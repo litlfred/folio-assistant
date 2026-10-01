@@ -37,6 +37,7 @@ import { dirname, join, relative, resolve } from "node:path";
 import {
   instanceRootsIn,
   readDeclaration,
+  siteDirFor,
   type KnownSubstrate,
   type Subscription,
 } from "../schemas/cat-harness.ts";
@@ -44,7 +45,8 @@ import { instanceConfigFilename } from "../schemas/harness-config.ts";
 import { instanceRepositories } from "../schemas/instance-repositories.ts";
 
 const REPO = resolve(import.meta.dir, "..", "..");
-export const OUT = join(REPO, "cat-harness", "docs", "subscriptions", "index.md");
+const INSTANCE = resolve(import.meta.dir, "..");
+export const OUT = join(INSTANCE, siteDirFor(INSTANCE), "subscriptions", "index.md");
 
 export type SubstrateSource = "staged instance" | "associated harness" | "hand-entered";
 

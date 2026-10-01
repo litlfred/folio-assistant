@@ -82,7 +82,7 @@ import {
   nestedDirectories,
 } from "../schemas/cat-harness.js";
 import { withViewers } from "./viewer-declarations.js";
-import { subscribedHarnesses, subscribedTile } from "./kg-instantiate.js";
+import { subscribedHarnesses, subscribedTile } from "./subscribed-harnesses.js";
 // The `folio` graph kind is registered by CORE. This module is a LIBRARY, so it
 // does NOT import that registration: a library's edge is inherited by every
 // module that imports it, and the harness may not depend on core. The

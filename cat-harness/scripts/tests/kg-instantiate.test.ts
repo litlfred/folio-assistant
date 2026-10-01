@@ -11,14 +11,8 @@ import { join } from "node:path";
 
 import { sweep } from "../check-instance-config.ts";
 import { harnessTiles } from "../harness-tiles.ts";
-import {
-  harnessHome,
-  instantiate,
-  stateDirectoriesOf,
-  subscribedHarnesses,
-  subscribedTile,
-  unsafePathReason,
-} from "../kg-instantiate.ts";
+import { harnessHome, instantiate, stateDirectoriesOf, unsafePathReason } from "../kg-instantiate.ts";
+import { subscribedHarnesses, subscribedTile } from "../subscribed-harnesses.ts";
 import { type RootFetcher, setTopLevelKey, subscribe } from "../kg-subscribe.ts";
 import { render, subscriptionCards } from "../subscriptions-viz.ts";
 import { readDeclaration } from "../../schemas/cat-harness.ts";
