@@ -340,10 +340,10 @@ roles, and how they compose with the LLM, see [Skills & roles](../../skills.html
 
 | Skill | Id | Schema | Summary |
 |-------|----|--------|---------|
-| [fhir-validation](fhir-validation.html) | `fhir-validation` | [schema](../skills/fhir-validation.html) | > Skill id: `fhir-validation` · Package: `authoring-who-smart-guidelines` · |
-| [ig-publication](ig-publication.html) | `ig-publication` | [schema](../skills/ig-publication.html) | > Skill id: `ig-publication` · Package: `authoring-who-smart-guidelines` · |
-| [l3-fhir-authoring](l3-fhir-authoring.html) | `l3-fhir-authoring` | [schema](../skills/l3-fhir-authoring.html) | > Skill id: `l3-fhir-authoring` · Package: `authoring-who-smart-guidelines` · |
-| [terminology-management](terminology-management.html) | `terminology-management` | [schema](../skills/terminology-management.html) | > Skill id: `terminology-management` · Package: `authoring-who-smart-guidelines` · |
+| [fhir-validation](fhir-validation.html) | `fhir-validation` | [schema](../skills/fhir-validation.html) | > Skill id: `fhir-validation` · Package: `fhir-ig-authoring` · |
+| [ig-publication](ig-publication.html) | `ig-publication` | [schema](../skills/ig-publication.html) | > Skill id: `ig-publication` · Package: `fhir-ig-authoring` · |
+| [l3-fhir-authoring](l3-fhir-authoring.html) | `l3-fhir-authoring` | [schema](../skills/l3-fhir-authoring.html) | > Skill id: `l3-fhir-authoring` · Package: `fhir-ig-authoring` · |
+| [terminology-management](terminology-management.html) | `terminology-management` | [schema](../skills/terminology-management.html) | > Skill id: `terminology-management` · Package: `fhir-ig-authoring` · |
 
 ## FHIR client & SMART launch (fhir-harness/skills/fhir-client)
 
