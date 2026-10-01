@@ -20,6 +20,15 @@
         "skills"
       ],
       "description": "The science layer's Lean tooling skills (`lean-formal-edges`, folio-assistant#1492). Declared HERE, from within `skills/`, by the instance that owns it (bean `cmsl` step 1, owner 2026-09-30, round 4). Until then only cat-harness declared it, as the mirror `folio-assistant-sci-lean-skills`, which cmsl step 3 removes."
+    },
+    {
+      "id": "data-skills",
+      "path": "data",
+      "subgraph": true,
+      "description": "The SCIENCE layer's reference-data skills: `reference-dataset-ingestion`, which turns a published constants table (CODATA first) into a library dataset whose values are addressable as `{{ <instance>.library.<entry>.<slug> }}` with provenance (bean uyp8). A subdirectory beside `skills/lean/` for the same reason that one is: `skills/voices/` is already declared as the `voices` kind.",
+      "graphKinds": [
+        "skills"
+      ]
     }
   ]
 }
