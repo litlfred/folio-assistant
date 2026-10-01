@@ -43554,6 +43554,55 @@
       "exported": true
     },
     {
+      "id": "large-datasets/schemas/id-lookup.ts#CatalogueNodeRead",
+      "name": "CatalogueNodeRead",
+      "module": "large-datasets/schemas/id-lookup.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "large-datasets/schemas/id-lookup.ts#CatalogueNodeReadSchema",
+      "name": "CatalogueNodeReadSchema",
+      "module": "large-datasets/schemas/id-lookup.ts",
+      "kind": "zod-object",
+      "doc": "The PART of a catalogue node the lookup reads — `id`, `title`, the node's own",
+      "fields": [
+        {
+          "name": "id",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "title",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "materialization",
+          "type": "z.object({ state: z.enum(CATALOGUE_MATERIALIZATION_STATES), provenance: z.object({ upstream: z.string().min(1).optional…",
+          "optional": false,
+          "array": false
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [
+        "CATALOGUE_MATERIALIZATION_STATES",
+        "z"
+      ],
+      "exported": true
+    },
+    {
       "id": "large-datasets/schemas/id-lookup.ts#IdEntry",
       "name": "IdEntry",
       "module": "large-datasets/schemas/id-lookup.ts",

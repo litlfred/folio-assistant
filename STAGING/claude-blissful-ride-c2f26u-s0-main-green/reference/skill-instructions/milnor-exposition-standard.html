@@ -508,32 +508,32 @@
   NOT a cache-busting strategy for third-party assets, and not applied to
   them: those are versioned in their own URLs already.
 -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-blissful-ride-c2f26u-s0-main-green/assets/css/docs-ui.css?v=1790862023">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-blissful-ride-c2f26u-s0-main-green/assets/css/docs-ui.css?v=1790865988">
 <!-- Narrow viewports: wide content scrolls in its own box, never the page
      (bean `2r2n`). The standalone viewers inline the same file through
      `withViewerNav`, so both kinds of page read one set of rules. -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-blissful-ride-c2f26u-s0-main-green/assets/css/narrow-viewport.css?v=1790862023">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-blissful-ride-c2f26u-s0-main-green/assets/css/narrow-viewport.css?v=1790865988">
 
 <!--
   The work-plan dashboard's styles, split from docs-ui.css so that
   `state-visualizer.ts` can inline exactly these bytes into the generated
   `<base>/<stub>/state-visualizer/` pages. One rule, two surfaces.
 -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-blissful-ride-c2f26u-s0-main-green/assets/css/work-plan.css?v=1790862023">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-blissful-ride-c2f26u-s0-main-green/assets/css/work-plan.css?v=1790865988">
 <!-- Sticky themes. GENERATED from the theme nodes in `schemas/themes.ts` by
      `bun run themes:css`; `themes:css:check` fails the build when it is stale.
      Loaded AFTER docs-ui.css deliberately: it supplies the `--fa-sticky-*`
      roles that docs-ui.css consumes, and a custom property has to be set on a
      matching element before the rule reading it takes effect. -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-blissful-ride-c2f26u-s0-main-green/assets/css/themes.css?v=1790862023">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-blissful-ride-c2f26u-s0-main-green/assets/css/themes.css?v=1790865988">
 <!-- UML overview colours: one class per graph kind, set on the Mermaid nodes
      that `scripts/gen-uml-overview.ts` writes into docs/uml/overview/. -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-blissful-ride-c2f26u-s0-main-green/assets/css/uml.css?v=1790862023">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-blissful-ride-c2f26u-s0-main-green/assets/css/uml.css?v=1790865988">
 <!-- Kind avatars. GENERATED from `schemas/avatars.ts` by `bun run avatars:css`;
      `avatars:css:check` fails the build when it is stale. One stylesheet
      rather than 68 assets: the glyph is a mask and the colour is a property,
      so a scheme swap is a custom property and the trash state is a selector. -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-blissful-ride-c2f26u-s0-main-green/assets/css/avatars.css?v=1790862023">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-blissful-ride-c2f26u-s0-main-green/assets/css/avatars.css?v=1790865988">
 
 <!--
   The kinds THIS INSTANCE DECLARES, for the avatar fan.
@@ -550,7 +550,7 @@
 <script type="application/json" id="fa-declared-kinds">["beans","cat-harness","code","code-list","docs","external-schema","folio","fsh-guts","health","interaction","issue-marks","library","memory","methodology","policies","processes","qa","scenarios","schemas","skills","substrate-snapshot","swimlane-glossary","todos","tools","translation-sources","uml","uploads","waiver"]</script>
 <script src="/folio-assistant/STAGING/claude-blissful-ride-c2f26u-s0-main-green/assets/js/vendor/qrcode.js" defer></script>
 <script src="/folio-assistant/STAGING/claude-blissful-ride-c2f26u-s0-main-green/assets/js/vendor/qrcode_UTF8.js" defer></script>
-<script src="/folio-assistant/STAGING/claude-blissful-ride-c2f26u-s0-main-green/assets/js/docs-ui.js?v=1790862023" defer></script>
+<script src="/folio-assistant/STAGING/claude-blissful-ride-c2f26u-s0-main-green/assets/js/docs-ui.js?v=1790865988" defer></script>
 
 <!--
   The work-plan dashboard. SELF-MOUNTING on any page carrying
@@ -847,20 +847,22 @@ eight words, no rubric — while that criterion is a <strong>strict gate passing
 a perfect 16/16</strong>. Scoring against eight bare words is how eight reviewers
 produce eight different sixteens. Bean <code class="language-plaintext highlighter-rouge">bfmf</code>.</p>
 
-<p><strong>It is now derived from the paper, not from the name.</strong> The source is
-<a href="https://github.com/litlfred/folio-assistant/tree/main/folio-assistant-sci/library/milnorlink"><code class="language-plaintext highlighter-rouge">folio-assistant-sci/library/milnorlink/</code></a>
-— John Milnor, <em>Link Groups</em>,
+<p><strong>It is now derived from the paper, not from the name.</strong> The source is the
+<code class="language-plaintext highlighter-rouge">milnorlink</code> library entry — John Milnor, <em>Link Groups</em>,
 Annals of Mathematics, Second Series, 59(2), March 1954, pp. 177–195
 (<a href="http://www.jstor.org/stable/1969685">JSTOR 1969685</a>), ingested at journal-page
-granularity so a citation to “p. 179” resolves to
-<code class="language-plaintext highlighter-rouge">folio-assistant-sci/library/milnorlink/sections/page-179.md</code>.</p>
+granularity so a citation to “p. 179” resolves to its
+<code class="language-plaintext highlighter-rouge">sections/page-179.md</code>. The entry is held by the science layer’s <code class="language-plaintext highlighter-rouge">library</code>
+graph and reached through that declaration, never through a path written
+here: this layer sits below it and does not link up (bean <code class="language-plaintext highlighter-rouge">rfuq</code>). The science
+layer’s <code class="language-plaintext highlighter-rouge">skills/voices/README.md</code> links down to this skill instead.</p>
 
 <p>The path moved with the corpus (bean <code class="language-plaintext highlighter-rouge">frs5</code>): the platform holds no content,
 so <code class="language-plaintext highlighter-rouge">milnorlink</code> went to the science instance. This link went on pointing at
 <code class="language-plaintext highlighter-rouge">cat-harness/library/</code> for a day and nothing reported it — <code class="language-plaintext highlighter-rouge">check:subgraphs</code>
 only began walking this directory once <code class="language-plaintext highlighter-rouge">main</code> added its zero-dangling
-assertion, which is what finally surfaced it. Every rule in
-<a href="https://github.com/litlfred/folio-assistant/blob/main/folio-assistant-sci/skills/voices/milnor/voice.json"><code class="language-plaintext highlighter-rouge">milnor</code>’s voice skill</a> quotes a page. 8899 words, 496
+assertion, which is what finally surfaced it. Every rule in the <code class="language-plaintext highlighter-rouge">milnor</code>
+voice skill’s <code class="language-plaintext highlighter-rouge">voice.json</code> (<code class="language-plaintext highlighter-rouge">skill_fetch milnor</code>) quotes a page. 8899 words, 496
 sentences; measured 2026-09-19.</p>
 <h3 id="what-the-measurement-found-including-where-we-are-wrong">
   
