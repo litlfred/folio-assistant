@@ -2,11 +2,11 @@
   "$schema": "viewer-nav-qa/v1",
   "root": "cat-harness/docs",
   "totals": {
-    "pages": 59,
-    "railed": 59,
+    "pages": 60,
+    "railed": 60,
     "declined": 0,
     "missing": 0,
-    "flagged": 0
+    "flagged": 1
   },
   "pages": [
     {
@@ -17,7 +17,13 @@
     {
       "path": "/cat-harness/catalogue/who-iris/",
       "source": "cat-harness/docs/cat-harness/catalogue/who-iris/index.html",
-      "verdict": "railed"
+      "verdict": "railed",
+      "flags": [
+        "clickable-mark",
+        "visualiser-nav",
+        "single-open",
+        "no-redundant-toggle"
+      ]
     },
     {
       "path": "/cat-harness/docs-auto/",
@@ -52,6 +58,11 @@
     {
       "path": "/cat-harness/docs-auto/index/docs/root-docs/",
       "source": "cat-harness/docs/cat-harness/docs-auto/index/docs/root-docs/index.html",
+      "verdict": "railed"
+    },
+    {
+      "path": "/cat-harness/docs-auto/index/docs/smart-base-docs/",
+      "source": "cat-harness/docs/cat-harness/docs-auto/index/docs/smart-base-docs/index.html",
       "verdict": "railed"
     },
     {
