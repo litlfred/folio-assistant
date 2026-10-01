@@ -9,7 +9,7 @@ tags:
     - ui
     - visualiser-navbar
 created_at: 2026-09-23T10:36:15Z
-updated_at: 2026-09-30T16:12:47Z
+updated_at: 2026-09-30T23:17:23Z
 parent: folio-assistant-4ccr
 ---
 
@@ -152,3 +152,89 @@ Each finding re-measured on a local build of that commit (`preview-site.sh`, ser
 - **FIXED** — 10. Bottom strip hides most of its tiles with no arrow, count or fade: Still fixed. With the glass open, .fa-glass-tiles holds 4 tiles, scrollWidth equals clientWidth (1280/1280 and 390/390), and none is off-screen. — dbbc2b6ef (nav4.mjs)
 - **STILL-PRESENT** — 11. Most declared tiles wear the same glyph: Glass → More: 25 of the 27 .fa-glass-more-item .fa-tile draw the identical outline SVG path ('M12 4.5 5 9.5…'). Only beans and uploads differ. The tile captions are clamped to 6 lines at 91–104px. (nav4.mjs)
 - **STILL-PRESENT** — 12. Two unrelated 'Settings': The glass ⚙ Settings panel ('Folio settings — theme, avatars, opacity') holds Theme/Avatars/Opacity/Blur/Harnesses/Tidy, and no text matches /discard|fish/ or points to the page settings. ▦ More actions → 'Settings' is still a separate panel. (nav9.mjs, nav8.mjs)
+
+
+_2026-09-30T23:0Xz_ — **Holder recorded, retroactively, by the session that already held it.** `bun run beans:claim folio-assistant-ob3m` REFUSED this bean: *"already in-progress on the default branch, and NOBODY RECORDED A HOLDER — so this cannot tell a sibling working it right now from a claim somebody abandoned."* That is bean `c3d7`, and the unrecorded holder was **this session**: the declaration half of finding 11 and `check:navbar-consistency` landed from `claude/cool-fermi-htir5p` in PR #1687, which set the status without writing a holder note.
+
+Checked before writing, as the refusal instructs: 14 open PRs, none claims this bean. #1709 matches on "navbar" but is about the Folio handle's scroll band, and #1633 matches "glyph" incidentally. So it was free, and it was free because *I* left it looking taken.
+
+Continuing here on **finding 11's rendered half** — an e2e assertion counting DISTINCT glyph drawings among the rendered `.fa-tile svg`, which the static check structurally cannot reach. Session: https://claude.ai/code/session_01MSKrDXE3bhaMth9NuG63z8
+
+
+## 2026-09-30 — finding 11's RENDERED half is now asserted, and three denominators are not one number
+
+The declaration half was gated by `check:navbar-consistency` in #1687. The
+rendered half is now a Playwright assertion in
+`cat-harness/test/action-tiles.e2e.ts`, which is where it belongs: that spec
+already loads the real `docs-ui.js` and `docs-ui.css` from the site dir, so it
+renders the launcher without a site build.
+
+### The measurement, today, computed rather than quoted
+
+`harness.json` carries **30** declared tiles, all visible. **2 of 30 name an
+icon** — `beans` and `uploads`, exactly the two `TILE_GLYPHS` holds — so
+**28 fall back to one drawing**, and the rendered panel shows **36 tiles with
+9 distinct drawings**.
+
+**None of those is this bean's earlier number, and that is the point it already
+made.** The render said *"18 of 20"*; the declaration half said *"2 of 11"*;
+today it is 2 of 30 declared and 28 of 36 rendered. So the test hardcodes
+**no** figure from this prose: every number in its failure message is computed
+from the fixture at run time, and the single literal is the ratchet.
+
+### Why a ratchet and not an equality
+
+`glyphFor` falls back to `NET_GLYPH` for every unregistered name, so sameness
+is this panel's DEFAULT rather than an accident. An equality would go red the
+first time somebody DREW a glyph — it would fail on the improvement it exists
+to encourage. A ceiling fails only when sameness gets worse, and silently
+permits every step toward fixing it. `FALLBACK_CEILING = 28`, to be LOWERED
+when a glyph is drawn and never raised.
+
+### Two things the fixture had to be taught, and one assertion that was vacuous
+
+**The fixture rendered the wrong population twice before it rendered the right
+one.** A first probe passed `harness.json` raw where the spec wants an id→path
+map, and got 3 tiles. Corrected, it got 6 — and reported all 6 distinct,
+because those are the BUILT-IN controls (Settings, Language, QR code, Knowledge
+graph, JSON-LD, Source), each carrying a hardcoded drawing and none going
+through `glyphFor` at all. The declared tiles arrive by a different route
+entirely: `<meta name="fa-tiles">`, filled at
+`_includes/head_custom.html:403` from `site.data.harness.tiles`. Until the
+fixture supplied that, every assertion about glyph sameness was measuring
+something else and passing.
+
+Supplied as an OPTIONAL third parameter defaulting to `null`, so all 22
+existing tests in that file are unchanged in behaviour: the caption assertions
+there name their tiles exactly (`["Search", "Settings", "Language", "QR
+code"]`), and putting the meta into the shared fixture would have rewritten six
+unrelated tests to accommodate one new one.
+
+**And one of my own assertions was vacuous** — `expect(groups.size)
+.toBeGreaterThan(1)`, meant to check that naming an icon buys something. It
+counts distinct drawings over the WHOLE panel, and the nine built-in ones are
+always distinct, so it passed with every declared tile on the fallback: the
+exact state it was written to reject. `dh4f`, caught by trying to falsify it
+rather than by reading it. It now identifies the fallback as the DOMINANT
+drawing and asserts each named tile differs from it.
+
+### Falsified, each assertion independently
+
+| planted | fired with |
+|---|---|
+| ceiling 28 → 27 | *"28 tiles draw the SAME glyph, out of 36 rendered (2 of 30 declared tiles name one, and 9 distinct drawings appear)"* |
+| `beans` un-registered from `TILE_GLYPHS` | 29 identical, 8 distinct — and the message's second branch names the cause: a glyph name stopped resolving while the declaration still claims it |
+| both names aliased TO the fallback | fired on the ceiling at 30, so the named-glyph assertion was **not** exercised — re-run with the ceiling raised to 99 to isolate it, and it fired: *"tile \"beans\" declares icon \"beans\" but draws the FALLBACK … the declaration buys nothing"* |
+
+The third row is the one worth keeping: a guard that fires for the wrong reason
+has not been falsified, and the only way to know was to disable the assertion
+in front of it.
+
+All 23 tests in the spec pass; `docs-ui.js` has no diff after the falsifications.
+
+### Still open on this bean
+
+- **Finding 12** — two unrelated "Settings", both wearing a gear. Untouched: the
+  repair is editorial (rename, or cross-link), not a check's.
+- The remaining ten findings, 11 of which were still present at the last
+  re-measure on `main` 3779d5d27.
