@@ -77,14 +77,14 @@ import { existsSync, mkdirSync, readFileSync, readdirSync, rmSync, writeFileSync
 import { basename, join, resolve } from "node:path";
 import { isDirectoryReadme } from "../../cat-harness/schemas/kg-node.js";
 
-import { IgMenuSchema, type IgMenu, type IgMenuGroup, menuHref, menuItemCount } from "../../cat-harness/schemas/ig-menu.js";
+import { IgMenuSchema, type IgMenu, type IgMenuGroup, menuHref, menuItemCount } from "../schemas/ig-menu.js";
 import {
   IgChromeSchema,
   chromeCss,
   chromeFileFor,
   tokenOf,
   type IgChrome,
-} from "../../cat-harness/schemas/ig-chrome.js";
+} from "../schemas/ig-chrome.js";
 import {
   declarationPathIn,
   directoriesForGraph,

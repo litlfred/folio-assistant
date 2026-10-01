@@ -13,7 +13,7 @@ parent: Skill instructions
 {% raw %}
 # ig-publication
 
-> Skill id: `ig-publication` · Package: `authoring-who-smart-guidelines` ·
+> Skill id: `ig-publication` · Package: `fhir-ig-authoring` ·
 > The most-referenced skill in this package — named by seven activities across
 > `l3-fhir-pipeline.bpmn`, `ig-incremental-build.bpmn` and
 > `draft-to-publication.bpmn`, in the `Publication manager`,
