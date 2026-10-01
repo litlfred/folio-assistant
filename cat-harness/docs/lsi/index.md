@@ -130,13 +130,13 @@ Each dimension is a **contrast** between two poles, shown by their highest-loadi
 
 | dim | σ | one pole | the other pole |
 |---|---|---|---|
-| 1 | 47.68 | bean, instance, session, graph, page, kind, branch, directory | *(none)* |
-| 2 | 27.80 | bias, studies, study, statistical, effect, causation, validity, causal | bean, harness, instance, directory, node, graph, kind, session |
-| 3 | 22.38 | proof, watcher, lean, slot, blocks, witness, project, sibling | harness, node, instance, bean, page, directory, bias, actor |
-| 4 | 19.57 | session, branch, queue, prs, beans, commits, coordination, bean | dpi, color, lean, grayscale, pdf, images, text, matplotlib |
+| 1 | 47.72 | bean, instance, session, graph, page, kind, branch, directory | *(none)* |
+| 2 | 27.81 | bias, studies, study, statistical, effect, causation, validity, causal | bean, harness, instance, directory, node, graph, kind, declared |
+| 3 | 22.39 | proof, watcher, lean, slot, blocks, witness, project, sibling | harness, node, instance, bean, page, directory, bias, actor |
+| 4 | 19.58 | session, branch, queue, prs, beans, commits, coordination, bean | dpi, color, lean, grayscale, pdf, images, text, matplotlib |
 | 5 | 18.72 | dpi, color, grayscale, contrast, raster, images, matplotlib, fonts | proof, lean, glossary, declaration, term, theorem, stub, mathlib |
-| 6 | 16.78 | regulatory, intervention, biosafety, ethics, candidate, rivals, dual-use, safety | fallacy, fallacious, reality, fallacies, solutions, description, consider, ignoring |
-| 7 | 16.34 | lean, mathlib, search, mcp, sorry, page, proof, build | watcher, voice, slot, backlog, queue, nesting, ledger, objection |
+| 6 | 16.78 | regulatory, intervention, biosafety, ethics, candidate, rivals, dual-use, safety | fallacy, fallacious, reality, fallacies, description, solutions, consider, ignoring |
+| 7 | 16.36 | lean, mathlib, search, mcp, sorry, page, proof, build | watcher, voice, slot, backlog, queue, nesting, ledger, objection |
 | 8 | 15.39 | mathlib, lean, sorry, lake, mcp, oleans, sessions, goal | slot, watcher, backlog, criterion, band, forward, major, auto-discharge |
 
 **Findings** — 0 narrow dimension(s), 0 near-duplicate pair(s).

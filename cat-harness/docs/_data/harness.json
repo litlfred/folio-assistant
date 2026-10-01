@@ -88,6 +88,7 @@
     "scenarios",
     "schemas",
     "skills",
+    "substrate-snapshot",
     "swimlane-glossary",
     "tools",
     "translation-sources",
@@ -1648,12 +1649,12 @@
         {
           "id": "directories",
           "label": "declared directories",
-          "value": 45
+          "value": 46
         },
         {
           "id": "kinds",
           "label": "declared graph kinds",
-          "value": 22
+          "value": 23
         },
         {
           "id": "views",
@@ -1734,6 +1735,10 @@
           "readOnly": false
         },
         {
+          "kind": "substrate-snapshot",
+          "note": "no viewer yet"
+        },
+        {
           "kind": "swimlane-glossary",
           "path": "/swimlane-glossary/"
         },
@@ -1755,7 +1760,7 @@
         }
       ],
       "findings": [
-        "cat-harness: declares 5 graph(s) with no published viewer — code, code-list, policies, scenarios, uml. Declared and not rendered is a gap, not a dead link."
+        "cat-harness: declares 6 graph(s) with no published viewer — code, code-list, policies, scenarios, substrate-snapshot, uml. Declared and not rendered is a gap, not a dead link."
       ],
       "navbarIcons": [
         "close",
@@ -2011,6 +2016,10 @@
       {
         "kind": "skills",
         "path": "/cat-harness/docs-auto/index/skills/skills/"
+      },
+      {
+        "kind": "substrate-snapshot",
+        "note": "no viewer yet"
       },
       {
         "kind": "swimlane-glossary",
@@ -2342,6 +2351,28 @@
           {
             "name": "associate-harness",
             "path": "/reference/skill-instructions/associate-harness.html"
+          }
+        ]
+      },
+      {
+        "key": "subscriptions",
+        "skills": [
+          {
+            "name": "kg-subscription",
+            "path": "/reference/skill-instructions/kg-subscription.html"
+          },
+          {
+            "name": "materialize-remote",
+            "path": "/reference/skill-instructions/materialize-remote.html"
+          }
+        ]
+      },
+      {
+        "key": "knownSubstrates",
+        "skills": [
+          {
+            "name": "kg-subscription",
+            "path": "/reference/skill-instructions/kg-subscription.html"
           }
         ]
       },
@@ -3193,11 +3224,15 @@
           },
           {
             "key": "directories",
-            "summary": "43: tools, external-schemas, code-lists, schemas, uml, skills, scenarios, policies, processes…"
+            "summary": "44: tools, external-schemas, subscriptions, code-lists, schemas, uml, skills, scenarios, poli…"
           },
           {
             "key": "associatedHarnesses",
             "summary": "1: ihris"
+          },
+          {
+            "key": "knownSubstrates",
+            "summary": "2: who-iris, who-world-health-data-hub"
           },
           {
             "key": "stickies",
