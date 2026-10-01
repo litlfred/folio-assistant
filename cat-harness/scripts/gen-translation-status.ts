@@ -54,6 +54,7 @@ import { basename, join, relative, resolve } from "node:path";
 import { readDeclaration, repoRootFor, siteDirFor } from "../schemas/cat-harness.js";
 import { tileCounts } from "../schemas/tile-count.js";
 import { withViewerNav, type ViewerNav } from "./viewer-page.ts";
+import { visualiserNavDeclaration } from "./lib/navbar.ts";
 import { renderedPath, withRenders } from "./viewer-declarations.js";
 
 /** This generator's Tool node (`tools/viewers.ts`), named on every page it draws. */
@@ -277,7 +278,7 @@ export function statusPage(doc: {
           ? ""
           : `<div class="ts-warn">${l.unreadable.length} catalogue(s) unreadable: ` +
             `${esc(l.unreadable.join(", "))}</div>`;
-      return `<tr>
+      return `<tr id="locale-${esc(l.locale)}">
   <th scope="row"><code>${esc(l.locale)}</code></th>
   <td>${l.catalogues} / ${l.templates}<br><span class="ts-dim">${pct(share(l.catalogues, l.templates))}</span></td>
   <td>${l.entries}</td>
@@ -324,6 +325,7 @@ code { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; }
 </style>
 </head>
 <body>
+${visualiserNavDeclaration(doc.locales.map((l) => ({ label: l.locale, href: `#locale-${l.locale}` })))}
 <main>
 <h1>translations — status</h1>
 <p class="ts-sub">The gettext side of the <code>translation-sources</code> graph, measured from the files in
