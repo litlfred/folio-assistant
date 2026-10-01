@@ -421,8 +421,8 @@ checkbox you silently worked around is one the next agent meets unchanged.
 Tick what is done and name who did it; withdraw a done-when you no longer
 believe, with reasons, rather than leaving it unmet. Where the bean and the
 code disagree, **the code is what is true and the bean is what is wrong** —
-the same rule [`AGENTS.md`'s banner](https://github.com/litlfred/folio-assistant/blob/main/AGENTS.md) states for a skill
-against that file.
+the same rule [`AGENTS.md`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/AGENTS.md) states for a skill against
+that file.
 
 This is the work-plan half. The cross-session half — why two sessions can file
 one defect four minutes apart — is

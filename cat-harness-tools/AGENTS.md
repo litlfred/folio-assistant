@@ -14,14 +14,23 @@ the code that runs it comes here.
 ## Which way the dependencies run
 
 ```
-cat-harness → folio-assistant-core → cat-harness-tools
+bootstrap → bootstrap-tools → cat-harness → cat-harness-tools → (the content layers)
 ```
 
-This layer may import the harness and core. **Core may not import this layer**
-— the owner's ruling of 2026-10-01 — which is why core's document adapter was
-cut into a server-free `DocumentContent` (it stays in core) and a server wrapper
-(it comes here). sci's server half lives in a named subgraph of
-`folio-assistant-sci`, not here.
+This layer may import `cat-harness` and `bootstrap-tools`, and **nothing above
+it** — the owner's ruling C1 of 2026-10-01 (epic `7x5n`, bean `rmi6`) put the
+tools BELOW the content core. The content core may import this layer; this
+layer does not name it, since a lower layer naming a higher one is itself the
+wrong direction (`check:reference-direction`). The order is declared, not
+written here: it is the `needs` of each `<instance>.json`, and
+`check:import-direction` enforces it from them.
+
+It was the other way round for a few hours: this layer needed the content
+core, and the core was forbidden to import it, which is why core's document adapter was cut into a
+server-free `DocumentContent` and a server wrapper. Under C1 the rule reads
+*core must not depend on the MCP server*; any part of the server that needs
+the core moves up into the core rather than coming here, and a content
+package's own server half lives with that package.
 
 ## What is here
 

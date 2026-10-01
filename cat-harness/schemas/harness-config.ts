@@ -1234,6 +1234,21 @@ export function resolveSkillDirs(folioRoot: string): string[] {
     }
   }
 
+  // THE OTHER INSTANCES IN THIS CHECKOUT (bean `cmsl` step 3, issue #1694).
+  // Until then `cat-harness.json` mirrored them with `scope: "repository"`, so
+  // seven packages — fhir-harness's two, core's, sci's `lean` and `data`,
+  // large-datasets', who-iris' — reached `skill_fetch` only through the
+  // platform naming its dependents. The owner removed the mirrors; the
+  // checkout answers instead. A folio in its own repository has no sibling
+  // instances, so this adds nothing there.
+  const own = new Set(
+    ownDirectories({ name: "(root)", root: resolve(folioRoot), own: true }).map((d) => resolve(d.absPath)),
+  );
+  for (const d of checkoutDirectories(resolve(folioRoot), { stackedOn: resolve(folioRoot) })) {
+    if (own.has(resolve(d.absPath))) continue;
+    if (isKgOnlyDirectory(d) && existsSync(d.absPath)) dirs.push(d.absPath);
+  }
+
   // The root last, so its skills win on a name collision.
   for (const d of ownDirectories({ name: "(root)", root: resolve(folioRoot), own: true })) {
     if (isKgOnlyDirectory(d) && existsSync(d.absPath)) dirs.push(d.absPath);
