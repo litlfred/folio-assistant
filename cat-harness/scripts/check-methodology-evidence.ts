@@ -57,7 +57,6 @@ import { basename, dirname, join, relative, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 import { parse as parseYaml } from "yaml";
 
-import { directoriesForGraph } from "../schemas/cat-harness.ts";
 import {
   MethodologyFrontMatterSchema,
   METHODOLOGY_SCHEMA_TAG,

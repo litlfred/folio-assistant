@@ -74,7 +74,6 @@ import { existsSync, readFileSync, writeFileSync } from "node:fs";
 import { basename, dirname, join, relative, resolve } from "node:path";
 
 import { AttributionSchema } from "../schemas/attribution.ts";
-import { directoriesForGraph } from "../schemas/cat-harness.js";
 import {
   DESCRIBABLE_ROLES,
   ImagesSidecarSchema,

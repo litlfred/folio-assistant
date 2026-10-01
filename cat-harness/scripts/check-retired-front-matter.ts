@@ -38,7 +38,7 @@ import { resolve, relative, join } from "node:path";
 import { Glob } from "bun";
 
 import { parseFrontMatter } from "../schemas/front-matter.ts";
-import { repoRootFor, directoryForGraph, declarationPathIn } from "../schemas/cat-harness.ts";
+import { repoRootFor, declarationPathIn } from "../schemas/cat-harness.ts";
 import { kgRoots } from "./known-skills.ts";
 import { corpusDirectoryForGraph } from "../schemas/harness-config.js";
 

@@ -58,7 +58,7 @@ import { tally } from "./summaries.ts";
 import { scanLibraryRefs, type RefSource } from "./library-refs.ts";
 import { orphanSubjectPages, viewerPlacement } from "./gen-schema-viz.ts";
 import { readDeclaration } from "../schemas/cat-harness.ts";
-import { directoriesForGraph, instanceRootsIn, repoRootFor, siteDirFor } from "../schemas/cat-harness.ts";
+import { instanceRootsIn, repoRootFor, siteDirFor } from "../schemas/cat-harness.ts";
 import { directoryByVisualisationRef } from "./graph-tiles.ts";
 import { tileCounts } from "../schemas/tile-count.js";
 import { itemState } from "./gen-uploads-viz.ts";

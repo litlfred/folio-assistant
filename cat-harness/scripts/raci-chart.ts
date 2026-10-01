@@ -71,8 +71,7 @@
  */
 import { resolve } from "node:path";
 
-import { workflowFiles, kgRoots, corpusScopeFor, roleGraphFor } from "./known-skills.js";
-import { readRoleGraph } from "../schemas/role-graph.js";
+import { workflowFiles, corpusScopeFor, roleGraphFor } from "./known-skills.js";
 import {
   INVOLVEMENT_VOCABULARIES,
   isActivity,

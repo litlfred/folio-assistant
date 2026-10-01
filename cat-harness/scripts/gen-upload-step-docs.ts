@@ -55,7 +55,7 @@ import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import { dirname, join, resolve } from "node:path";
 
 import { loadProcessModel, type ProcessModel, type ProcessNode } from "../src/workflow/process-model.ts";
-import { directoriesForGraph, siteDirFor } from "../schemas/cat-harness.ts";
+import { siteDirFor } from "../schemas/cat-harness.ts";
 import { tools } from "../tools/index.ts";
 import type { ToolDefinition } from "../schemas/tool.ts";
 import { corpusDirectoriesForGraph } from "../schemas/harness-config.js";

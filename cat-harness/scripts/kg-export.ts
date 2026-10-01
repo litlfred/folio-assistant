@@ -55,7 +55,7 @@ import { fileURLToPath } from "node:url";
 import { NS_PREFIXES, propertyIri, termIri } from "../schemas/namespaces.js";
 import { DCTERMS_NS } from "../schemas/jsonld.js";
 import { readPolicyGrants } from "../schemas/odrl.js";
-import { KG_CONTENT_GRAPH_KINDS, declaredAssets, declaredGraphs, declaredKinds, directoriesForGraph, repoRootFor, resolveDirectories, declarationPathIn } from "../schemas/cat-harness.js";
+import { KG_CONTENT_GRAPH_KINDS, declaredAssets, declaredGraphs, declaredKinds, repoRootFor, resolveDirectories, declarationPathIn } from "../schemas/cat-harness.js";
 import { type DependsOnGap, type DependsOnRecord, dependsOnFor } from "../schemas/depends-on.js";
 import { type RoleDef, actorsDir, capabilitiesDir, readRoleGraph } from "../schemas/role-graph.js";
 import { REGISTRY_GROUPS } from "../schemas/kg-node.js";

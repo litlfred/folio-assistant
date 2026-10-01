@@ -74,7 +74,7 @@ import { basename, join, relative } from "node:path";
 
 import ts from "typescript";
 
-import { directoriesForGraph, readDeclaration, repoRootFor } from "../schemas/cat-harness.js";
+import { readDeclaration, repoRootFor } from "../schemas/cat-harness.js";
 import { corpusDirectoriesForGraph } from "../schemas/harness-config.js";
 
 /**

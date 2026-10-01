@@ -36,7 +36,7 @@
 import { existsSync, readdirSync, readFileSync, statSync } from "fs";
 import { join, dirname, relative } from "path";
 import { GRAPH_EDGE_TERMS, type GraphEdgeTerm } from "../../schemas/jsonld";
-import { directoriesForGraph, folioDir } from "../../schemas/cat-harness.js";
+import { folioDir } from "../../schemas/cat-harness.js";
 import { corpusDirectoriesForGraph } from "../../schemas/harness-config.js";
 
 export interface GraphNode {

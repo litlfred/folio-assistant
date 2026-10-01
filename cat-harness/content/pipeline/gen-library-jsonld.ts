@@ -72,7 +72,6 @@ import { basename, dirname, join } from "path";
 import { CONTENT_CONTEXT_URL, typesForKind } from "../../schemas/jsonld";
 import { LABEL_PREFIXES } from "../../schemas/constraints";
 import { findContentRepoRoot } from "./repo-root";
-import { directoriesForGraph } from "../../schemas/cat-harness.js";
 import type { DocumentImage, ImagesSidecar } from "../../schemas/document-image.ts";
 import { buildTabularNodes, tabularShapeOf } from "./tabular-nodes.ts";
 import { TABULAR_CSVW_FILENAME } from "../../schemas/tabular-csvw.ts";

@@ -56,8 +56,7 @@
 import { readdirSync, readFileSync, statSync } from "node:fs";
 import { basename, join, relative, resolve } from "node:path";
 
-import { kgRoots, workflowFiles, corpusScopeFor, roleGraphFor } from "./known-skills.js";
-import { readRoleGraph } from "../schemas/role-graph.js";
+import { workflowFiles, corpusScopeFor, roleGraphFor } from "./known-skills.js";
 import { fulfilmentKindsForBpmnType } from "../schemas/role-graph.js";
 import { isActivity, loadProcessModel } from "../src/workflow/process-model.js";
 import { capabilitiesDir } from "../schemas/role-graph.ts";

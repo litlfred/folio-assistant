@@ -7,7 +7,7 @@
 import { resolve } from "path";
 import { readFileSync } from "fs";
 import { findContentRepoRoot } from "../../content/pipeline/repo-root";
-import { deferResolution, directoriesForGraph, directoryForGraph, folioDirDeferred } from "../../schemas/cat-harness.js";
+import { deferResolution, directoryForGraph, folioDirDeferred } from "../../schemas/cat-harness.js";
 import { corpusDirectoriesForGraph } from "../../schemas/harness-config.js";
 
 /**

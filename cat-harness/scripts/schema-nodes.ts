@@ -41,7 +41,6 @@
  */
 import { existsSync, readFileSync, readdirSync } from "node:fs";
 import { basename, join, relative, sep } from "node:path";
-import { directoriesForGraph } from "../schemas/cat-harness.js";
 import { corpusDirectoriesForGraph } from "../schemas/harness-config.js";
 // The `folio` graph kind is registered by CORE. This module is a LIBRARY, so it
 // does NOT import that registration: a library's edge is inherited by every

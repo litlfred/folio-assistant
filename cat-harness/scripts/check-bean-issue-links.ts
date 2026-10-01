@@ -38,7 +38,7 @@ import { spawnSync } from "node:child_process";
 import { readdirSync, readFileSync } from "node:fs";
 import { join, resolve } from "node:path";
 
-import { directoriesForGraph, repoRootFor } from "../schemas/cat-harness.js";
+import { repoRootFor } from "../schemas/cat-harness.js";
 import { OPEN_STATUSES, readBeanFiles } from "./bean-store-read.ts";
 import { corpusDirectoriesForGraph } from "../schemas/harness-config.js";
 

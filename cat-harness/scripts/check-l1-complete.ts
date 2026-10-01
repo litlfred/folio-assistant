@@ -66,7 +66,6 @@ import { LICENCE_FILENAME } from "../content/pipeline/gen-library-jsonld.ts";
 import { NARRATIVE_BEARING, narrativesIn } from "./narratives.ts";
 import { SUMMARIES_FILE } from "../schemas/block-summary.ts";
 import { entryDirs, entryItems, sidecarDefects, tally } from "./summaries.ts";
-import { directoriesForGraph } from "../schemas/cat-harness.ts";
 import { buildQaResult, writeQaResult } from "./qa-results.ts";
 import { REFERENCED_SOURCE_SCHEMA_ID, ReferencedSourceSchema } from "../schemas/referenced-source.ts";
 import { corpusDirectoriesForGraph } from "../schemas/harness-config.js";

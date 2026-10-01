@@ -44,7 +44,7 @@ import { basename, join, relative, resolve } from "node:path";
 import { EMPTY_NOTE_TAGS, KgRefSchema, type ArtefactRef, type KgRef, type NoteTags } from "../schemas/carried-note.js";
 import { TODO_SCHEMA_TAG, TodoNodeSchema, type TodoNode } from "../schemas/todo.js";
 import { TODO_GRAPH_FILE, parseTodoGraph } from "../schemas/todo-graph.js";
-import { deferResolution, directoryForGraph, repoRootFor } from "../schemas/cat-harness.js";
+import { deferResolution, repoRootFor } from "../schemas/cat-harness.js";
 import { corpusDirectoryForGraph } from "../schemas/harness-config.js";
 
 export const ROOT = resolve(import.meta.dir, "..");

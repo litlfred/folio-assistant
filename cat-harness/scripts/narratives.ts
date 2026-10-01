@@ -34,7 +34,6 @@ import { dirname, join, relative, resolve } from "node:path";
 import { NarrativeSchema, REJECTION_REASONS, type Narrative } from "../schemas/narrative.ts";
 import { SUMMARIES_FILE } from "../schemas/block-summary.ts";
 import { entryItems } from "./summaries.ts";
-import { directoriesForGraph } from "../schemas/cat-harness.ts";
 import { corpusDirectoriesForGraph } from "../schemas/harness-config.js";
 
 const ROOT = resolve(import.meta.dir, "..");

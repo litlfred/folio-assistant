@@ -22,7 +22,7 @@
 import { existsSync, readFileSync } from "node:fs";
 import { basename, join } from "node:path";
 
-import { directoriesForGraph, readDeclaration, sourceLinks } from "../../schemas/cat-harness.ts";
+import { readDeclaration, sourceLinks } from "../../schemas/cat-harness.ts";
 import { detectRepoUrl } from "../../src/core/git-refs.js";
 import { docsLayers } from "../compose-docs.js";
 import { itemFacts } from "../library-readmes.ts";

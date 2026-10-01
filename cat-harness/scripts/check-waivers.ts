@@ -46,7 +46,6 @@
 import { readdirSync, readFileSync } from "node:fs";
 import { join, resolve } from "node:path";
 
-import { directoriesForGraph } from "../schemas/cat-harness.js";
 import { WaiverNodeSchema, waiverState, type WaiverNode } from "../schemas/waiver.js";
 import { corpusDirectoriesForGraph } from "../schemas/harness-config.js";
 

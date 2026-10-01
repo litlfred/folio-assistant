@@ -57,7 +57,7 @@ import {
   type SummaryStatus,
 } from "../schemas/block-summary.ts";
 import { NarrativeSchema, type Narrative } from "../schemas/narrative.ts";
-import { declarationPathIn, directoriesForGraph, readDeclaration, repoRootFor } from "../schemas/cat-harness.ts";
+import { declarationPathIn, readDeclaration, repoRootFor } from "../schemas/cat-harness.ts";
 import { specimenSections } from "../schemas/section-verdicts.ts";
 import { corpusDirectoriesForGraph } from "../schemas/harness-config.js";
 

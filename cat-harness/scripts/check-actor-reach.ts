@@ -29,7 +29,7 @@ import {
   type NetworkReach,
   type ReachConflict,
 } from "../schemas/actor-reach";
-import { readActors, type LoadedActor } from "../schemas/role-graph";
+import { type LoadedActor } from "../schemas/role-graph";
 import { findInstanceRoot, instanceRootFor, readDeclaration, repoRootFor } from "../schemas/cat-harness";
 import { actorsDir } from "../schemas/role-graph.ts";
 import { checkoutActors } from "../schemas/scenario-overlay.js";

@@ -39,7 +39,6 @@ import { noteAbsent, splitDeclared } from "./lib/declared-presence.ts";
 import { existsSync, readFileSync, readdirSync, statSync } from "node:fs";
 import { join, resolve } from "node:path";
 
-import { directoriesForGraph } from "../schemas/cat-harness.ts";
 import { tools } from "../tools/index.ts";
 import { TABULAR_CSVW_FILENAME, TabularCsvwSchema } from "../schemas/tabular-csvw.ts";
 import { corpusDirectoriesForGraph } from "../schemas/harness-config.js";

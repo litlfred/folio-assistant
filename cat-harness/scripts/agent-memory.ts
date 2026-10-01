@@ -66,7 +66,7 @@ import {
   type MemoryLabel,
   type MemoryNode,
 } from "../schemas/memory.js";
-import { deferResolution, directoryForGraph, repoRootFor } from "../schemas/cat-harness.js";
+import { deferResolution, repoRootFor } from "../schemas/cat-harness.js";
 import { portableSegment } from "../schemas/portable-path";
 import { corpusDirectoryForGraph } from "../schemas/harness-config.js";
 

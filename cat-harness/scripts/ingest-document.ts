@@ -58,7 +58,6 @@ import { ARCHIVE_MIMETYPES } from "../schemas/archive-contents.ts";
 import { checkEntry, type Requirement } from "./check-l1-complete.ts";
 import { TABULAR_MIMETYPES } from "../schemas/tabular-records.ts";
 import { SLIDE_MIMETYPES } from "../schemas/pdf-structure.ts";
-import { directoriesForGraph } from "../schemas/cat-harness.ts";
 import { refreshLibraryIndex } from "./lsi.ts";
 import { IntakeSchema } from "../schemas/intake.ts";
 import { LICENCE_FILENAME, readLicence } from "../content/pipeline/gen-library-jsonld.ts";

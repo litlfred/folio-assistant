@@ -260,17 +260,17 @@ nothing renders yet. It is shown rather than omitted: "nothing renders this" and
 
 ### `skills`
 
-1 of 8 published.
+5 of 8 published.
 {: .fa-hx-dim }
 
 - Bootstrap — *declared, not published*
 - Bootstrap tools — *declared, not published*
 - [C@T Harness]({{ '/cat-harness/docs-auto/index/skills/skills/' | relative_url }})
-- FHIR IG Harness — *declared, not published*
-- folio-assistant-core — *declared, not published*
+- [FHIR IG Harness]({{ '/cat-harness/docs-auto/index/skills/fhir-ig-skills/' | relative_url }})
+- [folio-assistant-core]({{ '/cat-harness/docs-auto/index/skills/core-skills/' | relative_url }})
 - folio-assistant-sci — *declared, not published*
-- large-datasets — *declared, not published*
-- WHO IRIS — *declared, not published*
+- [large-datasets]({{ '/cat-harness/docs-auto/index/skills/large-datasets-skills/' | relative_url }})
+- [WHO IRIS]({{ '/cat-harness/docs-auto/index/skills/who-iris-skills/' | relative_url }})
 
 ### `swimlane-glossary`
 
