@@ -85,7 +85,7 @@ publisher. Nothing else is consulted.
 | source | trust | what it holds |
 |---|---|---|
 | npm, account `grahamegrieve` | **owner: trusted**. Grahame Grieve founded HL7 FHIR | mostly the latest version of each HL7 package; core packages under `@hl7/` |
-| `WorldHealthOrganization/smart-html`, `IHE/publications` | the publisher's own published site | every released WHO and IHE version |
+| a publisher's own published-site repository on GitHub (the seeder's list) | the publisher's own published site | every released version that publisher hosts there |
 | a template's own repo at HEAD | `FHIR/ig-registry/templates.json` names it; **owner: `fhir.base.template` is trusted** | templates, `#current` included |
 | `--mirror` | whoever ran `mirror-fhir-packages.sh` (Tool `fhir-package-mirror`) | what the others lack |
 
@@ -107,7 +107,7 @@ Rules:
 - **Provenance** in `ast-export-npm-provenance.json`: the source, URL or
   commit, and hash of every package.
 
-**Where it stands, measured 2026-10-01** over both WHO IGs together: 20
+**Where it stands, measured 2026-10-01** over the two IGs bean `a9tx` measures: 20
 packages install, including both templates. Missing are the pinned HL7
 versions (IPS, terminology, extensions, CQL, CRMI, SDC, IPA), `fhir.cqf.common`
 and `us.nlm.vsac`.
@@ -118,10 +118,17 @@ To close the gap:
    packages.fhir.org.
 3. Run the seeder again with `--mirror <repo>`.
 
-**`who.template.root` is not in `FHIR/ig-registry/templates.json`.** Until it
-is (a PR to that registry), the caller names its repo with `--template-repo
-who.template.root=WorldHealthOrganization/smart-ig-template`. That is the one
-location given by hand, and it is given on the command line, not stored.
+**A template the registry does not list** is named by the caller with
+`--template-repo <name>=<owner/repo>`, on the command line, never stored. The
+case met so far, and the upstream ask that would remove it, are in bean `a9tx`.
+
+**The one fixed table** is the seeder's list of publishers' site
+repositories, which maps a package-name prefix to the publisher's own GitHub
+repo. It is fixed knowledge, so it can drift. That is tolerated only because
+every package fetched through it must name itself exactly in its own
+`package.json`, so a stale entry fails as "missing", never as a wrong
+package. It lives in the fork, not in this layer: which publishers exist is
+not something fhir-harness may know.
 
 ## The measurement that justifies the work
 

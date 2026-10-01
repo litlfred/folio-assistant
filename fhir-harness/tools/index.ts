@@ -271,7 +271,7 @@ export function tools(baseUrl?: string): ToolDefinition[] {
       id: "fhir-cache-seed-npm",
       title: "Seed the FHIR package cache from trusted sources (exact versions)",
       description:
-        "Fill `~/.fhir/packages` (or `--cache`) for an environment that cannot reach packages.fhir.org, from trust anchors only: npm account `grahamegrieve` (owner-trusted), the publishers' own site repos (WorldHealthOrganization/smart-html, IHE/publications), template repos found through FHIR/ig-registry's templates.json read live each run, and an owner `--mirror`. Exact versions only (a patch wildcard resolves as the Publisher resolves it, recorded); every tarball verified; nothing computed once and kept; provenance recorded; missing versions listed, never substituted.",
+        "Fill `~/.fhir/packages` (or `--cache`) for an environment that cannot reach packages.fhir.org, from trust anchors only: npm account `grahamegrieve` (owner-trusted), publishers' own published-site repositories (the seeder's list, each fetch verified against the tarball's own package.json), template repos found through FHIR/ig-registry's templates.json read live each run, and an owner `--mirror`. Exact versions only (a patch wildcard resolves as the Publisher resolves it, recorded); every tarball verified; nothing computed once and kept; provenance recorded; missing versions listed, never substituted.",
       install: { cli: "git clone -b claude/ast-export https://github.com/litlfred/fhir-ig-publisher" },
       invoke: { shell: "python3 fhir-ig-publisher/ast-export/scripts/seed-fhir-cache-from-npm.py [--cache <dir>] [--sushi-config <file>] [--mirror <dir|git-url>] [--template-repo <name=owner/repo>] [--missing-out <file>] [--dry-run] [name#version ...]" },
       io: {
@@ -291,7 +291,7 @@ export function tools(baseUrl?: string): ToolDefinition[] {
       selection: {
         when: "packages.fhir.org is unreachable and registry.npmjs.org is not.",
         limits:
-          "Measured 2026-10-01 over both WHO IGs: 20 packages install; the pinned HL7 versions need `--mirror`. `who.template.root` is absent from FHIR/ig-registry, so its repo is named with `--template-repo`. A partly seeded cache does not make a faithful build of an IG whose pins it misses.",
+          "Measured 2026-10-01 over the two IGs bean a9tx measures: 20 packages install; pinned HL7 versions need `--mirror`. A template FHIR/ig-registry does not list is named with `--template-repo`. A partly seeded cache does not make a faithful build of an IG whose pins it misses.",
         cost: "One download per package; the core packages are tens of megabytes.",
       },
       requires: { runtime: ["python3", "npm", "git"], network: true },
