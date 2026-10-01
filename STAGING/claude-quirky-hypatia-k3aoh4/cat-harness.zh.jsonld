@@ -301,10 +301,10 @@
   ],
   "canonicalDocument": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld",
   "repository": "cat-harness",
-  "generatedAt": "2026-10-01T16:13:07.394Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/6724275e1cee8a93ace89b6b1fad5b63359e535a",
-  "sourceCommitSha": "6724275e1cee8a93ace89b6b1fad5b63359e535a",
-  "sourceCommitAt": "2026-10-01T16:06:04Z",
+  "generatedAt": "2026-10-01T16:46:46.130Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/644d04b99595c514b2581cd782268f333a00a401",
+  "sourceCommitSha": "644d04b99595c514b2581cd782268f333a00a401",
+  "sourceCommitAt": "2026-10-01T16:40:10Z",
   "sourceTreeDirty": true,
   "dependsOnUnavailable": "2 dependency edge(s), none expressible as a record — see gaps",
   "counts": {
@@ -317,7 +317,7 @@
     "SequenceFlow": 982,
     "Lane": 199,
     "ProcessNode": 927,
-    "Tool": 113,
+    "Tool": 112,
     "Schema": 143,
     "ExternalSchema": 17,
     "GraphKind": 23,
@@ -45566,47 +45566,6 @@
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#tool/package-release-manual"
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-hypatia-k3aoh4/cat-harness.jsonld#tool/pin-smart-base-terminology",
-      "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#Tool",
-      "name": "pin-smart-base-terminology",
-      "title": "Snapshot a published IG's terminology at its pinned version",
-      "description": "Read every CodeSystem concept out of a smart-base clone and write `external-schemas/who-smart-base.terminology.json`, the offline snapshot `check:term-mapping` resolves its `fhir` target against. 585 concepts across 12 code systems at v1.0.0.",
-      "install": {
-        "none": true
-      },
-      "invoke": {
-        "shell": "bun run cat-harness/scripts/pin-smart-base-terminology.ts --from <clone>"
-      },
-      "io": {
-        "inputs": [
-          {
-            "name": "from",
-            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-hypatia-k3aoh4/tool-types.schema.json#/$defs/FilesystemPath",
-            "description": "A clone of WorldHealthOrganization/smart-base checked out at the PINNED tag, passed as `--from`. The script refuses unless that clone's `sushi-config.yaml` version equals the pin's, so a newer clone cannot silently become the snapshot.",
-            "required": true
-          }
-        ],
-        "outputs": [
-          {
-            "name": "snapshot",
-            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-hypatia-k3aoh4/tool-types.schema.json#/$defs/RepoPath",
-            "description": "`cat-harness/external-schemas/who-smart-base.terminology.json`, `folio-pinned-terminology/v1`: the version, the source, and every `system#code` with its display, sorted."
-          }
-        ]
-      },
-      "requirements": {
-        "runtime": [
-          "bun",
-          "git"
-        ],
-        "network": false
-      },
-      "satisfies": [
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-hypatia-k3aoh4/cat-harness.jsonld#skill/vocabulary-authority"
-      ],
-      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#tool/pin-smart-base-terminology"
-    },
-    {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-hypatia-k3aoh4/cat-harness.jsonld#tool/transcribe-whisper-cpp",
       "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#Tool",
       "name": "transcribe-whisper-cpp",
@@ -46168,33 +46127,6 @@
       "module": "schemas/health-report.ts",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-hypatia-k3aoh4/cat-harness.jsonld#directory/schemas",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/health-report"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-hypatia-k3aoh4/cat-harness.jsonld#schema/ig-chrome",
-      "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#Schema",
-      "name": "ig-chrome",
-      "title": "ig-chrome.ts — a FHIR IG's published CHROME, as data.",
-      "module": "schemas/ig-chrome.ts",
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-hypatia-k3aoh4/cat-harness.jsonld#directory/schemas",
-      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/ig-chrome"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-hypatia-k3aoh4/cat-harness.jsonld#schema/ig-menu",
-      "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#Schema",
-      "name": "ig-menu",
-      "title": "ig-menu.ts — a FHIR IG's own navigation, as data.",
-      "module": "schemas/ig-menu.ts",
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-hypatia-k3aoh4/cat-harness.jsonld#directory/schemas",
-      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/ig-menu"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-hypatia-k3aoh4/cat-harness.jsonld#schema/ig-metadata-index",
-      "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#Schema",
-      "name": "ig-metadata-index",
-      "title": "IG metadata indexes — the Publisher's own metadata exports, given somewhere",
-      "module": "schemas/ig-metadata-index.ts",
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-hypatia-k3aoh4/cat-harness.jsonld#directory/schemas",
-      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/ig-metadata-index"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-hypatia-k3aoh4/cat-harness.jsonld#schema/inline-code",
@@ -47028,6 +46960,30 @@
       "title": "A reviewer's VERDICT on one version of one block: \"I read this, and here is",
       "module": "../folio-assistant-core/schemas/review-verdict.ts",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/review-verdict"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-hypatia-k3aoh4/cat-harness.jsonld#schema/ig-chrome",
+      "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#Schema",
+      "name": "ig-chrome",
+      "title": "ig-chrome.ts — a FHIR IG's published CHROME, as data.",
+      "module": "../fhir-harness/schemas/ig-chrome.ts",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/ig-chrome"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-hypatia-k3aoh4/cat-harness.jsonld#schema/ig-menu",
+      "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#Schema",
+      "name": "ig-menu",
+      "title": "ig-menu.ts — a FHIR IG's own navigation, as data.",
+      "module": "../fhir-harness/schemas/ig-menu.ts",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/ig-menu"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-hypatia-k3aoh4/cat-harness.jsonld#schema/ig-metadata-index",
+      "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#Schema",
+      "name": "ig-metadata-index",
+      "title": "IG metadata indexes — the Publisher's own metadata exports, given somewhere",
+      "module": "../fhir-harness/schemas/ig-metadata-index.ts",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/ig-metadata-index"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-hypatia-k3aoh4/cat-harness.jsonld#schema/artifact-store",
