@@ -5,7 +5,7 @@ status: in-progress
 type: task
 priority: normal
 created_at: 2026-09-30T22:52:49Z
-updated_at: 2026-09-30T22:52:58Z
+updated_at: 2026-10-01T00:25:25Z
 parent: folio-assistant-vke6
 ---
 
@@ -18,3 +18,10 @@ who-iris/ is a staged instance that will move to its own CONTENT repository (lit
 - every code file under who-iris/ is classified generic vs IRIS-specific, with a reason
 - generic DSpace/catalogue code lives in the platform, parameterised by instance
 - a kg:audit finding FAILS (non-blocking severity) while a staged content instance holds code, naming each file; passes on a clean instance
+
+
+## Progress 2026-10-01 (branch claude/magical-archimedes-4qkfxp-who-iris-code)
+- Moved to folio-assistant-core/scripts/ (instance root as argument): check-catalogue.ts, gen-covers.ts, lib/bytes.ts, lib/local-path.ts, gen-covers.test.ts, local-path.test.ts.
+- Stay in who-iris (IRIS-specific): scripts/gen-iris-pages.ts, scripts/tests/{gen-iris-pages,catalogue-links}.test.ts, themes/themes{,.test}.ts.
+- kg:audit criterion content-instance-holds-code (major) fails on who-iris with those 5 files; bootstrap passes; new optional declaration field separation: content|tools.
+- Open: no PR yet (caller's instruction); who-iris-tools not authorised.
