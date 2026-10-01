@@ -17,6 +17,7 @@
  * Stage D5 of the smart-* separation, #1767, bean `qvxh`.
  *
  * @module smart-base/scripts/gen-document-kinds
+ * @covers document-kinds
  */
 import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import { join, relative, resolve } from "node:path";

@@ -94,6 +94,13 @@ nothing renders yet. It is shown rather than omitted: "nothing renders this" and
 - [smart-trust]({{ '/cat-harness/docs-auto/index/docs/smart-trust-docs/' | relative_url }})
 - [WHO IRIS]({{ '/cat-harness/docs-auto/index/docs/who-iris-site/' | relative_url }})
 
+### `document-kinds`
+
+1 of 1 published.
+{: .fa-hx-dim }
+
+- [SMART Base]({{ '/cat-harness/document-kinds/smart-base/' | relative_url }})
+
 ### `external-schema`
 
 1 of 1 published.
