@@ -505,32 +505,32 @@
   NOT a cache-busting strategy for third-party assets, and not applied to
   them: those are versioned in their own URLs already.
 -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-blissful-ride-c2f26u/assets/css/docs-ui.css?v=1790843560">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-blissful-ride-c2f26u/assets/css/docs-ui.css?v=1790844279">
 <!-- Narrow viewports: wide content scrolls in its own box, never the page
      (bean `2r2n`). The standalone viewers inline the same file through
      `withViewerNav`, so both kinds of page read one set of rules. -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-blissful-ride-c2f26u/assets/css/narrow-viewport.css?v=1790843560">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-blissful-ride-c2f26u/assets/css/narrow-viewport.css?v=1790844279">
 
 <!--
   The work-plan dashboard's styles, split from docs-ui.css so that
   `state-visualizer.ts` can inline exactly these bytes into the generated
   `<base>/<stub>/state-visualizer/` pages. One rule, two surfaces.
 -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-blissful-ride-c2f26u/assets/css/work-plan.css?v=1790843560">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-blissful-ride-c2f26u/assets/css/work-plan.css?v=1790844279">
 <!-- Sticky themes. GENERATED from the theme nodes in `schemas/themes.ts` by
      `bun run themes:css`; `themes:css:check` fails the build when it is stale.
      Loaded AFTER docs-ui.css deliberately: it supplies the `--fa-sticky-*`
      roles that docs-ui.css consumes, and a custom property has to be set on a
      matching element before the rule reading it takes effect. -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-blissful-ride-c2f26u/assets/css/themes.css?v=1790843560">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-blissful-ride-c2f26u/assets/css/themes.css?v=1790844279">
 <!-- UML overview colours: one class per graph kind, set on the Mermaid nodes
      that `scripts/gen-uml-overview.ts` writes into docs/uml/overview/. -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-blissful-ride-c2f26u/assets/css/uml.css?v=1790843560">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-blissful-ride-c2f26u/assets/css/uml.css?v=1790844279">
 <!-- Kind avatars. GENERATED from `schemas/avatars.ts` by `bun run avatars:css`;
      `avatars:css:check` fails the build when it is stale. One stylesheet
      rather than 68 assets: the glyph is a mask and the colour is a property,
      so a scheme swap is a custom property and the trash state is a selector. -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-blissful-ride-c2f26u/assets/css/avatars.css?v=1790843560">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-blissful-ride-c2f26u/assets/css/avatars.css?v=1790844279">
 
 <!--
   The kinds THIS INSTANCE DECLARES, for the avatar fan.
@@ -547,7 +547,7 @@
 <script type="application/json" id="fa-declared-kinds">["beans","cat-harness","code","code-list","docs","external-schema","folio","fsh-guts","health","interaction","issue-marks","library","memory","methodology","policies","processes","qa","scenarios","schemas","skills","substrate-snapshot","swimlane-glossary","todos","tools","translation-sources","uml","uploads","waiver"]</script>
 <script src="/folio-assistant/STAGING/claude-blissful-ride-c2f26u/assets/js/vendor/qrcode.js" defer></script>
 <script src="/folio-assistant/STAGING/claude-blissful-ride-c2f26u/assets/js/vendor/qrcode_UTF8.js" defer></script>
-<script src="/folio-assistant/STAGING/claude-blissful-ride-c2f26u/assets/js/docs-ui.js?v=1790843560" defer></script>
+<script src="/folio-assistant/STAGING/claude-blissful-ride-c2f26u/assets/js/docs-ui.js?v=1790844279" defer></script>
 
 <!--
   The work-plan dashboard. SELF-MOUNTING on any page carrying
@@ -1024,10 +1024,10 @@ two of them disagree. Gaps are ordered by what they block.</p>
     </tr>
     <tr>
       <td>G6</td>
-      <td><strong>Some target repos don’t exist.</strong> Instances declare <code class="language-plaintext highlighter-rouge">litlfred/{folio-assistant-core, folio-assistant-sci, fhir-harness, large-datasets, agent-skills}</code>, and none of those repos is visible to this account.</td>
+      <td><strong>Some target repos don’t exist.</strong> Revised 2026-10-01 after two owner rulings: <code class="language-plaintext highlighter-rouge">large-datasets</code> and <code class="language-plaintext highlighter-rouge">agent-skills</code> become <strong>subgraphs of cat-harness</strong>, so they need no repos. Still needed: <code class="language-plaintext highlighter-rouge">litlfred/{folio-assistant-core, folio-assistant-sci, fhir-harness}</code>.</td>
       <td><code class="language-plaintext highlighter-rouge">list_repos</code>, 2026-10-01.</td>
       <td>S7 cannot seed them.</td>
-      <td><strong>Your decision</strong>: create empty repos. Not needed until S7.</td>
+      <td>Requested from the owner: three empty public repos (no README). Not needed until S7.</td>
     </tr>
     <tr>
       <td>G7</td>
@@ -1080,10 +1080,10 @@ two of them disagree. Gaps are ordered by what they block.</p>
     </tr>
     <tr>
       <td>G14</td>
-      <td><strong>IRIS-specific code has no home.</strong> 5 files need <code class="language-plaintext highlighter-rouge">who-iris-tools</code>, which is not authorised.</td>
+      <td><del>IRIS-specific code has no home</del> <strong>Ruled 2026-10-01:</strong> the 5 files stay in <code class="language-plaintext highlighter-rouge">who-iris</code>, and the finding becomes a QA <strong>warning</strong>, not a failure (“ok b/c small # tools”). No <code class="language-plaintext highlighter-rouge">who-iris-tools</code> repo.</td>
       <td><code class="language-plaintext highlighter-rouge">eayu</code>.</td>
-      <td>The <code class="language-plaintext highlighter-rouge">eayu</code> finding stays red by design.</td>
-      <td><strong>Your decision</strong>, after S7</td>
+      <td>—</td>
+      <td>S0 (severity change)</td>
     </tr>
   </tbody>
 </table></div>
@@ -1167,6 +1167,8 @@ these ticks.</p>
 <ul class="task-list">
   <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" /><code class="language-plaintext highlighter-rouge">check:import-direction</code> + <code class="language-plaintext highlighter-rouge">check:reference-direction</code> at <strong>0 wrong-direction edges</strong> (<code class="language-plaintext highlighter-rouge">zlmp</code>, <code class="language-plaintext highlighter-rouge">yj6r</code>, <code class="language-plaintext highlighter-rouge">zhg2</code>, <code class="language-plaintext highlighter-rouge">r3gy</code>)</li>
   <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" /><code class="language-plaintext highlighter-rouge">2j2r</code>: ~44 readers of <code class="language-plaintext highlighter-rouge">decl.directories</code> follow the checkout</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" /><strong>owner ruling 2026-10-01:</strong> <code class="language-plaintext highlighter-rouge">large-datasets</code> becomes a subgraph of cat-harness. Its one upward code import (<code class="language-plaintext highlighter-rouge">scripts/gen-id-lookup.ts</code> → <code class="language-plaintext highlighter-rouge">folio-assistant-core/schemas/catalogue.js</code>) and its <code class="language-plaintext highlighter-rouge">needs: folio-assistant-core</code> go first.</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" /><strong>owner ruling 2026-10-01:</strong> <code class="language-plaintext highlighter-rouge">agent-skills</code> (16 library sources + voices) becomes a library subgraph of cat-harness. It has 0 code imports from core, and its <code class="language-plaintext highlighter-rouge">needs: folio-assistant-core</code> plus 2 prose mentions go first.</li>
   <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />placement PR2 <code class="language-plaintext highlighter-rouge">pzwb</code> · PR3 <code class="language-plaintext highlighter-rouge">63wl</code> · PR4 <code class="language-plaintext highlighter-rouge">4fv8</code> · PR5 <code class="language-plaintext highlighter-rouge">tlat</code> · PR6 <code class="language-plaintext highlighter-rouge">apcg</code> · PR7 <code class="language-plaintext highlighter-rouge">8fq9</code> · PR8 <code class="language-plaintext highlighter-rouge">f8wp</code> · PR9 <code class="language-plaintext highlighter-rouge">p9bu</code></li>
   <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" /><code class="language-plaintext highlighter-rouge">9umr</code> finale: last five tool skills out of <code class="language-plaintext highlighter-rouge">folio-core</code></li>
 </ul>
@@ -1209,7 +1211,7 @@ these ticks.</p>
   <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" checked="checked" />current contents of <code class="language-plaintext highlighter-rouge">litlfred/cat-harness</code> and <code class="language-plaintext highlighter-rouge">litlfred/cat-harness-tools</code> read and recorded (G7): both empty, 2026-10-01</li>
   <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" /><strong>your authorisation</strong> (<code class="language-plaintext highlighter-rouge">smbc</code>)</li>
   <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />seed PR on a branch in each target repo; fresh-clone QA (<code class="language-plaintext highlighter-rouge">w1gy</code>)</li>
-  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />empty repos created by you for core / sci / fhir-harness / large-datasets / agent-skills (G6), when this story reaches them</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />empty repos created by you for core / sci / fhir-harness (G6), when this story reaches them</li>
 </ul>
 <h3 id="s8-w0at--cut-over">
   
