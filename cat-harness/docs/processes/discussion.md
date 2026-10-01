@@ -9,44 +9,44 @@ nav_exclude: true
 {% raw %}
 # Determine the harness and repositories
 
-`Process_Discussion` · strict (defaulted) · 6 step(s)
+`Process_Discussion` · strict (defaulted) · 5 step(s)
 
-A SUB-PROCESS of initialize-harness, never an entry point. Two facts have no answer in any file a Bootstrapping Agent can reach: WHICH harness this repository should become, and WHICH repositories are read from and written to. No instruction body produces them — they are judgements held by whoever asked for the harness. An agent that cannot obtain them cannot take the first step of `initialize-harness`, which is why that process's first step calls this one.
+THE SECOND PROCESS IN BOOTSTRAP, and an exception to bootstrap holding as little as possible. Two facts have no answer in any file a Bootstrapping Agent can reach: WHICH harness this repository should become, and WHICH repositories are read from and written to. No instruction body produces them — they are judgements held by whoever asked for the harness. An agent that cannot obtain them cannot take the first step of `initialize-harness`, so this is presupposed by every task rather than indicated by one. (Logging sits differently and is NOT the contrast it first looks like: the owner's rule is "logging is optional, unless indicated on tasks", and `initialize-harness` indicates it — which is why `log-message` is here too.)
 
-WHERE THIS IS, DETERMINED FIRST (owner, 2026-10-01: "i wanted to see more about determining context / role / process as part of precondition.. and that needs to be clarified as part of discussion/interaction"). Before narrowing anything, the Bootstrapping Agent says where it is: the Process (Initialize a harness, at its first step, inside this one), the Roles (itself as the Bootstrapping Agent; the person it will ask as the Requestor), and the context (what the request said, what the checkout holds). These are declared below as preconditions of the listing, established by A_DetermineWhere; one that cannot be established is not guessed — it becomes the FIRST question of the called discussion, which asks about it before the harness question.
+SYMMETRIC IN ITS PARTICIPANTS. Human-to-agent and agent-to-agent are the same process: the Requestor lane is filled by a person or by a sibling agent that already holds the answer. The output records which, because the two are evidence of different weight, but neither is refused and they are not conflated.
 
-THE ASKING IS NOT DRAWN HERE. This process narrows and records; the question itself is put through `human-agent-discussion`, the one reusable way bootstrap asks a person anything — context, options, a recommendation, one question, and what happens with no answer. What is particular to THIS question is carried in: the candidates, and that NO default is allowed. Which harness a repository becomes is not reversible by running anything again, so silence ends as unsettled, never as "bootstrap, by default".
+THE TOOL DOES NOT DECIDE. `discuss` carries a question out and an answer back. Judgement — the Bootstrapping Agent's — chooses what to ask and rules on when an answer settles the matter. The task is finished when a document conforming to `discussion.output.schema.json` exists, not when a pleasant exchange has occurred.
 
-THE OUTPUT IS A DOCUMENT. The task is finished when a document conforming to `discussion.output.schema.json` exists, not when a pleasant exchange has occurred.
+PRECONDITION: the Bootstrapping Agent has read bootstrap's README.md and has narrowed the candidates as far as context allows. BPMN has no precondition element and this schema adds none yet, so it is stated here as `initialize-harness` states its own.
 
-NO work-plan element on any activity, and isExecutable is false, for the reasons `initialize-harness` gives.
+NO work-plan element on any activity, and isExecutable is false, for the reasons `initialize-harness` gives: a work plan and an engine are both harness machinery, and a Bootstrapping Agent runs before either exists. This is data a Bootstrapping Agent reads.
 
 <img src="../assets/img/workflows/discussion.svg" alt="BPMN diagram: Determine the harness and repositories" style="max-width:100%">
 
 ## How it connects
 
-- **Called by:** [Initialize a harness](initialize-harness.html)
-- **Calls:** [Human–agent discussion](human-agent-discussion.html)
+- **Called by:** no call activity names this process
+- **Calls:** none
 - **Presented on:** no docs page section shows this diagram
 
 ## Lanes — who acts
 
 | lane | role | what it does here |
 |---|---|---|
-| Bootstrapping Agent | `bootstrapping-agent` | Narrows the candidates before spending the one question a reader is entitled to, and closes either with a determination or with what is still open — never a guess standing in for either. The Requestor takes part inside the called discussion, which is why this diagram has no lane for them. |
+| Bootstrapping Agent | `bootstrapping-agent` | Holds the one judgement this process refuses to compute: whether an answer actually settles the question, which is why G_Settled carries no computed decision unlike the DMN-backed gateways elsewhere in this corpus. It narrows candidates before spending the one question a reader is entitled to, and closes either with a determination or, on a decline, with what is still open — never a guess standing in for either. |
+| Requestor | `requestor` | Filled interchangeably by a person or a sibling agent that already holds the answer — the output records which, since the two are evidence of different weight, but this lane's standing to answer is the same either way. Declining is a legitimate exit here, not a failure: it is what turns the outcome into "unsettled" rather than forcing a guess. |
 
 ## Steps
 
-Every one of the 6 step(s) is documented.
+Every one of the 5 step(s) is documented.
 
 | step | lane | skill / sub-process | what it does |
 |---|---|---|---|
-| **Determine where you are: process, roles, context**<br>`A_DetermineWhere` | Bootstrapping Agent | `discussion`<br>`human-agent-discussion` | Before narrowing, say where this is happening, in the words you will use in the question. PROCESS: Initialize a harness, at its first step, inside Determine the harness and repositories — the only place a Bootstrapping Agent can be (FR-2). If you cannot say that (you were started some other way, or a step you believed done is not), you are out of process: do not infer your way back in. ROLES: you act as the Bootstrapping Agent because you were told so; the person you will ask is the Requestor — the one who asked for the harness, and the only one who may choose it. A request relayed by somebody else leaves the Requestor undetermined. CONTEXT: what the request said, and what the checkout holds — a declaration at its root, a harness named in the request. Whatever cannot be determined is handed to the called discussion as undetermined, and asked about first; it is never filled with a default. |
-| **List the harnesses this could be**<br>`A_ListHarnesses` | Bootstrapping Agent | `confirm-harness` | Zero or more. The candidate everybody has is bootstrap itself. Context may name others: "please set up <owner>/<repo> here" names one, and so does any Harness built on bootstrap that the Requestor mentions. This step narrows; it does not decide. |
-| **List the locations this could install to**<br>`A_ListLocations` | Bootstrapping Agent | `confirm-harness` | Zero or more. Is this a git repository already, or were one or more URLs to repositories supplied? Both are Knowledge Graph Data Stores; the difference is only how they are reached. A location whose root already holds a declaration, `<name>.json`, is not a blank slate, and says so in the question. |
-| **Ask the Requestor: which harness, and where?**<br>`A_AskRequestor` | Bootstrapping Agent | calls [Human–agent discussion](human-agent-discussion.html)<br>`confirm-harness`<br>`human-agent-discussion` | The candidates go in as the options; the recommendation may name one; the default is NONE. What A_DetermineWhere established goes in too — the process, the two roles, the context — so the called discussion checks it rather than re-deriving it; and anything it could not establish goes in as undetermined, to be asked first. The Requestor's answer comes back as answered, or the question as still open. |
-| **Record the determination**<br>`A_RecordDetermination` | Bootstrapping Agent | `discussion` | Writes a document conforming to `discussion.output.schema.json`: the harness, the repositories as read-from / written-to pairs, `determinedBy: asked`, and who answered. This artefact is what finishes the task. |
-| **Record what is still open**<br>`A_RecordUnsettled` | Bootstrapping Agent | `discussion` | `outcome: unsettled` with what was asked and what is still open, so the next actor resumes rather than restarts. An agent that reaches for a default here has produced a guess, not a determination. |
+| **Narrow the candidates from context**<br>`A_NarrowCandidates` | Bootstrapping Agent | `discussion` | Before asking. A repository whose root already holds a declaration, `<name>.json`, is not a blank slate, and a question whose candidates the agent could have worked out itself wastes the one question it is entitled to. |
+| **Put the question, with its candidates named**<br>`A_PutQuestion` | Bootstrapping Agent | `discussion` | Uses the `discuss` tool. One question where one will do — the Bootstrapping Agent's persona is "asks exactly one question when it must". A question a reader must go and research is not ready to be asked. |
+| **Answer, or decline**<br>`A_Answer` | Requestor | — | The Requestor lane, filled by a person or by a sibling agent. Declining is a permitted move and not an error: it produces `outcome: unsettled` with what is still open, never a guess. |
+| **Record the determination**<br>`A_RecordDetermination` | Bootstrapping Agent | `discussion` | Writes a document conforming to `discussion.output.schema.json`: the harness, the repositories as read-from / written-to pairs, `determinedBy`, and who answered. This artefact is what finishes the task. |
+| **Record what is still open**<br>`A_RecordUnsettled` | Bootstrapping Agent | `discussion` | The declined route. `outcome: unsettled` with `stillOpen`, so the next actor resumes rather than restarts. An agent that reaches for a default here has produced a guess, not a determination. |
 
 ## Decisions
 
@@ -54,6 +54,6 @@ Every one of the 1 decision(s) is documented.
 
 | decision | what decides it | branches |
 |---|---|---|
-| **One harness, and where it goes?**<br>`G_Settled` | At most one harness: a list of two is not an answer, and the Bootstrapping Agent may not break the tie. Judgement, not a computed decision. | **yes** → Record the determination<br>**no, or still open** → Record what is still open |
+| **Does the answer settle it?**<br>`G_Settled` | Judgement, exercised by the Bootstrapping Agent — which is why this gateway carries no computed decision. Whether an answer settles the matter is not computable from the answer's text, and a DMN table here would be a claim that it is. | **yes** → Record the determination<br>**not yet — ask once more** → Put the question, with its candidates named<br>**declined** → Record what is still open |
 
 {% endraw %}
