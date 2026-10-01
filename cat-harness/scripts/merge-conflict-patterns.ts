@@ -149,6 +149,8 @@ export const PATTERNS: readonly ConflictPattern[] = [
   },
   {
     id: "uploads",
+    // declared-path-literal: a GLOB matched against conflicted paths, not a
+    // directory read; it refuses any uploads/ wherever an instance declares one.
     globs: ["uploads/**", "**/uploads/**"],
     strategy: "refuse",
     why: "uploaded source material (30). Provenance-bearing input, never regenerated.",
