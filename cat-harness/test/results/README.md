@@ -22,7 +22,7 @@ Part of [C@T Harness](../../README.md) 0.1.0, declared as `qa`, holding `qa`.
 | [`rendered-labels.qa-results.json`](rendered-labels.qa-results.json) | data |  |
 | [`root-scan-census.qa-results.json`](root-scan-census.qa-results.json) | data |  |
 | [`skill-register.qa-results.json`](skill-register.qa-results.json) | data |  |
-| [`source-licence.qa-results.json`](source-licence.qa-results.json) | data that does not parse |  |
+| [`source-licence.qa-results.json`](source-licence.qa-results.json) | data |  |
 | [`subgraph-readmes.qa-results.json`](subgraph-readmes.qa-results.json) | data |  |
 | [`term-mapping.qa-results.json`](term-mapping.qa-results.json) | data |  |
 | [`wireframes.qa-results.json`](wireframes.qa-results.json) | data |  |
