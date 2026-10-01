@@ -1,0 +1,26 @@
+---
+# folio-assistant-70lx
+title: 'Separation stage 1a: stage cat-harness-tools/ as a sibling instance and git mv the unambiguous code'
+status: todo
+type: task
+created_at: 2026-10-01T06:58:00Z
+updated_at: 2026-10-01T06:58:00Z
+parent: folio-assistant-iirv
+blocked_by:
+    - folio-assistant-pyds
+---
+
+Stage 1a of the split plan: stage `cat-harness-tools/` as a sibling instance in this repo and `git mv` the unambiguous code (≈1,340 renames). Owner D1 (2026-10-01): ALL cat-harness code moves; dependents' code may import cat-harness-tools. D4 (2026-10-01): 1a runs NOW, before placement PR2.
+
+Plans (session scratchpad, 2026-10-01; to be committed with stage 0): `cat-harness-split-plan.md` (stages 0–6, decisions D1–D6, "Owner rulings, 2026-10-01") and `placement-proposal.md` (PR0–PR9, §6 "Owner rulings, 2026-09-30").
+
+**Moves:** `scripts/` (980), `src/` (79), `adapters/` (19), `content/pipeline/` (153; its 86 `script-sidecars` go to `cat-harness/test/results/script-sidecars/`), `test/**` except results (60), `templates/`, `deploy/`, `types/`, `ui/`, `viewer/`, `schemas/{block-qa-schema/,package.json,tsconfig.json}`, `skills/kg/graph-management/{kg-detangle,group-depth}.ts`, `skills/framework/types.ts`, `tools/discover.ts`.
+**New:** `cat-harness-tools/cat-harness-tools.json` (`needs [cat-harness, bootstrap, bootstrap-tools]`, `supports {cat-harness:[0]}`, `0.1.0`; takes the six `code` entries out of `cat-harness.json`), its own `package.json` (`w2gr` Q2, 2026-10-01: no compatibility re-exports), `scripts/lib/roots.ts` (`HARNESS_ROOT` from `--harness` → `$CAT_HARNESS_ROOT` → sibling `../cat-harness`; plus `TOOLS_ROOT`, `REPO_ROOT`).
+**Edits:** blocker-3 codemod (≈204 `import.meta.dir/..` root sites), root `package.json` (338 scripts, `main`, `exports`, `files`), workflows (136 code-path mentions in 13 files; path filters list BOTH dirs), `tsconfig` (9 globs), `.mcp.json`, `.claude/settings.json` hooks, `playwright.config.ts`, `upstream-pins.json`, higher-instance code imports (27 files), `partition/instance-rules.ts` `REPOS`/`ROOT`, `kg:detangle` `SCAN`. The MCP server entry becomes `cat-harness-tools/src/index.ts` — this discharges `w2gr`'s server move (Q1: the document adapter's server half moves; core keeps the content logic).
+
+## Done when
+- [ ] falsifier 1: every generator's `--check` output byte-identical to the stage-0 baseline except generated-by path strings (diff shows only those)
+- [ ] falsifier 2: `bun test` pass count equal to the stage-0 baseline
+- [ ] falsifier 3: `mcp:capture` tool list identical; the server starts over stdio from `cat-harness-tools/src/index.ts`
+- [ ] falsifier 4: `check:import-direction --all` green, and the planted `cat-harness → cat-harness-tools` import red
+- [ ] `bun run gates --all` green, or each failure shown pre-existing on the base SHA

@@ -1,0 +1,26 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/ns/content/v1.jsonld",
+  "@id": "library/w3c-2018-odrl-model-2-2/blocks/figure-img-p004-1",
+  "@type": [
+    "folio-assistant-core:Figure",
+    "doco:Figure"
+  ],
+  "kind": "figure",
+  "file": "../images/img-p004-1.png",
+  "pageStart": 4,
+  "pageEnd": 4,
+  "narrative": {
+    "text": "Figure 1, the ODRL Information Model: a class diagram centred on Policy (uid, profile; subclasses Set, Offer and Agreement; inheritFrom pointing to itself; conflict pointing to ConflictTerm), whose permission, obligation and prohibition properties point to Rule (uid). Rule has the subclasses Permission, Duty and Prohibition, with duty from Permission to Duty, remedy from Prohibition to Duty, consequence from Duty to Duty, and failure from Rule to itself. Rule links by action to Action (includedIn, implies); by the relation sub-property target to Asset (uid; hasPolicy to Policy; subclass AssetCollection with source, and partOf); by the function sub-properties assigner and assignee to Party (uid; subclass PartyCollection with source, and partOf); and by constraint to Constraint (uid, rightOperandReference, dataType, unit, status; leftOperand to LeftOperand, operator to Operator, rightOperand to RightOperand) or LogicalConstraint (uid; operand, a list of Constraints). A refinement property links Action, AssetCollection and PartyCollection to Constraint and LogicalConstraint.",
+    "state": "draft",
+    "drafted_by": {
+      "kind": "agent",
+      "id": "claude",
+      "model": "claude-opus-5-5",
+      "session": "https://claude.ai/code/session_019rLS387FZZzjPJsNQhfALA"
+    },
+    "drafted_at": "2026-10-01"
+  },
+  "derivedFrom": "library/w3c-2018-odrl-model-2-2/sections/sec-009",
+  "sourceDocument": "library/w3c-2018-odrl-model-2-2/manifest",
+  "provenance": "ingested"
+}

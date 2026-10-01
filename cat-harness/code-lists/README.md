@@ -12,6 +12,7 @@ Part of [C@T Harness](../README.md) 0.1.0, declared as `code-lists`, holding `co
 | [`adjudication-materialized-conflict.json`](adjudication-materialized-conflict.json) | Materialized-copy conflict outcomes |  |
 | [`adjudication-translation-drift.json`](adjudication-translation-drift.json) | Round-trip drift outcomes |  |
 | [`adjudication-translation-passage.json`](adjudication-translation-passage.json) | Flagged translation passage outcomes |  |
+| [`concern-group.json`](concern-group.json) | Concern groups |  |
 | [`grade-certainty.json`](grade-certainty.json) | GRADE certainty of evidence |  |
 | [`grade-etd-criterion.json`](grade-etd-criterion.json) | GRADE Evidence-to-Decision criteria |  |
 | [`grade-rating-down.json`](grade-rating-down.json) | GRADE reasons to rate certainty down |  |

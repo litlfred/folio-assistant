@@ -307,8 +307,8 @@ export function profileForContentType(contentType: string | undefined): ContentP
  * The `dak` adapter's block kinds — WHO SMART Guidelines L2 and L3.
  *
  * Taken from the component lists this repo already treats as canonical:
- * `schemas/skills/l2-dak-authoring/input.schema.json` (the nine DAK
- * components) and `schemas/skills/l3-fhir-authoring/input.schema.json` (the
+ * `smart-base/schemas/skills/l2-dak-authoring/input.schema.json` (the nine DAK
+ * components) and `fhir-harness/schemas/skills/l3-fhir-authoring/input.schema.json` (the
  * ten FHIR artefact types). WHO's own starter kit could not be consulted
  * directly — `smart.who.int` and `build.fhir.org` return the same 403 policy
  * denial as `who.int` — so these mirror the repo's schemas, not the published

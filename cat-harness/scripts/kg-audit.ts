@@ -58,7 +58,7 @@ import { readSchemaGraph } from "./schema-graph.js";
 import { checkTools, unresolvedPaths } from "./check-tools.js";
 import { deriveAlternatives } from "../schemas/tool.js";
 import { tools, toolsOf } from "../tools/discover.js";
-import { kgDirectories, ownKgRoots, workflowDirs, workflowFiles } from "./known-skills.js";
+import { kgDirectories, ownKgRoots, workflowDirs, workflowFiles, corpusScopeFor } from "./known-skills.js";
 import { docsLayers } from "./compose-docs.js";
 import { PAIR_CRITERION, discoverPairs, evaluatePairs, readAttestations } from "./prose-code-pairs.js";
 import { VOICE_REVIEW_CRITERION, evaluateVoiceReviews, readVoiceReviews, skillVoices } from "./skill-voice-review.js";
@@ -125,6 +125,7 @@ import { CONVENTION_GROUP } from "../schemas/convention.js";
 import { USER_STORIES_FILENAME, danglingStoryRoles, readUserStories, type UserStoryGraph } from "../schemas/user-story.js";
 import { actorsDir, capabilitiesDir } from "../schemas/role-graph.ts";
 import { conventionsDir, skillDefinitionDirs } from "../schemas/skill-definitions-dir.ts";
+import { checkoutActors, checkoutRoleGraph } from "../schemas/scenario-overlay.js";
 
 const ENGINE_VERSION = "1";
 
@@ -397,7 +398,7 @@ interface LoadedProcess {
 async function loadProcesses(): Promise<LoadedProcess[]> {
   // Every declared knowledge-graph directory, via the same helper the other
   // consumers use, so none of them can disagree about where diagrams live.
-  const files = workflowFiles(root).filter((f) => f.endsWith(".bpmn"));
+  const files = workflowFiles(root, corpusScopeFor(root)).filter((f) => f.endsWith(".bpmn"));
   const out: LoadedProcess[] = [];
   for (const file of files) {
     try {
@@ -1022,7 +1023,7 @@ function reachabilityCriteria(m: ProcessModel): Record<string, KgCriterionEntry>
 async function auditDecisions(
   processes: LoadedProcess[],
 ): Promise<KgQaReport[]> {
-  const decisionDirs = workflowDirs(root)
+  const decisionDirs = workflowDirs(root, corpusScopeFor(root))
     .map((d) => join(d, "decisions"))
     .filter((d) => existsSync(d));
   if (decisionDirs.length === 0) return [];
@@ -1582,7 +1583,7 @@ function brokenSkillContracts(): KgFinding[] {
       const ref = c[io];
       if (ref === undefined) continue;
       const shape = contractRefProblem(ref);
-      const file = contractFile(root, ref);
+      const file = contractFile(c.instanceRoot, ref);
       if (shape) out.push({ where: c.from, detail: `${io}: ${ref} — ${shape}.` });
       else if (file !== undefined && !existsSync(file)) {
         out.push({ where: c.from, detail: `${io}: ${ref} — no such file in this instance.` });
@@ -1610,9 +1611,11 @@ function unclaimedSkillContracts(): KgFinding[] {
     .map((d) => join(d, "skills"))
     .filter((d) => existsSync(d));
   if (dirs.length === 0) return [];
+  // Keyed by ABSOLUTE path: a ref is relative to the instance holding its
+  // skill, which from the checkout is not always `root` (placement PR1).
   const claimed = new Set<string>();
   for (const c of skillContracts(root).values()) {
-    for (const ref of [c.input, c.output]) if (ref !== undefined) claimed.add(ref);
+    for (const ref of [c.input, c.output]) if (ref !== undefined) claimed.add(resolve(c.instanceRoot, ref));
   }
   const out: KgFinding[] = [];
   for (const dir of dirs) {
@@ -1621,7 +1624,7 @@ function unclaimedSkillContracts(): KgFinding[] {
       for (const f of readdirSync(join(dir, e.name))) {
         if (!f.endsWith(".schema.json")) continue;
         const ref = relative(root, join(dir, e.name, f));
-        if (!claimed.has(ref)) out.push({ where: ref, detail: `no skill names ${ref} as its input or output.` });
+        if (!claimed.has(resolve(dir, e.name, f))) out.push({ where: ref, detail: `no skill names ${ref} as its input or output.` });
       }
     }
   }
@@ -1638,7 +1641,7 @@ function arrowDirection(): KgCriterionEntry {
   if (graph === null) {
     return { result: "unknown", findings: [{ where: "—", detail: "no schemas directory to read `@general` declarations from." }] };
   }
-  const perFile = workflowFiles(root)
+  const perFile = workflowFiles(root, corpusScopeFor(root))
     .filter((f) => f.endsWith(".bpmn"))
     .map((f) => processArrowFindings(relative(root, f), readFileSync(f, "utf-8")));
   // Zero extension elements across every diagram means the reader matched
@@ -1675,7 +1678,7 @@ function proseNamesResolve(): KgCriterionEntry {
       .filter((e) => e.isDirectory() && !e.name.startsWith(".") && e.name !== "node_modules")
       .map((e) => join(repo, e.name)),
   ];
-  const texts: { where: string; prose: string }[] = workflowFiles(root)
+  const texts: { where: string; prose: string }[] = workflowFiles(root, corpusScopeFor(root))
     .filter((f) => f.endsWith(".bpmn"))
     .map((f) => ({ where: relative(root, f), prose: diagramProse(readFileSync(f, "utf-8")) }));
   const graph = readSchemaGraph(root);
@@ -1860,7 +1863,7 @@ function manifestPackages(): { pkg: string; skill: string }[] {
       // defect into a hundred unrelated orphan reports.
     }
   };
-  for (const d of kgDirectories(root)) {
+  for (const d of kgDirectories(root, corpusScopeFor(root))) {
     // A manifest at the declared directory itself: the shape `bootstrap` and
     // `cat-harness-src` use.
     read(join(d.absPath, "package-manifest.json"), d.id);
@@ -2010,7 +2013,7 @@ function graphScope(): string {
   // `cat-harness/`, which is accurate and reads like a bug — and it is the
   // declaration that a reader would go and edit. "Resolve, do not compose",
   // applied to a diagnostic rather than to a link.
-  const dirs = kgDirectories(root).map((d) => `\`${d.id}\` at \`${d.path}\``);
+  const dirs = kgDirectories(root, corpusScopeFor(root)).map((d) => `\`${d.id}\` at \`${d.path}\``);
   return dirs.length > 0 ? dirs.join(", ") : "no knowledge-graph directory declared";
 }
 
@@ -2062,7 +2065,7 @@ function auditGraph(
   // belongs in no lane by its nature — `directory-conventions` is what a
   // performer reads, not a step anybody takes — so counting it as unbound
   // measured the criterion rather than the corpus. Bean `y1w9`.
-  const consulted = consultedSkills(root);
+  const consulted = consultedSkills(root, corpusScopeFor(root));
   // A skill that must never reach a published graph cannot be carried by a
   // published role either, so reporting it as unbound measures the strip
   // rather than the corpus.
@@ -2080,7 +2083,7 @@ function auditGraph(
   // matter, and this reads what it said. The narrower, safer direction is
   // deliberate — a skill is exempt here only because it opted out of
   // publication, never merely because nothing happens to bind it.
-  const unpublished = unpublishedSkills(root);
+  const unpublished = unpublishedSkills(root, corpusScopeFor(root));
   const unmodelled = [...skills]
     .filter((s) => !modelled.has(s) && !consulted.has(s) && !unpublished.has(s))
     .sort()
@@ -2341,7 +2344,7 @@ const strict = args.includes("--strict");
 const asJson = args.includes("--json");
 
 const auditorHash = sha256(readFileSync(join(AUDITOR_ROOT, "scripts", "kg-audit.ts"), "utf-8"));
-const skills = knownSkills(root);
+const skills = knownSkills(root, corpusScopeFor(root));
 
 /**
  * The skills a REFERENCE in this instance may resolve to: its own, plus every
@@ -2440,7 +2443,13 @@ const layeringUndetermined = ((): boolean => {
  */
 const refUnjudgeable = (ref: string): boolean =>
   layeringUndetermined && !resolvableSkills.has(ref);
-const actors = readActors(ACTOR_DIR, readPolicyGrants(POLICY_DIR));
+// The CHECKOUT's actors on the platform's own run: a dependent may extend an
+// actor by id with the roles and capabilities it takes on there (placement
+// PR0b). `--instance` audits that instance alone, as before.
+const actors =
+  corpusScopeFor(root) === "checkout"
+    ? checkoutActors(root, ACTOR_DIR, readPolicyGrants(POLICY_DIR))
+    : readActors(ACTOR_DIR, readPolicyGrants(POLICY_DIR));
 
 let graph: RoleGraph | undefined;
 let graphError: string | undefined;
@@ -2465,6 +2474,9 @@ try {
     graph = readRoleGraph(KG_ROOT);
     if (graph) roleGraphPath = join(KG_ROOT, "roles", "roles.json");
   }
+  // Dependents' extensions, by id, on the platform's own run (placement PR0b).
+  // Identical to the graph above while no dependent extends a role.
+  if (graph && corpusScopeFor(root) === "checkout") graph = checkoutRoleGraph(root, graph)?.graph ?? graph;
 } catch (e) {
   graphError = e instanceof Error ? e.message : String(e);
 }

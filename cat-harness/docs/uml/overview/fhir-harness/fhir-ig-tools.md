@@ -63,6 +63,7 @@ classDiagram
       maintains [0..*] Maintain[]
       downstream [0..1] object
       renders [0..*] string[]
+      subprocesses [0..*] string[]
     }
   }
   fhir_harness_fhir_ig_tools_ToolDefinition *-- "0..*" fhir_harness_fhir_ig_tools_Maintain : maintains

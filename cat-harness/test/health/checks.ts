@@ -1047,7 +1047,14 @@ const BEAN_THRESHOLDS: HealthThreshold[] = [
       "registered in CI and passing, costing a session's opening to re-derive. MINOR because the " +
       "remedy is a person re-deriving and closing, not a broken consumer. Of 96 claimed beans that day, " +
       "4 met this and 6 had met a cruder body-wide version — the difference is `z4mq` and the reason " +
-      "`doneWhenState` has an `unreadable` state.",
+      "`doneWhenState` has an `unreadable` state. " +
+      "ONLY A CLOSABLE BEAN IS COUNTED (bean `v9ah`). Measured 2026-09-25: every bean this named was " +
+      "inside the 72 h mid-flight window, which `bean-coordination` puts off limits, and `5a3l` had 16 " +
+      "open children of 26, so its own ticked boxes could not close it at any age. Both are now " +
+      "counted separately, as `bean-self-declared-done-mid-flight` and " +
+      "`bean-self-declared-done-open-children`, and never silently dropped. THE EPIC CASE IS RULED IN " +
+      "THE CHECK: a parent with an open child is not self-declared done, because its children are the " +
+      "work.",
   },
   {
     metric: "bean-stale-in-progress",
@@ -1293,7 +1300,35 @@ export function beanStoreCheck(ctx: HealthContext): HealthCheckResult {
   const withDoneWhen = claimed.filter((b) => b.doneWhen !== undefined);
   const criteriaAbsent = withDoneWhen.filter((b) => b.doneWhen!.kind === "absent");
   const criteriaUnreadable = withDoneWhen.filter((b) => b.doneWhen!.kind === "unreadable");
-  const selfDeclaredDone = withDoneWhen.filter((b) => b.doneWhen!.kind === "all-ticked");
+  const allTicked = withDoneWhen.filter((b) => b.doneWhen!.kind === "all-ticked");
+  // ONLY THE CLOSABLE ONES ARE FINDINGS — bean `v9ah`, `o5qj`'s shape on a
+  // second axis. `bean-coordination` closes a bean on EVIDENCE, and puts a
+  // MID-FLIGHT one off limits; measured 2026-09-25, every bean this finding
+  // named was inside the 72 h window, so every finding named something no
+  // session was allowed to act on. The finding cannot say that, so it is
+  // split, the way `thux` split quiet claims:
+  //
+  // - touched inside BEAN_QUIET_HOURS: somebody's live work. Its ticks are
+  //   news, not a task. The same clock as `bean-quiet-claims`, on purpose,
+  //   because two definitions of "recent" would drift apart.
+  // - a parent with OPEN children (`5a3l`: 16 of 26): its boxes are the epic's
+  //   own criteria while its children are the work, so it does not close at
+  //   ANY age. Keyed on the parent relation, not `type: epic`, for the reason
+  //   `claimPopulations` gives.
+  //
+  // Both are REPORTED as measurements, never silently subtracted: "nothing is
+  // self-declared done" and "they were all mid-flight" must not read the same
+  // (`dh4f`).
+  const openChildren = new Set(
+    beans.filter((b) => b.parent !== undefined && OPEN_BEAN_STATUSES.has(b.status)).map((b) => b.parent!),
+  );
+  const recent = (b: BeanEvidence): boolean => {
+    const h = hoursBetween(ctx.now, b.updatedAt);
+    return h !== undefined && h <= BEAN_QUIET_HOURS;
+  };
+  const doneButParenting = allTicked.filter((b) => openChildren.has(b.id));
+  const doneButMidFlight = allTicked.filter((b) => !openChildren.has(b.id) && recent(b));
+  const selfDeclaredDone = allTicked.filter((b) => !openChildren.has(b.id) && !recent(b));
 
   const cmd = "beans/defs/*.md front matter";
   const bodyCmd = "beans/defs/*.md — list items under the first `## Options` / `## Considered options` heading";
@@ -1363,6 +1398,18 @@ export function beanStoreCheck(ctx: HealthContext): HealthCheckResult {
       command: doneWhenCmd,
     },
     { metric: "bean-self-declared-done", value: selfDeclaredDone.length, unit: "count", command: doneWhenCmd },
+    {
+      metric: "bean-self-declared-done-mid-flight",
+      value: doneButMidFlight.length,
+      unit: "count",
+      command: `${doneWhenCmd}, touched within ${BEAN_QUIET_HOURS} h`,
+    },
+    {
+      metric: "bean-self-declared-done-open-children",
+      value: doneButParenting.length,
+      unit: "count",
+      command: `${doneWhenCmd}, with an open child`,
+    },
   ];
   const findings: HealthFinding[] = [];
   for (const g of dupGroups) {
@@ -1409,9 +1456,11 @@ export function beanStoreCheck(ctx: HealthContext): HealthCheckResult {
       metric: "bean-self-declared-done",
       severity: "minor",
       summary:
-        `\`${b.id}\` is \`in-progress\` with all ${n} of its Done-when boxes ticked ("${b.title}").`,
+        `\`${b.id}\` is \`in-progress\` with all ${n} of its Done-when boxes ticked, untouched for over ` +
+        `${BEAN_QUIET_HOURS} h and with no open child ("${b.title}").`,
       action:
-        "RE-DERIVE IT, then close it or record why not — never close it on the strength of its ticks. " +
+        "It is past the mid-flight window, so you MAY act on it — but RE-DERIVE IT first, then close it " +
+        "or record why not; never close it on the strength of its ticks. " +
         "The boxes are the bean's claim about itself: measured 2026-09-21, four of six such beans had " +
         "genuinely landed, `jijc` disagreed with its own gate (which prints an open judgement on it " +
         "while its last box says that work was migrated), and `z4mq` was not finished at all. If it has " +

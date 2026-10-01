@@ -154,7 +154,7 @@ de contenu, et non des alternatives entre lesquelles choisir.
 | `bean-coordination` | Discipline d'appropriation et de coordination multi-agents |
 | `todo-manager` | Discipline des tâches basées sur les beans (beans-as-todos) |
 
-### Lots de compétences de plateforme (`skills/folio-core`, `skills/authoring/folio-document-adapter`, `skills/authoring/folio-paper-adapter`)
+### Lots de compétences de plateforme (`skills/folio-core`, `folio-assistant-core/skills/content/folio-document-adapter`, `folio-assistant-sci/skills/content/folio-paper-adapter`)
 
 Des **lots de plateforme** plus importants, dont deux ont été migrés depuis le dépôt de contenu qou (voir le
 [registre de migration](migrations/2026-06-29-platform-skills-migration.html) et

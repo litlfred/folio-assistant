@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: folio\n"
-"POT-Creation-Date: 2026-10-01T07:04:08.054Z\n"
+"POT-Creation-Date: 2026-10-01T06:53:10.403Z\n"
 "PO-Revision-Date: \n"
 "Last-Translator: \n"
 "Language: ar\n"
@@ -110,7 +110,7 @@ msgstr ""
 msgid "✎ Edit{: .fa-node-edit title=\"Edit processes/editing-hci-validation.bpmn\" } KG…"
 msgstr ""
 
-#: docs/publication-workflow.md:250
+#: docs/publication-workflow.md:249
 msgid "A candidate version exists. What of ours binds it, what does the MVP build prove, and who is allowed to say yes? The accept is a  in a person-only lane, and no package may relax it"
 msgstr ""
 
@@ -213,10 +213,10 @@ msgid "Agents and system actors"
 msgstr ""
 
 #: docs/publication-workflow.md:222
-msgid "All five diagrams below live in , not in : 25 of their steps name a skill only  holds, and cat-harness depends only on  (bean , 2026-09-30)."
+msgid "All four diagrams below live in , not in : 25 of their steps name a skill only  holds, and cat-harness depends only on  (bean , 2026-09-30)."
 msgstr ""
 
-#: docs/publication-workflow.md:279
+#: docs/publication-workflow.md:278
 msgid "Also  — see Upstream dependencies below. The declaration was added when the coverage check was written; the diagram already documented that workflow step for step"
 msgstr ""
 
@@ -260,9 +260,9 @@ msgstr ""
 #: docs/publication-workflow.md:188
 #: docs/publication-workflow.md:197
 #: docs/publication-workflow.md:226
-#: docs/publication-workflow.md:238
-#: docs/publication-workflow.md:247
-#: docs/publication-workflow.md:276
+#: docs/publication-workflow.md:237
+#: docs/publication-workflow.md:246
+#: docs/publication-workflow.md:275
 #: docs/publication-workflow.md:295
 #: docs/publication-workflow.md:309
 #: docs/publication-workflow.md:315
@@ -436,7 +436,7 @@ msgstr ""
 msgid "Corpus + build pipeline"
 msgstr ""
 
-#: docs/publication-workflow.md:261
+#: docs/publication-workflow.md:260
 msgid "Coverage alone would not have been worth having. Bean : \"a diagram that is drawn once and then drifts is worse than none, because it is consulted.\" So each job names the node it stands for —  inside the job — and the same check compares the two in both directions: a job with no node is a diagram that has gone stale, a node the diagram does not have is one that was stale already. Both exit 1, in the same tier as a  line naming a diagram that is not there, because both mislead a reader who follows them."
 msgstr ""
 
@@ -448,7 +448,7 @@ msgstr ""
 msgid "Creating a sticky and placing one are two writes to two graphs, and the common bug is to make them one. The note goes into the folio carrying no coordinate; the coordinate goes into the layout layer, keyed by board and then by note — which is why one note may sit on several boards without arbitrating between them. The gateway exists because a dragged existing card takes only the second path"
 msgstr ""
 
-#: docs/publication-workflow.md:270
+#: docs/publication-workflow.md:269
 msgid "Declaring is opt-in per workflow, and a covered workflow none of whose jobs names a node is reported as undeclared rather than as fully drifted: \"nobody has said yet\" and \"said, and wrong\" are different answers, and only the second is a finding. What is never allowed is a diagram declaring some of a workflow's jobs and reading as complete."
 msgstr ""
 
@@ -469,9 +469,9 @@ msgstr ""
 #: docs/publication-workflow.md:188
 #: docs/publication-workflow.md:197
 #: docs/publication-workflow.md:226
-#: docs/publication-workflow.md:238
-#: docs/publication-workflow.md:247
-#: docs/publication-workflow.md:276
+#: docs/publication-workflow.md:237
+#: docs/publication-workflow.md:246
+#: docs/publication-workflow.md:275
 #: docs/publication-workflow.md:295
 #: docs/publication-workflow.md:309
 #: docs/publication-workflow.md:315
@@ -589,7 +589,7 @@ msgstr ""
 msgid "Gateway"
 msgstr ""
 
-#: docs/publication-workflow.md:249
+#: docs/publication-workflow.md:248
 msgid "Has a pinned dependency fallen behind a release, and what happens when the check cannot tell? Mechanical throughout, and it maintains ONE tracking issue rather than sending mail nobody reads"
 msgstr ""
 
@@ -846,7 +846,7 @@ msgstr ""
 msgid "Publication-readiness QA across layers; runs the QA reports."
 msgstr ""
 
-#: docs/publication-workflow.md:280
+#: docs/publication-workflow.md:279
 msgid "Publishing  is a full replace, so anything on that branch this build did not produce is gone unless something puts it back — bean , every open PR's preview deleted by an unrelated merge, silently, for months. The restore and the after-the-fact verification are a pair: a restore nobody checks is one that can quietly stop working, which is how the original defect lasted. Both gateways refuse rather than warn, and the second is three-state — and, since bean , the export is verified before the deploy and every failing step after the publish button goes through one alert to the publication manager"
 msgstr ""
 
@@ -995,10 +995,6 @@ msgstr ""
 msgid "Stakeholder sign-off, BA confirmation, and only then the close — an agent never assumes completion"
 msgstr ""
 
-#: docs/publication-workflow.md:232
-msgid "Subscribe a folio or harness to an external knowledge graph — a substrate, whose declaration conforms to bootstrap and declares at least one harness — pinned to a full commit SHA, then walk each chosen part from referenced to materialised: every subgraph or asset through , called once per part and never copied, continuing past a part a gate refuses; each chosen harness instantiated by writing its config, once its  are held. Moving the pin runs every held part through  first. Drawn here, not in cat-harness, because it calls this layer's subprocesses (epic , #1719)"
-msgstr ""
-
 #: docs/publication-workflow.md:483
 msgid "Syntax, spelling and links"
 msgstr ""
@@ -1047,7 +1043,7 @@ msgstr ""
 msgid "The change is committed"
 msgstr ""
 
-#: docs/publication-workflow.md:252
+#: docs/publication-workflow.md:251
 msgid "The CI workflows themselves —  are processes too, with triggers, gateways and compensation paths, and until 2026-09-20 none was drawn.  measures how many are, in three states; a workflow names the diagram it implements with a  line rather than being matched on its filename, because a mention is not coverage. The pointer is on the workflow because the workflow depends on the process it carries out, and the dependent holds the pointer (bean ; the diagram carried it until 2026-09-24)."
 msgstr ""
 
@@ -1071,11 +1067,15 @@ msgstr ""
 msgid "The fishbone. It looks like a delete and is not one: the content MOVES into , keeping its identity, so every reference still resolves and the reader who hit the wrong control lost a location rather than a node. Strict, unlike the two above, because it edits the folio — the reader is asked first, and the question names what will move and where it lands, per"
 msgstr ""
 
+#: docs/publication-workflow.md:280
+msgid "The general step both of the above call: render a Knowledge Graph (or a list of its Subgraphs) for a CDN at a publication root URL, and report a status and one message. Staging and release are the same process with different roots (owner, 2026-09-30). Tool-agnostic on purpose: its one call activity is bound by the Tool for the target, and GitHub Pages is the  Tool, whose own subprocess is bootstrap-tools'"
+msgstr ""
+
 #: docs/publication-workflow.md:160
 msgid "The graph's code nodes: Tool definitions and schema definition nodes — does the node declare what it is, do its references resolve, is the mechanism it advertises the one that runs?"
 msgstr ""
 
-#: docs/publication-workflow.md:278
+#: docs/publication-workflow.md:277
 msgid "The lifecycle of a review preview: staged on a push, taken down on a close, or removed by an explicit dispatch. Both gateways are three-state — a merge confirms a removal on its own while a close without one still needs the label (bean ), and the dispatch preflight refuses on a live signal AND on could-not-tell. Every path that changes  writes to the render log, and the two removal paths write the record in the SAME commit as the removal"
 msgstr ""
 
@@ -1147,7 +1147,7 @@ msgstr ""
 msgid "The work plan — tasks as beans"
 msgstr ""
 
-#: docs/publication-workflow.md:234
+#: docs/publication-workflow.md:233
 msgid "Theme and UI review — at ingestion only — what the arriving graphical assets will look like in the website or app design they are for, decided while it is still cheap:"
 msgstr ""
 
@@ -1203,7 +1203,7 @@ msgstr ""
 msgid "under an activity is the folio-assistant skill that implements it. The same reference is carried machine-readably as a  extension element on the BPMN activity."
 msgstr ""
 
-#: docs/publication-workflow.md:242
+#: docs/publication-workflow.md:241
 msgid "Upstream dependencies — what happens when somebody else's release changes what we ship. The first is the watcher and the second is the reusable subprocess it calls; any pinned dependency enters the second the same way, so a new tenant is a row in  rather than a third diagram:"
 msgstr ""
 
@@ -1307,7 +1307,7 @@ msgstr ""
 msgid "Why it is modelled as a lane rather than a note:"
 msgstr ""
 
-#: docs/publication-workflow.md:240
+#: docs/publication-workflow.md:239
 msgid "Will these ingested graphical assets read legibly, consistently and in every declared language, in the design they are for? Accessibility measured rather than asserted, branding against the instance's own declaration, languages extracted and laid out, at a web and a mobile width. Called from  — at ingestion only, by owner ruling (bean , 2026-09-24). It was post-MVP and called from  until then; that call is gone, and the cost — no post-build look at what shipped — is recorded in the skill as accepted rather than missed"
 msgstr ""
 

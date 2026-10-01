@@ -25,7 +25,7 @@ import { existsSync, mkdirSync, mkdtempSync, readFileSync, readdirSync, rmSync, 
 import { tmpdir } from "node:os";
 import { join, resolve } from "node:path";
 
-import { directoriesForGraph } from "../../schemas/cat-harness.ts";
+import { corpusDirectoriesForGraph as directoriesForGraph } from "../../schemas/harness-config.ts";
 import {
   NARRATIVE_STATES,
   NOT_AUTHORED,

@@ -434,6 +434,25 @@ export interface GraphKindDef {
    */
   declarationFile?: string;
   /**
+   * Is a directory of this kind GROUPED BY CONCERN — `<dir>/<group>/`, with
+   * the groups named from within by {@link declarationFile} and drawn from
+   * the `concern-group` code list (bean `9umr`; placement PR0c, bean `ejye`)?
+   *
+   * Owner, 2026-09-29: *"declared sub-graphs of cat-harness based on semantic
+   * concern … dont need a separate facet. built into location."* — and the
+   * split list of 2026-09-30: *schemas, skills, uml, processes, library,
+   * tests*. A fact about the KIND, so a kind that groups cannot disagree with
+   * itself between two declarations, the reason `perInstance` lives here.
+   *
+   * A group is declared ONCE, by the instance that declares the subgraph
+   * (the harness), and inherited: each higher instance's same-named
+   * `<dir>/<group>/` is a named MEMBER of it (option A, bean `1g4s`). So a
+   * higher instance adds no group of its own. `scripts/concern-groups.ts`
+   * resolves groups and members; `check:concern-groups` holds the rules.
+   * Requires {@link declarationFile}, since that is where groups are named.
+   */
+  concernGroups?: true;
+  /**
    * The kind this one is a SUB-GRAPH of, when it is one.
    *
    * Owner, 2026-09-23 (issue #1164): proposals live in *"a docs/proposals/
@@ -571,6 +590,9 @@ export const BASE_GRAPH_KINDS: Readonly<Record<string, GraphKindDef>> = {
     // folio-assistant-sci — so the nesting is declared where the #980 ruling
     // says it must be, never by a root declaration reaching down.
     declarationFile: "skills.json",
+    // Its `topics` ARE its concern groups (bean 9umr) — the first kind that
+    // grouped, and the shape every other grouping kind now follows.
+    concernGroups: true,
     renderable: false,
     // A Skill is a Capability with defined inputs and outputs — an authored
     // instruction body. It states what can be done, never what was done.
@@ -588,6 +610,15 @@ export const BASE_GRAPH_KINDS: Readonly<Record<string, GraphKindDef>> = {
     summary: BOOTSTRAP_GRAPH_KINDS["skills"],
   },
   processes: {
+    // Grouped by concern from within: `processes/processes.json` names the
+    // groups, `processes/<group>/` holds them, a DMN under
+    // `processes/<group>/decisions/` (placement proposal §1.2, PR0c).
+    declarationFile: "processes.json",
+    concernGroups: true,
+    // No `nodeSchemas` entry for its `concern-groups/v1` file: this kind
+    // states `validatorNotApplicable`, and the two are exclusive. That one
+    // file is graded by `check:concern-groups`, which parses it with
+    // `ConcernGroupsSchema`.
     renderable: false,
     // The BPMN and DMN are the source of truth and are READ to run a process;
     // where a running instance GOT TO is `workflow-state`, which is `state`.
@@ -859,12 +890,18 @@ export const BASE_GRAPH_KINDS: Readonly<Record<string, GraphKindDef>> = {
       "per list, every code carrying its definition and source, published as SKOS.",
   },
   schemas: {
+    // Grouped by concern from within (`schemas/schemas.json`), PR0c.
+    declarationFile: "schemas.json",
+    concernGroups: true,
     renderable: false,
     // A shape is the subject matter of the schema graph. It is true before
     // anything is validated against it.
     holds: "content",
     // declared-path-literal: this table IS the declaration, as on `health`.
     nodeSchemas: {
+      // The FROM-WITHIN node naming this directory's concern groups
+      // (placement PR0c): `concern-groups/v1`.
+      "concern-groups/v1": { validator: "schemas/concern-groups.ts#ConcernGroupsSchema" },
       "http://json-schema.org/draft-07/schema#": { external: "JSON Schema draft-07" },
       "https://json-schema.org/draft/2020-12/schema": { external: "JSON Schema 2020-12" },
       "folio-source-descriptor/v1": { validator: "large-datasets:schemas/source-descriptor.ts#SourceDescriptorSchema" },
@@ -877,6 +914,14 @@ export const BASE_GRAPH_KINDS: Readonly<Record<string, GraphKindDef>> = {
   // `scripts/gen-uml-overview.ts`. `derived`: regenerated, never authored, so
   // a finding against one is a finding against the generator or its inputs.
   uml: {
+    // Grouped by concern from within (`uml/uml.json`), PR0c — one generated
+    // pair per declared sub-subgraph, so the grouping is the generator's input.
+    declarationFile: "uml.json",
+    concernGroups: true,
+    // No `nodeSchemas` entry for its `concern-groups/v1` file: this kind
+    // states `validatorNotApplicable`, and the two are exclusive. That one
+    // file is graded by `check:concern-groups`, which parses it with
+    // `ConcernGroupsSchema`.
     renderable: false,
     holds: "derived",
     // declared-path-literal: this table IS the declaration, as on `health`.
@@ -1031,6 +1076,17 @@ export const BASE_GRAPH_KINDS: Readonly<Record<string, GraphKindDef>> = {
   // `ce65` own it. Reporting the two as one number is how the cheap one never
   // gets done.
   code: {
+    // Grouped by concern from within (`<dir>/code.json`), PR0c — for the TEST
+    // directories first: unit tests in `scripts/tests/<group>/`, e2e in
+    // `test/<group>/` (owner ruling 5, 2026-09-30: "split along same semantic
+    // lines as skills"). `code` rather than a new `tests` kind: a test file is
+    // code, and the grouping is a fact about location, not a new kind.
+    declarationFile: "code.json",
+    concernGroups: true,
+    // No `nodeSchemas` entry for its `concern-groups/v1` file: this kind
+    // states `validatorNotApplicable`, and the two are exclusive. That one
+    // file is graded by `check:concern-groups`, which parses it with
+    // `ConcernGroupsSchema`.
     renderable: false,
     holds: "content",
     validatorNotApplicable:
@@ -1358,6 +1414,13 @@ export const BASE_GRAPH_KINDS: Readonly<Record<string, GraphKindDef>> = {
   },
   library: {
     perInstance: true,
+    // Grouped by concern from within (`library/library.json`), PR0c — and
+    // ruled 2026-09-30 (issue 3, option A): the physical split is
+    // `library/<group>/<slug>/`; a new upload lands UNFILED at
+    // `library/<slug>/`, and filing is a core cataloguing refinement. The
+    // declaration is what lets a walker tell a group from a source.
+    declarationFile: "library.json",
+    concernGroups: true,
     layer: "core",
     renderable: false,
     // DERIVED, not content — bean `hqku`, and the owner's ruling of
@@ -1377,6 +1440,9 @@ export const BASE_GRAPH_KINDS: Readonly<Record<string, GraphKindDef>> = {
     holds: "derived",
     // declared-path-literal: this table IS the declaration, as on `health`.
     nodeSchemas: {
+      // The FROM-WITHIN node naming this directory's concern groups
+      // (placement PR0c): `concern-groups/v1`.
+      "concern-groups/v1": { validator: "schemas/concern-groups.ts#ConcernGroupsSchema" },
       "folio-document-images/v1": { validator: "schemas/document-image.ts#ImagesSidecarSchema" },
       "folio-image-verdicts/v1": { shape: "scripts/apply-image-verdicts.ts#VerdictFile" },
       // The section analogue of image verdicts (bean `fnqn`): which sections are
