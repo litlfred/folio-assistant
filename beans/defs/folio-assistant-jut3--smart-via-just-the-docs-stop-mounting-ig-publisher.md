@@ -500,7 +500,7 @@ The P0 rule from the skill (`ig-publisher-reduction`, owner approval 2026-09-30)
 - **Verified** on a local stage of the fork at `25771f6`: 678 of 678 artefact links and 36 of 36 toc links resolve, and both pages parse as strict Liquid.
 - **Parity:** the IG-level generated pages go from 11 missing to 9 (`qa*`, `searchform` and `history` remain).
 
-## 2026-10-01: phased-transition review — P0 restatement PROPOSED (awaiting owner approval)
+## 2026-10-01: phased-transition review — P0 restatement (APPROVED, see below)
 
 **The conflict.** Approved P0 says *"strictly: a page the Publisher renders from data it does not export is a gap, not an exception"*. But:
 - P2 (also approved) drops XML and Turtle, so 1,331 representation-view pages can never be P0 matches; under P2 they are refusals.
@@ -536,3 +536,16 @@ In the owner's words: *"Keep P2 as approved: drop XML and Turtle, and treat the 
 - JSON views remain in scope (673 pages).
 
 _2026-10-01T12:16:24Z_ — Claimed by claude/wonderful-curie-gbfeuy — pushed to main so sibling sessions see it before this branch has a PR (bean 35nj).
+
+## Owner ruling 2026-10-01: P0 restatement approved
+
+The owner answered *"1y"* to the restatement above: every Publisher page is
+**matched**, **refused under P2**, or **on the fork's ask**, and P0 passes with
+zero pages in none of them. `ig-publisher-reduction`'s P0 row now carries it,
+with the reason under "Approved by the owner".
+
+Against the parity table: narrative (35) and artefact main pages (673) are
+matched, and `toc` and `artifacts` are matched as of PR #1766. XML/TTL views
+(1,331) are P2 refusals once `ntyj` records them. Change history (668) goes on
+the fork's ask. Still to place: JSON views (673), DAK views (33), profile tabs
+(35), `-testing` (69), and the other IG-level pages (9).

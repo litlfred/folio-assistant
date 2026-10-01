@@ -54,7 +54,7 @@ invoked *for these*, not the Publisher gone.
 
 | | does | exit criterion — MEASURED |
 |---|---|---|
-| **P0** | re-point the metadata→variables bridge; render one IG's `input/pages/` through just-the-docs | **smart-trust**'s pages render with Publisher metadata populating the Jekyll variables, and the page set matches the Publisher's for that IG — strictly: a page the Publisher renders from data it does not export is a gap, not an exception |
+| **P0** | re-point the metadata→variables bridge; render one IG's `input/pages/` through just-the-docs | **smart-trust**'s pages render with Publisher metadata populating the Jekyll variables, and every page the Publisher renders for that IG is accounted for as **exactly one** of: **matched** (this site renders it), **refused under P2** (an XML/Turtle view, in P2's refusal record), or **on the fork's ask** (rendered from data the Publisher does not export, listed with the data it needs). A page in none is a **gap**; P0 passes with zero gaps |
 | **P1** | derive navigation from `sushi-config.yaml`'s `pages:` and `menu:` | the derived navigation is diffed against the Publisher's, **one diff per IG**, and each difference is **empty or explained entry by entry**; the per-IG diffs are also reported **together**, answering "what are the differences in IG1, IG2, … IGN?" |
 | **P2** | JSON-only representations; XML/TTL dropped from the render path | every dropped representation is **recorded as a refusal**, per IG with the same combined view as P1, so "publishes no Turtle" and "we ignored its Turtle" stay distinguishable |
 | **P3** | AST dump behind a flag on the fork; staging renders from cached AST | a staging page built from cache carries a **visible** stale-until-full-run mark, and a reader can tell which facts are provisional — the AST comes **from the fork**, which is a prerequisite |
@@ -76,6 +76,12 @@ All five phases were put to the owner one at a time, with the criteria above
   offered as a replacement for the fork and **not** accepted as one: the AST is
   the Publisher's.
 - **P2** and **P4** — approved as written.
+- **P0, restated 2026-10-01** (bean `jut3`, owner's answer *"1y"*). The strict
+  wording counted P2's refusals and the fork's data as P0 gaps, so P0 could not
+  pass before the phases after it — the phase order inverted. P0 now accounts
+  for every page as matched, refused under P2, or on the fork's ask, and passes
+  only with zero pages in none of the three. Still strict: nothing is silently
+  excepted; each page is in exactly one named list.
 
 Still open, and not decided by these approvals: `transform_dmn.py`'s HTML, the
 "parity-ish" checklist, and whether staging keeps a `tx` dependency (below).
