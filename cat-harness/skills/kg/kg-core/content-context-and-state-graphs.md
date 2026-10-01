@@ -103,6 +103,20 @@ stand-alone question outright: detached from what they judge, they assert
 nothing. This is also why the `kg-qa/` tree **mirrors** each subject's path
 rather than being flat — a verdict's identity is partly the thing it is about.
 
+**`attestations` is `state` too, and it is the half of `qa` that stays on
+`main`.** Arc `3fva` split every QA verdict by whether it can be regenerated.
+The DERIVED half (`qa`, and `health` with it) is state a CI run writes, and
+its record now lives on the orphan `qa-reports` branch keyed by commit — the
+checkout's `test/results/` is a working copy, still committed until bean
+`5hox` removes it. The JUDGEMENT half — agent, human and baseline-pair
+attestations, `qa-attestations/v1` under `test/attestations/` — is written by
+a review step too, so it is `state` by the same question, but it is the one
+state graph here that **cannot be rebuilt by re-running its writer**. That is
+why it stays on `main` (owner ruling D2 (a)) and why a merge conflict in it
+is a person's to read rather than a generator's to repeat. The layer answers
+*who writes it*; where it is kept answers *can it be reproduced* — two
+questions, and the arc is what made the second one visible.
+
 **`uploads` is `state` and `library` is `content`.** The clearest proof the
 axis is not about file type: the same PDF is state in one directory and content
 in the other. `uploads/` is a queue, and ingestion writes and drains it; the

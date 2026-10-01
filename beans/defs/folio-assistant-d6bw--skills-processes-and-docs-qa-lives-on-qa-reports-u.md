@@ -1,11 +1,11 @@
 ---
 # folio-assistant-d6bw
 title: 'Skills, processes and docs: QA lives on qa-reports — update every skill, BPMN and page that says test/results is committed'
-status: todo
+status: in-progress
 type: task
 priority: normal
 created_at: 2026-10-01T08:00:47Z
-updated_at: 2026-10-01T08:48:11Z
+updated_at: 2026-10-01T18:03:20Z
 parent: folio-assistant-3fva
 blocked_by:
     - folio-assistant-16ei

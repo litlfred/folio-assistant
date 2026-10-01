@@ -122,6 +122,24 @@ ruling is never superseded here.
 goes stale. This matters more for an agent ruling than a script one, because
 nobody can cheaply re-run it.
 
+### Where the verdict is kept: the attestation store, not the derived file
+
+Both entries are **judgements** — `reviewer.kind` is `agent` (or `human`) —
+so their durable home is the `attestations` graph,
+`test/attestations/<family>/<mirrored subject path>.attestations.json`
+(`qa-attestations/v1`), on `main`. The derived `test/results/` file beside
+them is a working copy whose record lives on the `qa-reports` branch, and a
+regeneration cannot reproduce an agent ruling (arc `3fva`, owner ruling D2
+(a)).
+
+Today `recordUntainted` still writes into the derived sidecar. That is safe
+but not finished: the next writer to save that file **moves** the judgement
+into the store (owner ruling 2, 2026-10-01), and `bun run
+qa:attestations:migrate` does the whole instance at once. So after recording,
+run `bun run qa:attestations:migrate:check` — it exits 1 while any judgement is
+still only in a derived file — and commit the store file it names. A corrupt
+store reads UNKNOWN and is refused rather than overwritten.
+
 ## Why the instrument is the thing to watch
 
 A measurement shipped with a `description` explaining its own failures away as
