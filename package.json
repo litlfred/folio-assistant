@@ -427,6 +427,8 @@
     "viewer:nav:audit": "bun run cat-harness/scripts/check-viewer-nav.ts",
     "viewer:nav:strict": "bun run cat-harness/scripts/check-viewer-nav.ts --check --strict",
     "voices:graph": "bun run cat-harness/scripts/voices-graph.ts",
+    "document-kinds:viz": "bun run cat-harness/scripts/gen-document-kinds-viz.ts",
+    "document-kinds:viz:check": "bun run cat-harness/scripts/gen-document-kinds-viz.ts --check",
     "voices:viz": "bun run cat-harness/scripts/gen-voices-viz.ts",
     "voices:viz:check": "bun run cat-harness/scripts/gen-voices-viz.ts --check",
     "wireframe:check": "bun run cat-harness/scripts/wireframe-check.mjs"
