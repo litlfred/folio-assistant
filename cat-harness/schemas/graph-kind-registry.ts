@@ -1038,6 +1038,38 @@ export const BASE_GRAPH_KINDS: Readonly<Record<string, GraphKindDef>> = {
     // is what proves the path still resolves.
     validator: "schemas/health-report.ts#HealthReportSchema",
   },
+  // QA ATTESTATIONS — the judgement half of a QA verdict (bean `2gst`, arc
+  // `3fva`). Split out of the `qa` kind by owner ruling D2 (a), 2026-10-01:
+  // derived script verdicts move to the `qa-reports` branch, and every
+  // non-script verdict stays on main. A `kg-qa/v1` sidecar used to carry its
+  // `pair_attestations` and `voice_reviews` beside script verdicts, so moving
+  // the file would have taken the judgements with it — and every reader read
+  // an absent sidecar as "never attested" and re-baselined (defect C4 of the
+  // reader audit). A SEPARATE kind, not a `nodeSchemas` row under `qa`,
+  // because the two answer different questions about deletion: a `qa` file can
+  // be regenerated from the tree, an attestation cannot.
+  //
+  // `state` by the one question, the same answer `review-verdicts` gives: a
+  // running audit WRITES it (a first-sight baseline, an attestation that moves
+  // with the prose), and detached from the subject it judges it asserts
+  // nothing. `recordsWork: false` — a judgement is finished, not in flight.
+  //
+  // ONE layout for every family, so bean `8wj1` (block-qa, translation-qa)
+  // adds rows to `ATTESTATION_FAMILIES` rather than a second store:
+  // `<attestations dir>/<family>/<mirrored subject path>.attestations.json`.
+  attestations: {
+    renderable: false,
+    holds: "state",
+    recordsWork: false,
+    summary:
+      "QA attestations — the judgements a QA family carries across runs (pair attestations, voice " +
+      "reviews, agent and human verdicts), one `qa-attestations/v1` file per subject, mirroring the " +
+      "derived family's tree. Kept on main where deleting derived results cannot reach them; each " +
+      "entry pins the hash it attested, so a stale one is detectable.",
+    schema: "schemas/qa-attestations.ts",
+    // declared-path-literal: this table IS the declaration, as on `health`.
+    validator: "schemas/qa-attestations.ts#QaAttestationsSchema",
+  },
   // Source code. Registered 2026-09-22 (bean `ylj7`) after a measurement the
   // owner asked for: of roughly 1,216 `.ts` files in this repository, about
   // 180 sat inside a DECLARED directory. Roughly 85% of the code was in no

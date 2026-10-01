@@ -282,6 +282,11 @@ export const AVATARS: Readonly<Record<string, Avatar>> = {
     tone: 320,
     reads: "a speech bubble — a remark about the work, not the work",
   },
+  attestations: {
+    glyph: "M6 3h12v18H6zM9 8h6M9 12h6M10 17l2 2 3-4",
+    tone: 28,
+    reads: "a signed sheet — a judgement somebody recorded, kept apart from what a script derives",
+  },
   "review-verdicts": {
     glyph: "M5 4h14v16H5zM8 12l3 3 5-6",
     tone: 200,
