@@ -1,7 +1,7 @@
 /**
  * The WHO SMART IG theme — measured from the template the IG actually builds with.
  *
- * @module smart-trust/themes/themes
+ * @module smart-base/themes/themes
  * @graphNode themes
  *
  * Owner, 2026-09-30: *"does not make css/branding/style of
@@ -16,6 +16,11 @@
  * guide is subject matter"*, and the root `AGENTS.md` draws that line. So a WHO
  * palette belongs to the WHO instance and still resolves through the platform's
  * `resolveTheme`. This file is that precedent applied a second time.
+ *
+ * **Which WHO instance:** smart-base, the harness every smart-* IG
+ * instantiates. It was first written under `smart-trust/themes/`, the IG it was
+ * measured beside; stage D of the smart-* separation (#1767, bean `kg83`) moved
+ * it here because the theme is the TEMPLATE's, and every IG wears it.
  *
  * ## The styling is NOT in `WorldHealthOrganization/smart-trust`
  *
@@ -137,7 +142,7 @@
  *
  *   1. `gen-themes-css` learning to emit instance WEBPAGE themes, scoped to
  *      that instance's page prefix, with the composed pages carrying the scope.
- *   2. `gen-smart-trust-pages.ts` emitting the theme's `themeCssVars` into a
+ *   2. `fhir-harness/scripts/gen-ig-pages.ts` (was `gen-smart-trust-pages.ts`) emitting the theme's `themeCssVars` into a
  *      per-instance stylesheet the composed pages include.
  *
  * (1) is platform code and would serve every future ingested IG; (2) is local
@@ -159,10 +164,10 @@ import {
 } from "../../cat-harness/schemas/theme.js";
 
 /** The instance these themes belong to. `themeKey` keys on it; ids are not unique across instances. */
-export const THEME_INSTANCE = "smart-trust";
+export const THEME_INSTANCE = "smart-base";
 
 /** The same instance as a REFERENCE names it — its planned `owner/repo` (bean `6rmv`). */
-export const THEME_REPOSITORY = "litlfred/smart-trust";
+export const THEME_REPOSITORY = "litlfred/smart-base";
 
 /**
  * The upstream sources, pinned — what `themes.test.ts` re-reads.
@@ -228,14 +233,14 @@ function ownParent(ref: { instance?: string; themeId: string }): { instance: str
   return theme ? { instance: THEME_INSTANCE, theme } : undefined;
 }
 
-export const SMART_TRUST_THEMES: readonly ResolvedTheme[] = DECLARED.map((declared) => {
+export const WHO_SMART_THEMES: readonly ResolvedTheme[] = DECLARED.map((declared) => {
   const r = resolveTheme({ instance: THEME_INSTANCE, theme: declared }, ownParent);
   if (!r.ok) throw new Error(`theme ${declared.id}: ${explainThemeFailure(r.failure)}`);
   return r.theme;
 });
 
-export function smartTrustThemeById(id: string): ResolvedTheme | undefined {
-  return SMART_TRUST_THEMES.find((t) => t.id === id);
+export function whoSmartThemeById(id: string): ResolvedTheme | undefined {
+  return WHO_SMART_THEMES.find((t) => t.id === id);
 }
 
 /**
@@ -252,4 +257,4 @@ export function smartTrustThemeById(id: string): ResolvedTheme | undefined {
  * would have caught it — a theme nothing can find is the `1xhc` shape: a
  * declaration that looks done and is reached by nobody.
  */
-export const INSTANCE_THEMES: readonly ResolvedTheme[] = SMART_TRUST_THEMES;
+export const INSTANCE_THEMES: readonly ResolvedTheme[] = WHO_SMART_THEMES;

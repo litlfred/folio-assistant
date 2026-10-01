@@ -1,7 +1,7 @@
 /**
  * The theme is re-derived from `upstream/who.css`, never compared to itself.
  *
- * @module smart-trust/themes/themes.test
+ * @module smart-base/themes/themes.test
  *
  * `who-iris/themes/themes.test.ts` set this bar and the reason is its own:
  * *"does not compare these constants against a copy of themselves … If the
@@ -25,7 +25,7 @@ import { describe, expect, test } from "bun:test";
 import { readFileSync } from "node:fs";
 import { join } from "node:path";
 
-import { SMART_TRUST_THEMES, THEME_INSTANCE, UPSTREAM, smartTrustThemeById } from "./themes.js";
+import { WHO_SMART_THEMES, THEME_INSTANCE, UPSTREAM, whoSmartThemeById } from "./themes.js";
 
 /** The vendored stylesheet, read as bytes — the artefact, not a summary of it. */
 const WHO_CSS = readFileSync(join(import.meta.dir, UPSTREAM.template.vendored), "utf-8");
@@ -60,7 +60,7 @@ describe("the vendored source is the one the theme claims", () => {
 });
 
 describe("every palette role is re-read from the stylesheet", () => {
-  const theme = smartTrustThemeById("who-smart-ig");
+  const theme = whoSmartThemeById("who-smart-ig");
 
   test("the theme resolves at all", () => {
     expect(theme?.id).toBe("who-smart-ig");
@@ -110,7 +110,7 @@ describe("the three values NOT taken stay not-taken", () => {
     // Present in the source, deliberately absent from the palette: it is one
     // component's border, and `edge` is documented as the generic rule.
     expect(customProperty("toc-box-border")).toBeDefined();
-    expect(SMART_TRUST_THEMES.map((t) => t.palette.edge)).not.toContain(customProperty("toc-box-border"));
+    expect(WHO_SMART_THEMES.map((t) => t.palette.edge)).not.toContain(customProperty("toc-box-border"));
   });
 
   test("the top navbar is declared upstream and deliberately not reproduced", () => {
@@ -118,11 +118,11 @@ describe("the three values NOT taken stay not-taken", () => {
     // full of `.navbar*` rules and this theme carries none of that layout.
     expect(WHO_CSS).toMatch(/\.navbar/);
     // The CARRIED values, not the whole serialised theme. The first draft
-    // asserted over `JSON.stringify(SMART_TRUST_THEMES)` and failed on the
+    // asserted over `JSON.stringify(WHO_SMART_THEMES)` and failed on the
     // theme's own DESCRIPTION, which says the navbar is not reproduced — a
     // test that reads its subject's prose as if it were its data. Palette and
     // layouts are where navbar styling would have to land if it were carried.
-    for (const t of SMART_TRUST_THEMES) {
+    for (const t of WHO_SMART_THEMES) {
       expect(JSON.stringify({ palette: t.palette, layouts: t.layouts })).not.toMatch(/navbar/i);
     }
   });
@@ -132,12 +132,12 @@ describe("geometry is a column width, never a viewport", () => {
   test("`laptop` takes the one max-width the stylesheet declares", () => {
     const capped = /@media\s*\(min-width:\s*2200px\)[^@]*max-width:\s*(\d+px)/.exec(WHO_CSS)?.[1];
     expect(capped).toBe("1980px");
-    expect(smartTrustThemeById("who-smart-ig")?.layouts.laptop.minWidth).toBe(capped);
+    expect(whoSmartThemeById("who-smart-ig")?.layouts.laptop.minWidth).toBe(capped);
   });
 
   test("`mobile` and `card` take the declared fluid width, not a guessed one", () => {
     expect(WHO_CSS).toMatch(/\.container\s*\{[^}]*width:\s*100%/);
-    const t = smartTrustThemeById("who-smart-ig");
+    const t = whoSmartThemeById("who-smart-ig");
     expect({ mobile: t?.layouts.mobile.minWidth, card: t?.layouts.card.minWidth }).toEqual({
       mobile: "100%",
       card: "100%",
@@ -146,7 +146,7 @@ describe("geometry is a column width, never a viewport", () => {
 
   test("padding is the one value the container declares", () => {
     expect(WHO_CSS).toMatch(/\.container\s*\{[^}]*padding:\s*0\s+20px/);
-    const t = smartTrustThemeById("who-smart-ig");
+    const t = whoSmartThemeById("who-smart-ig");
     for (const layout of ["laptop", "mobile", "card"] as const) {
       expect({ layout, padding: t?.layouts[layout].padding }).toEqual({ layout, padding: "20px" });
     }
@@ -156,7 +156,7 @@ describe("geometry is a column width, never a viewport", () => {
     // A measurement, not a placeholder — see the module docs. If upstream ever
     // adds a responsive body scale, this should be revisited rather than kept.
     expect(WHO_CSS).not.toMatch(/@media[^@]*body\s*\{[^}]*font-size/);
-    const t = smartTrustThemeById("who-smart-ig");
+    const t = whoSmartThemeById("who-smart-ig");
     for (const layout of ["laptop", "mobile", "card"] as const) {
       expect({ layout, scale: t?.layouts[layout].fontScale }).toEqual({ layout, scale: 1 });
     }

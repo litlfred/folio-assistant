@@ -83,6 +83,16 @@
       "graphKinds": [
         "qa"
       ]
+    },
+    {
+      "_comment": "The WHO SMART IG template's web theme, DERIVED from the stylesheet the IG actually builds with. Bean `7h3u`, issue #1682, on the owner's 2026-09-30 ruling: theme it, keep the just-the-docs machinery, WHO's styling, and the nav on the LEFT rather than their top bar. THE SOURCE IS NOT THIS IG. `WorldHealthOrganization/smart-trust` carries no branding CSS at all; its `ig.ini` selects `#local-template`, whose package.json declares `base: who.template.root` -- and that is `WorldHealthOrganization/smart-ig-template`, whose `content/assets/css/who.css` is the branding. It is vendored under `upstream/` so the test reads a COMMITTED artefact rather than the network, and because `local-template` depends on `who.template.root#current`, which can re-skin under us at any time. CC0-1.0, stated by that package's own package.json, is what makes vendoring permitted. Moved from `smart-trust/themes/` in stage D of the smart-* separation (#1767, bean `kg83`): the theme is the TEMPLATE's, and smart-base is the harness every smart-* IG instantiates. Declared rather than left implicit because an undeclared directory is the `dh4f` defect: every declaration-driven consumer scans nothing and reports a clean run over it.",
+      "id": "smart-base-themes",
+      "path": "themes/",
+      "description": "The WHO SMART IG template's web theme, measured from `who.template.root`'s own `who.css` and pinned by commit. Colour and geometry only: the IG's top navbar is deliberately not reproduced, because the owner asked for the nav to stay on the LEFT (2026-09-30). `upstream/who.css` is the vendored source the tests re-read, CC0-1.0.",
+      "_dependents_comment": "skip, not reproduce -- the same reasoning `who-iris-themes` carries. This entry says where THIS instance's theme lives; a dependent with no theme of its own needs no themes/ directory, and reproduce would ship an empty one downstream, which is the `dh4f` shape arriving by inheritance.",
+      "graphKinds": [
+        "themes"
+      ]
     }
   ],
   "_directories_comment": "The list above is the count; this comment said FIVE entries while there were six, and gives none now. `scenarios/` remains undeclared until it holds content -- a declared-but-absent directory is the `dh4f` defect, where every consumer scans nothing and reports a clean run over it.",
