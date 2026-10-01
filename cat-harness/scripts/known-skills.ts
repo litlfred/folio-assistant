@@ -16,7 +16,7 @@ import { existsSync, readFileSync, readdirSync } from "node:fs";
 import { basename, dirname, isAbsolute, join, join as joinPath, relative, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 
-import { resolveDirectories, repoRootFor, isKgContentDirectory } from "../schemas/cat-harness.js";
+import { checkoutDirectories, resolveDirectories, repoRootFor, isKgContentDirectory } from "../schemas/cat-harness.js";
 
 /**
  * The instance this module belongs to — the one that owns the repository-level
@@ -190,6 +190,25 @@ export function roleGraphFor(root: string): RoleGraph | undefined {
     if (g !== undefined) return g;
   }
   return undefined;
+}
+
+/**
+ * {@link kgDirectories} over the whole CHECKOUT: this instance's, then every
+ * other instance's in it, each with the id its OWN declaration gives it
+ * (qualified by instance only where two collide — `checkoutDirectories`).
+ *
+ * For a consumer whose question is about the checkout rather than one
+ * instance's graph — which diagrams exist (`workflowDirs`), which skills the
+ * site documents (`gen-skill-docs`). Until bean `cmsl` step 3 (issue #1694)
+ * such consumers got the checkout through `cat-harness.json` mirroring other
+ * instances; removing the mirrors dropped `workflowFiles(cat-harness)` from 82
+ * diagrams to 76 with nothing red. `kgDirectories` stays root-only on purpose
+ * (see it): this is the explicit, separately named widening.
+ */
+export function checkoutKgDirectories(root: string): Array<{ id: string; path: string; absPath: string }> {
+  return checkoutDirectories(root)
+    .filter(isKgContentDirectory)
+    .filter((d) => existsSync(d.absPath));
 }
 
 export function kgRoots(root: string): string[] {
@@ -742,7 +761,9 @@ export function knownSkills(root: string): Set<string> {
  */
 export function workflowDirs(root: string): string[] {
   const out: string[] = [];
-  for (const d of kgDirectories(root)) {
+  // The CHECKOUT's diagrams, not this instance's alone (bean `cmsl` step 3):
+  // see `checkoutKgDirectories`.
+  for (const d of checkoutKgDirectories(root)) {
     // `processes/`, the convention since 2026-09-21. An instance that has not
     // migrated declares its diagrams directly and is reached by the second
     // branch below, so no legacy name is needed here.

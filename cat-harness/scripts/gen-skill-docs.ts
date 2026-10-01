@@ -26,7 +26,7 @@
 import { readdirSync, readFileSync, writeFileSync, mkdirSync, existsSync, statSync } from "fs";
 import { join, resolve, basename, relative, isAbsolute, sep } from "path";
 
-import { isSkillMd, kgDirectories } from "./known-skills.js";
+import { checkoutKgDirectories, isSkillMd } from "./known-skills.js";
 import { packageDirsIn } from "./skill-topics.js";
 import { processRows, type ProcessRow } from "./gen-processes-viz.js";
 import { siteDirFor, repoRootFor } from "../schemas/cat-harness.ts";
@@ -507,16 +507,19 @@ const SKILLS_CATEGORIES: Record<string, string> = {
   // collision `todo-manager` and `bean-coordination` are listed for below, and
   // it is resolved the same way.
   "kg-navigation": "Knowledge-graph navigation (tooled)",
+  // Keyed by each OWNER's declared id (owner, 2026-10-01, #1694: when
+  // cat-harness's mirrors went, the owners' ids name things — these were the
+  // mirror spellings `folio-assistant-core-skills`, `folio-assistant-sci-…`).
   // folio-assistant-core’s own `skills/`, keyed by DECLARED ID for the same
   // reason as the two below it: the directory moves when core splits out and
   // the id does not. A LABEL is data, not a dependency — nothing here imports
   // core, so naming its package does not invert the layer order that
   // `folio-assistant-core.json`’s `needs: ["cat-harness"]` fixes.
-  "folio-assistant-core-skills": "Content layer (folio-assistant-core)",
+  "core-skills": "Content layer (folio-assistant-core)",
   // The science layer's Lean tooling (folio-assistant#1492): tooling lives in
   // folio-assistant-sci, never in core.
-  "folio-assistant-sci-lean-skills": "Science layer: Lean tooling (folio-assistant-sci)",
-  "folio-assistant-sci-data-skills": "Science layer: reference data (folio-assistant-sci)",
+  "lean-skills": "Science layer: Lean tooling (folio-assistant-sci)",
+  "data-skills": "Science layer: reference data (folio-assistant-sci)",
   "large-datasets-skills": "Large data sets (subsetting, materializing, publishing)",
   "who-iris-skills": "WHO IRIS (catalogue instance)",
   // The `fhir-harness` instance's two packages, keyed by BASENAME because they
@@ -584,7 +587,15 @@ function discoverGroups(): Group[] {
   // bootstrap's skills one level down and the generator demanded a heading for
   // a package called "skills"; #428 then keyed by repo-relative path, which
   // has the same shape of failure one move later.
-  for (const decl of kgDirectories(INSTANCE_ROOT)) {
+  // The CHECKOUT's skill directories (bean `cmsl` step 3, issue #1694): the
+  // site documents every instance's skills, which it reached through
+  // `cat-harness.json`'s mirrors until the owner removed them.
+  const kgDirs = checkoutKgDirectories(INSTANCE_ROOT);
+  // A directory declared in its own right is documented as its own root, never
+  // ALSO as a package of its parent: sci's `skills/` holds `lean/` and `data/`,
+  // each declared from within (`lean-skills`, `data-skills`).
+  const declaredRoots = new Set(kgDirs.map((d) => resolve(d.absPath)));
+  for (const decl of kgDirs) {
     const skillsRoot = decl.absPath;
     if (holdsSkill(skillsRoot)) {
       const direct = SKILLS_CATEGORIES[decl.id];
@@ -592,6 +603,7 @@ function discoverGroups(): Group[] {
       else out.push({ category: direct, dir: skillsRoot, repoPrefix: repoRelative(skillsRoot) });
     }
     for (const d of packageDirsIn(skillsRoot)) {
+      if (declaredRoots.has(resolve(d.dir))) continue;
       const dir = d.dir;
       // No SKILL `.md` means it is not a skill package: `workflows/`,
       // `roles/`, `permissions/`, `requirements/`, `framework/`,

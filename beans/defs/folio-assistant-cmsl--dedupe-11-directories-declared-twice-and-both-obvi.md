@@ -5,7 +5,7 @@ status: todo
 type: task
 priority: normal
 created_at: 2026-09-21T19:18:36Z
-updated_at: 2026-10-01T01:54:43Z
+updated_at: 2026-10-01T07:12:08Z
 parent: folio-assistant-zzmr
 ---
 
@@ -123,3 +123,23 @@ Step 3, tried and measured, not committed: there are **19** mirrors, not 16. Rem
 - **The blocker:** those consumers key pages and categories by DIRECTORY ID, and the mirror ids differ from the owners' own: core `core-skills`/`core-library`/`core-schemas`/`core-processes`/`core-methodologies`, sci `sci-methodologies`/`lean-skills`/`data-skills` vs `folio-assistant-core-skills`, `folio-assist-core-schemas`, `folio-assistant-sci-lean-skills`, … Whichever ids win decides published URLs (e.g. `/docs-auto/index/skills/folio-assistant-core-skills/`). Asked of the owner.
 - Second decision: the 6 kg-qa sidecars cat-harness wrote for other instances' subjects become orphans (each owner audits its own) — deleting them is the owner's call.
 The authored diff (3 files) is preserved; regen also measured ~2x slower `resolveSkillDirs` (41 → 89 ms/call, measured under load).
+
+
+## 2026-10-01 — HANDOVER (owner away ~1 week). Step 3 is WIP on PR #1747 (draft, NOT merged)
+State of #1747 (branch claude/brave-hawking-511rrx, from main fe0f2bd):
+- [x] 19 mirrors removed from cat-harness.json; sci declares skills/data/ from within (`data-skills`, subgraph: true).
+- [x] resolveSkillDirs reads the checkout overlay → LOCAL_PACKAGES identical (33).
+- [x] workflowDirs reads `checkoutKgDirectories` → workflow files identical (82). Submodules (bootstrap, bootstrap-tools) are EXCLUDED from the overlay (their own repos; bp43 one-writer rule).
+- [x] gen-skill-docs reads the checkout; categories re-keyed to owners' ids (core-skills, lean-skills, data-skills); a declared sub-directory is not also listed as its parent's package.
+- [ ] NOT DONE: full regen never completed on this head (stopped for handover) — expect skills:docs, docs:auto, translate-bpmn, kg:audit, uml, subgraph checks to need `bun run regen`.
+- [ ] NOT DONE: delete the 6 orphan kg-qa sidecars cat-harness wrote for other instances' subjects (owner APPROVED deletion 2026-10-01).
+- [ ] NOT DONE: check refusing a scope:repository entry whose path another instance's declaration covers.
+- [ ] NOT DONE: diff every generated artefact vs main (method: removed-lines-per-file, as in step 2).
+
+### OPEN DESIGN QUESTION — owner, 2026-10-01, mid-turn (resolve BEFORE finishing step 3)
+The last commit makes `checkoutDirectories` prefer an instance's OWN entry when an inherited one (main 6c792a2: every instance inherits cat-harness's `skills`) names the same directory. The owner said "not quite":
+1. "overlay files iteratively on dependencies until instance ones; replace files as you go" — a FILE-level overlay along the dependency chain, not entry-level preference.
+2. "(but a QA warning if a file replaces a parent dependent file)".
+3. Then: "actually... this can't happen", and "I think there is already a rule: if <stub>/<some-dir> is in a harness dependent, then it goes to <some-dir>/<stub> in the checked-out one. Issues with this?" and "differences in documentation?"
+4. "One issue: the repo has content under <some-dir>/<stub>/<blah> that exists under harness <stub>/<some-dir>/<blah>; then the instance overrides."
+Next agent: find the existing <stub>/<dir> → <dir>/<stub> rule (likely the materialise / sibling-scope mapping: `siblingScopeFor`, `materialiseDirectories`, `subjectPage`), check whether the docs describe it the same way, answer whether the collision in (4) is handled (instance wins + QA warning per (2)), and replace the entry-preference in checkoutDirectories if the overlay rule already covers it.

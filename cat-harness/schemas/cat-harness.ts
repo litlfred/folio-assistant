@@ -5167,8 +5167,19 @@ export function checkoutDirectories(
   const out = new Map<string, ResolvedDirectory>();
   const ids = new Set<string>();
   const add = (inst: string, qualify: boolean) => {
-    const name = qualify ? readDeclaration(inst, registry)?.name : undefined;
-    for (const d of resolveDirectories([{ name: "(local)", root: inst, own: true }], registry)) {
+    const declName = readDeclaration(inst, registry)?.name;
+    const name = qualify ? declName : undefined;
+    const resolved = resolveDirectories([{ name: "(local)", root: inst, own: true }], registry);
+    // THE OWNER'S ENTRY FIRST when two name one directory. Every instance now
+    // inherits cat-harness's `skills` entry (main, 6c792a2), so
+    // `fhir-harness/skills/` resolves both as the inherited `skills` and as
+    // fhir-harness's own `fhir-ig-skills`; first-wins kept the inherited one.
+    // The owner ruled (2026-10-01, #1694) that the OWNERS' ids name things.
+    const ownFirst = [
+      ...resolved.filter((d) => d.declaredBy === declName),
+      ...resolved.filter((d) => d.declaredBy !== declName),
+    ];
+    for (const d of ownFirst) {
       const key = resolve(d.absPath);
       if (out.has(key)) continue;
       // An id is unique within ONE instance, not across a checkout: four
@@ -5184,7 +5195,16 @@ export function checkoutDirectories(
   add(root, false);
   const checkout = repoRootFor(root);
   if (resolve(checkout) !== resolve(root) && existsSync(join(checkout, ".git"))) {
-    for (const inst of instanceRootsIn(checkout)) if (resolve(inst) !== resolve(root)) add(inst, true);
+    for (const inst of instanceRootsIn(checkout)) {
+      if (resolve(inst) === resolve(root)) continue;
+      // A SUBMODULE is another repository, not part of this checkout's corpus:
+      // `bootstrap` and `bootstrap-tools` became submodules on 2026-09-30, and
+      // bean `bp43` made each the only writer of its own artefacts. Reading
+      // them here would have put bootstrap's three diagrams back into
+      // cat-harness's workflow set (measured: 85 instead of 82).
+      if (existsSync(join(inst, ".git"))) continue;
+      add(inst, true);
+    }
   }
   return [...out.values()];
 }
