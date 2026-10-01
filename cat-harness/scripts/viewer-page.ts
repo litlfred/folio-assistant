@@ -62,7 +62,8 @@ import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import { dirname, relative, sep } from "node:path";
 
 import { injectRail, type NavItem } from "./lib/harness-rail.js";
-import { declaredGraphs, instantiatedHarnesses, publishedGraphs } from "./mount-instance-docs.js";
+import { VISUALISER_NAV_ATTR, visualiserNavDeclaration, type VisualiserNavEntry } from "./lib/navbar.js";
+import { declaredGraphs, instanceMark, instantiatedHarnesses, publishedGraphs } from "./mount-instance-docs.js";
 
 /**
  * The opt-out a visualisation writes into its own page.
@@ -116,6 +117,43 @@ export interface ViewerNav {
    * directory that ends in those characters for another reason.
    */
   instance?: string;
+  /**
+   * The page's OWN rail section, when its headings cannot supply one — a view
+   * drawn by script has none at build time (#1757). Written into the page as
+   * a `data-fa-visualiser-nav` declaration unless the page already carries
+   * one. {@link subjectSection} builds the common shape.
+   */
+  section?: readonly VisualiserNavEntry[];
+}
+
+/**
+ * The section a HANDLER's viewer gives its rail: the whole view, then one row
+ * per subject page, with this page's own regions under the row it is.
+ *
+ * Every handler viewer here (`folio`, `schemas`, `uploads`, `voices`) has the
+ * same two-level shape — one page over every instance, one page per subject —
+ * so the shape is written once. The current page's row carries no href (a
+ * link to here is a control that does nothing) and holds its regions, which
+ * are the page's static containers: they are what exists to be scrolled to
+ * before the script has drawn anything.
+ *
+ * @param subjects the subject pages, by the segment each is published under
+ * @param current  this page's subject, or `undefined` on the whole-view page
+ * @param regions  this page's own anchors, in reading order
+ */
+export function subjectSection(
+  subjects: readonly string[],
+  current: string | undefined,
+  regions: readonly { label: string; id: string }[],
+): VisualiserNavEntry[] {
+  const anchors = regions.map((r) => ({ label: r.label, href: `#${r.id}` }));
+  const up = current === undefined ? "" : "../";
+  return [
+    current === undefined ? { label: "all", items: anchors } : { label: "all", href: up },
+    ...subjects.map((s) =>
+      s === current ? { label: s, items: anchors } : { label: s, href: `${up}${s}/` },
+    ),
+  ];
 }
 
 /**
@@ -160,6 +198,9 @@ export function withViewerNav(html: string, pageAbs: string, o: ViewerNav): stri
   // these pages ARE the handler's viewers, so `harness.json`'s visualisation
   // paths point at the family this page belongs to.
   const site = publishedGraphs(o.built, instance, toRoot);
+  // The visualiser this page IS — the row the loop below marks current. Its
+  // label names the page's own section in the rail (#1757).
+  let visualiserLabel: string | undefined;
   const links: NavItem[] = declaredGraphs(instance, new Map(), site).map((item) => {
     // WHERE AM I — and the row loses its HREF, not just gains a mark.
     //
@@ -176,13 +217,29 @@ export function withViewerNav(html: string, pageAbs: string, o: ViewerNav): stri
     // may be published at a path that does not contain its name.
     if (item.href === undefined || item.href !== `${toRoot}${here}`) return item;
     const { href: _here, ...rest } = item;
+    visualiserLabel = item.label;
     return { ...rest, current: true };
   });
 
   const harnesses = instantiatedHarnesses(o.built, toRoot);
-  const railed = injectRail(html, {
+  // No current row — a page whose graph this instance does not itself declare,
+  // `/todos/` under cat-harness — is still a visualiser, and its section is
+  // named for the page rather than called "Contents".
+  visualiserLabel ??= here.split("/").filter(Boolean).pop();
+  const mark = instanceMark(o.built, instance, toRoot);
+  let own = html;
+  if (o.section?.length && !html.includes(VISUALISER_NAV_ATTR)) {
+    const body = /<body\b[^>]*>/i.exec(html);
+    if (body) {
+      const at = body.index + body[0].length;
+      own = html.slice(0, at) + visualiserNavDeclaration(o.section) + html.slice(at);
+    }
+  }
+  const railed = injectRail(withHeadingIds(own), {
     instance,
     toRoot,
+    ...(mark ? { mark } : {}),
+    ...(visualiserLabel ? { visualiserLabel } : {}),
     links,
     ...(harnesses ? { harnesses } : {}),
   });
@@ -313,4 +370,48 @@ export function makeEmit(o: EmitOptions): (path: string, content: string) => voi
     writeFileSync(path, final);
     if (!o.quiet) console.log(`  ✓ ${path}`);
   };
+}
+
+/**
+ * Give every `h2`/`h3` WITHOUT an id one, so the page's own sections can be
+ * indexed in its rail (#1757: *"make a qa flag to define LHS navbar for any
+ * visualizer"*).
+ *
+ * `documentIndexOf` indexes only headings with an id — a heading without one
+ * is not a destination — and 54 of the 55 generated viewer pages wrote none,
+ * so every one of them arrived with no section of its own. Minting the id here
+ * fixes the family in one place rather than in nine generators, and it is safe
+ * HERE in a way it would not be in `mount-instance-docs.ts`: `withViewerNav`
+ * only ever sees pages this repository generates, never a copied document.
+ *
+ * Existing ids are left alone and minted ones never collide with them.
+ */
+export function withHeadingIds(html: string): string {
+  const taken = new Set([...html.matchAll(/\bid="([^"]+)"/g)].map((m) => m[1]!));
+  // NEVER inside `<script>` or `<style>`: a client-rendered view builds its
+  // headings from string templates, and an id minted into one is an edit to
+  // somebody's JavaScript (found on the voices pages, `"<h2>" + esc(v.title)`).
+  return html
+    .split(/(<script\b[\s\S]*?<\/script>|<style\b[\s\S]*?<\/style>)/i)
+    .map((part, i) => (i % 2 === 1 ? part : idsIn(part, taken)))
+    .join("");
+}
+
+function idsIn(html: string, taken: Set<string>): string {
+  return html.replace(/<(h2|h3)\b([^>]*)>([\s\S]*?)<\/\1>/gi, (whole, tag: string, attrs: string, inner: string) => {
+    if (/\bid=/.test(attrs)) return whole;
+    const base =
+      "sec-" +
+      (inner
+        .replace(/<[^>]*>/g, "")
+        .replace(/&[a-z#0-9]+;/gi, " ")
+        .toLowerCase()
+        .replace(/[^a-z0-9]+/g, "-")
+        .replace(/^-+|-+$/g, "")
+        .slice(0, 60) || "section");
+    let id = base;
+    for (let n = 2; taken.has(id); n++) id = `${base}-${n}`;
+    taken.add(id);
+    return `<${tag}${attrs} id="${id}">${inner}</${tag}>`;
+  });
 }
