@@ -2,6 +2,9 @@
 title: "WHO SMART Base"
 description: "All 225 artefacts of the WHO SMART Base IG 0.3.0, reconstructed from its published output."
 has_children: true
+renders:
+  - smart-base/fhir-artifact-index
+rendered-by: ig-pages
 ---
 <style>
 .st-tag{display:inline-block;padding:.05rem .4rem;border-radius:3px;font-size:.75rem;

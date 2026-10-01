@@ -85,6 +85,7 @@ import {
   tokenOf,
   type IgChrome,
 } from "../schemas/ig-chrome.js";
+import { renderedPath, withRendersFrontMatter } from "../../cat-harness/scripts/viewer-declarations.js";
 import {
   declarationPathIn,
   directoriesForGraph,
@@ -878,6 +879,17 @@ const pages = new Map<string, string>();
 // Jekyll to copy the file verbatim, which is the behaviour this change exists
 // to stop.
 pages.set("index.md", indexPage(ix));
+
+// THE VIEWER DECLARATION (#1767, stage C3). The index page says which
+// directory it renders and which Tool drew it, so `harness-tiles` finds this
+// page as the `fhir-artifact-index` kind's viewer for this instance, the same
+// way every other kind's viewer is found (`viewer-declarations.ts`). The
+// directories come from the instance's own declaration; an instance that
+// declares none (a scratch one) gets no declaration rather than a guessed one.
+{
+  const rendered = directoriesForGraph(INSTANCE, "fhir-artifact-index").map((d) => renderedPath(repoRootFor(INSTANCE), d));
+  pages.set("index.md", withRendersFrontMatter(pages.get("index.md")!, rendered, "ig-pages"));
+}
 
 // EVERY artefact, not only the sidecar-bearing ones. The owner's call,
 // 2026-09-22: full parity with the Publisher's 673 artefact pages, against a

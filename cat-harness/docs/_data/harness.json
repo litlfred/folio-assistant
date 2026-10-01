@@ -609,7 +609,7 @@
         {
           "id": "views",
           "label": "visualisations you can open",
-          "value": 1
+          "value": 2
         }
       ],
       "visualisations": [
@@ -623,8 +623,8 @@
         },
         {
           "kind": "fhir-artifact-index",
-          "readOnly": true,
-          "note": "no viewer yet"
+          "path": "/smart-trust/",
+          "readOnly": true
         },
         {
           "kind": "qa",
@@ -636,7 +636,7 @@
         }
       ],
       "findings": [
-        "smart-trust: declares 4 graph(s) with no published viewer — code, fhir-artifact-index, qa, themes. Declared and not rendered is a gap, not a dead link.",
+        "smart-trust: declares 3 graph(s) with no published viewer — code, qa, themes. Declared and not rendered is a gap, not a dead link.",
         "smart-trust: 1 graph(s) hold materialized content and are READ-ONLY — fhir-artifact-index. Readable, not editable here: copy one out to your own folio/ to work on it. Separate from whether a viewer is published.",
         "smart-trust: no avatar declared for this instance — showing the generic mark."
       ],
@@ -664,28 +664,34 @@
       "reads": "a question mark — no avatar is declared for this kind",
       "genericAvatar": true,
       "instantiated": false,
+      "href": "/smart-immunizations/",
+      "hrefKind": "folio",
       "stats": [
         {
           "id": "directories",
           "label": "declared directories",
-          "value": 2
+          "value": 3
         },
         {
           "id": "kinds",
           "label": "declared graph kinds",
-          "value": 2
+          "value": 3
         },
         {
           "id": "views",
           "label": "visualisations you can open",
-          "value": 0
+          "value": 1
         }
       ],
       "visualisations": [
         {
-          "kind": "fhir-artifact-index",
-          "readOnly": true,
+          "kind": "docs",
           "note": "no viewer yet"
+        },
+        {
+          "kind": "fhir-artifact-index",
+          "path": "/smart-immunizations/",
+          "readOnly": true
         },
         {
           "kind": "qa",
@@ -693,7 +699,7 @@
         }
       ],
       "findings": [
-        "smart-immunizations: declares 2 graph(s) with no published viewer — fhir-artifact-index, qa. Declared and not rendered is a gap, not a dead link.",
+        "smart-immunizations: declares 2 graph(s) with no published viewer — docs, qa. Declared and not rendered is a gap, not a dead link.",
         "smart-immunizations: 1 graph(s) hold materialized content and are READ-ONLY — fhir-artifact-index. Readable, not editable here: copy one out to your own folio/ to work on it. Separate from whether a viewer is published.",
         "smart-immunizations: no avatar declared for this instance — showing the generic mark."
       ],
@@ -952,7 +958,7 @@
         {
           "id": "views",
           "label": "visualisations you can open",
-          "value": 5
+          "value": 6
         }
       ],
       "visualisations": [
@@ -962,8 +968,8 @@
         },
         {
           "kind": "fhir-artifact-index",
-          "readOnly": true,
-          "note": "no viewer yet"
+          "path": "/smart-base/",
+          "readOnly": true
         },
         {
           "kind": "library",
@@ -991,7 +997,7 @@
         }
       ],
       "findings": [
-        "smart-base: declares 3 graph(s) with no published viewer — fhir-artifact-index, qa, tools. Declared and not rendered is a gap, not a dead link.",
+        "smart-base: declares 2 graph(s) with no published viewer — qa, tools. Declared and not rendered is a gap, not a dead link.",
         "smart-base: 1 graph(s) hold materialized content and are READ-ONLY — fhir-artifact-index. Readable, not editable here: copy one out to your own folio/ to work on it. Separate from whether a viewer is published."
       ],
       "navbarIcons": [
@@ -2609,7 +2615,7 @@
           },
           {
             "key": "directories",
-            "summary": "2: smart-immunizations-artifact-index, qa"
+            "summary": "3: smart-immunizations-docs, smart-immunizations-artifact-index, qa"
           },
           {
             "key": "needs",

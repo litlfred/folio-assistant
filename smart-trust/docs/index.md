@@ -2,6 +2,9 @@
 title: "WHO SMART Trust — artefact index"
 description: "All 674 artefacts of the WHO SMART Trust IG 1.8.0, reconstructed from its published output."
 has_children: true
+renders:
+  - smart-trust/fhir-artifact-index
+rendered-by: ig-pages
 ---
 <style>
 .st-tag{display:inline-block;padding:.05rem .4rem;border-radius:3px;font-size:.75rem;
