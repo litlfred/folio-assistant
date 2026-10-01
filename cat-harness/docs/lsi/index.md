@@ -122,7 +122,7 @@ Each dimension is a **contrast** between two poles, shown by their highest-loadi
 
 ## cat-harness / skills
 
-**213** units · **5841** terms · k = **100** · retains **79.7 %** of the weighted matrix · weighting `log-entropy` · sidecar `cat-harness/test/results/lsi/cat-harness/skills.lsi.json`
+**213** units · **5842** terms · k = **100** · retains **79.7 %** of the weighted matrix · weighting `log-entropy` · sidecar `cat-harness/test/results/lsi/cat-harness/skills.lsi.json`
 
 > Dimension 1 has **no negative pole**: it most likely measures unit length and term frequency (a margin), not a theme. Read the themes from dimension 2 on.
 
@@ -134,10 +134,10 @@ Each dimension is a **contrast** between two poles, shown by their highest-loadi
 | 2 | 21.42 | watcher, slot, sibling, queue, backlog, prs, block, commits | harness, instance, declaration, directory, node, directories, graph, declares |
 | 3 | 17.77 | session, beans, goals, branch, store, window, epic, push | slot, chapter, block, edges, formal, glossary, project, proof |
 | 4 | 16.42 | page, block, section, text, sections, blocks, chapter, manifest | ledger, sibling, subdirectory, items, sessions, queue, window, renderable |
-| 5 | 14.81 | locale, navbar, translated, page, translation, theme, french, staging | edges, forward, edge, logical, backward, cross-chapter, energy, sections |
-| 6 | 14.77 | requirements, lane, actor, role, feature, phase, task, stakeholders | rung, queue, arm, slide, archive, zip, bytes, sniff |
+| 5 | 14.82 | locale, navbar, translated, page, translation, theme, french, staging | edges, forward, edge, logical, backward, cross-chapter, energy, ordering |
+| 6 | 14.77 | requirements, lane, role, actor, feature, phase, task, sign-off | rung, queue, arm, archive, slide, zip, bytes, sniff |
 | 7 | 14.38 | edges, forward, preview, backward, edge, cross-chapter, energy, logical | actor, lane, role, backlog, rung, criterion, login, roles |
-| 8 | 14.13 | locale, translation, translated, french, language, back-translation, badge, translations | theme, preview, tile, avatar, stylesheet, option, feature, surface |
+| 8 | 14.12 | locale, translation, translated, french, back-translation, language, badge, translations | preview, theme, feature, option, tile, stylesheet, avatar, phase |
 
 **Findings** — 0 narrow dimension(s), 1 near-duplicate pair(s).
 
