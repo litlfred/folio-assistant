@@ -1,11 +1,11 @@
 ---
 # folio-assistant-8wj1
 title: 'QA READERS F4: block and translation read-modify-write writers stop dropping agent verdicts when the prior is absent — the block-qa D2 split'
-status: todo
+status: in-progress
 type: task
 priority: critical
 created_at: 2026-10-01T08:47:13Z
-updated_at: 2026-10-01T08:47:13Z
+updated_at: 2026-10-01T15:30:00Z
 parent: folio-assistant-3fva
 blocked_by:
     - folio-assistant-16ei
@@ -37,6 +37,50 @@ Arc `3fva`, from reader audit `gxvk` (`cat-harness/docs/proposals/qa-readers-aud
 4. `qa-paths.ts` keeps the path functions. `qa-witness.ts` (publish family) consumes them and does not edit them.
 
 ## Done when
-- [ ] a sweep over a tree with no `test/results/` and no fetch refuses or reports `unknown`; it does not write a report missing the 13 agent entries
-- [ ] the 13 agent entries are byte-identical in `test/attestations/` (checked by a test)
-- [ ] `translation:block-qa:check` and the MCP `qa_staleness` and `qa_sweep` give the same results with `test/results/` absent and the branch fetched
+- [x] a sweep over a tree with no `test/results/` and no fetch refuses or reports `unknown`; it does not write a report missing the 13 agent entries. All 9 writers re-source attestations from `test/attestations/`. With the store unreadable they exit 4 and write nothing. Tested per writer family with the prior ABSENT in `scripts/tests/qa-attestations-writers.test.ts`. The SCRIPT half with no fetch is still open; see Summary.
+- [x] the 13 agent entries are byte-identical in `test/attestations/` (checked by a test): `content/pipeline/qa-attestations.test.ts`, over the real corpus
+- [ ] `translation:block-qa:check` and the MCP `qa_staleness` and `qa_sweep` give the same results with `test/results/` absent and the branch fetched. Not done: it needs the script half read through `qa-store`.
+
+
+## Summary of Changes (2026-10-01, branch `worktree-agent-a8ba4c80e273d619d`, NOT pushed)
+
+Held by session https://claude.ai/code/session_01LKpuPotV3Ve5Za75DQ3AQR (sub-agent of `claude/quirky-davinci-ixuymr`). Announced here rather than through `beans:claim`, because this session pushes nothing.
+
+**Measured** with `bun run qa:attestations:migrate:check`, which counts every non-script entry in every derived block or translation report:
+- before: 157 derived reports, **13 non-script entries in 12 files** (11 `block-qa/v1`, 2 `translation-qa/v1`; 12 by `kind: agent`), 0 in a store;
+- after: the same 13, all held in `test/attestations/`, 0 missing.
+
+**Writers found by grep.** There were 9, not 8. The ninth is `src/qa-agent-write.ts`, which the audit filed under F8b. Since `r7v6` it writes the results tree, so it had the same C11 loss.
+
+**Store layout**
+- `<instance>/test/attestations/<family>/<mirrored path>.attestations.json`, plus the marker `attestations.store.json`. Code: `cat-harness/content/pipeline/qa-attestations.ts`.
+- `qa-attestations/v1` carries `family` and `subject` (the instance-relative path, plus `locale` for translation-qa) and a `criteria` map with the derived report's shape.
+- Read states: hit, miss, no-store, corrupt and unknown.
+- Writers use `resolvePrior` and `finalizeCriteria`. On a no-store instance (one that never migrated), they ADOPT the prior's attestations.
+
+**Byte preservation.** 10 of the 12 source files are ASCII-escaped (an em dash is written as the six characters `—`). The store keeps each source's escaping. Tests check two things on the real corpus: each entry's TEXT is the same bytes in both files, and each derived file recomposes byte for byte from its script half plus the store.
+
+**Commits**
+- `8758a003`: the store and the migration (`qa:attestations:migrate`, `:check`); 12 store files.
+- `c7988bdd`: 8 block writers, and the CI gate.
+- `6b04f7b3`: the translation writer, the per-family C11 tests, and the 35 translation-qa sidecars restamped by `script_hash`.
+- `8bb8d554`: `qa:resolve-conflicts` (520m) reads the store.
+- `870e259a`: regen, and `@covers`.
+- `32677ff4`: the `check:artefact-verification` declaration.
+
+**Behaviour**
+- Every writer refuses (UNKNOWN, writes nothing, exit 4) when the store is corrupt or unreadable, or when the prior holds an attestation the store lacks.
+- `qa-merge-findings` now anchors at the block's content repo. It used the git top level, which pointed at a results tree nothing reads.
+- `language-trap-audit` used to drop adjudications on its own criteria by overwriting the array. It no longer does.
+
+**Gates.** Baseline was `bun run gates` before any change: 2 of 203 red. They were `bun test` (1 failing test: "the report is a fixpoint") and `translation:catalogue:check`. After (at `870e259a`): bun test was 13787 pass and 1 fail, the same test as the baseline. Gates were 3 of 203 red: the same two, plus `check:artefact-verification`, which flagged the new `:check`. `32677ff4` declares it, and it now passes.
+
+**Reconcile with `2gst`.** 2gst's layout is uncommitted, in its own worktree (`schemas/qa-attestations.ts`, the declared `attestations` directory).
+- The two agree on the root, the `<family>/` mirror, the suffix, the `$schema` tag and the `family` field.
+- `subject`: 2gst uses the object `{kind,id,path}`, 8wj1 a string plus `locale`.
+- Payload: 2gst uses family arrays, 8wj1 `criteria`, which fits 2gst's "a family adds its own arrays".
+- Presence: 2gst uses the DECLARED directory, and an absent one reads unknown. 8wj1 uses a marker file, and absence means no-store, which adopts the prior's attestations.
+- Module: 2gst's `schemas/qa-attestations.ts` against 8wj1's `content/pipeline/qa-attestations.ts`.
+- Recommended: after 2gst lands, 8wj1's families become members of 2gst's discriminated union, `storeState` reads `attestationsHomeFor`, and the marker goes.
+
+Open: the SCRIPT half (other writers' script criteria in the same file) is still carried from the prior derived file. With it absent, those criteria wait for their own writer to re-run. That is regenerable, not lost, but it belongs on `qa-store` (`16ei`), and it is the remaining third Done-when.
