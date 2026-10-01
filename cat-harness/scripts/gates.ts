@@ -704,6 +704,12 @@ function installsBrowser(def: { steps?: { run?: string }[] }): boolean {
  * write access to judge a tree, so the permission is the structural
  * discriminator, as `playwright install` is for {@link installsBrowser}: it is
  * what the job actually holds, not what it is called.
+ *
+ * SCOPED TO THE GATES WORKFLOW ({@link loadGates}). Other workflows have jobs
+ * holding `contents: write` too — `publish.yml`'s, for one — and their `bun`
+ * steps are still classified by {@link otherWorkflowSteps} and the exemption
+ * table, which is what keeps a CI step from going unaccounted for. The first
+ * version applied it everywhere and three exemptions stopped matching.
  */
 export function publishes(def: { permissions?: unknown }): boolean {
   const p = def.permissions;
@@ -728,14 +734,14 @@ export interface Gate {
  * here by design, and running their bodies locally would report a clean scan
  * of nothing, which is the thing this module refuses to do.
  */
-export function gatesFrom(workflowText: string, opts: { all?: boolean } = {}): Gate[] {
+export function gatesFrom(workflowText: string, opts: { all?: boolean; skipPublishers?: boolean } = {}): Gate[] {
   const doc = parse(workflowText) as {
     jobs?: Record<string, { permissions?: unknown; steps?: { name?: string; run?: string }[] }>;
   };
   const out: Gate[] = [];
   for (const [job, def] of Object.entries(doc.jobs ?? {})) {
     if (!opts.all && installsBrowser(def)) continue;
-    if (publishes(def)) continue;
+    if (opts.skipPublishers && publishes(def)) continue;
     for (const step of def.steps ?? []) {
       if (!step.run) continue;
       // A step's `run` may hold several lines; each `bun …` line is its own
@@ -767,7 +773,7 @@ export class NoGatesFound extends Error {
 /** Read and parse, refusing an empty result. */
 export function loadGates(root: string, opts: { all?: boolean } = {}): Gate[] {
   const path = join(root, GATES_WORKFLOW);
-  const gates = gatesFrom(readFileSync(path, "utf-8"), opts);
+  const gates = gatesFrom(readFileSync(path, "utf-8"), { ...opts, skipPublishers: true });
   if (gates.length === 0) throw new NoGatesFound(GATES_WORKFLOW);
   if (!opts.all) return gates;
 

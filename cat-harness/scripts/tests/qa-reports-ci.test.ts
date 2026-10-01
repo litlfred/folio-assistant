@@ -19,7 +19,7 @@ import { join, resolve } from "node:path";
 import { parse } from "yaml";
 
 import { checkWorkflows, qaReportsUnretried } from "../check-workflows.js";
-import { gatesFrom, GATES_WORKFLOW, publishes, unclassifiedSteps } from "../gates.js";
+import { gatesFrom, GATES_WORKFLOW, loadGates, publishes, unclassifiedSteps } from "../gates.js";
 
 const REPO = resolve(import.meta.dir, "../../..");
 const wf = (name: string) => readFileSync(join(REPO, ".github", "workflows", name), "utf-8");
@@ -71,11 +71,14 @@ describe("the publish job", () => {
     expect(publishes({ permissions: { contents: "read" } })).toBe(false);
     expect(publishes({ permissions: "write-all" })).toBe(true);
     expect(publishes({})).toBe(false);
-    const text = readFileSync(join(REPO, GATES_WORKFLOW), "utf-8");
     for (const all of [false, true]) {
-      expect(gatesFrom(text, { all }).filter((g) => g.command.includes("qa:publish"))).toEqual([]);
-      expect(gatesFrom(text, { all }).some((g) => g.job === "gates")).toBe(true);
+      expect(loadGates(REPO, { all }).filter((g) => g.command.includes("qa:publish"))).toEqual([]);
+      expect(loadGates(REPO, { all }).some((g) => g.job === "gates")).toBe(true);
     }
+    // Scoped to the gates workflow: the raw reader still SEES the line, so a
+    // caller asking "what does CI run" (commandsCiRuns) is not blinded.
+    const text = readFileSync(join(REPO, GATES_WORKFLOW), "utf-8");
+    expect(gatesFrom(text, { all: true }).some((g) => g.command.includes("qa:publish"))).toBe(true);
   });
 });
 

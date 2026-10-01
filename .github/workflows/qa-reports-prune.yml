@@ -25,6 +25,11 @@
 # the owner's call (`deletion-requires-confirmation`), not a scheduled job's.
 #
 # A PR whose state cannot be read is KEPT. Could-not-determine never deletes.
+#
+# TRIGGERS, ACTUAL: `schedule` and `workflow_dispatch`. The PRs named above are
+# what it READS (their state, through `gh pr list`); no pull request triggers it,
+# because retention is a property of the platform's branch over time, not of
+# any one change.
 name: qa-reports prune
 
 on:

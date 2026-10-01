@@ -400,6 +400,11 @@ export const RULES: Rule[] = [
       // index, and nothing in it is about any folio's subject matter — a folio
       // could not make it resolve differently, only give it more files.
       "scripts/qa-resolve-conflicts.ts",     // conflicts in the `qa` graph, resolved by regeneration
+      // Where the `qa` graph is KEPT once it leaves main (bean `16ei`): the
+      // read/write API over the `qa-reports` branch. Harness-level for the
+      // same reason as its two neighbours — it reads the declaration and git,
+      // and no folio's subject matter could make it answer differently.
+      "scripts/qa-store.ts",                 // the qa-reports branch: readQa / publishQa / pruneQa
       // Its clean-merge counterpart, and harness-level for the same reason: it
       // loads the GATE SET from the workflow and re-runs whichever writers
       // their checks report stale. It knows nothing about any folio's subject
