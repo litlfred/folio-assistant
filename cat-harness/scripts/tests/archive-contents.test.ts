@@ -20,7 +20,7 @@ import { join, resolve } from "node:path";
 
 import { ARCHIVE_CONTENTS_SCHEMA_ID, ArchiveContentsSchema, isArchiveMimetype } from "../../schemas/archive-contents.ts";
 import { checkAll, checkEntry } from "../check-l1-complete.ts";
-import { planFor } from "../ingest-document.ts";
+import { planFor, sniffMimetype } from "../ingest-document.ts";
 
 const ROOT = resolve(import.meta.dir, "../..");
 const made: string[] = [];
@@ -158,7 +158,21 @@ describe("routing happens on CONTENT, with no PDF backend needed", () => {
     // It lands on `undetermined` in this container, because no PyMuPDF is
     // installed — which is an honest report of a missing backend, and is NOT
     // the archive rung. Asserting the negative is the point.
-    expect(planFor(join(ROOT, "uploads/milnorlink.pdf"), undefined, "library").rung).not.toBe("archive");
+    //
+    // A FIXTURE, not a corpus file. This named `uploads/milnorlink.pdf` until
+    // 2026-09-30, when the retention rule (`q7ey`) retired that upload to
+    // `fsh-guts/uploads/` and `check:declared-paths` reported the literal as
+    // a witness that stopped resolving. Re-pointing it would have bought the
+    // same breakage the next time a source moves, and every ingested source
+    // is now supposed to move. What the test needs is a file the sniffer
+    // calls `application/pdf`, which the magic bytes alone decide — checked:
+    // `sniffMimetype` answers `application/pdf` for these eight bytes and for
+    // the real 1.4 MB paper alike.
+    const f = fixtures();
+    const pdf = join(f.dir, "minimal.pdf");
+    writeFileSync(pdf, "%PDF-1.4\n1 0 obj\n<< /Type /Catalog >>\nendobj\ntrailer\n<< /Root 1 0 R >>\n%%EOF\n");
+    expect(sniffMimetype(pdf)).toBe("application/pdf");
+    expect(planFor(pdf, undefined, "library").rung).not.toBe("archive");
   });
 
   test("the mimetype can be supplied, so the decision is testable in isolation", () => {

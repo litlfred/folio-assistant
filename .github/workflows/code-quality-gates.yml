@@ -525,6 +525,13 @@ jobs:
           # authored term's labels and definition have a current .pot in
           # every locale, beside the BPMN templates.
           bun run glossary:pot:check
+          # Bean `7wou` (owner, 2026-09-29: "extracting exsiting glossary
+          # needs compaision to existing termonology/coding"). Reports and
+          # never grades: an unmapped candidate may be a term this corpus is
+          # right to coin. It fails only on a result that breaks its own
+          # schema — notably an `undetermined` row with no reason, which is
+          # the one way silence could read as "no match" (bean `dh4f`).
+          bun run check:term-mapping
 
       # The agentic engine's after-check (#1180 step 5): every workflow
       # instance's history as W3C PROV-O, with authorizeTask re-run on each
@@ -1054,6 +1061,14 @@ jobs:
       - name: The root README's generated sections are current
         run: bun run readme:sync:root:check
 
+      # EVERY instance's README, each against its own declaration. The two
+      # steps above and below name one README apiece; `readme:toc` (the
+      # README's own table of contents) is carried by every harness README,
+      # and a generated region nothing checks is a hand-kept list that is
+      # wrong the first time somebody adds a heading.
+      - name: Every instance README's generated sections are current
+        run: bun run readme:sync:all:check
+
       # bootstrap's README carries `kg:processes` (its diagrams, drawn) and
       # `kg:files` (every file it holds), both generated from its declaration
       # (owner, 2026-09-29). The pictures themselves are checked by
@@ -1481,6 +1496,15 @@ jobs:
           bun run deps:python:check
           bun run check:l1-complete
           bun run check:l1-complete -- --check
+          # Bean `q7ey`: an ingested upload retires to `fsh-guts/uploads/`.
+          # The rule was written and hand-swept on 2026-09-30, and that one
+          # sweep left eight files in two places and a whole harness
+          # unswept -- so the rule needed enforcement, not a better sweep.
+          # Blocking on a bare queue drop; who-iris's per-source intake
+          # directories are reported and advisory, because moving the PDF
+          # out of one would orphan its `intake.json` and that layout is
+          # being reworked in #1612.
+          bun run check:uploads-retired
           bun run check:catalogue
           # Bean `06e3` §4(b): every harness declaring a `docs` graph owes at
           # least one MEANINGFULLY POPULATED page. Exit 2 — could not

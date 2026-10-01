@@ -7,6 +7,7 @@ Part of [C@T Harness](../README.md) 0.1.0, declared as `methodologies`, holding 
 
 | file | what it is | used by |
 |---|---|---|
+| [`adequacy-for-purpose-modelling.md`](adequacy-for-purpose-modelling.md) | Adequacy-for-purpose modelling |  |
 | [`consensus-grounded-subject-evaluation.md`](consensus-grounded-subject-evaluation.md) | Consensus-grounded subject evaluation: score against where experts agree, and read the panel |  |
 | [`correspondence-analysis.md`](correspondence-analysis.md) | Correspondence analysis: the SVD of the standardised residuals |  |
 | [`dmn.md`](dmn.md) | DMN — the computable case |  |
@@ -14,6 +15,8 @@ Part of [C@T Harness](../README.md) 0.1.0, declared as `methodologies`, holding 
 | [`kepner-tregoe.md`](kepner-tregoe.md) | Kepner-Tregoe Decision Analysis |  |
 | [`lsi.md`](lsi.md) | Latent Semantic Indexing: the vocabulary problem, answered with a truncated SVD |  |
 | [`madr.md`](madr.md) | MADR — the record, not the method |  |
+| [`mcdm-aggregation.md`](mcdm-aggregation.md) | Aggregation-type MCDM |  |
+| [`probabilistic-decision-analysis.md`](probabilistic-decision-analysis.md) | Probabilistic decision-making algorithms |  |
 | [`raci.md`](raci.md) | RACI — involvement, in four kinds |  |
 | [`rasci.md`](rasci.md) | RASCI — the fifth letter, and when it earns its place |  |
 | [`skill-pipeline-subject-indexing.md`](skill-pipeline-subject-indexing.md) | [Skill](https://github.com/litlfred/bootstrap/blob/main/schemas/README.md#skill)-pipeline subject indexing: decompose the cataloguer's stages and validate each |  |

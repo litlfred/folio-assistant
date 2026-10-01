@@ -22,6 +22,7 @@
  */
 import { describe, expect, test } from "bun:test";
 import { readRoleGraph } from "../../schemas/role-graph.ts";
+import { EXTERNAL_SCHEMA_TAG } from "../../schemas/external-schema.ts";
 import { join, resolve } from "node:path";
 import { mkdtempSync, readFileSync, readdirSync, rmSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
@@ -1028,11 +1029,36 @@ describe("schemas and standards are nodes, and graphs link to them", () => {
   const specs = byType("ExternalSchema");
   const idOf = (name: string): string => String(specs.find((n) => n.name === name)?.["@id"]);
 
+  /*
+   * The corpus is the files DECLARING themselves external schemas, not every
+   * `.json` in the directory. `external-schemas/` gained a second family on
+   * 2026-09-30 — `folio-pinned-terminology/v1`, the concept snapshot
+   * `check:term-mapping` resolves the FHIR half against — and a bare
+   * `*.json` count reads that as a missing node.
+   *
+   * Both halves are asserted, and the second is the reason: a test that only
+   * counted the first family would pass just as well if `loadSpecs` started
+   * dropping records for some OTHER reason, because the expected count would
+   * fall with the actual one. Naming the excluded file pins WHICH exclusion
+   * is legitimate, so a silently-dropped external schema still fails here.
+   */
   test("every external-schemas record is an ExternalSchema node, DMN 1.3 among them", () => {
-    const records = readdirSync(resolve(import.meta.dir, "..", "..", "external-schemas")).filter((f) => f.endsWith(".json"));
-    expect(specs.length).toBe(records.length);
+    const dir = resolve(import.meta.dir, "..", "..", "external-schemas");
+    const files = readdirSync(dir).filter((f) => f.endsWith(".json"));
+    const tagOf = (f: string): unknown => JSON.parse(readFileSync(join(dir, f), "utf-8")).$schema;
+    // Absent `$schema` is accepted as an external schema — `loadSpecs` reads it the same way.
+    const external = files.filter((f) => {
+      const tag = tagOf(f);
+      return typeof tag !== "string" || tag === EXTERNAL_SCHEMA_TAG;
+    });
+    const other = files.filter((f) => !external.includes(f));
+
+    expect(specs.length).toBe(external.length);
     expect(specs.map((n) => n.name)).toContain("omg-bpmn-2.0");
     expect(specs.map((n) => n.name)).toContain("omg-dmn-1.3");
+
+    expect(other).toEqual(["who-smart-base.terminology.json"]);
+    expect(tagOf("who-smart-base.terminology.json")).toBe("folio-pinned-terminology/v1");
   });
 
   test("the processes GraphKind conforms to BPMN AND DMN, and says why it has no validator", () => {
