@@ -1,14 +1,12 @@
 ---
 # folio-assistant-16ei
 title: 'qa-store: one read/write API for QA results, qa:fetch / qa:publish, ContentDirectory.storage, CI publish and a prune that fires'
-status: todo
+status: in-progress
 type: feature
 priority: high
 created_at: 2026-10-01T08:00:46Z
-updated_at: 2026-10-01T08:00:55Z
+updated_at: 2026-10-01T09:41:06Z
 parent: folio-assistant-3fva
-blocked_by:
-    - folio-assistant-3ds9
 ---
 
 Arc `3fva`, proposal §2.2–2.4 and §4 Phase 2. Blocked on the SPIKE bean. Serial, one agent: everything else depends on this.
@@ -22,6 +20,22 @@ Arc `3fva`, proposal §2.2–2.4 and §4 Phase 2. Blocked on the SPIKE bean. Ser
 - A prune workflow on `schedule`. The lake-cache prune never ran, because its trigger cannot fire.
 
 ## Done when
-- [ ] the module has 4-state tests on real git repositories, not mocks (as `520m` did)
-- [ ] main and PR runs publish, and a sibling's entry survives concurrent writes
+- [x] the module has 4-state tests on real git repositories, not mocks (as `520m` did) — `scripts/tests/qa-store.test.ts`
+- [ ] main and PR runs publish, and a sibling's entry survives concurrent writes — the concurrent-writer survival is tested locally against a real bare remote (a forced race, and two CLI processes started together); CI has not published yet, because nothing is pushed
 - [ ] the prune runs on schedule at least once
+
+
+## Progress 2026-10-01 (branch `worktree-agent-ab1c210ad9aa5cbbf`, NOT pushed)
+
+Held by session https://claude.ai/code/session_01LKpuPotV3Ve5Za75DQ3AQR (sub-agent of `claude/quirky-davinci-ixuymr`). Announced here rather than through `beans:claim`, because this session pushes nothing.
+
+- [x] `cat-harness/scripts/qa-store.ts`: `resolveQaLocation`, `readQa` / `readQaTree` / `readQaManifest` (hit / miss / corrupt / unknown; exit 0 / 1 / 3 / 4, usage 2), `fetchQa` (one batch, never deletes, reports `extra`), `publishQa`, `pruneQa`, and `githubPublishDecision` (fork skip).
+- [x] `qa:fetch`, `qa:publish`, `qa:prune` in package.json.
+- [x] `storage: {branch, keyedBy: "commit"}` on `ContentDirectory`, set on no declaration. Honoured by `check:declared-dirs`, `harness:dirs` (neither creates the directory nor lists it as missing) and `audit:coverage` (new state `stored`). Nothing is `.gitignore`d yet.
+- [x] CI: a `qa-publish` job in `code-quality-gates.yml` (`needs: gates`, `always()`, `contents: write`), `Task_QaPublish` in the BPMN, `gates.ts` skips publisher jobs, and `check:workflows` has the new finding `qa-reports-unretried`.
+- [x] `.github/workflows/qa-reports-prune.yml`: a schedule, plus a dispatch that is a dry run by default. It was not run.
+- [x] Tests on real temporary repositories (`qa-store.test.ts`, `directory-storage.test.ts`, `qa-reports-ci.test.ts`).
+- [ ] the first CI publish (this needs the branch pushed and merged)
+- [ ] the first scheduled prune
+
+Measured read-only against the real remote: `qa:fetch` on `qa-reports` returns a MISS (exit 1), because the branch does not exist yet. A read of spike entry `qa-reports-spike:main/cdb0a018…` returns CORRUPT (exit 3) in 2.4 s, because spike manifests have no `payloadTree`.

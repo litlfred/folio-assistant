@@ -224,7 +224,17 @@ describe("a strict reader and a loose one agree", () => {
     // is what turned that into a failure instead of a green cross-check.
     const loose = [...yaml.matchAll(/^\s*(?:run:\s*)?(bunx? .+?)\s*$/gm)].map((m) => m[1]!);
     const found = new Set(loadGates(ROOT, { all: true }).map((g) => g.command));
-    expect(loose.filter((c) => !found.has(c))).toEqual([]);
+    // A PUBLISHER job's lines are dropped on purpose, by `publishes` (bean
+    // `16ei`): a job holding `contents: write` is not a gate, and `bun run
+    // gates` must never push. They are named here, so the drop is a stated
+    // one rather than the silent kind this test exists to catch.
+    const published = new Set(
+      gatesFrom(readFileSync(join(ROOT, GATES_WORKFLOW), "utf-8"), { all: true })
+        .filter((g) => !found.has(g.command))
+        .map((g) => g.command),
+    );
+    expect([...published].every((c) => c.includes("qa:publish"))).toBe(true);
+    expect(loose.filter((c) => !found.has(c) && !published.has(c))).toEqual([]);
     // And the guard is not vacuous — a loose scan that matched nothing would
     // pass the filter above while proving nothing at all.
     expect(loose.length).toBeGreaterThan(30);

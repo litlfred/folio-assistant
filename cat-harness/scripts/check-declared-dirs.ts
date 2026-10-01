@@ -84,7 +84,15 @@ export function resolveDeclaredPath(
 
 export function auditInstance(instanceRoot: string, repoRoot: string): DirFinding[] {
   const decl = readDeclaration(instanceRoot) as
-    | { directories?: Array<{ id: string; path: string; scope?: string; absent?: { reason: string } }> }
+    | {
+        directories?: Array<{
+          id: string;
+          path: string;
+          scope?: string;
+          absent?: { reason: string };
+          storage?: { branch: string };
+        }>;
+      }
     | undefined;
   if (!decl?.directories) return [];
 
@@ -96,6 +104,11 @@ export function auditInstance(instanceRoot: string, repoRoot: string): DirFindin
     // `readdirSync` on it throws rather than reporting an empty graph.
     const present = existsSync(abs) && statSync(abs).isDirectory();
 
+    // A STORED directory (`storage.branch`, bean `16ei`) is kept on its
+    // branch, so its absence from the checkout is the declared state, not a
+    // missing directory — and its presence (a fetched working copy) is not a
+    // stale exemption either. Neither direction applies.
+    if (e.storage?.branch) continue;
     if (!present && !e.absent) {
       findings.push({
         instance: instanceRoot,

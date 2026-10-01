@@ -214,6 +214,18 @@ export const STEP_EXEMPTIONS: StepExemption[] = [
       "circular as a gate, and it needs `issues: write` and `pull-requests: write`, which the gate jobs deliberately do not have",
   },
   {
+    // Bean `16ei`. The scheduled retention job for the `qa-reports` branch.
+    // It WRITES a branch rather than judging a tree, needs `contents: write`
+    // and `pull-requests: read`, and a contributor has no verdict to get from
+    // it. Its rule is pinned by `qa-store.test.ts` in `bun test`, on real
+    // repositories.
+    match: "qa:prune",
+    kind: "ci-only",
+    reason:
+      "a scheduled WRITE to the qa-reports branch, not a check; its retention rule and its " +
+      "tip-only rewrite are covered by qa-store.test.ts in `bun test`",
+  },
+  {
     // Bean `uknu`. It reads a BUILT Jekyll site, which only the staging job
     // produces (`actions/jekyll-build-pages`), so it cannot join the fast set.
     // Its logic is pinned by `duplicate-ids.test.ts`, which IS in `bun test`,
@@ -682,6 +694,29 @@ function installsBrowser(def: { steps?: { run?: string }[] }): boolean {
   return (def.steps ?? []).some((s) => /playwright\s+install/.test(s.run ?? ""));
 }
 
+/**
+ * A job granted `contents: write` is a PUBLISHER, not a gate.
+ *
+ * Bean `16ei`: `code-quality-gates.yml` gained a job that publishes the QA
+ * results to the `qa-reports` branch after the gates have run. Its `bun run
+ * qa:publish` line would otherwise be extracted here and run by `bun run
+ * gates` on a contributor's machine — a gate set that PUSHES. No gate needs
+ * write access to judge a tree, so the permission is the structural
+ * discriminator, as `playwright install` is for {@link installsBrowser}: it is
+ * what the job actually holds, not what it is called.
+ *
+ * SCOPED TO THE GATES WORKFLOW ({@link loadGates}). Other workflows have jobs
+ * holding `contents: write` too — `publish.yml`'s, for one — and their `bun`
+ * steps are still classified by {@link otherWorkflowSteps} and the exemption
+ * table, which is what keeps a CI step from going unaccounted for. The first
+ * version applied it everywhere and three exemptions stopped matching.
+ */
+export function publishes(def: { permissions?: unknown }): boolean {
+  const p = def.permissions;
+  if (p === "write-all") return true;
+  return typeof p === "object" && p !== null && (p as Record<string, unknown>).contents === "write";
+}
+
 /** One runnable gate, with the job and step that ask for it. */
 export interface Gate {
   job: string;
@@ -699,13 +734,14 @@ export interface Gate {
  * here by design, and running their bodies locally would report a clean scan
  * of nothing, which is the thing this module refuses to do.
  */
-export function gatesFrom(workflowText: string, opts: { all?: boolean } = {}): Gate[] {
+export function gatesFrom(workflowText: string, opts: { all?: boolean; skipPublishers?: boolean } = {}): Gate[] {
   const doc = parse(workflowText) as {
-    jobs?: Record<string, { steps?: { name?: string; run?: string }[] }>;
+    jobs?: Record<string, { permissions?: unknown; steps?: { name?: string; run?: string }[] }>;
   };
   const out: Gate[] = [];
   for (const [job, def] of Object.entries(doc.jobs ?? {})) {
     if (!opts.all && installsBrowser(def)) continue;
+    if (opts.skipPublishers && publishes(def)) continue;
     for (const step of def.steps ?? []) {
       if (!step.run) continue;
       // A step's `run` may hold several lines; each `bun …` line is its own
@@ -737,7 +773,7 @@ export class NoGatesFound extends Error {
 /** Read and parse, refusing an empty result. */
 export function loadGates(root: string, opts: { all?: boolean } = {}): Gate[] {
   const path = join(root, GATES_WORKFLOW);
-  const gates = gatesFrom(readFileSync(path, "utf-8"), opts);
+  const gates = gatesFrom(readFileSync(path, "utf-8"), { ...opts, skipPublishers: true });
   if (gates.length === 0) throw new NoGatesFound(GATES_WORKFLOW);
   if (!opts.all) return gates;
 
