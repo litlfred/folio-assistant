@@ -471,6 +471,14 @@
       "status": "candidate"
     },
     {
+      "id": "pr-ready-for-merge",
+      "prefLabel": "Hand a green PR to the Merge Manager",
+      "definition": "DRAFT (issue #1800). The PR author's half of the merge hand-over. It carries the owner's tagging policy VERBATIM — owner, 2026-10-01: \"MERGE POLICY: Do NOT merge to main yourself. When your PR is green on every CI job, mark it \"Ready for review\", add the label `ready-to-merge`, and comment \"ready: <head sha>\". The Merge Steward session (named \"Separation\") merges it after bringing main in and regenerating. If it comments that your PR went red, fix and re-label. Push your own work freely.\" Steps: (1) re-read the PR's CURRENT head sha, then verify every CI job on THAT head is green, reading check runs rather than the legacy commit-status API, which is always empty here; (2) mark the PR Ready for review; (3) add the label `ready-to-merge`, keeping every existing label; (4) comment exactly `ready: <full 40-character head sha>`; (5) on a red bounce-back from the Merge Manager (a comment and the label removed): fix, push, wait for green on the new head, and run steps 1–4 again. It never merges.",
+      "notation": "pr-ready-for-merge",
+      "source": "cat-harness/tools/merge.ts#pr-ready-for-merge",
+      "status": "candidate"
+    },
+    {
       "id": "processes-viewer",
       "prefLabel": "Processes viewer",
       "definition": "Render the declared BPMN processes as an index page and one page per diagram.",

@@ -5,7 +5,8 @@ status: in-progress
 type: feature
 priority: normal
 created_at: 2026-10-01T17:02:57Z
-updated_at: 2026-10-01T17:03:06Z
+updated_at: 2026-10-01T17:18:03Z
+parent: folio-assistant-1xhc
 ---
 
 Proposal only (owner asked to discuss; nothing binds until ruled). Placement: cat-harness (owner, 2026-10-01). Artefacts: proposal page in cat-harness/docs/proposals/, a DRAFT merge-manager skill in sdlc-core, a pr-ready-for-merge Tool carrying the owner's tagging policy verbatim. Related: 1hjm, mc8h, eqxp, 391j. Issue #1800.

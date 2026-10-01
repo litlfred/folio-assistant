@@ -10,6 +10,7 @@ Part of [C@T Harness](../README.md) 0.1.0, declared as `tools`, holding `tools`.
 | [`discover.ts`](discover.ts) | a file |  |
 | [`index.ts`](index.ts) | a file |  |
 | [`mcp.ts`](mcp.ts) | a file |  |
+| [`merge.ts`](merge.ts) | a file |  |
 | [`sessions.ts`](sessions.ts) | a file |  |
 | [`viewers.ts`](viewers.ts) | a file |  |
 <!-- kg:subgraph:end -->
