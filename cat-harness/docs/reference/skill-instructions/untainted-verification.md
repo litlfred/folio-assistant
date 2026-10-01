@@ -6,14 +6,14 @@ parent: Skill instructions
 ---
 
 {: .note }
-> Generated from [`cat-harness/skills/folio-core/untainted-verification.md`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/folio-core/untainted-verification.md) — do not edit here.
+> Generated from [`cat-harness/skills/sdlc/sdlc-core/untainted-verification.md`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/sdlc/sdlc-core/untainted-verification.md) — do not edit here.
 >
-> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/cat-harness/skills/folio-core/untainted-verification.md){: .fa-edit-source }
+> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/cat-harness/skills/sdlc/sdlc-core/untainted-verification.md){: .fa-edit-source }
 
 {% raw %}
 # Untainted verification — the producer never writes the verdict
 
-> Skill id: `untainted-verification` · Package: `folio-core`
+> Skill id: `untainted-verification` · Package: `sdlc-core`
 
 A secret scan, a schema validation, a back-translation and a systematic
 literature search differ in what they read and in what counts as a finding.

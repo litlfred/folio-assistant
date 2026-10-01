@@ -9,7 +9,7 @@
  *
  * ```
  * ](reference/skill-instructions/deterministic-and-agentic.html)
- * ](../skills/crdm/crdm-detect.md)
+ * ](../skills/sdlc/crdm/crdm-detect.md)
  * ```
  *
  * From `docs/` the first reaches `docs/reference/…` and the second reaches

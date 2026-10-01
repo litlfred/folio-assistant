@@ -406,7 +406,7 @@ export function describe(o: ClaimOutcome, id: string): string {
         `could NOT push the claim to the default branch, so ${id} is NOT claimed anywhere a sibling can see.\n` +
         `  reason: ${o.reason}\n` +
         `  do this instead: claim it on your branch (\`beans update ${id} --status in-progress\`) and open the PR at your FIRST commit,\n` +
-        `  which is what makes a branch-local claim visible at all. See skills/folio-core/bean-coordination.md.`
+        `  which is what makes a branch-local claim visible at all. See skills/sdlc/sdlc-core/bean-coordination.md.`
       );
     case "unknown":
       return `COULD NOT DETERMINE whether ${id} is claimable: ${o.reason}. This is not "the bean is free" — do not start work on that reading.`;

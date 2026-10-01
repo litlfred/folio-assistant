@@ -1,0 +1,453 @@
+#!/usr/bin/env bun
+/**
+ * Is a minted glossary candidate already somebody else's concept?
+ *
+ * Bean `7wou`, under `5yhm`. The check the owner asked for on 2026-09-29:
+ * *"extracting exsiting glossary needs compaision to existing
+ * termonology/coding."* The contract, the three states and why `exact` and
+ * `concept` are a pair are in `schemas/term-mapping.ts` and are not restated
+ * here. Three things decide what the code below does:
+ *
+ *   * TWO TARGETS, NEVER MERGED. `skos` is authoritative for meaning, `fhir`
+ *     for a clinical code's operational semantics, and the owner was explicit
+ *     2026-09-30: "OCL is only for FHIR. not a constraint on SKOS." So there
+ *     are two resolvers and two sets of results, and a term can be mapped in
+ *     one and unmapped in the other without contradiction.
+ *
+ *   * A RESOLVER THAT CANNOT BE REACHED RETURNS `undetermined`, WITH ITS
+ *     REASON — never `unmapped`. In this checkout that is not hypothetical:
+ *     the network policy refuses `api.openconceptlab.org:443`, so every
+ *     `fhir` row is undetermined and says so, while `skos` resolves locally
+ *     and returns real verdicts.
+ *
+ *   * IT REPORTS AND NEVER GRADES. No ratio, no threshold, no exit code that
+ *     depends on how many mapped. An unmapped candidate may be a term this
+ *     corpus is right to coin.
+ *
+ * Usage:
+ *   bun run cat-harness/scripts/check-term-mapping.ts
+ *   bun run cat-harness/scripts/check-term-mapping.ts --check   # fail if stale
+ *
+ * @module scripts/check-term-mapping
+ * @covers glossary
+ */
+import { existsSync, readFileSync, readdirSync, statSync } from "node:fs";
+import { join, resolve } from "node:path";
+
+import {
+  MAPPING_TARGETS,
+  type ConceptMatch,
+  type MappingScope,
+  type MatchState,
+  type TermMapping,
+  TermMappingsFileSchema,
+  normaliseLabel,
+} from "../schemas/term-mapping.ts";
+import { PinnedTerminologySchema } from "../schemas/pinned-terminology.ts";
+import { QA_RESULTS_DIR, buildQaResult, writeQaResult } from "./qa-results.ts";
+
+const ROOT = resolve(import.meta.dir, "../..");
+const STEM = "term-mapping";
+
+/** The pinned published IG the `fhir` half resolves against — owner, 2026-09-30. */
+export const FHIR_PIN = "cat-harness/external-schemas/who-smart-base.json";
+export const FHIR_SNAPSHOT = "cat-harness/external-schemas/who-smart-base.terminology.json";
+
+interface GlossTerm {
+  id: string;
+  prefLabel: string;
+  altLabel?: string[];
+  exactMatch?: string[];
+  status?: string;
+}
+interface GlossScheme {
+  id: string;
+  terms: GlossTerm[];
+  file: string;
+}
+
+/** Every `*.glossary.json` in the checkout, authored and generated alike. */
+export function glossarySchemes(root: string): GlossScheme[] {
+  const out: GlossScheme[] = [];
+  const walk = (dir: string) => {
+    let names: string[];
+    try {
+      names = readdirSync(dir);
+    } catch {
+      return;
+    }
+    for (const n of names) {
+      if (n.startsWith(".") || n === "node_modules") continue;
+      const abs = join(dir, n);
+      let s;
+      try {
+        s = statSync(abs);
+      } catch {
+        continue;
+      }
+      if (s.isDirectory()) walk(abs);
+      else if (n.endsWith(".glossary.json")) {
+        try {
+          const d = JSON.parse(readFileSync(abs, "utf-8")) as { id?: string; terms?: GlossTerm[] };
+          if (d.terms) out.push({ id: d.id ?? n, terms: d.terms, file: abs.slice(root.length + 1) });
+        } catch {
+          // A scheme that will not parse is `check:glossary`'s finding, not
+          // this one's. Saying it twice would make one defect look like two.
+        }
+      }
+    }
+  };
+  walk(join(root, "folio-assistant-core", "glossary"));
+  return out;
+}
+
+/**
+ * The SKOS half, resolved LOCALLY against authored concepts.
+ *
+ * "Authoritative for meaning" does not mean "somewhere else": an authored
+ * term in this instance is a concept somebody decided, and a candidate that
+ * duplicates one is the promotion `glossary-terms` describes. External
+ * schemes reached through an authored term's `exactMatch` travel with it, so
+ * a match against `policy` also reports the ODRL URI it is an exact match for.
+ */
+export function skosIndex(schemes: GlossScheme[]): Map<string, ConceptMatch[]> {
+  const idx = new Map<string, ConceptMatch[]>();
+  const add = (label: string, m: ConceptMatch) => {
+    const k = normaliseLabel(label);
+    if (!k) return;
+    const list = idx.get(k) ?? [];
+    list.push(m);
+    idx.set(k, list);
+  };
+  for (const s of schemes) {
+    for (const t of s.terms) {
+      if (t.status !== "authored") continue;
+      // The external URI where there is one, otherwise the in-repo id — a
+      // concept without a URI is still a concept somebody authored.
+      const uri = t.exactMatch?.[0] ?? `${s.id}:${t.id}`;
+      add(t.prefLabel, { uri, predicate: "skos:exactMatch", via: t.prefLabel, scheme: s.id });
+      for (const alt of t.altLabel ?? []) {
+        add(alt, { uri, predicate: "skos:closeMatch", via: alt, scheme: s.id });
+      }
+    }
+  }
+  return idx;
+}
+
+/** Candidates, which are what the check is ABOUT. */
+export function candidates(schemes: GlossScheme[]): { term: GlossTerm; scheme: string }[] {
+  return schemes.flatMap((s) =>
+    s.terms.filter((t) => t.status !== "authored").map((term) => ({ term, scheme: s.id })),
+  );
+}
+
+export function resolveSkos(
+  cands: { term: GlossTerm; scheme: string }[],
+  idx: Map<string, ConceptMatch[]>,
+): TermMapping[] {
+  return cands.map(({ term, scheme }) => {
+    const key = normaliseLabel(term.prefLabel);
+    const hits = idx.get(key) ?? [];
+    const exactHit = hits.filter((h) => h.predicate === "skos:exactMatch");
+    const exact: MatchState = exactHit.length ? "mapped" : "unmapped";
+    const concept: MatchState = hits.length ? "mapped" : "unmapped";
+    return {
+      term: term.id,
+      scheme,
+      target: "skos" as const,
+      exact,
+      concept,
+      ...(hits.length ? { matches: hits } : {}),
+    };
+  });
+}
+
+/**
+ * The FHIR half, resolved against a PUBLISHED IG AT A VERSION.
+ *
+ * Owner, 2026-09-30, choosing between the two assertions this could make:
+ * **"this code is in the published base IG at version X"**, not "this code is
+ * in the collection this organisation curates today". They can disagree, and
+ * only the first is checkable offline and reproducible from the repository.
+ *
+ * So OCL is not the resolver here. It remains the terminology-MANAGEMENT tool
+ * the owner named for the SMART Guidelines side (bean `ejug`) — a different
+ * job from answering "does this code exist in v1.0.0".
+ *
+ * Matching is on the concept's DISPLAY, normalised, because a glossary
+ * candidate is a label and a FHIR code is an identifier: the display is the
+ * only field the two share. A code match would be a coincidence of spelling.
+ */
+export function resolveFhir(
+  cands: { term: GlossTerm; scheme: string }[],
+  pinned: PinnedTerminology | string,
+): TermMapping[] {
+  if (typeof pinned === "string") {
+    // No snapshot: undetermined WITH the reason, never `unmapped`.
+    return cands.map(({ term, scheme }) => ({
+      term: term.id,
+      scheme,
+      target: "fhir" as const,
+      exact: "undetermined" as const,
+      concept: "undetermined" as const,
+      undetermined_reason: pinned,
+    }));
+  }
+  const idx = new Map<string, ConceptMatch[]>();
+  for (const c of pinned.concepts) {
+    const k = normaliseLabel(c.display);
+    if (!k) continue;
+    idx.set(k, [
+      ...(idx.get(k) ?? []),
+      {
+        uri: `${c.system}#${c.code}`,
+        predicate: "skos:closeMatch" as const,
+        via: c.display,
+        scheme: `who-smart-base@${pinned.version}`,
+      },
+    ]);
+  }
+  return cands.map(({ term, scheme }) => {
+    const hits = idx.get(normaliseLabel(term.prefLabel)) ?? [];
+    // `closeMatch`, never `exactMatch`: a label matching a code's display
+    // means the two are about the same thing, not that the glossary term IS
+    // that code. Claiming exactness across vocabularies is the overreach
+    // `vocabulary-authority` exists to prevent.
+    return {
+      term: term.id,
+      scheme,
+      target: "fhir" as const,
+      exact: "unmapped" as const,
+      concept: (hits.length ? "mapped" : "unmapped") as MatchState,
+      ...(hits.length ? { matches: hits } : {}),
+    };
+  });
+}
+
+export interface PinnedTerminology {
+  version: string;
+  concepts: { system: string; code: string; display: string }[];
+}
+
+/**
+ * The pinned snapshot, or the REASON there is none.
+ *
+ * Returns a string rather than throwing, because "no pinned terminology" is a
+ * determined state of this repository and belongs on every row as its
+ * `undetermined_reason` — not as a crash, and not as `unmapped`.
+ */
+export function pinnedTerminology(root: string): PinnedTerminology | string {
+  const rec = join(root, FHIR_PIN);
+  const snap = join(root, FHIR_SNAPSHOT);
+  if (!existsSync(rec)) return `${FHIR_PIN} is absent, so no published IG is pinned`;
+  let version: string | undefined;
+  try {
+    version = (JSON.parse(readFileSync(rec, "utf-8")) as { version?: string }).version;
+  } catch {
+    return `${FHIR_PIN} will not parse`;
+  }
+  if (!version || version === "unpinned") {
+    return `${FHIR_PIN} is \`unpinned\` — the fhir half asserts a published IG at a VERSION, and none is chosen`;
+  }
+  if (!existsSync(snap)) {
+    return `${FHIR_PIN} pins ${version} but ${FHIR_SNAPSHOT} is absent — run scripts/pin-smart-base-terminology.ts`;
+  }
+  let raw: unknown;
+  try {
+    raw = JSON.parse(readFileSync(snap, "utf-8"));
+  } catch {
+    return `${FHIR_SNAPSHOT} will not parse`;
+  }
+  // VALIDATE, never cast. A bare `as PinnedTerminology` checked only
+  // `version`, so a snapshot whose `concepts` were empty, absent or
+  // malformed was returned as a CONSULTED terminology — every candidate then
+  // came back `unmapped`, determined and with no reason. That is the false
+  // measured-zero this whole check exists to refuse, reached from inside it.
+  // Found by a review bot on #1633; the schema was already written and simply
+  // not called.
+  const parsed = PinnedTerminologySchema.safeParse(raw);
+  if (!parsed.success) {
+    const first = parsed.error.issues[0];
+    const where = first?.path.length ? ` at \`${first.path.join(".")}\`` : "";
+    return `${FHIR_SNAPSHOT} does not satisfy PinnedTerminologySchema${where}: ${first?.message ?? "invalid"} — re-snapshot with scripts/pin-smart-base-terminology.ts`;
+  }
+  const d = parsed.data;
+  if (d.version !== version) {
+    // The one way this could assert something false: a snapshot of a
+    // different version than the record names.
+    return `${FHIR_SNAPSHOT} holds ${d.version} while ${FHIR_PIN} pins ${version} — re-snapshot at the pinned tag`;
+  }
+  // A snapshot of NO concepts cannot support a determined miss. The schema
+  // permits an empty array because an empty terminology is a representable
+  // thing; what is not representable is consulting one and calling the result
+  // a measurement. So the emptiness is refused HERE, where the consequence
+  // lives, rather than by tightening the schema for every other reader.
+  if (d.concepts.length === 0) {
+    return `${FHIR_SNAPSHOT} pins ${version} but holds NO concepts — nothing was consulted, so a miss is undetermined rather than unmapped`;
+  }
+  return d;
+}
+
+export function run(root: string): { mappings: TermMapping[]; scope: MappingScope[] } {
+  const schemes = glossarySchemes(root);
+  const cands = candidates(schemes);
+  const idx = skosIndex(schemes);
+  const authoredSchemes = [
+    ...new Set(schemes.filter((s) => s.terms.some((t) => t.status === "authored")).map((s) => s.id)),
+  ].sort();
+
+  const pinned = pinnedTerminology(root);
+  const scope: MappingScope[] = [
+    {
+      target: "skos",
+      consulted: authoredSchemes,
+      via: "local — authored terms in this checkout's declared glossary schemes",
+    },
+    {
+      target: "fhir",
+      consulted: typeof pinned === "string" ? [] : [`who-smart-base@${pinned.version}`],
+      via:
+        typeof pinned === "string"
+          ? FHIR_PIN
+          : `${FHIR_SNAPSHOT} — a published IG at a version, snapshotted offline`,
+      ...(typeof pinned === "string"
+        ? {
+            unreachable_reason:
+              `${pinned}. Every fhir row is therefore \`undetermined\`, NOT \`unmapped\` — ` +
+              "a terminology nobody consulted has said nothing.",
+          }
+        : {}),
+    },
+  ];
+
+  const mappings = [...resolveSkos(cands, idx), ...resolveFhir(cands, pinned)];
+  return { mappings, scope };
+}
+
+/**
+ * One row per (scheme, target), with all three counts and the mapped terms.
+ *
+ * Exported because `glossary-page.ts` renders these rows and must not have a
+ * second idea of their shape — the page and the record disagreeing about what
+ * a state means is the drift a shared type prevents.
+ */
+export interface SchemeState {
+  scheme: string;
+  target: string;
+  mapped: number;
+  unmapped: number;
+  undetermined: number;
+  /** Why the whole target could not be determined, where that is the case. */
+  reason?: string;
+  /** Term ids that matched, so the page can badge exactly those. */
+  mappedTerms: string[];
+}
+
+export function perScheme(
+  ms: TermMapping[],
+  target: string,
+  scope: MappingScope[],
+): SchemeState[] {
+  const of = ms.filter((m) => m.target === target);
+  const reason = scope.find((s) => s.target === target)?.unreachable_reason;
+  const schemes = [...new Set(of.map((m) => m.scheme))].sort();
+  return schemes.map((scheme) => {
+    const rows = of.filter((m) => m.scheme === scheme);
+    const n = (k: MatchState) => rows.filter((r) => r.concept === k).length;
+    return {
+      scheme,
+      target,
+      mapped: n("mapped"),
+      unmapped: n("unmapped"),
+      undetermined: n("undetermined"),
+      ...(reason ? { reason } : {}),
+      mappedTerms: rows.filter((r) => r.concept === "mapped").map((r) => r.term).sort(),
+    };
+  });
+}
+
+function summarise(ms: TermMapping[], target: string): string {
+  const of = ms.filter((m) => m.target === target);
+  const n = (k: MatchState) => of.filter((m) => m.concept === k).length;
+  // Three counts, never a ratio — see the module header.
+  return `${of.length} candidate(s): ${n("mapped")} mapped, ${n("unmapped")} unmapped, ${n("undetermined")} undetermined`;
+}
+
+function main(): number {
+  const check = process.argv.includes("--check");
+  const { mappings, scope } = run(ROOT);
+
+  const file = {
+    $schema: "folio-term-mappings/v1" as const,
+    checked_at: new Date().toISOString().slice(0, 10),
+    scope,
+    mappings,
+  };
+  const parsed = TermMappingsFileSchema.safeParse(file);
+  if (!parsed.success) {
+    console.error("the result does not satisfy its own schema:");
+    console.error(JSON.stringify(parsed.error.issues, null, 2));
+    return 2;
+  }
+
+  for (const t of MAPPING_TARGETS) {
+    const s = scope.find((x) => x.target === t)!;
+    console.log(`  ${t}: ${summarise(mappings, t)}`);
+    console.log(`    consulted ${s.consulted.length ? s.consulted.join(", ") : "(none declared)"} via ${s.via}`);
+    if (s.unreachable_reason) console.log(`    ! ${s.unreachable_reason}`);
+  }
+
+  const result = buildQaResult({
+    script: "cat-harness/scripts/check-term-mapping.ts",
+    scriptAbsPath: import.meta.path,
+    subject: { kind: "glossary", id: "folio-assistant-core/glossary" },
+    families: Object.fromEntries(
+      MAPPING_TARGETS.map((t) => [
+        t,
+        {
+          summary: summarise(mappings, t),
+          // PER SCHEME, not per term. One row per candidate per target is
+          // 5 210 entries here of which 5 210 say the same thing, and burying
+          // the actionable ones under them is the failure this file's whole
+          // shape exists to avoid. Per scheme is 5 rows, carries all three
+          // counts, and is what the glossary page renders.
+          //
+          // The mapped TERMS are named inside each row, because those are the
+          // ones a reader acts on and there are few of them by construction —
+          // if that ever stops being true, the page is the thing to page, not
+          // the record to truncate.
+          entries: perScheme(mappings, t, scope),
+        },
+      ]),
+    ),
+  });
+  const rel = join("cat-harness", QA_RESULTS_DIR, `${STEM}.qa-results.json`);
+  if (check) {
+    // `--check` VERIFIES. Writing in check mode would make the gate green by
+    // repairing what it was asked to inspect, which is the one thing a check
+    // must not do.
+    //
+    // Compared on the FAMILIES, not the whole file: `producer.script_hash`
+    // moves whenever this script is edited and the timestamp moves every run,
+    // and neither is a finding. What must not drift is what was found.
+    const abs = join(ROOT, rel);
+    if (!existsSync(abs)) {
+      console.error(`  ✗ ${rel} does not exist — run \`bun run term:mapping\``);
+      return 1;
+    }
+    const prior = JSON.parse(readFileSync(abs, "utf-8")) as { families?: unknown };
+    if (JSON.stringify(prior.families) !== JSON.stringify(result.families)) {
+      console.error(`  ✗ ${rel} is stale — run \`bun run term:mapping\` and commit it`);
+      return 1;
+    }
+    console.log(`  ✓ ${rel} is current`);
+    return 0;
+  }
+  const out = writeQaResult(join(ROOT, "cat-harness"), STEM, result);
+  console.log(`  wrote ${out.slice(ROOT.length + 1)}`);
+  // Never fails on WHAT IT FOUND. The three states are the report, and an
+  // unmapped candidate may be a term this corpus is right to coin.
+  return 0;
+}
+
+if (import.meta.main) process.exit(main());

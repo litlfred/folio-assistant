@@ -16,7 +16,7 @@ re-derived from `origin/main` rather than from the audit's report.
 
 | source | says |
 |---|---|
-| `skills/folio-core/bean-blocking.md` §"When it really is blocked" | its worked example is **`status: blocked`** · waits on · since · expires · handoff |
+| `skills/sdlc/sdlc-core/bean-blocking.md` §"When it really is blocked" | its worked example is **`status: blocked`** · waits on · since · expires · handoff |
 | `beans update --help` | *"New status (in-progress, todo, draft, completed, scrapped)"* |
 | `schemas/tool-types.ts:36` | `draft \| todo \| in-progress \| completed \| scrapped` — *"Exactly what `beans update --status` accepts"* |
 

@@ -525,6 +525,13 @@ jobs:
           # authored term's labels and definition have a current .pot in
           # every locale, beside the BPMN templates.
           bun run glossary:pot:check
+          # Bean `7wou` (owner, 2026-09-29: "extracting exsiting glossary
+          # needs compaision to existing termonology/coding"). Reports and
+          # never grades: an unmapped candidate may be a term this corpus is
+          # right to coin. It fails only on a result that breaks its own
+          # schema — notably an `undetermined` row with no reason, which is
+          # the one way silence could read as "no match" (bean `dh4f`).
+          bun run check:term-mapping
 
       # The agentic engine's after-check (#1180 step 5): every workflow
       # instance's history as W3C PROV-O, with authorizeTask re-run on each
@@ -939,6 +946,27 @@ jobs:
       # comment is a claim that outlives its measurement.
       - name: no wrong-direction edges across declared instances
         run: bun run kg:detangle:direction
+
+      # The same direction rule, over MODULE LOADS in every code file of every
+      # declared instance — no scan list. The step above reaches only the
+      # directories in `kg-detangle.ts`'s `SCAN`, and states that an import
+      # from an unlisted directory is "real and invisible to it": with `bf5l`'s
+      # sabotage planted in `cat-harness/adapters/` (not in `SCAN`), measured
+      # 2026-09-30, the step above printed 0 and exited 0, this one printed 1
+      # and exited 1. This does NOT widen `SCAN` or touch that step's pinned
+      # adjudications (the owner's Option 2 ruling on `p11x` stands); it is a
+      # second subject — a module an instance cannot be lifted out without —
+      # judged by the same `allowedFromNeeds`, so the two cannot disagree about
+      # an edge both see.
+      #
+      # `--all` because every instance's count was 0 once `builtin-adapters.ts`
+      # stopped holding `../<instance>/` paths (the adapters are now declared by
+      # the instances that ship them), and a check becomes an error once its
+      # count is zero. It also catches a module-path literal handed to a
+      # variable `import()` — the shape that table had — and PRINTS the
+      # `import(expr)` calls it cannot read as could-not-determine, never as 0.
+      - name: no module imports from an instance built on top of its own
+        run: bun run check:import-direction --all
 
       # Every term the code can MINT has a definition in the published
       # vocabulary. 93 classes and properties hang off `FOLIO_NS`, and until
@@ -1489,6 +1517,15 @@ jobs:
           bun run deps:python:check
           bun run check:l1-complete
           bun run check:l1-complete -- --check
+          # Bean `q7ey`: an ingested upload retires to `fsh-guts/uploads/`.
+          # The rule was written and hand-swept on 2026-09-30, and that one
+          # sweep left eight files in two places and a whole harness
+          # unswept -- so the rule needed enforcement, not a better sweep.
+          # Blocking on a bare queue drop; who-iris's per-source intake
+          # directories are reported and advisory, because moving the PDF
+          # out of one would orphan its `intake.json` and that layout is
+          # being reworked in #1612.
+          bun run check:uploads-retired
           bun run check:catalogue
           # Bean `06e3` §4(b): every harness declaring a `docs` graph owes at
           # least one MEANINGFULLY POPULATED page. Exit 2 — could not

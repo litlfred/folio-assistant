@@ -217,6 +217,6 @@ of `needs_owner` blocks for the author.
 
 - Rubric spec: `docs/requirements/2026-07-04-folio-assistant-proof-narrative-checkers.md` §5A
 - Author voice: `skills/authoring/authoring-core/milnor-exposition-standard.md`
-- Merge pipeline: `skills/folio-core/prepare-merge-auto.md`
+- Merge pipeline: `skills/sdlc/sdlc-core/prepare-merge-auto.md`
 - Sister drain: `.claude/skills/local/integration-backlog.md`
 - Flag guard: `content/pipeline/qa-flag-preservation-audit.ts`

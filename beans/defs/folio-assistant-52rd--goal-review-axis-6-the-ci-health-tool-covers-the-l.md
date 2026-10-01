@@ -19,4 +19,4 @@ Found 2026-09-24 in a 1-day goal review. The rule concerned is `goal-review` §"
 
 ## Summary of Changes
 
-Amended `cat-harness/skills/folio-core/goal-review.md` (and `.claude/commands/goal-review.md` for tjj6) on branch claude/magical-archimedes-4qkfxp-goal-review-gaps; every done-when box addressed in the skill text.
+Amended `cat-harness/skills/sdlc/sdlc-core/goal-review.md` (and `.claude/commands/goal-review.md` for tjj6) on branch claude/magical-archimedes-4qkfxp-goal-review-gaps; every done-when box addressed in the skill text.

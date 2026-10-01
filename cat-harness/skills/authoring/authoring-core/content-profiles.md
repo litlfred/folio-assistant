@@ -46,6 +46,16 @@ can say which answer was meant.
 If only rules, it is **a profile plus a subclass**, not an adapter. Reaching for
 a new adapter is the expensive answer and usually the wrong one.
 
+**The instance that ships a content adapter declares it; the harness never
+names it.** `contentAdapters` in that instance's `<instance>.json` —
+`contentType`, instance-relative `module`, `className`, and `extends` for the
+type it specialises — is what `src/builtin-adapters.ts` discovers. `extends`
+orders the fallback: the specialisation leads, because falling back *to* a
+superset loses nothing and falling back *from* it loses its tools. The harness
+held `../<instance>/adapters/…` paths until 2026-09-30, a variable import no
+static gate could see and the edge that kept it from lifting into its own
+repository; `check:import-direction` now fails on that shape (bean `p11x`).
+
 ## What profile enforcement catches that schema validation cannot
 
 A profile check runs on every validation, and it exists because the gap it

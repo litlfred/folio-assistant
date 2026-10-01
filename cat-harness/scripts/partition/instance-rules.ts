@@ -210,6 +210,10 @@ export const RULES: Rule[] = [
       // — the module this tool already shares — so both axes are classified
       // by the same test and answer to the same declaration (bean `zhg2`).
       "scripts/check-reference-direction.ts",
+      // The IMPORT half of that arrow, over every declared instance (bean
+      // `p11x`). Harness for the same reason: it reads declarations and module
+      // specifiers, consumes the same `layer-direction.ts`, and no folio content.
+      "scripts/check-import-direction.ts",
       "scripts/check-instance-config.ts",    // the config-naming gate
       // HARNESS, by the same test as `check-ci-health` above: its subject is
       // this repository's own Jekyll templates and the baseurl its site is
@@ -892,6 +896,11 @@ export const RULES: Rule[] = [
       // Recorded here rather than acted on: a partition-tuning pass is the
       // wrong place to redesign an adapter contract.
       "src/types.ts",
+      // HARNESS. The content model and the content half of an adapter, split
+      // out of `src/types.ts` (bean `w2gr`, step 1, owner ruling 2026-10-01):
+      // the server half moves to `cat-harness-tools`, and core must not depend
+      // on that, so the vocabulary both sides use stays here.
+      "src/content-types.ts",
       // HARNESS, both re-triaged 2026-09-19 while draining the last edges.
       //
       // `schemas/contributions.ts` is what a DEPENDENCY may add to the root
@@ -1412,6 +1421,25 @@ export const RULES: Rule[] = [
       "scripts/check-fallback-roles.ts",    // reads role-graph
       "scripts/check-instance-render.ts",   // can an instance render its own graph
       "scripts/check-kind-validators.ts",   // graph kinds and their validators
+      // HARNESS, although what it reads is core's glossary — the test is the
+      // module's imports, not the data's home. It reaches only
+      // `schemas/term-mapping.ts` and `scripts/qa-results.ts`, both harness,
+      // so classifying it core would buy two wrong-direction edges for the
+      // tidiness of filing it beside the glossary it inspects. Same reasoning
+      // the content-side block below states in the other direction.
+      "scripts/check-term-mapping.ts",      // is a minted candidate already somebody's concept (bean `7wou`)
+      // HARNESS on the same test, and it is worth stating because the
+      // instinct pulls the other way: what this reads is `uploads/` and
+      // `library/`, a folio's own material, and its three nearest
+      // neighbours by SUBJECT — `check-l1-complete`, `ingest-document`,
+      // `l1-blocks` — are all in the content-side block below. It imports
+      // `schemas/cat-harness.ts` and nothing else. The declaration resolver
+      // is harness, so filing this core would buy a wrong-direction edge for
+      // the tidiness of sitting beside the pipeline it audits. The three
+      // below are core because THEY reach `schemas/narrative.ts` and its
+      // siblings; this one reaches no core schema at all, which is what
+      // makes it a different answer rather than an inconsistent one.
+      "scripts/check-uploads-retired.ts",   // an ingested upload is not still in the queue (bean `q7ey`)
       "scripts/check-subgraph-coverage.ts", // is a declared subgraph reachable at all (bean `2krx`)
       "scripts/check-quiet-claim-liveness.ts", // the work plan's own state against the remote (bean `omki`)
       "scripts/skill-governance.ts",        // which skill governs a directory, read from the skills (#1168 B7b)

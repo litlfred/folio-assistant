@@ -32,7 +32,7 @@ import { mkdirSync, mkdtempSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 
-import { publishablePackages } from "../check-published-packages.js";
+import { GitUnanswerable, publishablePackages } from "../check-published-packages.js";
 
 /** A throwaway git repo holding `files`; every path is staged unless untracked. */
 function fixture(files: Record<string, string>, untracked: Record<string, string> = {}): string {
@@ -168,5 +168,60 @@ describe("publishablePackages — what this repository ships, in both ecosystems
     expect(found.length).toBeGreaterThan(0);
     const qa = found.filter((p) => p.dir.endsWith("schemas/block-qa-schema"));
     expect(qa.map((p) => p.ecosystem).sort()).toEqual(["npm", "pypi"]);
+  });
+});
+
+/*
+ * An unanswerable git is not an empty repository. Bean `bnuy`.
+ *
+ * `manifests()` returned `[]` when `git ls-files` failed, until 2026-09-30.
+ * The entry point's vacuity guard does not catch that, and the reason is the
+ * interesting half: discovery asks git once PER ECOSYSTEM and concatenates,
+ * so a failure on `*pyproject.toml` alone deletes the Python packages while
+ * the npm ones still answer — `pkgs.length` is not 0, the guard is satisfied,
+ * and the gate reports green over a corpus with a hole in it. That is the
+ * exact shape this file's header was written about (`1s5s`: the npm half
+ * passing vouching for a Python half nothing ran).
+ *
+ * A directory that is not a git repository at all is the reachable stand-in
+ * for "git could not answer" — `git ls-files` exits 128 there. Whether the
+ * cause is a missing repository, a broken git or ENOBUFS does not change what
+ * the caller may conclude, which is nothing.
+ */
+describe("git could not answer — bean `bnuy`", () => {
+  test("a directory that is not a repository REFUSES rather than reporting no packages", () => {
+    const bare = mkdtempSync(join(tmpdir(), "pubpkg-nogit-"));
+    // A real, publishable manifest sits here, so an empty answer would be
+    // wrong on the merits too and not merely uninformative.
+    writeFileSync(join(bare, "package.json"), JSON.stringify({ name: "@x/y", scripts: { build: "true" } }));
+
+    expect(() => publishablePackages(bare)).toThrow(GitUnanswerable);
+  });
+
+  test("the refusal names the pathspec and says nothing was checked", () => {
+    const bare = mkdtempSync(join(tmpdir(), "pubpkg-nogit-"));
+    try {
+      publishablePackages(bare);
+      throw new Error("expected a refusal");
+    } catch (e) {
+      expect(e).toBeInstanceOf(GitUnanswerable);
+      const g = e as GitUnanswerable;
+      expect(g.pathspec).toBe("*package.json");
+      expect(g.message).toContain("nothing was checked");
+      // The reason git gave, not a generic sentence: a reader must be able to
+      // tell ENOBUFS from "not a repository" without re-running it.
+      expect(g.why.length).toBeGreaterThan(0);
+    }
+  });
+
+  test("a repository that genuinely publishes nothing still answers []", () => {
+    const repo = mkdtempSync(join(tmpdir(), "pubpkg-empty-"));
+    spawnSync("git", ["init", "-q"], { cwd: repo });
+    writeFileSync(join(repo, "README.md"), "no packages here");
+    spawnSync("git", ["add", "-A"], { cwd: repo });
+
+    // The distinction the throw exists to preserve: this is a determined
+    // empty and must NOT refuse.
+    expect(publishablePackages(repo)).toEqual([]);
   });
 });

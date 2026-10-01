@@ -25,8 +25,8 @@ Measured on `main` before deciding. The four skills total 1,404 lines.
 `coordinate.md` alone is 731 lines with 94 matches for GitHub-ish terms, of
 which only **12** are concrete invocations:
 
-    grep -ciE 'github|gh pr|pull request|\bPR\b|mcp__github' skills/folio-core/coordinate.md   # 94
-    grep -cE  'mcp__github|gh api|gh pr|gh issue'             skills/folio-core/coordinate.md   # 12
+    grep -ciE 'github|gh pr|pull request|\bPR\b|mcp__github' skills/sdlc/sdlc-core/coordinate.md   # 94
+    grep -cE  'mcp__github|gh api|gh pr|gh issue'             skills/sdlc/sdlc-core/coordinate.md   # 12
 
 The other 82 are conceptual — "pull request", "PR", "GitHub" as a noun. So the
 split would have moved 1,404 lines of already-portable prose to isolate a few

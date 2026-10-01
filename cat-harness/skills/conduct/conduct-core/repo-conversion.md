@@ -88,13 +88,13 @@ tokens:
 |---|---|---|
 | **inline** | under ~10 documents | do it here, no subagents |
 | **one agent** | tens of documents, one kind | a single background agent, reporting per document |
-| **small swarm** | hundreds, or several distinct kinds | [`dispatch-agent`](../../folio-core/dispatch-agent.md) — 2–4 agents partitioned **by directory**, never by file count |
+| **small swarm** | hundreds, or several distinct kinds | [`dispatch-agent`](../../sdlc/sdlc-core/dispatch-agent.md) — 2–4 agents partitioned **by directory**, never by file count |
 
 Partition by directory because a per-file partition puts two agents in the same
 manifest, and the resulting conflicts cost more than the parallelism saved.
 
 Open one bean per ingestion front before dispatching — running the existence
-check in [`todo-manager.md`](../../folio-core/todo-manager.md) §"Check before you create" first —
+check in [`todo-manager.md`](../../sdlc/sdlc-core/todo-manager.md) §"Check before you create" first —
 so a session that dies mid-import leaves a plan behind rather than a half-full
 `library/`.
 

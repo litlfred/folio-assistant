@@ -54,15 +54,17 @@ import { registerRenderOrderTools } from "../../../cat-harness/src/tools/render-
 import { registerReadmeAuditTools } from "../../../cat-harness/src/tools/readme-audit.js";
 import { registerLsiQueryTools } from "../../../cat-harness/src/tools/lsi-query.js";
 
+// The content model lives in the harness's `content-types` (bean `w2gr`);
+// only the server-facing contract still comes from `types`, and that is what
+// step 2 separates from this adapter.
 import type {
-  ContentAdapter,
   ResolvedDocument,
   ResolvedBlock,
   DocumentDiff,
   BlockDiff,
   BranchCharacterization,
-  TriageResult,
-  UserRole } from "../../../cat-harness/src/types.js";
+  TriageResult } from "../../../cat-harness/src/content-types.js";
+import type { ContentAdapter, UserRole } from "../../../cat-harness/src/types.js";
 // The REAL feedback type, straight from the schema that validates it.
 //
 // It used to come through `src/types.ts`, which re-exported it from here —
