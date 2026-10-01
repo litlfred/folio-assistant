@@ -293,15 +293,29 @@ describe("no-orphan-sidecar in the results tree", () => {
     rmSync(root, { recursive: true, force: true });
   });
 
-  test("no mirror directory at all is a determined ZERO, not a finding", async () => {
-    // The normal state of a folio that has not run its sweep since upgrading.
-    // "Could not determine" is a third state everywhere in this repo, but an
-    // absent results directory is not one of its instances: nothing has been
-    // written there, so nothing is orphaned there.
-    const root = folio({ "ch-a": ["alpha"] }, {});
+  test("no mirror for THIS directory, inside a present results tree, is a determined ZERO", async () => {
+    // Another chapter has verdicts, so the tree is here; this one has none
+    // written. Nothing has been written for it, so nothing is orphaned there.
+    const root = folio({ "ch-a": ["alpha"], "ch-b": ["beta"] }, { "ch-b": ["beta"] });
     const { issues } = await validateInFolio(root, join(root, "folio", "demo", "ch-a"));
     expect(orphanIssues(issues).length).toBe(0);
     expect(issues.some((i) => i.message.includes("could not read the results tree"))).toBe(false);
+    expect(issues.some((i) => i.message.includes("could not determine orphans"))).toBe(false);
+    rmSync(root, { recursive: true, force: true });
+  });
+
+  test("an ABSENT results tree is UNKNOWN, said once, never a clean pass (C7)", async () => {
+    // Bean `c8uq`. This used to be a determined zero "by design". Once the
+    // derived corpus lives on `qa-reports`, every unfetched checkout looks
+    // like this, and "no orphans" would be a verdict over nothing.
+    const root = folio({ "ch-a": ["alpha"], "ch-b": ["beta"] }, {});
+    const { issues } = await validateInFolio(root, join(root, "folio", "demo", "ch-a"));
+    expect(orphanIssues(issues).length).toBe(0);
+    const notices = issues.filter((i) => i.message.includes("could not determine orphans"));
+    expect(notices).toHaveLength(1);
+    expect(notices[0]).toMatchObject({ level: "warning" });
+    expect(notices[0]!.message).toContain("qa:fetch");
+    // A warning, so validity still rests on the checks that DID run.
     rmSync(root, { recursive: true, force: true });
   });
 

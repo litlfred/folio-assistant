@@ -49,6 +49,7 @@ import {
 } from "../content/pipeline/translation-index.ts";
 import {
   QA_FAMILY_LABEL,
+  qaCorpusAvailability,
   readWitnessDoc,
   rollUpWitnessDocs,
   sidecarPaths,
@@ -68,7 +69,7 @@ import {
   sourceLinks,
   repoRootFor,
 } from "../schemas/cat-harness.ts";
-import { readQaGraph } from "../content/pipeline/qa-graph-index.ts";
+import { isQaGraphUnknown, projectQaGraph } from "../content/pipeline/qa-graph-index.ts";
 import { tileCounts } from "../schemas/tile-count.js";
 
 const INSTANCE_ROOT = join(dirname(fileURLToPath(import.meta.url)), "..");
@@ -258,6 +259,34 @@ function readBlock(page: WebPage, nodeId: string, block: string): string {
 // browser code that fetches them, for no gain — the reader's path to the
 // evidence is not what was in the wrong place.
 const QA_ASSET_DIR = join(INSTANCE_ROOT, "test", "results", "witnesses");
+
+/**
+ * Was the DERIVED QA corpus in this checkout before this run wrote anything?
+ *
+ * Asked HERE, before the first witness is emitted, because this generator
+ * recreates `witnesses/` itself and a question asked afterwards finds its own
+ * output — which is exactly how the `qa` tile went from 965 to 2 (bean `tfqf`,
+ * defect C9). Once derived QA lives on the `qa-reports` branch, an absent
+ * corpus means `qa:fetch` did not run or missed; it does NOT mean nothing was
+ * swept. So a subject with no sidecar renders "not available in this build"
+ * rather than "not swept", and the `qa` projection publishes `unknown` rather
+ * than a count. See `qaCorpusAvailability`.
+ */
+const QA_CORPUS = qaCorpusAvailability(INSTANCE_ROOT);
+if (!QA_CORPUS.present) {
+  console.log(
+    `  ? the derived QA corpus is ABSENT (${QA_CORPUS.trees.map((t) => relative(INSTANCE_ROOT, t.dir)).join(", ")}): ` +
+      `badges say "not available", and assets/qa/index.json says unknown. ` +
+      `Run \`bun run qa:fetch --ref main\` (or \`--ref pr/<n>\`) first to publish the evidence.`,
+  );
+}
+
+/** The badge title for a subject with no sidecar, which depends on whether the corpus was here at all. */
+function unsweptTitle(label: string, what: string): string {
+  return QA_CORPUS.present
+    ? `${label}: not swept — no ${what}`
+    : `${label}: not available in this build — the QA results were not fetched, so whether this was swept is unknown`;
+}
 
 /**
  * The todo board's data, published as ONE file rather than one per node.
@@ -479,9 +508,13 @@ function qaIcons(page: WebPage, node: WebPageNode): string {
       // "has anything ever ruled on this?" — and not a peek at the ruling.
       const swept = sidecarPaths(family, subject, INSTANCE_ROOT).length > 0;
       if (!swept) {
-        const title = `${label}: not swept — no sidecar for this ${noun}`;
+        const title = unsweptTitle(label, `sidecar for this ${noun}`);
+        // `fa-qa-unavailable` beside `fa-qa-unswept`, not instead of it: the
+        // mark looks the same (nothing to open), and the class and the title
+        // say WHICH absence it is.
+        const unavailable = QA_CORPUS.present ? "" : " fa-qa-unavailable";
         out.push(
-          ` <span class="fa-qa-badge fa-qa-unswept fa-qa-fam-${family}" ` +
+          ` <span class="fa-qa-badge fa-qa-unswept${unavailable} fa-qa-fam-${family}" ` +
             `title="${title}" aria-label="${title}">` +
             `<span class="fa-qa-tag">${tag}</span></span>`,
         );
@@ -591,10 +624,11 @@ function pageQaIcons(page: WebPage): string {
   const doc = rollUpWitnessDocs(family, subjects, INSTANCE_ROOT, `${page.title} — translations`);
 
   if (!doc) {
-    const title = `${label}: not swept — no block on this page carries a translation verdict`;
+    const title = unsweptTitle(label, "block on this page carries a translation verdict");
+    const unavailable = QA_CORPUS.present ? "" : " fa-qa-unavailable";
     return (
       `<span class="fa-qa-badges fa-page-qa-badges">` +
-      `<span class="fa-qa-badge fa-qa-unswept fa-qa-fam-${family}" ` +
+      `<span class="fa-qa-badge fa-qa-unswept${unavailable} fa-qa-fam-${family}" ` +
       `title="${title}" aria-label="${title}">` +
       `<span class="fa-qa-tag">${tag}</span></span></span>`
     );
@@ -1493,28 +1527,37 @@ function processHierarchy(): Record<string, string[]> {
     // an undeclared graph look identical from the published site.
     console.log(`  · assets/qa/index.json — no directory declares the \`qa\` graph`);
   } else {
-    const ix = readQaGraph(qaDir);
+    const ix = projectQaGraph(qaDir, QA_CORPUS.present);
     const out = join(OUT_DIR, "assets", "qa", "index.json");
     mkdirSync(dirname(out), { recursive: true });
-    emit(
-      out,
-      // `ix.files`, not `ix.families.length`: a family is a schema the sweep
-      // groups by, and 7 on the tile where 636 documents were swept would be
-      // a number the reader cannot reconcile with the page it opens. The two
-      // third states this block already prints — `unclassified`, `unreadable`
-      // — stay in the console; the tile carries one number and its unit.
-      JSON.stringify({ ...tileCounts({ qa: [ix.files, "documents"] }), ...ix }, null, 2) + "\n",
-      "verdict",
-    );
-    const fams = ix.families.map((f) => `${f.schema} ${f.files}`).join(", ");
-    console.log(
-      `  ${check ? "·" : "✓"} assets/qa/index.json (${ix.files} document(s), ` +
-        `${ix.families.length} famil${ix.families.length === 1 ? "y" : "ies"}: ${fams}` +
-        // Both third states are printed EVERY run, including at zero. A count
-        // that appears only when non-zero cannot be told from one nobody
-        // measured.
-        `; ${ix.unclassified} unclassified, ${ix.unreadable} unreadable)`,
-    );
+    if (isQaGraphUnknown(ix)) {
+      // C9: no count of what this build happened to write. The projection
+      // says `unknown` with its reason and carries NO tile count, so the
+      // navbar draws no number (`readTileCounts`' third state) instead of a
+      // false one.
+      emit(out, JSON.stringify(ix, null, 2) + "\n", "verdict");
+      console.log(`  ? assets/qa/index.json — UNKNOWN: the derived QA corpus is not in this build; no count published`);
+    } else {
+      emit(
+        out,
+        // `ix.files`, not `ix.families.length`: a family is a schema the sweep
+        // groups by, and 7 on the tile where 636 documents were swept would be
+        // a number the reader cannot reconcile with the page it opens. The two
+        // third states this block already prints — `unclassified`, `unreadable`
+        // — stay in the console; the tile carries one number and its unit.
+        JSON.stringify({ ...tileCounts({ qa: [ix.files, "documents"] }), ...ix }, null, 2) + "\n",
+        "verdict",
+      );
+      const fams = ix.families.map((f) => `${f.schema} ${f.files}`).join(", ");
+      console.log(
+        `  ${check ? "·" : "✓"} assets/qa/index.json (${ix.files} document(s), ` +
+          `${ix.families.length} famil${ix.families.length === 1 ? "y" : "ies"}: ${fams}` +
+          // Both third states are printed EVERY run, including at zero. A count
+          // that appears only when non-zero cannot be told from one nobody
+          // measured.
+          `; ${ix.unclassified} unclassified, ${ix.unreadable} unreadable)`,
+      );
+    }
   }
 }
 

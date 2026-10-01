@@ -1,11 +1,11 @@
 ---
 # folio-assistant-c8uq
 title: 'QA READERS F5: corpus walkers that pass on an empty corpus (orphan-verdict sweep, validate orphan check, reviewer permission)'
-status: todo
+status: in-progress
 type: task
 priority: high
 created_at: 2026-10-01T08:47:14Z
-updated_at: 2026-10-01T08:47:14Z
+updated_at: 2026-10-01T16:44:05Z
 parent: folio-assistant-3fva
 blocked_by:
     - folio-assistant-16ei
@@ -28,5 +28,19 @@ These gates walk the QA corpus and judge what they find. Once the corpus is gone
 - Rebaseline the declared-path literals as they move into `qa-store`.
 
 ## Done when
-- [ ] with `test/results/` absent and no fetch, `check:orphan-verdicts`, `content_validate`'s orphan check and `check:qa-reviewer-permission` each exit non-zero, or report `unknown` by name; none of them prints a pass
-- [ ] with the branch fetched, each gives today's answer
+- [x] with `test/results/` absent and no fetch, `check:orphan-verdicts`, `content_validate`'s orphan check and `check:qa-reviewer-permission` each exit non-zero, or report `unknown` by name; none of them prints a pass
+- [x] with the branch fetched, each gives today's answer
+
+## Summary of Changes
+
+Branch `qa-readers-f5-f6-c8uq-tfqf` (commit `1d82ae83`), not pushed.
+
+| reader | before (corpus absent) | after |
+|---|---|---|
+| `check:orphan-verdicts` | `✓ no orphaned block verdicts`, exit 0 | `vacuityRefusal`: "examined 0 members", names `qa:fetch`, exit 2 |
+| `content_validate` no-orphan-sidecar | determined zero "by design" | warning `could not determine orphans … run qa:fetch` once per call; a present tree with no mirror is still a determined zero |
+| `check:qa-reviewer-permission` | 5x "stale baseline entry, remove it", exit 1 (obeying → pass over 0) | reads derived results + declared `attestations`; absent derived tree → exit 2, no baseline entry judged stale; `--write-baseline` refuses; `forbidden` still exit 1 |
+| `check:declared-paths` | "6 witnessed literals no longer resolve", exit 1 | 7 witnesses under absent `qa`/`health` dirs listed as `?`, not lost, not new debt; exit 2; `--update` refuses |
+
+Verified by moving all 15 results directories aside and restoring them: every gate exits 2 and none prints a pass. With the corpus present each gives today's answer (122 verdicts examined, 0 orphans; 5974 entries, 0 forbidden; 0 lost witnesses). The fetched `qa-reports` entry `pr/1764/a4c54517…` is byte-identical to the committed corpus (diff -rq over all 14 trees), so "with the branch fetched" is the same answer.
+
