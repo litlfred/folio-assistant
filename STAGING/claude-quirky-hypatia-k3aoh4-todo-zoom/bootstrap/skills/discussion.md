@@ -11,7 +11,11 @@ file it can reach:
 
 No instruction body produces those. They are judgements held by whoever asked
 for the harness, and the only way to obtain one is to **ask**. This skill is
-how that asking is performed, and what it must produce.
+what that asking must produce. **How** to ask is not particular to this
+question: [`processes/discussion.bpmn`](../processes/discussion.bpmn) narrows
+the candidates and then calls
+[`human-agent-discussion`](human-agent-discussion.md), the one reusable way
+bootstrap asks a person anything, with **no default allowed**.
 
 ## What a skill is, and where the tool comes in
 

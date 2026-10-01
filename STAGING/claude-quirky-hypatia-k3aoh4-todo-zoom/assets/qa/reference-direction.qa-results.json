@@ -16,12 +16,8 @@
     },
     "multi-destination-unlisted": {
       "summary": "A file holding a wrong-direction reference to MORE THAN ONE instance above it, which `PENDING` does not list. `names > 1` is the whole membership rule, so an unlisted one is an unrecorded question rather than a finding somebody can act on: \"move it up\" has no single destination. This is the set the script exits 1 on, and recording it is not resolving it — whether these join `PENDING` or are ruled on is issue #1219's question.",
-      "count": 123,
+      "count": 124,
       "entries": [
-        {
-          "file": "cat-harness/content/docs/agentic-harness/consolidated-skill-references.md",
-          "names": 2
-        },
         {
           "file": "cat-harness/content/docs/fhir-content/the-three-layers.md",
           "names": 3
@@ -43,10 +39,6 @@
           "names": 2
         },
         {
-          "file": "cat-harness/docs/ar/agentic-harness.md",
-          "names": 2
-        },
-        {
           "file": "cat-harness/docs/ar/publication-workflow.md",
           "names": 3
         },
@@ -56,7 +48,7 @@
         },
         {
           "file": "cat-harness/docs/architecture/cat-harness-minimum.md",
-          "names": 3
+          "names": 4
         },
         {
           "file": "cat-harness/docs/architecture/current-state.md",
@@ -79,10 +71,6 @@
           "names": 2
         },
         {
-          "file": "cat-harness/docs/es/agentic-harness.md",
-          "names": 2
-        },
-        {
           "file": "cat-harness/docs/es/publication-workflow.md",
           "names": 3
         },
@@ -93,10 +81,6 @@
         {
           "file": "cat-harness/docs/external-schemas/index.md",
           "names": 3
-        },
-        {
-          "file": "cat-harness/docs/fr/agentic-harness.md",
-          "names": 2
         },
         {
           "file": "cat-harness/docs/fr/publication-workflow.md",
@@ -123,10 +107,6 @@
           "names": 2
         },
         {
-          "file": "cat-harness/docs/guides/voices.md",
-          "names": 5
-        },
-        {
           "file": "cat-harness/docs/guides/zh/agent-onboarding.md",
           "names": 2
         },
@@ -147,6 +127,10 @@
           "names": 2
         },
         {
+          "file": "cat-harness/docs/proposals/cat-harness-tools-split-2026-10-01.md",
+          "names": 7
+        },
+        {
           "file": "cat-harness/docs/proposals/cmsl-external-directories-2026-09-30.md",
           "names": 7
         },
@@ -157,6 +141,10 @@
         {
           "file": "cat-harness/docs/proposals/instance-versioning.md",
           "names": 2
+        },
+        {
+          "file": "cat-harness/docs/proposals/kg-subscriptions.md",
+          "names": 3
         },
         {
           "file": "cat-harness/docs/proposals/lsi-applicability.md",
@@ -171,8 +159,12 @@
           "names": 2
         },
         {
-          "file": "cat-harness/docs/ru/agentic-harness.md",
-          "names": 2
+          "file": "cat-harness/docs/proposals/placement-concern-groups-2026-10-01.md",
+          "names": 9
+        },
+        {
+          "file": "cat-harness/docs/proposals/separation-arc-2026-10-01.md",
+          "names": 10
         },
         {
           "file": "cat-harness/docs/ru/publication-workflow.md",
@@ -200,7 +192,7 @@
         },
         {
           "file": "cat-harness/docs/wireframes/index.json",
-          "names": 7
+          "names": 8
         },
         {
           "file": "cat-harness/docs/wireframes/library/intent.md",
@@ -216,10 +208,6 @@
         },
         {
           "file": "cat-harness/docs/wireframes/skills-index/intent.md",
-          "names": 2
-        },
-        {
-          "file": "cat-harness/docs/zh/agentic-harness.md",
           "names": 2
         },
         {
@@ -244,7 +232,7 @@
         },
         {
           "file": "cat-harness/schemas/kg-qa.ts",
-          "names": 6
+          "names": 7
         },
         {
           "file": "cat-harness/schemas/scenario-overlay.ts",
@@ -291,16 +279,16 @@
           "names": 3
         },
         {
+          "file": "cat-harness/scripts/check-declared-dirs.ts",
+          "names": 2
+        },
+        {
           "file": "cat-harness/scripts/check-import-direction.ts",
           "names": 2
         },
         {
           "file": "cat-harness/scripts/check-layout-norms.ts",
           "names": 6
-        },
-        {
-          "file": "cat-harness/scripts/check-structure-accessor.ts",
-          "names": 2
         },
         {
           "file": "cat-harness/scripts/check-subgraph-coverage.ts",
@@ -391,6 +379,10 @@
           "names": 3
         },
         {
+          "file": "cat-harness/scripts/library-graph.ts",
+          "names": 2
+        },
+        {
           "file": "cat-harness/scripts/mount-instance-docs.ts",
           "names": 2
         },
@@ -419,12 +411,12 @@
           "names": 3
         },
         {
-          "file": "cat-harness/skills/authoring/content-lifecycle/sample-import.md",
-          "names": 2
-        },
-        {
           "file": "cat-harness/skills/kg/graph-management/kg-detangle.ts",
           "names": 4
+        },
+        {
+          "file": "cat-harness/skills/kg/graph-management/kg-separation.md",
+          "names": 2
         },
         {
           "file": "cat-harness/skills/kg/kg-core/instance-kinds.md",
@@ -455,10 +447,6 @@
           "names": 2
         },
         {
-          "file": "cat-harness/skills/library/library-core/asset-extraction.md",
-          "names": 2
-        },
-        {
           "file": "cat-harness/skills/library/library-core/library-ingestion.md",
           "names": 4
         },
@@ -467,7 +455,19 @@
           "names": 3
         },
         {
+          "file": "cat-harness/skills/sdlc/sdlc-core/before-after-preview.md",
+          "names": 2
+        },
+        {
           "file": "cat-harness/src/builtin-adapters.ts",
+          "names": 2
+        },
+        {
+          "file": "cat-harness/src/content-types.ts",
+          "names": 2
+        },
+        {
+          "file": "cat-harness/src/core/anthropic.ts",
           "names": 2
         },
         {
@@ -480,11 +480,15 @@
         },
         {
           "file": "cat-harness/tools/index.ts",
-          "names": 3
+          "names": 2
         },
         {
           "file": "fhir-harness/skills/fhir-ig-base/ig-build-pipeline.md",
           "names": 2
+        },
+        {
+          "file": "fhir-harness/tools/index.ts",
+          "names": 3
         },
         {
           "file": "folio-assistant-core/folio-assistant-core.json",
@@ -504,7 +508,7 @@
         },
         {
           "file": "folio-assistant-core/skills/skills.json",
-          "names": 5
+          "names": 3
         },
         {
           "file": "folio-assistant-core/skills/voices/README.md",
@@ -733,19 +737,19 @@
       "count": 1,
       "entries": [
         {
-          "instances": 17,
-          "occurrences": 5663,
+          "instances": 18,
+          "occurrences": 5977,
           "allowed": 0,
-          "wrongDirection": 1459,
-          "wrongDirectionFiles": 364,
-          "exempt": 1144,
-          "namesRepository": 2028,
-          "undetermined": 1032,
+          "wrongDirection": 1672,
+          "wrongDirectionFiles": 379,
+          "exempt": 1195,
+          "namesRepository": 2054,
+          "undetermined": 1056,
           "pendingFiles": 47,
-          "pendingOccurrences": 399
+          "pendingOccurrences": 412
         }
       ]
     }
   },
-  "total": 175
+  "total": 176
 }

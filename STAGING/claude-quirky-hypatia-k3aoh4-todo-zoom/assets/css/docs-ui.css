@@ -3874,8 +3874,13 @@ a.fa-tile[data-fa-readonly]:focus-visible {
    at a constant size on screen — the shelf's scale divided out — because
    words zoomed to 25% with the card are present and unreadable. Hidden at
    full size, where the title and the body already say it. */
+/* A LIBRARY card's gist is its title, the same way and for the same reason —
+   owner, 2026-10-01: *"where is title of thing from library?"*. Zoomed to its
+   cover, a book card had a picture and nothing saying which book; the caption
+   is clamped to two lines (`zoomGlassCard`) so the cover stays its face. */
 .fa-glass-asset-gist { display: none; }
-.fa-glass-asset[data-fa-zoom-kind="todo"][data-fa-zoom="avatar"] .fa-glass-asset-gist {
+.fa-glass-asset[data-fa-zoom-kind="todo"][data-fa-zoom="avatar"] .fa-glass-asset-gist,
+.fa-glass-asset[data-fa-zoom-kind="library"][data-fa-zoom="avatar"] .fa-glass-asset-gist {
   display: -webkit-box;
   -webkit-box-orient: vertical;
   -webkit-line-clamp: 3;
@@ -7857,6 +7862,36 @@ a.fa-harness-tab__body:focus-visible {
   border: 1px dashed var(--fa-glass-edge);
 }
 
+/* ── A CARD'S METADATA, on hover and on focus — owner, 2026-10-01 ─────────
+ *
+ * *"hovering should show metadata."* One popover for the glass, outside the
+ * scaled shelf, so it is drawn at reading size whatever the view's zoom; the
+ * card's `aria-describedby` carries the same facts for a screen reader. */
+.fa-glass-meta {
+  position: fixed;
+  z-index: 1000;
+  pointer-events: auto;
+  max-width: min(22rem, calc(100vw - 1rem));
+  box-sizing: border-box;
+  padding: 0.5rem 0.7rem;
+  background: var(--fa-glass-card);
+  color: var(--fa-glass-ink);
+  border: 1px solid var(--fa-glass-edge);
+  border-radius: 6px;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.25);
+  font-size: 0.85rem;
+  line-height: 1.35;
+}
+.fa-glass-meta[hidden] { display: none; }
+.fa-glass-meta-list {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 0.15rem 0.6rem;
+  margin: 0;
+}
+.fa-glass-meta-list dt { font-weight: 700; }
+.fa-glass-meta-list dd { margin: 0; overflow-wrap: anywhere; }
+
 /* ── The avatar COVERS the card — owner, 2026-09-23 ──────────────────────
  *
  * *"artefact avatar should cover sheet"*; offered three shapes, the owner
@@ -7912,7 +7947,11 @@ a.fa-harness-tab__body:focus-visible {
    its art is the backdrop, faded by the theme's scrim — and keeps its ink. */
 .fa-glass-asset:has(> .fa-glass-asset-face > .fa-glass-avatar) .fa-glass-asset-gist {
   margin: 0 -0.5rem;
-  padding: 0.2em 0.45em;
+  /* The strip's top and bottom are BORDERS, not padding: a clamped box clips
+     at its padding edge, so bottom padding showed the top of the line after
+     the ellipsis (measured on a two-line library caption). */
+  padding: 0 0.45em;
+  border-block: 0.2em solid var(--fa-glass-card);
   background: var(--fa-glass-card);
   color: var(--fa-glass-ink);
 }
