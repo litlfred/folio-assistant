@@ -73,14 +73,19 @@
     }
   },
   "declaredKinds": [
+    "beans",
     "cat-harness",
     "code",
     "code-list",
     "docs",
     "external-schema",
     "folio",
+    "fsh-guts",
     "health",
+    "interaction",
+    "issue-marks",
     "library",
+    "memory",
     "methodology",
     "policies",
     "processes",
@@ -89,10 +94,12 @@
     "schemas",
     "skills",
     "swimlane-glossary",
+    "todos",
     "tools",
     "translation-sources",
     "uml",
-    "uploads"
+    "uploads",
+    "waiver"
   ],
   "links": [
     {
@@ -125,6 +132,22 @@
       "hidden": false,
       "count": 12,
       "unit": "entries"
+    },
+    {
+      "id": "beans",
+      "directory": "beans",
+      "title": "beans",
+      "ref": "cat-harness/docs/beans/index.html",
+      "surfaces": [
+        "navbar",
+        "board",
+        "glass"
+      ],
+      "href": "/beans/",
+      "hidden": false,
+      "icon": "beans",
+      "count": 530,
+      "unit": "beans"
     },
     {
       "id": "docs",
@@ -265,6 +288,20 @@
       "unit": "entries"
     },
     {
+      "id": "fsh-guts",
+      "directory": "fsh-guts",
+      "title": "fsh-guts",
+      "ref": "cat-harness/docs/fsh-guts/index.md",
+      "surfaces": [
+        "navbar",
+        "board",
+        "glass"
+      ],
+      "href": "/fsh-guts/",
+      "hidden": false,
+      "publish": "staging-only"
+    },
+    {
       "id": "large-datasets-schemas",
       "directory": "large-datasets-schemas",
       "title": "large-datasets-schemas",
@@ -350,6 +387,19 @@
       "unit": "documents"
     },
     {
+      "id": "root-docs",
+      "directory": "root-docs",
+      "title": "root-docs",
+      "ref": "cat-harness/docs/cat-harness/docs-auto/index/docs/root-docs/index.html",
+      "surfaces": [
+        "navbar",
+        "board",
+        "glass"
+      ],
+      "href": "/cat-harness/docs-auto/index/docs/root-docs/",
+      "hidden": false
+    },
+    {
       "id": "schemas",
       "directory": "schemas",
       "title": "schemas",
@@ -405,6 +455,21 @@
       ],
       "href": "/cat-harness/docs-auto/glossary/swimlane-glossary/",
       "hidden": false
+    },
+    {
+      "id": "todos",
+      "directory": "todos",
+      "title": "todos",
+      "ref": "cat-harness/docs/todos/index.html",
+      "surfaces": [
+        "navbar",
+        "board",
+        "glass"
+      ],
+      "href": "/todos/",
+      "hidden": false,
+      "count": 3,
+      "unit": "todos"
     },
     {
       "id": "tools",
@@ -1112,7 +1177,7 @@
         {
           "id": "directories",
           "label": "declared directories",
-          "value": 6
+          "value": 7
         },
         {
           "id": "kinds",
@@ -1785,26 +1850,36 @@
       "reads": "a question mark — no avatar is declared for this kind",
       "genericAvatar": true,
       "instantiated": false,
+      "href": "/processes/",
+      "hrefKind": "viewer",
       "stats": [
         {
           "id": "directories",
           "label": "declared directories",
-          "value": 3
+          "value": 5
         },
         {
           "id": "kinds",
           "label": "declared graph kinds",
-          "value": 3
+          "value": 5
         },
         {
           "id": "views",
           "label": "visualisations you can open",
-          "value": 0
+          "value": 1
         }
       ],
       "visualisations": [
         {
           "kind": "code",
+          "note": "no viewer yet"
+        },
+        {
+          "kind": "processes",
+          "path": "/processes/"
+        },
+        {
+          "kind": "scenarios",
           "note": "no viewer yet"
         },
         {
@@ -1817,8 +1892,9 @@
         }
       ],
       "findings": [
-        "bootstrap-tools: declares 3 graph(s) with no published viewer — code, schemas, skills. Declared and not rendered is a gap, not a dead link.",
-        "bootstrap-tools: no avatar declared for this instance — showing the generic mark."
+        "bootstrap-tools: declares 4 graph(s) with no published viewer — code, scenarios, schemas, skills. Declared and not rendered is a gap, not a dead link.",
+        "bootstrap-tools: no avatar declared for this instance — showing the generic mark.",
+        "bootstrap-tools: has no docs/ of its own, so the tile opens a kind handler's viewer (/processes/) rather than the instance's own themed root."
       ],
       "navbarIcons": [
         "close",
@@ -3247,7 +3323,7 @@
           },
           {
             "key": "directories",
-            "summary": "3: bootstrap-tools-schemas, bootstrap-tools-scripts, bootstrap-tools-skills"
+            "summary": "5: bootstrap-tools-schemas, bootstrap-tools-scripts, bootstrap-tools-skills, bootstrap-tools…"
           },
           {
             "key": "needs",

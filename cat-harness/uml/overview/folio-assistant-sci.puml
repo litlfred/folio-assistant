@@ -120,6 +120,9 @@ package "folio-assistant-sci/voices" as pkg_folio_assistant_sci_voices <<voices>
 package "folio-assistant-sci/lean-skills" as pkg_folio_assistant_sci_lean_skills <<skills>> {
   note "skills: no node schema declared\n(no node here carries a $schema family skills names (4 named): could not determine)" as n_folio_assistant_sci_lean_skills_skills
 }
+package "folio-assistant-sci/data-skills" as pkg_folio_assistant_sci_data_skills <<skills>> {
+  note "skills: no node schema declared\n(no node here carries a $schema family skills names (4 named): could not determine)" as n_folio_assistant_sci_data_skills_skills
+}
 
 folio_assistant_sci_qa_kg_qa_v1_kg_qa_v1 *-- "0..*" folio_assistant_sci_qa_kg_qa_v1_Pair_attestation : pair_attestations
 folio_assistant_sci_qa_kg_qa_v1_Voice_review *-- "0..*" folio_assistant_sci_qa_kg_qa_v1_Verdict : verdicts
@@ -128,9 +131,10 @@ folio_assistant_sci_voices_VoiceProfile *-- "1..*" folio_assistant_sci_voices_So
 folio_assistant_sci_voices_Rule *-- "0..*" folio_assistant_sci_voices_Pattern : patterns
 folio_assistant_sci_voices_Rule *-- "0..*" folio_assistant_sci_voices_Terminology : terminology
 folio_assistant_sci_voices_VoiceProfile *-- "1..*" folio_assistant_sci_voices_Rule : rules
-' grid: portrait, 2 column(s) — pkg_folio_assistant_sci_library pkg_folio_assistant_sci_sci_methodologies pkg_folio_assistant_sci_sci_adapters pkg_folio_assistant_sci_qa pkg_folio_assistant_sci_voices pkg_folio_assistant_sci_lean_skills
+' grid: portrait, 2 column(s) — pkg_folio_assistant_sci_library pkg_folio_assistant_sci_sci_methodologies pkg_folio_assistant_sci_sci_adapters pkg_folio_assistant_sci_qa pkg_folio_assistant_sci_voices pkg_folio_assistant_sci_lean_skills pkg_folio_assistant_sci_data_skills
 pkg_folio_assistant_sci_library -[hidden]down- pkg_folio_assistant_sci_sci_adapters
 pkg_folio_assistant_sci_sci_methodologies -[hidden]down- pkg_folio_assistant_sci_qa
 pkg_folio_assistant_sci_sci_adapters -[hidden]down- pkg_folio_assistant_sci_voices
 pkg_folio_assistant_sci_qa -[hidden]down- pkg_folio_assistant_sci_lean_skills
+pkg_folio_assistant_sci_voices -[hidden]down- pkg_folio_assistant_sci_data_skills
 @enduml

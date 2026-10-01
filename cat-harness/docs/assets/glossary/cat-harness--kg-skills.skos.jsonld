@@ -3824,6 +3824,26 @@
       "skos:note": "candidate"
     },
     {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-skills/render-kg-to-cdn",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-skills"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "render-kg-to-cdn"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Render a Knowledge Graph, or a list of its Subgraphs, for publication to a CDN at a publication root URL, and report a status and one message. The same step for a staging preview and for a release — only the root URL and the target differ. Names the target's Tool, never its steps: GitHub Pages (`gh-pages`) is one Tool, and it carries its own subprocess."
+        }
+      ],
+      "skos:notation": "render-kg-to-cdn",
+      "dcterms:source": "cat-harness/skills/process/workflow/render-kg-to-cdn.md",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-skills/render-logging",
       "@type": "skos:Concept",
       "skos:inScheme": {

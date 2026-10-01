@@ -26,7 +26,7 @@
 import { readdirSync, readFileSync, writeFileSync, mkdirSync, existsSync, statSync } from "fs";
 import { join, resolve, basename, relative, isAbsolute, sep } from "path";
 
-import { isSkillMd, kgDirectories } from "./known-skills.js";
+import { isSkillMd, kgDirectories, corpusScopeFor } from "./known-skills.js";
 import { packageDirsIn } from "./skill-topics.js";
 import { processRows, type ProcessRow } from "./gen-processes-viz.js";
 import { siteDirFor, repoRootFor } from "../schemas/cat-harness.ts";
@@ -512,11 +512,16 @@ const SKILLS_CATEGORIES: Record<string, string> = {
   // the id does not. A LABEL is data, not a dependency — nothing here imports
   // core, so naming its package does not invert the layer order that
   // `folio-assistant-core.json`’s `needs: ["cat-harness"]` fixes.
-  "folio-assistant-core-skills": "Content layer (folio-assistant-core)",
+  //
+  // THE OWNER'S ids since placement PR0 (bean `ejye`): the platform's mirrors
+  // (`folio-assistant-core-skills`, `folio-assistant-sci-lean-skills`, …) are
+  // gone, and the corpus is read from each owner's own declaration — where
+  // cmsl measured five of the mirror ids had already drifted.
+  "core-skills": "Content layer (folio-assistant-core)",
   // The science layer's Lean tooling (folio-assistant#1492): tooling lives in
-  // folio-assistant-sci, never in core.
-  "folio-assistant-sci-lean-skills": "Science layer: Lean tooling (folio-assistant-sci)",
-  "folio-assistant-sci-data-skills": "Science layer: reference data (folio-assistant-sci)",
+  // folio-assistant-sci, never in core. Declared from within sci's `skills/`.
+  "lean-skills": "Science layer: Lean tooling (folio-assistant-sci)",
+  "data-skills": "Science layer: reference data (folio-assistant-sci)",
   "large-datasets-skills": "Large data sets (subsetting, materializing, publishing)",
   "who-iris-skills": "WHO IRIS (catalogue instance)",
   // The `fhir-harness` instance's two packages, keyed by BASENAME because they
@@ -584,7 +589,12 @@ function discoverGroups(): Group[] {
   // bootstrap's skills one level down and the generator demanded a heading for
   // a package called "skills"; #428 then keyed by repo-relative path, which
   // has the same shape of failure one move later.
-  for (const decl of kgDirectories(INSTANCE_ROOT)) {
+  const decls = kgDirectories(INSTANCE_ROOT, corpusScopeFor(INSTANCE_ROOT));
+  // A subdirectory DECLARED in its own right (sci's `skills/lean/`, declared
+  // from within `skills/skills.json`) is a root, keyed by its id — never also
+  // a package of its parent, or it would be published twice under two keys.
+  const declaredRoots = new Set(decls.map((d) => resolve(d.absPath)));
+  for (const decl of decls) {
     const skillsRoot = decl.absPath;
     if (holdsSkill(skillsRoot)) {
       const direct = SKILLS_CATEGORIES[decl.id];
@@ -593,6 +603,7 @@ function discoverGroups(): Group[] {
     }
     for (const d of packageDirsIn(skillsRoot)) {
       const dir = d.dir;
+      if (declaredRoots.has(resolve(dir))) continue;
       // No SKILL `.md` means it is not a skill package: `workflows/`,
       // `roles/`, `permissions/`, `requirements/`, `framework/`,
       // `remote-packages/` and `memory/` are other node kinds.

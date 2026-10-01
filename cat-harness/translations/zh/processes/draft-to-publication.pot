@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: draft-to-publication\n"
-"POT-Creation-Date: 2026-09-24T17:53:10.470Z\n"
+"POT-Creation-Date: 2026-10-01T00:08:57.175Z\n"
 "PO-Revision-Date: \n"
 "Last-Translator: \n"
 "Language: zh\n"
@@ -59,7 +59,7 @@ msgstr ""
 msgid "Clinical / scientific SMEs"
 msgstr ""
 
-#: processes/draft-to-publication.bpmn:212
+#: processes/draft-to-publication.bpmn:214
 #. Diagram label
 msgid "Close the release beans [todo-manager]"
 msgstr ""
@@ -129,7 +129,7 @@ msgstr ""
 msgid "folio-assistant — corpus to draft publication to officially published. Source of truth: this file. Open it in bpmn.io, Camunda Modeler, or any other BPMN 2.0 tool. The SVG under docs/assets/img/workflows/ is generated from it by `bun run render:bpmn` — never hand-edit the SVG. The <bootstrap.processes:skill> extension on an activity names the folio-assistant skill that implements it; <cat-harness.processes:bean> marks a step that reads or writes the shared work plan in beans/."
 msgstr ""
 
-#: processes/draft-to-publication.bpmn:229
+#: processes/draft-to-publication.bpmn:231
 #. Diagram label
 msgid "no"
 msgstr ""
@@ -179,7 +179,7 @@ msgstr ""
 msgid "Publication-readiness QA across layers — QC reports, IG Publisher QA, proof status, broken links, build warnings."
 msgstr ""
 
-#: processes/draft-to-publication.bpmn:221
+#: processes/draft-to-publication.bpmn:223
 #. Diagram label
 msgid "Published officially"
 msgstr ""
@@ -236,7 +236,7 @@ msgstr ""
 
 #: processes/draft-to-publication.bpmn:202
 #. Diagram element documentation
-msgid "Version bump, release notes, tag, build the final artifacts, deploy to the publication platform."
+msgid "Version bump, release notes, tag, build the final artifacts, deploy to the publication platform. The deploy is the general render-kg-to-cdn step with the RELEASE root as its publication root URL — the same step a staging preview takes with a root under it; the target (GitHub Pages, or a folio's own platform) is chosen by its Tool."
 msgstr ""
 
 #: processes/draft-to-publication.bpmn:201
@@ -244,7 +244,7 @@ msgstr ""
 msgid "Version, tag and publish [content-publish]"
 msgstr ""
 
-#: processes/draft-to-publication.bpmn:213
+#: processes/draft-to-publication.bpmn:215
 #. Diagram element documentation
 msgid "What shipped is resolved; what slipped stays open and carries into the next cycle."
 msgstr ""
@@ -254,7 +254,7 @@ msgstr ""
 msgid "Work plan — beans (shared by humans and agents)"
 msgstr ""
 
-#: processes/draft-to-publication.bpmn:231
+#: processes/draft-to-publication.bpmn:233
 #. Diagram label
 msgid "yes"
 msgstr ""
