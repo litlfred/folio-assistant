@@ -74,6 +74,28 @@ Owner ruling 2026-09-30, bean `52cz`: this is written here so that an agent
 reading PR events **without** the tool knows it too. The tool enforces it
 (`verdictForCommit`, `mergeStateForHead`); this paragraph is for the reader.
 
+### `qa-publish` is a job in the gate workflow, and it is not a gate
+
+Since arc `3fva`, `Code quality gates` carries one job that judges nothing:
+`qa-publish`, which runs after `gates` **whatever they concluded** and stores
+the run's QA results on the orphan `qa-reports` branch (`main/<sha>/` on a
+push, `pr/<n>/<sha>/` on a same-repository PR). Read its outcome as a
+statement about the **evidence**, not about the commit:
+
+- **red** — the record for this commit was not stored. The gates' verdict is
+  untouched (it is a separate job for exactly that reason), but a later
+  `--against` this commit will read UNKNOWN, so it is still a red to fix, and
+  a workflow-level red in this report.
+- **green with a `::notice`** on a fork PR — skipped by design: a fork's token
+  cannot write. Stated, never silent.
+- **green** with the gates red — the red commit's evidence was stored. That is
+  the point of `always()`, not a contradiction.
+
+The owner's merge policy counts it like any job: a PR is handed to the Merge
+Steward only when CI is green on **every** job
+([`continual-progress`](continual-progress.md) §"Green means handed to the
+Merge Steward").
+
 ## The report answers about the default branch — and Pages is not on it
 
 **A Pages build outcome is not repository state.** It is a fact GitHub holds

@@ -2,10 +2,10 @@
   "$schema": "kg-qa/v1",
   "subject": {
     "kind": "process",
-    "id": "Process_QaReportSigning",
-    "path": "processes/qa-report-signing.bpmn"
+    "id": "Process_QaPublish",
+    "path": "processes/qa-publish.bpmn"
   },
-  "source_hash": "sha256:6f8477e9fd80df1c387f10ba28bfbe68a3a441e392f57f48f8a6118386095ffc",
+  "source_hash": "sha256:adf4ca9a8e9514aa03d6b156a8b7205c3336fdef61614a504da563842713d364",
   "criteria": {
     "raci-role-resolves": {
       "result": "n/a",
@@ -35,33 +35,37 @@
       "result": "fail",
       "findings": [
         {
-          "where": "Task_BuildRun",
-          "detail": "names skill \"qa-report-signing\", which no Tool declares `satisfies` for — the step's mechanism is still prose."
+          "where": "Task_DeriveKey",
+          "detail": "names skill \"qa-reports\", which no Tool declares `satisfies` for — the step's mechanism is still prose."
         },
         {
-          "where": "Task_ResolveReach",
-          "detail": "names skill \"qa-report-signing\", which no Tool declares `satisfies` for — the step's mechanism is still prose."
+          "where": "Task_BuildEntry",
+          "detail": "names skill \"qa-reports\", which no Tool declares `satisfies` for — the step's mechanism is still prose."
         },
         {
-          "where": "Task_ApiSign",
-          "detail": "names skill \"qa-report-signing\", which no Tool declares `satisfies` for — the step's mechanism is still prose."
+          "where": "Task_SpliceAndPush",
+          "detail": "names skill \"qa-reports\", which no Tool declares `satisfies` for — the step's mechanism is still prose."
         },
         {
-          "where": "Task_HumanSign",
-          "detail": "names skill \"qa-report-signing\", which no Tool declares `satisfies` for — the step's mechanism is still prose."
+          "where": "Task_Backoff",
+          "detail": "names skill \"qa-reports\", which no Tool declares `satisfies` for — the step's mechanism is still prose."
         },
         {
-          "where": "Task_RecordAttestation",
-          "detail": "names skill \"qa-report-signing\", which no Tool declares `satisfies` for — the step's mechanism is still prose."
+          "where": "Task_ReadPrStates",
+          "detail": "names skill \"qa-reports\", which no Tool declares `satisfies` for — the step's mechanism is still prose."
         },
         {
-          "where": "Task_StoreSigned",
+          "where": "Task_PlanPrune",
+          "detail": "names skill \"qa-reports\", which no Tool declares `satisfies` for — the step's mechanism is still prose."
+        },
+        {
+          "where": "Task_ApplyPrune",
           "detail": "names skill \"qa-reports\", which no Tool declares `satisfies` for — the step's mechanism is still prose."
         }
       ]
     },
     "decision-ref-resolves": {
-      "result": "pass",
+      "result": "n/a",
       "findings": []
     },
     "role-ref-resolves": {
@@ -81,21 +85,8 @@
       "findings": []
     },
     "role-carries-activity-skill": {
-      "result": "fail",
-      "findings": [
-        {
-          "where": "Task_BuildRun",
-          "detail": "needs skill \"qa-report-signing\", but its lane's role \"validation-pipeline\" does not carry it."
-        },
-        {
-          "where": "Task_ResolveReach",
-          "detail": "needs skill \"qa-report-signing\", but its lane's role \"validation-pipeline\" does not carry it."
-        },
-        {
-          "where": "Task_RecordAttestation",
-          "detail": "needs skill \"qa-report-signing\", but its lane's role \"validation-pipeline\" does not carry it."
-        }
-      ]
+      "result": "pass",
+      "findings": []
     },
     "activity-names-skill": {
       "result": "pass",
@@ -110,8 +101,13 @@
       "findings": []
     },
     "process-diagram-published": {
-      "result": "pass",
-      "findings": []
+      "result": "fail",
+      "findings": [
+        {
+          "where": "Process_QaPublish",
+          "detail": "qa-publish.svg is rendered but no docs page shows it — run `bun run processes:viz`."
+        }
+      ]
     },
     "activity-documented": {
       "result": "pass",
@@ -138,18 +134,18 @@
       "findings": []
     },
     "prose-reviewed-since-code-changed": {
-      "result": "n/a",
+      "result": "pass",
       "findings": []
     },
     "prose-claims-resolve": {
-      "result": "n/a",
+      "result": "pass",
       "findings": []
     }
   },
   "totals": {
-    "pass": 15,
+    "pass": 16,
     "fail": 2,
-    "n/a": 8,
+    "n/a": 7,
     "unknown": 0
   }
 }
