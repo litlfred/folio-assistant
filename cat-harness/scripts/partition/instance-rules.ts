@@ -413,6 +413,10 @@ export const RULES: Rule[] = [
       // differently, only add a row.
       "scripts/harness-tiles.ts",            // every initiated harness → its navbar tile
       "scripts/harness-panel.ts",            // every harness → its config panel row (issue #1146)
+      // The tile half of a KG subscription (issue #1719): which chosen harnesses
+      // are instantiated at the root, read from their snapshots. HARNESS so the
+      // tile above may import it; `kg-instantiate.ts` (core) imports it too.
+      "scripts/subscribed-harnesses.ts",
       // Beside its sibling, and HARNESS rather than core — the opposite
       // classification to `gen-default-boards.ts`, for the reason that entry
       // records: what settles it is what a module is ABOUT. That one produces
@@ -829,7 +833,8 @@ export const RULES: Rule[] = [
       // would be a rule that fires on nothing while reading as an adjudication.
       "scripts/sync-remote-skills.ts",       // a remote package's declared skills, materialized at its pinned commit (issue #556)
       "scripts/kg-subscribe.ts",             // subscribe to an external Knowledge Graph at a pin: judge its root declaration, record the subscription (issue #1719)
-      "scripts/subscriptions-viz.ts",        // the KG subscriptions page: known substrates and what each subscription chose to hold (issue #1719)
+      "scripts/kg-instantiate.ts",           // instantiate a harness a subscription chose: its config at the root and its state directories (issue #1719)
+      "scripts/subscriptions-viz.ts",        // the KG subscriptions page: known substrates, and what each instance subscribed to and chose (issue #1719)
       "scripts/check-read-only-graphs.ts", // a directory's `readOnly` declaration vs what its nodes say — the DECLARATION half of the same rule
       "scripts/gen-fsh-guts-viz.ts",         // the fsh-guts graph → projection + viewer; staging-only, so the page is withheld from the canonical deploy
       "scripts/gen-handler-index.ts",        // the handler namespace's own index, over the tiles model
@@ -1385,6 +1390,7 @@ export const RULES: Rule[] = [
       "schemas/fsh-guts.ts",        // the trashcan, not FHIR Shorthand
       "schemas/python-deps.ts",     // the repository's own Python toolchain
       "schemas/avatars.ts",         // an avatar for every declared kind
+      "schemas/substrate-snapshot.ts", // the node schema of `substrate-snapshot`, a kind the harness registers (issue #1719)
       "schemas/kind-validator.ts",  // a graph kind's validator
       "schemas/actor-reach.ts",     // which actors a declaration can reach
       // WHAT A REPOSITORY IS — the markers it carries. The word "content" in
