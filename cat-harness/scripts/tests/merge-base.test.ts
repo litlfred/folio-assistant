@@ -57,6 +57,27 @@ describe("classify", () => {
     expect(classify("cat-harness/docs/de/glossary/index.md").strategy).toBe("refuse");
   });
 
+  test("generated VIEWERS of uploads/ are taken; uploads/ itself stays refused", () => {
+    // The false positive found on #1764/#1775: `**/uploads/**` caught pages
+    // that render uploads/ rather than being uploads.
+    expect(classify("cat-harness/docs/uploads/index.html").pattern?.id).toBe("viewer-pages");
+    expect(classify("cat-harness/docs/cat-harness/uploads/who-iris/index.html").pattern?.id).toBe("viewer-namespace");
+    for (const p of ["beans", "todos", "health", "issue-marks", "swimlane-glossary"]) {
+      expect(classify(`cat-harness/docs/${p}/index.html`).pattern?.id).toBe("viewer-pages");
+    }
+    for (const seg of ["catalogue", "folio", "library", "schemas", "voices"]) {
+      expect(classify(`cat-harness/docs/cat-harness/${seg}/index.html`).pattern?.id).toBe("viewer-namespace");
+    }
+    expect(classify("cat-harness/docs/_includes/generated/navbar-footer.html").pattern?.id).toBe("navbar-include");
+    expect(classify("cat-harness/test/results/viewer-nav/viewer-nav.qa.json").pattern?.id).toBe("viewer-nav-qa");
+    // The real uploads stay refused, at the root and in any instance.
+    expect(classify("uploads/9789240093362-eng.pdf").pattern?.id).toBe("uploads");
+    expect(classify("who-iris/uploads/x.pdf").pattern?.id).toBe("uploads");
+    // Authored neighbours of the new globs stay refused.
+    expect(classify("cat-harness/docs/beans/notes.md").strategy).toBe("refuse");
+    expect(classify("cat-harness/docs/_includes/head_custom.html").strategy).toBe("refuse");
+  });
+
   test("a path no pattern names is REFUSED, with no pattern attached", () => {
     const c = classify("cat-harness/scripts/merge-base.ts");
     expect(c.strategy).toBe("refuse");
