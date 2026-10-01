@@ -19,7 +19,8 @@
  * @module scripts/skill-contracts
  */
 import { existsSync, readFileSync, readdirSync } from "node:fs";
-import { join, normalize, relative } from "node:path";
+import { dirname, join, normalize, relative } from "node:path";
+import { findInstanceRoot } from "../schemas/cat-harness.js";
 import { frontMatter } from "./front-matter.js";
 import { isSkillMd, skillMdDirs, corpusScopeFor } from "./known-skills.js";
 
@@ -28,8 +29,16 @@ export type ContractIo = "input" | "output";
 /** One skill's declared contracts, and the file that declares them. */
 export interface SkillContract {
   skill: string;
-  /** The skill file, relative to the instance root. */
+  /** The skill file, relative to the root the contracts were asked of. */
   from: string;
+  /**
+   * The root of the instance that HOLDS the skill, which its local contract
+   * paths are relative to. Not always the root asked: from the checkout a
+   * sci skill's `schemas/skills/<skill>/` is sci's (placement PR1, bean
+   * `ybwt`), and resolving it against the harness would read a file that is
+   * not there — or worse, one that is and belongs to nobody.
+   */
+  instanceRoot: string;
   input?: string;
   output?: string;
 }
@@ -73,7 +82,13 @@ export function skillContracts(root: string): Map<string, SkillContract> {
       if (fm.input === undefined && fm.output === undefined) continue;
       const skill = f.slice(0, -3);
       if (out.has(skill)) continue; // first package wins, as kg-export's own scan does
-      out.set(skill, { skill, from: relative(root, path), input: fm.input, output: fm.output });
+      out.set(skill, {
+        skill,
+        from: relative(root, path),
+        instanceRoot: findInstanceRoot(dirname(path)) ?? root,
+        input: fm.input,
+        output: fm.output,
+      });
     }
   }
   return out;

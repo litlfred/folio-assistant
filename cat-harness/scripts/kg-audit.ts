@@ -1583,7 +1583,7 @@ function brokenSkillContracts(): KgFinding[] {
       const ref = c[io];
       if (ref === undefined) continue;
       const shape = contractRefProblem(ref);
-      const file = contractFile(root, ref);
+      const file = contractFile(c.instanceRoot, ref);
       if (shape) out.push({ where: c.from, detail: `${io}: ${ref} — ${shape}.` });
       else if (file !== undefined && !existsSync(file)) {
         out.push({ where: c.from, detail: `${io}: ${ref} — no such file in this instance.` });
@@ -1611,9 +1611,11 @@ function unclaimedSkillContracts(): KgFinding[] {
     .map((d) => join(d, "skills"))
     .filter((d) => existsSync(d));
   if (dirs.length === 0) return [];
+  // Keyed by ABSOLUTE path: a ref is relative to the instance holding its
+  // skill, which from the checkout is not always `root` (placement PR1).
   const claimed = new Set<string>();
   for (const c of skillContracts(root).values()) {
-    for (const ref of [c.input, c.output]) if (ref !== undefined) claimed.add(ref);
+    for (const ref of [c.input, c.output]) if (ref !== undefined) claimed.add(resolve(c.instanceRoot, ref));
   }
   const out: KgFinding[] = [];
   for (const dir of dirs) {
@@ -1622,7 +1624,7 @@ function unclaimedSkillContracts(): KgFinding[] {
       for (const f of readdirSync(join(dir, e.name))) {
         if (!f.endsWith(".schema.json")) continue;
         const ref = relative(root, join(dir, e.name, f));
-        if (!claimed.has(ref)) out.push({ where: ref, detail: `no skill names ${ref} as its input or output.` });
+        if (!claimed.has(resolve(dir, e.name, f))) out.push({ where: ref, detail: `no skill names ${ref} as its input or output.` });
       }
     }
   }

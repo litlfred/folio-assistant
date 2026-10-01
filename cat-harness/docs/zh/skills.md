@@ -126,7 +126,7 @@ LLM 在仓库中高效工作所使用的技能（通过 `skill_fetch` 加载，�
 | `bean-coordination` | 多智能体认领与协作规范 |
 | `todo-manager` | 以 bean 作为待办事项（todo）的管理规范 |
 
-### 平台技能包（`skills/folio-core`、`skills/authoring/folio-document-adapter`、`skills/authoring/folio-paper-adapter`）
+### 平台技能包（`skills/folio-core`、`folio-assistant-core/skills/content/folio-document-adapter`、`folio-assistant-sci/skills/content/folio-paper-adapter`）
 
 更大型的**平台技能包**（platform bundles），其中两个从 qou 内容仓库迁移而来（参见[迁移记录](migrations/2026-06-29-platform-skills-migration.html)以及 issue [#27](https://github.com/litlfred/folio-assistant/issues/27)）。它们与具体内容无关，旨在同步到任何 folio 中：
 

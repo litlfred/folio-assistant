@@ -70,7 +70,7 @@
  * The three entries this file's `knownSkills()` switch surfaced —
  * `scientific-visualization`, `hypothesis-generation`,
  * `scientific-critical-thinking` — ARE declared, by
- * `skills/remote-packages/claude-scientific-skills.json`, and `kg-audit.ts`
+ * `folio-assistant-sci/skills/remote-packages/claude-scientific-skills.json`, and `kg-audit.ts`
  * accepted that as resolution. So for two hours the two checkers disagreed:
  * this one said delete, the audit said keep, and the corpus followed whichever
  * ran last.

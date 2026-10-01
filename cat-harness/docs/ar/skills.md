@@ -152,7 +152,7 @@ flowchart TD
 | `bean-coordination` | انضباط الحجز والتنسيق بين الوكلاء المتعددين |
 | `todo-manager` | انضباط إدارة المهام عبر beans |
 
-### حزم مهارات المنصة (`skills/folio-core`، و`skills/authoring/folio-document-adapter`، و`skills/authoring/folio-paper-adapter`)
+### حزم مهارات المنصة (`skills/folio-core`، و`folio-assistant-core/skills/content/folio-document-adapter`، و`folio-assistant-sci/skills/content/folio-paper-adapter`)
 
 **حزم المنصة** الأكبر، اثنتان منها تم ترحيلهما من مستودع محتوى qou (راجع
 [سجل الترحيل](migrations/2026-06-29-platform-skills-migration.html)

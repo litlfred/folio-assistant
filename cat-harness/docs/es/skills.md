@@ -154,7 +154,7 @@ de contenido, no alternativas entre las que elegir.
 | `bean-coordination` | Disciplina de reclamación/coordinación multiagente |
 | `todo-manager` | Disciplina de beans como tareas pendientes (*beans-as-todos*) |
 
-### Paquetes de habilidades de plataforma (`skills/folio-core`, `skills/authoring/folio-document-adapter`, `skills/authoring/folio-paper-adapter`)
+### Paquetes de habilidades de plataforma (`skills/folio-core`, `folio-assistant-core/skills/content/folio-document-adapter`, `folio-assistant-sci/skills/content/folio-paper-adapter`)
 
 **Paquetes de plataforma** más amplios, dos de ellos migrados desde el repositorio de contenido qou (consulta el
 [registro de migración](migrations/2026-06-29-platform-skills-migration.html) y el
