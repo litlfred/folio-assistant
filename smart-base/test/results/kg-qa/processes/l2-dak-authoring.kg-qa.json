@@ -28,21 +28,8 @@
       "findings": []
     },
     "skill-servable": {
-      "result": "fail",
-      "findings": [
-        {
-          "where": "Task_Personas",
-          "detail": "names skill \"l2-dak-authoring\", which exists but no local package serves — skill_fetch would answer \"package not found\"."
-        },
-        {
-          "where": "Task_DataDict",
-          "detail": "names skill \"l2-dak-authoring\", which exists but no local package serves — skill_fetch would answer \"package not found\"."
-        },
-        {
-          "where": "Task_Indicators",
-          "detail": "names skill \"l2-dak-authoring\", which exists but no local package serves — skill_fetch would answer \"package not found\"."
-        }
-      ]
+      "result": "pass",
+      "findings": []
     },
     "activity-skill-has-tool": {
       "result": "fail",
@@ -110,7 +97,7 @@
       "findings": []
     },
     "activity-fulfilment-kind": {
-      "result": "n/a",
+      "result": "pass",
       "findings": []
     },
     "call-activity-resolves": {
@@ -155,9 +142,9 @@
     }
   },
   "totals": {
-    "pass": 13,
-    "fail": 2,
-    "n/a": 10,
+    "pass": 15,
+    "fail": 1,
+    "n/a": 9,
     "unknown": 0
   }
 }

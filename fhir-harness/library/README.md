@@ -1,9 +1,9 @@
 <!-- kg:subgraph:begin -->
-# fhir-harness-library
+# library
 
-The bare FHIR layer's library -- the test-side literature a FHIR implementation guide relies on: the R5 TestPlan resource's source, the Gherkin reference and the Interoperability Test Bed README (bean `y4uj`, issue #1614 item 4). Same staging arrangement and the same reason as `smart-base-library` and `folio-assistant-core-library`: the consumers that scan libraries run from THIS root, and a library they cannot see is a corpus they report a clean pass over (the `dh4f` defect). A distinct id, because the conventional `library` would override the harness's own library rather than join it.
+L1 source content for the TEST side of a FHIR implementation guide -- what the repo taxonomy's Test repos define (FHIR test plans, the Gherkin test-language dialect, configuration for the Interoperability Test Bed) -- with no WHO, DAK or SMART assumption. First entries (bean `y4uj`, issue #1614 item 4): the R5 TestPlan resource's source (`hl7-2023-fhir-r5-testplan`, CC0), the Cucumber Gherkin reference (`cucumber-2024-gherkin-reference`, MIT) and the EC Interoperability Test Bed's README (`isaitb-2026-interoperability-test-bed-readme`, EUPL-1.2). Here and not in `smart-base/library/` because nothing about them is WHO's; not in `cat-harness/library/` because that library holds ONLY sources a platform methodology cites (`library-ref.test.ts`), and none cites these. The id is the conventional `library`, so this entry OVERRIDES the default rather than joining it. Declared WITH its entries in one commit, per bean dh4f.
 
-Part of [C@T Harness](../../cat-harness/README.md) 0.1.0, declared as `fhir-harness-library`, holding `library`.
+Part of [FHIR IG Harness](../README.md) 0.1.0, declared as `library`, holding `library`.
 
 | file | what it is | used by |
 |---|---|---|

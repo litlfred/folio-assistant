@@ -8,33 +8,8 @@
   "source_hash": null,
   "criteria": {
     "skill-has-entry-point": {
-      "result": "fail",
-      "findings": [
-        {
-          "where": "dak-postprocessing",
-          "detail": "skill \"dak-postprocessing\" is listed by no package manifest, carried by no role and named by no activity. In this instance's graph only (read: `skills` at `skills/`, `scenarios` at `scenarios/`, `processes` at `methodologies/processes/`, `smart-base-house-processes` at `processes/`) — a nested instance may name it, and this audit does not read one."
-        },
-        {
-          "where": "dak-preprocessing",
-          "detail": "skill \"dak-preprocessing\" is listed by no package manifest, carried by no role and named by no activity. In this instance's graph only (read: `skills` at `skills/`, `scenarios` at `scenarios/`, `processes` at `methodologies/processes/`, `smart-base-house-processes` at `processes/`) — a nested instance may name it, and this audit does not read one."
-        },
-        {
-          "where": "grade",
-          "detail": "skill \"grade\" is listed by no package manifest, carried by no role and named by no activity. In this instance's graph only (read: `skills` at `skills/`, `scenarios` at `scenarios/`, `processes` at `methodologies/processes/`, `smart-base-house-processes` at `processes/`) — a nested instance may name it, and this audit does not read one."
-        },
-        {
-          "where": "ig-artifact-ingestion",
-          "detail": "skill \"ig-artifact-ingestion\" is listed by no package manifest, carried by no role and named by no activity. In this instance's graph only (read: `skills` at `skills/`, `scenarios` at `scenarios/`, `processes` at `methodologies/processes/`, `smart-base-house-processes` at `processes/`) — a nested instance may name it, and this audit does not read one."
-        },
-        {
-          "where": "smart-stack-layering",
-          "detail": "skill \"smart-stack-layering\" is listed by no package manifest, carried by no role and named by no activity. In this instance's graph only (read: `skills` at `skills/`, `scenarios` at `scenarios/`, `processes` at `methodologies/processes/`, `smart-base-house-processes` at `processes/`) — a nested instance may name it, and this audit does not read one."
-        },
-        {
-          "where": "toolchain-ownership",
-          "detail": "skill \"toolchain-ownership\" is listed by no package manifest, carried by no role and named by no activity. In this instance's graph only (read: `skills` at `skills/`, `scenarios` at `scenarios/`, `processes` at `methodologies/processes/`, `smart-base-house-processes` at `processes/`) — a nested instance may name it, and this audit does not read one."
-        }
-      ]
+      "result": "pass",
+      "findings": []
     },
     "consulted-skill-not-performed": {
       "result": "n/a",
@@ -45,31 +20,35 @@
       "findings": [
         {
           "where": "dak-postprocessing",
-          "detail": "no role carries \"dak-postprocessing\" and no activity names it — reached, if at all, by direct invocation. In this instance's graph only (read: `skills` at `skills/`, `scenarios` at `scenarios/`, `processes` at `methodologies/processes/`, `smart-base-house-processes` at `processes/`) — a nested instance may name it, and this audit does not read one."
+          "detail": "no role carries \"dak-postprocessing\" and no activity names it — reached, if at all, by direct invocation. In this instance's graph only (read: `skills` at `skills/`, `scenarios` at `scenarios/`, `processes` at `methodologies/processes/`) — a nested instance may name it, and this audit does not read one."
         },
         {
           "where": "dak-preprocessing",
-          "detail": "no role carries \"dak-preprocessing\" and no activity names it — reached, if at all, by direct invocation. In this instance's graph only (read: `skills` at `skills/`, `scenarios` at `scenarios/`, `processes` at `methodologies/processes/`, `smart-base-house-processes` at `processes/`) — a nested instance may name it, and this audit does not read one."
+          "detail": "no role carries \"dak-preprocessing\" and no activity names it — reached, if at all, by direct invocation. In this instance's graph only (read: `skills` at `skills/`, `scenarios` at `scenarios/`, `processes` at `methodologies/processes/`) — a nested instance may name it, and this audit does not read one."
         },
         {
           "where": "grade",
-          "detail": "no role carries \"grade\" and no activity names it — reached, if at all, by direct invocation. In this instance's graph only (read: `skills` at `skills/`, `scenarios` at `scenarios/`, `processes` at `methodologies/processes/`, `smart-base-house-processes` at `processes/`) — a nested instance may name it, and this audit does not read one."
+          "detail": "no role carries \"grade\" and no activity names it — reached, if at all, by direct invocation. In this instance's graph only (read: `skills` at `skills/`, `scenarios` at `scenarios/`, `processes` at `methodologies/processes/`) — a nested instance may name it, and this audit does not read one."
         },
         {
           "where": "ig-artifact-ingestion",
-          "detail": "no role carries \"ig-artifact-ingestion\" and no activity names it — reached, if at all, by direct invocation. In this instance's graph only (read: `skills` at `skills/`, `scenarios` at `scenarios/`, `processes` at `methodologies/processes/`, `smart-base-house-processes` at `processes/`) — a nested instance may name it, and this audit does not read one."
+          "detail": "no role carries \"ig-artifact-ingestion\" and no activity names it — reached, if at all, by direct invocation. In this instance's graph only (read: `skills` at `skills/`, `scenarios` at `scenarios/`, `processes` at `methodologies/processes/`) — a nested instance may name it, and this audit does not read one."
+        },
+        {
+          "where": "l2-dak-authoring",
+          "detail": "no role carries \"l2-dak-authoring\" and no activity names it — reached, if at all, by direct invocation. In this instance's graph only (read: `skills` at `skills/`, `scenarios` at `scenarios/`, `processes` at `methodologies/processes/`) — a nested instance may name it, and this audit does not read one."
         },
         {
           "where": "smart-base-tools",
-          "detail": "no role carries \"smart-base-tools\" and no activity names it — reached, if at all, by direct invocation. In this instance's graph only (read: `skills` at `skills/`, `scenarios` at `scenarios/`, `processes` at `methodologies/processes/`, `smart-base-house-processes` at `processes/`) — a nested instance may name it, and this audit does not read one."
+          "detail": "no role carries \"smart-base-tools\" and no activity names it — reached, if at all, by direct invocation. In this instance's graph only (read: `skills` at `skills/`, `scenarios` at `scenarios/`, `processes` at `methodologies/processes/`) — a nested instance may name it, and this audit does not read one."
         },
         {
           "where": "smart-stack-layering",
-          "detail": "no role carries \"smart-stack-layering\" and no activity names it — reached, if at all, by direct invocation. In this instance's graph only (read: `skills` at `skills/`, `scenarios` at `scenarios/`, `processes` at `methodologies/processes/`, `smart-base-house-processes` at `processes/`) — a nested instance may name it, and this audit does not read one."
+          "detail": "no role carries \"smart-stack-layering\" and no activity names it — reached, if at all, by direct invocation. In this instance's graph only (read: `skills` at `skills/`, `scenarios` at `scenarios/`, `processes` at `methodologies/processes/`) — a nested instance may name it, and this audit does not read one."
         },
         {
           "where": "toolchain-ownership",
-          "detail": "no role carries \"toolchain-ownership\" and no activity names it — reached, if at all, by direct invocation. In this instance's graph only (read: `skills` at `skills/`, `scenarios` at `scenarios/`, `processes` at `methodologies/processes/`, `smart-base-house-processes` at `processes/`) — a nested instance may name it, and this audit does not read one."
+          "detail": "no role carries \"toolchain-ownership\" and no activity names it — reached, if at all, by direct invocation. In this instance's graph only (read: `skills` at `skills/`, `scenarios` at `scenarios/`, `processes` at `methodologies/processes/`) — a nested instance may name it, and this audit does not read one."
         }
       ]
     },
@@ -181,8 +160,8 @@
     }
   },
   "totals": {
-    "pass": 8,
-    "fail": 2,
+    "pass": 9,
+    "fail": 1,
     "n/a": 12,
     "unknown": 0
   }
