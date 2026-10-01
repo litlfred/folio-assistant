@@ -5,7 +5,7 @@ status: in-progress
 type: epic
 priority: normal
 created_at: 2026-09-30T08:12:08Z
-updated_at: 2026-10-01T08:59:13Z
+updated_at: 2026-10-01T09:00:24Z
 parent: folio-assistant-vuip
 ---
 
@@ -43,3 +43,8 @@ Next, the mechanism: one helper, packageDirsIn(kgDir), replacing the six one-lev
 ## Owner ruling 2026-10-01 (separation arc 7x5n): MCP is its own subgraph inside the tools concern
 Target: `cat-harness/skills/tools/mcp/`, declared as its own subgraph. MCP skills (mcp-assembly, mcp-contract, mcp-projection) move there. General tool skills (skills-and-tools, covered-is-not-reachable) move to `cat-harness/skills/tools/`. Tool definitions stay in cat-harness/tools/ (JSON, D2). Implementations go to cat-harness-tools; server parts needing core go to core (C1). The MCP spec library entry follows agent-skills into the cat-harness library.
 - [ ] skills/tools/ and skills/tools/mcp/ declared and populated (finale)
+
+
+## Refined 2026-10-01: two MCP subgraphs, split by layer
+cat-harness/skills/tools/mcp/ (generic skill<->tool mapping, contract, projection, assembly) and folio-assistant-core/skills/tools/mcp/ (folio-specific MCP surfaces). The 5 MCP/tool skills read as generic -> cat-harness; folio-specific implementations and the folio half of the tool registry -> core.
+- [ ] folio-assistant-core/skills/tools/mcp/ declared and populated

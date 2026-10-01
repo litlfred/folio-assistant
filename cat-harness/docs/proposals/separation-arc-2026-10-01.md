@@ -216,9 +216,13 @@ Largest subgraphs by file count: library 2,963 (29 entries; JSON-LD 1.1 501, arX
 
 The per-item placement verdicts (every skill, tool, scenario, process, role) are in `placement-audit-2026-10-01.md`, which an agent is producing now.
 
-### MCP placement (owner ruling 2026-10-01)
+### MCP placement (owner rulings 2026-10-01, refined the same day)
 
-MCP gets a **dedicated subgraph inside the existing `tools` concern group**: `cat-harness/skills/tools/mcp/`.
+MCP gets a **dedicated subgraph inside the `tools` concern group, split by layer**:
+- **`cat-harness/skills/tools/mcp/`** holds generic MCP: the basic mapping from skills to tools, kept consistent, plus contract, projection and assembly.
+- **`folio-assistant-core/skills/tools/mcp/`** holds folio-specific MCP surfaces: folio tools, content-adapter tool registrars, and the adapter-scaffold half of `folio_init` (`mer2`).
+
+First pass, to be verified per item by the placement audit: all 5 MCP and tool skills read as **generic** (0–8 folio mentions against 24–136 skill or tool mentions). The folio-specific candidates are among the implementations: `folio-init`, `readme-sync`/`readme-audit`, `preferences`, `degradation`, `translation`. The registry `tools/index.ts` is likely a SPLIT, with the generic registry in cat-harness and the folio tool list in core. Note that "folio" also matches the repo name, so verdicts are made on subject, not on grep count.
 
 | piece | target |
 |---|---|
