@@ -3465,9 +3465,37 @@ export function readDeclaration(
   const file = findDeclarationFile(instanceRoot);
   if (file === undefined) return undefined;
   const p = join(instanceRoot, file);
+  let text: string;
+  try {
+    text = readFileSync(p, "utf-8");
+  } catch (e) {
+    throw new Error(`${p} is not valid JSON: ${e instanceof Error ? e.message : String(e)}`);
+  }
+  // MEMOISED ON THE FILE'S TEXT, not its path or mtime: the checkout overlay
+  // (placement PR0) resolves every staged instance through its own chain and
+  // reads each declaration a dozen times per process, and the Zod parse is
+  // the cost (measured: a CLI run went from 0.2 s to 2 s). Keyed on the bytes,
+  // so a test that rewrites a fixture is re-parsed, and on the registry's
+  // size, since kinds are registered at runtime. A clone is returned, so a
+  // caller that mutates its copy cannot poison the next one.
+  const hit = declarationCache.get(p);
+  if (hit !== undefined && hit.text === text && hit.registry === registry && hit.kinds === registry.names().length) {
+    return structuredClone(hit.value);
+  }
+  const value = parseDeclarationText(p, text, registry);
+  declarationCache.set(p, { text, registry, kinds: registry.names().length, value });
+  return structuredClone(value);
+}
+
+const declarationCache = new Map<
+  string,
+  { text: string; registry: GraphKindRegistry; kinds: number; value: CatHarnessDeclaration }
+>();
+
+function parseDeclarationText(p: string, text: string, registry: GraphKindRegistry): CatHarnessDeclaration {
   let raw: unknown;
   try {
-    raw = JSON.parse(readFileSync(p, "utf-8"));
+    raw = JSON.parse(text);
   } catch (e) {
     throw new Error(`${p} is not valid JSON: ${e instanceof Error ? e.message : String(e)}`);
   }

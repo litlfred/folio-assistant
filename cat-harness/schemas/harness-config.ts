@@ -935,15 +935,8 @@ export function checkoutDirectories(start: string, opts: { stackedOn?: string } 
   const key = `${root}\0${base ?? ""}`;
   const cached = checkoutCache.get(key);
   if (cached !== undefined) return cached.map((d) => ({ ...d }));
-  let deps: ResolvedDependency[] = [];
-  try {
-    deps = orderedDependencies(root);
-  } catch {
-    // A cycle is `check:instance-graph`'s finding; here the checkout falls
-    // back to its root alone rather than taking every corpus-wide tool down.
-    deps = [];
-  }
-  let instances = [...new Set([...deps.map((d) => resolve(d.rootPath)), root])];
+  const graph = checkoutGraph(root);
+  let instances = [...graph.order];
   // `stackedOn`: only that instance and the ones stacked on it. What a tool
   // shipped BY an instance asks when it means "the corpus I serve": its
   // dependencies are its own overlay (`orderedDependencies`), already read by
@@ -959,7 +952,7 @@ export function checkoutDirectories(start: string, opts: { stackedOn?: string } 
   for (const inst of instances) {
     let mine: ResolvedDirectory[];
     try {
-      mine = resolveDirectories(declarationChain(inst));
+      mine = resolveDirectories(chainIn(graph, inst));
     } catch {
       continue; // an unreadable declaration is `check:harness-dirs`'s to report
     }
@@ -988,6 +981,72 @@ const checkoutCache = new Map<string, ResolvedDirectory[]>();
 export function clearCheckoutCache(): void {
   checkoutCache.clear();
   dependentsCache.clear();
+  graphCache.clear();
+}
+
+/** The checkout's dependency graph, walked ONCE: order, transitive closure, names. */
+interface CheckoutGraph {
+  /** Every instance the root reaches, deepest first, the root last. */
+  order: string[];
+  /** Each instance's transitive dependencies. */
+  deps: Map<string, Set<string>>;
+  /** Each instance's declared name, as `declarationChain` spells a link. */
+  names: Map<string, string>;
+}
+
+const graphCache = new Map<string, CheckoutGraph>();
+
+/**
+ * One `orderedDependencies` walk of the checkout root, from which every
+ * staged instance's own chain is DERIVED rather than re-walked. Walking each
+ * instance separately cost ~25 ms apiece (each derivation rescans the
+ * checkout for siblings), which made every corpus-wide CLI ten times slower
+ * than before placement PR0 — measured 0.2 s → 2 s on `narratives confirm`.
+ */
+function checkoutGraph(root: string): CheckoutGraph {
+  const hit = graphCache.get(root);
+  if (hit !== undefined) return hit;
+  let flat: ResolvedDependency[] = [];
+  try {
+    flat = orderedDependencies(root);
+  } catch {
+    // A cycle is `check:instance-graph`'s finding; here the checkout falls
+    // back to its root alone rather than taking every corpus-wide tool down.
+    flat = [];
+  }
+  const order = [...new Set([...flat.map((d) => resolve(d.rootPath)), root])];
+  const direct = new Map(flat.map((d) => [resolve(d.rootPath), d.needs.map((n) => resolve(n))]));
+  direct.set(root, flat.map((d) => resolve(d.rootPath)));
+  const deps = new Map<string, Set<string>>();
+  const close = (a: string, path: Set<string>): Set<string> => {
+    const known = deps.get(a);
+    if (known !== undefined) return known;
+    const out = new Set<string>();
+    if (path.has(a)) return out; // a cycle: reported elsewhere, never looped on here
+    path.add(a);
+    for (const n of direct.get(a) ?? []) {
+      out.add(n);
+      for (const x of close(n, path)) out.add(x);
+    }
+    path.delete(a);
+    deps.set(a, out);
+    return out;
+  };
+  for (const a of order) close(a, new Set());
+  const names = new Map(flat.map((d) => [resolve(d.rootPath), d.dependency.name ?? d.rootPath]));
+  const graph = { order, deps, names };
+  graphCache.set(root, graph);
+  return graph;
+}
+
+/** `declarationChain(inst)`, derived from the checkout's one walk when it reaches `inst`. */
+function chainIn(graph: CheckoutGraph, inst: string): Array<{ name: string; root: string; own?: boolean }> {
+  const deps = graph.deps.get(inst);
+  if (deps === undefined) return declarationChain(inst);
+  return [
+    ...graph.order.filter((x) => deps.has(x)).map((x) => ({ name: graph.names.get(x) ?? x, root: x })),
+    { name: "(root)", root: inst, own: true },
+  ];
 }
 
 const dependentsCache = new Map<string, Array<{ name: string; root: string }>>();
@@ -1007,23 +1066,11 @@ export function checkoutDependentsOf(instanceRoot: string): Array<{ name: string
   const target = resolve(instanceRoot);
   const cached = dependentsCache.get(target);
   if (cached !== undefined) return cached;
-  const checkout = checkoutRootFor(target);
-  let order: string[];
-  try {
-    order = [...orderedDependencies(checkout).map((d) => resolve(d.rootPath)), checkout];
-  } catch {
-    order = [checkout];
-  }
+  const graph = checkoutGraph(checkoutRootFor(target));
   const out: Array<{ name: string; root: string }> = [];
-  for (const inst of [...new Set(order)]) {
+  for (const inst of graph.order) {
     if (inst === target) continue;
-    let deps: string[];
-    try {
-      deps = orderedDependencies(inst).map((d) => resolve(d.rootPath));
-    } catch {
-      continue;
-    }
-    if (!deps.includes(target)) continue;
+    if (!(graph.deps.get(inst)?.has(target) ?? false)) continue;
     let name = inst;
     try {
       name = readDeclaration(inst)?.name ?? inst;
