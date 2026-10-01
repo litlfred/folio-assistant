@@ -4,7 +4,7 @@ title: 'MERGE AUTO-RESOLVE: merge:main resolves only DECLARED conflict patterns,
 status: in-progress
 type: feature
 created_at: 2026-10-01T06:57:14Z
-updated_at: 2026-10-01T06:57:14Z
+updated_at: 2026-10-01T16:04:07Z
 parent: folio-assistant-1xhc
 ---
 
@@ -32,3 +32,59 @@ Issue #1707 (bean y7b3 measured it). Owner 2026-10-01: '1 + new skills/tools for
 ## Handover (owner away a week)
 - Merged without waiting for CI on the owner's instruction; check CI on the merge commit first.
 - Next: PR B, a workflow that runs `bun run merge:main` on conflicted open PRs when main moves (bot push; same diagram).
+
+## Part B — design (written 2026-10-01, S2 of epic 7x5n; NOT implemented)
+
+**What.** When `main` moves, CI regenerates on each open PR's merge result and
+pushes a fix-up commit, so an agent does not spend a round on a merge that is
+mechanical by declaration. Same diagram: `merge-base.bpmn`, executed by the same
+`bun run merge:main`; the workflow is a second caller, never a second resolver.
+
+**Why it is worth building — measured on #1754 today (4-core container, load 6–8
+from sibling sessions):**
+
+| round | main | conflicts | result | merge start → verdict |
+|---|---|---|---|---|
+| 1 | cdb0a018c (red) | 42 | aborted: 6 unrepaired, all main's own red | 39 min |
+| 3 | c7505917 | 45 | refused in <1 min: 3 undeclared (now declared) | <1 min |
+| 4 | c7505917 | 45 | aborted: 2 unrepaired — submodules not checked out at merged pins (fixed) | 46 min |
+| 5 | c7505917 | 45 | merged, 75 current / 8 regenerated / 0 unrepaired | 37.5 min |
+| 6 | 48e9f383 | 4 | merged, 7 regenerated | 19 min |
+| 7 | after #1774 | 12 | merged, 80 current / 3 regenerated | 20 min |
+
+Plus `bun run gates` on the result: 29–32 min, red only on 5 s test timeouts
+under load (all pass at `--timeout 60000`) and, the first time, three
+merged-tree gates the branch alone could not see. Round 7 merge start (15:11)
+→ local gates done (16:01) → push (16:03): **52 min**. So merge → proved is
+~50–80 min of agent wall-clock, while `main` moves
+every ~3 min: by the time a branch is proved, it is ~20 commits behind again.
+Doing it in CI moves that cost off the agent and onto a runner that is not
+shared with sibling sessions.
+
+**Shape.**
+1. Trigger: `push` to `main`, debounced — `concurrency: merge-main-${pr}` with
+   `cancel-in-progress: true`, so a burst of pushes yields one run per PR.
+2. Select: open PRs whose `mergeable_state` is `dirty` (conflicted) or whose
+   base is more than N commits behind, AND which opt in by label
+   (`auto-merge-main`). Never a fork; never a PR whose head moved during the run.
+3. Run `bun run merge:main` on a checkout of the PR head with submodules.
+   - exit 0 → push the merge commit to the PR branch (bot identity), comment
+     once with the per-pattern counts, and let the PR's own CI judge it.
+   - exit 1 (refused) → push nothing; comment the ✗ list once (edit in place
+     on the next run, like the health issue), and label `needs-merge-human`.
+   - exit 1 (unrepaired) → push nothing; if the same checks fail on `main`,
+     say so (that is main's red, not the PR's) rather than labelling the PR.
+4. The push uses a token that DOES trigger the PR's workflows (a GITHUB_TOKEN
+   push does not), so the fix-up is proved by the real CI, not trusted.
+
+**What would falsify it.** (a) If most conflicts are authored rather than
+generated, the bot only comments — measure the refusal rate over the first
+week before widening the label. (b) If the regen half alone exceeds the
+runner budget (~40 min here, under load), split: CI pushes the resolved merge
+WITHOUT regen and lets the PR's own gates' writers fix up — but that pushes an
+unproved commit, which rule 2 of the skill forbids, so the answer would be a
+faster regen, not a weaker proof.
+
+**Not doing.** No new patterns from CI (a pattern is declared by a person, with
+its `why`); no merging to `main`; no running on PRs that have not opted in —
+a bot commit on somebody's in-flight branch is a coordination event.
