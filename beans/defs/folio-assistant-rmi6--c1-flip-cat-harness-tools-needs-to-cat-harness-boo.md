@@ -1,11 +1,11 @@
 ---
 # folio-assistant-rmi6
 title: 'C1: flip cat-harness-tools needs to [cat-harness, bootstrap-tools]; core adds cat-harness-tools'
-status: todo
+status: in-progress
 type: task
 priority: high
 created_at: 2026-10-01T12:16:24Z
-updated_at: 2026-10-01T12:16:25Z
+updated_at: 2026-10-01T13:19:53Z
 parent: folio-assistant-7x5n
 blocked_by:
     - folio-assistant-hx65
