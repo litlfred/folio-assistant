@@ -29,10 +29,11 @@
       "type": "string",
       "enum": [
         "github-pages",
-        "smart-who-int",
+        "canonical-host",
         "both"
       ],
-      "default": "github-pages"
+      "default": "github-pages",
+      "description": "Where the release is published. `canonical-host` is the host the IG's own canonical URL names (for a WHO SMART IG, smart.who.int) — named generically because fhir-harness knows no particular publisher (#1767)."
     }
   }
 }
