@@ -5,7 +5,7 @@ status: completed
 type: task
 priority: normal
 created_at: 2026-10-01T06:40:55Z
-updated_at: 2026-10-01T06:46:40Z
+updated_at: 2026-10-01T11:29:42Z
 parent: folio-assistant-scfh
 ---
 
@@ -26,3 +26,6 @@ Claimed by agent worktree branch worktree-agent-a4eb97cb997f2156b, session_019rL
 - [x] source recorded in each licence.json `note`: the WG's REC publication snapshot (w3c/poe snapshots/REC-odrl-model-20180215, w3c/prov ontology/releases/REC-prov-o-20130430, w3c/json-ld-syntax publication-snapshots/REC), REC text not editor's draft, not compared byte for byte with w3.org (blocked). Printed to PDF offline with headless Chromium; PDFs retired to fsh-guts/uploads/ with sidecars.
 - [x] evidence: NO methodology node relies on ODRL, PROV-O or JSON-LD (grep of all four methodologies/ dirs), so no `evidence:` was added. The specs are relied on by skills and docs (role-model, task-authorization, bpmn-execution, odrl-prov-actor-model proposal, prov-qaqc), which carry no evidence field.
 - [x] check:l1-complete, check:source-licence, check:methodology-evidence, tsc, library tests pass. Shared regenerated indexes left for the coordinator.
+
+## Superseded 2026-10-01 (owner, relayed in S0 / bean hx65)
+Owner chose "Add methodology citations": the three W3C sources are now cited by methodology nodes (prov-o-provenance, odrl-policies, json-ld-serialisation; bean 6306, #1769, ported into #1774). The reading above that no methodology relies on them is superseded.
