@@ -18,7 +18,7 @@
  * ## It is DERIVED, and the version is not its own to state
  *
  * {@link PinnedTerminologySchema.pin} names the external-schema record the
- * version comes from, and `scripts/pin-smart-base-terminology.ts` refuses to
+ * version comes from, and the `pin-ig-terminology` Tool refuses to
  * write unless the clone's own `sushi-config.yaml` declares that version. A
  * snapshot of one version labelled another is the single way this file could
  * assert something false, so it is refused at the point of writing rather

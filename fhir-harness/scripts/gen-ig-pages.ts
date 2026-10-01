@@ -79,14 +79,14 @@ import { DAK_HUB_SCRIPT, DAK_HUB_TEMPLATE, DAK_VIEW_SCRIPT, dakHubData, dakServe
 import { JSON_VIEW_SCRIPT, hasJsonView, jsonViewData } from "./resource-views.ts";
 import { isDirectoryReadme } from "../../cat-harness/schemas/kg-node.js";
 
-import { IgMenuSchema, type IgMenu, type IgMenuGroup, menuHref, menuItemCount } from "../../cat-harness/schemas/ig-menu.js";
+import { IgMenuSchema, type IgMenu, type IgMenuGroup, menuHref, menuItemCount } from "../schemas/ig-menu.js";
 import {
   IgChromeSchema,
   chromeCss,
   chromeFileFor,
   tokenOf,
   type IgChrome,
-} from "../../cat-harness/schemas/ig-chrome.js";
+} from "../schemas/ig-chrome.js";
 import {
   declarationPathIn,
   directoriesForGraph,

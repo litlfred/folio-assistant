@@ -2,6 +2,14 @@
 /**
  * Snapshot the terminology of a PUBLISHED IG at a pinned version.
  *
+ * Generic to any FHIR IG whose code systems are FSH under
+ * `input/fsh/codesystems/`, so it lives in fhir-harness (#1767, stage B′). It
+ * was `cat-harness/scripts/pin-smart-base-terminology.ts`, with the WHO pin
+ * record, snapshot path and source repository hard-coded; those are now
+ * `--pin`, `--out` and `--source`. The concept extraction is unchanged.
+ * The first use is still WHO's: `cat-harness/external-schemas/who-smart-base.json`,
+ * which `check:term-mapping` reads, so the pin and snapshot files stay there.
+ *
  * Bean `7wou` / `ejug`. The owner ruled 2026-09-30 that the `fhir` half of
  * `check:term-mapping` asserts **a published IG at a version** — not a live
  * curated collection — so the resolver needs that version's codes, offline
@@ -25,27 +33,35 @@
  *
  * ## It is DERIVED from the pin, and says so
  *
- * The version comes from `external-schemas/who-smart-base.json`, never from
- * this file. Moving the pin and re-running is the whole update procedure, and
+ * The version comes from the pin record named by `--pin`, never from this
+ * file. Moving the pin and re-running is the whole update procedure, and
  * a snapshot whose `version` disagrees with the record is a defect the check
  * reports rather than tolerates.
  *
  * Usage:
- *   bun run cat-harness/scripts/pin-smart-base-terminology.ts --from <clone>
+ *   bun run fhir-harness/scripts/pin-ig-terminology.ts --from <clone> \
+ *     --pin <repo-relative pin record> --out <repo-relative snapshot> --source <repository URL>
+ *
+ * WHO SMART base, the first and today only use:
+ *   --pin cat-harness/external-schemas/who-smart-base.json
+ *   --out cat-harness/external-schemas/who-smart-base.terminology.json
+ *   --source https://github.com/WorldHealthOrganization/smart-base
  *
  * The clone is made by hand, at the pinned tag, because cloning an external
- * repository is not something a gate should do:
- *   git clone --depth 1 --branch v1.0.0 https://github.com/WorldHealthOrganization/smart-base
+ * repository is not something a gate should do.
  *
- * @module scripts/pin-smart-base-terminology
+ * @module fhir-harness/scripts/pin-ig-terminology
  * @covers external-schemas
  */
 import { readFileSync, readdirSync, writeFileSync } from "node:fs";
 import { join, resolve } from "node:path";
 
 const ROOT = resolve(import.meta.dir, "../..");
-export const PIN_RECORD = "cat-harness/external-schemas/who-smart-base.json";
-export const SNAPSHOT = "cat-harness/external-schemas/who-smart-base.terminology.json";
+/** `--name value`, or undefined. */
+function arg(name: string): string | undefined {
+  const i = process.argv.indexOf(name);
+  return i >= 0 ? process.argv[i + 1] : undefined;
+}
 
 export interface PinnedConcept {
   /** The code system's FSH id, which is its identity inside the IG. */
@@ -84,12 +100,17 @@ export function snapshotFrom(clone: string): PinnedConcept[] {
 }
 
 function main(): number {
-  const i = process.argv.indexOf("--from");
-  if (i < 0 || !process.argv[i + 1]) {
-    console.error("usage: --from <path to a smart-base clone at the pinned tag>");
+  const from = arg("--from");
+  const PIN_RECORD = arg("--pin");
+  const SNAPSHOT = arg("--out");
+  const source = arg("--source");
+  if (!from || !PIN_RECORD || !SNAPSHOT || !source) {
+    console.error(
+      "usage: --from <IG clone at the pinned tag> --pin <pin record> --out <snapshot> --source <repository URL>",
+    );
     return 1;
   }
-  const clone = resolve(process.argv[i + 1]!);
+  const clone = resolve(from);
   const pin = JSON.parse(readFileSync(join(ROOT, PIN_RECORD), "utf-8")) as { version?: string };
   if (!pin.version || pin.version === "unpinned") {
     console.error(`${PIN_RECORD} is unpinned — pin a version before snapshotting it`);
@@ -109,14 +130,14 @@ function main(): number {
   const body = {
     $schema: "folio-pinned-terminology/v1",
     _comment:
-      "DERIVED from the version pinned in external-schemas/who-smart-base.json. Never hand-edit: " +
-      "move the pin, re-clone at that tag, and re-run pin-smart-base-terminology.ts. It exists " +
+      `DERIVED from the version pinned in ${PIN_RECORD}. Never hand-edit: ` +
+      "move the pin, re-clone at that tag, and re-run fhir-harness/scripts/pin-ig-terminology.ts. It exists " +
       "because the owner ruled 2026-09-30 that check:term-mapping's `fhir` half asserts a " +
       "PUBLISHED IG AT A VERSION rather than a live collection — so the codes must be fixed and " +
       "offline, not whatever a host serves today. Both hosts are in fact unreachable from CI.",
     pin: PIN_RECORD,
     version: pin.version,
-    source: "https://github.com/WorldHealthOrganization/smart-base",
+    source,
     concepts,
   };
   writeFileSync(join(ROOT, SNAPSHOT), JSON.stringify(body, null, 2) + "\n");

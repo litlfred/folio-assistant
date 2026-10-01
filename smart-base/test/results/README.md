@@ -9,5 +9,5 @@ Part of [SMART Base](../../README.md) 0.1.0, declared as `qa`, holding `qa`.
 |---|---|---|
 | [`kg-qa.manifest.json`](kg-qa.manifest.json) | data |  |
 | [`p2-refusals.qa-results.json`](p2-refusals.qa-results.json) | data |  |
-| [`kg-qa/`](kg-qa/) | 21 files | |
+| [`kg-qa/`](kg-qa/) | 18 files | |
 <!-- kg:subgraph:end -->
