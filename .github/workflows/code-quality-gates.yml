@@ -1502,6 +1502,27 @@ jobs:
           # at the eight the store had, so a NEW one fails and the backlog is
           # listed rather than demanded.
           bun run check:bean-bodies
+          # Bean `7pp6`: a markdown line whose FIRST character is `<` makes
+          # kramdown open a raw HTML block, and with no close tag the REST OF THE
+          # PAGE stays raw -- tables print as rows of pipes. The usual cause is an
+          # inline code span wrapped across a line break.
+          #
+          # `check:escaped-markup` already catches this, but only on a BUILT tree,
+          # and that runs in docs-site.yml AFTER merge. So five of these shipped
+          # green and reddened `main`: four closed at once by `7w1a` (`<agentId>`,
+          # `<branch>`, `<file.json>`, `<name>.config.json`) and `<slide>` by
+          # #1730, which cost NINE consecutive `Docs site` failures. Each was
+          # repaired by reflowing the one source that had it; a fix repeated five
+          # times is a missing gate, not five accidents.
+          #
+          # Column 0 only, outside fences and front matter, with autolinks and
+          # real html elements excused BY NAME -- including the
+          # `<details markdown="1">` that `7w1a` deliberately introduced. Of 6
+          # column-0 matches across 2314 files, four were not this defect, so a
+          # check designed from the one example would fire on valid documentation.
+          # Lands green over 706 sources: it locks the class, it does not open a
+          # backlog.
+          bun run check:escaped-markup:source
           # Bean `t7ao`: check:bean-bodies reads front matter by REGEX, and a
           # regex over a broken document does not notice the document is
           # broken. A bean committed with a literal `\1` where `updated_at:`
