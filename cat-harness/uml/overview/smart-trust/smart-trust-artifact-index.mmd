@@ -26,6 +26,7 @@ classDiagram
       canonical [0..1] string
       version [0..1] string
       category [0..1] string
+      listedAt [0..1] integer
       published [1] object
       dak [0..1] object
       materialization [1] object
@@ -191,7 +192,7 @@ classDiagram
       dak/ValueSet-KeyUsage [1] enum(10) of string
       dak/ValueSet-Participants-DEV [1] enum(60) of string
       dak/ValueSet-Participants-UAT [1] enum(57) of string
-      dak/ValueSet-Participants [1] enum(34) of string
+      dak/ValueSet-Participants [1] enum(35) of string
       dak/ValueSet-PayloadTypes [1] enum(1) of string
       dak/ValueSet-Transactions [1] enum(3) of string
       dak/ValueSet-WHORegionalOffices [1] enum(7) of string

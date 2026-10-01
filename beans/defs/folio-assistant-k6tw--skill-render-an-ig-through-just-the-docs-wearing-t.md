@@ -1,11 +1,11 @@
 ---
 # folio-assistant-k6tw
 title: 'SKILL: render an IG through just-the-docs wearing the instance''s existing theme (u3cd only reads kind=webpage; smart-trust''s 7h3u theme is unused)'
-status: todo
+status: completed
 type: task
 priority: normal
 created_at: 2026-10-01T12:31:04Z
-updated_at: 2026-10-01T12:34:27Z
+updated_at: 2026-10-01T15:22:48Z
 parent: folio-assistant-uhkv
 ---
 
@@ -36,4 +36,13 @@ Measured gap: staging smart-trust's IG site (bamf/u3cd) reports "colour scheme: 
 - [x] existing theme mechanisms mapped (u3cd, 7h3u, theme-by-ref, ig-chrome) — no duplicate built
 - [x] a skill states how an instance's existing theme reaches its IG site, and what is refused
 - [x] smart-trust's IG site renders in its declared theme (it already did; verified on built CSS)
-- [ ] gates: skill:register — blocked by main's gen-skill-docs crash
+- [x] gates: skill:register — completed after merging main (#1774)
+
+## 2026-10-01 (later): registration complete
+
+After merging `main` (#1774, "S0: main-green", which labels the 3 skill packages), `skill:register` ran to completion: *"9 artefact(s) current, 285 skill(s) across 29 package(s)"*. `uml:overview` needed `PLANTUML_JAR`; the Maven jar is reachable from these sessions.
+- [x] gates: skill:register
+
+## Summary of Changes
+- Premise corrected: the theme was already applied (`u3cd`).
+- Added the skill `ig-site-theme` (`fhir-ig-base`): the declared → resolved → rendered path, the refusals, the three theme paths, and verification on the built CSS. Registered (9 artefacts current).

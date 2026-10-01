@@ -546,6 +546,13 @@
       "status": "candidate"
     },
     {
+      "id": "fhir-artifact-index.fhirartifactschema.listedat",
+      "prefLabel": "FhirArtifactSchema.listedAt",
+      "definition": "Position on the Publisher's `artifacts.html`, 0-based, first appearance. The category's order and the artefact's order within it are both read off this — a renderer that must match the Publisher's page (owner, 2026-10-01: every phase renders equivalent to the standard IG render) has no other source for either. Absent exactly when `category` is.",
+      "source": "folio-assistant-core/schemas/fhir-artifact-index.ts#FhirArtifactSchema.listedAt",
+      "status": "candidate"
+    },
+    {
       "id": "fhir-artifact-index.igsourceschema.of",
       "prefLabel": "IgSourceSchema.of",
       "definition": "The URI the artefacts are published AT — what a `published` URL is resolved against.",

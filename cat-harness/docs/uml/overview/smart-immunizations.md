@@ -70,6 +70,7 @@ classDiagram
       canonical [0..1] string
       version [0..1] string
       category [0..1] string
+      listedAt [0..1] integer
       published [1] object
       dak [0..1] object
       materialization [1] object
