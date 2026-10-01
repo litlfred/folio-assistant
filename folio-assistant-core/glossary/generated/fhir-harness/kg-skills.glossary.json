@@ -22,6 +22,14 @@
       "status": "candidate"
     },
     {
+      "id": "ig-ast-delta",
+      "prefLabel": "ig-ast-delta",
+      "definition": "List and view what changed between two IG ASTs, check whether an AST is still valid for the IG's current inputs, and render the delta as just-the-docs pages that carry the provisional mark. Read before trusting a cached AST, before reviewing an incremental IG build, and before rendering anything from a cache.",
+      "notation": "ig-ast-delta",
+      "source": "fhir-harness/skills/fhir-ig-base/ig-ast-delta.md",
+      "status": "candidate"
+    },
+    {
       "id": "ig-build-pipeline",
       "prefLabel": "ig-build-pipeline",
       "definition": "The bare FHIR IG pipeline — FSH to SUSHI to the IG Publisher to a pages branch, with no pre-processing and no post-processing. What this layer runs, what it emits, and the list of things it deliberately refuses to know about. Read before adding anything to fhir-harness.",
