@@ -186,7 +186,6 @@ roles, and how they compose with the LLM, see [Skills & roles](../../skills.html
 | [MCP contract](mcp-contract.html) | `mcp-contract` | — | [`mcp-projection`](mcp-projection.md) emits a server. This checks the emitted |
 | [MCP projection](mcp-projection.html) | `mcp-projection` | — | **The harness does not require MCP. It knows how to emit it.** That distinction |
 | [Skills and Tools](skills-and-tools.html) | `skills-and-tools` | — | **A skill is a capability stated generically. A Tool content node is one |
-| [Two mechanisms and a persona](upload-routes.html) | `upload-routes` | — | [`content-acquisition`](content-acquisition.md) decides *what channel* a |
 
 ## Synced from claude-scientific-skills (pinned, read-only)
 
@@ -260,6 +259,7 @@ roles, and how they compose with the LLM, see [Skills & roles](../../skills.html
 | [Tabular metadata](tabular-metadata.html) | `tabular-metadata` | — | **The model is CSVW and nothing custom.** Bean `ulqj`, decided by the owner: |
 | [Translation manager](translation-manager.html) | `translation-manager` | — | > Skill id: `translation-manager` · Package: |
 | [Upload naming](upload-naming.html) | `upload-naming` | — | > **Lives in `library-core`, not `folio-core`.** It was written into |
+| [Two mechanisms and a persona](upload-routes.html) | `upload-routes` | — | [`content-acquisition`](content-acquisition.md) decides *what channel* a |
 | [Watching the queue](uploads-watch.html) | `uploads-watch` | — | `uploads/` is the acquisition queue — |
 
 ## Process model — roles, authorization, methodology (process-core)

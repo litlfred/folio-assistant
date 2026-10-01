@@ -2075,7 +2075,7 @@ upload-routes <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
 <p>How a file actually REACHES <code>uploads/</code> — the two mechanisms that write bytes into a declared queue, the persona that performs one of them on somebody's behalf, and what each writer owes that the route does not do for them. The step before intake and after acquisition.</p>
-<p class="fa-gloss-meta">Skills of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/folio-core/upload-routes.md"><code>cat-harness/skills/folio-core/upload-routes.md</code></a></p>
+<p class="fa-gloss-meta">Skills of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/library/library-core/upload-routes.md"><code>cat-harness/skills/library/library-core/upload-routes.md</code></a></p>
 </dd>
 <dt id="cat-harness--kg-skills--uploads-watch" data-fa-state="extracted" data-fa-gloss="">
 uploads-watch <span class="fa-gloss-status">candidate, extracted</span>
