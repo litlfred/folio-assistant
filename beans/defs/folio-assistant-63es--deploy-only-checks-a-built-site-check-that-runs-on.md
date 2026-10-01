@@ -1,10 +1,11 @@
 ---
 # folio-assistant-63es
 title: 'DEPLOY-ONLY CHECKS: a built-site check that runs only on main lets a PR stay green and break every publish'
-status: in-progress
+status: completed
 type: bug
+priority: normal
 created_at: 2026-10-01T06:31:51Z
-updated_at: 2026-10-01T06:31:51Z
+updated_at: 2026-10-01T07:06:44Z
 parent: folio-assistant-o3xy
 ---
 
@@ -23,4 +24,8 @@ check:escaped-markup and check:maintained-artefacts ran only in docs-site.yml (t
 ## Done when
 - [x] both checks run in stage
 - [x] parity gate covers named checks, falsified against the old workflow
-- [ ] PR green and merged
+- [x] PR green and merged — #1741 (b0ca040), owner: merge on green
+
+## Summary of Changes
+
+Merged in #1741 (`b0ca040`, 2026-10-01). `feature-staging.yml` runs `check:escaped-markup` after the mount and `check:maintained-artefacts` after the exports (the first placement, beside the mount, found 6 of 8 artefacts missing because staging writes them later; fixed in the same PR). `check-invocation-parity` now counts `bun run check:<name>` as an obligation, so the deploy gaining a built-site check that previews do not run fails CI. Falsified against the old staging workflow: it names exactly the two checks.
