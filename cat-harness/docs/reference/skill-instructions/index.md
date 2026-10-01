@@ -349,6 +349,7 @@ roles, and how they compose with the LLM, see [Skills & roles](../../skills.html
 | [Process state](process-state.html) | `process-state` | — | An agent working a BPMN process holds **nested state**: a *task*, inside a |
 | [Release epic planning](release-epic-planning.html) | `release-epic-planning` | — | A release epic groups all the work for a specific release version. |
 | [Release lifecycle](release-lifecycle.html) | `release-lifecycle` | — | This skill governs **when and why** to create releases. For the **how** |
+| [Render a Knowledge Graph to a CDN](render-kg-to-cdn.html) | `render-kg-to-cdn` | — | Owner, 2026-09-30: *"render content of a KG (or list of subgraphs within) for |
 | [Session context](session-context.html) | `session-context` | — | A **session** is one actor working, from the moment it picks up until it stops. |
 | [Playing a state machine](session-state-machine.html) | `session-state-machine` | — | > **An agent could also play a (non-deterministic) state machine as a tool. |
 | [Specification-compiled agents](specification-compiled-agents.html) | `specification-compiled-agents` | — | Renders [`methodologies/specification-compiled-agents.md`](https://github.com/litlfred/folio-assista |

@@ -619,6 +619,7 @@ classDiagram
       maintains [0..*] Maintain[]
       downstream [0..1] object
       renders [0..*] string[]
+      subprocess [0..1] object
     }
   }
   namespace smart_base__qa {

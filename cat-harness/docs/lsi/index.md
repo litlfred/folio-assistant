@@ -25,7 +25,7 @@ how to build, query and audit an index is the skill `lsi-indexing`.
 
 <div class="lv-grid">
 <div class="lv-stat"><b>5</b><span>committed indexes</span></div>
-<div class="lv-stat"><b>1763</b><span>units indexed</span></div>
+<div class="lv-stat"><b>1764</b><span>units indexed</span></div>
 <div class="lv-stat"><b>5</b><span>graphs that need an index and lack a fresh one</span></div>
 </div>
 
@@ -122,7 +122,7 @@ Each dimension is a **contrast** between two poles, shown by their highest-loadi
 
 ## cat-harness / skills
 
-**308** units · **7606** terms · k = **100** · retains **68.8 %** of the weighted matrix · weighting `log-entropy` · sidecar `cat-harness/test/results/lsi/cat-harness/skills.lsi.json`
+**309** units · **7609** terms · k = **100** · retains **68.8 %** of the weighted matrix · weighting `log-entropy` · sidecar `cat-harness/test/results/lsi/cat-harness/skills.lsi.json`
 
 > Dimension 1 has **no negative pole**: it most likely measures unit length and term frequency (a margin), not a theme. Read the themes from dimension 2 on.
 
@@ -130,14 +130,14 @@ Each dimension is a **contrast** between two poles, shown by their highest-loadi
 
 | dim | σ | one pole | the other pole |
 |---|---|---|---|
-| 1 | 47.26 | bean, instance, graph, session, kind, branch, page, directory | *(none)* |
-| 2 | 27.78 | bias, studies, study, effect, statistical, causation, validity, causal | bean, harness, instance, directory, node, graph, kind, session |
-| 3 | 22.36 | proof, watcher, lean, slot, blocks, witness, project, chapter | harness, node, instance, bean, directory, page, actor, bias |
-| 4 | 19.58 | dpi, color, grayscale, lean, pdf, images, matplotlib, raster | session, branch, queue, prs, commits, coordination, beans, bean |
-| 5 | 18.67 | dpi, color, grayscale, contrast, raster, matplotlib, eps, images | proof, lean, glossary, declaration, term, theorem, mathlib, sorry |
+| 1 | 47.30 | bean, instance, graph, session, kind, branch, page, directory | *(none)* |
+| 2 | 27.80 | bias, studies, study, effect, statistical, causation, validity, causal | bean, harness, instance, directory, node, graph, kind, declared |
+| 3 | 22.38 | proof, watcher, lean, slot, blocks, witness, project, chapter | harness, node, instance, bean, directory, page, actor, bias |
+| 4 | 19.58 | dpi, color, grayscale, lean, pdf, images, matplotlib, raster | session, branch, queue, prs, commits, coordination, beans, sibling |
+| 5 | 18.68 | dpi, color, grayscale, contrast, raster, matplotlib, eps, images | proof, lean, glossary, declaration, term, theorem, mathlib, sorry |
 | 6 | 16.78 | regulatory, intervention, biosafety, ethics, candidate, rivals, dual-use, safety | fallacy, fallacious, reality, fallacies, solutions, consider, description, ignoring |
 | 7 | 16.31 | lean, mathlib, mcp, sorry, search, proof, theorem, page | watcher, slot, voice, backlog, queue, ledger, nesting, objection |
-| 8 | 15.37 | mathlib, lean, sorry, lake, oleans, mcp, subdirectory, sessions | slot, watcher, criterion, forward, backlog, band, major, prose |
+| 8 | 15.37 | mathlib, lean, sorry, lake, oleans, mcp, subdirectory, sessions | slot, watcher, criterion, forward, band, backlog, major, prose |
 
 **Findings** — 0 narrow dimension(s), 0 near-duplicate pair(s).
 

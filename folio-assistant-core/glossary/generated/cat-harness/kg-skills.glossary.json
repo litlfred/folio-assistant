@@ -1561,6 +1561,14 @@
       "status": "candidate"
     },
     {
+      "id": "render-kg-to-cdn",
+      "prefLabel": "render-kg-to-cdn",
+      "definition": "Render a Knowledge Graph, or a list of its Subgraphs, for publication to a CDN at a publication root URL, and report a status and one message. The same step for a staging preview and for a release — only the root URL and the target differ. Names the target's Tool, never its steps: GitHub Pages (`gh-pages`) is one Tool, and it carries its own subprocess.",
+      "notation": "render-kg-to-cdn",
+      "source": "cat-harness/skills/process/workflow/render-kg-to-cdn.md",
+      "status": "candidate"
+    },
+    {
       "id": "render-logging",
       "prefLabel": "render-logging",
       "definition": "Log every render to the publish branch — what was published, removed, restored or deliberately retained — to an append-only log that lives beside what it describes. Use when adding or removing anything on `gh-pages`, when asking \"what happened to this preview\", or before writing a workflow step that deletes a published artefact.",

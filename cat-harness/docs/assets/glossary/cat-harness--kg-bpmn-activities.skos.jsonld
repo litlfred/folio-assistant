@@ -3381,12 +3381,12 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Publish to gh-pages (FULL REPLACE)"
+          "@value": "Push to the CDN [render-kg-to-cdn] gh-pages, FULL REPLACE"
         }
       ],
       "skos:definition": [
         {
-          "@value": "Publish to gh-pages as a FULL REPLACE: anything on the branch this build did not produce is gone unless the restore put it back. The verify step that follows reads the deployed ref to confirm the previews survived."
+          "@value": "THIS SITE IS ONE INSTANCE OF THE GENERAL STEP (owner, 2026-09-30: gh-pages is \"one specific tool of general 'publish to CDN'\"). Process_RenderKgToCdn, entered with the tree this build already rendered and verified, the site root as the publication root URL, and GitHub Pages as the target — so its `gh-pages` Tool pushes. Here that push is a FULL REPLACE of the `gh-pages` branch: anything on it this build did not produce is gone unless the restore put it back, which is why the restore and the survival check either side of this call stay in THIS process rather than in the general one. The call returns the push's status and message (the gh-pages merge commit and the QA result); a status other than `pushed` takes the `no` branch of Did the deploy succeed?."
         }
       ],
       "skos:notation": "Task_Publish",
@@ -4321,12 +4321,12 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Publish to STAGING/&lt;slug&gt;"
+          "@value": "Push to the CDN at STAGING/&lt;slug&gt;/ [render-kg-to-cdn]"
         }
       ],
       "skos:definition": [
         {
-          "@value": "`keep_files: true` and a `destination_dir`, so this push adds one directory beside whatever else is on the branch. It is also RETRIED once: five other workflows push to `gh-pages` without joining this one's concurrency group, and a queue does not help because GitHub CANCELS a pending job when a newer one arrives for the same group rather than queueing it. Measured 2026-09-19: three staging runs from three different branches inside 17 seconds, two cancelled."
+          "@value": "A PREVIEW IS THE GENERAL STEP WITH A DIFFERENT ROOT (owner, 2026-09-30: \"independent of staging vs publication … just rendering\"). Process_RenderKgToCdn, entered with the tree Task_Build rendered, `STAGING/<slug>/` under the site root as the publication root URL, and GitHub Pages as the target, so its `gh-pages` Tool pushes. For this target the push is `keep_files: true` with a `destination_dir`, so it adds one directory beside whatever else is on the branch; it is also RETRIED once: five other workflows push to `gh-pages` without joining this one's concurrency group, and a queue does not help because GitHub CANCELS a pending job when a newer one arrives for the same group rather than queueing it. Measured 2026-09-19: three staging runs from three different branches inside 17 seconds, two cancelled. The call returns the push's status and message; the render log and the PR comment that follow are this process's own."
         }
       ],
       "skos:notation": "Task_Deploy",
@@ -8021,7 +8021,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "Version bump, release notes, tag, build the final artifacts, deploy to the publication platform."
+          "@value": "Version bump, release notes, tag, build the final artifacts, deploy to the publication platform. The deploy is the general render-kg-to-cdn step with the RELEASE root as its publication root URL — the same step a staging preview takes with a root under it; the target (GitHub Pages, or a folio's own platform) is chosen by its Tool."
         }
       ],
       "skos:notation": "Task_PublishRelease",
@@ -8361,6 +8361,66 @@
       ],
       "skos:notation": "U_Coordinate",
       "dcterms:source": "cat-harness/processes/related-work.bpmn#U_Coordinate",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-bpmn-activities/process_renderkgtocdn.call_toolsubprocess",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Render and push with the target's Tool [its own subprocess]"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "BOUND BY THE TOOL, so no `calledElement` is written here: the activity names the skill, the Tool satisfies it, and the Tool's `subprocess` is what this descends into — for `gh-pages`, bootstrap-tools' Process_RenderKgToGitHubPages (stage, check the staging, deploy, check what is served). A diagram that named it would make every other CDN a second copy of this process. Whatever the Tool, it returns the two outputs below."
+        }
+      ],
+      "skos:notation": "Call_ToolSubprocess",
+      "dcterms:source": "cat-harness/processes/render-kg-to-cdn.bpmn#Call_ToolSubprocess",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-bpmn-activities/process_renderkgtocdn.task_report",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Report the push: status and message"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The output, on every path: `pushed`, `not-pushed` or `could-not-determine`, and one message — what is live (a commit), at which root URL, and the QA result. From the no-Tool branch the status is `not-pushed` and the message names the target nobody implements. A check that could not look is never reported as pushed."
+        }
+      ],
+      "skos:notation": "Task_Report",
+      "dcterms:source": "cat-harness/processes/render-kg-to-cdn.bpmn#Task_Report",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-bpmn-activities/process_renderkgtocdn.task_resolve",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Resolve the Subgraphs, the root URL and the target's Tool"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Every Subgraph id asked for must be one the declaration lists; none means the whole graph. The root URL is the one given. The target's Tool is the one that `satisfies: [\"render-kg-to-cdn\"]` for that CDN — `gh-pages` for GitHub Pages. A caller that already rendered and verified its tree hands the tree over instead of the graph, and the Tool pushes it without rendering again."
+        }
+      ],
+      "skos:notation": "Task_Resolve",
+      "dcterms:source": "cat-harness/processes/render-kg-to-cdn.bpmn#Task_Resolve",
       "skos:note": "candidate"
     },
     {

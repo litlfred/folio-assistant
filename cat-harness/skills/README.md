@@ -18,7 +18,7 @@ Part of [C@T Harness](../README.md) 0.1.0, declared as `skills`, holding `skills
 | [`kg/`](kg/) | 35 files | |
 | [`library/`](library/) | 22 files | |
 | [`permissions/`](permissions/) | 1 file | |
-| [`process/`](process/) | 23 files | |
+| [`process/`](process/) | 24 files | |
 | [`remote-packages/`](remote-packages/) | 2 files | |
 | [`requirements/`](requirements/) | 7 files | |
 | [`scientific-critical-thinking/`](scientific-critical-thinking/) | 11 files | |

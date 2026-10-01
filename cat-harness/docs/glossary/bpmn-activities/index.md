@@ -12,13 +12,13 @@ permalink: /glossary/bpmn-activities/
 
 Candidate terms extracted from every BPMN task and call activity: `name` as the label, its own `<documentation>` as the definition, the element id as the code. Each is the asset's own text, verbatim and not curated, and carries the badge "candidate, extracted". A person promotes one by authoring it. Authored terms, the counts and the sources are on the <a href="{{ '/glossary/' | relative_url }}">glossary index</a>.
 
-From: bootstrap 16 (<a href="{{ '/assets/glossary/bootstrap--kg-bpmn-activities.skos.jsonld' | relative_url }}">SKOS</a>) · cat-harness 492 (<a href="{{ '/assets/glossary/cat-harness--kg-bpmn-activities.skos.jsonld' | relative_url }}">SKOS</a>) · folio-assistant-core 4 (<a href="{{ '/assets/glossary/folio-assistant-core--kg-bpmn-activities.skos.jsonld' | relative_url }}">SKOS</a>) · large-datasets 30 (<a href="{{ '/assets/glossary/large-datasets--kg-bpmn-activities.skos.jsonld' | relative_url }}">SKOS</a>) · smart-base 9 (<a href="{{ '/assets/glossary/smart-base--kg-bpmn-activities.skos.jsonld' | relative_url }}">SKOS</a>).
+From: bootstrap 16 (<a href="{{ '/assets/glossary/bootstrap--kg-bpmn-activities.skos.jsonld' | relative_url }}">SKOS</a>) · cat-harness 495 (<a href="{{ '/assets/glossary/cat-harness--kg-bpmn-activities.skos.jsonld' | relative_url }}">SKOS</a>) · folio-assistant-core 4 (<a href="{{ '/assets/glossary/folio-assistant-core--kg-bpmn-activities.skos.jsonld' | relative_url }}">SKOS</a>) · large-datasets 30 (<a href="{{ '/assets/glossary/large-datasets--kg-bpmn-activities.skos.jsonld' | relative_url }}">SKOS</a>) · smart-base 9 (<a href="{{ '/assets/glossary/smart-base--kg-bpmn-activities.skos.jsonld' | relative_url }}">SKOS</a>).
 
-**Size:** this page holds 551 terms and is 427 KB before compression, fetched in one request, within its budget of 1.0 MB. There is no search index: the filter below runs over this page, and the A–Z bar jumps within it.
+**Size:** this page holds 554 terms and is 431 KB before compression, fetched in one request, within its budget of 1.0 MB. There is no search index: the filter below runs over this page, and the A–Z bar jumps within it.
 
 <label for="fa-gloss-q">Filter terms</label>
 <input id="fa-gloss-q" type="search" autocomplete="off" style="min-height:44px;width:100%;max-width:32rem">
-<p aria-live="polite"><span id="fa-gloss-n">551</span> shown</p>
+<p aria-live="polite"><span id="fa-gloss-n">554</span> shown</p>
 
 <nav aria-label="Letters"><a href="#letter-0-9">0–9</a> <a href="#letter-A">A</a> <a href="#letter-B">B</a> <a href="#letter-C">C</a> <a href="#letter-D">D</a> <a href="#letter-E">E</a> <a href="#letter-F">F</a> <a href="#letter-G">G</a> <a href="#letter-H">H</a> <a href="#letter-I">I</a> <a href="#letter-J">J</a> <a href="#letter-K">K</a> <a href="#letter-L">L</a> <a href="#letter-M">M</a> <a href="#letter-N">N</a> <a href="#letter-O">O</a> <a href="#letter-P">P</a> <a href="#letter-Q">Q</a> <a href="#letter-R">R</a> <a href="#letter-S">S</a> <a href="#letter-T">T</a> <a href="#letter-V">V</a> <a href="#letter-W">W</a></nav>
 
@@ -2510,26 +2510,26 @@ Publish the IG site [content-publish] <span class="fa-gloss-status">candidate, e
 <p>Release authorisation and review follow draft-to-publication.bpmn.</p>
 <p class="fa-gloss-meta">BPMN activities of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/l3-fhir-pipeline.bpmn"><code>cat-harness/processes/l3-fhir-pipeline.bpmn#Task_PublishIg</code></a></p>
 </dd>
-<dt id="cat-harness--kg-bpmn-activities--process_docssite.task_publish" data-fa-state="extracted" data-fa-gloss="">
-Publish to gh-pages (FULL REPLACE) <span class="fa-gloss-status">candidate, extracted</span>
-</dt>
-<dd>
-<p>Publish to gh-pages as a FULL REPLACE: anything on the branch this build did not produce is gone unless the restore put it back. The verify step that follows reads the deployed ref to confirm the previews survived.</p>
-<p class="fa-gloss-meta">BPMN activities of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/docs-site-publish.bpmn"><code>cat-harness/processes/docs-site-publish.bpmn#Task_Publish</code></a></p>
-</dd>
-<dt id="cat-harness--kg-bpmn-activities--process_featurestaging.task_deploy" data-fa-state="extracted" data-fa-gloss="">
-Publish to STAGING/&amp;lt;slug&amp;gt; <span class="fa-gloss-status">candidate, extracted</span>
-</dt>
-<dd>
-<p><code>keep_files: true</code> and a <code>destination_dir</code>, so this push adds one directory beside whatever else is on the branch. It is also RETRIED once: five other workflows push to <code>gh-pages</code> without joining this one's concurrency group, and a queue does not help because GitHub CANCELS a pending job when a newer one arrives for the same group rather than queueing it. Measured 2026-09-19: three staging runs from three different branches inside 17 seconds, two cancelled.</p>
-<p class="fa-gloss-meta">BPMN activities of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/feature-staging.bpmn"><code>cat-harness/processes/feature-staging.bpmn#Task_Deploy</code></a></p>
-</dd>
 <dt id="cat-harness--kg-bpmn-activities--process_kgtoportal.a_distribute" data-fa-state="extracted" data-fa-gloss="">
 Publish to the origin (a cache may front it) <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
 <p>Reach host behaviour through publication.host, never by assuming GitHub Pages' behaviour — Pages CANNOT serve application/ld+json and a local server can. A CDN in front is a layer, not the host: the canonical URL stays the origin's, and the cache is an accelerated route to the same bytes. Uploading and exposing are separable steps on purpose (xies, gate 4), because collapsing them removes the last moment at which a bad URL layout can still be caught.</p>
 <p class="fa-gloss-meta">BPMN activities of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/kg-to-portal.bpmn"><code>cat-harness/processes/kg-to-portal.bpmn#A_Distribute</code></a></p>
+</dd>
+<dt id="cat-harness--kg-bpmn-activities--process_docssite.task_publish" data-fa-state="extracted" data-fa-gloss="">
+Push to the CDN [render-kg-to-cdn] gh-pages, FULL REPLACE <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>THIS SITE IS ONE INSTANCE OF THE GENERAL STEP (owner, 2026-09-30: gh-pages is &quot;one specific tool of general 'publish to CDN'&quot;). Process_RenderKgToCdn, entered with the tree this build already rendered and verified, the site root as the publication root URL, and GitHub Pages as the target — so its <code>gh-pages</code> Tool pushes. Here that push is a FULL REPLACE of the <code>gh-pages</code> branch: anything on it this build did not produce is gone unless the restore put it back, which is why the restore and the survival check either side of this call stay in THIS process rather than in the general one. The call returns the push's status and message (the gh-pages merge commit and the QA result); a status other than <code>pushed</code> takes the <code>no</code> branch of Did the deploy succeed?.</p>
+<p class="fa-gloss-meta">BPMN activities of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/docs-site-publish.bpmn"><code>cat-harness/processes/docs-site-publish.bpmn#Task_Publish</code></a></p>
+</dd>
+<dt id="cat-harness--kg-bpmn-activities--process_featurestaging.task_deploy" data-fa-state="extracted" data-fa-gloss="">
+Push to the CDN at STAGING/&amp;lt;slug&amp;gt;/ [render-kg-to-cdn] <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>A PREVIEW IS THE GENERAL STEP WITH A DIFFERENT ROOT (owner, 2026-09-30: &quot;independent of staging vs publication … just rendering&quot;). Process_RenderKgToCdn, entered with the tree Task_Build rendered, <code>STAGING/&lt;slug&gt;/</code> under the site root as the publication root URL, and GitHub Pages as the target, so its <code>gh-pages</code> Tool pushes. For this target the push is <code>keep_files: true</code> with a <code>destination_dir</code>, so it adds one directory beside whatever else is on the branch; it is also RETRIED once: five other workflows push to <code>gh-pages</code> without joining this one's concurrency group, and a queue does not help because GitHub CANCELS a pending job when a newer one arrives for the same group rather than queueing it. Measured 2026-09-19: three staging runs from three different branches inside 17 seconds, two cancelled. The call returns the push's status and message; the render log and the PR comment that follow are this process's own.</p>
+<p class="fa-gloss-meta">BPMN activities of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/feature-staging.bpmn"><code>cat-harness/processes/feature-staging.bpmn#Task_Deploy</code></a></p>
 </dd>
 <dt id="bootstrap--kg-bpmn-activities--process_discussion.a_putquestion" data-fa-state="extracted" data-fa-gloss="">
 Put the question, with its candidates named <span class="fa-gloss-status">candidate, extracted</span>
@@ -2973,6 +2973,13 @@ Remove the preview AND append <code>removed</code> — one commit <span class="f
 <p>ONE COMMIT for the removal and its record. A separate log push can fail on its own and leave a preview that vanished with nothing saying why — which is the exact state bean <code>plj1</code> left the branch in. <code>render-log.ts</code> refuses a <code>removed</code> entry with no reason, so this step fails loudly rather than writing a record that says an artefact went and not why.</p>
 <p class="fa-gloss-meta">BPMN activities of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/feature-staging.bpmn"><code>cat-harness/processes/feature-staging.bpmn#Task_Remove</code></a></p>
 </dd>
+<dt id="cat-harness--kg-bpmn-activities--process_renderkgtocdn.call_toolsubprocess" data-fa-state="extracted" data-fa-gloss="">
+Render and push with the target's Tool [its own subprocess] <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>BOUND BY THE TOOL, so no <code>calledElement</code> is written here: the activity names the skill, the Tool satisfies it, and the Tool's <code>subprocess</code> is what this descends into — for <code>gh-pages</code>, bootstrap-tools' Process_RenderKgToGitHubPages (stage, check the staging, deploy, check what is served). A diagram that named it would make every other CDN a second copy of this process. Whatever the Tool, it returns the two outputs below.</p>
+<p class="fa-gloss-meta">BPMN activities of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/render-kg-to-cdn.bpmn"><code>cat-harness/processes/render-kg-to-cdn.bpmn#Call_ToolSubprocess</code></a></p>
+</dd>
 <dt id="cat-harness--kg-bpmn-activities--process_boardopenclose.a_renderavatars" data-fa-state="extracted" data-fa-gloss="">
 Render every card as its avatar <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
@@ -3000,6 +3007,13 @@ Report the capture state <span class="fa-gloss-status">candidate, extracted</spa
 <dd>
 <p>Capture is off or unknown, so nothing is committed. Say which of the two it is: off is somebody's decision, unknown means nobody could tell, and an agent that believes it has an audit trail when it has none acts on a false belief.</p>
 <p class="fa-gloss-meta">BPMN activities of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/activity-log.bpmn"><code>cat-harness/processes/activity-log.bpmn#A_ReportCaptureState</code></a></p>
+</dd>
+<dt id="cat-harness--kg-bpmn-activities--process_renderkgtocdn.task_report" data-fa-state="extracted" data-fa-gloss="">
+Report the push: status and message <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>The output, on every path: <code>pushed</code>, <code>not-pushed</code> or <code>could-not-determine</code>, and one message — what is live (a commit), at which root URL, and the QA result. From the no-Tool branch the status is <code>not-pushed</code> and the message names the target nobody implements. A check that could not look is never reported as pushed.</p>
+<p class="fa-gloss-meta">BPMN activities of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/render-kg-to-cdn.bpmn"><code>cat-harness/processes/render-kg-to-cdn.bpmn#Task_Report</code></a></p>
 </dd>
 <dt id="cat-harness--kg-bpmn-activities--process_kgseparation.task_propose" data-fa-state="extracted" data-fa-gloss="">
 Report what moves — sizes, what breaks <span class="fa-gloss-status">candidate, extracted</span>
@@ -3063,6 +3077,13 @@ Resolve the performer's reach [effectiveReach + signing-api probe] <span class="
 <dd>
 <p>Compute the two facts the gateway reads: effectiveReach(deployment, actor) from schemas/actor-reach.ts, and whether the signing-api capability is configured. Undeclared reach resolves to &quot;unknown&quot; rather than to the deployment's value — an aggregate does not determine a member.</p>
 <p class="fa-gloss-meta">BPMN activities of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/qa-report-signing.bpmn"><code>cat-harness/processes/qa-report-signing.bpmn#Task_ResolveReach</code></a></p>
+</dd>
+<dt id="cat-harness--kg-bpmn-activities--process_renderkgtocdn.task_resolve" data-fa-state="extracted" data-fa-gloss="">
+Resolve the Subgraphs, the root URL and the target's Tool <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>Every Subgraph id asked for must be one the declaration lists; none means the whole graph. The root URL is the one given. The target's Tool is the one that <code>satisfies: [&quot;render-kg-to-cdn&quot;]</code> for that CDN — <code>gh-pages</code> for GitHub Pages. A caller that already rendered and verified its tree hands the tree over instead of the graph, and the Tool pushes it without rendering again.</p>
+<p class="fa-gloss-meta">BPMN activities of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/render-kg-to-cdn.bpmn"><code>cat-harness/processes/render-kg-to-cdn.bpmn#Task_Resolve</code></a></p>
 </dd>
 <dt id="cat-harness--kg-bpmn-activities--process_igincremental.task_restore" data-fa-state="extracted" data-fa-gloss="">
 Restore derived state [ig-publication] <span class="fa-gloss-status">candidate, extracted</span>
@@ -3850,7 +3871,7 @@ Verify what arrived against what was signed <span class="fa-gloss-status">candid
 Version, tag and publish [content-publish] <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
-<p>Version bump, release notes, tag, build the final artifacts, deploy to the publication platform.</p>
+<p>Version bump, release notes, tag, build the final artifacts, deploy to the publication platform. The deploy is the general render-kg-to-cdn step with the RELEASE root as its publication root URL — the same step a staging preview takes with a root under it; the target (GitHub Pages, or a folio's own platform) is chosen by its Tool.</p>
 <p class="fa-gloss-meta">BPMN activities of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/draft-to-publication.bpmn"><code>cat-harness/processes/draft-to-publication.bpmn#Task_PublishRelease</code></a></p>
 </dd>
 <dt id="cat-harness--kg-bpmn-activities--process_narrativereview.call_voiceoverlay" data-fa-state="extracted" data-fa-gloss="">

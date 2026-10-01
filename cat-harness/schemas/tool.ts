@@ -400,6 +400,34 @@ export const ToolDefinitionSchema = z
      * a Tool restating it would be a second list free to drift.
      */
     renders: z.array(z.string().min(1)).optional(),
+    /**
+     * The Tool's OWN specific subprocess: the diagram that spells out how
+     * this one mechanism performs the skill it `satisfies`.
+     *
+     * Owner, 2026-09-30: *"in general tools can describe their own specific
+     * subprocesses if needed to not bog down general skills"*. A general
+     * process stays tool-agnostic — its activity names the SKILL, and the
+     * call into a mechanism's steps is bound by the Tool that satisfies it
+     * (`activity → skill → Tool → subprocess`, the join `bpmn-processes`
+     * already derives instead of drawing a `tool` element). The first case
+     * is `gh-pages`: the general `render-kg-to-cdn` names no GitHub step,
+     * and the Tool points at bootstrap-tools'
+     * `Process_RenderKgToGitHubPages`.
+     *
+     * `instance` names where the diagram lives — this instance, or one it
+     * `needs` — because a Tool may be implemented below the harness that
+     * declares it, and the arrow must point down, never up.
+     */
+    subprocess: z
+      .object({
+        /** The `<bpmn:process id>` a call activity bound by this Tool descends into. */
+        process: z.string().regex(/^Process_[A-Za-z0-9_]+$/, "a BPMN process id, Process_…"),
+        /** The instance (declaration `name`) whose `processes` graph holds it. */
+        instance: z.string().min(1),
+        /** Instance-relative path to the `.bpmn`. */
+        path: z.string().regex(/\.bpmn$/, "a .bpmn file"),
+      })
+      .optional(),
   })
   .refine(
     (t) =>
