@@ -21,6 +21,6 @@ Owner decisions (2026-10-01, structured questions):
 - [x] D2 chrome.json re-keyed to who.template.root; IG banners still draw their own identity; tests follow
 - [x] D3 smart-l1/ and smart-dak/ retired (owner OK); root needs, hardcoded lists (4 places) and docs follow
 - [x] D4 dak.ts + dak-content-type.ts (+ tests) into smart-base/schemas; no upward import from core. dak-blocks.ts stays in core: owner chose the split (2026-10-01) — bean 1335 builds the extension point it needs
-- [ ] D5 L1 and DAK document kinds with visualizers in smart-base (bean qvxh)
+- [x] D5 scoped OUT of this PR (owner, 2026-10-01: "own PR after #1795"): L1 and DAK document kinds with visualizers are bean qvxh, a stacked PR with a design note first; partly blocked on bean 1335
 - [x] D6 l3-fhir-authoring input generalised to a source model; smart-base supplies the L2->L3 specialisation
 - [ ] CI green on the stage D PR
