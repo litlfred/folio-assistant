@@ -3540,9 +3540,37 @@ export function readDeclaration(
   const file = findDeclarationFile(instanceRoot);
   if (file === undefined) return undefined;
   const p = join(instanceRoot, file);
+  let text: string;
+  try {
+    text = readFileSync(p, "utf-8");
+  } catch (e) {
+    throw new Error(`${p} is not valid JSON: ${e instanceof Error ? e.message : String(e)}`);
+  }
+  // MEMOISED ON THE FILE'S TEXT, not its path or mtime: the checkout overlay
+  // (placement PR0) resolves every staged instance through its own chain and
+  // reads each declaration a dozen times per process, and the Zod parse is
+  // the cost (measured: a CLI run went from 0.2 s to 2 s). Keyed on the bytes,
+  // so a test that rewrites a fixture is re-parsed, and on the registry's
+  // size, since kinds are registered at runtime. A clone is returned, so a
+  // caller that mutates its copy cannot poison the next one.
+  const hit = declarationCache.get(p);
+  if (hit !== undefined && hit.text === text && hit.registry === registry && hit.kinds === registry.names().length) {
+    return structuredClone(hit.value);
+  }
+  const value = parseDeclarationText(p, text, registry);
+  declarationCache.set(p, { text, registry, kinds: registry.names().length, value });
+  return structuredClone(value);
+}
+
+const declarationCache = new Map<
+  string,
+  { text: string; registry: GraphKindRegistry; kinds: number; value: CatHarnessDeclaration }
+>();
+
+function parseDeclarationText(p: string, text: string, registry: GraphKindRegistry): CatHarnessDeclaration {
   let raw: unknown;
   try {
-    raw = JSON.parse(readFileSync(p, "utf-8"));
+    raw = JSON.parse(text);
   } catch (e) {
     throw new Error(`${p} is not valid JSON: ${e instanceof Error ? e.message : String(e)}`);
   }
@@ -3936,16 +3964,80 @@ export function resolveDirectories(
   // the same directory as before. Existence-filtered (the `dh4f` rule); a
   // repository-scoped entry has one location by definition; a path another
   // entry already covers is not listed twice.
-  const out = [...byId.values()].map((d) => ({ ...d, member: d.member ?? d.declaredBy }));
+  //
+  // NESTED MEMBERS (placement PR0c, bean `ejye`). The same rule one level
+  // down, for a sub-subgraph declared FROM WITHIN: the harness declares a
+  // group once (`skills/skills.json` naming `library/`), and each instance's
+  // same-named `skills/library/` is a member of it. And a MEMBER's own
+  // declaration file is read as well as the declarer's — before this, sci's
+  // `skills/skills.json` (naming `lean/`, `data/`, `voices/`) was read only
+  // when sci was resolved ALONE, because in sci's chain `skills` is
+  // cat-harness's entry and only cat-harness's `skills.json` was opened. A
+  // worklist, so a member's from-within entry gets members of its own.
+  const out: ResolvedDirectory[] = [...byId.values()].map((d) => ({ ...d, member: d.member ?? d.declaredBy }));
   const seen = new Set(out.map((d) => d.absPath));
   const nameOf = new Map(chain.map((l) => [l.root, readDeclaration(l.root, registry)?.name ?? l.name]));
-  for (const d of [...out]) {
-    if (d.scope === "repository" || d.within !== undefined) continue;
+  const work = [...out];
+  while (work.length > 0) {
+    const d = work.shift()!;
+    if (d.scope === "repository") continue;
     for (const link of chain) {
       const abs = resolve(link.root, d.path);
       if (seen.has(abs) || !existsSync(abs)) continue;
       seen.add(abs);
-      out.push({ ...d, absPath: abs, own: link.own === true, member: nameOf.get(link.root) ?? link.name });
+      const member = nameOf.get(link.root) ?? link.name;
+      const m = { ...d, absPath: abs, own: link.own === true, member };
+      out.push(m);
+      work.push(m);
+      for (const nd of declaredFromWithin(m.absPath, m.graphKinds, registry)) {
+        const nAbs = join(m.absPath, nd.sub);
+        if (seen.has(nAbs)) continue;
+        seen.add(nAbs);
+        const e = {
+          ...nd.entry,
+          path: `${d.path.replace(/\/+$/, "")}/${nd.sub}/`,
+          declaredBy: member,
+          absPath: nAbs,
+          own: m.own,
+          member,
+          within: d.id,
+        } as ResolvedDirectory;
+        out.push(e);
+        work.push(e);
+      }
+    }
+  }
+  return out;
+}
+
+/**
+ * The instance directories a directory's kind-declaration file names FROM
+ * WITHIN (`"subgraph": true` entries), unresolved: each with its single path
+ * segment `sub`. Unparseable or absent files yield nothing —
+ * `check:harness-dirs` owns that finding.
+ */
+function declaredFromWithin(
+  absPath: string,
+  graphKinds: readonly string[],
+  registry: GraphKindRegistry,
+): Array<{ sub: string; entry: ContentDirectory }> {
+  const files = graphKinds
+    .map((g) => registry.get(g)?.declarationFile)
+    .filter((f): f is string => typeof f === "string");
+  const out: Array<{ sub: string; entry: ContentDirectory }> = [];
+  for (const f of [...new Set(files)]) {
+    const p = join(absPath, f);
+    if (!existsSync(p)) continue;
+    let nested: { directories?: Array<Record<string, unknown>> };
+    try {
+      nested = JSON.parse(readFileSync(p, "utf-8"));
+    } catch {
+      continue;
+    }
+    for (const nd of nested.directories ?? []) {
+      if (typeof nd.id !== "string" || typeof nd.path !== "string" || nd.subgraph !== true) continue;
+      const sub = nd.path.replace(/^\.\//, "").replace(/\/+$/, "");
+      out.push({ sub, entry: nd as unknown as ContentDirectory });
     }
   }
   return out;

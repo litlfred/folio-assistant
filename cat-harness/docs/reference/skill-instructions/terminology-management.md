@@ -6,9 +6,9 @@ parent: Skill instructions
 ---
 
 {: .note }
-> Generated from [`cat-harness/skills/authoring/authoring-who-smart-guidelines/terminology-management.md`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/authoring/authoring-who-smart-guidelines/terminology-management.md) — do not edit here. Typed contract: [schema reference](../skills/terminology-management.html).
+> Generated from [`fhir-harness/skills/content/fhir-ig-authoring/terminology-management.md`](https://github.com/litlfred/folio-assistant/blob/main/fhir-harness/skills/content/fhir-ig-authoring/terminology-management.md) — do not edit here. Typed contract: [schema reference](../skills/terminology-management.html).
 >
-> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/cat-harness/skills/authoring/authoring-who-smart-guidelines/terminology-management.md){: .fa-edit-source }
+> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/fhir-harness/skills/content/fhir-ig-authoring/terminology-management.md){: .fa-edit-source }
 
 {% raw %}
 # terminology-management
@@ -29,7 +29,7 @@ and concept maps that result.
 
 ## Inputs and outputs
 
-`schemas/skills/terminology-management/`:
+`fhir-harness/schemas/skills/terminology-management/`:
 
 - **in** — `operation` (required), `targetStandard`, `inputFile`
 - **out** — `resources`, `unmappedConcepts`

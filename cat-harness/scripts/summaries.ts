@@ -57,8 +57,9 @@ import {
   type SummaryStatus,
 } from "../schemas/block-summary.ts";
 import { NarrativeSchema, type Narrative } from "../schemas/narrative.ts";
-import { declarationPathIn, directoriesForGraph, readDeclaration, repoRootFor } from "../schemas/cat-harness.ts";
+import { declarationPathIn, readDeclaration, repoRootFor } from "../schemas/cat-harness.ts";
 import { specimenSections } from "../schemas/section-verdicts.ts";
+import { corpusDirectoriesForGraph } from "../schemas/harness-config.js";
 
 const ROOT = resolve(import.meta.dir, "..");
 
@@ -171,7 +172,7 @@ export function entryItems(entryDir: string, sidecar = readSidecar(entryDir)): S
  */
 export function heldLibraries(root = ROOT): string[] {
   const held: string[] = [];
-  for (const lib of directoriesForGraph(root, "library").filter((d) => existsSync(d))) {
+  for (const lib of corpusDirectoriesForGraph(root, "library").filter((d) => existsSync(d))) {
     const abs = resolve(lib);
     for (let owner = dirname(abs); owner !== dirname(owner); owner = dirname(owner)) {
       if (declarationPathIn(owner) === undefined) continue;
@@ -195,7 +196,7 @@ export function entryDirs(root = ROOT): string[] {
   const held = new Set(heldLibraries(root));
   // EVERY declared library, not the first. A drain that sees one library
   // reports a backlog that is short by the rest, with no sign that it is.
-  for (const lib of directoriesForGraph(root, "library").filter((d) => existsSync(d) && !held.has(resolve(d))).sort()) {
+  for (const lib of corpusDirectoriesForGraph(root, "library").filter((d) => existsSync(d) && !held.has(resolve(d))).sort()) {
     for (const slug of readdirSync(lib).sort()) {
       const dir = join(lib, slug);
       if (statSync(dir).isDirectory()) out.push(dir);

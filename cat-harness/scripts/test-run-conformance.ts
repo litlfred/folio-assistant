@@ -59,8 +59,10 @@ export function checkTestRuns(root: string, resultsDir: string, knownSkills: Set
   const out: TestRunConformance = { unresolved: [], nonconforming: [], unchecked: [], checked: 0, runs: 0 };
   const contracts = skillContracts(root);
   const schemaCache = new Map<string, ZodType | Error>();
-  const load = (ref: string): ZodType | Error | undefined => {
-    const f = contractFile(root, ref);
+  // Against the instance HOLDING the skill: its local contract path is
+  // relative to that root, not to the one this check was asked of.
+  const load = (base: string, ref: string): ZodType | Error | undefined => {
+    const f = contractFile(base, ref);
     if (f === undefined) return undefined;
     if (!schemaCache.has(f)) {
       try {
@@ -94,8 +96,8 @@ export function checkTestRuns(root: string, resultsDir: string, knownSkills: Set
       out.unchecked.push({ where, detail: "records no cases — only aggregates, which no contract can check." });
       continue;
     }
-    const input = load(c.input);
-    const output = load(c.output);
+    const input = load(c.instanceRoot, c.input);
+    const output = load(c.instanceRoot, c.output);
     if (input === undefined || output === undefined) {
       out.unchecked.push({ where, detail: `skill "${run.skill}" has an external contract, which this offline check does not fetch.` });
       continue;

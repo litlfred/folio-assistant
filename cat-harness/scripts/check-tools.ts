@@ -38,7 +38,7 @@ import { TOOL_TYPES, isInjectionSafe } from "../schemas/tool-types.js";
 import { alternativesWithoutSelection } from "../schemas/tool.js";
 import { toJsonSchema } from "../schemas/to-json-schema.js";
 import { contractFile, skillContracts } from "./skill-contracts.js";
-import { knownSkills as knownSkillsIn } from "./known-skills.js";
+import { corpusScopeFor, knownSkills as knownSkillsIn, workflowFiles } from "./known-skills.js";
 import { instanceRootsIn, repoRootFor } from "../schemas/cat-harness.js";
 
 /**
@@ -188,7 +188,7 @@ export function unresolvedPaths(
  * another instance is a thing that exists.
  */
 export function knownSkills(): Set<string> {
-  return knownSkillsIn(ROOT);
+  return knownSkillsIn(ROOT, corpusScopeFor(ROOT));
 }
 
 /**
@@ -207,9 +207,10 @@ export type InputContract =
   | { kind: "ok"; required: string[]; types: Map<string, string> };
 
 export function inputContract(root: string, skill: string): InputContract {
-  const ref = skillContracts(root).get(skill)?.input;
-  if (ref === undefined) return { kind: "absent" };
-  const f = contractFile(root, ref);
+  const c = skillContracts(root).get(skill);
+  const ref = c?.input;
+  if (c === undefined || ref === undefined) return { kind: "absent" };
+  const f = contractFile(c.instanceRoot, ref);
   if (f === undefined) return { kind: "external", ref };
   if (!existsSync(f)) return { kind: "unreadable", ref };
   try {
@@ -278,6 +279,13 @@ export interface ToolCheck {
    * symmetric by construction.
    */
   unselectableAlternatives: Array<{ tool: string; alternatives: string[] }>;
+  /**
+   * A Tool naming a `subprocesses` id no `.bpmn` in the checkout has as its
+   * stem (placement ruling 6: a Tool may describe its own specific
+   * subprocess). A pointer at nothing is the dangling-edge shape `satisfies`
+   * is already held to.
+   */
+  danglingSubprocesses: Array<{ tool: string; process: string }>;
   skillsWithTools: number;
   skillsWithoutTools: number;
 }
@@ -306,6 +314,21 @@ export interface ToolCheck {
  * instance's skills, so adding a sibling cannot silently create an obligation
  * to write Tools for it.
  */
+/**
+ * Every process id (`.bpmn` stem) any instance in this checkout declares —
+ * the set a Tool's `subprocesses` may name. Every instance, for the reason
+ * `satisfiableSkills` gives: not in my overlay is not does not exist.
+ */
+function declaredProcessIds(instance: string = ROOT): Set<string> {
+  const out = new Set<string>();
+  for (const inst of new Set([resolve(instance), ...instanceRootsIn(repoRootFor(instance)).map((r) => resolve(r))])) {
+    for (const f of workflowFiles(inst)) {
+      if (f.endsWith(".bpmn")) out.add(f.replace(/^.*\//, "").slice(0, -".bpmn".length));
+    }
+  }
+  return out;
+}
+
 function satisfiableSkills(instance: string = ROOT): Set<string> {
   const out = new Set(knownSkillsIn(instance));
   // `ROOT` is THIS INSTANCE (`cat-harness/`), not the checkout. Sibling
@@ -337,8 +360,14 @@ export function checkTools(instance?: string): ToolCheck {
   const unreadable = new Set<string>();
   const covered = new Set<string>();
   const unselectableAlternatives: ToolCheck["unselectableAlternatives"] = [];
+  const danglingSubprocesses: ToolCheck["danglingSubprocesses"] = [];
+  let processIds: Set<string> | undefined;
 
   for (const t of toolsFor(instance)) {
+    for (const p of t.subprocesses ?? []) {
+      processIds ??= declaredProcessIds(instance);
+      if (!processIds.has(p)) danglingSubprocesses.push({ tool: t.id, process: p });
+    }
     const portNames = new Set(t.io.inputs.map((i) => i.name));
     for (const s of t.satisfies) {
       if (skills.has(s)) covered.add(s);
@@ -411,6 +440,7 @@ export function checkTools(instance?: string): ToolCheck {
     mistypedContracts,
     unreadableContracts: [...unreadable].sort(),
     unselectableAlternatives,
+    danglingSubprocesses,
     skillsWithTools: covered.size,
     skillsWithoutTools: skills.size - covered.size,
   };
@@ -434,6 +464,11 @@ if (import.meta.main) {
     bad = true;
     console.error(`\n✗ ${r.danglingSatisfies.length} satisfies naming no skill:`);
     for (const d of r.danglingSatisfies) console.error(`    ${d.tool} → ${d.skill}`);
+  }
+  if (r.danglingSubprocesses.length > 0) {
+    bad = true;
+    console.error(`\n✗ ${r.danglingSubprocesses.length} subprocess(es) naming no declared .bpmn:`);
+    for (const d of r.danglingSubprocesses) console.error(`    ${d.tool} → ${d.process}`);
   }
   if (r.unsafeArgs.length > 0) {
     bad = true;

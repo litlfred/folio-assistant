@@ -65,14 +65,14 @@ A FOURTH trigger starts none of them, and that is deliberate rather than an omis
       <bpmn:incoming>Flow_0</bpmn:incoming>
       <bpmn:outgoing>Flow_1</bpmn:outgoing>
     </bpmn:serviceTask>
-    <bpmn:serviceTask id="Task_Deploy" name="Publish to&#10;STAGING/&amp;lt;slug&amp;gt;">
-      <bpmn:documentation>`keep_files: true` and a `destination_dir`, so this push adds one directory beside whatever else is on the branch. It is also RETRIED once: five other workflows push to `gh-pages` without joining this one's concurrency group, and a queue does not help because GitHub CANCELS a pending job when a newer one arrives for the same group rather than queueing it. Measured 2026-09-19: three staging runs from three different branches inside 17 seconds, two cancelled.</bpmn:documentation>
+    <bpmn:callActivity id="Task_Deploy" name="Push to the CDN at&#10;STAGING/&amp;lt;slug&amp;gt;/&#10;[render-kg-to-cdn]" calledElement="Process_RenderKgToCdn">
+      <bpmn:documentation>A PREVIEW IS THE GENERAL STEP WITH A DIFFERENT ROOT (owner, 2026-09-30: &quot;independent of staging vs publication … just rendering&quot;). Process_RenderKgToCdn, entered with the tree Task_Build rendered, `STAGING/&lt;slug&gt;/` under the site root as the publication root URL, and GitHub Pages as the target, so its `gh-pages` Tool pushes. For this target the push is `keep_files: true` with a `destination_dir`, so it adds one directory beside whatever else is on the branch; it is also RETRIED once: five other workflows push to `gh-pages` without joining this one's concurrency group, and a queue does not help because GitHub CANCELS a pending job when a newer one arrives for the same group rather than queueing it. Measured 2026-09-19: three staging runs from three different branches inside 17 seconds, two cancelled. The call returns the push's status and message; the render log and the PR comment that follow are this process's own.</bpmn:documentation>
       <bpmn:extensionElements>
-        <bootstrap.processes:skill ref="feature-staging"/>
+        <bootstrap.processes:skill ref="render-kg-to-cdn"/>
       </bpmn:extensionElements>
       <bpmn:incoming>Flow_1</bpmn:incoming>
       <bpmn:outgoing>Flow_2</bpmn:outgoing>
-    </bpmn:serviceTask>
+    </bpmn:callActivity>
     <bpmn:serviceTask id="Task_LogRendered" name="Append `rendered`&#10;to the render log">
       <bpmn:documentation>Its OWN commit, not part of the deploy. The publish action writes only into `destination_dir`, so an entry riding in `_site` would land at `STAGING/&lt;slug&gt;/_render-log/` — inside the directory a cleanup removes, which is the one place a record of the removal must not be. `continue-on-error`: a preview that deployed and whose entry did not is a gap in the record, not a failed deploy.</bpmn:documentation>
       <bpmn:extensionElements>

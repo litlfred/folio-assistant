@@ -51,7 +51,7 @@
  */
 import { readdirSync, readFileSync, statSync } from "node:fs";
 
-import { workflowDirs } from "./known-skills.js";
+import { workflowDirs, corpusScopeFor } from "./known-skills.js";
 import { join, relative, resolve } from "node:path";
 
 export interface CommentFinding {
@@ -118,7 +118,7 @@ if (import.meta.main) {
   const root = resolve(import.meta.dir, "..");
   // Every directory the instance DECLARES as holding processes, not the
   // literal `processes`. A topical layout puts them in several.
-  const dirs = workflowDirs(root);
+  const dirs = workflowDirs(root, corpusScopeFor(root));
   const files = dirs.flatMap((d) => xmlSourcesUnder(d));
 
   // An empty corpus is not a pass. Renaming `processes/` would

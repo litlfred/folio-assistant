@@ -55,7 +55,7 @@ import { fileURLToPath } from "node:url";
 import { NS_PREFIXES, propertyIri, termIri } from "../schemas/namespaces.js";
 import { DCTERMS_NS } from "../schemas/jsonld.js";
 import { readPolicyGrants } from "../schemas/odrl.js";
-import { KG_CONTENT_GRAPH_KINDS, declaredAssets, declaredGraphs, declaredKinds, directoriesForGraph, repoRootFor, resolveDirectories, declarationPathIn } from "../schemas/cat-harness.js";
+import { KG_CONTENT_GRAPH_KINDS, declaredAssets, declaredGraphs, declaredKinds, repoRootFor, resolveDirectories, declarationPathIn } from "../schemas/cat-harness.js";
 import { type DependsOnGap, type DependsOnRecord, dependsOnFor } from "../schemas/depends-on.js";
 import { type RoleDef, actorsDir, capabilitiesDir, readRoleGraph } from "../schemas/role-graph.js";
 import { REGISTRY_GROUPS } from "../schemas/kg-node.js";
@@ -82,6 +82,8 @@ import {
   skillMdDirs as knownSkillDirs,
   workflowDirs,
   unpublishedSkills,
+  corpusScopeFor,
+  roleGraphFor,
 } from "./known-skills.js";
 import { auditSchemaNodes } from "./schema-nodes.js";
 import { loadSpecs } from "./external-schemas.js";
@@ -92,6 +94,7 @@ import { stagingFields } from "./staging-stamp.js";
 import { buildQaResult, writeQaResult } from "./qa-results.js";
 import { loadProcessModel } from "../src/workflow/process-model.js";
 import { listDecisions } from "../src/workflow/decision-table.js";
+import { corpusDirectoriesForGraph } from "../schemas/harness-config.js";
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), "..");
 
@@ -102,7 +105,7 @@ const ROOT = join(dirname(fileURLToPath(import.meta.url)), "..");
  * Three times now a hardcoded list has been the bug. First this module listed
  * six directories and missed `schemas/skills/`, reporting 11 BPMN refs as
  * dangling. Then, with that fixed, the same list still omitted
- * `skills/authoring/authoring-who-smart-guidelines/` and its siblings, so
+ * `smart-base/skills/content/authoring-who-smart-guidelines/` and its siblings, so
  * `smart-base-tools` — a file that plainly exists — came out as a dangling
  * `declaresSkill` link. `knownSkills()` in `scripts/check-workflow-refs.ts`
  * carries a fourth, differently-wrong copy of the same list.
@@ -128,7 +131,7 @@ const ROOT = join(dirname(fileURLToPath(import.meta.url)), "..");
  * `known-skills.ts` was extracted to prevent, restated one module along.
  */
 function skillMdDirs(root: string = ROOT): string[] {
-  return knownSkillDirs(root).map((p) => p.join("/"));
+  return knownSkillDirs(root, corpusScopeFor(root)).map((p) => p.join("/"));
 }
 
 /**
@@ -173,7 +176,7 @@ const SKILL_IO_DIR = "schemas/skills";
  * DECLARES, and a directory it does not declare is not its graph.
  */
 function findBpmnDirs(root: string = ROOT): string[] {
-  return workflowDirs(root).map((abs) => relative(root, abs));
+  return workflowDirs(root, corpusScopeFor(root)).map((abs) => relative(root, abs));
 }
 
 
@@ -970,15 +973,23 @@ function collectSkills(doc: string, base: string, problems: string[], root: stri
   // Minted by `skillIoIri`, the one function that owns a contract's IRI, so a
   // local contract outside `schemas/skills/<skill>/<io>.schema.json` has no
   // published address and is left unset rather than composed here.
-  const contractIri = (ref: string): string | undefined => {
+  //
+  // Only for a contract THIS instance holds. A skill held higher up names a
+  // contract under its own instance's `schemas/skills/` (placement PR1, bean
+  // `ybwt`), which this instance's schema export does not publish — so minting
+  // an IRI under this base would name a path nothing serves, the defect the
+  // published-paths test exists for. Left unset until that instance publishes.
+  const own = resolve(ROOT);
+  const contractIri = (instanceRoot: string, ref: string): string | undefined => {
     if (isExternalContract(ref)) return ref;
+    if (resolve(instanceRoot) !== own) return undefined;
     const m = new RegExp(`^${SKILL_IO_DIR}/([^/]+)/(input|output)\\.schema\\.json$`).exec(ref);
     return m ? skillIoIri(base, m[1]!, m[2]!) : undefined;
   };
   for (const c of skillContracts(root).values()) {
     const s = get(c.skill);
-    if (c.input !== undefined) s.inputSchema = contractIri(c.input);
-    if (c.output !== undefined) s.outputSchema = contractIri(c.output);
+    if (c.input !== undefined) s.inputSchema = contractIri(c.instanceRoot, c.input);
+    if (c.output !== undefined) s.outputSchema = contractIri(c.instanceRoot, c.output);
   }
 
   // The skill documenting an unpublished kind is itself unpublished — it
@@ -994,7 +1005,7 @@ function collectSkills(doc: string, base: string, problems: string[], root: stri
   // "did it SAY not to publish it"), and the blanket test asserts the
   // OUTCOME over the built document at any depth, so neither can quietly
   // stop working.
-  const declared = unpublishedSkills(ROOT);
+  const declared = unpublishedSkills(ROOT, corpusScopeFor(ROOT));
   const publishable = (name: string): boolean => isPublishedSkill(name) && !declared.has(name);
   return [...byName.entries()]
     .filter(([name]) => publishable(name))
@@ -1258,7 +1269,7 @@ function collectPackages(doc: string, problems: string[]): Node[] {
   // Hoisted: `unpublishedSkills` walks every declared skill directory, so
   // calling it inside the filter below would re-read the corpus once per
   // package entry.
-  const declaredUnpublished = unpublishedSkills(ROOT);
+  const declaredUnpublished = unpublishedSkills(ROOT, corpusScopeFor(ROOT));
   if (!existsSync(skillsRoot)) return nodes;
   for (const d of packageDirsIn(skillsRoot)) {
     const mf = join(d.dir, "package-manifest.json");
@@ -1501,7 +1512,7 @@ async function collectProcesses(
   // Reading the DECLARATION is the only way to compare what was claimed
   // against what is there, because the filtered view has already thrown the
   // discrepancy away.
-  if (dirs.length === 0 && kgDirectories(root).length > 0) {
+  if (dirs.length === 0 && kgDirectories(root, corpusScopeFor(root)).length > 0) {
     (notes ?? problems).push(
       `no directory containing .bpmn files was found under ${relative(ROOT, root) || "."}`,
     );
@@ -1748,7 +1759,7 @@ function skillHome(base: string, ownDoc: string, skillId: string): string {
   // because those instances declare ids cat-harness also declares, and the
   // published-paths walk in `kg-export.test.ts` caught it as two documents
   // the deploy does not write.
-  if (knownSkills(ROOT).has(skillId)) return ownDoc;
+  if (knownSkills(ROOT, corpusScopeFor(ROOT)).has(skillId)) return ownDoc;
   for (const instance of instanceRootsIn(repoRootFor(ROOT))) {
     if (resolve(instance) === resolve(ROOT)) continue;
     if (!knownSkills(instance).has(skillId)) continue;
@@ -1954,7 +1965,7 @@ function linkSchemas(graph: Node[], root: string = ROOT): void {
       const named = def.schema && /^external-schemas\/([a-z0-9.-]+)\.json$/.exec(def.schema)?.[1];
       if (named && specIri.has(named)) links.add(specIri.get(named)!);
       let dirs: string[] = [];
-      try { dirs = directoriesForGraph(root, n.name); } catch { /* undeclared: nothing to scan */ }
+      try { dirs = corpusDirectoriesForGraph(root, n.name); } catch { /* undeclared: nothing to scan */ }
       for (const iri of specsIn(dirs.flatMap(diagramFiles))) links.add(iri);
       if (links.size > 0) n.conformsTo = [...links];
       if (def.validator) {
@@ -2007,8 +2018,11 @@ function collectDeclaredRoles(doc: string, root: string = ROOT): Node[] {
   // cannot silently redefine one.
   const roles: RoleDef[] = [];
   const seen = new Set<string>();
-  for (const kgRoot of kgRoots(root)) {
-    for (const r of readRoleGraph(kgRoot)?.roles ?? []) {
+  // The checkout's view on the platform's own run (placement PR0b): a
+  // dependent's extension adds skills to a role here, by id.
+  for (const kgRoot of corpusScopeFor(root) === "checkout" ? [root] : kgRoots(root)) {
+    const g = corpusScopeFor(root) === "checkout" ? roleGraphFor(root, "checkout") : readRoleGraph(kgRoot);
+    for (const r of g?.roles ?? []) {
       if (seen.has(r.id)) continue;
       seen.add(r.id);
       roles.push(r);

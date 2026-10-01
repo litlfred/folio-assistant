@@ -9,7 +9,85 @@ skinparam packageStyle rectangle
 hide empty methods
 
 package "folio-assistant-core/core-schemas" as pkg_folio_assistant_core_core_schemas <<schemas, cat-harness>> {
-  note "schemas: no node schema declared\n(no node here carries a $schema family schemas names (3 named): could not determine)" as n_folio_assistant_core_core_schemas_schemas
+  class "Document Authoring Input" as folio_assistant_core_core_schemas_skills_document_authoring_input_schema_json_Document_Authoring_Input <<schema: skills/document-authoring/input.schema.json>> #e9edf3 {
+    document [1] : string
+    chapter [1] : string
+    section [1] : string
+    kind [1] : enum(8)
+    label [1] : string
+    title [0..1] : string
+    uses [0..*] : string[]
+    body [0..1] : string
+  }
+  class "Document Authoring Output" as folio_assistant_core_core_schemas_skills_document_authoring_output_schema_json_Document_Authoring_Output <<schema: skills/document-authoring/output.schema.json>> #e9edf3 {
+    label [1] : string
+    filesWritten [0..*] : string[]
+    listedInSection [1] : boolean
+    validation [0..1] : object
+  }
+  class "Document Publishing Input" as folio_assistant_core_core_schemas_skills_document_publishing_input_schema_json_Document_Publishing_Input <<schema: skills/document-publishing/input.schema.json>> #e9edf3 {
+    document [1] : string
+    format [1] : md | html | pdf
+    pdfEngine [0..1] : auto | weasyprint | prince | wkhtmltopdf
+    css [0..1] : string
+    toc [0..1] : boolean
+  }
+  class "Issue" as folio_assistant_core_core_schemas_skills_document_publishing_output_schema_json_Issue <<schema: skills/document-publishing/output.schema.json>> #e9edf3 {
+    level [0..1] : error | warn
+    message [0..1] : string
+  }
+  class "Document Publishing Output" as folio_assistant_core_core_schemas_skills_document_publishing_output_schema_json_Document_Publishing_Output <<schema: skills/document-publishing/output.schema.json>> #e9edf3 {
+    outputPath [1] : string
+    engine [0..1] : string
+    blockCount [1] : integer
+    chapterCount [0..1] : integer
+    issues [0..*] : Issue[]
+  }
+  class "Document Structure Input" as folio_assistant_core_core_schemas_skills_document_structure_input_schema_json_Document_Structure_Input <<schema: skills/document-structure/input.schema.json>> #e9edf3 {
+    document [1] : string
+    operation [1] : add-chapter | add-section | reorder-chapters | reorder-sections
+    chapter [0..1] : string
+    title [0..1] : string
+    position [0..1] : integer
+    order [0..*] : string[]
+  }
+  class "Document Structure Output" as folio_assistant_core_core_schemas_skills_document_structure_output_schema_json_Document_Structure_Output <<schema: skills/document-structure/output.schema.json>> #e9edf3 {
+    manifestsChanged [0..*] : string[]
+    chapters [0..*] : string[]
+    forwardReferences [0..*] : string[]
+  }
+  class "Normative Statement Input" as folio_assistant_core_core_schemas_skills_normative_statements_input_schema_json_Normative_Statement_Input <<schema: skills/normative-statements/input.schema.json>> #e9edf3 {
+    label [1] : string
+    title [0..1] : string
+    statement [1] : string
+    force [1] : must | should | may | good-practice | research-priority
+    grading [0..1] : string
+    publishedNumber [0..1] : string
+    uses [0..*] : string[]
+  }
+  class "Normative Statement Output" as folio_assistant_core_core_schemas_skills_normative_statements_output_schema_json_Normative_Statement_Output <<schema: skills/normative-statements/output.schema.json>> #e9edf3 {
+    label [1] : string
+    kind [1] : 'prose'
+    anchor [0..1] : string
+    citedBy [0..*] : string[]
+  }
+  class "Quality Control Input" as folio_assistant_core_core_schemas_skills_quality_control_input_schema_json_Quality_Control_Input <<schema: skills/quality-control/input.schema.json>> #e9edf3 {
+    checkType [1] : qa-report | publication-checklist | conformance-validation | functionality-test | cross-component-consistency
+    targetPath [1] : string
+    checklistSections [0..*] : list<L1 | L2 | L3 | L4 | global>
+  }
+  class "Finding" as folio_assistant_core_core_schemas_skills_quality_control_output_schema_json_Finding <<schema: skills/quality-control/output.schema.json>> #e9edf3 {
+    severity [1] : error | warning | info
+    category [1] : string
+    message [1] : string
+    location [0..1] : string
+    remediation [0..1] : string
+  }
+  class "Quality Control Output" as folio_assistant_core_core_schemas_skills_quality_control_output_schema_json_Quality_Control_Output <<schema: skills/quality-control/output.schema.json>> #e9edf3 {
+    overallResult [1] : pass | pass-with-warnings | fail
+    findings [0..*] : Finding[]
+    checklistResults [0..1] : map<pass | fail | not-applicable>
+  }
 }
 package "folio-assistant-core/folios" as pkg_folio_assistant_core_folios <<folio>> {
   note "folio: no node schema declared\n(no validator registered: could not determine)" as n_folio_assistant_core_folios_folio
@@ -36,6 +114,7 @@ package "folio-assistant-core/core-tools" as pkg_folio_assistant_core_core_tools
     maintains [0..*] : Maintain[]
     downstream [0..1] : object
     renders [0..*] : string[]
+    subprocesses [0..*] : string[]
   }
 }
 package "folio-assistant-core/core-adapters" as pkg_folio_assistant_core_core_adapters <<code>> {
@@ -234,6 +313,8 @@ package "folio-assistant-core/voices" as pkg_folio_assistant_core_voices <<voice
   }
 }
 
+folio_assistant_core_core_schemas_skills_document_publishing_output_schema_json_Document_Publishing_Output *-- "0..*" folio_assistant_core_core_schemas_skills_document_publishing_output_schema_json_Issue : issues
+folio_assistant_core_core_schemas_skills_quality_control_output_schema_json_Quality_Control_Output *-- "0..*" folio_assistant_core_core_schemas_skills_quality_control_output_schema_json_Finding : findings
 folio_assistant_core_core_tools_ToolDefinition *-- "0..*" folio_assistant_core_core_tools_Maintain : maintains
 folio_assistant_core_core_skills_folio_voice_v1_folio_voice_v1 *-- "1..*" folio_assistant_core_core_skills_folio_voice_v1_Source : sources
 folio_assistant_core_core_skills_folio_voice_v1_Rule *-- "0..*" folio_assistant_core_core_skills_folio_voice_v1_Pattern : patterns

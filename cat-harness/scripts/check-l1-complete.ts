@@ -66,9 +66,9 @@ import { LICENCE_FILENAME } from "../content/pipeline/gen-library-jsonld.ts";
 import { NARRATIVE_BEARING, narrativesIn } from "./narratives.ts";
 import { SUMMARIES_FILE } from "../schemas/block-summary.ts";
 import { entryDirs, entryItems, sidecarDefects, tally } from "./summaries.ts";
-import { directoriesForGraph } from "../schemas/cat-harness.ts";
 import { buildQaResult, writeQaResult } from "./qa-results.ts";
 import { REFERENCED_SOURCE_SCHEMA_ID, ReferencedSourceSchema } from "../schemas/referenced-source.ts";
+import { corpusDirectoriesForGraph } from "../schemas/harness-config.js";
 
 export type State = "met" | "unmet" | "not-derivable";
 
@@ -1158,9 +1158,9 @@ export function instanceRootFor(cwd: string): string | undefined {
   // declare a library at all — and asking it by indexing reads as though the
   // first one mattered. It never did here, and after bean `a02m` a root may
   // declare several.
-  if (directoriesForGraph(cwd, "library").length > 0) return cwd;
+  if (corpusDirectoriesForGraph(cwd, "library").length > 0) return cwd;
   const own = resolve(import.meta.dir, "..");
-  return directoriesForGraph(own, "library").length > 0 ? own : undefined;
+  return corpusDirectoriesForGraph(own, "library").length > 0 ? own : undefined;
 }
 
 /**
@@ -1180,7 +1180,7 @@ export function checkAll(root: string): EntryReport[] | undefined {
   // root and checked nothing (the comment on `instanceRootFor` above). Half
   // is the same bug as none, with better camouflage: none at least yields the
   // `undefined` third state. `directoriesForGraph(...)[0]` until bean `a02m`.
-  const libs = directoriesForGraph(root, "library");
+  const libs = corpusDirectoriesForGraph(root, "library");
   if (libs.length === 0) return undefined;
   const out: EntryReport[] = [];
   // A slug in two libraries is REFUSED, not merged. The committed sidecar is
@@ -1371,7 +1371,7 @@ if (import.meta.main) {
     // Across EVERY declared library: an exception that has expired in the
     // second one is a gate lying about its coverage just as much as one that
     // expired in the first. Bean `a02m`.
-    const declaredLibs = libRoot ? splitDeclared(directoriesForGraph(libRoot, "library")) : { present: [], absent: [] };
+    const declaredLibs = libRoot ? splitDeclared(corpusDirectoriesForGraph(libRoot, "library")) : { present: [], absent: [] };
     noteAbsent(declaredLibs.absent, "a library");
     const libs = declaredLibs.present;
     if (libs.length > 0) {

@@ -30,7 +30,7 @@ as an **overlay**. This layer must not gain a `do_dak` flag: that would be this
 layer knowing about DAKs.
 
 Placement:
-[`smart-stack-layering`](../cat-harness/skills/authoring/authoring-who-smart-guidelines/smart-stack-layering.md).
+[`smart-stack-layering`](../smart-base/skills/content/authoring-who-smart-guidelines/smart-stack-layering.md).
 
 ## What is here
 

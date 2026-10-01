@@ -8,20 +8,16 @@ Part of [C@T Harness](../README.md) 0.1.0, declared as `skills`, holding `skills
 | file | what it is | used by |
 |---|---|---|
 | [`skills.json`](skills.json) | data |  |
-| [`authoring/`](authoring/) | 134 files | |
+| [`authoring/`](authoring/) | 43 files | |
 | [`conduct/`](conduct/) | 18 files | |
 | [`conventions/`](conventions/) | 2 files | |
 | [`folio-core/`](folio-core/) | 6 files | |
 | [`framework/`](framework/) | 1 file | |
-| [`hypothesis-generation/`](hypothesis-generation/) | 30 files | |
 | [`kg/`](kg/) | 35 files | |
 | [`library/`](library/) | 23 files | |
 | [`permissions/`](permissions/) | 1 file | |
-| [`process/`](process/) | 23 files | |
-| [`remote-packages/`](remote-packages/) | 2 files | |
+| [`process/`](process/) | 24 files | |
 | [`requirements/`](requirements/) | 7 files | |
-| [`scientific-critical-thinking/`](scientific-critical-thinking/) | 11 files | |
-| [`scientific-visualization/`](scientific-visualization/) | 21 files | |
 | [`sdlc/`](sdlc/) | 63 files | |
 | [`skill-definitions/`](skill-definitions/) | 2 files | |
 | [`ui/`](ui/) | 28 files | |
