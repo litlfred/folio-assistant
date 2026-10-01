@@ -3316,6 +3316,20 @@ a.fa-tile[data-fa-readonly]:focus-visible {
 .fa-sticky-p-medium   { border-left-color: var(--fa-sticky-accent, rgba(128, 128, 128, 0.7)); }
 .fa-sticky-p-low      { border-left-color: var(--fa-sticky-edge, rgba(128, 128, 128, 0.35)); }
 
+/* A THEMED CARD WITH NO PRIORITY carries its accent as a thin TOP band.
+ * Owner ruling 2026-09-30 (bean `v8n5`): the accent reached a card only
+ * through `.fa-sticky-p-medium`, so a landing card, which has no priority,
+ * showed its theme as white with grey edges, and the IRIS blue appeared
+ * nowhere on the who-iris card. Generic by construction: it keys on the
+ * theme ATTRIBUTE, not on any theme's name.
+ *
+ * The TOP edge, not the left. The left edge is the priority channel, and
+ * medium already paints the accent there, so an accent left edge on a card
+ * with no priority would read as "medium". Two signals, two edges. */
+.fa-sticky[data-fa-sticky-theme]:not([class*="fa-sticky-p-"]) {
+  border-top: 3px solid var(--fa-sticky-accent, var(--fa-sticky-edge, rgba(128, 128, 128, 0.45)));
+}
+
 .fa-sticky-head {
   display: flex;
   flex-direction: column;
@@ -4209,6 +4223,41 @@ a.fa-glass-asset-name { text-decoration: underline; text-underline-offset: 2px; 
 html:has(style[data-folio-narrow-viewport]) body:has(> .fa-glass-handle),
 html:has(script[data-fa-folio-mount]) body:has(> .fa-glass-handle) {
   padding-top: 2.25rem;
+}
+
+/* ...AND KEEP IT RESERVED ONCE THE PAGE SCROLLS — issue #1693.
+ *
+ * The rule above, and the theme header's empty middle, clear the handle at
+ * the TOP of a page only. Scrolled, the handle sat over the middle of a body
+ * line (9 of 21 scroll positions on `platform.html` at 1280x900). While the
+ * page is scrolled `placeHandleBand` in `docs-ui.js` shows this strip behind
+ * the handle, across the content column, at the handle's own top and height
+ * and in the page's own background, so text scrolls under a bar rather than
+ * past a pill. Its geometry and colour are set there because both are read
+ * off the page: the handle's height differs by viewport, and a FIXED side bar
+ * must stay uncovered.
+ *
+ * Just under the glass layer (90), so an open glass is unchanged; and
+ * `scroll-padding-top` so an anchor jump or a focus scroll lands its target
+ * below the strip instead of under it. 2.25rem matches the band above. */
+.fa-glass-band {
+  position: fixed;
+  right: 0;
+  z-index: 89;
+  pointer-events: auto;
+  box-shadow: 0 1px 0 rgba(128, 128, 128, 0.3);
+  /* The page's own background: the band is body's child, and a themed page's
+     body paints the scheme's colour. NOT `Canvas`, which follows the OS
+     scheme rather than `data-fa-scheme` (see `.fa-sticky-floating`). */
+  background-color: inherit;
+}
+.fa-glass-band[hidden] { display: none; }
+/* A body that paints no background (the JS marks it): the scheme's page
+   colours, the same pair `head_custom.html` gives `html`. */
+.fa-glass-band[data-fa-band-fallback] { background-color: #ffffff; }
+:root[data-fa-scheme="dark"] .fa-glass-band[data-fa-band-fallback] { background-color: #27262b; }
+html:has(body > .fa-glass-handle) {
+  scroll-padding-top: calc(var(--fa-staging-offset, 0px) + 2.25rem);
 }
 
 /* A pinned sticky sits OVER page content, so it must be opaque — and which

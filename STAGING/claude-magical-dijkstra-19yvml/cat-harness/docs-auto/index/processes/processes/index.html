@@ -181,7 +181,8 @@ window.addEventListener('resize',measure);window.addEventListener('load',measure
 
 <ul class="subs">
 <li><a href="../folio-assistant-core-processes/">folio-assistant-core-processes</a> <span class="p">folio-assistant-core/processes</span> <span class="n">1</span></li>
-<li><strong>processes</strong> <span class="p">cat-harness/processes</span> <span class="n">70</span></li>
+<li><a href="../large-datasets-processes/">large-datasets-processes</a> <span class="p">large-datasets/processes</span> <span class="n">4</span></li>
+<li><strong>processes</strong> <span class="p">cat-harness/processes</span> <span class="n">66</span></li>
 <li><a href="../smart-base-processes/">smart-base-processes</a> <span class="p">smart-base/methodologies/processes</span> <span class="n">1</span></li>
 </ul>
 
@@ -256,10 +257,6 @@ window.addEventListener('resize',measure);window.addEventListener('load',measure
 <tr>
   <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/content-lifecycle.bpmn"><code>Content lifecycle</code></a><br><span class="p">cat-harness/processes/content-lifecycle.bpmn</span></td>
   <td>folio-assistant — the content lifecycle end to end, one cycle of a folio.<div class="f"><span class="k">activities</span> 8</div><div class="f"><span class="k">lanes</span> Programme manager · Work plan — beans (shared by humans and agents) · Editors + authoring agents · Validation and QA (mechanical + agents) · Review team and SMEs · Publication manager</div><div class="f"><span class="k">skills</span> content-author, content-feedback, content-plan, content-publish, content-retire, content-review, content-test, content-validate, todo-manager</div></td>
-</tr>
-<tr>
-  <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/copy-out-materialized.bpmn"><code>Copy out materialized content — to work on somebody else's bytes</code></a><br><span class="p">cat-harness/processes/copy-out-materialized.bpmn</span></td>
-  <td>Materialized content is read-only.<div class="f"><span class="k">activities</span> 5</div><div class="f"><span class="k">lanes</span> Reader (any actor) · Source graph — read-only · Copier's own folio/ · Verification</div><div class="f"><span class="k">skills</span> copy-out-materialized</div></td>
 </tr>
 <tr>
   <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/crdm-close.bpmn"><code>CRDM close-out</code></a><br><span class="p">cat-harness/processes/crdm-close.bpmn</span></td>
@@ -378,10 +375,6 @@ window.addEventListener('resize',measure);window.addEventListener('load',measure
   <td>folio-assistant — the WHO SMART Guidelines L3 FHIR IG pipeline.<div class="f"><span class="k">activities</span> 8</div><div class="f"><span class="k">lanes</span> FHIR modeller · Work plan — beans (shared by humans and agents) · Build pipeline — SUSHI · validator · IG Publisher · QC reviewer · Publication manager</div><div class="f"><span class="k">skills</span> content-publish, fhir-validation, ig-publication, l3-fhir-authoring, quality-control, todo-manager</div></td>
 </tr>
 <tr>
-  <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/materialize-remote.bpmn"><code>Materialize remote content — the shared subprocess</code></a><br><span class="p">cat-harness/processes/materialize-remote.bpmn</span></td>
-  <td>One process, called wherever remote content is landed locally.<div class="f"><span class="k">activities</span> 10</div><div class="f"><span class="k">lanes</span> Contributor (human or agent) · Ingestion Engine (agent, runs unattended) · Corpus — L1 source knowledge graph</div><div class="f"><span class="k">skills</span> materialize-remote</div></td>
-</tr>
-<tr>
   <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/methodology-from-source.bpmn"><code>Adopt a methodology from a source document</code></a><br><span class="p">cat-harness/processes/methodology-from-source.bpmn</span></td>
   <td>The general process an agent follows when someone shares a paper, book or standard and asks for its method to be used: establish origin and licence, ingest it, render what the method says with what is adopted and refuse…<div class="f"><span class="k">activities</span> 8</div><div class="f"><span class="k">lanes</span> Owner · Agent</div><div class="f"><span class="k">skills</span> adopt-methodology-from-source, methodology-adoption</div></td>
 </tr>
@@ -410,10 +403,6 @@ window.addEventListener('resize',measure);window.addEventListener('load',measure
   <td>Attesting a QA report: build the test run, work out what the performer can actually reach, and sign — over the API where that is available, or as release authority where it is not.<div class="f"><span class="k">activities</span> 5</div><div class="f"><span class="k">lanes</span> Validation and QA (mechanical + agents) · Attestation service (API) · Human signer</div><div class="f"><span class="k">skills</span> content-test, qa-report-signing</div></td>
 </tr>
 <tr>
-  <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/refresh-materialized.bpmn"><code>Refresh materialized remote content</code></a><br><span class="p">cat-harness/processes/refresh-materialized.bpmn</span></td>
-  <td>Owner, 2026-09-20: &quot;also need to know about refreshing amterialed remote content.<div class="f"><span class="k">activities</span> 8</div><div class="f"><span class="k">lanes</span> Contributor (human or agent) · Ingestion Engine (agent, runs unattended) · Corpus — L1 source knowledge graph</div><div class="f"><span class="k">skills</span> adjudication, materialize-remote</div></td>
-</tr>
-<tr>
   <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/related-work.bpmn"><code>Related work: find, sort, summarize, ask to coordinate</code></a><br><span class="p">cat-harness/processes/related-work.bpmn</span></td>
   <td>Before new work takes shape, find the work it touches.<div class="f"><span class="k">activities</span> 5</div><div class="f"><span class="k">lanes</span> Agent · User</div><div class="f"><span class="k">skills</span> related-work-coordination</div></td>
 </tr>
@@ -432,10 +421,6 @@ window.addEventListener('resize',measure);window.addEventListener('load',measure
 <tr>
   <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/review-task.bpmn"><code>Review task</code></a><br><span class="p">cat-harness/processes/review-task.bpmn</span></td>
   <td>The generic review position: classify what changed, descend into the review that fits it, consolidate what comes back, and accept or send back.<div class="f"><span class="k">activities</span> 6</div><div class="f"><span class="k">lanes</span> Reviewer / SME · Editors + authoring agents</div><div class="f"><span class="k">skills</span> content-review, content-validate, semantic-review-scoping</div></td>
-</tr>
-<tr>
-  <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/sample-import.bpmn"><code>Sample import into a structured data store</code></a><br><span class="p">cat-harness/processes/sample-import.bpmn</span></td>
-  <td>The SDLC for testing an import of a SAMPLE of a remote source into a knowledge graph or other structured store.<div class="f"><span class="k">activities</span> 7</div><div class="f"><span class="k">lanes</span> Contributor (human or agent) · Ingestion Engine (agent, runs unattended) · Corpus — L1 source knowledge graph</div><div class="f"><span class="k">skills</span> materialize-remote, sample-import</div></td>
 </tr>
 <tr>
   <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/session-state-machine.bpmn"><code>Session state machine</code></a><br><span class="p">cat-harness/processes/session-state-machine.bpmn</span></td>

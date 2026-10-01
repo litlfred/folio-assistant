@@ -355,13 +355,6 @@
                 "type": "string",
                 "minLength": 1
               },
-              "dependents": {
-                "type": "string",
-                "enum": [
-                  "reproduce",
-                  "skip"
-                ]
-              },
               "coverage": {
                 "type": "object",
                 "properties": {
@@ -566,8 +559,7 @@
             "required": [
               "id",
               "path",
-              "graphKinds",
-              "dependents"
+              "graphKinds"
             ]
           }
         },
@@ -875,8 +867,8 @@
   "$comment": "Instance graph: https://litlfred.github.io/folio-assistant/STAGING/claude-magical-dijkstra-19yvml/cat-harness.jsonld",
   "staging": {
     "branch": "claude/magical-dijkstra-19yvml",
-    "sha": "116569e2e230f2bb18a28ee1a3954383b24bbcc2",
+    "sha": "d03844692386587a7a0559de759e7c6eaf7b8fb1",
     "pr": "1633/merge",
-    "run": "36770927315"
+    "run": "36794677098"
   }
 }
