@@ -381,8 +381,8 @@
       ]
     },
     "scope": {
-      "summary": "Which instances this census covered — the denominator, so a drop in enumerating scripts can be told from a drop in scope (bean `tqv4`). Every declared instance is a row: `scanned` with its count, or `no-scripts-dir`, which is neither a finding nor a pass. 7 of 17 declared instance(s) have a scripts/ directory.",
-      "count": 17,
+      "summary": "Which instances this census covered — the denominator, so a drop in enumerating scripts can be told from a drop in scope (bean `tqv4`). Every declared instance is a row: `scanned` with its count, or `no-scripts-dir`, which is neither a finding nor a pass. 7 of 18 declared instance(s) have a scripts/ directory.",
+      "count": 18,
       "entries": [
         {
           "instance": "folio-assistant",
@@ -413,6 +413,12 @@
           "path": "cat-harness/scripts",
           "state": "scanned",
           "enumerating": 70
+        },
+        {
+          "instance": "cat-harness-tools",
+          "path": "cat-harness-tools/scripts",
+          "state": "no-scripts-dir",
+          "enumerating": 0
         },
         {
           "instance": "fhir-harness",
@@ -494,5 +500,5 @@
       "entries": []
     }
   },
-  "total": 90
+  "total": 91
 }

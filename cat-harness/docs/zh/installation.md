@@ -73,7 +73,7 @@ cat-harness\scripts\upload-to-uploads.bat https://example.org/guideline.pdf
 
 ### 在 Linux/macOS 上，也有一个脚本
 
-`cat-harness/scripts/start-folio-assistant.sh` 会在 Bun 缺失时自动安装，然后启动服务器；`cat-harness/adapters/mcp-server/install.sh` 是一个更完整的安装程序，同时也涵盖了 TeX Live。两者在 2026-09-21 之前都未曾记录在文档中（[#740](https://github.com/litlfred/folio-assistant/issues/740)）——这也正是本节存在的原因。
+`cat-harness/scripts/start-folio-assistant.sh` 会在 Bun 缺失时自动安装，然后启动服务器；`cat-harness-tools/adapters/mcp-server/install.sh` 是一个更完整的安装程序，同时也涵盖了 TeX Live。两者在 2026-09-21 之前都未曾记录在文档中（[#740](https://github.com/litlfred/folio-assistant/issues/740)）——这也正是本节存在的原因。
 
 ## 检查你的环境
 

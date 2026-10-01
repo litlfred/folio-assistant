@@ -5,7 +5,7 @@ status: in-progress
 type: task
 priority: normal
 created_at: 2026-09-30T08:12:08Z
-updated_at: 2026-10-01T05:14:21Z
+updated_at: 2026-10-01T06:28:35Z
 parent: folio-assistant-vuip
 ---
 
@@ -63,3 +63,10 @@ Entry points to repoint: package.json main/exports/files/scripts (start*, check-
 **Q1 — may folio-assistant-core depend on cat-harness-tools? NO: split the adapter.** Measured on main 19ab47a: core's adapters/document imports 16 modules that move (src/tools/{check-deps,preferences,preview,skill-fetch,skill-prompts,folio-init,readme-sync,render-order,readme-audit,lsi-query}, types, core/{git,feedback,logging,rbac,cache}, routes/chat), and scripts/sample-import-run.ts drives src/tools/workflow.ts. Ruling: the document adapter's SERVER half (tool registration, routes, RBAC/git/feedback wiring) moves into cat-harness-tools; core keeps the content logic. Layering stays cat-harness <- cat-harness-tools, and core does not import cat-harness-tools. sci (paper adapter, which extends core's DocumentContentAdapter) follows the same split.
 
 **Q2 — packaging: own package.json**, like bootstrap-tools: cat-harness-tools carries its own manifest with the server entry points; the root start*/check-deps/mcp:capture scripts, .mcp.json and Docker paths are repointed; no compatibility re-exports.
+
+
+## Owner ruling 2026-10-01 (third): sci's server half
+
+**sci's server parts go into a NAMED SUBGRAPH of folio-assistant-sci** — 'not big enough for full repo, at least not yet'. That covers PaperContentAdapter (a server wrapper over core's content plus tool registration) and tools/lean.ts (the Lean MCP tool registrar). So it is not cat-harness-tools, and not a separate sci-tools instance. The subgraph may depend on cat-harness-tools; sci's content does not.
+
+Steps landed: #1736 (types.ts split, ContentSource), #1738 (DocumentContent / server wrapper split, boundary test).

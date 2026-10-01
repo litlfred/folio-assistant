@@ -42,7 +42,7 @@
  * @module content/pipeline/voice-criteria
  */
 
-import { loadVoices, type VoiceProfile } from "../../schemas/voices.ts";
+import { loadVoices, VOICE_ARTEFACT_KINDS, type VoiceProfile } from "../../schemas/voices.ts";
 import { instanceRootsIn, readDeclaration, repoRootFor } from "../../schemas/cat-harness.ts";
 import type { QaCriterionDefinition } from "../../schemas/block-qa.ts";
 
@@ -125,7 +125,7 @@ function provenancePhrase(v: VoiceProfile): string {
  * four this repository ships rather than trusting it.
  */
 export function voiceOverlayCriteria(instanceRoot: string): QaCriterionDefinition[] {
-  return shippedVoices(instanceRoot).map(({ voice, instance }) => {
+  return shippedVoices(instanceRoot).filter(({ voice }) => judgesBlocks(voice)).map(({ voice, instance }) => {
     const n = voice.rules.length;
     const mechanical = voice.rules.filter((r) => (r.patterns?.length ?? 0) > 0).length;
     return {
@@ -147,6 +147,18 @@ export function voiceOverlayCriteria(instanceRoot: string): QaCriterionDefinitio
       automated: false,
     } as QaCriterionDefinition;
   });
+}
+
+/**
+ * Whether a voice judges folio BLOCKS at all. A voice scoped only to artefact
+ * kinds (`appliesTo: ["skill"]` — the skill-authoring voices, bean `rkqp`) is
+ * judged through its own axis (`skill-voice-review-current`), so a block
+ * overlay criterion for it would ask an agent to hold prose to rules written
+ * for a SKILL.md. Absent `appliesTo` means every kind, blocks included.
+ */
+export function judgesBlocks(voice: VoiceProfile): boolean {
+  const scope = voice.appliesTo;
+  return scope === undefined || scope.some((k) => !(VOICE_ARTEFACT_KINDS as readonly string[]).includes(k));
 }
 
 /** Memoised per instance root — the filesystem is read once per process. */
