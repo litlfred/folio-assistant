@@ -505,32 +505,32 @@
   NOT a cache-busting strategy for third-party assets, and not applied to
   them: those are versioned in their own URLs already.
 -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-fervent-brahmagupta-rbwhzm/assets/css/docs-ui.css?v=1790877482">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-fervent-brahmagupta-rbwhzm/assets/css/docs-ui.css?v=1790878572">
 <!-- Narrow viewports: wide content scrolls in its own box, never the page
      (bean `2r2n`). The standalone viewers inline the same file through
      `withViewerNav`, so both kinds of page read one set of rules. -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-fervent-brahmagupta-rbwhzm/assets/css/narrow-viewport.css?v=1790877482">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-fervent-brahmagupta-rbwhzm/assets/css/narrow-viewport.css?v=1790878572">
 
 <!--
   The work-plan dashboard's styles, split from docs-ui.css so that
   `state-visualizer.ts` can inline exactly these bytes into the generated
   `<base>/<stub>/state-visualizer/` pages. One rule, two surfaces.
 -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-fervent-brahmagupta-rbwhzm/assets/css/work-plan.css?v=1790877482">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-fervent-brahmagupta-rbwhzm/assets/css/work-plan.css?v=1790878572">
 <!-- Sticky themes. GENERATED from the theme nodes in `schemas/themes.ts` by
      `bun run themes:css`; `themes:css:check` fails the build when it is stale.
      Loaded AFTER docs-ui.css deliberately: it supplies the `--fa-sticky-*`
      roles that docs-ui.css consumes, and a custom property has to be set on a
      matching element before the rule reading it takes effect. -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-fervent-brahmagupta-rbwhzm/assets/css/themes.css?v=1790877482">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-fervent-brahmagupta-rbwhzm/assets/css/themes.css?v=1790878572">
 <!-- UML overview colours: one class per graph kind, set on the Mermaid nodes
      that `scripts/gen-uml-overview.ts` writes into docs/uml/overview/. -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-fervent-brahmagupta-rbwhzm/assets/css/uml.css?v=1790877482">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-fervent-brahmagupta-rbwhzm/assets/css/uml.css?v=1790878572">
 <!-- Kind avatars. GENERATED from `schemas/avatars.ts` by `bun run avatars:css`;
      `avatars:css:check` fails the build when it is stale. One stylesheet
      rather than 68 assets: the glyph is a mask and the colour is a property,
      so a scheme swap is a custom property and the trash state is a selector. -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-fervent-brahmagupta-rbwhzm/assets/css/avatars.css?v=1790877482">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-fervent-brahmagupta-rbwhzm/assets/css/avatars.css?v=1790878572">
 
 <!--
   The kinds THIS INSTANCE DECLARES, for the avatar fan.
@@ -547,7 +547,7 @@
 <script type="application/json" id="fa-declared-kinds">["beans","cat-harness","code","code-list","docs","external-schema","folio","fsh-guts","health","interaction","issue-marks","library","memory","methodology","policies","processes","qa","scenarios","schemas","skills","substrate-snapshot","swimlane-glossary","todos","tools","translation-sources","uml","uploads","waiver"]</script>
 <script src="/folio-assistant/STAGING/claude-fervent-brahmagupta-rbwhzm/assets/js/vendor/qrcode.js" defer></script>
 <script src="/folio-assistant/STAGING/claude-fervent-brahmagupta-rbwhzm/assets/js/vendor/qrcode_UTF8.js" defer></script>
-<script src="/folio-assistant/STAGING/claude-fervent-brahmagupta-rbwhzm/assets/js/docs-ui.js?v=1790877482" defer></script>
+<script src="/folio-assistant/STAGING/claude-fervent-brahmagupta-rbwhzm/assets/js/docs-ui.js?v=1790878572" defer></script>
 
 <!--
   The work-plan dashboard. SELF-MOUNTING on any page carrying
@@ -1542,6 +1542,53 @@ cat-harness-tools (code)     █░░░░░░░░░░░░░░░░
   <li><strong>READMEs: each repo owns its own.</strong> folio-assistant stops regenerating and checking submodule READMEs. Each repo’s own CI keeps its README current (D3). Nothing is pushed upstream.</li>
   <li><strong>W3C library sources</strong> (PROV-O, ODRL 2.2, JSON-LD 1.1): <strong>methodologies cite them</strong> via <code class="language-plaintext highlighter-rouge">evidence:</code>, reusing sibling PR #1769’s methodology nodes. The test rule stays as it is.</li>
 </ul>
+<h2 id="rulings-2026-10-01-late">
+  
+  
+    <a href="#rulings-2026-10-01-late" class="anchor-heading" aria-labelledby="rulings-2026-10-01-late"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Rulings 2026-10-01 late
+  
+  
+</h2>
+    
+
+<p>Owner, about 17:30. Each ruling is recorded in full on the bean it settles.</p>
+
+<div class="table-wrapper"><table>
+  <thead>
+    <tr>
+      <th>question</th>
+      <th>ruling</th>
+      <th>bean</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong>Q-A</strong> generator retargeting</td>
+      <td>Split bootstrap outputs by kind. kg-qa verdicts, glossary ledgers and detangle stay in cat-harness as the auditor’s output (“a harness may discuss its dependencies”). bootstrap-tools renders the UML of bootstrap and bootstrap-tools at build time. bootstrap’s process translations move into bootstrap. Committed renderings become deploy-time output and keep their URLs. Delete the 37 duplicate sidecars. A <code class="language-plaintext highlighter-rouge">tools/index.ts</code> name collision throws. SKOS URLs (X2) are not ruled yet.</td>
+      <td><code class="language-plaintext highlighter-rouge">cmsl</code>, <code class="language-plaintext highlighter-rouge">wggr</code></td>
+    </tr>
+    <tr>
+      <td><strong>Q-B</strong> reference direction</td>
+      <td>Q1 is <strong>reword</strong>: files stay put and their prose stops naming higher layers. X3 exempts the 3 layering specifications. The ratchet also covers single-name files (A.10). Translation mirrors are exempt (X1).</td>
+      <td><code class="language-plaintext highlighter-rouge">zhg2</code> (implementation: <code class="language-plaintext highlighter-rouge">1bvx</code>, <code class="language-plaintext highlighter-rouge">vzo5</code>)</td>
+    </tr>
+    <tr>
+      <td>#1735 who-iris prose</td>
+      <td>Reword the outdated <code class="language-plaintext highlighter-rouge">dependents</code> prose in the who-iris files now, as the earlier ruling on #1735 said.</td>
+      <td><code class="language-plaintext highlighter-rouge">ga6u</code> (<code class="language-plaintext highlighter-rouge">qsx4</code> exists only on #1735’s branch)</td>
+    </tr>
+    <tr>
+      <td>S5 1a, trap 1</td>
+      <td><code class="language-plaintext highlighter-rouge">inProcess("src/tools/...")</code> resolves against the implementing instance (cat-harness-tools), found through <code class="language-plaintext highlighter-rouge">needs</code>. No cat-harness-tools path is written into cat-harness. Two points are still open: how a sidecar’s <code class="language-plaintext highlighter-rouge">source_file</code> resolves, and whether sci-bound files move in 1a.</td>
+      <td><code class="language-plaintext highlighter-rouge">70lx</code></td>
+    </tr>
+    <tr>
+      <td>merge-treadmill speed-ups</td>
+      <td>Four approved: input-hash skip (<code class="language-plaintext highlighter-rouge">f017</code>), parallel checks (<code class="language-plaintext highlighter-rouge">v3nf</code>), CI <code class="language-plaintext highlighter-rouge">merge:main</code> (<code class="language-plaintext highlighter-rouge">d33q</code> part B), and CI sharding with a BPMN cache and shallow checkout (<code class="language-plaintext highlighter-rouge">dlqu</code>).</td>
+      <td><code class="language-plaintext highlighter-rouge">0mf0</code></td>
+    </tr>
+  </tbody>
+</table></div>
 <h2 id="s4-evidence-1776-the-upward-links-pr">
   
   

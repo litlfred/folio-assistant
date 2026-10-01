@@ -301,10 +301,10 @@
   ],
   "canonicalDocument": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld",
   "repository": "cat-harness",
-  "generatedAt": "2026-10-01T18:01:03.042Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/a1cd69f9dcb9e44ef4ce8ccea11989c85a9e0f33",
-  "sourceCommitSha": "a1cd69f9dcb9e44ef4ce8ccea11989c85a9e0f33",
-  "sourceCommitAt": "2026-10-01T17:51:31Z",
+  "generatedAt": "2026-10-01T18:19:12.458Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/05fcbd41409abec1aebaf195b956d370b0bf691f",
+  "sourceCommitSha": "05fcbd41409abec1aebaf195b956d370b0bf691f",
+  "sourceCommitAt": "2026-10-01T18:14:39Z",
   "sourceTreeDirty": true,
   "dependsOnUnavailable": "2 dependency edge(s), none expressible as a record — see gaps",
   "counts": {
@@ -318,7 +318,7 @@
     "Lane": 201,
     "ProcessNode": 940,
     "Tool": 112,
-    "Schema": 143,
+    "Schema": 144,
     "ExternalSchema": 18,
     "GraphKind": 23,
     "Role": 48,
@@ -46784,6 +46784,15 @@
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/property-skills"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-brahmagupta-rbwhzm/cat-harness.jsonld#schema/prov-jsonld",
+      "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#Schema",
+      "name": "prov-jsonld",
+      "title": "PROV activities as PROV-JSONLD — links, not strings (beans `jcet`, `9y9j`).",
+      "module": "schemas/prov-jsonld.ts",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-brahmagupta-rbwhzm/cat-harness.jsonld#directory/schemas",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/prov-jsonld"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-brahmagupta-rbwhzm/cat-harness.jsonld#schema/prov",
       "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#Schema",
       "name": "prov",
@@ -49239,8 +49248,8 @@
   ],
   "staging": {
     "branch": "claude/fervent-brahmagupta-rbwhzm",
-    "sha": "56c7629455b0a93c45fb905b782e9b2f3b821918",
+    "sha": "4c7f679267bb6af7e0b2dd37c90e33a77972d7d8",
     "pr": "1791/merge",
-    "run": "36902511392"
+    "run": "36905403843"
   }
 }
