@@ -5,7 +5,7 @@ status: todo
 type: task
 priority: normal
 created_at: 2026-09-21T19:10:00Z
-updated_at: 2026-10-01T11:21:12Z
+updated_at: 2026-10-01T11:26:38Z
 parent: folio-assistant-uhkv
 ---
 
@@ -438,3 +438,11 @@ Asked how far *"just dont want branding"* reaches, with three options: logos onl
 - **The plain-text "WHO SMART Trust" name in titles stays.**
 
 Nothing changes in the rendered output. Recorded so the next agent doesn't re-ask.
+
+## 2026-10-01: both upstream defects fixed on the fork
+
+The two defects are fixed in https://github.com/litlfred/smart-trust/pull/2 (draft, `69f0662`), on the owner's instruction:
+- `{{PARTICIPANT_CODE}}` is replaced by `**$participant**`;
+- the feedback link now prepends `smart-`.
+
+SUSHI could not run in that session, because `packages.fhir.org` was unreachable. On the owner's choice, the fork's `fhirbuild` CI runs SUSHI and the IG Publisher on the PR, and nothing merges until it is green. Once it merges, re-ingest `menu.json` at the new fork commit so `/smart-trust/ig/` picks up the fix.
