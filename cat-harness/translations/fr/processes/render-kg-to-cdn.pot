@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: render-kg-to-cdn\n"
-"POT-Creation-Date: 2026-10-01T00:08:57.292Z\n"
+"POT-Creation-Date: 2026-10-01T05:34:34.816Z\n"
 "PO-Revision-Date: \n"
 "Last-Translator: \n"
 "Language: fr\n"
@@ -31,7 +31,7 @@ msgstr ""
 
 #: processes/render-kg-to-cdn.bpmn:55
 #. Diagram element documentation
-msgid "BOUND BY THE TOOL, so no `calledElement` is written here: the activity names the skill, the Tool satisfies it, and the Tool's `subprocess` is what this descends into — for `gh-pages`, bootstrap-tools' Process_RenderKgToGitHubPages (stage, check the staging, deploy, check what is served). A diagram that named it would make every other CDN a second copy of this process. Whatever the Tool, it returns the two outputs below."
+msgid "BOUND BY THE TOOL, so no `calledElement` is written here: the activity names the skill, the Tool satisfies it, and the Tool's `subprocesses` are what this descends into — for `gh-pages`, bootstrap-tools' render-kg-to-github-pages (make sure gh-pages exists and Pages serves it, stage, check the staging, commit onto gh-pages, check what is served). A diagram that named it would make every other CDN a second copy of this process. Whatever the Tool, it returns the two outputs below."
 msgstr ""
 
 #: processes/render-kg-to-cdn.bpmn:26
@@ -71,7 +71,7 @@ msgstr ""
 
 #: processes/render-kg-to-cdn.bpmn:14
 #. Diagram element documentation
-msgid "Render a Knowledge Graph — the whole of it, or a list of its Subgraphs — for publication to a CDN at a publication root URL, and report a STATUS and a MESSAGE. Owner, 2026-09-30: \"render content of a KG (or list of subgraphs within) for publication to a CDN at a given publication root URL … independent of staging vs publication … just rendering … output is status of push to CDN + message\". STAGING AND RELEASE ARE THE SAME PROCESS. A preview is this with a root under the release root; a release is this with the release root. What differs — who may start it, what is verified first, what else on the host must survive the push — belongs to the CALLER: `feature-staging` and `docs-site-publish` call this and keep their own steps around the call. TOOL-AGNOSTIC ON PURPOSE. Owner, 2026-09-30: \"tools can describe their own specific subprocesses if needed to not bog down general skills\". The one call activity names the skill; the Tool for the chosen target satisfies it and declares its own `subprocess`, which is what the call descends into. For GitHub Pages that is the `gh-pages` Tool and bootstrap-tools' Process_RenderKgToGitHubPages. No step here is GitHub's."
+msgid "Render a Knowledge Graph — the whole of it, or a list of its Subgraphs — for publication to a CDN at a publication root URL, and report a STATUS and a MESSAGE. Owner, 2026-09-30: \"render content of a KG (or list of subgraphs within) for publication to a CDN at a given publication root URL … independent of staging vs publication … just rendering … output is status of push to CDN + message\". STAGING AND RELEASE ARE THE SAME PROCESS. A preview is this with a root under the release root; a release is this with the release root. What differs — who may start it, what is verified first, what else on the host must survive the push — belongs to the CALLER: `feature-staging` and `docs-site-publish` call this and keep their own steps around the call. TOOL-AGNOSTIC ON PURPOSE. Owner, 2026-09-30: \"tools can describe their own specific subprocesses if needed to not bog down general skills\". The one call activity names the skill; the Tool for the chosen target satisfies it and lists its own `subprocesses`, which is what the call descends into. For GitHub Pages that is the `gh-pages` Tool and bootstrap-tools' render-kg-to-github-pages. No step here is GitHub's."
 msgstr ""
 
 #: processes/render-kg-to-cdn.bpmn:11

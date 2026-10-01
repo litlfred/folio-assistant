@@ -39,7 +39,7 @@ Drawn as [`render-kg-to-cdn.bpmn`](../../processes/render-kg-to-cdn.html).
 A preview is this with a root under the release root; a release is this with
 the release root. **What differs belongs to the caller**: who may start it,
 what must be reviewed or verified first, what else lives on the same host and
-must survive the push. That is why [`feature-staging`](feature-staging.md)
+must survive the push. That is why [`feature-staging`](../../folio-core/feature-staging.md)
 and `docs-site-publish` both *call* this process rather than restating it, and
 keep their own steps — the slug, the render log, restoring the open previews,
 the publication-manager alert — around the call.
@@ -48,7 +48,7 @@ the publication-manager alert — around the call.
 
 The general process has one call activity, **bound by the Tool**: the
 activity names this skill, the Tool for the chosen target `satisfies` it, and
-the Tool declares its own `subprocess` — the diagram of *its* steps
+the Tool lists its own `subprocesses` — the diagram of *its* steps
 ([`skills-and-tools`](skills-and-tools.md),
 [`bpmn-processes`](bpmn-processes.md)). The general skill never lists them.
 
@@ -69,7 +69,7 @@ stays the origin's canonical one even when a CDN serves it.
 ## What this is not
 
 Not the verification of what a build produced — that is
-[`publish-verification`](publish-verification.md), and it runs
+[`publish-verification`](../../folio-core/publish-verification.md), and it runs
 *before* a caller hands its tree over. Not the decision to release —
 [`content-publish`](content-publish.md) and
 [`release-lifecycle`](release-lifecycle.md). This step renders, pushes, and says

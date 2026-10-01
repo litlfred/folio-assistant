@@ -219,7 +219,7 @@ same skills — not a repository, not a fork, and not a rewrite of the prose.
 Owner, 2026-09-30: *"in general tools can describe their own specific
 subprocesses if needed to not bog down general skills"*. When one mechanism
 takes several steps, they belong to **the Tool**, not to the general skill: the
-Tool declares `subprocess` (a process id, the instance holding it, its path),
+Tool lists `subprocesses` (process ids, each the stem of a `.bpmn` the checkout declares),
 and a general diagram's call activity is bound by it. **General skills name the
 Tool, never its steps.** First case: `render-kg-to-cdn` is the general step
 (render a Knowledge Graph for a CDN at a publication root URL; output a status
