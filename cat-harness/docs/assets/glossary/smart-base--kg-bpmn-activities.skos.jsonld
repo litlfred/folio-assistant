@@ -192,6 +192,206 @@
       "skos:notation": "A_ValueProposition",
       "dcterms:source": "smart-base/methodologies/processes/diig-investment-path.bpmn#A_ValueProposition",
       "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/smart-base/ns#glossary/kg-bpmn-activities/process_l2dak.task_assembledak",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/smart-base/ns#glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Assemble and validate the DAK [content-validate]"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Assemble the validated components and run content validation: schemas, cross-component consistency and terminology bindings. The smart-base extractors read the authored artefacts; with SMART_BASE_HOME unset they report skip, never a clean run."
+        }
+      ],
+      "skos:notation": "Task_AssembleDak",
+      "dcterms:source": "smart-base/processes/l2-dak-authoring.bpmn#Task_AssembleDak",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/smart-base/ns#glossary/kg-bpmn-activities/process_l2dak.task_bpmn",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/smart-base/ns#glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Business processes · BPMN 2.0 [bpmn-authoring]"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Author the DAK's L2 business processes as BPMN 2.0, with Diagram Interchange: a .bpmn with no x/y on its shapes parses and renders blank. Stay at L2 — reviewable by a clinician, not FHIR."
+        }
+      ],
+      "skos:notation": "Task_Bpmn",
+      "dcterms:source": "smart-base/processes/l2-dak-authoring.bpmn#Task_Bpmn",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/smart-base/ns#glossary/kg-bpmn-activities/process_l2dak.task_datadict",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/smart-base/ns#glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Data dictionary and core data elements [l2-dak-authoring]"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Author the data dictionary and core data elements for this component. Stay structured but not FHIR: a data element a clinician can review, from which L3 can later be derived rather than written twice."
+        }
+      ],
+      "skos:notation": "Task_DataDict",
+      "dcterms:source": "smart-base/processes/l2-dak-authoring.bpmn#Task_DataDict",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/smart-base/ns#glossary/kg-bpmn-activities/process_l2dak.task_dmn",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/smart-base/ns#glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Decision logic · DMN tables [dmn-authoring]"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Author the decision logic as DMN tables, within the FEEL subset the interpreter implements (any, literals, comparisons, one-of). Ranges, not() and function calls are refused at load, so write inside the subset."
+        }
+      ],
+      "skos:notation": "Task_Dmn",
+      "dcterms:source": "smart-base/processes/l2-dak-authoring.bpmn#Task_Dmn",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/smart-base/ns#glossary/kg-bpmn-activities/process_l2dak.task_indicators",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/smart-base/ns#glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Indicators and requirements [l2-dak-authoring]"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Author the component's indicators and its functional and non-functional requirements. These are the DAK's requirements, distinct from skills/requirements/*.json, which are this harness's own conformance obligations."
+        }
+      ],
+      "skos:notation": "Task_Indicators",
+      "dcterms:source": "smart-base/processes/l2-dak-authoring.bpmn#Task_Indicators",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/smart-base/ns#glossary/kg-bpmn-activities/process_l2dak.task_personas",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/smart-base/ns#glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Personas and scenarios [l2-dak-authoring]"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Author the DAK's personas and the user journeys (scenarios) they appear in. These are the DAK's own actors, not this harness's scenarios/roles.json — the two vocabularies must not be conflated."
+        }
+      ],
+      "skos:notation": "Task_Personas",
+      "dcterms:source": "smart-base/processes/l2-dak-authoring.bpmn#Task_Personas",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/smart-base/ns#glossary/kg-bpmn-activities/process_l2dak.task_scopedak",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/smart-base/ns#glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Scope the DAK [content-plan]"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Enumerate the processes, decisions and data elements the guideline implies; identify the actors."
+        }
+      ],
+      "skos:notation": "Task_ScopeDak",
+      "dcterms:source": "smart-base/processes/l2-dak-authoring.bpmn#Task_ScopeDak",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/smart-base/ns#glossary/kg-bpmn-activities/process_l2dak.task_seedbeans",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/smart-base/ns#glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Seed the work plan [todo-manager]"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Turn the scope into beans on the shared work plan — one per DAK component, since a DAK is completed component by component. beans create is not idempotent: check for an existing bean before every create, or a re-run duplicates the plan."
+        }
+      ],
+      "skos:notation": "Task_SeedBeans",
+      "dcterms:source": "smart-base/processes/l2-dak-authoring.bpmn#Task_SeedBeans",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/smart-base/ns#glossary/kg-bpmn-activities/process_l2dak.task_smevalidate",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/smart-base/ns#glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Clinical validation [content-review]"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Ground truth: does the DAK say what the guideline says?"
+        }
+      ],
+      "skos:notation": "Task_SmeValidate",
+      "dcterms:source": "smart-base/processes/l2-dak-authoring.bpmn#Task_SmeValidate",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/smart-base/ns#glossary/kg-bpmn-activities/process_l2dak.task_terminology",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/smart-base/ns#glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Terminology bindings [terminology-management]"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "ICD-11, SNOMED CT, LOINC bindings — governed separately from the artifacts that cite them."
+        }
+      ],
+      "skos:notation": "Task_Terminology",
+      "dcterms:source": "smart-base/processes/l2-dak-authoring.bpmn#Task_Terminology",
+      "skos:note": "candidate"
     }
   ]
 }

@@ -22,7 +22,7 @@ Related: `xies` (PUBLISH TO CDN — the signoff → merge → CDN flow this step
 
 ## Done when
 - [x] general process, skill and the `gh-pages` Tool with its own subprocess
-- [ ] merged to main; `render:bpmn:check`, `check:tools`, `skill:register:check` green there
+- [x] merged to main; `render:bpmn:check`, `check:tools`, `skill:register:check` green there — all three exit 0 on main bac5800 (2026-10-01)
 - [ ] `xies` updated to name `Process_RenderKgToCdn` as its publication step
 
 
