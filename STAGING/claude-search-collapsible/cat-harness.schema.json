@@ -355,13 +355,6 @@
                 "type": "string",
                 "minLength": 1
               },
-              "dependents": {
-                "type": "string",
-                "enum": [
-                  "reproduce",
-                  "skip"
-                ]
-              },
               "coverage": {
                 "type": "object",
                 "properties": {
@@ -566,8 +559,7 @@
             "required": [
               "id",
               "path",
-              "graphKinds",
-              "dependents"
+              "graphKinds"
             ]
           }
         },
@@ -875,8 +867,8 @@
   "$comment": "Instance graph: https://litlfred.github.io/folio-assistant/STAGING/claude-search-collapsible/cat-harness.jsonld",
   "staging": {
     "branch": "claude/search-collapsible",
-    "sha": "e5a9c10f69160bd57ed716bed39cb20f5da0d35a",
+    "sha": "77286e12ee8fd6dedcd795c950f5191368bf5434",
     "pr": "1720/merge",
-    "run": "36795420177"
+    "run": "36797452358"
   }
 }
