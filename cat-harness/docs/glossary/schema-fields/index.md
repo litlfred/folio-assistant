@@ -318,7 +318,7 @@ AptDependency.version <span class="fa-gloss-status">candidate, extracted</span>
 ArchiveContentsSchema.@context <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
-<p>The published content context — bean <code>yh6u</code>. OPTIONAL because folio repositories hold records written before the arm emitted it; when present it must be that context, since any other would bind these keys to terms nobody declared.</p>
+<p>The published content context — bean <code>yh6u</code>. OPTIONAL because folio repositories hold records written before the arm emitted it; when present it must be that context (bare, or with <code>@base</code> beside it — bean <code>bh4q</code>), since any other would bind these keys to terms nobody declared.</p>
 <p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/archive-contents.ts"><code>cat-harness/schemas/archive-contents.ts#ArchiveContentsSchema.@context</code></a></p>
 </dd>
 <dt id="cat-harness--kg-schema-fields--archive-contents.archivecontentsschema.archive" data-fa-state="extracted" data-fa-gloss="">
@@ -10348,7 +10348,7 @@ TabularCsvwSchema.tables <span class="fa-gloss-status">candidate, extracted</spa
 TabularRecordsSchema.@context <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
-<p>The published content context — bean <code>yh6u</code>. OPTIONAL because folio repositories hold records written before the arm emitted it; when present it must be that context, since any other would bind these keys to terms nobody declared.</p>
+<p>The published content context — bean <code>yh6u</code>. OPTIONAL because folio repositories hold records written before the arm emitted it; when present it must be that context (bare, or with <code>@base</code> beside it — bean <code>bh4q</code>), since any other would bind these keys to terms nobody declared.</p>
 <p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/tabular-records.ts"><code>cat-harness/schemas/tabular-records.ts#TabularRecordsSchema.@context</code></a></p>
 </dd>
 <dt id="cat-harness--kg-schema-fields--tabular-records.tabularrecordsschema.header_vocabulary" data-fa-state="extracted" data-fa-gloss="">
