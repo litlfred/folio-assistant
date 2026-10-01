@@ -951,14 +951,14 @@
     {
       "id": "folio-assistant-3o5b",
       "title": "TEST PROCESS: tester + certifier roles, system-under-test actor facet, test-plan-execution.bpmn, certification DMN, kg-audit criteria",
-      "status": "todo",
+      "status": "completed",
       "type": "feature",
       "priority": "normal",
       "parent": "folio-assistant-3fva",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-10-01T08:00:47Z",
-      "updatedAt": "2026-10-01T08:00:55Z",
+      "updatedAt": "2026-10-01T19:08:15Z",
       "preview": "Arc `3fva`, proposal §3.2 and §4 items 5.4 and 5.5. Blocked on the TEST PLAN schema bean.\n\n`test-plan-execution.bpmn` has five lanes:\n- Requester / SUT: requests certification against plan P.\n- Tester: resolves the plan, binds the test data, executes, writes the run.\n- Untainted checker: re-executes a sample (`untainted-verification`).\n- Certifier: decides, using the DMN that `exitCriteria` names.",
       "file": "beans/defs/folio-assistant-3o5b--test-process-tester-certifier-roles-system-under-t.md"
     },

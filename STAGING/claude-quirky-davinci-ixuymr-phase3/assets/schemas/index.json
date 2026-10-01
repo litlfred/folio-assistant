@@ -2546,6 +2546,13 @@
           "doc": "What this participant can reach off its own machine — `internet`,"
         },
         {
+          "name": "systemUnderTest",
+          "type": "SystemUnderTestFacet",
+          "optional": true,
+          "array": false,
+          "doc": "The system-under-test facet — present when this actor can be executed"
+        },
+        {
           "name": "meta",
           "type": "Record<string, unknown>",
           "optional": true,
@@ -2557,7 +2564,8 @@
       "values": [],
       "refs": [
         "cat-harness/schemas/cat-harness.ts#NetworkReach",
-        "cat-harness/schemas/skill-package.ts#ActorKind"
+        "cat-harness/schemas/skill-package.ts#ActorKind",
+        "cat-harness/schemas/skill-package.ts#SystemUnderTestFacet"
       ],
       "unresolved": [],
       "external": [],
@@ -26188,6 +26196,13 @@
           "doc": "What this participant can reach off its own machine."
         },
         {
+          "name": "systemUnderTest",
+          "type": "SystemUnderTestFacet",
+          "optional": true,
+          "array": false,
+          "doc": "The system-under-test facet (bean `3o5b`) — present when the actor can be"
+        },
+        {
           "name": "path",
           "type": "string",
           "optional": false,
@@ -26208,7 +26223,8 @@
       "values": [],
       "refs": [
         "cat-harness/schemas/cat-harness.ts#NetworkReach",
-        "cat-harness/schemas/role-graph.ts#ActorDef"
+        "cat-harness/schemas/role-graph.ts#ActorDef",
+        "cat-harness/schemas/skill-package.ts#SystemUnderTestFacet"
       ],
       "unresolved": [],
       "external": [],
@@ -28399,6 +28415,13 @@
           "doc": "Network reach — see `ActorDefinition.reach` in `assistant-types.ts`, and"
         },
         {
+          "name": "systemUnderTest",
+          "type": "SystemUnderTestFacetSchema.optional()",
+          "optional": true,
+          "array": false,
+          "doc": "The SYSTEM-UNDER-TEST facet (bean `3o5b`, arc `3fva`): present when this"
+        },
+        {
           "name": "meta",
           "type": "z.record(z.string(), z.unknown()).optional()",
           "optional": true,
@@ -28408,7 +28431,8 @@
       "extendsNames": [],
       "values": [],
       "refs": [
-        "cat-harness/schemas/skill-package.ts#ActorKindSchema"
+        "cat-harness/schemas/skill-package.ts#ActorKindSchema",
+        "cat-harness/schemas/skill-package.ts#SystemUnderTestFacetSchema"
       ],
       "unresolved": [
         "NETWORK_REACHES"
@@ -29786,6 +29810,50 @@
       "extendsNames": [],
       "values": [],
       "refs": [],
+      "unresolved": [],
+      "external": [
+        "z"
+      ],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/skill-package.ts#SystemUnderTestFacet",
+      "name": "SystemUnderTestFacet",
+      "module": "cat-harness/schemas/skill-package.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/skill-package.ts#SystemUnderTestFacetSchema",
+      "name": "SystemUnderTestFacetSchema",
+      "module": "cat-harness/schemas/skill-package.ts",
+      "kind": "zod-object",
+      "doc": "The system-under-test FACET on an actor — bean `3o5b`, proposal §3.2.",
+      "fields": [
+        {
+          "name": "kind",
+          "type": "SutKindSchema",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "version",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [
+        "cat-harness/schemas/test-plan.ts#SutKindSchema"
+      ],
       "unresolved": [],
       "external": [
         "z"
@@ -45771,6 +45839,14 @@
       "array": false
     },
     {
+      "from": "cat-harness/schemas/assistant-types.ts#ActorDefinition",
+      "to": "cat-harness/schemas/skill-package.ts#SystemUnderTestFacet",
+      "via": "systemUnderTest",
+      "kind": "field",
+      "optional": true,
+      "array": false
+    },
+    {
       "from": "cat-harness/schemas/assistant-types.ts#CapabilityDefinition",
       "to": "cat-harness/schemas/assistant-types.ts#CapabilityDetection",
       "via": "detection",
@@ -49563,6 +49639,14 @@
       "array": false
     },
     {
+      "from": "cat-harness/schemas/role-graph.ts#LoadedActor",
+      "to": "cat-harness/schemas/skill-package.ts#SystemUnderTestFacet",
+      "via": "systemUnderTest",
+      "kind": "field",
+      "optional": true,
+      "array": false
+    },
+    {
       "from": "cat-harness/schemas/role-graph.ts#PermissionVocabulary",
       "to": "cat-harness/schemas/role-graph.ts#PermissionDef",
       "via": "permissions",
@@ -50075,6 +50159,14 @@
       "array": false
     },
     {
+      "from": "cat-harness/schemas/skill-package.ts#ActorDefinitionSchema",
+      "to": "cat-harness/schemas/skill-package.ts#SystemUnderTestFacetSchema",
+      "via": "systemUnderTest",
+      "kind": "field",
+      "optional": true,
+      "array": false
+    },
+    {
       "from": "cat-harness/schemas/skill-package.ts#CapabilityDefinitionSchema",
       "to": "cat-harness/schemas/skill-package.ts#CapabilityDetectionSchema",
       "via": "detection",
@@ -50313,6 +50405,14 @@
       "kind": "field",
       "optional": false,
       "array": true
+    },
+    {
+      "from": "cat-harness/schemas/skill-package.ts#SystemUnderTestFacetSchema",
+      "to": "cat-harness/schemas/test-plan.ts#SutKindSchema",
+      "via": "kind",
+      "kind": "field",
+      "optional": false,
+      "array": false
     },
     {
       "from": "cat-harness/schemas/skill-topics.ts#SkillTopicsSchema",
