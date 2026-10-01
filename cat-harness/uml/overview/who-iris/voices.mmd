@@ -1,7 +1,7 @@
 classDiagram
   direction TB
-  namespace who_style_guide__voices {
-    class who_style_guide_voices_Source["Source"] {
+  namespace who_iris__voices {
+    class who_iris_voices_Source["Source"] {
       <<json: VoiceProfileSchema>>
       title [1] string
       instance [0..1] string
@@ -10,19 +10,19 @@ classDiagram
       url [0..1] string~uri~
       year [0..1] integer
     }
-    class who_style_guide_voices_Pattern["Pattern"] {
+    class who_iris_voices_Pattern["Pattern"] {
       <<json: VoiceProfileSchema>>
       regex [1] string
       caseSensitive [0..1] boolean
       message [1] string
     }
-    class who_style_guide_voices_Terminology["Terminology"] {
+    class who_iris_voices_Terminology["Terminology"] {
       <<json: VoiceProfileSchema>>
       correct [1] string
       incorrect [1] string | string[]
       context [0..1] string
     }
-    class who_style_guide_voices_Rule["Rule"] {
+    class who_iris_voices_Rule["Rule"] {
       <<json: VoiceProfileSchema>>
       id [1] string
       title [1] string
@@ -34,7 +34,7 @@ classDiagram
       terminology [0..*] Terminology[]
       judgementOnly [0..1] boolean
     }
-    class who_style_guide_voices_VoiceProfile["VoiceProfile"] {
+    class who_iris_voices_VoiceProfile["VoiceProfile"] {
       <<json: VoiceProfileSchema>>
       $schema [1] 'folio-voice/v1' | 'folio-voice-skill/v1'
       id [1] string
@@ -50,12 +50,12 @@ classDiagram
       superseded [0..1] object
     }
   }
-  who_style_guide_voices_VoiceProfile *-- "1..*" who_style_guide_voices_Source : sources
-  who_style_guide_voices_Rule *-- "0..*" who_style_guide_voices_Pattern : patterns
-  who_style_guide_voices_Rule *-- "0..*" who_style_guide_voices_Terminology : terminology
-  who_style_guide_voices_VoiceProfile *-- "1..*" who_style_guide_voices_Rule : rules
-  cssClass "who_style_guide_voices_Source" fa_uml_kind_voices
-  cssClass "who_style_guide_voices_Pattern" fa_uml_kind_voices
-  cssClass "who_style_guide_voices_Terminology" fa_uml_kind_voices
-  cssClass "who_style_guide_voices_Rule" fa_uml_kind_voices
-  cssClass "who_style_guide_voices_VoiceProfile" fa_uml_kind_voices
+  who_iris_voices_VoiceProfile *-- "1..*" who_iris_voices_Source : sources
+  who_iris_voices_Rule *-- "0..*" who_iris_voices_Pattern : patterns
+  who_iris_voices_Rule *-- "0..*" who_iris_voices_Terminology : terminology
+  who_iris_voices_VoiceProfile *-- "1..*" who_iris_voices_Rule : rules
+  cssClass "who_iris_voices_Source" fa_uml_kind_voices
+  cssClass "who_iris_voices_Pattern" fa_uml_kind_voices
+  cssClass "who_iris_voices_Terminology" fa_uml_kind_voices
+  cssClass "who_iris_voices_Rule" fa_uml_kind_voices
+  cssClass "who_iris_voices_VoiceProfile" fa_uml_kind_voices

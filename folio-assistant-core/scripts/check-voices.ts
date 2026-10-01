@@ -99,7 +99,7 @@ function resolveCitation(
 ): { ok: true; path: string } | { ok: false; why: string } {
   // The CITING instance, not always `cat-harness`. A BARE citation resolves
   // against whoever wrote it, so hardcoding one root would have answered a
-  // who-style-guide voice's bare reference out of the platform's library —
+  // who-iris voice's bare reference out of the platform's library —
   // the wrong corpus, reported as a confident resolution.
   const r = resolveLibraryRef(src, citingRoot, REPO_ROOT);
   return r.ok ? { ok: true, path: r.path } : { ok: false, why: explainFailure(r.failure) };
@@ -281,7 +281,7 @@ function main(): number {
       }
       // Against the DECLARING instance: a `path` is a node of the voice's own
       // knowledge graph, so looking for it under the platform would report a
-      // who-style-guide voice's own node as missing.
+      // who-iris voice's own node as missing.
       // Through the NAMED instance when the source names one, exactly as a
       // rule's `path` is resolved above: a voice addressing a role cites the
       // role graph that declares it, which is the dependency's, not its own.

@@ -216,7 +216,7 @@ export type VoiceRule = z.infer<typeof VoiceRuleSchema>;
  * A voice in this instance, or in another one.
  *
  * Mirrors `ThemeRef` and `LibraryRef` exactly, and for the same reason: a
- * NAME, never a path. `../who-style-guide/voices/who-editorial.json` would
+ * NAME, never a path. `../who-iris/skills/voices/who-editorial/voice.json` would
  * work today and hardcode a checkout layout into content.
  */
 export const VoiceRefSchema = z

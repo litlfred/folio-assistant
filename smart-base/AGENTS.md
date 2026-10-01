@@ -83,5 +83,5 @@ misrepresents the standard.
 | | |
 |---|---|
 | `who-iris` | the IRIS catalogue — the *shape* of a corpus of 1,057,223 files, almost none of it held |
-| `who-style-guide` | the three WHO editorial voices already derived, and the model this layer's voices follow |
+| `who-iris` style guide (`who-iris/skills/voices/`) | the three WHO editorial voices already derived, and the model this layer's voices follow; a separate `who-style-guide` instance until 2026-10-01 (bean `qsx4`) |
 | `smart-trust`, `smart-immunizations` | reconstructed artefact indexes of published IGs; provisional per `nsbb` |

@@ -193,7 +193,14 @@ export function scanTree(root: string, roots: readonly string[]): ScanResult {
   return { leaks, filesScanned, unreadable };
 }
 
-const ROOTS = [".github", "cat-harness", "beans", "who-style-guide", "package.json"];
+// `who-iris/skills` and `who-iris/glossary` are what `who-style-guide` held
+// until it became a subgraph of who-iris (bean qsx4): the same files, scanned
+// where they now live. A root that does not exist is `could-not-scan`, so the
+// old name could not simply stay.
+// declared-path-literal: a list of scan ROOTS chosen for this check, not a
+// graph lookup -- the same kind of literal as `cat-harness` and `beans` beside
+// them, which name directories rather than resolve a declared graph.
+const ROOTS = [".github", "cat-harness", "beans", "who-iris/skills", "who-iris/glossary", "package.json"];
 
 if (import.meta.main) {
   const { leaks, filesScanned, unreadable } = scanTree(ROOT, ROOTS);

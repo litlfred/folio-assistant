@@ -10,13 +10,13 @@ permalink: /glossary/
 
 # Glossary
 
-Every term the instances in this repository define or carry, as W3C SKOS. Terms link to the external concepts they match rather than copying them. 2737 terms: **38 authored** in 4 glossaries, on this page, and **2699 extracted** from knowledge-graph assets in 22 generated schemes, one page per asset type, plus the sources below.
+Every term the instances in this repository define or carry, as W3C SKOS. Terms link to the external concepts they match rather than copying them. 2738 terms: **38 authored** in 4 glossaries, on this page, and **2700 extracted** from knowledge-graph assets in 22 generated schemes, one page per asset type, plus the sources below.
 
 <table>
 <thead><tr><th>state</th><th>what it means</th><th>terms</th></tr></thead>
 <tbody>
 <tr><td>authored</td><td>A person wrote or approved the definition.</td><td>38</td></tr>
-<tr><td>candidate, extracted</td><td>Lifted from a knowledge-graph asset's own title and description, verbatim, and not curated. The definition is the asset's text, the source links to the asset, and an asset with no description gives a term with none. A person promotes one by authoring it.</td><td>2699</td></tr>
+<tr><td>candidate, extracted</td><td>Lifted from a knowledge-graph asset's own title and description, verbatim, and not curated. The definition is the asset's text, the source links to the asset, and an asset with no description gives a term with none. A person promotes one by authoring it.</td><td>2700</td></tr>
 <tr><td>could-not-extract</td><td>The source names a term the extractor could not read, and says why.</td><td>0</td></tr>
 </tbody>
 </table>
@@ -33,7 +33,7 @@ Each term is on exactly one page. Extracted candidates are split by asset type, 
 <tr><td><a href="{{ '/glossary/tools/' | relative_url }}">Tools</a></td><td>candidates, extracted</td><td>128</td><td>84 KB</td></tr>
 <tr><td><a href="{{ '/glossary/bpmn-activities/' | relative_url }}">BPMN activities</a></td><td>candidates, extracted</td><td>551</td><td>427 KB</td></tr>
 <tr><td><a href="{{ '/glossary/dmn-decisions/' | relative_url }}">DMN decisions</a></td><td>candidates, extracted</td><td>9</td><td>7 KB</td></tr>
-<tr><td><a href="{{ '/glossary/schema-fields/' | relative_url }}">Schema fields</a></td><td>candidates, extracted</td><td>1715</td><td>943 KB</td></tr>
+<tr><td><a href="{{ '/glossary/schema-fields/' | relative_url }}">Schema fields</a></td><td>candidates, extracted</td><td>1716</td><td>944 KB</td></tr>
 </tbody></table></div>
 
 **Size:** this page holds 38 terms and is 50 KB before compression, within its budget of 64 KB; each asset type's page has a budget of 1.0 MB. There is no search index: the filter on each page runs over that page, and its A–Z bar jumps within it. The SKOS files in the sources are the machine-readable form.
@@ -325,12 +325,12 @@ policy
 
 <h2 id="letter-Q">Q</h2>
 <dl class="fa-gloss">
-<dt id="who-style-guide--who-terms--quality-of-the-evidence" data-fa-state="authored" data-fa-gloss="certainty of the evidence confidence in the estimates of effect">
+<dt id="who-iris--who-terms--quality-of-the-evidence" data-fa-state="authored" data-fa-gloss="certainty of the evidence confidence in the estimates of effect">
 quality of the evidence
 </dt>
 <dd>
 <p>In the context of guideline development, the confidence that the estimates of an effect are adequate to support a particular decision or recommendation. Rated high, moderate, low or very low.</p>
-<p class="fa-gloss-meta">WHO house terms · <code>https://litlfred.github.io/folio-assistant/who-style-guide/ns#glossary/who-terms/quality-of-the-evidence</code> · source <a href="https://github.com/litlfred/folio-assistant/blob/main/who-iris/library/9789241548960-eng/sections/sec-153-91-what-is-the-quality-of-the-evidence.md"><code>who-iris/library/9789241548960-eng/sections/sec-153-91-what-is-the-quality-of-the-evidence.md</code></a></p>
+<p class="fa-gloss-meta">WHO house terms · <code>https://litlfred.github.io/folio-assistant/who-iris/ns#glossary/who-terms/quality-of-the-evidence</code> · source <a href="https://github.com/litlfred/folio-assistant/blob/main/who-iris/library/9789241548960-eng/sections/sec-153-91-what-is-the-quality-of-the-evidence.md"><code>who-iris/library/9789241548960-eng/sections/sec-153-91-what-is-the-quality-of-the-evidence.md</code></a></p>
 </dd>
 </dl>
 
@@ -403,7 +403,7 @@ voice
 <li><strong>Bootstrap terms</strong> (bootstrap, 22 terms) · <a href="{{ '/assets/glossary/bootstrap--terms.skos.jsonld' | relative_url }}">SKOS JSON-LD</a> · <code>bootstrap/schemas/graph.schema.json</code></li>
 <li><strong>Folio Assistant platform terms (cat-harness)</strong> (cat-harness, 14 terms) · <a href="{{ '/assets/glossary/cat-harness--platform.skos.jsonld' | relative_url }}">SKOS JSON-LD</a> · <code>folio-assistant-core/glossary/cat-harness.glossary.json</code></li>
 <li><strong>Folio Assistant platform terms</strong> (folio-assistant-core, 1 term) · <a href="{{ '/assets/glossary/folio-assistant-core--platform.skos.jsonld' | relative_url }}">SKOS JSON-LD</a> · <code>folio-assistant-core/glossary/folio-assistant-core.glossary.json</code></li>
-<li><strong>WHO house terms</strong> (who-style-guide, 1 term) · <a href="{{ '/assets/glossary/who-style-guide--who-terms.skos.jsonld' | relative_url }}">SKOS JSON-LD</a> · <code>who-style-guide/glossary/who-style-guide.glossary.json</code></li>
+<li><strong>WHO house terms</strong> (who-iris, 1 term) · <a href="{{ '/assets/glossary/who-iris--who-terms.skos.jsonld' | relative_url }}">SKOS JSON-LD</a> · <code>who-iris/glossary/who-iris.glossary.json</code></li>
 <li><strong>Swimlane roles</strong> (cat-harness, 48 terms) · <a href="{{ '/cat-harness/docs-auto/glossary/swimlane-glossary/' | relative_url }}">rendered here</a> · <code>cat-harness/glossary/glossary-ledger.json</code></li>
 <li><strong>Swimlane roles</strong> (bootstrap, 6 terms) · <a href="{{ '/cat-harness/docs-auto/glossary/swimlane-glossary/' | relative_url }}">rendered here</a> · <code>cat-harness/glossary/bootstrap/glossary-ledger.json</code></li>
 </ul>
@@ -417,14 +417,14 @@ Generated by `folio-assistant-core/scripts/glossary-extract.ts` into `folio-assi
 <tbody>
 <tr><td>bootstrap</td><td>7 · <a href="{{ '/assets/glossary/bootstrap--kg-skills.skos.jsonld' | relative_url }}">SKOS</a></td><td>—</td><td>16 · <a href="{{ '/assets/glossary/bootstrap--kg-bpmn-activities.skos.jsonld' | relative_url }}">SKOS</a></td><td>—</td><td>—</td></tr>
 <tr><td>bootstrap-tools</td><td>1 · <a href="{{ '/assets/glossary/bootstrap-tools--kg-skills.skos.jsonld' | relative_url }}">SKOS</a></td><td>—</td><td>—</td><td>—</td><td>28 · <a href="{{ '/assets/glossary/bootstrap-tools--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a></td></tr>
-<tr><td>cat-harness</td><td>275 · <a href="{{ '/assets/glossary/cat-harness--kg-skills.skos.jsonld' | relative_url }}">SKOS</a></td><td>111 · <a href="{{ '/assets/glossary/cat-harness--kg-tools.skos.jsonld' | relative_url }}">SKOS</a></td><td>492 · <a href="{{ '/assets/glossary/cat-harness--kg-bpmn-activities.skos.jsonld' | relative_url }}">SKOS</a></td><td>9 · <a href="{{ '/assets/glossary/cat-harness--kg-dmn-decisions.skos.jsonld' | relative_url }}">SKOS</a></td><td>1514 · <a href="{{ '/assets/glossary/cat-harness--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a></td></tr>
+<tr><td>cat-harness</td><td>275 · <a href="{{ '/assets/glossary/cat-harness--kg-skills.skos.jsonld' | relative_url }}">SKOS</a></td><td>111 · <a href="{{ '/assets/glossary/cat-harness--kg-tools.skos.jsonld' | relative_url }}">SKOS</a></td><td>492 · <a href="{{ '/assets/glossary/cat-harness--kg-bpmn-activities.skos.jsonld' | relative_url }}">SKOS</a></td><td>9 · <a href="{{ '/assets/glossary/cat-harness--kg-dmn-decisions.skos.jsonld' | relative_url }}">SKOS</a></td><td>1515 · <a href="{{ '/assets/glossary/cat-harness--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a></td></tr>
 <tr><td>fhir-harness</td><td>6 · <a href="{{ '/assets/glossary/fhir-harness--kg-skills.skos.jsonld' | relative_url }}">SKOS</a></td><td>4 · <a href="{{ '/assets/glossary/fhir-harness--kg-tools.skos.jsonld' | relative_url }}">SKOS</a></td><td>—</td><td>—</td><td>—</td></tr>
 <tr><td>folio-assistant-core</td><td>1 · <a href="{{ '/assets/glossary/folio-assistant-core--kg-skills.skos.jsonld' | relative_url }}">SKOS</a></td><td>4 · <a href="{{ '/assets/glossary/folio-assistant-core--kg-tools.skos.jsonld' | relative_url }}">SKOS</a></td><td>4 · <a href="{{ '/assets/glossary/folio-assistant-core--kg-bpmn-activities.skos.jsonld' | relative_url }}">SKOS</a></td><td>—</td><td>155 · <a href="{{ '/assets/glossary/folio-assistant-core--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a></td></tr>
 <tr><td>folio-assistant-sci</td><td>2 · <a href="{{ '/assets/glossary/folio-assistant-sci--kg-skills.skos.jsonld' | relative_url }}">SKOS</a></td><td>—</td><td>—</td><td>—</td><td>—</td></tr>
 <tr><td>large-datasets</td><td>3 · <a href="{{ '/assets/glossary/large-datasets--kg-skills.skos.jsonld' | relative_url }}">SKOS</a></td><td>—</td><td>30 · <a href="{{ '/assets/glossary/large-datasets--kg-bpmn-activities.skos.jsonld' | relative_url }}">SKOS</a></td><td>—</td><td>18 · <a href="{{ '/assets/glossary/large-datasets--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a></td></tr>
 <tr><td>smart-base</td><td>—</td><td>9 · <a href="{{ '/assets/glossary/smart-base--kg-tools.skos.jsonld' | relative_url }}">SKOS</a></td><td>9 · <a href="{{ '/assets/glossary/smart-base--kg-bpmn-activities.skos.jsonld' | relative_url }}">SKOS</a></td><td>—</td><td>—</td></tr>
 <tr><td>who-iris</td><td>1 · <a href="{{ '/assets/glossary/who-iris--kg-skills.skos.jsonld' | relative_url }}">SKOS</a></td><td>—</td><td>—</td><td>—</td><td>—</td></tr>
-<tr><td><strong>total</strong></td><td><strong>296</strong></td><td><strong>128</strong></td><td><strong>551</strong></td><td><strong>9</strong></td><td><strong>1715</strong></td></tr>
+<tr><td><strong>total</strong></td><td><strong>296</strong></td><td><strong>128</strong></td><td><strong>551</strong></td><td><strong>9</strong></td><td><strong>1716</strong></td></tr>
 </tbody></table></div>
 
 <script type="application/ld+json">
@@ -579,7 +579,7 @@ Generated by `folio-assistant-core/scripts/glossary-extract.ts` into `folio-assi
   },
   {
    "@type": "DefinedTerm",
-   "@id": "https://litlfred.github.io/folio-assistant/who-style-guide/ns#glossary/who-terms/quality-of-the-evidence",
+   "@id": "https://litlfred.github.io/folio-assistant/who-iris/ns#glossary/who-terms/quality-of-the-evidence",
    "name": "quality of the evidence",
    "description": "In the context of guideline development, the confidence that the estimates of an effect are adequate to support a particular decision or recommendation. Rated high, moderate, low or very low."
   },

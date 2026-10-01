@@ -7,20 +7,20 @@
   "_generated": "folio-assistant-core/scripts/glossary-page.ts — do not hand-edit; run `bun run glossary:page`",
   "@graph": [
     {
-      "@id": "https://litlfred.github.io/folio-assistant/who-style-guide/ns#glossary/who-terms",
+      "@id": "https://litlfred.github.io/folio-assistant/who-iris/ns#glossary/who-terms",
       "@type": "skos:ConceptScheme",
       "skos:prefLabel": "WHO house terms",
-      "skos:definition": "Terms the WHO publications use under more than one name, recorded where a publication itself STATES that the names are equivalent. A shared spelling or a latent-semantic cosine is not evidence of equivalence and is never recorded here: each alternative label carries the source sentence that asserts it. Owner, 2026-09-30 (bean ftu0): the WHO glossary is owned by who-style-guide, the instance the house voices live in, and cites the who-iris library across the instance boundary as the voices do.",
+      "skos:definition": "Terms the WHO publications use under more than one name, recorded where a publication itself STATES that the names are equivalent. A shared spelling or a latent-semantic cosine is not evidence of equivalence and is never recorded here: each alternative label carries the source sentence that asserts it. Owner, 2026-09-30 (bean ftu0): the WHO glossary is owned by the style guide, where the house voices live. The style guide is a subgraph of who-iris since the owner's ruling of the same day (bean qsx4), so the glossary, the voices and the library they cite are one instance and every citation is a same-instance one.",
       "dcterms:hasVersion": "2026-09-30",
-      "dcterms:modified": "2026-09-30",
-      "dcterms:source": "who-style-guide/skills/voices/who-guideline-development/voice.json",
+      "dcterms:modified": "2026-10-01",
+      "dcterms:source": "who-iris/skills/voices/who-guideline-development/voice.json",
       "dcterms:license": "CC-BY-4.0"
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/who-style-guide/ns#glossary/who-terms/quality-of-the-evidence",
+      "@id": "https://litlfred.github.io/folio-assistant/who-iris/ns#glossary/who-terms/quality-of-the-evidence",
       "@type": "skos:Concept",
       "skos:inScheme": {
-        "@id": "https://litlfred.github.io/folio-assistant/who-style-guide/ns#glossary/who-terms"
+        "@id": "https://litlfred.github.io/folio-assistant/who-iris/ns#glossary/who-terms"
       },
       "skos:prefLabel": [
         {

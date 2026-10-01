@@ -1,5 +1,5 @@
 {
-  "_comment": "The WHO IRIS catalogue instance, staged as a top-level directory ahead of becoming its own repository. Owner, 2026-09-20: 'there needs to be a new repo (staged here as a new top-level dir -> repo later) which is an instance of fa-core, and is for the who-iris cataloge and this is an example artefact (the style guide is part of the library itself)', and later 'in future who-iris iwll be own repo. will have specialized tools/themes.' The `library` entry landed with the git mv (bean frs5), in the same change, exactly as the previous version of this comment said it would: until then its ABSENCE was load-bearing, because `resolveLibraryRef` reported `no-library-graph` for a citation naming this instance -- a different and more useful answer than 'that section is missing'. Both of those are now real answers rather than one standing in for the other.",
+  "_comment": "The WHO IRIS catalogue instance, staged as a top-level directory ahead of becoming its own repository. Owner, 2026-09-20: 'there needs to be a new repo (staged here as a new top-level dir -> repo later) which is an instance of fa-core, and is for the who-iris cataloge and this is an example artefact (the style guide is part of the library itself)', and later 'in future who-iris iwll be own repo. will have specialized tools/themes.' The `library` entry landed with the git mv (bean frs5), in the same change, exactly as the previous version of this comment said it would: until then its ABSENCE was load-bearing, because `resolveLibraryRef` reported `no-library-graph` for a citation naming this instance -- a different and more useful answer than 'that section is missing'. Both of those are now real answers rather than one standing in for the other. THE STYLE GUIDE IS NOW A SUBGRAPH OF THIS INSTANCE, not an instance of its own: owner, 2026-09-30, 'who voices style guide is derivative KG content from who-iris, merge content into subgraph. including docs.' The three house voices moved to `skills/voices/`, the WHO glossary to `glossary/`, and the style guide's README to `docs/style-guide.md`, all by git mv (bean qsx4). The cross-instance citation bean z7ev built for them is no longer needed by them: a voice and the publication it is read from are in one instance, so every citation is the bare, same-instance form.",
   "name": "who-iris",
   "repository": "litlfred/who-iris",
   "livesAt": { "repository": "litlfred/folio-assistant", "path": "who-iris" },
@@ -105,9 +105,19 @@
       "id": "who-iris-skills",
       "path": "skills/",
       "dependents": "skip",
-      "description": "Deliberately thin, per 'mionimal tools in who specific stuff'. ONE skill: `iris-dspace`, how IRIS uses DSpace and qualified Dublin Core, with what a later tool needs stated as nine checkable requirements. The Dublin Core TYPE is generic and lives in folio-assist-core; enumeration and subsetting live in large-datasets; OCR stays a cat-harness platform tool.",
+      "description": "Deliberately thin, per 'mionimal tools in who specific stuff'. ONE skill package: `iris-dspace`, how IRIS uses DSpace and qualified Dublin Core, with what a later tool needs stated as nine checkable requirements. The Dublin Core TYPE is generic and lives in folio-assist-core; enumeration and subsetting live in large-datasets; OCR stays a cat-harness platform tool. Since 2026-10-01 it also holds the WHO STYLE GUIDE's three house voices under `voices/`, declared from within by `skills.json` (bean `cmsl`) -- they were the separate staged instance `who-style-guide` until the owner's 2026-09-30 ruling, 'who voices style guide is derivative KG content from who-iris, merge content into subgraph. including docs.' (bean `qsx4`).",
       "graphKinds": [
         "skills"
+      ]
+    },
+    {
+      "id": "glossary",
+      "path": "glossary/",
+      "dependents": "reproduce",
+      "_comment": "MOVED HERE from who-style-guide/glossary/ with the rest of the style guide (bean qsx4, owner 2026-09-30: 'who voices style guide is derivative KG content from who-iris, merge content into subgraph'). The id stays the CONVENTIONAL `glossary`, so this entry overrides the inherited default rather than adding a second entry at the same path. Bean ftu0 had put the glossary with the voices because it is a HOUSE rule about wording; the voices are now here, so it followed them, and the reason ftu0 gave still holds.",
+      "description": "The WHO glossary: folio-glossary/v1 schemes of terms the WHO publications use under more than one name -- a HOUSE rule about wording, like the style-guide voices under skills/voices/ (bean ftu0). An alternative label is recorded only where a publication STATES the equivalence, and each term cites that sentence in this instance's own library; a count or a latent-semantic cosine is never the evidence. The scheme's source is the who-guideline-development voice, so its terms are minted in this instance's namespace. Rendered on the glossary/ page and checked by check:glossary, both of which read every instance's declared glossary directory.",
+      "graphKinds": [
+        "glossary"
       ]
     },
     {

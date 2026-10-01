@@ -8,5 +8,5 @@ Part of [WHO IRIS](../../README.md) 0.1.0, declared as `qa`, holding `qa`.
 | file | what it is | used by |
 |---|---|---|
 | [`kg-qa.manifest.json`](kg-qa.manifest.json) | data |  |
-| [`kg-qa/`](kg-qa/) | 2 files | |
+| [`kg-qa/`](kg-qa/) | 5 files | |
 <!-- kg:subgraph:end -->

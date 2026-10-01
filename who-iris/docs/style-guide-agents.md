@@ -1,14 +1,18 @@
-# AGENTS.md — who-style-guide
+# Working on the WHO style guide's voices
 
-What binds everywhere is the repository's [`AGENTS.md`](../AGENTS.md); what
-this layer *is* is [`README.md`](README.md). One rule governs everything here.
+What binds everywhere is the repository's [`AGENTS.md`](../../AGENTS.md),
+then who-iris's [`AGENTS.md`](../AGENTS.md); what the style guide *is* is
+[`style-guide.md`](style-guide.md). One rule governs the voices in
+[`skills/voices/`](../skills/voices/).
 
 ## A voice is DERIVED FROM a publication; it is not the publication
 
-The three source documents live in [`who-iris/library/`](../who-iris/library/),
-and they stay there. Every rule in a voice cites
-`{ instance: "who-iris", libraryId, sectionId }` and **resolves across the
-instance boundary**.
+The three source documents live in this instance's
+[`library/`](../library/), and they stay there. Every rule in a voice cites
+`{ libraryId, sectionId }` and resolves against that library. The voices and
+the library have been one instance since 2026-10-01 (bean `qsx4`); before
+that, the voices were the separate `who-style-guide` instance and cited
+across the boundary.
 
 So: **do not copy source text into this layer.** A quoted rule carries its
 quote and its page so a reader can check it; a copied document is a second
@@ -34,5 +38,8 @@ the document it came from.
 
 ---
 
-*A declared asset of this instance ([`who-style-guide.json`](who-style-guide.json), role
-`agent-instructions`). Issue #592.*
+*Was `who-style-guide/AGENTS.md`, that instance's `agent-instructions` asset
+(issue #592). It moved into who-iris's docs subgraph when the style guide
+became a subgraph of who-iris (bean `qsx4`). It is not kept beside the voices
+because any `.md` other than a README inside a skills directory is read as a
+skill: `gen-skill-docs` demanded a category for a package called `voices`.*

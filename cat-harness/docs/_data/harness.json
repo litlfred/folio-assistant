@@ -130,7 +130,7 @@
       ],
       "href": "/cat-harness/library/agent-skills/",
       "hidden": false,
-      "count": 11,
+      "count": 12,
       "unit": "entries"
     },
     {
@@ -146,7 +146,7 @@
       "href": "/beans/",
       "hidden": false,
       "icon": "beans",
-      "count": 512,
+      "count": 524,
       "unit": "beans"
     },
     {
@@ -383,7 +383,7 @@
       ],
       "href": "/lsi/",
       "hidden": false,
-      "count": 996,
+      "count": 1012,
       "unit": "documents"
     },
     {
@@ -859,68 +859,6 @@
       ]
     },
     {
-      "name": "who-style-guide",
-      "title": "who-style-guide",
-      "label": "who-style-guide",
-      "description": "The WHO house voices — editorial style, guideline development, publication design — each derived from one IRIS publication and citing it by page.",
-      "footer": false,
-      "needs": [
-        "who-iris"
-      ],
-      "icon": null,
-      "tone": 0,
-      "toneFrom": "avatar",
-      "reads": "a question mark — no avatar is declared for this kind",
-      "genericAvatar": true,
-      "instantiated": false,
-      "href": "/cat-harness/voices/who-style-guide/",
-      "hrefKind": "viewer",
-      "stats": [
-        {
-          "id": "directories",
-          "label": "declared directories",
-          "value": 3
-        },
-        {
-          "id": "kinds",
-          "label": "declared graph kinds",
-          "value": 3
-        },
-        {
-          "id": "views",
-          "label": "visualisations you can open",
-          "value": 1
-        }
-      ],
-      "visualisations": [
-        {
-          "kind": "glossary",
-          "note": "no viewer yet"
-        },
-        {
-          "kind": "qa",
-          "note": "no viewer yet"
-        },
-        {
-          "kind": "voices",
-          "path": "/cat-harness/voices/who-style-guide/"
-        }
-      ],
-      "findings": [
-        "who-style-guide: declares 2 graph(s) with no published viewer — glossary, qa. Declared and not rendered is a gap, not a dead link.",
-        "who-style-guide: no avatar declared for this instance — showing the generic mark.",
-        "who-style-guide: has no docs/ of its own, so the tile opens a kind handler's viewer (/cat-harness/voices/who-style-guide/) rather than the instance's own themed root."
-      ],
-      "navbarIcons": [
-        "close",
-        "todos",
-        "beans",
-        "processes",
-        "kg",
-        "launcher"
-      ]
-    },
-    {
       "name": "smart-base",
       "title": "SMART Base",
       "label": "SMART Base",
@@ -1020,17 +958,17 @@
         {
           "id": "directories",
           "label": "declared directories",
-          "value": 9
+          "value": 11
         },
         {
           "id": "kinds",
           "label": "declared graph kinds",
-          "value": 8
+          "value": 10
         },
         {
           "id": "views",
           "label": "visualisations you can open",
-          "value": 5
+          "value": 6
         }
       ],
       "visualisations": [
@@ -1046,6 +984,10 @@
         {
           "kind": "docs",
           "path": "/cat-harness/docs-auto/index/docs/who-iris-site/"
+        },
+        {
+          "kind": "glossary",
+          "note": "no viewer yet"
         },
         {
           "kind": "library",
@@ -1067,10 +1009,14 @@
           "kind": "uploads",
           "path": "/cat-harness/uploads/who-iris/",
           "readOnly": false
+        },
+        {
+          "kind": "voices",
+          "path": "/cat-harness/voices/who-iris/"
         }
       ],
       "findings": [
-        "who-iris: declares 3 graph(s) with no published viewer — code, qa, themes. Declared and not rendered is a gap, not a dead link.",
+        "who-iris: declares 4 graph(s) with no published viewer — code, glossary, qa, themes. Declared and not rendered is a gap, not a dead link.",
         "who-iris: 1 graph(s) hold materialized content and are READ-ONLY — catalogue. Readable, not editable here: copy one out to your own folio/ to work on it. Separate from whether a viewer is published."
       ],
       "navbarIcons": [
@@ -2169,12 +2115,6 @@
       "major": null,
       "agent": "",
       "human": ""
-    },
-    "who-style-guide": {
-      "version": "0.1.0",
-      "major": null,
-      "agent": "",
-      "human": ""
     }
   },
   "config": {
@@ -2681,48 +2621,6 @@
         ]
       },
       {
-        "name": "who-style-guide",
-        "title": "who-style-guide",
-        "group": "checkout",
-        "declaredIn": "who-style-guide/who-style-guide.json",
-        "viewHref": "https://github.com/litlfred/folio-assistant/blob/main/who-style-guide/who-style-guide.json",
-        "editHref": "https://github.com/litlfred/folio-assistant/edit/main/who-style-guide/who-style-guide.json",
-        "declared": [
-          {
-            "key": "name",
-            "summary": "who-style-guide"
-          },
-          {
-            "key": "description",
-            "summary": "The WHO house voices — editorial style, guideline development, publication design — each …"
-          },
-          {
-            "key": "assets",
-            "summary": "2: agent-instructions, readme"
-          },
-          {
-            "key": "repository",
-            "summary": "litlfred/who-style-guide"
-          },
-          {
-            "key": "livesAt",
-            "summary": "{ repository, path }"
-          },
-          {
-            "key": "directories",
-            "summary": "2: glossary, qa"
-          },
-          {
-            "key": "needs",
-            "summary": "who-iris"
-          },
-          {
-            "key": "version",
-            "summary": "0.1.0"
-          }
-        ]
-      },
-      {
         "name": "smart-base",
         "title": "SMART Base",
         "group": "instantiated",
@@ -2814,7 +2712,7 @@
           },
           {
             "key": "directories",
-            "summary": "9: library, who-iris-site, who-iris-catalogue, who-iris-uploads, who-iris-skills, who-iris-t…"
+            "summary": "10: library, who-iris-site, who-iris-catalogue, who-iris-uploads, who-iris-skills, glossary, …"
           },
           {
             "key": "stickies",

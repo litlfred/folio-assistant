@@ -48,6 +48,16 @@ corpus find something they cannot explain. Beans `r1lz` and `frs5` are the
 worked example, and it went the other way: a mathematics paper that looked
 like it belonged here and did not.
 
+## The style guide is derived from the library, and lives beside it
+
+The WHO house voices (`skills/voices/`) and the WHO glossary (`glossary/`) are
+the **style guide**: KG content derived from the publications in `library/`,
+folded into this instance from the former `who-style-guide` instance by the
+owner's ruling of 2026-09-30 (bean `qsx4`). Working on a voice has its own
+rule — a voice is derived from a publication and never copies it — in
+[`docs/style-guide-agents.md`](docs/style-guide-agents.md); what the style guide is
+is [`docs/style-guide.md`](docs/style-guide.md).
+
 ---
 
 *A declared asset of this instance ([`who-iris.json`](who-iris.json), role

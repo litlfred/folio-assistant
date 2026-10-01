@@ -400,7 +400,10 @@ describe("every declared graph reaches the navbar, linked or not", () => {
     // `bjzs`). The list grew because the instance did, exactly as it did for
     // `code`; pinning it at seven would make the assertion a statement about
     // 2026-09-26 rather than about the declaration.
-    expect(kinds()).toEqual(["catalogue", "code", "docs", "library", "qa", "skills", "themes", "uploads"]);
+    // TEN since 2026-10-01: `glossary` and `voices` joined when the WHO style
+    // guide was folded into who-iris as a subgraph (bean `qsx4`) — the voices
+    // declared from within `skills/skills.json`, the glossary in who-iris.json.
+    expect(kinds()).toEqual(["catalogue", "code", "docs", "glossary", "library", "qa", "skills", "themes", "uploads", "voices"]);
   });
 
   it("links exactly the kinds it was told are published", () => {
@@ -413,6 +416,9 @@ describe("every declared graph reaches the navbar, linked or not", () => {
       // `code` is declared and publishes no page — which is exactly the state
       // this assertion exists to keep visible, rather than a gap to hide.
       "code",
+      // `glossary` and `voices` arrived with the style guide (bean `qsx4`); no
+      // page is passed in here, so both are declared-and-unlinked.
+      "glossary",
       "library",
       // `qa` is declared and publishes no page, like `code` above: the audit
       // writes sidecars, and the viewer for them is the QA index rather than a
@@ -422,6 +428,7 @@ describe("every declared graph reaches the navbar, linked or not", () => {
       "skills",
       "themes",
       "uploads",
+      "voices",
     ]);
   });
 

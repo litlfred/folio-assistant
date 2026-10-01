@@ -70,3 +70,19 @@ now live in two libraries, and a verdict belongs beside the documents it judges
 — `apply-image-verdicts` resolves each document against the library its verdict
 file is in, which it could not do from one shared file. Nothing was re-judged:
 every verdict is byte-identical to the one it was split from.
+
+## The style guide, derived from the library
+
+The three **WHO house voices** — `who-editorial`, `who-guideline-development`,
+`who-publication-design` — live in [`skills/voices/`](skills/voices/), and the
+**WHO glossary** lives in [`glossary/`](glossary/). Each voice is read rule by
+rule out of one of the three publications above, and every rule cites the page
+it came from. Together they are the style guide:
+[`docs/style-guide.md`](docs/style-guide.md).
+
+They were the separate staged instance `who-style-guide/` until the owner's
+ruling of 2026-09-30: *"who voices style guide is derivative KG content from
+who-iris, merge content into subgraph. including docs."* They moved here by
+`git mv` (bean `qsx4`). Because a voice and its source are now in one instance,
+every citation is a same-instance one, and `bun run check:voices` resolves them
+against this instance's own library.

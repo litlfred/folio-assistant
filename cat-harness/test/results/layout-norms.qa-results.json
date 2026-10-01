@@ -2,13 +2,13 @@
   "$schema": "qa-results/v1",
   "producer": {
     "script": "cat-harness/scripts/check-layout-norms.ts",
-    "script_hash": "29272be0da17"
+    "script_hash": "ee6d4aa083a1"
   },
   "subject": {
     "kind": "corpus",
     "id": "declared-directories"
   },
-  "updated_at": "2026-09-30T16:32:51.718Z",
+  "updated_at": "2026-10-01T02:01:33.124Z",
   "families": {
     "nested-declaration": {
       "summary": "A declared directory contained by another declared directory — an asset buried below its stub instead of sitting at `<stub>/<asset>`. A consumer scanning the outer graph must then decide whether the inner one's nodes are also its own (bean `x4v4`), and every count computed from that sweep depends on the answer. Known pairs are baselined so outstanding work does not fail the gate; a pair not in the baseline does.",

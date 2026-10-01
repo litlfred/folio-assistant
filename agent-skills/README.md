@@ -4,8 +4,8 @@ Published guidance on **authoring and operating agent skills**, ingested as L1
 source content, and the voices read out of it.
 
 This instance is staged as a top-level directory ahead of becoming its own
-repository — the same arrangement as `who-iris/`, `who-style-guide/`,
-`folio-assistant-sci/` and `folio-assistant-core/`.
+repository — the same arrangement as `who-iris/`, `folio-assistant-sci/` and
+`folio-assistant-core/`.
 
 ## Why it is not in `cat-harness/`
 

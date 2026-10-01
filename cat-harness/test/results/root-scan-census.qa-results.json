@@ -8,7 +8,7 @@
     "kind": "root-scan-census",
     "id": "scripts"
   },
-  "updated_at": "2026-09-30T14:29:23.633Z",
+  "updated_at": "2026-10-01T00:15:37.691Z",
   "families": {
     "enumerating-scripts": {
       "summary": "Every script that binds a root constant and enumerates the filesystem, with whether its scan is SEEDED at that root and whether it asks git. A FLOOR, not a count: both filters are syntactic, so a scanner spelled differently is missed — which is not hypothetical, since `xd1g`'s own list of eleven was one short (`kg-audit`, found by a sibling session). The two filters disagree by design: 0 seeded at a root against 69 enumerating at all, and that GAP is the finding — it is why a syntactic check cannot answer this question and the guard lives in `scripts/tests/git-corpus-conversions.test.ts` instead.",
@@ -362,8 +362,8 @@
       ]
     },
     "scope": {
-      "summary": "Which instances this census covered — the denominator, so a drop in enumerating scripts can be told from a drop in scope (bean `tqv4`). Every declared instance is a row: `scanned` with its count, or `no-scripts-dir`, which is neither a finding nor a pass. 7 of 17 declared instance(s) have a scripts/ directory.",
-      "count": 17,
+      "summary": "Which instances this census covered — the denominator, so a drop in enumerating scripts can be told from a drop in scope (bean `tqv4`). Every declared instance is a row: `scanned` with its count, or `no-scripts-dir`, which is neither a finding nor a pass. 7 of 16 declared instance(s) have a scripts/ directory.",
+      "count": 16,
       "entries": [
         {
           "instance": "folio-assistant",
@@ -460,12 +460,6 @@
           "path": "who-iris/scripts",
           "state": "scanned",
           "enumerating": 1
-        },
-        {
-          "instance": "who-style-guide",
-          "path": "who-style-guide/scripts",
-          "state": "no-scripts-dir",
-          "enumerating": 0
         }
       ]
     },
@@ -475,5 +469,5 @@
       "entries": []
     }
   },
-  "total": 86
+  "total": 85
 }

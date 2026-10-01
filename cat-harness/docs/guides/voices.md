@@ -23,9 +23,9 @@ Voices are **editorial overlays**, not content adapters or project profiles. The
 
 | Voice | Description | SKILL.md | voice.json |
 | --- | --- | --- | --- |
-| WHO Editorial Style | Spelling, capitalization, reference layout, non-discriminatory language. | [SKILL.md](../../../who-style-guide/skills/voices/who-editorial/SKILL.md) | [voice.json](../../../who-style-guide/skills/voices/who-editorial/voice.json) |
-| WHO Guideline Development | GRADE wording, strength, certainty, justification. | [SKILL.md](../../../who-style-guide/skills/voices/who-guideline-development/SKILL.md) | [voice.json](../../../who-style-guide/skills/voices/who-guideline-development/voice.json) |
-| WHO Publication Design | Visual conventions, logo use, typography, accessibility. | [SKILL.md](../../../who-style-guide/skills/voices/who-publication-design/SKILL.md) | [voice.json](../../../who-style-guide/skills/voices/who-publication-design/voice.json) |
+| WHO Editorial Style | Spelling, capitalization, reference layout, non-discriminatory language. | [SKILL.md](../../../who-iris/skills/voices/who-editorial/SKILL.md) | [voice.json](../../../who-iris/skills/voices/who-editorial/voice.json) |
+| WHO Guideline Development | GRADE wording, strength, certainty, justification. | [SKILL.md](../../../who-iris/skills/voices/who-guideline-development/SKILL.md) | [voice.json](../../../who-iris/skills/voices/who-guideline-development/voice.json) |
+| WHO Publication Design | Visual conventions, logo use, typography, accessibility. | [SKILL.md](../../../who-iris/skills/voices/who-publication-design/SKILL.md) | [voice.json](../../../who-iris/skills/voices/who-publication-design/voice.json) |
 | Milnor Exposition Standard | Eight hallmarks of mathematical exposition (H1-H8). | [SKILL.md](../../../folio-assistant-sci/skills/voices/milnor/SKILL.md) | [voice.json](../../../folio-assistant-sci/skills/voices/milnor/voice.json) |
 
 ## Activation
@@ -67,19 +67,19 @@ Derived from the WHO Editorial Style Manual, this voice governs spelling, capita
 - **Scope:** General editorial house style.
 - **Key rules:** Write out journal names in full, rewrite to avoid discriminatory language instead of decorating with "he or she".
 - **Counterintuitive items:** Use `-ize` instead of `-ise` (e.g., organize, not organise); avoid eponym genitives (Crohn disease, not Crohn's disease).
-- **Source:** [`who-style-guide/skills/voices/who-editorial/`](../../../who-style-guide/skills/voices/who-editorial/)
+- **Source:** [`who-iris/skills/voices/who-editorial/`](../../../who-iris/skills/voices/who-editorial/)
 
 ### WHO Guideline Development
 Derived from the WHO handbook for guideline development, this dictates the phrasing of normative statements.
 - **Scope:** Recommendations and guideline methodology.
 - **Key rules:** Use "should" for strong recommendations, "suggest" for conditional ones. Never say "not recommended" (use "we recommend against"). State certainty on the GRADE scale.
-- **Source:** [`who-style-guide/skills/voices/who-guideline-development/`](../../../who-style-guide/skills/voices/who-guideline-development/)
+- **Source:** [`who-iris/skills/voices/who-guideline-development/`](../../../who-iris/skills/voices/who-guideline-development/)
 
 ### WHO Publication Design
 Governs the visual conventions of WHO (Western Pacific Region) products rather than the prose itself.
 - **Scope:** Visual identity and formatting.
 - **Key rules:** Never combine red and green or blue and yellow in figures; leave specific exclusion zones around the logo; use the exact brand blue (C95 M25 Y0 K0).
-- **Source:** [`who-style-guide/skills/voices/who-publication-design/`](../../../who-style-guide/skills/voices/who-publication-design/)
+- **Source:** [`who-iris/skills/voices/who-publication-design/`](../../../who-iris/skills/voices/who-publication-design/)
 
 ### Milnor Exposition Standard
 A scoring gate derived from John Milnor's "Link Groups" paper covering the hallmarks of mathematical exposition (H1-H8).

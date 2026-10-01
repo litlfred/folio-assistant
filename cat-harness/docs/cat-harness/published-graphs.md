@@ -127,7 +127,7 @@ nothing renders yet. It is shown rather than omitted: "nothing renders this" and
 {: .fa-hx-dim }
 
 - [folio-assistant-core]({{ '/glossary/' | relative_url }})
-- who-style-guide — *declared, not published*
+- WHO IRIS — *declared, not published*
 
 ### `health`
 
@@ -213,7 +213,7 @@ nothing renders yet. It is shown rather than omitted: "nothing renders this" and
 
 ### `qa`
 
-1 of 14 published.
+1 of 13 published.
 {: .fa-hx-dim }
 
 - agent-skills — *declared, not published*
@@ -229,7 +229,6 @@ nothing renders yet. It is shown rather than omitted: "nothing renders this" and
 - SMART L1 — *declared, not published*
 - smart-trust — *declared, not published*
 - WHO IRIS — *declared, not published*
-- who-style-guide — *declared, not published*
 
 ### `requirements`
 
@@ -335,7 +334,7 @@ nothing renders yet. It is shown rather than omitted: "nothing renders this" and
 - [folio-assistant-core]({{ '/cat-harness/voices/folio-assistant-core/' | relative_url }})
 - [folio-assistant-sci]({{ '/cat-harness/voices/folio-assistant-sci/' | relative_url }})
 - [SMART Base]({{ '/cat-harness/voices/smart-base/' | relative_url }})
-- [who-style-guide]({{ '/cat-harness/voices/who-style-guide/' | relative_url }})
+- [WHO IRIS]({{ '/cat-harness/voices/who-iris/' | relative_url }})
 
 ### `waiver`
 

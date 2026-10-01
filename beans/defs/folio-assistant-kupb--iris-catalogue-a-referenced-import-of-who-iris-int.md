@@ -1,11 +1,11 @@
 ---
 # folio-assistant-kupb
 title: 'IRIS CATALOGUE: a referenced import of who-iris into the KG, its themes, and the SDLC that tests a sample import'
-status: completed
+status: in-progress
 type: epic
 priority: high
 created_at: 2026-09-20T08:01:14Z
-updated_at: 2026-09-30T08:26:13Z
+updated_at: 2026-10-01T02:05:09Z
 parent: folio-assistant-yg29
 ---
 
@@ -97,3 +97,5 @@ Closed on evidence, 2026-09-30, with its Done-when re-measured on this branch:
 - **Every child is closed.** The last two, `08u4` (Handle survival path) and `xlg2` (sample import run end-to-end), complete in PR #1528. The non-catalogue children were re-parented on 2026-09-26 (`9fe74a7be8d`).
 - **`check:voices` is green across the instance boundary.** Re-run today: every rule cites a source that resolves.
 - **The rendering shows the IRIS hierarchy with 3 materialised items and the rest referenced.** `check:catalogue` exits 0 and `iris:pages:check` reports the pages current. The live published site could not be checked from this container (github.io egress is blocked), so that part rests on the generated pages rather than a fetch.
+
+_2026-10-01_ — REOPENED for child `qsx4`: the owner's 2026-09-30 ruling folds who-style-guide into who-iris as a subgraph ('who voices style guide is derivative KG content from who-iris, merge content into subgraph. including docs.'), which revises the 'two staged top-level dirs' decision recorded above. Close again when qsx4 closes.
