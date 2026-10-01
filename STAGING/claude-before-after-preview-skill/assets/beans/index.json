@@ -2,7 +2,7 @@
   "$schema": "folio-bean-index/v1",
   "tile": {
     "beans": {
-      "count": 529,
+      "count": 530,
       "unit": "beans"
     }
   },
@@ -301,6 +301,20 @@
       "updatedAt": "2026-09-26T03:55:45Z",
       "preview": "`pages-publish-health` (bean `qj9a`) counts instruments for observing the\npublished site. The count is **0**, so it reports a `major` finding whose action\nis this bean. This is that probe, specified rather than built, because it cannot\nbe built here.\n\n## Why it cannot be written or tested from an agent's container\n\nMeasured 2026-09-25 and 2026-09-26, every route refused:\n\n| route | result |\n|---|-",
       "file": "beans/defs/folio-assistant-1dre--pages-serving-probe-the-instrument-pages-publish-h.md"
+    },
+    {
+      "id": "folio-assistant-1g4s",
+      "title": "OPTION A: subgraphs inherit automatically as named members; dependents retired",
+      "status": "completed",
+      "type": "task",
+      "priority": "",
+      "parent": "",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-30T22:39:25Z",
+      "updatedAt": "2026-09-30T22:39:25Z",
+      "preview": "Owner 2026-09-30: 'if f-a-core ... has a docs/ ... and depends on cat-harness where docs/ is declared ... the viewer should detect f-a-core/docs ... a named (sub-)subgraph of docs' and 'make dependents: reproduce automatic behaviour so don't need it'.\n\n## Summary of Changes\n- resolveDirectories: every instance-scoped entry gains one MEMBER per chain instance whose <root>/<path> exists (ResolvedDir",
+      "file": "beans/defs/folio-assistant-1g4s--option-a-subgraphs-inherit-automatically-as-named.md"
     },
     {
       "id": "folio-assistant-1gf7",
