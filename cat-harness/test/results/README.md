@@ -26,14 +26,12 @@ Part of [C@T Harness](../../README.md) 0.1.0, declared as `qa`, holding `qa`.
 | [`subgraph-readmes.qa-results.json`](subgraph-readmes.qa-results.json) | data |  |
 | [`term-mapping.qa-results.json`](term-mapping.qa-results.json) | data |  |
 | [`wireframes.qa-results.json`](wireframes.qa-results.json) | data |  |
-| [`agent-skills/`](agent-skills/) | 2 files | |
 | [`block-qa/`](block-qa/) | 122 files | |
 | [`bootstrap/`](bootstrap/) | 22 files | |
 | [`bootstrap-tools/`](bootstrap-tools/) | 7 files | |
 | [`cat-harness-tools/`](cat-harness-tools/) | 2 files | |
-| [`detangle/`](detangle/) | 34 files | |
-| [`kg-qa/`](kg-qa/) | 497 files | |
-| [`large-datasets/`](large-datasets/) | 2 files | |
+| [`detangle/`](detangle/) | 61 files | |
+| [`kg-qa/`](kg-qa/) | 487 files | |
 | [`library-qa/`](library-qa/) | 59 files | |
 | [`lsi/`](lsi/) | 5 files | |
 | [`tool-runs/`](tool-runs/) | 3 files | |

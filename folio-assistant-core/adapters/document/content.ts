@@ -3,7 +3,9 @@
  * with no server in it.
  *
  * Split out of `index.ts` (bean `w2gr`, step 2). The owner ruled on 2026-10-01
- * that `folio-assistant-core` does not depend on `cat-harness-tools`, where the
+ * that `folio-assistant-core` does not depend on `cat-harness-tools` (ruling C1
+ * later that day reversed the edge: core now needs `cat-harness-tools`, and the
+ * rule became "core must not depend on the MCP server"), where the
  * MCP server, the HTTP routes and RBAC are moving. So the adapter is cut in
  * two along that line:
  *
