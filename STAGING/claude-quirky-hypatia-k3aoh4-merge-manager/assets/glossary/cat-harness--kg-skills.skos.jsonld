@@ -2234,6 +2234,46 @@
       "skos:note": "candidate"
     },
     {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-skills/merge-conflict-patterns",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-skills"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "merge-conflict-patterns"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Merge the base branch in and resolve, without a person, only the conflicts a DECLARED pattern covers — generated files, generated README regions, QA sidecars — then prove the result with the gate set. Refuses the whole merge when any conflict is authored or undeclared. Use for \"merge main\", \"resolve the conflicts\", \"the PR is conflicted again\", \"auto-resolve\", and when adding a pattern for a new kind of churn."
+        }
+      ],
+      "skos:notation": "merge-conflict-patterns",
+      "dcterms:source": "cat-harness/skills/sdlc/sdlc-core/merge-conflict-patterns.md",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-skills/merge-manager",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-skills"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "merge-manager"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "DRAFT — PROPOSED, NOT YET RULED ON (issue #1800). How green pull requests land on a default branch that moves faster than any one PR can keep up with: one Merge Manager merges, every other agent hands over with a label and a `ready: <sha>` comment. Covers when the role is needed and when it is not, intake, queue order, bringing main in, regenerating, the submodule-pin guard, the merge itself, the bounce-back protocol and the audit trail. Use when several green PRs are waiting on a busy main, when you are asked to act as the merge steward, or when you are an author wondering how your PR gets merged."
+        }
+      ],
+      "skos:notation": "merge-manager",
+      "dcterms:source": "cat-harness/skills/sdlc/sdlc-core/merge-manager.md",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-skills/methodology-adoption",
       "@type": "skos:Concept",
       "skos:inScheme": {
