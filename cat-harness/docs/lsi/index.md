@@ -122,7 +122,7 @@ Each dimension is a **contrast** between two poles, shown by their highest-loadi
 
 ## cat-harness / skills
 
-**308** units · **7610** terms · k = **100** · retains **68.8 %** of the weighted matrix · weighting `log-entropy` · sidecar `cat-harness/test/results/lsi/cat-harness/skills.lsi.json`
+**308** units · **7606** terms · k = **100** · retains **68.8 %** of the weighted matrix · weighting `log-entropy` · sidecar `cat-harness/test/results/lsi/cat-harness/skills.lsi.json`
 
 > Dimension 1 has **no negative pole**: it most likely measures unit length and term frequency (a margin), not a theme. Read the themes from dimension 2 on.
 
@@ -130,14 +130,14 @@ Each dimension is a **contrast** between two poles, shown by their highest-loadi
 
 | dim | σ | one pole | the other pole |
 |---|---|---|---|
-| 1 | 47.27 | bean, instance, session, graph, kind, branch, page, directory | *(none)* |
+| 1 | 47.26 | bean, instance, graph, session, kind, branch, page, directory | *(none)* |
 | 2 | 27.78 | bias, studies, study, effect, statistical, causation, validity, causal | bean, harness, instance, directory, node, graph, kind, session |
-| 3 | 22.37 | proof, watcher, lean, slot, blocks, project, witness, chapter | harness, node, instance, bean, directory, page, actor, bias |
-| 4 | 19.61 | session, branch, queue, prs, commits, beans, coordination, bean | dpi, color, lean, grayscale, pdf, images, matplotlib, raster |
-| 5 | 18.68 | dpi, color, grayscale, contrast, raster, matplotlib, eps, images | proof, lean, glossary, declaration, term, theorem, mathlib, sorry |
+| 3 | 22.36 | proof, watcher, lean, slot, blocks, witness, project, chapter | harness, node, instance, bean, directory, page, actor, bias |
+| 4 | 19.58 | dpi, color, grayscale, lean, pdf, images, matplotlib, raster | session, branch, queue, prs, commits, coordination, beans, bean |
+| 5 | 18.67 | dpi, color, grayscale, contrast, raster, matplotlib, eps, images | proof, lean, glossary, declaration, term, theorem, mathlib, sorry |
 | 6 | 16.78 | regulatory, intervention, biosafety, ethics, candidate, rivals, dual-use, safety | fallacy, fallacious, reality, fallacies, solutions, consider, description, ignoring |
-| 7 | 16.28 | lean, mathlib, mcp, sorry, search, proof, theorem, page | watcher, slot, voice, backlog, queue, ledger, nesting, objection |
-| 8 | 15.38 | mathlib, lean, sorry, lake, subdirectory, mcp, oleans, sessions | slot, watcher, criterion, forward, backlog, band, major, avatar |
+| 7 | 16.31 | lean, mathlib, mcp, sorry, search, proof, theorem, page | watcher, slot, voice, backlog, queue, ledger, nesting, objection |
+| 8 | 15.37 | mathlib, lean, sorry, lake, oleans, mcp, subdirectory, sessions | slot, watcher, criterion, forward, backlog, band, major, prose |
 
 **Findings** — 0 narrow dimension(s), 0 near-duplicate pair(s).
 
