@@ -658,6 +658,25 @@ jobs:
       - name: No page carries a duplicate id
         run: bun run check:duplicate-ids ./_site
 
+      # The deploy's own built-site checks, run HERE so they fail on the pull
+      # request rather than after the merge (bean `63es`). Until 2026-10-01 they
+      # ran only in `docs-site.yml`, on `main`: a code span wrapped so a line
+      # began `<slide>` opened a raw HTML block that never closed, the page's
+      # last table printed as pipes, and every publish from #1615 on stopped at
+      # `check:escaped-markup` (#1726) — while each PR's `stage` stayed green.
+      # #1687's preview carried the broken page and this check flags it there.
+      #
+      # `reference/` is only carried when a PR touches skills, schemas or their
+      # generators — exactly the PRs that can break those pages. Invoked by
+      # DECLARED SCRIPT NAME, as in `docs-site.yml`, so `unrunScripts` sees them.
+      # `built-site-check-parity.test.ts` fails if the deploy gains one that is
+      # not also here.
+      - name: No escaped block-level markup in the preview
+        run: bun run check:escaped-markup ./_site
+
+      - name: Every maintained artefact is in the preview
+        run: bun run check:maintained-artefacts ./_site
+
       # A PREVIEW MUST NOT CLAIM TO BE CANONICAL.
       #
       # `jekyll-seo-tag` ships in the `github-pages` gem set that

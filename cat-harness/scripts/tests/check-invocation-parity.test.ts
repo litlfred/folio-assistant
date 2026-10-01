@@ -40,6 +40,27 @@ describe("invocations", () => {
     expect(got.map((i) => i.instance)).toEqual([undefined, "./no-such-instance"]);
   });
 
+  test("a check the deploy runs BY SCRIPT NAME is an obligation too (63es)", () => {
+    // `check:escaped-markup` ran only in the deploy, invoked by name, so the
+    // path matcher never saw it — and a <slide> line that broke every publish
+    // from #1615 on stayed green on each PR's preview (#1726).
+    const yml = "        run: bun run check:no-such-check ./_site\n          bun run cat-harness/scripts/kg-export.ts --out a.jsonld\n";
+    expect(invocations(yml)).toEqual([{ script: "check:no-such-check" }, { script: "kg-export" }]);
+  });
+
+  test("a named check mentioned only in a COMMENT is not an obligation", () => {
+    expect(invocations("        # run bun run check:no-such-check here\n        echo hi")).toEqual([]);
+  });
+
+  test("the real deploy's built-site checks are obligations the real preview meets", () => {
+    const deploy = invocations(wf("docs-site.yml")).map((i) => i.script);
+    const preview = new Set(invocations(wf("feature-staging.yml")).map((i) => i.script));
+    for (const c of ["check:escaped-markup", "check:maintained-artefacts"]) {
+      expect(deploy).toContain(c);
+      expect(preview.has(c)).toBe(true);
+    }
+  });
+
   test("a repeated invocation is counted once", () => {
     const yml = "bun run cat-harness/scripts/ns-export.ts --layer a\nbun run cat-harness/scripts/ns-export.ts --layer b";
     expect(invocations(yml)).toEqual([{ script: "ns-export" }]);
