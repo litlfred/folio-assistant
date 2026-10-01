@@ -12,6 +12,8 @@ description: >
 
 > Skill id: `ig-ast-delta` · Package: `fhir-ig-base` · Instance:
 > `fhir-harness` · Bean `a9tx`
+> 
+> This is an instantiation of the general compiled-artefact-cache pattern. See `cat-harness/skills/process/process-core/compiled-artefact-cache.md` for the shared contract.
 
 An **IG AST** is a per-resource dump of what one IG Publisher build held in
 memory. It is written by the `ast-export` library, which is built **on top
