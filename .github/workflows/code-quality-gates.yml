@@ -541,6 +541,13 @@ jobs:
       - name: PROV-O QA/QC report
         run: bun run check:prov-qaqc
 
+      # KG subscriptions (issue #1719, epic bean `fnx4`): the known substrates,
+      # derived from the declarations wherever a fact exists, and every
+      # subscription with the state of each chosen part. Generated and
+      # network-free; this fails only when the page is stale.
+      - name: KG subscriptions page is current
+        run: bun run subscriptions:viz:check
+
       # The graph per locale -- bean `jmpb`, on the owner's ruling. This gate
       # is NOT about how much is translated (nothing is, measured 2026-09-22:
       # 58 of 62 .pot templates are diagrams and none has a .po). It checks
@@ -879,6 +886,13 @@ jobs:
       # family has not cleared the others.
       - name: harness state graphs are judged, not just typed
         run: bun run check:harness-state:check
+
+      # Issue #1719, slice 4: every subscription has its substrate snapshot at
+      # its pin, each snapshot's bytes match their digest and re-judge to the
+      # committed summary, and none is orphaned. Offline — it reads what
+      # `kg:subscribe` wrote and never fetches. It JUDGES `substrate-snapshot`.
+      - name: KG subscriptions have their snapshots, and each holds
+        run: bun run kg:subscribe:check
 
       # And `--strict` too, now that it is GREEN — the four `typed-only` kinds
       # were the only thing holding it red, and the step above judges them. Wired

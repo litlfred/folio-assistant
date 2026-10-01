@@ -1,0 +1,534 @@
+#!/usr/bin/env bun
+/**
+ * SUBSCRIBE an instance to an external Knowledge Graph — a **substrate** — at a
+ * pinned commit: fetch ONLY the substrate's root declaration, judge it, and on
+ * success record the subscription and a cached snapshot of what was judged.
+ *
+ * @module cat-harness/scripts/kg-subscribe
+ * @covers cat-harness, substrate-snapshot
+ *
+ * Issue #1719, epic bean `fnx4`, slice 4 of
+ * `docs/proposals/kg-subscriptions.md`. The other two verbs, materialise and
+ * instantiate, are slices 5–7; this one writes the choice and the pin, and
+ * nothing else arrives.
+ *
+ * ## What a substrate is — the rule, stated once
+ *
+ * A repository is a substrate at a commit when **both** hold:
+ *
+ * 1. **Its root carries a bootstrap declaration.** The root declaration is
+ *    found by bootstrap's own rule (`declarationFileIn`: the `<stem>.json`
+ *    whose `name` equals `<stem>`, and exactly one of them), and it parses as
+ *    bootstrap's `KnowledgeGraphDeclarationSchema`. Nothing of this harness's
+ *    schema is asked of it: a substrate need not be built on cat-harness, and
+ *    every field bootstrap does not define is an Extension it may carry.
+ * 2. **It declares at least one harness.** Bootstrap defines the term: *"A
+ *    Knowledge Graph whose Subgraphs hold Skills, Roles or Processes."* And
+ *    bootstrap names the Graph Kind for each: `skills` holds Skills,
+ *    `scenarios` holds Roles, `processes` holds Processes
+ *    (`BOOTSTRAP_GRAPH_KINDS`). So a declaration IS a harness when at least
+ *    one of its `directories` lists one of those three kinds in `graphKinds`
+ *    — {@link HARNESS_GRAPH_KINDS}, {@link harnessesOf}.
+ *
+ * ### Why that rule, and not the two nearer ones
+ *
+ * - **Not "has a `<name>.config.json`".** That is what `harness-tiles.ts`
+ *   reads, and it answers a different question: whether a harness is
+ *   INSTANTIATED here, in the navbar. A substrate offers harnesses to be
+ *   instantiated by the subscriber (slice 7), so requiring the upstream to
+ *   have instantiated its own would refuse exactly the repositories a
+ *   subscription exists for.
+ * - **Not this harness's own graph kinds.** A kind cat-harness registers
+ *   (`methodology`, `cat-harness`, …) is an Extension to a reader that knows
+ *   only bootstrap, and the owner's definition says the substrate meets
+ *   BOOTSTRAP's requirements. Judging it by our vocabulary would make "is a
+ *   substrate" depend on which harness is asking.
+ *
+ * ### Only the root is judged, and that is a limit, not a rule
+ *
+ * The fetch reads one file. A repository whose harnesses are all NESTED
+ * instances (this monorepo's root declares only `uploads/` and `tools/`) is
+ * judged not-a-substrate, and the reason names the gap. Reading one level
+ * down is `knowledgeGraphsIn`'s rule and costs a blob per root directory;
+ * it is recorded as an open question on the epic, not done quietly here.
+ *
+ * ## Three answers, never two
+ *
+ * - **substrate** — both points hold; the harness names are listed.
+ * - **not-a-substrate(reason)** — the bytes were read and one point fails.
+ * - **could-not-determine(reason)** — the bytes were NOT read: the network,
+ *   the forge, a SHA the remote does not serve. Collapsing this into "not a
+ *   substrate" would record a guess about a repository nobody looked at, and
+ *   collapsing it into "substrate" would subscribe to one. Both are `dh4f`.
+ *
+ * An unpinned ref is refused BEFORE anything is fetched, with
+ * `sync-remote-skills`' {@link pinnedRef}: the same reason, the same words.
+ *
+ * ## What is written, and where
+ *
+ * - The subscriber's `<instance>.json` gains (or keeps) a `subscriptions`
+ *   entry: `id`, `repository`, `ref`, and NOTHING CHOSEN — every subgraph,
+ *   asset and harness starts referenced. A re-subscribe at the same pin keeps
+ *   whatever the subscriber has chosen since and changes no byte.
+ * - A {@link SubstrateSnapshotSchema} node, `<id>.substrate.json`, in the
+ *   subscriber's OWN directory declared with graph kind `substrate-snapshot`.
+ *   Found through the declaration, never by a path literal; an instance that
+ *   declares none is refused with what to declare. Why a wrapper rather than a
+ *   copy of `<name>.json` is on the schema.
+ *
+ * Moving the pin of a subscription that has CHOSEN parts is refused: that is
+ * `refresh-materialized` (the proposal: "Refresh is not re-subscribe"), because
+ * the chosen parts' materialisation records are pinned to the old commit.
+ *
+ * ## `--check` — the gate over what was written
+ *
+ * Offline, over every instance in the checkout: each subscription has its
+ * snapshot at its pin, each snapshot's digest is over its bytes and its
+ * summary is what re-judging those bytes gives, every chosen part is one the
+ * substrate offers, and no snapshot is orphaned ({@link checkSubscriptions}).
+ * It is what JUDGES the `substrate-snapshot` kind rather than merely typing it.
+ *
+ * Usage:
+ *   bun run kg:subscribe <owner/repo>@<40-char-sha> [--instance <dir>] [--id <id>] [--dry-run]
+ *   bun run kg:subscribe:check
+ */
+import { createHash } from "node:crypto";
+import { existsSync, mkdirSync, mkdtempSync, readdirSync, readFileSync, rmSync, writeFileSync } from "node:fs";
+import { tmpdir } from "node:os";
+import { join, relative, resolve } from "node:path";
+
+import { declarationFileIn } from "../../bootstrap-tools/schemas/declaration.ts";
+import { KnowledgeGraphDeclarationSchema } from "../../bootstrap-tools/schemas/graph.ts";
+import {
+  CatHarnessDeclarationSchema,
+  type Subscription,
+  findDeclarationFile,
+  instanceRootsIn,
+  repoRootFor,
+  rootForScope,
+} from "../schemas/cat-harness.js";
+import { RepoFullNameSchema } from "../schemas/repo-full-name.js";
+import {
+  SNAPSHOT_GRAPH_KIND,
+  SNAPSHOT_SUFFIX,
+  SUBSTRATE_SNAPSHOT_SCHEMA,
+  SubstrateSnapshotSchema,
+  type SubstrateSnapshot,
+} from "../schemas/substrate-snapshot.js";
+import { git, pinnedRef, shallowFetch } from "./sync-remote-skills.js";
+
+const INSTANCE = join(import.meta.dir, "..");
+
+/** The graph kind of the directory a snapshot is written to, and a snapshot's filename suffix: defined beside the schema. */
+export { SNAPSHOT_GRAPH_KIND, SNAPSHOT_SUFFIX };
+
+/**
+ * Bootstrap's Graph Kinds whose Subgraphs hold what makes a Knowledge Graph a
+ * Harness: Skills, Roles (`scenarios`) and Processes. Read against
+ * `BOOTSTRAP_GRAPH_KINDS`' own sentences; a test holds the two together.
+ */
+export const HARNESS_GRAPH_KINDS: readonly string[] = ["skills", "scenarios", "processes"];
+
+export type SubstrateVerdict =
+  | {
+      state: "substrate";
+      file: string;
+      raw: string;
+      summary: SubstrateSnapshot["summary"];
+    }
+  | { state: "not-a-substrate"; reason: string }
+  | { state: "could-not-determine"; reason: string };
+
+/**
+ * Put the substrate's ROOT `.json` files at `ref` into a directory and return
+ * it. Throwing means the bytes were not read: could-not-determine. Injectable,
+ * so the judgement is tested against fixtures with no network.
+ */
+export type RootFetcher = (repository: string, ref: string) => string | Promise<string>;
+
+/** `owner/repo@sha`, or why not. The pin is checked with `pinnedRef`. */
+export function parseTarget(arg: string): { ok: true; repository: string; ref: string } | { ok: false; why: string } {
+  const at = arg.lastIndexOf("@");
+  if (at <= 0) return { ok: false, why: `\`${arg}\` is not \`<owner/repo>@<40-char-sha>\`` };
+  const repository = arg.slice(0, at);
+  const ref = arg.slice(at + 1);
+  const repo = RepoFullNameSchema.safeParse(repository);
+  if (!repo.success) return { ok: false, why: `\`${repository}\`: ${repo.error.issues[0]?.message ?? "not owner/repo"}` };
+  const pin = pinnedRef(ref);
+  if (!pin.ok) return { ok: false, why: pin.why };
+  return { ok: true, repository, ref };
+}
+
+/** The harnesses a bootstrap declaration declares, by the rule in the module docblock. */
+export function harnessesOf(decl: { name: string; directories?: { graphKinds: readonly string[] }[] }): string[] {
+  const isHarness = (decl.directories ?? []).some((d) => d.graphKinds.some((k) => HARNESS_GRAPH_KINDS.includes(k)));
+  return isHarness ? [decl.name] : [];
+}
+
+/** Judge the `.json` files a fetcher left in `dir`. Pure over the directory. */
+export function judgeRoot(dir: string): SubstrateVerdict {
+  let file: string | undefined;
+  try {
+    file = declarationFileIn(dir);
+  } catch (e) {
+    return { state: "not-a-substrate", reason: e instanceof Error ? e.message.replace(dir, "the root") : String(e) };
+  }
+  if (!file) {
+    return {
+      state: "not-a-substrate",
+      reason: "the root carries no Knowledge Graph declaration — no `<name>.json` whose `name` is `<name>`",
+    };
+  }
+  return judgeDeclaration(relative(dir, file), readFileSync(file, "utf8"));
+}
+
+/**
+ * Judge one root declaration's bytes — the half of {@link judgeRoot} after
+ * the file is found. `--check` re-runs it over a snapshot's `raw`, so the
+ * committed summary is held to the same code that wrote it.
+ */
+export function judgeDeclaration(name: string, raw: string): SubstrateVerdict {
+  let json: unknown;
+  try {
+    json = JSON.parse(raw);
+  } catch (e) {
+    return { state: "not-a-substrate", reason: `\`${name}\` is not JSON: ${e instanceof Error ? e.message : String(e)}` };
+  }
+  const parsed = KnowledgeGraphDeclarationSchema.safeParse(json);
+  if (!parsed.success) {
+    const issue = parsed.error.issues[0];
+    return {
+      state: "not-a-substrate",
+      reason: `\`${name}\` does not meet bootstrap's declaration schema: ${issue?.path.join(".") || "(root)"}: ${issue?.message ?? parsed.error.message}`,
+    };
+  }
+  const decl = parsed.data;
+  const harnesses = harnessesOf(decl);
+  if (harnesses.length === 0) {
+    return {
+      state: "not-a-substrate",
+      reason:
+        `\`${name}\` declares no harness: none of its ${(decl.directories ?? []).length} Subgraph(s) holds ` +
+        `${HARNESS_GRAPH_KINDS.map((k) => `\`${k}\``).join(", ")} — bootstrap's kinds for Skills, Roles and Processes. ` +
+        `Only the root declaration is read; harnesses declared by nested instances are not seen`,
+    };
+  }
+  return {
+    state: "substrate",
+    file: name,
+    raw,
+    summary: {
+      name: decl.name,
+      ...(decl.title !== undefined ? { title: decl.title } : {}),
+      ...(decl.version !== undefined ? { version: decl.version } : {}),
+      subgraphs: (decl.directories ?? []).map((d) => ({ id: d.id, graphKinds: d.graphKinds.map(String) })),
+      harnesses,
+    },
+  };
+}
+
+/** Fetch, then judge. A fetch that throws is could-not-determine, never either verdict. */
+export async function judgeSubstrate(repository: string, ref: string, fetch: RootFetcher): Promise<SubstrateVerdict> {
+  let dir: string;
+  try {
+    dir = await fetch(repository, ref);
+  } catch (e) {
+    return {
+      state: "could-not-determine",
+      reason: `the root declaration of ${repository} at ${ref.slice(0, 12)} was not read: ${e instanceof Error ? e.message : String(e)}`,
+    };
+  }
+  try {
+    return judgeRoot(dir);
+  } finally {
+    rmSync(dir, { recursive: true, force: true });
+  }
+}
+
+/**
+ * The real fetcher: a shallow, BLOBLESS fetch of the one commit, then only the
+ * root's `.json` blobs are read. No checkout, so a large substrate costs its
+ * root tree and a few small files.
+ */
+export const gitRootFetcher: RootFetcher = (repository, ref) => {
+  const repo = shallowFetch(`https://github.com/${repository}.git`, ref, { blobless: true, prefix: "kg-subscribe-" });
+  try {
+    const head = git(["rev-parse", "FETCH_HEAD"], repo).trim();
+    if (head !== ref) throw new Error(`the remote served ${head} for ${ref}`);
+    const out = mkdtempSync(join(tmpdir(), "kg-subscribe-root-"));
+    const names = git(["ls-tree", "--name-only", "FETCH_HEAD"], repo)
+      .split("\n")
+      .filter((n) => n.endsWith(".json") && !n.includes("/"));
+    for (const n of names) writeFileSync(join(out, n), git(["show", `FETCH_HEAD:${n}`], repo));
+    return out;
+  } finally {
+    rmSync(repo, { recursive: true, force: true });
+  }
+};
+
+// ── Writing the subscriber's declaration without reformatting it ─────────────
+
+/**
+ * The span of each TOP-LEVEL key's value in a JSON object's text. A splice
+ * rather than a re-serialisation, because declarations here carry hand-chosen
+ * one-line objects (`livesAt`) that `JSON.stringify` would expand, and a
+ * subscribe must not rewrite lines it did not mean to touch.
+ */
+function topLevelValueSpans(text: string): Map<string, { start: number; end: number }> {
+  const spans = new Map<string, { start: number; end: number }>();
+  const ws = (ch: string | undefined): boolean => ch !== undefined && /\s/.test(ch);
+  let depth = 0;
+  let key: string | undefined;
+  let start = -1;
+  // A value ends at the comma after it at depth 1, or at the object's own closer.
+  const close = (at: number): void => {
+    let end = at;
+    while (ws(text[end - 1])) end--;
+    if (key !== undefined) spans.set(key, { start, end });
+    key = undefined;
+  };
+  for (let i = 0; i < text.length; i++) {
+    const c = text[i];
+    if (c === '"') {
+      let j = i + 1;
+      while (text[j] !== '"') j += text[j] === "\\" ? 2 : 1;
+      if (depth === 1 && key === undefined) {
+        let k = j + 1;
+        while (ws(text[k])) k++;
+        if (text[k] === ":") {
+          key = JSON.parse(text.slice(i, j + 1)) as string;
+          let v = k + 1;
+          while (ws(text[v])) v++;
+          start = v;
+          i = v - 1;
+          continue;
+        }
+      }
+      i = j;
+    } else if (c === "{" || c === "[") depth++;
+    else if (c === "}" || c === "]") {
+      depth--;
+      if (depth === 0) close(i);
+    } else if (c === "," && depth === 1) close(i);
+  }
+  return spans;
+}
+
+/** Set a top-level key's value in a JSON object's text, 2-space indented; append the key if absent. */
+export function setTopLevelKey(text: string, key: string, value: unknown): string {
+  const rendered = JSON.stringify(value, null, 2).replace(/\n/g, "\n  ");
+  const span = topLevelValueSpans(text).get(key);
+  if (span) return text.slice(0, span.start) + rendered + text.slice(span.end);
+  const close = text.lastIndexOf("}");
+  let before = close;
+  while (/\s/.test(text[before - 1] ?? "")) before--;
+  return `${text.slice(0, before)},\n  ${JSON.stringify(key)}: ${rendered}\n${text.slice(close)}`;
+}
+
+// ── Subscribe ────────────────────────────────────────────────────────────────
+
+export type SubscribeResult =
+  | { ok: true; verdict: Extract<SubstrateVerdict, { state: "substrate" }>; entry: Subscription; changed: string[]; declarationFile: string; snapshotFile: string }
+  | { ok: false; state: "refused" | "not-a-substrate" | "could-not-determine"; reason: string };
+
+export interface SubscribeOptions {
+  target: string;
+  instance?: string;
+  id?: string;
+  dryRun?: boolean;
+  fetch?: RootFetcher;
+}
+
+function snapshotDirOf(instanceRoot: string, raw: Record<string, unknown>): string | undefined {
+  const dirs = (raw["directories"] ?? []) as { path: string; graphKinds?: string[]; scope?: "repository" }[];
+  const d = dirs.find((x) => (x.graphKinds ?? []).includes(SNAPSHOT_GRAPH_KIND));
+  return d ? resolve(rootForScope(instanceRoot, d.scope), d.path) : undefined;
+}
+
+export async function subscribe(opts: SubscribeOptions): Promise<SubscribeResult> {
+  const t = parseTarget(opts.target);
+  if (!t.ok) return { ok: false, state: "refused", reason: t.why };
+
+  const instanceRoot = resolve(opts.instance ?? INSTANCE);
+  const declName = findDeclarationFile(instanceRoot);
+  if (!declName) return { ok: false, state: "refused", reason: `${instanceRoot} carries no instance declaration to subscribe` };
+  const declarationFile = join(instanceRoot, declName);
+  const text = readFileSync(declarationFile, "utf8");
+  const raw = JSON.parse(text) as Record<string, unknown>;
+
+  const snapshotDir = snapshotDirOf(instanceRoot, raw);
+  if (!snapshotDir) {
+    return {
+      ok: false,
+      state: "refused",
+      reason:
+        `${declName} declares no directory of graph kind \`${SNAPSHOT_GRAPH_KIND}\` to cache the substrate's declaration in. ` +
+        `Declare one (cat-harness's \`subscriptions\` entry is the pattern) and re-run`,
+    };
+  }
+
+  const verdict = await judgeSubstrate(t.repository, t.ref, opts.fetch ?? gitRootFetcher);
+  if (verdict.state !== "substrate") return { ok: false, state: verdict.state, reason: verdict.reason };
+
+  const id = opts.id ?? verdict.summary.name;
+  const existing = ((raw["subscriptions"] ?? []) as Subscription[]).slice();
+  const at = existing.findIndex((s) => s.id === id);
+  const prior = at >= 0 ? existing[at] : undefined;
+  if (prior && prior.repository !== t.repository) {
+    return {
+      ok: false,
+      state: "refused",
+      reason: `subscription \`${id}\` already names ${prior.repository}; pass \`--id\` to subscribe ${t.repository} under another name`,
+    };
+  }
+  if (prior && prior.ref !== t.ref && (prior.subgraphs?.length || prior.harnesses?.length || (prior.assets && prior.assets.policy !== "none"))) {
+    return {
+      ok: false,
+      state: "refused",
+      reason:
+        `subscription \`${id}\` is pinned at ${prior.ref.slice(0, 12)} and has chosen parts, whose materialisation records are pinned there too. ` +
+        `Moving the pin is \`refresh-materialized\`, not a re-subscribe`,
+    };
+  }
+  // Nothing chosen on a first subscribe; a re-subscribe keeps every choice.
+  const entry: Subscription = prior ? { ...prior, ref: t.ref } : { id, repository: t.repository, ref: t.ref };
+  if (at >= 0) existing[at] = entry;
+  else existing.push(entry);
+
+  const nextRaw = { ...raw, subscriptions: existing };
+  const check = CatHarnessDeclarationSchema.safeParse(
+    Object.fromEntries(Object.entries(nextRaw).filter(([k]) => !k.startsWith("@"))),
+  );
+  if (!check.success) {
+    const issue = check.error.issues[0];
+    return { ok: false, state: "refused", reason: `the declaration would not parse: ${issue?.path.join(".")}: ${issue?.message}` };
+  }
+
+  const snapshot: SubstrateSnapshot = SubstrateSnapshotSchema.parse({
+    $schema: SUBSTRATE_SNAPSHOT_SCHEMA,
+    subscription: id,
+    repository: t.repository,
+    ref: t.ref,
+    file: verdict.file,
+    raw: verdict.raw,
+    fixity: { algorithm: "sha256", digest: createHash("sha256").update(verdict.raw).digest("hex") },
+    summary: verdict.summary,
+    note: "Somebody else's bytes, pinned. Do not edit: re-run `bun run kg:subscribe` at the pin, or refresh.",
+  });
+  const snapshotFile = join(snapshotDir, `${id}.substrate.json`);
+  const snapshotText = `${JSON.stringify(snapshot, null, 2)}\n`;
+  const nextText = prior && prior.ref === t.ref ? text : setTopLevelKey(text, "subscriptions", existing);
+
+  const changed: string[] = [];
+  if (nextText !== text) changed.push(declarationFile);
+  if (!existsSync(snapshotFile) || readFileSync(snapshotFile, "utf8") !== snapshotText) changed.push(snapshotFile);
+  if (!opts.dryRun) {
+    if (nextText !== text) writeFileSync(declarationFile, nextText);
+    if (changed.includes(snapshotFile)) {
+      mkdirSync(snapshotDir, { recursive: true });
+      writeFileSync(snapshotFile, snapshotText);
+    }
+  }
+  return { ok: true, verdict, entry, changed, declarationFile, snapshotFile };
+}
+
+// ── --check: offline, every subscription has a snapshot that still holds ────
+
+
+/**
+ * Offline judgement of one instance's subscriptions and snapshots. Findings,
+ * each a sentence; `[]` is clean. What it holds:
+ *
+ * - every `subscriptions` entry has its snapshot, at the entry's repository
+ *   and pin, and the instance declares somewhere to keep it;
+ * - each snapshot parses, its digest is over its `raw`, and re-judging `raw`
+ *   gives the committed `summary` — so a hand edit to either is caught;
+ * - every CHOSEN subgraph and harness is one the substrate offers;
+ * - no snapshot is orphaned: each belongs to a subscription.
+ */
+export function checkSubscriptions(instanceRoot: string): string[] {
+  const declName = findDeclarationFile(instanceRoot);
+  if (!declName) return [];
+  const raw = JSON.parse(readFileSync(join(instanceRoot, declName), "utf8")) as Record<string, unknown>;
+  const subs = (raw["subscriptions"] ?? []) as Subscription[];
+  const dir = snapshotDirOf(instanceRoot, raw);
+  const out: string[] = [];
+  if (!dir) {
+    if (subs.length) out.push(`${declName}: ${subs.length} subscription(s) and no \`${SNAPSHOT_GRAPH_KIND}\` directory to hold their snapshots`);
+    return out;
+  }
+  const seen = new Set<string>();
+  for (const s of subs) {
+    const file = join(dir, `${s.id}${SNAPSHOT_SUFFIX}`);
+    seen.add(`${s.id}${SNAPSHOT_SUFFIX}`);
+    if (!existsSync(file)) {
+      out.push(`${s.id}: no snapshot at ${relative(instanceRoot, file)} — run \`bun run kg:subscribe ${s.repository}@${s.ref}\``);
+      continue;
+    }
+    const parsed = SubstrateSnapshotSchema.safeParse(JSON.parse(readFileSync(file, "utf8")));
+    if (!parsed.success) {
+      out.push(`${s.id}: the snapshot does not parse: ${parsed.error.issues[0]?.path.join(".")}: ${parsed.error.issues[0]?.message}`);
+      continue;
+    }
+    const snap = parsed.data;
+    if (snap.subscription !== s.id) out.push(`${s.id}: the snapshot says it belongs to \`${snap.subscription}\``);
+    if (snap.repository !== s.repository || snap.ref !== s.ref) {
+      out.push(`${s.id}: the snapshot is of ${snap.repository}@${snap.ref.slice(0, 12)}, the subscription pins ${s.repository}@${s.ref.slice(0, 12)} — re-subscribe`);
+    }
+    if (createHash("sha256").update(snap.raw).digest("hex") !== snap.fixity.digest) {
+      out.push(`${s.id}: the snapshot's bytes do not match their digest — somebody else's bytes were edited in place`);
+    }
+    const again = judgeDeclaration(snap.file, snap.raw);
+    if (again.state !== "substrate") out.push(`${s.id}: the cached declaration no longer judges as a substrate: ${again.reason}`);
+    else if (JSON.stringify(again.summary) !== JSON.stringify(snap.summary)) out.push(`${s.id}: the snapshot's summary is not what its bytes say`);
+    const offered = new Set(snap.summary.subgraphs.map((g) => g.id));
+    for (const g of s.subgraphs ?? []) if (!offered.has(g)) out.push(`${s.id}: chose subgraph \`${g}\`, which the substrate does not declare`);
+    for (const h of s.harnesses ?? []) if (!snap.summary.harnesses.includes(h)) out.push(`${s.id}: chose harness \`${h}\`, which the substrate does not declare`);
+  }
+  if (existsSync(dir)) {
+    for (const f of readdirSync(dir).filter((n) => n.endsWith(SNAPSHOT_SUFFIX)).sort()) {
+      if (!seen.has(f)) out.push(`${relative(instanceRoot, join(dir, f))}: a snapshot no subscription names — orphaned`);
+    }
+  }
+  return out;
+}
+
+function flag(argv: string[], name: string): string | undefined {
+  const i = argv.indexOf(name);
+  return i >= 0 ? argv[i + 1] : undefined;
+}
+
+if (import.meta.main) {
+  const argv = process.argv.slice(2);
+  if (argv.includes("--check")) {
+    const roots = [...new Set([resolve(INSTANCE), ...instanceRootsIn(repoRootFor(INSTANCE)).map((r) => resolve(r))])];
+    let subs = 0;
+    const problems: string[] = [];
+    for (const r of roots) {
+      const f = findDeclarationFile(r);
+      if (!f) continue;
+      subs += ((JSON.parse(readFileSync(join(r, f), "utf8")) as { subscriptions?: unknown[] }).subscriptions ?? []).length;
+      problems.push(...checkSubscriptions(r).map((p) => `${relative(repoRootFor(INSTANCE), r) || "."}: ${p}`));
+    }
+    console.log(`KG subscriptions — ${subs} across ${roots.length} instance(s)`);
+    for (const p of problems) console.error(`  ✗ ${p}`);
+    if (problems.length) process.exit(1);
+    console.log(subs ? "  ✓ every subscription has a snapshot at its pin, and each snapshot holds" : "  ✓ none subscribed — every declaration was read, and no snapshot is orphaned");
+    process.exit(0);
+  }
+  const target = argv.find((a, i) => !a.startsWith("--") && !["--instance", "--id"].includes(argv[i - 1] ?? ""));
+  if (!target) {
+    console.error("usage: bun run kg:subscribe <owner/repo>@<40-char-sha> [--instance <dir>] [--id <id>] [--dry-run]");
+    process.exit(2);
+  }
+  const dryRun = argv.includes("--dry-run");
+  const r = await subscribe({ target, instance: flag(argv, "--instance"), id: flag(argv, "--id"), dryRun });
+  if (!r.ok) {
+    const mark = r.state === "could-not-determine" ? "?" : "✗";
+    console.error(`  ${mark} ${r.state}: ${r.reason}`);
+    process.exit(r.state === "could-not-determine" ? 3 : 1);
+  }
+  console.log(`  ✓ substrate: ${r.verdict.summary.name} — harness(es) ${r.verdict.summary.harnesses.join(", ")}, ${r.verdict.summary.subgraphs.length} subgraph(s), all referenced`);
+  if (r.changed.length === 0) console.log("  ✓ already subscribed at this pin — nothing to write");
+  for (const f of r.changed) console.log(`  ${dryRun ? "would write" : "wrote"} ${relative(process.cwd(), f)}`);
+}

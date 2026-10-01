@@ -198,11 +198,10 @@ nothing renders yet. It is shown rather than omitted: "nothing renders this" and
 
 ### `processes`
 
-6 of 6 published.
+5 of 5 published.
 {: .fa-hx-dim }
 
 - [Bootstrap]({{ '/processes/' | relative_url }})
-- [Bootstrap tools]({{ '/processes/' | relative_url }})
 - [C@T Harness]({{ '/processes/' | relative_url }})
 - [folio-assistant-core]({{ '/processes/' | relative_url }})
 - [large-datasets]({{ '/processes/' | relative_url }})
@@ -244,11 +243,10 @@ nothing renders yet. It is shown rather than omitted: "nothing renders this" and
 
 ### `scenarios`
 
-0 of 3 published.
+0 of 2 published.
 {: .fa-hx-dim }
 
 - Bootstrap — *declared, not published*
-- Bootstrap tools — *declared, not published*
 - C@T Harness — *declared, not published*
 
 ### `schemas`
@@ -275,6 +273,13 @@ nothing renders yet. It is shown rather than omitted: "nothing renders this" and
 - folio-assistant-sci — *declared, not published*
 - [large-datasets]({{ '/cat-harness/docs-auto/index/skills/large-datasets-skills/' | relative_url }})
 - [WHO IRIS]({{ '/cat-harness/docs-auto/index/skills/who-iris-skills/' | relative_url }})
+
+### `substrate-snapshot`
+
+0 of 1 published.
+{: .fa-hx-dim }
+
+- C@T Harness — *declared, not published*
 
 ### `swimlane-glossary`
 

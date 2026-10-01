@@ -24,8 +24,21 @@
       "findings": []
     },
     "skill-ref-resolves": {
-      "result": "pass",
-      "findings": []
+      "result": "fail",
+      "findings": [
+        {
+          "where": "Task_Personas",
+          "detail": "names skill \"l2-dak-authoring\", which resolves to no skill in this instance or anything it `needs`."
+        },
+        {
+          "where": "Task_DataDict",
+          "detail": "names skill \"l2-dak-authoring\", which resolves to no skill in this instance or anything it `needs`."
+        },
+        {
+          "where": "Task_Indicators",
+          "detail": "names skill \"l2-dak-authoring\", which resolves to no skill in this instance or anything it `needs`."
+        }
+      ]
     },
     "skill-servable": {
       "result": "pass",
@@ -39,24 +52,12 @@
           "detail": "names skill \"content-plan\", which no Tool declares `satisfies` for — the step's mechanism is still prose."
         },
         {
-          "where": "Task_Personas",
-          "detail": "names skill \"l2-dak-authoring\", which no Tool declares `satisfies` for — the step's mechanism is still prose."
-        },
-        {
           "where": "Task_Bpmn",
           "detail": "names skill \"bpmn-authoring\", which no Tool declares `satisfies` for — the step's mechanism is still prose."
         },
         {
           "where": "Task_Dmn",
           "detail": "names skill \"dmn-authoring\", which no Tool declares `satisfies` for — the step's mechanism is still prose."
-        },
-        {
-          "where": "Task_DataDict",
-          "detail": "names skill \"l2-dak-authoring\", which no Tool declares `satisfies` for — the step's mechanism is still prose."
-        },
-        {
-          "where": "Task_Indicators",
-          "detail": "names skill \"l2-dak-authoring\", which no Tool declares `satisfies` for — the step's mechanism is still prose."
         },
         {
           "where": "Task_Terminology",
@@ -89,8 +90,13 @@
       "findings": []
     },
     "role-carries-activity-skill": {
-      "result": "pass",
-      "findings": []
+      "result": "fail",
+      "findings": [
+        {
+          "where": "Task_Terminology",
+          "detail": "needs skill \"terminology-management\", but its lane's role \"terminologist\" does not carry it."
+        }
+      ]
     },
     "activity-names-skill": {
       "result": "pass",
@@ -142,8 +148,8 @@
     }
   },
   "totals": {
-    "pass": 15,
-    "fail": 1,
+    "pass": 13,
+    "fail": 3,
     "n/a": 9,
     "unknown": 0
   }
