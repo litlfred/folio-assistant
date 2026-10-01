@@ -166,23 +166,61 @@ describe("diff — list and view what changed between two ASTs", () => {
 });
 
 describe("render — just-the-docs pages for the delta", () => {
+  const page = (pages: string[], prefix: string) => pages.find((p) => p.split("/").pop()!.startsWith(prefix))!;
+
   test("an index that lists, a page per changed resource that shows, and the provisional mark on every page", () => {
     const b = readAst(ast([libA(), libB("1.0.0")], []));
     const h = readAst(ast([libA({ description: "uses {{ site.data.fhir.ig.version }} | and a pipe" }), libB("1.1.0")], []));
     const site = tmp("site-");
     const pages = renderDelta(diffAst(b, h), site, { title: "AST delta" });
-    expect(pages.map((p) => p.slice(site.length + 1)).sort()).toEqual(["Library-A.md", "Library-B.md", "index.md"]);
+    expect(pages.length).toBe(3);
     for (const p of pages) {
       const t = readFileSync(p, "utf-8");
       expect(t).toContain("Provisional — built from a cached AST");
       expect(t).toContain("{% raw %}");
     }
-    const a = readFileSync(join(site, "Library-A.md"), "utf-8");
+    const aPage = page(pages, "Library-A-");
+    const a = readFileSync(aPage, "utf-8");
     expect(a).toMatch(/^---\ntitle: "Library\/A"\nparent: "AST delta"\n---/);
     expect(a).toContain("\\| and a pipe");
     const idx = readFileSync(join(site, "index.md"), "utf-8");
-    expect(idx).toContain("[`http://x/Library/A\\|1.0.0`](Library-A.md)");
+    expect(idx).toContain(`[\`http://x/Library/A\\|1.0.0\`](${aPage.split("/").pop()})`);
     expect(idx).toContain("1.0.0 → 1.1.0");
-    expect(existsSync(join(site, "Library-B.md"))).toBe(true);
+  });
+
+  test("a value carrying {% endraw %} cannot close the raw block or run Liquid", () => {
+    const b = readAst(ast([libA()], []));
+    const h = readAst(ast([libA({ description: "x {% endraw %}{% include evil.html %}{{ site.secret }}" })], []));
+    const pages = renderDelta(diffAst(b, h), tmp("site-"));
+    const t = readFileSync(page(pages, "Library-A-"), "utf-8");
+    const body = t.slice(t.indexOf("{% raw %}") + 9, t.lastIndexOf("{% endraw %}"));
+    expect(body).not.toMatch(/\{%|\{\{|%\}|\}\}/);
+    expect(body).toContain("endraw");
+  });
+
+  test("two resources sharing type/id but not key get two pages", () => {
+    const b = readAst(ast([libA()], []));
+    const twin = { type: "Library", id: "A", json: { url: X + "Other/A", version: "9.9.9", name: "A2" } };
+    const h = readAst(ast([libA({ description: "changed" }), twin], []));
+    const d = diffAst(b, h);
+    const pages = renderDelta({ ...d, resources: [...d.resources, { ...d.resources[0]!, key: X + "Other/A|9.9.9", status: "changed" }] }, tmp("site-"));
+    expect(new Set(pages).size).toBe(pages.length);
+    expect(pages.filter((p) => p.split("/").pop()!.startsWith("Library-A-")).length).toBe(2);
+  });
+});
+
+describe("an incomplete AST is cannot-tell, never a clean diff", () => {
+  test("a missing dependencies.json refuses to read", () => {
+    const dir = ast([pat], []);
+    rmSync(join(dir, "dependencies.json"));
+    expect(() => readAst(dir)).toThrow(/dependencies.json is missing/);
+  });
+
+  test("a missing resource payload fails the diff rather than reading as unchanged", () => {
+    const b = ast([libA()], []);
+    const h = ast([libA()], []);
+    rmSync(join(b, "resources/Library/A.json"));
+    rmSync(join(h, "resources/Library/A.json"));
+    expect(() => diffAst(readAst(b), readAst(h))).toThrow(/missing/);
   });
 });

@@ -304,4 +304,12 @@ describe("file-level users, for the IG AST's incremental plan (bean a9tx)", () =
     // ...and a reference counts as use: Act1 names ExPerson.
     expect(fileUsers(g)["input/fsh/examples/ExPerson.fsh"]).toEqual(["input/fsh/activitydefinitions/Act1.fsh"]);
   });
+
+  test("an Alias-only file names the files that use its aliases, including code uses that make no edge", () => {
+    // aliases.fsh declares $SCT (used by GenderVS in a code) and $LOCAL (used by ExPerson).
+    expect(fileUsers(g)["input/fsh/aliases.fsh"]).toEqual([
+      "input/fsh/examples/ExPerson.fsh",
+      "input/fsh/valuesets/GenderVS.fsh",
+    ]);
+  });
 });

@@ -102,8 +102,16 @@ export function readAst(dir: string): Ast {
   if (!existsSync(mf)) throw new Error(`no AST at ${dir}: manifest.json is missing`);
   const manifest = JSON.parse(readFileSync(mf, "utf-8")) as AstManifest;
   if (manifest.$schema !== "ig-ast/v1") throw new Error(`${mf} is not ig-ast/v1 (found ${String(manifest.$schema)})`);
+  // REQUIRED. A missing dependency document is "cannot tell", never "no
+  // edges": substituting an empty list would let a diff of two incomplete ASTs
+  // report no edge changes as a clean result (Copilot review on #1708).
   const df = join(dir, "dependencies.json");
-  const edges = existsSync(df) ? (JSON.parse(readFileSync(df, "utf-8")).dependencies as AstEdge[]) : [];
+  if (!existsSync(df)) throw new Error(`incomplete AST at ${dir}: dependencies.json is missing`);
+  const deps = JSON.parse(readFileSync(df, "utf-8")) as { $schema?: string; dependencies?: unknown };
+  if (deps.$schema !== "ig-ast-dependencies/v1" || !Array.isArray(deps.dependencies)) {
+    throw new Error(`${df} is not ig-ast-dependencies/v1`);
+  }
+  const edges = deps.dependencies as AstEdge[];
   return { dir, manifest, edges };
 }
 
@@ -355,11 +363,14 @@ function resourceDiff(base: Ast, head: Ast, br: AstResource, hr: AstResource): R
   };
 }
 
+/** Reads a resource payload. A missing or malformed file THROWS: turning it into
+ * `undefined` on both sides would diff as unchanged, a false-clean delta. */
 function readJson(p: string): unknown {
+  if (!existsSync(p)) throw new Error(`AST resource file missing: ${p}`);
   try {
     return JSON.parse(readFileSync(p, "utf-8"));
-  } catch {
-    return undefined;
+  } catch (e) {
+    throw new Error(`AST resource file is not JSON: ${p}: ${(e as Error).message}`);
   }
 }
 
@@ -502,14 +513,22 @@ function provisionalMark(d: AstDelta): string {
   );
 }
 
+/** Type-id plus a short hash of the KEY: two entries sharing type/id but not
+ * canonical|version must not overwrite one page. */
 function pageName(r: ResourceDelta): string {
-  return `${safe(r.resourceType)}-${safe(r.id)}.md`;
+  const h = createHash("sha256").update(r.key).digest("hex").slice(0, 8);
+  return `${safe(r.resourceType)}-${safe(r.id)}-${h}.md`;
 }
 
 const safe = (s: string) => s.replace(/[^A-Za-z0-9._-]/g, "_");
 const short = (s?: string) => (s ? (/^[0-9a-f]{40}$/.test(s) ? s.slice(0, 8) : s) : "unknown");
 /** Markdown-table-safe text. */
-const esc = (s: string) => String(s).replace(/\|/g, "\\|").replace(/\n/g, " ");
+/** Markdown-table-safe AND Liquid-inert text. A word joiner (U+2060) between
+ * `{` and `{`/`%` stops Jekyll parsing a tag or output, including a value that
+ * carries `{% endraw %}` and would otherwise close the page's raw block
+ * (Copilot review on #1708). The text reads the same. */
+const esc = (s: string) => neutralise(String(s)).replace(/\|/g, "\\|").replace(/\n/g, " ");
+export const neutralise = (s: string) => s.replace(/\{(?=[{%])/g, "{\u2060").replace(/%\}/g, "%\u2060}").replace(/\}\}/g, "}\u2060}");
 const yaml = (s: string) => JSON.stringify(s);
 function cell(v: unknown): string {
   if (v === undefined) return "";

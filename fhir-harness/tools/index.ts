@@ -172,7 +172,7 @@ export function tools(baseUrl?: string): ToolDefinition[] {
       title: "Build an IG and write its AST",
       description:
         "Run one ordinary IG Publisher build through `AstPublisher` (a subclass that overrides nothing) and write the AST beside `output/`: one JSON file per resource keyed `canonical|version`, `dependencies.json` (upstream's DependencyAnalyser plus the Library/PlanDefinition/ActivityDefinition/Measure edges it leaves empty), SUSHI's `fsh-index.json`, and a manifest that declares itself a cache and records the inputs it is valid for.",
-      install: { cli: "git clone -b claude/ast-export https://github.com/litlfred/fhir-ig-publisher && cd fhir-ig-publisher/ast-export && mvn -q package" },
+      install: { cli: "git clone -b claude/ast-export https://github.com/litlfred/fhir-ig-publisher && cd fhir-ig-publisher/ast-export && mvn -q package && mvn -q dependency:build-classpath -Dmdep.outputFile=cp.txt" },
       invoke: { shell: "java -cp \"target/classes:$(cat cp.txt)\" org.hl7.fhir.igtools.ast.AstExportCli -ig <ig> [-ast-out <dir>]" },
       io: {
         inputs: [
@@ -199,7 +199,7 @@ export function tools(baseUrl?: string): ToolDefinition[] {
       title: "Plan an incremental IG build from a delta of changed files",
       description:
         "Map a delta (a commit range, a PR's diff, or the staged index) onto a base AST: which resources to rebuild (the forward cone), which to load from cache, which to remove, or a full build and why. Builds nothing.",
-      install: { cli: "git clone -b claude/ast-export https://github.com/litlfred/fhir-ig-publisher && cd fhir-ig-publisher/ast-export && mvn -q package" },
+      install: { cli: "git clone -b claude/ast-export https://github.com/litlfred/fhir-ig-publisher && cd fhir-ig-publisher/ast-export && mvn -q package && mvn -q dependency:build-classpath -Dmdep.outputFile=cp.txt" },
       invoke: { shell: "java -cp \"target/classes:$(cat cp.txt)\" org.hl7.fhir.igtools.ast.AstPlanCli -ast <ast> -ig <ig> [-head <rev> | -staged] [-out plan.json] [-fsh-users <json>]" },
       io: {
         inputs: [
@@ -225,14 +225,15 @@ export function tools(baseUrl?: string): ToolDefinition[] {
       title: "Rebuild only the cone of a change and merge it into the AST",
       description:
         "Write the unchanged part of a base AST as a FHIR package into the package cache, build a temporary IG of only the rebuild set with the stock Publisher, merge the result into a mixed-provenance AST (`builtAt` per resource), and repeat while the merged graph's cone reaches resources that were not rebuilt.",
-      install: { cli: "git clone -b claude/ast-export https://github.com/litlfred/fhir-ig-publisher && cd fhir-ig-publisher/ast-export && mvn -q package" },
-      invoke: { shell: "java -cp \"target/classes:$(cat cp.txt)\" org.hl7.fhir.igtools.ast.IncrementalBuildCli -ast <base> -ig <ig> -out <dir> [-cache-folder <dir>]" },
+      install: { cli: "git clone -b claude/ast-export https://github.com/litlfred/fhir-ig-publisher && cd fhir-ig-publisher/ast-export && mvn -q package && mvn -q dependency:build-classpath -Dmdep.outputFile=cp.txt" },
+      invoke: { shell: "java -cp \"target/classes:$(cat cp.txt)\" org.hl7.fhir.igtools.ast.IncrementalBuildCli -ast <base> -ig <ig> -out <dir> [-cache-folder <dir>] [-fsh-users <json>]" },
       io: {
         inputs: [
           { name: "ast", schema: t("FilesystemPath"), required: true },
           { name: "ig", schema: t("FilesystemPath"), required: true },
           { name: "out", schema: t("FilesystemPath"), required: true },
           { name: "cache-folder", schema: t("FilesystemPath"), required: false, description: "Keeps the `*.ast-cache` packages out of `~/.fhir/packages`." },
+          { name: "fsh-users", schema: t("FilesystemPath"), required: false, description: "`fsh-file-users/v1` from `fsh-cone --file-users`, so a changed RuleSet- or Alias-only file reaches its users instead of forcing a full build." },
         ],
         outputs: [{ name: "rounds", schema: t("Count"), description: "Rounds to a fixed point; exit 3 when it does not converge, which means run a full build." }],
       },
@@ -368,6 +369,49 @@ export function tools(baseUrl?: string): ToolDefinition[] {
         limits:
           "Structural, not FHIR-semantic: a reordered repeating element shows a change at every index. At most 200 differential rows per resource; the rest is counted, never dropped silently.",
         cost: "Reads both ASTs once.",
+      },
+      requires: { runtime: ["bun"], network: false },
+    }),
+
+    defineTool({
+      id: "ig-ast-list",
+      title: "Summarise one IG AST",
+      description:
+        "Counts per resource type, edges in total and resolved inside the IG, edges by origin (upstream's DependencyAnalyser or ast-export's LogicEdges), whether the AST is mixed-provenance and how many resources each revision built, and what the manifest declares provisional.",
+      install: { none: true },
+      invoke: { shell: "bun run fhir-harness/scripts/ig-ast.ts list <ast>" },
+      io: {
+        inputs: [{ name: "ast", schema: t("FilesystemPath"), required: true }],
+        outputs: [{ name: "resources", schema: t("Count") }],
+      },
+      satisfies: ["ig-ast-delta"],
+      selection: {
+        when: "Before diffing or rendering, to see what an AST holds; after a merge, to see how mixed it is.",
+        limits: "Counts only; it does not check the AST against the IG's inputs (`ig-ast-validity` does).",
+        cost: "Reads the manifest and dependency document once.",
+      },
+      requires: { runtime: ["bun"], network: false },
+    }),
+
+    defineTool({
+      id: "ig-ast-render",
+      title: "Render a computed IG AST delta as just-the-docs pages",
+      description:
+        "Write the pages for a delta already computed by `ig-ast-diff --json`: an index that lists, a page per changed resource that shows, every one opening with the provisional mark and with Liquid in values neutralised.",
+      install: { none: true },
+      invoke: { shell: "bun run fhir-harness/scripts/ig-ast.ts render <delta.json> --site <dir>" },
+      io: {
+        inputs: [
+          { name: "delta", schema: t("FilesystemPath"), required: true, description: "`ig-ast-delta/v1`, from `ig-ast-diff --json`." },
+          { name: "site", schema: t("FilesystemPath"), required: true },
+        ],
+        outputs: [{ name: "pages", schema: t("Count") }],
+      },
+      satisfies: ["ig-ast-delta"],
+      selection: {
+        when: "Re-rendering a stored delta without the two ASTs, e.g. into a staging site.",
+        limits: "Shows what the delta records; it cannot add a differential the delta did not compute.",
+        cost: "Milliseconds per page.",
       },
       requires: { runtime: ["bun"], network: false },
     }),
