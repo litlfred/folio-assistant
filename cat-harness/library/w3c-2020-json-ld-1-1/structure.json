@@ -1,0 +1,3054 @@
+{
+ "_schema": "pdf-structure/v1",
+ "doc_id": "w3c-2020-json-ld-1-1",
+ "source": {
+  "file": "w3c-2020-json-ld-1-1.pdf",
+  "sha256": "251b1757427a335239dd0db70f0c191d3bd32d1352aafb3b798bdf6ea801eb15",
+  "bytes": 5056535,
+  "pages": 95,
+  "text_source": "embedded",
+  "extractor": "pymupdf",
+  "mtime": "2026-10-01T06:41:11Z",
+  "mimetype_sniffed": "application/pdf",
+  "mimetype_source": "magic-bytes"
+ },
+ "metadata": {
+  "arxiv": null,
+  "doi": null,
+  "title": "JSON-LD 1.1 This version: Latest published version: Latest editor's draft: Test suite: Implementation report: Previous version: Previous Recommendation: Editors:",
+  "authors_raw": "Gregg Kellogg (v1.0 and v1.1)",
+  "title_lines": [
+   "JSON-LD 1.1",
+   "This version:",
+   "Latest published version:",
+   "Latest editor's draft:",
+   "Test suite:",
+   "Implementation report:",
+   "Previous version:",
+   "Previous Recommendation:",
+   "Editors:"
+  ],
+  "abstract": null,
+  "docinfo": {
+   "Title": "JSON-LD 1.1",
+   "Producer": "Skia/PDF m141",
+   "Creator": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/141.0.0.0 Safari/537.36",
+   "CreationDate": "D:20261001064024+00'00'"
+  }
+ },
+ "toc": [
+  {
+   "level": 1,
+   "title": "JSON-LD 1.1",
+   "page": 1,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 2,
+   "title": "A JSON-based Serialization for Linked Data",
+   "page": 1,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 2,
+   "title": "W3C Recommendation 16 July 2020",
+   "page": 1,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 2,
+   "title": "Abstract",
+   "page": 1,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 2,
+   "title": "Status of This Document",
+   "page": 1,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 3,
+   "title": "Set of Documents",
+   "page": 2,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 2,
+   "title": "Table of Contents",
+   "page": 2,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 2,
+   "title": "Introduction",
+   "page": 4,
+   "source": "outline",
+   "number": "1"
+  },
+  {
+   "level": 3,
+   "title": "How to Read this Document",
+   "page": 4,
+   "source": "outline",
+   "number": "1.1"
+  },
+  {
+   "level": 3,
+   "title": "Contributing",
+   "page": 4,
+   "source": "outline",
+   "number": "1.2"
+  },
+  {
+   "level": 3,
+   "title": "Typographical conventions",
+   "page": 5,
+   "source": "outline",
+   "number": "1.3"
+  },
+  {
+   "level": 4,
+   "title": "Note",
+   "page": 5,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 3,
+   "title": "Terminology",
+   "page": 5,
+   "source": "outline",
+   "number": "1.4"
+  },
+  {
+   "level": 4,
+   "title": "Terms imported from Other Specifications",
+   "page": 5,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 5,
+   "title": "Note",
+   "page": 6,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 4,
+   "title": "JSON-LD Specific Term Definitions",
+   "page": 7,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 3,
+   "title": "Design Goals and Rationale",
+   "page": 8,
+   "source": "outline",
+   "number": "1.5"
+  },
+  {
+   "level": 3,
+   "title": "Data Model Overview",
+   "page": 9,
+   "source": "outline",
+   "number": "1.6"
+  },
+  {
+   "level": 4,
+   "title": "Note",
+   "page": 9,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 3,
+   "title": "Syntax Tokens and Keywords",
+   "page": 9,
+   "source": "outline",
+   "number": "1.7"
+  },
+  {
+   "level": 4,
+   "title": "Note",
+   "page": 10,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 4,
+   "title": "Note",
+   "page": 10,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 4,
+   "title": "Note",
+   "page": 10,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 2,
+   "title": "Conformance",
+   "page": 10,
+   "source": "outline",
+   "number": "2"
+  },
+  {
+   "level": 2,
+   "title": "Basic Concepts",
+   "page": 11,
+   "source": "outline",
+   "number": "3"
+  },
+  {
+   "level": 3,
+   "title": "The Context",
+   "page": 12,
+   "source": "outline",
+   "number": "3.1"
+  },
+  {
+   "level": 4,
+   "title": "Note",
+   "page": 13,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 3,
+   "title": "IRIs",
+   "page": 13,
+   "source": "outline",
+   "number": "3.2"
+  },
+  {
+   "level": 4,
+   "title": "Note",
+   "page": 13,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 4,
+   "title": "Note",
+   "page": 13,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 3,
+   "title": "Node Identifiers",
+   "page": 15,
+   "source": "outline",
+   "number": "3.3"
+  },
+  {
+   "level": 3,
+   "title": "Uses of JSON Objects",
+   "page": 15,
+   "source": "outline",
+   "number": "3.4"
+  },
+  {
+   "level": 3,
+   "title": "Specifying the Type",
+   "page": 16,
+   "source": "outline",
+   "number": "3.5"
+  },
+  {
+   "level": 2,
+   "title": "Advanced Concepts",
+   "page": 17,
+   "source": "outline",
+   "number": "4"
+  },
+  {
+   "level": 3,
+   "title": "Advanced Context Usage",
+   "page": 18,
+   "source": "outline",
+   "number": "4.1"
+  },
+  {
+   "level": 4,
+   "title": "Note",
+   "page": 19,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 4,
+   "title": "Note",
+   "page": 19,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 4,
+   "title": "JSON-LD 1.1 Processing Mode",
+   "page": 19,
+   "source": "outline",
+   "number": "4.1.1"
+  },
+  {
+   "level": 5,
+   "title": "Note",
+   "page": 20,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 4,
+   "title": "Default Vocabulary",
+   "page": 20,
+   "source": "outline",
+   "number": "4.1.2"
+  },
+  {
+   "level": 5,
+   "title": "Note",
+   "page": 21,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 4,
+   "title": "Base IRI",
+   "page": 21,
+   "source": "outline",
+   "number": "4.1.3"
+  },
+  {
+   "level": 4,
+   "title": "Using the Document Base for the Default Vocabulary",
+   "page": 21,
+   "source": "outline",
+   "number": "4.1.4"
+  },
+  {
+   "level": 4,
+   "title": "Compact IRIs",
+   "page": 22,
+   "source": "outline",
+   "number": "4.1.5"
+  },
+  {
+   "level": 5,
+   "title": "Note",
+   "page": 23,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 4,
+   "title": "Aliasing Keywords",
+   "page": 24,
+   "source": "outline",
+   "number": "4.1.6"
+  },
+  {
+   "level": 5,
+   "title": "Note",
+   "page": 24,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 4,
+   "title": "IRI Expansion within a Context",
+   "page": 24,
+   "source": "outline",
+   "number": "4.1.7"
+  },
+  {
+   "level": 5,
+   "title": "Warning",
+   "page": 25,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 5,
+   "title": "Warning",
+   "page": 26,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 4,
+   "title": "Scoped Contexts",
+   "page": 26,
+   "source": "outline",
+   "number": "4.1.8"
+  },
+  {
+   "level": 5,
+   "title": "Note",
+   "page": 27,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 5,
+   "title": "Note",
+   "page": 27,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 5,
+   "title": "Note",
+   "page": 28,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 5,
+   "title": "Note",
+   "page": 28,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 4,
+   "title": "Context Propagation",
+   "page": 28,
+   "source": "outline",
+   "number": "4.1.9"
+  },
+  {
+   "level": 5,
+   "title": "Note",
+   "page": 29,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 4,
+   "title": "Imported Contexts",
+   "page": 29,
+   "source": "outline",
+   "number": "4.1.10"
+  },
+  {
+   "level": 4,
+   "title": "Protected Term Definitions",
+   "page": 30,
+   "source": "outline",
+   "number": "4.1.11"
+  },
+  {
+   "level": 5,
+   "title": "Note",
+   "page": 33,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 5,
+   "title": "Note",
+   "page": 33,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 3,
+   "title": "Describing Values",
+   "page": 33,
+   "source": "outline",
+   "number": "4.2"
+  },
+  {
+   "level": 4,
+   "title": "Typed Values",
+   "page": 33,
+   "source": "outline",
+   "number": "4.2.1"
+  },
+  {
+   "level": 5,
+   "title": "Note",
+   "page": 34,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 5,
+   "title": "Note",
+   "page": 34,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 4,
+   "title": "JSON Literals",
+   "page": 34,
+   "source": "outline",
+   "number": "4.2.2"
+  },
+  {
+   "level": 5,
+   "title": "Warning",
+   "page": 34,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 5,
+   "title": "Note",
+   "page": 35,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 4,
+   "title": "Type Coercion",
+   "page": 35,
+   "source": "outline",
+   "number": "4.2.3"
+  },
+  {
+   "level": 5,
+   "title": "Note",
+   "page": 35,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 5,
+   "title": "Note",
+   "page": 36,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 5,
+   "title": "Note",
+   "page": 37,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 4,
+   "title": "String Internationalization",
+   "page": 37,
+   "source": "outline",
+   "number": "4.2.4"
+  },
+  {
+   "level": 5,
+   "title": "Note",
+   "page": 38,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 5,
+   "title": "4.2.4.1 Base DirectionBase Direction",
+   "page": 39,
+   "source": "outline",
+   "number": "4.2.4.1"
+  },
+  {
+   "level": 6,
+   "title": "Note",
+   "page": 40,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 3,
+   "title": "Value Ordering",
+   "page": 40,
+   "source": "outline",
+   "number": "4.3"
+  },
+  {
+   "level": 4,
+   "title": "Note",
+   "page": 40,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 4,
+   "title": "Note",
+   "page": 41,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 4,
+   "title": "Lists",
+   "page": 41,
+   "source": "outline",
+   "number": "4.3.1"
+  },
+  {
+   "level": 4,
+   "title": "Sets",
+   "page": 42,
+   "source": "outline",
+   "number": "4.3.2"
+  },
+  {
+   "level": 4,
+   "title": "Using @set with @type",
+   "page": 43,
+   "source": "outline",
+   "number": "4.3.3"
+  },
+  {
+   "level": 3,
+   "title": "Nested Properties",
+   "page": 43,
+   "source": "outline",
+   "number": "4.4"
+  },
+  {
+   "level": 4,
+   "title": "Note",
+   "page": 44,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 3,
+   "title": "Embedding",
+   "page": 44,
+   "source": "outline",
+   "number": "4.5"
+  },
+  {
+   "level": 4,
+   "title": "Identifying Blank Nodes",
+   "page": 45,
+   "source": "outline",
+   "number": "4.5.1"
+  },
+  {
+   "level": 3,
+   "title": "Indexed Values",
+   "page": 46,
+   "source": "outline",
+   "number": "4.6"
+  },
+  {
+   "level": 4,
+   "title": "Data Indexing",
+   "page": 46,
+   "source": "outline",
+   "number": "4.6.1"
+  },
+  {
+   "level": 5,
+   "title": "Warning",
+   "page": 47,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 5,
+   "title": "4.6.1.1 Property-based data indexingProperty-based data indexing",
+   "page": 48,
+   "source": "outline",
+   "number": "4.6.1.1"
+  },
+  {
+   "level": 6,
+   "title": "Note",
+   "page": 48,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 4,
+   "title": "Language Indexing",
+   "page": 48,
+   "source": "outline",
+   "number": "4.6.2"
+  },
+  {
+   "level": 4,
+   "title": "Node Identifier Indexing",
+   "page": 49,
+   "source": "outline",
+   "number": "4.6.3"
+  },
+  {
+   "level": 5,
+   "title": "Note",
+   "page": 51,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 4,
+   "title": "Node Type Indexing",
+   "page": 51,
+   "source": "outline",
+   "number": "4.6.4"
+  },
+  {
+   "level": 5,
+   "title": "Note",
+   "page": 52,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 3,
+   "title": "Included Nodes",
+   "page": 52,
+   "source": "outline",
+   "number": "4.7"
+  },
+  {
+   "level": 3,
+   "title": "Reverse Properties",
+   "page": 54,
+   "source": "outline",
+   "number": "4.8"
+  },
+  {
+   "level": 3,
+   "title": "4.9 Named GraphsNamed Graphs",
+   "page": 55,
+   "source": "outline",
+   "number": "4.9"
+  },
+  {
+   "level": 4,
+   "title": "Graph Containers",
+   "page": 56,
+   "source": "outline",
+   "number": "4.9.1"
+  },
+  {
+   "level": 5,
+   "title": "Note",
+   "page": 56,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 5,
+   "title": "Note",
+   "page": 56,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 4,
+   "title": "Named Graph Data Indexing",
+   "page": 56,
+   "source": "outline",
+   "number": "4.9.2"
+  },
+  {
+   "level": 5,
+   "title": "Note",
+   "page": 57,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 4,
+   "title": "Named Graph Indexing",
+   "page": 57,
+   "source": "outline",
+   "number": "4.9.3"
+  },
+  {
+   "level": 5,
+   "title": "Note",
+   "page": 59,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 3,
+   "title": "Loading Documents",
+   "page": 59,
+   "source": "outline",
+   "number": "4.10"
+  },
+  {
+   "level": 2,
+   "title": "Forms of JSON-LD",
+   "page": 59,
+   "source": "outline",
+   "number": "5"
+  },
+  {
+   "level": 3,
+   "title": "Expanded Document Form",
+   "page": 59,
+   "source": "outline",
+   "number": "5.1"
+  },
+  {
+   "level": 3,
+   "title": "Compacted Document Form",
+   "page": 60,
+   "source": "outline",
+   "number": "5.2"
+  },
+  {
+   "level": 4,
+   "title": "Shortening IRIs",
+   "page": 61,
+   "source": "outline",
+   "number": "5.2.1"
+  },
+  {
+   "level": 4,
+   "title": "Representing Values as Strings",
+   "page": 62,
+   "source": "outline",
+   "number": "5.2.2"
+  },
+  {
+   "level": 4,
+   "title": "Representing Lists as Arrays",
+   "page": 63,
+   "source": "outline",
+   "number": "5.2.3"
+  },
+  {
+   "level": 4,
+   "title": "Reversing Node Relationships",
+   "page": 63,
+   "source": "outline",
+   "number": "5.2.4"
+  },
+  {
+   "level": 4,
+   "title": "Indexing Values",
+   "page": 64,
+   "source": "outline",
+   "number": "5.2.5"
+  },
+  {
+   "level": 4,
+   "title": "Normalizing Values as Objects",
+   "page": 65,
+   "source": "outline",
+   "number": "5.2.6"
+  },
+  {
+   "level": 4,
+   "title": "Representing Singular Values as Arrays",
+   "page": 66,
+   "source": "outline",
+   "number": "5.2.7"
+  },
+  {
+   "level": 4,
+   "title": "Term Selection",
+   "page": 66,
+   "source": "outline",
+   "number": "5.2.8"
+  },
+  {
+   "level": 3,
+   "title": "Flattened Document Form",
+   "page": 67,
+   "source": "outline",
+   "number": "5.3"
+  },
+  {
+   "level": 3,
+   "title": "Framed Document Form",
+   "page": 68,
+   "source": "outline",
+   "number": "5.4"
+  },
+  {
+   "level": 2,
+   "title": "Modifying Behavior with Link Relationships",
+   "page": 69,
+   "source": "outline",
+   "number": "6"
+  },
+  {
+   "level": 3,
+   "title": "Interpreting JSON as JSON-LD",
+   "page": 69,
+   "source": "outline",
+   "number": "6.1"
+  },
+  {
+   "level": 3,
+   "title": "Alternate Document Location",
+   "page": 70,
+   "source": "outline",
+   "number": "6.2"
+  },
+  {
+   "level": 2,
+   "title": "7. Embedding JSON-LD in HTML DocumentsEmbedding JSON-LD in HTML Documents",
+   "page": 71,
+   "source": "outline",
+   "number": "7"
+  },
+  {
+   "level": 3,
+   "title": "Note",
+   "page": 71,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 3,
+   "title": "Inheriting base IRI from HTML's base element",
+   "page": 71,
+   "source": "outline",
+   "number": "7.1"
+  },
+  {
+   "level": 3,
+   "title": "Restrictions for contents of JSON-LD script elements",
+   "page": 72,
+   "source": "outline",
+   "number": "7.2"
+  },
+  {
+   "level": 4,
+   "title": "Note",
+   "page": 72,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 3,
+   "title": "Locating a Specific JSON-LD Script Element",
+   "page": 72,
+   "source": "outline",
+   "number": "7.3"
+  },
+  {
+   "level": 2,
+   "title": "Data Model",
+   "page": 73,
+   "source": "outline",
+   "number": "8"
+  },
+  {
+   "level": 3,
+   "title": "Note",
+   "page": 73,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 3,
+   "title": "Note",
+   "page": 73,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 3,
+   "title": "Note",
+   "page": 74,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 2,
+   "title": "JSON-LD Grammar",
+   "page": 75,
+   "source": "outline",
+   "number": "9"
+  },
+  {
+   "level": 3,
+   "title": "Note",
+   "page": 75,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 3,
+   "title": "Terms",
+   "page": 75,
+   "source": "outline",
+   "number": "9.1"
+  },
+  {
+   "level": 3,
+   "title": "Node Objects",
+   "page": 75,
+   "source": "outline",
+   "number": "9.2"
+  },
+  {
+   "level": 3,
+   "title": "Frame Objects",
+   "page": 76,
+   "source": "outline",
+   "number": "9.3"
+  },
+  {
+   "level": 3,
+   "title": "Graph Objects",
+   "page": 76,
+   "source": "outline",
+   "number": "9.4"
+  },
+  {
+   "level": 3,
+   "title": "Value Objects",
+   "page": 76,
+   "source": "outline",
+   "number": "9.5"
+  },
+  {
+   "level": 3,
+   "title": "Value Patterns",
+   "page": 77,
+   "source": "outline",
+   "number": "9.6"
+  },
+  {
+   "level": 3,
+   "title": "Lists and Sets",
+   "page": 77,
+   "source": "outline",
+   "number": "9.7"
+  },
+  {
+   "level": 3,
+   "title": "Language Maps",
+   "page": 77,
+   "source": "outline",
+   "number": "9.8"
+  },
+  {
+   "level": 3,
+   "title": "Index Maps",
+   "page": 77,
+   "source": "outline",
+   "number": "9.9"
+  },
+  {
+   "level": 3,
+   "title": "Property-based Index Maps",
+   "page": 78,
+   "source": "outline",
+   "number": "9.10"
+  },
+  {
+   "level": 3,
+   "title": "Id Maps",
+   "page": 78,
+   "source": "outline",
+   "number": "9.11"
+  },
+  {
+   "level": 3,
+   "title": "Type Maps",
+   "page": 78,
+   "source": "outline",
+   "number": "9.12"
+  },
+  {
+   "level": 3,
+   "title": "Included Blocks",
+   "page": 78,
+   "source": "outline",
+   "number": "9.13"
+  },
+  {
+   "level": 3,
+   "title": "Property Nesting",
+   "page": 78,
+   "source": "outline",
+   "number": "9.14"
+  },
+  {
+   "level": 3,
+   "title": "Context Definitions",
+   "page": 78,
+   "source": "outline",
+   "number": "9.15"
+  },
+  {
+   "level": 4,
+   "title": "Expanded term definition",
+   "page": 79,
+   "source": "outline",
+   "number": "9.15.1"
+  },
+  {
+   "level": 3,
+   "title": "9.16 KeywordsKeywords",
+   "page": 80,
+   "source": "outline",
+   "number": "9.16"
+  },
+  {
+   "level": 2,
+   "title": "Relationship to RDF",
+   "page": 82,
+   "source": "outline",
+   "number": "10"
+  },
+  {
+   "level": 3,
+   "title": "Note",
+   "page": 82,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 3,
+   "title": "Note",
+   "page": 82,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 3,
+   "title": "Serializing/Deserializing RDF",
+   "page": 82,
+   "source": "outline",
+   "number": "10.1"
+  },
+  {
+   "level": 3,
+   "title": "The rdf:JSON Datatype",
+   "page": 83,
+   "source": "outline",
+   "number": "10.2"
+  },
+  {
+   "level": 4,
+   "title": "Issue",
+   "page": 84,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 3,
+   "title": "The i18n Namespace",
+   "page": 84,
+   "source": "outline",
+   "number": "10.3"
+  },
+  {
+   "level": 3,
+   "title": "The rdf:CompoundLiteral class and the rdf:language and rdf:direction properties",
+   "page": 84,
+   "source": "outline",
+   "number": "10.4"
+  },
+  {
+   "level": 2,
+   "title": "Security Considerations",
+   "page": 85,
+   "source": "outline",
+   "number": "11"
+  },
+  {
+   "level": 3,
+   "title": "Note",
+   "page": 85,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 2,
+   "title": "Privacy Considerations",
+   "page": 85,
+   "source": "outline",
+   "number": "12"
+  },
+  {
+   "level": 2,
+   "title": "Internationalization Considerations",
+   "page": 85,
+   "source": "outline",
+   "number": "13"
+  },
+  {
+   "level": 2,
+   "title": "A. Image Descriptions",
+   "page": 85,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 3,
+   "title": "A.1 Linked Data Dataset",
+   "page": 85,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 2,
+   "title": "B. Relationship to Other Linked Data Formats",
+   "page": 86,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 3,
+   "title": "B.1 Turtle",
+   "page": 86,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 4,
+   "title": "B.1.1 Prefix definitions",
+   "page": 86,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 4,
+   "title": "B.1.2 Embedding",
+   "page": 86,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 4,
+   "title": "B.1.3 Conversion of native data types",
+   "page": 87,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 5,
+   "title": "Note",
+   "page": 87,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 4,
+   "title": "B.1.4 Lists",
+   "page": 87,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 3,
+   "title": "B.2 RDFa",
+   "page": 88,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 3,
+   "title": "B.3 Microdata",
+   "page": 88,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 2,
+   "title": "C. IANA Considerations",
+   "page": 89,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 3,
+   "title": "application/ld+json",
+   "page": 89,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 3,
+   "title": "C.1 Examples",
+   "page": 90,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 2,
+   "title": "D. Open Issues",
+   "page": 91,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 3,
+   "title": "Issue 108: Consider context by reference with metadata defer-future-versionprivacy-trackersecurity-tracker",
+   "page": 91,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 3,
+   "title": "Issue 191: Compact IRI expansion support for non-trivial prefix term definitions defer-future-versionspec:enhancement",
+   "page": 91,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 3,
+   "title": "Issue 280: language-maps don't allow separate base direction defer-future-version",
+   "page": 91,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 3,
+   "title": "Issue 328: @default in @context in JSON-LD core syntax defer-future-version",
+   "page": 91,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 3,
+   "title": "Issue 329: Suggestion about `@prefix` defer-future-version",
+   "page": 91,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 3,
+   "title": "Issue 335: Type Coercion / Node Conversion: @coerce keyword or similar defer-future-version",
+   "page": 91,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 2,
+   "title": "E. Changes since 1.0 Recommendation of 16 January 2014",
+   "page": 91,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 2,
+   "title": "F. Changes since JSON-LD Community Group Final Report",
+   "page": 92,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 2,
+   "title": "G. Changes since Candidate Release of 12 December 2019",
+   "page": 92,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 2,
+   "title": "H. Changes since Proposed Recommendation Release of 7 May 2020",
+   "page": 92,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 2,
+   "title": "I. Acknowledgements",
+   "page": 93,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 2,
+   "title": "J. References",
+   "page": 93,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 3,
+   "title": "J.1 Normative references",
+   "page": 93,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 3,
+   "title": "J.2 Informative references",
+   "page": 94,
+   "source": "outline",
+   "number": null
+  }
+ ],
+ "toc_source": "outline",
+ "toc_undetermined_reason": null,
+ "sections": [
+  {
+   "id": "sec-front-matter",
+   "number": null,
+   "title": "Front matter",
+   "level": 1,
+   "page_start": 1,
+   "page_end": 1,
+   "n_chars": 3,
+   "n_words": 1
+  },
+  {
+   "id": "sec-000-json-ld-11",
+   "number": null,
+   "title": "JSON-LD 1.1",
+   "level": 1,
+   "page_start": 1,
+   "page_end": 1,
+   "n_chars": 2380,
+   "n_words": 310
+  },
+  {
+   "id": "sec-001-a-json-based-serialization-for-linked-data",
+   "number": null,
+   "title": "A JSON-based Serialization for Linked Data",
+   "level": 2,
+   "page_start": 1,
+   "page_end": 1,
+   "n_chars": 0,
+   "n_words": 0
+  },
+  {
+   "id": "sec-002-w3c-recommendation-16-july-2020",
+   "number": null,
+   "title": "W3C Recommendation 16 July 2020",
+   "level": 2,
+   "page_start": 1,
+   "page_end": 1,
+   "n_chars": 0,
+   "n_words": 0
+  },
+  {
+   "id": "sec-003-abstract",
+   "number": null,
+   "title": "Abstract",
+   "level": 2,
+   "page_start": 1,
+   "page_end": 1,
+   "n_chars": 0,
+   "n_words": 0
+  },
+  {
+   "id": "sec-004-status-of-this-document",
+   "number": null,
+   "title": "Status of This Document",
+   "level": 2,
+   "page_start": 1,
+   "page_end": 2,
+   "n_chars": 2663,
+   "n_words": 425
+  },
+  {
+   "id": "sec-005-set-of-documents",
+   "number": null,
+   "title": "Set of Documents",
+   "level": 3,
+   "page_start": 2,
+   "page_end": 2,
+   "n_chars": 0,
+   "n_words": 0
+  },
+  {
+   "id": "sec-006-table-of-contents",
+   "number": null,
+   "title": "Table of Contents",
+   "level": 2,
+   "page_start": 2,
+   "page_end": 4,
+   "n_chars": 6251,
+   "n_words": 1002
+  },
+  {
+   "id": "sec-007-14-terminology",
+   "number": "1.4",
+   "title": "Terminology",
+   "level": 3,
+   "page_start": 4,
+   "page_end": 4,
+   "n_chars": 126,
+   "n_words": 18
+  },
+  {
+   "id": "sec-008-1-introduction",
+   "number": "1",
+   "title": "Introduction",
+   "level": 2,
+   "page_start": 4,
+   "page_end": 4,
+   "n_chars": 0,
+   "n_words": 0
+  },
+  {
+   "id": "sec-009-11-how-to-read-this-document",
+   "number": "1.1",
+   "title": "How to Read this Document",
+   "level": 3,
+   "page_start": 4,
+   "page_end": 4,
+   "n_chars": 0,
+   "n_words": 0
+  },
+  {
+   "id": "sec-010-12-contributing",
+   "number": "1.2",
+   "title": "Contributing",
+   "level": 3,
+   "page_start": 4,
+   "page_end": 5,
+   "n_chars": 1916,
+   "n_words": 290
+  },
+  {
+   "id": "sec-011-note",
+   "number": null,
+   "title": "Note",
+   "level": 4,
+   "page_start": 5,
+   "page_end": 5,
+   "n_chars": 1419,
+   "n_words": 229
+  },
+  {
+   "id": "sec-012-13-typographical-conventions",
+   "number": "1.3",
+   "title": "Typographical conventions",
+   "level": 3,
+   "page_start": 5,
+   "page_end": 5,
+   "n_chars": 369,
+   "n_words": 59
+  },
+  {
+   "id": "sec-013-terms-imported-from-other-specifications",
+   "number": null,
+   "title": "Terms imported from Other Specifications",
+   "level": 4,
+   "page_start": 5,
+   "page_end": 7,
+   "n_chars": 10063,
+   "n_words": 1734
+  },
+  {
+   "id": "sec-014-json-ld-specific-term-definitions",
+   "number": null,
+   "title": "JSON-LD Specific Term Definitions",
+   "level": 4,
+   "page_start": 7,
+   "page_end": 8,
+   "n_chars": 5169,
+   "n_words": 904
+  },
+  {
+   "id": "sec-015-15-design-goals-and-rationale",
+   "number": "1.5",
+   "title": "Design Goals and Rationale",
+   "level": 3,
+   "page_start": 8,
+   "page_end": 9,
+   "n_chars": 3300,
+   "n_words": 531
+  },
+  {
+   "id": "sec-016-note",
+   "number": null,
+   "title": "Note",
+   "level": 4,
+   "page_start": 9,
+   "page_end": 9,
+   "n_chars": 1152,
+   "n_words": 188
+  },
+  {
+   "id": "sec-017-16-data-model-overview",
+   "number": "1.6",
+   "title": "Data Model Overview",
+   "level": 3,
+   "page_start": 9,
+   "page_end": 9,
+   "n_chars": 0,
+   "n_words": 0
+  },
+  {
+   "id": "sec-018-17-syntax-tokens-and-keywords",
+   "number": "1.7",
+   "title": "Syntax Tokens and Keywords",
+   "level": 3,
+   "page_start": 9,
+   "page_end": 10,
+   "n_chars": 4732,
+   "n_words": 802
+  },
+  {
+   "id": "sec-019-2-conformance",
+   "number": "2",
+   "title": "Conformance",
+   "level": 2,
+   "page_start": 10,
+   "page_end": 11,
+   "n_chars": 3061,
+   "n_words": 443
+  },
+  {
+   "id": "sec-020-3-basic-concepts",
+   "number": "3",
+   "title": "Basic Concepts",
+   "level": 2,
+   "page_start": 11,
+   "page_end": 12,
+   "n_chars": 2849,
+   "n_words": 466
+  },
+  {
+   "id": "sec-021-32-iris",
+   "number": "3.2",
+   "title": "IRIs",
+   "level": 3,
+   "page_start": 12,
+   "page_end": 12,
+   "n_chars": 459,
+   "n_words": 63
+  },
+  {
+   "id": "sec-022-31-the-context",
+   "number": "3.1",
+   "title": "The Context",
+   "level": 3,
+   "page_start": 12,
+   "page_end": 13,
+   "n_chars": 2163,
+   "n_words": 288
+  },
+  {
+   "id": "sec-023-note",
+   "number": null,
+   "title": "Note",
+   "level": 4,
+   "page_start": 13,
+   "page_end": 15,
+   "n_chars": 8219,
+   "n_words": 1293
+  },
+  {
+   "id": "sec-024-33-node-identifiers",
+   "number": "3.3",
+   "title": "Node Identifiers",
+   "level": 3,
+   "page_start": 15,
+   "page_end": 15,
+   "n_chars": 262,
+   "n_words": 29
+  },
+  {
+   "id": "sec-025-34-uses-of-json-objects",
+   "number": "3.4",
+   "title": "Uses of JSON Objects",
+   "level": 3,
+   "page_start": 15,
+   "page_end": 16,
+   "n_chars": 2415,
+   "n_words": 415
+  },
+  {
+   "id": "sec-026-35-specifying-the-type",
+   "number": "3.5",
+   "title": "Specifying the Type",
+   "level": 3,
+   "page_start": 16,
+   "page_end": 17,
+   "n_chars": 3420,
+   "n_words": 503
+  },
+  {
+   "id": "sec-027-4-advanced-concepts",
+   "number": "4",
+   "title": "Advanced Concepts",
+   "level": 2,
+   "page_start": 17,
+   "page_end": 18,
+   "n_chars": 2305,
+   "n_words": 334
+  },
+  {
+   "id": "sec-028-41-advanced-context-usage",
+   "number": "4.1",
+   "title": "Advanced Context Usage",
+   "level": 3,
+   "page_start": 18,
+   "page_end": 19,
+   "n_chars": 2941,
+   "n_words": 378
+  },
+  {
+   "id": "sec-029-note",
+   "number": null,
+   "title": "Note",
+   "level": 4,
+   "page_start": 19,
+   "page_end": 19,
+   "n_chars": 1673,
+   "n_words": 217
+  },
+  {
+   "id": "sec-030-411-json-ld-11-processing-mode",
+   "number": "4.1.1",
+   "title": "JSON-LD 1.1 Processing Mode",
+   "level": 4,
+   "page_start": 19,
+   "page_end": 20,
+   "n_chars": 779,
+   "n_words": 123
+  },
+  {
+   "id": "sec-031-note",
+   "number": null,
+   "title": "Note",
+   "level": 5,
+   "page_start": 20,
+   "page_end": 20,
+   "n_chars": 1384,
+   "n_words": 235
+  },
+  {
+   "id": "sec-032-412-default-vocabulary",
+   "number": "4.1.2",
+   "title": "Default Vocabulary",
+   "level": 4,
+   "page_start": 20,
+   "page_end": 21,
+   "n_chars": 1217,
+   "n_words": 168
+  },
+  {
+   "id": "sec-033-413-base-iri",
+   "number": "4.1.3",
+   "title": "Base IRI",
+   "level": 4,
+   "page_start": 21,
+   "page_end": 21,
+   "n_chars": 1888,
+   "n_words": 271
+  },
+  {
+   "id": "sec-034-414-using-the-document-base-for-the-default-voca",
+   "number": "4.1.4",
+   "title": "Using the Document Base for the Default Vocabulary",
+   "level": 4,
+   "page_start": 21,
+   "page_end": 22,
+   "n_chars": 1526,
+   "n_words": 246
+  },
+  {
+   "id": "sec-035-415-compact-iris",
+   "number": "4.1.5",
+   "title": "Compact IRIs",
+   "level": 4,
+   "page_start": 22,
+   "page_end": 23,
+   "n_chars": 2040,
+   "n_words": 255
+  },
+  {
+   "id": "sec-036-note",
+   "number": null,
+   "title": "Note",
+   "level": 5,
+   "page_start": 23,
+   "page_end": 24,
+   "n_chars": 4256,
+   "n_words": 593
+  },
+  {
+   "id": "sec-037-416-aliasing-keywords",
+   "number": "4.1.6",
+   "title": "Aliasing Keywords",
+   "level": 4,
+   "page_start": 24,
+   "page_end": 24,
+   "n_chars": 329,
+   "n_words": 32
+  },
+  {
+   "id": "sec-038-417-iri-expansion-within-a-context",
+   "number": "4.1.7",
+   "title": "IRI Expansion within a Context",
+   "level": 4,
+   "page_start": 24,
+   "page_end": 25,
+   "n_chars": 833,
+   "n_words": 133
+  },
+  {
+   "id": "sec-039-warning",
+   "number": null,
+   "title": "Warning",
+   "level": 5,
+   "page_start": 25,
+   "page_end": 26,
+   "n_chars": 3386,
+   "n_words": 449
+  },
+  {
+   "id": "sec-040-418-scoped-contexts",
+   "number": "4.1.8",
+   "title": "Scoped Contexts",
+   "level": 4,
+   "page_start": 26,
+   "page_end": 27,
+   "n_chars": 1531,
+   "n_words": 217
+  },
+  {
+   "id": "sec-041-note",
+   "number": null,
+   "title": "Note",
+   "level": 5,
+   "page_start": 27,
+   "page_end": 28,
+   "n_chars": 2237,
+   "n_words": 266
+  },
+  {
+   "id": "sec-042-note",
+   "number": null,
+   "title": "Note",
+   "level": 5,
+   "page_start": 28,
+   "page_end": 28,
+   "n_chars": 2297,
+   "n_words": 276
+  },
+  {
+   "id": "sec-043-419-context-propagation",
+   "number": "4.1.9",
+   "title": "Context Propagation",
+   "level": 4,
+   "page_start": 28,
+   "page_end": 29,
+   "n_chars": 2573,
+   "n_words": 386
+  },
+  {
+   "id": "sec-044-4110-imported-contexts",
+   "number": "4.1.10",
+   "title": "Imported Contexts",
+   "level": 4,
+   "page_start": 29,
+   "page_end": 30,
+   "n_chars": 2727,
+   "n_words": 297
+  },
+  {
+   "id": "sec-045-4111-protected-term-definitions",
+   "number": "4.1.11",
+   "title": "Protected Term Definitions",
+   "level": 4,
+   "page_start": 30,
+   "page_end": 32,
+   "n_chars": 4673,
+   "n_words": 635
+  },
+  {
+   "id": "sec-046-note",
+   "number": null,
+   "title": "Note",
+   "level": 5,
+   "page_start": 32,
+   "page_end": 33,
+   "n_chars": 1378,
+   "n_words": 133
+  },
+  {
+   "id": "sec-047-note",
+   "number": null,
+   "title": "Note",
+   "level": 5,
+   "page_start": 33,
+   "page_end": 33,
+   "n_chars": 1482,
+   "n_words": 241
+  },
+  {
+   "id": "sec-048-42-describing-values",
+   "number": "4.2",
+   "title": "Describing Values",
+   "level": 3,
+   "page_start": 33,
+   "page_end": 33,
+   "n_chars": 0,
+   "n_words": 0
+  },
+  {
+   "id": "sec-049-421-typed-values",
+   "number": "4.2.1",
+   "title": "Typed Values",
+   "level": 4,
+   "page_start": 33,
+   "page_end": 34,
+   "n_chars": 960,
+   "n_words": 105
+  },
+  {
+   "id": "sec-050-note",
+   "number": null,
+   "title": "Note",
+   "level": 5,
+   "page_start": 34,
+   "page_end": 34,
+   "n_chars": 1641,
+   "n_words": 274
+  },
+  {
+   "id": "sec-051-warning",
+   "number": null,
+   "title": "Warning",
+   "level": 5,
+   "page_start": 34,
+   "page_end": 34,
+   "n_chars": 1733,
+   "n_words": 234
+  },
+  {
+   "id": "sec-052-422-json-literals",
+   "number": "4.2.2",
+   "title": "JSON Literals",
+   "level": 4,
+   "page_start": 34,
+   "page_end": 35,
+   "n_chars": 100,
+   "n_words": 13
+  },
+  {
+   "id": "sec-053-note",
+   "number": null,
+   "title": "Note",
+   "level": 5,
+   "page_start": 35,
+   "page_end": 35,
+   "n_chars": 2579,
+   "n_words": 439
+  },
+  {
+   "id": "sec-054-423-type-coercion",
+   "number": "4.2.3",
+   "title": "Type Coercion",
+   "level": 4,
+   "page_start": 35,
+   "page_end": 36,
+   "n_chars": 1589,
+   "n_words": 195
+  },
+  {
+   "id": "sec-055-note",
+   "number": null,
+   "title": "Note",
+   "level": 5,
+   "page_start": 36,
+   "page_end": 37,
+   "n_chars": 2049,
+   "n_words": 256
+  },
+  {
+   "id": "sec-056-note",
+   "number": null,
+   "title": "Note",
+   "level": 5,
+   "page_start": 37,
+   "page_end": 37,
+   "n_chars": 1078,
+   "n_words": 180
+  },
+  {
+   "id": "sec-057-424-string-internationalization",
+   "number": "4.2.4",
+   "title": "String Internationalization",
+   "level": 4,
+   "page_start": 37,
+   "page_end": 40,
+   "n_chars": 5902,
+   "n_words": 803
+  },
+  {
+   "id": "sec-058-note",
+   "number": null,
+   "title": "Note",
+   "level": 6,
+   "page_start": 40,
+   "page_end": 40,
+   "n_chars": 1401,
+   "n_words": 215
+  },
+  {
+   "id": "sec-059-43-value-ordering",
+   "number": "4.3",
+   "title": "Value Ordering",
+   "level": 3,
+   "page_start": 40,
+   "page_end": 41,
+   "n_chars": 1561,
+   "n_words": 219
+  },
+  {
+   "id": "sec-060-431-lists",
+   "number": "4.3.1",
+   "title": "Lists",
+   "level": 4,
+   "page_start": 41,
+   "page_end": 42,
+   "n_chars": 3734,
+   "n_words": 512
+  },
+  {
+   "id": "sec-061-432-sets",
+   "number": "4.3.2",
+   "title": "Sets",
+   "level": 4,
+   "page_start": 42,
+   "page_end": 43,
+   "n_chars": 1935,
+   "n_words": 280
+  },
+  {
+   "id": "sec-062-433-using-set-with-type",
+   "number": "4.3.3",
+   "title": "Using @set with @type",
+   "level": 4,
+   "page_start": 43,
+   "page_end": 43,
+   "n_chars": 165,
+   "n_words": 19
+  },
+  {
+   "id": "sec-063-44-nested-properties",
+   "number": "4.4",
+   "title": "Nested Properties",
+   "level": 3,
+   "page_start": 43,
+   "page_end": 44,
+   "n_chars": 1078,
+   "n_words": 127
+  },
+  {
+   "id": "sec-064-note",
+   "number": null,
+   "title": "Note",
+   "level": 4,
+   "page_start": 44,
+   "page_end": 44,
+   "n_chars": 1930,
+   "n_words": 185
+  },
+  {
+   "id": "sec-065-45-embedding",
+   "number": "4.5",
+   "title": "Embedding",
+   "level": 3,
+   "page_start": 44,
+   "page_end": 45,
+   "n_chars": 2597,
+   "n_words": 363
+  },
+  {
+   "id": "sec-066-451-identifying-blank-nodes",
+   "number": "4.5.1",
+   "title": "Identifying Blank Nodes",
+   "level": 4,
+   "page_start": 45,
+   "page_end": 46,
+   "n_chars": 1628,
+   "n_words": 269
+  },
+  {
+   "id": "sec-067-461-data-indexing",
+   "number": "4.6.1",
+   "title": "Data Indexing",
+   "level": 4,
+   "page_start": 46,
+   "page_end": 46,
+   "n_chars": 1791,
+   "n_words": 293
+  },
+  {
+   "id": "sec-068-46-indexed-values",
+   "number": "4.6",
+   "title": "Indexed Values",
+   "level": 3,
+   "page_start": 46,
+   "page_end": 47,
+   "n_chars": 952,
+   "n_words": 136
+  },
+  {
+   "id": "sec-069-warning",
+   "number": null,
+   "title": "Warning",
+   "level": 5,
+   "page_start": 47,
+   "page_end": 48,
+   "n_chars": 2371,
+   "n_words": 300
+  },
+  {
+   "id": "sec-070-note",
+   "number": null,
+   "title": "Note",
+   "level": 6,
+   "page_start": 48,
+   "page_end": 48,
+   "n_chars": 1445,
+   "n_words": 182
+  },
+  {
+   "id": "sec-071-462-language-indexing",
+   "number": "4.6.2",
+   "title": "Language Indexing",
+   "level": 4,
+   "page_start": 48,
+   "page_end": 49,
+   "n_chars": 2656,
+   "n_words": 373
+  },
+  {
+   "id": "sec-072-463-node-identifier-indexing",
+   "number": "4.6.3",
+   "title": "Node Identifier Indexing",
+   "level": 4,
+   "page_start": 49,
+   "page_end": 51,
+   "n_chars": 3093,
+   "n_words": 382
+  },
+  {
+   "id": "sec-073-note",
+   "number": null,
+   "title": "Note",
+   "level": 5,
+   "page_start": 51,
+   "page_end": 51,
+   "n_chars": 1152,
+   "n_words": 182
+  },
+  {
+   "id": "sec-074-464-node-type-indexing",
+   "number": "4.6.4",
+   "title": "Node Type Indexing",
+   "level": 4,
+   "page_start": 51,
+   "page_end": 52,
+   "n_chars": 2801,
+   "n_words": 344
+  },
+  {
+   "id": "sec-075-47-included-nodes",
+   "number": "4.7",
+   "title": "Included Nodes",
+   "level": 3,
+   "page_start": 52,
+   "page_end": 54,
+   "n_chars": 4026,
+   "n_words": 436
+  },
+  {
+   "id": "sec-076-48-reverse-properties",
+   "number": "4.8",
+   "title": "Reverse Properties",
+   "level": 3,
+   "page_start": 54,
+   "page_end": 56,
+   "n_chars": 5352,
+   "n_words": 687
+  },
+  {
+   "id": "sec-077-note",
+   "number": null,
+   "title": "Note",
+   "level": 5,
+   "page_start": 56,
+   "page_end": 56,
+   "n_chars": 175,
+   "n_words": 31
+  },
+  {
+   "id": "sec-078-491-graph-containers",
+   "number": "4.9.1",
+   "title": "Graph Containers",
+   "level": 4,
+   "page_start": 56,
+   "page_end": 56,
+   "n_chars": 1554,
+   "n_words": 183
+  },
+  {
+   "id": "sec-079-492-named-graph-data-indexing",
+   "number": "4.9.2",
+   "title": "Named Graph Data Indexing",
+   "level": 4,
+   "page_start": 56,
+   "page_end": 57,
+   "n_chars": 2359,
+   "n_words": 284
+  },
+  {
+   "id": "sec-080-493-named-graph-indexing",
+   "number": "4.9.3",
+   "title": "Named Graph Indexing",
+   "level": 4,
+   "page_start": 57,
+   "page_end": 59,
+   "n_chars": 3057,
+   "n_words": 326
+  },
+  {
+   "id": "sec-081-note",
+   "number": null,
+   "title": "Note",
+   "level": 5,
+   "page_start": 59,
+   "page_end": 59,
+   "n_chars": 1956,
+   "n_words": 292
+  },
+  {
+   "id": "sec-082-51-expanded-document-form",
+   "number": "5.1",
+   "title": "Expanded Document Form",
+   "level": 3,
+   "page_start": 59,
+   "page_end": 59,
+   "n_chars": 188,
+   "n_words": 32
+  },
+  {
+   "id": "sec-083-52-compacted-document-form",
+   "number": "5.2",
+   "title": "Compacted Document Form",
+   "level": 3,
+   "page_start": 59,
+   "page_end": 59,
+   "n_chars": 1230,
+   "n_words": 189
+  },
+  {
+   "id": "sec-084-410-loading-documents",
+   "number": "4.10",
+   "title": "Loading Documents",
+   "level": 3,
+   "page_start": 59,
+   "page_end": 59,
+   "n_chars": 0,
+   "n_words": 0
+  },
+  {
+   "id": "sec-085-5-forms-of-json-ld",
+   "number": "5",
+   "title": "Forms of JSON-LD",
+   "level": 2,
+   "page_start": 59,
+   "page_end": 61,
+   "n_chars": 4292,
+   "n_words": 590
+  },
+  {
+   "id": "sec-086-521-shortening-iris",
+   "number": "5.2.1",
+   "title": "Shortening IRIs",
+   "level": 4,
+   "page_start": 61,
+   "page_end": 62,
+   "n_chars": 2451,
+   "n_words": 311
+  },
+  {
+   "id": "sec-087-522-representing-values-as-strings",
+   "number": "5.2.2",
+   "title": "Representing Values as Strings",
+   "level": 4,
+   "page_start": 62,
+   "page_end": 63,
+   "n_chars": 1939,
+   "n_words": 241
+  },
+  {
+   "id": "sec-088-523-representing-lists-as-arrays",
+   "number": "5.2.3",
+   "title": "Representing Lists as Arrays",
+   "level": 4,
+   "page_start": 63,
+   "page_end": 63,
+   "n_chars": 598,
+   "n_words": 69
+  },
+  {
+   "id": "sec-089-524-reversing-node-relationships",
+   "number": "5.2.4",
+   "title": "Reversing Node Relationships",
+   "level": 4,
+   "page_start": 63,
+   "page_end": 64,
+   "n_chars": 1671,
+   "n_words": 199
+  },
+  {
+   "id": "sec-090-525-indexing-values",
+   "number": "5.2.5",
+   "title": "Indexing Values",
+   "level": 4,
+   "page_start": 64,
+   "page_end": 65,
+   "n_chars": 1438,
+   "n_words": 190
+  },
+  {
+   "id": "sec-091-526-normalizing-values-as-objects",
+   "number": "5.2.6",
+   "title": "Normalizing Values as Objects",
+   "level": 4,
+   "page_start": 65,
+   "page_end": 66,
+   "n_chars": 2444,
+   "n_words": 296
+  },
+  {
+   "id": "sec-092-527-representing-singular-values-as-arrays",
+   "number": "5.2.7",
+   "title": "Representing Singular Values as Arrays",
+   "level": 4,
+   "page_start": 66,
+   "page_end": 66,
+   "n_chars": 943,
+   "n_words": 110
+  },
+  {
+   "id": "sec-093-528-term-selection",
+   "number": "5.2.8",
+   "title": "Term Selection",
+   "level": 4,
+   "page_start": 66,
+   "page_end": 67,
+   "n_chars": 2473,
+   "n_words": 260
+  },
+  {
+   "id": "sec-094-53-flattened-document-form",
+   "number": "5.3",
+   "title": "Flattened Document Form",
+   "level": 3,
+   "page_start": 67,
+   "page_end": 68,
+   "n_chars": 2042,
+   "n_words": 266
+  },
+  {
+   "id": "sec-095-54-framed-document-form",
+   "number": "5.4",
+   "title": "Framed Document Form",
+   "level": 3,
+   "page_start": 68,
+   "page_end": 69,
+   "n_chars": 1530,
+   "n_words": 196
+  },
+  {
+   "id": "sec-096-61-interpreting-json-as-json-ld",
+   "number": "6.1",
+   "title": "Interpreting JSON as JSON-LD",
+   "level": 3,
+   "page_start": 69,
+   "page_end": 69,
+   "n_chars": 439,
+   "n_words": 73
+  },
+  {
+   "id": "sec-097-62-alternate-document-location",
+   "number": "6.2",
+   "title": "Alternate Document Location",
+   "level": 3,
+   "page_start": 69,
+   "page_end": 69,
+   "n_chars": 2142,
+   "n_words": 264
+  },
+  {
+   "id": "sec-098-6-modifying-behavior-with-link-relationships",
+   "number": "6",
+   "title": "Modifying Behavior with Link Relationships",
+   "level": 2,
+   "page_start": 69,
+   "page_end": 70,
+   "n_chars": 1870,
+   "n_words": 272
+  },
+  {
+   "id": "sec-099-note",
+   "number": null,
+   "title": "Note",
+   "level": 3,
+   "page_start": 70,
+   "page_end": 71,
+   "n_chars": 1070,
+   "n_words": 92
+  },
+  {
+   "id": "sec-100-note",
+   "number": null,
+   "title": "Note",
+   "level": 4,
+   "page_start": 71,
+   "page_end": 71,
+   "n_chars": 2212,
+   "n_words": 282
+  },
+  {
+   "id": "sec-101-71-inheriting-base-iri-from-htmls-base-element",
+   "number": "7.1",
+   "title": "Inheriting base IRI from HTML's base element",
+   "level": 3,
+   "page_start": 71,
+   "page_end": 72,
+   "n_chars": 1153,
+   "n_words": 145
+  },
+  {
+   "id": "sec-102-note",
+   "number": null,
+   "title": "Note",
+   "level": 3,
+   "page_start": 72,
+   "page_end": 72,
+   "n_chars": 934,
+   "n_words": 142
+  },
+  {
+   "id": "sec-103-72-restrictions-for-contents-of-json-ld-script-e",
+   "number": "7.2",
+   "title": "Restrictions for contents of JSON-LD script elements",
+   "level": 3,
+   "page_start": 72,
+   "page_end": 72,
+   "n_chars": 324,
+   "n_words": 35
+  },
+  {
+   "id": "sec-104-73-locating-a-specific-json-ld-script-element",
+   "number": "7.3",
+   "title": "Locating a Specific JSON-LD Script Element",
+   "level": 3,
+   "page_start": 72,
+   "page_end": 73,
+   "n_chars": 853,
+   "n_words": 102
+  },
+  {
+   "id": "sec-105-8-data-model",
+   "number": "8",
+   "title": "Data Model",
+   "level": 2,
+   "page_start": 73,
+   "page_end": 73,
+   "n_chars": 769,
+   "n_words": 129
+  },
+  {
+   "id": "sec-106-note",
+   "number": null,
+   "title": "Note",
+   "level": 3,
+   "page_start": 73,
+   "page_end": 74,
+   "n_chars": 3320,
+   "n_words": 552
+  },
+  {
+   "id": "sec-107-note",
+   "number": null,
+   "title": "Note",
+   "level": 3,
+   "page_start": 74,
+   "page_end": 75,
+   "n_chars": 2723,
+   "n_words": 413
+  },
+  {
+   "id": "sec-108-91-terms",
+   "number": "9.1",
+   "title": "Terms",
+   "level": 3,
+   "page_start": 75,
+   "page_end": 75,
+   "n_chars": 1860,
+   "n_words": 347
+  },
+  {
+   "id": "sec-109-92-node-objects",
+   "number": "9.2",
+   "title": "Node Objects",
+   "level": 3,
+   "page_start": 75,
+   "page_end": 75,
+   "n_chars": 0,
+   "n_words": 0
+  },
+  {
+   "id": "sec-110-9-json-ld-grammar",
+   "number": "9",
+   "title": "JSON-LD Grammar",
+   "level": 2,
+   "page_start": 75,
+   "page_end": 76,
+   "n_chars": 2365,
+   "n_words": 425
+  },
+  {
+   "id": "sec-111-93-frame-objects",
+   "number": "9.3",
+   "title": "Frame Objects",
+   "level": 3,
+   "page_start": 76,
+   "page_end": 76,
+   "n_chars": 1426,
+   "n_words": 260
+  },
+  {
+   "id": "sec-112-94-graph-objects",
+   "number": "9.4",
+   "title": "Graph Objects",
+   "level": 3,
+   "page_start": 76,
+   "page_end": 76,
+   "n_chars": 0,
+   "n_words": 0
+  },
+  {
+   "id": "sec-113-95-value-objects",
+   "number": "9.5",
+   "title": "Value Objects",
+   "level": 3,
+   "page_start": 76,
+   "page_end": 77,
+   "n_chars": 3149,
+   "n_words": 569
+  },
+  {
+   "id": "sec-114-98-language-maps",
+   "number": "9.8",
+   "title": "Language Maps",
+   "level": 3,
+   "page_start": 77,
+   "page_end": 77,
+   "n_chars": 372,
+   "n_words": 71
+  },
+  {
+   "id": "sec-115-96-value-patterns",
+   "number": "9.6",
+   "title": "Value Patterns",
+   "level": 3,
+   "page_start": 77,
+   "page_end": 77,
+   "n_chars": 0,
+   "n_words": 0
+  },
+  {
+   "id": "sec-116-97-lists-and-sets",
+   "number": "9.7",
+   "title": "Lists and Sets",
+   "level": 3,
+   "page_start": 77,
+   "page_end": 77,
+   "n_chars": 19,
+   "n_words": 4
+  },
+  {
+   "id": "sec-117-99-index-maps",
+   "number": "9.9",
+   "title": "Index Maps",
+   "level": 3,
+   "page_start": 77,
+   "page_end": 78,
+   "n_chars": 3537,
+   "n_words": 639
+  },
+  {
+   "id": "sec-118-913-included-blocks",
+   "number": "9.13",
+   "title": "Included Blocks",
+   "level": 3,
+   "page_start": 78,
+   "page_end": 78,
+   "n_chars": 490,
+   "n_words": 79
+  },
+  {
+   "id": "sec-119-910-property-based-index-maps",
+   "number": "9.10",
+   "title": "Property-based Index Maps",
+   "level": 3,
+   "page_start": 78,
+   "page_end": 78,
+   "n_chars": 0,
+   "n_words": 0
+  },
+  {
+   "id": "sec-120-911-id-maps",
+   "number": "9.11",
+   "title": "Id Maps",
+   "level": 3,
+   "page_start": 78,
+   "page_end": 78,
+   "n_chars": 0,
+   "n_words": 0
+  },
+  {
+   "id": "sec-121-912-type-maps",
+   "number": "9.12",
+   "title": "Type Maps",
+   "level": 3,
+   "page_start": 78,
+   "page_end": 78,
+   "n_chars": 22,
+   "n_words": 4
+  },
+  {
+   "id": "sec-122-914-property-nesting",
+   "number": "9.14",
+   "title": "Property Nesting",
+   "level": 3,
+   "page_start": 78,
+   "page_end": 78,
+   "n_chars": 0,
+   "n_words": 0
+  },
+  {
+   "id": "sec-123-915-context-definitions",
+   "number": "9.15",
+   "title": "Context Definitions",
+   "level": 3,
+   "page_start": 78,
+   "page_end": 79,
+   "n_chars": 1754,
+   "n_words": 313
+  },
+  {
+   "id": "sec-124-9151-expanded-term-definition",
+   "number": "9.15.1",
+   "title": "Expanded term definition",
+   "level": 4,
+   "page_start": 79,
+   "page_end": 82,
+   "n_chars": 12205,
+   "n_words": 2147
+  },
+  {
+   "id": "sec-125-note",
+   "number": null,
+   "title": "Note",
+   "level": 3,
+   "page_start": 82,
+   "page_end": 82,
+   "n_chars": 2558,
+   "n_words": 402
+  },
+  {
+   "id": "sec-126-10-relationship-to-rdf",
+   "number": "10",
+   "title": "Relationship to RDF",
+   "level": 2,
+   "page_start": 82,
+   "page_end": 82,
+   "n_chars": 0,
+   "n_words": 0
+  },
+  {
+   "id": "sec-127-101-serializingdeserializing-rdf",
+   "number": "10.1",
+   "title": "Serializing/Deserializing RDF",
+   "level": 3,
+   "page_start": 82,
+   "page_end": 83,
+   "n_chars": 936,
+   "n_words": 154
+  },
+  {
+   "id": "sec-128-102-the-rdfjson-datatype",
+   "number": "10.2",
+   "title": "The rdf:JSON Datatype",
+   "level": 3,
+   "page_start": 83,
+   "page_end": 84,
+   "n_chars": 2283,
+   "n_words": 273
+  },
+  {
+   "id": "sec-129-issue",
+   "number": null,
+   "title": "Issue",
+   "level": 4,
+   "page_start": 84,
+   "page_end": 84,
+   "n_chars": 2297,
+   "n_words": 344
+  },
+  {
+   "id": "sec-130-note",
+   "number": null,
+   "title": "Note",
+   "level": 3,
+   "page_start": 84,
+   "page_end": 84,
+   "n_chars": 1233,
+   "n_words": 182
+  },
+  {
+   "id": "sec-131-103-the-i18n-namespace",
+   "number": "10.3",
+   "title": "The i18n Namespace",
+   "level": 3,
+   "page_start": 84,
+   "page_end": 84,
+   "n_chars": 0,
+   "n_words": 0
+  },
+  {
+   "id": "sec-132-104-the-rdfcompoundliteral-class-and-the-rdflang",
+   "number": "10.4",
+   "title": "The rdf:CompoundLiteral class and the rdf:language and rdf:direction properties",
+   "level": 3,
+   "page_start": 84,
+   "page_end": 85,
+   "n_chars": 667,
+   "n_words": 95
+  },
+  {
+   "id": "sec-133-11-security-considerations",
+   "number": "11",
+   "title": "Security Considerations",
+   "level": 2,
+   "page_start": 85,
+   "page_end": 85,
+   "n_chars": 2824,
+   "n_words": 420
+  },
+  {
+   "id": "sec-134-12-privacy-considerations",
+   "number": "12",
+   "title": "Privacy Considerations",
+   "level": 2,
+   "page_start": 85,
+   "page_end": 85,
+   "n_chars": 0,
+   "n_words": 0
+  },
+  {
+   "id": "sec-135-13-internationalization-considerations",
+   "number": "13",
+   "title": "Internationalization Considerations",
+   "level": 2,
+   "page_start": 85,
+   "page_end": 85,
+   "n_chars": 0,
+   "n_words": 0
+  },
+  {
+   "id": "sec-136-a-image-descriptions",
+   "number": null,
+   "title": "A. Image Descriptions",
+   "level": 2,
+   "page_start": 85,
+   "page_end": 85,
+   "n_chars": 0,
+   "n_words": 0
+  },
+  {
+   "id": "sec-137-a1-linked-data-dataset",
+   "number": null,
+   "title": "A.1 Linked Data Dataset",
+   "level": 3,
+   "page_start": 85,
+   "page_end": 86,
+   "n_chars": 1416,
+   "n_words": 197
+  },
+  {
+   "id": "sec-138-b-relationship-to-other-linked-data-formats",
+   "number": null,
+   "title": "B. Relationship to Other Linked Data Formats",
+   "level": 2,
+   "page_start": 86,
+   "page_end": 86,
+   "n_chars": 0,
+   "n_words": 0
+  },
+  {
+   "id": "sec-139-b1-turtle",
+   "number": null,
+   "title": "B.1 Turtle",
+   "level": 3,
+   "page_start": 86,
+   "page_end": 86,
+   "n_chars": 0,
+   "n_words": 0
+  },
+  {
+   "id": "sec-140-b11-prefix-definitions",
+   "number": null,
+   "title": "B.1.1 Prefix definitions",
+   "level": 4,
+   "page_start": 86,
+   "page_end": 86,
+   "n_chars": 506,
+   "n_words": 51
+  },
+  {
+   "id": "sec-141-b12-embedding",
+   "number": null,
+   "title": "B.1.2 Embedding",
+   "level": 4,
+   "page_start": 86,
+   "page_end": 87,
+   "n_chars": 882,
+   "n_words": 117
+  },
+  {
+   "id": "sec-142-note",
+   "number": null,
+   "title": "Note",
+   "level": 5,
+   "page_start": 87,
+   "page_end": 87,
+   "n_chars": 643,
+   "n_words": 83
+  },
+  {
+   "id": "sec-143-b13-conversion-of-native-data-types",
+   "number": null,
+   "title": "B.1.3 Conversion of native data types",
+   "level": 4,
+   "page_start": 87,
+   "page_end": 87,
+   "n_chars": 518,
+   "n_words": 57
+  },
+  {
+   "id": "sec-144-b14-lists",
+   "number": null,
+   "title": "B.1.4 Lists",
+   "level": 4,
+   "page_start": 87,
+   "page_end": 88,
+   "n_chars": 824,
+   "n_words": 107
+  },
+  {
+   "id": "sec-145-b2-rdfa",
+   "number": null,
+   "title": "B.2 RDFa",
+   "level": 3,
+   "page_start": 88,
+   "page_end": 88,
+   "n_chars": 1193,
+   "n_words": 89
+  },
+  {
+   "id": "sec-146-b3-microdata",
+   "number": null,
+   "title": "B.3 Microdata",
+   "level": 3,
+   "page_start": 88,
+   "page_end": 89,
+   "n_chars": 3623,
+   "n_words": 320
+  },
+  {
+   "id": "sec-147-c-iana-considerations",
+   "number": null,
+   "title": "C. IANA Considerations",
+   "level": 2,
+   "page_start": 89,
+   "page_end": 89,
+   "n_chars": 0,
+   "n_words": 0
+  },
+  {
+   "id": "sec-148-applicationldjson",
+   "number": null,
+   "title": "application/ld+json",
+   "level": 3,
+   "page_start": 89,
+   "page_end": 90,
+   "n_chars": 3908,
+   "n_words": 569
+  },
+  {
+   "id": "sec-149-c1-examples",
+   "number": null,
+   "title": "C.1 Examples",
+   "level": 3,
+   "page_start": 90,
+   "page_end": 91,
+   "n_chars": 783,
+   "n_words": 120
+  },
+  {
+   "id": "sec-150-issue-108-consider-context-by-reference-with-met",
+   "number": null,
+   "title": "Issue 108: Consider context by reference with metadata defer-future-versionprivacy-trackersecurity-tracker",
+   "level": 3,
+   "page_start": 91,
+   "page_end": 91,
+   "n_chars": 44,
+   "n_words": 6
+  },
+  {
+   "id": "sec-151-issue-191-compact-iri-expansion-support-for-non",
+   "number": null,
+   "title": "Issue 191: Compact IRI expansion support for non-trivial prefix term definitions defer-future-versionspec:enhancement",
+   "level": 3,
+   "page_start": 91,
+   "page_end": 91,
+   "n_chars": 70,
+   "n_words": 9
+  },
+  {
+   "id": "sec-152-issue-280-language-maps-dont-allow-separate-base",
+   "number": null,
+   "title": "Issue 280: language-maps don't allow separate base direction defer-future-version",
+   "level": 3,
+   "page_start": 91,
+   "page_end": 91,
+   "n_chars": 50,
+   "n_words": 6
+  },
+  {
+   "id": "sec-153-issue-328-default-in-context-in-json-ld-core-syn",
+   "number": null,
+   "title": "Issue 328: @default in @context in JSON-LD core syntax defer-future-version",
+   "level": 3,
+   "page_start": 91,
+   "page_end": 91,
+   "n_chars": 109,
+   "n_words": 15
+  },
+  {
+   "id": "sec-154-issue-335-type-coercion-node-conversion-coerce-k",
+   "number": null,
+   "title": "Issue 335: Type Coercion / Node Conversion: @coerce keyword or similar defer-future-version",
+   "level": 3,
+   "page_start": 91,
+   "page_end": 91,
+   "n_chars": 1017,
+   "n_words": 112
+  },
+  {
+   "id": "sec-155-d-open-issues",
+   "number": null,
+   "title": "D. Open Issues",
+   "level": 2,
+   "page_start": 91,
+   "page_end": 91,
+   "n_chars": 175,
+   "n_words": 9
+  },
+  {
+   "id": "sec-156-e-changes-since-10-recommendation-of-16-january",
+   "number": null,
+   "title": "E. Changes since 1.0 Recommendation of 16 January 2014",
+   "level": 2,
+   "page_start": 91,
+   "page_end": 92,
+   "n_chars": 1849,
+   "n_words": 301
+  },
+  {
+   "id": "sec-157-f-changes-since-json-ld-community-group-final-re",
+   "number": null,
+   "title": "F. Changes since JSON-LD Community Group Final Report",
+   "level": 2,
+   "page_start": 92,
+   "page_end": 92,
+   "n_chars": 3893,
+   "n_words": 618
+  },
+  {
+   "id": "sec-158-g-changes-since-candidate-release-of-12-december",
+   "number": null,
+   "title": "G. Changes since Candidate Release of 12 December 2019",
+   "level": 2,
+   "page_start": 92,
+   "page_end": 92,
+   "n_chars": 0,
+   "n_words": 0
+  },
+  {
+   "id": "sec-159-h-changes-since-proposed-recommendation-release",
+   "number": null,
+   "title": "H. Changes since Proposed Recommendation Release of 7 May 2020",
+   "level": 2,
+   "page_start": 92,
+   "page_end": 93,
+   "n_chars": 3238,
+   "n_words": 409
+  },
+  {
+   "id": "sec-160-i-acknowledgements",
+   "number": null,
+   "title": "I. Acknowledgements",
+   "level": 2,
+   "page_start": 93,
+   "page_end": 93,
+   "n_chars": 0,
+   "n_words": 0
+  },
+  {
+   "id": "sec-161-j-references",
+   "number": null,
+   "title": "J. References",
+   "level": 2,
+   "page_start": 93,
+   "page_end": 93,
+   "n_chars": 0,
+   "n_words": 0
+  },
+  {
+   "id": "sec-162-j1-normative-references",
+   "number": null,
+   "title": "J.1 Normative references",
+   "level": 3,
+   "page_start": 93,
+   "page_end": 94,
+   "n_chars": 4013,
+   "n_words": 450
+  },
+  {
+   "id": "sec-163-j2-informative-references",
+   "number": null,
+   "title": "J.2 Informative references",
+   "level": 3,
+   "page_start": 94,
+   "page_end": 95,
+   "n_chars": 1641,
+   "n_words": 196
+  }
+ ],
+ "diagnostics": {
+  "pages_without_text": 0,
+  "likely_scanned": false,
+  "toc_entries": 193,
+  "toc_inferred_entries": 0,
+  "sections": 165,
+  "chars_total": 285686
+ }
+}
