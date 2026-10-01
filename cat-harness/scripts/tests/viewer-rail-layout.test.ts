@@ -91,3 +91,20 @@ describe("withHeadingIds", () => {
     expect(withHeadingIds(js)).toBe(js);
   });
 });
+
+describe("sibling rows in a group share one indent (owner, 2026-10-01)", () => {
+  // The schemas rail put a label-only `all` one step LEFT of the linked
+  // subjects beside it: `.fa-nav-dead` took the bare pad while a sub-group
+  // link took pad + one glyph step. Same depth must mean same indent.
+  it("a label-only row is indented like a linked one; a kind row stays flush", async () => {
+    const { navbarCss } = await import("../lib/navbar.ts");
+    const css = navbarCss();
+    const pad = (selector: string): string | undefined =>
+      new RegExp(`${selector.replace(/[.]/g, "\\.")}\\{padding-left:(\\d+)px`).exec(css)?.[1];
+    const link = pad(".fa-nav-group .fa-nav-sub a");
+    const dead = pad(".fa-nav-group .fa-nav-sub .fa-nav-dead");
+    expect(link).toBeDefined();
+    expect(dead).toBe(link);
+    expect(css).toContain(".fa-nav-group .fa-nav-sub .fa-nav-dead.fa-nav-kind{");
+  });
+});

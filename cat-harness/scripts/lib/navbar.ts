@@ -476,7 +476,8 @@ export function navbarCss(): string {
     // LINKED row's mark was pushed past the 56px strip at rest while an inert
     // row's was not — measured on a built /who-iris/ page — so the strip showed
     // marks only for the rows that do not open.
-    `.fa-nav-group .fa-nav-sub a.fa-nav-kind{padding-left:${NAV_PAD_PX}px}`,
+    `.fa-nav-group .fa-nav-sub .fa-nav-dead{padding-left:${NAV_PAD_PX + NAV_GLYPH_PX + 8}px}`,
+    `.fa-nav-group .fa-nav-sub a.fa-nav-kind,.fa-nav-group .fa-nav-sub .fa-nav-dead.fa-nav-kind{padding-left:${NAV_PAD_PX}px}`,
     `.fa-nav-tone{border-radius:3px}`,
     // Labels are held invisible at rest rather than merely clipped: clipping
     // is a geometry argument, and a host stylesheet moves where a label starts
@@ -551,7 +552,12 @@ function itemHtml(i: NavItem, c: Ctx): string {
     // assistive technology reads "catalogue, no viewer yet" as one thing
     // rather than as a label and a detached aside.
     const note = i.note ? `<span class="fa-nav-note">${esc(i.note)}</span>` : "";
-    row = `<span class="fa-nav-dead"${d}${title}>${body}${note}</span>`;
+    // A kind row keeps the kind class whether or not it links, so a dead kind
+    // and a live one sit at the same indent (and a dead NON-kind row at the
+    // same indent as its linked siblings — the schemas rail put `all` one
+    // step left of the subjects beside it, owner 2026-10-01).
+    const deadKind = i.glyphPath && !i.icon ? " fa-nav-kind" : "";
+    row = `<span class="fa-nav-dead${deadKind}"${d}${title}>${body}${note}</span>`;
   } else {
     const kind = i.glyphPath && !i.icon ? ' class="fa-nav-kind"' : "";
     row = `<a href="${href(i.href, c)}"${kind}${d}${title}${i.current ? ' aria-current="page"' : ""}>${body}</a>`;
