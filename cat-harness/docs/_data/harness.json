@@ -1705,26 +1705,36 @@
       "reads": "a question mark — no avatar is declared for this kind",
       "genericAvatar": true,
       "instantiated": false,
+      "href": "/processes/",
+      "hrefKind": "viewer",
       "stats": [
         {
           "id": "directories",
           "label": "declared directories",
-          "value": 3
+          "value": 5
         },
         {
           "id": "kinds",
           "label": "declared graph kinds",
-          "value": 3
+          "value": 5
         },
         {
           "id": "views",
           "label": "visualisations you can open",
-          "value": 0
+          "value": 1
         }
       ],
       "visualisations": [
         {
           "kind": "code",
+          "note": "no viewer yet"
+        },
+        {
+          "kind": "processes",
+          "path": "/processes/"
+        },
+        {
+          "kind": "scenarios",
           "note": "no viewer yet"
         },
         {
@@ -1737,8 +1747,9 @@
         }
       ],
       "findings": [
-        "bootstrap-tools: declares 3 graph(s) with no published viewer — code, schemas, skills. Declared and not rendered is a gap, not a dead link.",
-        "bootstrap-tools: no avatar declared for this instance — showing the generic mark."
+        "bootstrap-tools: declares 4 graph(s) with no published viewer — code, scenarios, schemas, skills. Declared and not rendered is a gap, not a dead link.",
+        "bootstrap-tools: no avatar declared for this instance — showing the generic mark.",
+        "bootstrap-tools: has no docs/ of its own, so the tile opens a kind handler's viewer (/processes/) rather than the instance's own themed root."
       ],
       "navbarIcons": [
         "close",
@@ -3240,7 +3251,7 @@
           },
           {
             "key": "directories",
-            "summary": "3: bootstrap-tools-schemas, bootstrap-tools-scripts, bootstrap-tools-skills"
+            "summary": "5: bootstrap-tools-schemas, bootstrap-tools-scripts, bootstrap-tools-skills, bootstrap-tools…"
           },
           {
             "key": "needs",
