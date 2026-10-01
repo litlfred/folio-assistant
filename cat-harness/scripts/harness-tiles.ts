@@ -603,7 +603,15 @@ function tileFor(
 
   const visualisations: HarnessVisualisation[] = [];
   for (const kind of kinds) {
-    const candidates = ownsSite
+    // `ownsSite || isRepoRoot`, as `folioRoot` and `siteDirMount` below
+    // already read it: `state-visualizer` rule 3 says the ROOT instance elides
+    // its own name, and since cmsl step 2 (issue #1694) the root declares the
+    // checkout's state graphs, so `/issue-marks/` is its page too. Testing
+    // `ownsSite` alone rendered that tile "no viewer yet".
+    // …but `/<kind>/` is the SITE OWNER's whenever it declares that kind too:
+    // the root's `uploads` would otherwise open cat-harness's `/uploads/`.
+    const ownerHolds = (owner?.decl.directories ?? []).some((d) => (d.graphKinds ?? []).includes(kind));
+    const candidates = ownsSite || (isRepoRoot && !ownerHolds)
       ? [ownStatePage(kind), subjectPage(handler, kind, decl.name)]
       : [subjectPage(handler, kind, decl.name)];
     // `index.md` COUNTS TOO (issue #1164): Jekyll builds it to the same URL,
@@ -1165,7 +1173,12 @@ export function harnessTiles(
     if (!read) continue;
     // Viewers RESOLVED from the pages (#1168 B7a-2b): a directory no longer
     // names its viewer, the page names the directories it draws.
-    const decl = { ...read, directories: withViewers(read.directories ?? [], dir) };
+    // The REPOSITORY root passed explicitly: its default, `repoRootFor(dir)`, is
+    // "the parent directory", which for the checkout root's own declaration is
+    // the directory ABOVE the repository. Since cmsl step 2 (issue #1694) that
+    // declaration holds `beans`/`todos`/`issue-marks`, so their dashboards went
+    // undiscovered and the tiles rendered "no viewer yet".
+    const decl = { ...read, directories: withViewers(read.directories ?? [], dir, repoRoot) };
     decls.push({ dir, decl });
   }
 

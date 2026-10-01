@@ -38,7 +38,7 @@ import { join } from "node:path";
 
 import { z } from "zod";
 
-import { resolveDirectories } from "./cat-harness.ts";
+import { checkoutResolvedDirectories } from "./cat-harness.ts";
 import { BeanIdSchema } from "./tool-types.ts";
 import { ProcessElementIdSchema } from "./process-element-id.ts";
 
@@ -63,9 +63,9 @@ export const LOG_NODE = "logs";
  */
 export function logDirs(root: string): string[] {
   try {
-    return resolveDirectories([{ name: "(local)", root, own: true }])
-      .filter((d) => d.graphKinds.includes("fsh-guts"))
-      .map((d) => join(d.absPath, LOG_NODE));
+    // Own, else the checkout's: `fsh-guts/` is declared by the root instance
+    // since cmsl step 2 (bean `cmsl`, issue #1694).
+    return checkoutResolvedDirectories(root, "fsh-guts").map((d) => join(d.absPath, LOG_NODE));
   } catch {
     return [];
   }
