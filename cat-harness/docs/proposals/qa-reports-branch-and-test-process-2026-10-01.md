@@ -317,6 +317,17 @@ medium size guideline. A larger swarm would be asked for separately
 
 ## 5. Decisions for the owner
 
+> **Ruled by the owner, 2026-10-01:**
+>
+> - **D1 (a):** the orphan `qa-reports` branch, subject to the `3ds9` spike.
+> - **D2 (a):** attestations stay on `main` in `test/attestations/`.
+> - **D4 (b) "right away":** the moved files are removed from `main` as soon as
+>   every reader is migrated and the branch holds a hash-verified copy. No
+>   7-day soak. This is the owner's explicit go for bean `5hox`.
+> - **D3 and D5 were not asked.** They proceed on their defaults: (a) and (a).
+>
+> The options below are kept as the record of what was weighed.
+
 The recommended option is listed first in each. **The default applies if no
 answer comes, and the work proceeds on it.**
 
