@@ -16,6 +16,22 @@ description: "fr: 30/38 — termes rédigés entièrement traduits"
 
 **30 / 38** termes rédigés entièrement traduits. Ces traductions ne sont pas officielles : rédigées par un agent, elles n'ont pas encore été validées par une personne (issue #206). Le texte marqué non traduit est le texte source, affiché plutôt que masqué.
 
+## Already somebody else's concept? _(non traduit)_
+
+Extracted candidates are minted from this repository's own assets and are not, by themselves, checked against any vocabulary. `check:term-mapping` asks whether each already exists as a concept somebody is authoritative for — SKOS for what a term MEANS, FHIR for a clinical code's operational semantics — and the two are separate questions with separate answers. _(non traduit)_
+
+The table's labels are in the source language: it reports counts per scheme, computed by the gate rather than authored here. _(non traduit)_
+
+<table class="fa-gloss-mapping">
+<caption>Already somebody else's concept? — <code>check:term-mapping</code>, bean <code>7wou</code></caption>
+<thead><tr><th>target</th><th>mapped</th><th>unmapped</th><th>undetermined</th><th>why undetermined</th></tr></thead>
+<tbody><tr><td><code>fhir</code></td><td>0</td><td>2725</td><td>0</td><td>—</td></tr><tr><td><code>skos</code></td><td>0</td><td>2725</td><td>0</td><td>—</td></tr></tbody>
+</table>
+<p class="fa-gloss-mapping-note"><strong>Undetermined is never “no match”.</strong> 
+A vocabulary that could not be reached has said nothing, and the column above keeps that 
+apart from a checked miss. The counts are reported and not graded: an unmapped candidate may 
+be a term this corpus is right to coin.</p>
+
 ## Pages
 
 Les candidats extraits ne sont pas traduits : ils sont repris tels quels des ressources du graphe de connaissances et ne sont pas révisés. Leurs pages sont dans la langue source. [Le glossaire dans la langue source, avec tous les termes extraits]({{ '/glossary/' | relative_url }}).
