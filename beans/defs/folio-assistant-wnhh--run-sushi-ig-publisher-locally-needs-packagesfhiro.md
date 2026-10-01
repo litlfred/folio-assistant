@@ -25,3 +25,24 @@ For a session whose environment allows **`packages.fhir.org`** and **`tx.fhir.or
 - [ ] a local Publisher render of smart-trust `main` matches its `gh-pages`, with the comparison method and result recorded
 - [ ] the AST fork builds and emits smart-trust's AST, or the blocker is recorded
 - [ ] smart-base re-ingested, and its DAK view pages checked in Chromium against its `gh-pages`
+
+## 2026-10-01: the fhir-ast cache tried from the jut3 session (no build access)
+
+`fhir-harness/scripts/ig-cache.sh`, from `agy/wnhh-sushi-publisher-local` at
+`e0e4dc2d`, was run against `/home/user/smart-trust` from a container with
+neither `packages.fhir.org` nor `tx.fhir.org`:
+- `status`: cache ABSENT.
+- `restore`: *"cache branch 'fhir-ast/smart.who.int.trust' not found on
+  origin"*. **The AST that branch dumped (678 resources) was never seeded:**
+  no `fhir-ast/*` branch exists on `origin`. Running
+  `ig-cache.sh seed --push` from the session that holds the dump is the step
+  that makes it reusable by every other session.
+- `doctor`: SUSHI v3.20.1 is present; the Publisher jar is missing from
+  `~/.fhir`; `packages.fhir.org` and `tx.fhir.org` are unreachable. A session
+  like this one can **restore** an AST but cannot **build** one.
+
+Format, as the consumer reads it (`fhir-harness/scripts/ig-ast.ts`): the AST
+is **JSON**, not XML. It uses three families, `ig-ast/v1` (one entry per
+resource, carrying the resource's FHIR JSON), `ig-ast-dependencies/v1` and
+`ig-ast-plan/v1`. They are declared only as TypeScript interfaces: no Zod,
+no JSON Schema, no JSON-LD context.
