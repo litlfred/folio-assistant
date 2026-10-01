@@ -13,26 +13,10 @@
 
   <style id="jtd-nav-activation">
   
-
-    
-    .site-nav > ul.nav-list:first-child > li:not(:nth-child(54)) > a,
-    .site-nav > ul.nav-list:first-child > li > ul > li a {
+    .site-nav ul li a {
       background-image: none;
     }
 
-    .site-nav > ul.nav-list:not(:first-child) a,
-    .site-nav li.external a {
-      background-image: none;
-    }
-
-    .site-nav > ul.nav-list:first-child > li:nth-child(54) > a {
-      font-weight: 600;
-      text-decoration: none;
-    }.site-nav > ul.nav-list:first-child > li:nth-child(54) > button svg {
-      transform: rotate(-90deg);
-    }.site-nav > ul.nav-list:first-child > li.nav-list-item:nth-child(54) > ul.nav-list {
-      display: block;
-    }
   </style>
 
   
@@ -50,16 +34,16 @@
 
 
   <!-- Begin Jekyll SEO tag v2.8.0 -->
-<title>Latent semantic indexes | folio-assistant</title>
+<title>Merge the base branch in | folio-assistant</title>
 <meta name="generator" content="Jekyll v3.10.0" />
-<meta property="og:title" content="Latent semantic indexes" />
+<meta property="og:title" content="Merge the base branch in" />
 <meta property="og:locale" content="en_US" />
-<meta name="description" content="Every committed LSI index over a declared prose graph — its latent dimensions, its findings, and which graphs still need one." />
-<meta property="og:description" content="Every committed LSI index over a declared prose graph — its latent dimensions, its findings, and which graphs still need one." />
+<meta name="description" content="Content-agnostic agent skills framework — author scientific papers, WHO SMART Guidelines, and FHIR Implementation Guides with an LLM, an MCP server, and a typed content-object model." />
+<meta property="og:description" content="Content-agnostic agent skills framework — author scientific papers, WHO SMART Guidelines, and FHIR Implementation Guides with an LLM, an MCP server, and a typed content-object model." />
 <meta property="og:site_name" content="folio-assistant" />
 <meta property="og:type" content="website" />
 <meta name="twitter:card" content="summary" />
-<meta property="twitter:title" content="Latent semantic indexes" />
+<meta property="twitter:title" content="Merge the base branch in" />
 <!-- End Jekyll SEO tag -->
 
 
@@ -810,657 +794,173 @@ window.addEventListener('resize',measure);window.addEventListener('load',measure
       <div id="main-content" class="main-content">
         <main>
           
-            <style>
-.lv-grid{display:flex;flex-wrap:wrap;gap:.75rem;margin:1rem 0}
-.lv-stat{flex:1 1 8rem;border:1px solid rgba(128,128,128,.35);border-radius:6px;padding:.5rem .7rem}
-.lv-stat b{display:block;font-size:1.25rem;line-height:1.2}
-.lv-stat span{font-size:.75rem;opacity:.75}
-.lv-pass{color:#5fd3b8;font-weight:600}.lv-fail{color:#ff9486;font-weight:600}.lv-na{opacity:.8}
-</style>
-
-<p>A <strong>latent semantic index</strong> places every unit of a prose graph — a library
-section, a skill, a bean — in a space built from which words occur
-together, so units that discuss the same thing in <em>different words</em> sit
-close. It is a retrieval aid: every neighbour and finding below is a
-<strong>proposal</strong>, never a relation the graph asserts.</p>
-
-<p>The method is <a href="../methodologies/">Latent Semantic Indexing</a> (node <code class="language-plaintext highlighter-rouge">lsi</code>), with
-<a href="../methodologies/">correspondence analysis</a> (node <code class="language-plaintext highlighter-rouge">correspondence-analysis</code>) as its parallel track;
-how to build, query and audit an index is the skill <code class="language-plaintext highlighter-rouge">lsi-indexing</code>.</p>
-
-<div class="lv-grid">
-<div class="lv-stat"><b>5</b><span>committed indexes</span></div>
-<div class="lv-stat"><b>1668</b><span>units indexed</span></div>
-<div class="lv-stat"><b>6</b><span>graphs that need an index and lack a fresh one</span></div>
-</div>
-<h2 id="which-graphs-need-an-index">
-  
-  
-    <a href="#which-graphs-need-an-index" class="anchor-heading" aria-labelledby="which-graphs-need-an-index"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Which graphs need an index
-  
-  
-</h2>
-    
-
-<p>A graph needs one at 100 units and 20,000 words — a house threshold, with its
-basis in <code class="language-plaintext highlighter-rouge">scripts/lsi.ts</code>. Below it a graph is <strong>not judged</strong>, which is not
-the same as fine. The same verdict is <code class="language-plaintext highlighter-rouge">kg:audit</code>’s <code class="language-plaintext highlighter-rouge">tool-downstream-fresh</code> for the <code class="language-plaintext highlighter-rouge">lsi-index</code> Tool.</p>
-
-<div class="table-wrapper"><table>
-  <thead>
-    <tr>
-      <th>graph</th>
-      <th>verdict</th>
-      <th>detail</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td><code class="language-plaintext highlighter-rouge">agent-skills/library</code></td>
-      <td><span class="lv-fail">fail</span></td>
-      <td>no successful run recorded — re-run <code class="language-plaintext highlighter-rouge">bun run lsi index --instance agent-skills --graph library</code></td>
-    </tr>
-    <tr>
-      <td><code class="language-plaintext highlighter-rouge">bootstrap-tools/bootstrap-tools-skills</code></td>
-      <td><span class="lv-na">n/a</span></td>
-      <td>below the need-an-index threshold — not judged</td>
-    </tr>
-    <tr>
-      <td><code class="language-plaintext highlighter-rouge">bootstrap/skills</code></td>
-      <td><span class="lv-na">n/a</span></td>
-      <td>below the need-an-index threshold — not judged</td>
-    </tr>
-    <tr>
-      <td><code class="language-plaintext highlighter-rouge">cat-harness/docs</code></td>
-      <td><span class="lv-fail">fail</span></td>
-      <td>needs an LSI index and has none — run <code class="language-plaintext highlighter-rouge">bun run lsi index --instance cat-harness --graph docs</code></td>
-    </tr>
-    <tr>
-      <td><code class="language-plaintext highlighter-rouge">cat-harness/folio</code></td>
-      <td><span class="lv-na">n/a</span></td>
-      <td>below the need-an-index threshold — not judged</td>
-    </tr>
-    <tr>
-      <td><code class="language-plaintext highlighter-rouge">cat-harness/library</code></td>
-      <td><span class="lv-fail">fail</span></td>
-      <td>stale — re-run <code class="language-plaintext highlighter-rouge">bun run lsi index --instance cat-harness --graph library</code></td>
-    </tr>
-    <tr>
-      <td><code class="language-plaintext highlighter-rouge">cat-harness/methodologies</code></td>
-      <td><span class="lv-na">n/a</span></td>
-      <td>below the need-an-index threshold — not judged</td>
-    </tr>
-    <tr>
-      <td><code class="language-plaintext highlighter-rouge">cat-harness/policies</code></td>
-      <td><span class="lv-na">n/a</span></td>
-      <td>below the need-an-index threshold — not judged</td>
-    </tr>
-    <tr>
-      <td><code class="language-plaintext highlighter-rouge">cat-harness/skills</code></td>
-      <td><span class="lv-pass">pass</span></td>
-      <td>fresh</td>
-    </tr>
-    <tr>
-      <td><code class="language-plaintext highlighter-rouge">fhir-harness/fhir-ig-skills</code></td>
-      <td><span class="lv-na">n/a</span></td>
-      <td>below the need-an-index threshold — not judged</td>
-    </tr>
-    <tr>
-      <td><code class="language-plaintext highlighter-rouge">fhir-harness/library</code></td>
-      <td><span class="lv-na">n/a</span></td>
-      <td>below the need-an-index threshold — not judged</td>
-    </tr>
-    <tr>
-      <td><code class="language-plaintext highlighter-rouge">folio-assistant-core/core-library</code></td>
-      <td><span class="lv-na">n/a</span></td>
-      <td>below the need-an-index threshold — not judged</td>
-    </tr>
-    <tr>
-      <td><code class="language-plaintext highlighter-rouge">folio-assistant-core/core-methodologies</code></td>
-      <td><span class="lv-na">n/a</span></td>
-      <td>below the need-an-index threshold — not judged</td>
-    </tr>
-    <tr>
-      <td><code class="language-plaintext highlighter-rouge">folio-assistant-core/core-skills</code></td>
-      <td><span class="lv-na">n/a</span></td>
-      <td>below the need-an-index threshold — not judged</td>
-    </tr>
-    <tr>
-      <td><code class="language-plaintext highlighter-rouge">folio-assistant-core/folios</code></td>
-      <td><span class="lv-na">n/a</span></td>
-      <td>below the need-an-index threshold — not judged</td>
-    </tr>
-    <tr>
-      <td><code class="language-plaintext highlighter-rouge">folio-assistant-core/glossary</code></td>
-      <td><span class="lv-na">n/a</span></td>
-      <td>below the need-an-index threshold — not judged</td>
-    </tr>
-    <tr>
-      <td><code class="language-plaintext highlighter-rouge">folio-assistant-sci/library</code></td>
-      <td><span class="lv-na">n/a</span></td>
-      <td>below the need-an-index threshold — not judged</td>
-    </tr>
-    <tr>
-      <td><code class="language-plaintext highlighter-rouge">folio-assistant-sci/sci-methodologies</code></td>
-      <td><span class="lv-na">n/a</span></td>
-      <td>below the need-an-index threshold — not judged</td>
-    </tr>
-    <tr>
-      <td><code class="language-plaintext highlighter-rouge">folio-assistant/beans</code></td>
-      <td><span class="lv-na">n/a</span></td>
-      <td>state graph — indexed on demand, never committed</td>
-    </tr>
-    <tr>
-      <td><code class="language-plaintext highlighter-rouge">folio-assistant/memory</code></td>
-      <td><span class="lv-na">n/a</span></td>
-      <td>below the need-an-index threshold — not judged</td>
-    </tr>
-    <tr>
-      <td><code class="language-plaintext highlighter-rouge">folio-assistant/root-docs</code></td>
-      <td><span class="lv-na">n/a</span></td>
-      <td>below the need-an-index threshold — not judged</td>
-    </tr>
-    <tr>
-      <td><code class="language-plaintext highlighter-rouge">large-datasets/large-datasets-skills</code></td>
-      <td><span class="lv-na">n/a</span></td>
-      <td>below the need-an-index threshold — not judged</td>
-    </tr>
-    <tr>
-      <td><code class="language-plaintext highlighter-rouge">smart-base/library</code></td>
-      <td><span class="lv-fail">fail</span></td>
-      <td>no successful run recorded — re-run <code class="language-plaintext highlighter-rouge">bun run lsi index --instance smart-base --graph library</code></td>
-    </tr>
-    <tr>
-      <td><code class="language-plaintext highlighter-rouge">smart-base/methodologies</code></td>
-      <td><span class="lv-na">n/a</span></td>
-      <td>below the need-an-index threshold — not judged</td>
-    </tr>
-    <tr>
-      <td><code class="language-plaintext highlighter-rouge">smart-base/smart-base-docs</code></td>
-      <td><span class="lv-fail">fail</span></td>
-      <td>needs an LSI index and has none — run <code class="language-plaintext highlighter-rouge">bun run lsi index --instance smart-base --graph smart-base-docs</code></td>
-    </tr>
-    <tr>
-      <td><code class="language-plaintext highlighter-rouge">smart-trust/smart-trust-docs</code></td>
-      <td><span class="lv-fail">fail</span></td>
-      <td>needs an LSI index and has none — run <code class="language-plaintext highlighter-rouge">bun run lsi index --instance smart-trust --graph smart-trust-docs</code></td>
-    </tr>
-    <tr>
-      <td><code class="language-plaintext highlighter-rouge">who-iris/library</code></td>
-      <td><span class="lv-pass">pass</span></td>
-      <td>fresh</td>
-    </tr>
-    <tr>
-      <td><code class="language-plaintext highlighter-rouge">who-iris/who-iris-docs</code></td>
-      <td><span class="lv-na">n/a</span></td>
-      <td>below the need-an-index threshold — not judged</td>
-    </tr>
-    <tr>
-      <td><code class="language-plaintext highlighter-rouge">who-iris/who-iris-site</code></td>
-      <td><span class="lv-na">n/a</span></td>
-      <td>below the need-an-index threshold — not judged</td>
-    </tr>
-    <tr>
-      <td><code class="language-plaintext highlighter-rouge">who-iris/who-iris-skills</code></td>
-      <td><span class="lv-na">n/a</span></td>
-      <td>below the need-an-index threshold — not judged</td>
-    </tr>
-    <tr>
-      <td><code class="language-plaintext highlighter-rouge">who-style-guide/glossary</code></td>
-      <td><span class="lv-na">n/a</span></td>
-      <td>below the need-an-index threshold — not judged</td>
-    </tr>
-  </tbody>
-</table></div>
-<h2 id="agent-skills--library">
-  
-  
-    <a href="#agent-skills--library" class="anchor-heading" aria-labelledby="agent-skills--library"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> agent-skills / library
-  
-  
-</h2>
-    
-
-<p><strong>174</strong> units · <strong>2605</strong> terms · k = <strong>100</strong> · retains <strong>88.5 %</strong> of the weighted matrix · weighting <code class="language-plaintext highlighter-rouge">log-entropy</code> · sidecar <code class="language-plaintext highlighter-rouge">cat-harness/test/results/lsi/agent-skills/library.lsi.json</code></p>
-
-<blockquote>
-  <p>Dimension 1 has <strong>no negative pole</strong>: it most likely measures unit length and term frequency (a margin), not a theme. Read the themes from dimension 2 on.</p>
+            <blockquote class="note">
+  <p>Generated from <code class="language-plaintext highlighter-rouge">cat-harness/processes/merge-base.bpmn</code> by <code class="language-plaintext highlighter-rouge">gen-processes-viz.ts</code> — do not edit here. <a href="index.html">All processes</a></p>
 </blockquote>
-
-<p>Each dimension is a <strong>contrast</strong> between two poles, shown by their highest-loading terms. It is not named here: naming it is a reader’s act.</p>
-
-<div class="table-wrapper"><table>
-  <thead>
-    <tr>
-      <th>dim</th>
-      <th>σ</th>
-      <th>one pole</th>
-      <th>the other pole</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>1</td>
-      <td>18.54</td>
-      <td>gemini, task, office, science, model, industrial, agent, openhands</td>
-      <td><em>(none)</em></td>
-    </tr>
-    <tr>
-      <td>2</td>
-      <td>15.41</td>
-      <td>office, industrial, science, finance, media, gpt, opus, deepseek</td>
-      <td>defects, defect, safety, routing, body, detected, checks, description</td>
-    </tr>
-    <tr>
-      <td>3</td>
-      <td>13.21</td>
-      <td>arxiv, wang, zhou, language, yang, yao, jiang, liu</td>
-      <td>defects, defect, routing, office, industrial, safety, detected, body</td>
-    </tr>
-    <tr>
-      <td>4</td>
-      <td>12.16</td>
-      <td>openhands, gemini, gpt, configurations, opus, flash, condition, pro</td>
-      <td>defects, defect, arxiv, safety, liu, routing, coding, zhang</td>
-    </tr>
-    <tr>
-      <td>5</td>
-      <td>11.34</td>
-      <td>openhands, defects, gemini, gpt, flash, pro, opus, defect</td>
-      <td>reasoning, tool, reference, docs, cookie, file, multimodal, coding</td>
-    </tr>
-    <tr>
-      <td>6</td>
-      <td>10.31</td>
-      <td>oracle, human, fraction, verifier, augmentation, pytest, passed, submissions</td>
-      <td>claude, openhands, opus, gpt, flash, pro, deepseek, gemini</td>
-    </tr>
-    <tr>
-      <td>7</td>
-      <td>9.45</td>
-      <td>behaviour, hook, mechanisms, interface, call, external, advisory, ordinary</td>
-      <td>cookie, claude, services, docs, platform, analyze, usage, policy</td>
-    </tr>
-    <tr>
-      <td>8</td>
-      <td>8.90</td>
-      <td>wang, xiangyi, tier, university, spec, retrieved, well, checks</td>
-      <td>reasoning, yao, generated, spec-aware, providing, framework, chat, hook</td>
-    </tr>
-  </tbody>
-</table></div>
-
-<p><strong>Findings</strong> — 0 narrow dimension(s), 0 near-duplicate pair(s).</p>
-<h2 id="cat-harness--library">
+<h1 id="merge-the-base-branch-in">
   
   
-    <a href="#cat-harness--library" class="anchor-heading" aria-labelledby="cat-harness--library"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> cat-harness / library
+    <a href="#merge-the-base-branch-in" class="anchor-heading" aria-labelledby="merge-the-base-branch-in"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Merge the base branch in
+  
+  
+</h1>
+    
+
+<p><code class="language-plaintext highlighter-rouge">Process_MergeBase</code> · strict · 7 step(s)</p>
+
+<p>CALLED FROM <code class="language-plaintext highlighter-rouge">Task_PrepareMerge</code> in code-change-review.bpmn, and executed by <code class="language-plaintext highlighter-rouge">bun run merge:main</code> (cat-harness/scripts/merge-base.ts). Bean <code class="language-plaintext highlighter-rouge">y7b3</code>, issue #1707. Owner, 2026-10-01: “put in merge process bpmn”.</p>
+
+<p>MEASURED 2026-09-30 over 300 main-into-branch merges: 235 conflicted, 147 (63%) ONLY on generated files, each resolved the same mechanical way. The declared patterns, and why each is or is not automatic, are in the <code class="language-plaintext highlighter-rouge">merge-conflict-patterns</code> skill.</p>
+
+<p>ALL OR NOTHING: every conflicted path is classified before any is touched, and one refusal aborts the merge and restores the tree. PROVED, NOT ASSUMED: <code class="language-plaintext highlighter-rouge">regen</code> derives every check/writer pair from the CI workflow, and an unrepaired check aborts too. Only what both gateways pass is committed.</p>
+
+<p><img src="../assets/img/workflows/merge-base.svg" alt="BPMN diagram: Merge the base branch in" style="max-width:100%" /></p>
+<h2 id="how-it-connects">
+  
+  
+    <a href="#how-it-connects" class="anchor-heading" aria-labelledby="how-it-connects"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> How it connects
   
   
 </h2>
     
-
-<p><strong>350</strong> units · <strong>5861</strong> terms · k = <strong>100</strong> · retains <strong>66.5 %</strong> of the weighted matrix · weighting <code class="language-plaintext highlighter-rouge">log-entropy</code> · sidecar <code class="language-plaintext highlighter-rouge">cat-harness/test/results/lsi/cat-harness/library.lsi.json</code></p>
-
-<blockquote>
-  <p>Dimension 1 has <strong>no negative pole</strong>: it most likely measures unit length and term frequency (a margin), not a theme. Read the themes from dimension 2 on.</p>
-</blockquote>
-
-<p>Each dimension is a <strong>contrast</strong> between two poles, shown by their highest-loading terms. It is not named here: naming it is a reader’s act.</p>
-
-<div class="table-wrapper"><table>
-  <thead>
-    <tr>
-      <th>dim</th>
-      <th>σ</th>
-      <th>one pole</th>
-      <th>the other pole</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>1</td>
-      <td>27.14</td>
-      <td>arxiv, conference, proceedings, models, model, subject, systems, data</td>
-      <td><em>(none)</em></td>
-    </tr>
-    <tr>
-      <td>2</td>
-      <td>19.08</td>
-      <td>arxiv, proceedings, preprint, conference, wang, chen, zhang, yang</td>
-      <td>matrix, analysis, swot, algorithm, error, approximation, terms, singular</td>
-    </tr>
-    <tr>
-      <td>3</td>
-      <td>17.48</td>
-      <td>lce, streaming, lightgcn, incremental, slim, recommendation, items, yelp</td>
-      <td>subject, records, subjects, annif, qualitative, team, gnd, all-subjects</td>
-    </tr>
-    <tr>
-      <td>4</td>
-      <td>17.19</td>
-      <td>swot, organization, strategic, management, business, design, opportunities, threats</td>
-      <td>recall, embeddings, lce, subject, streaming, terms, subjects, all-subjects</td>
-    </tr>
-    <tr>
-      <td>5</td>
-      <td>16.34</td>
-      <td>swot, organization, strategic, lce, streaming, threats, lightgcn, weaknesses</td>
-      <td>wireframes, wireframe, layout, matrix, approximation, algorithm, design, icon</td>
-    </tr>
-    <tr>
-      <td>6</td>
-      <td>15.73</td>
-      <td>wireframes, wireframe, design, mid-fidelity, wiregen, layout, prompt, llms</td>
-      <td>matrix, approximation, algorithms, arxiv, randomized, algorithm, random, international</td>
-    </tr>
-    <tr>
-      <td>7</td>
-      <td>14.35</td>
-      <td>agent, headings, heading, lcgft, workflow, subdivision, workflows, baseline</td>
-      <td>lsa, documents, swot, similarity, term, document, terms, retrieval</td>
-    </tr>
-    <tr>
-      <td>8</td>
-      <td>13.90</td>
-      <td>documents, lsa, terms, document, retrieval, dimensions, query, term</td>
-      <td>algorithm, random, randomized, approximation, algorithms, wireframes, error, gaussian</td>
-    </tr>
-  </tbody>
-</table></div>
-
-<p><strong>Findings</strong> — 0 narrow dimension(s), 6 near-duplicate pair(s).</p>
-
-<p><em>Near-duplicates</em> (cosine ≥ 0.95) — similar is not duplicate; read both:</p>
 
 <ul>
-  <li>0.974 — <code class="language-plaintext highlighter-rouge">cat-harness/library/landauer-foltz-laham-1998-intro-lsa/sections/page-001.md</code> ~ <code class="language-plaintext highlighter-rouge">cat-harness/library/landauer-foltz-laham-1998-intro-lsa/sections/page-041.md</code></li>
-  <li>0.963 — <code class="language-plaintext highlighter-rouge">cat-harness/library/arxiv-0909.4061v2/sections/page-032.md</code> ~ <code class="language-plaintext highlighter-rouge">cat-harness/library/arxiv-0909.4061v2/sections/page-033.md</code></li>
-  <li>0.970 — <code class="language-plaintext highlighter-rouge">cat-harness/library/arxiv-0909.4061v2/sections/page-048.md</code> ~ <code class="language-plaintext highlighter-rouge">cat-harness/library/arxiv-0909.4061v2/sections/page-049.md</code></li>
-  <li>0.956 — <code class="language-plaintext highlighter-rouge">cat-harness/library/qi-hessen-vanderheijden-2023-ca-vs-lsa/sections/sec-014-411-map-as-a-function-of-the-number-of-dimension.md</code> ~ <code class="language-plaintext highlighter-rouge">cat-harness/library/qi-hessen-vanderheijden-2023-ca-vs-lsa/sections/sec-017-421-weighting-the-elements-of-the-raw-document-t.md</code></li>
-  <li>0.971 — <code class="language-plaintext highlighter-rouge">cat-harness/library/arxiv-2607.14456v1/sections/page-012.md</code> ~ <code class="language-plaintext highlighter-rouge">cat-harness/library/arxiv-2607.14456v1/sections/page-022.md</code></li>
-  <li>0.951 — <code class="language-plaintext highlighter-rouge">cat-harness/library/arxiv-2607.14456v1/sections/page-015.md</code> ~ <code class="language-plaintext highlighter-rouge">cat-harness/library/arxiv-2607.14456v1/sections/page-022.md</code></li>
+  <li><strong>Called by:</strong> <a href="code-change-review.html">Code change and review</a></li>
+  <li><strong>Calls:</strong> none</li>
+  <li><strong>Presented on:</strong> no docs page section shows this diagram</li>
 </ul>
-<h2 id="cat-harness--skills">
+<h2 id="lanes--who-acts">
   
   
-    <a href="#cat-harness--skills" class="anchor-heading" aria-labelledby="cat-harness--skills"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> cat-harness / skills
-  
-  
-</h2>
-    
-
-<p><strong>213</strong> units · <strong>5841</strong> terms · k = <strong>100</strong> · retains <strong>79.6 %</strong> of the weighted matrix · weighting <code class="language-plaintext highlighter-rouge">log-entropy</code> · sidecar <code class="language-plaintext highlighter-rouge">cat-harness/test/results/lsi/cat-harness/skills.lsi.json</code></p>
-
-<blockquote>
-  <p>Dimension 1 has <strong>no negative pole</strong>: it most likely measures unit length and term frequency (a margin), not a theme. Read the themes from dimension 2 on.</p>
-</blockquote>
-
-<p>Each dimension is a <strong>contrast</strong> between two poles, shown by their highest-loading terms. It is not named here: naming it is a reader’s act.</p>
-
-<div class="table-wrapper"><table>
-  <thead>
-    <tr>
-      <th>dim</th>
-      <th>σ</th>
-      <th>one pole</th>
-      <th>the other pole</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>1</td>
-      <td>43.61</td>
-      <td>instance, harness, kind, session, directory, graph, block, page</td>
-      <td><em>(none)</em></td>
-    </tr>
-    <tr>
-      <td>2</td>
-      <td>21.41</td>
-      <td>watcher, slot, sibling, queue, backlog, prs, block, commits</td>
-      <td>harness, instance, declaration, directory, node, directories, graph, bootstrap</td>
-    </tr>
-    <tr>
-      <td>3</td>
-      <td>17.77</td>
-      <td>session, beans, goals, branch, store, window, epic, push</td>
-      <td>slot, chapter, block, edges, formal, glossary, project, proof</td>
-    </tr>
-    <tr>
-      <td>4</td>
-      <td>16.41</td>
-      <td>page, block, section, sections, blocks, chapter, manifest, text</td>
-      <td>ledger, sibling, subdirectory, items, sessions, window, queue, renderable</td>
-    </tr>
-    <tr>
-      <td>5</td>
-      <td>14.81</td>
-      <td>locale, navbar, translated, page, translation, french, staging, theme</td>
-      <td>edges, forward, edge, logical, backward, cross-chapter, energy, sections</td>
-    </tr>
-    <tr>
-      <td>6</td>
-      <td>14.77</td>
-      <td>lane, requirements, actor, role, feature, phase, task, stakeholders</td>
-      <td>rung, queue, slide, arm, archive, bytes, zip, sniff</td>
-    </tr>
-    <tr>
-      <td>7</td>
-      <td>14.38</td>
-      <td>edges, forward, preview, backward, edge, cross-chapter, energy, logical</td>
-      <td>actor, lane, role, backlog, rung, criterion, login, roles</td>
-    </tr>
-    <tr>
-      <td>8</td>
-      <td>14.12</td>
-      <td>locale, translated, translation, french, back-translation, badge, translations, trip</td>
-      <td>preview, feature, phase, option, sha, impact, user, staging</td>
-    </tr>
-  </tbody>
-</table></div>
-
-<p><strong>Findings</strong> — 0 narrow dimension(s), 1 near-duplicate pair(s).</p>
-
-<p><em>Near-duplicates</em> (cosine ≥ 0.95) — similar is not duplicate; read both:</p>
-
-<ul>
-  <li>0.953 — <code class="language-plaintext highlighter-rouge">cat-harness/skills/sdlc/sdlc-core/delivery-summary.md</code> ~ <code class="language-plaintext highlighter-rouge">cat-harness/skills/sdlc/sdlc-core/diff.md</code></li>
-</ul>
-<h2 id="smart-base--library">
-  
-  
-    <a href="#smart-base--library" class="anchor-heading" aria-labelledby="smart-base--library"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> smart-base / library
+    <a href="#lanes--who-acts" class="anchor-heading" aria-labelledby="lanes--who-acts"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Lanes — who acts
   
   
 </h2>
     
 
-<p><strong>595</strong> units · <strong>6151</strong> terms · k = <strong>100</strong> · retains <strong>54.5 %</strong> of the weighted matrix · weighting <code class="language-plaintext highlighter-rouge">log-entropy</code> · sidecar <code class="language-plaintext highlighter-rouge">cat-harness/test/results/lsi/smart-base/library.lsi.json</code></p>
-
-<blockquote>
-  <p>Dimension 1 has <strong>no negative pole</strong>: it most likely measures unit length and term frequency (a margin), not a theme. Read the themes from dimension 2 on.</p>
-</blockquote>
-
-<p>Each dimension is a <strong>contrast</strong> between two poles, shown by their highest-loading terms. It is not named here: naming it is a reader’s act.</p>
-
 <div class="table-wrapper"><table>
   <thead>
     <tr>
-      <th>dim</th>
-      <th>σ</th>
-      <th>one pole</th>
-      <th>the other pole</th>
+      <th>lane</th>
+      <th>role</th>
+      <th>what it does here</th>
     </tr>
   </thead>
   <tbody>
     <tr>
-      <td>1</td>
-      <td>35.53</td>
-      <td>user, requirements, systems, service, care, training, adaptation, pcposs</td>
-      <td><em>(none)</em></td>
+      <td>merge:main command</td>
+      <td><code class="language-plaintext highlighter-rouge">build-pipeline</code></td>
+      <td>Mechanical. Decides nothing a declaration has not decided: a path no pattern names is refused, and the gate set, not this lane, judges the result.</td>
     </tr>
     <tr>
-      <td>2</td>
-      <td>20.36</td>
-      <td>transmit, provider, healthcare, manage, event, alerts, diagnostic, commodities</td>
-      <td>requirements, accessed, handbook, design, adaptation, pcposs, website, user</td>
-    </tr>
-    <tr>
-      <td>3</td>
-      <td>18.89</td>
-      <td>accessed, world, website, organization, geneva, international, pdf, january</td>
-      <td>pcposs, lane, activity, decision-support, swim, symbol, workflows, depict</td>
-    </tr>
-    <tr>
-      <td>4</td>
-      <td>17.14</td>
-      <td>intervention, evaluation, axis, project, mhealth, studies, study, projects</td>
-      <td>pcposs, adaptation, roll-out, handbook, annexes, decision-support, activity, business</td>
-    </tr>
-    <tr>
-      <td>5</td>
-      <td>15.12</td>
-      <td>standards, interoperability, enterprise, architecture, software, requirements, fhir, pcposs</td>
-      <td>research, qualitative, studies, accessed, study, quantitative, lane, client</td>
-    </tr>
-    <tr>
-      <td>6</td>
-      <td>14.58</td>
-      <td>material, licence, translation, rights, igo, citation, work, imply</td>
-      <td>accessed, website, january, doi, pdf, org, qualitative, lane</td>
-    </tr>
-    <tr>
-      <td>7</td>
-      <td>14.06</td>
-      <td>studies, qualitative, quantitative, study, designs, element, intervention, methods</td>
-      <td>axis, points, mhealth, scaling, domain, lane, swim, symbol</td>
-    </tr>
-    <tr>
-      <td>8</td>
-      <td>13.52</td>
-      <td>element, hiv, elements, pcposs, testing, workers, forms, duplicated</td>
-      <td>enterprise, business, studies, qualitative, activities, symbol, quantitative, swim</td>
+      <td>Authoring agent</td>
+      <td><code class="language-plaintext highlighter-rouge">authoring-agent</code></td>
+      <td>Reached only when the command refused: an authored conflict, an undeclared path, or a resolution the gates could not reproduce. The refused paths are listed for it; what to do with an authored conflict is judgement.</td>
     </tr>
   </tbody>
 </table></div>
-
-<p><strong>Findings</strong> — 0 narrow dimension(s), 25 near-duplicate pair(s).</p>
-
-<p><em>Near-duplicates</em> (cosine ≥ 0.95) — similar is not duplicate; read both:</p>
-
-<ul>
-  <li>0.996 — <code class="language-plaintext highlighter-rouge">smart-base/library/9789240010567-eng/sections/page-004.md</code> ~ <code class="language-plaintext highlighter-rouge">smart-base/library/9789241511766-eng/sections/page-002.md</code></li>
-  <li>0.996 — <code class="language-plaintext highlighter-rouge">smart-base/library/9789240010567-eng/sections/page-004.md</code> ~ <code class="language-plaintext highlighter-rouge">smart-base/library/9789240081949-eng/sections/page-004.md</code></li>
-  <li>0.994 — <code class="language-plaintext highlighter-rouge">smart-base/library/9789240010567-eng/sections/page-004.md</code> ~ <code class="language-plaintext highlighter-rouge">smart-base/library/9789240120747-eng/sections/page-004.md</code></li>
-  <li>0.969 — <code class="language-plaintext highlighter-rouge">smart-base/library/9789240010567-eng/sections/page-014.md</code> ~ <code class="language-plaintext highlighter-rouge">smart-base/library/who-rhr-1806-eng/sections/page-001.md</code></li>
-  <li>0.981 — <code class="language-plaintext highlighter-rouge">smart-base/library/9789240010567-eng/sections/page-017.md</code> ~ <code class="language-plaintext highlighter-rouge">smart-base/library/9789240120747-eng/sections/page-016.md</code></li>
-  <li>0.969 — <code class="language-plaintext highlighter-rouge">smart-base/library/9789240010567-eng/sections/page-022.md</code> ~ <code class="language-plaintext highlighter-rouge">smart-base/library/9789240010567-eng/sections/page-132.md</code></li>
-  <li>0.998 — <code class="language-plaintext highlighter-rouge">smart-base/library/9789240010567-eng/sections/page-051.md</code> ~ <code class="language-plaintext highlighter-rouge">smart-base/library/who-rhr-1806-eng/sections/page-004.md</code></li>
-  <li>0.986 — <code class="language-plaintext highlighter-rouge">smart-base/library/9789240010567-eng/sections/page-059.md</code> ~ <code class="language-plaintext highlighter-rouge">smart-base/library/who-rhr-1806-eng/sections/page-001.md</code></li>
-  <li>0.989 — <code class="language-plaintext highlighter-rouge">smart-base/library/9789240010567-eng/sections/page-099.md</code> ~ <code class="language-plaintext highlighter-rouge">smart-base/library/9789240120747-eng/sections/page-034.md</code></li>
-  <li>0.986 — <code class="language-plaintext highlighter-rouge">smart-base/library/9789240010567-eng/sections/page-099.md</code> ~ <code class="language-plaintext highlighter-rouge">smart-base/library/9789240010567-eng/sections/page-173.md</code></li>
-  <li>0.986 — <code class="language-plaintext highlighter-rouge">smart-base/library/9789240010567-eng/sections/page-099.md</code> ~ <code class="language-plaintext highlighter-rouge">smart-base/library/9789240010567-eng/sections/page-174.md</code></li>
-  <li>0.988 — <code class="language-plaintext highlighter-rouge">smart-base/library/9789240010567-eng/sections/page-116.md</code> ~ <code class="language-plaintext highlighter-rouge">smart-base/library/9789241511766-eng/sections/page-038.md</code></li>
-  <li>0.952 — <code class="language-plaintext highlighter-rouge">smart-base/library/9789240010567-eng/sections/page-120.md</code> ~ <code class="language-plaintext highlighter-rouge">smart-base/library/9789241511766-eng/sections/page-064.md</code></li>
-  <li>0.981 — <code class="language-plaintext highlighter-rouge">smart-base/library/9789240010567-eng/sections/page-157.md</code> ~ <code class="language-plaintext highlighter-rouge">smart-base/library/9789240010567-eng/sections/page-159.md</code></li>
-  <li>0.999 — <code class="language-plaintext highlighter-rouge">smart-base/library/9789240010567-eng/sections/page-173.md</code> ~ <code class="language-plaintext highlighter-rouge">smart-base/library/9789240010567-eng/sections/page-174.md</code></li>
-  <li>… and 10 more in the sidecar</li>
-</ul>
-<h2 id="who-iris--library">
+<h2 id="steps">
   
   
-    <a href="#who-iris--library" class="anchor-heading" aria-labelledby="who-iris--library"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> who-iris / library
+    <a href="#steps" class="anchor-heading" aria-labelledby="steps"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Steps
   
   
 </h2>
     
 
-<p><strong>336</strong> units · <strong>3827</strong> terms · k = <strong>100</strong> · retains <strong>69.2 %</strong> of the weighted matrix · weighting <code class="language-plaintext highlighter-rouge">log-entropy</code> · sidecar <code class="language-plaintext highlighter-rouge">cat-harness/test/results/lsi/who-iris/library.lsi.json</code></p>
-
-<blockquote>
-  <p>Dimension 1 has <strong>no negative pole</strong>: it most likely measures unit length and term frequency (a margin), not a theme. Read the themes from dimension 2 on.</p>
-</blockquote>
-
-<p>Each dimension is a <strong>contrast</strong> between two poles, shown by their highest-loading terms. It is not named here: naming it is a reader’s act.</p>
+<p><strong>2</strong> of 7 step(s) carry no documentation — <code class="language-plaintext highlighter-rouge">activity-documented</code> lists them.</p>
 
 <div class="table-wrapper"><table>
   <thead>
     <tr>
-      <th>dim</th>
-      <th>σ</th>
-      <th>one pole</th>
-      <th>the other pole</th>
+      <th>step</th>
+      <th>lane</th>
+      <th>skill / sub-process</th>
+      <th>what it does</th>
     </tr>
   </thead>
   <tbody>
     <tr>
-      <td>1</td>
-      <td>23.69</td>
-      <td>evidence, review, group, quality, health, interest, development, systematic</td>
-      <td><em>(none)</em></td>
+      <td><strong>Merge the base in, without committing</strong><br /><code class="language-plaintext highlighter-rouge">Task_Merge</code></td>
+      <td>merge:main command</td>
+      <td><a href="../reference/skill-instructions/prepare-merge.html"><code class="language-plaintext highlighter-rouge">prepare-merge</code></a></td>
+      <td><code class="language-plaintext highlighter-rouge">git merge --no-ff --no-commit origin/main</code> on a clean tree (untracked files refuse too, so the final stage cannot sweep in a scratch file).</td>
     </tr>
     <tr>
-      <td>2</td>
-      <td>13.83</td>
-      <td>imprecision, effect, confidence, inconsistency, estimate, studies, rated, indirectness</td>
-      <td>organization, november, accessed, grc, world, planning, group, doi</td>
+      <td><strong>Classify every conflicted path against the declared patterns</strong><br /><code class="language-plaintext highlighter-rouge">Task_Classify</code></td>
+      <td>merge:main command</td>
+      <td><a href="../reference/skill-instructions/merge-conflict-patterns.html"><code class="language-plaintext highlighter-rouge">merge-conflict-patterns</code></a></td>
+      <td>The first matching pattern decides: take-base, generated-regions, qa-sidecar, or refuse. A path no pattern names refuses.</td>
     </tr>
     <tr>
-      <td>3</td>
-      <td>13.06</td>
-      <td>accessed, november, pmid, cochrane, website, doi, oxman, org</td>
-      <td>interests, interest, members, conflict, coi, financial, individuals, chair</td>
+      <td><strong>Resolve each by its declared strategy</strong><br /><code class="language-plaintext highlighter-rouge">Task_Resolve</code></td>
+      <td>merge:main command</td>
+      <td><a href="../reference/skill-instructions/merge-conflict-patterns.html"><code class="language-plaintext highlighter-rouge">merge-conflict-patterns</code></a></td>
+      <td>qa-sidecar paths first, through <code class="language-plaintext highlighter-rouge">qa:resolve-conflicts</code>; take-base paths take the base’s copy; generated-regions files take the base’s side of each hunk, which lies inside a generated region by construction.</td>
     </tr>
     <tr>
-      <td>4</td>
-      <td>12.13</td>
-      <td>names, international, nomenclature, used, name, republic, style, social</td>
-      <td>gdg, doi, grade, interest, interests, review, evidence, coi</td>
+      <td><strong>Regenerate, asking every CI gate</strong><br /><code class="language-plaintext highlighter-rouge">Task_Regen</code></td>
+      <td>merge:main command</td>
+      <td><a href="../reference/skill-instructions/prepare-merge.html"><code class="language-plaintext highlighter-rouge">prepare-merge</code></a></td>
+      <td><code class="language-plaintext highlighter-rouge">bun run regen</code>: every check/writer pair the CI workflow runs, repeated until the tree settles.</td>
     </tr>
     <tr>
-      <td>5</td>
-      <td>11.85</td>
-      <td>gender, determinants, social, equity, rights, human, services, right</td>
-      <td>name, names, republic, style, full, text, nomenclature, english</td>
+      <td><strong>Commit the merge</strong><br /><code class="language-plaintext highlighter-rouge">Task_Commit</code></td>
+      <td>merge:main command</td>
+      <td><a href="../reference/skill-instructions/continual-progress.html"><code class="language-plaintext highlighter-rouge">continual-progress</code></a></td>
+      <td>—</td>
     </tr>
     <tr>
-      <td>6</td>
-      <td>11.57</td>
-      <td>doi, coi, financial, accessed, november, conflict, cois, interests</td>
-      <td>rapid, proposal, canada, advice, planning, updating, key, review</td>
+      <td><strong>Abort, restore the tree, list what was refused</strong><br /><code class="language-plaintext highlighter-rouge">Task_Abort</code></td>
+      <td>merge:main command</td>
+      <td><a href="../reference/skill-instructions/merge-conflict-patterns.html"><code class="language-plaintext highlighter-rouge">merge-conflict-patterns</code></a></td>
+      <td><code class="language-plaintext highlighter-rouge">git merge --abort</code>. Each refused path is listed with its pattern’s reason, or “no declared pattern”.</td>
     </tr>
     <tr>
-      <td>7</td>
-      <td>10.79</td>
-      <td>republic, name, local, approved, english, haiti, addis, abu</td>
-      <td>nomenclature, symbols, world, international, abbreviations, text, used, organization</td>
-    </tr>
-    <tr>
-      <td>8</td>
-      <td>10.54</td>
-      <td>determinants, interests, canada, conflict, effect, declarations, social, conflicts</td>
-      <td>gdg, cost, questions, key, condition, steering, diabetes, effectiveness</td>
+      <td><strong>Resolve by hand, then regenerate</strong><br /><code class="language-plaintext highlighter-rouge">Task_ByHand</code></td>
+      <td>Authoring agent</td>
+      <td><a href="../reference/skill-instructions/prepare-merge.html"><code class="language-plaintext highlighter-rouge">prepare-merge</code></a></td>
+      <td>—</td>
     </tr>
   </tbody>
 </table></div>
+<h2 id="decisions">
+  
+  
+    <a href="#decisions" class="anchor-heading" aria-labelledby="decisions"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Decisions
+  
+  
+</h2>
+    
 
-<p><strong>Findings</strong> — 0 narrow dimension(s), 9 near-duplicate pair(s).</p>
+<p>Every one of the 3 decision(s) is documented.</p>
 
-<p><em>Near-duplicates</em> (cosine ≥ 0.95) — similar is not duplicate; read both:</p>
-
-<ul>
-  <li>0.973 — <code class="language-plaintext highlighter-rouge">who-iris/library/wpr-rdo-2020-003-eng/sections/page-006.md</code> ~ <code class="language-plaintext highlighter-rouge">who-iris/library/wpr-rdo-2020-003-eng/sections/page-010.md</code></li>
-  <li>0.973 — <code class="language-plaintext highlighter-rouge">who-iris/library/wpr-rdo-2020-003-eng/sections/page-006.md</code> ~ <code class="language-plaintext highlighter-rouge">who-iris/library/wpr-rdo-2020-003-eng/sections/page-008.md</code></li>
-  <li>0.965 — <code class="language-plaintext highlighter-rouge">who-iris/library/wpr-rdo-2020-003-eng/sections/page-006.md</code> ~ <code class="language-plaintext highlighter-rouge">who-iris/library/wpr-rdo-2020-003-eng/sections/page-007.md</code></li>
-  <li>0.961 — <code class="language-plaintext highlighter-rouge">who-iris/library/wpr-rdo-2020-003-eng/sections/page-007.md</code> ~ <code class="language-plaintext highlighter-rouge">who-iris/library/wpr-rdo-2020-003-eng/sections/page-008.md</code></li>
-  <li>0.954 — <code class="language-plaintext highlighter-rouge">who-iris/library/wpr-rdo-2020-003-eng/sections/page-007.md</code> ~ <code class="language-plaintext highlighter-rouge">who-iris/library/wpr-rdo-2020-003-eng/sections/page-010.md</code></li>
-  <li>0.968 — <code class="language-plaintext highlighter-rouge">who-iris/library/wpr-rdo-2020-003-eng/sections/page-008.md</code> ~ <code class="language-plaintext highlighter-rouge">who-iris/library/wpr-rdo-2020-003-eng/sections/page-010.md</code></li>
-  <li>0.966 — <code class="language-plaintext highlighter-rouge">who-iris/library/wpr-rdo-2020-003-eng/sections/page-020.md</code> ~ <code class="language-plaintext highlighter-rouge">who-iris/library/wpr-rdo-2020-003-eng/sections/page-021.md</code></li>
-  <li>0.957 — <code class="language-plaintext highlighter-rouge">who-iris/library/who-pub-tps-931/sections/page-039.md</code> ~ <code class="language-plaintext highlighter-rouge">who-iris/library/who-pub-tps-931/sections/page-040.md</code></li>
-  <li>0.999 — <code class="language-plaintext highlighter-rouge">who-iris/library/who-pub-tps-931/sections/page-116.md</code> ~ <code class="language-plaintext highlighter-rouge">who-iris/library/who-pub-tps-931/sections/page-119.md</code></li>
-</ul><hr />
-
-<p>Generated by <code class="language-plaintext highlighter-rouge">bun run lsi:viz</code> from the committed sidecars; <code class="language-plaintext highlighter-rouge">lsi:viz:check</code> fails when this page is stale.</p>
+<div class="table-wrapper"><table>
+  <thead>
+    <tr>
+      <th>decision</th>
+      <th>what decides it</th>
+      <th>branches</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong>Any conflict?</strong><br /><code class="language-plaintext highlighter-rouge">GW_Conflicts</code></td>
+      <td><code class="language-plaintext highlighter-rouge">none</code> still regenerates: a CLEAN merge can produce an artefact neither side would emit (bean <code class="language-plaintext highlighter-rouge">lxpq</code>), so only the gates can say it is right.</td>
+      <td><strong>none</strong> → Regenerate, asking every CI gate<br /><strong>yes</strong> → Classify every conflicted path against the declared patterns</td>
+    </tr>
+    <tr>
+      <td><strong>Every path resolvable?</strong><br /><code class="language-plaintext highlighter-rouge">GW_AllDeclared</code></td>
+      <td><code class="language-plaintext highlighter-rouge">no</code> if even one path is refused: the merge is aborted whole, never half-resolved.</td>
+      <td><strong>yes</strong> → Resolve each by its declared strategy<br /><strong>no</strong> → Abort, restore the tree, list what was refused</td>
+    </tr>
+    <tr>
+      <td><strong>Every gate reproduced?</strong><br /><code class="language-plaintext highlighter-rouge">GW_Proved</code></td>
+      <td><code class="language-plaintext highlighter-rouge">no</code> when regen reports an unrepaired check, or one with no writer: a resolution the gates cannot reproduce is not a resolution.</td>
+      <td><strong>yes</strong> → Commit the merge<br /><strong>no</strong> → Abort, restore the tree, list what was refused</td>
+    </tr>
+  </tbody>
+</table></div>
 
           
 
