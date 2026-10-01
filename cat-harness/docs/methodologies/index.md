@@ -225,7 +225,7 @@ strictly worse than declaring none.
 
 **Ingested sources:**
 
-- `library/w3c-2020-json-ld-1-1`
+- [`library/w3c-2020-json-ld-1-1`](../cat-harness/library/cat-harness/#cat-harness%2Fw3c-2020-json-ld-1-1) · [item page](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/library/w3c-2020-json-ld-1-1/README.md)
 
 ### Kepner-Tregoe Decision Analysis
 
@@ -299,7 +299,7 @@ these.
 
 **Ingested sources:**
 
-- `library/w3c-2018-odrl-model-2-2`
+- [`library/w3c-2018-odrl-model-2-2`](../cat-harness/library/cat-harness/#cat-harness%2Fw3c-2018-odrl-model-2-2) · [item page](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/library/w3c-2018-odrl-model-2-2/README.md)
 
 ### Probabilistic decision-making algorithms — and what their regret bounds are claims ABOUT
 
@@ -341,7 +341,7 @@ these.
 
 **Ingested sources:**
 
-- `library/w3c-2013-prov-o`
+- [`library/w3c-2013-prov-o`](../cat-harness/library/cat-harness/#cat-harness%2Fw3c-2013-prov-o) · [item page](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/library/w3c-2013-prov-o/README.md)
 
 ### RACI — who is involved in an activity, and in which of four ways
 
