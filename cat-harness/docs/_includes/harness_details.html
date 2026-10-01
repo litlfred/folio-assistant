@@ -17,21 +17,33 @@
 
   Every value is GENERATED into `docs/_data/harness.json` and gated by
   `docs:harness:check`. This template decides nothing.
+
+  `instance=<name>` renders ONE harness's section, for the landing page an
+  instance generates for itself (`fhir-harness/scripts/gen-ig-pages.ts
+  --summary`; #1767). Same data, same markup, so the site root and the
+  instance's own page cannot describe the instance two ways. The heading does
+  not link there, because "there" is the page it is on.
 {%- endcomment -%}
 {%- assign tiles = site.data.harness.harnesses -%}
+{%- if include.instance -%}
+{%- assign instantiated = tiles | where: "name", include.instance -%}
+{%- else -%}
 {%- assign instantiated = tiles | where: "instantiated", true -%}
+{%- endif -%}
 {%- if instantiated.size > 0 -%}
 <section class="fa-harness-sections" id="harnesses">
+  {%- unless include.instance -%}
   <h2 id="harnesses-heading">What each harness holds</h2>
   <p class="fa-harness-sections__lead">
     One section per instantiated harness, in the same order as the dividers in
     the sidebar — the floor last.
   </p>
+  {%- endunless -%}
   {%- for t in instantiated -%}
   <section class="fa-harness-section" id="harness-{{ t.name }}"
            style="--fa-tile-tone: {{ t.tone }}; --fa-tile-on: {% if t.genericAvatar %}0{% else %}1{% endif %}">
     <h3 class="fa-harness-section__title" id="harness-{{ t.name }}-heading">
-      {%- if t.href -%}
+      {%- if t.href and include.instance == nil -%}
       <a href="{{ t.href | relative_url }}">{{ t.label | default: t.title }}</a>
       {%- else -%}
       {{ t.label | default: t.title }}

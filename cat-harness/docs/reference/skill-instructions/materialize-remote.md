@@ -27,7 +27,8 @@ neither.
 
 Diagrams: [`materialize-remote.bpmn`](../../processes/materialize-remote.html)
 and [`refresh-materialized.bpmn`](../../processes/refresh-materialized.html).
-Schema: `folio-assistant-core/schemas/materialization.ts`. Nothing here restates
+Schema: the `folio-materialization/v1` record (`MaterializationSchema`, owned
+by the content layer above this one — named here, not linked). Nothing here restates
 either — where they disagree, the schema wins and this file is wrong.
 
 ## Ask the purpose FIRST

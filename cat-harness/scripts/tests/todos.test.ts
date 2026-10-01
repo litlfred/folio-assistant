@@ -21,8 +21,9 @@ import { workflowFiles } from "../known-skills.js";
 import { loadProcessModel } from "../../src/workflow/process-model.js";
 
 describe("the declaration and the directory agree", () => {
-  test("`harness.json` declares a `todos` graph", () => {
-    // The checkout root declares it since cmsl step 2 (issue #1694).
+  test("the checkout's root declaration declares a `todos` graph", () => {
+    // The ROOT instance's, since placement PR0 (bean `ejye`): `todos/` sits at
+    // the checkout's root and belongs to the checkout, not to the platform.
     const d = readDeclaration(repoRootFor(ROOT));
     const entry = d?.directories?.find((x) => x.graphKinds?.includes("todos"));
     expect(entry?.path).toBe("todos/");
@@ -118,7 +119,7 @@ describe("the published process hierarchy", () => {
     // real parser: it is async and pulls in bpmn-moddle, which is exactly why
     // the GENERATOR does not use it and why a test can.
     const expected: Record<string, string[]> = {};
-    for (const f of workflowFiles(ROOT).filter((x) => x.endsWith(".bpmn"))) {
+    for (const f of workflowFiles(ROOT, "checkout").filter((x) => x.endsWith(".bpmn"))) {
       const m = await loadProcessModel(f);
       const calls = new Set<string>();
       for (const n of m.nodes.values()) if (n.calledElement) calls.add(n.calledElement);
@@ -163,7 +164,7 @@ describe("the published process hierarchy", () => {
     // so `Process_Translation` was missing from BOTH sides and the assertion
     // passed over a hole. Deriving from the same SOURCE is the rule; deriving
     // from the same IMPLEMENTATION is how a test blesses a bug.
-    const bpmn = workflowFiles(ROOT).filter((f) => f.endsWith(".bpmn"));
+    const bpmn = workflowFiles(ROOT, "checkout").filter((f) => f.endsWith(".bpmn"));
     const expected: string[] = [];
     for (const f of bpmn) expected.push((await loadProcessModel(f)).id);
     expect(expected.length).toBeGreaterThan(5);
