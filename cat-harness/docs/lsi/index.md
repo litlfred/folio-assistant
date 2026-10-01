@@ -133,7 +133,7 @@ Each dimension is a **contrast** between two poles, shown by their highest-loadi
 | 3 | 17.75 | session, beans, branch, goals, store, window, epic, push | slot, chapter, block, edges, formal, glossary, project, proof |
 | 4 | 16.35 | page, block, section, sections, blocks, chapter, manifest, text | ledger, sibling, subdirectory, items, queue, sessions, renderable, relocation |
 | 5 | 14.82 | locale, translated, navbar, translation, page, french, staging, language | edges, forward, edge, logical, backward, cross-chapter, energy, sections |
-| 6 | 14.62 | lane, actor, requirements, role, feature, task, phase, stakeholders | queue, slide, arm, sheet, archive, rung, zip, bytes |
+| 6 | 14.62 | lane, actor, requirements, role, feature, task, phase, stakeholders | queue, slide, arm, archive, sheet, rung, zip, bytes |
 | 7 | 14.36 | edges, forward, preview, backward, edge, cross-chapter, energy, storytelling | actor, lane, role, backlog, criterion, rung, referee, proved |
 | 8 | 14.14 | locale, translation, translated, french, back-translation, translations, language, badge | preview, theme, feature, phase, option, staging, merge, sha |
 
