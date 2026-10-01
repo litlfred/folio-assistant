@@ -512,32 +512,32 @@
   NOT a cache-busting strategy for third-party assets, and not applied to
   them: those are versioned in their own URLs already.
 -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-quirky-hypatia-k3aoh4-strip-pinned/assets/css/docs-ui.css?v=1790881631">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-quirky-hypatia-k3aoh4-strip-pinned/assets/css/docs-ui.css?v=1790883651">
 <!-- Narrow viewports: wide content scrolls in its own box, never the page
      (bean `2r2n`). The standalone viewers inline the same file through
      `withViewerNav`, so both kinds of page read one set of rules. -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-quirky-hypatia-k3aoh4-strip-pinned/assets/css/narrow-viewport.css?v=1790881631">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-quirky-hypatia-k3aoh4-strip-pinned/assets/css/narrow-viewport.css?v=1790883651">
 
 <!--
   The work-plan dashboard's styles, split from docs-ui.css so that
   `state-visualizer.ts` can inline exactly these bytes into the generated
   `<base>/<stub>/state-visualizer/` pages. One rule, two surfaces.
 -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-quirky-hypatia-k3aoh4-strip-pinned/assets/css/work-plan.css?v=1790881631">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-quirky-hypatia-k3aoh4-strip-pinned/assets/css/work-plan.css?v=1790883651">
 <!-- Sticky themes. GENERATED from the theme nodes in `schemas/themes.ts` by
      `bun run themes:css`; `themes:css:check` fails the build when it is stale.
      Loaded AFTER docs-ui.css deliberately: it supplies the `--fa-sticky-*`
      roles that docs-ui.css consumes, and a custom property has to be set on a
      matching element before the rule reading it takes effect. -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-quirky-hypatia-k3aoh4-strip-pinned/assets/css/themes.css?v=1790881631">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-quirky-hypatia-k3aoh4-strip-pinned/assets/css/themes.css?v=1790883651">
 <!-- UML overview colours: one class per graph kind, set on the Mermaid nodes
      that `scripts/gen-uml-overview.ts` writes into docs/uml/overview/. -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-quirky-hypatia-k3aoh4-strip-pinned/assets/css/uml.css?v=1790881631">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-quirky-hypatia-k3aoh4-strip-pinned/assets/css/uml.css?v=1790883651">
 <!-- Kind avatars. GENERATED from `schemas/avatars.ts` by `bun run avatars:css`;
      `avatars:css:check` fails the build when it is stale. One stylesheet
      rather than 68 assets: the glyph is a mask and the colour is a property,
      so a scheme swap is a custom property and the trash state is a selector. -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-quirky-hypatia-k3aoh4-strip-pinned/assets/css/avatars.css?v=1790881631">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-quirky-hypatia-k3aoh4-strip-pinned/assets/css/avatars.css?v=1790883651">
 
 <!--
   The kinds THIS INSTANCE DECLARES, for the avatar fan.
@@ -554,7 +554,7 @@
 <script type="application/json" id="fa-declared-kinds">["beans","cat-harness","code","code-list","docs","external-schema","folio","fsh-guts","health","interaction","issue-marks","library","memory","methodology","policies","processes","qa","scenarios","schemas","skills","substrate-snapshot","swimlane-glossary","todos","tools","translation-sources","uml","uploads","waiver"]</script>
 <script src="/folio-assistant/STAGING/claude-quirky-hypatia-k3aoh4-strip-pinned/assets/js/vendor/qrcode.js" defer></script>
 <script src="/folio-assistant/STAGING/claude-quirky-hypatia-k3aoh4-strip-pinned/assets/js/vendor/qrcode_UTF8.js" defer></script>
-<script src="/folio-assistant/STAGING/claude-quirky-hypatia-k3aoh4-strip-pinned/assets/js/docs-ui.js?v=1790881631" defer></script>
+<script src="/folio-assistant/STAGING/claude-quirky-hypatia-k3aoh4-strip-pinned/assets/js/docs-ui.js?v=1790883651" defer></script>
 
 <!--
   The work-plan dashboard. SELF-MOUNTING on any page carrying
@@ -1201,7 +1201,7 @@ the same as fine. The same verdict is <code class="language-plaintext highlighte
 </h2>
     
 
-<p><strong>213</strong> units · <strong>5844</strong> terms · k = <strong>100</strong> · retains <strong>79.7 %</strong> of the weighted matrix · weighting <code class="language-plaintext highlighter-rouge">log-entropy</code> · sidecar <code class="language-plaintext highlighter-rouge">cat-harness/test/results/lsi/cat-harness/skills.lsi.json</code></p>
+<p><strong>213</strong> units · <strong>5845</strong> terms · k = <strong>100</strong> · retains <strong>79.7 %</strong> of the weighted matrix · weighting <code class="language-plaintext highlighter-rouge">log-entropy</code> · sidecar <code class="language-plaintext highlighter-rouge">cat-harness/test/results/lsi/cat-harness/skills.lsi.json</code></p>
 
 <blockquote>
   <p>Dimension 1 has <strong>no negative pole</strong>: it most likely measures unit length and term frequency (a margin), not a theme. Read the themes from dimension 2 on.</p>
@@ -1240,32 +1240,32 @@ the same as fine. The same verdict is <code class="language-plaintext highlighte
     <tr>
       <td>4</td>
       <td>16.48</td>
-      <td>page, block, section, blocks, tile, sections, text, chapter</td>
+      <td>page, block, section, blocks, sections, text, tile, chapter</td>
       <td>ledger, sibling, subdirectory, items, sessions, queue, renderable, relocation</td>
     </tr>
     <tr>
       <td>5</td>
       <td>14.92</td>
-      <td>tile, navbar, theme, avatar, board, card, tiles, locale</td>
+      <td>tile, navbar, theme, avatar, board, locale, page, card</td>
       <td>forward, edges, edge, logical, backward, sections, cross-chapter, energy</td>
     </tr>
     <tr>
       <td>6</td>
       <td>14.77</td>
       <td>requirements, lane, role, actor, feature, phase, task, sign-off</td>
-      <td>rung, queue, arm, slide, archive, zip, bytes, sniff</td>
+      <td>rung, queue, arm, archive, slide, zip, bytes, sniff</td>
     </tr>
     <tr>
       <td>7</td>
       <td>14.39</td>
-      <td>preview, locale, translation, translated, language, french, translations, manifest</td>
-      <td>tile, role, avatar, actor, lane, referee, backlog, fit</td>
+      <td>preview, locale, translation, translated, edges, language, forward, chapter</td>
+      <td>role, actor, lane, tile, avatar, backlog, referee, fit</td>
     </tr>
     <tr>
       <td>8</td>
       <td>14.36</td>
-      <td>edges, forward, tile, edge, avatar, backward, cross-chapter, board</td>
-      <td>rung, pdf, actor, lane, glossary, language, requirement, mcp</td>
+      <td>tile, edges, forward, avatar, edge, board, tiles, card</td>
+      <td>pdf, rung, language, glossary, translation, mcp, locale, translated</td>
     </tr>
   </tbody>
 </table></div>
