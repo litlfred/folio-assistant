@@ -93,6 +93,7 @@ import {
   readDeclaration,
   siteDirFor,
 } from "../schemas/cat-harness.js";
+import { KIND_TILE_ICONS } from "./graph-tiles.js";
 
 /**
  * The client that owns both glyph registries, resolved through `siteDirFor`
@@ -320,6 +321,20 @@ function main(): number {
           detail: `absent from TILE_GLYPHS [${[...tiles.keys()].join(", ")}] — falls back`,
         });
       }
+    }
+  }
+
+  // Family 3, for the KIND fallback — `graph-tiles.ts` gives an undeclared
+  // tile its graph kind's icon, so a kind mapped to an undrawn name is the
+  // same miss, made for every derived tile of that kind at once.
+  for (const [kind, name] of Object.entries(KIND_TILE_ICONS)) {
+    if (!tiles.has(name)) {
+      findings.push({
+        family: "unregistered-tile-icon",
+        blocking: true,
+        subject: `KIND_TILE_ICONS.${kind}=${JSON.stringify(name)}`,
+        detail: `absent from TILE_GLYPHS [${[...tiles.keys()].join(", ")}] — falls back`,
+      });
     }
   }
 

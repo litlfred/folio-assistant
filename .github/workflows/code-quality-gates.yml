@@ -1852,8 +1852,10 @@ jobs:
           # Every ingested source records its licence, or records that nobody
           # could find it and where they looked (issue #1023). It REPORTS
           # absence and `unknown`, because the field is new, and fails only on
-          # a record that claims something it cannot back.
-          bun run check:source-licence
+          # a record that claims something it cannot back. The `:check` form
+          # compares the committed sidecar and writes nothing (bean `i2kp`):
+          # the writing form, run as the gate, rewrote what it should judge.
+          bun run check:source-licence:check
           # Every declared harness visualiser has a wireframe, checked at a web
           # AND a mobile viewport (issue #1023; owner: "need both web and
           # mobile layouts in usability reviews"). Gated: a visualiser added

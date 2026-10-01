@@ -122,7 +122,7 @@ Each dimension is a **contrast** between two poles, shown by their highest-loadi
 
 ## cat-harness / skills
 
-**213** units · **5842** terms · k = **100** · retains **79.7 %** of the weighted matrix · weighting `log-entropy` · sidecar `cat-harness/test/results/lsi/cat-harness/skills.lsi.json`
+**213** units · **5843** terms · k = **100** · retains **79.7 %** of the weighted matrix · weighting `log-entropy` · sidecar `cat-harness/test/results/lsi/cat-harness/skills.lsi.json`
 
 > Dimension 1 has **no negative pole**: it most likely measures unit length and term frequency (a margin), not a theme. Read the themes from dimension 2 on.
 
@@ -130,20 +130,20 @@ Each dimension is a **contrast** between two poles, shown by their highest-loadi
 
 | dim | σ | one pole | the other pole |
 |---|---|---|---|
-| 1 | 43.69 | instance, kind, harness, session, directory, graph, block, page | *(none)* |
+| 1 | 43.70 | instance, harness, kind, session, directory, graph, block, page | *(none)* |
 | 2 | 21.42 | watcher, slot, sibling, queue, backlog, prs, block, commits | harness, instance, declaration, directory, node, directories, graph, bootstrap |
-| 3 | 17.76 | session, beans, goals, branch, store, window, epic, push | slot, chapter, block, edges, formal, glossary, project, proof |
-| 4 | 16.45 | page, block, manifest, section, sections, text, blocks, chapter | ledger, sibling, subdirectory, items, sessions, window, renderable, relocation |
-| 5 | 14.98 | rung, queue, archive, arm, sniff, zip, archived, slide | requirements, feature, role, lane, actor, phase, sign-off, feedback |
-| 6 | 14.80 | locale, page, navbar, translated, translation, sha, language, french | edges, forward, edge, lane, actor, logical, backward, cross-chapter |
-| 7 | 14.39 | edges, forward, edge, backward, preview, cross-chapter, energy, logical | actor, lane, role, requirement, login, criterion, roles, process |
-| 8 | 14.12 | locale, translated, translation, french, back-translation, claim, trip, badge | preview, feature, phase, impact, option, staging, feedback, post |
+| 3 | 17.76 | session, beans, goals, branch, store, window, epic, push | slot, chapter, block, edges, formal, glossary, project, narrative |
+| 4 | 16.45 | page, block, section, manifest, sections, text, blocks, chapter | ledger, sibling, subdirectory, items, sessions, window, renderable, relocation |
+| 5 | 14.97 | rung, queue, archive, arm, sniff, zip, archived, slide | requirements, role, feature, lane, actor, phase, sign-off, feedback |
+| 6 | 14.80 | locale, page, translated, navbar, translation, sha, language, french | edges, forward, edge, lane, logical, actor, backward, cross-chapter |
+| 7 | 14.39 | edges, forward, edge, backward, preview, cross-chapter, energy, logical | actor, lane, role, requirement, login, criterion, process, roles |
+| 8 | 14.12 | locale, translated, translation, french, back-translation, claim, trip, badge | preview, feature, phase, impact, option, feedback, staging, post |
 
 **Findings** — 0 narrow dimension(s), 1 near-duplicate pair(s).
 
 *Near-duplicates* (cosine ≥ 0.95) — similar is not duplicate; read both:
 
-- 0.953 — `cat-harness/skills/sdlc/sdlc-core/delivery-summary.md` ~ `cat-harness/skills/sdlc/sdlc-core/diff.md`
+- 0.954 — `cat-harness/skills/sdlc/sdlc-core/delivery-summary.md` ~ `cat-harness/skills/sdlc/sdlc-core/diff.md`
 
 ## smart-base / library
 

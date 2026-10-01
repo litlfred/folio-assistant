@@ -889,6 +889,12 @@ export const SCRIPT_EXEMPTIONS: ScriptExemption[] = [
       "SUBSUMED by `check:library-qa:check`, which CI runs: the same script with `--check`, so it judges exactly the same library entries and fails on a stale sidecar or a could-not-determine entry instead of rewriting the sidecar. Kept as a script because the writer is what refreshes `library-entry-qa.qa-results.json` after an ingest. Issue #1794, bean `8iqc`",
   },
   {
+    script: "check:source-licence",
+    kind: "covered-by",
+    reason:
+      "SUBSUMED by `check:source-licence:check`, which CI runs: the same script with `--check`, so it computes the same report and fails on the same malformed records, and additionally fails when the committed sidecar is not what the corpus produces. The bare form is the WRITER of `test/results/source-licence.qa-results.json`, and it used to be the gate — so the gate rewrote the record it should have judged, and a stale sidecar failed nothing (bean `i2kp`). Kept as the author's command, and as the writer `regen` pairs with the `:check` twin",
+  },
+  {
     script: "audit:coverage:check",
     kind: "covered-by",
     reason:
