@@ -6,9 +6,9 @@ parent: Skill instructions
 ---
 
 {: .note }
-> Generated from [`cat-harness/skills/folio-core/voice-authoring-guidance.md`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/folio-core/voice-authoring-guidance.md) — do not edit here.
+> Generated from [`cat-harness/skills/authoring/authoring-core/voice-authoring-guidance.md`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/authoring/authoring-core/voice-authoring-guidance.md) — do not edit here.
 >
-> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/cat-harness/skills/folio-core/voice-authoring-guidance.md){: .fa-edit-source }
+> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/cat-harness/skills/authoring/authoring-core/voice-authoring-guidance.md){: .fa-edit-source }
 
 {% raw %}
 # Voice authoring guidance

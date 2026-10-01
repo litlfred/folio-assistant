@@ -1,11 +1,11 @@
 ---
 # folio-assistant-u3cd
 title: 'IG SITE THEME: build-ig-site dresses each IG''s own just-the-docs site in the palette its instance declares'
-status: in-progress
+status: completed
 type: feature
 priority: normal
 created_at: 2026-09-30T21:48:48Z
-updated_at: 2026-09-30T22:04:49Z
+updated_at: 2026-09-30T23:42:12Z
 parent: folio-assistant-o3xy
 ---
 
@@ -24,7 +24,7 @@ It sets --sidebar-color/--link-color/--border-color, which only folio-assistant'
 - [x] scheme written from a declared palette, with tests
 - [x] contrast chosen and reported
 - [x] staged smart-trust site rendered locally with #1683's palette and screenshotted
-- [ ] PR green
+- [x] PR green — #1701 merged (c8514ea), owner: "merge 1701 when green"
 
 ## Round 1 (2026-09-30)
 
@@ -39,3 +39,14 @@ Until #1683 merges, smart-trust declares no webpage theme on main, so the stagin
 ## Coordination (2026-09-30)
 
 Only sibling in scope: #1683 (bean `7h3u`), which declares the palette this reads. No shared files. #1683 changes neither `instanceThemes` nor the palette roles. Intent, files and asks posted there: https://github.com/litlfred/folio-assistant/pull/1683#issuecomment-5920385735. Either merge order works; #1683's "theme applied" item now covers two surfaces, and this bean does not tick it.
+
+## Summary of Changes
+
+Merged in #1701 (`c8514ea`, 2026-09-30).
+
+- `stage-ig-sites` resolves the instance's ONE declared `webpage` theme through `instanceThemes` (two declared is refused; none builds with the default scheme and says so).
+- `build-ig-site` writes the palette as a just-the-docs colour scheme (`_sass/color_schemes/ig.scss`, `color_scheme: ig`): surface to background, ink to text and headings, accent to links, buttons and sidebar, edge to borders. `$feedback-color` is re-derived, because just-the-docs imports its light scheme first.
+- Sidebar text is the palette role with the better WCAG contrast on accent; a pairing below AA, or one not computable, is reported.
+- fhir-harness takes a palette and names no IG's branding.
+
+Rendered locally with #1683's `who-smart-ig` palette: sidebar text 8.92:1 on #00477d. smart-trust's `/ig/` site wears it once #1683 merges.

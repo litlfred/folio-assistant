@@ -6,7 +6,7 @@ allowed-tools: Bash(git*), Bash(bun*), mcp__github__pull_request_read, mcp__gith
 
 # /staging-review — send back the staging URLs, and what to look at
 
-Runs the [`staging-review`](../../cat-harness/skills/folio-core/staging-review.md)
+Runs the [`staging-review`](../../cat-harness/skills/sdlc/sdlc-core/staging-review.md)
 skill. Read it first; this file only parses the argument and names the order.
 
 ## Argument

@@ -168,6 +168,24 @@ export interface GraphKindDef {
    */
   layer?: "core";
   /**
+   * Does every instance have ITS OWN graph of this kind — so an instance that
+   * inherits a directory of this kind gets its own copy created?
+   *
+   * The per-entry `dependents: "reproduce" | "skip"` answered this until
+   * 2026-09-30, when the owner retired it (option A: "make dependents:
+   * reproduce automatic behaviour so [we] don't need it"). It is a fact about
+   * the KIND: a folio has its own `uploads/`, `library/`, `docs/`, `qa`
+   * results and work plan; it does not have its own empty `schemas/`,
+   * `tools/` or `code`. Stated once here, it cannot disagree between two
+   * declarations of the same kind — which the per-entry field did, e.g.
+   * `docs` was `reproduce` once and `skip` four times.
+   *
+   * Absent means no: an inherited directory of the kind is a MEMBER of the
+   * subgraph exactly where it already exists, and is never created empty
+   * (the `dh4f` rule). {@link materialiseDirectories} reads it.
+   */
+  perInstance?: true;
+  /**
    * Is a graph of this kind expected to render as a website?
    *
    * The only behavioural distinction in the vocabulary — and the reason
@@ -696,6 +714,7 @@ export const BASE_GRAPH_KINDS: Readonly<Record<string, GraphKindDef>> = {
   // moment a `docs` page needs a block viewer, a LaTeX pass, a QA badge or a
   // translation overlay, it is describing authored CONTENT and is a `folio`.
   docs: {
+    perInstance: true,
     renderable: true,
     // THE FROM-WITHIN NODE (issue #1164; the owner's #980 ruling: nesting is
     // allowed when "a (Sub?)KGraph node within the first subdir labels all the
@@ -781,6 +800,7 @@ export const BASE_GRAPH_KINDS: Readonly<Record<string, GraphKindDef>> = {
       "at these statements by `req:<slug>#<key>`.",
   },
   "external-schema": {
+    perInstance: true,
     renderable: false,
     // `content`, and the call is against the obvious reading. A process DOES
     // write these files — `external-schemas.ts --write` refreshes each
@@ -798,9 +818,29 @@ export const BASE_GRAPH_KINDS: Readonly<Record<string, GraphKindDef>> = {
     holds: "content",
     // declared-path-literal: this table IS the declaration, as on `health`.
     validator: "cat-harness:schemas/external-schema.ts#ExternalSchemaSchema",
+    // A SECOND family in the same directory — bean `7wou`. A record pins an
+    // edition; this is that edition's CONTENT, snapshotted so
+    // `check:term-mapping`'s fhir half can assert "this code is in the
+    // published IG at version X" offline. The directory is a place to look
+    // and the file declares what it is, which is why `loadSpecs` now reads
+    // `$schema` instead of parsing every `*.json` as a record.
+    // BOTH families are listed. Declaring `nodeSchemas` at all makes this the
+    // complete account of the directory, so the record's own family has to
+    // appear beside the new one — `check:kind-validators` reports an unlisted
+    // family as unmapped, which is the right answer and the reason the
+    // kind-level `validator` above is not a fallback.
+    nodeSchemas: {
+      "folio-external-schema/v1": {
+        validator: "schemas/external-schema.ts#ExternalSchemaSchema",
+      },
+      "folio-pinned-terminology/v1": {
+        validator: "schemas/pinned-terminology.ts#PinnedTerminologySchema",
+      },
+    },
     summary:
       "The specifications this instance depends on — one record per specification, pinning the " +
-      "EDITION in use, with the operative terms derived from the corpus rather than hand-listed.",
+      "EDITION in use, with the operative terms derived from the corpus rather than hand-listed; " +
+      "and, beside a record, the pinned edition's own codes where something resolves against them.",
   },
   // Code lists — a closed set of codes, each with a label, a definition and a
   // source, published as a SKOS concept scheme (schemas/code-list.ts). Owner,
@@ -862,6 +902,7 @@ export const BASE_GRAPH_KINDS: Readonly<Record<string, GraphKindDef>> = {
   // declaration mentioned, so a consumer scanning the declared directories saw
   // none of them and reported a clean run over the lot.
   qa: {
+    perInstance: true,
     renderable: false,
     // A verdict is where a REVIEW got to on a subject that lives elsewhere.
     // Detached from the artefact it judges it says nothing — which is the
@@ -1096,6 +1137,7 @@ export const BASE_GRAPH_KINDS: Readonly<Record<string, GraphKindDef>> = {
     summary: BOOTSTRAP_GRAPH_KINDS["models"],
   },
   beans: {
+    perInstance: true,
     renderable: false,
     // The work plan. Its own declaration already splits WHAT IS BEING WORKED
     // ON from WHERE IT GOT TO — both are records about content, neither is
@@ -1200,6 +1242,7 @@ export const BASE_GRAPH_KINDS: Readonly<Record<string, GraphKindDef>> = {
   // the four coordinates of the role model: who, as which role, in which
   // process, on which task.
   todos: {
+    perInstance: true,
     layer: "core",
     renderable: false,
     // A person's outstanding items. Outstanding is the word that settles it —
@@ -1293,6 +1336,7 @@ export const BASE_GRAPH_KINDS: Readonly<Record<string, GraphKindDef>> = {
   // `content/docs/document-ingestion/uploads-and-library-are-two-stages-of-one-pipeline.md`
   // exists to state.
   uploads: {
+    perInstance: true,
     layer: "core",
     renderable: false,
     // A QUEUE, and a queue is a position in a pipeline. The declaration
@@ -1313,6 +1357,7 @@ export const BASE_GRAPH_KINDS: Readonly<Record<string, GraphKindDef>> = {
       "greppable as corpus: a document here reads as absent to every consumer.",
   },
   library: {
+    perInstance: true,
     layer: "core",
     renderable: false,
     // DERIVED, not content — bean `hqku`, and the owner's ruling of
@@ -1344,6 +1389,16 @@ export const BASE_GRAPH_KINDS: Readonly<Record<string, GraphKindDef>> = {
       // measure coverage on, no `xref` to dedupe by and no pixel to inspect,
       // so `role` and `basis` would each mean two things.
       "folio-vector-labels/v1": { validator: "schemas/vector-labels.ts#VectorLabelsSidecarSchema" },
+      // The JUDGEMENT half of the vector arm — bean `a8wy`. Stands to
+      // `folio-vector-labels` as `folio-image-verdicts` stands to
+      // `folio-document-images`: the measurement says where every text line
+      // sits, this says what somebody reading them concluded, and its
+      // required `basis` records whether they rendered the page. A
+      // labels-only reading gets the nouns right and the relations wrong, so
+      // a reader has to be able to tell the two apart.
+      "folio-figure-descriptions/v1": {
+        validator: "schemas/figure-description.ts#FigureDescriptionsFileSchema",
+      },
       // Agent summaries of prose blocks, beside the blocks rather than in
       // them — the blocks stay verbatim and `ingested` (owner, 2026-09-24).
       // The semantic half of its QA is `block-summaries` in check-l1-complete.
@@ -1620,6 +1675,7 @@ export const BASE_GRAPH_KINDS: Readonly<Record<string, GraphKindDef>> = {
   // a voice apply, and a graph kind that conflated the two would have no place
   // to record that this instance ships four voices and activates none.
   voices: {
+    perInstance: true,
     layer: "core",
     renderable: false,
     // THE FROM-WITHIN NODE, as on `docs` (owner 2026-09-30, bean `rkqp`:
@@ -1928,6 +1984,7 @@ export const BASE_GRAPH_KINDS: Readonly<Record<string, GraphKindDef>> = {
   // defect in reverse, five committed directories that no declaration
   // mentioned. That is what this kind is for.
   "translation-sources": {
+    perInstance: true,
     renderable: false,
     // A `.po` catalogue and its manifest are authored content in another
     // language, not a record of a translation having happened.

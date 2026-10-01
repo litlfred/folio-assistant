@@ -37,7 +37,7 @@ keep it true.
 | `quote` | **the grantor's own words, verbatim** | the agent's paraphrase is the thing under suspicion; a summary can widen a scope without anyone noticing |
 | `gate` | which gate class is waived (below) — never "everything" | a blanket waiver is indistinguishable from no rule, and nobody can audit what it covered |
 | `scope` | `session:<id>`, `process:<instance-id>`, or `until:<ISO-8601>` | an unscoped waiver outlives the situation that justified it |
-| `expires` | a timestamp, always | same argument [`bean-blocking.md`](../../folio-core/bean-blocking.md) makes for a block: **a waiver with no expiry cannot be told from one nobody remembered to withdraw** |
+| `expires` | a timestamp, always | same argument [`bean-blocking.md`](../../sdlc/sdlc-core/bean-blocking.md) makes for a block: **a waiver with no expiry cannot be told from one nobody remembered to withdraw** |
 
 A waiver missing any field is **not a waiver**, and the gate stands. An agent
 that finds a malformed one asks, exactly as if none existed.
@@ -54,12 +54,12 @@ non-destructive move (`scrapped`, with reasons) is always available.
 
 | gate class | the rule it relaxes | waivable |
 |---|---|---|
-| `merge-to-main` | [`crdm-requirements-workflow`](../../crdm/crdm-requirements-workflow.md) §Phase 6 — explicit confirmation before merging | yes |
-| `bean-close` | [`bean-coordination`](../../folio-core/bean-coordination.md) §"When you cannot re-derive it yourself" — the `ready-to-close` batch | yes |
+| `merge-to-main` | [`crdm-requirements-workflow`](../../sdlc/crdm/crdm-requirements-workflow.md) §Phase 6 — explicit confirmation before merging | yes |
+| `bean-close` | [`bean-coordination`](../../sdlc/sdlc-core/bean-coordination.md) §"When you cannot re-derive it yourself" — the `ready-to-close` batch | yes |
 | `deletion` | [`deletion-requires-confirmation`](deletion-requires-confirmation.md) — report and wait | yes, **per artefact class**, never blanket |
-| `swarm-spawn` | [`swarm-management`](../../folio-core/swarm-management.md) — asked every time, per swarm | yes, with the agent count and model level named in the quote |
+| `swarm-spawn` | [`swarm-management`](../../sdlc/sdlc-core/swarm-management.md) — asked every time, per swarm | yes, with the agent count and model level named in the quote |
 | `process-reentry` | [`process-state`](../../process/workflow/process-state.md) — confirm before re-entering | yes |
-| `issue-close` | [`issue-working`](../../folio-core/issue-working.md) — an agent never closes an issue on its own say-so | yes; the waiver names the issues |
+| `issue-close` | [`issue-working`](../../sdlc/sdlc-core/issue-working.md) — an agent never closes an issue on its own say-so | yes; the waiver names the issues |
 | *bean deletion* | `AGENTS.md`, "never delete ANY bean" | **no — a prohibition, not a gate** |
 | *fabricating evidence* | anywhere a rule says re-derive rather than quote | **no** |
 

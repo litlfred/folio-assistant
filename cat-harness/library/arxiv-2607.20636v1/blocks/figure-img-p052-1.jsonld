@@ -1,0 +1,25 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/ns/content/v1.jsonld",
+  "@id": "library/arxiv-2607.20636v1/blocks/figure-img-p052-1",
+  "@type": [
+    "folio-assistant-core:Figure",
+    "doco:Figure"
+  ],
+  "kind": "figure",
+  "file": "../images/img-p052-1.png",
+  "pageStart": 52,
+  "pageEnd": 52,
+  "narrative": {
+    "text": "Figure 4.4: \"Sensitivity of PTRRα to α on selected LCDB instances (T = 44, k = 22)\". Normalised cumulative reward (ALG/OPT) against α from 0.1 to 1.0, six datasets, each a line with a shaded 95% band. The reading the figure is for is that the datasets DISAGREE about α: ds 55 is flat at about 0.995 throughout, ds 67 RISES with α (0.943 to 0.954), ds 16 peaks in the middle around 0.846 at α≈0.4-0.7, while ds 58 (0.907 to 0.886), ds 19 (0.789 to 0.722) and ds 46 (0.735 to 0.696) all FALL. Every curve's total variation across the sweep is small — the largest, ds 19, moves about 0.067 — so the sensitivity is real but shallow, and the bands of ds 19 and ds 46 overlap over much of the range.",
+    "state": "draft",
+    "drafted_by": {
+      "kind": "agent",
+      "id": "claude",
+      "model": "claude-opus-5"
+    },
+    "drafted_at": "2026-09-29"
+  },
+  "derivedFrom": "library/arxiv-2607.20636v1/sections/sec-029",
+  "sourceDocument": "library/arxiv-2607.20636v1/manifest",
+  "provenance": "ingested"
+}

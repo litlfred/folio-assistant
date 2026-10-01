@@ -5,7 +5,7 @@ status: in-progress
 type: task
 priority: normal
 created_at: 2026-09-30T08:12:08Z
-updated_at: 2026-09-30T17:03:14Z
+updated_at: 2026-10-01T05:14:21Z
 parent: folio-assistant-vuip
 ---
 
@@ -56,3 +56,10 @@ Blockers found:
 3. folio-assistant-sci/adapters/paper imports adapters/document/* — sci's paper adapter is server-side, so sci would depend on cat-harness-tools (allowed by direction; paths repoint).
 
 Entry points to repoint: package.json main/exports/files/scripts (start*, check-deps, mcp:capture), .mcp.json, build-lean-mcp.yml (adapters/mcp-server/Dockerfile), start-folio-assistant.sh, tsconfig include, code-quality-gates ruff scope.
+
+
+## Owner rulings 2026-10-01
+
+**Q1 — may folio-assistant-core depend on cat-harness-tools? NO: split the adapter.** Measured on main 19ab47a: core's adapters/document imports 16 modules that move (src/tools/{check-deps,preferences,preview,skill-fetch,skill-prompts,folio-init,readme-sync,render-order,readme-audit,lsi-query}, types, core/{git,feedback,logging,rbac,cache}, routes/chat), and scripts/sample-import-run.ts drives src/tools/workflow.ts. Ruling: the document adapter's SERVER half (tool registration, routes, RBAC/git/feedback wiring) moves into cat-harness-tools; core keeps the content logic. Layering stays cat-harness <- cat-harness-tools, and core does not import cat-harness-tools. sci (paper adapter, which extends core's DocumentContentAdapter) follows the same split.
+
+**Q2 — packaging: own package.json**, like bootstrap-tools: cat-harness-tools carries its own manifest with the server entry points; the root start*/check-deps/mcp:capture scripts, .mcp.json and Docker paths are repointed; no compatibility re-exports.

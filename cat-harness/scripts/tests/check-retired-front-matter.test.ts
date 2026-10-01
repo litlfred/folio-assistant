@@ -41,8 +41,8 @@ function fixture(files: Record<string, string>, declare = true): string {
     writeDeclaration(root, JSON.stringify({
         name: "fixture",
         directories: [
-          { id: "skills", path: "skills/", dependents: "reproduce", graphKinds: ["cat-harness"] },
-          { id: "fsh-guts", path: "fsh-guts/", dependents: "reproduce", scope: "repository", graphKinds: ["fsh-guts"] },
+          { id: "skills", path: "skills/", graphKinds: ["cat-harness"] },
+          { id: "fsh-guts", path: "fsh-guts/", scope: "repository", graphKinds: ["fsh-guts"] },
         ],
       }));
     // Every retirement's record has to exist, or `missingRecords` fires and

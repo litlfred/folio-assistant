@@ -4,6 +4,16 @@
 reference.** Staged as a top-level directory ahead of becoming its own
 repository, where it will carry its own tools and themes.
 
+**Contents**
+
+<!-- readme:toc:begin -->
+
+- [What is here, and what is only known about](#what-is-here-and-what-is-only-known-about)
+- [The worked example closes a loop](#the-worked-example-closes-a-loop)
+- [The library, now that it is here](#the-library-now-that-it-is-here)
+
+<!-- readme:toc:end -->
+
 ## What is here, and what is only known about
 
 | | |

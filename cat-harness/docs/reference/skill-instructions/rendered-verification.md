@@ -6,9 +6,9 @@ parent: Skill instructions
 ---
 
 {: .note }
-> Generated from [`cat-harness/skills/folio-core/rendered-verification.md`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/folio-core/rendered-verification.md) — do not edit here.
+> Generated from [`cat-harness/skills/sdlc/sdlc-core/rendered-verification.md`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/sdlc/sdlc-core/rendered-verification.md) — do not edit here.
 >
-> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/cat-harness/skills/folio-core/rendered-verification.md){: .fa-edit-source }
+> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/cat-harness/skills/sdlc/sdlc-core/rendered-verification.md){: .fa-edit-source }
 
 {% raw %}
 # /rendered-verification — look at it, then send the picture
@@ -88,6 +88,12 @@ dividers have colour now" is unfalsifiable and the author has to take your
 word for what it looked like. `git worktree add <dir> origin/main --detach`
 is the cheap way; symlink `node_modules` and the docs `vendor`/`.bundle`
 into it rather than re-installing.
+
+When the pair goes to a **reviewer** rather than confirming the change to
+yourself, [`before-after-preview`](before-after-preview.md) governs it:
+one build with one variable where possible, stable capture, a *k of n* count
+with its method, the status line, and where the preview sits in the review
+processes. It also covers papers, FHIR IGs and slide decks.
 
 ## Running it here
 

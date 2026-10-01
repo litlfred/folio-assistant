@@ -22,7 +22,7 @@ which one you are writing for before you write a line:
 | lives in | `templates/readme/` beside the writer, in the tools repository (`bootstrap-tools/scripts/templates/readme/`) | `cat-harness/docs/_includes/` — just-the-docs' extension points (`head_custom.html`, `footer_custom.html`, `nav_footer_custom.html`) plus our own |
 | output | `<directory>/README.md`, **committed**, read on GitHub where no Liquid runs | `_site/`, **never committed**, published to Pages |
 | data | only what the generator passes: `subgraph`, `instance`, `kg`, `files`, `subdirs`, `summary` | `site`, `page`, `include`, and `_data/*.json` written by the pipeline |
-| verified by | `bun run readme:subgraphs:check` — the diff is the output | building the site: [`rendered-verification`](../../folio-core/rendered-verification.md), `bun run preview:site` |
+| verified by | `bun run readme:subgraphs:check` — the diff is the output | building the site: [`rendered-verification`](../../sdlc/sdlc-core/rendered-verification.md), `bun run preview:site` |
 
 ## Where a template lives
 
@@ -103,7 +103,7 @@ a reader would want its own row for it — not to hide logic.
 template emits clean Markdown. It is also how a separator the output needs
 disappears: one `{% endif -%}` in `_includes/landing.html` glued two HTML
 attributes together and the live landing page printed its own markup as text,
-past every gate ([`continual-progress`](../../folio-core/continual-progress.md) §"A template is
+past every gate ([`continual-progress`](../../sdlc/sdlc-core/continual-progress.md) §"A template is
 not a page"). Strip freely inside a tag's own lines; think before stripping
 next to a table row's newline, the blank line before a heading or table, or
 an attribute boundary. `subgraph-readmes` also collapses three or more
@@ -154,6 +154,6 @@ is part of `bun run gates`.
   `relative_url`, never a literal `/…`.
 - Override just-the-docs through its extension-point includes, not by copying
   a theme layout — a copied layout silently stops tracking the pinned version
-  ([`upstream-version-adoption`](../../folio-core/upstream-version-adoption.md)).
+  ([`upstream-version-adoption`](../../sdlc/sdlc-core/upstream-version-adoption.md)).
 - A generated reference directory (`reference/skill-instructions/`,
   `reference/skills/`, `docs-auto/`) is never hand-edited; change its generator.

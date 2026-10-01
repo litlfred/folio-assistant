@@ -11,6 +11,15 @@ from what the IG publishes.
 | Published at | <https://worldhealthorganization.github.io/smart-trust> |
 | DAK API | present |
 
+**Contents**
+
+<!-- readme:toc:begin -->
+
+- [What is here](#what-is-here)
+- [Regenerating](#regenerating)
+
+<!-- readme:toc:end -->
+
 ## What is here
 
 `fhir-artifact-index/index.json` lists every artefact of the IG with its
@@ -43,5 +52,5 @@ because "could not check" is never green.
 
 Nothing in this directory is hand-edited. See
 [`AGENTS.md`](AGENTS.md) and the
-[`ig-artifact-ingestion`](../cat-harness/skills/authoring-who-smart-guidelines/ig-artifact-ingestion.md)
+[`ig-artifact-ingestion`](../cat-harness/skills/authoring/authoring-who-smart-guidelines/ig-artifact-ingestion.md)
 skill.

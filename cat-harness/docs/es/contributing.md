@@ -63,7 +63,7 @@ cambies las pautas para agentes.
 
 - Las **instrucciones de habilidades** (`docs/reference/skill-instructions/*.md`) también son
   generadas — nunca las edites a mano. Edita el cuerpo de las habilidades en
-  `skills/content-lifecycle/*.md` o `src/skills/*.md` y vuelve a generar:
+  `skills/authoring/content-lifecycle/*.md` o `src/skills/*.md` y vuelve a generar:
 
   ```sh
   bun run scripts/gen-skill-docs.ts
@@ -85,6 +85,6 @@ bundle exec jekyll serve
 ## Publicar un cambio
 
 Verifica → confirma que se pueda fusionar → push → (solo si se solicita) abre un PR. Consulta
-`skills/folio-core/prepare-merge.md`. Mantén el **formalismo del marco de trabajo
+`skills/sdlc/sdlc-core/prepare-merge.md`. Mantén el **formalismo del marco de trabajo
 separado del contenido** — el contenido pertenece a su propio repositorio, y cualquier contenido
 en esta documentación es solo ilustrativo.

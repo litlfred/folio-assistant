@@ -12,6 +12,7 @@ import { readFileSync, readdirSync } from "node:fs";
 import { join } from "node:path";
 
 import { firstHeading, frontMatter, nodeSummary } from "../front-matter.js";
+import { packageDirsIn } from "../skill-topics.js";
 
 describe("front matter", () => {
   test("a plain scalar description is read", () => {
@@ -55,26 +56,33 @@ describe("nodeSummary — and its third state", () => {
 });
 
 describe("the live corpus really is describable — the assertion that would have caught it", () => {
-  const FOLIO_CORE = join(import.meta.dir, "..", "..", "skills", "folio-core");
-  const files = readdirSync(FOLIO_CORE).filter((f) => f.endsWith(".md"));
+  // Every package, through the topic-aware walk (bean 9umr). This read only
+  // skills/folio-core/ until its skills moved into topics, which left it six —
+  // and a corpus of six proves little about the promise.
+  const SKILLS = join(import.meta.dir, "..", "..", "skills");
+  const files = packageDirsIn(SKILLS).flatMap((p) =>
+    readdirSync(p.dir)
+      .filter((f) => f.endsWith(".md") && f !== "README.md")
+      .map((f) => join(p.dir, f)),
+  );
 
   test("there are skills to check — otherwise this proves nothing", () => {
     expect(files.length).toBeGreaterThan(50);
   });
 
-  test("every folio-core skill yields SOME summary", () => {
+  test("every skill yields SOME summary", () => {
     // Not "most". If a skill can be listed it can be described, because the
     // heading fallback covers the ones carrying no front matter. A failure
     // here is a file with neither — which is a node that cannot say what it
     // is, and that is worth a red build.
-    const mute = files.filter((f) => !nodeSummary(readFileSync(join(FOLIO_CORE, f), "utf8")));
+    const mute = files.filter((f) => !nodeSummary(readFileSync(f, "utf8")));
     expect(mute).toEqual([]);
   });
 
   test("summaries are one line — a folded block must not leak newlines", () => {
     // `skill_list` renders one skill per line. A description carrying a newline
     // breaks the list into fragments that read as separate skills.
-    const multiline = files.filter((f) => nodeSummary(readFileSync(join(FOLIO_CORE, f), "utf8"))?.includes("\n"));
+    const multiline = files.filter((f) => nodeSummary(readFileSync(f, "utf8"))?.includes("\n"));
     expect(multiline).toEqual([]);
   });
 });
