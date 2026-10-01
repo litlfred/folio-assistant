@@ -1,6 +1,6 @@
 import { describe, expect, test } from "bun:test";
 import { drainSubprocess } from "./helpers";
-import { mkdirSync, mkdtempSync, rmSync, writeFileSync } from "fs";
+import { existsSync, mkdirSync, mkdtempSync, rmSync, writeFileSync } from "fs";
 import { tmpdir } from "os";
 import { join, resolve } from "path";
 import { loadProcessModel } from "../../src/workflow/process-model";
@@ -28,6 +28,15 @@ import {
  */
 
 const WF = resolve(import.meta.dir, "../../processes");
+/**
+ * Where a shipped diagram lives. Not always `WF`: a content-type process is
+ * held by the instance that owns its skills — `l2-dak-authoring` moved to
+ * `smart-base/processes/` (#1772) — so the test looks in each owner's
+ * processes directory rather than assuming the platform holds them all.
+ */
+const PROCESS_DIRS = [WF, resolve(import.meta.dir, "../../../smart-base/processes")];
+const processFile = (f: string): string =>
+  PROCESS_DIRS.map((d) => join(d, `${f}.bpmn`)).find((p) => existsSync(p)) ?? join(WF, `${f}.bpmn`);
 const INSTANCE_ROOT = resolve(import.meta.dir, "../..");
 const editing = () => loadProcessModel(join(WF, "editing-hci-validation.bpmn"));
 
@@ -48,7 +57,7 @@ describe("the base is strict and the content-type processes are not", () => {
 
   test("the three per-content-type processes are advisory", async () => {
     for (const f of ["authoring-a-paper", "l2-dak-authoring", "l3-fhir-pipeline"]) {
-      expect((await loadProcessModel(join(WF, `${f}.bpmn`))).enforcement).toBe("advisory");
+      expect((await loadProcessModel(processFile(f))).enforcement).toBe("advisory");
     }
   });
 
@@ -181,7 +190,7 @@ describe("the relaxations this repo actually ships", () => {
     const models = await Promise.all(
       ["editing-hci-validation", "draft-to-publication", "content-lifecycle",
        "authoring-a-paper", "l2-dak-authoring", "l3-fhir-pipeline"].map((f) =>
-        loadProcessModel(join(WF, `${f}.bpmn`)),
+        loadProcessModel(processFile(f)),
       ),
     );
     const relaxations = loadRelaxations(INSTANCE_ROOT);
