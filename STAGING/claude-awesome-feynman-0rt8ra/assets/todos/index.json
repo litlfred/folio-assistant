@@ -214,7 +214,9 @@
     "Process_BoardPlaceNote": [],
     "Process_BoardRelocate": [],
     "Process_CiHealth": [],
-    "Process_CodeChangeReview": [],
+    "Process_CodeChangeReview": [
+      "Process_MergeBase"
+    ],
     "Process_CodeQualityGates": [],
     "Process_ContentAcquisition": [],
     "Process_ContentChangeReview": [
@@ -252,7 +254,8 @@
     ],
     "Process_DocsSite": [
       "Process_PublishAlert",
-      "Process_PublishVerification"
+      "Process_PublishVerification",
+      "Process_RenderKgToCdn"
     ],
     "Process_Ingestion": [
       "Process_BuildL1Kg",
@@ -269,10 +272,13 @@
       "Process_OptionsAnalysis"
     ],
     "Process_EvidenceRetrieval": [],
-    "Process_FeatureStaging": [],
+    "Process_FeatureStaging": [
+      "Process_RenderKgToCdn"
+    ],
     "Process_GettingStarted": [],
     "Process_GraphDetanglement": [],
     "Process_HumanTranslation": [],
+    "Process_IgAstDeltaReview": [],
     "Process_IgIncremental": [],
     "Process_BuildL1Kg": [],
     "Process_DeriveContent": [],
@@ -289,8 +295,8 @@
       "Process_UpstreamAdoption"
     ],
     "Process_KgToPortal": [],
-    "Process_L2Dak": [],
     "Process_L3Fhir": [],
+    "Process_MergeBase": [],
     "Process_MethodologyFromSource": [
       "Process_Ingestion",
       "Process_RelatedWork"
@@ -304,6 +310,7 @@
     "Process_PublishVerification": [],
     "Process_QaReportSigning": [],
     "Process_RelatedWork": [],
+    "Process_RenderKgToCdn": [],
     "Process_RepoHealth": [],
     "Process_CodeReview": [],
     "Process_NarrativeReview": [
@@ -345,7 +352,12 @@
       "Process_MaterializeRemote",
       "Process_RefreshMaterialized"
     ],
-    "Process_DIIG": []
+    "Process_SubscribeKg": [
+      "Process_MaterializeRemote",
+      "Process_RefreshMaterialized"
+    ],
+    "Process_DIIG": [],
+    "Process_L2Dak": []
   },
   "themeArt": {
     "library": {

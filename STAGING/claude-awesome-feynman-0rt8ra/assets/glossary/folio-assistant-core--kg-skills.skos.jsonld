@@ -32,6 +32,101 @@
       "skos:notation": "deep-document-research",
       "dcterms:source": "folio-assistant-core/skills/deep-document-research.md",
       "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant-core/0.1.0/ns#glossary/kg-skills/document-authoring",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant-core/0.1.0/ns#glossary/kg-skills"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "document-authoring"
+        }
+      ],
+      "skos:notation": "document-authoring",
+      "dcterms:source": "folio-assistant-core/skills/content/folio-document-adapter/document-authoring.md",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant-core/0.1.0/ns#glossary/kg-skills/document-intake",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant-core/0.1.0/ns#glossary/kg-skills"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "document-intake"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Process uploaded documents (PDFs, scans, LaTeX, structured/normative guidelines, etc.) from uploads/ into structured content objects. Handles OCR extraction, environment detection, structural analysis, and content-object generation. Supports multi-stage pipelines: raw upload → extracted text → structured blocks → .ts/.md content objects."
+        }
+      ],
+      "skos:notation": "document-intake",
+      "dcterms:source": "folio-assistant-core/skills/library/ingestion/document-intake.md",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant-core/0.1.0/ns#glossary/kg-skills/document-publishing",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant-core/0.1.0/ns#glossary/kg-skills"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "document-publishing"
+        }
+      ],
+      "skos:notation": "document-publishing",
+      "dcterms:source": "folio-assistant-core/skills/content/folio-document-adapter/document-publishing.md",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant-core/0.1.0/ns#glossary/kg-skills/document-structure",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant-core/0.1.0/ns#glossary/kg-skills"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "document-structure"
+        }
+      ],
+      "skos:notation": "document-structure",
+      "dcterms:source": "folio-assistant-core/skills/content/folio-document-adapter/document-structure.md",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant-core/0.1.0/ns#glossary/kg-skills/normative-statements",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant-core/0.1.0/ns#glossary/kg-skills"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "normative-statements"
+        }
+      ],
+      "skos:notation": "normative-statements",
+      "dcterms:source": "folio-assistant-core/skills/content/folio-document-adapter/normative-statements.md",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant-core/0.1.0/ns#glossary/kg-skills/quality-control",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant-core/0.1.0/ns#glossary/kg-skills"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "quality-control"
+        }
+      ],
+      "skos:notation": "quality-control",
+      "dcterms:source": "folio-assistant-core/skills/content/content-lifecycle-ext/quality-control.md",
+      "skos:note": "candidate"
     }
   ]
 }

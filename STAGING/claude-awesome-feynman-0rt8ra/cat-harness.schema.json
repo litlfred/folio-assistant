@@ -229,6 +229,13 @@
           ],
           "additionalProperties": false
         },
+        "separation": {
+          "type": "string",
+          "enum": [
+            "content",
+            "tools"
+          ]
+        },
         "stub": {
           "type": "string",
           "minLength": 1
@@ -643,6 +650,112 @@
             "additionalProperties": false
           }
         },
+        "subscriptions": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string",
+                "pattern": "^[a-z0-9][a-z0-9-]*$"
+              },
+              "repository": {
+                "type": "string",
+                "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]*\\/[A-Za-z0-9][A-Za-z0-9._-]*$",
+                "description": "A forge repository's full name, owner/name"
+              },
+              "ref": {
+                "type": "string",
+                "pattern": "^[0-9a-f]{40}$"
+              },
+              "subgraphs": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "minLength": 1
+                }
+              },
+              "assets": {
+                "type": "object",
+                "properties": {
+                  "policy": {
+                    "type": "string",
+                    "enum": [
+                      "none",
+                      "on-demand",
+                      "all"
+                    ]
+                  }
+                },
+                "required": [
+                  "policy"
+                ],
+                "additionalProperties": false
+              },
+              "harnesses": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "pattern": "^[a-z0-9][a-z0-9-]*$"
+                }
+              },
+              "note": {
+                "type": "string",
+                "minLength": 1
+              }
+            },
+            "required": [
+              "id",
+              "repository",
+              "ref"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "knownSubstrates": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "name": {
+                "type": "string",
+                "pattern": "^[a-z0-9][a-z0-9-]*$"
+              },
+              "title": {
+                "type": "string",
+                "minLength": 1
+              },
+              "repository": {
+                "type": "string",
+                "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]*\\/[A-Za-z0-9][A-Za-z0-9._-]*$",
+                "description": "A forge repository's full name, owner/name"
+              },
+              "status": {
+                "type": "string",
+                "enum": [
+                  "proposed",
+                  "planned",
+                  "exists",
+                  "published"
+                ]
+              },
+              "toolsRepository": {
+                "type": "string",
+                "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]*\\/[A-Za-z0-9][A-Za-z0-9._-]*$",
+                "description": "A forge repository's full name, owner/name"
+              },
+              "note": {
+                "type": "string",
+                "minLength": 1
+              }
+            },
+            "required": [
+              "name",
+              "status"
+            ],
+            "additionalProperties": false
+          }
+        },
         "stickies": {
           "type": "array",
           "items": {
@@ -897,8 +1010,8 @@
   "$comment": "Instance graph: https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-feynman-0rt8ra/cat-harness.jsonld",
   "staging": {
     "branch": "claude/awesome-feynman-0rt8ra",
-    "sha": "499cf90ebbc85edf8dc0bd2859e8d5befa70fb5b",
-    "pr": "1741/merge",
-    "run": "36825711265"
+    "sha": "524bfc93b7196d54625e3d4934fed59b0938e74a",
+    "pr": "1754/merge",
+    "run": "36897937406"
   }
 }

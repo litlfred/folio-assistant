@@ -1166,7 +1166,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "`prepare-merge` brings the base in, re-runs the gates and pushes — it does NOT merge. `watch` follows the PR until it is merged or closed, because webhooks do not reliably deliver CI success or a merge-conflict transition."
+          "@value": "`prepare-merge` brings the base in, re-runs the gates and pushes — it does NOT merge. Bringing the base in IS `merge-base.bpmn` (`bun run merge:main`): conflicts a declared pattern covers are resolved and proved by the gate set; anything else aborts the merge and comes back to the agent (bean `y7b3`, #1707). `watch` follows the PR until it is merged or closed, because webhooks do not reliably deliver CI success or a merge-conflict transition."
         }
       ],
       "skos:notation": "Task_PrepareMerge",
@@ -3381,12 +3381,12 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Publish to gh-pages (FULL REPLACE)"
+          "@value": "Push to the CDN [render-kg-to-cdn] gh-pages, FULL REPLACE"
         }
       ],
       "skos:definition": [
         {
-          "@value": "Publish to gh-pages as a FULL REPLACE: anything on the branch this build did not produce is gone unless the restore put it back. The verify step that follows reads the deployed ref to confirm the previews survived."
+          "@value": "THIS SITE IS ONE INSTANCE OF THE GENERAL STEP (owner, 2026-09-30: gh-pages is \"one specific tool of general 'publish to CDN'\"). Process_RenderKgToCdn, entered with the tree this build already rendered and verified, the site root as the publication root URL, and GitHub Pages as the target — so its `gh-pages` Tool pushes. Here that push is a FULL REPLACE of the `gh-pages` branch: anything on it this build did not produce is gone unless the restore put it back, which is why the restore and the survival check either side of this call stay in THIS process rather than in the general one. The call returns the push's status and message (the gh-pages merge commit and the QA result); a status other than `pushed` takes the `no` branch of Did the deploy succeed?."
         }
       ],
       "skos:notation": "Task_Publish",
@@ -4321,12 +4321,12 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Publish to STAGING/&lt;slug&gt;"
+          "@value": "Push to the CDN at STAGING/&lt;slug&gt;/ [render-kg-to-cdn]"
         }
       ],
       "skos:definition": [
         {
-          "@value": "`keep_files: true` and a `destination_dir`, so this push adds one directory beside whatever else is on the branch. It is also RETRIED once: five other workflows push to `gh-pages` without joining this one's concurrency group, and a queue does not help because GitHub CANCELS a pending job when a newer one arrives for the same group rather than queueing it. Measured 2026-09-19: three staging runs from three different branches inside 17 seconds, two cancelled."
+          "@value": "A PREVIEW IS THE GENERAL STEP WITH A DIFFERENT ROOT (owner, 2026-09-30: \"independent of staging vs publication … just rendering\"). Process_RenderKgToCdn, entered with the tree Task_Build rendered, `STAGING/<slug>/` under the site root as the publication root URL, and GitHub Pages as the target, so its `gh-pages` Tool pushes. For this target the push is `keep_files: true` with a `destination_dir`, so it adds one directory beside whatever else is on the branch; it is also RETRIED once: five other workflows push to `gh-pages` without joining this one's concurrency group, and a queue does not help because GitHub CANCELS a pending job when a newer one arrives for the same group rather than queueing it. Measured 2026-09-19: three staging runs from three different branches inside 17 seconds, two cancelled. The call returns the push's status and message; the render log and the PR comment that follow are this process's own."
         }
       ],
       "skos:notation": "Task_Deploy",
@@ -5211,6 +5211,86 @@
       ],
       "skos:notation": "Task_WriteStatus",
       "dcterms:source": "cat-harness/processes/human-translation-workflow.bpmn#Task_WriteStatus",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-bpmn-activities/process_igastdeltareview.task_diff",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Diff base → head and render the delta pages [ig-ast-delta]"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "`ig-ast.ts diff <base> <head> --plan plan.json --site <site>/ast-delta/`: resources added, removed, changed (with an element-level differential) and version-changed; edges added and removed; the plan's decision. Every page opens with the provisional mark and is wrapped in raw so narrative Liquid is not executed."
+        }
+      ],
+      "skos:notation": "Task_Diff",
+      "dcterms:source": "cat-harness/processes/ig-ast-delta-review.bpmn#Task_Diff",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-bpmn-activities/process_igastdeltareview.task_filecoupling",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Note the missed coupling on the bean [todo-manager]"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Append to bean `a9tx` (W8): the resource key, the differential path, and why it is unexplained. Check before creating: beans create is not idempotent. A note, not a new bean, unless the owner asks for one."
+        }
+      ],
+      "skos:notation": "Task_FileCoupling",
+      "dcterms:source": "cat-harness/processes/ig-ast-delta-review.bpmn#Task_FileCoupling",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-bpmn-activities/process_igastdeltareview.task_review",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Read the rendered delta [ig-ast-delta]"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Start at the delta index; open each changed resource's page. Check `builtAt` before judging: a resource carried from the base was not rebuilt, so a difference there is the change itself or a missed coupling, never noise. The differential is structural: a reordered repeating element shows at every index."
+        }
+      ],
+      "skos:notation": "Task_Review",
+      "dcterms:source": "cat-harness/processes/ig-ast-delta-review.bpmn#Task_Review",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-bpmn-activities/process_igastdeltareview.task_validity",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Check the base AST against the IG's inputs [ig-ast-delta]"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "`ig-ast.ts validity <base> --ig <root>`: folio-assistant-core's compiledValidity on the manifest's inputs, with the input digest recomputed by the same algorithm as the Java writer. Exit 0 valid, 1 stale-inputs (names which input), 2 cannot-tell. Run against the BASE revision's checkout."
+        }
+      ],
+      "skos:notation": "Task_Validity",
+      "dcterms:source": "cat-harness/processes/ig-ast-delta-review.bpmn#Task_Validity",
       "skos:note": "candidate"
     },
     {
@@ -6574,206 +6654,6 @@
       "skos:note": "candidate"
     },
     {
-      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-bpmn-activities/process_l2dak.task_assembledak",
-      "@type": "skos:Concept",
-      "skos:inScheme": {
-        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-bpmn-activities"
-      },
-      "skos:prefLabel": [
-        {
-          "@value": "Assemble and validate the DAK [content-validate]"
-        }
-      ],
-      "skos:definition": [
-        {
-          "@value": "Assemble the validated components and run content validation: schemas, cross-component consistency and terminology bindings. The smart-base extractors read the authored artefacts; with SMART_BASE_HOME unset they report skip, never a clean run."
-        }
-      ],
-      "skos:notation": "Task_AssembleDak",
-      "dcterms:source": "cat-harness/processes/l2-dak-authoring.bpmn#Task_AssembleDak",
-      "skos:note": "candidate"
-    },
-    {
-      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-bpmn-activities/process_l2dak.task_bpmn",
-      "@type": "skos:Concept",
-      "skos:inScheme": {
-        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-bpmn-activities"
-      },
-      "skos:prefLabel": [
-        {
-          "@value": "Business processes · BPMN 2.0 [bpmn-authoring]"
-        }
-      ],
-      "skos:definition": [
-        {
-          "@value": "Author the DAK's L2 business processes as BPMN 2.0, with Diagram Interchange: a .bpmn with no x/y on its shapes parses and renders blank. Stay at L2 — reviewable by a clinician, not FHIR."
-        }
-      ],
-      "skos:notation": "Task_Bpmn",
-      "dcterms:source": "cat-harness/processes/l2-dak-authoring.bpmn#Task_Bpmn",
-      "skos:note": "candidate"
-    },
-    {
-      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-bpmn-activities/process_l2dak.task_datadict",
-      "@type": "skos:Concept",
-      "skos:inScheme": {
-        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-bpmn-activities"
-      },
-      "skos:prefLabel": [
-        {
-          "@value": "Data dictionary and core data elements [l2-dak-authoring]"
-        }
-      ],
-      "skos:definition": [
-        {
-          "@value": "Author the data dictionary and core data elements for this component. Stay structured but not FHIR: a data element a clinician can review, from which L3 can later be derived rather than written twice."
-        }
-      ],
-      "skos:notation": "Task_DataDict",
-      "dcterms:source": "cat-harness/processes/l2-dak-authoring.bpmn#Task_DataDict",
-      "skos:note": "candidate"
-    },
-    {
-      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-bpmn-activities/process_l2dak.task_dmn",
-      "@type": "skos:Concept",
-      "skos:inScheme": {
-        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-bpmn-activities"
-      },
-      "skos:prefLabel": [
-        {
-          "@value": "Decision logic · DMN tables [dmn-authoring]"
-        }
-      ],
-      "skos:definition": [
-        {
-          "@value": "Author the decision logic as DMN tables, within the FEEL subset the interpreter implements (any, literals, comparisons, one-of). Ranges, not() and function calls are refused at load, so write inside the subset."
-        }
-      ],
-      "skos:notation": "Task_Dmn",
-      "dcterms:source": "cat-harness/processes/l2-dak-authoring.bpmn#Task_Dmn",
-      "skos:note": "candidate"
-    },
-    {
-      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-bpmn-activities/process_l2dak.task_indicators",
-      "@type": "skos:Concept",
-      "skos:inScheme": {
-        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-bpmn-activities"
-      },
-      "skos:prefLabel": [
-        {
-          "@value": "Indicators and requirements [l2-dak-authoring]"
-        }
-      ],
-      "skos:definition": [
-        {
-          "@value": "Author the component's indicators and its functional and non-functional requirements. These are the DAK's requirements, distinct from skills/requirements/*.json, which are this harness's own conformance obligations."
-        }
-      ],
-      "skos:notation": "Task_Indicators",
-      "dcterms:source": "cat-harness/processes/l2-dak-authoring.bpmn#Task_Indicators",
-      "skos:note": "candidate"
-    },
-    {
-      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-bpmn-activities/process_l2dak.task_personas",
-      "@type": "skos:Concept",
-      "skos:inScheme": {
-        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-bpmn-activities"
-      },
-      "skos:prefLabel": [
-        {
-          "@value": "Personas and scenarios [l2-dak-authoring]"
-        }
-      ],
-      "skos:definition": [
-        {
-          "@value": "Author the DAK's personas and the user journeys (scenarios) they appear in. These are the DAK's own actors, not this harness's scenarios/roles.json — the two vocabularies must not be conflated."
-        }
-      ],
-      "skos:notation": "Task_Personas",
-      "dcterms:source": "cat-harness/processes/l2-dak-authoring.bpmn#Task_Personas",
-      "skos:note": "candidate"
-    },
-    {
-      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-bpmn-activities/process_l2dak.task_scopedak",
-      "@type": "skos:Concept",
-      "skos:inScheme": {
-        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-bpmn-activities"
-      },
-      "skos:prefLabel": [
-        {
-          "@value": "Scope the DAK [content-plan]"
-        }
-      ],
-      "skos:definition": [
-        {
-          "@value": "Enumerate the processes, decisions and data elements the guideline implies; identify the actors."
-        }
-      ],
-      "skos:notation": "Task_ScopeDak",
-      "dcterms:source": "cat-harness/processes/l2-dak-authoring.bpmn#Task_ScopeDak",
-      "skos:note": "candidate"
-    },
-    {
-      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-bpmn-activities/process_l2dak.task_seedbeans",
-      "@type": "skos:Concept",
-      "skos:inScheme": {
-        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-bpmn-activities"
-      },
-      "skos:prefLabel": [
-        {
-          "@value": "Seed the work plan [todo-manager]"
-        }
-      ],
-      "skos:definition": [
-        {
-          "@value": "Turn the scope into beans on the shared work plan — one per DAK component, since a DAK is completed component by component. beans create is not idempotent: check for an existing bean before every create, or a re-run duplicates the plan."
-        }
-      ],
-      "skos:notation": "Task_SeedBeans",
-      "dcterms:source": "cat-harness/processes/l2-dak-authoring.bpmn#Task_SeedBeans",
-      "skos:note": "candidate"
-    },
-    {
-      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-bpmn-activities/process_l2dak.task_smevalidate",
-      "@type": "skos:Concept",
-      "skos:inScheme": {
-        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-bpmn-activities"
-      },
-      "skos:prefLabel": [
-        {
-          "@value": "Clinical validation [content-review]"
-        }
-      ],
-      "skos:definition": [
-        {
-          "@value": "Ground truth: does the DAK say what the guideline says?"
-        }
-      ],
-      "skos:notation": "Task_SmeValidate",
-      "dcterms:source": "cat-harness/processes/l2-dak-authoring.bpmn#Task_SmeValidate",
-      "skos:note": "candidate"
-    },
-    {
-      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-bpmn-activities/process_l2dak.task_terminology",
-      "@type": "skos:Concept",
-      "skos:inScheme": {
-        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-bpmn-activities"
-      },
-      "skos:prefLabel": [
-        {
-          "@value": "Terminology bindings [terminology-management]"
-        }
-      ],
-      "skos:definition": [
-        {
-          "@value": "ICD-11, SNOMED CT, LOINC bindings — governed separately from the artifacts that cite them."
-        }
-      ],
-      "skos:notation": "Task_Terminology",
-      "dcterms:source": "cat-harness/processes/l2-dak-authoring.bpmn#Task_Terminology",
-      "skos:note": "candidate"
-    },
-    {
       "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-bpmn-activities/process_l3fhir.task_authorfsh",
       "@type": "skos:Concept",
       "skos:inScheme": {
@@ -7091,6 +6971,136 @@
       ],
       "skos:notation": "Task_Test",
       "dcterms:source": "cat-harness/processes/content-lifecycle.bpmn#Task_Test",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-bpmn-activities/process_mergebase.task_abort",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Abort, restore the tree, list what was refused"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "`git merge --abort`. Each refused path is listed with its pattern's reason, or \"no declared pattern\"."
+        }
+      ],
+      "skos:notation": "Task_Abort",
+      "dcterms:source": "cat-harness/processes/merge-base.bpmn#Task_Abort",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-bpmn-activities/process_mergebase.task_byhand",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Resolve by hand, then regenerate"
+        }
+      ],
+      "skos:notation": "Task_ByHand",
+      "dcterms:source": "cat-harness/processes/merge-base.bpmn#Task_ByHand",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-bpmn-activities/process_mergebase.task_classify",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Classify every conflicted path against the declared patterns"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The first matching pattern decides: take-base, generated-regions, qa-sidecar, or refuse. A path no pattern names refuses."
+        }
+      ],
+      "skos:notation": "Task_Classify",
+      "dcterms:source": "cat-harness/processes/merge-base.bpmn#Task_Classify",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-bpmn-activities/process_mergebase.task_commit",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Commit the merge"
+        }
+      ],
+      "skos:notation": "Task_Commit",
+      "dcterms:source": "cat-harness/processes/merge-base.bpmn#Task_Commit",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-bpmn-activities/process_mergebase.task_merge",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Merge the base in, without committing"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "`git merge --no-ff --no-commit origin/main` on a clean tree (untracked files refuse too, so the final stage cannot sweep in a scratch file)."
+        }
+      ],
+      "skos:notation": "Task_Merge",
+      "dcterms:source": "cat-harness/processes/merge-base.bpmn#Task_Merge",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-bpmn-activities/process_mergebase.task_regen",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Regenerate, asking every CI gate"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "`bun run regen`: every check/writer pair the CI workflow runs, repeated until the tree settles."
+        }
+      ],
+      "skos:notation": "Task_Regen",
+      "dcterms:source": "cat-harness/processes/merge-base.bpmn#Task_Regen",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-bpmn-activities/process_mergebase.task_resolve",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Resolve each by its declared strategy"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "qa-sidecar paths first, through `qa:resolve-conflicts`; take-base paths take the base's copy; generated-regions files take the base's side of each hunk, which lies inside a generated region by construction."
+        }
+      ],
+      "skos:notation": "Task_Resolve",
+      "dcterms:source": "cat-harness/processes/merge-base.bpmn#Task_Resolve",
       "skos:note": "candidate"
     },
     {
@@ -8021,7 +8031,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "Version bump, release notes, tag, build the final artifacts, deploy to the publication platform."
+          "@value": "Version bump, release notes, tag, build the final artifacts, deploy to the publication platform. The deploy is the general render-kg-to-cdn step with the RELEASE root as its publication root URL — the same step a staging preview takes with a root under it; the target (GitHub Pages, or a folio's own platform) is chosen by its Tool."
         }
       ],
       "skos:notation": "Task_PublishRelease",
@@ -8361,6 +8371,66 @@
       ],
       "skos:notation": "U_Coordinate",
       "dcterms:source": "cat-harness/processes/related-work.bpmn#U_Coordinate",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-bpmn-activities/process_renderkgtocdn.call_toolsubprocess",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Render and push with the target's Tool [its own subprocess]"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "BOUND BY THE TOOL, so no `calledElement` is written here: the activity names the skill, the Tool satisfies it, and the Tool's `subprocesses` are what this descends into — for `gh-pages`, bootstrap-tools' render-kg-to-github-pages (make sure gh-pages exists and Pages serves it, stage, check the staging, commit onto gh-pages, check what is served). A diagram that named it would make every other CDN a second copy of this process. Whatever the Tool, it returns the two outputs below."
+        }
+      ],
+      "skos:notation": "Call_ToolSubprocess",
+      "dcterms:source": "cat-harness/processes/render-kg-to-cdn.bpmn#Call_ToolSubprocess",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-bpmn-activities/process_renderkgtocdn.task_report",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Report the push: status and message"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The output, on every path: `pushed`, `not-pushed` or `could-not-determine`, and one message — what is live (a commit), at which root URL, and the QA result. From the no-Tool branch the status is `not-pushed` and the message names the target nobody implements. A check that could not look is never reported as pushed."
+        }
+      ],
+      "skos:notation": "Task_Report",
+      "dcterms:source": "cat-harness/processes/render-kg-to-cdn.bpmn#Task_Report",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-bpmn-activities/process_renderkgtocdn.task_resolve",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Resolve the Subgraphs, the root URL and the target's Tool"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Every Subgraph id asked for must be one the declaration lists; none means the whole graph. The root URL is the one given. The target's Tool is the one that `satisfies: [\"render-kg-to-cdn\"]` for that CDN — `gh-pages` for GitHub Pages. A caller that already rendered and verified its tree hands the tree over instead of the graph, and the Tool pushes it without rendering again."
+        }
+      ],
+      "skos:notation": "Task_Resolve",
+      "dcterms:source": "cat-harness/processes/render-kg-to-cdn.bpmn#Task_Resolve",
       "skos:note": "candidate"
     },
     {
