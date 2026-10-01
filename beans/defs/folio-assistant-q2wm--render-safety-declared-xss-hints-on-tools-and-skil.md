@@ -170,9 +170,9 @@ Re-measured first, on main cdb0a018: **still nothing renders a tool's output, an
 
 So the vocabulary is the one this bean already proposed, and it is held to an implementation rather than left as prose:
 
-- \`schemas/tool.ts\`: \`render?: { as: "text" | "url" | "markdown" | "json", reason? }\` on each OUTPUT port (\`ToolOutputSchema\`). Absent = \`text\`. Anything but \`text\` needs a reason; \`url\` / \`markdown\` only on a Url / Markdown schema.
-- \`schemas/render-output.ts\`: \`renderToolOutput\` — the one implementation. text → escaped; url → \`safeHref\` or escaped text (a refused URL is shown, not dropped); markdown → remark with raw HTML off (sanitised); json → escaped \`<pre>\`.
-- 7 tests (\`render-output.test.ts\`), each falsified: sanitize off → fails; safeHref bypassed → fails.
-- Declared on the 6 Url/Markdown outputs in \`tools/index.ts\`, each with its reason.
+- `schemas/tool.ts`: `render?: { as: "text" | "url" | "markdown" | "json", reason? }` on each OUTPUT port (`ToolOutputSchema`). Absent = `text`. Anything but `text` needs a reason; `url` / `markdown` only on a Url / Markdown schema.
+- `schemas/render-output.ts`: `renderToolOutput` — the one implementation. text → escaped; url → `safeHref` or escaped text (a refused URL is shown, not dropped); markdown → remark with raw HTML off (sanitised); json → escaped `<pre>`.
+- 7 tests (`render-output.test.ts`), each falsified: sanitize off → fails; safeHref bypassed → fails.
+- Declared on the 6 Url/Markdown outputs in `tools/index.ts`, each with its reason.
 
-**Still true, and the reason this is not \"done\":** no page calls \`renderToolOutput\` yet, because no page renders a tool's output. The day one does, it calls this. Lazy window fetch still has no subject (every fetch loads a whole index once).
+**Still true, and the reason this is not "done":** no page calls `renderToolOutput` yet, because no page renders a tool's output. The day one does, it calls this. Lazy window fetch still has no subject (every fetch loads a whole index once).
