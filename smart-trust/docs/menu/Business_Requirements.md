@@ -94,12 +94,12 @@ nav_order: 2
 
 [← all 5 sections](../)
 
-- [Concepts](http://smart.who.int/trust/concepts.html)
-- [Certificate Governance](http://smart.who.int/trust/concepts_certificate_governance.html)
-- [Onboarding Process](http://smart.who.int/trust/concepts_onboarding.html)
-- [Use Cases](http://smart.who.int/trust/use_cases.html)
-- [Decision Support Logic](http://smart.who.int/trust/decision_support.html)
-- [Functional Requirements](http://smart.who.int/trust/functional.html)
+- [Concepts](../pages/concepts.html)
+- [Certificate Governance](../pages/concepts_certificate_governance.html)
+- [Onboarding Process](../pages/concepts_onboarding.html)
+- [Use Cases](../pages/use_cases.html)
+- [Decision Support Logic](../pages/decision_support.html)
+- [Functional Requirements](../pages/functional.html)
 
-Published by the IG at `http://smart.who.int/trust`. This repository holds the IG's
-artefacts, not its narrative pages, so every link above leaves for the canonical copy.
+Published by the IG at `http://smart.who.int/trust`. A link above stays on this site when the page's
+source was snapshotted (`ig-pages/pages.json`); anything else leaves for the canonical copy.

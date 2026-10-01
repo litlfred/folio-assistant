@@ -5,7 +5,7 @@ status: todo
 type: task
 priority: normal
 created_at: 2026-09-21T19:10:00Z
-updated_at: 2026-10-01T08:03:18Z
+updated_at: 2026-10-01T08:46:01Z
 parent: folio-assistant-uhkv
 ---
 
@@ -71,8 +71,8 @@ fourth was avoided only by asking first.
 ## Done when
 
 - [x] The three measurements above, recorded with provenance
-- [ ] `input/pages/` renders through just-the-docs with Publisher metadata
-      populating the Jekyll variables
+- [x] `input/pages/` renders through just-the-docs with Publisher metadata
+      populating the Jekyll variables — 2026-10-01, see §"Round 2" (images still linked at the published IG; 4 Publisher-generated fragments stated, not reproduced)
 - [ ] A stated parity checklist (STATED 2026-09-22, see M3), and MVP declared
       against it rather than against an impression — the MVP call is the
       owner's, and the 19-page ceiling is a data limit, not an effort one
@@ -416,3 +416,42 @@ Provenance: `WorldHealthOrganization/smart-trust` at `30d55b3630ac8a8937e1d98f7c
 Rendering 42 pages through just-the-docs is therefore a bounded job. The falsifier would have been heavy use of `sql` or `[[[ ]]]`, and it does not fire.
 
 **The decision this exposes, which is the owner's:** where the 42 pages come from. The options are a committed snapshot (licence CC-BY-SA, attribution required), a submodule, or a fetch at build time. The repository boundary rule (*platform, not content*) applies to `smart-trust/` as a mock-up instance. Nothing is vendored until that is decided.
+
+## Owner ruling 2026-10-01: where the 42 pages come from
+
+In the owner's words: *"i (litlfred) work for WHO. using this as staging. just dont want branding. authorized. litlfred/smart-trust is a development fork for who/smart-trust. merge to main on litlfred/smart-trust, same for smart-base etc."*
+
+- **Licence.** Use of the content is authorised by the owner, who works for WHO, and the CC-BY-SA licence still applies.
+- **Source.** `litlfred/smart-trust` `main`, not `WorldHealthOrganization/smart-trust`. At `30d55b3` the two are the same commit. Changes go to `main` on the litlfred forks (smart-trust, smart-base, and the rest), never upstream.
+- **Mechanism.** A pinned snapshot (option 1 of 3), committed and refreshed by a script.
+- **Branding.** None: no WHO logos or WHO identity on the rendered pages. The 42 page sources contain none. In the IG Publisher build the branding comes from the `who.template.root` template, which this pipeline doesn't use. Whether the colour theme from `7h3u` (`themes/upstream/who.css`) also counts as branding is put to the owner separately; until they answer, it stays.
+
+## Round 2 landed (2026-10-01): the 42 narrative pages render through just-the-docs
+
+Done on the branch of PR #1766. Session https://claude.ai/code/session_01DnFZtVpff4o7puqWazGvKN.
+
+- **Snapshot.** `cat-harness/scripts/ingest-ig-pages.ts` copies `input/pagecontent/*.md` verbatim from `litlfred/smart-trust` at `30d55b36`, together with the `pages:` tree, into `smart-trust/ig-pages/` (`pages.json`, schema `folio-ig-pages/v1`). `--check` exits 0 if they match, 1 if they differ, and 2 if it could not determine (no `--source`).
+- **New graph kind `ig-page-sources`**, `holds: "derived"`. It follows the line `fhir-artifact-index`'s own registry comment draws against `library`: ingestion produces bytes here. It also has an avatar and a row in the `directory-conventions` table.
+- **Renderer.** `smart-trust/scripts/narrative-pages.ts` resolves exactly the Liquid that was measured:
+  - `include X.md` is transcluded, and `img.html` becomes the markup it would emit;
+  - `assign`/`unless` are dropped, and the `unless` bodies are kept;
+  - the `site.data.canonicals` loop becomes the index's artefacts of that type;
+  - `site.data.fhir.packageId` filter chains are evaluated.
+
+  Everything else is reported, and the result is `wrapRaw`-wrapped.
+- **Output.** `docs/pages/*.md`: 42 pages, each with a source and licence footer. Menu sections now link to them locally.
+- **Tests.** `narrative-pages.test.ts`, 22 tests. Besides the units, it checks that every local link resolves to a page that exists once built, and that every page parses as strict Liquid.
+
+**Not reproduced, and said so on each page and in the build log (8 unique):**
+- Four Publisher-generated fragments: `dependency-table.xhtml`, `list-structuremaps.xhtml`, `routine_sync.svg`, `verify_vdhc.svg`.
+- `{{PARTICIPANT_CODE}}` in 5 pages, left as text.
+
+**Upstream defects found, for the fork:**
+- `{{PARTICIPANT_CODE}}` sits in prose, so the Publisher most likely renders it empty (`…/trustlist/-//did.json`).
+- `feedback.md` derives its repository link as `github.com/WorldHealthOrganization/trust`, but the repository is `smart-trust`.
+
+**Limits:**
+- Images and downloads are linked at the published IG, not copied.
+- The skill's generated reference page cannot be regenerated until `main`'s `gen-skill-docs` crash (#1760, "no category in SKILLS_CATEGORIES") is fixed.
+
+**Still open:** the MVP call against the parity checklist, which is the owner's. The branding question on the colour theme also remains open; the `7h3u` theme stays until the owner answers.

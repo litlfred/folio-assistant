@@ -1662,6 +1662,40 @@ export const BASE_GRAPH_KINDS: Readonly<Record<string, GraphKindDef>> = {
       "Each export declares whether it was present, absent or never looked for, and a " +
       "`uses` field that upstream declared and left empty is recorded as exactly that.",
   },
+  // An IG's NARRATIVE PAGE SOURCES — `input/pagecontent/*.md` plus the
+  // `pages:` tree that titles them, copied VERBATIM from the IG's source
+  // repository at a pinned commit by `ingest-ig-pages.ts` (bean `jut3`).
+  //
+  // A SIBLING of `fhir-artifact-index` and of `ig-menu`'s document, kept apart
+  // for the reason `fhir-artifact-index`'s own comment draws against
+  // `library`: that index is NOT derived because 655 of its 674 artefacts stay
+  // upstream and are only referenced. This graph is the opposite case —
+  // ingestion PRODUCES BYTES HERE, 42 files of somebody else's prose — so it
+  // takes `library`'s answer, and `ig-metadata-index`'s one entry up.
+  //
+  // `derived` by the axis's two questions, and they agree. Detached, a page
+  // source asserts nothing of this repository's; and you would REGENERATE it:
+  // re-ingest the same commit and the same bytes come back, which
+  // `ingest:ig-pages:check` asserts. What it buys is concrete: the links inside
+  // these files are relative to the IG's PUBLISHED site, so a link checker
+  // reading them as this repository's would report dozens of dangling links
+  // nobody here can fix. A finding against a page source is a finding against
+  // the upstream IG or the ingest, never an author here — `check-subgraphs`
+  // files them under `derivedLinks`, not `dangling`.
+  //
+  // NOT renderable: the RENDERED pages are `smart-trust/docs/pages/`, written
+  // by `gen-smart-trust-pages.ts` from these sources. Saying `true` here would
+  // publish the raw Liquid as a second, broken copy of every page.
+  "ig-page-sources": {
+    renderable: false,
+    holds: "derived",
+    // declared-path-literal: this table IS the declaration, as on `health`.
+    schema: "schemas/ig-pages.ts",
+    validator: "schemas/ig-pages.ts#IgPagesSchema",
+    summary:
+      "A FHIR IG's narrative page sources, copied verbatim from its source repository at a pinned " +
+      "commit, with the `pages:` tree that titles them. Rendered elsewhere; never edited here.",
+  },
   // Binary releases — WHAT WAS PUBLISHED, under what version, with what
   // digest. Never the bytes.
   //

@@ -94,10 +94,10 @@ nav_order: 1
 
 [← all 5 sections](../)
 
-- [Summary](http://smart.who.int/trust/index.html)
-- [Dependencies](http://smart.who.int/trust/dependencies.html)
-- [Ethical Considerations and Data Protection Principles](http://smart.who.int/trust/ethical_principles.html)
-- [Frequently Asked Questions](http://smart.who.int/trust/faq.html)
+- [Summary](../pages/index.html)
+- [Dependencies](../pages/dependencies.html)
+- [Ethical Considerations and Data Protection Principles](../pages/ethical_principles.html)
+- [Frequently Asked Questions](../pages/faq.html)
 
-Published by the IG at `http://smart.who.int/trust`. This repository holds the IG's
-artefacts, not its narrative pages, so every link above leaves for the canonical copy.
+Published by the IG at `http://smart.who.int/trust`. A link above stays on this site when the page's
+source was snapshotted (`ig-pages/pages.json`); anything else leaves for the canonical copy.

@@ -84,6 +84,8 @@ import {
   type FhirArtifactIndex,
   type Representation,
 } from "../../folio-assistant-core/schemas/fhir-artifact-index.js";
+import { IgPagesSchema, type IgPages } from "../../cat-harness/schemas/ig-pages.js";
+import { narrativeTitle, renderNarrative, type NarrativeContext } from "./narrative-pages.ts";
 
 const INSTANCE = resolve(import.meta.dir, "..");
 const INDEX = join(INSTANCE, "fhir-artifact-index", "index.json");
@@ -98,6 +100,33 @@ const INDEX = join(INSTANCE, "fhir-artifact-index", "index.json");
  */
 const MENU = join(INSTANCE, "fhir-artifact-index", "menu.json");
 const OUT = join(INSTANCE, "docs");
+/**
+ * The IG's NARRATIVE pages, copied verbatim from its source by
+ * `ingest-ig-pages.ts` (bean `jut3`). Optional for the same reason the menu
+ * is: absent, they are not rendered and the build says so.
+ */
+const PAGES_MANIFEST = join(INSTANCE, "ig-pages", "pages.json");
+const PAGE_SOURCES = join(INSTANCE, "ig-pages", "pages");
+
+function loadNarrative(): { manifest: IgPages; sources: Map<string, string> } | undefined {
+  if (!existsSync(PAGES_MANIFEST)) return undefined;
+  const m = IgPagesSchema.safeParse(JSON.parse(readFileSync(PAGES_MANIFEST, "utf8")));
+  if (!m.success) {
+    console.error("the committed page manifest does not validate — refusing to render narrative pages from it:");
+    for (const i of m.error.issues.slice(0, 5)) console.error(`  ${i.path.join(".")}: ${i.message}`);
+    process.exit(1);
+  }
+  const sources = new Map<string, string>();
+  for (const p of m.data.pages) sources.set(p.file, readFileSync(join(PAGE_SOURCES, p.file), "utf8"));
+  return { manifest: m.data, sources };
+}
+const NARRATIVE = loadNarrative();
+
+/** The narrative page an IG href names (`concepts.html`), as a docs-relative path, if this site renders it. */
+function narrativeFor(href: string): string | undefined {
+  const m = /^([^/#]+)\.html(#.*)?$/.exec(href);
+  return m && NARRATIVE?.sources.has(`${m[1]}.md`) ? `pages/${m[1]}.html${m[2] ?? ""}` : undefined;
+}
 
 /**
  * The instance that OWNS the WHO chrome.
@@ -741,7 +770,12 @@ function artifactPage(ix: FhirArtifactIndex, a: FhirArtifact): string {
  * is.
  */
 function menuGroupPage(menu: IgMenu, group: IgMenuGroup, order: number): string {
-  const rows = group.items.map((it) => `- [${mdCell(it.label)}](${menuHref(menu, it)})`);
+  // A local narrative page when this site renders one, else the canonical copy.
+  const target = (it: { href: string }): string => {
+    const local = narrativeFor(it.href);
+    return local ? `../${local}` : menuHref(menu, it);
+  };
+  const rows = group.items.map((it) => `- [${mdCell(it.label)}](${target(it)})`);
   const body = [
     `[← all ${menu.groups.length} sections](../)`,
     ``,
@@ -753,9 +787,9 @@ function menuGroupPage(menu: IgMenu, group: IgMenuGroup, order: number): string 
           `*${mdCell(group.label)} carries no sub-items in \`sushi-config.yaml\`.*`,
         ]),
     ``,
-    ...(group.href ? [`This section's own page: [${mdCell(group.label)}](${menuHref(menu, group)}).`, ``] : []),
-    `Published by the IG at \`${menu.canonical}\`. This repository holds the IG's`,
-    `artefacts, not its narrative pages, so every link above leaves for the canonical copy.`,
+    ...(group.href ? [`This section's own page: [${mdCell(group.label)}](${target(group)}).`, ``] : []),
+    `Published by the IG at \`${menu.canonical}\`. A link above stays on this site when the page's`,
+    `source was snapshotted (\`ig-pages/pages.json\`); anything else leaves for the canonical copy.`,
   ].join("\n");
   return shell(
     `${group.label} — WHO SMART Trust`,
@@ -822,6 +856,46 @@ if (existsSync(MENU)) {
   for (const group of menu.groups) {
     sectionOrder += 1;
     pages.set(join("menu", `${menuName(group.label)}.md`), menuGroupPage(menu, group, sectionOrder));
+  }
+}
+
+// THE IG'S NARRATIVE PAGES (bean `jut3`) — rendered from its own source rather
+// than mounted as Publisher HTML. Not in the sidebar: the menu sections above
+// already list them in the IG's own order, and 42 more leaves would bury it.
+const narrativeGaps: string[] = [];
+if (NARRATIVE) {
+  const byName = new Map(ix.artifacts.map((a) => [`${a.resourceType}-${a.id}`, a]));
+  const ctx: NarrativeContext = {
+    sources: NARRATIVE.sources,
+    publishedBase: ix.source.of,
+    packageId: ix.packageId,
+    artifactHref: (name) => {
+      const a = byName.get(name);
+      return a ? `../artifact/${pageName(a)}.html` : undefined;
+    },
+    artifactsOfType: (t) =>
+      ix.artifacts
+        .filter((a) => a.resourceType === t)
+        .map((a) => ({ label: a.title ?? a.id, href: `../artifact/${pageName(a)}.html` })),
+  };
+  const src = NARRATIVE.manifest.source;
+  for (const p of NARRATIVE.manifest.pages) {
+    const { body, gaps } = renderNarrative(p.file, ctx);
+    narrativeGaps.push(...gaps);
+    const title = narrativeTitle(p.file, p.title, NARRATIVE.sources.get(p.file));
+    const sourceUrl = `${src.of}/blob/${src.ref}/${src.path}/${p.file}`;
+    const footer = [
+      ``,
+      `---`,
+      ``,
+      `<small>Source: [\`${src.path}/${p.file}\`](${sourceUrl}) at \`${src.ref.slice(0, 8)}\`` +
+        `${NARRATIVE.manifest.license ? ` · licence ${NARRATIVE.manifest.license}` : ""}. ` +
+        `Rendered from the IG's source by this site, not by the IG Publisher.</small>`,
+    ].join("\n");
+    pages.set(
+      join("pages", p.file),
+      shell(`${title} — WHO SMART Trust`, `${title}: a narrative page of the WHO SMART Trust IG, rendered from its source.`, `# ${title}\n\n${body}\n${footer}`, { kind: "leaf" }),
+    );
   }
 }
 
@@ -901,6 +975,17 @@ if (CHECK) {
   } else {
     console.log("  0 menu section(s) — COULD NOT DETERMINE: no menu.json.");
     console.log("    Run `ingest-ig-menu.ts --source <ig-repo>`; this is not an IG without navigation.");
+  }
+  if (NARRATIVE) {
+    const src = NARRATIVE.manifest.source;
+    console.log(`  ${NARRATIVE.manifest.pages.length} narrative page(s) from ${src.of} @ ${src.ref.slice(0, 8)}`);
+    // Deduplicated: a transcluded page reports its gaps once per page that includes it.
+    const gaps = [...new Set(narrativeGaps)].sort();
+    console.log(`    ${gaps.length} construct(s) not reproduced${gaps.length ? ":" : ""}`);
+    for (const g of gaps) console.log(`      ${g}`);
+  } else {
+    console.log("  0 narrative page(s) — COULD NOT DETERMINE: no pages.json.");
+    console.log("    Run `ingest-ig-pages.ts --source <ig-repo>`; this is not an IG without narrative pages.");
   }
   // THE CHROME, SAID OUT LOUD EITHER WAY. Its absence is the same third state
   // the menu's is: unstyled pages and "we mirrored it" look identical from a

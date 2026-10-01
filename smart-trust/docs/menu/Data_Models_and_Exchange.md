@@ -94,13 +94,13 @@ nav_order: 3
 
 [← all 5 sections](../)
 
-- [System Actors](http://smart.who.int/trust/system-actors.html)
-- [Transactions](http://smart.who.int/trust/transactions.html)
-- [Sequence Diagrams](http://smart.who.int/trust/sequence-diagrams.html)
-- [Trust Domains](http://smart.who.int/trust/trust_domains.html)
-- [Trust Network Gateway Architecture](http://smart.who.int/trust/trust_network_gateway_architecture.html)
-- [DID Trustlist Specification](http://smart.who.int/trust/concepts_did.html)
-- [HCERT Specification](http://smart.who.int/trust/hcert_spec.html)
+- [System Actors](../pages/system-actors.html)
+- [Transactions](../pages/transactions.html)
+- [Sequence Diagrams](../pages/sequence-diagrams.html)
+- [Trust Domains](../pages/trust_domains.html)
+- [Trust Network Gateway Architecture](../pages/trust_network_gateway_architecture.html)
+- [DID Trustlist Specification](../pages/concepts_did.html)
+- [HCERT Specification](../pages/hcert_spec.html)
 
-Published by the IG at `http://smart.who.int/trust`. This repository holds the IG's
-artefacts, not its narrative pages, so every link above leaves for the canonical copy.
+Published by the IG at `http://smart.who.int/trust`. A link above stays on this site when the page's
+source was snapshotted (`ig-pages/pages.json`); anything else leaves for the canonical copy.
