@@ -59,7 +59,7 @@ import { existsSync, readFileSync, readdirSync } from "node:fs";
 import { basename, dirname, join } from "node:path";
 
 import type { BlockQaReport, QaCriterionEntry } from "../../schemas/block-qa.ts";
-import { KG_QA_MANIFEST_PATH, kgQaSidecarPath } from "../../schemas/kg-qa.ts";
+import { KG_QA_MANIFEST_PATH, kgQaSidecarPath, subjectEscapes } from "../../schemas/kg-qa.ts";
 import type { KgQaManifest, KgQaReport } from "../../schemas/kg-qa.ts";
 import type { ScriptQaReport } from "../../schemas/script-qa.ts";
 import { existingBlockQaPath, translationQaPath } from "./qa-paths.ts";
@@ -339,6 +339,11 @@ export function sidecarPaths(family: QaFamily, subjectPath: string, repoRoot: st
       // The SAME function the auditor writes with. Composing the path here a
       // second time is how a reader ends up looking where nothing was
       // written — and finding nothing reads as "unaudited", a false pass.
+      //
+      // A subject OUTSIDE `repoRoot` has no sidecar in this tree: its owner
+      // audits it and holds the one verdict (Q-A PR 4, 2026-10-01), so the
+      // writer refuses the path. Pass the OWNER as `repoRoot` to read it.
+      if (subjectEscapes(repoRoot, dir)) return [];
       return [kgQaSidecarPath(repoRoot, dir, stem)].filter((p) => existsSync(p));
   }
 }
