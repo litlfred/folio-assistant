@@ -64,3 +64,17 @@ is a cache, never an authority. The branch carries:
 ## Claim released 2026-09-29
 
 Released `in-progress` → `todo` on the owner's instruction (review session https://claude.ai/code/session_014Qj8wncQhqV52QGN1yZDnj). No git change to this bean since before 2026-09-26, no holder recorded, and no open branch touches it; the sessions that held theme D (content folios, SMART/FHIR stack, ingest) work stopped on the 2026-09-25 weekly usage limit. Nothing in the body was changed: re-claim with `bun run beans:claim <id>`.
+
+## Network probe 2026-10-01 — seed not attempted
+
+Session https://claude.ai/code/session_01PricYFhYhFA5DuMJaWo3CE was dispatched to build the smart-trust AST and run `ig-cache.sh seed --push` to the `fhir-ast/smart.who.int.trust` branch. Step 0 probe, `curl -sS -o /dev/null -m 10 -w "%{http_code}"`:
+
+| host | result |
+|---|---|
+| https://packages.fhir.org/ | `000`: `CONNECT tunnel failed, response 403` |
+| https://tx.fhir.org/ | `000`: `CONNECT tunnel failed, response 403` |
+| https://build.fhir.org/ | `000`: `CONNECT tunnel failed, response 403` |
+
+The agent proxy (`$HTTPS_PROXY/__agentproxy/status`: enabled, not selective) denies all three hosts. This environment's network policy does not allow them. Per the dispatch instructions, the build was **not attempted**, and no workaround was tried (the npm registry is squatted for FHIR packages and is off-limits).
+
+**What unblocks it:** a session whose environment network policy allows `packages.fhir.org`, `tx.fhir.org` and `build.fhir.org`. Alternatively, the owner can run `ig-cache.sh seed --push` locally from the AST already dumped on `agy/wnhh-sushi-publisher-local`. Nothing exists on origin under `refs/heads/fhir-ast/*` yet.
