@@ -21199,6 +21199,25 @@
       "skos:note": "candidate"
     },
     {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/site-indexes.libraryindexentryschema.withheldby",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "LibraryIndexEntrySchema.withheldBy"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The structured half of `withheld` (issue #1794): which gates refused, and the catalogue record — copied from `folio-withheld/v1`, so the same shapes, never restated."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/site-indexes.ts#LibraryIndexEntrySchema.withheldBy",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/site-indexes.qaindexschema.badges",
       "@type": "skos:Concept",
       "skos:inScheme": {

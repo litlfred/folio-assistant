@@ -2,7 +2,7 @@
   "$schema": "folio-bean-index/v1",
   "tile": {
     "beans": {
-      "count": 604,
+      "count": 605,
       "unit": "beans"
     }
   },
@@ -4171,6 +4171,20 @@
       "updatedAt": "2026-09-23T19:25:46Z",
       "preview": "## Progress — 2026-09-18\n\nMechanism landed on `claude/festive-galileo-s7ibx0` ([PR #282](https://github.com/litlfred/folio-assistant/pull/282)).\n\nBefore: a `callActivity` was an opaque box completed in one step, so decomposing\na diagram made it read better and gate LESS. `editing-hci-validation` asked for\none `CallActivity_Evidence` and skipped the ten gated steps of\n`evidence-retrieval`; `documen",
       "file": "beans/defs/folio-assistant-hylg--workflow-interpreter-descends-into-call-activities.md"
+    },
+    {
+      "id": "folio-assistant-i2kp",
+      "title": "check:source-licence has no --check, so it writes its own sidecar and no gate can fail on its content",
+      "status": "completed",
+      "type": "task",
+      "priority": "normal",
+      "parent": "folio-assistant-1xhc",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-10-01T07:11:24Z",
+      "updatedAt": "2026-10-01T16:07:52Z",
+      "preview": "Owner, 2026-10-01: **\"and fix 1xhc\"**. This is the fix, scoped and measured.\nHanded over mid-flight: the diagnosis is complete and verified, no code written.\n\n## Defect 1 — `check:source-licence` has no `--check` mode at all\n\n`cat-harness/scripts/check-source-licence.ts`: unless given `--json` it ALWAYS\ncalls `writeQaResult(...)`, and it exits non-zero only on `malformed`.\n\nSo CI runs `bun run che",
+      "file": "beans/defs/folio-assistant-i2kp--checksource-licence-has-no-check-so-it-writes-its.md"
     },
     {
       "id": "folio-assistant-i4i1",
