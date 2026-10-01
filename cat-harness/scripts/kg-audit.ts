@@ -131,7 +131,7 @@ import {
 } from "./known-skills.js";
 import { LOCAL_PACKAGES } from "./skill-packages.js";
 import { repoRootFor, DECLARATION_SUFFIX, ownDirectoryById, instanceDirectoriesForGraph, readDeclaration, kgQaHomeFor} from "../schemas/cat-harness.js";
-import { toolDownstreamEntry, undeclaredDownstream } from "./downstream-runs.ts";
+import { toolDownstreamEntry, undeclaredDownstreamEntry } from "./downstream-runs.ts";
 import { VERIFIERS } from "./publish-verify.ts";
 import { orderedDependencies } from "../schemas/harness-config.js";
 import { CONVENTION_GROUP } from "../schemas/convention.js";
@@ -2252,10 +2252,10 @@ function auditGraph(
       // somebody has to measure again.
       // A downstream tool with no declaration (bean `fq5u`). The family's
       // per-Tool verdict is `tool-downstream-fresh`, which generalises what
-      // `lsi-index-fresh` judged here for LSI alone.
-      "downstream-tool-declared": entry(
-        undeclaredDownstream(tools(), AUDITOR_ROOT, VERIFIERS.map((v) => ({ id: v.id, tool: v.tool }))),
-      ),
+      // `lsi-index-fresh` judged here for LSI alone. The entry is built there,
+      // not by `entry()`, because run records that are not in the checkout
+      // make it `unknown` rather than a pass (bean `oq1j`).
+      "downstream-tool-declared": undeclaredDownstreamEntry(tools(), AUDITOR_ROOT, VERIFIERS.map((v) => ({ id: v.id, tool: v.tool }))),
       "manifest-skill-exists": (() => {
         const remote = remotePackageSkills(root);
         return entry(
