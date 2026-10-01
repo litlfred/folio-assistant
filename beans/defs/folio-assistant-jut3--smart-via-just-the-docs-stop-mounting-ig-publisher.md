@@ -668,3 +668,39 @@ views, then write the P2 refusal record.
 - The Publisher's status line uses `colsd` for drafts and `colsi` otherwise, with the same text.
 - **Not reproduced:** all 672 Publisher headings start with `": "`, an empty type label in its template. Ours drop it, by the same rule as the tab bars. Recorded with the other upstream defects in bean `g4oc`.
 - The DAK view pages' JSON tab now points to this site's JSON view, but only where that page is written; smart-base holds no package, so its pages are unchanged.
+
+## 2026-10-01: change history, testing and profile tabs — 756 of 756 equivalent (10 left)
+
+The owner chose `1 2 3` again: change history, profile tabs, testing tabs.
+
+**Change history is not data-limited, so the parity table was wrong.** All
+672 Publisher `.change.history.html` pages on smart-trust state no history,
+just a heading and one sentence. Measured on all 672: the heading is
+`name ?? title ?? id`, then " - Change History"; the sentence is
+`History of changes for <id> .`. They are rendered now, and they come off the
+fork's ask.
+
+**The tab pages, generic in `resource-views.ts`.** The resource facts the
+Publisher states (`name`, `experimental`, `kind`, `status`, `date`) are read at
+generation time from the held `package.tgz`, the same copy the JSON views
+fetch. One template, `tab-page.liquid`, renders them. Each page states only
+what the Publisher's does:
+- **`-testing`** is written only while the IG holds no TestPlan and no
+  TestScript, because otherwise the Publisher's page would list them.
+- **`-examples`** is written only while no resource claims the model in
+  `meta.profile`.
+
+**Checked against the fork's `gh-pages`** (Jekyll build, main-content text):
+
+| page kind | pages | equivalent |
+|---|---:|---:|
+| `.change.history` | 672 | 672 |
+| `-testing` | 69 | 69 |
+| logical model `.profile.history` | 5 | 5 |
+| logical model `-examples` | 5 | 5 |
+| logical model `.profile.json` (Chromium, JSON + status + heading) | 5 | 5 |
+
+**Left:** `-definitions` and `-mappings` for the 5 logical models (10 pages).
+They are the Publisher's element tables (Key / Differential / Snapshot)
+rendered from each StructureDefinition's snapshot, which is real rendering
+work rather than a sentence. That is the next slice.

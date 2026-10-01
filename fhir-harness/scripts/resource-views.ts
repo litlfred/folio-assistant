@@ -12,6 +12,8 @@
  * Generic: nothing here knows whose IG it is. A caller that renders more tabs
  * (a DAK overlay) passes them in.
  */
+import { readFileSync } from "node:fs";
+import { gunzipSync } from "node:zlib";
 import { artifactPageName, type FhirArtifact } from "../../folio-assistant-core/schemas/fhir-artifact-index.js";
 
 /** Where the generator publishes the loader, under the instance's docs root. */
@@ -43,6 +45,8 @@ export interface JsonViewData {
   rawName: string;
   tabs: Tab[];
   script: string;
+  /** A one-line description under the heading — a logical model's `.profile.json` page has one. */
+  intro?: string;
 }
 
 /**
@@ -69,3 +73,166 @@ export function jsonViewData(a: FhirArtifact, packagePath: string, extraTabs: Ta
     script: `../${JSON_VIEW_SCRIPT}`,
   };
 }
+
+// ── The IG's package, read at generation time ───────────────────────────────
+//
+// The tab pages below need a few facts about each resource that the artefact
+// index does not carry in the Publisher's terms (its `name`, `experimental`,
+// a StructureDefinition's `kind`). They are read from the same package.tgz the
+// JSON views fetch — the KG's copy — so the generator and the browser read one
+// source.
+
+/** Every `package/*.json` entry of a package.tgz, by entry name. */
+export function packageEntries(tgzPath: string): Map<string, Buffer> {
+  const buf = gunzipSync(readFileSync(tgzPath));
+  const out = new Map<string, Buffer>();
+  for (let off = 0; off + 512 <= buf.length; ) {
+    const header = buf.subarray(off, off + 512);
+    const cstr = (a: number, b: number) => header.subarray(a, b).toString("utf8").replace(/\0.*$/s, "");
+    const name = cstr(0, 100);
+    if (!name) break;
+    const prefix = cstr(345, 500);
+    const size = parseInt(cstr(124, 136).trim() || "0", 8);
+    const full = prefix ? `${prefix}/${name}` : name;
+    if (full.endsWith(".json")) out.set(full, buf.subarray(off + 512, off + 512 + size));
+    off += 512 + Math.ceil(size / 512) * 512;
+  }
+  return out;
+}
+
+/** The resource facts a tab page states, read from the resource itself. */
+export interface ResourceFacts {
+  resourceType: string;
+  id: string;
+  name?: string;
+  title?: string;
+  status?: string;
+  date?: string;
+  experimental?: boolean;
+  kind?: string;
+  url?: string;
+}
+
+export function resourceFacts(r: Record<string, unknown>): ResourceFacts {
+  const str = (k: string) => (typeof r[k] === "string" ? (r[k] as string) : undefined);
+  return {
+    resourceType: String(r.resourceType),
+    id: String(r.id),
+    name: str("name"),
+    title: str("title"),
+    status: str("status"),
+    date: str("date"),
+    experimental: typeof r.experimental === "boolean" ? r.experimental : undefined,
+    kind: str("kind"),
+    url: str("url"),
+  };
+}
+
+/** "<Status> as of <YYYY-MM-DD>", only when the resource carries a date — the Publisher's status line. */
+export function statusLine(f: ResourceFacts): string | undefined {
+  if (!f.date) return undefined;
+  const s = f.status ?? "";
+  return `${s.charAt(0).toUpperCase()}${s.slice(1)} as of ${f.date.slice(0, 10)}`;
+}
+
+/** A page of the tab family: a heading, an optional status line, then sections of text. */
+export interface TabPageData {
+  tabs: Tab[];
+  heading: string;
+  status?: string;
+  sections: Array<{ heading?: string; text: string }>;
+}
+
+/** The Publisher's tab bar for a resource's pages, with `active` the current one (or none). */
+export function resourceTabs(a: FhirArtifact, extraTabs: Tab[], jsonLocal: boolean, active?: string): Tab[] {
+  const stem = artifactPageName(a);
+  const pub = (k: "xml" | "json" | "ttl") => a.published?.[k]?.url;
+  if (a.resourceType === "StructureDefinition") {
+    // The SD family's own bar: Content, Detailed Descriptions, Mappings, then
+    // the representations. The two table tabs are the Publisher's pages.
+    const site = pub("json")?.replace(/[^/]*$/, "") ?? "";
+    return [
+      { label: "Content", href: `${stem}.html`, active: active === "Content" },
+      { label: "Detailed Descriptions", href: `${site}${stem}-definitions.html`, active: false },
+      { label: "Mappings", href: `${site}${stem}-mappings.html`, active: false },
+      ...(pub("xml") ? [{ label: "XML", href: pub("xml")!, active: false }] : []),
+      ...(pub("json") ? [{ label: "JSON", href: jsonLocal ? `${stem}.profile.json.html` : pub("json")!, active: active === "JSON" }] : []),
+      ...(pub("ttl") ? [{ label: "TTL", href: pub("ttl")!, active: false }] : []),
+      ...extraTabs,
+    ];
+  }
+  return [
+    { label: "Narrative Content", href: `${stem}.html`, active: false },
+    ...(pub("xml") ? [{ label: "XML", href: pub("xml")!, active: false }] : []),
+    ...(pub("json") ? [{ label: "JSON", href: jsonLocal && hasJsonView(a) ? `${stem}.json.html` : pub("json")!, active: active === "JSON" }] : []),
+    ...(pub("ttl") ? [{ label: "TTL", href: pub("ttl")!, active: false }] : []),
+    ...extraTabs,
+  ];
+}
+
+/**
+ * `<Name>.change.history.html` (and a StructureDefinition's
+ * `.profile.history.html`). The Publisher's page states no history — none is
+ * exported to it — only a heading and one sentence, measured on all 672 of
+ * smart-trust's: the heading names `name ?? title ?? id`, the sentence `id`.
+ */
+export function historyPage(a: FhirArtifact, f: ResourceFacts, tabs: Tab[]): TabPageData | undefined {
+  if (f.resourceType === "StructureDefinition") {
+    if (f.kind !== "logical") return undefined;
+    return { tabs, heading: `Logical Model: ${f.name ?? f.id} - Change History`, status: statusLine(f), sections: [{ text: `Changes in the ${f.name ?? f.id} logical model.` }] };
+  }
+  return { tabs, heading: `${f.name ?? f.title ?? f.id} - Change History`, sections: [{ text: `History of changes for ${f.id} .` }] };
+}
+
+/**
+ * `<Name>-testing.html`. Written only when the IG holds NO TestPlan and no
+ * TestScript (`hasTests` false): the page then states that none is available,
+ * which is the Publisher's text. An IG with tests would list them, and this
+ * renders no such list — so it writes nothing rather than a page that says
+ * "none" over tests that exist.
+ */
+export function testingPage(f: ResourceFacts, tabs: Tab[], hasTests: boolean): TabPageData | undefined {
+  if (hasTests || !f.url || f.resourceType === "ImplementationGuide") return undefined;
+  const sd = f.resourceType === "StructureDefinition";
+  if (sd && f.kind !== "logical") return undefined;
+  const label = sd ? `Logical Model: ${f.name ?? f.id}` : `${f.resourceType}: ${f.title ?? f.name ?? f.id}`;
+  const what = sd ? "Profile" : f.resourceType;
+  return {
+    tabs,
+    heading: `${label} - Testing${!sd && f.experimental ? " (Experimental)" : ""}`,
+    status: statusLine(f),
+    sections: [
+      { heading: "Test Plans", text: `No test plans are currently available for the ${what}.` },
+      { heading: "Test Scripts", text: `No test scripts are currently available for the ${what}.` },
+    ],
+  };
+}
+
+/** A logical model's `-examples.html`, written only when no resource in the IG claims the model in `meta.profile`. */
+export function examplesPage(f: ResourceFacts, tabs: Tab[], hasExamples: boolean): TabPageData | undefined {
+  if (f.resourceType !== "StructureDefinition" || f.kind !== "logical" || hasExamples) return undefined;
+  return { tabs, heading: `Logical Model: ${f.name ?? f.id} - Examples`, status: statusLine(f), sections: [{ text: "No examples are currently available for the Profile." }] };
+}
+
+/** A logical model's `.profile.json.html`: the JSON view, with the SD family's heading and line. */
+export function profileJsonViewData(a: FhirArtifact, f: ResourceFacts, packagePath: string, tabs: Tab[]): JsonViewData | undefined {
+  if (f.kind !== "logical" || !a.published?.json) return undefined;
+  const base = jsonViewData(a, packagePath);
+  return {
+    ...base,
+    heading: `Logical Model: ${f.name ?? f.id} - JSON Profile`,
+    intro: `JSON representation of the ${f.name ?? f.id} logical model.`,
+    tabs,
+  };
+}
+
+/** Text safe as markdown prose: the characters kramdown would read as markup are escaped. */
+export function mdText(s: string): string {
+  return s.replace(/([\\`*_[\]<>|])/g, "\\$1");
+}
+
+/**
+ * A VIEW page beside an artefact's own page — one per representation, sidecar
+ * or tab, never one per artefact. The one rule every count and test reads.
+ */
+export const VIEW_PAGE = /\.(schema\.json|jsonld|json|change\.history|profile\.history|profile\.json)\.md$|-(testing|examples)\.md$/;

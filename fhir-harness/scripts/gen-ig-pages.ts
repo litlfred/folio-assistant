@@ -76,7 +76,7 @@
 import { existsSync, mkdirSync, readFileSync, readdirSync, rmSync, writeFileSync } from "node:fs";
 import { basename, join, resolve } from "node:path";
 import { DAK_HUB_SCRIPT, DAK_HUB_TEMPLATE, DAK_VIEW_SCRIPT, dakHubData, dakHubFragment, dakServed, dakViewData, dakViews } from "./dak-views.ts";
-import { JSON_VIEW_SCRIPT, hasJsonView, jsonViewData } from "./resource-views.ts";
+import { JSON_VIEW_SCRIPT, VIEW_PAGE, examplesPage, hasJsonView, historyPage, jsonViewData, mdText, packageEntries, profileJsonViewData, resourceFacts, resourceTabs, testingPage, type TabPageData } from "./resource-views.ts";
 import { isDirectoryReadme } from "../../cat-harness/schemas/kg-node.js";
 
 import { IgMenuSchema, type IgMenu, type IgMenuGroup, menuHref, menuItemCount } from "../schemas/ig-menu.js";
@@ -140,6 +140,8 @@ const DAK_HUB_LOADER = join(import.meta.dir, "templates", "ig-pages", "dak-hub.j
 /** The JSON view pages' template and loader — the Publisher's `<Name>.json.html`. */
 const JSON_VIEW_TEMPLATE = join(import.meta.dir, "templates", "ig-pages", "json-view.liquid");
 const JSON_VIEW_LOADER = join(import.meta.dir, "templates", "ig-pages", "resource-json.js");
+/** The text-only tab pages' template — history, testing, a logical model's examples. */
+const TAB_PAGE_TEMPLATE = join(import.meta.dir, "templates", "ig-pages", "tab-page.liquid");
 /** An artefact page's DAK API section: its template and the loader that builds it from the OpenAPI sidecar. */
 const DAK_OPENAPI_BODY = readFileSync(join(import.meta.dir, "templates", "ig-pages", "dak-openapi.liquid"), "utf8");
 const DAK_OPENAPI_LOADER = join(import.meta.dir, "templates", "ig-pages", "dak-openapi.js");
@@ -971,6 +973,48 @@ if (ix.artifacts.some(hasJsonView)) {
     pages.set(JSON_VIEW_SCRIPT, readFileSync(JSON_VIEW_LOADER, "utf8"));
   }
 }
+
+// THE TAB PAGES — `.change.history` (672 on smart-trust), `-testing` (69) and a
+// logical model's `.profile.history`, `.profile.json` and `-examples` — from
+// the resource itself, read out of the same held package at generation time.
+// Each states only what the Publisher's states; a page whose Publisher form
+// would list data this build cannot (tests, examples) is not written.
+const tabCounts = { history: 0, testing: 0, profileHistory: 0, profileJson: 0, examples: 0 };
+if (ix.package?.localPath && dakServing.ok) {
+  const entries = packageEntries(join(INSTANCE, ix.package.localPath));
+  const resources = [...entries.values()].map((b) => JSON.parse(b.toString("utf8")) as Record<string, unknown>);
+  const hasTests = resources.some((r) => r.resourceType === "TestPlan" || r.resourceType === "TestScript");
+  const claimed = new Set(resources.flatMap((r) => ((r.meta as { profile?: string[] } | undefined)?.profile ?? [])));
+  const tabTemplate = readFileSync(TAB_PAGE_TEMPLATE, "utf8");
+  const jsonTemplate = readFileSync(JSON_VIEW_TEMPLATE, "utf8");
+  const tabPage = (file: string, title: string, p: TabPageData | undefined, count: keyof typeof tabCounts) => {
+    if (!p) return;
+    const data = { ...p, heading: mdText(p.heading), status: p.status, sections: p.sections.map((x) => ({ ...x, text: mdText(x.text) })) };
+    pages.set(join("artifact", file), shell(title, `${p.heading}.`, tabTemplate, { kind: "leaf" }, "fixture", { tab_page: data }));
+    tabCounts[count] += 1;
+  };
+  for (const a of ix.artifacts) {
+    const raw = entries.get(`package/${a.resourceType}-${a.id}.json`);
+    if (!raw) continue;
+    const f = resourceFacts(JSON.parse(raw.toString("utf8")));
+    const stem = pageName(a);
+    const dakTabs = dakViews(a).map((v) => ({ label: v.label, href: `${v.file}.html`, active: false }));
+    const name = a.title ?? a.name ?? a.id;
+    if (a.resourceType === "StructureDefinition") {
+      const tabs = resourceTabs(a, dakTabs, true);
+      tabPage(`${stem}.profile.history.md`, `${name} — change history`, historyPage(a, f, tabs), "profileHistory");
+      tabPage(`${stem}-examples.md`, `${name} — examples`, examplesPage(f, tabs, f.url !== undefined && claimed.has(f.url)), "examples");
+      const pj = profileJsonViewData(a, f, ix.package.localPath, resourceTabs(a, dakTabs, true, "JSON"));
+      if (pj) {
+        pages.set(join("artifact", `${stem}.profile.json.md`), shell(`${name} — JSON profile`, `The JSON representation of ${a.key}.`, jsonTemplate, { kind: "leaf" }, "fixture", { json_view: { ...pj, heading: mdText(pj.heading), intro: pj.intro && mdText(pj.intro) } }));
+        tabCounts.profileJson += 1;
+      }
+    } else if (hasJsonView(a)) {
+      tabPage(`${stem}.change.history.md`, `${name} — change history`, historyPage(a, f, resourceTabs(a, dakTabs, true)), "history");
+    }
+    tabPage(`${stem}-testing.md`, `${name} — testing`, testingPage(f, resourceTabs(a, dakTabs, true), hasTests), "testing");
+  }
+}
 if ([...pages.values()].some((p) => p.includes("data-dak-openapi-src"))) pages.set(DAK_OPENAPI_SCRIPT, readFileSync(DAK_OPENAPI_LOADER, "utf8"));
 
 // THE DAK API HUB — the Publisher's `dak-api.html`, as its own page (owner,
@@ -1078,11 +1122,12 @@ if (CHECK) {
   // pages over a corpus of 674.
   // One per ARTEFACT: the DAK view pages and their raw files share the
   // directory and are counted on their own line.
-  const artefactPages = [...pages.keys()].filter((k) => k.startsWith("artifact/") && k.endsWith(".md") && !/\.(schema\.json|jsonld|json)\.md$/.test(k)).length;
+  const artefactPages = [...pages.keys()].filter((k) => k.startsWith("artifact/") && k.endsWith(".md") && !VIEW_PAGE.test(k)).length;
   const categoryPages = [...pages.keys()].filter((k) => k.startsWith("category/")).length;
   console.log(`  ${artefactPages} artefact page(s) — one per artefact; ${dak.schema} carry a DAK schema`);
   console.log(`  ${dakViewCount} DAK view page(s) — one per held JSON Schema or JSON-LD sidecar, file fetched client-side`);
   console.log(`  ${jsonViewCount} JSON view page(s) — resource read client-side from the held package.tgz`);
+  console.log(`  tab pages: ${tabCounts.history} change history, ${tabCounts.testing} testing, ${tabCounts.profileHistory} profile history, ${tabCounts.profileJson} profile JSON, ${tabCounts.examples} examples`);
   console.log(`  ${categoryPages} category page(s) — categories over ${INLINE_LIMIT}, listed off the index`);
   // THE MENU IS REPORTED EITHER WAY. An unreported page is a page nothing
   // checks, and an absent menu reported as silence is indistinguishable from

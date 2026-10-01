@@ -25,6 +25,7 @@
  * @module smart-trust/scripts/tests/pages-markdown.test
  */
 import { describe, expect, it } from "bun:test";
+import { VIEW_PAGE } from "../../../fhir-harness/scripts/resource-views.ts";
 import { existsSync, readFileSync, readdirSync } from "fs";
 import { join, resolve } from "path";
 
@@ -45,7 +46,7 @@ const categoryFiles = existsSync(CATEGORIES)
  * beside its artefact page, as the Publisher's does, but is a different page
  * KIND: one per held sidecar, not one per artefact (bean `jut3`).
  */
-const isView = (f: string) => /\.(schema\.json|jsonld|json)\.md$/.test(f);
+const isView = (f: string) => VIEW_PAGE.test(f);
 
 const artifactFiles = existsSync(ARTIFACTS)
   ? readdirSync(ARTIFACTS)
