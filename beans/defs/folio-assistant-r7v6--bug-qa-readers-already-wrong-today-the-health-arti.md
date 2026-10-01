@@ -1,11 +1,11 @@
 ---
 # folio-assistant-r7v6
 title: 'BUG: QA readers already wrong today — the health artifact is never uploaded, a dead export comparison, a legacy qa-agent-write path, gates that write in --check'
-status: todo
+status: in-progress
 type: bug
 priority: high
 created_at: 2026-10-01T08:47:15Z
-updated_at: 2026-10-01T08:47:15Z
+updated_at: 2026-10-01T08:57:48Z
 parent: folio-assistant-3fva
 ---
 

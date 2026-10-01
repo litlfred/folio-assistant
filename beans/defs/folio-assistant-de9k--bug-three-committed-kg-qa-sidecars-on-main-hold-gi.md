@@ -1,11 +1,11 @@
 ---
 # folio-assistant-de9k
 title: 'BUG: three committed kg-qa sidecars on main hold git conflict markers, and every reader treats them as empty'
-status: todo
+status: in-progress
 type: bug
 priority: critical
 created_at: 2026-10-01T08:47:14Z
-updated_at: 2026-10-01T08:47:14Z
+updated_at: 2026-10-01T08:57:48Z
 parent: folio-assistant-3fva
 ---
 
