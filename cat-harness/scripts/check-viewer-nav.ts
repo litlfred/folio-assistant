@@ -64,6 +64,7 @@ import { instanceRootFor, repoRootFor, siteDirFor } from "../schemas/cat-harness
 import {
   VIEWER_NAV_QA_SCHEMA,
   ViewerNavQaSchema,
+  type ViewerNavFlag,
   type ViewerNavPage,
   type ViewerNavQa,
 } from "../schemas/viewer-nav-qa.ts";
@@ -101,6 +102,44 @@ function pagesUnder(dir: string): string[] {
 const WHY_MISSING = "standalone page with no rail and no declared opt-out";
 const WHY_DECLINED = "declares <meta name=\"folio-navbar\" content=\"none\">";
 
+/**
+ * The layout flags a railed page FAILS (#1757). Read off the rail's own
+ * markup, which `lib/navbar.ts` renders, so these are statements about what
+ * the reader is served rather than about what a model asked for.
+ *
+ * Regex over one `<nav class="fa-nav">` rather than a DOM, for the reason
+ * `documentIndexOf` gives: this walks the whole docs tree.
+ */
+export function layoutFlags(html: string): ViewerNavFlag[] {
+  const at = html.indexOf('<nav class="fa-nav"');
+  if (at < 0) return [];
+  const end = html.indexOf("</nav>", at);
+  const nav = html.slice(at, end < 0 ? undefined : end);
+  const flags: ViewerNavFlag[] = [];
+
+  const head = /<label class="fa-nav-head"([^>]*)>([\s\S]*?)<\/label>/.exec(nav);
+  if (!head) flags.push("header");
+  else {
+    const control = /\bfor="fa-nav-open"/.test(head[1]!);
+    // A mark is an avatar <img>, a drawn <svg>, or a LETTER — one
+    // alphanumeric character. `☰` is not a letter: it names the action.
+    const glyph = /<span class="fa-nav-glyph[^"]*"[^>]*>([\s\S]*?)<\/span>/.exec(head[2]!)?.[1] ?? "";
+    const marked = /<img\b|<svg\b/.test(glyph) || /^[\p{L}\p{N}]$/u.test(glyph.trim());
+    if (!control || !marked) flags.push("clickable-mark");
+  }
+
+  const summaries = [...nav.matchAll(/<details class="fa-nav-group"( open)?><summary>[\s\S]*?<span class="fa-nav-label">([^<]*)</g)];
+  const open = summaries.filter((m) => m[1]);
+  const own = (label: string): boolean => label !== "Graphs" && label !== "Harnesses";
+  if (!summaries.some((m) => own(m[2]!))) flags.push("visualiser-nav");
+  if (open.length !== 1 || !own(open[0]![2]!)) flags.push("single-open");
+
+  if (nav.includes('class="fa-nav-close"') || nav.includes("&#9776;") || nav.includes("☰")) {
+    flags.push("no-redundant-toggle");
+  }
+  return flags;
+}
+
 export function audit(docs: string, repo: string): ViewerNavQa {
   const pages: ViewerNavPage[] = [];
   for (const abs of pagesUnder(docs)) {
@@ -112,7 +151,8 @@ export function audit(docs: string, repo: string): ViewerNavQa {
     const source = relative(repo, abs).split(sep).join("/");
     const path = sitePathForPage(docs, abs);
     if (html.includes('class="fa-nav"')) {
-      pages.push({ path, source, verdict: "railed" });
+      const flags = layoutFlags(html);
+      pages.push({ path, source, verdict: "railed", ...(flags.length ? { flags } : {}) });
     } else if (declinesNavbar(html)) {
       pages.push({ path, source, verdict: "declined", reason: WHY_DECLINED });
     } else {
@@ -129,6 +169,7 @@ export function audit(docs: string, repo: string): ViewerNavQa {
       railed: count("railed"),
       declined: count("declined"),
       missing: count("missing"),
+      flagged: pages.filter((p) => p.flags?.length).length,
     },
     pages,
   };
@@ -147,6 +188,25 @@ export function regressions(before: ViewerNavQa, after: ViewerNavQa): string[] {
   return after.pages
     .filter((p) => was.get(p.path) === "railed" && p.verdict !== "railed")
     .map((p) => `${p.path} was railed and is now ${p.verdict}`);
+}
+
+/**
+ * Layout flags a railed page has GAINED since the sidecar — a page that was
+ * graded clean on a criterion and now fails it. Only pages the prior audit
+ * graded (it recorded `flags` support) are compared: a sidecar written before
+ * the flags existed graded nothing, and treating its silence as "clean" would
+ * fail every branch on the day this lands.
+ */
+export function flagRegressions(before: ViewerNavQa, after: ViewerNavQa): string[] {
+  if (before.totals.flagged === undefined) return [];
+  const was = new Map(before.pages.map((p) => [p.path, new Set(p.flags ?? [])]));
+  const out: string[] = [];
+  for (const p of after.pages) {
+    const prior = was.get(p.path);
+    if (!prior) continue;
+    for (const f of p.flags ?? []) if (!prior.has(f)) out.push(`${p.path} now fails ${f}`);
+  }
+  return out;
 }
 
 if (import.meta.main) {
@@ -204,7 +264,32 @@ if (import.meta.main) {
     console.log(`  ✓ ${relative(REPO, SIDECAR)}`);
   }
 
+  // A LAYOUT FLAG THAT APPEARS is a regression of the same kind as a lost
+  // rail: the page was graded clean and now is not, and the author of the
+  // diff is the one who did it. Gated in `check` on that basis; the absolute
+  // list is `strict`'s.
+  if (check || strict) {
+    const have = existsSync(SIDECAR) ? readFileSync(SIDECAR, "utf-8") : null;
+    let prior: ViewerNavQa | undefined;
+    try {
+      const parsed = have ? ViewerNavQaSchema.safeParse(JSON.parse(have)) : undefined;
+      if (parsed?.success) prior = parsed.data;
+    } catch {
+      prior = undefined;
+    }
+    if (prior) {
+      for (const r of flagRegressions(prior, now)) {
+        console.error(`  ✗ REGRESSION: ${r}`);
+        failed++;
+      }
+    }
+  }
+
   if (strict) {
+    for (const p of now.pages.filter((x) => x.flags?.length)) {
+      console.error(`  ✗ ${p.path} — fails ${p.flags!.join(", ")} (${p.source})`);
+      failed++;
+    }
     for (const p of now.pages.filter((x) => x.verdict === "missing")) {
       console.error(`  ✗ ${p.path} — ${p.reason} (${p.source})`);
       failed++;
@@ -213,7 +298,8 @@ if (import.meta.main) {
 
   console.log(
     `  ${now.totals.railed} railed, ${now.totals.declined} declined, ` +
-      `${now.totals.missing} missing, of ${now.totals.pages} generated viewer page(s)`,
+      `${now.totals.missing} missing, of ${now.totals.pages} generated viewer page(s); ` +
+      `${now.totals.flagged} railed page(s) fail a layout flag`,
   );
   process.exit(failed > 0 ? 1 : 0);
 }

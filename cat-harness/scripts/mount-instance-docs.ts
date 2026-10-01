@@ -588,6 +588,39 @@ export function instantiatedHarnesses(built: string, toRoot: string): NavItem[] 
 }
 
 /**
+ * An instance's MARK for the navbar header — its declared avatar and tone,
+ * read off the same `_data/harness.json` as {@link instantiatedHarnesses}.
+ *
+ * Any harness row named `instance` answers, instantiated or not: the header
+ * names the instance whose page this is, which is a different question from
+ * whether it belongs in the harnesses list. Absent, the header draws the
+ * instance's initial — never a `☰` (#1757).
+ */
+export function instanceMark(built: string, instance: string, toRoot: string): Pick<NavItem, "avatar" | "tone"> | undefined {
+  const prefix = publishedDocsPrefix(REPO, built);
+  if (prefix === undefined) return undefined;
+  const data = join(REPO, prefix, "_data", "harness.json");
+  if (!existsSync(data)) return undefined;
+  let d: { name?: string; icon?: { src?: string; title?: string } | null; harnesses?: { name?: string; tone?: number; icon?: { src?: string; title?: string; region?: { x: number; y: number; w: number; h: number } } | null }[] };
+  try {
+    d = JSON.parse(readFileSync(data, "utf-8"));
+  } catch {
+    return undefined;
+  }
+  const h = d.harnesses?.find((x) => x.name === instance);
+  const icon = h?.icon ?? (d.name === instance ? d.icon : undefined);
+  const avatar = icon?.src
+    ? {
+        src: `${toRoot}${icon.src}`,
+        ...(icon.title ? { title: icon.title } : {}),
+        ...("region" in icon && icon.region ? { region: icon.region } : {}),
+      }
+    : undefined;
+  if (!avatar && !h?.tone) return undefined;
+  return { ...(avatar ? { avatar } : {}), ...(h?.tone ? { tone: h.tone } : {}) };
+}
+
+/**
  * Inject the harness rail into every mounted HTML page.
  *
  * The rail's LINKS ARE DERIVED FROM THE MOUNT TABLE, never listed: an instance
@@ -687,9 +720,11 @@ function injectRails<T extends { name: string; kind: string; route: string; visu
 
       const harnesses = instantiatedHarnesses(built, toRoot);
       const before = readFileSync(file, "utf-8");
+      const mark = instanceMark(built, m.name, toRoot);
       const after = injectRail(before, {
         instance: m.name,
         toRoot,
+        ...(mark ? { mark } : {}),
         ...(root[0] ? { root: root[0] } : {}),
         links,
         ...(harnesses ? { harnesses } : {}),
@@ -832,9 +867,11 @@ export function railStandalonePages(
       const toRoot = depth === 0 ? "." : new Array(depth).fill("..").join("/");
       const links = declaredGraphs(instanceName, new Map(), publishedGraphs(built, instanceName, toRoot));
       const harnesses = instantiatedHarnesses(built, toRoot);
+      const mark = instanceMark(built, instanceName, toRoot);
       const after = injectRail(before, {
         instance: instanceName,
         toRoot,
+        ...(mark ? { mark } : {}),
         links,
         ...(harnesses ? { harnesses } : {}),
       });

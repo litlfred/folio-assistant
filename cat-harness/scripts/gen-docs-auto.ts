@@ -102,6 +102,7 @@ import { withInlineCode } from "../schemas/inline-code.ts";
 import { skillPageHref, skillPagesOf } from "./lib/skill-pages.ts";
 import { ownElementPattern } from "../schemas/namespaces.js";
 import { renderedPath, withRenders } from "./viewer-declarations.js";
+import { visualiserNavDeclaration } from "./lib/navbar.ts";
 
 /** This generator's Tool node (`tools/viewers.ts`), named on every page it draws. */
 const VIEWER_TOOL = "docs-auto-viewer";
@@ -690,6 +691,9 @@ const PAGE_CSS = `<style>
  * template literal.
  */
 const TABLE_FILTER_MIN = 25;
+
+/** The most entries a rail section lists before the table filter takes over (#1757). */
+const RAIL_ITEMS_MAX = 60;
 const TABLE_FILTER_BOX = `<div class="fa-table-filter">
 <label for="fa-table-filter-0">Filter this table</label>
 <input type="search" id="fa-table-filter-0" autocomplete="off" spellcheck="false" aria-describedby="fa-table-filter-0-count">
@@ -800,6 +804,24 @@ export function autoDocPage(
     )
     .join("\n");
 
+  // THE RAIL SECTION (#1757): the sibling sub-graphs, as the page's own list
+  // above already gives them, with THIS one's entries beneath it. Entries only
+  // up to a size a 248px column can hold; past it the table's filter is the
+  // way in, and a rail of 270 rows is the page again.
+  const railNav = visualiserNavDeclaration(
+    (siblings.length ? siblings : [{ id: scope || type.title, path: "", count: items.length }]).map((s) => {
+      const isHere = siblings.length === 0 || s.id === scope;
+      const kids = isHere && items.length <= RAIL_ITEMS_MAX
+        ? items.filter((i) => keyOf(i)).map((i) => ({ label: i.name, href: `#${rowId(i)}` }))
+        : [];
+      return {
+        label: s.id,
+        ...(isHere ? {} : { href: `../${s.id}/` }),
+        ...(kids.length ? { items: kids } : {}),
+      };
+    }),
+  );
+
   return `<!DOCTYPE html>
 <html lang="en">
 <head>
@@ -809,6 +831,7 @@ export function autoDocPage(
 ${PAGE_CSS}
 </head>
 <body>
+${railNav}
 <div class="wrap">
 <h1>${esc(type.title)}${scope ? ` <span class="p">${esc(scope)}</span>` : ""}</h1>
 <p class="lede">Derived: ${esc(type.extracts)}.${scopePath ? ` Sub-graph <code>${esc(scopePath)}</code>.` : ""}</p>
@@ -894,6 +917,7 @@ export function levelPage(prefix: string, children: readonly LevelChild[]): stri
 ${PAGE_CSS}
 </head>
 <body>
+${visualiserNavDeclaration(children.map((c) => ({ label: c.title, href: `${c.seg}/` })))}
 <div class="wrap">
 <h1>docs-auto${prefix ? ` <span class="p">${esc(prefix)}</span>` : ""}</h1>
 <p class="lede">Derived documentation over a declared sub-graph. Each entry below is

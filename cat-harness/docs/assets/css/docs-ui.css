@@ -1043,7 +1043,8 @@
   .side-bar > .fa-nav-icons {
     width: var(--fa-nav-collapsed);
     flex-wrap: wrap;
-    padding-top: var(--fa-nav-head-clear, 2rem);
+    /* No `☰` to clear any more (#1757): the avatar above is the control. */
+    padding-top: 0.25rem;
   }
   .side-bar:hover > .fa-nav-icons,
   .side-bar:focus-within > .fa-nav-icons,

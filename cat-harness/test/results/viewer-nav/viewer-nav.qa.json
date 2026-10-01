@@ -2,10 +2,11 @@
   "$schema": "viewer-nav-qa/v1",
   "root": "cat-harness/docs",
   "totals": {
-    "pages": 51,
-    "railed": 51,
+    "pages": 55,
+    "railed": 55,
     "declined": 0,
-    "missing": 0
+    "missing": 0,
+    "flagged": 1
   },
   "pages": [
     {
@@ -16,7 +17,13 @@
     {
       "path": "/cat-harness/catalogue/who-iris/",
       "source": "cat-harness/docs/cat-harness/catalogue/who-iris/index.html",
-      "verdict": "railed"
+      "verdict": "railed",
+      "flags": [
+        "clickable-mark",
+        "visualiser-nav",
+        "single-open",
+        "no-redundant-toggle"
+      ]
     },
     {
       "path": "/cat-harness/docs-auto/",
@@ -64,6 +71,11 @@
       "verdict": "railed"
     },
     {
+      "path": "/cat-harness/docs-auto/index/docs/who-iris-site/",
+      "source": "cat-harness/docs/cat-harness/docs-auto/index/docs/who-iris-site/index.html",
+      "verdict": "railed"
+    },
+    {
       "path": "/cat-harness/docs-auto/index/processes/",
       "source": "cat-harness/docs/cat-harness/docs-auto/index/processes/index.html",
       "verdict": "railed"
@@ -71,6 +83,11 @@
     {
       "path": "/cat-harness/docs-auto/index/processes/folio-assistant-core-processes/",
       "source": "cat-harness/docs/cat-harness/docs-auto/index/processes/folio-assistant-core-processes/index.html",
+      "verdict": "railed"
+    },
+    {
+      "path": "/cat-harness/docs-auto/index/processes/large-datasets-processes/",
+      "source": "cat-harness/docs/cat-harness/docs-auto/index/processes/large-datasets-processes/index.html",
       "verdict": "railed"
     },
     {
@@ -96,6 +113,16 @@
     {
       "path": "/cat-harness/docs-auto/index/skills/folio-assistant-core-skills/",
       "source": "cat-harness/docs/cat-harness/docs-auto/index/skills/folio-assistant-core-skills/index.html",
+      "verdict": "railed"
+    },
+    {
+      "path": "/cat-harness/docs-auto/index/skills/folio-assistant-sci-data-skills/",
+      "source": "cat-harness/docs/cat-harness/docs-auto/index/skills/folio-assistant-sci-data-skills/index.html",
+      "verdict": "railed"
+    },
+    {
+      "path": "/cat-harness/docs-auto/index/skills/folio-assistant-sci-lean-skills/",
+      "source": "cat-harness/docs/cat-harness/docs-auto/index/skills/folio-assistant-sci-lean-skills/index.html",
       "verdict": "railed"
     },
     {

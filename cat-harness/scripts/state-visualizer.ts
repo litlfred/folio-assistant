@@ -147,6 +147,7 @@ import { QA_GRAPH_INDEX_SCHEMA } from "../content/pipeline/qa-graph-index.ts";
 import { unportableSegment } from "../schemas/portable-path";
 import { carriesMarker, orphanSubjectPages } from "./orphan-pages.ts";
 import { withViewerNav } from "./viewer-page.ts";
+import { visualiserNavDeclaration } from "./lib/navbar.ts";
 import { renderedPath, withRenders, withViewers } from "./viewer-declarations.js";
 
 /** This generator's Tool node (`tools/viewers.ts`), named on every page it draws. */
@@ -743,14 +744,98 @@ function dashboardPage(g: StateGraph, graphs: StateGraph[]): string {
       ? `<meta name="fa-beans-src" content="${src}">`
       : `<meta name="fa-todo-src" content="${src}">`,
   ];
+  // The todo graph is LISTED as well as counted (#1757) — the counts are the
+  // script's, the listing and its rail section are static.
+  const todos = tag === TODO_INDEX_SCHEMA ? todoItemsOf(g.id) : undefined;
+  const listing = todos ? todoListing(todos) : undefined;
   return page({
     title: `${g.id} — state`,
     metas,
-    body: head + `<div class="fa-workplan" data-fa-workplan>
+    body: head + (listing ? listing.nav : "") + `<div class="fa-workplan" data-fa-workplan>
   <p class="fa-workplan-fallback">This view needs JavaScript. The data is
   <a href="${src}">a plain JSON file</a>.</p>
-</div>` + registry(graphs, g.id),
+</div>` + (listing ? listing.html : "") + registry(graphs, g.id),
   });
+}
+
+/** A todo as the projection publishes it — only the fields the listing reads. */
+interface ListedTodo {
+  id: string;
+  summary?: string;
+  status?: string;
+  priority?: string;
+  target?: { page?: string; node?: string };
+}
+
+/**
+ * The todos, LISTED, grouped by the knowledge-graph node each is attached to —
+ * and the rail section that indexes them.
+ *
+ * Owner, 2026-10-01 (#1757): *"todos page should have a LHS navbar to help see
+ * todos associated the KG"*. The page showed two counts and no todo, so there
+ * was nothing a navbar could point at. Rendered SERVER-SIDE, like
+ * {@link qaPanels}: the data is known at generate time, and a list of links
+ * needs no script.
+ *
+ * Grouped by `target.page` — the node the todo is attached to — because that
+ * is the association the owner asked to see. A todo attached to nothing is
+ * grouped as such, by name, rather than dropped: a todo missing from the
+ * listing reads as one that does not exist.
+ *
+ * Returns the HTML and the `data-fa-visualiser-nav` declaration together, so
+ * the anchors the nav links to and the ids the listing carries are minted in
+ * one place and cannot disagree.
+ */
+export function todoListing(items: readonly ListedTodo[]): { html: string; nav: string } {
+  const UNATTACHED = "attached to no node";
+  const groups = new Map<string, ListedTodo[]>();
+  for (const t of items) {
+    const k = t.target?.page ?? UNATTACHED;
+    groups.set(k, [...(groups.get(k) ?? []), t]);
+  }
+  const keys = [...groups.keys()].sort((a, b) =>
+    a === UNATTACHED ? 1 : b === UNATTACHED ? -1 : a.localeCompare(b, "en"),
+  );
+  const slug = (s: string): string => s.replace(/[^A-Za-z0-9_-]+/g, "-");
+  const nav = keys.map((k) => ({
+    label: k,
+    href: `#node-${slug(k)}`,
+    items: groups.get(k)!.map((t) => ({ label: t.summary ?? t.id, href: `#todo-${slug(t.id)}` })),
+  }));
+  const html =
+    `<h2 class="sv-h2">Todos by the node they are attached to — ${items.length}</h2>` +
+    keys
+      .map(
+        (k) =>
+          `<section class="sv-item" id="node-${slug(k)}">` +
+          `<h3>${esc(k)}</h3><ul>` +
+          groups
+            .get(k)!
+            .map(
+              (t) =>
+                `<li id="todo-${slug(t.id)}">${esc(t.summary ?? t.id)}` +
+                (t.status ? ` <span class="sv-tag">${esc(t.status)}</span>` : "") +
+                (t.priority ? ` <span class="sv-tag">${esc(t.priority)}</span>` : "") +
+                (t.target?.node ? ` <span class="sv-sub">· ${esc(t.target.node)}</span>` : "") +
+                `</li>`,
+            )
+            .join("") +
+          `</ul></section>`,
+      )
+      .join("\n");
+  return { html, nav: visualiserNavDeclaration(nav) };
+}
+
+/** The todo items a graph's projection publishes, or `undefined` if unreadable. */
+function todoItemsOf(id: string): ListedTodo[] | undefined {
+  const p = projectionFor(id);
+  if (p === null) return undefined;
+  try {
+    const d = JSON.parse(readFileSync(p, "utf8")) as { items?: ListedTodo[] };
+    return Array.isArray(d.items) ? d.items : undefined;
+  } catch {
+    return undefined;
+  }
 }
 
 /** The `$schema` a graph's published projection declares, or null. */

@@ -250,16 +250,31 @@ describe("at rest it is a strip, and opens three ways", () => {
     );
   });
 
-  it("shows the [x] only while pinned", () => {
-    expect(css).toContain(".fa-nav-close{display:none}");
-    expect(css).toContain(".fa-nav:has(.fa-nav-open:checked) .fa-nav-close");
+  it("renders no [x] and no ☰ — the header is the one control (#1757)", () => {
+    const html = navbarHtml(model);
+    expect(html).not.toContain("fa-nav-close");
+    expect(html).not.toContain("&#9776;");
+    expect(html).not.toContain("☰");
+    expect(css).not.toContain(".fa-nav-close");
   });
 
-  it("both controls drive ONE checkbox", () => {
+  it("ONE control drives the checkbox, and it is the header", () => {
     const html = navbarHtml(model);
     const id = /<input[^>]*class="fa-nav-open"[^>]*id="([^"]+)"/.exec(html)?.[1];
     expect(id).toBeDefined();
-    expect([...html.matchAll(new RegExp(`for="${id}"`, "g"))]).toHaveLength(2);
+    const labels = [...html.matchAll(new RegExp(`<label class="([^"]+)" for="${id}"`, "g"))];
+    expect(labels.map((m) => m[1])).toEqual(["fa-nav-head"]);
+  });
+
+  it("the header carries the instance's mark — its initial when no avatar is declared", () => {
+    const html = navbarHtml({ ...model, instance: "who-iris" });
+    expect(region(html, "fa-nav-top")).toMatch(/<span class="fa-nav-glyph[^"]*"[^>]*>W<\/span>/);
+  });
+
+  it("the header carries the declared avatar when there is one", () => {
+    const html = navbarHtml({ ...model, mark: { avatar: { src: "../a.svg" }, tone: 268 } });
+    expect(region(html, "fa-nav-top")).toContain('<img src="../a.svg" alt="">');
+    expect(region(html, "fa-nav-top")).toContain("hsl(268 45% 28%)");
   });
 
   it("escapes what it is given", () => {
@@ -660,14 +675,42 @@ describe("the document index — `documentIndexOf`", () => {
     expect(html).toContain("fa-nav-graphs");
   });
 
-  it("sits in the FIXED top, with the instance", () => {
+  it("is the page's OWN section: first in the middle, the only group open (#1757)", () => {
     const html = injectRail(page(`<h2 id="a">A</h2><h2 id="b">B</h2>`), {
       instance: "who-iris",
       toRoot: "..",
       links: [],
     });
-    expect(region(html!, "fa-nav-top")).toContain('href="#a"');
-    expect(region(html!, "fa-nav-graphs")).not.toContain('href="#a"');
+    // It moved OUT of the fixed top: there it arrived folded while Graphs
+    // arrived open — the one section about this page was the one you had to open.
+    expect(region(html!, "fa-nav-top")).not.toContain('href="#a"');
+    const graphs = region(html!, "fa-nav-graphs");
+    expect(graphs).toContain('href="#a"');
+    const open = [...graphs.matchAll(/<details class="fa-nav-group"( open)?><summary>[\s\S]*?<span class="fa-nav-label">([^<]*)</g)];
+    expect(open.filter((m) => m[1]).map((m) => m[2])).toEqual(["Contents"]);
+  });
+
+  it("is named for the visualiser when the caller says which", () => {
+    const html = injectRail(page(`<h2 id="a">A</h2><h2 id="b">B</h2>`), {
+      instance: "cat-harness",
+      toRoot: "..",
+      links: [],
+      visualiserLabel: "todos",
+    });
+    expect(region(html!, "fa-nav-graphs")).toContain('<span class="fa-nav-label">todos</span>');
+  });
+
+  it("prefers a DECLARED visualiser nav over the headings", () => {
+    const decl = `<script type="application/json" data-fa-visualiser-nav>` +
+      `[{"label":"node-x","href":"#node-x","items":[{"label":"t1","href":"#todo-t1"}]}]</script>`;
+    const html = injectRail(page(`${decl}<h2 id="a">A</h2><h2 id="b">B</h2>`), {
+      instance: "cat-harness",
+      toRoot: "..",
+      links: [],
+    });
+    const graphs = region(html!, "fa-nav-graphs");
+    expect(graphs).toContain('href="#todo-t1"');
+    expect(graphs).not.toContain('href="#a"');
   });
 });
 
@@ -911,7 +954,6 @@ describe("the two surfaces differ by DECLARATION, not by branch", () => {
       // The labels still point at the input the FIRST copy rendered, which is
       // the whole mechanism: one control, operated from both copies.
       expect(html).toContain('for="fa-nav-open"');
-      expect(html).toContain("fa-nav-close");
       expect(html).toContain("fa-nav-head");
     });
 
