@@ -5,7 +5,7 @@ status: in-progress
 type: bug
 priority: critical
 created_at: 2026-10-01T08:47:14Z
-updated_at: 2026-10-01T08:57:48Z
+updated_at: 2026-10-01T09:30:18Z
 parent: folio-assistant-3fva
 ---
 
@@ -44,3 +44,7 @@ Done 2026-10-01 by a subagent of session 01LKpuPo, on worktree branch `worktree-
 - **They are now dead sidecars, reported and not deleted.** `kg:audit:check --instance bootstrap` / `bootstrap-tools` used to say SUBJECT UNREADABLE. They now say SUBJECT GONE: the submodules no longer carry `initialization-steps`, `human-agent-discussion` or `render-kg-to-github-pages`. Removing the sidecars is the owner's call under `deletion-requires-confirmation`.
 - **`db346408`: guard.** `cat-harness/content/pipeline/qa-graph-integrity.ts` sweeps every instance's declared `qa` directories, which covers the hosted homes. It fails on a start or end conflict marker of any width (48aab0bd wrote 8-wide markers) and on unparseable `.json`. Its test plants the exact 48aab0bd shape. `kg-qa.test.ts` also gains a schema walk over every instance's `kgQaHomeFor` home. Both were falsified: putting the conflicted file back turns each test red.
 - **Coordination:** PR #1769 does not touch these files. A comment there names them, the risk, and this fix.
+
+
+## Owner ruling 2026-10-01 — the 3 SUBJECT-GONE sidecars are DELETED
+Asked with options; the owner chose delete. Before deletion: each was about 1.06 KB, held 0 `pair_attestations` (checked against both parents of `48aab0bd` by the de9k agent), and described a skill that left the submodules during placement. Removed with `git rm` on branch `claude/quirky-davinci-ixuymr`.
