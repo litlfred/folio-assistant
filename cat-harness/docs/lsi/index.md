@@ -137,7 +137,7 @@ Each dimension is a **contrast** between two poles, shown by their highest-loadi
 | 5 | 14.81 | locale, navbar, translated, page, translation, french, staging, theme | edges, forward, edge, logical, backward, cross-chapter, energy, sections |
 | 6 | 14.77 | lane, requirements, actor, role, feature, phase, task, stakeholders | rung, queue, slide, arm, archive, bytes, zip, sniff |
 | 7 | 14.38 | edges, forward, preview, backward, edge, cross-chapter, energy, logical | actor, lane, role, backlog, rung, criterion, login, roles |
-| 8 | 14.12 | locale, translated, translation, french, back-translation, badge, translations, trip | preview, feature, phase, option, sha, impact, user, staging |
+| 8 | 14.12 | locale, translated, translation, french, back-translation, badge, translations, trip | preview, feature, phase, option, sha, impact, staging, user |
 
 **Findings** — 0 narrow dimension(s), 1 near-duplicate pair(s).
 
