@@ -5,7 +5,7 @@ status: todo
 type: task
 priority: normal
 created_at: 2026-10-01T08:00:46Z
-updated_at: 2026-10-01T08:00:55Z
+updated_at: 2026-10-01T08:48:11Z
 parent: folio-assistant-3fva
 blocked_by:
     - folio-assistant-oqe3
@@ -21,3 +21,17 @@ The per-instance `test/results/` dirs (`folio-assistant-sci`, `fhir-harness`, `s
 ## Done when
 - [ ] no gate or test references a committed `test/results` file
 - [ ] a freshly initialised folio publishes to its own qa-reports branch
+
+
+
+## From the reader audit (`gxvk`, 2026-10-01)
+`cat-harness/docs/proposals/qa-readers-audit-2026-10-01.md` §5.7 lists the G-class sites:
+- `qa-resolve-conflicts.ts:221-254,325`
+- the repository attributes file, lines 7-77
+- `regen-after-merge.ts:131`
+- `gate-tree-guard.ts:8`: keep it; it catches gates that write in `--check`
+- `templates/document/github/workflows/qa-sweep.yml:114`
+- `folio-staging.yml:315`
+- `qa-resolve-conflicts.test.ts` and the attributes test
+
+`init-folio.ts:433,451` (the `folio_init` AGENTS template says "Commit") is also here. The reader beans this one now follows in practice are `folio-assistant-2gst`, `0dav`, `id4s`, `oq1j`, `8wj1`, `c8uq`, `tfqf` and `cxcn`.
