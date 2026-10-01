@@ -299,7 +299,7 @@ MOVE, SPLIT and AMBIGUOUS rows are listed in full. OK, CODE and TO-JSON rows are
 | SPLIT | `folio-assistant-sci/skills/content/folio-paper-adapter/q-usage-watcher.md` | `root/ (a checkout-root link: replace it, R6; the item stays)` | content | rule 1: generic item with 1 upward reference(s) into root — keep it here, invert the reference (the higher item links down) | unplanned |
 | SPLIT | `smart-base/skills/content/authoring-who-smart-guidelines/ig-artifact-ingestion.md` | `smart-trust/ (receives the upward-pointing passage or link only; the item stays at its path)` | content | rule 1: generic item with 2 upward reference(s) into smart-trust — keep it here, invert the reference (the higher item links down) | unplanned |
 
-<details><summary>collapsed: OK 335, CODE 3, TO-JSON 23</summary>
+<details markdown="1"><summary>collapsed: OK 335, CODE 3, TO-JSON 23</summary>
 
 | instance | concern | OK | CODE | TO-JSON |
 |---|---|---:|---:|---:|
@@ -343,7 +343,7 @@ MOVE, SPLIT and AMBIGUOUS rows are listed in full. OK, CODE and TO-JSON rows are
 | MOVE | `who-style-guide/skills/voices/who-publication-design/SKILL.md` | `who-iris/skills/voices/who-publication-design/SKILL.md` | content | ruling: who-style-guide retires into who-iris (#1735) | #1735 (S3) |
 | MOVE | `who-style-guide/skills/voices/who-publication-design/voice.json` | `who-iris/skills/voices/who-publication-design/voice.json` | content | ruling: who-style-guide retires into who-iris (#1735) | #1735 (S3) |
 
-<details><summary>collapsed: OK 41</summary>
+<details markdown="1"><summary>collapsed: OK 41</summary>
 
 | instance | concern | OK | CODE | TO-JSON |
 |---|---|---:|---:|---:|
@@ -355,7 +355,7 @@ MOVE, SPLIT and AMBIGUOUS rows are listed in full. OK, CODE and TO-JSON rows are
 
 ### skill-command (44)
 
-<details><summary>collapsed: OK 44</summary>
+<details markdown="1"><summary>collapsed: OK 44</summary>
 
 | instance | concern | OK | CODE | TO-JSON |
 |---|---|---:|---:|---:|
@@ -396,7 +396,7 @@ MOVE, SPLIT and AMBIGUOUS rows are listed in full. OK, CODE and TO-JSON rows are
 | MOVE | `smart-base/tools/index.ts` | `fhir-harness/tools/valueset-schemas.json` | content | rule 2: generic FHIR vocabulary, no WHO/SMART/DAK terms | unplanned (tool placement; S5 70lx carries implementations) |
 | SPLIT | `cat-harness/tools/mcp.ts` | `cat-harness/tools/instance-init.json (generic instance init) + folio-assistant-core/tools/folio-init.json (content-adapter scaffold; core tools/mcp subgraph)` | conduct | refined MCP ruling 2026-10-01 + mer2 ("split the operation"): generic init stays, folio scaffold half is core-specific | mer2 (S6) + 70lx |
 
-<details><summary>collapsed: TO-JSON 104</summary>
+<details markdown="1"><summary>collapsed: TO-JSON 104</summary>
 
 | instance | concern | OK | CODE | TO-JSON |
 |---|---|---:|---:|---:|
@@ -416,7 +416,7 @@ MOVE, SPLIT and AMBIGUOUS rows are listed in full. OK, CODE and TO-JSON rows are
 
 ### tool-code (2)
 
-<details><summary>collapsed: OK 1, CODE 1</summary>
+<details markdown="1"><summary>collapsed: OK 1, CODE 1</summary>
 
 | instance | concern | OK | CODE | TO-JSON |
 |---|---|---:|---:|---:|
@@ -459,7 +459,7 @@ MOVE, SPLIT and AMBIGUOUS rows are listed in full. OK, CODE and TO-JSON rows are
 | SPLIT | `cat-harness/processes/ig-ast-delta-review.bpmn` | `fhir-harness/ (receives the upward-pointing passage or link only; the item stays at its path)` | content | rule 1: generic item with 1 upward reference(s) into fhir-harness — keep it here, invert the reference (the higher item links down) | unplanned |
 | SPLIT | `cat-harness/processes/review-task.bpmn` | `folio-assistant-sci/ (receives the upward-pointing passage or link only; the item stays at its path)` | content | rule 1: generic item with 1 upward reference(s) into folio-assistant-sci — keep it here, invert the reference (the higher item links down) | unplanned |
 
-<details><summary>collapsed: OK 49</summary>
+<details markdown="1"><summary>collapsed: OK 49</summary>
 
 | instance | concern | OK | CODE | TO-JSON |
 |---|---|---:|---:|---:|
@@ -487,7 +487,7 @@ MOVE, SPLIT and AMBIGUOUS rows are listed in full. OK, CODE and TO-JSON rows are
 | MOVE | `cat-harness/processes/decisions/pages-live-gate.dmn` | `folio-assistant-core/processes/sdlc/pages-live-gate.dmn` | sdlc | placement PR3 ruling (63wl); heuristic said OK | 63wl (PR3) |
 | MOVE | `cat-harness/processes/decisions/review-coverage-gate.dmn` | `folio-assistant-core/processes/sdlc/review-coverage-gate.dmn` | sdlc | placement PR3 ruling (63wl); heuristic said OK | 63wl (PR3) |
 
-<details><summary>collapsed: OK 4</summary>
+<details markdown="1"><summary>collapsed: OK 4</summary>
 
 | instance | concern | OK | CODE | TO-JSON |
 |---|---|---:|---:|---:|
@@ -517,7 +517,7 @@ MOVE, SPLIT and AMBIGUOUS rows are listed in full. OK, CODE and TO-JSON rows are
 | SPLIT | `cat-harness/scenarios/roles.json#build-pipeline` | `fhir-harness/scenarios/roles.json `extensions` (the upward role→skill edges only; the role stays)` | sdlc | rule 1: generic item with 1 upward reference(s) into fhir-harness — keep it here, move the upward role→skill edges into the owner's roles.json `extensions` overlay (PR0b mechanism) | 4fv8 (PR4) |
 | SPLIT | `cat-harness/scenarios/roles.json#qc-reviewer` | `fhir-harness/scenarios/roles.json `extensions` (the upward role→skill edges only; the role stays)` | content | rule 1: generic item with 1 upward reference(s) into fhir-harness — keep it here, move the upward role→skill edges into the owner's roles.json `extensions` overlay (PR0b mechanism) | 4fv8 (PR4) |
 
-<details><summary>collapsed: OK 36</summary>
+<details markdown="1"><summary>collapsed: OK 36</summary>
 
 | instance | concern | OK | CODE | TO-JSON |
 |---|---|---:|---:|---:|
@@ -535,7 +535,7 @@ MOVE, SPLIT and AMBIGUOUS rows are listed in full. OK, CODE and TO-JSON rows are
 
 ### role-extension (25)
 
-<details><summary>collapsed: OK 25</summary>
+<details markdown="1"><summary>collapsed: OK 25</summary>
 
 | instance | concern | OK | CODE | TO-JSON |
 |---|---|---:|---:|---:|
@@ -586,7 +586,7 @@ MOVE, SPLIT and AMBIGUOUS rows are listed in full. OK, CODE and TO-JSON rows are
 | MOVE | `cat-harness/scenarios/stories.json#terminologist-2` | `fhir-harness/scenarios/stories.json` | content | PR4 ruling: story follows its role `terminologist` | 4fv8 (PR4) |
 | MOVE | `cat-harness/scenarios/stories.json#terminologist-3` | `fhir-harness/scenarios/stories.json` | content | PR4 ruling: story follows its role `terminologist` | 4fv8 (PR4) |
 
-<details><summary>collapsed: OK 80</summary>
+<details markdown="1"><summary>collapsed: OK 80</summary>
 
 | instance | concern | OK | CODE | TO-JSON |
 |---|---|---:|---:|---:|
@@ -611,7 +611,7 @@ MOVE, SPLIT and AMBIGUOUS rows are listed in full. OK, CODE and TO-JSON rows are
 | MOVE | `cat-harness/scenarios/actors/onboarding-agent.json` | `folio-assistant-core/scenarios/actors/onboarding-agent.json` | ui | placement PR4 ruling (4fv8); heuristic said OK | 4fv8 (PR4) |
 | MOVE | `cat-harness/scenarios/actors/terminologist.json` | `fhir-harness/scenarios/actors/terminologist.json` | content | placement PR4 ruling (4fv8); heuristic said OK | 4fv8 (PR4) |
 
-<details><summary>collapsed: OK 27</summary>
+<details markdown="1"><summary>collapsed: OK 27</summary>
 
 | instance | concern | OK | CODE | TO-JSON |
 |---|---|---:|---:|---:|
@@ -639,7 +639,7 @@ MOVE, SPLIT and AMBIGUOUS rows are listed in full. OK, CODE and TO-JSON rows are
 | MOVE | `cat-harness/scenarios/capabilities/smart-base.json` | `smart-base/scenarios/capabilities/smart-base.json` | tools | placement PR4 ruling (4fv8) | 4fv8 (PR4) |
 | MOVE | `cat-harness/scenarios/capabilities/sushi-compiler.json` | `fhir-harness/scenarios/capabilities/sushi-compiler.json` | tools | placement PR4 ruling (4fv8); heuristic said OK | 4fv8 (PR4) |
 
-<details><summary>collapsed: OK 17</summary>
+<details markdown="1"><summary>collapsed: OK 17</summary>
 
 | instance | concern | OK | CODE | TO-JSON |
 |---|---|---:|---:|---:|
@@ -649,7 +649,7 @@ MOVE, SPLIT and AMBIGUOUS rows are listed in full. OK, CODE and TO-JSON rows are
 
 ### methodology (21)
 
-<details><summary>collapsed: OK 21</summary>
+<details markdown="1"><summary>collapsed: OK 21</summary>
 
 | instance | concern | OK | CODE | TO-JSON |
 |---|---|---:|---:|---:|
@@ -677,7 +677,7 @@ MOVE, SPLIT and AMBIGUOUS rows are listed in full. OK, CODE and TO-JSON rows are
 | MOVE | `cat-harness/code-lists/grade-recommendation-strength.json` | `smart-base/code-lists/grade-recommendation-strength.json` | content | rule 2/3: GRADE evidence-to-decision vocabulary; placement §0 keeps GRADE in smart-base (the `grade` skill); heuristic said OK | unplanned |
 | SPLIT | `cat-harness/code-lists/own-namespaces.json` | `folio-assistant-core/ (receives the upward-pointing passage or link only; the item stays at its path)` | kg | rule 1: generic item with 3 upward reference(s) into folio-assistant-core — keep it here, invert the reference (the higher item links down) | unplanned |
 
-<details><summary>collapsed: OK 6</summary>
+<details markdown="1"><summary>collapsed: OK 6</summary>
 
 | instance | concern | OK | CODE | TO-JSON |
 |---|---|---:|---:|---:|
@@ -707,7 +707,7 @@ MOVE, SPLIT and AMBIGUOUS rows are listed in full. OK, CODE and TO-JSON rows are
 | MOVE | `cat-harness/templates/paper/github/workflows/lean-build.yml` | `folio-assistant-sci/templates/paper/github/workflows/lean-build.yml` | sdlc | rule 2: paper-content-type template (folio_init writes it for a paper folio) | unplanned |
 | MOVE | `cat-harness/templates/paper/github/workflows/lean_ci.yml` | `folio-assistant-sci/templates/paper/github/workflows/lean_ci.yml` | sdlc | rule 2: paper-content-type template (folio_init writes it for a paper folio) | unplanned |
 
-<details><summary>collapsed: OK 3, CODE 1</summary>
+<details markdown="1"><summary>collapsed: OK 3, CODE 1</summary>
 
 | instance | concern | OK | CODE | TO-JSON |
 |---|---|---:|---:|---:|
@@ -756,7 +756,7 @@ MOVE, SPLIT and AMBIGUOUS rows are listed in full. OK, CODE and TO-JSON rows are
 | SPLIT | `folio-assistant-core/schemas/fhir-artifact-index.ts` | `fhir-harness/schemas/fhir-artifact-index.ts` | content | rule 2 vs users: subject is fhir but used at/below folio-assistant-core by ['cat-harness']; keep a generic stub, move the fhir body | unplanned (#223 code partition; S5) |
 | SPLIT | `folio-assistant-core/schemas/materialization.ts` | `cat-harness-tools/schemas/library/materialization-state.ts (states + fixity) + the rest stays in folio-assistant-core` | library | placement ruling 2 (A) / PR5 tlat: the state vocabulary and fixity move down; under D1 + "tools below core" the Zod lands in cat-harness-tools, not cat-harness; heuristic said OK | tlat (PR5) |
 
-<details><summary>collapsed: OK 87, CODE 186</summary>
+<details markdown="1"><summary>collapsed: OK 87, CODE 186</summary>
 
 | instance | concern | OK | CODE | TO-JSON |
 |---|---|---:|---:|---:|
@@ -810,7 +810,7 @@ MOVE, SPLIT and AMBIGUOUS rows are listed in full. OK, CODE and TO-JSON rows are
 | MOVE | `agent-skills/library/skills-in-openai-api-notebook/` | `cat-harness/library/conduct/skills-in-openai-api-notebook` | conduct | ruling 2026-10-01: agent-skills becomes a library subgraph of cat-harness | unplanned (7x5n S4 subgraph ruling) |
 | MOVE | `agent-skills/library/skills-in-openai-api/` | `cat-harness/library/conduct/skills-in-openai-api` | conduct | ruling 2026-10-01: agent-skills becomes a library subgraph of cat-harness | unplanned (7x5n S4 subgraph ruling) |
 
-<details><summary>collapsed: OK 45</summary>
+<details markdown="1"><summary>collapsed: OK 45</summary>
 
 | instance | concern | OK | CODE | TO-JSON |
 |---|---|---:|---:|---:|
@@ -863,7 +863,7 @@ MOVE, SPLIT and AMBIGUOUS rows are listed in full. OK, CODE and TO-JSON rows are
 | SPLIT | `cat-harness/scripts/eval/` | `cat-harness-tools/scripts/eval/ (generic) + folio-assistant-sci, smart-base` | content | rule 1: code reaches folio-assistant-sci, smart-base — move the reaching files up ("tools below core"), the rest to cat-harness-tools | unplanned (#223 code partition; S5) |
 | SPLIT | `cat-harness/scripts/translation/` | `cat-harness-tools/scripts/translation/ (generic) + smart-base` | library | rule 1: code reaches smart-base — move the reaching files up ("tools below core"), the rest to cat-harness-tools | unplanned (#223 code partition; S5) |
 
-<details><summary>collapsed: OK 115, CODE 407</summary>
+<details markdown="1"><summary>collapsed: OK 115, CODE 407</summary>
 
 | instance | concern | OK | CODE | TO-JSON |
 |---|---|---:|---:|---:|
@@ -949,7 +949,7 @@ MOVE, SPLIT and AMBIGUOUS rows are listed in full. OK, CODE and TO-JSON rows are
 | MOVE | `cat-harness/content/pipeline/wall-violations-sweep.ts` | `folio-assistant-sci/content/pipeline/wall-violations-sweep.ts` | content | rule 2+4: executable whose subject is sci (vocabulary signal; no non-test harness importer) | unplanned (#223 code partition; S5) |
 | SPLIT | `cat-harness/content/pipeline/script-sidecars/` | `cat-harness-tools/content/pipeline/script-sidecars/ (generic) + folio-assistant-sci` | content | rule 1: code reaches folio-assistant-sci — move the reaching files up ("tools below core"), the rest to cat-harness-tools | unplanned (#223 code partition; S5) |
 
-<details><summary>collapsed: OK 9, CODE 192</summary>
+<details markdown="1"><summary>collapsed: OK 9, CODE 192</summary>
 
 | instance | concern | OK | CODE | TO-JSON |
 |---|---|---:|---:|---:|
