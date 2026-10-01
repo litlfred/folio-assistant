@@ -5,7 +5,7 @@
 import { describe, expect, it } from "bun:test";
 import { readFileSync } from "node:fs";
 import { join } from "node:path";
-import { dakViewData, dakViews, displayText, fenceFor } from "../dak-views.ts";
+import { DAK_VIEW_SCRIPT, dakViewData, dakViews } from "../dak-views.ts";
 import type { FhirArtifact } from "../../../folio-assistant-core/schemas/fhir-artifact-index.js";
 
 const a = {
@@ -28,23 +28,19 @@ describe("dak views", () => {
     expect(dakViews(byRef)).toEqual([]);
   });
 
-  it("displays the file as the Publisher's page does: JavaScript's key order, two-space indent", () => {
-    // Integer-like keys come first in JSON.stringify — the reason 3 of
-    // smart-trust's 33 files display differently from their own bytes.
-    expect(displayText('{\n    "b": 1,\n    "1": 2\n}')).toBe('{\n  "1": 2,\n  "b": 1\n}');
-  });
-
-  it("fences with more backticks than the text holds", () => {
-    expect(fenceFor("{}")).toBe("```");
-    expect(fenceFor('{"a":"````"}')).toBe("`````");
-  });
-
   it("tabs: narrative, the Publisher's representations, then the DAK views with this one active", () => {
-    const d = dakViewData(a, dakViews(a)[1]!, '{"@context":{}}');
+    const d = dakViewData(a, dakViews(a)[1]!);
     expect(d.tabs.map((t) => `${t.label}${t.active ? "*" : ""}`)).toEqual(["Narrative Content", "XML", "JSON", "JSON Schema", "JSON-LD*"]);
     expect(d.tabs[0]!.href).toBe("ValueSet-Actors.html");
     expect(d.label).toBe("JSON-LD");
-    expect(d.text).toBe('{\n  "@context": {}\n}');
+    expect(d.script).toBe(`../${DAK_VIEW_SCRIPT}`);
+    // The page carries no file text: the loader fetches it (bean `680p`).
+    expect(JSON.stringify(d)).not.toContain("@context");
+  });
+
+  it("the loader shows the file as the Publisher does: JSON.stringify(parsed, null, 2)", () => {
+    const js = readFileSync(join(import.meta.dir, "..", "templates", "dak-view.js"), "utf8");
+    expect(js).toContain("JSON.stringify(d, null, 2)");
   });
 
   it("the template is a file that opens with the comment describing it, and computes nothing", () => {

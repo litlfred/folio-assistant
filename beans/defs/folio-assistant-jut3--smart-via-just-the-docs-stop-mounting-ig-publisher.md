@@ -582,3 +582,16 @@ this renderer:
 
 Ours renders one consistent tab bar. Which schema copy to show, and whether
 to reproduce the tab defects, are the owner's calls.
+
+## Owner ruling 2026-10-01: show the root schema; DAK views now equivalent
+
+The owner answered *"do 1"*: the view pages show the root copy. The ingest
+now reads every schema, displays and OpenAPI sidecar from the root first and
+falls back to `schemas/`. It reports each pair that differs; on the fork that
+is all 52 pairs. The fork's own `dak-api.html` links the root copies too, so
+`schemas/` is the stale one.
+
+After re-ingest, with the file now fetched client-side (bean `680p`), **all 33
+DAK view pages display exactly what the Publisher's pages display**
+(Chromium, via Playwright). The tab-bar differences remain and are the second
+decision.

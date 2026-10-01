@@ -2,7 +2,7 @@
 title: "WHO GDHCN Key Usage ValueSet - UAT — JSON Schema"
 description: "The JSON Schema sidecar of ValueSet/KeyUsage-UAT, from the IG's DAK API."
 nav_exclude: true
-dak: {"label":"JSON Schema","file":"ValueSet-KeyUsage-UAT.schema.json","artifact":{"title":"WHO GDHCN Key Usage ValueSet - UAT","page":"ValueSet-KeyUsage-UAT.html"},"tabs":[{"label":"Narrative Content","href":"ValueSet-KeyUsage-UAT.html","active":false},{"label":"XML","href":"https://litlfred.github.io/smart-trust/ValueSet-KeyUsage-UAT.xml","active":false},{"label":"JSON","href":"https://litlfred.github.io/smart-trust/ValueSet-KeyUsage-UAT.json","active":false},{"label":"TTL","href":"https://litlfred.github.io/smart-trust/ValueSet-KeyUsage-UAT.ttl","active":false},{"label":"JSON Schema","href":"ValueSet-KeyUsage-UAT.schema.json.html","active":true},{"label":"JSON-LD","href":"ValueSet-KeyUsage-UAT.jsonld.html","active":false}],"text":"{\n  \"$schema\": \"https://json-schema.org/draft/2020-12/schema\",\n  \"$id\": \"http://smart.who.int/trust/ValueSet-KeyUsage-UAT.schema.json\",\n  \"title\": \"WHO GDHCN  Key Usage ValueSet - UAT Schema\",\n  \"description\": \"JSON Schema for WHO GDHCN  Key Usage ValueSet - UAT ValueSet codes. Generated from FHIR expansions using IRI format.\",\n  \"type\": \"string\",\n  \"enum\": [\n    \"http://smart.who.int/trust/CodeSystem/KeyUsage-UAT#SCA\",\n    \"http://smart.who.int/trust/CodeSystem/KeyUsage-UAT#DSC\",\n    \"http://smart.who.int/trust/CodeSystem/KeyUsage-UAT#DECA\",\n    \"http://smart.who.int/trust/CodeSystem/KeyUsage-UAT#DESC\",\n    \"http://smart.who.int/trust/CodeSystem/KeyUsage-UAT#TLS\",\n    \"http://smart.who.int/trust/CodeSystem/KeyUsage-UAT#UP\",\n    \"http://smart.who.int/trust/CodeSystem/KeyUsage-UAT#SCA\",\n    \"http://smart.who.int/trust/CodeSystem/KeyUsage-UAT#DSC\",\n    \"http://smart.who.int/trust/CodeSystem/KeyUsage-UAT#UP\",\n    \"http://smart.who.int/trust/CodeSystem/KeyUsage-UAT#TLS\"\n  ],\n  \"narrative\": \"This schema validates IRI-formatted codes for the WHO GDHCN  Key Usage ValueSet - UAT ValueSet. Each enum value includes the system URI in the format {systemuri}#{code} to match JSON-LD enumeration IRIs. Display values are available at http://smart.who.int/trust/ValueSet-KeyUsage-UAT.displays.json. For a complete listing of all ValueSets, see artifacts.html#terminology-value-sets.\",\n  \"fhir:displays\": \"http://smart.who.int/trust/ValueSet-KeyUsage-UAT.displays.json\",\n  \"fhir:valueSet\": \"http://smart.who.int/trust/ValueSet/KeyUsage-UAT\",\n  \"fhir:version\": \"1.8.0\",\n  \"fhir:expansionTimestamp\": \"2026-10-01T11:52:14.597234\"\n}","fence":"```"}
+dak: {"label":"JSON Schema","file":"ValueSet-KeyUsage-UAT.schema.json","artifact":{"title":"WHO GDHCN Key Usage ValueSet - UAT","page":"ValueSet-KeyUsage-UAT.html"},"tabs":[{"label":"Narrative Content","href":"ValueSet-KeyUsage-UAT.html","active":false},{"label":"XML","href":"https://litlfred.github.io/smart-trust/ValueSet-KeyUsage-UAT.xml","active":false},{"label":"JSON","href":"https://litlfred.github.io/smart-trust/ValueSet-KeyUsage-UAT.json","active":false},{"label":"TTL","href":"https://litlfred.github.io/smart-trust/ValueSet-KeyUsage-UAT.ttl","active":false},{"label":"JSON Schema","href":"ValueSet-KeyUsage-UAT.schema.json.html","active":true},{"label":"JSON-LD","href":"ValueSet-KeyUsage-UAT.jsonld.html","active":false}],"script":"../assets/dak-view.js"}
 ---
 <style>
 .st-tag{display:inline-block;padding:.05rem .4rem;border-radius:3px;font-size:.75rem;
@@ -97,8 +97,8 @@ A DAK sidecar's view page, the Publisher's `<Name>.schema.json.html` or `<Name>.
 Reads `page.dak`, every field written by `gen-smart-trust-pages.ts`:
 `label` (JSON Schema | JSON-LD), `file` (the raw file, published beside this page),
 `artifact.title` and `artifact.page`, `tabs[]` (`label`, `href`, `active`) in the Publisher's order,
-`text` (the file as the Publisher's page displays it: `JSON.stringify(parsed, null, 2)`)
-and `fence` (a backtick run longer than any inside `text`). This file only arranges them.
+and `script` (the shared loader's path). The file's text is NOT in the page: `dak-view.js` fetches
+it in the browser, as the Publisher's page does (bean `680p`). This file only arranges.
 {%- endcomment -%}
 [← {{ page.dak.artifact.title }}]({{ page.dak.artifact.page }})
 
@@ -108,6 +108,6 @@ and `fence` (a backtick run longer than any inside `text`). This file only arran
 
 [Raw {{ page.dak.label }}]({{ page.dak.file }}) · [Download]({{ page.dak.file }}){: download=""}
 
-{{ page.dak.fence }}json
-{{ page.dak.text }}
-{{ page.dak.fence }}
+<pre><code class="language-json" data-dak-src="{{ page.dak.file }}">Loading…</code></pre>
+<noscript><p>This view needs JavaScript; the <a href="{{ page.dak.file }}">raw file</a> does not.</p></noscript>
+<script src="{{ page.dak.script }}" defer></script>

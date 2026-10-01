@@ -2,7 +2,7 @@
 title: "WHO Regional Offices — JSON Schema"
 description: "The JSON Schema sidecar of ValueSet/WHORegionalOffices, from the IG's DAK API."
 nav_exclude: true
-dak: {"label":"JSON Schema","file":"ValueSet-WHORegionalOffices.schema.json","artifact":{"title":"WHO Regional Offices","page":"ValueSet-WHORegionalOffices.html"},"tabs":[{"label":"Narrative Content","href":"ValueSet-WHORegionalOffices.html","active":false},{"label":"XML","href":"https://litlfred.github.io/smart-trust/ValueSet-WHORegionalOffices.xml","active":false},{"label":"JSON","href":"https://litlfred.github.io/smart-trust/ValueSet-WHORegionalOffices.json","active":false},{"label":"TTL","href":"https://litlfred.github.io/smart-trust/ValueSet-WHORegionalOffices.ttl","active":false},{"label":"JSON Schema","href":"ValueSet-WHORegionalOffices.schema.json.html","active":true},{"label":"JSON-LD","href":"ValueSet-WHORegionalOffices.jsonld.html","active":false}],"text":"{\n  \"$schema\": \"https://json-schema.org/draft/2020-12/schema\",\n  \"$id\": \"http://smart.who.int/trust/ValueSet-WHORegionalOffices.schema.json\",\n  \"title\": \"WHO Regional Offices Schema\",\n  \"description\": \"JSON Schema for WHO Regional Offices ValueSet codes. Generated from FHIR expansions using IRI format.\",\n  \"type\": \"string\",\n  \"enum\": [\n    \"http://smart.who.int/trust/CodeSystem/WHORegionalOffices#AFRO\",\n    \"http://smart.who.int/trust/CodeSystem/WHORegionalOffices#AMRO\",\n    \"http://smart.who.int/trust/CodeSystem/WHORegionalOffices#EMRO\",\n    \"http://smart.who.int/trust/CodeSystem/WHORegionalOffices#EURO\",\n    \"http://smart.who.int/trust/CodeSystem/WHORegionalOffices#SEARO\",\n    \"http://smart.who.int/trust/CodeSystem/WHORegionalOffices#WPRO\",\n    \"http://smart.who.int/trust/CodeSystem/WHORegionalOffices#OTHER\"\n  ],\n  \"narrative\": \"This schema validates IRI-formatted codes for the WHO Regional Offices ValueSet. Each enum value includes the system URI in the format {systemuri}#{code} to match JSON-LD enumeration IRIs. Display values are available at http://smart.who.int/trust/ValueSet-WHORegionalOffices.displays.json. For a complete listing of all ValueSets, see artifacts.html#terminology-value-sets.\",\n  \"fhir:displays\": \"http://smart.who.int/trust/ValueSet-WHORegionalOffices.displays.json\",\n  \"fhir:valueSet\": \"http://smart.who.int/trust/ValueSet/WHORegionalOffices\",\n  \"fhir:version\": \"1.8.0\",\n  \"fhir:expansionTimestamp\": \"2026-10-01T11:52:14.595970\"\n}","fence":"```"}
+dak: {"label":"JSON Schema","file":"ValueSet-WHORegionalOffices.schema.json","artifact":{"title":"WHO Regional Offices","page":"ValueSet-WHORegionalOffices.html"},"tabs":[{"label":"Narrative Content","href":"ValueSet-WHORegionalOffices.html","active":false},{"label":"XML","href":"https://litlfred.github.io/smart-trust/ValueSet-WHORegionalOffices.xml","active":false},{"label":"JSON","href":"https://litlfred.github.io/smart-trust/ValueSet-WHORegionalOffices.json","active":false},{"label":"TTL","href":"https://litlfred.github.io/smart-trust/ValueSet-WHORegionalOffices.ttl","active":false},{"label":"JSON Schema","href":"ValueSet-WHORegionalOffices.schema.json.html","active":true},{"label":"JSON-LD","href":"ValueSet-WHORegionalOffices.jsonld.html","active":false}],"script":"../assets/dak-view.js"}
 ---
 <style>
 .st-tag{display:inline-block;padding:.05rem .4rem;border-radius:3px;font-size:.75rem;
@@ -97,8 +97,8 @@ A DAK sidecar's view page, the Publisher's `<Name>.schema.json.html` or `<Name>.
 Reads `page.dak`, every field written by `gen-smart-trust-pages.ts`:
 `label` (JSON Schema | JSON-LD), `file` (the raw file, published beside this page),
 `artifact.title` and `artifact.page`, `tabs[]` (`label`, `href`, `active`) in the Publisher's order,
-`text` (the file as the Publisher's page displays it: `JSON.stringify(parsed, null, 2)`)
-and `fence` (a backtick run longer than any inside `text`). This file only arranges them.
+and `script` (the shared loader's path). The file's text is NOT in the page: `dak-view.js` fetches
+it in the browser, as the Publisher's page does (bean `680p`). This file only arranges.
 {%- endcomment -%}
 [← {{ page.dak.artifact.title }}]({{ page.dak.artifact.page }})
 
@@ -108,6 +108,6 @@ and `fence` (a backtick run longer than any inside `text`). This file only arran
 
 [Raw {{ page.dak.label }}]({{ page.dak.file }}) · [Download]({{ page.dak.file }}){: download=""}
 
-{{ page.dak.fence }}json
-{{ page.dak.text }}
-{{ page.dak.fence }}
+<pre><code class="language-json" data-dak-src="{{ page.dak.file }}">Loading…</code></pre>
+<noscript><p>This view needs JavaScript; the <a href="{{ page.dak.file }}">raw file</a> does not.</p></noscript>
+<script src="{{ page.dak.script }}" defer></script>

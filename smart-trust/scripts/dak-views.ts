@@ -5,9 +5,11 @@
  * WHO's DAK post-processing (smart-base) publishes two sidecars per artefact
  * that a reader can open as a page: a JSON Schema and a JSON-LD vocabulary.
  * The Publisher's page for each is a tab bar, a heading, Raw and Download
- * links, and the file. This module computes everything that page shows;
+ * links, and the file. This module computes the page's data;
  * `templates/dak-view.liquid` arranges it and Jekyll renders it
  * (`liquid-templates`: computation in the generator, layout in the template).
+ * The file itself is fetched in the browser by `templates/dak-view.js`, as the
+ * Publisher's page does — never baked into the page (bean `680p`).
  *
  * Here, in smart-trust, and not in fhir-harness: a DAK is WHO's, and the bare
  * FHIR layer may not know about it.
@@ -37,32 +39,17 @@ export function dakViews(a: FhirArtifact): DakView[] {
   });
 }
 
-/**
- * The file as the Publisher's page DISPLAYS it. Its page fetches the file and
- * shows `JSON.stringify(parsed, null, 2)` — which is not always the file's own
- * text: JavaScript orders integer-like keys first, so a schema whose
- * `properties` holds `"1"` and `"resourceType"` displays them swapped
- * (3 of smart-trust's 33 files, measured 2026-10-01). Computing it the same
- * way is what makes the two pages show the same thing.
- */
-export function displayText(raw: string): string {
-  return JSON.stringify(JSON.parse(raw), null, 2);
-}
-
-/** A backtick fence longer than any backtick run in `text`, so the text cannot close it. */
-export function fenceFor(text: string): string {
-  const longest = Math.max(0, ...(text.match(/`+/g) ?? []).map((m) => m.length));
-  return "`".repeat(Math.max(3, longest + 1));
-}
-
 export interface DakViewData {
   label: string;
   file: string;
   artifact: { title: string; page: string };
   tabs: Array<{ label: string; href: string; active: boolean }>;
-  text: string;
-  fence: string;
+  /** The shared loader, relative to the page. */
+  script: string;
 }
+
+/** Where the generator publishes the loader, under the instance's docs root; pages sit one level down in `artifact/`. */
+export const DAK_VIEW_SCRIPT = "assets/dak-view.js";
 
 /**
  * Everything one view page shows. Tabs follow the Publisher's order: the
@@ -70,13 +57,12 @@ export interface DakViewData {
  * P2 this site renders none of them), then each DAK view, the current one
  * active.
  */
-export function dakViewData(a: FhirArtifact, view: DakView, raw: string): DakViewData {
+export function dakViewData(a: FhirArtifact, view: DakView): DakViewData {
   const page = `${artifactPageName(a)}.html`;
   const reps = (["xml", "json", "ttl"] as const).flatMap((k) => {
     const url = a.published?.[k]?.url;
     return url ? [{ label: k.toUpperCase(), href: url, active: false }] : [];
   });
-  const text = displayText(raw);
   return {
     label: view.label,
     file: view.file,
@@ -86,7 +72,6 @@ export function dakViewData(a: FhirArtifact, view: DakView, raw: string): DakVie
       ...reps,
       ...dakViews(a).map((v) => ({ label: v.label, href: `${v.file}.html`, active: v.file === view.file })),
     ],
-    text,
-    fence: fenceFor(text),
+    script: `../${DAK_VIEW_SCRIPT}`,
   };
 }

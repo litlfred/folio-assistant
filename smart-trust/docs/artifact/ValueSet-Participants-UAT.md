@@ -116,7 +116,7 @@ IG rather than a gap in this index.
 
 | Sidecar | Published at | Held locally |
 |---|---|---|
-| JSON Schema | <https://litlfred.github.io/smart-trust/schemas/ValueSet-Participants-UAT.schema.json> | `fhir-artifact-index/dak/ValueSet-Participants-UAT.schema.json` · [view](ValueSet-Participants-UAT.schema.json.html) |
-| Displays | <https://litlfred.github.io/smart-trust/schemas/ValueSet-Participants-UAT.displays.json> | `fhir-artifact-index/dak/ValueSet-Participants-UAT.displays.json` |
-| OpenAPI | <https://litlfred.github.io/smart-trust/schemas/ValueSet-Participants-UAT.openapi.json> | `fhir-artifact-index/dak/ValueSet-Participants-UAT.openapi.json` |
+| JSON Schema | <https://litlfred.github.io/smart-trust/ValueSet-Participants-UAT.schema.json> | `fhir-artifact-index/dak/ValueSet-Participants-UAT.schema.json` · [view](ValueSet-Participants-UAT.schema.json.html) |
+| Displays | <https://litlfred.github.io/smart-trust/ValueSet-Participants-UAT.displays.json> | `fhir-artifact-index/dak/ValueSet-Participants-UAT.displays.json` |
+| OpenAPI | <https://litlfred.github.io/smart-trust/ValueSet-Participants-UAT.openapi.json> | `fhir-artifact-index/dak/ValueSet-Participants-UAT.openapi.json` |
 | JSON-LD | <https://litlfred.github.io/smart-trust/ValueSet-Participants-UAT.jsonld> | `fhir-artifact-index/dak/ValueSet-Participants-UAT.jsonld` · [view](ValueSet-Participants-UAT.jsonld.html) |

@@ -2,7 +2,7 @@
 title: "WHO GDHCN Trust Domains - UAT — JSON-LD"
 description: "The JSON-LD sidecar of ValueSet/Domains-UAT, from the IG's DAK API."
 nav_exclude: true
-dak: {"label":"JSON-LD","file":"ValueSet-Domains-UAT.jsonld","artifact":{"title":"WHO GDHCN Trust Domains - UAT","page":"ValueSet-Domains-UAT.html"},"tabs":[{"label":"Narrative Content","href":"ValueSet-Domains-UAT.html","active":false},{"label":"XML","href":"https://litlfred.github.io/smart-trust/ValueSet-Domains-UAT.xml","active":false},{"label":"JSON","href":"https://litlfred.github.io/smart-trust/ValueSet-Domains-UAT.json","active":false},{"label":"TTL","href":"https://litlfred.github.io/smart-trust/ValueSet-Domains-UAT.ttl","active":false},{"label":"JSON Schema","href":"ValueSet-Domains-UAT.schema.json.html","active":false},{"label":"JSON-LD","href":"ValueSet-Domains-UAT.jsonld.html","active":true}],"text":"{\n  \"@context\": {\n    \"@version\": 1.1,\n    \"@base\": \"http://smart.who.int/trust/ValueSet-Domains-UAT.jsonld\",\n    \"name\": \"http://www.w3.org/2000/01/rdf-schema#label\",\n    \"fhir\": \"https://smart.who.int/base/DataTypes.jsonld#\",\n    \"id\": \"@id\",\n    \"generatedAt\": {\n      \"@id\": \"http://www.w3.org/ns/prov#generatedAtTime\",\n      \"@type\": \"http://www.w3.org/2001/XMLSchema#dateTime\"\n    },\n    \"fhir:CodeSystem\": {\n      \"@type\": \"@id\"\n    },\n    \"cs\": \"http://smart.who.int/trust/CodeSystem-Domains-UAT\"\n  },\n  \"@id\": \"http://smart.who.int/trust/ValueSet-Domains-UAT.jsonld\",\n  \"@type\": \"http://www.w3.org/ns/prov#Entity\",\n  \"generatedAt\": \"2026-10-01T11:53:49.743359Z\",\n  \"@graph\": [\n    {\n      \"id\": \"#DDCC\",\n      \"name\": \"DDCC\"\n    },\n    {\n      \"id\": \"#IPS-PILGRIMAGE\",\n      \"name\": \"IPS for Pilgrimage\"\n    },\n    {\n      \"id\": \"#PH4H\",\n      \"name\": \"Pan-American Highway for Digital Health (PH4H)\"\n    },\n    {\n      \"id\": \"#ICVP\",\n      \"name\": \"International Certificate of Vaccination of Prophylaxsis (ICVP)\"\n    }\n  ],\n  \"fhir:CodeSystem\": \"cs\"\n}","fence":"```"}
+dak: {"label":"JSON-LD","file":"ValueSet-Domains-UAT.jsonld","artifact":{"title":"WHO GDHCN Trust Domains - UAT","page":"ValueSet-Domains-UAT.html"},"tabs":[{"label":"Narrative Content","href":"ValueSet-Domains-UAT.html","active":false},{"label":"XML","href":"https://litlfred.github.io/smart-trust/ValueSet-Domains-UAT.xml","active":false},{"label":"JSON","href":"https://litlfred.github.io/smart-trust/ValueSet-Domains-UAT.json","active":false},{"label":"TTL","href":"https://litlfred.github.io/smart-trust/ValueSet-Domains-UAT.ttl","active":false},{"label":"JSON Schema","href":"ValueSet-Domains-UAT.schema.json.html","active":false},{"label":"JSON-LD","href":"ValueSet-Domains-UAT.jsonld.html","active":true}],"script":"../assets/dak-view.js"}
 ---
 <style>
 .st-tag{display:inline-block;padding:.05rem .4rem;border-radius:3px;font-size:.75rem;
@@ -97,8 +97,8 @@ A DAK sidecar's view page, the Publisher's `<Name>.schema.json.html` or `<Name>.
 Reads `page.dak`, every field written by `gen-smart-trust-pages.ts`:
 `label` (JSON Schema | JSON-LD), `file` (the raw file, published beside this page),
 `artifact.title` and `artifact.page`, `tabs[]` (`label`, `href`, `active`) in the Publisher's order,
-`text` (the file as the Publisher's page displays it: `JSON.stringify(parsed, null, 2)`)
-and `fence` (a backtick run longer than any inside `text`). This file only arranges them.
+and `script` (the shared loader's path). The file's text is NOT in the page: `dak-view.js` fetches
+it in the browser, as the Publisher's page does (bean `680p`). This file only arranges.
 {%- endcomment -%}
 [← {{ page.dak.artifact.title }}]({{ page.dak.artifact.page }})
 
@@ -108,6 +108,6 @@ and `fence` (a backtick run longer than any inside `text`). This file only arran
 
 [Raw {{ page.dak.label }}]({{ page.dak.file }}) · [Download]({{ page.dak.file }}){: download=""}
 
-{{ page.dak.fence }}json
-{{ page.dak.text }}
-{{ page.dak.fence }}
+<pre><code class="language-json" data-dak-src="{{ page.dak.file }}">Loading…</code></pre>
+<noscript><p>This view needs JavaScript; the <a href="{{ page.dak.file }}">raw file</a> does not.</p></noscript>
+<script src="{{ page.dak.script }}" defer></script>

@@ -1,5 +1,5 @@
 {
-  "openapi": "3.0.3",
+  "openapi": "3.1.0",
   "info": {
     "title": "COSE Headers (DRAFT) API",
     "description": "Data elements for COSE Headers https://www.iana.org/assignments/cose/cose.xhtml#header-parameters",
@@ -51,8 +51,25 @@
         "required": [
           "resourceType"
         ],
-        "resourceDefinition": "http://smart.who.int/trust/StructureDefinition/COSEHeader",
-        "fhir:parent": "http://hl7.org/fhir/StructureDefinition/Base"
+        "allOf": [
+          {
+            "$ref": "./StructureDefinition-FHIRSchemaBase.schema.json"
+          },
+          {
+            "type": "object",
+            "properties": {
+              "resourceDefinition": {
+                "type": "string",
+                "format": "uri",
+                "const": "http://smart.who.int/trust/StructureDefinition/COSEHeader"
+              },
+              "fhir:parent": {
+                "type": "string",
+                "const": "http://hl7.org/fhir/StructureDefinition/Base"
+              }
+            }
+          }
+        ]
       }
     }
   }

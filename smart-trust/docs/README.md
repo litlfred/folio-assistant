@@ -9,6 +9,7 @@ Part of [smart-trust](../README.md) 0.1.0, declared as `smart-trust-docs`, holdi
 |---|---|---|
 | [`index.md`](index.md) | "All 678 artefacts of the WHO SMART Trust IG 1.8.0, reconstructed from its published output." |  |
 | [`artifact/`](artifact/) | 744 files | |
+| [`assets/`](assets/) | 1 file | |
 | [`category/`](category/) | 1 file | |
 | [`menu/`](menu/) | 5 files | |
 <!-- kg:subgraph:end -->

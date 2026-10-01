@@ -116,7 +116,7 @@ IG rather than a gap in this index.
 
 | Sidecar | Published at | Held locally |
 |---|---|---|
-| JSON Schema | <https://litlfred.github.io/smart-trust/schemas/ValueSet-KeyUsage.schema.json> | `fhir-artifact-index/dak/ValueSet-KeyUsage.schema.json` · [view](ValueSet-KeyUsage.schema.json.html) |
-| Displays | <https://litlfred.github.io/smart-trust/schemas/ValueSet-KeyUsage.displays.json> | `fhir-artifact-index/dak/ValueSet-KeyUsage.displays.json` |
-| OpenAPI | <https://litlfred.github.io/smart-trust/schemas/ValueSet-KeyUsage.openapi.json> | `fhir-artifact-index/dak/ValueSet-KeyUsage.openapi.json` |
+| JSON Schema | <https://litlfred.github.io/smart-trust/ValueSet-KeyUsage.schema.json> | `fhir-artifact-index/dak/ValueSet-KeyUsage.schema.json` · [view](ValueSet-KeyUsage.schema.json.html) |
+| Displays | <https://litlfred.github.io/smart-trust/ValueSet-KeyUsage.displays.json> | `fhir-artifact-index/dak/ValueSet-KeyUsage.displays.json` |
+| OpenAPI | <https://litlfred.github.io/smart-trust/ValueSet-KeyUsage.openapi.json> | `fhir-artifact-index/dak/ValueSet-KeyUsage.openapi.json` |
 | JSON-LD | <https://litlfred.github.io/smart-trust/ValueSet-KeyUsage.jsonld> | `fhir-artifact-index/dak/ValueSet-KeyUsage.jsonld` · [view](ValueSet-KeyUsage.jsonld.html) |

@@ -1,5 +1,5 @@
 {
-  "openapi": "3.0.3",
+  "openapi": "3.1.0",
   "info": {
     "title": "Health Certificate API",
     "description": "Logical Model for the HCERT",
@@ -40,15 +40,15 @@
             "description": "Resource type identifier for HCert logical model"
           },
           "1": {
-            "$ref": "http://smart.who.int/base/StructureDefinition-HCertDCC.schema.json",
+            "$ref": "StructureDefinition-HCertDCC.schema.json",
             "description": "HCERT EU DCC"
           },
           "3": {
-            "$ref": "http://smart.who.int/base/StructureDefinition-DDCCCoreDataSet.schema.json",
+            "$ref": "StructureDefinition-DDCCCoreDataSet.schema.json",
             "description": "DDCC Vaccination claim (PROPOSED)"
           },
           "4": {
-            "$ref": "http://smart.who.int/base/StructureDefinition-DDCCCoreDataSet.schema.json",
+            "$ref": "StructureDefinition-DDCCCoreDataSet.schema.json",
             "description": "DDCC Test Result claim (PROPOSED)"
           },
           "5": {
@@ -56,19 +56,36 @@
             "description": "URI of a Verifiable Health Link.  Of the form 'vhlink:/eyJ1cmwiOiJodHRwczovL2Vo....'"
           },
           "-6": {
-            "$ref": "http://smart.who.int/base/StructureDefinition-DVCMin.schema.json",
+            "$ref": "StructureDefinition-DVCMin.schema.json",
             "description": "Minimal Digital Vaccination Certificate Payload (Proposed)"
           },
           "-7": {
-            "$ref": "http://smart.who.int/base/StructureDefinition-MedicationTreatmentLineMin.schema.json",
+            "$ref": "StructureDefinition-MedicationTreatmentLineMin.schema.json",
             "description": "Medication Treatment Line Minimal (Proposed)"
           }
         },
         "required": [
           "resourceType"
         ],
-        "resourceDefinition": "http://smart.who.int/trust/StructureDefinition/HCert",
-        "fhir:parent": "http://hl7.org/fhir/StructureDefinition/Base"
+        "allOf": [
+          {
+            "$ref": "./StructureDefinition-FHIRSchemaBase.schema.json"
+          },
+          {
+            "type": "object",
+            "properties": {
+              "resourceDefinition": {
+                "type": "string",
+                "format": "uri",
+                "const": "http://smart.who.int/trust/StructureDefinition/HCert"
+              },
+              "fhir:parent": {
+                "type": "string",
+                "const": "http://hl7.org/fhir/StructureDefinition/Base"
+              }
+            }
+          }
+        ]
       }
     }
   }

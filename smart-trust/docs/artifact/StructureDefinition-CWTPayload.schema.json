@@ -25,13 +25,30 @@
       "description": "Issued At"
     },
     "-260": {
-      "$ref": "http://smart.who.int/base/StructureDefinition-HCert.schema.json",
+      "$ref": "StructureDefinition-HCert.schema.json",
       "description": "HCert"
     }
   },
   "required": [
     "resourceType"
   ],
-  "resourceDefinition": "http://smart.who.int/trust/StructureDefinition/CWTPayload",
-  "fhir:parent": "http://hl7.org/fhir/StructureDefinition/Base"
+  "allOf": [
+    {
+      "$ref": "./StructureDefinition-FHIRSchemaBase.schema.json"
+    },
+    {
+      "type": "object",
+      "properties": {
+        "resourceDefinition": {
+          "type": "string",
+          "format": "uri",
+          "const": "http://smart.who.int/trust/StructureDefinition/CWTPayload"
+        },
+        "fhir:parent": {
+          "type": "string",
+          "const": "http://hl7.org/fhir/StructureDefinition/Base"
+        }
+      }
+    }
+  ]
 }

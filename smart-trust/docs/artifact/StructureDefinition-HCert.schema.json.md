@@ -2,7 +2,7 @@
 title: "Health Certificate — JSON Schema"
 description: "The JSON Schema sidecar of StructureDefinition/HCert, from the IG's DAK API."
 nav_exclude: true
-dak: {"label":"JSON Schema","file":"StructureDefinition-HCert.schema.json","artifact":{"title":"Health Certificate","page":"StructureDefinition-HCert.html"},"tabs":[{"label":"Narrative Content","href":"StructureDefinition-HCert.html","active":false},{"label":"XML","href":"https://litlfred.github.io/smart-trust/StructureDefinition-HCert.xml","active":false},{"label":"JSON","href":"https://litlfred.github.io/smart-trust/StructureDefinition-HCert.json","active":false},{"label":"TTL","href":"https://litlfred.github.io/smart-trust/StructureDefinition-HCert.ttl","active":false},{"label":"JSON Schema","href":"StructureDefinition-HCert.schema.json.html","active":true}],"text":"{\n  \"$schema\": \"https://json-schema.org/draft/2020-12/schema\",\n  \"$id\": \"http://smart.who.int/base/StructureDefinition-HCert.schema.json\",\n  \"title\": \"Health Certificate\",\n  \"description\": \"Logical Model for the HCERT\",\n  \"type\": \"object\",\n  \"properties\": {\n    \"1\": {\n      \"$ref\": \"http://smart.who.int/base/StructureDefinition-HCertDCC.schema.json\",\n      \"description\": \"HCERT EU DCC\"\n    },\n    \"3\": {\n      \"$ref\": \"http://smart.who.int/base/StructureDefinition-DDCCCoreDataSet.schema.json\",\n      \"description\": \"DDCC Vaccination claim (PROPOSED)\"\n    },\n    \"4\": {\n      \"$ref\": \"http://smart.who.int/base/StructureDefinition-DDCCCoreDataSet.schema.json\",\n      \"description\": \"DDCC Test Result claim (PROPOSED)\"\n    },\n    \"5\": {\n      \"type\": \"string\",\n      \"description\": \"URI of a Verifiable Health Link.  Of the form 'vhlink:/eyJ1cmwiOiJodHRwczovL2Vo....'\"\n    },\n    \"resourceType\": {\n      \"type\": \"string\",\n      \"const\": \"HCert\",\n      \"description\": \"Resource type identifier for HCert logical model\"\n    },\n    \"-6\": {\n      \"$ref\": \"http://smart.who.int/base/StructureDefinition-DVCMin.schema.json\",\n      \"description\": \"Minimal Digital Vaccination Certificate Payload (Proposed)\"\n    },\n    \"-7\": {\n      \"$ref\": \"http://smart.who.int/base/StructureDefinition-MedicationTreatmentLineMin.schema.json\",\n      \"description\": \"Medication Treatment Line Minimal (Proposed)\"\n    }\n  },\n  \"required\": [\n    \"resourceType\"\n  ],\n  \"resourceDefinition\": \"http://smart.who.int/trust/StructureDefinition/HCert\",\n  \"fhir:parent\": \"http://hl7.org/fhir/StructureDefinition/Base\"\n}","fence":"```"}
+dak: {"label":"JSON Schema","file":"StructureDefinition-HCert.schema.json","artifact":{"title":"Health Certificate","page":"StructureDefinition-HCert.html"},"tabs":[{"label":"Narrative Content","href":"StructureDefinition-HCert.html","active":false},{"label":"XML","href":"https://litlfred.github.io/smart-trust/StructureDefinition-HCert.xml","active":false},{"label":"JSON","href":"https://litlfred.github.io/smart-trust/StructureDefinition-HCert.json","active":false},{"label":"TTL","href":"https://litlfred.github.io/smart-trust/StructureDefinition-HCert.ttl","active":false},{"label":"JSON Schema","href":"StructureDefinition-HCert.schema.json.html","active":true}],"script":"../assets/dak-view.js"}
 ---
 <style>
 .st-tag{display:inline-block;padding:.05rem .4rem;border-radius:3px;font-size:.75rem;
@@ -97,8 +97,8 @@ A DAK sidecar's view page, the Publisher's `<Name>.schema.json.html` or `<Name>.
 Reads `page.dak`, every field written by `gen-smart-trust-pages.ts`:
 `label` (JSON Schema | JSON-LD), `file` (the raw file, published beside this page),
 `artifact.title` and `artifact.page`, `tabs[]` (`label`, `href`, `active`) in the Publisher's order,
-`text` (the file as the Publisher's page displays it: `JSON.stringify(parsed, null, 2)`)
-and `fence` (a backtick run longer than any inside `text`). This file only arranges them.
+and `script` (the shared loader's path). The file's text is NOT in the page: `dak-view.js` fetches
+it in the browser, as the Publisher's page does (bean `680p`). This file only arranges.
 {%- endcomment -%}
 [← {{ page.dak.artifact.title }}]({{ page.dak.artifact.page }})
 
@@ -108,6 +108,6 @@ and `fence` (a backtick run longer than any inside `text`). This file only arran
 
 [Raw {{ page.dak.label }}]({{ page.dak.file }}) · [Download]({{ page.dak.file }}){: download=""}
 
-{{ page.dak.fence }}json
-{{ page.dak.text }}
-{{ page.dak.fence }}
+<pre><code class="language-json" data-dak-src="{{ page.dak.file }}">Loading…</code></pre>
+<noscript><p>This view needs JavaScript; the <a href="{{ page.dak.file }}">raw file</a> does not.</p></noscript>
+<script src="{{ page.dak.script }}" defer></script>

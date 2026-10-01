@@ -116,7 +116,7 @@ IG rather than a gap in this index.
 
 | Sidecar | Published at | Held locally |
 |---|---|---|
-| JSON Schema | <https://litlfred.github.io/smart-trust/schemas/ValueSet-WHORegionalOffices.schema.json> | `fhir-artifact-index/dak/ValueSet-WHORegionalOffices.schema.json` · [view](ValueSet-WHORegionalOffices.schema.json.html) |
-| Displays | <https://litlfred.github.io/smart-trust/schemas/ValueSet-WHORegionalOffices.displays.json> | `fhir-artifact-index/dak/ValueSet-WHORegionalOffices.displays.json` |
-| OpenAPI | <https://litlfred.github.io/smart-trust/schemas/ValueSet-WHORegionalOffices.openapi.json> | `fhir-artifact-index/dak/ValueSet-WHORegionalOffices.openapi.json` |
+| JSON Schema | <https://litlfred.github.io/smart-trust/ValueSet-WHORegionalOffices.schema.json> | `fhir-artifact-index/dak/ValueSet-WHORegionalOffices.schema.json` · [view](ValueSet-WHORegionalOffices.schema.json.html) |
+| Displays | <https://litlfred.github.io/smart-trust/ValueSet-WHORegionalOffices.displays.json> | `fhir-artifact-index/dak/ValueSet-WHORegionalOffices.displays.json` |
+| OpenAPI | <https://litlfred.github.io/smart-trust/ValueSet-WHORegionalOffices.openapi.json> | `fhir-artifact-index/dak/ValueSet-WHORegionalOffices.openapi.json` |
 | JSON-LD | <https://litlfred.github.io/smart-trust/ValueSet-WHORegionalOffices.jsonld> | `fhir-artifact-index/dak/ValueSet-WHORegionalOffices.jsonld` · [view](ValueSet-WHORegionalOffices.jsonld.html) |

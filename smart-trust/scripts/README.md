@@ -9,6 +9,6 @@ Part of [smart-trust](../README.md) 0.1.0, declared as `smart-trust-scripts`, ho
 |---|---|---|
 | [`dak-views.ts`](dak-views.ts) | a file |  |
 | [`gen-smart-trust-pages.ts`](gen-smart-trust-pages.ts) | a file |  |
-| [`templates/`](templates/) | 1 file | |
+| [`templates/`](templates/) | 2 files | |
 | [`tests/`](tests/) | 2 files | |
 <!-- kg:subgraph:end -->

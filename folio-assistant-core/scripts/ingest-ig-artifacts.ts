@@ -339,6 +339,8 @@ function main(): void {
   const materializedStems = new Map<string, string>();
   /** `dak/<basename>` → the source file it was copied from, for fixity. */
   const materializedFrom = new Map<string, string>();
+  /** Sidecars published twice with different bytes — the root copy is the one read. */
+  const divergentSidecars: string[] = [];
 
   const byCanonical = new Map<string, FhirArtifact>();
   const byStem = new Map<string, FhirArtifact>();
@@ -352,15 +354,31 @@ function main(): void {
 
   /** Attach the four sidecars named by `stem`, materialising if asked. Returns whether any landed. */
   const attach = (a: FhirArtifact, stem: string, counts?: EnumEntry): boolean => {
-    const sidecars: Array<[keyof NonNullable<FhirArtifact["dak"]>, string]> = [
-      ["schema", `schemas/${stem}.schema.json`],
-      ["displays", `schemas/${stem}.displays.json`],
-      ["openapi", `schemas/${stem}.openapi.json`],
-      ["jsonld", `${stem}.jsonld`],
+    // THE ROOT COPY FIRST, `schemas/` only as a fallback. Measured 2026-10-01
+    // on litlfred/smart-trust gh-pages 9bd9643: all 52 schema, displays and
+    // OpenAPI sidecars exist in BOTH places and EVERY pair differs. The root
+    // copy is what smart-base's current generator writes (Coding-shaped
+    // values), what the IG's own `dak-api.html`, its artefact pages' Endpoints
+    // section and its `.schema.json.html` view pages all link, and what a
+    // reader of the published IG therefore sees; `schemas/` holds an older
+    // format (IRI-string enums) under the same `$id`. An IG that publishes only
+    // under `schemas/` (the shape this ingest was first written against) is
+    // still read. Each divergent pair is reported, never silently picked.
+    const candidates = (name: string) => [name, `schemas/${name}`];
+    const sidecars: Array<[keyof NonNullable<FhirArtifact["dak"]>, string[]]> = [
+      ["schema", candidates(`${stem}.schema.json`)],
+      ["displays", candidates(`${stem}.displays.json`)],
+      ["openapi", candidates(`${stem}.openapi.json`)],
+      ["jsonld", [`${stem}.jsonld`]],
     ];
     let any = false;
-    for (const [slot, file] of sidecars) {
-      if (!existsSync(join(source, file))) continue;
+    for (const [slot, paths] of sidecars) {
+      const file = paths.find((f) => existsSync(join(source, f)));
+      if (file === undefined) continue;
+      const shadow = paths.find((f) => f !== file && existsSync(join(source, f)));
+      if (shadow && !readFileSync(join(source, shadow)).equals(readFileSync(join(source, file)))) {
+        divergentSidecars.push(`${file} ≠ ${shadow}`);
+      }
       const local = materializeDak ? join("fhir-artifact-index", "dak", basename(file)) : undefined;
       const r = rep(source, base, file, local);
       if (!r) continue;
@@ -552,6 +570,11 @@ function main(): void {
   console.log(`  dakApi: ${dakApi}; provenance: ${Object.keys(provenance).join(", ") || "none"}`);
   console.log(`  materialization: ${Object.entries(census).map(([k, v]) => `${k}=${v}`).join(" ")}`);
   console.log(`  dak sidecars: ${Object.entries(dakCensus).map(([k, v]) => `${k}=${v}`).join(" ")}`);
+  if (divergentSidecars.length > 0) {
+    console.log(`  ${divergentSidecars.length} sidecar(s) published twice with different bytes; the root copy was read:`);
+    for (const d of divergentSidecars.slice(0, 5)) console.log(`    ${d}`);
+    if (divergentSidecars.length > 5) console.log(`    …and ${divergentSidecars.length - 5} more`);
+  }
   console.log(`  contexts: ${contexts.length}`);
   if (unbound.length) {
     console.log(`  UNBOUND sidecars: ${unbound.length} — listed by an enumeration, matched to no artefact:`);

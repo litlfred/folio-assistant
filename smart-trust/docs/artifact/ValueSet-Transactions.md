@@ -116,7 +116,7 @@ IG rather than a gap in this index.
 
 | Sidecar | Published at | Held locally |
 |---|---|---|
-| JSON Schema | <https://litlfred.github.io/smart-trust/schemas/ValueSet-Transactions.schema.json> | `fhir-artifact-index/dak/ValueSet-Transactions.schema.json` · [view](ValueSet-Transactions.schema.json.html) |
-| Displays | <https://litlfred.github.io/smart-trust/schemas/ValueSet-Transactions.displays.json> | `fhir-artifact-index/dak/ValueSet-Transactions.displays.json` |
-| OpenAPI | <https://litlfred.github.io/smart-trust/schemas/ValueSet-Transactions.openapi.json> | `fhir-artifact-index/dak/ValueSet-Transactions.openapi.json` |
+| JSON Schema | <https://litlfred.github.io/smart-trust/ValueSet-Transactions.schema.json> | `fhir-artifact-index/dak/ValueSet-Transactions.schema.json` · [view](ValueSet-Transactions.schema.json.html) |
+| Displays | <https://litlfred.github.io/smart-trust/ValueSet-Transactions.displays.json> | `fhir-artifact-index/dak/ValueSet-Transactions.displays.json` |
+| OpenAPI | <https://litlfred.github.io/smart-trust/ValueSet-Transactions.openapi.json> | `fhir-artifact-index/dak/ValueSet-Transactions.openapi.json` |
 | JSON-LD | <https://litlfred.github.io/smart-trust/ValueSet-Transactions.jsonld> | `fhir-artifact-index/dak/ValueSet-Transactions.jsonld` · [view](ValueSet-Transactions.jsonld.html) |

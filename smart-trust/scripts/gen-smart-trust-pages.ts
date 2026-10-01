@@ -58,7 +58,7 @@
  */
 import { existsSync, mkdirSync, readFileSync, readdirSync, rmSync, writeFileSync } from "node:fs";
 import { join, resolve } from "node:path";
-import { dakViewData, dakViews } from "./dak-views.ts";
+import { DAK_VIEW_SCRIPT, dakViewData, dakViews } from "./dak-views.ts";
 import { isDirectoryReadme } from "../../cat-harness/schemas/kg-node.js";
 
 import { IgMenuSchema, type IgMenu, type IgMenuGroup, menuHref, menuItemCount } from "../../cat-harness/schemas/ig-menu.js";
@@ -102,6 +102,8 @@ const MENU = join(INSTANCE, "fhir-artifact-index", "menu.json");
 const OUT = join(INSTANCE, "docs");
 /** The DAK view pages' Liquid template (`liquid-templates`: a file of this directory, beside its writer). */
 const DAK_VIEW_TEMPLATE = join(import.meta.dir, "templates", "dak-view.liquid");
+/** Their one shared loader, copied to `docs/assets/` (bean `680p`). */
+const DAK_VIEW_LOADER = join(import.meta.dir, "templates", "dak-view.js");
 
 /**
  * The instance that OWNS the WHO chrome.
@@ -817,13 +819,15 @@ for (const a of ix.artifacts) {
 // THE DAK VIEW PAGES — the Publisher's `<Name>.schema.json.html` and
 // `<Name>.jsonld.html` (bean `jut3`'s parity table: 33 on smart-trust). Each is
 // the raw file, published beside its page so Raw and Download resolve, plus a
-// page that is the Liquid template over data `dak-views.ts` computed.
+// page that is the Liquid template over data `dak-views.ts` computed. The file's
+// text is fetched in the browser, never copied into the page (bean `680p`).
 const dakTemplate = readFileSync(DAK_VIEW_TEMPLATE, "utf8");
+let dakViewCount = 0;
 for (const a of ix.artifacts) {
   for (const v of dakViews(a)) {
-    const raw = readFileSync(join(INSTANCE, v.localPath), "utf8");
-    const data = dakViewData(a, v, raw);
-    pages.set(join("artifact", v.file), raw);
+    const data = dakViewData(a, v);
+    pages.set(join("artifact", v.file), readFileSync(join(INSTANCE, v.localPath), "utf8"));
+    dakViewCount += 1;
     pages.set(
       join("artifact", `${v.file}.md`),
       shell(
@@ -837,6 +841,7 @@ for (const a of ix.artifacts) {
     );
   }
 }
+if (dakViewCount > 0) pages.set(DAK_VIEW_SCRIPT, readFileSync(DAK_VIEW_LOADER, "utf8"));
 
 // A page for each category too large to inline, so "too many to list here"
 // points somewhere. Driven by the SAME `INLINE_LIMIT` comparison the index
