@@ -413,4 +413,15 @@ Theming comes from the avatar's **declared hue**: one hue, both schemes
 derived, so no tile can be authored legible in one mode and invisible in the
 other. A per-instance palette would be a second colour vocabulary beside
 `theme.ts` — the drift that file exists to have ended.
+
+## `summary` and `alsoWritten` — what a reader sees, kept apart from why it was named
+
+A harness section on the landing page shows the declaration's `summary`, a
+one-line gloss, and lists `alsoWritten`, the other spellings of the name. Both
+exist because `description` was being made to carry them (bean `ob3m` findings
+4–5). One harness's description was a naming rationale with literal backticks,
+and another's was five newline-separated spellings that rendered as one line.
+Authoring notes belong in `description` or a `_comment`. The reader-facing
+line goes in `summary`, and alternative spellings go in `alsoWritten` as a
+list, never inline.
 {% endraw %}

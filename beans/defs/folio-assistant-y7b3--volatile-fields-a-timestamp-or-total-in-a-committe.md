@@ -3,8 +3,9 @@
 title: 'VOLATILE FIELDS: a timestamp or total in a committed generated file turns every pair of concurrent changes into a conflict'
 status: in-progress
 type: task
+priority: normal
 created_at: 2026-09-30T22:25:16Z
-updated_at: 2026-09-30T22:25:16Z
+updated_at: 2026-10-01T07:33:12Z
 parent: folio-assistant-o3xy
 ---
 
@@ -46,3 +47,10 @@ The `N files` count per subdirectory in generated directory READMEs (`beans/READ
 
 ## Found in passing
 `cat-harness/test/results/kg-export.@litlfred/folio-assistant.qa-results.json` is an orphan: unwritten since 2026-09-23, producer path pre-split `scripts/kg-export.ts`; the exporter now names the host's sidecar `kg-export`. Owner, 2026-09-30: "ok move to fsh-guts" — moved to `fsh-guts/retired/kg-export-folio-assistant-orphan-sidecar.md`, content kept inside the manifest.
+
+
+## Handover evidence, 2026-10-01 (session_01Cw8JgZEDT5VqQ5ergjdMjB)
+
+The GOAL 2 handover (issue #1260) names the same class again: the beans README, the LSI index and page, and the detangle, kg-qa, kg-export and source-licence sidecars go stale on main after merges, so every open PR then conflicts on them, and a conflicting PR runs no CI. It asked for a bean; this one, `cflw` and `do70` already hold it, so the evidence is recorded here rather than in a fourth.
+
+Measured on main at aeeb6bab: `readme:subgraphs:check` 0 stale; `kg:audit:all:check` 17 of 17 clean. So the drift reported on 663ce6d had cleared by the time it was re-checked, which is the intermittent shape this bean describes.

@@ -132,7 +132,7 @@
       "href": "/beans/",
       "hidden": false,
       "icon": "beans",
-      "count": 597,
+      "count": 602,
       "unit": "beans"
     },
     {
@@ -146,7 +146,8 @@
         "glass"
       ],
       "href": "/cat-harness/docs-auto/index/docs/docs/",
-      "hidden": false
+      "hidden": false,
+      "icon": "docs"
     },
     {
       "id": "external-schemas",
@@ -159,7 +160,8 @@
         "glass"
       ],
       "href": "/external-schemas/",
-      "hidden": false
+      "hidden": false,
+      "icon": "schemas"
     },
     {
       "id": "folio",
@@ -202,6 +204,7 @@
       ],
       "href": "/cat-harness/library/cat-harness/",
       "hidden": false,
+      "icon": "library",
       "count": 25,
       "unit": "entries"
     },
@@ -217,6 +220,7 @@
       ],
       "href": "/methodologies/",
       "hidden": false,
+      "icon": "methodologies",
       "theme": "analyst"
     },
     {
@@ -230,7 +234,8 @@
         "glass"
       ],
       "href": "/processes/",
-      "hidden": false
+      "hidden": false,
+      "icon": "processes"
     },
     {
       "id": "qa",
@@ -244,7 +249,8 @@
       ],
       "href": "/lsi/",
       "hidden": false,
-      "count": 987,
+      "icon": "index",
+      "count": 989,
       "unit": "documents"
     },
     {
@@ -272,6 +278,7 @@
       ],
       "href": "/cat-harness/schemas/cat-harness/",
       "hidden": false,
+      "icon": "schemas",
       "count": 200,
       "unit": "modules"
     },
@@ -287,7 +294,8 @@
       ],
       "href": "/cat-harness/docs-auto/index/skills/skills/",
       "hidden": false,
-      "readOnly": false
+      "readOnly": false,
+      "icon": "skills"
     },
     {
       "id": "swimlane-glossary",
@@ -328,7 +336,8 @@
         "glass"
       ],
       "href": "/tools/",
-      "hidden": false
+      "hidden": false,
+      "icon": "tools"
     },
     {
       "id": "translation-sources",
@@ -358,7 +367,7 @@
       "href": "/cat-harness/uploads/cat-harness/",
       "hidden": false,
       "icon": "uploads",
-      "count": 16,
+      "count": 19,
       "unit": "waiting"
     }
   ],
@@ -368,6 +377,7 @@
       "title": "Folio Assistant",
       "label": "Folio Assistant",
       "description": "The repository itself, acting as an initialized instance. NAMED `folio-assistant-checkout` rather than `folio-assistant`, which `cat-harness/harness.json` already uses: two declarations sharing a name makes `declaredBy` and a sticky's `contributedBy` ambiguous, so a directory can be attributed to the wrong instance while reading correctly. It declares the directories a person drops things into, which belong to the checkout rather than to any one layer inside it.",
+      "summary": "This repository as a working instance: the platform and the folios it hosts.",
       "footer": false,
       "needs": [
         "agent-skills",
@@ -426,7 +436,7 @@
       "reads": "a leaf of paper held in a frame — the folio, and the instance that holds it",
       "genericAvatar": false,
       "instantiated": true,
-      "href": "/",
+      "href": "/#harness-folio-assistant",
       "hrefKind": "folio",
       "stats": [
         {
@@ -2138,6 +2148,13 @@
       "title": "C@T Harness",
       "label": "C@T Harness",
       "description": "computable adjudication and agentic test harness\n\ncaaat-harness\n\nca&at-harness\n\n.c&at-harness\n\n c@t-harness",
+      "summary": "Computable adjudication and agentic test harness.",
+      "alsoWritten": [
+        "caaat-harness",
+        "ca&at-harness",
+        ".c&at-harness",
+        "c@t-harness"
+      ],
       "footer": false,
       "needs": [
         "bootstrap",
@@ -2184,7 +2201,7 @@
       "reads": "a framed face with ears — the harness the instance is held in",
       "genericAvatar": false,
       "instantiated": true,
-      "href": "/",
+      "href": "/#harness-cat-harness",
       "hrefKind": "folio",
       "stats": [
         {
@@ -3042,6 +3059,24 @@
         ]
       },
       {
+        "key": "summary",
+        "skills": [
+          {
+            "name": "harness-tiles",
+            "path": "/reference/skill-instructions/harness-tiles.html"
+          }
+        ]
+      },
+      {
+        "key": "alsoWritten",
+        "skills": [
+          {
+            "name": "harness-tiles",
+            "path": "/reference/skill-instructions/harness-tiles.html"
+          }
+        ]
+      },
+      {
         "key": "images",
         "skills": [
           {
@@ -3335,6 +3370,10 @@
           {
             "key": "description",
             "summary": "The repository itself, acting as an initialized instance. NAMED `folio-assistant-checkout…"
+          },
+          {
+            "key": "summary",
+            "summary": "This repository as a working instance: the platform and the folios it hosts."
           },
           {
             "key": "assets",
@@ -4049,6 +4088,14 @@
           {
             "key": "description",
             "summary": "computable adjudication and agentic test harness\n\ncaaat-harness\n\nca&at-harness\n\n.c&at-har…"
+          },
+          {
+            "key": "summary",
+            "summary": "Computable adjudication and agentic test harness."
+          },
+          {
+            "key": "alsoWritten",
+            "summary": "caaat-harness, ca&at-harness, .c&at-harness, c@t-harness"
           },
           {
             "key": "images",
