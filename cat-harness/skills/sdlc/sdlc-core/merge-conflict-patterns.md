@@ -100,11 +100,29 @@ a locale no generator writes (`de/`) is refused.
 
 ### `viewer-pages` — take the base, regenerate
 
-`docs/external-schemas/index.md`, `docs/processes/*.md` and
-`docs/translation-status/index.html`: whole-file viewer pages, each with its
-writer's `--check` in the CI workflow (`external-schemas:viz`, `processes:viz`,
+`docs/external-schemas/index.md`, `docs/methodologies/index.md`,
+`docs/processes/*.md` and `docs/translation-status/index.html`: whole-file
+viewer pages, each with its writer's `--check` in the CI workflow
+(`external-schemas:viz`, `methodologies:viz`, `processes:viz`,
 `translation:status`). A new schema, diagram or translation anywhere rewrites
 them. Found the same way, on the same merge.
+
+### `handler-index` — take the base, regenerate
+
+`docs/cat-harness/published-graphs.md`, the handler's index of every published
+graph and declared viewer, written whole by `gen-handler-index.ts`
+(`handler:index:check`). Any new graph or viewer rewrites it. Found on #1754's
+third merge, 2026-10-01.
+
+### `health-report` — take the base's measurement
+
+`test/health/results/*.health-report.json`. Not a derivation of the tree but a
+**measurement** of external state (publish branch, clone size, the work plan),
+written by `bun run health` and refreshed daily on the base by the
+health-check workflow, so the base's copy is simply the newer measurement and
+a branch's older one carries nothing worth keeping. `check:harness-state`
+judges its producer hash; if the merge changed the producer, `bun run health`
+rewrites it. Found on the same merge.
 
 ### `site-data` — take the base, regenerate (36)
 

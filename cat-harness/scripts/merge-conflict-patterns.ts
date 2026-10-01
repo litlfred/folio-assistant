@@ -110,11 +110,24 @@ export const PATTERNS: readonly ConflictPattern[] = [
     id: "viewer-pages",
     globs: [
       "cat-harness/docs/external-schemas/index.md",
+      "cat-harness/docs/methodologies/index.md",
       "cat-harness/docs/processes/*.md",
       "cat-harness/docs/translation-status/index.html",
     ],
     strategy: "take-base",
-    why: "whole-file viewer pages (external-schemas:viz, processes:viz, translation:status), each with a --check in the CI workflow. Rewritten whole from the declarations they render, so a new schema, diagram or translation anywhere changes them; found 2026-10-01 when a merge refused on these alone.",
+    why: "whole-file viewer pages (external-schemas:viz, methodologies:viz, processes:viz, translation:status), each with a --check in the CI workflow. Rewritten whole from the declarations they render, so a new schema, diagram or translation anywhere changes them; found 2026-10-01 when a merge refused on these alone.",
+  },
+  {
+    id: "handler-index",
+    globs: ["cat-harness/docs/cat-harness/published-graphs.md"],
+    strategy: "take-base",
+    why: "the handler's index of every published graph and declared viewer, written whole by gen-handler-index.ts (handler:index:check in CI). Any new graph or viewer anywhere rewrites it; found 2026-10-01 on #1754.",
+  },
+  {
+    id: "health-report",
+    globs: ["**/test/health/results/*.health-report.json"],
+    strategy: "take-base",
+    why: "the committed repository health report: a MEASUREMENT of external state (the publish branch, clone size, the work plan) written by `bun run health` and refreshed daily on the base by the health-check workflow, so the base's copy is the newer measurement. check:harness-state judges its producer hash; if the merge changes the producer, `bun run health` rewrites it. Found 2026-10-01 on #1754.",
   },
   {
     id: "site-data",
