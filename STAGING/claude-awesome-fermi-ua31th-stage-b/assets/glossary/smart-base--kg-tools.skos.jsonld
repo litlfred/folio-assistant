@@ -114,46 +114,6 @@
       "skos:note": "candidate"
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/smart-base/ns#glossary/kg-tools/jsonld-vocabularies",
-      "@type": "skos:Concept",
-      "skos:inScheme": {
-        "@id": "https://litlfred.github.io/folio-assistant/smart-base/ns#glossary/kg-tools"
-      },
-      "skos:prefLabel": [
-        {
-          "@value": "ValueSet expansions → JSON-LD"
-        }
-      ],
-      "skos:definition": [
-        {
-          "@value": "JSON-LD vocabularies built from the ValueSet expansions in the published output."
-        }
-      ],
-      "skos:notation": "jsonld-vocabularies",
-      "dcterms:source": "smart-base/tools/index.ts#jsonld-vocabularies",
-      "skos:note": "candidate"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/smart-base/ns#glossary/kg-tools/logical-model-schemas",
-      "@type": "skos:Concept",
-      "skos:inScheme": {
-        "@id": "https://litlfred.github.io/folio-assistant/smart-base/ns#glossary/kg-tools"
-      },
-      "skos:prefLabel": [
-        {
-          "@value": "Logical models → JSON Schema"
-        }
-      ],
-      "skos:definition": [
-        {
-          "@value": "A JSON Schema per logical model, from the published FHIR resources."
-        }
-      ],
-      "skos:notation": "logical-model-schemas",
-      "dcterms:source": "smart-base/tools/index.ts#logical-model-schemas",
-      "skos:note": "candidate"
-    },
-    {
       "@id": "https://litlfred.github.io/folio-assistant/smart-base/ns#glossary/kg-tools/smart-liquid-variables",
       "@type": "skos:Concept",
       "skos:inScheme": {
@@ -171,26 +131,6 @@
       ],
       "skos:notation": "smart-liquid-variables",
       "dcterms:source": "smart-base/tools/index.ts#smart-liquid-variables",
-      "skos:note": "candidate"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/smart-base/ns#glossary/kg-tools/valueset-schemas",
-      "@type": "skos:Concept",
-      "skos:inScheme": {
-        "@id": "https://litlfred.github.io/folio-assistant/smart-base/ns#glossary/kg-tools"
-      },
-      "skos:prefLabel": [
-        {
-          "@value": "ValueSets → JSON Schema"
-        }
-      ],
-      "skos:definition": [
-        {
-          "@value": "A JSON Schema per ValueSet, plus the enumeration-response schemas published at the IG root."
-        }
-      ],
-      "skos:notation": "valueset-schemas",
-      "dcterms:source": "smart-base/tools/index.ts#valueset-schemas",
       "skos:note": "candidate"
     }
   ]

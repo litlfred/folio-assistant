@@ -505,32 +505,32 @@
   NOT a cache-busting strategy for third-party assets, and not applied to
   them: those are versioned in their own URLs already.
 -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-awesome-fermi-ua31th-stage-b/assets/css/docs-ui.css?v=1790854511">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-awesome-fermi-ua31th-stage-b/assets/css/docs-ui.css?v=1790855764">
 <!-- Narrow viewports: wide content scrolls in its own box, never the page
      (bean `2r2n`). The standalone viewers inline the same file through
      `withViewerNav`, so both kinds of page read one set of rules. -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-awesome-fermi-ua31th-stage-b/assets/css/narrow-viewport.css?v=1790854511">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-awesome-fermi-ua31th-stage-b/assets/css/narrow-viewport.css?v=1790855764">
 
 <!--
   The work-plan dashboard's styles, split from docs-ui.css so that
   `state-visualizer.ts` can inline exactly these bytes into the generated
   `<base>/<stub>/state-visualizer/` pages. One rule, two surfaces.
 -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-awesome-fermi-ua31th-stage-b/assets/css/work-plan.css?v=1790854511">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-awesome-fermi-ua31th-stage-b/assets/css/work-plan.css?v=1790855764">
 <!-- Sticky themes. GENERATED from the theme nodes in `schemas/themes.ts` by
      `bun run themes:css`; `themes:css:check` fails the build when it is stale.
      Loaded AFTER docs-ui.css deliberately: it supplies the `--fa-sticky-*`
      roles that docs-ui.css consumes, and a custom property has to be set on a
      matching element before the rule reading it takes effect. -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-awesome-fermi-ua31th-stage-b/assets/css/themes.css?v=1790854511">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-awesome-fermi-ua31th-stage-b/assets/css/themes.css?v=1790855764">
 <!-- UML overview colours: one class per graph kind, set on the Mermaid nodes
      that `scripts/gen-uml-overview.ts` writes into docs/uml/overview/. -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-awesome-fermi-ua31th-stage-b/assets/css/uml.css?v=1790854511">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-awesome-fermi-ua31th-stage-b/assets/css/uml.css?v=1790855764">
 <!-- Kind avatars. GENERATED from `schemas/avatars.ts` by `bun run avatars:css`;
      `avatars:css:check` fails the build when it is stale. One stylesheet
      rather than 68 assets: the glyph is a mask and the colour is a property,
      so a scheme swap is a custom property and the trash state is a selector. -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-awesome-fermi-ua31th-stage-b/assets/css/avatars.css?v=1790854511">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-awesome-fermi-ua31th-stage-b/assets/css/avatars.css?v=1790855764">
 
 <!--
   The kinds THIS INSTANCE DECLARES, for the avatar fan.
@@ -547,7 +547,7 @@
 <script type="application/json" id="fa-declared-kinds">["beans","cat-harness","code","code-list","docs","external-schema","folio","fsh-guts","health","interaction","issue-marks","library","memory","methodology","policies","processes","qa","scenarios","schemas","skills","substrate-snapshot","swimlane-glossary","todos","tools","translation-sources","uml","uploads","waiver"]</script>
 <script src="/folio-assistant/STAGING/claude-awesome-fermi-ua31th-stage-b/assets/js/vendor/qrcode.js" defer></script>
 <script src="/folio-assistant/STAGING/claude-awesome-fermi-ua31th-stage-b/assets/js/vendor/qrcode_UTF8.js" defer></script>
-<script src="/folio-assistant/STAGING/claude-awesome-fermi-ua31th-stage-b/assets/js/docs-ui.js?v=1790854511" defer></script>
+<script src="/folio-assistant/STAGING/claude-awesome-fermi-ua31th-stage-b/assets/js/docs-ui.js?v=1790855764" defer></script>
 
 <!--
   The work-plan dashboard. SELF-MOUNTING on any page carrying
@@ -1365,12 +1365,12 @@ voice
 <tbody>
 <tr><td>bootstrap</td><td>7 · <a href="/folio-assistant/STAGING/claude-awesome-fermi-ua31th-stage-b/assets/glossary/bootstrap--kg-skills.skos.jsonld">SKOS</a></td><td>—</td><td>16 · <a href="/folio-assistant/STAGING/claude-awesome-fermi-ua31th-stage-b/assets/glossary/bootstrap--kg-bpmn-activities.skos.jsonld">SKOS</a></td><td>—</td><td>—</td></tr>
 <tr><td>bootstrap-tools</td><td>1 · <a href="/folio-assistant/STAGING/claude-awesome-fermi-ua31th-stage-b/assets/glossary/bootstrap-tools--kg-skills.skos.jsonld">SKOS</a></td><td>—</td><td>—</td><td>—</td><td>28 · <a href="/folio-assistant/STAGING/claude-awesome-fermi-ua31th-stage-b/assets/glossary/bootstrap-tools--kg-schema-fields.skos.jsonld">SKOS</a></td></tr>
-<tr><td>cat-harness</td><td>206 · <a href="/folio-assistant/STAGING/claude-awesome-fermi-ua31th-stage-b/assets/glossary/cat-harness--kg-skills.skos.jsonld">SKOS</a></td><td>113 · <a href="/folio-assistant/STAGING/claude-awesome-fermi-ua31th-stage-b/assets/glossary/cat-harness--kg-tools.skos.jsonld">SKOS</a></td><td>499 · <a href="/folio-assistant/STAGING/claude-awesome-fermi-ua31th-stage-b/assets/glossary/cat-harness--kg-bpmn-activities.skos.jsonld">SKOS</a></td><td>9 · <a href="/folio-assistant/STAGING/claude-awesome-fermi-ua31th-stage-b/assets/glossary/cat-harness--kg-dmn-decisions.skos.jsonld">SKOS</a></td><td>1568 · <a href="/folio-assistant/STAGING/claude-awesome-fermi-ua31th-stage-b/assets/glossary/cat-harness--kg-schema-fields.skos.jsonld">SKOS</a></td></tr>
-<tr><td>fhir-harness</td><td>11 · <a href="/folio-assistant/STAGING/claude-awesome-fermi-ua31th-stage-b/assets/glossary/fhir-harness--kg-skills.skos.jsonld">SKOS</a></td><td>15 · <a href="/folio-assistant/STAGING/claude-awesome-fermi-ua31th-stage-b/assets/glossary/fhir-harness--kg-tools.skos.jsonld">SKOS</a></td><td>—</td><td>—</td><td>29 · <a href="/folio-assistant/STAGING/claude-awesome-fermi-ua31th-stage-b/assets/glossary/fhir-harness--kg-schema-fields.skos.jsonld">SKOS</a></td></tr>
+<tr><td>cat-harness</td><td>206 · <a href="/folio-assistant/STAGING/claude-awesome-fermi-ua31th-stage-b/assets/glossary/cat-harness--kg-skills.skos.jsonld">SKOS</a></td><td>112 · <a href="/folio-assistant/STAGING/claude-awesome-fermi-ua31th-stage-b/assets/glossary/cat-harness--kg-tools.skos.jsonld">SKOS</a></td><td>499 · <a href="/folio-assistant/STAGING/claude-awesome-fermi-ua31th-stage-b/assets/glossary/cat-harness--kg-bpmn-activities.skos.jsonld">SKOS</a></td><td>9 · <a href="/folio-assistant/STAGING/claude-awesome-fermi-ua31th-stage-b/assets/glossary/cat-harness--kg-dmn-decisions.skos.jsonld">SKOS</a></td><td>1568 · <a href="/folio-assistant/STAGING/claude-awesome-fermi-ua31th-stage-b/assets/glossary/cat-harness--kg-schema-fields.skos.jsonld">SKOS</a></td></tr>
+<tr><td>fhir-harness</td><td>11 · <a href="/folio-assistant/STAGING/claude-awesome-fermi-ua31th-stage-b/assets/glossary/fhir-harness--kg-skills.skos.jsonld">SKOS</a></td><td>19 · <a href="/folio-assistant/STAGING/claude-awesome-fermi-ua31th-stage-b/assets/glossary/fhir-harness--kg-tools.skos.jsonld">SKOS</a></td><td>—</td><td>—</td><td>29 · <a href="/folio-assistant/STAGING/claude-awesome-fermi-ua31th-stage-b/assets/glossary/fhir-harness--kg-schema-fields.skos.jsonld">SKOS</a></td></tr>
 <tr><td>folio-assistant-core</td><td>7 · <a href="/folio-assistant/STAGING/claude-awesome-fermi-ua31th-stage-b/assets/glossary/folio-assistant-core--kg-skills.skos.jsonld">SKOS</a></td><td>4 · <a href="/folio-assistant/STAGING/claude-awesome-fermi-ua31th-stage-b/assets/glossary/folio-assistant-core--kg-tools.skos.jsonld">SKOS</a></td><td>4 · <a href="/folio-assistant/STAGING/claude-awesome-fermi-ua31th-stage-b/assets/glossary/folio-assistant-core--kg-bpmn-activities.skos.jsonld">SKOS</a></td><td>—</td><td>155 · <a href="/folio-assistant/STAGING/claude-awesome-fermi-ua31th-stage-b/assets/glossary/folio-assistant-core--kg-schema-fields.skos.jsonld">SKOS</a></td></tr>
 <tr><td>folio-assistant-sci</td><td>54 · <a href="/folio-assistant/STAGING/claude-awesome-fermi-ua31th-stage-b/assets/glossary/folio-assistant-sci--kg-skills.skos.jsonld">SKOS</a></td><td>—</td><td>—</td><td>—</td><td>—</td></tr>
 <tr><td>large-datasets</td><td>5 · <a href="/folio-assistant/STAGING/claude-awesome-fermi-ua31th-stage-b/assets/glossary/large-datasets--kg-skills.skos.jsonld">SKOS</a></td><td>—</td><td>41 · <a href="/folio-assistant/STAGING/claude-awesome-fermi-ua31th-stage-b/assets/glossary/large-datasets--kg-bpmn-activities.skos.jsonld">SKOS</a></td><td>—</td><td>18 · <a href="/folio-assistant/STAGING/claude-awesome-fermi-ua31th-stage-b/assets/glossary/large-datasets--kg-schema-fields.skos.jsonld">SKOS</a></td></tr>
-<tr><td>smart-base</td><td>8 · <a href="/folio-assistant/STAGING/claude-awesome-fermi-ua31th-stage-b/assets/glossary/smart-base--kg-skills.skos.jsonld">SKOS</a></td><td>9 · <a href="/folio-assistant/STAGING/claude-awesome-fermi-ua31th-stage-b/assets/glossary/smart-base--kg-tools.skos.jsonld">SKOS</a></td><td>9 · <a href="/folio-assistant/STAGING/claude-awesome-fermi-ua31th-stage-b/assets/glossary/smart-base--kg-bpmn-activities.skos.jsonld">SKOS</a></td><td>—</td><td>—</td></tr>
+<tr><td>smart-base</td><td>8 · <a href="/folio-assistant/STAGING/claude-awesome-fermi-ua31th-stage-b/assets/glossary/smart-base--kg-skills.skos.jsonld">SKOS</a></td><td>6 · <a href="/folio-assistant/STAGING/claude-awesome-fermi-ua31th-stage-b/assets/glossary/smart-base--kg-tools.skos.jsonld">SKOS</a></td><td>9 · <a href="/folio-assistant/STAGING/claude-awesome-fermi-ua31th-stage-b/assets/glossary/smart-base--kg-bpmn-activities.skos.jsonld">SKOS</a></td><td>—</td><td>—</td></tr>
 <tr><td>who-iris</td><td>1 · <a href="/folio-assistant/STAGING/claude-awesome-fermi-ua31th-stage-b/assets/glossary/who-iris--kg-skills.skos.jsonld">SKOS</a></td><td>—</td><td>—</td><td>—</td><td>—</td></tr>
 <tr><td><strong>total</strong></td><td><strong>300</strong></td><td><strong>141</strong></td><td><strong>569</strong></td><td><strong>9</strong></td><td><strong>1798</strong></td></tr>
 </tbody></table></div></div>
