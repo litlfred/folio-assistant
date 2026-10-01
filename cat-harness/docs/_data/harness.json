@@ -1432,12 +1432,12 @@
         {
           "id": "directories",
           "label": "declared directories",
-          "value": 0
+          "value": 1
         },
         {
           "id": "kinds",
           "label": "declared graph kinds",
-          "value": 0
+          "value": 1
         },
         {
           "id": "views",
@@ -1445,8 +1445,14 @@
           "value": 0
         }
       ],
-      "visualisations": [],
+      "visualisations": [
+        {
+          "kind": "voices",
+          "note": "no viewer yet"
+        }
+      ],
       "findings": [
+        "agent-skills: declares 1 graph(s) with no published viewer — voices. Declared and not rendered is a gap, not a dead link.",
         "agent-skills: no avatar declared for this instance — showing the generic mark."
       ],
       "navbarIcons": [
