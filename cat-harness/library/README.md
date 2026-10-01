@@ -11,7 +11,7 @@ Part of [C@T Harness](../README.md) 0.1.0, declared as `library`, holding `libra
 | [`image-verdicts.json`](image-verdicts.json) | data |  |
 | [`arxiv-0909.4061v2/`](arxiv-0909.4061v2/README.md) | 227 files | |
 | [`arxiv-2202.02427v1/`](arxiv-2202.02427v1/README.md) | 73 files | |
-| [`arxiv-2312.07755v1/`](arxiv-2312.07755v1/README.md) | 186 files | |
+| [`arxiv-2312.07755v1/`](arxiv-2312.07755v1/README.md) | 130 files | |
 | [`arxiv-2504.07199v3/`](arxiv-2504.07199v3/README.md) | 77 files | |
 | [`arxiv-2504.19675v2/`](arxiv-2504.19675v2/README.md) | 83 files | |
 | [`arxiv-2504.21474v1/`](arxiv-2504.21474v1/README.md) | 32 files | |

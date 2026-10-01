@@ -10,7 +10,7 @@ Part of [agent-skills](../README.md) 0.1.0, declared as `library`, holding `libr
 | [`image-verdicts.json`](image-verdicts.json) | data |  |
 | [`agent-skill-best-practices---gemini-cli/`](agent-skill-best-practices---gemini-cli/README.md) | 13 files | |
 | [`agent-skills---google-antigravity-docs/`](agent-skills---google-antigravity-docs/README.md) | 16 files | |
-| [`arxiv-2602.12670v4/`](arxiv-2602.12670v4/README.md) | 259 files | |
+| [`arxiv-2602.12670v4/`](arxiv-2602.12670v4/README.md) | 258 files | |
 | [`arxiv-2607.25032v1/`](arxiv-2607.25032v1/README.md) | 43 files | |
 | [`arxiv-2608.08453v1/`](arxiv-2608.08453v1/README.md) | 67 files | |
 | [`best-practices---google-antigravity-docs/`](best-practices---google-antigravity-docs/README.md) | 16 files | |

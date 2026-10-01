@@ -7,12 +7,12 @@ Part of [SMART Base](../README.md) 0.1.0, declared as `library`, holding `librar
 
 | file | what it is | used by |
 |---|---|---|
-| [`9789240010567-eng/`](9789240010567-eng/README.md) | 579 files | |
-| [`9789240081949-eng/`](9789240081949-eng/README.md) | 218 files | |
+| [`9789240010567-eng/`](9789240010567-eng/README.md) | 573 files | |
+| [`9789240081949-eng/`](9789240081949-eng/README.md) | 213 files | |
 | [`9789240093362-eng/`](9789240093362-eng/README.md) | 167 files | |
 | [`9789240120747-eng/`](9789240120747-eng/README.md) | 221 files | |
-| [`9789241509510-eng/`](9789241509510-eng/README.md) | 586 files | |
-| [`9789241511766-eng/`](9789241511766-eng/README.md) | 580 files | |
+| [`9789241509510-eng/`](9789241509510-eng/README.md) | 527 files | |
+| [`9789241511766-eng/`](9789241511766-eng/README.md) | 525 files | |
 | [`mehl-2021-who-smart-guidelines/`](mehl-2021-who-smart-guidelines/README.md) | 12 files | |
 | [`who-rhr-1806-eng/`](who-rhr-1806-eng/README.md) | 65 files | |
 <!-- kg:subgraph:end -->
