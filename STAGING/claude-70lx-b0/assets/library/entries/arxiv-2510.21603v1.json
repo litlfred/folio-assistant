@@ -1,0 +1,1206 @@
+{
+  "$schema": "folio-library-entry/v1",
+  "id": "arxiv-2510.21603v1",
+  "blocks": [
+    {
+      "id": "library/arxiv-2510.21603v1/blocks/prose-sec-000",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Abstract",
+      "pageStart": 1,
+      "pageEnd": 1,
+      "target": "../sections/sec-000-abstract.md",
+      "narrative": null,
+      "content": "Deep Research systems have revolutionized how LLMs solve com-\nplex questions through iterative reasoning and evidence gathering.\nHowever, current systems remain fundamentally constrained to\ntextual web data, overlooking the vast knowledge embedded in mul-\ntimodal documents: scientific papers, technical reports, and finan-\ncial documents where critical information exists in figures, tables,\ncharts, and equations. Processing such documents demands sophis-\nticated parsing to preserve visual semantics, intelligent chunking to\nmaintain structural coherence, and adaptive retrieval across modal-\nitie",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-2510.21603v1/blocks/prose-sec-001",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Introduction",
+      "pageStart": 1,
+      "pageEnd": 2,
+      "target": "../sections/sec-001-1-introduction.md",
+      "narrative": null,
+      "content": "Recently, agentic retrieval-augmented generation (RAG) systems\nhave significantly transformed the way LLMs retrieve, organize,\nand present information [30, 43]. Agentic RAG enhances tradi-\ntional RAG paradigm by enabling systems to plan retrieval strate-\ngies, invoke external tools, adaptively refine queries, and validate\ncontext [18]. These capabilities underpin recent Deep Research\nsystems [13], which support complex reasoning [14, 17–19] and\nresearch workflows [9, 20]. However, current deep research sys-\ntems [37] remain constrained by their exclusive focus on textual\nweb data. This limitat",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-2510.21603v1/blocks/prose-sec-front-matter",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Front matter",
+      "pageStart": 1,
+      "pageEnd": 1,
+      "target": "../sections/sec-front-matter.md",
+      "narrative": null,
+      "content": "Doc-Researcher: A Unified System for Multimodal Document\nParsing and Deep Research\nKuicai Dong∗, Shurui Huang∗, Fangda Ye∗, Wei Han, Zhi Zhang, Dexun Li, Wenjun Li, Qu Yang,\nGang Wang, Yichao Wang, Chen Zhang, Yong Liu\nHuawei Technologies Co., Ltd.\n* denotes co-first authors; correspond to {dong.kuicai, liu.yong6}@huawei.com",
+      "truncated": false,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-2510.21603v1/blocks/figure-img-p002-1",
+      "types": [
+        "folio-assistant-core:Figure",
+        "doco:Figure"
+      ],
+      "kind": "figure",
+      "title": "",
+      "pageStart": 2,
+      "pageEnd": 2,
+      "target": "../images/img-p002-1.png",
+      "narrative": "draft",
+      "content": "A black line-art icon of a person: a circle for the head above a rounded torso. It marks the human's turn in the worked example on this page, where a user asks a question about an insurance brochure.",
+      "truncated": false,
+      "provenance": "ingested",
+      "summary": null
+    },
+    {
+      "id": "library/arxiv-2510.21603v1/blocks/figure-img-p002-10",
+      "types": [
+        "folio-assistant-core:Figure",
+        "doco:Figure"
+      ],
+      "kind": "figure",
+      "title": "",
+      "pageStart": 2,
+      "pageEnd": 2,
+      "target": "../images/img-p002-10.png",
+      "narrative": "draft",
+      "content": "A page from a Prudential Singapore brochure headed \"PRUShield Premier and PRUExtra Supplementary Plans: Coverage for private hospital not under Prudential's Panel and Non-Panel listings\". It works through one scenario -- a private hospital single-bedded ward, total bill S$80,000 -- showing what PRUShield Premier covers (S$68,850, John pays S$11,150) and then four supplementary options beneath it, each with its daily premium and what John would still pay: PRUExtra Premier CoPay (S$5,900, with a level-progression bar advancing him to Level 4), PRUExtra Preferred CoPay (S$11,150), and PRUExtra Premier Lite CoPay (S$7,325).",
+      "truncated": false,
+      "provenance": "ingested",
+      "summary": null
+    },
+    {
+      "id": "library/arxiv-2510.21603v1/blocks/figure-img-p002-11",
+      "types": [
+        "folio-assistant-core:Figure",
+        "doco:Figure"
+      ],
+      "kind": "figure",
+      "title": "",
+      "pageStart": 2,
+      "pageEnd": 2,
+      "target": "../images/img-p002-11.png",
+      "narrative": "draft",
+      "content": "A two-cell strip lifted from the brochure's comparison table. The left cell reads \"PRUShield's deductible amount for claims not under panel providers (Per policy year)\"; the right reads \"Covers 95% of deductible amount that is above S$2,000, you pay S$2,000 and 5% of the remaining deductible amount\". It is the row the worked example's answer is drawn from.",
+      "truncated": false,
+      "provenance": "ingested",
+      "summary": null
+    },
+    {
+      "id": "library/arxiv-2510.21603v1/blocks/figure-img-p002-12",
+      "types": [
+        "folio-assistant-core:Figure",
+        "doco:Figure"
+      ],
+      "kind": "figure",
+      "title": "",
+      "pageStart": 2,
+      "pageEnd": 2,
+      "target": "../images/img-p002-12.png",
+      "narrative": "draft",
+      "content": "A full brochure page headed \"A little extra goes a long way\", holding a dense comparison table of five supplementary plans across two PRUShield tiers -- PRUExtra Premier CoPay, Preferred CoPay, Premier Lite CoPay, Plus CoPay and Plus Lite CoPay. Rows cover hospital and ward types, cancer drug treatment and services, deductible handling under and outside panel providers, co-insurance, stop-loss, claims-based premium pricing, value-added services, premiums for a 30-year-old (S$832.80 down to S$158.00) and eligibility. Ten numbered footnotes run beneath it.",
+      "truncated": false,
+      "provenance": "ingested",
+      "summary": null
+    },
+    {
+      "id": "library/arxiv-2510.21603v1/blocks/figure-img-p002-13",
+      "types": [
+        "folio-assistant-core:Figure",
+        "doco:Figure"
+      ],
+      "kind": "figure",
+      "title": "",
+      "pageStart": 2,
+      "pageEnd": 2,
+      "target": "../images/img-p002-13.png",
+      "narrative": "draft",
+      "content": "A black line-art icon of a robot head: a rounded square face with two dot eyes, a smiling mouth, side panels, and a single antenna ending in a circle. It marks the system's turn in the worked example on this page.",
+      "truncated": false,
+      "provenance": "ingested",
+      "summary": null
+    },
+    {
+      "id": "library/arxiv-2510.21603v1/blocks/prose-sec-002",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Related Work",
+      "pageStart": 2,
+      "pageEnd": 3,
+      "target": "../sections/sec-002-2-related-work.md",
+      "narrative": null,
+      "content": "Our work builds upon three research directions that collectively\ndefine the landscape of multimodal document understanding.\nDocument Parsing Strategies. Document parsing approaches\nfall into three categories, each with distinct tradeoffs. Shallow\nparsing relies on OCR to extract text while discarding spatial and\nvisual information [31]. Deep parsing systems like MinerU [39]\npreserve layout structure through bounding boxes, transcribe equa-\ntions to LaTeX [38], and convert tables to structured formats [42].\nRecent VLM-based parsers [21, 27] further enhance extraction\nquality. Parsing-free appro",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-2510.21603v1/blocks/figure-img-p003-106",
+      "types": [
+        "folio-assistant-core:Figure",
+        "doco:Figure"
+      ],
+      "kind": "figure",
+      "title": "",
+      "pageStart": 3,
+      "pageEnd": 3,
+      "target": "../images/img-p003-106.png",
+      "narrative": "draft",
+      "content": "A black line-art icon of a framed picture: a rounded square containing a circle at upper left and two mountain peaks below. It stands for images as a parsed element type.",
+      "truncated": false,
+      "provenance": "ingested",
+      "summary": null
+    },
+    {
+      "id": "library/arxiv-2510.21603v1/blocks/figure-img-p003-131",
+      "types": [
+        "folio-assistant-core:Figure",
+        "doco:Figure"
+      ],
+      "kind": "figure",
+      "title": "",
+      "pageStart": 3,
+      "pageEnd": 3,
+      "target": "../images/img-p003-131.png",
+      "narrative": "draft",
+      "content": "A black line-art icon of a table: a rounded rectangle with a blank header band above a three-by-four grid of cells. It stands for tables as a parsed element type.",
+      "truncated": false,
+      "provenance": "ingested",
+      "summary": null
+    },
+    {
+      "id": "library/arxiv-2510.21603v1/blocks/figure-img-p003-156",
+      "types": [
+        "folio-assistant-core:Figure",
+        "doco:Figure"
+      ],
+      "kind": "figure",
+      "title": "",
+      "pageStart": 3,
+      "pageEnd": 3,
+      "target": "../images/img-p003-156.png",
+      "narrative": "draft",
+      "content": "A black line-art icon of a mathematical expression: a square-root sign over an x with a superscript 2, enclosed in tall curved brackets. It stands for equations as a parsed element type.",
+      "truncated": false,
+      "provenance": "ingested",
+      "summary": null
+    },
+    {
+      "id": "library/arxiv-2510.21603v1/blocks/figure-img-p003-181",
+      "types": [
+        "folio-assistant-core:Figure",
+        "doco:Figure"
+      ],
+      "kind": "figure",
+      "title": "",
+      "pageStart": 3,
+      "pageEnd": 3,
+      "target": "../images/img-p003-181.png",
+      "narrative": "draft",
+      "content": "A colour icon of four interlocking jigsaw pieces forming a square -- green at upper left, blue at upper right, yellow at lower left, red at lower right. It marks the stage where parsed elements are assembled.",
+      "truncated": false,
+      "provenance": "ingested",
+      "summary": null
+    },
+    {
+      "id": "library/arxiv-2510.21603v1/blocks/figure-img-p003-182",
+      "types": [
+        "folio-assistant-core:Figure",
+        "doco:Figure"
+      ],
+      "kind": "figure",
+      "title": "",
+      "pageStart": 3,
+      "pageEnd": 3,
+      "target": "../images/img-p003-182.png",
+      "narrative": "draft",
+      "content": "A colour icon of a database cluster: a large pale-blue cylinder at the centre connected by right-angled lines to six smaller cylinders in green, yellow and blue. It marks the indexed store the parsed content is written to.",
+      "truncated": false,
+      "provenance": "ingested",
+      "summary": null
+    },
+    {
+      "id": "library/arxiv-2510.21603v1/blocks/figure-img-p003-183",
+      "types": [
+        "folio-assistant-core:Figure",
+        "doco:Figure"
+      ],
+      "kind": "figure",
+      "title": "",
+      "pageStart": 3,
+      "pageEnd": 3,
+      "target": "../images/img-p003-183.png",
+      "narrative": "draft",
+      "content": "A colour icon of an image under selection: a picture of a yellow sun and grey mountains against a cyan sky, framed by four corner handles. It marks visual elements being selected for conversion.",
+      "truncated": false,
+      "provenance": "ingested",
+      "summary": null
+    },
+    {
+      "id": "library/arxiv-2510.21603v1/blocks/figure-img-p003-184",
+      "types": [
+        "folio-assistant-core:Figure",
+        "doco:Figure"
+      ],
+      "kind": "figure",
+      "title": "",
+      "pageStart": 3,
+      "pageEnd": 3,
+      "target": "../images/img-p003-184.png",
+      "narrative": "draft",
+      "content": "A colour icon of a brain on a microchip: a pale outline brain inside a teal square chip, with pins radiating to small dots on all four sides. It marks the model-driven steps of the pipeline.",
+      "truncated": false,
+      "provenance": "ingested",
+      "summary": null
+    },
+    {
+      "id": "library/arxiv-2510.21603v1/blocks/figure-img-p003-186",
+      "types": [
+        "folio-assistant-core:Figure",
+        "doco:Figure"
+      ],
+      "kind": "figure",
+      "title": "",
+      "pageStart": 3,
+      "pageEnd": 3,
+      "target": "../images/img-p003-186.png",
+      "narrative": "draft",
+      "content": "A black line-art icon of a robot head with two antennae and side panels, its lower edge drawn as a speech-bubble tail. It marks the answering agent in the architecture figure.",
+      "truncated": false,
+      "provenance": "ingested",
+      "summary": null
+    },
+    {
+      "id": "library/arxiv-2510.21603v1/blocks/figure-img-p003-236",
+      "types": [
+        "folio-assistant-core:Figure",
+        "doco:Figure"
+      ],
+      "kind": "figure",
+      "title": "",
+      "pageStart": 3,
+      "pageEnd": 3,
+      "target": "../images/img-p003-236.png",
+      "narrative": "draft",
+      "content": "A black line-art icon of three rectangular speech bubbles, each containing three dots, arranged in a loose cluster. It marks the multi-turn exchange the system supports.",
+      "truncated": false,
+      "provenance": "ingested",
+      "summary": null
+    },
+    {
+      "id": "library/arxiv-2510.21603v1/blocks/figure-img-p003-261",
+      "types": [
+        "folio-assistant-core:Figure",
+        "doco:Figure"
+      ],
+      "kind": "figure",
+      "title": "",
+      "pageStart": 3,
+      "pageEnd": 3,
+      "target": "../images/img-p003-261.png",
+      "narrative": "draft",
+      "content": "A black line-art icon of three page glyphs above an open upturned hand, each page connected to the hand by an arrow pointing down. It marks documents being delivered to the reader.",
+      "truncated": false,
+      "provenance": "ingested",
+      "summary": null
+    },
+    {
+      "id": "library/arxiv-2510.21603v1/blocks/figure-img-p003-286",
+      "types": [
+        "folio-assistant-core:Figure",
+        "doco:Figure"
+      ],
+      "kind": "figure",
+      "title": "",
+      "pageStart": 3,
+      "pageEnd": 3,
+      "target": "../images/img-p003-286.png",
+      "narrative": "draft",
+      "content": "A black line-art icon of a checklist: a page of ruled items marked alternately with ticks and crosses, a pencil lying across it, a second page behind, and a circular badge carrying a tick at upper right. It marks the evaluation stage.",
+      "truncated": false,
+      "provenance": "ingested",
+      "summary": null
+    },
+    {
+      "id": "library/arxiv-2510.21603v1/blocks/figure-img-p003-311",
+      "types": [
+        "folio-assistant-core:Figure",
+        "doco:Figure"
+      ],
+      "kind": "figure",
+      "title": "",
+      "pageStart": 3,
+      "pageEnd": 3,
+      "target": "../images/img-p003-311.png",
+      "narrative": "draft",
+      "content": "A black line-art icon of a page layout: a small filled square and rules at the top, a bordered band across the middle carrying the word CONTEXT, and further rules and three small boxes beneath. It marks the assembled context passed to the model.",
+      "truncated": false,
+      "provenance": "ingested",
+      "summary": null
+    },
+    {
+      "id": "library/arxiv-2510.21603v1/blocks/figure-img-p003-4",
+      "types": [
+        "folio-assistant-core:Figure",
+        "doco:Figure"
+      ],
+      "kind": "figure",
+      "title": "",
+      "pageStart": 3,
+      "pageEnd": 3,
+      "target": "../images/img-p003-4.png",
+      "narrative": "draft",
+      "content": "A generic PDF file icon: a pale grey page with its top-right corner folded, overlaid by a red rectangle carrying the white letters PDF. One of the input document types in the architecture figure.",
+      "truncated": false,
+      "provenance": "ingested",
+      "summary": null
+    },
+    {
+      "id": "library/arxiv-2510.21603v1/blocks/figure-img-p003-5",
+      "types": [
+        "folio-assistant-core:Figure",
+        "doco:Figure"
+      ],
+      "kind": "figure",
+      "title": "",
+      "pageStart": 3,
+      "pageEnd": 3,
+      "target": "../images/img-p003-5.png",
+      "narrative": "draft",
+      "content": "A colour icon of a folded newspaper: a masthead panel in yellow reading NEWS, a pink image block at lower left, and grey rules standing for body text. It stands for news documents among the figure's input types.",
+      "truncated": false,
+      "provenance": "ingested",
+      "summary": null
+    },
+    {
+      "id": "library/arxiv-2510.21603v1/blocks/figure-img-p003-56",
+      "types": [
+        "folio-assistant-core:Figure",
+        "doco:Figure"
+      ],
+      "kind": "figure",
+      "title": "",
+      "pageStart": 3,
+      "pageEnd": 3,
+      "target": "../images/img-p003-56.png",
+      "narrative": "draft",
+      "content": "A black-and-white icon of a browser window: a dark title bar with three dots, the letters WWW below it, three rules standing for text, and an arrow cursor at lower right. It stands for web pages among the figure's input types.",
+      "truncated": false,
+      "provenance": "ingested",
+      "summary": null
+    },
+    {
+      "id": "library/arxiv-2510.21603v1/blocks/figure-img-p003-6",
+      "types": [
+        "folio-assistant-core:Figure",
+        "doco:Figure"
+      ],
+      "kind": "figure",
+      "title": "",
+      "pageStart": 3,
+      "pageEnd": 3,
+      "target": "../images/img-p003-6.png",
+      "narrative": "draft",
+      "content": "A black line-art icon of a spiral-bound notebook lettered MANUAL across the top, with five horizontal rules below standing for text. It stands for manuals and handbooks among the figure's input types.",
+      "truncated": false,
+      "provenance": "ingested",
+      "summary": null
+    },
+    {
+      "id": "library/arxiv-2510.21603v1/blocks/figure-img-p003-81",
+      "types": [
+        "folio-assistant-core:Figure",
+        "doco:Figure"
+      ],
+      "kind": "figure",
+      "title": "",
+      "pageStart": 3,
+      "pageEnd": 3,
+      "target": "../images/img-p003-81.png",
+      "narrative": "draft",
+      "content": "A black line-art icon of a portrait page carrying a serif capital T beside three short rules, with two longer rules beneath. It stands for plain text content within the parsing stage.",
+      "truncated": false,
+      "provenance": "ingested",
+      "summary": null
+    },
+    {
+      "id": "library/arxiv-2510.21603v1/blocks/prose-sec-003",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Multimodal Deep Research",
+      "pageStart": 3,
+      "pageEnd": 3,
+      "target": "../sections/sec-003-33-multimodal-deep-research.md",
+      "narrative": null,
+      "content": "Figure 2: Doc-Researcher Architecture: (a) multimodal deep parsing and indexing, and (b) multimodal deep research.\nDocument RAG Systems. Due to limited context windows,\nDocRAG systems have merged that decompose understanding\ninto retrieval and reasoning stages. Current systems [3, 6, 12]\nemploy various strategies: M3DocRAG uses vision-only page re-\ntrieval, MDocAgent combines text chunks with screenshots, and\nVDocRAG [32] incorporates figure extraction. However, all perform\nsingle-round retrieval with fixed granularities, lacking the iterative\nrefinement and adaptive strategies essential for c",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-2510.21603v1/blocks/prose-sec-004",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Method: Doc-Researcher",
+      "pageStart": 3,
+      "pageEnd": 3,
+      "target": "../sections/sec-004-3-method-doc-researcher.md",
+      "narrative": null,
+      "content": "Doc-Researcher (in Figure 2) consists of two main modules: deep\nparsing and deep research. The deep parsing pipeline transforms\nmultimodal documents into structured, multi-granular, and search-\nable units while preserving multimodal semantics. The deep re-\nsearch adopts a multi-agent collaborative framework to solve com-\nplex questions with iterative search and refinement.\n3.1",
+      "truncated": false,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-2510.21603v1/blocks/prose-sec-005",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Deep Multimodal Document Parsing",
+      "pageStart": 3,
+      "pageEnd": 3,
+      "target": "../sections/sec-005-31-deep-multimodal-document-parsing.md",
+      "narrative": null,
+      "content": "Multi-modal Doc Parsing. Given a collection of multimodal doc-\numents D, each document 𝑑𝑖∈D undergoes layout-aware parsing\nvia MinerU [39] to extract structural elements 𝐸𝑖= {𝑒𝑖,𝑗,𝑘}, where\nindices denote document 𝑖, page 𝑗, and reading sequence 𝑘. Each el-\nement is pair with its layout type (text, table, figure, equation), and\nbounding box coordinates (Figure 5a). For computational efficiency,\nwe perform one-time textual conversion of visual elements. Tables\nand figures are processed through Qwen2.5-VL [1] to generate both\ncoarse-grained summaries for contextual understanding and f",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-2510.21603v1/blocks/prose-sec-006",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Multimodal Retrieval Architecture",
+      "pageStart": 3,
+      "pageEnd": 4,
+      "target": "../sections/sec-006-32-multimodal-retrieval-architecture.md",
+      "narrative": null,
+      "content": "Vision-only Retrieval. Vision-only retrieval operates at page gran-\nularity using raw screenshots as encoded passages. This approach\neliminates parsing overhead, offering high efficiency without OCR\nor layout analysis. However, it faces challenges in representing\ncomplex interleaved text-vision content through dense vectors. For\nhigh-resolution pages, multi-vector vision retrievers can produce\nthousands of vectors, as each small image patch (typically 16x16 or\n14x14 pixels) correspond to a vector. Additionally, vision retrievers\nrely on parameter-heavy VLMs (often >3B parameters) with deeper\na",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-2510.21603v1/blocks/prose-sec-007",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "M4DocBench Benchmark",
+      "pageStart": 4,
+      "pageEnd": 4,
+      "target": "../sections/sec-007-4-m4docbench-benchmark.md",
+      "narrative": null,
+      "content": "4.1",
+      "truncated": false,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-2510.21603v1/blocks/prose-sec-008",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Motivation of M4DocBench",
+      "pageStart": 4,
+      "pageEnd": 5,
+      "target": "../sections/sec-008-41-motivation-of-m4docbench.md",
+      "narrative": null,
+      "content": "Existing evaluation benchmarks fail to capture the complexity of\nmultimodal document deep research. A comprehensive evaluation\nmust assess four critical dimensions: (1) Multi-hop reasoning:\nComplex questions requiring sophisticated reasoning chains across\nevidence. (2) Multi-modal integration: Questions demanding\ninformation from at least two modalities (text, tables, images). (3)\nMulti-document synthesis: Questions relying evidence from mul-\ntiple documents, where each document provides unique, essential\ninformation. Distractor documents with topically related content\nincrease retrieval diffi",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-2510.21603v1/blocks/prose-sec-009",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Domain and Document Collection",
+      "pageStart": 5,
+      "pageEnd": 5,
+      "target": "../sections/sec-009-42-domain-and-document-collection.md",
+      "narrative": null,
+      "content": "We select four distinct domains (research, insurance, education, and\nfinance) based on three criteria: (1) Multimodal richness: Each\ndomain features essential visual elements (tables, charts, figures) in-\ntegrated with text; (2) Reasoning complexity: Questions require\ndiverse capabilities from technical comprehension to numerical\nanalysis; (3) Practical relevance: These represent real-world sce-\nnarios where professionals routinely conduct document research.\nWe collect documents from authoritative sources to ensure quality\nand representativeness:\n• Research: We collect 166 computer science pap",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-2510.21603v1/blocks/prose-sec-010",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Annotation Process",
+      "pageStart": 5,
+      "pageEnd": 5,
+      "target": "../sections/sec-010-43-annotation-process.md",
+      "narrative": null,
+      "content": "Our annotation process employs PhD/Master-level researchers with\nextensive research experience to ensure benchmark quality. Beyond\nbasic question-answer pairs, we annotate six critical dimensions\nthat enable comprehensive evaluation of deep research systems:\n• Hard Negative Documents: We carefully curate documents\nthat share topical similarity with target questions while lacking\nessential information. This tests systems’ ability to distinguish\ntruly relevant sources from plausible distractors—a critical capa-\nbility for effective document filtering in large collections.\n• Retrieval Granularity",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-2510.21603v1/blocks/prose-sec-011",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Benchmark Statistics",
+      "pageStart": 5,
+      "pageEnd": 5,
+      "target": "../sections/sec-011-44-benchmark-statistics.md",
+      "narrative": null,
+      "content": "Table 7 presents statistics of M4DocBench’s 158 expert-annotated\nquestions, demonstrating its unique evaluation capabilities: (1)\nDocument-scale Complexity. Questions require processing 12.7\ndocuments (306.4 pages) on average, up to 42 documents (836 pages)\nin challenging cases. Systems must identify 3.8 relevant documents\nfrom extensive collections, testing critical document filtering ca-\npabilities underexplored in existing benchmarks. (2) Multimodal\nand Complex Evidence Requirements. 112 questions require\nmultiple modalities, with balanced evidence distribution across\ntext (40.9%), tables (",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-2510.21603v1/blocks/prose-sec-012",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Experiment",
+      "pageStart": 5,
+      "pageEnd": 5,
+      "target": "../sections/sec-012-5-experiment.md",
+      "narrative": null,
+      "content": "5.1",
+      "truncated": false,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-2510.21603v1/blocks/prose-sec-013",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Evaluation Metrics and Benchmarks",
+      "pageStart": 5,
+      "pageEnd": 6,
+      "target": "../sections/sec-013-51-evaluation-metrics-and-benchmarks.md",
+      "narrative": null,
+      "content": "Multimodal Retrieval Evaluation. We evaluate retrieval per-\nformance at three granularities aligned with our retrieval frame-\nwork (§3.2): document, page, and layout. For each granularity, we\ncompute recall@k by comparing retrieved passages2 against gold\nannotations. Document and page recall are computed using exact ID\nmatching. For chunk-level evaluation, following Dong et al. [5], we\ncalculate recall based on bounding box overlap between retrieved\nand gold-standard layouts. Note that parsing-free methods cannot\nbe evaluated at chunk granularity.\nDeep Research Evaluation. We evaluate the comp",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-2510.21603v1/blocks/prose-sec-014",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "System Setting and Baselines",
+      "pageStart": 6,
+      "pageEnd": 7,
+      "target": "../sections/sec-014-52-system-setting-and-baselines.md",
+      "narrative": null,
+      "content": "Retrieval System. We evaluate 10 retrievers to implement our\nmultimodal retrieval architecture (§3.2): 5 Text retrievers: BM25\n[28], E5 [40], BGE-M3 [2], Qwen3-embedding-0.6B [45], and Qwen3-\nreranker-0.6B [45]. 5 Vision retrievers: DSE [22], ColPali [10],\nColQwen [10], and Jina-embedding-v4 [11] (multi-vector and dense\nvariants). We configure these retrievers in three paradigms: (1)\nText-only: Text retrievers encode both textual and visual chunks,\nwith visual elements represented through VLM descriptions. (2)\nVision-only: Vision retrievers directly retrieve page screenshots\nwithout parsing. (",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-2510.21603v1/blocks/prose-sec-015",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Multimodal Retrieval System Results",
+      "pageStart": 7,
+      "pageEnd": 7,
+      "target": "../sections/sec-015-53-multimodal-retrieval-system-results.md",
+      "narrative": null,
+      "content": "Table 2 presents retrieval performance across different paradigms\non M4DocBench and MMDocIR, evaluating both original questions\nand decomposed sub-queries. Fine-grained results are in Figure 7.\nRetrieval Paradigm Comparison. Text-only retrieval shows\nhierarchical performance: sparse retrieval (BM25) performs worst,\nwhile dense retrievers (BGE-M3, Qwen3-Embedding) achieve sub-\nstantial improvements. Vision-only retrieval, Jina-embedding-v4,\neven its dense variant, outperform other multi-vector models. Note\nthat vision-only retrieval excels text-only method on MMDocIR’s\nvisual-centric tasks but",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-2510.21603v1/blocks/prose-sec-016",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Main Results: Multimodal Deep Research",
+      "pageStart": 7,
+      "pageEnd": 8,
+      "target": "../sections/sec-016-54-main-results-multimodal-deep-research.md",
+      "narrative": null,
+      "content": "Table 3 validates our core contributions via systematic comparisons.\nDeep Research can largely improve multimodal understand-\ning. Direct answering achieves only 5-10%; long-context processing\nranges within 9-31% despite document content of 96k tokens is\ngiven. Results show that neither parametric knowledge nor brute-\nforce context extension can handle research-level complexity. In\ncomparison, Doc-Researcher with multi-agent framework (with\nstrategic planning, iterative search-refine loops, and progressive\nevidence accumulation) achieves score of 50.6%. The 20-40% gap\nover long-context proves",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-2510.21603v1/blocks/prose-sec-017",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Ablation Study",
+      "pageStart": 8,
+      "pageEnd": 8,
+      "target": "../sections/sec-017-55-ablation-study.md",
+      "narrative": null,
+      "content": "We ablate components of Doc-Researcher, and validate different\narchitectural design as follows:\nHybrid Retrieval Necessity. Within our deep parsing frame-\nwork, hybrid retrieval (42.4-50.6%) outperforms text-only (39.2-\n45.6%) by 3-5%. This shows that even with high-quality textual\ntranscriptions in both coarse and fine-grained level, some visual se-\nmantics is lost. In comparison, visual encoders that directly encode\nusing chunk image, can capture irreplaceable semantics. This vali-\ndates our hybrid retrieval design over single-modality approaches.\nAdaptive Planning Impact. Removing the Plann",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-2510.21603v1/blocks/prose-sec-018",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Parsing and Deep Research Efficiency",
+      "pageStart": 8,
+      "pageEnd": 8,
+      "target": "../sections/sec-018-56-parsing-and-deep-research-efficiency.md",
+      "narrative": null,
+      "content": "Table 4 analyzes computational tradeoffs across parsing strategies\non M4DocBench’s 304 documents (6,177 pages, 4,146 figures, and\n2,739 tables) and deep research latency on 158 questions.\nParsing Setting\nParsing Latency and Cost\nDoc-Researcher Latency\nLevel\nType\nParse Index Caption Store\nPlan Search Refine\nAnswer\nfree vision:dense\n-\n08:56\n-\n0.15\n-\n05:34 19:50:16 03:30:42\nvision:multi\n-\n39:14\n-\n4.33\n-\n59:47 20:32:23 03:41:12\nshal’ text:dense\n18:47\n09:50\n-\n0.37\n-\n10:31 03:29:37 01:57:32\ndeep text:dense\n01:21:21 12:47 01:12:32 0.34 01:48:32 10:54 04:14:30 02:27:28\nhybrid:dense 01:21:21 14:40 01:1",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-2510.21603v1/blocks/prose-sec-019",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Conclusion",
+      "pageStart": 8,
+      "pageEnd": 9,
+      "target": "../sections/sec-019-6-conclusion.md",
+      "narrative": null,
+      "content": "We introduced Doc-Researcher, addressing the critical limitation\nthat existing deep research systems cannot process multimodal doc-\numents. Our work identifies and resolves three fundamental gaps\nin current systems. First, we developed a deep multimodal parsing\nframework that preserves layout structure and modality-specific\ncharacteristics, achieving 11.4% improvement over simplistic OCR\napproaches. Second, we designed a systematic retrieval architec-\nture supporting multiple paradigms (text/vision/hybrid) and gran-\nularities (chunk/page/full/summary). Third, we implement itera-\ntive multi-age",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-2510.21603v1/blocks/prose-sec-020",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "References",
+      "pageStart": 9,
+      "pageEnd": 13,
+      "target": "../sections/sec-020-references.md",
+      "narrative": null,
+      "content": "[1] Shuai Bai, Keqin Chen, Xuejing Liu, Jialin Wang, Wenbin Ge, Sibo Song, Kai Dang,\nPeng Wang, Shijie Wang, Jun Tang, Humen Zhong, Yuanzhi Zhu, Mingkun Yang,\nZhaohai Li, Jianqiang Wan, Pengfei Wang, Wei Ding, Zheren Fu, Yiheng Xu, Jiabo\nYe, Xi Zhang, Tianbao Xie, Zesen Cheng, Hang Zhang, Zhibo Yang, Haiyang Xu,\nand Junyang Lin. 2025. Qwen2.5-VL Technical Report. arXiv:2502.13923 [cs.CV]\nhttps://arxiv.org/abs/2502.13923\n[2] Jianlv Chen, Shitao Xiao, Peitian Zhang, Kun Luo, Defu Lian, and Zheng Liu.\n2024. BGE M3-Embedding: Multi-Lingual, Multi-Functionality, Multi-Granularity\nText Embeddings Th",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-2510.21603v1/blocks/figure-img-p011-1",
+      "types": [
+        "folio-assistant-core:Figure",
+        "doco:Figure"
+      ],
+      "kind": "figure",
+      "title": "",
+      "pageStart": 11,
+      "pageEnd": 11,
+      "target": "../images/img-p011-1.png",
+      "narrative": "draft",
+      "content": "A page from a CVSource (投中信息) Chinese-language investment-research report headed \"A轮交易占市场近半数 广东投资数量荣登榜首\" (A-round deals are nearly half the market; Guangdong leads on deal count). Two donut charts compare deal count and deal size by round for H1 2024, and a horizontal bar chart below ranks the top ten regions -- Guangdong 647 deals against 5967.1, Jiangsu 646, Shanghai 493, Zhejiang 417, Beijing 388.",
+      "truncated": false,
+      "provenance": "ingested",
+      "summary": null
+    },
+    {
+      "id": "library/arxiv-2510.21603v1/blocks/figure-img-p011-10",
+      "types": [
+        "folio-assistant-core:Figure",
+        "doco:Figure"
+      ],
+      "kind": "figure",
+      "title": "",
+      "pageStart": 11,
+      "pageEnd": 11,
+      "target": "../images/img-p011-10.png",
+      "narrative": "draft",
+      "content": "A page from a CVSource (投中信息) Chinese-language investment-research report headed \"港交所主板账面退出回报最高\" (HKEX main board has the highest book exit return). A red rectangle covers the opening paragraph and the exit-analysis table; a bar-and-line chart below tracks VC/PE penetration of IPOs from 2024-04 to 2025-04.",
+      "truncated": false,
+      "provenance": "ingested",
+      "summary": null
+    },
+    {
+      "id": "library/arxiv-2510.21603v1/blocks/figure-img-p011-11",
+      "types": [
+        "folio-assistant-core:Figure",
+        "doco:Figure"
+      ],
+      "kind": "figure",
+      "title": "",
+      "pageStart": 11,
+      "pageEnd": 11,
+      "target": "../images/img-p011-11.png",
+      "narrative": "draft",
+      "content": "A page from a CVSource (投中信息) Chinese-language investment-research report with the same heading \"港交所主板账面退出回报最高\", for May 2025. A red rectangle covers the opening paragraph and the exit-analysis table; the bar-and-line chart beneath runs 2024-05 to 2025-05. It is the immediate sibling of the April page and differs in its figures rather than its layout.",
+      "truncated": false,
+      "provenance": "ingested",
+      "summary": null
+    },
+    {
+      "id": "library/arxiv-2510.21603v1/blocks/figure-img-p011-12",
+      "types": [
+        "folio-assistant-core:Figure",
+        "doco:Figure"
+      ],
+      "kind": "figure",
+      "title": "",
+      "pageStart": 11,
+      "pageEnd": 11,
+      "target": "../images/img-p011-12.png",
+      "narrative": "draft",
+      "content": "A page from a CVSource (投中信息) Chinese-language investment-research report headed \"4月VC/PE机构背景企业IPO一览表\" (April: IPOs of companies with VC/PE backing). A two-column table lists seven companies against their investing institutions, with a footnote in orange noting that space limits the list to institutions that had not yet exited.",
+      "truncated": false,
+      "provenance": "ingested",
+      "summary": null
+    },
+    {
+      "id": "library/arxiv-2510.21603v1/blocks/figure-img-p011-13",
+      "types": [
+        "folio-assistant-core:Figure",
+        "doco:Figure"
+      ],
+      "kind": "figure",
+      "title": "",
+      "pageStart": 11,
+      "pageEnd": 11,
+      "target": "../images/img-p011-13.png",
+      "narrative": "draft",
+      "content": "A web page from the National University of Singapore headed \"MComp in AI: Frequently Asked Questions\", opening with a note on the NUS Master's Degree by Coursework Enhanced Tuition Fee Rebate. Under Requirements, questions and answers cover degree backgrounds, IT work experience, document deadlines and whether TOEFL/IELTS and GRE/GMAT scores are needed.",
+      "truncated": false,
+      "provenance": "ingested",
+      "summary": null
+    },
+    {
+      "id": "library/arxiv-2510.21603v1/blocks/figure-img-p011-14",
+      "types": [
+        "folio-assistant-core:Figure",
+        "doco:Figure"
+      ],
+      "kind": "figure",
+      "title": "",
+      "pageStart": 11,
+      "pageEnd": 11,
+      "target": "../images/img-p011-14.png",
+      "narrative": "draft",
+      "content": "A narrow screenshot of an NUS page headed \"Master of Computing (Computer Science Specialisation) (Coursework)\", with an orange \"Explore Our Programmes\" banner at the top, a dark blue technology hero image in the middle, two orange call-to-action buttons (\"More Info\", \"Apply Now\"), and Faculty and description text beneath.",
+      "truncated": false,
+      "provenance": "ingested",
+      "summary": null
+    },
+    {
+      "id": "library/arxiv-2510.21603v1/blocks/figure-img-p011-15",
+      "types": [
+        "folio-assistant-core:Figure",
+        "doco:Figure"
+      ],
+      "kind": "figure",
+      "title": "",
+      "pageStart": 11,
+      "pageEnd": 11,
+      "target": "../images/img-p011-15.png",
+      "narrative": "draft",
+      "content": "A brochure page for the NUS MTech in Artificial Intelligence Systems. The upper half covers English Language Proficiency (TOEFL and IELTS thresholds in a small table) and the GRE/NUS-ISS entrance test, with a \"How to Apply\" panel. The lower half holds the Programme Schedule as two coloured grids -- full-time over two semesters, part-time over four -- followed by notes on the Practice Module and the Stackable Graduate Certificate Programme.",
+      "truncated": false,
+      "provenance": "ingested",
+      "summary": null
+    },
+    {
+      "id": "library/arxiv-2510.21603v1/blocks/figure-img-p011-16",
+      "types": [
+        "folio-assistant-core:Figure",
+        "doco:Figure"
+      ],
+      "kind": "figure",
+      "title": "",
+      "pageStart": 11,
+      "pageEnd": 11,
+      "target": "../images/img-p011-16.png",
+      "narrative": "draft",
+      "content": "A full one-page brochure for the NUS Master of Science in Quantitative Finance, in the university's blue and orange. Panels cover Overview, Faculty, Career Opportunities, Programme Structure and Candidature, Admission Requirements, How to Apply and two student testimonials. A red rectangle marks the candidature paragraph -- a 40-unit programme of five core and five elective courses, completable in 1 to 2 years full-time or 2 to 4 part-time.",
+      "truncated": false,
+      "provenance": "ingested",
+      "summary": null
+    },
+    {
+      "id": "library/arxiv-2510.21603v1/blocks/figure-img-p011-17",
+      "types": [
+        "folio-assistant-core:Figure",
+        "doco:Figure"
+      ],
+      "kind": "figure",
+      "title": "",
+      "pageStart": 11,
+      "pageEnd": 11,
+      "target": "../images/img-p011-17.png",
+      "narrative": "draft",
+      "content": "A web page headed \"Master of Technology in Enterprise Business Analytics\" from NUS-ISS. A red rectangle encloses the Overview table -- next intake, duration, application timeline, entrance test and GRE arrangements -- above descriptive paragraphs and a list of what graduates will be able to do.",
+      "truncated": false,
+      "provenance": "ingested",
+      "summary": null
+    },
+    {
+      "id": "library/arxiv-2510.21603v1/blocks/figure-img-p011-18",
+      "types": [
+        "folio-assistant-core:Figure",
+        "doco:Figure"
+      ],
+      "kind": "figure",
+      "title": "",
+      "pageStart": 11,
+      "pageEnd": 11,
+      "target": "../images/img-p011-18.png",
+      "narrative": "draft",
+      "content": "A page rendered from a markdown file, its header reading \"27.nus-ba.md\" and \"2025-07-26\", about the NUS Master of Science in Business Analytics. A red rectangle encloses the Commitment and Candidature table -- full time 14 months average and 24 maximum, part time 24 and 48 -- with target audience and admission criteria beneath.",
+      "truncated": false,
+      "provenance": "ingested",
+      "summary": null
+    },
+    {
+      "id": "library/arxiv-2510.21603v1/blocks/figure-img-p011-19",
+      "types": [
+        "folio-assistant-core:Figure",
+        "doco:Figure"
+      ],
+      "kind": "figure",
+      "title": "",
+      "pageStart": 11,
+      "pageEnd": 11,
+      "target": "../images/img-p011-19.png",
+      "narrative": "draft",
+      "content": "A web page section for the NUS MSc in Digital Financial Technology. A red rectangle encloses the Commitment and Candidature table -- full time 1.5 years average and 3 years maximum, part time 2.5 and 3 -- with Scholarships above and Target Audience and General Admission Criteria (GMAT 650/800, TOEFL 90/120, IELTS 6.0/9) beneath.",
+      "truncated": false,
+      "provenance": "ingested",
+      "summary": null
+    },
+    {
+      "id": "library/arxiv-2510.21603v1/blocks/figure-img-p011-2",
+      "types": [
+        "folio-assistant-core:Figure",
+        "doco:Figure"
+      ],
+      "kind": "figure",
+      "title": "",
+      "pageStart": 11,
+      "pageEnd": 11,
+      "target": "../images/img-p011-2.png",
+      "narrative": "draft",
+      "content": "A page from a CVSource (投中信息) Chinese-language investment-research report headed \"全球：中企IPO首日破发率43.75%\" (global: 43.75% of Chinese-company IPOs broke issue on day one). Two ranked tables give the top five first-day risers and fallers for April 2024, and a horizontal bar chart below shows the distribution of first-day moves across bands from -60%,-30% up to 240%,270%.",
+      "truncated": false,
+      "provenance": "ingested",
+      "summary": null
+    },
+    {
+      "id": "library/arxiv-2510.21603v1/blocks/figure-img-p011-20",
+      "types": [
+        "folio-assistant-core:Figure",
+        "doco:Figure"
+      ],
+      "kind": "figure",
+      "title": "",
+      "pageStart": 11,
+      "pageEnd": 11,
+      "target": "../images/img-p011-20.png",
+      "narrative": "draft",
+      "content": "A web page section headed \"Capstone Project & Internships\" for the NUS MTech EBAC programme. A red rectangle encloses the paragraph describing the project module -- five months full-time, 7 to 12 months part-time, 30 man-days per team member and a mandatory four-day course. Objectives, learning outcomes and a Timetable & Exams table for full-time students follow.",
+      "truncated": false,
+      "provenance": "ingested",
+      "summary": null
+    },
+    {
+      "id": "library/arxiv-2510.21603v1/blocks/figure-img-p011-21",
+      "types": [
+        "folio-assistant-core:Figure",
+        "doco:Figure"
+      ],
+      "kind": "figure",
+      "title": "",
+      "pageStart": 11,
+      "pageEnd": 11,
+      "target": "../images/img-p011-21.png",
+      "narrative": "draft",
+      "content": "A web page section headed \"Internship Timeline\" for the NUS MSc in Digital Financial Technology. A red rectangle encloses an orange-headed table of the FinTech Capstone Project -- key features, internship period, submission and application windows, offer deadlines and the student acceptance grace period. Instructions for posting a position on NUS TalentConnect follow.",
+      "truncated": false,
+      "provenance": "ingested",
+      "summary": null
+    },
+    {
+      "id": "library/arxiv-2510.21603v1/blocks/figure-img-p011-22",
+      "types": [
+        "folio-assistant-core:Figure",
+        "doco:Figure"
+      ],
+      "kind": "figure",
+      "title": "",
+      "pageStart": 11,
+      "pageEnd": 11,
+      "target": "../images/img-p011-22.png",
+      "narrative": "draft",
+      "content": "A web page for an NUS MSAI programme, laid out as stacked blue accordion headers -- Admission Requirements, Programme Structure & Duration, Curriculum, Career Prospects and Additional Information -- each expanded. The first holds a small table of required documents; the last gives tuition fees of S$63,220 for academic year 2025/26 and after.",
+      "truncated": false,
+      "provenance": "ingested",
+      "summary": null
+    },
+    {
+      "id": "library/arxiv-2510.21603v1/blocks/figure-img-p011-3",
+      "types": [
+        "folio-assistant-core:Figure",
+        "doco:Figure"
+      ],
+      "kind": "figure",
+      "title": "",
+      "pageStart": 11,
+      "pageEnd": 11,
+      "target": "../images/img-p011-3.png",
+      "narrative": "draft",
+      "content": "A page from a CVSource (投中信息) Chinese-language investment-research report headed \"全球：IPO数量及金额呈下降趋势\" (global: IPO counts and amounts trending down). A combined bar-and-line chart tracks monthly IPO fundraising and company counts from 2023-04 to 2024-04, and a table beneath breaks April 2024 down by exchange board across the A-share, Hong Kong and US markets.",
+      "truncated": false,
+      "provenance": "ingested",
+      "summary": null
+    },
+    {
+      "id": "library/arxiv-2510.21603v1/blocks/figure-img-p011-4",
+      "types": [
+        "folio-assistant-core:Figure",
+        "doco:Figure"
+      ],
+      "kind": "figure",
+      "title": "",
+      "pageStart": 11,
+      "pageEnd": 11,
+      "target": "../images/img-p011-4.png",
+      "narrative": "draft",
+      "content": "A page from a CVSource (投中信息) Chinese-language investment-research report headed \"A股：制度建设期的IPO放缓\" (A-shares: IPOs slow during a period of regulatory construction). A combined bar-and-line chart runs 2023-04 to 2024-04, and a table below lists the top five A-share fundraisings of April 2024 by company, stock code, business and amount.",
+      "truncated": false,
+      "provenance": "ingested",
+      "summary": null
+    },
+    {
+      "id": "library/arxiv-2510.21603v1/blocks/figure-img-p011-5",
+      "types": [
+        "folio-assistant-core:Figure",
+        "doco:Figure"
+      ],
+      "kind": "figure",
+      "title": "",
+      "pageStart": 11,
+      "pageEnd": 11,
+      "target": "../images/img-p011-5.png",
+      "narrative": "draft",
+      "content": "A page from a CVSource (投中信息) Chinese-language investment-research report headed \"全球中企IPO募资金额创一年新低\" (fundraising by Chinese companies hits a one-year low). A combined bar-and-line chart covers 2024-02 to 2025-02, with a table beneath giving February 2025 IPO counts and amounts by exchange board.",
+      "truncated": false,
+      "provenance": "ingested",
+      "summary": null
+    },
+    {
+      "id": "library/arxiv-2510.21603v1/blocks/figure-img-p011-6",
+      "types": [
+        "folio-assistant-core:Figure",
+        "doco:Figure"
+      ],
+      "kind": "figure",
+      "title": "",
+      "pageStart": 11,
+      "pageEnd": 11,
+      "target": "../images/img-p011-6.png",
+      "narrative": "draft",
+      "content": "A page from a CVSource (投中信息) Chinese-language investment-research report headed \"港交所IPO数量与募资金额居首位\" (HKEX leads on both IPO count and amount) for H1 2025. A red rectangle marks the paragraph carrying the figures the example question is answered from, and a table below gives IPO counts and amounts for eleven exchange boards.",
+      "truncated": false,
+      "provenance": "ingested",
+      "summary": null
+    },
+    {
+      "id": "library/arxiv-2510.21603v1/blocks/figure-img-p011-7",
+      "types": [
+        "folio-assistant-core:Figure",
+        "doco:Figure"
+      ],
+      "kind": "figure",
+      "title": "",
+      "pageStart": 11,
+      "pageEnd": 11,
+      "target": "../images/img-p011-7.png",
+      "narrative": "draft",
+      "content": "A page from a CVSource (投中信息) Chinese-language investment-research report headed \"全球中企港股IPO表现最突出\" (Hong Kong listings the standout) for May 2025. A red rectangle marks the opening paragraph -- 18 companies, count up 38.46% year on year, S$500亿元 raised -- and a second red rectangle marks the exchange-board table beneath the bar-and-line chart.",
+      "truncated": false,
+      "provenance": "ingested",
+      "summary": null
+    },
+    {
+      "id": "library/arxiv-2510.21603v1/blocks/figure-img-p011-8",
+      "types": [
+        "folio-assistant-core:Figure",
+        "doco:Figure"
+      ],
+      "kind": "figure",
+      "title": "",
+      "pageStart": 11,
+      "pageEnd": 11,
+      "target": "../images/img-p011-8.png",
+      "narrative": "draft",
+      "content": "A page from a CVSource (投中信息) Chinese-language investment-research report headed \"A股IPO回归常态 港美IPO持续活跃\" (A-share IPOs return to normal; Hong Kong and US stay active) for April 2025. A red rectangle marks the opening paragraph -- 24 companies, count up 50%, 146亿元 raised -- and another marks the exchange-board table below the chart.",
+      "truncated": false,
+      "provenance": "ingested",
+      "summary": null
+    },
+    {
+      "id": "library/arxiv-2510.21603v1/blocks/figure-img-p011-9",
+      "types": [
+        "folio-assistant-core:Figure",
+        "doco:Figure"
+      ],
+      "kind": "figure",
+      "title": "",
+      "pageStart": 11,
+      "pageEnd": 11,
+      "target": "../images/img-p011-9.png",
+      "narrative": "draft",
+      "content": "A page from a CVSource (投中信息) Chinese-language investment-research report headed \"港主板退出回报高 先进制造获投数量多\" (Hong Kong main board returns are high; advanced manufacturing attracts the most deals). A red rectangle marks the opening paragraph and the exit-analysis table beneath it; a second table below breaks VC/PE exit returns down by industry.",
+      "truncated": false,
+      "provenance": "ingested",
+      "summary": null
+    },
+    {
+      "id": "library/arxiv-2510.21603v1/blocks/figure-img-p012-1",
+      "types": [
+        "folio-assistant-core:Figure",
+        "doco:Figure"
+      ],
+      "kind": "figure",
+      "title": "",
+      "pageStart": 12,
+      "pageEnd": 12,
+      "target": "../images/img-p012-1.png",
+      "narrative": "draft",
+      "content": "Page 3 of the paper \"Actions Speak Louder than Words: Trillion-Parameter Sequential Transducers for Generative Recommendations\", reproduced as it stands. It carries Figure 2 (a comparison of features and training procedures for DLRMs against Generative Recommenders), two columns of body text under headings 2.2 and 2.3, and Table 1. It is the parser's input, shown before any layout analysis.",
+      "truncated": false,
+      "provenance": "ingested",
+      "summary": null
+    },
+    {
+      "id": "library/arxiv-2510.21603v1/blocks/figure-img-p012-5",
+      "types": [
+        "folio-assistant-core:Figure",
+        "doco:Figure"
+      ],
+      "kind": "figure",
+      "title": "",
+      "pageStart": 12,
+      "pageEnd": 12,
+      "target": "../images/img-p012-5.png",
+      "narrative": "draft",
+      "content": "The same page of \"Actions Speak Louder than Words\", overlaid with the parser's layout analysis. Fifteen regions are tinted and numbered 1 to 15 -- green for the figure, blue for the caption and the section headings, pink for body-text paragraphs, yellow for the table -- so that each detected element and its reading order can be read off directly. It is the output counterpart of the unannotated page beside it.",
+      "truncated": false,
+      "provenance": "ingested",
+      "summary": null
+    }
+  ]
+}
