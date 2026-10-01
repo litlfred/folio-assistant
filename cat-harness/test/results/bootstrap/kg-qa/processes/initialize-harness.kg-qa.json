@@ -5,7 +5,7 @@
     "id": "Process_InitializeHarness",
     "path": "processes/initialize-harness.bpmn"
   },
-  "source_hash": "sha256:4754f54dcbe5fe722e6631d4e1da75af3ca8cbcf7e4e1e32af85e5d63f71411d",
+  "source_hash": "sha256:31700fe51b5c32b7916860cecae70242c6981ec8c81a99567c93a1d72f842cd8",
   "criteria": {
     "raci-role-resolves": {
       "result": "n/a",
@@ -35,15 +35,7 @@
       "result": "fail",
       "findings": [
         {
-          "where": "A_ListHarnesses",
-          "detail": "names skill \"confirm-harness\", which no Tool declares `satisfies` for — the step's mechanism is still prose."
-        },
-        {
-          "where": "A_ListLocations",
-          "detail": "names skill \"confirm-harness\", which no Tool declares `satisfies` for — the step's mechanism is still prose."
-        },
-        {
-          "where": "A_ConfirmHarness",
+          "where": "A_DetermineHarness",
           "detail": "names skill \"confirm-harness\", which no Tool declares `satisfies` for — the step's mechanism is still prose."
         },
         {
@@ -61,6 +53,10 @@
         {
           "where": "A_WriteRootReadme",
           "detail": "names skill \"root-readme\", which no Tool declares `satisfies` for — the step's mechanism is still prose."
+        },
+        {
+          "where": "A_CompleteInitialization",
+          "detail": "names skill \"initialization-steps\", which no Tool declares `satisfies` for — the step's mechanism is still prose."
         }
       ]
     },
@@ -88,10 +84,6 @@
       "result": "fail",
       "findings": [
         {
-          "where": "A_ConfirmHarness",
-          "detail": "needs skill \"confirm-harness\", but its lane's role \"requestor\" does not carry it."
-        },
-        {
           "where": "A_ReadLocation",
           "detail": "needs skill \"bootstrap-kg-navigation\", but its lane's role \"knowledge-graph-data-store\" does not carry it."
         },
@@ -106,7 +98,7 @@
       "findings": []
     },
     "activity-fulfilment-kind": {
-      "result": "pass",
+      "result": "n/a",
       "findings": []
     },
     "call-activity-resolves": {
@@ -131,10 +123,6 @@
         {
           "where": "GW_HarnessChosen",
           "detail": "\"One harness?\" carries no <bpmn:documentation>, so its page shows the question and not what answers it — who decides, from what evidence, and what each branch commits the process to."
-        },
-        {
-          "where": "GW_AlreadyInitialized",
-          "detail": "\"Already initialized?\" carries no <bpmn:documentation>, so its page shows the question and not what answers it — who decides, from what evidence, and what each branch commits the process to."
         },
         {
           "where": "GW_InstructionsFound",
@@ -164,9 +152,9 @@
     }
   },
   "totals": {
-    "pass": 14,
+    "pass": 13,
     "fail": 3,
-    "n/a": 8,
+    "n/a": 9,
     "unknown": 0
   }
 }
