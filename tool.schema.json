@@ -296,6 +296,15 @@
             "type": "string",
             "minLength": 1
           }
+        },
+        "subprocesses": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1,
+            "pattern": "^[a-z][a-z0-9-]*$",
+            "description": "A BPMN process id, e.g. crdm-requirements"
+          }
         }
       },
       "required": [
@@ -314,8 +323,8 @@
   "description": "One concrete way to exercise a skill. A skill states a capability generically; a Tool names the skills it satisfies and how to install and invoke it. Generated from schemas/tool.ts, which is authoritative.",
   "staging": {
     "branch": "main",
-    "sha": "aeeb6bab82aed4c24d912d4c88293608a42b47af",
+    "sha": "84b8b419f077be3dfe1488bb65b28884f239bde2",
     "pr": "main",
-    "run": "36830230992"
+    "run": "36860752959"
   }
 }

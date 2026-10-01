@@ -76,8 +76,8 @@
   "title": "Bootstrap",
   "description": "The graph an agent reads before it knows what this repository is.",
   "versionInfo": "0.1.0",
-  "generatedAtTime": "2026-10-01T07:28:35.420Z",
-  "wasDerivedFrom": "git:f70a56c10faf6ef266185685f5e64b8e4009a9dd",
+  "generatedAtTime": "2026-10-01T12:20:41.127Z",
+  "wasDerivedFrom": "git:7a91356e990005a79cd84f6dde74dcaee73c62df",
   "@graph": [
     {
       "@id": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#asset/agent-instructions",
@@ -121,7 +121,7 @@
       "@id": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#directory/processes",
       "@type": "bootstrap:Subgraph",
       "label": "processes",
-      "description": "bootstrap's Processes: `initialize-harness.bpmn`, the only one an Actor starts; `discussion.bpmn`, which it calls to ask the Requestor; and `log-message.bpmn`, which any step may call to record what it is doing. `ns.jsonld` defines the elements these diagrams add to BPMN (skill, role, precondition), written with the prefix `bootstrap.processes:`.",
+      "description": "bootstrap's Processes: `initialize-harness.bpmn`, the only one an Actor starts; `discussion.bpmn`, which it calls to determine the harness and repositories; `human-agent-discussion.bpmn`, the reusable discussion every diagram calls to ask a person anything; `complete-initialization.bpmn`, which checks every initialization step the declarations name; and `log-message.bpmn`, which any step may call to record what it is doing. `ns.jsonld` defines the elements these diagrams add to BPMN (skill, role, precondition), written with the prefix `bootstrap.processes:`.",
       "type": [
         "bootstrap:graphKind/processes"
       ],
@@ -161,6 +161,261 @@
       "isPartOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_CompleteInitialization",
+      "@type": "bootstrap:Process",
+      "label": "Complete initialization",
+      "source": "processes/complete-initialization.bpmn",
+      "isPartOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#directory/processes"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_CompleteInitialization/flow/SF_CI_1",
+      "@type": "bootstrap:SequenceFlow",
+      "sourceRef": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_CompleteInitialization/node/Start_CompleteInitialization",
+      "targetRef": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_CompleteInitialization/node/A_ReadDeclarations",
+      "isPartOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_CompleteInitialization"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_CompleteInitialization/flow/SF_CI_10",
+      "@type": "bootstrap:SequenceFlow",
+      "sourceRef": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_CompleteInitialization/node/A_FollowStated",
+      "targetRef": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_CompleteInitialization/node/A_RecordStep",
+      "isPartOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_CompleteInitialization"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_CompleteInitialization/flow/SF_CI_11",
+      "@type": "bootstrap:SequenceFlow",
+      "label": "needs a person, or could not determine",
+      "sourceRef": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_CompleteInitialization/node/GW_StepState",
+      "targetRef": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_CompleteInitialization/node/A_AskPerson",
+      "isPartOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_CompleteInitialization"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_CompleteInitialization/flow/SF_CI_12",
+      "@type": "bootstrap:SequenceFlow",
+      "sourceRef": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_CompleteInitialization/node/A_AskPerson",
+      "targetRef": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_CompleteInitialization/node/A_RecordStep",
+      "isPartOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_CompleteInitialization"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_CompleteInitialization/flow/SF_CI_13",
+      "@type": "bootstrap:SequenceFlow",
+      "sourceRef": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_CompleteInitialization/node/A_RecordStep",
+      "targetRef": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_CompleteInitialization/node/GW_NextStep",
+      "isPartOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_CompleteInitialization"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_CompleteInitialization/flow/SF_CI_14",
+      "@type": "bootstrap:SequenceFlow",
+      "label": "no, all checked",
+      "sourceRef": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_CompleteInitialization/node/GW_NextStep",
+      "targetRef": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_CompleteInitialization/node/A_Report",
+      "isPartOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_CompleteInitialization"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_CompleteInitialization/flow/SF_CI_15",
+      "@type": "bootstrap:SequenceFlow",
+      "sourceRef": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_CompleteInitialization/node/A_Report",
+      "targetRef": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_CompleteInitialization/node/GW_AllDone",
+      "isPartOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_CompleteInitialization"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_CompleteInitialization/flow/SF_CI_16",
+      "@type": "bootstrap:SequenceFlow",
+      "label": "yes",
+      "sourceRef": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_CompleteInitialization/node/GW_AllDone",
+      "targetRef": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_CompleteInitialization/node/End_Complete",
+      "isPartOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_CompleteInitialization"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_CompleteInitialization/flow/SF_CI_17",
+      "@type": "bootstrap:SequenceFlow",
+      "label": "no",
+      "sourceRef": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_CompleteInitialization/node/GW_AllDone",
+      "targetRef": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_CompleteInitialization/node/End_OpenStepsRecorded",
+      "isPartOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_CompleteInitialization"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_CompleteInitialization/flow/SF_CI_18",
+      "@type": "bootstrap:SequenceFlow",
+      "sourceRef": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_CompleteInitialization/node/A_CheckDocuments",
+      "targetRef": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_CompleteInitialization/node/A_ListSteps",
+      "isPartOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_CompleteInitialization"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_CompleteInitialization/flow/SF_CI_2",
+      "@type": "bootstrap:SequenceFlow",
+      "sourceRef": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_CompleteInitialization/node/A_ReadDeclarations",
+      "targetRef": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_CompleteInitialization/node/A_CheckDocuments",
+      "isPartOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_CompleteInitialization"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_CompleteInitialization/flow/SF_CI_3",
+      "@type": "bootstrap:SequenceFlow",
+      "sourceRef": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_CompleteInitialization/node/A_ListSteps",
+      "targetRef": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_CompleteInitialization/node/GW_NextStep",
+      "isPartOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_CompleteInitialization"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_CompleteInitialization/flow/SF_CI_4",
+      "@type": "bootstrap:SequenceFlow",
+      "label": "yes",
+      "sourceRef": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_CompleteInitialization/node/GW_NextStep",
+      "targetRef": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_CompleteInitialization/node/A_CheckStep",
+      "isPartOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_CompleteInitialization"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_CompleteInitialization/flow/SF_CI_5",
+      "@type": "bootstrap:SequenceFlow",
+      "sourceRef": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_CompleteInitialization/node/A_CheckStep",
+      "targetRef": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_CompleteInitialization/node/GW_StepState",
+      "isPartOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_CompleteInitialization"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_CompleteInitialization/flow/SF_CI_6",
+      "@type": "bootstrap:SequenceFlow",
+      "label": "done",
+      "sourceRef": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_CompleteInitialization/node/GW_StepState",
+      "targetRef": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_CompleteInitialization/node/A_RecordStep",
+      "isPartOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_CompleteInitialization"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_CompleteInitialization/flow/SF_CI_7",
+      "@type": "bootstrap:SequenceFlow",
+      "label": "not done, and I can do it",
+      "sourceRef": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_CompleteInitialization/node/GW_StepState",
+      "targetRef": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_CompleteInitialization/node/A_PerformStep",
+      "isPartOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_CompleteInitialization"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_CompleteInitialization/flow/SF_CI_8",
+      "@type": "bootstrap:SequenceFlow",
+      "sourceRef": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_CompleteInitialization/node/A_PerformStep",
+      "targetRef": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_CompleteInitialization/node/A_CheckStep",
+      "isPartOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_CompleteInitialization"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_CompleteInitialization/flow/SF_CI_9",
+      "@type": "bootstrap:SequenceFlow",
+      "label": "stated",
+      "sourceRef": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_CompleteInitialization/node/GW_StepState",
+      "targetRef": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_CompleteInitialization/node/A_FollowStated",
+      "isPartOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_CompleteInitialization"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_CompleteInitialization/node/A_AskPerson",
+      "@type": "bootstrap:ProcessNode",
+      "label": "Ask the person to do what only they can",
+      "type": "bpmn:callActivity",
+      "isPartOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_CompleteInitialization",
+      "skill": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#skill/human-agent-discussion"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_CompleteInitialization/node/A_CheckDocuments",
+      "@type": "bootstrap:ProcessNode",
+      "label": "Check the JSON Schemas and JSON-LD are at their IRIs",
+      "type": "bpmn:task",
+      "isPartOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_CompleteInitialization",
+      "skill": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#skill/publish-documents"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_CompleteInitialization/node/A_CheckStep",
+      "@type": "bootstrap:ProcessNode",
+      "label": "Check it",
+      "type": "bpmn:task",
+      "isPartOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_CompleteInitialization",
+      "skill": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#skill/initialization-steps"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_CompleteInitialization/node/A_FollowStated",
+      "@type": "bootstrap:ProcessNode",
+      "label": "Follow it, and say that you did",
+      "type": "bpmn:task",
+      "isPartOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_CompleteInitialization",
+      "skill": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#skill/initialization-steps"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_CompleteInitialization/node/A_ListSteps",
+      "@type": "bootstrap:ProcessNode",
+      "label": "List the steps the declarations name",
+      "type": "bpmn:task",
+      "isPartOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_CompleteInitialization",
+      "skill": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#skill/initialization-steps"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_CompleteInitialization/node/A_PerformStep",
+      "@type": "bootstrap:ProcessNode",
+      "label": "Do it, then check again",
+      "type": "bpmn:task",
+      "isPartOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_CompleteInitialization",
+      "skill": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#skill/initialization-steps"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_CompleteInitialization/node/A_ReadDeclarations",
+      "@type": "bootstrap:ProcessNode",
+      "label": "Read the declaration, and each one it needs",
+      "type": "bpmn:task",
+      "isPartOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_CompleteInitialization",
+      "skill": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#skill/bootstrap-kg-navigation"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_CompleteInitialization/node/A_RecordStep",
+      "@type": "bootstrap:ProcessNode",
+      "label": "Record the step in its state",
+      "type": "bpmn:task",
+      "isPartOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_CompleteInitialization",
+      "skill": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#skill/initialization-steps"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_CompleteInitialization/node/A_Report",
+      "@type": "bootstrap:ProcessNode",
+      "label": "Report every step",
+      "type": "bpmn:callActivity",
+      "isPartOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_CompleteInitialization",
+      "skill": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#skill/log-message"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_CompleteInitialization/node/End_Complete",
+      "@type": "bootstrap:ProcessNode",
+      "label": "Every step done",
+      "type": "bpmn:endEvent",
+      "isPartOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_CompleteInitialization"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_CompleteInitialization/node/End_OpenStepsRecorded",
+      "@type": "bootstrap:ProcessNode",
+      "label": "Open steps recorded, each with what to do",
+      "type": "bpmn:endEvent",
+      "isPartOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_CompleteInitialization"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_CompleteInitialization/node/GW_AllDone",
+      "@type": "bootstrap:ProcessNode",
+      "label": "Every checkable step done?",
+      "type": "bpmn:exclusiveGateway",
+      "isPartOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_CompleteInitialization"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_CompleteInitialization/node/GW_NextStep",
+      "@type": "bootstrap:ProcessNode",
+      "label": "A step not yet checked?",
+      "type": "bpmn:exclusiveGateway",
+      "isPartOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_CompleteInitialization"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_CompleteInitialization/node/GW_StepState",
+      "@type": "bootstrap:ProcessNode",
+      "label": "What did the check find?",
+      "type": "bpmn:exclusiveGateway",
+      "isPartOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_CompleteInitialization"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_CompleteInitialization/node/Start_CompleteInitialization",
+      "@type": "bootstrap:ProcessNode",
+      "label": "A harness is installed here",
+      "type": "bpmn:startEvent",
+      "isPartOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_CompleteInitialization"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_Discussion",
       "@type": "bootstrap:Process",
       "label": "Determine the harness and repositories",
@@ -168,24 +423,24 @@
       "isPartOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#directory/processes"
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_Discussion/flow/Flow_Answer_Gate",
+      "@id": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_Discussion/flow/Flow_Ask_Gate",
       "@type": "bootstrap:SequenceFlow",
-      "sourceRef": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_Discussion/node/A_Answer",
+      "sourceRef": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_Discussion/node/A_AskRequestor",
       "targetRef": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_Discussion/node/G_Settled",
       "isPartOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_Discussion"
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_Discussion/flow/Flow_Narrow_Put",
+      "@id": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_Discussion/flow/Flow_Harnesses_Locations",
       "@type": "bootstrap:SequenceFlow",
-      "sourceRef": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_Discussion/node/A_NarrowCandidates",
-      "targetRef": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_Discussion/node/A_PutQuestion",
+      "sourceRef": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_Discussion/node/A_ListHarnesses",
+      "targetRef": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_Discussion/node/A_ListLocations",
       "isPartOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_Discussion"
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_Discussion/flow/Flow_Put_Answer",
+      "@id": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_Discussion/flow/Flow_Locations_Ask",
       "@type": "bootstrap:SequenceFlow",
-      "sourceRef": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_Discussion/node/A_PutQuestion",
-      "targetRef": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_Discussion/node/A_Answer",
+      "sourceRef": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_Discussion/node/A_ListLocations",
+      "targetRef": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_Discussion/node/A_AskRequestor",
       "isPartOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_Discussion"
     },
     {
@@ -196,19 +451,11 @@
       "isPartOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_Discussion"
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_Discussion/flow/Flow_Settled_Declined",
-      "@type": "bootstrap:SequenceFlow",
-      "label": "declined",
-      "sourceRef": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_Discussion/node/G_Settled",
-      "targetRef": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_Discussion/node/A_RecordUnsettled",
-      "isPartOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_Discussion"
-    },
-    {
       "@id": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_Discussion/flow/Flow_Settled_No",
       "@type": "bootstrap:SequenceFlow",
-      "label": "not yet — ask once more",
+      "label": "no, or still open",
       "sourceRef": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_Discussion/node/G_Settled",
-      "targetRef": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_Discussion/node/A_PutQuestion",
+      "targetRef": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_Discussion/node/A_RecordUnsettled",
       "isPartOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_Discussion"
     },
     {
@@ -220,10 +467,10 @@
       "isPartOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_Discussion"
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_Discussion/flow/Flow_Start_Narrow",
+      "@id": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_Discussion/flow/Flow_Start_Harnesses",
       "@type": "bootstrap:SequenceFlow",
       "sourceRef": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_Discussion/node/Start_Discussion",
-      "targetRef": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_Discussion/node/A_NarrowCandidates",
+      "targetRef": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_Discussion/node/A_ListHarnesses",
       "isPartOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_Discussion"
     },
     {
@@ -234,27 +481,28 @@
       "isPartOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_Discussion"
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_Discussion/node/A_Answer",
+      "@id": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_Discussion/node/A_AskRequestor",
       "@type": "bootstrap:ProcessNode",
-      "label": "Answer, or decline",
-      "type": "bpmn:task",
-      "isPartOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_Discussion"
+      "label": "Ask the Requestor: which harness, and where?",
+      "type": "bpmn:callActivity",
+      "isPartOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_Discussion",
+      "skill": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#skill/confirm-harness"
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_Discussion/node/A_NarrowCandidates",
+      "@id": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_Discussion/node/A_ListHarnesses",
       "@type": "bootstrap:ProcessNode",
-      "label": "Narrow the candidates from context",
+      "label": "List the harnesses this could be",
       "type": "bpmn:task",
       "isPartOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_Discussion",
-      "skill": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#skill/discussion"
+      "skill": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#skill/confirm-harness"
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_Discussion/node/A_PutQuestion",
+      "@id": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_Discussion/node/A_ListLocations",
       "@type": "bootstrap:ProcessNode",
-      "label": "Put the question, with its candidates named",
+      "label": "List the locations this could install to",
       "type": "bpmn:task",
       "isPartOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_Discussion",
-      "skill": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#skill/discussion"
+      "skill": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#skill/confirm-harness"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_Discussion/node/A_RecordDetermination",
@@ -289,16 +537,254 @@
     {
       "@id": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_Discussion/node/G_Settled",
       "@type": "bootstrap:ProcessNode",
-      "label": "Does the answer settle it?",
+      "label": "One harness, and where it goes?",
       "type": "bpmn:exclusiveGateway",
       "isPartOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_Discussion"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_Discussion/node/Start_Discussion",
       "@type": "bootstrap:ProcessNode",
-      "label": "A fact is needed that no file holds",
+      "label": "Which harness, and where, is not known",
       "type": "bpmn:startEvent",
       "isPartOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_Discussion"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_HumanAgentDiscussion",
+      "@type": "bootstrap:Process",
+      "label": "Human–agent discussion",
+      "source": "processes/human-agent-discussion.bpmn",
+      "isPartOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#directory/processes"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_HumanAgentDiscussion/flow/SF_HAD_1",
+      "@type": "bootstrap:SequenceFlow",
+      "sourceRef": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_HumanAgentDiscussion/node/Start_HumanAgentDiscussion",
+      "targetRef": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_HumanAgentDiscussion/node/A_GiveContext",
+      "isPartOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_HumanAgentDiscussion"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_HumanAgentDiscussion/flow/SF_HAD_10",
+      "@type": "bootstrap:SequenceFlow",
+      "label": "no answer",
+      "sourceRef": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_HumanAgentDiscussion/node/GW_WhatCameBack",
+      "targetRef": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_HumanAgentDiscussion/node/GW_DefaultAllowed",
+      "isPartOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_HumanAgentDiscussion"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_HumanAgentDiscussion/flow/SF_HAD_11",
+      "@type": "bootstrap:SequenceFlow",
+      "label": "yes",
+      "sourceRef": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_HumanAgentDiscussion/node/GW_DefaultAllowed",
+      "targetRef": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_HumanAgentDiscussion/node/A_ApplyDefault",
+      "isPartOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_HumanAgentDiscussion"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_HumanAgentDiscussion/flow/SF_HAD_12",
+      "@type": "bootstrap:SequenceFlow",
+      "label": "no",
+      "sourceRef": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_HumanAgentDiscussion/node/GW_DefaultAllowed",
+      "targetRef": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_HumanAgentDiscussion/node/A_RecordUnsettled",
+      "isPartOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_HumanAgentDiscussion"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_HumanAgentDiscussion/flow/SF_HAD_13",
+      "@type": "bootstrap:SequenceFlow",
+      "label": "declined",
+      "sourceRef": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_HumanAgentDiscussion/node/GW_WhatCameBack",
+      "targetRef": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_HumanAgentDiscussion/node/A_RecordUnsettled",
+      "isPartOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_HumanAgentDiscussion"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_HumanAgentDiscussion/flow/SF_HAD_14",
+      "@type": "bootstrap:SequenceFlow",
+      "sourceRef": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_HumanAgentDiscussion/node/A_RecordAnswer",
+      "targetRef": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_HumanAgentDiscussion/node/End_Answered",
+      "isPartOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_HumanAgentDiscussion"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_HumanAgentDiscussion/flow/SF_HAD_15",
+      "@type": "bootstrap:SequenceFlow",
+      "sourceRef": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_HumanAgentDiscussion/node/A_ApplyDefault",
+      "targetRef": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_HumanAgentDiscussion/node/End_Defaulted",
+      "isPartOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_HumanAgentDiscussion"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_HumanAgentDiscussion/flow/SF_HAD_16",
+      "@type": "bootstrap:SequenceFlow",
+      "sourceRef": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_HumanAgentDiscussion/node/A_RecordUnsettled",
+      "targetRef": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_HumanAgentDiscussion/node/End_Unsettled",
+      "isPartOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_HumanAgentDiscussion"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_HumanAgentDiscussion/flow/SF_HAD_2",
+      "@type": "bootstrap:SequenceFlow",
+      "sourceRef": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_HumanAgentDiscussion/node/A_GiveContext",
+      "targetRef": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_HumanAgentDiscussion/node/A_LayOutOptions",
+      "isPartOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_HumanAgentDiscussion"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_HumanAgentDiscussion/flow/SF_HAD_3",
+      "@type": "bootstrap:SequenceFlow",
+      "sourceRef": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_HumanAgentDiscussion/node/A_LayOutOptions",
+      "targetRef": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_HumanAgentDiscussion/node/A_Recommend",
+      "isPartOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_HumanAgentDiscussion"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_HumanAgentDiscussion/flow/SF_HAD_4",
+      "@type": "bootstrap:SequenceFlow",
+      "sourceRef": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_HumanAgentDiscussion/node/A_Recommend",
+      "targetRef": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_HumanAgentDiscussion/node/A_PutQuestion",
+      "isPartOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_HumanAgentDiscussion"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_HumanAgentDiscussion/flow/SF_HAD_5",
+      "@type": "bootstrap:SequenceFlow",
+      "sourceRef": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_HumanAgentDiscussion/node/A_PutQuestion",
+      "targetRef": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_HumanAgentDiscussion/node/A_Answer",
+      "isPartOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_HumanAgentDiscussion"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_HumanAgentDiscussion/flow/SF_HAD_6",
+      "@type": "bootstrap:SequenceFlow",
+      "sourceRef": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_HumanAgentDiscussion/node/A_Answer",
+      "targetRef": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_HumanAgentDiscussion/node/GW_WhatCameBack",
+      "isPartOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_HumanAgentDiscussion"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_HumanAgentDiscussion/flow/SF_HAD_7",
+      "@type": "bootstrap:SequenceFlow",
+      "label": "settles it",
+      "sourceRef": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_HumanAgentDiscussion/node/GW_WhatCameBack",
+      "targetRef": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_HumanAgentDiscussion/node/A_RecordAnswer",
+      "isPartOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_HumanAgentDiscussion"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_HumanAgentDiscussion/flow/SF_HAD_8",
+      "@type": "bootstrap:SequenceFlow",
+      "label": "unclear",
+      "sourceRef": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_HumanAgentDiscussion/node/GW_WhatCameBack",
+      "targetRef": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_HumanAgentDiscussion/node/A_FollowUp",
+      "isPartOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_HumanAgentDiscussion"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_HumanAgentDiscussion/flow/SF_HAD_9",
+      "@type": "bootstrap:SequenceFlow",
+      "sourceRef": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_HumanAgentDiscussion/node/A_FollowUp",
+      "targetRef": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_HumanAgentDiscussion/node/A_Answer",
+      "isPartOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_HumanAgentDiscussion"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_HumanAgentDiscussion/node/A_Answer",
+      "@type": "bootstrap:ProcessNode",
+      "label": "Answer, decline, or say nothing",
+      "type": "bpmn:userTask",
+      "isPartOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_HumanAgentDiscussion"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_HumanAgentDiscussion/node/A_ApplyDefault",
+      "@type": "bootstrap:ProcessNode",
+      "label": "Apply the stated default, and say so",
+      "type": "bpmn:task",
+      "isPartOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_HumanAgentDiscussion",
+      "skill": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#skill/human-agent-discussion"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_HumanAgentDiscussion/node/A_FollowUp",
+      "@type": "bootstrap:ProcessNode",
+      "label": "Follow up, narrower",
+      "type": "bpmn:task",
+      "isPartOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_HumanAgentDiscussion",
+      "skill": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#skill/human-agent-discussion"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_HumanAgentDiscussion/node/A_GiveContext",
+      "@type": "bootstrap:ProcessNode",
+      "label": "Say what is being decided, and why it matters now",
+      "type": "bpmn:task",
+      "isPartOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_HumanAgentDiscussion",
+      "skill": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#skill/human-agent-discussion"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_HumanAgentDiscussion/node/A_LayOutOptions",
+      "@type": "bootstrap:ProcessNode",
+      "label": "Lay out the options, with what each costs",
+      "type": "bpmn:task",
+      "isPartOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_HumanAgentDiscussion",
+      "skill": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#skill/human-agent-discussion"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_HumanAgentDiscussion/node/A_PutQuestion",
+      "@type": "bootstrap:ProcessNode",
+      "label": "Ask ONE question",
+      "type": "bpmn:task",
+      "isPartOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_HumanAgentDiscussion",
+      "skill": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#skill/human-agent-discussion"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_HumanAgentDiscussion/node/A_Recommend",
+      "@type": "bootstrap:ProcessNode",
+      "label": "Recommend one, and say what happens with no answer",
+      "type": "bpmn:task",
+      "isPartOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_HumanAgentDiscussion",
+      "skill": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#skill/human-agent-discussion"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_HumanAgentDiscussion/node/A_RecordAnswer",
+      "@type": "bootstrap:ProcessNode",
+      "label": "Record the answer, and who gave it",
+      "type": "bpmn:task",
+      "isPartOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_HumanAgentDiscussion",
+      "skill": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#skill/human-agent-discussion"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_HumanAgentDiscussion/node/A_RecordUnsettled",
+      "@type": "bootstrap:ProcessNode",
+      "label": "Record what is still open",
+      "type": "bpmn:task",
+      "isPartOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_HumanAgentDiscussion",
+      "skill": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#skill/human-agent-discussion"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_HumanAgentDiscussion/node/End_Answered",
+      "@type": "bootstrap:ProcessNode",
+      "label": "Answered",
+      "type": "bpmn:endEvent",
+      "isPartOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_HumanAgentDiscussion"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_HumanAgentDiscussion/node/End_Defaulted",
+      "@type": "bootstrap:ProcessNode",
+      "label": "Default applied, and said so",
+      "type": "bpmn:endEvent",
+      "isPartOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_HumanAgentDiscussion"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_HumanAgentDiscussion/node/End_Unsettled",
+      "@type": "bootstrap:ProcessNode",
+      "label": "Still open, and said so",
+      "type": "bpmn:endEvent",
+      "isPartOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_HumanAgentDiscussion"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_HumanAgentDiscussion/node/GW_DefaultAllowed",
+      "@type": "bootstrap:ProcessNode",
+      "label": "Did the caller allow a default?",
+      "type": "bpmn:exclusiveGateway",
+      "isPartOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_HumanAgentDiscussion"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_HumanAgentDiscussion/node/GW_WhatCameBack",
+      "@type": "bootstrap:ProcessNode",
+      "label": "What came back?",
+      "type": "bpmn:exclusiveGateway",
+      "isPartOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_HumanAgentDiscussion"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_HumanAgentDiscussion/node/Start_HumanAgentDiscussion",
+      "@type": "bootstrap:ProcessNode",
+      "label": "Something only a person can supply is needed",
+      "type": "bpmn:startEvent",
+      "isPartOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_HumanAgentDiscussion"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness",
@@ -311,7 +797,7 @@
       "@id": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness/flow/SF_IH_1",
       "@type": "bootstrap:SequenceFlow",
       "sourceRef": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness/node/Start_InitializeHarness",
-      "targetRef": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness/node/A_ListHarnesses",
+      "targetRef": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness/node/A_DetermineHarness",
       "isPartOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness"
     },
     {
@@ -345,7 +831,7 @@
     {
       "@id": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness/flow/SF_IH_14",
       "@type": "bootstrap:SequenceFlow",
-      "label": "already an instance",
+      "label": "already, as something else",
       "sourceRef": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness/node/GW_AlreadyInitialized",
       "targetRef": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness/node/A_LogFailure",
       "isPartOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness"
@@ -362,27 +848,28 @@
       "@id": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness/flow/SF_IH_16",
       "@type": "bootstrap:SequenceFlow",
       "sourceRef": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness/node/A_WriteRootReadme",
+      "targetRef": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness/node/A_CompleteInitialization",
+      "isPartOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness/flow/SF_IH_17",
+      "@type": "bootstrap:SequenceFlow",
+      "label": "already, as the chosen harness",
+      "sourceRef": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness/node/GW_AlreadyInitialized",
+      "targetRef": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness/node/A_CompleteInitialization",
+      "isPartOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness/flow/SF_IH_18",
+      "@type": "bootstrap:SequenceFlow",
+      "sourceRef": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness/node/A_CompleteInitialization",
       "targetRef": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness/node/End_Installed",
-      "isPartOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness/flow/SF_IH_2",
-      "@type": "bootstrap:SequenceFlow",
-      "sourceRef": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness/node/A_ListHarnesses",
-      "targetRef": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness/node/A_ListLocations",
-      "isPartOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness/flow/SF_IH_3",
-      "@type": "bootstrap:SequenceFlow",
-      "sourceRef": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness/node/A_ListLocations",
-      "targetRef": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness/node/A_ConfirmHarness",
       "isPartOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness/flow/SF_IH_4",
       "@type": "bootstrap:SequenceFlow",
-      "sourceRef": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness/node/A_ConfirmHarness",
+      "sourceRef": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness/node/A_DetermineHarness",
       "targetRef": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness/node/GW_HarnessChosen",
       "isPartOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness"
     },
@@ -426,36 +913,28 @@
       "isPartOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness"
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness/node/A_ConfirmHarness",
+      "@id": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness/node/A_CompleteInitialization",
       "@type": "bootstrap:ProcessNode",
-      "label": "Confirm WHICH harness,\nand where",
-      "type": "bpmn:userTask",
+      "label": "Make sure every step is done",
+      "type": "bpmn:callActivity",
+      "isPartOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness",
+      "skill": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#skill/initialization-steps"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness/node/A_DetermineHarness",
+      "@type": "bootstrap:ProcessNode",
+      "label": "Determine which harness, and where",
+      "type": "bpmn:callActivity",
       "isPartOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness",
       "skill": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#skill/confirm-harness"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness/node/A_Install",
       "@type": "bootstrap:ProcessNode",
-      "label": "Follow them, at\neach location",
+      "label": "Follow them, at each location",
       "type": "bpmn:task",
       "isPartOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness",
       "skill": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#skill/bootstrap-kg-navigation"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness/node/A_ListHarnesses",
-      "@type": "bootstrap:ProcessNode",
-      "label": "List the harnesses\nthis could be",
-      "type": "bpmn:task",
-      "isPartOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness",
-      "skill": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#skill/confirm-harness"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness/node/A_ListLocations",
-      "@type": "bootstrap:ProcessNode",
-      "label": "List the locations\nthis could install to",
-      "type": "bpmn:task",
-      "isPartOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness",
-      "skill": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#skill/confirm-harness"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness/node/A_LogFailure",
@@ -468,7 +947,7 @@
     {
       "@id": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness/node/A_LogInstallStart",
       "@type": "bootstrap:ProcessNode",
-      "label": "Log the start\nof the install",
+      "label": "Log the start of the install",
       "type": "bpmn:callActivity",
       "isPartOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness",
       "skill": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#skill/log-message"
@@ -476,7 +955,7 @@
     {
       "@id": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness/node/A_ReadDeclaration",
       "@type": "bootstrap:ProcessNode",
-      "label": "Read the harness's\ndeclaration and instructions",
+      "label": "Read the harness's declaration and instructions",
       "type": "bpmn:task",
       "isPartOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness",
       "skill": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#skill/bootstrap-kg-navigation"
@@ -484,7 +963,7 @@
     {
       "@id": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness/node/A_ReadLocation",
       "@type": "bootstrap:ProcessNode",
-      "label": "Read what each location\nalready is",
+      "label": "Read what each location already is",
       "type": "bpmn:task",
       "isPartOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness",
       "skill": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#skill/bootstrap-kg-navigation"
@@ -492,7 +971,7 @@
     {
       "@id": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness/node/A_WriteRootReadme",
       "@type": "bootstrap:ProcessNode",
-      "label": "Write the root README,\nif it is not there",
+      "label": "Write the root README, if it is not there",
       "type": "bpmn:task",
       "isPartOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness",
       "skill": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#skill/root-readme"
@@ -507,7 +986,7 @@
     {
       "@id": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness/node/End_Installed",
       "@type": "bootstrap:ProcessNode",
-      "label": "Harness installed",
+      "label": "Harness installed, every step checked",
       "type": "bpmn:endEvent",
       "isPartOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness"
     },
@@ -635,17 +1114,32 @@
       "source": "scenarios/roles.json",
       "isPartOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#directory/scenarios",
       "flowNodeRef": [
-        "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_Discussion/node/A_NarrowCandidates",
-        "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_Discussion/node/A_PutQuestion",
+        "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_CompleteInitialization/node/A_AskPerson",
+        "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_CompleteInitialization/node/A_CheckDocuments",
+        "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_CompleteInitialization/node/A_CheckStep",
+        "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_CompleteInitialization/node/A_FollowStated",
+        "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_CompleteInitialization/node/A_ListSteps",
+        "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_CompleteInitialization/node/A_PerformStep",
+        "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_CompleteInitialization/node/A_RecordStep",
+        "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_CompleteInitialization/node/A_Report",
+        "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_CompleteInitialization/node/End_Complete",
+        "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_CompleteInitialization/node/End_OpenStepsRecorded",
+        "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_CompleteInitialization/node/GW_AllDone",
+        "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_CompleteInitialization/node/GW_NextStep",
+        "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_CompleteInitialization/node/GW_StepState",
+        "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_CompleteInitialization/node/Start_CompleteInitialization",
+        "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_Discussion/node/A_AskRequestor",
+        "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_Discussion/node/A_ListHarnesses",
+        "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_Discussion/node/A_ListLocations",
         "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_Discussion/node/A_RecordDetermination",
         "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_Discussion/node/A_RecordUnsettled",
         "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_Discussion/node/End_Settled",
         "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_Discussion/node/End_Unsettled",
         "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_Discussion/node/G_Settled",
         "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_Discussion/node/Start_Discussion",
+        "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness/node/A_CompleteInitialization",
+        "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness/node/A_DetermineHarness",
         "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness/node/A_Install",
-        "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness/node/A_ListHarnesses",
-        "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness/node/A_ListLocations",
         "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness/node/A_LogFailure",
         "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness/node/A_LogInstallStart",
         "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness/node/A_WriteRootReadme",
@@ -665,6 +1159,7 @@
       "source": "scenarios/roles.json",
       "isPartOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#directory/scenarios",
       "flowNodeRef": [
+        "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_CompleteInitialization/node/A_ReadDeclarations",
         "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness/node/A_ReadDeclaration",
         "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness/node/A_ReadLocation"
       ]
@@ -688,8 +1183,7 @@
       "source": "scenarios/roles.json",
       "isPartOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#directory/scenarios",
       "flowNodeRef": [
-        "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_Discussion/node/A_Answer",
-        "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness/node/A_ConfirmHarness"
+        "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_HumanAgentDiscussion/node/A_Answer"
       ]
     },
     {
@@ -737,12 +1231,48 @@
       "isPartOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#directory/skills"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#skill/human-agent-discussion",
+      "@type": "bootstrap:Skill",
+      "label": "human-agent-discussion",
+      "title": "Asking a person, in one reusable way",
+      "description": "Ask a person (or a sibling agent) for what no file holds: context, then the options, then a recommendation and what happens with no answer, then ONE question. The reusable discussion every bootstrap diagram calls when it needs a person; it records the answer, an applied default, or what is still open, and never a guess.",
+      "source": "skills/human-agent-discussion.md",
+      "isPartOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#directory/skills"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#skill/initialization-steps",
+      "@type": "bootstrap:Skill",
+      "label": "initialization-steps",
+      "title": "Every initialization step, as the declarations name them",
+      "description": "Walk every initialization step the declarations name (the instance's own and each one it needs), check each before doing anything, do what can be done, ask for what only a person can do, and report every step as done, not done, could not determine, or stated.",
+      "source": "skills/initialization-steps.md",
+      "isPartOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#directory/skills"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#skill/log-message",
       "@type": "bootstrap:Skill",
       "label": "log-message",
       "title": "Logging what you are doing",
       "description": "Say what you are doing, to the Logger, in a form a reader can act on. Five required fields and one optional body; an incomplete message is not logged. Callable from any task in any process, and required by some.",
       "source": "skills/log-message.md",
+      "isPartOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#directory/skills"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#skill/publish-documents",
+      "@type": "bootstrap:Skill",
+      "label": "publish-documents",
+      "title": "The documents at their addresses: the primary step",
+      "description": "The primary step of initializing a Knowledge Graph harness: every JSON Schema and JSON-LD document it names an address for (schemas, vocabulary, diagram vocabulary, graph export, each with its @context) is published AT that address, and the address answers. Checked first, right after the declaration is read.",
+      "source": "skills/publish-documents.md",
+      "isPartOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#directory/skills"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#skill/publish-site",
+      "@type": "bootstrap:Skill",
+      "label": "publish-site",
+      "title": "The site: an instance rendered for publication, and its address answering",
+      "description": "Give an instance a site: its Knowledge Graph rendered for publication at its site address, and the address answering. Four checks — a workflow publishes it, the gh-pages branch exists, Pages serves that branch, the address answers. How the rendering is staged and pushed is the toolset's own process, not this skill's.",
+      "source": "skills/publish-site.md",
       "isPartOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#directory/skills"
     },
     {
@@ -761,11 +1291,11 @@
   ],
   "counts": {
     "bootstrap:Asset": 3,
-    "bootstrap:Process": 3,
-    "bootstrap:ProcessNode": 30,
+    "bootstrap:Process": 5,
+    "bootstrap:ProcessNode": 59,
     "bootstrap:Role": 4,
-    "bootstrap:SequenceFlow": 30,
-    "bootstrap:Skill": 7,
+    "bootstrap:SequenceFlow": 63,
+    "bootstrap:Skill": 11,
     "bootstrap:Subgraph": 5
   },
   "problems": []

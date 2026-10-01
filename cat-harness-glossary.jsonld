@@ -1610,6 +1610,7 @@
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#glossary-usage/Process_PrChecksPresent/Lane_Ci",
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#glossary-usage/Process_PublishAlert/Lane_Ci",
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#glossary-usage/Process_PublishVerification/Lane_Ci",
+        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#glossary-usage/Process_RenderKgToCdn/Lane_Ci",
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#glossary-usage/Process_RepoHealth/Lane_Ci",
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#glossary-usage/Process_RenderLog/Lane_Pipeline",
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#glossary-usage/Process_UpstreamPinWatch/Lane_Ci",
@@ -1804,6 +1805,15 @@
       "label": "CI/CD Pipeline",
       "scopeNote": "Runs every verifier over the exported documents before anything is deployed, and reports pass, fail or could-not-tell. It decides nothing about the release: the caller blocks on anything but a pass.",
       "source": "cat-harness/processes/publish-verification.bpmn"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#glossary-usage/Process_RenderKgToCdn/Lane_Ci",
+      "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#LaneUsage",
+      "ofConcept": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/build-pipeline",
+      "inProcess": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_RenderKgToCdn",
+      "label": "Build pipeline",
+      "scopeNote": "Whoever renders: a workflow running the Tool's commands, or an agent running the same ones. A fixed program either way — the judgement about whether to publish was made by the caller before it got here.",
+      "source": "cat-harness/processes/render-kg-to-cdn.bpmn"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#glossary-usage/Process_RepoHealth/Lane_Ci",

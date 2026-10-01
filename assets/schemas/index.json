@@ -2,22 +2,18 @@
   "$schema": "folio-schema-graph/v1",
   "tile": {
     "schemas": {
-      "count": 203,
-      "unit": "modules"
-    },
-    "folio-assist-core-schemas": {
-      "count": 21,
-      "unit": "modules"
-    },
-    "large-datasets-schemas": {
-      "count": 5,
+      "count": 206,
       "unit": "modules"
     }
   },
   "roots": [
     "cat-harness/schemas",
+    "fhir-harness/schemas",
     "folio-assistant-core/schemas",
-    "large-datasets/schemas"
+    "folio-assistant-sci/schemas",
+    "large-datasets/schemas",
+    "large-datasets/sources",
+    "smart-base/schemas"
   ],
   "modules": [
     {
@@ -228,6 +224,14 @@
       "graphNode": "none",
       "reason": "the node shape; the nodes are `code-lists/*.json`",
       "summary": "A code list: a closed set of codes, each with a label, a plain-language",
+      "isTest": false
+    },
+    {
+      "module": "cat-harness/schemas/concern-groups.ts",
+      "instance": "cat-harness",
+      "name": "concern-groups",
+      "graphNode": "schema",
+      "summary": "The shape of a kind's FROM-WITHIN declaration file when it names concern",
       "isTest": false
     },
     {
@@ -1149,6 +1153,14 @@
       "isTest": false
     },
     {
+      "module": "cat-harness/schemas/scenario-overlay.ts",
+      "instance": "cat-harness",
+      "name": "scenario-overlay",
+      "graphNode": "schema",
+      "summary": "Roles, actors and capabilities EXTENDED BY ID from a higher instance's own",
+      "isTest": false
+    },
+    {
       "module": "cat-harness/schemas/schema-graph.test.ts",
       "instance": "cat-harness",
       "name": "schema-graph.test",
@@ -1298,6 +1310,14 @@
       "name": "sticky-contribution",
       "graphNode": "schema",
       "summary": "A sticky is a CONTRIBUTION from a layer, declared by that layer.",
+      "isTest": false
+    },
+    {
+      "module": "cat-harness/schemas/substrate-snapshot.ts",
+      "instance": "cat-harness",
+      "name": "substrate-snapshot",
+      "graphNode": "schema",
+      "summary": "A SUBSTRATE SNAPSHOT: the root declaration of a subscribed Knowledge Graph,",
       "isTest": false
     },
     {
@@ -6265,6 +6285,13 @@
           "doc": "Where the instance lives TODAY when that is not the root of"
         },
         {
+          "name": "separation",
+          "type": "\"content\" | \"tools\"",
+          "optional": true,
+          "array": false,
+          "doc": "Which half of a kg-separation pair the planned {@link repository} is —"
+        },
+        {
           "name": "stub",
           "type": "string",
           "optional": true,
@@ -6318,6 +6345,20 @@
           "optional": true,
           "array": true,
           "doc": "Harnesses this one is associated with and does not hold — {@link AssociatedHarness}. Issue #1146."
+        },
+        {
+          "name": "subscriptions",
+          "type": "Subscription[]",
+          "optional": true,
+          "array": true,
+          "doc": "External Knowledge Graphs this one CONSUMES, and which of their parts it chose to hold — {@link Subscription}. Issue #1719."
+        },
+        {
+          "name": "knownSubstrates",
+          "type": "KnownSubstrate[]",
+          "optional": true,
+          "array": true,
+          "doc": "Substrates known to exist or planned that NO declaration here names — {@link KnownSubstrate}. Issue #1719."
         },
         {
           "name": "stickies",
@@ -6378,11 +6419,13 @@
         "cat-harness/schemas/cat-harness.ts#ContentAdapterDeclaration",
         "cat-harness/schemas/cat-harness.ts#ContentDirectory",
         "cat-harness/schemas/cat-harness.ts#InstanceLocation",
+        "cat-harness/schemas/cat-harness.ts#KnownSubstrate",
         "cat-harness/schemas/cat-harness.ts#LiquidPrefix",
         "cat-harness/schemas/cat-harness.ts#NavbarIcon",
         "cat-harness/schemas/cat-harness.ts#Publication",
         "cat-harness/schemas/cat-harness.ts#RemoteGraph",
         "cat-harness/schemas/cat-harness.ts#RenderExemption",
+        "cat-harness/schemas/cat-harness.ts#Subscription",
         "cat-harness/schemas/cat-harness.ts#Topology",
         "cat-harness/schemas/kg-node.ts#KgAsset",
         "cat-harness/schemas/kg-node.ts#KgImage",
@@ -6443,6 +6486,13 @@
           "type": "InstanceLocationSchema.optional()",
           "optional": true,
           "array": false
+        },
+        {
+          "name": "separation",
+          "type": "z.enum([\"content\", \"tools\"]).optional()",
+          "optional": true,
+          "array": false,
+          "doc": "Which half of a kg-separation pair this instance's planned `repository`"
         },
         {
           "name": "stub",
@@ -6509,6 +6559,20 @@
           "doc": "Harnesses this one is associated with — see {@link AssociatedHarness}."
         },
         {
+          "name": "subscriptions",
+          "type": "z .array(SubscriptionSchema) .refine((xs) => new Set(xs.map((x) => x.id)).size === xs.length, { message: \"subscriptions…",
+          "optional": true,
+          "array": true,
+          "doc": "External Knowledge Graphs this one subscribes to — see {@link Subscription}."
+        },
+        {
+          "name": "knownSubstrates",
+          "type": "z .array(KnownSubstrateSchema) .refine((xs) => new Set(xs.map((x) => x.name)).size === xs.length, { message: \"knownSubs…",
+          "optional": true,
+          "array": true,
+          "doc": "See {@link KnownSubstrate}. Names are unique."
+        },
+        {
           "name": "stickies",
           "type": "z.array(StickyContributionSchema).optional()",
           "optional": true,
@@ -6564,10 +6628,12 @@
         "cat-harness/schemas/cat-harness.ts#ContentDirectorySchema",
         "cat-harness/schemas/cat-harness.ts#ExactVersionSchema",
         "cat-harness/schemas/cat-harness.ts#InstanceLocationSchema",
+        "cat-harness/schemas/cat-harness.ts#KnownSubstrateSchema",
         "cat-harness/schemas/cat-harness.ts#NavbarIconsSchema",
         "cat-harness/schemas/cat-harness.ts#PublicationSchema",
         "cat-harness/schemas/cat-harness.ts#RemoteGraphSchema",
         "cat-harness/schemas/cat-harness.ts#RenderExemptionSchema",
+        "cat-harness/schemas/cat-harness.ts#SubscriptionSchema",
         "cat-harness/schemas/cat-harness.ts#TopologySchema",
         "cat-harness/schemas/kg-node.ts#KgAssetSchema",
         "cat-harness/schemas/kg-node.ts#KgImageSchema",
@@ -7069,6 +7135,120 @@
       ],
       "unresolved": [],
       "external": [
+        "z"
+      ],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/cat-harness.ts#KnownSubstrate",
+      "name": "KnownSubstrate",
+      "module": "cat-harness/schemas/cat-harness.ts",
+      "kind": "interface",
+      "doc": "A substrate this harness knows of that NO declaration in the checkout names.",
+      "fields": [
+        {
+          "name": "name",
+          "type": "string",
+          "optional": false,
+          "array": false,
+          "doc": "The substrate's instance name, as its declaration gives it or will."
+        },
+        {
+          "name": "title",
+          "type": "string",
+          "optional": true,
+          "array": false,
+          "doc": "Human title."
+        },
+        {
+          "name": "repository",
+          "type": "RepoFullName",
+          "optional": true,
+          "array": false,
+          "doc": "`owner/repo`, when one exists or is planned."
+        },
+        {
+          "name": "status",
+          "type": "\"proposed\" | \"planned\" | \"exists\" | \"published\"",
+          "optional": false,
+          "array": false,
+          "doc": "Where it stands: proposed (an idea), planned (a staged instance), exists (a repository), published (a release)."
+        },
+        {
+          "name": "toolsRepository",
+          "type": "RepoFullName",
+          "optional": true,
+          "array": false,
+          "doc": "Its paired tools repository, when the `kg-separation` pattern gives it one."
+        },
+        {
+          "name": "note",
+          "type": "string",
+          "optional": true,
+          "array": false,
+          "doc": "One sentence a reader of the visualizer sees."
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [
+        "cat-harness/schemas/repo-full-name.ts#RepoFullName"
+      ],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/cat-harness.ts#KnownSubstrateSchema",
+      "name": "KnownSubstrateSchema",
+      "module": "cat-harness/schemas/cat-harness.ts",
+      "kind": "zod-object",
+      "fields": [
+        {
+          "name": "name",
+          "type": "z.string().regex(INSTANCE_NAME)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "title",
+          "type": "z.string().min(1).optional()",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "repository",
+          "type": "RepoFullNameSchema.optional()",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "status",
+          "type": "z.enum([\"proposed\", \"planned\", \"exists\", \"published\"])",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "toolsRepository",
+          "type": "RepoFullNameSchema.optional()",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "note",
+          "type": "z.string().min(1).optional()",
+          "optional": true,
+          "array": false
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [
+        "cat-harness/schemas/repo-full-name.ts#RepoFullNameSchema"
+      ],
+      "unresolved": [],
+      "external": [
+        "INSTANCE_NAME",
         "z"
       ],
       "exported": true
@@ -7607,6 +7787,134 @@
       "exported": true
     },
     {
+      "id": "cat-harness/schemas/cat-harness.ts#Subscription",
+      "name": "Subscription",
+      "module": "cat-harness/schemas/cat-harness.ts",
+      "kind": "interface",
+      "doc": "A SUBSCRIPTION to an external Knowledge Graph — a **substrate**: a repository",
+      "fields": [
+        {
+          "name": "id",
+          "type": "string",
+          "optional": false,
+          "array": false,
+          "doc": "Local name for the subscription; unique within this list. The substrate's own name, unless two pins of one substrate are ever needed."
+        },
+        {
+          "name": "repository",
+          "type": "RepoFullName",
+          "optional": false,
+          "array": false,
+          "doc": "Where the substrate lives, `owner/repo` (#1652)."
+        },
+        {
+          "name": "ref",
+          "type": "string",
+          "optional": false,
+          "array": false,
+          "doc": "The pinned commit, a full 40-character SHA. A tag replaces it once the substrate publishes releases."
+        },
+        {
+          "name": "subgraphs",
+          "type": "string[]",
+          "optional": true,
+          "array": true,
+          "doc": "Subgraph ids (the substrate's `directories[].id`) CHOSEN for materialisation. Everything else stays referenced."
+        },
+        {
+          "name": "assets",
+          "type": "{ policy: \"none\" | \"on-demand\" | \"all\" }",
+          "optional": true,
+          "array": false,
+          "doc": "How referenced binary assets are materialised. Each copy still passes `Process_MaterializeRemote`'s gates."
+        },
+        {
+          "name": "harnesses",
+          "type": "string[]",
+          "optional": true,
+          "array": true,
+          "doc": "Harness names from the substrate CHOSEN for instantiation. Instantiating writes `<name>.config.json`, which is what puts it in the navbar."
+        },
+        {
+          "name": "note",
+          "type": "string",
+          "optional": true,
+          "array": false,
+          "doc": "One sentence a reader of the visualizer sees."
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [
+        "cat-harness/schemas/repo-full-name.ts#RepoFullName"
+      ],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/cat-harness.ts#SubscriptionSchema",
+      "name": "SubscriptionSchema",
+      "module": "cat-harness/schemas/cat-harness.ts",
+      "kind": "zod-object",
+      "fields": [
+        {
+          "name": "id",
+          "type": "z.string().regex(INSTANCE_NAME)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "repository",
+          "type": "RepoFullNameSchema",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "ref",
+          "type": "z.string().regex(/^[0-9a-f]{40}$/, \"ref must be a full 40-character commit SHA — pin, never follow a branch\")",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "subgraphs",
+          "type": "uniqueStrings(\"subgraphs\").optional()",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "assets",
+          "type": "z.object({ policy: z.enum([\"none\", \"on-demand\", \"all\"]) }).strict().optional()",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "harnesses",
+          "type": "z.array(z.string().regex(INSTANCE_NAME)).refine((xs) => new Set(xs).size === xs.length, { message: \"harnesses: a name a…",
+          "optional": true,
+          "array": true
+        },
+        {
+          "name": "note",
+          "type": "z.string().min(1).optional()",
+          "optional": true,
+          "array": false
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [
+        "cat-harness/schemas/cat-harness.ts#uniqueStrings",
+        "cat-harness/schemas/repo-full-name.ts#RepoFullNameSchema"
+      ],
+      "unresolved": [],
+      "external": [
+        "INSTANCE_NAME",
+        "z"
+      ],
+      "exported": true
+    },
+    {
       "id": "cat-harness/schemas/cat-harness.ts#Tile",
       "name": "Tile",
       "module": "cat-harness/schemas/cat-harness.ts",
@@ -7765,6 +8073,20 @@
         "z"
       ],
       "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/cat-harness.ts#uniqueStrings",
+      "name": "uniqueStrings",
+      "module": "cat-harness/schemas/cat-harness.ts",
+      "kind": "undetermined",
+      "note": "(label: string) => z .array(z.string().min(1)) .refine((xs) => new Set(xs).size === xs.length, { message: `${label}: a value appears twice` })",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": false
     },
     {
       "id": "cat-harness/schemas/cat-harness.ts#Visualisation",
@@ -8053,6 +8375,78 @@
       "refs": [],
       "unresolved": [],
       "external": [
+        "z"
+      ],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/concern-groups.ts#ConcernGroupCodeSchema",
+      "name": "ConcernGroupCodeSchema",
+      "module": "cat-harness/schemas/concern-groups.ts",
+      "kind": "zod-scalar",
+      "doc": "A group's code: one plain segment, which is also its directory name.",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/concern-groups.ts#ConcernGroups",
+      "name": "ConcernGroups",
+      "module": "cat-harness/schemas/concern-groups.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/concern-groups.ts#ConcernGroupsSchema",
+      "name": "ConcernGroupsSchema",
+      "module": "cat-harness/schemas/concern-groups.ts",
+      "kind": "zod-object",
+      "fields": [
+        {
+          "name": "$schema",
+          "type": "z.literal(CONCERN_GROUPS_TAG)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "_comment",
+          "type": "z.string().optional()",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "groups",
+          "type": "z.array(ConcernGroupCodeSchema)",
+          "optional": false,
+          "array": true,
+          "doc": "The concern groups this directory holds, by code; each is `<dir>/<code>/`."
+        },
+        {
+          "name": "directories",
+          "type": "z .array( z .object({ id: z.string().min(1), path: z.string().min(1), subgraph: z.literal(true), graphKinds: z.array(z.…",
+          "optional": true,
+          "array": true,
+          "doc": "Instance directories declared from within, as in `skills.json`."
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [
+        "cat-harness/schemas/concern-groups.ts#ConcernGroupCodeSchema"
+      ],
+      "unresolved": [],
+      "external": [
+        "CONCERN_GROUPS_TAG",
         "z"
       ],
       "exported": true
@@ -16631,6 +17025,13 @@
           "doc": "The NESTED DECLARATION a directory of this kind carries, by filename."
         },
         {
+          "name": "concernGroups",
+          "type": "true",
+          "optional": true,
+          "array": false,
+          "doc": "Is a directory of this kind GROUPED BY CONCERN — `<dir>/<group>/`, with"
+        },
+        {
           "name": "within",
           "type": "string",
           "optional": true,
@@ -16680,6 +17081,42 @@
       "unresolved": [],
       "external": [],
       "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/harness-config.ts#CheckoutGraph",
+      "name": "CheckoutGraph",
+      "module": "cat-harness/schemas/harness-config.ts",
+      "kind": "interface",
+      "doc": "The checkout's dependency graph, walked ONCE: order, transitive closure, names.",
+      "fields": [
+        {
+          "name": "order",
+          "type": "string[]",
+          "optional": false,
+          "array": true,
+          "doc": "Every instance the root reaches, deepest first, the root last."
+        },
+        {
+          "name": "deps",
+          "type": "Map<string, Set<string>>",
+          "optional": false,
+          "array": false,
+          "doc": "Each instance's transitive dependencies."
+        },
+        {
+          "name": "names",
+          "type": "Map<string, string>",
+          "optional": false,
+          "array": false,
+          "doc": "Each instance's declared name, as `declarationChain` spells a link."
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": false
     },
     {
       "id": "cat-harness/schemas/harness-config.ts#ClosedContentType",
@@ -25511,6 +25948,65 @@
       "exported": true
     },
     {
+      "id": "cat-harness/schemas/role-graph.ts#RoleExtension",
+      "name": "RoleExtension",
+      "module": "cat-harness/schemas/role-graph.ts",
+      "kind": "interface",
+      "doc": "A higher instance adding skills to a role a lower instance declares.",
+      "fields": [
+        {
+          "name": "role",
+          "type": "string",
+          "optional": false,
+          "array": false,
+          "doc": "The id of a role declared by an instance this one depends on."
+        },
+        {
+          "name": "skills",
+          "type": "string[]",
+          "optional": false,
+          "array": true,
+          "doc": "Skills the role gains in this instance's checkout."
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/role-graph.ts#RoleExtensionSchema",
+      "name": "RoleExtensionSchema",
+      "module": "cat-harness/schemas/role-graph.ts",
+      "kind": "zod-object",
+      "fields": [
+        {
+          "name": "role",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "skills",
+          "type": "z.array(SkillNameSchema).min(1)",
+          "optional": false,
+          "array": true
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [
+        "cat-harness/schemas/tool-types.ts#SkillNameSchema"
+      ],
+      "unresolved": [],
+      "external": [
+        "z"
+      ],
+      "exported": true
+    },
+    {
       "id": "cat-harness/schemas/role-graph.ts#RoleGraph",
       "name": "RoleGraph",
       "module": "cat-harness/schemas/role-graph.ts",
@@ -25535,13 +26031,21 @@
           "optional": true,
           "array": true,
           "doc": "Actors, when declared alongside. Usually read from the actor directory."
+        },
+        {
+          "name": "extensions",
+          "type": "RoleExtension[]",
+          "optional": true,
+          "array": true,
+          "doc": "Roles of a LOWER instance this graph adds skills to, BY ID (placement"
         }
       ],
       "extendsNames": [],
       "values": [],
       "refs": [
         "cat-harness/schemas/role-graph.ts#ActorDef",
-        "cat-harness/schemas/role-graph.ts#RoleDef"
+        "cat-harness/schemas/role-graph.ts#RoleDef",
+        "cat-harness/schemas/role-graph.ts#RoleExtension"
       ],
       "unresolved": [],
       "external": [],
@@ -25570,13 +26074,20 @@
           "type": "z.array(ActorDefSchema).optional()",
           "optional": true,
           "array": true
+        },
+        {
+          "name": "extensions",
+          "type": "z.array(RoleExtensionSchema).optional()",
+          "optional": true,
+          "array": true
         }
       ],
       "extendsNames": [],
       "values": [],
       "refs": [
         "cat-harness/schemas/role-graph.ts#ActorDefSchema",
-        "cat-harness/schemas/role-graph.ts#RoleDefSchema"
+        "cat-harness/schemas/role-graph.ts#RoleDefSchema",
+        "cat-harness/schemas/role-graph.ts#RoleExtensionSchema"
       ],
       "unresolved": [],
       "external": [
@@ -25718,6 +26229,82 @@
           "type": "string",
           "optional": false,
           "array": false
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/scenario-overlay.ts#CapabilityRecord",
+      "name": "CapabilityRecord",
+      "module": "cat-harness/schemas/scenario-overlay.ts",
+      "kind": "type-alias",
+      "doc": "A capability probe, as its JSON file declares it.",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/scenario-overlay.ts#RoleExtensionRecord",
+      "name": "RoleExtensionRecord",
+      "module": "cat-harness/schemas/scenario-overlay.ts",
+      "kind": "interface",
+      "doc": "Who added what to a role, for a report that must name the instance.",
+      "fields": [
+        {
+          "name": "instance",
+          "type": "string",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "role",
+          "type": "string",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "skills",
+          "type": "string[]",
+          "optional": false,
+          "array": true
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/scenario-overlay.ts#ScenarioLayer",
+      "name": "ScenarioLayer",
+      "module": "cat-harness/schemas/scenario-overlay.ts",
+      "kind": "interface",
+      "doc": "A higher instance's `scenarios/` directory, as an overlay layer.",
+      "fields": [
+        {
+          "name": "instance",
+          "type": "string",
+          "optional": false,
+          "array": false,
+          "doc": "The instance's declared name."
+        },
+        {
+          "name": "dir",
+          "type": "string",
+          "optional": false,
+          "array": false,
+          "doc": "Absolute path of its `scenarios` directory."
         }
       ],
       "extendsNames": [],
@@ -29973,6 +30560,97 @@
       "exported": true
     },
     {
+      "id": "cat-harness/schemas/substrate-snapshot.ts#SubstrateSnapshot",
+      "name": "SubstrateSnapshot",
+      "module": "cat-harness/schemas/substrate-snapshot.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/substrate-snapshot.ts#SubstrateSnapshotSchema",
+      "name": "SubstrateSnapshotSchema",
+      "module": "cat-harness/schemas/substrate-snapshot.ts",
+      "kind": "zod-object",
+      "fields": [
+        {
+          "name": "$schema",
+          "type": "z.literal(SUBSTRATE_SNAPSHOT_SCHEMA)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "subscription",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false,
+          "doc": "The `subscriptions[].id` this snapshot belongs to."
+        },
+        {
+          "name": "repository",
+          "type": "RepoFullNameSchema",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "ref",
+          "type": "z.string().regex(/^[0-9a-f]{40}$/)",
+          "optional": false,
+          "array": false,
+          "doc": "The pinned commit the bytes were read at — a full SHA, never a branch."
+        },
+        {
+          "name": "file",
+          "type": "z.string().regex(/^[^/]+\\.json$/)",
+          "optional": false,
+          "array": false,
+          "doc": "The upstream file, relative to the substrate's repository root: `<name>.json`."
+        },
+        {
+          "name": "raw",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false,
+          "doc": "The upstream bytes, exactly as fetched."
+        },
+        {
+          "name": "fixity",
+          "type": "z.object({ algorithm: z.literal(\"sha256\"), digest: z.string().regex(/^[0-9a-f]{64}$/) }).strict()",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "summary",
+          "type": "z .object({ name: z.string().min(1), title: z.string().optional(), version: z.string().optional(), subgraphs: z.array(z…",
+          "optional": false,
+          "array": false,
+          "doc": "What the judgement found, derived from `raw`."
+        },
+        {
+          "name": "note",
+          "type": "z.string().min(1).optional()",
+          "optional": true,
+          "array": false
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [
+        "cat-harness/schemas/repo-full-name.ts#RepoFullNameSchema"
+      ],
+      "unresolved": [],
+      "external": [
+        "SUBSTRATE_SNAPSHOT_SCHEMA",
+        "z"
+      ],
+      "exported": true
+    },
+    {
       "id": "cat-harness/schemas/tabular-csvw.ts#CsvwColumnSchema",
       "name": "CsvwColumnSchema",
       "module": "cat-harness/schemas/tabular-csvw.ts",
@@ -33808,11 +34486,19 @@
           "optional": true,
           "array": true,
           "doc": "The graph KINDS this Tool draws a viewer for — one page per declared"
+        },
+        {
+          "name": "subprocesses",
+          "type": "z.array(ProcessIdSchema).optional()",
+          "optional": true,
+          "array": true,
+          "doc": "Process ids of the BPMN this Tool's OWN specific procedure is drawn as."
         }
       ],
       "extendsNames": [],
       "values": [],
       "refs": [
+        "cat-harness/schemas/tool-types.ts#ProcessIdSchema",
         "cat-harness/schemas/tool-types.ts#SkillNameSchema",
         "cat-harness/schemas/tool.ts#ToolDownstreamSchema",
         "cat-harness/schemas/tool.ts#ToolId",
@@ -43934,6 +44620,14 @@
     },
     {
       "from": "cat-harness/schemas/cat-harness.ts#CatHarnessDeclaration",
+      "to": "cat-harness/schemas/cat-harness.ts#KnownSubstrate",
+      "via": "knownSubstrates",
+      "kind": "field",
+      "optional": true,
+      "array": true
+    },
+    {
+      "from": "cat-harness/schemas/cat-harness.ts#CatHarnessDeclaration",
       "to": "cat-harness/schemas/cat-harness.ts#LiquidPrefix",
       "via": "liquid",
       "kind": "field",
@@ -43971,6 +44665,14 @@
       "kind": "field",
       "optional": true,
       "array": false
+    },
+    {
+      "from": "cat-harness/schemas/cat-harness.ts#CatHarnessDeclaration",
+      "to": "cat-harness/schemas/cat-harness.ts#Subscription",
+      "via": "subscriptions",
+      "kind": "field",
+      "optional": true,
+      "array": true
     },
     {
       "from": "cat-harness/schemas/cat-harness.ts#CatHarnessDeclaration",
@@ -44062,6 +44764,14 @@
     },
     {
       "from": "cat-harness/schemas/cat-harness.ts#CatHarnessDeclarationSchema",
+      "to": "cat-harness/schemas/cat-harness.ts#KnownSubstrateSchema",
+      "via": "knownSubstrates",
+      "kind": "field",
+      "optional": true,
+      "array": true
+    },
+    {
+      "from": "cat-harness/schemas/cat-harness.ts#CatHarnessDeclarationSchema",
       "to": "cat-harness/schemas/cat-harness.ts#NavbarIconsSchema",
       "via": "navbarIcons",
       "kind": "field",
@@ -44091,6 +44801,14 @@
       "kind": "field",
       "optional": true,
       "array": false
+    },
+    {
+      "from": "cat-harness/schemas/cat-harness.ts#CatHarnessDeclarationSchema",
+      "to": "cat-harness/schemas/cat-harness.ts#SubscriptionSchema",
+      "via": "subscriptions",
+      "kind": "field",
+      "optional": true,
+      "array": true
     },
     {
       "from": "cat-harness/schemas/cat-harness.ts#CatHarnessDeclarationSchema",
@@ -44245,6 +44963,38 @@
       "array": false
     },
     {
+      "from": "cat-harness/schemas/cat-harness.ts#KnownSubstrate",
+      "to": "cat-harness/schemas/repo-full-name.ts#RepoFullName",
+      "via": "repository",
+      "kind": "field",
+      "optional": true,
+      "array": false
+    },
+    {
+      "from": "cat-harness/schemas/cat-harness.ts#KnownSubstrate",
+      "to": "cat-harness/schemas/repo-full-name.ts#RepoFullName",
+      "via": "toolsRepository",
+      "kind": "field",
+      "optional": true,
+      "array": false
+    },
+    {
+      "from": "cat-harness/schemas/cat-harness.ts#KnownSubstrateSchema",
+      "to": "cat-harness/schemas/repo-full-name.ts#RepoFullNameSchema",
+      "via": "repository",
+      "kind": "field",
+      "optional": true,
+      "array": false
+    },
+    {
+      "from": "cat-harness/schemas/cat-harness.ts#KnownSubstrateSchema",
+      "to": "cat-harness/schemas/repo-full-name.ts#RepoFullNameSchema",
+      "via": "toolsRepository",
+      "kind": "field",
+      "optional": true,
+      "array": false
+    },
+    {
       "from": "cat-harness/schemas/cat-harness.ts#MaterialisedDirectory",
       "to": "cat-harness/schemas/kg-node.ts#DeclarationScope",
       "via": "scope",
@@ -44298,6 +45048,30 @@
       "via": "visualiser",
       "kind": "field",
       "optional": true,
+      "array": false
+    },
+    {
+      "from": "cat-harness/schemas/cat-harness.ts#Subscription",
+      "to": "cat-harness/schemas/repo-full-name.ts#RepoFullName",
+      "via": "repository",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "cat-harness/schemas/cat-harness.ts#SubscriptionSchema",
+      "to": "cat-harness/schemas/cat-harness.ts#uniqueStrings",
+      "via": "subgraphs",
+      "kind": "field",
+      "optional": true,
+      "array": false
+    },
+    {
+      "from": "cat-harness/schemas/cat-harness.ts#SubscriptionSchema",
+      "to": "cat-harness/schemas/repo-full-name.ts#RepoFullNameSchema",
+      "via": "repository",
+      "kind": "field",
+      "optional": false,
       "array": false
     },
     {
@@ -44363,6 +45137,14 @@
       "kind": "field",
       "optional": true,
       "array": false
+    },
+    {
+      "from": "cat-harness/schemas/concern-groups.ts#ConcernGroupsSchema",
+      "to": "cat-harness/schemas/concern-groups.ts#ConcernGroupCodeSchema",
+      "via": "groups",
+      "kind": "field",
+      "optional": false,
+      "array": true
     },
     {
       "from": "cat-harness/schemas/constraints.ts#AlgorithmSchema",
@@ -47005,6 +47787,14 @@
       "array": true
     },
     {
+      "from": "cat-harness/schemas/role-graph.ts#RoleExtensionSchema",
+      "to": "cat-harness/schemas/tool-types.ts#SkillNameSchema",
+      "via": "skills",
+      "kind": "field",
+      "optional": false,
+      "array": true
+    },
+    {
       "from": "cat-harness/schemas/role-graph.ts#RoleGraph",
       "to": "cat-harness/schemas/role-graph.ts#ActorDef",
       "via": "actors",
@@ -47021,6 +47811,14 @@
       "array": true
     },
     {
+      "from": "cat-harness/schemas/role-graph.ts#RoleGraph",
+      "to": "cat-harness/schemas/role-graph.ts#RoleExtension",
+      "via": "extensions",
+      "kind": "field",
+      "optional": true,
+      "array": true
+    },
+    {
       "from": "cat-harness/schemas/role-graph.ts#RoleGraphSchema",
       "to": "cat-harness/schemas/role-graph.ts#ActorDefSchema",
       "via": "actors",
@@ -47032,6 +47830,14 @@
       "from": "cat-harness/schemas/role-graph.ts#RoleGraphSchema",
       "to": "cat-harness/schemas/role-graph.ts#RoleDefSchema",
       "via": "roles",
+      "kind": "field",
+      "optional": true,
+      "array": true
+    },
+    {
+      "from": "cat-harness/schemas/role-graph.ts#RoleGraphSchema",
+      "to": "cat-harness/schemas/role-graph.ts#RoleExtensionSchema",
+      "via": "extensions",
       "kind": "field",
       "optional": true,
       "array": true
@@ -47813,6 +48619,14 @@
       "array": false
     },
     {
+      "from": "cat-harness/schemas/substrate-snapshot.ts#SubstrateSnapshotSchema",
+      "to": "cat-harness/schemas/repo-full-name.ts#RepoFullNameSchema",
+      "via": "repository",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
       "from": "cat-harness/schemas/tabular-csvw.ts#CsvwTableSchema",
       "to": "cat-harness/schemas/tabular-csvw.ts#CsvwColumnSchema",
       "via": "tableSchema",
@@ -48235,6 +49049,14 @@
       "kind": "extends",
       "optional": false,
       "array": false
+    },
+    {
+      "from": "cat-harness/schemas/tool.ts#ToolDefinitionSchema",
+      "to": "cat-harness/schemas/tool-types.ts#ProcessIdSchema",
+      "via": "subprocesses",
+      "kind": "field",
+      "optional": true,
+      "array": true
     },
     {
       "from": "cat-harness/schemas/tool.ts#ToolDefinitionSchema",
