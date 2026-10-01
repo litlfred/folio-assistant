@@ -508,32 +508,32 @@
   NOT a cache-busting strategy for third-party assets, and not applied to
   them: those are versioned in their own URLs already.
 -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-before-after-preview-skill/assets/css/docs-ui.css?v=1790816992">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-before-after-preview-skill/assets/css/docs-ui.css?v=1790818177">
 <!-- Narrow viewports: wide content scrolls in its own box, never the page
      (bean `2r2n`). The standalone viewers inline the same file through
      `withViewerNav`, so both kinds of page read one set of rules. -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-before-after-preview-skill/assets/css/narrow-viewport.css?v=1790816992">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-before-after-preview-skill/assets/css/narrow-viewport.css?v=1790818177">
 
 <!--
   The work-plan dashboard's styles, split from docs-ui.css so that
   `state-visualizer.ts` can inline exactly these bytes into the generated
   `<base>/<stub>/state-visualizer/` pages. One rule, two surfaces.
 -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-before-after-preview-skill/assets/css/work-plan.css?v=1790816992">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-before-after-preview-skill/assets/css/work-plan.css?v=1790818177">
 <!-- Sticky themes. GENERATED from the theme nodes in `schemas/themes.ts` by
      `bun run themes:css`; `themes:css:check` fails the build when it is stale.
      Loaded AFTER docs-ui.css deliberately: it supplies the `--fa-sticky-*`
      roles that docs-ui.css consumes, and a custom property has to be set on a
      matching element before the rule reading it takes effect. -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-before-after-preview-skill/assets/css/themes.css?v=1790816992">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-before-after-preview-skill/assets/css/themes.css?v=1790818177">
 <!-- UML overview colours: one class per graph kind, set on the Mermaid nodes
      that `scripts/gen-uml-overview.ts` writes into docs/uml/overview/. -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-before-after-preview-skill/assets/css/uml.css?v=1790816992">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-before-after-preview-skill/assets/css/uml.css?v=1790818177">
 <!-- Kind avatars. GENERATED from `schemas/avatars.ts` by `bun run avatars:css`;
      `avatars:css:check` fails the build when it is stale. One stylesheet
      rather than 68 assets: the glyph is a mask and the colour is a property,
      so a scheme swap is a custom property and the trash state is a selector. -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-before-after-preview-skill/assets/css/avatars.css?v=1790816992">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-before-after-preview-skill/assets/css/avatars.css?v=1790818177">
 
 <!--
   The kinds THIS INSTANCE DECLARES, for the avatar fan.
@@ -550,7 +550,7 @@
 <script type="application/json" id="fa-declared-kinds">["beans","cat-harness","code","code-list","docs","external-schema","folio","fsh-guts","health","interaction","issue-marks","library","memory","methodology","policies","processes","qa","scenarios","schemas","skills","swimlane-glossary","todos","tools","translation-sources","uml","uploads","waiver"]</script>
 <script src="/folio-assistant/STAGING/claude-before-after-preview-skill/assets/js/vendor/qrcode.js" defer></script>
 <script src="/folio-assistant/STAGING/claude-before-after-preview-skill/assets/js/vendor/qrcode_UTF8.js" defer></script>
-<script src="/folio-assistant/STAGING/claude-before-after-preview-skill/assets/js/docs-ui.js?v=1790816992" defer></script>
+<script src="/folio-assistant/STAGING/claude-before-after-preview-skill/assets/js/docs-ui.js?v=1790818177" defer></script>
 
 <!--
   The work-plan dashboard. SELF-MOUNTING on any page carrying
@@ -995,6 +995,36 @@ spelling anyway.</p>
 <p>It is recorded here so the next agent meets it as a known fact instead of
 rediscovering it and proposing a rename. <strong>Do not re-litigate it.</strong> If you are
 grepping for FHIR Shorthand, exclude this directory.</p>
+<h2 id="an-ingested-source-comes-here--owner-2026-09-29">
+  
+  
+    <a href="#an-ingested-source-comes-here--owner-2026-09-29" class="anchor-heading" aria-labelledby="an-ingested-source-comes-here--owner-2026-09-29"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> An INGESTED SOURCE comes here — owner, 2026-09-29
+  
+  
+</h2>
+    
+
+<blockquote>
+  <p>archival (once ingested into KG and put into a proper <code class="language-plaintext highlighter-rouge">library/</code> under a
+harness repo) then it should be moved to <code class="language-plaintext highlighter-rouge">fsh-guts</code>.</p>
+</blockquote>
+
+<p>The third thing this directory is for, after a superseded page and a spent
+script: <strong>the source bytes of a document whose derivation has landed.</strong> A
+<code class="language-plaintext highlighter-rouge">library/&lt;slug&gt;/</code> entry holds <code class="language-plaintext highlighter-rouge">sections/</code>, <code class="language-plaintext highlighter-rouge">blocks/</code>, <code class="language-plaintext highlighter-rouge">images/</code> and the
+manifest, and <code class="language-plaintext highlighter-rouge">check:l1-complete</code>’s <code class="language-plaintext highlighter-rouge">contents</code> check refuses anything else —
+so the PDF cannot stay with what was derived from it, and deleting it would
+remove the only copy in the working tree.</p>
+
+<p>It arrives the way every other non-markdown node does: the bytes, plus a
+same-basename <code class="language-plaintext highlighter-rouge">.md</code> sidecar with <code class="language-plaintext highlighter-rouge">kind: source</code>, whose <code class="language-plaintext highlighter-rouge">movedFrom</code> is the
+<code class="language-plaintext highlighter-rouge">uploads/</code> path and whose <code class="language-plaintext highlighter-rouge">summary</code> names the library entry it was ingested
+into. The full lifecycle is in
+<a href="/folio-assistant/STAGING/claude-before-after-preview-skill/reference/skill-instructions/library-ingestion.html"><code class="language-plaintext highlighter-rouge">library-ingestion</code></a> §”What happens to the upload after
+it is ingested”, and that skill is the one to change if the rule moves.</p>
+
+<p><strong><code class="language-plaintext highlighter-rouge">fsh-guts/uploads/</code> is the proposed sub-directory</strong>, beside <code class="language-plaintext highlighter-rouge">retired/</code> and
+<code class="language-plaintext highlighter-rouge">scripts/</code>, and is not yet ruled on.</p>
 <h2 id="what-does-not-go-here">
   
   

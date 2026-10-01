@@ -301,10 +301,10 @@
   ],
   "canonicalDocument": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld",
   "repository": "cat-harness",
-  "generatedAt": "2026-10-01T01:11:57.867Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/3fa3f2aa5e9ac4d85562af5b9b2a9b536d38537d",
-  "sourceCommitSha": "3fa3f2aa5e9ac4d85562af5b9b2a9b536d38537d",
-  "sourceCommitAt": "2026-10-01T01:07:11Z",
+  "generatedAt": "2026-10-01T01:32:02.361Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/84d622c1ad55fef14c213b23e9249a8d33b0e701",
+  "sourceCommitSha": "84d622c1ad55fef14c213b23e9249a8d33b0e701",
+  "sourceCommitAt": "2026-10-01T01:25:58Z",
   "sourceTreeDirty": true,
   "dependsOnUnavailable": "2 dependency edge(s), none expressible as a record — see gaps",
   "counts": {
@@ -317,8 +317,8 @@
     "SequenceFlow": 941,
     "Lane": 192,
     "ProcessNode": 889,
-    "Tool": 111,
-    "Schema": 137,
+    "Tool": 112,
+    "Schema": 140,
     "ExternalSchema": 17,
     "GraphKind": 36,
     "Role": 48,
@@ -4010,7 +4010,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-before-after-preview-skill/cat-harness.jsonld#package/library-core"
       ],
       "instructionsPath": "skills/library/library-core/library-ingestion.md",
-      "instructionLines": 624,
+      "instructionLines": 795,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -4246,7 +4246,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-before-after-preview-skill/cat-harness.jsonld#package/process-core"
       ],
       "instructionsPath": "skills/process/process-core/decision-methodology-selector.md",
-      "instructionLines": 167,
+      "instructionLines": 254,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -44597,6 +44597,47 @@
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#tool/package-release-manual"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-before-after-preview-skill/cat-harness.jsonld#tool/pin-smart-base-terminology",
+      "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#Tool",
+      "name": "pin-smart-base-terminology",
+      "title": "Snapshot a published IG's terminology at its pinned version",
+      "description": "Read every CodeSystem concept out of a smart-base clone and write `external-schemas/who-smart-base.terminology.json`, the offline snapshot `check:term-mapping` resolves its `fhir` target against. 585 concepts across 12 code systems at v1.0.0.",
+      "install": {
+        "none": true
+      },
+      "invoke": {
+        "shell": "bun run cat-harness/scripts/pin-smart-base-terminology.ts --from <clone>"
+      },
+      "io": {
+        "inputs": [
+          {
+            "name": "from",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-before-after-preview-skill/tool-types.schema.json#/$defs/FilesystemPath",
+            "description": "A clone of WorldHealthOrganization/smart-base checked out at the PINNED tag, passed as `--from`. The script refuses unless that clone's `sushi-config.yaml` version equals the pin's, so a newer clone cannot silently become the snapshot.",
+            "required": true
+          }
+        ],
+        "outputs": [
+          {
+            "name": "snapshot",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-before-after-preview-skill/tool-types.schema.json#/$defs/RepoPath",
+            "description": "`cat-harness/external-schemas/who-smart-base.terminology.json`, `folio-pinned-terminology/v1`: the version, the source, and every `system#code` with its display, sorted."
+          }
+        ]
+      },
+      "requirements": {
+        "runtime": [
+          "bun",
+          "git"
+        ],
+        "network": false
+      },
+      "satisfies": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-before-after-preview-skill/cat-harness.jsonld#skill/vocabulary-authority"
+      ],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#tool/pin-smart-base-terminology"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-before-after-preview-skill/cat-harness.jsonld#tool/transcribe-whisper-cpp",
       "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#Tool",
       "name": "transcribe-whisper-cpp",
@@ -45061,6 +45102,15 @@
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/external-schema"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-before-after-preview-skill/cat-harness.jsonld#schema/figure-description",
+      "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#Schema",
+      "name": "figure-description",
+      "title": "What a person or agent SAYS a drawn figure shows — bean `a8wy`, under",
+      "module": "schemas/figure-description.ts",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-before-after-preview-skill/cat-harness.jsonld#directory/schemas",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/figure-description"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-before-after-preview-skill/cat-harness.jsonld#schema/folio-graph-kind",
       "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#Schema",
       "name": "folio-graph-kind",
@@ -45332,6 +45382,15 @@
       "module": "schemas/pdf-structure.ts",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-before-after-preview-skill/cat-harness.jsonld#directory/schemas",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/pdf-structure"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-before-after-preview-skill/cat-harness.jsonld#schema/pinned-terminology",
+      "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#Schema",
+      "name": "pinned-terminology",
+      "title": "The codes a PUBLISHED IG carries at ONE pinned version — bean `7wou`.",
+      "module": "schemas/pinned-terminology.ts",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-before-after-preview-skill/cat-harness.jsonld#directory/schemas",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/pinned-terminology"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-before-after-preview-skill/cat-harness.jsonld#schema/precision-scalar",
@@ -45620,6 +45679,15 @@
       "module": "schemas/tabular-records.ts",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-before-after-preview-skill/cat-harness.jsonld#directory/schemas",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/tabular-records"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-before-after-preview-skill/cat-harness.jsonld#schema/term-mapping",
+      "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#Schema",
+      "name": "term-mapping",
+      "title": "Whether a glossary term the extractor MINTED already exists as a concept",
+      "module": "schemas/term-mapping.ts",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-before-after-preview-skill/cat-harness.jsonld#directory/schemas",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/term-mapping"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-before-after-preview-skill/cat-harness.jsonld#schema/test-preload",
@@ -46240,7 +46308,7 @@
       "name": "who-smart-base",
       "title": "WHO SMART Guidelines base IG",
       "authority": "other",
-      "specVersion": "unpinned",
+      "specVersion": "v1.0.0",
       "specUse": "reads",
       "specUrl": "https://smart.who.int/base/",
       "namespace": [
@@ -46340,7 +46408,7 @@
       "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#GraphKind",
       "name": "external-schema",
       "renderable": false,
-      "summary": "The specifications this instance depends on — one record per specification, pinning the EDITION in use, with the operative terms derived from the corpus rather than hand-listed.",
+      "summary": "The specifications this instance depends on — one record per specification, pinning the EDITION in use, with the operative terms derived from the corpus rather than hand-listed; and, beside a record, the pinned edition's own codes where something resolves against them.",
       "validator": "https://litlfred.github.io/folio-assistant/STAGING/claude-before-after-preview-skill/cat-harness.jsonld#schema/external-schema"
     },
     {
