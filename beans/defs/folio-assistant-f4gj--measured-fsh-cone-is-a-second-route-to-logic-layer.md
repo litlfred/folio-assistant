@@ -241,7 +241,7 @@ It takes an IG root and the artefact index and prints every table above.
 - [x] (b) RuleSet parameter substitution in `buildFshGraph`, tagged `insert (parameter expanded)`
 - [x] Re-measure after (b): 458/458 logic edges; extraction reaches every target ground truth names
 - [x] Record that (b)'s fix is itself a partial reimplementation of SUSHI, and what it does not do
-- [x] Open: does ~24 % rebuild per commit still pay for an incremental build? NOT answered here; handed to `folio-assistant-a9tx` W7, which measures the incremental loop on a real IG
+- [x] Open: does ~24 % rebuild per commit still pay for an incremental build? NOT answered here; now W7's question in `folio-assistant-a9tx`, which measures the incremental loop on a real IG
 - [x] Owner review and merge — merged (#1546, #1555); `fsh-cone.ts` carries the parameter expansion and its test on `main`
 
 
@@ -257,6 +257,6 @@ The measurement and both `fsh-cone` fixes are on `main`:
 - (b) RuleSet parameter substitution: 458 of 458 logic-layer edges, `cat-harness/content/pipeline/fsh-cone.ts` plus `scripts/tests/fsh-cone.test.ts`
 - Reproduction script: `cat-harness/scripts/measure-logic-layer-edges.ts`
 
-The one unanswered question, whether rebuilding about 24 % per commit still pays for an incremental build, belongs to `folio-assistant-a9tx` W7. That is a measurement on a real IG, not something this bean could settle.
+The one unanswered question, whether rebuilding about 24 % per commit still pays for an incremental build, is W7's question in `folio-assistant-a9tx`. That is a measurement on a real IG, not something this bean could settle.
 
 Closed by session https://claude.ai/code/session_01DnFZtVpff4o7puqWazGvKN.
