@@ -448,8 +448,18 @@ scrolled out of view from a tile that does not exist.
   dragging or with the Strip and More buttons, overrides the declared default
   in that browser. The fit and the count apply to their arrangement too.
 
-`glass-strip-fit.e2e.ts` holds all four assertions, and it fails against the
-strip as it was before the ruling.
+- **It starts HIDDEN** (owner, 2026-10-01: *"have folio bottom strip tiles
+  default to hidden away when folio first opened"*). With no stored choice,
+  the folio opens with the strip slid away. Only its tab shows, and it says
+  "Show tiles (N)" so the reader knows what is behind it. The tab is the one
+  control both ways (`l4zi`, [`board-windows`](board-windows.md)) and carries
+  `aria-expanded`. The reader's choice is remembered in this browser as `1`
+  or `0`, and storage that cannot be read counts as no choice: hidden. This
+  is the glass's own strip. The BOARD's tile strip, above, still starts open.
+
+`glass-strip-fit.e2e.ts` holds the four fit assertions and
+`glass-strip-default-hidden.e2e.ts` the default. Both fail against the strip
+as it was before the ruling.
 
 ## `summary` and `alsoWritten` — what a reader sees, kept apart from why it was named
 
