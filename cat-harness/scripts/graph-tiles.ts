@@ -85,6 +85,15 @@ export interface GraphTile {
    * never folded into it. Absent when the caller did not say.
    */
   qualifier?: string;
+  /**
+   * True when another tile carries the same {@link title}, so the qualifier
+   * is what tells them apart and is SHOWN beside the label rather than only
+   * spoken. Decided here, over the whole set, because the client draws one
+   * tile at a time and cannot see the others. Elsewhere the qualifier is in
+   * the accessible name and the tooltip only: a square tile has room for one
+   * line, and on a tile with a unique name the second line hid its count.
+   */
+  showQualifier?: true;
   /** The declared page, repo-root relative, exactly as declared. */
   ref: string;
   /**
@@ -318,6 +327,9 @@ export function graphTiles(
       });
     });
   }
+  const seen = new Map<string, number>();
+  for (const t of tiles) seen.set(t.title, (seen.get(t.title) ?? 0) + 1);
+  for (const t of tiles) if (t.qualifier && seen.get(t.title)! > 1) t.showQualifier = true;
   return tiles;
 }
 

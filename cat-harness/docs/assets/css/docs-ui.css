@@ -7053,6 +7053,11 @@ a.fa-harness-tab__body:focus-visible {
    having to tell it. */
 .fa-board-strip:not(:has(.fa-tile)) { display: none; }
 
+/* A tile whose name another tile shares shows its harness on a second line
+   (bean `ob3m` finding 6), so it may grow past the square rather than clip
+   the line that tells the two apart. */
+.fa-board-tiles .fa-tile:has(.fa-tile-qualifier) { height: auto; min-height: 4rem; }
+
 .fa-board-tiles:empty {
   display: none;
 }

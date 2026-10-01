@@ -464,5 +464,13 @@ describe("a tile says the destination's ONE name (bean `ob3m` finding 6)", () =>
       ["Docs", "C@T Harness"],
       ["Docs", "Folio Assistant"],
     ]);
+    // Two tiles share the name, so the qualifier is SHOWN on both.
+    expect(tiles.map((t) => t.showQualifier)).toEqual([true, true]);
+  });
+
+  test("a tile whose name is unique keeps the qualifier out of sight", () => {
+    const tiles = graphTiles([docs("docs")], undefined, () => "C@T Harness");
+    expect(tiles[0]!.qualifier).toBe("C@T Harness");
+    expect(tiles[0]!.showQualifier).toBeUndefined();
   });
 });

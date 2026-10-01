@@ -2492,7 +2492,7 @@
    * `1le7`'s, extended if it needs to be, never duplicated."* A second copy
    * would be two tiles that look alike until one of them is changed.
    */
-  function tileLink(glyph, label, href, hint, qualifier) {
+  function tileLink(glyph, label, href, hint, qualifier, showQualifier) {
     // Every tile's href goes through the same check as every other link on
     // this page. A tile is the one place a declared value reaches an `href`
     // with no composition in between, so it is the one most worth checking.
@@ -2509,8 +2509,12 @@
       "aria-label": named + " — " + hint,
     });
     a.innerHTML = glyph;
+    if (qualifier) a.setAttribute("title", named);
     a.appendChild(el("span", { class: "fa-tile-caption" }, label));
-    if (qualifier) a.appendChild(el("span", { class: "fa-tile-qualifier" }, qualifier));
+    // SHOWN only where another tile carries the same name (`showQualifier`,
+    // decided by the generator over the whole set). Everywhere else it is in
+    // the accessible name and the tooltip: a square tile holds one line.
+    if (qualifier && showQualifier) a.appendChild(el("span", { class: "fa-tile-qualifier" }, qualifier));
     return a;
   }
 
@@ -2742,7 +2746,7 @@
       var badge = tileCountOf(t);
       if (badge) hint += ", " + badge.count + " " + badge.unit;
       if (frozen) hint += " — materialized content: readable, not editable here";
-      var tile = tileLink(glyphFor(t.icon), t.title, withBase(t.href), hint, t.qualifier);
+      var tile = tileLink(glyphFor(t.icon), t.title, withBase(t.href), hint, t.qualifier, t.showQualifier === true);
       if (frozen) tile.setAttribute("data-fa-readonly", "");
       if (badge) {
         // `aria-hidden` is belt and braces, not the mechanism: `tileLink` sets
