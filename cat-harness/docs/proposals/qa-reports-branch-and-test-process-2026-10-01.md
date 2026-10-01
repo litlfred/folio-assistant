@@ -186,8 +186,13 @@ criteria (a registry or a plan) and whether a decision is taken on the rollup.
 
 ### 3.2 New nodes (strawperson)
 
-- **`test-plan/v1`** has the FHIR R5 TestPlan shape (the source is held,
-  `hl7-2023-fhir-r5-testplan`). It records `scope` (the system-under-test kind and
+- **`test-plan/v1`** is the platform's own, FHIR-free model. It is *informed by*
+  FHIR R5 TestPlan (the source is held, `hl7-2023-fhir-r5-testplan`), but it does
+  not depend on it. **[FHIR TestPlan](https://www.hl7.org/fhir/testplan.html) is a
+  downstream target in the FHIR context** (owner, 2026-10-01). Once a SMART
+  Guidelines IG's content is complete (DAK test scenarios, test cases and test
+  data), a fhir-harness export maps `test-plan/v1` onto TestPlan resources. That
+  mapping lives in fhir-harness, never in the platform schema. It records `scope` (the system-under-test kind and
   version range), `requirements[]` (`req:` refs), `testCases[]` (id, assertions
   whose ids are criterion ids, `testData` refs, optional Gherkin `.feature`
   link), `dependencies[]`, and `exitCriteria`, the certification rule as a DMN

@@ -5,7 +5,7 @@ status: todo
 type: task
 priority: normal
 created_at: 2026-10-01T08:00:47Z
-updated_at: 2026-10-01T08:00:56Z
+updated_at: 2026-10-01T09:12:25Z
 parent: folio-assistant-3fva
 blocked_by:
     - folio-assistant-3o5b
@@ -18,3 +18,7 @@ Arc `3fva`, proposal §3.3 and §4 item 5.6. Blocked on the TEST PROCESS bean.
 ## Done when
 - [ ] a signed certification exists for crdm-detect at a stated version, stored per D5
 - [ ] the report renders, and its badge links to the run
+
+
+## Owner ruling 2026-10-01
+A plan needs at least one `req:` requirement. **Write a crdm-detect requirement first** (what precision/recall it must reach, and on which corpus), then build the plan against it.
