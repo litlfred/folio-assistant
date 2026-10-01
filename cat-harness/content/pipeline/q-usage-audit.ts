@@ -59,6 +59,7 @@ import { siteDirFor } from "../../schemas/cat-harness.ts";
 // so a downstream folio that has not moved its own sidecars yet is not read
 // as having none).
 import { blockQaPath, existingBlockQaPath } from "./qa-paths.ts";
+import { blockAttestationKey, composeCriteria, finalizeCriteria, refusalLine, resolvePrior } from "../../schemas/qa-attestations.ts";
 
 const SCRIPT_DIR = dirname(fileURLToPath(import.meta.url));
 
@@ -281,7 +282,7 @@ function captureHeadSha(): string {
 }
 const HEAD_SHA = captureHeadSha();
 
-function updateSidecar(b: BlockTriple, results: Map<string, QUsageResult>): void {
+function updateSidecar(b: BlockTriple, results: Map<string, QUsageResult>): boolean {
   // Load-then-write, so the two halves get different qa-paths.ts helpers:
   // read wherever the verdict already lives (results tree, falling back to
   // the legacy `<block>.qa.json` sibling, so a downstream folio that has not
@@ -291,15 +292,28 @@ function updateSidecar(b: BlockTriple, results: Map<string, QUsageResult>): void
   const blockRoot = b.ts.replace(/\.ts$/, "");
   const writePath = blockQaPath(REPO_ROOT, blockRoot);
   const readPath = existingBlockQaPath(REPO_ROOT, blockRoot);
-  let sidecar: QaSidecar;
+  let prior: QaSidecar | undefined;
   if (readPath) {
     try {
-      sidecar = JSON.parse(readFileSync(readPath, "utf-8")) as QaSidecar;
+      prior = JSON.parse(readFileSync(readPath, "utf-8")) as QaSidecar;
     } catch {
-      sidecar = makeFreshSidecar(b);
+      prior = undefined;
     }
+  }
+  // Attestations come from the store, never from the prior report (bean
+  // `8wj1`, C11): with the prior absent, the fresh sidecar below used to be
+  // written without the block's agent and human verdicts.
+  const attested = resolvePrior(REPO_ROOT, blockAttestationKey(REPO_ROOT, blockRoot), prior);
+  if (!attested.ok) {
+    console.error(refusalLine("q-usage-audit", relative(REPO_ROOT, blockRoot), attested));
+    return false;
+  }
+  let sidecar: QaSidecar;
+  if (attested.prior) {
+    sidecar = attested.prior;
   } else {
     sidecar = makeFreshSidecar(b);
+    sidecar.criteria = composeCriteria({}, attested.attestations) as QaSidecar["criteria"];
   }
 
   // Refresh source hashes + paths
@@ -365,6 +379,16 @@ function updateSidecar(b: BlockTriple, results: Map<string, QUsageResult>): void
     ];
   }
 
+  try {
+    sidecar.criteria = finalizeCriteria(attested, sidecar.criteria, "script", { dryRun: noWrite });
+  } catch (err) {
+    console.error(refusalLine("q-usage-audit", relative(REPO_ROOT, blockRoot), {
+      state: "unknown",
+      path: attested.path,
+      reason: err instanceof Error ? err.message : String(err),
+    }));
+    return false;
+  }
   if (!noWrite) {
     // Unlike the legacy sibling location (which always existed, since it
     // shared the .ts manifest's own directory), the mirrored results-tree
@@ -373,6 +397,7 @@ function updateSidecar(b: BlockTriple, results: Map<string, QUsageResult>): void
     mkdirSync(dirname(writePath), { recursive: true });
     writeFileSync(writePath, JSON.stringify(sidecar, null, 2) + "\n", "utf-8");
   }
+  return true;
 }
 
 function makeFreshSidecar(b: BlockTriple): QaSidecar {
@@ -580,6 +605,8 @@ function main(): void {
   const findings: BlockFinding[] = [];
   const coveredLean = new Set<string>();
   let touchedSidecars = 0;
+  // Sidecars NOT written because their attestations could not be read. Never a pass.
+  let refusedSidecars = 0;
   let dispensationsHonored = 0;
 
   for (const b of blocks) {
@@ -639,8 +666,8 @@ function main(): void {
       }
     }
     stats.set(b.chapter, stat);
-    updateSidecar(b, results);
-    if (!noWrite) touchedSidecars++;
+    if (!updateSidecar(b, results)) refusedSidecars++;
+    else if (!noWrite) touchedSidecars++;
   }
 
   // Orphan library-tree coverage — Lean files reachable by no block's
@@ -745,6 +772,10 @@ function main(): void {
   // Orphan `fail`s are real §7c violations (mixed-substrate files); count
   // them toward strict exit. Orphan `warn`s (base-ring advisories) do not.
   const orphanFails = orphan.findings.filter((f) => f.result === "fail").length;
+  if (refusedSidecars > 0) {
+    console.error(`q-usage-audit: UNKNOWN — ${refusedSidecars} sidecar(s) not written because their attestations could not be read`);
+    process.exit(4);
+  }
   if (strict && witness.n_fails + orphanFails > 0) process.exit(1);
 }
 

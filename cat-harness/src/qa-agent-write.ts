@@ -41,6 +41,7 @@ import {
   resolveCanonicalLean,
 } from "../content/pipeline/qa-utils";
 import { blockQaPath, existingBlockQaPath, findContentRepoRoot } from "../content/pipeline/qa-paths";
+import { blockAttestationKey, composeCriteria, finalizeCriteria, refusalLine, resolvePrior } from "../schemas/qa-attestations.ts";
 import type {
   BlockQaReport,
   QaCriterionEntry,
@@ -191,7 +192,19 @@ const relPaths = {
   lean: leanPath ? relative(REPO_ROOT, leanPath) : undefined,
 };
 
-let report: BlockQaReport | undefined = qaReadPath === undefined ? undefined : loadQaReport(qaReadPath);
+// An agent verdict is an ATTESTATION (bean `8wj1`, D2): written to the store
+// first, with the block's other attestations read from the store rather than
+// from the prior report (C11). An unreadable store means nothing is written.
+const attested = resolvePrior(
+  contentRepoRoot,
+  blockAttestationKey(contentRepoRoot, resolve(base)),
+  qaReadPath === undefined ? undefined : loadQaReport(qaReadPath),
+);
+if (!attested.ok) {
+  console.error(refusalLine("qa-agent-write", relative(contentRepoRoot, resolve(base)), attested));
+  process.exit(4);
+}
+let report: BlockQaReport | undefined = attested.prior;
 if (!report) {
   report = {
     $schema: "block-qa/v1",
@@ -199,7 +212,7 @@ if (!report) {
     kind,
     paths: relPaths,
     source_hashes: currentHashes,
-    criteria: {},
+    criteria: composeCriteria({}, attested.attestations) as BlockQaReport["criteria"],
     updated_at: nowIso,
   };
 }
@@ -235,6 +248,16 @@ const kept = existing.filter(
   (e) => !(e.reviewer.kind === "agent" && e.reviewer.id === skill),
 );
 report.criteria[criterion] = [...kept, entry];
+try {
+  report.criteria = finalizeCriteria(attested, report.criteria, "attesting");
+} catch (err) {
+  console.error(refusalLine("qa-agent-write", relative(contentRepoRoot, resolve(base)), {
+    state: "unknown",
+    path: attested.path,
+    reason: err instanceof Error ? err.message : String(err),
+  }));
+  process.exit(4);
+}
 
 saveQaReport(qaPath, report);
 console.log(

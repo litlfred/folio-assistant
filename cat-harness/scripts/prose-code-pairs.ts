@@ -34,7 +34,10 @@
  * to the attestation store, `test/attestations/kg-qa/` — owner ruling D2 (a):
  * a judgement stays on main while the derived sidecar moves to the
  * `qa-reports` branch. A store that cannot be read is `unknown`, never a
- * fresh baseline ({@link evaluatePairsFrom}):
+ * fresh baseline ({@link evaluatePairsFrom}). A store with no entry for the
+ * subject (or no store at all) takes the attestations a PRIOR sidecar still
+ * carries inside it, and `kg-audit` moves them into the store as it saves
+ * (owner ruling 2, 2026-10-01) — {@link readAttestations}:
  *
  * - no attestation yet → a `baseline` is recorded; it claims only "unchanged
  *   since first seen", and the pair passes;
@@ -63,6 +66,7 @@ import { join, relative, resolve } from "node:path";
 import type { KgCriterionEntry, KgFinding } from "../schemas/kg-qa.js";
 import {
   kgAttestationFor,
+  priorKgJudgements,
   readAttestationFile,
   serialiseAttestations,
   type KgAttestations,
@@ -180,26 +184,42 @@ export function evaluatePairs(
 }
 
 /**
- * The prior attestations, in the four states of `readAttestationFile`.
+ * The prior attestations, in the states of `readAttestationFile`.
  *
- * `hit` and `miss` carry a list — a miss is a store that is there and holds
- * nothing for this subject, which is genuinely "first sight". `corrupt` and
- * `unknown` carry NO list on purpose: the `de9k` leftover was a reader that
- * answered `[]` for a file it could not parse, so the next run re-baselined
- * the subject and the judgement was gone without a word (C1, C4).
+ * `hit`, `miss` and `absent` carry a list. On `miss` or `absent` the store
+ * has no entry for this subject, and the list is whatever the PRIOR sidecar
+ * still carries inside it (`moved` counts them): the writer moves those into
+ * the store as it saves (owner ruling 2, 2026-10-01). With nothing in the
+ * prior either, the list is empty — genuinely "first sight".
+ *
+ * `corrupt` and `unknown` carry NO list on purpose: the `de9k` leftover was
+ * a reader that answered `[]` for a file it could not parse, so the next run
+ * re-baselined the subject and the judgement was gone without a word (C1,
+ * C4). A prior sidecar that will not parse while the store has no entry is
+ * `unknown` for the same reason.
  */
 export type AttestationsRead =
-  | { state: "hit" | "miss"; attestations: PairAttestation[] }
+  | { state: "hit"; attestations: PairAttestation[] }
+  | { state: "miss" | "absent"; attestations: PairAttestation[]; moved: number }
   | { state: "corrupt" | "unknown"; reason: string };
 
-/** Attestations recorded in the store file for one subject. */
-export function readAttestations(storeFile: string, storeRoot: string): AttestationsRead {
+/**
+ * Attestations recorded for one subject: the store file's, or — when the
+ * store has none — the ones `priorSidecar` still carries (ruling 2). On a
+ * `hit` the prior sidecar is never read.
+ */
+export function readAttestations(storeFile: string, storeRoot: string, priorSidecar?: string): AttestationsRead {
   const r = readAttestationFile(storeFile, storeRoot);
   if (r.state === "hit") {
     const file = r.file as KgAttestations;
     return { state: "hit", attestations: (file.pair_attestations ?? []) as PairAttestation[] };
   }
-  if (r.state === "miss") return { state: "miss", attestations: [] };
+  if (r.state === "miss" || r.state === "absent") {
+    const prior = priorKgJudgements(priorSidecar);
+    if (prior.state === "unknown") return { state: "unknown", reason: prior.reason };
+    const list = prior.state === "found" ? (prior.pair_attestations as PairAttestation[]) : [];
+    return { state: r.state, attestations: list, moved: list.length };
+  }
   return { state: r.state, reason: r.reason };
 }
 

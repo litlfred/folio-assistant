@@ -81,6 +81,7 @@ import {
 import { execFileSync } from "node:child_process";
 import { join, relative, resolve, dirname, basename } from "node:path";
 import { blockQaPath, existingBlockQaPath } from "./qa-paths";
+import { blockAttestationKey, composeCriteria, finalizeCriteria, refusalLine, resolvePrior } from "../../schemas/qa-attestations.ts";
 import { findContentRepoRoot } from "./repo-root";
 
 // ---------------------------------------------------------------------------
@@ -548,7 +549,7 @@ function writeSidecar(
   scriptHash: string,
   scriptSha: string,
   reviewedSha: string,
-) {
+): boolean {
   // LOAD-THEN-WRITE. The read falls back to the legacy sibling so a folio whose
   // verdicts have not migrated keeps its history instead of being overwritten
   // by a fresh empty document; the write lands in the results tree only, so
@@ -557,14 +558,24 @@ function writeSidecar(
   const blockRoot = join(b.dir, b.root);
   const qaReadPath = existingBlockQaPath(repoRoot, blockRoot);
   const qaPath = blockQaPath(repoRoot, blockRoot);
-  let doc: QaSidecarDoc = {};
+  let prior: QaSidecarDoc | undefined;
   if (qaReadPath) {
     try {
-      doc = JSON.parse(readFileSync(qaReadPath, "utf8")) as QaSidecarDoc;
+      prior = JSON.parse(readFileSync(qaReadPath, "utf8")) as QaSidecarDoc;
     } catch {
-      doc = {};
+      prior = undefined;
     }
   }
+  // Attestations come from the store, never from the prior report (bean
+  // `8wj1`, C11). This writer REPLACES each criterion's array below, so an
+  // agent's adjudication on a language-trap criterion used to vanish on the
+  // next run even with the prior present; `finalizeCriteria` puts it back.
+  const attested = resolvePrior(repoRoot, blockAttestationKey(repoRoot, blockRoot), prior);
+  if (!attested.ok) {
+    console.error(refusalLine("language-trap-audit", relative(repoRoot, blockRoot), attested));
+    return false;
+  }
+  const doc: QaSidecarDoc = attested.prior ?? { criteria: composeCriteria({}, attested.attestations) as QaSidecarDoc["criteria"] };
   doc.$schema ??= "block-qa/v1";
   doc.label ??= b.label;
   doc.kind ??= b.kind;
@@ -590,11 +601,22 @@ function writeSidecar(
     doc.criteria[f.criterion] = [entry];
   }
   doc.updated_at = now;
+  try {
+    doc.criteria = finalizeCriteria(attested, doc.criteria, "script");
+  } catch (err) {
+    console.error(refusalLine("language-trap-audit", relative(repoRoot, blockRoot), {
+      state: "unknown",
+      path: attested.path,
+      reason: err instanceof Error ? err.message : String(err),
+    }));
+    return false;
+  }
   // The mirrored results directory is not guaranteed to exist for a block
   // that has never had a verdict written under the new convention; the
   // legacy sibling location always did, because it was the block's own.
   mkdirSync(dirname(qaPath), { recursive: true });
   writeFileSync(qaPath, JSON.stringify(doc, null, 2) + "\n");
+  return true;
 }
 
 // ---------------------------------------------------------------------------
@@ -791,6 +813,8 @@ function main() {
     }
   }
 
+  // Sidecars NOT written because their attestations could not be read.
+  let refusedSidecars = 0;
   if (writeSidecars) {
     const scriptHash = sha12(
       readFileSync(resolve(__dirname, basename(__filename)), "utf8"),
@@ -811,7 +835,7 @@ function main() {
     const reviewedSha = headSha(repoRoot);
     for (const b of blocks) {
       const fs = allFindings.filter((f) => f.mdPath === b.mdPath);
-      writeSidecar(b, fs, scriptHash, scriptSha, reviewedSha);
+      if (!writeSidecar(b, fs, scriptHash, scriptSha, reviewedSha)) refusedSidecars++;
     }
   }
 
@@ -850,6 +874,10 @@ function main() {
     console.log(`  total candidate fails: ${fails.length}`);
     if (jsonOut) console.log(`  json -> ${jsonOut}`);
     if (mdOut) console.log(`  md   -> ${mdOut}`);
+  }
+  if (refusedSidecars > 0) {
+    console.error(`language-trap-audit: UNKNOWN — ${refusedSidecars} sidecar(s) not written; see above`);
+    process.exit(4);
   }
   process.exit(fails.length ? 1 : 0);
 }

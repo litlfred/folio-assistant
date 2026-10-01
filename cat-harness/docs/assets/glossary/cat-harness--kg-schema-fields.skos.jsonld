@@ -18938,6 +18938,44 @@
       "skos:note": "candidate"
     },
     {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/qa-attestations.attestationkey.locale",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "AttestationKey.locale"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "`translation-qa` only."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/qa-attestations.ts#AttestationKey.locale",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/qa-attestations.attestationkey.subject",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "AttestationKey.subject"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The subject root relative to the instance root, POSIX, without extension."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/qa-attestations.ts#AttestationKey.subject",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/qa-attestations.kgattestationtree.atthome",
       "@type": "skos:Concept",
       "skos:inScheme": {

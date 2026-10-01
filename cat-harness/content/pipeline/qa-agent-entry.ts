@@ -26,8 +26,9 @@
 import { createHash } from "node:crypto";
 import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import { execFileSync } from "node:child_process";
-import { basename, dirname, join } from "node:path";
+import { basename, dirname, join, relative } from "node:path";
 import { blockQaPath, existingBlockQaPath } from "./qa-paths";
+import { blockAttestationKey, composeCriteria, finalizeCriteria, refusalLine, resolvePrior } from "../../schemas/qa-attestations.ts";
 import { findContentRepoRoot } from "./repo-root";
 
 function arg(name: string): string | undefined {
@@ -105,15 +106,25 @@ interface QaSidecarDoc {
   [k: string]: unknown;
 }
 
-let doc: QaSidecarDoc = {};
+let prior: QaSidecarDoc | undefined;
 if (qaReadPath) {
   try {
-    doc = JSON.parse(readFileSync(qaReadPath, "utf8")) as QaSidecarDoc;
+    prior = JSON.parse(readFileSync(qaReadPath, "utf8")) as QaSidecarDoc;
   } catch {
     console.error(`unparseable sidecar (fix by hand first): ${qaReadPath}`);
     process.exit(1);
   }
 }
+// An agent verdict is an ATTESTATION (bean `8wj1`, D2): it is written to the
+// attestation store first, and the block's other attestations come from that
+// store — never from the prior report, whose absence used to mean they were
+// dropped (C11). A store that cannot be read means nothing is written.
+const attested = resolvePrior(repoRoot, blockAttestationKey(repoRoot, blockRoot), prior);
+if (!attested.ok) {
+  console.error(refusalLine("qa-agent-entry", relative(repoRoot, blockRoot), attested));
+  process.exit(4);
+}
+const doc: QaSidecarDoc = attested.prior ?? { criteria: composeCriteria({}, attested.attestations) as QaSidecarDoc["criteria"] };
 doc.$schema ??= "block-qa/v1";
 doc.criteria ??= {};
 doc.criteria[criterion] ??= [];
@@ -134,6 +145,16 @@ if (notes) entry.notes = notes;
 
 doc.criteria![criterion].push(entry);
 doc.updated_at = entry.reviewed_at;
+try {
+  doc.criteria = finalizeCriteria(attested, doc.criteria!, "attesting");
+} catch (err) {
+  console.error(refusalLine("qa-agent-entry", relative(repoRoot, blockRoot), {
+    state: "unknown",
+    path: attested.path,
+    reason: err instanceof Error ? err.message : String(err),
+  }));
+  process.exit(4);
+}
 // The mirrored results directory is not guaranteed to exist for a block
 // that has never had a verdict written under the new convention; the
 // legacy sibling location always did, because it was the block's own.

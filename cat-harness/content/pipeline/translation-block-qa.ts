@@ -74,6 +74,15 @@ import { resolvePoSources } from "./po-resolve.ts";
 import { extractMarkdown } from "./pot-extract.ts";
 import { gitFileCommitSha, gitHeadSha, hashFile, sweepActor, walkBlocks } from "./qa-utils.ts";
 import { existingTranslationQaPath, translationQaPath } from "./qa-paths.ts";
+import {
+  isAsciiEscaped,
+  missingAttestations,
+  refusalLine,
+  resolvePrior,
+  translationAttestationKey,
+  writeCriteriaAttestations,
+  type PriorOk,
+} from "../../schemas/qa-attestations.ts";
 import { sourceLocale, targetLocales } from "./translation-index.ts";
 import { siteDirFor } from "../../schemas/cat-harness.ts";
 
@@ -674,6 +683,37 @@ export function mergeCriteria(
 }
 
 /**
+ * {@link mergeCriteria}, with the attestation half read from the STORE.
+ *
+ * Bean `8wj1` (C11). `mergeCriteria` keeps whatever it is handed as `existing`,
+ * which was the prior report read off disk — so with the prior absent, the two
+ * agent verdicts on `translation-semantic-roundtrip` were simply not handed to
+ * it, and the re-run wrote `[]` in their place. Here the prior's attestations
+ * are replaced by the store's before the merge, and the merge is checked to have
+ * kept every one of them. A store that cannot be read is a refusal: the caller
+ * writes nothing.
+ *
+ * Order is `mergeCriteria`'s, unchanged: on a criterion this sweep measures its
+ * fresh entry leads; on one it does not, the attestations rule.
+ */
+export function mergeWithAttestations(
+  instanceRoot: string,
+  subjectRoot: string,
+  locale: string,
+  current: TranslationBlockQaReport | undefined,
+  fresh: Record<string, TranslationQaEntry[]>,
+):
+  | { ok: true; criteria: Record<string, TranslationQaEntry[]>; resolution: PriorOk }
+  | { ok: false; state: string; path: string; reason: string } {
+  const res = resolvePrior(instanceRoot, translationAttestationKey(instanceRoot, subjectRoot, locale), current);
+  if (!res.ok) return res;
+  const criteria = mergeCriteria(res.prior?.criteria ?? res.attestations, fresh);
+  const lost = missingAttestations(criteria, res.attestations);
+  if (lost.length > 0) return { ok: false, state: "unknown", path: res.path, reason: `the merge would drop ${lost.join(", ")}` };
+  return { ok: true, criteria, resolution: res };
+}
+
+/**
  * Whether a rewritten sidecar differs in SUBSTANCE from the one on disk.
  *
  * Timestamps move on every run, so comparing the whole file would report every
@@ -782,6 +822,8 @@ interface SweepTally {
   written: number;
   stale: number;
   skipped: number;
+  /** (subject, locale) pairs NOT written because their attestations could not be read. Never a pass. */
+  refused: number;
 }
 
 /**
@@ -844,7 +886,13 @@ function sweepSubject(
     const current = existing
       ? (JSON.parse(readFileSync(existing, "utf-8")) as TranslationBlockQaReport)
       : undefined;
-    doc.criteria = mergeCriteria(current?.criteria, doc.criteria);
+    const merged = mergeWithAttestations(INSTANCE_ROOT, subjectRoot, locale, current, doc.criteria);
+    if (!merged.ok) {
+      console.error(refusalLine("translation-block-qa", `${relative(INSTANCE_ROOT, subjectRoot)} (${locale})`, merged));
+      tally.refused++;
+      continue;
+    }
+    doc.criteria = merged.criteria;
     const body = JSON.stringify(doc, null, 2) + "\n";
     // A verdict identical in substance but sitting at the LEGACY path is not
     // up to date: it still has to be written to the results tree, or every run
@@ -854,6 +902,12 @@ function sweepSubject(
       console.error(`  ✗ ${relative(INSTANCE_ROOT, out)} is stale`);
       tally.stale++;
       continue;
+    }
+    // On an instance that never had a store, the prior's attestations move into one now.
+    if (merged.resolution.adopt) {
+      writeCriteriaAttestations(INSTANCE_ROOT, merged.resolution.key, merged.resolution.attestations, {
+        asciiEscape: existing !== undefined && isAsciiEscaped(readFileSync(existing, "utf-8")),
+      });
     }
     mkdirSync(dirname(out), { recursive: true });
     writeFileSync(out, body);
@@ -872,7 +926,7 @@ if (import.meta.main) {
     .map((s) => s.trim())
     .filter(Boolean);
 
-  const tally: SweepTally = { written: 0, stale: 0, skipped: 0 };
+  const tally: SweepTally = { written: 0, stale: 0, skipped: 0, refused: 0 };
 
   for (const block of walkBlocks(root, { includeUnlabelled: true, verify: false })) {
     if (!block.md || !existsSync(block.md)) continue;
@@ -894,7 +948,12 @@ if (import.meta.main) {
     }
   }
 
-  const { written, stale, skipped } = tally;
+  const { written, stale, skipped, refused } = tally;
+
+  if (refused > 0) {
+    console.error(`\n${refused} (subject, locale) pair(s) UNKNOWN: their attestations could not be read, so nothing was written for them`);
+    process.exit(4);
+  }
 
   if (check && stale > 0) {
     console.error(

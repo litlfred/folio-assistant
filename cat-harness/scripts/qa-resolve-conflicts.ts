@@ -37,12 +37,24 @@
  * A non-script entry is self-identifying, so the guard is a predicate and not a
  * judgement call. It is applied TWICE on purpose:
  *
- * 1. **Before** — refuse any file where either side carries one, leaving it
- *    conflicted for a person.
+ * 1. **Before** — refuse any file where either side carries one that the
+ *    ATTESTATION STORE does not hold, leaving it conflicted for a person.
  * 2. **After** — verify that every non-script entry present in either side is
  *    still present in the regenerated file. A fast path that is the only
  *    protection is a fast path that becomes the protection the day its
  *    assumption breaks.
+ *
+ * ## The guard reads the store (bean `8wj1`)
+ *
+ * Until the attestation store existed, "either side carries a non-script
+ * entry" meant "regeneration would destroy it", because the writers kept those
+ * entries only by reading the file being regenerated. Since `8wj1` every block
+ * and translation writer reads them from `test/attestations/` instead
+ * (`schemas/qa-attestations.ts`), so a file whose non-script entries
+ * are ALL held there, byte for byte, regenerates without losing one, and is
+ * resolved. One the store does not hold, a store file that is itself
+ * conflicted, or a store that cannot be read, is still refused: those are the
+ * cases where a person has to look.
  *
  * ## Two constraints found by resolving a real conflict rather than imagining one
  *
@@ -80,6 +92,7 @@ import { existsSync, readFileSync } from "node:fs";
 import { join, relative } from "node:path";
 
 import { directoryForGraph, repoRootFor } from "../schemas/cat-harness.ts";
+import { attestationKeyForDerived, attestationPath, entryIdentity, readCriteriaAttestations } from "../schemas/qa-attestations.ts";
 
 const ROOT = join(import.meta.dir, "..");
 const dryRun = process.argv.includes("--dry-run");
@@ -101,6 +114,8 @@ export interface SideScan {
   kinds: string[];
   /** Identities of the non-script entries, for the after-check. */
   nonScript: string[];
+  /** The non-script entries themselves — criterion and exact serialisation — for the store check. */
+  nonScriptEntries?: { criterion: string | undefined; json: string }[];
   /** Distinct `reviewer.id` values — which generator wrote this. */
   reviewerIds: string[];
   /** A side that would not parse. Never treated as "nothing found". */
@@ -128,9 +143,15 @@ export function scanDocument(doc: unknown, into: SideScan, path: string[] = []):
     const id = typeof r["id"] === "string" ? (r["id"] as string) : undefined;
     if (kind !== undefined) {
       into.kinds.push(kind);
-      if (kind !== "script") into.nonScript.push(`${path.join(".")}|${kind}|${id ?? "?"}`);
+      if (kind !== "script") {
+        into.nonScript.push(`${path.join(".")}|${kind}|${id ?? "?"}`);
+        const criterion = path.length >= 3 && path[path.length - 3] === "criteria" ? path[path.length - 2] : undefined;
+        (into.nonScriptEntries ??= []).push({ criterion, json: entryIdentity(doc) });
+      }
     }
-    if (id !== undefined && !into.reviewerIds.includes(id)) into.reviewerIds.push(id);
+    // Only a SCRIPT reviewer names a generator; an agent's id never will, and
+    // looking one up would report a "missing writer" for every adjudication.
+    if (id !== undefined && kind === "script" && !into.reviewerIds.includes(id)) into.reviewerIds.push(id);
   }
   for (const [k, v] of Object.entries(rec)) scanDocument(v, into, [...path, k]);
 }
@@ -184,8 +205,37 @@ export interface Outcome {
   reason: string;
 }
 
+/**
+ * Does the attestation store hold every non-script entry of both sides?
+ * `undefined` when it does; otherwise why not. Never "yes" by default: a family
+ * the store does not serve, a store file in conflict, or an unreadable store
+ * are each a reason.
+ */
+export function storeHolds(
+  repoRoot: string,
+  instanceRoot: string,
+  path: string,
+  scan: SideScan,
+  unmerged: readonly string[],
+): string | undefined {
+  const key = attestationKeyForDerived(instanceRoot, join(repoRoot, path));
+  if (!key) return "its family is not one the attestation store serves";
+  const storePath = relative(repoRoot, attestationPath(instanceRoot, key));
+  if (unmerged.includes(storePath)) return `its attestation file ${storePath} is itself conflicted`;
+  const read = readCriteriaAttestations(instanceRoot, key);
+  if (read.state === "corrupt" || read.state === "unknown") return `the attestation store is ${read.state} at ${storePath}: ${read.reason}`;
+  const held = read.state === "hit" ? read.criteria : {};
+  const missing = (scan.nonScriptEntries ?? []).filter(
+    (e) => e.criterion === undefined || !(held[e.criterion] ?? []).some((h) => entryIdentity(h) === e.json),
+  );
+  if (missing.length > 0) {
+    return `${missing.length} of them ${read.state === "absent" ? "with no attestation store at all" : `not held in ${storePath}`} — run \`bun run qa:attestations:migrate\` first`;
+  }
+  return undefined;
+}
+
 /** Decide, per conflicted path, without touching anything. */
-export function plan(repoRoot: string, qaDir: string, paths: readonly string[]): Outcome[] {
+export function plan(repoRoot: string, qaDir: string, paths: readonly string[], instanceRoot?: string): Outcome[] {
   return paths.map((path) => {
     if (!path.startsWith(qaDir)) {
       return { path, action: "skip" as const, reason: `outside the declared \`qa\` graph (${qaDir})` };
@@ -199,10 +249,19 @@ export function plan(repoRoot: string, qaDir: string, paths: readonly string[]):
       };
     }
     if (scan.nonScript.length > 0) {
+      const kinds = [...new Set(scan.nonScript.map((s) => s.split("|")[1]))].join(", ");
+      const why = instanceRoot === undefined ? "no instance root was given to find the attestation store" : storeHolds(repoRoot, instanceRoot, path, scan, paths);
+      if (why !== undefined) {
+        return {
+          path,
+          action: "refuse" as const,
+          reason: `carries ${scan.nonScript.length} non-script verdict(s) (${kinds}) — regenerating could destroy them: ${why}`,
+        };
+      }
       return {
         path,
-        action: "refuse" as const,
-        reason: `carries ${scan.nonScript.length} non-script verdict(s) (${[...new Set(scan.nonScript.map((s) => s.split("|")[1]))].join(", ")}) — regenerating would destroy them`,
+        action: "resolve" as const,
+        reason: `${scan.nonScript.length} non-script verdict(s) (${kinds}), every one held in the attestation store, which the regenerating writer reads`,
       };
     }
     return {
@@ -251,7 +310,8 @@ if (import.meta.main) {
     process.exit(0);
   }
 
-  const outcomes = plan(repoRoot, qaDir, paths);
+  // The instance that declares the `qa` directory: its `test/attestations/` is the store.
+  const outcomes = plan(repoRoot, qaDir, paths, ROOT);
   const resolve = outcomes.filter((o) => o.action === "resolve");
   const refuse = outcomes.filter((o) => o.action === "refuse");
   const skip = outcomes.filter((o) => o.action === "skip");
@@ -274,11 +334,11 @@ if (import.meta.main) {
   }
 
   // What must survive: every non-script entry from either side of every file
-  // this command touches. It is empty by construction today (a file carrying
-  // one is refused above) and is computed anyway, because the check that only
-  // ever passes is the one nobody notices has stopped running.
+  // this command touches — by criterion and exact serialisation, not by array
+  // index, since a writer composes attestations FIRST and an index may move.
   const mustSurvive = new Map<string, string[]>();
-  for (const o of resolve) mustSurvive.set(o.path, scanConflict(repoRoot, o.path).nonScript);
+  const survivalId = (e: { criterion: string | undefined; json: string }) => `${e.criterion ?? "?"}|${e.json}`;
+  for (const o of resolve) mustSurvive.set(o.path, (scanConflict(repoRoot, o.path).nonScriptEntries ?? []).map(survivalId));
 
   // Take either side. Which one does not matter: the regeneration below
   // overwrites it from the MERGED tree, and both sides are stale with respect
@@ -323,9 +383,10 @@ if (import.meta.main) {
     if (before.length === 0) continue;
     const after: SideScan = { kinds: [], nonScript: [], reviewerIds: [], unreadable: [] };
     scanDocument(JSON.parse(readFileSync(join(repoRoot, path), "utf-8")), after);
+    const afterIds = new Set((after.nonScriptEntries ?? []).map(survivalId));
     for (const entry of before) {
-      if (!after.nonScript.includes(entry)) {
-        console.error(`  ✗ ${path}: regeneration dropped ${entry}`);
+      if (!afterIds.has(entry)) {
+        console.error(`  ✗ ${path}: regeneration dropped ${entry.slice(0, 160)}`);
         lost++;
       }
     }

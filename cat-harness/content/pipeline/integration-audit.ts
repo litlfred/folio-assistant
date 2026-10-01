@@ -41,6 +41,7 @@ import {
   WATCHER_CRITERIA_BY_AXIS,
 } from "./qa-criteria-registry";
 import { blockQaPath, existingBlockQaPath } from "./qa-paths";
+import { blockAttestationKey, finalizeCriteria, refusalLine, resolvePrior } from "../../schemas/qa-attestations.ts";
 import { findContentRepoRoot } from "./repo-root";
 import type { BlockQaReport } from "../../schemas/block-qa";
 
@@ -205,6 +206,7 @@ function run(): void {
   > = {};
   let totalBlocks = 0;
   let blocksAffected = 0;
+  let refused = 0;
 
   const repoRoot = findContentRepoRoot();
 
@@ -220,7 +222,22 @@ function run(): void {
     // `undefined` means no verdict anywhere — the same `continue` the missing
     // file always took, and never "I looked in the wrong place".
     const qaReadPath = existingBlockQaPath(repoRoot, block.root);
-    const report = qaReadPath ? loadQaReport(qaReadPath) : undefined;
+    // Attestations come from the store, never from the prior report (bean
+    // `8wj1`, C11): this tool rewrites the report, so a prior whose agent
+    // entries were missing would otherwise be saved without them.
+    const attested = resolvePrior(
+      repoRoot,
+      blockAttestationKey(repoRoot, block.root),
+      qaReadPath ? loadQaReport(qaReadPath) : undefined,
+    );
+    if (!attested.ok) {
+      console.error(refusalLine("integration-audit", relative(repoRoot, block.root), attested));
+      refused++;
+      continue;
+    }
+    // No derived report: there is nothing to invalidate, and the store's
+    // attestations are left exactly as they are.
+    const report = attested.prior;
     if (!report) continue;
     // The write lands in the results tree whichever location it was read from,
     // so invalidating a legacy folio's verdict also migrates it — one verdict
@@ -240,9 +257,29 @@ function run(): void {
       entry.blocks++;
     }
 
+    // `--include-agent` is the one deliberate removal of an attestation, so it
+    // finalises as an ATTESTING writer and the store records the removal; without
+    // it, the store's attestations are put back whatever the invalidation did.
+    try {
+      report.criteria = finalizeCriteria(attested, report.criteria, args.includeAgent ? "attesting" : "script", {
+        dryRun: args.dryRun,
+      });
+    } catch (err) {
+      console.error(refusalLine("integration-audit", relative(repoRoot, block.root), {
+        state: "unknown",
+        path: attested.path,
+        reason: err instanceof Error ? err.message : String(err),
+      }));
+      refused++;
+      continue;
+    }
     if (!args.dryRun) {
       saveQaReport(qaPath, report);
     }
+  }
+  if (refused > 0) {
+    console.error(`integration-audit: UNKNOWN — ${refused} block(s) not written because their attestations could not be read`);
+    process.exit(4);
   }
 
   const summary = {

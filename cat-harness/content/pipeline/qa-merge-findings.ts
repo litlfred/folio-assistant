@@ -42,7 +42,8 @@ import {
   insertAdjudication,
 } from "./qa-utils";
 import { qaCriteriaByIdFor } from "./qa-criteria-registry";
-import { blockQaPath, existingBlockQaPath } from "./qa-paths";
+import { blockQaPath, existingBlockQaPath, findContentRepoRoot } from "./qa-paths";
+import { blockAttestationKey, composeCriteria, finalizeCriteria, refusalLine, resolvePrior } from "../../schemas/qa-attestations.ts";
 import type {
   BlockQaReport,
   QaCriterionEntry,
@@ -161,6 +162,8 @@ function run(): void {
   const nowIso = new Date().toISOString();
   let added = 0;
   let skipped = 0;
+  // Findings NOT merged because the attestation store could not be read.
+  let refused = 0;
 
   // Hoisted out of the loop: `qaCriteriaByIdFor` memoises the derivation but
   // builds a fresh index on each call, and the repository root is the same for
@@ -182,7 +185,15 @@ function run(): void {
     // qa-paths.ts contract and never puts a verdict beside its block; loading
     // just below falls back to the legacy sibling so a not-yet-migrated
     // folio's history is read rather than overwritten with an empty report.
-    const repo = repoRoot();
+    //
+    // Anchored at the block's own CONTENT repo, found the way qa-sweep finds it
+    // (bean `8wj1`). This was the git top level, which in a checkout holding
+    // more than one instance — this one: the verdicts live under
+    // `cat-harness/test/results/` — named a results tree nothing reads, so a
+    // merged finding started a fresh report there instead of joining the real
+    // one. The attestation store is anchored at the same root, so the sweep
+    // and this tool agree on where an adjudication lives.
+    const repo = findContentRepoRoot(rootAbs, repoRoot());
     const qaPath = blockQaPath(repo, rootAbs);
     if (!existsSync(tsPath)) {
       console.error(`no .ts manifest at ${tsPath}`);
@@ -208,7 +219,19 @@ function run(): void {
 
     // READ: prefer the results-tree verdict, fall back to the legacy sidecar
     // (see the comment on `qaPath` above).
-    let report: BlockQaReport | undefined = loadQaReport(existingBlockQaPath(repo, rootAbs) ?? qaPath);
+    // An adjudication is an ATTESTATION: it is written to the store first, and
+    // the store — never the prior report — is where the others come from.
+    const attested = resolvePrior(
+      repo,
+      blockAttestationKey(repo, rootAbs),
+      loadQaReport(existingBlockQaPath(repo, rootAbs) ?? qaPath),
+    );
+    if (!attested.ok) {
+      console.error(refusalLine("qa-merge-findings", relative(repo, rootAbs), attested));
+      refused++;
+      continue;
+    }
+    let report: BlockQaReport | undefined = attested.prior;
     if (!report) {
       // CatBootstrap a fresh sidecar — agent can write the first
       // entry even if qa-sweep hasn't run yet. Reuses the shared
@@ -229,7 +252,7 @@ function run(): void {
             : undefined,
         },
         source_hashes: currentHashes,
-        criteria: {},
+        criteria: composeCriteria({}, attested.attestations) as BlockQaReport["criteria"],
         updated_at: nowIso,
       };
     }
@@ -252,6 +275,17 @@ function run(): void {
     // Rationale and the measurement in `insertAdjudication`.
     report.criteria[f.criterion] = insertAdjudication(existing, entry);
     report.updated_at = nowIso;
+    try {
+      report.criteria = finalizeCriteria(attested, report.criteria, "attesting");
+    } catch (err) {
+      console.error(refusalLine("qa-merge-findings", relative(repo, rootAbs), {
+        state: "unknown",
+        path: attested.path,
+        reason: err instanceof Error ? err.message : String(err),
+      }));
+      refused++;
+      continue;
+    }
     saveQaReport(qaPath, report);
     added++;
   }
@@ -261,6 +295,7 @@ function run(): void {
       {
         added,
         skipped,
+        refused,
         reviewer: batch.reviewer,
         head: headSha,
       },
@@ -268,6 +303,7 @@ function run(): void {
       2,
     ),
   );
+  if (refused > 0) process.exit(4);
 }
 
 run();

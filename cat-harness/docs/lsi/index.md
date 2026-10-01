@@ -129,12 +129,12 @@ Each dimension is a **contrast** between two poles, shown by their highest-loadi
 
 | dim | σ | one pole | the other pole |
 |---|---|---|---|
-| 1 | 43.74 | instance, harness, kind, directory, session, graph, block, page | *(none)* |
-| 2 | 21.43 | watcher, slot, sibling, queue, backlog, prs, block, commits | harness, instance, declaration, directory, node, directories, graph, bootstrap |
-| 3 | 17.79 | session, beans, goals, branch, store, epic, window, push | slot, chapter, block, edges, formal, glossary, project, proof |
-| 4 | 16.46 | page, block, section, sections, chapter, blocks, manifest, text | ledger, sibling, subdirectory, items, sessions, window, queue, coordination |
+| 1 | 43.76 | instance, harness, kind, directory, session, graph, block, page | *(none)* |
+| 2 | 21.44 | watcher, slot, sibling, queue, backlog, prs, block, commits | harness, instance, declaration, directory, node, directories, graph, bootstrap |
+| 3 | 17.79 | session, beans, goals, branch, epic, window, store, push | slot, chapter, block, edges, formal, glossary, project, proof |
+| 4 | 16.49 | page, block, section, chapter, sections, blocks, manifest, text | ledger, sibling, subdirectory, items, sessions, window, queue, coordination |
 | 5 | 14.81 | locale, translated, navbar, translation, page, french, staging, theme | edges, forward, edge, logical, backward, cross-chapter, energy, sections |
-| 6 | 14.77 | lane, actor, role, requirements, feature, task, phase, stakeholders | rung, queue, slide, arm, bytes, zip, archive, images |
+| 6 | 14.77 | lane, actor, role, requirements, feature, task, phase, impact | rung, queue, slide, arm, bytes, zip, archive, images |
 | 7 | 14.38 | edges, forward, preview, backward, edge, cross-chapter, energy, logical | actor, lane, role, backlog, rung, criterion, login, roles |
 | 8 | 14.14 | locale, translation, translated, french, back-translation, translations, badge, language | preview, feature, phase, theme, option, staging, merge, sha |
 

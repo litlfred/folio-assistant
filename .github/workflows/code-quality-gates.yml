@@ -1868,6 +1868,10 @@ jobs:
           bun run kg:export:check
           bun run check:xml-comments
           bun run check:orphan-verdicts
+          # Every QA judgement is held in the attestation store (beans `2gst`,
+          # `8wj1`, D2): no kg-qa sidecar still carries one, and every non-script
+          # block/translation verdict in a derived report is held there too.
+          bun run qa:attestations:migrate:check
           bun run check:partition
           # Every XML namespace the corpus declares is reconciled against a
           # specification record naming its EDITION. Added with the registry
