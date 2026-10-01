@@ -27,7 +27,6 @@ import {
 } from "../../schemas/cat-harness.ts";
 import { overDeepLinks, scanSubgraphs } from "../check-subgraphs.ts";
 import { checkoutDirectories } from "../../schemas/harness-config.ts";
-import { checkoutDirectories as reportDirectories } from "../../schemas/cat-harness.ts";
 
 const ROOT = resolve(import.meta.dir, "../..");
 const dirs = resolveDirectories([{ name: "(local)", root: ROOT, own: true }]);
@@ -151,17 +150,11 @@ describe("the entanglement report", () => {
     // Same call shape as `scanSubgraphs` itself — it takes an instance CHAIN,
     // not a path, and passing the root produced a `chain.find is not a
     // function` rather than a wrong answer.
-    // Over the directories the sweep ITSELF reads — `scanSubgraphs` composes
-    // them with `checkoutDirectories` from `schemas/cat-harness.ts`, which
-    // qualifies a colliding id as `<instance>-<id>` (`agent-skills-library`).
-    // This asked `harness-config.ts`'s namesake, which labels the same
-    // directory `<member>/<id>`; the two agreed only while cat-harness carried
-    // `scope: "repository"` mirrors under the qualified ids. Once PR0's
-    // retirement of the mirrors was restored (S0, bean `hx65`), 229 derived
-    // links were labelled with ids this set did not contain.
-    const dirs = reportDirectories(ROOT);
+    // Over the CORPUS the sweep reads since placement PR0 (bean `ejye`), with
+    // a foreign directory labelled `<member>/<id>`, as the report labels it.
+    const dirs = checkoutDirectories(ROOT, { stackedOn: ROOT });
     const derivedIds = new Set(
-      dirs.filter((d) => d.graphKinds.some((g) => isDerivedGraph(g))).map((d) => d.id),
+      dirs.filter((d) => d.graphKinds.some((g) => isDerivedGraph(g))).flatMap((d) => [d.id, `${d.member}/${d.id}`]),
     );
     expect(derivedIds.size, "no derived directory is declared, so this proves nothing").toBeGreaterThan(0);
 
