@@ -2264,3 +2264,64 @@ jobs:
       # `node_modules/` counted as graph nodes, pinned in a committed sidecar.
       - name: the registration chain is current, read unmasked
         run: bun run skill:register:check
+
+  qa-publish:
+    # bpmn-node: Task_QaPublish
+    name: Publish QA results to qa-reports (not a gate)
+    #
+    # Bean `16ei`, arc `3fva`, owner rulings D1 and D3: each run's QA results
+    # go to the orphan `qa-reports` branch, keyed `main/<sha>/` on a push to
+    # main and `pr/<n>/<head-sha>/` on a same-repository PR.
+    #
+    # ## A SEPARATE job, after the gates, whatever they concluded
+    #
+    # `needs: gates` orders it after the gates; `always()` runs it even when
+    # they are red, because the evidence of a red commit is evidence too, and
+    # the manifest records the gates' result beside it. Being its own job is
+    # what keeps a red publish from masking a gate: it fails in its own lane
+    # and the gates' verdict is untouched.
+    #
+    # ## It is not a gate, and `gates.ts` knows it
+    #
+    # This is the only job here with `contents: write`, and `gates.ts` skips a
+    # job holding it (`publishes`), so `bun run gates` never pushes from a
+    # contributor's machine.
+    #
+    # ## Fork PRs
+    #
+    # A fork PR's token is read-only (spike `3ds9`). `qa:publish --github`
+    # decides that itself and exits 0 with a `::notice` naming the reason, so
+    # the skip is stated, never silent and never a red run.
+    #
+    # It publishes what the checkout holds under every declared `qa` directory.
+    # While `test/results/` is still committed, that is the committed content;
+    # once a directory declares `storage`, the gates job must hand its working
+    # copy over (an artifact) before this publishes anything the run produced.
+    needs: [gates]
+    if: ${{ always() && (github.event_name == 'push' || github.event_name == 'pull_request') }}
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    concurrency:
+      group: qa-publish-${{ github.event.pull_request.number || github.sha }}
+      cancel-in-progress: false
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          submodules: true
+
+      - uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: 1.3.14
+
+      - name: Install dependencies
+        run: bun install --frozen-lockfile
+
+      # Every write to `qa-reports` goes through `qa-store.ts`: fetch the tip,
+      # splice, `commit-tree -p`, push without `-f`, three attempts with the
+      # backoff from `backoff-sleep.ts`. `check:workflows` fails a raw push
+      # (`qa-reports-unretried`).
+      - name: Publish this run's QA results (skips fork PRs with a notice)
+        env:
+          GATES_RESULT: ${{ needs.gates.result }}
+        run: bun run qa:publish --github --gates-result "$GATES_RESULT"
