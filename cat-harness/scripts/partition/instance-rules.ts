@@ -1642,7 +1642,7 @@ export const RULES: Rule[] = [
     // fires on nothing while reading as a live adjudication is worse than no
     // rule, because the next reader takes it as evidence the file is still
     // here. The reasoning is kept; the dead prefix is not.
-    prefixes: ["skills/authoring-math/", "skills/folio-paper-adapter/", "computations/", "latex/", "scripts/render-tex/", "scripts/docker-latex-build/", "scripts/knot-plots/"],
+    prefixes: ["skills/authoring/authoring-math/", "skills/authoring/folio-paper-adapter/", "computations/", "latex/", "scripts/render-tex/", "scripts/docker-latex-build/", "scripts/knot-plots/"],
     exact: ["schemas/formalization-types.ts", "schemas/precision-scalar.ts", "schemas/refactor-strategy.ts"],
   },
   {
@@ -1655,7 +1655,7 @@ export const RULES: Rule[] = [
     repo: "base",
     // declared-path-literal: the TARGET layout of the five-repo split, which no
     // declaration in THIS repo describes — that is the whole point of the plan.
-    prefixes: ["skills/authoring-who-smart-guidelines/"],
+    prefixes: ["skills/authoring/authoring-who-smart-guidelines/"],
     // `schemas/dak-blocks.ts` was here and is CORE. Measured: core's own
     // `schemas/block-kinds.ts` already declares `CONTENT_ADAPTERS =
     // ["paper", "dak"]` and `DAK_BLOCK_KINDS`, so the DAK block kinds are
@@ -1716,7 +1716,7 @@ export const RULES: Rule[] = [
     repo: "core",
     // declared-path-literal: the TARGET layout of the five-repo split, which no
     // declaration in THIS repo describes — that is the whole point of the plan.
-    prefixes: ["adapters/mcp-server/", "adapters/document/", "src/blocks/", "scripts/translation/", "skills/folio-core/", "skills/folio-document-adapter/", "skills/authoring-document/", "skills/content-lifecycle/", "content/pipeline/", "schemas/", "ui/", "viewer/", "translations/"],
+    prefixes: ["adapters/mcp-server/", "adapters/document/", "src/blocks/", "scripts/translation/", "skills/folio-core/", "skills/authoring/folio-document-adapter/", "skills/authoring-document/", "skills/authoring/content-lifecycle/", "content/pipeline/", "schemas/", "ui/", "viewer/", "translations/"],
     // `blueprint/` STOOD in the prefixes above until 2026-09-30 (bean `vov0`):
     // it held a hand-written QOU blueprint, folio content in the platform, and
     // is removed now that `blueprint-layout.ts` generates a paper's

@@ -517,7 +517,7 @@ bootstrap DECLARES (7 own skills + 3 diagrams), not from what a run reported.
     skill-in-role-or-process     23 findings
 
 Counts match, so this single leak explains the whole remainder. `smart-base-tools`
-lives at `cat-harness/skills/authoring-who-smart-guidelines/smart-base-tools.md`
+lives at `cat-harness/skills/authoring/authoring-who-smart-guidelines/smart-base-tools.md`
 and nothing under `bootstrap/` mentions it.
 
 It is in `knownSkills` — the canonical function with many consumers — so it is

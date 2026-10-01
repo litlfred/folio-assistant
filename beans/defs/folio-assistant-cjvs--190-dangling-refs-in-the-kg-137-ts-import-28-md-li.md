@@ -49,7 +49,7 @@ reading: a real broken import would not typecheck.
 Sample, `md-link`:
 
 ```
-from: cat-harness/skills/authoring-who-smart-guidelines/grade.md
+from: cat-harness/skills/authoring/authoring-who-smart-guidelines/grade.md
 ref:  ../../methodologies/dmn.md
 ```
 
@@ -418,8 +418,8 @@ large-datasets reaches through folio-assistant-core.
 
 ### Still open: the 2 cross-instance `md-link`s, left alone on purpose
 
-- `cat-harness/skills/content-lifecycle/sample-import.md` → `large-datasets/skills/materialize-remote.md`
-- `cat-harness/skills/folio-core/todo-review.md` → `large-datasets/skills/copy-out-materialized.md`
+- `cat-harness/skills/authoring/content-lifecycle/sample-import.md` → `large-datasets/skills/materialize-remote.md`
+- `cat-harness/skills/authoring/authoring-core/todo-review.md` → `large-datasets/skills/copy-out-materialized.md`
   (and, since the move, to `large-datasets/processes/copy-out-materialized.bpmn`)
 
 These links still run from cat-harness up to a dependent. So does the

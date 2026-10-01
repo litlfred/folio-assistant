@@ -111,7 +111,23 @@ interface Verdict {
 interface VerdictFile {
   inspected_by: unknown;
   inspected_at: string;
+  /**
+   * Who looked at ONE document's images, when that was not `inspected_by`.
+   *
+   * The file-wide pair was the only attribution until bean `scfh`, so every
+   * document added to a library's verdicts inherited the first inspector and
+   * the first date: appending a deck inspected on 2026-09-30 would have
+   * recorded it as inspected on 2026-09-22 by someone else. An attribution
+   * that is wrong is worse than none, because it is the part a reader trusts.
+   */
+  attribution?: Record<string, { inspected_by: unknown; inspected_at: string }>;
   verdicts: Record<string, Record<string, Verdict>>;
+}
+
+/** The attribution for one document: its own, else the file's. */
+export function attributionFor(vf: VerdictFile, docId: string): { by: unknown; at: string } {
+  const own = vf.attribution?.[docId];
+  return own ? { by: own.inspected_by, at: own.inspected_at } : { by: vf.inspected_by, at: vf.inspected_at };
 }
 
 export interface ApplyResult {
@@ -226,12 +242,8 @@ export function runStaging(entryDir: string, libDir: string, check: boolean): nu
     console.log(`· no verdicts for ${docId} yet — nothing to apply`);
     return 0;
   }
-  const { text, result } = applyTo(
-    readFileSync(sidecar, "utf-8"),
-    docVerdicts,
-    verdicts.inspected_by,
-    verdicts.inspected_at,
-  );
+  const who = attributionFor(verdicts, docId);
+  const { text, result } = applyTo(readFileSync(sidecar, "utf-8"), docVerdicts, who.by, who.at);
   if (result.orphaned.length > 0) {
     console.error(`✗ ${docId}: ${result.orphaned.length} verdict(s) name an image the sidecar does not have:`);
     for (const id of result.orphaned) console.error(`      ${id}`);
@@ -298,12 +310,8 @@ function run(): number {
         bad++;
         continue;
       }
-      const { text, result } = applyTo(
-        readFileSync(path, "utf-8"),
-        docVerdicts,
-        verdicts.inspected_by,
-        verdicts.inspected_at,
-      );
+      const who = attributionFor(verdicts, docId);
+      const { text, result } = applyTo(readFileSync(path, "utf-8"), docVerdicts, who.by, who.at);
       if (!check) writeFileSync(path, text, "utf-8");
       results.push({ docId, ...result });
     }

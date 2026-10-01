@@ -21,7 +21,10 @@ Part of [C@T Harness](../README.md) 0.1.0, declared as `library`, holding `libra
 | [`deerwester-1990-indexing-by-lsa/`](deerwester-1990-indexing-by-lsa/README.md) | 107 files | |
 | [`dusengumuremyi-2026-ai-mediated-raci/`](dusengumuremyi-2026-ai-mediated-raci/README.md) | 29 files | |
 | [`gurel-tat-2017-swot-analysis/`](gurel-tat-2017-swot-analysis/README.md) | 61 files | |
+| [`kg-folio-asst-2026-09-30/`](kg-folio-asst-2026-09-30/README.md) | 72 files | |
 | [`landauer-foltz-laham-1998-intro-lsa/`](landauer-foltz-laham-1998-intro-lsa/README.md) | 128 files | |
+| [`omg-2013-bpmn-2-0-2/`](omg-2013-bpmn-2-0-2/README.md) | 4 files | |
+| [`omg-2024-dmn-1-5/`](omg-2024-dmn-1-5/README.md) | 4 files | |
 | [`qi-hessen-vanderheijden-2023-ca-vs-lsa/`](qi-hessen-vanderheijden-2023-ca-vs-lsa/README.md) | 78 files | |
 | [`sammut-bonnici-galea-2015-swot-analysis/`](sammut-bonnici-galea-2015-swot-analysis/README.md) | 34 files | |
 <!-- kg:subgraph:end -->
