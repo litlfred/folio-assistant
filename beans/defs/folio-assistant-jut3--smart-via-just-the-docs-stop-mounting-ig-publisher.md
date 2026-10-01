@@ -5,7 +5,7 @@ status: todo
 type: task
 priority: normal
 created_at: 2026-09-21T19:10:00Z
-updated_at: 2026-10-01T08:03:18Z
+updated_at: 2026-10-01T10:24:29Z
 parent: folio-assistant-uhkv
 ---
 
@@ -416,3 +416,15 @@ Provenance: `WorldHealthOrganization/smart-trust` at `30d55b3630ac8a8937e1d98f7c
 Rendering 42 pages through just-the-docs is therefore a bounded job. The falsifier would have been heavy use of `sql` or `[[[ ]]]`, and it does not fire.
 
 **The decision this exposes, which is the owner's:** where the 42 pages come from. The options are a committed snapshot (licence CC-BY-SA, attribution required), a submodule, or a fetch at build time. The repository boundary rule (*platform, not content*) applies to `smart-trust/` as a mock-up instance. Nothing is vendored until that is decided.
+
+## 2026-10-01: narrative pages, a duplicate built and reverted
+
+**What happened.** A round 2 built a second renderer for the 42 narrative pages (`ingest-ig-pages.ts`, `narrative-pages.ts`, a new graph kind `ig-page-sources`, and `smart-trust/docs/pages/`). It went in as `464df76` and was reverted in the next commit. **Bean `bamf` (#1670) and `u3cd` (#1701) already render the IG's narrative pages through just-the-docs**, as their own site at `/smart-trust/ig/` (`fhir-harness/scripts/build-ig-site.ts`, `stage-ig-sites.ts`). They also copy images, render the PlantUML diagrams and populate `site.data.fhir`. Nothing in this bean pointed at `bamf`, and nothing was searched before building. The duplicate was found when its pages failed staging's `check:duplicate-ids`: WHO's own source repeats `{#execute_rule}`, `{#get_valuesets_api}` and `routine_sync`, and `bamf`'s post-build `--dedupe-ids` already renames those.
+
+**What was kept.** The owner's ruling is honoured through `bamf`. `fhir-artifact-index/menu.json` was re-ingested from `litlfred/smart-trust` at `30d55b36`, so `stage-ig-sites.ts`, which clones `menu.json`'s `source.of` at `source.ref`, now builds `/smart-trust/ig/` from the fork.
+
+**Still true from round 2.** Two upstream defects worth fixing on the fork:
+1. `{{PARTICIPANT_CODE}}` sits in prose in five pages, so the Publisher most likely renders it empty.
+2. `feedback.md` derives `github.com/WorldHealthOrganization/trust`, but the repository is `smart-trust`.
+
+**Done-when item 2** (`input/pages/` through just-the-docs with Publisher metadata) is met by `bamf`, not by this bean's work. The **parity checklist / MVP** call is the owner's, still open.
