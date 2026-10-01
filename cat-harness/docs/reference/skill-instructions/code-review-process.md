@@ -71,7 +71,7 @@ the arbiter. If ambiguous, ask the BA.
 ## Cross-references
 
 - [`release-lifecycle`](release-lifecycle.md) — the broader release flow
-- [`../folio-core/prepare-merge-auto.md`](prepare-merge-auto.md) — merge mechanics
-- [`../folio-core/staging-review.md`](staging-review.md) — visual comparison
+- [`../../sdlc/sdlc-core/prepare-merge-auto.md`](prepare-merge-auto.md) — merge mechanics
+- [`../../sdlc/sdlc-core/staging-review.md`](staging-review.md) — visual comparison
 - [`../../skills/sdlc/crdm/crdm-requirements-template.md`](crdm-requirements-template.md) — acceptance criteria
 {% endraw %}

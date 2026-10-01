@@ -13,7 +13,7 @@ parent: Skill instructions
 {% raw %}
 # Visual diff — see a figure change
 
-> Skill id: `visual-diff` · Package: `folio-core` · Bean: `0rxe` · Epic: `q4jm`
+> Skill id: `visual-diff` · Package: `sdlc-core` · Bean: `0rxe` · Epic: `q4jm`
 
 For a figure, a diagram, a table, an equation or a simulator, the change a
 reviewer must judge is how the block LOOKS. The Markdown or SVG diff of a

@@ -12,17 +12,17 @@ parent: Skill instructions
 
 {% raw %}
 > **This is a stub, not the skill.** The skill is
-> [Bean Coordination (folio-core)](bean-coordination.html), from `cat-harness/skills/folio-core`,
+> [Bean Coordination (folio-core)](bean-coordination.html), from `cat-harness/skills/sdlc/sdlc-core`,
 > which is what `skill_fetch` serves. Read that one; this page exists
 > only so an old link still lands somewhere truthful.
 
-# bean-coordination — see `skills/folio-core/`
+# bean-coordination — see `skills/sdlc/sdlc-core/`
 
 **This is a stub. The skill lives in the `kg` graph, not here.**
 
 `skill_fetch("bean-coordination")` serves
 [`skills/sdlc/sdlc-core/bean-coordination.md`](../../../skills/sdlc/sdlc-core/bean-coordination.md)
-— `LOCAL_PACKAGES` in `src/tools/skill-fetch.ts` holds `skills/folio-core` and
+— `LOCAL_PACKAGES` in `src/tools/skill-fetch.ts` holds `skills/sdlc/sdlc-core` and
 no `.claude/skills/local` entry.
 
 A 62-line hand-authored copy sat here until 2026-09-19. It described *itself* as

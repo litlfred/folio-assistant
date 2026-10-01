@@ -694,17 +694,17 @@ The two are not alternatives. (1) prevents the blindness; (2) catches the
 branches that were already open when (1) landed — including #477, whose 12
 beans are still branch-only today.
 
-## Which copy is canonical — `skills/folio-core/`
+## Which copy is canonical — `skills/sdlc/sdlc-core/`
 
 **This file.** A `.claude/skills/local/bean-coordination.md` existed until
 2026-09-19 and described *itself* as "the generic source of truth" from which
 downstream repos sync. That was measurably wrong: `LOCAL_PACKAGES` in
 `src/tools/skill-fetch.ts` is the table `skill_fetch` serves from, it holds
-`skills/folio-core` and no `.claude/skills/local` entry, and the local copy
+`skills/sdlc/sdlc-core` and no `.claude/skills/local` entry, and the local copy
 carried no front matter at all. An agent asking for this skill by name has
 always received *this* file. Bean `tdmg`.
 
-So when this skill or the installer changes, **`skills/folio-core/` is what a
+So when this skill or the installer changes, **`skills/sdlc/sdlc-core/` is what a
 downstream repo syncs from**, and the generated mirror under the docs site
 follows it automatically. On landing a coordination change that affects a
 downstream repo, update that repo's ownership note and close the tracking beans.

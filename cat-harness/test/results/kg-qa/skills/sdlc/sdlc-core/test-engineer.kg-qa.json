@@ -24,8 +24,13 @@
       "findings": []
     },
     "prose-reviewed-since-code-changed": {
-      "result": "pass",
-      "findings": []
+      "result": "fail",
+      "findings": [
+        {
+          "where": "cat-harness/skills/sdlc/sdlc-core/test-engineer.ts",
+          "detail": "cat-harness/skills/sdlc/sdlc-core/test-engineer.ts changed since cat-harness/skills/sdlc/sdlc-core/test-engineer.md was last seen, and the prose did not. Re-read it; if it still holds, run pairs:attest with a reason."
+        }
+      ]
     },
     "prose-claims-resolve": {
       "result": "pass",
@@ -37,8 +42,8 @@
     }
   },
   "totals": {
-    "pass": 6,
-    "fail": 0,
+    "pass": 5,
+    "fail": 1,
     "n/a": 1,
     "unknown": 0
   },

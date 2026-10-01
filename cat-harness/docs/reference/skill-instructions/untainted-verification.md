@@ -13,7 +13,7 @@ parent: Skill instructions
 {% raw %}
 # Untainted verification — the producer never writes the verdict
 
-> Skill id: `untainted-verification` · Package: `folio-core`
+> Skill id: `untainted-verification` · Package: `sdlc-core`
 
 A secret scan, a schema validation, a back-translation and a systematic
 literature search differ in what they read and in what counts as a finding.
