@@ -301,10 +301,10 @@
   ],
   "canonicalDocument": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld",
   "repository": "cat-harness",
-  "generatedAt": "2026-10-01T17:08:03.734Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/2107eeb968c0578933f76cce6a406827ddd89477",
-  "sourceCommitSha": "2107eeb968c0578933f76cce6a406827ddd89477",
-  "sourceCommitAt": "2026-10-01T17:03:13Z",
+  "generatedAt": "2026-10-01T17:48:29.084Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/18be48e142dc3dcd1723ee94cc42f1b16374138d",
+  "sourceCommitSha": "18be48e142dc3dcd1723ee94cc42f1b16374138d",
+  "sourceCommitAt": "2026-10-01T17:43:23Z",
   "sourceTreeDirty": true,
   "dependsOnUnavailable": "2 dependency edge(s), none expressible as a record — see gaps",
   "counts": {
@@ -318,7 +318,7 @@
     "Lane": 199,
     "ProcessNode": 927,
     "Tool": 112,
-    "Schema": 143,
+    "Schema": 144,
     "ExternalSchema": 17,
     "GraphKind": 23,
     "Role": 48,
@@ -4076,7 +4076,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th-stage-d/cat-harness.jsonld#package/fhir-ig-base"
       ],
       "instructionsPath": "../fhir-harness/skills/fhir-ig-base/ig-build-pipeline.md",
-      "instructionLines": 126,
+      "instructionLines": 127,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -5087,12 +5087,12 @@
       "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Skill",
       "name": "smart-stack-layering",
       "title": "smart-stack-layering",
-      "description": "Which of the five layers a WHO SMART asset, rule, script or page belongs to, and the one question that settles it. Read before adding anything to fhir-harness, smart-base, smart-l1, smart-dak or smart-ig, before creating a per-IG harness, and before moving a pre/post-processing step.",
+      "description": "Which layer a WHO SMART asset, rule, script or page belongs to — fhir-harness, smart-base (with its L1 and DAK document kinds) or smart-ig — and the one question that settles it. Read before adding anything to fhir-harness, smart-base or smart-ig, before creating a per-IG harness, and before moving a pre/post-processing step.",
       "inPackage": [
         "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th-stage-d/cat-harness.jsonld#package/authoring-who-smart-guidelines"
       ],
       "instructionsPath": "../smart-base/skills/content/authoring-who-smart-guidelines/smart-stack-layering.md",
-      "instructionLines": 165,
+      "instructionLines": 184,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -46952,6 +46952,14 @@
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/ig-chrome"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th-stage-d/cat-harness.jsonld#schema/ig-identity",
+      "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#Schema",
+      "name": "ig-identity",
+      "title": "An IG's identity, as its own `sushi-config.yaml` states it — id, canonical,",
+      "module": "../fhir-harness/schemas/ig-identity.ts",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/ig-identity"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th-stage-d/cat-harness.jsonld#schema/ig-menu",
       "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#Schema",
       "name": "ig-menu",
@@ -48753,8 +48761,8 @@
   ],
   "staging": {
     "branch": "claude/awesome-fermi-ua31th-stage-d",
-    "sha": "28edf285f04221d0bae564ee2d4be05a0282b1b4",
+    "sha": "0cb02883732c5e9390feddc8f7826d1d98445ac7",
     "pr": "1795/merge",
-    "run": "36896549847"
+    "run": "36901489825"
   }
 }

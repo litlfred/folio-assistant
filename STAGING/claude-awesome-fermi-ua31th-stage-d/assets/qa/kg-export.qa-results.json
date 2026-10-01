@@ -21,13 +21,8 @@
     },
     "undeclaredSchemaModules": {
       "summary": "Modules in the declared schemas/ directory that do not say what they are, so they are absent from the graph.",
-      "count": 1,
-      "entries": [
-        {
-          "module": "../fhir-harness/schemas/ig-identity.ts",
-          "why": "no-tag"
-        }
-      ]
+      "count": 0,
+      "entries": []
     },
     "undeclaredTerms": {
       "summary": "Property names used in `@graph` that the `@context` does not declare. Dropped outright by a JSON-LD processor.",
@@ -35,5 +30,5 @@
       "entries": []
     }
   },
-  "total": 1
+  "total": 0
 }
