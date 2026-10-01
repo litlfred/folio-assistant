@@ -1,11 +1,11 @@
 ---
 # folio-assistant-bo44
 title: 'WRITER-ONLY GATES: nine check scripts always write their sidecar and cannot fail on its content — the general form of uju6/i2kp'
-status: todo
+status: in-progress
 type: bug
 priority: high
 created_at: 2026-10-01T08:00:46Z
-updated_at: 2026-10-01T08:00:46Z
+updated_at: 2026-10-01T08:18:11Z
 parent: folio-assistant-3fva
 ---
 
