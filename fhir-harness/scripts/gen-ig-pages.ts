@@ -1,63 +1,80 @@
 #!/usr/bin/env bun
 /**
- * Render smart-trust's reader-facing pages from the artefact index.
+ * Render ANY FHIR IG instance's reader-facing pages from its artefact index.
  *
- * @module smart-trust/scripts/gen-smart-trust-pages
+ * @module fhir-harness/scripts/gen-ig-pages
  * @covers fhir-artifact-index
+ *
+ * ## Why it lives in fhir-harness
+ *
+ * This was `smart-trust/scripts/gen-smart-trust-pages.ts`. Nothing in it was
+ * about smart-trust except the instance directory, a display label and the
+ * instance that owns the template chrome: it reads `fhir-artifact-index/`
+ * (`index.json`, optionally `menu.json`), which every ingested IG holds in the
+ * same shape. Owner, 2026-10-01 (#1767): *"push generic stuff as much as
+ * possible into fhir-harness first"* — so the second IG to want pages
+ * (smart-base, for its `/smart-base/` landing page) reuses this rather than
+ * copying it, and the generator travels with the layer that owns the index's
+ * pipeline when the smart-* instances leave for their own repositories.
  *
  * ## Why this exists
  *
- * `fhir-artifact-index` is registered `renderable: false`, and `smart-trust/`
- * declared exactly one directory of exactly that kind — so 674 ingested
- * artefacts were reachable at no URL. The owner found it by asking where
- * `/smart-trust` was. Only two of this repository's graph kinds are renderable
- * (`docs` and `folio`), and `who-iris/` publishes because it declares a
- * `docs/` directory alongside its `catalogue/`. This generator writes the
- * equivalent for smart-trust.
+ * `fhir-artifact-index` is registered `renderable: false`, so an instance
+ * whose only declared graph of that kind is the index publishes its artefacts
+ * at no URL. The owner found it by asking where `/smart-trust` was. Only two
+ * of this repository's graph kinds are renderable (`docs` and `folio`); this
+ * generator writes an instance's `docs/` from its index.
  *
  * **The URL the owner expected is the right one.** `withRoutes` in
  * `cat-harness/scripts/mount-instance-docs.ts` publishes an instance at
  * `/<kind>/<instance>/` for every renderable kind AND once at `/<instance>/`,
- * its themed root. A `docs` graph here therefore serves both
- * `/docs/smart-trust/` and `/smart-trust/`.
+ * its themed root.
  *
  * ## Generated from the index, never transcribed
  *
  * Every artefact, count, canonical URL and link on these pages is read out of
- * `smart-trust/fhir-artifact-index/index.json`. Hand-writing them would
- * produce pages that agree with the index exactly once — on the day they were
- * written. `--check` is what keeps that from happening quietly, and it is
- * wired into the gate set.
- *
- * That is the same discipline the index itself carries: `smart-trust/AGENTS.md`
- * says nothing under the graph is authored, and this directory is no different.
+ * `<instance>/fhir-artifact-index/index.json`. Hand-writing them would produce
+ * pages that agree with the index exactly once. `--check` keeps that from
+ * happening quietly, and it is wired into the gate set per instance.
  *
  * ## What the pages say, and what they refuse to imply
  *
- * **A referenced artefact is not a broken one.** 655 of the 674 are
- * `referenced` — the index knows where they live and holds none of their
- * bytes. Following `gen-iris-pages.ts`, no row is greyed out: a disabled-looking
- * row reads as "broken", while a row stating **referenced** reads as "upstream,
- * not here", which is the actual state and the whole point of cataloguing by
+ * **A referenced artefact is not a broken one.** Following `gen-iris-pages.ts`,
+ * no row is greyed out: a row stating **referenced** reads as "upstream, not
+ * here", which is the actual state and the whole point of cataloguing by
  * reference.
  *
- * **Two link targets, never conflated.** An artefact's canonical URL
- * (`http://smart.who.int/trust/...`) is its IDENTITY; its published URL
- * (`https://worldhealthorganization.github.io/smart-trust/...`) is where bytes
- * are served. smart-trust is canonical at one host and published at another,
- * so composing either from the other would write a link that resolves for
- * nobody. Both come from the index.
+ * **Two link targets, never conflated.** An artefact's canonical URL is its
+ * IDENTITY; its published URL is where bytes are served. A WHO IG is canonical
+ * at one host and published at another, so composing either from the other
+ * would write a link that resolves for nobody. Both come from the index.
+ *
+ * **The banner's identity is the INDEX's, never the chrome's.** `chrome.json`
+ * is ingested once, at the chrome owner, from ONE IG's template chain; its
+ * tokens and rules are the TEMPLATE's and hold for every IG built on it, but
+ * its `id`/`version`/`status` are that one IG's. Bean `bamf` found smart-base's
+ * chrome describing `smart.who.int.trust` 1.8.0. So the banner names the
+ * index's `packageId`, `version` and `canonicalBase`, and takes `status` from
+ * the chrome ONLY when the chrome's `id` is this IG's — otherwise the status
+ * is not determined and no watermark is drawn, rather than another IG's draft
+ * status being asserted of this one.
  *
  * **No WHO logo.** Same instruction the who-iris pages follow: until published
- * under WHO, colour carries the identity and the wordmark is set in type. A
- * replica carrying the real mark is indistinguishable from the real thing.
+ * under WHO, colour carries the identity and the wordmark is set in type.
  *
  * Usage:
- *   bun run smart-trust/scripts/gen-smart-trust-pages.ts
- *   bun run smart-trust/scripts/gen-smart-trust-pages.ts --check
+ *   bun run fhir-harness/scripts/gen-ig-pages.ts --instance <dir> --label "<IG display name>"
+ *     [--chrome-owner <instance>] [--summary] [--check]
+ *
+ * `--summary` puts the instance's own declaration — its description and every
+ * declared graph with its viewer — above the artefact index, via the
+ * `harness_details.html` include (with `instance=`), which reads `site.data.harness` at build
+ * time. It is how an instance that holds MORE than an IG's artefacts (smart-base:
+ * a library, methodologies, voices) gets a landing page that says so without a
+ * word of it being typed here.
  */
 import { existsSync, mkdirSync, readFileSync, readdirSync, rmSync, writeFileSync } from "node:fs";
-import { join, resolve } from "node:path";
+import { basename, join, resolve } from "node:path";
 import { isDirectoryReadme } from "../../cat-harness/schemas/kg-node.js";
 
 import { IgMenuSchema, type IgMenu, type IgMenuGroup, menuHref, menuItemCount } from "../../cat-harness/schemas/ig-menu.js";
@@ -85,7 +102,19 @@ import {
   type Representation,
 } from "../../folio-assistant-core/schemas/fhir-artifact-index.js";
 
-const INSTANCE = resolve(import.meta.dir, "..");
+/** `--name value`, or undefined. */
+function arg(name: string): string | undefined {
+  const i = process.argv.indexOf(name);
+  return i >= 0 ? process.argv[i + 1] : undefined;
+}
+
+const INSTANCE_ARG = arg("--instance");
+if (!INSTANCE_ARG) {
+  console.error("usage: gen-ig-pages.ts --instance <dir> --label <name> [--chrome-owner <instance>] [--summary] [--check]");
+  process.exit(2);
+}
+const INSTANCE = resolve(process.cwd(), INSTANCE_ARG);
+const INSTANCE_NAME = basename(INSTANCE);
 const INDEX = join(INSTANCE, "fhir-artifact-index", "index.json");
 /**
  * The IG's OWN navigation, ingested from its `sushi-config.yaml`.
@@ -100,15 +129,26 @@ const MENU = join(INSTANCE, "fhir-artifact-index", "menu.json");
 const OUT = join(INSTANCE, "docs");
 
 /**
- * The instance that OWNS the WHO chrome.
+ * The instance that OWNS the template chrome, or none.
  *
  * Named rather than walked to, and `schemas/ig-chrome.ts` §`chromeFileFor`
  * carries why: `smart-trust` needs `smart-ig` while `smart-base` needs
  * `fhir-harness`, so there is no `needs` path between them to walk. Widening
  * the walk until one matched would settle a layering question — `nsbb`'s —
- * inside a stylesheet loader.
+ * inside a stylesheet loader. A FLAG rather than a constant now that the
+ * generator is generic: fhir-harness has no business naming a WHO instance.
  */
-const CHROME_OWNER = "smart-base";
+const CHROME_OWNER = arg("--chrome-owner");
+
+/**
+ * The IG's display name — `WHO SMART Trust`. Not in the index (whose `title`
+ * is the package id plus "— artefact index"), so it is the one string a
+ * caller supplies; the package id stands in when none is given.
+ */
+const LABEL_ARG = arg("--label");
+
+/** Whether the index page opens with the instance's own declaration. */
+const SUMMARY = process.argv.includes("--summary");
 
 /** The declaration's `name`, or `undefined` when a directory is not an instance. */
 function declaredName(root: string): string | undefined {
@@ -132,6 +172,7 @@ function declaredName(root: string): string | undefined {
  * so, rather than quietly shipping unstyled pages and calling them a mirror.
  */
 function loadChrome(): IgChrome | undefined {
+  if (CHROME_OWNER === undefined) return undefined;
   const file = chromeFileFor(repoRootFor(INSTANCE), CHROME_OWNER, {
     instanceRootsIn,
     declarationNameOf: declaredName,
@@ -176,19 +217,32 @@ const CHROME_SCOPE = ".st-ig";
  * `fragment-pagebegin.html` does it. Nothing here decides that smart-trust is
  * a draft.
  */
-function igBanner(chrome: IgChrome): string {
-  const title = chrome.id;
-  const label = [chrome.version, chrome.status].filter(Boolean).join(" — ");
+function igBanner(chrome: IgChrome, ix: FhirArtifactIndex): string {
+  const title = ix.packageId ?? chrome.id;
+  const canonical = ix.canonicalBase ?? chrome.canonical;
+  const status = statusFor(chrome, ix);
+  const label = [ix.version ?? chrome.version, status].filter(Boolean).join(" — ");
   return [
     `<div class="${CHROME_SCOPE.slice(1)}">`,
-    `  <div class="st-ig-bar"><a href="${esc(chrome.canonical)}">${esc(title)}</a></div>`,
-    `  <div id="ig-status" class="ig-status-${esc(chrome.status)}">`,
-    `    <p><span class="st-ig-title">WHO SMART Trust</span><br/><span>${esc(label)}</span></p>`,
+    `  <div class="st-ig-bar"><a href="${esc(canonical)}">${esc(title)}</a></div>`,
+    status !== undefined
+      ? `  <div id="ig-status" class="ig-status-${esc(status)}">`
+      : `  <div id="ig-status">`,
+    `    <p><span class="st-ig-title">${esc(LABEL)}</span><br/><span>${esc(label)}</span></p>`,
     `  </div>`,
     `  <p id="publish-box">This page mirrors a published WHO Implementation Guide. ` +
-      `The authoritative version is at <a href="${esc(chrome.canonical)}">${esc(chrome.canonical)}</a>.</p>`,
+      `The authoritative version is at <a href="${esc(canonical)}">${esc(canonical)}</a>.</p>`,
     `</div>`,
   ].join("\n");
+}
+
+/**
+ * The IG's publication status — from the chrome only when the chrome was
+ * ingested from THIS IG. See the module doc: another IG's `draft` is not a
+ * fact about this one, and `undefined` draws no watermark rather than a wrong one.
+ */
+function statusFor(chrome: IgChrome, ix: FhirArtifactIndex): string | undefined {
+  return ix.packageId !== undefined && chrome.id === ix.packageId ? chrome.status : undefined;
 }
 
 /**
@@ -355,7 +409,13 @@ type NavRole =
  * written independently — one constant, referenced twice, or a re-titled index
  * silently orphans all 7 sections and the sidebar quietly flattens.
  */
-const INDEX_TITLE = "WHO SMART Trust — artefact index";
+let LABEL = LABEL_ARG ?? INSTANCE_NAME;
+/**
+ * With `--summary` the index page IS the instance's landing page, so it carries
+ * the IG's name alone; without it, it is the artefact index and says so.
+ */
+const titleFor = (label: string): string => (SUMMARY ? label : `${label} — artefact index`);
+let INDEX_TITLE = titleFor(LABEL);
 
 function navFrontMatter(nav: NavRole): string[] {
   switch (nav.kind) {
@@ -408,7 +468,7 @@ function shell(
   // reported by the build, never faked with a hand-typed palette.
   const wearsChrome = chrome === "fixture" && CHROME !== undefined;
   const style = wearsChrome ? `${CSS}\n${chromeStyles(CHROME!)}` : CSS;
-  const banner = wearsChrome ? `${igBanner(CHROME!)}\n\n` : "";
+  const banner = wearsChrome ? `${igBanner(CHROME!, IX)}\n\n` : "";
   return `${fm}<style>${style}</style>\n\n${banner}${body.trim()}\n`;
 }
 
@@ -499,7 +559,7 @@ function indexPage(ix: FhirArtifactIndex): string {
   ];
 
   const body = [
-    `The artefact index of the WHO SMART Trust Implementation Guide, rebuilt from what the IG`,
+    `The artefact index of the ${LABEL} Implementation Guide, rebuilt from what the IG`,
     `publishes. Most of it is catalogued **by reference**: the index records where each artefact`,
     `lives and holds none of its bytes. A ${stateTag({ materialization: { state: "referenced" } } as FhirArtifact)} row`,
     `is not a broken one — it means upstream, not here.`,
@@ -545,10 +605,17 @@ function indexPage(ix: FhirArtifactIndex): string {
     ``,
   ].join("\n");
 
+  // The instance's own declaration, ABOVE the index, when asked for. A Liquid
+  // include rather than text written here: the description and the viewer
+  // links are harness-tiles' answer (`site.data.harness`), and a second copy
+  // of them in this page would be a second answer free to drift.
+  const summary = SUMMARY
+    ? `{% include harness_details.html instance=${yamlScalar(INSTANCE_NAME)} %}\n\n## Artefact index\n\n`
+    : "";
   return shell(
     INDEX_TITLE,
-    `All ${ix.count} artefacts of the WHO SMART Trust IG ${ix.version ?? ""}, reconstructed from its published output.`,
-    body,
+    `All ${ix.count} artefacts of the ${LABEL} IG ${ix.version ?? ""}, reconstructed from its published output.`,
+    summary + body,
   );
 }
 
@@ -621,8 +688,8 @@ function categoryPage(ix: FhirArtifactIndex, label: string | undefined, list: Fh
   ].join("\n");
 
   return shell(
-    `${name} — WHO SMART Trust`,
-    `The ${list.length} WHO SMART Trust artefacts in the ${name} category, with canonical URLs and published representations.`,
+    `${name} — ${LABEL}`,
+    `The ${list.length} ${LABEL} artefacts in the ${name} category, with canonical URLs and published representations.`,
     body,
     { kind: "section", order },
   );
@@ -714,8 +781,8 @@ function artifactPage(ix: FhirArtifactIndex, a: FhirArtifact): string {
   ].join("\n");
 
   return shell(
-    `${name} — WHO SMART Trust artefact`,
-    `${a.key} in the WHO SMART Trust IG, with its canonical URL, published representations and DAK API sidecars.`,
+    `${name} — ${LABEL} artefact`,
+    `${a.key} in the ${LABEL} IG, with its canonical URL, published representations and DAK API sidecars.`,
     body,
     { kind: "leaf" },
   );
@@ -758,8 +825,8 @@ function menuGroupPage(menu: IgMenu, group: IgMenuGroup, order: number): string 
     `artefacts, not its narrative pages, so every link above leaves for the canonical copy.`,
   ].join("\n");
   return shell(
-    `${group.label} — WHO SMART Trust`,
-    `The ${group.items.length} page(s) the WHO SMART Trust IG publishes under ${group.label}.`,
+    `${group.label} — ${LABEL}`,
+    `The ${group.items.length} page(s) the ${LABEL} IG publishes under ${group.label}.`,
     body,
     { kind: "section", order },
   );
@@ -784,6 +851,11 @@ if (!parsed.success) {
   process.exit(1);
 }
 const ix = parsed.data;
+const IX = ix;
+if (LABEL_ARG === undefined && ix.packageId) {
+  LABEL = ix.packageId;
+  INDEX_TITLE = titleFor(LABEL);
+}
 
 const pages = new Map<string, string>();
 // WRITTEN AS `.md`, LINKED AS `.html` — and the mismatch is correct. Jekyll
@@ -859,10 +931,10 @@ if (CHECK) {
     console.error(`✗ ${stale.length} page(s) stale or orphaned:`);
     for (const s of stale.slice(0, 10)) console.error(`    ${s}`);
     if (stale.length > 10) console.error(`    …and ${stale.length - 10} more`);
-    console.error("  Run `bun run smart-trust:pages`. These pages are generated; never edit them.");
+    console.error(`  Run \`bun run ${INSTANCE_NAME}:pages\`. These pages are generated; never edit them.`);
     process.exit(1);
   }
-  console.log(`✓ smart-trust docs are current — ${pages.size} page(s) over ${ix.count} artefacts`);
+  console.log(`✓ ${INSTANCE_NAME} docs are current — ${pages.size} page(s) over ${ix.count} artefacts`);
 } else {
   // Rebuilt wholesale so a removed artefact cannot leave a page behind — all
   // but the directory's README, which another generator owns and is carried
@@ -880,7 +952,7 @@ if (CHECK) {
     writeFileSync(abs, html);
   }
   const dak = dakOverlayCensus(ix.artifacts);
-  console.log(`smart-trust/docs: ${pages.size} page(s)`);
+  console.log(`${INSTANCE_NAME}/docs: ${pages.size} page(s)`);
   console.log(`  index over ${ix.count} artefacts in ${byCategory(ix.artifacts).size} categories`);
   // Counted from the page map, never as `pages.size - 1`. That expression was
   // right while the index was the only non-artefact page and quietly became
@@ -907,9 +979,15 @@ if (CHECK) {
   // build log that only mentions the chrome when it is there.
   if (CHROME) {
     const conflicted = CHROME.conflicts.length;
+    if (statusFor(CHROME, ix) === undefined) {
+      console.log(
+        `  status NOT determined — the chrome was ingested from ${CHROME.id}, not ${ix.packageId ?? "this IG"}; ` +
+          `no watermark drawn`,
+      );
+    }
     console.log(
       `  chrome mirrored on every page — ${CHROME.tokens.length} token(s) over ` +
-        `${CHROME.layers.length} template layer(s), ${CHROME.rules.length} rule(s), status "${CHROME.status}"`,
+        `${CHROME.layers.length} template layer(s), ${CHROME.rules.length} rule(s); the chrome's own IG is ${CHROME.id} (status "${CHROME.status}")`,
     );
     for (const l of CHROME.layers) console.log(`    ${l.package} ${l.version} @ ${l.ref.slice(0, 8)}`);
     if (conflicted > 0) {
@@ -919,7 +997,11 @@ if (CHECK) {
       }
     }
   } else {
-    console.log("  chrome NOT applied — COULD NOT DETERMINE: no chrome.json.");
+    console.log(
+      CHROME_OWNER === undefined
+        ? "  chrome NOT applied — no --chrome-owner given."
+        : "  chrome NOT applied — COULD NOT DETERMINE: no chrome.json.",
+    );
     console.log("    Run `ingest-ig-chrome.ts --ig <ig> --layer <base> --layer <next>`; the pages are unstyled, not a mirror.");
   }
 }

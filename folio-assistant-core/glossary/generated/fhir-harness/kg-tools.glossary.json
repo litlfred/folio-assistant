@@ -95,6 +95,14 @@
       "status": "candidate"
     },
     {
+      "id": "ig-pages",
+      "prefLabel": "Generate an IG instance's reader-facing pages from its artefact index",
+      "definition": "Write `<instance>/docs/` — an index page, one page per artefact, a page per over-large category and per menu group — from `fhir-artifact-index/index.json` (and `menu.json` when ingested), styled by the template chrome an owning instance ingested. Moved here from smart-trust because nothing in it was smart-trust's (#1767); smart-base reuses it for its `/smart-base/` landing page with `--summary`. For an IG whose SOURCE is at hand, `build-ig-site` renders the IG's own pages instead; this is for an IG known only by what it published.",
+      "notation": "ig-pages",
+      "source": "fhir-harness/tools/index.ts#ig-pages",
+      "status": "candidate"
+    },
+    {
       "id": "ig-site-data",
       "prefLabel": "Populate site.data.fhir for a just-the-docs IG render",
       "definition": "Write the IG Publisher's Jekyll variables (`site.data.fhir.ig.*`, `packageId`, `canonical`) for ONE implementation guide, from `sushi-config.yaml` or a published IG's `fhir-artifact-index`, so pages written for the Publisher render on just-the-docs unchanged. fhir-harness declares `site.data` as a pass-through Liquid prefix; this is what Jekyll then reads (bean `bamf`).",
