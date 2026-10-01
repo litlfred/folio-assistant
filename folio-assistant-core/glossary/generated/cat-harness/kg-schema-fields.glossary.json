@@ -2310,6 +2310,13 @@
       "status": "candidate"
     },
     {
+      "id": "cat-harness.contentdirectory.storage",
+      "prefLabel": "ContentDirectory.storage",
+      "definition": "This directory's contents are STORED on a branch, keyed by commit, and the checkout holds at most a working copy. See {@link DirectoryStorageSchema}.",
+      "source": "cat-harness/schemas/cat-harness.ts#ContentDirectory.storage",
+      "status": "candidate"
+    },
+    {
       "id": "cat-harness.contentdirectory.summaries",
       "prefLabel": "ContentDirectory.summaries",
       "definition": "Whether the agent summary drain may offer a `library`'s blocks; absent means `drain`. See the schema field (bean `x80s`).",
@@ -2359,6 +2366,13 @@
       "status": "candidate"
     },
     {
+      "id": "cat-harness.contentdirectoryshape.storage",
+      "prefLabel": "ContentDirectoryShape.storage",
+      "definition": "Where this directory's contents are KEPT, when that is not the checkout. See {@link DirectoryStorageSchema} — bean `16ei`, arc `3fva`.",
+      "source": "cat-harness/schemas/cat-harness.ts#ContentDirectoryShape.storage",
+      "status": "candidate"
+    },
+    {
       "id": "cat-harness.contentdirectoryshape.summaries",
       "prefLabel": "ContentDirectoryShape.summaries",
       "definition": "Whether the agent summary drain may draft summaries for a `library` directory's prose blocks (bean `x80s`). Absent means `drain`.",
@@ -2398,6 +2412,20 @@
       "prefLabel": "DeclaredGraph.url",
       "definition": "Set iff the graph is elsewhere. Exactly one of the two, always.",
       "source": "cat-harness/schemas/cat-harness.ts#DeclaredGraph.url",
+      "status": "candidate"
+    },
+    {
+      "id": "cat-harness.directorystorageschema.branch",
+      "prefLabel": "DirectoryStorageSchema.branch",
+      "definition": "The branch, e.g. `qa-reports`. A plain branch name: no `refs/`, no `..`, no leading `-`.",
+      "source": "cat-harness/schemas/cat-harness.ts#DirectoryStorageSchema.branch",
+      "status": "candidate"
+    },
+    {
+      "id": "cat-harness.directorystorageschema.keyedby",
+      "prefLabel": "DirectoryStorageSchema.keyedBy",
+      "definition": "How entries are keyed on the branch. Only `commit` exists.",
+      "source": "cat-harness/schemas/cat-harness.ts#DirectoryStorageSchema.keyedBy",
       "status": "candidate"
     },
     {

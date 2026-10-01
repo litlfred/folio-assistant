@@ -12,9 +12,9 @@ permalink: /glossary/schema-fields/
 
 Candidate terms extracted from every schema field with a doc comment: `<Declaration>.<field>` as the label, the comment's first paragraph as the definition. Each is the asset's own text, verbatim and not curated, and carries the badge "candidate, extracted". A person promotes one by authoring it. Authored terms, the counts and the sources are on the <a href="{{ '/glossary/' | relative_url }}">glossary index</a>.
 
-From: bootstrap-tools 28 (<a href="{{ '/assets/glossary/bootstrap-tools--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · cat-harness 1625 (<a href="{{ '/assets/glossary/cat-harness--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · folio-assistant-core 155 (<a href="{{ '/assets/glossary/folio-assistant-core--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · large-datasets 18 (<a href="{{ '/assets/glossary/large-datasets--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>).
+From: bootstrap-tools 28 (<a href="{{ '/assets/glossary/bootstrap-tools--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · cat-harness 1629 (<a href="{{ '/assets/glossary/cat-harness--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · folio-assistant-core 155 (<a href="{{ '/assets/glossary/folio-assistant-core--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · large-datasets 18 (<a href="{{ '/assets/glossary/large-datasets--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>).
 
-**Size:** this page holds 1826 terms and is 1007 KB before compression, fetched in one request, within its budget of 1.0 MB. There is no search index: the filter below runs over this page, and the A–Z bar jumps within it.
+**Size:** this page holds 1830 terms and is 1009 KB before compression, fetched in one request, within its budget of 1.0 MB. There is no search index: the filter below runs over this page, and the A–Z bar jumps within it.
 
 <table class="fa-gloss-mapping">
 <caption>Already somebody else's concept? — <code>check:term-mapping</code>, bean <code>7wou</code></caption>
@@ -28,7 +28,7 @@ be a term this corpus is right to coin.</p>
 
 <label for="fa-gloss-q">Filter terms</label>
 <input id="fa-gloss-q" type="search" autocomplete="off" style="min-height:44px;width:100%;max-width:32rem">
-<p aria-live="polite"><span id="fa-gloss-n">1826</span> shown</p>
+<p aria-live="polite"><span id="fa-gloss-n">1830</span> shown</p>
 
 <nav aria-label="Letters"><a href="#letter-A">A</a> <a href="#letter-B">B</a> <a href="#letter-C">C</a> <a href="#letter-D">D</a> <a href="#letter-E">E</a> <a href="#letter-F">F</a> <a href="#letter-G">G</a> <a href="#letter-H">H</a> <a href="#letter-I">I</a> <a href="#letter-J">J</a> <a href="#letter-K">K</a> <a href="#letter-L">L</a> <a href="#letter-M">M</a> <a href="#letter-N">N</a> <a href="#letter-O">O</a> <a href="#letter-P">P</a> <a href="#letter-Q">Q</a> <a href="#letter-R">R</a> <a href="#letter-S">S</a> <a href="#letter-T">T</a> <a href="#letter-U">U</a> <a href="#letter-V">V</a> <a href="#letter-W">W</a></nav>
 
@@ -2135,6 +2135,13 @@ ContentDirectory.readOnlyBasis <span class="fa-gloss-status">candidate, extracte
 <p>Why — required whenever &#123;@link readOnly} is declared, either value. See the schema field.</p>
 <p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/cat-harness.ts"><code>cat-harness/schemas/cat-harness.ts#ContentDirectory.readOnlyBasis</code></a></p>
 </dd>
+<dt id="cat-harness--kg-schema-fields--cat-harness.contentdirectory.storage" data-fa-state="extracted" data-fa-gloss="">
+ContentDirectory.storage <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>This directory's contents are STORED on a branch, keyed by commit, and the checkout holds at most a working copy. See &#123;@link DirectoryStorageSchema}.</p>
+<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/cat-harness.ts"><code>cat-harness/schemas/cat-harness.ts#ContentDirectory.storage</code></a></p>
+</dd>
 <dt id="cat-harness--kg-schema-fields--cat-harness.contentdirectory.summaries" data-fa-state="extracted" data-fa-gloss="">
 ContentDirectory.summaries <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
@@ -2183,6 +2190,13 @@ ContentDirectoryShape.readOnlyBasis <span class="fa-gloss-status">candidate, ext
 <dd>
 <p>WHY, and required whenever <code>readOnly</code> is declared — either value.</p>
 <p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/cat-harness.ts"><code>cat-harness/schemas/cat-harness.ts#ContentDirectoryShape.readOnlyBasis</code></a></p>
+</dd>
+<dt id="cat-harness--kg-schema-fields--cat-harness.contentdirectoryshape.storage" data-fa-state="extracted" data-fa-gloss="">
+ContentDirectoryShape.storage <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>Where this directory's contents are KEPT, when that is not the checkout. See &#123;@link DirectoryStorageSchema} — bean <code>16ei</code>, arc <code>3fva</code>.</p>
+<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/cat-harness.ts"><code>cat-harness/schemas/cat-harness.ts#ContentDirectoryShape.storage</code></a></p>
 </dd>
 <dt id="cat-harness--kg-schema-fields--cat-harness.contentdirectoryshape.summaries" data-fa-state="extracted" data-fa-gloss="">
 ContentDirectoryShape.summaries <span class="fa-gloss-status">candidate, extracted</span>
@@ -3188,6 +3202,20 @@ DiffRendererSchema.label <span class="fa-gloss-status">candidate, extracted</spa
 <dd>
 <p>What the selector shows. Words, never an icon alone.</p>
 <p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/diff-renderers.ts"><code>cat-harness/schemas/diff-renderers.ts#DiffRendererSchema.label</code></a></p>
+</dd>
+<dt id="cat-harness--kg-schema-fields--cat-harness.directorystorageschema.branch" data-fa-state="extracted" data-fa-gloss="">
+DirectoryStorageSchema.branch <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>The branch, e.g. <code>qa-reports</code>. A plain branch name: no <code>refs/</code>, no <code>..</code>, no leading <code>-</code>.</p>
+<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/cat-harness.ts"><code>cat-harness/schemas/cat-harness.ts#DirectoryStorageSchema.branch</code></a></p>
+</dd>
+<dt id="cat-harness--kg-schema-fields--cat-harness.directorystorageschema.keyedby" data-fa-state="extracted" data-fa-gloss="">
+DirectoryStorageSchema.keyedBy <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>How entries are keyed on the branch. Only <code>commit</code> exists.</p>
+<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/cat-harness.ts"><code>cat-harness/schemas/cat-harness.ts#DirectoryStorageSchema.keyedBy</code></a></p>
 </dd>
 <dt id="cat-harness--kg-schema-fields--document-image.documentimageschema.basis" data-fa-state="extracted" data-fa-gloss="">
 DocumentImageSchema.basis <span class="fa-gloss-status">candidate, extracted</span>

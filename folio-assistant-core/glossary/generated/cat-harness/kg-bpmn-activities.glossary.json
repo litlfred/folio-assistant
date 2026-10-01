@@ -527,6 +527,14 @@
       "status": "candidate"
     },
     {
+      "id": "process_codequalitygates.task_qapublish",
+      "prefLabel": "Publish QA results to qa-reports (NOT A GATE)",
+      "definition": "Bean `16ei`, arc `3fva`. After Task_RepositoryGates, WHATEVER it concluded (`needs: gates` with `always()`), `qa:publish --github` writes this run's `test/results` trees to the orphan `qa-reports` branch: `main/<sha>/` on a push to main, `pr/<n>/<head-sha>/` on a same-repository PR (owner rulings D1, D3). A fork PR's token is read-only, so it is skipped with a `::notice` naming why. It does NOT reach GW_Join: a red publish is its own red and never decides mergeability, and the hard gates never wait on it. The only job here holding `contents: write`, which is also how `bun run gates` knows not to run it locally.",
+      "notation": "Task_QaPublish",
+      "source": "cat-harness/processes/code-quality-gates.bpmn#Task_QaPublish",
+      "status": "candidate"
+    },
+    {
       "id": "process_codequalitygates.task_repositorygates",
       "prefLabel": "Repository gates (HARD)",
       "definition": "The 43 repository-gate steps — workflow refs, lane and process documentation, kg:audit:check, detangle, skills, published packages — 150 `bun run` invocations in all. A SEPARATE job from Task_TypeScript since bean `om30`: they were one job in which `bun test` came second of 47 steps, and because Actions stops a job at its first failing step and no step was continue-on-error, a deliberate test failure on `main` meant none of these ran. A gate never asked and a gate that passed are indistinguishable from outside, which is `xom7` at the step rather than the workflow. No sequence dependency on Task_TypeScript is drawn because there is none: a red test must not stop these being asked. `bun run gates` derives its list from BOTH jobs, so the local set still cannot drift from CI's.",
