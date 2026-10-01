@@ -41,7 +41,7 @@ import {
   WATCHER_CRITERIA_BY_AXIS,
 } from "./qa-criteria-registry";
 import { blockQaPath, existingBlockQaPath } from "./qa-paths";
-import { blockAttestationKey, finalizeCriteria, refusalLine, resolvePrior } from "./qa-attestations";
+import { blockAttestationKey, finalizeCriteria, refusalLine, resolvePrior } from "../../schemas/qa-attestations.ts";
 import { findContentRepoRoot } from "./repo-root";
 import type { BlockQaReport } from "../../schemas/block-qa";
 

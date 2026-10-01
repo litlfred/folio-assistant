@@ -6,7 +6,7 @@
  * the prior report and carrying them forward, so a run with no prior — which
  * moving `test/results/` to the `qa-reports` branch makes ordinary — wrote a
  * report without them and said nothing. Every writer now reads them from the
- * attestation store (`content/pipeline/qa-attestations.ts`), and refuses with
+ * attestation store (`schemas/qa-attestations.ts`), and refuses with
  * exit 4 when the store cannot be read.
  *
  * The writers are CLIs with top-level state, so each is SPAWNED against a
@@ -34,13 +34,13 @@ import { blockQaPath } from "../../content/pipeline/qa-paths";
 import {
   attestationPath,
   blockAttestationKey,
+  criteriaAttestationsHome,
   entryIdentity,
-  readAttestations,
-  storeRoot,
+  readCriteriaAttestations as readAttestations,
   translationAttestationKey,
-  writeAttestations,
+  writeCriteriaAttestations as writeAttestations,
   type CriteriaMap,
-} from "../../content/pipeline/qa-attestations";
+} from "../../schemas/qa-attestations";
 import { mergeWithAttestations } from "../../content/pipeline/translation-block-qa";
 import { writeDeclaration } from "../../test/support/instance-fixture";
 
@@ -130,20 +130,41 @@ describe("block, script-only writers — prior ABSENT", () => {
     }
   }, BUDGET);
 
-  test("qa-sweep with an UNREADABLE store writes nothing and exits 4", () => {
+  test("(b) qa-sweep with a CORRUPT store writes nothing and exits 4", () => {
     const t = fixture();
     try {
-      rmSync(join(storeRoot(t.root), "attestations.store.json"));
+      writeFileSync(attestationPath(t.root, blockAttestationKey(t.root, t.blockRoot)), "<<<<<<< ours\n");
       const r = run(t.root, [join(PIPELINE, "qa-sweep.ts"), join(t.root, "content"), "--only", "voice-emoji-content", "--script-sidecar-root", t.sidecars]);
       expect(r.status).toBe(4);
       expect(r.stderr).toContain("UNKNOWN");
       expect(existsSync(blockQaPath(t.root, t.blockRoot))).toBe(false);
+      expect(readFileSync(attestationPath(t.root, blockAttestationKey(t.root, t.blockRoot)), "utf-8")).toBe("<<<<<<< ours\n");
     } finally {
       t.cleanup();
     }
   }, BUDGET);
 
-  test("qa-sweep with a prior that carries an attestation the store does not hold refuses (unmigrated)", () => {
+  test("(a) owner ruling 2: NO store, a prior report holding judgements — qa-sweep moves them into a new store as it saves", () => {
+    const t = fixture();
+    try {
+      // The folio has never had a store: remove the one the fixture seeded.
+      rmSync(criteriaAttestationsHome(t.root).storeRoot, { recursive: true, force: true });
+      const path = blockQaPath(t.root, t.blockRoot);
+      mkdirSync(join(path, ".."), { recursive: true });
+      writeFileSync(path, JSON.stringify({
+        $schema: "block-qa/v1", label: "sec:blk", kind: "prose", paths: {}, source_hashes: {},
+        criteria: { "voice-emoji-content": [ADJUDICATION], "human-only-axis": [HUMAN] }, updated_at: "t",
+      }));
+      const r = run(t.root, [join(PIPELINE, "qa-sweep.ts"), join(t.root, "content"), "--only", "voice-emoji-content", "--script-sidecar-root", t.sidecars]);
+      expect(r.status).toBe(0);
+      // In the store now, verbatim — and still in the report's projection.
+      expectSurvived(t);
+    } finally {
+      t.cleanup();
+    }
+  }, BUDGET);
+
+  test("qa-sweep with a prior that carries a judgement the store's file does not hold refuses (conflict)", () => {
     const t = fixture();
     try {
       const stray = { ...ADJUDICATION, notes: "not in the store" };
@@ -153,7 +174,7 @@ describe("block, script-only writers — prior ABSENT", () => {
       writeFileSync(path, prior);
       const r = run(t.root, [join(PIPELINE, "qa-sweep.ts"), join(t.root, "content"), "--only", "voice-emoji-content", "--script-sidecar-root", t.sidecars]);
       expect(r.status).toBe(4);
-      expect(r.stderr).toContain("unmigrated");
+      expect(r.stderr).toContain("conflict");
       expect(readFileSync(path, "utf-8")).toBe(prior);
     } finally {
       t.cleanup();
@@ -263,12 +284,30 @@ describe("translation — prior ABSENT", () => {
     }
   });
 
-  test("an unreadable store is a refusal, never an empty merge", () => {
+  test("an unreadable store file is a refusal, never an empty merge", () => {
     const root = mkdtempSync(join(tmpdir(), "qa-attest-tr-"));
     try {
-      mkdirSync(storeRoot(root), { recursive: true });
+      const key = translationAttestationKey(root, join(root, "p"), "fr");
+      mkdirSync(join(attestationPath(root, key), ".."), { recursive: true });
+      writeFileSync(attestationPath(root, key), "{ garbled");
       const m = mergeWithAttestations(root, join(root, "p"), "fr", undefined, fresh);
       expect(m.ok).toBe(false);
+    } finally {
+      rmSync(root, { recursive: true, force: true });
+    }
+  });
+
+  test("(a) owner ruling 2: NO store, the prior carries the round-trip verdicts — they are kept and marked to move", () => {
+    const root = mkdtempSync(join(tmpdir(), "qa-attest-tr-"));
+    try {
+      const subject = join(root, "content", "p");
+      const prior = { criteria: { "translation-semantic-roundtrip": [roundtrip] } } as never;
+      const m = mergeWithAttestations(root, subject, "fr", prior, fresh);
+      expect(m.ok).toBe(true);
+      if (!m.ok) return;
+      expect(m.resolution.adopt).toBe(true);
+      expect(m.criteria["translation-semantic-roundtrip"]!.map(entryIdentity)).toEqual([entryIdentity(roundtrip)]);
+      expect(existsSync(criteriaAttestationsHome(root).storeRoot)).toBe(false);
     } finally {
       rmSync(root, { recursive: true, force: true });
     }

@@ -1,4 +1,0 @@
-{
-  "$schema": "qa-attestations-store/v1",
-  "description": "The attestation store: every QA verdict whose reviewer.kind is not `script` (an agent's or a human's judgement), kept on main per owner ruling D2 (a), 2026-10-01, while derived script verdicts move to the `qa-reports` branch. One `<family>/<subject path>.attestations.json` per subject, mirroring `test/results/<family>/`. Writers read attestations from HERE, never from a prior derived report. Module: content/pipeline/qa-attestations.ts; bean folio-assistant-8wj1."
-}

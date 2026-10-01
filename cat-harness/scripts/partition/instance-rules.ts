@@ -405,11 +405,6 @@ export const RULES: Rule[] = [
       // same reason as its two neighbours — it reads the declaration and git,
       // and no folio's subject matter could make it answer differently.
       "scripts/qa-store.ts",                 // the qa-reports branch: readQa / publishQa / pruneQa
-      // What STAYS on main when the `qa` graph leaves it (bean `8wj1`, D2): it
-      // moves non-script verdicts out of derived reports into
-      // `test/attestations/`. Harness-level like its neighbours: it reads the
-      // reports' own `reviewer.kind`, and no folio's subject matter changes that.
-      "scripts/qa-attestations-migrate.ts",  // non-script verdicts into the attestation store
       // Its clean-merge counterpart, and harness-level for the same reason: it
       // loads the GATE SET from the workflow and re-runs whichever writers
       // their checks report stale. It knows nothing about any folio's subject
@@ -1243,9 +1238,12 @@ export const RULES: Rule[] = [
       // attestations (bean `cuxx`). Same side as the auditor that calls it.
       "scripts/prose-code-pairs.ts",
       "scripts/skill-voice-review.ts",     // skills reviewed against the skill voices, kept in the attestation store (beans rkqp, 2gst)
-      // The one-shot move of those judgements out of kg-qa sidecars into the
-      // attestation store (bean `2gst`). Same side as the auditor whose data it moves.
-      "scripts/migrate-kg-attestations.ts",
+      // The move of those judgements — and of block-qa and translation-qa
+      // agent/human verdicts (bean `8wj1`) — out of derived files into the
+      // attestation store (bean `2gst`). Same side as the auditor whose data it
+      // moves; it reads the reports' own `reviewer.kind`, and no folio's
+      // subject matter changes that.
+      "scripts/migrate-qa-attestations.ts",
       // ...and stage A, what that prose SAYS about the code (bean `ca4a`).
       "scripts/pair-claims.ts",
       "scripts/known-skills.ts",

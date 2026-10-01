@@ -1,7 +1,11 @@
 {
   "$schema": "qa-attestations/v1",
   "family": "block-qa",
-  "subject": "content/docs/publication-workflow/how-to-read-them",
+  "subject": {
+    "kind": "block",
+    "id": "content/docs/publication-workflow/how-to-read-them",
+    "path": "content/docs/publication-workflow/how-to-read-them"
+  },
   "criteria": {
     "voice-status-leak": [
       {

@@ -24,7 +24,7 @@ import {
   unmergedPaths,
   type SideScan,
 } from "../qa-resolve-conflicts.ts";
-import { attestationKeyForDerived, writeAttestations } from "../../content/pipeline/qa-attestations.ts";
+import { attestationKeyForDerived, attestationPath, writeCriteriaAttestations } from "../../schemas/qa-attestations.ts";
 
 const QA = "cat-harness/test/results/";
 
@@ -98,7 +98,7 @@ describe("the guard reads the attestation store (bean 8wj1)", () => {
   /** Write the store into the merged working tree, as committed state on main would be. */
   function seedStore(dir: string, entries: unknown[]): string {
     const instance = join(dir, "cat-harness");
-    writeAttestations(instance, attestationKeyForDerived(instance, join(dir, path))!, { "translation-coverage": entries });
+    writeCriteriaAttestations(instance, attestationKeyForDerived(instance, join(dir, path))!, { "translation-coverage": entries });
     return instance;
   }
 
@@ -124,13 +124,13 @@ describe("the guard reads the attestation store (bean 8wj1)", () => {
     expect(o!.action).toBe("refuse");
   });
 
-  test("an unreadable store refuses", () => {
+  test("an unreadable store file refuses", () => {
     const dir = conflicted([{ path, ours: sidecar("warn", true), theirs: sidecar("fail", true) }]);
     const instance = seedStore(dir, [agent]);
-    writeFileSync(join(instance, "test", "attestations", "attestations.store.json"), "{ nope");
+    writeFileSync(attestationPath(instance, attestationKeyForDerived(instance, join(dir, path))!), "{ nope");
     const [o] = plan(dir, QA, unmergedPaths(dir), instance);
     expect(o!.action).toBe("refuse");
-    expect(o!.reason).toContain("unknown");
+    expect(o!.reason).toContain("corrupt");
   });
 });
 

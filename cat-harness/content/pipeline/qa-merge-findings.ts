@@ -43,7 +43,7 @@ import {
 } from "./qa-utils";
 import { qaCriteriaByIdFor } from "./qa-criteria-registry";
 import { blockQaPath, existingBlockQaPath, findContentRepoRoot } from "./qa-paths";
-import { blockAttestationKey, composeCriteria, finalizeCriteria, refusalLine, resolvePrior } from "./qa-attestations";
+import { blockAttestationKey, composeCriteria, finalizeCriteria, refusalLine, resolvePrior } from "../../schemas/qa-attestations.ts";
 import type {
   BlockQaReport,
   QaCriterionEntry,

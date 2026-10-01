@@ -84,7 +84,7 @@ import { loadContributions } from "../../schemas/harness-config";
 import { ContributionRegistry, type FolioContribution } from "../../schemas/contributions";
 import { usesGraphHash } from "./uses-graph-hash";
 import { blockQaPath, existingBlockQaPath, findContentRepoRoot } from "./qa-paths";
-import { blockAttestationKey, composeCriteria, finalizeCriteria, refusalLine, resolvePrior } from "./qa-attestations.ts";
+import { blockAttestationKey, composeCriteria, finalizeCriteria, refusalLine, resolvePrior } from "../../schemas/qa-attestations.ts";
 import { contributionsRoot } from "./repo-root";
 
 

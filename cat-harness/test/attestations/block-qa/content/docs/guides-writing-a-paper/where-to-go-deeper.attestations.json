@@ -1,7 +1,11 @@
 {
   "$schema": "qa-attestations/v1",
   "family": "block-qa",
-  "subject": "content/docs/guides-writing-a-paper/where-to-go-deeper",
+  "subject": {
+    "kind": "block",
+    "id": "content/docs/guides-writing-a-paper/where-to-go-deeper",
+    "path": "content/docs/guides-writing-a-paper/where-to-go-deeper"
+  },
   "criteria": {
     "voice-author-notes-pollution": [
       {

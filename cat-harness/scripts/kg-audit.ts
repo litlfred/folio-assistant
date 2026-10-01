@@ -69,6 +69,7 @@ import {
   attestationPathFor,
   attestationsHomeFor,
   KG_QA_SIDECAR_SUFFIX,
+  priorKgJudgements,
   QA_ATTESTATIONS_SCHEMA,
   readAttestationFile,
   serialiseAttestations,
@@ -2382,10 +2383,13 @@ const check = args.includes("--check");
 const strict = args.includes("--strict");
 const asJson = args.includes("--json");
 /**
- * Create the attestation store (the declared `attestations` directory) when it
- * is absent. Without it every read is `unknown` and NOTHING is baselined: re-baselining over a
- * store that is missing is exactly how C4 lost the drift it recorded, so
- * starting a store is an explicit act, never a side effect.
+ * Create the attestation store (the `attestations` directory) when it is
+ * absent, even with nothing to put in it. No longer required: since owner
+ * ruling 2 (2026-10-01) an absent store is `absent`, not `unknown`, and the
+ * first save creates it, moving whatever judgements the prior sidecars still
+ * carry. C4's loss came from re-baselining over judgements nobody read; a
+ * first save that READS the prior sidecar and writes what it holds to the
+ * store first cannot do that. Kept so scripts that pass it keep working.
  */
 const initAttestations = args.includes("--init-attestations");
 if (initAttestations && check) {
@@ -2781,7 +2785,9 @@ const judgementsOf = (r: KgQaReport) =>
   for (const r of reports) {
     if (r.subject.kind !== "process" && r.subject.kind !== "skill") continue;
     const pairs = discoverPairs(r.subject, root, repoRoot);
-    const { entry: e, attestations } = evaluatePairsFrom(pairs, readAttestations(attestationPath(r), ATT_STORE), repoRoot);
+    // On a store miss (or no store yet) the prior sidecar's own attestations
+    // are read instead, and moved into the store below (owner ruling 2).
+    const { entry: e, attestations } = evaluatePairsFrom(pairs, readAttestations(attestationPath(r), ATT_STORE, sidecarPath(r)), repoRoot);
     r.criteria[PAIR_CRITERION] = e;
     // Stage A (bean `ca4a`): what the prose says about the code, where it can be checked.
     r.criteria["prose-claims-resolve"] = claimsEntry(pairs.flatMap((p) => judgePair(repoRoot, p, scripts)));
@@ -2798,18 +2804,66 @@ const judgementsOf = (r: KgQaReport) =>
   const voices = skillVoices(resolve(root, ".."));
   for (const r of reports) {
     if (r.subject.kind !== "skill" || !r.subject.path) continue;
-    const { entry: e, reviews } = evaluateVoiceReviewsFrom(join(root, r.subject.path), readVoiceReviews(attestationPath(r), ATT_STORE), voices);
+    const { entry: e, reviews } = evaluateVoiceReviewsFrom(join(root, r.subject.path), readVoiceReviews(attestationPath(r), ATT_STORE, sidecarPath(r)), voices);
     r.criteria[VOICE_REVIEW_CRITERION] = e;
     r.totals = tally(r.criteria);
     judgementsOf(r).reviews = reviews;
   }
 }
 
-const written = new Set<string>();
+// ── The judgements, to the attestation store (bean `2gst`).
+//
+// Written only where both halves were read (hit, miss or absent). A subject
+// whose computed set is EMPTY while a file exists is left as it is and
+// reported: emptying it would delete judgements, and that is a person's call.
+//
+// Owner ruling 2 (2026-10-01): where the store has no entry for a subject —
+// or there is no store yet — the judgements its PRIOR sidecar still carries
+// are moved here as this run saves, and the sidecar written after is clean.
+// Every moved entry lands in the store: one the evaluation above did not
+// carry forward (a pair no longer declared) is kept verbatim rather than
+// dropped with the sidecar's copy. A prior sidecar that will not parse while
+// the store has no entry may be holding judgements, so that subject is
+// UNKNOWN: neither file is written, and the run fails.
+//
+// The store is written BEFORE the sidecars, so a run that stops between the
+// two leaves the judgements in both places, never in neither.
+const attWritten = new Set<string>();
+const attKept: string[] = [];
+const attUnknown = new Set<KgQaReport>();
+let attMoved = 0;
 for (const r of reports) {
-  const p = sidecarPath(r);
-  written.add(resolve(p));
-  const text = serialise(r);
+  const p = attestationPath(r);
+  attWritten.add(resolve(p));
+  const read = readAttestationFile(p, ATT_STORE);
+  const prior = read.state === "miss" || read.state === "absent" ? priorKgJudgements(sidecarPath(r)) : ({ state: "none" } as const);
+  if (prior.state === "unknown") {
+    attUnknown.add(r);
+    console.error(`  ✗ UNKNOWN ${relative(root, sidecarPath(r))}: ${prior.reason}. The store has no entry for it, so neither file is written.`);
+    continue;
+  }
+  const j = judgements.get(r) ?? { pairs: [], reviews: [] };
+  if (j.pairs === undefined || j.reviews === undefined) continue;
+  let pairs = j.pairs;
+  let reviews = j.reviews;
+  {
+    if (prior.state === "found") {
+      attMoved += prior.pair_attestations.length + prior.voice_reviews.length;
+      const pairKey = (a: { kind?: unknown; prose?: unknown; code?: unknown }) => `${String(a.kind)}|${String(a.prose)}|${String(a.code)}`;
+      const havePairs = new Set(pairs.map(pairKey));
+      const haveVoices = new Set(reviews.map((v) => v.voice));
+      pairs = [...pairs, ...(prior.pair_attestations as PairAttestation[]).filter((a) => !havePairs.has(pairKey(a)))];
+      reviews = [...reviews, ...(prior.voice_reviews as VoiceReview[]).filter((v) => !haveVoices.has(v.voice))];
+    }
+  }
+  const file: KgAttestations = { $schema: QA_ATTESTATIONS_SCHEMA, family: "kg-qa", subject: r.subject };
+  if (pairs.length) file.pair_attestations = pairs;
+  if (reviews.length) file.voice_reviews = reviews;
+  if (!file.pair_attestations && !file.voice_reviews) {
+    if (existsSync(p)) attKept.push(relative(root, p));
+    continue;
+  }
+  const text = serialiseAttestations(file);
   if (check) {
     const current = existsSync(p) ? readFileSync(p, "utf-8") : undefined;
     if (current !== text) stale.push(relative(root, p));
@@ -2818,27 +2872,20 @@ for (const r of reports) {
     writeFileSync(p, text);
   }
 }
+if (attMoved > 0) {
+  console.log(
+    `  ${check ? "would move" : "→ moved"} ${attMoved} judgement(s) from prior kg-qa sidecars into the attestation store ` +
+      `(${relative(root, ATT_STORE)}) — owner ruling 2: a first save moves them`,
+  );
+}
 
-// ── The judgements, to the attestation store (bean `2gst`).
-//
-// Written only where both halves were read (hit or miss). A subject whose
-// computed set is EMPTY while a file exists is left as it is and reported:
-// emptying it would delete judgements, and that is a person's call.
-const attWritten = new Set<string>();
-const attKept: string[] = [];
+const written = new Set<string>();
 for (const r of reports) {
-  const p = attestationPath(r);
-  attWritten.add(resolve(p));
-  const j = judgements.get(r);
-  if (j === undefined || j.pairs === undefined || j.reviews === undefined) continue;
-  const file: KgAttestations = { $schema: QA_ATTESTATIONS_SCHEMA, family: "kg-qa", subject: r.subject };
-  if (j.pairs.length) file.pair_attestations = j.pairs;
-  if (j.reviews.length) file.voice_reviews = j.reviews;
-  if (!file.pair_attestations && !file.voice_reviews) {
-    if (existsSync(p)) attKept.push(relative(root, p));
-    continue;
-  }
-  const text = serialiseAttestations(file);
+  const p = sidecarPath(r);
+  written.add(resolve(p));
+  // Never overwrite a sidecar whose judgements could not be moved.
+  if (attUnknown.has(r)) continue;
+  const text = serialise(r);
   if (check) {
     const current = existsSync(p) ? readFileSync(p, "utf-8") : undefined;
     if (current !== text) stale.push(relative(root, p));
@@ -3031,6 +3078,9 @@ if (check) {
   //   · Only `--check` gates. Bare `kg:audit` is the WRITER and still exits 0,
   //     or regenerating after a rename would fail the very command you run to
   //     fix it.
-  process.exit(stale.length || tripped || orphans.length > 0 || attOrphans.length > 0 ? 1 : 0);
+  process.exit(stale.length || tripped || orphans.length > 0 || attOrphans.length > 0 || attUnknown.size > 0 ? 1 : 0);
 }
-process.exit(0);
+// A subject whose judgements could not be moved (ruling 2) was NOT written —
+// the writer says so with its exit code too, or a script running it would
+// read a refusal as a clean save.
+process.exit(attUnknown.size > 0 ? 4 : 0);

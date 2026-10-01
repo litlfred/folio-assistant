@@ -1,7 +1,11 @@
 {
   "$schema": "qa-attestations/v1",
   "family": "block-qa",
-  "subject": "content/docs/guides-who-smart-ig/a-mock-session",
+  "subject": {
+    "kind": "block",
+    "id": "content/docs/guides-who-smart-ig/a-mock-session",
+    "path": "content/docs/guides-who-smart-ig/a-mock-session"
+  },
   "criteria": {
     "voice-emoji-content": [
       {

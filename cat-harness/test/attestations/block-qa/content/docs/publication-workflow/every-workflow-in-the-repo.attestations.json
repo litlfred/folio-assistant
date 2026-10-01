@@ -1,7 +1,11 @@
 {
   "$schema": "qa-attestations/v1",
   "family": "block-qa",
-  "subject": "content/docs/publication-workflow/every-workflow-in-the-repo",
+  "subject": {
+    "kind": "block",
+    "id": "content/docs/publication-workflow/every-workflow-in-the-repo",
+    "path": "content/docs/publication-workflow/every-workflow-in-the-repo"
+  },
   "criteria": {
     "voice-author-notes-pollution": [
       {

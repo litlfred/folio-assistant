@@ -80,9 +80,9 @@ import {
   refusalLine,
   resolvePrior,
   translationAttestationKey,
-  writeAttestations,
+  writeCriteriaAttestations,
   type PriorOk,
-} from "./qa-attestations.ts";
+} from "../../schemas/qa-attestations.ts";
 import { sourceLocale, targetLocales } from "./translation-index.ts";
 import { siteDirFor } from "../../schemas/cat-harness.ts";
 
@@ -905,7 +905,7 @@ function sweepSubject(
     }
     // On an instance that never had a store, the prior's attestations move into one now.
     if (merged.resolution.adopt) {
-      writeAttestations(INSTANCE_ROOT, merged.resolution.key, merged.resolution.attestations, {
+      writeCriteriaAttestations(INSTANCE_ROOT, merged.resolution.key, merged.resolution.attestations, {
         asciiEscape: existing !== undefined && isAsciiEscaped(readFileSync(existing, "utf-8")),
       });
     }

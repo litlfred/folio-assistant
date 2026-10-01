@@ -50,7 +50,7 @@
  * entry" meant "regeneration would destroy it", because the writers kept those
  * entries only by reading the file being regenerated. Since `8wj1` every block
  * and translation writer reads them from `test/attestations/` instead
- * (`content/pipeline/qa-attestations.ts`), so a file whose non-script entries
+ * (`schemas/qa-attestations.ts`), so a file whose non-script entries
  * are ALL held there, byte for byte, regenerates without losing one, and is
  * resolved. One the store does not hold, a store file that is itself
  * conflicted, or a store that cannot be read, is still refused: those are the
@@ -92,7 +92,7 @@ import { existsSync, readFileSync } from "node:fs";
 import { join, relative } from "node:path";
 
 import { directoryForGraph, repoRootFor } from "../schemas/cat-harness.ts";
-import { attestationKeyForDerived, attestationPath, entryIdentity, readAttestations } from "../content/pipeline/qa-attestations.ts";
+import { attestationKeyForDerived, attestationPath, entryIdentity, readCriteriaAttestations } from "../schemas/qa-attestations.ts";
 
 const ROOT = join(import.meta.dir, "..");
 const dryRun = process.argv.includes("--dry-run");
@@ -222,14 +222,14 @@ export function storeHolds(
   if (!key) return "its family is not one the attestation store serves";
   const storePath = relative(repoRoot, attestationPath(instanceRoot, key));
   if (unmerged.includes(storePath)) return `its attestation file ${storePath} is itself conflicted`;
-  const read = readAttestations(instanceRoot, key);
+  const read = readCriteriaAttestations(instanceRoot, key);
   if (read.state === "corrupt" || read.state === "unknown") return `the attestation store is ${read.state} at ${storePath}: ${read.reason}`;
   const held = read.state === "hit" ? read.criteria : {};
   const missing = (scan.nonScriptEntries ?? []).filter(
     (e) => e.criterion === undefined || !(held[e.criterion] ?? []).some((h) => entryIdentity(h) === e.json),
   );
   if (missing.length > 0) {
-    return `${missing.length} of them ${read.state === "no-store" ? "with no attestation store at all" : `not held in ${storePath}`} — run \`bun run qa:attestations:migrate\` first`;
+    return `${missing.length} of them ${read.state === "absent" ? "with no attestation store at all" : `not held in ${storePath}`} — run \`bun run qa:attestations:migrate\` first`;
   }
   return undefined;
 }

@@ -32,7 +32,7 @@ import type {
 // anchors everything else to); `existingBlockQaPath` for reading (results
 // tree first, legacy `<block>.qa.json` sibling as fallback).
 import { blockQaPath, existingBlockQaPath } from "./qa-paths";
-import { blockAttestationKey, composeCriteria, finalizeCriteria, refusalLine, resolvePrior } from "./qa-attestations";
+import { blockAttestationKey, composeCriteria, finalizeCriteria, refusalLine, resolvePrior } from "../../schemas/qa-attestations.ts";
 
 /**
  * Root of the CONTENT repo being swept.

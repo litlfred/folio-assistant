@@ -1,7 +1,11 @@
 {
   "$schema": "qa-attestations/v1",
   "family": "block-qa",
-  "subject": "content/docs/guides-writing-a-paper/before-you-start",
+  "subject": {
+    "kind": "block",
+    "id": "content/docs/guides-writing-a-paper/before-you-start",
+    "path": "content/docs/guides-writing-a-paper/before-you-start"
+  },
   "criteria": {
     "voice-author-notes-pollution": [
       {

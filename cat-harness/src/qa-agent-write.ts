@@ -41,7 +41,7 @@ import {
   resolveCanonicalLean,
 } from "../content/pipeline/qa-utils";
 import { blockQaPath, existingBlockQaPath, findContentRepoRoot } from "../content/pipeline/qa-paths";
-import { blockAttestationKey, composeCriteria, finalizeCriteria, refusalLine, resolvePrior } from "../content/pipeline/qa-attestations";
+import { blockAttestationKey, composeCriteria, finalizeCriteria, refusalLine, resolvePrior } from "../schemas/qa-attestations.ts";
 import type {
   BlockQaReport,
   QaCriterionEntry,

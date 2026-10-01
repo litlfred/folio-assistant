@@ -1,7 +1,11 @@
 {
   "$schema": "qa-attestations/v1",
   "family": "block-qa",
-  "subject": "content/docs/guides-writing-a-document/1-scaffold-the-folio",
+  "subject": {
+    "kind": "block",
+    "id": "content/docs/guides-writing-a-document/1-scaffold-the-folio",
+    "path": "content/docs/guides-writing-a-document/1-scaffold-the-folio"
+  },
   "criteria": {
     "voice-status-leak": [
       {

@@ -1,7 +1,11 @@
 {
   "$schema": "qa-attestations/v1",
   "family": "block-qa",
-  "subject": "content/docs/crdm-methodology/what-is-not-built-yet",
+  "subject": {
+    "kind": "block",
+    "id": "content/docs/crdm-methodology/what-is-not-built-yet",
+    "path": "content/docs/crdm-methodology/what-is-not-built-yet"
+  },
   "criteria": {
     "voice-status-leak": [
       {

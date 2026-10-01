@@ -59,7 +59,7 @@ import { siteDirFor } from "../../schemas/cat-harness.ts";
 // so a downstream folio that has not moved its own sidecars yet is not read
 // as having none).
 import { blockQaPath, existingBlockQaPath } from "./qa-paths.ts";
-import { blockAttestationKey, composeCriteria, finalizeCriteria, refusalLine, resolvePrior } from "./qa-attestations.ts";
+import { blockAttestationKey, composeCriteria, finalizeCriteria, refusalLine, resolvePrior } from "../../schemas/qa-attestations.ts";
 
 const SCRIPT_DIR = dirname(fileURLToPath(import.meta.url));
 

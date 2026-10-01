@@ -1,7 +1,11 @@
 {
   "$schema": "qa-attestations/v1",
   "family": "translation-qa",
-  "subject": "content/docs/crdm-methodology/overview",
+  "subject": {
+    "kind": "block",
+    "id": "content/docs/crdm-methodology/overview",
+    "path": "content/docs/crdm-methodology/overview"
+  },
   "locale": "fr",
   "criteria": {
     "translation-semantic-roundtrip": [
