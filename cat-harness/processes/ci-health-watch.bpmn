@@ -47,7 +47,8 @@ ONE TRACKING ISSUE, EDITED IN PLACE, never a comment and never a second issue �
         <bpmn:flowNodeRef>End_Found</bpmn:flowNodeRef>
       </bpmn:lane>
     </bpmn:laneSet>
-    <bpmn:startEvent id="Start_Sweep" name="Weekly (Mon 09:17 UTC),&#10;or on dispatch">
+    <bpmn:startEvent id="Start_Sweep" name="Weekly (Mon 09:17 UTC),&#10;a FAILING gating run on main,&#10;or on dispatch">
+      <bpmn:documentation>Three ways in, and the first two answer different questions. The weekly cron bounds a QUIET stretch, with nobody working — ynu8's original case. A workflow_run on a failing gating run bounds an ACTIVE one, where main moves every 7.7 min (186 merges in 24h, measured 2026-09-30) and the cost is the time to NOTICE rather than the time to detect; main already gate-checks every push, so all nine of 391j's incidents were detected automatically. Bean kgho. On workflow_run the job is conditioned on the triggering run having FAILED, so a green main starts no sweep at all: the cost scales with the defect, not with the merge cadence. Not a push trigger — a push-triggered run starts alongside the workflows it reports on and would read them as in_progress, which check:ci-health rightly calls neither red nor green, giving a job that runs 186 times a day to report could-not-determine.</bpmn:documentation>
       <bpmn:outgoing>Flow_0</bpmn:outgoing>
     </bpmn:startEvent>
     <bpmn:task id="Task_Check" name="Run check:ci-health,&#10;WRITING the report file">

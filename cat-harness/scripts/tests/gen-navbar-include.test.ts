@@ -18,6 +18,7 @@ import { readFileSync } from "node:fs";
 import { join } from "node:path";
 
 import { siteDirFor } from "../../schemas/cat-harness.js";
+import { render, type Harness } from "../gen-navbar-include.js";
 
 const ROOT = join(import.meta.dir, "..", "..", "..");
 // The site root is ASKED FOR here too. `site-dir-single-answer` scans test
@@ -160,5 +161,27 @@ describe("the writer is a fixpoint over the real data", () => {
     const out = `${r.stdout.toString()}${r.stderr.toString()}`;
     expect(out).not.toContain("stale");
     expect(r.exitCode).toBe(0);
+  });
+});
+
+// Bean `nvbr` (#223): "the lhs navbar should have sections for each node in
+// the folio instance". The model that shipped is one section per INSTANTIATED
+// harness (`603s`, `b5f0`), so the gate is stated in those terms. Asserted on
+// `render` rather than on the committed file, so the two cases the gate names
+// — several instances, and none — are tested whatever the repository holds.
+describe("one navbar section per instantiated harness (bean `nvbr`)", () => {
+  const h = (name: string, instantiated: boolean): Harness => ({ name, label: name, instantiated });
+  const sections = (s: string) => [...s.matchAll(/data-fa-harness-config="([^"]+)"/g)].map((m) => m[1]);
+
+  test("two instantiated harnesses render two sections; a declared-only one renders none", () => {
+    const out = variants(render([h("alpha", true), h("beta", true), h("gamma", false)], "T"));
+    for (const v of [out.canonical, out.staging]) expect(sections(v)).toEqual(["alpha", "beta"]);
+  });
+
+  test("zero instances renders without error, and with no empty Harnesses group", () => {
+    const out = render([], "T");
+    expect(out).toContain('class="fa-nav-top"');
+    expect(sections(out)).toEqual([]);
+    expect(out).not.toContain(">Harnesses<");
   });
 });

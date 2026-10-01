@@ -70,14 +70,7 @@ import { Glob } from "bun";
 
 import { gitCorpus } from "../schemas/git-corpus.ts";
 
-import {
-  isDerivedGraph,
-  isPublishedGraphKind,
-  isRenderable,
-  owningDirectory,
-  resolveDirectories,
-  subgraphTree,
-} from "../schemas/cat-harness.js";
+import { checkoutDirectories, isDerivedGraph, isPublishedGraphKind, isRenderable, owningDirectory, subgraphTree } from "../schemas/cat-harness.js";
 
 const ROOT = resolve(import.meta.dir, "..");
 
@@ -345,7 +338,11 @@ function markdownIn(abs: string): string[] {
 }
 
 export function scanSubgraphs(root: string = ROOT): SubgraphReport {
-  const dirs = resolveDirectories([{ name: "(local)", root, own: true }]);
+  // The whole CHECKOUT, not this instance alone (bean `cmsl`, issue #1694): a
+  // dangling link anywhere in the corpus is this check's question, and the
+  // corpus used to reach it only through cat-harness's repository-scoped
+  // mirrors. `checkoutDirectories` composes it once.
+  const dirs = checkoutDirectories(root);
   const tree = subgraphTree(dirs);
   const edges: CrossEdge[] = [];
   const dangling: SubgraphReport["dangling"] = [];
@@ -365,6 +362,7 @@ export function scanSubgraphs(root: string = ROOT): SubgraphReport {
       continue;
     }
     let attributed = 0;
+    let unowned = 0;
     for (const rel of markdownIn(abs)) {
       const file = join(abs, rel);
       // ABSOLUTE, not instance-relative. A `scope: "repository"` directory
@@ -379,6 +377,7 @@ export function scanSubgraphs(root: string = ROOT): SubgraphReport {
       // in which instance-relative and repository-scoped entries are
       // commensurable at all.
       const owner = owningDirectory(dirs, file);
+      if (owner === undefined) unowned += 1;
       // Attribute the file to its DEEPEST owner, not to the directory whose
       // sweep happened to reach it — that attribution IS the `x4v4` defect.
       if (owner === undefined || owner.id !== dir.id) continue;
@@ -424,7 +423,12 @@ export function scanSubgraphs(root: string = ROOT): SubgraphReport {
         });
       }
     }
-    if (attributed === 0 && markdownIn(abs).length > 0) {
+    // Flagged when a file under it belongs to NO directory — the `3ye4` shape,
+    // a path comparison that fails and attributes a file to nothing. A PARENT
+    // whose files all belong to deeper declared directories (an instance's
+    // `skills/` holding only `voices/`, once the checkout overlay reads every
+    // instance) is examined through them, and is not a finding.
+    if (attributed === 0 && unowned > 0) {
       notExamined.push(`${dir.id} (${dir.path})`);
     }
   }

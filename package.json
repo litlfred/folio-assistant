@@ -119,6 +119,7 @@
     "check:docs-templates": "bun run cat-harness/scripts/check-docs-templates.ts",
     "check:duplicate-ids": "bun run cat-harness/scripts/check-duplicate-ids.ts",
     "check:escaped-markup": "bun run cat-harness/scripts/check-escaped-markup.ts",
+    "check:escaped-markup:source": "bun run cat-harness/scripts/check-escaped-markup.ts --source cat-harness/skills cat-harness/docs",
     "check:fallback-roles": "bun run cat-harness/scripts/check-fallback-roles.ts",
     "check:folio-mount": "bun run cat-harness/scripts/check-folio-mount.ts",
     "check:glossary": "bun run folio-assistant-core/scripts/glossary-page.ts --check",

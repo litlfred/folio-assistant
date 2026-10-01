@@ -38,7 +38,7 @@ import { resolve, relative, join } from "node:path";
 import { Glob } from "bun";
 
 import { parseFrontMatter } from "../schemas/front-matter.ts";
-import { repoRootFor, directoryForGraph, declarationPathIn } from "../schemas/cat-harness.ts";
+import { checkoutDirectoriesForGraph, repoRootFor, declarationPathIn } from "../schemas/cat-harness.ts";
 import { kgRoots } from "./known-skills.ts";
 
 const INSTANCE = resolve(import.meta.dir, "..");
@@ -184,6 +184,18 @@ function sweepRoots(instance: string, repo: string): string[] {
     // consumer does.
     dirs.push(...kgRoots(instance));
   }
+  // THE CHECKOUT ROOT'S OWN DIRECTORIES too. `beans/`, `memory/`, `fsh-guts/`
+  // and the root `docs/` overlay were swept through cat-harness's
+  // `scope: "repository"` entries until cmsl step 2 (issue #1694) moved them
+  // into the root instance's declaration; reading only this instance's then
+  // swept none of them (measured: the real-tree exemption test found 0). Only
+  // when `repo` is a different directory that declares itself — a fixture
+  // passing `scan(root, root)` is its own repository and gets nothing extra.
+  const rootDecl = resolve(repo) !== resolve(instance) ? declarationPathIn(repo) : undefined;
+  if (rootDecl !== undefined && existsSync(rootDecl)) {
+    const r = JSON.parse(readFileSync(rootDecl, "utf-8")) as { directories?: { path?: string }[] };
+    for (const d of r.directories ?? []) if (typeof d.path === "string") dirs.push(resolve(repo, d.path));
+  }
   // `.claude/skills/` is a local convention rather than a declared graph,
   // and since #437 it sits beside the instance rather than inside it.
   // Checking one place would silently skip it.
@@ -201,7 +213,7 @@ export function scan(
   instance = INSTANCE,
   repo = repoRootFor(instance),
 ): { findings: Finding[]; scanned: number; missingRecords: Retired[]; roots: string[] } {
-  const guts = directoryForGraph(instance, "fsh-guts");
+  const guts = checkoutDirectoriesForGraph(instance, "fsh-guts")[0];
   // No declared trashcan means the records are UNREACHABLE, not absent. Both
   // report here, because a rule whose reasons cannot be located is in the
   // same state either way from the reader's side.
@@ -257,7 +269,7 @@ function main(): void {
     console.error(`    ${f.entry.because}`);
     console.error(
       `    The full record, with every value it ever held: ` +
-        `${relative(REPO, join(directoryForGraph(INSTANCE, "fsh-guts") ?? "", f.entry.record))}`,
+        `${relative(REPO, join(checkoutDirectoriesForGraph(INSTANCE, "fsh-guts")[0] ?? "", f.entry.record))}`,
     );
   }
 

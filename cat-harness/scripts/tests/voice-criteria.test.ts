@@ -23,6 +23,7 @@ import {
   qaCriteriaByIdFor,
 } from "../../content/pipeline/qa-criteria-registry.ts";
 import {
+  judgesBlocks,
   overlayCriterionId,
   overlaySeverityOf,
   shippedVoices,
@@ -43,8 +44,8 @@ describe("the derivation reproduces the hand-written criteria", () => {
   const derived = voiceOverlayCriteria(INSTANCE);
   const byId = new Map(derived.map((c) => [c.id, c]));
 
-  test("every voice this repository ships produces one criterion", () => {
-    expect(derived.length).toBe(shippedVoices(INSTANCE).length);
+  test("every voice this repository ships that judges BLOCKS produces one criterion", () => {
+    expect(derived.length).toBe(shippedVoices(INSTANCE).filter(({ voice }) => judgesBlocks(voice)).length);
     // Four when this landed. Asserted against the voices rather than as a
     // literal, so shipping a fifth voice is not a test failure — that is the
     // point of deriving them.
@@ -149,9 +150,21 @@ describe("overlaySeverityOf is declared, never derived from the rules", () => {
 
 describe("the criterion id is composed in one place", () => {
   test("`overlayCriterionId` is what the derivation uses", () => {
-    for (const { voice } of shippedVoices(INSTANCE)) {
+    for (const { voice } of shippedVoices(INSTANCE).filter(({ voice }) => judgesBlocks(voice))) {
       const c = voiceOverlayCriteria(INSTANCE).find((x) => x.voices?.[0] === voice.id);
       expect(c!.id).toBe(overlayCriterionId(voice.id));
     }
+  });
+});
+
+// Bean `rkqp`: a voice scoped only to artefact kinds (`appliesTo: ["skill"]`)
+// is judged by `skill-voice-review-current`, never as a block overlay — or
+// activating it would hold folio prose to rules written for a SKILL.md.
+describe("a voice that judges only skills makes no block criterion", () => {
+  test("the skill-authoring voices are shipped, and none is a block overlay", () => {
+    const skillOnly = shippedVoices(INSTANCE).filter(({ voice }) => !judgesBlocks(voice)).map(({ voice }) => voice.id);
+    expect(skillOnly).toContain("agent-skill-authoring");
+    const ids = new Set(voiceOverlayCriteria(INSTANCE).map((c) => c.id));
+    for (const id of skillOnly) expect(ids.has(overlayCriterionId(id))).toBe(false);
   });
 });

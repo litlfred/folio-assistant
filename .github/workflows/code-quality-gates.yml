@@ -1294,10 +1294,42 @@ jobs:
           # names the range it used either way.
           if [ -n "$CATALOGUE_BASE_SHA" ]; then
             git fetch --no-tags --depth=1 origin "$CATALOGUE_BASE_SHA"
+            bun run translation:catalogue:check
           else
+            # NO pull-request context: a `workflow_dispatch` or `merge_group`
+            # run. `CATALOGUE_BASE_SHA` is empty, and the old fallback then ran
+            # the three-dot path against an `origin/main` this very fetch had
+            # just CREATED as a shallow graft — which has no merge base, so the
+            # script exited 2, "could not determine", every time.
+            #
+            # That made a dispatched run of this workflow UNPASSABLE, which is
+            # not a nuisance but a trap: `check-head-has-run.ts` tells an
+            # operator to dispatch when a head has no run, so following the
+            # repository's own advice attached a red hard gate to a PR that had
+            # not earned it. Measured on #1633, 2026-10-01, run 36789391040 —
+            # the only red among twelve checks, and it was the advice, not the
+            # branch. Issue #823, bean `sddf`.
+            #
+            # Deepen until a merge base EXISTS, then name it. `--base` is the
+            # script's two-dot path and needs no merge base of its own, but a
+            # base still has to be supplied.
             git fetch --no-tags --prune --depth=200 origin main || true
+            base="$(git merge-base origin/main HEAD 2>/dev/null || true)"
+            if [ -z "$base" ]; then
+              git fetch --no-tags --unshallow origin main 2>/dev/null \
+                || git fetch --no-tags --deepen=2000 origin main 2>/dev/null || true
+              base="$(git merge-base origin/main HEAD 2>/dev/null || true)"
+            fi
+            if [ -n "$base" ]; then
+              bun run translation:catalogue:check -- --base "$base"
+            else
+              # Still could-not-determine, and it stays exit 2 rather than
+              # becoming a pass. `dh4f`: the one thing this must never do is
+              # render "I could not look" as "nothing is wrong".
+              echo "::error::no merge base against origin/main after deepening — the catalogue check cannot run on this event"
+              exit 2
+            fi
           fi
-          bun run translation:catalogue:check
 
       - name: gates that were registered and never run
         run: |
@@ -1470,6 +1502,27 @@ jobs:
           # at the eight the store had, so a NEW one fails and the backlog is
           # listed rather than demanded.
           bun run check:bean-bodies
+          # Bean `7pp6`: a markdown line whose FIRST character is `<` makes
+          # kramdown open a raw HTML block, and with no close tag the REST OF THE
+          # PAGE stays raw -- tables print as rows of pipes. The usual cause is an
+          # inline code span wrapped across a line break.
+          #
+          # `check:escaped-markup` already catches this, but only on a BUILT tree,
+          # and that runs in docs-site.yml AFTER merge. So five of these shipped
+          # green and reddened `main`: four closed at once by `7w1a` (`<agentId>`,
+          # `<branch>`, `<file.json>`, `<name>.config.json`) and `<slide>` by
+          # #1730, which cost NINE consecutive `Docs site` failures. Each was
+          # repaired by reflowing the one source that had it; a fix repeated five
+          # times is a missing gate, not five accidents.
+          #
+          # Column 0 only, outside fences and front matter, with autolinks and
+          # real html elements excused BY NAME -- including the
+          # `<details markdown="1">` that `7w1a` deliberately introduced. Of 6
+          # column-0 matches across 2314 files, four were not this defect, so a
+          # check designed from the one example would fire on valid documentation.
+          # Lands green over 706 sources: it locks the class, it does not open a
+          # backlog.
+          bun run check:escaped-markup:source
           # Bean `t7ao`: check:bean-bodies reads front matter by REGEX, and a
           # regex over a broken document does not notice the document is
           # broken. A bean committed with a literal `\1` where `updated_at:`
