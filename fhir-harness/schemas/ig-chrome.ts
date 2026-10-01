@@ -261,8 +261,8 @@ export const CHROME_FILENAME = "chrome.json";
  *
  * ## Why the instance is NAMED rather than walked to
  *
- * The owner placed the chrome at `smart-base` so `smart-l1`, `smart-dak` and
- * `smart-ig` inherit it instead of each re-copying it. The obvious
+ * The owner placed the chrome at `smart-base` so every WHO SMART IG (through
+ * `smart-ig`) inherits it instead of each re-copying it. The obvious
  * implementation is to walk `needs` from the consumer upward — and it does not
  * work: `smart-trust` needs `smart-ig`, while `smart-base` needs
  * `fhir-harness`, so **there is no `needs` path from smart-trust to
