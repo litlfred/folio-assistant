@@ -16,11 +16,11 @@
       "findings": []
     },
     "skill-in-role-or-process": {
-      "result": "unknown",
+      "result": "fail",
       "findings": [
         {
-          "where": "—",
-          "detail": "no role graph declared."
+          "where": "bootstrap-contract-semver",
+          "detail": "no role carries \"bootstrap-contract-semver\" and no activity names it — reached, if at all, by direct invocation. In this instance's graph only (read: `skills` at `skills/`, `scenarios` at `scenarios/`, `processes` at `processes/`, `bootstrap-tools-skills` at `skills/`, `bootstrap-tools-processes` at `processes/`, `bootstrap-tools-scenarios` at `scenarios/`) — a nested instance may name it, and this audit does not read one."
         }
       ]
     },
@@ -106,13 +106,8 @@
       "findings": []
     },
     "arrow-direction": {
-      "result": "unknown",
-      "findings": [
-        {
-          "where": "—",
-          "detail": "no BPMN extension element was found in any diagram, so the process half checked nothing."
-        }
-      ]
+      "result": "pass",
+      "findings": []
     },
     "prose-names-resolve": {
       "result": "pass",
@@ -137,9 +132,9 @@
     }
   },
   "totals": {
-    "pass": 8,
-    "fail": 0,
+    "pass": 9,
+    "fail": 1,
     "n/a": 12,
-    "unknown": 2
+    "unknown": 0
   }
 }

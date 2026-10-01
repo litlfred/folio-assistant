@@ -46,11 +46,43 @@
       "status": "candidate"
     },
     {
+      "id": "human-agent-discussion",
+      "prefLabel": "human-agent-discussion",
+      "definition": "Ask a person (or a sibling agent) for what no file holds: context, then the options, then a recommendation and what happens with no answer, then ONE question. The reusable discussion every bootstrap diagram calls when it needs a person; it records the answer, an applied default, or what is still open, and never a guess.",
+      "notation": "human-agent-discussion",
+      "source": "bootstrap/skills/human-agent-discussion.md",
+      "status": "candidate"
+    },
+    {
+      "id": "initialization-steps",
+      "prefLabel": "initialization-steps",
+      "definition": "Walk every initialization step the declarations name (the instance's own and each one it needs), check each before doing anything, do what can be done, ask for what only a person can do, and report every step as done, not done, could not determine, or stated.",
+      "notation": "initialization-steps",
+      "source": "bootstrap/skills/initialization-steps.md",
+      "status": "candidate"
+    },
+    {
       "id": "log-message",
       "prefLabel": "log-message",
       "definition": "Say what you are doing, to the Logger, in a form a reader can act on. Five required fields and one optional body; an incomplete message is not logged. Callable from any task in any process, and required by some.",
       "notation": "log-message",
       "source": "bootstrap/skills/log-message.md",
+      "status": "candidate"
+    },
+    {
+      "id": "publish-documents",
+      "prefLabel": "publish-documents",
+      "definition": "The primary step of initializing a Knowledge Graph harness: every JSON Schema and JSON-LD document it names an address for (schemas, vocabulary, diagram vocabulary, graph export, each with its @context) is published AT that address, and the address answers. Checked first, right after the declaration is read.",
+      "notation": "publish-documents",
+      "source": "bootstrap/skills/publish-documents.md",
+      "status": "candidate"
+    },
+    {
+      "id": "publish-site",
+      "prefLabel": "publish-site",
+      "definition": "Give an instance a site: its Knowledge Graph rendered for publication at its site address, and the address answering. Four checks — a workflow publishes it, the gh-pages branch exists, Pages serves that branch, the address answers. How the rendering is staged and pushed is the toolset's own process, not this skill's.",
+      "notation": "publish-site",
+      "source": "bootstrap/skills/publish-site.md",
       "status": "candidate"
     },
     {
