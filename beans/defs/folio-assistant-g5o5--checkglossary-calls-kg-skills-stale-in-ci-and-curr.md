@@ -74,7 +74,7 @@ both. That is why every environmental hypothesis failed: there was no
 environment difference to find.
 
 **The defect itself is one term.** `2c295f8ac06` edited
-`cat-harness/skills/folio-paper-adapter/latex-build-cache.md`'s front-matter
+`cat-harness/skills/authoring/folio-paper-adapter/latex-build-cache.md`'s front-matter
 `description`, `scripts/install-tex.sh` -> `cat-harness/scripts/install-tex.sh`
 (twice), and that description is PROJECTED into the three artefacts named above.
 It did not regenerate them. Fixed by `bun run glossary:page` in `bc6c84a5166`.

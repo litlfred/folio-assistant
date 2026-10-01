@@ -6,7 +6,7 @@ generated: cat-harness/scripts/gen-skill-commands.ts
 
 # /proposition-consolidation-audit
 
-Run the `proposition-consolidation-audit` skill. Read [`cat-harness/skills/folio-paper-adapter/proposition-consolidation-audit.md`](../../cat-harness/skills/folio-paper-adapter/proposition-consolidation-audit.md) and follow it.
+Run the `proposition-consolidation-audit` skill. Read [`cat-harness/skills/authoring/folio-paper-adapter/proposition-consolidation-audit.md`](../../cat-harness/skills/authoring/folio-paper-adapter/proposition-consolidation-audit.md) and follow it.
 
 This command is a pointer, generated from that skill's `user_invocable: true`; the
 instructions live in the skill and nowhere else. The same skill is also served as the

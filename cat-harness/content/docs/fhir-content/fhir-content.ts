@@ -6,7 +6,7 @@ export default webpage({
   navOrder: 13,
   nodes: [
     { id: "overview", block: "overview" },
-    { id: "the-three-layers", title: "L1, L2, L3 — three layers, not three stages", block: "the-three-layers" },
+    { id: "the-three-layers", title: "L1–L5 — five layers, not five stages; FHIR content is the first three", block: "the-three-layers" },
     { id: "representations", title: "Representations, and why only one is taken", block: "representations" },
     { id: "the-artefact-index", title: "The artefact index is reconstructed", block: "the-artefact-index" },
     { id: "the-dak-surface", title: "The DAK API surface", block: "the-dak-surface" },

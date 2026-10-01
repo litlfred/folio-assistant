@@ -6,7 +6,7 @@ generated: cat-harness/scripts/gen-skill-commands.ts
 
 # /devils-advocate-watcher
 
-Run the `devils-advocate-watcher` skill. Read [`cat-harness/skills/folio-core/devils-advocate-watcher.md`](../../cat-harness/skills/folio-core/devils-advocate-watcher.md) and follow it.
+Run the `devils-advocate-watcher` skill. Read [`cat-harness/skills/authoring/authoring-core/devils-advocate-watcher.md`](../../cat-harness/skills/authoring/authoring-core/devils-advocate-watcher.md) and follow it.
 
 This command is a pointer, generated from that skill's `user_invocable: true`; the
 instructions live in the skill and nowhere else. The same skill is also served as the

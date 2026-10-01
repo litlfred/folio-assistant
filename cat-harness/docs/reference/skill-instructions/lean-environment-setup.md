@@ -6,9 +6,9 @@ parent: Skill instructions
 ---
 
 {: .note }
-> Generated from [`cat-harness/skills/folio-paper-adapter/lean-environment-setup.md`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/folio-paper-adapter/lean-environment-setup.md) — do not edit here.
+> Generated from [`cat-harness/skills/authoring/folio-paper-adapter/lean-environment-setup.md`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/authoring/folio-paper-adapter/lean-environment-setup.md) — do not edit here.
 >
-> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/cat-harness/skills/folio-paper-adapter/lean-environment-setup.md){: .fa-edit-source }
+> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/cat-harness/skills/authoring/folio-paper-adapter/lean-environment-setup.md){: .fa-edit-source }
 
 {% raw %}
 # Lean Environment Setup
@@ -178,7 +178,7 @@ that loads the skill. It now sits beside this file. Nothing was deleted.
 | what | where |
 |---|---|
 | FAST ROUTE, architecture, prerequisites, setup, Docker, no-Lean fallback, troubleshooting | **here** |
-| Mathlib cache 403 fallback — packing oleans, orphan branch, chunking | [`lean-environment-setup/mathlib-cache-fallback.md`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/folio-paper-adapter/lean-environment-setup/mathlib-cache-fallback.md) |
+| Mathlib cache 403 fallback — packing oleans, orphan branch, chunking | [`lean-environment-setup/mathlib-cache-fallback.md`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/authoring/folio-paper-adapter/lean-environment-setup/mathlib-cache-fallback.md) |
 
 Go there only once the FAST ROUTE below has actually failed.
 

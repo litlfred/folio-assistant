@@ -18,6 +18,7 @@ package "cat-harness/library" as pkg_cat_harness_library <<library>> {
   class "folio-image-verdicts/v1" as cat_harness_library_folio_image_verdicts_v1 <<ts: VerdictFile>> #f4f4f1 {
     inspected_by [1] : unknown
     inspected_at [1] : string
+    attribution [0..1] : Record<string, { inspected_by: unknown; inspected_at: string }>
     verdicts [1] : Record<string, Record<string, Verdict>>
   }
   class "folio-vector-labels/v1" as cat_harness_library_folio_vector_labels_v1_folio_vector_labels_v1 <<json: VectorLabelsSidecarSchema>> #f4f4f1 {
@@ -49,8 +50,30 @@ package "cat-harness/library" as pkg_cat_harness_library <<library>> {
     entry [1] : string
     summaries [0..*] : Summary[]
   }
+  class "folio-slides-accessibility/v1" as cat_harness_library_folio_slides_accessibility_v1_folio_slides_accessibility_v1 <<json: SlidesAccessibilitySchema>> #f4f4f1 {
+    $schema [1] : 'folio-slides-accessibility/v1'
+    source [1] : object
+    format [1] : pptx | odp
+    slides [1] : integer
+    checks [1] : object
+  }
+  class "Outline" as cat_harness_library_folio_referenced_source_v1_Outline <<json: ReferencedSourceSchema>> #f4f4f1 {
+    level [1] : integer
+    title [1] : string
+    page [1] : integer | null
+  }
+  class "folio-referenced-source/v1" as cat_harness_library_folio_referenced_source_v1_folio_referenced_source_v1 <<json: ReferencedSourceSchema>> #f4f4f1 {
+    $schema [1] : 'folio-referenced-source/v1'
+    identity [1] : object
+    source [1] : object
+    outline [0..*] : Outline[]
+    outline_source [1] : embedded | none
+    materialization [1] : object
+    withheld [1] : object
+  }
 }
 
 cat_harness_library_folio_block_summaries_v1_Summary *-- "0..*" cat_harness_library_folio_block_summaries_v1_Superseded : superseded
 cat_harness_library_folio_block_summaries_v1_folio_block_summaries_v1 *-- "0..*" cat_harness_library_folio_block_summaries_v1_Summary : summaries
+cat_harness_library_folio_referenced_source_v1_folio_referenced_source_v1 *-- "0..*" cat_harness_library_folio_referenced_source_v1_Outline : outline
 @enduml
