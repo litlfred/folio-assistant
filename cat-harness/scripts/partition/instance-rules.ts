@@ -1472,7 +1472,6 @@ export const RULES: Rule[] = [
       "scripts/governing-process.ts",       // which BPMN process governs a directory, read from `coverage.process`
       "scripts/check-published-refs.ts",  // a SHA may stage, only a version may publish (issue #592)
       "scripts/ingest-ig-menu.ts",        // a FHIR IG's own navigation, read from its sushi-config (bean `0818`)
-      "scripts/ingest-ig-pages.ts",       // the pages that navigation points at, copied verbatim from the IG's source (bean `jut3`)
       "scripts/check-code-accounting.ts", // the two questions about a code file, kept apart (bean `ylj7`)
       "scripts/check-publishable.ts",     // is an instance PUBLISHED at all — the declaration, three-state (instance-versioning §3.1)
       "scripts/check-version-bump.ts",    // the bump computed from the exported surface (instance-versioning §4.1)

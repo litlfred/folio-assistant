@@ -1,3 +1,0 @@
-
-### Security and Privacy Considerations
-  

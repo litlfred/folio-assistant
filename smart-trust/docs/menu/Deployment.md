@@ -94,13 +94,13 @@ nav_order: 4
 
 [← all 5 sections](../)
 
-- [Onboarding Checklist](../pages/concepts_onboarding_checklist.html)
-- [Security and Privacy Considerations](../pages/security_privacy.html)
-- [Testing](../pages/testing.html)
-- [Reference Implementations](../pages/reference_implementation.html)
-- [Downloads](../pages/downloads.html)
-- [Changes](../pages/changes.html)
-- [Endpoints](../pages/endpoints.html)
+- [Onboarding Checklist](http://smart.who.int/trust/concepts_onboarding_checklist.html)
+- [Security and Privacy Considerations](http://smart.who.int/trust/security_privacy.html)
+- [Testing](http://smart.who.int/trust/testing.html)
+- [Reference Implementations](http://smart.who.int/trust/reference_implementation.html)
+- [Downloads](http://smart.who.int/trust/downloads.html)
+- [Changes](http://smart.who.int/trust/changes.html)
+- [Endpoints](http://smart.who.int/trust/endpoints.html)
 
-Published by the IG at `http://smart.who.int/trust`. A link above stays on this site when the page's
-source was snapshotted (`ig-pages/pages.json`); anything else leaves for the canonical copy.
+Published by the IG at `http://smart.who.int/trust`. This repository holds the IG's
+artefacts, not its narrative pages, so every link above leaves for the canonical copy.

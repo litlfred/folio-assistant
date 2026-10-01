@@ -95,10 +95,10 @@ nav_order: 5
 [← all 5 sections](../)
 
 - [Artifact Index](http://smart.who.int/trust/artifacts.html)
-- [References](../pages/references.html)
-- [Mappings](../pages/maps.html)
-- [License](../pages/license.html)
-- [DAK API](../pages/dak-api.html)
+- [References](http://smart.who.int/trust/references.html)
+- [Mappings](http://smart.who.int/trust/maps.html)
+- [License](http://smart.who.int/trust/license.html)
+- [DAK API](http://smart.who.int/trust/dak-api.html)
 
-Published by the IG at `http://smart.who.int/trust`. A link above stays on this site when the page's
-source was snapshotted (`ig-pages/pages.json`); anything else leaves for the canonical copy.
+Published by the IG at `http://smart.who.int/trust`. This repository holds the IG's
+artefacts, not its narrative pages, so every link above leaves for the canonical copy.

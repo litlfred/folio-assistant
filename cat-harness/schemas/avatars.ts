@@ -429,15 +429,6 @@ export const AVATARS: Readonly<Record<string, Avatar>> = {
     tone: 190,
     reads: "a card index with an arrow leaving it — not what the IG holds, but what its toolchain reported about it",
   },
-  "ig-page-sources": {
-    // The `fhir-artifact-index` drawer with a page of prose standing in front
-    // of it. It quotes the family's glyph for the reason `ig-metadata-index`
-    // does; the page is the difference — these are the IG's own words, copied
-    // here verbatim, not a card standing for something kept elsewhere.
-    glyph: "M4 6h12v12H4zM4 10h12M10 6v12M15 11h6v9h-6zM16.5 14h3M16.5 16.5h3",
-    tone: 140,
-    reads: "a card index with a page in front of it — an IG's own narrative pages, copied verbatim from its source",
-  },
   "binary-release": {
     // A sealed carton with its strap. Deliberately NOT the `uploads` arrow —
     // that is something arriving, and a release is something that WENT, under

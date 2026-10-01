@@ -925,12 +925,6 @@ export const SCRIPT_EXEMPTIONS: ScriptExemption[] = [
       "CI CANNOT OBTAIN ITS INPUT. It compares the committed `menu.json` against the IG's OWN `sushi-config.yaml`, which lives in the upstream source repository — not in this checkout, and not reachable from a runner: `worldhealthorganization.github.io:443` and `litlfred.github.io:443` both answer 403 CONNECT from this environment (measured 2026-09-23, and `wjfu` recorded the same denial on the 21st). Wired as a gate it would exercise nothing on every run. It is built so that CANNOT be mistaken for a pass: with no `--source` it exits **2**, printing `could not determine`, rather than the 0 a silent skip would give. What IS gated, on every run and without the network, is the committed menu's effect: `smart-trust:pages:check` regenerates the 5 left-hand-nav sections FROM `menu.json` and compares them byte for byte, and `check:kind-validators` parses the file against `folio-ig-menu/v1`. Run this one by hand after cloning the IG, or from `/prepare-merge`. Bean `0818`",
   },
   {
-    script: "ingest:ig-pages:check",
-    kind: "report",
-    reason:
-      "CI CANNOT OBTAIN ITS INPUT \u2014 the `ingest:ig-menu:check` shape, one directory over. It compares the committed `pages.json` and `pages/*.md` against the IG's own `input/pagecontent/` at the pinned commit, which lives in the IG's source repository (`litlfred/smart-trust`, the owner's development fork of the WHO IG, ruled 2026-10-01) and not in this checkout. Built so a skip CANNOT be mistaken for a pass: with no `--source` it exits **2**, printing `could not determine`. What IS gated on every run, without the network, is the snapshot's EFFECT: `smart-trust:pages:check` re-renders the narrative pages FROM `pages/*.md` and compares them byte for byte, and `narrative-pages.test.ts` checks every local link on them resolves. Run this one by hand after cloning the IG. Bean `jut3`",
-  },
-  {
     script: "ingest:ig-chrome:check",
     kind: "report",
     reason:

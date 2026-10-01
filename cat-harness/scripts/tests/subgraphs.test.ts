@@ -19,7 +19,6 @@ import { existsSync } from "node:fs";
 import { join, resolve } from "node:path";
 
 import {
-  checkoutDirectories as scannedDirectories,
   isDerivedGraph,
   owningDirectory,
   resolveDirectories,
@@ -153,15 +152,7 @@ describe("the entanglement report", () => {
     // function` rather than a wrong answer.
     // Over the CORPUS the sweep reads since placement PR0 (bean `ejye`), with
     // a foreign directory labelled `<member>/<id>`, as the report labels it.
-    //
-    // And the SAME directory set: the one `scanSubgraphs` itself walks, which is
-    // `cat-harness.ts`'s `checkoutDirectories` — every instance in the checkout.
-    // This used the like-named function in `harness-config.ts`, which walks the
-    // dependency graph instead, until 2026-10-01. Harmless while every derived
-    // directory sat in a graph-reachable instance; `smart-trust/ig-pages/`
-    // (bean `jut3`) is the first that does not, and the narrower oracle reported
-    // its links as derived-from-nowhere.
-    const dirs = scannedDirectories(ROOT);
+    const dirs = checkoutDirectories(ROOT, { stackedOn: ROOT });
     const derivedIds = new Set(
       dirs.filter((d) => d.graphKinds.some((g) => isDerivedGraph(g))).flatMap((d) => [d.id, `${d.member}/${d.id}`]),
     );
