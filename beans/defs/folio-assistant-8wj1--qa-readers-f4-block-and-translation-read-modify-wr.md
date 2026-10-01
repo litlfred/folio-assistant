@@ -5,7 +5,7 @@ status: in-progress
 type: task
 priority: critical
 created_at: 2026-10-01T08:47:13Z
-updated_at: 2026-10-01T15:30:00Z
+updated_at: 2026-10-01T17:30:00Z
 parent: folio-assistant-3fva
 blocked_by:
     - folio-assistant-16ei
@@ -38,7 +38,7 @@ Arc `3fva`, from reader audit `gxvk` (`cat-harness/docs/proposals/qa-readers-aud
 
 ## Done when
 - [x] a sweep over a tree with no `test/results/` and no fetch refuses or reports `unknown`; it does not write a report missing the 13 agent entries. All 9 writers re-source attestations from `test/attestations/`. With the store unreadable they exit 4 and write nothing. Tested per writer family with the prior ABSENT in `scripts/tests/qa-attestations-writers.test.ts`. The SCRIPT half with no fetch is still open; see Summary.
-- [x] the 13 agent entries are byte-identical in `test/attestations/` (checked by a test): `content/pipeline/qa-attestations.test.ts`, over the real corpus
+- [x] the 13 agent entries are byte-identical in `test/attestations/` (checked by a test): `schemas/qa-attestations-criteria.test.ts` (was `content/pipeline/qa-attestations.test.ts`), over the real corpus
 - [ ] `translation:block-qa:check` and the MCP `qa_staleness` and `qa_sweep` give the same results with `test/results/` absent and the branch fetched. Not done: it needs the script half read through `qa-store`.
 
 
@@ -84,3 +84,20 @@ Held by session https://claude.ai/code/session_01LKpuPotV3Ve5Za75DQ3AQR (sub-age
 - Recommended: after 2gst lands, 8wj1's families become members of 2gst's discriminated union, `storeState` reads `attestationsHomeFor`, and the marker goes.
 
 Open: the SCRIPT half (other writers' script criteria in the same file) is still carried from the prior derived file. With it absent, those criteria wait for their own writer to re-run. That is regenerable, not lost, but it belongs on `qa-store` (`16ei`), and it is the remaining third Done-when.
+
+## Owner rulings 2026-10-01 (binding) — reconciliation with `2gst`
+1. **2gst's declared design wins.** 8wj1 adapts: subject is an OBJECT, the families are members of the one `QaAttestationsSchema` union, presence is the DECLARED `attestations` directory (no marker file), one schema module.
+2. **A folio with no store yet auto-moves on first save**, for ALL families, kg-qa included. A writer that finds judgements in a prior derived file and no store entry moves them into the store as it saves; it does not refuse and wait for a manual migration. Nothing is ever silently dropped. A corrupt store is still UNKNOWN and refused.
+3. **The store stays at `<instance>/test/attestations/`** (layout-norms baseline entry kept).
+
+## Summary of Changes — merged onto `claude/quirky-davinci-ixuymr` (2026-10-01, NOT pushed)
+Cherry-picked `8758a003..e8caf202`, then:
+- `b18799fb` — **one schema, one API, one migration.** `block-qa` and `translation-qa` are members of `schemas/qa-attestations.ts`'s union: `subject {kind: "block", id, path}` (id and path = the instance-relative subject root), a `criteria` map holding only non-script entries, plus `locale` on translation-qa. `content/pipeline/qa-attestations.ts` is deleted; `resolvePrior` / `finalizeCriteria` / split / compose live in the schema module and the nine writers import them from there. The marker `attestations.store.json` is gone. The 12 store files are converted: only the subject lines change, every entry byte-identical. `qa-attestations-migrate.ts` is deleted; `migrate-kg-attestations.ts` is generalised to `scripts/migrate-qa-attestations.ts` for all three families, and `qa:attestations:migrate[:check]` run it.
+- **Ruling 2.** `readAttestationFile` answers `absent` (was `unknown`) when the store directory is not there. On `miss` or `absent`, `resolvePrior` MOVES the prior's judgements (`adopt`), and `finalizeCriteria` writes them to the store before the derived report. `corrupt`/`unknown` still refuse (exit 4). The old `unmigrated` refusal is now `conflict`, and only for a store HIT plus a prior judgement the store lacks: refused, never dropped, a person reconciles.
+- **Kept:** the 9 writers, `qa:resolve-conflicts` reading the store, the `language-trap-audit` overwrite fix, the `qa-merge-findings` repo-root fix, and `qa-attestations-writers.test.ts` (now also: no store → qa-sweep moves the prior's judgements; corrupt store → exit 4, nothing written; store hit + stray prior judgement → conflict).
+- **Counts, measured before and after:** 13 judgements (11 block-qa + 2 translation-qa) in 12 derived files, all 13 held in the store, entries byte-identical. A round-trip test on the real corpus starts from NO store, runs each subject's first save, and reproduces the committed store byte for byte, and each derived report byte for byte.
+- `9f858484`: declaration, conventions and gate text. `604ef031`: regen.
+
+**One deviation, flagged.** Block and translation derived reports still carry a PROJECTION of their judgements, composed from the store and never the source once the store holds the subject. So "the derived file is clean" holds for kg-qa only. About 30 readers and the published site take `criteria[id][0]` from the derived file; stripping the projection is reader work that belongs with `5hox`.
+
+**Still open.** The third Done-when (the script half through `qa-store`). Also, `translation-roundtrip.ts` writes agent round-trip entries straight into a legacy-path sidecar and is not yet a store writer. With a store hit, its new entry makes the next writer refuse with `conflict`: loud, not lost.
