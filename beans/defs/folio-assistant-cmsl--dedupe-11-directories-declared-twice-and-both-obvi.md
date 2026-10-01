@@ -1,11 +1,11 @@
 ---
 # folio-assistant-cmsl
 title: 'DEDUPE: 11 directories declared twice — and both obvious fixes are measurably wrong'
-status: todo
+status: in-progress
 type: task
 priority: normal
 created_at: 2026-09-21T19:18:36Z
-updated_at: 2026-10-01T09:20:34Z
+updated_at: 2026-10-01T12:25:43Z
 parent: folio-assistant-zzmr
 ---
 
@@ -134,3 +134,5 @@ The authored diff (3 files) is preserved; regen also measured ~2x slower `resolv
 - [ ] Delete the 6 cross-instance kg-qa sidecars (approved)
 - [ ] Skill docs keyed by owner directory id
 - [ ] Remove the duplicate checkoutDirectories in schemas/cat-harness.ts (cmsl's), keeping harness-config.ts's (PR0's)
+
+_2026-10-01T12:25:43Z_ — Claimed by claude/fervent-brahmagupta-rbwhzm — pushed to main so sibling sessions see it before this branch has a PR (bean 35nj).
