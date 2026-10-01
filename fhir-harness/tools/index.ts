@@ -268,16 +268,18 @@ export function tools(baseUrl?: string): ToolDefinition[] {
 
     defineTool({
       id: "fhir-cache-seed-npm",
-      title: "Seed the FHIR package cache from npm (exact versions, trusted publisher)",
+      title: "Seed the FHIR package cache from trusted sources (exact versions)",
       description:
-        "Fill `~/.fhir/packages` (or `--cache`) from registry.npmjs.org for an environment that cannot reach packages.fhir.org: exact version matches only, published by the owner-trusted account `grahamegrieve`, each tarball's sha512 integrity verified, npm's malicious-package placeholder refused, dependencies followed through each package's own `package.json`, provenance recorded. Missing versions are listed, never substituted.",
+        "Fill `~/.fhir/packages` (or `--cache`) for an environment that cannot reach packages.fhir.org, from trust anchors only: npm account `grahamegrieve` (owner-trusted), the publishers' own site repos (WorldHealthOrganization/smart-html, IHE/publications), template repos found through FHIR/ig-registry's templates.json read live each run, and an owner `--mirror`. Exact versions only (a patch wildcard resolves as the Publisher resolves it, recorded); every tarball verified; nothing computed once and kept; provenance recorded; missing versions listed, never substituted.",
       install: { cli: "git clone -b claude/ast-export https://github.com/litlfred/fhir-ig-publisher" },
-      invoke: { shell: "python3 fhir-ig-publisher/ast-export/scripts/seed-fhir-cache-from-npm.py [--cache <dir>] [--sushi-config <file>] [--dry-run] [name#version ...]" },
+      invoke: { shell: "python3 fhir-ig-publisher/ast-export/scripts/seed-fhir-cache-from-npm.py [--cache <dir>] [--sushi-config <file>] [--mirror <dir|git-url>] [--template-repo <name=owner/repo>] [--missing-out <file>] [--dry-run] [name#version ...]" },
       io: {
         inputs: [
           { name: "sushi-config", schema: t("FilesystemPath"), required: false, description: "Seed what this IG pins: its `dependencies:` and the core package for its `fhirVersion`." },
           { name: "cache", schema: t("FilesystemPath"), required: false, description: "Default `~/.fhir/packages`, which SUSHI and the IG Publisher read." },
           { name: "dry-run", schema: t("Flag"), required: false, description: "Resolve and report; download nothing." },
+          { name: "mirror", schema: t("FilesystemPath"), required: false, description: "A directory or git repository of `<name>#<version>.tgz` filled by `fhir-package-mirror`." },
+          { name: "missing-out", schema: t("FilesystemPath"), required: false, description: "Write the missing list, one `name#version` per line: the input `fhir-package-mirror` takes." },
         ],
         outputs: [
           { name: "installed", schema: t("Count") },
@@ -288,10 +290,33 @@ export function tools(baseUrl?: string): ToolDefinition[] {
       selection: {
         when: "packages.fhir.org is unreachable and registry.npmjs.org is not.",
         limits:
-          "The npm mirror mostly carries the latest version of each package: measured 2026-09-30 at 10 of smart-trust's 30 pinned versions, and without `who.template.root#current`. A partly seeded cache does not make a faithful build of an IG whose pins it misses.",
+          "Measured 2026-10-01 over both WHO IGs: 20 packages install; the pinned HL7 versions need `--mirror`. `who.template.root` is absent from FHIR/ig-registry, so its repo is named with `--template-repo`. A partly seeded cache does not make a faithful build of an IG whose pins it misses.",
         cost: "One download per package; the core packages are tens of megabytes.",
       },
-      requires: { runtime: ["python3", "npm"], network: true },
+      requires: { runtime: ["python3", "npm", "git"], network: true },
+    }),
+
+    defineTool({
+      id: "fhir-package-mirror",
+      title: "Mirror FHIR packages from packages.fhir.org into a git repository",
+      description:
+        "On a machine that reaches packages.fhir.org, fetch exactly a missing list (from `fhir-cache-seed-npm --missing-out`), check each tarball names itself exactly, record SHA512SUMS, and commit and push to a git repository that an environment without packages.fhir.org reads with `--mirror`. The person running it is the trust anchor for what it adds.",
+      install: { cli: "git clone -b claude/ast-export https://github.com/litlfred/fhir-ig-publisher" },
+      invoke: { shell: "fhir-ig-publisher/ast-export/scripts/mirror-fhir-packages.sh <mirror-repo-dir> <missing.txt | name#version ...>" },
+      io: {
+        inputs: [
+          { name: "mirror-repo-dir", schema: t("FilesystemPath"), required: true, description: "A git checkout to fill; committed and pushed when it is one." },
+          { name: "missing", schema: t("FilesystemPath"), required: true, description: "The seeder's `--missing-out` file, so nothing unneeded is mirrored." },
+        ],
+        outputs: [{ name: "mirrored", schema: t("Count"), description: "Exit non-zero when any could not be fetched or named itself differently." }],
+      },
+      satisfies: ["ig-publisher-fork"],
+      selection: {
+        when: "The seeder reports missing packages and the environment that needs them cannot reach packages.fhir.org.",
+        limits: "Run where packages.fhir.org is reachable. It mirrors exact versions only; a wildcard in the list is resolved by the seeder first.",
+        cost: "One download per package; terminology packages are megabytes each.",
+      },
+      requires: { runtime: ["bash", "curl", "python3", "git"], network: true },
     }),
 
     defineTool({

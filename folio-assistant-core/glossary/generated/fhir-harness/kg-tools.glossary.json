@@ -16,10 +16,18 @@
     },
     {
       "id": "fhir-cache-seed-npm",
-      "prefLabel": "Seed the FHIR package cache from npm (exact versions, trusted publisher)",
-      "definition": "Fill `~/.fhir/packages` (or `--cache`) from registry.npmjs.org for an environment that cannot reach packages.fhir.org: exact version matches only, published by the owner-trusted account `grahamegrieve`, each tarball's sha512 integrity verified, npm's malicious-package placeholder refused, dependencies followed through each package's own `package.json`, provenance recorded. Missing versions are listed, never substituted.",
+      "prefLabel": "Seed the FHIR package cache from trusted sources (exact versions)",
+      "definition": "Fill `~/.fhir/packages` (or `--cache`) for an environment that cannot reach packages.fhir.org, from trust anchors only: npm account `grahamegrieve` (owner-trusted), the publishers' own site repos (WorldHealthOrganization/smart-html, IHE/publications), template repos found through FHIR/ig-registry's templates.json read live each run, and an owner `--mirror`. Exact versions only (a patch wildcard resolves as the Publisher resolves it, recorded); every tarball verified; nothing computed once and kept; provenance recorded; missing versions listed, never substituted.",
       "notation": "fhir-cache-seed-npm",
       "source": "fhir-harness/tools/index.ts#fhir-cache-seed-npm",
+      "status": "candidate"
+    },
+    {
+      "id": "fhir-package-mirror",
+      "prefLabel": "Mirror FHIR packages from packages.fhir.org into a git repository",
+      "definition": "On a machine that reaches packages.fhir.org, fetch exactly a missing list (from `fhir-cache-seed-npm --missing-out`), check each tarball names itself exactly, record SHA512SUMS, and commit and push to a git repository that an environment without packages.fhir.org reads with `--mirror`. The person running it is the trust anchor for what it adds.",
+      "notation": "fhir-package-mirror",
+      "source": "fhir-harness/tools/index.ts#fhir-package-mirror",
       "status": "candidate"
     },
     {

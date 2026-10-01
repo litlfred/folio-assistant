@@ -12,13 +12,13 @@ permalink: /glossary/tools/
 
 Candidate terms extracted from every Tool node: `title` as the label, `description` as the definition, the Tool id as the code. Each is the asset's own text, verbatim and not curated, and carries the badge "candidate, extracted". A person promotes one by authoring it. Authored terms, the counts and the sources are on the <a href="{{ '/glossary/' | relative_url }}">glossary index</a>.
 
-From: cat-harness 111 (<a href="{{ '/assets/glossary/cat-harness--kg-tools.skos.jsonld' | relative_url }}">SKOS</a>) · fhir-harness 11 (<a href="{{ '/assets/glossary/fhir-harness--kg-tools.skos.jsonld' | relative_url }}">SKOS</a>) · folio-assistant-core 4 (<a href="{{ '/assets/glossary/folio-assistant-core--kg-tools.skos.jsonld' | relative_url }}">SKOS</a>) · smart-base 9 (<a href="{{ '/assets/glossary/smart-base--kg-tools.skos.jsonld' | relative_url }}">SKOS</a>).
+From: cat-harness 111 (<a href="{{ '/assets/glossary/cat-harness--kg-tools.skos.jsonld' | relative_url }}">SKOS</a>) · fhir-harness 12 (<a href="{{ '/assets/glossary/fhir-harness--kg-tools.skos.jsonld' | relative_url }}">SKOS</a>) · folio-assistant-core 4 (<a href="{{ '/assets/glossary/folio-assistant-core--kg-tools.skos.jsonld' | relative_url }}">SKOS</a>) · smart-base 9 (<a href="{{ '/assets/glossary/smart-base--kg-tools.skos.jsonld' | relative_url }}">SKOS</a>).
 
-**Size:** this page holds 135 terms and is 90 KB before compression, fetched in one request, within its budget of 1.0 MB. There is no search index: the filter below runs over this page, and the A–Z bar jumps within it.
+**Size:** this page holds 136 terms and is 91 KB before compression, fetched in one request, within its budget of 1.0 MB. There is no search index: the filter below runs over this page, and the A–Z bar jumps within it.
 
 <label for="fa-gloss-q">Filter terms</label>
 <input id="fa-gloss-q" type="search" autocomplete="off" style="min-height:44px;width:100%;max-width:32rem">
-<p aria-live="polite"><span id="fa-gloss-n">135</span> shown</p>
+<p aria-live="polite"><span id="fa-gloss-n">136</span> shown</p>
 
 <nav aria-label="Letters"><a href="#letter-A">A</a> <a href="#letter-B">B</a> <a href="#letter-C">C</a> <a href="#letter-D">D</a> <a href="#letter-E">E</a> <a href="#letter-F">F</a> <a href="#letter-G">G</a> <a href="#letter-H">H</a> <a href="#letter-I">I</a> <a href="#letter-J">J</a> <a href="#letter-K">K</a> <a href="#letter-L">L</a> <a href="#letter-M">M</a> <a href="#letter-N">N</a> <a href="#letter-O">O</a> <a href="#letter-P">P</a> <a href="#letter-Q">Q</a> <a href="#letter-R">R</a> <a href="#letter-S">S</a> <a href="#letter-T">T</a> <a href="#letter-U">U</a> <a href="#letter-V">V</a> <a href="#letter-W">W</a></nav>
 
@@ -555,6 +555,13 @@ Methodologies viewer <span class="fa-gloss-status">candidate, extracted</span>
 <p>Render the declared methodology graph as one page.</p>
 <p class="fa-gloss-meta">Tools of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/tools/viewers.ts"><code>cat-harness/tools/viewers.ts#methodologies-viewer</code></a></p>
 </dd>
+<dt id="fhir-harness--kg-tools--fhir-package-mirror" data-fa-state="extracted" data-fa-gloss="">
+Mirror FHIR packages from packages.fhir.org into a git repository <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>On a machine that reaches packages.fhir.org, fetch exactly a missing list (from <code>fhir-cache-seed-npm --missing-out</code>), check each tarball names itself exactly, record SHA512SUMS, and commit and push to a git repository that an environment without packages.fhir.org reads with <code>--mirror</code>. The person running it is the trust anchor for what it adds.</p>
+<p class="fa-gloss-meta">Tools of fhir-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/fhir-harness/tools/index.ts"><code>fhir-harness/tools/index.ts#fhir-package-mirror</code></a></p>
+</dd>
 <dt id="folio-assistant-core--kg-tools--folio-review-comment-move" data-fa-state="extracted" data-fa-gloss="">
 Move a review comment's status <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
@@ -741,10 +748,10 @@ Schemas viewer <span class="fa-gloss-status">candidate, extracted</span>
 <p class="fa-gloss-meta">Tools of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/tools/viewers.ts"><code>cat-harness/tools/viewers.ts#schemas-viewer</code></a></p>
 </dd>
 <dt id="fhir-harness--kg-tools--fhir-cache-seed-npm" data-fa-state="extracted" data-fa-gloss="">
-Seed the FHIR package cache from npm (exact versions, trusted publisher) <span class="fa-gloss-status">candidate, extracted</span>
+Seed the FHIR package cache from trusted sources (exact versions) <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
-<p>Fill <code>~/.fhir/packages</code> (or <code>--cache</code>) from registry.npmjs.org for an environment that cannot reach packages.fhir.org: exact version matches only, published by the owner-trusted account <code>grahamegrieve</code>, each tarball's sha512 integrity verified, npm's malicious-package placeholder refused, dependencies followed through each package's own <code>package.json</code>, provenance recorded. Missing versions are listed, never substituted.</p>
+<p>Fill <code>~/.fhir/packages</code> (or <code>--cache</code>) for an environment that cannot reach packages.fhir.org, from trust anchors only: npm account <code>grahamegrieve</code> (owner-trusted), the publishers' own site repos (WorldHealthOrganization/smart-html, IHE/publications), template repos found through FHIR/ig-registry's templates.json read live each run, and an owner <code>--mirror</code>. Exact versions only (a patch wildcard resolves as the Publisher resolves it, recorded); every tarball verified; nothing computed once and kept; provenance recorded; missing versions listed, never substituted.</p>
 <p class="fa-gloss-meta">Tools of fhir-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/fhir-harness/tools/index.ts"><code>fhir-harness/tools/index.ts#fhir-cache-seed-npm</code></a></p>
 </dd>
 <dt id="cat-harness--kg-tools--sibling-sessions" data-fa-state="extracted" data-fa-gloss="">

@@ -5,7 +5,7 @@ status: todo
 type: feature
 priority: normal
 created_at: 2026-09-22T19:07:23Z
-updated_at: 2026-10-01T00:30:00Z
+updated_at: 2026-10-01T02:00:00Z
 parent: folio-assistant-uhkv
 ---
 
@@ -251,3 +251,26 @@ holds on coverage:
 - **coverage:** 10 of smart-trust's 30 pinned versions are on npm, and
   `who.template.root#current` (smart-immunizations' template) is not. **W1/W2
   still need packages.fhir.org.**
+
+
+## Getting the rest of the dependencies (2026-10-01)
+
+Owner: *"how get rest of deps?"*, then: add the publishers' own repos as
+sources **and** a mirror script; *"dynamically load from repos... dont calc
+once and assume fixed. avoid drift"*; *"fhir.base.template trusted"*.
+
+Fork `47a8276`. The seeder now tries these, in order: npm `grahamegrieve`;
+`WorldHealthOrganization/smart-html` and `IHE/publications`; template repos
+through `FHIR/ig-registry/templates.json`, read live; and `--mirror`. Patch
+wildcards resolve as the Publisher resolves them, and the resolution is recorded.
+`mirror-fhir-packages.sh` (Tool `fhir-package-mirror`) fills a git repo from
+packages.fhir.org on a machine that reaches it.
+
+**Measured:** 20 packages install for both WHO IGs together, including both
+templates. **Still missing:** the pinned HL7 versions (IPS, terminology,
+extensions, CQL, CRMI, SDC, IPA), `fhir.cqf.common` and `us.nlm.vsac`. Next:
+the owner runs the mirror script, then the seeder runs with `--mirror`.
+
+**Upstream ask:** `who.template.root` is not in `FHIR/ig-registry`'s
+templates.json, so its repo is passed with `--template-repo`. A PR to the
+registry would remove that.

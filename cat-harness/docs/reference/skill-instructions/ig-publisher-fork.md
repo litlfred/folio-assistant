@@ -78,37 +78,54 @@ Here, [`ig-ast-delta`](ig-ast-delta.md) lists, checks, diffs and renders what
 those produce. Owner: **no GitHub Actions for now**, and any CI added later
 **calls these same scripts**.
 
-## Without packages.fhir.org: seeding the cache from npm
+## Without packages.fhir.org: seeding the cache from trusted sources
 
-Some environments reach `registry.npmjs.org` but not `packages.fhir.org`
-(this one, 2026-09-30). The npm account **`grahamegrieve`** publishes FHIR
-packages there, and **the owner ruled it trusted**: Grahame Grieve founded HL7
-FHIR and maintains the IG Publisher. That account is the trust anchor, and no
-other account is.
+Some environments reach GitHub and `registry.npmjs.org` but not
+`packages.fhir.org` (this one, 2026-09-30). `ast-export/scripts/seed-fhir-cache-from-npm.py`
+(Tool `fhir-cache-seed-npm`) fills the FHIR package cache from sources that
+are each a **trust anchor**: named by the owner, or the package's own
+publisher. Nothing else is consulted.
 
-`ast-export/scripts/seed-fhir-cache-from-npm.py` (Tool
-`fhir-cache-seed-npm`) fills the FHIR package cache from it, with these rules:
+| source | trust | what it holds |
+|---|---|---|
+| npm, account `grahamegrieve` | **owner: trusted**. Grahame Grieve founded HL7 FHIR | mostly the latest version of each HL7 package; core packages under `@hl7/` |
+| `WorldHealthOrganization/smart-html`, `IHE/publications` | the publisher's own published site | every released WHO and IHE version |
+| a template's own repo at HEAD | `FHIR/ig-registry/templates.json` names it; **owner: `fhir.base.template` is trusted** | templates, `#current` included |
+| `--mirror` | whoever ran `mirror-fhir-packages.sh` (Tool `fhir-package-mirror`) | what the others lack |
 
-- **Exact versions only.** A pin to `hl7.fhir.uv.cql#1.0.0` is never satisfied
-  by 2.0.0. A build over substituted versions would measure a different IG
-  while looking like the real one, and the owner chose exact-only over an
-  "approximate" build.
-- **Trusted, then verified.** A tarball is accepted only when its npm
-  maintainers include `grahamegrieve`, and only after its published sha512
-  integrity checks. npm's `0.0.1-security` placeholder (a package taken down
-  as malicious; the unscoped `hl7.fhir.r4.core` is one) is refused. The real
-  core packages are under `@hl7/`.
-- **Nothing guessed.** Dependencies are followed through each package's own
-  `package.json`. `current`, `dev` and ranges are reported as missing.
-- **Provenance recorded** in `ast-export-npm-provenance.json` beside the cache.
+Rules:
 
-**What it cannot do, measured 2026-09-30.** The mirror mostly carries the
-latest version of each package. For smart-trust, 10 of the 30 exact versions
-in its transitive closure are there. smart-immunizations needs
-`who.template.root#current`, which is not on npm at all. So the seeder serves
-IGs whose pins are current releases. **It does not replace packages.fhir.org
-for the WHO IGs**, and a measurement taken over a partly seeded cache is not a
-measurement of them.
+- **Exact versions only.** A pin is never satisfied by another version. The
+  owner chose exact-only over an "approximate" build with substituted versions.
+  The one exception is the Publisher's own rule: a patch wildcard (`1.1.x`)
+  resolves to the highest `1.1.N` a source lists, and the resolution is
+  recorded.
+- **Verified.** npm tarballs against npm's sha512. Every other source must
+  carry a `package/package.json` naming exactly the requested package and
+  version. npm's `0.0.1-security` malicious-package placeholder is refused.
+- **Nothing computed once and kept.** Owner, 2026-10-01: *"dynamically load
+  from repos... dont calc once and assume fixed. avoid drift"*. The template
+  registry, the IHE folder listing and any mirror clone are fetched fresh every
+  run into a scratch directory deleted at exit. There is no table of package
+  locations in the script that could go stale behind the registry.
+- **Provenance** in `ast-export-npm-provenance.json`: the source, URL or
+  commit, and hash of every package.
+
+**Where it stands, measured 2026-10-01** over both WHO IGs together: 20
+packages install, including both templates. Missing are the pinned HL7
+versions (IPS, terminology, extensions, CQL, CRMI, SDC, IPA), `fhir.cqf.common`
+and `us.nlm.vsac`.
+
+To close the gap:
+1. Run the seeder with `--missing-out missing.txt`.
+2. Run `mirror-fhir-packages.sh <repo> missing.txt` on a machine that reaches
+   packages.fhir.org.
+3. Run the seeder again with `--mirror <repo>`.
+
+**`who.template.root` is not in `FHIR/ig-registry/templates.json`.** Until it
+is (a PR to that registry), the caller names its repo with `--template-repo
+who.template.root=WorldHealthOrganization/smart-ig-template`. That is the one
+location given by hand, and it is given on the command line, not stored.
 
 ## The measurement that justifies the work
 
