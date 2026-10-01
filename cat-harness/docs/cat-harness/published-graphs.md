@@ -84,12 +84,13 @@ nothing renders yet. It is shown rather than omitted: "nothing renders this" and
 
 ### `docs`
 
-5 of 5 published.
+6 of 6 published.
 {: .fa-hx-dim }
 
 - [C@T Harness]({{ '/cat-harness/docs-auto/index/docs/docs/' | relative_url }})
 - [Folio Assistant]({{ '/cat-harness/docs-auto/index/docs/root-docs/' | relative_url }})
 - [SMART Base]({{ '/cat-harness/docs-auto/index/docs/smart-base-docs/' | relative_url }})
+- [smart-immunizations]({{ '/cat-harness/docs-auto/index/docs/' | relative_url }})
 - [smart-trust]({{ '/cat-harness/docs-auto/index/docs/smart-trust-docs/' | relative_url }})
 - [WHO IRIS]({{ '/cat-harness/docs-auto/index/docs/who-iris-site/' | relative_url }})
 
@@ -102,12 +103,12 @@ nothing renders yet. It is shown rather than omitted: "nothing renders this" and
 
 ### `fhir-artifact-index`
 
-0 of 3 published.
+3 of 3 published.
 {: .fa-hx-dim }
 
-- SMART Base — *declared, not published*
-- smart-immunizations — *declared, not published*
-- smart-trust — *declared, not published*
+- [SMART Base]({{ '/smart-base/' | relative_url }})
+- [smart-immunizations]({{ '/smart-immunizations/' | relative_url }})
+- [smart-trust]({{ '/smart-trust/' | relative_url }})
 
 ### `folio`
 

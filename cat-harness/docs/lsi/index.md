@@ -26,7 +26,7 @@ how to build, query and audit an index is the skill `lsi-indexing`.
 <div class="lv-grid">
 <div class="lv-stat"><b>5</b><span>committed indexes</span></div>
 <div class="lv-stat"><b>1667</b><span>units indexed</span></div>
-<div class="lv-stat"><b>6</b><span>graphs that need an index and lack a fresh one</span></div>
+<div class="lv-stat"><b>7</b><span>graphs that need an index and lack a fresh one</span></div>
 </div>
 
 ## Which graphs need an index
@@ -64,6 +64,7 @@ the same as fine. The same verdict is `kg:audit`'s `tool-downstream-fresh` for t
 | `smart-base/library` | <span class="lv-fail">fail</span> | no successful run recorded — re-run `bun run lsi index --instance smart-base --graph library` |
 | `smart-base/methodologies` | <span class="lv-na">n/a</span> | below the need-an-index threshold — not judged |
 | `smart-base/smart-base-docs` | <span class="lv-fail">fail</span> | needs an LSI index and has none — run `bun run lsi index --instance smart-base --graph smart-base-docs` |
+| `smart-immunizations/smart-immunizations-docs` | <span class="lv-fail">fail</span> | needs an LSI index and has none — run `bun run lsi index --instance smart-immunizations --graph smart-immunizations-docs` |
 | `smart-trust/smart-trust-docs` | <span class="lv-fail">fail</span> | needs an LSI index and has none — run `bun run lsi index --instance smart-trust --graph smart-trust-docs` |
 | `who-iris/library` | <span class="lv-pass">pass</span> | fresh |
 | `who-iris/who-iris-docs` | <span class="lv-na">n/a</span> | below the need-an-index threshold — not judged |
