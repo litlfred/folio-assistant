@@ -2,7 +2,7 @@
   "$schema": "http://json-schema.org/draft-07/schema#",
   "$id": "https://litlfred.github.io/folio-assistant/STAGING/claude-cool-fermi-htir5p/skills/content-review/output.schema.json",
   "title": "Content Review Output",
-  "description": "What a review produces: findings, a decision about them, and the audit notes that justify it. A finding is an observation; a decision is an act about a set of findings; neither determines the other. Mirrors schemas/qa-review.ts — see skills/folio-core/decision-audit.md.",
+  "description": "What a review produces: findings, a decision about them, and the audit notes that justify it. A finding is an observation; a decision is an act about a set of findings; neither determines the other. Mirrors schemas/qa-review.ts — see skills/sdlc/sdlc-core/decision-audit.md.",
   "type": "object",
   "required": [
     "findings",
@@ -263,8 +263,8 @@
   },
   "staging": {
     "branch": "claude/cool-fermi-htir5p",
-    "sha": "1e425a18997094ac1e585029f02703acf312ae71",
-    "pr": "1723/merge",
-    "run": "36795061998"
+    "sha": "0bb9d41dd11e35ef358ea04448910cbd61ae851e",
+    "pr": "1743/merge",
+    "run": "36825966367"
   }
 }
