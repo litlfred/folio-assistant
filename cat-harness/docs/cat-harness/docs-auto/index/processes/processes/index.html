@@ -134,7 +134,7 @@
 <ul class="subs">
 <li><a href="../core-processes/">core-processes</a> <span class="p">folio-assistant-core/processes</span> <span class="n">1</span></li>
 <li><a href="../large-datasets-processes/">large-datasets-processes</a> <span class="p">large-datasets/processes</span> <span class="n">5</span></li>
-<li><strong>processes</strong> <span class="p">cat-harness/processes</span> <span class="n">67</span></li>
+<li><strong>processes</strong> <span class="p">cat-harness/processes</span> <span class="n">68</span></li>
 <li><a href="../smart-base-house-processes/">smart-base-house-processes</a> <span class="p">smart-base/processes</span> <span class="n">1</span></li>
 <li><a href="../smart-base-processes/">smart-base-processes</a> <span class="p">smart-base/methodologies/processes</span> <span class="n">1</span></li>
 </ul>
@@ -326,6 +326,10 @@
 <tr>
   <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/l3-fhir-pipeline.bpmn"><code>L3 FHIR IG pipeline</code></a><br><span class="p">cat-harness/processes/l3-fhir-pipeline.bpmn</span></td>
   <td>folio-assistant — the WHO SMART Guidelines L3 FHIR IG pipeline.<div class="f"><span class="k">activities</span> 8</div><div class="f"><span class="k">lanes</span> FHIR modeller · Work plan — beans (shared by humans and agents) · Build pipeline — SUSHI · validator · IG Publisher · QC reviewer · Publication manager</div><div class="f"><span class="k">skills</span> content-publish, fhir-validation, ig-publication, l3-fhir-authoring, quality-control, todo-manager</div></td>
+</tr>
+<tr>
+  <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/merge-base.bpmn"><code>Merge the base branch in</code></a><br><span class="p">cat-harness/processes/merge-base.bpmn</span></td>
+  <td>CALLED FROM <code>Task_PrepareMerge</code> in code-change-review.bpmn, and executed by <code>bun run merge:main</code> (cat-harness/scripts/merge-base.ts).<div class="f"><span class="k">activities</span> 7</div><div class="f"><span class="k">lanes</span> merge:main command · Authoring agent</div><div class="f"><span class="k">skills</span> continual-progress, merge-conflict-patterns, prepare-merge</div></td>
 </tr>
 <tr>
   <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/methodology-from-source.bpmn"><code>Adopt a methodology from a source document</code></a><br><span class="p">cat-harness/processes/methodology-from-source.bpmn</span></td>
