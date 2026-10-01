@@ -21,9 +21,9 @@ import {
   neighbors,
   graphStats,
   type GraphIndex,
-} from "../../../content/pipeline/graph-index";
-import { GRAPH_EDGE_TERMS, type GraphEdgeTerm } from "../../../schemas/jsonld";
-import { graphSearch, formatPath } from "../../../content/pipeline/graph-search";
+} from "../../../../cat-harness/content/pipeline/graph-index";
+import { GRAPH_EDGE_TERMS, type GraphEdgeTerm } from "../../../../cat-harness/schemas/jsonld";
+import { graphSearch, formatPath } from "../../../../cat-harness/content/pipeline/graph-search";
 
 /** Tool names this module owns. */
 export const GRAPH_TOOL_NAMES = [

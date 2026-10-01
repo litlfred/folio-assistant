@@ -8,7 +8,7 @@
  * @module scripts/mcp-server/git
  */
 
-import { folioDir } from "../../schemas/cat-harness.js";
+import { folioDir } from "../../../cat-harness/schemas/cat-harness.js";
 import { REPO_ROOT } from "./paths.js";
 import { readFileSync, existsSync, writeFileSync, unlinkSync, mkdirSync, symlinkSync, readdirSync } from "fs";
 import { join, resolve } from "path";
