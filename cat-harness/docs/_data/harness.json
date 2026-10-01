@@ -1250,6 +1250,7 @@
       "title": "Folio Assistant",
       "label": "Folio Assistant",
       "description": "The repository itself, acting as an initialized instance. NAMED `folio-assistant-checkout` rather than `folio-assistant`, which `cat-harness/harness.json` already uses: two declarations sharing a name makes `declaredBy` and a sticky's `contributedBy` ambiguous, so a directory can be attributed to the wrong instance while reading correctly. It declares the directories a person drops things into, which belong to the checkout rather than to any one layer inside it.",
+      "summary": "This repository as a working instance: the platform and the folios it hosts.",
       "footer": false,
       "needs": [
         "folio-assistant-core"
@@ -1680,6 +1681,13 @@
       "title": "C@T Harness",
       "label": "C@T Harness",
       "description": "computable adjudication and agentic test harness\n\ncaaat-harness\n\nca&at-harness\n\n.c&at-harness\n\n c@t-harness",
+      "summary": "Computable adjudication and agentic test harness.",
+      "alsoWritten": [
+        "caaat-harness",
+        "ca&at-harness",
+        ".c&at-harness",
+        "c@t-harness"
+      ],
       "footer": false,
       "needs": [
         "bootstrap",
@@ -3420,6 +3428,9 @@
     "findings": [
       "`topology`: no skill edits `topology` yet: its axes are documented only in the schema (cat-harness.ts, TopologySchema)",
       "who-iris: declares `folioMount`, which the declaration schema does not have and silently drops.",
+      "folio-assistant: declares `summary`, which the declaration schema does not have and silently drops.",
+      "cat-harness: declares `summary`, which the declaration schema does not have and silently drops.",
+      "cat-harness: declares `alsoWritten`, which the declaration schema does not have and silently drops.",
       "cat-harness: declares `folioMount`, which the declaration schema does not have and silently drops.",
       "bootstrap-tools: declares `supports`, which the declaration schema does not have and silently drops."
     ]

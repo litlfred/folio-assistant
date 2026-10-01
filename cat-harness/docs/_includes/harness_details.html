@@ -37,12 +37,20 @@
       {{ t.label | default: t.title }}
       {%- endif -%}
     </h3>
-    {%- if t.description and t.description != "" -%}
-    {%- comment -%} Backtick spans in the declared description render as
-    <code> rather than showing their markers (bean `mylx`). `markdownify`
-    wraps its output in one <p>, which the existing paragraph already is.
-    {%- endcomment %}
-    <p class="fa-harness-section__description">{{ t.description | markdownify | remove: "<p>" | remove: "</p>" | strip }}</p>
+    {%- comment -%} The READER's line: `summary` when the instance declares
+    one, else the description (`ob3m` 4/5 — a description is written for an
+    author). Backtick spans render as <code> rather than showing their markers
+    (bean `mylx`). `markdownify` wraps its output in one <p>, which the
+    existing paragraph already is.
+    {%- endcomment -%}
+    {%- assign t_line = t.summary | default: t.description -%}
+    {%- if t_line and t_line != "" -%}
+    <p class="fa-harness-section__description">{{ t_line | markdownify | remove: "<p>" | remove: "</p>" | strip }}</p>
+    {%- endif -%}
+    {%- if t.alsoWritten and t.alsoWritten.size > 0 -%}
+    <p class="fa-harness-section__also">Also written:
+      {%- for w in t.alsoWritten %} <code>{{ w }}</code>{% unless forloop.last %},{% endunless %}{%- endfor -%}
+    </p>
     {%- endif -%}
     {%- if t.stats.size > 0 -%}
     <dl class="fa-harness-section__stats">

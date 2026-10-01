@@ -203,6 +203,10 @@ export type HarnessTile = {
    */
   label: string;
   description: string;
+  /** The reader's one line, when declared (`ob3m` 4/5). The landing prefers it to {@link description}. */
+  summary?: string;
+  /** Other spellings of the name, rendered as a list (`ob3m` 5). */
+  alsoWritten?: readonly string[];
   /**
    * Exempt from owing a visualiser — the declared reason bootstrap sorts
    * last. See the module docs.
@@ -1075,6 +1079,8 @@ function tileFor(
     // set can say whether this title identifies anything.
     label: decl.title ?? decl.name,
     description: decl.description ?? "",
+    ...(decl.summary ? { summary: decl.summary } : {}),
+    ...(decl.alsoWritten ? { alsoWritten: decl.alsoWritten } : {}),
     footer: isExemptFrom(decl, "visualiser"),
     ...(decl.needs ? { needs: decl.needs } : {}),
     // `avatarRegion` rides the ICON too, when the icon image declares one.

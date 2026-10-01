@@ -9,7 +9,7 @@ tags:
     - ui
     - visualiser-navbar
 created_at: 2026-09-23T10:36:15Z
-updated_at: 2026-10-01T08:46:14Z
+updated_at: 2026-10-01T08:53:21Z
 parent: folio-assistant-4ccr
 ---
 
@@ -277,3 +277,13 @@ Built with preview-site.sh, served at /folio-assistant/, 1280×800 and 390×844.
 - **12 — FIXED on main** (the glass tile is 'Folio settings', docs-ui.js:6070).
 - **1, 3, 4, 5, 9 — STILL PRESENT** as last recorded: resting-strip icons carry aria-label only; the landing descriptions still carry the naming rationale (4) and the run-together spellings (5); the '▾ Folio' handle is still [154,0,82,25] over the site title at 390.
 - 6, 7, 11 not re-measured this round.
+
+
+## 2026-10-01 — findings 4 and 5: a reader's summary, spellings as a list (owner's choice)
+
+Owner chose, from three options: keep the C@T spellings visible, as a list. So the declaration gains two optional fields (`summary`, `alsoWritten`; `CatHarnessDeclarationSchema`), and the landing's harness section (`_includes/harness_details.html`) prints `summary` when declared, else `description` as before, plus an 'Also written:' line. Measured on a local build:
+
+- Folio Assistant: 'This repository as a working instance: the platform and the folios it hosts.' (the naming rationale stays in `description`, where it is for authors)
+- C@T Harness: 'Computable adjudication and agentic test harness.' then 'Also written: caaat-harness, ca&at-harness, .c&at-harness, c@t-harness'
+
+**Not changed:** the two landing STICKIES (`cat-harness/folio/*.json`) are folio content; the C@T card's spellings are the acronym's derivation chain and `landing-sticky.test.ts` pins them on purpose. Finding 3's sticky half is therefore left as authored.
