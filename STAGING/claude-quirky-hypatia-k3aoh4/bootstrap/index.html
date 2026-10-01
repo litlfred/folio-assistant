@@ -29,14 +29,17 @@ it. Every definition is drawn on one page,
 <a href="schemas/README.html"><code>schemas/README.md</code></a>, from one file,
 <a href="schemas/graph.schema.json"><code>schemas/graph.schema.json</code></a>.</p>
 <p><strong>Contents</strong></p>
-<ol>
-<li><a href="#what-you-are-setting-up">What you are setting up</a>: what a repository becomes</li>
-<li><a href="#who-takes-part">Who takes part</a>: you, the person who asked, and the rest</li>
-<li><a href="#user-story">User story</a>: what you are here to do, in one sentence</li>
-<li><a href="#steps">Steps</a>: the six steps, drawn and then in order</li>
-<li><a href="#functional-requirements">Functional Requirements</a>: the eight rules the steps meet</li>
-<li><a href="#every-file-here">Every file here</a>: what each file is</li>
-</ol>
+<!-- kg:toc:begin -->
+<ul>
+<li><a href="#what-you-are-setting-up">What you are setting up</a></li>
+<li><a href="#who-takes-part">Who takes part</a></li>
+<li><a href="#user-story">User story</a></li>
+<li><a href="#steps">Steps</a></li>
+<li><a href="#functional-requirements">Functional Requirements</a></li>
+<li><a href="#reading-it-on-the-web">Reading it on the web</a></li>
+<li><a href="#every-file-here">Every file here</a></li>
+</ul>
+<!-- kg:toc:end -->
 <hr>
 <h2>What you are setting up</h2>
 <p>A <a href="schemas/README.html#knowledge-graph">Knowledge Graph</a> (<a href="schemas/graph.schema.json#/$defs/KnowledgeGraph">src</a>) is
@@ -142,30 +145,40 @@ up, or the reason it could not be is recorded.</p>
 <p>The steps are drawn as a
 <a href="schemas/README.html#process">Process</a> (<a href="schemas/graph.schema.json#/$defs/Process">src</a>),
 <a href="processes/initialize-harness.bpmn"><code>initialize-harness.bpmn</code></a>. It is the only
-<a href="schemas/README.html#process">Process</a> you start. Each step names the
+<a href="schemas/README.html#process">Process</a> you start; every other one is called from a step. Each step names the
 <a href="schemas/README.html#skill">Skill</a> (<a href="schemas/graph.schema.json#/$defs/Skill">src</a>) to read and the Functional
 Requirement it must meet (see the next section).</p>
 <pre><code class="language-text"> 1  Learn how to open files here
  |
- 2  Find the candidates  --- ask --->  the Requestor chooses one Harness
+ 2  Determine the Harness and repositories  --- ask --->  the Requestor chooses one Harness
  |
- 3  Check each repository  --- already set up? --->  record it and stop
- |
+ 3  Check each repository  --- already this Harness? --->  go to 7
+ |                         --- already another one? --->  record it and stop
  4  Record that you are starting
  |
  5  Follow the chosen Harness's own instructions
  |
  6  Leave a README at the repository's root, if it has none
+ |
+ 7  Make sure every step the declarations name is done  --- only a person can? ---> ask
+      first: the JSON Schemas and JSON-LD at the IRIs they name
+ |
+    Harness installed, every step reported: done, not done, could not determine, or stated
 
     At any step: something cannot be found or read  --->  record it and stop
+    Whenever a person must decide or act  --->  the one human-agent discussion
 </code></pre>
 <p>The same steps, and the <a href="schemas/README.html#process">Processes</a> they start, as the diagrams themselves:</p>
 <!-- kg:processes:begin -->
-<p><strong>Determine the harness and repositories</strong>: <a href="processes/discussion.bpmn"><code>processes/discussion.bpmn</code></a>, the one you start.</p>
-<p><img src="processes/discussion.svg" alt="Determine the harness and repositories"></p>
-<p><strong>Initialize a harness</strong>: <a href="processes/initialize-harness.bpmn"><code>processes/initialize-harness.bpmn</code></a>, the one you start; it calls "Log a message".</p>
+<p><strong>Initialize a harness</strong>: <a href="processes/initialize-harness.bpmn"><code>processes/initialize-harness.bpmn</code></a>, the one you start; it calls "Determine the harness and repositories", "Log a message" and "Complete initialization".</p>
 <p><img src="processes/initialize-harness.svg" alt="Initialize a harness"></p>
-<p><strong>Log a message</strong>: <a href="processes/log-message.bpmn"><code>processes/log-message.bpmn</code></a>, started from "Initialize a harness".</p>
+<p><strong>Complete initialization</strong>: <a href="processes/complete-initialization.bpmn"><code>processes/complete-initialization.bpmn</code></a>, started from "Initialize a harness"; it calls "Human–agent discussion" and "Log a message".</p>
+<p><img src="processes/complete-initialization.svg" alt="Complete initialization"></p>
+<p><strong>Determine the harness and repositories</strong>: <a href="processes/discussion.bpmn"><code>processes/discussion.bpmn</code></a>, started from "Initialize a harness"; it calls "Human–agent discussion".</p>
+<p><img src="processes/discussion.svg" alt="Determine the harness and repositories"></p>
+<p><strong>Human–agent discussion</strong>: <a href="processes/human-agent-discussion.bpmn"><code>processes/human-agent-discussion.bpmn</code></a>, a reusable sub-process, started from "Complete initialization" and "Determine the harness and repositories".</p>
+<p><img src="processes/human-agent-discussion.svg" alt="Human–agent discussion"></p>
+<p><strong>Log a message</strong>: <a href="processes/log-message.bpmn"><code>processes/log-message.bpmn</code></a>, a reusable sub-process, started from "Complete initialization" and "Initialize a harness".</p>
 <p><img src="processes/log-message.svg" alt="Log a message"></p>
 <!-- kg:processes:end -->
 <ol>
@@ -175,17 +188,21 @@ Requirement it must meet (see the next section).</p>
 Opening files is all you can do (Functional Requirement 1, FR-1).</p>
 </li>
 <li>
-<p><strong>Find the candidates, and ask the Requestor to choose.</strong> List the
+<p><strong>Determine the Harness and repositories.</strong> List the
 Harnesses the repository could become, and the repositories it could be
 set up in. Then ask the Requestor for one Harness and its repositories
-(FR-3). Read <a href="skills/confirm-harness.html"><code>skills/confirm-harness.md</code></a> for
-what to ask, and <a href="skills/discussion.html"><code>skills/discussion.md</code></a> for how.
+(FR-3), through the one reusable discussion (FR-9). Read
+<a href="skills/confirm-harness.html"><code>skills/confirm-harness.md</code></a> for what to ask,
+and <a href="skills/human-agent-discussion.html"><code>skills/human-agent-discussion.md</code></a>
+for how.
 This step is done when the answer is written down as a document that
 matches <a href="schemas/discussion.output.schema.json"><code>schemas/discussion.output.schema.json</code></a>.</p>
 </li>
 <li>
 <p><strong>Check each repository.</strong> If its root already holds a declaration,
-<code>&#x3C;name>.json</code>, it is already set up, and you stop (FR-5).</p>
+<code>&#x3C;name>.json</code>, it is already set up (FR-5). If it is the Harness the
+Requestor chose, go straight to step 7; if it is another, record that and
+stop.</p>
 </li>
 <li>
 <p><strong>Record that you are starting.</strong> Read
@@ -202,6 +219,19 @@ Harness's declaration, <code>&#x3C;name>.json</code>.</p>
 <li>
 <p><strong>Leave a README at the repository's root, if it has none</strong> (FR-8). Read
 <a href="skills/root-readme.html"><code>skills/root-readme.md</code></a>.</p>
+</li>
+<li>
+<p><strong>Make sure every step is done</strong> (FR-10). The steps are the ones the
+declarations name. <strong>First, and primary: the Harness's JSON Schemas and
+JSON-LD documents are published at the IRIs they name</strong> (FR-11; read
+<a href="skills/publish-documents.html"><code>skills/publish-documents.md</code></a>). Then the
+declared directories and files, the README and the sections it opts
+into, each needed Harness's own instructions, and the site on GitHub
+Pages, which is how the documents get to their addresses. Check each one before doing anything, do what you
+can, and ask the person for what only they can do. Read
+<a href="skills/initialization-steps.html"><code>skills/initialization-steps.md</code></a> and,
+for the site, <a href="skills/publish-site.html"><code>skills/publish-site.md</code></a>. Where
+bootstrap-tools is available, its <code>init</code> command performs the same checks.</p>
 </li>
 </ol>
 <p>If anything cannot be found or read along the way, record what failed (step
@@ -224,7 +254,7 @@ a step can name it: Functional Requirement 1 is FR-1.</p>
 </tr>
 <tr>
 <td><strong>FR-2</strong></td>
-<td>You start one Process, <code>initialize-harness</code>. The Processes <code>discussion</code> and <code>log-message</code> are started only by its steps.</td>
+<td>You start one Process, <code>initialize-harness</code>. The Processes <code>discussion</code>, <code>human-agent-discussion</code>, <code>complete-initialization</code> and <code>log-message</code> are started only by steps of another Process.</td>
 </tr>
 <tr>
 <td><strong>FR-3</strong></td>
@@ -236,7 +266,7 @@ a step can name it: Functional Requirement 1 is FR-1.</p>
 </tr>
 <tr>
 <td><strong>FR-5</strong></td>
-<td>A repository whose root already holds a declaration is already set up. You record that and stop; you never set it up again.</td>
+<td>A repository whose root already holds a declaration is already set up. You never set it up again: if it is the chosen Harness, you only check its steps (FR-10); if it is another, you record that and stop.</td>
 </tr>
 <tr>
 <td><strong>FR-6</strong></td>
@@ -250,8 +280,32 @@ a step can name it: Functional Requirement 1 is FR-1.</p>
 <td><strong>FR-8</strong></td>
 <td>When the set-up succeeds, the repository's root has a <code>README.md</code> naming the Harness and whether the set-up succeeded everywhere. An existing README is added to, never replaced.</td>
 </tr>
+<tr>
+<td><strong>FR-9</strong></td>
+<td>Whenever a step needs a person to decide or to act, it calls <code>human-agent-discussion</code>: context, options, a recommendation and what happens with no answer, then one question. A default applies only where the calling step allows one.</td>
+</tr>
+<tr>
+<td><strong>FR-10</strong></td>
+<td>Every initialization step the declarations name is checked before anything is done, and reported as done, not done, could not determine, or stated. "Could not determine" is never reported as done, and nothing somebody wrote is replaced.</td>
+</tr>
+<tr>
+<td><strong>FR-11</strong></td>
+<td>A Knowledge Graph Harness's JSON Schemas and JSON-LD documents (its vocabulary, its diagram vocabulary, its graph, each with its <code>@context</code>) are published at the IRIs they name. It is the primary initialization step: checked first after the declarations are read, and first in the report. A site is how they get there, not the goal.</td>
+</tr>
 </tbody>
 </table>
+<hr>
+<h2>Reading it on the web</h2>
+<p>Every README here, the root's first and then each directory's, is also one
+page with a table of contents at <code>https://litlfred.github.io/bootstrap/</code>,
+beside every file as it sits here. The page is built by <code>bootstrap-tools</code>, a
+separate repository beside this one, from these files, on each push to
+<code>main</code>, by the workflow in
+<a href=".github/workflows/pages.yml"><code>.github/workflows/pages.yml</code></a>. That workflow
+is the one file here that is not text, data or a diagram. It configures a
+build that runs somewhere else, and no step in this README reads it
+(FR-7). The site is also the first repository to go through its own step 7:
+<a href="skills/publish-site.html"><code>skills/publish-site.md</code></a>.</p>
 <hr>
 <h2>Every file here</h2>
 <p>Grouped by directory, each described from the file itself. "Used by" names the
@@ -312,12 +366,12 @@ Process that reads a file, where a diagram says so.</p>
 <tr>
 <td><a href="skills/bootstrap-kg-navigation.html"><code>bootstrap-kg-navigation.md</code></a></td>
 <td>Read and navigate a knowledge graph with nothing installed — no MCP server, no tools, no harness.</td>
-<td>"Initialize a harness"</td>
+<td>"Complete initialization", "Initialize a harness"</td>
 </tr>
 <tr>
 <td><a href="skills/confirm-harness.html"><code>confirm-harness.md</code></a></td>
 <td>Narrow the harnesses and locations this could be, then have the Requestor settle it.</td>
-<td>"Initialize a harness"</td>
+<td>"Determine the harness and repositories", "Initialize a harness"</td>
 </tr>
 <tr>
 <td><a href="skills/discussion.html"><code>discussion.md</code></a></td>
@@ -325,14 +379,34 @@ Process that reads a file, where a diagram says so.</p>
 <td></td>
 </tr>
 <tr>
+<td><a href="skills/human-agent-discussion.html"><code>human-agent-discussion.md</code></a></td>
+<td>Ask a person (or a sibling agent) for what no file holds: context, then the options, then a recommendation and what happens with no answer, then ONE question.</td>
+<td>"Complete initialization", "Determine the harness and repositories", "Human–agent discussion"</td>
+</tr>
+<tr>
+<td><a href="skills/initialization-steps.html"><code>initialization-steps.md</code></a></td>
+<td>Walk every initialization step the declarations name (the instance's own and each one it needs), check each before doing anything, do what can be done, ask f…</td>
+<td>"Complete initialization", "Initialize a harness"</td>
+</tr>
+<tr>
 <td><a href="skills/log-message.html"><code>log-message.md</code></a></td>
 <td>Say what you are doing, to the Logger, in a form a reader can act on.</td>
-<td>"Initialize a harness", "Log a message"</td>
+<td>"Complete initialization", "Initialize a harness", "Log a message"</td>
 </tr>
 <tr>
 <td><a href="skills/package-manifest.json"><code>package-manifest.json</code></a></td>
 <td>What an agent reads before it knows whether this repository is an instance, what kind, or what for.</td>
 <td></td>
+</tr>
+<tr>
+<td><a href="skills/publish-documents.html"><code>publish-documents.md</code></a></td>
+<td>The primary step of initializing a Knowledge Graph harness: every JSON Schema and JSON-LD document it names an address for (schemas, vocabulary, diagram voca…</td>
+<td>"Complete initialization"</td>
+</tr>
+<tr>
+<td><a href="skills/publish-site.html"><code>publish-site.md</code></a></td>
+<td>Give an instance a site: its Knowledge Graph rendered for publication at its site address, and the address answering.</td>
+<td>"Complete initialization"</td>
 </tr>
 <tr>
 <td><a href="skills/root-readme.html"><code>root-readme.md</code></a></td>
@@ -395,7 +469,7 @@ Process that reads a file, where a diagram says so.</p>
 </tr>
 </tbody>
 </table>
-<p><strong><a href="processes/README.html"><code>processes/</code></a></strong>: bootstrap's Processes: <code>initialize-harness.bpmn</code>, the only one an Actor starts; <code>discussion.bpmn</code>, which it calls to ask the Requestor; and `log-message.bpmn…</p>
+<p><strong><a href="processes/README.html"><code>processes/</code></a></strong>: bootstrap's Processes: <code>initialize-harness.bpmn</code>, the only one an Actor starts; <code>discussion.bpmn</code>, which it calls to determine the harness and repositories;…</p>
 <table>
 <thead>
 <tr>
@@ -406,13 +480,33 @@ Process that reads a file, where a diagram says so.</p>
 </thead>
 <tbody>
 <tr>
+<td><a href="processes/complete-initialization.bpmn"><code>complete-initialization.bpmn</code></a></td>
+<td>a Process: Complete initialization</td>
+<td>"Initialize a harness"</td>
+</tr>
+<tr>
+<td><a href="processes/complete-initialization.svg"><code>complete-initialization.svg</code></a></td>
+<td>the picture of <code>complete-initialization.bpmn</code>, generated from it</td>
+<td></td>
+</tr>
+<tr>
 <td><a href="processes/discussion.bpmn"><code>discussion.bpmn</code></a></td>
 <td>a Process: Determine the harness and repositories</td>
-<td></td>
+<td>"Initialize a harness"</td>
 </tr>
 <tr>
 <td><a href="processes/discussion.svg"><code>discussion.svg</code></a></td>
 <td>the picture of <code>discussion.bpmn</code>, generated from it</td>
+<td></td>
+</tr>
+<tr>
+<td><a href="processes/human-agent-discussion.bpmn"><code>human-agent-discussion.bpmn</code></a></td>
+<td>a Process: Human–agent discussion</td>
+<td>"Complete initialization", "Determine the harness and repositories"</td>
+</tr>
+<tr>
+<td><a href="processes/human-agent-discussion.svg"><code>human-agent-discussion.svg</code></a></td>
+<td>the picture of <code>human-agent-discussion.bpmn</code>, generated from it</td>
 <td></td>
 </tr>
 <tr>
@@ -428,7 +522,7 @@ Process that reads a file, where a diagram says so.</p>
 <tr>
 <td><a href="processes/log-message.bpmn"><code>log-message.bpmn</code></a></td>
 <td>a Process: Log a message</td>
-<td>"Initialize a harness"</td>
+<td>"Complete initialization", "Initialize a harness"</td>
 </tr>
 <tr>
 <td><a href="processes/log-message.svg"><code>log-message.svg</code></a></td>
