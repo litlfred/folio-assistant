@@ -102,6 +102,25 @@ orders integer-like keys first, so for 3 of smart-trust's 33 files the two
 differ. Showing the raw bytes would have looked right and been wrong. The
 loader now does what the Publisher's page does.
 
+## Printing and PDFs
+
+A browser prints the page **as it is at that moment**, so fetched content prints
+once it has loaded and not before. Measured 2026-10-01 on a JSON view page in
+Chromium: a PDF taken at `domcontentloaded` holds "Loading JSON source…", and
+one taken after the load holds the resource.
+
+- **Every loader signals completion.** Each counts itself in and out of
+  `window.__kgLoads`, and the last one to finish sets `<html data-kg-loaded>`,
+  on success or failure. A failed fetch still ends the wait, and its message is
+  what prints.
+- **Anything that prints or renders a PDF waits for that attribute**, never
+  for a fixed delay. That includes a Playwright `page.pdf()`, a PDF build step
+  and a screenshot test. A page with no loader never sets it, so a tool that
+  waits must first check whether the page loads one of the loader scripts.
+- **A reader pressing Ctrl+P** gets the page as loaded. The loaders are fast,
+  but a print from a cold cache can still catch "Loading…". That is a
+  visible, honest state, not a blank.
+
 ## Verify in a browser, not in the HTML
 
 A static check cannot see fetched content: the built HTML holds only

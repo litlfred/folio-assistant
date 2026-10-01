@@ -11,6 +11,16 @@
 (function () {
   var host = document.querySelector("[data-dak-openapi-src]");
   if (!host) return;
+  // PRINT AND PDF: the page prints what has loaded. Each loader counts itself
+  // in and out, and the last one to finish marks <html data-kg-loaded> — the
+  // signal a print or PDF step waits for (`visualizer-loading` §"Printing").
+  var kg = (window.__kgLoads = window.__kgLoads || {
+    pending: 0,
+    done: function () {
+      if (--this.pending === 0) document.documentElement.setAttribute("data-kg-loaded", "");
+    },
+  });
+  kg.pending++;
   function el(tag, attrs, kids) {
     var e = document.createElement(tag);
     Object.keys(attrs || {}).forEach(function (k) { e.setAttribute(k, attrs[k]); });
@@ -68,5 +78,8 @@
     })
     .catch(function (e) {
       host.textContent = "Could not load " + host.getAttribute("data-dak-openapi-src") + ": " + e.message;
+    })
+    .finally(function () {
+      kg.done();
     });
 })();

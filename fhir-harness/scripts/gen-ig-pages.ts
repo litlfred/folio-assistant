@@ -129,6 +129,9 @@ const INDEX = join(INSTANCE, "fhir-artifact-index", "index.json");
  */
 const MENU = join(INSTANCE, "fhir-artifact-index", "menu.json");
 const OUT = join(INSTANCE, "docs");
+/** The pages' shared stylesheets, under the docs root (one copy each, linked from every page). */
+const PAGES_CSS = "assets/ig-pages.css";
+const CHROME_CSS = "assets/ig-chrome.css";
 const dakViewServing = () => dakServed(INSTANCE);
 
 /** The DAK view pages' Liquid template (`liquid-templates`: a file of this directory, beside its writer). */
@@ -483,17 +486,20 @@ function shell(
     "---",
     "",
   ].join("\n");
-  // The remaining styling rides inside the page rather than in a `<head>` this
-  // file no longer owns. It is now the handful of rules just-the-docs has no
-  // opinion about; everything the theme already provides was removed rather
-  // than overridden.
+  // The remaining styling — the handful of rules just-the-docs has no opinion
+  // about, and the mirrored chrome — is LINKED, from one stylesheet each
+  // under the instance's `assets/` (bean `680p`). It was inlined into every
+  // page: 3.1 KB x 2,153 pages = 6.7 MB of smart-trust's 12.2 MB of generated
+  // pages (measured 2026-10-01), the same bytes 2,153 times. `relative_url`
+  // keeps the link right under any baseurl, staging previews included.
   // The chrome is mirrored only when it was actually ingested. Absent, the
   // page renders as an ordinary folio page: a mirror nobody could build is
   // reported by the build, never faked with a hand-typed palette.
   const wearsChrome = chrome === "fixture" && CHROME !== undefined;
-  const style = wearsChrome ? `${CSS}\n${chromeStyles(CHROME!)}` : CSS;
+  const link = (file: string) => `<link rel="stylesheet" href="{{ '/${INSTANCE_NAME}/${file}' | relative_url }}">`;
+  const links = `${link(PAGES_CSS)}${wearsChrome ? `\n${link(CHROME_CSS)}` : ""}`;
   const banner = wearsChrome ? `${igBanner(CHROME!, IX)}\n\n` : "";
-  return `${fm}<style>${style}</style>\n\n${banner}${body.trim()}\n`;
+  return `${fm}${links}\n\n${banner}${body.trim()}\n`;
 }
 
 /**
@@ -903,6 +909,8 @@ const pages = new Map<string, string>();
 // Jekyll to copy the file verbatim, which is the behaviour this change exists
 // to stop.
 pages.set("index.md", indexPage(ix));
+pages.set(PAGES_CSS, `${CSS.trim()}\n`);
+if (CHROME !== undefined) pages.set(CHROME_CSS, `${chromeStyles(CHROME).trim()}\n`);
 
 // EVERY artefact, not only the sidecar-bearing ones. The owner's call,
 // 2026-09-22: full parity with the Publisher's 673 artefact pages, against a

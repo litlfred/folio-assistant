@@ -15,7 +15,7 @@ The Publisher writes every view as a full static HTML page, though its own DAK v
 ## Done when
 - [x] the DAK view pages fetch their file client-side; no file text is baked into a page
 - [ ] the artefact pages' DAK API sections and the dak-api replica read their data from the KG client-side
-- [ ] a measured before/after of the smart-trust site's built HTML bytes, recorded here
+- [x] a measured before/after of the smart-trust site's built HTML bytes, recorded here
 - [ ] the trade-off stated: what a no-JS reader or a search index loses, and what still renders without JS
 
 ## 2026-10-01: DAK view pages fetch their file
@@ -51,3 +51,23 @@ files into `docs/`.
   not served, and says so.
 - **Verified in Chromium:** all 33 smart-trust view pages still display
   exactly what the Publisher's pages display.
+
+## 2026-10-01: one stylesheet, not 2,153 inline copies; printing
+
+**Measured first.** smart-trust's generated pages were 12.2 MB, and 6.7 MB of
+that (55 %) was one 3.1 KB `<style>` block inlined into all 2,153 pages: the
+shared rules plus the mirrored IG chrome. `gen-ig-pages` now writes them once,
+as `assets/ig-pages.css` and `assets/ig-chrome.css`, and each page links them
+through `relative_url`.
+- **After:** smart-trust 12.2 MB → **5.9 MB (−52 %)**; smart-base 0.88 MB.
+  The only inline style left is the hub's 278-byte `h4` rule.
+- The page tests now read the stylesheet files, and check that every page
+  links them and inlines none.
+
+**Printing** (owner: *"what about printing a page with loaded content?"*). A
+browser prints what has loaded.
+- Chromium PDFs of a JSON view page: printed at `domcontentloaded`, it lacks
+  the JSON; printed after `<html data-kg-loaded>`, it holds it.
+- Every loader now counts itself in and out, and the last to finish sets that
+  attribute. `visualizer-loading` §"Printing and PDFs" says a print or PDF step
+  waits for it, never for a fixed delay.

@@ -8,6 +8,16 @@
 (function () {
   var code = document.querySelector("code[data-package][data-entry]");
   if (!code) return;
+  // PRINT AND PDF: the page prints what has loaded. Each loader counts itself
+  // in and out, and the last one to finish marks <html data-kg-loaded> — the
+  // signal a print or PDF step waits for (`visualizer-loading` §"Printing").
+  var kg = (window.__kgLoads = window.__kgLoads || {
+    pending: 0,
+    done: function () {
+      if (--this.pending === 0) document.documentElement.setAttribute("data-kg-loaded", "");
+    },
+  });
+  kg.pending++;
   function tarEntry(buf, name) {
     var dec = new TextDecoder();
     for (var off = 0; off + 512 <= buf.length; ) {
@@ -42,5 +52,8 @@
     })
     .catch(function (e) {
       code.textContent = "Could not load JSON: " + e.message;
+    })
+    .finally(function () {
+      kg.done();
     });
 })();

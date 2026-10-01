@@ -69,6 +69,14 @@ const indexSrc = existsSync(join(DOCS, "index.md"))
   ? readFileSync(join(DOCS, "index.md"), "utf-8")
   : "";
 
+/**
+ * The pages' CSS — linked, not inlined (bean `680p`): the shared rules and,
+ * where the chrome was ingested, the mirrored chrome. The style tests below
+ * read these files; every page must link them.
+ */
+const cssFile = (f: string) => (existsSync(join(DOCS, "assets", f)) ? readFileSync(join(DOCS, "assets", f), "utf-8") : "");
+const SITE_CSS = `${cssFile("ig-pages.css")}\n${cssFile("ig-chrome.css")}`;
+
 /** Every generated page, index first, as `[label, source]`. */
 const pages: [string, string][] = [
   ["index.md", indexSrc],
@@ -147,21 +155,31 @@ describe("smart-trust pages are generated at all", () => {
   });
 });
 
+describe("the CSS is linked once, never inlined per page", () => {
+  it("the shared stylesheet exists", () => {
+    expect(SITE_CSS).toContain(".st-tag");
+  });
+  for (const [label, src] of pages) {
+    it(`${label} links it and inlines none`, () => {
+      expect(src).toContain("assets/ig-pages.css");
+      expect(src).not.toContain("<style>");
+    });
+  }
+});
+
 describe("the pages carry no theme CSS of their own", () => {
   /**
    * `body`, a colour scheme and `prefers-color-scheme` are the THEME's to
    * declare. A page that restates them is a page that silently stops matching
    * — and it is what made these pages render light plates in dark mode.
    */
-  for (const [label, src] of pages) {
-    it(`${label} does not redeclare the theme`, () => {
-      const css = /<style>([\s\S]*?)<\/style>/.exec(src)?.[1] ?? "";
-      expect(css).not.toContain("body{");
-      expect(css).not.toContain("body {");
-      expect(css).not.toContain("prefers-color-scheme");
-      expect(css).not.toContain("background:#0d1117");
-    });
-  }
+  // One stylesheet every page links (checked above), so one assertion.
+  it("the linked stylesheet does not redeclare the theme", () => {
+    expect(SITE_CSS).not.toContain("body{");
+    expect(SITE_CSS).not.toContain("body {");
+    expect(SITE_CSS).not.toContain("prefers-color-scheme");
+    expect(SITE_CSS).not.toContain("background:#0d1117");
+  });
 
   /**
    * The AUTHORED half stays small — and this used to be a bare line count over
@@ -180,7 +198,7 @@ describe("the pages carry no theme CSS of their own", () => {
    * what somebody typed here, and that is what must stay readable.
    */
   it("the hand-written half of the style block is still small enough to read in one screen", () => {
-    const css = /<style>([\s\S]*?)<\/style>/.exec(indexSrc)?.[1] ?? "";
+    const css = SITE_CSS;
     const authored = css
       .trim()
       .split("\n")
@@ -198,10 +216,7 @@ describe("the pages carry no theme CSS of their own", () => {
    * opened a single artefact page.
    */
   it("every mirrored declaration is scoped — no bare :root anywhere", () => {
-    for (const [label, src] of pages) {
-      const css = /<style>([\s\S]*?)<\/style>/.exec(src)?.[1] ?? "";
-      expect(`${label}: ${/(^|[\s,}]):root\s*\{/.test(css)}`).toBe(`${label}: false`);
-    }
+    expect(/(^|[\s,}]):root\s*\{/.test(SITE_CSS)).toBe(false);
   });
 });
 
@@ -332,7 +347,7 @@ describe("materialization state is stated, never implied by styling", () => {
    * classes carry a colour and nothing else; the WORD is what is read.
    */
   it("both state tags are defined and both are used with their word", () => {
-    const css = /<style>([\s\S]*?)<\/style>/.exec(indexSrc)?.[1] ?? "";
+    const css = SITE_CSS;
     expect(css).toContain(".st-held");
     expect(css).toContain(".st-ref");
     expect(indexSrc).toMatch(/class="st-tag st-held">materialized</);

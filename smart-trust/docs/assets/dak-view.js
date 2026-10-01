@@ -5,7 +5,18 @@
 // It shows the file as the Publisher's view page does: fetched, parsed and
 // re-serialised with `JSON.stringify(parsed, null, 2)` — so JavaScript's key
 // order (integer-like keys first) applies here exactly as it does there.
+(function () {
+  // PRINT AND PDF: the page prints what has loaded. Each loader counts itself
+  // in and out, and the last one to finish marks <html data-kg-loaded> — the
+  // signal a print or PDF step waits for (`visualizer-loading` §"Printing").
+  var kg = (window.__kgLoads = window.__kgLoads || {
+    pending: 0,
+    done: function () {
+      if (--this.pending === 0) document.documentElement.setAttribute("data-kg-loaded", "");
+    },
+  });
 document.querySelectorAll("code[data-dak-src]").forEach(function (el) {
+  kg.pending++;
   fetch(el.getAttribute("data-dak-src"))
     .then(function (r) {
       if (!r.ok) throw new Error(r.status + " " + r.statusText);
@@ -16,5 +27,9 @@ document.querySelectorAll("code[data-dak-src]").forEach(function (el) {
     })
     .catch(function (e) {
       el.textContent = "Could not load " + el.getAttribute("data-dak-src") + ": " + e.message;
+    })
+    .finally(function () {
+      kg.done();
     });
 });
+})();
