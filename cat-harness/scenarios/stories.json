@@ -353,6 +353,14 @@
       "want": "Say clearly what could not be extracted"
     },
     {
+      "id": "ingestion-agent-4",
+      "role": {
+        "role": "ingestion-agent"
+      },
+      "want": "Walk each part a subscriber chose through the shared materialisation gates, one at a time, and carry on past a part a gate refuses",
+      "soThat": "one refused subgraph or asset leaves that part referenced with its reason recorded, rather than failing the whole subscription or slipping through ungated"
+    },
+    {
       "id": "integration-watcher-1",
       "role": {
         "role": "integration-watcher"
@@ -778,6 +786,22 @@
         "role": "user"
       },
       "want": "Find out what changed while they were away"
+    },
+    {
+      "id": "user-4",
+      "role": {
+        "role": "user"
+      },
+      "want": "Subscribe a WHO-facing folio to who-iris at a pinned commit and materialise only its catalogue subgraph, leaving every other subgraph and the binary library referenced",
+      "soThat": "the folio cites the catalogue from local, fixity-checked bytes that passed the five gates, while still showing everything else who-iris offers"
+    },
+    {
+      "id": "user-5",
+      "role": {
+        "role": "user"
+      },
+      "want": "Subscribe a folio that is not WHO-facing to ihris and instantiate the ihris harness, without materialising any of its subgraphs",
+      "soThat": "ihris appears in the folio's navbar as an instantiated harness, pinned to one commit, once its needs are known to be held"
     }
   ]
 }

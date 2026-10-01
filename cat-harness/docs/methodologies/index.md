@@ -95,7 +95,7 @@ strictly worse than declaring none.
 
 **Ingested sources:**
 
-- `library/arxiv-2607.20636v1`
+- [`library/arxiv-2607.20636v1`](../cat-harness/library/cat-harness/#cat-harness%2Farxiv-2607.20636v1) · [item page](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/library/arxiv-2607.20636v1/README.md) · [source](https://arxiv.org/abs/2607.20636v1)
 
 ### Bidirectional agentic autoformalization — extract, compile-fix, check faithfulness, then informalize back without the source
 
@@ -268,7 +268,7 @@ these.
 
 **Ingested sources:**
 
-- `library/wang-rangaiah-2026-mcdm-aggregation`
+- [`library/wang-rangaiah-2026-mcdm-aggregation`](../cat-harness/library/cat-harness/#cat-harness%2Fwang-rangaiah-2026-mcdm-aggregation) · [item page](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/library/wang-rangaiah-2026-mcdm-aggregation/README.md)
 
 ### Probabilistic decision-making algorithms — and what their regret bounds are claims ABOUT
 
@@ -282,7 +282,7 @@ these.
 
 **Ingested sources:**
 
-- `library/arxiv-2508.21620v2`
+- [`library/arxiv-2508.21620v2`](../cat-harness/library/cat-harness/#cat-harness%2Farxiv-2508.21620v2) · [item page](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/library/arxiv-2508.21620v2/README.md) · [source](https://arxiv.org/abs/2508.21620v2)
 
 ### Process-driven autoformalization — judge a formalised statement by compiling it WITH a proof, and read the first error as the step signal
 

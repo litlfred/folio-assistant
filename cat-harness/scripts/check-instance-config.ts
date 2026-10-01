@@ -23,9 +23,9 @@
  *   - a config under the RETIRED global name — a finding, with the `git mv`
  *     to run, because nothing reads it and nothing else would say so;
  *   - a `*.config.json` at the instantiation root matching no declared
- *     instance — a finding, because it is either a rename half-done or a
- *     config for an instance that is not here, and the two are worth telling
- *     apart by hand.
+ *     instance, and no harness a subscription chose — a finding, because
+ *     it is either a rename half-done or a config for an instance that is
+ *     not here, and the two are worth telling apart by hand.
  *
  * COULD-NOT-DETERMINE is its own exit. An unreadable declaration means the
  * instance's name is unknown, so its filename is unknowable — reported, never
@@ -81,6 +81,12 @@ export function sweep(checkout: string): { findings: Finding[]; expected: Set<st
       continue;
     }
     expected.add(instanceConfigFilename(name));
+    // A harness a SUBSCRIPTION chose is instantiated by a config of its name
+    // with no local declaration (`kg-instantiate.ts`, issue #1719): claimed,
+    // not orphaned.
+    for (const s of readDeclaration(root)?.subscriptions ?? []) {
+      for (const h of s.harnesses ?? []) expected.add(instanceConfigFilename(h));
+    }
 
     // The retired name, wherever it sits: beside the declaration or at the
     // checkout root. Both are places a migration would leave one.

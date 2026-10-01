@@ -49,6 +49,26 @@
       "skos:note": "candidate"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/ns#glossary/kg-skills/ig-ast-delta",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/ns#glossary/kg-skills"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "ig-ast-delta"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "List and view what changed between two IG ASTs, check whether an AST is still valid for the IG's current inputs, and render the delta as just-the-docs pages that carry the provisional mark. Read before trusting a cached AST, before reviewing an incremental IG build, and before rendering anything from a cache."
+        }
+      ],
+      "skos:notation": "ig-ast-delta",
+      "dcterms:source": "fhir-harness/skills/fhir-ig-base/ig-ast-delta.md",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/ns#glossary/kg-skills/ig-build-pipeline",
       "@type": "skos:Concept",
       "skos:inScheme": {

@@ -85,8 +85,33 @@
       "findings": []
     },
     "role-carries-activity-skill": {
-      "result": "pass",
-      "findings": []
+      "result": "fail",
+      "findings": [
+        {
+          "where": "Task_MapL2",
+          "detail": "needs skill \"l3-fhir-authoring\", but its lane's role \"fhir-modeller\" does not carry it."
+        },
+        {
+          "where": "Task_AuthorFsh",
+          "detail": "needs skill \"l3-fhir-authoring\", but its lane's role \"fhir-modeller\" does not carry it."
+        },
+        {
+          "where": "Task_Sushi",
+          "detail": "needs skill \"l3-fhir-authoring\", but its lane's role \"build-pipeline\" does not carry it."
+        },
+        {
+          "where": "Task_Validate",
+          "detail": "needs skill \"fhir-validation\", but its lane's role \"build-pipeline\" does not carry it."
+        },
+        {
+          "where": "Task_IgPublisher",
+          "detail": "needs skill \"ig-publication\", but its lane's role \"build-pipeline\" does not carry it."
+        },
+        {
+          "where": "Task_PublishIg",
+          "detail": "needs skill \"ig-publication\", but its lane's role \"publication-manager\" does not carry it."
+        }
+      ]
     },
     "activity-names-skill": {
       "result": "pass",
@@ -138,8 +163,8 @@
     }
   },
   "totals": {
-    "pass": 15,
-    "fail": 1,
+    "pass": 14,
+    "fail": 2,
     "n/a": 9,
     "unknown": 0
   }

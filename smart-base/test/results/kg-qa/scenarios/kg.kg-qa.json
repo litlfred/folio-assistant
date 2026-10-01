@@ -8,8 +8,33 @@
   "source_hash": null,
   "criteria": {
     "skill-has-entry-point": {
-      "result": "pass",
-      "findings": []
+      "result": "fail",
+      "findings": [
+        {
+          "where": "dak-postprocessing",
+          "detail": "skill \"dak-postprocessing\" is listed by no package manifest, carried by no role and named by no activity. In this instance's graph only (read: `skills` at `skills/`, `scenarios` at `scenarios/`, `processes` at `methodologies/processes/`) — a nested instance may name it, and this audit does not read one."
+        },
+        {
+          "where": "dak-preprocessing",
+          "detail": "skill \"dak-preprocessing\" is listed by no package manifest, carried by no role and named by no activity. In this instance's graph only (read: `skills` at `skills/`, `scenarios` at `scenarios/`, `processes` at `methodologies/processes/`) — a nested instance may name it, and this audit does not read one."
+        },
+        {
+          "where": "grade",
+          "detail": "skill \"grade\" is listed by no package manifest, carried by no role and named by no activity. In this instance's graph only (read: `skills` at `skills/`, `scenarios` at `scenarios/`, `processes` at `methodologies/processes/`) — a nested instance may name it, and this audit does not read one."
+        },
+        {
+          "where": "ig-artifact-ingestion",
+          "detail": "skill \"ig-artifact-ingestion\" is listed by no package manifest, carried by no role and named by no activity. In this instance's graph only (read: `skills` at `skills/`, `scenarios` at `scenarios/`, `processes` at `methodologies/processes/`) — a nested instance may name it, and this audit does not read one."
+        },
+        {
+          "where": "smart-stack-layering",
+          "detail": "skill \"smart-stack-layering\" is listed by no package manifest, carried by no role and named by no activity. In this instance's graph only (read: `skills` at `skills/`, `scenarios` at `scenarios/`, `processes` at `methodologies/processes/`) — a nested instance may name it, and this audit does not read one."
+        },
+        {
+          "where": "toolchain-ownership",
+          "detail": "skill \"toolchain-ownership\" is listed by no package manifest, carried by no role and named by no activity. In this instance's graph only (read: `skills` at `skills/`, `scenarios` at `scenarios/`, `processes` at `methodologies/processes/`) — a nested instance may name it, and this audit does not read one."
+        }
+      ]
     },
     "consulted-skill-not-performed": {
       "result": "n/a",
@@ -156,8 +181,8 @@
     }
   },
   "totals": {
-    "pass": 9,
-    "fail": 1,
+    "pass": 8,
+    "fail": 2,
     "n/a": 11,
     "unknown": 0
   }

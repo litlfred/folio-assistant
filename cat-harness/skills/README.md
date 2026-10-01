@@ -8,7 +8,7 @@ Part of [C@T Harness](../README.md) 0.1.0, declared as `skills`, holding `skills
 | file | what it is | used by |
 |---|---|---|
 | [`skills.json`](skills.json) | data |  |
-| [`authoring/`](authoring/) | 43 files | |
+| [`authoring/`](authoring/) | 42 files | |
 | [`conduct/`](conduct/) | 18 files | |
 | [`conventions/`](conventions/) | 2 files | |
 | [`folio-core/`](folio-core/) | 6 files | |

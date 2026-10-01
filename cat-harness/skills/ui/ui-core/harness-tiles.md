@@ -38,6 +38,15 @@ Dependencies keep a group of their own rather than disappearing. Making the
 distinction a **disappearance** would answer *"where did who-iris go"* with
 silence.
 
+**A harness a KG subscription chose is instantiated by the same file**, with
+no local declaration: its declaration is the substrate snapshot `kg:subscribe`
+cached at the pin. `bun run kg:instantiate <subscription> <harness>` writes the
+config and the harness's state directories, and refuses a harness that was not
+chosen, not declared at the pin, or whose `needs` nothing here holds. The tile
+is drawn from the snapshot (`scripts/subscribed-harnesses.ts`): it links
+nowhere, because nothing of it is published here, and a snapshot that cannot
+be read is a finding on the tile rather than an empty one. Issue #1719.
+
 ## "Harness" carries TWO senses, and only one of them is this rule
 
 **Measured 2026-09-23** (bean `ogit`, [#1109](https://github.com/litlfred/folio-assistant/issues/1109)), after the owner asked *"why is detangle a harness? review all things labeled are harnesses -- are they?"*
