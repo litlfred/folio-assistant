@@ -245,6 +245,94 @@
       "notation": "Task_Trial",
       "source": "large-datasets/processes/sample-import.bpmn#Task_Trial",
       "status": "candidate"
+    },
+    {
+      "id": "process_subscribekg.call_materialize",
+      "prefLabel": "Materialise the part [materialize-remote]",
+      "definition": "The ONLY way bytes arrive. Purpose first, then the five gates — size, restrictions, copyright, retention, source loss — then fetch with fixity, or stay referenced with the refusing gate's basis recorded. Both ends of that subprocess return here and the walk continues: one part refused is not the subscription refused.",
+      "notation": "Call_Materialize",
+      "source": "large-datasets/processes/subscribe-kg.bpmn#Call_Materialize",
+      "status": "candidate"
+    },
+    {
+      "id": "process_subscribekg.call_refresh",
+      "prefLabel": "Refresh the held part [refresh-materialized]",
+      "definition": "The shared refresh, called, not re-described: what changed upstream, what changed locally, and what to do when both did. An archival copy is fixity-checked and never re-fetched. Whatever that process decides — refreshed, kept divergent, or deferred — is the part's new state; this loop only moves to the next part.",
+      "notation": "Call_Refresh",
+      "source": "large-datasets/processes/subscribe-kg.bpmn#Call_Refresh",
+      "status": "candidate"
+    },
+    {
+      "id": "process_subscribekg.task_choose",
+      "prefLabel": "Choose subgraphs, the asset policy, harnesses",
+      "definition": "Written to the entry as `subgraphs`, `assets.policy` (none, on-demand or all) and `harnesses`. Choosing is not holding: a chosen subgraph is still referenced until the gates below let it through. Choosing nothing is legitimate — a subscription with no parts chosen is a pinned reference, the case associatedHarnesses covers today.",
+      "notation": "Task_Choose",
+      "source": "large-datasets/processes/subscribe-kg.bpmn#Task_Choose",
+      "status": "candidate"
+    },
+    {
+      "id": "process_subscribekg.task_instantiate",
+      "prefLabel": "Instantiate the harness: write its config",
+      "definition": "Write `<harness>.config.json` at the repository root, plus the state directories the harness declares. That file is what harness-tiles reads as INSTANTIATED, and it is what puts the harness in the navbar's bottom region. check:instance-render must be green on the result; a config that renders nothing is an entry pointing nowhere.",
+      "notation": "Task_Instantiate",
+      "source": "large-datasets/processes/subscribe-kg.bpmn#Task_Instantiate",
+      "status": "candidate"
+    },
+    {
+      "id": "process_subscribekg.task_pin",
+      "prefLabel": "Name the substrate, pin a full commit SHA",
+      "definition": "`owner/repo` and a 40-character commit SHA — never a branch, never an abbreviated SHA. The schema refuses anything else (SubscriptionSchema.ref), and this step exists so the refusal is met while choosing rather than at commit time. A tag replaces the SHA only once the substrate publishes releases.",
+      "notation": "Task_Pin",
+      "source": "large-datasets/processes/subscribe-kg.bpmn#Task_Pin",
+      "status": "candidate"
+    },
+    {
+      "id": "process_subscribekg.task_record",
+      "prefLabel": "Write the entry and cache the declaration",
+      "definition": "The `subscriptions` entry in the subscriber's instance declaration — id, repository, ref, and nothing chosen yet — plus a cached copy of the substrate's declaration at the pin. The entry holds the choice and the pin, never state: whether a part is held is answered by its materialisation record, and a second answer here would be free to disagree with it.",
+      "notation": "Task_Record",
+      "source": "large-datasets/processes/subscribe-kg.bpmn#Task_Record",
+      "status": "candidate"
+    },
+    {
+      "id": "process_subscribekg.task_refuse",
+      "prefLabel": "Record why it is not a substrate; write no entry",
+      "definition": "No subscription entry is written for a repository that is not a substrate. What is recorded is the reason (non-conforming, no harness, or unreachable) and the pin it was asked at, so a later attempt at a different commit starts from what failed.",
+      "notation": "Task_Refuse",
+      "source": "large-datasets/processes/subscribe-kg.bpmn#Task_Refuse",
+      "status": "candidate"
+    },
+    {
+      "id": "process_subscribekg.task_repin",
+      "prefLabel": "Move the entry's ref and re-cache the declaration",
+      "definition": "Only after every held part has been through the refresh. Moving the ref first would make the records of parts not yet refreshed describe a commit the entry no longer names. The cached declaration is replaced so the review that follows shows what the NEW pin offers, including subgraphs that did not exist at the old one.",
+      "notation": "Task_RePin",
+      "source": "large-datasets/processes/subscribe-kg.bpmn#Task_RePin",
+      "status": "candidate"
+    },
+    {
+      "id": "process_subscribekg.task_review",
+      "prefLabel": "Review what the substrate offers",
+      "definition": "Every subgraph, asset class and harness the cached declaration names, each with its current state — referenced, materialised, unknown, stale, or refused by a gate. Shown whole, because a reader who sees only what was chosen cannot tell \"not offered\" from \"not taken\".",
+      "notation": "Task_Review",
+      "source": "large-datasets/processes/subscribe-kg.bpmn#Task_Review",
+      "status": "candidate"
+    },
+    {
+      "id": "process_subscribekg.task_summarise",
+      "prefLabel": "Record how the walk ended, part by part",
+      "definition": "One line per offered part: materialised, referenced by choice, or referenced because a gate refused (and which). Nothing new is decided here; it is the account the visualizer and the next refresh read, written once rather than reconstructed from the loop.",
+      "notation": "Task_Summarise",
+      "source": "large-datasets/processes/subscribe-kg.bpmn#Task_Summarise",
+      "status": "candidate"
+    },
+    {
+      "id": "process_subscribekg.task_validate",
+      "prefLabel": "Fetch the root declaration at the pin, and validate it",
+      "definition": "A sparse, shallow fetch of the substrate's root declaration only. Two questions: does it parse as bootstrap's KnowledgeGraphDeclarationSchema, and does it declare at least one harness? `could not fetch` is a third answer and is never read as `conforms`.",
+      "notation": "Task_Validate",
+      "source": "large-datasets/processes/subscribe-kg.bpmn#Task_Validate",
+      "status": "candidate"
     }
   ]
 }
