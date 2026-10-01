@@ -42,7 +42,7 @@ nothing renders yet. It is shown rather than omitted: "nothing renders this" and
 1 of 1 published.
 {: .fa-hx-dim }
 
-- [C@T Harness]({{ '/beans/' | relative_url }})
+- [Folio Assistant]({{ '/beans/' | relative_url }})
 
 ### `cat-harness`
 
@@ -84,10 +84,11 @@ nothing renders yet. It is shown rather than omitted: "nothing renders this" and
 
 ### `docs`
 
-3 of 3 published.
+4 of 4 published.
 {: .fa-hx-dim }
 
 - [C@T Harness]({{ '/cat-harness/docs-auto/index/docs/docs/' | relative_url }})
+- [Folio Assistant]({{ '/cat-harness/docs-auto/index/docs/root-docs/' | relative_url }})
 - [smart-trust]({{ '/cat-harness/docs-auto/index/docs/smart-trust-docs/' | relative_url }})
 - [WHO IRIS]({{ '/cat-harness/docs-auto/index/docs/who-iris-site/' | relative_url }})
 
@@ -120,7 +121,7 @@ nothing renders yet. It is shown rather than omitted: "nothing renders this" and
 1 of 1 published.
 {: .fa-hx-dim }
 
-- [C@T Harness]({{ '/fsh-guts/' | relative_url }})
+- [Folio Assistant]({{ '/fsh-guts/' | relative_url }})
 
 ### `glossary`
 
@@ -142,14 +143,14 @@ nothing renders yet. It is shown rather than omitted: "nothing renders this" and
 0 of 1 published.
 {: .fa-hx-dim }
 
-- C@T Harness — *declared, not published*
+- Folio Assistant — *declared, not published*
 
 ### `issue-marks`
 
 1 of 1 published.
 {: .fa-hx-dim }
 
-- [C@T Harness]({{ '/issue-marks/' | relative_url }})
+- [Folio Assistant]({{ '/issue-marks/' | relative_url }})
 
 ### `library`
 
@@ -168,7 +169,7 @@ nothing renders yet. It is shown rather than omitted: "nothing renders this" and
 0 of 1 published.
 {: .fa-hx-dim }
 
-- C@T Harness — *declared, not published*
+- Folio Assistant — *declared, not published*
 
 ### `methodology`
 
@@ -292,7 +293,7 @@ nothing renders yet. It is shown rather than omitted: "nothing renders this" and
 1 of 1 published.
 {: .fa-hx-dim }
 
-- [C@T Harness]({{ '/todos/' | relative_url }})
+- [Folio Assistant]({{ '/todos/' | relative_url }})
 
 ### `tools`
 
@@ -343,13 +344,7 @@ nothing renders yet. It is shown rather than omitted: "nothing renders this" and
 0 of 1 published.
 {: .fa-hx-dim }
 
-- C@T Harness — *declared, not published*
-
-## Every declared viewer
-
-The same viewers the navbar and the board show, by title.
-
-- [fsh-guts]({{ '/fsh-guts/' | relative_url }}) — declared on `fsh-guts`
+- Folio Assistant — *declared, not published*
 
 ---
 
