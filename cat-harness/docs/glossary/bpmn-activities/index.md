@@ -12,14 +12,14 @@ permalink: /glossary/bpmn-activities/
 
 Candidate terms extracted from every BPMN task and call activity: `name` as the label, its own `<documentation>` as the definition, the element id as the code. Each is the asset's own text, verbatim and not curated, and carries the badge "candidate, extracted". A person promotes one by authoring it. Authored terms, the counts and the sources are on the <a href="{{ '/glossary/' | relative_url }}">glossary index</a>.
 
-From: bootstrap 38 (<a href="{{ '/assets/glossary/bootstrap--kg-bpmn-activities.skos.jsonld' | relative_url }}">SKOS</a>) · bootstrap-tools 7 (<a href="{{ '/assets/glossary/bootstrap-tools--kg-bpmn-activities.skos.jsonld' | relative_url }}">SKOS</a>) · cat-harness 490 (<a href="{{ '/assets/glossary/cat-harness--kg-bpmn-activities.skos.jsonld' | relative_url }}">SKOS</a>) · folio-assistant-core 4 (<a href="{{ '/assets/glossary/folio-assistant-core--kg-bpmn-activities.skos.jsonld' | relative_url }}">SKOS</a>) · large-datasets 41 (<a href="{{ '/assets/glossary/large-datasets--kg-bpmn-activities.skos.jsonld' | relative_url }}">SKOS</a>) · smart-base 19 (<a href="{{ '/assets/glossary/smart-base--kg-bpmn-activities.skos.jsonld' | relative_url }}">SKOS</a>).
+From: bootstrap 38 (<a href="{{ '/assets/glossary/bootstrap--kg-bpmn-activities.skos.jsonld' | relative_url }}">SKOS</a>) · bootstrap-tools 7 (<a href="{{ '/assets/glossary/bootstrap-tools--kg-bpmn-activities.skos.jsonld' | relative_url }}">SKOS</a>) · cat-harness 498 (<a href="{{ '/assets/glossary/cat-harness--kg-bpmn-activities.skos.jsonld' | relative_url }}">SKOS</a>) · folio-assistant-core 4 (<a href="{{ '/assets/glossary/folio-assistant-core--kg-bpmn-activities.skos.jsonld' | relative_url }}">SKOS</a>) · large-datasets 41 (<a href="{{ '/assets/glossary/large-datasets--kg-bpmn-activities.skos.jsonld' | relative_url }}">SKOS</a>) · smart-base 19 (<a href="{{ '/assets/glossary/smart-base--kg-bpmn-activities.skos.jsonld' | relative_url }}">SKOS</a>).
 
-**Size:** this page holds 599 terms and is 470 KB before compression, fetched in one request, within its budget of 1.0 MB. There is no search index: the filter below runs over this page, and the A–Z bar jumps within it.
+**Size:** this page holds 607 terms and is 477 KB before compression, fetched in one request, within its budget of 1.0 MB. There is no search index: the filter below runs over this page, and the A–Z bar jumps within it.
 
 <table class="fa-gloss-mapping">
 <caption>Already somebody else's concept? — <code>check:term-mapping</code>, bean <code>7wou</code></caption>
 <thead><tr><th>target</th><th>mapped</th><th>unmapped</th><th>undetermined</th><th>why undetermined</th></tr></thead>
-<tbody><tr><td><code>fhir</code></td><td>0</td><td>599</td><td>0</td><td>—</td></tr><tr><td><code>skos</code></td><td>0</td><td>599</td><td>0</td><td>—</td></tr></tbody>
+<tbody><tr><td><code>fhir</code></td><td>0</td><td>607</td><td>0</td><td>—</td></tr><tr><td><code>skos</code></td><td>0</td><td>607</td><td>0</td><td>—</td></tr></tbody>
 </table>
 <p class="fa-gloss-mapping-note"><strong>Undetermined is never “no match”.</strong> 
 A vocabulary that could not be reached has said nothing, and the column above keeps that 
@@ -28,7 +28,7 @@ be a term this corpus is right to coin.</p>
 
 <label for="fa-gloss-q">Filter terms</label>
 <input id="fa-gloss-q" type="search" autocomplete="off" style="min-height:44px;width:100%;max-width:32rem">
-<p aria-live="polite"><span id="fa-gloss-n">599</span> shown</p>
+<p aria-live="polite"><span id="fa-gloss-n">607</span> shown</p>
 
 <nav aria-label="Letters"><a href="#letter-0-9">0–9</a> <a href="#letter-A">A</a> <a href="#letter-B">B</a> <a href="#letter-C">C</a> <a href="#letter-D">D</a> <a href="#letter-E">E</a> <a href="#letter-F">F</a> <a href="#letter-G">G</a> <a href="#letter-H">H</a> <a href="#letter-I">I</a> <a href="#letter-J">J</a> <a href="#letter-K">K</a> <a href="#letter-L">L</a> <a href="#letter-M">M</a> <a href="#letter-N">N</a> <a href="#letter-O">O</a> <a href="#letter-P">P</a> <a href="#letter-Q">Q</a> <a href="#letter-R">R</a> <a href="#letter-S">S</a> <a href="#letter-T">T</a> <a href="#letter-V">V</a> <a href="#letter-W">W</a></nav>
 
@@ -658,6 +658,13 @@ Available to cite as an L1 source <span class="fa-gloss-status">candidate, extra
 
 <h2 id="letter-B">B</h2>
 <dl class="fa-gloss">
+<dt id="cat-harness--kg-bpmn-activities--process_qapublish.task_backoff" data-fa-state="extracted" data-fa-gloss="">
+Back off [backoff-sleep] <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>Wait the same intervals <code>backoff-sleep.ts</code> uses, then go round again: fetch the new tip and splice onto it. Three attempts in all.</p>
+<p class="fa-gloss-meta">BPMN activities of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/qa-publish.bpmn"><code>cat-harness/processes/qa-publish.bpmn#Task_Backoff</code></a></p>
+</dd>
 <dt id="cat-harness--kg-bpmn-activities--process_buildl1kg.task_bind" data-fa-state="extracted" data-fa-gloss="">
 Bind the folder name to the bibliography slug <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
@@ -734,6 +741,13 @@ Build the draft publication [content-publish] <span class="fa-gloss-status">cand
 <dd>
 <p>Render the corpus into the draft form of the folio: PDF, HTML site, or FHIR IG.</p>
 <p class="fa-gloss-meta">BPMN activities of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/draft-to-publication.bpmn"><code>cat-harness/processes/draft-to-publication.bpmn#Task_BuildDraft</code></a></p>
+</dd>
+<dt id="cat-harness--kg-bpmn-activities--process_qapublish.task_buildentry" data-fa-state="extracted" data-fa-gloss="">
+Build the entry [tree + manifest] <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>Hashes the working copy of every declared <code>qa</code> directory (<code>&lt;instance&gt;/test/results/**</code>, byte-identical to the checkout's layout) into a tree through a private index, and writes <code>manifest.json</code> (<code>qa-reports-manifest/v1</code>): inputs, producers, verdict counts and the gates' result. Identical JSON is the same blob, so an unchanged family costs nothing to store again. Its git objects live in a private bare repository, never in the checkout's own store.</p>
+<p class="fa-gloss-meta">BPMN activities of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/qa-publish.bpmn"><code>cat-harness/processes/qa-publish.bpmn#Task_BuildEntry</code></a></p>
 </dd>
 <dt id="cat-harness--kg-bpmn-activities--process_docssite.task_build" data-fa-state="extracted" data-fa-gloss="">
 Build the Jekyll site and the API reference <span class="fa-gloss-status">candidate, extracted</span>
@@ -1040,6 +1054,13 @@ Comment the preview URL on the PR <span class="fa-gloss-status">candidate, extra
 <p>Post, or update in place, one comment on the PR giving the preview URL (STAGING/&lt;slug&gt;/) and the commit it was built from. Pull-request events only.</p>
 <p class="fa-gloss-meta">BPMN activities of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/feature-staging.bpmn"><code>cat-harness/processes/feature-staging.bpmn#Task_Comment</code></a></p>
 </dd>
+<dt id="cat-harness--kg-bpmn-activities--process_qapublish.task_applyprune" data-fa-state="extracted" data-fa-gloss="">
+Commit a tip without the pruned entries <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>One new commit whose tree lacks the pruned entries, parented on the current tip, through the same fetch → rebuild → push loop as a publish: no <code>-f</code>, three attempts. History is not rewritten — truncating it is a deletion of a different order and the owner's call (<code>deletion-requires-confirmation</code>), not a scheduled job's.</p>
+<p class="fa-gloss-meta">BPMN activities of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/qa-publish.bpmn"><code>cat-harness/processes/qa-publish.bpmn#Task_ApplyPrune</code></a></p>
+</dd>
 <dt id="cat-harness--kg-bpmn-activities--process_editing.task_commit" data-fa-state="extracted" data-fa-gloss="">
 Commit into the corpus <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
@@ -1288,6 +1309,13 @@ Derive content from the assets [document-intake] <span class="fa-gloss-status">c
 <dd>
 <p>See ingest-derive-content.bpmn. Most of this subprocess is not implemented yet.</p>
 <p class="fa-gloss-meta">BPMN activities of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/document-ingestion.bpmn"><code>cat-harness/processes/document-ingestion.bpmn#CallActivity_Derive</code></a></p>
+</dd>
+<dt id="cat-harness--kg-bpmn-activities--process_qapublish.task_derivekey" data-fa-state="extracted" data-fa-gloss="">
+Derive the key [main/&lt;sha&gt; or pr/&lt;n&gt;/&lt;sha&gt;] <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p><code>qa:publish --github</code> reads the event: a push to main publishes under <code>main/&lt;sha&gt;/</code>, a pull request under <code>pr/&lt;n&gt;/&lt;head-sha&gt;/</code> — the head that was tested, not the merge ref. It also reads whether the token can write, which the gateway after it routes on.</p>
+<p class="fa-gloss-meta">BPMN activities of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/qa-publish.bpmn"><code>cat-harness/processes/qa-publish.bpmn#Task_DeriveKey</code></a></p>
 </dd>
 <dt id="cat-harness--kg-bpmn-activities--process_featurestaging.task_slug" data-fa-state="extracted" data-fa-gloss="">
 Derive the slug from the head ref <span class="fa-gloss-status">candidate, extracted</span>
@@ -2611,6 +2639,13 @@ Plan the implementation <span class="fa-gloss-status">candidate, extracted</span
 <p>DIIG Chapter 5. Infrastructure; legislation, policy and compliance, including data management, privacy and security, and the regulation of new technologies; leadership and governance, including external partnerships; workforce and training; services and applications.</p>
 <p class="fa-gloss-meta">BPMN activities of smart-base · source <a href="https://github.com/litlfred/folio-assistant/blob/main/smart-base/methodologies/processes/diig-investment-path.bpmn"><code>smart-base/methodologies/processes/diig-investment-path.bpmn#A_PlanImplementation</code></a></p>
 </dd>
+<dt id="cat-harness--kg-bpmn-activities--process_qapublish.task_planprune" data-fa-state="extracted" data-fa-gloss="">
+Plan the prune [planPrune] <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>Keep every <code>main/&lt;sha&gt;</code> for 90 days and one per day after that; drop <code>pr/&lt;n&gt;</code> 7 days after the PR closed. The rule is <code>planPrune</code> in <code>scripts/qa-store.ts</code>, pinned by its tests, and the plan is printed whether or not it is applied.</p>
+<p class="fa-gloss-meta">BPMN activities of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/qa-publish.bpmn"><code>cat-harness/processes/qa-publish.bpmn#Task_PlanPrune</code></a></p>
+</dd>
 <dt id="cat-harness--kg-bpmn-activities--process_contentacquisition.a_pointtoupload" data-fa-state="extracted" data-fa-gloss="">
 Point at the upload target [scripts/upload-url.ts] <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
@@ -2720,7 +2755,7 @@ Prose blocks enter the summary queue [library-ingestion] <span class="fa-gloss-s
 Publish QA results to qa-reports (NOT A GATE) <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
-<p>Bean <code>16ei</code>, arc <code>3fva</code>. After Task_RepositoryGates, WHATEVER it concluded (<code>needs: gates</code> with <code>always()</code>), <code>qa:publish --github</code> writes this run's <code>test/results</code> trees to the orphan <code>qa-reports</code> branch: <code>main/&lt;sha&gt;/</code> on a push to main, <code>pr/&lt;n&gt;/&lt;head-sha&gt;/</code> on a same-repository PR (owner rulings D1, D3). A fork PR's token is read-only, so it is skipped with a <code>::notice</code> naming why. It does NOT reach GW_Join: a red publish is its own red and never decides mergeability, and the hard gates never wait on it. The only job here holding <code>contents: write</code>, which is also how <code>bun run gates</code> knows not to run it locally.</p>
+<p>Bean <code>16ei</code>, arc <code>3fva</code>. After Task_RepositoryGates, WHATEVER it concluded (<code>needs: gates</code> with <code>always()</code>), <code>qa:publish --github</code> writes this run's <code>test/results</code> trees to the orphan <code>qa-reports</code> branch: <code>main/&lt;sha&gt;/</code> on a push to main, <code>pr/&lt;n&gt;/&lt;head-sha&gt;/</code> on a same-repository PR (owner rulings D1, D3). A fork PR's token is read-only, so it is skipped with a <code>::notice</code> naming why. It does NOT reach GW_Join: a red publish is its own red and never decides mergeability, and the hard gates never wait on it. The only job here holding <code>contents: write</code>, which is also how <code>bun run gates</code> knows not to run it locally. A CALL ACTIVITY: the key derivation, the fork skip and the never-<code>-f</code> retry loop are <code>qa-publish.bpmn</code>, which also draws the retention run that takes entries off the branch again.</p>
 <p class="fa-gloss-meta">BPMN activities of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/code-quality-gates.bpmn"><code>cat-harness/processes/code-quality-gates.bpmn#Task_QaPublish</code></a></p>
 </dd>
 <dt id="cat-harness--kg-bpmn-activities--process_l3fhir.task_publishig" data-fa-state="extracted" data-fa-gloss="">
@@ -2835,6 +2870,13 @@ Re-render the cone's records (fhir_narrative · skip lists) <span class="fa-glos
 <dd>
 <p>Narrative and fragments for the cone only: the publisher's -no-validate / -no-narrative complements today, Rapido's differential build once its tracker is persisted.</p>
 <p class="fa-gloss-meta">BPMN activities of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/ig-incremental-build.bpmn"><code>cat-harness/processes/ig-incremental-build.bpmn#Task_Render</code></a></p>
+</dd>
+<dt id="cat-harness--kg-bpmn-activities--process_qapublish.task_readprstates" data-fa-state="extracted" data-fa-gloss="">
+Read every PR's state <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p><code>gh pr list --state all</code>: number, state and when it closed, so each <code>pr/&lt;n&gt;/</code> entry can be judged against its close date. A PR missing from the list is <code>unknown</code>, and an unknown is kept.</p>
+<p class="fa-gloss-meta">BPMN activities of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/qa-publish.bpmn"><code>cat-harness/processes/qa-publish.bpmn#Task_ReadPrStates</code></a></p>
 </dd>
 <dt id="bootstrap--kg-bpmn-activities--process_completeinitialization.a_readdeclarations" data-fa-state="extracted" data-fa-gloss="">
 Read the declaration, and each one it needs <span class="fa-gloss-status">candidate, extracted</span>
@@ -3967,6 +4009,13 @@ SOURCE LOSS what survives if the origin goes <span class="fa-gloss-status">candi
 <p>Not hypothetical. The one IRIS record this repository holds carries a handle on iris.wpro.who.int, a regional instance merged into the global one. Only an ARCHIVAL copy of the original bytes discharges this; a working copy cannot, because the derived sections are not the publication.</p>
 <p class="fa-gloss-meta">BPMN activities of large-datasets · source <a href="https://github.com/litlfred/folio-assistant/blob/main/large-datasets/processes/materialize-remote.bpmn"><code>large-datasets/processes/materialize-remote.bpmn#Task_SourceLoss</code></a></p>
 </dd>
+<dt id="cat-harness--kg-bpmn-activities--process_qapublish.task_spliceandpush" data-fa-state="extracted" data-fa-gloss="">
+Splice onto the tip and push (never -f) <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>Fetch the branch tip, splice this entry into its tree, <code>commit-tree -p &lt;tip&gt;</code>, and push without <code>-f</code>, with <code>pack.useSparse=false</code> so blobs already on the remote under another key are not resent. Writers own disjoint keys, so splicing onto whatever tip is current loses nobody's entry.</p>
+<p class="fa-gloss-meta">BPMN activities of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/qa-publish.bpmn"><code>cat-harness/processes/qa-publish.bpmn#Task_SpliceAndPush</code></a></p>
+</dd>
 <dt id="cat-harness--kg-bpmn-activities--process_extractstructure.task_sections" data-fa-state="extracted" data-fa-gloss="">
 Split into sections/*.md with doc_brief front-matter <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
@@ -4001,6 +4050,13 @@ State the finding and what it read <span class="fa-gloss-status">candidate, extr
 <dd>
 <p>Each provider says what it found and on what evidence. A finding that does not show what it read is an opinion, and an adjudicator cannot tell it from a finding about some other version of the block.</p>
 <p class="fa-gloss-meta">BPMN activities of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/adjudication.bpmn"><code>cat-harness/processes/adjudication.bpmn#A_StateFinding</code></a></p>
+</dd>
+<dt id="cat-harness--kg-bpmn-activities--process_qareportsigning.task_storesigned" data-fa-state="extracted" data-fa-gloss="">
+Store the signed report on qa-reports <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>The signed report, its signature and the route that produced it are written TOGETHER into the <code>qa-reports</code> entry keyed by the commit the report judged (<code>main/&lt;sha&gt;/</code> or <code>pr/&lt;n&gt;/&lt;sha&gt;/</code>), through <code>scripts/qa-store.ts</code> — never committed to main and never pushed by hand (arc <code>3fva</code>, owner ruling D1). A signature kept apart from the bytes it covers attests nothing a reader can check. A certification DECISION taken on the report is a separate node that stays on main beside <code>test/attestations/</code> (ruling D5, default (a)); it is not written here.</p>
+<p class="fa-gloss-meta">BPMN activities of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/qa-report-signing.bpmn"><code>cat-harness/processes/qa-report-signing.bpmn#Task_StoreSigned</code></a></p>
 </dd>
 <dt id="cat-harness--kg-bpmn-activities--process_humantranslation.task_submitpo" data-fa-state="extracted" data-fa-gloss="">
 Submit completed .po file <span class="fa-gloss-status">candidate, extracted</span>

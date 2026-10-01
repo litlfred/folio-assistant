@@ -5,7 +5,7 @@
     "id": "Process_CodeQualityGates",
     "path": "processes/code-quality-gates.bpmn"
   },
-  "source_hash": "sha256:f5b2928447652cf2b1a6037d5868f495b4f23a3521fa37d10dbd59ed469f4ae2",
+  "source_hash": "sha256:e0474ab547606273c76866002b18b58b3e1d68c60d451813a71597f4c59e2f16",
   "criteria": {
     "raci-role-resolves": {
       "result": "n/a",
@@ -32,8 +32,13 @@
       "findings": []
     },
     "activity-skill-has-tool": {
-      "result": "pass",
-      "findings": []
+      "result": "fail",
+      "findings": [
+        {
+          "where": "Task_QaPublish",
+          "detail": "names skill \"qa-reports\", which no Tool declares `satisfies` for — the step's mechanism is still prose."
+        }
+      ]
     },
     "decision-ref-resolves": {
       "result": "n/a",
@@ -89,10 +94,6 @@
         {
           "where": "Task_SkillChain",
           "detail": "needs skill \"platform-gates\", but its lane's role \"build-pipeline\" does not carry it."
-        },
-        {
-          "where": "Task_QaPublish",
-          "detail": "needs skill \"platform-gates\", but its lane's role \"build-pipeline\" does not carry it."
         }
       ]
     },
@@ -105,7 +106,7 @@
       "findings": []
     },
     "call-activity-resolves": {
-      "result": "n/a",
+      "result": "pass",
       "findings": []
     },
     "process-diagram-published": {
@@ -137,13 +138,8 @@
       "findings": []
     },
     "prose-reviewed-since-code-changed": {
-      "result": "fail",
-      "findings": [
-        {
-          "where": ".github/workflows/code-quality-gates.yml",
-          "detail": ".github/workflows/code-quality-gates.yml changed since cat-harness/processes/code-quality-gates.bpmn was last seen, and the prose did not. Re-read it; if it still holds, run pairs:attest with a reason."
-        }
-      ]
+      "result": "pass",
+      "findings": []
     },
     "prose-claims-resolve": {
       "result": "pass",
@@ -151,9 +147,9 @@
     }
   },
   "totals": {
-    "pass": 15,
+    "pass": 16,
     "fail": 2,
-    "n/a": 8,
+    "n/a": 7,
     "unknown": 0
   }
 }

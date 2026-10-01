@@ -238,7 +238,8 @@ adjudicator role before this skill existed.
 | store | holds | skill |
 |---|---|---|
 | `todos/feedback/` | a person's feedback ON content — the **intake** | [`todo-review`](todo-review.md) |
-| `test/results/block-qa/` | reviewer entries per criterion — the **record** | the `qa-*` family |
+| `test/attestations/block-qa/` | the adjudicated (non-script) reviewer entries per criterion — the **record**, on `main` | the `qa-*` family; schema `qa-attestations/v1` |
+| `test/results/block-qa/` | the derived report, which keeps a **projection** composed from the store; its record is on the `qa-reports` branch | the `qa-*` family |
 | `beans/` | the work plan | [`todo-manager`](todo-manager.md) |
 
 Adjudication **consumes an intake and writes a record**. It is not a rival to

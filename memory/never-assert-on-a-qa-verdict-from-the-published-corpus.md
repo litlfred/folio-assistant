@@ -11,9 +11,9 @@ references:
   - kind: agent
     id: ci-health-watcher
 ---
-`test/results/witnesses/**` is live state. A test that reads a VERDICT out of it
-breaks when somebody fixes or adjudicates the finding — which is the system
-working, not a regression.
+`test/results/witnesses/**` is live state, and leaving `main` for `qa-reports`
+(arc `3fva`). A test reading a VERDICT out of it breaks when somebody fixes or
+adjudicates the finding (the system working), and when the file is not there.
 
 **Read the document live and flip the ONE criterion you test, BY ID, where it
 sits.** Do not freeze a captured copy: freezing the criterion freezes its

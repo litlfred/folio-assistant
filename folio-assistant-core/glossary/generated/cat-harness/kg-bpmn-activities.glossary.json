@@ -529,7 +529,7 @@
     {
       "id": "process_codequalitygates.task_qapublish",
       "prefLabel": "Publish QA results to qa-reports (NOT A GATE)",
-      "definition": "Bean `16ei`, arc `3fva`. After Task_RepositoryGates, WHATEVER it concluded (`needs: gates` with `always()`), `qa:publish --github` writes this run's `test/results` trees to the orphan `qa-reports` branch: `main/<sha>/` on a push to main, `pr/<n>/<head-sha>/` on a same-repository PR (owner rulings D1, D3). A fork PR's token is read-only, so it is skipped with a `::notice` naming why. It does NOT reach GW_Join: a red publish is its own red and never decides mergeability, and the hard gates never wait on it. The only job here holding `contents: write`, which is also how `bun run gates` knows not to run it locally.",
+      "definition": "Bean `16ei`, arc `3fva`. After Task_RepositoryGates, WHATEVER it concluded (`needs: gates` with `always()`), `qa:publish --github` writes this run's `test/results` trees to the orphan `qa-reports` branch: `main/<sha>/` on a push to main, `pr/<n>/<head-sha>/` on a same-repository PR (owner rulings D1, D3). A fork PR's token is read-only, so it is skipped with a `::notice` naming why. It does NOT reach GW_Join: a red publish is its own red and never decides mergeability, and the hard gates never wait on it. The only job here holding `contents: write`, which is also how `bun run gates` knows not to run it locally. A CALL ACTIVITY: the key derivation, the fork skip and the never-`-f` retry loop are `qa-publish.bpmn`, which also draws the retention run that takes entries off the branch again.",
       "notation": "Task_QaPublish",
       "source": "cat-harness/processes/code-quality-gates.bpmn#Task_QaPublish",
       "status": "candidate"
@@ -3230,6 +3230,62 @@
       "status": "candidate"
     },
     {
+      "id": "process_qapublish.task_applyprune",
+      "prefLabel": "Commit a tip without the pruned entries",
+      "definition": "One new commit whose tree lacks the pruned entries, parented on the current tip, through the same fetch → rebuild → push loop as a publish: no `-f`, three attempts. History is not rewritten — truncating it is a deletion of a different order and the owner's call (`deletion-requires-confirmation`), not a scheduled job's.",
+      "notation": "Task_ApplyPrune",
+      "source": "cat-harness/processes/qa-publish.bpmn#Task_ApplyPrune",
+      "status": "candidate"
+    },
+    {
+      "id": "process_qapublish.task_backoff",
+      "prefLabel": "Back off [backoff-sleep]",
+      "definition": "Wait the same intervals `backoff-sleep.ts` uses, then go round again: fetch the new tip and splice onto it. Three attempts in all.",
+      "notation": "Task_Backoff",
+      "source": "cat-harness/processes/qa-publish.bpmn#Task_Backoff",
+      "status": "candidate"
+    },
+    {
+      "id": "process_qapublish.task_buildentry",
+      "prefLabel": "Build the entry [tree + manifest]",
+      "definition": "Hashes the working copy of every declared `qa` directory (`<instance>/test/results/**`, byte-identical to the checkout's layout) into a tree through a private index, and writes `manifest.json` (`qa-reports-manifest/v1`): inputs, producers, verdict counts and the gates' result. Identical JSON is the same blob, so an unchanged family costs nothing to store again. Its git objects live in a private bare repository, never in the checkout's own store.",
+      "notation": "Task_BuildEntry",
+      "source": "cat-harness/processes/qa-publish.bpmn#Task_BuildEntry",
+      "status": "candidate"
+    },
+    {
+      "id": "process_qapublish.task_derivekey",
+      "prefLabel": "Derive the key [main/<sha> or pr/<n>/<sha>]",
+      "definition": "`qa:publish --github` reads the event: a push to main publishes under `main/<sha>/`, a pull request under `pr/<n>/<head-sha>/` — the head that was tested, not the merge ref. It also reads whether the token can write, which the gateway after it routes on.",
+      "notation": "Task_DeriveKey",
+      "source": "cat-harness/processes/qa-publish.bpmn#Task_DeriveKey",
+      "status": "candidate"
+    },
+    {
+      "id": "process_qapublish.task_planprune",
+      "prefLabel": "Plan the prune [planPrune]",
+      "definition": "Keep every `main/<sha>` for 90 days and one per day after that; drop `pr/<n>` 7 days after the PR closed. The rule is `planPrune` in `scripts/qa-store.ts`, pinned by its tests, and the plan is printed whether or not it is applied.",
+      "notation": "Task_PlanPrune",
+      "source": "cat-harness/processes/qa-publish.bpmn#Task_PlanPrune",
+      "status": "candidate"
+    },
+    {
+      "id": "process_qapublish.task_readprstates",
+      "prefLabel": "Read every PR's state",
+      "definition": "`gh pr list --state all`: number, state and when it closed, so each `pr/<n>/` entry can be judged against its close date. A PR missing from the list is `unknown`, and an unknown is kept.",
+      "notation": "Task_ReadPrStates",
+      "source": "cat-harness/processes/qa-publish.bpmn#Task_ReadPrStates",
+      "status": "candidate"
+    },
+    {
+      "id": "process_qapublish.task_spliceandpush",
+      "prefLabel": "Splice onto the tip and push (never -f)",
+      "definition": "Fetch the branch tip, splice this entry into its tree, `commit-tree -p <tip>`, and push without `-f`, with `pack.useSparse=false` so blobs already on the remote under another key are not resent. Writers own disjoint keys, so splicing onto whatever tip is current loses nobody's entry.",
+      "notation": "Task_SpliceAndPush",
+      "source": "cat-harness/processes/qa-publish.bpmn#Task_SpliceAndPush",
+      "status": "candidate"
+    },
+    {
       "id": "process_qareportsigning.task_apisign",
       "prefLabel": "Sign over the API",
       "definition": "The attestation service signs the run hashes. Reached only from the one table row that has both egress and a configured endpoint.",
@@ -3267,6 +3323,14 @@
       "definition": "Compute the two facts the gateway reads: effectiveReach(deployment, actor) from schemas/actor-reach.ts, and whether the signing-api capability is configured. Undeclared reach resolves to \"unknown\" rather than to the deployment's value — an aggregate does not determine a member.",
       "notation": "Task_ResolveReach",
       "source": "cat-harness/processes/qa-report-signing.bpmn#Task_ResolveReach",
+      "status": "candidate"
+    },
+    {
+      "id": "process_qareportsigning.task_storesigned",
+      "prefLabel": "Store the signed report on qa-reports",
+      "definition": "The signed report, its signature and the route that produced it are written TOGETHER into the `qa-reports` entry keyed by the commit the report judged (`main/<sha>/` or `pr/<n>/<sha>/`), through `scripts/qa-store.ts` — never committed to main and never pushed by hand (arc `3fva`, owner ruling D1). A signature kept apart from the bytes it covers attests nothing a reader can check. A certification DECISION taken on the report is a separate node that stays on main beside `test/attestations/` (ruling D5, default (a)); it is not written here.",
+      "notation": "Task_StoreSigned",
+      "source": "cat-harness/processes/qa-report-signing.bpmn#Task_StoreSigned",
       "status": "candidate"
     },
     {
