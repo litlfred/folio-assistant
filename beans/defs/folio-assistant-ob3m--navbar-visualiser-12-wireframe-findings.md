@@ -9,7 +9,7 @@ tags:
     - ui
     - visualiser-navbar
 created_at: 2026-09-23T10:36:15Z
-updated_at: 2026-10-01T08:59:02Z
+updated_at: 2026-10-01T12:34:27Z
 parent: folio-assistant-4ccr
 ---
 
@@ -293,3 +293,14 @@ Owner chose, from three options: keep the C@T spellings visible, as a list. So t
 
 - The handle's mark follows the state: ▾ closed, ▴ open (it stayed ▾ with the glass down; only the aria-label changed). Measured: ▾ → ▴ on open → ▾ on Escape, at 1280 and 390.
 - Below 50rem the site title is held left of the handle (`max-width: calc(50vw - 3rem)`, ellipsis, no right padding, auto right margin so the header's icon buttons stay right). Measured on a local build: at 390 the title box ends at 153 and the handle starts at 154, 'C@T Harness' is not truncated, a 32-character title is ellipsised, and 0 header controls sit under the handle at 360, 390 and 700. At 360 'C@T Harness' itself ellipsises — the honest cost at that width.
+
+
+## 2026-10-01 — finding 11 fixed, rendered half measured
+
+Owner: "keep going". On `claude/quirky-hypatia-k3aoh4` (PR #1762).
+
+- **Declared half**: `TILE_GLYPHS` gains seven drawings (tools, schemas, skills, methodologies, index, docs, library; `processes` now shares the row's PROCESS_GLYPH). Every declared tile names one: `check:navbar-consistency` reports **14 of 14** (was 2 of 14), and the corpus no longer emits `tile-without-icon`.
+- **Rendered half**: most tiles are DERIVED from a dependency's directory, not declared, so a declared-only fix left 20 of 29 on the net. `graph-tiles.ts` now falls back to the directory's graph KIND (`KIND_TILE_ICONS`, `kindTileIcon`); a declared icon still wins. `check:navbar-consistency` fails a kind mapped to an undrawn name (falsified: planted `librar`, exit 1).
+- **Measured on a local build, Glass → More at 1280×800: 29 tiles, 11 distinct drawings** (was 2). Six tiles still take the net because their kinds have no drawing: folio, fsh-guts, root-docs, swimlane-glossary, todos, translation-sources.
+
+Still open here: 1, 3 (sticky half), 6, 7, 12 (needs an editorial call: rename or cross-link the two Settings).
