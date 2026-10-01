@@ -172,10 +172,12 @@ describe("readActiveVoices", () => {
 
   test("the instantiated checkout root now answers like any configured instance", () => {
     // The other half of the change, asserted rather than left implicit: the
-    // root is instantiated, so its silence is a DECISION (no voice active)
-    // rather than an absence.
+    // root is instantiated, so its answer is a DECISION rather than an
+    // absence. Until 2026-09-30 that decision was "no voice"; the owner then
+    // activated the base skill-authoring voice for this checkout's skills
+    // (round 5, issue #1694). Still determined, which is the point here.
     const root = repoRootFor(join(import.meta.dir, "../.."));
-    expect(readActiveVoices(root)).toEqual([]);
+    expect(readActiveVoices(root)).toEqual(["agent-skill-authoring"]);
   });
 });
 

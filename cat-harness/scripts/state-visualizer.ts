@@ -131,7 +131,7 @@ import {
   unlinkSync,
   writeFileSync,
 } from "node:fs";
-import { basename, dirname, join, relative, sep } from "node:path";
+import { basename, dirname, join, relative, resolve, sep } from "node:path";
 
 import {
   graphKindsOfLayer,
@@ -870,7 +870,19 @@ if (!decl) {
   process.exit(2);
 }
 
-const all = stateGraphsOf(decl);
+// AND the checkout root's own state graphs (bean `cmsl` step 2, issue #1694):
+// `beans/`, `todos/`, `memory/`, `fsh-guts/`, `issue-marks/`, `interaction/`
+// are declared by the root instance since the owner's round-5 ruling, and this
+// site is where their dashboards were always published — every one of them
+// names `cat-harness/docs/<id>/index.html` as its visualiser. Reading only this
+// instance's declaration would orphan all six the moment the entries moved.
+const rootRead = resolve(REPO_ROOT) === resolve(ROOT) ? undefined : readDeclaration(REPO_ROOT);
+const rootDirs = rootRead ? withViewers(rootRead.directories ?? [], REPO_ROOT, REPO_ROOT) : [];
+const ownIds = new Set((decl.directories ?? []).map((d) => d.id));
+const checkoutDirs = rootDirs.filter((d) => !ownIds.has(d.id));
+const all = [...stateGraphsOf(decl), ...stateGraphsOf({ ...decl, directories: checkoutDirs })].sort((a, b) =>
+  a.id.localeCompare(b.id),
+);
 const taken = all.filter((g) => RESERVED_IDS.has(g.id) || g.id.startsWith("_"));
 for (const g of taken) {
   console.error(
@@ -903,7 +915,10 @@ const graphs = all.filter((g) => !taken.includes(g) && !unportable.includes(g));
 // repository root, any other from this instance's.
 const drawnDir = (g: StateGraph): string => {
   const entry = decl.directories?.find((d) => d.id === g.id);
-  return renderedPath(REPO_ROOT, join(entry?.scope === "repository" ? REPO_ROOT : ROOT, g.path));
+  // An entry the checkout root declares resolves against the root, which is
+  // where a `repository`-scoped entry of this instance resolved too.
+  const base = entry === undefined || entry.scope === "repository" ? REPO_ROOT : ROOT;
+  return renderedPath(REPO_ROOT, join(base, g.path));
 };
 for (const g of graphs) {
   emit(join(SITE, g.id, "index.html"), withRenders(dashboardPage(g, graphs), [drawnDir(g)], VIEWER_TOOL));

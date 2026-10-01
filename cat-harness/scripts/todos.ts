@@ -44,13 +44,12 @@ import { basename, join, relative, resolve } from "node:path";
 import { EMPTY_NOTE_TAGS, KgRefSchema, type ArtefactRef, type KgRef, type NoteTags } from "../schemas/carried-note.js";
 import { TODO_SCHEMA_TAG, TodoNodeSchema, type TodoNode } from "../schemas/todo.js";
 import { TODO_GRAPH_FILE, parseTodoGraph } from "../schemas/todo-graph.js";
-import { deferResolution, repoRootFor } from "../schemas/cat-harness.js";
-import { corpusDirectoryForGraph } from "../schemas/harness-config.js";
+import { checkoutDirectoriesForGraph, deferResolution, repoRootFor } from "../schemas/cat-harness.js";
 
 export const ROOT = resolve(import.meta.dir, "..");
 // declared-path-literal: the convention fallback, at the call site so the choice is visible.
 export const TODO_ROOT = deferResolution(
-  () => corpusDirectoryForGraph(ROOT, "todos") ?? join(repoRootFor(ROOT), "todos"),
+  () => checkoutDirectoriesForGraph(ROOT, "todos")[0] ?? join(repoRootFor(ROOT), "todos"),
   { moduleUrl: import.meta.url, what: "its todo directory", under: ROOT },
 );
 

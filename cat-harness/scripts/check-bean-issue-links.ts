@@ -38,9 +38,8 @@ import { spawnSync } from "node:child_process";
 import { readdirSync, readFileSync } from "node:fs";
 import { join, resolve } from "node:path";
 
-import { repoRootFor } from "../schemas/cat-harness.js";
+import { checkoutDirectoriesForGraph, repoRootFor } from "../schemas/cat-harness.js";
 import { OPEN_STATUSES, readBeanFiles } from "./bean-store-read.ts";
-import { corpusDirectoriesForGraph } from "../schemas/harness-config.js";
 
 /** The INSTANCE root — this file lives at `<instance>/scripts/`. */
 export const INSTANCE_ROOT = resolve(import.meta.dir, "..");
@@ -94,7 +93,7 @@ export interface BeanIssueReport {
 
 /** Issue numbers this repository tracks a read-mark for. */
 export function markedIssues(root: string): string[] {
-  const dirs = corpusDirectoriesForGraph(root, "issue-marks");
+  const dirs = checkoutDirectoriesForGraph(root, "issue-marks");
   const out: string[] = [];
   for (const dir of dirs) {
     for (const name of readdirSync(dir)) {

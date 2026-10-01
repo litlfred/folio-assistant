@@ -42,8 +42,6 @@ const SCRIPT = join("cat-harness", "scripts", "check-navbar-consistency.ts");
 const CLIENT_INSTANCE = join(REPO, "cat-harness");
 const CLIENT = join(CLIENT_INSTANCE, siteDirFor(CLIENT_INSTANCE), "assets", "js", "docs-ui.js");
 const DECL = join(REPO, "cat-harness", "cat-harness.json");
-// The ROOT instance holds the `beans` tile since placement PR0 (bean `ejye`).
-const ROOT_DECL = join(REPO, "folio-assistant.json");
 
 /** Run the check, returning its exit status and combined output. */
 function run(...args: string[]): { status: number; out: string } {
@@ -115,7 +113,7 @@ describe("the two namespaces stay separate", () => {
   });
 
   test("an unregistered TILE icon fails (a name absent from the registry)", () => {
-    withEdit(ROOT_DECL, (s) => s.replace('"icon": "beans"', '"icon": "no-such-glyph"'), () => {
+    withEdit(DECL, (s) => s.replace('"icon": "uploads"', '"icon": "no-such-glyph"'), () => {
       const { status, out } = run("--check");
       expect(out).toContain("unregistered-tile-icon");
       expect(status).toBe(1);

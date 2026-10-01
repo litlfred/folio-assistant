@@ -78,14 +78,14 @@ describe("the verdict is asked of the REPOSITORY, not one instance", () => {
     rmSync(root, { recursive: true, force: true });
   });
 
-  it("this repository is ACTIVE, on the checkout's beans and todos", () => {
+  it("this repository is ACTIVE, on the checkout root's beans and todos", () => {
     const repo = resolve(import.meta.dir, "..", "..", "..");
     expect(isActiveKg(repo)).toBe(true);
     const { plan } = workPlanGraphsIn(repo);
-    // The ROOT instance declares the work plan since placement PR0 (bean
-    // `ejye`): `beans/` and `todos/` sit at the checkout's root and belong to
-    // the checkout. Until then cat-harness declared them at
-    // `scope: "repository"`, and this asserted the opposite pair.
+    // The ROOT instance declares the work plan since cmsl step 2 (owner,
+    // round 5, issue #1694), where cat-harness used to declare it at
+    // `scope: "repository"`. Asked of the repository, the answer is the same
+    // either way — which is the point of asking the repository.
     expect(plan.map((p) => p.instance)).toContain("folio-assistant");
     expect(plan.map((p) => p.instance)).not.toContain("cat-harness");
   });

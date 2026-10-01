@@ -3,7 +3,10 @@
   "_title": "No `title`, deliberately: `displayTitle` is title || name || id, so the sidebar and the landing page fall back to `name` — which the schema already requires to be the instance's identifier, the one artefacts are stub-named after. A title here said `c@t-harness` and overrode that, labelling THIS repository with the brand of the harness layer that is still to be split out of it. Setting the title to `folio-assistant` instead would be the same fact in two fields, free to drift. The c@t-harness derivation stays in the description, where it is a tagline rather than an identity.",
   "name": "cat-harness",
   "repository": "litlfred/cat-harness",
-  "livesAt": { "repository": "litlfred/folio-assistant", "path": "cat-harness" },
+  "livesAt": {
+    "repository": "litlfred/folio-assistant",
+    "path": "cat-harness"
+  },
   "version": "0.1.0",
   "iriBase": "https://litlfred.github.io/cat-harness/",
   "_title_comment": "The HUMAN display name, for the LHS navbar's harness tabs. Owner, 2026-09-21: \"harnesses should list the names (they should be named in schmeas, e.g. cat-boostrap should be named 'Boostrap', f-a => Folio Assistant, cat-harness => C@T Harness)\". `name` stays the machine identifier that filenames, `needs` edges and `declaredBy` resolve against; `title` is what a reader sees and nothing resolves against. Bean t3n8. THIS ONE WAS WRONG RATHER THAN ABSENT: it declared `title: \"folio-assistant\"`, the ROOT instance's name, so two instances carried one title and `disambiguate()` correctly qualified this tab to \"folio-assistant (cat-harness)\" — the label the owner reported. The disambiguator behaved as designed; the declaration was the defect.",
@@ -644,6 +647,51 @@
       ]
     },
     {
+      "id": "who-iris-library",
+      "path": "who-iris/library/",
+      "scope": "repository",
+      "description": "The WHO IRIS instance's library, reached from here because this repository STAGES who-iris as a sibling top-level directory ahead of it becoming its own repo -- the same pattern as `folio-assist-core-schemas` and `detangle-schemas` above. Repository-scoped, so it resolves against the repository root rather than this instance's. Declared here as well as in who-iris/harness.json because the consumers that scan libraries -- `check:l1-complete`, the narrative queue, `gen-library-jsonld`, the MCP server's graph roots -- run from THIS root, and a library they cannot see is a corpus they report a clean pass over (the dh4f defect).",
+      "graphKinds": [
+        "library"
+      ]
+    },
+    {
+      "id": "agent-skills-library",
+      "path": "agent-skills/library/",
+      "scope": "repository",
+      "description": "The agent-skill literature instance's library -- published guidance on authoring and operating agent skills, vendor documentation and arXiv papers alike. Same staging arrangement and same reason as `who-iris-library` and `folio-assistant-sci-library` below: the consumers that scan libraries run from THIS root, and a library they cannot see is a corpus they report a clean pass over (the dh4f defect). It is NOT in cat-harness/library/ although its subject is this harness's own: `AGENTS.md` opens by saying the platform holds no content, and these are other publishers' documents.",
+      "graphKinds": [
+        "library"
+      ]
+    },
+    {
+      "id": "folio-assistant-sci-library",
+      "path": "folio-assistant-sci/library/",
+      "scope": "repository",
+      "description": "The science instance's library -- `milnorlink`, plus (since 2026-09-29, bean h3rw) three Lean-autoformalization papers that the science layer's methodology nodes cite as `evidence`: `arxiv-2601.22554v1`, `arxiv-2406.01940v2`, `arxiv-2602.16554v1`. Same staging arrangement and same reason as `who-iris-library` above. Bean r1lz sent it here rather than to who-iris: it is not an IRIS item and never was.",
+      "graphKinds": [
+        "library"
+      ]
+    },
+    {
+      "id": "folio-assistant-core-library",
+      "path": "folio-assistant-core/library/",
+      "scope": "repository",
+      "description": "The core layer's library -- `arxiv-2510.21603v1` (Doc-Researcher), and nothing else. Same staging arrangement and the same reason as `who-iris-library` and `folio-assistant-sci-library` above: the consumers that scan libraries -- `check:l1-complete`, the narrative queue, `gen-library-jsonld`, `ingest-document`'s own destination list -- run from THIS root, and a library they cannot see is a corpus they report a clean pass over (the `dh4f` defect). `ingest-document` is what proved it: with the directory declared ONLY in `folio-assistant-core.json` it refused the destination as matching none, because it reads the list from here. Declared in both, exactly as the four siblings are.",
+      "graphKinds": [
+        "library"
+      ]
+    },
+    {
+      "id": "smart-base-library",
+      "path": "smart-base/library/",
+      "scope": "repository",
+      "description": "The WHO digital-health corpus `smart-base` holds -- the publications the DIIG methodology and the WHO digital-health voices are derived FROM. Declared here, with `scope: repository` and an id distinct from the conventional `library`, for the same reason the three entries above are: this is a SIBLING instance's directory seen from the harness layer, and giving it the conventional id would override the harness's OWN library rather than joining it. `smart-base/smart-base.json` declares the same directory as plain `library` in its own namespace, which is the override that belongs there. Bean `ve07`; issue #877.",
+      "graphKinds": [
+        "library"
+      ]
+    },
+    {
       "id": "translation-sources",
       "coverage": {
         "_visualiser_comment": "Bean lnur. This graph owed a visualiser and kg:audit said so — cat-harness declares several graphs with no published viewer and this was one. Generated by scripts/gen-translation-status.ts, which measures the .pot/.po files on each run. NOT a state-visualizer dashboard: that generator draws only STATE graphs, and translation-sources is the INPUT to injection rather than something a process writes as it runs, so it is correctly skipped there and always will be."
@@ -666,6 +714,75 @@
       "description": "Authored content of this instance itself, rendered to a website. Holds the landing sticky — the instance's own description and its onboarding links, as a page-global note rather than text composited into the backdrop."
     },
     {
+      "id": "smart-base-methodologies",
+      "path": "smart-base/methodologies/",
+      "scope": "repository",
+      "description": "The methodologies `smart-base` adopts from its own corpus -- `diig`, the WHO/ITU Digital Implementation Investment Guide. Separate from the harness's `methodologies` because DIIG is a programme-investment method owned by this layer. (It was declared beside a `smart-kg-methodologies` entry holding GRADE until 2026-09-24, when GRADE became a skill plus code lists — bean `wg7r`.) `methodology-adoption` SS4 places a method by ownership so that extraction is literal -- this directory lifts out with this entry and nothing else moves. Issue #877, bean `wkt1`.",
+      "graphKinds": [
+        "methodology"
+      ]
+    },
+    {
+      "id": "folio-assistant-core-methodologies",
+      "theme": {
+        "themeId": "analyst"
+      },
+      "path": "folio-assistant-core/methodologies/",
+      "scope": "repository",
+      "description": "The methodologies the CORE layer adopts from its own corpus -- Doc-Researcher's multimodal document parsing and deep research. Declared beside `smart-base-methodologies` and for the same reason: `methodology-adoption` §4 places a method by ownership so that extraction is literal, and a document-ingestion method belongs to the layer whose job is what a folio holds, where it CAME FROM, and how much is present. Repository-scoped so it resolves against the repository root, like its siblings.",
+      "graphKinds": [
+        "methodology"
+      ]
+    },
+    {
+      "id": "folio-assistant-sci-methodologies",
+      "theme": {
+        "themeId": "analyst"
+      },
+      "path": "folio-assistant-sci/methodologies/",
+      "scope": "repository",
+      "description": "The methodologies the SCIENCE layer adopts from its own corpus -- external methods for formalising mathematics in Lean (blueprint-driven formalization, process-driven autoformalization, bidirectional agentic autoformalization), each citing a paper held in `folio-assistant-sci/library/`. Declared beside `smart-base-methodologies` and `folio-assistant-core-methodologies` and for the same reason: `methodology-adoption` §4 places a method by ownership so that extraction is literal, and a method for formalising mathematics belongs to the layer that exists for folios that formalise mathematics. Repository-scoped so it resolves against the repository root, like its siblings. Bean h3rw.",
+      "graphKinds": [
+        "methodology"
+      ]
+    },
+    {
+      "id": "folio-assistant-sci-lean-skills",
+      "path": "folio-assistant-sci/skills/lean/",
+      "scope": "repository",
+      "description": "The SCIENCE layer's Lean tooling skills: `lean-formal-edges`, which runs the elaborated formal-edge extractor (folio-assistant#1492). Under the science layer, not core, per the owner's cut 'f-a-core has high level processes only, no tooling'. A subdirectory of `folio-assistant-sci/skills/` rather than that directory itself, because `skills/voices/` is already declared as the `voices` kind, and one directory declared under two kinds would be scanned twice. Repository-scoped, like `folio-assistant-core-skills`, so the consumers that resolve a skill ref from this root can see it.",
+      "graphKinds": [
+        "skills"
+      ]
+    },
+    {
+      "id": "folio-assistant-sci-data-skills",
+      "path": "folio-assistant-sci/skills/data/",
+      "scope": "repository",
+      "description": "The SCIENCE layer's reference-data skills: `reference-dataset-ingestion`, which turns a published constants table (CODATA first) into a library dataset whose values are addressable as `{{ <instance>.library.<entry>.<slug> }}` with provenance (bean uyp8). A subdirectory beside `skills/lean/` for the same reason that one is: `skills/voices/` is already declared as the `voices` kind.",
+      "graphKinds": [
+        "skills"
+      ]
+    },
+    {
+      "id": "folio-assistant-core-skills",
+      "path": "folio-assistant-core/skills/",
+      "scope": "repository",
+      "description": "The core layer's skills, reached from here for the same reason its library and methodologies are: the consumers that resolve a `<folio:skill ref>` run from this root, and a skill they cannot see is a DANGLING ref reported against a diagram that is correct.",
+      "graphKinds": [
+        "skills"
+      ]
+    },
+    {
+      "id": "smart-base-processes",
+      "path": "smart-base/methodologies/processes/",
+      "scope": "repository",
+      "description": "The BPMN `smart-base` derives from its own corpus -- DIIG's nine chapters as an executable process. Declared SEPARATELY from `smart-base-methodologies` for the reason `methodology-crdm-processes` is declared separately from `methodologies/`: `workflowDirs` resolves diagrams from a declared directory, so a nested one that is not itself declared leaves every diagram undiscovered (bean `g43o`). Issue #877, bean `qnvy`.",
+      "graphKinds": [
+        "processes"
+      ]
+    },
+    {
       "id": "docs",
       "path": "docs/",
       "description": "Documentation about the Knowledge Graph itself: the pages of the published site, some written by people and some generated from the graph.",
@@ -676,6 +793,70 @@
       "tile": {
         "title": "Docs — cat-harness"
       }
+    },
+    {
+      "id": "folio-assist-core-schemas",
+      "path": "folio-assistant-core/schemas/",
+      "scope": "repository",
+      "description": "The schemas of the content layer's Node Kinds, kept as their own Subgraph until this repository is split.",
+      "_description_comment": "The CONTENT layer's schema nodes, staged as a top-level directory ahead of the split (#223). Owner, 2026-09-20: 'not in cat-harness, in folio-assitant-core/ as a named subgraph.' A NAMED SUBGRAPH and not a second `schemas` entry: overrides match on the entry's id, so reusing `schemas` would REPLACE this instance's schema graph rather than add to it -- the same trap the `cat-harness-src` entry above documents from the other side. REPOSITORY-scoped, like `bootstrap/skills/`: it sits at the top of the checkout, not inside this instance, and is deliberately never overlaid by a dependency. This entry is the mirror of `folio-assistant-core/harness.json`'s own, and it has to be stated twice only because `resolveSkillDirs` has no caller -- when that is wired, THIS entry is the one to delete.",
+      "graphKinds": [
+        "schemas",
+        "cat-harness"
+      ]
+    },
+    {
+      "id": "large-datasets-skills",
+      "path": "large-datasets/skills/",
+      "scope": "repository",
+      "description": "The instructions for working with large datasets: one Skill per file.",
+      "_description_comment": "The `large-datasets` subgraph's instruction bodies. Declared here as well as in its own harness.json for the same reason kg-navigation is: `resolveSkillDirs` has no caller yet, so a nested instance's directories are not reachable from the root. `materialize-remote` lives here and is named by two diagrams in cat-harness/processes/ -- a skill ref resolves across the declared graphs, not within one directory. The `skills` graph does NOT owe a visualiser: `owesVisualiser` is `!renderable && holds !== \"content\"`, and `skills` is `content` — *\"a graph that stands on its own does not need a viewer to be legible\"*. So no gate was failing. What WAS wrong is that the viewer already existed and nothing declared it: `docs-auto` renders one sub-page per skills directory, and `graph-tiles.undeclaredProjections` lists exactly a directory with a published page and no declared visualisation — so all seven read as \"no published viewer\" in the navbar tiles while being rendered the whole time. `tools` is the same `content` kind and has declared one all along, which is the precedent: declaring a visualiser for a content kind is a courtesy the corpus already extends, not an obligation this invents.",
+      "graphKinds": [
+        "skills"
+      ],
+      "tile": {
+        "title": "Skills — large-datasets"
+      }
+    },
+    {
+      "id": "who-iris-skills",
+      "path": "who-iris/skills/",
+      "scope": "repository",
+      "description": "The who-iris instance's skills. ONE today -- `iris-dspace`, how IRIS uses DSpace and qualified Dublin Core, and what a later tool needs from a record stated as checkable requirements. Deliberately thin, per the owner's 'mionimal tools in who specific stuff': the Dublin Core TYPE is generic and lives in folio-assist-core, the enumeration/subsetting descriptor lives in large-datasets, and OCR stays a cat-harness platform tool. What is WHO-specific is only how IRIS uses those things. The `skills` graph does NOT owe a visualiser: `owesVisualiser` is `!renderable && holds !== \"content\"`, and `skills` is `content` — *\"a graph that stands on its own does not need a viewer to be legible\"*. So no gate was failing. What WAS wrong is that the viewer already existed and nothing declared it: `docs-auto` renders one sub-page per skills directory, and `graph-tiles.undeclaredProjections` lists exactly a directory with a published page and no declared visualisation — so all seven read as \"no published viewer\" in the navbar tiles while being rendered the whole time. `tools` is the same `content` kind and has declared one all along, which is the precedent: declaring a visualiser for a content kind is a courtesy the corpus already extends, not an obligation this invents.",
+      "graphKinds": [
+        "skills"
+      ],
+      "tile": {
+        "title": "Skills — who-iris"
+      }
+    },
+    {
+      "id": "fhir-ig-skills",
+      "path": "fhir-harness/skills/",
+      "scope": "repository",
+      "description": "The `fhir-harness` instance's instruction bodies -- the FHIR IG layer's two packages, `fhir-ig-base` (build pipeline, publisher fork and reduction, Jekyll render) and `fhir-client` (client operations, SMART launch). Declared here for the reason `bootstrap-skills` above gives, and the id is deliberately the SAME one `fhir-harness/fhir-harness.json` uses for the same directory: where a sibling instance's id does not collide with one of this instance's own, reusing it keeps one name on one directory. Measured 2026-09-27 (bean `3x2o`): `fhir-client-operations.md` and `smart-launch.md` were committed under `docs/reference/skill-instructions/` and produced by NO source, so they were orphans no re-run could refresh -- 280 committed against 278 produced -- while the four `fhir-ig-base` bodies had never been published at all.",
+      "graphKinds": [
+        "skills"
+      ]
+    },
+    {
+      "id": "large-datasets-processes",
+      "path": "large-datasets/processes/",
+      "scope": "repository",
+      "description": "The `large-datasets` subgraph's BPMN -- `materialize-remote`, `refresh-materialized`, `copy-out-materialized` and `sample-import`, moved out of cat-harness/processes/ on 2026-09-30 (bean `cjvs`, issue #1605) because their steps name skills cat-harness cannot reach. Declared in large-datasets.json as that instance's own `processes` graph, and here as well, repository-scoped, for the reason `folio-assistant-core-processes` is: the consumers that scan for diagrams run from this root, and `workflowDirs` resolves only from a DECLARED directory (bean `g43o`).",
+      "graphKinds": [
+        "processes"
+      ]
+    },
+    {
+      "id": "large-datasets-schemas",
+      "path": "large-datasets/schemas/",
+      "scope": "repository",
+      "description": "The `large-datasets` subgraph's schema nodes -- `source-descriptor` (how to enumerate a corpus and ask it for a subset) and `artifact-store` (where an artifact too large for the site tree goes, as a declaration rather than a hardcoded host). Repository-scoped, so the path resolves against the REPO ROOT and carries no `../` -- a `../` prefix resolved OUTSIDE the checkout and every consumer silently dropped the entry (caught by CI, 2026-09-20).",
+      "graphKinds": [
+        "schemas",
+        "cat-harness"
+      ]
     },
     {
       "id": "swimlane-glossary",
@@ -728,6 +909,15 @@
       "coverage": {
         "skill": "where-does-this-go"
       }
+    },
+    {
+      "id": "folio-assistant-core-processes",
+      "path": "folio-assistant-core/processes/",
+      "scope": "repository",
+      "description": "The BPMN core owns -- `deep-document-research`, Doc-Researcher's iterative loop as an executable process. A TOP-LEVEL directory rather than `methodologies/processes/`, which is where it was first put: `check:layout-norms` refused that as a package subdirectory of an already-declared graph, declaring the same directory twice. `smart-base` carries the nested shape and is baselined, but the harness's own diagrams live in a top-level `processes/` and so do these. That satisfies bean `g43o` -- `workflowDirs` resolves from a DECLARED directory -- without the double declaration, which is strictly better than baselining a third instance of a tolerated exception. Declared here as well, repository-scoped, because the consumers that scan for diagrams run from this root.",
+      "graphKinds": [
+        "processes"
+      ]
     },
     {
       "id": "cat-harness-deploy",

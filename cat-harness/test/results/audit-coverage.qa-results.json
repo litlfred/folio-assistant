@@ -129,7 +129,6 @@
           "gates": [
             "bun run check:asset-roles",
             "bun run check:avatar-instances",
-            "bun run check:concern-groups",
             "bun run check:declaration-claims",
             "bun run check:declaration-filename",
             "bun run check:declared-assets",
@@ -266,6 +265,7 @@
             "bun run check:command-paths",
             "bun run check:docs-populated",
             "bun run check:docs-templates",
+            "bun run check:escaped-markup:source",
             "bun run check:folio-mount",
             "bun run check:glossary",
             "bun run check:instance-render",
@@ -527,7 +527,6 @@
           "kind": "processes",
           "state": "covered",
           "directories": [
-            "bootstrap-tools/processes",
             "bootstrap/processes",
             "cat-harness/processes",
             "folio-assistant-core/processes",
@@ -665,7 +664,6 @@
           "kind": "scenarios",
           "state": "covered",
           "directories": [
-            "bootstrap-tools/scenarios",
             "bootstrap/scenarios",
             "cat-harness/scenarios"
           ],
@@ -783,6 +781,7 @@
             "bun run check:agents-xref",
             "bun run check:agents-xref:strict",
             "bun run check:bean-restates-skill",
+            "bun run check:escaped-markup:source",
             "bun run check:remote-skills",
             "bun run check:skills",
             "bun run check:stale-field-advice",
