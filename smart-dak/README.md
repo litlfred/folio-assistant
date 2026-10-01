@@ -14,6 +14,14 @@ ours since bean `cz17`, renamed from `dak.json` on 2026-09-22. WHO's
 `smart-base` still writes the old spelling, and that divergence is deliberate
 pre-work rather than a bug.
 
+**Contents**
+
+<!-- readme:toc:begin -->
+
+- [Open](#open)
+
+<!-- readme:toc:end -->
+
 ## Open
 
 The nine DAK Tool nodes are in `smart-base/tools/`, placed there on a direct

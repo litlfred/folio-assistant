@@ -1061,6 +1061,14 @@ jobs:
       - name: The root README's generated sections are current
         run: bun run readme:sync:root:check
 
+      # EVERY instance's README, each against its own declaration. The two
+      # steps above and below name one README apiece; `readme:toc` (the
+      # README's own table of contents) is carried by every harness README,
+      # and a generated region nothing checks is a hand-kept list that is
+      # wrong the first time somebody adds a heading.
+      - name: Every instance README's generated sections are current
+        run: bun run readme:sync:all:check
+
       # bootstrap's README carries `kg:processes` (its diagrams, drawn) and
       # `kg:files` (every file it holds), both generated from its declaration
       # (owner, 2026-09-29). The pictures themselves are checked by
