@@ -9,8 +9,9 @@
  * @module schemas/todo.test
  */
 import { describe, expect, test } from "bun:test";
+import { HARNESS_ROOT } from "../scripts/lib/roots.ts";
 
-import { TodoItemSchema } from "./constraints";
+import { TodoItemSchema } from "../../cat-harness/schemas/constraints";
 import {
   TodoTagsSchema,
   TodoNodeSchema,
@@ -20,12 +21,12 @@ import {
   danglingTags,
   TODO_SCHEMA_TAG,
   type KgIndex,
-} from "./todo";
+} from "../../cat-harness/schemas/todo";
 import { resolve } from "node:path";
-import { readTodoFiles, todoDefaultTheme } from "../scripts/todos.js";
-import { readDeclaration } from "./cat-harness.js";
-import { resolveThemeBackdrop } from "./theme.js";
-import { themeById } from "./themes.js";
+import { readTodoFiles, todoDefaultTheme } from "../../cat-harness/scripts/todos.js";
+import { readDeclaration } from "../../cat-harness/schemas/cat-harness.js";
+import { resolveThemeBackdrop } from "../../cat-harness/schemas/theme.js";
+import { themeById } from "../../cat-harness/schemas/themes.js";
 
 const KG: KgIndex = {
   roles: new Set(["editor", "author"]),
@@ -231,7 +232,7 @@ describe("a todo's theme — declared, defaulted, and never guessed", () => {
     // A theme with no card crop cannot carry a backdrop, so assigning one is
     // a choice that renders as nothing. `resolveThemeBackdrop` refuses a
     // partial set wholesale, so this is complete-or-none rather than a count.
-    const decl = readDeclaration(resolve(import.meta.dir, ".."));
+    const decl = readDeclaration(HARNESS_ROOT);
     for (const { todo } of todos) {
       if (todo.theme === undefined) continue;
       const art = resolveThemeBackdrop(themeById(todo.theme)!, decl?.images);
