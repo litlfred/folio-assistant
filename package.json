@@ -333,6 +333,8 @@
     "subscriptions:viz": "bun run cat-harness/scripts/subscriptions-viz.ts",
     "subscriptions:viz:check": "bun run cat-harness/scripts/subscriptions-viz.ts --check",
     "publish:verify": "bun run cat-harness/scripts/publish-verify.ts",
+    "qa:attestations:migrate": "bun run cat-harness/scripts/qa-attestations-migrate.ts",
+    "qa:attestations:migrate:check": "bun run cat-harness/scripts/qa-attestations-migrate.ts --check",
     "qa:fetch": "bun run cat-harness/scripts/qa-store.ts fetch",
     "qa:prune": "bun run cat-harness/scripts/qa-store.ts prune",
     "qa:publish": "bun run cat-harness/scripts/qa-store.ts publish",
