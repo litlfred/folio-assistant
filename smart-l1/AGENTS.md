@@ -33,4 +33,4 @@ candidate once, became the `grade` skill and code lists in `cat-harness` on
 *is*, and it is not settled by this layer existing.
 
 Placement:
-[`smart-stack-layering`](../cat-harness/skills/authoring/authoring-who-smart-guidelines/smart-stack-layering.md).
+[`smart-stack-layering`](../smart-base/skills/content/authoring-who-smart-guidelines/smart-stack-layering.md).

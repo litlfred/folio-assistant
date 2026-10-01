@@ -49,32 +49,6 @@ roles, and how they compose with the LLM, see [Skills & roles](../../skills.html
 | [Voice editorial review](voice-editorial-review.html) | `voice-editorial-review` | — |  |
 | [Voice overlay review](voice-overlay-review.html) | `voice-overlay-review` | — |  |
 
-## Mathematical authoring (authoring-math)
-
-| Skill | Id | Schema | Summary |
-|-------|----|--------|---------|
-| [latex-authoring](latex-authoring.html) | `latex-authoring` | [schema](../skills/latex-authoring.html) | > Skill id: `latex-authoring` · Package: `authoring-math` · |
-| [lean-formalization](lean-formalization.html) | `lean-formalization` | [schema](../skills/lean-formalization.html) | > Skill id: `lean-formalization` · Package: `authoring-math` · |
-| [proof-verification](proof-verification.html) | `proof-verification` | [schema](../skills/proof-verification.html) | > Skill id: `proof-verification` · Package: `authoring-math` · |
-
-## WHO SMART Guidelines (authoring-who-smart-guidelines)
-
-| Skill | Id | Schema | Summary |
-|-------|----|--------|---------|
-| [dak-postprocessing](dak-postprocessing.html) | `dak-postprocessing` | — | > Skill id: `dak-postprocessing` · Package: `authoring-who-smart-guidelines` · |
-| [dak-preprocessing](dak-preprocessing.html) | `dak-preprocessing` | — | > Skill id: `dak-preprocessing` · Package: `authoring-who-smart-guidelines` · |
-| [fhir-validation](fhir-validation.html) | `fhir-validation` | [schema](../skills/fhir-validation.html) | > Skill id: `fhir-validation` · Package: `authoring-who-smart-guidelines` · |
-| [grade](grade.html) | `grade` | — | > Skill id: `grade` · Package: `authoring-who-smart-guidelines` · The grading |
-| [ig-artifact-ingestion](ig-artifact-ingestion.html) | `ig-artifact-ingestion` | — | > Skill id: `ig-artifact-ingestion` · Package: `authoring-who-smart-guidelines` · |
-| [ig-publication](ig-publication.html) | `ig-publication` | [schema](../skills/ig-publication.html) | > Skill id: `ig-publication` · Package: `authoring-who-smart-guidelines` · |
-| [l2-dak-authoring](l2-dak-authoring.html) | `l2-dak-authoring` | [schema](../skills/l2-dak-authoring.html) | > Skill id: `l2-dak-authoring` · Package: `authoring-who-smart-guidelines` · |
-| [l3-fhir-authoring](l3-fhir-authoring.html) | `l3-fhir-authoring` | [schema](../skills/l3-fhir-authoring.html) | > Skill id: `l3-fhir-authoring` · Package: `authoring-who-smart-guidelines` · |
-| [quality-control](quality-control.html) | `quality-control` | [schema](../skills/quality-control.html) | > Skill id: `quality-control` · Package: `authoring-who-smart-guidelines` · |
-| [smart-base Toolchain](smart-base-tools.html) | `smart-base-tools` | — | > Skill id: `smart-base-tools` · Package: |
-| [smart-stack-layering](smart-stack-layering.html) | `smart-stack-layering` | — | > Skill id: `smart-stack-layering` · Package: `authoring-who-smart-guidelines` |
-| [terminology-management](terminology-management.html) | `terminology-management` | [schema](../skills/terminology-management.html) | > Skill id: `terminology-management` · Package: `authoring-who-smart-guidelines` · |
-| [toolchain-ownership](toolchain-ownership.html) | `toolchain-ownership` | — | > Skill id: `toolchain-ownership` · Package: `authoring-who-smart-guidelines` · |
-
 ## Lifecycle skills
 
 | Skill | Id | Schema | Summary |
@@ -88,67 +62,7 @@ roles, and how they compose with the LLM, see [Skills & roles](../../skills.html
 | [Content Testing](content-test.html) | `content-test` | [schema](../skills/content-test.html) | End-to-end testing of content artifacts in realistic scenarios. |
 | [Content Validation](content-validate.html) | `content-validate` | [schema](../skills/content-validate.html) | Validate authored content against schemas, standards, and clinical accuracy. |
 | [Evidence Appraisal](evidence-appraisal.html) | `evidence-appraisal` | — | Appraise and grade a **body of evidence** against the grading system the folio |
-
-## Document adapter (folio-document-adapter)
-
-| Skill | Id | Schema | Summary |
-|-------|----|--------|---------|
-| [document-authoring](document-authoring.html) | `document-authoring` | [schema](../skills/document-authoring.html) | Author a **document** folio: policy guidance, a standard, a report, a |
-| [document-publishing](document-publishing.html) | `document-publishing` | [schema](../skills/document-publishing.html) | Take a document folio from corpus to published artifact — without a TeX |
-| [document-structure](document-structure.html) | `document-structure` | [schema](../skills/document-structure.html) | Decide and maintain the chapter/section skeleton of a document folio. |
-| [normative-statements](normative-statements.html) | `normative-statements` | [schema](../skills/normative-statements.html) | Carry a **recommendation, requirement or rule** in a document folio — the |
-
-## Paper adapter (folio-paper-adapter)
-
-| Skill | Id | Schema | Summary |
-|-------|----|--------|---------|
-| [/build-docs](build-docs.html) | `build-docs` | — | Builds the Lean HTML documentation using `doc-gen4` locally, to save CI |
-| [/build-pdf](build-pdf.html) | `build-pdf` | — | Builds the PDF locally to save CI minutes: the monolithic `main.pdf` and |
-| [Category Theory Formalization](category-theory.html) | `category-theory` | — |  |
-| [Chapter Analysis & Formalization](chapter-analysis.html) | `chapter-analysis` | — |  |
-| [Compute Audit](compute-audit.html) | `compute-audit` | — | python3 script.py --args ... |
-| [Compute-author](compute-author.html) | `compute-author` | — |  |
-| [Content Block Review](content-block-review.html) | `content-block-review` | — |  |
-| [Content Validation](content-validation.html) | `content-validation` | — | bun run cat-harness/content/pipeline/validate.ts content/<paper>   # after setup-folio-assistant.sh |
-| [Critical Path Analysis & Context Review](critical-path-analysis.html) | `critical-path-analysis` | — |  |
-| [definition-clarity-audit](definition-clarity-audit.html) | `definition-clarity-audit` | — | A content block can be **schema-clean, ref-resolving, proof-backed** and still be |
-| [Document Intake](document-intake.html) | `document-intake` | — | > **Bib human-review integration.** Track per-upload ingestion |
-| [FFI roundtrip audit](ffi-roundtrip-audit.html) | `ffi-roundtrip-audit` | — | total = mp.mpf(0) |
-| [Lean 4 Formalizer (Narrative to Proof)](formalizer.html) | `formalizer` | — | The base ring rule, import ordering, and library synthesis. Read before |
-| [Gröbner Basis](groebner-basis.html) | `groebner-basis` | — |  |
-| [LaTeX build performance](latex-build-cache.html) | `latex-build-cache` | — | A from-scratch compile re-parses the heavy preamble on **every latexmk |
-| [LaTeX Validation](latex-validation.html) | `latex-validation` | — |  |
-| [Lean Build Fix](lean-build-fix.html) | `lean-build-fix` | — |  |
-| [Lean cache: the authoring loop](lean-cache-restore.html) | `lean-cache-restore` | — | cat-harness/scripts/lake-cache.sh contribute   # give the build back |
-| [Lean Completeness Audit](lean-completeness-audit.html) | `lean-completeness-audit` | — | find content/<paper>/lean/ -name '*.lean' -not -path '*/.lake/*' \| sort |
-| [Lean Environment Setup](lean-environment-setup.html) | `lean-environment-setup` | — | A proven workaround for one specific failure: `lake exe cache get` returning |
-| [Lean formal dependency graph](lean-formal-graph.html) | `lean-formal-graph` | — | bun run content/pipeline/content-graph.ts content/<paper> |
-| [Lean File Generation](lean-generation.html) | `lean-generation` | — | Description here. |
-| [`MathlibExt` Curator](lean-mathlibext-curator.html) | `lean-mathlibext-curator` | — |  |
-| [Lean Proof Review](lean-proof-review.html) | `lean-proof-review` | — | git diff origin/main...HEAD -- '*.lean' \ |
-| [lean-proof-vacuity-audit](lean-proof-vacuity-audit.html) | `lean-proof-vacuity-audit` | — | A proof can be **sorry-free, axiom-clean, and statement-faithful** and still |
-| [/lean-substantive-pass](lean-substantive-pass.html) | `lean-substantive-pass` | — | The job of this skill is to take an abstract `class FooContext where |
-| [Lean Witness Audit](lean-witness-audit.html) | `lean-witness-audit` | — | python3 witness_base.py check-stale my-computation.witness.json |
-| [Paper Importer](paper-importer.html) | `paper-importer` | — | > **Bib human-review integration.** When importing a paper whose |
-| [Proof Conciseness](proof-conciseness.html) | `proof-conciseness` | — |  |
-| [Proof Editor (Coordinator)](proof-editor.html) | `proof-editor` | — |  |
-| [Proof Exposition Review](proof-exposition-review.html) | `proof-exposition-review` | — |  |
-| [Proof Gap Audit](proof-gap-audit.html) | `proof-gap-audit` | — |  |
-| [/proof-integration-watcher](proof-integration-watcher.html) | `proof-integration-watcher` | — | A concrete instance of [`local/integration-watcher`](integration-watcher.md). |
-| [Proof Narrative ↔ Lean Equivalence Audit](proof-narrative-lean-equivalence.html) | `proof-narrative-lean-equivalence` | — | > **Specialises [`narrative-asserts-code`](narrative-asserts-code.md)** |
-| [Proof Simplifier](proof-simplifier.html) | `proof-simplifier` | — | bun run content/pipeline/refactor-strategy.ts --lean 4.24.0 --applicable |
-| [Proof Status Tracking](proof-status-tracking.html) | `proof-status-tracking` | — |  |
-| [Proof Triage & Resolution](proof-triage.html) | `proof-triage` | — | [[require]] |
-| [/proposition-consolidation-audit](proposition-consolidation-audit.html) | `proposition-consolidation-audit` | — | grep -lE "^export default (proposition\|theorem\|lemma\|corollary)" \ |
-| [/q-usage-watcher](q-usage-watcher.html) | `q-usage-watcher` | — | > **Folio-optional axis.** The `q-usage` criteria encode a substrate |
-| [Remark Audit](remark-audit.html) | `remark-audit` | — | cd content && grep -rl '"remark"' --include='*.ts' \| sort |
-| [Rendering Auditor](rendering-auditor.html) | `rendering-auditor` | — | cd content && bun run pipeline/build.ts <paper>/<paper>.ts \ |
-| [Rendering Fixes](rendering-fixes.html) | `rendering-fixes` | — |  |
-| [Semantic review scoping](semantic-review-scoping.html) | `semantic-review-scoping` | — |  |
-| [Simulator Math Audit](simulator-math-audit.html) | `simulator-math-audit` | — |  |
-| [Simulator](simulator.html) | `simulator` | — |  |
-| [Verify Anchor Connectivity](verify-local-substrate.html) | `verify-local-substrate` | — |  |
-| [Witnessed Values](witnessed-values.html) | `witnessed-values` | — |  |
+| [Sample import](sample-import.html) | `sample-import` | — | The SDLC for trying out a remote source before committing to it: take a |
 
 ## Agent conduct (conduct-core)
 
@@ -185,12 +99,6 @@ roles, and how they compose with the LLM, see [Skills & roles](../../skills.html
 | [MCP contract](mcp-contract.html) | `mcp-contract` | — | [`mcp-projection`](mcp-projection.md) emits a server. This checks the emitted |
 | [MCP projection](mcp-projection.html) | `mcp-projection` | — | **The harness does not require MCP. It knows how to emit it.** That distinction |
 | [Skills and Tools](skills-and-tools.html) | `skills-and-tools` | — | **A skill is a capability stated generically. A Tool content node is one |
-
-## Synced from claude-scientific-skills (pinned, read-only)
-
-| Skill | Id | Schema | Summary |
-|-------|----|--------|---------|
-| [Scientific Visualization](scientific-visualization.html) | `scientific-visualization` | — | Build figures that preserve scientific meaning before optimizing appearance. Separate universal prin |
 
 ## Graph management (graph-management)
 
@@ -291,22 +199,11 @@ roles, and how they compose with the LLM, see [Skills & roles](../../skills.html
 | [Process state](process-state.html) | `process-state` | — | An agent working a BPMN process holds **nested state**: a *task*, inside a |
 | [Release epic planning](release-epic-planning.html) | `release-epic-planning` | — | A release epic groups all the work for a specific release version. |
 | [Release lifecycle](release-lifecycle.html) | `release-lifecycle` | — | This skill governs **when and why** to create releases. For the **how** |
+| [Render a Knowledge Graph to a CDN](render-kg-to-cdn.html) | `render-kg-to-cdn` | — | Owner, 2026-09-30: *"render content of a KG (or list of subgraphs within) for |
 | [Session context](session-context.html) | `session-context` | — | A **session** is one actor working, from the moment it picks up until it stops. |
 | [Playing a state machine](session-state-machine.html) | `session-state-machine` | — | > **An agent could also play a (non-deterministic) state machine as a tool. |
 | [Specification-compiled agents](specification-compiled-agents.html) | `specification-compiled-agents` | — | Renders [`methodologies/specification-compiled-agents.md`](https://github.com/litlfred/folio-assista |
 | [State in a running process](workflow-state.html) | `workflow-state` | — | A process instance is not self-contained. It walks a diagram that lives |
-
-## Synced from claude-scientific-skills (pinned, read-only)
-
-| Skill | Id | Schema | Summary |
-|-------|----|--------|---------|
-| [Scientific Visualization](scientific-visualization.html) | `scientific-visualization` | — | Build figures that preserve scientific meaning before optimizing appearance. Separate universal prin |
-
-## Synced from claude-scientific-skills (pinned, read-only)
-
-| Skill | Id | Schema | Summary |
-|-------|----|--------|---------|
-| [Scientific Visualization](scientific-visualization.html) | `scientific-visualization` | — | Build figures that preserve scientific meaning before optimizing appearance. Separate universal prin |
 
 ## CRDM requirements methodology (skills/sdlc/crdm)
 
@@ -412,38 +309,41 @@ roles, and how they compose with the LLM, see [Skills & roles](../../skills.html
 | [All UI must follow accessibility guidelines](ui-accessibility.html) | `ui-accessibility` | — | This is a **rule**, stated as one by the owner, and it binds every surface this |
 | [Wireframe design review](wireframe-design-review.html) | `wireframe-design-review` | — | Method: [`wiregen`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/methodologies/ |
 
-## Science layer: Lean tooling (folio-assistant-sci)
-
-| Skill | Id | Schema | Summary |
-|-------|----|--------|---------|
-| [Lean formal edges (elaborated)](lean-formal-edges.html) | `lean-formal-edges` | — | bun run folio-assistant-sci/content/pipeline/formal-edges.ts \ |
-
-## Science layer: reference data (folio-assistant-sci)
-
-| Skill | Id | Schema | Summary |
-|-------|----|--------|---------|
-| [Reference dataset ingestion](reference-dataset-ingestion.html) | `reference-dataset-ingestion` | — |  |
-
 ## Content layer (folio-assistant-core)
 
 | Skill | Id | Schema | Summary |
 |-------|----|--------|---------|
 | [Deep document research](deep-document-research.html) | `deep-document-research` | — | Renders `methodologies/doc-researcher.md` — Dong et al., arXiv:2510.21603v1 — |
 
-## Large data sets (subsetting, materializing, publishing)
+## Content lifecycle refinements (content-lifecycle-ext)
 
 | Skill | Id | Schema | Summary |
 |-------|----|--------|---------|
-| [Working on materialized content](copy-out-materialized.html) | `copy-out-materialized` | — | **Materialized content is a copy of somebody else's bytes, and this repository |
-| [Materialize on demand](materialize-on-demand.html) | `materialize-on-demand` | — | Bootstrap brings an agent to a working harness. It does **not** bring the |
-| [Materializing remote content](materialize-remote.html) | `materialize-remote` | — | **One process, and this repository already ran it twice before naming it.** |
-| [Sample import](sample-import.html) | `sample-import` | — | The SDLC for trying out a remote source before committing to it: take a |
+| [quality-control](quality-control.html) | `quality-control` | [schema](../skills/quality-control.html) | > Skill id: `quality-control` · Package: `authoring-who-smart-guidelines` · |
 
-## WHO IRIS (catalogue instance)
+## Document adapter (folio-document-adapter)
 
 | Skill | Id | Schema | Summary |
 |-------|----|--------|---------|
-| [IRIS, DSpace and Dublin Core](iris-dspace.html) | `iris-dspace` | — | **Every claim here was read off one captured record** — the DSpace full item |
+| [document-authoring](document-authoring.html) | `document-authoring` | [schema](../skills/document-authoring.html) | Author a **document** folio: policy guidance, a standard, a report, a |
+| [document-publishing](document-publishing.html) | `document-publishing` | [schema](../skills/document-publishing.html) | Take a document folio from corpus to published artifact — without a TeX |
+| [document-structure](document-structure.html) | `document-structure` | [schema](../skills/document-structure.html) | Decide and maintain the chapter/section skeleton of a document folio. |
+| [normative-statements](normative-statements.html) | `normative-statements` | [schema](../skills/normative-statements.html) | Carry a **recommendation, requirement or rule** in a document folio — the |
+
+## Document ingestion methods (ingestion)
+
+| Skill | Id | Schema | Summary |
+|-------|----|--------|---------|
+| [Document Intake](document-intake.html) | `document-intake` | — | > **Bib human-review integration.** Track per-upload ingestion |
+
+## FHIR IG authoring (fhir-ig-authoring)
+
+| Skill | Id | Schema | Summary |
+|-------|----|--------|---------|
+| [fhir-validation](fhir-validation.html) | `fhir-validation` | [schema](../skills/fhir-validation.html) | > Skill id: `fhir-validation` · Package: `authoring-who-smart-guidelines` · |
+| [ig-publication](ig-publication.html) | `ig-publication` | [schema](../skills/ig-publication.html) | > Skill id: `ig-publication` · Package: `authoring-who-smart-guidelines` · |
+| [l3-fhir-authoring](l3-fhir-authoring.html) | `l3-fhir-authoring` | [schema](../skills/l3-fhir-authoring.html) | > Skill id: `l3-fhir-authoring` · Package: `authoring-who-smart-guidelines` · |
+| [terminology-management](terminology-management.html) | `terminology-management` | [schema](../skills/terminology-management.html) | > Skill id: `terminology-management` · Package: `authoring-who-smart-guidelines` · |
 
 ## FHIR client & SMART launch (fhir-harness/skills/fhir-client)
 
@@ -456,11 +356,126 @@ roles, and how they compose with the LLM, see [Skills & roles](../../skills.html
 
 | Skill | Id | Schema | Summary |
 |-------|----|--------|---------|
-| [ig-ast-delta](ig-ast-delta.html) | `ig-ast-delta` | — | > Skill id: `ig-ast-delta` · Package: `fhir-ig-base` · Instance: |
 | [ig-build-pipeline](ig-build-pipeline.html) | `ig-build-pipeline` | — | > Skill id: `ig-build-pipeline` · Package: `fhir-ig-base` · Instance: |
 | [ig-publisher-fork](ig-publisher-fork.html) | `ig-publisher-fork` | — | > Skill id: `ig-publisher-fork` · Package: `fhir-ig-base` · Instance: |
 | [ig-publisher-reduction](ig-publisher-reduction.html) | `ig-publisher-reduction` | — | > Skill id: `ig-publisher-reduction` · Package: `fhir-ig-base` · Instance: |
 | [ig-render-jekyll](ig-render-jekyll.html) | `ig-render-jekyll` | — | > Skill id: `ig-render-jekyll` · Package: `fhir-ig-base` · Instance: |
+
+## Large data sets (subsetting, materializing, publishing)
+
+| Skill | Id | Schema | Summary |
+|-------|----|--------|---------|
+| [Working on materialized content](copy-out-materialized.html) | `copy-out-materialized` | — | **Materialized content is a copy of somebody else's bytes, and this repository |
+| [Materialize on demand](materialize-on-demand.html) | `materialize-on-demand` | — | Bootstrap brings an agent to a working harness. It does **not** bring the |
+| [Materializing remote content](materialize-remote.html) | `materialize-remote` | — | **One process, and this repository already ran it twice before naming it.** |
+
+## WHO IRIS (catalogue instance)
+
+| Skill | Id | Schema | Summary |
+|-------|----|--------|---------|
+| [IRIS, DSpace and Dublin Core](iris-dspace.html) | `iris-dspace` | — | **Every claim here was read off one captured record** — the DSpace full item |
+
+## Mathematical authoring (authoring-math)
+
+| Skill | Id | Schema | Summary |
+|-------|----|--------|---------|
+| [latex-authoring](latex-authoring.html) | `latex-authoring` | [schema](../skills/latex-authoring.html) | > Skill id: `latex-authoring` · Package: `authoring-math` · |
+| [lean-formalization](lean-formalization.html) | `lean-formalization` | [schema](../skills/lean-formalization.html) | > Skill id: `lean-formalization` · Package: `authoring-math` · |
+| [proof-verification](proof-verification.html) | `proof-verification` | [schema](../skills/proof-verification.html) | > Skill id: `proof-verification` · Package: `authoring-math` · |
+
+## Paper adapter (folio-paper-adapter)
+
+| Skill | Id | Schema | Summary |
+|-------|----|--------|---------|
+| [/build-docs](build-docs.html) | `build-docs` | — | Builds the Lean HTML documentation using `doc-gen4` locally, to save CI |
+| [/build-pdf](build-pdf.html) | `build-pdf` | — | Builds the PDF locally to save CI minutes: the monolithic `main.pdf` and |
+| [Category Theory Formalization](category-theory.html) | `category-theory` | — |  |
+| [Chapter Analysis & Formalization](chapter-analysis.html) | `chapter-analysis` | — |  |
+| [Compute Audit](compute-audit.html) | `compute-audit` | — | python3 script.py --args ... |
+| [Compute-author](compute-author.html) | `compute-author` | — |  |
+| [Content Block Review](content-block-review.html) | `content-block-review` | — |  |
+| [Content Validation](content-validation.html) | `content-validation` | — | bun run cat-harness/content/pipeline/validate.ts content/<paper>   # after setup-folio-assistant.sh |
+| [Critical Path Analysis & Context Review](critical-path-analysis.html) | `critical-path-analysis` | — |  |
+| [definition-clarity-audit](definition-clarity-audit.html) | `definition-clarity-audit` | — | A content block can be **schema-clean, ref-resolving, proof-backed** and still be |
+| [FFI roundtrip audit](ffi-roundtrip-audit.html) | `ffi-roundtrip-audit` | — | total = mp.mpf(0) |
+| [Lean 4 Formalizer (Narrative to Proof)](formalizer.html) | `formalizer` | — | The base ring rule, import ordering, and library synthesis. Read before |
+| [Gröbner Basis](groebner-basis.html) | `groebner-basis` | — |  |
+| [LaTeX build performance](latex-build-cache.html) | `latex-build-cache` | — | A from-scratch compile re-parses the heavy preamble on **every latexmk |
+| [LaTeX Validation](latex-validation.html) | `latex-validation` | — |  |
+| [Lean Build Fix](lean-build-fix.html) | `lean-build-fix` | — |  |
+| [Lean cache: the authoring loop](lean-cache-restore.html) | `lean-cache-restore` | — | cat-harness/scripts/lake-cache.sh contribute   # give the build back |
+| [Lean Completeness Audit](lean-completeness-audit.html) | `lean-completeness-audit` | — | find content/<paper>/lean/ -name '*.lean' -not -path '*/.lake/*' \| sort |
+| [Lean Environment Setup](lean-environment-setup.html) | `lean-environment-setup` | — | A proven workaround for one specific failure: `lake exe cache get` returning |
+| [Lean formal dependency graph](lean-formal-graph.html) | `lean-formal-graph` | — | bun run content/pipeline/content-graph.ts content/<paper> |
+| [Lean File Generation](lean-generation.html) | `lean-generation` | — | Description here. |
+| [`MathlibExt` Curator](lean-mathlibext-curator.html) | `lean-mathlibext-curator` | — |  |
+| [Lean Proof Review](lean-proof-review.html) | `lean-proof-review` | — | git diff origin/main...HEAD -- '*.lean' \ |
+| [lean-proof-vacuity-audit](lean-proof-vacuity-audit.html) | `lean-proof-vacuity-audit` | — | A proof can be **sorry-free, axiom-clean, and statement-faithful** and still |
+| [/lean-substantive-pass](lean-substantive-pass.html) | `lean-substantive-pass` | — | The job of this skill is to take an abstract `class FooContext where |
+| [Lean Witness Audit](lean-witness-audit.html) | `lean-witness-audit` | — | python3 witness_base.py check-stale my-computation.witness.json |
+| [Paper Importer](paper-importer.html) | `paper-importer` | — | > **Bib human-review integration.** When importing a paper whose |
+| [Proof Conciseness](proof-conciseness.html) | `proof-conciseness` | — |  |
+| [Proof Editor (Coordinator)](proof-editor.html) | `proof-editor` | — |  |
+| [Proof Exposition Review](proof-exposition-review.html) | `proof-exposition-review` | — |  |
+| [Proof Gap Audit](proof-gap-audit.html) | `proof-gap-audit` | — |  |
+| [/proof-integration-watcher](proof-integration-watcher.html) | `proof-integration-watcher` | — | A concrete instance of [`local/integration-watcher`](integration-watcher.md). |
+| [Proof Narrative ↔ Lean Equivalence Audit](proof-narrative-lean-equivalence.html) | `proof-narrative-lean-equivalence` | — | > **Specialises [`narrative-asserts-code`](narrative-asserts-code.md)** |
+| [Proof Simplifier](proof-simplifier.html) | `proof-simplifier` | — | bun run content/pipeline/refactor-strategy.ts --lean 4.24.0 --applicable |
+| [Proof Status Tracking](proof-status-tracking.html) | `proof-status-tracking` | — |  |
+| [Proof Triage & Resolution](proof-triage.html) | `proof-triage` | — | [[require]] |
+| [/proposition-consolidation-audit](proposition-consolidation-audit.html) | `proposition-consolidation-audit` | — | grep -lE "^export default (proposition\|theorem\|lemma\|corollary)" \ |
+| [/q-usage-watcher](q-usage-watcher.html) | `q-usage-watcher` | — | > **Folio-optional axis.** The `q-usage` criteria encode a substrate |
+| [Remark Audit](remark-audit.html) | `remark-audit` | — | cd content && grep -rl '"remark"' --include='*.ts' \| sort |
+| [Rendering Auditor](rendering-auditor.html) | `rendering-auditor` | — | cd content && bun run pipeline/build.ts <paper>/<paper>.ts \ |
+| [Rendering Fixes](rendering-fixes.html) | `rendering-fixes` | — |  |
+| [Semantic review scoping](semantic-review-scoping.html) | `semantic-review-scoping` | — |  |
+| [Simulator Math Audit](simulator-math-audit.html) | `simulator-math-audit` | — |  |
+| [Simulator](simulator.html) | `simulator` | — |  |
+| [Verify Anchor Connectivity](verify-local-substrate.html) | `verify-local-substrate` | — |  |
+| [Witnessed Values](witnessed-values.html) | `witnessed-values` | — |  |
+
+## Synced from claude-scientific-skills (pinned, read-only)
+
+| Skill | Id | Schema | Summary |
+|-------|----|--------|---------|
+| [Scientific Visualization](scientific-visualization.html) | `scientific-visualization` | — | Build figures that preserve scientific meaning before optimizing appearance. Separate universal prin |
+
+## Synced from claude-scientific-skills (pinned, read-only)
+
+| Skill | Id | Schema | Summary |
+|-------|----|--------|---------|
+| [Scientific Visualization](scientific-visualization.html) | `scientific-visualization` | — | Build figures that preserve scientific meaning before optimizing appearance. Separate universal prin |
+
+## Synced from claude-scientific-skills (pinned, read-only)
+
+| Skill | Id | Schema | Summary |
+|-------|----|--------|---------|
+| [Scientific Visualization](scientific-visualization.html) | `scientific-visualization` | — | Build figures that preserve scientific meaning before optimizing appearance. Separate universal prin |
+
+## Science layer: Lean tooling (folio-assistant-sci)
+
+| Skill | Id | Schema | Summary |
+|-------|----|--------|---------|
+| [Lean formal edges (elaborated)](lean-formal-edges.html) | `lean-formal-edges` | — | bun run folio-assistant-sci/content/pipeline/formal-edges.ts \ |
+
+## Science layer: reference data (folio-assistant-sci)
+
+| Skill | Id | Schema | Summary |
+|-------|----|--------|---------|
+| [Reference dataset ingestion](reference-dataset-ingestion.html) | `reference-dataset-ingestion` | — |  |
+
+## WHO SMART Guidelines (authoring-who-smart-guidelines)
+
+| Skill | Id | Schema | Summary |
+|-------|----|--------|---------|
+| [dak-postprocessing](dak-postprocessing.html) | `dak-postprocessing` | — | > Skill id: `dak-postprocessing` · Package: `authoring-who-smart-guidelines` · |
+| [dak-preprocessing](dak-preprocessing.html) | `dak-preprocessing` | — | > Skill id: `dak-preprocessing` · Package: `authoring-who-smart-guidelines` · |
+| [grade](grade.html) | `grade` | — | > Skill id: `grade` · Package: `authoring-who-smart-guidelines` · The grading |
+| [ig-artifact-ingestion](ig-artifact-ingestion.html) | `ig-artifact-ingestion` | — | > Skill id: `ig-artifact-ingestion` · Package: `authoring-who-smart-guidelines` · |
+| [l2-dak-authoring](l2-dak-authoring.html) | `l2-dak-authoring` | [schema](../skills/l2-dak-authoring.html) | > Skill id: `l2-dak-authoring` · Package: `authoring-who-smart-guidelines` · |
+| [smart-base Toolchain](smart-base-tools.html) | `smart-base-tools` | — | > Skill id: `smart-base-tools` · Package: |
+| [smart-stack-layering](smart-stack-layering.html) | `smart-stack-layering` | — | > Skill id: `smart-stack-layering` · Package: `authoring-who-smart-guidelines` |
+| [toolchain-ownership](toolchain-ownership.html) | `toolchain-ownership` | — | > Skill id: `toolchain-ownership` · Package: `authoring-who-smart-guidelines` · |
 
 ## Local skills (.claude/skills/local)
 

@@ -124,6 +124,52 @@ export function tools(baseUrl?: string): ToolDefinition[] {
       },
       requires: { runtime: ["bun"], network: false },
     }),
+    // ── `gh-pages`: ONE way of performing `render-kg-to-cdn`.
+    //
+    // Owner, 2026-09-30: "make sure that gh-pages is one specific tool of
+    // general 'publish to CDN' as part of publication/staging process", and
+    // "tools can describe their own specific subprocesses if needed to not
+    // bog down general skills". So the general process names no GitHub step;
+    // this node carries the GitHub half, and its steps are a diagram in
+    // bootstrap-tools (below this harness, so the arrow points down).
+    //
+    // `manual`, honestly: the mechanism is that subprocess — stage with
+    // `site.ts`, deploy with the Pages workflow (or, for this repository's own
+    // site, `docs-site.yml` / `feature-staging.yml` pushing to the `gh-pages`
+    // branch), then report with bootstrap-tools' `pages-status.ts`. There is
+    // no single command that is all of it, and declaring one would assert
+    // machinery that is not there.
+    defineTool({
+      id: "gh-pages",
+      title: "GitHub Pages (gh-pages)",
+      description:
+        "Push a rendered Knowledge Graph to GitHub Pages at a publication root URL — a staging preview (`STAGING/<slug>/`) or the release root, the same steps either way — and report the push: a status (pushed, not pushed, could not determine) and one message carrying the commit merged onto `gh-pages` and the QA result. Its steps are bootstrap-tools' `render-kg-to-github-pages` process, which first provisions the target: an orphan `gh-pages` branch, then Pages switched on to serve it.",
+      install: { none: true },
+      invoke: { manual: true },
+      io: {
+        inputs: [
+          { name: "root", schema: t("RepoPath"), required: true, description: "The instance root whose Knowledge Graph is rendered, or a tree a caller already rendered and verified." },
+          { name: "url", schema: t("Url"), required: false, description: "The publication root URL. Default: the declaration's `iriBase`, else `https://<owner>.github.io/<repo>/`." },
+          { name: "subgraph", schema: t("Slug"), required: false, description: "A declared directory id to render; repeatable. Absent: the whole graph." },
+          { name: "sha", schema: t("CommitSha"), required: false, description: "The commit that is live: the commit on `gh-pages`." },
+        ],
+        outputs: [
+          { name: "status", schema: t("Text"), description: "`pushed`, `not-pushed` or `could-not-determine` — never `pushed` over a check that could not look." },
+          { name: "message", schema: t("Text"), description: "One line: the live commit, the root URL, and the QA of both what was staged and what is served." },
+        ],
+      },
+      satisfies: ["render-kg-to-cdn"],
+      // Its own subprocess (ruling 6, 2026-09-30), drawn in bootstrap-tools'
+      // declared `processes/` — an instance this one needs, so the arrow points down.
+      subprocesses: ["render-kg-to-github-pages"],
+      selection: {
+        when: "The CDN target is GitHub Pages: this repository's docs site and its review previews, and every instance whose declaration names a GitHub `repository`.",
+        limits:
+          "GitHub only. Pages cannot serve server-side redirects or custom headers, and a full-replace push to the `gh-pages` branch deletes what the build did not produce unless the caller restores it first (`docs-site-publish`, bean plj1). Another CDN is another Tool satisfying `render-kg-to-cdn`.",
+        cost: "Free for a public repository: Pages and the Actions minutes its workflow uses. A deploy takes a minute or two to be served.",
+      },
+      requires: { runtime: ["bun"], network: true },
+    }),
     defineTool({
       id: "subgraph-readmes",
       title: "Directory READMEs from the Knowledge Graph",
@@ -314,7 +360,7 @@ export function tools(baseUrl?: string): ToolDefinition[] {
         when:
           "A listing needs a cover and the bytes are already held. It renders page 1 by default and calls that the cover, because page 1 is a determined answer and \"the cover\" is not — the same choice `pdf-pages.py` makes about sections.",
         limits:
-          "It decides nothing beyond the raster. WHICH documents get a cover, where the file lands, and what the catalogue must say about the derivation are the instance's — see `who-iris/scripts/gen-covers.ts`, which refuses to write bytes for a THUMBNAIL that does not declare itself derived. It also cannot tell you whether the page it rendered IS the cover; it can only tell you it is page 1.",
+          "It decides nothing beyond the raster. WHICH documents get a cover, where the file lands, and what the catalogue must say about the derivation are the catalogue's to declare — see `folio-assistant-core/scripts/gen-covers.ts`, which reads them from an instance's catalogue and refuses to write bytes for a THUMBNAIL that does not declare itself derived. It also cannot tell you whether the page it rendered IS the cover; it can only tell you it is page 1.",
         cost:
           "One PyMuPDF wheel, no network at run time, and a few milliseconds per page. Deterministic — identical input gives identical bytes, which is what lets a caller gate on `--check` rather than re-deciding.",
       },

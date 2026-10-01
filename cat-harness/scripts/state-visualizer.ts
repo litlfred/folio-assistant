@@ -148,7 +148,7 @@ import { unportableSegment } from "../schemas/portable-path";
 import { carriesMarker, orphanSubjectPages } from "./orphan-pages.ts";
 import { withViewerNav } from "./viewer-page.ts";
 import { visualiserNavDeclaration } from "./lib/navbar.ts";
-import { renderedPath, withRenders, withViewers } from "./viewer-declarations.js";
+import { renderedPath, siteDirectories, withRenders, withViewers } from "./viewer-declarations.js";
 
 /** This generator's Tool node (`tools/viewers.ts`), named on every page it draws. */
 const VIEWER_TOOL = "state-viewer";
@@ -937,7 +937,15 @@ if (import.meta.main) main();
 function main(): void {
 // Viewers RESOLVED from the pages (#1168 B7a-2b).
 const declRead = readDeclaration(ROOT);
-const decl = declRead && { ...declRead, directories: withViewers(declRead.directories ?? [], ROOT) };
+// The CHECKOUT's state graphs too (placement PR0, bean `ejye`): `beans`,
+// `todos`, `memory`, `interaction` and `issue-marks` are declared by the
+// checkout's ROOT instance since the platform stopped mirroring them, and
+// this site still draws their dashboards. Read as `repository`-scoped, which
+// is what they are relative to this instance and how `drawnDir` resolves them.
+const decl = declRead && {
+  ...declRead,
+  directories: withViewers(siteDirectories(declRead.directories ?? [], ROOT, REPO_ROOT), ROOT),
+};
 if (!decl) {
   // "Could not determine", and this generator does not get to decide it means
   // "no state". Exit 2 is never rendered as a pass, the same rule

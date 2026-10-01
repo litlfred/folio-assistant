@@ -6,9 +6,9 @@ parent: Skill instructions
 ---
 
 {: .note }
-> Generated from [`cat-harness/skills/authoring/authoring-who-smart-guidelines/l3-fhir-authoring.md`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/authoring/authoring-who-smart-guidelines/l3-fhir-authoring.md) — do not edit here. Typed contract: [schema reference](../skills/l3-fhir-authoring.html).
+> Generated from [`fhir-harness/skills/content/fhir-ig-authoring/l3-fhir-authoring.md`](https://github.com/litlfred/folio-assistant/blob/main/fhir-harness/skills/content/fhir-ig-authoring/l3-fhir-authoring.md) — do not edit here. Typed contract: [schema reference](../skills/l3-fhir-authoring.html).
 >
-> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/cat-harness/skills/authoring/authoring-who-smart-guidelines/l3-fhir-authoring.md){: .fa-edit-source }
+> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/fhir-harness/skills/content/fhir-ig-authoring/l3-fhir-authoring.md){: .fa-edit-source }
 
 {% raw %}
 # l3-fhir-authoring
@@ -29,7 +29,7 @@ DAK, using FHIR Shorthand and SUSHI.
 
 ## Inputs and outputs
 
-`schemas/skills/l3-fhir-authoring/`:
+`fhir-harness/schemas/skills/l3-fhir-authoring/`:
 
 - **in** — `artifactType` (required), `l2Source` (required), `fshOutputDir`,
   `igRoot`

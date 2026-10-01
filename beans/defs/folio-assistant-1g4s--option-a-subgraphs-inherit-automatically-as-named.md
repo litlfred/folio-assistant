@@ -3,8 +3,10 @@
 title: 'OPTION A: subgraphs inherit automatically as named members; dependents retired'
 status: completed
 type: task
+priority: normal
 created_at: 2026-09-30T22:39:25Z
-updated_at: 2026-09-30T22:39:25Z
+updated_at: 2026-10-01T06:58:18Z
+parent: folio-assistant-iirv
 ---
 
 Owner 2026-09-30: 'if f-a-core ... has a docs/ ... and depends on cat-harness where docs/ is declared ... the viewer should detect f-a-core/docs ... a named (sub-)subgraph of docs' and 'make dependents: reproduce automatic behaviour so don't need it'.

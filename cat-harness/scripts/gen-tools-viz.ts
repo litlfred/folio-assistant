@@ -50,6 +50,7 @@ import { join, resolve } from "node:path";
 
 import { declarationPathIn } from "../schemas/cat-harness.js";
 import { docsLayers } from "./compose-docs.js";
+import { kgRoots } from "./known-skills.js";
 import { skillPageHref, skillPagesOf } from "./lib/skill-pages.ts";
 import { conventionalPage, handledDirectories, withRendersFrontMatter } from "./viewer-declarations.js";
 
@@ -141,6 +142,13 @@ export function skillIds(repo = REPO): Set<string> {
       walk(join(entry.scope === "repository" ? repo : instanceRoot, entry.path));
     }
   }
+  // And every skills root the checkout RESOLVES, which includes a directory an
+  // instance holds by inheritance and does not restate (option A, bean
+  // `1g4s`): sci's `skills/` is a member of the harness's `skills` graph, and
+  // since placement PR1 (bean `ybwt`) it holds the paper skills harness tools
+  // satisfy. Reading declarations alone missed it.
+  const platform = join(repo, "cat-harness");
+  if (existsSync(platform)) for (const d of kgRoots(platform)) walk(d);
   return out;
 }
 

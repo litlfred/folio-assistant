@@ -36,7 +36,8 @@
 import { existsSync, readdirSync, readFileSync, statSync } from "fs";
 import { join, dirname, relative } from "path";
 import { GRAPH_EDGE_TERMS, type GraphEdgeTerm } from "../../schemas/jsonld";
-import { directoriesForGraph, folioDir } from "../../schemas/cat-harness.js";
+import { folioDir } from "../../schemas/cat-harness.js";
+import { corpusDirectoriesForGraph } from "../../schemas/harness-config.js";
 
 export interface GraphNode {
   /** The `@id` — a relative IRI, minted by `resolveLabel` for authored blocks. */
@@ -464,7 +465,7 @@ export function defaultRoots(repoRoot: string): Array<{ name: string; dir: strin
   // Named per directory rather than all called "library", because a node's
   // root name is how a message says WHERE it came from, and two roots with one
   // name make that answer useless exactly when there is something to tell apart.
-  const libraries = directoriesForGraph(repoRoot, "library");
+  const libraries = corpusDirectoriesForGraph(repoRoot, "library");
   return [
     { name: "folio", dir: folioDir(repoRoot) },
     // declared-path-literal: the convention fallback, at the call site so the

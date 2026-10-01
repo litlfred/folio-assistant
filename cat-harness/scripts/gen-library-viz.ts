@@ -58,12 +58,13 @@ import { tally } from "./summaries.ts";
 import { scanLibraryRefs, type RefSource } from "./library-refs.ts";
 import { orphanSubjectPages, viewerPlacement } from "./gen-schema-viz.ts";
 import { readDeclaration } from "../schemas/cat-harness.ts";
-import { directoriesForGraph, instanceRootsIn, repoRootFor, siteDirFor } from "../schemas/cat-harness.ts";
+import { instanceRootsIn, repoRootFor, siteDirFor } from "../schemas/cat-harness.ts";
 import { directoryByVisualisationRef } from "./graph-tiles.ts";
 import { tileCounts } from "../schemas/tile-count.js";
 import { itemState } from "./gen-uploads-viz.ts";
 import { makeEmit, type ViewerNav, subjectSection } from "./viewer-page.ts";
 import { renderedPath, withRenders, withViewers } from "./viewer-declarations.js";
+import { corpusDirectoriesForGraph } from "../schemas/harness-config.js";
 
 /** This generator's Tool node (`tools/viewers.ts`), named on every page it draws. */
 const VIEWER_TOOL = "library-viewer";
@@ -836,7 +837,7 @@ if (import.meta.main) {
   // rule `gen-schema-viz.ts` follows, and for the same reason: writing
   // "library" here would be a second answer to a question `harness.json`
   // already answers, and `check:declared-paths` would be right to say so.
-  const libDirs = directoriesForGraph(ROOT, "library");
+  const libDirs = corpusDirectoriesForGraph(ROOT, "library");
   const seg = libDirs.length > 0 ? basename(libDirs[0]!) : null;
   if (seg === null) {
     // No library directory declared by this instance — the uploads half alone

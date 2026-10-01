@@ -2121,6 +2121,13 @@
       "status": "candidate"
     },
     {
+      "id": "cat-harness.catharnessdeclaration.separation",
+      "prefLabel": "CatHarnessDeclaration.separation",
+      "definition": "Which half of a kg-separation pair the planned {@link repository} is — see `separation` on {@link CatHarnessDeclarationSchema}. Absent is \"has not said\". Bean `eayu`.",
+      "source": "cat-harness/schemas/cat-harness.ts#CatHarnessDeclaration.separation",
+      "status": "candidate"
+    },
+    {
       "id": "cat-harness.catharnessdeclaration.stickies",
       "prefLabel": "CatHarnessDeclaration.stickies",
       "definition": "Sticky notes this layer contributes to the landing board.",
@@ -2209,6 +2216,13 @@
       "prefLabel": "CatHarnessDeclarationSchema.remoteGraphs",
       "definition": "Graphs this instance knows about and does not hold — see {@link RemoteGraph}. A SEPARATE array from `directories`, not a variant of one, because a remote graph has no directory.",
       "source": "cat-harness/schemas/cat-harness.ts#CatHarnessDeclarationSchema.remoteGraphs",
+      "status": "candidate"
+    },
+    {
+      "id": "cat-harness.catharnessdeclarationschema.separation",
+      "prefLabel": "CatHarnessDeclarationSchema.separation",
+      "definition": "Which half of a kg-separation pair this instance's planned `repository` is: `content` (files to read — no code, bootstrap FR-7) or `tools` (the code that writes and checks a content repository).",
+      "source": "cat-harness/schemas/cat-harness.ts#CatHarnessDeclarationSchema.separation",
       "status": "candidate"
     },
     {
@@ -2699,6 +2713,20 @@
       "prefLabel": "CodeSchema.value",
       "definition": "The value the code stands for, when it stands for one — a namespace IRI, for instance. Absent on a code that is its own value.",
       "source": "cat-harness/schemas/code-list.ts#CodeSchema.value",
+      "status": "candidate"
+    },
+    {
+      "id": "concern-groups.concerngroupsschema.directories",
+      "prefLabel": "ConcernGroupsSchema.directories",
+      "definition": "Instance directories declared from within, as in `skills.json`.",
+      "source": "cat-harness/schemas/concern-groups.ts#ConcernGroupsSchema.directories",
+      "status": "candidate"
+    },
+    {
+      "id": "concern-groups.concerngroupsschema.groups",
+      "prefLabel": "ConcernGroupsSchema.groups",
+      "definition": "The concern groups this directory holds, by code; each is `<dir>/<code>/`.",
+      "source": "cat-harness/schemas/concern-groups.ts#ConcernGroupsSchema.groups",
       "status": "candidate"
     },
     {
@@ -3969,6 +3997,125 @@
       "status": "candidate"
     },
     {
+      "id": "document-structure.textfileschema.format",
+      "prefLabel": "TextFileSchema.format",
+      "definition": "How the rung read it, decided by CONTENT: `markdown` when it has an ATX heading outside fenced code and does not open with `<`; `verbatim` for any other text; `image` for a member the caller declared as an image, which is recorded and never sectioned.",
+      "source": "cat-harness/schemas/document-structure.ts#TextFileSchema.format",
+      "status": "candidate"
+    },
+    {
+      "id": "document-structure.textfileschema.lines",
+      "prefLabel": "TextFileSchema.lines",
+      "definition": "Line count, or null for a file not read as text (an image the source carries).",
+      "source": "cat-harness/schemas/document-structure.ts#TextFileSchema.lines",
+      "status": "candidate"
+    },
+    {
+      "id": "document-structure.textsectionschema.file",
+      "prefLabel": "TextSectionSchema.file",
+      "definition": "The file the section is in, as recorded in `source.files[].path`.",
+      "source": "cat-harness/schemas/document-structure.ts#TextSectionSchema.file",
+      "status": "candidate"
+    },
+    {
+      "id": "document-structure.textsectionschema.line_end",
+      "prefLabel": "TextSectionSchema.line_end",
+      "definition": "One-based last line, inclusive.",
+      "source": "cat-harness/schemas/document-structure.ts#TextSectionSchema.line_end",
+      "status": "candidate"
+    },
+    {
+      "id": "document-structure.textsectionschema.line_start",
+      "prefLabel": "TextSectionSchema.line_start",
+      "definition": "One-based first line, inclusive.",
+      "source": "cat-harness/schemas/document-structure.ts#TextSectionSchema.line_start",
+      "status": "candidate"
+    },
+    {
+      "id": "document-structure.textsectionschema.unit",
+      "prefLabel": "TextSectionSchema.unit",
+      "definition": "`heading`: divided by the file's own heading. `file`: the whole file, which carries none the rung reads.",
+      "source": "cat-harness/schemas/document-structure.ts#TextSectionSchema.unit",
+      "status": "candidate"
+    },
+    {
+      "id": "document-structure.textsourceschema.bytes",
+      "prefLabel": "TextSourceSchema.bytes",
+      "definition": "Total bytes over every file.",
+      "source": "cat-harness/schemas/document-structure.ts#TextSourceSchema.bytes",
+      "status": "candidate"
+    },
+    {
+      "id": "document-structure.textsourceschema.file",
+      "prefLabel": "TextSourceSchema.file",
+      "definition": "A display name for the whole source: the file's name, or the bundle's.",
+      "source": "cat-harness/schemas/document-structure.ts#TextSourceSchema.file",
+      "status": "candidate"
+    },
+    {
+      "id": "document-structure.textsourceschema.mimetype_sniffed",
+      "prefLabel": "TextSourceSchema.mimetype_sniffed",
+      "definition": "Text has no magic bytes; what it is was decided by reading it.",
+      "source": "cat-harness/schemas/document-structure.ts#TextSourceSchema.mimetype_sniffed",
+      "status": "candidate"
+    },
+    {
+      "id": "document-structure.textsourceschema.mtime",
+      "prefLabel": "TextSourceSchema.mtime",
+      "definition": "The source's own time. For a repository checkout a file's mtime is the checkout's, which says nothing, so this is the commit time instead.",
+      "source": "cat-harness/schemas/document-structure.ts#TextSourceSchema.mtime",
+      "status": "candidate"
+    },
+    {
+      "id": "document-structure.textsourceschema.sha256",
+      "prefLabel": "TextSourceSchema.sha256",
+      "definition": "With one file, that file's sha256. With several, the sha256 of their `sha256sum`-format listing (`<hex> <path>\\n`, in `files` order), which anyone can recompute from a checkout with `sha256sum` alone.",
+      "source": "cat-harness/schemas/document-structure.ts#TextSourceSchema.sha256",
+      "status": "candidate"
+    },
+    {
+      "id": "document-structure.textstructureschema.structure_note",
+      "prefLabel": "TextStructureSchema.structure_note",
+      "definition": "What the rung did NOT claim. Always required: a text source always omits something (rendering, shortcodes, images).",
+      "source": "cat-harness/schemas/document-structure.ts#TextStructureSchema.structure_note",
+      "status": "candidate"
+    },
+    {
+      "id": "document-structure.textstructureschema.toc_source",
+      "prefLabel": "TextStructureSchema.toc_source",
+      "definition": "`headings`: at least one file was divided by its own headings. `files`: none was, so each file is one section.",
+      "source": "cat-harness/schemas/document-structure.ts#TextStructureSchema.toc_source",
+      "status": "candidate"
+    },
+    {
+      "id": "document-structure.textupstreamschema.committed",
+      "prefLabel": "TextUpstreamSchema.committed",
+      "definition": "Commit time, ISO 8601, as git reports it.",
+      "source": "cat-harness/schemas/document-structure.ts#TextUpstreamSchema.committed",
+      "status": "candidate"
+    },
+    {
+      "id": "document-structure.textupstreamschema.path",
+      "prefLabel": "TextUpstreamSchema.path",
+      "definition": "Path of the files within the repository.",
+      "source": "cat-harness/schemas/document-structure.ts#TextUpstreamSchema.path",
+      "status": "candidate"
+    },
+    {
+      "id": "document-structure.textupstreamschema.ref",
+      "prefLabel": "TextUpstreamSchema.ref",
+      "definition": "The ref the commit was taken from (a branch or tag name).",
+      "source": "cat-harness/schemas/document-structure.ts#TextUpstreamSchema.ref",
+      "status": "candidate"
+    },
+    {
+      "id": "document-structure.textupstreamschema.retrieved",
+      "prefLabel": "TextUpstreamSchema.retrieved",
+      "definition": "When it was retrieved, ISO date.",
+      "source": "cat-harness/schemas/document-structure.ts#TextUpstreamSchema.retrieved",
+      "status": "candidate"
+    },
+    {
       "id": "external-schema.externalschemaschema.id",
       "prefLabel": "ExternalSchemaSchema.id",
       "definition": "Stable local id, e.g. `omg-bpmn-2.0`.",
@@ -5082,6 +5229,13 @@
       "status": "candidate"
     },
     {
+      "id": "graph-kind-registry.graphkinddef.concerngroups",
+      "prefLabel": "GraphKindDef.concernGroups",
+      "definition": "Is a directory of this kind GROUPED BY CONCERN — `<dir>/<group>/`, with the groups named from within by {@link declarationFile} and drawn from the `concern-group` code list (bean `9umr`; placement PR0c, bean `ejye`)?",
+      "source": "cat-harness/schemas/graph-kind-registry.ts#GraphKindDef.concernGroups",
+      "status": "candidate"
+    },
+    {
       "id": "graph-kind-registry.graphkinddef.declarationfile",
       "prefLabel": "GraphKindDef.declarationFile",
       "definition": "The NESTED DECLARATION a directory of this kind carries, by filename.",
@@ -5156,6 +5310,27 @@
       "prefLabel": "GraphKindDef.within",
       "definition": "The kind this one is a SUB-GRAPH of, when it is one.",
       "source": "cat-harness/schemas/graph-kind-registry.ts#GraphKindDef.within",
+      "status": "candidate"
+    },
+    {
+      "id": "harness-config.checkoutgraph.deps",
+      "prefLabel": "CheckoutGraph.deps",
+      "definition": "Each instance's transitive dependencies.",
+      "source": "cat-harness/schemas/harness-config.ts#CheckoutGraph.deps",
+      "status": "candidate"
+    },
+    {
+      "id": "harness-config.checkoutgraph.names",
+      "prefLabel": "CheckoutGraph.names",
+      "definition": "Each instance's declared name, as `declarationChain` spells a link.",
+      "source": "cat-harness/schemas/harness-config.ts#CheckoutGraph.names",
+      "status": "candidate"
+    },
+    {
+      "id": "harness-config.checkoutgraph.order",
+      "prefLabel": "CheckoutGraph.order",
+      "definition": "Every instance the root reaches, deepest first, the root last.",
+      "source": "cat-harness/schemas/harness-config.ts#CheckoutGraph.order",
       "status": "candidate"
     },
     {
@@ -7336,10 +7511,31 @@
       "status": "candidate"
     },
     {
+      "id": "role-graph.roleextension.role",
+      "prefLabel": "RoleExtension.role",
+      "definition": "The id of a role declared by an instance this one depends on.",
+      "source": "cat-harness/schemas/role-graph.ts#RoleExtension.role",
+      "status": "candidate"
+    },
+    {
+      "id": "role-graph.roleextension.skills",
+      "prefLabel": "RoleExtension.skills",
+      "definition": "Skills the role gains in this instance's checkout.",
+      "source": "cat-harness/schemas/role-graph.ts#RoleExtension.skills",
+      "status": "candidate"
+    },
+    {
       "id": "role-graph.rolegraph.actors",
       "prefLabel": "RoleGraph.actors",
       "definition": "Actors, when declared alongside. Usually read from the actor directory.",
       "source": "cat-harness/schemas/role-graph.ts#RoleGraph.actors",
+      "status": "candidate"
+    },
+    {
+      "id": "role-graph.rolegraph.extensions",
+      "prefLabel": "RoleGraph.extensions",
+      "definition": "Roles of a LOWER instance this graph adds skills to, BY ID (placement PR0b, bean `ejye`). See {@link RoleExtension}.",
+      "source": "cat-harness/schemas/role-graph.ts#RoleGraph.extensions",
       "status": "candidate"
     },
     {
@@ -7368,6 +7564,20 @@
       "prefLabel": "SkillProvenance.via",
       "definition": "The role that declared it — may be an ancestor, not the role asked for.",
       "source": "cat-harness/schemas/role-graph.ts#SkillProvenance.via",
+      "status": "candidate"
+    },
+    {
+      "id": "scenario-overlay.scenariolayer.dir",
+      "prefLabel": "ScenarioLayer.dir",
+      "definition": "Absolute path of its `scenarios` directory.",
+      "source": "cat-harness/schemas/scenario-overlay.ts#ScenarioLayer.dir",
+      "status": "candidate"
+    },
+    {
+      "id": "scenario-overlay.scenariolayer.instance",
+      "prefLabel": "ScenarioLayer.instance",
+      "definition": "The instance's declared name.",
+      "source": "cat-harness/schemas/scenario-overlay.ts#ScenarioLayer.instance",
       "status": "candidate"
     },
     {
@@ -8838,6 +9048,13 @@
       "prefLabel": "ToolDefinitionSchema.selection",
       "definition": "Why to reach for this one. REQUIRED when the Tool has a derived alternative ({@link deriveAlternatives}); `check-tools` enforces it, since whether a Tool has one is a fact about the whole set.",
       "source": "cat-harness/schemas/tool.ts#ToolDefinitionSchema.selection",
+      "status": "candidate"
+    },
+    {
+      "id": "tool.tooldefinitionschema.subprocesses",
+      "prefLabel": "ToolDefinitionSchema.subprocesses",
+      "definition": "Process ids of the BPMN this Tool's OWN specific procedure is drawn as.",
+      "source": "cat-harness/schemas/tool.ts#ToolDefinitionSchema.subprocesses",
       "status": "candidate"
     },
     {

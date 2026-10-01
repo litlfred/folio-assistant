@@ -6,9 +6,9 @@ parent: Skill instructions
 ---
 
 {: .note }
-> Generated from [`cat-harness/skills/authoring/folio-paper-adapter/document-intake.md`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/authoring/folio-paper-adapter/document-intake.md) — do not edit here.
+> Generated from [`folio-assistant-core/skills/library/ingestion/document-intake.md`](https://github.com/litlfred/folio-assistant/blob/main/folio-assistant-core/skills/library/ingestion/document-intake.md) — do not edit here.
 >
-> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/cat-harness/skills/authoring/folio-paper-adapter/document-intake.md){: .fa-edit-source }
+> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/folio-assistant-core/skills/library/ingestion/document-intake.md){: .fa-edit-source }
 
 {% raw %}
 # Document Intake
@@ -141,7 +141,7 @@ when the session network allows the upstream host, use
 `openalex-paper-search` (alex-mcp; OpenAlex catalog) rather than
 `curl`/`WebFetch`. The MCP tools return canonical metadata and the
 PDF in one call, eliminating the OCR-then-extract-then-name dance.
-See [`paper-importer.md §Phase 1`](paper-importer.md#phase-1-acquisition)
+See `paper-importer.md §Phase 1` (folio-assistant-sci)
 for the per-tool routing table. Sandboxed Claude-Code-on-the-web
 sessions (github-only allowlist) cannot reach those hosts; in
 those sessions, queue the fetch onto a normal-network machine

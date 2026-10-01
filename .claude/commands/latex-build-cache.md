@@ -6,7 +6,7 @@ generated: cat-harness/scripts/gen-skill-commands.ts
 
 # /latex-build-cache
 
-Run the `latex-build-cache` skill. Read [`cat-harness/skills/authoring/folio-paper-adapter/latex-build-cache.md`](../../cat-harness/skills/authoring/folio-paper-adapter/latex-build-cache.md) and follow it.
+Run the `latex-build-cache` skill. Read [`folio-assistant-sci/skills/content/folio-paper-adapter/latex-build-cache.md`](../../folio-assistant-sci/skills/content/folio-paper-adapter/latex-build-cache.md) and follow it.
 
 This command is a pointer, generated from that skill's `user_invocable: true`; the
 instructions live in the skill and nowhere else. The same skill is also served as the

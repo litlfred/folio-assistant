@@ -56,8 +56,7 @@
 import { readdirSync, readFileSync, statSync } from "node:fs";
 import { basename, join, relative, resolve } from "node:path";
 
-import { kgRoots, workflowFiles } from "./known-skills.js";
-import { readRoleGraph } from "../schemas/role-graph.js";
+import { workflowFiles, corpusScopeFor, roleGraphFor } from "./known-skills.js";
 import { fulfilmentKindsForBpmnType } from "../schemas/role-graph.js";
 import { isActivity, loadProcessModel } from "../src/workflow/process-model.js";
 import { capabilitiesDir } from "../schemas/role-graph.ts";
@@ -83,9 +82,9 @@ export interface FallbackUse {
  */
 export function declaredRoles(root: string): Set<string> {
   const out = new Set<string>();
-  for (const kgRoot of kgRoots(root)) {
-    for (const r of readRoleGraph(kgRoot)?.roles ?? []) out.add(r.id);
-  }
+  // The CHECKOUT's role graph when this is the platform's own run: its roles
+  // plus any a dependent adds or extends by id (placement PR0b).
+  for (const r of roleGraphFor(root, corpusScopeFor(root))?.roles ?? []) out.add(r.id);
   return out;
 }
 
@@ -277,7 +276,7 @@ export async function fallbackRoleFor(root: string, skill: string): Promise<stri
  */
 export async function fallbackRolesBySkill(root: string): Promise<Map<string, string[]>> {
   const bySkill = new Map<string, Set<string>>();
-  for (const f of workflowFiles(root).filter((x) => x.endsWith(".bpmn"))) {
+  for (const f of workflowFiles(root, corpusScopeFor(root)).filter((x) => x.endsWith(".bpmn"))) {
     const model = await loadProcessModel(f);
     for (const n of [...model.nodes.values()].filter(isActivity)) {
       const kinds = fulfilmentKindsForBpmnType(n.type);
@@ -304,7 +303,7 @@ if (import.meta.main) {
   const roles = declaredRoles(ROOT);
   const facts = declaredCapabilityFacts(ROOT);
   const uses = fallbackUses(ROOT, SCANNED);
-  const diagrams = workflowFiles(ROOT).filter((f) => f.endsWith(".bpmn"));
+  const diagrams = workflowFiles(ROOT, corpusScopeFor(ROOT)).filter((f) => f.endsWith(".bpmn"));
 
   console.log(
     `fallback: ${uses.length} use(s) across ${SCANNED.length} tree(s); ` +

@@ -274,6 +274,7 @@ of declaring one: navigable without being held.
 | `pdf-tables.py` | tables or figures matter | what `pdf-structure/v1`'s Section does not carry |
 | `slides-structure.py` | the package declares a **PPTX or ODP** deck | one section per **slide**, `images.json`, `accessibility.json` |
 | `referenced-source.py` | `--reference` given: the **licence forbids a copy** | `referenced.json` only — identity, sha256, outline; no text |
+| `text-structure.ts` | the source is **text files** — Markdown, MDX, XML — usually fetched from a repository at a commit | `text-structure/v1`: a Markdown file divided by its own ATX headings outside fenced code, any other file one verbatim section, located by **file and line range**; images recorded by digest, never sectioned |
 | `notebook-structure.ts` | the file is JSON with a numeric `nbformat` and a `cells` array — a **Jupyter notebook**, decided by content, never by the `.ipynb` name | `notebook-structure/v1`: one section per markdown heading, located by **cell** range; code kept as fenced code and never run; outputs not kept, and `structure_note` says so |
 
 **A notebook is a variant, not a PDF with odd pages** (bean `rkqp`, owner
@@ -361,6 +362,42 @@ why the text is withheld — plus a manifest with an empty `contains`, and a
 posting is a reading of the licence, not of the bytes. `check:l1-complete`
 knows the kind, and **refuses** a `referenced` entry that holds `sections/`,
 `blocks/` or `images/`. That would be the copy this kind exists not to make.
+
+## A source published as text in a repository — read it at a commit (bean `y4uj`)
+
+The Gherkin reference, the MCP specification, the `hmans/beans` README and
+FHIR R5's TestPlan resource (issue #1614 item 4) are published as Markdown or
+XML in git repositories. Printing one to PDF so a PDF rung can read it makes
+the recorded sha256 identify a rendering nobody published, so they take their
+own rung instead:
+
+```sh
+bun run cat-harness/scripts/text-structure.ts -o <library> --doc-id <slug> \
+  --base <checkout> --upstream upstream.json [--title T] [--image F]... FILE...
+```
+
+then `l1-blocks.ts -o <entry>` and `gen-library-jsonld.ts --entry <entry>`, as
+for a notebook. What it decides:
+
+- **Divided by the author's headings, or not at all.** A Markdown file splits
+  at its own ATX headings, outside fenced code. A `# comment` inside a
+  `gherkin` block is not a heading. Any other text, and anything that opens
+  with `<`, is one section, fenced verbatim. Nothing is rendered: shortcodes
+  and JSX stay as written, and `structure_note` says so.
+- **`upstream` records the exact revision**: repository, 40-hex commit, ref,
+  path, and in words whether that revision is the **published** text or a
+  working copy. A default branch is often neither, and a reader cannot tell
+  which from a URL. Keep the clone out of the repository tree. The bytes can
+  be fetched again from the commit, so none go to `uploads/` or `fsh-guts/`.
+- **Several files are one source** when the publisher ships them as one, as
+  with a specification version that is a directory of pages. Each file keeps
+  its own sha256. The source's sha256 is the sha256 of their `sha256sum`
+  listing, so `sha256sum -c` against a checkout verifies the entry without
+  this code.
+
+It is not wired into `bun run ingest`. That command reads a dropped file from
+`uploads/`, and text has no magic bytes to route on, so it would have to guess
+from the extension. Routing a dropped `.md` is a separate decision.
 
 ## An inferred chapter tree is refused, not guessed
 

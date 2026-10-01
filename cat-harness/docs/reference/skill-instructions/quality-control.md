@@ -6,9 +6,9 @@ parent: Skill instructions
 ---
 
 {: .note }
-> Generated from [`cat-harness/skills/authoring/authoring-who-smart-guidelines/quality-control.md`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/authoring/authoring-who-smart-guidelines/quality-control.md) — do not edit here. Typed contract: [schema reference](../skills/quality-control.html).
+> Generated from [`folio-assistant-core/skills/content/content-lifecycle-ext/quality-control.md`](https://github.com/litlfred/folio-assistant/blob/main/folio-assistant-core/skills/content/content-lifecycle-ext/quality-control.md) — do not edit here. Typed contract: [schema reference](../skills/quality-control.html).
 >
-> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/cat-harness/skills/authoring/authoring-who-smart-guidelines/quality-control.md){: .fa-edit-source }
+> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/folio-assistant-core/skills/content/content-lifecycle-ext/quality-control.md){: .fa-edit-source }
 
 {% raw %}
 # quality-control
@@ -24,7 +24,7 @@ whether it clears.
 
 ## Inputs and outputs
 
-`schemas/skills/quality-control/`:
+`folio-assistant-core/schemas/skills/quality-control/`:
 
 - **in** — `checkType` (required), `targetPath` (required), `checklistSections`
 - **out** — `overallResult`, `findings`, `checklistResults`

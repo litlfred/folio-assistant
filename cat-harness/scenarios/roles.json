@@ -65,16 +65,11 @@
       ],
       "skills": [
         "adjudication",
-        "content-block-review",
         "content-feedback",
         "content-review",
-        "content-validation",
         "decision-audit",
-        "document-intake",
         "milnor-exposition-standard",
         "narrative-asserts-code",
-        "rendering-auditor",
-        "semantic-review-scoping",
         "staging-review",
         "translation-manager",
         "visual-diff",
@@ -149,7 +144,6 @@
       "skills": [
         "content-publish",
         "evidence-review",
-        "quality-control",
         "untainted-verification",
         "ig-ast-delta"
       ],
@@ -210,12 +204,12 @@
       "skills": [
         "content-publish",
         "content-review",
-        "ig-publication",
         "decision-audit",
         "qa-report-signing",
         "publish-verification",
         "instance-publication",
-        "package-release"
+        "package-release",
+        "render-kg-to-cdn"
       ],
       "persona": "Owns the release. Cares about what is authorised, what is built and what is public — and about the gap between them."
     },
@@ -233,7 +227,6 @@
         "crdm-requirements-workflow",
         "decision-audit",
         "dmn-authoring",
-        "l2-dak-authoring",
         "methodology-adoption",
         "opening-brief"
       ],
@@ -247,7 +240,6 @@
         "person"
       ],
       "skills": [
-        "terminology-management",
         "code-lists",
         "vocabulary-authority"
       ],
@@ -260,9 +252,7 @@
       "actorKinds": [
         "person"
       ],
-      "skills": [
-        "l3-fhir-authoring"
-      ],
+      "skills": [],
       "persona": "Builds the L3 profiles. Fluent in FHIR and in the tooling; wants the model's constraints and invariants, not an introduction to the resource."
     },
     {
@@ -372,8 +362,6 @@
         "decision-audit",
         "deletion-requires-confirmation",
         "delivery-summary",
-        "document-authoring",
-        "document-structure",
         "feature-staging",
         "gate-tree-mutation",
         "github-state-inspection",
@@ -381,14 +369,12 @@
         "issue-working",
         "library-ingestion",
         "methodology-adoption",
-        "normative-statements",
         "opening-brief",
         "placement",
         "platform-gates",
         "prepare-merge",
         "prepare-merge-auto",
         "related-work-coordination",
-        "semantic-review-scoping",
         "session-context",
         "session-state-machine",
         "todo-manager",
@@ -415,8 +401,7 @@
       "skills": [
         "getting-started",
         "interaction-modality",
-        "repo-conversion",
-        "document-intake"
+        "repo-conversion"
       ],
       "persona": "Meets a repository it has never seen and must orient before acting. Will follow the first plausible convention it finds, so the earliest instruction it reads matters most."
     },
@@ -428,11 +413,8 @@
         "agent"
       ],
       "skills": [
-        "document-intake",
         "library-ingestion",
         "materialize-remote",
-        "paper-importer",
-        "proof-status-tracking",
         "theme-art-intake",
         "theme-ui-review"
       ],
@@ -450,7 +432,6 @@
         "filing-dublin-core",
         "archiving-web-pages",
         "archiving-arxiv",
-        "document-intake",
         "library-ingestion"
       ],
       "persona": "Treats provenance as the perishable part. A document can be re-read at any time; how it arrived, from where, in what state and under what licence is knowable only while it is arriving, so that is what gets written down first."
@@ -475,9 +456,7 @@
       "actorKinds": [
         "agent"
       ],
-      "skills": [
-        "document-intake"
-      ],
+      "skills": [],
       "persona": "Searches trusted sources and appraises what comes back. Its value is in what it REJECTS, so it must be able to say why a source was not used."
     },
     {
@@ -503,24 +482,14 @@
         "content-publish",
         "content-test",
         "content-validate",
-        "document-publishing",
         "feature-staging",
         "publish-verification",
-        "fhir-validation",
-        "ig-publication",
-        "l3-fhir-authoring",
-        "latex-authoring",
-        "quality-control",
         "todo-manager",
         "translation-manager",
         "upstream-version-adoption",
         "watch",
-        "build-docs",
-        "build-pdf",
-        "latex-build-cache",
-        "latex-validation",
-        "smart-base-tools",
         "kg-separation",
+        "render-kg-to-cdn",
         "ig-ast-delta"
       ]
     },
@@ -569,10 +538,7 @@
       "actorKinds": [
         "system"
       ],
-      "skills": [
-        "lean-formalization",
-        "proof-verification"
-      ]
+      "skills": []
     },
     {
       "id": "ig-publisher-service",
@@ -581,10 +547,7 @@
       "actorKinds": [
         "system"
       ],
-      "skills": [
-        "fhir-validation",
-        "ig-publication"
-      ]
+      "skills": []
     },
     {
       "id": "attestation-service",
@@ -619,7 +582,6 @@
       ],
       "actedUpon": true,
       "skills": [
-        "document-intake",
         "materialize-remote"
       ]
     },
@@ -773,9 +735,7 @@
         "bib-photo-ingestion-watcher",
         "integration-watch",
         "integration-audit",
-        "integration-backlog",
-        "proof-integration-watcher",
-        "q-usage-watcher"
+        "integration-backlog"
       ],
       "persona": "Sees a diff, not a conversation. Knows its axis narrowly and deeply, and knows that a finding it cannot substantiate costs more than one it never raised."
     },
@@ -789,20 +749,7 @@
       "inherits": [
         "authoring-agent"
       ],
-      "skills": [
-        "formalizer",
-        "chapter-analysis",
-        "lean-generation",
-        "lean-substantive-pass",
-        "lean-build-fix",
-        "lean-cache-restore",
-        "lean-environment-setup",
-        "lean-mathlibext-curator",
-        "lean-formal-graph",
-        "proof-triage",
-        "category-theory",
-        "groebner-basis"
-      ],
+      "skills": [],
       "persona": "Reads mathematics and writes Lean. Knows the toolchain is slow and the cache is load-bearing; knows a `sorry` is a debt with a location, not a failure."
     },
     {
@@ -815,21 +762,7 @@
       "inherits": [
         "reviewer"
       ],
-      "skills": [
-        "lean-proof-review",
-        "lean-proof-vacuity-audit",
-        "proof-gap-audit",
-        "proof-conciseness",
-        "proof-editor",
-        "proof-exposition-review",
-        "proof-simplifier",
-        "proof-narrative-lean-equivalence",
-        "lean-completeness-audit",
-        "remark-audit",
-        "definition-clarity-audit",
-        "proposition-consolidation-audit",
-        "critical-path-analysis"
-      ],
+      "skills": [],
       "persona": "Assumes a proof that compiles may still prove nothing. Knows the difference between a gap in the argument and a gap in the exposition, and that the second is not the lesser one."
     },
     {
@@ -842,16 +775,7 @@
       "inherits": [
         "authoring-agent"
       ],
-      "skills": [
-        "compute-audit",
-        "compute-author",
-        "ffi-roundtrip-audit",
-        "lean-witness-audit",
-        "witnessed-values",
-        "verify-local-substrate",
-        "simulator",
-        "simulator-math-audit"
-      ],
+      "skills": [],
       "persona": "Knows a number in prose and a number from a script are two claims until something ties them. Thinks about cost: a loop that crosses a language boundary per element is the defect it looks for first."
     }
   ]

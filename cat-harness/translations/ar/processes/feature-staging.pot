@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: feature-staging\n"
-"POT-Creation-Date: 2026-09-30T14:06:20.982Z\n"
+"POT-Creation-Date: 2026-10-01T00:08:57.193Z\n"
 "PO-Revision-Date: \n"
 "Last-Translator: \n"
 "Language: ar\n"
@@ -16,7 +16,7 @@ msgstr ""
 
 #: processes/feature-staging.bpmn:69
 #. Diagram element documentation
-msgid "`keep_files: true` and a `destination_dir`, so this push adds one directory beside whatever else is on the branch. It is also RETRIED once: five other workflows push to `gh-pages` without joining this one's concurrency group, and a queue does not help because GitHub CANCELS a pending job when a newer one arrives for the same group rather than queueing it. Measured 2026-09-19: three staging runs from three different branches inside 17 seconds, two cancelled."
+msgid "A PREVIEW IS THE GENERAL STEP WITH A DIFFERENT ROOT (owner, 2026-09-30: \"independent of staging vs publication … just rendering\"). Process_RenderKgToCdn, entered with the tree Task_Build rendered, `STAGING/<slug>/` under the site root as the publication root URL, and GitHub Pages as the target, so its `gh-pages` Tool pushes. For this target the push is `keep_files: true` with a `destination_dir`, so it adds one directory beside whatever else is on the branch; it is also RETRIED once: five other workflows push to `gh-pages` without joining this one's concurrency group, and a queue does not help because GitHub CANCELS a pending job when a newer one arrives for the same group rather than queueing it. Measured 2026-09-19: three staging runs from three different branches inside 17 seconds, two cancelled. The call returns the push's status and message; the render log and the PR comment that follow are this process's own."
 msgstr ""
 
 #: processes/feature-staging.bpmn:76
@@ -139,11 +139,6 @@ msgstr ""
 msgid "Preview live"
 msgstr ""
 
-#: processes/feature-staging.bpmn:68
-#. Diagram label
-msgid "Publish to STAGING/&lt;slug&gt;"
-msgstr ""
-
 #: processes/feature-staging.bpmn:95
 #. Diagram label
 msgid "Pull request closed"
@@ -152,6 +147,11 @@ msgstr ""
 #: processes/feature-staging.bpmn:57
 #. Diagram label
 msgid "Pull request opened, synchronised or reopened"
+msgstr ""
+
+#: processes/feature-staging.bpmn:68
+#. Diagram label
+msgid "Push to the CDN at STAGING/&lt;slug&gt;/ [render-kg-to-cdn]"
 msgstr ""
 
 #: processes/feature-staging.bpmn:156

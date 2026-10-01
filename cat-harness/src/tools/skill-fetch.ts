@@ -50,7 +50,7 @@ const REFERENCE_PACKAGES: Record<string, { repo: string; ref: string; skills: Re
 //                              route into folio-paper-adapter's depth
 //   - folio-core             : content-agnostic platform bundle (skills/folio-core)
 //   - folio-document-adapter : prose-folio bundle, no Lean and no required TeX
-//   - folio-paper-adapter    : formal-math paper-adapter bundle (skills/authoring/folio-paper-adapter)
+//   - folio-paper-adapter    : formal-math paper-adapter bundle (folio-assistant-sci/skills/content/folio-paper-adapter)
 //
 // `folio-document-adapter` and `folio-paper-adapter` are the two halves of one
 // content model, not alternatives to pick between: a paper folio wants both,

@@ -85,7 +85,7 @@ import { basename, dirname, join, relative } from "node:path";
 
 import { orphanSubjectPages, viewerPlacement } from "./gen-schema-viz.ts";
 import { classify } from "./check-docs-populated.ts";
-import { isSkillMd, kgRoots, skillMdDirs } from "./known-skills.ts";
+import { isSkillMd, kgRoots, skillMdDirs, corpusScopeFor } from "./known-skills.ts";
 import { readRoleGraph } from "../schemas/role-graph.ts";
 import {
   findDeclarationFile,
@@ -97,6 +97,7 @@ import {
   visualisationsOf,
   forgeLocation,
 } from "../schemas/cat-harness.ts";
+import { checkoutDirectories } from "../schemas/harness-config.ts";
 import { withViewerNav } from "./viewer-page.ts";
 import { withInlineCode } from "../schemas/inline-code.ts";
 import { skillPageHref, skillPagesOf } from "./lib/skill-pages.ts";
@@ -305,11 +306,24 @@ function walk(dir: string, pred: (name: string) => boolean): string[] {
  * defect — a consumer scans nothing and reports a clean run over it.
  */
 export function declaredDirectories(graph: string): Array<{ id: string; absPath: string; path: string }> {
-  return resolveDirectories([{ name: "(local)", root: ROOT, own: true }])
-    .filter((d) => (d.graphKinds ?? []).includes(graph))
-    .map((d) => ({ id: d.id, absPath: d.absPath, path: relative(REPO, d.absPath).split("\\").join("/") }))
-    .filter((d) => existsSync(d.absPath))
-    .sort((a, b) => a.id.localeCompare(b.id, "en"));
+  // The CORPUS this handler documents (placement PR0, bean `ejye`): this
+  // instance plus everything stacked on it, which the platform's
+  // `scope: "repository"` mirrors used to supply under ids of their own. Each
+  // directory now keeps its OWNER's id; one that collides with an id already
+  // taken (smart-base's `processes`) is qualified by its instance, which is
+  // the mirror id it had (`smart-base-processes`).
+  const own = new Set(resolveDirectories([{ name: "(local)", root: ROOT, own: true }]).map((d) => d.absPath));
+  const all = checkoutDirectories(ROOT, { stackedOn: ROOT })
+    .filter((d) => (d.graphKinds ?? []).includes(graph as never) && existsSync(d.absPath))
+    .sort((a, b) => Number(!own.has(a.absPath)) - Number(!own.has(b.absPath)));
+  const taken = new Set<string>();
+  const out: Array<{ id: string; absPath: string; path: string }> = [];
+  for (const d of all) {
+    const id = taken.has(d.id) ? `${d.member ?? d.declaredBy}-${d.id}` : d.id;
+    taken.add(id);
+    out.push({ id, absPath: d.absPath, path: relative(REPO, d.absPath).split("\\").join("/") });
+  }
+  return out.sort((a, b) => a.id.localeCompare(b.id, "en"));
 }
 
 /**
@@ -347,7 +361,7 @@ export const TYPES: AutoDocType[] = [
       // whatever is under them, so this asks the same function rather than
       // re-deriving the rule and disagreeing by seven.
       const items: AutoDocItem[] = [];
-      for (const parts of skillMdDirs(ROOT)) {
+      for (const parts of skillMdDirs(ROOT, corpusScopeFor(ROOT))) {
         const dir = join(ROOT, ...parts);
         if (!existsSync(dir)) continue;
         for (const f of readdirSync(dir)) {

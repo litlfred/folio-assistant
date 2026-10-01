@@ -22,7 +22,7 @@ import { execFileSync, spawnSync } from "child_process";
 import { createHash } from "crypto";
 
 import { OWNED, fixedPagesOf, recentOrder, requirementsFromSkill } from "../gen-iris-pages.js";
-import { nodes, pngSize } from "../gen-covers.js";
+import { nodes as nodesOf, pngSize } from "../../../folio-assistant-core/scripts/gen-covers.js";
 import { publicationBlockers } from "../../../folio-assistant-core/schemas/materialization.js";
 
 const INSTANCE = resolve(import.meta.dir, "..", "..");
@@ -231,7 +231,7 @@ describe("the IRIS home replica", () => {
     // withheld the `<img>` was never emitted, so a `src` broken by moving these
     // pages (bean `zgba`) sat undetected. Existing on disk is what would not.
     const esc = (x: string) => x.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
-    const thumbs = nodes().flatMap((n) => (n.bitstreams ?? []).filter((b) => b.bundle === "THUMBNAIL"));
+    const thumbs = nodesOf(INSTANCE).flatMap((n) => (n.bitstreams ?? []).filter((b) => b.bundle === "THUMBNAIL"));
     const shown = thumbs.filter((b) => publicationBlockers(b.materialization?.gates).length === 0);
     const withheld = thumbs.filter((b) => publicationBlockers(b.materialization?.gates).length > 0);
     // Both halves non-empty today, or one of the two assertions below is vacuous.
@@ -257,7 +257,7 @@ describe("the IRIS home replica", () => {
     // `linkOrWithheld`; this reads every page the generator wrote, so a new
     // call site that bypasses it goes red here.
     const pages = readdirSync(SITE).filter((f) => f.endsWith(".html")).map((f) => readFileSync(join(SITE, f), "utf-8"));
-    const pdfs = nodes().flatMap((n) =>
+    const pdfs = nodesOf(INSTANCE).flatMap((n) =>
       (n.bitstreams ?? []).filter((b) => b.bundle === "ORIGINAL" && b.materialization?.state === "materialized"),
     );
     const esc = (x: string) => x.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
@@ -477,7 +477,7 @@ describe("library/ is the corpus only — bean 2b5s", () => {
 describe("library/withheld.json is the catalogue's gates, for the mount — bean cw35", () => {
   const w = JSON.parse(readFileSync(join(LIB, "withheld.json"), "utf-8")) as { paths: { path: string }[] };
   const listed = new Set(w.paths.map((p) => p.path));
-  const items = nodes().filter((n) => n.libraryId);
+  const items = nodesOf(INSTANCE).filter((n) => n.libraryId);
   const originalBlocked = (n: (typeof items)[number]) =>
     (n.bitstreams ?? []).some(
       (b) => b.bundle === "ORIGINAL" && b.materialization?.state === "materialized" && publicationBlockers(b.materialization?.gates).length > 0,
