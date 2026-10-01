@@ -21,7 +21,7 @@ https://<owner>.github.io/<repo>/STAGING/<branch-slug>/
 ```
 
 **A preview is the general publication step with a different root.** The push
-itself is [`render-kg-to-cdn`](../process/workflow/render-kg-to-cdn.md) with
+itself is [`render-kg-to-cdn`](../../process/workflow/render-kg-to-cdn.md) with
 `STAGING/<branch-slug>/` as the publication root URL and the `gh-pages` Tool as
 the target — the same step a release takes with the site root. What this skill
 owns is everything around that call: the slug, the banner and `staging.json`,
