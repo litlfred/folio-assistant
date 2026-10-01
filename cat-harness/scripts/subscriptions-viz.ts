@@ -40,6 +40,7 @@ import {
   type KnownSubstrate,
   type Subscription,
 } from "../schemas/cat-harness.ts";
+import { instanceConfigFilename } from "../schemas/harness-config.ts";
 import { instanceRepositories } from "../schemas/instance-repositories.ts";
 
 const REPO = resolve(import.meta.dir, "..", "..");
@@ -90,13 +91,18 @@ export interface SubscriptionCard {
   /** The subscribing instance. */
   subscriber: string;
   subscription: Subscription;
+  /** Chosen harnesses whose `<name>.config.json` sits at the root (`kg:instantiate`, slice 7). */
+  instantiated?: string[];
 }
 
 export function subscriptionCards(repoRoot: string): SubscriptionCard[] {
   const out: SubscriptionCard[] = [];
   for (const root of instanceRootsIn(repoRoot)) {
     const d = readDeclaration(root);
-    for (const s of d?.subscriptions ?? []) out.push({ subscriber: d!.name, subscription: s });
+    for (const s of d?.subscriptions ?? []) {
+      const instantiated = (s.harnesses ?? []).filter((h) => existsSync(join(repoRoot, instanceConfigFilename(h))));
+      out.push({ subscriber: d!.name, subscription: s, ...(instantiated.length ? { instantiated } : {}) });
+    }
   }
   return out.sort((a, b) => `${a.subscriber}/${a.subscription.id}`.localeCompare(`${b.subscriber}/${b.subscription.id}`));
 }
@@ -157,7 +163,7 @@ export function render(substrates: readonly SubstrateRow[], cards: readonly Subs
       "",
     );
   }
-  for (const { subscriber, subscription: s } of cards) {
+  for (const { subscriber, subscription: s, instantiated } of cards) {
     lines.push(`### \`${subscriber}\` → ${repoLink(s.repository)} as \`${s.id}\``, "");
     lines.push(`Pinned at \`${s.ref}\`.${s.note ? ` ${s.note}` : ""}`, "");
     lines.push("| part | chosen | state here |", "|---|---|---|");
@@ -166,7 +172,13 @@ export function render(substrates: readonly SubstrateRow[], cards: readonly Subs
     // NOT YET HELD — never drawn as held, never as missing.
     for (const g of s.subgraphs ?? []) lines.push(`| subgraph \`${g}\` | ✓ | 🔗 chosen, not yet held |`);
     lines.push(`| assets | policy \`${s.assets?.policy ?? "none"}\` | 🔗 each copy passes the materialisation gates |`);
-    for (const h of s.harnesses ?? []) lines.push(`| harness \`${h}\` | ✓ | 🔗 chosen, not yet instantiated |`);
+    for (const h of s.harnesses ?? []) {
+      lines.push(
+        instantiated?.includes(h)
+          ? `| harness \`${h}\` | ✓ | ⬆ instantiated: \`${h}.config.json\` at the root |`
+          : `| harness \`${h}\` | ✓ | 🔗 chosen, not yet instantiated |`,
+      );
+    }
     lines.push(
       "| everything else the substrate offers | — | 🔗 referenced |",
       "",

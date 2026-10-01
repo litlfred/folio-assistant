@@ -82,6 +82,7 @@ import {
   nestedDirectories,
 } from "../schemas/cat-harness.js";
 import { withViewers } from "./viewer-declarations.js";
+import { subscribedHarnesses, subscribedTile } from "./kg-instantiate.js";
 // The `folio` graph kind is registered by CORE. This module is a LIBRARY, so it
 // does NOT import that registration: a library's edge is inherited by every
 // module that imports it, and the harness may not depend on core. The
@@ -1198,6 +1199,18 @@ export function harnessTiles(
     // here would undo it one layer down.
     if (icons !== undefined) tile.navbarIcons = [...icons];
     tiles.push(tile);
+  }
+
+  // SUBSCRIBED HARNESSES (issue #1719, slice 7): a harness a subscription
+  // chose, with `<name>.config.json` at the root and no local declaration, is
+  // instantiated here and gets a tile drawn from its cached snapshot. A local
+  // instance of the same name wins: `kg:instantiate` refuses that case, and
+  // drawing both would be the duplicate `disambiguate` exists to flag.
+  const local = new Set(decls.map(({ decl }) => decl.name));
+  for (const h of subscribedHarnesses(repoRoot, decls)) {
+    if (!h.instantiated || local.has(h.harness)) continue;
+    local.add(h.harness);
+    tiles.push(subscribedTile(h));
   }
 
   return orderTiles(disambiguate(tiles));

@@ -1,0 +1,476 @@
+#!/usr/bin/env bun
+/**
+ * INSTANTIATE a harness a subscription chose: write `<harness>.config.json` at
+ * the instantiation root, and the state directories the harness declares, so
+ * the harness reaches the navbar.
+ *
+ * @module cat-harness/scripts/kg-instantiate
+ * @covers cat-harness, substrate-snapshot
+ *
+ * Issue #1719, epic bean `fnx4`, slice 7 of
+ * `docs/proposals/kg-subscriptions.md` — the third verb, after subscribe
+ * (slice 4, `kg-subscribe.ts`) and materialise (slices 5–6).
+ *
+ * ## What it reads, and why nothing is fetched
+ *
+ * The harness's declaration is the substrate snapshot `kg:subscribe` cached at
+ * the subscription's pin. Instantiating reads that snapshot and nothing else:
+ * the pin was judged once, its bytes carry a digest, and reading the network
+ * again here would be a second, unpinned answer to "what does this harness
+ * declare". So a missing or edited snapshot is refused rather than refetched.
+ *
+ * ## The refusals, each with its reason
+ *
+ * - **not chosen**: the harness is not in the subscription's `harnesses`.
+ *   Choosing is the subscriber's act, recorded in the declaration; instantiating
+ *   something unchosen would put a harness in the navbar that no declaration
+ *   asked for.
+ * - **not declared**: the snapshot does not list it among the substrate's
+ *   harnesses at the pin.
+ * - **a need unmet**: every name in the harness's `needs` must be an instance
+ *   in this checkout, or a substrate some subscription here holds the snapshot
+ *   of. The missing ones are named.
+ * - **a name taken**: a local instance already carries the harness's name. Two
+ *   declarations under one name is the ambiguity `disambiguate` reports, and
+ *   the config file would bind to the wrong one.
+ *
+ * ## Three answers, never two
+ *
+ * `could-not-determine` is its own result and is never clean: a snapshot that
+ * is absent or will not parse, an unreadable declaration in the checkout while
+ * a need is still unresolved, or a directory whose graph kinds this registry
+ * does not know, so whether it is a STATE directory cannot be said. Creating
+ * it might write a directory the harness's processes never use; skipping it
+ * might leave out one they write. Either guess is `dh4f`, so the run stops and
+ * names the kinds to register.
+ *
+ * ## Where the state directories go
+ *
+ * Under `<instantiation root>/<harness>/`, at each directory's declared path,
+ * with a `.gitkeep` so an empty directory survives a commit. The harness has no
+ * local declaration (its declaration is the snapshot, on purpose: see
+ * `schemas/substrate-snapshot.ts`), so `<harness>/` is where its local bytes
+ * live; no scanner reads it as an instance because it carries no declaration.
+ *
+ * ## Idempotent, and the config is never overwritten
+ *
+ * State directories are written first and the config last, so a config on disk
+ * means the directories were made. A run that finds the config reports it as
+ * already instantiated and leaves it byte for byte; it still creates any state
+ * directory that has gone missing, which is the one thing a re-run can repair
+ * without overwriting anything.
+ *
+ * ## How it reaches the navbar
+ *
+ * `harness-tiles.ts` draws a tile for every chosen harness whose config sits
+ * at the root and that no local instance names, from its snapshot
+ * ({@link subscribedTile}); `check-instance-config.ts` counts a chosen
+ * harness's config as claimed rather than orphaned. Run `bun run
+ * docs:harness` afterwards to regenerate `docs/_data/harness.json`.
+ *
+ * `check:instance-render` judges instances that have a local tree to render.
+ * A subscribed harness has none until its subgraphs are materialised, so that
+ * gate says nothing about it yet: a limit, reported here rather than implied.
+ *
+ * Usage:
+ *   bun run kg:instantiate <subscription-id> <harness> [--instance <dir>] [--dry-run]
+ */
+import { createHash } from "node:crypto";
+import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
+import { isAbsolute, join, relative, resolve } from "node:path";
+
+import { KnowledgeGraphDeclarationSchema } from "../../bootstrap-tools/schemas/graph.ts";
+import { GENERIC, avatarFor, hasAvatar } from "../schemas/avatars.js";
+import {
+  type CatHarnessDeclaration,
+  type Subscription,
+  findDeclarationFile,
+  graphLayer,
+  instanceRootsIn,
+  readDeclaration,
+  repoRootFor,
+  rootForScope,
+} from "../schemas/cat-harness.js";
+import { instanceConfigFilename } from "../schemas/harness-config.js";
+import { SubstrateSnapshotSchema, type SubstrateSnapshot } from "../schemas/substrate-snapshot.js";
+import type { HarnessTile } from "./harness-tiles.js";
+import { SNAPSHOT_GRAPH_KIND, SNAPSHOT_SUFFIX } from "./kg-subscribe.js";
+
+const INSTANCE = join(import.meta.dir, "..");
+
+type DirLike = { path: string; graphKinds?: readonly string[]; scope?: "repository" };
+
+/** The directory an instance keeps its substrate snapshots in, or undefined when it declares none. */
+export function snapshotDirFor(instanceRoot: string, decl: { directories?: readonly DirLike[] }): string | undefined {
+  const d = (decl.directories ?? []).find((x) => (x.graphKinds ?? []).includes(SNAPSHOT_GRAPH_KIND));
+  return d ? resolve(rootForScope(instanceRoot, d.scope), d.path) : undefined;
+}
+
+export type SnapshotRead =
+  | { state: "read"; snapshot: SubstrateSnapshot }
+  | { state: "absent" | "unreadable" | "mismatch"; reason: string };
+
+/**
+ * One subscription's cached snapshot, held to the subscription it belongs to:
+ * the right id, repository and pin, and bytes that still match their digest.
+ */
+export function readSnapshot(instanceRoot: string, decl: { directories?: readonly DirLike[] }, s: Subscription): SnapshotRead {
+  const dir = snapshotDirFor(instanceRoot, decl);
+  if (!dir) return { state: "absent", reason: `the subscriber declares no \`${SNAPSHOT_GRAPH_KIND}\` directory, so no snapshot of \`${s.id}\` can exist` };
+  const file = join(dir, `${s.id}${SNAPSHOT_SUFFIX}`);
+  if (!existsSync(file)) {
+    return { state: "absent", reason: `no snapshot of \`${s.id}\` at ${file} — run \`bun run kg:subscribe ${s.repository}@${s.ref}\`` };
+  }
+  let parsed;
+  try {
+    parsed = SubstrateSnapshotSchema.safeParse(JSON.parse(readFileSync(file, "utf8")));
+  } catch (e) {
+    return { state: "unreadable", reason: `the snapshot of \`${s.id}\` is not JSON: ${e instanceof Error ? e.message : String(e)}` };
+  }
+  if (!parsed.success) {
+    const i = parsed.error.issues[0];
+    return { state: "unreadable", reason: `the snapshot of \`${s.id}\` does not parse: ${i?.path.join(".")}: ${i?.message}` };
+  }
+  const snap = parsed.data;
+  if (snap.subscription !== s.id || snap.repository !== s.repository || snap.ref !== s.ref) {
+    return {
+      state: "mismatch",
+      reason: `the snapshot of \`${s.id}\` is of ${snap.repository}@${snap.ref.slice(0, 12)}, the subscription pins ${s.repository}@${s.ref.slice(0, 12)} — re-subscribe`,
+    };
+  }
+  if (createHash("sha256").update(snap.raw).digest("hex") !== snap.fixity.digest) {
+    return { state: "mismatch", reason: `the snapshot of \`${s.id}\` does not match its digest — somebody else's bytes were edited in place` };
+  }
+  return { state: "read", snapshot: snap };
+}
+
+/** A harness's declaration, read out of the snapshot's upstream bytes. */
+export type HarnessDeclaration = {
+  name: string;
+  title?: string;
+  description?: string;
+  directories: { id: string; path: string; graphKinds: string[] }[];
+  needs?: string[];
+};
+
+/** Read the harness `harness` out of a snapshot, or undefined when the bytes do not declare it. */
+export function harnessDeclarationIn(snap: SubstrateSnapshot, harness: string): HarnessDeclaration | undefined {
+  if (!snap.summary.harnesses.includes(harness)) return undefined;
+  const parsed = KnowledgeGraphDeclarationSchema.safeParse(JSON.parse(snap.raw));
+  // `summary.harnesses` is derived from the root declaration's own name
+  // (`harnessesOf`), so the root declaration IS the harness's.
+  if (!parsed.success || parsed.data.name !== harness) return undefined;
+  const d = parsed.data;
+  return {
+    name: d.name,
+    ...(d.title !== undefined ? { title: d.title } : {}),
+    ...(d.description !== undefined ? { description: d.description } : {}),
+    directories: (d.directories ?? []).map((x) => ({ id: x.id, path: x.path, graphKinds: x.graphKinds.map(String) })),
+    ...(d.needs !== undefined ? { needs: [...d.needs] } : {}),
+  };
+}
+
+/** A declared path that may be created under the harness's home: relative, no `..`, no dot-prefixed segment. */
+export function unsafePathReason(path: string): string | undefined {
+  if (isAbsolute(path)) return "is absolute";
+  const segs = path.split("/").filter((s) => s !== "" && s !== ".");
+  if (segs.length === 0) return "names the harness's root rather than a directory under it";
+  if (segs.includes("..")) return "climbs out of the harness's home";
+  const dot = segs.find((s) => s.startsWith("."));
+  if (dot) return `has the dot-prefixed segment \`${dot}\``;
+  return undefined;
+}
+
+export type StateDirectories =
+  | { state: "determined"; dirs: { id: string; path: string }[] }
+  | { state: "could-not-determine"; reason: string };
+
+/**
+ * The directories a harness declares that hold STATE: any directory with a
+ * kind whose layer is `state`. A directory none of whose kinds is state, and
+ * at least one of whose kinds this registry does not know, is undetermined.
+ */
+export function stateDirectoriesOf(decl: HarnessDeclaration): StateDirectories {
+  const dirs: { id: string; path: string }[] = [];
+  const undetermined: string[] = [];
+  for (const d of decl.directories) {
+    const layers = d.graphKinds.map((k) => graphLayer(k));
+    if (layers.includes("state")) dirs.push({ id: d.id, path: d.path });
+    else if (layers.includes(undefined)) {
+      const unknown = d.graphKinds.filter((k) => graphLayer(k) === undefined);
+      undetermined.push(`\`${d.id}\` (${unknown.map((k) => `\`${k}\``).join(", ")})`);
+    }
+  }
+  if (undetermined.length) {
+    return {
+      state: "could-not-determine",
+      reason:
+        `whether ${undetermined.length === 1 ? "this directory holds" : "these directories hold"} state cannot be said: ${undetermined.join("; ")} ` +
+        `— no graph kind registered here names its layer. Register the kind (with its \`holds\`) and re-run`,
+    };
+  }
+  return { state: "determined", dirs };
+}
+
+/** Where a subscribed harness's local bytes live: `<root>/<harness>/`. */
+export function harnessHome(instantiationRoot: string, harness: string): string {
+  return join(instantiationRoot, harness);
+}
+
+export type InstantiateResult =
+  | {
+      ok: true;
+      state: "instantiated" | "already-instantiated";
+      configFile: string;
+      stateDirs: string[];
+      /** Every file or directory this run wrote (or would, on a dry run). Empty when nothing changed. */
+      written: string[];
+    }
+  | { ok: false; state: "refused" | "could-not-determine"; reason: string };
+
+export interface InstantiateOptions {
+  subscription: string;
+  harness: string;
+  /** The subscribing instance's directory. Defaults to cat-harness. */
+  instance?: string;
+  /** The instantiation root, where `<harness>.config.json` goes. Defaults to the instance's repository root. */
+  root?: string;
+  dryRun?: boolean;
+}
+
+/** Each declaration in the checkout, or the reason one could not be read. */
+function declarationsIn(root: string): { decls: { dir: string; decl: CatHarnessDeclaration }[]; unreadable: string[] } {
+  const decls: { dir: string; decl: CatHarnessDeclaration }[] = [];
+  const unreadable: string[] = [];
+  for (const dir of instanceRootsIn(root)) {
+    try {
+      const decl = readDeclaration(dir);
+      if (decl) decls.push({ dir, decl });
+    } catch (e) {
+      unreadable.push(`${relative(root, dir) || "."}: ${e instanceof Error ? e.message.split("\n")[0] : String(e)}`);
+    }
+  }
+  return { decls, unreadable };
+}
+
+export function instantiate(opts: InstantiateOptions): InstantiateResult {
+  const instanceRoot = resolve(opts.instance ?? INSTANCE);
+  const root = resolve(opts.root ?? repoRootFor(instanceRoot));
+  const refuse = (reason: string): InstantiateResult => ({ ok: false, state: "refused", reason });
+  const unknown = (reason: string): InstantiateResult => ({ ok: false, state: "could-not-determine", reason });
+
+  if (!findDeclarationFile(instanceRoot)) return refuse(`${instanceRoot} carries no instance declaration`);
+  let subscriber: CatHarnessDeclaration | undefined;
+  try {
+    subscriber = readDeclaration(instanceRoot);
+  } catch (e) {
+    return unknown(`the subscriber's declaration could not be read: ${e instanceof Error ? e.message.split("\n")[0] : String(e)}`);
+  }
+  if (!subscriber) return refuse(`${instanceRoot} carries no instance declaration`);
+
+  const subs = subscriber.subscriptions ?? [];
+  const sub = subs.find((s) => s.id === opts.subscription);
+  if (!sub) {
+    return refuse(
+      `${subscriber.name} has no subscription \`${opts.subscription}\`` +
+        (subs.length ? `; it subscribes to ${subs.map((s) => `\`${s.id}\``).join(", ")}` : "; it subscribes to nothing — run `bun run kg:subscribe` first"),
+    );
+  }
+  const chosen = sub.harnesses ?? [];
+  if (!chosen.includes(opts.harness)) {
+    return refuse(
+      `subscription \`${sub.id}\` did not choose harness \`${opts.harness}\`` +
+        (chosen.length ? ` (it chose ${chosen.map((h) => `\`${h}\``).join(", ")})` : " (it chose no harness)") +
+        `. Choosing is recorded in the declaration: add it to the subscription's \`harnesses\` first`,
+    );
+  }
+
+  const read = readSnapshot(instanceRoot, subscriber, sub);
+  if (read.state === "mismatch") return refuse(read.reason);
+  if (read.state !== "read") return unknown(read.reason);
+  const snap = read.snapshot;
+  if (!snap.summary.harnesses.includes(opts.harness)) {
+    return refuse(
+      `${sub.repository} at ${sub.ref.slice(0, 12)} does not declare harness \`${opts.harness}\`; ` +
+        `it declares ${snap.summary.harnesses.map((h) => `\`${h}\``).join(", ")}`,
+    );
+  }
+  const harness = harnessDeclarationIn(snap, opts.harness);
+  if (!harness) return unknown(`the snapshot lists \`${opts.harness}\` but its bytes do not declare it — re-run \`bun run kg:subscribe:check\``);
+
+  const { decls, unreadable } = declarationsIn(root);
+  const local = new Set(decls.map((d) => d.decl.name));
+  if (local.has(opts.harness)) {
+    return refuse(
+      `a local instance in this checkout is already named \`${opts.harness}\`; a config of that name binds to it, ` +
+        `so a subscribed harness cannot be instantiated under the same name`,
+    );
+  }
+
+  // NEEDS: local instances, or substrates whose snapshot some subscription here holds.
+  const subscribed = new Set<string>();
+  const snapshotGaps: string[] = [];
+  for (const { dir, decl } of decls) {
+    for (const s of decl.subscriptions ?? []) {
+      const r = readSnapshot(dir, decl, s);
+      if (r.state === "read") {
+        subscribed.add(r.snapshot.summary.name);
+        for (const h of r.snapshot.summary.harnesses) subscribed.add(h);
+      } else snapshotGaps.push(`${decl.name}/${s.id}: ${r.reason}`);
+    }
+  }
+  const missing = (harness.needs ?? []).filter((n) => !local.has(n) && !subscribed.has(n));
+  if (missing.length) {
+    const gaps = [...unreadable, ...snapshotGaps];
+    if (gaps.length) {
+      return unknown(
+        `\`${opts.harness}\` needs ${missing.map((n) => `\`${n}\``).join(", ")}, found neither locally nor by a subscription — ` +
+          `but ${gaps.length} source(s) could not be read, so the answer is not known: ${gaps.join("; ")}`,
+      );
+    }
+    return refuse(
+      `\`${opts.harness}\` needs ${missing.map((n) => `\`${n}\``).join(", ")}, which ${missing.length === 1 ? "is" : "are"} neither ` +
+        `an instance in this checkout nor a substrate any subscription here holds. Subscribe to ${missing.length === 1 ? "it" : "them"} first`,
+    );
+  }
+
+  const states = stateDirectoriesOf(harness);
+  if (states.state === "could-not-determine") return unknown(states.reason);
+  for (const d of states.dirs) {
+    const why = unsafePathReason(d.path);
+    if (why) return refuse(`state directory \`${d.id}\` (\`${d.path}\`) ${why}; nothing was written`);
+  }
+
+  const home = harnessHome(root, opts.harness);
+  const stateDirs = states.dirs.map((d) => join(home, d.path));
+  const written: string[] = [];
+  for (const dir of stateDirs) {
+    const keep = join(dir, ".gitkeep");
+    if (existsSync(dir)) continue;
+    written.push(dir);
+    if (!opts.dryRun) {
+      mkdirSync(dir, { recursive: true });
+      writeFileSync(keep, "");
+    }
+  }
+
+  const configFile = join(root, instanceConfigFilename(opts.harness));
+  if (existsSync(configFile)) return { ok: true, state: "already-instantiated", configFile, stateDirs, written };
+
+  const config = {
+    _comment:
+      `${opts.harness.toUpperCase()}, INSTANTIATED from a KG subscription: \`${subscriber.name}\` subscribes to ${sub.repository} ` +
+      `as \`${sub.id}\`, pinned at ${sub.ref}, and chose this harness. Its declaration is the cached snapshot, not a local ` +
+      `\`${opts.harness}.json\`; its state directories live under \`${opts.harness}/\`. Written by \`bun run kg:instantiate\`; ` +
+      `re-running reports this file rather than overwriting it.`,
+    _subscription: { subscriber: subscriber.name, id: sub.id, repository: sub.repository, ref: sub.ref },
+  };
+  written.push(configFile);
+  if (!opts.dryRun) writeFileSync(configFile, `${JSON.stringify(config, null, 2)}\n`);
+  return { ok: true, state: "instantiated", configFile, stateDirs, written };
+}
+
+// ── What the navbar and the config sweep read ────────────────────────────────
+
+/** A chosen harness, and whether it is instantiated at the root. */
+export interface SubscribedHarness {
+  harness: string;
+  subscriber: string;
+  subscription: Subscription;
+  instantiated: boolean;
+  snapshot: SnapshotRead;
+}
+
+/**
+ * Every harness some subscription in `decls` chose, with whether its config
+ * sits at `root`. Reads only what it is handed and the snapshots, so the
+ * navbar's caller does not rescan the tree.
+ */
+export function subscribedHarnesses(root: string, decls: readonly { dir: string; decl: CatHarnessDeclaration }[]): SubscribedHarness[] {
+  const out: SubscribedHarness[] = [];
+  for (const { dir, decl } of decls) {
+    for (const s of decl.subscriptions ?? []) {
+      const chosen = s.harnesses ?? [];
+      if (!chosen.length) continue;
+      const snapshot = readSnapshot(dir, decl, s);
+      for (const h of chosen) {
+        out.push({
+          harness: h,
+          subscriber: decl.name,
+          subscription: s,
+          instantiated: existsSync(join(root, instanceConfigFilename(h))),
+          snapshot,
+        });
+      }
+    }
+  }
+  return out;
+}
+
+/**
+ * The navbar tile of an instantiated subscribed harness, drawn from its
+ * snapshot. It has no local pages, so it links nowhere and opens no viewer;
+ * its subgraphs are listed as referenced, and a snapshot that cannot be read
+ * is drawn as a finding, never as an empty tile.
+ */
+export function subscribedTile(h: SubscribedHarness): HarnessTile {
+  const own = hasAvatar(h.harness);
+  const avatar = own ? avatarFor(h.harness) : GENERIC;
+  const s = h.subscription;
+  const pin = `${s.repository}@${s.ref.slice(0, 12)}`;
+  const decl = h.snapshot.state === "read" ? harnessDeclarationIn(h.snapshot.snapshot, h.harness) : undefined;
+  const findings: string[] = [];
+  if (h.snapshot.state !== "read") findings.push(`${h.harness}: could not read its declaration — ${h.snapshot.reason}`);
+  else if (!decl) findings.push(`${h.harness}: the snapshot of \`${s.id}\` does not declare it at the pin`);
+  const kinds = [...new Set((decl?.directories ?? []).flatMap((d) => d.graphKinds))];
+  const title = decl?.title ?? h.harness;
+  return {
+    name: h.harness,
+    title,
+    label: title,
+    description:
+      `Subscribed from [\`${s.repository}\`](https://github.com/${s.repository}) at \`${s.ref.slice(0, 12)}\` by \`${h.subscriber}\`` +
+      (decl?.description ? `. ${decl.description}` : "."),
+    footer: false,
+    icon: null,
+    tone: avatar.tone,
+    toneFrom: "avatar",
+    reads: avatar.reads,
+    genericAvatar: !own,
+    instantiated: h.instantiated,
+    ...(decl?.needs !== undefined ? { needs: decl.needs } : {}),
+    stats: [
+      { id: "directories", label: "declared directories", value: decl?.directories.length ?? 0 },
+      { id: "kinds", label: "declared graph kinds", value: kinds.length },
+      { id: "views", label: "visualisations you can open", value: 0 },
+    ],
+    visualisations: kinds.map((kind) => ({ kind, note: `referenced from ${pin}, not held here` })),
+    findings,
+  };
+}
+
+function flag(argv: string[], name: string): string | undefined {
+  const i = argv.indexOf(name);
+  return i >= 0 ? argv[i + 1] : undefined;
+}
+
+if (import.meta.main) {
+  const argv = process.argv.slice(2);
+  const positional = argv.filter((a, i) => !a.startsWith("--") && argv[i - 1] !== "--instance");
+  const [subscription, harness] = positional;
+  if (!subscription || !harness) {
+    console.error("usage: bun run kg:instantiate <subscription-id> <harness> [--instance <dir>] [--dry-run]");
+    process.exit(2);
+  }
+  const dryRun = argv.includes("--dry-run");
+  const r = instantiate({ subscription, harness, instance: flag(argv, "--instance"), dryRun });
+  if (!r.ok) {
+    console.error(`  ${r.state === "could-not-determine" ? "?" : "✗"} ${r.state}: ${r.reason}`);
+    process.exit(r.state === "could-not-determine" ? 3 : 1);
+  }
+  const rel = (p: string) => relative(process.cwd(), p);
+  if (r.state === "already-instantiated") console.log(`  ✓ ${harness} is already instantiated: ${rel(r.configFile)} exists and was left as it is`);
+  else console.log(`  ✓ ${harness} ${dryRun ? "would be" : "is"} instantiated from \`${subscription}\``);
+  for (const f of r.written) console.log(`  ${dryRun ? "would write" : "wrote"} ${rel(f)}`);
+  if (r.state === "instantiated" && !dryRun) console.log("  next: `bun run docs:harness` to put it in the navbar's data");
+}
