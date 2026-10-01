@@ -1,0 +1,38 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://litlfred.github.io/folio-assistant/STAGING/claude-reference-direction-ratchet/skills/dmn-authoring/output.schema.json",
+  "title": "DMN Authoring Output",
+  "description": "Output schema for DMN decision table authoring.",
+  "type": "object",
+  "required": [
+    "dmnFile"
+  ],
+  "properties": {
+    "dmnFile": {
+      "type": "string"
+    },
+    "decisionTableCount": {
+      "type": "integer"
+    },
+    "ruleCount": {
+      "type": "integer"
+    },
+    "hitPolicy": {
+      "type": "string",
+      "enum": [
+        "UNIQUE",
+        "FIRST",
+        "PRIORITY",
+        "ANY",
+        "COLLECT",
+        "RULE ORDER"
+      ]
+    }
+  },
+  "staging": {
+    "branch": "claude/reference-direction-ratchet",
+    "sha": "4f0b257189c4fdd14a8b596ba5d24149d914c3df",
+    "pr": "1809/merge",
+    "run": "36904014128"
+  }
+}

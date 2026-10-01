@@ -1,0 +1,2600 @@
+{
+  "$schema": "qa-results/v1",
+  "producer": {
+    "script": "cat-harness/scripts/check-reference-direction.ts",
+    "script_hash": "f32ccf2d4188"
+  },
+  "subject": {
+    "kind": "reference-direction",
+    "id": "instances"
+  },
+  "families": {
+    "baseline-behind": {
+      "summary": "A baseline entry the tree has outgrown — no wrong-direction reference left, or fewer instances named than the entry lists. A stale entry is a hole (the file could regress and pass), so `--check` fails on it; `bun run check:reference-direction` (or `bun run regen`) trims or narrows it.",
+      "count": 0,
+      "entries": []
+    },
+    "baselined": {
+      "summary": "Baseline entries recorded at the seed (\"baselined 2026-10-01\"), with the instances each names — the files naming ONE instance above them as well as several (owner Q-B A.10). Membership only ever shrinks.",
+      "count": 324,
+      "entries": [
+        {
+          "file": "bootstrap-tools/scripts/check-bootstrap-concepts.ts",
+          "targets": [
+            "cat-harness"
+          ]
+        },
+        {
+          "file": "bootstrap-tools/scripts/iri-sync.ts",
+          "targets": [
+            "cat-harness"
+          ]
+        },
+        {
+          "file": "bootstrap-tools/skills/package-manifest.json",
+          "targets": [
+            "who-iris"
+          ]
+        },
+        {
+          "file": "bootstrap/.github/workflows/pages.yml",
+          "targets": [
+            "bootstrap-tools"
+          ]
+        },
+        {
+          "file": "bootstrap/bootstrap.json",
+          "targets": [
+            "bootstrap-tools"
+          ]
+        },
+        {
+          "file": "bootstrap/ns.jsonld",
+          "targets": [
+            "bootstrap-tools"
+          ]
+        },
+        {
+          "file": "bootstrap/processes/complete-initialization.bpmn",
+          "targets": [
+            "bootstrap-tools"
+          ]
+        },
+        {
+          "file": "bootstrap/README.md",
+          "targets": [
+            "bootstrap-tools"
+          ]
+        },
+        {
+          "file": "bootstrap/schemas/discussion.input.schema.json",
+          "targets": [
+            "bootstrap-tools"
+          ]
+        },
+        {
+          "file": "bootstrap/schemas/discussion.output.schema.json",
+          "targets": [
+            "bootstrap-tools"
+          ]
+        },
+        {
+          "file": "bootstrap/schemas/graph.schema.json",
+          "targets": [
+            "bootstrap-tools"
+          ]
+        },
+        {
+          "file": "bootstrap/schemas/model-registry.schema.json",
+          "targets": [
+            "bootstrap-tools"
+          ]
+        },
+        {
+          "file": "bootstrap/schemas/README.md",
+          "targets": [
+            "bootstrap-tools"
+          ]
+        },
+        {
+          "file": "bootstrap/schemas/requirement.schema.json",
+          "targets": [
+            "bootstrap-tools"
+          ]
+        },
+        {
+          "file": "bootstrap/skills/bootstrap-graph-emission.md",
+          "targets": [
+            "bootstrap-tools"
+          ]
+        },
+        {
+          "file": "bootstrap/skills/bootstrap-graph-publication.md",
+          "targets": [
+            "bootstrap-tools"
+          ]
+        },
+        {
+          "file": "bootstrap/skills/initialization-steps.md",
+          "targets": [
+            "bootstrap-tools"
+          ]
+        },
+        {
+          "file": "bootstrap/skills/publish-documents.md",
+          "targets": [
+            "bootstrap-tools"
+          ]
+        },
+        {
+          "file": "cat-harness/code-lists/own-namespaces.json",
+          "targets": [
+            "folio-assistant-core"
+          ]
+        },
+        {
+          "file": "cat-harness/content/docs/content-types/content-types.ts",
+          "targets": [
+            "smart-base"
+          ]
+        },
+        {
+          "file": "cat-harness/content/docs/fhir-content/the-three-layers.md",
+          "targets": [
+            "folio-assistant-core",
+            "folio-assistant-sci",
+            "smart-base"
+          ]
+        },
+        {
+          "file": "cat-harness/content/docs/guides-who-smart-dak/guides-who-smart-dak.ts",
+          "targets": [
+            "smart-base"
+          ]
+        },
+        {
+          "file": "cat-harness/content/docs/guides-who-smart-ig/making-the-build-incremental.md",
+          "targets": [
+            "smart-immunizations"
+          ]
+        },
+        {
+          "file": "cat-harness/content/docs/guides-writing-a-document/where-things-are.md",
+          "targets": [
+            "folio-assistant-core"
+          ]
+        },
+        {
+          "file": "cat-harness/content/docs/harness/overview.md",
+          "targets": [
+            "folio-assistant-core"
+          ]
+        },
+        {
+          "file": "cat-harness/content/docs/harness/the-dependency-walk.md",
+          "targets": [
+            "folio-assistant-core"
+          ]
+        },
+        {
+          "file": "cat-harness/content/docs/harnessed-kg-overview/slide-01.md",
+          "targets": [
+            "smart-base"
+          ]
+        },
+        {
+          "file": "cat-harness/content/docs/harnessed-kg-overview/slide-02.md",
+          "targets": [
+            "large-datasets",
+            "who-iris"
+          ]
+        },
+        {
+          "file": "cat-harness/content/docs/harnessed-kg-overview/slide-04.md",
+          "targets": [
+            "smart-base"
+          ]
+        },
+        {
+          "file": "cat-harness/content/docs/harnessed-kg-overview/slide-09.md",
+          "targets": [
+            "folio-assistant-core",
+            "smart-base",
+            "smart-immunizations",
+            "who-iris"
+          ]
+        },
+        {
+          "file": "cat-harness/content/docs/harnessed-kg-overview/slide-10.md",
+          "targets": [
+            "smart-base"
+          ]
+        },
+        {
+          "file": "cat-harness/content/docs/ig-publisher/what-only-it-can-do.md",
+          "targets": [
+            "smart-base"
+          ]
+        },
+        {
+          "file": "cat-harness/content/docs/knowledge-graph/what-is-declared-today.md",
+          "targets": [
+            "agent-skills",
+            "who-style-guide"
+          ]
+        },
+        {
+          "file": "cat-harness/content/pipeline/content-graph.ts",
+          "targets": [
+            "folio-assistant-sci"
+          ]
+        },
+        {
+          "file": "cat-harness/content/pipeline/fsh-cone.ts",
+          "targets": [
+            "smart-immunizations"
+          ]
+        },
+        {
+          "file": "cat-harness/content/pipeline/gen-library-jsonld.ts",
+          "targets": [
+            "smart-base"
+          ]
+        },
+        {
+          "file": "cat-harness/content/pipeline/gen-site-jsonld.ts",
+          "targets": [
+            "smart-base"
+          ]
+        },
+        {
+          "file": "cat-harness/content/pipeline/lean-atlas-ingest.ts",
+          "targets": [
+            "folio-assistant-sci"
+          ]
+        },
+        {
+          "file": "cat-harness/content/pipeline/liquid-values.ts",
+          "targets": [
+            "fhir-harness"
+          ]
+        },
+        {
+          "file": "cat-harness/content/pipeline/lsi.ts",
+          "targets": [
+            "who-iris"
+          ]
+        },
+        {
+          "file": "cat-harness/content/pipeline/po-inject.ts",
+          "targets": [
+            "smart-base"
+          ]
+        },
+        {
+          "file": "cat-harness/content/pipeline/pot-extract.ts",
+          "targets": [
+            "folio-assistant-core",
+            "smart-base"
+          ]
+        },
+        {
+          "file": "cat-harness/content/pipeline/qa-checker-discovery.ts",
+          "targets": [
+            "smart-base"
+          ]
+        },
+        {
+          "file": "cat-harness/content/pipeline/qa-checkers-dak.ts",
+          "targets": [
+            "smart-base",
+            "smart-immunizations"
+          ]
+        },
+        {
+          "file": "cat-harness/content/pipeline/qa-criteria-registry.ts",
+          "targets": [
+            "folio-assistant-sci"
+          ]
+        },
+        {
+          "file": "cat-harness/content/pipeline/qa-sweep.ts",
+          "targets": [
+            "folio-assistant-sci"
+          ]
+        },
+        {
+          "file": "cat-harness/content/pipeline/repo-root.ts",
+          "targets": [
+            "folio-assistant-sci"
+          ]
+        },
+        {
+          "file": "cat-harness/content/pipeline/script-sidecars/proof-compile-cost.script.json",
+          "targets": [
+            "folio-assistant-sci"
+          ]
+        },
+        {
+          "file": "cat-harness/content/pipeline/script-sidecars/proof-no-cost-regression.script.json",
+          "targets": [
+            "folio-assistant-sci"
+          ]
+        },
+        {
+          "file": "cat-harness/content/pipeline/voice-criteria.ts",
+          "targets": [
+            "who-style-guide"
+          ]
+        },
+        {
+          "file": "cat-harness/docs/architecture/cat-harness-minimum.md",
+          "targets": [
+            "cat-harness-tools",
+            "folio-assistant-core",
+            "folio-assistant-sci",
+            "smart-base"
+          ]
+        },
+        {
+          "file": "cat-harness/docs/architecture/current-state.md",
+          "targets": [
+            "folio-assistant-core",
+            "folio-assistant-sci",
+            "smart-base"
+          ]
+        },
+        {
+          "file": "cat-harness/docs/architecture/folio-board-requirements.md",
+          "targets": [
+            "folio-assistant-core",
+            "large-datasets",
+            "who-iris"
+          ]
+        },
+        {
+          "file": "cat-harness/docs/architecture/future-state.md",
+          "targets": [
+            "folio-assistant-core",
+            "folio-assistant-sci",
+            "smart-base"
+          ]
+        },
+        {
+          "file": "cat-harness/docs/architecture/migration-plan.md",
+          "targets": [
+            "folio-assistant-core",
+            "folio-assistant-sci",
+            "smart-base"
+          ]
+        },
+        {
+          "file": "cat-harness/docs/assets/harness/tiles.json",
+          "targets": [
+            "who-iris"
+          ]
+        },
+        {
+          "file": "cat-harness/docs/detangle.md",
+          "targets": [
+            "folio-assistant-sci",
+            "smart-base"
+          ]
+        },
+        {
+          "file": "cat-harness/docs/external-schemas/index.md",
+          "targets": [
+            "folio-assistant-core",
+            "large-datasets",
+            "smart-base"
+          ]
+        },
+        {
+          "file": "cat-harness/docs/installation.md",
+          "targets": [
+            "cat-harness-tools"
+          ]
+        },
+        {
+          "file": "cat-harness/docs/lsi/index.md",
+          "targets": [
+            "agent-skills",
+            "fhir-harness",
+            "folio-assistant",
+            "folio-assistant-core",
+            "folio-assistant-sci",
+            "large-datasets",
+            "smart-base",
+            "smart-trust",
+            "who-iris",
+            "who-style-guide"
+          ]
+        },
+        {
+          "file": "cat-harness/docs/processes/copy-out-materialized.md",
+          "targets": [
+            "folio-assistant-core",
+            "large-datasets",
+            "who-iris"
+          ]
+        },
+        {
+          "file": "cat-harness/docs/processes/deep-document-research.md",
+          "targets": [
+            "folio-assistant-core"
+          ]
+        },
+        {
+          "file": "cat-harness/docs/processes/diig-investment-path.md",
+          "targets": [
+            "smart-base"
+          ]
+        },
+        {
+          "file": "cat-harness/docs/processes/graph-detanglement.md",
+          "targets": [
+            "smart-base"
+          ]
+        },
+        {
+          "file": "cat-harness/docs/processes/human-translation-workflow.md",
+          "targets": [
+            "smart-base"
+          ]
+        },
+        {
+          "file": "cat-harness/docs/processes/ig-ast-delta-review.md",
+          "targets": [
+            "folio-assistant-core"
+          ]
+        },
+        {
+          "file": "cat-harness/docs/processes/ig-incremental-build.md",
+          "targets": [
+            "smart-immunizations"
+          ]
+        },
+        {
+          "file": "cat-harness/docs/processes/kg-separation.md",
+          "targets": [
+            "cat-harness-tools"
+          ]
+        },
+        {
+          "file": "cat-harness/docs/processes/kg-to-portal.md",
+          "targets": [
+            "smart-trust",
+            "who-iris"
+          ]
+        },
+        {
+          "file": "cat-harness/docs/processes/l2-dak-authoring.md",
+          "targets": [
+            "smart-base"
+          ]
+        },
+        {
+          "file": "cat-harness/docs/processes/materialize-remote.md",
+          "targets": [
+            "large-datasets"
+          ]
+        },
+        {
+          "file": "cat-harness/docs/processes/refresh-materialized.md",
+          "targets": [
+            "large-datasets"
+          ]
+        },
+        {
+          "file": "cat-harness/docs/processes/sample-import.md",
+          "targets": [
+            "large-datasets",
+            "who-iris"
+          ]
+        },
+        {
+          "file": "cat-harness/docs/processes/subscribe-kg.md",
+          "targets": [
+            "large-datasets"
+          ]
+        },
+        {
+          "file": "cat-harness/docs/processes/translation-workflow.md",
+          "targets": [
+            "smart-base"
+          ]
+        },
+        {
+          "file": "cat-harness/docs/proposals/cat-harness-tools-split-2026-10-01.md",
+          "targets": [
+            "cat-harness-tools",
+            "fhir-harness",
+            "folio-assistant-core",
+            "large-datasets",
+            "smart-base",
+            "smart-trust",
+            "who-iris"
+          ]
+        },
+        {
+          "file": "cat-harness/docs/proposals/cmsl-external-directories-2026-09-30.md",
+          "targets": [
+            "agent-skills",
+            "fhir-harness",
+            "folio-assistant-core",
+            "folio-assistant-sci",
+            "large-datasets",
+            "smart-base",
+            "who-iris"
+          ]
+        },
+        {
+          "file": "cat-harness/docs/proposals/declaration-gap.md",
+          "targets": [
+            "agent-skills",
+            "folio-assistant-core",
+            "folio-assistant-sci",
+            "large-datasets",
+            "smart-base",
+            "who-iris",
+            "who-style-guide"
+          ]
+        },
+        {
+          "file": "cat-harness/docs/proposals/index.md",
+          "targets": [
+            "fhir-harness",
+            "smart-base",
+            "smart-immunizations",
+            "smart-trust"
+          ]
+        },
+        {
+          "file": "cat-harness/docs/proposals/instance-versioning.md",
+          "targets": [
+            "who-iris",
+            "who-style-guide"
+          ]
+        },
+        {
+          "file": "cat-harness/docs/proposals/kg-subscriptions.md",
+          "targets": [
+            "folio-assistant-core",
+            "large-datasets",
+            "who-iris"
+          ]
+        },
+        {
+          "file": "cat-harness/docs/proposals/lsi-applicability.md",
+          "targets": [
+            "agent-skills",
+            "smart-base",
+            "smart-trust",
+            "who-iris"
+          ]
+        },
+        {
+          "file": "cat-harness/docs/proposals/lsi-epic-filing-2026-09-29.md",
+          "targets": [
+            "smart-base",
+            "smart-immunizations",
+            "who-iris"
+          ]
+        },
+        {
+          "file": "cat-harness/docs/proposals/lsi-who-iris-2026-09-29.md",
+          "targets": [
+            "who-iris",
+            "who-style-guide"
+          ]
+        },
+        {
+          "file": "cat-harness/docs/proposals/odrl-prov-actor-model.md",
+          "targets": [
+            "smart-trust"
+          ]
+        },
+        {
+          "file": "cat-harness/docs/proposals/placement-audit-2026-10-01.json",
+          "targets": [
+            "agent-skills",
+            "cat-harness-tools",
+            "fhir-harness",
+            "folio-assistant-core",
+            "folio-assistant-sci",
+            "large-datasets",
+            "smart-base",
+            "smart-ig",
+            "smart-l1",
+            "smart-trust",
+            "who-iris",
+            "who-style-guide"
+          ]
+        },
+        {
+          "file": "cat-harness/docs/proposals/placement-audit-2026-10-01.md",
+          "targets": [
+            "agent-skills",
+            "cat-harness-tools",
+            "fhir-harness",
+            "folio-assistant-core",
+            "folio-assistant-sci",
+            "large-datasets",
+            "smart-base",
+            "smart-dak",
+            "smart-ig",
+            "smart-immunizations",
+            "smart-l1",
+            "smart-trust",
+            "who-iris",
+            "who-style-guide"
+          ]
+        },
+        {
+          "file": "cat-harness/docs/proposals/placement-concern-groups-2026-10-01.md",
+          "targets": [
+            "agent-skills",
+            "cat-harness-tools",
+            "fhir-harness",
+            "folio-assistant-core",
+            "folio-assistant-sci",
+            "large-datasets",
+            "smart-base",
+            "smart-immunizations",
+            "who-iris"
+          ]
+        },
+        {
+          "file": "cat-harness/docs/proposals/separation-arc-2026-10-01.md",
+          "targets": [
+            "agent-skills",
+            "cat-harness-tools",
+            "fhir-harness",
+            "folio-assistant-core",
+            "folio-assistant-sci",
+            "large-datasets",
+            "smart-base",
+            "smart-trust",
+            "who-iris",
+            "who-style-guide"
+          ]
+        },
+        {
+          "file": "cat-harness/docs/proposals/smart-separation-2026-10-01.md",
+          "targets": [
+            "cat-harness-tools",
+            "fhir-harness",
+            "smart-base",
+            "smart-dak",
+            "smart-ig",
+            "smart-immunizations",
+            "smart-l1",
+            "smart-trust"
+          ]
+        },
+        {
+          "file": "cat-harness/docs/skills.md",
+          "targets": [
+            "folio-assistant-core",
+            "folio-assistant-sci"
+          ]
+        },
+        {
+          "file": "cat-harness/docs/subgraph-viewers.md",
+          "targets": [
+            "agent-skills",
+            "folio-assistant-sci",
+            "who-iris"
+          ]
+        },
+        {
+          "file": "cat-harness/docs/translation-support.md",
+          "targets": [
+            "smart-base"
+          ]
+        },
+        {
+          "file": "cat-harness/docs/wireframes/catalogue/intent.md",
+          "targets": [
+            "who-iris"
+          ]
+        },
+        {
+          "file": "cat-harness/docs/wireframes/docs-index/intent.md",
+          "targets": [
+            "smart-trust",
+            "who-iris"
+          ]
+        },
+        {
+          "file": "cat-harness/docs/wireframes/external-schemas/intent.md",
+          "targets": [
+            "folio-assistant-core"
+          ]
+        },
+        {
+          "file": "cat-harness/docs/wireframes/glossary-page/intent.md",
+          "targets": [
+            "large-datasets"
+          ]
+        },
+        {
+          "file": "cat-harness/docs/wireframes/harness-config/decision.json",
+          "targets": [
+            "smart-trust"
+          ]
+        },
+        {
+          "file": "cat-harness/docs/wireframes/harness-config/intent.md",
+          "targets": [
+            "smart-trust"
+          ]
+        },
+        {
+          "file": "cat-harness/docs/wireframes/harness-config/reviews/agent-1.json",
+          "targets": [
+            "folio-assistant-core",
+            "large-datasets",
+            "smart-trust"
+          ]
+        },
+        {
+          "file": "cat-harness/docs/wireframes/index.json",
+          "targets": [
+            "agent-skills",
+            "fhir-harness",
+            "folio-assistant-core",
+            "folio-assistant-sci",
+            "large-datasets",
+            "smart-base",
+            "who-iris",
+            "who-style-guide"
+          ]
+        },
+        {
+          "file": "cat-harness/docs/wireframes/library/intent.md",
+          "targets": [
+            "agent-skills",
+            "folio-assistant-sci",
+            "who-iris"
+          ]
+        },
+        {
+          "file": "cat-harness/docs/wireframes/lsi/intent.md",
+          "targets": [
+            "who-iris"
+          ]
+        },
+        {
+          "file": "cat-harness/docs/wireframes/methodologies/intent.md",
+          "targets": [
+            "smart-base"
+          ]
+        },
+        {
+          "file": "cat-harness/docs/wireframes/navbar/intent.md",
+          "targets": [
+            "smart-trust",
+            "who-iris"
+          ]
+        },
+        {
+          "file": "cat-harness/docs/wireframes/schemas/intent.md",
+          "targets": [
+            "folio-assistant-core",
+            "large-datasets"
+          ]
+        },
+        {
+          "file": "cat-harness/docs/wireframes/skills-index/intent.md",
+          "targets": [
+            "large-datasets",
+            "who-iris"
+          ]
+        },
+        {
+          "file": "cat-harness/docs/wireframes/tools/intent.md",
+          "targets": [
+            "smart-trust"
+          ]
+        },
+        {
+          "file": "cat-harness/docs/wireframes/uploads/intent.md",
+          "targets": [
+            "who-iris"
+          ]
+        },
+        {
+          "file": "cat-harness/external-schemas/w3c-skos.json",
+          "targets": [
+            "folio-assistant-core"
+          ]
+        },
+        {
+          "file": "cat-harness/folio/folio-assist-core.json",
+          "targets": [
+            "folio-assistant-core"
+          ]
+        },
+        {
+          "file": "cat-harness/folio/README.md",
+          "targets": [
+            "smart-trust",
+            "who-iris"
+          ]
+        },
+        {
+          "file": "cat-harness/folio/smart-trust.json",
+          "targets": [
+            "smart-trust"
+          ]
+        },
+        {
+          "file": "cat-harness/folio/who-iris.json",
+          "targets": [
+            "who-iris"
+          ]
+        },
+        {
+          "file": "cat-harness/methodologies/correspondence-analysis.md",
+          "targets": [
+            "who-iris"
+          ]
+        },
+        {
+          "file": "cat-harness/methodologies/json-ld-serialisation.md",
+          "targets": [
+            "folio-assistant-core"
+          ]
+        },
+        {
+          "file": "cat-harness/methodologies/lsi.md",
+          "targets": [
+            "who-iris"
+          ]
+        },
+        {
+          "file": "cat-harness/methodologies/README.md",
+          "targets": [
+            "smart-base"
+          ]
+        },
+        {
+          "file": "cat-harness/processes/graph-detanglement.bpmn",
+          "targets": [
+            "smart-base"
+          ]
+        },
+        {
+          "file": "cat-harness/processes/human-translation-workflow.bpmn",
+          "targets": [
+            "smart-base"
+          ]
+        },
+        {
+          "file": "cat-harness/processes/translation-workflow.bpmn",
+          "targets": [
+            "smart-base"
+          ]
+        },
+        {
+          "file": "cat-harness/scenarios/actors/deep-researcher.json",
+          "targets": [
+            "folio-assistant-core"
+          ]
+        },
+        {
+          "file": "cat-harness/scenarios/capabilities/smart-base.json",
+          "targets": [
+            "smart-base"
+          ]
+        },
+        {
+          "file": "cat-harness/scenarios/stories.json",
+          "targets": [
+            "who-iris"
+          ]
+        },
+        {
+          "file": "cat-harness/schemas/assistant-types.ts",
+          "targets": [
+            "smart-base"
+          ]
+        },
+        {
+          "file": "cat-harness/schemas/binary-release.ts",
+          "targets": [
+            "folio-assistant-core",
+            "smart-trust"
+          ]
+        },
+        {
+          "file": "cat-harness/schemas/block-kinds.ts",
+          "targets": [
+            "fhir-harness",
+            "smart-base"
+          ]
+        },
+        {
+          "file": "cat-harness/schemas/block-qa.ts",
+          "targets": [
+            "folio-assistant-sci"
+          ]
+        },
+        {
+          "file": "cat-harness/schemas/content-type.ts",
+          "targets": [
+            "smart-base"
+          ]
+        },
+        {
+          "file": "cat-harness/schemas/content-types-base.ts",
+          "targets": [
+            "smart-base"
+          ]
+        },
+        {
+          "file": "cat-harness/schemas/contributions.ts",
+          "targets": [
+            "smart-base"
+          ]
+        },
+        {
+          "file": "cat-harness/schemas/dak-blocks.ts",
+          "targets": [
+            "smart-base"
+          ]
+        },
+        {
+          "file": "cat-harness/schemas/dak-content-type.ts",
+          "targets": [
+            "smart-base"
+          ]
+        },
+        {
+          "file": "cat-harness/schemas/detangle-sidecar.ts",
+          "targets": [
+            "folio-assistant-core"
+          ]
+        },
+        {
+          "file": "cat-harness/schemas/external-schema.ts",
+          "targets": [
+            "folio-assistant-core"
+          ]
+        },
+        {
+          "file": "cat-harness/schemas/glossary-graph-kind.ts",
+          "targets": [
+            "folio-assistant-core"
+          ]
+        },
+        {
+          "file": "cat-harness/schemas/kg-node.ts",
+          "targets": [
+            "smart-base"
+          ]
+        },
+        {
+          "file": "cat-harness/schemas/kg-qa.ts",
+          "targets": [
+            "agent-skills",
+            "smart-dak",
+            "smart-ig",
+            "smart-immunizations",
+            "smart-l1",
+            "smart-trust",
+            "who-iris"
+          ]
+        },
+        {
+          "file": "cat-harness/schemas/pdf-structure.ts",
+          "targets": [
+            "who-iris"
+          ]
+        },
+        {
+          "file": "cat-harness/schemas/property-skills.ts",
+          "targets": [
+            "large-datasets"
+          ]
+        },
+        {
+          "file": "cat-harness/schemas/qa-report.ts",
+          "targets": [
+            "smart-base"
+          ]
+        },
+        {
+          "file": "cat-harness/schemas/reference-direction.ts",
+          "targets": [
+            "folio-assistant-core"
+          ]
+        },
+        {
+          "file": "cat-harness/schemas/scenario-overlay.ts",
+          "targets": [
+            "fhir-harness",
+            "smart-base"
+          ]
+        },
+        {
+          "file": "cat-harness/schemas/skill-definitions-dir.ts",
+          "targets": [
+            "fhir-harness",
+            "folio-assistant-core",
+            "folio-assistant-sci",
+            "smart-base"
+          ]
+        },
+        {
+          "file": "cat-harness/schemas/skill-topics.ts",
+          "targets": [
+            "folio-assistant-sci"
+          ]
+        },
+        {
+          "file": "cat-harness/schemas/source-provenance.ts",
+          "targets": [
+            "folio-assistant-core",
+            "who-iris"
+          ]
+        },
+        {
+          "file": "cat-harness/schemas/theme-by-ref.ts",
+          "targets": [
+            "who-iris"
+          ]
+        },
+        {
+          "file": "cat-harness/schemas/theme.ts",
+          "targets": [
+            "folio-assistant",
+            "who-iris"
+          ]
+        },
+        {
+          "file": "cat-harness/schemas/themes.ts",
+          "targets": [
+            "folio-assistant-core",
+            "who-iris"
+          ]
+        },
+        {
+          "file": "cat-harness/schemas/translation-tools.ts",
+          "targets": [
+            "smart-base"
+          ]
+        },
+        {
+          "file": "cat-harness/schemas/viewer-nav-qa.ts",
+          "targets": [
+            "smart-trust",
+            "who-iris"
+          ]
+        },
+        {
+          "file": "cat-harness/schemas/vocabulary.ts",
+          "targets": [
+            "smart-base"
+          ]
+        },
+        {
+          "file": "cat-harness/schemas/voice-skill.ts",
+          "targets": [
+            "agent-skills",
+            "folio-assistant-core",
+            "who-iris",
+            "who-style-guide"
+          ]
+        },
+        {
+          "file": "cat-harness/schemas/voices.ts",
+          "targets": [
+            "who-iris",
+            "who-style-guide"
+          ]
+        },
+        {
+          "file": "cat-harness/schemas/withheld.ts",
+          "targets": [
+            "who-iris"
+          ]
+        },
+        {
+          "file": "cat-harness/scripts/apply-image-verdicts.ts",
+          "targets": [
+            "agent-skills"
+          ]
+        },
+        {
+          "file": "cat-harness/scripts/check-avatar-instances.ts",
+          "targets": [
+            "smart-trust",
+            "who-iris"
+          ]
+        },
+        {
+          "file": "cat-harness/scripts/check-bean-restates-skill.ts",
+          "targets": [
+            "fhir-harness"
+          ]
+        },
+        {
+          "file": "cat-harness/scripts/check-command-paths.ts",
+          "targets": [
+            "smart-base",
+            "who-iris"
+          ]
+        },
+        {
+          "file": "cat-harness/scripts/check-declaration-filename.ts",
+          "targets": [
+            "folio-assistant-core"
+          ]
+        },
+        {
+          "file": "cat-harness/scripts/check-declared-assets.ts",
+          "targets": [
+            "folio-assistant-sci",
+            "large-datasets",
+            "who-iris"
+          ]
+        },
+        {
+          "file": "cat-harness/scripts/check-declared-dirs.ts",
+          "targets": [
+            "folio-assistant-core",
+            "who-iris"
+          ]
+        },
+        {
+          "file": "cat-harness/scripts/check-escaped-markup.ts",
+          "targets": [
+            "folio-assistant-sci"
+          ]
+        },
+        {
+          "file": "cat-harness/scripts/check-folio-mount.ts",
+          "targets": [
+            "who-iris"
+          ]
+        },
+        {
+          "file": "cat-harness/scripts/check-graph-kind-work.ts",
+          "targets": [
+            "who-iris"
+          ]
+        },
+        {
+          "file": "cat-harness/scripts/check-import-direction.ts",
+          "targets": [
+            "folio-assistant-core",
+            "folio-assistant-sci"
+          ]
+        },
+        {
+          "file": "cat-harness/scripts/check-instance-themes.ts",
+          "targets": [
+            "who-iris"
+          ]
+        },
+        {
+          "file": "cat-harness/scripts/check-l1-complete.ts",
+          "targets": [
+            "smart-base"
+          ]
+        },
+        {
+          "file": "cat-harness/scripts/check-layout-norms.ts",
+          "targets": [
+            "agent-skills",
+            "folio-assistant-core",
+            "folio-assistant-sci",
+            "smart-base",
+            "who-iris",
+            "who-style-guide"
+          ]
+        },
+        {
+          "file": "cat-harness/scripts/check-module-scope-resolution.ts",
+          "targets": [
+            "folio-assistant-sci"
+          ]
+        },
+        {
+          "file": "cat-harness/scripts/check-navbar-consistency.ts",
+          "targets": [
+            "who-iris"
+          ]
+        },
+        {
+          "file": "cat-harness/scripts/check-read-only-graphs.ts",
+          "targets": [
+            "who-iris"
+          ]
+        },
+        {
+          "file": "cat-harness/scripts/check-secret-leaks.ts",
+          "targets": [
+            "who-style-guide"
+          ]
+        },
+        {
+          "file": "cat-harness/scripts/check-soft-hyphens.ts",
+          "targets": [
+            "smart-base"
+          ]
+        },
+        {
+          "file": "cat-harness/scripts/check-structure-accessor.ts",
+          "targets": [
+            "folio-assistant-core"
+          ]
+        },
+        {
+          "file": "cat-harness/scripts/check-subgraph-coverage.ts",
+          "targets": [
+            "agent-skills",
+            "who-iris"
+          ]
+        },
+        {
+          "file": "cat-harness/scripts/check-tabular-stubs.ts",
+          "targets": [
+            "folio-assistant-sci",
+            "who-iris"
+          ]
+        },
+        {
+          "file": "cat-harness/scripts/check-term-mapping.ts",
+          "targets": [
+            "folio-assistant-core"
+          ]
+        },
+        {
+          "file": "cat-harness/scripts/check-tools.ts",
+          "targets": [
+            "folio-assistant-core",
+            "large-datasets"
+          ]
+        },
+        {
+          "file": "cat-harness/scripts/check-uploads-retired.ts",
+          "targets": [
+            "agent-skills",
+            "folio-assistant-core",
+            "folio-assistant-sci",
+            "smart-base",
+            "who-iris"
+          ]
+        },
+        {
+          "file": "cat-harness/scripts/compose-docs.ts",
+          "targets": [
+            "smart-trust",
+            "who-iris"
+          ]
+        },
+        {
+          "file": "cat-harness/scripts/content-holds-code.ts",
+          "targets": [
+            "who-iris"
+          ]
+        },
+        {
+          "file": "cat-harness/scripts/ensure-landing-sticky.ts",
+          "targets": [
+            "folio-assistant-core"
+          ]
+        },
+        {
+          "file": "cat-harness/scripts/folio-mount.ts",
+          "targets": [
+            "who-iris"
+          ]
+        },
+        {
+          "file": "cat-harness/scripts/gates.ts",
+          "targets": [
+            "fhir-harness",
+            "folio-assistant-core"
+          ]
+        },
+        {
+          "file": "cat-harness/scripts/gen-docs-auto.ts",
+          "targets": [
+            "smart-base",
+            "smart-trust",
+            "who-iris"
+          ]
+        },
+        {
+          "file": "cat-harness/scripts/gen-handler-index.ts",
+          "targets": [
+            "who-iris"
+          ]
+        },
+        {
+          "file": "cat-harness/scripts/gen-library-viz.ts",
+          "targets": [
+            "agent-skills",
+            "who-iris"
+          ]
+        },
+        {
+          "file": "cat-harness/scripts/gen-methodologies-viz.ts",
+          "targets": [
+            "folio-assistant-core",
+            "smart-base"
+          ]
+        },
+        {
+          "file": "cat-harness/scripts/gen-navbar-include.ts",
+          "targets": [
+            "who-iris"
+          ]
+        },
+        {
+          "file": "cat-harness/scripts/gen-object-model-uml.ts",
+          "targets": [
+            "folio-assistant-core",
+            "smart-base"
+          ]
+        },
+        {
+          "file": "cat-harness/scripts/gen-schema-docs.ts",
+          "targets": [
+            "folio-assistant-core",
+            "large-datasets"
+          ]
+        },
+        {
+          "file": "cat-harness/scripts/gen-schema-viz.ts",
+          "targets": [
+            "agent-skills",
+            "folio-assistant-core",
+            "who-iris"
+          ]
+        },
+        {
+          "file": "cat-harness/scripts/gen-skill-docs.ts",
+          "targets": [
+            "fhir-harness",
+            "folio-assistant-core",
+            "folio-assistant-sci"
+          ]
+        },
+        {
+          "file": "cat-harness/scripts/gen-themes-css.ts",
+          "targets": [
+            "fhir-harness"
+          ]
+        },
+        {
+          "file": "cat-harness/scripts/gen-uml-overview.ts",
+          "targets": [
+            "smart-base"
+          ]
+        },
+        {
+          "file": "cat-harness/scripts/gen-upload-step-docs.ts",
+          "targets": [
+            "folio-assistant-core",
+            "smart-base"
+          ]
+        },
+        {
+          "file": "cat-harness/scripts/gen-uploads-viz.ts",
+          "targets": [
+            "agent-skills",
+            "folio-assistant-sci",
+            "smart-base",
+            "who-iris"
+          ]
+        },
+        {
+          "file": "cat-harness/scripts/gen-voices-viz.ts",
+          "targets": [
+            "agent-skills",
+            "who-style-guide"
+          ]
+        },
+        {
+          "file": "cat-harness/scripts/glossary-export.ts",
+          "targets": [
+            "smart-base"
+          ]
+        },
+        {
+          "file": "cat-harness/scripts/graph-tiles.ts",
+          "targets": [
+            "folio-assistant-core",
+            "large-datasets"
+          ]
+        },
+        {
+          "file": "cat-harness/scripts/harness-tiles.ts",
+          "targets": [
+            "folio-assistant-core",
+            "large-datasets",
+            "who-iris"
+          ]
+        },
+        {
+          "file": "cat-harness/scripts/ingest-document.ts",
+          "targets": [
+            "folio-assistant-sci",
+            "who-iris"
+          ]
+        },
+        {
+          "file": "cat-harness/scripts/init-folio.ts",
+          "targets": [
+            "folio-assistant-core",
+            "folio-assistant-sci"
+          ]
+        },
+        {
+          "file": "cat-harness/scripts/kg-audit.ts",
+          "targets": [
+            "agent-skills",
+            "fhir-harness",
+            "folio-assistant-core",
+            "folio-assistant-sci",
+            "large-datasets",
+            "smart-base",
+            "who-iris",
+            "who-style-guide"
+          ]
+        },
+        {
+          "file": "cat-harness/scripts/known-skills.ts",
+          "targets": [
+            "fhir-harness",
+            "folio-assistant-sci",
+            "smart-base"
+          ]
+        },
+        {
+          "file": "cat-harness/scripts/layout-norms-baseline.json",
+          "targets": [
+            "smart-base"
+          ]
+        },
+        {
+          "file": "cat-harness/scripts/lib/declared-presence.ts",
+          "targets": [
+            "who-iris"
+          ]
+        },
+        {
+          "file": "cat-harness/scripts/lib/graph-kind-nav.ts",
+          "targets": [
+            "who-iris"
+          ]
+        },
+        {
+          "file": "cat-harness/scripts/lib/navbar.ts",
+          "targets": [
+            "who-iris"
+          ]
+        },
+        {
+          "file": "cat-harness/scripts/library-graph.ts",
+          "targets": [
+            "folio-assistant-core",
+            "who-iris"
+          ]
+        },
+        {
+          "file": "cat-harness/scripts/measure-logic-layer-edges.ts",
+          "targets": [
+            "smart-immunizations"
+          ]
+        },
+        {
+          "file": "cat-harness/scripts/mount-instance-docs.ts",
+          "targets": [
+            "smart-trust",
+            "who-iris"
+          ]
+        },
+        {
+          "file": "cat-harness/scripts/ns-export.ts",
+          "targets": [
+            "folio-assistant-core"
+          ]
+        },
+        {
+          "file": "cat-harness/scripts/orphan-pages.ts",
+          "targets": [
+            "who-iris"
+          ]
+        },
+        {
+          "file": "cat-harness/scripts/render-selection.ts",
+          "targets": [
+            "who-iris"
+          ]
+        },
+        {
+          "file": "cat-harness/scripts/root-scan-census.ts",
+          "targets": [
+            "folio-assistant-core"
+          ]
+        },
+        {
+          "file": "cat-harness/scripts/schema-graph.ts",
+          "targets": [
+            "folio-assistant-core",
+            "large-datasets"
+          ]
+        },
+        {
+          "file": "cat-harness/scripts/schema-nodes.ts",
+          "targets": [
+            "folio-assistant-core",
+            "large-datasets"
+          ]
+        },
+        {
+          "file": "cat-harness/scripts/skill-governance.ts",
+          "targets": [
+            "fhir-harness",
+            "smart-base",
+            "smart-trust"
+          ]
+        },
+        {
+          "file": "cat-harness/scripts/skill-packages.ts",
+          "targets": [
+            "large-datasets",
+            "who-iris"
+          ]
+        },
+        {
+          "file": "cat-harness/scripts/skill-register.ts",
+          "targets": [
+            "fhir-harness",
+            "folio-assistant-core",
+            "large-datasets",
+            "who-iris"
+          ]
+        },
+        {
+          "file": "cat-harness/scripts/staging-banner.ts",
+          "targets": [
+            "who-iris"
+          ]
+        },
+        {
+          "file": "cat-harness/scripts/sync-remote-skills.ts",
+          "targets": [
+            "fhir-harness"
+          ]
+        },
+        {
+          "file": "cat-harness/scripts/viewer-declarations.ts",
+          "targets": [
+            "who-iris"
+          ]
+        },
+        {
+          "file": "cat-harness/scripts/viewer-page.ts",
+          "targets": [
+            "who-iris"
+          ]
+        },
+        {
+          "file": "cat-harness/scripts/voices-graph.ts",
+          "targets": [
+            "agent-skills",
+            "folio-assistant-sci",
+            "who-style-guide"
+          ]
+        },
+        {
+          "file": "cat-harness/skills/authoring/authoring-core/evidence-review.md",
+          "targets": [
+            "who-style-guide"
+          ]
+        },
+        {
+          "file": "cat-harness/skills/authoring/authoring-core/review-comments.md",
+          "targets": [
+            "folio-assistant-core"
+          ]
+        },
+        {
+          "file": "cat-harness/skills/authoring/authoring-core/technical-documentation.md",
+          "targets": [
+            "agent-skills"
+          ]
+        },
+        {
+          "file": "cat-harness/skills/authoring/authoring-core/todo-review.md",
+          "targets": [
+            "large-datasets"
+          ]
+        },
+        {
+          "file": "cat-harness/skills/authoring/content-lifecycle/evidence-appraisal.md",
+          "targets": [
+            "smart-base"
+          ]
+        },
+        {
+          "file": "cat-harness/skills/conduct/conduct-core/getting-started.md",
+          "targets": [
+            "who-iris"
+          ]
+        },
+        {
+          "file": "cat-harness/skills/conduct/conduct-core/interaction-modality.md",
+          "targets": [
+            "who-iris"
+          ]
+        },
+        {
+          "file": "cat-harness/skills/conduct/conduct-core/repo-conversion.md",
+          "targets": [
+            "folio-assistant-core"
+          ]
+        },
+        {
+          "file": "cat-harness/skills/conduct/conduct-core/untrusted-input.md",
+          "targets": [
+            "smart-base"
+          ]
+        },
+        {
+          "file": "cat-harness/skills/conduct/security/package-manifest.json",
+          "targets": [
+            "smart-base"
+          ]
+        },
+        {
+          "file": "cat-harness/skills/kg/graph-management/graph-detanglement.md",
+          "targets": [
+            "smart-base"
+          ]
+        },
+        {
+          "file": "cat-harness/skills/kg/graph-management/kg-detangle.ts",
+          "targets": [
+            "folio-assistant-core",
+            "folio-assistant-sci",
+            "large-datasets",
+            "who-iris"
+          ]
+        },
+        {
+          "file": "cat-harness/skills/kg/graph-management/kg-separation.md",
+          "targets": [
+            "cat-harness-tools",
+            "who-iris"
+          ]
+        },
+        {
+          "file": "cat-harness/skills/kg/graph-management/lsi-indexing.md",
+          "targets": [
+            "who-iris"
+          ]
+        },
+        {
+          "file": "cat-harness/skills/kg/kg-core/harness-requirements.md",
+          "targets": [
+            "who-iris"
+          ]
+        },
+        {
+          "file": "cat-harness/skills/kg/kg-core/instance-kinds.md",
+          "targets": [
+            "agent-skills",
+            "folio-assistant-core",
+            "folio-assistant-sci",
+            "large-datasets",
+            "who-iris",
+            "who-style-guide"
+          ]
+        },
+        {
+          "file": "cat-harness/skills/kg/kg-core/instance-publication.md",
+          "targets": [
+            "smart-base",
+            "smart-trust"
+          ]
+        },
+        {
+          "file": "cat-harness/skills/kg/kg-core/kg-contribution-offer.md",
+          "targets": [
+            "who-iris"
+          ]
+        },
+        {
+          "file": "cat-harness/skills/kg/kg-core/kg-to-portal.md",
+          "targets": [
+            "smart-trust",
+            "who-iris"
+          ]
+        },
+        {
+          "file": "cat-harness/skills/kg/kg-core/placement.md",
+          "targets": [
+            "smart-base",
+            "who-iris"
+          ]
+        },
+        {
+          "file": "cat-harness/skills/kg/kg-core/schema-management.md",
+          "targets": [
+            "folio-assistant-sci",
+            "who-iris"
+          ]
+        },
+        {
+          "file": "cat-harness/skills/kg/kg-core/skill-voice-review.md",
+          "targets": [
+            "agent-skills"
+          ]
+        },
+        {
+          "file": "cat-harness/skills/kg/kg-core/vocabulary-authority.md",
+          "targets": [
+            "fhir-harness",
+            "folio-assistant-core"
+          ]
+        },
+        {
+          "file": "cat-harness/skills/kg/kg-navigation/package-manifest.json",
+          "targets": [
+            "large-datasets",
+            "who-iris"
+          ]
+        },
+        {
+          "file": "cat-harness/skills/library/library-core/asset-extraction.md",
+          "targets": [
+            "folio-assistant-core"
+          ]
+        },
+        {
+          "file": "cat-harness/skills/library/library-core/glossary-build.md",
+          "targets": [
+            "folio-assistant-core"
+          ]
+        },
+        {
+          "file": "cat-harness/skills/library/library-core/glossary-terms.md",
+          "targets": [
+            "folio-assistant-core"
+          ]
+        },
+        {
+          "file": "cat-harness/skills/library/library-core/library-ingestion.md",
+          "targets": [
+            "folio-assistant-core",
+            "folio-assistant-sci",
+            "large-datasets",
+            "who-iris"
+          ]
+        },
+        {
+          "file": "cat-harness/skills/library/library-core/translation-manager.md",
+          "targets": [
+            "smart-base"
+          ]
+        },
+        {
+          "file": "cat-harness/skills/library/library-core/upload-naming.md",
+          "targets": [
+            "who-iris"
+          ]
+        },
+        {
+          "file": "cat-harness/skills/process/process-core/role-model.md",
+          "targets": [
+            "folio-assistant-core"
+          ]
+        },
+        {
+          "file": "cat-harness/skills/process/process-core/swimlane-glossary.md",
+          "targets": [
+            "folio-assistant-core"
+          ]
+        },
+        {
+          "file": "cat-harness/skills/process/workflow/bpmn-authoring.md",
+          "targets": [
+            "smart-base"
+          ]
+        },
+        {
+          "file": "cat-harness/skills/process/workflow/bpmn-processes.md",
+          "targets": [
+            "fhir-harness",
+            "folio-assistant-core",
+            "smart-base"
+          ]
+        },
+        {
+          "file": "cat-harness/skills/process/workflow/dmn-authoring.md",
+          "targets": [
+            "smart-base"
+          ]
+        },
+        {
+          "file": "cat-harness/skills/sdlc/sdlc-core/adjudication.md",
+          "targets": [
+            "folio-assistant-sci"
+          ]
+        },
+        {
+          "file": "cat-harness/skills/sdlc/sdlc-core/before-after-preview.md",
+          "targets": [
+            "fhir-harness",
+            "folio-assistant-sci"
+          ]
+        },
+        {
+          "file": "cat-harness/skills/sdlc/sdlc-core/continual-progress.md",
+          "targets": [
+            "who-iris"
+          ]
+        },
+        {
+          "file": "cat-harness/skills/sdlc/sdlc-core/coordinate.md",
+          "targets": [
+            "who-iris"
+          ]
+        },
+        {
+          "file": "cat-harness/skills/sdlc/sdlc-core/diff.md",
+          "targets": [
+            "folio-assistant-core"
+          ]
+        },
+        {
+          "file": "cat-harness/skills/sdlc/sdlc-core/github-state-inspection.md",
+          "targets": [
+            "folio-assistant"
+          ]
+        },
+        {
+          "file": "cat-harness/skills/sdlc/sdlc-core/narrative-asserts-code.md",
+          "targets": [
+            "folio-assistant-sci"
+          ]
+        },
+        {
+          "file": "cat-harness/skills/sdlc/sdlc-core/prepare-merge.md",
+          "targets": [
+            "folio-assistant-core"
+          ]
+        },
+        {
+          "file": "cat-harness/skills/sdlc/sdlc-core/rendered-verification.md",
+          "targets": [
+            "who-iris"
+          ]
+        },
+        {
+          "file": "cat-harness/skills/sdlc/sdlc-core/staging-review.md",
+          "targets": [
+            "folio-assistant-core"
+          ]
+        },
+        {
+          "file": "cat-harness/skills/ui/theming/package-manifest.json",
+          "targets": [
+            "folio-assistant-core"
+          ]
+        },
+        {
+          "file": "cat-harness/skills/ui/ui-core/board-windows.md",
+          "targets": [
+            "who-iris"
+          ]
+        },
+        {
+          "file": "cat-harness/skills/ui/ui-core/docs-auto.md",
+          "targets": [
+            "who-iris"
+          ]
+        },
+        {
+          "file": "cat-harness/skills/ui/ui-core/readme-sections.md",
+          "targets": [
+            "smart-immunizations"
+          ]
+        },
+        {
+          "file": "cat-harness/src/builtin-adapters.ts",
+          "targets": [
+            "folio-assistant-core",
+            "folio-assistant-sci"
+          ]
+        },
+        {
+          "file": "cat-harness/src/content-types.ts",
+          "targets": [
+            "cat-harness-tools",
+            "folio-assistant-core"
+          ]
+        },
+        {
+          "file": "cat-harness/src/core/anthropic.ts",
+          "targets": [
+            "cat-harness-tools",
+            "folio-assistant-core"
+          ]
+        },
+        {
+          "file": "cat-harness/src/docs/declaration-claims.ts",
+          "targets": [
+            "agent-skills",
+            "folio-assistant-sci",
+            "who-iris"
+          ]
+        },
+        {
+          "file": "cat-harness/src/sessions/staleness.ts",
+          "targets": [
+            "who-iris"
+          ]
+        },
+        {
+          "file": "cat-harness/src/tools/beans-prime.ts",
+          "targets": [
+            "folio-assistant"
+          ]
+        },
+        {
+          "file": "cat-harness/src/tools/lsi-query.ts",
+          "targets": [
+            "who-iris"
+          ]
+        },
+        {
+          "file": "cat-harness/src/tools/skill-fetch.ts",
+          "targets": [
+            "folio-assistant-sci"
+          ]
+        },
+        {
+          "file": "cat-harness/src/tools/translation.ts",
+          "targets": [
+            "smart-base"
+          ]
+        },
+        {
+          "file": "cat-harness/src/tools/workflow.ts",
+          "targets": [
+            "folio-assistant"
+          ]
+        },
+        {
+          "file": "cat-harness/src/workflow/process-model.ts",
+          "targets": [
+            "folio-assistant-core",
+            "large-datasets"
+          ]
+        },
+        {
+          "file": "cat-harness/templates/paper/github/workflows/blueprint.yml",
+          "targets": [
+            "folio-assistant-sci"
+          ]
+        },
+        {
+          "file": "cat-harness/tools/index.ts",
+          "targets": [
+            "folio-assistant-core"
+          ]
+        },
+        {
+          "file": "cat-harness/tools/mcp.ts",
+          "targets": [
+            "who-iris"
+          ]
+        },
+        {
+          "file": "fhir-harness/schemas/ig-menu.ts",
+          "targets": [
+            "smart-trust"
+          ]
+        },
+        {
+          "file": "fhir-harness/scripts/ig-site-data.ts",
+          "targets": [
+            "smart-base"
+          ]
+        },
+        {
+          "file": "fhir-harness/scripts/ingest-ig-menu.ts",
+          "targets": [
+            "smart-trust"
+          ]
+        },
+        {
+          "file": "fhir-harness/scripts/pin-ig-terminology.ts",
+          "targets": [
+            "smart-base"
+          ]
+        },
+        {
+          "file": "fhir-harness/skills/content/fhir-ig-authoring/ig-publication.md",
+          "targets": [
+            "smart-base"
+          ]
+        },
+        {
+          "file": "fhir-harness/skills/content/fhir-ig-authoring/l3-fhir-authoring.md",
+          "targets": [
+            "smart-base"
+          ]
+        },
+        {
+          "file": "fhir-harness/skills/content/fhir-ig-authoring/terminology-management.md",
+          "targets": [
+            "smart-base"
+          ]
+        },
+        {
+          "file": "fhir-harness/skills/fhir-ig-base/ig-build-pipeline.md",
+          "targets": [
+            "smart-base",
+            "smart-dak"
+          ]
+        },
+        {
+          "file": "fhir-harness/skills/fhir-ig-base/ig-render-jekyll.md",
+          "targets": [
+            "smart-base"
+          ]
+        },
+        {
+          "file": "fhir-harness/tools/index.ts",
+          "targets": [
+            "smart-base",
+            "smart-immunizations",
+            "smart-trust"
+          ]
+        },
+        {
+          "file": "folio-assistant-core/adapters/document/index.ts",
+          "targets": [
+            "smart-trust"
+          ]
+        },
+        {
+          "file": "folio-assistant-core/adapters/README.md",
+          "targets": [
+            "folio-assistant-sci"
+          ]
+        },
+        {
+          "file": "folio-assistant-core/folio-assistant-core.json",
+          "targets": [
+            "folio-assistant-sci",
+            "who-iris"
+          ]
+        },
+        {
+          "file": "folio-assistant-core/README.md",
+          "targets": [
+            "who-iris"
+          ]
+        },
+        {
+          "file": "folio-assistant-core/schemas/catalogue.ts",
+          "targets": [
+            "who-iris"
+          ]
+        },
+        {
+          "file": "folio-assistant-core/schemas/dublin-core.ts",
+          "targets": [
+            "who-iris"
+          ]
+        },
+        {
+          "file": "folio-assistant-core/schemas/library-ref.ts",
+          "targets": [
+            "agent-skills",
+            "folio-assistant-sci",
+            "who-iris",
+            "who-style-guide"
+          ]
+        },
+        {
+          "file": "folio-assistant-core/schemas/materialization.ts",
+          "targets": [
+            "who-iris"
+          ]
+        },
+        {
+          "file": "folio-assistant-core/scripts/backfill-materialized-fixity.ts",
+          "targets": [
+            "who-iris"
+          ]
+        },
+        {
+          "file": "folio-assistant-core/scripts/check-artifact-index.ts",
+          "targets": [
+            "smart-trust"
+          ]
+        },
+        {
+          "file": "folio-assistant-core/scripts/check-catalogue.ts",
+          "targets": [
+            "who-iris"
+          ]
+        },
+        {
+          "file": "folio-assistant-core/scripts/check-materialized-fixity.ts",
+          "targets": [
+            "smart-immunizations",
+            "who-iris"
+          ]
+        },
+        {
+          "file": "folio-assistant-core/scripts/check-voices.ts",
+          "targets": [
+            "folio-assistant-sci",
+            "who-iris",
+            "who-style-guide"
+          ]
+        },
+        {
+          "file": "folio-assistant-core/scripts/gen-covers.ts",
+          "targets": [
+            "who-iris"
+          ]
+        },
+        {
+          "file": "folio-assistant-core/scripts/lib/bytes.ts",
+          "targets": [
+            "who-iris"
+          ]
+        },
+        {
+          "file": "folio-assistant-core/scripts/lib/local-path.ts",
+          "targets": [
+            "who-iris"
+          ]
+        },
+        {
+          "file": "folio-assistant-core/scripts/sample-import-check.ts",
+          "targets": [
+            "who-iris"
+          ]
+        },
+        {
+          "file": "folio-assistant-core/scripts/sample-import-run.ts",
+          "targets": [
+            "who-iris"
+          ]
+        },
+        {
+          "file": "folio-assistant-core/skills/library/ingestion/document-intake.md",
+          "targets": [
+            "folio-assistant-sci"
+          ]
+        },
+        {
+          "file": "folio-assistant-core/skills/skills.json",
+          "targets": [
+            "agent-skills",
+            "who-iris",
+            "who-style-guide"
+          ]
+        },
+        {
+          "file": "folio-assistant-core/skills/voices/README.md",
+          "targets": [
+            "agent-skills",
+            "who-iris",
+            "who-style-guide"
+          ]
+        },
+        {
+          "file": "folio-assistant-core/skills/voices/technical-writer/voice.json",
+          "targets": [
+            "agent-skills"
+          ]
+        },
+        {
+          "file": "smart-base/skills/content/authoring-who-smart-guidelines/dak-preprocessing.md",
+          "targets": [
+            "smart-dak"
+          ]
+        },
+        {
+          "file": "smart-base/skills/content/authoring-who-smart-guidelines/ig-artifact-ingestion.md",
+          "targets": [
+            "smart-trust"
+          ]
+        }
+      ]
+    },
+    "held": {
+      "summary": "Baseline entries held from the 2026-09-24 `PENDING` list (issue #1219), with the instances each names. Not findings: the committed record, so a reader with only this file can tell a held question from an axis nobody has run. Fixed the same way as any other entry (reword) and trimmed by the same rule.",
+      "count": 40,
+      "entries": [
+        {
+          "file": "cat-harness/cat-harness.json",
+          "targets": [
+            "folio-assistant-core",
+            "folio-assistant-sci",
+            "smart-base",
+            "who-iris"
+          ]
+        },
+        {
+          "file": "cat-harness/content/docs/ig-publisher/what-it-cannot-be-asked-for.md",
+          "targets": [
+            "smart-immunizations",
+            "smart-trust"
+          ]
+        },
+        {
+          "file": "cat-harness/content/docs/publication-workflow/every-workflow-in-the-repo.md",
+          "targets": [
+            "folio-assistant-core",
+            "large-datasets",
+            "smart-base",
+            "who-iris"
+          ]
+        },
+        {
+          "file": "cat-harness/docs/cat-harness/published-graphs.md",
+          "targets": [
+            "agent-skills",
+            "fhir-harness",
+            "folio-assistant-core",
+            "folio-assistant-sci",
+            "large-datasets",
+            "smart-base",
+            "smart-immunizations",
+            "smart-trust",
+            "who-iris",
+            "who-style-guide"
+          ]
+        },
+        {
+          "file": "cat-harness/docs/methodologies/index.md",
+          "targets": [
+            "folio-assistant-core",
+            "folio-assistant-sci",
+            "smart-base"
+          ]
+        },
+        {
+          "file": "cat-harness/docs/processes/index.md",
+          "targets": [
+            "folio-assistant-core",
+            "large-datasets",
+            "smart-base"
+          ]
+        },
+        {
+          "file": "cat-harness/docs/wireframes/voices/intent.md",
+          "targets": [
+            "agent-skills",
+            "folio-assistant-core",
+            "folio-assistant-sci",
+            "smart-base",
+            "who-style-guide"
+          ]
+        },
+        {
+          "file": "cat-harness/schemas/avatars.ts",
+          "targets": [
+            "fhir-harness",
+            "folio-assistant-core",
+            "smart-base",
+            "smart-dak",
+            "smart-ig",
+            "smart-l1",
+            "who-iris"
+          ]
+        },
+        {
+          "file": "cat-harness/schemas/cat-harness.ts",
+          "targets": [
+            "agent-skills",
+            "fhir-harness",
+            "folio-assistant-core",
+            "folio-assistant-sci",
+            "large-datasets",
+            "smart-base",
+            "who-iris"
+          ]
+        },
+        {
+          "file": "cat-harness/schemas/dak.ts",
+          "targets": [
+            "smart-base",
+            "smart-immunizations"
+          ]
+        },
+        {
+          "file": "cat-harness/schemas/graph-kind-registry.ts",
+          "targets": [
+            "fhir-harness",
+            "folio-assistant-core",
+            "folio-assistant-sci",
+            "smart-base",
+            "smart-trust",
+            "who-iris"
+          ]
+        },
+        {
+          "file": "cat-harness/schemas/harness-config.ts",
+          "targets": [
+            "fhir-harness",
+            "folio-assistant-core",
+            "large-datasets",
+            "smart-base",
+            "smart-trust",
+            "who-iris"
+          ]
+        },
+        {
+          "file": "cat-harness/schemas/jsonld.ts",
+          "targets": [
+            "folio-assistant-core",
+            "smart-base"
+          ]
+        },
+        {
+          "file": "cat-harness/schemas/namespaces.ts",
+          "targets": [
+            "folio-assistant-core",
+            "smart-base"
+          ]
+        },
+        {
+          "file": "cat-harness/scripts/check-context-emission.ts",
+          "targets": [
+            "folio-assistant-core",
+            "smart-immunizations",
+            "smart-trust"
+          ]
+        },
+        {
+          "file": "cat-harness/scripts/dak-pdf.ts",
+          "targets": [
+            "smart-base",
+            "smart-immunizations"
+          ]
+        },
+        {
+          "file": "cat-harness/scripts/external-schemas.ts",
+          "targets": [
+            "folio-assistant-core",
+            "smart-base",
+            "smart-trust"
+          ]
+        },
+        {
+          "file": "cat-harness/scripts/harness-schema-export.ts",
+          "targets": [
+            "folio-assistant-core",
+            "large-datasets",
+            "smart-base"
+          ]
+        },
+        {
+          "file": "cat-harness/scripts/kg-export.ts",
+          "targets": [
+            "agent-skills",
+            "fhir-harness",
+            "folio-assistant-core",
+            "large-datasets",
+            "smart-base",
+            "who-iris",
+            "who-style-guide"
+          ]
+        },
+        {
+          "file": "cat-harness/skills/kg/kg-core/directory-conventions.md",
+          "targets": [
+            "folio-assistant",
+            "folio-assistant-core",
+            "folio-assistant-sci",
+            "smart-base",
+            "who-iris"
+          ]
+        },
+        {
+          "file": "cat-harness/skills/kg/kg-core/kg-export.md",
+          "targets": [
+            "folio-assistant-core",
+            "smart-base"
+          ]
+        },
+        {
+          "file": "cat-harness/skills/ui/ui-core/harness-tiles.md",
+          "targets": [
+            "fhir-harness",
+            "smart-base",
+            "who-iris"
+          ]
+        },
+        {
+          "file": "cat-harness/tools/discover.ts",
+          "targets": [
+            "fhir-harness",
+            "smart-base"
+          ]
+        },
+        {
+          "file": "fhir-harness/AGENTS.md",
+          "targets": [
+            "smart-base",
+            "smart-dak",
+            "smart-ig",
+            "smart-l1"
+          ]
+        },
+        {
+          "file": "fhir-harness/fhir-harness.json",
+          "targets": [
+            "smart-base",
+            "smart-dak",
+            "smart-ig",
+            "smart-immunizations",
+            "smart-l1",
+            "smart-trust"
+          ]
+        },
+        {
+          "file": "fhir-harness/schemas/ig-chrome.ts",
+          "targets": [
+            "smart-base",
+            "smart-dak",
+            "smart-ig",
+            "smart-l1",
+            "smart-trust"
+          ]
+        },
+        {
+          "file": "fhir-harness/scripts/gen-ig-pages.ts",
+          "targets": [
+            "smart-base",
+            "smart-ig",
+            "smart-trust"
+          ]
+        },
+        {
+          "file": "fhir-harness/scripts/ingest-ig-chrome.ts",
+          "targets": [
+            "smart-base",
+            "smart-trust"
+          ]
+        },
+        {
+          "file": "fhir-harness/skills/fhir-ig-base/ig-publisher-fork.md",
+          "targets": [
+            "smart-immunizations",
+            "smart-trust"
+          ]
+        },
+        {
+          "file": "fhir-harness/skills/fhir-ig-base/ig-publisher-reduction.md",
+          "targets": [
+            "smart-base",
+            "smart-immunizations",
+            "smart-trust"
+          ]
+        },
+        {
+          "file": "folio-assistant-core/schemas/fhir-artifact-index.ts",
+          "targets": [
+            "smart-immunizations",
+            "smart-trust",
+            "who-iris"
+          ]
+        },
+        {
+          "file": "folio-assistant-core/scripts/ingest-ig-artifacts.ts",
+          "targets": [
+            "smart-immunizations",
+            "smart-trust"
+          ]
+        },
+        {
+          "file": "smart-base/AGENTS.md",
+          "targets": [
+            "smart-immunizations",
+            "smart-trust"
+          ]
+        },
+        {
+          "file": "smart-base/README.md",
+          "targets": [
+            "smart-immunizations",
+            "smart-trust"
+          ]
+        },
+        {
+          "file": "smart-base/skills/content/authoring-who-smart-guidelines/dak-postprocessing.md",
+          "targets": [
+            "smart-dak",
+            "smart-immunizations",
+            "smart-trust"
+          ]
+        },
+        {
+          "file": "smart-base/skills/content/authoring-who-smart-guidelines/toolchain-ownership.md",
+          "targets": [
+            "smart-immunizations",
+            "smart-trust"
+          ]
+        },
+        {
+          "file": "smart-base/smart-base.json",
+          "targets": [
+            "smart-immunizations",
+            "smart-trust"
+          ]
+        },
+        {
+          "file": "smart-ig/AGENTS.md",
+          "targets": [
+            "smart-immunizations",
+            "smart-trust"
+          ]
+        },
+        {
+          "file": "smart-ig/README.md",
+          "targets": [
+            "smart-immunizations",
+            "smart-trust"
+          ]
+        },
+        {
+          "file": "smart-ig/smart-ig.json",
+          "targets": [
+            "smart-immunizations",
+            "smart-trust"
+          ]
+        }
+      ]
+    },
+    "instances-undeclared": {
+      "summary": "An instance that declares no `needs`, so nothing about its layer is known and every reference from it is `undetermined`. `[]` is the floor; absent is nobody-has-said, and collapsing the two would make an undeclared instance look either tangled or spotless.",
+      "count": 0,
+      "entries": []
+    },
+    "new-offenders": {
+      "summary": "A file holding a wrong-direction reference that the baseline (`cat-harness/scripts/reference-direction-baseline.json`) does not cover — unlisted, or listed but now naming an instance its entry does not (`added`). This is the set both the plain run and `--check` exit 1 on: the ratchet only ever shrinks (owner Q-B 2026-10-01). Fix it by rewording so it names nothing above it (Q1); never by adding it to the baseline.",
+      "count": 0,
+      "entries": []
+    },
+    "verdict-census": {
+      "summary": "Not findings, and NOT graded: what the axis says on the run that wrote this. Verdict counts are recorded because they ARE this axis's answer — a reader holding only this file cannot otherwise tell `audited clean` from `never audited`, which is the whole reason the sidecar exists. They are not graded because they move whenever anybody writes a paragraph, and `audit-coverage` already established that a gate keyed on a number like that is stale by default. FILE counts are not here at all — how many files were skipped as machine-written or self-declared generator output is a census of the tree, not a statement about direction, and stays in the printed report. 364 file(s) in the baseline; 6 exemption(s) declared, each with a stated reason.",
+      "count": 1,
+      "entries": [
+        {
+          "instances": 18,
+          "occurrences": 8863,
+          "allowed": 0,
+          "wrongDirection": 4220,
+          "wrongDirectionFiles": 364,
+          "exempt": 1504,
+          "namesRepository": 2078,
+          "undetermined": 1061,
+          "heldFiles": 40,
+          "heldOccurrences": 342,
+          "baselinedFiles": 324,
+          "baselinedOccurrences": 3878
+        }
+      ]
+    }
+  },
+  "total": 365
+}
