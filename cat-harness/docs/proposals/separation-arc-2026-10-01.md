@@ -29,9 +29,17 @@ GOAL 1  vuip  repo separation          ██████████░░░�
   fnx4  KG subscriptions               ████████████░░░░░░░░  slices 1–4,7,8 merged; 5+6 in #1756
   uhkv  SMART stack (sibling: n3ni)    ████████░░░░░░░░░░░░   5/13
 
-ARC 7x5n stories                      S0 S1 S2 S3 S4 S5 S6 S7 S8
-                                       ░░ ░░ ░░ ░░ ░░ ░░ ░░ ░░ ░░
-main CI (code-quality, docs-site)      RED — 5 jobs, see S0
+ARC 7x5n stories (09:16 UTC)
+  S0 main green          ███░░░░░░░  #1774: workflow-skill-refs fixed; 3 hard jobs still red
+  S1 bookkeeping         ███████░░░  3 beans wait on S0
+  S2 merge treadmill     ▒░░░░░░░░░  #1754 agent running
+  S3 drain PRs           ▒░░░░░░░░░  #1747 agent running (R1)
+  S4 direction/placement ▒▒░░░░░░░░  #1776 (R5/R6, large-datasets import) + placement audit running
+  S5 code → tools        ░░░░░░░░░░  runs alone, after S4
+  S6 standalone          ░░░░░░░░░░
+  S7 seed repos          █████░░░░░  all 5 target repos exist and are empty
+  S8 cut over            ░░░░░░░░░░
+main CI                                RED: 5 jobs at cdb0a018/d1a5d6e, being fixed in S0 (#1774)
 ```
 
 **Legend for the story row:** `░░` todo, `▒▒` in progress, `██` done, `!!` blocked on the owner.
