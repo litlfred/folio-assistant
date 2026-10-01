@@ -1,11 +1,11 @@
 ---
 # folio-assistant-oq1j
 title: 'QA READERS F3: detangle, LSI and tool-run readers fetch by ref or recompute'
-status: todo
+status: in-progress
 type: task
 priority: normal
 created_at: 2026-10-01T08:47:13Z
-updated_at: 2026-10-01T08:47:13Z
+updated_at: 2026-10-01T16:51:42Z
 parent: folio-assistant-3fva
 blocked_by:
     - folio-assistant-16ei
@@ -29,3 +29,9 @@ Arc `3fva`, from reader audit `gxvk` (`cat-harness/docs/proposals/qa-readers-aud
 ## Done when
 - [ ] `kg:detangle:check`, `lsi:skills:check`, `lsi:viz:check` and `uml:overview:check` pass on `main` with `test/results/` absent
 - [ ] `listToolRuns` over an unfetched store reports `unknown`, not an empty list
+
+
+
+## Claim 2026-10-01
+
+Held by session https://claude.ai/code/session_01LKpuPotV3Ve5Za75DQ3AQR (sub-agent; branch worktree-agent-a2e988d81c184f1da, NOT pushed). Announced here rather than through beans:claim, because the bean is not on the default branch yet and this session pushes nothing.
