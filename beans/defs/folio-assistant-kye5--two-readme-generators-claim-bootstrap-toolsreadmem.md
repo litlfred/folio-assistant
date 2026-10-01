@@ -5,7 +5,7 @@ status: in-progress
 type: bug
 priority: normal
 created_at: 2026-10-01T09:30:25Z
-updated_at: 2026-10-01T10:10:51Z
+updated_at: 2026-10-01T11:22:38Z
 parent: folio-assistant-iirv
 ---
 
@@ -21,3 +21,7 @@ The question is ownership, not content: D3 (owner 2026-10-01) says each instance
 
 ## 2026-10-01 — fixed in PR #1769
 readme-sections --all now skips an instance whose root is a git submodule (its .git is a file) and SAYS so per README; bootstrap keeps its explicit readme:sync:bootstrap:check (green). isSubmoduleRoot is tested (file / directory / absent / this checkout's bootstrap-tools). readme:sync:all:check green. Remaining: delete bootstrap-tools branch claude/fervent-brahmagupta-rbwhzm (2ec5eab) with the owner's ok.
+
+
+## 2026-10-01 — branch deletion refused by the session's git proxy
+Owner said delete it. git push --delete returned HTTP 403 (organisation egress policy; not retried, per the proxy rules), and the GitHub MCP tools have no delete-ref. The owner deletes it at https://github.com/litlfred/bootstrap-tools/branches (branch claude/fervent-brahmagupta-rbwhzm, commit 2ec5eab, no PR).
