@@ -1,5 +1,5 @@
 <!-- kg:subgraph:begin -->
-# Work in progress PROCESS-DRIVEN AUTOFORMALIZATION IN LEAN 4
+# arxiv-2406.01940v2
 
 ingested source material — attributed to its document, not folio content
 

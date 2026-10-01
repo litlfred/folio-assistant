@@ -1,5 +1,5 @@
 <!-- kg:subgraph:begin -->
-# Digital transformation handbook for primary health care Optimizing person-centred point of service systems
+# 9789240093362-eng
 
 ingested source material — attributed to its document, not folio content
 

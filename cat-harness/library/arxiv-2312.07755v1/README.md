@@ -1,5 +1,5 @@
 <!-- kg:subgraph:begin -->
-# Designing with Language: Wireframing UI Design Intent with Generative Large
+# Designing with Language: Wireframing UI Design Intent with Generative Large Language Models
 
 ingested source material — attributed to its document, not folio content
 

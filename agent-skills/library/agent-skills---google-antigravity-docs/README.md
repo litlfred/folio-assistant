@@ -1,5 +1,5 @@
 <!-- kg:subgraph:begin -->
-# agent-skills---google-antigravity-docs
+# Agent Skills | Google Antigravity Docs
 
 ingested source material — attributed to its document, not folio content
 

@@ -1,5 +1,5 @@
 <!-- kg:subgraph:begin -->
-# Tagging for a National Technical Library’s Open-Access Catalog
+# arxiv-2504.07199v3
 
 ingested source material — attributed to its document, not folio content
 

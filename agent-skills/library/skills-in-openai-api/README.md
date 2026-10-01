@@ -1,5 +1,5 @@
 <!-- kg:subgraph:begin -->
-# skills-in-openai-api
+# Skills in OpenAI API
 
 ingested source material — attributed to its document, not folio content
 
