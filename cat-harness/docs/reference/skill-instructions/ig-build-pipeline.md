@@ -104,7 +104,7 @@ phase's *"Delete files >100MB before deployment"* is the same concern one layer
 down.
 
 They belong here. Recorded because this is the layering rule
-([`smart-stack-layering`](https://github.com/litlfred/folio-assistant/blob/main/smart-base/skills/content/authoring-who-smart-guidelines/smart-stack-layering.md))
+([`smart-stack-layering`](smart-stack-layering.md))
 producing a result its own step names contradicted — which is the only kind of
 evidence that a split is doing work.
 

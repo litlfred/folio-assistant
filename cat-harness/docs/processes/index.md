@@ -375,11 +375,7 @@ Three states, not two. `loadProcessModel` reads an undeclared policy as `strict`
 
 ## Findings
 
-**3 diagram(s) have no rendered SVG.** `bun run render:bpmn`.
-
-- `bootstrap-tools/processes/render-kg-to-github-pages.bpmn`
-- `bootstrap/processes/complete-initialization.bpmn`
-- `bootstrap/processes/human-agent-discussion.bpmn`
+Every one of the **81** diagrams has a rendered SVG.
 
 ### Activities carrying no `<bootstrap.processes:skill ref>` — a census, not a gap list
 
