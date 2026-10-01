@@ -9,7 +9,7 @@ tags:
     - ui
     - visualiser-navbar
 created_at: 2026-09-23T10:36:15Z
-updated_at: 2026-10-01T08:53:21Z
+updated_at: 2026-10-01T08:59:02Z
 parent: folio-assistant-4ccr
 ---
 
@@ -287,3 +287,9 @@ Owner chose, from three options: keep the C@T spellings visible, as a list. So t
 - C@T Harness: 'Computable adjudication and agentic test harness.' then 'Also written: caaat-harness, ca&at-harness, .c&at-harness, c@t-harness'
 
 **Not changed:** the two landing STICKIES (`cat-harness/folio/*.json`) are folio content; the C@T card's spellings are the acronym's derivation chain and `landing-sticky.test.ts` pins them on purpose. Finding 3's sticky half is therefore left as authored.
+
+
+## 2026-10-01 — finding 9: FIXED in #1762
+
+- The handle's mark follows the state: ▾ closed, ▴ open (it stayed ▾ with the glass down; only the aria-label changed). Measured: ▾ → ▴ on open → ▾ on Escape, at 1280 and 390.
+- Below 50rem the site title is held left of the handle (`max-width: calc(50vw - 3rem)`, ellipsis, no right padding, auto right margin so the header's icon buttons stay right). Measured on a local build: at 390 the title box ends at 153 and the handle starts at 154, 'C@T Harness' is not truncated, a 32-character title is ellipsised, and 0 header controls sit under the handle at 360, 390 and 700. At 360 'C@T Harness' itself ellipsises — the honest cost at that width.

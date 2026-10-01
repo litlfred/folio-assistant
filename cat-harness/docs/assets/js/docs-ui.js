@@ -6641,6 +6641,12 @@
       }
       handle.setAttribute("aria-label", label);
       handle.title = label;
+      // THE MARK FOLLOWS THE STATE — `ob3m` finding 9: it stayed ▾ with the
+      // glass down, so the one visible cue said "pull down" over a folio that
+      // was already down. Only the accessible name changed. ▴ while open is
+      // "put it away", the same pair the strip toggle already uses.
+      var mark = handle.querySelector(".fa-glass-handle__mark");
+      if (mark) mark.textContent = open ? "\u25B4" : "\u25BE";
     }
     countWaiting();
     document.addEventListener("fa:folio-changed", countWaiting);
