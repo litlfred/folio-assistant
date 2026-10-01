@@ -20,7 +20,7 @@
                   targetNamespace="https://litlfred.github.io/folio-assistant/workflows"
                   exporter="folio-assistant" exporterVersion="1">
 
-  <bpmn:import namespace="https://litlfred.github.io/folio-assistant/workflows" location="l2-dak-authoring.bpmn" importType="http://www.omg.org/spec/BPMN/20100524/MODEL" />
+  <bpmn:import namespace="https://litlfred.github.io/folio-assistant/workflows" location="../../smart-base/processes/l2-dak-authoring.bpmn" importType="http://www.omg.org/spec/BPMN/20100524/MODEL" />
   <bpmn:collaboration id="Collaboration_L3Fhir">
     <bpmn:participant id="Participant_L3Fhir" name="WHO SMART Guidelines — L2 DAK to published FHIR IG" processRef="Process_L3Fhir" />
   </bpmn:collaboration>
