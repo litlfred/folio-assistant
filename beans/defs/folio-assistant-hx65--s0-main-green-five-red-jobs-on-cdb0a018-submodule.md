@@ -16,4 +16,4 @@ Failing on main cdb0a018 (gh api jobs): Repository gates #13 'workflow skill ref
 - [ ] fix PR merged on per-job verified green
 - [ ] submodule pins bootstrap ebfa406, bootstrap-tools 03832a8; translation templates re-extracted
 - [ ] readme:subgraphs cause (02f16ae98bb) read from the job log
-- [ ] owner ruling on 8 detangle + 1 kg-qa orphan sidecars recorded
+- [x] owner ruling on 8 detangle + 1 kg-qa orphan sidecars recorded: WIDEN THE SCAN to each instance's own skills/, keep the files (owner, 2026-10-01)

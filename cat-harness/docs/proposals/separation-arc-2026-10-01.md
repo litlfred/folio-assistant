@@ -99,7 +99,7 @@ these ticks.
 - [ ] fix PR merged on **per-job verified green** (not "merged before CI")
 - [ ] submodule pins: bootstrap `ebfa406`, bootstrap-tools `03832a8`, translation templates re-extracted
 - [ ] `readme:subgraphs` cause read from the job log (G10)
-- [ ] your ruling on the 8 + 1 orphan sidecars recorded on the bean (G8)
+- [x] your ruling on the 8 + 1 orphan sidecars recorded on the bean (G8): widen the scan, keep the files
 
 ### S1 `a4of` — bookkeeping truth
 - [ ] `y5si`, `ybp4` completed with PR evidence
