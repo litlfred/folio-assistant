@@ -1,0 +1,101 @@
+{
+  "_comment": "Role EXTENSIONS by id (placement PR0b; PR1, bean ybwt). Each entry adds this instance's skills to a role the harness declares, so the edge points DOWN: the harness's scenarios/roles.json names no skill that lives above it. An extension adds skills and nothing else; a role this instance owns outright would go in `roles` (placement PR4 moves whole roles). Schema: cat-harness/schemas/role-graph.ts (RoleExtensionSchema); overlay: cat-harness/schemas/scenario-overlay.ts.",
+  "name": "folio-assistant-sci",
+  "roles": [],
+  "extensions": [
+    {
+      "role": "reviewer",
+      "skills": [
+        "content-block-review",
+        "content-validation",
+        "rendering-auditor",
+        "semantic-review-scoping"
+      ]
+    },
+    {
+      "role": "authoring-agent",
+      "skills": [
+        "semantic-review-scoping"
+      ]
+    },
+    {
+      "role": "ingestion-agent",
+      "skills": [
+        "paper-importer",
+        "proof-status-tracking"
+      ]
+    },
+    {
+      "role": "build-pipeline",
+      "skills": [
+        "latex-authoring",
+        "build-docs",
+        "build-pdf",
+        "latex-build-cache",
+        "latex-validation"
+      ]
+    },
+    {
+      "role": "lean-toolchain",
+      "skills": [
+        "lean-formalization",
+        "proof-verification"
+      ]
+    },
+    {
+      "role": "integration-watcher",
+      "skills": [
+        "proof-integration-watcher",
+        "q-usage-watcher"
+      ]
+    },
+    {
+      "role": "lean-authoring-agent",
+      "skills": [
+        "formalizer",
+        "chapter-analysis",
+        "lean-generation",
+        "lean-substantive-pass",
+        "lean-build-fix",
+        "lean-cache-restore",
+        "lean-environment-setup",
+        "lean-mathlibext-curator",
+        "lean-formal-graph",
+        "proof-triage",
+        "category-theory",
+        "groebner-basis"
+      ]
+    },
+    {
+      "role": "proof-review-agent",
+      "skills": [
+        "lean-proof-review",
+        "lean-proof-vacuity-audit",
+        "proof-gap-audit",
+        "proof-conciseness",
+        "proof-editor",
+        "proof-exposition-review",
+        "proof-simplifier",
+        "proof-narrative-lean-equivalence",
+        "lean-completeness-audit",
+        "remark-audit",
+        "definition-clarity-audit",
+        "proposition-consolidation-audit",
+        "critical-path-analysis"
+      ]
+    },
+    {
+      "role": "compute-authoring-agent",
+      "skills": [
+        "compute-audit",
+        "compute-author",
+        "ffi-roundtrip-audit",
+        "lean-witness-audit",
+        "witnessed-values",
+        "verify-local-substrate",
+        "simulator",
+        "simulator-math-audit"
+      ]
+    }
+  ]
+}

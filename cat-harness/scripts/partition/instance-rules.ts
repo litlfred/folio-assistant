@@ -1672,8 +1672,11 @@ export const RULES: Rule[] = [
     // `cat-harness/`, so the prefix now matches nothing — and a rule that
     // fires on nothing while reading as a live adjudication is worse than no
     // rule, because the next reader takes it as evidence the file is still
-    // here. The reasoning is kept; the dead prefix is not.
-    prefixes: ["skills/authoring/authoring-math/", "skills/authoring/folio-paper-adapter/", "computations/", "latex/", "scripts/render-tex/", "scripts/docker-latex-build/", "scripts/knot-plots/"],
+    // here. The reasoning is kept; the dead prefix is not. The same went for
+    // `skills/authoring/{authoring-math,folio-paper-adapter}/` on 2026-10-01:
+    // placement PR1 (bean `ybwt`) moved both packages to
+    // `folio-assistant-sci/skills/content/`.
+    prefixes: ["computations/", "latex/", "scripts/render-tex/", "scripts/docker-latex-build/", "scripts/knot-plots/"],
     exact: ["schemas/formalization-types.ts", "schemas/precision-scalar.ts", "schemas/refactor-strategy.ts"],
   },
   {
@@ -1682,23 +1685,21 @@ export const RULES: Rule[] = [
   },
 
   // ── smart-base: WHO L2-L3, DAK, FHIR, OCL
-  {
-    repo: "base",
-    // declared-path-literal: the TARGET layout of the five-repo split, which no
-    // declaration in THIS repo describes — that is the whole point of the plan.
-    prefixes: ["skills/authoring/authoring-who-smart-guidelines/"],
-    // `schemas/dak-blocks.ts` was here and is CORE. Measured: core's own
-    // `schemas/block-kinds.ts` already declares `CONTENT_ADAPTERS =
-    // ["paper", "dak"]` and `DAK_BLOCK_KINDS`, so the DAK block kinds are
-    // part of the core content model by the core's own declaration. Calling
-    // the module that defines their schemas `smart-base` made the core barrel
-    // re-export a smart-base module — the one `folio-assist-core → smart-base`
-    // wrong-direction edge, and it was the classification that was wrong
-    // rather than the import.
-    //
-    // What IS smart-base is the L2/L3 AUTHORING skills above: the procedures
-    // for producing a DAK, as against the block kinds a folio may contain.
-  },
+  // `skills/authoring/authoring-who-smart-guidelines/` was the one prefix of a
+  // smart-base rule here until placement PR1 (bean `ybwt`, 2026-10-01) moved
+  // the package to `smart-base/skills/content/` and its four generic FHIR IG
+  // skills to `fhir-harness/skills/content/fhir-ig-authoring/`. Its note stays:
+  // `schemas/dak-blocks.ts` was here and is CORE. Measured: core's own
+  // `schemas/block-kinds.ts` already declares `CONTENT_ADAPTERS =
+  // ["paper", "dak"]` and `DAK_BLOCK_KINDS`, so the DAK block kinds are
+  // part of the core content model by the core's own declaration. Calling
+  // the module that defines their schemas `smart-base` made the core barrel
+  // re-export a smart-base module — the one `folio-assist-core → smart-base`
+  // wrong-direction edge, and it was the classification that was wrong
+  // rather than the import.
+  //
+  // What IS smart-base is the L2/L3 AUTHORING skills above: the procedures
+  // for producing a DAK, as against the block kinds a folio may contain.
   {
     repo: "base",
     exact: [
@@ -1747,7 +1748,7 @@ export const RULES: Rule[] = [
     repo: "core",
     // declared-path-literal: the TARGET layout of the five-repo split, which no
     // declaration in THIS repo describes — that is the whole point of the plan.
-    prefixes: ["adapters/mcp-server/", "adapters/document/", "src/blocks/", "scripts/translation/", "skills/folio-core/", "skills/authoring/folio-document-adapter/", "skills/authoring-document/", "skills/authoring/content-lifecycle/", "content/pipeline/", "schemas/", "ui/", "viewer/", "translations/"],
+    prefixes: ["adapters/mcp-server/", "adapters/document/", "src/blocks/", "scripts/translation/", "skills/folio-core/", "skills/authoring-document/", "skills/authoring/content-lifecycle/", "content/pipeline/", "schemas/", "ui/", "viewer/", "translations/"],
     // `blueprint/` STOOD in the prefixes above until 2026-09-30 (bean `vov0`):
     // it held a hand-written QOU blueprint, folio content in the platform, and
     // is removed now that `blueprint-layout.ts` generates a paper's

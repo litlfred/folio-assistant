@@ -6,9 +6,9 @@ parent: Skill instructions
 ---
 
 {: .note }
-> Generated from [`cat-harness/skills/authoring/authoring-who-smart-guidelines/ig-publication.md`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/authoring/authoring-who-smart-guidelines/ig-publication.md) — do not edit here. Typed contract: [schema reference](../skills/ig-publication.html).
+> Generated from [`fhir-harness/skills/content/fhir-ig-authoring/ig-publication.md`](https://github.com/litlfred/folio-assistant/blob/main/fhir-harness/skills/content/fhir-ig-authoring/ig-publication.md) — do not edit here. Typed contract: [schema reference](../skills/ig-publication.html).
 >
-> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/cat-harness/skills/authoring/authoring-who-smart-guidelines/ig-publication.md){: .fa-edit-source }
+> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/fhir-harness/skills/content/fhir-ig-authoring/ig-publication.md){: .fa-edit-source }
 
 {% raw %}
 # ig-publication
@@ -29,7 +29,7 @@ site, deploy.
 
 ## Inputs and outputs
 
-`schemas/skills/ig-publication/`:
+`fhir-harness/schemas/skills/ig-publication/`:
 
 - **in** — `igRoot` (required), `versionIncrement` (required), `releaseNotes`,
   `publicationTarget`

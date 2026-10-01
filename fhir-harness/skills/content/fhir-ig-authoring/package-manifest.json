@@ -1,0 +1,22 @@
+{
+  "name": "fhir-ig-authoring",
+  "version": "0.1.0",
+  "description": "Authoring a FHIR Implementation Guide: L3 FSH authoring, terminology management, FHIR validation and IG publication. No WHO, DAK or SMART assumption; moved here from the harness's authoring-who-smart-guidelines package (placement PR1, #1702).",
+  "skills": [
+    "fhir-validation",
+    "ig-publication",
+    "l3-fhir-authoring",
+    "terminology-management"
+  ],
+  "providesCapabilities": [
+    "ig-publisher",
+    "sushi-compiler",
+    "fhir-validator",
+    "java-runtime"
+  ],
+  "lifecycleStages": [
+    "author",
+    "validate",
+    "publish"
+  ]
+}

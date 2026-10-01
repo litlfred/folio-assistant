@@ -105,7 +105,7 @@ const ROOT = join(dirname(fileURLToPath(import.meta.url)), "..");
  * Three times now a hardcoded list has been the bug. First this module listed
  * six directories and missed `schemas/skills/`, reporting 11 BPMN refs as
  * dangling. Then, with that fixed, the same list still omitted
- * `skills/authoring/authoring-who-smart-guidelines/` and its siblings, so
+ * `smart-base/skills/content/authoring-who-smart-guidelines/` and its siblings, so
  * `smart-base-tools` — a file that plainly exists — came out as a dangling
  * `declaresSkill` link. `knownSkills()` in `scripts/check-workflow-refs.ts`
  * carries a fourth, differently-wrong copy of the same list.
@@ -973,15 +973,23 @@ function collectSkills(doc: string, base: string, problems: string[], root: stri
   // Minted by `skillIoIri`, the one function that owns a contract's IRI, so a
   // local contract outside `schemas/skills/<skill>/<io>.schema.json` has no
   // published address and is left unset rather than composed here.
-  const contractIri = (ref: string): string | undefined => {
+  //
+  // Only for a contract THIS instance holds. A skill held higher up names a
+  // contract under its own instance's `schemas/skills/` (placement PR1, bean
+  // `ybwt`), which this instance's schema export does not publish — so minting
+  // an IRI under this base would name a path nothing serves, the defect the
+  // published-paths test exists for. Left unset until that instance publishes.
+  const own = resolve(ROOT);
+  const contractIri = (instanceRoot: string, ref: string): string | undefined => {
     if (isExternalContract(ref)) return ref;
+    if (resolve(instanceRoot) !== own) return undefined;
     const m = new RegExp(`^${SKILL_IO_DIR}/([^/]+)/(input|output)\\.schema\\.json$`).exec(ref);
     return m ? skillIoIri(base, m[1]!, m[2]!) : undefined;
   };
   for (const c of skillContracts(root).values()) {
     const s = get(c.skill);
-    if (c.input !== undefined) s.inputSchema = contractIri(c.input);
-    if (c.output !== undefined) s.outputSchema = contractIri(c.output);
+    if (c.input !== undefined) s.inputSchema = contractIri(c.instanceRoot, c.input);
+    if (c.output !== undefined) s.outputSchema = contractIri(c.instanceRoot, c.output);
   }
 
   // The skill documenting an unpublished kind is itself unpublished — it

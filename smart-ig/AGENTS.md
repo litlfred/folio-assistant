@@ -29,4 +29,4 @@ Per the `folio-assistant-core` precedent: a declared-but-absent directory is the
 `dh4f` defect.
 
 Placement:
-[`smart-stack-layering`](../cat-harness/skills/authoring/authoring-who-smart-guidelines/smart-stack-layering.md).
+[`smart-stack-layering`](../smart-base/skills/content/authoring-who-smart-guidelines/smart-stack-layering.md).
