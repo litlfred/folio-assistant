@@ -2,7 +2,7 @@
   "$schema": "folio-bean-index/v1",
   "tile": {
     "beans": {
-      "count": 591,
+      "count": 592,
       "unit": "beans"
     }
   },
@@ -1301,14 +1301,14 @@
     {
       "id": "folio-assistant-5qq3",
       "title": "REGEN SCOPE: the browser jobs' artefacts are outside regen's fast set, and a stale one only surfaces in CI",
-      "status": "in-progress",
+      "status": "completed",
       "type": "task",
       "priority": "normal",
       "parent": "folio-assistant-2upx",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-30T18:53:17Z",
-      "updatedAt": "2026-10-01T12:36:11Z",
+      "updatedAt": "2026-10-01T12:50:27Z",
       "preview": "Found 2026-09-30 on PR #1633, by CI rather than by `regen`.\n\n`End-to-end + accessibility (hard)` failed on `render:bpmn:check` with three\nstale drawings — `bootstrap/processes/{discussion,initialize-harness,log-message}.svg`\n— on a tree where `bun run regen` had just reported a fixed point.\n\n## This is NOT the same defect as `check:X` (the prefix-convention false clean)\n\nWorth separating, because ",
       "file": "beans/defs/folio-assistant-5qq3--regen-scope-the-browser-jobs-artefacts-are-outside.md"
     },
@@ -3102,7 +3102,7 @@
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-21T19:18:36Z",
-      "updatedAt": "2026-10-01T12:25:43Z",
+      "updatedAt": "2026-10-01T12:27:01Z",
       "preview": "Owner asked 2026-09-21: *\"we need to dediplicate. options? auto stub prefix?\"*\nBoth options were put to them, both were chosen, and **both turned out to be\nmeasurably wrong**. Recorded here so the next agent does not re-derive it.\n\n## The measurement\n\n**63 declared entries across 52 distinct directories; 11 declared twice.**\nEvery duplicate has one shape: `cat-harness` declares another instance's\n",
       "file": "beans/defs/folio-assistant-cmsl--dedupe-11-directories-declared-twice-and-both-obvi.md"
     },
@@ -4325,6 +4325,20 @@
       "updatedAt": "2026-09-24T13:46:41Z",
       "preview": "Found 2026-09-23 while ingesting arXiv:2510.21603v1 (bean `ctp3`). Split out\nrather than worked around, because routing around it would have meant writing 383\nimage descriptions from nothing.\n\n## CORRECTED 2026-09-24 — the original diagnosis in this bean was WRONG\n\nEverything below the next heading was written on 2026-09-23 from counts and\nfile sizes. **Two file reads falsified it**, and the corre",
       "file": "beans/defs/folio-assistant-j820--pdf-extractor-fragments-a-composite-figure-383-pla.md"
+    },
+    {
+      "id": "folio-assistant-jcet",
+      "title": "STANDARDS MISMATCHES the W3C methodology nodes recorded: PROV_CONTEXT IRI, JSON-LD @base in an external context, ODRL conflict default",
+      "status": "todo",
+      "type": "bug",
+      "priority": "normal",
+      "parent": "folio-assistant-scfh",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-10-01T12:32:06Z",
+      "updatedAt": "2026-10-01T12:32:37Z",
+      "preview": "Found while writing the three W3C methodology nodes (bean 6306, PR #1769), each quoted against the HELD spec in cat-harness/library/. None is fixed: each needs a decision, not a mechanical edit.\n\n1. **PROV_CONTEXT** (cat-harness/schemas/prov.ts:29) = \"http://www.w3.org/ns/prov-o\". That IRI is the PROV-O OWL ontology document; the namespace is http://www.w3.org/ns/prov# and W3C's JSON-LD context is",
+      "file": "beans/defs/folio-assistant-jcet--standards-mismatches-the-w3c-methodology-nodes-rec.md"
     },
     {
       "id": "folio-assistant-jg8s",
