@@ -229,6 +229,14 @@
       "status": "candidate"
     },
     {
+      "id": "compiled-artefact-cache",
+      "prefLabel": "compiled-artefact-cache",
+      "definition": "The general pattern for caching expensive compiled artefacts (Lean .oleans, FHIR ASTs) across builds. Defines branch-based storage, validity checking, exit code protocol, safety guards, and the restore→build→contribute loop.",
+      "notation": "compiled-artefact-cache",
+      "source": "cat-harness/skills/process/process-core/compiled-artefact-cache.md",
+      "status": "candidate"
+    },
+    {
       "id": "compute-integration-watcher",
       "prefLabel": "compute-integration-watcher",
       "definition": "Cross-layer wiring auditor — watches for newly-landed formal/analytic improvements (proofs, propositions, lemmas, axiom→theorem upgrades, witness data) on the default branch AND on open PRs, and checks whether each one has been wired into the production compute chain. Complements `local/compute-audit` (which scans for performance/correctness antipatterns inside scripts). Runs in two modes: REACTIVE (watch new commits / PR events) and IDLE-SWEEP (walk all existing content blocks and audit wiring).",
