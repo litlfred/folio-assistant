@@ -1,11 +1,11 @@
 ---
 # folio-assistant-nvbr
 title: Phase I.4 — LHS navbar section per node in the folio instance (#223)
-status: todo
+status: in-progress
 type: task
 priority: normal
 created_at: 2026-09-18T15:00:27Z
-updated_at: 2026-09-29T20:52:42Z
+updated_at: 2026-10-01T06:20:28Z
 parent: folio-assistant-yj32
 ---
 
@@ -56,3 +56,5 @@ scrap or fold it deliberately rather than by accident.
 
 
 _2026-09-29_ — **Re-parented `vke6` → `yj32`** by subject, per todo-manager §"WHICH parent" (owner choice '1 2 3' on the LSI epic-filing proposal, bean ansc). An LHS navbar section per folio node is yj32's rendering subject; #223 is where it was asked, not what it is.
+
+_2026-10-01T06:20:28Z_ — Claimed by claude/tbdl-jekyll-doc-index — pushed to main so sibling sessions see it before this branch has a PR (bean 35nj).

@@ -122,6 +122,7 @@ sit *inside* level 3's `Draft the block edit`, and live with their guides:
 | `l2-dak-authoring.bpmn` | WHO SMART Guidelines DAK (L2) | [Authoring a WHO SMART DAK](guides/who-smart-dak.html#the-l2-artifacts) |
 | `l3-fhir-pipeline.bpmn` | WHO SMART Implementation Guide (L3) | [Authoring a WHO SMART IG](guides/who-smart-ig.html#the-l3-pipeline) |
 | `ig-incremental-build.bpmn` | WHO SMART IG (L3) — the build lane, incremental by dependency cone (proposed) | [Making the build incremental](guides/who-smart-ig.html#making-the-build-incremental) · [the overview](proposals/ig-incremental-build-overview.html) |
+| `ig-ast-delta-review.bpmn` | Any FHIR IG — the review step of an incremental build: is the incremental IG AST what a full build would have produced? (proposed) | [the process](processes/ig-ast-delta-review.html) |
 
 **Agent process** — how an agent works, rather than how content is authored.
 These run alongside the content processes rather than inside them:

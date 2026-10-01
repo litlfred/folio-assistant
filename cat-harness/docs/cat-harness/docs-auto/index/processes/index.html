@@ -133,7 +133,7 @@
 <ul class="subs">
 <li><a href="../folio-assistant-core-processes/">folio-assistant-core-processes</a> <span class="p">folio-assistant-core/processes</span> <span class="n">1</span></li>
 <li><a href="../large-datasets-processes/">large-datasets-processes</a> <span class="p">large-datasets/processes</span> <span class="n">5</span></li>
-<li><a href="../processes/">processes</a> <span class="p">cat-harness/processes</span> <span class="n">66</span></li>
+<li><a href="../processes/">processes</a> <span class="p">cat-harness/processes</span> <span class="n">67</span></li>
 <li><a href="../smart-base-processes/">smart-base-processes</a> <span class="p">smart-base/methodologies/processes</span> <span class="n">1</span></li>
 </ul>
 
@@ -191,7 +191,7 @@
 </tr>
 <tr>
   <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/code-change-review.bpmn"><code>Code change and review</code></a><br><span class="p">cat-harness/processes/code-change-review.bpmn</span></td>
-  <td>Getting a change to the PLATFORM from &quot;this is needed&quot; to merged: claim the work, branch and announce it, make the change, prove it against the platform's own gates, and carry it through review to a merge somebody else…<div class="f"><span class="k">activities</span> 11</div><div class="f"><span class="k">lanes</span> Authoring agent · CI/CD pipeline · Code reviewer</div><div class="f"><span class="k">skills</span> bean-coordination, ci-health, code-node-review, continual-progress, issue-working, platform-gates, prepare-merge, todo-manager, watch</div></td>
+  <td>Getting a change to the PLATFORM from &quot;this is needed&quot; to merged: claim the work, branch and announce it, make the change, prove it against the platform's own gates, and carry it through review to a merge somebody else…<div class="f"><span class="k">activities</span> 11</div><div class="f"><span class="k">lanes</span> Authoring agent · CI/CD pipeline · Code reviewer</div><div class="f"><span class="k">skills</span> bean-coordination, before-after-preview, ci-health, code-node-review, continual-progress, issue-working, platform-gates, prepare-merge, todo-manager, watch</div></td>
 </tr>
 <tr>
   <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/code-quality-gates.bpmn"><code>The gates a change must pass before it can merge</code></a><br><span class="p">cat-harness/processes/code-quality-gates.bpmn</span></td>
@@ -203,7 +203,7 @@
 </tr>
 <tr>
   <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/content-change-review.bpmn"><code>Content Change and Review</code></a><br><span class="p">cat-harness/processes/content-change-review.bpmn</span></td>
-  <td>Getting a change to a folio's CONTENT from a request into a published rendering: the author says what they want, an agent works out its scope and makes it, a review committee accepts or refuses it, and the pipeline depl…<div class="f"><span class="k">activities</span> 29</div><div class="f"><span class="k">lanes</span> Content Author · Folio-Assistant Agent · Review Committee · CI/CD Pipeline · Review Coordinator</div><div class="f"><span class="k">skills</span> adjudication, content-author, content-graph, content-publish, content-review, decision-audit, feature-staging, prepare-merge, prepare-merge-auto, review-comments, review-heatmap, semantic-review-scoping, staging-review, todo-manager, visual-diff, watch</div></td>
+  <td>Getting a change to a folio's CONTENT from a request into a published rendering: the author says what they want, an agent works out its scope and makes it, a review committee accepts or refuses it, and the pipeline depl…<div class="f"><span class="k">activities</span> 29</div><div class="f"><span class="k">lanes</span> Content Author · Folio-Assistant Agent · Review Committee · CI/CD Pipeline · Review Coordinator</div><div class="f"><span class="k">skills</span> adjudication, before-after-preview, content-author, content-graph, content-publish, content-review, decision-audit, feature-staging, prepare-merge, prepare-merge-auto, review-comments, review-heatmap, semantic-review-scoping, staging-review, todo-manager, visual-diff, watch</div></td>
 </tr>
 <tr>
   <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/content-lifecycle.bpmn"><code>Content lifecycle</code></a><br><span class="p">cat-harness/processes/content-lifecycle.bpmn</span></td>
@@ -259,7 +259,7 @@
 </tr>
 <tr>
   <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/editing-hci-validation.bpmn"><code>Editing and HCI validation</code></a><br><span class="p">cat-harness/processes/editing-hci-validation.bpmn</span></td>
-  <td>folio-assistant — editing a content block and its HCI validation gate.<div class="f"><span class="k">activities</span> 17</div><div class="f"><span class="k">lanes</span> Editor / author (person) · Work plan — beans (shared by humans and agents) · Authoring agent (system) · HCI validation pipeline (system) · Mechanical validation (system) · Non-mechanical validation (review agent or SME) · Corpus (versioned store)</div><div class="f"><span class="k">skills</span> content-author, content-review, content-test, content-validate, decision-audit, todo-manager</div></td>
+  <td>folio-assistant — editing a content block and its HCI validation gate.<div class="f"><span class="k">activities</span> 17</div><div class="f"><span class="k">lanes</span> Editor / author (person) · Work plan — beans (shared by humans and agents) · Authoring agent (system) · HCI validation pipeline (system) · Mechanical validation (system) · Non-mechanical validation (review agent or SME) · Corpus (versioned store)</div><div class="f"><span class="k">skills</span> before-after-preview, content-author, content-review, content-test, content-validate, decision-audit, todo-manager</div></td>
 </tr>
 <tr>
   <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/evidence-retrieval.bpmn"><code>Evidence for a recommendation</code></a><br><span class="p">cat-harness/processes/evidence-retrieval.bpmn</span></td>
@@ -280,6 +280,10 @@
 <tr>
   <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/human-translation-workflow.bpmn"><code>Human Translation Workflow</code></a><br><span class="p">cat-harness/processes/human-translation-workflow.bpmn</span></td>
   <td>The human half of translation: a coordinator assigns a locale to a qualified translator, the translator works in their own tool, a subject-matter expert judges accuracy, and only then is the result official.<div class="f"><span class="k">activities</span> 16</div><div class="f"><span class="k">lanes</span> Translation Coordinator · Human Translator · Subject-Matter Expert / Reviewer · Automated Pipeline</div><div class="f"><span class="k">skills</span> translation-manager</div></td>
+</tr>
+<tr>
+  <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/ig-ast-delta-review.bpmn"><code>Is the incremental IG AST what a full build would have produced?</code></a><br><span class="p">cat-harness/processes/ig-ast-delta-review.bpmn</span></td>
+  <td>THE REVIEW STEP OF AN INCREMENTAL IG BUILD, drawn as its own subprocess (bean <code>a9tx</code>, owner 2026-09-30: &quot;list and view differentials/deltas against AST ...<div class="f"><span class="k">activities</span> 4</div><div class="f"><span class="k">lanes</span> Incremental build (system) · QC reviewer · Work plan — beans (shared by humans and agents)</div><div class="f"><span class="k">skills</span> ig-ast-delta, todo-manager</div></td>
 </tr>
 <tr>
   <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/ig-incremental-build.bpmn"><code>Incremental IG build</code></a><br><span class="p">cat-harness/processes/ig-incremental-build.bpmn</span></td>

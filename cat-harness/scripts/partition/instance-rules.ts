@@ -903,6 +903,11 @@ export const RULES: Rule[] = [
       // Recorded here rather than acted on: a partition-tuning pass is the
       // wrong place to redesign an adapter contract.
       "src/types.ts",
+      // HARNESS. The content model and the content half of an adapter, split
+      // out of `src/types.ts` (bean `w2gr`, step 1, owner ruling 2026-10-01):
+      // the server half moves to `cat-harness-tools`, and core must not depend
+      // on that, so the vocabulary both sides use stays here.
+      "src/content-types.ts",
       // HARNESS, both re-triaged 2026-09-19 while draining the last edges.
       //
       // `schemas/contributions.ts` is what a DEPENDENCY may add to the root
