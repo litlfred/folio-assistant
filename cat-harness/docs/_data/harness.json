@@ -1228,13 +1228,13 @@
         {
           "id": "views",
           "label": "visualisations you can open",
-          "value": 2
+          "value": 6
         }
       ],
       "visualisations": [
         {
           "kind": "beans",
-          "note": "no viewer yet"
+          "path": "/beans/"
         },
         {
           "kind": "code",
@@ -1242,7 +1242,7 @@
         },
         {
           "kind": "docs",
-          "note": "no viewer yet"
+          "path": "/cat-harness/docs-auto/index/docs/root-docs/"
         },
         {
           "kind": "fsh-guts",
@@ -1255,7 +1255,7 @@
         },
         {
           "kind": "issue-marks",
-          "note": "no viewer yet"
+          "path": "/issue-marks/"
         },
         {
           "kind": "memory",
@@ -1263,7 +1263,7 @@
         },
         {
           "kind": "todos",
-          "note": "no viewer yet"
+          "path": "/todos/"
         },
         {
           "kind": "uploads",
@@ -1275,7 +1275,7 @@
         }
       ],
       "findings": [
-        "folio-assistant: declares 8 graph(s) with no published viewer — beans, code, docs, interaction, issue-marks, memory, todos, waiver. Declared and not rendered is a gap, not a dead link.",
+        "folio-assistant: declares 4 graph(s) with no published viewer — code, interaction, memory, waiver. Declared and not rendered is a gap, not a dead link.",
         "folio-assistant: a viewer is published at /cat-harness/library/folio-assistant/ for a \"library\" graph this instance does not declare. Declare it and the tile links it."
       ],
       "navbarIcons": [
@@ -1884,6 +1884,8 @@
       "launcher"
     ],
     "hrefs": {
+      "todos": "/todos/",
+      "beans": "/beans/",
       "processes": "/processes/",
       "kg": "/cat-harness/"
     },

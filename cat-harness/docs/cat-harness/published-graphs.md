@@ -39,10 +39,10 @@ nothing renders yet. It is shown rather than omitted: "nothing renders this" and
 
 ### `beans`
 
-0 of 1 published.
+1 of 1 published.
 {: .fa-hx-dim }
 
-- Folio Assistant — *declared, not published*
+- [Folio Assistant]({{ '/beans/' | relative_url }})
 
 ### `cat-harness`
 
@@ -83,11 +83,11 @@ nothing renders yet. It is shown rather than omitted: "nothing renders this" and
 
 ### `docs`
 
-3 of 4 published.
+4 of 4 published.
 {: .fa-hx-dim }
 
 - [C@T Harness]({{ '/cat-harness/docs-auto/index/docs/docs/' | relative_url }})
-- Folio Assistant — *declared, not published*
+- [Folio Assistant]({{ '/cat-harness/docs-auto/index/docs/root-docs/' | relative_url }})
 - [smart-trust]({{ '/cat-harness/docs-auto/index/docs/smart-trust-docs/' | relative_url }})
 - [WHO IRIS]({{ '/cat-harness/docs-auto/index/docs/who-iris-site/' | relative_url }})
 
@@ -146,10 +146,10 @@ nothing renders yet. It is shown rather than omitted: "nothing renders this" and
 
 ### `issue-marks`
 
-0 of 1 published.
+1 of 1 published.
 {: .fa-hx-dim }
 
-- Folio Assistant — *declared, not published*
+- [Folio Assistant]({{ '/issue-marks/' | relative_url }})
 
 ### `library`
 
@@ -289,10 +289,10 @@ nothing renders yet. It is shown rather than omitted: "nothing renders this" and
 
 ### `todos`
 
-0 of 1 published.
+1 of 1 published.
 {: .fa-hx-dim }
 
-- Folio Assistant — *declared, not published*
+- [Folio Assistant]({{ '/todos/' | relative_url }})
 
 ### `tools`
 

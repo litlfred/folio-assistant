@@ -869,7 +869,7 @@ if (!decl) {
 // names `cat-harness/docs/<id>/index.html` as its visualiser. Reading only this
 // instance's declaration would orphan all six the moment the entries moved.
 const rootRead = resolve(REPO_ROOT) === resolve(ROOT) ? undefined : readDeclaration(REPO_ROOT);
-const rootDirs = rootRead ? withViewers(rootRead.directories ?? [], REPO_ROOT) : [];
+const rootDirs = rootRead ? withViewers(rootRead.directories ?? [], REPO_ROOT, REPO_ROOT) : [];
 const ownIds = new Set((decl.directories ?? []).map((d) => d.id));
 const checkoutDirs = rootDirs.filter((d) => !ownIds.has(d.id));
 const all = [...stateGraphsOf(decl), ...stateGraphsOf({ ...decl, directories: checkoutDirs })].sort((a, b) =>
