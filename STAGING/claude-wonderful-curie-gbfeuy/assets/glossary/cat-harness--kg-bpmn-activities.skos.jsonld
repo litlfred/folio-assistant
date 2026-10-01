@@ -1166,7 +1166,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "`prepare-merge` brings the base in, re-runs the gates and pushes — it does NOT merge. `watch` follows the PR until it is merged or closed, because webhooks do not reliably deliver CI success or a merge-conflict transition."
+          "@value": "`prepare-merge` brings the base in, re-runs the gates and pushes — it does NOT merge. Bringing the base in IS `merge-base.bpmn` (`bun run merge:main`): conflicts a declared pattern covers are resolved and proved by the gate set; anything else aborts the merge and comes back to the agent (bean `y7b3`, #1707). `watch` follows the PR until it is merged or closed, because webhooks do not reliably deliver CI success or a merge-conflict transition."
         }
       ],
       "skos:notation": "Task_PrepareMerge",
@@ -6654,206 +6654,6 @@
       "skos:note": "candidate"
     },
     {
-      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-bpmn-activities/process_l2dak.task_assembledak",
-      "@type": "skos:Concept",
-      "skos:inScheme": {
-        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-bpmn-activities"
-      },
-      "skos:prefLabel": [
-        {
-          "@value": "Assemble and validate the DAK [content-validate]"
-        }
-      ],
-      "skos:definition": [
-        {
-          "@value": "Assemble the validated components and run content validation: schemas, cross-component consistency and terminology bindings. The smart-base extractors read the authored artefacts; with SMART_BASE_HOME unset they report skip, never a clean run."
-        }
-      ],
-      "skos:notation": "Task_AssembleDak",
-      "dcterms:source": "cat-harness/processes/l2-dak-authoring.bpmn#Task_AssembleDak",
-      "skos:note": "candidate"
-    },
-    {
-      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-bpmn-activities/process_l2dak.task_bpmn",
-      "@type": "skos:Concept",
-      "skos:inScheme": {
-        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-bpmn-activities"
-      },
-      "skos:prefLabel": [
-        {
-          "@value": "Business processes · BPMN 2.0 [bpmn-authoring]"
-        }
-      ],
-      "skos:definition": [
-        {
-          "@value": "Author the DAK's L2 business processes as BPMN 2.0, with Diagram Interchange: a .bpmn with no x/y on its shapes parses and renders blank. Stay at L2 — reviewable by a clinician, not FHIR."
-        }
-      ],
-      "skos:notation": "Task_Bpmn",
-      "dcterms:source": "cat-harness/processes/l2-dak-authoring.bpmn#Task_Bpmn",
-      "skos:note": "candidate"
-    },
-    {
-      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-bpmn-activities/process_l2dak.task_datadict",
-      "@type": "skos:Concept",
-      "skos:inScheme": {
-        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-bpmn-activities"
-      },
-      "skos:prefLabel": [
-        {
-          "@value": "Data dictionary and core data elements [l2-dak-authoring]"
-        }
-      ],
-      "skos:definition": [
-        {
-          "@value": "Author the data dictionary and core data elements for this component. Stay structured but not FHIR: a data element a clinician can review, from which L3 can later be derived rather than written twice."
-        }
-      ],
-      "skos:notation": "Task_DataDict",
-      "dcterms:source": "cat-harness/processes/l2-dak-authoring.bpmn#Task_DataDict",
-      "skos:note": "candidate"
-    },
-    {
-      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-bpmn-activities/process_l2dak.task_dmn",
-      "@type": "skos:Concept",
-      "skos:inScheme": {
-        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-bpmn-activities"
-      },
-      "skos:prefLabel": [
-        {
-          "@value": "Decision logic · DMN tables [dmn-authoring]"
-        }
-      ],
-      "skos:definition": [
-        {
-          "@value": "Author the decision logic as DMN tables, within the FEEL subset the interpreter implements (any, literals, comparisons, one-of). Ranges, not() and function calls are refused at load, so write inside the subset."
-        }
-      ],
-      "skos:notation": "Task_Dmn",
-      "dcterms:source": "cat-harness/processes/l2-dak-authoring.bpmn#Task_Dmn",
-      "skos:note": "candidate"
-    },
-    {
-      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-bpmn-activities/process_l2dak.task_indicators",
-      "@type": "skos:Concept",
-      "skos:inScheme": {
-        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-bpmn-activities"
-      },
-      "skos:prefLabel": [
-        {
-          "@value": "Indicators and requirements [l2-dak-authoring]"
-        }
-      ],
-      "skos:definition": [
-        {
-          "@value": "Author the component's indicators and its functional and non-functional requirements. These are the DAK's requirements, distinct from skills/requirements/*.json, which are this harness's own conformance obligations."
-        }
-      ],
-      "skos:notation": "Task_Indicators",
-      "dcterms:source": "cat-harness/processes/l2-dak-authoring.bpmn#Task_Indicators",
-      "skos:note": "candidate"
-    },
-    {
-      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-bpmn-activities/process_l2dak.task_personas",
-      "@type": "skos:Concept",
-      "skos:inScheme": {
-        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-bpmn-activities"
-      },
-      "skos:prefLabel": [
-        {
-          "@value": "Personas and scenarios [l2-dak-authoring]"
-        }
-      ],
-      "skos:definition": [
-        {
-          "@value": "Author the DAK's personas and the user journeys (scenarios) they appear in. These are the DAK's own actors, not this harness's scenarios/roles.json — the two vocabularies must not be conflated."
-        }
-      ],
-      "skos:notation": "Task_Personas",
-      "dcterms:source": "cat-harness/processes/l2-dak-authoring.bpmn#Task_Personas",
-      "skos:note": "candidate"
-    },
-    {
-      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-bpmn-activities/process_l2dak.task_scopedak",
-      "@type": "skos:Concept",
-      "skos:inScheme": {
-        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-bpmn-activities"
-      },
-      "skos:prefLabel": [
-        {
-          "@value": "Scope the DAK [content-plan]"
-        }
-      ],
-      "skos:definition": [
-        {
-          "@value": "Enumerate the processes, decisions and data elements the guideline implies; identify the actors."
-        }
-      ],
-      "skos:notation": "Task_ScopeDak",
-      "dcterms:source": "cat-harness/processes/l2-dak-authoring.bpmn#Task_ScopeDak",
-      "skos:note": "candidate"
-    },
-    {
-      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-bpmn-activities/process_l2dak.task_seedbeans",
-      "@type": "skos:Concept",
-      "skos:inScheme": {
-        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-bpmn-activities"
-      },
-      "skos:prefLabel": [
-        {
-          "@value": "Seed the work plan [todo-manager]"
-        }
-      ],
-      "skos:definition": [
-        {
-          "@value": "Turn the scope into beans on the shared work plan — one per DAK component, since a DAK is completed component by component. beans create is not idempotent: check for an existing bean before every create, or a re-run duplicates the plan."
-        }
-      ],
-      "skos:notation": "Task_SeedBeans",
-      "dcterms:source": "cat-harness/processes/l2-dak-authoring.bpmn#Task_SeedBeans",
-      "skos:note": "candidate"
-    },
-    {
-      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-bpmn-activities/process_l2dak.task_smevalidate",
-      "@type": "skos:Concept",
-      "skos:inScheme": {
-        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-bpmn-activities"
-      },
-      "skos:prefLabel": [
-        {
-          "@value": "Clinical validation [content-review]"
-        }
-      ],
-      "skos:definition": [
-        {
-          "@value": "Ground truth: does the DAK say what the guideline says?"
-        }
-      ],
-      "skos:notation": "Task_SmeValidate",
-      "dcterms:source": "cat-harness/processes/l2-dak-authoring.bpmn#Task_SmeValidate",
-      "skos:note": "candidate"
-    },
-    {
-      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-bpmn-activities/process_l2dak.task_terminology",
-      "@type": "skos:Concept",
-      "skos:inScheme": {
-        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-bpmn-activities"
-      },
-      "skos:prefLabel": [
-        {
-          "@value": "Terminology bindings [terminology-management]"
-        }
-      ],
-      "skos:definition": [
-        {
-          "@value": "ICD-11, SNOMED CT, LOINC bindings — governed separately from the artifacts that cite them."
-        }
-      ],
-      "skos:notation": "Task_Terminology",
-      "dcterms:source": "cat-harness/processes/l2-dak-authoring.bpmn#Task_Terminology",
-      "skos:note": "candidate"
-    },
-    {
       "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-bpmn-activities/process_l3fhir.task_authorfsh",
       "@type": "skos:Concept",
       "skos:inScheme": {
@@ -7171,6 +6971,136 @@
       ],
       "skos:notation": "Task_Test",
       "dcterms:source": "cat-harness/processes/content-lifecycle.bpmn#Task_Test",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-bpmn-activities/process_mergebase.task_abort",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Abort, restore the tree, list what was refused"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "`git merge --abort`. Each refused path is listed with its pattern's reason, or \"no declared pattern\"."
+        }
+      ],
+      "skos:notation": "Task_Abort",
+      "dcterms:source": "cat-harness/processes/merge-base.bpmn#Task_Abort",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-bpmn-activities/process_mergebase.task_byhand",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Resolve by hand, then regenerate"
+        }
+      ],
+      "skos:notation": "Task_ByHand",
+      "dcterms:source": "cat-harness/processes/merge-base.bpmn#Task_ByHand",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-bpmn-activities/process_mergebase.task_classify",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Classify every conflicted path against the declared patterns"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The first matching pattern decides: take-base, generated-regions, qa-sidecar, or refuse. A path no pattern names refuses."
+        }
+      ],
+      "skos:notation": "Task_Classify",
+      "dcterms:source": "cat-harness/processes/merge-base.bpmn#Task_Classify",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-bpmn-activities/process_mergebase.task_commit",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Commit the merge"
+        }
+      ],
+      "skos:notation": "Task_Commit",
+      "dcterms:source": "cat-harness/processes/merge-base.bpmn#Task_Commit",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-bpmn-activities/process_mergebase.task_merge",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Merge the base in, without committing"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "`git merge --no-ff --no-commit origin/main` on a clean tree (untracked files refuse too, so the final stage cannot sweep in a scratch file)."
+        }
+      ],
+      "skos:notation": "Task_Merge",
+      "dcterms:source": "cat-harness/processes/merge-base.bpmn#Task_Merge",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-bpmn-activities/process_mergebase.task_regen",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Regenerate, asking every CI gate"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "`bun run regen`: every check/writer pair the CI workflow runs, repeated until the tree settles."
+        }
+      ],
+      "skos:notation": "Task_Regen",
+      "dcterms:source": "cat-harness/processes/merge-base.bpmn#Task_Regen",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-bpmn-activities/process_mergebase.task_resolve",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Resolve each by its declared strategy"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "qa-sidecar paths first, through `qa:resolve-conflicts`; take-base paths take the base's copy; generated-regions files take the base's side of each hunk, which lies inside a generated region by construction."
+        }
+      ],
+      "skos:notation": "Task_Resolve",
+      "dcterms:source": "cat-harness/processes/merge-base.bpmn#Task_Resolve",
       "skos:note": "candidate"
     },
     {

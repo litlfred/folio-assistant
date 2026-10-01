@@ -1363,6 +1363,25 @@
       "skos:note": "candidate"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant-core/0.1.0/ns#glossary/kg-schema-fields/fhir-artifact-index.fhirartifactindexschema.dakapihub",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant-core/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "FhirArtifactIndexSchema.dakApiHub"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The DAK API hub: the region of the IG's `dak-api.html` between its `DAK_API_HUB_START` and `DAK_API_HUB_END` markers, which smart-base's `generate_dak_api_hub.py` writes after the Publisher has run. `url` is the page it was read from; `localPath` is the fragment, held so a page can fetch it (bean `680p`) rather than retype its prose — as a JSON node (`{ from, between, html }`), because an `.html` fragment published in the served graph would be a page with no <body>. Absent means the IG publishes no hub, or it was not materialised."
+        }
+      ],
+      "dcterms:source": "folio-assistant-core/schemas/fhir-artifact-index.ts#FhirArtifactIndexSchema.dakApiHub",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant-core/0.1.0/ns#glossary/kg-schema-fields/fhir-artifact-index.fhirartifactindexschema.dakunbound",
       "@type": "skos:Concept",
       "skos:inScheme": {
@@ -1398,6 +1417,25 @@
         }
       ],
       "dcterms:source": "folio-assistant-core/schemas/fhir-artifact-index.ts#FhirArtifactIndexSchema.id",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant-core/0.1.0/ns#glossary/kg-schema-fields/fhir-artifact-index.fhirartifactindexschema.package",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant-core/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "FhirArtifactIndexSchema.package"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The IG's own `package.tgz` — every resource's JSON in one file, as the Publisher packaged it. Held (`--materialize-package`) so a page can fetch the one archive and read a resource out of it in the browser, rather than this graph copying hundreds of resource files (bean `680p`, `visualizer-loading`). Absent means not held."
+        }
+      ],
+      "dcterms:source": "folio-assistant-core/schemas/fhir-artifact-index.ts#FhirArtifactIndexSchema.package",
       "skos:note": "candidate"
     },
     {
