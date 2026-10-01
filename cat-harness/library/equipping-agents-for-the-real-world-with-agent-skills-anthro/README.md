@@ -3,7 +3,7 @@
 
 ingested source material — attributed to its document, not folio content
 
-Held in the library [`agent-skills/library/`](../../../agent-skills/library/README.md) as `equipping-agents-for-the-real-world-with-agent-skills-anthro`.
+Held in the library [`cat-harness/library/`](../README.md) as `equipping-agents-for-the-real-world-with-agent-skills-anthro`.
 
 | | |
 |---|---|

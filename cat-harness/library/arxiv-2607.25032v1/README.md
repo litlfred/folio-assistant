@@ -3,7 +3,7 @@
 
 ingested source material — attributed to its document, not folio content
 
-Held in the library [`agent-skills/library/`](../../../agent-skills/library/README.md) as `arxiv-2607.25032v1`.
+Held in the library [`cat-harness/library/`](../README.md) as `arxiv-2607.25032v1`.
 
 | | |
 |---|---|

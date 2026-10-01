@@ -5,29 +5,19 @@
     "id": "Process_SampleImport",
     "path": "processes/sample-import.bpmn"
   },
-  "source_hash": "sha256:e89e952d76aeecd27e4e265d44c680c6997c95031545be45b875022a7fa1ea8e",
+  "source_hash": "sha256:5ab3974b7bd1d586cb01203028e6cdc0a86192e45281036933f7430a876b59d7",
   "criteria": {
     "raci-role-resolves": {
       "result": "n/a",
       "findings": []
     },
     "raci-single-accountable": {
-      "result": "unknown",
-      "findings": [
-        {
-          "where": "—",
-          "detail": "no role graph declared at scenarios/roles.json, so this instance holds no role DEFINITIONS. Role references are still resolved — see `role-ref-resolves` — against the 54 role(s) reachable through this instance's `needs`; what cannot be judged here is what those roles CARRY, which needs the definition rather than the name."
-        }
-      ]
+      "result": "n/a",
+      "findings": []
     },
     "raci-accountable-not-consulted": {
-      "result": "unknown",
-      "findings": [
-        {
-          "where": "—",
-          "detail": "no role graph declared at scenarios/roles.json, so this instance holds no role DEFINITIONS. Role references are still resolved — see `role-ref-resolves` — against the 54 role(s) reachable through this instance's `needs`; what cannot be judged here is what those roles CARRY, which needs the definition rather than the name."
-        }
-      ]
+      "result": "n/a",
+      "findings": []
     },
     "convention-ref-resolves": {
       "result": "n/a",
@@ -95,24 +85,43 @@
       "findings": []
     },
     "lane-binds-role": {
-      "result": "unknown",
-      "findings": [
-        {
-          "where": "—",
-          "detail": "no role graph declared at scenarios/roles.json, so this instance holds no role DEFINITIONS. Role references are still resolved — see `role-ref-resolves` — against the 54 role(s) reachable through this instance's `needs`; what cannot be judged here is what those roles CARRY, which needs the definition rather than the name."
-        }
-      ]
+      "result": "pass",
+      "findings": []
     },
     "variable-performer-declared-alone": {
       "result": "n/a",
       "findings": []
     },
     "role-carries-activity-skill": {
-      "result": "unknown",
+      "result": "fail",
       "findings": [
         {
-          "where": "—",
-          "detail": "no role graph declared at scenarios/roles.json, so this instance holds no role DEFINITIONS. Role references are still resolved — see `role-ref-resolves` — against the 54 role(s) reachable through this instance's `needs`; what cannot be judged here is what those roles CARRY, which needs the definition rather than the name."
+          "where": "Task_Scope",
+          "detail": "needs skill \"sample-import\", but its lane's role \"user\" does not carry it."
+        },
+        {
+          "where": "Call_Materialize",
+          "detail": "needs skill \"sample-import\", but its lane's role \"ingestion-agent\" does not carry it."
+        },
+        {
+          "where": "Task_Library",
+          "detail": "needs skill \"sample-import\", but its lane's role \"ingestion-agent\" does not carry it."
+        },
+        {
+          "where": "Task_Trial",
+          "detail": "needs skill \"sample-import\", but its lane's role \"ingestion-agent\" does not carry it."
+        },
+        {
+          "where": "Task_ImportTest",
+          "detail": "needs skill \"sample-import\", but its lane's role \"ingestion-agent\" does not carry it."
+        },
+        {
+          "where": "Task_RecordFindings",
+          "detail": "needs skill \"sample-import\", but its lane's role \"corpus\" does not carry it."
+        },
+        {
+          "where": "Call_Refresh",
+          "detail": "needs skill \"sample-import\", but its lane's role \"ingestion-agent\" does not carry it."
         }
       ]
     },
@@ -121,13 +130,8 @@
       "findings": []
     },
     "activity-fulfilment-kind": {
-      "result": "unknown",
-      "findings": [
-        {
-          "where": "—",
-          "detail": "no role graph declared at scenarios/roles.json, so this instance holds no role DEFINITIONS. Role references are still resolved — see `role-ref-resolves` — against the 54 role(s) reachable through this instance's `needs`; what cannot be judged here is what those roles CARRY, which needs the definition rather than the name."
-        }
-      ]
+      "result": "pass",
+      "findings": []
     },
     "call-activity-resolves": {
       "result": "pass",
@@ -171,9 +175,9 @@
     }
   },
   "totals": {
-    "pass": 13,
-    "fail": 1,
-    "n/a": 6,
-    "unknown": 5
+    "pass": 15,
+    "fail": 2,
+    "n/a": 8,
+    "unknown": 0
   }
 }

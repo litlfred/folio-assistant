@@ -18,7 +18,7 @@ The after-check for the agentic engine (issue #1180, step 5). The deterministic 
 
 ## Totals
 
-9 instance(s), 100 step(s) checked, 100 `prov:Activity` emitted, 79 finding(s). Policies evaluated: `https://litlfred.github.io/folio-assistant/policies/folio-defaults`, `https://litlfred.github.io/folio-assistant/policies/http-gateway`.
+9 instance(s), 100 step(s) checked, 100 `prov:Activity` emitted, 83 finding(s). Policies evaluated: `https://litlfred.github.io/folio-assistant/policies/folio-defaults`, `https://litlfred.github.io/folio-assistant/policies/http-gateway`.
 
 | finding | count | means |
 |---|---|---|
@@ -30,7 +30,7 @@ The after-check for the agentic engine (issue #1180, step 5). The deterministic 
 | `deny` | 0 | an ODRL policy prohibits `perform-task` here |
 | `authz-disagrees` | 0 | the verdict recorded in the entry's `authz` differs from the one recomputed now |
 | `node-not-in-model` | 4 | the entry names a node its process model does not have |
-| `source-moved` | 10 | the `.bpmn` the instance recorded is gone; the diagram was found by file name, as `workflow_start` resolves one, and its process id matches the instance's |
+| `source-moved` | 14 | the `.bpmn` the instance recorded is gone; the diagram was found by file name, as `workflow_start` resolves one, and its process id matches the instance's |
 | `source-missing` | 0 | the `.bpmn` the instance recorded is gone and no diagram with that name and process id exists; nothing in it can be checked |
 
 ## By instance
@@ -161,21 +161,25 @@ The after-check for the agentic engine (issue #1180, step 5). The deterministic 
 
 ### sampleimport--xlg2-wpro-trial
 
-12 step(s) checked, 12 `prov:Activity` emitted, 2 finding(s). Sources: `cat-harness/processes/sample-import.bpmn`, `cat-harness/processes/materialize-remote.bpmn`. [PROV JSON-LD]({{ '/assets/prov/sampleimport--xlg2-wpro-trial.prov.jsonld' | relative_url }})
+12 step(s) checked, 12 `prov:Activity` emitted, 4 finding(s). Sources: `large-datasets/processes/sample-import.bpmn`, `large-datasets/processes/materialize-remote.bpmn`. [PROV JSON-LD]({{ '/assets/prov/sampleimport--xlg2-wpro-trial.prov.jsonld' | relative_url }})
 
 | instance | entry | node | finding | detail |
 |---|---|---|---|---|
+| `sampleimport--xlg2-wpro-trial` | (instance) | `Process_SampleImport` | `source-moved` | large-datasets/processes/sample-import.bpmn does not exist; read cat-harness/processes/sample-import.bpmn, which defines Process_SampleImport |
 | `sampleimport--xlg2-wpro-trial` | 2 | `Call_Materialize` | `not-eligible` | claude may act as authoring-agent, business-analyst, code-reviewer, not as ingestion-agent |
 | `sampleimport--xlg2-wpro-trial` | 2 | `Call_Materialize` | `unknown` | no policy grants perform-task for Process_SampleImport/Call_Materialize as ingestion-agent |
+| `sampleimport--xlg2-wpro-trial/Call_Materialize` | (instance) | `Process_MaterializeRemote` | `source-moved` | large-datasets/processes/materialize-remote.bpmn does not exist; read cat-harness/processes/materialize-remote.bpmn, which defines Process_MaterializeRemote |
 
 ### sampleimport--xlg2-wpro-trial-original
 
-17 step(s) checked, 17 `prov:Activity` emitted, 2 finding(s). Sources: `cat-harness/processes/sample-import.bpmn`, `cat-harness/processes/materialize-remote.bpmn`. [PROV JSON-LD]({{ '/assets/prov/sampleimport--xlg2-wpro-trial-original.prov.jsonld' | relative_url }})
+17 step(s) checked, 17 `prov:Activity` emitted, 4 finding(s). Sources: `large-datasets/processes/sample-import.bpmn`, `large-datasets/processes/materialize-remote.bpmn`. [PROV JSON-LD]({{ '/assets/prov/sampleimport--xlg2-wpro-trial-original.prov.jsonld' | relative_url }})
 
 | instance | entry | node | finding | detail |
 |---|---|---|---|---|
+| `sampleimport--xlg2-wpro-trial-original` | (instance) | `Process_SampleImport` | `source-moved` | large-datasets/processes/sample-import.bpmn does not exist; read cat-harness/processes/sample-import.bpmn, which defines Process_SampleImport |
 | `sampleimport--xlg2-wpro-trial-original` | 2 | `Call_Materialize` | `not-eligible` | claude may act as authoring-agent, business-analyst, code-reviewer, not as ingestion-agent |
 | `sampleimport--xlg2-wpro-trial-original` | 2 | `Call_Materialize` | `unknown` | no policy grants perform-task for Process_SampleImport/Call_Materialize as ingestion-agent |
+| `sampleimport--xlg2-wpro-trial-original/Call_Materialize` | (instance) | `Process_MaterializeRemote` | `source-moved` | large-datasets/processes/materialize-remote.bpmn does not exist; read cat-harness/processes/materialize-remote.bpmn, which defines Process_MaterializeRemote |
 
 ## Regenerate
 

@@ -143,6 +143,16 @@ roles, and how they compose with the LLM, see [Skills & roles](../../skills.html
 |-------|----|--------|---------|
 | [Reading the knowledge graph](kg-navigation.html) | `kg-navigation` | — | You are in a fresh container. You have a task, a filesystem, and no memory of |
 
+## Large data sets (subsetting, materializing, publishing)
+
+| Skill | Id | Schema | Summary |
+|-------|----|--------|---------|
+| [Working on materialized content](copy-out-materialized.html) | `copy-out-materialized` | — | **Materialized content is a copy of somebody else's bytes, and this repository |
+| [Subscribing to a knowledge graph](kg-subscription.html) | `kg-subscription` | — | Owner, 2026-09-30 (issue #1719): *"a way for a folio instance (or cat-harness |
+| [Materialize on demand](materialize-on-demand.html) | `materialize-on-demand` | — | Bootstrap brings an agent to a working harness. It does **not** bring the |
+| [Materializing remote content](materialize-remote.html) | `materialize-remote` | — | **One process, and this repository already ran it twice before naming it.** |
+| [Sample import](sample-import.html) | `sample-import` | — | The SDLC for trying out a remote source before committing to it: take a |
+
 ## Library and information management (library-core)
 
 | Skill | Id | Schema | Summary |
@@ -360,16 +370,6 @@ roles, and how they compose with the LLM, see [Skills & roles](../../skills.html
 | [ig-publisher-fork](ig-publisher-fork.html) | `ig-publisher-fork` | — | > Skill id: `ig-publisher-fork` · Package: `fhir-ig-base` · Instance: |
 | [ig-publisher-reduction](ig-publisher-reduction.html) | `ig-publisher-reduction` | — | > Skill id: `ig-publisher-reduction` · Package: `fhir-ig-base` · Instance: |
 | [ig-render-jekyll](ig-render-jekyll.html) | `ig-render-jekyll` | — | > Skill id: `ig-render-jekyll` · Package: `fhir-ig-base` · Instance: |
-
-## Large data sets (subsetting, materializing, publishing)
-
-| Skill | Id | Schema | Summary |
-|-------|----|--------|---------|
-| [Working on materialized content](copy-out-materialized.html) | `copy-out-materialized` | — | **Materialized content is a copy of somebody else's bytes, and this repository |
-| [Subscribing to a knowledge graph](kg-subscription.html) | `kg-subscription` | — | Owner, 2026-09-30 (issue #1719): *"a way for a folio instance (or cat-harness |
-| [Materialize on demand](materialize-on-demand.html) | `materialize-on-demand` | — | Bootstrap brings an agent to a working harness. It does **not** bring the |
-| [Materializing remote content](materialize-remote.html) | `materialize-remote` | — | **One process, and this repository already ran it twice before naming it.** |
-| [Sample import](sample-import.html) | `sample-import` | — | The SDLC for trying out a remote source before committing to it: take a |
 
 ## WHO IRIS (catalogue instance)
 
