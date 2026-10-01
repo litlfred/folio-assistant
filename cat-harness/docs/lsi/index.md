@@ -122,7 +122,7 @@ Each dimension is a **contrast** between two poles, shown by their highest-loadi
 
 ## cat-harness / skills
 
-**213** units · **5844** terms · k = **100** · retains **79.7 %** of the weighted matrix · weighting `log-entropy` · sidecar `cat-harness/test/results/lsi/cat-harness/skills.lsi.json`
+**213** units · **5845** terms · k = **100** · retains **79.7 %** of the weighted matrix · weighting `log-entropy` · sidecar `cat-harness/test/results/lsi/cat-harness/skills.lsi.json`
 
 > Dimension 1 has **no negative pole**: it most likely measures unit length and term frequency (a margin), not a theme. Read the themes from dimension 2 on.
 
@@ -133,11 +133,11 @@ Each dimension is a **contrast** between two poles, shown by their highest-loadi
 | 1 | 43.69 | instance, harness, kind, directory, session, graph, block, page | *(none)* |
 | 2 | 21.43 | watcher, sibling, queue, slot, backlog, prs, block, commits | harness, instance, declaration, directory, node, directories, graph, bootstrap |
 | 3 | 17.77 | session, beans, goals, branch, store, window, epic, push | slot, chapter, edges, block, formal, glossary, project, proof |
-| 4 | 16.48 | page, block, section, blocks, tile, sections, text, chapter | ledger, sibling, subdirectory, items, sessions, queue, renderable, relocation |
-| 5 | 14.92 | tile, navbar, theme, avatar, board, card, tiles, locale | forward, edges, edge, logical, backward, sections, cross-chapter, energy |
-| 6 | 14.77 | requirements, lane, role, actor, feature, phase, task, sign-off | rung, queue, arm, slide, archive, zip, bytes, sniff |
-| 7 | 14.39 | preview, locale, translation, translated, language, french, translations, manifest | tile, role, avatar, actor, lane, referee, backlog, fit |
-| 8 | 14.36 | edges, forward, tile, edge, avatar, backward, cross-chapter, board | rung, pdf, actor, lane, glossary, language, requirement, mcp |
+| 4 | 16.48 | page, block, section, blocks, sections, text, tile, chapter | ledger, sibling, subdirectory, items, sessions, queue, renderable, relocation |
+| 5 | 14.92 | tile, navbar, theme, avatar, board, locale, page, card | forward, edges, edge, logical, backward, sections, cross-chapter, energy |
+| 6 | 14.77 | requirements, lane, role, actor, feature, phase, task, sign-off | rung, queue, arm, archive, slide, zip, bytes, sniff |
+| 7 | 14.39 | preview, locale, translation, translated, edges, language, forward, chapter | role, actor, lane, tile, avatar, backlog, referee, fit |
+| 8 | 14.36 | tile, edges, forward, avatar, edge, board, tiles, card | pdf, rung, language, glossary, translation, mcp, locale, translated |
 
 **Findings** — 0 narrow dimension(s), 1 near-duplicate pair(s).
 
