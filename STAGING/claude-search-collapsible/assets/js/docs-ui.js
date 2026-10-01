@@ -4608,6 +4608,85 @@
    */
   function placeHandle(handle) {
     document.body.appendChild(handle);
+    placeHandleBand(handle);
+  }
+
+  /**
+   * THE HANDLE'S BAND, while the page is scrolled — issue #1693.
+   *
+   * At the top of a page the handle sits in space nobody reads: the theme
+   * header's empty middle, or the band a viewer or replica reserves with
+   * padding (`015u`, `g9r2`). Once the page scrolls, that space has gone and
+   * the handle, still fixed, sat over the middle of a body line. Measured on
+   * `platform.html` at 1280x900: the handle crossed a text line at 9 of 21
+   * scroll positions. The line stayed readable either side of it, and a link
+   * centred under it opened the glass instead.
+   *
+   * So while the page is scrolled, an opaque strip the handle's own height
+   * runs across the content column behind it. Text scrolls UNDER the strip,
+   * the way it scrolls under any sticky bar, rather than past the pill with
+   * its middle missing. `scroll-padding-top` in `docs-ui.css` keeps an anchor
+   * jump or a focus scroll from landing a target under the strip.
+   *
+   * Chosen over the issue's other two options on evidence and on the owner's
+   * word. Hiding the handle on scroll-down still overlaps on scroll-up, the
+   * moment it reappears. Docking it in the side bar is the 2026-09-24
+   * placement the owner reversed on 2026-09-27: "not on navbar but at top
+   * middle of display screen".
+   *
+   * The handle itself is untouched: same button, same place, same tab stop
+   * and accessible name. The strip is decoration, `aria-hidden`, and absent
+   * from the tab order. It sits BELOW the glass layer, so an open glass is
+   * unchanged, and it starts at a FIXED side bar's right edge, so it never
+   * covers the side bar's own controls.
+   */
+  function placeHandleBand(handle) {
+    var band = el("div", { class: "fa-glass-band", "aria-hidden": "true", hidden: "" });
+    document.body.insertBefore(band, handle);
+    var queued = false;
+    function update() {
+      queued = false;
+      if (!handle.isConnected) return;
+      var on = (window.scrollY || document.documentElement.scrollTop || 0) > 0;
+      if (!on) { band.hidden = true; return; }
+      var hb = handle.getBoundingClientRect();
+      var left = 0;
+      var side = document.querySelector(".side-bar");
+      if (side && getComputedStyle(side).position === "fixed") {
+        var sb = side.getBoundingClientRect();
+        // Only a side bar docked to the LEFT edge and narrower than the page.
+        // Its RESTING edge, which is where the page content starts: hovered
+        // or focused, `.side-bar` widens to the open nav (264 px) OVER the
+        // content, and above this band (z-index 100 against 89). Taking that
+        // edge left the text between the rail and 264 px readable beside the
+        // handle -- CI's Chrome rests the pointer on the rail (#1693).
+        if (sb.left <= 0 && sb.right < window.innerWidth / 2) {
+          var main = side.nextElementSibling;
+          var content = main && main.classList.contains("main") ? main.getBoundingClientRect().left : sb.right;
+          left = Math.max(0, Math.min(sb.right, content));
+        }
+      }
+      band.style.top = hb.top + "px";
+      band.style.height = hb.height + "px";
+      band.style.left = left + "px";
+      band.hidden = false;
+      // The COLOUR is the stylesheet's (`inline-colour.test.ts`): the band
+      // inherits body's background. A page whose body paints none (a replica
+      // may leave it to `html`) would get a see-through band, so that case is
+      // MARKED here and coloured by a scheme token in `docs-ui.css`.
+      var own = getComputedStyle(band).backgroundColor;
+      var clear = !own || own === "transparent" || /rgba\([^)]*,\s*0\)$/.test(own);
+      if (clear) band.setAttribute("data-fa-band-fallback", "");
+      else band.removeAttribute("data-fa-band-fallback");
+    }
+    function queue() {
+      if (queued) return;
+      queued = true;
+      window.requestAnimationFrame(update);
+    }
+    window.addEventListener("scroll", queue, { passive: true });
+    window.addEventListener("resize", queue);
+    update();
   }
 
   var glassLayer = null;
