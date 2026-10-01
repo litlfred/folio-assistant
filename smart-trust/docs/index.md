@@ -117,7 +117,7 @@ enumeration response, carrying an `example` that happens to hold the list. So th
 | canonicals | `canonicals.json` |
 | packageIndex | `package.tgz!package/.index.json` |
 | artifactsHtml | `artifacts.html` |
-| dakEnumerations | `LogicalModels.schema.json, ValueSets.schema.json` |
+| sidecarEnumerations | `LogicalModels.schema.json, ValueSets.schema.json` |
 | source | `gh-pages` — `https://worldhealthorganization.github.io/smart-trust` (read 2026-09-21) |
 | canonical base | `http://smart.who.int/trust` |
 

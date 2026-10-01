@@ -8,7 +8,7 @@
  * bun run folio-assistant-core/scripts/ingest-ig-artifacts.ts \
  *   --source /path/to/gh-pages --kind gh-pages --id smart-trust \
  *   --base https://worldhealthorganization.github.io/smart-trust \
- *   --out smart-trust --materialize-dak
+ *   --out smart-trust --materialize-sidecars
  * ```
  *
  * `--check` re-runs the ingest and exits non-zero if the committed index
@@ -44,7 +44,7 @@ import {
   FHIR_ARTIFACT_INDEX_SCHEMA_TAG,
   FhirArtifactIndexSchema,
   materializationCensus,
-  dakOverlayCensus,
+  sidecarCensus,
   type FhirArtifact,
   type FhirArtifactIndex,
   type Representation,
@@ -129,10 +129,14 @@ function main(): void {
   const source = arg("source");
   const out = arg("out");
   const check = process.argv.includes("--check");
-  const materializeDak = process.argv.includes("--materialize-dak");
+  const materializeSidecars = process.argv.includes("--materialize-sidecars");
+  // Where materialised sidecars land, under `fhir-artifact-index/`. A flag,
+  // because this layer names no publisher's layout; an instance that already
+  // holds them elsewhere (WHO's smart-* use `dak/`) passes its own.
+  const sidecarDir = arg("sidecar-dir") ?? "sidecars";
   const USAGE =
     "usage: ingest-ig-artifacts.ts --source <dir> --out <dir> [--id <id>] " +
-    "[--base <url>] [--kind gh-pages|output] [--materialize-dak] [--check]";
+    "[--base <url>] [--kind gh-pages|output] [--materialize-sidecars] [--check]";
 
   // A MISINVOCATION AND "NOTHING HERE TO CHECK" ARE DIFFERENT, and printing one
   // usage string for both is why `ingest:ig:check` read as a broken script for
@@ -229,8 +233,8 @@ function main(): void {
   // presence of `openapi/`, which in smart-trust holds the DDCC Gateway API —
   // a domain API that merely lives there.
   const enumerations = readdirSync(source).filter((f) => /^[A-Za-z]+\.schema\.json$/.test(f)).sort();
-  const dakApi = enumerations.length > 0 ? "present" : "absent";
-  if (enumerations.length) provenance.dakEnumerations = enumerations;
+  const sidecarApi = enumerations.length > 0 ? "present" : "absent";
+  if (enumerations.length) provenance.sidecarEnumerations = enumerations;
 
   // ── Merge into one artefact per key ───────────────────────────────────
   const byKey = new Map<string, FhirArtifact>();
@@ -315,7 +319,7 @@ function main(): void {
   // fills `valueSetUrl` on 190 of 191 ValueSets and `logicalModelUrl` on NONE
   // of 11 Logical Models, though its own schema declares that field.
   //
-  // Anything still unbound is RECORDED in `dakUnbound`, never dropped — the
+  // Anything still unbound is RECORDED in `sidecarsUnbound`, never dropped — the
   // defect above was invisible precisely because nothing recorded it.
   //
   // `dak/` sits inside the declared graph directory rather than beside it, so
@@ -329,11 +333,11 @@ function main(): void {
     propertyCount?: number;
   }
   const graphDir = join(out, "fhir-artifact-index");
-  const dakDir = join(graphDir, "dak");
+  const sidecarsDir = join(graphDir, sidecarDir);
   const materialized: Array<[string, string]> = [];
   const unbound: UnboundSidecar[] = [];
   const materializedStems = new Map<string, string>();
-  /** `dak/<basename>` → the source file it was copied from, for fixity. */
+  /** `<sidecar-dir>/<basename>` → the source file it was copied from, for fixity. */
   const materializedFrom = new Map<string, string>();
 
   const byCanonical = new Map<string, FhirArtifact>();
@@ -348,7 +352,7 @@ function main(): void {
 
   /** Attach the four sidecars named by `stem`, materialising if asked. Returns whether any landed. */
   const attach = (a: FhirArtifact, stem: string, counts?: EnumEntry): boolean => {
-    const sidecars: Array<[keyof NonNullable<FhirArtifact["dak"]>, string]> = [
+    const sidecars: Array<[keyof NonNullable<FhirArtifact["sidecars"]>, string]> = [
       ["schema", `schemas/${stem}.schema.json`],
       ["displays", `schemas/${stem}.displays.json`],
       ["openapi", `schemas/${stem}.openapi.json`],
@@ -357,12 +361,12 @@ function main(): void {
     let any = false;
     for (const [slot, file] of sidecars) {
       if (!existsSync(join(source, file))) continue;
-      const local = materializeDak ? join("fhir-artifact-index", "dak", basename(file)) : undefined;
+      const local = materializeSidecars ? join("fhir-artifact-index", sidecarDir, basename(file)) : undefined;
       const r = rep(source, base, file, local);
       if (!r) continue;
-      a.dak = a.dak ?? {};
-      (a.dak as Record<string, unknown>)[slot] = r;
-      if (materializeDak) {
+      a.sidecars = a.sidecars ?? {};
+      (a.sidecars as Record<string, unknown>)[slot] = r;
+      if (materializeSidecars) {
         materialized.push([file, basename(file)]);
         // The copy into `dak/` happens at the end of the run, long after the
         // materialization records are built — so fixity is taken from the
@@ -373,8 +377,8 @@ function main(): void {
       dakByteTotal += r.bytes ?? statSync(join(source, file)).size;
       any = true;
     }
-    if (any && counts?.codeCount !== undefined) a.dak = { ...a.dak, codeCount: counts.codeCount };
-    if (any && counts?.propertyCount !== undefined) a.dak = { ...a.dak, propertyCount: counts.propertyCount };
+    if (any && counts?.codeCount !== undefined) a.sidecars = { ...a.sidecars, codeCount: counts.codeCount };
+    if (any && counts?.propertyCount !== undefined) a.sidecars = { ...a.sidecars, propertyCount: counts.propertyCount };
     // Gates are assigned AFTER every sidecar has landed, not here: `dakGates`
     // reads running totals, so building them mid-loop gave each artefact a
     // different "measured" surface — 14 files on the first, hundreds on the
@@ -383,7 +387,7 @@ function main(): void {
     return any;
   };
 
-  if (dakApi === "present") {
+  if (sidecarApi === "present") {
     // Pass 1 — the enumerations, which are authoritative about what exists.
     for (const enumFile of enumerations) {
       let entries: EnumEntry[] = [];
@@ -417,7 +421,7 @@ function main(): void {
     // Pass 2 — artefacts no enumeration mentioned, by their own stem. This is
     // what covers an IG publishing sidecars it does not enumerate.
     for (const a of byKey.values()) {
-      if (a.dak) continue;
+      if (a.sidecars) continue;
       attach(a, `${a.resourceType}-${a.id}`);
     }
     // One measurement, taken once, applied to every materialised node.
@@ -436,7 +440,7 @@ function main(): void {
       // there, which `check-materialized-fixity` reports as `absent`.
       //
       // Measured 2026-09-22 on smart-immunizations: `IMMZ.D.DE19` and
-      // `IMMZ.Z.VS`, both `dak: { jsonld }` only, both declaring a
+      // `IMMZ.Z.VS`, both `sidecars: { jsonld }` only, both declaring a
       // `.schema.json` that does not exist and never did. 198 schema files on
       // disk against 200 materialized claims.
       //
@@ -444,7 +448,7 @@ function main(): void {
       // the richest sidecar — but the path is now READ from what attached
       // rather than composed from a stem and a hope.
       const landed = ["schema", "displays", "openapi", "jsonld"]
-        .map((slot) => (a.dak as Record<string, { localPath?: string }> | undefined)?.[slot]?.localPath)
+        .map((slot) => (a.sidecars as Record<string, { localPath?: string }> | undefined)?.[slot]?.localPath)
         .find((p): p is string => typeof p === "string");
       if (landed === undefined) {
         // Nothing materialised after all. Leaving the node `referenced` is the
@@ -482,9 +486,9 @@ function main(): void {
   const ctxDir = join(source, "tng-context");
   if (existsSync(ctxDir)) {
     for (const f of readdirSync(ctxDir).filter((n) => n.endsWith(".jsonld")).sort()) {
-      const local = materializeDak ? join("fhir-artifact-index", "dak", "contexts", f) : undefined;
+      const local = materializeSidecars ? join("fhir-artifact-index", sidecarDir, "contexts", f) : undefined;
       const r = rep(source, base, `tng-context/${f}`, local);
-      if (r) { contexts.push({ id: `tng-context/${f.replace(/\.jsonld$/, "")}`, representation: r }); if (materializeDak) materialized.push([`tng-context/${f}`, join("contexts", f)]); }
+      if (r) { contexts.push({ id: `tng-context/${f.replace(/\.jsonld$/, "")}`, representation: r }); if (materializeSidecars) materialized.push([`tng-context/${f}`, join("contexts", f)]); }
     }
   }
 
@@ -508,9 +512,9 @@ function main(): void {
     ...(manifest.date ? { builtAt: manifest.date } : {}),
     source: { kind, of: base, readAt: new Date().toISOString().slice(0, 10) },
     provenance,
-    dakApi,
+    sidecarApi,
     ...(contexts.length ? { contexts } : {}),
-    ...(unbound.length ? { dakUnbound: unbound } : {}),
+    ...(unbound.length ? { sidecarsUnbound: unbound } : {}),
     count: artifacts.length,
     artifacts,
   };
@@ -537,17 +541,17 @@ function main(): void {
 
   mkdirSync(graphDir, { recursive: true });
   writeFileSync(outFile, serialized);
-  if (materializeDak && materialized.length) {
-    mkdirSync(join(dakDir, "contexts"), { recursive: true });
-    for (const [from, to] of materialized) copyFileSync(join(source, from), join(dakDir, to));
+  if (materializeSidecars && materialized.length) {
+    mkdirSync(join(sidecarsDir, "contexts"), { recursive: true });
+    for (const [from, to] of materialized) copyFileSync(join(source, from), join(sidecarsDir, to));
   }
 
   const census = materializationCensus(artifacts);
-  const dakCensus = dakOverlayCensus(artifacts);
+  const sidecarCounts = sidecarCensus(artifacts);
   console.log(`${outFile}: ${index.count} artefacts`);
-  console.log(`  dakApi: ${dakApi}; provenance: ${Object.keys(provenance).join(", ") || "none"}`);
+  console.log(`  sidecarApi: ${sidecarApi}; provenance: ${Object.keys(provenance).join(", ") || "none"}`);
   console.log(`  materialization: ${Object.entries(census).map(([k, v]) => `${k}=${v}`).join(" ")}`);
-  console.log(`  dak sidecars: ${Object.entries(dakCensus).map(([k, v]) => `${k}=${v}`).join(" ")}`);
+  console.log(`  sidecars: ${Object.entries(sidecarCounts).map(([k, v]) => `${k}=${v}`).join(" ")}`);
   console.log(`  contexts: ${contexts.length}`);
   if (unbound.length) {
     console.log(`  UNBOUND sidecars: ${unbound.length} — listed by an enumeration, matched to no artefact:`);

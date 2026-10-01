@@ -46,7 +46,7 @@
  * | IG-publisher standard | `package/.index.json`, `canonicals.json`, `artifacts.html`, `package.manifest.json` | **every** IG |
  * | DAK API | `.schema.json`, `.displays.json`, `.openapi.json`, `.jsonld` per artefact, plus JSON-LD contexts | only IGs that publish one |
  *
- * The standard layer is the SPINE and the DAK API is an {@link DakOverlaySchema |
+ * The standard layer is the SPINE and the DAK API is an {@link SidecarOverlaySchema |
  * overlay}. That ordering is what keeps the type valid for an IG with no DAK
  * API — the overlay is simply absent — and it is why `dak` is optional on an
  * artefact rather than the artefact being optional on a DAK entry.
@@ -56,7 +56,7 @@
  * **`openapi/openapi.json` is not the DAK API.** In smart-trust that path
  * holds the *DDCC Gateway* API — a domain API about certificate exchange that
  * merely lives there. A pipeline globbing for `openapi` will file a subject-
- * matter API as an artefact descriptor. {@link DakOverlaySchema.openapi} is
+ * matter API as an artefact descriptor. {@link SidecarOverlaySchema.openapi} is
  * therefore keyed off the ARTEFACT's name, never off a directory scan.
  *
  * **`.index.json` is lossy.** Its Organization entries in smart-trust carry a
@@ -78,9 +78,9 @@
  * DAK API's own shape lossy.
  */
 import { z } from "zod";
-import { MaterializationSchema } from "./materialization.js";
+import { MaterializationSchema } from "../../folio-assistant-core/schemas/materialization.js";
 
-export const FHIR_ARTIFACT_INDEX_SCHEMA_TAG = "folio-fhir-artifact-index/v1";
+export const FHIR_ARTIFACT_INDEX_SCHEMA_TAG = "folio-fhir-artifact-index/v2";
 export const FHIR_ARTIFACT_SCHEMA_TAG = "folio-fhir-artifact/v1";
 
 /**
@@ -139,7 +139,7 @@ export const IndexProvenanceSchema = z
      * type (`ValueSets.schema.json`, `LogicalModels.schema.json`, ...) and
      * because what was read is a schema's `example`, not a response.
      */
-    dakEnumerations: z.array(z.string().min(1)).optional(),
+    sidecarEnumerations: z.array(z.string().min(1)).optional(),
   })
   .strict();
 export type IndexProvenance = z.infer<typeof IndexProvenanceSchema>;
@@ -190,7 +190,7 @@ export type PublishedFormats = z.infer<typeof PublishedFormatsSchema>;
  * `count`: a ValueSet's code count and a logical model's property count are
  * different measurements, and a reader handed `count: 5` could not say which.
  */
-export const DakOverlaySchema = z
+export const SidecarOverlaySchema = z
   .object({
     /** `schemas/<name>.schema.json` — the JSON Schema for this artefact. */
     schema: RepresentationSchema.optional(),
@@ -206,7 +206,7 @@ export const DakOverlaySchema = z
     propertyCount: z.number().int().nonnegative().optional(),
   })
   .strict();
-export type DakOverlay = z.infer<typeof DakOverlaySchema>;
+export type SidecarOverlay = z.infer<typeof SidecarOverlaySchema>;
 
 /**
  * One artefact of the IG.
@@ -239,7 +239,7 @@ export const FhirArtifactSchema = z
     /** Editorial grouping from `artifacts.html`. Absent means the IG published no artefact page. */
     category: z.string().min(1).optional(),
     published: PublishedFormatsSchema,
-    dak: DakOverlaySchema.optional(),
+    sidecars: SidecarOverlaySchema.optional(),
     materialization: MaterializationSchema,
   })
   .strict();
@@ -265,7 +265,7 @@ export type JsonLdContext = z.infer<typeof JsonLdContextSchema>;
 /**
  * The index document — one per published IG.
  *
- * `dakApi` is a three-state determination and NOT a boolean derived from
+ * `sidecarApi` is a three-state determination and NOT a boolean derived from
  * whether any artefact carries an overlay. "This IG publishes no DAK API" and
  * "the ingest did not look" are different facts, and only the first is a
  * reason to stop ingesting.
@@ -298,8 +298,8 @@ export const UnboundSidecarSchema = z
   .strict();
 export type UnboundSidecar = z.infer<typeof UnboundSidecarSchema>;
 
-export const DAK_API_STATES = ["unknown", "absent", "present"] as const;
-export type DakApiState = (typeof DAK_API_STATES)[number];
+export const SIDECAR_API_STATES = ["unknown", "absent", "present"] as const;
+export type SidecarApiState = (typeof SIDECAR_API_STATES)[number];
 
 export const FhirArtifactIndexSchema = z
   .object({
@@ -317,14 +317,14 @@ export const FhirArtifactIndexSchema = z
     builtAt: z.string().min(1).optional(),
     source: IgSourceSchema,
     provenance: IndexProvenanceSchema,
-    dakApi: z.enum(DAK_API_STATES),
+    sidecarApi: z.enum(SIDECAR_API_STATES),
     contexts: z.array(JsonLdContextSchema).optional(),
     /**
      * Sidecars an enumeration listed that bound to no artefact. Absent means
      * none; an empty array is not written. See {@link UnboundSidecarSchema}
      * for why these are recorded rather than warned about and forgotten.
      */
-    dakUnbound: z.array(UnboundSidecarSchema).optional(),
+    sidecarsUnbound: z.array(UnboundSidecarSchema).optional(),
     count: z.number().int().nonnegative(),
     artifacts: z.array(FhirArtifactSchema),
   })
@@ -333,9 +333,9 @@ export const FhirArtifactIndexSchema = z
     message: "count must equal artifacts.length — a count that disagrees with its array is the failure this field exists to catch",
     path: ["count"],
   })
-  .refine((ix) => ix.dakApi !== "absent" || ix.artifacts.every((a) => a.dak === undefined), {
-    message: "dakApi is 'absent' but an artefact carries a DAK overlay",
-    path: ["dakApi"],
+  .refine((ix) => ix.sidecarApi !== "absent" || ix.artifacts.every((a) => a.sidecars === undefined), {
+    message: "sidecarApi is 'absent' but an artefact carries a DAK overlay",
+    path: ["sidecarApi"],
   })
   .refine((ix) => new Set(ix.artifacts.map((a) => a.key)).size === ix.artifacts.length, {
     message: "artifact keys must be unique within an index",
@@ -364,12 +364,12 @@ export function materializationCensus(artifacts: FhirArtifact[]): Record<string,
  * are independently published: smart-trust emits `.displays.json` for every
  * ValueSet but for no logical model, and a single count would hide that.
  */
-export function dakOverlayCensus(artifacts: FhirArtifact[]): Record<string, number> {
+export function sidecarCensus(artifacts: FhirArtifact[]): Record<string, number> {
   const census: Record<string, number> = { schema: 0, displays: 0, openapi: 0, jsonld: 0 };
   for (const a of artifacts) {
-    if (!a.dak) continue;
+    if (!a.sidecars) continue;
     for (const k of ["schema", "displays", "openapi", "jsonld"] as const) {
-      if (a.dak[k]) census[k] += 1;
+      if (a.sidecars[k]) census[k] += 1;
     }
   }
   return census;

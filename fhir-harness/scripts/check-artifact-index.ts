@@ -16,9 +16,9 @@
  * written down in `gates.ts` rather than left as a silence.
  *
  * This one needs nothing but the repository. It asks whether each committed
- * index is a VALID `folio-fhir-artifact-index/v1` document: schema-conformant,
+ * index is a VALID `folio-fhir-artifact-index/v2` document: schema-conformant,
  * `count` agreeing with `artifacts.length`, keys unique, no DAK overlay on an
- * index that declares `dakApi: "absent"`.
+ * index that declares `sidecarApi: "absent"`.
  *
  * That is not the whole of what `ingest:ig:check` would catch, and this file
  * does not pretend otherwise. What it does catch is the failure that is
@@ -106,7 +106,7 @@ for (const path of indexes) {
   }
   const parsed = FhirArtifactIndexSchema.safeParse(raw);
   if (!parsed.success) {
-    console.error(`✗ ${rel}: does not validate as folio-fhir-artifact-index/v1`);
+    console.error(`✗ ${rel}: does not validate as folio-fhir-artifact-index/v2`);
     for (const issue of parsed.error.issues.slice(0, 5)) {
       console.error(`    ${issue.path.join(".")}: ${issue.message}`);
     }
@@ -117,7 +117,7 @@ for (const path of indexes) {
   const ix = parsed.data;
   const census = materializationCensus(ix.artifacts);
   console.log(
-    `✓ ${rel}: ${ix.count} artefacts, dakApi=${ix.dakApi}, ` +
+    `✓ ${rel}: ${ix.count} artefacts, sidecarApi=${ix.sidecarApi}, ` +
       `${Object.entries(census).map(([k, v]) => `${k}=${v}`).join(" ")}`,
   );
 }

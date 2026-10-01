@@ -13,7 +13,9 @@ Stage C of cat-harness/docs/proposals/smart-separation-2026-10-01.md (#1767). Ow
 fhir-harness/AGENTS.md: nothing here may know about WHO. gen-ig-pages (stage A) writes a WHO publish note and DAK API sections; the artefact-index schema carries a WHO-named dak overlay.
 
 ## Done when
-- [ ] C1 gen-ig-pages neutral: --publish-note and --sidecar-label flags (neutral defaults); smart-trust and smart-base pass WHO values and stay byte-identical
-- [ ] C2 neutral sidecar overlay in fhir-artifact-index schema (dak -> sidecars), committed index.json migrated with no artefact data change, ingest + generator follow; DAK label supplied by smart-base
+- [x] C1 gen-ig-pages neutral: --publish-note and --sidecar-label flags (neutral defaults); smart-trust and smart-base pass WHO values and stay byte-identical
+- [x] C2 neutral sidecar overlay in fhir-artifact-index schema (dak -> sidecars), committed index.json migrated with no artefact data change, ingest + generator follow; DAK label supplied by smart-base
 - [ ] C3 fhir-artifact-index kind viewer for every instance declaring one
 - [ ] gates: no failure absent on main
+
+C2 as built: fhir-artifact-index schema, ingest-ig-artifacts, check-artifact-index (+ ingest invocation test) moved core -> fhir-harness. dak -> sidecars, dakApi -> sidecarApi, dakUnbound -> sidecarsUnbound, provenance.dakEnumerations -> sidecarEnumerations; tag folio-fhir-artifact-index/v1 -> v2 (renamed fields under the same tag would misdescribe the data). Committed index.json x3 migrated by key rename only, verified by reversing the rename and comparing to the original. The materialised sidecar DIRECTORY stays dak/ (981 files; the data leaves for the forks anyway): ingest takes --sidecar-dir (default sidecars), the WHO ingest scripts pass dak. tsconfig now covers fhir-harness/{schemas,scripts}: moving the schema out of core had silently dropped it from type-checking, which is how FhirArtifact["dak"] survived the rename; two older type errors in gen-ig-pages surfaced and are fixed.
