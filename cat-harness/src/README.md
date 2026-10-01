@@ -19,7 +19,7 @@ Part of [C@T Harness](../README.md) 0.1.0, declared as `cat-harness-src`, holdin
 | [`types.ts`](types.ts) | a file |  |
 | [`auth/`](auth/) | 1 file | |
 | [`blocks/`](blocks/) | 3 files | |
-| [`core/`](core/) | 13 files | |
+| [`core/`](core/) | 14 files | |
 | [`crdm/`](crdm/) | 1 file | |
 | [`docs/`](docs/) | 1 file | |
 | [`impact/`](impact/) | 1 file | |

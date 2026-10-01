@@ -42,5 +42,5 @@ Part of [folio-assistant-core](../README.md) 0.1.0, declared as `core-scripts`, 
 | [`sample-import-run.ts`](sample-import-run.ts) | a file |  |
 | [`source-liveness.test.ts`](source-liveness.test.ts) | a file |  |
 | [`source-liveness.ts`](source-liveness.ts) | a file |  |
-| [`tests/`](tests/) | 6 files | |
+| [`tests/`](tests/) | 7 files | |
 <!-- kg:subgraph:end -->

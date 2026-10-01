@@ -27,16 +27,22 @@
  * would fork the whole method — the version that then drifts is the one
  * nobody is reading.
  *
+ *
+ * ## The server half (bean `w2gr`, step 2)
+ *
+ * Everything content lives in {@link DocumentContent} (`content.ts`), which this
+ * class extends. What stays here is only what a server needs: request parsing,
+ * the RBAC checks, `Response` construction, the chat tool list and prompt, and
+ * MCP tool registration. Step 3 moves this half to `cat-harness-tools`; the
+ * owner ruled on 2026-10-01 that core does not depend on that instance.
  * @module folio-assistant/adapters/document
  */
 
-import { existsSync, readFileSync, writeFileSync, readdirSync, mkdirSync } from "fs";
-import { join, resolve, extname } from "path";
-import { execSync, spawnSync } from "child_process";
-import { createHash, randomBytes } from "crypto";
+import { existsSync, readFileSync } from "fs";
+import { extname } from "path";
+import { randomBytes } from "crypto";
 
 import type { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
-import { recordFileName, uploadRecords } from "./intake-records.js";
 import { registerDocumentRenderTools } from "./tools/render.js";
 import { registerValidateTools } from "./tools/validate.js";
 import { registerQaTools } from "./tools/qa.js";
@@ -53,64 +59,12 @@ import { registerReadmeSyncTools } from "../../../cat-harness/src/tools/readme-s
 import { registerRenderOrderTools } from "../../../cat-harness/src/tools/render-order.js";
 import { registerReadmeAuditTools } from "../../../cat-harness/src/tools/readme-audit.js";
 import { registerLsiQueryTools } from "../../../cat-harness/src/tools/lsi-query.js";
-
-// The content model lives in the harness's `content-types` (bean `w2gr`);
-// only the server-facing contract still comes from `types`, and that is what
-// step 2 separates from this adapter.
-import type {
-  ResolvedDocument,
-  ResolvedBlock,
-  DocumentDiff,
-  BlockDiff,
-  BranchCharacterization,
-  TriageResult } from "../../../cat-harness/src/content-types.js";
 import type { ContentAdapter, UserRole } from "../../../cat-harness/src/types.js";
-// The REAL feedback type, straight from the schema that validates it.
-//
-// It used to come through `src/types.ts`, which re-exported it from here —
-// and that re-export was the last wrong-direction edge in the partition
-// (bean `jcmx`). This adapter is core, so importing the schema directly is
-// core -> core and adds no edge; it also means the adapter works with the
-// full type rather than the structural minimum the HARNESS needs, which is
-// all `TodoRef` in `src/types.ts` ever claimed to be.
-import type { FeedbackItem } from "../../../cat-harness/schemas/types.js";
-import type { GitHelper } from "../../../cat-harness/src/core/git.js";
-import { FeedbackStore } from "../../../cat-harness/src/core/feedback.js";
-import { log } from "../../../cat-harness/src/core/logging.js";
 import { allows, forbidden } from "../../../cat-harness/src/core/rbac.js";
-import { PaperResolver } from "./resolver.js";
-import { getAnthropic } from "../../../cat-harness/src/routes/chat.js";
-import { directoryForGraph, folioDir } from "../../../cat-harness/schemas/cat-harness.js";
+import { DocumentContent, type ContentResult, type IncomingFile } from "./content.js";
 
-/**
- * The declared `uploads` graph for a folio, or the convention.
- *
- * declared-path-literal: the convention fallback for a WRITE target. This
- * adapter creates the queue on a first ingest, so resolving to nothing
- * before one has happened would make the first ingest impossible.
- *
- * The fallback is deliberate and belongs at the call site rather than in
- * `directoriesForGraph`: this adapter CREATES the queue on a first ingest, so
- * resolving to nothing before one has happened would make the first ingest
- * impossible rather than merely empty.
- */
-function uploadsRoot(repoRoot: string): string {
-  return directoryForGraph(repoRoot, "uploads") ?? join(repoRoot, "uploads");
-}
-
-/** An upload's Dublin Core record, read for its title; undefined when absent or unreadable. */
-function readRecord(path: string): { title?: string; fields: unknown[] } | undefined {
-  if (!existsSync(path)) return undefined;
-  try {
-    const rec = JSON.parse(readFileSync(path, "utf-8")) as {
-      fields?: { element?: string; qualifier?: string; values?: { value?: string }[] }[];
-    };
-    const fields = rec.fields ?? [];
-    return { title: fields.find((f) => f.element === "title" && !f.qualifier)?.values?.[0]?.value, fields };
-  } catch {
-    return undefined;
-  }
-}
+export { DocumentContent } from "./content.js";
+export type { ContentResult, IncomingFile } from "./content.js";
 
 const CORS = { "Access-Control-Allow-Origin": "*" };
 
@@ -186,324 +140,14 @@ function fenced(content: string, max: number): string {
   return `<untrusted-content ${nonce}>\n${body}\n</untrusted-content ${nonce}>`;
 }
 
-export class DocumentContentAdapter implements ContentAdapter {
-  readonly type: string = "document";
-  readonly name: string = "Document Assistant";
-  readonly repoRoot: string;
 
-  protected resolver: PaperResolver;
-  protected gitHelper: GitHelper;
-  protected feedbackStore: FeedbackStore;
-  protected folioRoot: string;
-  protected leanDir: string;
-  protected buildDir: string;
-  protected mainTex: string;
+/** Map a content result to the response its route always returned. */
+function asResponse<T>(r: ContentResult<T>, headers: Record<string, string>): Response {
+  if (r.ok) return Response.json(r.data, { headers });
+  return Response.json({ error: r.error, ...r.extra }, { status: r.status, headers: CORS });
+}
 
-  /**
-   * `feedbackDir` rather than a built `FeedbackStore`, because the store is
-   * per-folio CONTENT state and the adapter is the thing that knows about a
-   * folio.
-   *
-   * It used to be handed in by `src/index.ts`, which meant the harness's
-   * process entry point constructed a content object — a wrong-direction
-   * dependency the moment `src/core/feedback.ts` was classified core. A
-   * directory is a path; a store is content.
-   */
-  constructor(repoRoot: string, gitHelper: GitHelper, feedbackDir: string) {
-    this.repoRoot = repoRoot;
-    this.gitHelper = gitHelper;
-    this.feedbackStore = new FeedbackStore(feedbackDir);
-    this.resolver = new PaperResolver(repoRoot, gitHelper, this.feedbackStore);
-    this.folioRoot = folioDir(repoRoot);
-    this.leanDir = resolve(repoRoot, "lean");
-    this.buildDir = resolve(repoRoot, "build");
-    this.mainTex = resolve(repoRoot, "main.tex");
-  }
-
-  /**
-   * The adapter's feedback store, for the server to pass to the feedback
-   * route as a service.
-   *
-   * Typed `unknown` on the `ContentAdapter` side and concretely here: the
-   * harness declares the SLOT, the content layer fills it with a type it
-   * owns. Naming `FeedbackStore` in `src/types.ts` would put the content model
-   * back into the harness, which is the import this whole change removes.
-   */
-  getFeedbackStore(): unknown {
-    return this.feedbackStore;
-  }
-
-  // ── Discovery ──────────────────────────────────────────────────
-
-  async listItems(branch?: string) {
-    return this.resolver.resolveFolio(branch);
-  }
-
-  async getOutline(itemId: string, branch?: string) {
-    return this.resolver.resolveOutline(itemId, branch);
-  }
-
-  async getChapterDetail(itemId: string, chapterDir: string, branch?: string) {
-    return this.resolver.resolveChapterDetail(itemId, chapterDir, branch);
-  }
-
-  async getSection(itemId: string, chapterDir: string, sectionIndex: number, branch?: string) {
-    return this.resolver.resolveSection(itemId, chapterDir, sectionIndex, branch);
-  }
-
-  async getDocument(itemId: string, branch?: string) {
-    return this.resolver.resolveDocument(itemId, branch);
-  }
-
-  // ── Editing ──────────────────────────────────────────────────
-
-  async saveBlock(itemId: string, rootName: string, md: string): Promise<string> {
-    const paperDir = join(this.folioRoot, itemId);
-    if (!existsSync(paperDir)) throw new Error("Paper not found");
-
-    let mdPath: string | null = null;
-    for (const d of readdirSync(paperDir)) {
-      const candidate = join(paperDir, d, `${rootName}.ts`);
-      if (existsSync(candidate)) {
-        mdPath = join(paperDir, d, `${rootName}.md`);
-        break;
-      }
-    }
-    if (!mdPath) throw new Error(`Block "${rootName}" not found`);
-
-    writeFileSync(mdPath, md, "utf-8");
-    this.invalidateCache(itemId);
-    log("edit", `block saved: ${itemId}/${rootName}`, `${md.length} chars → ${mdPath}`);
-    return mdPath;
-  }
-
-  invalidateCache(itemId?: string): void {
-    this.resolver.invalidateCache(itemId);
-  }
-
-  // ── Diff ───────────────────────────────────────────────────────
-
-  async computeDiff(itemId: string, base: string, head: string): Promise<DocumentDiff> {
-    const mb = this.gitHelper.mergeBase(base, head);
-    const effectiveBase = mb || base;
-
-    const [basePaper, headPaper] = await Promise.all([
-      this.resolver.resolveDocument(itemId, effectiveBase),
-      this.resolver.resolveDocument(itemId, head),
-    ]);
-
-    return this.computeDocumentDiff(basePaper, headPaper, base, head, itemId, mb || undefined);
-  }
-
-  private computeDocumentDiff(
-    basePaper: ResolvedDocument | null,
-    headPaper: ResolvedDocument | null,
-    base: string,
-    head: string,
-    itemId?: string,
-    mergeBase?: string,
-  ): DocumentDiff {
-    const documentId = headPaper?.id || basePaper?.id || itemId || "";
-
-    function flattenBlocks(paper: ResolvedDocument | null): Map<string, ResolvedBlock> {
-      const map = new Map();
-      if (!paper) return map;
-      for (const ch of paper.chapters || [])
-        for (const sec of ch.sections || [])
-          for (const blk of sec.blocks || [])
-            map.set(blk.rootName, blk);
-      return map;
-    }
-
-    const baseBlocks = flattenBlocks(basePaper);
-    const headBlocks = flattenBlocks(headPaper);
-    const allNames = new Set([...baseBlocks.keys(), ...headBlocks.keys()]);
-
-    const blocks: BlockDiff[] = [];
-    const summary = { added: 0, removed: 0, changed: 0, unchanged: 0 };
-
-    for (const name of allNames) {
-      const baseBlk = baseBlocks.get(name);
-      const headBlk = headBlocks.get(name);
-      const blockTodos = this.feedbackStore.read(documentId, name);
-      const todos = blockTodos.length ? blockTodos : undefined;
-
-      if (!baseBlk && headBlk) {
-        blocks.push({
-          rootName: name, kind: headBlk.kind, label: headBlk.label, title: headBlk.title, status: "added",
-          mdDiff: headBlk.md ? { base: "", head: headBlk.md } : undefined,
-          leanDiff: headBlk.lean?.source ? { base: "", head: headBlk.lean.source } : undefined,
-          todos,
-        });
-        summary.added++;
-      } else if (baseBlk && !headBlk) {
-        blocks.push({
-          rootName: name, kind: baseBlk.kind, label: baseBlk.label, title: baseBlk.title, status: "removed",
-          mdDiff: baseBlk.md ? { base: baseBlk.md, head: "" } : undefined,
-          leanDiff: baseBlk.lean?.source ? { base: baseBlk.lean.source, head: "" } : undefined,
-          todos,
-        });
-        summary.removed++;
-      } else if (baseBlk && headBlk) {
-        const mdChanged = baseBlk.md !== headBlk.md;
-        const leanChanged = (baseBlk.lean?.source || "") !== (headBlk.lean?.source || "");
-        const statusChanged = baseBlk.status !== headBlk.status;
-
-        if (mdChanged || leanChanged || statusChanged) {
-          const diff: BlockDiff = { rootName: name, kind: headBlk.kind, label: headBlk.label, title: headBlk.title, status: "changed", todos };
-          if (mdChanged) diff.mdDiff = { base: baseBlk.md, head: headBlk.md };
-          if (leanChanged) diff.leanDiff = { base: baseBlk.lean?.source || "", head: headBlk.lean?.source || "" };
-          if (statusChanged) diff.statusDiff = { base: baseBlk.status || "", head: headBlk.status || "" };
-          blocks.push(diff);
-          summary.changed++;
-        } else {
-          blocks.push({ rootName: name, kind: headBlk.kind, label: headBlk.label, title: headBlk.title, status: "unchanged", todos });
-          summary.unchanged++;
-        }
-      }
-    }
-
-    return { base, head, documentId, blocks, summary, mergeBase };
-  }
-
-  // ── AI characterization ────────────────────────────────────────
-
-  async characterizeChanges(diff: DocumentDiff): Promise<BranchCharacterization> {
-    const client = getAnthropic();
-    if (!client) return this.fallbackCharacterization(diff);
-
-    const changedBlocks = diff.blocks.filter((b) => b.status !== "unchanged");
-    const blockDescriptions = changedBlocks
-      .slice(0, 30)
-      .map((b) => {
-        let desc = `[${b.status}] ${b.kind}: ${b.title || b.rootName}`;
-        if (b.label) desc += ` (${b.label})`;
-        if (b.statusDiff) desc += ` | status: ${b.statusDiff.base} → ${b.statusDiff.head}`;
-        if (b.mdDiff) desc += ` | md changed`;
-        if (b.leanDiff) desc += ` | lean source changed`;
-        return desc;
-      })
-      .join("\n");
-
-    const prompt = `Characterize the changes between branch "${diff.base}" and "${diff.head}" for document "${diff.documentId}".
-
-Summary: +${diff.summary.added} added, -${diff.summary.removed} removed, ~${diff.summary.changed} changed, ${diff.summary.unchanged} unchanged blocks.
-
-Changed blocks:
-${blockDescriptions}
-
-Respond in JSON: {"title": "...", "summary": "...", "categories": [...], "impact": "minor|moderate|major", "suggestions": [...]}`;
-
-    try {
-      const response = await client.messages.create({
-        model: "claude-haiku-4-5-20251001",
-        max_tokens: 500,
-        messages: [{ role: "user", content: prompt }],
-      });
-
-      const text = response.content[0]?.type === "text" ? response.content[0].text : "";
-      const jsonMatch = text.match(/\{[\s\S]*\}/);
-      if (jsonMatch) {
-        const parsed = JSON.parse(jsonMatch[0]);
-        return {
-          title: parsed.title || "Branch changes",
-          summary: parsed.summary || "",
-          categories: parsed.categories || [],
-          impact: parsed.impact || "moderate",
-          suggestions: parsed.suggestions,
-        };
-      }
-      return this.fallbackCharacterization(diff);
-    } catch (e) {
-      return {
-        ...this.fallbackCharacterization(diff),
-        error: `AI error: ${e instanceof Error ? e.message : String(e)}`,
-      };
-    }
-  }
-
-  private fallbackCharacterization(diff: DocumentDiff): BranchCharacterization {
-    const { added, removed, changed } = diff.summary;
-    const total = added + removed + changed;
-    const categories: string[] = [];
-    const changedBlocks = diff.blocks.filter((b) => b.status !== "unchanged");
-    const kinds = new Set(changedBlocks.map((b) => b.kind));
-    if (kinds.has("definition")) categories.push("definitions");
-    if (kinds.has("theorem") || kinds.has("lemma") || kinds.has("proposition")) categories.push("proofs");
-    if (changedBlocks.some((b) => b.leanDiff)) categories.push("formalization");
-    if (added > 0) categories.push("new-content");
-    if (removed > 0) categories.push("removals");
-    const impact = total > 10 ? "major" : total > 3 ? "moderate" : "minor";
-    return {
-      title: `${total} block${total !== 1 ? "s" : ""} changed (${diff.base} → ${diff.head})`,
-      summary: `${added} added, ${removed} removed, ${changed} modified.`,
-      categories,
-      impact,
-    };
-  }
-
-  // ── AI triage ──────────────────────────────────────────────────
-
-  async triageFeedback(
-    todo: FeedbackItem,
-    blockContent: string,
-    blockKind: string,
-    itemId: string,
-    rootName: string,
-  ): Promise<TriageResult> {
-    const client = getAnthropic();
-    if (!client) {
-      return {
-        assessment: `Feedback: "${todo.summary}". Priority: ${todo.priority}. No AI available.`,
-        actionable: false,
-      };
-    }
-
-    const prompt = `You are an editor triaging feedback on a structured document.
-
-Block: "${rootName}" (kind: ${blockKind}, document: ${itemId})
-
-Block content (markdown):
-\`\`\`
-${blockContent.slice(0, 2000)}
-\`\`\`
-
-Feedback:
-- Summary: ${todo.summary}
-- Detail: ${todo.comment || "(none)"}
-- Priority: ${todo.priority}
-
-Respond in JSON: {"assessment": "...", "actionable": boolean, "proposedEdit": {"description": "...", "newMd": "..."}}`;
-
-    try {
-      const response = await client.messages.create({
-        model: "claude-haiku-4-5-20251001",
-        max_tokens: 1500,
-        messages: [{ role: "user", content: prompt }],
-      });
-
-      const text = response.content[0]?.type === "text" ? response.content[0].text : "";
-      const jsonMatch = text.match(/\{[\s\S]*\}/);
-      if (jsonMatch) {
-        const parsed = JSON.parse(jsonMatch[0]);
-        return {
-          assessment: parsed.assessment || "No assessment.",
-          actionable: !!parsed.actionable,
-          proposedEdit: parsed.proposedEdit
-            ? { description: parsed.proposedEdit.description || "", newMd: parsed.proposedEdit.newMd }
-            : undefined,
-        };
-      }
-      return { assessment: "Failed to parse AI response.", actionable: false };
-    } catch (e) {
-      return {
-        assessment: `Feedback: "${todo.summary}".`,
-        actionable: false,
-        error: `AI error: ${e instanceof Error ? e.message : String(e)}`,
-      };
-    }
-  }
-
+export class DocumentContentAdapter extends DocumentContent implements ContentAdapter {
   // ── Chat tools ─────────────────────────────────────────────────
 
   getChatTools(): unknown[] {
@@ -564,89 +208,8 @@ Respond in JSON: {"assessment": "...", "actionable": boolean, "proposedEdit": {"
   }
 
   async executeChatTool(name: string, input: Record<string, unknown>, context?: Record<string, unknown>): Promise<string> {
-    const pid = (input.itemId as string) || (input.paperId as string) || (context?.paperId as string) || "";
-
     try {
-      switch (name) {
-        case "get_document_status": {
-          const paper = pid ? await this.getDocument(pid) : null;
-          if (!paper) return JSON.stringify({ error: "Document not found", itemId: pid });
-          const stats: Record<string, number> = { chapters: 0, totalBlocks: 0, definitions: 0, theorems: 0, openTodos: 0 };
-          stats.chapters = paper.chapters.length;
-          for (const ch of paper.chapters)
-            for (const sec of ch.sections || [])
-              for (const blk of sec.blocks || []) {
-                stats.totalBlocks++;
-                if (blk.kind === "definition") stats.definitions++;
-                if (blk.kind === "theorem" || blk.kind === "lemma" || blk.kind === "proposition") stats.theorems++;
-                stats.openTodos += (blk.todos || []).filter((t) => t.status === "open").length;
-              }
-          return JSON.stringify({ title: paper.title, ...stats });
-        }
-
-        case "get_todos": {
-          const rawLabel = (input.blockLabel || input.rootName) as string | undefined;
-          const rootName = rawLabel?.replace(/^(def|thm|lem|prop|cor|rem|ex|conj):/, "") || undefined;
-          if (rootName && pid) {
-            return JSON.stringify(this.feedbackStore.read(pid, rootName));
-          }
-          const status = (input.status as string) || "open";
-          const all = this.feedbackStore.listAll(status);
-          const filtered = pid ? all.filter((t) => t.itemId === pid) : all;
-          return JSON.stringify(filtered.slice(0, 30));
-        }
-
-        case "get_block": {
-          const label = input.label as string;
-          const paper = pid ? await this.getDocument(pid) : null;
-          if (!paper) return JSON.stringify({ error: "Document not found" });
-          for (const ch of paper.chapters)
-            for (const sec of ch.sections || [])
-              for (const blk of sec.blocks || [])
-                if (blk.label === label) {
-                  return JSON.stringify({
-                    kind: blk.kind, label: blk.label, title: blk.title,
-                    md: (blk.md || "").slice(0, 3000),
-                    lean: blk.lean ? { ref: blk.lean.ref, validation: blk.lean.validation } : null,
-                    status: blk.status, uses: blk.uses, tags: blk.tags,
-                    chapter: ch.title, section: sec.title,
-                  });
-                }
-          return JSON.stringify({ error: `Block not found: ${label}` });
-        }
-
-        case "get_chapter_blocks": {
-          const chNum = input.chapterNumber as number;
-          const paper = pid ? await this.getDocument(pid) : null;
-          if (!paper) return JSON.stringify({ error: "Document not found" });
-          const ch = paper.chapters.find((c) => c.number === chNum);
-          if (!ch) return JSON.stringify({ error: `Chapter ${chNum} not found` });
-          const blocks: unknown[] = [];
-          for (const sec of ch.sections || [])
-            for (const blk of sec.blocks || [])
-              blocks.push({ kind: blk.kind, label: blk.label, title: blk.title, status: blk.status, section: sec.title });
-          return JSON.stringify({ chapter: ch.title, blocks });
-        }
-
-        case "search_blocks": {
-          const q = ((input.query as string) || "").toLowerCase();
-          const paper = pid ? await this.getDocument(pid) : null;
-          if (!paper) return JSON.stringify({ error: "Document not found" });
-          const matches: unknown[] = [];
-          for (const ch of paper.chapters)
-            for (const sec of ch.sections || [])
-              for (const blk of sec.blocks || []) {
-                const searchable = [blk.label, blk.title, blk.kind, ...(blk.tags || []), (blk.md || "").slice(0, 500)].join(" ").toLowerCase();
-                if (searchable.includes(q))
-                  matches.push({ kind: blk.kind, label: blk.label, title: blk.title, chapter: ch.title, section: sec.title });
-                if (matches.length >= 15) break;
-              }
-          return JSON.stringify(matches);
-        }
-
-        default:
-          return JSON.stringify({ error: `Unknown tool: ${name}` });
-      }
+      return JSON.stringify(await this.answerChatQuery(name, input, context));
     } catch (e) {
       return JSON.stringify({ error: String(e) });
     }
@@ -770,7 +333,7 @@ End every response with suggested follow-ups:
     if (path === "/api/diff") {
       const id = url.searchParams.get("id");
       const base = url.searchParams.get("base") || "main";
-      const head = url.searchParams.get("head") || this.gitHelper.currentBranch();
+      const head = url.searchParams.get("head") || this.currentBranch();
       if (!id) return Response.json({ error: "Missing ?id=" }, { status: 400 });
       try {
         const diff = await this.computeDiff(id, base, head);
@@ -784,7 +347,7 @@ End every response with suggested follow-ups:
     if (path === "/api/characterize") {
       const id = url.searchParams.get("id");
       const base = url.searchParams.get("base") || "main";
-      const head = url.searchParams.get("head") || this.gitHelper.currentBranch();
+      const head = url.searchParams.get("head") || this.currentBranch();
       if (!id) return Response.json({ error: "Missing ?id=" }, { status: 400 });
       try {
         const diff = await this.computeDiff(id, base, head);
@@ -798,37 +361,13 @@ End every response with suggested follow-ups:
     // Content assets
     if (path.startsWith("/api/content-asset/")) {
       const rel = path.slice("/api/content-asset/".length);
-      return serveFile(join(this.folioRoot, rel)) || new Response("Asset not found", { status: 404 });
+      return serveFile(this.contentAssetPath(rel)) || new Response("Asset not found", { status: 404 });
     }
 
     // Uploads listing
     if (path === "/api/uploads") {
       try {
-        const uploadsDir = uploadsRoot(this.repoRoot);
-        if (!existsSync(uploadsDir)) return Response.json({ uploads: [] }, { headers: CORS });
-        const dirs = readdirSync(uploadsDir, { withFileTypes: true })
-          .filter((d) => d.isDirectory())
-          .map((d) => {
-            const intakePath = join(uploadsDir, d.name, "intake.json");
-            let intake: Record<string, unknown> | null = null;
-            if (existsSync(intakePath)) {
-              try { intake = JSON.parse(readFileSync(intakePath, "utf-8")); } catch { /* skip */ }
-            }
-            // The title is the intake's own, else its Dublin Core record's
-            // `dc.title` (bean `d4lb`); the pipeline stage, classification and
-            // block count the old shape carried were never updated after the
-            // upload, so they are no longer reported as if they were state.
-            const rec = typeof intake?.record === "string" ? readRecord(join(uploadsDir, d.name, intake.record)) : undefined;
-            return {
-              id: d.name,
-              title: (intake?.title as string | undefined) ?? rec?.title ?? d.name,
-              record: rec?.fields ?? null,
-              files: readdirSync(join(uploadsDir, d.name)).filter(
-                (f) => f !== "intake.json" && f !== intake?.record,
-              ),
-            };
-          });
-        return Response.json({ uploads: dirs }, { headers: CORS });
+        return Response.json(this.listUploads(), { headers: CORS });
       } catch (e) {
         return Response.json({ error: String(e) }, { status: 500, headers: CORS });
       }
@@ -837,16 +376,10 @@ End every response with suggested follow-ups:
     // Single upload detail
     if (path.startsWith("/api/uploads/")) {
       const docId = path.slice("/api/uploads/".length).replace(/\/$/, "");
-      const docDir = join(uploadsRoot(this.repoRoot), docId);
-      if (!existsSync(docDir)) return Response.json({ error: "Not found" }, { status: 404, headers: CORS });
       try {
-        const files = readdirSync(docDir);
-        const intakePath = join(docDir, "intake.json");
-        let intake: Record<string, unknown> | null = null;
-        if (existsSync(intakePath)) {
-          try { intake = JSON.parse(readFileSync(intakePath, "utf-8")); } catch { /* skip */ }
-        }
-        return Response.json({ id: docId, intake, files }, { headers: CORS });
+        const detail = this.uploadDetail(docId);
+        if (!detail) return Response.json({ error: "Not found" }, { status: 404, headers: CORS });
+        return Response.json(detail, { headers: CORS });
       } catch (e) {
         return Response.json({ error: String(e) }, { status: 500, headers: CORS });
       }
@@ -854,12 +387,9 @@ End every response with suggested follow-ups:
 
     // Render PDF status
     if (path === "/api/render-pdf/status") {
-      try {
-        execSync("which latexmk", { stdio: "pipe" });
-        return Response.json({ available: true }, { headers: CORS });
-      } catch {
-        return Response.json({ available: false, reason: "latexmk not installed" }, { headers: CORS });
-      }
+      return this.latexmkAvailable()
+        ? Response.json({ available: true }, { headers: CORS })
+        : Response.json({ available: false, reason: "latexmk not installed" }, { headers: CORS });
     }
 
     // Block changelog (git log for block's sibling files)
@@ -870,34 +400,7 @@ End every response with suggested follow-ups:
       if (!id) return Response.json({ error: "Missing ?id= parameter" }, { status: 400, headers: CORS });
       if (!label) return Response.json({ error: "Missing ?label= parameter" }, { status: 400, headers: CORS });
       try {
-        const paper = await this.getDocument(id);
-        if (!paper) return Response.json({ error: "Paper not found" }, { status: 404, headers: CORS });
-        let rootName: string | null = null;
-        let chapterDir: string | null = null;
-        for (const ch of paper.chapters || []) {
-          for (const sec of ch.sections || []) {
-            for (const blk of sec.blocks || []) {
-              if (blk.label === label) { rootName = blk.rootName; break; }
-            }
-            if (rootName) break;
-          }
-          if (rootName) {
-            const paperDir = join(this.folioRoot, id || "");
-            for (const d of readdirSync(paperDir, { withFileTypes: true })) {
-              if (d.isDirectory() && existsSync(join(paperDir, d.name, `${rootName}.ts`))) {
-                chapterDir = d.name; break;
-              }
-            }
-            break;
-          }
-        }
-        if (!rootName || !chapterDir) {
-          return Response.json({ error: `Block "${label}" not found` }, { status: 404, headers: CORS });
-        }
-        const base = `folio/${id}/${chapterDir}/${rootName}`;
-        const files = [`${base}.ts`, `${base}.md`, `${base}.lean`];
-        const commits = this.gitHelper.gitLogFiles(files, limit);
-        return Response.json({ label, rootName, chapterDir, commits }, { headers: { "Cache-Control": "no-cache", ...CORS } });
+        return asResponse(await this.blockChangelog(id, label, limit), { "Cache-Control": "no-cache", ...CORS });
       } catch (e) {
         return Response.json({ error: String(e) }, { status: 500, headers: CORS });
       }
@@ -910,45 +413,7 @@ End every response with suggested follow-ups:
       if (!id) return Response.json({ error: "Missing ?id= parameter" }, { status: 400, headers: CORS });
       if (!label) return Response.json({ error: "Missing ?label= parameter" }, { status: 400, headers: CORS });
       try {
-        const paper = await this.getDocument(id);
-        if (!paper) return Response.json({ error: "Paper not found" }, { status: 404, headers: CORS });
-        const allBlocks: Array<{ label: string; kind: string; title: string; uses: string[] }> = [];
-        const reverseDeps = new Map<string, string[]>();
-        for (const ch of paper.chapters || []) {
-          for (const sec of ch.sections || []) {
-            for (const blk of sec.blocks || []) {
-              if (!blk.label) continue;
-              allBlocks.push({ label: blk.label, kind: blk.kind, title: blk.title || "", uses: blk.uses || [] });
-              for (const dep of blk.uses || []) {
-                if (!reverseDeps.has(dep)) reverseDeps.set(dep, []);
-                reverseDeps.get(dep)!.push(blk.label);
-              }
-            }
-          }
-        }
-        const target = allBlocks.find(b => b.label === label);
-        if (!target) return Response.json({ error: `Block "${label}" not found` }, { status: 404, headers: CORS });
-        const directDependents = (reverseDeps.get(label) || []).map(l => allBlocks.find(b => b.label === l)!).filter(Boolean);
-        const visited = new Set<string>([label]);
-        const queue = [...(reverseDeps.get(label) || [])];
-        const transitive: typeof allBlocks = [];
-        while (queue.length) {
-          const cur = queue.shift()!;
-          if (visited.has(cur)) continue;
-          visited.add(cur);
-          const blk = allBlocks.find(b => b.label === cur);
-          if (blk) transitive.push(blk);
-          for (const next of reverseDeps.get(cur) || []) {
-            if (!visited.has(next)) queue.push(next);
-          }
-        }
-        return Response.json({
-          target: { label: target.label, kind: target.kind, title: target.title },
-          directDependents: directDependents.map(b => ({ label: b.label, kind: b.kind, title: b.title })),
-          transitiveDependents: transitive.filter(b => !directDependents.some(d => d.label === b.label))
-            .map(b => ({ label: b.label, kind: b.kind, title: b.title })),
-          totalAffected: transitive.length,
-        }, { headers: { "Cache-Control": "no-cache", ...CORS } });
+        return asResponse(await this.undoImpact(id, label), { "Cache-Control": "no-cache", ...CORS });
       } catch (e) {
         return Response.json({ error: String(e) }, { status: 500, headers: CORS });
       }
@@ -957,50 +422,7 @@ End every response with suggested follow-ups:
     // TeX export — build content pipeline and serve files as JSON manifest
     if (path === "/api/tex-export") {
       try {
-
-        const buildResult = spawnSync("bun", ["run", join(this.repoRoot, "content/pipeline/build.ts")], {
-          cwd: this.repoRoot, stdio: "pipe", timeout: 60_000,
-        });
-        if (buildResult.status !== 0) {
-          return Response.json({ error: "Build failed: " + (buildResult.stderr?.toString() || "unknown error") }, { status: 500, headers: CORS });
-        }
-
-        const files: { name: string; data: Buffer }[] = [];
-
-        const mainTexPath = resolve(this.repoRoot, "main.tex");
-        if (existsSync(mainTexPath)) {
-          files.push({ name: "main.tex", data: readFileSync(mainTexPath) as Buffer });
-        }
-
-        const chaptersDir = resolve(this.repoRoot, "chapters");
-        if (existsSync(chaptersDir)) {
-          for (const f of readdirSync(chaptersDir)) {
-            if (f.endsWith(".tex")) {
-              files.push({ name: `chapters/${f}`, data: readFileSync(join(chaptersDir, f)) as Buffer });
-            }
-          }
-        }
-
-        const preamblePath = resolve(this.repoRoot, "latex/preamble.tex");
-        if (existsSync(preamblePath)) {
-          files.push({ name: "latex/preamble.tex", data: readFileSync(preamblePath) as Buffer });
-        }
-
-        const bibPath = resolve(this.repoRoot, "references.bib");
-        if (existsSync(bibPath)) {
-          files.push({ name: "references.bib", data: readFileSync(bibPath) as Buffer });
-        }
-
-        if (files.length === 0) {
-          return Response.json({ error: "No TeX files generated" }, { status: 500, headers: CORS });
-        }
-
-        const manifest = files.map(f => ({
-          name: f.name,
-          content: f.data.toString("utf-8"),
-        }));
-
-        return Response.json({ files: manifest }, { headers: CORS });
+        return asResponse(this.texExport(), CORS);
       } catch (e) {
         return Response.json({ error: String(e) }, { status: 500, headers: CORS });
       }
@@ -1031,63 +453,33 @@ End every response with suggested follow-ups:
         const contentType = req.headers.get("content-type") || "";
 
         if (contentType.includes("multipart/form-data")) {
-          // Multipart file upload
+          // Multipart file upload: the server reads the form, the content
+          // layer writes the queue and its records.
           const formData = await req.formData();
           const docId = (formData.get("id") as string) || `upload-${Date.now()}`;
-          const title = (formData.get("title") as string) || docId;
-          const docType = (formData.get("type") as string) || "paper";
-          const domain = (formData.get("domain") as string) || "";
-          const normativeLevel = (formData.get("normativeLevel") as string) || "";
-
-          const uploadsDir = join(uploadsRoot(this.repoRoot), docId);
-          if (!existsSync(uploadsDir)) mkdirSync(uploadsDir, { recursive: true });
-
-          // Save uploaded files
-          const savedFiles: string[] = [];
+          const incoming: IncomingFile[] = [];
           for (
             const [key, value] of formData.entries() as IterableIterator<
               [string, string | File]
             >
           ) {
             if (value instanceof File) {
-              const filename = value.name || `${key}.bin`;
-              const buffer = Buffer.from(await value.arrayBuffer());
-              const filePath = join(uploadsDir, filename);
-              writeFileSync(filePath, buffer);
-              savedFiles.push(filename);
+              incoming.push({ name: value.name || `${key}.bin`, bytes: Buffer.from(await value.arrayBuffer()) });
             }
           }
-
-          // Detect format from file extensions
-          const format = savedFiles.some((f) => f.endsWith(".tex")) ? "latex"
-            : savedFiles.some((f) => f.endsWith(".pdf")) ? "pdf"
-            : savedFiles.some((f) => f.endsWith(".docx")) ? "docx"
-            : savedFiles.some((f) => f.match(/\.(png|jpg|jpeg|tiff?)$/i)) ? "scan"
-            : "unknown";
-
-          // The intake and the Dublin Core record (bean `d4lb`): what arrived
-          // and where from, and what it is — two records, each with its schema.
-          const { intake, record } = uploadRecords({
+          const saved = this.ingestUploadFiles({
             docId,
-            title,
-            type: docType,
-            domain,
-            normativeLevel,
-            format,
-            capturedAt: new Date().toISOString(),
-            files: savedFiles.map((f) => {
-              const bytes = readFileSync(join(uploadsDir, f));
-              return { path: f, bytes: bytes.length, sha256: createHash("sha256").update(bytes).digest("hex") };
-            }),
-          });
-          writeFileSync(join(uploadsDir, "intake.json"), JSON.stringify(intake, null, 2));
-          writeFileSync(join(uploadsDir, recordFileName(docId)), JSON.stringify(record, null, 2));
+            title: (formData.get("title") as string) || docId,
+            type: (formData.get("type") as string) || "paper",
+            domain: (formData.get("domain") as string) || "",
+            normativeLevel: (formData.get("normativeLevel") as string) || "",
+          }, incoming);
 
           return Response.json({
             ok: true,
-            id: docId,
-            files: savedFiles,
-            format,
+            id: saved.id,
+            files: saved.files,
+            format: saved.format,
             stage: "uploaded",
           }, { headers: CORS });
         }
@@ -1097,26 +489,11 @@ End every response with suggested follow-ups:
           id?: string; title?: string; url?: string;
           type?: string; domain?: string; normativeLevel?: string;
         };
-        const docId = body.id || `upload-${Date.now()}`;
-        const uploadsDir = join(uploadsRoot(this.repoRoot), docId);
-        if (!existsSync(uploadsDir)) mkdirSync(uploadsDir, { recursive: true });
-
-        const { intake, record } = uploadRecords({
-          docId,
-          title: body.title || docId,
-          type: body.type || "paper",
-          domain: body.domain,
-          normativeLevel: body.normativeLevel,
-          upstream: body.url,
-          capturedAt: new Date().toISOString(),
-          files: [],
-        });
-        writeFileSync(join(uploadsDir, "intake.json"), JSON.stringify(intake, null, 2));
-        writeFileSync(join(uploadsDir, recordFileName(docId)), JSON.stringify(record, null, 2));
+        const { id } = this.ingestUploadUrl(body);
 
         return Response.json({
           ok: true,
-          id: docId,
+          id,
           stage: "uploaded",
           message: "Intake created. Upload files to /api/upload with multipart/form-data.",
         }, { headers: CORS });
@@ -1128,34 +505,9 @@ End every response with suggested follow-ups:
     // Render PDF
     if (path === "/api/render-pdf") {
       try {
-        try {
-          execSync("which latexmk", { stdio: "pipe" });
-        } catch {
-          return Response.json({ error: "latexmk not installed" }, { status: 503, headers: CORS });
-        }
-
-        // Build content → .tex
-        spawnSync("bun", ["run", join(this.repoRoot, "content/pipeline/build.ts")], {
-          cwd: this.repoRoot, stdio: "pipe", timeout: 60_000,
-        });
-
-        // Run latexmk
-        if (!existsSync(this.buildDir)) mkdirSync(this.buildDir, { recursive: true });
-        const latexResult = spawnSync("latexmk", [
-          "-pdf", "-g", `-output-directory=${this.buildDir}`,
-          "-interaction=nonstopmode", "-file-line-error", this.mainTex,
-        ], { cwd: this.repoRoot, stdio: "pipe", timeout: 300_000 });
-
-        // Find generated PDF
-        const pdfFiles = existsSync(this.buildDir) ? readdirSync(this.buildDir).filter((f) => f.endsWith(".pdf")) : [];
-        const pdfPath = pdfFiles.length > 0 ? join(this.buildDir, pdfFiles[0]) : null;
-        if (pdfPath && existsSync(pdfPath)) {
-          return new Response(readFileSync(pdfPath), {
-            headers: { "Content-Type": "application/pdf", ...CORS },
-          });
-        }
-
-        return Response.json({ error: "LaTeX compilation failed", exitCode: latexResult.status }, { status: 500, headers: CORS });
+        const r = this.renderPdf();
+        if (r.ok) return new Response(r.data, { headers: { "Content-Type": "application/pdf", ...CORS } });
+        return Response.json({ error: r.error, ...r.extra }, { status: r.status, headers: CORS });
       } catch (e) {
         return Response.json({ error: String(e) }, { status: 500, headers: CORS });
       }
@@ -1163,6 +515,7 @@ End every response with suggested follow-ups:
 
     return null;
   }
+
 
   // ── MCP tool registration ──────────────────────────────────────
 
