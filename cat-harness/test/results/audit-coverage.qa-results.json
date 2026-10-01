@@ -10,9 +10,24 @@
   },
   "families": {
     "coverage-measured": {
-      "summary": "Every declared kind with its four counts and its state. Not findings: the measurement itself, so the committed record answers \"what audits this kind\" without rerunning anything. The file COUNTS are printed rather than recorded — a census moves on any commit and a gate keyed on it is stale by default; `hasFiles` carries the only thing it decides. 51 of 51 declared kind(s), 203 gate(s), 73 criteria.",
-      "count": 51,
+      "summary": "Every declared kind with its four counts and its state. Not findings: the measurement itself, so the committed record answers \"what audits this kind\" without rerunning anything. The file COUNTS are printed rather than recorded — a census moves on any commit and a gate keyed on it is stale by default; `hasFiles` carries the only thing it decides. 52 of 52 declared kind(s), 203 gate(s), 73 criteria.",
+      "count": 52,
       "entries": [
+        {
+          "kind": "attestations",
+          "state": "covered",
+          "directories": [
+            "cat-harness/test/attestations",
+            "folio-assistant-sci/test/attestations"
+          ],
+          "criteria": [],
+          "subjectKinds": [],
+          "gates": [
+            "bun run kg:audit:check"
+          ],
+          "typed": true,
+          "hasFiles": true
+        },
         {
           "kind": "bean-defs",
           "state": "no-directory",
@@ -1206,5 +1221,5 @@
       "entries": []
     }
   },
-  "total": 68
+  "total": 69
 }

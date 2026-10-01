@@ -6335,24 +6335,10 @@
       "status": "candidate"
     },
     {
-      "id": "kg-qa.kgqareport.pair_attestations",
-      "prefLabel": "KgQaReport.pair_attestations",
-      "definition": "Declared prose ↔ code pairs and the state each was last accepted in — carried ACROSS runs, unlike everything above, because it is the baseline `prose-reviewed-since-code-changed` compares against. Written by `kg-audit` and by `pairs:attest`; see `scripts/prose-code-pairs.ts`.",
-      "source": "cat-harness/schemas/kg-qa.ts#KgQaReport.pair_attestations",
-      "status": "candidate"
-    },
-    {
       "id": "kg-qa.kgqareport.source_hash",
       "prefLabel": "KgQaReport.source_hash",
       "definition": "sha256 of the audited file, or `null` for the roll-up.",
       "source": "cat-harness/schemas/kg-qa.ts#KgQaReport.source_hash",
-      "status": "candidate"
-    },
-    {
-      "id": "kg-qa.kgqareport.voice_reviews",
-      "prefLabel": "KgQaReport.voice_reviews",
-      "definition": "An agent's or a person's rule-by-rule review of a skill against a voice that judges skills — carried across runs like `pair_attestations`, and written by `voice:review`; see `scripts/skill-voice-review.ts`.",
-      "source": "cat-harness/schemas/kg-qa.ts#KgQaReport.voice_reviews",
       "status": "candidate"
     },
     {
@@ -6990,6 +6976,41 @@
       "prefLabel": "PythonDepSchema.why",
       "definition": "Why this is declared — and for a `transitive` entry, why it has no import of its own.",
       "source": "cat-harness/schemas/python-deps.ts#PythonDepSchema.why",
+      "status": "candidate"
+    },
+    {
+      "id": "qa-attestations.kgattestationtree.atthome",
+      "prefLabel": "KgAttestationTree.attHome",
+      "definition": "Absolute attestations home (the `<family>` directory goes under it).",
+      "source": "cat-harness/schemas/qa-attestations.ts#KgAttestationTree.attHome",
+      "status": "candidate"
+    },
+    {
+      "id": "qa-attestations.kgattestationtree.instance",
+      "prefLabel": "KgAttestationTree.instance",
+      "definition": "Repo-relative instance root, `.` for the checkout root.",
+      "source": "cat-harness/schemas/qa-attestations.ts#KgAttestationTree.instance",
+      "status": "candidate"
+    },
+    {
+      "id": "qa-attestations.kgattestationtree.kgtree",
+      "prefLabel": "KgAttestationTree.kgTree",
+      "definition": "Absolute `<qa home>/kg-qa`.",
+      "source": "cat-harness/schemas/qa-attestations.ts#KgAttestationTree.kgTree",
+      "status": "candidate"
+    },
+    {
+      "id": "qa-attestations.kgattestationtree.storeroot",
+      "prefLabel": "KgAttestationTree.storeRoot",
+      "definition": "The declared directory whose absence is \"store absent\" — see `attestationsHomeFor`.",
+      "source": "cat-harness/schemas/qa-attestations.ts#KgAttestationTree.storeRoot",
+      "status": "candidate"
+    },
+    {
+      "id": "qa-attestations.pairattestationschema.by",
+      "prefLabel": "PairAttestationSchema.by",
+      "definition": "`baseline` counts as a judgement (owner, 2026-10-01): it records the state the drift is measured from.",
+      "source": "cat-harness/schemas/qa-attestations.ts#PairAttestationSchema.by",
       "status": "candidate"
     },
     {
