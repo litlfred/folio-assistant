@@ -54,6 +54,11 @@ export const PROPERTY_SKILLS = {
   directories: { skills: ["directory-conventions", "schema-management"] },
   remoteGraphs: { skills: ["library-ingestion", "materialize-remote"] },
   associatedHarnesses: { skills: ["associate-harness"] },
+  // Issue #1719. Both name a large-datasets skill, as `remoteGraphs` already
+  // does with `materialize-remote`: the process that walks a subscription
+  // calls that layer's subprocesses, so its skill lives beside them.
+  subscriptions: { skills: ["kg-subscription", "materialize-remote"] },
+  knownSubstrates: { skills: ["kg-subscription"] },
   stickies: { skills: ["create-sticky-note"] },
   renderExemption: { skills: ["harness-tiles"] },
   needs: { skills: ["instance-kinds", "confirm-harness"] },
