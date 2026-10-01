@@ -11,11 +11,11 @@ Part of [C@T Harness](../README.md) 0.1.0, declared as `skills`, holding `skills
 | [`authoring/`](authoring/) | 135 files | |
 | [`conduct/`](conduct/) | 18 files | |
 | [`conventions/`](conventions/) | 2 files | |
-| [`folio-core/`](folio-core/) | 7 files | |
+| [`folio-core/`](folio-core/) | 6 files | |
 | [`framework/`](framework/) | 1 file | |
 | [`hypothesis-generation/`](hypothesis-generation/) | 30 files | |
 | [`kg/`](kg/) | 35 files | |
-| [`library/`](library/) | 22 files | |
+| [`library/`](library/) | 23 files | |
 | [`permissions/`](permissions/) | 1 file | |
 | [`process/`](process/) | 23 files | |
 | [`remote-packages/`](remote-packages/) | 2 files | |
