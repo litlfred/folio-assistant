@@ -1,4 +1,27 @@
 #!/usr/bin/env bash
+# FHIR AST cache service — restore, verify, seed, and diagnose the
+# prebuilt AST JSON artifacts for a FHIR Implementation Guide.
+#
+# USAGE
+#   scripts/ig-cache.sh status     [--ig-root DIR]
+#   scripts/ig-cache.sh restore    [--ig-root DIR] [--package NAME] [--branch BR]
+#   scripts/ig-cache.sh seed       [--ig-root DIR] [--package NAME] [--branch BR] [--push] [--force]
+#   scripts/ig-cache.sh contribute [--ig-root DIR] [--package NAME] [--force]
+#   scripts/ig-cache.sh verify     [--ig-root DIR]
+#   scripts/ig-cache.sh doctor     [--ig-root DIR]
+#   scripts/ig-cache.sh list
+#
+# EXIT CODES
+#   0  success / cache present
+#   1  cache miss (nothing restored — a build is required)
+#   2  usage or environment error (git missing, not a repo, bad roster)
+#   3  cache present but UNUSABLE (corrupt or mismatched)
+#
+# WARM-START SUPPORT
+#   The Publisher's tx cache (`input-cache/txcache/`) persists across runs.
+#   This cache is restored alongside the AST JSON files, skipping terminology
+#   expansion network round-trips for unchanged ValueSets.
+
 set -uo pipefail
 
 PROG="${0##*/}"
@@ -13,21 +36,21 @@ command -v git >/dev/null 2>&1 || die "git not found on PATH"
 REPO_ROOT=$(git rev-parse --show-toplevel 2>/dev/null) \
   || die "not inside a git repository"
 
-# ── Argument parsing ────────────────────────────────────────────────
 CMD="${1:-}"; shift || true
 IG_ROOT=""
 PACKAGE=""
 BRANCH=""
 PUSH=0
 FORCE=0
+
 while [ $# -gt 0 ]; do
   case "$1" in
-    --ig-root)   IG_ROOT="${2:-}"; shift 2 ;;
-    --package)   PACKAGE="${2:-}";   shift 2 ;;
-    --branch)    BRANCH="${2:-}";    shift 2 ;;
-    --push)      PUSH=1; shift ;;
-    --force)     FORCE=1; shift ;;
-    -h|--help)   CMD="help"; shift ;;
+    --ig-root) IG_ROOT="${2:-}"; shift 2 ;;
+    --package) PACKAGE="${2:-}"; shift 2 ;;
+    --branch)  BRANCH="${2:-}"; shift 2 ;;
+    --push)    PUSH=1; shift ;;
+    --force)   FORCE=1; shift ;;
+    -h|--help) CMD="help"; shift ;;
     *) die "unknown option: $1" ;;
   esac
 done
@@ -39,236 +62,281 @@ resolve_ig_root() {
   fi
   local d="$PWD"
   while [ "$d" != "/" ]; do
-    if [ -f "$d/sushi-config.yaml" ] || [ -f "$d/ig.ini" ]; then
+    if [ -f "$d/sushi-config.yaml" ]; then
       printf '%s\n' "$d"; return
     fi
     d=$(dirname "$d")
   done
-  printf '%s\n' "$PWD"
+  printf '%s\n' "$REPO_ROOT"
 }
 
 resolve_package() {
   local root="$1"
   [ -n "$PACKAGE" ] && { printf '%s\n' "$PACKAGE"; return; }
+  
   if [ -f "$root/sushi-config.yaml" ]; then
-    local pkg; pkg=$(grep -E '^id:' "$root/sushi-config.yaml" | awk '{print $2}' | tr -d '"'\''')
-    [ -n "$pkg" ] && { printf '%s\n' "$pkg"; return; }
+    local id
+    id=$(grep '^id:' "$root/sushi-config.yaml" | head -1 | sed 's/^id:[[:space:]]*//' | tr -d '"'\''')
+    [ -n "$id" ] && { printf '%s\n' "$id"; return; }
   fi
   return 1
 }
 
-count_resources() {
-  find "$1/fhir-ast" -maxdepth 1 -name '*.json' -not -name 'manifest.json' -not -name 'dependencies.json' -type f 2>/dev/null | wc -l | tr -d ' '
+cmd_list_names() {
+  git ls-remote --heads origin 'refs/heads/fhir-ast/*' | sed -n 's#^.*refs/heads/\(.*\)$#\1#p'
 }
 
-# ── Restore ─────────────────────────────────────────────────────────
+count_resources() {
+  local dir="$1"
+  find "$dir" -name '*.json' -not -name 'manifest.json' -not -name 'dependencies.json' -not -name 'fsh-index.json' -type f 2>/dev/null | head -20000 | wc -l | tr -d ' '
+}
+
+cmd_status() {
+  local root; root=$(resolve_ig_root)
+  local pkg; pkg=$(resolve_package "$root")
+  [ -z "$pkg" ] && pkg="(unknown)"
+  
+  local out="$root/output-ast"
+  printf 'ig cache status\n'
+  info "ig root: $root"
+  info "package: $pkg"
+  
+  if [ ! -d "$out" ]; then
+    printf '\n  cache ABSENT — run: %s restore\n' "$PROG"
+    return 1
+  fi
+  
+  local n; n=$(count_resources "$out")
+  if [ "$n" -eq 0 ]; then
+    warn "output-ast exists but has 0 resources — unusable."
+    return 3
+  fi
+  
+  printf '\n  cache PRESENT — %s resources on disk.\n' "$n"
+  
+  if ! bun run "$REPO_ROOT/fhir-harness/scripts/ig-ast.ts" validity "$out" --ig "$root" >/dev/null 2>&1; then
+    warn "AST is stale for current inputs. Run \`%s seed\` after rebuilding." "$PROG"
+    return 3
+  fi
+  return 0
+}
 
 cmd_restore() {
   local root; root=$(resolve_ig_root)
-  local pkg; pkg=$(resolve_package "$root") || die "could not resolve package id from sushi-config.yaml"
+  local pkg; pkg=$(resolve_package "$root") || die "could not resolve package id from $root/sushi-config.yaml"
   local br="${BRANCH:-fhir-ast/$pkg}"
-
-  local have; have=$(count_resources "$root")
-  if [ "$have" -gt 0 ]; then
-    if [ "$FORCE" -eq 0 ]; then
-      printf 'cache already present (%s resources) — nothing to do.\n' "$have"
-      return 0
-    fi
-    info "--force: overwriting existing cache"
+  
+  local out="$root/output-ast"
+  if [ -d "$out" ] && [ "$(count_resources "$out")" -gt 0 ]; then
+    local n; n=$(count_resources "$out")
+    printf 'cache already present (%s resources) — nothing to do.\n' "$n"
+    return 0
   fi
-
-  printf 'restoring %s -> %s\n' "$br" "$root/fhir-ast"
-
+  
+  printf 'restoring %s -> %s\n' "$br" "$out"
+  
   git update-ref -d "$PRIVATE_REF" 2>/dev/null || true
   if ! git fetch --depth=1 origin "+$br:$PRIVATE_REF" 2>/dev/null; then
     warn "cache branch '$br' not found on origin."
     info "A build is required. Afterwards run: $PROG seed"
     return 1
   fi
-
-  rm -rf "$root/fhir-ast"
-  mkdir -p "$root/fhir-ast"
-  mkdir -p "$root/input-cache/txcache"
-
-  git --work-tree="$root" checkout "$PRIVATE_REF" -- fhir-ast txcache 2>/dev/null || true
   
-  if [ -d "$root/txcache" ]; then
-    cp -r "$root/txcache/"* "$root/input-cache/txcache/" 2>/dev/null || true
-    rm -rf "$root/txcache"
+  mkdir -p "$out"
+  
+  local tmp; tmp=$(mktemp -d) || die "mktemp failed"
+  trap "rm -rf '$tmp'; git update-ref -d '$PRIVATE_REF' 2>/dev/null || true" RETURN
+  
+  git archive --format=tar "$PRIVATE_REF" | tar -xC "$tmp" 2>/dev/null || {
+    warn "could not extract AST from '$br'."
+    return 3
+  }
+  
+  # The AST files sit at the root of the branch, along with txcache/
+  find "$tmp" -maxdepth 1 -name '*.json' -exec mv {} "$out/" \;
+  
+  if [ -d "$tmp/txcache" ]; then
+    info "restoring txcache -> $root/input-cache/txcache"
+    mkdir -p "$root/input-cache"
+    rm -rf "$root/input-cache/txcache"
+    mv "$tmp/txcache" "$root/input-cache/txcache"
   fi
-
-  local n; n=$(count_resources "$root")
+  
+  local n; n=$(count_resources "$out")
   if [ "$n" -eq 0 ]; then
-    warn "extract succeeded but produced NO resources — cache is unusable."
+    warn "extract produced NO resources — cache is unusable."
     return 3
   fi
-
+  
   printf '\nrestored %s resources from %s.\n' "$n" "$br"
   return 0
 }
-
-# ── Seed ────────────────────────────────────────────────────────────
 
 seed_subject() {
   printf 'AST %s | %s resources | %s edges | Publisher %s | src %s' "$1" "$2" "$3" "$4" "$5"
 }
 
 parse_counts() {
-  printf '%s' "$1" | sed -n 's/.*| \([0-9]*\) resources | \([0-9]*\) edges |.*/\1 \2/p'
-}
-
-branch_counts() {
-  local ref="refs/ig-cache-prevcheck"
-  git update-ref -d "$ref" 2>/dev/null || true
-  timeout 60 git fetch --depth=1 --filter=blob:none -q origin "+$1:$ref" 2>/dev/null || return 1
-  local msg; msg=$(git log -1 --format=%s "$ref" 2>/dev/null)
-  git update-ref -d "$ref" 2>/dev/null || true
-  parse_counts "$msg"
+  local msg="$1"
+  local resources edges
+  resources=$(printf '%s' "$msg" | sed -n 's/.*| \([0-9]*\) resources .*/\1/p')
+  edges=$(printf '%s' "$msg" | sed -n 's/.*| \([0-9]*\) edges .*/\1/p')
+  if [ -n "$resources" ] && [ -n "$edges" ]; then
+    printf '%s %s\n' "$resources" "$edges"
+  fi
 }
 
 would_shrink() {
-  local prev; prev=$(branch_counts "$1") || return 1
+  local br="$1" cand_res="$2" cand_edges="$3"
+  local ref="refs/ig-cache-prevcheck"
+  git update-ref -d "$ref" 2>/dev/null || true
+  timeout 60 git fetch --depth=1 --filter=blob:none -q origin "+$br:$ref" 2>/dev/null || return 1
+  local msg; msg=$(git log -1 --format=%s "$ref" 2>/dev/null)
+  git update-ref -d "$ref" 2>/dev/null || true
+  
+  local prev; prev=$(parse_counts "$msg")
   [ -z "$prev" ] && return 1
-  local pr pe; pr=${prev%% *}; pe=${prev##* }
-  info "incumbent $1: $pr resources, $pe edges"
-  [ "$2" -lt $(( pr * 90 / 100 )) ] || [ "$3" -lt $(( pe * 90 / 100 )) ]
+  
+  local po pw; po=${prev%% *}; pw=${prev##* }
+  info "incumbent $br: $po resources, $pw edges"
+  
+  [ "$cand_res" -lt $(( po * 90 / 100 )) ] || [ "$cand_edges" -lt $(( pw * 90 / 100 )) ]
 }
 
 cmd_seed() {
   local root; root=$(resolve_ig_root)
-  local pkg; pkg=$(resolve_package "$root") || die "no package id"
+  local pkg; pkg=$(resolve_package "$root") || die "pass --package NAME"
   local br="${BRANCH:-fhir-ast/$pkg}"
-
-  local n; n=$(count_resources "$root")
-  if [ "$n" -eq 0 ]; then
-    info "running AstExportCli to build AST..."
-    if command -v bun >/dev/null; then
-      bun run fhir-harness/scripts/ig-ast.ts export --ig-root "$root" || die "AST export failed"
-      n=$(count_resources "$root")
-    else
-      die "bun not found, cannot build AST automatically"
-    fi
-    [ "$n" -eq 0 ] && die "no AST resources found in $root/fhir-ast after export"
+  
+  local out="$root/output-ast"
+  
+  info "Running AstExportCli..."
+  local export_dir="$REPO_ROOT/fhir-ig-publisher/ast-export"
+  [ ! -d "$export_dir" ] && export_dir="$PWD/fhir-ig-publisher/ast-export"
+  if [ -d "$export_dir" ] && [ -f "$export_dir/target/classes/org/hl7/fhir/igtools/ast/AstExportCli.class" ]; then
+    (cd "$export_dir" && java -cp "target/classes:$(cat cp.txt 2>/dev/null)" org.hl7.fhir.igtools.ast.AstExportCli -ig "$root" -ast-out "$out") || die "AstExportCli failed"
+  else
+    warn "AstExportCli not built or not found, assuming AST is already in $out"
   fi
-
+  
+  local n; n=$(count_resources "$out")
+  [ "$n" -eq 0 ] && die "no resources under $out — build before seeding."
+  
   local edges=0
-  [ -f "$root/fhir-ast/manifest.json" ] && edges=$(grep -o '"edges": *[0-9]*' "$root/fhir-ast/manifest.json" | grep -o '[0-9]*' | head -1 || echo 0)
+  if [ -f "$out/dependencies.json" ]; then
+    edges=$(grep -o '"target"' "$out/dependencies.json" 2>/dev/null | wc -l | tr -d ' ')
+  fi
   
-  local pub_ver="unknown"
-  [ -f "$root/fhir-ast/manifest.json" ] && pub_ver=$(grep -o '"publisherVersion": *"[^"]*"' "$root/fhir-ast/manifest.json" | cut -d'"' -f4 | head -1 || echo "unknown")
+  local pub_version="unknown"
+  local sha; sha=$(git rev-parse --short HEAD 2>/dev/null || echo "unknown")
   
-  local short_sha; short_sha=$(git rev-parse --short HEAD 2>/dev/null || echo "unknown")
-
   if [ "$PUSH" -eq 1 ] && would_shrink "$br" "$n" "$edges"; then
     if [ "$FORCE" -eq 0 ]; then
-      die "refusing to publish '$br': candidate smaller than incumbent."
+      die "refusing to publish '$br': candidate smaller than incumbent. Use --force."
     fi
-    warn "--force: publishing smaller cache"
+    warn "--force: publishing a smaller cache than the incumbent"
   fi
-
-  local subj; subj=$(seed_subject "$pkg" "$n" "$edges" "$pub_ver" "$short_sha")
-
+  
+  local subj; subj=$(seed_subject "$pkg" "$n" "$edges" "$pub_version" "$sha")
+  
   local tmp; tmp=$(mktemp -d) || die "mktemp failed"
-  # shellcheck disable=SC2064
   trap "rm -rf '$tmp'" RETURN
-
-  cp -r "$root/fhir-ast" "$tmp/fhir-ast"
+  
+  cp -R "$out/"*.json "$tmp/" 2>/dev/null || true
   if [ -d "$root/input-cache/txcache" ]; then
-    cp -r "$root/input-cache/txcache" "$tmp/txcache"
+    cp -R "$root/input-cache/txcache" "$tmp/"
   fi
-
-  local tree; tree=$( (
-    cd "$tmp" || exit 1
-    find . -type f | sed 's#^\./##' | while read -r f; do
-      sha=$(git hash-object -w "$f")
-      printf '100644 blob %s\t%s\n' "$sha" "$f"
-    done | git mktree
-  ) ) || die "mktree failed"
-
-  local commit; commit=$(git -c user.name=folio-ig-cache-bot -c user.email=folio-ig-cache-bot@users.noreply.github.com commit-tree "$tree" -m "$subj")
-
+  
   if [ "$PUSH" -eq 1 ]; then
-    printf 'pushing %s\n' "$br"
+    info "committing to $br directly..."
+    export GIT_DIR="$REPO_ROOT/.git"
+    export GIT_INDEX_FILE="$tmp/index"
+    export GIT_WORK_TREE="$tmp"
+    git add .
+    local tree
+    tree=$(git write-tree) || die "git write-tree failed"
+    local commit
+    commit=$(git commit-tree "$tree" -m "$subj") || die "git commit-tree failed"
     git push -f origin "$commit:refs/heads/$br" >/dev/null 2>&1 || die "push failed"
+    printf '\npushed %s (%s resources, %s edges)\n' "$br" "$n" "$edges"
   else
-    printf 'Built tree %s. Use --push to publish.\n' "$commit"
+    printf '\nFiles written to %s\n' "$tmp"
+    printf 'Push them to the orphan branch manually or pass --push.\n'
   fi
 }
 
 cmd_contribute() {
-  local root; root=$(resolve_ig_root)
   PUSH=1
-  cmd_seed
+  cmd_seed "$@"
 }
 
 cmd_verify() {
   local root; root=$(resolve_ig_root)
-  if ! command -v bun >/dev/null 2>&1; then
-    die "bun not found on PATH"
+  local out="$root/output-ast"
+  if [ ! -d "$out" ]; then
+    die "no output-ast found in $root"
   fi
-  bun run fhir-harness/scripts/ig-ast.ts validity --ig-root "$root"
-}
-
-cmd_status() {
-  local root; root=$(resolve_ig_root)
-  local pkg; pkg=$(resolve_package "$root")
-  local br="${BRANCH:-fhir-ast/$pkg}"
-  
-  local n; n=$(count_resources "$root")
-  if [ "$n" -eq 0 ]; then
-    printf 'cache ABSENT\n'
-    return 1
-  fi
-  
-  printf 'cache PRESENT — %s resources\n' "$n"
-  
-  if ! cmd_verify >/dev/null 2>&1; then
-    warn "AST is present but invalid/stale according to validity check"
-    return 3
-  fi
-  return 0
+  bun run "$REPO_ROOT/fhir-harness/scripts/ig-ast.ts" validity "$out" --ig "$root"
 }
 
 cmd_doctor() {
   local root; root=$(resolve_ig_root)
-  printf 'IG cache doctor\n'
-  info "IG root: $root"
-  info "java: $(command -v java >/dev/null && java -version 2>&1 | head -1 || echo 'MISSING')"
-  info "sushi: $(command -v sushi >/dev/null && sushi -v || echo 'MISSING')"
-  info "publisher: $([ -f "$HOME/.fhir/publishers/publisher.jar" ] && echo 'PRESENT' || echo 'MISSING')"
+  printf 'ig cache doctor\n'
   
-  if curl -Ism 5 https://packages.fhir.org | grep -q 'HTTP/'; then
-    info "packages.fhir.org: REACHABLE"
+  if command -v java >/dev/null 2>&1; then
+    info "java: $(java -version 2>&1 | head -1)"
   else
-    warn "packages.fhir.org: UNREACHABLE"
+    warn "java not found"
   fi
   
-  if curl -Ism 5 https://tx.fhir.org | grep -q 'HTTP/'; then
-    info "tx.fhir.org: REACHABLE"
+  if command -v sushi >/dev/null 2>&1; then
+    info "sushi: $(sushi -v 2>&1 | head -1)"
   else
-    warn "tx.fhir.org: UNREACHABLE"
+    warn "sushi not found"
   fi
-}
-
-cmd_list_names() {
-  timeout 30 git ls-remote --heads origin 'refs/heads/fhir-ast/*' 2>/dev/null \
-    | sed 's#.*refs/heads/##' | sort
+  
+  local jar=$(find ~/.fhir -name 'org.hl7.fhir.publisher.jar' 2>/dev/null | head -1)
+  if [ -n "$jar" ]; then
+    info "publisher: $jar"
+  else
+    warn "publisher: org.hl7.fhir.publisher.jar not found in ~/.fhir"
+  fi
+  
+  if command -v mvn >/dev/null 2>&1; then
+    info "maven: $(mvn -v 2>&1 | head -1 | cut -d' ' -f1-3)"
+  else
+    warn "maven not found"
+  fi
+  
+  if curl -sI https://packages.fhir.org | grep -q '200 OK'; then
+    info "network: packages.fhir.org reachable"
+  else
+    warn "network: packages.fhir.org UNREACHABLE"
+  fi
+  
+  if curl -sI https://tx.fhir.org | grep -q '200 OK'; then
+    info "network: tx.fhir.org reachable"
+  else
+    warn "network: tx.fhir.org UNREACHABLE"
+  fi
 }
 
 cmd_list() {
-  printf 'cache branches on origin:\n'
-  local out; out=$(cmd_list_names)
-  [ -z "$out" ] && { info "(none)"; return 1; }
-  printf '%s\n' "$out" | sed 's/^/  /'
+  cmd_list_names
 }
 
 case "$CMD" in
-  status)     cmd_status ;;
-  restore)    cmd_restore ;;
-  seed)       cmd_seed ;;
-  contribute) cmd_contribute ;;
-  verify)     cmd_verify ;;
-  doctor)     cmd_doctor ;;
-  list)       cmd_list ;;
-  *)          die "unknown command: $CMD" ;;
+  status)     cmd_status "$@" ;;
+  restore)    cmd_restore "$@" ;;
+  seed)       cmd_seed "$@" ;;
+  contribute) cmd_contribute "$@" ;;
+  verify)     cmd_verify "$@" ;;
+  doctor)     cmd_doctor "$@" ;;
+  list)       cmd_list "$@" ;;
+  help)
+    grep '^#' "$0" | cut -c 3-
+    ;;
+  *)
+    die "unknown command: $CMD"
+    ;;
 esac
