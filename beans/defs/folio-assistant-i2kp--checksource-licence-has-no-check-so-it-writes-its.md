@@ -1,11 +1,11 @@
 ---
 # folio-assistant-i2kp
 title: check:source-licence has no --check, so it writes its own sidecar and no gate can fail on its content
-status: in-progress
+status: completed
 type: task
 priority: normal
 created_at: 2026-10-01T07:11:24Z
-updated_at: 2026-10-01T07:12:01Z
+updated_at: 2026-10-01T16:07:52Z
 parent: folio-assistant-1xhc
 ---
 
@@ -92,21 +92,41 @@ FRESHNESS, and conflating them would hide either.
 
 ## Done when
 
-- [ ] `check-source-licence.ts` takes `--check`: compares via `qaResultState`,
+- [x] `check-source-licence.ts` takes `--check`: compares via `qaResultState`,
       writes nothing, decides all four states as tabled above
-- [ ] `package.json` gains `check:source-licence:check`
-- [ ] `code-quality-gates.yml`'s gate list calls the `:check` twin; the writing
+- [x] `package.json` gains `check:source-licence:check`
+- [x] `code-quality-gates.yml`'s gate list calls the `:check` twin; the writing
       form stays as the author's command, the same split every other generated
       artefact here uses
-- [ ] `WRITER_OVERRIDES` gains the pair, so `regen` repairs it after a merge
+- [x] ~~`WRITER_OVERRIDES` gains the pair~~ — not needed: the twin is spelled `<writer>:check`, so `repairableGates` pairs it by the ordinary convention (measured: over the fast set it returns `{check: "check:source-licence:check", writer: "check:source-licence"}`). An override for a pair the convention already forms would be a second answer free to drift. Original text:, so `regen` repairs it after a merge
       instead of leaving it to the mutation guard
-- [ ] defect 2 classified (`uju6` spelling vs `5qq3` scope) and fixed, or split
+- [x] defect 2 classified — see §"Defect 2, re-measured" below. Original text: (`uju6` spelling vs `5qq3` scope) and fixed, or split
       into its own bean if it is `5qq3`'s
-- [ ] tests, both directions: a current sidecar passes `--check` and writes
+- [x] tests, both directions (`cat-harness/scripts/tests/check-source-licence.test.ts`): a current sidecar passes `--check` and writes
       NOTHING (assert the bytes are untouched — that is the whole point); a
       hand-staled one fails and is NOT repaired; an absent one fails rather
       than passing vacuously; an unreadable one exits 2; and `--check` with a
       malformed entry still fails on content
+
+## Defect 2, re-measured (2026-10-01, PR #1753 pickup)
+
+**The premise does not hold: `kg:audit:all:check` IS asked by `regen`.**
+`regen` prints only `regenerated`, `unrepaired` and `no-writer` outcomes; a
+`current` pair is counted in the summary line and never named. So "appears 0
+times in regen's output" is exactly what a pair that was asked and found
+current looks like, and is not evidence that it was skipped.
+
+At `e1599aed80a` the step is `run: bun run kg:audit:all:check` in the `gates`
+job (the fast set), the script ends in `:check`, and `kg:audit:all` exists, so
+`repairableGates` (the same `endsWith(":check")` test at that commit) forms the
+pair. On the merged tree `repairableGates(loadGates(root), scripts)` returns it
+explicitly.
+
+So it is neither `uju6`'s spelling shape nor `5qq3`'s scope shape. What remains
+is why the check passed locally and failed in CI on the same commit: an
+environment difference (which instances a local checkout holds, or untracked
+residue), not a `regen` defect. Not pursued here; if it recurs it deserves its
+own bean with a CI-side measurement.
 
 ## Not established
 
