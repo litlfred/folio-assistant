@@ -262,7 +262,7 @@ describe("the report over this repository", () => {
 });
 
 describe("the report is a fixpoint", () => {
-  test("running it once is enough to satisfy the gate", { timeout: 60_000 }, () => {
+  test("running it once is enough to satisfy the gate", () => {
     // Its own sidecar lives in the `qa-results` graph, so the `qa` row counts
     // it, and writing it changed the next run's answer — for ever. The first
     // version could only be satisfied by running the writer TWICE, which is not
@@ -282,7 +282,7 @@ describe("the report is a fixpoint", () => {
     // The exclusion is one file, not the family: every OTHER `.qa-results.json`
     // is still counted, or the row would stop measuring the thing it names.
     expect(qa!.sidecars).toBeGreaterThan(1);
-  });
+  }, 60_000);
 
   test("census excludes only what it is told to", () => {
     const dir = mkdtempSync(join(tmpdir(), "audit-coverage-skip-"));

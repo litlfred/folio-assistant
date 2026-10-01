@@ -42,6 +42,19 @@
  * as `undetermined`, which looks like a cautious gate rather than a
  * non-functioning one.
  *
+ * ## One more line, about a QA sidecar, and it never decides the exit
+ *
+ * The exporter also computes `kg-export.qa-results.json`; this gate compares
+ * it with a baseline (bean `ymsu`, then `id4s`) — the working copy, or with
+ * `--against <ref>` the `qa-reports` branch through qa-store. `current` prints
+ * nothing; `stale` asks for a regeneration; `absent`, `unreadable` and
+ * `unknown` print UNKNOWN, because a branch with no baseline is not a branch
+ * whose baseline agrees. **Exit on every one of them: 0**, with or without
+ * `--strict` — the sidecar is not this gate's subject, and a missing baseline
+ * is not this change's defect (proposal §2.3).
+ *
+ *   bun run check:version-bump [--strict] [--json] [--against main|<sha>|pr/<n>]
+ *
  * @module scripts/check-version-bump
  * @covers cat-harness
  */
@@ -52,7 +65,7 @@ import { tmpdir } from "node:os";
 import { join, relative, resolve } from "node:path";
 
 import { instanceRootFor, instanceRootsIn, readDeclaration, repoRootFor } from "../schemas/cat-harness.js";
-import { qaResultPath, qaResultState, readQaResult, type QaResultState } from "./qa-results.js";
+import { againstRef, qaResultPath, qaResultState, readQaResult, type QaResultState } from "./qa-results.js";
 import {
   type Bump,
   type SurfaceSubject,
@@ -91,8 +104,14 @@ export interface BumpReport {
    * any instance's version — it is a fact about an artefact this gate USED to
    * repair silently (bean `ymsu`). `undefined` is could-not-determine: the
    * exporter wrote no sidecar to compare, or it never ran.
+   *
+   * Compared against the working copy, or with `against` the `qa-reports`
+   * branch (bean `id4s`). Every state but `current` is reported as UNKNOWN —
+   * "no baseline" is not "unchanged" — and none of them decides the exit.
    */
   qaSidecar?: QaResultState;
+  /** The `--against` ref the baseline was read from, when one was given. */
+  against?: string;
 }
 
 function git(repoRoot: string, ...args: string[]): { ok: boolean; out: string } {
@@ -204,6 +223,7 @@ export function surfaceAtRef(repoRoot: string, ref: string): SurfaceSubject[] | 
  */
 export function surfaceAtHead(
   repoRoot: string,
+  opts: { against?: string } = {},
 ): { subjects: SurfaceSubject[]; qa: QaResultState | undefined } | undefined {
   const tmp = mkdtempSync(join(tmpdir(), "vbump-head-"));
   const out = join(tmp, "surface.jsonld");
@@ -231,11 +251,14 @@ export function surfaceAtHead(
   // agreement.
   const instance = instanceRootFor(join(repoRoot, script));
   const fresh = readQaResult(qaResultPath(tmp, "kg-export"));
-  const qa = fresh === undefined ? undefined : qaResultState(qaResultPath(instance, "kg-export"), fresh);
+  // Bean `id4s`: the baseline is read through qa-store — the working copy, or
+  // the `qa-reports` branch with `against` — in its four states, so a branch
+  // with no baseline comes back `absent`/`unknown` and never `current`.
+  const qa = fresh === undefined ? undefined : qaResultState(qaResultPath(instance, "kg-export"), fresh, opts);
   return { subjects: surfaceOf(JSON.parse(readFileSync(out, "utf-8"))), qa };
 }
 
-export function auditVersionBumps(repoRoot: string): BumpReport {
+export function auditVersionBumps(repoRoot: string, opts: { against?: string } = {}): BumpReport {
   const rows: BumpRow[] = [];
   const publishable: { root: string; name: string; version: string }[] = [];
   const roots = instanceRootsIn(repoRoot);
@@ -269,7 +292,7 @@ export function auditVersionBumps(repoRoot: string): BumpReport {
   // Exported ONCE and reused: the surface is a property of the working tree,
   // not of the instance being scored, and re-exporting per instance would
   // multiply the slowest step by the number of publishable instances.
-  const headExport = surfaceAtHead(repoRoot);
+  const headExport = surfaceAtHead(repoRoot, opts);
   const head = headExport?.subjects;
 
   for (const { root, name, version } of publishable) {
@@ -338,7 +361,7 @@ export function auditVersionBumps(repoRoot: string): BumpReport {
     rows.push(clearsFloor(version, floor) ? base : { ...base, state: "under" });
   }
 
-  return { rows, qaSidecar: headExport?.qa };
+  return { rows, qaSidecar: headExport?.qa, ...(opts.against ? { against: opts.against } : {}) };
 }
 
 export function formatReport(report: BumpReport): string {
@@ -389,11 +412,20 @@ export function formatReport(report: BumpReport): string {
   // tidy ending: `kg:export` is a writer with no `:check` anywhere in the set.
   // Recorded on the bean; inventing a gate for it here would be a second
   // subject smuggled into this change.
+  //
+  // Bean `id4s`: the baseline may be absent — QA results leave `main` for the
+  // `qa-reports` branch (owner rulings D1/D4) — and then this line says
+  // UNKNOWN, never nothing: silence would read as `current`. EXIT ON IT: 0,
+  // always, with or without `--strict`, for the reason above (it is not this
+  // gate's subject) and proposal §2.3's (a missing baseline is not this
+  // change's defect).
   if (report.qaSidecar !== undefined && report.qaSidecar !== "current") {
-    out.push(
-      `  ? the committed \`kg-export.qa-results.json\` is ${report.qaSidecar.toUpperCase()} against this run. ` +
-        "This gate no longer rewrites it — run `bun run kg:export` and commit the result.",
-    );
+    const where = report.against ? `the qa-reports baseline (${report.against})` : "the committed working copy";
+    const why =
+      report.qaSidecar === "stale"
+        ? `is STALE against this run — run \`bun run kg:export\` and commit the result`
+        : `is UNKNOWN (${report.qaSidecar}) — no baseline to compare with, which is NOT "unchanged"`;
+    out.push(`  ? \`kg-export.qa-results.json\` in ${where} ${why}. Advisory: never decides this gate's exit.`);
   }
   out.push(
     "A rename reads as MAJOR (the old id is removed, a new one added). That is the conservative direction, " +
@@ -404,13 +436,21 @@ export function formatReport(report: BumpReport): string {
 
 if (import.meta.main) {
   const repoRoot = resolve(repoRootFor(instanceRootFor(import.meta.dir)));
-  const report = auditVersionBumps(repoRoot);
+  let against: string | undefined;
+  try {
+    against = againstRef(process.argv.slice(2));
+  } catch (e) {
+    console.error(`check:version-bump: ${(e as Error).message}`);
+    process.exit(2);
+  }
+  const report = auditVersionBumps(repoRoot, { against });
   console.log(process.argv.includes("--json") ? JSON.stringify(report, null, 2) : formatReport(report));
 
   // ADVISORY by default, matching its two siblings. `--strict` fails on an
   // under-bump AND on an undetermined row — the second deliberately, because a
   // comparison that could not be made is the state a strict gate most needs to
-  // stop, not the one it may wave through.
+  // stop, not the one it may wave through. The kg-export QA baseline line is
+  // NOT part of either: see `formatReport` — it never decides the exit.
   const bad = report.rows.filter((r) => r.state === "under" || r.state === "undetermined");
   if (process.argv.includes("--strict") && bad.length > 0) process.exit(1);
   process.exit(0);
