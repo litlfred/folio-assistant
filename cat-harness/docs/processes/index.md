@@ -120,6 +120,7 @@ The reverse of `<bootstrap.processes:skill ref>`, which is the join nothing else
 | [`adopt-methodology-from-source`](../reference/skill-instructions/adopt-methodology-from-source.html) | [`methodology-from-source.bpmn`](methodology-from-source.html) |
 | [`bean-blocking`](../reference/skill-instructions/bean-blocking.html) | [`kg-to-portal.bpmn`](kg-to-portal.html) |
 | [`bean-coordination`](../reference/skill-instructions/bean-coordination.html) | [`bean-lifecycle.bpmn`](bean-lifecycle.html), [`code-change-review.bpmn`](code-change-review.html) |
+| [`before-after-preview`](../reference/skill-instructions/before-after-preview.html) | [`code-change-review.bpmn`](code-change-review.html), [`content-change-review.bpmn`](content-change-review.html), [`editing-hci-validation.bpmn`](editing-hci-validation.html) |
 | [`board-diagram-interchange`](../reference/skill-instructions/board-diagram-interchange.html) | [`board-place-note.bpmn`](board-place-note.html), [`board-relocate.bpmn`](board-relocate.html) |
 | [`board-windows`](../reference/skill-instructions/board-windows.html) | [`board-open-close.bpmn`](board-open-close.html), [`board-relocate.bpmn`](board-relocate.html) |
 | `bootstrap-kg-navigation` | [`initialize-harness.bpmn`](initialize-harness.html) |

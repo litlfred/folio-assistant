@@ -177,5 +177,13 @@
   "_needs_comment": "The layer this instance sits on. Owner, 2026-09-20: \"So bootsteap, cat harness, fa-core, f-a, from bottom to top.\" Declared rather than hardcoded in the navbar, so the ordering is a fact of the repository and not of whichever consumer needed it first.",
   "needs": [
     "cat-harness"
+  ],
+  "_contentAdapters_comment": "Declared HERE, by the instance that ships the adapter, so cat-harness's composition root (`src/builtin-adapters.ts`) finds it by reading declarations instead of holding a `../folio-assistant-core/adapters/document/index.ts` path into the layer above it. That path was the last upward import out of cat-harness, and a variable one no static gate could see (bean p11x, `check:import-direction`).",
+  "contentAdapters": [
+    {
+      "contentType": "document",
+      "module": "adapters/document/index.ts",
+      "className": "DocumentContentAdapter"
+    }
   ]
 }

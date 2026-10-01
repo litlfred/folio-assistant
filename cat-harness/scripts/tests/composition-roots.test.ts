@@ -20,6 +20,9 @@
  * @module scripts/tests/composition-roots.test
  */
 import { describe, test, expect } from "bun:test";
+import { mkdirSync, mkdtempSync, rmSync, writeFileSync } from "node:fs";
+import { tmpdir } from "node:os";
+import { join } from "node:path";
 
 import { TOOL_GROUPS, registerMcpToolGroups } from "../../adapters/mcp-server/tool-groups.ts";
 import {
@@ -30,7 +33,9 @@ import {
 /** The MCP server's own root, for the ad-hoc declarations below. */
 const MCP_ROOT = new URL("../..", import.meta.url).pathname;
 import {
+  AdapterDeclarationCollisionError,
   BUILTIN_ADAPTERS,
+  discoverBuiltinAdapters,
   resolveBuiltinAdapter,
 } from "../../src/builtin-adapters.ts";
 import { SERVER_ROUTES } from "../../src/server.ts";
@@ -110,13 +115,58 @@ describe("built-in content adapters", () => {
     }
   });
 
-  test("`paper` leads the list, because it is the superset", () => {
-    // Falling back TO paper loses nothing — it registers the document tools
-    // too. Falling back FROM it loses Lean and TeX, which is why that
-    // direction has to be announced.
-    expect(BUILTIN_ADAPTERS[0].contentType).toBe("paper");
-    expect(BUILTIN_ADAPTERS.find((a) => a.contentType === "paper")?.layer).toBe("sci");
-    expect(BUILTIN_ADAPTERS.find((a) => a.contentType === "document")?.layer).toBe("core");
+  test("a specialisation leads its base, because it is the superset", () => {
+    // Falling back TO a specialisation loses nothing — it registers its base's
+    // tools too. Falling back FROM it loses its own, which is why that
+    // direction has to be announced. Which instances ship `paper` and
+    // `document` is asserted by THOSE instances' tests, not here: this one
+    // must hold in a checkout of the harness alone.
+    for (const d of BUILTIN_ADAPTERS) {
+      if (d.extends === undefined) continue;
+      const base = BUILTIN_ADAPTERS.findIndex((a) => a.contentType === d.extends);
+      if (base >= 0) expect(BUILTIN_ADAPTERS.indexOf(d)).toBeLessThan(base);
+    }
+  });
+
+  test("discovery reads declarations, orders by `extends`, and refuses a collision", () => {
+    const tmp = mkdtempSync(join(tmpdir(), "builtin-adapters-"));
+    try {
+      const harness = join(tmp, "harness");
+      mkdirSync(harness);
+      writeFileSync(join(harness, "harness.json"), JSON.stringify({ name: "harness" }));
+      const decl = (name: string, adapters: unknown) => {
+        mkdirSync(join(tmp, name));
+        writeFileSync(join(tmp, name, `${name}.json`), JSON.stringify({ name, contentAdapters: adapters }));
+      };
+      decl("base", [{ contentType: "b", module: "a/b.ts", className: "B" }]);
+      decl("spec", [{ contentType: "s", module: "a/s.ts", className: "S", extends: "b" }]);
+      const { adapters, problems } = discoverBuiltinAdapters(tmp, harness);
+      expect(problems).toEqual([]);
+      // `base` sorts first alphabetically; `spec` leads anyway, by `extends`.
+      expect(adapters.map((a) => a.contentType)).toEqual(["s", "b"]);
+      expect(adapters[0]).toMatchObject({ instance: "spec", module: "../spec/a/s.ts" });
+
+      decl("dupe", [{ contentType: "b", module: "x.ts", className: "X" }]);
+      expect(() => discoverBuiltinAdapters(tmp, harness)).toThrow(AdapterDeclarationCollisionError);
+    } finally {
+      rmSync(tmp, { recursive: true, force: true });
+    }
+  });
+
+  test("a malformed or escaping declaration is RECORDED, not read as 'declares none'", () => {
+    const tmp = mkdtempSync(join(tmpdir(), "builtin-adapters-"));
+    try {
+      mkdirSync(join(tmp, "up"));
+      writeFileSync(
+        join(tmp, "up", "up.json"),
+        JSON.stringify({ name: "up", contentAdapters: [{ contentType: "x", module: "../elsewhere/x.ts", className: "X" }] }),
+      );
+      const { adapters, problems } = discoverBuiltinAdapters(tmp, join(tmp, "up"));
+      expect(adapters).toEqual([]);
+      expect(problems.join("\n")).toContain("up");
+    } finally {
+      rmSync(tmp, { recursive: true, force: true });
+    }
   });
 
   test("an unknown contentType falls back AND says so", async () => {

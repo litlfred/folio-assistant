@@ -5,7 +5,7 @@
     "id": "Process_ContentChangeReview",
     "path": "processes/content-change-review.bpmn"
   },
-  "source_hash": "sha256:38e3cf8d39562349c7dfd7340a189903da4e25c9a1eaf02ec6e6f3de54f29bb8",
+  "source_hash": "sha256:2e1497d1fd769029d9a52383d2c626500737d57751df63115098e816f5ae143a",
   "criteria": {
     "raci-role-resolves": {
       "result": "n/a",
@@ -47,8 +47,16 @@
           "detail": "names skill \"content-author\", which no Tool declares `satisfies` for — the step's mechanism is still prose."
         },
         {
+          "where": "Task_CommitPush",
+          "detail": "names skill \"before-after-preview\", which no Tool declares `satisfies` for — the step's mechanism is still prose."
+        },
+        {
           "where": "Task_Iterate",
           "detail": "names skill \"content-author\", which no Tool declares `satisfies` for — the step's mechanism is still prose."
+        },
+        {
+          "where": "Task_Iterate",
+          "detail": "names skill \"before-after-preview\", which no Tool declares `satisfies` for — the step's mechanism is still prose."
         },
         {
           "where": "Call_ReviewSlices",

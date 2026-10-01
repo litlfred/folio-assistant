@@ -210,6 +210,10 @@ export const RULES: Rule[] = [
       // — the module this tool already shares — so both axes are classified
       // by the same test and answer to the same declaration (bean `zhg2`).
       "scripts/check-reference-direction.ts",
+      // The IMPORT half of that arrow, over every declared instance (bean
+      // `p11x`). Harness for the same reason: it reads declarations and module
+      // specifiers, consumes the same `layer-direction.ts`, and no folio content.
+      "scripts/check-import-direction.ts",
       "scripts/check-instance-config.ts",    // the config-naming gate
       // HARNESS, by the same test as `check-ci-health` above: its subject is
       // this repository's own Jekyll templates and the baseurl its site is
@@ -892,6 +896,11 @@ export const RULES: Rule[] = [
       // Recorded here rather than acted on: a partition-tuning pass is the
       // wrong place to redesign an adapter contract.
       "src/types.ts",
+      // HARNESS. The content model and the content half of an adapter, split
+      // out of `src/types.ts` (bean `w2gr`, step 1, owner ruling 2026-10-01):
+      // the server half moves to `cat-harness-tools`, and core must not depend
+      // on that, so the vocabulary both sides use stays here.
+      "src/content-types.ts",
       // HARNESS, both re-triaged 2026-09-19 while draining the last edges.
       //
       // `schemas/contributions.ts` is what a DEPENDENCY may add to the root

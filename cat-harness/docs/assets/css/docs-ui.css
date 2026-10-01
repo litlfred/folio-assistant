@@ -7281,11 +7281,25 @@ a.fa-harness-tab__body:focus-visible {
  *   data-open="true"   the magnifier, then the field across the full width of
  *                      the panel, and results the same full width beneath.
  *
- * IN FLOW, NOT FIXED. The Folio handle and PR #1709's `.fa-glass-band` (z 89)
- * are `position: fixed` at the top CENTRE of the window. This control is in
- * the display panel's own column, below the header band the handle sits in,
- * at the far end from it — so the two never share a box at rest, and while
- * the page scrolls this one passes under the strip like any other content.
+ * STICKY, BELOW THE HANDLE'S ROW — issue #1732. The owner decided
+ * (2026-10-01) the magnifier must ALWAYS be on screen. #1720 had it in plain
+ * flow, so it scrolled away: measured on a local build it could be pressed at
+ * 1 of 14 sampled positions on a long page at 1280px and 2 of 25 at 390px.
+ *
+ * Sticky rather than fixed, because sticky keeps everything #1720 measured
+ * at rest — same place, same zero vertical cost, same full-width row — and
+ * only changes what happens once the page scrolls. It sticks at the staging
+ * banner's offset plus 2.5rem: the Folio handle and PR #1709's
+ * `.fa-glass-band` (z 89) are `position: fixed` at that offset and at most
+ * 2rem tall (28px at 1280, 25px at 390), so 2.5rem clears both with a gap.
+ * It is at the far inline end from the handle, which is centred, and z 88
+ * keeps it under the band and the glass layer (90) should either ever reach
+ * it. The phone header's menu button is in the side bar, which scrolls away
+ * on a phone, and sits ~300px above the panel at rest.
+ *
+ * Text scrolls UNDER it, so the magnifier and the open row paint the page's
+ * own background — per scheme, from tokens here, never from script
+ * (`inline-colour.test.ts`).
  */
 /* ## The page's ink; only opaque surfaces name their own
  *
@@ -7302,16 +7316,30 @@ a.fa-harness-tab__body:focus-visible {
  * per-scheme pair below. */
 .fa-search-home {
   --fa-search-border: #737d8c;
+  /* The page's own background, for the two surfaces that now sit over text.
+     The same pair `head_custom.html` gives `html`. */
+  --fa-search-page-bg: #27262b;
 
-  position: relative;
-  color: inherit;
+  position: sticky;
+  top: calc(var(--fa-staging-offset, 0px) + 2.5rem);
+  z-index: 88;
+  /* NOW OPAQUE, SO IT NAMES ITS INK — the rule at the top of this block,
+     applied the other way round. Inheriting was right while the search
+     painted nothing; once it paints the scheme's background it must name the
+     scheme's foreground, or a page whose own text does not follow the scheme
+     gets #000 on #27262b (1.39:1, caught by `a11y.e2e.ts`).
+     #e6e9ee on #27262b 12.34:1; #1f2933 on #ffffff 14.76:1. */
+  color: #e6e9ee;
+}
+:root[data-fa-scheme="light"] .fa-search-home {
+  --fa-search-page-bg: #ffffff;
+  color: #1f2933;
 }
 
-/* CLOSED — the magnifier, floated. `z-index` so a heading's own box, which
-   runs under a float, never takes the click meant for it. */
+/* CLOSED — the magnifier, floated. The z-index above also keeps a heading's
+   own box, which runs under a float, from taking the click meant for it. */
 .fa-search-home[data-open="false"] {
   float: inline-end;
-  z-index: 2;
   margin-block: 0 0.25rem;
   margin-inline: 0.75rem 0;
 }
@@ -7326,6 +7354,23 @@ a.fa-harness-tab__body:focus-visible {
   width: 100%;
   clear: both;
   margin: 0 0 0.75rem;
+  /* Opaque: pinned mid-page, body text scrolls under the row, and the field
+     itself is transparent. */
+  background: var(--fa-search-page-bg);
+}
+
+/* KEEP THE PAGE WHERE IT IS WHILE SEARCHING. just-the-docs sets
+   `.search-active .main { position: fixed }` at 50rem and up, for the
+   full-screen overlay it draws search in. Search is not drawn there any more,
+   and pinned mid-page that rule dropped the reader at the top of the page the
+   moment they typed. `:has` scopes this to pages where docs-ui adopted the
+   search; a page without it keeps the theme's behaviour. */
+@media (min-width: 50rem) {
+  .search-active .main:has(.fa-search-home) {
+    position: relative;
+    left: auto;
+    right: auto;
+  }
 }
 .fa-search-home[data-open="true"] .fa-search-holder { flex: 1 1 auto; min-width: 0; }
 
@@ -7343,7 +7388,8 @@ a.fa-harness-tab__body:focus-visible {
   padding: 0;
   border: 1px solid var(--fa-search-border);
   border-radius: 50%;
-  background: transparent;
+  /* Opaque, pinned over text (#1732). */
+  background: var(--fa-search-page-bg, transparent);
   color: inherit;
   cursor: pointer;
   line-height: 1;
