@@ -2051,6 +2051,13 @@
       "status": "candidate"
     },
     {
+      "id": "cat-harness.catharnessdeclaration.knownsubstrates",
+      "prefLabel": "CatHarnessDeclaration.knownSubstrates",
+      "definition": "Substrates known to exist or planned that NO declaration here names — {@link KnownSubstrate}. Issue #1719.",
+      "source": "cat-harness/schemas/cat-harness.ts#CatHarnessDeclaration.knownSubstrates",
+      "status": "candidate"
+    },
+    {
       "id": "cat-harness.catharnessdeclaration.liquid",
       "prefLabel": "CatHarnessDeclaration.liquid",
       "definition": "The Liquid prefix this instance's VALUES are addressed by in authored text — `{{ <prefix>.<directory-id>.<entry>.<path> }}` — and whether the platform resolves it or passes it through.",
@@ -2135,6 +2142,13 @@
       "status": "candidate"
     },
     {
+      "id": "cat-harness.catharnessdeclaration.subscriptions",
+      "prefLabel": "CatHarnessDeclaration.subscriptions",
+      "definition": "External Knowledge Graphs this one CONSUMES, and which of their parts it chose to hold — {@link Subscription}. Issue #1719.",
+      "source": "cat-harness/schemas/cat-harness.ts#CatHarnessDeclaration.subscriptions",
+      "status": "candidate"
+    },
+    {
       "id": "cat-harness.catharnessdeclaration.topology",
       "prefLabel": "CatHarnessDeclaration.topology",
       "definition": "The topology axes this deployment declares about itself. See {@link Topology} — every field optional, absent meaning \"has not said\".",
@@ -2184,6 +2198,13 @@
       "status": "candidate"
     },
     {
+      "id": "cat-harness.catharnessdeclarationschema.knownsubstrates",
+      "prefLabel": "CatHarnessDeclarationSchema.knownSubstrates",
+      "definition": "See {@link KnownSubstrate}. Names are unique.",
+      "source": "cat-harness/schemas/cat-harness.ts#CatHarnessDeclarationSchema.knownSubstrates",
+      "status": "candidate"
+    },
+    {
       "id": "cat-harness.catharnessdeclarationschema.liquid",
       "prefLabel": "CatHarnessDeclarationSchema.liquid",
       "definition": "See {@link CatHarnessDeclaration.liquid}.",
@@ -2223,6 +2244,13 @@
       "prefLabel": "CatHarnessDeclarationSchema.separation",
       "definition": "Which half of a kg-separation pair this instance's planned `repository` is: `content` (files to read — no code, bootstrap FR-7) or `tools` (the code that writes and checks a content repository).",
       "source": "cat-harness/schemas/cat-harness.ts#CatHarnessDeclarationSchema.separation",
+      "status": "candidate"
+    },
+    {
+      "id": "cat-harness.catharnessdeclarationschema.subscriptions",
+      "prefLabel": "CatHarnessDeclarationSchema.subscriptions",
+      "definition": "External Knowledge Graphs this one subscribes to — see {@link Subscription}. `.optional()` for the reason `associatedHarnesses` is. Ids are unique, and never also in `needs` or `associatedHarnesses` — refined below.",
+      "source": "cat-harness/schemas/cat-harness.ts#CatHarnessDeclarationSchema.subscriptions",
       "status": "candidate"
     },
     {
@@ -2422,6 +2450,48 @@
       "status": "candidate"
     },
     {
+      "id": "cat-harness.knownsubstrate.name",
+      "prefLabel": "KnownSubstrate.name",
+      "definition": "The substrate's instance name, as its declaration gives it or will.",
+      "source": "cat-harness/schemas/cat-harness.ts#KnownSubstrate.name",
+      "status": "candidate"
+    },
+    {
+      "id": "cat-harness.knownsubstrate.note",
+      "prefLabel": "KnownSubstrate.note",
+      "definition": "One sentence a reader of the visualizer sees.",
+      "source": "cat-harness/schemas/cat-harness.ts#KnownSubstrate.note",
+      "status": "candidate"
+    },
+    {
+      "id": "cat-harness.knownsubstrate.repository",
+      "prefLabel": "KnownSubstrate.repository",
+      "definition": "`owner/repo`, when one exists or is planned.",
+      "source": "cat-harness/schemas/cat-harness.ts#KnownSubstrate.repository",
+      "status": "candidate"
+    },
+    {
+      "id": "cat-harness.knownsubstrate.status",
+      "prefLabel": "KnownSubstrate.status",
+      "definition": "Where it stands: proposed (an idea), planned (a staged instance), exists (a repository), published (a release).",
+      "source": "cat-harness/schemas/cat-harness.ts#KnownSubstrate.status",
+      "status": "candidate"
+    },
+    {
+      "id": "cat-harness.knownsubstrate.title",
+      "prefLabel": "KnownSubstrate.title",
+      "definition": "Human title.",
+      "source": "cat-harness/schemas/cat-harness.ts#KnownSubstrate.title",
+      "status": "candidate"
+    },
+    {
+      "id": "cat-harness.knownsubstrate.toolsrepository",
+      "prefLabel": "KnownSubstrate.toolsRepository",
+      "definition": "Its paired tools repository, when the `kg-separation` pattern gives it one.",
+      "source": "cat-harness/schemas/cat-harness.ts#KnownSubstrate.toolsRepository",
+      "status": "candidate"
+    },
+    {
       "id": "cat-harness.liquidprefix.passthrough",
       "prefLabel": "LiquidPrefix.passThrough",
       "definition": "Leave `{{ <prefix>.… }}` for the downstream engine (Jekyll, IG Publisher).",
@@ -2608,6 +2678,55 @@
       "prefLabel": "SubgraphRelation.parent",
       "definition": "The containing directory's `id`.",
       "source": "cat-harness/schemas/cat-harness.ts#SubgraphRelation.parent",
+      "status": "candidate"
+    },
+    {
+      "id": "cat-harness.subscription.assets",
+      "prefLabel": "Subscription.assets",
+      "definition": "How referenced binary assets are materialised. Each copy still passes `Process_MaterializeRemote`'s gates.",
+      "source": "cat-harness/schemas/cat-harness.ts#Subscription.assets",
+      "status": "candidate"
+    },
+    {
+      "id": "cat-harness.subscription.harnesses",
+      "prefLabel": "Subscription.harnesses",
+      "definition": "Harness names from the substrate CHOSEN for instantiation. Instantiating writes `<name>.config.json`, which is what puts it in the navbar.",
+      "source": "cat-harness/schemas/cat-harness.ts#Subscription.harnesses",
+      "status": "candidate"
+    },
+    {
+      "id": "cat-harness.subscription.id",
+      "prefLabel": "Subscription.id",
+      "definition": "Local name for the subscription; unique within this list. The substrate's own name, unless two pins of one substrate are ever needed.",
+      "source": "cat-harness/schemas/cat-harness.ts#Subscription.id",
+      "status": "candidate"
+    },
+    {
+      "id": "cat-harness.subscription.note",
+      "prefLabel": "Subscription.note",
+      "definition": "One sentence a reader of the visualizer sees.",
+      "source": "cat-harness/schemas/cat-harness.ts#Subscription.note",
+      "status": "candidate"
+    },
+    {
+      "id": "cat-harness.subscription.ref",
+      "prefLabel": "Subscription.ref",
+      "definition": "The pinned commit, a full 40-character SHA. A tag replaces it once the substrate publishes releases.",
+      "source": "cat-harness/schemas/cat-harness.ts#Subscription.ref",
+      "status": "candidate"
+    },
+    {
+      "id": "cat-harness.subscription.repository",
+      "prefLabel": "Subscription.repository",
+      "definition": "Where the substrate lives, `owner/repo` (#1652).",
+      "source": "cat-harness/schemas/cat-harness.ts#Subscription.repository",
+      "status": "candidate"
+    },
+    {
+      "id": "cat-harness.subscription.subgraphs",
+      "prefLabel": "Subscription.subgraphs",
+      "definition": "Subgraph ids (the substrate's `directories[].id`) CHOSEN for materialisation. Everything else stays referenced.",
+      "source": "cat-harness/schemas/cat-harness.ts#Subscription.subgraphs",
       "status": "candidate"
     },
     {
@@ -8344,6 +8463,41 @@
       "status": "candidate"
     },
     {
+      "id": "substrate-snapshot.substratesnapshotschema.file",
+      "prefLabel": "SubstrateSnapshotSchema.file",
+      "definition": "The upstream file, relative to the substrate's repository root: `<name>.json`.",
+      "source": "cat-harness/schemas/substrate-snapshot.ts#SubstrateSnapshotSchema.file",
+      "status": "candidate"
+    },
+    {
+      "id": "substrate-snapshot.substratesnapshotschema.raw",
+      "prefLabel": "SubstrateSnapshotSchema.raw",
+      "definition": "The upstream bytes, exactly as fetched.",
+      "source": "cat-harness/schemas/substrate-snapshot.ts#SubstrateSnapshotSchema.raw",
+      "status": "candidate"
+    },
+    {
+      "id": "substrate-snapshot.substratesnapshotschema.ref",
+      "prefLabel": "SubstrateSnapshotSchema.ref",
+      "definition": "The pinned commit the bytes were read at — a full SHA, never a branch.",
+      "source": "cat-harness/schemas/substrate-snapshot.ts#SubstrateSnapshotSchema.ref",
+      "status": "candidate"
+    },
+    {
+      "id": "substrate-snapshot.substratesnapshotschema.subscription",
+      "prefLabel": "SubstrateSnapshotSchema.subscription",
+      "definition": "The `subscriptions[].id` this snapshot belongs to.",
+      "source": "cat-harness/schemas/substrate-snapshot.ts#SubstrateSnapshotSchema.subscription",
+      "status": "candidate"
+    },
+    {
+      "id": "substrate-snapshot.substratesnapshotschema.summary",
+      "prefLabel": "SubstrateSnapshotSchema.summary",
+      "definition": "What the judgement found, derived from `raw`.",
+      "source": "cat-harness/schemas/substrate-snapshot.ts#SubstrateSnapshotSchema.summary",
+      "status": "candidate"
+    },
+    {
       "id": "tabular-csvw.csvwcolumnschema.datatype",
       "prefLabel": "CsvwColumnSchema.datatype",
       "definition": "A CSVW datatype name. `any` is CSVW's own top type.",
@@ -8470,6 +8624,174 @@
       "status": "candidate"
     },
     {
+      "id": "test-plan.fixedtestdataschema.path",
+      "prefLabel": "FixedTestDataSchema.path",
+      "definition": "Repo-relative path to the committed set.",
+      "source": "cat-harness/schemas/test-plan.ts#FixedTestDataSchema.path",
+      "status": "candidate"
+    },
+    {
+      "id": "test-plan.generatedtestdataschema.generator",
+      "prefLabel": "GeneratedTestDataSchema.generator",
+      "definition": "The generator, when it is not implied by the template — `synthea`, `fsh`. FHIR `testData.type`.",
+      "source": "cat-harness/schemas/test-plan.ts#GeneratedTestDataSchema.generator",
+      "status": "candidate"
+    },
+    {
+      "id": "test-plan.generatedtestdataschema.params",
+      "prefLabel": "GeneratedTestDataSchema.params",
+      "definition": "The generator's parameters. Hashed with the template into the run's data basis.",
+      "source": "cat-harness/schemas/test-plan.ts#GeneratedTestDataSchema.params",
+      "status": "candidate"
+    },
+    {
+      "id": "test-plan.generatedtestdataschema.seed",
+      "prefLabel": "GeneratedTestDataSchema.seed",
+      "definition": "Required: without a fixed seed, regenerating does not give the bytes that were hashed (`zz0a`).",
+      "source": "cat-harness/schemas/test-plan.ts#GeneratedTestDataSchema.seed",
+      "status": "candidate"
+    },
+    {
+      "id": "test-plan.generatedtestdataschema.template",
+      "prefLabel": "GeneratedTestDataSchema.template",
+      "definition": "Repo-relative path to the template (a FHIR template, a Synthea module, …).",
+      "source": "cat-harness/schemas/test-plan.ts#GeneratedTestDataSchema.template",
+      "status": "candidate"
+    },
+    {
+      "id": "test-plan.testassertionschema.expectation",
+      "prefLabel": "TestAssertionSchema.expectation",
+      "definition": "What is expected, for a reader who has only the plan.",
+      "source": "cat-harness/schemas/test-plan.ts#TestAssertionSchema.expectation",
+      "status": "candidate"
+    },
+    {
+      "id": "test-plan.testassertionschema.type",
+      "prefLabel": "TestAssertionSchema.type",
+      "definition": "FHIR `TestPlan.testCase.assertion.type`: does a failure fail the case?",
+      "source": "cat-harness/schemas/test-plan.ts#TestAssertionSchema.type",
+      "status": "candidate"
+    },
+    {
+      "id": "test-plan.testplancaseschema.assertions",
+      "prefLabel": "TestPlanCaseSchema.assertions",
+      "definition": "A case with no assertion asserts nothing, and would pass vacuously.",
+      "source": "cat-harness/schemas/test-plan.ts#TestPlanCaseSchema.assertions",
+      "status": "candidate"
+    },
+    {
+      "id": "test-plan.testplancaseschema.dependson",
+      "prefLabel": "TestPlanCaseSchema.dependsOn",
+      "definition": "Sibling cases that must run first. FHIR `testCase.dependency`, resolved.",
+      "source": "cat-harness/schemas/test-plan.ts#TestPlanCaseSchema.dependsOn",
+      "status": "candidate"
+    },
+    {
+      "id": "test-plan.testplancaseschema.feature",
+      "prefLabel": "TestPlanCaseSchema.feature",
+      "definition": "Optional Gherkin `.feature` file the case is written in.",
+      "source": "cat-harness/schemas/test-plan.ts#TestPlanCaseSchema.feature",
+      "status": "candidate"
+    },
+    {
+      "id": "test-plan.testplancaseschema.testdata",
+      "prefLabel": "TestPlanCaseSchema.testData",
+      "definition": "May be empty: a case can test behaviour on no input. Absent and empty are the same here.",
+      "source": "cat-harness/schemas/test-plan.ts#TestPlanCaseSchema.testData",
+      "status": "candidate"
+    },
+    {
+      "id": "test-plan.testplanexitcriteriaschema.decision",
+      "prefLabel": "TestPlanExitCriteriaSchema.decision",
+      "definition": "The certification rule, executable.",
+      "source": "cat-harness/schemas/test-plan.ts#TestPlanExitCriteriaSchema.decision",
+      "status": "candidate"
+    },
+    {
+      "id": "test-plan.testplanexitcriteriaschema.description",
+      "prefLabel": "TestPlanExitCriteriaSchema.description",
+      "definition": "A reader's summary of it. Never the rule itself — the DMN is.",
+      "source": "cat-harness/schemas/test-plan.ts#TestPlanExitCriteriaSchema.description",
+      "status": "candidate"
+    },
+    {
+      "id": "test-plan.testplanschema.requirements",
+      "prefLabel": "TestPlanSchema.requirements",
+      "definition": "What the plan is evidence FOR. At least one: a plan tied to no requirement certifies nothing.",
+      "source": "cat-harness/schemas/test-plan.ts#TestPlanSchema.requirements",
+      "status": "candidate"
+    },
+    {
+      "id": "test-plan.testplanschema.version",
+      "prefLabel": "TestPlanSchema.version",
+      "definition": "The PLAN's version — a run records which one it executed.",
+      "source": "cat-harness/schemas/test-plan.ts#TestPlanSchema.version",
+      "status": "candidate"
+    },
+    {
+      "id": "test-plan.testplanscopeschema.target",
+      "prefLabel": "TestPlanScopeSchema.target",
+      "definition": "The specific system, when the plan is for one: a skill name, a tool name, an IG canonical. Absent means the plan applies to any system of `kind` (a conformance plan any implementer may run).",
+      "source": "cat-harness/schemas/test-plan.ts#TestPlanScopeSchema.target",
+      "status": "candidate"
+    },
+    {
+      "id": "test-plan.testplanscopeschema.versionrange",
+      "prefLabel": "TestPlanScopeSchema.versionRange",
+      "definition": "The versions the plan applies to, as a semver range (`>=1.2 <2`, `*`). Required: `*` is a statement; absence would be an omission that reads the same.",
+      "source": "cat-harness/schemas/test-plan.ts#TestPlanScopeSchema.versionRange",
+      "status": "candidate"
+    },
+    {
+      "id": "test-report.testcaseverdictschema.assertions",
+      "prefLabel": "TestCaseVerdictSchema.assertions",
+      "definition": "Per-assertion results, keyed by the assertion's criterion id.",
+      "source": "cat-harness/schemas/test-report.ts#TestCaseVerdictSchema.assertions",
+      "status": "candidate"
+    },
+    {
+      "id": "test-report.testcaseverdictschema.reason",
+      "prefLabel": "TestCaseVerdictSchema.reason",
+      "definition": "Why the case was skipped. Required when `result` is `skipped`.",
+      "source": "cat-harness/schemas/test-report.ts#TestCaseVerdictSchema.reason",
+      "status": "candidate"
+    },
+    {
+      "id": "test-report.testcaseverdictschema.reviewed_at",
+      "prefLabel": "TestCaseVerdictSchema.reviewed_at",
+      "definition": "ISO-8601 UTC.",
+      "source": "cat-harness/schemas/test-report.ts#TestCaseVerdictSchema.reviewed_at",
+      "status": "candidate"
+    },
+    {
+      "id": "test-report.testreportschema.cases",
+      "prefLabel": "TestReportSchema.cases",
+      "definition": "Case id → reviewer entries, oldest first. The last is current.",
+      "source": "cat-harness/schemas/test-report.ts#TestReportSchema.cases",
+      "status": "candidate"
+    },
+    {
+      "id": "test-report.testreportschema.plan",
+      "prefLabel": "TestReportSchema.plan",
+      "definition": "ONE plan. There is no field for a second — see the module note.",
+      "source": "cat-harness/schemas/test-report.ts#TestReportSchema.plan",
+      "status": "candidate"
+    },
+    {
+      "id": "test-report.testreviewerschema.actor",
+      "prefLabel": "TestReviewerSchema.actor",
+      "definition": "On whose authority — an id under `scenarios/actors/`. Absent is unresolved, not permitted.",
+      "source": "cat-harness/schemas/test-report.ts#TestReviewerSchema.actor",
+      "status": "candidate"
+    },
+    {
+      "id": "test-report.testreviewerschema.id",
+      "prefLabel": "TestReviewerSchema.id",
+      "definition": "What ran: a script path, an agent name, a GitHub login.",
+      "source": "cat-harness/schemas/test-report.ts#TestReviewerSchema.id",
+      "status": "candidate"
+    },
+    {
       "id": "test-run.hashbasisschema.hash",
       "prefLabel": "HashBasisSchema.hash",
       "definition": "12-char SHA-256 prefix over the inputs in listed order, or `unknown`.",
@@ -8491,6 +8813,20 @@
       "status": "candidate"
     },
     {
+      "id": "test-run.testplanrefschema.id",
+      "prefLabel": "TestPlanRefSchema.id",
+      "definition": "The plan's `id` (`test-plan/v1`).",
+      "source": "cat-harness/schemas/test-run.ts#TestPlanRefSchema.id",
+      "status": "candidate"
+    },
+    {
+      "id": "test-run.testplanrefschema.version",
+      "prefLabel": "TestPlanRefSchema.version",
+      "definition": "The plan's `version` at execution time.",
+      "source": "cat-harness/schemas/test-run.ts#TestPlanRefSchema.version",
+      "status": "candidate"
+    },
+    {
       "id": "test-run.testrunschema.cases",
       "prefLabel": "TestRunSchema.cases",
       "definition": "The cases, when the runner records them. Absent is a real state: a run that only records aggregates cannot be checked against the contract, and `test-run-conforms` says so rather than passing it.",
@@ -8509,6 +8845,13 @@
       "prefLabel": "TestRunSchema.outcome",
       "definition": "The measurements themselves, in whatever shape the runner records.",
       "source": "cat-harness/schemas/test-run.ts#TestRunSchema.outcome",
+      "status": "candidate"
+    },
+    {
+      "id": "test-run.testrunschema.plan",
+      "prefLabel": "TestRunSchema.plan",
+      "definition": "The plan this run executed (bean `ygzh`). Optional: a run recorded before plans existed — `crdm-detect-eval` — tested a skill directly, and still parses.",
+      "source": "cat-harness/schemas/test-run.ts#TestRunSchema.plan",
       "status": "candidate"
     },
     {
@@ -8537,6 +8880,13 @@
       "prefLabel": "TestRunSchema.subject",
       "definition": "What this run measured, for a reader who has only the file.",
       "source": "cat-harness/schemas/test-run.ts#TestRunSchema.subject",
+      "status": "candidate"
+    },
+    {
+      "id": "test-run.testrunschema.sut",
+      "prefLabel": "TestRunSchema.sut",
+      "definition": "The system under test (bean `ygzh`). Required whenever `plan` is set.",
+      "source": "cat-harness/schemas/test-run.ts#TestRunSchema.sut",
       "status": "candidate"
     },
     {
