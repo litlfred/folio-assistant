@@ -5,7 +5,7 @@ status: todo
 type: task
 priority: normal
 created_at: 2026-09-21T19:10:00Z
-updated_at: 2026-10-01T10:24:29Z
+updated_at: 2026-10-01T11:21:12Z
 parent: folio-assistant-uhkv
 ---
 
@@ -428,3 +428,13 @@ Rendering 42 pages through just-the-docs is therefore a bounded job. The falsifi
 2. `feedback.md` derives `github.com/WorldHealthOrganization/trust`, but the repository is `smart-trust`.
 
 **Done-when item 2** (`input/pages/` through just-the-docs with Publisher metadata) is met by `bamf`, not by this bean's work. The **parity checklist / MVP** call is the owner's, still open.
+
+## Owner ruling 2026-10-01: branding means logos only
+
+Asked how far *"just dont want branding"* reaches, with three options: logos only; no WHO identity at all; or colours only. The owner chose **1, logos only**.
+
+- **No WHO logo** on any page. This is the generator's existing rule: *"until published under WHO, colour carries the identity and the wordmark is set in type"*.
+- **WHO's colour theme stays.** That is `7h3u`'s `themes/upstream/who.css` (#1682).
+- **The plain-text "WHO SMART Trust" name in titles stays.**
+
+Nothing changes in the rendered output. Recorded so the next agent doesn't re-ask.
