@@ -547,14 +547,12 @@
       "prefLabel": "Clinical / scientific SME",
       "definition": "Reviewer whose judgement is about the subject matter rather than the artefact.",
       "altLabel": [
-        "Clinical / scientific SMEs",
-        "Clinical SME"
+        "Clinical / scientific SMEs"
       ],
       "notation": "clinical-sme",
       "inScheme": "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness-glossary.jsonld",
       "usage": [
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#glossary-usage/Process_Publication/Lane_Sme",
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#glossary-usage/Process_L2Dak/Lane_Sme"
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#glossary-usage/Process_Publication/Lane_Sme"
       ]
     },
     {
@@ -565,15 +563,6 @@
       "label": "Clinical / scientific SMEs",
       "scopeNote": "Runs in parallel with Lane_ReviewTeam, not after it — Gateway_ReviewJoin waits on both — but does not own the approve/reject gateway that follows: sign-off here is necessary for the join to complete and nothing more, which keeps a clinical judgement from also becoming the phase-gate call.",
       "source": "cat-harness/processes/draft-to-publication.bpmn"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#glossary-usage/Process_L2Dak/Lane_Sme",
-      "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#LaneUsage",
-      "ofConcept": "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#role/clinical-sme",
-      "inProcess": "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#process/Process_L2Dak",
-      "label": "Clinical SME",
-      "scopeNote": "The one gate every authored track must clear before assembly: a \"no\" here does not return to the specific task that erred but loops back through Gateway_AuthorMerge into the fork itself, so this lane's judgement — not the analyst's — decides whether personas, BPMN, DMN, data dictionary and indicators all get revisited together.",
-      "source": "cat-harness/processes/l2-dak-authoring.bpmn"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#role/administrator",
@@ -621,15 +610,13 @@
       "prefLabel": "Programme manager",
       "definition": "Owns what gets worked on and holds release authority. The lane that authorises, and the one step no policy may relax.",
       "altLabel": [
-        "Programme manager (release authority)",
-        "Programme manager / technical officer"
+        "Programme manager (release authority)"
       ],
       "notation": "programme-manager",
       "inScheme": "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness-glossary.jsonld",
       "usage": [
         "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#glossary-usage/Process_Lifecycle/Lane_ProgMgr",
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#glossary-usage/Process_Publication/Lane_ProgMgr",
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#glossary-usage/Process_L2Dak/Lane_Programme"
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#glossary-usage/Process_Publication/Lane_ProgMgr"
       ]
     },
     {
@@ -649,15 +636,6 @@
       "label": "Programme manager (release authority)",
       "scopeNote": "Sits between review's approval and the actual publish — a second, distinct gate on an already-approved draft, because content being right and a release being authorised to ship are two different questions, and only this lane answers the second one.",
       "source": "cat-harness/processes/draft-to-publication.bpmn"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#glossary-usage/Process_L2Dak/Lane_Programme",
-      "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#LaneUsage",
-      "ofConcept": "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#role/programme-manager",
-      "inProcess": "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#process/Process_L2Dak",
-      "label": "Programme manager / technical officer",
-      "scopeNote": "Sets the scope once, before the fork into six parallel authoring tracks. The actors and processes enumerated here are what everything downstream, including the terminology and clinical lanes, is scoped against, and nothing later in this diagram revisits that boundary.",
-      "source": "cat-harness/processes/l2-dak-authoring.bpmn"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#role/publication-manager",
@@ -782,7 +760,6 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#glossary-usage/Process_CRDM_Requirements/Lane_BA",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#glossary-usage/Process_CRDM/Lane_BA",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#glossary-usage/Process_CRDM_Signoff/Lane_BA",
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#glossary-usage/Process_L2Dak/Lane_Analyst",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#glossary-usage/Process_OptionsAnalysis/Lane_BusinessAnalyst",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#glossary-usage/Process_SwotAnalysis/Lane_BusinessAnalyst"
       ]
@@ -851,15 +828,6 @@
       "source": "cat-harness/processes/crdm-signoff.bpmn"
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#glossary-usage/Process_L2Dak/Lane_Analyst",
-      "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#LaneUsage",
-      "ofConcept": "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#role/business-analyst",
-      "inProcess": "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#process/Process_L2Dak",
-      "label": "Business analyst",
-      "scopeNote": "Opens the parallel fork into six authoring tracks — five landing here, the sixth (terminology) crossing into a separate lane — and re-enters that same fork whenever clinical validation sends work back, so a fix after Gateway_Accurate revisits every track it is entangled with rather than patching only the one SME flagged. Performs the final assemble-and-validate once accuracy holds.",
-      "source": "cat-harness/processes/l2-dak-authoring.bpmn"
-    },
-    {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#glossary-usage/Process_OptionsAnalysis/Lane_BusinessAnalyst",
       "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#LaneUsage",
       "ofConcept": "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#role/business-analyst",
@@ -883,19 +851,7 @@
       "prefLabel": "Terminologist",
       "definition": "Owns coded concepts and value sets — the vocabulary a DAK is expressed in.",
       "notation": "terminologist",
-      "inScheme": "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness-glossary.jsonld",
-      "usage": [
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#glossary-usage/Process_L2Dak/Lane_Terminologist"
-      ]
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#glossary-usage/Process_L2Dak/Lane_Terminologist",
-      "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#LaneUsage",
-      "ofConcept": "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#role/terminologist",
-      "inProcess": "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#process/Process_L2Dak",
-      "label": "Terminologist",
-      "scopeNote": "One parallel branch of the fork, producing bindings the other five tracks cite rather than author themselves. Kept a separate lane rather than folded into the analyst's because governance of a code binding is deliberately independent of the artefact that cites it.",
-      "source": "cat-harness/processes/l2-dak-authoring.bpmn"
+      "inScheme": "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness-glossary.jsonld"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#role/fhir-modeller",
@@ -2073,7 +2029,6 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#glossary-usage/Process_GettingStarted/Lane_WorkPlan",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#glossary-usage/Process_IgAstDeltaReview/Lane_WorkPlan",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#glossary-usage/Process_IgIncremental/Lane_WorkPlan",
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#glossary-usage/Process_L2Dak/Lane_WorkPlan",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#glossary-usage/Process_L3Fhir/Lane_WorkPlan"
       ]
     },
@@ -2166,15 +2121,6 @@
       "label": "Work plan — beans (shared by humans and agents)",
       "scopeNote": "Where every failure branch lands before the process ends rather than just stopping: Gateway_Valid's `no`, Gateway_QcPass's `no` and Gateway_Restore's `environment error` each write here — Task_LogFindings, Task_QcBeans, Task_LogEnvError — before EndEvent_Findings, EndEvent_FindingsQc or EndEvent_EnvError, so a run that stops short always leaves a record of why rather than only a red check.",
       "source": "cat-harness/processes/ig-incremental-build.bpmn"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#glossary-usage/Process_L2Dak/Lane_WorkPlan",
-      "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#LaneUsage",
-      "ofConcept": "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#role/work-plan",
-      "inProcess": "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#process/Process_L2Dak",
-      "label": "Work plan — beans (shared by humans and agents)",
-      "scopeNote": "A single claim made once, right after scoping and before the parallel fork. Unlike the per-edit lifecycle in editing-hci-validation, this diagram seeds one bean for the whole DAK and never returns here to log or resolve it, so tracking any one track's own progress is not this lane's concern.",
-      "source": "cat-harness/processes/l2-dak-authoring.bpmn"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#glossary-usage/Process_L3Fhir/Lane_WorkPlan",

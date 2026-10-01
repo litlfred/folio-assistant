@@ -301,10 +301,10 @@
   ],
   "canonicalDocument": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld",
   "repository": "cat-harness",
-  "generatedAt": "2026-10-01T14:57:59.705Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/2f1193cb21dd8511b4449de745020d5a0b946031",
-  "sourceCommitSha": "2f1193cb21dd8511b4449de745020d5a0b946031",
-  "sourceCommitAt": "2026-10-01T14:53:36Z",
+  "generatedAt": "2026-10-01T16:18:32.133Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/cbe208f1327263f661abc9c340025923978d0f25",
+  "sourceCommitSha": "cbe208f1327263f661abc9c340025923978d0f25",
+  "sourceCommitAt": "2026-10-01T16:09:10Z",
   "sourceTreeDirty": true,
   "dependsOnUnavailable": "2 dependency edge(s), none expressible as a record — see gaps",
   "counts": {
@@ -1390,7 +1390,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#package/graph-management"
       ],
       "instructionsPath": "skills/kg/graph-management/kg-separation.md",
-      "instructionLines": 215,
+      "instructionLines": 217,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -8014,625 +8014,6 @@
       "outgoing": [],
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#directory/processes",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CRDM/node/End_CRDM"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#process/Process_L2Dak",
-      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Process",
-      "name": "L2 DAK authoring",
-      "enforcement": "advisory",
-      "sourcePath": "processes/l2-dak-authoring.bpmn",
-      "startNode": [
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#process/Process_L2Dak/node/StartEvent_Guideline"
-      ],
-      "nodeCount": 16,
-      "flowCount": 21,
-      "conformsTo": [
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#externalSchema/omg-bpmn-2.0",
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#externalSchema/omg-dd-1.0"
-      ],
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#directory/processes",
-      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_L2Dak"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#process/Process_L2Dak/flow/B01",
-      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#SequenceFlow",
-      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#process/Process_L2Dak",
-      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#process/Process_L2Dak/node/StartEvent_Guideline",
-      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#process/Process_L2Dak/node/Task_ScopeDak",
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#directory/processes",
-      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_L2Dak/flow/B01"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#process/Process_L2Dak/flow/B02",
-      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#SequenceFlow",
-      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#process/Process_L2Dak",
-      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#process/Process_L2Dak/node/Task_ScopeDak",
-      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#process/Process_L2Dak/node/Task_SeedBeans",
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#directory/processes",
-      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_L2Dak/flow/B02"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#process/Process_L2Dak/flow/B03",
-      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#SequenceFlow",
-      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#process/Process_L2Dak",
-      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#process/Process_L2Dak/node/Task_SeedBeans",
-      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#process/Process_L2Dak/node/Gateway_AuthorMerge",
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#directory/processes",
-      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_L2Dak/flow/B03"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#process/Process_L2Dak/flow/B04",
-      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#SequenceFlow",
-      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#process/Process_L2Dak",
-      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#process/Process_L2Dak/node/Gateway_AuthorMerge",
-      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#process/Process_L2Dak/node/Gateway_AuthorFork",
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#directory/processes",
-      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_L2Dak/flow/B04"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#process/Process_L2Dak/flow/B05",
-      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#SequenceFlow",
-      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#process/Process_L2Dak",
-      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#process/Process_L2Dak/node/Gateway_AuthorFork",
-      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#process/Process_L2Dak/node/Task_Personas",
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#directory/processes",
-      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_L2Dak/flow/B05"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#process/Process_L2Dak/flow/B06",
-      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#SequenceFlow",
-      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#process/Process_L2Dak",
-      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#process/Process_L2Dak/node/Gateway_AuthorFork",
-      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#process/Process_L2Dak/node/Task_Bpmn",
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#directory/processes",
-      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_L2Dak/flow/B06"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#process/Process_L2Dak/flow/B08",
-      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#SequenceFlow",
-      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#process/Process_L2Dak",
-      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#process/Process_L2Dak/node/Gateway_AuthorFork",
-      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#process/Process_L2Dak/node/Task_DataDict",
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#directory/processes",
-      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_L2Dak/flow/B08"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#process/Process_L2Dak/flow/B09",
-      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#SequenceFlow",
-      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#process/Process_L2Dak",
-      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#process/Process_L2Dak/node/Gateway_AuthorFork",
-      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#process/Process_L2Dak/node/Task_Indicators",
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#directory/processes",
-      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_L2Dak/flow/B09"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#process/Process_L2Dak/flow/B10",
-      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#SequenceFlow",
-      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#process/Process_L2Dak",
-      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#process/Process_L2Dak/node/Gateway_AuthorFork",
-      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#process/Process_L2Dak/node/Task_Terminology",
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#directory/processes",
-      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_L2Dak/flow/B10"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#process/Process_L2Dak/flow/B07",
-      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#SequenceFlow",
-      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#process/Process_L2Dak",
-      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#process/Process_L2Dak/node/Gateway_AuthorFork",
-      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#process/Process_L2Dak/node/Task_Dmn",
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#directory/processes",
-      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_L2Dak/flow/B07"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#process/Process_L2Dak/flow/B11",
-      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#SequenceFlow",
-      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#process/Process_L2Dak",
-      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#process/Process_L2Dak/node/Task_Personas",
-      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#process/Process_L2Dak/node/Gateway_AuthorJoin",
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#directory/processes",
-      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_L2Dak/flow/B11"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#process/Process_L2Dak/flow/B12",
-      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#SequenceFlow",
-      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#process/Process_L2Dak",
-      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#process/Process_L2Dak/node/Task_Bpmn",
-      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#process/Process_L2Dak/node/Gateway_AuthorJoin",
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#directory/processes",
-      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_L2Dak/flow/B12"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#process/Process_L2Dak/flow/B14",
-      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#SequenceFlow",
-      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#process/Process_L2Dak",
-      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#process/Process_L2Dak/node/Task_DataDict",
-      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#process/Process_L2Dak/node/Gateway_AuthorJoin",
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#directory/processes",
-      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_L2Dak/flow/B14"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#process/Process_L2Dak/flow/B15",
-      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#SequenceFlow",
-      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#process/Process_L2Dak",
-      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#process/Process_L2Dak/node/Task_Indicators",
-      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#process/Process_L2Dak/node/Gateway_AuthorJoin",
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#directory/processes",
-      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_L2Dak/flow/B15"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#process/Process_L2Dak/flow/B16",
-      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#SequenceFlow",
-      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#process/Process_L2Dak",
-      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#process/Process_L2Dak/node/Task_Terminology",
-      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#process/Process_L2Dak/node/Gateway_AuthorJoin",
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#directory/processes",
-      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_L2Dak/flow/B16"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#process/Process_L2Dak/flow/B13",
-      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#SequenceFlow",
-      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#process/Process_L2Dak",
-      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#process/Process_L2Dak/node/Task_Dmn",
-      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#process/Process_L2Dak/node/Gateway_AuthorJoin",
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#directory/processes",
-      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_L2Dak/flow/B13"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#process/Process_L2Dak/flow/B17",
-      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#SequenceFlow",
-      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#process/Process_L2Dak",
-      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#process/Process_L2Dak/node/Gateway_AuthorJoin",
-      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#process/Process_L2Dak/node/Task_SmeValidate",
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#directory/processes",
-      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_L2Dak/flow/B17"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#process/Process_L2Dak/flow/B18",
-      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#SequenceFlow",
-      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#process/Process_L2Dak",
-      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#process/Process_L2Dak/node/Task_SmeValidate",
-      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#process/Process_L2Dak/node/Gateway_Accurate",
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#directory/processes",
-      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_L2Dak/flow/B18"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#process/Process_L2Dak/flow/B19",
-      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#SequenceFlow",
-      "name": "changes needed",
-      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#process/Process_L2Dak",
-      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#process/Process_L2Dak/node/Gateway_Accurate",
-      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#process/Process_L2Dak/node/Gateway_AuthorMerge",
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#directory/processes",
-      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_L2Dak/flow/B19"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#process/Process_L2Dak/flow/B20",
-      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#SequenceFlow",
-      "name": "validated",
-      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#process/Process_L2Dak",
-      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#process/Process_L2Dak/node/Gateway_Accurate",
-      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#process/Process_L2Dak/node/Task_AssembleDak",
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#directory/processes",
-      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_L2Dak/flow/B20"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#process/Process_L2Dak/flow/B21",
-      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#SequenceFlow",
-      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#process/Process_L2Dak",
-      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#process/Process_L2Dak/node/Task_AssembleDak",
-      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#process/Process_L2Dak/node/EndEvent_L2Ready",
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#directory/processes",
-      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_L2Dak/flow/B21"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#process/Process_L2Dak/lane/Lane_Programme",
-      "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#Lane",
-      "name": "Programme manager / technical officer",
-      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#process/Process_L2Dak",
-      "bindsRole": "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#role/programme-manager",
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#directory/processes",
-      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_L2Dak/lane/Lane_Programme"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#process/Process_L2Dak/lane/Lane_WorkPlan",
-      "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#Lane",
-      "name": "Work plan — beans (shared by humans and agents)",
-      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#process/Process_L2Dak",
-      "bindsRole": "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#role/work-plan",
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#directory/processes",
-      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_L2Dak/lane/Lane_WorkPlan"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#process/Process_L2Dak/lane/Lane_Analyst",
-      "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#Lane",
-      "name": "Business analyst",
-      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#process/Process_L2Dak",
-      "bindsRole": "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#role/business-analyst",
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#directory/processes",
-      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_L2Dak/lane/Lane_Analyst"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#process/Process_L2Dak/lane/Lane_Terminologist",
-      "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#Lane",
-      "name": "Terminologist",
-      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#process/Process_L2Dak",
-      "bindsRole": "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#role/terminologist",
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#directory/processes",
-      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_L2Dak/lane/Lane_Terminologist"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#process/Process_L2Dak/lane/Lane_Sme",
-      "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#Lane",
-      "name": "Clinical SME",
-      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#process/Process_L2Dak",
-      "bindsRole": "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#role/clinical-sme",
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#directory/processes",
-      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_L2Dak/lane/Lane_Sme"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#process/Process_L2Dak/node/StartEvent_Guideline",
-      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#ProcessNode",
-      "name": "WHO guideline / recommendations",
-      "nodeKind": "start",
-      "bpmnType": "bpmn:StartEvent",
-      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#process/Process_L2Dak",
-      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#role/programme-manager",
-      "inLane": "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#process/Process_L2Dak/lane/Lane_Programme",
-      "implementedBy": [],
-      "touchesWorkPlan": false,
-      "relaxable": true,
-      "incoming": [],
-      "outgoing": [
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#process/Process_L2Dak/flow/B01"
-      ],
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#directory/processes",
-      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_L2Dak/node/StartEvent_Guideline"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#process/Process_L2Dak/node/Task_ScopeDak",
-      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#ProcessNode",
-      "name": "Scope the DAK",
-      "nodeKind": "activity",
-      "bpmnType": "bpmn:UserTask",
-      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#process/Process_L2Dak",
-      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#role/programme-manager",
-      "inLane": "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#process/Process_L2Dak/lane/Lane_Programme",
-      "implementedBy": [
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#skill/content-plan"
-      ],
-      "touchesWorkPlan": false,
-      "relaxable": true,
-      "incoming": [
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#process/Process_L2Dak/flow/B01"
-      ],
-      "outgoing": [
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#process/Process_L2Dak/flow/B02"
-      ],
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#directory/processes",
-      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_L2Dak/node/Task_ScopeDak"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#process/Process_L2Dak/node/Task_SeedBeans",
-      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#ProcessNode",
-      "name": "Seed the work plan",
-      "nodeKind": "activity",
-      "bpmnType": "bpmn:Task",
-      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#process/Process_L2Dak",
-      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#role/work-plan",
-      "inLane": "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#process/Process_L2Dak/lane/Lane_WorkPlan",
-      "implementedBy": [
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#skill/todo-manager"
-      ],
-      "touchesWorkPlan": true,
-      "workPlanOp": "claim",
-      "relaxable": true,
-      "incoming": [
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#process/Process_L2Dak/flow/B02"
-      ],
-      "outgoing": [
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#process/Process_L2Dak/flow/B03"
-      ],
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#directory/processes",
-      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_L2Dak/node/Task_SeedBeans"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#process/Process_L2Dak/node/Gateway_AuthorMerge",
-      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#ProcessNode",
-      "name": "Gateway_AuthorMerge",
-      "nodeKind": "exclusive",
-      "bpmnType": "bpmn:ExclusiveGateway",
-      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#process/Process_L2Dak",
-      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#role/business-analyst",
-      "inLane": "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#process/Process_L2Dak/lane/Lane_Analyst",
-      "implementedBy": [],
-      "touchesWorkPlan": false,
-      "relaxable": true,
-      "incoming": [
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#process/Process_L2Dak/flow/B03",
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#process/Process_L2Dak/flow/B19"
-      ],
-      "outgoing": [
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#process/Process_L2Dak/flow/B04"
-      ],
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#directory/processes",
-      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_L2Dak/node/Gateway_AuthorMerge"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#process/Process_L2Dak/node/Gateway_AuthorFork",
-      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#ProcessNode",
-      "name": "Gateway_AuthorFork",
-      "nodeKind": "parallel",
-      "bpmnType": "bpmn:ParallelGateway",
-      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#process/Process_L2Dak",
-      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#role/business-analyst",
-      "inLane": "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#process/Process_L2Dak/lane/Lane_Analyst",
-      "implementedBy": [],
-      "touchesWorkPlan": false,
-      "relaxable": true,
-      "incoming": [
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#process/Process_L2Dak/flow/B04"
-      ],
-      "outgoing": [
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#process/Process_L2Dak/flow/B05",
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#process/Process_L2Dak/flow/B06",
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#process/Process_L2Dak/flow/B08",
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#process/Process_L2Dak/flow/B09",
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#process/Process_L2Dak/flow/B10",
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#process/Process_L2Dak/flow/B07"
-      ],
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#directory/processes",
-      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_L2Dak/node/Gateway_AuthorFork"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#process/Process_L2Dak/node/Task_Personas",
-      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#ProcessNode",
-      "name": "Personas and scenarios",
-      "nodeKind": "activity",
-      "bpmnType": "bpmn:UserTask",
-      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#process/Process_L2Dak",
-      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#role/business-analyst",
-      "inLane": "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#process/Process_L2Dak/lane/Lane_Analyst",
-      "implementedBy": [
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#skill/l2-dak-authoring"
-      ],
-      "touchesWorkPlan": false,
-      "relaxable": true,
-      "incoming": [
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#process/Process_L2Dak/flow/B05"
-      ],
-      "outgoing": [
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#process/Process_L2Dak/flow/B11"
-      ],
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#directory/processes",
-      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_L2Dak/node/Task_Personas"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#process/Process_L2Dak/node/Task_Bpmn",
-      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#ProcessNode",
-      "name": "Business processes · BPMN 2.0",
-      "nodeKind": "activity",
-      "bpmnType": "bpmn:UserTask",
-      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#process/Process_L2Dak",
-      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#role/business-analyst",
-      "inLane": "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#process/Process_L2Dak/lane/Lane_Analyst",
-      "implementedBy": [
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#skill/bpmn-authoring"
-      ],
-      "touchesWorkPlan": false,
-      "relaxable": true,
-      "incoming": [
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#process/Process_L2Dak/flow/B06"
-      ],
-      "outgoing": [
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#process/Process_L2Dak/flow/B12"
-      ],
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#directory/processes",
-      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_L2Dak/node/Task_Bpmn"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#process/Process_L2Dak/node/Task_Dmn",
-      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#ProcessNode",
-      "name": "Decision logic · DMN tables",
-      "nodeKind": "activity",
-      "bpmnType": "bpmn:UserTask",
-      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#process/Process_L2Dak",
-      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#role/business-analyst",
-      "inLane": "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#process/Process_L2Dak/lane/Lane_Analyst",
-      "implementedBy": [
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#skill/dmn-authoring"
-      ],
-      "touchesWorkPlan": false,
-      "relaxable": true,
-      "incoming": [
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#process/Process_L2Dak/flow/B07"
-      ],
-      "outgoing": [
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#process/Process_L2Dak/flow/B13"
-      ],
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#directory/processes",
-      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_L2Dak/node/Task_Dmn"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#process/Process_L2Dak/node/Task_DataDict",
-      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#ProcessNode",
-      "name": "Data dictionary and core data elements",
-      "nodeKind": "activity",
-      "bpmnType": "bpmn:UserTask",
-      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#process/Process_L2Dak",
-      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#role/business-analyst",
-      "inLane": "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#process/Process_L2Dak/lane/Lane_Analyst",
-      "implementedBy": [
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#skill/l2-dak-authoring"
-      ],
-      "touchesWorkPlan": false,
-      "relaxable": true,
-      "incoming": [
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#process/Process_L2Dak/flow/B08"
-      ],
-      "outgoing": [
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#process/Process_L2Dak/flow/B14"
-      ],
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#directory/processes",
-      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_L2Dak/node/Task_DataDict"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#process/Process_L2Dak/node/Task_Indicators",
-      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#ProcessNode",
-      "name": "Indicators and requirements",
-      "nodeKind": "activity",
-      "bpmnType": "bpmn:UserTask",
-      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#process/Process_L2Dak",
-      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#role/business-analyst",
-      "inLane": "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#process/Process_L2Dak/lane/Lane_Analyst",
-      "implementedBy": [
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#skill/l2-dak-authoring"
-      ],
-      "touchesWorkPlan": false,
-      "relaxable": true,
-      "incoming": [
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#process/Process_L2Dak/flow/B09"
-      ],
-      "outgoing": [
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#process/Process_L2Dak/flow/B15"
-      ],
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#directory/processes",
-      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_L2Dak/node/Task_Indicators"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#process/Process_L2Dak/node/Task_Terminology",
-      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#ProcessNode",
-      "name": "Terminology bindings",
-      "nodeKind": "activity",
-      "bpmnType": "bpmn:UserTask",
-      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#process/Process_L2Dak",
-      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#role/terminologist",
-      "inLane": "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#process/Process_L2Dak/lane/Lane_Terminologist",
-      "implementedBy": [
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#skill/terminology-management"
-      ],
-      "touchesWorkPlan": false,
-      "relaxable": true,
-      "incoming": [
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#process/Process_L2Dak/flow/B10"
-      ],
-      "outgoing": [
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#process/Process_L2Dak/flow/B16"
-      ],
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#directory/processes",
-      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_L2Dak/node/Task_Terminology"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#process/Process_L2Dak/node/Gateway_AuthorJoin",
-      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#ProcessNode",
-      "name": "Gateway_AuthorJoin",
-      "nodeKind": "parallel",
-      "bpmnType": "bpmn:ParallelGateway",
-      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#process/Process_L2Dak",
-      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#role/business-analyst",
-      "inLane": "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#process/Process_L2Dak/lane/Lane_Analyst",
-      "implementedBy": [],
-      "touchesWorkPlan": false,
-      "relaxable": true,
-      "incoming": [
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#process/Process_L2Dak/flow/B11",
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#process/Process_L2Dak/flow/B12",
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#process/Process_L2Dak/flow/B14",
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#process/Process_L2Dak/flow/B15",
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#process/Process_L2Dak/flow/B16",
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#process/Process_L2Dak/flow/B13"
-      ],
-      "outgoing": [
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#process/Process_L2Dak/flow/B17"
-      ],
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#directory/processes",
-      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_L2Dak/node/Gateway_AuthorJoin"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#process/Process_L2Dak/node/Task_SmeValidate",
-      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#ProcessNode",
-      "name": "Clinical validation",
-      "nodeKind": "activity",
-      "bpmnType": "bpmn:UserTask",
-      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#process/Process_L2Dak",
-      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#role/clinical-sme",
-      "inLane": "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#process/Process_L2Dak/lane/Lane_Sme",
-      "implementedBy": [
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#skill/content-review"
-      ],
-      "touchesWorkPlan": false,
-      "relaxable": true,
-      "incoming": [
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#process/Process_L2Dak/flow/B17"
-      ],
-      "outgoing": [
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#process/Process_L2Dak/flow/B18"
-      ],
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#directory/processes",
-      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_L2Dak/node/Task_SmeValidate"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#process/Process_L2Dak/node/Gateway_Accurate",
-      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#ProcessNode",
-      "name": "Clinically accurate?",
-      "nodeKind": "exclusive",
-      "bpmnType": "bpmn:ExclusiveGateway",
-      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#process/Process_L2Dak",
-      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#role/clinical-sme",
-      "inLane": "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#process/Process_L2Dak/lane/Lane_Sme",
-      "implementedBy": [],
-      "touchesWorkPlan": false,
-      "relaxable": true,
-      "incoming": [
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#process/Process_L2Dak/flow/B18"
-      ],
-      "outgoing": [
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#process/Process_L2Dak/flow/B19",
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#process/Process_L2Dak/flow/B20"
-      ],
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#directory/processes",
-      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_L2Dak/node/Gateway_Accurate"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#process/Process_L2Dak/node/Task_AssembleDak",
-      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#ProcessNode",
-      "name": "Assemble and validate the DAK",
-      "nodeKind": "activity",
-      "bpmnType": "bpmn:UserTask",
-      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#process/Process_L2Dak",
-      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#role/business-analyst",
-      "inLane": "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#process/Process_L2Dak/lane/Lane_Analyst",
-      "implementedBy": [
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#skill/content-validate"
-      ],
-      "touchesWorkPlan": false,
-      "relaxable": true,
-      "incoming": [
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#process/Process_L2Dak/flow/B20"
-      ],
-      "outgoing": [
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#process/Process_L2Dak/flow/B21"
-      ],
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#directory/processes",
-      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_L2Dak/node/Task_AssembleDak"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#process/Process_L2Dak/node/EndEvent_L2Ready",
-      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#ProcessNode",
-      "name": "L2 DAK ready for L3",
-      "nodeKind": "end",
-      "bpmnType": "bpmn:EndEvent",
-      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#process/Process_L2Dak",
-      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#role/business-analyst",
-      "inLane": "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#process/Process_L2Dak/lane/Lane_Analyst",
-      "implementedBy": [],
-      "touchesWorkPlan": false,
-      "relaxable": true,
-      "incoming": [
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#process/Process_L2Dak/flow/B21"
-      ],
-      "outgoing": [],
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#directory/processes",
-      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_L2Dak/node/EndEvent_L2Ready"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#process/Process_ExtractStructure",
@@ -40024,6 +39405,582 @@
       ],
       "outgoing": [],
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_DIIG/node/End_Process_DIIG"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#process/Process_L2Dak",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Process",
+      "name": "L2 DAK authoring",
+      "enforcement": "advisory",
+      "sourcePath": "../smart-base/processes/l2-dak-authoring.bpmn",
+      "startNode": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#process/Process_L2Dak/node/StartEvent_Guideline"
+      ],
+      "nodeCount": 16,
+      "flowCount": 21,
+      "conformsTo": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#externalSchema/omg-bpmn-2.0",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#externalSchema/omg-dd-1.0"
+      ],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_L2Dak"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#process/Process_L2Dak/flow/B01",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#process/Process_L2Dak",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#process/Process_L2Dak/node/StartEvent_Guideline",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#process/Process_L2Dak/node/Task_ScopeDak",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_L2Dak/flow/B01"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#process/Process_L2Dak/flow/B02",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#process/Process_L2Dak",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#process/Process_L2Dak/node/Task_ScopeDak",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#process/Process_L2Dak/node/Task_SeedBeans",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_L2Dak/flow/B02"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#process/Process_L2Dak/flow/B03",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#process/Process_L2Dak",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#process/Process_L2Dak/node/Task_SeedBeans",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#process/Process_L2Dak/node/Gateway_AuthorMerge",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_L2Dak/flow/B03"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#process/Process_L2Dak/flow/B04",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#process/Process_L2Dak",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#process/Process_L2Dak/node/Gateway_AuthorMerge",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#process/Process_L2Dak/node/Gateway_AuthorFork",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_L2Dak/flow/B04"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#process/Process_L2Dak/flow/B05",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#process/Process_L2Dak",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#process/Process_L2Dak/node/Gateway_AuthorFork",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#process/Process_L2Dak/node/Task_Personas",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_L2Dak/flow/B05"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#process/Process_L2Dak/flow/B06",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#process/Process_L2Dak",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#process/Process_L2Dak/node/Gateway_AuthorFork",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#process/Process_L2Dak/node/Task_Bpmn",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_L2Dak/flow/B06"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#process/Process_L2Dak/flow/B08",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#process/Process_L2Dak",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#process/Process_L2Dak/node/Gateway_AuthorFork",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#process/Process_L2Dak/node/Task_DataDict",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_L2Dak/flow/B08"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#process/Process_L2Dak/flow/B09",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#process/Process_L2Dak",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#process/Process_L2Dak/node/Gateway_AuthorFork",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#process/Process_L2Dak/node/Task_Indicators",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_L2Dak/flow/B09"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#process/Process_L2Dak/flow/B10",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#process/Process_L2Dak",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#process/Process_L2Dak/node/Gateway_AuthorFork",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#process/Process_L2Dak/node/Task_Terminology",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_L2Dak/flow/B10"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#process/Process_L2Dak/flow/B07",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#process/Process_L2Dak",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#process/Process_L2Dak/node/Gateway_AuthorFork",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#process/Process_L2Dak/node/Task_Dmn",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_L2Dak/flow/B07"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#process/Process_L2Dak/flow/B11",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#process/Process_L2Dak",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#process/Process_L2Dak/node/Task_Personas",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#process/Process_L2Dak/node/Gateway_AuthorJoin",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_L2Dak/flow/B11"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#process/Process_L2Dak/flow/B12",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#process/Process_L2Dak",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#process/Process_L2Dak/node/Task_Bpmn",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#process/Process_L2Dak/node/Gateway_AuthorJoin",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_L2Dak/flow/B12"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#process/Process_L2Dak/flow/B14",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#process/Process_L2Dak",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#process/Process_L2Dak/node/Task_DataDict",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#process/Process_L2Dak/node/Gateway_AuthorJoin",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_L2Dak/flow/B14"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#process/Process_L2Dak/flow/B15",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#process/Process_L2Dak",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#process/Process_L2Dak/node/Task_Indicators",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#process/Process_L2Dak/node/Gateway_AuthorJoin",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_L2Dak/flow/B15"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#process/Process_L2Dak/flow/B16",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#process/Process_L2Dak",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#process/Process_L2Dak/node/Task_Terminology",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#process/Process_L2Dak/node/Gateway_AuthorJoin",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_L2Dak/flow/B16"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#process/Process_L2Dak/flow/B13",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#process/Process_L2Dak",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#process/Process_L2Dak/node/Task_Dmn",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#process/Process_L2Dak/node/Gateway_AuthorJoin",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_L2Dak/flow/B13"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#process/Process_L2Dak/flow/B17",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#process/Process_L2Dak",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#process/Process_L2Dak/node/Gateway_AuthorJoin",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#process/Process_L2Dak/node/Task_SmeValidate",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_L2Dak/flow/B17"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#process/Process_L2Dak/flow/B18",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#process/Process_L2Dak",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#process/Process_L2Dak/node/Task_SmeValidate",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#process/Process_L2Dak/node/Gateway_Accurate",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_L2Dak/flow/B18"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#process/Process_L2Dak/flow/B19",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#SequenceFlow",
+      "name": "changes needed",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#process/Process_L2Dak",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#process/Process_L2Dak/node/Gateway_Accurate",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#process/Process_L2Dak/node/Gateway_AuthorMerge",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_L2Dak/flow/B19"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#process/Process_L2Dak/flow/B20",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#SequenceFlow",
+      "name": "validated",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#process/Process_L2Dak",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#process/Process_L2Dak/node/Gateway_Accurate",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#process/Process_L2Dak/node/Task_AssembleDak",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_L2Dak/flow/B20"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#process/Process_L2Dak/flow/B21",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#process/Process_L2Dak",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#process/Process_L2Dak/node/Task_AssembleDak",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#process/Process_L2Dak/node/EndEvent_L2Ready",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_L2Dak/flow/B21"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#process/Process_L2Dak/lane/Lane_Programme",
+      "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#Lane",
+      "name": "Programme manager / technical officer",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#process/Process_L2Dak",
+      "bindsRole": "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#role/programme-manager",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_L2Dak/lane/Lane_Programme"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#process/Process_L2Dak/lane/Lane_WorkPlan",
+      "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#Lane",
+      "name": "Work plan — beans (shared by humans and agents)",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#process/Process_L2Dak",
+      "bindsRole": "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#role/work-plan",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_L2Dak/lane/Lane_WorkPlan"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#process/Process_L2Dak/lane/Lane_Analyst",
+      "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#Lane",
+      "name": "Business analyst",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#process/Process_L2Dak",
+      "bindsRole": "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#role/business-analyst",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_L2Dak/lane/Lane_Analyst"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#process/Process_L2Dak/lane/Lane_Terminologist",
+      "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#Lane",
+      "name": "Terminologist",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#process/Process_L2Dak",
+      "bindsRole": "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#role/terminologist",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_L2Dak/lane/Lane_Terminologist"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#process/Process_L2Dak/lane/Lane_Sme",
+      "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#Lane",
+      "name": "Clinical SME",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#process/Process_L2Dak",
+      "bindsRole": "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#role/clinical-sme",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_L2Dak/lane/Lane_Sme"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#process/Process_L2Dak/node/StartEvent_Guideline",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#ProcessNode",
+      "name": "WHO guideline / recommendations",
+      "nodeKind": "start",
+      "bpmnType": "bpmn:StartEvent",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#process/Process_L2Dak",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#role/programme-manager",
+      "inLane": "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#process/Process_L2Dak/lane/Lane_Programme",
+      "implementedBy": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#process/Process_L2Dak/flow/B01"
+      ],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_L2Dak/node/StartEvent_Guideline"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#process/Process_L2Dak/node/Task_ScopeDak",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#ProcessNode",
+      "name": "Scope the DAK",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:UserTask",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#process/Process_L2Dak",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#role/programme-manager",
+      "inLane": "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#process/Process_L2Dak/lane/Lane_Programme",
+      "implementedBy": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#skill/content-plan"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#process/Process_L2Dak/flow/B01"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#process/Process_L2Dak/flow/B02"
+      ],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_L2Dak/node/Task_ScopeDak"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#process/Process_L2Dak/node/Task_SeedBeans",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#ProcessNode",
+      "name": "Seed the work plan",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:Task",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#process/Process_L2Dak",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#role/work-plan",
+      "inLane": "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#process/Process_L2Dak/lane/Lane_WorkPlan",
+      "implementedBy": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#skill/todo-manager"
+      ],
+      "touchesWorkPlan": true,
+      "workPlanOp": "claim",
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#process/Process_L2Dak/flow/B02"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#process/Process_L2Dak/flow/B03"
+      ],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_L2Dak/node/Task_SeedBeans"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#process/Process_L2Dak/node/Gateway_AuthorMerge",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#ProcessNode",
+      "name": "Gateway_AuthorMerge",
+      "nodeKind": "exclusive",
+      "bpmnType": "bpmn:ExclusiveGateway",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#process/Process_L2Dak",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#role/business-analyst",
+      "inLane": "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#process/Process_L2Dak/lane/Lane_Analyst",
+      "implementedBy": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#process/Process_L2Dak/flow/B03",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#process/Process_L2Dak/flow/B19"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#process/Process_L2Dak/flow/B04"
+      ],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_L2Dak/node/Gateway_AuthorMerge"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#process/Process_L2Dak/node/Gateway_AuthorFork",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#ProcessNode",
+      "name": "Gateway_AuthorFork",
+      "nodeKind": "parallel",
+      "bpmnType": "bpmn:ParallelGateway",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#process/Process_L2Dak",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#role/business-analyst",
+      "inLane": "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#process/Process_L2Dak/lane/Lane_Analyst",
+      "implementedBy": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#process/Process_L2Dak/flow/B04"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#process/Process_L2Dak/flow/B05",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#process/Process_L2Dak/flow/B06",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#process/Process_L2Dak/flow/B08",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#process/Process_L2Dak/flow/B09",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#process/Process_L2Dak/flow/B10",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#process/Process_L2Dak/flow/B07"
+      ],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_L2Dak/node/Gateway_AuthorFork"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#process/Process_L2Dak/node/Task_Personas",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#ProcessNode",
+      "name": "Personas and scenarios",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:UserTask",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#process/Process_L2Dak",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#role/business-analyst",
+      "inLane": "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#process/Process_L2Dak/lane/Lane_Analyst",
+      "implementedBy": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#skill/l2-dak-authoring"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#process/Process_L2Dak/flow/B05"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#process/Process_L2Dak/flow/B11"
+      ],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_L2Dak/node/Task_Personas"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#process/Process_L2Dak/node/Task_Bpmn",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#ProcessNode",
+      "name": "Business processes · BPMN 2.0",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:UserTask",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#process/Process_L2Dak",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#role/business-analyst",
+      "inLane": "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#process/Process_L2Dak/lane/Lane_Analyst",
+      "implementedBy": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#skill/bpmn-authoring"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#process/Process_L2Dak/flow/B06"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#process/Process_L2Dak/flow/B12"
+      ],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_L2Dak/node/Task_Bpmn"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#process/Process_L2Dak/node/Task_Dmn",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#ProcessNode",
+      "name": "Decision logic · DMN tables",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:UserTask",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#process/Process_L2Dak",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#role/business-analyst",
+      "inLane": "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#process/Process_L2Dak/lane/Lane_Analyst",
+      "implementedBy": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#skill/dmn-authoring"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#process/Process_L2Dak/flow/B07"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#process/Process_L2Dak/flow/B13"
+      ],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_L2Dak/node/Task_Dmn"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#process/Process_L2Dak/node/Task_DataDict",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#ProcessNode",
+      "name": "Data dictionary and core data elements",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:UserTask",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#process/Process_L2Dak",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#role/business-analyst",
+      "inLane": "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#process/Process_L2Dak/lane/Lane_Analyst",
+      "implementedBy": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#skill/l2-dak-authoring"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#process/Process_L2Dak/flow/B08"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#process/Process_L2Dak/flow/B14"
+      ],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_L2Dak/node/Task_DataDict"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#process/Process_L2Dak/node/Task_Indicators",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#ProcessNode",
+      "name": "Indicators and requirements",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:UserTask",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#process/Process_L2Dak",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#role/business-analyst",
+      "inLane": "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#process/Process_L2Dak/lane/Lane_Analyst",
+      "implementedBy": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#skill/l2-dak-authoring"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#process/Process_L2Dak/flow/B09"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#process/Process_L2Dak/flow/B15"
+      ],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_L2Dak/node/Task_Indicators"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#process/Process_L2Dak/node/Task_Terminology",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#ProcessNode",
+      "name": "Terminology bindings",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:UserTask",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#process/Process_L2Dak",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#role/terminologist",
+      "inLane": "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#process/Process_L2Dak/lane/Lane_Terminologist",
+      "implementedBy": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#skill/terminology-management"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#process/Process_L2Dak/flow/B10"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#process/Process_L2Dak/flow/B16"
+      ],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_L2Dak/node/Task_Terminology"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#process/Process_L2Dak/node/Gateway_AuthorJoin",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#ProcessNode",
+      "name": "Gateway_AuthorJoin",
+      "nodeKind": "parallel",
+      "bpmnType": "bpmn:ParallelGateway",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#process/Process_L2Dak",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#role/business-analyst",
+      "inLane": "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#process/Process_L2Dak/lane/Lane_Analyst",
+      "implementedBy": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#process/Process_L2Dak/flow/B11",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#process/Process_L2Dak/flow/B12",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#process/Process_L2Dak/flow/B14",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#process/Process_L2Dak/flow/B15",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#process/Process_L2Dak/flow/B16",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#process/Process_L2Dak/flow/B13"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#process/Process_L2Dak/flow/B17"
+      ],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_L2Dak/node/Gateway_AuthorJoin"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#process/Process_L2Dak/node/Task_SmeValidate",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#ProcessNode",
+      "name": "Clinical validation",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:UserTask",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#process/Process_L2Dak",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#role/clinical-sme",
+      "inLane": "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#process/Process_L2Dak/lane/Lane_Sme",
+      "implementedBy": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#skill/content-review"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#process/Process_L2Dak/flow/B17"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#process/Process_L2Dak/flow/B18"
+      ],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_L2Dak/node/Task_SmeValidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#process/Process_L2Dak/node/Gateway_Accurate",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#ProcessNode",
+      "name": "Clinically accurate?",
+      "nodeKind": "exclusive",
+      "bpmnType": "bpmn:ExclusiveGateway",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#process/Process_L2Dak",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#role/clinical-sme",
+      "inLane": "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#process/Process_L2Dak/lane/Lane_Sme",
+      "implementedBy": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#process/Process_L2Dak/flow/B18"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#process/Process_L2Dak/flow/B19",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#process/Process_L2Dak/flow/B20"
+      ],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_L2Dak/node/Gateway_Accurate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#process/Process_L2Dak/node/Task_AssembleDak",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#ProcessNode",
+      "name": "Assemble and validate the DAK",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:UserTask",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#process/Process_L2Dak",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#role/business-analyst",
+      "inLane": "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#process/Process_L2Dak/lane/Lane_Analyst",
+      "implementedBy": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#skill/content-validate"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#process/Process_L2Dak/flow/B20"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#process/Process_L2Dak/flow/B21"
+      ],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_L2Dak/node/Task_AssembleDak"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#process/Process_L2Dak/node/EndEvent_L2Ready",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#ProcessNode",
+      "name": "L2 DAK ready for L3",
+      "nodeKind": "end",
+      "bpmnType": "bpmn:EndEvent",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#process/Process_L2Dak",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#role/business-analyst",
+      "inLane": "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#process/Process_L2Dak/lane/Lane_Analyst",
+      "implementedBy": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#process/Process_L2Dak/flow/B21"
+      ],
+      "outgoing": [],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_L2Dak/node/EndEvent_L2Ready"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th/cat-harness.jsonld#tool/folio-block-qa-summary",

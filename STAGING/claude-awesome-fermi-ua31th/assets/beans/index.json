@@ -2,7 +2,7 @@
   "$schema": "folio-bean-index/v1",
   "tile": {
     "beans": {
-      "count": 595,
+      "count": 596,
       "unit": "beans"
     }
   },
@@ -3426,7 +3426,7 @@
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-30T22:52:49Z",
-      "updatedAt": "2026-10-01T00:25:25Z",
+      "updatedAt": "2026-10-01T08:56:29Z",
       "preview": "## Why\nOwner ruling 2026-09-30, verbatim: \"dspace scripts generic in folio-assistant. iris specific tools for now ok in who-iris/ but make sure fails QA finding\".\n\nwho-iris/ is a staged instance that will move to its own CONTENT repository (litlfred/who-iris). kg-separation / bootstrap FR-7: a content repository holds no code. who-iris-tools is NOT authorised.\n\n## Done when\n- every code file under",
       "file": "beans/defs/folio-assistant-eayu--who-iris-separation-generic-dspace-code-to-the-pla.md"
     },
@@ -3566,7 +3566,7 @@
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-10-01T06:40:55Z",
-      "updatedAt": "2026-10-01T06:46:40Z",
+      "updatedAt": "2026-10-01T11:29:42Z",
       "preview": "Issue #1614 item 4: methodology literature the KG / folio-asst deck relies on and no library holds. ODRL Information Model 2.2 (REC 2018-02-15; actor permissions, before/after check), PROV-O (REC 2013-04-30; QA/QC reports as provenance, bun run prov:qaqc), JSON-LD 1.1 (REC 2020-07-16; every manifest is JSON-LD). w3.org is blocked from the container; the REC publication snapshots are in each WG's G",
       "file": "beans/defs/folio-assistant-f1qz--ingest-w3c-odrl-22-prov-o-json-ld-11-into-cat-harn.md"
     },
@@ -4077,15 +4077,15 @@
     {
       "id": "folio-assistant-hx65",
       "title": "S0 main green: five red jobs on cdb0a018, submodule pins, orphan-sidecar ruling",
-      "status": "todo",
+      "status": "completed",
       "type": "task",
       "priority": "critical",
       "parent": "folio-assistant-7x5n",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-10-01T08:14:33Z",
-      "updatedAt": "2026-10-01T12:16:23Z",
-      "preview": "Failing on main cdb0a018 (gh api jobs): Repository gates #13 'workflow skill refs'; TypeScript #7 'bun test'; E2E #7 'playwright test'; Skill-registration chain #5 'registration chain is current'; Docs site #7 'Regenerate skill instruction pages'. Four merges landed before CI finished.\n\n## Done when\n- [ ] each failing job named with step and cause\n- [ ] fix PR merged on per-job verified green\n- [ ",
+      "updatedAt": "2026-10-01T15:09:20Z",
+      "preview": "Failing on main cdb0a018 (gh api jobs): Repository gates #13 'workflow skill refs'; TypeScript #7 'bun test'; E2E #7 'playwright test'; Skill-registration chain #5 'registration chain is current'; Docs site #7 'Regenerate skill instruction pages'. Four merges landed before CI finished.\n\n## Done when\n- [x] each failing job named with step and cause (PR #1774 body; root cause: take-main merges 198a9",
       "file": "beans/defs/folio-assistant-hx65--s0-main-green-five-red-jobs-on-cdb0a018-submodule.md"
     },
     {
@@ -5607,6 +5607,20 @@
       "updatedAt": "2026-09-23T17:58:25Z",
       "preview": "Owner, 2026-09-23 (session_017nyJj3PsjvszpF3DyGeBgE): *\"bootstrap/README need propeor one voice revieqw. not condensed very repetative.\"*\n\n`bootstrap/README.md` is 252 lines. The owner reads it as repetitive and not condensed. This is repetition INSIDE one page. That is a different measurement from the one parent `88mg` made, which compared `docs/` with `skills/` and found little overlap.\n\n## Done",
       "file": "beans/defs/folio-assistant-pv51--bootstrap-readme-one-voice-rewrite-repetitive-and.md"
+    },
+    {
+      "id": "folio-assistant-pw9j",
+      "title": "Bump bootstrap/bootstrap-tools pins to the fixed upstream (f75a216 / 3046412); re-extract translation templates",
+      "status": "todo",
+      "type": "task",
+      "priority": "normal",
+      "parent": "folio-assistant-7x5n",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-10-01T15:09:20Z",
+      "updatedAt": "2026-10-01T15:09:20Z",
+      "preview": "Upstream fixed 2026-10-01: bootstrap#1 (f75a2167d226) and bootstrap-tools#4 (30464126ed93) — READMEs reproducible via published-IRI term links, each repo checks its own README in CI. Main pins PR0's 7a91356 / c5e5e25. Bump both gitlinks, re-extract bootstrap translation templates (translate-bpmn --extract), regenerate bootstrap kg-qa sidecars and SVGs, gates green.\n## Done when\n- [ ] pins at f75a2",
+      "file": "beans/defs/folio-assistant-pw9j--bump-bootstrapbootstrap-tools-pins-to-the-fixed-up.md"
     },
     {
       "id": "folio-assistant-pyds",
@@ -8034,7 +8048,7 @@
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-10-01T05:31:12Z",
-      "updatedAt": "2026-10-01T08:15:15Z",
+      "updatedAt": "2026-10-01T15:09:31Z",
       "preview": "PR1 of the approved placement proposal (owner rulings 2026-09-30; bean 9umr's eight groups; PR0 mechanisms in bean ejye). Move the content-type skill packages out of `cat-harness/skills/` to the instance that owns them, into the `content` / `library` concern group there:\n\n- paper / formal-math (`folio-paper-adapter`, `authoring-math`) and the three `claude-scientific-skills` packages -> `folio-ass",
       "file": "beans/defs/folio-assistant-ybwt--placement-pr1-content-type-skill-packages-move-up.md"
     },
