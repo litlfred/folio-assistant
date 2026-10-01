@@ -74,7 +74,7 @@
 import { existsSync, readFileSync, readdirSync } from "node:fs";
 import { basename, dirname, extname, join, resolve } from "node:path";
 
-import { directoriesForGraph, repoRootFor } from "../schemas/cat-harness.js";
+import { repoRootFor } from "../schemas/cat-harness.js";
 import { readStructure, STRUCTURE_FILENAME } from "../schemas/document-structure.ts";
 import { readEntryBlocks, readLibraryGraph, type LibraryEntry } from "./library-graph.ts";
 import {
