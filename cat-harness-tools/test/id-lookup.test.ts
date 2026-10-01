@@ -53,7 +53,9 @@ function committedFiles(): Map<string, string> {
   const walk = (d: string, rel: string): void => {
     for (const e of readdirSync(d, { withFileTypes: true })) {
       if (e.isDirectory()) walk(join(d, e.name), rel + e.name + "/");
-      else out.set(rel + e.name, readFileSync(join(d, e.name), "utf8"));
+      // The host directory's own subgraph README is not part of the index
+      // (`gen-id-lookup.ts`, NOT_THE_INDEX; bean `j7ql`).
+      else if (!(rel === "" && e.name === "README.md")) out.set(rel + e.name, readFileSync(join(d, e.name), "utf8"));
     }
   };
   walk(OUT, "");
