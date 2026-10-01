@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: code-change-review\n"
-"POT-Creation-Date: 2026-10-01T00:12:54.809Z\n"
+"POT-Creation-Date: 2026-10-01T06:50:37.607Z\n"
 "PO-Revision-Date: \n"
 "Last-Translator: \n"
 "Language: fr\n"
@@ -21,15 +21,15 @@ msgstr ""
 
 #: processes/code-change-review.bpmn:246
 #. Diagram element documentation
-msgid "`prepare-merge` brings the base in, re-runs the gates and pushes — it does NOT merge. `watch` follows the PR until it is merged or closed, because webhooks do not reliably deliver CI success or a merge-conflict transition."
+msgid "`prepare-merge` brings the base in, re-runs the gates and pushes — it does NOT merge. Bringing the base in IS `merge-base.bpmn` (`bun run merge:main`): conflicts a declared pattern covers are resolved and proved by the gate set; anything else aborts the merge and comes back to the agent (bean `y7b3`, #1707). `watch` follows the PR until it is merged or closed, because webhooks do not reliably deliver CI success or a merge-conflict transition."
 msgstr ""
 
-#: processes/code-change-review.bpmn:260
+#: processes/code-change-review.bpmn:263
 #. Diagram element documentation
 msgid "A closed work item is read later by somebody deciding whether to reopen the subject, so \"completed\" with nothing behind it cannot be audited. An ISSUE is never closed on the agent's own say-so."
 msgstr ""
 
-#: processes/code-change-review.bpmn:295
+#: processes/code-change-review.bpmn:298
 #. Diagram element documentation
 msgid "A human or an agent acting AS reviewer. Nothing is a reviewer; somebody acts as one for the duration of this lane. For a rendered change the reviewer reads the agent's before/after preview rather than building one."
 msgstr ""
@@ -74,7 +74,7 @@ msgstr ""
 msgid "CI green?"
 msgstr ""
 
-#: processes/code-change-review.bpmn:280
+#: processes/code-change-review.bpmn:283
 #. Diagram element documentation
 msgid "CI tests the MERGE, not the branch. That is why a locally green tree can go red here: the agent's tree and the merge result are different trees, and the difference is invisible from a checkout."
 msgstr ""
@@ -94,7 +94,7 @@ msgstr ""
 msgid "Claim the work item"
 msgstr ""
 
-#: processes/code-change-review.bpmn:322
+#: processes/code-change-review.bpmn:325
 #. Diagram label
 msgid "clear"
 msgstr ""
@@ -124,7 +124,7 @@ msgstr ""
 msgid "Exists as a separate lane for one reason: what it tests — the merge of head into base — is not a claim the Agent lane could make about its own tree, so GW_CIGreen has to be fed by an independent run rather than by the agent reporting its own gates as done."
 msgstr ""
 
-#: processes/code-change-review.bpmn:320
+#: processes/code-change-review.bpmn:323
 #. Diagram label
 msgid "findings"
 msgstr ""
@@ -134,7 +134,7 @@ msgstr ""
 msgid "Getting a change to the PLATFORM from \"this is needed\" to merged: claim the work, branch and announce it, make the change, prove it against the platform's own gates, and carry it through review to a merge somebody else is not left holding. You are in this process for a change to folio-assistant itself. `content-change-review` is the same shape for a folio's content, and the acceptance differs: here a code reviewer judges the engineering, there a review committee judges the editorial. The loop back through \"root-cause the failure\" is the point of drawing this at all. Red CI is not a state you report and leave; it is a state you re-enter the process from. The same is true of a review that is not clear."
 msgstr ""
 
-#: processes/code-change-review.bpmn:316
+#: processes/code-change-review.bpmn:319
 #. Diagram label
 msgid "green"
 msgstr ""
@@ -149,7 +149,7 @@ msgstr ""
 msgid "Make the change"
 msgstr ""
 
-#: processes/code-change-review.bpmn:273
+#: processes/code-change-review.bpmn:276
 #. Diagram label
 msgid "Merged"
 msgstr ""
@@ -164,12 +164,12 @@ msgstr ""
 msgid "Prepare the merge, and watch it through"
 msgstr ""
 
-#: processes/code-change-review.bpmn:259
+#: processes/code-change-review.bpmn:262
 #. Diagram label
 msgid "Record what was done, and close"
 msgstr ""
 
-#: processes/code-change-review.bpmn:317
+#: processes/code-change-review.bpmn:320
 #. Diagram label
 msgid "red"
 msgstr ""
@@ -179,7 +179,7 @@ msgstr ""
 msgid "Review clear?"
 msgstr ""
 
-#: processes/code-change-review.bpmn:294
+#: processes/code-change-review.bpmn:297
 #. Diagram label
 msgid "Review the change"
 msgstr ""
@@ -189,7 +189,7 @@ msgstr ""
 msgid "Root-cause the failure"
 msgstr ""
 
-#: processes/code-change-review.bpmn:279
+#: processes/code-change-review.bpmn:282
 #. Diagram label
 msgid "Run the gates against the merge of head into base"
 msgstr ""
