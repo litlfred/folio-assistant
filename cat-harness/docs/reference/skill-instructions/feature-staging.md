@@ -23,6 +23,13 @@ feature branch's rendered site at:
 https://<owner>.github.io/<repo>/STAGING/<branch-slug>/
 ```
 
+**A preview is the general publication step with a different root.** The push
+itself is [`render-kg-to-cdn`](render-kg-to-cdn.md) with
+`STAGING/<branch-slug>/` as the publication root URL and the `gh-pages` Tool as
+the target — the same step a release takes with the site root. What this skill
+owns is everything around that call: the slug, the banner and `staging.json`,
+the render log, the PR comment, and taking the preview down.
+
 ## How it works
 
 ### 1. Feature branch → staging deployment
@@ -225,6 +232,6 @@ This skill has its own process: **[Staging a feature branch preview, and taking 
 | [Content Change and Review](../../processes/content-change-review.html) | Create feature branch; Build staging site; Deploy to STAGING/<slug>/; Comment staging URL on PR; Remove STAGING/<slug>/ |
 | [CRDM Phase 6 — implement, MVP, acceptance](../../processes/crdm-deliver.html) | Deploy the MVP to staging |
 | [Publishing the docs site, and keeping the previews alive](../../processes/docs-site-publish.html) | Restore the OPEN PRs' staging previews |
-| [Staging a feature branch preview, and taking it down](../../processes/feature-staging.html) | Build the docs site Jekyll · TypeDoc · KG export; Publish to STAGING/&lt;slug&gt;; Derive the slug from the head ref |
+| [Staging a feature branch preview, and taking it down](../../processes/feature-staging.html) | Build the docs site Jekyll · TypeDoc · KG export; Derive the slug from the head ref |
 | [Adopting an upstream version bump](../../processes/upstream-version-adoption.html) | MVP: build the candidate on a staging branch |
 

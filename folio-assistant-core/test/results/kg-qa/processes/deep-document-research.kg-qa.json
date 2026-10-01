@@ -12,22 +12,12 @@
       "findings": []
     },
     "raci-single-accountable": {
-      "result": "unknown",
-      "findings": [
-        {
-          "where": "—",
-          "detail": "no role graph declared at scenarios/roles.json, so this instance holds no role DEFINITIONS. Role references are still resolved — see `role-ref-resolves` — against the 52 role(s) reachable through this instance's `needs`; what cannot be judged here is what those roles CARRY, which needs the definition rather than the name."
-        }
-      ]
+      "result": "n/a",
+      "findings": []
     },
     "raci-accountable-not-consulted": {
-      "result": "unknown",
-      "findings": [
-        {
-          "where": "—",
-          "detail": "no role graph declared at scenarios/roles.json, so this instance holds no role DEFINITIONS. Role references are still resolved — see `role-ref-resolves` — against the 52 role(s) reachable through this instance's `needs`; what cannot be judged here is what those roles CARRY, which needs the definition rather than the name."
-        }
-      ]
+      "result": "n/a",
+      "findings": []
     },
     "convention-ref-resolves": {
       "result": "n/a",
@@ -75,39 +65,24 @@
       "findings": []
     },
     "lane-binds-role": {
-      "result": "unknown",
-      "findings": [
-        {
-          "where": "—",
-          "detail": "no role graph declared at scenarios/roles.json, so this instance holds no role DEFINITIONS. Role references are still resolved — see `role-ref-resolves` — against the 52 role(s) reachable through this instance's `needs`; what cannot be judged here is what those roles CARRY, which needs the definition rather than the name."
-        }
-      ]
+      "result": "pass",
+      "findings": []
     },
     "variable-performer-declared-alone": {
       "result": "n/a",
       "findings": []
     },
     "role-carries-activity-skill": {
-      "result": "unknown",
-      "findings": [
-        {
-          "where": "—",
-          "detail": "no role graph declared at scenarios/roles.json, so this instance holds no role DEFINITIONS. Role references are still resolved — see `role-ref-resolves` — against the 52 role(s) reachable through this instance's `needs`; what cannot be judged here is what those roles CARRY, which needs the definition rather than the name."
-        }
-      ]
+      "result": "pass",
+      "findings": []
     },
     "activity-names-skill": {
       "result": "pass",
       "findings": []
     },
     "activity-fulfilment-kind": {
-      "result": "unknown",
-      "findings": [
-        {
-          "where": "—",
-          "detail": "no role graph declared at scenarios/roles.json, so this instance holds no role DEFINITIONS. Role references are still resolved — see `role-ref-resolves` — against the 52 role(s) reachable through this instance's `needs`; what cannot be judged here is what those roles CARRY, which needs the definition rather than the name."
-        }
-      ]
+      "result": "n/a",
+      "findings": []
     },
     "call-activity-resolves": {
       "result": "n/a",
@@ -151,9 +126,9 @@
     }
   },
   "totals": {
-    "pass": 12,
+    "pass": 14,
     "fail": 1,
-    "n/a": 7,
-    "unknown": 5
+    "n/a": 10,
+    "unknown": 0
   }
 }

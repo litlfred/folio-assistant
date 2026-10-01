@@ -1,0 +1,40 @@
+{
+  "_comment": "Role EXTENSIONS by id (placement PR0b; PR1, bean ybwt). Each entry adds this instance's skills to a role the harness declares, so the edge points DOWN: the harness's scenarios/roles.json names no skill that lives above it. An extension adds skills and nothing else; a role this instance owns outright would go in `roles` (placement PR4 moves whole roles). Schema: cat-harness/schemas/role-graph.ts (RoleExtensionSchema); overlay: cat-harness/schemas/scenario-overlay.ts.",
+  "name": "fhir-harness",
+  "roles": [],
+  "extensions": [
+    {
+      "role": "publication-manager",
+      "skills": [
+        "ig-publication"
+      ]
+    },
+    {
+      "role": "terminologist",
+      "skills": [
+        "terminology-management"
+      ]
+    },
+    {
+      "role": "fhir-modeller",
+      "skills": [
+        "l3-fhir-authoring"
+      ]
+    },
+    {
+      "role": "build-pipeline",
+      "skills": [
+        "fhir-validation",
+        "ig-publication",
+        "l3-fhir-authoring"
+      ]
+    },
+    {
+      "role": "ig-publisher-service",
+      "skills": [
+        "fhir-validation",
+        "ig-publication"
+      ]
+    }
+  ]
+}

@@ -668,6 +668,12 @@ export interface CatHarnessDeclaration extends KgNodeLabels {
    * Absent means it already lives at the root of its own repository.
    */
   livesAt?: InstanceLocation;
+  /**
+   * Which half of a kg-separation pair the planned {@link repository} is —
+   * see `separation` on {@link CatHarnessDeclarationSchema}. Absent is "has
+   * not said". Bean `eayu`.
+   */
+  separation?: "content" | "tools";
   stub?: string;
   /**
    * Where this instance's artefacts are published — the base every `@id` in
@@ -720,6 +726,10 @@ export interface CatHarnessDeclaration extends KgNodeLabels {
   remoteGraphs?: RemoteGraph[];
   /** Harnesses this one is associated with and does not hold — {@link AssociatedHarness}. Issue #1146. */
   associatedHarnesses?: AssociatedHarness[];
+  /** External Knowledge Graphs this one CONSUMES, and which of their parts it chose to hold — {@link Subscription}. Issue #1719. */
+  subscriptions?: Subscription[];
+  /** Substrates known to exist or planned that NO declaration here names — {@link KnownSubstrate}. Issue #1719. */
+  knownSubstrates?: KnownSubstrate[];
   /**
    * Sticky notes this layer contributes to the landing board.
    *
@@ -2057,6 +2067,105 @@ export const AssociatedHarnessSchema = z
   // without a word and leave ✎ pointing nowhere.
   .strict();
 
+/**
+ * A SUBSCRIPTION to an external Knowledge Graph — a **substrate**: a repository
+ * whose root declaration meets bootstrap's schema requirements and declares at
+ * least one harness. Issue #1719; the design is
+ * `docs/proposals/kg-subscriptions.md`.
+ *
+ * ## Between `associatedHarnesses` and `needs`, and it MOVES
+ *
+ * `needs` is fully loaded, with order, overlay and skill resolution.
+ * `associatedHarnesses` is never loaded. A subscription starts referenced and
+ * becomes materialised one part at a time, as the subscriber chooses. So this
+ * entry holds only the CHOICE and the PIN. Whether a chosen part is actually
+ * held is answered by that part's `MaterializationSchema` record, the one
+ * place that already answers "do we hold these bytes". Recording state here
+ * too would give two answers to that question.
+ *
+ * `ref` is a 40-character SHA and required, the rule `sync-remote-skills`
+ * already enforces. An unpinned subscription is how two subscribers see two
+ * graphs under one name. A subgraph not listed is REFERENCED, not absent.
+ */
+export interface Subscription {
+  /** Local name for the subscription; unique within this list. The substrate's own name, unless two pins of one substrate are ever needed. */
+  id: string;
+  /** Where the substrate lives, `owner/repo` (#1652). */
+  repository: RepoFullName;
+  /** The pinned commit, a full 40-character SHA. A tag replaces it once the substrate publishes releases. */
+  ref: string;
+  /** Subgraph ids (the substrate's `directories[].id`) CHOSEN for materialisation. Everything else stays referenced. */
+  subgraphs?: string[];
+  /** How referenced binary assets are materialised. Each copy still passes `Process_MaterializeRemote`'s gates. */
+  assets?: { policy: "none" | "on-demand" | "all" };
+  /** Harness names from the substrate CHOSEN for instantiation. Instantiating writes `<name>.config.json`, which is what puts it in the navbar. */
+  harnesses?: string[];
+  /** One sentence a reader of the visualizer sees. */
+  note?: string;
+}
+
+const uniqueStrings = (label: string) =>
+  z
+    .array(z.string().min(1))
+    .refine((xs) => new Set(xs).size === xs.length, { message: `${label}: a value appears twice` });
+
+export const SubscriptionSchema = z
+  .object({
+    id: z.string().regex(INSTANCE_NAME),
+    repository: RepoFullNameSchema,
+    // A full SHA, and only that. A branch name moves under the subscriber;
+    // an abbreviated SHA is ambiguous by definition.
+    ref: z.string().regex(/^[0-9a-f]{40}$/, "ref must be a full 40-character commit SHA — pin, never follow a branch"),
+    subgraphs: uniqueStrings("subgraphs").optional(),
+    assets: z.object({ policy: z.enum(["none", "on-demand", "all"]) }).strict().optional(),
+    harnesses: z.array(z.string().regex(INSTANCE_NAME)).refine((xs) => new Set(xs).size === xs.length, { message: "harnesses: a name appears twice" }).optional(),
+    note: z.string().min(1).optional(),
+  })
+  // STRICT for the reason AssociatedHarnessSchema is: a misspelt `subgraph`
+  // would be dropped without a word, and the subscriber would believe it had
+  // chosen something it had not.
+  .strict();
+
+/**
+ * A substrate this harness knows of that NO declaration in the checkout names.
+ * Issue #1719, owner: *"cat-harness should list known substrates now and as
+ * part of separation plans."*
+ *
+ * **Hand-entered only where no fact already exists.** Every staged instance
+ * already declares its planned `repository` (#1652), and every associated
+ * harness its `repository`, so the registry DERIVES those rows. Listing them
+ * again here would be a second copy of a fact, free to drift. This list is for
+ * the rest: a proposed substrate with no instance yet (the WHO World Health
+ * Data Hub), or a status only a person knows (a repository created today).
+ * `scripts/subscriptions-viz.ts` merges the two, and a hand row overrides a
+ * derived one by `name`.
+ */
+export interface KnownSubstrate {
+  /** The substrate's instance name, as its declaration gives it or will. */
+  name: string;
+  /** Human title. */
+  title?: string;
+  /** `owner/repo`, when one exists or is planned. */
+  repository?: RepoFullName;
+  /** Where it stands: proposed (an idea), planned (a staged instance), exists (a repository), published (a release). */
+  status: "proposed" | "planned" | "exists" | "published";
+  /** Its paired tools repository, when the `kg-separation` pattern gives it one. */
+  toolsRepository?: RepoFullName;
+  /** One sentence a reader of the visualizer sees. */
+  note?: string;
+}
+
+export const KnownSubstrateSchema = z
+  .object({
+    name: z.string().regex(INSTANCE_NAME),
+    title: z.string().min(1).optional(),
+    repository: RepoFullNameSchema.optional(),
+    status: z.enum(["proposed", "planned", "exists", "published"]),
+    toolsRepository: RepoFullNameSchema.optional(),
+    note: z.string().min(1).optional(),
+  })
+  .strict();
+
 export const RemoteGraphSchema = z
   .object({
     id: z.string().min(1),
@@ -2432,6 +2541,20 @@ export const CatHarnessDeclarationSchema = z.object({
   navbarIcons: NavbarIconsSchema.optional(),
   repository: RepoFullNameSchema.optional(),
   livesAt: InstanceLocationSchema.optional(),
+  /**
+   * Which half of a kg-separation pair this instance's planned `repository`
+   * is: `content` (files to read — no code, bootstrap FR-7) or `tools` (the
+   * code that writes and checks a content repository).
+   *
+   * Optional, and absent is "has not said", never "not content": most staged
+   * instances here have not been through the split, and a default would claim
+   * a decision nobody made. Added 2026-09-30 (bean `eayu`) because who-iris is
+   * staged as a CONTENT repository with no tools repository authorised, so
+   * nothing else in the tree says it must hold no code; kg:audit's
+   * `content-instance-holds-code` reads it. An instance a declared tools
+   * instance `supports` is content too, and is read as such without this.
+   */
+  separation: z.enum(["content", "tools"]).optional(),
   stub: z.string().min(1).optional(),
   canonicalUrl: z.string().url().optional(),
   /**
@@ -2478,6 +2601,20 @@ export const CatHarnessDeclarationSchema = z.object({
   associatedHarnesses: z
     .array(AssociatedHarnessSchema)
     .refine((xs) => new Set(xs.map((x) => x.name)).size === xs.length, { message: "associatedHarnesses: a name appears twice" })
+    .optional(),
+  /**
+   * External Knowledge Graphs this one subscribes to — see {@link Subscription}.
+   * `.optional()` for the reason `associatedHarnesses` is. Ids are unique, and
+   * never also in `needs` or `associatedHarnesses` — refined below.
+   */
+  subscriptions: z
+    .array(SubscriptionSchema)
+    .refine((xs) => new Set(xs.map((x) => x.id)).size === xs.length, { message: "subscriptions: an id appears twice" })
+    .optional(),
+  /** See {@link KnownSubstrate}. Names are unique. */
+  knownSubstrates: z
+    .array(KnownSubstrateSchema)
+    .refine((xs) => new Set(xs.map((x) => x.name)).size === xs.length, { message: "knownSubstrates: a name appears twice" })
     .optional(),
   stickies: z.array(StickyContributionSchema).optional(),
   renderExemption: RenderExemptionSchema.optional(),
@@ -2578,6 +2715,26 @@ export const CatHarnessDeclarationSchema = z.object({
           code: z.ZodIssueCode.custom,
           path: ["associatedHarnesses", i, "name"],
           message: `\`${a.name}\` is in \`needs\`: an associated harness is referenced, not loaded (issue #1146)`,
+        });
+      }
+    });
+    // Issue #1719: one relation per remote thing. A subscription that is also
+    // in `needs` would be both loaded and chosen part by part; one that is
+    // also an associated harness would be both referenced-only and consumed.
+    const associated = new Set((d.associatedHarnesses ?? []).map((a) => a.name));
+    (d.subscriptions ?? []).forEach((sub, i) => {
+      if (needs.has(sub.id)) {
+        ctx.addIssue({
+          code: z.ZodIssueCode.custom,
+          path: ["subscriptions", i, "id"],
+          message: `\`${sub.id}\` is in \`needs\`: a subscription is consumed part by part, not loaded whole (issue #1719)`,
+        });
+      }
+      if (associated.has(sub.id)) {
+        ctx.addIssue({
+          code: z.ZodIssueCode.custom,
+          path: ["subscriptions", i, "id"],
+          message: `\`${sub.id}\` is also in \`associatedHarnesses\`: subscribe to it OR associate it, not both (issue #1719)`,
         });
       }
     });
@@ -3520,9 +3677,37 @@ export function readDeclaration(
   const file = findDeclarationFile(instanceRoot);
   if (file === undefined) return undefined;
   const p = join(instanceRoot, file);
+  let text: string;
+  try {
+    text = readFileSync(p, "utf-8");
+  } catch (e) {
+    throw new Error(`${p} is not valid JSON: ${e instanceof Error ? e.message : String(e)}`);
+  }
+  // MEMOISED ON THE FILE'S TEXT, not its path or mtime: the checkout overlay
+  // (placement PR0) resolves every staged instance through its own chain and
+  // reads each declaration a dozen times per process, and the Zod parse is
+  // the cost (measured: a CLI run went from 0.2 s to 2 s). Keyed on the bytes,
+  // so a test that rewrites a fixture is re-parsed, and on the registry's
+  // size, since kinds are registered at runtime. A clone is returned, so a
+  // caller that mutates its copy cannot poison the next one.
+  const hit = declarationCache.get(p);
+  if (hit !== undefined && hit.text === text && hit.registry === registry && hit.kinds === registry.names().length) {
+    return structuredClone(hit.value);
+  }
+  const value = parseDeclarationText(p, text, registry);
+  declarationCache.set(p, { text, registry, kinds: registry.names().length, value });
+  return structuredClone(value);
+}
+
+const declarationCache = new Map<
+  string,
+  { text: string; registry: GraphKindRegistry; kinds: number; value: CatHarnessDeclaration }
+>();
+
+function parseDeclarationText(p: string, text: string, registry: GraphKindRegistry): CatHarnessDeclaration {
   let raw: unknown;
   try {
-    raw = JSON.parse(readFileSync(p, "utf-8"));
+    raw = JSON.parse(text);
   } catch (e) {
     throw new Error(`${p} is not valid JSON: ${e instanceof Error ? e.message : String(e)}`);
   }
@@ -3916,16 +4101,80 @@ export function resolveDirectories(
   // the same directory as before. Existence-filtered (the `dh4f` rule); a
   // repository-scoped entry has one location by definition; a path another
   // entry already covers is not listed twice.
-  const out = [...byId.values()].map((d) => ({ ...d, member: d.member ?? d.declaredBy }));
+  //
+  // NESTED MEMBERS (placement PR0c, bean `ejye`). The same rule one level
+  // down, for a sub-subgraph declared FROM WITHIN: the harness declares a
+  // group once (`skills/skills.json` naming `library/`), and each instance's
+  // same-named `skills/library/` is a member of it. And a MEMBER's own
+  // declaration file is read as well as the declarer's — before this, sci's
+  // `skills/skills.json` (naming `lean/`, `data/`, `voices/`) was read only
+  // when sci was resolved ALONE, because in sci's chain `skills` is
+  // cat-harness's entry and only cat-harness's `skills.json` was opened. A
+  // worklist, so a member's from-within entry gets members of its own.
+  const out: ResolvedDirectory[] = [...byId.values()].map((d) => ({ ...d, member: d.member ?? d.declaredBy }));
   const seen = new Set(out.map((d) => d.absPath));
   const nameOf = new Map(chain.map((l) => [l.root, readDeclaration(l.root, registry)?.name ?? l.name]));
-  for (const d of [...out]) {
-    if (d.scope === "repository" || d.within !== undefined) continue;
+  const work = [...out];
+  while (work.length > 0) {
+    const d = work.shift()!;
+    if (d.scope === "repository") continue;
     for (const link of chain) {
       const abs = resolve(link.root, d.path);
       if (seen.has(abs) || !existsSync(abs)) continue;
       seen.add(abs);
-      out.push({ ...d, absPath: abs, own: link.own === true, member: nameOf.get(link.root) ?? link.name });
+      const member = nameOf.get(link.root) ?? link.name;
+      const m = { ...d, absPath: abs, own: link.own === true, member };
+      out.push(m);
+      work.push(m);
+      for (const nd of declaredFromWithin(m.absPath, m.graphKinds, registry)) {
+        const nAbs = join(m.absPath, nd.sub);
+        if (seen.has(nAbs)) continue;
+        seen.add(nAbs);
+        const e = {
+          ...nd.entry,
+          path: `${d.path.replace(/\/+$/, "")}/${nd.sub}/`,
+          declaredBy: member,
+          absPath: nAbs,
+          own: m.own,
+          member,
+          within: d.id,
+        } as ResolvedDirectory;
+        out.push(e);
+        work.push(e);
+      }
+    }
+  }
+  return out;
+}
+
+/**
+ * The instance directories a directory's kind-declaration file names FROM
+ * WITHIN (`"subgraph": true` entries), unresolved: each with its single path
+ * segment `sub`. Unparseable or absent files yield nothing —
+ * `check:harness-dirs` owns that finding.
+ */
+function declaredFromWithin(
+  absPath: string,
+  graphKinds: readonly string[],
+  registry: GraphKindRegistry,
+): Array<{ sub: string; entry: ContentDirectory }> {
+  const files = graphKinds
+    .map((g) => registry.get(g)?.declarationFile)
+    .filter((f): f is string => typeof f === "string");
+  const out: Array<{ sub: string; entry: ContentDirectory }> = [];
+  for (const f of [...new Set(files)]) {
+    const p = join(absPath, f);
+    if (!existsSync(p)) continue;
+    let nested: { directories?: Array<Record<string, unknown>> };
+    try {
+      nested = JSON.parse(readFileSync(p, "utf-8"));
+    } catch {
+      continue;
+    }
+    for (const nd of nested.directories ?? []) {
+      if (typeof nd.id !== "string" || typeof nd.path !== "string" || nd.subgraph !== true) continue;
+      const sub = nd.path.replace(/^\.\//, "").replace(/\/+$/, "");
+      out.push({ sub, entry: nd as unknown as ContentDirectory });
     }
   }
   return out;
@@ -5117,85 +5366,6 @@ function matchingDirectories(
   return resolveDirectories([{ name: "(local)", root, own: true }], registry).filter((d) =>
     d.graphKinds.includes(graph as GraphKind),
   );
-}
-
-/**
- * An instance's STATE graph, answered by the instance or else by its CHECKOUT.
- *
- * Bean `cmsl` step 2 (owner, 2026-09-30, round 5, issue #1694): the
- * checkout-level graphs — `beans`, `todos`, `memory` (and its `waiver` kind),
- * `fsh-guts`, `issue-marks`, `interaction` — are declared by the ROOT instance,
- * whose directory they physically sit in, not by `cat-harness` reaching up
- * with `scope: "repository"`. A lookup rooted at `cat-harness/` then finds
- * nothing, and a reader handed nothing reports a clean run over it (the `dh4f`
- * shape). So: the instance's own declaration first — an instance may keep its
- * own, and every test fixture does — then the checkout root's, consulted only
- * when that directory carries a declaration of its own, so a fixture in a
- * temporary directory never picks up whatever happens to sit beside it.
- */
-export function checkoutResolvedDirectories(
-  root: string,
-  graph: string,
-  registry: GraphKindRegistry = defaultGraphKinds,
-): ResolvedDirectory[] {
-  const own = matchingDirectories(root, graph, registry);
-  if (own.length > 0) return own;
-  const checkout = repoRootFor(root);
-  if (resolve(checkout) === resolve(root) || declarationPathIn(checkout) === undefined) return [];
-  return matchingDirectories(checkout, graph, registry);
-}
-
-/**
- * THE CHECKOUT OVERLAY: this instance's resolved directories, then every other
- * instance's in the same checkout, de-duplicated by absolute path (first wins,
- * so this instance's own entry keeps its id).
- *
- * For a CORPUS-WIDE tool — one whose question is about the whole checkout,
- * like "does any link dangle" — run from one instance. Until bean `cmsl` (issue
- * #1694) such a tool got the checkout by accident: `cat-harness.json` mirrored
- * other instances' directories with `scope: "repository"`. Moving the
- * checkout's state to the root instance (step 2) and deleting the mirrors
- * (step 3) takes that away, and measured, `check:subgraphs` went from 4078
- * files scanned to 2880 with nothing red. This is the one place the union is
- * composed. A fixture outside a checkout (its parent declares nothing and holds
- * no instance) gets only its own directories.
- */
-export function checkoutDirectories(
-  root: string,
-  registry: GraphKindRegistry = defaultGraphKinds,
-): ResolvedDirectory[] {
-  const out = new Map<string, ResolvedDirectory>();
-  const ids = new Set<string>();
-  const add = (inst: string, qualify: boolean) => {
-    const name = qualify ? readDeclaration(inst, registry)?.name : undefined;
-    for (const d of resolveDirectories([{ name: "(local)", root: inst, own: true }], registry)) {
-      const key = resolve(d.absPath);
-      if (out.has(key)) continue;
-      // An id is unique within ONE instance, not across a checkout: four
-      // instances each call theirs `skills`. A consumer keying on the id would
-      // attribute one instance's files to another's directory, so a colliding
-      // id is qualified by its instance — the spelling the old mirrors used
-      // (`folio-assistant-core-skills`), so ids a reader already knows survive.
-      const id = ids.has(d.id) && name !== undefined ? `${name}-${d.id}` : d.id;
-      ids.add(id);
-      out.set(key, id === d.id ? d : { ...d, id });
-    }
-  };
-  add(root, false);
-  const checkout = repoRootFor(root);
-  if (resolve(checkout) !== resolve(root) && existsSync(join(checkout, ".git"))) {
-    for (const inst of instanceRootsIn(checkout)) if (resolve(inst) !== resolve(root)) add(inst, true);
-  }
-  return [...out.values()];
-}
-
-/** {@link checkoutResolvedDirectories}, as absolute paths. */
-export function checkoutDirectoriesForGraph(
-  root: string,
-  graph: string,
-  registry: GraphKindRegistry = defaultGraphKinds,
-): string[] {
-  return checkoutResolvedDirectories(root, graph, registry).map((d) => d.absPath);
 }
 
 /**

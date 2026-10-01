@@ -466,7 +466,7 @@ so because this had not been measured yet.
 additionally have put a 40 MB PDF into the site build.
 
 **R27 is therefore already satisfied, and already gated.**
-`who-iris/scripts/check-catalogue.ts` checks that a `materialized` claim names
+`folio-assistant-core/scripts/check-catalogue.ts` checks that a `materialized` claim names
 bytes that exist, with `local-path.ts`'s three states (`ok` / `missing` /
 `unknown`) and bean `yl5w`'s scar behind it: *three claims resolved to nothing
 and the gate said clean*.

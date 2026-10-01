@@ -38,6 +38,7 @@ package "fhir-harness/fhir-ig-tools" as pkg_fhir_harness_fhir_ig_tools <<tools>>
     maintains [0..*] : Maintain[]
     downstream [0..1] : object
     renders [0..*] : string[]
+    subprocesses [0..*] : string[]
   }
 }
 package "fhir-harness/qa" as pkg_fhir_harness_qa <<qa>> {

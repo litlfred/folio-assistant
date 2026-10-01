@@ -75,6 +75,31 @@ reconciled away: the two count different sets (a `satisfies` naming a skill
 that does not resolve is in one and not the other), and neither is wrong for
 its own question.
 
+### A Tool's OWN procedure is the Tool's subprocess, not the skill's prose
+
+Owner, 2026-09-30 (placement ruling 6): *"in general tools can describe
+their own specific subprocesses if needed to not bog down general skills"*.
+The direction of the edge stays the one above — the Tool owns it. A Tool
+whose way of exercising a skill has steps of its own (a retry loop, a staging
+directory, a two-pass mode) names that diagram in **`subprocesses`**, a list
+of process ids on its Tool node; `check:tools` refuses one no `.bpmn` in the
+checkout has as its stem. The general process stays general and reaches the
+detail by `calledElement` only where it has chosen that Tool. By convention
+the diagram sits in the declaring instance's `processes/tools/` concern
+group, beside other tools' procedures rather than among the general
+processes.
+
+### Processes are grouped by concern, from within
+
+`processes/processes.json` (`"$schema": "concern-groups/v1"`) names the
+groups — codes of `code-lists/concern-group.json` — and each is
+`processes/<group>/`, a DMN under `processes/<group>/decisions/`. A higher
+instance's same-named `processes/<group>/` is a member of the harness's group
+and declares none of its own. `workflowFiles` walks recursively, so grouping
+moves no diagram out of reach; the rules are in
+[`directory-conventions`](directory-conventions.md) §"Concern
+groups", checked by `check:concern-groups`.
+
 ### Binding the extension namespaces
 
 **An element's prefix names the Subgraph that declares it** (owner, 2026-09-24,

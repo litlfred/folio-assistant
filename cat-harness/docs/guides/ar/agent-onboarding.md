@@ -70,8 +70,8 @@ bun run src/index.ts --check-deps      # what this environment can do
 | الموقع | ما يقدمه لك |
 |---|---|
 | `skills/folio-core/` | مهارات غير مرتبطة بمحتوى معين: التنسيق، المراقبون (watchers)، ضمان الجودة (QA)، التصيير، المراجع |
-| `skills/authoring/folio-paper-adapter/` | الأوراق البحثية: Lean، وLaTeX، والبراهين، والمحاكيات |
-| `skills/authoring/authoring-who-smart-guidelines/` | حزم DAK / أدلة IG لإرشادات منظمة الصحة العالمية SMART |
+| `folio-assistant-sci/skills/content/folio-paper-adapter/` | الأوراق البحثية: Lean، وLaTeX، والبراهين، والمحاكيات |
+| `smart-base/skills/content/authoring-who-smart-guidelines/` | حزم DAK / أدلة IG لإرشادات منظمة الصحة العالمية SMART |
 | [مرجع مخطط المهارات](../../reference/skills/) | عقد الإدخال/الإخراج المصنف للأنواع والمولّد آليًا لكل مهارة |
 | [تعليمات المهارات](../../reference/skill-instructions/) | نصوص التعليمات الكاملة المولّدة آليًا |
 | [المهارات والأدوار](../../skills.html) | كيفية تكوين المهارات والأدوار والقدرات معًا |

@@ -97,7 +97,9 @@ answer "what did this look like last term", which is the question a course
 reading list asks every year.
 
 **3. The distribution transport.** GitHub Pages is a tool choice — `xies`
-carries that verbatim — and so is jsDelivr, Cloudflare, or an object store.
+carries that verbatim, and since 2026-09-30 it is literally one: the `gh-pages`
+Tool, satisfying the general [`render-kg-to-cdn`](render-kg-to-cdn.md)
+step — and so is jsDelivr, Cloudflare, or an object store.
 Reach host behaviour through `publication.host`, never by assuming Pages'
 behaviour. The axes already record why this matters: Pages **cannot** serve
 `application/ld+json`, and a local server can.

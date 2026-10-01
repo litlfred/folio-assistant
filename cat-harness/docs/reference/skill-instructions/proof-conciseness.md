@@ -6,9 +6,9 @@ parent: Skill instructions
 ---
 
 {: .note }
-> Generated from [`cat-harness/skills/authoring/folio-paper-adapter/proof-conciseness.md`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/authoring/folio-paper-adapter/proof-conciseness.md) — do not edit here.
+> Generated from [`folio-assistant-sci/skills/content/folio-paper-adapter/proof-conciseness.md`](https://github.com/litlfred/folio-assistant/blob/main/folio-assistant-sci/skills/content/folio-paper-adapter/proof-conciseness.md) — do not edit here.
 >
-> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/cat-harness/skills/authoring/folio-paper-adapter/proof-conciseness.md){: .fa-edit-source }
+> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/folio-assistant-sci/skills/content/folio-paper-adapter/proof-conciseness.md){: .fa-edit-source }
 
 {% raw %}
 # Proof Conciseness

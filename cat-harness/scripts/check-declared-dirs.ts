@@ -48,10 +48,22 @@
  * for the reason recorded there: that gate twice reported a clean run over
  * instances a hardcoded list had never heard of.
  *
+ * ## A third finding: a MIRROR of another instance's directory
+ *
+ * - **mirror** — a `scope: "repository"` entry whose path lies inside ANOTHER
+ *   instance's root. Until bean `cmsl` step 3 (issue #1694, PR #1747)
+ *   `cat-harness.json` declared twenty of these — `who-iris/library/`,
+ *   `folio-assistant-core/skills/`, … — so the platform named the instances
+ *   stacked on it, under ids that had already drifted from the owners' own.
+ *   Each instance declares its own directories; the checkout aggregates them
+ *   (the root instance `needs` every staged instance, and `check:instance-graph`
+ *   refuses one it does not reach). A mirror is refused so the twenty cannot
+ *   quietly come back one at a time.
+ *
  * Exit codes: 0 clean · 1 any finding.
  */
 import { existsSync, statSync } from "node:fs";
-import { basename, join, resolve } from "node:path";
+import { basename, join, resolve, sep } from "node:path";
 
 import { instanceRootsIn, readDeclaration } from "../schemas/cat-harness.js";
 // The `folio` graph kind is registered by CORE as a load-time side effect, so
@@ -64,7 +76,7 @@ export interface DirFinding {
   instance: string;
   id: string;
   path: string;
-  kind: "absent" | "stale-exemption";
+  kind: "absent" | "stale-exemption" | "mirror";
   detail: string;
 }
 
@@ -82,7 +94,18 @@ export function resolveDeclaredPath(
   return join(entry.scope === "repository" ? repoRoot : instanceRoot, entry.path);
 }
 
-export function auditInstance(instanceRoot: string, repoRoot: string): DirFinding[] {
+/**
+ * @param otherInstances every instance root in the checkout; a
+ *   repository-scoped entry inside one of them other than the declaring
+ *   instance is a `mirror`. An instance that CONTAINS the declaring one (the
+ *   checkout's root instance) is not "other" for this purpose — every path is
+ *   inside it.
+ */
+export function auditInstance(
+  instanceRoot: string,
+  repoRoot: string,
+  otherInstances: readonly string[] = [],
+): DirFinding[] {
   const decl = readDeclaration(instanceRoot) as
     | { directories?: Array<{ id: string; path: string; scope?: string; absent?: { reason: string } }> }
     | undefined;
@@ -106,6 +129,27 @@ export function auditInstance(instanceRoot: string, repoRoot: string): DirFindin
           `declared and not on disk. Create it, drop the declaration, or record ` +
           `\`"absent": { "reason": "…" }\` saying why it is meant to be missing.`,
       });
+    }
+    if (e.scope === "repository") {
+      const target = resolve(abs);
+      const self = resolve(instanceRoot);
+      const owner = otherInstances
+        .map((r) => resolve(r))
+        .filter((r) => r !== self && !(self + sep).startsWith(r === sep ? r : r + sep))
+        .find((r) => target === r || target.startsWith(r + sep));
+      if (owner !== undefined) {
+        findings.push({
+          instance: instanceRoot,
+          id: e.id,
+          path: e.path,
+          kind: "mirror",
+          detail:
+            `a repository-scoped entry inside another instance (${basename(owner)}). ` +
+            `That instance declares its own directories and the checkout aggregates ` +
+            `them (bean \`cmsl\`): drop this entry, and if a corpus-wide tool then ` +
+            `misses the directory, the root instance must \`need\` ${basename(owner)}.`,
+        });
+      }
     }
     if (present && e.absent) {
       findings.push({
@@ -133,7 +177,7 @@ if (import.meta.main) {
     const decl = readDeclaration(inst) as { directories?: unknown[] } | undefined;
     declared += decl?.directories?.length ?? 0;
     exempt += (decl?.directories as Array<{ absent?: unknown }> | undefined)?.filter((d) => d.absent).length ?? 0;
-    findings = findings.concat(auditInstance(inst, repoRoot));
+    findings = findings.concat(auditInstance(inst, repoRoot, instances));
   }
 
   for (const f of findings) {

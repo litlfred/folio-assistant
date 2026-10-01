@@ -349,6 +349,7 @@ import {
   siblingScopeFor,
   resolveDirectories,
   type MaterialisedDirectory,
+  type ResolvedDirectory,
 } from "./cat-harness";
 /**
  * Re-exported, not redefined.
@@ -873,6 +874,286 @@ export function declarationChain(
   return chain;
 }
 
+// ── The checkout aggregates (bean `cmsl` option A, step 3; placement PR0a) ──
+
+/**
+ * The checkout an instance is staged in: the directory whose own instance
+ * AGGREGATES every instance beside it.
+ *
+ * {@link siblingScopeFor}, named for the question it answers here. For a
+ * nested instance (`cat-harness/`) it is the repository root; for the
+ * instance declared AT the repository root it is that root itself, not its
+ * parent — the case `repoRootFor` gets wrong by construction.
+ */
+export function checkoutRootFor(start: string): string {
+  return siblingScopeFor(resolve(start));
+}
+
+/**
+ * Every directory the CHECKOUT holds: each staged instance's own directories,
+ * resolved through that instance's own chain, so an inherited subgraph
+ * contributes one member per instance whose same-named directory exists
+ * (bean `1g4s`, option A).
+ *
+ * ## Why this exists — the arrow the mirrors had backwards
+ *
+ * Until placement PR0 (bean `ejye`), `cat-harness.json` carried 19
+ * `scope: "repository"` entries naming its DEPENDENTS' directories —
+ * `folio-assistant-core/skills/`, `who-iris/library/`, … — so that a
+ * corpus-wide tool asking the platform for "every library" got every library.
+ * Every one of those owners `needs` cat-harness, so the platform was naming
+ * its users: the wrong-way arrow `cmsl` measured, and 5 of the 19 had already
+ * drifted from the owner's own id. The owner's ruling (2026-09-30, round 3):
+ * **the checkout aggregates.** The root instance `needs` every staged
+ * instance and declares the checkout-level state it physically holds; a
+ * corpus-wide tool resolves over the root's overlay; the platform names no
+ * folio.
+ *
+ * ## Why per instance, and not one `resolveDirectories` over one long chain
+ *
+ * `resolveDirectories` overrides BY ID, which is right along one dependency
+ * line and wrong across siblings: `smart-base` declares `processes` at
+ * `methodologies/processes/`, and resolving it in the same chain as
+ * cat-harness would REPLACE cat-harness's `processes` rather than add to it.
+ * Each instance answers for itself through its own chain, keeping the entries
+ * it owns (`own`, or a default seeded in its own tree); the union, de-duplicated
+ * by absolute path, is the checkout. A diamond reaches an instance twice and
+ * contributes it once.
+ *
+ * ## The falsifier it carries (cmsl)
+ *
+ * A checkout whose root instance does NOT stage an instance sees less — a
+ * split checkout running against one folio sees that folio's dependencies
+ * only. That is the intended behaviour: the tool sees what the checkout
+ * contains, not what the platform remembers having been next to.
+ *
+ * @param start any instance root in the checkout, or the checkout root
+ */
+export function checkoutDirectories(start: string, opts: { stackedOn?: string } = {}): ResolvedDirectory[] {
+  const root = checkoutRootFor(start);
+  const base = opts.stackedOn === undefined ? undefined : resolve(opts.stackedOn);
+  const key = `${root}\0${base ?? ""}`;
+  const cached = checkoutCache.get(key);
+  if (cached !== undefined) return cached.map((d) => ({ ...d }));
+  const graph = checkoutGraph(root);
+  let instances = [...graph.order];
+  // `stackedOn`: only that instance and the ones stacked on it. What a tool
+  // shipped BY an instance asks when it means "the corpus I serve": its
+  // dependencies are its own overlay (`orderedDependencies`), already read by
+  // every caller that resolves downward, and counting them again here would
+  // re-attribute bootstrap's skills to the platform.
+  if (base !== undefined) {
+    const above = new Set(checkoutDependentsOf(base).map((d) => d.root));
+    instances = instances.filter((i) => i === base || above.has(i));
+    if (!instances.includes(base)) instances.unshift(base);
+  }
+  const out: ResolvedDirectory[] = [];
+  const seen = new Set<string>();
+  for (const inst of instances) {
+    let mine: ResolvedDirectory[];
+    try {
+      mine = resolveDirectories(chainIn(graph, inst));
+    } catch {
+      continue; // an unreadable declaration is `check:harness-dirs`'s to report
+    }
+    for (const d of mine) {
+      // OWN entries only: an inherited declaration's own location is reported
+      // by the instance that declared it, which is also in this list.
+      if (!d.own && d.declaredBy !== "(default)") continue;
+      if (seen.has(d.absPath)) continue;
+      seen.add(d.absPath);
+      out.push(d);
+    }
+  }
+  checkoutCache.set(key, out);
+  return out.map((d) => ({ ...d }));
+}
+
+/**
+ * Memoised per checkout root for the life of the process: resolving every
+ * instance through its own chain costs ~0.9 s on this checkout, and a
+ * corpus-wide script asks for several kinds. A caller that rewrites a
+ * declaration mid-process (a test fixture) calls {@link clearCheckoutCache}.
+ */
+const checkoutCache = new Map<string, ResolvedDirectory[]>();
+
+/** Forget every memoised {@link checkoutDirectories} / {@link checkoutDependentsOf} answer. */
+export function clearCheckoutCache(): void {
+  checkoutCache.clear();
+  dependentsCache.clear();
+  graphCache.clear();
+}
+
+/** The checkout's dependency graph, walked ONCE: order, transitive closure, names. */
+interface CheckoutGraph {
+  /** Every instance the root reaches, deepest first, the root last. */
+  order: string[];
+  /** Each instance's transitive dependencies. */
+  deps: Map<string, Set<string>>;
+  /** Each instance's declared name, as `declarationChain` spells a link. */
+  names: Map<string, string>;
+}
+
+const graphCache = new Map<string, CheckoutGraph>();
+
+/**
+ * One `orderedDependencies` walk of the checkout root, from which every
+ * staged instance's own chain is DERIVED rather than re-walked. Walking each
+ * instance separately cost ~25 ms apiece (each derivation rescans the
+ * checkout for siblings), which made every corpus-wide CLI ten times slower
+ * than before placement PR0 — measured 0.2 s → 2 s on `narratives confirm`.
+ */
+function checkoutGraph(root: string): CheckoutGraph {
+  const hit = graphCache.get(root);
+  if (hit !== undefined) return hit;
+  let flat: ResolvedDependency[] = [];
+  try {
+    flat = orderedDependencies(root);
+  } catch {
+    // A cycle is `check:instance-graph`'s finding; here the checkout falls
+    // back to its root alone rather than taking every corpus-wide tool down.
+    flat = [];
+  }
+  const order = [...new Set([...flat.map((d) => resolve(d.rootPath)), root])];
+  const direct = new Map(flat.map((d) => [resolve(d.rootPath), d.needs.map((n) => resolve(n))]));
+  direct.set(root, flat.map((d) => resolve(d.rootPath)));
+  const deps = new Map<string, Set<string>>();
+  const close = (a: string, path: Set<string>): Set<string> => {
+    const known = deps.get(a);
+    if (known !== undefined) return known;
+    const out = new Set<string>();
+    if (path.has(a)) return out; // a cycle: reported elsewhere, never looped on here
+    path.add(a);
+    for (const n of direct.get(a) ?? []) {
+      out.add(n);
+      for (const x of close(n, path)) out.add(x);
+    }
+    path.delete(a);
+    deps.set(a, out);
+    return out;
+  };
+  for (const a of order) close(a, new Set());
+  const names = new Map(flat.map((d) => [resolve(d.rootPath), d.dependency.name ?? d.rootPath]));
+  const graph = { order, deps, names };
+  graphCache.set(root, graph);
+  return graph;
+}
+
+/** `declarationChain(inst)`, derived from the checkout's one walk when it reaches `inst`. */
+function chainIn(graph: CheckoutGraph, inst: string): Array<{ name: string; root: string; own?: boolean }> {
+  const deps = graph.deps.get(inst);
+  if (deps === undefined) return declarationChain(inst);
+  return [
+    ...graph.order.filter((x) => deps.has(x)).map((x) => ({ name: graph.names.get(x) ?? x, root: x })),
+    { name: "(root)", root: inst, own: true },
+  ];
+}
+
+const dependentsCache = new Map<string, Array<{ name: string; root: string }>>();
+
+/**
+ * The instances in this checkout that DEPEND on `instanceRoot` — directly or
+ * through another — deepest first, so a later one overlays an earlier one.
+ *
+ * The reverse of {@link orderedDependencies}, and only answerable from the
+ * checkout: an instance's own declaration names what it needs, never what
+ * needs it (the arrow `cmsl` fixed). This is what a higher instance's
+ * extension of a lower instance's node is found through (placement PR0b): the
+ * lower instance resolves its roles, then asks the checkout which dependents
+ * hold a pointer at them.
+ */
+export function checkoutDependentsOf(instanceRoot: string): Array<{ name: string; root: string }> {
+  const target = resolve(instanceRoot);
+  const cached = dependentsCache.get(target);
+  if (cached !== undefined) return cached;
+  const graph = checkoutGraph(checkoutRootFor(target));
+  const out: Array<{ name: string; root: string }> = [];
+  for (const inst of graph.order) {
+    if (inst === target) continue;
+    if (!(graph.deps.get(inst)?.has(target) ?? false)) continue;
+    let name = inst;
+    try {
+      name = readDeclaration(inst)?.name ?? inst;
+    } catch {
+      // unreadable: named by path, `check:harness-dirs` reports it
+    }
+    out.push({ name, root: inst });
+  }
+  dependentsCache.set(target, out);
+  return out;
+}
+
+/**
+ * Every directory in the checkout holding `kind`, as absolute paths — the
+ * corpus-wide counterpart of `directoriesForGraph`, which answers for ONE
+ * instance and, since PR0, sees nothing above it.
+ */
+export function checkoutDirectoriesForGraph(
+  kind: string,
+  start: string,
+  opts: { stackedOn?: string } = {},
+): string[] {
+  return checkoutDirectories(start, opts)
+    .filter((d) => d.graphKinds.includes(kind as never))
+    .map((d) => d.absPath);
+}
+
+/**
+ * The corpus a tool shipped BY `instanceRoot` serves, for `kind`: that
+ * instance's directories plus those of every instance the checkout stacks on
+ * it. Same argument order as `directoriesForGraph`, so a corpus-wide call
+ * site states its scope by its function name. This is what replaced asking
+ * the platform's declaration for its dependents' directories (placement PR0a).
+ */
+export function corpusDirectoriesForGraph(instanceRoot: string, kind: string): string[] {
+  return checkoutDirectoriesForGraph(kind, instanceRoot, { stackedOn: instanceRoot });
+}
+
+/**
+ * The ONE corpus directory holding `kind`, or `undefined` — the corpus
+ * counterpart of `directoryForGraph`, with its refusal: more than one is an
+ * error, never "the first". For the checkout-level state graphs (`beans`,
+ * `todos`, `memory`, `issue-marks`, `interaction`, `fsh-guts`) the root
+ * instance declares since placement PR0a, which a platform tool still asks
+ * for by kind.
+ */
+export function corpusDirectoryForGraph(instanceRoot: string, kind: string): string | undefined {
+  const all = corpusDirectoriesForGraph(instanceRoot, kind);
+  if (all.length > 1) {
+    throw new Error(
+      `graph "${kind}" is held by ${all.length} directories in this checkout, so there is no single ` +
+        `directory for it: ${all.join(", ")}. Use \`corpusDirectoriesForGraph\` for all of them.`,
+    );
+  }
+  return all[0];
+}
+
+/**
+ * Every `scope: "repository"` entry declared by an instance that is NOT the
+ * checkout's root instance — a MIRROR, which the checkout-aggregates ruling
+ * retired. Only the instance whose root IS the checkout may declare at the
+ * checkout's scope: anything else naming a repository path is either another
+ * instance's directory (the wrong-way arrow) or checkout-level state that
+ * belongs to the root. Returned as `<instance>#<id>` so a finding names both.
+ */
+export function repositoryMirrors(start: string): string[] {
+  const root = checkoutRootFor(start);
+  const out: string[] = [];
+  for (const inst of instanceRootsIn(root)) {
+    if (resolve(inst) === root) continue;
+    let decl: ReturnType<typeof readDeclaration>;
+    try {
+      decl = readDeclaration(inst);
+    } catch {
+      continue;
+    }
+    for (const d of decl?.directories ?? []) {
+      if (d.scope === "repository") out.push(`${decl!.name}#${d.id}`);
+    }
+  }
+  return out.sort();
+}
+
 /**
  * Create every directory this instance declares or inherits, if absent.
  *
@@ -951,6 +1232,21 @@ export function resolveSkillDirs(folioRoot: string): string[] {
     for (const d of ownDirectories({ name: dep.dependency.name, root: dep.rootPath })) {
       if (isKgOnlyDirectory(d) && existsSync(d.absPath)) dirs.push(d.absPath);
     }
+  }
+
+  // THE OTHER INSTANCES IN THIS CHECKOUT (bean `cmsl` step 3, issue #1694).
+  // Until then `cat-harness.json` mirrored them with `scope: "repository"`, so
+  // seven packages — fhir-harness's two, core's, sci's `lean` and `data`,
+  // large-datasets', who-iris' — reached `skill_fetch` only through the
+  // platform naming its dependents. The owner removed the mirrors; the
+  // checkout answers instead. A folio in its own repository has no sibling
+  // instances, so this adds nothing there.
+  const own = new Set(
+    ownDirectories({ name: "(root)", root: resolve(folioRoot), own: true }).map((d) => resolve(d.absPath)),
+  );
+  for (const d of checkoutDirectories(resolve(folioRoot), { stackedOn: resolve(folioRoot) })) {
+    if (own.has(resolve(d.absPath))) continue;
+    if (isKgOnlyDirectory(d) && existsSync(d.absPath)) dirs.push(d.absPath);
   }
 
   // The root last, so its skills win on a name collision.

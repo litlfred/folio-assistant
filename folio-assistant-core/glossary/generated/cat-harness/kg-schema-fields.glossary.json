@@ -2051,6 +2051,13 @@
       "status": "candidate"
     },
     {
+      "id": "cat-harness.catharnessdeclaration.knownsubstrates",
+      "prefLabel": "CatHarnessDeclaration.knownSubstrates",
+      "definition": "Substrates known to exist or planned that NO declaration here names — {@link KnownSubstrate}. Issue #1719.",
+      "source": "cat-harness/schemas/cat-harness.ts#CatHarnessDeclaration.knownSubstrates",
+      "status": "candidate"
+    },
+    {
       "id": "cat-harness.catharnessdeclaration.liquid",
       "prefLabel": "CatHarnessDeclaration.liquid",
       "definition": "The Liquid prefix this instance's VALUES are addressed by in authored text — `{{ <prefix>.<directory-id>.<entry>.<path> }}` — and whether the platform resolves it or passes it through.",
@@ -2121,10 +2128,24 @@
       "status": "candidate"
     },
     {
+      "id": "cat-harness.catharnessdeclaration.separation",
+      "prefLabel": "CatHarnessDeclaration.separation",
+      "definition": "Which half of a kg-separation pair the planned {@link repository} is — see `separation` on {@link CatHarnessDeclarationSchema}. Absent is \"has not said\". Bean `eayu`.",
+      "source": "cat-harness/schemas/cat-harness.ts#CatHarnessDeclaration.separation",
+      "status": "candidate"
+    },
+    {
       "id": "cat-harness.catharnessdeclaration.stickies",
       "prefLabel": "CatHarnessDeclaration.stickies",
       "definition": "Sticky notes this layer contributes to the landing board.",
       "source": "cat-harness/schemas/cat-harness.ts#CatHarnessDeclaration.stickies",
+      "status": "candidate"
+    },
+    {
+      "id": "cat-harness.catharnessdeclaration.subscriptions",
+      "prefLabel": "CatHarnessDeclaration.subscriptions",
+      "definition": "External Knowledge Graphs this one CONSUMES, and which of their parts it chose to hold — {@link Subscription}. Issue #1719.",
+      "source": "cat-harness/schemas/cat-harness.ts#CatHarnessDeclaration.subscriptions",
       "status": "candidate"
     },
     {
@@ -2177,6 +2198,13 @@
       "status": "candidate"
     },
     {
+      "id": "cat-harness.catharnessdeclarationschema.knownsubstrates",
+      "prefLabel": "CatHarnessDeclarationSchema.knownSubstrates",
+      "definition": "See {@link KnownSubstrate}. Names are unique.",
+      "source": "cat-harness/schemas/cat-harness.ts#CatHarnessDeclarationSchema.knownSubstrates",
+      "status": "candidate"
+    },
+    {
       "id": "cat-harness.catharnessdeclarationschema.liquid",
       "prefLabel": "CatHarnessDeclarationSchema.liquid",
       "definition": "See {@link CatHarnessDeclaration.liquid}.",
@@ -2209,6 +2237,20 @@
       "prefLabel": "CatHarnessDeclarationSchema.remoteGraphs",
       "definition": "Graphs this instance knows about and does not hold — see {@link RemoteGraph}. A SEPARATE array from `directories`, not a variant of one, because a remote graph has no directory.",
       "source": "cat-harness/schemas/cat-harness.ts#CatHarnessDeclarationSchema.remoteGraphs",
+      "status": "candidate"
+    },
+    {
+      "id": "cat-harness.catharnessdeclarationschema.separation",
+      "prefLabel": "CatHarnessDeclarationSchema.separation",
+      "definition": "Which half of a kg-separation pair this instance's planned `repository` is: `content` (files to read — no code, bootstrap FR-7) or `tools` (the code that writes and checks a content repository).",
+      "source": "cat-harness/schemas/cat-harness.ts#CatHarnessDeclarationSchema.separation",
+      "status": "candidate"
+    },
+    {
+      "id": "cat-harness.catharnessdeclarationschema.subscriptions",
+      "prefLabel": "CatHarnessDeclarationSchema.subscriptions",
+      "definition": "External Knowledge Graphs this one subscribes to — see {@link Subscription}. `.optional()` for the reason `associatedHarnesses` is. Ids are unique, and never also in `needs` or `associatedHarnesses` — refined below.",
+      "source": "cat-harness/schemas/cat-harness.ts#CatHarnessDeclarationSchema.subscriptions",
       "status": "candidate"
     },
     {
@@ -2408,6 +2450,48 @@
       "status": "candidate"
     },
     {
+      "id": "cat-harness.knownsubstrate.name",
+      "prefLabel": "KnownSubstrate.name",
+      "definition": "The substrate's instance name, as its declaration gives it or will.",
+      "source": "cat-harness/schemas/cat-harness.ts#KnownSubstrate.name",
+      "status": "candidate"
+    },
+    {
+      "id": "cat-harness.knownsubstrate.note",
+      "prefLabel": "KnownSubstrate.note",
+      "definition": "One sentence a reader of the visualizer sees.",
+      "source": "cat-harness/schemas/cat-harness.ts#KnownSubstrate.note",
+      "status": "candidate"
+    },
+    {
+      "id": "cat-harness.knownsubstrate.repository",
+      "prefLabel": "KnownSubstrate.repository",
+      "definition": "`owner/repo`, when one exists or is planned.",
+      "source": "cat-harness/schemas/cat-harness.ts#KnownSubstrate.repository",
+      "status": "candidate"
+    },
+    {
+      "id": "cat-harness.knownsubstrate.status",
+      "prefLabel": "KnownSubstrate.status",
+      "definition": "Where it stands: proposed (an idea), planned (a staged instance), exists (a repository), published (a release).",
+      "source": "cat-harness/schemas/cat-harness.ts#KnownSubstrate.status",
+      "status": "candidate"
+    },
+    {
+      "id": "cat-harness.knownsubstrate.title",
+      "prefLabel": "KnownSubstrate.title",
+      "definition": "Human title.",
+      "source": "cat-harness/schemas/cat-harness.ts#KnownSubstrate.title",
+      "status": "candidate"
+    },
+    {
+      "id": "cat-harness.knownsubstrate.toolsrepository",
+      "prefLabel": "KnownSubstrate.toolsRepository",
+      "definition": "Its paired tools repository, when the `kg-separation` pattern gives it one.",
+      "source": "cat-harness/schemas/cat-harness.ts#KnownSubstrate.toolsRepository",
+      "status": "candidate"
+    },
+    {
       "id": "cat-harness.liquidprefix.passthrough",
       "prefLabel": "LiquidPrefix.passThrough",
       "definition": "Leave `{{ <prefix>.… }}` for the downstream engine (Jekyll, IG Publisher).",
@@ -2597,6 +2681,55 @@
       "status": "candidate"
     },
     {
+      "id": "cat-harness.subscription.assets",
+      "prefLabel": "Subscription.assets",
+      "definition": "How referenced binary assets are materialised. Each copy still passes `Process_MaterializeRemote`'s gates.",
+      "source": "cat-harness/schemas/cat-harness.ts#Subscription.assets",
+      "status": "candidate"
+    },
+    {
+      "id": "cat-harness.subscription.harnesses",
+      "prefLabel": "Subscription.harnesses",
+      "definition": "Harness names from the substrate CHOSEN for instantiation. Instantiating writes `<name>.config.json`, which is what puts it in the navbar.",
+      "source": "cat-harness/schemas/cat-harness.ts#Subscription.harnesses",
+      "status": "candidate"
+    },
+    {
+      "id": "cat-harness.subscription.id",
+      "prefLabel": "Subscription.id",
+      "definition": "Local name for the subscription; unique within this list. The substrate's own name, unless two pins of one substrate are ever needed.",
+      "source": "cat-harness/schemas/cat-harness.ts#Subscription.id",
+      "status": "candidate"
+    },
+    {
+      "id": "cat-harness.subscription.note",
+      "prefLabel": "Subscription.note",
+      "definition": "One sentence a reader of the visualizer sees.",
+      "source": "cat-harness/schemas/cat-harness.ts#Subscription.note",
+      "status": "candidate"
+    },
+    {
+      "id": "cat-harness.subscription.ref",
+      "prefLabel": "Subscription.ref",
+      "definition": "The pinned commit, a full 40-character SHA. A tag replaces it once the substrate publishes releases.",
+      "source": "cat-harness/schemas/cat-harness.ts#Subscription.ref",
+      "status": "candidate"
+    },
+    {
+      "id": "cat-harness.subscription.repository",
+      "prefLabel": "Subscription.repository",
+      "definition": "Where the substrate lives, `owner/repo` (#1652).",
+      "source": "cat-harness/schemas/cat-harness.ts#Subscription.repository",
+      "status": "candidate"
+    },
+    {
+      "id": "cat-harness.subscription.subgraphs",
+      "prefLabel": "Subscription.subgraphs",
+      "definition": "Subgraph ids (the substrate's `directories[].id`) CHOSEN for materialisation. Everything else stays referenced.",
+      "source": "cat-harness/schemas/cat-harness.ts#Subscription.subgraphs",
+      "status": "candidate"
+    },
+    {
       "id": "cat-harness.topology.outwardfacing",
       "prefLabel": "Topology.outwardFacing",
       "definition": "Whether the deployment serves people outside the operator. §1 axis 10.",
@@ -2699,6 +2832,20 @@
       "prefLabel": "CodeSchema.value",
       "definition": "The value the code stands for, when it stands for one — a namespace IRI, for instance. Absent on a code that is its own value.",
       "source": "cat-harness/schemas/code-list.ts#CodeSchema.value",
+      "status": "candidate"
+    },
+    {
+      "id": "concern-groups.concerngroupsschema.directories",
+      "prefLabel": "ConcernGroupsSchema.directories",
+      "definition": "Instance directories declared from within, as in `skills.json`.",
+      "source": "cat-harness/schemas/concern-groups.ts#ConcernGroupsSchema.directories",
+      "status": "candidate"
+    },
+    {
+      "id": "concern-groups.concerngroupsschema.groups",
+      "prefLabel": "ConcernGroupsSchema.groups",
+      "definition": "The concern groups this directory holds, by code; each is `<dir>/<code>/`.",
+      "source": "cat-harness/schemas/concern-groups.ts#ConcernGroupsSchema.groups",
       "status": "candidate"
     },
     {
@@ -5201,6 +5348,13 @@
       "status": "candidate"
     },
     {
+      "id": "graph-kind-registry.graphkinddef.concerngroups",
+      "prefLabel": "GraphKindDef.concernGroups",
+      "definition": "Is a directory of this kind GROUPED BY CONCERN — `<dir>/<group>/`, with the groups named from within by {@link declarationFile} and drawn from the `concern-group` code list (bean `9umr`; placement PR0c, bean `ejye`)?",
+      "source": "cat-harness/schemas/graph-kind-registry.ts#GraphKindDef.concernGroups",
+      "status": "candidate"
+    },
+    {
       "id": "graph-kind-registry.graphkinddef.declarationfile",
       "prefLabel": "GraphKindDef.declarationFile",
       "definition": "The NESTED DECLARATION a directory of this kind carries, by filename.",
@@ -5275,6 +5429,27 @@
       "prefLabel": "GraphKindDef.within",
       "definition": "The kind this one is a SUB-GRAPH of, when it is one.",
       "source": "cat-harness/schemas/graph-kind-registry.ts#GraphKindDef.within",
+      "status": "candidate"
+    },
+    {
+      "id": "harness-config.checkoutgraph.deps",
+      "prefLabel": "CheckoutGraph.deps",
+      "definition": "Each instance's transitive dependencies.",
+      "source": "cat-harness/schemas/harness-config.ts#CheckoutGraph.deps",
+      "status": "candidate"
+    },
+    {
+      "id": "harness-config.checkoutgraph.names",
+      "prefLabel": "CheckoutGraph.names",
+      "definition": "Each instance's declared name, as `declarationChain` spells a link.",
+      "source": "cat-harness/schemas/harness-config.ts#CheckoutGraph.names",
+      "status": "candidate"
+    },
+    {
+      "id": "harness-config.checkoutgraph.order",
+      "prefLabel": "CheckoutGraph.order",
+      "definition": "Every instance the root reaches, deepest first, the root last.",
+      "source": "cat-harness/schemas/harness-config.ts#CheckoutGraph.order",
       "status": "candidate"
     },
     {
@@ -7455,10 +7630,31 @@
       "status": "candidate"
     },
     {
+      "id": "role-graph.roleextension.role",
+      "prefLabel": "RoleExtension.role",
+      "definition": "The id of a role declared by an instance this one depends on.",
+      "source": "cat-harness/schemas/role-graph.ts#RoleExtension.role",
+      "status": "candidate"
+    },
+    {
+      "id": "role-graph.roleextension.skills",
+      "prefLabel": "RoleExtension.skills",
+      "definition": "Skills the role gains in this instance's checkout.",
+      "source": "cat-harness/schemas/role-graph.ts#RoleExtension.skills",
+      "status": "candidate"
+    },
+    {
       "id": "role-graph.rolegraph.actors",
       "prefLabel": "RoleGraph.actors",
       "definition": "Actors, when declared alongside. Usually read from the actor directory.",
       "source": "cat-harness/schemas/role-graph.ts#RoleGraph.actors",
+      "status": "candidate"
+    },
+    {
+      "id": "role-graph.rolegraph.extensions",
+      "prefLabel": "RoleGraph.extensions",
+      "definition": "Roles of a LOWER instance this graph adds skills to, BY ID (placement PR0b, bean `ejye`). See {@link RoleExtension}.",
+      "source": "cat-harness/schemas/role-graph.ts#RoleGraph.extensions",
       "status": "candidate"
     },
     {
@@ -7487,6 +7683,20 @@
       "prefLabel": "SkillProvenance.via",
       "definition": "The role that declared it — may be an ancestor, not the role asked for.",
       "source": "cat-harness/schemas/role-graph.ts#SkillProvenance.via",
+      "status": "candidate"
+    },
+    {
+      "id": "scenario-overlay.scenariolayer.dir",
+      "prefLabel": "ScenarioLayer.dir",
+      "definition": "Absolute path of its `scenarios` directory.",
+      "source": "cat-harness/schemas/scenario-overlay.ts#ScenarioLayer.dir",
+      "status": "candidate"
+    },
+    {
+      "id": "scenario-overlay.scenariolayer.instance",
+      "prefLabel": "ScenarioLayer.instance",
+      "definition": "The instance's declared name.",
+      "source": "cat-harness/schemas/scenario-overlay.ts#ScenarioLayer.instance",
       "status": "candidate"
     },
     {
@@ -8253,6 +8463,41 @@
       "status": "candidate"
     },
     {
+      "id": "substrate-snapshot.substratesnapshotschema.file",
+      "prefLabel": "SubstrateSnapshotSchema.file",
+      "definition": "The upstream file, relative to the substrate's repository root: `<name>.json`.",
+      "source": "cat-harness/schemas/substrate-snapshot.ts#SubstrateSnapshotSchema.file",
+      "status": "candidate"
+    },
+    {
+      "id": "substrate-snapshot.substratesnapshotschema.raw",
+      "prefLabel": "SubstrateSnapshotSchema.raw",
+      "definition": "The upstream bytes, exactly as fetched.",
+      "source": "cat-harness/schemas/substrate-snapshot.ts#SubstrateSnapshotSchema.raw",
+      "status": "candidate"
+    },
+    {
+      "id": "substrate-snapshot.substratesnapshotschema.ref",
+      "prefLabel": "SubstrateSnapshotSchema.ref",
+      "definition": "The pinned commit the bytes were read at — a full SHA, never a branch.",
+      "source": "cat-harness/schemas/substrate-snapshot.ts#SubstrateSnapshotSchema.ref",
+      "status": "candidate"
+    },
+    {
+      "id": "substrate-snapshot.substratesnapshotschema.subscription",
+      "prefLabel": "SubstrateSnapshotSchema.subscription",
+      "definition": "The `subscriptions[].id` this snapshot belongs to.",
+      "source": "cat-harness/schemas/substrate-snapshot.ts#SubstrateSnapshotSchema.subscription",
+      "status": "candidate"
+    },
+    {
+      "id": "substrate-snapshot.substratesnapshotschema.summary",
+      "prefLabel": "SubstrateSnapshotSchema.summary",
+      "definition": "What the judgement found, derived from `raw`.",
+      "source": "cat-harness/schemas/substrate-snapshot.ts#SubstrateSnapshotSchema.summary",
+      "status": "candidate"
+    },
+    {
       "id": "tabular-csvw.csvwcolumnschema.datatype",
       "prefLabel": "CsvwColumnSchema.datatype",
       "definition": "A CSVW datatype name. `any` is CSVW's own top type.",
@@ -8957,6 +9202,13 @@
       "prefLabel": "ToolDefinitionSchema.selection",
       "definition": "Why to reach for this one. REQUIRED when the Tool has a derived alternative ({@link deriveAlternatives}); `check-tools` enforces it, since whether a Tool has one is a fact about the whole set.",
       "source": "cat-harness/schemas/tool.ts#ToolDefinitionSchema.selection",
+      "status": "candidate"
+    },
+    {
+      "id": "tool.tooldefinitionschema.subprocesses",
+      "prefLabel": "ToolDefinitionSchema.subprocesses",
+      "definition": "Process ids of the BPMN this Tool's OWN specific procedure is drawn as.",
+      "source": "cat-harness/schemas/tool.ts#ToolDefinitionSchema.subprocesses",
       "status": "candidate"
     },
     {

@@ -23,7 +23,7 @@ The three states (referenced / materialized / unknown) and the five gates are sc
 
 ## How it connects
 
-- **Called by:** [Sample import into a structured data store](sample-import.html)
+- **Called by:** [Sample import into a structured data store](sample-import.html), [Subscribe to an external knowledge graph](subscribe-kg.html)
 - **Calls:** none
 - **Names the `materialize-remote` skill without calling this process:** [Refresh materialized remote content](refresh-materialized.html) — `activity-calls-skill-process` asks whether each should be a call activity.
 - **Presented on:** no docs page section shows this diagram

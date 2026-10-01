@@ -35,6 +35,9 @@ export const PROPERTY_SKILLS = {
   // today (bean 6rmv); `instance-repositories.ts` derives the map from both.
   repository: { skills: ["instance-kinds", "directory-conventions"] },
   livesAt: { skills: ["instance-kinds", "directory-conventions"] },
+  // Content or tools half of the split (bean eayu); a content instance holding
+  // code is a failing kg:audit finding.
+  separation: { skills: ["kg-separation"] },
   stub: { skills: ["directory-conventions"] },
   canonicalUrl: { skills: ["directory-conventions"] },
   previewUrl: { skills: ["directory-conventions"] },
@@ -54,6 +57,11 @@ export const PROPERTY_SKILLS = {
   directories: { skills: ["directory-conventions", "schema-management"] },
   remoteGraphs: { skills: ["library-ingestion", "materialize-remote"] },
   associatedHarnesses: { skills: ["associate-harness"] },
+  // Issue #1719. Both name a large-datasets skill, as `remoteGraphs` already
+  // does with `materialize-remote`: the process that walks a subscription
+  // calls that layer's subprocesses, so its skill lives beside them.
+  subscriptions: { skills: ["kg-subscription", "materialize-remote"] },
+  knownSubstrates: { skills: ["kg-subscription"] },
   stickies: { skills: ["create-sticky-note"] },
   renderExemption: { skills: ["harness-tiles"] },
   needs: { skills: ["instance-kinds", "confirm-harness"] },

@@ -154,7 +154,7 @@ model, not alternatives to choose between.
 | `bean-coordination` | Multi-agent claim/coordination discipline |
 | `todo-manager` | beans-as-todos discipline |
 
-### Platform skill bundles (`skills/folio-core`, `skills/authoring/folio-document-adapter`, `skills/authoring/folio-paper-adapter`)
+### Platform skill bundles (`skills/folio-core`, `folio-assistant-core/skills/content/folio-document-adapter`, `folio-assistant-sci/skills/content/folio-paper-adapter`)
 
 Larger **platform bundles**, two of them migrated from the qou content repo (see
 [migration record](migrations/2026-06-29-platform-skills-migration.html) and

@@ -401,8 +401,8 @@ _Эта страница сгенерирована из [`content/docs/agentic-
 | Дисциплина коммитов и PR | `AGENTS.md § Commit early, commit often` | [`AGENTS.md`](../../AGENTS.md) |
 | Обнаружение запросов функциональности | `crdm-detect.md` | [`skills/sdlc/crdm/crdm-detect.md`](../../skills/sdlc/crdm/crdm-detect.md) |
 | Рабочий процесс требований CRDM | `crdm-requirements-workflow.md` | [`skills/sdlc/crdm/crdm-requirements-workflow.md`](../../skills/sdlc/crdm/crdm-requirements-workflow.md) |
-| Создание контента (paper) | навыки authoring-math | [`skills/authoring/authoring-math/`](../../skills/authoring/authoring-math/) |
-| Создание контента (document) | навыки folio-document-adapter | [`skills/authoring/folio-document-adapter/`](../../skills/authoring/folio-document-adapter/) |
+| Создание контента (paper) | навыки authoring-math | [`folio-assistant-sci/skills/content/authoring-math/`](../../../folio-assistant-sci/skills/content/authoring-math/) |
+| Создание контента (document) | навыки folio-document-adapter | [`folio-assistant-core/skills/content/folio-document-adapter/`](../../../folio-assistant-core/skills/content/folio-document-adapter/) |
 | Жизненный цикл контента | навыки content-lifecycle | [`skills/authoring/content-lifecycle/`](../../skills/authoring/content-lifecycle/) |
 | Импорт документов | `docs-generation.md` | [`skills/ui/ui-core/docs-generation.md`](../../skills/ui/ui-core/docs-generation.md) |
 | Диспетчеризация и координация | `dispatch-agent.md`, `coordinate.md` | [`skills/folio-core/`](../../skills/folio-core/) |

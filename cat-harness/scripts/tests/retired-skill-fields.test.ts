@@ -30,6 +30,8 @@ import { existsSync, readFileSync } from "node:fs";
 import { resolve } from "node:path";
 import { Glob } from "bun";
 
+import { kgRoots } from "../known-skills.js";
+
 const ROOT = resolve(import.meta.dir, "../..");
 
 /**
@@ -49,9 +51,15 @@ const RETIRED: Record<string, string> = {
 
 function skillDefinitionFiles(): string[] {
   const out: string[] = [];
-  for (const dir of ["skills", "adapters", "src"]) {
-    for (const rel of new Glob("**/*.ts").scanSync({ cwd: resolve(ROOT, dir) })) {
-      const abs = resolve(ROOT, dir, rel);
+  // The harness's own trees, plus every skills root the checkout resolves:
+  // the paper adapter's fourteen definitions moved up to sci with their
+  // skills (placement PR1, bean `ybwt`), and they still type as
+  // `SkillDefinition` from the harness's framework.
+  const dirs = new Set([...["skills", "adapters", "src"].map((d) => resolve(ROOT, d)), ...kgRoots(ROOT).map((d) => resolve(d))]);
+  for (const dir of dirs) {
+    for (const rel of new Glob("**/*.ts").scanSync({ cwd: dir })) {
+      const abs = resolve(dir, rel);
+      if (out.includes(abs)) continue;
       if (abs.endsWith(".test.ts")) continue;
       const text = readFileSync(abs, "utf-8");
       // The literals, not the schema that defines the shape.

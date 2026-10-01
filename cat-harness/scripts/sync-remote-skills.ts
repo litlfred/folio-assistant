@@ -63,9 +63,11 @@ import {
   writeFileSync,
 } from "node:fs";
 import { tmpdir } from "node:os";
-import { join, relative } from "node:path";
+import { join, relative, resolve } from "node:path";
 
+import { findInstanceRoot } from "../schemas/cat-harness.ts";
 import { kgRoots } from "./known-skills.js";
+import { packageDirsIn } from "./skill-topics.js";
 
 const INSTANCE = join(import.meta.dir, "..");
 
@@ -195,19 +197,58 @@ export function upstreamLicence(clone: string, skillDir: string): { path: string
   return undefined;
 }
 
-function git(args: string[], cwd?: string): void {
+/** Run git; its stdout, or a throw carrying its stderr. Shared with `kg-subscribe`. */
+export function git(args: string[], cwd?: string): string {
   const r = spawnSync("git", args, { cwd, encoding: "utf8" });
-  if (r.status !== 0) throw new Error(`git ${args.join(" ")} failed: ${r.stderr.trim()}`);
+  if (r.status !== 0) throw new Error(`git ${args.join(" ")} failed: ${(r.stderr ?? "").trim() || `exit ${r.status}`}`);
+  return r.stdout;
 }
 
-/** Fetch exactly one commit, shallowly. */
+/**
+ * Fetch exactly one commit, shallowly, into a fresh repository, WITHOUT a
+ * checkout: the caller reads `FETCH_HEAD`. `blobless` adds
+ * `--filter=blob:none`, so only trees arrive and a blob is fetched when it is
+ * read — `kg-subscribe` reads one file of a whole repository this way.
+ */
+export function shallowFetch(repo: string, ref: string, opts: { blobless?: boolean; prefix?: string } = {}): string {
+  const dir = mkdtempSync(join(tmpdir(), opts.prefix ?? "remote-skill-"));
+  try {
+    git(["init", "-q", dir]);
+    git(["remote", "add", "origin", repo], dir);
+    git(["fetch", "-q", "--depth", "1", ...(opts.blobless ? ["--filter=blob:none"] : []), "origin", ref], dir);
+  } catch (e) {
+    rmSync(dir, { recursive: true, force: true });
+    throw e;
+  }
+  return dir;
+}
+
+/** Fetch exactly one commit, shallowly, and check it out. */
 function fetchAt(repo: string, ref: string): string {
-  const dir = mkdtempSync(join(tmpdir(), "remote-skill-"));
-  git(["init", "-q", dir]);
-  git(["remote", "add", "origin", repo], dir);
-  git(["fetch", "-q", "--depth", "1", "origin", ref], dir);
+  const dir = shallowFetch(repo, ref);
   git(["checkout", "-q", "FETCH_HEAD"], dir);
   return dir;
+}
+
+/**
+ * Where a synced skill's package lives under `skillsDir`: the existing package
+ * directory of that name, which may sit in a concern group
+ * (`skills/content/<skill>/`, placement PR1, bean `ybwt`), else a new one at
+ * the top level. Asked of the ONE grouped walk rather than composed, so a
+ * re-sync lands where discovery already looks.
+ */
+export function syncedPackageDir(skillsDir: string, skill: string): string {
+  return packageDirsIn(skillsDir).find((d) => d.name === skill)?.dir ?? join(skillsDir, skill);
+}
+
+/**
+ * Every skills directory in the checkout that holds a `remote-packages/`
+ * directory. A wrapper belongs to the instance whose skills use it — sci holds
+ * `claude-scientific-skills`, fhir-harness `smarter-fhir` (placement PR1) — so
+ * a check rooted at the harness alone would read none of them.
+ */
+export function wrapperSkillsDirs(instance: string): string[] {
+  return [...new Set(kgRoots(instance).map((d) => resolve(d)))].filter((d) => existsSync(join(d, "remote-packages"))).sort();
 }
 
 /** Offline: every declared skill is materialized, at the wrapper's pin, from that wrapper. */
@@ -222,7 +263,8 @@ export function checkMaterialized(skillsDir: string): string[] {
     }
     if (w.sync.autoUpdate) problems.push(`${w.file}: autoUpdate is true — a pinned sync never updates itself`);
     for (const skill of w.wrapper.skills) {
-      const rec = join(skillsDir, skill, RECORD_FILE);
+      const pkg = syncedPackageDir(skillsDir, skill);
+      const rec = join(pkg, RECORD_FILE);
       if (!existsSync(rec)) {
         problems.push(`${w.file}: \`${skill}\` is declared and not materialized — run \`bun run sync:remote-skills\``);
         continue;
@@ -230,8 +272,8 @@ export function checkMaterialized(skillsDir: string): string[] {
       const r = JSON.parse(readFileSync(rec, "utf8")) as { ref?: string; package?: string };
       if (r.ref !== w.ref) problems.push(`${skill}: materialized at ${r.ref}, but ${w.file} pins ${w.ref} — re-sync`);
       if (r.package !== w.name) problems.push(`${skill}: materialized from \`${r.package}\`, but declared by \`${w.name}\``);
-      if (!existsSync(join(skillsDir, skill, `${skill}.md`))) problems.push(`${skill}: no \`${skill}.md\` entry point`);
-      if (!LICENCE_NAMES.some((n) => existsSync(join(skillsDir, skill, n)))) {
+      if (!existsSync(join(pkg, `${skill}.md`))) problems.push(`${skill}: no \`${skill}.md\` entry point`);
+      if (!LICENCE_NAMES.some((n) => existsSync(join(pkg, n)))) {
         problems.push(`${skill}: no licence file beside the copy — the notice must travel with it`);
       }
     }
@@ -278,7 +320,7 @@ function sync(skillsDir: string, instanceRoot: string): number {
           failures++;
           continue;
         }
-        const dst = join(skillsDir, skill);
+        const dst = syncedPackageDir(skillsDir, skill);
         rmSync(dst, { recursive: true, force: true });
         cpSync(src, dst, { recursive: true });
         renameSync(join(dst, "SKILL.md"), join(dst, `${skill}.md`));
@@ -328,21 +370,15 @@ function sync(skillsDir: string, instanceRoot: string): number {
 }
 
 if (import.meta.main) {
-  const skillsDir = kgRoots(INSTANCE)[0];
-  if (!skillsDir) {
-    console.error("  ✗ this instance declares no knowledge-graph directory to materialize into");
-    process.exit(1);
-  }
+  const dirs = wrapperSkillsDirs(INSTANCE);
   if (process.argv.includes("--check")) {
     const noticePath = join(INSTANCE, "..", "NOTICE");
-    const problems = [
-      ...checkMaterialized(skillsDir),
-      ...checkNotice(existsSync(noticePath) ? readFileSync(noticePath, "utf8") : "", wrappersIn(skillsDir)),
-    ];
-    const declared = wrappersIn(skillsDir).filter((w) => w.sync).flatMap((w) => w.wrapper.skills);
-    console.log(`Remote skills — ${declared.length} declared by a syncing wrapper`);
+    const notice = existsSync(noticePath) ? readFileSync(noticePath, "utf8") : "";
+    const problems = dirs.flatMap((d) => [...checkMaterialized(d), ...checkNotice(notice, wrappersIn(d))]);
+    const declared = dirs.flatMap((d) => wrappersIn(d).filter((w) => w.sync).flatMap((w) => w.wrapper.skills));
+    console.log(`Remote skills — ${declared.length} declared by a syncing wrapper, in ${dirs.length} skills director${dirs.length === 1 ? "y" : "ies"}`);
     if (declared.length === 0) {
-      console.log("  ✓ none declared — the directory was read and no wrapper syncs");
+      console.log("  ✓ none declared — every skills directory was read and no wrapper syncs");
       process.exit(0);
     }
     for (const p of problems) console.error(`  ✗ ${p}`);
@@ -350,5 +386,7 @@ if (import.meta.main) {
     console.log("  ✓ every declared skill is materialized at its wrapper's pin");
     process.exit(0);
   }
-  process.exit(sync(skillsDir, INSTANCE) ? 1 : 0);
+  let failures = 0;
+  for (const d of dirs) failures += sync(d, findInstanceRoot(d) ?? INSTANCE);
+  process.exit(failures ? 1 : 0);
 }

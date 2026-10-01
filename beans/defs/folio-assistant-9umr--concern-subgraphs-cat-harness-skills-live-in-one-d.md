@@ -5,7 +5,7 @@ status: in-progress
 type: epic
 priority: normal
 created_at: 2026-09-30T08:12:08Z
-updated_at: 2026-10-01T01:58:37Z
+updated_at: 2026-10-01T09:00:24Z
 parent: folio-assistant-vuip
 ---
 
@@ -35,3 +35,16 @@ Next, the mechanism: one helper, packageDirsIn(kgDir), replacing the six one-lev
 
 
 *2026-10-01* — Step 8 merged in #1729: skills/sdlc/ holds crdm, spec-kit and a new sdlc-core package with the 46 SDLC skills from folio-core. folio-core now holds six: the tool surface (mcp-assembly, mcp-contract, mcp-projection, skills-and-tools, covered-is-not-reachable), waiting on w2gr, and upload-routes, which the classification could not place. Three more flat walks found and fixed on the way: registry.test, skill-manifest-coverage.test (#1689) and front-matter.test (#1729); skill_fetch's package_name list is now built from discovery.
+
+
+*2026-10-01* — Placement PR2–PR9 are tracked as children of the separation epic `folio-assistant-iirv` (PR2 `pzwb`, PR3 `63wl`, PR4 `4fv8`, PR5 `tlat`, PR6 `apcg`, PR7 `8fq9`, PR8 `f8wp`, PR9 `p9bu`), because owner ruling D4 (2026-10-01, option 3) interleaves them with the cat-harness / cat-harness-tools split stages into one ordered sequence. PR0 (`ejye`) and PR1 (`ybwt`) stay under this epic on their branches; stage 0 (`pyds`) and PR2/PR3 wait on them.
+
+
+## Owner ruling 2026-10-01 (separation arc 7x5n): MCP is its own subgraph inside the tools concern
+Target: `cat-harness/skills/tools/mcp/`, declared as its own subgraph. MCP skills (mcp-assembly, mcp-contract, mcp-projection) move there. General tool skills (skills-and-tools, covered-is-not-reachable) move to `cat-harness/skills/tools/`. Tool definitions stay in cat-harness/tools/ (JSON, D2). Implementations go to cat-harness-tools; server parts needing core go to core (C1). The MCP spec library entry follows agent-skills into the cat-harness library.
+- [ ] skills/tools/ and skills/tools/mcp/ declared and populated (finale)
+
+
+## Refined 2026-10-01: two MCP subgraphs, split by layer
+cat-harness/skills/tools/mcp/ (generic skill<->tool mapping, contract, projection, assembly) and folio-assistant-core/skills/tools/mcp/ (folio-specific MCP surfaces). The 5 MCP/tool skills read as generic -> cat-harness; folio-specific implementations and the folio half of the tool registry -> core.
+- [ ] folio-assistant-core/skills/tools/mcp/ declared and populated
