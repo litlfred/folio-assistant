@@ -132,7 +132,7 @@
 
 <ul class="subs">
 <li><a href="../folio-assistant-core-processes/">folio-assistant-core-processes</a> <span class="p">folio-assistant-core/processes</span> <span class="n">1</span></li>
-<li><a href="../large-datasets-processes/">large-datasets-processes</a> <span class="p">large-datasets/processes</span> <span class="n">4</span></li>
+<li><a href="../large-datasets-processes/">large-datasets-processes</a> <span class="p">large-datasets/processes</span> <span class="n">5</span></li>
 <li><a href="../processes/">processes</a> <span class="p">cat-harness/processes</span> <span class="n">66</span></li>
 <li><a href="../smart-base-processes/">smart-base-processes</a> <span class="p">smart-base/methodologies/processes</span> <span class="n">1</span></li>
 </ul>
@@ -428,6 +428,10 @@
 <tr>
   <td><a href="https://github.com/litlfred/folio-assistant/blob/main/large-datasets/processes/sample-import.bpmn"><code>Sample import into a structured data store</code></a><br><span class="p">large-datasets/processes/sample-import.bpmn</span></td>
   <td>The SDLC for testing an import of a SAMPLE of a remote source into a knowledge graph or other structured store.<div class="f"><span class="k">activities</span> 7</div><div class="f"><span class="k">lanes</span> Contributor (human or agent) · Ingestion Engine (agent, runs unattended) · Corpus — L1 source knowledge graph</div><div class="f"><span class="k">skills</span> materialize-remote, sample-import</div></td>
+</tr>
+<tr>
+  <td><a href="https://github.com/litlfred/folio-assistant/blob/main/large-datasets/processes/subscribe-kg.bpmn"><code>Subscribe to an external knowledge graph</code></a><br><span class="p">large-datasets/processes/subscribe-kg.bpmn</span></td>
+  <td>Owner, 2026-09-30 (issue #1719): &quot;a way for a folio instance (or cat-harness in general) to &quot;subscribe&quot; to external KGs … they can choose to materialize some or all subgraphs … an asset reference … they can choose to ma…<div class="f"><span class="k">activities</span> 11</div><div class="f"><span class="k">lanes</span> Subscriber (the folio's owner) · Ingestion Engine (agent, runs unattended) · Corpus — the subscriber's declaration</div><div class="f"><span class="k">skills</span> kg-subscription, materialize-remote</div></td>
 </tr>
 <tr>
   <td><a href="https://github.com/litlfred/folio-assistant/blob/main/smart-base/methodologies/processes/diig-investment-path.bpmn"><code>DIIG — from a health system bottleneck to a costed implementation plan</code></a><br><span class="p">smart-base/methodologies/processes/diig-investment-path.bpmn</span></td>

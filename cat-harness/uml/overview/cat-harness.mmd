@@ -58,6 +58,20 @@ classDiagram
       concepts [0..*] Concept[]
     }
   }
+  namespace cat_harness__subscriptions {
+    class cat_harness_subscriptions_SubstrateSnapshot["SubstrateSnapshot"] {
+      <<json: SubstrateSnapshotSchema>>
+      $schema [1] 'folio-substrate-snapshot/v1'
+      subscription [1] string
+      repository [1] string
+      ref [1] string
+      file [1] string
+      raw [1] string
+      fixity [1] object
+      summary [1] object
+      note [0..1] string
+    }
+  }
   namespace cat_harness__code_lists {
     class cat_harness_code_lists_Code["Code"] {
       <<json: CodeListSchema>>
@@ -1959,6 +1973,7 @@ classDiagram
   cssClass "cat_harness_external_schemas_folio_external_schema_v1_folio_external_schema_v1" fa_uml_kind_external_schema
   cssClass "cat_harness_external_schemas_folio_pinned_terminology_v1_Concept" fa_uml_kind_external_schema
   cssClass "cat_harness_external_schemas_folio_pinned_terminology_v1_folio_pinned_terminology_v1" fa_uml_kind_external_schema
+  cssClass "cat_harness_subscriptions_SubstrateSnapshot" fa_uml_kind_substrate_snapshot
   cat_harness_code_lists_CodeList *-- "1..*" cat_harness_code_lists_Code : codes
   cssClass "cat_harness_code_lists_Code" fa_uml_kind_code_list
   cssClass "cat_harness_code_lists_CodeList" fa_uml_kind_code_list

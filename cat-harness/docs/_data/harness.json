@@ -2389,13 +2389,25 @@
       },
       {
         "key": "subscriptions",
-        "skills": [],
-        "gap": "no skill governs `subscriptions` yet: `bun run kg:subscribe` writes it, and the `kg-subscription` skill is slice 8 of the kg-subscriptions proposal (issue #1719)"
+        "skills": [
+          {
+            "name": "kg-subscription",
+            "path": "/reference/skill-instructions/kg-subscription.html"
+          },
+          {
+            "name": "materialize-remote",
+            "path": "/reference/skill-instructions/materialize-remote.html"
+          }
+        ]
       },
       {
         "key": "knownSubstrates",
-        "skills": [],
-        "gap": "no skill governs `knownSubstrates` yet: the rule (hand rows only where no declaration names the substrate) is on KnownSubstrateSchema; the skill is slice 8 of the kg-subscriptions proposal (issue #1719)"
+        "skills": [
+          {
+            "name": "kg-subscription",
+            "path": "/reference/skill-instructions/kg-subscription.html"
+          }
+        ]
       },
       {
         "key": "stickies",
@@ -3181,6 +3193,10 @@
             "summary": "1: ihris"
           },
           {
+            "key": "knownSubstrates",
+            "summary": "2: who-iris, who-world-health-data-hub"
+          },
+          {
             "key": "stickies",
             "summary": "1: cat-harness"
           },
@@ -3307,11 +3323,8 @@
     ],
     "findings": [
       "`topology`: no skill edits `topology` yet: its axes are documented only in the schema (cat-harness.ts, TopologySchema)",
-      "`subscriptions`: no skill governs `subscriptions` yet: `bun run kg:subscribe` writes it, and the `kg-subscription` skill is slice 8 of the kg-subscriptions proposal (issue #1719)",
-      "`knownSubstrates`: no skill governs `knownSubstrates` yet: the rule (hand rows only where no declaration names the substrate) is on KnownSubstrateSchema; the skill is slice 8 of the kg-subscriptions proposal (issue #1719)",
       "who-iris: declares `folioMount`, which the declaration schema does not have and silently drops.",
       "cat-harness: declares `folioMount`, which the declaration schema does not have and silently drops.",
-      "cat-harness: declares `knownSubstrates`, which the declaration schema does not have and silently drops.",
       "bootstrap-tools: declares `supports`, which the declaration schema does not have and silently drops."
     ]
   }

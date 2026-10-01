@@ -130,14 +130,14 @@ Each dimension is a **contrast** between two poles, shown by their highest-loadi
 
 | dim | σ | one pole | the other pole |
 |---|---|---|---|
-| 1 | 47.58 | bean, instance, session, graph, kind, branch, directory, page | *(none)* |
-| 2 | 27.81 | bias, studies, study, effect, statistical, causation, validity, causal | bean, harness, instance, directory, node, graph, kind, session |
-| 3 | 22.39 | proof, watcher, lean, slot, blocks, witness, project, sibling | harness, node, instance, bean, directory, page, bias, actor |
-| 4 | 19.60 | session, branch, queue, prs, commits, beans, coordination, bean | dpi, color, lean, grayscale, pdf, images, matplotlib, raster |
-| 5 | 18.69 | dpi, color, grayscale, raster, matplotlib, contrast, images, fonts | proof, lean, glossary, declaration, term, theorem, mathlib, sorry |
+| 1 | 47.61 | bean, instance, graph, session, kind, branch, directory, page | *(none)* |
+| 2 | 27.82 | bias, studies, study, effect, statistical, causation, validity, causal | bean, harness, instance, directory, node, graph, kind, declared |
+| 3 | 22.40 | proof, watcher, lean, slot, blocks, witness, project, sibling | harness, node, instance, bean, directory, page, bias, actor |
+| 4 | 19.61 | session, branch, queue, prs, beans, commits, bean, coordination | dpi, color, lean, grayscale, pdf, images, matplotlib, raster |
+| 5 | 18.69 | dpi, color, grayscale, raster, contrast, matplotlib, images, fonts | proof, lean, glossary, declaration, term, theorem, mathlib, sorry |
 | 6 | 16.78 | regulatory, intervention, biosafety, ethics, candidate, rivals, dual-use, safety | fallacy, fallacious, reality, fallacies, solutions, description, consider, ignoring |
-| 7 | 16.31 | lean, mathlib, search, mcp, sorry, proof, theorem, page | watcher, slot, voice, backlog, queue, ledger, nesting, objection |
-| 8 | 15.39 | mathlib, lean, sorry, lake, mcp, oleans, subdirectory, sessions | slot, watcher, criterion, backlog, forward, band, major, auto-discharge |
+| 7 | 16.33 | lean, mathlib, search, mcp, sorry, proof, theorem, page | watcher, slot, voice, backlog, queue, nesting, ledger, objection |
+| 8 | 15.40 | mathlib, lean, sorry, lake, mcp, oleans, subdirectory, sessions | slot, watcher, criterion, backlog, forward, band, major, auto-discharge |
 
 **Findings** — 0 narrow dimension(s), 0 near-duplicate pair(s).
 
