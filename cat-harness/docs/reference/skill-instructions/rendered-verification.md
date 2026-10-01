@@ -89,6 +89,12 @@ word for what it looked like. `git worktree add <dir> origin/main --detach`
 is the cheap way; symlink `node_modules` and the docs `vendor`/`.bundle`
 into it rather than re-installing.
 
+When the pair goes to a **reviewer** rather than confirming the change to
+yourself, [`before-after-preview`](before-after-preview.md) governs it:
+one build with one variable where possible, stable capture, a *k of n* count
+with its method, the status line, and where the preview sits in the review
+processes. It also covers papers, FHIR IGs and slide decks.
+
 ## Running it here
 
 Building the site is [`preview:site`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/scripts/preview-site.sh), whose

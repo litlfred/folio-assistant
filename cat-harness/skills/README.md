@@ -22,7 +22,7 @@ Part of [C@T Harness](../README.md) 0.1.0, declared as `skills`, holding `skills
 | [`requirements/`](requirements/) | 7 files | |
 | [`scientific-critical-thinking/`](scientific-critical-thinking/) | 11 files | |
 | [`scientific-visualization/`](scientific-visualization/) | 21 files | |
-| [`sdlc/`](sdlc/) | 62 files | |
+| [`sdlc/`](sdlc/) | 63 files | |
 | [`skill-definitions/`](skill-definitions/) | 2 files | |
 | [`ui/`](ui/) | 28 files | |
 <!-- kg:subgraph:end -->

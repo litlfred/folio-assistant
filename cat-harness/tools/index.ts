@@ -2233,6 +2233,7 @@ export function tools(baseUrl?: string): ToolDefinition[] {
           // the bar; one flag wanting a bespoke type is not.
           { name: "top", schema: t("Count"), required: false, arg: { flag: "--top" }, description: "Show only the N largest cones. `0` is a legitimate request for none, which is why `Count` admits zero." },
           { name: "history", schema: t("Count"), required: false, arg: { flag: "--history" }, description: "Report the blast radius over the last N commits instead of a static cone." },
+          { name: "fileUsers", schema: t("RepoPath"), required: false, arg: { flag: "--file-users" }, description: "Also write `fsh-file-users/v1`: for each FSH file, the files that use what it declares. The IG AST's incremental plan reads it (`AstPlanCli -fsh-users`) so a changed RuleSet- or Alias-only file reaches its users rather than forcing a full build (bean `a9tx`)." },
           // `--changed f1,f2,…` stays UNDECLARED, and for a reason the new type
           // does not touch: it is a comma-separated list inside ONE argv word.
           // `Slug` forbids the comma, `repeated` would claim the flag may be

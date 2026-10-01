@@ -1,11 +1,11 @@
 ---
 # folio-assistant-tbdl
 title: Jekyll pages' navbar shows no open-document index — only the injected rail supplies documentIndex
-status: todo
+status: in-progress
 type: task
 priority: normal
 created_at: 2026-09-30T11:23:09Z
-updated_at: 2026-09-30T11:23:09Z
+updated_at: 2026-10-01T05:31:21Z
 parent: folio-assistant-yj32
 ---
 
@@ -36,3 +36,5 @@ Option 1 looks right. It is recorded here, not decided.
 - [ ] `bun run gates` green
 
 _2026-09-30_ — Filed under `yj32`, not `p5wm`: on this date `main` re-parented its siblings `sjic` and `oi1y` there by subject (bean `ansc`, todo-manager §"WHICH parent"), and this bean is the same subject.
+
+_2026-10-01T05:31:21Z_ — Claimed by claude/tbdl-jekyll-doc-index — pushed to main so sibling sessions see it before this branch has a PR (bean 35nj).

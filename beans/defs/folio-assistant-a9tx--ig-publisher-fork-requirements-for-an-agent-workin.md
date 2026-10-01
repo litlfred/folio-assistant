@@ -5,7 +5,7 @@ status: todo
 type: feature
 priority: normal
 created_at: 2026-09-22T19:07:23Z
-updated_at: 2026-09-30T17:45:00Z
+updated_at: 2026-10-01T02:00:00Z
 parent: folio-assistant-uhkv
 ---
 
@@ -183,3 +183,94 @@ Owner's call: an agent with network access **claims this bean whole**
 (`bun run beans:claim folio-assistant-a9tx`), W3 and W4 included, rather than a
 child bean. W1 was un-ticked the same day. It had been ticked with the
 byte-identical check never run, which was a false tick.
+
+
+## Prepared for the agent with network, 2026-09-30
+
+Done while the network-enabled agent could not yet start. Everything here is
+built and unit-tested; **nothing is measured on a real IG yet.** Owner: no
+GitHub Actions for now, and any CI later **calls these same scripts and
+tools**. The one Actions run was cancelled while queued, and the workflow removed.
+
+**Fork** (`claude/ast-export`, `45ec95d`, 21 Java tests):
+- `inputs` in the manifest is now **exactly** folio-assistant's strict
+  `CompiledInputsSchema`: `inputDigest` is 64 bare hex characters, and an unknown
+  `sourceRevision` is omitted, with the reason in `inputsUnknown`. Before this, every AST
+  would have read as `cannot-tell`.
+- A golden-vector test for `InputDigest`
+  (`58871352…82f1`), which folio-assistant's TypeScript twin asserts too.
+- `-fsh-users <json>` on `AstPlanCli` / `IncrementalBuildCli`.
+- The scripts are in `ast-export/scripts/`: `run-real-igs.sh` and `w7-round.sh`.
+
+**folio-assistant** (PR #1708):
+- `fhir-harness/scripts/ig-ast.ts`: `list`, `validity` (`compiledValidity`),
+  `diff` (resources and edges, element-level differential), and `render`
+  (just-the-docs pages, every one carrying the provisional mark). 10 tests.
+- The skill `fhir-ig-base/ig-ast-delta`; six Tools in `fhir-harness/tools`.
+- `fsh-cone --file-users` (`fsh-file-users/v1`), declared on the `fsh-cone` tool.
+- `cat-harness/processes/ig-ast-delta-review.bpmn`, the review subprocess:
+  validity, then diff and render, then "every difference explained?". An
+  unexplained difference is noted here under W8 and ends in a full build. Its
+  placement in `ig-incremental-build.bpmn` (between Task_Merge and Task_Qa) is
+  **stated in the skill, not drawn**; that diagram is unchanged.
+- Corrected: the `ig-publisher-fork` skill and `fhir-harness.json` said the
+  logic-layer edges live in `org.hl7.fhir.core`.
+
+**Found, not used: FHIR packages on npm.** `registry.npmjs.org` is reachable
+here, and the npm account `grahamegrieve` publishes about 567 FHIR packages
+(`@hl7/hl7.fhir.r4.core`, `smart.who.int.base`, `who.ddcc`, the templates).
+The unscoped `hl7.fhir.r4.core` and `fhir.base.template` are npm
+**malicious-package placeholders**, so FHIR names on npm are not
+automatically HL7's. Nothing ties these tarballs to packages.fhir.org. IG
+templates also carry scripts that the Publisher runs, so loading an unverified
+one is code execution, not only data. **Not used.** Whether to use it for
+measurement only is the owner's call.
+
+**For the agent, in order:**
+1. `ast-export/scripts/run-real-igs.sh <work> --byte-identical`.
+2. Record W1 (layout, byte-identical diff) and W2 (per type, against 458).
+3. `bun run fhir-harness/scripts/ig-ast.ts validity <smart-immunizations>/output-ast --ig <smart-immunizations>`
+   must be `valid`. That is the first real cross-language check.
+4. `ast-export/scripts/w7-round.sh <work>`. Then
+   `ig-ast.ts diff <base> <work>/w7/ast --plan <work>/w7/plan.json --site <dir>` and
+   review it per `ig-ast-delta-review.bpmn`.
+
+
+## npm: the owner's ruling, and what it buys (2026-09-30)
+
+Owner: *"grahamegrieve is trusted. he is founder of hl7 fhir"*, and then
+**exact versions only**, over an approximate build with substituted
+versions. The earlier note above ("Not used") is superseded on trust. It still
+holds on coverage:
+
+- the seeder is built (fork `45af0f5`,
+  `ast-export/scripts/seed-fhir-cache-from-npm.py`, Tool `fhir-cache-seed-npm`,
+  documented in the `ig-publisher-fork` skill). It was verified by installing
+  8 packages into a scratch cache with integrity checked and provenance written,
+  and by refusing the `0.0.1-security` placeholder;
+- **coverage:** 10 of smart-trust's 30 pinned versions are on npm, and
+  `who.template.root#current` (smart-immunizations' template) is not. **W1/W2
+  still need packages.fhir.org.**
+
+
+## Getting the rest of the dependencies (2026-10-01)
+
+Owner: *"how get rest of deps?"*, then: add the publishers' own repos as
+sources **and** a mirror script; *"dynamically load from repos... dont calc
+once and assume fixed. avoid drift"*; *"fhir.base.template trusted"*.
+
+Fork `47a8276`. The seeder now tries these, in order: npm `grahamegrieve`;
+`WorldHealthOrganization/smart-html` and `IHE/publications`; template repos
+through `FHIR/ig-registry/templates.json`, read live; and `--mirror`. Patch
+wildcards resolve as the Publisher resolves them, and the resolution is recorded.
+`mirror-fhir-packages.sh` (Tool `fhir-package-mirror`) fills a git repo from
+packages.fhir.org on a machine that reaches it.
+
+**Measured:** 20 packages install for both WHO IGs together, including both
+templates. **Still missing:** the pinned HL7 versions (IPS, terminology,
+extensions, CQL, CRMI, SDC, IPA), `fhir.cqf.common` and `us.nlm.vsac`. Next:
+the owner runs the mirror script, then the seeder runs with `--mirror`.
+
+**Upstream ask:** `who.template.root` is not in `FHIR/ig-registry`'s
+templates.json, so its repo is passed with `--template-repo`. A PR to the
+registry would remove that.
