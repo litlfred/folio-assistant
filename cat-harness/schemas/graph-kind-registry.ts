@@ -778,6 +778,13 @@ export const BASE_GRAPH_KINDS: Readonly<Record<string, GraphKindDef>> = {
       "folio-library-entry/v1": { validator: "schemas/site-indexes.ts#LibraryEntrySchema", generated: true },
       "folio-voices-index/v1": { validator: "schemas/site-indexes.ts#VoicesIndexSchema", generated: true },
       "folio-graph-projection/v1": { validator: "schemas/site-indexes.ts#FolioGraphProjectionSchema", generated: true },
+      // A DAK sidecar published beside its view page, at the path the IG
+      // Publisher serves it from, so Raw and Download resolve where the
+      // Publisher's do (bean `jut3`). The bytes are a copy of the
+      // artefact-index graph's `dak/` file — named here, not run, as the
+      // `schemas` kind names it; removing the copy waits on publishing a KG
+      // directory directly (bean `680p`).
+      "https://json-schema.org/draft/2020-12/schema": { external: "JSON Schema 2020-12" },
     },
     summary:
       "Documentation ABOUT the knowledge graph — how the harness works, what its " +

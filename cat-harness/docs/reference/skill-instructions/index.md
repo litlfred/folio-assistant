@@ -306,6 +306,7 @@ roles, and how they compose with the LLM, see [Skills & roles](../../skills.html
 | [Serving a rendering](serving-renderings.html) | `serving-renderings` | — | A **rendering** is what an instance publishes about itself. Running it produces |
 | [At ingestion, and only at ingestion](theme-ui-review.html) | `theme-ui-review` | — | **The owner, 2026-09-23 and 2026-09-24**, settling bean `9fdi`: |
 | [All UI must follow accessibility guidelines](ui-accessibility.html) | `ui-accessibility` | — | This is a **rule**, stated as one by the owner, and it binds every surface this |
+| [Visualizer loading](visualizer-loading.html) | `visualizer-loading` | — | > Skill id: `visualizer-loading` · Package: `ui-core` · Beans `680p`, `s32v`, |
 | [Wireframe design review](wireframe-design-review.html) | `wireframe-design-review` | — | Method: [`wiregen`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/methodologies/ |
 
 ## Content layer (folio-assistant-core)

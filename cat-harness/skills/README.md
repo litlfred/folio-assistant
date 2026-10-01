@@ -20,5 +20,5 @@ Part of [C@T Harness](../README.md) 0.1.0, declared as `skills`, holding `skills
 | [`requirements/`](requirements/) | 7 files | |
 | [`sdlc/`](sdlc/) | 63 files | |
 | [`skill-definitions/`](skill-definitions/) | 2 files | |
-| [`ui/`](ui/) | 28 files | |
+| [`ui/`](ui/) | 29 files | |
 <!-- kg:subgraph:end -->
