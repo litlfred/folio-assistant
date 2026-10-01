@@ -70,18 +70,26 @@ classDiagram
       description [0..1] string
       roles [0..*] string[]
     }
+    class cat_harness_scenarios_Extension["Extension"] {
+      <<json: RoleGraphSchema>>
+      role [1] string
+      skills [1..*] string[]
+    }
     class cat_harness_scenarios_RoleGraph["RoleGraph"] {
       <<json: RoleGraphSchema>>
       name [1] string
       roles [0..*] Role[]
       actors [0..*] Actor[]
+      extensions [0..*] Extension[]
     }
   }
   cat_harness_scenarios_Role *-- "0..*" cat_harness_scenarios_FormerName : formerNames
   cat_harness_scenarios_RoleGraph *-- "0..*" cat_harness_scenarios_Role : roles
   cat_harness_scenarios_RoleGraph *-- "0..*" cat_harness_scenarios_Actor : actors
+  cat_harness_scenarios_RoleGraph *-- "0..*" cat_harness_scenarios_Extension : extensions
   cssClass "cat_harness_scenarios_FormerName" fa_uml_kind_scenarios
   cssClass "cat_harness_scenarios_Role" fa_uml_kind_scenarios
   cssClass "cat_harness_scenarios_Actor" fa_uml_kind_scenarios
+  cssClass "cat_harness_scenarios_Extension" fa_uml_kind_scenarios
   cssClass "cat_harness_scenarios_RoleGraph" fa_uml_kind_scenarios
 ```

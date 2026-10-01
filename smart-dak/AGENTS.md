@@ -33,7 +33,7 @@ Per the `folio-assistant-core` precedent: declaring a directory that is not
 there is the `dh4f` defect.
 
 Placement:
-[`smart-stack-layering`](../cat-harness/skills/authoring/authoring-who-smart-guidelines/smart-stack-layering.md).
+[`smart-stack-layering`](../smart-base/skills/content/authoring-who-smart-guidelines/smart-stack-layering.md).
 The pipeline steps:
-[`dak-preprocessing`](../cat-harness/skills/authoring/authoring-who-smart-guidelines/dak-preprocessing.md),
-[`dak-postprocessing`](../cat-harness/skills/authoring/authoring-who-smart-guidelines/dak-postprocessing.md).
+[`dak-preprocessing`](../smart-base/skills/content/authoring-who-smart-guidelines/dak-preprocessing.md),
+[`dak-postprocessing`](../smart-base/skills/content/authoring-who-smart-guidelines/dak-postprocessing.md).

@@ -36,7 +36,7 @@ pages branch is a deployment target, and which one is the instance's to declare.
 
 ## What the Publisher run emits
 
-Stated in [`ig-publication`](../../../cat-harness/skills/authoring/authoring-who-smart-guidelines/ig-publication.md)
+Stated in [`ig-publication`](../content/fhir-ig-authoring/ig-publication.md)
 §"The render-IG phase", because that skill owns the run and this one owns the
 layer. Do not restate the list here — two copies of an emission list is two
 copies free to drift, and the emission list is exactly the thing a new Publisher
@@ -102,7 +102,7 @@ phase's *"Delete files >100MB before deployment"* is the same concern one layer
 down.
 
 They belong here. Recorded because this is the layering rule
-([`smart-stack-layering`](../../../cat-harness/skills/authoring/authoring-who-smart-guidelines/smart-stack-layering.md))
+([`smart-stack-layering`](../../../smart-base/skills/content/authoring-who-smart-guidelines/smart-stack-layering.md))
 producing a result its own step names contradicted — which is the only kind of
 evidence that a split is doing work.
 

@@ -2,7 +2,7 @@
   "$schema": "qa-results/v1",
   "producer": {
     "script": "cat-harness/scripts/skill-register.ts",
-    "script_hash": "227465897481"
+    "script_hash": "c7ed674a8247"
   },
   "subject": {
     "kind": "corpus",
@@ -28,7 +28,7 @@
           "verify": "skills:docs:check",
           "because": "the skill's published reference page",
           "ran": true,
-          "current": true
+          "current": false
         },
         {
           "verify": "check:glossary",
@@ -58,13 +58,13 @@
           "verify": "kg:audit:check",
           "because": "the skill's kg-qa sidecar — masked inside `gates` by `bun test`",
           "ran": true,
-          "current": true
+          "current": false
         },
         {
           "verify": "kg:detangle:check",
           "because": "the skills subgraph gains a node, so its detangle sidecar moves",
           "ran": true,
-          "current": true
+          "current": false
         },
         {
           "verify": "uml:overview:check",

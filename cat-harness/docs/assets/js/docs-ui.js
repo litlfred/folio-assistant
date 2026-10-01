@@ -6050,7 +6050,24 @@
     }
     chromeTile("glass-filter", "Filter", "\u25BD", "Filter your glass \u2014 by kind, by where it came from, or item by item", buildFilter);
 
-    chromeTile("glass-settings", "Settings", "⚙", "Folio settings — theme, avatars, opacity", buildSettings);
+    // RENAMED 2026-10-01 on the owner's ruling — bean `ob3m` finding 12. Two
+    // unrelated controls were both called "Settings" and both wore a gear:
+    // this one, and the LAUNCHER's at `tileButton(GEAR_GLYPH, "Settings", …)`
+    // around line 2060, which is site chrome (theme, language, QR). Neither
+    // pointed at the other, so a reader met the same name twice for different
+    // things and a screen reader read them identically.
+    //
+    // The label comes from this call's OWN title, which already said "Folio
+    // settings" — the rename recovers information the code held rather than
+    // inventing a distinction. The launcher's label is deliberately untouched:
+    // readers have already learned it, and only one of the two had to move.
+    //
+    // The `id` stays `glass-settings`. Every glass test keys on
+    // `data-fa-glass-chrome="glass-settings"` and `STRIP_DEFAULT` lists it, so
+    // the id is the contract and the label is the prose. Cross-linking the two
+    // panels was considered and rejected: it would assert a relationship
+    // between site chrome and board state that does not exist.
+    chromeTile("glass-settings", "Folio settings", "⚙", "Theme, avatars, opacity", buildSettings);
 
     /* ── HARNESSES — the config panel, issue #1146 ────────────────────────
      *

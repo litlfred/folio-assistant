@@ -7,9 +7,6 @@ Part of [WHO IRIS](../README.md) 0.1.0, declared as `who-iris-scripts`, holding 
 
 | file | what it is | used by |
 |---|---|---|
-| [`check-catalogue.ts`](check-catalogue.ts) | a file |  |
-| [`gen-covers.ts`](gen-covers.ts) | a file |  |
 | [`gen-iris-pages.ts`](gen-iris-pages.ts) | a file |  |
-| [`lib/`](lib/) | 2 files | |
-| [`tests/`](tests/) | 4 files | |
+| [`tests/`](tests/) | 2 files | |
 <!-- kg:subgraph:end -->

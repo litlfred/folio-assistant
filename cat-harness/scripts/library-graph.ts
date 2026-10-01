@@ -95,6 +95,7 @@ import { withheldReason } from "./lib/withheld.ts";
 import { entryItems, type SummaryTally } from "./summaries.ts";
 import { ingestRungOf, type IngestRung } from "../content/pipeline/gen-library-jsonld.ts";
 import { pagesOf, readStructure, STRUCTURE_FILENAME } from "../schemas/document-structure.ts";
+import { corpusDirectoriesForGraph } from "../schemas/harness-config.js";
 
 /**
  * Whether a library entry's source upload is still on disk, and whether it is
@@ -167,7 +168,7 @@ export interface LibraryEntry {
    * whatever is associated to it if there is something"*.
    *
    * In order: the rendered COVER beside the entry (`<slug>-cover.png`, the
-   * file `who-iris/scripts/gen-covers.ts` writes, emblem already masked),
+   * file `folio-assistant-core/scripts/gen-covers.ts` writes, emblem already masked),
    * then the first image `images.json` declares a `figure`. A logo is never
    * the avatar — it names who published the book, not the book.
    *
@@ -665,7 +666,7 @@ export function readLibraryGraph(roots: string[], repoRoot: string = repoRootFor
   const libDirs = new Set<string>();
   const upDirs = new Set<string>();
   for (const r of roots) {
-    for (const d of directoriesForGraph(r, "library")) libDirs.add(d);
+    for (const d of corpusDirectoriesForGraph(r, "library")) libDirs.add(d);
     for (const d of directoriesForGraph(r, "uploads")) upDirs.add(d);
   }
   // An instance that declares a library declares its own queue, and that

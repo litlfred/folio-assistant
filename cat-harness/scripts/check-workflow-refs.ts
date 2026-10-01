@@ -32,7 +32,7 @@
  * @covers processes, skills
  */
 import { existsSync, readdirSync, readFileSync } from "node:fs";
-import { workflowFiles } from "./known-skills.js";
+import { workflowFiles, corpusScopeFor } from "./known-skills.js";
 import { basename, join, relative, resolve } from "node:path";
 import { loadProcessModel, isActivity } from "../src/workflow/process-model.js";
 import { knownSkills } from "./known-skills.js";
@@ -144,12 +144,12 @@ let fileCount = 0;
 let rootFiles: string[] = [];
 
 for (const root of INSTANCES) {
-const skills = knownSkills(root);
+const skills = knownSkills(root, corpusScopeFor(root));
 knownCount += skills.size;
 // Absolute paths from every declared directory. A dangling `<bootstrap.processes:skill
 // ref>` in a diagram this checker never opens is a broken reference reported
 // as clean, which is the exact failure this script exists to prevent.
-const files = workflowFiles(root).filter((f) => f.endsWith(".bpmn"));
+const files = workflowFiles(root, corpusScopeFor(root)).filter((f) => f.endsWith(".bpmn"));
 fileCount += files.length;
 // The sections after this loop are about the ROOT instance only — its
 // content-type translation declarations and its publication index.

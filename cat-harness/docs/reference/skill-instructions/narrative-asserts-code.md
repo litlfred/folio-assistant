@@ -74,7 +74,7 @@ nothing from you.
 
 For a **proof ↔ Lean** pair, a proof assistant can settle the formal claim
 mechanically, which no other pair kind allows. That work belongs to
-[`proof-narrative-lean-equivalence`](proof-narrative-lean-equivalence.md):
+`proof-narrative-lean-equivalence` (folio-assistant-sci):
 stub-weakening, overreach, hypothesis mismatch and notation drift. This skill
 states the question for every pair kind, and that one answers it for Lean.
 Nothing Lean-specific goes here (requirement R5), so a pair kind added later

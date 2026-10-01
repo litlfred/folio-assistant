@@ -7,7 +7,9 @@ Part of [C@T Harness](../../cat-harness/README.md) 0.1.0, declared as `fhir-ig-s
 
 | file | what it is | used by |
 |---|---|---|
+| [`content/`](content/) | 5 files | |
 | [`fhir-client/`](fhir-client/) | 3 files | |
 | [`fhir-ig-base/`](fhir-ig-base/) | 6 files | |
+| [`remote-packages/`](remote-packages/) | 1 file | |
 | [`skill-definitions/`](skill-definitions/) | 4 files | |
 <!-- kg:subgraph:end -->

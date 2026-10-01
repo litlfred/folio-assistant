@@ -61,7 +61,7 @@ import { authorizeTask, type TaskAuthVerdict } from "../src/workflow/authorize.j
 import type { HistoryEntry, InstanceState } from "../src/workflow/instance.js";
 import { isActivity, isDecision, loadProcessModel, type ProcessModel } from "../src/workflow/process-model.js";
 import { listInstances } from "../src/workflow/store.js";
-import { roleGraphFor, workflowFiles } from "./known-skills.js";
+import { roleGraphFor, workflowFiles, corpusScopeFor } from "./known-skills.js";
 
 const HARNESS = resolve(import.meta.dir, "..");
 const REPO = repoRootFor(HARNESS);
@@ -287,7 +287,7 @@ export async function buildReport(
   const ctx = opts.ctx ?? accessContext(HARNESS);
   const graph = "graph" in opts ? opts.graph : roleGraphFor(HARNESS);
   let diagrams: string[] | undefined = opts.diagrams;
-  const candidates = () => (diagrams ??= workflowFiles(HARNESS).filter((f) => f.endsWith(".bpmn")));
+  const candidates = () => (diagrams ??= workflowFiles(HARNESS, corpusScopeFor(HARNESS)).filter((f) => f.endsWith(".bpmn")));
   const models = new Map<string, Promise<ProcessModel>>();
   const model = (p: string) => {
     if (!models.has(p)) models.set(p, loadProcessModel(p));

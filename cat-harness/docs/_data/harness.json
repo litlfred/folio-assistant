@@ -73,14 +73,19 @@
     }
   },
   "declaredKinds": [
+    "beans",
     "cat-harness",
     "code",
     "code-list",
     "docs",
     "external-schema",
     "folio",
+    "fsh-guts",
     "health",
+    "interaction",
+    "issue-marks",
     "library",
+    "memory",
     "methodology",
     "policies",
     "processes",
@@ -88,11 +93,14 @@
     "scenarios",
     "schemas",
     "skills",
+    "substrate-snapshot",
     "swimlane-glossary",
+    "todos",
     "tools",
     "translation-sources",
     "uml",
-    "uploads"
+    "uploads",
+    "waiver"
   ],
   "links": [
     {
@@ -125,6 +133,22 @@
       "hidden": false,
       "count": 12,
       "unit": "entries"
+    },
+    {
+      "id": "beans",
+      "directory": "beans",
+      "title": "beans",
+      "ref": "cat-harness/docs/beans/index.html",
+      "surfaces": [
+        "navbar",
+        "board",
+        "glass"
+      ],
+      "href": "/beans/",
+      "hidden": false,
+      "icon": "beans",
+      "count": 541,
+      "unit": "beans"
     },
     {
       "id": "docs",
@@ -265,6 +289,20 @@
       "unit": "entries"
     },
     {
+      "id": "fsh-guts",
+      "directory": "fsh-guts",
+      "title": "fsh-guts",
+      "ref": "cat-harness/docs/fsh-guts/index.md",
+      "surfaces": [
+        "navbar",
+        "board",
+        "glass"
+      ],
+      "href": "/fsh-guts/",
+      "hidden": false,
+      "publish": "staging-only"
+    },
+    {
       "id": "large-datasets-schemas",
       "directory": "large-datasets-schemas",
       "title": "large-datasets-schemas",
@@ -304,7 +342,7 @@
       ],
       "href": "/cat-harness/library/cat-harness/",
       "hidden": false,
-      "count": 19,
+      "count": 22,
       "unit": "entries"
     },
     {
@@ -346,8 +384,21 @@
       ],
       "href": "/lsi/",
       "hidden": false,
-      "count": 1018,
+      "count": 943,
       "unit": "documents"
+    },
+    {
+      "id": "root-docs",
+      "directory": "root-docs",
+      "title": "root-docs",
+      "ref": "cat-harness/docs/cat-harness/docs-auto/index/docs/root-docs/index.html",
+      "surfaces": [
+        "navbar",
+        "board",
+        "glass"
+      ],
+      "href": "/cat-harness/docs-auto/index/docs/root-docs/",
+      "hidden": false
     },
     {
       "id": "schemas",
@@ -407,6 +458,21 @@
       "hidden": false
     },
     {
+      "id": "todos",
+      "directory": "todos",
+      "title": "todos",
+      "ref": "cat-harness/docs/todos/index.html",
+      "surfaces": [
+        "navbar",
+        "board",
+        "glass"
+      ],
+      "href": "/todos/",
+      "hidden": false,
+      "count": 3,
+      "unit": "todos"
+    },
+    {
       "id": "tools",
       "directory": "tools",
       "title": "Tools",
@@ -447,7 +513,7 @@
       "href": "/cat-harness/uploads/cat-harness/",
       "hidden": false,
       "icon": "uploads",
-      "count": 23,
+      "count": 19,
       "unit": "waiting"
     },
     {
@@ -1112,7 +1178,7 @@
         {
           "id": "directories",
           "label": "declared directories",
-          "value": 6
+          "value": 7
         },
         {
           "id": "kinds",
@@ -1308,12 +1374,12 @@
         {
           "id": "directories",
           "label": "declared directories",
-          "value": 3
+          "value": 4
         },
         {
           "id": "kinds",
           "label": "declared graph kinds",
-          "value": 3
+          "value": 4
         },
         {
           "id": "views",
@@ -1322,6 +1388,10 @@
         }
       ],
       "visualisations": [
+        {
+          "kind": "library",
+          "note": "no viewer yet"
+        },
         {
           "kind": "qa",
           "note": "no viewer yet"
@@ -1336,7 +1406,7 @@
         }
       ],
       "findings": [
-        "fhir-harness: declares 2 graph(s) with no published viewer — qa, tools. Declared and not rendered is a gap, not a dead link.",
+        "fhir-harness: declares 3 graph(s) with no published viewer — library, qa, tools. Declared and not rendered is a gap, not a dead link.",
         "fhir-harness: no avatar declared for this instance — showing the generic mark.",
         "fhir-harness: has no docs/ of its own, so the tile opens a kind handler's viewer (/cat-harness/docs-auto/index/skills/fhir-ig-skills/) rather than the instance's own themed root."
       ],
@@ -1648,12 +1718,12 @@
         {
           "id": "directories",
           "label": "declared directories",
-          "value": 45
+          "value": 47
         },
         {
           "id": "kinds",
           "label": "declared graph kinds",
-          "value": 22
+          "value": 23
         },
         {
           "id": "views",
@@ -1734,6 +1804,10 @@
           "readOnly": false
         },
         {
+          "kind": "substrate-snapshot",
+          "note": "no viewer yet"
+        },
+        {
           "kind": "swimlane-glossary",
           "path": "/swimlane-glossary/"
         },
@@ -1755,7 +1829,7 @@
         }
       ],
       "findings": [
-        "cat-harness: declares 5 graph(s) with no published viewer — code, code-list, policies, scenarios, uml. Declared and not rendered is a gap, not a dead link."
+        "cat-harness: declares 6 graph(s) with no published viewer — code, code-list, policies, scenarios, substrate-snapshot, uml. Declared and not rendered is a gap, not a dead link."
       ],
       "navbarIcons": [
         "close",
@@ -2011,6 +2085,10 @@
       {
         "kind": "skills",
         "path": "/cat-harness/docs-auto/index/skills/skills/"
+      },
+      {
+        "kind": "substrate-snapshot",
+        "note": "no viewer yet"
       },
       {
         "kind": "swimlane-glossary",
@@ -2342,6 +2420,28 @@
           {
             "name": "associate-harness",
             "path": "/reference/skill-instructions/associate-harness.html"
+          }
+        ]
+      },
+      {
+        "key": "subscriptions",
+        "skills": [
+          {
+            "name": "kg-subscription",
+            "path": "/reference/skill-instructions/kg-subscription.html"
+          },
+          {
+            "name": "materialize-remote",
+            "path": "/reference/skill-instructions/materialize-remote.html"
+          }
+        ]
+      },
+      {
+        "key": "knownSubstrates",
+        "skills": [
+          {
+            "name": "kg-subscription",
+            "path": "/reference/skill-instructions/kg-subscription.html"
           }
         ]
       },
@@ -2965,7 +3065,7 @@
           },
           {
             "key": "directories",
-            "summary": "3: fhir-ig-skills, fhir-ig-tools, qa"
+            "summary": "4: library, fhir-ig-skills, fhir-ig-tools, qa"
           },
           {
             "key": "needs",
@@ -3193,11 +3293,15 @@
           },
           {
             "key": "directories",
-            "summary": "43: tools, external-schemas, code-lists, schemas, uml, skills, scenarios, policies, processes…"
+            "summary": "45: tools, external-schemas, subscriptions, code-lists, schemas, uml, skills, scenarios, poli…"
           },
           {
             "key": "associatedHarnesses",
             "summary": "1: ihris"
+          },
+          {
+            "key": "knownSubstrates",
+            "summary": "2: who-iris, who-world-health-data-hub"
           },
           {
             "key": "stickies",

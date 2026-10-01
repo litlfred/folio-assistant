@@ -353,7 +353,42 @@ export interface RoleGraph {
   roles: RoleDef[];
   /** Actors, when declared alongside. Usually read from the actor directory. */
   actors?: ActorDef[];
+  /**
+   * Roles of a LOWER instance this graph adds skills to, BY ID (placement
+   * PR0b, bean `ejye`). See {@link RoleExtension}.
+   */
+  extensions?: RoleExtension[];
 }
+
+/**
+ * A higher instance adding skills to a role a lower instance declares.
+ *
+ * The extension POINTS AT the role, the way a voice points at the role it
+ * addresses (`activeIn.roles`) and a user story at the role it is told as
+ * (#1168): the dependent holds the pointer, so the role is added to without
+ * being edited, and the lower instance never names anything above it. That
+ * is what lets a role→skill edge naming a core or sci skill move UP with its
+ * skill (placement PR1–PR4) instead of staying in the harness as an upward
+ * reference.
+ *
+ * It ADDS and overrides nothing: no title, description, `inherits`,
+ * `actorKinds` or persona. The same id-matching rule as a directory override
+ * and as `inherits`. It does NOT restore `roles:` in skill front matter
+ * (beans `tuvg`, `v625`) — the edge lives on the role graph, as before.
+ */
+export interface RoleExtension {
+  /** The id of a role declared by an instance this one depends on. */
+  role: string;
+  /** Skills the role gains in this instance's checkout. */
+  skills: string[];
+}
+
+export const RoleExtensionSchema = z
+  .object({
+    role: z.string().min(1),
+    skills: z.array(SkillNameSchema).min(1),
+  })
+  .strict();
 
 /**
  * @general — a node others depend on: it points only at other general nodes,
@@ -463,6 +498,7 @@ export const RoleGraphSchema = z.object({
   name: z.string().min(1),
   roles: z.array(RoleDefSchema).default([]),
   actors: z.array(ActorDefSchema).optional(),
+  extensions: z.array(RoleExtensionSchema).optional(),
 });
 
 // ── Reading ─────────────────────────────────────────────────────
@@ -496,10 +532,11 @@ function withoutComments(raw: unknown): unknown {
   const drop = (o: Record<string, unknown>): Record<string, unknown> =>
     Object.fromEntries(Object.entries(o).filter(([k]) => !k.startsWith("_")));
   const top = drop(raw as Record<string, unknown>);
-  if (Array.isArray(top.roles)) {
-    top.roles = top.roles.map((r) =>
-      typeof r === "object" && r !== null ? drop(r as Record<string, unknown>) : r,
-    );
+  for (const key of ["roles", "extensions"] as const) {
+    const list = top[key];
+    if (Array.isArray(list)) {
+      top[key] = list.map((r) => (typeof r === "object" && r !== null ? drop(r as Record<string, unknown>) : r));
+    }
   }
   return top;
 }
@@ -549,7 +586,7 @@ function scenariosSubdir(repoRoot: string, name: string): string | undefined {
   return scenarios === undefined ? undefined : join(scenarios, name);
 }
 
-export function readRoleGraph(kgRoot: string): RoleGraph | undefined {
+export function readRoleGraph(kgRoot: string, lower: ReadonlySet<string> = new Set()): RoleGraph | undefined {
   // TWO PLACES, because the role graph became a DECLARED DIRECTORY on
   // 2026-09-21 instead of a subdirectory of one.
   //
@@ -599,7 +636,10 @@ export function readRoleGraph(kgRoot: string): RoleGraph | undefined {
   }
   for (const r of graph.roles) {
     for (const parent of r.inherits ?? []) {
-      if (!ids.has(parent)) {
+      // `lower`: role ids a LOWER instance declares (placement PR0b). A
+      // higher instance's role may inherit one; the lower graph is read first
+      // and can never inherit upward, so a cross-instance cycle cannot form.
+      if (!ids.has(parent) && !lower.has(parent)) {
         throw new Error(`${p}: role "${r.id}" inherits "${parent}", which is not declared.`);
       }
     }
@@ -739,6 +779,9 @@ export function readActors(actorsDir: string, grants?: ReadonlyMap<string, reado
     } catch (e) {
       throw new Error(`${p} is not valid JSON: ${e instanceof Error ? e.message : String(e)}`);
     }
+    // An EXTENSION of another instance's actor (placement PR0b) is not an
+    // actor; `overlayActors` in `scenario-overlay.ts` applies it.
+    if (typeof raw.extends === "string") continue;
     out.push({
       id: String(raw.id ?? f.slice(0, -5)),
       title: String(raw.title ?? raw.id ?? f.slice(0, -5)),

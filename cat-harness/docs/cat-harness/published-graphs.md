@@ -154,11 +154,12 @@ nothing renders yet. It is shown rather than omitted: "nothing renders this" and
 
 ### `library`
 
-6 of 6 published.
+6 of 7 published.
 {: .fa-hx-dim }
 
 - [agent-skills]({{ '/cat-harness/library/agent-skills/' | relative_url }})
 - [C@T Harness]({{ '/cat-harness/library/cat-harness/' | relative_url }})
+- FHIR IG Harness — *declared, not published*
 - [folio-assistant-core]({{ '/cat-harness/library/folio-assistant-core/' | relative_url }})
 - [folio-assistant-sci]({{ '/cat-harness/library/folio-assistant-sci/' | relative_url }})
 - [SMART Base]({{ '/cat-harness/library/smart-base/' | relative_url }})
@@ -272,6 +273,13 @@ nothing renders yet. It is shown rather than omitted: "nothing renders this" and
 - folio-assistant-sci — *declared, not published*
 - [large-datasets]({{ '/cat-harness/docs-auto/index/skills/large-datasets-skills/' | relative_url }})
 - [WHO IRIS]({{ '/cat-harness/docs-auto/index/skills/who-iris-skills/' | relative_url }})
+
+### `substrate-snapshot`
+
+0 of 1 published.
+{: .fa-hx-dim }
+
+- C@T Harness — *declared, not published*
 
 ### `swimlane-glossary`
 
