@@ -5,7 +5,7 @@ status: todo
 type: task
 priority: normal
 created_at: 2026-10-01T06:58:00Z
-updated_at: 2026-10-01T08:15:15Z
+updated_at: 2026-10-01T08:56:37Z
 parent: folio-assistant-iirv
 blocked_by:
     - folio-assistant-pyds
@@ -35,3 +35,7 @@ w2gr 3b and this stage are the same git mv. This bean survives. The move list fr
 - root package.json entries, .mcp.json, tsconfig, partition rules.
 - traps: join(import.meta.dir, ...) paths and workflow paths: filters only show in CI.
 NOTE cat-harness-tools/ already exists on main (#1742, w2gr step 3a).
+
+
+## Owner ruling C1, 2026-10-01 (separation arc 7x5n): cat-harness-tools sits BELOW core
+cat-harness-tools needs only cat-harness (+ bootstrap-tools); folio-assistant-core MAY depend on it. MCP-server / tool-implementation parts that need core move UP into folio-assistant-core. Supersedes the reading of the 2026-10-01 ruling 2 as 'core must not depend on cat-harness-tools': it now reads 'core must not depend on the MCP server'. Measured basis: 88 references from core into cat-harness code. Under D1 those would have formed a core<->tools cycle. Concretely: cat-harness-tools/cat-harness-tools.json drops needs: folio-assistant-core.

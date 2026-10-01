@@ -177,7 +177,7 @@ Method: `git ls-files` and a relative-import and markdown-link scan over every t
 
 ```
 cat-harness  (KG repo)       ███░░░░░░░░░░░░░░░░░  not seedable yet
-cat-harness-tools (code)     █░░░░░░░░░░░░░░░░░░░  not seedable yet; blocked by a layering question (C1)
+cat-harness-tools (code)     █░░░░░░░░░░░░░░░░░░░  not seedable yet (C1 ruled: tools below core)
 ```
 
 | # | blocker | measure | story |
@@ -192,7 +192,9 @@ cat-harness-tools (code)     █░░░░░░░░░░░░░░░░
 
 What is already clean: **0** references from cat-harness into cat-harness-tools. **231** code→KG edges (tools reading the KG is the allowed direction). **391** inbound edges from higher instances (pointing down is allowed).
 
-**C1, a layering conflict that needs a ruling.** `cat-harness-tools` declares `needs: folio-assistant-core`, and ruling 2 (2026-10-01) says core must not depend on cat-harness-tools. But **88 references from folio-assistant-core point into cat-harness *code*** (scripts, src, schemas), and more come from sci (11), who-iris (12), smart-trust (7) and fhir-harness (6). Under D1 that code moves to cat-harness-tools. Core would then need tools while tools needs core, which is a cycle.
+**C1, a layering conflict, ruled 2026-10-01: tools go BELOW core.** `cat-harness-tools` needs only `cat-harness` (and `bootstrap-tools`), and `folio-assistant-core` may depend on it. The MCP-server and tool-implementation parts that need core move up into core. Ruling 2 now reads: *core must not depend on the MCP server*. Layer order: bootstrap → bootstrap-tools → cat-harness → cat-harness-tools → folio-assistant-core → {sci, fhir-harness} → smart-*. The text below records the conflict as it was measured.
+
+ `cat-harness-tools` declares `needs: folio-assistant-core`, and ruling 2 (2026-10-01) says core must not depend on cat-harness-tools. But **88 references from folio-assistant-core point into cat-harness *code*** (scripts, src, schemas), and more come from sci (11), who-iris (12), smart-trust (7) and fhir-harness (6). Under D1 that code moves to cat-harness-tools. Core would then need tools while tools needs core, which is a cycle.
 
 ### Dense subgraph clusters (where the edges are)
 
