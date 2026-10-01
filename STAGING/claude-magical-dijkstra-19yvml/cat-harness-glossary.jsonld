@@ -509,9 +509,19 @@
       "notation": "qc-reviewer",
       "inScheme": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-dijkstra-19yvml/cat-harness-glossary.jsonld",
       "usage": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-dijkstra-19yvml/cat-harness.jsonld#glossary-usage/Process_IgAstDeltaReview/Lane_Review",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-dijkstra-19yvml/cat-harness.jsonld#glossary-usage/Process_IgIncremental/Lane_Review",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-dijkstra-19yvml/cat-harness.jsonld#glossary-usage/Process_L3Fhir/Lane_Qc"
       ]
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-dijkstra-19yvml/cat-harness.jsonld#glossary-usage/Process_IgAstDeltaReview/Lane_Review",
+      "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#LaneUsage",
+      "ofConcept": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-dijkstra-19yvml/cat-harness.jsonld#role/qc-reviewer",
+      "inProcess": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-dijkstra-19yvml/cat-harness.jsonld#process/Process_IgAstDeltaReview",
+      "label": "QC reviewer",
+      "scopeNote": "Reads the rendered delta and answers one question: is every difference explained by the change? This is the only judgement in the subprocess, and it is a person's (or a reviewing agent acting in this role) because \"explained\" depends on what the change was meant to do, which no tool knows.",
+      "source": "cat-harness/processes/ig-ast-delta-review.bpmn"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-dijkstra-19yvml/cat-harness.jsonld#glossary-usage/Process_IgIncremental/Lane_Review",
@@ -1591,6 +1601,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-dijkstra-19yvml/cat-harness.jsonld#glossary-usage/Process_Publication/Lane_Build",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-dijkstra-19yvml/cat-harness.jsonld#glossary-usage/Process_FeatureStaging/Lane_Ci",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-dijkstra-19yvml/cat-harness.jsonld#glossary-usage/Process_HumanTranslation/Lane_Pipeline",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-dijkstra-19yvml/cat-harness.jsonld#glossary-usage/Process_IgAstDeltaReview/Lane_Build",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-dijkstra-19yvml/cat-harness.jsonld#glossary-usage/Process_IgIncremental/Lane_Build",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-dijkstra-19yvml/cat-harness.jsonld#glossary-usage/Process_JsonLdDrift/Lane_Ci",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-dijkstra-19yvml/cat-harness.jsonld#glossary-usage/Process_KgSeparation/Lane_Pipeline",
@@ -1712,6 +1723,15 @@
       "label": "Automated Pipeline",
       "scopeNote": "Owns extraction, glossary preparation, injection and round-trip QA — the only machine check for semantic drift — whose findings go to Task_SMEReview whatever they say, so a clean round-trip is evidence for the reviewer, never a bypass of them. The same lane writes the final status.json once sign-off lands, so the official record sits beside the checks that fed it.",
       "source": "cat-harness/processes/human-translation-workflow.bpmn"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-dijkstra-19yvml/cat-harness.jsonld#glossary-usage/Process_IgAstDeltaReview/Lane_Build",
+      "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#LaneUsage",
+      "ofConcept": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-dijkstra-19yvml/cat-harness.jsonld#role/build-pipeline",
+      "inProcess": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-dijkstra-19yvml/cat-harness.jsonld#process/Process_IgAstDeltaReview",
+      "label": "Incremental build (system)",
+      "scopeNote": "Checks that the base AST still matches the IG's inputs, then diffs base against head and renders the delta pages. Both steps are mechanical and read files only; neither decides anything a person has to own. A stale or undeterminable base ends here, before any delta is shown, because a delta against the wrong base explains nothing.",
+      "source": "cat-harness/processes/ig-ast-delta-review.bpmn"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-dijkstra-19yvml/cat-harness.jsonld#glossary-usage/Process_IgIncremental/Lane_Build",
@@ -2041,6 +2061,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-dijkstra-19yvml/cat-harness.jsonld#glossary-usage/Process_Editing/Lane_WorkPlan",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-dijkstra-19yvml/cat-harness.jsonld#glossary-usage/Process_EvidenceRetrieval/Lane_WorkPlan",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-dijkstra-19yvml/cat-harness.jsonld#glossary-usage/Process_GettingStarted/Lane_WorkPlan",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-dijkstra-19yvml/cat-harness.jsonld#glossary-usage/Process_IgAstDeltaReview/Lane_WorkPlan",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-dijkstra-19yvml/cat-harness.jsonld#glossary-usage/Process_IgIncremental/Lane_WorkPlan",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-dijkstra-19yvml/cat-harness.jsonld#glossary-usage/Process_L2Dak/Lane_WorkPlan",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-dijkstra-19yvml/cat-harness.jsonld#glossary-usage/Process_L3Fhir/Lane_WorkPlan"
@@ -2117,6 +2138,15 @@
       "label": "Work plan (beans)",
       "scopeNote": "Seeds one bean per top-level content object the author named, positioned after scaffolding but before the Pages probe — a work plan exists for a folio whose publication status is not yet known, rather than waiting on that answer.",
       "source": "cat-harness/processes/getting-started.bpmn"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-dijkstra-19yvml/cat-harness.jsonld#glossary-usage/Process_IgAstDeltaReview/Lane_WorkPlan",
+      "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#LaneUsage",
+      "ofConcept": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-dijkstra-19yvml/cat-harness.jsonld#role/work-plan",
+      "inProcess": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-dijkstra-19yvml/cat-harness.jsonld#process/Process_IgAstDeltaReview",
+      "label": "Work plan — beans (shared by humans and agents)",
+      "scopeNote": "Where an unexplained difference is recorded before the run falls back to a full build: a note on bean `a9tx` under W8, naming the resource and the path, so the cone rules get fixed rather than the difference being forgotten when the full build comes back green.",
+      "source": "cat-harness/processes/ig-ast-delta-review.bpmn"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-dijkstra-19yvml/cat-harness.jsonld#glossary-usage/Process_IgIncremental/Lane_WorkPlan",

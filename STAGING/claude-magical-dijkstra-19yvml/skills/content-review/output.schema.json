@@ -2,7 +2,7 @@
   "$schema": "http://json-schema.org/draft-07/schema#",
   "$id": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-dijkstra-19yvml/skills/content-review/output.schema.json",
   "title": "Content Review Output",
-  "description": "What a review produces: findings, a decision about them, and the audit notes that justify it. A finding is an observation; a decision is an act about a set of findings; neither determines the other. Mirrors schemas/qa-review.ts — see skills/folio-core/decision-audit.md.",
+  "description": "What a review produces: findings, a decision about them, and the audit notes that justify it. A finding is an observation; a decision is an act about a set of findings; neither determines the other. Mirrors schemas/qa-review.ts — see skills/sdlc/sdlc-core/decision-audit.md.",
   "type": "object",
   "required": [
     "findings",
@@ -263,8 +263,8 @@
   },
   "staging": {
     "branch": "claude/magical-dijkstra-19yvml",
-    "sha": "ac96b38206318bb2af268cafdb8f24efd954d4c4",
-    "pr": "1633/merge",
-    "run": "36799201624"
+    "sha": "d7ca20fdc614f0db69e6b3d2624fa5409f7dec26",
+    "pr": "1746/merge",
+    "run": "36827388715"
   }
 }
