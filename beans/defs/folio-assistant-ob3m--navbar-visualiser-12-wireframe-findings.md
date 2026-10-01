@@ -9,7 +9,7 @@ tags:
     - ui
     - visualiser-navbar
 created_at: 2026-09-23T10:36:15Z
-updated_at: 2026-10-01T12:34:27Z
+updated_at: 2026-10-01T17:53:56Z
 parent: folio-assistant-4ccr
 ---
 
@@ -304,3 +304,28 @@ Owner: "keep going". On `claude/quirky-hypatia-k3aoh4` (PR #1762).
 - **Measured on a local build, Glass → More at 1280×800: 29 tiles, 11 distinct drawings** (was 2). Six tiles still take the net because their kinds have no drawing: folio, fsh-guts, root-docs, swimlane-glossary, todos, translation-sources.
 
 Still open here: 1, 3 (sticky half), 6, 7, 12 (needs an editorial call: rename or cross-link the two Settings).
+
+
+## Finding 6: owner's ruling and implementation (2026-10-01)
+
+**Ruling.** On 2026-10-01 the owner chose option 1 of 4, **"One name everywhere"**. Each destination gets ONE label, used identically on every surface: the viewer rail, the Jekyll sidebar and FOLDERS, the landing's "visualisations you can open", the glass tiles and More panel, and the Stickies "Visualisations" row. Where the harness matters, a surface appends it as a qualifier ("Skills · C@T Harness") and never uses a different base name.
+
+**Implemented** in PR #1804, which is stacked on #1762:
+
+- `cat-harness/scripts/lib/nav-label.ts` is the one label source:
+  - a kind's display name comes from the new `GraphKindDef.title`;
+  - a harness is named by its declared `title`;
+  - a tile uses its declared title with any harness suffix stripped, and never the directory id.
+- The suffixed tile titles were removed from the declarations.
+- Bootstrap's row now opens its own landing section instead of `/processes/`.
+- The IRIS sticky link says "WHO IRIS".
+- New gate: `check:nav-names:check`, with a committed sidecar.
+
+**After, measured** with Playwright on a preview build, served on a dedicated port, over the same six surfaces:
+
+| | destinations | on two or more surfaces | with two names, exact | with two names, case and plural folded |
+|---|---|---|---|---|
+| before (644d04b) | 56 | 39 | 9 | 7 |
+| after | 58 | 40 | **0** | **0** |
+
+The gate reads 76 destinations statically, across 61 railed pages, the include, `harness.json` and the stickies. On the 644d04b tree it fails with 36 multi-named destinations; on this branch it passes.
