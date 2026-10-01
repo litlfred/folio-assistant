@@ -92,7 +92,8 @@ describe("where an attestation lives", () => {
 
   test("an instance with no declaration falls back to the convention", () => {
     const root = mkdtempSync(join(tmpdir(), "att-home-"));
-    expect(attestationsHomeFor(root)).toEqual({ root: join(root, "test", "attestations"), by: "convention" });
+    const conv = join(root, "test", "attestations");
+    expect(attestationsHomeFor(root)).toEqual({ root: conv, by: "convention", storeRoot: conv });
   });
 });
 
@@ -101,11 +102,12 @@ describe("reading — four states, and only a miss is 'never attested'", () => {
   const tree = join(home, "kg-qa");
   const path = join(tree, "processes", "p.attestations.json");
 
-  test("no family tree at all is UNKNOWN — a deleted store must not read as first sight", () => {
-    expect(readAttestationFile(path, tree).state).toBe("unknown");
+  test("no store at all is UNKNOWN — a deleted store must not read as first sight", () => {
+    expect(readAttestationFile(path, join(home, "absent")).state).toBe("unknown");
   });
 
-  test("a tree with no file for this subject is a miss", () => {
+  test("a store with no file for this subject is a miss — even with no family tree under it yet", () => {
+    expect(readAttestationFile(path, home).state).toBe("miss");
     mkdirSync(join(tree, "processes"), { recursive: true });
     expect(readAttestationFile(path, tree).state).toBe("miss");
   });
@@ -120,7 +122,7 @@ describe("reading — four states, and only a miss is 'never attested'", () => {
   test("a valid file is a hit, returned as written — key order included", () => {
     // Keys deliberately NOT in schema order: zod would rebuild them, and a
     // writer round-tripping through it would rewrite every entry.
-    const reordered = { ...file(), pair_attestations: [{ by: "agent", reason: "r", ...pair, ...{ by: "agent" } }] };
+    const reordered = { ...file(), pair_attestations: [{ reason: "r", ...pair, by: "agent" }] };
     writeFileSync(path, serialiseAttestations(reordered as KgAttestations));
     const r = readAttestationFile(path, tree);
     expect(r.state).toBe("hit");

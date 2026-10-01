@@ -61,8 +61,10 @@
  *
  * - `miss` — the store is there and this subject has no file: genuinely never
  *   attested. The ONLY state a caller may treat as "first sight".
- * - `unknown` — the store's family tree itself is absent, so whether the
- *   subject was attested cannot be determined. Never a re-baseline.
+ * - `unknown` — the declared attestations directory itself is absent (the
+ *   store, not one subject's file), so whether the subject was attested
+ *   cannot be determined. Never a re-baseline. A hosted instance's subtree
+ *   that does not exist yet is a `miss`: the store is there, empty for it.
  * - `corrupt` — the file is there and does not parse or validate. Never `[]`,
  *   and never overwritten: the next writer refuses it (the `de9k` leftover,
  *   which C1's conflict markers made live).
@@ -176,23 +178,34 @@ export function attestationsHomeFor(
   instanceRoot: string,
   hostRoot?: string,
   registry: GraphKindRegistry = defaultGraphKinds,
-): { root: string; by: "own" | "hosted" | "convention" } {
+): {
+  root: string;
+  by: "own" | "hosted" | "convention";
+  /**
+   * The DECLARED directory whose absence makes every read `unknown`: the
+   * instance's own, or the host's for a hosted instance. A hosted subtree
+   * that does not exist yet is a store with nothing in it (a `miss`), not a
+   * missing store — only the declared directory going is "store absent".
+   */
+  storeRoot: string;
+} {
   const find = (root: string) =>
     resolveDirectories([{ name: "(local)", root, own: true }], registry).find((d) =>
       (d.graphKinds as readonly string[]).includes(ATTESTATIONS_GRAPH_KIND),
     );
   const own = find(instanceRoot);
-  if (own !== undefined) return { root: own.absPath, by: "own" };
+  if (own !== undefined) return { root: own.absPath, by: "own", storeRoot: own.absPath };
   if (hostRoot !== undefined && resolve(hostRoot) !== resolve(instanceRoot)) {
     const host = find(hostRoot);
     const decl = readDeclaration(instanceRoot);
     if (host !== undefined && decl !== undefined && decl !== null) {
-      return { root: join(host.absPath, artefactStub(decl)), by: "hosted" };
+      return { root: join(host.absPath, artefactStub(decl)), by: "hosted", storeRoot: host.absPath };
     }
   }
   // declared-path-literal: the base case for an instance that declares no
   // `attestations` directory and is hosted by nobody.
-  return { root: join(instanceRoot, "test", "attestations"), by: "convention" };
+  const conv = join(instanceRoot, "test", "attestations");
+  return { root: conv, by: "convention", storeRoot: conv };
 }
 
 /**
@@ -231,13 +244,15 @@ export type AttestationRead =
 /**
  * Read one attestation file, in four states.
  *
- * `familyTree` is `<attestationsHome>/<family>`: when IT is absent the store
- * is not there to consult, which is `unknown`, not `miss` — the distinction
- * that keeps a deleted or unfetched store from reading as "never attested".
+ * `storeRoot` is the declared attestations directory (`storeRoot` from
+ * {@link attestationsHomeFor}): when IT is absent the store is not there to
+ * consult, which is `unknown`, not `miss` — the distinction that keeps a
+ * deleted or unfetched store from reading as "never attested".
  */
-export function readAttestationFile(path: string, familyTree: string): AttestationRead {
-  if (!existsSync(familyTree)) {
-    return { state: "unknown", path, reason: `the attestation store ${familyTree} is absent, so whether this subject was attested cannot be determined` };
+export function readAttestationFile(path: string, storeRoot: string): AttestationRead {
+  if (!existsSync(storeRoot)) {
+    // No absolute path in the reason: it is written into committed sidecars.
+    return { state: "unknown", path, reason: "the attestation store is absent, so whether this subject was attested cannot be determined" };
   }
   if (!existsSync(path)) return { state: "miss", path, reason: "no attestation recorded for this subject" };
   let text: string;
@@ -277,6 +292,8 @@ export interface KgAttestationTree {
   kgTree: string;
   /** Absolute attestations home (the `<family>` directory goes under it). */
   attHome: string;
+  /** The declared directory whose absence is "store absent" — see `attestationsHomeFor`. */
+  storeRoot: string;
 }
 
 /** The suffix `kgQaSidecarPath` composes. */
@@ -292,7 +309,8 @@ export function kgAttestationTrees(repoRoot: string, hostRoot: string): KgAttest
   for (const root of instanceRootsIn(repoRoot)) {
     const kgTree = resolve(kgQaHomeFor(root, hostRoot).root, "kg-qa");
     if (out.has(kgTree)) continue;
-    out.set(kgTree, { instance: relative(repoRoot, root) || ".", kgTree, attHome: attestationsHomeFor(root, hostRoot).root });
+    const home = attestationsHomeFor(root, hostRoot);
+    out.set(kgTree, { instance: relative(repoRoot, root) || ".", kgTree, attHome: home.root, storeRoot: home.storeRoot });
   }
   return [...out.values()];
 }
@@ -305,7 +323,7 @@ export function kgAttestationFor(
   sidecarAbs: string,
   repoRoot: string,
   hostRoot: string,
-): { file: string; familyTree: string } | undefined {
+): { file: string; storeRoot: string } | undefined {
   const abs = resolve(sidecarAbs);
   const tree = kgAttestationTrees(repoRoot, hostRoot)
     .filter((t) => abs.startsWith(`${t.kgTree}${sep}`))
@@ -315,6 +333,6 @@ export function kgAttestationFor(
   if (tree === undefined) return undefined;
   return {
     file: attestationPathFor(abs, tree.kgTree, tree.attHome, "kg-qa", KG_QA_SIDECAR_SUFFIX),
-    familyTree: join(tree.attHome, "kg-qa"),
+    storeRoot: tree.storeRoot,
   };
 }

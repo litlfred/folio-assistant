@@ -125,6 +125,8 @@ describe("the qa directories declared in this checkout", () => {
 
   it("includes cat-harness's, whose walk covers the hosted bootstrap homes", () => {
     expect(dirs).toContain(resolve(REPO, "cat-harness", "test", "results"));
+    // The judgement half, split out by bean `2gst`, is swept as well.
+    expect(dirs).toContain(resolve(REPO, "cat-harness", "test", "attestations"));
     expect(report.examined).toBeGreaterThan(0);
   });
 
