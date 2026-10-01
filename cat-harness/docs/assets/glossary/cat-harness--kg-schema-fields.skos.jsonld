@@ -5543,6 +5543,25 @@
       "skos:note": "candidate"
     },
     {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/cat-harness.catharnessdeclaration.knownsubstrates",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "CatHarnessDeclaration.knownSubstrates"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Substrates known to exist or planned that NO declaration here names — {@link KnownSubstrate}. Issue #1719."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/cat-harness.ts#CatHarnessDeclaration.knownSubstrates",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/cat-harness.catharnessdeclaration.liquid",
       "@type": "skos:Concept",
       "skos:inScheme": {
@@ -5882,6 +5901,25 @@
         }
       ],
       "dcterms:source": "cat-harness/schemas/cat-harness.ts#CatHarnessDeclarationSchema.iriBase",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/cat-harness.catharnessdeclarationschema.knownsubstrates",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "CatHarnessDeclarationSchema.knownSubstrates"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "See {@link KnownSubstrate}. Names are unique."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/cat-harness.ts#CatHarnessDeclarationSchema.knownSubstrates",
       "skos:note": "candidate"
     },
     {
@@ -6471,6 +6509,120 @@
         }
       ],
       "dcterms:source": "cat-harness/schemas/cat-harness.ts#InstanceLocation.repository",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/cat-harness.knownsubstrate.name",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "KnownSubstrate.name"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The substrate's instance name, as its declaration gives it or will."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/cat-harness.ts#KnownSubstrate.name",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/cat-harness.knownsubstrate.note",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "KnownSubstrate.note"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "One sentence a reader of the visualizer sees."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/cat-harness.ts#KnownSubstrate.note",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/cat-harness.knownsubstrate.repository",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "KnownSubstrate.repository"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "`owner/repo`, when one exists or is planned."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/cat-harness.ts#KnownSubstrate.repository",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/cat-harness.knownsubstrate.status",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "KnownSubstrate.status"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Where it stands: proposed (an idea), planned (a staged instance), exists (a repository), published (a release)."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/cat-harness.ts#KnownSubstrate.status",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/cat-harness.knownsubstrate.title",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "KnownSubstrate.title"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Human title."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/cat-harness.ts#KnownSubstrate.title",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/cat-harness.knownsubstrate.toolsrepository",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "KnownSubstrate.toolsRepository"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Its paired tools repository, when the `kg-separation` pattern gives it one."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/cat-harness.ts#KnownSubstrate.toolsRepository",
       "skos:note": "candidate"
     },
     {
