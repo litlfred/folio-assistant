@@ -15,7 +15,7 @@
 
 STAGING AND RELEASE ARE THE SAME PROCESS. A preview is this with a root under the release root; a release is this with the release root. What differs — who may start it, what is verified first, what else on the host must survive the push — belongs to the CALLER: `feature-staging` and `docs-site-publish` call this and keep their own steps around the call.
 
-TOOL-AGNOSTIC ON PURPOSE. Owner, 2026-09-30: &quot;tools can describe their own specific subprocesses if needed to not bog down general skills&quot;. The one call activity names the skill; the Tool for the chosen target satisfies it and declares its own `subprocess`, which is what the call descends into. For GitHub Pages that is the `gh-pages` Tool and bootstrap-tools' Process_RenderKgToGitHubPages. No step here is GitHub's.</bpmn:documentation>
+TOOL-AGNOSTIC ON PURPOSE. Owner, 2026-09-30: &quot;tools can describe their own specific subprocesses if needed to not bog down general skills&quot;. The one call activity names the skill; the Tool for the chosen target satisfies it and lists its own `subprocesses`, which is what the call descends into. For GitHub Pages that is the `gh-pages` Tool and bootstrap-tools' render-kg-to-github-pages. No step here is GitHub's.</bpmn:documentation>
     <bpmn:extensionElements>
       <!-- STRICT: the report is the output. A push nobody reported on cannot
            be told from no push, and a caller deciding what to do next needs
@@ -52,7 +52,7 @@ TOOL-AGNOSTIC ON PURPOSE. Owner, 2026-09-30: &quot;tools can describe their own 
       <bpmn:outgoing>Flow_4</bpmn:outgoing>
     </bpmn:exclusiveGateway>
     <bpmn:callActivity id="Call_ToolSubprocess" name="Render and push with&#10;the target's Tool&#10;[its own subprocess]">
-      <bpmn:documentation>BOUND BY THE TOOL, so no `calledElement` is written here: the activity names the skill, the Tool satisfies it, and the Tool's `subprocess` is what this descends into — for `gh-pages`, bootstrap-tools' Process_RenderKgToGitHubPages (stage, check the staging, deploy, check what is served). A diagram that named it would make every other CDN a second copy of this process. Whatever the Tool, it returns the two outputs below.</bpmn:documentation>
+      <bpmn:documentation>BOUND BY THE TOOL, so no `calledElement` is written here: the activity names the skill, the Tool satisfies it, and the Tool's `subprocesses` are what this descends into — for `gh-pages`, bootstrap-tools' render-kg-to-github-pages (make sure gh-pages exists and Pages serves it, stage, check the staging, commit onto gh-pages, check what is served). A diagram that named it would make every other CDN a second copy of this process. Whatever the Tool, it returns the two outputs below.</bpmn:documentation>
       <bpmn:extensionElements><bootstrap.processes:skill ref="render-kg-to-cdn"/></bpmn:extensionElements>
       <bpmn:incoming>Flow_3</bpmn:incoming>
       <bpmn:outgoing>Flow_5</bpmn:outgoing>

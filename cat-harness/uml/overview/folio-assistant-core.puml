@@ -9,7 +9,7 @@ skinparam packageStyle rectangle
 hide empty methods
 
 package "folio-assistant-core/core-schemas" as pkg_folio_assistant_core_core_schemas <<schemas, cat-harness>> {
-  note "schemas: no node schema declared\n(no node here carries a $schema family schemas names (3 named): could not determine)" as n_folio_assistant_core_core_schemas_schemas
+  note "schemas: no node schema declared\n(no node here carries a $schema family schemas names (4 named): could not determine)" as n_folio_assistant_core_core_schemas_schemas
 }
 package "folio-assistant-core/folios" as pkg_folio_assistant_core_folios <<folio>> {
   note "folio: no node schema declared\n(no validator registered: could not determine)" as n_folio_assistant_core_folios_folio
@@ -36,7 +36,7 @@ package "folio-assistant-core/core-tools" as pkg_folio_assistant_core_core_tools
     maintains [0..*] : Maintain[]
     downstream [0..1] : object
     renders [0..*] : string[]
-    subprocess [0..1] : object
+    subprocesses [0..*] : string[]
   }
 }
 package "folio-assistant-core/core-adapters" as pkg_folio_assistant_core_core_adapters <<code>> {

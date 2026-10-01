@@ -17,7 +17,7 @@
  * @covers none — .github/workflows/ is not a declared graph kind
  */
 import { resolve } from "node:path";
-import { workflowFiles } from "./known-skills.js";
+import { workflowFiles, corpusScopeFor } from "./known-skills.js";
 import { loadProcessModel } from "../src/workflow/process-model.js";
 import { loadRelaxations, validateRelaxations, PolicyError } from "../src/workflow/gate.js";
 
@@ -27,7 +27,7 @@ const root = resolve(import.meta.dir, "..");
 // one whose relaxations go unchecked — the policy gate passing because it
 // never looked.
 const models = await Promise.all(
-  workflowFiles(root)
+  workflowFiles(root, corpusScopeFor(root))
     .filter((f) => f.endsWith(".bpmn"))
     .map((f) => loadProcessModel(f)),
 );

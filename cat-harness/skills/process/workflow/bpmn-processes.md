@@ -76,21 +76,30 @@ reconciled away: the two count different sets (a `satisfies` naming a skill
 that does not resolve is in one and not the other), and neither is wrong for
 its own question.
 
-### A Tool may carry its own subprocess; a general diagram names the Tool's skill, not its steps
+### A Tool's OWN procedure is the Tool's subprocess, not the skill's prose
 
-Owner, 2026-09-30: *"in general tools can describe their own specific
-subprocesses if needed to not bog down general skills"*. When one mechanism's
-steps are worth drawing, they go in **the Tool's own diagram**, which the Tool
-declares in `subprocess` (`schemas/tool.ts`). The general diagram keeps a
-single call activity that names the general skill and writes **no
-`calledElement`** — the call is bound by whichever Tool satisfies that skill
-(`activity → skill → Tool → subprocess`, the join above, extended one step).
+Owner, 2026-09-30 (placement ruling 6): *"in general tools can describe
+their own specific subprocesses if needed to not bog down general skills"*.
+The direction of the edge stays the one above — the Tool owns it. A Tool
+whose way of exercising a skill has steps of its own (a retry loop, a staging
+directory, a two-pass mode) names that diagram in **`subprocesses`**, a list
+of process ids on its Tool node; `check:tools` refuses one no `.bpmn` in the
+checkout has as its stem. The general process stays general and reaches the
+detail by `calledElement` only where it has chosen that Tool. By convention
+the diagram sits in the declaring instance's `processes/tools/` concern
+group, beside other tools' procedures rather than among the general
+processes.
 
-`render-kg-to-cdn.bpmn` is the first case: it names no GitHub step, and the
-`gh-pages` Tool points at bootstrap-tools' `Process_RenderKgToGitHubPages`. A
-caller that is itself specific — `docs-site-publish`, `feature-staging` —
-calls the general process with `calledElement`, and keeps only the steps that
-are its own around the call.
+### Processes are grouped by concern, from within
+
+`processes/processes.json` (`"$schema": "concern-groups/v1"`) names the
+groups — codes of `code-lists/concern-group.json` — and each is
+`processes/<group>/`, a DMN under `processes/<group>/decisions/`. A higher
+instance's same-named `processes/<group>/` is a member of the harness's group
+and declares none of its own. `workflowFiles` walks recursively, so grouping
+moves no diagram out of reach; the rules are in
+[`directory-conventions`](../../kg/kg-core/directory-conventions.md) §"Concern
+groups", checked by `check:concern-groups`.
 
 ### Binding the extension namespaces
 
@@ -234,7 +243,7 @@ does claim → resolve — every one manufactures the condition and none
 discharges it, which is how **219** beans accumulated.
 
 Before reaching for an `archive` op, read
-[`todo-manager`](../../sdlc/sdlc-core/todo-manager.md) §"Archiving — two dispositions": an op and
+[`todo-manager`](../../folio-core/todo-manager.md) §"Archiving — two dispositions": an op and
 a periodic sweep answer different questions, and for most processes the
 answer is the sweep. An op is worth an edge on your diagram only where your
 process's completion is *itself* the reason a bean is finished — and then the

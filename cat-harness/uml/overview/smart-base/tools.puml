@@ -27,7 +27,7 @@ package "smart-base/tools" as pkg_smart_base_tools <<tools>> {
     maintains [0..*] : Maintain[]
     downstream [0..1] : object
     renders [0..*] : string[]
-    subprocess [0..1] : object
+    subprocesses [0..*] : string[]
   }
 }
 

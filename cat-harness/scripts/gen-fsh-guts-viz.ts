@@ -82,16 +82,26 @@ export interface GutsFile {
  * generator that keeps working after the directory moves, over nothing.
  */
 export function gutsDir(repo = REPO): string | undefined {
-  const declPath = declarationPathIn(join(repo, "cat-harness"));
-  if (!declPath || !existsSync(declPath)) return undefined;
-  const d = JSON.parse(readFileSync(declPath, "utf-8")) as {
-    directories?: { id?: string; path?: string; scope?: string; graphKinds?: string[] }[];
-  };
-  for (const e of d.directories ?? []) {
-    if (!e.path || !(e.graphKinds ?? []).includes(KIND)) continue;
-    return join(e.scope === "repository" ? repo : join(repo, "cat-harness"), e.path);
+  // The CHECKOUT's root instance declares it since placement PR0a (bean
+  // `ejye`); cat-harness's own declaration is still read after it, so a
+  // checkout that has not moved the entry keeps resolving.
+  for (const root of declarers(repo)) {
+    const declPath = declarationPathIn(root);
+    if (!declPath || !existsSync(declPath)) continue;
+    const d = JSON.parse(readFileSync(declPath, "utf-8")) as {
+      directories?: { id?: string; path?: string; scope?: string; graphKinds?: string[] }[];
+    };
+    for (const e of d.directories ?? []) {
+      if (!e.path || !(e.graphKinds ?? []).includes(KIND)) continue;
+      return join(e.scope === "repository" ? repo : root, e.path);
+    }
   }
   return undefined;
+}
+
+/** The declarations that may hold the trashcan: the checkout's root instance, then the platform. */
+function declarers(repo: string): string[] {
+  return [repo, join(repo, "cat-harness")];
 }
 
 /**
@@ -107,12 +117,16 @@ export function gutsDir(repo = REPO): string | undefined {
  * belongs and what the ref is expressed against.
  */
 export function pageRelPath(repo = REPO): string | undefined {
-  const declPath = declarationPathIn(join(repo, "cat-harness"));
-  if (!declPath || !existsSync(declPath)) return undefined;
-  const d = JSON.parse(readFileSync(declPath, "utf-8")) as {
-    directories?: { graphKinds?: string[]; coverage?: { visualiser?: unknown } }[];
-  };
-  for (const e of d.directories ?? []) {
+  const entries = declarers(repo).flatMap((root) => {
+    const declPath = declarationPathIn(root);
+    if (!declPath || !existsSync(declPath)) return [];
+    return (
+      JSON.parse(readFileSync(declPath, "utf-8")) as {
+        directories?: { graphKinds?: string[]; coverage?: { visualiser?: unknown } }[];
+      }
+    ).directories ?? [];
+  });
+  for (const e of entries) {
     if (!(e.graphKinds ?? []).includes(KIND)) continue;
     const v = e.coverage?.visualiser;
     for (const one of Array.isArray(v) ? v : [v]) {

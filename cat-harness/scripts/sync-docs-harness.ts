@@ -41,7 +41,7 @@ import { gitTopLevelDirs } from "../schemas/git-corpus.ts";
 import { harnessTiles, instanceDirs } from "./harness-tiles.js";
 import { harnessPanel, skillPageIn } from "./harness-panel.js";
 import { siteLinks } from "./site-links.js";
-import { withViewers } from "./viewer-declarations.js";
+import { siteDirectories, withViewers } from "./viewer-declarations.js";
 
 
 const ROOT = resolve(import.meta.dir, "..");
@@ -416,7 +416,7 @@ const payload = {
   // de-duplicated, because a directory may hold several graphs and two
   // directories may hold the same one — `schemas/` declares both `schemas`
   // and `cat-harness`.
-  declaredKinds: [...new Set((decl.directories ?? []).flatMap((d) => d.graphKinds ?? []))].sort(),
+  declaredKinds: [...new Set(siteDirectories(decl.directories ?? [], ROOT, REPO_ROOT).flatMap((d) => d.graphKinds ?? []))].sort(),
   links,
   // ONE FAT TILE PER INITIATED HARNESS, for the left sidebar.
   //
@@ -438,7 +438,7 @@ const payload = {
    * and says where it shows, never two registries free to disagree about what
    * a tile is. The navbar and the board filter this by `surfaces`. */
   tiles: withTileCounts(
-    graphTiles(withViewers(decl?.directories ?? [], ROOT), relative(REPO_ROOT, join(ROOT, siteDirFor(ROOT)))),
+    graphTiles(withViewers(siteDirectories(decl?.directories ?? [], ROOT, REPO_ROOT), ROOT), relative(REPO_ROOT, join(ROOT, siteDirFor(ROOT)))),
     scanTileCounts(join(ROOT, siteDirFor(ROOT), "assets")),
   ),
   harnesses: allHarnesses,

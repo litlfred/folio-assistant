@@ -418,7 +418,7 @@ if (import.meta.main) {
   // The page says which directories it draws (#1168 B7a-2).
   const rendered = withRendersFrontMatter(
     page(rows, report, libraryResolver(REPO, INSTANCE_ROOT), PAGE),
-    handledDirectories(REPO, INSTANCE_ROOT, KIND),
+    handledDirectories(REPO, INSTANCE_ROOT, KIND, "corpus"),
     VIEWER_TOOL,
   );
   const out = join(baseDocs(REPO), PAGE);

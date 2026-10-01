@@ -1705,6 +1705,12 @@ jobs:
           # `a1lq`), because a partial checkout looks the same; CI has the
           # whole checkout, so here it fails.
           bun run check:instance-graph
+          # Concern groups (placement PR0c, bean `ejye`): every grouping
+          # kind's groups are declared from within, are codes of
+          # `code-lists/concern-group.json`, are declared once, and a higher
+          # instance's same-named directory is a member rather than a group
+          # of its own.
+          bun run check:concern-groups
           # No module scope resolves the folio directory. `folioDir` throws
           # on a malformed declaration, and a throw during evaluation strands
           # every export below it — which is how bean `95s1` got an error

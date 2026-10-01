@@ -45,7 +45,7 @@ the publication-manager alert — around the call.
 
 The general process has one call activity, **bound by the Tool**: the
 activity names this skill, the Tool for the chosen target `satisfies` it, and
-the Tool declares its own `subprocess` — the diagram of *its* steps
+the Tool lists its own `subprocesses` — the diagram of *its* steps
 ([`skills-and-tools`](../../folio-core/skills-and-tools.md),
 [`bpmn-processes`](bpmn-processes.md)). The general skill never lists them.
 

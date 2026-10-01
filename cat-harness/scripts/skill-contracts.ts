@@ -21,7 +21,7 @@
 import { existsSync, readFileSync, readdirSync } from "node:fs";
 import { join, normalize, relative } from "node:path";
 import { frontMatter } from "./front-matter.js";
-import { isSkillMd, skillMdDirs } from "./known-skills.js";
+import { isSkillMd, skillMdDirs, corpusScopeFor } from "./known-skills.js";
 
 export type ContractIo = "input" | "output";
 
@@ -63,7 +63,7 @@ export function contractFile(root: string, ref: string): string | undefined {
  */
 export function skillContracts(root: string): Map<string, SkillContract> {
   const out = new Map<string, SkillContract>();
-  for (const dir of skillMdDirs(root)) {
+  for (const dir of skillMdDirs(root, corpusScopeFor(root))) {
     const abs = join(root, ...dir);
     if (!existsSync(abs)) continue;
     for (const f of readdirSync(abs)) {

@@ -42,7 +42,7 @@
  */
 import { z } from "zod";
 
-import { SkillNameSchema } from "./tool-types.js";
+import { ProcessIdSchema, SkillNameSchema } from "./tool-types.js";
 
 /** A lowercase, hyphenated id. It is also the MCP tool name stem. */
 const ToolId = z
@@ -401,33 +401,25 @@ export const ToolDefinitionSchema = z
      */
     renders: z.array(z.string().min(1)).optional(),
     /**
-     * The Tool's OWN specific subprocess: the diagram that spells out how
-     * this one mechanism performs the skill it `satisfies`.
+     * Process ids of the BPMN this Tool's OWN specific procedure is drawn as.
      *
-     * Owner, 2026-09-30: *"in general tools can describe their own specific
-     * subprocesses if needed to not bog down general skills"*. A general
-     * process stays tool-agnostic — its activity names the SKILL, and the
-     * call into a mechanism's steps is bound by the Tool that satisfies it
-     * (`activity → skill → Tool → subprocess`, the join `bpmn-processes`
-     * already derives instead of drawing a `tool` element). The first case
-     * is `gh-pages`: the general `render-kg-to-cdn` names no GitHub step,
-     * and the Tool points at bootstrap-tools'
-     * `Process_RenderKgToGitHubPages`.
+     * Owner, 2026-09-30 (placement ruling 6): *"in general tools can describe
+     * their own specific subprocesses if needed to not bog down general
+     * skills"*. A skill states a capability generically; the steps that are
+     * true of ONE way of exercising it — this tool's retries, its staging
+     * directory, its two-pass mode — belong to the Tool, not to the skill
+     * every other Tool also satisfies. So the Tool points at its
+     * subprocess, the way it points at the skills it `satisfies`: the
+     * dependent holds the pointer, and the general process calls the
+     * subprocess (`calledElement`) only where it chose this Tool.
      *
-     * `instance` names where the diagram lives — this instance, or one it
-     * `needs` — because a Tool may be implemented below the harness that
-     * declares it, and the arrow must point down, never up.
+     * Each id is the stem of a `.bpmn` the checkout declares;
+     * `check:tools` reports one that resolves to nothing. By convention it
+     * lives under the declaring instance's `processes/tools/` concern group
+     * (placement PR0c), beside the other tools' procedures rather than
+     * among the general processes.
      */
-    subprocess: z
-      .object({
-        /** The `<bpmn:process id>` a call activity bound by this Tool descends into. */
-        process: z.string().regex(/^Process_[A-Za-z0-9_]+$/, "a BPMN process id, Process_…"),
-        /** The instance (declaration `name`) whose `processes` graph holds it. */
-        instance: z.string().min(1),
-        /** Instance-relative path to the `.bpmn`. */
-        path: z.string().regex(/\.bpmn$/, "a .bpmn file"),
-      })
-      .optional(),
+    subprocesses: z.array(ProcessIdSchema).optional(),
   })
   .refine(
     (t) =>

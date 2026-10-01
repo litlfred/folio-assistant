@@ -483,6 +483,14 @@ export const RULES: Rule[] = [
       "schemas/skill-package.ts",
       // `skills.json`'s shape (bean `9umr`); read by `scripts/skill-topics.ts`.
       "schemas/skill-topics.ts",
+      // The other grouping kinds' from-within group declaration (placement
+      // PR0c, bean `ejye`); imports only zod. Concern groups are how the
+      // harness's own subgraphs are laid out, not content.
+      "schemas/concern-groups.ts",
+      // Roles, actors and capabilities extended by id from a dependent's
+      // `scenarios/` (placement PR0b). The role model is harness vocabulary
+      // (`role-graph.ts` below), and this reads it and `harness-config.ts`.
+      "schemas/scenario-overlay.ts",
       // What happened when a Tool ran, and under whose authority. Tools are
       // the HARNESS's vocabulary — the `tools` graph is declared by
       // `agentic-harness`, not by any folio — and this file imports only
@@ -1226,6 +1234,10 @@ export const RULES: Rule[] = [
       // ...and the topic level it walks through (bean `9umr`): which
       // subdirectories of a skills directory are topics, from `skills.json`.
       "scripts/skill-topics.ts",
+      // ...which now delegates to the ONE grouped walk every grouping kind
+      // shares (placement PR0c, bean `ejye`), and that walk's gate.
+      "scripts/concern-groups.ts",
+      "scripts/check-concern-groups.ts",
       // The checkout-portability gate, beside the module it runs. Harness by
       // subject: it reads `git ls-files` over THIS repository and grades the
       // tree's own filenames, which is a fact about the checkout and not about

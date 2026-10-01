@@ -100,7 +100,7 @@ classDiagram
       maintains [0..*] Maintain[]
       downstream [0..1] object
       renders [0..*] string[]
-      subprocess [0..1] object
+      subprocesses [0..*] string[]
     }
   }
   namespace folio_assistant_core__core_adapters {

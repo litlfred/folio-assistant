@@ -151,7 +151,7 @@ export function tools(baseUrl?: string): ToolDefinition[] {
           { name: "root", schema: t("RepoPath"), required: true, description: "The instance root whose Knowledge Graph is rendered, or a tree a caller already rendered and verified." },
           { name: "url", schema: t("Url"), required: false, description: "The publication root URL. Default: the declaration's `iriBase`, else `https://<owner>.github.io/<repo>/`." },
           { name: "subgraph", schema: t("Slug"), required: false, description: "A declared directory id to render; repeatable. Absent: the whole graph." },
-          { name: "sha", schema: t("CommitSha"), required: false, description: "The commit that is live: the merge on `gh-pages`, or the commit a Pages workflow deployed." },
+          { name: "sha", schema: t("CommitSha"), required: false, description: "The commit that is live: the commit on `gh-pages`." },
         ],
         outputs: [
           { name: "status", schema: t("Text"), description: "`pushed`, `not-pushed` or `could-not-determine` — never `pushed` over a check that could not look." },
@@ -159,12 +159,9 @@ export function tools(baseUrl?: string): ToolDefinition[] {
         ],
       },
       satisfies: ["render-kg-to-cdn"],
-      subprocess: {
-        process: "Process_RenderKgToGitHubPages",
-        instance: "bootstrap-tools",
-        // declared-path-literal: a path inside ANOTHER instance (bootstrap-tools), relative to its root, naming the Tool's subprocess; this instance's declaration cannot resolve it, and it lands with the bootstrap-tools pin bump.
-        path: "processes/render-kg-to-github-pages.bpmn",
-      },
+      // Its own subprocess (ruling 6, 2026-09-30), drawn in bootstrap-tools'
+      // declared `processes/` — an instance this one needs, so the arrow points down.
+      subprocesses: ["render-kg-to-github-pages"],
       selection: {
         when: "The CDN target is GitHub Pages: this repository's docs site and its review previews, and every instance whose declaration names a GitHub `repository`.",
         limits:

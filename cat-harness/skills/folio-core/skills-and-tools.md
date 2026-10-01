@@ -46,6 +46,13 @@ of the capability; performing the fallback is a mechanism.** The skill must say
 a fallback exists and when to reach for it, because an agent that does not know
 one exists will stop. What it must not do is spell out the edit.
 
+**When the mechanism is itself a procedure**, it is the Tool's subprocess
+(owner, 2026-09-30: *"tools can describe their own specific subprocesses if
+needed to not bog down general skills"*). The Tool node names the BPMN in
+`subprocesses` (process ids, checked by `check:tools`), conventionally under
+`processes/tools/`; the skill keeps the portable sentence. See
+[`bpmn-processes`](../process/workflow/bpmn-processes.md).
+
 ## Every bean skill has (at least) two Tools
 
 The work-plan skills are the worked example, because the harness has carried
@@ -209,7 +216,7 @@ same skills — not a repository, not a fork, and not a rewrite of the prose.
 Owner, 2026-09-30: *"in general tools can describe their own specific
 subprocesses if needed to not bog down general skills"*. When one mechanism
 takes several steps, they belong to **the Tool**, not to the general skill: the
-Tool declares `subprocess` (a process id, the instance holding it, its path),
+Tool lists `subprocesses` (process ids, each the stem of a `.bpmn` the checkout declares),
 and a general diagram's call activity is bound by it. **General skills name the
 Tool, never its steps.** First case: `render-kg-to-cdn` is the general step
 (render a Knowledge Graph for a CDN at a publication root URL; output a status
