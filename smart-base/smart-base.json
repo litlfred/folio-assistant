@@ -93,6 +93,15 @@
       "graphKinds": [
         "themes"
       ]
+    },
+    {
+      "_comment": "Document KINDS this harness contributes (stage D5 of the smart-* separation, #1767, bean qvxh): named structures of sections a document authored with smart-base follows. The owner's reframe: L1 and DAK are document kinds inside smart-base, not harness layers. dak.json is GENERATED from DAK_COMPONENTS by smart-base/scripts/gen-document-kinds.ts (gated by smart-base:document-kinds:check); l1.json and dth.json are authored from their sources once those are ingested (beans tyo0, 5blc).",
+      "id": "smart-base-document-kinds",
+      "path": "document-kinds/",
+      "description": "WHO SMART document kinds: the DAK (a fixed structure, the ten components) and, to follow, L1 (semi-fixed) and the Digital Transformation Handbook (an L1 subtype).",
+      "graphKinds": [
+        "document-kinds"
+      ]
     }
   ],
   "_directories_comment": "The list above is the count; this comment said FIVE entries while there were six, and gives none now. `scenarios/` remains undeclared until it holds content -- a declared-but-absent directory is the `dh4f` defect, where every consumer scans nothing and reports a clean run over it.",

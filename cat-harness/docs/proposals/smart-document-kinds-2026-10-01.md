@@ -102,6 +102,18 @@ declares a kind brings the check.
    with unplaced artefacts shown. OK, or should an IG's own `dak.config.json`
    be the only source of component membership?
 
+## Decided
+
+Owner, 2026-10-01:
+
+- **Q1 → all three sources.** L1's required sections are drawn from the SMART
+  Guidelines paper (Mehl 2021), the WHO guideline-development handbook, and the
+  DTHs' shared structure, and **each section records which of them it comes
+  from** in `sources[]`. The handbook and the DTHs are ingested first (bean
+  `tyo0`), so `l1.json` lands in D5d.
+- **Q2 → computed from resource type**, with every artefact no rule places shown
+  as unplaced.
+
 ## Staging
 
 | step | what |
