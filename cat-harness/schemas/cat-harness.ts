@@ -489,20 +489,10 @@ export interface GraphNodeDirectory extends KgNodeLabels {
  */
 export interface ContentDirectory extends GraphNodeDirectory {
   /**
-   * Whether a DEPENDENT instance materialises its own copy of this directory.
-   *
-   * Orthogonal to {@link GraphNodeDirectory.scope}, which says where a path
-   * RESOLVES. This says whether a folio depending on this instance gets one
-   * of its own. Required, because neither default is safe — see
-   * {@link DependentMaterialisationSchema} for the measurement.
-   */
-  dependents: DependentMaterialisation;
-
-  /**
    * What makes this subgraph reachable — a renderer, a documentation entry,
    * and a governing skill — or the reasons it does not need one.
    *
-   * OPTIONAL on purpose, unlike {@link dependents} above. An absent field is
+   * OPTIONAL on purpose. An absent field is
    * exactly the finding `check:subgraph-coverage` exists to raise, so making
    * it required would both destroy the measurement and bill every concurrent
    * branch for a field they had no reason to know about — which is what
@@ -565,6 +555,45 @@ export const InstanceLocationSchema = z
       .min(1)
       .regex(/^[A-Za-z0-9._-]+(?:\/[A-Za-z0-9._-]+)*$/, "a repository-relative directory, no leading ./ or trailing /")
       .refine((p) => !p.split("/").includes(".."), "a location may not climb with `..`"),
+  })
+  .strict();
+
+/**
+ * One content adapter an instance ships, as its own declaration states it.
+ *
+ * `module` is relative to the DECLARING instance's root, and `className` is the
+ * export to construct. `extends` names the `contentType` this one specialises —
+ * `paper` extends `document` — and is what orders the fallback: a
+ * specialisation is a superset, so falling back TO it loses nothing, while
+ * falling back FROM it loses its tools. That order used to be the position of
+ * a row in a table in `src/builtin-adapters.ts`; it is a fact about the
+ * adapters, so it is declared beside them.
+ */
+export interface ContentAdapterDeclaration {
+  /** The `contentType` a folio's config names to get this adapter. */
+  contentType: string;
+  /** Instance-relative module path. */
+  module: string;
+  /** The exported class. */
+  className: string;
+  /** The `contentType` this adapter specialises, if any. */
+  extends?: string;
+}
+
+/**
+ * Zod form of {@link ContentAdapterDeclaration}. Exported on its own so the
+ * composition root can read this one field without parsing — and so without
+ * throwing on — every other field of every declaration in the checkout.
+ */
+export const ContentAdapterDeclarationSchema = z
+  .object({
+    contentType: z.string().min(1),
+    module: z
+      .string()
+      .min(1)
+      .refine((m) => !m.startsWith("/") && !m.split("/").includes(".."), "instance-relative, never absolute or escaping"),
+    className: z.string().min(1),
+    extends: z.string().min(1).optional(),
   })
   .strict();
 
@@ -732,6 +761,11 @@ export interface CatHarnessDeclaration extends KgNodeLabels {
    */
   needs?: string[];
   /**
+   * The content adapters this instance SHIPS, which the harness's composition
+   * root discovers rather than names. See {@link ContentAdapterDeclaration}.
+   */
+  contentAdapters?: ContentAdapterDeclaration[];
+  /**
    * The Liquid prefix this instance's VALUES are addressed by in authored
    * text — `{{ <prefix>.<directory-id>.<entry>.<path> }}` — and whether the
    * platform resolves it or passes it through.
@@ -816,47 +850,18 @@ export interface CatHarnessDeclaration extends KgNodeLabels {
 }
 
 /**
- * Whether a DEPENDENT instance materialises its own copy of this directory.
- *
- * ## The question this answers, and why `scope` cannot
- *
- * `scope` says WHERE a path resolves — against the instance or against the
- * repository. This asks something orthogonal: when another instance depends on
- * mine, **does it get one of its own?** The two are independent, and treating
- * them as one axis was measured and refused: moving one queue by giving
- * `uploads` `scope: "repository"` turned **6 tests red**, three of them the
- * guarantee a dependent inherits its own `uploads/` and `library/`.
- *
- * - **`reproduce`** — the directory is part of the SHAPE a folio has. A
- *   dependent gets its own, empty, with a keep marker. `uploads/` and
- *   `library/` are the worked examples: an ingestion queue with the
- *   dependency's files in it would be worse than useless.
- * - **`skip`** — the directory is merely WHERE THIS INSTANCE'S CONTENT LIVES.
- *   A dependent reads it through the overlay and materialises nothing.
- *   `schemas/`, `tools/` and `src/skills/` are the platform's own.
- *
- * ## It does not touch resolution, only materialisation
- *
- * A `skip` entry is still RESOLVED into a dependent's directory list, because
- * that is how the cross-instance overlay serves a dependency's skills —
- * `skill_list` and `skill_fetch` depend on it. What `skip` suppresses is
- * `mkdirSync`, nothing else. Conflating the two would break the overlay to fix
- * a directory-creation problem.
- *
- * ## Why REQUIRED, when nearly every other field here is optional
- *
- * Because neither default is safe, which is unusual and is the whole argument.
- * Defaulting to `reproduce` is today's behaviour and ships junk: simulated on a
- * fresh folio depending on this instance, **12 directories are inherited** and
- * four of them are the platform's own, each materialised empty with a committed
- * keep marker — the `dh4f` shape, shipped downstream to every folio.
- * Defaulting to `skip` silently stops a folio getting an ingestion queue, and
- * nothing would fail. A field whose wrong value is invisible either way is a
- * field that has to be written down, so this follows the `BLOCK_KINDS`
- * discipline: a directory added without a classification does not compile.
+ * RETIRED 2026-09-30 (option A). A per-entry `dependents: "reproduce" |
+ * "skip"` said whether an instance inheriting a directory got its own copy.
+ * The owner: "make dependents: reproduce automatic behaviour so [we] don't
+ * need it." Every declared subgraph is now inherited automatically — each
+ * instance in the chain whose same-named directory exists is a MEMBER of it
+ * ({@link ResolvedDirectory.member}) — and whether an inherited directory is
+ * CREATED is a fact about its graph kind, `GraphKindDef.perInstance`, stated
+ * once rather than per entry (the per-entry field disagreed with itself:
+ * `docs` was `reproduce` once and `skip` four times). A legacy `dependents`
+ * key still parses and is dropped, so a folio written before the change keeps
+ * loading.
  */
-export const DependentMaterialisationSchema = z.enum(["reproduce", "skip"]);
-export type DependentMaterialisation = z.infer<typeof DependentMaterialisationSchema>;
 
 /**
  * A place to look, with no statement about inheritance.
@@ -1341,7 +1346,6 @@ export const TileSchema = VisualisationSchema.omit({ ref: true });
 export type Tile = z.infer<typeof TileSchema>;
 
 const ContentDirectoryShape = GraphNodeDirectoryShape.extend({
-  dependents: DependentMaterialisationSchema,
   coverage: SubgraphCoverageSchema.optional(),
   /** How this directory's tile looks. See {@link TileSchema}. */
   tile: TileSchema.optional(),
@@ -1645,9 +1649,9 @@ export const DEFAULT_DIRECTORIES: readonly ContentDirectory[] = [
   // the rule "every entry carries one" free of an exception nobody would
   // remember — and if either ever loses that scope, the classification it
   // already has is the right one.
-  { id: "tools", path: "tools/", dependents: "skip", graphKinds: ["tools"] },
-  { id: "schemas", path: "schemas/", dependents: "skip", graphKinds: ["schemas", "cat-harness"] },
-  { id: "skills", path: "skills/", dependents: "skip", graphKinds: ["skills"] },
+  { id: "tools", path: "tools/", graphKinds: ["tools"] },
+  { id: "schemas", path: "schemas/", graphKinds: ["schemas", "cat-harness"] },
+  { id: "skills", path: "skills/", graphKinds: ["skills"] },
   // THE CONVENTION, as of 2026-09-21: an instance's Knowledge Graph is five sibling
   // directories rather than one with subdirectories. `scenarios/` and
   // `processes/` were `skills/roles/` and `skills/workflows/`, found by
@@ -1663,12 +1667,12 @@ export const DEFAULT_DIRECTORIES: readonly ContentDirectory[] = [
   //
   // Existence-filtered like every other entry, so an instance that has no
   // `processes/` is not claimed to have an empty one — the `dh4f` defect.
-  { id: "scenarios", path: "scenarios/", dependents: "skip", graphKinds: ["scenarios"] },
-  { id: "processes", path: "processes/", dependents: "skip", graphKinds: ["processes"] },
-  { id: "beans", path: "beans/", dependents: "reproduce", graphKinds: ["beans"] },
-  { id: "todos", path: "todos/", dependents: "reproduce", graphKinds: ["todos"] },
-  { id: "uploads", path: "uploads/", dependents: "reproduce", graphKinds: ["uploads"] },
-  { id: "library", path: "library/", dependents: "reproduce", graphKinds: ["library"] },
+  { id: "scenarios", path: "scenarios/", graphKinds: ["scenarios"] },
+  { id: "processes", path: "processes/", graphKinds: ["processes"] },
+  { id: "beans", path: "beans/", graphKinds: ["beans"] },
+  { id: "todos", path: "todos/", graphKinds: ["todos"] },
+  { id: "uploads", path: "uploads/", graphKinds: ["uploads"] },
+  { id: "library", path: "library/", graphKinds: ["library"] },
   // `skills/voices/`, not `voices/`, since 2026-09-21 — a voice IS a skill, and
   // the four this repository ships moved under `skills/` with the rest of the
   // `kg` graph (bean `btuv`). The convention stated here and the fallback
@@ -1684,7 +1688,7 @@ export const DEFAULT_DIRECTORIES: readonly ContentDirectory[] = [
   // The LEGACY path is not dropped: `loadVoices` probes `voices/` when the new
   // one is absent, for the same reason `voiceFilesIn` reads both file layouts
   // — a downstream folio must not be broken by an upgrade it did not ask for.
-  { id: "voices", path: "skills/voices/", dependents: "reproduce", graphKinds: ["voices"] },
+  { id: "voices", path: "skills/voices/", graphKinds: ["voices"] },
 ];
 
 /**
@@ -2509,6 +2513,17 @@ export const CatHarnessDeclarationSchema = z.object({
    * in this schema, and a path would break the moment a directory moved.
    */
   needs: z.array(z.string().min(1)).optional(),
+  /**
+   * The content adapters this instance ships — see {@link ContentAdapterDeclaration}.
+   *
+   * Declared by the instance that OWNS the adapter, so the harness below it
+   * finds them by reading declarations instead of naming a directory above
+   * itself. `src/builtin-adapters.ts` held a `../<instance>/adapters/…` path
+   * for each until 2026-09-30 — a variable import no static gate could see,
+   * and the edge that kept this instance from lifting out on its own
+   * (`check:import-direction`, bean `p11x`).
+   */
+  contentAdapters: z.array(ContentAdapterDeclarationSchema).optional(),
   /** See {@link CatHarnessDeclaration.liquid}. */
   liquid: z
     .object({
@@ -3527,24 +3542,6 @@ export function readDeclaration(
     // Nothing was wrong with either side. The author of the other branch did
     // not know the field existed, and 166 red tests are a terrible way to find
     // out. So the missing-field case says which entries, and what to write.
-    const missing = parsed.error.issues
-      .filter((i) => i.path.length === 3 && i.path[0] === "directories" && i.path[2] === "dependents")
-      .map((i) => {
-        const dirs = (raw as { directories?: Array<{ id?: string }> })?.directories ?? [];
-        return dirs[i.path[1] as number]?.id ?? `#${String(i.path[1])}`;
-      });
-    if (missing.length > 0) {
-      throw new Error(
-        `${p}: ${missing.length} directory entr${missing.length === 1 ? "y is" : "ies are"} ` +
-          `missing the required \`dependents\` field: ${missing.join(", ")}.\n` +
-          `  Add \`"dependents": "reproduce"\` if an instance depending on this one should get its ` +
-          `OWN copy of the directory (\`uploads/\`, \`library/\`, \`folio/\`),\n` +
-          `  or \`"dependents": "skip"\` if it merely says where THIS instance's content lives ` +
-          `(\`schemas/\`, \`tools/\`, \`src/skills/\`).\n` +
-          `  It has no default on purpose: \`reproduce\` would ship empty directories into every ` +
-          `downstream folio, and \`skip\` would silently deny one its ingestion queue.`,
-      );
-    }
     throw new Error(`${p} is not a valid CatHarness declaration: ${parsed.error.message}`);
   }
   // Kind validation is here rather than in the Zod schema because the
@@ -3779,8 +3776,20 @@ export interface ResolvedDirectory extends ContentDirectory {
   declaredBy: string;
   /** Absolute path, resolved against the instance that declared it. */
   absPath: string;
-  /** True when the declaring instance is the root rather than a dependency. */
+  /**
+   * True when this entry is the ROOT instance's — its own declaration, or its
+   * own member of an inherited subgraph.
+   */
   own: boolean;
+  /**
+   * The instance whose directory this is. A declared subgraph is inherited as
+   * one MEMBER per instance in the chain whose same-named directory exists
+   * (owner, 2026-09-30, bean `3r47`/`xsqm` follow-up, option A: "if f-a-core
+   * … has a docs/ … and depends on cat-harness where docs/ is declared …
+   * the viewer should detect f-a-core/docs", "a named (sub-)subgraph of
+   * docs"). The declarer's own member comes first; `member` names each.
+   */
+  member?: string;
   /**
    * The id of the directory that declared this one FROM WITHIN (bean `cmsl`,
    * owner 2026-09-30): an entry of its kind's declaration file, e.g.
@@ -3898,7 +3907,28 @@ export function resolveDirectories(
   // inward without two answers existing at once.
   for (const d of [...byId.values()]) promoteFromWithin(d, byId, registry, new Set(), rootLink);
 
-  return [...byId.values()];
+  // MEMBERS (option A, owner 2026-09-30). A subgraph declared once is
+  // inherited by every instance in the chain: each whose `<root>/<path>`
+  // exists contributes its own member, a named sub-subgraph of the declared
+  // one — "if f-a-core … has a docs/ … and depends on cat-harness where docs/
+  // is declared …, the viewer should detect f-a-core/docs". The declarer's
+  // member comes first, so a consumer looking a subgraph up by id is handed
+  // the same directory as before. Existence-filtered (the `dh4f` rule); a
+  // repository-scoped entry has one location by definition; a path another
+  // entry already covers is not listed twice.
+  const out = [...byId.values()].map((d) => ({ ...d, member: d.member ?? d.declaredBy }));
+  const seen = new Set(out.map((d) => d.absPath));
+  const nameOf = new Map(chain.map((l) => [l.root, readDeclaration(l.root, registry)?.name ?? l.name]));
+  for (const d of [...out]) {
+    if (d.scope === "repository" || d.within !== undefined) continue;
+    for (const link of chain) {
+      const abs = resolve(link.root, d.path);
+      if (seen.has(abs) || !existsSync(abs)) continue;
+      seen.add(abs);
+      out.push({ ...d, absPath: abs, own: link.own === true, member: nameOf.get(link.root) ?? link.name });
+    }
+  }
+  return out;
 }
 
 /**
@@ -3960,7 +3990,12 @@ function promoteFromWithin(
       continue; // `check:harness-dirs` owns an unparseable declaration and says so
     }
     for (const nd of nested.directories ?? []) {
-      if (typeof nd.id !== "string" || typeof nd.path !== "string" || nd.dependents === undefined) continue;
+      // `"subgraph": true` marks an entry that is a subgraph of the INSTANCE
+      // (skills.json's `voices`), not a part of its parent's graph
+      // (beans.json's `defs`, docs.json's `proposals`). It answered the retired
+      // `dependents` question until 2026-09-30 (option A); the fact it carried
+      // here was never about dependents, so it is now stated as what it is.
+      if (typeof nd.id !== "string" || typeof nd.path !== "string" || nd.subgraph !== true) continue;
       // An instance-level DECLARATION with this id wins; a built-in DEFAULT
       // (`declaredBy: "(default)"`, e.g. `skills/voices`) is a convention, and
       // a from-within declaration is stronger than a convention.
@@ -4635,6 +4670,20 @@ export interface MaterialisedDirectory {
 }
 
 /**
+ * Does each instance have its own directory of every kind this one holds
+ * ({@link GraphKindDef.perInstance})? Such a directory is reproduced in each
+ * dependent by {@link materialiseDirectories}; an unregistered kind has said
+ * nothing, so it is not.
+ */
+export function isPerInstance(
+  dir: Pick<ContentDirectory, "graphKinds">,
+  registry: GraphKindRegistry = defaultGraphKinds,
+): boolean {
+  const kinds = dir.graphKinds ?? [];
+  return kinds.length > 0 && kinds.every((k) => registry.get(resolveGraphKind(k).kind)?.perInstance === true);
+}
+
+/**
  * Create every declared directory that does not exist yet, in the instance
  * being set up.
  *
@@ -4696,7 +4745,14 @@ export function materialiseDirectories(
     // the cross-instance overlay still serves the dependency's skills through
     // `skill_list` and `skill_fetch`. The only thing suppressed here is
     // `mkdirSync`.
-    if (dir.own !== true && dir.dependents === "skip") continue;
+    // Option A (owner 2026-09-30): "make dependents: reproduce automatic
+    // behaviour so [we] don't need it." Whether an inherited entry is created
+    // here is now read from its graph KIND ({@link GraphKindDef.perInstance}):
+    // a folio has its own `uploads/`, `library/`, `docs/`, work plan; it has
+    // no use for an empty `schemas/` or `tools/`. Anything else is a MEMBER of
+    // the inherited subgraph exactly where it already exists, never created
+    // empty (the `dh4f` rule); a repository-scoped entry has one location.
+    if (dir.own !== true && (dir.scope === "repository" || !isPerInstance(dir))) continue;
     const base = rootForScope(rootAbs, dir.scope);
     const abs = resolve(base, dir.path);
     const rel = relative(base, abs);
@@ -5510,7 +5566,6 @@ export function toJsonLd(
       path: termIri("path"),
       directories: termIri("scans"),
       scope: termIri("scope"),
-      dependents: termIri("dependents"),
       // What a directory holds, as the kinds' own individuals — the same
       // property kg-export writes (`dcterms:type`, via `propertyIri`).
       holdsGraph: { "@id": propertyIri("holdsGraph"), "@type": "@id" },
@@ -5544,10 +5599,6 @@ export function toJsonLd(
         // One stays a string, several become a list — JSON-LD permits both.
         holdsGraph: kinds.length === 1 ? kinds[0] : kinds,
         path: d.path,
-        // `dependents` is REQUIRED, so a projection that dropped it produced a
-        // document that no longer parses as a declaration — caught by the
-        // round-trip test rather than by review.
-        dependents: d.dependents,
         // ...and `scope` was ALREADY being dropped, silently, because it is
         // optional: a declaration round-tripped through JSON-LD came back
         // saying every path resolves against the instance. `beans/`, `todos/`

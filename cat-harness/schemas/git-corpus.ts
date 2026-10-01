@@ -78,23 +78,44 @@ import { existsSync, readdirSync } from "node:fs";
 import { join, relative, resolve, sep } from "node:path";
 
 /**
+ * Room for a whole-checkout `ls-files -z`; node's 1 MiB default is not.
+ *
+ * Measured 2026-09-30, the day it started mattering:
+ *
+ * | | bytes of PATH NAMES |
+ * |---|---:|
+ * | `origin/main` at `874d4c9bfb8` | 1,005,252 |
+ * | the next branch to merge, +740 ingested library files | 1,058,420 |
+ * | node's default | 1,048,576 |
+ *
+ * So `main` was 43 KB from the cliff and one ordinary ingest went over it.
+ * The size of a repository's file list is not something a caller can reason
+ * about, which is why this is a constant rather than a judgement per call
+ * site. `trackedPaths` in `scripts/check-portable-paths.ts` had already been
+ * given the same 64 MiB in isolation — that is the evidence this is a class,
+ * and the reason the fix is a shared constant rather than a third literal.
+ */
+export const GIT_LIST_MAX_BUFFER = 64 * 1024 * 1024;
+
+/**
  * The files git accounts for under {@link dir}, as absolute paths — or
  * `undefined` when git cannot answer.
  *
  * @param dir       directory to ask about; its repository is inferred
  * @param pathspec  optional git pathspecs, e.g. `["*.md"]`. Omitted means all.
  */
-/** Room for a whole-checkout `ls-files -z`; the 1 MiB default is not. */
-export const GIT_LIST_MAX_BUFFER = 64 * 1024 * 1024;
-
 export function gitCorpus(dir: string, pathspec: readonly string[] = []): string[] | undefined {
   if (!existsSync(dir)) return undefined;
   const r = spawnSync(
     "git",
     ["ls-files", "-z", "--cached", "--others", "--exclude-standard", "--", ...pathspec],
-    // spawnSync's default maxBuffer is 1 MiB, and this checkout's listing
-    // crossed it on 2026-09-30 — past that the call fails with ENOBUFS and
-    // every caller reads "git could not answer", a false could-not-determine.
+    // On ENOBUFS `spawnSync` sets `error` rather than truncating, so the
+    // symptom is total: every caller reads "git could not answer", a false
+    // could-not-determine. The ones that then FALL BACK to a filesystem walk
+    // are the danger — a walk is a different corpus with different
+    // exclusions (#1609 measured that direction turning 21 archived beans
+    // into findings), so crossing this buffer rescopes a check rather than
+    // stopping it, and nothing reports that.
     { cwd: dir, encoding: "utf-8", maxBuffer: GIT_LIST_MAX_BUFFER },
   );
   if (r.error !== undefined || r.status !== 0) return undefined;

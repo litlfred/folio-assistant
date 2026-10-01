@@ -63,7 +63,7 @@ de la mise à jour des directives pour les agents.
 
 - Les **instructions de compétences** (`docs/reference/skill-instructions/*.md`) sont également
   générées — ne les modifiez jamais manuellement. Modifiez le corps des compétences sous
-  `skills/content-lifecycle/*.md` ou `src/skills/*.md` et régénérez :
+  `skills/authoring/content-lifecycle/*.md` ou `src/skills/*.md` et régénérez :
 
   ```sh
   bun run scripts/gen-skill-docs.ts
@@ -85,6 +85,6 @@ bundle exec jekyll serve
 ## Livrer une modification
 
 Vérifier → confirmer l'aptitude à la fusion → pousser (push) → (uniquement sur demande) ouvrir une PR. Voir
-`skills/folio-core/prepare-merge.md`. Maintenez le **formalisme du framework
+`skills/sdlc/sdlc-core/prepare-merge.md`. Maintenez le **formalisme du framework
 séparé du contenu** — le contenu a sa place dans son propre dépôt, et tout contenu
 dans cette documentation n'est fourni qu'à titre d'illustration.

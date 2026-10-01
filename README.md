@@ -33,6 +33,38 @@ not, do not.
 > The **formalism of authoring is kept separate from any content** — examples in
 > the docs are illustrative only.
 
+**Contents**
+
+<!-- readme:toc:begin -->
+
+- [Cold start — what an arriving agent does first](#cold-start--what-an-arriving-agent-does-first)
+- [Harness instances](#harness-instances)
+- [Bootstrapping — setting up a repository to write in](#bootstrapping--setting-up-a-repository-to-write-in)
+- [What it does](#what-it-does)
+- [How a change gets published](#how-a-change-gets-published)
+  - [One proposed change to one content block — the HCI validation gate](#one-proposed-change-to-one-content-block--the-hci-validation-gate)
+  - [Corpus → draft → review team → published](#corpus--draft--review-team--published)
+  - [One cycle of a folio, plan → retire](#one-cycle-of-a-folio-plan--retire)
+  - [Per content type](#per-content-type)
+- [Start a new folio](#start-a-new-folio)
+  - [1. Create the repo and scaffold it](#1-create-the-repo-and-scaffold-it)
+  - [2. Open your agent in the folio, not here](#2-open-your-agent-in-the-folio-not-here)
+  - [3. Or let the agent do step 1 too](#3-or-let-the-agent-do-step-1-too)
+  - [Which content type?](#which-content-type)
+- [Working on the platform itself](#working-on-the-platform-itself)
+  - [Common commands](#common-commands)
+- [Use it with your LLM harness](#use-it-with-your-llm-harness)
+  - [Claude Code](#claude-code)
+  - [Antigravity / Gemini CLI](#antigravity--gemini-cli)
+  - [Any MCP client](#any-mcp-client)
+- [The tools the agent gets](#the-tools-the-agent-gets)
+- [Documentation](#documentation)
+- [Work-plan with beans](#work-plan-with-beans)
+- [Contributing](#contributing)
+- [License](#license)
+
+<!-- readme:toc:end -->
+
 ## Cold start — what an arriving agent does first
 
 <!-- cat-harness:cold-start:begin -->

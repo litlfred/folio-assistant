@@ -259,7 +259,7 @@ export function incompatibleCompanions(def: {
  * | **checker** | `checker_sees`, and nothing that would let it shortcut | an independent rendering or finding |
  * | **adjudicator** | `adjudicator_sees` — never the artefact itself | `pass` / `warn` / `fail`, each drift named |
  *
- * See `skills/folio-core/untainted-verification.md` for the three rules and
+ * See `skills/sdlc/sdlc-core/untainted-verification.md` for the three rules and
  * the failure each one is there to stop.
  */
 export interface UntaintedDispatch<A extends string = CompanionRole> {

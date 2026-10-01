@@ -75,6 +75,7 @@ import { withInlineCode } from "../../cat-harness/schemas/inline-code.ts";
 import { instanceNamespace } from "../../cat-harness/schemas/instance-repositories.ts";
 import { GlossarySchema, schemeIri, toSkos, termIri, type Glossary, type LangText } from "../schemas/glossary.ts";
 import { ASSET_TYPES, EXTRACTED_PREFIX, assetTypeTitle, assetTypeWhat, extract, type AssetType } from "./glossary-extract.ts";
+import type { SchemeState } from "../../cat-harness/scripts/check-term-mapping.ts";
 import { GLOSSARY_SUBDIR, potPath, sourceText, templateName, translationsDir } from "./glossary-pot.ts";
 import { parsePo } from "../../cat-harness/content/pipeline/po-inject.ts";
 
@@ -571,6 +572,107 @@ function termEntry({ s, t, label }: Row): string {
 }
 
 /**
+ * What `check:term-mapping` found, read from the harness instance that wrote it.
+ *
+ * Bean `7wou`. The page SHOWS the three states; it does not compute them —
+ * a second implementation of "is this term already somebody's concept" would
+ * be free to disagree with the gate's, and the reader would have no way to
+ * tell which was right.
+ *
+ * The path is resolved through `instanceOwners`, not written down: the file
+ * belongs to the instance DECLARED as `cat-harness`, and hardcoding
+ * `cat-harness/test/results/` is how a consumer stops finding it the moment
+ * the layout moves. Core may read it — core declares `needs: ["cat-harness"]`,
+ * so this is the permitted direction.
+ *
+ * **Absent returns `undefined`, and the page then says the check has not
+ * run.** Rendering "0 mapped" over a file nobody wrote would be `dh4f`
+ * exactly: could-not-determine presented as a determined empty.
+ */
+export function mappingStates(repo: string = REPO): SchemeState[] | undefined {
+  const harness = instanceOwners(repo).find((o) => o.name === "cat-harness");
+  if (!harness) return undefined;
+  const file = join(harness.root, "test", "results", "term-mapping.qa-results.json");
+  if (!existsSync(file)) return undefined;
+  try {
+    const d = JSON.parse(readFileSync(file, "utf-8")) as {
+      families?: Record<string, { entries?: SchemeState[] }>;
+    };
+    const rows = Object.values(d.families ?? {}).flatMap((f) => f.entries ?? []);
+    return rows.length ? rows : undefined;
+  } catch {
+    // A result that will not parse is `check:term-mapping`'s finding, not
+    // this page's. Saying it twice would make one defect look like two.
+    return undefined;
+  }
+}
+
+/**
+ * `\`x\`` in prose written for a terminal, rendered as `<code>` in HTML.
+ *
+ * The reason strings come from `check-term-mapping`, which writes for a
+ * console. Dropped into a raw `<td>`, kramdown leaves markdown alone inside
+ * block HTML, so the backticks would appear literally on the page — bean
+ * `mylx`, "raw markdown backticks show in rendered text", already open
+ * against six pages. Escaped FIRST, so the conversion cannot smuggle markup
+ * in from a reason string.
+ */
+export function codeSpans(text: string): string {
+  return esc(text).replace(/`([^`]+)`/g, "<code>$1</code>");
+}
+
+/**
+ * The mapping block for one scheme, or for every scheme on the index.
+ *
+ * Says all three states with their counts, and the REASON whenever a target
+ * is undetermined — that reason is the whole difference between "checked,
+ * no match" and "nobody asked", and it is stated once per target rather than
+ * repeated on 2 605 identical rows.
+ */
+export function mappingBlock(states: SchemeState[] | undefined, schemes: readonly string[]): string {
+  if (!states) {
+    return [
+      `<p class="fa-gloss-mapping fa-gloss-mapping--unrun">`,
+      `<strong>Not checked.</strong> No <code>term-mapping</code> result is committed, so whether `,
+      `these terms already exist in an authoritative vocabulary is <em>unknown</em> — which is not `,
+      `the same as “none do”. Run <code>bun run term:mapping</code>.`,
+      `</p>`,
+    ].join("");
+  }
+  const mine = states.filter((s) => schemes.includes(s.scheme));
+  if (!mine.length) return "";
+  const byTarget = new Map<string, SchemeState[]>();
+  for (const s of mine) byTarget.set(s.target, [...(byTarget.get(s.target) ?? []), s]);
+  const rows = [...byTarget.entries()]
+    .sort(([a], [b]) => a.localeCompare(b))
+    .map(([target, list]) => {
+      const sum = (k: "mapped" | "unmapped" | "undetermined") =>
+        list.reduce((n, s) => n + s[k], 0);
+      const reason = list.find((s) => s.reason)?.reason;
+      return [
+        `<tr>`,
+        `<td><code>${esc(target)}</code></td>`,
+        `<td>${sum("mapped")}</td>`,
+        `<td>${sum("unmapped")}</td>`,
+        `<td>${sum("undetermined")}</td>`,
+        `<td>${reason ? codeSpans(reason) : "—"}</td>`,
+        `</tr>`,
+      ].join("");
+    });
+  return [
+    `<table class="fa-gloss-mapping">`,
+    `<caption>Already somebody else's concept? — <code>check:term-mapping</code>, bean <code>7wou</code></caption>`,
+    `<thead><tr><th>target</th><th>mapped</th><th>unmapped</th><th>undetermined</th><th>why undetermined</th></tr></thead>`,
+    `<tbody>${rows.join("")}</tbody>`,
+    `</table>`,
+    `<p class="fa-gloss-mapping-note"><strong>Undetermined is never “no match”.</strong> `,
+    `A vocabulary that could not be reached has said nothing, and the column above keeps that `,
+    `apart from a checked miss. The counts are reported and not graded: an unmapped candidate may `,
+    `be a term this corpus is right to coin.</p>`,
+  ].join("\n");
+}
+
+/**
  * A description's inline code that names ANOTHER term of the same scheme
  * becomes a link to that term's entry (bean `qgjh`). Role descriptions say
  * "Inherits `reviewer`" — the reviewer is on the page, with an anchor, and the
@@ -710,6 +812,8 @@ From: ${from}.
 
 **Size:** this page holds ${rows.length} terms and is ${size} before compression, fetched in one request, within its budget of ${sizeLabel(budgetOf(type))}. There is no search index: the filter below runs over this page, and the A–Z bar jumps within it.
 
+${mappingBlock(mappingStates(), [...new Set(rows.map((r) => r.s.glossary.id))])}
+
 ${termsBlock(rows)}
 
 ${FILTER_SCRIPT}
@@ -814,6 +918,12 @@ Every term the instances in this repository define or carry, as W3C SKOS. Terms 
 </tbody>
 </table>
 
+## Already somebody else's concept?
+
+Extracted candidates are minted from this repository's own assets and are not, by themselves, checked against any vocabulary. \`check:term-mapping\` asks whether each already exists as a concept somebody is authoritative for — SKOS for what a term MEANS, FHIR for a clinical code's operational semantics — and the two are separate questions with separate answers.
+
+${mappingBlock(mappingStates(), [...new Set(c.glossaries.map((g) => g.glossary.id))])}
+
 ## Pages
 
 Each term is on exactly one page. Extracted candidates are split by asset type, so that no page is fetched at the size of all of them (owner, 2026-09-24).
@@ -908,6 +1018,21 @@ function inLocale(src: string, t: SchemeTranslations | undefined): { text: strin
  * chrome and all, or it marks what is not.
  */
 export const LOCALE_PAGE_STRINGS = {
+  // Bean `7wou`. The source page gained this section on 2026-09-30 and the
+  // five locale pages did not, which `translation:drift:check` caught as
+  // 9 headings against 8 — correctly, and it is reader-visible: a section
+  // a reader in that language could not reach. Added as msgids rather than
+  // recorded in KNOWN_DRIFT, because these pages are GENERATED from this
+  // file and a generated page's missing section is a generator gap, not a
+  // translator's backlog.
+  mapping: "Already somebody else's concept?",
+  mappingIntro:
+    "Extracted candidates are minted from this repository's own assets and are not, by themselves, checked against any vocabulary. `check:term-mapping` asks whether each already exists as a concept somebody is authoritative for — SKOS for what a term MEANS, FHIR for a clinical code's operational semantics — and the two are separate questions with separate answers.",
+  // The same shape as `pagesNote`: the table below is counts, scheme ids and
+  // column labels the generator writes in the source language. Saying so is
+  // the policy this page already follows for the extracted pages — never
+  // silently English, never omitted.
+  mappingTableNote: "The table's labels are in the source language: it reports counts per scheme, computed by the gate rather than authored here.",
   pages: "Pages",
   pagesNote: "Extracted candidates are not translated: they are lifted verbatim from knowledge-graph assets and uncurated. Their pages are in the source language.",
   authored: "Authored terms",
@@ -987,6 +1112,18 @@ export function renderLocalePage(
     `# ${esc(titleTerm)}`,
     "",
     `**${translated} / ${terms}** ${mark(u("fullyTranslated"))}. ${mark(u("status"))}`,
+    "",
+    // Before `## Pages`, because `translation-drift` compares the ORDER of
+    // headings and not merely their number: re-levelling or re-ordering one
+    // keeps the count identical and is still drift (measured on this gate,
+    // twice, which is why it records the full shape).
+    `## ${mark(u("mapping"))}`,
+    "",
+    `${mark(u("mappingIntro"))}`,
+    "",
+    `${mark(u("mappingTableNote"))}`,
+    "",
+    mappingBlock(mappingStates(), [...new Set(c.glossaries.map((g) => g.glossary.id))]),
     "",
     `## ${mark(u("pages"))}`,
     "",

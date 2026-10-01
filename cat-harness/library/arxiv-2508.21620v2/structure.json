@@ -1,0 +1,390 @@
+{
+ "_schema": "pdf-structure/v1",
+ "doc_id": "arxiv-2508.21620v2",
+ "source": {
+  "file": "2508.21620v2.pdf",
+  "sha256": "df2697ddad3185010a73bdcd37186a23192ae5553d7d6b6cfa6d7a8e3a9bcbeb",
+  "bytes": 460584,
+  "pages": 29,
+  "text_source": "embedded",
+  "extractor": "pymupdf",
+  "mtime": "2026-09-29T22:16:34Z",
+  "mimetype_sniffed": "application/pdf",
+  "mimetype_source": "magic-bytes"
+ },
+ "metadata": {
+  "arxiv": {
+   "id": "2508.21620",
+   "version": "2",
+   "primary_class": "cs.LG",
+   "stamp_date": "23 May 2026"
+  },
+  "doi": null,
+  "title": "Introduction to the Analysis of Probabilistic",
+  "authors_raw": "Decision-Making Algorithms",
+  "title_lines": [
+   "Introduction to the Analysis of Probabilistic"
+  ],
+  "abstract": "Decision theories offer principled methods for making choices under various types of uncertainty. Algorithms that implement these theories have been success- fully applied to a wide range of real-world problems, including materials and drug discovery. Indeed, they are desirable since they can adaptively gather information to make better decisions in the future, resulting in data-efficient workflows. In scien- tific discovery, where experiments are costly, these algorithms can thus significantly reduce the cost of experimentation. Theoretical analyses of these algorithms are cru- cial for understanding their behavior and providing valuable insights for developing next-generation algorithms. However, theoretical analyses in the literature are often inaccessible to non-experts. This monograph aims to provide an accessible, self- contained introduction to the theoretical analysis of commonly used probabilistic decision-making algorithms, including bandit algorithms, Bayesian optimization, and tree search algorithms. Only basic knowledge of probability theory and statis- tics, along with some elementary knowledge about Gaussian processes, is assumed. arXiv:2508.21620v2 [cs.LG] 23 May 2026",
+  "docinfo": {
+   "Title": "Introduction to the Analysis of Probabilistic Decision-Making Algorithms",
+   "Author": "Agustinus Kristiadi",
+   "Producer": "pikepdf 8.15.1",
+   "Creator": "arXiv GenPDF (tex2pdf:a6404ea)"
+  }
+ },
+ "toc": [
+  {
+   "level": 1,
+   "title": "Decision-Making",
+   "page": 2,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 2,
+   "title": "Bayesian decision theory",
+   "page": 2,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 2,
+   "title": "Frequentist decision theory",
+   "page": 3,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 1,
+   "title": "Concentration Inequalities",
+   "page": 5,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 2,
+   "title": "Gaussian Tail Bounds",
+   "page": 8,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 2,
+   "title": "Other Useful Inequalities",
+   "page": 8,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 1,
+   "title": "Frequentist Bandits",
+   "page": 10,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 2,
+   "title": "Explore-Then-Exploit",
+   "page": 10,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 2,
+   "title": "Upper Confidence Bound (UCB)",
+   "page": 12,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 1,
+   "title": "Gaussian Processes",
+   "page": 15,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 2,
+   "title": "Posterior Inference",
+   "page": 15,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 2,
+   "title": "Reproducing Kernel Hilbert Space",
+   "page": 16,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 2,
+   "title": "Information Capacity",
+   "page": 16,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 2,
+   "title": "Useful Inequalities",
+   "page": 17,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 1,
+   "title": "Discrete Bayesian Optimization",
+   "page": 18,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 2,
+   "title": "GP-UCB: High-Probability Regret Bound",
+   "page": 19,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 2,
+   "title": "GP-TS: Expected Regret Bound",
+   "page": 21,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 1,
+   "title": "Continuous Bayesian Optimization",
+   "page": 24,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 1,
+   "title": "Acknowledgments",
+   "page": 28,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 1,
+   "title": "Acknowledgments",
+   "page": 28,
+   "source": "outline",
+   "number": null
+  }
+ ],
+ "toc_source": "outline",
+ "toc_undetermined_reason": null,
+ "sections": [
+  {
+   "id": "sec-front-matter",
+   "number": null,
+   "title": "Front matter",
+   "level": 1,
+   "page_start": 1,
+   "page_end": 1,
+   "n_chars": 45,
+   "n_words": 6
+  },
+  {
+   "id": "sec-000-decision-making",
+   "number": null,
+   "title": "Decision-Making",
+   "level": 1,
+   "page_start": 1,
+   "page_end": 2,
+   "n_chars": 2924,
+   "n_words": 419
+  },
+  {
+   "id": "sec-001-bayesian-decision-theory",
+   "number": null,
+   "title": "Bayesian decision theory",
+   "level": 2,
+   "page_start": 2,
+   "page_end": 3,
+   "n_chars": 1926,
+   "n_words": 324
+  },
+  {
+   "id": "sec-002-frequentist-decision-theory",
+   "number": null,
+   "title": "Frequentist decision theory",
+   "level": 2,
+   "page_start": 3,
+   "page_end": 5,
+   "n_chars": 2712,
+   "n_words": 472
+  },
+  {
+   "id": "sec-003-concentration-inequalities",
+   "number": null,
+   "title": "Concentration Inequalities",
+   "level": 1,
+   "page_start": 5,
+   "page_end": 8,
+   "n_chars": 5270,
+   "n_words": 940
+  },
+  {
+   "id": "sec-004-gaussian-tail-bounds",
+   "number": null,
+   "title": "Gaussian Tail Bounds",
+   "level": 2,
+   "page_start": 8,
+   "page_end": 8,
+   "n_chars": 576,
+   "n_words": 101
+  },
+  {
+   "id": "sec-005-other-useful-inequalities",
+   "number": null,
+   "title": "Other Useful Inequalities",
+   "level": 2,
+   "page_start": 8,
+   "page_end": 10,
+   "n_chars": 1158,
+   "n_words": 204
+  },
+  {
+   "id": "sec-006-frequentist-bandits",
+   "number": null,
+   "title": "Frequentist Bandits",
+   "level": 1,
+   "page_start": 10,
+   "page_end": 10,
+   "n_chars": 1171,
+   "n_words": 213
+  },
+  {
+   "id": "sec-007-explore-then-exploit",
+   "number": null,
+   "title": "Explore-Then-Exploit",
+   "level": 2,
+   "page_start": 10,
+   "page_end": 12,
+   "n_chars": 3494,
+   "n_words": 637
+  },
+  {
+   "id": "sec-008-upper-confidence-bound-ucb",
+   "number": null,
+   "title": "Upper Confidence Bound (UCB)",
+   "level": 2,
+   "page_start": 12,
+   "page_end": 15,
+   "n_chars": 3196,
+   "n_words": 601
+  },
+  {
+   "id": "sec-009-gaussian-processes",
+   "number": null,
+   "title": "Gaussian Processes",
+   "level": 1,
+   "page_start": 15,
+   "page_end": 15,
+   "n_chars": 1664,
+   "n_words": 291
+  },
+  {
+   "id": "sec-010-posterior-inference",
+   "number": null,
+   "title": "Posterior Inference",
+   "level": 2,
+   "page_start": 15,
+   "page_end": 16,
+   "n_chars": 813,
+   "n_words": 164
+  },
+  {
+   "id": "sec-011-reproducing-kernel-hilbert-space",
+   "number": null,
+   "title": "Reproducing Kernel Hilbert Space",
+   "level": 2,
+   "page_start": 16,
+   "page_end": 16,
+   "n_chars": 1096,
+   "n_words": 208
+  },
+  {
+   "id": "sec-012-information-capacity",
+   "number": null,
+   "title": "Information Capacity",
+   "level": 2,
+   "page_start": 16,
+   "page_end": 17,
+   "n_chars": 2267,
+   "n_words": 392
+  },
+  {
+   "id": "sec-013-useful-inequalities",
+   "number": null,
+   "title": "Useful Inequalities",
+   "level": 2,
+   "page_start": 17,
+   "page_end": 18,
+   "n_chars": 437,
+   "n_words": 81
+  },
+  {
+   "id": "sec-014-discrete-bayesian-optimization",
+   "number": null,
+   "title": "Discrete Bayesian Optimization",
+   "level": 1,
+   "page_start": 18,
+   "page_end": 19,
+   "n_chars": 2814,
+   "n_words": 498
+  },
+  {
+   "id": "sec-015-gp-ucb-high-probability-regret-bound",
+   "number": null,
+   "title": "GP-UCB: High-Probability Regret Bound",
+   "level": 2,
+   "page_start": 19,
+   "page_end": 21,
+   "n_chars": 3153,
+   "n_words": 590
+  },
+  {
+   "id": "sec-016-gp-ts-expected-regret-bound",
+   "number": null,
+   "title": "GP-TS: Expected Regret Bound",
+   "level": 2,
+   "page_start": 21,
+   "page_end": 24,
+   "n_chars": 4554,
+   "n_words": 835
+  },
+  {
+   "id": "sec-017-continuous-bayesian-optimization",
+   "number": null,
+   "title": "Continuous Bayesian Optimization",
+   "level": 1,
+   "page_start": 24,
+   "page_end": 28,
+   "n_chars": 4928,
+   "n_words": 922
+  },
+  {
+   "id": "sec-018-acknowledgments",
+   "number": null,
+   "title": "Acknowledgments",
+   "level": 1,
+   "page_start": 28,
+   "page_end": 29,
+   "n_chars": 1179,
+   "n_words": 165
+  }
+ ],
+ "diagnostics": {
+  "pages_without_text": 0,
+  "likely_scanned": false,
+  "toc_entries": 20,
+  "toc_inferred_entries": 0,
+  "sections": 20,
+  "chars_total": 45377
+ }
+}

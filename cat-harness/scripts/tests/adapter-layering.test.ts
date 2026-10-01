@@ -55,6 +55,15 @@ describe("the harness contract does not import the content model", () => {
     expect(imports.length).toBeGreaterThan(0);
   });
 
+  test("`src/content-types.ts` imports nothing at all — it is the vocabulary, not a consumer", () => {
+    // Split out of `src/types.ts` (bean `w2gr`, step 1) so the content model
+    // stays in the harness when the server half moves to `cat-harness-tools`.
+    // It must not reach into `schemas/` (bean `jcmx`) nor into the server.
+    const src = readFileSync(join(INSTANCE, "src/content-types.ts"), "utf-8");
+    expect(src).toContain("export interface ContentSource");
+    expect([...src.matchAll(/^import .*? from "([^"]+)";$/gm)]).toEqual([]);
+  });
+
   test("the two layers it belongs to disagree, which is why this matters", () => {
     expect(classify("src/types.ts").repo).toBe("harness");
     expect(classify("schemas/types.ts").repo).toBe("core");
@@ -90,7 +99,9 @@ describe("the core types still satisfy the harness minima", () => {
     // `src/types.ts` once carried a hand-written second `FeedbackItem` that
     // drifted from the schema's on five fields. The guard against repeating
     // it is that `TodoRef` is far smaller than what it stands in for.
-    const src = readFileSync(join(INSTANCE, "src/types.ts"), "utf-8");
+    // `TodoRef` moved to `src/content-types.ts` with the rest of the content
+    // model (bean `w2gr`, step 1); `src/types.ts` re-exports it.
+    const src = readFileSync(join(INSTANCE, "src/content-types.ts"), "utf-8");
     const body = src.slice(src.indexOf("export interface TodoRef"));
     const fields = [...body.slice(0, body.indexOf("}")).matchAll(/^\s{2}(\w+)[?]?:/gm)];
     expect(fields.length).toBeLessThanOrEqual(4);

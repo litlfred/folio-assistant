@@ -73,14 +73,19 @@
     }
   },
   "declaredKinds": [
+    "beans",
     "cat-harness",
     "code",
     "code-list",
     "docs",
     "external-schema",
     "folio",
+    "fsh-guts",
     "health",
+    "interaction",
+    "issue-marks",
     "library",
+    "memory",
     "methodology",
     "policies",
     "processes",
@@ -89,10 +94,12 @@
     "schemas",
     "skills",
     "swimlane-glossary",
+    "todos",
     "tools",
     "translation-sources",
     "uml",
-    "uploads"
+    "uploads",
+    "waiver"
   ],
   "links": [
     {
@@ -125,6 +132,22 @@
       "hidden": false,
       "count": 12,
       "unit": "entries"
+    },
+    {
+      "id": "beans",
+      "directory": "beans",
+      "title": "beans",
+      "ref": "cat-harness/docs/beans/index.html",
+      "surfaces": [
+        "navbar",
+        "board",
+        "glass"
+      ],
+      "href": "/beans/",
+      "hidden": false,
+      "icon": "beans",
+      "count": 530,
+      "unit": "beans"
     },
     {
       "id": "docs",
@@ -265,6 +288,20 @@
       "unit": "entries"
     },
     {
+      "id": "fsh-guts",
+      "directory": "fsh-guts",
+      "title": "fsh-guts",
+      "ref": "cat-harness/docs/fsh-guts/index.md",
+      "surfaces": [
+        "navbar",
+        "board",
+        "glass"
+      ],
+      "href": "/fsh-guts/",
+      "hidden": false,
+      "publish": "staging-only"
+    },
+    {
       "id": "large-datasets-schemas",
       "directory": "large-datasets-schemas",
       "title": "large-datasets-schemas",
@@ -346,8 +383,21 @@
       ],
       "href": "/lsi/",
       "hidden": false,
-      "count": 1017,
+      "count": 1018,
       "unit": "documents"
+    },
+    {
+      "id": "root-docs",
+      "directory": "root-docs",
+      "title": "root-docs",
+      "ref": "cat-harness/docs/cat-harness/docs-auto/index/docs/root-docs/index.html",
+      "surfaces": [
+        "navbar",
+        "board",
+        "glass"
+      ],
+      "href": "/cat-harness/docs-auto/index/docs/root-docs/",
+      "hidden": false
     },
     {
       "id": "schemas",
@@ -405,6 +455,21 @@
       ],
       "href": "/cat-harness/docs-auto/glossary/swimlane-glossary/",
       "hidden": false
+    },
+    {
+      "id": "todos",
+      "directory": "todos",
+      "title": "todos",
+      "ref": "cat-harness/docs/todos/index.html",
+      "surfaces": [
+        "navbar",
+        "board",
+        "glass"
+      ],
+      "href": "/todos/",
+      "hidden": false,
+      "count": 3,
+      "unit": "todos"
     },
     {
       "id": "tools",
@@ -1218,64 +1283,31 @@
         {
           "id": "directories",
           "label": "declared directories",
-          "value": 9
+          "value": 2
         },
         {
           "id": "kinds",
           "label": "declared graph kinds",
-          "value": 10
+          "value": 2
         },
         {
           "id": "views",
           "label": "visualisations you can open",
-          "value": 6
+          "value": 1
         }
       ],
       "visualisations": [
-        {
-          "kind": "beans",
-          "path": "/beans/"
-        },
         {
           "kind": "code",
           "note": "no viewer yet"
         },
         {
-          "kind": "docs",
-          "path": "/cat-harness/docs-auto/index/docs/root-docs/"
-        },
-        {
-          "kind": "fsh-guts",
-          "path": "/fsh-guts/",
-          "stagingOnly": true
-        },
-        {
-          "kind": "interaction",
-          "note": "no viewer yet"
-        },
-        {
-          "kind": "issue-marks",
-          "path": "/issue-marks/"
-        },
-        {
-          "kind": "memory",
-          "note": "no viewer yet"
-        },
-        {
-          "kind": "todos",
-          "path": "/todos/"
-        },
-        {
           "kind": "uploads",
           "path": "/cat-harness/uploads/folio-assistant/"
-        },
-        {
-          "kind": "waiver",
-          "note": "no viewer yet"
         }
       ],
       "findings": [
-        "folio-assistant: declares 4 graph(s) with no published viewer — code, interaction, memory, waiver. Declared and not rendered is a gap, not a dead link.",
+        "folio-assistant: declares 1 graph(s) with no published viewer — code. Declared and not rendered is a gap, not a dead link.",
         "folio-assistant: a viewer is published at /cat-harness/library/folio-assistant/ for a \"library\" graph this instance does not declare. Declare it and the tile links it."
       ],
       "navbarIcons": [
@@ -1597,20 +1629,24 @@
         {
           "id": "directories",
           "label": "declared directories",
-          "value": 45
+          "value": 52
         },
         {
           "id": "kinds",
           "label": "declared graph kinds",
-          "value": 22
+          "value": 29
         },
         {
           "id": "views",
           "label": "visualisations you can open",
-          "value": 17
+          "value": 21
         }
       ],
       "visualisations": [
+        {
+          "kind": "beans",
+          "path": "/beans/"
+        },
         {
           "kind": "cat-harness",
           "path": "/cat-harness/schemas/cat-harness/"
@@ -1636,12 +1672,29 @@
           "path": "/cat-harness/folio/"
         },
         {
+          "kind": "fsh-guts",
+          "path": "/fsh-guts/",
+          "stagingOnly": true
+        },
+        {
           "kind": "health",
           "path": "/health/"
         },
         {
+          "kind": "interaction",
+          "note": "no viewer yet"
+        },
+        {
+          "kind": "issue-marks",
+          "path": "/issue-marks/"
+        },
+        {
           "kind": "library",
           "path": "/cat-harness/library/cat-harness/"
+        },
+        {
+          "kind": "memory",
+          "note": "no viewer yet"
         },
         {
           "kind": "methodology",
@@ -1687,6 +1740,10 @@
           "path": "/swimlane-glossary/"
         },
         {
+          "kind": "todos",
+          "path": "/todos/"
+        },
+        {
           "kind": "tools",
           "path": "/tools/"
         },
@@ -1701,10 +1758,14 @@
         {
           "kind": "uploads",
           "path": "/uploads/"
+        },
+        {
+          "kind": "waiver",
+          "note": "no viewer yet"
         }
       ],
       "findings": [
-        "cat-harness: declares 5 graph(s) with no published viewer — code, code-list, policies, scenarios, uml. Declared and not rendered is a gap, not a dead link."
+        "cat-harness: declares 8 graph(s) with no published viewer — code, code-list, interaction, memory, policies, scenarios, uml, waiver. Declared and not rendered is a gap, not a dead link."
       ],
       "navbarIcons": [
         "close",
@@ -1892,6 +1953,10 @@
     "notes": {},
     "folders": [
       {
+        "kind": "beans",
+        "path": "/beans/"
+      },
+      {
         "kind": "cat-harness",
         "path": "/cat-harness/schemas/cat-harness/"
       },
@@ -1916,12 +1981,29 @@
         "path": "/cat-harness/folio/"
       },
       {
+        "kind": "fsh-guts",
+        "path": "/fsh-guts/",
+        "stagingOnly": true
+      },
+      {
         "kind": "health",
         "path": "/health/"
       },
       {
+        "kind": "interaction",
+        "note": "no viewer yet"
+      },
+      {
+        "kind": "issue-marks",
+        "path": "/issue-marks/"
+      },
+      {
         "kind": "library",
         "path": "/cat-harness/library/cat-harness/"
+      },
+      {
+        "kind": "memory",
+        "note": "no viewer yet"
       },
       {
         "kind": "methodology",
@@ -1966,6 +2048,10 @@
         "path": "/swimlane-glossary/"
       },
       {
+        "kind": "todos",
+        "path": "/todos/"
+      },
+      {
         "kind": "tools",
         "path": "/tools/"
       },
@@ -1980,6 +2066,10 @@
       {
         "kind": "uploads",
         "path": "/uploads/"
+      },
+      {
+        "kind": "waiver",
+        "note": "no viewer yet"
       }
     ]
   },
@@ -2315,6 +2405,15 @@
           },
           {
             "name": "confirm-harness"
+          }
+        ]
+      },
+      {
+        "key": "contentAdapters",
+        "skills": [
+          {
+            "name": "content-profiles",
+            "path": "/reference/skill-instructions/content-profiles.html"
           }
         ]
       },
@@ -2806,6 +2905,10 @@
             "summary": "folio-assistant-core"
           },
           {
+            "key": "contentAdapters",
+            "summary": "1 entry"
+          },
+          {
             "key": "version",
             "summary": "0.1.0"
           }
@@ -2841,7 +2944,7 @@
           },
           {
             "key": "directories",
-            "summary": "9: uploads, root-tools, fsh-guts, beans, todos, memory, interaction, issue-marks, root-docs"
+            "summary": "2: uploads, root-tools"
           },
           {
             "key": "stickies",
@@ -2998,6 +3101,10 @@
             "summary": "cat-harness"
           },
           {
+            "key": "contentAdapters",
+            "summary": "1 entry"
+          },
+          {
             "key": "version",
             "summary": "0.1.0"
           }
@@ -3065,7 +3172,7 @@
           },
           {
             "key": "directories",
-            "summary": "43: tools, external-schemas, code-lists, schemas, uml, skills, scenarios, policies, processes…"
+            "summary": "50: tools, external-schemas, code-lists, schemas, uml, skills, scenarios, policies, processes…"
           },
           {
             "key": "associatedHarnesses",

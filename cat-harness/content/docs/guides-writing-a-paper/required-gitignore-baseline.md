@@ -36,7 +36,7 @@ Two deliberate exclusions:
 - **`beans/` stays tracked.** It is the durable, cross-session work plan; a
   sibling agent has to be able to read it. Bean *duplication* is prevented by
   the create-guard in
-  [`skills/folio-core/todo-manager.md`](../../skills/folio-core/todo-manager.md),
+  [`skills/sdlc/sdlc-core/todo-manager.md`](../../skills/sdlc/sdlc-core/todo-manager.md),
   not by ignoring the directory.
 - **Any directory your folio documents as a real pipeline stays tracked** — in
   `qou`, `uploads/` is the document-intake stage and belongs in git. Check your

@@ -106,6 +106,6 @@ Or:
 
 ## Cross-references
 
-- [`../../skills/folio-core/coordinate.md`](../../folio-core/coordinate.md) — multi-agent coordination
-- [`../../skills/folio-core/todo-manager.md`](../../folio-core/todo-manager.md) — bean management
-- [`../../skills/folio-core/bean-coordination.md`](../../folio-core/bean-coordination.md) — cross-session beans
+- [`../../skills/sdlc/sdlc-core/coordinate.md`](../../sdlc/sdlc-core/coordinate.md) — multi-agent coordination
+- [`../../skills/sdlc/sdlc-core/todo-manager.md`](../../sdlc/sdlc-core/todo-manager.md) — bean management
+- [`../../skills/sdlc/sdlc-core/bean-coordination.md`](../../sdlc/sdlc-core/bean-coordination.md) — cross-session beans

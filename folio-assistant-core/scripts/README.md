@@ -23,6 +23,7 @@ Part of [folio-assistant-core](../README.md) 0.1.0, declared as `core-scripts`, 
 | [`codemod-refterm.ts`](codemod-refterm.ts) | a file |  |
 | [`extract-assets.ts`](extract-assets.ts) | a file |  |
 | [`glossary-extract.ts`](glossary-extract.ts) | a file |  |
+| [`glossary-mapping-block.test.ts`](glossary-mapping-block.test.ts) | a file |  |
 | [`glossary-one-concept.test.ts`](glossary-one-concept.test.ts) | a file |  |
 | [`glossary-page.ts`](glossary-page.ts) | a file |  |
 | [`glossary-pot.test.ts`](glossary-pot.test.ts) | a file |  |
@@ -41,5 +42,5 @@ Part of [folio-assistant-core](../README.md) 0.1.0, declared as `core-scripts`, 
 | [`sample-import-run.ts`](sample-import-run.ts) | a file |  |
 | [`source-liveness.test.ts`](source-liveness.test.ts) | a file |  |
 | [`source-liveness.ts`](source-liveness.ts) | a file |  |
-| [`tests/`](tests/) | 6 files | |
+| [`tests/`](tests/) | 7 files | |
 <!-- kg:subgraph:end -->

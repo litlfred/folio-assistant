@@ -63,7 +63,7 @@ Gemini CLI, Antigravity, Cursor, Copilot). `CLAUDE.md` / `GEMINI.md` — тон�
 
 - **Инструкции навыков** (`docs/reference/skill-instructions/*.md`) также
   генерируются автоматически — никогда не редактируйте их вручную. Редактируйте тела навыков в
-  `skills/content-lifecycle/*.md` или `src/skills/*.md` и запускайте повторную генерацию:
+  `skills/authoring/content-lifecycle/*.md` или `src/skills/*.md` и запускайте повторную генерацию:
 
   ```sh
   bun run scripts/gen-skill-docs.ts
@@ -85,6 +85,6 @@ bundle exec jekyll serve
 ## Отправка изменений
 
 Проверка → подтверждение возможности слияния → push → (только если попросят) открытие PR. См.
-`skills/folio-core/prepare-merge.md`. Держите **формализм фреймворка отдельно
+`skills/sdlc/sdlc-core/prepare-merge.md`. Держите **формализм фреймворка отдельно
 от контента** — контент должен находиться в собственном репозитории, а любой контент
 в этой документации носит чисто иллюстративный характер.

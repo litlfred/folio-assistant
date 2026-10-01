@@ -6,9 +6,9 @@ parent: Skill instructions
 ---
 
 {: .note }
-> Generated from [`cat-harness/skills/folio-core/platform-gates.md`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/folio-core/platform-gates.md) — do not edit here.
+> Generated from [`cat-harness/skills/sdlc/sdlc-core/platform-gates.md`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/sdlc/sdlc-core/platform-gates.md) — do not edit here.
 >
-> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/cat-harness/skills/folio-core/platform-gates.md){: .fa-edit-source }
+> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/cat-harness/skills/sdlc/sdlc-core/platform-gates.md){: .fa-edit-source }
 
 {% raw %}
 # The platform's own gates — run what CI will run
@@ -221,7 +221,7 @@ failed again, on `kg:audit:check`:
 
 ```
 1 sidecar(s) are stale. Run `bun run kg:audit` and commit:
-  · test/results/kg-qa/skills/folio-core/platform-gates.kg-qa.json
+  · test/results/kg-qa/skills/sdlc/sdlc-core/platform-gates.kg-qa.json
 ```
 
 The gates run was launched, and *while it ran* this very file was edited to

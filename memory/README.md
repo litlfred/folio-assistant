@@ -9,6 +9,7 @@ Part of [Folio Assistant](../README.md) 0.1.0, declared as `memory`, holding `me
 |---|---|---|
 | [`a-diagnostic-must-not-wear-a-findings-grep-string.md`](a-diagnostic-must-not-wear-a-findings-grep-string.md) | text |  |
 | [`a-local-green-that-cannot-see-the-test-is-not-a-green.md`](a-local-green-that-cannot-see-the-test-is-not-a-green.md) | text |  |
+| [`a-path-table-into-a-higher-layer-is-an-import.md`](a-path-table-into-a-higher-layer-is-an-import.md) | text |  |
 | [`adapter-vs-profile.md`](adapter-vs-profile.md) | text |  |
 | [`adding-a-block-kind-is-30-files-not-one.md`](adding-a-block-kind-is-30-files-not-one.md) | text |  |
 | [`block-verdicts-moved-to-the-results-tree.md`](block-verdicts-moved-to-the-results-tree.md) | text |  |

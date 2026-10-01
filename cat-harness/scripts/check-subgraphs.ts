@@ -92,7 +92,7 @@ export interface SubgraphReport {
    * dangling link is `blv9`, not this"*. That was wrong, and it hid the
    * largest finding in the corpus: relocating CRDM into `methodologies/crdm/`
    * (bean `g43o`, hours earlier — CRDM has since moved again, to
-   * `skills/crdm/`, and this sentence is kept in the past tense on purpose:
+   * `skills/sdlc/crdm/`, and this sentence is kept in the past tense on purpose:
    * it records what the check caught, not where the files are today) broke
    * **13 sibling links** in
    * `crdm-requirements-workflow.md` — `interaction-modality.md`,

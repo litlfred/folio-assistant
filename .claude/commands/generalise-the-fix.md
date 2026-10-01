@@ -6,7 +6,7 @@ generated: cat-harness/scripts/gen-skill-commands.ts
 
 # /generalise-the-fix
 
-Run the `generalise-the-fix` skill. Read [`cat-harness/skills/folio-core/generalise-the-fix.md`](../../cat-harness/skills/folio-core/generalise-the-fix.md) and follow it.
+Run the `generalise-the-fix` skill. Read [`cat-harness/skills/sdlc/sdlc-core/generalise-the-fix.md`](../../cat-harness/skills/sdlc/sdlc-core/generalise-the-fix.md) and follow it.
 
 This command is a pointer, generated from that skill's `user_invocable: true`; the
 instructions live in the skill and nowhere else. The same skill is also served as the

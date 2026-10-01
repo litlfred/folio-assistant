@@ -9,6 +9,18 @@ may import from the harness, and the harness may never import from it. That
 direction is checked — `bun run check:partition:edges` reports any edge running
 the wrong way.
 
+**Contents**
+
+<!-- readme:toc:begin -->
+
+- [Scope, stated so the boundary is checkable](#scope-stated-so-the-boundary-is-checkable)
+- [This instance is PRE-SPLIT](#this-instance-is-pre-split)
+- [What is here today](#what-is-here-today)
+- [Three states, and there is no default](#three-states-and-there-is-no-default)
+- [Why this is not in cat-harness/](#why-this-is-not-in-cat-harness)
+
+<!-- readme:toc:end -->
+
 ## Scope, stated so the boundary is checkable
 
 | in scope | out of scope |

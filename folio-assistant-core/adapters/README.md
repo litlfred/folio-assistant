@@ -7,5 +7,5 @@ Part of [folio-assistant-core](../README.md) 0.1.0, declared as `core-adapters`,
 
 | file | what it is | used by |
 |---|---|---|
-| [`document/`](document/) | 12 files | |
+| [`document/`](document/) | 14 files | |
 <!-- kg:subgraph:end -->

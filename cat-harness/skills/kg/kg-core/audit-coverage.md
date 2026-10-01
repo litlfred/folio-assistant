@@ -220,7 +220,7 @@ side of the star.
 pass caught the first version repairing the staleness it reported: red once, green
 on the rerun, the file still stale in the repository. **A checker that mutates its
 own subject cannot be falsified**, which is the one property
-[`generalise-the-fix`](../../folio-core/generalise-the-fix.md) Move 3 asks a guard to have.
+[`generalise-the-fix`](../../sdlc/sdlc-core/generalise-the-fix.md) Move 3 asks a guard to have.
 
 The findings are reported and do not fail. `--strict` fails on an unaudited kind
 and `--require-all` on an undeclared gate, for the day each gap is meant to close.

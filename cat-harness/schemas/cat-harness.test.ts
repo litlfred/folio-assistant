@@ -31,19 +31,19 @@ beforeAll(() => {
   writeDeclaration(HARNESS, JSON.stringify({
       name: "agentic-harness",
       directories: [
-        { id: "tools", path: "tools/", dependents: "reproduce", graphKinds: ["tools"] },
-        { id: "kg", path: "kg/", dependents: "reproduce", graphKinds: ["kg"] },
-        { id: "schemas", path: "schemas/", dependents: "reproduce", graphKinds: ["schemas"] },
+        { id: "tools", path: "tools/", graphKinds: ["tools"] },
+        { id: "kg", path: "kg/", graphKinds: ["kg"] },
+        { id: "schemas", path: "schemas/", graphKinds: ["schemas"] },
       ],
     }));
 
   // core declares ONLY folio/ — the other three are inherited.
   mkdirSync(CORE, { recursive: true });
-  writeDeclaration(CORE, JSON.stringify({ name: "folio-assist-core", directories: [{ id: "folio", path: "folio/", dependents: "reproduce", graphKinds: ["folio"] }] }));
+  writeDeclaration(CORE, JSON.stringify({ name: "folio-assist-core", directories: [{ id: "folio", path: "folio/", graphKinds: ["folio"] }] }));
 
   // An instance that moves its knowledge graph somewhere else.
   mkdirSync(RELOCATED, { recursive: true });
-  writeDeclaration(RELOCATED, JSON.stringify({ name: "relocated", directories: [{ id: "kg", path: "graph/knowledge/", dependents: "reproduce", graphKinds: ["kg"] }] }));
+  writeDeclaration(RELOCATED, JSON.stringify({ name: "relocated", directories: [{ id: "kg", path: "graph/knowledge/", graphKinds: ["kg"] }] }));
 
   mkdirSync(BROKEN, { recursive: true });
   writeDeclaration(BROKEN, "{ not json", "broken");
@@ -69,50 +69,25 @@ describe("reading a declaration", () => {
     expect(() => readDeclaration(BROKEN)).toThrow(/not valid JSON/);
   });
 
-  it("names the entries missing `dependents`, rather than dumping the Zod error", () => {
-    // THE REAL CASE, reproduced. `dependents` is required, so a branch that
-    // adds a directory entry without knowing the field exists produces a
-    // declaration that will not parse once the two meet. Main added
-    // `methodology-crdm` and `methodology-raci` while the field was in review,
-    // and CI on the merged tree reported 166 failures and 35 errors whose only
-    // visible cause was a raw Zod dump repeated across every test that reads a
-    // declaration. Nothing was wrong with either side.
-    const bad = join(TMP, "missing-dependents");
-    mkdirSync(bad, { recursive: true });
-    writeDeclaration(bad, JSON.stringify({
+  it("a legacy `dependents` field is accepted and ignored (retired 2026-09-30, option A)", () => {
+    // `dependents` was REQUIRED until option A made inheritance automatic. A
+    // folio written before then still carries it, and must not stop parsing
+    // because of an upgrade it did not ask for.
+    const legacy = join(TMP, "legacy-dependents");
+    mkdirSync(legacy, { recursive: true });
+    writeDeclaration(legacy, JSON.stringify({
         name: "x",
-        directories: [
-          { id: "uploads", path: "uploads/", dependents: "reproduce", graphKinds: ["uploads"] },
-          { id: "methodology-raci", path: "methodologies/raci/", graphKinds: ["cat-harness"] },
-          { id: "methodology-crdm", path: "methodologies/crdm/", graphKinds: ["cat-harness"] },
-        ],
+        directories: [{ id: "uploads", path: "uploads/", dependents: "reproduce", graphKinds: ["uploads"] }],
       }));
-    let err: unknown;
-    try {
-      readDeclaration(bad);
-    } catch (e) {
-      err = e;
-    }
-    const msg = (err as Error).message;
-    // It must name WHICH entries — the author's next action is editing those
-    // two lines, and a count alone does not point at them.
-    const named = msg.split("\n")[0]!;
-    expect(named).toContain("methodology-raci");
-    expect(named).toContain("methodology-crdm");
-    // ...and NOT the entry that is fine, or the reader edits the wrong line.
-    // Scoped to the first line on purpose: the guidance below it cites
-    // `uploads/` as an EXAMPLE of a `reproduce` directory, so asserting over
-    // the whole message would be asserting against the help text.
-    expect(named).not.toContain("uploads");
-    // Both values, because the whole difficulty is knowing which to write.
-    expect(msg).toContain('"dependents": "reproduce"');
-    expect(msg).toContain('"dependents": "skip"');
+    const decl = readDeclaration(legacy)!;
+    expect(decl.directories![0]!.id).toBe("uploads");
+    expect("dependents" in decl.directories![0]!).toBe(false);
   });
 
   it("rejects an unknown graph kind rather than accepting it", () => {
     const bad = join(TMP, "bad-kind");
     mkdirSync(bad, { recursive: true });
-    writeDeclaration(bad, JSON.stringify({ name: "x", directories: [{ id: "a", path: "a/", dependents: "reproduce", graphKinds: ["wishful"] }] }));
+    writeDeclaration(bad, JSON.stringify({ name: "x", directories: [{ id: "a", path: "a/", graphKinds: ["wishful"] }] }));
     // The message must name the offending kind AND what is known, so the
     // author can see whether they typo'd or forgot to register a dependency's
     // contribution — those need different fixes.
@@ -193,7 +168,7 @@ describe("inheritance — the Phase 0.3 gate", () => {
     const root = mkdtempSync(join(tmpdir(), "renamed-id-"));
     try {
       mkdirSync(join(root, "old-skills"));
-      writeDeclaration(root, { name: "older", directories: [{ id: "cat-harness", path: "old-skills/", dependents: "skip", graphKinds: ["skills"] }] });
+      writeDeclaration(root, { name: "older", directories: [{ id: "cat-harness", path: "old-skills/", graphKinds: ["skills"] }] });
       const dirs = resolveDirectories([{ name: "older", root, own: true }]);
       expect(dirs.filter((d) => d.id === "cat-harness")).toEqual([]);
       expect(dirs.filter((d) => d.id === "skills").map((d) => d.path)).toEqual(["old-skills/"]);
@@ -423,9 +398,6 @@ describe("materialiseDirectories", () => {
     id,
     path,
     graphKinds: ["kg"],
-    // The fixture default. A case that is ABOUT `dependents` overrides it
-    // through `extra`; every other case should not have to mention it.
-    dependents: "reproduce",
     declaredBy: "test",
     absPath: path,
     own: true,
@@ -439,53 +411,46 @@ describe("materialiseDirectories", () => {
     expect(out[0]!.created).toBe(true);
   });
 
-  describe("`dependents` decides what an INHERITED entry does here", () => {
-    // The whole point, and both directions are needed: a test that only checks
-    // the `skip` case passes equally well for a change that materialises
-    // nothing at all.
-    test("an inherited `skip` entry is not created", () => {
+  describe("an inherited WORKING STORE is reproduced; inherited content is not (option A)", () => {
+    // Inheritance is automatic since 2026-09-30 (owner: "make dependents:
+    // reproduce automatic behaviour so don't need it"). Whether a dependent
+    // gets its own copy is read from the graph kind: a process WRITES a
+    // `state` store and REBUILDS a `derived` one, and that process runs in the
+    // dependent too. Authored content is never created empty — the `dh4f` shape.
+    test("an inherited state store (uploads) is created in the dependent", () => {
       const root = tmpRoot();
       const out = materialiseDirectories(
-        [resolved("schemas", "schemas/", { own: false, dependents: "skip" })],
-        root,
-      );
-      expect(existsSync(join(root, "schemas"))).toBe(false);
-      expect(out).toEqual([]);
-    });
-
-    test("an inherited `reproduce` entry IS created", () => {
-      const root = tmpRoot();
-      const out = materialiseDirectories(
-        [resolved("uploads", "uploads/", { own: false, dependents: "reproduce" })],
+        [resolved("uploads", "uploads/", { own: false, graphKinds: ["uploads"] })],
         root,
       );
       expect(existsSync(join(root, "uploads"))).toBe(true);
       expect(out[0]!.created).toBe(true);
     });
 
-    test("an instance's OWN `skip` entry is still created — it declared it", () => {
-      // `dependents` says what a DEPENDENT does, never what the declaring
-      // instance does about its own directory. Without this, marking
-      // `schemas/` as `skip` would stop the platform creating its own.
+    test("an inherited content subgraph (schemas) is not created", () => {
       const root = tmpRoot();
       const out = materialiseDirectories(
-        [resolved("schemas", "schemas/", { own: true, dependents: "skip" })],
+        [resolved("schemas", "schemas/", { own: false, graphKinds: ["schemas"] })],
         root,
       );
-      expect(existsSync(join(root, "schemas"))).toBe(true);
-      expect(out[0]!.created).toBe(true);
+      expect(existsSync(join(root, "schemas"))).toBe(false);
+      expect(out).toEqual([]);
     });
 
-    test("a `skip` entry is still RESOLVED — only materialisation is suppressed", () => {
-      // The overlay reads a dependency's skills through the resolved list, so
-      // suppressing resolution instead of creation would break `skill_fetch`
-      // to fix a directory-creation problem.
-      const dirs = [
-        resolved("schemas", "schemas/", { own: false, dependents: "skip" }),
-        resolved("uploads", "uploads/", { own: false, dependents: "reproduce" }),
-      ];
-      expect(dirs.map((d) => d.id)).toEqual(["schemas", "uploads"]);
-      expect(materialiseDirectories(dirs, tmpRoot()).map((m) => m.id)).toEqual(["uploads"]);
+    test("an inherited repository-scoped entry is not created — it has one location", () => {
+      const root = tmpRoot();
+      const out = materialiseDirectories(
+        [resolved("beans", "beans/", { own: false, scope: "repository", graphKinds: ["beans"] })],
+        root,
+      );
+      expect(out).toEqual([]);
+    });
+
+    test("an instance's OWN entry is created — it declared it", () => {
+      const root = tmpRoot();
+      const out = materialiseDirectories([resolved("schemas", "schemas/", { own: true })], root);
+      expect(existsSync(join(root, "schemas"))).toBe(true);
+      expect(out[0]!.created).toBe(true);
     });
   });
 
@@ -540,6 +505,7 @@ describe("materialiseDirectories", () => {
         resolved("library", "library/", {
           declaredBy: "folio-assist-core",
           own: false,
+          graphKinds: ["library"],
           absPath: join(depCheckout, "library"),
         }),
       ],
@@ -662,7 +628,7 @@ describe("the `kg` → `cat-harness` rename keeps old declarations working", () 
     // instance's `harness.json` looked like before the rename.
     const old = join(TMP, "old-vocabulary");
     mkdirSync(join(old, "skills"), { recursive: true });
-    writeDeclaration(old, JSON.stringify({ name: "downstream", directories: [{ id: "kg", path: "skills/", dependents: "reproduce", graphKinds: ["kg"] }] }));
+    writeDeclaration(old, JSON.stringify({ name: "downstream", directories: [{ id: "kg", path: "skills/", graphKinds: ["kg"] }] }));
     const d = readDeclaration(old);
     expect(d).toBeDefined();
     expect(d!.directories[0]!.graphKinds).toEqual(["kg"]);
@@ -714,7 +680,7 @@ describe("default directories — inherit the convention, declare only the devia
     mkdirSync(join(moved, "tools"), { recursive: true });
     writeDeclaration(moved, JSON.stringify({
         name: "relocated",
-        directories: [{ id: "skills", path: "graph/knowledge/", dependents: "reproduce", graphKinds: ["cat-harness"] }],
+        directories: [{ id: "skills", path: "graph/knowledge/", graphKinds: ["cat-harness"] }],
       }));
     const d = resolveDirectories([{ name: "relocated", root: moved, own: true }]);
     expect(d.find((x) => x.id === "skills")!.path).toBe("graph/knowledge/");
@@ -761,7 +727,7 @@ describe("the scope trap", () => {
     try {
       // The content is at the REPOSITORY root; the entry omits `scope`.
       const dirs = [
-        { id: "shared", path: "shared/", dependents: "reproduce", graphKinds: ["beans"], declaredBy: "(t)", absPath: "", own: true },
+        { id: "shared", path: "shared/", graphKinds: ["beans"], declaredBy: "(t)", absPath: "", own: true },
       ] as unknown as Parameters<typeof materialiseDirectories>[0];
       expect(() => materialiseDirectories(dirs, instance)).toThrow(/scope/);
       // ...and it did not create the twin on the way to throwing.
@@ -779,7 +745,7 @@ describe("the scope trap", () => {
     mkdirSync(instance, { recursive: true });
     try {
       const dirs = [
-        { id: "own", path: "own/", dependents: "reproduce", graphKinds: ["beans"], declaredBy: "(t)", absPath: "", own: true },
+        { id: "own", path: "own/", graphKinds: ["beans"], declaredBy: "(t)", absPath: "", own: true },
       ] as unknown as Parameters<typeof materialiseDirectories>[0];
       const out = materialiseDirectories(dirs, instance);
       expect(out[0]?.created).toBe(true);
@@ -817,8 +783,8 @@ describe("directoryForGraph refuses an ambiguous kind rather than picking one", 
     writeDeclaration(root, JSON.stringify({
         name: "amb",
         directories: [
-          { id: "first", path: "a/", dependents: "reproduce", graphKinds: ["schemas", "cat-harness"] },
-          { id: "second", path: "b/", dependents: "reproduce", graphKinds: ["cat-harness"] },
+          { id: "first", path: "a/", graphKinds: ["schemas", "cat-harness"] },
+          { id: "second", path: "b/", graphKinds: ["cat-harness"] },
         ],
       }));
     return root;
@@ -915,12 +881,12 @@ describe("a nested declaration is named by its KIND, not by its directory", () =
       join(dir, fileName),
       JSON.stringify({
         name: "n",
-        directories: [{ id: "defs", path: "defs", dependents: "reproduce", graphKinds: ["bean-defs"] }],
+        directories: [{ id: "defs", path: "defs", graphKinds: ["bean-defs"] }],
       }),
     );
     writeDeclaration(root, JSON.stringify({
         name: "n",
-        directories: [{ id: "beans", path: `${dirPath}/`, dependents: "reproduce", graphKinds: ["beans"] }],
+        directories: [{ id: "beans", path: `${dirPath}/`, graphKinds: ["beans"] }],
       }));
     return root;
   }
@@ -957,9 +923,9 @@ describe("a nested declaration is named by its KIND, not by its directory", () =
       mkdirSync(join(root, "qa"), { recursive: true });
       writeFileSync(
         join(root, "qa", "qa.json"),
-        JSON.stringify({ name: "n", directories: [{ id: "x", path: "x", dependents: "reproduce", graphKinds: ["health"] }] }),
+        JSON.stringify({ name: "n", directories: [{ id: "x", path: "x", graphKinds: ["health"] }] }),
       );
-      writeDeclaration(root, JSON.stringify({ name: "n", directories: [{ id: "qa", path: "qa/", dependents: "reproduce", graphKinds: ["qa"] }] }));
+      writeDeclaration(root, JSON.stringify({ name: "n", directories: [{ id: "qa", path: "qa/", graphKinds: ["qa"] }] }));
       const decl = readDeclaration(root)!;
       expect([...declaredKinds(root, decl)].sort()).toEqual(["health", "qa"]);
     } finally {
@@ -1121,7 +1087,7 @@ describe("`graphKinds` was `graphs` until 2026-09-21, and the old key still read
   // alias an unmigrated folio stops resolving its own directories on upgrade.
   // Same failure `GRAPH_KIND_ALIASES` prevents one layer down, for the same
   // kind of rename.
-  const base = { id: "voices", path: "voices/", dependents: "reproduce" } as const;
+  const base = { id: "voices", path: "voices/" } as const;
 
   for (const [name, schema] of [
     ["GraphNodeDirectorySchema", GraphNodeDirectorySchema],
@@ -1160,7 +1126,7 @@ describe("`graphKinds` was `graphs` until 2026-09-21, and the old key still read
 describe("a directory declares the theme it renders on (owner, 2026-09-20)", () => {
   it("is optional — absent means the instance's own theme", () => {
     const r = ContentDirectorySchema.safeParse({
-      id: "x", path: "x/", dependents: "skip", graphKinds: ["cat-harness"],
+      id: "x", path: "x/", graphKinds: ["cat-harness"],
     });
     expect(r.success).toBe(true);
     if (r.success) expect(r.data.theme).toBeUndefined();
@@ -1169,7 +1135,7 @@ describe("a directory declares the theme it renders on (owner, 2026-09-20)", () 
   it("refuses an empty theme — absent and blank are different claims", () => {
     expect(
       ContentDirectorySchema.safeParse({
-        id: "x", path: "x/", dependents: "skip", graphKinds: ["cat-harness"], theme: "",
+        id: "x", path: "x/", graphKinds: ["cat-harness"], theme: "",
       }).success,
     ).toBe(false);
   });
@@ -1249,8 +1215,8 @@ describe("ownDirectoryById — two entries, one path, different scopes", () => {
 
   test("picks the instance-scoped entry over a repository-scoped one at the same path", () => {
     const root = tree([
-      { id: "root-docs", path: "docs/", scope: "repository", graphKinds: ["docs"], dependents: "reproduce" },
-      { id: "docs", path: "docs/", graphKinds: ["docs"], dependents: "reproduce" },
+      { id: "root-docs", path: "docs/", scope: "repository", graphKinds: ["docs"] },
+      { id: "docs", path: "docs/", graphKinds: ["docs"] },
     ]);
     expect(ownDirectoryById(root, DIR, "NOPE")).toBe(join(root, DIR));
   });
@@ -1259,7 +1225,7 @@ describe("ownDirectoryById — two entries, one path, different scopes", () => {
     // The falsifier. If the scope filter is dropped, this returns the entry
     // and the caller silently resolves against the wrong root — which is the
     // failure mode, not an exception.
-    const root = tree([{ id: "docs", path: "docs/", scope: "repository", graphKinds: ["docs"], dependents: "reproduce" }]);
+    const root = tree([{ id: "docs", path: "docs/", scope: "repository", graphKinds: ["docs"] }]);
     expect(ownDirectoryById(root, "docs", "fallback")).toBe(join(root, "fallback"));
   });
 
@@ -1270,7 +1236,7 @@ describe("ownDirectoryById — two entries, one path, different scopes", () => {
 });
 
 // Bean `cmsl`: an entry declared FROM WITHIN a resolved directory's
-// declaration file, answering `dependents`, is an instance directory.
+// declaration file, marked `"subgraph": true`, is an instance directory.
 describe("resolveDirectories — from-within declarations", () => {
   function fixture(declareSkills: boolean): string {
     const root = mkdtempSync(join(tmpdir(), "from-within-"));
@@ -1280,7 +1246,7 @@ describe("resolveDirectories — from-within declarations", () => {
       JSON.stringify({
         name: "fw",
         directories: declareSkills
-          ? [{ id: "skills", path: "skills/", graphKinds: ["skills"], dependents: "reproduce" }]
+          ? [{ id: "skills", path: "skills/", graphKinds: ["skills"] }]
           : [],
       }),
     );
@@ -1289,7 +1255,7 @@ describe("resolveDirectories — from-within declarations", () => {
       JSON.stringify({
         name: "fw-skills",
         topics: [],
-        directories: [{ id: "voices", path: "voices", graphKinds: ["voices"], dependents: "reproduce" }],
+        directories: [{ id: "voices", path: "voices", graphKinds: ["voices"], subgraph: true }],
       }),
     );
     return root;
