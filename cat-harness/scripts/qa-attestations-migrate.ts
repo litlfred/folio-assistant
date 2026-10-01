@@ -36,6 +36,7 @@
  * 3 a derived report or a store file could not be read (nothing is guessed).
  *
  * @module scripts/qa-attestations-migrate
+ * @covers qa
  */
 import { existsSync, readdirSync, readFileSync, statSync } from "node:fs";
 import { join, relative, resolve } from "node:path";
