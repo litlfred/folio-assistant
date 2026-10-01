@@ -3,8 +3,9 @@
 title: 'PHASE P2: JSON-only — every dropped XML/Turtle representation recorded as a refusal, per IG and combined'
 status: todo
 type: feature
+priority: normal
 created_at: 2026-10-01T12:32:21Z
-updated_at: 2026-10-01T12:32:21Z
+updated_at: 2026-10-01T12:35:15Z
 parent: folio-assistant-uhkv
 blocked_by:
     - folio-assistant-qrnz
@@ -22,3 +23,11 @@ Phase P2 of `ig-publisher-reduction` (approved 2026-09-30). Opened in the 2026-1
 - [ ] a refusal record per IG: which XML/TTL representations the Publisher published that this pipeline does not render
 - [ ] the JSON view pages render for every artefact with a JSON representation
 - [ ] the combined report across at least 2 IGs (after `qrnz`)
+
+## Owner ruling 2026-10-01: every phase renders equivalent to the standard IG render
+
+In the owner's words: *"each phase needs to render equivalent to existing IG standard render"*.
+
+This is an invariant across **all** phases, not just P0's exit criterion. Whatever a phase changes in the pipeline, its output must stay equivalent to the IG Publisher's standard render of the same IG. The measured reference is `jut3`'s parity table: the Publisher's page set, by page kind.
+
+**Open tension, put to the owner:** P2 as approved drops XML/Turtle ("recorded as a refusal"). Under this invariant, a refused representation is a difference from the standard render.

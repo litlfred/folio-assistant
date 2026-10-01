@@ -5,7 +5,7 @@ status: in-progress
 type: task
 priority: normal
 created_at: 2026-09-21T19:10:00Z
-updated_at: 2026-10-01T12:32:34Z
+updated_at: 2026-10-01T12:35:15Z
 parent: folio-assistant-uhkv
 ---
 
@@ -518,3 +518,11 @@ A page in none of the three is a **gap**, and P0 passes only with zero gaps. Str
 The skill (`ig-publisher-reduction.md`) is **not edited** until the owner approves this wording.
 
 **Opened in the same review:** `ha24` (P1), `ntyj` (P2) and `h3tx` (P4). P1 and P2 are blocked by `qrnz` (second IG, needed for the combined view); P4 is blocked by `a9tx`.
+
+## Owner ruling 2026-10-01: every phase renders equivalent to the standard IG render
+
+In the owner's words: *"each phase needs to render equivalent to existing IG standard render"*.
+
+This is an invariant across **all** phases, not just P0's exit criterion. Whatever a phase changes in the pipeline, its output must stay equivalent to the IG Publisher's standard render of the same IG. The measured reference is `jut3`'s parity table: the Publisher's page set, by page kind.
+
+**Open tension, put to the owner:** P2 as approved drops XML/Turtle ("recorded as a refusal"). Under this invariant, a refused representation is a difference from the standard render.
