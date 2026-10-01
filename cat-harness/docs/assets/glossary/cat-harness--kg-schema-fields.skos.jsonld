@@ -22016,6 +22016,101 @@
       "skos:note": "candidate"
     },
     {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/substrate-snapshot.substratesnapshotschema.file",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "SubstrateSnapshotSchema.file"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The upstream file, relative to the substrate's repository root: `<name>.json`."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/substrate-snapshot.ts#SubstrateSnapshotSchema.file",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/substrate-snapshot.substratesnapshotschema.raw",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "SubstrateSnapshotSchema.raw"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The upstream bytes, exactly as fetched."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/substrate-snapshot.ts#SubstrateSnapshotSchema.raw",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/substrate-snapshot.substratesnapshotschema.ref",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "SubstrateSnapshotSchema.ref"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The pinned commit the bytes were read at — a full SHA, never a branch."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/substrate-snapshot.ts#SubstrateSnapshotSchema.ref",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/substrate-snapshot.substratesnapshotschema.subscription",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "SubstrateSnapshotSchema.subscription"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The `subscriptions[].id` this snapshot belongs to."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/substrate-snapshot.ts#SubstrateSnapshotSchema.subscription",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/substrate-snapshot.substratesnapshotschema.summary",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "SubstrateSnapshotSchema.summary"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "What the judgement found, derived from `raw`."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/substrate-snapshot.ts#SubstrateSnapshotSchema.summary",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/tabular-csvw.csvwcolumnschema.datatype",
       "@type": "skos:Concept",
       "skos:inScheme": {

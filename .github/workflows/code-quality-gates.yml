@@ -861,6 +861,13 @@ jobs:
       - name: harness state graphs are judged, not just typed
         run: bun run check:harness-state:check
 
+      # Issue #1719, slice 4: every subscription has its substrate snapshot at
+      # its pin, each snapshot's bytes match their digest and re-judge to the
+      # committed summary, and none is orphaned. Offline — it reads what
+      # `kg:subscribe` wrote and never fetches. It JUDGES `substrate-snapshot`.
+      - name: KG subscriptions have their snapshots, and each holds
+        run: bun run kg:subscribe:check
+
       # And `--strict` too, now that it is GREEN — the four `typed-only` kinds
       # were the only thing holding it red, and the step above judges them. Wired
       # on the same reasoning as `check:skills`: it locks in a property this tree

@@ -195,17 +195,35 @@ export function upstreamLicence(clone: string, skillDir: string): { path: string
   return undefined;
 }
 
-function git(args: string[], cwd?: string): void {
+/** Run git; its stdout, or a throw carrying its stderr. Shared with `kg-subscribe`. */
+export function git(args: string[], cwd?: string): string {
   const r = spawnSync("git", args, { cwd, encoding: "utf8" });
-  if (r.status !== 0) throw new Error(`git ${args.join(" ")} failed: ${r.stderr.trim()}`);
+  if (r.status !== 0) throw new Error(`git ${args.join(" ")} failed: ${(r.stderr ?? "").trim() || `exit ${r.status}`}`);
+  return r.stdout;
 }
 
-/** Fetch exactly one commit, shallowly. */
+/**
+ * Fetch exactly one commit, shallowly, into a fresh repository, WITHOUT a
+ * checkout: the caller reads `FETCH_HEAD`. `blobless` adds
+ * `--filter=blob:none`, so only trees arrive and a blob is fetched when it is
+ * read — `kg-subscribe` reads one file of a whole repository this way.
+ */
+export function shallowFetch(repo: string, ref: string, opts: { blobless?: boolean; prefix?: string } = {}): string {
+  const dir = mkdtempSync(join(tmpdir(), opts.prefix ?? "remote-skill-"));
+  try {
+    git(["init", "-q", dir]);
+    git(["remote", "add", "origin", repo], dir);
+    git(["fetch", "-q", "--depth", "1", ...(opts.blobless ? ["--filter=blob:none"] : []), "origin", ref], dir);
+  } catch (e) {
+    rmSync(dir, { recursive: true, force: true });
+    throw e;
+  }
+  return dir;
+}
+
+/** Fetch exactly one commit, shallowly, and check it out. */
 function fetchAt(repo: string, ref: string): string {
-  const dir = mkdtempSync(join(tmpdir(), "remote-skill-"));
-  git(["init", "-q", dir]);
-  git(["remote", "add", "origin", repo], dir);
-  git(["fetch", "-q", "--depth", "1", "origin", ref], dir);
+  const dir = shallowFetch(repo, ref);
   git(["checkout", "-q", "FETCH_HEAD"], dir);
   return dir;
 }

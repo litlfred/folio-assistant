@@ -93,6 +93,7 @@
     "scenarios",
     "schemas",
     "skills",
+    "substrate-snapshot",
     "swimlane-glossary",
     "todos",
     "tools",
@@ -1629,12 +1630,12 @@
         {
           "id": "directories",
           "label": "declared directories",
-          "value": 52
+          "value": 53
         },
         {
           "id": "kinds",
           "label": "declared graph kinds",
-          "value": 29
+          "value": 30
         },
         {
           "id": "views",
@@ -1736,6 +1737,10 @@
           "readOnly": false
         },
         {
+          "kind": "substrate-snapshot",
+          "note": "no viewer yet"
+        },
+        {
           "kind": "swimlane-glossary",
           "path": "/swimlane-glossary/"
         },
@@ -1765,7 +1770,7 @@
         }
       ],
       "findings": [
-        "cat-harness: declares 8 graph(s) with no published viewer — code, code-list, interaction, memory, policies, scenarios, uml, waiver. Declared and not rendered is a gap, not a dead link."
+        "cat-harness: declares 9 graph(s) with no published viewer — code, code-list, interaction, memory, policies, scenarios, substrate-snapshot, uml, waiver. Declared and not rendered is a gap, not a dead link."
       ],
       "navbarIcons": [
         "close",
@@ -2042,6 +2047,10 @@
       {
         "kind": "skills",
         "path": "/cat-harness/docs-auto/index/skills/skills/"
+      },
+      {
+        "kind": "substrate-snapshot",
+        "note": "no viewer yet"
       },
       {
         "kind": "swimlane-glossary",
@@ -2377,6 +2386,16 @@
             "path": "/reference/skill-instructions/associate-harness.html"
           }
         ]
+      },
+      {
+        "key": "subscriptions",
+        "skills": [],
+        "gap": "no skill governs `subscriptions` yet: `bun run kg:subscribe` writes it, and the `kg-subscription` skill is slice 8 of the kg-subscriptions proposal (issue #1719)"
+      },
+      {
+        "key": "knownSubstrates",
+        "skills": [],
+        "gap": "no skill governs `knownSubstrates` yet: the rule (hand rows only where no declaration names the substrate) is on KnownSubstrateSchema; the skill is slice 8 of the kg-subscriptions proposal (issue #1719)"
       },
       {
         "key": "stickies",
@@ -3155,7 +3174,7 @@
           },
           {
             "key": "directories",
-            "summary": "50: tools, external-schemas, code-lists, schemas, uml, skills, scenarios, policies, processes…"
+            "summary": "51: tools, external-schemas, subscriptions, code-lists, schemas, uml, skills, scenarios, poli…"
           },
           {
             "key": "associatedHarnesses",
@@ -3288,6 +3307,8 @@
     ],
     "findings": [
       "`topology`: no skill edits `topology` yet: its axes are documented only in the schema (cat-harness.ts, TopologySchema)",
+      "`subscriptions`: no skill governs `subscriptions` yet: `bun run kg:subscribe` writes it, and the `kg-subscription` skill is slice 8 of the kg-subscriptions proposal (issue #1719)",
+      "`knownSubstrates`: no skill governs `knownSubstrates` yet: the rule (hand rows only where no declaration names the substrate) is on KnownSubstrateSchema; the skill is slice 8 of the kg-subscriptions proposal (issue #1719)",
       "who-iris: declares `folioMount`, which the declaration schema does not have and silently drops.",
       "cat-harness: declares `folioMount`, which the declaration schema does not have and silently drops.",
       "cat-harness: declares `knownSubstrates`, which the declaration schema does not have and silently drops.",

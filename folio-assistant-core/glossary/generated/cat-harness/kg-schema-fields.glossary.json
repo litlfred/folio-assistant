@@ -8113,6 +8113,41 @@
       "status": "candidate"
     },
     {
+      "id": "substrate-snapshot.substratesnapshotschema.file",
+      "prefLabel": "SubstrateSnapshotSchema.file",
+      "definition": "The upstream file, relative to the substrate's repository root: `<name>.json`.",
+      "source": "cat-harness/schemas/substrate-snapshot.ts#SubstrateSnapshotSchema.file",
+      "status": "candidate"
+    },
+    {
+      "id": "substrate-snapshot.substratesnapshotschema.raw",
+      "prefLabel": "SubstrateSnapshotSchema.raw",
+      "definition": "The upstream bytes, exactly as fetched.",
+      "source": "cat-harness/schemas/substrate-snapshot.ts#SubstrateSnapshotSchema.raw",
+      "status": "candidate"
+    },
+    {
+      "id": "substrate-snapshot.substratesnapshotschema.ref",
+      "prefLabel": "SubstrateSnapshotSchema.ref",
+      "definition": "The pinned commit the bytes were read at — a full SHA, never a branch.",
+      "source": "cat-harness/schemas/substrate-snapshot.ts#SubstrateSnapshotSchema.ref",
+      "status": "candidate"
+    },
+    {
+      "id": "substrate-snapshot.substratesnapshotschema.subscription",
+      "prefLabel": "SubstrateSnapshotSchema.subscription",
+      "definition": "The `subscriptions[].id` this snapshot belongs to.",
+      "source": "cat-harness/schemas/substrate-snapshot.ts#SubstrateSnapshotSchema.subscription",
+      "status": "candidate"
+    },
+    {
+      "id": "substrate-snapshot.substratesnapshotschema.summary",
+      "prefLabel": "SubstrateSnapshotSchema.summary",
+      "definition": "What the judgement found, derived from `raw`.",
+      "source": "cat-harness/schemas/substrate-snapshot.ts#SubstrateSnapshotSchema.summary",
+      "status": "candidate"
+    },
+    {
       "id": "tabular-csvw.csvwcolumnschema.datatype",
       "prefLabel": "CsvwColumnSchema.datatype",
       "definition": "A CSVW datatype name. `any` is CSVW's own top type.",
