@@ -371,6 +371,17 @@
       "unit": "waiting"
     }
   ],
+  "glassStrip": {
+    "pinned": [
+      "glass-todos",
+      "glass-settings",
+      "library",
+      "processes",
+      "tools",
+      "skills"
+    ],
+    "unmatched": []
+  },
   "harnesses": [
     {
       "name": "folio-assistant",
@@ -2185,6 +2196,15 @@
         ]
       },
       {
+        "key": "glassStrip",
+        "skills": [
+          {
+            "name": "harness-tiles",
+            "path": "/reference/skill-instructions/harness-tiles.html"
+          }
+        ]
+      },
+      {
         "key": "repository",
         "skills": [
           {
@@ -3176,6 +3196,10 @@
           {
             "key": "navbarIcons",
             "summary": "close, todos, beans, processes, kg, launcher"
+          },
+          {
+            "key": "glassStrip",
+            "summary": "6 entries"
           },
           {
             "key": "repository",

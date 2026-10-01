@@ -9,7 +9,7 @@ tags:
     - ui
     - visualiser-navbar
 created_at: 2026-09-23T10:36:15Z
-updated_at: 2026-10-01T12:34:27Z
+updated_at: 2026-10-01T18:55:06Z
 parent: folio-assistant-4ccr
 ---
 
@@ -304,3 +304,18 @@ Owner: "keep going". On `claude/quirky-hypatia-k3aoh4` (PR #1762).
 - **Measured on a local build, Glass → More at 1280×800: 29 tiles, 11 distinct drawings** (was 2). Six tiles still take the net because their kinds have no drawing: folio, fsh-guts, root-docs, swimlane-glossary, todos, translation-sources.
 
 Still open here: 1, 3 (sticky half), 6, 7, 12 (needs an editorial call: rename or cross-link the two Settings).
+
+
+
+## 2026-10-01 — finding 10: owner ruling implemented (option 1 of 4, "Pinned tiles first, plus +N more")
+
+Branch `claude/quirky-hypatia-k3aoh4-strip-pinned`, which is stacked on #1762. Session https://claude.ai/code/session_01Cw8JgZEDT5VqQ5ergjdMjB.
+
+- **Declared, not hard-coded.** The instance declaration gains `glassStrip` (`GlassStripSchema`: `{chrome}` or `{kind}` pins, inherited along `needs` like `navbarIcons`). `cat-harness.json` pins Todos, Settings, library, processes, tools and skills. `sync-docs-harness.ts` resolves each kind to one tile (`resolveGlassStrip`; one slot per kind, and the others stay in More). The page reads the pins from `<meta name="fa-glass-strip">`, or from `assets/harness/glass-strip.json` on replica pages.
+- **Fit, not scroll.** The strip never scrolls. It shows as many pins as fit and refits on resize. Its last tile reads "+N more" (accessible name "N more tiles"), where N is exact. Pins that do not fit wait first in More.
+- **Measured on a local build.** Before (#1762 head): the strip held Todos, Filter, Settings and More. 15 tiles sat behind More with no count, and none of library/processes/tools/skills was on the strip. After: at 1280×800, the 6 pins plus "+12 more", with scrollWidth equal to clientWidth (1280/1280). At 390×844, Todos, Folio settings, library and processes plus "+14 more" (390/390). Shown + N = 18 = total at both widths.
+- **Test.** `glass-strip-fit.e2e.ts`: 10 specs pass. Against #1762 head 8 fail, for real reasons: shown+N was 3 against 25, scrollWidth was 408 against a 390 limit, the pin order did not match, and the strip used overflow-x auto. The 2 keyboard specs pass on both, because More was already a button.
+
+
+
+- **Scope addition (owner, 2026-10-01): "have folio bottom strip tiles default to hidden away when folio first opened".** With no stored choice, the strip now starts slid away. Its tab reads "Show tiles (N)", carries `aria-expanded`, and toggles both ways (`l4zi`). The choice is remembered in this browser as `1`/`0`, and storage that cannot be read falls back to hidden. Test: `glass-strip-default-hidden.e2e.ts`, 7 specs at 1280×800 and 390×844. All 7 fail against #1762 head.

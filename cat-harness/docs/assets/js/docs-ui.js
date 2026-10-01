@@ -5896,26 +5896,40 @@
     dock.appendChild(dockHead);
     dock.appendChild(strip);
     sheet.appendChild(dock);
+    /* HIDDEN UNTIL ASKED FOR — owner, 2026-10-01: *"have folio bottom strip
+     * tiles default to hidden away when folio first opened"*. So with no
+     * stored choice the folio opens with the strip slid away and only this
+     * tab showing, which says how many tiles are behind it. The tab is still
+     * the one control both ways (`l4zi`), and a reader's choice either way is
+     * remembered as "1" or "0". Unreadable storage counts as no choice:
+     * hidden, the stated default, rather than a guess at a choice. */
     var STRIP_HIDDEN_KEY = "fa-glass-strip-hidden";
     function stripWasHidden() {
-      try { return localStorage.getItem(STRIP_HIDDEN_KEY) === "1"; } catch (_e) { return false; }
+      try { return localStorage.getItem(STRIP_HIDDEN_KEY) !== "0"; } catch (_e) { return true; }
+    }
+    function labelStripToggle() {
+      var h = dock.getAttribute("data-fa-strip") === "hidden";
+      var total = typeof stripTotal === "function" ? stripTotal() : null;
+      while (stripToggle.firstChild) stripToggle.removeChild(stripToggle.firstChild);
+      stripToggle.appendChild(el("span", { "aria-hidden": "true" }, h ? "\u25B4 " : "\u25BE "));
+      stripToggle.appendChild(document.createTextNode(h ? "Show tiles" : "Hide tiles"));
+      if (h && total !== null) {
+        stripToggle.appendChild(el("span", { class: "fa-glass-strip-count" }, " (" + total + ")"));
+      }
+      stripToggle.title = h ? "Bring the tiles back" : "Slide the tiles away \u2014 this tab brings them back";
     }
     function setStripHidden(h) {
       dock.setAttribute("data-fa-strip", h ? "hidden" : "shown");
       if (h) strip.setAttribute("inert", ""); else strip.removeAttribute("inert");
       stripToggle.setAttribute("aria-expanded", h ? "false" : "true");
-      while (stripToggle.firstChild) stripToggle.removeChild(stripToggle.firstChild);
-      stripToggle.appendChild(el("span", { "aria-hidden": "true" }, h ? "\u25B4 " : "\u25BE "));
-      stripToggle.appendChild(document.createTextNode(h ? "Show tiles" : "Hide tiles"));
-      stripToggle.title = h ? "Bring the tiles back" : "Slide the tiles away \u2014 this tab brings them back";
+      labelStripToggle();
     }
     stripToggle.addEventListener("click", function () {
       var h = dock.getAttribute("data-fa-strip") !== "hidden";
       setStripHidden(h);
       try {
-        if (h) localStorage.setItem(STRIP_HIDDEN_KEY, "1");
-        else localStorage.removeItem(STRIP_HIDDEN_KEY);
-      } catch (_e) { /* a strip that comes back next page is the safe failure */ }
+        localStorage.setItem(STRIP_HIDDEN_KEY, h ? "1" : "0");
+      } catch (_e) { /* next page: hidden, the default */ }
       glassLive.textContent = h ? "Tiles hidden. The Show tiles tab brings them back." : "Tiles shown.";
     });
     setStripHidden(stripWasHidden());
@@ -6111,7 +6125,7 @@
     // readers have already learned it, and only one of the two had to move.
     //
     // The `id` stays `glass-settings`. Every glass test keys on
-    // `data-fa-glass-chrome="glass-settings"` and `STRIP_DEFAULT` lists it, so
+    // `data-fa-glass-chrome="glass-settings"` and the `glassStrip` pins resolve to it, so
     // the id is the contract and the label is the prose. Cross-linking the two
     // panels was considered and rejected: it would assert a relationship
     // between site chrome and board state that does not exist.
@@ -6333,18 +6347,41 @@
      * The arrangement is the READER'S and is remembered in this browser — a
      * view preference like the theme, never a change to the declaration. */
     var STRIP_KEY = "fa-glass-strip";
-    var STRIP_DEFAULT = ["glass-todos", "glass-filter", "glass-settings"];
+    /* THE DEFAULT STRIP IS DECLARED — owner, 2026-10-01, bean `ob3m` finding
+     * 10, option 1 of 4: **"Pinned tiles first, plus '+N more'"**. The
+     * instance's `glassStrip` declaration names the pins (Todos, Settings,
+     * library, processes, tools, skills here), `sync-docs-harness.ts`
+     * resolves each kind to one tile id, and the page reads the ids from
+     * `<meta name="fa-glass-strip">` — or, on a page no Jekyll wrote, from
+     * `assets/harness/glass-strip.json`. Nothing here names a kind.
+     *
+     * `STRIP_CHROME_ONLY` is what a page gets when NOTHING declared a strip:
+     * the glass's own two controls, never a guess at which graphs matter. */
+    var STRIP_CHROME_ONLY = ["glass-todos", "glass-settings"];
+    function stripIdList(v) {
+      return Array.isArray(v)
+        ? v.filter(function (x) { return typeof x === "string" && x !== "glass-more"; })
+        : null;
+    }
+    function declaredStripFromMeta() {
+      var meta = document.querySelector('meta[name="fa-glass-strip"]');
+      if (!meta) return null;
+      try { return stripIdList(JSON.parse(meta.getAttribute("content") || "null")); } catch (_e) { return null; }
+    }
+    // True once the READER has arranged the strip: their arrangement then
+    // wins over the declaration, as the theme does (Q9: declared default,
+    // reader may override).
+    var stripArranged = false;
     function loadStrip() {
       try {
-        var v = JSON.parse(localStorage.getItem(STRIP_KEY) || "null");
-        if (Array.isArray(v)) {
-          return v.filter(function (x) { return typeof x === "string" && x !== "glass-more"; });
-        }
-      } catch (_e) { /* unreadable: the default strip */ }
-      return STRIP_DEFAULT.slice();
+        var v = stripIdList(JSON.parse(localStorage.getItem(STRIP_KEY) || "null"));
+        if (v) { stripArranged = true; return v; }
+      } catch (_e) { /* unreadable: the declared strip */ }
+      return (declaredStripFromMeta() || STRIP_CHROME_ONLY).slice();
     }
     var stripIds = loadStrip();
     function saveStrip() {
+      stripArranged = true;
       try { localStorage.setItem(STRIP_KEY, JSON.stringify(stripIds)); } catch (_e) { /* next page: the default */ }
     }
 
@@ -6393,7 +6430,98 @@
       if (openPanelId && panelButtons[openPanelId]) panelButtons[openPanelId].setAttribute("aria-expanded", "true");
       // A declared tile on the strip needs the list; drawn when it arrives.
       if (waiting) withDeclared(function (t) { if (t) renderStrip(); });
+      // The count needs the list too, even when no declared tile is pinned.
+      else if (!declaredTiles) withDeclared(function (t) { if (t) fitStrip(); });
+      fitStrip();
     }
+
+    /* ── FIT, NOT SCROLL — owner, 2026-10-01, bean `ob3m` finding 10 ──────
+     *
+     * The strip once held 25 tiles in one row and scrolled them sideways
+     * with no arrow, count or fade: 11 visible at 1280 px, about 2½ at 390,
+     * and the rest off-screen with nothing saying so. The ruling: **no tile
+     * may be silently off-screen.** So the strip never scrolls. It shows as
+     * many pinned tiles as fit, in declared order, and the last tile says
+     * "+N more", where N is EXACTLY the number of tiles not on screen —
+     * pinned ones that did not fit at this width plus everything in More.
+     * Shown + N is always the total, which is what the e2e test asserts.
+     *
+     * Refitted whenever the strip's box changes (a resize, the glass
+     * opening), because "what fits" is a fact about this width only. */
+    var overflowIds = [];
+    /** Every tile the glass can draw, chrome and declared — or null while the list is unread. */
+    function stripTotal() {
+      if (!declaredTiles) return null;
+      var n = 0;
+      Object.keys(chromeDefs).forEach(function (id) { if (id !== "glass-more") n++; });
+      declaredTiles.forEach(function (t) { if (declaredTileEl(t)) n++; });
+      return n;
+    }
+    function stripItems() {
+      return Array.prototype.slice.call(strip.querySelectorAll("[data-fa-strip-item]"));
+    }
+    function labelMore() {
+      var total = stripTotal();
+      var shown = stripItems().filter(function (n) { return !n.hasAttribute("hidden"); }).length;
+      var cap = moreBtn.querySelector(".fa-tile-caption");
+      if (total === null) {
+        moreBtn.removeAttribute("data-fa-more-count");
+        moreBtn.setAttribute("aria-label", chromeDefs["glass-more"].title);
+        if (cap) cap.textContent = "More";
+        return;
+      }
+      var n = Math.max(0, total - shown);
+      moreBtn.setAttribute("data-fa-more-count", String(n));
+      moreBtn.setAttribute("aria-label", n === 0 ? "More \u2014 every tile is on the strip"
+        : n + (n === 1 ? " more tile" : " more tiles"));
+      moreBtn.title = chromeDefs["glass-more"].title;
+      if (cap) cap.textContent = n === 0 ? "More" : "+" + n + " more";
+      labelStripToggle();
+    }
+    var lastOverflow = "";
+    function fitStrip() {
+      var items = stripItems();
+      items.forEach(function (n) { n.removeAttribute("hidden"); n.removeAttribute("data-fa-overflow"); });
+      overflowIds = [];
+      labelMore();
+      // Not laid out (the glass is down): nothing to measure, and hiding every
+      // tile because the strip is 0 px wide would be a lie about the width.
+      if (strip.clientWidth > 0) {
+        var cs = getComputedStyle(strip);
+        var rtl = cs.direction === "rtl";
+        var box = strip.getBoundingClientRect();
+        var edge = rtl ? box.left + parseFloat(cs.paddingLeft) : box.right - parseFloat(cs.paddingRight);
+        var past = function () {
+          var r = moreBtn.getBoundingClientRect();
+          return rtl ? r.left < edge - 0.5 : r.right > edge + 0.5;
+        };
+        var shown = items.slice();
+        while (shown.length && past()) {
+          var last = shown.pop();
+          last.setAttribute("hidden", "");
+          last.setAttribute("data-fa-overflow", "");
+          overflowIds.unshift(last.getAttribute("data-fa-strip-item"));
+          labelMore();
+        }
+      }
+      var sig = overflowIds.join(" ");
+      if (sig !== lastOverflow) {
+        lastOverflow = sig;
+        // More lists what the strip cannot show, so it changes with the width.
+        if (openPanelId === "glass-more") {
+          var body = panel.querySelector(".fa-glass-panel-body");
+          if (body) { while (body.firstChild) body.removeChild(body.firstChild); buildMore(body); }
+        }
+      }
+    }
+    var fitQueued = false;
+    function queueFit() {
+      if (fitQueued) return;
+      fitQueued = true;
+      (window.requestAnimationFrame || setTimeout)(function () { fitQueued = false; fitStrip(); });
+    }
+    if (typeof ResizeObserver === "function") new ResizeObserver(queueFit).observe(strip);
+    else window.addEventListener("resize", queueFit);
 
     function moveTile(id, toStrip, index) {
       if (id === "glass-more") return;
@@ -6530,10 +6658,18 @@
       if (tileDrag && e.pointerId === tileDrag.pointerId) endTileDrag();
     });
 
-    function moreItem(id, node) {
+    function moreItem(id, node, overflowed) {
       var wrap = el("div", { class: "fa-glass-more-item", "data-fa-more-item": id });
       wireTileDrag(node, id);
       wrap.appendChild(node);
+      if (overflowed) {
+        // PINNED, and there is no room for it at this width. Its place on the
+        // strip is kept; a "↓ Strip" button here would promise a move the
+        // width cannot honour.
+        wrap.setAttribute("data-fa-overflow", "");
+        wrap.appendChild(el("span", { class: "fa-glass-arrange-note" }, "Pinned \u00b7 no room at this width"));
+        return wrap;
+      }
       var b = el("button", {
         type: "button",
         class: "fa-glass-arrange",
@@ -6561,6 +6697,11 @@
       body.appendChild(grid);
       var onStrip = el("div", { class: "fa-glass-on-strip" });
       body.appendChild(onStrip);
+      // FIRST, the pinned tiles the strip had no room for, in pinned order:
+      // they are what "+N more" counted ahead of everything else.
+      overflowIds.forEach(function (id) {
+        if (chromeDefs[id]) grid.appendChild(moreItem(id, makeChromeTile(id, false), true));
+      });
       Object.keys(chromeDefs).forEach(function (id) {
         if (id === "glass-more" || stripIds.indexOf(id) !== -1) return;
         grid.appendChild(moreItem(id, makeChromeTile(id, false)));
@@ -6570,6 +6711,12 @@
           status.textContent = "The list of visualisations could not be read. That is not the same as there being none.";
         } else {
           var n = 0;
+          var first = grid.querySelector(".fa-glass-more-item:not([data-fa-overflow])");
+          overflowIds.forEach(function (id) {
+            var t = declaredById(id);
+            var node = t && declaredTileEl(t);
+            if (node) grid.insertBefore(moreItem(id, node, true), first);
+          });
           tiles.forEach(function (t) {
             var node = declaredTileEl(t);
             if (!node) return;
@@ -6586,7 +6733,8 @@
           stripIds.forEach(function (id) {
             if (!chromeDefs[id] && !declaredById(id)) return;
             var li = el("li", { class: "fa-glass-arrange-row", "data-fa-strip-row": id });
-            li.appendChild(el("span", { class: "fa-glass-arrange-name" }, labelOf(id)));
+            li.appendChild(el("span", { class: "fa-glass-arrange-name" },
+              labelOf(id) + (overflowIds.indexOf(id) !== -1 ? " (no room at this width)" : "")));
             var b = el("button", {
               type: "button",
               class: "fa-glass-arrange",
@@ -6606,8 +6754,20 @@
     chromeTile("glass-more", "More", "⋯", "More — every visualisation this folio declares, and where each tile lives", buildMore);
     // MORE IS FIXED, and last: the one tile that is always on the strip.
     var moreBtn = makeChromeTile("glass-more", true);
+    moreBtn.setAttribute("data-fa-more", "");
     strip.appendChild(moreBtn);
     renderStrip();
+    // A page no Jekyll wrote has no meta: read the published pins, unless the
+    // reader has arranged the strip in the meantime.
+    if (!stripArranged && !document.querySelector('meta[name="fa-glass-strip"]')) {
+      fetch(withBase("/assets/harness/glass-strip.json"))
+        .then(function (r) { if (!r.ok) throw new Error("HTTP " + r.status); return r.json(); })
+        .then(function (v) {
+          var ids = stripIdList(v);
+          if (ids && !stripArranged) { stripIds = ids; renderStrip(); }
+        })
+        .catch(function () { /* no declared strip: the glass's own chrome stays */ });
+    }
 
     function setOpen(open) {
       layer.setAttribute("data-fa-glass", open ? "open" : "closed");
