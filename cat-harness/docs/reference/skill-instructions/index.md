@@ -259,6 +259,7 @@ roles, and how they compose with the LLM, see [Skills & roles](../../skills.html
 | [Staging review](staging-review.html) | `staging-review` | — | > Skill id: `staging-review` · Package: `sdlc-core` |
 | [Swarm management](swarm-management.html) | `swarm-management` | — | A swarm is several agents working one goal in parallel. It is the most |
 | [Test Engineer](test-engineer.html) | `test-engineer` | — | bun test                              # from scripts/tests/ |
+| [Running a test plan](test-plan-execution.html) | `test-plan-execution` | — | > Skill id: `test-plan-execution` · Package: `sdlc-core` · Process: |
 | [Session Task Manager (`beans`)](todo-manager.html) | `todo-manager` | — | > **Disambiguation:** |
 | [Turn reporting](turn-reporting.html) | `turn-reporting` | — | Split out of `todo-manager.md` on 2026-09-19 (bean `tdmg`), which had reached |
 | [Untainted verification](untainted-verification.html) | `untainted-verification` | — | > Skill id: `untainted-verification` · Package: `sdlc-core` |

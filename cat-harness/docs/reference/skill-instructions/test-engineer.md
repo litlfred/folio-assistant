@@ -156,3 +156,10 @@ bun run report.ts --out test-report.json
 The report includes `by_category` breakdown so each pipeline stage
 can extract just the tests relevant to it.
 {% endraw %}
+
+## Processes that run this skill
+
+| process | step(s) that name it |
+|---|---|
+| [Test-plan execution](../../processes/test-plan-execution.html) | Execute every case, or skip it with a reason |
+

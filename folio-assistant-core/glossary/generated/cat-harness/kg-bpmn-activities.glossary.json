@@ -3573,6 +3573,94 @@
       "status": "candidate"
     },
     {
+      "id": "process_testplanexecution.a_binddata",
+      "prefLabel": "Bind the test data [fixed or generated]",
+      "definition": "Per bean `vm6m`: a fixed set is a committed path and counts as evidence only once reviewed; a generated set is template + params + seed and is never materialised. Both feed the run's data hash, and nothing that feeds the process hash may feed it too.",
+      "notation": "A_BindData",
+      "source": "cat-harness/processes/test-plan-execution.bpmn#A_BindData",
+      "status": "candidate"
+    },
+    {
+      "id": "process_testplanexecution.a_execute",
+      "prefLabel": "Execute every case, or skip it with a reason",
+      "definition": "Every case in dependency order. A case is executed or explicitly `skipped` with its reason; a case that simply has no verdict is a finding, because it cannot be told from a case nobody ran.",
+      "notation": "A_Execute",
+      "source": "cat-harness/processes/test-plan-execution.bpmn#A_Execute",
+      "status": "candidate"
+    },
+    {
+      "id": "process_testplanexecution.a_filecertification",
+      "prefLabel": "File the signed certification [qa-attestations/v1]",
+      "definition": "The signed certification goes under the declared `attestations` graph on main (owner ruling D2 (a), D5 default), pointing at the report it certifies. The bean resolves here, once the process has actually finished.",
+      "notation": "A_FileCertification",
+      "source": "cat-harness/processes/test-plan-execution.bpmn#A_FileCertification",
+      "status": "candidate"
+    },
+    {
+      "id": "process_testplanexecution.a_recordcertification",
+      "prefLabel": "Record the certification decision [attestations]",
+      "definition": "The judgement: the certifier records, under their own name, that the system meets plan P at this version on this run. It is written under the declared `attestations` graph beside the other judgements, never on the `qa-reports` branch with derived results. A user task, so no agent or pipeline can fill it.",
+      "notation": "A_RecordCertification",
+      "source": "cat-harness/processes/test-plan-execution.bpmn#A_RecordCertification",
+      "status": "candidate"
+    },
+    {
+      "id": "process_testplanexecution.a_recordrefusal",
+      "prefLabel": "Record the refusal, with the failing cases",
+      "definition": "A complete, trusted run in which a case failed. The refusal names the failing cases and is the end of this request; nothing is signed. The bean resolves here because the process has finished — what to do about the failure is a new piece of work.",
+      "notation": "A_RecordRefusal",
+      "source": "cat-harness/processes/test-plan-execution.bpmn#A_RecordRefusal",
+      "status": "candidate"
+    },
+    {
+      "id": "process_testplanexecution.a_recordundetermined",
+      "prefLabel": "Record why it could not be decided",
+      "definition": "The third state: which fact kept the table from deciding — a run not finished, an unknown data hash, an unexecuted case, a checker that disagreed or could not run, or nothing passed. A note and not a resolution, because the request is still open: it needs a re-run or an adjudication, not a verdict.",
+      "notation": "A_RecordUndetermined",
+      "source": "cat-harness/processes/test-plan-execution.bpmn#A_RecordUndetermined",
+      "status": "candidate"
+    },
+    {
+      "id": "process_testplanexecution.a_reexecutesample",
+      "prefLabel": "Re-execute a sample, blind to the tester's verdicts",
+      "definition": "Given the plan, the bound data and a sample of case ids — not the report. Says `agree`, `disagree` or `unknown`; `unknown` (could not run) is said as plainly as a disagreement, because the table reads both the same way and an unknown read as agreement certifies on one party's word.",
+      "notation": "A_ReExecuteSample",
+      "source": "cat-harness/processes/test-plan-execution.bpmn#A_ReExecuteSample",
+      "status": "candidate"
+    },
+    {
+      "id": "process_testplanexecution.a_request",
+      "prefLabel": "Request certification of the system against plan P",
+      "definition": "Name the plan by id AND version, and the system under test by actor id. The actor must carry the `systemUnderTest` facet: an actor that has not said it can be tested is not run against a plan by default. The bean this instance tracks is claimed here.",
+      "notation": "A_Request",
+      "source": "cat-harness/processes/test-plan-execution.bpmn#A_Request",
+      "status": "candidate"
+    },
+    {
+      "id": "process_testplanexecution.a_resolveplan",
+      "prefLabel": "Resolve the plan [test-plan/v1]",
+      "definition": "The plan parses, names at least one `req:` requirement, its `exitCriteria` resolves to a decision in a `.dmn` that exists, and its `scope.kind` is the system's facet kind. A plan that does not resolve is not run — `test-plan-resolves` audits the same join afterwards.",
+      "notation": "A_ResolvePlan",
+      "source": "cat-harness/processes/test-plan-execution.bpmn#A_ResolvePlan",
+      "status": "candidate"
+    },
+    {
+      "id": "process_testplanexecution.a_writerun",
+      "prefLabel": "Write the test run and the test report [folio-test-run/v1 + test-report/v1]",
+      "definition": "The run records `plan {id, version}` and `sut {actor, version, reach}` with its data and process hashes; the report rolls up per plan, never across plans, and goes to the `qa-reports` branch at `tests/plan/sut/run/`. No verdict in it may name the system under test as its reviewer.",
+      "notation": "A_WriteRun",
+      "source": "cat-harness/processes/test-plan-execution.bpmn#A_WriteRun",
+      "status": "candidate"
+    },
+    {
+      "id": "process_testplanexecution.call_sign",
+      "prefLabel": "Sign the certification",
+      "definition": "`qa-report-signing.bpmn`, unchanged: it builds the signable run record, resolves the signer's reach, and routes the signature to the API or to a human release authority.",
+      "notation": "Call_Sign",
+      "source": "cat-harness/processes/test-plan-execution.bpmn#Call_Sign",
+      "status": "candidate"
+    },
+    {
       "id": "process_themeuireview.a_accessibility",
       "prefLabel": "Accessibility: measure, do not assert",
       "definition": "Contrast COMPUTED against the real ground, including the worst case a backdrop can present; a non-colour channel wherever colour carries meaning (SC 1.4.1); an accessible name on every region; keyboard and focus order. An automated pass is necessary and not sufficient — axe accepts a non-empty placeholder as an accessible name, and a CSS selector that matches nothing raises no error at all.",

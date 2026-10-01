@@ -166,4 +166,5 @@ fencing it and saying so is the honest move.
 | process | step(s) that name it |
 |---|---|
 | [Adjudication](../../processes/adjudication.html) | Dispatch with adjudicator_sees — never the artefact |
+| [Test-plan execution](../../processes/test-plan-execution.html) | Re-execute a sample, blind to the tester's verdicts |
 

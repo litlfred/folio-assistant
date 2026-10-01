@@ -3374,6 +3374,26 @@
       "skos:note": "candidate"
     },
     {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-skills/test-plan-execution",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-skills"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "test-plan-execution"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Run a `test-plan/v1` against a system under test and take it to a certification decision — the five lanes of `test-plan-execution.bpmn` (requester, tester, untainted checker, certifier, attestation service), how the test data is bound, what the run and the report must record, the facts the certification table reads, and the four kg-audit criteria that judge a run afterwards. Read before executing a plan, re-executing a sample, or certifying a result."
+        }
+      ],
+      "skos:notation": "test-plan-execution",
+      "dcterms:source": "cat-harness/skills/sdlc/sdlc-core/test-plan-execution.md",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-skills/theme-art-intake",
       "@type": "skos:Concept",
       "skos:inScheme": {

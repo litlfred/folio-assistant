@@ -62,7 +62,7 @@ Part of [C@T Harness](../README.md) 0.1.0, declared as `processes`, holding `pro
 | [`pr-checks-present.bpmn`](pr-checks-present.bpmn) | a [Process](https://litlfred.github.io/bootstrap/schemas/#process): Which open pull requests have no CI run on their head? |  |
 | [`publish-alert.bpmn`](publish-alert.bpmn) | a [Process](https://litlfred.github.io/bootstrap/schemas/#process): Alert the publication manager | "Publishing the docs site, and keeping the previews alive" |
 | [`publish-verification.bpmn`](publish-verification.bpmn) | a [Process](https://litlfred.github.io/bootstrap/schemas/#process): Verify the export before it is deployed | "Publishing the docs site, and keeping the previews alive", "A knowledge graph leaves for its own repositories" |
-| [`qa-report-signing.bpmn`](qa-report-signing.bpmn) | a [Process](https://litlfred.github.io/bootstrap/schemas/#process): QA report signing |  |
+| [`qa-report-signing.bpmn`](qa-report-signing.bpmn) | a [Process](https://litlfred.github.io/bootstrap/schemas/#process): QA report signing | "Test-plan execution" |
 | [`related-work.bpmn`](related-work.bpmn) | a [Process](https://litlfred.github.io/bootstrap/schemas/#process): Related work: find, sort, summarize, ask to coordinate | "CRDM — link the work to an issue", "Adopt a methodology from a source document" |
 | [`render-kg-to-cdn.bpmn`](render-kg-to-cdn.bpmn) | a [Process](https://litlfred.github.io/bootstrap/schemas/#process): Render a [Knowledge Graph](https://litlfred.github.io/bootstrap/schemas/#knowledge-graph) to a CDN | "Publishing the docs site, and keeping the previews alive", "Staging a feature branch preview, and taking it down" |
 | [`repository-health-watch.bpmn`](repository-health-watch.bpmn) | a [Process](https://litlfred.github.io/bootstrap/schemas/#process): Is the repository itself healthy? |  |
@@ -72,11 +72,12 @@ Part of [C@T Harness](../README.md) 0.1.0, declared as `processes`, holding `pro
 | [`session-state-machine.bpmn`](session-state-machine.bpmn) | a [Process](https://litlfred.github.io/bootstrap/schemas/#process): Session state machine |  |
 | [`staging-render-log.bpmn`](staging-render-log.bpmn) | a [Process](https://litlfred.github.io/bootstrap/schemas/#process): Render log — the publish branch keeps its own history |  |
 | [`swot-analysis.bpmn`](swot-analysis.bpmn) | a [Process](https://litlfred.github.io/bootstrap/schemas/#process): SWOT situation analysis |  |
+| [`test-plan-execution.bpmn`](test-plan-execution.bpmn) | a [Process](https://litlfred.github.io/bootstrap/schemas/#process): Test-plan execution |  |
 | [`theme-ui-review.bpmn`](theme-ui-review.bpmn) | a [Process](https://litlfred.github.io/bootstrap/schemas/#process): Theme and UI review — at ingestion | "Ingestion subprocess — ingest a theme" |
 | [`translation-workflow.bpmn`](translation-workflow.bpmn) | a [Process](https://litlfred.github.io/bootstrap/schemas/#process): translation-workflow.bpmn |  |
 | [`upstream-pin-watch.bpmn`](upstream-pin-watch.bpmn) | a [Process](https://litlfred.github.io/bootstrap/schemas/#process): Watching a pinned upstream dependency |  |
 | [`upstream-version-adoption.bpmn`](upstream-version-adoption.bpmn) | a [Process](https://litlfred.github.io/bootstrap/schemas/#process): Adopting an upstream version bump | "A knowledge graph leaves for its own repositories", "Watching a pinned upstream dependency" |
 | [`voice-review.bpmn`](voice-review.bpmn) | a [Process](https://litlfred.github.io/bootstrap/schemas/#process): Voice overlay review | "Narrative review" |
 | [`wireframe-design-review.bpmn`](wireframe-design-review.bpmn) | a [Process](https://litlfred.github.io/bootstrap/schemas/#process): Wireframe design review |  |
-| [`decisions/`](decisions/) | 9 files | |
+| [`decisions/`](decisions/) | 10 files | |
 <!-- kg:subgraph:end -->
