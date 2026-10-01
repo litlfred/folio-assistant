@@ -17190,25 +17190,6 @@
       "skos:note": "candidate"
     },
     {
-      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/kg-qa.kgqareport.pair_attestations",
-      "@type": "skos:Concept",
-      "skos:inScheme": {
-        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
-      },
-      "skos:prefLabel": [
-        {
-          "@value": "KgQaReport.pair_attestations"
-        }
-      ],
-      "skos:definition": [
-        {
-          "@value": "Declared prose ↔ code pairs and the state each was last accepted in — carried ACROSS runs, unlike everything above, because it is the baseline `prose-reviewed-since-code-changed` compares against. Written by `kg-audit` and by `pairs:attest`; see `scripts/prose-code-pairs.ts`."
-        }
-      ],
-      "dcterms:source": "cat-harness/schemas/kg-qa.ts#KgQaReport.pair_attestations",
-      "skos:note": "candidate"
-    },
-    {
       "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/kg-qa.kgqareport.source_hash",
       "@type": "skos:Concept",
       "skos:inScheme": {
@@ -17225,25 +17206,6 @@
         }
       ],
       "dcterms:source": "cat-harness/schemas/kg-qa.ts#KgQaReport.source_hash",
-      "skos:note": "candidate"
-    },
-    {
-      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/kg-qa.kgqareport.voice_reviews",
-      "@type": "skos:Concept",
-      "skos:inScheme": {
-        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
-      },
-      "skos:prefLabel": [
-        {
-          "@value": "KgQaReport.voice_reviews"
-        }
-      ],
-      "skos:definition": [
-        {
-          "@value": "An agent's or a person's rule-by-rule review of a skill against a voice that judges skills — carried across runs like `pair_attestations`, and written by `voice:review`; see `scripts/skill-voice-review.ts`."
-        }
-      ],
-      "dcterms:source": "cat-harness/schemas/kg-qa.ts#KgQaReport.voice_reviews",
       "skos:note": "candidate"
     },
     {
@@ -18973,6 +18935,101 @@
         }
       ],
       "dcterms:source": "cat-harness/schemas/python-deps.ts#PythonDepSchema.why",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/qa-attestations.kgattestationtree.atthome",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "KgAttestationTree.attHome"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Absolute attestations home (the `<family>` directory goes under it)."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/qa-attestations.ts#KgAttestationTree.attHome",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/qa-attestations.kgattestationtree.instance",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "KgAttestationTree.instance"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Repo-relative instance root, `.` for the checkout root."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/qa-attestations.ts#KgAttestationTree.instance",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/qa-attestations.kgattestationtree.kgtree",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "KgAttestationTree.kgTree"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Absolute `<qa home>/kg-qa`."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/qa-attestations.ts#KgAttestationTree.kgTree",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/qa-attestations.kgattestationtree.storeroot",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "KgAttestationTree.storeRoot"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The declared directory whose absence is \"store absent\" — see `attestationsHomeFor`."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/qa-attestations.ts#KgAttestationTree.storeRoot",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/qa-attestations.pairattestationschema.by",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "PairAttestationSchema.by"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "`baseline` counts as a judgement (owner, 2026-10-01): it records the state the drift is measured from."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/qa-attestations.ts#PairAttestationSchema.by",
       "skos:note": "candidate"
     },
     {

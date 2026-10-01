@@ -12,14 +12,14 @@ permalink: /glossary/schema-fields/
 
 Candidate terms extracted from every schema field with a doc comment: `<Declaration>.<field>` as the label, the comment's first paragraph as the definition. Each is the asset's own text, verbatim and not curated, and carries the badge "candidate, extracted". A person promotes one by authoring it. Authored terms, the counts and the sources are on the <a href="{{ '/glossary/' | relative_url }}">glossary index</a>.
 
-From: bootstrap-tools 28 (<a href="{{ '/assets/glossary/bootstrap-tools--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · cat-harness 1629 (<a href="{{ '/assets/glossary/cat-harness--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · folio-assistant-core 155 (<a href="{{ '/assets/glossary/folio-assistant-core--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · large-datasets 18 (<a href="{{ '/assets/glossary/large-datasets--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>).
+From: bootstrap-tools 28 (<a href="{{ '/assets/glossary/bootstrap-tools--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · cat-harness 1632 (<a href="{{ '/assets/glossary/cat-harness--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · folio-assistant-core 155 (<a href="{{ '/assets/glossary/folio-assistant-core--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · large-datasets 18 (<a href="{{ '/assets/glossary/large-datasets--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>).
 
-**Size:** this page holds 1830 terms and is 1009 KB before compression, fetched in one request, within its budget of 1.0 MB. There is no search index: the filter below runs over this page, and the A–Z bar jumps within it.
+**Size:** this page holds 1833 terms and is 1011 KB before compression, fetched in one request, within its budget of 1.0 MB. There is no search index: the filter below runs over this page, and the A–Z bar jumps within it.
 
 <table class="fa-gloss-mapping">
 <caption>Already somebody else's concept? — <code>check:term-mapping</code>, bean <code>7wou</code></caption>
 <thead><tr><th>target</th><th>mapped</th><th>unmapped</th><th>undetermined</th><th>why undetermined</th></tr></thead>
-<tbody><tr><td><code>fhir</code></td><td>0</td><td>1830</td><td>0</td><td>—</td></tr><tr><td><code>skos</code></td><td>0</td><td>1830</td><td>0</td><td>—</td></tr></tbody>
+<tbody><tr><td><code>fhir</code></td><td>0</td><td>1833</td><td>0</td><td>—</td></tr><tr><td><code>skos</code></td><td>0</td><td>1833</td><td>0</td><td>—</td></tr></tbody>
 </table>
 <p class="fa-gloss-mapping-note"><strong>Undetermined is never “no match”.</strong> 
 A vocabulary that could not be reached has said nothing, and the column above keeps that 
@@ -28,7 +28,7 @@ be a term this corpus is right to coin.</p>
 
 <label for="fa-gloss-q">Filter terms</label>
 <input id="fa-gloss-q" type="search" autocomplete="off" style="min-height:44px;width:100%;max-width:32rem">
-<p aria-live="polite"><span id="fa-gloss-n">1830</span> shown</p>
+<p aria-live="polite"><span id="fa-gloss-n">1833</span> shown</p>
 
 <nav aria-label="Letters"><a href="#letter-A">A</a> <a href="#letter-B">B</a> <a href="#letter-C">C</a> <a href="#letter-D">D</a> <a href="#letter-E">E</a> <a href="#letter-F">F</a> <a href="#letter-G">G</a> <a href="#letter-H">H</a> <a href="#letter-I">I</a> <a href="#letter-J">J</a> <a href="#letter-K">K</a> <a href="#letter-L">L</a> <a href="#letter-M">M</a> <a href="#letter-N">N</a> <a href="#letter-O">O</a> <a href="#letter-P">P</a> <a href="#letter-Q">Q</a> <a href="#letter-R">R</a> <a href="#letter-S">S</a> <a href="#letter-T">T</a> <a href="#letter-U">U</a> <a href="#letter-V">V</a> <a href="#letter-W">W</a></nav>
 
@@ -5205,6 +5205,34 @@ KgAssetSchema.src <span class="fa-gloss-status">candidate, extracted</span>
 <p>Path relative to the root &#123;@link DeclarationScopeSchema | <code>scope</code>} names — this instance's by default, the repository's when <code>scope</code> says so.</p>
 <p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/kg-node.ts"><code>cat-harness/schemas/kg-node.ts#KgAssetSchema.src</code></a></p>
 </dd>
+<dt id="cat-harness--kg-schema-fields--qa-attestations.kgattestationtree.atthome" data-fa-state="extracted" data-fa-gloss="">
+KgAttestationTree.attHome <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>Absolute attestations home (the <code>&lt;family&gt;</code> directory goes under it).</p>
+<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/qa-attestations.ts"><code>cat-harness/schemas/qa-attestations.ts#KgAttestationTree.attHome</code></a></p>
+</dd>
+<dt id="cat-harness--kg-schema-fields--qa-attestations.kgattestationtree.instance" data-fa-state="extracted" data-fa-gloss="">
+KgAttestationTree.instance <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>Repo-relative instance root, <code>.</code> for the checkout root.</p>
+<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/qa-attestations.ts"><code>cat-harness/schemas/qa-attestations.ts#KgAttestationTree.instance</code></a></p>
+</dd>
+<dt id="cat-harness--kg-schema-fields--qa-attestations.kgattestationtree.kgtree" data-fa-state="extracted" data-fa-gloss="">
+KgAttestationTree.kgTree <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>Absolute <code>&lt;qa home&gt;/kg-qa</code>.</p>
+<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/qa-attestations.ts"><code>cat-harness/schemas/qa-attestations.ts#KgAttestationTree.kgTree</code></a></p>
+</dd>
+<dt id="cat-harness--kg-schema-fields--qa-attestations.kgattestationtree.storeroot" data-fa-state="extracted" data-fa-gloss="">
+KgAttestationTree.storeRoot <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>The declared directory whose absence is &quot;store absent&quot; — see <code>attestationsHomeFor</code>.</p>
+<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/qa-attestations.ts"><code>cat-harness/schemas/qa-attestations.ts#KgAttestationTree.storeRoot</code></a></p>
+</dd>
 <dt id="cat-harness--kg-schema-fields--kg-qa.kgcriteriondefinition.applies" data-fa-state="extracted" data-fa-gloss="">
 KgCriterionDefinition.applies <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
@@ -5338,26 +5366,12 @@ KgQaReport.criteria <span class="fa-gloss-status">candidate, extracted</span>
 <p>Criterion id → entry. Criteria not applying to this kind are omitted.</p>
 <p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/kg-qa.ts"><code>cat-harness/schemas/kg-qa.ts#KgQaReport.criteria</code></a></p>
 </dd>
-<dt id="cat-harness--kg-schema-fields--kg-qa.kgqareport.pair_attestations" data-fa-state="extracted" data-fa-gloss="">
-KgQaReport.pair_attestations <span class="fa-gloss-status">candidate, extracted</span>
-</dt>
-<dd>
-<p>Declared prose ↔ code pairs and the state each was last accepted in — carried ACROSS runs, unlike everything above, because it is the baseline <code>prose-reviewed-since-code-changed</code> compares against. Written by <code>kg-audit</code> and by <code>pairs:attest</code>; see <code>scripts/prose-code-pairs.ts</code>.</p>
-<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/kg-qa.ts"><code>cat-harness/schemas/kg-qa.ts#KgQaReport.pair_attestations</code></a></p>
-</dd>
 <dt id="cat-harness--kg-schema-fields--kg-qa.kgqareport.source_hash" data-fa-state="extracted" data-fa-gloss="">
 KgQaReport.source_hash <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
 <p>sha256 of the audited file, or <code>null</code> for the roll-up.</p>
 <p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/kg-qa.ts"><code>cat-harness/schemas/kg-qa.ts#KgQaReport.source_hash</code></a></p>
-</dd>
-<dt id="cat-harness--kg-schema-fields--kg-qa.kgqareport.voice_reviews" data-fa-state="extracted" data-fa-gloss="">
-KgQaReport.voice_reviews <span class="fa-gloss-status">candidate, extracted</span>
-</dt>
-<dd>
-<p>An agent's or a person's rule-by-rule review of a skill against a voice that judges skills — carried across runs like <code>pair_attestations</code>, and written by <code>voice:review</code>; see <code>scripts/skill-voice-review.ts</code>.</p>
-<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/kg-qa.ts"><code>cat-harness/schemas/kg-qa.ts#KgQaReport.voice_reviews</code></a></p>
 </dd>
 <dt id="cat-harness--kg-schema-fields--carried-note.kgrefschema.id" data-fa-state="extracted" data-fa-gloss="">
 KgRefSchema.id <span class="fa-gloss-status">candidate, extracted</span>
@@ -6827,6 +6841,13 @@ PackageManifest.python <span class="fa-gloss-status">candidate, extracted</span>
 <dd>
 <p>Python packages (installed via uv/pip).</p>
 <p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/assistant-package.ts"><code>cat-harness/schemas/assistant-package.ts#PackageManifest.python</code></a></p>
+</dd>
+<dt id="cat-harness--kg-schema-fields--qa-attestations.pairattestationschema.by" data-fa-state="extracted" data-fa-gloss="">
+PairAttestationSchema.by <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p><code>baseline</code> counts as a judgement (owner, 2026-10-01): it records the state the drift is measured from.</p>
+<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/qa-attestations.ts"><code>cat-harness/schemas/qa-attestations.ts#PairAttestationSchema.by</code></a></p>
 </dd>
 <dt id="cat-harness--kg-schema-fields--panel-chrome.panelcontrol.because" data-fa-state="extracted" data-fa-gloss="">
 PanelControl.because <span class="fa-gloss-status">candidate, extracted</span>

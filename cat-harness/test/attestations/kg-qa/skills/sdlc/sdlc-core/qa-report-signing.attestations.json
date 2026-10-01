@@ -1,0 +1,19 @@
+{
+  "$schema": "qa-attestations/v1",
+  "family": "kg-qa",
+  "subject": {
+    "kind": "skill",
+    "id": "qa-report-signing",
+    "path": "skills/sdlc/sdlc-core/qa-report-signing.md"
+  },
+  "pair_attestations": [
+    {
+      "kind": "co-located",
+      "prose": "cat-harness/skills/sdlc/sdlc-core/qa-report-signing.md",
+      "code": "cat-harness/skills/sdlc/sdlc-core/qa-report-signing.ts",
+      "prose_hash": "7c557e42793d",
+      "code_hash": "44587545ea22",
+      "by": "baseline"
+    }
+  ]
+}

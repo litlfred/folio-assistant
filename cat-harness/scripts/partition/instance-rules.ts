@@ -1237,7 +1237,10 @@ export const RULES: Rule[] = [
       // Its one cross-run criterion — declared prose ↔ code pairs and their
       // attestations (bean `cuxx`). Same side as the auditor that calls it.
       "scripts/prose-code-pairs.ts",
-      "scripts/skill-voice-review.ts",     // skills reviewed against the skill voices, carried in kg-qa (bean rkqp)
+      "scripts/skill-voice-review.ts",     // skills reviewed against the skill voices, kept in the attestation store (beans rkqp, 2gst)
+      // The one-shot move of those judgements out of kg-qa sidecars into the
+      // attestation store (bean `2gst`). Same side as the auditor whose data it moves.
+      "scripts/migrate-kg-attestations.ts",
       // ...and stage A, what that prose SAYS about the code (bean `ca4a`).
       "scripts/pair-claims.ts",
       "scripts/known-skills.ts",

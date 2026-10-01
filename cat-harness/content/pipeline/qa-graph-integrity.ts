@@ -12,7 +12,8 @@
  * `…/bootstrap-tools/`. Three things made the damage invisible:
  *
  * - every reader that tolerates a parse error treated those files as absent
- *   (`readAttestations` and `readVoiceReviews` return `[]`);
+ *   (`readAttestations` and `readVoiceReviews` returned `[]`; since bean
+ *   `2gst` they read the attestation store and answer `corrupt` instead);
  * - `readQaGraph` counted them as "3 unreadable", and nothing fails on that
  *   count;
  * - `kg-qa.test.ts` validates only `test/results/kg-qa/**`, so it never saw
@@ -123,11 +124,19 @@ export function checkQaDirs(dirs: readonly string[]): QaIntegrityReport {
   return { dirs: roots, examined: files.size, findings };
 }
 
-/** Every directory declared as a `qa` graph, by every instance in the checkout. */
+/**
+ * Every directory declared as a `qa` or `attestations` graph, by every
+ * instance in the checkout. The attestation store is swept too (bean `2gst`):
+ * it holds the judgements C1's conflict markers would have destroyed, and its
+ * readers now refuse a corrupt file rather than reading it as empty — this is
+ * where such a file is reported before a reader meets it.
+ */
 export function declaredQaDirs(repoRoot: string): string[] {
   const dirs = new Set<string>();
   for (const inst of instanceRootsIn(repoRoot)) {
-    for (const d of directoriesForGraph(inst, "qa")) dirs.add(resolve(d));
+    for (const kind of ["qa", "attestations"]) {
+      for (const d of directoriesForGraph(inst, kind)) dirs.add(resolve(d));
+    }
   }
   return [...dirs].sort();
 }

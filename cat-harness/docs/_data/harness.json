@@ -73,6 +73,7 @@
     }
   },
   "declaredKinds": [
+    "attestations",
     "beans",
     "cat-harness",
     "code",
@@ -1133,12 +1134,12 @@
         {
           "id": "directories",
           "label": "declared directories",
-          "value": 7
+          "value": 8
         },
         {
           "id": "kinds",
           "label": "declared graph kinds",
-          "value": 6
+          "value": 7
         },
         {
           "id": "views",
@@ -1147,6 +1148,10 @@
         }
       ],
       "visualisations": [
+        {
+          "kind": "attestations",
+          "note": "no viewer yet"
+        },
         {
           "kind": "code",
           "note": "no viewer yet"
@@ -1173,7 +1178,7 @@
         }
       ],
       "findings": [
-        "folio-assistant-sci: declares 3 graph(s) with no published viewer — code, qa, skills. Declared and not rendered is a gap, not a dead link.",
+        "folio-assistant-sci: declares 4 graph(s) with no published viewer — attestations, code, qa, skills. Declared and not rendered is a gap, not a dead link.",
         "folio-assistant-sci: no avatar declared for this instance — showing the generic mark.",
         "folio-assistant-sci: has no docs/ of its own, so the tile opens a kind handler's viewer (/cat-harness/library/folio-assistant-sci/) rather than the instance's own themed root."
       ],
@@ -1551,20 +1556,24 @@
         {
           "id": "directories",
           "label": "declared directories",
-          "value": 27
+          "value": 28
         },
         {
           "id": "kinds",
           "label": "declared graph kinds",
-          "value": 23
+          "value": 24
         },
         {
           "id": "views",
           "label": "visualisations you can open",
-          "value": 17
+          "value": 18
         }
       ],
       "visualisations": [
+        {
+          "kind": "attestations",
+          "path": "/attestations/"
+        },
         {
           "kind": "cat-harness",
           "path": "/cat-harness/schemas/cat-harness/"
@@ -1860,6 +1869,10 @@
     },
     "notes": {},
     "folders": [
+      {
+        "kind": "attestations",
+        "path": "/attestations/"
+      },
       {
         "kind": "cat-harness",
         "path": "/cat-harness/schemas/cat-harness/"
@@ -2868,7 +2881,7 @@
           },
           {
             "key": "directories",
-            "summary": "4: library, sci-methodologies, sci-adapters, qa"
+            "summary": "5: library, sci-methodologies, sci-adapters, qa, attestations"
           },
           {
             "key": "needs",
@@ -3150,7 +3163,7 @@
           },
           {
             "key": "directories",
-            "summary": "25: tools, external-schemas, subscriptions, code-lists, schemas, uml, skills, scenarios, poli…"
+            "summary": "26: tools, external-schemas, subscriptions, code-lists, schemas, uml, skills, scenarios, poli…"
           },
           {
             "key": "associatedHarnesses",
