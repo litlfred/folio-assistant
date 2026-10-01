@@ -170,3 +170,46 @@ stalling the way the last five did.
 7. **Report shape:** the agent ends with a table of the checklist lines it
    ticked, each with its evidence (sha, run id, bean id), and the lines it
    could not tick, each with the reason.
+
+## Seed readiness — cat-harness and cat-harness-tools (measured 2026-10-01, main `cdb0a018`)
+
+Method: `git ls-files` and a relative-import and markdown-link scan over every tracked `.ts` and `.md` file, excluding `test/results/`. Edges are counted per file-to-target reference and grouped by subgraph.
+
+```
+cat-harness  (KG repo)       ███░░░░░░░░░░░░░░░░░  not seedable yet
+cat-harness-tools (code)     █░░░░░░░░░░░░░░░░░░░  not seedable yet; blocked by a layering question (C1)
+```
+
+| # | blocker | measure | story |
+|---|---|---|---|
+| R1 | cat-harness declares **20 directories whose path is another instance's** (`who-iris/library`, `folio-assistant-core/skills`, `smart-base/methodologies`, …) | 20 of 45 declarations | cmsl step 3, #1747 (S3) |
+| R2 | **code still in cat-harness** | 1,522 `.ts` files: scripts 816, schemas 208, src 76, test 58, plus the 363 below | S5 `70lx`, `8lcl` |
+| R3 | **`.ts` inside KG subgraphs** (D2 → JSON) | 363: content 337 (block manifests), skills 12, translations 7, tools 5, types 2 | S5 `y9r6` |
+| R4 | **KG → code edges the cut severs** | 412, of which 363 are `content → schemas` (block manifests importing Zod builders). The rest are tools→schemas 11, skills→schemas 13, translations 7 | S5 `y9r6` (data, not imports) |
+| R5 | **upward links from cat-harness** | 26 (all markdown): docs→who-style-guide 9, docs→sci 8, docs→core 5, skills→sci/who-iris/beans 4 | S4 |
+| R6 | references to the repo root | 13 (5 ts in scripts, 1 in schemas, 7 md) | S4 |
+| R7 | main is red | 5 jobs | S0 |
+
+What is already clean: **0** references from cat-harness into cat-harness-tools. **231** code→KG edges (tools reading the KG is the allowed direction). **391** inbound edges from higher instances (pointing down is allowed).
+
+**C1, a layering conflict that needs a ruling.** `cat-harness-tools` declares `needs: folio-assistant-core`, and ruling 2 (2026-10-01) says core must not depend on cat-harness-tools. But **88 references from folio-assistant-core point into cat-harness *code*** (scripts, src, schemas), and more come from sci (11), who-iris (12), smart-trust (7) and fhir-harness (6). Under D1 that code moves to cat-harness-tools. Core would then need tools while tools needs core, which is a cycle.
+
+### Dense subgraph clusters (where the edges are)
+
+Inside cat-harness, the heaviest edges between subgraphs:
+
+| edges | from → to | reading |
+|---|---|---|
+| 866 | scripts → schemas | the code core. Both move to tools together (Zod), so this is not a cut |
+| 363 | content → schemas | **the main cut**: block manifests import Zod builders. D2 makes them JSON |
+| 201 | scripts → content | code reading KG content. Allowed after the split |
+| 155 | scripts → src | code ↔ code, which moves together |
+| 88 | docs → skills | KG ↔ KG, stays together |
+| 48 | docs → processes | KG ↔ KG |
+| 46 / 45 | test → schemas, src → schemas | code ↔ code |
+
+Skills by concern (files): sdlc 63 · authoring 42 · kg 35 · ui 28 · process 24 · library 23 · conduct 18 · requirements 7 · folio-core 6 (the last five go out in the 9umr finale).
+
+Largest subgraphs by file count: library 2,963 (29 entries; JSON-LD 1.1 501, arXiv 2607.20636 462) · docs 1,487 · test 1,028 · scripts 996 · qa results 966 · content 783 · translations 600 · uml 291.
+
+The per-item placement verdicts (every skill, tool, scenario, process, role) are in `placement-audit-2026-10-01.md`, which an agent is producing now.
