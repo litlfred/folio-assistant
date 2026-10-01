@@ -5,10 +5,11 @@ status: in-progress
 type: task
 priority: normal
 created_at: 2026-10-01T05:31:12Z
-updated_at: 2026-10-01T08:15:15Z
+updated_at: 2026-10-01T15:09:31Z
 parent: folio-assistant-9umr
 blocked_by:
     - folio-assistant-hx65
+    - folio-assistant-63wl
 ---
 
 PR1 of the approved placement proposal (owner rulings 2026-09-30; bean 9umr's eight groups; PR0 mechanisms in bean ejye). Move the content-type skill packages out of `cat-harness/skills/` to the instance that owns them, into the `content` / `library` concern group there:
@@ -54,3 +55,7 @@ kg-qa sidecars and `schemas/skills/<skill>/` travel with their skill. Role->skil
 
 ## 2026-10-01 — separation arc (7x5n)
 Merged (#1758 / #1760). Remaining boxes need green gates ON MAIN, which is red at cdb0a018, so this waits on S0 (hx65) and closes in S1 (a4of).
+
+
+## 2026-10-01 (arc 7x5n S1)
+Remaining box = BPMN skill refs to moved skills; the widened detangle scan (#1774) now counts 91 such harness-BPMN edges. They are PR3's (63wl) work, so this bean waits on 63wl.

@@ -575,6 +575,6 @@ this skill by name never received them. Ported here as part of bean `tdmg`.
 | [Getting started](../../processes/getting-started.html) | Seed the work plan |
 | [Is the incremental IG AST what a full build would have produced?](../../processes/ig-ast-delta-review.html) | Note the missed coupling on the bean |
 | [Incremental IG build](../../processes/ig-incremental-build.html) | Log the environment error on the bean; Log findings on the bean; File QC findings as beans |
-| [L2 DAK authoring](../../processes/l2-dak-authoring.html) | Seed the work plan |
 | [L3 FHIR IG pipeline](../../processes/l3-fhir-pipeline.html) | File QC findings as beans |
+| [L2 DAK authoring](../../processes/l2-dak-authoring.html) | Seed the work plan |
 

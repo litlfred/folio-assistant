@@ -84,6 +84,12 @@ export const ANYONE = "cat-harness:anyone" as const;
  * ODRL's conflict strategies. The folio profile's default when a policy names
  * none is `odrl:prohibit`: the safe reading, stated here as OUR rule rather
  * than claimed as ODRL's.
+ *
+ * ODRL 2.2 §2.10 says otherwise — "If the conflict property is not explicitly
+ * set, the default of invalid will be used" — so this is a PROFILE DEPARTURE,
+ * kept by owner ruling on 2026-10-01 (bean `jcet`): an unstated clash denies
+ * rather than voiding the whole policy. Changing it is a policy decision, not
+ * a conformance fix; `odrl.test.ts` pins the value.
  */
 export const ODRL_CONFLICT = ["odrl:perm", "odrl:prohibit", "odrl:invalid"] as const;
 export const FOLIO_DEFAULT_CONFLICT = "odrl:prohibit" as const;
