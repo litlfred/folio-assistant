@@ -5,8 +5,8 @@ status: in-progress
 type: task
 priority: normal
 created_at: 2026-09-30T08:12:08Z
-updated_at: 2026-10-01T05:14:21Z
-parent: folio-assistant-vuip
+updated_at: 2026-10-01T06:58:18Z
+parent: folio-assistant-iirv
 ---
 
 Owner 2026-09-29/30: 'i want to split out cat-harness-tools too https://github.com/litlfred/cat-harness-tools' — 'see sibling work' (#1514, bootstrap-tools, bean 81tw). Direction ruled 2026-09-30: **tools depend on the harness** — cat-harness never imports the new instance.
@@ -63,3 +63,12 @@ Entry points to repoint: package.json main/exports/files/scripts (start*, check-
 **Q1 — may folio-assistant-core depend on cat-harness-tools? NO: split the adapter.** Measured on main 19ab47a: core's adapters/document imports 16 modules that move (src/tools/{check-deps,preferences,preview,skill-fetch,skill-prompts,folio-init,readme-sync,render-order,readme-audit,lsi-query}, types, core/{git,feedback,logging,rbac,cache}, routes/chat), and scripts/sample-import-run.ts drives src/tools/workflow.ts. Ruling: the document adapter's SERVER half (tool registration, routes, RBAC/git/feedback wiring) moves into cat-harness-tools; core keeps the content logic. Layering stays cat-harness <- cat-harness-tools, and core does not import cat-harness-tools. sci (paper adapter, which extends core's DocumentContentAdapter) follows the same split.
 
 **Q2 — packaging: own package.json**, like bootstrap-tools: cat-harness-tools carries its own manifest with the server entry points; the root start*/check-deps/mcp:capture scripts, .mcp.json and Docker paths are repointed; no compatibility re-exports.
+
+
+## 2026-10-01 — scope widened per D1; now a child of the separation epic `iirv`
+
+Owner ruling **D1** (2026-10-01, split plan `cat-harness-split-plan.md`): *"shouldn't we move cat-harness code to cat-harness-tools? … f-a-core (in general dependent harnesses) can reference and use cat-harness or other harness/tools in its dependency chain."* So this bean's scope is no longer the MCP server and src/tools only: **ALL cat-harness code** (scripts/, src/ incl. src/workflow/, adapters/, content/pipeline/, the Zod schemas/*.ts, templates/, deploy/, test specs) moves to cat-harness-tools. The 2026-09-30 classification above (56 MOVES / 35 STAYS / 1 SPLIT) is superseded for the STAYS column: under D1 those move too.
+
+How D1 reads against Q1 above (2026-10-01): a dependent instance's CODE may import anything in its dependency chain, cat-harness-tools included; the import-direction gate forbids only upward edges. Q1's split of the document adapter's server half still stands as design; Q2 (own package.json, root entry points repointed, no re-exports) is unchanged.
+
+Owner rulings D2–D6 (2026-10-01) are recorded on the epic `folio-assistant-iirv`. The work this bean named is now staged there: the server and code move in stage 1a (`70lx`), Zod in 1b (`8lcl`), content-to-JSON in 1c (`y9r6`), and "pushed to litlfred/cat-harness-tools" is stage 4 (`iai8`). Stage 0 (`pyds`) is where this bean is claimed and D1–D6 recorded as working premises.
