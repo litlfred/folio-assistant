@@ -124,18 +124,29 @@ describe("the two namespaces stay separate", () => {
 });
 
 describe("the fallback is measured, not graded", () => {
+  // PLANTED, not read off the corpus: since `ob3m` finding 11 every declared
+  // tile names a glyph, so a test that waited for the real corpus to have a
+  // miss would pass by finding nothing to report.
+  const unnamed = (src: string): string => src.replace(/("title": "Tools"),\s*"icon": "tools"/, "$1");
+
   test("tiles naming no glyph are reported per instance, with a denominator", () => {
-    const { out, status } = run();
-    expect(out).toMatch(/tile-without-icon/);
-    expect(out).toMatch(/\d+ of \d+ declared tile\(s\) name no icon/);
-    // ADVISORY: `glyphFor`'s fallback is deliberate, so this must not fail the
-    // gate. What was missing was the COUNT — `ob3m` finding 11 had to be taken
-    // by hand off a render.
-    expect(status).toBe(0);
+    withEdit(DECL, unnamed, () => {
+      const { out, status } = run();
+      expect(out).toMatch(/tile-without-icon: cat-harness/);
+      expect(out).toMatch(/\d+ of \d+ declared tile\(s\) name no icon/);
+      // ADVISORY: `glyphFor`'s fallback is deliberate, so this must not fail
+      // the gate. What was missing was the COUNT — `ob3m` finding 11 had to be
+      // taken by hand off a render.
+      expect(status).toBe(0);
+    });
   });
 
   test("it fails under --strict, so the gate can opt in later", () => {
-    expect(run("--strict").status).toBe(1);
+    withEdit(DECL, unnamed, () => expect(run("--strict").status).toBe(1));
+  });
+
+  test("the real corpus has no declared tile on the fallback", () => {
+    expect(run().out).not.toContain("tile-without-icon");
   });
 
   test("the declared-tile denominator is NOT the rendered one", () => {
