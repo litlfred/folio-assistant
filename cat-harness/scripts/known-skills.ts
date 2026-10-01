@@ -506,7 +506,7 @@ export function skillMdDirs(root: string, scope: CorpusScope = corpusScopeFor(ro
  * `remote-packages/`, so it was a THIRD definition. Under it,
  * `scientific-visualization`, `hypothesis-generation` and
  * `scientific-critical-thinking` read as dangling, and all three were deleted
- * from `skills/authoring/authoring-math/package-manifest.json` two hours after bean
+ * from `folio-assistant-sci/skills/content/authoring-math/package-manifest.json` two hours after bean
  * `m4zg` recorded that deleting them would be wrong. The evidence offered was a
  * `git log --diff-filter=A` search finding no file ever added for any of them —
  * which is the wrong question, because a remote skill has no file here by
@@ -545,9 +545,12 @@ export interface RemoteDeclaration {
  */
 export function remotePackageDeclarations(root: string): RemoteDeclaration[] {
   const out: RemoteDeclaration[] = [];
-  const dir = join(kgRoots(root)[0] ?? join(root, "skills"), "remote-packages");
-  if (!existsSync(dir)) return out;
-  for (const f of readdirSync(dir).filter((f) => f.endsWith(".json")).sort()) {
+  // EVERY declared skills root, not `kgRoots(root)[0]`: a wrapper sits with
+  // the instance whose skills use it — sci holds `claude-scientific-skills`,
+  // fhir-harness `smarter-fhir` (placement PR1, bean `ybwt`) — and from the
+  // checkout the first root is the deepest instance's, which holds none.
+  const dirs = [...new Set(kgRoots(root).map((d) => resolve(d, "remote-packages")))].filter((d) => existsSync(d));
+  for (const dir of dirs) for (const f of readdirSync(dir).filter((f) => f.endsWith(".json")).sort()) {
     try {
       const p = JSON.parse(readFileSync(join(dir, f), "utf-8")) as {
         wrapper?: { skills?: string[] };

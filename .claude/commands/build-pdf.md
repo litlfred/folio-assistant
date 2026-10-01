@@ -6,7 +6,7 @@ generated: cat-harness/scripts/gen-skill-commands.ts
 
 # /build-pdf
 
-Run the `build-pdf` skill. Read [`cat-harness/skills/authoring/folio-paper-adapter/build-pdf.md`](../../cat-harness/skills/authoring/folio-paper-adapter/build-pdf.md) and follow it.
+Run the `build-pdf` skill. Read [`folio-assistant-sci/skills/content/folio-paper-adapter/build-pdf.md`](../../folio-assistant-sci/skills/content/folio-paper-adapter/build-pdf.md) and follow it.
 
 This command is a pointer, generated from that skill's `user_invocable: true`; the
 instructions live in the skill and nowhere else. The same skill is also served as the

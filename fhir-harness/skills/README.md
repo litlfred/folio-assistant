@@ -1,13 +1,15 @@
 <!-- kg:subgraph:begin -->
 # fhir-ig-skills
 
-The `fhir-harness` instance's instruction bodies -- the FHIR IG layer's two packages, `fhir-ig-base` (build pipeline, publisher fork and reduction, Jekyll render) and `fhir-client` (client operations, SMART launch). Declared here for the reason `bootstrap-skills` above gives, and the id is deliberately the SAME one `fhir-harness/fhir-harness.json` uses for the same directory: where a sibling instance's id does not collide with one of this instance's own, reusing it keeps one name on one directory. Measured 2026-09-27 (bean `3x2o`): `fhir-client-operations.md` and `smart-launch.md` were committed under `docs/reference/skill-instructions/` and produced by NO source, so they were orphans no re-run could refresh -- 280 committed against 278 produced -- while the four `fhir-ig-base` bodies had never been published at all.
+Two packages. `fhir-client` is SMART on FHIR app launch (`smart-launch`) and FHIR resource operations (`fhir-client-operations`) through the SMARTerFHIR library, authored here against a pinned upstream commit because that repository ships no skill files (issue #556, bean `wlqd`). `fhir-ig-base` is the IG pipeline. `ig-build-pipeline` states what the layer runs and the list of things it refuses to know about, including the deploy phase's assignment. `ig-render-jekyll` states the three render contracts -- JSON only, navigation derived from `sushi-config.yaml`'s own ordered `pages:` and `menu:` maps rather than authored, and the LHS rail with the IG theme captured rather than discarded. `ig-publisher-reduction` is the five-phase transition to an AST-only Publisher, each phase carrying an exit criterion that is a measurement or a diff rather than an impression. `ig-publisher-fork` is the brief for an agent taking a local experimental fork, and says why a publisher-only fork cannot satisfy its central criterion: the Library/PlanDefinition/Measure edges are produced in `org.hl7.fhir.core`, not in the publisher.
 
-Part of [C@T Harness](../../cat-harness/README.md) 0.1.0, declared as `fhir-ig-skills`, holding `skills`.
+Part of [FHIR IG Harness](../README.md) 0.1.0, declared as `fhir-ig-skills`, holding `skills`.
 
 | file | what it is | used by |
 |---|---|---|
+| [`content/`](content/) | 5 files | |
 | [`fhir-client/`](fhir-client/) | 3 files | |
-| [`fhir-ig-base/`](fhir-ig-base/) | 6 files | |
+| [`fhir-ig-base/`](fhir-ig-base/) | 5 files | |
+| [`remote-packages/`](remote-packages/) | 1 file | |
 | [`skill-definitions/`](skill-definitions/) | 4 files | |
 <!-- kg:subgraph:end -->

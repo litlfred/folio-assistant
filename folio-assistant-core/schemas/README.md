@@ -28,4 +28,5 @@ Part of [C@T Harness](../../cat-harness/README.md) 0.1.0, declared as `folio-ass
 | [`review-comment.ts`](review-comment.ts) | a file |  |
 | [`review-verdict.test.ts`](review-verdict.test.ts) | a file |  |
 | [`review-verdict.ts`](review-verdict.ts) | a file |  |
+| [`skills/`](skills/) | 10 files | |
 <!-- kg:subgraph:end -->

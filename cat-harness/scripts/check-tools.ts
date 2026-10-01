@@ -207,9 +207,10 @@ export type InputContract =
   | { kind: "ok"; required: string[]; types: Map<string, string> };
 
 export function inputContract(root: string, skill: string): InputContract {
-  const ref = skillContracts(root).get(skill)?.input;
-  if (ref === undefined) return { kind: "absent" };
-  const f = contractFile(root, ref);
+  const c = skillContracts(root).get(skill);
+  const ref = c?.input;
+  if (c === undefined || ref === undefined) return { kind: "absent" };
+  const f = contractFile(c.instanceRoot, ref);
   if (f === undefined) return { kind: "external", ref };
   if (!existsSync(f)) return { kind: "unreadable", ref };
   try {

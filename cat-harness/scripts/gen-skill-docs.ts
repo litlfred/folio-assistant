@@ -411,6 +411,11 @@ const SKILLS_CATEGORIES: Record<string, string> = {
   "folio-paper-adapter": "Paper adapter (folio-paper-adapter)",
   "authoring-math": "Mathematical authoring (authoring-math)",
   "authoring-who-smart-guidelines": "WHO SMART Guidelines (authoring-who-smart-guidelines)",
+  // Placement PR1 (bean `ybwt`): packages split out of the harness's content
+  // packages when they moved up to their owning instance, by #1702's theme.
+  "fhir-ig-authoring": "FHIR IG authoring (fhir-ig-authoring)",
+  "content-lifecycle-ext": "Content lifecycle refinements (content-lifecycle-ext)",
+  ingestion: "Document ingestion methods (ingestion)",
   // Stubs for skills a remote package DECLARES and this instance does not
   // vendor. The heading says "not implemented" in the reader's own words,
   // because the published page is where somebody meets one of these first and

@@ -400,8 +400,8 @@ _تم توليد هذه الصفحة من [`content/docs/agentic-harness/`](http
 | انضباط التثبيت وطلبات السحب | `AGENTS.md § Commit early, commit often` | [`AGENTS.md`](../../AGENTS.md) |
 | اكتشاف طلبات الميزات | `crdm-detect.md` | [`skills/sdlc/crdm/crdm-detect.md`](../../skills/sdlc/crdm/crdm-detect.md) |
 | سير عمل متطلبات CRDM | `crdm-requirements-workflow.md` | [`skills/sdlc/crdm/crdm-requirements-workflow.md`](../../skills/sdlc/crdm/crdm-requirements-workflow.md) |
-| تأليف المحتوى (paper) | مهارات authoring-math | [`skills/authoring/authoring-math/`](../../skills/authoring/authoring-math/) |
-| تأليف المحتوى (document) | مهارات folio-document-adapter | [`skills/authoring/folio-document-adapter/`](../../skills/authoring/folio-document-adapter/) |
+| تأليف المحتوى (paper) | مهارات authoring-math | [`folio-assistant-sci/skills/content/authoring-math/`](../../../folio-assistant-sci/skills/content/authoring-math/) |
+| تأليف المحتوى (document) | مهارات folio-document-adapter | [`folio-assistant-core/skills/content/folio-document-adapter/`](../../../folio-assistant-core/skills/content/folio-document-adapter/) |
 | دورة حياة المحتوى | مهارات content-lifecycle | [`skills/authoring/content-lifecycle/`](../../skills/authoring/content-lifecycle/) |
 | استيعاب المستندات | `docs-generation.md` | [`skills/ui/ui-core/docs-generation.md`](../../skills/ui/ui-core/docs-generation.md) |
 | الإرسال والتنسيق | `dispatch-agent.md`، و`coordinate.md` | [`skills/folio-core/`](../../skills/folio-core/) |

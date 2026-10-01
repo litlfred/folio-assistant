@@ -18,7 +18,7 @@
  * ## This is NOT vendoring, and the distinction is the whole reconciliation
  *
  * `smart-base.json`'s own header says the upstream toolchain is not vendored
- * here, and [`smart-base-tools`](../../cat-harness/skills/authoring/authoring-who-smart-guidelines/smart-base-tools.md)
+ * here, and [`smart-base-tools`](../../smart-base/skills/content/authoring-who-smart-guidelines/smart-base-tools.md)
  * argues why: a copy of the Python would be a second, drifting toolchain.
  *
  * **That argument is about copies of the CODE and it still stands.** A Tool
@@ -35,7 +35,7 @@
  * *DAK Postprocessing* and are not DAK-shaped — any IG depending on
  * `hl7.fhir.uv.cql` produces oversized `Library` resources. By the placement
  * question in
- * [`smart-stack-layering`](../../cat-harness/skills/authoring/authoring-who-smart-guidelines/smart-stack-layering.md)
+ * [`smart-stack-layering`](../../smart-base/skills/content/authoring-who-smart-guidelines/smart-stack-layering.md)
  * they belong to `fhir-harness`, and putting them here to keep the list
  * tidy would be the layering rule being overruled by a step's own name.
  *
