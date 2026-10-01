@@ -1,0 +1,25 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/ns/content/v1.jsonld",
+  "@id": "library/arxiv-2607.20636v1/blocks/figure-img-p100-1",
+  "@type": [
+    "folio-assistant-core:Figure",
+    "doco:Figure"
+  ],
+  "kind": "figure",
+  "file": "../images/img-p100-1.png",
+  "pageStart": 100,
+  "pageEnd": 100,
+  "narrative": {
+    "text": "Figure 7.1, which the caption itself calls a table: the reward the agents of Section 7.3.2 receive as a function of where the true threshold θ falls. Columns are Agent A, Agent B and Agent C; rows are the four cases θ < s_A, s_A ≤ θ < s_B, s_B ≤ θ < s_C, and s_C ≤ θ. A cell is either the quadratic (α/2)(T−θ)² — dark green, the un-switched payoff — or the square root √(2T/α̃_X) for that agent, in progressively paler green. The shading tracks the staircase: the top row is all quadratic, and each row down converts one more agent, left to right, so the bottom row is all square roots. The colour carries no quantity beyond that ordering.",
+    "state": "draft",
+    "drafted_by": {
+      "kind": "agent",
+      "id": "claude",
+      "model": "claude-opus-5"
+    },
+    "drafted_at": "2026-09-29"
+  },
+  "derivedFrom": "library/arxiv-2607.20636v1/sections/sec-069",
+  "sourceDocument": "library/arxiv-2607.20636v1/manifest",
+  "provenance": "ingested"
+}

@@ -16,6 +16,22 @@ description: "zh: 30/38 — 个人工编写的术语已完整翻译"
 
 **30 / 38** 个人工编写的术语已完整翻译. 这些译文并非正式译文：由智能体起草，尚未经人工审定（issue #206）。标记为未翻译的文本为原文，予以显示而非隐藏。
 
+## Already somebody else's concept? _(未翻译)_
+
+Extracted candidates are minted from this repository's own assets and are not, by themselves, checked against any vocabulary. `check:term-mapping` asks whether each already exists as a concept somebody is authoritative for — SKOS for what a term MEANS, FHIR for a clinical code's operational semantics — and the two are separate questions with separate answers. _(未翻译)_
+
+The table's labels are in the source language: it reports counts per scheme, computed by the gate rather than authored here. _(未翻译)_
+
+<table class="fa-gloss-mapping">
+<caption>Already somebody else's concept? — <code>check:term-mapping</code>, bean <code>7wou</code></caption>
+<thead><tr><th>target</th><th>mapped</th><th>unmapped</th><th>undetermined</th><th>why undetermined</th></tr></thead>
+<tbody><tr><td><code>fhir</code></td><td>0</td><td>2724</td><td>0</td><td>—</td></tr><tr><td><code>skos</code></td><td>0</td><td>2724</td><td>0</td><td>—</td></tr></tbody>
+</table>
+<p class="fa-gloss-mapping-note"><strong>Undetermined is never “no match”.</strong> 
+A vocabulary that could not be reached has said nothing, and the column above keeps that 
+apart from a checked miss. The counts are reported and not graded: an unmapped candidate may 
+be a term this corpus is right to coin.</p>
+
 ## 页面
 
 提取的候选术语不作翻译：它们逐字取自知识图谱资产，未经审校。其页面使用源语言。 [源语言术语表，含全部提取的术语]({{ '/glossary/' | relative_url }}).

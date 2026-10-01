@@ -213,13 +213,20 @@ describe("the fsh-guts page reports the declaration gap rather than hiding it", 
     for (const f of files) expect(["declared", "sidecar", "undeclared"]).toContain(f.state);
   });
 
-  it("a script with a tagged sidecar is `sidecar`, never `undeclared`", () => {
-    // The distinction the page is built on: a `.py` CANNOT carry YAML front
-    // matter, so filing it beside a `.md` that simply omitted the line would
-    // make the format's limit and somebody's omission look the same.
+  it("a file that CANNOT carry front matter, with a tagged sidecar, is `sidecar`", () => {
+    // The distinction the page is built on: a file whose format has no YAML
+    // header cannot carry the tag, so filing it beside a `.md` that simply
+    // omitted the line would make the format's limit and somebody's omission
+    // look the same.
+    //
+    // This asserted `/\.(py|ts|sh)$/` until 2026-09-30, which is the SAME
+    // too-narrow rule the generator had — so the test could not have caught
+    // it, and `detangle-schema-viewer.html` read as `undeclared` from the day
+    // it arrived. The invariant is "not markdown", not a list of extensions;
+    // bean `q7ey`'s sweep of 33 archived PDFs is what made the gap visible.
     const viaSidecar = files.filter((f) => f.state === "sidecar");
     expect(viaSidecar.length).toBeGreaterThan(0);
-    for (const f of viaSidecar) expect(f.rel).toMatch(/\.(py|ts|sh)$/);
+    for (const f of viaSidecar) expect(f.rel.endsWith(".md")).toBe(false);
   });
 
   it("the page names the undeclared count rather than only the total", () => {
