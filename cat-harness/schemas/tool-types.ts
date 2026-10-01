@@ -445,6 +445,18 @@ export const LakeCacheActionSchema = z
   ])
   .describe("A lake-cache verb: restore prebuilt oleans, seed them, or diagnose why a restore missed.");
 
+export const IgCacheActionSchema = z
+  .enum([
+    "status",
+    "restore",
+    "seed",
+    "contribute",
+    "verify",
+    "list",
+    "doctor",
+  ])
+  .describe("An ig-cache verb: restore AST, seed it, or diagnose.");
+
 export const NamespaceLayerSchema = z
   .enum(NAMESPACE_LAYERS)
   .describe("A namespace layer: bootstrap resolves before anything else, then harness, then core.");
@@ -563,6 +575,7 @@ export const TOOL_TYPES = {
   ContentType: ContentTypeSchema,
   LinkMode: LinkModeSchema,
   LakeCacheAction: LakeCacheActionSchema,
+  IgCacheAction: IgCacheActionSchema,
   NamespaceLayer: NamespaceLayerSchema,
   PreferenceAction: PreferenceActionSchema,
   CommitSha: CommitShaSchema,
@@ -663,6 +676,7 @@ export const INJECTION_SAFE: ReadonlySet<ToolTypeName> = new Set<ToolTypeName>([
   "ContentType",
   "LinkMode",
   "LakeCacheAction",
+  "IgCacheAction",
   "NamespaceLayer",
   "PreferenceAction",
   "CommitSha",

@@ -71,7 +71,10 @@ Preserving these intermediates is what makes subsequent incremental builds (such
 
 | Aspect | Lean Cache (`lean-cache-restore`) | FHIR AST (`ig-ast-delta`) |
 |---|---|---|
-| Artefacts | `.olean` files, `.trace` files | Per-resource FHIR AST JSON |
+| Artefacts | `.olean` files, `.trace` files | Per-resource AST JSON, `dependencies.json`, `txcache/` |
 | Inputs Schema | `CompiledInputsSchema` | `CompiledInputsSchema` |
-| Key Inputs | `toolchain` (lean version), `sourceRevision` | `toolchain` (sushi version), `sourceRevision`, `inputDigest` |
-| Storage Branch | `lake-cache/<package>-<toolchain>` | Orphan branch per IG / toolchain |
+| Key Inputs | `toolchain` (Lean version), `sourceRevision` | `toolchain` (Publisher version), `sourceRevision`, `inputDigest` |
+| Storage Branch | `lake-cache/<package>-<toolchain>` | `fhir-ast/<ig-package-id>` |
+| Service Script | `lake-cache.sh` (9 verbs) | `ig-cache.sh` (7 verbs) |
+| Cone Engine | Lake's `.trace`-based dependency graph | `fsh-cone.ts` + `AstPlanCli` |
+| Incremental | `lake build` (only stale modules) | `IncrementalBuildCli` (cone rebuild loop) |
