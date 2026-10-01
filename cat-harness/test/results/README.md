@@ -30,7 +30,7 @@ Part of [C@T Harness](../../README.md) 0.1.0, declared as `qa`, holding `qa`.
 | [`bootstrap/`](bootstrap/) | 16 files | |
 | [`bootstrap-tools/`](bootstrap-tools/) | 3 files | |
 | [`detangle/`](detangle/) | 40 files | |
-| [`kg-qa/`](kg-qa/) | 566 files | |
+| [`kg-qa/`](kg-qa/) | 565 files | |
 | [`library-qa/`](library-qa/) | 51 files | |
 | [`lsi/`](lsi/) | 5 files | |
 | [`tool-runs/`](tool-runs/) | 3 files | |
