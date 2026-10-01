@@ -47,6 +47,16 @@ import { basename, join, relative, resolve } from "path";
 /** The PLATFORM root — where the science layer would be installed. */
 const ROOT = resolve(import.meta.dir, "../..");
 
+/**
+ * Is `dir` the root of a git submodule? A submodule's `.git` is a FILE (a
+ * `gitdir:` pointer), a checkout's own is a directory — the one marker that
+ * holds whether or not the submodule has been initialised with history.
+ */
+export function isSubmoduleRoot(dir: string): boolean {
+  const git = join(dir, ".git");
+  return existsSync(git) && statSync(git).isFile();
+}
+
 import {
   discoverPapers,
   injectSection,
@@ -1067,6 +1077,16 @@ if (import.meta.main) {
     }
     let worst = 0;
     for (const root of roots) {
+      // A SUBMODULE is another repository, and it owns its own README (owner
+      // D3, 2026-10-01: each instance hosts the generated outputs about
+      // itself). Writing into it leaves a change this checkout cannot commit,
+      // and checking it compares the other repository's generator against
+      // this one's — they disagree on bootstrap-tools/README.md (bean `kye5`).
+      // Said, not silently dropped: a skipped README is not a current one.
+      if (resolve(root) !== repo && isSubmoduleRoot(root)) {
+        console.log(`${relative(repo, root)}/README.md skipped — a submodule; its own repository generates and checks it (bean kye5).`);
+        continue;
+      }
       try {
         const r = await runReadmeSync({
           root,

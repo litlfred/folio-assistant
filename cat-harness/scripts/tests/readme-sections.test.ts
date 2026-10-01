@@ -18,6 +18,7 @@ import {
   SECTIONS,
   extractHeadings,
   githubSlug,
+  isSubmoduleRoot,
   leanLibName,
   runReadmeSync,
   syncSections,
@@ -433,5 +434,29 @@ describe("readme:toc — the README's own h2/h3 outline", () => {
 
   test("it is registered last, so it sees every other section's output", () => {
     expect(SECTIONS[SECTIONS.length - 1].marker).toBe(README_TOC_MARKER);
+  });
+});
+
+describe("isSubmoduleRoot — `--all` skips a README another repository owns (bean kye5)", () => {
+  const made: string[] = [];
+  afterEach(() => { for (const d of made.splice(0)) rmSync(d, { recursive: true, force: true }); });
+  const tmp = () => { const d = mkdtempSync(join(tmpdir(), "submodule-")); made.push(d); return d; };
+
+  it("a `.git` FILE (a gitdir pointer) is a submodule", () => {
+    const d = tmp();
+    writeFileSync(join(d, ".git"), "gitdir: ../.git/modules/x\n");
+    expect(isSubmoduleRoot(d)).toBe(true);
+  });
+
+  it("a `.git` DIRECTORY is a checkout of its own, and no `.git` is a plain directory", () => {
+    const own = tmp();
+    mkdirSync(join(own, ".git"));
+    expect(isSubmoduleRoot(own)).toBe(false);
+    expect(isSubmoduleRoot(tmp())).toBe(false);
+  });
+
+  it("this checkout's bootstrap-tools is one (the case the skip exists for)", () => {
+    const bt = resolve(import.meta.dir, "../../../bootstrap-tools");
+    expect(isSubmoduleRoot(bt)).toBe(true);
   });
 });
