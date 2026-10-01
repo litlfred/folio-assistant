@@ -68,6 +68,8 @@ classDiagram
       cases [0..*] Case[]
       requirements [0..*] string[]
       updated_at [1] string
+      plan [0..1] object
+      sut [0..1] object
     }
     class cat_harness_qa_qa_witness_v1["qa-witness/v1"] {
       <<ts: QaWitness>>

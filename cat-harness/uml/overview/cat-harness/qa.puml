@@ -68,6 +68,8 @@ package "cat-harness/qa" as pkg_cat_harness_qa <<qa>> {
     cases [0..*] : Case[]
     requirements [0..*] : string[]
     updated_at [1] : string
+    plan [0..1] : object
+    sut [0..1] : object
   }
   class "qa-witness/v1" as cat_harness_qa_qa_witness_v1 <<ts: QaWitness>> #f4e6e6 {
     kind [1] : 'script' | 'agent' | 'human'

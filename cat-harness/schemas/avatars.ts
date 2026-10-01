@@ -439,6 +439,22 @@ export const AVATARS: Readonly<Record<string, Avatar>> = {
     tone: 24,
     reads: "a sealed carton with its strap — what shipped under a version, recorded by digest and size, never by its bytes",
   },
+  "test-plan": {
+    // A checklist of empty boxes: what must be shown, before anybody has run
+    // it. Deliberately empty — a plan carries no verdicts, and a ticked box
+    // would say it did.
+    glyph: "M6 4h12v16H6zM8 8h2v2H8zM12 9h4M8 12h2v2H8zM12 13h4M8 16h2v2H8zM12 17h4",
+    tone: 140,
+    reads: "a checklist with its boxes empty — what a system must show, before any run",
+  },
+  "test-report": {
+    // The same checklist with its boxes filled in, one ticked and one crossed:
+    // the plan's form, completed by a run. Quotes `test-plan`'s glyph on
+    // purpose, as `ig-metadata-index` quotes its sibling's.
+    glyph: "M6 4h12v16H6zM8 8l1 1 2-2M12 9h4M8 12l2 2m0-2l-2 2M12 13h4M8 16l1 1 2-2M12 17h4",
+    tone: 110,
+    reads: "the plan's checklist filled in — one run's verdicts against one plan, never a tally across plans",
+  },
   library: {
     glyph: "M5 4h4v16H5zM11 4h3v16h-3zM16 5l3 15-2 .4L14 5.4z",
     tone: 36,
