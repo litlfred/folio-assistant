@@ -1,11 +1,11 @@
 ---
 # folio-assistant-0mf0
 title: 'S2 merge treadmill: land merge:main (#1754) and regen-in-CI on the merge result (d33q part B)'
-status: todo
+status: in-progress
 type: task
 priority: high
 created_at: 2026-10-01T08:14:33Z
-updated_at: 2026-10-01T08:14:33Z
+updated_at: 2026-10-01T17:25:52Z
 parent: folio-assistant-7x5n
 ---
 
