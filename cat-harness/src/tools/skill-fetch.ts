@@ -165,7 +165,7 @@ export function registerSkillFetchTools(server: McpServer): void {
     {
       skill: z.string().describe(
         "Skill identifier. Examples: 'lean-generation' (package_name 'folio-paper-adapter'), " +
-        "'bean-coordination' (package_name 'folio-core'), 'corpus-grep' (package_name 'folio-assistant'), " +
+        "'bean-coordination' (package_name 'sdlc-core'), 'corpus-grep' (package_name 'kg-core'), " +
         "'content-validate' (package_name 'content-lifecycle'), " +
         "'l3-fhir-authoring' (package_name 'authoring-who-smart-guidelines'), " +
         "'academic-paper-reviewer' (package_name 'academic-research-skills')"

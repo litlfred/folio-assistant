@@ -100,7 +100,7 @@ export interface StakeholderMap {
  *
  * It was `name → path`, which was safe only while the list omitted
  * `.claude/skills/local/`. Reading the declaration admits it, and
- * `todo-manager.md` exists **three** times — `skills/folio-core/`,
+ * `todo-manager.md` exists **three** times — `skills/sdlc/sdlc-core/`,
  * `.claude/skills/local/` and the generated mirror, a divergence `AGENTS.md`
  * documents at length. Under `name → path` the last one scanned wins and a
  * change to either of the others reports NO impact: no roles, no lanes,
