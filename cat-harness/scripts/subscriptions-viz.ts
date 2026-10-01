@@ -5,7 +5,7 @@
  * `docs/proposals/kg-subscriptions.md` §"Known substrates" and §"The visualizer".
  *
  * ```sh
- * bun run subscriptions:viz          # write cat-harness/docs/subscriptions/index.md
+ * bun run subscriptions:viz          # write the subscriptions page under this instance's site directory
  * bun run subscriptions:viz:check    # fail when it is stale
  * ```
  *
