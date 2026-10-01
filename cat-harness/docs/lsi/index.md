@@ -134,9 +134,9 @@ Each dimension is a **contrast** between two poles, shown by their highest-loadi
 | 2 | 21.41 | watcher, slot, sibling, queue, backlog, prs, block, commits | harness, instance, declaration, directory, node, directories, graph, bootstrap |
 | 3 | 17.77 | session, beans, goals, branch, store, window, epic, push | slot, chapter, block, edges, formal, glossary, project, proof |
 | 4 | 16.41 | page, block, section, sections, blocks, chapter, manifest, text | ledger, sibling, subdirectory, items, sessions, window, queue, renderable |
-| 5 | 14.81 | locale, navbar, translated, page, translation, french, staging, theme | edges, forward, edge, logical, backward, cross-chapter, energy, sections |
-| 6 | 14.77 | lane, requirements, actor, role, feature, phase, task, stakeholders | rung, queue, slide, arm, archive, bytes, zip, sniff |
-| 7 | 14.38 | edges, forward, preview, backward, edge, cross-chapter, energy, logical | actor, lane, role, backlog, rung, criterion, login, roles |
+| 5 | 14.81 | locale, navbar, translated, page, translation, french, staging, theme | edges, forward, edge, logical, backward, cross-chapter, energy, ordering |
+| 6 | 14.77 | requirements, lane, role, actor, feature, phase, task, sign-off | rung, queue, arm, slide, archive, zip, bytes, sniff |
+| 7 | 14.38 | edges, forward, preview, edge, backward, cross-chapter, energy, logical | actor, lane, role, backlog, rung, criterion, login, roles |
 | 8 | 14.12 | locale, translated, translation, french, back-translation, badge, translations, trip | preview, feature, phase, option, sha, impact, user, staging |
 
 **Findings** — 0 narrow dimension(s), 1 near-duplicate pair(s).
