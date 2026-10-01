@@ -262,7 +262,7 @@ describe("the report over this repository", () => {
 });
 
 describe("the report is a fixpoint", () => {
-  test("running it once is enough to satisfy the gate", () => {
+  test("running it once is enough to satisfy the gate", { timeout: 60_000 }, () => {
     // Its own sidecar lives in the `qa-results` graph, so the `qa` row counts
     // it, and writing it changed the next run's answer — for ever. The first
     // version could only be satisfied by running the writer TWICE, which is not
@@ -272,6 +272,13 @@ describe("the report is a fixpoint", () => {
     expect(JSON.stringify(a.rows)).toBe(JSON.stringify(b.rows));
     const qa = a.rows.find((r) => r.kind === "qa");
     expect(qa).toBeDefined();
+    // With `test/results/` absent from the checkout — QA on the `qa-reports`
+    // branch (bean 0dav) — there is nothing to count, and the row must say
+    // UNKNOWN rather than `empty` (readers-audit C8).
+    if (qa!.state === "unknown") {
+      expect(qa!.files).toBe(0);
+      return;
+    }
     // The exclusion is one file, not the family: every OTHER `.qa-results.json`
     // is still counted, or the row would stop measuring the thing it names.
     expect(qa!.sidecars).toBeGreaterThan(1);

@@ -97,7 +97,16 @@ describe("presence checks honour it", () => {
       { absPath: a, storage: STORED },
       { absPath: b, storage: STORED },
     ]);
-    expect(r).toEqual({ files: 0, sidecars: 0, stored: 2 });
+    expect(r).toEqual({ files: 0, sidecars: 0, stored: 2, uncounted: 0 });
+  });
+
+  test("a directory neither stored nor present is UNCOUNTED, never a census of zero (bean 0dav, C8)", () => {
+    const root = instance([]);
+    const here = join(root, "here");
+    mkdirSync(here);
+    writeFileSync(join(here, "x.json"), "{}");
+    const r = censusDirectories([{ absPath: here }, { absPath: join(root, "gone") }]);
+    expect(r).toEqual({ files: 1, sidecars: 0, stored: 0, uncounted: 1 });
   });
 });
 
