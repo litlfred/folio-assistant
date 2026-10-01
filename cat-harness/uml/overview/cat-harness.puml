@@ -522,6 +522,7 @@ package "cat-harness/qa" as pkg_cat_harness_qa <<qa>> {
     source [1] : string
     verdict [1] : railed | declined | missing
     reason [0..1] : string
+    flags [0..*] : list<header | clickable-mark | visualiser-nav | single-open | no-redundant-toggle>
   }
   class "viewer-nav-qa/v1" as cat_harness_qa_viewer_nav_qa_v1_viewer_nav_qa_v1 <<json: ViewerNavQaSchema>> #f4e6e6 {
     $schema [1] : 'viewer-nav-qa/v1'
@@ -656,7 +657,7 @@ package "cat-harness/smart-base-library" as pkg_cat_harness_smart_base_library <
   note "library: no node schema declared\n(no node here carries a $schema family library names (10 named): could not determine)" as n_cat_harness_smart_base_library_library
 }
 package "cat-harness/fhir-harness-library" as pkg_cat_harness_fhir_harness_library <<library>> {
-  note "library: no node schema declared\n(no node here carries a $schema family library names (9 named): could not determine)" as n_cat_harness_fhir_harness_library_library
+  note "library: no node schema declared\n(no node here carries a $schema family library names (10 named): could not determine)" as n_cat_harness_fhir_harness_library_library
 }
 package "cat-harness/translation-sources" as pkg_cat_harness_translation_sources <<translation-sources>> {
   class "TranslationConfig" as cat_harness_translation_sources_TranslationConfig <<json: TranslationConfigSchema>> #f4f4f1 {

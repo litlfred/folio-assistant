@@ -12,9 +12,9 @@ permalink: /glossary/schema-fields/
 
 Candidate terms extracted from every schema field with a doc comment: `<Declaration>.<field>` as the label, the comment's first paragraph as the definition. Each is the asset's own text, verbatim and not curated, and carries the badge "candidate, extracted". A person promotes one by authoring it. Authored terms, the counts and the sources are on the <a href="{{ '/glossary/' | relative_url }}">glossary index</a>.
 
-From: bootstrap-tools 28 (<a href="{{ '/assets/glossary/bootstrap-tools--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · cat-harness 1556 (<a href="{{ '/assets/glossary/cat-harness--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · folio-assistant-core 155 (<a href="{{ '/assets/glossary/folio-assistant-core--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · large-datasets 18 (<a href="{{ '/assets/glossary/large-datasets--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>).
+From: bootstrap-tools 28 (<a href="{{ '/assets/glossary/bootstrap-tools--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · cat-harness 1576 (<a href="{{ '/assets/glossary/cat-harness--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · folio-assistant-core 155 (<a href="{{ '/assets/glossary/folio-assistant-core--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · large-datasets 18 (<a href="{{ '/assets/glossary/large-datasets--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>).
 
-**Size:** this page holds 1757 terms and is 968 KB before compression, fetched in one request, within its budget of 1.0 MB. There is no search index: the filter below runs over this page, and the A–Z bar jumps within it.
+**Size:** this page holds 1777 terms and is 980 KB before compression, fetched in one request, within its budget of 1.0 MB. There is no search index: the filter below runs over this page, and the A–Z bar jumps within it.
 
 <table class="fa-gloss-mapping">
 <caption>Already somebody else's concept? — <code>check:term-mapping</code>, bean <code>7wou</code></caption>
@@ -28,7 +28,7 @@ be a term this corpus is right to coin.</p>
 
 <label for="fa-gloss-q">Filter terms</label>
 <input id="fa-gloss-q" type="search" autocomplete="off" style="min-height:44px;width:100%;max-width:32rem">
-<p aria-live="polite"><span id="fa-gloss-n">1757</span> shown</p>
+<p aria-live="polite"><span id="fa-gloss-n">1777</span> shown</p>
 
 <nav aria-label="Letters"><a href="#letter-A">A</a> <a href="#letter-B">B</a> <a href="#letter-C">C</a> <a href="#letter-D">D</a> <a href="#letter-E">E</a> <a href="#letter-F">F</a> <a href="#letter-G">G</a> <a href="#letter-H">H</a> <a href="#letter-I">I</a> <a href="#letter-J">J</a> <a href="#letter-K">K</a> <a href="#letter-L">L</a> <a href="#letter-M">M</a> <a href="#letter-N">N</a> <a href="#letter-O">O</a> <a href="#letter-P">P</a> <a href="#letter-Q">Q</a> <a href="#letter-R">R</a> <a href="#letter-S">S</a> <a href="#letter-T">T</a> <a href="#letter-U">U</a> <a href="#letter-V">V</a> <a href="#letter-W">W</a></nav>
 
@@ -1442,6 +1442,13 @@ CatHarnessDeclaration.repository <span class="fa-gloss-status">candidate, extrac
 <p>The repository this instance IS — <code>owner/name</code>, its PLANNED home once the pre-split repository is broken apart (owner, 2026-09-30, bean <code>6rmv</code>).</p>
 <p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/cat-harness.ts"><code>cat-harness/schemas/cat-harness.ts#CatHarnessDeclaration.repository</code></a></p>
 </dd>
+<dt id="cat-harness--kg-schema-fields--cat-harness.catharnessdeclaration.separation" data-fa-state="extracted" data-fa-gloss="">
+CatHarnessDeclaration.separation <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>Which half of a kg-separation pair the planned &#123;@link repository} is — see <code>separation</code> on &#123;@link CatHarnessDeclarationSchema}. Absent is &quot;has not said&quot;. Bean <code>eayu</code>.</p>
+<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/cat-harness.ts"><code>cat-harness/schemas/cat-harness.ts#CatHarnessDeclaration.separation</code></a></p>
+</dd>
 <dt id="cat-harness--kg-schema-fields--cat-harness.catharnessdeclaration.stickies" data-fa-state="extracted" data-fa-gloss="">
 CatHarnessDeclaration.stickies <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
@@ -1532,6 +1539,13 @@ CatHarnessDeclarationSchema.remoteGraphs <span class="fa-gloss-status">candidate
 <dd>
 <p>Graphs this instance knows about and does not hold — see &#123;@link RemoteGraph}. A SEPARATE array from <code>directories</code>, not a variant of one, because a remote graph has no directory.</p>
 <p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/cat-harness.ts"><code>cat-harness/schemas/cat-harness.ts#CatHarnessDeclarationSchema.remoteGraphs</code></a></p>
+</dd>
+<dt id="cat-harness--kg-schema-fields--cat-harness.catharnessdeclarationschema.separation" data-fa-state="extracted" data-fa-gloss="">
+CatHarnessDeclarationSchema.separation <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>Which half of a kg-separation pair this instance's planned <code>repository</code> is: <code>content</code> (files to read — no code, bootstrap FR-7) or <code>tools</code> (the code that writes and checks a content repository).</p>
+<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/cat-harness.ts"><code>cat-harness/schemas/cat-harness.ts#CatHarnessDeclarationSchema.separation</code></a></p>
 </dd>
 <dt id="cat-harness--kg-schema-fields--cat-harness.catharnessdeclarationschema.version" data-fa-state="extracted" data-fa-gloss="">
 CatHarnessDeclarationSchema.version <span class="fa-gloss-status">candidate, extracted</span>
@@ -10519,6 +10533,125 @@ TestSummary.duration_ms <span class="fa-gloss-status">candidate, extracted</span
 <p>Duration of entire run in milliseconds.</p>
 <p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/formalization-types.ts"><code>cat-harness/schemas/formalization-types.ts#TestSummary.duration_ms</code></a></p>
 </dd>
+<dt id="cat-harness--kg-schema-fields--document-structure.textfileschema.format" data-fa-state="extracted" data-fa-gloss="">
+TextFileSchema.format <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>How the rung read it, decided by CONTENT: <code>markdown</code> when it has an ATX heading outside fenced code and does not open with <code>&lt;</code>; <code>verbatim</code> for any other text; <code>image</code> for a member the caller declared as an image, which is recorded and never sectioned.</p>
+<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/document-structure.ts"><code>cat-harness/schemas/document-structure.ts#TextFileSchema.format</code></a></p>
+</dd>
+<dt id="cat-harness--kg-schema-fields--document-structure.textfileschema.lines" data-fa-state="extracted" data-fa-gloss="">
+TextFileSchema.lines <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>Line count, or null for a file not read as text (an image the source carries).</p>
+<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/document-structure.ts"><code>cat-harness/schemas/document-structure.ts#TextFileSchema.lines</code></a></p>
+</dd>
+<dt id="cat-harness--kg-schema-fields--document-structure.textsectionschema.file" data-fa-state="extracted" data-fa-gloss="">
+TextSectionSchema.file <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>The file the section is in, as recorded in <code>source.files[].path</code>.</p>
+<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/document-structure.ts"><code>cat-harness/schemas/document-structure.ts#TextSectionSchema.file</code></a></p>
+</dd>
+<dt id="cat-harness--kg-schema-fields--document-structure.textsectionschema.line_end" data-fa-state="extracted" data-fa-gloss="">
+TextSectionSchema.line_end <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>One-based last line, inclusive.</p>
+<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/document-structure.ts"><code>cat-harness/schemas/document-structure.ts#TextSectionSchema.line_end</code></a></p>
+</dd>
+<dt id="cat-harness--kg-schema-fields--document-structure.textsectionschema.line_start" data-fa-state="extracted" data-fa-gloss="">
+TextSectionSchema.line_start <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>One-based first line, inclusive.</p>
+<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/document-structure.ts"><code>cat-harness/schemas/document-structure.ts#TextSectionSchema.line_start</code></a></p>
+</dd>
+<dt id="cat-harness--kg-schema-fields--document-structure.textsectionschema.unit" data-fa-state="extracted" data-fa-gloss="">
+TextSectionSchema.unit <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p><code>heading</code>: divided by the file's own heading. <code>file</code>: the whole file, which carries none the rung reads.</p>
+<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/document-structure.ts"><code>cat-harness/schemas/document-structure.ts#TextSectionSchema.unit</code></a></p>
+</dd>
+<dt id="cat-harness--kg-schema-fields--document-structure.textsourceschema.bytes" data-fa-state="extracted" data-fa-gloss="">
+TextSourceSchema.bytes <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>Total bytes over every file.</p>
+<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/document-structure.ts"><code>cat-harness/schemas/document-structure.ts#TextSourceSchema.bytes</code></a></p>
+</dd>
+<dt id="cat-harness--kg-schema-fields--document-structure.textsourceschema.file" data-fa-state="extracted" data-fa-gloss="">
+TextSourceSchema.file <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>A display name for the whole source: the file's name, or the bundle's.</p>
+<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/document-structure.ts"><code>cat-harness/schemas/document-structure.ts#TextSourceSchema.file</code></a></p>
+</dd>
+<dt id="cat-harness--kg-schema-fields--document-structure.textsourceschema.mimetype_sniffed" data-fa-state="extracted" data-fa-gloss="">
+TextSourceSchema.mimetype_sniffed <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>Text has no magic bytes; what it is was decided by reading it.</p>
+<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/document-structure.ts"><code>cat-harness/schemas/document-structure.ts#TextSourceSchema.mimetype_sniffed</code></a></p>
+</dd>
+<dt id="cat-harness--kg-schema-fields--document-structure.textsourceschema.mtime" data-fa-state="extracted" data-fa-gloss="">
+TextSourceSchema.mtime <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>The source's own time. For a repository checkout a file's mtime is the checkout's, which says nothing, so this is the commit time instead.</p>
+<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/document-structure.ts"><code>cat-harness/schemas/document-structure.ts#TextSourceSchema.mtime</code></a></p>
+</dd>
+<dt id="cat-harness--kg-schema-fields--document-structure.textsourceschema.sha256" data-fa-state="extracted" data-fa-gloss="">
+TextSourceSchema.sha256 <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>With one file, that file's sha256. With several, the sha256 of their <code>sha256sum</code>-format listing (<code>&lt;hex&gt; &lt;path&gt;\n</code>, in <code>files</code> order), which anyone can recompute from a checkout with <code>sha256sum</code> alone.</p>
+<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/document-structure.ts"><code>cat-harness/schemas/document-structure.ts#TextSourceSchema.sha256</code></a></p>
+</dd>
+<dt id="cat-harness--kg-schema-fields--document-structure.textstructureschema.structure_note" data-fa-state="extracted" data-fa-gloss="">
+TextStructureSchema.structure_note <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>What the rung did NOT claim. Always required: a text source always omits something (rendering, shortcodes, images).</p>
+<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/document-structure.ts"><code>cat-harness/schemas/document-structure.ts#TextStructureSchema.structure_note</code></a></p>
+</dd>
+<dt id="cat-harness--kg-schema-fields--document-structure.textstructureschema.toc_source" data-fa-state="extracted" data-fa-gloss="">
+TextStructureSchema.toc_source <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p><code>headings</code>: at least one file was divided by its own headings. <code>files</code>: none was, so each file is one section.</p>
+<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/document-structure.ts"><code>cat-harness/schemas/document-structure.ts#TextStructureSchema.toc_source</code></a></p>
+</dd>
+<dt id="cat-harness--kg-schema-fields--document-structure.textupstreamschema.committed" data-fa-state="extracted" data-fa-gloss="">
+TextUpstreamSchema.committed <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>Commit time, ISO 8601, as git reports it.</p>
+<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/document-structure.ts"><code>cat-harness/schemas/document-structure.ts#TextUpstreamSchema.committed</code></a></p>
+</dd>
+<dt id="cat-harness--kg-schema-fields--document-structure.textupstreamschema.path" data-fa-state="extracted" data-fa-gloss="">
+TextUpstreamSchema.path <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>Path of the files within the repository.</p>
+<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/document-structure.ts"><code>cat-harness/schemas/document-structure.ts#TextUpstreamSchema.path</code></a></p>
+</dd>
+<dt id="cat-harness--kg-schema-fields--document-structure.textupstreamschema.ref" data-fa-state="extracted" data-fa-gloss="">
+TextUpstreamSchema.ref <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>The ref the commit was taken from (a branch or tag name).</p>
+<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/document-structure.ts"><code>cat-harness/schemas/document-structure.ts#TextUpstreamSchema.ref</code></a></p>
+</dd>
+<dt id="cat-harness--kg-schema-fields--document-structure.textupstreamschema.retrieved" data-fa-state="extracted" data-fa-gloss="">
+TextUpstreamSchema.retrieved <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>When it was retrieved, ISO date.</p>
+<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/document-structure.ts"><code>cat-harness/schemas/document-structure.ts#TextUpstreamSchema.retrieved</code></a></p>
+</dd>
 <dt id="cat-harness--kg-schema-fields--theme-art-intake.themeartfailure.detail" data-fa-state="extracted" data-fa-gloss="">
 ThemeArtFailure.detail <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
@@ -11716,6 +11849,13 @@ VerificationRoster.entries <span class="fa-gloss-status">candidate, extracted</s
 <dd>
 <p>The verification entries.</p>
 <p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/bib-verification.ts"><code>cat-harness/schemas/bib-verification.ts#VerificationRoster.entries</code></a></p>
+</dd>
+<dt id="cat-harness--kg-schema-fields--viewer-nav-qa.viewernavpageschema.flags" data-fa-state="extracted" data-fa-gloss="">
+ViewerNavPageSchema.flags <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>The layout criteria this railed page FAILS. Absent when it fails none.</p>
+<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/viewer-nav-qa.ts"><code>cat-harness/schemas/viewer-nav-qa.ts#ViewerNavPageSchema.flags</code></a></p>
 </dd>
 <dt id="cat-harness--kg-schema-fields--viewer-nav-qa.viewernavpageschema.path" data-fa-state="extracted" data-fa-gloss="">
 ViewerNavPageSchema.path <span class="fa-gloss-status">candidate, extracted</span>
