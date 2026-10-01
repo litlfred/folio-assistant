@@ -130,7 +130,7 @@
       ],
       "href": "/cat-harness/library/agent-skills/",
       "hidden": false,
-      "count": 12,
+      "count": 14,
       "unit": "entries"
     },
     {
@@ -174,6 +174,21 @@
       ],
       "href": "/external-schemas/",
       "hidden": false
+    },
+    {
+      "id": "fhir-harness-library",
+      "directory": "fhir-harness-library",
+      "title": "fhir-harness-library",
+      "ref": "cat-harness/docs/cat-harness/library/fhir-harness/index.html",
+      "surfaces": [
+        "navbar",
+        "board",
+        "glass"
+      ],
+      "href": "/cat-harness/library/fhir-harness/",
+      "hidden": false,
+      "count": 3,
+      "unit": "entries"
     },
     {
       "id": "fhir-ig-skills",
@@ -341,7 +356,7 @@
       ],
       "href": "/cat-harness/library/cat-harness/",
       "hidden": false,
-      "count": 22,
+      "count": 25,
       "unit": "entries"
     },
     {
@@ -411,7 +426,7 @@
       ],
       "href": "/cat-harness/schemas/cat-harness/",
       "hidden": false,
-      "count": 203,
+      "count": 205,
       "unit": "modules"
     },
     {
@@ -512,7 +527,7 @@
       "href": "/cat-harness/uploads/cat-harness/",
       "hidden": false,
       "icon": "uploads",
-      "count": 19,
+      "count": 16,
       "unit": "waiting"
     },
     {
@@ -1277,7 +1292,7 @@
       "reads": "a leaf of paper held in a frame — the folio, and the instance that holds it",
       "genericAvatar": false,
       "instantiated": true,
-      "href": "/",
+      "href": "/#harness-folio-assistant",
       "hrefKind": "folio",
       "stats": [
         {
@@ -1367,7 +1382,7 @@
       "reads": "a question mark — no avatar is declared for this kind",
       "genericAvatar": true,
       "instantiated": false,
-      "href": "/cat-harness/docs-auto/index/skills/fhir-ig-skills/",
+      "href": "/cat-harness/library/fhir-harness/",
       "hrefKind": "viewer",
       "stats": [
         {
@@ -1383,13 +1398,13 @@
         {
           "id": "views",
           "label": "visualisations you can open",
-          "value": 1
+          "value": 2
         }
       ],
       "visualisations": [
         {
           "kind": "library",
-          "note": "no viewer yet"
+          "path": "/cat-harness/library/fhir-harness/"
         },
         {
           "kind": "qa",
@@ -1405,9 +1420,9 @@
         }
       ],
       "findings": [
-        "fhir-harness: declares 3 graph(s) with no published viewer — library, qa, tools. Declared and not rendered is a gap, not a dead link.",
+        "fhir-harness: declares 2 graph(s) with no published viewer — qa, tools. Declared and not rendered is a gap, not a dead link.",
         "fhir-harness: no avatar declared for this instance — showing the generic mark.",
-        "fhir-harness: has no docs/ of its own, so the tile opens a kind handler's viewer (/cat-harness/docs-auto/index/skills/fhir-ig-skills/) rather than the instance's own themed root."
+        "fhir-harness: has no docs/ of its own, so the tile opens a kind handler's viewer (/cat-harness/library/fhir-harness/) rather than the instance's own themed root."
       ],
       "navbarIcons": [
         "close",
@@ -1711,7 +1726,7 @@
       "reads": "a framed face with ears — the harness the instance is held in",
       "genericAvatar": false,
       "instantiated": true,
-      "href": "/",
+      "href": "/#harness-cat-harness",
       "hrefKind": "folio",
       "stats": [
         {

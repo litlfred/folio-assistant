@@ -1047,7 +1047,14 @@ function tileFor(
         };
   const navMark = themeAvatar ?? iconMark;
 
-  const href = folio ?? firstViewer ?? handled;
+  // A FOLIO AT THE SITE ROOT IS THE LANDING PAGE, which every harness row is
+  // already beside: `ob3m` finding 2 measured Folio Assistant and C@T Harness
+  // both linking to `/`, two rows that open one page and say nothing about
+  // which harness was chosen. The landing gives each harness its own section,
+  // `id="harness-<name>"` (`_includes/harness_details.html`), so that section
+  // is the honest destination — the same page, at this harness's place on it.
+  const rooted = folio === "/" ? `/#harness-${decl.name}` : folio;
+  const href = rooted ?? firstViewer ?? handled;
   if (folio === undefined && firstViewer !== undefined) {
     findings.push(
       `${decl.name}: has no docs/ of its own, so the tile opens a kind handler's viewer ` +

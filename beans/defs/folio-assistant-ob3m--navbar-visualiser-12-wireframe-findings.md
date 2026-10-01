@@ -9,7 +9,7 @@ tags:
     - ui
     - visualiser-navbar
 created_at: 2026-09-23T10:36:15Z
-updated_at: 2026-10-01T06:51:19Z
+updated_at: 2026-10-01T08:46:14Z
 parent: folio-assistant-4ccr
 ---
 
@@ -266,3 +266,14 @@ imply a relationship between site chrome and board state that does not exist.
 Giving them different glyphs was also rejected — two controls called the same
 thing is the defect, and a different gear does not fix a duplicate name for a
 screen reader.
+
+
+## 2026-10-01 — re-measured on a local build of claude/quirky-hypatia-k3aoh4 (PR #1762)
+
+Built with preview-site.sh, served at /folio-assistant/, 1280×800 and 390×844. Session https://claude.ai/code/session_01Cw8JgZEDT5VqQ5ergjdMjB.
+
+- **8 — FIXED by #1762.** The Jekyll include renders no `.fa-nav-head` (☰) and no `.fa-nav-close` ([x]): zero of either on the built page at both widths. The owner asked for both to go (#1757) because the avatar already toggles the bar. The mobile footer copy still shows '▦Harnesses / ⌂C@T Harness' as a block, which is the harness list rather than a stray control.
+- **2 — FIXED in #1762.** A harness whose folio is the site root now links to its own section on the landing: Folio Assistant → `/#harness-folio-assistant`, C@T Harness → `/#harness-cat-harness` (`harness-tiles.ts`; the ids come from `_includes/harness_details.html`). Two rows no longer open one page.
+- **12 — FIXED on main** (the glass tile is 'Folio settings', docs-ui.js:6070).
+- **1, 3, 4, 5, 9 — STILL PRESENT** as last recorded: resting-strip icons carry aria-label only; the landing descriptions still carry the naming rationale (4) and the run-together spellings (5); the '▾ Folio' handle is still [154,0,82,25] over the site title at 390.
+- 6, 7, 11 not re-measured this round.
