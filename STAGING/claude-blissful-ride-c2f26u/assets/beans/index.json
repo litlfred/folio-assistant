@@ -2,7 +2,7 @@
   "$schema": "folio-bean-index/v1",
   "tile": {
     "beans": {
-      "count": 583,
+      "count": 589,
       "unit": "beans"
     }
   },
@@ -2757,6 +2757,20 @@
       "file": "beans/defs/folio-assistant-bamf--fhir-harness-declares-and-populates-fhir-ig-jekyll.md"
     },
     {
+      "id": "folio-assistant-bbza",
+      "title": "S5-b: tool implementations land on their layer — folio-specific to core, maths to sci (23 rows)",
+      "status": "todo",
+      "type": "task",
+      "priority": "normal",
+      "parent": "folio-assistant-7x5n",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-10-01T12:16:24Z",
+      "updatedAt": "2026-10-01T12:16:26Z",
+      "preview": "Story S5 (txue), with 70lx. Rows: cat-harness/docs/proposals/placement-audit-2026-10-01.json (PR #1778) — pr '(tool placement; S5 70lx carries implementations)': cat-harness -> sci 18, -> core 3, -> fhir-harness 1; smart-base -> fhir-harness 1. MCP rulings: generic MCP skills -> cat-harness/skills/tools/mcp/, folio-specific MCP -> folio-assistant-core/skills/tools/mcp/ and folio-assistant-core/too",
+      "file": "beans/defs/folio-assistant-bbza--s5-b-tool-implementations-land-on-their-layer-foli.md"
+    },
+    {
       "id": "folio-assistant-bf5l",
       "title": "WRONG DIRECTION on main: cat-harness/schemas/intake.ts imports folio-assistant-core, and two of three checks cannot see it",
       "status": "completed",
@@ -4056,7 +4070,7 @@
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-10-01T08:14:33Z",
-      "updatedAt": "2026-10-01T11:36:41Z",
+      "updatedAt": "2026-10-01T12:16:23Z",
       "preview": "Failing on main cdb0a018 (gh api jobs): Repository gates #13 'workflow skill refs'; TypeScript #7 'bun test'; E2E #7 'playwright test'; Skill-registration chain #5 'registration chain is current'; Docs site #7 'Regenerate skill instruction pages'. Four merges landed before CI finished.\n\n## Done when\n- [ ] each failing job named with step and cause\n- [ ] fix PR merged on per-job verified green\n- [ ",
       "file": "beans/defs/folio-assistant-hx65--s0-main-green-five-red-jobs-on-cdb0a018-submodule.md"
     },
@@ -4269,6 +4283,20 @@
       "updatedAt": "2026-09-23T16:32:08Z",
       "preview": "Owner, 2026-09-20, defining the term after four carves had already been picked by judgement:\n\n> 'candidate subgraph = large collection of thematiactally related content that is diconnected (maybe some light detagling) from other parts of the KG. (part of larger process detangle knwoedlge graph. look in lean, paper layout for related. generalize, make subprocess, deangle heuristics...).'\n\nTHIS IS A",
       "file": "beans/defs/folio-assistant-j79e--detangle-a-candidate-subgraph-is-measured-cohesive.md"
+    },
+    {
+      "id": "folio-assistant-j7ql",
+      "title": "S4-b: fold agent-skills and large-datasets into cat-harness concern groups (38 rows)",
+      "status": "todo",
+      "type": "task",
+      "priority": "normal",
+      "parent": "folio-assistant-7x5n",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-10-01T12:16:24Z",
+      "updatedAt": "2026-10-01T12:16:25Z",
+      "preview": "Story S4 (rfuq). Rows: cat-harness/docs/proposals/placement-audit-2026-10-01.json (PR #1778) — pr '(7x5n S4 subgraph ruling)': agent-skills MOVE 21; large-datasets MOVE 11 + CODE 4 (-> cat-harness-tools) + 2 (-> sci / who-iris). Owner: both become cat-harness subgraphs, DISSOLVED into the eight concern groups (Q5). Done in #1776: large-datasets core import 1->0. Remaining: drop needs: folio-assist",
+      "file": "beans/defs/folio-assistant-j7ql--s4-b-fold-agent-skills-and-large-datasets-into-cat.md"
     },
     {
       "id": "folio-assistant-j820",
@@ -4663,6 +4691,20 @@
       "updatedAt": "2026-09-29T18:14:49Z",
       "preview": "Found while doing he0e (PR #691). `1. TOC` at docs/guides/agent-onboarding.md:20 is the list item kramdown REPLACES with the generated table of contents, immediately followed by `{:toc}`. Its text never reaches a reader in any language.\n\npot-extract.ts picks it up as a translatable string anyway, and the Arabic and Russian translators rendered it — ar has جدول المحتويات. That is a sensible human r",
       "file": "beans/defs/folio-assistant-lrbx--extraction-the-kramdown-toc-placeholder-is-extract.md"
+    },
+    {
+      "id": "folio-assistant-lthi",
+      "title": "S4-c: cat-harness items owed to core, who-iris, smart-base, fhir-harness or the root (~45 rows)",
+      "status": "todo",
+      "type": "task",
+      "priority": "normal",
+      "parent": "folio-assistant-7x5n",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-10-01T12:16:24Z",
+      "updatedAt": "2026-10-01T12:16:25Z",
+      "preview": "Story S4 (rfuq). Rows: cat-harness/docs/proposals/placement-audit-2026-10-01.json (PR #1778) — instance=cat-harness, pr 'unplanned', target folio-assistant-core (SPLIT 14, MOVE 1), who-iris (SPLIT 8), smart-base (SPLIT 6, MOVE 6), fhir-harness (SPLIT 4), root (SPLIT 4); plus fhir-harness->smart-base SPLIT 7, core->sci SPLIT 3. SPLIT here mostly means keep the generic item and invert the upward ref",
+      "file": "beans/defs/folio-assistant-lthi--s4-c-cat-harness-items-owed-to-core-who-iris-smart.md"
     },
     {
       "id": "folio-assistant-lvk9",
@@ -5919,6 +5961,20 @@
       "file": "beans/defs/folio-assistant-rmcf--72-script-sidecars-churn-on-every-gates-run-becaus.md"
     },
     {
+      "id": "folio-assistant-rmi6",
+      "title": "C1: flip cat-harness-tools needs to [cat-harness, bootstrap-tools]; core adds cat-harness-tools",
+      "status": "todo",
+      "type": "task",
+      "priority": "high",
+      "parent": "folio-assistant-7x5n",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-10-01T12:16:24Z",
+      "updatedAt": "2026-10-01T12:16:25Z",
+      "preview": "Owner ruling C1 (2026-10-01): tools sit below core. Placement audit: 0 of cat-harness-tools' 27 files import core, so only declarations change (cat-harness-tools.json needs; folio-assistant-core.json needs += cat-harness-tools) plus artefacts that read needs.\n## Done when\n- [ ] declarations changed; import-direction / reference-direction green; gates green; merged",
+      "file": "beans/defs/folio-assistant-rmi6--c1-flip-cat-harness-tools-needs-to-cat-harness-boo.md"
+    },
+    {
       "id": "folio-assistant-rmor",
       "title": "INJECTION: injectMarkdown deletes EVERY blank line in the document, not the ones it introduced — the written page is structurally destroyed",
       "status": "completed",
@@ -6101,6 +6157,20 @@
       "file": "beans/defs/folio-assistant-sa8y--qa-wording-a-graph-scoped-finding-worded-absolutel.md"
     },
     {
+      "id": "folio-assistant-saqd",
+      "title": "S5-a: maths code out of cat-harness into folio-assistant-sci's code (#223 partition; 49 MOVE + 10 split)",
+      "status": "todo",
+      "type": "task",
+      "priority": "normal",
+      "parent": "folio-assistant-7x5n",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-10-01T12:16:24Z",
+      "updatedAt": "2026-10-01T12:16:25Z",
+      "preview": "Story S5 (txue), with/after 70lx. Rows: cat-harness/docs/proposals/placement-audit-2026-10-01.json (PR #1778) — pr '(#223 code partition; S5)', instance=cat-harness, target folio-assistant-sci: MOVE 49, AMBIGUOUS 10 (owner Q4: SPLIT — generic pipeline -> cat-harness-tools, Lean/LaTeX checkers -> sci code plugged into it). Plus smart-base 3, fhir-harness 2, core 1. One agent at a time.\n## Done when",
+      "file": "beans/defs/folio-assistant-saqd--s5-a-maths-code-out-of-cat-harness-into-folio-assi.md"
+    },
+    {
       "id": "folio-assistant-scfh",
       "title": "INGEST SLIDES: pptx+odp rung, a11y probe, KG/folio-asst deck into library, methodology gaps, docs (#1614)",
       "status": "in-progress",
@@ -6253,6 +6323,20 @@
       "updatedAt": "2026-09-20T15:07:23Z",
       "preview": "Owner, 2026-09-20, answering the four options put to them — first \"2+ 2\",\ncorrected immediately to:\n\n> 2+3 + recomend....\n\nand, in the same breath:\n\n> recommendatio on what to do based on curent state of where harness go to in\n> its intialzaiton. would also have harness health check badges.\n\n## What was chosen\n\n**Option 2 AND option 3, together**, plus a third thing neither option had:\n\n| part | w",
       "file": "beans/defs/folio-assistant-supn--harness-cards-become-todos-outstanding-work-a-next.md"
+    },
+    {
+      "id": "folio-assistant-syiq",
+      "title": "S4-a: cat-harness sci-subject skills move or split to folio-assistant-sci (watchers, editorial graph, Milnor; ~48 rows)",
+      "status": "todo",
+      "type": "task",
+      "priority": "normal",
+      "parent": "folio-assistant-7x5n",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-10-01T12:16:24Z",
+      "updatedAt": "2026-10-01T12:16:25Z",
+      "preview": "Story S4 (rfuq). Rows: cat-harness/docs/proposals/placement-audit-2026-10-01.json (PR #1778) — instance=cat-harness, KG kinds, target folio-assistant-sci, pr 'unplanned' (MOVE 15, SPLIT 23, AMBIGUOUS 10). Owner rulings 2026-10-01: Q1 integration-watcher family -> sci, generic integration-watcher stays; Q2 editorial graph split (uses[] stays, Lean comparison -> sci); Q3 Milnor -> sci, markdown-rend",
+      "file": "beans/defs/folio-assistant-syiq--s4-a-cat-harness-sci-subject-skills-move-or-split.md"
     },
     {
       "id": "folio-assistant-syrl",
