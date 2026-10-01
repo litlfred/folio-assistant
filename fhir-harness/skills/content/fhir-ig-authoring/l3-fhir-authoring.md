@@ -5,7 +5,7 @@ output: schemas/skills/l3-fhir-authoring/output.schema.json
 
 # l3-fhir-authoring
 
-> Skill id: `l3-fhir-authoring` · Package: `authoring-who-smart-guidelines` ·
+> Skill id: `l3-fhir-authoring` · Package: `fhir-ig-authoring` ·
 > Named by `l3-fhir-pipeline.bpmn` (**Map L2 → L3**, **Author FSH profiles**,
 > **SUSHI compile → FHIR JSON**) and `ig-incremental-build.bpmn`
 > (**SUSHI on the restricted tank**).

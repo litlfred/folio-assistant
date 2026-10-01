@@ -250,7 +250,7 @@ export function pinnedTerminology(root: string): PinnedTerminology | string {
     return `${FHIR_PIN} is \`unpinned\` — the fhir half asserts a published IG at a VERSION, and none is chosen`;
   }
   if (!existsSync(snap)) {
-    return `${FHIR_PIN} pins ${version} but ${FHIR_SNAPSHOT} is absent — run scripts/pin-smart-base-terminology.ts`;
+    return `${FHIR_PIN} pins ${version} but ${FHIR_SNAPSHOT} is absent — run the \`pin-ig-terminology\` Tool`;
   }
   let raw: unknown;
   try {
@@ -269,7 +269,7 @@ export function pinnedTerminology(root: string): PinnedTerminology | string {
   if (!parsed.success) {
     const first = parsed.error.issues[0];
     const where = first?.path.length ? ` at \`${first.path.join(".")}\`` : "";
-    return `${FHIR_SNAPSHOT} does not satisfy PinnedTerminologySchema${where}: ${first?.message ?? "invalid"} — re-snapshot with scripts/pin-smart-base-terminology.ts`;
+    return `${FHIR_SNAPSHOT} does not satisfy PinnedTerminologySchema${where}: ${first?.message ?? "invalid"} — re-snapshot with the \`pin-ig-terminology\` Tool`;
   }
   const d = parsed.data;
   if (d.version !== version) {
