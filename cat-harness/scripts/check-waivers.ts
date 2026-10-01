@@ -48,6 +48,7 @@ import { join, resolve } from "node:path";
 
 import { directoriesForGraph } from "../schemas/cat-harness.js";
 import { WaiverNodeSchema, waiverState, type WaiverNode } from "../schemas/waiver.js";
+import { corpusDirectoriesForGraph } from "../schemas/harness-config.js";
 
 /** The INSTANCE root — this file lives at `<instance>/scripts/`. */
 export const INSTANCE_ROOT = resolve(import.meta.dir, "..");
@@ -77,7 +78,7 @@ export interface WaiverReport {
 /** Read every waiver in the declared `waiver` graph. */
 export function checkWaivers(root: string = INSTANCE_ROOT, now: Date = new Date()): WaiverReport {
   const out: WaiverReport = { store: null, inForce: [], inert: [], malformed: [] };
-  const dirs = directoriesForGraph(root, "waiver");
+  const dirs = corpusDirectoriesForGraph(root, "waiver");
   if (dirs.length === 0) return out;
   out.store = dirs.join(", ");
   const files: { dir: string; name: string }[] = [];

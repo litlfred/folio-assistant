@@ -85,7 +85,7 @@ import { basename, dirname, join, relative } from "node:path";
 
 import { orphanSubjectPages, viewerPlacement } from "./gen-schema-viz.ts";
 import { classify } from "./check-docs-populated.ts";
-import { isSkillMd, kgRoots, skillMdDirs } from "./known-skills.ts";
+import { isSkillMd, kgRoots, skillMdDirs, corpusScopeFor } from "./known-skills.ts";
 import { readRoleGraph } from "../schemas/role-graph.ts";
 import {
   findDeclarationFile,
@@ -346,7 +346,7 @@ export const TYPES: AutoDocType[] = [
       // whatever is under them, so this asks the same function rather than
       // re-deriving the rule and disagreeing by seven.
       const items: AutoDocItem[] = [];
-      for (const parts of skillMdDirs(ROOT)) {
+      for (const parts of skillMdDirs(ROOT, corpusScopeFor(ROOT))) {
         const dir = join(ROOT, ...parts);
         if (!existsSync(dir)) continue;
         for (const f of readdirSync(dir)) {

@@ -26,6 +26,7 @@ import { directoriesForGraph, readDeclaration, sourceLinks } from "../../schemas
 import { detectRepoUrl } from "../../src/core/git-refs.js";
 import { docsLayers } from "../compose-docs.js";
 import { itemFacts } from "../library-readmes.ts";
+import { corpusDirectoriesForGraph } from "../../schemas/harness-config.js";
 
 /** The links a library reference resolves to; each absent where it does not. */
 export interface LibraryLinks {
@@ -51,7 +52,7 @@ const SOURCE_BRANCH = "main";
 export function libraryResolver(repo: string, instanceRoot: string): LibraryResolver {
   const base = docsLayers(repo).layers.find((l) => !l.repositoryScoped)?.dir;
   const handler = readDeclaration(instanceRoot)?.name;
-  const libs = directoriesForGraph(instanceRoot, "library");
+  const libs = corpusDirectoriesForGraph(instanceRoot, "library");
   const seg = libs.length > 0 ? basename(libs[0]!) : undefined;
   const projection = base === undefined ? undefined : join(base, "assets", "library", "index.json");
   const entries: Entry[] =

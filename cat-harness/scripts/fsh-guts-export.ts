@@ -46,6 +46,7 @@ import {
   resolveDirectories, repoRootFor } from "../schemas/cat-harness.js";
 import { NS_PREFIXES, termIri } from "../schemas/namespaces.js";
 import { readFshGutsNode } from "../schemas/fsh-guts.js";
+import { checkoutDirectories } from "../schemas/harness-config.js";
 
 const ROOT = resolve(import.meta.dir, "..");
 
@@ -125,8 +126,10 @@ export interface FshGutsDir {
 /** Every declared `fsh-guts` directory — not the literal path. */
 export function fshGutsDirs(root: string): FshGutsDir[] {
   try {
-    return resolveDirectories([{ name: "(local)", root, own: true }])
-      .filter((d) => d.graphKinds.includes("fsh-guts"))
+    // Own declaration first; then the checkout's (placement PR0a: the
+    // repository's `fsh-guts/` is declared by the ROOT instance).
+    const own = resolveDirectories([{ name: "(local)", root, own: true }]).filter((d) => d.graphKinds.includes("fsh-guts"));
+    return (own.length > 0 ? own : checkoutDirectories(root, { stackedOn: root }).filter((d) => d.graphKinds.includes("fsh-guts")))
       .map((d) => ({ absPath: d.absPath, path: d.path.replace(/\/+$/, "") }))
       .filter((d) => existsSync(d.absPath));
   } catch {

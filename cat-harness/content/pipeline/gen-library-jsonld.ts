@@ -78,6 +78,7 @@ import { buildTabularNodes, tabularShapeOf } from "./tabular-nodes.ts";
 import { TABULAR_CSVW_FILENAME } from "../../schemas/tabular-csvw.ts";
 import { readStructure, STRUCTURE_FILENAME } from "../../schemas/document-structure.ts";
 import type { INGEST_RUNGS } from "../../schemas/site-indexes.ts";
+import { corpusDirectoriesForGraph } from "../../schemas/harness-config.js";
 
 interface StructureSection {
   id: string;
@@ -646,7 +647,7 @@ async function run(): Promise<number> {
   // declared-path-literal: the convention fallback, at the call site so the
   // choice is visible. An absent directory is handled below as "nothing to
   // ingest", which is the determined-empty third state.
-  const declaredLibraries = directoriesForGraph(root, "library");
+  const declaredLibraries = corpusDirectoriesForGraph(root, "library");
   const libraryDirs = (declaredLibraries.length > 0 ? declaredLibraries : [join(root, "library")]).filter(
     (d) => existsSync(d),
   );

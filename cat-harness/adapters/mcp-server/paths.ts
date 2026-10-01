@@ -8,6 +8,7 @@ import { resolve } from "path";
 import { readFileSync } from "fs";
 import { findContentRepoRoot } from "../../content/pipeline/repo-root";
 import { deferResolution, directoriesForGraph, directoryForGraph, folioDirDeferred } from "../../schemas/cat-harness.js";
+import { corpusDirectoriesForGraph } from "../../schemas/harness-config.js";
 
 /**
  * The FOLIO's root — the content repo this server serves.
@@ -65,7 +66,7 @@ export const UPLOADS_DIR = deferResolution(
 // resolving to nothing before then would make the first ingest impossible
 // rather than merely empty.
 export const LIBRARY_DIRS: string[] = (() => {
-  const declared = directoriesForGraph(REPO_ROOT, "library");
+  const declared = corpusDirectoriesForGraph(REPO_ROOT, "library");
   return declared.length > 0 ? declared : [resolve(REPO_ROOT, "library")];
 })();
 

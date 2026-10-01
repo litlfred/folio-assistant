@@ -26,7 +26,7 @@
 import { readdirSync, readFileSync, writeFileSync, mkdirSync, existsSync, statSync } from "fs";
 import { join, resolve, basename, relative, isAbsolute, sep } from "path";
 
-import { isSkillMd, kgDirectories } from "./known-skills.js";
+import { isSkillMd, kgDirectories, corpusScopeFor } from "./known-skills.js";
 import { packageDirsIn } from "./skill-topics.js";
 import { processRows, type ProcessRow } from "./gen-processes-viz.js";
 import { siteDirFor, repoRootFor } from "../schemas/cat-harness.ts";
@@ -583,7 +583,7 @@ function discoverGroups(): Group[] {
   // bootstrap's skills one level down and the generator demanded a heading for
   // a package called "skills"; #428 then keyed by repo-relative path, which
   // has the same shape of failure one move later.
-  for (const decl of kgDirectories(INSTANCE_ROOT)) {
+  for (const decl of kgDirectories(INSTANCE_ROOT, corpusScopeFor(INSTANCE_ROOT))) {
     const skillsRoot = decl.absPath;
     if (holdsSkill(skillsRoot)) {
       const direct = SKILLS_CATEGORIES[decl.id];

@@ -58,6 +58,7 @@ import { loadProcessModel, type ProcessModel, type ProcessNode } from "../src/wo
 import { directoriesForGraph, siteDirFor } from "../schemas/cat-harness.ts";
 import { tools } from "../tools/index.ts";
 import type { ToolDefinition } from "../schemas/tool.ts";
+import { corpusDirectoriesForGraph } from "../schemas/harness-config.js";
 
 const INSTANCE_ROOT = resolve(import.meta.dir, "..");
 
@@ -86,7 +87,7 @@ const PROCESS_FILE = "document-ingestion.bpmn";
  * answers — none, or several — refuse.
  */
 function processPath(): string {
-  const dirs = directoriesForGraph(INSTANCE_ROOT, "processes");
+  const dirs = corpusDirectoriesForGraph(INSTANCE_ROOT, "processes");
   if (dirs.length === 0) {
     throw new CannotDerive(
       `${INSTANCE_ROOT} declares no \`processes\` graph, so there is no diagram to read ` +

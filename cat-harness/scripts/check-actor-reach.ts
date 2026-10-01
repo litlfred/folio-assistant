@@ -30,8 +30,9 @@ import {
   type ReachConflict,
 } from "../schemas/actor-reach";
 import { readActors, type LoadedActor } from "../schemas/role-graph";
-import { instanceRootFor, readDeclaration, repoRootFor } from "../schemas/cat-harness";
+import { findInstanceRoot, instanceRootFor, readDeclaration, repoRootFor } from "../schemas/cat-harness";
 import { actorsDir } from "../schemas/role-graph.ts";
+import { checkoutActors } from "../schemas/scenario-overlay.js";
 
 // THE REPOSITORY root, asked for rather than taken from the working directory.
 // `.claude/` is agent-tool configuration at the top of the checkout, not a
@@ -57,7 +58,10 @@ export interface ReachReport {
 export function buildReport(actorDir: string, instanceRoot: string): ReachReport {
   const decl = readDeclaration(instanceRoot);
   const deployment = decl?.topology?.network;
-  const actors = readActors(actorDir);
+  // The checkout's registry: the platform's actors plus a dependent's
+  // extension or new actor (placement PR0b). Identical while none exists.
+  // Overlaid on the instance that HOLDS the registry, which is the platform.
+  const actors = checkoutActors(findInstanceRoot(actorDir) ?? instanceRoot, actorDir);
   const declared: ReachReport["declared"] = [];
   const undeclared: ReachReport["undeclared"] = [];
   const conflicts: ReachConflict[] = [];

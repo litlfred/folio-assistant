@@ -65,6 +65,7 @@ import {
 } from "../schemas/methodology.ts";
 import { buildQaResult, writeQaResult } from "./qa-results.ts";
 import { isDirectoryReadme } from "../schemas/kg-node.ts";
+import { corpusDirectoriesForGraph } from "../schemas/harness-config.js";
 
 /**
  * This module's own instance root.
@@ -96,7 +97,7 @@ export interface EvidenceReport {
 /** Every `.md` under every directory declaring a `methodology` graph. */
 export function methodologyFiles(root: string): string[] {
   const out: string[] = [];
-  for (const dir of directoriesForGraph(root, "methodology")) {
+  for (const dir of corpusDirectoriesForGraph(root, "methodology")) {
     if (!existsSync(dir)) continue;
     for (const e of readdirSync(dir)) {
       const p = join(dir, e);
@@ -136,7 +137,7 @@ export function resolveEvidence(root: string, ref: string): string | undefined {
   // declaration to strip this prefix would be asking where a library lives in
   // order to parse a string that does not name one.
   const slug = ref.slice("library/".length);
-  for (const lib of directoriesForGraph(root, "library")) {
+  for (const lib of corpusDirectoriesForGraph(root, "library")) {
     const p = join(lib, slug);
     if (existsSync(p) && statSync(p).isDirectory()) return p;
   }
@@ -223,7 +224,7 @@ export function methodologyNodes(root = INSTANCE_ROOT): MethodologyNode[] {
 
 export function checkMethodologyEvidence(root = INSTANCE_ROOT): EvidenceReport {
   const r: EvidenceReport = {
-    undetermined: directoriesForGraph(root, "methodology").length === 0,
+    undetermined: corpusDirectoriesForGraph(root, "methodology").length === 0,
     nodes: 0,
     invalid: [],
     unresolved: [],

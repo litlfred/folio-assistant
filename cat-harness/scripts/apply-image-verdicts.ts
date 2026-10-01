@@ -82,6 +82,7 @@ import {
   requiresInspection,
   type ImageRole,
 } from "../schemas/document-image.ts";
+import { corpusDirectoriesForGraph } from "../schemas/harness-config.js";
 
 const ROOT = resolve(import.meta.dir, "..");
 
@@ -99,7 +100,7 @@ const ROOT = resolve(import.meta.dir, "..");
 // declared-path-literal: the convention fallback, at the call site so the
 // choice is visible. An absent directory is reported below, not assumed empty.
 const LIBRARIES: string[] = (() => {
-  const declared = directoriesForGraph(ROOT, "library");
+  const declared = corpusDirectoriesForGraph(ROOT, "library");
   return declared.length > 0 ? declared : [join(ROOT, "library")];
 })();
 

@@ -33,7 +33,7 @@
  */
 
 import { readFileSync, writeFileSync, existsSync, readdirSync, mkdirSync, unlinkSync } from "node:fs";
-import { workflowFiles } from "./known-skills.js";
+import { workflowFiles, corpusScopeFor } from "./known-skills.js";
 import { join, dirname, relative, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 import type { WebPage, WebPageNode } from "../schemas/webpage.ts";
@@ -1106,7 +1106,7 @@ function processHierarchy(): Record<string, string[]> {
   // committed file that reproduced perfectly on the machine that wrote it.
   // An artefact that is only reproducible where it was generated is not a
   // generated artefact; it is a snapshot.
-  for (const f of workflowFiles(INSTANCE_ROOT)) {
+  for (const f of workflowFiles(INSTANCE_ROOT, corpusScopeFor(INSTANCE_ROOT))) {
     if (!f.endsWith(".bpmn")) continue;
     const xml = readFileSync(f, "utf-8");
     // PREFIX-AGNOSTIC, and that is a live fix rather than defensiveness.

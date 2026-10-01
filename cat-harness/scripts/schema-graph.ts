@@ -75,6 +75,7 @@ import { basename, join, relative } from "node:path";
 import ts from "typescript";
 
 import { directoriesForGraph, readDeclaration, repoRootFor } from "../schemas/cat-harness.js";
+import { corpusDirectoriesForGraph } from "../schemas/harness-config.js";
 
 /**
  * EVERY declared `schemas` directory reachable from this root.
@@ -102,7 +103,7 @@ import { directoriesForGraph, readDeclaration, repoRootFor } from "../schemas/ca
  * path nothing is at.
  */
 export function schemaRoots(root: string): string[] {
-  const declared = directoriesForGraph(root, "schemas");
+  const declared = corpusDirectoriesForGraph(root, "schemas");
   if (declared.length > 0) return [...declared].sort();
   const conventional = join(root, "schemas");
   return existsSync(conventional) ? [conventional] : [];
