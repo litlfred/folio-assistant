@@ -377,7 +377,10 @@ export async function materialize(opts: MaterializeOptions): Promise<Materialize
   } catch (e) {
     return { state: "could-not-determine", reason: `${label} of ${sub.repository} at ${sub.ref.slice(0, 12)} was not read: ${e instanceof Error ? e.message : String(e)}` };
   }
-  if (!fetched) return { state: "refused", reason: `${sub.repository} at ${sub.ref.slice(0, 12)} holds nothing at \`${part.path}\`, though the snapshot declares it` };
+  if (!fetched) {
+    const claim = part.kind === "subgraph" ? "though the snapshot declares it" : "though it lies under a directory the snapshot declares";
+    return { state: "refused", reason: `${sub.repository} at ${sub.ref.slice(0, 12)} holds nothing at \`${part.path}\`, ${claim}` };
+  }
   try {
     const wantKind = part.kind === "subgraph" ? "tree" : "blob";
     if (fetched.kind !== wantKind) {
