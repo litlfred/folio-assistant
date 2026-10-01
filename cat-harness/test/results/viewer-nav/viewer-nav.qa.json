@@ -2,11 +2,11 @@
   "$schema": "viewer-nav-qa/v1",
   "root": "cat-harness/docs",
   "totals": {
-    "pages": 60,
-    "railed": 60,
+    "pages": 61,
+    "railed": 61,
     "declined": 0,
     "missing": 0,
-    "flagged": 0
+    "flagged": 1
   },
   "pages": [
     {
@@ -213,6 +213,17 @@
       "path": "/cat-harness/schemas/cat-harness/",
       "source": "cat-harness/docs/cat-harness/schemas/cat-harness/index.html",
       "verdict": "railed"
+    },
+    {
+      "path": "/cat-harness/schemas/fhir-harness/",
+      "source": "cat-harness/docs/cat-harness/schemas/fhir-harness/index.html",
+      "verdict": "railed",
+      "flags": [
+        "clickable-mark",
+        "visualiser-nav",
+        "single-open",
+        "no-redundant-toggle"
+      ]
     },
     {
       "path": "/cat-harness/schemas/folio-assistant-core/",
