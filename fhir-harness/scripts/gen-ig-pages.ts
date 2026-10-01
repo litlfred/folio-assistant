@@ -150,6 +150,20 @@ const LABEL_ARG = arg("--label");
 /** Whether the index page opens with the instance's own declaration. */
 const SUMMARY = process.argv.includes("--summary");
 
+/**
+ * The sentence the banner's publish box opens with. A FLAG, because which
+ * publisher an IG mirrors is the caller's to say: fhir-harness knows no
+ * particular one (`fhir-harness/AGENTS.md`), so the default names none.
+ */
+const PUBLISH_NOTE = arg("--publish-note") ?? "This page mirrors a published FHIR Implementation Guide.";
+
+/**
+ * What the IG calls its per-artefact JSON sidecars (JSON Schema, displays,
+ * OpenAPI, JSON-LD). Some publishers brand them; this layer does not, so the
+ * label is the caller's and the default is plain.
+ */
+const SIDECAR_LABEL = arg("--sidecar-label") ?? "API sidecars";
+
 /** The declaration's `name`, or `undefined` when a directory is not an instance. */
 function declaredName(root: string): string | undefined {
   const decl = declarationPathIn(root);
@@ -230,7 +244,7 @@ function igBanner(chrome: IgChrome, ix: FhirArtifactIndex): string {
       : `  <div id="ig-status">`,
     `    <p><span class="st-ig-title">${esc(LABEL)}</span><br/><span>${esc(label)}</span></p>`,
     `  </div>`,
-    `  <p id="publish-box">This page mirrors a published WHO Implementation Guide. ` +
+    `  <p id="publish-box">${esc(PUBLISH_NOTE)} ` +
       `The authoritative version is at <a href="${esc(canonical)}">${esc(canonical)}</a>.</p>`,
     `</div>`,
   ].join("\n");
@@ -583,11 +597,11 @@ function indexPage(ix: FhirArtifactIndex): string {
     `|---|---|`,
     ...provRows,
     ``,
-    `## DAK API surface`,
+    `## ${SIDECAR_LABEL} surface`,
     ``,
-    `The IG publishes a DAK API for ${dak.schema} of its artefacts. The four sidecars are issued`,
+    `The IG publishes a ${SIDECAR_LABEL} for ${dak.schema} of its artefacts. The four sidecars are issued`,
     `independently — every ValueSet gets all four, the logical models get two — which is why they`,
-    `are counted separately rather than as one "has DAK" tally.`,
+    `are counted separately rather than as one "has ${SIDECAR_LABEL}" tally.`,
     ``,
     `<div class="st-grid">`,
     stat(dak.schema, "JSON Schema"),
@@ -598,7 +612,7 @@ function indexPage(ix: FhirArtifactIndex): string {
     ``,
     `## Every artefact, by category`,
     ``,
-    `Grouped as the IG's own \`artifacts.html\` groups them. An artefact with a DAK API sidecar links`,
+    `Grouped as the IG's own \`artifacts.html\` groups them. An artefact with a ${SIDECAR_LABEL} sidecar links`,
     `through to its own page; the rest link out to the published representations.`,
     ``,
     sections,
@@ -760,7 +774,7 @@ function artifactPage(ix: FhirArtifactIndex, a: FhirArtifact): string {
     // because a missing section reads as "nobody looked".
     ...(a.dak
       ? [
-          `## DAK API`,
+          `## ${SIDECAR_LABEL}`,
           ``,
           `The four sidecars are published independently, so an absent one is a fact about the`,
           `IG rather than a gap in this index.`,
@@ -771,9 +785,9 @@ function artifactPage(ix: FhirArtifactIndex, a: FhirArtifact): string {
           ``,
         ]
       : [
-          `## DAK API`,
+          `## ${SIDECAR_LABEL}`,
           ``,
-          `No DAK API sidecar is published for this artefact. That is a fact about the IG,`,
+          `No ${SIDECAR_LABEL} sidecar is published for this artefact. That is a fact about the IG,`,
           `not a gap in this index — sidecars are published per artefact, and`,
           `${ix.artifacts.filter((x) => x.dak).length} of ${ix.count} carry one.`,
           ``,
@@ -782,7 +796,7 @@ function artifactPage(ix: FhirArtifactIndex, a: FhirArtifact): string {
 
   return shell(
     `${name} — ${LABEL} artefact`,
-    `${a.key} in the ${LABEL} IG, with its canonical URL, published representations and DAK API sidecars.`,
+    `${a.key} in the ${LABEL} IG, with its canonical URL, published representations and ${SIDECAR_LABEL} sidecars.`,
     body,
     { kind: "leaf" },
   );
@@ -960,7 +974,7 @@ if (CHECK) {
   // pages over a corpus of 674.
   const artefactPages = [...pages.keys()].filter((k) => k.startsWith("artifact/")).length;
   const categoryPages = [...pages.keys()].filter((k) => k.startsWith("category/")).length;
-  console.log(`  ${artefactPages} artefact page(s) — one per artefact; ${dak.schema} carry a DAK schema`);
+  console.log(`  ${artefactPages} artefact page(s) — one per artefact; ${dak.schema} carry a ${SIDECAR_LABEL} schema`);
   console.log(`  ${categoryPages} category page(s) — categories over ${INLINE_LIMIT}, listed off the index`);
   // THE MENU IS REPORTED EITHER WAY. An unreported page is a page nothing
   // checks, and an absent menu reported as silence is indistinguishable from

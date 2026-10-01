@@ -129,7 +129,7 @@ enumeration response, carrying an `example` that happens to hold the list. So th
 
 The IG publishes a DAK API for 47 of its artefacts. The four sidecars are issued
 independently — every ValueSet gets all four, the logical models get two — which is why they
-are counted separately rather than as one "has DAK" tally.
+are counted separately rather than as one "has DAK API" tally.
 
 <div class="st-grid">
 <div class="st-stat"><b>47</b><span>JSON Schema</span></div>
