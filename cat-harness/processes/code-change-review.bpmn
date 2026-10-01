@@ -242,10 +242,13 @@ The loop back through "root-cause the failure" is the point of drawing this at a
       <bpmn:outgoing>f14</bpmn:outgoing>
     </bpmn:task>
 
-    <bpmn:task id="Task_PrepareMerge" name="Prepare the merge, and watch it through">
+    <bpmn:callActivity id="Task_PrepareMerge" name="Prepare the merge, and watch it through" calledElement="Process_MergeBase">
       <bpmn:documentation>
         `prepare-merge` brings the base in, re-runs the gates and pushes —
-        it does NOT merge. `watch` follows the PR until it is merged or
+        it does NOT merge. Bringing the base in IS `merge-base.bpmn`
+        (`bun run merge:main`): conflicts a declared pattern covers are
+        resolved and proved by the gate set; anything else aborts the merge
+        and comes back to the agent (bean `y7b3`, #1707). `watch` follows the PR until it is merged or
         closed, because webhooks do not reliably deliver CI success or a
         merge-conflict transition.
       </bpmn:documentation>
@@ -254,7 +257,7 @@ The loop back through "root-cause the failure" is the point of drawing this at a
       </bpmn:extensionElements>
       <bpmn:incoming>f15</bpmn:incoming>
       <bpmn:outgoing>f16</bpmn:outgoing>
-    </bpmn:task>
+    </bpmn:callActivity>
 
     <bpmn:task id="Task_CloseBean" name="Record what was done, and close">
       <bpmn:documentation>
