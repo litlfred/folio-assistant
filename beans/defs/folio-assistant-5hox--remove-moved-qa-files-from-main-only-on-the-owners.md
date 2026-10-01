@@ -5,7 +5,7 @@ status: todo
 type: task
 priority: normal
 created_at: 2026-10-01T08:00:47Z
-updated_at: 2026-10-01T08:48:11Z
+updated_at: 2026-10-01T19:22:21Z
 parent: folio-assistant-3fva
 blocked_by:
     - folio-assistant-7mwa
@@ -35,3 +35,6 @@ Asked as D4 with four options. The owner chose **right away** over the recommend
 
 ## Added by the reader audit (`gxvk`, 2026-10-01)
 **Do not `git rm` before `folio-assistant-2gst` (F1) and `folio-assistant-8wj1` (F4) land.** The QA files are MIXED: 12 block/translation files hold 13 agent verdicts, and 32 `kg-qa` files hold `pair_attestations` (6 agent, 26 baseline), each beside script verdicts. Their readers re-baseline or drop those entries silently when the file is absent (`cat-harness/docs/proposals/qa-readers-audit-2026-10-01.md` C4 and C11). Both are added as blockers here.
+
+
+_2026-10-01_ — Also wait for the recordUntainted store fix (filed under 3fva by the parent session) before removing derived files.
