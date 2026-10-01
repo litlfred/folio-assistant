@@ -5,7 +5,7 @@
     "id": "Process_Discussion",
     "path": "processes/discussion.bpmn"
   },
-  "source_hash": "sha256:f8519fa12fc3da00dbbe59bbdb26be7fd84a5d512174adf2d81bcbb254c46fb0",
+  "source_hash": "sha256:779fcf32d1c7dc00c817d902e307f8f3a9b7033093849edb85b112be1e4abfa1",
   "criteria": {
     "raci-role-resolves": {
       "result": "n/a",
@@ -32,8 +32,25 @@
       "findings": []
     },
     "activity-skill-has-tool": {
-      "result": "pass",
-      "findings": []
+      "result": "fail",
+      "findings": [
+        {
+          "where": "A_ListHarnesses",
+          "detail": "names skill \"confirm-harness\", which no Tool declares `satisfies` for — the step's mechanism is still prose."
+        },
+        {
+          "where": "A_ListLocations",
+          "detail": "names skill \"confirm-harness\", which no Tool declares `satisfies` for — the step's mechanism is still prose."
+        },
+        {
+          "where": "A_AskRequestor",
+          "detail": "names skill \"confirm-harness\", which no Tool declares `satisfies` for — the step's mechanism is still prose."
+        },
+        {
+          "where": "A_AskRequestor",
+          "detail": "names skill \"human-agent-discussion\", which no Tool declares `satisfies` for — the step's mechanism is still prose."
+        }
+      ]
     },
     "decision-ref-resolves": {
       "result": "n/a",
@@ -68,7 +85,7 @@
       "findings": []
     },
     "call-activity-resolves": {
-      "result": "n/a",
+      "result": "pass",
       "findings": []
     },
     "process-diagram-published": {
@@ -110,8 +127,8 @@
   },
   "totals": {
     "pass": 15,
-    "fail": 0,
-    "n/a": 10,
+    "fail": 1,
+    "n/a": 9,
     "unknown": 0
   }
 }
