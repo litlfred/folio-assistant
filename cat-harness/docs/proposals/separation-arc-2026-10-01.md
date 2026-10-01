@@ -215,3 +215,18 @@ Skills by concern (files): sdlc 63 · authoring 42 · kg 35 · ui 28 · process 
 Largest subgraphs by file count: library 2,963 (29 entries; JSON-LD 1.1 501, arXiv 2607.20636 462) · docs 1,487 · test 1,028 · scripts 996 · qa results 966 · content 783 · translations 600 · uml 291.
 
 The per-item placement verdicts (every skill, tool, scenario, process, role) are in `placement-audit-2026-10-01.md`, which an agent is producing now.
+
+### MCP placement (owner ruling 2026-10-01)
+
+MCP gets a **dedicated subgraph inside the existing `tools` concern group**: `cat-harness/skills/tools/mcp/`.
+
+| piece | target |
+|---|---|
+| `mcp-assembly`, `mcp-contract`, `mcp-projection` (now in `skills/folio-core/`) | `cat-harness/skills/tools/mcp/` |
+| `skills-and-tools`, `covered-is-not-reachable` | `cat-harness/skills/tools/` |
+| tool definitions `cat-harness/tools/*.ts` | stay, converted to JSON (D2) |
+| `cat-harness/src/tools/*` (20) | `cat-harness-tools` |
+| `cat-harness-tools/adapters/mcp-server` (16) | stays; any part that needs core moves to core (C1) |
+| MCP spec, `agent-skills/library/mcp-2026-specification-2026-07-28` | cat-harness library (agent-skills ruling) |
+
+Tracked on `9umr` (finale) under S4.
