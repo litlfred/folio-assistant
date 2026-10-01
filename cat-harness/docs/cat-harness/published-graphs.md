@@ -196,10 +196,11 @@ nothing renders yet. It is shown rather than omitted: "nothing renders this" and
 
 ### `processes`
 
-5 of 5 published.
+6 of 6 published.
 {: .fa-hx-dim }
 
 - [Bootstrap]({{ '/processes/' | relative_url }})
+- [Bootstrap tools]({{ '/processes/' | relative_url }})
 - [C@T Harness]({{ '/processes/' | relative_url }})
 - [folio-assistant-core]({{ '/processes/' | relative_url }})
 - [large-datasets]({{ '/processes/' | relative_url }})
@@ -241,10 +242,11 @@ nothing renders yet. It is shown rather than omitted: "nothing renders this" and
 
 ### `scenarios`
 
-0 of 2 published.
+0 of 3 published.
 {: .fa-hx-dim }
 
 - Bootstrap — *declared, not published*
+- Bootstrap tools — *declared, not published*
 - C@T Harness — *declared, not published*
 
 ### `schemas`

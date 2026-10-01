@@ -133,7 +133,7 @@
 <ul class="subs">
 <li><a href="../folio-assistant-core-processes/">folio-assistant-core-processes</a> <span class="p">folio-assistant-core/processes</span> <span class="n">1</span></li>
 <li><a href="../large-datasets-processes/">large-datasets-processes</a> <span class="p">large-datasets/processes</span> <span class="n">4</span></li>
-<li><strong>processes</strong> <span class="p">cat-harness/processes</span> <span class="n">67</span></li>
+<li><strong>processes</strong> <span class="p">cat-harness/processes</span> <span class="n">68</span></li>
 <li><a href="../smart-base-processes/">smart-base-processes</a> <span class="p">smart-base/methodologies/processes</span> <span class="n">1</span></li>
 </ul>
 
@@ -247,7 +247,7 @@
 </tr>
 <tr>
   <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/docs-site-publish.bpmn"><code>Publishing the docs site, and keeping the previews alive</code></a><br><span class="p">cat-harness/processes/docs-site-publish.bpmn</span></td>
-  <td>PUBLISHING THE SITE IS A FULL REPLACE, AND THAT IS THE WHOLE REASON THIS IS DRAWN.<div class="f"><span class="k">activities</span> 8</div><div class="f"><span class="k">lanes</span> CI/CD Pipeline</div><div class="f"><span class="k">skills</span> feature-staging, publish-verification</div></td>
+  <td>PUBLISHING THE SITE IS A FULL REPLACE, AND THAT IS THE WHOLE REASON THIS IS DRAWN.<div class="f"><span class="k">activities</span> 8</div><div class="f"><span class="k">lanes</span> CI/CD Pipeline</div><div class="f"><span class="k">skills</span> feature-staging, publish-verification, render-kg-to-cdn</div></td>
 </tr>
 <tr>
   <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/document-ingestion.bpmn"><code>Document ingestion — uploads/ to the L1 source knowledge graph</code></a><br><span class="p">cat-harness/processes/document-ingestion.bpmn</span></td>
@@ -255,7 +255,7 @@
 </tr>
 <tr>
   <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/draft-to-publication.bpmn"><code>Draft, review and publish</code></a><br><span class="p">cat-harness/processes/draft-to-publication.bpmn</span></td>
-  <td>folio-assistant — corpus to draft publication to officially published.<div class="f"><span class="k">activities</span> 11</div><div class="f"><span class="k">lanes</span> Editors + authoring agents · Work plan — beans (shared by humans and agents) · Corpus + build pipeline (system) · Publication manager · Review team (content · QC · technical officer) · Clinical / scientific SMEs · Programme manager (release authority)</div><div class="f"><span class="k">skills</span> content-author, content-feedback, content-publish, content-review, content-test, content-validate, ig-publication, quality-control, todo-manager</div></td>
+  <td>folio-assistant — corpus to draft publication to officially published.<div class="f"><span class="k">activities</span> 11</div><div class="f"><span class="k">lanes</span> Editors + authoring agents · Work plan — beans (shared by humans and agents) · Corpus + build pipeline (system) · Publication manager · Review team (content · QC · technical officer) · Clinical / scientific SMEs · Programme manager (release authority)</div><div class="f"><span class="k">skills</span> content-author, content-feedback, content-publish, content-review, content-test, content-validate, ig-publication, quality-control, render-kg-to-cdn, todo-manager</div></td>
 </tr>
 <tr>
   <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/editing-hci-validation.bpmn"><code>Editing and HCI validation</code></a><br><span class="p">cat-harness/processes/editing-hci-validation.bpmn</span></td>
@@ -267,7 +267,7 @@
 </tr>
 <tr>
   <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/feature-staging.bpmn"><code>Staging a feature branch preview, and taking it down</code></a><br><span class="p">cat-harness/processes/feature-staging.bpmn</span></td>
-  <td>THE LIFECYCLE OF A REVIEW PREVIEW, drawn rather than described.<div class="f"><span class="k">activities</span> 12</div><div class="f"><span class="k">lanes</span> CI/CD Pipeline · Human actor</div><div class="f"><span class="k">skills</span> deletion-requires-confirmation, feature-staging, render-logging, staging-review</div></td>
+  <td>THE LIFECYCLE OF A REVIEW PREVIEW, drawn rather than described.<div class="f"><span class="k">activities</span> 12</div><div class="f"><span class="k">lanes</span> CI/CD Pipeline · Human actor</div><div class="f"><span class="k">skills</span> deletion-requires-confirmation, feature-staging, render-kg-to-cdn, render-logging, staging-review</div></td>
 </tr>
 <tr>
   <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/getting-started.bpmn"><code>Getting started</code></a><br><span class="p">cat-harness/processes/getting-started.bpmn</span></td>
@@ -360,6 +360,10 @@
 <tr>
   <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/related-work.bpmn"><code>Related work: find, sort, summarize, ask to coordinate</code></a><br><span class="p">cat-harness/processes/related-work.bpmn</span></td>
   <td>Before new work takes shape, find the work it touches.<div class="f"><span class="k">activities</span> 5</div><div class="f"><span class="k">lanes</span> Agent · User</div><div class="f"><span class="k">skills</span> related-work-coordination</div></td>
+</tr>
+<tr>
+  <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/render-kg-to-cdn.bpmn"><code>Render a Knowledge Graph to a CDN</code></a><br><span class="p">cat-harness/processes/render-kg-to-cdn.bpmn</span></td>
+  <td>Render a Knowledge Graph — the whole of it, or a list of its Subgraphs — for publication to a CDN at a publication root URL, and report a STATUS and a MESSAGE.<div class="f"><span class="k">activities</span> 3</div><div class="f"><span class="k">lanes</span> Build pipeline</div><div class="f"><span class="k">skills</span> render-kg-to-cdn</div></td>
 </tr>
 <tr>
   <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/repository-health-watch.bpmn"><code>Is the repository itself healthy?</code></a><br><span class="p">cat-harness/processes/repository-health-watch.bpmn</span></td>

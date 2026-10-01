@@ -1,9 +1,9 @@
 <!-- kg:subgraph:begin -->
-# library
+# folio-assistant-sci-library
 
-Ingested L1 source material for the sciences. `milnorlink` was the whole of it until 2026-09-29, when three Lean-autoformalization papers arrived as the `evidence` of this layer's methodology nodes (bean h3rw). `milnorlink` is the source text the derived `milnor` skill reads, moved out of cat-harness/library/ because the PLATFORM holds no content (bean r1lz, and the rule AGENTS.md states as 'folio-assistant is the platform, not the content'). Its `image-verdicts.json` moved with it rather than staying behind: a verdict belongs to the library it judges, and one file judging documents in two libraries is how one library's judgement comes to rewrite another's sidecar. The id is `library`, the CONVENTIONAL one, so this entry OVERRIDES the default rather than joining it: overrides match on id and never on path, so a distinct id at the same path yields two entries for one directory and every fan-out consumer scans it twice. Measured while doing exactly that.
+The science instance's library -- `milnorlink`, plus (since 2026-09-29, bean h3rw) three Lean-autoformalization papers that the science layer's methodology nodes cite as `evidence`: `arxiv-2601.22554v1`, `arxiv-2406.01940v2`, `arxiv-2602.16554v1`. Same staging arrangement and same reason as `who-iris-library` above. Bean r1lz sent it here rather than to who-iris: it is not an IRIS item and never was.
 
-Part of [folio-assistant-sci](../README.md) 0.1.0, declared as `library`, holding `library`.
+Part of [C@T Harness](../../cat-harness/README.md) 0.1.0, declared as `folio-assistant-sci-library`, holding `library`.
 
 | file | what it is | used by |
 |---|---|---|

@@ -1,9 +1,9 @@
 <!-- kg:subgraph:begin -->
-# methodologies
+# smart-base-methodologies
 
-Methodologies adopted from the WHO digital-health corpus in `library/` -- somebody else's work, adopted whole, never a house process with a citation bolted on. `diig.md` is the first. Declared in the commit that created its content rather than ahead of it: a declared-but-absent directory is the `dh4f` defect, where every consumer scans nothing and reports a clean run over it. `skip` rather than `reproduce` because a downstream instance inherits the METHOD by depending on this layer, not by copying the directory.
+The methodologies `smart-base` adopts from its own corpus -- `diig`, the WHO/ITU Digital Implementation Investment Guide. Separate from the harness's `methodologies` because DIIG is a programme-investment method owned by this layer. (It was declared beside a `smart-kg-methodologies` entry holding GRADE until 2026-09-24, when GRADE became a skill plus code lists — bean `wg7r`.) `methodology-adoption` SS4 places a method by ownership so that extraction is literal -- this directory lifts out with this entry and nothing else moves. Issue #877, bean `wkt1`.
 
-Part of [SMART Base](../README.md) 0.1.0, declared as `methodologies`, holding `methodology`.
+Part of [C@T Harness](../../cat-harness/README.md) 0.1.0, declared as `smart-base-methodologies`, holding `methodology`.
 
 | file | what it is | used by |
 |---|---|---|

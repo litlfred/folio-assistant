@@ -1,9 +1,9 @@
 <!-- kg:subgraph:begin -->
-# lean-skills
+# folio-assistant-sci-lean-skills
 
-The science layer's Lean tooling skills (`lean-formal-edges`, folio-assistant#1492). Declared HERE, from within `skills/`, by the instance that owns it (bean `cmsl` step 1, owner 2026-09-30, round 4). Until then only cat-harness declared it, as the mirror `folio-assistant-sci-lean-skills`, which cmsl step 3 removes.
+The SCIENCE layer's Lean tooling skills: `lean-formal-edges`, which runs the elaborated formal-edge extractor (folio-assistant#1492). Under the science layer, not core, per the owner's cut 'f-a-core has high level processes only, no tooling'. A subdirectory of `folio-assistant-sci/skills/` rather than that directory itself, because `skills/voices/` is already declared as the `voices` kind, and one directory declared under two kinds would be scanned twice. Repository-scoped, like `folio-assistant-core-skills`, so the consumers that resolve a skill ref from this root can see it.
 
-Part of [folio-assistant-sci](../../README.md) 0.1.0, declared as `lean-skills`, holding `skills`.
+Part of [C@T Harness](../../../cat-harness/README.md) 0.1.0, declared as `folio-assistant-sci-lean-skills`, holding `skills`.
 
 | file | what it is | used by |
 |---|---|---|

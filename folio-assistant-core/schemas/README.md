@@ -1,9 +1,9 @@
 <!-- kg:subgraph:begin -->
-# core-schemas
+# folio-assist-core-schemas
 
 The schemas of the content layer's [Node Kinds](https://github.com/litlfred/bootstrap/blob/main/schemas/README.md#node-kind), kept as their own [Subgraph](https://github.com/litlfred/bootstrap/blob/main/schemas/README.md#subgraph) until this repository is split.
 
-Part of [folio-assistant-core](../README.md) 0.1.0, declared as `core-schemas`, holding `schemas`, `cat-harness`.
+Part of [C@T Harness](../../cat-harness/README.md) 0.1.0, declared as `folio-assist-core-schemas`, holding `schemas`, `cat-harness`.
 
 | file | what it is | used by |
 |---|---|---|

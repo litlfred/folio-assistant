@@ -1,9 +1,9 @@
 <!-- kg:subgraph:begin -->
 # large-datasets-schemas
 
-`source-descriptor` — how to enumerate a corpus and ask it for a subset. `artifact-store` — where an artifact too large for the site tree goes, as a DECLARATION rather than a hardcoded host, per the owner's 'make tool that can be done another way potentially if not github cdn'.
+The `large-datasets` subgraph's schema nodes -- `source-descriptor` (how to enumerate a corpus and ask it for a subset) and `artifact-store` (where an artifact too large for the site tree goes, as a declaration rather than a hardcoded host). Repository-scoped, so the path resolves against the REPO ROOT and carries no `../` -- a `../` prefix resolved OUTSIDE the checkout and every consumer silently dropped the entry (caught by CI, 2026-09-20).
 
-Part of [large-datasets](../README.md) 0.1.0, declared as `large-datasets-schemas`, holding `schemas`, `cat-harness`.
+Part of [C@T Harness](../../cat-harness/README.md) 0.1.0, declared as `large-datasets-schemas`, holding `schemas`, `cat-harness`.
 
 | file | what it is | used by |
 |---|---|---|

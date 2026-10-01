@@ -1,9 +1,9 @@
 <!-- kg:subgraph:begin -->
-# data-skills
+# folio-assistant-sci-data-skills
 
-The science layer's reference-data skills: `reference-dataset-ingestion`, which turns a published constants table (CODATA first) into a library dataset whose values are addressable as `{{ <instance>.library.<entry>.<slug> }}` with provenance (bean uyp8). Declared HERE, from within `skills/`, by the instance that owns it (placement PR0, bean ejye). Until then only cat-harness declared it, as the mirror `folio-assistant-sci-data-skills`, which PR0 removed with the other 18 (bean cmsl option A, step 3).
+The SCIENCE layer's reference-data skills: `reference-dataset-ingestion`, which turns a published constants table (CODATA first) into a library dataset whose values are addressable as `{{ <instance>.library.<entry>.<slug> }}` with provenance (bean uyp8). A subdirectory beside `skills/lean/` for the same reason that one is: `skills/voices/` is already declared as the `voices` kind.
 
-Part of [folio-assistant-sci](../../README.md) 0.1.0, declared as `data-skills`, holding `skills`.
+Part of [C@T Harness](../../../cat-harness/README.md) 0.1.0, declared as `folio-assistant-sci-data-skills`, holding `skills`.
 
 | file | what it is | used by |
 |---|---|---|
