@@ -341,7 +341,7 @@
       ],
       "href": "/cat-harness/library/cat-harness/",
       "hidden": false,
-      "count": 19,
+      "count": 22,
       "unit": "entries"
     },
     {
@@ -383,7 +383,7 @@
       ],
       "href": "/lsi/",
       "hidden": false,
-      "count": 1018,
+      "count": 1044,
       "unit": "documents"
     },
     {
@@ -512,7 +512,7 @@
       "href": "/cat-harness/uploads/cat-harness/",
       "hidden": false,
       "icon": "uploads",
-      "count": 23,
+      "count": 19,
       "unit": "waiting"
     },
     {
@@ -1373,12 +1373,12 @@
         {
           "id": "directories",
           "label": "declared directories",
-          "value": 3
+          "value": 4
         },
         {
           "id": "kinds",
           "label": "declared graph kinds",
-          "value": 3
+          "value": 4
         },
         {
           "id": "views",
@@ -1387,6 +1387,10 @@
         }
       ],
       "visualisations": [
+        {
+          "kind": "library",
+          "note": "no viewer yet"
+        },
         {
           "kind": "qa",
           "note": "no viewer yet"
@@ -1401,9 +1405,60 @@
         }
       ],
       "findings": [
-        "fhir-harness: declares 2 graph(s) with no published viewer — qa, tools. Declared and not rendered is a gap, not a dead link.",
+        "fhir-harness: declares 3 graph(s) with no published viewer — library, qa, tools. Declared and not rendered is a gap, not a dead link.",
         "fhir-harness: no avatar declared for this instance — showing the generic mark.",
         "fhir-harness: has no docs/ of its own, so the tile opens a kind handler's viewer (/cat-harness/docs-auto/index/skills/fhir-ig-skills/) rather than the instance's own themed root."
+      ],
+      "navbarIcons": [
+        "close",
+        "todos",
+        "beans",
+        "processes",
+        "kg",
+        "launcher"
+      ]
+    },
+    {
+      "name": "cat-harness-tools",
+      "title": "C@T Harness Tools",
+      "label": "C@T Harness Tools",
+      "description": "What implements the harness's Tool definitions: the MCP servers, their tool registrars and routes. Definitions stay in cat-harness; this layer runs them.",
+      "footer": false,
+      "needs": [
+        "folio-assistant-core"
+      ],
+      "icon": null,
+      "tone": 0,
+      "toneFrom": "avatar",
+      "reads": "a question mark — no avatar is declared for this kind",
+      "genericAvatar": true,
+      "instantiated": false,
+      "stats": [
+        {
+          "id": "directories",
+          "label": "declared directories",
+          "value": 2
+        },
+        {
+          "id": "kinds",
+          "label": "declared graph kinds",
+          "value": 1
+        },
+        {
+          "id": "views",
+          "label": "visualisations you can open",
+          "value": 0
+        }
+      ],
+      "visualisations": [
+        {
+          "kind": "code",
+          "note": "no viewer yet"
+        }
+      ],
+      "findings": [
+        "cat-harness-tools: declares 1 graph(s) with no published viewer — code. Declared and not rendered is a gap, not a dead link.",
+        "cat-harness-tools: no avatar declared for this instance — showing the generic mark."
       ],
       "navbarIcons": [
         "close",
@@ -1662,7 +1717,7 @@
         {
           "id": "directories",
           "label": "declared directories",
-          "value": 45
+          "value": 46
         },
         {
           "id": "kinds",
@@ -2083,6 +2138,12 @@
       "major": 0,
       "agent": "https://litlfred.github.io/cat-harness/0.1.0/",
       "human": "https://litlfred.github.io/cat-harness/v0/"
+    },
+    "cat-harness-tools": {
+      "version": "0.1.0",
+      "major": null,
+      "agent": "",
+      "human": ""
     },
     "fhir-harness": {
       "version": "0.1.0",
@@ -2984,7 +3045,61 @@
           },
           {
             "key": "directories",
-            "summary": "3: fhir-ig-skills, fhir-ig-tools, qa"
+            "summary": "4: library, fhir-ig-skills, fhir-ig-tools, qa"
+          },
+          {
+            "key": "needs",
+            "summary": "folio-assistant-core"
+          },
+          {
+            "key": "liquid",
+            "summary": "{ prefix, passThrough }"
+          },
+          {
+            "key": "version",
+            "summary": "0.1.0"
+          }
+        ]
+      },
+      {
+        "name": "cat-harness-tools",
+        "title": "C@T Harness Tools",
+        "group": "checkout",
+        "declaredIn": "cat-harness-tools/cat-harness-tools.json",
+        "viewHref": "https://github.com/litlfred/folio-assistant/blob/main/cat-harness-tools/cat-harness-tools.json",
+        "editHref": "https://github.com/litlfred/folio-assistant/edit/main/cat-harness-tools/cat-harness-tools.json",
+        "declared": [
+          {
+            "key": "name",
+            "summary": "cat-harness-tools"
+          },
+          {
+            "key": "title",
+            "summary": "C@T Harness Tools"
+          },
+          {
+            "key": "description",
+            "summary": "What implements the harness's Tool definitions: the MCP servers, their tool registrars an…"
+          },
+          {
+            "key": "assets",
+            "summary": "2: agent-instructions, instance-readme"
+          },
+          {
+            "key": "repository",
+            "summary": "litlfred/cat-harness-tools"
+          },
+          {
+            "key": "livesAt",
+            "summary": "{ repository, path }"
+          },
+          {
+            "key": "canonicalUrl",
+            "summary": "https://litlfred.github.io/folio-assistant/cat-harness-tools"
+          },
+          {
+            "key": "directories",
+            "summary": "2: cat-harness-tools-adapters, cat-harness-tools-tests"
           },
           {
             "key": "needs",
@@ -3158,7 +3273,7 @@
           },
           {
             "key": "directories",
-            "summary": "43: tools, external-schemas, code-lists, schemas, uml, skills, scenarios, policies, processes…"
+            "summary": "44: tools, external-schemas, code-lists, schemas, uml, skills, scenarios, policies, processes…"
           },
           {
             "key": "associatedHarnesses",

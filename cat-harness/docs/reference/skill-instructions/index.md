@@ -88,7 +88,6 @@ roles, and how they compose with the LLM, see [Skills & roles](../../skills.html
 | [Content Testing](content-test.html) | `content-test` | [schema](../skills/content-test.html) | End-to-end testing of content artifacts in realistic scenarios. |
 | [Content Validation](content-validate.html) | `content-validate` | [schema](../skills/content-validate.html) | Validate authored content against schemas, standards, and clinical accuracy. |
 | [Evidence Appraisal](evidence-appraisal.html) | `evidence-appraisal` | — | Appraise and grade a **body of evidence** against the grading system the folio |
-| [Sample import](sample-import.html) | `sample-import` | — | The SDLC for trying out a remote source before committing to it: take a |
 
 ## Document adapter (folio-document-adapter)
 
@@ -292,7 +291,6 @@ roles, and how they compose with the LLM, see [Skills & roles](../../skills.html
 | [Process state](process-state.html) | `process-state` | — | An agent working a BPMN process holds **nested state**: a *task*, inside a |
 | [Release epic planning](release-epic-planning.html) | `release-epic-planning` | — | A release epic groups all the work for a specific release version. |
 | [Release lifecycle](release-lifecycle.html) | `release-lifecycle` | — | This skill governs **when and why** to create releases. For the **how** |
-| [Render a Knowledge Graph to a CDN](render-kg-to-cdn.html) | `render-kg-to-cdn` | — | Owner, 2026-09-30: *"render content of a KG (or list of subgraphs within) for |
 | [Session context](session-context.html) | `session-context` | — | A **session** is one actor working, from the moment it picks up until it stops. |
 | [Playing a state machine](session-state-machine.html) | `session-state-machine` | — | > **An agent could also play a (non-deterministic) state machine as a tool. |
 | [Specification-compiled agents](specification-compiled-agents.html) | `specification-compiled-agents` | — | Renders [`methodologies/specification-compiled-agents.md`](https://github.com/litlfred/folio-assista |
@@ -414,11 +412,38 @@ roles, and how they compose with the LLM, see [Skills & roles](../../skills.html
 | [All UI must follow accessibility guidelines](ui-accessibility.html) | `ui-accessibility` | — | This is a **rule**, stated as one by the owner, and it binds every surface this |
 | [Wireframe design review](wireframe-design-review.html) | `wireframe-design-review` | — | Method: [`wiregen`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/methodologies/ |
 
+## Science layer: Lean tooling (folio-assistant-sci)
+
+| Skill | Id | Schema | Summary |
+|-------|----|--------|---------|
+| [Lean formal edges (elaborated)](lean-formal-edges.html) | `lean-formal-edges` | — | bun run folio-assistant-sci/content/pipeline/formal-edges.ts \ |
+
+## Science layer: reference data (folio-assistant-sci)
+
+| Skill | Id | Schema | Summary |
+|-------|----|--------|---------|
+| [Reference dataset ingestion](reference-dataset-ingestion.html) | `reference-dataset-ingestion` | — |  |
+
 ## Content layer (folio-assistant-core)
 
 | Skill | Id | Schema | Summary |
 |-------|----|--------|---------|
 | [Deep document research](deep-document-research.html) | `deep-document-research` | — | Renders `methodologies/doc-researcher.md` — Dong et al., arXiv:2510.21603v1 — |
+
+## Large data sets (subsetting, materializing, publishing)
+
+| Skill | Id | Schema | Summary |
+|-------|----|--------|---------|
+| [Working on materialized content](copy-out-materialized.html) | `copy-out-materialized` | — | **Materialized content is a copy of somebody else's bytes, and this repository |
+| [Materialize on demand](materialize-on-demand.html) | `materialize-on-demand` | — | Bootstrap brings an agent to a working harness. It does **not** bring the |
+| [Materializing remote content](materialize-remote.html) | `materialize-remote` | — | **One process, and this repository already ran it twice before naming it.** |
+| [Sample import](sample-import.html) | `sample-import` | — | The SDLC for trying out a remote source before committing to it: take a |
+
+## WHO IRIS (catalogue instance)
+
+| Skill | Id | Schema | Summary |
+|-------|----|--------|---------|
+| [IRIS, DSpace and Dublin Core](iris-dspace.html) | `iris-dspace` | — | **Every claim here was read off one captured record** — the DSpace full item |
 
 ## FHIR client & SMART launch (fhir-harness/skills/fhir-client)
 
@@ -436,32 +461,6 @@ roles, and how they compose with the LLM, see [Skills & roles](../../skills.html
 | [ig-publisher-fork](ig-publisher-fork.html) | `ig-publisher-fork` | — | > Skill id: `ig-publisher-fork` · Package: `fhir-ig-base` · Instance: |
 | [ig-publisher-reduction](ig-publisher-reduction.html) | `ig-publisher-reduction` | — | > Skill id: `ig-publisher-reduction` · Package: `fhir-ig-base` · Instance: |
 | [ig-render-jekyll](ig-render-jekyll.html) | `ig-render-jekyll` | — | > Skill id: `ig-render-jekyll` · Package: `fhir-ig-base` · Instance: |
-
-## Large data sets (subsetting, materializing, publishing)
-
-| Skill | Id | Schema | Summary |
-|-------|----|--------|---------|
-| [Working on materialized content](copy-out-materialized.html) | `copy-out-materialized` | — | **Materialized content is a copy of somebody else's bytes, and this repository |
-| [Materialize on demand](materialize-on-demand.html) | `materialize-on-demand` | — | Bootstrap brings an agent to a working harness. It does **not** bring the |
-| [Materializing remote content](materialize-remote.html) | `materialize-remote` | — | **One process, and this repository already ran it twice before naming it.** |
-
-## WHO IRIS (catalogue instance)
-
-| Skill | Id | Schema | Summary |
-|-------|----|--------|---------|
-| [IRIS, DSpace and Dublin Core](iris-dspace.html) | `iris-dspace` | — | **Every claim here was read off one captured record** — the DSpace full item |
-
-## Science layer: Lean tooling (folio-assistant-sci)
-
-| Skill | Id | Schema | Summary |
-|-------|----|--------|---------|
-| [Lean formal edges (elaborated)](lean-formal-edges.html) | `lean-formal-edges` | — | bun run folio-assistant-sci/content/pipeline/formal-edges.ts \ |
-
-## Science layer: reference data (folio-assistant-sci)
-
-| Skill | Id | Schema | Summary |
-|-------|----|--------|---------|
-| [Reference dataset ingestion](reference-dataset-ingestion.html) | `reference-dataset-ingestion` | — |  |
 
 ## Local skills (.claude/skills/local)
 

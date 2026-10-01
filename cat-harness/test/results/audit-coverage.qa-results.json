@@ -129,7 +129,6 @@
           "gates": [
             "bun run check:asset-roles",
             "bun run check:avatar-instances",
-            "bun run check:concern-groups",
             "bun run check:declaration-claims",
             "bun run check:declaration-filename",
             "bun run check:declared-assets",
@@ -194,6 +193,8 @@
           "state": "covered",
           "directories": [
             "bootstrap-tools/scripts",
+            "cat-harness-tools/adapters",
+            "cat-harness-tools/test",
             "cat-harness/adapters",
             "cat-harness/deploy",
             "cat-harness/scripts",
@@ -437,6 +438,7 @@
           "directories": [
             "agent-skills/library",
             "cat-harness/library",
+            "fhir-harness/library",
             "folio-assistant-core/library",
             "folio-assistant-sci/library",
             "smart-base/library",
@@ -528,7 +530,6 @@
           "kind": "processes",
           "state": "covered",
           "directories": [
-            "bootstrap-tools/processes",
             "bootstrap/processes",
             "cat-harness/processes",
             "folio-assistant-core/processes",
@@ -666,7 +667,6 @@
           "kind": "scenarios",
           "state": "covered",
           "directories": [
-            "bootstrap-tools/scenarios",
             "bootstrap/scenarios",
             "cat-harness/scenarios"
           ],
@@ -916,6 +916,7 @@
             "bun run translate-kg-viewer:check",
             "bun run translation:block-qa:check",
             "bun run translation:catalogue:check",
+            "bun run translation:catalogue:check -- --base \"$base\"",
             "bun run translation:drift:check",
             "bun run translation:index:check",
             "bun run translation:obsolete:check",

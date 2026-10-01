@@ -5,7 +5,7 @@ status: in-progress
 type: task
 priority: normal
 created_at: 2026-09-30T11:33:55Z
-updated_at: 2026-09-30T23:17:23Z
+updated_at: 2026-10-01T06:51:19Z
 parent: folio-assistant-ahvw
 ---
 
@@ -224,3 +224,37 @@ own proposal: the agent does not write corpus guidance unasked.
 - [x] 1. The `r0tm` ruling request reaches the owner.
 - [ ] 2. The check — **blocked on a convention decision**, not on effort.
 - [x] 3. `bean-coordination` records the convention.
+
+
+## RULED 2026-10-01 — adopt `status: draft`; do not mint a new marker
+
+The owner chose, from three options:
+
+> **`status: draft`** — already in the schema enum, already offered by
+> `beans create --status`, and used by **0 of 542** beans.
+
+Re-measured on main `02f16ae98bb`: `todo` 195, `completed` 232, `in-progress`
+106, `scrapped` 9, **`draft` 0**. Claiming it collides with nothing and needs no
+schema change.
+
+**This reverses my earlier reading of done-when 2, and the correction matters.**
+I recorded that a check keyed on `status: draft` would be *"vacuous by
+construction"* and concluded the done-when list was backwards. The vacuity
+measurement was right — 0 of 518 then, 0 of 542 now — but the conclusion was
+wrong. `draft` was not the wrong key; it was **an unclaimed one**, and an enum
+member nothing uses is free to adopt rather than evidence against itself. A
+measurement of the present tense is not a measurement of what the convention
+should be.
+
+So done-when 2 is buildable **exactly as originally written**, and needs no
+declared marker beyond the one the schema has carried all along.
+
+## Done when — restated
+
+1. [x] The `r0tm` ruling request reaches the owner.
+2. [ ] The check: beans that are `status: draft` AND carry a
+       recommendation/default section AND exist on no ancestor of the default
+       branch, with a denominator. `could not determine` is a finding, never
+       green (`dh4f`).
+3. [x] `bean-coordination` records the convention — to be amended with the
+       `status: draft` half, which it currently does not name.

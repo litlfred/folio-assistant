@@ -15,6 +15,8 @@ Part of [agent-skills](../README.md) 0.1.0, declared as `library`, holding `libr
 | [`arxiv-2608.08453v1/`](arxiv-2608.08453v1/README.md) | 67 files | |
 | [`best-practices---google-antigravity-docs/`](best-practices---google-antigravity-docs/README.md) | 16 files | |
 | [`equipping-agents-for-the-real-world-with-agent-skills-anthro/`](equipping-agents-for-the-real-world-with-agent-skills-anthro/README.md) | 52 files | |
+| [`hmans-2026-beans-readme/`](hmans-2026-beans-readme/README.md) | 47 files | |
+| [`mcp-2026-specification-2026-07-28/`](mcp-2026-specification-2026-07-28/README.md) | 1631 files | |
 | [`rfc2119-key-words-requirement-levels/`](rfc2119-key-words-requirement-levels/README.md) | 22 files | |
 | [`rfc8174-uppercase-vs-lowercase-2119-key-words/`](rfc8174-uppercase-vs-lowercase-2119-key-words/README.md) | 28 files | |
 | [`skill-authoring-best-practices---claude-platform-docs/`](skill-authoring-best-practices---claude-platform-docs/README.md) | 106 files | |

@@ -75,11 +75,6 @@
         },
         {
           "instance": "bootstrap",
-          "directory": "processes",
-          "path": "bootstrap/processes"
-        },
-        {
-          "instance": "bootstrap",
           "directory": "models",
           "path": "bootstrap/models"
         },
@@ -162,6 +157,11 @@
           "instance": "cat-harness",
           "directory": "smart-base-library",
           "path": "smart-base/library"
+        },
+        {
+          "instance": "cat-harness",
+          "directory": "fhir-harness-library",
+          "path": "fhir-harness/library"
         },
         {
           "instance": "cat-harness",
@@ -433,7 +433,7 @@
     },
     "no-title": {
       "summary": "Declared directories with no `title`: their README heading falls back to the id.",
-      "count": 99,
+      "count": 102,
       "entries": [
         {
           "instance": "folio-assistant",
@@ -612,6 +612,11 @@
         },
         {
           "instance": "cat-harness",
+          "directory": "fhir-harness-library",
+          "path": "fhir-harness/library"
+        },
+        {
+          "instance": "cat-harness",
           "directory": "translation-sources",
           "path": "cat-harness/translations"
         },
@@ -729,6 +734,16 @@
           "instance": "cat-harness",
           "directory": "cat-harness-deploy",
           "path": "cat-harness/deploy"
+        },
+        {
+          "instance": "cat-harness-tools",
+          "directory": "cat-harness-tools-adapters",
+          "path": "cat-harness-tools/adapters"
+        },
+        {
+          "instance": "cat-harness-tools",
+          "directory": "cat-harness-tools-tests",
+          "path": "cat-harness-tools/test"
         },
         {
           "instance": "fhir-harness",
@@ -954,5 +969,5 @@
       "entries": []
     }
   },
-  "total": 182
+  "total": 185
 }

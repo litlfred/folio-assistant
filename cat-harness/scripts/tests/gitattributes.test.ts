@@ -38,6 +38,10 @@ describe(".gitattributes exists and is read by git", () => {
       "cat-harness/docs/glossary/index.md",
       "cat-harness/docs/cat-harness/docs-auto/index/index.html",
       "cat-harness/test/results/audit-coverage.qa-results.json",
+      // Added 2026-10-01, bean `eqxp`. Producer `writeToolRun` composes the
+      // body from its argument and reads the existing file only to skip a
+      // pointless write.
+      "cat-harness/test/results/tool-runs/lsi-index/cat-harness/skills.tool-run.json",
     ]) {
       // Asked of GIT, not matched against the file's text: a pattern that looks
       // right and does not apply is the failure mode this guards.
@@ -83,8 +87,51 @@ describe("every -merge path is gated in CI", () => {
     // files are covered by `check:glossary`, `docs:auto:check` and
     // `audit:coverage:require-all`, so taking the wrong side cannot ship.
     const wf = readFileSync(join(REPO, ".github", "workflows", "code-quality-gates.yml"), "utf-8");
-    for (const gate of ["check:glossary", "docs:auto:check", "audit:coverage:require-all"]) {
+    for (const gate of ["check:glossary", "docs:auto:check", "audit:coverage:require-all", "lsi:skills:check"]) {
       expect(wf, `${gate} is not in CI, so a -merge path it covers is unguarded`).toContain(gate);
     }
+  });
+});
+
+/**
+ * Two files that pass the carry-forward test and FAIL the gate test.
+ *
+ * Bean `eqxp`, 2026-10-01. Both were cleared on the producer question — read
+ * each one, neither carries anything forward — and both were then refused,
+ * because being safe to overwrite is only half of it. `oxka`'s entry is safe
+ * *because* a wrong resolution reddens; without that it is a way to lose work
+ * quietly.
+ *
+ * Measured by corrupting each committed file and running its gate:
+ *
+ *   · `skill-register.qa-results.json` — `producer.script_hash` and a family
+ *     summary corrupted. `skill:register:check` exited **0**, and 66 tests
+ *     across `skill-register.test.ts` and `qa-results.test.ts` passed.
+ *   · `skills.lsi.json` — `fingerprint` corrupted. `lsi:skills:check` exited
+ *     **0**. That gate reads the RUN RECORD's `inputFingerprint` (corrupting
+ *     which does exit 1) and never validates the sidecar's own contents.
+ *
+ * This test is here so the next agent reaching for them has to overturn a
+ * measurement rather than an opinion.
+ */
+describe("a generated file whose gate does NOT redden is not marked", () => {
+  test("the two refused candidates stay textually mergeable", () => {
+    for (const p of [
+      "cat-harness/test/results/skill-register.qa-results.json",
+      "cat-harness/test/results/lsi/cat-harness/skills.lsi.json",
+    ]) {
+      expect(
+        mergeAttr(p),
+        `${p} is marked -merge, but no gate reddens on a wrong resolution of it — see this block`,
+      ).not.toBe("unset");
+    }
+  });
+
+  test("the gate that DOES cover the newly marked run record is named in CI", () => {
+    // The asymmetry is the point: the run record is guarded, its sibling
+    // sidecar is not, and they sit two directories apart.
+    const wf = readFileSync(join(REPO, ".github", "workflows", "code-quality-gates.yml"), "utf-8");
+    expect(wf).toContain("lsi:skills:check");
+    expect(mergeAttr("cat-harness/test/results/tool-runs/lsi-index/cat-harness/skills.tool-run.json")).toBe("unset");
   });
 });

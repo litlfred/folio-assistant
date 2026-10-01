@@ -149,27 +149,34 @@ shape that goes unseen. It was answered, and it was answered because the
 question had been posted to [issue #1558](https://github.com/litlfred/folio-assistant/issues/1558)
 and PR #1581 — not because anyone found the bean.
 
-**What NOT to rely on, measured 2026-09-30 over all 518 beans in this store:**
+**What the check reads, and what it must not — both measured over the whole store:**
 
-- **`status: draft` is not a signal.** It is legal — `schemas/tool-types.ts`
-  has `.enum(["draft", "todo", "in-progress", "completed", "scrapped"])` and
-  `beans create --status` offers it — and **no bean has ever used it.** `r0tm`
-  itself, whose own title calls it *"a draft decision"*, is `status: todo`. A
-  check keyed on `draft` reports `0 of 0` and reads green for ever, which is
-  bean `1xhc`.
-- **Prose is not a signal either.** Six recognisers over the 286 open beans
-  give between **1 and 190** candidates depending which form you match
+- **`status: draft` is the marker — claimed 2026-10-01, on the owner's ruling.**
+  It was already legal (`schemas/tool-types.ts` has
+  `.enum(["draft", "todo", "in-progress", "completed", "scrapped"])`, and
+  `beans create --status` offers it) and used by **0 of 542** beans. An enum
+  member nothing uses is free to adopt, so a decision bean awaiting a ruling is
+  `status: draft` and needs no new vocabulary.
+
+  **This reverses what this section said for one day**, and the reversal is
+  worth keeping. It read *"`status: draft` is not a signal"*, on a correct
+  measurement — zero use then, zero use now — and a wrong conclusion. Zero use
+  made `draft` **unclaimed**, not unsuitable; a measurement of the present
+  tense is not a measurement of what the convention should be.
+
+- **Prose is still not a signal.** Six recognisers over the open beans give
+  between **1 and 190** candidates depending which form you match
   (`Recommendation` heading 1, `Options` heading 20, `safe default` 1,
   `ruling` 63, `owner's call` 48, an unticked box 190) — bean `vq8g` as a
   number rather than a worry. And the only unreachable bean either broad
-  recogniser finds is one that *records* a ruling rather than asking for one.
+  recogniser found was one that *records* a ruling rather than asking for one.
+  So a check reads the STATUS and the two halves above, never the prose.
 
-So the convention above is the whole of what is binding today: **a comment
-where a person reads, and a line on the bean saying where.** Whether a decision
-bean should also carry a DECLARED marker, so a check can find one without
-guessing at prose, is bean `3432` done-when 2 and is the owner's call — it
-changes what a decision bean looks like. It is recorded there unanswered rather
-than decided here.
+So the convention is three things, and the third is new: **a comment where a
+person reads, a line on the bean saying where, and `status: draft` while the
+ruling is outstanding.** The first two are what reach a human; the third is what
+lets a check find the bean that never landed.
+
 
 ### The trigger is STARTING WORK, not claiming — and that distinction cost a merge
 

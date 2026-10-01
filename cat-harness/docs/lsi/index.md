@@ -25,7 +25,7 @@ how to build, query and audit an index is the skill `lsi-indexing`.
 
 <div class="lv-grid">
 <div class="lv-stat"><b>5</b><span>committed indexes</span></div>
-<div class="lv-stat"><b>1765</b><span>units indexed</span></div>
+<div class="lv-stat"><b>1763</b><span>units indexed</span></div>
 <div class="lv-stat"><b>5</b><span>graphs that need an index and lack a fresh one</span></div>
 </div>
 
@@ -49,6 +49,7 @@ the same as fine. The same verdict is `kg:audit`'s `tool-downstream-fresh` for t
 | `cat-harness/policies` | <span class="lv-na">n/a</span> | below the need-an-index threshold — not judged |
 | `cat-harness/skills` | <span class="lv-pass">pass</span> | fresh |
 | `fhir-harness/fhir-ig-skills` | <span class="lv-na">n/a</span> | below the need-an-index threshold — not judged |
+| `fhir-harness/library` | <span class="lv-na">n/a</span> | below the need-an-index threshold — not judged |
 | `folio-assistant-core/core-library` | <span class="lv-na">n/a</span> | below the need-an-index threshold — not judged |
 | `folio-assistant-core/core-methodologies` | <span class="lv-na">n/a</span> | below the need-an-index threshold — not judged |
 | `folio-assistant-core/core-skills` | <span class="lv-na">n/a</span> | below the need-an-index threshold — not judged |
@@ -122,7 +123,7 @@ Each dimension is a **contrast** between two poles, shown by their highest-loadi
 
 ## cat-harness / skills
 
-**310** units · **7647** terms · k = **100** · retains **68.8 %** of the weighted matrix · weighting `log-entropy` · sidecar `cat-harness/test/results/lsi/cat-harness/skills.lsi.json`
+**308** units · **7634** terms · k = **100** · retains **68.9 %** of the weighted matrix · weighting `log-entropy` · sidecar `cat-harness/test/results/lsi/cat-harness/skills.lsi.json`
 
 > Dimension 1 has **no negative pole**: it most likely measures unit length and term frequency (a margin), not a theme. Read the themes from dimension 2 on.
 
@@ -130,14 +131,14 @@ Each dimension is a **contrast** between two poles, shown by their highest-loadi
 
 | dim | σ | one pole | the other pole |
 |---|---|---|---|
-| 1 | 47.97 | bean, instance, session, graph, kind, page, directory, branch | *(none)* |
-| 2 | 27.83 | bias, studies, study, statistical, effect, causation, validity, causal | bean, harness, instance, directory, node, graph, kind, declared |
-| 3 | 22.45 | proof, watcher, lean, slot, blocks, witness, project, sibling | harness, node, instance, bean, directory, page, bias, actor |
-| 4 | 19.59 | session, branch, queue, prs, beans, commits, bean, coordination | dpi, color, lean, grayscale, pdf, text, images, matplotlib |
-| 5 | 18.80 | dpi, color, grayscale, contrast, images, raster, matplotlib, fonts | proof, lean, glossary, declaration, term, stub, theorem, instance |
-| 6 | 16.80 | regulatory, intervention, biosafety, ethics, ledger, rivals, candidate, dual-use | fallacy, fallacious, reality, fallacies, description, solutions, ignoring, consider |
-| 7 | 16.47 | lean, mathlib, search, mcp, regulatory, sorry, page, candidate | watcher, voice, queue, slot, backlog, nesting, dpi, color |
-| 8 | 15.44 | mathlib, lean, sorry, lake, mcp, oleans, sessions, goal | slot, watcher, backlog, criterion, band, major, forward, auto-discharge |
+| 1 | 47.72 | bean, instance, session, graph, page, kind, branch, directory | *(none)* |
+| 2 | 27.80 | bias, studies, study, statistical, effect, causation, validity, causal | bean, harness, instance, directory, node, graph, kind, session |
+| 3 | 22.38 | proof, watcher, lean, slot, blocks, witness, project, sibling | harness, node, instance, bean, page, directory, bias, actor |
+| 4 | 19.58 | dpi, color, lean, grayscale, pdf, text, images, matplotlib | session, branch, queue, prs, beans, commits, coordination, bean |
+| 5 | 18.73 | dpi, color, grayscale, images, contrast, raster, matplotlib, fonts | proof, lean, glossary, declaration, term, theorem, stub, instance |
+| 6 | 16.78 | regulatory, intervention, biosafety, ethics, candidate, rivals, dual-use, safety | fallacy, fallacious, reality, fallacies, solutions, description, consider, ignoring |
+| 7 | 16.34 | lean, mathlib, search, mcp, sorry, proof, page, build | watcher, voice, slot, backlog, queue, nesting, ledger, objection |
+| 8 | 15.40 | mathlib, lean, sorry, lake, goal, sessions, session, mcp | slot, watcher, backlog, criterion, band, major, forward, auto-discharge |
 
 **Findings** — 0 narrow dimension(s), 0 near-duplicate pair(s).
 
