@@ -25,8 +25,12 @@
  *
  * A subscription's STATE is read from the checkout only: a chosen part with no
  * materialisation record is drawn as not yet held, never as held, and never as
- * missing. What upstream looks like right now is `refresh-materialized`'s
- * question, not this page's.
+ * missing. A part WITH a record (slices 5 and 6, `kg:materialize`) is drawn
+ * from that record: ⬇ held, and its bytes still hash to it; ⚠ held at another
+ * pin, or bytes that no longer match; ✗ a gate refused; ? a gate unanswered or
+ * a record unreadable — could-not-determine is drawn, never hidden. What
+ * upstream looks like right now is `refresh-materialized`'s question, not this
+ * page's.
  *
  * @module cat-harness/scripts/subscriptions-viz
  * @covers cat-harness, docs — the subscriptions and known substrates every declaration states
@@ -35,12 +39,14 @@ import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import { dirname, join, relative, resolve } from "node:path";
 
 import {
+  findDeclarationFile,
   instanceRootsIn,
   readDeclaration,
   type KnownSubstrate,
   type Subscription,
 } from "../schemas/cat-harness.ts";
 import { instanceRepositories } from "../schemas/instance-repositories.ts";
+import { partRecordsIn, snapshotDirOf, type PartView } from "./kg-subscribe.ts";
 
 const REPO = resolve(import.meta.dir, "..", "..");
 export const OUT = join(REPO, "cat-harness", "docs", "subscriptions", "index.md");
@@ -90,13 +96,24 @@ export interface SubscriptionCard {
   /** The subscribing instance. */
   subscriber: string;
   subscription: Subscription;
+  /** The materialisation records under the subscription's directory, read structurally. */
+  parts?: readonly PartView[];
+  /** Bytes in that directory with no record, relative to the snapshot directory. */
+  strays?: readonly string[];
 }
 
 export function subscriptionCards(repoRoot: string): SubscriptionCard[] {
   const out: SubscriptionCard[] = [];
   for (const root of instanceRootsIn(repoRoot)) {
     const d = readDeclaration(root);
-    for (const s of d?.subscriptions ?? []) out.push({ subscriber: d!.name, subscription: s });
+    if (!d?.subscriptions?.length) continue;
+    const declName = findDeclarationFile(root);
+    const raw = declName ? (JSON.parse(readFileSync(join(root, declName), "utf-8")) as Record<string, unknown>) : {};
+    const snapshotDir = snapshotDirOf(root, raw);
+    for (const s of d.subscriptions) {
+      const { parts, strays } = snapshotDir ? partRecordsIn(snapshotDir, s.id) : { parts: [], strays: [] };
+      out.push({ subscriber: d.name, subscription: s, parts, strays });
+    }
   }
   return out.sort((a, b) => `${a.subscriber}/${a.subscription.id}`.localeCompare(`${b.subscriber}/${b.subscription.id}`));
 }
@@ -107,6 +124,23 @@ const STATUS_MARK: Record<KnownSubstrate["status"], string> = {
   exists: "📦 exists",
   published: "🚀 published",
 };
+
+const fmtBytes = (n: number): string => (n < 1024 ? `${n} B` : n < 1024 ** 2 ? `${(n / 1024).toFixed(1)} KiB` : `${(n / 1024 ** 2).toFixed(1)} MiB`);
+const code = (xs: readonly string[]): string => xs.map((g) => `\`${g}\``).join(", ");
+
+/** One part's state, drawn from its record. `ref` is the subscription's pin. */
+export function partState(p: PartView, ref: string): string {
+  if (p.state === "unreadable") return `? record unreadable: ${p.why ?? "no reason given"}`;
+  if (p.state === "referenced") {
+    if (p.refused.length) return `✗ gate refused: ${code(p.refused)}${p.unanswered.length ? `; unanswered: ${code(p.unanswered)}` : ""}`;
+    if (p.unanswered.length) return `? gates unanswered: ${code(p.unanswered)}${p.purposeMissing ? "; no purpose stated" : ""}`;
+    return p.purposeMissing ? "? no purpose stated" : "? stayed referenced, and the record does not say why";
+  }
+  if (p.ref !== ref) return `⚠ stale: held at \`${(p.ref ?? "?").slice(0, 12)}\`, pinned at \`${ref.slice(0, 12)}\``;
+  if (p.fixity !== "verified") return `⚠ the bytes do not match the record (${p.fixity ?? "unchecked"})`;
+  const size = p.bytes !== undefined ? `, ${fmtBytes(p.bytes)}` : "";
+  return `⬇ materialised — ${p.fileCount ?? "?"} file(s)${size}, ${p.purpose ?? "no purpose"}`;
+}
 
 const cell = (s: string | undefined): string => (s ?? "—").replace(/\|/g, "\\|").replace(/\n/g, " ");
 const repoLink = (r: string | undefined): string => (r ? `[\`${r}\`](https://github.com/${r})` : "—");
@@ -157,15 +191,29 @@ export function render(substrates: readonly SubstrateRow[], cards: readonly Subs
       "",
     );
   }
-  for (const { subscriber, subscription: s } of cards) {
+  for (const { subscriber, subscription: s, parts = [], strays = [] } of cards) {
     lines.push(`### \`${subscriber}\` → ${repoLink(s.repository)} as \`${s.id}\``, "");
     lines.push(`Pinned at \`${s.ref}\`.${s.note ? ` ${s.note}` : ""}`, "");
     lines.push("| part | chosen | state here |", "|---|---|---|");
     // A chosen part's STATE is not in the subscription on purpose (see
     // `Subscription`); until a materialisation record exists it is chosen and
     // NOT YET HELD — never drawn as held, never as missing.
-    for (const g of s.subgraphs ?? []) lines.push(`| subgraph \`${g}\` | ✓ | 🔗 chosen, not yet held |`);
+    const subgraphPart = (g: string): PartView | undefined => parts.find((p) => p.part?.kind === "subgraph" && p.part.id === g);
+    for (const g of s.subgraphs ?? []) {
+      const p = subgraphPart(g);
+      lines.push(`| subgraph \`${g}\` | ✓ | ${p ? cell(partState(p, s.ref)) : "🔗 chosen, not yet held"} |`);
+    }
+    for (const p of parts) {
+      if (p.part?.kind !== "subgraph" || (s.subgraphs ?? []).includes(p.part.id)) continue;
+      lines.push(`| subgraph \`${p.part.id}\` | — | ⚠ recorded, and no longer chosen: ${cell(partState(p, s.ref))} |`);
+    }
     lines.push(`| assets | policy \`${s.assets?.policy ?? "none"}\` | 🔗 each copy passes the materialisation gates |`);
+    for (const p of parts) {
+      if (p.part?.kind !== "asset") continue;
+      lines.push(`| asset \`${p.part.path}\` | on demand | ${cell(partState(p, s.ref))} |`);
+    }
+    for (const p of parts) if (!p.part) lines.push(`| a record with no part | — | ${cell(partState(p, s.ref))} |`);
+    for (const st of strays) lines.push(`| \`${st}\` | — | ⚠ bytes with no record |`);
     for (const h of s.harnesses ?? []) lines.push(`| harness \`${h}\` | ✓ | 🔗 chosen, not yet instantiated |`);
     lines.push(
       "| everything else the substrate offers | — | 🔗 referenced |",
