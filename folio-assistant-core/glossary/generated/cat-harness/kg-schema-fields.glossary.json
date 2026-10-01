@@ -2051,6 +2051,13 @@
       "status": "candidate"
     },
     {
+      "id": "cat-harness.catharnessdeclaration.knownsubstrates",
+      "prefLabel": "CatHarnessDeclaration.knownSubstrates",
+      "definition": "Substrates known to exist or planned that NO declaration here names — {@link KnownSubstrate}. Issue #1719.",
+      "source": "cat-harness/schemas/cat-harness.ts#CatHarnessDeclaration.knownSubstrates",
+      "status": "candidate"
+    },
+    {
       "id": "cat-harness.catharnessdeclaration.liquid",
       "prefLabel": "CatHarnessDeclaration.liquid",
       "definition": "The Liquid prefix this instance's VALUES are addressed by in authored text — `{{ <prefix>.<directory-id>.<entry>.<path> }}` — and whether the platform resolves it or passes it through.",
@@ -2135,6 +2142,13 @@
       "status": "candidate"
     },
     {
+      "id": "cat-harness.catharnessdeclaration.subscriptions",
+      "prefLabel": "CatHarnessDeclaration.subscriptions",
+      "definition": "External Knowledge Graphs this one CONSUMES, and which of their parts it chose to hold — {@link Subscription}. Issue #1719.",
+      "source": "cat-harness/schemas/cat-harness.ts#CatHarnessDeclaration.subscriptions",
+      "status": "candidate"
+    },
+    {
       "id": "cat-harness.catharnessdeclaration.topology",
       "prefLabel": "CatHarnessDeclaration.topology",
       "definition": "The topology axes this deployment declares about itself. See {@link Topology} — every field optional, absent meaning \"has not said\".",
@@ -2184,6 +2198,13 @@
       "status": "candidate"
     },
     {
+      "id": "cat-harness.catharnessdeclarationschema.knownsubstrates",
+      "prefLabel": "CatHarnessDeclarationSchema.knownSubstrates",
+      "definition": "See {@link KnownSubstrate}. Names are unique.",
+      "source": "cat-harness/schemas/cat-harness.ts#CatHarnessDeclarationSchema.knownSubstrates",
+      "status": "candidate"
+    },
+    {
       "id": "cat-harness.catharnessdeclarationschema.liquid",
       "prefLabel": "CatHarnessDeclarationSchema.liquid",
       "definition": "See {@link CatHarnessDeclaration.liquid}.",
@@ -2223,6 +2244,13 @@
       "prefLabel": "CatHarnessDeclarationSchema.separation",
       "definition": "Which half of a kg-separation pair this instance's planned `repository` is: `content` (files to read — no code, bootstrap FR-7) or `tools` (the code that writes and checks a content repository).",
       "source": "cat-harness/schemas/cat-harness.ts#CatHarnessDeclarationSchema.separation",
+      "status": "candidate"
+    },
+    {
+      "id": "cat-harness.catharnessdeclarationschema.subscriptions",
+      "prefLabel": "CatHarnessDeclarationSchema.subscriptions",
+      "definition": "External Knowledge Graphs this one subscribes to — see {@link Subscription}. `.optional()` for the reason `associatedHarnesses` is. Ids are unique, and never also in `needs` or `associatedHarnesses` — refined below.",
+      "source": "cat-harness/schemas/cat-harness.ts#CatHarnessDeclarationSchema.subscriptions",
       "status": "candidate"
     },
     {
@@ -2422,6 +2450,48 @@
       "status": "candidate"
     },
     {
+      "id": "cat-harness.knownsubstrate.name",
+      "prefLabel": "KnownSubstrate.name",
+      "definition": "The substrate's instance name, as its declaration gives it or will.",
+      "source": "cat-harness/schemas/cat-harness.ts#KnownSubstrate.name",
+      "status": "candidate"
+    },
+    {
+      "id": "cat-harness.knownsubstrate.note",
+      "prefLabel": "KnownSubstrate.note",
+      "definition": "One sentence a reader of the visualizer sees.",
+      "source": "cat-harness/schemas/cat-harness.ts#KnownSubstrate.note",
+      "status": "candidate"
+    },
+    {
+      "id": "cat-harness.knownsubstrate.repository",
+      "prefLabel": "KnownSubstrate.repository",
+      "definition": "`owner/repo`, when one exists or is planned.",
+      "source": "cat-harness/schemas/cat-harness.ts#KnownSubstrate.repository",
+      "status": "candidate"
+    },
+    {
+      "id": "cat-harness.knownsubstrate.status",
+      "prefLabel": "KnownSubstrate.status",
+      "definition": "Where it stands: proposed (an idea), planned (a staged instance), exists (a repository), published (a release).",
+      "source": "cat-harness/schemas/cat-harness.ts#KnownSubstrate.status",
+      "status": "candidate"
+    },
+    {
+      "id": "cat-harness.knownsubstrate.title",
+      "prefLabel": "KnownSubstrate.title",
+      "definition": "Human title.",
+      "source": "cat-harness/schemas/cat-harness.ts#KnownSubstrate.title",
+      "status": "candidate"
+    },
+    {
+      "id": "cat-harness.knownsubstrate.toolsrepository",
+      "prefLabel": "KnownSubstrate.toolsRepository",
+      "definition": "Its paired tools repository, when the `kg-separation` pattern gives it one.",
+      "source": "cat-harness/schemas/cat-harness.ts#KnownSubstrate.toolsRepository",
+      "status": "candidate"
+    },
+    {
       "id": "cat-harness.liquidprefix.passthrough",
       "prefLabel": "LiquidPrefix.passThrough",
       "definition": "Leave `{{ <prefix>.… }}` for the downstream engine (Jekyll, IG Publisher).",
@@ -2608,6 +2678,55 @@
       "prefLabel": "SubgraphRelation.parent",
       "definition": "The containing directory's `id`.",
       "source": "cat-harness/schemas/cat-harness.ts#SubgraphRelation.parent",
+      "status": "candidate"
+    },
+    {
+      "id": "cat-harness.subscription.assets",
+      "prefLabel": "Subscription.assets",
+      "definition": "How referenced binary assets are materialised. Each copy still passes `Process_MaterializeRemote`'s gates.",
+      "source": "cat-harness/schemas/cat-harness.ts#Subscription.assets",
+      "status": "candidate"
+    },
+    {
+      "id": "cat-harness.subscription.harnesses",
+      "prefLabel": "Subscription.harnesses",
+      "definition": "Harness names from the substrate CHOSEN for instantiation. Instantiating writes `<name>.config.json`, which is what puts it in the navbar.",
+      "source": "cat-harness/schemas/cat-harness.ts#Subscription.harnesses",
+      "status": "candidate"
+    },
+    {
+      "id": "cat-harness.subscription.id",
+      "prefLabel": "Subscription.id",
+      "definition": "Local name for the subscription; unique within this list. The substrate's own name, unless two pins of one substrate are ever needed.",
+      "source": "cat-harness/schemas/cat-harness.ts#Subscription.id",
+      "status": "candidate"
+    },
+    {
+      "id": "cat-harness.subscription.note",
+      "prefLabel": "Subscription.note",
+      "definition": "One sentence a reader of the visualizer sees.",
+      "source": "cat-harness/schemas/cat-harness.ts#Subscription.note",
+      "status": "candidate"
+    },
+    {
+      "id": "cat-harness.subscription.ref",
+      "prefLabel": "Subscription.ref",
+      "definition": "The pinned commit, a full 40-character SHA. A tag replaces it once the substrate publishes releases.",
+      "source": "cat-harness/schemas/cat-harness.ts#Subscription.ref",
+      "status": "candidate"
+    },
+    {
+      "id": "cat-harness.subscription.repository",
+      "prefLabel": "Subscription.repository",
+      "definition": "Where the substrate lives, `owner/repo` (#1652).",
+      "source": "cat-harness/schemas/cat-harness.ts#Subscription.repository",
+      "status": "candidate"
+    },
+    {
+      "id": "cat-harness.subscription.subgraphs",
+      "prefLabel": "Subscription.subgraphs",
+      "definition": "Subgraph ids (the substrate's `directories[].id`) CHOSEN for materialisation. Everything else stays referenced.",
+      "source": "cat-harness/schemas/cat-harness.ts#Subscription.subgraphs",
       "status": "candidate"
     },
     {
@@ -5628,209 +5747,6 @@
       "status": "candidate"
     },
     {
-      "id": "ig-chrome.igchromeconflictschema.kind",
-      "prefLabel": "IgChromeConflictSchema.kind",
-      "definition": "`shape` — the layers agree the token exists and disagree about what KIND of value it holds, so a consumer substituting one into the other's rule emits something invalid.",
-      "source": "cat-harness/schemas/ig-chrome.ts#IgChromeConflictSchema.kind",
-      "status": "candidate"
-    },
-    {
-      "id": "ig-chrome.igchromeconflictschema.sites",
-      "prefLabel": "IgChromeConflictSchema.sites",
-      "definition": "Where it was seen. `min(1)` rather than `min(2)`: a `shape` conflict needs two layers by definition, but a `malformed` value needs only one, and requiring two would have made the second kind unrepresentable in the schema written to hold it.",
-      "source": "cat-harness/schemas/ig-chrome.ts#IgChromeConflictSchema.sites",
-      "status": "candidate"
-    },
-    {
-      "id": "ig-chrome.igchromelayerschema.of",
-      "prefLabel": "IgChromeLayerSchema.of",
-      "definition": "The repository the bytes were read from.",
-      "source": "cat-harness/schemas/ig-chrome.ts#IgChromeLayerSchema.of",
-      "status": "candidate"
-    },
-    {
-      "id": "ig-chrome.igchromelayerschema.package",
-      "prefLabel": "IgChromeLayerSchema.package",
-      "definition": "The `fhir.template` package name, e.g. `who.template.root`.",
-      "source": "cat-harness/schemas/ig-chrome.ts#IgChromeLayerSchema.package",
-      "status": "candidate"
-    },
-    {
-      "id": "ig-chrome.igchromelayerschema.path",
-      "prefLabel": "IgChromeLayerSchema.path",
-      "definition": "The stylesheet within that repository.",
-      "source": "cat-harness/schemas/ig-chrome.ts#IgChromeLayerSchema.path",
-      "status": "candidate"
-    },
-    {
-      "id": "ig-chrome.igchromelayerschema.ref",
-      "prefLabel": "IgChromeLayerSchema.ref",
-      "definition": "The commit they were read at. Provenance.",
-      "source": "cat-harness/schemas/ig-chrome.ts#IgChromeLayerSchema.ref",
-      "status": "candidate"
-    },
-    {
-      "id": "ig-chrome.igchromelayerschema.version",
-      "prefLabel": "IgChromeLayerSchema.version",
-      "definition": "Its declared version, e.g. `0.5.0`.",
-      "source": "cat-harness/schemas/ig-chrome.ts#IgChromeLayerSchema.version",
-      "status": "candidate"
-    },
-    {
-      "id": "ig-chrome.igchromeruleschema.from",
-      "prefLabel": "IgChromeRuleSchema.from",
-      "definition": "The package the rule was read from.",
-      "source": "cat-harness/schemas/ig-chrome.ts#IgChromeRuleSchema.from",
-      "status": "candidate"
-    },
-    {
-      "id": "ig-chrome.igchromeruleschema.selector",
-      "prefLabel": "IgChromeRuleSchema.selector",
-      "definition": "The selector, verbatim, e.g. `#ig-status.ig-status-draft`.",
-      "source": "cat-harness/schemas/ig-chrome.ts#IgChromeRuleSchema.selector",
-      "status": "candidate"
-    },
-    {
-      "id": "ig-chrome.igchromeschema.canonical",
-      "prefLabel": "IgChromeSchema.canonical",
-      "definition": "Its `canonical`.",
-      "source": "cat-harness/schemas/ig-chrome.ts#IgChromeSchema.canonical",
-      "status": "candidate"
-    },
-    {
-      "id": "ig-chrome.igchromeschema.id",
-      "prefLabel": "IgChromeSchema.id",
-      "definition": "The IG's `id` from `sushi-config.yaml`, e.g. `smart.who.int.trust`.",
-      "source": "cat-harness/schemas/ig-chrome.ts#IgChromeSchema.id",
-      "status": "candidate"
-    },
-    {
-      "id": "ig-chrome.igchromeschema.layers",
-      "prefLabel": "IgChromeSchema.layers",
-      "definition": "The chain, BASE FIRST, so index order is override order.",
-      "source": "cat-harness/schemas/ig-chrome.ts#IgChromeSchema.layers",
-      "status": "candidate"
-    },
-    {
-      "id": "ig-chrome.igchromeschema.status",
-      "prefLabel": "IgChromeSchema.status",
-      "definition": "Its `status` — what selects the watermark. `draft` here.",
-      "source": "cat-harness/schemas/ig-chrome.ts#IgChromeSchema.status",
-      "status": "candidate"
-    },
-    {
-      "id": "ig-chrome.igchrometokenschema.from",
-      "prefLabel": "IgChromeTokenSchema.from",
-      "definition": "The package whose declaration wins.",
-      "source": "cat-harness/schemas/ig-chrome.ts#IgChromeTokenSchema.from",
-      "status": "candidate"
-    },
-    {
-      "id": "ig-chrome.igchrometokenschema.name",
-      "prefLabel": "IgChromeTokenSchema.name",
-      "definition": "The custom property, including its leading `--`.",
-      "source": "cat-harness/schemas/ig-chrome.ts#IgChromeTokenSchema.name",
-      "status": "candidate"
-    },
-    {
-      "id": "ig-chrome.igchrometokenschema.overrides",
-      "prefLabel": "IgChromeTokenSchema.overrides",
-      "definition": "Lower layers this shadows, nearest first. Empty when only one declared it.",
-      "source": "cat-harness/schemas/ig-chrome.ts#IgChromeTokenSchema.overrides",
-      "status": "candidate"
-    },
-    {
-      "id": "ig-chrome.igchrometokenschema.value",
-      "prefLabel": "IgChromeTokenSchema.value",
-      "definition": "The winning value, verbatim.",
-      "source": "cat-harness/schemas/ig-chrome.ts#IgChromeTokenSchema.value",
-      "status": "candidate"
-    },
-    {
-      "id": "ig-menu.igmenugroupschema.href",
-      "prefLabel": "IgMenuGroupSchema.href",
-      "definition": "Set when the group itself is a page rather than only a container.",
-      "source": "cat-harness/schemas/ig-menu.ts#IgMenuGroupSchema.href",
-      "status": "candidate"
-    },
-    {
-      "id": "ig-menu.igmenuschema.canonical",
-      "prefLabel": "IgMenuSchema.canonical",
-      "definition": "Its `canonical`, the base every `href` is relative to.",
-      "source": "cat-harness/schemas/ig-menu.ts#IgMenuSchema.canonical",
-      "status": "candidate"
-    },
-    {
-      "id": "ig-menu.igmenuschema.id",
-      "prefLabel": "IgMenuSchema.id",
-      "definition": "The IG's `id` from `sushi-config.yaml`, e.g. `smart.who.int.trust`.",
-      "source": "cat-harness/schemas/ig-menu.ts#IgMenuSchema.id",
-      "status": "candidate"
-    },
-    {
-      "id": "ig-menu.igmenusourceschema.of",
-      "prefLabel": "IgMenuSourceSchema.of",
-      "definition": "The repository the config was read from.",
-      "source": "cat-harness/schemas/ig-menu.ts#IgMenuSourceSchema.of",
-      "status": "candidate"
-    },
-    {
-      "id": "ig-menu.igmenusourceschema.path",
-      "prefLabel": "IgMenuSourceSchema.path",
-      "definition": "The path within that repository.",
-      "source": "cat-harness/schemas/ig-menu.ts#IgMenuSourceSchema.path",
-      "status": "candidate"
-    },
-    {
-      "id": "ig-menu.igmenusourceschema.ref",
-      "prefLabel": "IgMenuSourceSchema.ref",
-      "definition": "The commit it was read at. Provenance.",
-      "source": "cat-harness/schemas/ig-menu.ts#IgMenuSourceSchema.ref",
-      "status": "candidate"
-    },
-    {
-      "id": "ig-metadata-index.igidentityschema.canonical",
-      "prefLabel": "IgIdentitySchema.canonical",
-      "definition": "The IG's canonical URL, where it declares one.",
-      "source": "cat-harness/schemas/ig-metadata-index.ts#IgIdentitySchema.canonical",
-      "status": "candidate"
-    },
-    {
-      "id": "ig-metadata-index.igidentityschema.packageid",
-      "prefLabel": "IgIdentitySchema.packageId",
-      "definition": "The NPM-style package id, e.g. `who.smart.trust`.",
-      "source": "cat-harness/schemas/ig-metadata-index.ts#IgIdentitySchema.packageId",
-      "status": "candidate"
-    },
-    {
-      "id": "ig-metadata-index.igidentityschema.version",
-      "prefLabel": "IgIdentitySchema.version",
-      "definition": "The IG version this harvest was taken at. An id alone collides across versions.",
-      "source": "cat-harness/schemas/ig-metadata-index.ts#IgIdentitySchema.version",
-      "status": "candidate"
-    },
-    {
-      "id": "ig-metadata-index.igmetadatasourceschema.harvestedat",
-      "prefLabel": "IgMetadataSourceSchema.harvestedAt",
-      "definition": "When the harvest ran.",
-      "source": "cat-harness/schemas/ig-metadata-index.ts#IgMetadataSourceSchema.harvestedAt",
-      "status": "candidate"
-    },
-    {
-      "id": "ig-metadata-index.igmetadatasourceschema.harvestedfrom",
-      "prefLabel": "IgMetadataSourceSchema.harvestedFrom",
-      "definition": "The published site or package the exports were read out of.",
-      "source": "cat-harness/schemas/ig-metadata-index.ts#IgMetadataSourceSchema.harvestedFrom",
-      "status": "candidate"
-    },
-    {
-      "id": "ig-metadata-index.igmetadatasourceschema.runurl",
-      "prefLabel": "IgMetadataSourceSchema.runUrl",
-      "definition": "A URL for the harvest run, if one exists.",
-      "source": "cat-harness/schemas/ig-metadata-index.ts#IgMetadataSourceSchema.runUrl",
-      "status": "candidate"
-    },
-    {
       "id": "instance-repositories.instancerepository.livesat",
       "prefLabel": "InstanceRepository.livesAt",
       "definition": "Where it sits today, when not at the root of `repository`.",
@@ -8341,6 +8257,41 @@
       "prefLabel": "StickyTextSchema.scale",
       "definition": "Multiply the words' size. `1` is normal; `0.8` fits more in.",
       "source": "cat-harness/schemas/sticky-contribution.ts#StickyTextSchema.scale",
+      "status": "candidate"
+    },
+    {
+      "id": "substrate-snapshot.substratesnapshotschema.file",
+      "prefLabel": "SubstrateSnapshotSchema.file",
+      "definition": "The upstream file, relative to the substrate's repository root: `<name>.json`.",
+      "source": "cat-harness/schemas/substrate-snapshot.ts#SubstrateSnapshotSchema.file",
+      "status": "candidate"
+    },
+    {
+      "id": "substrate-snapshot.substratesnapshotschema.raw",
+      "prefLabel": "SubstrateSnapshotSchema.raw",
+      "definition": "The upstream bytes, exactly as fetched.",
+      "source": "cat-harness/schemas/substrate-snapshot.ts#SubstrateSnapshotSchema.raw",
+      "status": "candidate"
+    },
+    {
+      "id": "substrate-snapshot.substratesnapshotschema.ref",
+      "prefLabel": "SubstrateSnapshotSchema.ref",
+      "definition": "The pinned commit the bytes were read at — a full SHA, never a branch.",
+      "source": "cat-harness/schemas/substrate-snapshot.ts#SubstrateSnapshotSchema.ref",
+      "status": "candidate"
+    },
+    {
+      "id": "substrate-snapshot.substratesnapshotschema.subscription",
+      "prefLabel": "SubstrateSnapshotSchema.subscription",
+      "definition": "The `subscriptions[].id` this snapshot belongs to.",
+      "source": "cat-harness/schemas/substrate-snapshot.ts#SubstrateSnapshotSchema.subscription",
+      "status": "candidate"
+    },
+    {
+      "id": "substrate-snapshot.substratesnapshotschema.summary",
+      "prefLabel": "SubstrateSnapshotSchema.summary",
+      "definition": "What the judgement found, derived from `raw`.",
+      "source": "cat-harness/schemas/substrate-snapshot.ts#SubstrateSnapshotSchema.summary",
       "status": "candidate"
     },
     {

@@ -89,7 +89,7 @@ nothing renders yet. It is shown rather than omitted: "nothing renders this" and
 
 - [C@T Harness]({{ '/cat-harness/docs-auto/index/docs/docs/' | relative_url }})
 - [Folio Assistant]({{ '/cat-harness/docs-auto/index/docs/root-docs/' | relative_url }})
-- [SMART Base]({{ '/cat-harness/docs-auto/index/docs/' | relative_url }})
+- [SMART Base]({{ '/cat-harness/docs-auto/index/docs/smart-base-docs/' | relative_url }})
 - [smart-trust]({{ '/cat-harness/docs-auto/index/docs/smart-trust-docs/' | relative_url }})
 - [WHO IRIS]({{ '/cat-harness/docs-auto/index/docs/who-iris-site/' | relative_url }})
 
