@@ -135,7 +135,6 @@ so the difference could not show. Use the pair:
 |---|---|
 | `readme:sync` · `readme:audit` | the cat-harness instance's README |
 | `readme:sync:root` · `readme:audit:root` | the REPOSITORY's README |
-| `readme:sync:bootstrap` | bootstrap's README — renders its diagrams first |
 | `readme:sync:all` | EVERY instance's README, each against its own declaration |
 
 Both are gated in `code-quality-gates.yml`, and that is not belt and braces:
@@ -198,9 +197,11 @@ skill and tool in cat-harness"*.
   is the SVG `render:bpmn` writes **beside** the `.bpmn` for an instance
   exempt from `workflow-visualiser` — one with no site of its own, so its
   README is where its diagrams are seen. This section **reads** the SVG and
-  never draws; rendering needs a browser, so `readme:sync:bootstrap` runs
-  `render:bpmn` first. A diagram with no picture beside it leaves the region
-  untouched — never a broken image.
+  never draws; rendering needs a browser, so `render:bpmn` must run first.
+  bootstrap's own README is generated and checked in bootstrap's repository
+  (owner, 2026-10-01: each repo owns its README; litlfred/bootstrap#1).
+  A diagram with no picture beside it leaves the region untouched — never a
+  broken image.
 - **`kg:files`** — every file, grouped by declared directory, with "what it
   is" read from the file itself (front-matter `description`, a Process's
   name, a schema's `title`, a JSON file's own `description` or `$comment`)
