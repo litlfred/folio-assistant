@@ -160,6 +160,7 @@ Owner, 2026-10-01:
   The DAK half has a head start: `cat-harness/schemas/dak.ts`, `dak-blocks.ts` and `dak-content-type.ts` already exist and, by this plan, are S-destined. `smart-ig` has no counterpart in the owner's reframe; it is treated as the IG publication the DAK feeds (fhir-harness's concern) until told otherwise. The L1 library is to grow PCMT and the other WHO digital-transformation handbooks; that has its own bean. Stage D therefore stops **retiring** the three directories and **re-homes** them as kinds; the `needs: smart-ig` edges are repointed to `smart-base` either way.
 
 - **Q4, Q6 and Q7** proceed on their defaults.
+- **The `l3-fhir-authoring` → `l2-dak-authoring` edge** (raised in stage B): owner chose option 1. It stays for now. In stage D the generic skill's input becomes a source model, and smart-base supplies the L2 → L3 specialisation.
 
 ## What would change this plan
 
