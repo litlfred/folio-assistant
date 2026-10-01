@@ -1477,6 +1477,25 @@
       "skos:note": "candidate"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant-core/0.1.0/ns#glossary/kg-schema-fields/fhir-artifact-index.fhirartifactschema.listedat",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant-core/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "FhirArtifactSchema.listedAt"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Position on the Publisher's `artifacts.html`, 0-based, first appearance. The category's order and the artefact's order within it are both read off this — a renderer that must match the Publisher's page (owner, 2026-10-01: every phase renders equivalent to the standard IG render) has no other source for either. Absent exactly when `category` is."
+        }
+      ],
+      "dcterms:source": "folio-assistant-core/schemas/fhir-artifact-index.ts#FhirArtifactSchema.listedAt",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant-core/0.1.0/ns#glossary/kg-schema-fields/fhir-artifact-index.igsourceschema.of",
       "@type": "skos:Concept",
       "skos:inScheme": {

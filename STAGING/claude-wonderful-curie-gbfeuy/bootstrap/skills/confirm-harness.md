@@ -36,6 +36,9 @@ is only how you reach them — the git CLI, or a forge's API.
 
 ## Asking
 
+Ask through [`human-agent-discussion`](human-agent-discussion.md): context,
+the candidates as options, your recommendation, and, said before the
+question, that **there is no default**: with no answer, the process stops.
 Ask **once**, with what you found, and make it answerable by picking:
 
 > **What should this become?** I can see *(list)*. If it is none of those, name
