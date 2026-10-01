@@ -278,6 +278,18 @@ Other audit findings, now on the checklist:
 - **READMEs: each repo owns its own.** folio-assistant stops regenerating and checking submodule READMEs. Each repo's own CI keeps its README current (D3). Nothing is pushed upstream.
 - **W3C library sources** (PROV-O, ODRL 2.2, JSON-LD 1.1): **methodologies cite them** via `evidence:`, reusing sibling PR #1769's methodology nodes. The test rule stays as it is.
 
+## Rulings 2026-10-01 late
+
+Owner, about 17:30. Each ruling is recorded in full on the bean it settles.
+
+| question | ruling | bean |
+|---|---|---|
+| **Q-A** generator retargeting | Split bootstrap outputs by kind. kg-qa verdicts, glossary ledgers and detangle stay in cat-harness as the auditor's output ("a harness may discuss its dependencies"). bootstrap-tools renders the UML of bootstrap and bootstrap-tools at build time. bootstrap's process translations move into bootstrap. Committed renderings become deploy-time output and keep their URLs. Delete the 37 duplicate sidecars. A `tools/index.ts` name collision throws. SKOS URLs (X2) are not ruled yet. | `cmsl`, `wggr` |
+| **Q-B** reference direction | Q1 is **reword**: files stay put and their prose stops naming higher layers. X3 exempts the 3 layering specifications. The ratchet also covers single-name files (A.10). Translation mirrors are exempt (X1). | `zhg2` (implementation: `1bvx`, `vzo5`) |
+| #1735 who-iris prose | Reword the outdated `dependents` prose in the who-iris files now, as the earlier ruling on #1735 said. | `ga6u` (`qsx4` exists only on #1735's branch) |
+| S5 1a, trap 1 | `inProcess("src/tools/...")` resolves against the implementing instance (cat-harness-tools), found through `needs`. No cat-harness-tools path is written into cat-harness. Two points are still open: how a sidecar's `source_file` resolves, and whether sci-bound files move in 1a. | `70lx` |
+| merge-treadmill speed-ups | Four approved: input-hash skip (`f017`), parallel checks (`v3nf`), CI `merge:main` (`d33q` part B), and CI sharding with a BPMN cache and shallow checkout (`dlqu`). | `0mf0` |
+
 ## S4 evidence (#1776, the upward-links PR)
 
 R5 upward markdown links 26 → **0** · R6 root links (md) 12 → **0** · large-datasets → core import 1 → **0** · `check:reference-direction` 1667 → 1640 occurrences. The 6 R6 `.ts` items are paths written into *emitted* files (`init-folio.ts:279,290,318,344`, `translate-kg-viewer.ts:153`, `translation.ts:225`), not root references. One upward name remains in large-datasets (`gen-id-lookup.ts` `SOURCE = "who-iris"`, plus prose naming core); it goes with the `needs` change.
