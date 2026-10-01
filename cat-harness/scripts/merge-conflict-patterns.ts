@@ -112,10 +112,11 @@ export const PATTERNS: readonly ConflictPattern[] = [
       "cat-harness/docs/external-schemas/index.md",
       "cat-harness/docs/methodologies/index.md",
       "cat-harness/docs/processes/*.md",
+      "cat-harness/docs/qa/index.html",
       "cat-harness/docs/translation-status/index.html",
     ],
     strategy: "take-base",
-    why: "whole-file viewer pages (external-schemas:viz, methodologies:viz, processes:viz, translation:status), each with a --check in the CI workflow. Rewritten whole from the declarations they render, so a new schema, diagram or translation anywhere changes them; found 2026-10-01 when a merge refused on these alone.",
+    why: "whole-file viewer pages (external-schemas:viz, methodologies:viz, processes:viz, state:visualizer, translation:status), each with a --check in the CI workflow. Rewritten whole from the declarations they render, so a new schema, diagram or translation anywhere changes them; found 2026-10-01 when a merge refused on these alone.",
   },
   {
     id: "handler-index",
@@ -128,6 +129,18 @@ export const PATTERNS: readonly ConflictPattern[] = [
     globs: ["**/test/health/results/*.health-report.json"],
     strategy: "take-base",
     why: "the committed repository health report: a MEASUREMENT of external state (the publish branch, clone size, the work plan) written by `bun run health` and refreshed daily on the base by the health-check workflow, so the base's copy is the newer measurement. check:harness-state judges its producer hash; if the merge changes the producer, `bun run health` rewrites it. Found 2026-10-01 on #1754.",
+  },
+  {
+    id: "qa-witnesses",
+    globs: ["**/test/results/witnesses/**"],
+    strategy: "take-base",
+    why: "QA witness projections (qa-witness/v1) and page verdict indexes, written by gen-docs-pages.ts from the kg-qa sidecars and the live subject. A projection, never an attestation: the sidecars it reads are delegated above, and docs-site regenerates the witnesses at publish. Found 2026-10-01 on #1754.",
+  },
+  {
+    id: "pot-templates",
+    globs: ["cat-harness/translations/**/*.pot"],
+    strategy: "take-base",
+    why: "gettext TEMPLATES, extracted from the English pages by pot-for-pages.ts (translation:pot:check). Every edit to a source page rewrites its .pot in every locale. The .po files beside them are authored translations and stay refused. Found 2026-10-01 on #1754.",
   },
   {
     id: "site-data",

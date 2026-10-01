@@ -46,6 +46,11 @@ describe("classify", () => {
     // Authored neighbours: a methodology page itself, and the health producer.
     expect(classify("cat-harness/docs/methodologies/prov-o.md").strategy).toBe("refuse");
     expect(classify("cat-harness/test/health/run.ts").strategy).toBe("refuse");
+    expect(classify("cat-harness/docs/qa/index.html").pattern?.id).toBe("viewer-pages");
+    expect(classify("cat-harness/test/results/witnesses/guides-who-smart-dak/the-l2-artifacts.kg.json").pattern?.id).toBe("qa-witnesses");
+    expect(classify("cat-harness/translations/ar/publication-workflow.pot").pattern?.id).toBe("pot-templates");
+    // The authored translation beside the template is NOT a template.
+    expect(classify("cat-harness/translations/ar/publication-workflow.po").strategy).toBe("refuse");
     // The unsafe neighbours: authored translations, and a locale no generator writes.
     expect(classify("cat-harness/docs/ar/index.md").strategy).toBe("refuse");
     expect(classify("cat-harness/docs/fr/getting-started.md").strategy).toBe("refuse");
