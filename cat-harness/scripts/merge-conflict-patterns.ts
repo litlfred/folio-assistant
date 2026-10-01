@@ -101,6 +101,22 @@ export const PATTERNS: readonly ConflictPattern[] = [
     why: "the generated glossary and LSI pages (173 + 34). Whole-corpus aggregates; concurrent term additions always collide.",
   },
   {
+    id: "translated-glossary",
+    globs: ["cat-harness/docs/{ar,es,fr,ru,zh}/glossary/index.md"],
+    strategy: "take-base",
+    why: "the translated glossary pages, one per locale, written whole by glossary-page.ts beside the English one (check:glossary). Same aggregate, so the same collision; found 2026-10-01 when a merge refused on all five. The rest of each locale directory is authored translation and stays refused.",
+  },
+  {
+    id: "viewer-pages",
+    globs: [
+      "cat-harness/docs/external-schemas/index.md",
+      "cat-harness/docs/processes/*.md",
+      "cat-harness/docs/translation-status/index.html",
+    ],
+    strategy: "take-base",
+    why: "whole-file viewer pages (external-schemas:viz, processes:viz, translation:status), each with a --check in the CI workflow. Rewritten whole from the declarations they render, so a new schema, diagram or translation anywhere changes them; found 2026-10-01 when a merge refused on these alone.",
+  },
+  {
     id: "site-data",
     globs: ["cat-harness/docs/assets/**/*.json", "cat-harness/docs/_data/**"],
     strategy: "take-base",

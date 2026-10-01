@@ -32,6 +32,20 @@ describe("classify", () => {
     expect(classify("cat-harness/test/results/bootstrap/kg-qa.manifest.json").pattern?.id).toBe("kg-qa-manifest");
   });
 
+  test("translated glossaries and viewer pages are taken; their authored neighbours are not", () => {
+    for (const l of ["ar", "es", "fr", "ru", "zh"]) {
+      expect(classify(`cat-harness/docs/${l}/glossary/index.md`).pattern?.id).toBe("translated-glossary");
+    }
+    expect(classify("cat-harness/docs/external-schemas/index.md").pattern?.id).toBe("viewer-pages");
+    expect(classify("cat-harness/docs/processes/index.md").pattern?.id).toBe("viewer-pages");
+    expect(classify("cat-harness/docs/processes/merge-base.md").pattern?.id).toBe("viewer-pages");
+    expect(classify("cat-harness/docs/translation-status/index.html").pattern?.id).toBe("viewer-pages");
+    // The unsafe neighbours: authored translations, and a locale no generator writes.
+    expect(classify("cat-harness/docs/ar/index.md").strategy).toBe("refuse");
+    expect(classify("cat-harness/docs/fr/getting-started.md").strategy).toBe("refuse");
+    expect(classify("cat-harness/docs/de/glossary/index.md").strategy).toBe("refuse");
+  });
+
   test("a path no pattern names is REFUSED, with no pattern attached", () => {
     const c = classify("cat-harness/scripts/merge-base.ts");
     expect(c.strategy).toBe("refuse");

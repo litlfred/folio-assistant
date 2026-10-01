@@ -89,6 +89,23 @@ Generated overview diagrams and their SVGs.
 The generated glossary and LSI pages: whole-corpus aggregates where concurrent
 term additions always collide.
 
+### `translated-glossary` — take the base, regenerate
+
+`cat-harness/docs/{ar,es,fr,ru,zh}/glossary/index.md`. The per-locale glossary
+pages `glossary-page.ts` writes whole beside the English one (`check:glossary`),
+so they collide exactly when it does. Not in the first measurement; found
+2026-10-01 when a `merge:main` on #1754 refused on all five. Only the glossary
+page is named: the rest of each locale directory is authored translation, and
+a locale no generator writes (`de/`) is refused.
+
+### `viewer-pages` — take the base, regenerate
+
+`docs/external-schemas/index.md`, `docs/processes/*.md` and
+`docs/translation-status/index.html`: whole-file viewer pages, each with its
+writer's `--check` in the CI workflow (`external-schemas:viz`, `processes:viz`,
+`translation:status`). A new schema, diagram or translation anywhere rewrites
+them. Found the same way, on the same merge.
+
 ### `site-data` — take the base, regenerate (36)
 
 Generated site data indexes under `docs/assets/**/*.json` and `docs/_data/`.
