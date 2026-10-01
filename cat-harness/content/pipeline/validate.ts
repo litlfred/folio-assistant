@@ -295,11 +295,34 @@ async function loadBlocksFromDir(
       // exists to end — and it would go silently wrong the day the mirroring
       // scheme changes. The probe name never touches the filesystem.
       const mirrorDir = dirname(blockQaPath(repoRoot, join(dir, "__probe__")));
-      // An ABSENT mirror directory is a determined zero, not an unknown: no
-      // verdict has been written for this directory under the current
-      // convention. That is the normal state of a folio that has not migrated
-      // and must not produce a finding.
-      if (existsSync(mirrorDir)) {
+      // The results tree's ROOT, asked of the same writer function: the
+      // mirror of the instance root itself.
+      const resultsRoot = dirname(blockQaPath(repoRoot, join(repoRoot, "__probe__")));
+      // TWO absences, and they are different facts (bean `c8uq`, defect C7).
+      //
+      // - The results tree EXISTS and this directory has no mirror in it: no
+      //   verdict was ever written for this directory. A determined zero, and
+      //   no finding — the normal state of a chapter nobody has swept.
+      // - The results tree ITSELF is absent: this checkout does not hold the
+      //   derived QA corpus at all. Once derived QA moved to the `qa-reports`
+      //   branch that is every unfetched checkout, and calling it "no orphans"
+      //   is the false-clean this check exists to refuse. It used to be a
+      //   determined zero "by design"; it is now an UNKNOWN, said once per
+      //   run under the check's own id.
+      //
+      // Only when the directory has entries, for the reason the third state
+      // above gives: any issue disarms the empty-corpus refusal.
+      if (!existsSync(resultsRoot)) {
+        const notice =
+          `check "no-orphan-sidecar" could not determine orphans in the results ` +
+          `tree: ${resultsRoot} is absent from this checkout, so verdicts under ` +
+          `test/results/block-qa/ were NOT checked (verdicts beside the blocks ` +
+          `were). The derived QA corpus lives on the \`qa-reports\` branch — run ` +
+          `\`bun run qa:fetch --ref main\` (or \`--ref pr/<n>\`) and validate again.`;
+        if (entries.length > 0 && !issues.some((i) => i.message === notice)) {
+          issues.push({ level: "warning", block: "(none)", message: notice });
+        }
+      } else if (existsSync(mirrorDir)) {
         for (const f of readdirSync(mirrorDir)) {
           if (!f.endsWith(BLOCK_QA_SUFFIX)) continue;
           // `blockOfQaPath` rather than re-deriving `join(dir, base + ".ts")`:

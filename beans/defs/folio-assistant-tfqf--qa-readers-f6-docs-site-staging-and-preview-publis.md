@@ -1,11 +1,11 @@
 ---
 # folio-assistant-tfqf
 title: 'QA READERS F6: docs site, staging and preview publish QA from qa-reports — silent shrink of /assets/qa and a false 965 to 2 count'
-status: todo
+status: in-progress
 type: task
 priority: high
 created_at: 2026-10-01T08:47:14Z
-updated_at: 2026-10-01T08:47:14Z
+updated_at: 2026-10-01T16:44:05Z
 parent: folio-assistant-3fva
 blocked_by:
     - folio-assistant-16ei

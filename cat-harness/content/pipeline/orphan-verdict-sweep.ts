@@ -32,6 +32,19 @@
  * sweep, and it is reported separately so a reader can tell the sweep earned
  * its run.
  *
+ * ## An absent tree is "could not determine", never "no orphans"
+ *
+ * This sweep used to treat a missing `test/results/block-qa/` as a determined
+ * empty and print `✓ no orphaned block verdicts`. Bean `c8uq` (reader audit
+ * `qa-readers-audit-2026-10-01.md`, defect **C6**): once derived QA leaves
+ * `main` for the `qa-reports` branch, EVERY checkout lacks the tree until
+ * `bun run qa:fetch` materialises it, so that `✓` would be printed on every run
+ * over zero verdicts — measured, it was. {@link sweepOrphanVerdicts} therefore
+ * reports how many verdicts it EXAMINED, and the CLI refuses through
+ * `vacuityRefusal` (exit 2, "could not determine") when that is zero. A folio
+ * that genuinely has never swept gets the same refusal, which is the honest
+ * answer: nothing was judged, so nothing can be called clean.
+ *
  * @module content/pipeline/orphan-verdict-sweep
  * @covers qa
  */
@@ -67,13 +80,36 @@ function walk(dir: string): string[] {
 /**
  * Orphaned block verdicts across the whole results tree.
  *
- * An ABSENT results tree is a determined empty, not an error: a folio that has
- * never run a sweep since migrating has no tree, and reporting that as a
- * problem would put a finding in front of every such folio on day one.
+ * Returns only what was FOUND. An absent tree yields `[]` here, and that `[]`
+ * is not a verdict: callers that report a result must use
+ * {@link sweepOrphanVerdicts}, which says how many verdicts were examined, so
+ * an empty corpus cannot read as a clean one (bean `c8uq`, defect C6).
  */
 export function orphanVerdicts(repoRoot: string): OrphanVerdict[] {
+  return sweepOrphanVerdicts(repoRoot).orphans;
+}
+
+/** What one sweep looked at, and what it found there. */
+export interface OrphanSweep {
+  orphans: OrphanVerdict[];
+  /** Block verdicts examined. Zero means the sweep judged nothing. */
+  examined: number;
+  /** The results tree it walked, absolute. */
+  tree: string;
+  /** Whether that tree exists in this checkout. */
+  present: boolean;
+}
+
+/**
+ * The sweep, with its population. `examined === 0` is the case a caller must
+ * NOT report as clean: either the tree is absent (not fetched, or never
+ * written) or it holds no block verdict at all.
+ */
+export function sweepOrphanVerdicts(repoRoot: string): OrphanSweep {
+  const tree = join(repoRoot, BLOCK_QA_RESULTS_DIR);
+  const verdicts = walk(tree);
   const out: OrphanVerdict[] = [];
-  for (const verdict of walk(join(repoRoot, BLOCK_QA_RESULTS_DIR))) {
+  for (const verdict of verdicts) {
     const ts = blockOfQaPath(repoRoot, verdict);
     // `undefined` means the path is not under the results tree, which `walk`
     // makes impossible — but the contract is allowed to refuse and this must
@@ -85,17 +121,39 @@ export function orphanVerdicts(repoRoot: string): OrphanVerdict[] {
       kind: existsSync(dirname(ts)) ? "moved" : "abandoned",
     });
   }
-  return out.sort((a, b) => a.verdict.localeCompare(b.verdict));
+  return {
+    orphans: out.sort((a, b) => a.verdict.localeCompare(b.verdict)),
+    examined: verdicts.length,
+    tree,
+    present: existsSync(tree),
+  };
 }
 
 if (import.meta.main) {
   const { findContentRepoRoot } = await import("./repo-root");
+  const { vacuityRefusal } = await import("../../scripts/vacuity-refusal");
   const root = findContentRepoRoot();
-  const found = orphanVerdicts(root);
+  const sweep = sweepOrphanVerdicts(root);
+  const found = sweep.orphans;
   const abandoned = found.filter((f) => f.kind === "abandoned");
 
+  // Zero examined is "could not determine", never "no orphans" (C6). The
+  // refusal names the tree and its state, and the remedy: the derived corpus
+  // is fetched from `qa-reports`, not assumed to be in the checkout.
+  const refusal = vacuityRefusal({ script: "check:orphan-verdicts", covers: "qa" }, [
+    { label: "block-qa verdicts", dir: sweep.tree, present: sweep.present, found: sweep.examined },
+  ]);
+  if (refusal) {
+    console.error(refusal);
+    console.error(
+      `\nThe derived QA corpus is published to the \`qa-reports\` branch. Materialise it\n` +
+        `first — \`bun run qa:fetch --ref main\` (or \`--ref pr/<n>\`) — then re-run this sweep.`,
+    );
+    process.exit(2);
+  }
+
   if (found.length === 0) {
-    console.log(`✓ no orphaned block verdicts under ${BLOCK_QA_RESULTS_DIR}`);
+    console.log(`✓ no orphaned block verdicts under ${BLOCK_QA_RESULTS_DIR} (${sweep.examined} examined)`);
     process.exit(0);
   }
   console.error(`${found.length} orphaned block verdict(s):\n`);

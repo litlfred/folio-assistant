@@ -1,11 +1,11 @@
 ---
 # folio-assistant-c8uq
 title: 'QA READERS F5: corpus walkers that pass on an empty corpus (orphan-verdict sweep, validate orphan check, reviewer permission)'
-status: todo
+status: in-progress
 type: task
 priority: high
 created_at: 2026-10-01T08:47:14Z
-updated_at: 2026-10-01T08:47:14Z
+updated_at: 2026-10-01T16:44:05Z
 parent: folio-assistant-3fva
 blocked_by:
     - folio-assistant-16ei

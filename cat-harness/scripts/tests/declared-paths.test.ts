@@ -26,7 +26,7 @@ import { describe, expect, test } from "bun:test";
 import { existsSync, readFileSync } from "node:fs";
 import { join, resolve } from "node:path";
 
-import { isTestFile, scanDeclaredPaths, witnessesOf } from "../check-declared-paths.js";
+import { absentResultDirs, isTestFile, scanDeclaredPaths, underAbsentResults, witnessesOf } from "../check-declared-paths.js";
 
 const root = resolve(import.meta.dir, "../..");
 const scan = scanDeclaredPaths(root);
@@ -144,5 +144,25 @@ describe("declared-path literals", () => {
   test("test literals naming real artefacts are checked to dereference", () => {
     const guarded = scan.artefacts.filter((a) => a.file.endsWith(".test.ts"));
     expect(guarded.length, "no test names a real artefact — the relocation guard is vacuous").toBeGreaterThan(20);
+  });
+});
+
+describe("a witness under an ABSENT results tree is unknown, not lost (bean `c8uq`)", () => {
+  test("only a literal INSIDE an absent results directory qualifies", () => {
+    const root = join("/", "r");
+    const absent = [join(root, "test", "results"), join(root, "test", "health", "results") + "/"];
+    expect(underAbsentResults(root, "test/results/kg-qa.manifest.json", absent)).toBe(true);
+    expect(underAbsentResults(root, "test/health/results/repository.health-report.json", absent)).toBe(true);
+    // A sibling whose name merely STARTS with the directory's is not inside it.
+    expect(underAbsentResults(root, "test/results-old/x.json", absent)).toBe(false);
+    expect(underAbsentResults(root, "processes/x.bpmn", absent)).toBe(false);
+  });
+
+  test("absentResultDirs names only declared qa/health directories that are missing", () => {
+    // In this checkout the results trees are committed, so none is absent; the
+    // gate's absent-corpus behaviour is exercised by moving them aside, which
+    // a test must not do (bean `ymsu`).
+    const root = resolve(import.meta.dir, "..", "..");
+    for (const d of absentResultDirs(root)) expect(existsSync(d)).toBe(false);
   });
 });
