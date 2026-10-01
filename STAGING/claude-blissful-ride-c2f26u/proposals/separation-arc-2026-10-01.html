@@ -505,32 +505,32 @@
   NOT a cache-busting strategy for third-party assets, and not applied to
   them: those are versioned in their own URLs already.
 -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-blissful-ride-c2f26u/assets/css/docs-ui.css?v=1790846222">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-blissful-ride-c2f26u/assets/css/docs-ui.css?v=1790854704">
 <!-- Narrow viewports: wide content scrolls in its own box, never the page
      (bean `2r2n`). The standalone viewers inline the same file through
      `withViewerNav`, so both kinds of page read one set of rules. -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-blissful-ride-c2f26u/assets/css/narrow-viewport.css?v=1790846222">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-blissful-ride-c2f26u/assets/css/narrow-viewport.css?v=1790854704">
 
 <!--
   The work-plan dashboard's styles, split from docs-ui.css so that
   `state-visualizer.ts` can inline exactly these bytes into the generated
   `<base>/<stub>/state-visualizer/` pages. One rule, two surfaces.
 -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-blissful-ride-c2f26u/assets/css/work-plan.css?v=1790846222">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-blissful-ride-c2f26u/assets/css/work-plan.css?v=1790854704">
 <!-- Sticky themes. GENERATED from the theme nodes in `schemas/themes.ts` by
      `bun run themes:css`; `themes:css:check` fails the build when it is stale.
      Loaded AFTER docs-ui.css deliberately: it supplies the `--fa-sticky-*`
      roles that docs-ui.css consumes, and a custom property has to be set on a
      matching element before the rule reading it takes effect. -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-blissful-ride-c2f26u/assets/css/themes.css?v=1790846222">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-blissful-ride-c2f26u/assets/css/themes.css?v=1790854704">
 <!-- UML overview colours: one class per graph kind, set on the Mermaid nodes
      that `scripts/gen-uml-overview.ts` writes into docs/uml/overview/. -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-blissful-ride-c2f26u/assets/css/uml.css?v=1790846222">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-blissful-ride-c2f26u/assets/css/uml.css?v=1790854704">
 <!-- Kind avatars. GENERATED from `schemas/avatars.ts` by `bun run avatars:css`;
      `avatars:css:check` fails the build when it is stale. One stylesheet
      rather than 68 assets: the glyph is a mask and the colour is a property,
      so a scheme swap is a custom property and the trash state is a selector. -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-blissful-ride-c2f26u/assets/css/avatars.css?v=1790846222">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-blissful-ride-c2f26u/assets/css/avatars.css?v=1790854704">
 
 <!--
   The kinds THIS INSTANCE DECLARES, for the avatar fan.
@@ -547,7 +547,7 @@
 <script type="application/json" id="fa-declared-kinds">["beans","cat-harness","code","code-list","docs","external-schema","folio","fsh-guts","health","interaction","issue-marks","library","memory","methodology","policies","processes","qa","scenarios","schemas","skills","substrate-snapshot","swimlane-glossary","todos","tools","translation-sources","uml","uploads","waiver"]</script>
 <script src="/folio-assistant/STAGING/claude-blissful-ride-c2f26u/assets/js/vendor/qrcode.js" defer></script>
 <script src="/folio-assistant/STAGING/claude-blissful-ride-c2f26u/assets/js/vendor/qrcode_UTF8.js" defer></script>
-<script src="/folio-assistant/STAGING/claude-blissful-ride-c2f26u/assets/js/docs-ui.js?v=1790846222" defer></script>
+<script src="/folio-assistant/STAGING/claude-blissful-ride-c2f26u/assets/js/docs-ui.js?v=1790854704" defer></script>
 
 <!--
   The work-plan dashboard. SELF-MOUNTING on any page carrying
@@ -851,17 +851,18 @@ ignores that stalls again the same way.</p>
   fnx4  KG subscriptions               ████████████░░░░░░░░  slices 1–4,7,8 merged; 5+6 in #1756
   uhkv  SMART stack (sibling: n3ni)    ████████░░░░░░░░░░░░   5/13
 
-ARC 7x5n stories (09:16 UTC)
-  S0 main green          ███░░░░░░░  #1774: workflow-skill-refs fixed; 3 hard jobs still red
+ARC 7x5n stories (11:30 UTC)
+  S0 main green          ██████░░░░  #1774 b4b9e0eb8: repo gates now reach step 17 (13→16→17); reg-chain, bun test, e2e still red
   S1 bookkeeping         ███████░░░  3 beans wait on S0
-  S2 merge treadmill     ▒░░░░░░░░░  #1754 agent running
+  S2 merge treadmill     ███░░░░░░░  2 commits parked on claude/awesome-feynman-0rt8ra-s2-wip; waits on S0
   S3 drain PRs           ▒░░░░░░░░░  #1747 agent running (R1)
-  S4 direction/placement ▒▒░░░░░░░░  #1776 (R5/R6, large-datasets import) + placement audit running
-  S5 code → tools        ░░░░░░░░░░  runs alone, after S4
+  S4 direction/placement █████░░░░░  #1776 ready (R5 26→0, R6 →0, large-datasets import 1→0); audit #1778: 7/7 questions ruled
+  S5 code → tools        ░░░░░░░░░░  790 CODE + 127 TO-JSON rows mapped to 70lx/8lcl/y9r6
   S6 standalone          ░░░░░░░░░░
   S7 seed repos          █████░░░░░  all 5 target repos exist and are empty
   S8 cut over            ░░░░░░░░░░
-main CI                                RED: 5 jobs at cdb0a018/d1a5d6e, being fixed in S0 (#1774)
+  UPSTREAM               ▒░░░░░░░░░  bootstrap + bootstrap-tools: README via published IRIs, README CI check, live render
+main CI                                RED at d1a5d6e (S0 is the critical path)
 </code></pre></div></div>
 
 <p><strong>Legend for the story row:</strong> <code class="language-plaintext highlighter-rouge">░░</code> todo, <code class="language-plaintext highlighter-rouge">▒▒</code> in progress, <code class="language-plaintext highlighter-rouge">██</code> done, <code class="language-plaintext highlighter-rouge">!!</code> blocked on the owner.</p>
@@ -1455,6 +1456,144 @@ cat-harness-tools (code)     █░░░░░░░░░░░░░░░░
 </table></div>
 
 <p>Tracked on <code class="language-plaintext highlighter-rouge">9umr</code> (finale) under S4.</p>
+<h2 id="placement-audit-1778-and-the-owner-rulings-on-its-questions-2026-10-01">
+  
+  
+    <a href="#placement-audit-1778-and-the-owner-rulings-on-its-questions-2026-10-01" class="anchor-heading" aria-labelledby="placement-audit-1778-and-the-owner-rulings-on-its-questions-2026-10-01"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Placement audit (#1778) and the owner rulings on its questions (2026-10-01)
+  
+  
+</h2>
+    
+
+<p>The audit checked <strong>2,266 items</strong> (skills, voices, tools, processes, decisions, roles, stories, actors, capabilities, methodologies, code lists, templates, schemas, library entries, script and code groups):</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>PLACEMENT    ████████░░░░░░░░░░░░  945 OK / 2266
+  CODE    → cat-harness-tools   790   (S5: 70lx 553+, 8lcl 181)
+  MOVE    → owning instance     295   (placement PR2–PR8 + 160 unplanned)
+  TO-JSON (D2)                  127   (S5: y9r6)
+  SPLIT                          89
+  AMBIGUOUS                      20   → 7 questions, all ruled below
+</code></pre></div></div>
+
+<div class="table-wrapper"><table>
+  <thead>
+    <tr>
+      <th>Q</th>
+      <th>question</th>
+      <th>owner ruling</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>1</td>
+      <td>integration-watcher family (compute, detangler, devils-advocate, integration-watch, narrative-asserts-code)</td>
+      <td><strong>move the family to sci</strong>; the generic <code class="language-plaintext highlighter-rouge">integration-watcher</code> stays in cat-harness as their base</td>
+    </tr>
+    <tr>
+      <td>2</td>
+      <td>editorial graph (content-graph, uses-editorial-review, corpus-grep)</td>
+      <td><strong>split</strong>: the <code class="language-plaintext highlighter-rouge">uses[]</code> relation stays in cat-harness; the Lean comparison moves to sci</td>
+    </tr>
+    <tr>
+      <td>3</td>
+      <td>milnor-exposition-standard, markdown-render-check</td>
+      <td><strong>Milnor to sci</strong>; the render check splits (generic markdown stays, LaTeX/maths to sci)</td>
+    </tr>
+    <tr>
+      <td>4</td>
+      <td>10 pipeline modules with maths vocabulary (qa-criteria-registry, lean-lexer, render-latex, …)</td>
+      <td><strong>split in S5</strong>: the generic pipeline goes to cat-harness-tools; the maths checkers go to sci’s code and plug into it</td>
+    </tr>
+    <tr>
+      <td>5</td>
+      <td>shape of large-datasets and agent-skills inside cat-harness</td>
+      <td><strong>dissolve into the concern groups</strong> (matches PR8 3A)</td>
+    </tr>
+    <tr>
+      <td>6</td>
+      <td><code class="language-plaintext highlighter-rouge">skills/authoring/</code> vs the <code class="language-plaintext highlighter-rouge">content</code> concern code</td>
+      <td><strong>rename to <code class="language-plaintext highlighter-rouge">skills/content/</code></strong> in placement PR2 (<code class="language-plaintext highlighter-rouge">pzwb</code>)</td>
+    </tr>
+    <tr>
+      <td>7</td>
+      <td>core’s <code class="language-plaintext highlighter-rouge">catalogue</code>, <code class="language-plaintext highlighter-rouge">dublin-core</code>, <code class="language-plaintext highlighter-rouge">fhir-artifact-index</code> schemas</td>
+      <td><strong>split</strong>: the generic shape stays in core; IRIS/FHIR specifics go to who-iris / fhir-harness and register on load</td>
+    </tr>
+  </tbody>
+</table></div>
+
+<p>Other audit findings, now on the checklist:</p>
+<ul class="task-list">
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" /><code class="language-plaintext highlighter-rouge">cat-harness-tools.json</code> <code class="language-plaintext highlighter-rouge">needs</code> → <code class="language-plaintext highlighter-rouge">["cat-harness","bootstrap-tools"]</code>, and core adds <code class="language-plaintext highlighter-rouge">cat-harness-tools</code> (C1). 0 of tools’ 27 files import core.</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />34 cat-harness skills that point at sci and are in no PR yet (mostly authoring-core, sdlc-core)</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />90 code files that name higher instances by literal path → resolve through the checkout overlay (PR0a)</li>
+</ul>
+<h2 id="s0-rulings-2026-10-01">
+  
+  
+    <a href="#s0-rulings-2026-10-01" class="anchor-heading" aria-labelledby="s0-rulings-2026-10-01"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> S0 rulings (2026-10-01)
+  
+  
+</h2>
+    
+
+<ul>
+  <li><strong>Submodule pins:</strong> restore PR0’s bootstrap <code class="language-plaintext highlighter-rouge">7a91356</code> / bootstrap-tools <code class="language-plaintext highlighter-rouge">c5e5e25</code>. All of main’s artefacts were generated at those pins; a later merge had regressed the gitlinks.</li>
+  <li><strong>READMEs: each repo owns its own.</strong> folio-assistant stops regenerating and checking submodule READMEs. Each repo’s own CI keeps its README current (D3). Nothing is pushed upstream.</li>
+  <li><strong>W3C library sources</strong> (PROV-O, ODRL 2.2, JSON-LD 1.1): <strong>methodologies cite them</strong> via <code class="language-plaintext highlighter-rouge">evidence:</code>, reusing sibling PR #1769’s methodology nodes. The test rule stays as it is.</li>
+</ul>
+<h2 id="s4-evidence-1776-the-upward-links-pr">
+  
+  
+    <a href="#s4-evidence-1776-the-upward-links-pr" class="anchor-heading" aria-labelledby="s4-evidence-1776-the-upward-links-pr"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> S4 evidence (#1776, the upward-links PR)
+  
+  
+</h2>
+    
+
+<p>R5 upward markdown links 26 → <strong>0</strong> · R6 root links (md) 12 → <strong>0</strong> · large-datasets → core import 1 → <strong>0</strong> · <code class="language-plaintext highlighter-rouge">check:reference-direction</code> 1667 → 1640 occurrences. The 6 R6 <code class="language-plaintext highlighter-rouge">.ts</code> items are paths written into <em>emitted</em> files (<code class="language-plaintext highlighter-rouge">init-folio.ts:279,290,318,344</code>, <code class="language-plaintext highlighter-rouge">translate-kg-viewer.ts:153</code>, <code class="language-plaintext highlighter-rouge">translation.ts:225</code>), not root references. One upward name remains in large-datasets (<code class="language-plaintext highlighter-rouge">gen-id-lookup.ts</code> <code class="language-plaintext highlighter-rouge">SOURCE = "who-iris"</code>, plus prose naming core); it goes with the <code class="language-plaintext highlighter-rouge">needs</code> change.</p>
+<h2 id="upstream-fixes-2026-10-01-done">
+  
+  
+    <a href="#upstream-fixes-2026-10-01-done" class="anchor-heading" aria-labelledby="upstream-fixes-2026-10-01-done"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Upstream fixes (2026-10-01): done
+  
+  
+</h2>
+    
+
+<p>Owner: <em>“also fix any upstream issues”</em>. Both PRs were merged with every job green, and both repos’ <code class="language-plaintext highlighter-rouge">main</code> is green on Check and Pages.</p>
+
+<div class="table-wrapper"><table>
+  <thead>
+    <tr>
+      <th>repo</th>
+      <th>PR</th>
+      <th>new <code class="language-plaintext highlighter-rouge">main</code></th>
+      <th>what</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>litlfred/bootstrap-tools</td>
+      <td><a href="https://github.com/litlfred/bootstrap-tools/pull/4">#4</a></td>
+      <td><code class="language-plaintext highlighter-rouge">30464126ed93</code></td>
+      <td><code class="language-plaintext highlighter-rouge">term-links.ts</code>: outside bootstrap, cross-repo terms link to the <strong>published IRI</strong> (<code class="language-plaintext highlighter-rouge">https://litlfred.github.io/bootstrap/schemas/#&lt;term&gt;</code>), never to <code class="language-plaintext highlighter-rouge">../bootstrap/…</code>, so the README is byte-identical standalone and hosted. New <code class="language-plaintext highlighter-rouge">check.yml</code> runs the README checks standalone.</td>
+    </tr>
+    <tr>
+      <td>litlfred/bootstrap</td>
+      <td><a href="https://github.com/litlfred/bootstrap/pull/1">#1</a></td>
+      <td><code class="language-plaintext highlighter-rouge">f75a2167d226</code></td>
+      <td>new <code class="language-plaintext highlighter-rouge">check.yml</code> checks out bootstrap-tools beside it and checks the READMEs, subgraph READMEs and schema pages</td>
+    </tr>
+  </tbody>
+</table></div>
+
+<ul class="task-list">
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" checked="checked" />Live render. The proxy blocks the live host, so each repo’s real <code class="language-plaintext highlighter-rouge">gh-pages</code> branch was built locally with Jekyll: <code class="language-plaintext highlighter-rouge">index.html</code> redirects to <code class="language-plaintext highlighter-rouge">README.html</code>, the generated-by notices and the no-edit footer are present, and no <code class="language-plaintext highlighter-rouge">../bootstrap/</code> links remain.</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" /><strong>Follow-up after S0:</strong> bump folio-assistant’s pins to <code class="language-plaintext highlighter-rouge">f75a216</code> / <code class="language-plaintext highlighter-rouge">3046412</code>, re-extract the bootstrap translation templates, and regenerate the bootstrap kg-qa sidecars.</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Minor: bootstrap-tools publishes <code class="language-plaintext highlighter-rouge">scripts/templates/site/default.html</code> raw, so its Liquid is visible at that URL. Exclude <code class="language-plaintext highlighter-rouge">scripts/templates/</code> in <code class="language-plaintext highlighter-rouge">site.ts</code>.</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Minor: bootstrap-tools’ unit tests need bootstrap beside them (19 fail standalone), so its CI runs only the README checks.</li>
+</ul>
 
           
 
