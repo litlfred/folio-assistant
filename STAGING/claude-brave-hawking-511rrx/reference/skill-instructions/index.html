@@ -505,32 +505,32 @@
   NOT a cache-busting strategy for third-party assets, and not applied to
   them: those are versioned in their own URLs already.
 -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-brave-hawking-511rrx/assets/css/docs-ui.css?v=1790837841">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-brave-hawking-511rrx/assets/css/docs-ui.css?v=1790838827">
 <!-- Narrow viewports: wide content scrolls in its own box, never the page
      (bean `2r2n`). The standalone viewers inline the same file through
      `withViewerNav`, so both kinds of page read one set of rules. -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-brave-hawking-511rrx/assets/css/narrow-viewport.css?v=1790837841">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-brave-hawking-511rrx/assets/css/narrow-viewport.css?v=1790838827">
 
 <!--
   The work-plan dashboard's styles, split from docs-ui.css so that
   `state-visualizer.ts` can inline exactly these bytes into the generated
   `<base>/<stub>/state-visualizer/` pages. One rule, two surfaces.
 -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-brave-hawking-511rrx/assets/css/work-plan.css?v=1790837841">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-brave-hawking-511rrx/assets/css/work-plan.css?v=1790838827">
 <!-- Sticky themes. GENERATED from the theme nodes in `schemas/themes.ts` by
      `bun run themes:css`; `themes:css:check` fails the build when it is stale.
      Loaded AFTER docs-ui.css deliberately: it supplies the `--fa-sticky-*`
      roles that docs-ui.css consumes, and a custom property has to be set on a
      matching element before the rule reading it takes effect. -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-brave-hawking-511rrx/assets/css/themes.css?v=1790837841">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-brave-hawking-511rrx/assets/css/themes.css?v=1790838827">
 <!-- UML overview colours: one class per graph kind, set on the Mermaid nodes
      that `scripts/gen-uml-overview.ts` writes into docs/uml/overview/. -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-brave-hawking-511rrx/assets/css/uml.css?v=1790837841">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-brave-hawking-511rrx/assets/css/uml.css?v=1790838827">
 <!-- Kind avatars. GENERATED from `schemas/avatars.ts` by `bun run avatars:css`;
      `avatars:css:check` fails the build when it is stale. One stylesheet
      rather than 68 assets: the glyph is a mask and the colour is a property,
      so a scheme swap is a custom property and the trash state is a selector. -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-brave-hawking-511rrx/assets/css/avatars.css?v=1790837841">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-brave-hawking-511rrx/assets/css/avatars.css?v=1790838827">
 
 <!--
   The kinds THIS INSTANCE DECLARES, for the avatar fan.
@@ -547,7 +547,7 @@
 <script type="application/json" id="fa-declared-kinds">["cat-harness","code","code-list","docs","external-schema","folio","health","library","methodology","policies","processes","qa","scenarios","schemas","skills","swimlane-glossary","tools","translation-sources","uml","uploads"]</script>
 <script src="/folio-assistant/STAGING/claude-brave-hawking-511rrx/assets/js/vendor/qrcode.js" defer></script>
 <script src="/folio-assistant/STAGING/claude-brave-hawking-511rrx/assets/js/vendor/qrcode_UTF8.js" defer></script>
-<script src="/folio-assistant/STAGING/claude-brave-hawking-511rrx/assets/js/docs-ui.js?v=1790837841" defer></script>
+<script src="/folio-assistant/STAGING/claude-brave-hawking-511rrx/assets/js/docs-ui.js?v=1790838827" defer></script>
 
 <!--
   The work-plan dashboard. SELF-MOUNTING on any page carrying
@@ -2993,6 +2993,237 @@ roles, and how they compose with the LLM, see <a href="../../skills.html">Skills
       <td><code class="language-plaintext highlighter-rouge">wireframe-design-review</code></td>
       <td>—</td>
       <td>Method: [<code class="language-plaintext highlighter-rouge">wiregen</code>](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/methodologies/</td>
+    </tr>
+  </tbody>
+</table></div>
+<h2 id="fhir-client--smart-launch-fhir-harnessskillsfhir-client">
+  
+  
+    <a href="#fhir-client--smart-launch-fhir-harnessskillsfhir-client" class="anchor-heading" aria-labelledby="fhir-client--smart-launch-fhir-harnessskillsfhir-client"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> FHIR client &amp; SMART launch (fhir-harness/skills/fhir-client)
+  
+  
+</h2>
+    
+
+<div class="table-wrapper"><table>
+  <thead>
+    <tr>
+      <th>Skill</th>
+      <th>Id</th>
+      <th>Schema</th>
+      <th>Summary</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><a href="fhir-client-operations.html">fhir-client-operations</a></td>
+      <td><code class="language-plaintext highlighter-rouge">fhir-client-operations</code></td>
+      <td>—</td>
+      <td>&gt; Skill id: <code class="language-plaintext highlighter-rouge">fhir-client-operations</code> · Package: <code class="language-plaintext highlighter-rouge">fhir-client</code> · Instance:</td>
+    </tr>
+    <tr>
+      <td><a href="smart-launch.html">smart-launch</a></td>
+      <td><code class="language-plaintext highlighter-rouge">smart-launch</code></td>
+      <td>—</td>
+      <td>&gt; Skill id: <code class="language-plaintext highlighter-rouge">smart-launch</code> · Package: <code class="language-plaintext highlighter-rouge">fhir-client</code> · Instance:</td>
+    </tr>
+  </tbody>
+</table></div>
+<h2 id="fhir-ig-build-fhir-harnessskillsfhir-ig-base">
+  
+  
+    <a href="#fhir-ig-build-fhir-harnessskillsfhir-ig-base" class="anchor-heading" aria-labelledby="fhir-ig-build-fhir-harnessskillsfhir-ig-base"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> FHIR IG build (fhir-harness/skills/fhir-ig-base)
+  
+  
+</h2>
+    
+
+<div class="table-wrapper"><table>
+  <thead>
+    <tr>
+      <th>Skill</th>
+      <th>Id</th>
+      <th>Schema</th>
+      <th>Summary</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><a href="ig-ast-delta.html">ig-ast-delta</a></td>
+      <td><code class="language-plaintext highlighter-rouge">ig-ast-delta</code></td>
+      <td>—</td>
+      <td>&gt; Skill id: <code class="language-plaintext highlighter-rouge">ig-ast-delta</code> · Package: <code class="language-plaintext highlighter-rouge">fhir-ig-base</code> · Instance:</td>
+    </tr>
+    <tr>
+      <td><a href="ig-build-pipeline.html">ig-build-pipeline</a></td>
+      <td><code class="language-plaintext highlighter-rouge">ig-build-pipeline</code></td>
+      <td>—</td>
+      <td>&gt; Skill id: <code class="language-plaintext highlighter-rouge">ig-build-pipeline</code> · Package: <code class="language-plaintext highlighter-rouge">fhir-ig-base</code> · Instance:</td>
+    </tr>
+    <tr>
+      <td><a href="ig-publisher-fork.html">ig-publisher-fork</a></td>
+      <td><code class="language-plaintext highlighter-rouge">ig-publisher-fork</code></td>
+      <td>—</td>
+      <td>&gt; Skill id: <code class="language-plaintext highlighter-rouge">ig-publisher-fork</code> · Package: <code class="language-plaintext highlighter-rouge">fhir-ig-base</code> · Instance:</td>
+    </tr>
+    <tr>
+      <td><a href="ig-publisher-reduction.html">ig-publisher-reduction</a></td>
+      <td><code class="language-plaintext highlighter-rouge">ig-publisher-reduction</code></td>
+      <td>—</td>
+      <td>&gt; Skill id: <code class="language-plaintext highlighter-rouge">ig-publisher-reduction</code> · Package: <code class="language-plaintext highlighter-rouge">fhir-ig-base</code> · Instance:</td>
+    </tr>
+    <tr>
+      <td><a href="ig-render-jekyll.html">ig-render-jekyll</a></td>
+      <td><code class="language-plaintext highlighter-rouge">ig-render-jekyll</code></td>
+      <td>—</td>
+      <td>&gt; Skill id: <code class="language-plaintext highlighter-rouge">ig-render-jekyll</code> · Package: <code class="language-plaintext highlighter-rouge">fhir-ig-base</code> · Instance:</td>
+    </tr>
+  </tbody>
+</table></div>
+<h2 id="content-layer-folio-assistant-core">
+  
+  
+    <a href="#content-layer-folio-assistant-core" class="anchor-heading" aria-labelledby="content-layer-folio-assistant-core"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Content layer (folio-assistant-core)
+  
+  
+</h2>
+    
+
+<div class="table-wrapper"><table>
+  <thead>
+    <tr>
+      <th>Skill</th>
+      <th>Id</th>
+      <th>Schema</th>
+      <th>Summary</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><a href="deep-document-research.html">Deep document research</a></td>
+      <td><code class="language-plaintext highlighter-rouge">deep-document-research</code></td>
+      <td>—</td>
+      <td>Renders <code class="language-plaintext highlighter-rouge">methodologies/doc-researcher.md</code> — Dong et al., arXiv:2510.21603v1 —</td>
+    </tr>
+  </tbody>
+</table></div>
+<h2 id="science-layer-lean-tooling-folio-assistant-sci">
+  
+  
+    <a href="#science-layer-lean-tooling-folio-assistant-sci" class="anchor-heading" aria-labelledby="science-layer-lean-tooling-folio-assistant-sci"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Science layer: Lean tooling (folio-assistant-sci)
+  
+  
+</h2>
+    
+
+<div class="table-wrapper"><table>
+  <thead>
+    <tr>
+      <th>Skill</th>
+      <th>Id</th>
+      <th>Schema</th>
+      <th>Summary</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><a href="lean-formal-edges.html">Lean formal edges (elaborated)</a></td>
+      <td><code class="language-plaintext highlighter-rouge">lean-formal-edges</code></td>
+      <td>—</td>
+      <td>bun run folio-assistant-sci/content/pipeline/formal-edges.ts \</td>
+    </tr>
+  </tbody>
+</table></div>
+<h2 id="science-layer-reference-data-folio-assistant-sci">
+  
+  
+    <a href="#science-layer-reference-data-folio-assistant-sci" class="anchor-heading" aria-labelledby="science-layer-reference-data-folio-assistant-sci"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Science layer: reference data (folio-assistant-sci)
+  
+  
+</h2>
+    
+
+<div class="table-wrapper"><table>
+  <thead>
+    <tr>
+      <th>Skill</th>
+      <th>Id</th>
+      <th>Schema</th>
+      <th>Summary</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><a href="reference-dataset-ingestion.html">Reference dataset ingestion</a></td>
+      <td><code class="language-plaintext highlighter-rouge">reference-dataset-ingestion</code></td>
+      <td>—</td>
+      <td> </td>
+    </tr>
+  </tbody>
+</table></div>
+<h2 id="large-data-sets-subsetting-materializing-publishing">
+  
+  
+    <a href="#large-data-sets-subsetting-materializing-publishing" class="anchor-heading" aria-labelledby="large-data-sets-subsetting-materializing-publishing"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Large data sets (subsetting, materializing, publishing)
+  
+  
+</h2>
+    
+
+<div class="table-wrapper"><table>
+  <thead>
+    <tr>
+      <th>Skill</th>
+      <th>Id</th>
+      <th>Schema</th>
+      <th>Summary</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><a href="copy-out-materialized.html">Working on materialized content</a></td>
+      <td><code class="language-plaintext highlighter-rouge">copy-out-materialized</code></td>
+      <td>—</td>
+      <td>**Materialized content is a copy of somebody else’s bytes, and this repository</td>
+    </tr>
+    <tr>
+      <td><a href="materialize-on-demand.html">Materialize on demand</a></td>
+      <td><code class="language-plaintext highlighter-rouge">materialize-on-demand</code></td>
+      <td>—</td>
+      <td>Bootstrap brings an agent to a working harness. It does <strong>not</strong> bring the</td>
+    </tr>
+    <tr>
+      <td><a href="materialize-remote.html">Materializing remote content</a></td>
+      <td><code class="language-plaintext highlighter-rouge">materialize-remote</code></td>
+      <td>—</td>
+      <td><strong>One process, and this repository already ran it twice before naming it.</strong></td>
+    </tr>
+  </tbody>
+</table></div>
+<h2 id="who-iris-catalogue-instance">
+  
+  
+    <a href="#who-iris-catalogue-instance" class="anchor-heading" aria-labelledby="who-iris-catalogue-instance"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> WHO IRIS (catalogue instance)
+  
+  
+</h2>
+    
+
+<div class="table-wrapper"><table>
+  <thead>
+    <tr>
+      <th>Skill</th>
+      <th>Id</th>
+      <th>Schema</th>
+      <th>Summary</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><a href="iris-dspace.html">IRIS, DSpace and Dublin Core</a></td>
+      <td><code class="language-plaintext highlighter-rouge">iris-dspace</code></td>
+      <td>—</td>
+      <td><strong>Every claim here was read off one captured record</strong> — the DSpace full item</td>
     </tr>
   </tbody>
 </table></div>

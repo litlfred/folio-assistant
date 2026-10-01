@@ -11,7 +11,7 @@
   "families": {
     "danglingLinks": {
       "summary": "Internal links whose target node is not in `@graph`. A DATA defect, not an export failure.",
-      "count": 9,
+      "count": 38,
       "entries": [
         {
           "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hawking-511rrx/cat-harness.jsonld#process/Process_IgAstDeltaReview/node/Task_Validity",
@@ -27,6 +27,151 @@
           "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hawking-511rrx/cat-harness.jsonld#process/Process_IgAstDeltaReview/node/Task_Review",
           "edge": "implementedBy",
           "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hawking-511rrx/cat-harness.jsonld#skill/ig-ast-delta"
+        },
+        {
+          "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hawking-511rrx/cat-harness.jsonld#process/Process_DeepDocumentResearch/node/A_Plan",
+          "edge": "implementedBy",
+          "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hawking-511rrx/cat-harness.jsonld#skill/deep-document-research"
+        },
+        {
+          "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hawking-511rrx/cat-harness.jsonld#process/Process_DeepDocumentResearch/node/A_Search",
+          "edge": "implementedBy",
+          "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hawking-511rrx/cat-harness.jsonld#skill/deep-document-research"
+        },
+        {
+          "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hawking-511rrx/cat-harness.jsonld#process/Process_DeepDocumentResearch/node/A_Refine",
+          "edge": "implementedBy",
+          "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hawking-511rrx/cat-harness.jsonld#skill/deep-document-research"
+        },
+        {
+          "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hawking-511rrx/cat-harness.jsonld#process/Process_DeepDocumentResearch/node/A_Report",
+          "edge": "implementedBy",
+          "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hawking-511rrx/cat-harness.jsonld#skill/deep-document-research"
+        },
+        {
+          "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hawking-511rrx/cat-harness.jsonld#process/Process_MaterializeRemote/node/Task_Purpose",
+          "edge": "implementedBy",
+          "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hawking-511rrx/cat-harness.jsonld#skill/materialize-remote"
+        },
+        {
+          "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hawking-511rrx/cat-harness.jsonld#process/Process_MaterializeRemote/node/Task_Enumerate",
+          "edge": "implementedBy",
+          "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hawking-511rrx/cat-harness.jsonld#skill/materialize-remote"
+        },
+        {
+          "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hawking-511rrx/cat-harness.jsonld#process/Process_MaterializeRemote/node/Task_Size",
+          "edge": "implementedBy",
+          "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hawking-511rrx/cat-harness.jsonld#skill/materialize-remote"
+        },
+        {
+          "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hawking-511rrx/cat-harness.jsonld#process/Process_MaterializeRemote/node/Task_Restrictions",
+          "edge": "implementedBy",
+          "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hawking-511rrx/cat-harness.jsonld#skill/materialize-remote"
+        },
+        {
+          "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hawking-511rrx/cat-harness.jsonld#process/Process_MaterializeRemote/node/Task_Copyright",
+          "edge": "implementedBy",
+          "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hawking-511rrx/cat-harness.jsonld#skill/materialize-remote"
+        },
+        {
+          "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hawking-511rrx/cat-harness.jsonld#process/Process_MaterializeRemote/node/Task_Retention",
+          "edge": "implementedBy",
+          "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hawking-511rrx/cat-harness.jsonld#skill/materialize-remote"
+        },
+        {
+          "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hawking-511rrx/cat-harness.jsonld#process/Process_MaterializeRemote/node/Task_SourceLoss",
+          "edge": "implementedBy",
+          "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hawking-511rrx/cat-harness.jsonld#skill/materialize-remote"
+        },
+        {
+          "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hawking-511rrx/cat-harness.jsonld#process/Process_MaterializeRemote/node/Task_Fetch",
+          "edge": "implementedBy",
+          "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hawking-511rrx/cat-harness.jsonld#skill/materialize-remote"
+        },
+        {
+          "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hawking-511rrx/cat-harness.jsonld#process/Process_MaterializeRemote/node/Task_Declare",
+          "edge": "implementedBy",
+          "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hawking-511rrx/cat-harness.jsonld#skill/materialize-remote"
+        },
+        {
+          "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hawking-511rrx/cat-harness.jsonld#process/Process_MaterializeRemote/node/Task_StayRef",
+          "edge": "implementedBy",
+          "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hawking-511rrx/cat-harness.jsonld#skill/materialize-remote"
+        },
+        {
+          "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hawking-511rrx/cat-harness.jsonld#process/Process_CopyOutMaterialized/node/Task_EditDirectly",
+          "edge": "implementedBy",
+          "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hawking-511rrx/cat-harness.jsonld#skill/copy-out-materialized"
+        },
+        {
+          "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hawking-511rrx/cat-harness.jsonld#process/Process_CopyOutMaterialized/node/Task_ReadSource",
+          "edge": "implementedBy",
+          "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hawking-511rrx/cat-harness.jsonld#skill/copy-out-materialized"
+        },
+        {
+          "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hawking-511rrx/cat-harness.jsonld#process/Process_CopyOutMaterialized/node/Task_Land",
+          "edge": "implementedBy",
+          "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hawking-511rrx/cat-harness.jsonld#skill/copy-out-materialized"
+        },
+        {
+          "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hawking-511rrx/cat-harness.jsonld#process/Process_CopyOutMaterialized/node/Task_RecordProvenance",
+          "edge": "implementedBy",
+          "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hawking-511rrx/cat-harness.jsonld#skill/copy-out-materialized"
+        },
+        {
+          "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hawking-511rrx/cat-harness.jsonld#process/Process_CopyOutMaterialized/node/Task_VerifySourceUntouched",
+          "edge": "implementedBy",
+          "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hawking-511rrx/cat-harness.jsonld#skill/copy-out-materialized"
+        },
+        {
+          "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hawking-511rrx/cat-harness.jsonld#process/Process_RefreshMaterialized/node/Task_Fixity",
+          "edge": "implementedBy",
+          "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hawking-511rrx/cat-harness.jsonld#skill/materialize-remote"
+        },
+        {
+          "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hawking-511rrx/cat-harness.jsonld#process/Process_RefreshMaterialized/node/Task_Upstream",
+          "edge": "implementedBy",
+          "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hawking-511rrx/cat-harness.jsonld#skill/materialize-remote"
+        },
+        {
+          "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hawking-511rrx/cat-harness.jsonld#process/Process_RefreshMaterialized/node/Task_Local",
+          "edge": "implementedBy",
+          "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hawking-511rrx/cat-harness.jsonld#skill/materialize-remote"
+        },
+        {
+          "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hawking-511rrx/cat-harness.jsonld#process/Process_RefreshMaterialized/node/Task_Adjudicate",
+          "edge": "implementedBy",
+          "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hawking-511rrx/cat-harness.jsonld#skill/materialize-remote"
+        },
+        {
+          "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hawking-511rrx/cat-harness.jsonld#process/Process_RefreshMaterialized/node/Task_Reconcile",
+          "edge": "implementedBy",
+          "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hawking-511rrx/cat-harness.jsonld#skill/materialize-remote"
+        },
+        {
+          "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hawking-511rrx/cat-harness.jsonld#process/Process_RefreshMaterialized/node/Task_Apply",
+          "edge": "implementedBy",
+          "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hawking-511rrx/cat-harness.jsonld#skill/materialize-remote"
+        },
+        {
+          "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hawking-511rrx/cat-harness.jsonld#process/Process_RefreshMaterialized/node/Task_KeepLocal",
+          "edge": "implementedBy",
+          "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hawking-511rrx/cat-harness.jsonld#skill/materialize-remote"
+        },
+        {
+          "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hawking-511rrx/cat-harness.jsonld#process/Process_RefreshMaterialized/node/Task_RecordConflict",
+          "edge": "implementedBy",
+          "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hawking-511rrx/cat-harness.jsonld#skill/materialize-remote"
+        },
+        {
+          "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hawking-511rrx/cat-harness.jsonld#process/Process_SampleImport/node/Call_Materialize",
+          "edge": "implementedBy",
+          "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hawking-511rrx/cat-harness.jsonld#skill/materialize-remote"
+        },
+        {
+          "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hawking-511rrx/cat-harness.jsonld#process/Process_SampleImport/node/Call_Refresh",
+          "edge": "implementedBy",
+          "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hawking-511rrx/cat-harness.jsonld#skill/materialize-remote"
         },
         {
           "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hawking-511rrx/cat-harness.jsonld#role/user",
@@ -76,5 +221,5 @@
       "entries": []
     }
   },
-  "total": 9
+  "total": 38
 }
