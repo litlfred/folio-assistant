@@ -5,9 +5,5 @@
 
 Part of [agent-skills](../../README.md) 0.1.0, declared as `voices`, holding `voices`.
 
-| file | what it is | used by |
-|---|---|---|
-| [`voices.json`](../../../cat-harness/skills/voices/voices.json) | data |  |
-| [`agent-skill-authoring/`](../../../cat-harness/skills/voices/agent-skill-authoring/) | 1 file | |
-| [`vendors/`](../../../cat-harness/skills/voices/vendors/) | 4 files | |
+_This directory holds no files yet._
 <!-- kg:subgraph:end -->

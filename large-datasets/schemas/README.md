@@ -8,7 +8,7 @@ Part of [large-datasets](../README.md) 0.1.0, declared as `large-datasets-schema
 | file | what it is | used by |
 |---|---|---|
 | [`artifact-store.ts`](../../cat-harness/schemas/artifact-store.ts) | a file |  |
-| [`id-lookup.test.ts`](../../cat-harness/schemas/id-lookup.test.ts) | a file |  |
+| [`id-lookup.test.ts`](../../cat-harness-tools/test/id-lookup.test.ts) | a file |  |
 | [`id-lookup.ts`](../../cat-harness/schemas/id-lookup.ts) | a file |  |
 | [`source-descriptor.test.ts`](../../cat-harness/schemas/source-descriptor.test.ts) | a file |  |
 | [`source-descriptor.ts`](../../cat-harness/schemas/source-descriptor.ts) | a file |  |

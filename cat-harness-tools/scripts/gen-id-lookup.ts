@@ -119,14 +119,22 @@ export function referencedEntries(nodesDir: string): IdEntry[] {
   return out;
 }
 
-/** Every file currently under `dir`, relative to it. */
+/**
+ * The file at the top of an index directory that is NOT the index's: the
+ * declared directory's own subgraph README, written by `readme:subgraphs`
+ * because the directory is a declared one in its host instance (bean `j7ql`).
+ * This build neither writes nor removes it.
+ */
+const NOT_THE_INDEX = new Set(["README.md"]);
+
+/** Every index file currently under `dir`, relative to it. */
 function listFiles(dir: string, base = dir): string[] {
   if (!existsSync(dir)) return [];
   const out: string[] = [];
   for (const e of readdirSync(dir, { withFileTypes: true })) {
     const p = join(dir, e.name);
     if (e.isDirectory()) out.push(...listFiles(p, base));
-    else out.push(relative(base, p));
+    else if (!(dir === base && NOT_THE_INDEX.has(e.name))) out.push(relative(base, p));
   }
   return out.sort();
 }
@@ -175,7 +183,9 @@ if (import.meta.main) {
       }
       console.log(`id-lookup: ${rel} is current (${files.size} files).`);
     } else {
-      rmSync(dir, { recursive: true, force: true });
+      // Remove what the build no longer writes, never the whole directory:
+      // it is a declared directory of its host and carries that README.
+      for (const f of listFiles(dir)) if (!files.has(f)) rmSync(join(dir, f), { force: true });
       for (const [f, body] of files) {
         mkdirSync(dirname(join(dir, f)), { recursive: true });
         writeFileSync(join(dir, f), body);
