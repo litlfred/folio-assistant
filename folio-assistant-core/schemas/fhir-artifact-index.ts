@@ -332,7 +332,9 @@ export const FhirArtifactIndexSchema = z
      * `DAK_API_HUB_START` and `DAK_API_HUB_END` markers, which smart-base's
      * `generate_dak_api_hub.py` writes after the Publisher has run. `url` is the
      * page it was read from; `localPath` is the fragment, held so a page can
-     * fetch it (bean `680p`) rather than retype its prose. Absent means the IG
+     * fetch it (bean `680p`) rather than retype its prose — as a JSON node
+     * (`{ from, between, html }`), because an `.html` fragment published in
+     * the served graph would be a page with no <body>. Absent means the IG
      * publishes no hub, or it was not materialised.
      */
     dakApiHub: RepresentationSchema.optional(),

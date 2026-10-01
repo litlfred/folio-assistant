@@ -75,7 +75,7 @@
  */
 import { existsSync, mkdirSync, readFileSync, readdirSync, rmSync, writeFileSync } from "node:fs";
 import { basename, join, resolve } from "node:path";
-import { DAK_HUB_SCRIPT, DAK_HUB_TEMPLATE, DAK_VIEW_SCRIPT, dakHubData, dakServed, dakViewData, dakViews } from "./dak-views.ts";
+import { DAK_HUB_SCRIPT, DAK_HUB_TEMPLATE, DAK_VIEW_SCRIPT, dakHubData, dakHubFragment, dakServed, dakViewData, dakViews } from "./dak-views.ts";
 import { JSON_VIEW_SCRIPT, hasJsonView, jsonViewData } from "./resource-views.ts";
 import { isDirectoryReadme } from "../../cat-harness/schemas/kg-node.js";
 
@@ -979,7 +979,7 @@ if ([...pages.values()].some((p) => p.includes("data-dak-openapi-src"))) pages.s
 // links should go on THIS site, because the Publisher's relative links assume
 // its flat layout.
 if (ix.dakApiHub?.localPath && dakServing.ok) {
-  const hub = dakHubData(ix, readFileSync(join(INSTANCE, ix.dakApiHub.localPath), "utf8"), "");
+  const hub = dakHubData(ix, dakHubFragment(INSTANCE, ix.dakApiHub.localPath), "");
   pages.set(
     "dak-api.md",
     shell(

@@ -143,6 +143,11 @@ export function dakServed(instanceRoot: string): { ok: true } | { ok: false; why
   return { ok: true };
 }
 
+/** The hub's HTML, from the JSON node the ingest holds it in (`{ from, between, html }`). */
+export function dakHubFragment(instanceRoot: string, localPath: string): string {
+  return (JSON.parse(readFileSync(join(instanceRoot, localPath), "utf8")) as { html: string }).html;
+}
+
 /** Where smart-base's post-processing writes the hub into `dak-api.html` (`generate_dak_api_hub.py`, `comment_marker`). */
 export const DAK_API_PLACEHOLDER = "<!-- DAK_API_CONTENT -->";
 /** The hub's loader, published under the instance's docs root by `gen-ig-pages`. */
@@ -176,6 +181,6 @@ export function dakHubFill(instanceRoot: string): { marker: string; body: string
     return undefined;
   }
   if (!ix.dakApiHub?.localPath || !dakServed(instanceRoot).ok) return undefined;
-  const fragment = readFileSync(join(instanceRoot, ix.dakApiHub.localPath), "utf8");
+  const fragment = dakHubFragment(instanceRoot, ix.dakApiHub.localPath);
   return { marker: DAK_API_PLACEHOLDER, body: readFileSync(DAK_HUB_TEMPLATE, "utf8"), data: { hub: dakHubData(ix, fragment, "../") } };
 }

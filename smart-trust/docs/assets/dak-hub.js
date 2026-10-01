@@ -16,9 +16,11 @@
   fetch(host.getAttribute("data-dak-hub-src"))
     .then(function (r) {
       if (!r.ok) throw new Error(r.status + " " + r.statusText);
-      return r.text();
+      return r.json();
     })
-    .then(function (html) {
+    .then(function (node) {
+      // The fragment is held as data ({ from, between, html }), not as a page.
+      var html = node.html;
       var t = document.createElement("template");
       t.innerHTML = html;
       t.content.querySelectorAll("script").forEach(function (s) { s.remove(); });

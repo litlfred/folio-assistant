@@ -525,14 +525,15 @@ function main(): void {
     const a = html.indexOf(HUB_START);
     const b = html.indexOf(HUB_END);
     if (a >= 0 && b > a) {
-      const fragment = `${html.slice(a, b + HUB_END.length)}\n`;
+      // Held as DATA — a JSON node carrying the HTML — never as an `.html`
+      // file: published in the served graph, an `.html` fragment is a page
+      // with no <body>, which the staging banner refuses (and rightly: it is
+      // not a page). Measured on PR #1766's staging job, 2026-10-01.
+      const url = `${base.replace(/\/$/, "")}/dak-api.html`;
+      const fragment = `${JSON.stringify({ from: url, between: [HUB_START, HUB_END], html: html.slice(a, b + HUB_END.length) }, null, 2)}\n`;
       hub = {
         fragment,
-        rep: {
-          url: `${base.replace(/\/$/, "")}/dak-api.html`,
-          localPath: join("fhir-artifact-index", "dak", "dak-api-hub.html"),
-          bytes: Buffer.byteLength(fragment),
-        },
+        rep: { url, localPath: join("fhir-artifact-index", "dak", "dak-api-hub.json"), bytes: Buffer.byteLength(fragment) },
       };
     } else {
       console.log("  dak-api.html carries no DAK_API_HUB_START/END pair — no hub held");
@@ -597,7 +598,7 @@ function main(): void {
     mkdirSync(join(dakDir, "contexts"), { recursive: true });
     for (const [from, to] of materialized) copyFileSync(join(source, from), join(dakDir, to));
   }
-  if (hub) writeFileSync(join(graphDir, "dak", "dak-api-hub.html"), hub.fragment);
+  if (hub) writeFileSync(join(graphDir, "dak", "dak-api-hub.json"), hub.fragment);
   if (materializePackage && existsSync(join(source, "package.tgz"))) copyFileSync(join(source, "package.tgz"), join(graphDir, "package.tgz"));
 
   const census = materializationCensus(artifacts);
