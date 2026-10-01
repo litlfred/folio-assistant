@@ -114,7 +114,7 @@ Three rules, in the order they bite:
    the image. `local:cat-harness/uploads/<file>.pdf#page=1` says the true thing
    and resolves to the true thing.
 2. **The declaration is authored, and the tool refuses without it.**
-   `who-iris/scripts/gen-covers.ts` will not write bytes for a `THUMBNAIL`
+   `folio-assistant-core/scripts/gen-covers.ts` will not write bytes for a `THUMBNAIL`
    whose `materialization.note` does not declare the derivation. Generating
    that sentence would make the check circular — a tool cannot attest to its
    own output.
@@ -176,5 +176,5 @@ file's `localPath`, which exists only once somebody asked for it.
 - `schemas/materialization.ts` — `materializedAt`, the timestamp this one is
   most often confused with.
 - `cat-harness/scripts/pdf-cover.py` — the generic page raster, and
-  `who-iris/scripts/gen-covers.ts` the instance wiring that decides which
-  documents get one and checks every claim it makes about them.
+  `folio-assistant-core/scripts/gen-covers.ts` the catalogue wiring (any instance; the catalogue decides which
+  documents get one) that checks every claim it makes about them.

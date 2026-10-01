@@ -1,7 +1,7 @@
 /**
  * `localPath` is an edge like any other, and it must resolve — bean `yl5w`.
  *
- * @module who-iris/scripts/tests/local-path
+ * @module folio-assistant-core/scripts/local-path.test
  *
  * Both halves are asserted, and they must be able to disagree: the DECISION
  * against a planted directory, and the real corpus's own claims. A single
@@ -12,9 +12,10 @@ import { chmodSync, mkdirSync, mkdtempSync, readdirSync, readFileSync, writeFile
 import { tmpdir } from "node:os";
 import { join, resolve } from "node:path";
 
-import { checkLocalPath } from "../lib/local-path.ts";
+import { checkLocalPath } from "./lib/local-path.ts";
 
-const INSTANCE = resolve(import.meta.dir, "..", "..");
+/** The worked example: the one catalogue instance in this checkout, read as DATA (same as `source-liveness.test.ts`). */
+const INSTANCE = resolve(import.meta.dir, "..", "..", "who-iris");
 
 describe("checkLocalPath", () => {
   test("a file that is there is ok", () => {

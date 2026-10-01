@@ -1,7 +1,7 @@
 /**
  * The covers are OURS, and the catalogue has to say so.
  *
- * @module who-iris/scripts/tests/gen-covers.test
+ * @module folio-assistant-core/scripts/gen-covers.test
  *
  * DSpace generates a `THUMBNAIL` bundle of its own, so a cover this repository
  * rasterised is filed under the same bundle name as one IRIS produced and
@@ -15,13 +15,14 @@ import { createHash } from "crypto";
 import { existsSync, readFileSync } from "fs";
 import { join, resolve } from "path";
 
-import { coversWanted, nodes, pngSize, COVER_WIDTH, DERIVED_MARKER } from "../gen-covers.js";
+import { coversWanted, nodes, pngSize, COVER_WIDTH, DERIVED_MARKER } from "./gen-covers.js";
 
-const INSTANCE = resolve(import.meta.dir, "..", "..");
+/** The worked example: the one catalogue instance in this checkout, read as DATA (same as `source-liveness.test.ts`). */
+const INSTANCE = resolve(import.meta.dir, "..", "..", "who-iris");
 
 describe("the catalogue asks for the covers, not the script", () => {
-  const all = nodes();
-  const { covers, problems } = coversWanted(all);
+  const all = nodes(INSTANCE);
+  const { covers, problems } = coversWanted(all, INSTANCE);
 
   it("the real catalogue yields covers and no problems", () => {
     expect(problems).toEqual([]);
@@ -56,7 +57,7 @@ describe("the catalogue asks for the covers, not the script", () => {
 });
 
 describe("a THUMBNAIL that does not declare itself derived is refused", () => {
-  const all = nodes();
+  const all = nodes(INSTANCE);
 
   it("stripping the declaration turns a cover into a problem", () => {
     const withCover = all.find((n) => n.bitstreams?.some((b) => b.bundle === "THUMBNAIL"));
@@ -66,7 +67,7 @@ describe("a THUMBNAIL that does not declare itself derived is refused", () => {
     const thumb = stripped!.bitstreams!.find((b) => b.bundle === "THUMBNAIL")!;
     thumb.materialization.note = "a cover";
 
-    const { covers, problems } = coversWanted([stripped!]);
+    const { covers, problems } = coversWanted([stripped!], INSTANCE);
     expect(covers).toEqual([]);
     expect(problems.length).toBe(1);
     expect(problems[0]).toContain("does not declare itself derived");
@@ -125,7 +126,7 @@ describe("the check keeps its teeth where PyMuPDF is not installed", () => {
   // could-not-determine either: four of the five claims a node makes about a
   // cover need no decoder at all. These assert that they really are checkable
   // from the committed bytes.
-  const { covers } = coversWanted(nodes());
+  const { covers } = coversWanted(nodes(INSTANCE), INSTANCE);
 
   it("PNG dimensions are readable from the file header, with no decoder", () => {
     for (const c of covers) {

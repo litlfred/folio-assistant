@@ -1,7 +1,11 @@
 /**
  * Does a materialisation's `localPath` name bytes that are actually there?
  *
- * @module who-iris/scripts/lib/local-path
+ * @module folio-assistant-core/scripts/lib/local-path
+ *
+ * Moved from `who-iris/scripts/lib/` on 2026-09-30 (bean `eayu`, owner:
+ * *"dspace scripts generic in folio-assistant"*). It was already generic — it
+ * takes the instance directory as a parameter — so only its home changed.
  *
  * ## Why this is a module rather than four lines in the checker
  *

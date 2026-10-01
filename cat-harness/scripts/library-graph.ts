@@ -168,7 +168,7 @@ export interface LibraryEntry {
    * whatever is associated to it if there is something"*.
    *
    * In order: the rendered COVER beside the entry (`<slug>-cover.png`, the
-   * file `who-iris/scripts/gen-covers.ts` writes, emblem already masked),
+   * file `folio-assistant-core/scripts/gen-covers.ts` writes, emblem already masked),
    * then the first image `images.json` declares a `figure`. A logo is never
    * the avatar — it names who published the book, not the book.
    *

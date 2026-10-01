@@ -35,6 +35,9 @@ export const PROPERTY_SKILLS = {
   // today (bean 6rmv); `instance-repositories.ts` derives the map from both.
   repository: { skills: ["instance-kinds", "directory-conventions"] },
   livesAt: { skills: ["instance-kinds", "directory-conventions"] },
+  // Content or tools half of the split (bean eayu); a content instance holding
+  // code is a failing kg:audit finding.
+  separation: { skills: ["kg-separation"] },
   stub: { skills: ["directory-conventions"] },
   canonicalUrl: { skills: ["directory-conventions"] },
   previewUrl: { skills: ["directory-conventions"] },

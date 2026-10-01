@@ -90,6 +90,22 @@ Owner rulings that make the pattern (2026-09-29, bean `xsqm`):
   exported graph and glossary ledger. The content repository carries only
   what its own checks need.
 
+### Staged content with no tools repository yet — the finding, not the silence
+
+An instance can be planned as a content repository before its `-tools` pair
+is authorised (who-iris, 2026-09-30). Declare it — `separation: "content"` in
+`<name>.json`; the content half of an existing pair is read from the tools
+instance's `supports` and needs nothing — and kg:audit's
+`content-instance-holds-code` fails, naming every code file still inside it.
+It is `major`, not `critical`: nothing is broken, and an owner may tolerate the
+code *for now* (*"iris specific tools for now ok in who-iris/ but make sure
+fails QA finding"*), so it must not fail `kg:audit --check`; but FR-7 has no
+legitimate exceptions, so it is not `minor` either. The remedy splits by what
+the code is: **generic** code (it works for any instance of its kind — any
+DSpace catalogue, any PDF) moves into the platform and takes the instance root
+as an argument; **instance-specific** code waits for `<name>-tools`. Bean
+`eayu`.
+
 ## The stages
 
 Each stage names its lane (a role in `cat-harness/scenarios/roles.json`) and

@@ -1452,6 +1452,24 @@ export const KG_CRITERIA: readonly KgCriterionDefinition[] = [
       "A user story in `scenarios/stories.json` is told as a role the role graph does not declare — a story " +
       "told as nobody, which no author can write for and no reviewer can check against.",
   },
+  {
+    id: "content-instance-holds-code",
+    applies: ["graph"],
+    scope: "instance",
+    // `major`, argued rather than picked (bean `eayu`). Not `critical`: nothing
+    // names a thing that does not exist — every file resolves and runs — and
+    // the owner TOLERATES the case for now ("iris specific tools for now ok in
+    // who-iris/ but make sure fails QA finding"), so it must not fail
+    // `kg:audit --check`, which is what CI runs. Not `minor`: minor is for gaps
+    // with LEGITIMATE instances, and a content repository holding code has
+    // none — FR-7 admits no exception, and a tolerated violation is still a
+    // violation. `major` records `fail`, fails `--strict`, and names each file.
+    severity: "major",
+    summary:
+      "An instance declared as a CONTENT repository (`separation: \"content\"`, or the content half a " +
+      "declared tools instance `supports`) holds code. A content repository holds no code (kg-separation, " +
+      "bootstrap FR-7); each file is named, and belongs in the platform or a `<name>-tools` repository.",
+  },
 ] as const;
 
 export const KG_CRITERIA_BY_ID: Readonly<Record<string, KgCriterionDefinition>> = Object.fromEntries(
