@@ -198,21 +198,22 @@ export function render(substrates: readonly SubstrateRow[], cards: readonly Subs
     // A chosen part's STATE is not in the subscription on purpose (see
     // `Subscription`); until a materialisation record exists it is chosen and
     // NOT YET HELD — never drawn as held, never as missing.
-    const subgraphPart = (g: string): PartView | undefined => parts.find((p) => p.part?.kind === "subgraph" && p.part.id === g);
+    // Matched on the SLOT — the part the layout says the directory holds — so
+    // a record that cannot be read is still drawn on its part's row.
+    const subgraphPart = (g: string): PartView | undefined => parts.find((p) => p.slot.kind === "subgraph" && p.slot.id === g);
     for (const g of s.subgraphs ?? []) {
       const p = subgraphPart(g);
       lines.push(`| subgraph \`${g}\` | ✓ | ${p ? cell(partState(p, s.ref)) : "🔗 chosen, not yet held"} |`);
     }
     for (const p of parts) {
-      if (p.part?.kind !== "subgraph" || (s.subgraphs ?? []).includes(p.part.id)) continue;
-      lines.push(`| subgraph \`${p.part.id}\` | — | ⚠ recorded, and no longer chosen: ${cell(partState(p, s.ref))} |`);
+      if (p.slot.kind !== "subgraph" || (s.subgraphs ?? []).includes(p.slot.id)) continue;
+      lines.push(`| subgraph \`${p.slot.id}\` | — | ⚠ recorded, and no longer chosen: ${cell(partState(p, s.ref))} |`);
     }
     lines.push(`| assets | policy \`${s.assets?.policy ?? "none"}\` | 🔗 each copy passes the materialisation gates |`);
     for (const p of parts) {
-      if (p.part?.kind !== "asset") continue;
-      lines.push(`| asset \`${p.part.path}\` | on demand | ${cell(partState(p, s.ref))} |`);
+      if (p.slot.kind !== "asset") continue;
+      lines.push(`| asset \`${p.slot.path}\` | on demand | ${cell(partState(p, s.ref))} |`);
     }
-    for (const p of parts) if (!p.part) lines.push(`| a record with no part | — | ${cell(partState(p, s.ref))} |`);
     for (const st of strays) lines.push(`| \`${st}\` | — | ⚠ bytes with no record |`);
     for (const h of s.harnesses ?? []) lines.push(`| harness \`${h}\` | ✓ | 🔗 chosen, not yet instantiated |`);
     lines.push(

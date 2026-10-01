@@ -381,7 +381,7 @@ export async function materialize(opts: MaterializeOptions): Promise<Materialize
   try {
     const wantKind = part.kind === "subgraph" ? "tree" : "blob";
     if (fetched.kind !== wantKind) {
-      return { state: "refused", reason: `\`${part.path}\` is a ${fetched.kind === "submodule" ? "submodule" : fetched.kind === "tree" ? "directory" : "file"} at the pin; a ${part.kind} is ${wantKind === "tree" ? "a directory" : "one file"}` };
+      return { state: "refused", reason: `\`${part.path}\` is a ${fetched.kind === "submodule" ? "submodule" : fetched.kind === "tree" ? "directory" : "file"} at the pin; ${part.kind === "asset" ? "an asset" : "a subgraph"} is ${wantKind === "tree" ? "a directory" : "one file"}` };
     }
     const { files, links } = treeEntries(fetched.part);
     if (links.length) {

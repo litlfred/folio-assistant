@@ -603,6 +603,13 @@ export function treeDigest(dir: string, files: readonly string[] = treeEntries(d
 export interface PartView {
   /** The part's directory, absolute. */
   dir: string;
+  /**
+   * Which part the LAYOUT says this directory holds. Known even when the
+   * record is unreadable, so a broken record is drawn on its part's row
+   * instead of falling off the page.
+   */
+  slot: { kind: "subgraph"; id: string } | { kind: "asset"; path: string };
+  /** Which part the RECORD says it is; the writer's `--check` holds the two equal. */
   part?: KgPart;
   ref?: string;
   state: "materialized" | "referenced" | "unreadable";
@@ -620,8 +627,8 @@ export interface PartView {
   fixity?: "verified" | "mismatch" | "absent";
 }
 
-function viewOf(dir: string): PartView {
-  const base: PartView = { dir, state: "unreadable", refused: [], unanswered: [] };
+function viewOf(dir: string, slot: PartView["slot"]): PartView {
+  const base: PartView = { dir, slot, state: "unreadable", refused: [], unanswered: [] };
   let r: Record<string, unknown>;
   try {
     r = JSON.parse(readFileSync(join(dir, PART_RECORD_FILE), "utf8")) as Record<string, unknown>;
@@ -676,7 +683,7 @@ export function partRecordsIn(snapshotDir: string, subscription: string): { part
     if (e.name === "subgraphs" && e.isDirectory()) {
       for (const g of readdirSync(p, { withFileTypes: true })) {
         const gd = join(p, g.name);
-        if (g.isDirectory() && existsSync(join(gd, PART_RECORD_FILE))) parts.push(viewOf(gd));
+        if (g.isDirectory() && existsSync(join(gd, PART_RECORD_FILE))) parts.push(viewOf(gd, { kind: "subgraph", id: g.name }));
         else strays.push(rel(gd));
       }
     } else if (e.name === "assets" && e.isDirectory()) {
@@ -684,7 +691,7 @@ export function partRecordsIn(snapshotDir: string, subscription: string): { part
         for (const a of readdirSync(d, { withFileTypes: true })) {
           const ad = join(d, a.name);
           if (a.isDirectory() && !lstatSync(ad).isSymbolicLink()) {
-            if (existsSync(join(ad, PART_RECORD_FILE))) parts.push(viewOf(ad));
+            if (existsSync(join(ad, PART_RECORD_FILE))) parts.push(viewOf(ad, { kind: "asset", path: relative(p, ad).split("\\").join("/") }));
             else walk(ad);
           } else strays.push(rel(ad));
         }
