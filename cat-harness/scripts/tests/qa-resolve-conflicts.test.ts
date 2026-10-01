@@ -24,6 +24,7 @@ import {
   unmergedPaths,
   type SideScan,
 } from "../qa-resolve-conflicts.ts";
+import { attestationKeyForDerived, writeAttestations } from "../../content/pipeline/qa-attestations.ts";
 
 const QA = "cat-harness/test/results/";
 
@@ -85,6 +86,52 @@ function conflicted(files: { path: string; ours: string; theirs: string }[]): st
 }
 afterAll(() => {
   for (const d of dirs) rmSync(d, { recursive: true, force: true });
+});
+
+describe("the guard reads the attestation store (bean 8wj1)", () => {
+  const path = `${QA}translation-qa/docs/x.fr.translation-qa.json`;
+  const agent = {
+    result: "pass",
+    reviewer: { kind: "agent", id: "voice-review" },
+    note: "adjudicated by hand — the string is a proper noun and is not translated",
+  };
+  /** Write the store into the merged working tree, as committed state on main would be. */
+  function seedStore(dir: string, entries: unknown[]): string {
+    const instance = join(dir, "cat-harness");
+    writeAttestations(instance, attestationKeyForDerived(instance, join(dir, path))!, { "translation-coverage": entries });
+    return instance;
+  }
+
+  test("an agent verdict the store HOLDS no longer blocks regeneration", () => {
+    const dir = conflicted([{ path, ours: sidecar("warn", true), theirs: sidecar("fail", true) }]);
+    const instance = seedStore(dir, [agent]);
+    const [o] = plan(dir, QA, unmergedPaths(dir), instance);
+    expect(o!.action).toBe("resolve");
+    expect(o!.reason).toContain("attestation store");
+  });
+
+  test("...one it does NOT hold is still refused, with the command that fixes it", () => {
+    const dir = conflicted([{ path, ours: sidecar("warn", true), theirs: sidecar("fail", true) }]);
+    const instance = seedStore(dir, [{ ...agent, note: "a different verdict" }]);
+    const [o] = plan(dir, QA, unmergedPaths(dir), instance);
+    expect(o!.action).toBe("refuse");
+    expect(o!.reason).toContain("qa:attestations:migrate");
+  });
+
+  test("...and with no store at all, refused — never read as 'nothing to keep'", () => {
+    const dir = conflicted([{ path, ours: sidecar("warn", true), theirs: sidecar("fail", true) }]);
+    const [o] = plan(dir, QA, unmergedPaths(dir), join(dir, "cat-harness"));
+    expect(o!.action).toBe("refuse");
+  });
+
+  test("an unreadable store refuses", () => {
+    const dir = conflicted([{ path, ours: sidecar("warn", true), theirs: sidecar("fail", true) }]);
+    const instance = seedStore(dir, [agent]);
+    writeFileSync(join(instance, "test", "attestations", "attestations.store.json"), "{ nope");
+    const [o] = plan(dir, QA, unmergedPaths(dir), instance);
+    expect(o!.action).toBe("refuse");
+    expect(o!.reason).toContain("unknown");
+  });
 });
 
 describe("the guard refuses what regeneration would destroy", () => {
