@@ -400,6 +400,20 @@ export function interactionProfilesRead(): Family {
   return f;
 }
 
+/**
+ * Does this run write the committed QA sidecar?
+ *
+ * Never under `--check` (bean `r7v6`, the write-in-check half of reader-audit
+ * rows R11/R21). The gate form CI runs judges and writes nothing. Measured
+ * 2026-10-01, a `--check` run over an absent results tree RECREATED
+ * `harness-state.qa-results.json`. A gate that writes the record it reports
+ * into is the `ymsu` gate-tree-mutation defect. This mirrors `writesReport` in
+ * `skill-register.ts` (bean `bo44`), so the two gates answer it the same way.
+ */
+export function writesSidecar(argv: readonly string[]): boolean {
+  return !argv.includes("--check");
+}
+
 function main(): number {
   const check = process.argv.includes("--check");
   const families = [healthProducerCurrent(), todoProcessRefs(), issueMarkEdits(), interactionProfilesRead()];
@@ -422,7 +436,7 @@ function main(): number {
     for (const x of f.findings) console.log(`      · ${x.where} — ${x.detail}`);
   }
 
-  writeQaResult(
+  if (writesSidecar(process.argv)) writeQaResult(
     ROOT,
     "harness-state",
     buildQaResult({
