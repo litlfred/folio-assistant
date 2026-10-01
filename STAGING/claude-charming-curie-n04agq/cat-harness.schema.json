@@ -355,13 +355,6 @@
                 "type": "string",
                 "minLength": 1
               },
-              "dependents": {
-                "type": "string",
-                "enum": [
-                  "reproduce",
-                  "skip"
-                ]
-              },
               "coverage": {
                 "type": "object",
                 "properties": {
@@ -566,8 +559,7 @@
             "required": [
               "id",
               "path",
-              "graphKinds",
-              "dependents"
+              "graphKinds"
             ]
           }
         },
@@ -875,8 +867,8 @@
   "$comment": "Instance graph: https://litlfred.github.io/folio-assistant/STAGING/claude-charming-curie-n04agq/cat-harness.jsonld",
   "staging": {
     "branch": "claude/charming-curie-n04agq",
-    "sha": "e1fb78296008305b613192fa149f33c0a50b4792",
-    "pr": "1689/merge",
-    "run": "36780403577"
+    "sha": "6625e28726a40067431ed16e160ff3ba348e34aa",
+    "pr": "1729/merge",
+    "run": "36794559597"
   }
 }

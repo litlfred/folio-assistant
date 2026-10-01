@@ -1044,9 +1044,9 @@
         "skos:Concept"
       ],
       "label": "dependents",
-      "comment": "Whether an instance depending on this one materialises its own copy of a declared directory. Orthogonal to `scope`, which says where a path resolves rather than who gets one.",
+      "comment": "RETIRED 2026-09-30: whether an instance depending on this one materialised its own copy of a declared directory. Inheritance is now automatic — every instance whose directory exists is a member of the declared subgraph — and whether a dependent gets one created is its graph kind's `perInstance`.",
       "prefLabel": "dependents",
-      "definition": "Whether an instance depending on this one materialises its own copy of a declared directory. Orthogonal to `scope`, which says where a path resolves rather than who gets one.",
+      "definition": "RETIRED 2026-09-30: whether an instance depending on this one materialised its own copy of a declared directory. Inheritance is now automatic — every instance whose directory exists is a member of the declared subgraph — and whether a dependent gets one created is its graph kind's `perInstance`.",
       "notation": "cat-harness:dependents",
       "inScheme": "https://litlfred.github.io/cat-harness/0.1.0/ns",
       "isDefinedBy": "https://litlfred.github.io/cat-harness/0.1.0/ns",
@@ -1547,6 +1547,21 @@
       "prefLabel": "requiresCapability",
       "definition": "A capability this node needs before it can run.",
       "notation": "cat-harness:requiresCapability",
+      "inScheme": "https://litlfred.github.io/cat-harness/0.1.0/ns",
+      "isDefinedBy": "https://litlfred.github.io/cat-harness/0.1.0/ns",
+      "layer": "harness"
+    },
+    {
+      "@id": "cat-harness:setupBySkill",
+      "@type": [
+        "rdf:Property",
+        "skos:Concept"
+      ],
+      "label": "setupBySkill",
+      "comment": "The skill that explains how to set up this capability — install, configure, verify. A pointer from an environment probe to a procedure, not a merge of the two kinds.",
+      "prefLabel": "setupBySkill",
+      "definition": "The skill that explains how to set up this capability — install, configure, verify. A pointer from an environment probe to a procedure, not a merge of the two kinds.",
+      "notation": "cat-harness:setupBySkill",
       "inScheme": "https://litlfred.github.io/cat-harness/0.1.0/ns",
       "isDefinedBy": "https://litlfred.github.io/cat-harness/0.1.0/ns",
       "layer": "harness"
