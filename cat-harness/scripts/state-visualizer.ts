@@ -800,7 +800,7 @@ export function qaPanels(id: string, src: string): string {
   if (unknown.availability === "unknown") {
     return (
       `<h2 class="sv-h2">Not available in this build</h2>` +
-      `<p class="sv-sub">The <code>qa</code> graph was not counted: ${esc(unknown.reason ?? "no reason recorded")}. ` +
+      `<p class="sv-sub">${esc(unknown.reason ?? "No reason was recorded")}. ` +
       `This is <strong>unknown</strong>, not zero.</p>` +
       `<p class="sv-sub">The data is <a href="${src}">a plain JSON file</a>.</p>`
     );

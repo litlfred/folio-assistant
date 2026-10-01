@@ -17,6 +17,7 @@ import {
   countPublished,
   countResults,
   decideSource,
+  holdsCorpus,
   judgePublished,
   type QaFetchState,
 } from "../qa-site-assets.ts";
@@ -31,6 +32,7 @@ function tree(files: string[]): { dir: string; cleanup: () => void } {
 }
 
 const NONE = { witnesses: 0, results: 0, files: 0 };
+const NO_CORPUS = { ...NONE, corpus: false };
 
 function state(over: Partial<QaFetchState>): QaFetchState {
   return {
@@ -76,26 +78,40 @@ describe("decideSource", () => {
   const counts = { witnesses: 5, results: 4, files: 30 };
 
   test("a checkout holding the corpus publishes it as checked out, even when the store has an entry", () => {
-    const d = decideSource(counts, { index: 0, key: "pr/1/abc", counts: { witnesses: 9, results: 9, files: 99 } });
+    const d = decideSource({ ...counts, corpus: true }, { index: 0, key: "pr/1/abc", counts: { witnesses: 9, results: 9, files: 99 } });
     expect(d.source).toBe("checkout");
     expect(d.expected).toEqual(counts);
   });
 
   test("an absent corpus with an exact hit is `fetched`, judged against the ENTRY's counts", () => {
-    const d = decideSource(NONE, { index: 0, key: "main/abc", counts });
+    const d = decideSource(NO_CORPUS, { index: 0, key: "main/abc", counts });
     expect(d).toMatchObject({ source: "fetched", expected: counts });
   });
 
   test("a hit on a fallback ref is labelled as another commit's evidence", () => {
-    const d = decideSource(NONE, { index: 1, key: "main/older", counts });
+    const d = decideSource(NO_CORPUS, { index: 1, key: "main/older", counts });
     expect(d.source).toBe("fetched-fallback");
     expect(d.reason).toContain("ANOTHER commit");
   });
 
   test("no corpus and no hit is `unavailable`, never an empty success", () => {
-    const d = decideSource(NONE, undefined);
+    const d = decideSource(NO_CORPUS, undefined);
     expect(d.source).toBe("unavailable");
     expect(d.reason).toContain("QA not available for this ref");
+  });
+});
+
+describe("holdsCorpus — a build's own leftovers are not a corpus", () => {
+  test("one build-written result is NOT a corpus; a verdict family is", () => {
+    // Measured: a preview run left `kg-export.qa-results.json` behind in an
+    // otherwise absent tree, and the next fetch called the checkout present.
+    const { dir, cleanup } = tree(["kg-export.qa-results.json"]);
+    expect(holdsCorpus(dir)).toBe(false);
+    const decided = decideSource({ ...countResults(dir), corpus: holdsCorpus(dir) }, undefined);
+    expect(decided.source).toBe("unavailable");
+    mkdirSync(join(dir, "kg-qa"));
+    expect(holdsCorpus(dir)).toBe(true);
+    cleanup();
   });
 });
 

@@ -123,6 +123,20 @@ function walkFiles(dir: string, out: string[] = []): string[] {
   return out;
 }
 
+/**
+ * The verdict families whose presence means "the corpus is here". NOT "any
+ * file": a build writes a few results itself (`kg-export` writes
+ * `kg-export.qa-results.json` during the site build), and counting those as a
+ * corpus is exactly the C10 shape — measured here, when a preview run left that
+ * one file behind and the next fetch called the checkout's corpus present.
+ */
+export const CORPUS_FAMILIES = ["kg-qa", "block-qa", "translation-qa"] as const;
+
+/** Does this results tree hold a verdict corpus (any family), as opposed to a build's own leftovers? */
+export function holdsCorpus(resultsDir: string): boolean {
+  return CORPUS_FAMILIES.some((f) => existsSync(join(resultsDir, f)));
+}
+
 /** Count a results tree. An absent tree is all zeros — the caller decides what that means. */
 export function countResults(resultsDir: string): QaAssetCounts {
   const files = walkFiles(resultsDir);
@@ -158,13 +172,13 @@ export function countPublished(siteDir: string): Pick<QaAssetCounts, "witnesses"
  * hit (or undefined), with its index into the requested refs.
  */
 export function decideSource(
-  local: QaAssetCounts,
+  local: QaAssetCounts & { corpus: boolean },
   hit: { index: number; key: string; counts: QaAssetCounts } | undefined,
 ): { source: QaSource; expected: QaAssetCounts; reason: string } {
-  if (local.files > 0) {
+  if (local.corpus) {
     return {
       source: "checkout",
-      expected: local,
+      expected: { witnesses: local.witnesses, results: local.results, files: local.files },
       reason:
         "the checkout holds the QA corpus (still committed), so it is published as checked out" +
         (hit ? `; qa-reports also has ${hit.key}` : "; qa-reports had no entry for this build's ref"),
@@ -286,7 +300,7 @@ function cmdFetch(a: ReturnType<typeof args>): number {
   const root = repoRoot();
   const results = resolve(root, resultsRel);
   const requested = [ref, ...a.many("fallback")];
-  const local = countResults(results);
+  const local = { ...countResults(results), corpus: holdsCorpus(results) };
 
   const scratch = mkdtempSync(join(tmpdir(), "qa-site-assets-"));
   const attempts: QaFetchState["attempts"] = [];
