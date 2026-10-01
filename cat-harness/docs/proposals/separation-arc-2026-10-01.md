@@ -242,3 +242,41 @@ First pass, to be verified per item by the placement audit: all 5 MCP and tool s
 | MCP spec, `agent-skills/library/mcp-2026-specification-2026-07-28` | cat-harness library (agent-skills ruling) |
 
 Tracked on `9umr` (finale) under S4.
+
+## Placement audit (#1778) and the owner rulings on its questions (2026-10-01)
+
+The audit checked **2,266 items** (skills, voices, tools, processes, decisions, roles, stories, actors, capabilities, methodologies, code lists, templates, schemas, library entries, script and code groups):
+
+```
+PLACEMENT    ████████░░░░░░░░░░░░  945 OK / 2266
+  CODE    → cat-harness-tools   790   (S5: 70lx 553+, 8lcl 181)
+  MOVE    → owning instance     295   (placement PR2–PR8 + 160 unplanned)
+  TO-JSON (D2)                  127   (S5: y9r6)
+  SPLIT                          89
+  AMBIGUOUS                      20   → 7 questions, all ruled below
+```
+
+| Q | question | owner ruling |
+|---|---|---|
+| 1 | integration-watcher family (compute, detangler, devils-advocate, integration-watch, narrative-asserts-code) | **move the family to sci**; the generic `integration-watcher` stays in cat-harness as their base |
+| 2 | editorial graph (content-graph, uses-editorial-review, corpus-grep) | **split**: the `uses[]` relation stays in cat-harness; the Lean comparison moves to sci |
+| 3 | milnor-exposition-standard, markdown-render-check | **Milnor to sci**; the render check splits (generic markdown stays, LaTeX/maths to sci) |
+| 4 | 10 pipeline modules with maths vocabulary (qa-criteria-registry, lean-lexer, render-latex, …) | **split in S5**: the generic pipeline goes to cat-harness-tools; the maths checkers go to sci's code and plug into it |
+| 5 | shape of large-datasets and agent-skills inside cat-harness | **dissolve into the concern groups** (matches PR8 3A) |
+| 6 | `skills/authoring/` vs the `content` concern code | **rename to `skills/content/`** in placement PR2 (`pzwb`) |
+| 7 | core's `catalogue`, `dublin-core`, `fhir-artifact-index` schemas | **split**: the generic shape stays in core; IRIS/FHIR specifics go to who-iris / fhir-harness and register on load |
+
+Other audit findings, now on the checklist:
+- [ ] `cat-harness-tools.json` `needs` → `["cat-harness","bootstrap-tools"]`, and core adds `cat-harness-tools` (C1). 0 of tools' 27 files import core.
+- [ ] 34 cat-harness skills that point at sci and are in no PR yet (mostly authoring-core, sdlc-core)
+- [ ] 90 code files that name higher instances by literal path → resolve through the checkout overlay (PR0a)
+
+## S0 rulings (2026-10-01)
+
+- **Submodule pins:** restore PR0's bootstrap `7a91356` / bootstrap-tools `c5e5e25`. All of main's artefacts were generated at those pins; a later merge had regressed the gitlinks.
+- **READMEs: each repo owns its own.** folio-assistant stops regenerating and checking submodule READMEs. Each repo's own CI keeps its README current (D3). Nothing is pushed upstream.
+- **W3C library sources** (PROV-O, ODRL 2.2, JSON-LD 1.1): **methodologies cite them** via `evidence:`, reusing sibling PR #1769's methodology nodes. The test rule stays as it is.
+
+## S4 evidence (#1776, the upward-links PR)
+
+R5 upward markdown links 26 → **0** · R6 root links (md) 12 → **0** · large-datasets → core import 1 → **0** · `check:reference-direction` 1667 → 1640 occurrences. The 6 R6 `.ts` items are paths written into *emitted* files (`init-folio.ts:279,290,318,344`, `translate-kg-viewer.ts:153`, `translation.ts:225`), not root references. One upward name remains in large-datasets (`gen-id-lookup.ts` `SOURCE = "who-iris"`, plus prose naming core); it goes with the `needs` change.

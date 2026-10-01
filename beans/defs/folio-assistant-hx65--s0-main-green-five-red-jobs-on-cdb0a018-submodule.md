@@ -5,7 +5,7 @@ status: todo
 type: task
 priority: critical
 created_at: 2026-10-01T08:14:33Z
-updated_at: 2026-10-01T08:14:33Z
+updated_at: 2026-10-01T11:26:09Z
 parent: folio-assistant-7x5n
 ---
 
@@ -17,3 +17,7 @@ Failing on main cdb0a018 (gh api jobs): Repository gates #13 'workflow skill ref
 - [ ] submodule pins bootstrap ebfa406, bootstrap-tools 03832a8; translation templates re-extracted
 - [ ] readme:subgraphs cause (02f16ae98bb) read from the job log
 - [x] owner ruling on 8 detangle + 1 kg-qa orphan sidecars recorded: WIDEN THE SCAN to each instance's own skills/, keep the files (owner, 2026-10-01)
+
+
+## Owner rulings 2026-10-01 (relayed to the S0 agent)
+Pins: restore PR0's bootstrap 7a91356 / bootstrap-tools c5e5e25. READMEs: each repo owns its own; folio-assistant stops regenerating and checking submodule READMEs. W3C sources: methodologies cite them (evidence:), reusing #1769; the test stays.
