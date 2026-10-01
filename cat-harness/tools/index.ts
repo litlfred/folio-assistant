@@ -162,6 +162,7 @@ export function tools(baseUrl?: string): ToolDefinition[] {
       subprocess: {
         process: "Process_RenderKgToGitHubPages",
         instance: "bootstrap-tools",
+        // declared-path-literal: a path inside ANOTHER instance (bootstrap-tools), relative to its root, naming the Tool's subprocess; this instance's declaration cannot resolve it, and it lands with the bootstrap-tools pin bump.
         path: "processes/render-kg-to-github-pages.bpmn",
       },
       selection: {
