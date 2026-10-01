@@ -355,13 +355,6 @@
                 "type": "string",
                 "minLength": 1
               },
-              "dependents": {
-                "type": "string",
-                "enum": [
-                  "reproduce",
-                  "skip"
-                ]
-              },
               "coverage": {
                 "type": "object",
                 "properties": {
@@ -566,8 +559,7 @@
             "required": [
               "id",
               "path",
-              "graphKinds",
-              "dependents"
+              "graphKinds"
             ]
           }
         },
@@ -842,6 +834,36 @@
             "minLength": 1
           }
         },
+        "contentAdapters": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "contentType": {
+                "type": "string",
+                "minLength": 1
+              },
+              "module": {
+                "type": "string",
+                "minLength": 1
+              },
+              "className": {
+                "type": "string",
+                "minLength": 1
+              },
+              "extends": {
+                "type": "string",
+                "minLength": 1
+              }
+            },
+            "required": [
+              "contentType",
+              "module",
+              "className"
+            ],
+            "additionalProperties": false
+          }
+        },
         "liquid": {
           "type": "object",
           "properties": {
@@ -875,8 +897,8 @@
   "$comment": "Instance graph: https://litlfred.github.io/folio-assistant/STAGING/claude-practical-ride-e0v0aq/cat-harness.jsonld",
   "staging": {
     "branch": "claude/practical-ride-e0v0aq",
-    "sha": "650328823447f6eb9d8976d4b32f26371cd4c8bd",
-    "pr": "1615/merge",
-    "run": "36791088597"
+    "sha": "68ad5f59577f5788f60568b520a00edb5e73aeb5",
+    "pr": "1744/merge",
+    "run": "36828912659"
   }
 }

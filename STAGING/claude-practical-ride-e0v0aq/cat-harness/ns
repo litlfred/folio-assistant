@@ -453,9 +453,9 @@
         "skos:Concept"
       ],
       "label": "external-schema",
-      "comment": "The specifications this instance depends on — one record per specification, pinning the EDITION in use, with the operative terms derived from the corpus rather than hand-listed.",
+      "comment": "The specifications this instance depends on — one record per specification, pinning the EDITION in use, with the operative terms derived from the corpus rather than hand-listed; and, beside a record, the pinned edition's own codes where something resolves against them.",
       "prefLabel": "external-schema",
-      "definition": "The specifications this instance depends on — one record per specification, pinning the EDITION in use, with the operative terms derived from the corpus rather than hand-listed.",
+      "definition": "The specifications this instance depends on — one record per specification, pinning the EDITION in use, with the operative terms derived from the corpus rather than hand-listed; and, beside a record, the pinned edition's own codes where something resolves against them.",
       "notation": "cat-harness:graphKind/external-schema",
       "inScheme": "https://litlfred.github.io/cat-harness/0.1.0/ns",
       "isDefinedBy": "https://litlfred.github.io/cat-harness/0.1.0/ns",
@@ -1044,9 +1044,9 @@
         "skos:Concept"
       ],
       "label": "dependents",
-      "comment": "Whether an instance depending on this one materialises its own copy of a declared directory. Orthogonal to `scope`, which says where a path resolves rather than who gets one.",
+      "comment": "RETIRED 2026-09-30: whether an instance depending on this one materialised its own copy of a declared directory. Inheritance is now automatic — every instance whose directory exists is a member of the declared subgraph — and whether a dependent gets one created is its graph kind's `perInstance`.",
       "prefLabel": "dependents",
-      "definition": "Whether an instance depending on this one materialises its own copy of a declared directory. Orthogonal to `scope`, which says where a path resolves rather than who gets one.",
+      "definition": "RETIRED 2026-09-30: whether an instance depending on this one materialised its own copy of a declared directory. Inheritance is now automatic — every instance whose directory exists is a member of the declared subgraph — and whether a dependent gets one created is its graph kind's `perInstance`.",
       "notation": "cat-harness:dependents",
       "inScheme": "https://litlfred.github.io/cat-harness/0.1.0/ns",
       "isDefinedBy": "https://litlfred.github.io/cat-harness/0.1.0/ns",
