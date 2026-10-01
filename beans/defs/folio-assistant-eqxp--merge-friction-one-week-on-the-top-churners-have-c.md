@@ -183,3 +183,58 @@ the marker-scoped ones are struck. What survives is the whole-file set —
 `skills.tool-run.json` — each already cleared by reading its producer. The
 remaining churn from marker-scoped READMEs needs a different answer, and this
 bean does not have one.
+
+## CORRECTION, 2026-10-01 — two claims in this bean were wrong
+
+Both were found by measuring what the bean had only reasoned about. They are
+left above as written and corrected here, because a bean that quietly edits its
+own history teaches the next agent nothing.
+
+### 1. `-merge` does not reduce the NUMBER of conflicts
+
+This bean claimed that with the proposed entries, merge cycle 26 "would have
+carried two conflicts rather than five". **That is false.**
+
+Measured in a scratch repository: with `gen.json -merge`, a merge in which both
+sides changed that file exits **1** with the path **unresolved**. Git declares
+a conflict and leaves OURS as the tentative result. That is what the attribute
+is specified to do, and what `oxka` actually claimed — *"The conflict is then
+ONE clean conflict to resolve by regenerating, rather than markers buried
+inside a megabyte"*.
+
+So the benefit is real but narrower than stated: a clean whole-file conflict
+instead of inline markers in generated output, and a collapsed diff in review.
+**Removing these conflicts, rather than tidying them, requires the files not to
+be on `main` at all.**
+
+### 2. Two of the three "cleared" candidates FAIL, on the half this bean skipped
+
+`oxka`'s entry is safe on **three** counts, not one: the producer carries
+nothing forward, a CI gate reddens a wrong resolution, and a case holds the
+line in `gitattributes.test.ts`. This bean checked only the first and called
+the paths cleared. Checking the second, by corrupting each committed file and
+running its gate:
+
+| path | carries forward | gate reddens | verdict |
+|---|---|---|---|
+| `tool-runs/lsi-index/.../skills.tool-run.json` | no | **yes** — `lsi:skills:check` 0 → 1 on a bad `inputFingerprint` | **marked** |
+| `skill-register.qa-results.json` | no | **no** — `skill:register:check` exits 0; 66 unit tests pass | refused |
+| `lsi/.../skills.lsi.json` | no | **no** — `lsi:skills:check` exits 0 | refused |
+
+`skills.lsi.json` is the instructive one. `lsi:skills:check` *looks* like its
+gate and is not: it validates the RUN RECORD's `inputFingerprint` — corrupting
+which does exit 1 — and never reads the sidecar's own contents. The two files
+sit two directories apart and only one of them is guarded.
+
+Both refusals are now asserted in `gitattributes.test.ts`, with the
+measurements, so the next agent reaching for them has to overturn evidence
+rather than an opinion.
+
+### What this leaves
+
+One entry added. The churn this bean set out to reduce is **not** reduced by
+`.gitattributes` in any case, per correction 1 — which makes the owner's
+proposal of moving QA reports off `main` to a content-addressed orphan branch
+the only route on the table that removes these conflicts rather than tidying
+them. That is written up separately; this bean's remaining value is the
+measurements and the three negative results (`beans/README.md` and these two).

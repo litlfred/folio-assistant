@@ -96,7 +96,7 @@ y `bun run bat:sync:check` hace fallar la CI si falta alguno o está desactualiz
 
 `cat-harness/scripts/start-folio-assistant.sh` instala Bun si no está presente y
 luego inicia el servidor, y
-`cat-harness/adapters/mcp-server/install.sh` es un instalador más completo que cubre
+`cat-harness-tools/adapters/mcp-server/install.sh` es un instalador más completo que cubre
 también TeX Live. Ambos estuvieron indocumentados hasta el 2026-09-21
 ([#740](https://github.com/litlfred/folio-assistant/issues/740)) — motivo por el cual
 existe esta sección.

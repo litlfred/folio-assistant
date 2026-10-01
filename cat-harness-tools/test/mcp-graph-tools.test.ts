@@ -19,7 +19,7 @@ import {
   isGraphTool,
   invalidateGraphIndex,
   GRAPH_TOOL_NAMES,
-} from "../../adapters/mcp-server/tools/graph";
+} from "../adapters/mcp-server/tools/graph";
 
 const ROOT = mkdtempSync(join(tmpdir(), "mcp-graph-"));
 const CONTENT = join(ROOT, "folio", "qou", "ch01");

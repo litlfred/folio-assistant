@@ -19,13 +19,13 @@
  * @module scripts/mcp-server/server
  */
 
-import { folioDir, folioDirDeferred } from "../../schemas/cat-harness.js";
-import type { Paper, Chapter, Block, PaperMacro, FeedbackItem, Section, RenderedAsset, Folio } from "../../schemas/types";
-import { FeedbackItemSchema } from "../../schemas/constraints";
+import { folioDir, folioDirDeferred } from "../../../cat-harness/schemas/cat-harness.js";
+import type { Paper, Chapter, Block, PaperMacro, FeedbackItem, Section, RenderedAsset, Folio } from "../../../cat-harness/schemas/types";
+import { FeedbackItemSchema } from "../../../cat-harness/schemas/constraints";
 import {
   INVALID_ENUM, parseTodoPriority, parseTodoStatus, TODO_PRIORITIES, TODO_STATUSES,
-} from "../../src/core/feedback.js";
-import { allows, forbidden, getUserEmail, getUserName, getUserRole } from "../../src/core/rbac.js";
+} from "../../../cat-harness/src/core/feedback.js";
+import { allows, forbidden, getUserEmail, getUserName, getUserRole } from "../../../cat-harness/src/core/rbac.js";
 // `renderBlock` was reached through `await import(join(REPO_ROOT, …))`, which
 // types as `any` — so nothing checked what was handed to it, and a
 // `ResolvedBlock` went in for two years where a `Block` was declared. The
@@ -36,14 +36,14 @@ import { allows, forbidden, getUserEmail, getUserName, getUserRole } from "../..
 // and the TeX renderer belongs to the science layer, so it is resolved from
 // the folio's declared profile through `resolveRenderTarget`. See
 // `schemas/render-targets.ts`.
-import { resolveRenderTarget } from "../../content/pipeline/render-discovery.js";
-import { readDeclaredFolioProfile } from "../../content/pipeline/profile-check.js";
+import { resolveRenderTarget } from "../../../cat-harness/content/pipeline/render-discovery.js";
+import { readDeclaredFolioProfile } from "../../../cat-harness/content/pipeline/profile-check.js";
 import { registerMcpToolGroups } from "./tool-groups.js";
-import { leanStatusBucket } from "../../schemas/types";
+import { leanStatusBucket } from "../../../cat-harness/schemas/types";
 import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 import { StdioServerTransport } from "@modelcontextprotocol/sdk/server/stdio.js";
 import { REPO_ROOT, BUILD_DIR, FEEDBACK_DIR, FEEDBACK_WORKTREE, MAIN_TEX, FOLIO_PORT, LIBRARY_DIRS, UPLOADS_DIR } from "./paths.js";
-import { safeSegment, joinSegments, realPathWithin, writableWithin } from "../../src/core/safe-path.js";
+import { safeSegment, joinSegments, realPathWithin, writableWithin } from "../../../cat-harness/src/core/safe-path.js";
 
 /**
  * An archive was REFUSED, as distinct from failing to be an archive.
@@ -68,9 +68,9 @@ import {
 } from "./git.js";
 import { existsSync, readFileSync, writeFileSync, mkdirSync, readdirSync } from "fs";
 import { join, relative, resolve, extname, basename } from "path";
-import { loadContributions } from "../../schemas/harness-config";
-import { ContributionRegistry, type FolioContribution } from "../../schemas/contributions";
-import { contributionsRoot } from "../../content/pipeline/repo-root";
+import { loadContributions } from "../../../cat-harness/schemas/harness-config";
+import { ContributionRegistry, type FolioContribution } from "../../../cat-harness/schemas/contributions";
+import { contributionsRoot } from "../../../cat-harness/content/pipeline/repo-root";
 import Anthropic from "@anthropic-ai/sdk";
 
 // ── Access control ───────────────────────────────────────────
@@ -124,7 +124,7 @@ function parseFeedbackTs(content: string): unknown[] {
 /** Serialize feedback items to TypeScript source. */
 function serializeFeedbackTs(items: FeedbackItem[]): string {
   const json = JSON.stringify(items, null, 2);
-  return `import type { FeedbackItem } from "../../schemas/types";\n\nexport default ${json} satisfies FeedbackItem[];\n`;
+  return `import type { FeedbackItem } from "../../../cat-harness/schemas/types";\n\nexport default ${json} satisfies FeedbackItem[];\n`;
 }
 
 /**
@@ -326,11 +326,11 @@ const GRAPH_ROOTS = [
     dir,
   })),
 ];
-import { resolveFormalRef } from "../../schemas/formal-ref.js";
+import { resolveFormalRef } from "../../../cat-harness/schemas/formal-ref.js";
 import {
   blockCaption, blockExamples, blockLean, blockProofs, blockTex,
   isSectionRef, sectionBlockNames,
-} from "../manifest-entries.js";
+} from "../../../cat-harness/adapters/manifest-entries.js";
 
 /**
  * Resolve the Lean source for a block across branch-backed storage.

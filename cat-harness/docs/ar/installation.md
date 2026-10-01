@@ -96,7 +96,7 @@ cat-harness\scripts\upload-to-uploads.bat https://example.org/guideline.pdf
 
 يقوم `cat-harness/scripts/start-folio-assistant.sh` بتثبيت Bun إذا كان مفقودًا ثم
 يبدأ تشغيل الخادم، كما أن
-`cat-harness/adapters/mcp-server/install.sh` هو برنامج تثبيت أكثر شمولاً يغطي TeX
+`cat-harness-tools/adapters/mcp-server/install.sh` هو برنامج تثبيت أكثر شمولاً يغطي TeX
 Live أيضًا. كلاهما لم يكن موثقًا حتى 2026-09-21
 ([#740](https://github.com/litlfred/folio-assistant/issues/740)) — ولهذا السبب
 يوجد هذا القسم.

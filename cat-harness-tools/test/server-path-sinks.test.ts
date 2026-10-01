@@ -30,10 +30,11 @@
 import { describe, it, expect } from "bun:test";
 import { readFileSync } from "node:fs";
 import { join, basename } from "node:path";
-import { safeSegment } from "../../src/core/safe-path";
+import { safeSegment } from "../../cat-harness/src/core/safe-path";
 
-// `import.meta.dir` is `cat-harness/scripts/tests`, so the instance root is two up.
-const SERVER = join(import.meta.dir, "../../adapters/mcp-server/server.ts");
+// `import.meta.dir` is `cat-harness-tools/test`, so the instance root is one up.
+// Moved here with the server (bean `w2gr`, step 3a).
+const SERVER = join(import.meta.dir, "../adapters/mcp-server/server.ts");
 const src = readFileSync(SERVER, "utf-8");
 
 describe("the file under test was actually read", () => {
@@ -48,7 +49,7 @@ describe("the file under test was actually read", () => {
   });
 
   it("imports the containment helpers rather than hand-rolling them", () => {
-    expect(src).toContain('from "../../src/core/safe-path.js"');
+    expect(src).toContain('from "../../../cat-harness/src/core/safe-path.js"');
     for (const helper of ["safeSegment", "realPathWithin", "writableWithin"]) {
       expect(src).toContain(helper);
     }
