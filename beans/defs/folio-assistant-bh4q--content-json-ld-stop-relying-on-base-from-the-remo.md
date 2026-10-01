@@ -3,6 +3,7 @@
 title: 'Content JSON-LD: stop relying on @base from the remote context (JSON-LD 1.1 §4.1.3)'
 status: todo
 type: task
+parent: folio-assistant-scfh
 created_at: 2026-10-01T18:30:16Z
 updated_at: 2026-10-01T18:30:16Z
 ---
