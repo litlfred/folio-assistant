@@ -5,7 +5,7 @@ status: todo
 type: feature
 priority: high
 created_at: 2026-09-21T14:13:32Z
-updated_at: 2026-09-29T20:52:41Z
+updated_at: 2026-10-01T12:32:21Z
 parent: folio-assistant-uhkv
 ---
 
@@ -57,3 +57,8 @@ Released `in-progress` → `todo` on the owner's instruction (review session htt
 
 
 _2026-09-29_ — **Re-parented `yj32` → `uhkv`** by subject, per todo-manager §"WHICH parent" (owner choice '1 2 3' on the LSI epic-filing proposal, bean ansc). Ingesting a second IG to test the artefact-index pipeline is SMART-stack work.
+
+
+
+## 2026-10-01: P1 and P2 wait on this bean
+Phases P1 (folio-assistant-ha24) and P2 (folio-assistant-ntyj) of `ig-publisher-reduction` require a per-IG view **plus a combined one**. With only smart-trust ingested, the combined view cannot be built, so a second IG is now a prerequisite of two approved phases, not only a test of the pipeline.

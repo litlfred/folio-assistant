@@ -5,7 +5,7 @@ status: in-progress
 type: task
 priority: normal
 created_at: 2026-09-21T19:10:00Z
-updated_at: 2026-10-01T12:30:43Z
+updated_at: 2026-10-01T12:32:34Z
 parent: folio-assistant-uhkv
 ---
 
@@ -499,3 +499,22 @@ The P0 rule from the skill (`ig-publisher-reduction`, owner approval 2026-09-30)
 - **Shared naming rule:** the page-name rule moved to `artifactPageName` in `fhir-artifact-index.ts`, so the writer (`gen-smart-trust-pages`) and this linker cannot disagree.
 - **Verified** on a local stage of the fork at `25771f6`: 678 of 678 artefact links and 36 of 36 toc links resolve, and both pages parse as strict Liquid.
 - **Parity:** the IG-level generated pages go from 11 missing to 9 (`qa*`, `searchform` and `history` remain).
+
+## 2026-10-01: phased-transition review — P0 restatement PROPOSED (awaiting owner approval)
+
+**The conflict.** Approved P0 says *"strictly: a page the Publisher renders from data it does not export is a gap, not an exception"*. But:
+- P2 (also approved) drops XML and Turtle, so 1,331 representation-view pages can never be P0 matches; under P2 they are refusals.
+- The skill's own "not settled" section says a data-limited page kind *"belongs on the fork's ask rather than on the parity list"*, which covers the 668 change-history tabs.
+
+As written, P0 cannot pass before P2 and the fork are done, and that inverts the phase order.
+
+**Proposed wording for P0's page-set criterion.** Every page the Publisher renders for the IG is accounted for as **exactly one** of:
+- **matched:** this site renders it;
+- **refused under P2:** an XML or Turtle representation view, recorded in P2's refusal list;
+- **on the fork's ask:** rendered from data the Publisher does not export, listed with the data it needs.
+
+A page in none of the three is a **gap**, and P0 passes only with zero gaps. Strictness is kept, since nothing is silently excepted; it just stops counting the other phases' work as P0's.
+
+The skill (`ig-publisher-reduction.md`) is **not edited** until the owner approves this wording.
+
+**Opened in the same review:** `ha24` (P1), `ntyj` (P2) and `h3tx` (P4). P1 and P2 are blocked by `qrnz` (second IG, needed for the combined view); P4 is blocked by `a9tx`.
