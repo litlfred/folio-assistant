@@ -9770,6 +9770,16 @@
     // nothing" and "never declared". See `navbarRow` in `sync-docs-harness.ts`.
     var notes = row.notes && typeof row.notes === "object" ? row.notes : {};
 
+    /* EVERY CONTROL IN THIS ROW CARRIES `data-fa-tip`, and it is the SAME
+     * string as its `aria-label` — owner's ruling on `ob3m` finding 1,
+     * 2026-10-01: *"show each icon's name as a tooltip on hover or keyboard
+     * focus."* The row is glyphs with no words, so a sighted reader had no
+     * name at all until now; `title` names it for a pointer after a delay and
+     * never for a keyboard. The stylesheet paints the attribute beside the
+     * strip (`[data-fa-tip]::after` in docs-ui.css) with an EMPTY alternative
+     * text, so a screen reader still hears the `aria-label` once and the
+     * tooltip not at all. `check-navbar-consistency.ts` fails a row control
+     * built without it. */
     var host = el("div", { class: "fa-nav-icons", role: "group", "aria-label": "Harness actions" });
 
     var LABELS = {
@@ -9805,7 +9815,7 @@
         // clicks that button rather than minting a rival with its own idea of
         // whether the panel is open. Two toggles over one state is the `l4zi`
         // defect from the other direction.
-        var proxy = el("button", { type: "button", class: "fa-nav-icon", "aria-label": LABELS.launcher });
+        var proxy = el("button", { type: "button", class: "fa-nav-icon", "aria-label": LABELS.launcher, "data-fa-tip": LABELS.launcher });
         proxy.innerHTML = rowGlyph("launcher");
         proxy.addEventListener("click", function () {
           var real = document.querySelector(".fa-tiles-toggle");
@@ -9842,7 +9852,7 @@
       // turn into something else.
       var at = safeHref(withBase(hrefs[id]));
       if (at) {
-        var a = el("a", { class: "fa-nav-icon", href: at, "aria-label": label, title: label });
+        var a = el("a", { class: "fa-nav-icon", href: at, "aria-label": label, title: label, "data-fa-tip": label });
         a.innerHTML = rowGlyph(id);
         host.appendChild(a);
       } else {
@@ -9866,7 +9876,8 @@
         var dead = el("span", {
           class: "fa-nav-icon fa-nav-icon--dead",
           "aria-label": label + " — " + why,
-          title: label + " — " + why
+          title: label + " — " + why,
+          "data-fa-tip": label + " — " + why
         });
         dead.innerHTML = rowGlyph(id);
         host.appendChild(dead);
@@ -9883,6 +9894,7 @@
       scheme.innerHTML = name === "light" ? BULB_ON : BULB_OFF;
       var said = name === "light" ? "Light mode is on — switch to dark" : "Dark mode is on — switch to light";
       scheme.setAttribute("aria-label", said);
+      scheme.setAttribute("data-fa-tip", said);
       scheme.title = said;
       scheme.setAttribute("aria-pressed", name === "dark" ? "true" : "false");
     });
@@ -9901,6 +9913,11 @@
     var closeCtl = bar.querySelector(".fa-nav-close");
     if (closeCtl && bar.classList.contains("fa-nav-js")) {
       closeCtl.classList.add("fa-nav-icon", "fa-nav-close--in-row");
+      // Its name is in a visually hidden span, so to the eye it is a bare
+      // glyph like the rest of the row and gets the same tooltip. Read off
+      // that span rather than restated, so the two cannot disagree.
+      var closeName = (closeCtl.textContent || "").replace(/\s+/g, " ").replace(/^[\s×x]+/, "").trim();
+      if (closeName) closeCtl.setAttribute("data-fa-tip", closeName);
       host.appendChild(closeCtl);
     }
 
