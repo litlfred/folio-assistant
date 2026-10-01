@@ -138,6 +138,48 @@ Neither check closes the window. Both are cheap, and the second catches the case
 that matters most in practice — a sibling minutes ahead of you who already has a
 PR up.
 
+### A DECISION bean you will not land soon — put the question where a person reads
+
+The section above is about work. A **decision** bean is different: it exists to
+get a ruling, and its whole value is that somebody with the authority to rule
+sees it. Branch-locality hurts it worse than it hurts a work item, because a
+work item merely gets duplicated while a decision sits unanswered and every
+branch downstream of it waits.
+
+**So if you open a decision bean on a branch you will not land soon, post the
+question where the owner already reads — the issue — and say ON THE BEAN where
+you posted it.** Both halves. The comment is what reaches a person; the line on
+the bean is what stops the next session re-asking, and tells them where the
+answer will appear.
+
+**This is written down because it WORKED.** Bean `r0tm` carried a
+recommendation and a safe default on a branch with no PR, which is exactly the
+shape that goes unseen. It was answered, and it was answered because the
+question had been posted to [issue #1558](https://github.com/litlfred/folio-assistant/issues/1558)
+and PR #1581 — not because anyone found the bean.
+
+**What NOT to rely on, measured 2026-09-30 over all 518 beans in this store:**
+
+- **`status: draft` is not a signal.** It is legal — `schemas/tool-types.ts`
+  has `.enum(["draft", "todo", "in-progress", "completed", "scrapped"])` and
+  `beans create --status` offers it — and **no bean has ever used it.** `r0tm`
+  itself, whose own title calls it *"a draft decision"*, is `status: todo`. A
+  check keyed on `draft` reports `0 of 0` and reads green for ever, which is
+  bean `1xhc`.
+- **Prose is not a signal either.** Six recognisers over the 286 open beans
+  give between **1 and 190** candidates depending which form you match
+  (`Recommendation` heading 1, `Options` heading 20, `safe default` 1,
+  `ruling` 63, `owner's call` 48, an unticked box 190) — bean `vq8g` as a
+  number rather than a worry. And the only unreachable bean either broad
+  recogniser finds is one that *records* a ruling rather than asking for one.
+
+So the convention above is the whole of what is binding today: **a comment
+where a person reads, and a line on the bean saying where.** Whether a decision
+bean should also carry a DECLARED marker, so a check can find one without
+guessing at prose, is bean `3432` done-when 2 and is the owner's call — it
+changes what a decision bean looks like. It is recorded there unanswered rather
+than decided here.
+
 ### The trigger is STARTING WORK, not claiming — and that distinction cost a merge
 
 **Measured 2026-09-26, bean `tuvg`.** These checks are written above as what you
