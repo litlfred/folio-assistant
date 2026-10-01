@@ -711,6 +711,60 @@
  * definitions moved, which is what keeps this file hand-written.
  */
 
+/* ONE SCROLL REGION — the viewer rail's layout on a theme page.
+ *
+ * Owner ruling on bean ob3m finding 7, 2026-10-01: *"Use the viewer-rail
+ * layout on Jekyll pages."* `mountSidebarRail` (docs-ui.js) moves "On this
+ * page", the page list and a folded "Graphs" group (FOLDERS plus the harness
+ * group) into `.fa-nav-middle`, so the middle is the ONLY region that scrolls.
+ * What it replaced, measured on the built landing at 1280x800 with every group
+ * open: the middle at its 128px floor showing 0 of 430 page links, the harness
+ * group scrolling inside the footer, and `.side-bar` clipping 2108px into 800.
+ *
+ * So every region that used to scroll inside its own cap stops doing so once
+ * it is inside the middle. Written HERE, before the 50rem block, on purpose:
+ * at the same specificity the collapsed-strip rule below comes later and
+ * wins, which keeps the strip's at-rest compaction (`--fa-nav-text`); below
+ * 50rem this rule is the one that applies and lifts the base `25%` cap, which
+ * would otherwise make the index a scroller inside the phone menu. */
+.fa-nav-middle > .fa-doc-index {
+  flex: 0 0 auto;
+  max-height: none;
+  overflow: visible;
+}
+
+.fa-nav-graphs-group {
+  /* Published the way `.fa-nav-folders` publishes it — read by the strip. */
+  --fa-nav-rest-pad: 0.5rem;
+  flex: 0 0 auto;
+  padding: var(--fa-nav-rest-pad) 0;
+  border-top: 1px solid rgba(128, 128, 128, 0.25);
+  /* The footer's size, which the harness group had before it moved here. */
+  font-size: 0.75rem;
+}
+
+/* The same heading the other disclosures in this column wear, so the four
+   read as one set. 24px floor for the reason `.fa-doc-index__heading` gives. */
+.fa-nav-graphs-group__heading {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+  min-height: 1.5rem;
+  padding: 0.25rem var(--fa-nav-pad, 1rem);
+  cursor: pointer;
+  user-select: none;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+}
+
+/* The group no longer sits in a capped footer, so the scroll box the footer
+   rule gave it would be a second scroller inside the first. */
+.fa-nav-graphs-group > .fa-nav-group {
+  max-height: none;
+  overflow: visible;
+}
+
 @media (min-width: 50rem) {
   .side-bar {
     width: var(--fa-nav-collapsed);
@@ -790,6 +844,33 @@
     min-height: 8rem;
     overflow-y: auto;
     overflow-x: hidden;
+  }
+
+  /* FOLDED, THE GRAPHS HEADING STAYS IN SIGHT. It comes after the page list,
+   * which is the ruling's order and the rail's, and the page list runs to
+   * thousands of pixels -- so in flow the heading would sit at the very end
+   * of the one scroller, where nobody finds it. Pinned to the scroller's
+   * bottom edge while folded, it is always one row away; opened, it returns
+   * to flow and `mountSidebarRail` brings it to the top. `sticky`, so it is
+   * still IN the one scroll region rather than a fixed region of its own.
+   *
+   * `background: inherit` down the chain from `.side-bar`, which the theme
+   * paints opaque, so rows scrolling under the heading do not show through. */
+  .side-bar > .fa-nav-middle {
+    background: inherit;
+    /* THE CONTAINING BLOCK for what is positioned inside it. The harness rows
+     * carry visually-hidden `.fa-nav-sr` text, `position: absolute` with no
+     * positioned ancestor short of `.side-bar` -- so the middle neither
+     * clipped nor scrolled them, and with the harnesses open `.side-bar`
+     * measured 6811px of overflow in an 800px column: one scroller on
+     * screen, a second column's worth of content hanging off it. */
+    position: relative;
+  }
+  .fa-nav-middle > .fa-nav-graphs-group:not([open]) {
+    position: sticky;
+    bottom: 0;
+    z-index: 1;
+    background: inherit;
   }
 
   /* Inside the wrapper the nav scrolls with the folders rather than apart from
@@ -884,6 +965,7 @@
   .side-bar .site-nav,
   .side-bar .fa-doc-index,
   .side-bar .fa-nav-folders,
+  .side-bar .fa-nav-graphs-group,
   .side-bar .fa-nav-pages,
   .side-bar .fa-harness-tabs__heading,
   .side-bar .fa-harness-tab__label,

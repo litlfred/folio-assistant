@@ -10130,6 +10130,81 @@
     nav.parentNode.insertBefore(btn, nav);
   }
 
+  /* ── THE RAIL'S LAYOUT, ON A THEME PAGE ──────────────────────────────────
+   *
+   * Owner ruling on bean ob3m finding 7, 2026-10-01, option 1 of 4: *"Use the
+   * viewer-rail layout on Jekyll pages."* The generated viewer rail
+   * (`lib/navbar.ts`, #1762) has ONE scroller holding the page's own section
+   * first and a folded "Graphs" group after it. This sidebar had three
+   * regions that each capped and scrolled on their own, and the measurement
+   * that settled it was taken on the built landing page at 1280x800 with
+   * every group unfolded: the middle at its 128px floor, 0 of the 430 page
+   * links visible because FOLDERS (789px) sat above them, the harness group
+   * scrolling inside the footer, and `.side-bar` clipping 2108px of content
+   * into 800. Two nested scrollers and a column that hid what it could not fit.
+   *
+   * So, inside the one middle region and in this order:
+   *
+   *   1. "On this page" -- first, as the ruling says, and still folded on
+   *      arrival (*"any indices/toc should be closed"*, 2026-09-23).
+   *   2. The page list -- the only group open on arrival, so it gets the
+   *      height. The rail's `single-open` rule, applied to this surface.
+   *   3. "Graphs" -- FOLDERS and the harness group, moved out of the footer,
+   *      in ONE disclosure that starts folded. Each keeps its own fold inside
+   *      it, so nothing the owner asked to start closed now starts open.
+   *
+   * MOVED, never re-rendered: the folder rows and the harness rows are the
+   * nodes the generators already wrote, so their labels, notes and tooltips
+   * are exactly what those generators say. This changes WHERE, not WHAT.
+   *
+   * The footer keeps home, which is the one destination `navbar.ts` pins below
+   * everything (*"keep home at bottom"*). Only the sidebar's own footer is
+   * touched: just-the-docs renders the same include a second time for the
+   * phone layout, outside `.side-bar`, and that copy is not this region.
+   */
+  function mountSidebarRail() {
+    var bar = document.querySelector(".side-bar");
+    var nav = bar && bar.querySelector(".site-nav");
+    if (!bar || !nav) return;
+    if (bar.querySelector(".fa-nav-graphs-group")) return;
+
+    // THE ONE SCROLLER. `mountInstanceGraphs` builds it when the folder row
+    // could be read; when it could not, the nav still needs a region to share
+    // with the page index, or the index keeps a scroll box of its own.
+    var middle = bar.querySelector(":scope > .fa-nav-middle");
+    if (!middle) {
+      middle = el("div", { class: "fa-nav-middle" });
+      var first = bar.querySelector(":scope > .fa-nav-pages") || nav;
+      if (first.parentNode !== bar) return;
+      bar.insertBefore(middle, first);
+      if (first !== nav) middle.appendChild(first);
+      middle.appendChild(nav);
+    }
+
+    var index = bar.querySelector(".fa-doc-index");
+    if (index) middle.insertBefore(index, middle.firstChild);
+
+    var folders = middle.querySelector(":scope > .fa-nav-folders");
+    var foot = bar.querySelector(":scope > .site-footer .fa-nav-bottom");
+    var harnesses = foot && foot.querySelector(":scope > details.fa-nav-group");
+    if (!folders && !harnesses) return;
+
+    var group = el("details", { class: "fa-nav-graphs-group" });
+    group.appendChild(el("summary", { class: "fa-nav-graphs-group__heading" }, "Graphs"));
+    if (folders) group.appendChild(folders);
+    if (harnesses) group.appendChild(harnesses);
+    middle.appendChild(group);
+
+    // OPENED FROM THE BOTTOM EDGE, the heading is pinned there while folded
+    // (docs-ui.css), so what it reveals lands below the fold. Bring the group
+    // to the top of the one scroller so opening it visibly does something.
+    group.addEventListener("toggle", function () {
+      if (!group.open) return;
+      var by = group.getBoundingClientRect().top - middle.getBoundingClientRect().top;
+      if (by > 0) middle.scrollTop += by;
+    });
+  }
+
   /* ── STAY CLOSED, REMEMBERED ─────────────────────────────────────────────
    *
    * Owner, 2026-09-23: *"need mechansim for closing harness navabar (e.g. w/
@@ -10365,6 +10440,9 @@
     mountInstanceGraphs();
     // AFTER the wrapper exists, so the heading lands beside the nav inside it.
     mountNavPagesHeading();
+    // LAST of the sidebar mounts: it MOVES the index, the folders and the
+    // harness group into the one middle, so all three must already exist.
+    mountSidebarRail();
     // Before the badges: both read the same translation metadata, and the nav
     // is the thing a reader sees first.
     mountNavLocale();
