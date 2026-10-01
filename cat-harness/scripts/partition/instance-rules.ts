@@ -405,6 +405,11 @@ export const RULES: Rule[] = [
       // same reason as its two neighbours — it reads the declaration and git,
       // and no folio's subject matter could make it answer differently.
       "scripts/qa-store.ts",                 // the qa-reports branch: readQa / publishQa / pruneQa
+      // What STAYS on main when the `qa` graph leaves it (bean `8wj1`, D2): it
+      // moves non-script verdicts out of derived reports into
+      // `test/attestations/`. Harness-level like its neighbours: it reads the
+      // reports' own `reviewer.kind`, and no folio's subject matter changes that.
+      "scripts/qa-attestations-migrate.ts",  // non-script verdicts into the attestation store
       // Its clean-merge counterpart, and harness-level for the same reason: it
       // loads the GATE SET from the workflow and re-runs whichever writers
       // their checks report stale. It knows nothing about any folio's subject

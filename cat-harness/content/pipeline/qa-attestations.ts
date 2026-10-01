@@ -144,6 +144,9 @@ export type AttestationRead =
   | { state: "no-store"; path: string }
   | { state: "corrupt" | "unknown"; path: string; reason: string };
 
+/** The criteria type of a report, so a writer gets its attestations back in its own entry type. */
+export type CriteriaOf<R> = R extends { criteria?: infer C } ? NonNullable<C> : CriteriaMap;
+
 /** The answer a writer acts on: proceed with these, or refuse. */
 export type PriorResolution<R> =
   | {
@@ -151,7 +154,7 @@ export type PriorResolution<R> =
       /** The prior report with its attestation half re-sourced from the store; `undefined` when there was no prior. */
       prior: R | undefined;
       /** The subject's attestations: the store's, or on a `no-store` instance the prior's own (adopted). */
-      attestations: CriteriaMap;
+      attestations: CriteriaOf<R>;
       /** The store path for this subject. */
       path: string;
       instanceRoot: string;
@@ -440,7 +443,7 @@ export function resolvePrior<R extends { criteria?: CriteriaMap<unknown> }>(
   if (read.state === "no-store") {
     const adopt = Object.keys(split.attestations).length > 0;
     const composed = prior ? ({ ...prior, criteria: composeCriteria(split.script, split.attestations) } as R) : undefined;
-    return { ok: true, prior: composed, attestations: split.attestations as CriteriaMap, path: read.path, instanceRoot, key, adopt };
+    return { ok: true, prior: composed, attestations: split.attestations as CriteriaOf<R>, path: read.path, instanceRoot, key, adopt };
   }
   const stored: CriteriaMap = read.state === "hit" ? read.criteria : {};
   const unheld = missingAttestations(stored, split.attestations);
@@ -455,11 +458,11 @@ export function resolvePrior<R extends { criteria?: CriteriaMap<unknown> }>(
     };
   }
   const composed = prior ? ({ ...prior, criteria: composeCriteria(split.script, stored) } as R) : undefined;
-  return { ok: true, prior: composed, attestations: stored, path: read.path, instanceRoot, key, adopt: false };
+  return { ok: true, prior: composed, attestations: stored as CriteriaOf<R>, path: read.path, instanceRoot, key, adopt: false };
 }
 
 /** The resolution a writer may proceed with. */
-export type PriorOk = Extract<PriorResolution<unknown>, { ok: true }>;
+export type PriorOk = Omit<Extract<PriorResolution<unknown>, { ok: true }>, "attestations"> & { attestations: CriteriaMap<unknown> };
 
 /**
  * Finalise the criteria a writer is about to save. THROWS — before the writer
