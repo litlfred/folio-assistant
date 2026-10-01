@@ -130,14 +130,14 @@ Each dimension is a **contrast** between two poles, shown by their highest-loadi
 
 | dim | σ | one pole | the other pole |
 |---|---|---|---|
-| 1 | 47.26 | bean, instance, graph, session, kind, branch, page, directory | *(none)* |
-| 2 | 27.78 | bias, studies, study, effect, statistical, causation, validity, causal | bean, harness, instance, directory, node, graph, kind, session |
+| 1 | 47.25 | bean, instance, graph, session, kind, branch, page, directory | *(none)* |
+| 2 | 27.78 | bias, studies, study, effect, statistical, causation, validity, causal | bean, instance, harness, directory, node, graph, kind, session |
 | 3 | 22.36 | proof, watcher, lean, slot, blocks, witness, project, chapter | harness, node, instance, bean, directory, page, actor, bias |
-| 4 | 19.58 | dpi, color, grayscale, lean, pdf, images, matplotlib, raster | session, branch, queue, prs, commits, coordination, beans, bean |
+| 4 | 19.57 | dpi, color, grayscale, lean, pdf, images, matplotlib, raster | session, branch, queue, prs, commits, coordination, beans, sibling |
 | 5 | 18.67 | dpi, color, grayscale, contrast, raster, matplotlib, eps, images | proof, lean, glossary, declaration, term, theorem, mathlib, sorry |
-| 6 | 16.78 | regulatory, intervention, biosafety, ethics, candidate, rivals, dual-use, safety | fallacy, fallacious, reality, fallacies, solutions, consider, description, ignoring |
-| 7 | 16.31 | lean, mathlib, mcp, sorry, search, proof, theorem, page | watcher, slot, voice, backlog, queue, ledger, nesting, objection |
-| 8 | 15.37 | mathlib, lean, sorry, lake, oleans, mcp, subdirectory, sessions | slot, watcher, criterion, forward, backlog, band, major, prose |
+| 6 | 16.77 | regulatory, intervention, biosafety, ethics, candidate, rivals, dual-use, safety | fallacy, fallacious, reality, fallacies, solutions, consider, description, ignoring |
+| 7 | 16.30 | lean, mathlib, mcp, sorry, search, proof, theorem, page | watcher, slot, voice, backlog, queue, ledger, nesting, objection |
+| 8 | 15.36 | mathlib, lean, sorry, lake, oleans, mcp, subdirectory, sessions | slot, watcher, criterion, forward, backlog, band, major, prose |
 
 **Findings** — 0 narrow dimension(s), 0 near-duplicate pair(s).
 
