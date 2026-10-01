@@ -38,6 +38,15 @@
  * than no export: a consumer sees a well-formed graph and cannot tell it is
  * looking at part of one. Bean `dh4f` is the local precedent.
  *
+ * ## Judge mode — `bun run kg:export:check` (bean `bo44`)
+ *
+ * `--check` builds the export IN MEMORY, judges it and writes nothing: no
+ * `_kg/` document, no QA sidecar. 0 no fatal finding · 1 a root field or a
+ * term outside the `@context`, or a keyword/alias collision · 2 an unread
+ * source (could not determine), an unknown flag, or a run that threw. It
+ * accepts `--base-url` and `--instance`; `--out` and `--qa-root` are a
+ * writer's flags and are refused.
+ *
  * @module scripts/kg-export
  *
  * @conformsTo dcmi-terms
@@ -91,7 +100,16 @@ import { declaredNamespaces } from "../schemas/external-schema.js";
 import { toolsOf } from "../tools/discover.js";
 import { skillIoIri } from "./harness-schema-export.js";
 import { stagingFields } from "./staging-stamp.js";
-import { buildQaResult, writeQaResult } from "./qa-results.js";
+import {
+  buildQaResult,
+  concludeJudgement,
+  judgementOf,
+  judgeUsage,
+  judging,
+  writeQaResult,
+  type Judgement,
+  type QaResult,
+} from "./qa-results.js";
 import { loadProcessModel } from "../src/workflow/process-model.js";
 import { listDecisions } from "../src/workflow/decision-table.js";
 import { corpusDirectoriesForGraph } from "../schemas/harness-config.js";
@@ -2795,6 +2813,124 @@ export async function buildExport(opts: ExportOptions = {}): Promise<Export> {
   };
 }
 
+/**
+ * The export's QA sidecar document. Pure — the writer writes it, the judge
+ * (`--check`) only compares it for the advisory line. One rendering of one
+ * computation.
+ */
+export function kgExportQaDocument(data: Awaited<ReturnType<typeof buildExport>>, docPath: string): QaResult {
+  return buildQaResult({
+    script: "scripts/kg-export.ts",
+    scriptAbsPath: join(ROOT, "scripts", "kg-export.ts"),
+    // `docPath`, not `${stub}.jsonld`: a foreign instance's document sits at
+    // `<stub>/<stub>.jsonld` (bean `dyd3`), so composing it here named a
+    // document nothing writes — in the file whose whole purpose is saying
+    // what was found about WHICH graph.
+    subject: { kind: "graph", id: docPath },
+    families: {
+      undeclaredTerms: {
+        summary:
+          "Property names used in `@graph` that the `@context` does not declare. " +
+          "Dropped outright by a JSON-LD processor.",
+        entries: data.undeclaredTerms,
+      },
+      undeclaredSchemaModules: {
+        summary:
+          "Modules in the declared schemas/ directory that do not say what they are, " +
+          "so they are absent from the graph.",
+        entries: data.undeclaredSchemaModules,
+      },
+      danglingLinks: {
+        summary: "Internal links whose target node is not in `@graph`. A DATA defect, not an export failure.",
+        entries: data.danglingLinks,
+      },
+      problems: {
+        summary: "Sources that could not be read. Never empty-by-omission.",
+        entries: data.problems,
+      },
+    },
+  });
+}
+
+/** What the judge counts, separated so a test can judge a corrupted export without running one. */
+export interface KgExportFindings {
+  /** Root-level fields absent from the `@context` — a processor drops them. Fatal. */
+  rootUndeclared: number;
+  /** Nodes carrying a JSON-LD keyword AND its alias. Fatal. */
+  collisions: number;
+  /** Property names absent from the `@context` (fatal since `ovkk`). */
+  undeclaredTerms: number;
+  /** Sources that could not be read — the graph is partial, so the question was not fully ASKED. */
+  problems: number;
+}
+
+/**
+ * Bean `bo44`'s four states over an export, with the writer's severity line
+ * kept exactly: the three document-validity families fail; dangling links and
+ * undeclared schema modules are reported and never fail. An unread source is
+ * `unknown` (exit 2) here where the writer has always exited 1 on it — both
+ * non-zero, and the judge says WHICH non-zero it is: a partial graph has not
+ * been judged whole, which is a different fact from a defect found in it.
+ */
+export function judgeKgExport(f: KgExportFindings): Judgement {
+  return judgementOf({
+    failing: f.rootUndeclared + f.collisions + f.undeclaredTerms,
+    undetermined: f.problems > 0,
+  });
+}
+
+if (import.meta.main && judging()) {
+  // Judge mode: build the export in memory, judge it, write NOTHING — neither
+  // `_kg/<stub>.jsonld` nor the QA sidecar (bean `bo44`). `--out` and
+  // `--qa-root` are a writer's flags and are refused here.
+  const GATE = "kg:export";
+  const argv = process.argv.slice(2);
+  const usage = judgeUsage(GATE, argv, ["--base-url", "--instance"]);
+  if (usage !== undefined) process.exit(usage);
+  const arg = (flag: string): string | undefined => {
+    const i = argv.indexOf(flag);
+    return i !== -1 ? argv[i + 1] : undefined;
+  };
+  try {
+    const baseUrl = arg("--base-url") ?? process.env.KG_BASE_URL;
+    const instanceRoot = arg("--instance");
+    const { stub, docPath } = exportIdentity({ baseUrl, instanceRoot });
+    const data = await buildExport({ baseUrl, instanceRoot });
+    const published = { ...publishedDocument(data), ...stagingFields() };
+    const rootUndeclared = undeclaredRootTerms(published as unknown as Record<string, unknown>, data["@context"]);
+    const collisions = keywordCollisions(data["@graph"]);
+    for (const t of rootUndeclared) console.error(`  ✗ root field not in the @context: ${t}`);
+    for (const c of collisions.slice(0, 10)) console.error(`  ✗ keyword AND alias: ${c}`);
+    for (const t of data.undeclaredTerms.slice(0, 10)) console.error(`  ✗ undeclared term: ${t.term}`);
+    for (const p of data.problems) console.error(`  ? could not read: ${p}`);
+    const hostStub = artefactStub(readDeclaration(ROOT)!);
+    const findings: KgExportFindings = {
+      rootUndeclared: rootUndeclared.length,
+      collisions: collisions.length,
+      undeclaredTerms: data.undeclaredTerms.length,
+      problems: data.problems.length,
+    };
+    process.exit(
+      concludeJudgement({
+        gate: GATE,
+        judgement: judgeKgExport(findings),
+        detail:
+          `${data["@graph"].length} node(s); ${findings.rootUndeclared} root field(s) and ${findings.undeclaredTerms} ` +
+          `term(s) undeclared, ${findings.collisions} collision(s), ${findings.problems} unread source(s); ` +
+          `${data.danglingLinks.length} dangling link(s) reported, not gated`,
+        committed: {
+          root: ROOT,
+          stem: stub === hostStub ? "kg-export" : `kg-export.${stub}`,
+          fresh: kgExportQaDocument(data, docPath),
+          writer: instanceRoot ? `kg:export -- --instance ${instanceRoot}` : GATE,
+        },
+      }),
+    );
+  } catch (e) {
+    process.exit(concludeJudgement({ gate: GATE, judgement: "error", detail: (e as Error).message }));
+  }
+}
+
 if (import.meta.main) {
   const arg = (flag: string): string | undefined => {
     const i = process.argv.indexOf(flag);
@@ -2919,37 +3055,7 @@ const out = arg("--out") ?? join(repoRootFor(ROOT), "_kg", `${stub}.jsonld`);
   // own stub.
   const hostStub = artefactStub(readDeclaration(ROOT)!);
   const qaStem = stub === hostStub ? "kg-export" : `kg-export.${stub}`;
-  const resultPath = writeQaResult(qaRoot, qaStem, buildQaResult({
-    script: "scripts/kg-export.ts",
-    scriptAbsPath: join(ROOT, "scripts", "kg-export.ts"),
-    // `docPath`, not `${stub}.jsonld`: a foreign instance's document sits at
-    // `<stub>/<stub>.jsonld` (bean `dyd3`), so composing it here named a
-    // document nothing writes — in the file whose whole purpose is saying
-    // what was found about WHICH graph.
-    subject: { kind: "graph", id: docPath },
-    families: {
-      undeclaredTerms: {
-        summary:
-          "Property names used in `@graph` that the `@context` does not declare. " +
-          "Dropped outright by a JSON-LD processor.",
-        entries: data.undeclaredTerms,
-      },
-      undeclaredSchemaModules: {
-        summary:
-          "Modules in the declared schemas/ directory that do not say what they are, " +
-          "so they are absent from the graph.",
-        entries: data.undeclaredSchemaModules,
-      },
-      danglingLinks: {
-        summary: "Internal links whose target node is not in `@graph`. A DATA defect, not an export failure.",
-        entries: data.danglingLinks,
-      },
-      problems: {
-        summary: "Sources that could not be read. Never empty-by-omission.",
-        entries: data.problems,
-      },
-    },
-  }));
+  const resultPath = writeQaResult(qaRoot, qaStem, kgExportQaDocument(data, docPath));
   // Relative to the root it was WRITTEN under, not to `ROOT`. With `--qa-root`
   // pointing elsewhere the latter prints a pile of `../`, and a reader chasing
   // a sidecar has to resolve it by hand to find out it is in a temp directory.
