@@ -12,14 +12,14 @@ permalink: /glossary/bpmn-activities/
 
 Candidate terms extracted from every BPMN task and call activity: `name` as the label, its own `<documentation>` as the definition, the element id as the code. Each is the asset's own text, verbatim and not curated, and carries the badge "candidate, extracted". A person promotes one by authoring it. Authored terms, the counts and the sources are on the <a href="{{ '/glossary/' | relative_url }}">glossary index</a>.
 
-From: bootstrap 33 (<a href="{{ '/assets/glossary/bootstrap--kg-bpmn-activities.skos.jsonld' | relative_url }}">SKOS</a>) · bootstrap-tools 7 (<a href="{{ '/assets/glossary/bootstrap-tools--kg-bpmn-activities.skos.jsonld' | relative_url }}">SKOS</a>) · cat-harness 489 (<a href="{{ '/assets/glossary/cat-harness--kg-bpmn-activities.skos.jsonld' | relative_url }}">SKOS</a>) · folio-assistant-core 4 (<a href="{{ '/assets/glossary/folio-assistant-core--kg-bpmn-activities.skos.jsonld' | relative_url }}">SKOS</a>) · large-datasets 41 (<a href="{{ '/assets/glossary/large-datasets--kg-bpmn-activities.skos.jsonld' | relative_url }}">SKOS</a>) · smart-base 19 (<a href="{{ '/assets/glossary/smart-base--kg-bpmn-activities.skos.jsonld' | relative_url }}">SKOS</a>).
+From: bootstrap 33 (<a href="{{ '/assets/glossary/bootstrap--kg-bpmn-activities.skos.jsonld' | relative_url }}">SKOS</a>) · bootstrap-tools 7 (<a href="{{ '/assets/glossary/bootstrap-tools--kg-bpmn-activities.skos.jsonld' | relative_url }}">SKOS</a>) · cat-harness 496 (<a href="{{ '/assets/glossary/cat-harness--kg-bpmn-activities.skos.jsonld' | relative_url }}">SKOS</a>) · folio-assistant-core 4 (<a href="{{ '/assets/glossary/folio-assistant-core--kg-bpmn-activities.skos.jsonld' | relative_url }}">SKOS</a>) · large-datasets 41 (<a href="{{ '/assets/glossary/large-datasets--kg-bpmn-activities.skos.jsonld' | relative_url }}">SKOS</a>) · smart-base 19 (<a href="{{ '/assets/glossary/smart-base--kg-bpmn-activities.skos.jsonld' | relative_url }}">SKOS</a>).
 
-**Size:** this page holds 593 terms and is 462 KB before compression, fetched in one request, within its budget of 1.0 MB. There is no search index: the filter below runs over this page, and the A–Z bar jumps within it.
+**Size:** this page holds 600 terms and is 466 KB before compression, fetched in one request, within its budget of 1.0 MB. There is no search index: the filter below runs over this page, and the A–Z bar jumps within it.
 
 <table class="fa-gloss-mapping">
 <caption>Already somebody else's concept? — <code>check:term-mapping</code>, bean <code>7wou</code></caption>
 <thead><tr><th>target</th><th>mapped</th><th>unmapped</th><th>undetermined</th><th>why undetermined</th></tr></thead>
-<tbody><tr><td><code>fhir</code></td><td>0</td><td>593</td><td>0</td><td>—</td></tr><tr><td><code>skos</code></td><td>0</td><td>593</td><td>0</td><td>—</td></tr></tbody>
+<tbody><tr><td><code>fhir</code></td><td>0</td><td>600</td><td>0</td><td>—</td></tr><tr><td><code>skos</code></td><td>0</td><td>600</td><td>0</td><td>—</td></tr></tbody>
 </table>
 <p class="fa-gloss-mapping-note"><strong>Undetermined is never “no match”.</strong> 
 A vocabulary that could not be reached has said nothing, and the column above keeps that 
@@ -28,7 +28,7 @@ be a term this corpus is right to coin.</p>
 
 <label for="fa-gloss-q">Filter terms</label>
 <input id="fa-gloss-q" type="search" autocomplete="off" style="min-height:44px;width:100%;max-width:32rem">
-<p aria-live="polite"><span id="fa-gloss-n">593</span> shown</p>
+<p aria-live="polite"><span id="fa-gloss-n">600</span> shown</p>
 
 <nav aria-label="Letters"><a href="#letter-0-9">0–9</a> <a href="#letter-A">A</a> <a href="#letter-B">B</a> <a href="#letter-C">C</a> <a href="#letter-D">D</a> <a href="#letter-E">E</a> <a href="#letter-F">F</a> <a href="#letter-G">G</a> <a href="#letter-H">H</a> <a href="#letter-I">I</a> <a href="#letter-J">J</a> <a href="#letter-K">K</a> <a href="#letter-L">L</a> <a href="#letter-M">M</a> <a href="#letter-N">N</a> <a href="#letter-O">O</a> <a href="#letter-P">P</a> <a href="#letter-Q">Q</a> <a href="#letter-R">R</a> <a href="#letter-S">S</a> <a href="#letter-T">T</a> <a href="#letter-V">V</a> <a href="#letter-W">W</a></nav>
 
@@ -276,6 +276,13 @@ be a term this corpus is right to coin.</p>
 
 <h2 id="letter-A">A</h2>
 <dl class="fa-gloss">
+<dt id="cat-harness--kg-bpmn-activities--process_mergebase.task_abort" data-fa-state="extracted" data-fa-gloss="">
+Abort, restore the tree, list what was refused <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p><code>git merge --abort</code>. Each refused path is listed with its pattern's reason, or &quot;no declared pattern&quot;.</p>
+<p class="fa-gloss-meta">BPMN activities of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/merge-base.bpmn"><code>cat-harness/processes/merge-base.bpmn#Task_Abort</code></a></p>
+</dd>
 <dt id="cat-harness--kg-bpmn-activities--process_contentacquisition.a_accept" data-fa-state="extracted" data-fa-gloss="">
 Accept it, and record where it came from <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
@@ -900,6 +907,13 @@ Claim the work item <span class="fa-gloss-status">candidate, extracted</span>
 <p>Claim before you work. A claim ANNOUNCES rather than reserves until the PR exists, which is why the branch is announced at the next step and not at the end.</p>
 <p class="fa-gloss-meta">BPMN activities of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/code-change-review.bpmn"><code>cat-harness/processes/code-change-review.bpmn#Task_ClaimBean</code></a></p>
 </dd>
+<dt id="cat-harness--kg-bpmn-activities--process_mergebase.task_classify" data-fa-state="extracted" data-fa-gloss="">
+Classify every conflicted path against the declared patterns <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>The first matching pattern decides: take-base, generated-regions, qa-sidecar, or refuse. A path no pattern names refuses.</p>
+<p class="fa-gloss-meta">BPMN activities of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/merge-base.bpmn"><code>cat-harness/processes/merge-base.bpmn#Task_Classify</code></a></p>
+</dd>
 <dt id="cat-harness--kg-bpmn-activities--process_review.task_classifychange" data-fa-state="extracted" data-fa-gloss="">
 Classify what changed <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
@@ -1039,6 +1053,13 @@ Commit into the corpus <span class="fa-gloss-status">candidate, extracted</span>
 <dd>
 <p>Only now does the change become corpus content, together with its QA sidecars. Subject to the commit-hygiene requirement.</p>
 <p class="fa-gloss-meta">BPMN activities of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/editing-hci-validation.bpmn"><code>cat-harness/processes/editing-hci-validation.bpmn#Task_Commit</code></a></p>
+</dd>
+<dt id="cat-harness--kg-bpmn-activities--process_mergebase.task_commit" data-fa-state="extracted" data-fa-gloss="">
+Commit the merge <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p><em>The asset carries no description.</em></p>
+<p class="fa-gloss-meta">BPMN activities of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/merge-base.bpmn"><code>cat-harness/processes/merge-base.bpmn#Task_Commit</code></a></p>
 </dd>
 <dt id="cat-harness--kg-bpmn-activities--process_codechangereview.task_commitandopenpr" data-fa-state="extracted" data-fa-gloss="">
 Commit, push, open the PR <span class="fa-gloss-status">candidate, extracted</span>
@@ -2214,6 +2235,13 @@ Merge restored and rebuilt records <span class="fa-gloss-status">candidate, extr
 <p>Combine the restored per-artefact records with the cone's freshly rendered ones into one complete set, so the meta-index rebuild that follows has every artefact's record and never re-derives one.</p>
 <p class="fa-gloss-meta">BPMN activities of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/ig-incremental-build.bpmn"><code>cat-harness/processes/ig-incremental-build.bpmn#Task_Merge</code></a></p>
 </dd>
+<dt id="cat-harness--kg-bpmn-activities--process_mergebase.task_merge" data-fa-state="extracted" data-fa-gloss="">
+Merge the base in, without committing <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p><code>git merge --no-ff --no-commit origin/main</code> on a clean tree (untracked files refuse too, so the final stage cannot sweep in a scratch file).</p>
+<p class="fa-gloss-meta">BPMN activities of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/merge-base.bpmn"><code>cat-harness/processes/merge-base.bpmn#Task_Merge</code></a></p>
+</dd>
 <dt id="cat-harness--kg-bpmn-activities--process_contentchangereview.task_merge" data-fa-state="extracted" data-fa-gloss="">
 Merge, on explicit confirmation <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
@@ -2636,7 +2664,7 @@ Prepare domain glossary <span class="fa-gloss-status">candidate, extracted</span
 Prepare the merge, and watch it through <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
-<p><code>prepare-merge</code> brings the base in, re-runs the gates and pushes — it does NOT merge. <code>watch</code> follows the PR until it is merged or closed, because webhooks do not reliably deliver CI success or a merge-conflict transition.</p>
+<p><code>prepare-merge</code> brings the base in, re-runs the gates and pushes — it does NOT merge. Bringing the base in IS <code>merge-base.bpmn</code> (<code>bun run merge:main</code>): conflicts a declared pattern covers are resolved and proved by the gate set; anything else aborts the merge and comes back to the agent (bean <code>y7b3</code>, #1707). <code>watch</code> follows the PR until it is merged or closed, because webhooks do not reliably deliver CI success or a merge-conflict transition.</p>
 <p class="fa-gloss-meta">BPMN activities of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/code-change-review.bpmn"><code>cat-harness/processes/code-change-review.bpmn#Task_PrepareMerge</code></a></p>
 </dd>
 <dt id="smart-base--kg-bpmn-activities--process_diig.a_prioritizebottlenecks" data-fa-state="extracted" data-fa-gloss="">
@@ -3151,6 +3179,13 @@ Regenerate the context, block, library and site graphs — and diff <span class=
 <p>Run the five --check generators in one job — the JSON-LD context, block siblings, library nodes, site graph, then the label-resolution and emitter tests. Any committed .jsonld that differs from what its generator now produces fails the PR, because a stale generated file is still consulted.</p>
 <p class="fa-gloss-meta">BPMN activities of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/jsonld-drift-check.bpmn"><code>cat-harness/processes/jsonld-drift-check.bpmn#Task_Check</code></a></p>
 </dd>
+<dt id="cat-harness--kg-bpmn-activities--process_mergebase.task_regen" data-fa-state="extracted" data-fa-gloss="">
+Regenerate, asking every CI gate <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p><code>bun run regen</code>: every check/writer pair the CI workflow runs, repeated until the tree settles.</p>
+<p class="fa-gloss-meta">BPMN activities of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/merge-base.bpmn"><code>cat-harness/processes/merge-base.bpmn#Task_Regen</code></a></p>
+</dd>
 <dt id="cat-harness--kg-bpmn-activities--process_crdm_issue.call_relatedwork" data-fa-state="extracted" data-fa-gloss="">
 Related work: find, sort, ask <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
@@ -3304,6 +3339,20 @@ Request further revisions <span class="fa-gloss-status">candidate, extracted</sp
 <dd>
 <p>Author provides feedback on what needs adjustment. Agent iterates on the feature branch.</p>
 <p class="fa-gloss-meta">BPMN activities of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/content-change-review.bpmn"><code>cat-harness/processes/content-change-review.bpmn#Task_RequestRevision</code></a></p>
+</dd>
+<dt id="cat-harness--kg-bpmn-activities--process_mergebase.task_byhand" data-fa-state="extracted" data-fa-gloss="">
+Resolve by hand, then regenerate <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p><em>The asset carries no description.</em></p>
+<p class="fa-gloss-meta">BPMN activities of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/merge-base.bpmn"><code>cat-harness/processes/merge-base.bpmn#Task_ByHand</code></a></p>
+</dd>
+<dt id="cat-harness--kg-bpmn-activities--process_mergebase.task_resolve" data-fa-state="extracted" data-fa-gloss="">
+Resolve each by its declared strategy <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>qa-sidecar paths first, through <code>qa:resolve-conflicts</code>; take-base paths take the base's copy; generated-regions files take the base's side of each hunk, which lies inside a generated region by construction.</p>
+<p class="fa-gloss-meta">BPMN activities of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/merge-base.bpmn"><code>cat-harness/processes/merge-base.bpmn#Task_Resolve</code></a></p>
 </dd>
 <dt id="cat-harness--kg-bpmn-activities--process_editing.task_resolvebean" data-fa-state="extracted" data-fa-gloss="">
 Resolve or re-open the bean [todo-manager] <span class="fa-gloss-status">candidate, extracted</span>
