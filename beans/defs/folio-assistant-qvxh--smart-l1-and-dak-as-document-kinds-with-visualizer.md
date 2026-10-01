@@ -1,10 +1,11 @@
 ---
 # folio-assistant-qvxh
 title: SMART L1 and DAK as DOCUMENT KINDS with visualizers inside smart-base, not harnesses
-status: todo
+status: in-progress
 type: feature
+priority: normal
 created_at: 2026-10-01T08:37:53Z
-updated_at: 2026-10-01T08:37:53Z
+updated_at: 2026-10-01T18:20:42Z
 parent: folio-assistant-uhkv
 ---
 
@@ -22,3 +23,5 @@ Head start: cat-harness/schemas/dak.ts, dak-blocks.ts, dak-content-type.ts alrea
 - [ ] a visualizer for each kind
 - [ ] smart-l1/ and smart-dak/ re-homed (nothing deleted without owner OK); needs: smart-ig edges repointed to smart-base
 - [ ] smart-ig's fate stated to the owner (not in the reframe)
+
+_2026-10-01_ — Started as stage D5 (owner: 'start D5 while CI runs'), branch claude/awesome-fermi-ua31th-stage-d5 stacked on #1795. Design note first: cat-harness/docs/proposals/smart-document-kinds-2026-10-01.md. Measured: a content profile is the wrong mechanism (CONTENT_PROFILES is a compile-time union in core, and profiles constrain block kinds, not structure). Proposed: a generic document-kind graph kind in core + smart-base's dak/l1 kinds as data + viewers. Two done-when items already closed by stage D (#1795): smart-l1/smart-dak retired (D3, owner OK); smart-ig kept (owner).
