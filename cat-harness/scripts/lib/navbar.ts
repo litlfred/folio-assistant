@@ -531,8 +531,11 @@ function railTipCss(): string[] {
     `background:#1f2328;color:#ffffff;border:1px solid #58a6ff;box-shadow:0 2px 8px rgba(0,0,0,.35);`,
     `font:600 13px/1.3 -apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif;`,
     `letter-spacing:normal;text-transform:none;white-space:nowrap;pointer-events:none;`,
-    `opacity:0;visibility:hidden}`,
-    `.fa-nav [data-fa-tip]:hover::after,.fa-nav [data-fa-tip]:focus-visible::after{opacity:1;visibility:visible}`,
+    // `opacity` alone, not `visibility`: the rail is CLOSED, never hidden, and
+    // `navbar.test.ts` holds this stylesheet to carrying no `visibility:hidden`
+    // at all. With `pointer-events:none` an invisible tooltip intercepts nothing.
+    `opacity:0}`,
+    `.fa-nav [data-fa-tip]:hover::after,.fa-nav [data-fa-tip]:focus-visible::after{opacity:1}`,
     // Beyond the strip at whatever width it has: open, the controls it names
     // sit inside a wider rail and the tooltip moves out with its edge.
     `.fa-nav:hover [data-fa-tip]::after,.fa-nav:has(:focus-visible) [data-fa-tip]::after,`,

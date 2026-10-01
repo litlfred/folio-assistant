@@ -5890,40 +5890,48 @@ button.fa-nav-icon {
     white-space: nowrap;
     pointer-events: none;
     opacity: 0;
-    visibility: hidden;
   }
   .side-bar [data-fa-tip]:hover::after,
   .side-bar [data-fa-tip]:focus-visible::after {
     opacity: 1;
-    visibility: visible;
   }
 
-  /* THE STRIP DOES NOT PEEK WHILE THE POINTER IS ON THE ICON COLUMN.
+  /* THE STRIP DOES NOT PEEK WHEN THE POINTER ARRIVES ON THE ICON COLUMN.
    *
    * Without this the tooltip above could never be seen for a pointer.
    * Measured on #1762's head, 1280x800: the pointer on Beans at (20,105)
    * widened the strip to 264px, which re-flows the column into a ROW, and the
-   * pointer was then over NOTHING — the icon it was naming had moved 60px
-   * up and to the right. A name for something that is no longer under the
-   * pointer names nothing.
+   * pointer was then over NOTHING — the icon it was naming had moved up and
+   * to the right. A name for something no longer under the pointer names
+   * nothing.
    *
-   * So hovering the column keeps the strip a strip — the owner's ruling says
-   * it stays narrow — and hovering anywhere else in it still peeks.
+   * `.fa-nav-tip-hold` is set by `docs-ui.js` (`mountNavIconRow`) when the
+   * pointer ENTERS the strip inside the column's at-rest box, and cleared the
+   * moment it leaves that box. So arriving on an icon keeps the strip a strip
+   * — the owner's ruling says it stays narrow — while arriving anywhere else
+   * still peeks, and a reader already peeking can still reach the row's
+   * icons and its [x]: holding on `.fa-nav-icons:hover` alone was tried
+   * first, and it collapsed the open bar under a pointer moving INTO the row
+   * (four `navbar-row.e2e.ts` cases caught it).
+   *
    * Re-asserts the rest geometry the way the stay-closed rule above does, at
    * a specificity that beats every open rule, rather than guarding each one.
-   *
-   * NOT for keyboard focus and NOT while pinned: those are the reader's
-   * deliberate opening, and `:focus-within` is the one this file refuses to
-   * suppress (a keyboard reader would tab through links they cannot see). */
-  .side-bar:hover:has(> .fa-nav-icons:hover):not(:focus-within):not(:has(.fa-nav-open:checked)) {
+   * NOT for KEYBOARD focus and NOT while pinned: those are the reader's
+   * deliberate opening, and a keyboard reader must never tab through links
+   * they cannot see. `:focus-visible` rather than `:focus-within`, because a
+   * CLICK on a column icon focuses it too: with `:focus-within` the strip
+   * opened on mousedown, re-flowed the column, and the mouseup landed on
+   * another element — the click never arrived (`navbar-row.e2e.ts`'s
+   * launcher case caught it). */
+  .side-bar.fa-nav-tip-hold:hover:not(:has(:focus-visible)):not(:has(.fa-nav-open:checked)) {
     width: var(--fa-nav-collapsed);
     --fa-nav-text: 0;
   }
-  .side-bar:hover:has(> .fa-nav-icons:hover):not(:focus-within):not(:has(.fa-nav-open:checked)) > .fa-nav-icons {
+  .side-bar.fa-nav-tip-hold:hover:not(:has(:focus-visible)):not(:has(.fa-nav-open:checked)) > .fa-nav-icons {
     width: var(--fa-nav-collapsed);
     flex-wrap: wrap;
   }
-  .side-bar:hover:has(> .fa-nav-icons:hover):not(:focus-within):not(:has(.fa-nav-open:checked)) .fa-nav-close {
+  .side-bar.fa-nav-tip-hold:hover:not(:has(:focus-visible)):not(:has(.fa-nav-open:checked)) .fa-nav-close {
     display: none;
   }
 }

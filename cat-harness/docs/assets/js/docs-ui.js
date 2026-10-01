@@ -9925,6 +9925,54 @@
     var header = bar.querySelector(".site-header");
     if (header && header.nextSibling) bar.insertBefore(host, header.nextSibling);
     else bar.appendChild(host);
+
+    holdStripForTips(bar, host);
+  }
+
+  /* ARRIVING ON AN ICON DOES NOT OPEN THE STRIP — bean `ob3m` finding 1.
+   *
+   * Hover widens the strip, and widening re-flows this column into a row, so
+   * the icon a pointer arrived on moved out from under it before its tooltip
+   * could name it. The stylesheet holds the strip at rest while the bar
+   * carries `.fa-nav-tip-hold`; this decides when it does.
+   *
+   * WHY A REMEMBERED BOX, not `:hover` on the column. The column's place is
+   * only true AT REST — once the strip peeks it is a row somewhere else — so
+   * "is the pointer on the column" has to be asked of where the column WAS.
+   * `.fa-nav-icons:hover` alone held the strip shut under a pointer moving
+   * into the open row and made the row's icons and its [x] unreachable.
+   *
+   * Set on ENTERING the bar only, so a reader already peeking keeps the open
+   * bar; cleared the moment the pointer leaves the box, so moving down the
+   * strip peeks exactly as before. Touch has no hover and is left alone. */
+  function holdStripForTips(bar, host) {
+    var rest = null;
+    function measure() {
+      if (bar.classList.contains("fa-nav-tip-hold")) return;
+      if (bar.matches(":hover") || bar.matches(":focus-within")) return;
+      if (bar.querySelector(".fa-nav-open:checked")) return;
+      var r = host.getBoundingClientRect();
+      if (r.width > 0 && r.height > 0) rest = { l: r.left, r: r.right, t: r.top, b: r.bottom };
+    }
+    function inside(e) {
+      return !!rest && e.clientX >= rest.l && e.clientX < rest.r && e.clientY >= rest.t && e.clientY < rest.b;
+    }
+    measure();
+    window.addEventListener("resize", measure);
+    bar.addEventListener("pointerenter", function (e) {
+      if (e.pointerType === "touch") return;
+      measure();
+      if (inside(e)) bar.classList.add("fa-nav-tip-hold");
+    });
+    bar.addEventListener("pointermove", function (e) {
+      if (bar.classList.contains("fa-nav-tip-hold") && !inside(e)) bar.classList.remove("fa-nav-tip-hold");
+    });
+    bar.addEventListener("pointerleave", function () {
+      bar.classList.remove("fa-nav-tip-hold");
+      // Re-measured once the bar is back at rest, so a box first measured
+      // while the pointer happened to be on the bar at load is not missing.
+      requestAnimationFrame(measure);
+    });
   }
 
   /* ── THE MIDDLE: this instance's controlled folders, then its navigation ──

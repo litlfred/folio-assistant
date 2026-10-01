@@ -176,7 +176,6 @@ test.describe("landing: every icon in the strip is named on hover and on keyboar
         return {
           name: e.getAttribute("aria-label"),
           content: a.content,
-          visibility: a.visibility,
           opacity: +a.opacity,
           left: parseFloat(a.left),
           strip: document.querySelector(".side-bar")!.getBoundingClientRect().width,
@@ -188,7 +187,6 @@ test.describe("landing: every icon in the strip is named on hover and on keyboar
       // The strip did not peek: the icon is still where the pointer is.
       expect(r.strip).toBe(56);
       expect(r.content).toContain(JSON.stringify(r.name));
-      expect(r.visibility).toBe("visible");
       expect(r.opacity).toBeGreaterThan(0.9);
       expect(r.left).toBeGreaterThan(r.iconRight);
       expect(r.left).toBeGreaterThanOrEqual(56);
@@ -199,6 +197,7 @@ test.describe("landing: every icon in the strip is named on hover and on keyboar
     expect(await open(page, "landing")).toEqual([]);
     await page.locator(".side-bar .site-title").focus();
     await page.keyboard.press("Tab");
+    await page.waitForTimeout(250);
     const r = await page.evaluate(() => {
       const e = document.activeElement as HTMLElement;
       const a = getComputedStyle(e, "::after");
@@ -207,14 +206,14 @@ test.describe("landing: every icon in the strip is named on hover and on keyboar
         fv: e.matches(":focus-visible"),
         name: e.getAttribute("aria-label"),
         content: a.content,
-        visibility: a.visibility,
+        opacity: +a.opacity,
         left: parseFloat(a.left),
         strip: document.querySelector(".side-bar")!.getBoundingClientRect().right,
       };
     });
     expect(r.inRow).toBe(true);
     expect(r.fv).toBe(true);
-    expect(r.visibility).toBe("visible");
+    expect(r.opacity).toBeGreaterThan(0.9);
     expect(r.content).toContain(JSON.stringify(r.name));
     expect(r.left).toBeGreaterThan(r.strip);
     // The tooltip's text has an EMPTY alternative, so a screen reader hears
@@ -232,7 +231,7 @@ test.describe("landing: every icon in the strip is named on hover and on keyboar
     await page.mouse.move(box.x + box.width / 2, box.y + box.height / 2);
     const { d, shown } = await first.evaluate((e) => {
       const a = getComputedStyle(e, "::after");
-      return { d: a.transitionDuration, shown: a.visibility === "visible" && a.content.includes(e.getAttribute("aria-label")!) };
+      return { d: a.transitionDuration, shown: +a.opacity > 0.9 && a.content.includes(e.getAttribute("aria-label")!) };
     });
     expect(shown).toBe(true);
     // At most a millisecond: the site's global reduced-motion rule writes
