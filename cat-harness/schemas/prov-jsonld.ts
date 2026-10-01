@@ -41,6 +41,8 @@
  * carried as it was.
  *
  * @module schemas/prov-jsonld
+ * @graphNode schema
+ * @conformsTo w3c-prov-jsonld
  * @covers schemas
  */
 import { existsSync, readdirSync, readFileSync, statSync } from "node:fs";
@@ -49,13 +51,14 @@ import { basename, join, relative } from "node:path";
 import { releaseIris, releaseIri } from "../../bootstrap-tools/schemas/release-iri.ts";
 import { instanceDirectoryForGraph, instanceRootsIn, readDeclaration } from "./cat-harness.ts";
 import { CAT_HARNESS_NS, FOLIO_BASE } from "./namespaces.ts";
-import type { ProvActivity } from "./prov.ts";
+import { PROV_CONTEXT, type ProvActivity } from "./prov.ts";
 
 /**
  * Where the PROV-JSONLD context is published — the address the owner
  * downloaded it from on 2026-10-01. Documents name it; nothing fetches it.
+ * Defined in `prov.ts` (the lower layer) and re-exported here by name.
  */
-export const PROV_JSONLD_CONTEXT_URL = "https://openprovenance.org/prov-jsonld/context.jsonld" as const;
+export const PROV_JSONLD_CONTEXT_URL = PROV_CONTEXT;
 
 /**
  * The held copy, pinned by sha256 (rule `ld-no-context-fetched-at-run-time`).

@@ -32,9 +32,9 @@ import { z } from "zod";
  * publishes no JSON-LD context for PROV-O. Until then this held
  * `http://www.w3.org/ns/prov-o`, the ontology DOCUMENT's address, which is
  * neither the namespace (`…/ns/prov#`) nor a context. Held locally and pinned;
- * see `prov-jsonld.ts`.
+ * see `prov-jsonld.ts`, which builds on this module and so imports it from here.
  */
-export { PROV_JSONLD_CONTEXT_URL as PROV_CONTEXT } from "./prov-jsonld.ts";
+export const PROV_CONTEXT = "https://openprovenance.org/prov-jsonld/context.jsonld" as const;
 
 /** `<process>#<task>`: a BPMN process id and one of its task ids. */
 export const PLAN_REF = /^[a-z0-9][a-z0-9-]*#[A-Za-z_][A-Za-z0-9_.-]*$/;
