@@ -128,6 +128,8 @@ export interface ExportResult {
   instance: string;
   /** True when the workflow passes a `--base-url` this gate had to stand in for. */
   standInBase: boolean;
+  /** Which exporter ran, carried from the invocation. */
+  tool?: Invocation["tool"];
   /** Nodes the export emitted, when it said. Zero is a finding, not a pass. */
   nodes?: number;
   /** True when the export exited 0. */
