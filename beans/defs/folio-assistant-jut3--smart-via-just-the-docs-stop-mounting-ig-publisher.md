@@ -5,7 +5,7 @@ status: in-progress
 type: task
 priority: normal
 created_at: 2026-09-21T19:10:00Z
-updated_at: 2026-10-01T12:35:15Z
+updated_at: 2026-10-01T12:37:45Z
 parent: folio-assistant-uhkv
 ---
 
@@ -526,3 +526,11 @@ In the owner's words: *"each phase needs to render equivalent to existing IG sta
 This is an invariant across **all** phases, not just P0's exit criterion. Whatever a phase changes in the pipeline, its output must stay equivalent to the IG Publisher's standard render of the same IG. The measured reference is `jut3`'s parity table: the Publisher's page set, by page kind.
 
 **Open tension, put to the owner:** P2 as approved drops XML/Turtle ("recorded as a refusal"). Under this invariant, a refused representation is a difference from the standard render.
+
+## Owner ruling 2026-10-01: P2 kept as approved
+
+In the owner's words: *"Keep P2 as approved: drop XML and Turtle, and treat the refusal record as an accepted"*, the option offered as *"…accepted, documented difference from the standard render"*.
+
+- XML and Turtle representation views (1,331 pages on smart-trust) are **not rendered**.
+- Each one is recorded as a refusal. That record is the **accepted, documented exception** to the cross-phase rule that every phase renders equivalent to the standard IG render.
+- JSON views remain in scope (673 pages).
