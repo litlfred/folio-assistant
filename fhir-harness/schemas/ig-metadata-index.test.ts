@@ -10,7 +10,7 @@ import {
   igMetadataVerdict,
   type IgMetadataIndex,
 } from "./ig-metadata-index";
-import { defaultGraphKinds, graphKindIri, graphLayer, isDerivedGraph, isRenderable, processMayWrite } from "./cat-harness";
+import { defaultGraphKinds, graphKindIri, graphLayer, isDerivedGraph, isRenderable, processMayWrite } from "../../cat-harness/schemas/cat-harness";
 
 /**
  * A harvest of one IG, in the shape the three Publisher exports actually take.
