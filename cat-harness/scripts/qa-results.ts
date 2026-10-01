@@ -704,6 +704,11 @@ export function judgeQaResult(args: {
         `no baseline to split NEW from inherited findings (${read.from}: ${read.state}, ${read.reason}). ` +
           `Not "no new findings" — the comparison was not made. Not this change's defect either, so not gated.`,
       );
+    } else {
+      // Nothing is graded against a baseline here, so its absence decides
+      // nothing — but it is still said, so a reader can tell "compared, no
+      // change" from "nothing to compare with".
+      console.log(`  baseline (${read.from}): ${read.state} — ${read.reason}. Nothing here is judged against one.`);
     }
   }
   const judgement = judgementOf({ failing, undetermined: args.undetermined !== undefined });
