@@ -5,7 +5,7 @@ status: in-progress
 type: task
 priority: normal
 created_at: 2026-10-01T06:38:12Z
-updated_at: 2026-10-01T07:01:39Z
+updated_at: 2026-10-01T08:00:56Z
 parent: folio-assistant-scfh
 ---
 
@@ -35,3 +35,6 @@ New rung: cat-harness/scripts/text-structure.ts, variant text-structure/v1. No m
 `library-ref.test.ts` requires the PLATFORM library (cat-harness/library) to hold ONLY sources a platform methodology cites. No methodology cites these, so the four cat-harness entries listed above moved before the first commit:
 - mcp-2026-specification-2026-07-28 and hmans-2026-beans-readme → agent-skills/library. That library holds literature on operating agents, already including RFC 2119/8174, which the MCP specification cites.
 - cucumber-2024-gherkin-reference and isaitb-2026-interoperability-test-bed-readme → fhir-harness/library, next to the TestPlan source: the WHO-free test-side literature of a FHIR IG.
+
+
+_2026-10-01_ — Now feeds arc `3fva` (issue #1763, `cat-harness/docs/proposals/qa-reports-branch-and-test-process-2026-10-01.md`).
