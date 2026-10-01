@@ -1054,8 +1054,8 @@ export const BASE_GRAPH_KINDS: Readonly<Record<string, GraphKindDef>> = {
   // with the prose), and detached from the subject it judges it asserts
   // nothing. `recordsWork: false` — a judgement is finished, not in flight.
   //
-  // ONE layout for every family, so bean `8wj1` (block-qa, translation-qa)
-  // adds rows to `ATTESTATION_FAMILIES` rather than a second store:
+  // ONE layout for every family — bean `8wj1` (block-qa, translation-qa) is a
+  // member of the same `QaAttestationsSchema` union, not a second store:
   // `<attestations dir>/<family>/<mirrored subject path>.attestations.json`.
   attestations: {
     renderable: false,
