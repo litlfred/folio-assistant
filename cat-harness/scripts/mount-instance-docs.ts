@@ -601,7 +601,8 @@ export function instanceMark(built: string, instance: string, toRoot: string): P
   if (prefix === undefined) return undefined;
   const data = join(REPO, prefix, "_data", "harness.json");
   if (!existsSync(data)) return undefined;
-  let d: { name?: string; icon?: { src?: string; title?: string } | null; harnesses?: { name?: string; tone?: number; icon?: { src?: string; title?: string; region?: { x: number; y: number; w: number; h: number } } | null }[] };
+  type Icon = { src?: string; title?: string; region?: { x: number; y: number; w: number; h: number } };
+  let d: { name?: string; icon?: Icon | null; harnesses?: { name?: string; tone?: number; icon?: { src?: string; title?: string; region?: { x: number; y: number; w: number; h: number } } | null }[] };
   try {
     d = JSON.parse(readFileSync(data, "utf-8"));
   } catch {
@@ -613,7 +614,7 @@ export function instanceMark(built: string, instance: string, toRoot: string): P
     ? {
         src: `${toRoot}${icon.src}`,
         ...(icon.title ? { title: icon.title } : {}),
-        ...("region" in icon && icon.region ? { region: icon.region } : {}),
+        ...(icon.region ? { region: icon.region } : {}),
       }
     : undefined;
   if (!avatar && !h?.tone) return undefined;

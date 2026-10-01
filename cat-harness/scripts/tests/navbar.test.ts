@@ -246,7 +246,7 @@ describe("at rest it is a strip, and opens three ways", () => {
 
   it("opens on hover, on keyboard focus, and on the pinned checkbox", () => {
     expect(css).toContain(
-      `.fa-nav:hover,.fa-nav:focus-within,.fa-nav:has(.fa-nav-open:checked){width:${NAV_OPEN_PX}px}`,
+      `.fa-nav:hover,.fa-nav:has(:focus-visible),.fa-nav:has(.fa-nav-open:checked){width:${NAV_OPEN_PX}px}`,
     );
   });
 

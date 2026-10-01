@@ -354,7 +354,7 @@ export { NAV_MARK_PX as NAV_GLYPH_PX } from "./navbar-geometry.js";
  * The navbar's stylesheet, scoped to `.fa-nav` so a host page keeps its own.
  *
  * Three ways in, one way back: `:hover` while the pointer is on it,
- * `:focus-within` for a keyboard, and the header — the instance's mark —
+ * `:focus-visible` inside it for a keyboard, and the header — the instance's mark —
  * which checks a box so it STAYS open, which is what a touch device needs,
  * having no hover at all. The same header unchecks it (#1757: the separate
  * `☰` and `[x]` were two more controls for that one bit). `board-windows`' `l4zi`: an action whose inverse is not
@@ -373,17 +373,22 @@ export function navbarCss(): string {
     `.fa-nav{position:fixed;top:0;left:0;bottom:0;width:${NAV_COLLAPSED_PX}px;z-index:2147483000;`,
     `background:#1f2328;color:#e6edf3;overflow:hidden;transition:width .14s ease;`,
     `font:14px/1.5 -apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif}`,
-    `.fa-nav:hover,.fa-nav:focus-within,.fa-nav:has(.fa-nav-open:checked){width:${NAV_OPEN_PX}px}`,
+    // KEYBOARD focus opens it, not any focus. `:focus-within` matched the
+    // checkbox a CLICK on the header focuses, so the click that unpinned the
+    // rail left it held open by its own focus — measured 264px wide after the
+    // second click, pointer away (#1757). `:focus-visible` is the keyboard's
+    // focus and not the pointer's, which is exactly the split needed.
+    `.fa-nav:hover,.fa-nav:has(:focus-visible),.fa-nav:has(.fa-nav-open:checked){width:${NAV_OPEN_PX}px}`,
     // The folio handle, placed IN this rail by docs-ui.js (owner, 2026-09-24:
     // "folio handle on LHS on navbar"). At rest the strip shows marks only, so
     // its label waits for the rail to open, as every other label here does.
-    `.fa-nav:not(:hover):not(:focus-within):not(:has(.fa-nav-open:checked)) .fa-glass-handle__label{opacity:0}`,
+    `.fa-nav:not(:hover):not(:has(:focus-visible)):not(:has(.fa-nav-open:checked)) .fa-glass-handle__label{opacity:0}`,
     // The theme widens its own sidebar at `mq(lg)` with a `min-width` FLOOR.
     // The rail has no such floor and would simply stay narrower -- which is
     // the same navbar at two widths on one screen size, the defect this
     // whole module exists to have ended.
     `@media(min-width:${NAV_WIDE_MQ_PX}px){`,
-    `.fa-nav:hover,.fa-nav:focus-within,.fa-nav:has(.fa-nav-open:checked){width:${NAV_OPEN_WIDE_PX}px}`,
+    `.fa-nav:hover,.fa-nav:has(:focus-visible),.fa-nav:has(.fa-nav-open:checked){width:${NAV_OPEN_WIDE_PX}px}`,
     `.fa-nav-in{width:${NAV_OPEN_WIDE_PX}px}}`,
     // Clipped in place, never parked at `left:-9999px`: on a right-to-left
     // page that is the scrollable side, and it widened the page ~10,000px
@@ -456,7 +461,7 @@ export function navbarCss(): string {
     `.fa-nav-action{display:none;background:none;border:0;cursor:pointer;`,
     `padding:0 ${NAV_PAD_PX}px;font-size:13px;line-height:1;color:inherit;opacity:.7}`,
     `.fa-nav-action:hover,.fa-nav-action:focus-visible{opacity:1}`,
-    `.fa-nav:hover .fa-nav-action,.fa-nav:focus-within .fa-nav-action,`,
+    `.fa-nav:hover .fa-nav-action,.fa-nav:has(:focus-visible) .fa-nav-action,`,
     `.fa-nav:has(.fa-nav-open:checked) .fa-nav-action{display:block}`,
     // THE EXPLODING MENU. `<details>` so it is keyboard-operable and announces
     // its own state with no script.
@@ -478,7 +483,7 @@ export function navbarCss(): string {
     // without touching any of these numbers. `opacity`, not `display:none` --
     // a screen reader should still reach them.
     `.fa-nav-label{white-space:nowrap;opacity:0;transition:opacity .12s ease}`,
-    `.fa-nav:hover .fa-nav-label,.fa-nav:focus-within .fa-nav-label,`,
+    `.fa-nav:hover .fa-nav-label,.fa-nav:has(:focus-visible) .fa-nav-label,`,
     `.fa-nav:has(.fa-nav-open:checked) .fa-nav-label{opacity:1}`,
     `@media print{.fa-nav{display:none}body{padding-left:0}}`,
     `.fa-nav-sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}`,
@@ -537,7 +542,9 @@ function itemHtml(i: NavItem, c: Ctx): string {
   // Indent by PADDING rather than by a nested list: a nested `<ul>` would make
   // the document index a different shape from every other group here, and the
   // rows are links either way.
-  const d = i.depth && i.depth > 0 ? ` style="padding-left:${NAV_PAD_PX + (NAV_GLYPH_PX + 8) * i.depth}px"` : "";
+  // `depth + 1`: these rows sit in a group, whose rows are already one step
+  // in. `depth` alone gave a child exactly its parent's indent (#1757).
+  const d = i.depth && i.depth > 0 ? ` style="padding-left:${NAV_PAD_PX + (NAV_GLYPH_PX + 8) * (i.depth + 1)}px"` : "";
   let row: string;
   if (i.href === undefined) {
     // The note is part of the row's TEXT, inside the same element, so an
@@ -795,6 +802,10 @@ export function visualiserNavOf(html: string, label: string): NavGroup | undefin
     typeof e?.label === "string" && e.label
       ? {
           label: e.label,
+          // A BULLET, not the row's initial. A letter per row read as a
+          // column of unrelated marks (B, T, P, D — #1757 screenshot); the
+          // initial is the mark for a harness, which these rows are not.
+          icon: depth > 0 ? "·" : "▸",
           ...(typeof e.href === "string" && e.href ? { href: e.href } : {}),
           ...(depth > 0 ? { depth } : {}),
         }
