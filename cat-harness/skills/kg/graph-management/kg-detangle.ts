@@ -52,6 +52,7 @@ import { allowedFromNeeds, directionOf, type LayerRule } from "../../../schemas/
 import { ancestorsOf, flattenDependencies } from "../../../schemas/dependency-order.js";
 import { ownElementPattern } from "../../../schemas/namespaces.js";
 import { isDirectoryReadme } from "../../../schemas/kg-node.ts";
+import { checkoutDirectories, orderedDependencies } from "../../../schemas/harness-config.ts";
 
 const ROOT = resolve(import.meta.dir, "../../../..");
 
@@ -77,7 +78,7 @@ const ROOT = resolve(import.meta.dir, "../../../..");
  * An entry naming a directory that does not exist is REPORTED as a determined
  * empty and left alone — removing it is a person's edit, not this script's.
  */
-const SCAN: Array<{ path: string }> = [
+const LITERAL_SCAN: Array<{ path: string }> = [
   { path: "cat-harness/skills" },
   { path: "cat-harness/processes" },
   { path: "cat-harness/scenarios" },
@@ -91,6 +92,65 @@ const SCAN: Array<{ path: string }> = [
   { path: "bootstrap/skills" },
   { path: "bootstrap/processes" },
 ];
+
+/**
+ * Every instance's OWN `skills` directories, resolved from the declarations —
+ * never hardcoded. Owner ruling, 2026-10-01 (separation arc S0, bean `hx65`):
+ * placement PR1 moved eight skill packages out of `cat-harness/skills/` into
+ * the instances that own them, which left their detangle sidecars measuring a
+ * path nobody had. The ruling was to WIDEN THE SCAN rather than delete the
+ * measurements, so a package is measured wherever its owner declares it.
+ *
+ * A declared directory nested inside one already scanned (e.g.
+ * `folio-assistant-sci/skills/lean/` under `folio-assistant-sci/skills/`) is
+ * dropped, because scanning both would count its nodes twice.
+ */
+function declaredSkillScan(literal: ReadonlyArray<{ path: string }>): Array<{ path: string }> {
+  const out = [...literal];
+  const covers = (outer: string, inner: string): boolean => inner === outer || inner.startsWith(`${outer}/`);
+  const declared = checkoutDirectories(ROOT)
+    .filter((d) => d.graphKinds.includes("skills" as never))
+    .map((d) => relative(ROOT, d.absPath).split("\\").join("/").replace(/\/+$/, ""))
+    .filter((p) => p.length > 0 && !p.startsWith(".."))
+    .sort((a, b) => a.length - b.length);
+  for (const p of declared) {
+    if (out.some((s) => covers(s.path, p) || covers(p, s.path))) continue;
+    out.push({ path: p });
+  }
+  return out;
+}
+
+const SCAN: Array<{ path: string }> = declaredSkillScan(LITERAL_SCAN);
+const WIDENED = new Set(SCAN.slice(LITERAL_SCAN.length).map((s) => s.path));
+
+/**
+ * Topics a WIDENED skills directory inherits from the instances it stacks on.
+ *
+ * Topic membership is option A (bean `1g4s`): the same-named directory of every
+ * instance stacked on the declarer is a MEMBER of the topic, never a group of
+ * its own — `folio-assistant-core` declares `content`, so
+ * `folio-assistant-sci/skills/content/authoring-math` is the group, exactly as
+ * `cat-harness/skills/authoring/authoring-math` was before placement PR1 moved
+ * it. Only the widened entries inherit: the literal ones were measured with
+ * their own topics before this change, and their groups must not shift.
+ */
+function inheritedTopics(path: string): string[] {
+  if (!WIDENED.has(path)) return [];
+  const instance = join(ROOT, path.split("/")[0]!);
+  const out: string[] = [];
+  let deps: string[] = [];
+  try {
+    deps = orderedDependencies(instance).map((d) => d.rootPath);
+  } catch {
+    return []; // a cycle is `check:instance-graph`'s finding
+  }
+  for (const dep of deps) {
+    const skills = join(dep, "skills");
+    if (!existsSync(skills)) continue;
+    for (const t of topicsOf(skills)) if (existsSync(join(ROOT, path, t.path))) out.push(t.path);
+  }
+  return out;
+}
 
 const EXT = /\.(md|bpmn|dmn|json|ts)$/;
 
@@ -214,7 +274,7 @@ for (const { path } of SCAN) {
   // A group that is a declared TOPIC is not a package, it holds packages; the
   // package one level down is the group, so `kg/graph-management` stays the
   // group it was as `graph-management` rather than merging into `kg`.
-  const topics = new Set(topicsOf(join(ROOT, path)).map((t) => t.path));
+  const topics = new Set([...topicsOf(join(ROOT, path)).map((t) => t.path), ...inheritedTopics(path)]);
   for (const abs of scanned) {
     const id = relative(ROOT, abs);
     const segs = id.split("/");
