@@ -491,7 +491,7 @@ jobs:
       # UNDETERMINED rather than counted as passing, and zero diagrams is a
       # finding rather than a clean run (`6tkl`).
       - name: swimlane definitions
-        run: bun run check:lane-documentation
+        run: bun run check:lane-documentation:check
 
       # ...and the PROCESS says what it is for -- bean `7rna`. The sibling one
       # level up. `gen-docs-auto`'s index took the first `<documentation>`
@@ -628,7 +628,7 @@ jobs:
       # consequence. Known counts are baselined; a NEW file, or a baselined file
       # GAINING a label, fails.
       - name: no rendered label shows a character reference as literal text
-        run: bun run check:rendered-labels
+        run: bun run check:rendered-labels:check
 
       # Every Tool's `satisfies` names a skill that exists, and every io port
       # references a type the shared vocabulary declares. The schema can require
@@ -1719,6 +1719,11 @@ jobs:
           # computed and read by nobody, so `folio-assistant` rendered a
           # question mark until the owner saw it. Bean `zc7m`.
           bun run check:avatar-instances
+          # ...and the KIND axis, which no package script or CI step ran until
+          # bean `bo44` (2026-10-01): `check-avatar-coverage --check` existed,
+          # still wrote its sidecar, and nothing called it. The `:check` form
+          # judges and writes nothing.
+          bun run check:avatar-coverage:check
           # A reader's folio must be the SAME folio in every library they
           # browse (F8/F9). A page that forgets the mount is a folio that
           # silently disappears when they follow a link — the page renders,
@@ -1830,7 +1835,7 @@ jobs:
           # or whose `evidence` points at a bib-slug no library holds —
           # a citation that claims to resolve and does not is worse than
           # none, because every listing reads it as backed.
-          bun run check:methodology-evidence
+          bun run check:methodology-evidence:check
           # The layout norm, ENFORCED AS A RATCHET rather than as a gate
           # on the whole corpus: no declared directory sits inside another
           # declared directory, with the four `skills/voices` nestings that
@@ -1838,17 +1843,29 @@ jobs:
           # `cat-harness` — which reached zero on 2026-09-22 and has no
           # baseline entry — cannot regress. Owner: "follow established
           # norms on layout. qa to enforce."
-          bun run check:layout-norms
+          bun run check:layout-norms:check
           # Every ingested source records its licence, or records that nobody
           # could find it and where they looked (issue #1023). It REPORTS
           # absence and `unknown`, because the field is new, and fails only on
           # a record that claims something it cannot back.
-          bun run check:source-licence
+          bun run check:source-licence:check
           # Every declared harness visualiser has a wireframe, checked at a web
           # AND a mobile viewport (issue #1023; owner: "need both web and
           # mobile layouts in usability reviews"). Gated: a visualiser added
           # without a wireframe, or a wireframe checked at one width, fails.
-          bun run check:wireframes
+          bun run check:wireframes:check
+          # The four above run in their JUDGE form (`:check`, bean `bo44`):
+          # compute, judge, write nothing. Their bare forms rewrite their own
+          # QA sidecar on every run, so the gate CI ran was also the writer of
+          # the record it reported into — a gate that cannot fail on its
+          # sidecar's content, and that leaves the tree dirty. Exit 2 is
+          # could-not-determine and is never a pass.
+          #
+          # The KG export, judged in memory: a root field or term outside the
+          # `@context`, or a keyword/alias collision, fails; an unread source
+          # is exit 2. Until `bo44` only the deploy ran the exporter, so a
+          # fatal export finding surfaced at publish time rather than on the PR.
+          bun run kg:export:check
           bun run check:xml-comments
           bun run check:orphan-verdicts
           bun run check:partition

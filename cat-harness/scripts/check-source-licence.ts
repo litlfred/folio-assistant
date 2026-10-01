@@ -38,6 +38,14 @@
  * Usage:
  *   bun run check:source-licence            # report, write the sidecar
  *   bun run check:source-licence -- --json  # print the sidecar document
+ *   bun run check:source-licence:check      # JUDGE: compute and judge, write nothing (the gate)
+ *
+ * Judge mode (`--check`, beans `bo44` and `i2kp`): 0 no malformed record · 1 a
+ * malformed record · 2 no library entry found (could not determine), an
+ * unknown flag, or the run threw. It judges the FRESH computation and writes
+ * nothing; it does not gate on whether the committed sidecar is current,
+ * because that copy leaves `main` with arc `3fva` (proposal §2.3). Staleness is
+ * printed as an advisory instead — see `concludeJudgement`.
  *
  * @module scripts/check-source-licence
  * @covers library, uploads
@@ -48,7 +56,16 @@ import { fileURLToPath } from "node:url";
 import { repoRootFor } from "../schemas/cat-harness.ts";
 import { licenceProblem, type SourceLicence } from "../schemas/source-licence.ts";
 import { gitScan } from "../schemas/git-corpus.ts";
-import { buildQaResult, writeQaResult } from "./qa-results.ts";
+import {
+  buildQaResult,
+  concludeJudgement,
+  judgementOf,
+  judgeUsage,
+  judging,
+  writeQaResult,
+  type Judgement,
+  type QaResult,
+} from "./qa-results.ts";
 
 const INSTANCE_ROOT = resolve(dirname(fileURLToPath(import.meta.url)), "..");
 const REPO_ROOT = repoRootFor(INSTANCE_ROOT);
@@ -99,13 +116,14 @@ export function checkSourceLicence(root: string = REPO_ROOT): LicenceReport {
   return r;
 }
 
-if (import.meta.main) {
-  const r = checkSourceLicence();
-  if (r.entries === 0) {
-    console.error("UNDETERMINED: no library entry found. This is not a pass; nothing was checked.");
-    process.exit(2);
-  }
-  const doc = buildQaResult({
+/** Bean `bo44`'s four states over a report: only a malformed record is a finding. */
+export function judgeSourceLicence(r: LicenceReport): Judgement {
+  return judgementOf({ failing: r.malformed.length, undetermined: r.entries === 0 });
+}
+
+/** The sidecar document for a report. Pure, so the judge and the writer render ONE computation. */
+export function sourceLicenceDocument(r: LicenceReport): QaResult {
+  return buildQaResult({
     script: "cat-harness/scripts/check-source-licence.ts",
     scriptAbsPath: fileURLToPath(import.meta.url),
     subject: { kind: "corpus", id: "library-source-licences" },
@@ -127,6 +145,42 @@ if (import.meta.main) {
       },
     },
   });
+}
+
+if (import.meta.main) {
+  const GATE = "check:source-licence";
+  if (judging()) {
+    // Judge mode: compute, judge, write NOTHING (beans `bo44`, `i2kp`).
+    const usage = judgeUsage(GATE, process.argv.slice(2), []);
+    if (usage !== undefined) process.exit(usage);
+    let jr: LicenceReport;
+    try {
+      jr = checkSourceLicence();
+    } catch (e) {
+      process.exit(concludeJudgement({ gate: GATE, judgement: "error", detail: (e as Error).message }));
+    }
+    for (const m of jr.malformed) console.error(`  ✗ ${m.entry}: ${m.problem}`);
+    process.exit(
+      concludeJudgement({
+        gate: GATE,
+        judgement: judgeSourceLicence(jr),
+        detail:
+          jr.entries === 0
+            ? "no library entry found"
+            : `${jr.entries} library entries: stated ${jr.stated.length} · unknown ${jr.unknown.length} · ` +
+              `not recorded ${jr.notRecorded.length} · malformed ${jr.malformed.length}`,
+        ...(jr.entries === 0
+          ? {}
+          : { committed: { root: INSTANCE_ROOT, stem: "source-licence", fresh: sourceLicenceDocument(jr), writer: GATE } }),
+      }),
+    );
+  }
+  const r = checkSourceLicence();
+  if (r.entries === 0) {
+    console.error("UNDETERMINED: no library entry found. This is not a pass; nothing was checked.");
+    process.exit(2);
+  }
+  const doc = sourceLicenceDocument(r);
   if (process.argv.includes("--json")) console.log(JSON.stringify(doc, null, 2));
   else {
     writeQaResult(INSTANCE_ROOT, "source-licence", doc);

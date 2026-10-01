@@ -588,7 +588,7 @@ function run(args: readonly string[], quiet = false): number {
  * by a sibling session, or by a person asking *"was this ever checked?"*.
  */
 export interface Flags {
-  /** Verify only — regenerate nothing. What CI runs. */
+  /** Verify only — regenerate nothing and write no sidecar (bean `bo44`). What CI runs. */
   check: boolean;
   /** Print the chain and exit 0. Writes nothing, verifies nothing. */
   dryRun: boolean;
@@ -596,6 +596,20 @@ export interface Flags {
   json: boolean;
   /** Skip the committed QA sidecar. For a scratch tree that must not be dirtied. */
   noReport: boolean;
+}
+
+/**
+ * Does a VERIFYING run write the committed QA sidecar?
+ *
+ * Never under `--check` (bean `bo44`): the gate form judges and writes
+ * nothing, and measured 2026-10-01 it was rewriting
+ * `test/results/skill-register.qa-results.json` whenever that differed — the
+ * gate CI runs was a writer of the record it reports into. `--no-report` keeps
+ * its meaning for the writing path. (`--dry-run` decides separately, above
+ * the verify.)
+ */
+export function writesReport(flags: Flags): boolean {
+  return !flags.noReport && !flags.check;
 }
 
 export function parseFlags(argv: readonly string[]): Flags {
@@ -704,7 +718,7 @@ const HELP =
   `skill-register — regenerate everything adding a skill stales, and refuse a\n` +
   `skill that arrived without its declarations (beans \`v625\`, \`nfv3\`).\n\n` +
   `  bun run skill:register              regenerate, then verify\n` +
-  `  bun run skill:register --check      verify only — what CI runs\n` +
+  `  bun run skill:register --check      verify only, write nothing (not even the QA sidecar) — what CI runs\n` +
   `  bun run skill:register --dry-run    print the chain; write and verify nothing\n` +
   `  bun run skill:register --json       emit the verdicts as JSON\n` +
   `  bun run skill:register --no-report  skip the committed QA sidecar\n\n` +
@@ -861,9 +875,16 @@ function main(): number {
   // Written BEFORE the exit branches, so a red run is recorded rather than only
   // printed. A sidecar that exists only on success cannot distinguish "clean"
   // from "never ran".
-  const reportAt = flags.noReport
-    ? undefined
-    : writeReport(INSTANCE_ROOT, verdicts, declarationVerdicts(f));
+  //
+  // NOT under `--check` (bean `bo44`). The gate form judges and writes nothing:
+  // measured 2026-10-01, `skill:register:check` rewrote
+  // `test/results/skill-register.qa-results.json` whenever it differed, so the
+  // gate CI runs was also a writer of the record it reports into. The record is
+  // the author's command's to write (`bun run skill:register`); the gate's
+  // verdict is its exit code.
+  const reportAt = writesReport(flags)
+    ? writeReport(INSTANCE_ROOT, verdicts, declarationVerdicts(f))
+    : undefined;
   if (flags.json) {
     console.log(
       JSON.stringify(
