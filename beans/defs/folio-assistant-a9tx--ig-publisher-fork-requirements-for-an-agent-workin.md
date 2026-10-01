@@ -5,9 +5,11 @@ status: todo
 type: feature
 priority: normal
 created_at: 2026-09-22T19:07:23Z
-updated_at: 2026-10-01T02:00:00Z
+updated_at: 2026-10-01T07:10:00Z
 parent: folio-assistant-uhkv
 ---
+
+> **Taking this over? Start at §"HANDOVER — start here (2026-10-01)" at the end of this bean.** Earlier sections are history; the order list in §"Prepared for the agent with network" is superseded.
 
 Requirements for an agent working a **local experimental fork** of the IG
 Publisher, and what the AST it emits must carry.
@@ -274,3 +276,85 @@ the owner runs the mirror script, then the seeder runs with `--mirror`.
 **Upstream ask:** `who.template.root` is not in `FHIR/ig-registry`'s
 templates.json, so its repo is passed with `--template-repo`. A PR to the
 registry would remove that.
+
+## HANDOVER — start here (2026-10-01)
+
+**Claim it whole** (owner's ruling): `bun run beans:claim folio-assistant-a9tx`.
+Everything is built and unit-tested, and **nothing has been measured on a real IG.**
+Tick a box here only on a measurement, with its provenance.
+
+### Where things are
+
+| what | where | state |
+|---|---|---|
+| AST library (producer) | `litlfred/fhir-ig-publisher`, branch `claude/ast-export`, dir `ast-export/` (head `8fe4ec91`) | W1, W2, W5, W6 and W7 built; 22 Java tests (`mvn -q test`) |
+| consumer tools | folio-assistant `main` (PR #1708 merged, `adc024eb`): `fhir-harness/scripts/ig-ast.ts` | `list`, `validity`, `diff`, `render`; 14 tests |
+| skills | `fhir-harness/skills/fhir-ig-base/`: `ig-publisher-fork` (production, cache seeding), `ig-ast-delta` (consumption) | current |
+| Tools | `fhir-harness/tools/index.ts`: ten `ig-ast-*` / `fhir-cache-*` / `fhir-package-mirror` | declared |
+| process | `cat-harness/processes/ig-ast-delta-review.bpmn` | the W8 review step |
+| RuleSet / Alias reach | `bun run cat-harness/content/pipeline/fsh-cone.ts <ig> --file-users <json>` → `AstPlanCli -fsh-users` | tested |
+
+### Step 0: which environment are you in?
+
+`curl -s -o /dev/null -w '%{http_code}' https://packages.fhir.org/hl7.fhir.uv.extensions.r5`
+
+- **200: path A.** Go to Step 1.
+- **000 or 403: path B.** packages.fhir.org is blocked (Claude Code cloud, 2026-09-30 to 10-01: organization policy).
+  - Check whether `litlfred/fhir-package-mirror` exists. **As of 2026-10-01 it does not.**
+  - If it is missing, **stop and ask the owner** to create it and run the mirror command (given below).
+  - If it exists, seed the cache:
+    `python3 ast-export/scripts/seed-fhir-cache-from-npm.py --sushi-config <ig>/sushi-config.yaml --template-repo who.template.root=WorldHealthOrganization/smart-ig-template --mirror https://github.com/litlfred/fhir-package-mirror`
+  - Exit 0 means nothing is missing.
+  - `tx.fhir.org` is blocked too, so build with `-tx n/a`. **Label every number "no terminology server".**
+
+The owner's mirror command, run on a machine that reaches packages.fhir.org, from `~/space_cats`:
+
+1. Clone the mirror repo, and check out `claude/ast-export` in `fhir-ig-publisher`.
+2. Fetch both IGs' `sushi-config.yaml` from raw.githubusercontent.com.
+3. Run the seeder with `--dry-run --missing-out /tmp/missing.txt` and the `--template-repo` argument above.
+4. Run `fhir-ig-publisher/ast-export/scripts/mirror-fhir-packages.sh fhir-package-mirror /tmp/missing.txt`.
+
+The exact one-liner is in the session that wrote this section, and in the fork's README §"Without packages.fhir.org".
+
+### Step 1: measure (W1, W2)
+
+`ast-export/scripts/run-real-igs.sh <work> --byte-identical`. Record:
+
+- **W1, layout.** Are FSH sources under `fsh-generated/resources/`? `IncrementalPlan` assumes they are; if not, fix the source mapping in the library.
+- **W1, byte-identical.** Diff the stock build's `output/` against the `AstExportCli` build's. Timestamps differ; any other difference is a finding.
+- **W2.** Logic resources with at least one `ast-export` edge to another logic resource, **per type**, against 458 of 458 on smart-immunizations. Cross-check against `fsh-cone`.
+
+### Step 2: the first real cross-language check
+
+`bun run fhir-harness/scripts/ig-ast.ts validity <work>/smart-immunizations/output-ast --ig <work>/smart-immunizations`
+must return `valid`. The Java and TypeScript digests share a golden vector in their tests, but they have never been compared on real data.
+
+### Step 3: W7, then W8
+
+1. `ast-export/scripts/w7-round.sh <work>`. It changes one CQL file, then runs the plan and the incremental build.
+2. The fork README lists the risks to check first, starting with a **canonical collision** between the cache package and the temporary IG. Fix what breaks **in the library**.
+3. `ig-ast.ts diff <base> <work>/w7/ast --plan <work>/w7/plan.json --site <dir>`, then review per `ig-ast-delta-review.bpmn`.
+4. W8: do a full build of the same change and diff it against the incremental AST. Each difference is a missed coupling, or it gets an explanation, one entry at a time.
+
+### Rules the owner set; do not relitigate
+
+- **A library on top, not a fork in.** Do not modify existing Publisher code unless there is no other way. Subclass, reuse, remarshal.
+- **No GitHub Actions for now.** If CI is ever added, it calls these same scripts and holds no logic of its own.
+- **Exact package versions only.** No approximate builds with substituted versions.
+- **Trust anchors:**
+  - npm account `grahamegrieve`;
+  - the publishers' own site repositories;
+  - template repositories via `FHIR/ig-registry/templates.json` (`fhir.base.template` is trusted);
+  - the owner's mirror.
+- **Load dynamically.** Never compute a lookup once and keep it.
+- **fhir-harness knows nothing about WHO.** WHO specifics go in the fork or in beans.
+- **An AST is a cache, never an authority.** Every rendered page carries the provisional mark.
+- **Never merge without the owner's explicit word.** Comment on the PR or on issue #222 after every push.
+- **Writing a skill:** do not put the literal Liquid raw-block closing tag in skill text. `gen-skill-docs` wraps each page in one raw block, and that tag broke the staging build once. Hardening the generator is an open task.
+
+### Open, not yours unless asked
+
+- W3 (pinned closure, terminology provenance) and W4 (page-fragment provenance, which needs `org.hl7.fhir.core`).
+- An upstream PR adding `who.template.root` to `FHIR/ig-registry/templates.json`.
+- Phases P0 to P4 in `ig-publisher-reduction` beyond the AST work.
+

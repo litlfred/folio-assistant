@@ -5,7 +5,7 @@ status: in-progress
 type: task
 priority: normal
 created_at: 2026-09-20T14:45:12Z
-updated_at: 2026-09-30T19:17:49Z
+updated_at: 2026-09-30T22:09:25Z
 parent: folio-assistant-slw1
 ---
 
@@ -201,3 +201,9 @@ Refuse the literal `structure.json` in TypeScript outside a short allowlist, eac
 - [x] The four skill-authoring voices now declare `appliesTo: ["skill"]` — until now they claimed every block kind.
 - Measured: 323 skill sidecars each gain only `n/a` (no voice is active in `folio-assistant.config.json`); nothing else moved.
 - OPEN, the owner's: which voices to ACTIVATE (`voice.active`). Nothing is reviewed until then.
+
+
+## Owner, 2026-09-30 (round 5): activate the BASE voice only — issue #1694
+`folio-assistant.config.json` → `voices.active: ["agent-skill-authoring"]`. The vendor overrides stay inactive (our skills are agent-agnostic; a vendor voice describes that vendor's own platform).
+- Measured: all 325 skill sidecars go `n/a` → `fail` (minor, ungated) "never reviewed against agent-skill-authoring (12 skill rules)" — that is the review backlog, and nothing else in any sidecar moved.
+- Closed a hole the activation exposed: `voiceOverlayCriteria` made a BLOCK-prose criterion for every shipped voice, ignoring `appliesTo`, so an active skill voice would have asked agents to hold folio prose to rules written for a SKILL.md. `judgesBlocks()` now drops voices scoped only to artefact kinds; the four skill-authoring voices make no block overlay (test pinned).

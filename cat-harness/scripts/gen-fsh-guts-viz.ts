@@ -81,13 +81,25 @@ export interface GutsFile {
  * scoped, and a literal here is the `check:declared-assets` shape — a
  * generator that keeps working after the directory moves, over nothing.
  */
-export function gutsDir(repo = REPO): string | undefined {
-  const declPath = declarationPathIn(join(repo, "cat-harness"));
-  if (!declPath || !existsSync(declPath)) return undefined;
-  const d = JSON.parse(readFileSync(declPath, "utf-8")) as {
-    directories?: { id?: string; path?: string; scope?: string; graphKinds?: string[] }[];
+/** One declaration entry, as the two readers below need it. */
+type Entry = { id?: string; path?: string; scope?: string; graphKinds?: string[]; coverage?: { visualiser?: unknown } };
+
+/**
+ * cat-harness's own entries, then the checkout root's. `fsh-guts/` is declared
+ * by the root instance since cmsl step 2 (issue #1694); a root entry sits at
+ * the repository root, as a `repository`-scoped one did, so it is marked so.
+ */
+function declEntries(repo: string): Entry[] {
+  const read = (dir: string): Entry[] => {
+    const p = declarationPathIn(dir);
+    if (!p || !existsSync(p)) return [];
+    return (JSON.parse(readFileSync(p, "utf-8")) as { directories?: Entry[] }).directories ?? [];
   };
-  for (const e of d.directories ?? []) {
+  return [...read(join(repo, "cat-harness")), ...read(repo).map((e) => ({ ...e, scope: "repository" }))];
+}
+
+export function gutsDir(repo = REPO): string | undefined {
+  for (const e of declEntries(repo)) {
     if (!e.path || !(e.graphKinds ?? []).includes(KIND)) continue;
     return join(e.scope === "repository" ? repo : join(repo, "cat-harness"), e.path);
   }
@@ -107,12 +119,7 @@ export function gutsDir(repo = REPO): string | undefined {
  * belongs and what the ref is expressed against.
  */
 export function pageRelPath(repo = REPO): string | undefined {
-  const declPath = declarationPathIn(join(repo, "cat-harness"));
-  if (!declPath || !existsSync(declPath)) return undefined;
-  const d = JSON.parse(readFileSync(declPath, "utf-8")) as {
-    directories?: { graphKinds?: string[]; coverage?: { visualiser?: unknown } }[];
-  };
-  for (const e of d.directories ?? []) {
+  for (const e of declEntries(repo)) {
     if (!(e.graphKinds ?? []).includes(KIND)) continue;
     const v = e.coverage?.visualiser;
     for (const one of Array.isArray(v) ? v : [v]) {
