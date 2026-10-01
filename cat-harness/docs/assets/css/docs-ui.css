@@ -6474,13 +6474,31 @@ a.fa-harness-tab__body:focus-visible {
 }
 
 .fa-harness-section__gap,
-.fa-harness-section__findings {
+.fa-harness-section__findings,
+.fa-harness-section__subgraphs {
   font-size: 0.8125rem;
   opacity: 0.85;
   margin: 0;
 }
 
-.fa-harness-section__findings summary {
+/* LOCAL / REMOTE as a word in a box (`603s`). No colour of its own — the word
+   is the signal, so it survives a missing stylesheet and reads the same to a
+   screen reader; the box only lines the tags up. A REMOTE tag is drawn with a
+   dashed border as a second, shape-based cue. */
+.fa-harness-section__subgraphs ul { margin: 0.25rem 0 0; padding-left: 1rem; }
+.fa-harness-section__where {
+  display: inline-block;
+  min-width: 3.75rem;
+  padding: 0 0.3rem;
+  border: 1px solid currentColor;
+  border-radius: 3px;
+  font-size: 0.75rem;
+  text-align: center;
+}
+.fa-harness-section__subgraphs [data-fa-where="remote"] .fa-harness-section__where { border-style: dashed; }
+
+.fa-harness-section__findings summary,
+.fa-harness-section__subgraphs summary {
   cursor: pointer;
   min-height: 2rem;
   display: flex;
