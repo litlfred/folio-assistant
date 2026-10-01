@@ -383,6 +383,19 @@ export function dakOverlayCensus(artifacts: FhirArtifact[]): Record<string, numb
  * and inventing a second one with the same name would make "Other" mean two
  * different things in one index.
  */
+/**
+ * The file stem of an artefact's page on a site rendered from this index:
+ * `<ResourceType>-<id>`, with anything outside `[A-Za-z0-9._-]` made `_`.
+ *
+ * One rule, read by every generator that writes or links such a page —
+ * `gen-smart-trust-pages.ts` writes them, `build-ig-site.ts` links to them
+ * from an IG's `artifacts` page (bean `jut3`). Two copies of the rule would be
+ * two answers to "what is this artefact's URL", free to disagree silently.
+ */
+export function artifactPageName(a: { resourceType: string; id: string }): string {
+  return `${a.resourceType}-${a.id}`.replace(/[^A-Za-z0-9._-]/g, "_");
+}
+
 export function byCategory(artifacts: FhirArtifact[]): Map<string | undefined, FhirArtifact[]> {
   const out = new Map<string | undefined, FhirArtifact[]>();
   for (const a of artifacts) {

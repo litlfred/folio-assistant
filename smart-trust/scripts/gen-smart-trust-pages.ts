@@ -80,6 +80,7 @@ import {
   materializationCensus,
   dakOverlayCensus,
   byCategory,
+  artifactPageName,
   type FhirArtifact,
   type FhirArtifactIndex,
   type Representation,
@@ -223,8 +224,9 @@ function esc(s: string): string {
 }
 
 /** A filesystem-safe page name for an artefact key (`ValueSet/Actors` -> `ValueSet-Actors`). */
+/** The artefact's page stem: the shared rule, so linkers elsewhere agree with it. */
 function pageName(a: FhirArtifact): string {
-  return `${a.resourceType}-${a.id}`.replace(/[^A-Za-z0-9._-]/g, "_");
+  return artifactPageName(a);
 }
 
 /**

@@ -5,7 +5,7 @@ status: in-progress
 type: task
 priority: normal
 created_at: 2026-09-21T19:10:00Z
-updated_at: 2026-10-01T12:27:51Z
+updated_at: 2026-10-01T12:30:43Z
 parent: folio-assistant-uhkv
 ---
 
@@ -489,3 +489,13 @@ The P0 rule from the skill (`ig-publisher-reduction`, owner approval 2026-09-30)
 - **Checks:** `ingest:ig:check` passes against that checkout, and `check:materialized-fixity` verifies 272 artefacts with 0 edited.
 - **Parity gap closed:** "artefact not in our index" goes from 4 to 0.
 - **Lesson:** the first attempt skipped `gh-pages`' subfolders (`schemas/`, `openapi/`) and silently dropped every DAK schema sidecar. The ingest reported it as a thinner index (`schema=0`), and it was caught by comparing with the previous counts.
+
+## 2026-10-01: parity step 2 — `toc` and `artifacts` generated
+
+`build-ig-site.ts` now writes the two Publisher-generated IG-level pages from data the build already holds, and reports them under `generated`, separately from source pages.
+
+- **`toc`:** the `pages:` tree, nested. A page that neither exists nor is generated is listed as text, not as a link.
+- **`artifacts`:** every artefact from the instance's index, grouped by category, linking to `../artifact/<stem>.html`. It is written only when the instance holds both an index and `docs/artifact/` (`stage-ig-sites.ts` `artifactsFor`). It takes the menu's "Artifact Index" slot.
+- **Shared naming rule:** the page-name rule moved to `artifactPageName` in `fhir-artifact-index.ts`, so the writer (`gen-smart-trust-pages`) and this linker cannot disagree.
+- **Verified** on a local stage of the fork at `25771f6`: 678 of 678 artefact links and 36 of 36 toc links resolve, and both pages parse as strict Liquid.
+- **Parity:** the IG-level generated pages go from 11 missing to 9 (`qa*`, `searchform` and `history` remain).
