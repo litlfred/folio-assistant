@@ -83,6 +83,7 @@ import {
 } from "../schemas/cat-harness.js";
 import { withViewers } from "./viewer-declarations.js";
 import { subscribedHarnesses, subscribedTile } from "./subscribed-harnesses.js";
+import { labelVisualisations } from "./lib/nav-label.js";
 // The `folio` graph kind is registered by CORE. This module is a LIBRARY, so it
 // does NOT import that registration: a library's edge is inherited by every
 // module that imports it, and the harness may not depend on core. The
@@ -111,6 +112,20 @@ export type HarnessStat = {
 export type HarnessVisualisation = {
   /** The declared graph kind this shows. */
   kind: string;
+  /**
+   * What every surface CALLS this row — set by `labelVisualisations` in
+   * `lib/nav-label.ts`, and never composed by a surface (bean `ob3m`,
+   * finding 6: "One name everywhere"). The kind's display name, or, where two
+   * of this instance's kinds share one page, the display name of the kind its
+   * directories declare first, so that page has one name.
+   */
+  label?: string;
+  /**
+   * Set when this kind's page is the SAME destination as another kind's row
+   * of this instance, and names that kind. A list of destinations skips the
+   * row, so one page is listed once, under one name.
+   */
+  sameAs?: string;
   /**
    * The kind this one is a sub-graph of, from the registry's `within`
    * (issue #1164). Every list of kinds draws it inside that kind's row,
@@ -263,13 +278,16 @@ export type HarnessTile = {
    * What {@link href} points AT, which is three different kinds of thing:
    *
    * - `folio`   — the instance's own themed root
+   * - `section` — its own section of the landing page, for an INSTANTIATED
+   *               instance with no folio. Before `viewer`, so a harness row
+   *               never takes the name of a graph's page (bean `ob3m` 6).
    * - `viewer`  — a kind handler's view of one of its graphs
    * - `handled` — one of the instance's OWN files, published for it by the
    *               site build and named by its `renderExemption.reachableAt`.
    *               Only a render-exempt instance can have this, and it is the
    *               last resort.
    */
-  hrefKind?: "folio" | "viewer" | "handled";
+  hrefKind?: "folio" | "section" | "viewer" | "handled";
   stats: HarnessStat[];
   visualisations: HarnessVisualisation[];
   /**
@@ -732,6 +750,10 @@ function tileFor(
     v.note = inertNote(bucket, exempt);
   }
 
+  // ONE NAME PER DESTINATION (bean `ob3m` finding 6). Labelled here, where
+  // the directories are in hand, and read by every surface from the data.
+  labelVisualisations(visualisations, dirs);
+
   if (stagingOnly.length > 0) {
     findings.push(
       `${decl.name}: ${stagingOnly.length} graph(s) declare a staging-only viewer, deliberately ` +
@@ -1059,14 +1081,27 @@ function tileFor(
   // `id="harness-<name>"` (`_includes/harness_details.html`), so that section
   // is the honest destination — the same page, at this harness's place on it.
   const rooted = folio === "/" ? `/#harness-${decl.name}` : folio;
-  const href = rooted ?? firstViewer ?? handled;
-  if (folio === undefined && firstViewer !== undefined) {
+  // AN INSTANTIATED HARNESS WITH NO FOLIO OF ITS OWN goes to its own section
+  // of the landing too, never to one of its graphs' viewers. Bean `ob3m`
+  // finding 6 ("One name everywhere"): bootstrap's row linked `/processes/`,
+  // so one page was called "Bootstrap" on the harness row and "processes" one
+  // row below it. The landing renders a section for every instantiated
+  // harness (`_includes/harness_details.html`), so the anchor always resolves.
+  const instantiated = existsSync(join(repoRoot, instanceConfigFilename(decl.name)));
+  const section = rooted === undefined && instantiated ? `/#harness-${decl.name}` : undefined;
+  const href = rooted ?? section ?? firstViewer ?? handled;
+  if (folio === undefined && section !== undefined) {
+    findings.push(
+      `${decl.name}: has no docs/ of its own, so the tile opens its section of the landing ` +
+        `(${section}) rather than the instance's own themed root.`,
+    );
+  } else if (folio === undefined && firstViewer !== undefined) {
     findings.push(
       `${decl.name}: has no docs/ of its own, so the tile opens a kind handler's viewer ` +
         `(${firstViewer}) rather than the instance's own themed root.`,
     );
   }
-  if (handled !== undefined) {
+  if (handled !== undefined && section === undefined) {
     findings.push(
       `${decl.name}: renders nothing of its own (render-exempt), so its tab opens one of its ` +
         `own files as published (${handled}), declared as \`reachableAt\`.`,
@@ -1134,7 +1169,7 @@ function tileFor(
     toneFrom: themeTone !== undefined ? ("theme" as const) : ("avatar" as const),
     reads: avatar.reads,
     genericAvatar: !own,
-    instantiated: existsSync(join(repoRoot, instanceConfigFilename(decl.name))),
+    instantiated,
     ...(href === undefined
       ? {}
       : {
@@ -1142,7 +1177,9 @@ function tileFor(
           hrefKind:
             folio !== undefined
               ? ("folio" as const)
-              : firstViewer !== undefined
+              : section !== undefined
+                ? ("section" as const)
+                : firstViewer !== undefined
                 ? ("viewer" as const)
                 : ("handled" as const),
         }),

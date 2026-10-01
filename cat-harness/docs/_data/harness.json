@@ -122,7 +122,8 @@
     {
       "id": "beans",
       "directory": "beans",
-      "title": "beans",
+      "title": "Beans",
+      "qualifier": "Folio Assistant",
       "ref": "cat-harness/docs/beans/index.html",
       "surfaces": [
         "navbar",
@@ -138,7 +139,8 @@
     {
       "id": "docs",
       "directory": "docs",
-      "title": "Docs — cat-harness",
+      "title": "Docs",
+      "qualifier": "C@T Harness",
       "ref": "cat-harness/docs/cat-harness/docs-auto/index/docs/docs/index.html",
       "surfaces": [
         "navbar",
@@ -153,6 +155,7 @@
       "id": "external-schemas",
       "directory": "external-schemas",
       "title": "External schemas",
+      "qualifier": "C@T Harness",
       "ref": "cat-harness/docs/external-schemas/index.md",
       "surfaces": [
         "navbar",
@@ -166,7 +169,8 @@
     {
       "id": "folio",
       "directory": "folio",
-      "title": "folio",
+      "title": "Folio",
+      "qualifier": "C@T Harness",
       "ref": "cat-harness/docs/cat-harness/folio/index.html",
       "surfaces": [
         "navbar",
@@ -181,7 +185,8 @@
     {
       "id": "fsh-guts",
       "directory": "fsh-guts",
-      "title": "fsh-guts",
+      "title": "FSH guts",
+      "qualifier": "Folio Assistant",
       "ref": "cat-harness/docs/fsh-guts/index.md",
       "surfaces": [
         "navbar",
@@ -195,7 +200,8 @@
     {
       "id": "library",
       "directory": "library",
-      "title": "library",
+      "title": "Library",
+      "qualifier": "C@T Harness",
       "ref": "cat-harness/docs/cat-harness/library/cat-harness/index.html",
       "surfaces": [
         "navbar",
@@ -212,6 +218,7 @@
       "id": "methodologies",
       "directory": "methodologies",
       "title": "Methodologies",
+      "qualifier": "C@T Harness",
       "ref": "cat-harness/docs/methodologies/index.md",
       "surfaces": [
         "navbar",
@@ -226,7 +233,8 @@
     {
       "id": "processes",
       "directory": "processes",
-      "title": "processes",
+      "title": "Processes",
+      "qualifier": "C@T Harness",
       "ref": "cat-harness/docs/processes/index.md",
       "surfaces": [
         "navbar",
@@ -241,6 +249,7 @@
       "id": "qa",
       "directory": "qa",
       "title": "Latent semantic indexes",
+      "qualifier": "C@T Harness",
       "ref": "cat-harness/docs/lsi/index.md",
       "surfaces": [
         "navbar",
@@ -256,7 +265,8 @@
     {
       "id": "root-docs",
       "directory": "root-docs",
-      "title": "root-docs",
+      "title": "Docs",
+      "qualifier": "Folio Assistant",
       "ref": "cat-harness/docs/cat-harness/docs-auto/index/docs/root-docs/index.html",
       "surfaces": [
         "navbar",
@@ -269,7 +279,8 @@
     {
       "id": "schemas",
       "directory": "schemas",
-      "title": "schemas",
+      "title": "Schemas",
+      "qualifier": "C@T Harness",
       "ref": "cat-harness/docs/cat-harness/schemas/cat-harness/index.html",
       "surfaces": [
         "navbar",
@@ -285,7 +296,8 @@
     {
       "id": "skills",
       "directory": "skills",
-      "title": "Skills — cat-harness",
+      "title": "Skills",
+      "qualifier": "C@T Harness",
       "ref": "cat-harness/docs/cat-harness/docs-auto/index/skills/skills/index.html",
       "surfaces": [
         "navbar",
@@ -300,7 +312,8 @@
     {
       "id": "swimlane-glossary",
       "directory": "swimlane-glossary",
-      "title": "swimlane-glossary",
+      "title": "Swimlane glossary",
+      "qualifier": "C@T Harness",
       "ref": "cat-harness/docs/cat-harness/docs-auto/glossary/swimlane-glossary/index.html",
       "surfaces": [
         "navbar",
@@ -313,7 +326,8 @@
     {
       "id": "todos",
       "directory": "todos",
-      "title": "todos",
+      "title": "Todos",
+      "qualifier": "Folio Assistant",
       "ref": "cat-harness/docs/todos/index.html",
       "surfaces": [
         "navbar",
@@ -329,6 +343,7 @@
       "id": "tools",
       "directory": "tools",
       "title": "Tools",
+      "qualifier": "C@T Harness",
       "ref": "cat-harness/docs/tools/index.md",
       "surfaces": [
         "navbar",
@@ -342,7 +357,8 @@
     {
       "id": "translation-sources",
       "directory": "translation-sources",
-      "title": "translation-sources",
+      "title": "Translation sources",
+      "qualifier": "C@T Harness",
       "ref": "cat-harness/docs/translation-status/index.html",
       "surfaces": [
         "navbar",
@@ -357,7 +373,8 @@
     {
       "id": "uploads",
       "directory": "uploads",
-      "title": "uploads",
+      "title": "Uploads",
+      "qualifier": "C@T Harness",
       "ref": "cat-harness/docs/cat-harness/uploads/cat-harness/index.html",
       "surfaces": [
         "navbar",
@@ -458,44 +475,54 @@
       "visualisations": [
         {
           "kind": "beans",
-          "path": "/beans/"
+          "path": "/beans/",
+          "label": "Beans"
         },
         {
           "kind": "code",
-          "note": "no viewer yet"
+          "note": "no viewer yet",
+          "label": "Code"
         },
         {
           "kind": "docs",
-          "path": "/cat-harness/docs-auto/index/docs/root-docs/"
+          "path": "/cat-harness/docs-auto/index/docs/root-docs/",
+          "label": "Docs"
         },
         {
           "kind": "fsh-guts",
           "path": "/fsh-guts/",
-          "stagingOnly": true
+          "stagingOnly": true,
+          "label": "FSH guts"
         },
         {
           "kind": "interaction",
-          "note": "no viewer yet"
+          "note": "no viewer yet",
+          "label": "Interaction"
         },
         {
           "kind": "issue-marks",
-          "path": "/issue-marks/"
+          "path": "/issue-marks/",
+          "label": "Issue marks"
         },
         {
           "kind": "memory",
-          "note": "no viewer yet"
+          "note": "no viewer yet",
+          "label": "Memory"
         },
         {
           "kind": "todos",
-          "path": "/todos/"
+          "path": "/todos/",
+          "label": "Todos"
         },
         {
           "kind": "uploads",
-          "path": "/cat-harness/uploads/folio-assistant/"
+          "path": "/cat-harness/uploads/folio-assistant/",
+          "label": "Uploads"
         },
         {
           "kind": "waiver",
-          "note": "no viewer yet"
+          "note": "no viewer yet",
+          "label": "Waivers"
         }
       ],
       "findings": [
@@ -580,24 +607,29 @@
       "visualisations": [
         {
           "kind": "code",
-          "note": "no viewer yet"
+          "note": "no viewer yet",
+          "label": "Code"
         },
         {
           "kind": "docs",
-          "path": "/cat-harness/docs-auto/index/docs/smart-trust-docs/"
+          "path": "/cat-harness/docs-auto/index/docs/smart-trust-docs/",
+          "label": "Docs"
         },
         {
           "kind": "fhir-artifact-index",
           "readOnly": true,
-          "note": "no viewer yet"
+          "note": "no viewer yet",
+          "label": "FHIR artefact index"
         },
         {
           "kind": "qa",
-          "note": "no viewer yet"
+          "note": "no viewer yet",
+          "label": "QA"
         },
         {
           "kind": "themes",
-          "note": "no viewer yet"
+          "note": "no viewer yet",
+          "label": "Themes"
         }
       ],
       "findings": [
@@ -650,11 +682,13 @@
         {
           "kind": "fhir-artifact-index",
           "readOnly": true,
-          "note": "no viewer yet"
+          "note": "no viewer yet",
+          "label": "FHIR artefact index"
         },
         {
           "kind": "qa",
-          "note": "no viewer yet"
+          "note": "no viewer yet",
+          "label": "QA"
         }
       ],
       "findings": [
@@ -706,7 +740,8 @@
       "visualisations": [
         {
           "kind": "qa",
-          "note": "no viewer yet"
+          "note": "no viewer yet",
+          "label": "QA"
         }
       ],
       "findings": [
@@ -757,7 +792,8 @@
       "visualisations": [
         {
           "kind": "qa",
-          "note": "no viewer yet"
+          "note": "no viewer yet",
+          "label": "QA"
         }
       ],
       "findings": [
@@ -808,7 +844,8 @@
       "visualisations": [
         {
           "kind": "qa",
-          "note": "no viewer yet"
+          "note": "no viewer yet",
+          "label": "QA"
         }
       ],
       "findings": [
@@ -861,15 +898,18 @@
       "visualisations": [
         {
           "kind": "glossary",
-          "note": "no viewer yet"
+          "note": "no viewer yet",
+          "label": "Glossary"
         },
         {
           "kind": "qa",
-          "note": "no viewer yet"
+          "note": "no viewer yet",
+          "label": "QA"
         },
         {
           "kind": "voices",
-          "path": "/cat-harness/voices/who-style-guide/"
+          "path": "/cat-harness/voices/who-style-guide/",
+          "label": "Voices"
         }
       ],
       "findings": [
@@ -923,36 +963,44 @@
       "visualisations": [
         {
           "kind": "docs",
-          "path": "/cat-harness/docs-auto/index/docs/smart-base-docs/"
+          "path": "/cat-harness/docs-auto/index/docs/smart-base-docs/",
+          "label": "Docs"
         },
         {
           "kind": "fhir-artifact-index",
           "readOnly": true,
-          "note": "no viewer yet"
+          "note": "no viewer yet",
+          "label": "FHIR artefact index"
         },
         {
           "kind": "library",
-          "path": "/cat-harness/library/smart-base/"
+          "path": "/cat-harness/library/smart-base/",
+          "label": "Library"
         },
         {
           "kind": "methodology",
-          "path": "/methodologies/"
+          "path": "/methodologies/",
+          "label": "Methodologies"
         },
         {
           "kind": "processes",
-          "path": "/processes/"
+          "path": "/processes/",
+          "label": "Processes"
         },
         {
           "kind": "qa",
-          "note": "no viewer yet"
+          "note": "no viewer yet",
+          "label": "QA"
         },
         {
           "kind": "tools",
-          "note": "no viewer yet"
+          "note": "no viewer yet",
+          "label": "Tools"
         },
         {
           "kind": "voices",
-          "path": "/cat-harness/voices/smart-base/"
+          "path": "/cat-harness/voices/smart-base/",
+          "label": "Voices"
         }
       ],
       "findings": [
@@ -1006,36 +1054,44 @@
         {
           "kind": "catalogue",
           "path": "/cat-harness/catalogue/who-iris/",
-          "readOnly": true
+          "readOnly": true,
+          "label": "Catalogue"
         },
         {
           "kind": "code",
-          "note": "no viewer yet"
+          "note": "no viewer yet",
+          "label": "Code"
         },
         {
           "kind": "docs",
-          "path": "/cat-harness/docs-auto/index/docs/who-iris-site/"
+          "path": "/cat-harness/docs-auto/index/docs/who-iris-site/",
+          "label": "Docs"
         },
         {
           "kind": "library",
-          "path": "/cat-harness/library/who-iris/"
+          "path": "/cat-harness/library/who-iris/",
+          "label": "Library"
         },
         {
           "kind": "qa",
-          "note": "no viewer yet"
+          "note": "no viewer yet",
+          "label": "QA"
         },
         {
           "kind": "skills",
-          "path": "/cat-harness/docs-auto/index/skills/who-iris-skills/"
+          "path": "/cat-harness/docs-auto/index/skills/who-iris-skills/",
+          "label": "Skills"
         },
         {
           "kind": "themes",
-          "note": "no viewer yet"
+          "note": "no viewer yet",
+          "label": "Themes"
         },
         {
           "kind": "uploads",
           "path": "/cat-harness/uploads/who-iris/",
-          "readOnly": false
+          "readOnly": false,
+          "label": "Uploads"
         }
       ],
       "findings": [
@@ -1088,27 +1144,34 @@
       "visualisations": [
         {
           "kind": "cat-harness",
-          "path": "/cat-harness/schemas/large-datasets/"
+          "path": "/cat-harness/schemas/large-datasets/",
+          "label": "Schemas",
+          "sameAs": "schemas"
         },
         {
           "kind": "code",
-          "note": "no viewer yet"
+          "note": "no viewer yet",
+          "label": "Code"
         },
         {
           "kind": "processes",
-          "path": "/processes/"
+          "path": "/processes/",
+          "label": "Processes"
         },
         {
           "kind": "qa",
-          "note": "no viewer yet"
+          "note": "no viewer yet",
+          "label": "QA"
         },
         {
           "kind": "schemas",
-          "path": "/cat-harness/schemas/large-datasets/"
+          "path": "/cat-harness/schemas/large-datasets/",
+          "label": "Schemas"
         },
         {
           "kind": "skills",
-          "path": "/cat-harness/docs-auto/index/skills/large-datasets-skills/"
+          "path": "/cat-harness/docs-auto/index/skills/large-datasets-skills/",
+          "label": "Skills"
         }
       ],
       "findings": [
@@ -1162,27 +1225,33 @@
       "visualisations": [
         {
           "kind": "code",
-          "note": "no viewer yet"
+          "note": "no viewer yet",
+          "label": "Code"
         },
         {
           "kind": "library",
-          "path": "/cat-harness/library/folio-assistant-sci/"
+          "path": "/cat-harness/library/folio-assistant-sci/",
+          "label": "Library"
         },
         {
           "kind": "methodology",
-          "path": "/methodologies/"
+          "path": "/methodologies/",
+          "label": "Methodologies"
         },
         {
           "kind": "qa",
-          "note": "no viewer yet"
+          "note": "no viewer yet",
+          "label": "QA"
         },
         {
           "kind": "skills",
-          "note": "no viewer yet"
+          "note": "no viewer yet",
+          "label": "Skills"
         },
         {
           "kind": "voices",
-          "path": "/cat-harness/voices/folio-assistant-sci/"
+          "path": "/cat-harness/voices/folio-assistant-sci/",
+          "label": "Voices"
         }
       ],
       "findings": [
@@ -1236,19 +1305,23 @@
       "visualisations": [
         {
           "kind": "library",
-          "path": "/cat-harness/library/fhir-harness/"
+          "path": "/cat-harness/library/fhir-harness/",
+          "label": "Library"
         },
         {
           "kind": "qa",
-          "note": "no viewer yet"
+          "note": "no viewer yet",
+          "label": "QA"
         },
         {
           "kind": "skills",
-          "path": "/cat-harness/docs-auto/index/skills/fhir-ig-skills/"
+          "path": "/cat-harness/docs-auto/index/skills/fhir-ig-skills/",
+          "label": "Skills"
         },
         {
           "kind": "tools",
-          "note": "no viewer yet"
+          "note": "no viewer yet",
+          "label": "Tools"
         }
       ],
       "findings": [
@@ -1303,15 +1376,18 @@
       "visualisations": [
         {
           "kind": "library",
-          "path": "/cat-harness/library/agent-skills/"
+          "path": "/cat-harness/library/agent-skills/",
+          "label": "Library"
         },
         {
           "kind": "qa",
-          "note": "no viewer yet"
+          "note": "no viewer yet",
+          "label": "QA"
         },
         {
           "kind": "voices",
-          "path": "/cat-harness/voices/agent-skills/"
+          "path": "/cat-harness/voices/agent-skills/",
+          "label": "Voices"
         }
       ],
       "findings": [
@@ -1398,51 +1474,64 @@
       "visualisations": [
         {
           "kind": "cat-harness",
-          "path": "/cat-harness/schemas/folio-assistant-core/"
+          "path": "/cat-harness/schemas/folio-assistant-core/",
+          "label": "Schemas",
+          "sameAs": "schemas"
         },
         {
           "kind": "code",
-          "note": "no viewer yet"
+          "note": "no viewer yet",
+          "label": "Code"
         },
         {
           "kind": "folio",
-          "note": "no viewer yet"
+          "note": "no viewer yet",
+          "label": "Folio"
         },
         {
           "kind": "glossary",
-          "path": "/glossary/"
+          "path": "/glossary/",
+          "label": "Glossary"
         },
         {
           "kind": "library",
-          "path": "/cat-harness/library/folio-assistant-core/"
+          "path": "/cat-harness/library/folio-assistant-core/",
+          "label": "Library"
         },
         {
           "kind": "methodology",
-          "path": "/methodologies/"
+          "path": "/methodologies/",
+          "label": "Methodologies"
         },
         {
           "kind": "processes",
-          "path": "/processes/"
+          "path": "/processes/",
+          "label": "Processes"
         },
         {
           "kind": "qa",
-          "note": "no viewer yet"
+          "note": "no viewer yet",
+          "label": "QA"
         },
         {
           "kind": "schemas",
-          "path": "/cat-harness/schemas/folio-assistant-core/"
+          "path": "/cat-harness/schemas/folio-assistant-core/",
+          "label": "Schemas"
         },
         {
           "kind": "skills",
-          "path": "/cat-harness/docs-auto/index/skills/core-skills/"
+          "path": "/cat-harness/docs-auto/index/skills/core-skills/",
+          "label": "Skills"
         },
         {
           "kind": "tools",
-          "note": "no viewer yet"
+          "note": "no viewer yet",
+          "label": "Tools"
         },
         {
           "kind": "voices",
-          "path": "/cat-harness/voices/folio-assistant-core/"
+          "path": "/cat-harness/voices/folio-assistant-core/",
+          "label": "Voices"
         }
       ],
       "findings": [
@@ -1494,7 +1583,8 @@
       "visualisations": [
         {
           "kind": "code",
-          "note": "no viewer yet"
+          "note": "no viewer yet",
+          "label": "Code"
         }
       ],
       "findings": [
@@ -1590,98 +1680,122 @@
       "visualisations": [
         {
           "kind": "cat-harness",
-          "path": "/cat-harness/schemas/cat-harness/"
+          "path": "/cat-harness/schemas/cat-harness/",
+          "label": "Schemas",
+          "sameAs": "schemas"
         },
         {
           "kind": "code",
-          "note": "no viewer yet"
+          "note": "no viewer yet",
+          "label": "Code"
         },
         {
           "kind": "code-list",
-          "note": "no viewer yet"
+          "note": "no viewer yet",
+          "label": "Code lists"
         },
         {
           "kind": "docs",
-          "path": "/cat-harness/docs-auto/index/docs/docs/"
+          "path": "/cat-harness/docs-auto/index/docs/docs/",
+          "label": "Docs"
         },
         {
           "kind": "external-schema",
-          "path": "/external-schemas/"
+          "path": "/external-schemas/",
+          "label": "External schemas"
         },
         {
           "kind": "folio",
-          "path": "/cat-harness/folio/"
+          "path": "/cat-harness/folio/",
+          "label": "Folio"
         },
         {
           "kind": "health",
-          "path": "/health/"
+          "path": "/health/",
+          "label": "Health"
         },
         {
           "kind": "library",
-          "path": "/cat-harness/library/cat-harness/"
+          "path": "/cat-harness/library/cat-harness/",
+          "label": "Library"
         },
         {
           "kind": "methodology",
-          "path": "/methodologies/"
+          "path": "/methodologies/",
+          "label": "Methodologies"
         },
         {
           "kind": "policies",
-          "note": "no viewer yet"
+          "note": "no viewer yet",
+          "label": "Policies"
         },
         {
           "kind": "processes",
-          "path": "/processes/"
+          "path": "/processes/",
+          "label": "Processes"
         },
         {
           "kind": "proposals",
           "within": "docs",
-          "path": "/proposals/"
+          "path": "/proposals/",
+          "label": "Proposals"
         },
         {
           "kind": "qa",
-          "path": "/qa/"
+          "path": "/qa/",
+          "label": "QA"
         },
         {
           "kind": "requirements",
           "within": "docs",
-          "path": "/requirements/"
+          "path": "/requirements/",
+          "label": "Requirements"
         },
         {
           "kind": "scenarios",
-          "note": "no viewer yet"
+          "note": "no viewer yet",
+          "label": "Scenarios"
         },
         {
           "kind": "schemas",
-          "path": "/cat-harness/schemas/cat-harness/"
+          "path": "/cat-harness/schemas/cat-harness/",
+          "label": "Schemas"
         },
         {
           "kind": "skills",
           "path": "/cat-harness/docs-auto/index/skills/skills/",
-          "readOnly": false
+          "readOnly": false,
+          "label": "Skills"
         },
         {
           "kind": "substrate-snapshot",
-          "note": "no viewer yet"
+          "note": "no viewer yet",
+          "label": "Substrate snapshots"
         },
         {
           "kind": "swimlane-glossary",
-          "path": "/swimlane-glossary/"
+          "path": "/swimlane-glossary/",
+          "label": "Swimlane glossary"
         },
         {
           "kind": "tools",
-          "path": "/tools/"
+          "path": "/tools/",
+          "label": "Tools"
         },
         {
           "kind": "translation-sources",
-          "path": "/translation-status/"
+          "path": "/translation-status/",
+          "label": "Translation sources"
         },
         {
           "kind": "uml",
-          "note": "no viewer yet"
+          "note": "no viewer yet",
+          "label": "UML"
         },
         {
           "kind": "uploads",
-          "path": "/uploads/"
+          "path": "/uploads/",
+          "label": "Uploads"
         }
       ],
       "findings": [
@@ -1733,23 +1847,28 @@
       "visualisations": [
         {
           "kind": "code",
-          "note": "no viewer yet"
+          "note": "no viewer yet",
+          "label": "Code"
         },
         {
           "kind": "processes",
-          "path": "/processes/"
+          "path": "/processes/",
+          "label": "Processes"
         },
         {
           "kind": "scenarios",
-          "note": "no viewer yet"
+          "note": "no viewer yet",
+          "label": "Scenarios"
         },
         {
           "kind": "schemas",
-          "note": "no viewer yet"
+          "note": "no viewer yet",
+          "label": "Schemas"
         },
         {
           "kind": "skills",
-          "note": "no viewer yet"
+          "note": "no viewer yet",
+          "label": "Skills"
         }
       ],
       "findings": [
@@ -1811,8 +1930,8 @@
       "reads": "a seed germinating — the first thing, before anything else is known",
       "genericAvatar": false,
       "instantiated": true,
-      "href": "/processes/",
-      "hrefKind": "viewer",
+      "href": "/#harness-bootstrap",
+      "hrefKind": "section",
       "stats": [
         {
           "id": "directories",
@@ -1833,28 +1952,33 @@
       "visualisations": [
         {
           "kind": "models",
-          "note": "no viewer by design"
+          "note": "no viewer by design",
+          "label": "Models"
         },
         {
           "kind": "processes",
-          "path": "/processes/"
+          "path": "/processes/",
+          "label": "Processes"
         },
         {
           "kind": "scenarios",
-          "note": "no viewer by design"
+          "note": "no viewer by design",
+          "label": "Scenarios"
         },
         {
           "kind": "schemas",
-          "note": "no viewer by design"
+          "note": "no viewer by design",
+          "label": "Schemas"
         },
         {
           "kind": "skills",
-          "note": "no viewer by design"
+          "note": "no viewer by design",
+          "label": "Skills"
         }
       ],
       "findings": [
         "bootstrap: 4 graph(s) render no viewer — models, scenarios, schemas, skills — under a declared `renderExemption`. Not a gap: it owes Its own Knowledge Graph, written out as `.jsonld` with a `.json` copy and published at `<base>/bootstrap/bootstrap.jsonld`, the exact address its `@id` names. Governed by `skills/bootstrap-graph-emission.md` and `skills/bootstrap-graph-publication.md`.",
-        "bootstrap: has no docs/ of its own, so the tile opens a kind handler's viewer (/processes/) rather than the instance's own themed root."
+        "bootstrap: has no docs/ of its own, so the tile opens its section of the landing (/#harness-bootstrap) rather than the instance's own themed root."
       ],
       "navbarIcons": [
         "close",
@@ -1884,97 +2008,115 @@
     "notes": {},
     "folders": [
       {
-        "kind": "cat-harness",
-        "path": "/cat-harness/schemas/cat-harness/"
-      },
-      {
         "kind": "code",
+        "label": "Code",
         "note": "no viewer yet"
       },
       {
         "kind": "code-list",
+        "label": "Code lists",
         "note": "no viewer yet"
       },
       {
         "kind": "docs",
+        "label": "Docs",
         "path": "/cat-harness/docs-auto/index/docs/docs/"
       },
       {
         "kind": "external-schema",
+        "label": "External schemas",
         "path": "/external-schemas/"
       },
       {
         "kind": "folio",
+        "label": "Folio",
         "path": "/cat-harness/folio/"
       },
       {
         "kind": "health",
+        "label": "Health",
         "path": "/health/"
       },
       {
         "kind": "library",
+        "label": "Library",
         "path": "/cat-harness/library/cat-harness/"
       },
       {
         "kind": "methodology",
+        "label": "Methodologies",
         "path": "/methodologies/"
       },
       {
         "kind": "policies",
+        "label": "Policies",
         "note": "no viewer yet"
       },
       {
         "kind": "processes",
+        "label": "Processes",
         "path": "/processes/"
       },
       {
         "kind": "proposals",
+        "label": "Proposals",
         "within": "docs",
         "path": "/proposals/"
       },
       {
         "kind": "qa",
+        "label": "QA",
         "path": "/qa/"
       },
       {
         "kind": "requirements",
+        "label": "Requirements",
         "within": "docs",
         "path": "/requirements/"
       },
       {
         "kind": "scenarios",
+        "label": "Scenarios",
         "note": "no viewer yet"
       },
       {
         "kind": "schemas",
+        "label": "Schemas",
         "path": "/cat-harness/schemas/cat-harness/"
       },
       {
         "kind": "skills",
+        "label": "Skills",
         "path": "/cat-harness/docs-auto/index/skills/skills/"
       },
       {
         "kind": "substrate-snapshot",
+        "label": "Substrate snapshots",
         "note": "no viewer yet"
       },
       {
         "kind": "swimlane-glossary",
+        "label": "Swimlane glossary",
         "path": "/swimlane-glossary/"
       },
       {
         "kind": "tools",
+        "label": "Tools",
         "path": "/tools/"
       },
       {
         "kind": "translation-sources",
+        "label": "Translation sources",
         "path": "/translation-status/"
       },
       {
         "kind": "uml",
+        "label": "UML",
         "note": "no viewer yet"
       },
       {
         "kind": "uploads",
+        "label": "Uploads",
         "path": "/uploads/"
       }
     ]

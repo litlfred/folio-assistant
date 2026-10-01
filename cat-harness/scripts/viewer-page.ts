@@ -63,7 +63,8 @@ import { dirname, relative, sep } from "node:path";
 
 import { injectRail, type NavItem } from "./lib/harness-rail.js";
 import { VISUALISER_NAV_ATTR, visualiserNavDeclaration, type VisualiserNavEntry } from "./lib/navbar.js";
-import { declaredGraphs, instanceMark, instantiatedHarnesses, publishedGraphs } from "./mount-instance-docs.js";
+import { kindTitle } from "./lib/nav-label.js";
+import { declaredGraphs, instanceMark, instantiatedHarnesses, publishedGraphs, railNames } from "./mount-instance-docs.js";
 
 /**
  * The opt-out a visualisation writes into its own page.
@@ -145,15 +146,34 @@ export function subjectSection(
   subjects: readonly string[],
   current: string | undefined,
   regions: readonly { label: string; id: string }[],
+  /**
+   * What each subject page is CALLED. A subject page is a destination other
+   * surfaces name too (`/cat-harness/schemas/cat-harness/` is "Schemas" in
+   * the Graphs group), so its row takes that one name with the harness as the
+   * qualifier: "Schemas · C@T Harness". Bean `ob3m` finding 6. Omitted, a row
+   * is the bare segment, as before.
+   */
+  name?: (subject: string) => { label: string; qualifier?: string },
 ): VisualiserNavEntry[] {
   const anchors = regions.map((r) => ({ label: r.label, href: `#${r.id}` }));
   const up = current === undefined ? "" : "../";
+  const named = (s: string): { label: string; qualifier?: string } => name?.(s) ?? { label: s };
   return [
     current === undefined ? { label: "all", items: anchors } : { label: "all", href: up },
     ...subjects.map((s) =>
-      s === current ? { label: s, items: anchors } : { label: s, href: `${up}${s}/` },
+      s === current ? { ...named(s), items: anchors } : { ...named(s), href: `${up}${s}/` },
     ),
   ];
+}
+
+/**
+ * {@link subjectSection}'s `name` for a handler's viewer of `kind`: the kind's
+ * display name, qualified by each subject harness's own name from
+ * `_data/harness.json` (its directory name when the data cannot say).
+ */
+export function subjectNames(built: string, kind: string): (subject: string) => { label: string; qualifier: string } {
+  const label = kindTitle(kind);
+  return (subject) => ({ label, qualifier: railNames(built, subject).harness ?? subject });
 }
 
 /**
@@ -201,7 +221,8 @@ export function withViewerNav(html: string, pageAbs: string, o: ViewerNav): stri
   // The visualiser this page IS — the row the loop below marks current. Its
   // label names the page's own section in the rail (#1757).
   let visualiserLabel: string | undefined;
-  const links: NavItem[] = declaredGraphs(instance, new Map(), site).map((item) => {
+  const named = railNames(o.built, instance);
+  const links: NavItem[] = declaredGraphs(instance, new Map(), site, named.harness).map((item) => {
     // WHERE AM I — and the row loses its HREF, not just gains a mark.
     //
     // `state-visualizer.test.ts` states the rule this repository already
@@ -236,7 +257,8 @@ export function withViewerNav(html: string, pageAbs: string, o: ViewerNav): stri
     }
   }
   const railed = injectRail(withHeadingIds(own), {
-    instance,
+    instance: named.harness ?? instance,
+    ...(named.site ? { homeLabel: named.site } : {}),
     toRoot,
     ...(mark ? { mark } : {}),
     ...(visualiserLabel ? { visualiserLabel } : {}),

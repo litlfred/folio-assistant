@@ -46,6 +46,7 @@ export const FOLIO_GRAPH_KIND: GraphKindDef = {
   // and nothing about `state` forbids a future kind being rendered.
   holds: "content",
   perInstance: true,
+  title: "Folio",
   summary: "Authored content, rendered to a website by the just-the-docs pipeline.",
 };
 
