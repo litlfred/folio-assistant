@@ -658,6 +658,24 @@ jobs:
       - name: No page carries a duplicate id
         run: bun run check:duplicate-ids ./_site
 
+      # The deploy's own built-site checks, run on the PREVIEW so they fail on the pull
+      # request rather than after the merge (bean `63es`). Until 2026-10-01 they
+      # ran only in `docs-site.yml`, on `main`: a code span wrapped so a line
+      # began `<slide>` opened a raw HTML block that never closed, the page's
+      # last table printed as pipes, and every publish from #1615 on stopped at
+      # `check:escaped-markup` (#1726) — while each PR's `stage` stayed green.
+      # #1687's preview carried the broken page and this check flags it there.
+      #
+      # `reference/` is only carried when a PR touches skills, schemas or their
+      # generators — exactly the PRs that can break those pages. Invoked by
+      # DECLARED SCRIPT NAME, as in `docs-site.yml`, so `unrunScripts` sees them.
+      # `check:invocation-parity` fails if the deploy gains one that is not also
+      # here. `check:maintained-artefacts` is the other one; it runs below, after
+      # the exports that write what it looks for.
+      - name: No escaped block-level markup in the preview
+        run: bun run check:escaped-markup ./_site
+
+
       # A PREVIEW MUST NOT CLAIM TO BE CANONICAL.
       #
       # `jekyll-seo-tag` ships in the `github-pages` gem set that
@@ -1089,6 +1107,13 @@ jobs:
       # as nothing checked the target rather than the attribute.
       #
       # A test asserts both workflows carry this step.
+      # After every export above, as in `docs-site.yml`: the schemas and the
+      # `ns.jsonld` vocabularies are written by the export step, so checking
+      # beside `check:escaped-markup` (straight after the mount) found 6 of 8
+      # missing — measured on this PR's first run (bean `63es`).
+      - name: Every maintained artefact is in the preview
+        run: bun run check:maintained-artefacts ./_site
+
       - name: Check the navbar tiles resolve against the built site
         run: bun run cat-harness/scripts/site-links.ts --root ./cat-harness --site ./_site
 
