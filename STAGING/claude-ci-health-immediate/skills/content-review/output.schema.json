@@ -2,7 +2,7 @@
   "$schema": "http://json-schema.org/draft-07/schema#",
   "$id": "https://litlfred.github.io/folio-assistant/STAGING/claude-ci-health-immediate/skills/content-review/output.schema.json",
   "title": "Content Review Output",
-  "description": "What a review produces: findings, a decision about them, and the audit notes that justify it. A finding is an observation; a decision is an act about a set of findings; neither determines the other. Mirrors schemas/qa-review.ts — see skills/folio-core/decision-audit.md.",
+  "description": "What a review produces: findings, a decision about them, and the audit notes that justify it. A finding is an observation; a decision is an act about a set of findings; neither determines the other. Mirrors schemas/qa-review.ts — see skills/sdlc/sdlc-core/decision-audit.md.",
   "type": "object",
   "required": [
     "findings",
@@ -263,8 +263,8 @@
   },
   "staging": {
     "branch": "claude/ci-health-immediate",
-    "sha": "f2b3d519cee06a3f760ad7991702c54fb7d6c0df",
+    "sha": "ee1edb1684c739c5e24c7e86023e8c17cf168739",
     "pr": "1725/merge",
-    "run": "36793512013"
+    "run": "36824534023"
   }
 }

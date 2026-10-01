@@ -355,13 +355,6 @@
                 "type": "string",
                 "minLength": 1
               },
-              "dependents": {
-                "type": "string",
-                "enum": [
-                  "reproduce",
-                  "skip"
-                ]
-              },
               "coverage": {
                 "type": "object",
                 "properties": {
@@ -566,8 +559,7 @@
             "required": [
               "id",
               "path",
-              "graphKinds",
-              "dependents"
+              "graphKinds"
             ]
           }
         },
@@ -842,6 +834,36 @@
             "minLength": 1
           }
         },
+        "contentAdapters": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "contentType": {
+                "type": "string",
+                "minLength": 1
+              },
+              "module": {
+                "type": "string",
+                "minLength": 1
+              },
+              "className": {
+                "type": "string",
+                "minLength": 1
+              },
+              "extends": {
+                "type": "string",
+                "minLength": 1
+              }
+            },
+            "required": [
+              "contentType",
+              "module",
+              "className"
+            ],
+            "additionalProperties": false
+          }
+        },
         "liquid": {
           "type": "object",
           "properties": {
@@ -875,8 +897,8 @@
   "$comment": "Instance graph: https://litlfred.github.io/folio-assistant/STAGING/claude-ci-health-immediate/cat-harness.jsonld",
   "staging": {
     "branch": "claude/ci-health-immediate",
-    "sha": "f2b3d519cee06a3f760ad7991702c54fb7d6c0df",
+    "sha": "ee1edb1684c739c5e24c7e86023e8c17cf168739",
     "pr": "1725/merge",
-    "run": "36793512013"
+    "run": "36824534023"
   }
 }
