@@ -2,7 +2,7 @@
   "$schema": "folio-bean-index/v1",
   "tile": {
     "beans": {
-      "count": 603,
+      "count": 604,
       "unit": "beans"
     }
   },
@@ -189,6 +189,20 @@
       "updatedAt": "2026-09-24T06:22:01Z",
       "preview": "Owner, 2026-09-23: 'bootstrap/ should be its own subgraph.... in fact QA: in harness `<stub>/*.*` should be a subgraph.' The FIRST half only — which top-level directories are undeclared, and what each should become. The reference-direction half is a sibling session's.\n\nDeliverable is a SPLIT (declare / fold / remove / already-declared / not-mine), not a sweep. Implement only what the owner picks.\n",
       "file": "beans/defs/folio-assistant-0uu2--declaration-gap-every-top-level-directory-is-a-dec.md"
+    },
+    {
+      "id": "folio-assistant-0w7q",
+      "title": "VIEWER RAIL: avatar header, per-visualiser section, drop redundant ☰/[x], QA flags (#1757)",
+      "status": "in-progress",
+      "type": "task",
+      "priority": "",
+      "parent": "folio-assistant-p5wm",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-10-01T07:25:35Z",
+      "updatedAt": "2026-10-01T07:25:35Z",
+      "preview": "Owner report 2026-10-01, issue #1757 (session_01Cw8JgZEDT5VqQ5ergjdMjB).\n\n## Done when\n- [ ] rail header is the instance avatar or initial, clickable pin toggle; ☰ and [x] removed (rail + Jekyll footer)\n- [ ] NavbarModel carries a per-visualiser section, open by default; Graphs collapsed when present\n- [ ] /todos/ visualiser section: todos grouped by attached KG node\n- [ ] viewer-nav QA flags: hea",
+      "file": "beans/defs/folio-assistant-0w7q--viewer-rail-avatar-header-per-visualiser-section-d.md"
     },
     {
       "id": "folio-assistant-0xfe",
@@ -2832,7 +2846,7 @@
       "status": "todo",
       "type": "task",
       "priority": "",
-      "parent": "",
+      "parent": "folio-assistant-scfh",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-10-01T18:30:16Z",
@@ -5336,7 +5350,7 @@
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-23T10:36:15Z",
-      "updatedAt": "2026-10-01T06:51:19Z",
+      "updatedAt": "2026-10-01T12:34:27Z",
       "preview": "Findings from the as-is wireframe `cat-harness/docs/wireframes/navbar/` (intent.md, as-is.html, checks/), observed at 1280×800 and 390×844. Verbatim from its `## Findings`; a finding tagged → is also covered by that cross-cutting bug.\n\n1. **At rest the strip is marks with no labels.** Changed by #1022: the four divider initials are gone, so the harnesses are **not reachable from the strip at all**",
       "file": "beans/defs/folio-assistant-ob3m--navbar-visualiser-12-wireframe-findings.md"
     },
@@ -5947,14 +5961,14 @@
     {
       "id": "folio-assistant-qvxh",
       "title": "SMART L1 and DAK as DOCUMENT KINDS with visualizers inside smart-base, not harnesses",
-      "status": "todo",
+      "status": "in-progress",
       "type": "feature",
       "priority": "",
       "parent": "folio-assistant-uhkv",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-10-01T08:37:53Z",
-      "updatedAt": "2026-10-01T08:37:53Z",
+      "updatedAt": "2026-10-01T18:19:26Z",
       "preview": "Issue #1767; proposal cat-harness/docs/proposals/smart-separation-2026-10-01.md §Decided Q5.\n\nOwner, 2026-10-01: \"what they really need to be are sub-document types/kinds/visualizer for them. smart-L1 is like a L1 document that was fully computable from smart-base assets (and maybe some other things like PICO, cochrane, etc), semi fixed structure ... similarly DAK is a publication type w/ the 10 c",
       "file": "beans/defs/folio-assistant-qvxh--smart-l1-and-dak-as-document-kinds-with-visualizer.md"
     },
@@ -8071,12 +8085,12 @@
       "title": "VOLATILE FIELDS: a timestamp or total in a committed generated file turns every pair of concurrent changes into a conflict",
       "status": "in-progress",
       "type": "task",
-      "priority": "",
+      "priority": "normal",
       "parent": "folio-assistant-o3xy",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-30T22:25:16Z",
-      "updatedAt": "2026-09-30T22:25:16Z",
+      "updatedAt": "2026-10-01T07:33:12Z",
       "preview": "Follow-on to #1658 (bean 52cz, done) and beans oxka / 520m / lxpq (completed). Owner 2026-09-30 chose MEASURE line-level before building a resolver.\n\n## Measured 2026-09-30\n\n300 recent main-into-branch merges on origin/claude/* replayed with git merge-tree (read-only). 235 conflicted; 147 (63%) conflicted ONLY on generated files.\n\nTop four, what the conflicting lines are:\n\n| file | conflicted merg",
       "file": "beans/defs/folio-assistant-y7b3--volatile-fields-a-timestamp-or-total-in-a-committe.md"
     },
