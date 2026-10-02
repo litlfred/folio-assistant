@@ -296,7 +296,7 @@ if (import.meta.main) {
     console.log(json);
     if (outFile) writeFileSync(outFile, `${json}\n`);
     const n = (s: MemberStatus): number => report.members.filter((m) => m.status === s).length;
-    console.error(`\nmerge-train: ${report.verdict.toUpperCase()} — ${n("merged") + n("would-merge")} merged, ${n("refused") + n("would-refuse")} refused, ` +
+    console.error(`\nmerge-train: ${report.dry_run ? "DRY RUN, would be " : ""}${report.verdict.toUpperCase()} — ${n("merged") + n("would-merge")} merged, ${n("refused") + n("would-refuse")} refused, ` +
       `${n("already-contained")} already contained; main ${report.main.status}${report.head ? `; head ${report.head.slice(0, 10)}` : ""}. Not pushed.`);
     process.exit(code);
   };
