@@ -10,7 +10,7 @@
   },
   "families": {
     "coverage-measured": {
-      "summary": "Every declared kind with its four counts and its state. Not findings: the measurement itself, so the committed record answers \"what audits this kind\" without rerunning anything. The file COUNTS are printed rather than recorded — a census moves on any commit and a gate keyed on it is stale by default; `hasFiles` carries the only thing it decides. 49 of 49 declared kind(s), 202 gate(s), 73 criteria.",
+      "summary": "Every declared kind with its four counts and its state. Not findings: the measurement itself, so the committed record answers \"what audits this kind\" without rerunning anything. The file COUNTS are printed rather than recorded — a census moves on any commit and a gate keyed on it is stale by default; `hasFiles` carries the only thing it decides. 49 of 49 declared kind(s), 201 gate(s), 73 criteria.",
       "count": 49,
       "entries": [
         {
@@ -158,7 +158,6 @@
             "bun run check:version-bump",
             "bun run check:wireframes",
             "bun run harness:dirs:check",
-            "bun run iri:sync:check",
             "bun run kg:audit:all:check",
             "bun run kg:audit:check",
             "bun run kg:detangle:check",
@@ -294,7 +293,6 @@
             "bun run readme:audit",
             "bun run readme:audit:root",
             "bun run readme:sync:all:check",
-            "bun run readme:sync:bootstrap:check",
             "bun run readme:sync:check",
             "bun run readme:sync:root:check",
             "bun run skills:docs:check",
@@ -1169,7 +1167,7 @@
       "entries": []
     },
     "kinds-unaudited": {
-      "summary": "A declared kind whose directories hold files that NOTHING reaches — no kg-audit criterion, no gate declaring @covers, and no declared validator. All 202 gate(s) have declared, so this is a verdict rather than an upper bound (bean `3srh`).",
+      "summary": "A declared kind whose directories hold files that NOTHING reaches — no kg-audit criterion, no gate declaring @covers, and no declared validator. All 201 gate(s) have declared, so this is a verdict rather than an upper bound (bean `3srh`).",
       "count": 0,
       "entries": []
     }
