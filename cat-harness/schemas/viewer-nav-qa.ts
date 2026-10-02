@@ -61,6 +61,8 @@ export type ViewerNavVerdict = z.infer<typeof ViewerNavVerdictSchema>;
  * | `visualiser-nav` | the page declares no section of its own — *"define LHS navbar for any visualizer"* |
  * | `single-open` | more or fewer than one disclosure arrives open, or the open one is not the page's own — *"only the current pages visualiers LHS navbar is open"* |
  * | `no-redundant-toggle` | a `☰` or an `[x]` duplicates the header — *"excise [hamburger] and [x]"* |
+ * | `rail-tips` | a control whose name is in `aria-label` and nowhere visible carries no `data-fa-tip` equal to it, or the page paints no tooltip on hover AND keyboard focus — bean `ob3m` finding 1, owner's ruling 2026-10-01: *"show each icon's name as a tooltip on hover or keyboard focus"* |
+ * | `harnesses-at-rest` | the rail has no `▦ Harnesses` disclosure, or its stylesheet hides that summary at rest — same ruling: *"make ▦ Harnesses visible … too"* |
  *
  * Only RAILED pages are graded: a page with no rail is already `missing`, and
  * failing it five more times would be one finding counted six ways.
@@ -71,6 +73,8 @@ export const ViewerNavFlagSchema = z.enum([
   "visualiser-nav",
   "single-open",
   "no-redundant-toggle",
+  "rail-tips",
+  "harnesses-at-rest",
 ]);
 export type ViewerNavFlag = z.infer<typeof ViewerNavFlagSchema>;
 

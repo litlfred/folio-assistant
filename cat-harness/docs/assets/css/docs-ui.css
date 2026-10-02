@@ -921,6 +921,42 @@
    * flex floor; collapsing either changes a layout this rule has no business
    * changing, and neither leaves a gap between marks.
    */
+  /* ▦ HARNESSES IS A MARK AT REST, like every other mark in the strip.
+   *
+   * Owner's ruling on bean `ob3m` finding 1, 2026-10-01, option 1 of 4:
+   * *"Make ▦ Harnesses visible on the landing page too."* Measured before it
+   * on #1762's head, 1280x800: the two lists above gave this summary
+   * `opacity: 0` AND `max-height: 0` at rest, so the strip showed six icons
+   * and no ▦ — reaching a harness took a hover to widen the strip and then a
+   * click. The viewer rail (`lib/navbar.ts`) never hid it, so the same control
+   * was one tap away on a generated page and two on this one.
+   *
+   * ONLY THE HARNESSES GROUP, by position: it is the one disclosure in the
+   * fixed bottom. Any other `.fa-nav-group` keeps the lists' rest state.
+   *
+   * WHAT STILL HIDES AT REST: the word (`.fa-nav-label`, in the lists above)
+   * and the `▸` disclosure caret, which in a 56px strip beside a glyph is a
+   * second mark that names nothing. Both come back from the same one flag, so
+   * the open summary is exactly what it was. The gutter is scaled the same
+   * way, so at rest the ▦ sits in the mark column — `--fa-nav-pad` from the
+   * edge, like ⌂ below it and every icon above — and open it sits where the
+   * caret needs it. ONE CLICK on it opens the group, and the click's focus
+   * holds the strip open (`:focus-within`), so the harness list is the
+   * first thing that click shows. */
+  .side-bar .fa-nav-bottom > .fa-nav-group > summary {
+    opacity: 1;
+    max-height: none;
+    min-height: var(--fa-nav-rest-min);
+    padding-left: calc(var(--fa-nav-pad) + var(--fa-nav-text, 1) * (0.5rem - var(--fa-nav-pad)));
+    gap: calc(var(--fa-nav-text, 1) * 0.375rem);
+  }
+  .side-bar .fa-nav-bottom > .fa-nav-group > summary::before {
+    display: inline-block;
+    overflow: hidden;
+    max-width: calc(var(--fa-nav-text, 1) * 2em);
+    opacity: var(--fa-nav-text, 1);
+  }
+
   /* A CLOSED DISCLOSURE MUST NOT YIELD, because it has nothing to give.
    *
    * Owner, 2026-09-23, with a screenshot: *"on this page is cut off"*. It was
@@ -5892,6 +5928,115 @@ button.fa-nav-icon {
   border: 0;
   background: none;
   cursor: pointer;
+}
+
+/* ═══ THE NAME OF AN ICON, ON HOVER AND ON KEYBOARD FOCUS ═════════════════
+ *
+ * Owner's ruling on bean `ob3m` finding 1, 2026-10-01, option 1 of 4: *"show
+ * each icon's name as a tooltip on hover or keyboard focus."* Captions that
+ * are always visible were option 2 and were NOT chosen — the strip stays
+ * `--fa-nav-collapsed` wide.
+ *
+ * WHICH CONTROLS: those carrying `data-fa-tip`, which `docs-ui.js` writes on
+ * every control in the icon row with the same string as its `aria-label`.
+ * Those are the controls whose name is in `aria-label` and nowhere a sighted
+ * reader can see it, open or closed. A row with its own `.fa-nav-label` is
+ * named beside its mark once the strip opens, and hover and focus open it.
+ *
+ * WHERE: beyond the strip's right edge, level with the control. `fixed` with
+ * `top` left `auto` takes the STATIC position vertically, which is the
+ * control's own line, and `left` is the strip's current width plus a gap,
+ * from the same `--fa-nav-text` flag every other open rule reads. Fixed is
+ * also what stops `.side-bar`'s `overflow: hidden` clipping it: an overflow
+ * box clips a fixed descendant only when it is that descendant's containing
+ * block.
+ *
+ * ONE NAME FOR A SCREEN READER: `content: … / ""` gives the generated text an
+ * empty alternative, so the accessible name stays the `aria-label` and the
+ * tooltip is never read as a second one. The first `content` is the fallback
+ * for an engine that drops the alt syntax.
+ *
+ * INVERTED AGAINST THE SCHEME, so it reads as a tooltip over either page
+ * rather than as more sidebar. #1f2328 on white and white on #1f2328 are
+ * both 15.8:1.
+ *
+ * Inside `min-width: 50rem` only: below it the theme's own menu labels every
+ * row in words, and there is no strip to sit beside. */
+:root {
+  --fa-tip-bg: #1f2328;
+  --fa-tip-ink: #ffffff;
+}
+:root[data-fa-scheme="dark"] {
+  --fa-tip-bg: #ffffff;
+  --fa-tip-ink: #1f2328;
+}
+@media (min-width: 50rem) {
+  .side-bar [data-fa-tip]::after {
+    content: attr(data-fa-tip);
+    content: attr(data-fa-tip) / "";
+    position: fixed;
+    left: calc(var(--fa-nav-collapsed) + var(--fa-nav-text, 1) * (var(--fa-nav-open) - var(--fa-nav-collapsed)) + 0.5rem);
+    z-index: 2147483001;
+    padding: 0.25rem 0.5rem;
+    border-radius: 0.25rem;
+    background: var(--fa-tip-bg);
+    color: var(--fa-tip-ink);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+    font-size: 0.8125rem;
+    font-weight: 600;
+    line-height: 1.3;
+    letter-spacing: normal;
+    text-transform: none;
+    white-space: nowrap;
+    pointer-events: none;
+    opacity: 0;
+  }
+  .side-bar [data-fa-tip]:hover::after,
+  .side-bar [data-fa-tip]:focus-visible::after {
+    opacity: 1;
+  }
+
+  /* THE STRIP DOES NOT PEEK WHEN THE POINTER ARRIVES ON THE ICON COLUMN.
+   *
+   * Without this the tooltip above could never be seen for a pointer.
+   * Measured on #1762's head, 1280x800: the pointer on Beans at (20,105)
+   * widened the strip to 264px, which re-flows the column into a ROW, and the
+   * pointer was then over NOTHING — the icon it was naming had moved up and
+   * to the right. A name for something no longer under the pointer names
+   * nothing.
+   *
+   * `.fa-nav-tip-hold` is set by `docs-ui.js` (`mountNavIconRow`) when the
+   * pointer ENTERS the strip inside the column's at-rest box, and cleared the
+   * moment it leaves that box. So arriving on an icon keeps the strip a strip
+   * — the owner's ruling says it stays narrow — while arriving anywhere else
+   * still peeks, and a reader already peeking can still reach the row's
+   * icons and its [x]: holding on `.fa-nav-icons:hover` alone was tried
+   * first, and it collapsed the open bar under a pointer moving INTO the row
+   * (four `navbar-row.e2e.ts` cases caught it).
+   *
+   * Re-asserts the rest geometry the way the stay-closed rule above does, at
+   * a specificity that beats every open rule, rather than guarding each one.
+   * NOT for KEYBOARD focus and NOT while pinned: those are the reader's
+   * deliberate opening, and a keyboard reader must never tab through links
+   * they cannot see. `:focus-visible` rather than `:focus-within`, because a
+   * CLICK on a column icon focuses it too: with `:focus-within` the strip
+   * opened on mousedown, re-flowed the column, and the mouseup landed on
+   * another element — the click never arrived (`navbar-row.e2e.ts`'s
+   * launcher case caught it). */
+  .side-bar.fa-nav-tip-hold:hover:not(:has(:focus-visible)):not(:has(.fa-nav-open:checked)) {
+    width: var(--fa-nav-collapsed);
+    --fa-nav-text: 0;
+  }
+  .side-bar.fa-nav-tip-hold:hover:not(:has(:focus-visible)):not(:has(.fa-nav-open:checked)) > .fa-nav-icons {
+    width: var(--fa-nav-collapsed);
+    flex-wrap: wrap;
+  }
+  .side-bar.fa-nav-tip-hold:hover:not(:has(:focus-visible)):not(:has(.fa-nav-open:checked)) .fa-nav-close {
+    display: none;
+  }
+}
+@media (min-width: 50rem) and (prefers-reduced-motion: no-preference) {
+  .side-bar [data-fa-tip]::after { transition: opacity .12s ease; }
 }
 
 /* ═══ THE OPEN DOCUMENT'S INDEX ════════════════════════════════════════════
