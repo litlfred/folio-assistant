@@ -1,0 +1,117 @@
+{
+  "$schema": "kg-qa/v1",
+  "subject": {
+    "kind": "skill",
+    "id": "agent-handoff",
+    "path": "skills/sdlc/sdlc-core/agent-handoff.md"
+  },
+  "source_hash": "37a001e0de04",
+  "criteria": {
+    "skill-is-a-stub": {
+      "result": "pass",
+      "findings": []
+    },
+    "skill-is-brief": {
+      "result": "pass",
+      "findings": []
+    },
+    "skill-not-a-document": {
+      "result": "pass",
+      "findings": []
+    },
+    "skill-no-repeated-heading": {
+      "result": "pass",
+      "findings": []
+    },
+    "prose-reviewed-since-code-changed": {
+      "result": "n/a",
+      "findings": []
+    },
+    "prose-claims-resolve": {
+      "result": "n/a",
+      "findings": []
+    },
+    "skill-voice-review-current": {
+      "result": "pass",
+      "findings": []
+    }
+  },
+  "totals": {
+    "pass": 5,
+    "fail": 0,
+    "n/a": 2,
+    "unknown": 0
+  },
+  "voice_reviews": [
+    {
+      "voice": "agent-skill-authoring",
+      "instance": "cat-harness",
+      "skill_hash": "37a001e0de0455fe5ab98c8361ba7c59d5214e5a3d58623a44e9ec67028a68d7",
+      "voice_hash": "6dccbc641e657a67414b98b8675abf691270236bcfd79b36593cee41eae28d90",
+      "by": "agent",
+      "at": "2026-10-02T16:21:09.486Z",
+      "verdicts": [
+        {
+          "rule": "as-assume-general-knowledge",
+          "result": "pass",
+          "note": "every section is a project convention or a measured failure (bean mac1), no general background"
+        },
+        {
+          "rule": "as-body-under-500-lines",
+          "result": "pass",
+          "note": "~165 lines"
+        },
+        {
+          "rule": "as-description-states-function-and-trigger",
+          "result": "pass",
+          "note": "states the six things it settles and 'Use when writing a bean for another agent… and as the receiver'; trigger terms listed"
+        },
+        {
+          "rule": "as-description-third-person",
+          "result": "pass",
+          "note": "rewritten from imperative to 'Governs… States…'"
+        },
+        {
+          "rule": "as-evaluations-before-instructions",
+          "result": "pass",
+          "note": "written from an observed run without the skill (bean mac1, 2026-10-02): five failures, each mapped to the rule that addresses it in the table"
+        },
+        {
+          "rule": "as-examples-move-to-references",
+          "result": "pass",
+          "note": "three short code examples, each disambiguating one rule (report formats, the pasted line, the input mismatch)"
+        },
+        {
+          "rule": "as-no-name-as-heading",
+          "result": "pass",
+          "note": "first heading changed to 'One task, two agents, one human between them'"
+        },
+        {
+          "rule": "as-one-default-name-the-exception",
+          "result": "pass",
+          "note": "each rule gives one default and the named exception: claim, never create (stop if missing); verifier closes (executor closes only if it can run Done-when itself); owner only"
+        },
+        {
+          "rule": "as-read-third-party-skills-in-full",
+          "result": "n/a",
+          "note": "first-party skill"
+        },
+        {
+          "rule": "as-reference-toc-over-100-lines",
+          "result": "n/a",
+          "note": "no reference files"
+        },
+        {
+          "rule": "as-references-one-level-deep",
+          "result": "n/a",
+          "note": "no reference files; links go to sibling skills (bean-coordination, dispatch-agent) for disambiguation only"
+        },
+        {
+          "rule": "as-state-dependencies",
+          "result": "pass",
+          "note": "added a Needs line: beans CLI via install-beans.sh and bun run beans:claim, with the blocked behaviour"
+        }
+      ]
+    }
+  ]
+}
