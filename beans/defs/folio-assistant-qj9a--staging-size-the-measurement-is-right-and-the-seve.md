@@ -5,7 +5,7 @@ status: in-progress
 type: bug
 priority: normal
 created_at: 2026-09-25T18:10:30Z
-updated_at: 2026-10-02T16:56:12Z
+updated_at: 2026-10-02T16:59:32Z
 parent: folio-assistant-1xhc
 ---
 
@@ -252,3 +252,66 @@ built client-side owes two things the static one gave for free", with the
 `console.warn` trap stated and the reason a PDF is the strictest case.
 
 Fixed in `166507acd1b`.
+
+
+## Collision review — run LATE, 2026-10-02, and two phases stood down
+
+**I broke the rule I am now following.** PR #1886 landed
+`coordinate` §"Before a platform refactor" (STRICT) earlier today — owner,
+verbatim: *"if you are working on a refactor of the platform, review active
+agents/beans for impact and coordiante"* — and I dispatched two agents at
+shared includes, committed generators and workflow YAML **without** it. By
+that section's own definition (blast radius, not diff size) this was a
+platform refactor. Recorded here because the section says a review living only
+in chat is gone when the container goes.
+
+### What was already claimed
+
+| sibling | its PRs / beans | shared files | effect on this work |
+|---|---|---|---|
+| page-weight session (bean `gp2f`, issue #1885) | **#1886**, `ready-to-merge` | the whole per-page chrome plan, phases A–E | **owns** the harness bar (C) and the shared nav (D) |
+| navbar session (bean `ob3m`) | #1804, #1805, #1808, #1819 — all `ready-to-merge` | `docs-ui.css`, `docs-ui.js`, `_includes/generated/navbar-footer.html`, `harness_details.html`, `head_custom.html` | gates the KG islands work; `check:nav-names` gates `nav_exclude` |
+| — | #1875, #1801 | `.github/workflows/docs-site.yml` | gates where the minifier step wires in |
+
+`gp2f` records phase C as "owned here, at the navbar session's request",
+waiting on those four PRs. So the harness-bar work was claimed with agreement
+before I started.
+
+### Stood down, measurements offered rather than discarded
+
+- **Harness bar duplication (~60.6 MiB)** — is `gp2f` phase C. Dropped.
+  `gp2f` has the better mechanism: `nav_footer_custom` is emitted in both
+  `components/sidebar.html` and `components/footer.html`, so the fix is to
+  override those two includes.
+- **`nav_exclude` the generated sections (~94.3 MiB)** — a *different*
+  mechanism against phase D's bytes, and complementary: 94.3 MiB off the nav
+  before it is published once beats publishing the large one once. Dropped as
+  a workstream, offered to `gp2f` as an input. Collides with #1804.
+
+### Kept, because it collides with nothing
+
+**Post-build HTML minification.** Operates on the built `_site`, touches no
+include, generator or source page, composes with all five `gp2f` phases.
+Measured on three sampled pages of `origin/gh-pages` preview
+`STAGING/agy-wnhh-sushi-publisher-local`: comments −10.0%; plus inter-tag
+whitespace collapse −10.7% stored (~45 MB of 418 MB HTML); **gzipped transfer
+−25.4%**. The "no Jekyll plugin under `actions/jekyll-build-pages@v1`"
+objection is true of plugins and irrelevant to the route: the workflows
+already post-process the tree (`strip-preview-seo.ts --site ./_site`,
+`feature-staging.yml:712`).
+
+### A measurement to correct, since it is cited elsewhere
+
+My first chrome/content split (56.6% / 43.4%) was **wrong by ~7×**. It summed
+nav + svg + script + style and called the remainder content; the remainder is
+`<head>`, `<footer>` and wrappers, all chrome. Measuring `<main>` directly:
+content is **5.9%** (24.7 MB of 417.5 MB), independently 2.7–2.8% on three
+pages. A subtraction-based baseline makes #1885's 10–15 KB/page target look
+already met.
+
+### Defect reported on #1886 (non-blocking)
+
+`coordinate.kg-qa.json` regresses in that diff: `skill-not-a-document`
+pass → fail (481 lines, p90 391), `totals.fail` 2 → 3. `kg:audit:check` fails
+only on `critical`, so it stays green; `kg:audit:strict` adds `major`, and the
+PR carries `ready-to-merge`.
