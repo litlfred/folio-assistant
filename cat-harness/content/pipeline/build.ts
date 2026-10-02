@@ -21,9 +21,10 @@ import {
   validateLatexAst,
 } from "./render-latex";
 import { generateMainTex } from "./generate-main-tex";
-import { runPreflight } from "./latex-preflight";
 import { collectReferencedTerms } from "./markdown-ast";
-import { resolveLeanFile, leanFileStatus } from "../../scripts/lean-coverage";
+// The LaTeX preflight and Lean coverage are the science layer's: reached
+// through pipeline slots that folio-assistant-sci fills (bean `squu`).
+import { leanFileStatus, resolveLeanFile, runPreflight } from "./pipeline-plugins";
 import { findContentRepoRoot, findPapers } from "./repo-root";
 
 // ── Build ────────────────────────────────────────────────────────

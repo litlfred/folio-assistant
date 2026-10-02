@@ -188,7 +188,6 @@
           "subjectKinds": [],
           "gates": [
             "bun run check:catalogue",
-            "bun run dc:render:check",
             "bun run id-lookup:check",
             "bun run iris:covers:check",
             "bun run iris:pages:check"
@@ -262,6 +261,7 @@
             "cat-harness/docs",
             "docs",
             "smart-base/docs",
+            "smart-immunizations/docs",
             "smart-trust/docs",
             "who-iris/docs",
             "who-iris/site"
@@ -334,6 +334,7 @@
           "gates": [
             "bun run check:artifact-index",
             "bun run smart-base:pages:check",
+            "bun run smart-immunizations:pages:check",
             "bun run smart-trust:pages:check"
           ],
           "typed": true,
