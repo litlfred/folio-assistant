@@ -299,22 +299,22 @@
   "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld",
   "@type": "http://www.w3.org/ns/prov#Entity",
   "repository": "cat-harness",
-  "generatedAt": "2026-10-02T23:17:58.155Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/edc167d24ad57b2a2b00b8f8225ff4deece3b299",
-  "sourceCommitSha": "edc167d24ad57b2a2b00b8f8225ff4deece3b299",
-  "sourceCommitAt": "2026-10-03T01:12:42+02:00",
+  "generatedAt": "2026-10-02T23:40:02.063Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/225b7cfd1dbf7ad1798c65b8e0e6f519fbda3de6",
+  "sourceCommitSha": "225b7cfd1dbf7ad1798c65b8e0e6f519fbda3de6",
+  "sourceCommitAt": "2026-10-03T01:35:07+02:00",
   "sourceTreeDirty": true,
   "dependsOnUnavailable": "2 dependency edge(s), none expressible as a record — see gaps",
   "counts": {
-    "Skill": 296,
+    "Skill": 299,
     "Actor": 36,
     "Capability": 28,
     "SkillPackage": 35,
     "Decision": 9,
-    "Process": 76,
-    "SequenceFlow": 996,
-    "Lane": 201,
-    "ProcessNode": 940,
+    "Process": 77,
+    "SequenceFlow": 1003,
+    "Lane": 204,
+    "ProcessNode": 948,
     "Tool": 117,
     "Schema": 156,
     "ExternalSchema": 20,
@@ -1645,7 +1645,7 @@
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/kg-core"
       ],
       "instructionsPath": "skills/kg/kg-core/directory-conventions.md",
-      "instructionLines": 1306,
+      "instructionLines": 1308,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -1917,7 +1917,7 @@
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/library-core"
       ],
       "instructionsPath": "skills/library/library-core/library-ingestion.md",
-      "instructionLines": 917,
+      "instructionLines": 931,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -2476,7 +2476,7 @@
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/crdm"
       ],
       "instructionsPath": "skills/sdlc/crdm/crdm-requirements-workflow.md",
-      "instructionLines": 480,
+      "instructionLines": 482,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -2558,7 +2558,7 @@
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/sdlc-core"
       ],
       "instructionsPath": "skills/sdlc/sdlc-core/issue-working.md",
-      "instructionLines": 134,
+      "instructionLines": 135,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -2613,6 +2613,22 @@
       "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/prepare-for-handover",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Skill",
+      "name": "prepare-for-handover",
+      "title": "Prepare for a handover",
+      "description": "Prepare for a handover: commit and push everything you hold, then write a handover report that cites the commits. Use it when told a stall, timeout or container loss is coming (\"you may stall in N minutes\"), before a long or risky step, or whenever a steward or the owner says \"prepare for handover\". It is the producing half; `handover-report` is the format and `stalled-agent-triage` is the reader.",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/sdlc-core"
+      ],
+      "instructionsPath": "skills/sdlc/sdlc-core/prepare-for-handover.md",
+      "instructionLines": 106,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/test-engineer",
       "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Skill",
       "name": "test-engineer",
@@ -2637,7 +2653,7 @@
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/sdlc-core"
       ],
       "instructionsPath": "skills/sdlc/sdlc-core/opening-brief.md",
-      "instructionLines": 232,
+      "instructionLines": 236,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -2701,7 +2717,7 @@
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/sdlc-core"
       ],
       "instructionsPath": "skills/sdlc/sdlc-core/session-intent.md",
-      "instructionLines": 273,
+      "instructionLines": 269,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -2717,7 +2733,7 @@
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/sdlc-core"
       ],
       "instructionsPath": "skills/sdlc/sdlc-core/coordinate.md",
-      "instructionLines": 481,
+      "instructionLines": 524,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -2834,6 +2850,22 @@
       "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/handover-report",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Skill",
+      "name": "handover-report",
+      "title": "Handover report",
+      "description": "Write a handover report: a templated snapshot of an agent's current state, committed as a bean note, so that a session or subagent that stalls, runs out of context, or loses its container can be picked up by another agent without re-deriving anything. Use it when you are told a stall is likely, at the end of every long arc, before a risky or long-running step, and whenever a steward asks for one. Its reader is `stalled-agent-triage`.",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/sdlc-core"
+      ],
+      "instructionsPath": "skills/sdlc/sdlc-core/handover-report.md",
+      "instructionLines": 112,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/bean-coordination",
       "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Skill",
       "name": "bean-coordination",
@@ -2843,7 +2875,7 @@
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/sdlc-core"
       ],
       "instructionsPath": "skills/sdlc/sdlc-core/bean-coordination.md",
-      "instructionLines": 822,
+      "instructionLines": 821,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -3105,6 +3137,22 @@
       "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/stalled-agent-triage",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Skill",
+      "name": "stalled-agent-triage",
+      "title": "Stalled-agent triage",
+      "description": "Triage incoming work from stalled agents. Given named agents or sessions, or a time window, find what they left (handover reports, open PRs, branches, beans, issue and PR discussions, workflow instances), collect as many handover reports as exist, reconstruct the rest, consolidate the workstreams into 2–4 themes, recommend how to fold them into the current or a new work plan, and coordinate open PRs with their owners (the merge steward above all). Use when a session or a swarm has stalled, timed out or lost its container, or when the owner says \"pick up what X was doing\".",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/sdlc-core"
+      ],
+      "instructionsPath": "skills/sdlc/sdlc-core/stalled-agent-triage.md",
+      "instructionLines": 116,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/diff",
       "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Skill",
       "name": "diff",
@@ -3321,7 +3369,7 @@
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/sdlc-core"
       ],
       "instructionsPath": "skills/sdlc/sdlc-core/continual-progress.md",
-      "instructionLines": 268,
+      "instructionLines": 267,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -3575,7 +3623,7 @@
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/ui-core"
       ],
       "instructionsPath": "skills/ui/ui-core/kg-viewer.md",
-      "instructionLines": 191,
+      "instructionLines": 261,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -3702,7 +3750,7 @@
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/ui-core"
       ],
       "instructionsPath": "skills/ui/ui-core/harness-tiles.md",
-      "instructionLines": 440,
+      "instructionLines": 439,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -6490,6 +6538,7 @@
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/generalise-the-fix",
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/github-state-inspection",
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/goal-review",
+        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/handover-report",
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/idle-backlog",
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/integration-backlog",
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/integration-watch",
@@ -6503,6 +6552,7 @@
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/pickup",
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/platform-gates",
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/pr-description",
+        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/prepare-for-handover",
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/prepare-merge",
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/prepare-merge-auto",
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/publish-verification",
@@ -6512,6 +6562,7 @@
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/rendered-verification",
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/session-intent",
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/staging-review",
+        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/stalled-agent-triage",
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/swarm-management",
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/test-engineer",
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/todo-manager",
@@ -10259,7 +10310,8 @@
       "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/authoring-agent",
       "inLane": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CRDM_Signoff/lane/Lane_Agent",
       "implementedBy": [
-        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/crdm-requirements-workflow"
+        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/crdm-requirements-workflow",
+        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/coordinate"
       ],
       "touchesWorkPlan": true,
       "workPlanOp": "claim",
@@ -22366,6 +22418,269 @@
       "outgoing": [
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_FeatureStaging/flow/Flow_18"
       ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_StalledAgentTriage",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Process",
+      "name": "Stalled-agent triage: collect handovers, consolidate themes, recommend, re-route",
+      "enforcement": "strict",
+      "sourcePath": "processes/sdlc/stalled-agent-triage.bpmn",
+      "startNode": [
+        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_StalledAgentTriage/node/Start_SAT"
+      ],
+      "nodeCount": 8,
+      "flowCount": 7,
+      "conformsTo": [
+        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#externalSchema/omg-bpmn-2.0",
+        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#externalSchema/omg-dd-1.0"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_StalledAgentTriage/flow/SF_Process_StalledAgentTriage_1",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_StalledAgentTriage",
+      "from": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_StalledAgentTriage/node/Start_SAT",
+      "to": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_StalledAgentTriage/node/A_Footprint",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_StalledAgentTriage/flow/SF_Process_StalledAgentTriage_2",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_StalledAgentTriage",
+      "from": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_StalledAgentTriage/node/A_Footprint",
+      "to": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_StalledAgentTriage/node/A_Collect",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_StalledAgentTriage/flow/SF_Process_StalledAgentTriage_3",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_StalledAgentTriage",
+      "from": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_StalledAgentTriage/node/A_Collect",
+      "to": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_StalledAgentTriage/node/A_Consolidate",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_StalledAgentTriage/flow/SF_Process_StalledAgentTriage_4",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_StalledAgentTriage",
+      "from": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_StalledAgentTriage/node/A_Consolidate",
+      "to": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_StalledAgentTriage/node/U_Decide",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_StalledAgentTriage/flow/SF_Process_StalledAgentTriage_5",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_StalledAgentTriage",
+      "from": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_StalledAgentTriage/node/U_Decide",
+      "to": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_StalledAgentTriage/node/A_Record",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_StalledAgentTriage/flow/SF_Process_StalledAgentTriage_6",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_StalledAgentTriage",
+      "from": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_StalledAgentTriage/node/A_Record",
+      "to": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_StalledAgentTriage/node/S_Reroute",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_StalledAgentTriage/flow/SF_Process_StalledAgentTriage_7",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_StalledAgentTriage",
+      "from": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_StalledAgentTriage/node/S_Reroute",
+      "to": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_StalledAgentTriage/node/End_SAT",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_StalledAgentTriage/lane/Lane_Triage",
+      "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#Lane",
+      "name": "Triage agent",
+      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_StalledAgentTriage",
+      "bindsRole": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/authoring-agent",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_StalledAgentTriage/lane/Lane_Steward",
+      "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#Lane",
+      "name": "Merge steward",
+      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_StalledAgentTriage",
+      "bindsRole": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/session-coordinator",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_StalledAgentTriage/lane/Lane_User",
+      "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#Lane",
+      "name": "User",
+      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_StalledAgentTriage",
+      "bindsRole": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/user",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_StalledAgentTriage/node/Start_SAT",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#ProcessNode",
+      "name": "Agents stalled, or owner asks to pick up their work",
+      "nodeKind": "start",
+      "bpmnType": "bpmn:StartEvent",
+      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_StalledAgentTriage",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/authoring-agent",
+      "inLane": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_StalledAgentTriage/lane/Lane_Triage",
+      "implementedBy": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_StalledAgentTriage/flow/SF_Process_StalledAgentTriage_1"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_StalledAgentTriage/node/A_Footprint",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#ProcessNode",
+      "name": "Find the footprint",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:Task",
+      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_StalledAgentTriage",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/authoring-agent",
+      "inLane": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_StalledAgentTriage/lane/Lane_Triage",
+      "implementedBy": [
+        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/stalled-agent-triage"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_StalledAgentTriage/flow/SF_Process_StalledAgentTriage_1"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_StalledAgentTriage/flow/SF_Process_StalledAgentTriage_2"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_StalledAgentTriage/node/A_Collect",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#ProcessNode",
+      "name": "Collect or reconstruct a handover report per agent",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:Task",
+      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_StalledAgentTriage",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/authoring-agent",
+      "inLane": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_StalledAgentTriage/lane/Lane_Triage",
+      "implementedBy": [
+        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/handover-report"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_StalledAgentTriage/flow/SF_Process_StalledAgentTriage_2"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_StalledAgentTriage/flow/SF_Process_StalledAgentTriage_3"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_StalledAgentTriage/node/A_Consolidate",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#ProcessNode",
+      "name": "Consolidate into 2-4 themes, with a recommendation each",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:Task",
+      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_StalledAgentTriage",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/authoring-agent",
+      "inLane": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_StalledAgentTriage/lane/Lane_Triage",
+      "implementedBy": [
+        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/stalled-agent-triage"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_StalledAgentTriage/flow/SF_Process_StalledAgentTriage_3"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_StalledAgentTriage/flow/SF_Process_StalledAgentTriage_4"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_StalledAgentTriage/node/U_Decide",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#ProcessNode",
+      "name": "Decide each theme",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:Task",
+      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_StalledAgentTriage",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/user",
+      "inLane": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_StalledAgentTriage/lane/Lane_User",
+      "implementedBy": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_StalledAgentTriage/flow/SF_Process_StalledAgentTriage_4"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_StalledAgentTriage/flow/SF_Process_StalledAgentTriage_5"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_StalledAgentTriage/node/A_Record",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#ProcessNode",
+      "name": "Record the triage and claim the picked-up work",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:Task",
+      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_StalledAgentTriage",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/authoring-agent",
+      "inLane": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_StalledAgentTriage/lane/Lane_Triage",
+      "implementedBy": [
+        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/bean-coordination"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_StalledAgentTriage/flow/SF_Process_StalledAgentTriage_5"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_StalledAgentTriage/flow/SF_Process_StalledAgentTriage_6"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_StalledAgentTriage/node/S_Reroute",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#ProcessNode",
+      "name": "Re-route open PRs that lost their driver",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:Task",
+      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_StalledAgentTriage",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/session-coordinator",
+      "inLane": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_StalledAgentTriage/lane/Lane_Steward",
+      "implementedBy": [
+        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/coordinate"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_StalledAgentTriage/flow/SF_Process_StalledAgentTriage_6"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_StalledAgentTriage/flow/SF_Process_StalledAgentTriage_7"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_StalledAgentTriage/node/End_SAT",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#ProcessNode",
+      "name": "Stalled work has an owner and a place in the plan",
+      "nodeKind": "end",
+      "bpmnType": "bpmn:EndEvent",
+      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_StalledAgentTriage",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/authoring-agent",
+      "inLane": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_StalledAgentTriage/lane/Lane_Triage",
+      "implementedBy": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_StalledAgentTriage/flow/SF_Process_StalledAgentTriage_7"
+      ],
+      "outgoing": [],
       "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes"
     },
     {
@@ -41301,7 +41616,7 @@
       "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#Tool",
       "name": "library-viewer",
       "title": "Library viewer",
-      "description": "Render each declared library directory — its entries, intakes and avatars — as a page per subject instance.",
+      "description": "Render each declared library directory — its entries, intakes and avatars — as a page per subject instance, and give every entry its own path IRI (<library>/<instance>/<id>/): a materialized thin shell that loads the entry from the published projection, with its JSON-LD manifest as the alternate.",
       "install": {
         "none": true
       },
@@ -45722,6 +46037,7 @@
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/content-graph",
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/content-plan",
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/continual-progress",
+        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/coordinate",
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/crdm-detect",
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/crdm-requirements-workflow",
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/decision-audit",
@@ -46619,8 +46935,8 @@
   ],
   "staging": {
     "branch": "main",
-    "sha": "edc167d24ad57b2a2b00b8f8225ff4deece3b299",
+    "sha": "225b7cfd1dbf7ad1798c65b8e0e6f519fbda3de6",
     "pr": "main",
-    "run": "37076472285"
+    "run": "37078282890"
   }
 }
