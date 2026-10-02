@@ -421,7 +421,7 @@ section.
 each writes a NOTE, never an append to the bean.**
 
 ```bash
-bun run beans:note <bean-id> --title "Finding 3: ruling and after state" --body-file note.md
+bun run beans:note <bean-id> --title "Finding 3: ruling and after state" --body "…"
 git add beans/notes/      # the note AND the regenerated index
 ```
 

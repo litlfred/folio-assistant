@@ -1086,6 +1086,7 @@ export const RULES: Rule[] = [
       // (bean `xl55`). Harness: it indexes the platform's own docs manifests.
       "scripts/process-presentations.ts",
       "scripts/claim-bean.ts",
+      "scripts/bean-notes.ts",              // per-branch notes on a bean and their generated index (bean `m61r`) — the harness's own work plan, no content type
       "scripts/beans-landed.ts",            // open beans named in a merged PR title — reported, never closed (bean `4d22`)
       "scripts/check-duplicate-ids.ts",     // no built page carries one id twice — run on the staged site (bean `uknu`)
       "scripts/front-matter.ts",
