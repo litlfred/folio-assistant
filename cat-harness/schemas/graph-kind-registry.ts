@@ -2198,10 +2198,19 @@ export const BASE_GRAPH_KINDS: Readonly<Record<string, GraphKindDef>> = {
     // subscription, which this tree deliberately does not carry. Every node is
     // tagged `folio-substrate-snapshot/v1` regardless, so moving to
     // `nodeSchemas` then is a one-line change.
+    //
+    // A SECOND family now lives here too, and the validator does not cover it:
+    // the `folio-kg-materialization/v1` part records `kg:materialize` writes
+    // (slices 5-6). Their schema embeds core's `MaterializationSchema`, so it
+    // is core's (`folio-assistant-core/schemas/kg-materialization.ts`) and
+    // this registry cannot name it without pointing up the arrow. They are
+    // JUDGED by `kg:materialize:check` instead; `kg:validate` on one reports
+    // it against the snapshot schema, which is a known gap, not a verdict.
     validator: "schemas/substrate-snapshot.ts#SubstrateSnapshotSchema",
     summary:
       "The root declaration of each Knowledge Graph this instance subscribes to, cached byte for byte at " +
-      "the pinned commit with its fixity, and what the substrate judgement found in it.",
+      "the pinned commit with its fixity, and what the substrate judgement found in it; and each chosen " +
+      "subgraph or asset materialised from it, with its fixity, provenance and gate answers.",
   },
   "translation-sources": {
     title: "Translation sources",
