@@ -10,7 +10,8 @@ import { join } from "node:path";
 
 import { DAK_COMPONENTS } from "../../cat-harness/schemas/block-kinds.ts";
 import { DocumentKindSchema } from "../../cat-harness/schemas/document-kind.ts";
-import { dakCoverage, dakKind } from "./gen-document-kinds.ts";
+import { dakCoverage, dakKind, kindSetProblems } from "./gen-document-kinds.ts";
+import { pinnedTerms } from "./pin-smart-kg.ts";
 
 const committed = DocumentKindSchema.parse(JSON.parse(readFileSync(join(import.meta.dir, "..", "document-kinds", "dak.json"), "utf-8")));
 
@@ -41,6 +42,41 @@ describe("the document-kind schema refuses what a kind may not be", () => {
   });
   it("two sections with one id", () => {
     expect(DocumentKindSchema.safeParse({ ...base, sections: [...base.sections, base.sections[0]] }).success).toBe(false);
+  });
+});
+
+describe("the authored kinds resolve as a set (bean pebe)", () => {
+  const read = (id: string) =>
+    DocumentKindSchema.parse(JSON.parse(readFileSync(join(import.meta.dir, "..", "document-kinds", `${id}.json`), "utf-8")));
+  const kinds = ["dak", "l1", "l1-guideline", "dth"].map(read);
+  const pinned = pinnedTerms();
+  it("the committed kinds have no problem", () => {
+    expect(kindSetProblems(kinds, pinned)).toEqual([]);
+  });
+  it("l1-guideline and dth both extend l1, and neither redeclares its sections", () => {
+    expect(kinds.filter((k) => k.extends === "l1").map((k) => k.id).sort()).toEqual(["dth", "l1-guideline"]);
+  });
+  it("every section and every kind names a source", () => {
+    for (const k of kinds.filter((k) => k.id !== "dak")) for (const s of k.sections) expect(s.sources?.length ?? 0).toBeGreaterThan(0);
+  });
+  // Calibration: each case is the committed set with ONE thing broken.
+  const dth = kinds.find((k) => k.id === "dth")!;
+  const others = kinds.filter((k) => k.id !== "dth");
+  it("an extends that names no kind", () => {
+    expect(kindSetProblems([...others, { ...dth, extends: "l9" }], pinned).join()).toContain('extends "l9"');
+  });
+  it("an extends chain that loops", () => {
+    const l1 = kinds.find((k) => k.id === "l1")!;
+    const looped = [...kinds.filter((k) => k.id !== "l1"), { ...l1, extends: "dth" }];
+    expect(kindSetProblems(looped, pinned).join()).toContain("loops");
+  });
+  it("a child redeclaring a section its parent has", () => {
+    const dup = { ...dth, sections: [...dth.sections, { ...dth.sections[0]!, id: "introduction" }] };
+    expect(kindSetProblems([...others, dup], pinned).join()).toContain('"introduction" is already its parent');
+  });
+  it("a modelledBy term the pinned smart-kg snapshot does not declare", () => {
+    const bad = { ...dth, sections: dth.sections.map((s, i) => (i === 0 ? { ...s, modelledBy: ["sgkg-l2#not-a-class"] } : s)) };
+    expect(kindSetProblems([...others, bad], pinned).join()).toContain("sgkg-l2#not-a-class");
   });
 });
 

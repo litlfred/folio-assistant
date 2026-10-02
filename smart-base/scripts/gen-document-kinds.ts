@@ -19,7 +19,7 @@
  * @module smart-base/scripts/gen-document-kinds
  * @covers document-kinds
  */
-import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
+import { existsSync, mkdirSync, readdirSync, readFileSync, writeFileSync } from "node:fs";
 import { join, relative, resolve } from "node:path";
 
 import { DAK_COMPONENTS, DAK_UNFORMALIZED_COMPONENTS } from "../../cat-harness/schemas/block-kinds.ts";
@@ -33,9 +33,56 @@ import {
 } from "../../cat-harness/schemas/document-kind.ts";
 import { directoriesForGraph, instanceRootsIn, readDeclaration, repoRootFor } from "../../cat-harness/schemas/cat-harness.ts";
 import { DAK_CARDS } from "../../cat-harness/scripts/gen-dak-components-figure.ts";
+import { pinnedTerms, snapshotProblem } from "./pin-smart-kg.ts";
 
 const OUT = resolve(import.meta.dir, "..", "document-kinds");
 const GENERATOR = "smart-base/scripts/gen-document-kinds.ts";
+
+/**
+ * What is wrong with the kinds in this directory TAKEN TOGETHER — the joins a
+ * per-file schema cannot see (bean `pebe`):
+ *
+ * - `extends` names a kind that is here, and the chain does not loop;
+ * - a child does not redeclare a section id its parent already has — "extends"
+ *   would otherwise mean two sections answering to one id;
+ * - every `modelledBy` term is in the pinned smart-kg snapshot, so a section
+ *   cannot claim a class smart-kg does not declare at the commit we pinned.
+ */
+export function kindSetProblems(kinds: readonly DocumentKind[], pinned: ReadonlySet<string>): string[] {
+  const byId = new Map(kinds.map((k) => [k.id, k]));
+  const out: string[] = [];
+  for (const k of kinds) {
+    const seen = new Set<string>([k.id]);
+    let parent = k.extends;
+    const inherited = new Set<string>();
+    while (parent !== undefined) {
+      const p = byId.get(parent);
+      if (!p) { out.push(`${k.id}: extends "${parent}", which is not a kind here`); break; }
+      if (seen.has(p.id)) { out.push(`${k.id}: its extends chain loops at "${p.id}"`); break; }
+      seen.add(p.id);
+      for (const s of p.sections) inherited.add(s.id);
+      parent = p.extends;
+    }
+    for (const s of k.sections) {
+      if (inherited.has(s.id)) out.push(`${k.id}: section "${s.id}" is already its parent's — extend it, do not redeclare it`);
+      for (const t of s.modelledBy ?? []) {
+        if (!pinned.has(t)) out.push(`${k.id}: section "${s.id}" is modelledBy "${t}", which the pinned smart-kg snapshot does not declare`);
+      }
+    }
+  }
+  return out;
+}
+
+/** Every document kind in the directory, generated or authored. */
+function kindsIn(dir: string): DocumentKind[] {
+  if (!existsSync(dir)) return [];
+  return readdirSync(dir)
+    .filter((f) => f.endsWith(".json"))
+    .sort()
+    .map((f) => JSON.parse(readFileSync(join(dir, f), "utf-8")) as { $schema?: string })
+    .filter((d) => d.$schema === DOCUMENT_KIND_SCHEMA_TAG)
+    .map((d) => DocumentKindSchema.parse(d));
+}
 
 /** The DAK as a fixed-structure document kind, one section per component. */
 export function dakKind(): DocumentKind {
@@ -152,11 +199,18 @@ if (import.meta.main) {
       if (!ok) { console.log(`✗ ${relative(process.cwd(), target)} is stale — run without --check`); bad++; }
     }
     if (bad === 0) console.log(`✓ ${files.size} document-kind file(s) current`);
-    process.exit(bad === 0 ? 0 : 1);
+    const snap = snapshotProblem();
+    const problems = [...(snap ? [snap] : []), ...kindSetProblems(kindsIn(OUT), pinnedTerms())];
+    for (const p of problems) console.log(`✗ ${p}`);
+    if (problems.length === 0) console.log(`✓ kinds resolve: every extends names a kind here, every modelledBy is in the pinned smart-kg snapshot`);
+    process.exit(bad === 0 && problems.length === 0 ? 0 : 1);
   }
   mkdirSync(OUT, { recursive: true });
   for (const [target, body] of files) {
     writeFileSync(target, body);
     console.log(`${relative(process.cwd(), target)} written`);
   }
+  const problems = kindSetProblems(kindsIn(OUT), pinnedTerms());
+  for (const p of problems) console.log(`✗ ${p}`);
+  if (problems.length > 0) process.exit(1);
 }
