@@ -1,5 +1,5 @@
 <!-- kg:subgraph:begin -->
-# agent-skill-best-practices---gemini-cli
+# Agent Skill best practices
 
 ingested source material — attributed to its document, not folio content
 

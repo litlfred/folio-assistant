@@ -75,6 +75,6 @@ Part of [C@T Harness](../README.md) 0.1.0, declared as `docs`, holding `docs`.
 | [`translation-status/`](translation-status/) | 1 file | |
 | [`uml/`](uml/) | 123 files | |
 | [`uploads/`](uploads/) | 1 file | |
-| [`wireframes/`](wireframes/) | 178 files | |
+| [`wireframes/`](wireframes/) | 192 files | |
 | [`zh/`](zh/) | 14 files | |
 <!-- kg:subgraph:end -->
