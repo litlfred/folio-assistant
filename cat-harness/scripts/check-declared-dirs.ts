@@ -71,7 +71,6 @@ import { instanceRootsIn, readDeclaration } from "../schemas/cat-harness.js";
 // perfectly valid declaration that uses it. Same import, same reason, as
 // `check-declared-assets.ts` and `kg-export.ts` carry.
 import "../schemas/folio-graph-kind.js";
-import { mayLeaveMain } from "./qa-results.js";
 
 export interface DirFinding {
   instance: string;
@@ -115,7 +114,6 @@ export function auditInstance(
           scope?: string;
           absent?: { reason: string };
           storage?: { branch: string };
-          graphKinds?: string[];
         }>;
       }
     | undefined;
@@ -134,12 +132,6 @@ export function auditInstance(
     // missing directory — and its presence (a fetched working copy) is not a
     // stale exemption either. Neither direction applies.
     if (e.storage?.branch) continue;
-    // And a directory every one of whose kinds the qa-reports arc moves OFF
-    // `main` (`mayLeaveMain`: `qa`, `health`) may be absent before its
-    // declaration says `storage` (bean `5hox`) — the rule `readme:subgraphs`
-    // already applies (bean `0dav`). Without it, a checkout with the derived
-    // corpus fetched elsewhere reported 15 `absent` findings (bean `cxcn`).
-    if (!present && mayLeaveMain(e)) continue;
     if (!present && !e.absent) {
       findings.push({
         instance: instanceRoot,
