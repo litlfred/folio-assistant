@@ -158,3 +158,25 @@ Why this theme for agent B: it has no file overlap with theme 1's trains, it is 
 
 ### Exit for this burn window
 When the token budget nears its end, both agents run `prepare-for-handover`. The next steward starts with `stalled-agent-triage` from this note.
+
+## Update 2026-10-02 ~21:50 UTC — weekly budget at 3%; steward stopping
+
+Everything is pushed. `git log @{u}..HEAD` is empty in every steward worktree.
+
+| PR | branch @ head | state | next |
+|---|---|---|---|
+| #1924 train 6 (#1913 + #1903) | `claude/blissful-ride-c2f26u-train-6` @ 435f9ce | main merged after #1911; all extra checks pass locally; CI pending | merge when green, then close #1913 and #1903. If #1912 lands first, it conflicts only on generated bean READMEs |
+| #1912 (this note, handover skills, beans 4ak5 + whlc children) | `claude/blissful-ride-c2f26u-handover` @ 82c793f | main merged; CI pending | merge when green |
+| #1928 rename script + beans 46qw (closed) and tlk2 | `claude/blissful-ride-c2f26u-rename-script` @ 12cc62c | 46qw done: `cat-state`, `cat-fhir-ast/*` | tlk2: step 1 runs now; steps 2–3 wait for #1816 to read `cat/fhir-harness/fhir-ast/` (asked session 01PricYF), then post `folio-assistant-tlk2: resume fhir-ast` on #1928 |
+| #1927 bean 9c7h (fsh-guts → `cat/cat-harness/fsh-guts`) | `claude/blissful-ride-c2f26u-fsh-guts-branch` @ 69e17c4 | beans only | merge when green |
+| #1911 | merged as 909678c | D1–D3 plus D5 (owner: "Make it like the others"); `lodp` closed | D4 is still open under issue #1910 |
+
+**Owner rulings this window:**
+- **Special branches:** `cat/<harness>/<name>` (note on `fs43`). `lake-cache` → `cat/folio-assistant-sci/lake-cache/<pkg>` is PROPOSED, not confirmed.
+- **New beans:** 9c7h (fsh-guts branch, a separation prerequisite) and 4ak5 (per-harness KG export plus root `index.jsonld`).
+
+**Follow-up after train 6 lands:** update `special-branches.json` and its mirrors to the `cat/<harness>/<name>` names, on #1928.
+
+**Still waiting on:** #1899 (`ready` from 013WbQek); `qa-reports` rename (bean zlq9); nok9 retype; the `qa-reports-spike*` branches.
+
+**Check-ins cancelled** to save budget. The next GitHub event, or a message, resumes the steward.
