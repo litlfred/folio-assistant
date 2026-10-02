@@ -23,7 +23,10 @@
  * Measured 2026-10-02: six climbs in three files before stage D (#1767)
  * moved smart-trust's themes/ and the DAK schemas and scripts into
  * smart-base; after it, 25 climbs in 10 smart-base files, all now through
- * smart-base/platform.ts.
+ * smart-base/platform.ts. Later the same day main moved the DAK block and QA
+ * code in as well, and 17 more arrived with the merge, also rerouted. A merge
+ * from main is where new climbs arrive, so this test failing after one is the
+ * expected signal to reroute them, not a regression in the rule.
  *
  * @module cat-harness/scripts/tests/instance-separation-imports.test
  */
