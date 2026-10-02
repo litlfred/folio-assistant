@@ -1,5 +1,5 @@
 <!-- kg:subgraph:begin -->
-# dusengumuremyi-2026-ai-mediated-raci
+# How AI-Mediated RACI Matrix in the Organisational Boardroom Reshapes Real-Time Operational Efficiency, Error-Free Sensemaking of Strategic Decision-Making, Management Effectiveness, and Organisational Defensibility
 
 ingested source material — attributed to its document, not folio content
 

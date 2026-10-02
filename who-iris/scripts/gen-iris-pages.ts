@@ -57,6 +57,7 @@ import { withViewerNav } from "../../cat-harness/scripts/viewer-page.ts";
 import { whoThemeById } from "../themes/themes.js";
 import { bytesFor, repoRelative } from "../../folio-assistant-core/scripts/lib/bytes.js";
 import { resolvableIri, type CatalogueNode } from "../../folio-assistant-core/schemas/catalogue.js";
+import { dcRenderingsFor } from "../../folio-assistant-core/scripts/dc-render.ts";
 import { publicationBlockers } from "../../folio-assistant-core/schemas/materialization.js";
 import { withInlineCode } from "../../cat-harness/schemas/inline-code.ts";
 
@@ -490,7 +491,12 @@ function assetHref(
  * own gates. The item's catalogue PAGE stays: it is metadata, and it says why.
  */
 export function withheldManifest(all: Node[]): string {
-  const paths: { path: string; reason: string }[] = [];
+  const paths: {
+    path: string;
+    reason: string;
+    gates?: { gate: string; verdict: string }[];
+    record?: { id: string; page?: string; uri?: string };
+  }[] = [];
   for (const n of all) {
     for (const b of n.bitstreams ?? []) {
       const blocked = publicationBlockers(b.materialization?.gates);
@@ -498,7 +504,25 @@ export function withheldManifest(all: Node[]): string {
       const reason = `${n.id} ${b.bundle} "${b.name}": ${blocked
         .map((k) => `${k} ${b.materialization?.gates?.[k]?.verdict ?? "not recorded"}`)
         .join(", ")}`;
-      if (b.bundle === "ORIGINAL" && n.libraryId) paths.push({ path: `${n.libraryId}/`, reason });
+      // The ENTRY carries its gates and its catalogue record as data (issue
+      // #1794), so the library viewer can say which gate refused and send the
+      // reader to the record without parsing `reason`. The record page is the
+      // replica's item page, at the route the declaration gives it; the URI is
+      // the item's own resolvable IRI, absent when it records none.
+      if (b.bundle === "ORIGINAL" && n.libraryId) {
+        const page = replicaPageOf(n);
+        const uri = sourceOf(n);
+        paths.push({
+          path: `${n.libraryId}/`,
+          reason,
+          gates: blocked.map((k) => ({ gate: k, verdict: b.materialization?.gates?.[k]?.verdict ?? "not recorded" })),
+          record: {
+            id: n.id,
+            ...(page ? { page: `/${REPLICA_ROUTE}/${page}` } : {}),
+            ...(uri ? { uri } : {}),
+          },
+        });
+      }
       const lp = b.materialization?.localPath;
       if (b.bundle === "THUMBNAIL" && lp?.startsWith("library/")) paths.push({ path: lp.slice("library/".length), reason });
     }
@@ -1442,7 +1466,8 @@ function replicaPageOf(n: Node): string | undefined {
  */
 const LIBRARY_LINKS = libraryResolver(repoRootFor(HARNESS_ROOT), HARNESS_ROOT);
 
-const REPLICA_FROM_CATALOGUE = (() => {
+/** The replica's route from the site root (no slashes), as `withRoutes` gives it. */
+const REPLICA_ROUTE = (() => {
   const declared = (readDeclaration(INSTANCE)?.directories ?? []).flatMap((d) =>
     (d.graphKinds ?? []).map((kind) => ({ name: SUBJECT, kind, dir: d.path, instanceRoot: (d as { instanceRoot?: boolean }).instanceRoot === true })),
   );
@@ -1454,10 +1479,15 @@ const REPLICA_FROM_CATALOGUE = (() => {
         "catalogue page to link. Mark the replica's directory, or this link is a guess.",
     );
   }
-  const route = root.route;
-  const from = subjectPage(HANDLER, CATALOGUE_KIND, SUBJECT).replace(/^\/|\/$/g, "");
-  return posix.relative(from, route);
+  return root.route;
 })();
+
+/* Relative from the catalogue page, built on the one route above, which the
+   withheld list also uses (issue #1794) — two consumers, one route. */
+const REPLICA_FROM_CATALOGUE = posix.relative(
+  subjectPage(HANDLER, CATALOGUE_KIND, SUBJECT).replace(/^\/|\/$/g, ""),
+  REPLICA_ROUTE,
+);
 
 /**
  * The item's upstream URI, or undefined when it has none.
@@ -1618,6 +1648,28 @@ function metadataCell(n: Node): string {
 }
 
 /**
+ * The record's two standard renderings — DC XML and DCMI-Terms JSON-LD —
+ * written by `dc-render.ts` beside these pages (bean `7eak`, owner:
+ * *"who-iris should link to json and xml renderings"*).
+ *
+ * The path comes from `dcRenderingsFor`, the same function the renderer
+ * writes with, so the link and the file cannot name two places. A file that
+ * is not there is NOT linked: a link to a rendering nobody wrote reads exactly
+ * like one that works. `dc:render:check` is what makes "not there" a failure.
+ */
+function renderingsCell(n: Node): string {
+  if (!n.metadataRef) return `<span class="none">no record, so nothing to render</span>`;
+  const r = dcRenderingsFor(INSTANCE, n.metadataRef);
+  if (r === undefined) return `<span class="none">this instance declares no published root</span>`;
+  const link = (abs: string, label: string): string =>
+    existsSync(abs)
+      ? `<a href="${esc(encPath(relative(SITE, abs).split(sep).join("/")))}">${label}</a>`
+      : `<span class="none">${label}: not rendered (run <code>bun run dc:render</code>)</span>`;
+  return `${link(r.xml, "Dublin Core XML")}
+      <br>${link(r.jsonld, "JSON-LD (DCMI Terms)")}`;
+}
+
+/**
  * Where this item can be read FROM — upstream and here, side by side.
  *
  * The owner's *"both links there"*: the IRIS source, and this repository's own
@@ -1722,6 +1774,7 @@ ${bits}
 <tr><td>Ingested text (L1)</td>
     <td>${n.libraryId ? `<a href="https://github.com/litlfred/folio-assistant/tree/main/who-iris/library/${esc(n.libraryId)}/sections">who-iris/library/${esc(n.libraryId)}/sections/</a>` : "—"}</td></tr>
 <tr><td>Dublin Core record</td><td>${metadataCell(n)}</td></tr>
+<tr><td>Dublin Core renderings</td><td>${renderingsCell(n)}</td></tr>
 </tbody>
 </table>
 

@@ -416,6 +416,8 @@ const SKILLS_CATEGORIES: Record<string, string> = {
   "fhir-ig-authoring": "FHIR IG authoring (fhir-ig-authoring)",
   "content-lifecycle-ext": "Content lifecycle refinements (content-lifecycle-ext)",
   ingestion: "Document ingestion methods (ingestion)",
+  // Bean `7eak`: rendering catalogue records as standard Dublin Core.
+  catalogue: "Catalogue records — Dublin Core renderings (catalogue)",
   // Declared directories that hold their skills DIRECTLY, so they are keyed by
   // the declaration's id, like `crdm` and `bootstrap` below. All three were
   // declared in `cat-harness.json` with no label here, which made
@@ -535,7 +537,10 @@ const SKILLS_CATEGORIES: Record<string, string> = {
   // folio-assistant-sci, never in core. Declared from within sci's `skills/`.
   "lean-skills": "Science layer: Lean tooling (folio-assistant-sci)",
   "data-skills": "Science layer: reference data (folio-assistant-sci)",
-  "large-datasets-skills": "Large data sets (subsetting, materializing, publishing)",
+  // `large-datasets` is a package of the harness's `library` group since bean
+  // `j7ql` (2026-10-01), keyed by basename like the packages above; it was
+  // the `large-datasets-skills` root of its own instance before.
+  "large-datasets": "Large data sets (subsetting, materializing, publishing)",
   "who-iris-skills": "WHO IRIS (catalogue instance)",
   // The `fhir-harness` instance's two packages, keyed by BASENAME because they
   // are package subdirectories of a declared root (`fhir-ig-skills`), not roots

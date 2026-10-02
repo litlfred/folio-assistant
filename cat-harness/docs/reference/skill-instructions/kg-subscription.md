@@ -6,9 +6,9 @@ parent: Skill instructions
 ---
 
 {: .note }
-> Generated from [`large-datasets/skills/kg-subscription.md`](https://github.com/litlfred/folio-assistant/blob/main/large-datasets/skills/kg-subscription.md) — do not edit here.
+> Generated from [`cat-harness/skills/library/large-datasets/kg-subscription.md`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/library/large-datasets/kg-subscription.md) — do not edit here.
 >
-> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/large-datasets/skills/kg-subscription.md){: .fa-edit-source }
+> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/cat-harness/skills/library/large-datasets/kg-subscription.md){: .fa-edit-source }
 
 {% raw %}
 # Subscribing to a knowledge graph

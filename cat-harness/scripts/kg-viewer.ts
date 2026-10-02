@@ -77,7 +77,13 @@ import { dirname, join, relative } from "node:path";
 import { fileURLToPath } from "node:url";
 
 import { exportIdentity } from "./kg-export.js";
-import { UI_STRINGS, loadCatalogues, type LocaleCatalogue } from "./kg-viewer-strings.js";
+import {
+  UI_STRINGS,
+  loadCatalogues,
+  plannedLocales,
+  type LocaleCatalogue,
+  type PlannedLocale,
+} from "./kg-viewer-strings.js";
 import { repoRootFor } from "../schemas/cat-harness.js";
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), "..");
@@ -117,6 +123,7 @@ function safeJson(value: unknown): string {
 export function viewerHtml(
   stub: string,
   catalogues: LocaleCatalogue[] = loadCatalogues(ROOT),
+  planned: PlannedLocale[] = plannedLocales(ROOT),
 ): string {
   const doc = `../${stub}.jsonld`;
 
@@ -245,6 +252,25 @@ export function viewerHtml(
           color: var(--fg); font: inherit; font-size: 13px; cursor: pointer; }
   .lang:hover { background: var(--accent-bg); }
   .lang[aria-pressed="true"] { background: var(--accent); color: var(--on-accent); border-color: var(--accent); }
+  /*
+   * A planned language (bean w6fu): still a 32px target, still focusable, but
+   * dashed and dimmed so it does not read as a choice. --dim on --bg is the
+   * pair the meta line already uses. The hover tint is removed, because a
+   * hover change is how a pointer user is told "this does something".
+   */
+  .lang.planned { background: transparent; color: var(--dim); border-style: dashed; cursor: default; }
+  .lang.planned:hover { background: transparent; }
+  .langs-why { align-self: center; font-size: 12.5px; color: var(--dim); }
+  .langs-why[open] { flex-basis: 100%; }
+  .langs-why > summary { display: inline-flex; align-items: center; min-height: 32px; padding: 0 4px;
+                         cursor: pointer; color: var(--accent); text-underline-offset: 2px; }
+  .langs-why > summary:hover { text-decoration: underline; }
+  /* inline-flex drops the UA disclosure marker, so the state is drawn here:
+     a toggle that does not show whether it is open is half a toggle. */
+  .langs-why > summary::-webkit-details-marker { display: none; }
+  .langs-why > summary::before { content: "ⓘ ▸"; margin-inline-end: 5px; }
+  .langs-why[open] > summary::before { content: "ⓘ ▾"; }
+  .langs-why > p { margin: 2px 0 0; color: var(--fg); max-width: 78ch; }
   .boundary { background: var(--panel); border: 1px solid var(--line); color: var(--fg);
               padding: 8px 11px; border-radius: 6px; font-size: 12.5px;
               margin: 10px 0 0; max-width: 78ch; }
@@ -299,6 +325,17 @@ export function viewerHtml(
      #0000EE on --bg in dark: unreadable (owner, 2026-09-27, on typeIri
      "ProcessGraph"). The same accent the edges and the header links use. */
   td a { color: var(--accent); text-underline-offset: 2px; }
+  /* A link that LEAVES this page says so (bean yhcq, finding 4). The colour
+     alone used to be the only difference between an in-graph edge (a button
+     that stays here) and an IRI (a navigation away), and since ce6152624 the
+     two share a colour, so nothing said it. An arrow for every outbound link,
+     and words for one into another graph, where the short id hides that. */
+  td a[href]::after { content: " \\2197"; font-size: .85em; }
+  .elsewhere { color: var(--dim); font-size: 12px; }
+  /* 28px tall like the edges: a 13px line alone is under the 24px floor
+     (SC 2.5.8), and this instance's profile is low-dexterity. */
+  .crumb { display: inline-flex; align-items: center; min-height: 28px; font-size: 13px; margin: 0 0 2px;
+           color: var(--accent); text-underline-offset: 2px; }
   .undeclared { color: var(--warn); }
   .undeclared::after { content: " ⚠"; }
   .note { background: var(--warn-bg); border: 1px solid var(--warn); color: var(--warn);
@@ -328,10 +365,18 @@ export function viewerHtml(
      through a dozen filters to reach the results. -->
 <a class="skip" id="skip" href="#list">Skip to results</a>
 <header>
+  <!-- The way back (bean yhcq, finding 8). The page is reached from the docs
+       navbar and carries none of its chrome, so returning depended on the
+       browser's Back button. "../" because the page is <site>/<stub>/ and
+       its graph document is the sibling "../<stub>.jsonld": the same relative
+       reasoning as DOC, so it is right under STAGING/<slug>/ too. -->
+  <a class="crumb" id="home" href="../">&larr; <bdi id="home-t">Docs site</bdi></a>
   <h1 id="title">${stub} — knowledge graph</h1>
   <div class="meta" id="meta">loading <code>${doc}</code>…</div>
-  <!-- One button per language that has a catalogue, drawn only when there is
-       more than English to offer. A switcher with one option is furniture. -->
+  <!-- One button per language that has a catalogue, plus a DISABLED one per
+       language whose catalogue is still empty, with the reason beside them
+       (bean w6fu). Drawn only when there is more than English to show or to
+       promise: a switcher with one option and nothing planned is furniture. -->
   <div class="langs" id="langs" role="group" aria-label="Interface language" hidden></div>
   <!-- Where the translation stops. Hidden in English, because in English
        there is no boundary to draw. -->
@@ -384,6 +429,12 @@ const STUB = ${JSON.stringify(stub)};
  */
 const STRINGS = ${safeJson(strings)};
 const LOCALES = ${safeJson(locales)};
+// Languages with a catalogue that translates nothing yet (bean w6fu). Drawn
+// DISABLED beside the real choices, so a reader can see a translation is
+// planned; never selectable, because the page cannot show them. Computed from
+// each catalogue's contents when the page is generated, so the first
+// translated string moves a language from here into LOCALES by itself.
+const PLANNED = ${safeJson(planned)};
 // The SAME key the docs site writes (docs/assets/js/docs-ui.js), so a reader
 // who chose a language there arrives here in it. A second key would be a
 // second answer to one question.
@@ -517,6 +568,7 @@ function applyChrome() {
   el("title").textContent = heading;
   document.title = heading;
   el("skip").textContent = T("Skip to results");
+  el("home-t").textContent = T("Docs site");
   el("facets-h").textContent = T("Kind");
   el("subs-h").textContent = T("Subgraph");
   el("list-h").textContent = T("Nodes");
@@ -556,13 +608,35 @@ function drawBoundary() {
  * One button per language with a catalogue, each labelled in ITS OWN language
  * -- which is what a reader looking for that language is looking for, and
  * which leaves no accessible name to get wrong in a language nobody here
- * reads. Nothing is drawn when English is the only option: a switcher with one
- * choice is furniture.
+ * reads.
+ *
+ * Languages that are PLANNED -- a catalogue exists and translates nothing yet
+ * -- are drawn too, disabled (owner's ruling 2026-10-02, bean w6fu), so a
+ * reader can see a translation is coming rather than concluding there will
+ * never be one. Four things make "disabled" accessible rather than merely
+ * grey:
+ *
+ *  - aria-disabled, NOT the disabled attribute. A disabled button leaves the
+ *    tab order, so a keyboard or screen-reader user would never learn the
+ *    language is planned; this one stays focusable and is announced as
+ *    unavailable.
+ *  - a VISIBLE reason, "Translations coming", on the line itself -- never in a
+ *    title tooltip, which a phone cannot show and a keyboard cannot open.
+ *  - that reason is a details/summary toggle, so the full sentence opens on
+ *    tap, Enter or Space; pressing a planned language opens it too, which is
+ *    the answer to "why did nothing happen?" at the place it is asked.
+ *  - each planned button is described by the reason, so it is announced with
+ *    it.
+ *
+ * Nothing is drawn when English is the only language at all: a switcher with
+ * one choice and nothing planned is furniture.
  */
 function drawLangs() {
   const box = el("langs");
+  const was = el("langs-why");
+  const keepOpen = Boolean(was && was.open);
   box.innerHTML = "";
-  if (LOCALES.length < 2) { box.hidden = true; return; }
+  if (LOCALES.length < 2 && PLANNED.length === 0) { box.hidden = true; return; }
   box.hidden = false;
   for (const l of LOCALES) {
     const b = document.createElement("button");
@@ -575,6 +649,41 @@ function drawLangs() {
     b.onclick = () => setLocale(l.locale);
     box.appendChild(b);
   }
+  if (PLANNED.length === 0) return;
+  for (const l of PLANNED) {
+    const b = document.createElement("button");
+    b.className = "lang planned";
+    b.type = "button";
+    b.setAttribute("lang", l.locale);
+    b.setAttribute("dir", l.dir);
+    b.setAttribute("aria-disabled", "true");
+    b.setAttribute("aria-describedby", "langs-why-s");
+    b.textContent = l.name;
+    b.onclick = () => {
+      el("langs-why").open = true;
+      el("langs-why-s").focus();
+    };
+    box.appendChild(b);
+  }
+  const why = document.createElement("details");
+  why.className = "langs-why";
+  why.id = "langs-why";
+  why.open = keepOpen;
+  const s = document.createElement("summary");
+  s.id = "langs-why-s";
+  s.textContent = T("Translations coming");
+  const p = document.createElement("p");
+  p.id = "langs-why-t";
+  // Each name in its own language, isolated, so a right-to-left name in a
+  // left-to-right sentence keeps its place in the list.
+  const names = PLANNED.map((l) =>
+    '<bdi lang="' + escape(l.locale) + '" dir="' + escape(l.dir) + '">' + escape(l.name) + "</bdi>").join(", ");
+  p.innerHTML = fill(
+    T("A translation of this interface into {languages} is planned. Until it is ready, the page is shown in English."),
+    { languages: names });
+  why.appendChild(s);
+  why.appendChild(p);
+  box.appendChild(why);
 }
 
 fetch(DOC)
@@ -777,7 +886,14 @@ function matches(n, q) {
 
 function drawList() {
   const q = el("q").value.trim().toLowerCase();
-  const hits = G.filter((n) => matches(n, q));
+  // ALPHABETICAL BY THE NAME SHOWN (bean yhcq, finding 5). Document order put
+  // 2,986 rows in whatever order the export walked its directories, so the
+  // list could only be searched, never scanned. Sorted per draw rather than
+  // once: the label is the graph's own text and does not change with the
+  // interface language, but a collator per draw keeps that true if it ever
+  // does. The id breaks a tie so the order is stable.
+  const hits = G.filter((n) => matches(n, q))
+    .sort((a, b) => collate.compare(sortKey(a), sortKey(b)) || collate.compare(a["@id"], b["@id"]));
   const ol = el("list");
   ol.innerHTML = "";
   ol.setAttribute("data-count", String(hits.length));
@@ -812,10 +928,29 @@ function escape(s) {
   return String(s).replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" })[c]);
 }
 
+const collate = new Intl.Collator("en", { sensitivity: "base", numeric: true });
+// A label's leading markup -- a backtick, a quote, "**", "/" of a slash
+// command -- is not where a reader looks for it, so it does not decide the
+// order. The label shown is unchanged.
+function sortKey(n) {
+  return String(label(n)).replace(/^[^\\p{L}\\p{N}]+/u, "");
+}
+
 function select(id) {
   sel = id;
   drawList();
   renderDetail();
+  // ON ONE COLUMN THE DETAIL IS BELOW THE WHOLE LIST (bean yhcq, finding 2):
+  // measured 2026-09-30, a tapped row's detail was 1,028 px down a 844 px
+  // screen, past a 72vh scroll box a swipe scrolls instead of the page.
+  // aria-live told a screen reader; nothing told a sighted touch reader. So
+  // where the layout has stacked, take the reader to what they asked for.
+  // Focus goes with it, so a keyboard user's next Tab starts there too.
+  if (window.matchMedia("(max-width: 860px)").matches) {
+    const d = el("detail");
+    d.scrollIntoView({ block: "start" });
+    d.focus({ preventScroll: true });
+  }
 }
 
 /**
@@ -927,9 +1062,41 @@ function value(key, v) {
   }
   if (linkTerms.has(key) && byId.has(v)) return btn(v, label(byId.get(v)));
   if (typeof v === "string" && /^https?:\\/\\//.test(v)) {
-    return '<a href="' + escape(v) + '" rel="noreferrer">' + escape(short(v)) + "</a>";
+    // A link-valued property whose target is not a node HERE is a node in
+    // another graph document (bean yhcq, finding 3): satisfies ->
+    // bootstrap.jsonld#skill/discussion. Its short id reads like a local one,
+    // so it says where it goes.
+    const elsewhere = linkTerms.has(key)
+      ? ' <span class="elsewhere">(' + escape(T("in another graph")) + ")</span>"
+      : "";
+    return '<a href="' + escape(v) + '" rel="noreferrer">' + escape(short(v)) + "</a>" + elsewhere;
   }
   return escape(v);
+}
+
+/**
+ * A neighbour's name as at most two lines of about 24 characters, broken at a
+ * space where there is one, with an ellipsis only when even two lines cannot
+ * hold it (bean yhcq, finding 6: "Produce >= 2 candidates, w" was cut mid-word
+ * at 26 with nothing showing it had been). The full name stays the group's
+ * accessible name; this is the visual half.
+ */
+function labelLines(name, x) {
+  const MAX = 24;
+  const words = String(name).split(/\\s+/);
+  const lines = [""];
+  for (const w of words) {
+    const cur = lines[lines.length - 1];
+    if (!cur) lines[lines.length - 1] = w;
+    else if ((cur + " " + w).length <= MAX) lines[lines.length - 1] = cur + " " + w;
+    else lines.push(w);
+  }
+  let shown = lines.slice(0, 2);
+  const cut = lines.length > 2 || shown.some((l) => l.length > MAX);
+  shown = shown.map((l) => (l.length > MAX ? l.slice(0, MAX - 1) : l));
+  if (cut) shown[shown.length - 1] = shown[shown.length - 1].slice(0, MAX - 1).replace(/\\s+$/, "") + "…";
+  return shown.map((l, i) =>
+    i === 0 ? escape(l) : '<tspan class="more" x="' + x + '" dy="13">' + escape(l) + "</tspan>").join("");
 }
 
 /**
@@ -941,7 +1108,15 @@ function neighbourhood(n, back) {
     for (const v of [].concat(n[t] ?? [])) if (byId.has(v)) out.push({ id: v, via: t, dir: "out" });
   }
   const nodes = out.concat(back.map((b) => ({ id: b.from, via: b.via, dir: "in" }))).slice(0, 14);
-  if (nodes.length === 0) return '<p class="empty">' + escape(T("No links to or from this node.")) + "</p>";
+  if (nodes.length === 0) {
+    // "No links" directly under a link was the finding (bean yhcq, 3): a link
+    // into another graph document cannot be drawn here, but it IS a link.
+    const leaves = [...linkTerms].some((t) =>
+      [].concat(n[t] ?? []).some((v) => typeof v === "string" && /^https?:/.test(v) && !byId.has(v)));
+    return '<p class="empty">' + escape(leaves
+      ? T("No links to or from other nodes in this graph. The links above lead out of it.")
+      : T("No links to or from this node.")) + "</p>";
+  }
 
   const W = 560, cx = W / 2, cy = 150, R = 112;
   // role="group", not role="img". An img is a LEAF in the accessibility tree,
@@ -990,7 +1165,7 @@ function neighbourhood(n, back) {
     s += '<circle cx="' + x + '" cy="' + y + '" r="5"></circle>';
     s += '<text aria-hidden="true" x="' + (x + dx) + '" y="' +
       (y + (anchor === "middle" ? (Math.sin(a) > 0 ? 17 : -9) : 4)) +
-      '" text-anchor="' + anchor + '">' + escape(name.slice(0, 26)) + "</text>";
+      '" text-anchor="' + anchor + '">' + labelLines(name, x + dx) + "</text>";
     s += "</g>";
   });
   s += "</svg>";

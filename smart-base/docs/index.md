@@ -2,6 +2,9 @@
 title: "WHO SMART Base"
 description: "All 225 artefacts of the WHO SMART Base IG 0.3.0, reconstructed from its published output."
 has_children: true
+renders:
+  - smart-base/fhir-artifact-index
+rendered-by: ig-pages
 ---
 <style>
 .st-tag{display:inline-block;padding:.05rem .4rem;border-radius:3px;font-size:.75rem;
@@ -52,15 +55,13 @@ has_children: true
 }
 
 .st-ig #ig-status.ig-status-draft {
-  background-image: url("data:image/svg+xml;
-  http: //www.w3.org/2000/svg' width='150px' height='150px'><rect width='800%' height='100%' fill='transparent' /><text transform='translate(30, 50) rotate(-35)' fill='rgba(245,45,45,0.5)' font-family='Arial' font-weight='bold' font-size='20'>DRAFT</text></svg>");
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='150px' height='150px'><rect width='800%' height='100%' fill='transparent' /><text transform='translate(30, 50) rotate(-35)' fill='rgba(245,45,45,0.5)' font-family='Arial' font-weight='bold' font-size='20'>DRAFT</text></svg>");
   background-size: calc(50% / 5) 100px;
   background-repeat: repeat-x;
 }
 
 .st-ig #ig-status.ig-status-retired {
-  background-image: url("data:image/svg+xml;
-  http: //www.w3.org/2000/svg' width='150px' height='150px'><rect width='800%' height='100%' fill='transparent' /><text transform='translate(30, 60) rotate(-35)' fill='rgba(245,45,45,0.5)' font-family='Arial' font-weight='bold' font-size='20'>RETIRED</text></svg>");
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='150px' height='150px'><rect width='800%' height='100%' fill='transparent' /><text transform='translate(30, 60) rotate(-35)' fill='rgba(245,45,45,0.5)' font-family='Arial' font-weight='bold' font-size='20'>RETIRED</text></svg>");
   background-size: calc(50% / 5) 100px;
   background-repeat: repeat-x;
 }
@@ -121,7 +122,7 @@ enumeration response, carrying an `example` that happens to hold the list. So th
 | canonicals | `canonicals.json` |
 | packageIndex | `package.tgz!package/.index.json` |
 | artifactsHtml | `artifacts.html` |
-| dakEnumerations | `LogicalModels.schema.json, ValueSets.schema.json` |
+| sidecarEnumerations | `LogicalModels.schema.json, ValueSets.schema.json` |
 | source | `gh-pages` — `https://worldhealthorganization.github.io/smart-base` (read 2026-09-22) |
 | canonical base | `http://smart.who.int/base` |
 
@@ -129,7 +130,7 @@ enumeration response, carrying an `example` that happens to hold the list. So th
 
 The IG publishes a DAK API for 47 of its artefacts. The four sidecars are issued
 independently — every ValueSet gets all four, the logical models get two — which is why they
-are counted separately rather than as one "has DAK" tally.
+are counted separately rather than as one "has DAK API" tally.
 
 <div class="st-grid">
 <div class="st-stat"><b>47</b><span>JSON Schema</span></div>

@@ -108,30 +108,18 @@ function declaresLayering(root: string): boolean {
 
 const INSTANCES = instanceRootsIn(REPO);
 
-/**
- * The instance declared at the repository root, which cannot be audited today.
- *
- * `kg:audit --instance .` exits 1 before auditing anything: `kg-audit.ts`
- * computes `const repoRoot = resolve(root, "..")`, which for THIS instance —
- * the only one declared at the checkout root — lands on the parent of the
- * checkout, where there is no `package.json`. Bean `pgzn`, measured on `main`
- * as well as here, so it is pre-existing rather than caused by the widening
- * this file tests.
- *
- * Excluded BY NAME rather than by swallowing any instance whose audit fails: a
- * catch-all exclusion would absorb the next crash silently, which is the
- * failure mode this file exists to close. The invariant still has subjects —
- * see the anti-vacuity floor below — and `pgzn`'s "Done when" is to delete
- * this constant.
- */
-const ROOT_INSTANCE = resolve(REPO);
+// No root-instance exclusion: `kg:audit --instance .` used to throw before
+// auditing anything (bean `pgzn`), and this file excluded that instance by
+// name. The audit now resolves its repository root through `checkoutRootFor`,
+// so every declared instance — the one AT the checkout root included — is a
+// subject here. `kg-audit-root-instance.test.ts` pins the crash itself.
 
 /** A name no instance holds, used by the constructed third-state case below. */
 const MISSING_SKILL = "a-skill-that-exists-nowhere";
 
 /** Instances whose closure is strictly wider than their own skills. */
 const REACHES_DOWN = INSTANCES.filter(
-  (i) => i !== ROOT_INSTANCE && declaresLayering(i) && closureSkills(i).size > knownSkills(i).size,
+  (i) => declaresLayering(i) && closureSkills(i).size > knownSkills(i).size,
 );
 
 describe("skill refs resolve across the `needs` chain", () => {
@@ -211,7 +199,7 @@ describe("skill refs resolve across the `needs` chain", () => {
    * Should the gate ever be relaxed, the loop below judges whatever it lets in.
    */
   test("no instance here leaves `needs` undeclared (gated), and any that did would report unknown", async () => {
-    const undeclared = INSTANCES.filter((i) => i !== ROOT_INSTANCE && !declaresLayering(i));
+    const undeclared = INSTANCES.filter((i) => !declaresLayering(i));
     expect(
       undeclared.map((i) => relative(REPO, i)),
       "check:instance-graph requires every instance to declare `needs` (issue #1548)",
@@ -461,7 +449,6 @@ describe("role refs resolve across the `needs` chain", () => {
   test("a role held anywhere in the `needs` closure is not reported dangling", async () => {
     const offences: string[] = [];
     for (const inst of INSTANCES) {
-      if (inst === ROOT_INSTANCE) continue; // bean `pgzn`, as above
       const rel = `./${relative(REPO, inst)}`;
       const reachable = closureRoleIds(inst);
       if (reachable.size === 0) continue; // nothing to resolve against
@@ -495,7 +482,6 @@ describe("role refs resolve across the `needs` chain", () => {
     // Anti-vacuity. Measured: smart-base and folio-assistant-core declare no
     // role graph at all, so all of their reachable ids come from below.
     const downward = INSTANCES.filter((i) => {
-      if (i === ROOT_INSTANCE) return false;
       const own = new Set<string>();
       for (const d of ["scenarios", "skills"]) {
         try {

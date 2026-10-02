@@ -12,23 +12,24 @@ permalink: /glossary/skills/
 
 Candidate terms extracted from every skill's front matter: `name` as the label, `description` as the definition. Each is the asset's own text, verbatim and not curated, and carries the badge "candidate, extracted". A person promotes one by authoring it. Authored terms, the counts and the sources are on the <a href="{{ '/glossary/' | relative_url }}">glossary index</a>.
 
-From: bootstrap 11 (<a href="{{ '/assets/glossary/bootstrap--kg-skills.skos.jsonld' | relative_url }}">SKOS</a>) · bootstrap-tools 2 (<a href="{{ '/assets/glossary/bootstrap-tools--kg-skills.skos.jsonld' | relative_url }}">SKOS</a>) · cat-harness 207 (<a href="{{ '/assets/glossary/cat-harness--kg-skills.skos.jsonld' | relative_url }}">SKOS</a>) · fhir-harness 11 (<a href="{{ '/assets/glossary/fhir-harness--kg-skills.skos.jsonld' | relative_url }}">SKOS</a>) · folio-assistant-core 7 (<a href="{{ '/assets/glossary/folio-assistant-core--kg-skills.skos.jsonld' | relative_url }}">SKOS</a>) · folio-assistant-sci 54 (<a href="{{ '/assets/glossary/folio-assistant-sci--kg-skills.skos.jsonld' | relative_url }}">SKOS</a>) · large-datasets 5 (<a href="{{ '/assets/glossary/large-datasets--kg-skills.skos.jsonld' | relative_url }}">SKOS</a>) · smart-base 8 (<a href="{{ '/assets/glossary/smart-base--kg-skills.skos.jsonld' | relative_url }}">SKOS</a>) · who-iris 1 (<a href="{{ '/assets/glossary/who-iris--kg-skills.skos.jsonld' | relative_url }}">SKOS</a>).
+From: bootstrap 11 (<a href="{{ '/assets/glossary/bootstrap--kg-skills.skos.jsonld' | relative_url }}">SKOS</a>) · bootstrap-tools 2 (<a href="{{ '/assets/glossary/bootstrap-tools--kg-skills.skos.jsonld' | relative_url }}">SKOS</a>) · cat-harness 213 (<a href="{{ '/assets/glossary/cat-harness--kg-skills.skos.jsonld' | relative_url }}">SKOS</a>) · fhir-harness 11 (<a href="{{ '/assets/glossary/fhir-harness--kg-skills.skos.jsonld' | relative_url }}">SKOS</a>) · folio-assistant-core 8 (<a href="{{ '/assets/glossary/folio-assistant-core--kg-skills.skos.jsonld' | relative_url }}">SKOS</a>) · folio-assistant-sci 54 (<a href="{{ '/assets/glossary/folio-assistant-sci--kg-skills.skos.jsonld' | relative_url }}">SKOS</a>) · smart-base 8 (<a href="{{ '/assets/glossary/smart-base--kg-skills.skos.jsonld' | relative_url }}">SKOS</a>) · who-iris 1 (<a href="{{ '/assets/glossary/who-iris--kg-skills.skos.jsonld' | relative_url }}">SKOS</a>).
 
-**Size:** this page holds 306 terms and is 228 KB before compression, fetched in one request, within its budget of 1.0 MB. There is no search index: the filter below runs over this page, and the A–Z bar jumps within it.
+**Size:** this page holds 308 terms and is 231 KB before compression, fetched in one request, within its budget of 1.0 MB. There is no search index: the filter below runs over this page, and the A–Z bar jumps within it.
 
 <table class="fa-gloss-mapping">
 <caption>Already somebody else's concept? — <code>check:term-mapping</code>, bean <code>7wou</code></caption>
 <thead><tr><th>target</th><th>mapped</th><th>unmapped</th><th>undetermined</th><th>why undetermined</th></tr></thead>
-<tbody><tr><td><code>fhir</code></td><td>0</td><td>306</td><td>0</td><td>—</td></tr><tr><td><code>skos</code></td><td>0</td><td>306</td><td>0</td><td>—</td></tr></tbody>
+<tbody><tr><td><code>fhir</code></td><td>0</td><td>308</td><td>0</td><td>—</td></tr><tr><td><code>skos</code></td><td>0</td><td>308</td><td>0</td><td>—</td></tr></tbody>
 </table>
 <p class="fa-gloss-mapping-note"><strong>Undetermined is never “no match”.</strong> 
 A vocabulary that could not be reached has said nothing, and the column above keeps that 
 apart from a checked miss. The counts are reported and not graded: an unmapped candidate may 
 be a term this corpus is right to coin.</p>
+<p class="fa-gloss-mapping-perterm"><strong>Per term.</strong> Every term on this page is <strong>unmapped</strong> on <code>fhir</code>, and <strong>unmapped</strong> on <code>skos</code>, unless its entry says otherwise. No entry says otherwise.</p>
 
 <label for="fa-gloss-q">Filter terms</label>
 <input id="fa-gloss-q" type="search" autocomplete="off" style="min-height:44px;width:100%;max-width:32rem">
-<p aria-live="polite"><span id="fa-gloss-n">306</span> shown</p>
+<p aria-live="polite"><span id="fa-gloss-n">308</span> shown</p>
 
 <nav aria-label="Letters"><a href="#letter-A">A</a> <a href="#letter-B">B</a> <a href="#letter-C">C</a> <a href="#letter-D">D</a> <a href="#letter-E">E</a> <a href="#letter-F">F</a> <a href="#letter-G">G</a> <a href="#letter-H">H</a> <a href="#letter-I">I</a> <a href="#letter-K">K</a> <a href="#letter-L">L</a> <a href="#letter-M">M</a> <a href="#letter-N">N</a> <a href="#letter-O">O</a> <a href="#letter-P">P</a> <a href="#letter-Q">Q</a> <a href="#letter-R">R</a> <a href="#letter-S">S</a> <a href="#letter-T">T</a> <a href="#letter-U">U</a> <a href="#letter-V">V</a> <a href="#letter-W">W</a></nav>
 
@@ -441,12 +442,12 @@ coordinate <span class="fa-gloss-status">candidate, extracted</span>
 <p>Coordinate work across multiple in-flight Claude PRs working toward a shared goal. Post intent + asks on related PRs, identify cherry-pickable work, respond to code-review comments on your own PR, periodically triage sibling PR activity (new comments, CI status, new commits), watch main + newly created branches/PRs, escalate inconsistent findings to the author, and keep a coordination ledger up to date.</p>
 <p class="fa-gloss-meta">Skills of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/sdlc/sdlc-core/coordinate.md"><code>cat-harness/skills/sdlc/sdlc-core/coordinate.md</code></a></p>
 </dd>
-<dt id="large-datasets--kg-skills--copy-out-materialized" data-fa-state="extracted" data-fa-gloss="">
+<dt id="cat-harness--kg-skills--copy-out-materialized" data-fa-state="extracted" data-fa-gloss="">
 copy-out-materialized <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
 <p>Materialized content is read-only. To work on it you take a copy into your own folio/, and the copy records what it is a copy of — the local-provenance edge, which is not the upstream one.</p>
-<p class="fa-gloss-meta">Skills of large-datasets · source <a href="https://github.com/litlfred/folio-assistant/blob/main/large-datasets/skills/copy-out-materialized.md"><code>large-datasets/skills/copy-out-materialized.md</code></a></p>
+<p class="fa-gloss-meta">Skills of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/library/large-datasets/copy-out-materialized.md"><code>cat-harness/skills/library/large-datasets/copy-out-materialized.md</code></a></p>
 </dd>
 <dt id="cat-harness--kg-skills--corpus-grep" data-fa-state="extracted" data-fa-gloss="">
 corpus-grep <span class="fa-gloss-status">candidate, extracted</span>
@@ -703,6 +704,13 @@ domain-fencing <span class="fa-gloss-status">candidate, extracted</span>
 <dd>
 <p>How a domain-specific rule is kept out of the platform without being lost — the opt-in axis mechanism, the one criterion that should use it and does not, and the test for whether a rule generalizes at all.</p>
 <p class="fa-gloss-meta">Skills of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/kg/graph-management/domain-fencing.md"><code>cat-harness/skills/kg/graph-management/domain-fencing.md</code></a></p>
+</dd>
+<dt id="folio-assistant-core--kg-skills--dublin-core-renderings" data-fa-state="extracted" data-fa-gloss="">
+dublin-core-renderings <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>Render a catalogue's Dublin Core records in the two standard forms an outside reader can use: Dublin Core XML, which a harvester reads, and JSON-LD bound to DCMI Metadata Terms. Each rendering is published beside the item's page. Covers which records get one, which XML form is used and why, how every field maps from the record's own data (never composed), what cannot be expressed and how that is reported, and the gate. Read this before changing the mapping, adding a catalogue instance, or linking a rendering from a page.</p>
+<p class="fa-gloss-meta">Skills of folio-assistant-core · source <a href="https://github.com/litlfred/folio-assistant/blob/main/folio-assistant-core/skills/library/catalogue/dublin-core-renderings.md"><code>folio-assistant-core/skills/library/catalogue/dublin-core-renderings.md</code></a></p>
 </dd>
 </dl>
 
@@ -1092,12 +1100,12 @@ kg-separation <span class="fa-gloss-status">candidate, extracted</span>
 <p>Separate a Knowledge Graph into its own repository — as a CONTENT repository (files to read, no code) and a TOOLS repository (the code that writes and checks it) — once it is too large, or its consumers or cadence differ. The end-to-end method: the signals that trigger it, the preconditions, eleven stages each with the command that gates it, the owner's decision points, how identifiers, QA and publication move, how the parent consumes the result, and rollback. graph-detanglement owns stages 1–3; this skill owns the rest. Bootstrap + bootstrap-tools is the worked example; cat-harness + cat-harness-tools is next.</p>
 <p class="fa-gloss-meta">Skills of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/kg/graph-management/kg-separation.md"><code>cat-harness/skills/kg/graph-management/kg-separation.md</code></a></p>
 </dd>
-<dt id="large-datasets--kg-skills--kg-subscription" data-fa-state="extracted" data-fa-gloss="">
+<dt id="cat-harness--kg-skills--kg-subscription" data-fa-state="extracted" data-fa-gloss="">
 kg-subscription <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
 <p>Subscribing a folio or harness to an external knowledge graph — a substrate — and walking its parts from referenced to materialised, one at a time and only through the shared materialisation gates. When to subscribe, what makes a repository a substrate, choosing subgraphs, assets and harnesses, the five gates, instantiating a harness so it reaches the navbar, moving the pin, and what never to do.</p>
-<p class="fa-gloss-meta">Skills of large-datasets · source <a href="https://github.com/litlfred/folio-assistant/blob/main/large-datasets/skills/kg-subscription.md"><code>large-datasets/skills/kg-subscription.md</code></a></p>
+<p class="fa-gloss-meta">Skills of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/library/large-datasets/kg-subscription.md"><code>cat-harness/skills/library/large-datasets/kg-subscription.md</code></a></p>
 </dd>
 <dt id="cat-harness--kg-skills--kg-to-portal" data-fa-state="extracted" data-fa-gloss="">
 kg-to-portal <span class="fa-gloss-status">candidate, extracted</span>
@@ -1289,19 +1297,19 @@ markdown-render-check <span class="fa-gloss-status">candidate, extracted</span>
 <p><em>The asset carries no description.</em></p>
 <p class="fa-gloss-meta">Skills of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/ui/ui-core/markdown-render-check.md"><code>cat-harness/skills/ui/ui-core/markdown-render-check.md</code></a></p>
 </dd>
-<dt id="large-datasets--kg-skills--materialize-on-demand" data-fa-state="extracted" data-fa-gloss="">
+<dt id="cat-harness--kg-skills--materialize-on-demand" data-fa-state="extracted" data-fa-gloss="">
 materialize-on-demand <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
 <p>After bootstrap, a person asks for part of a remote subgraph to be held locally. Check what is already here (cache:index), put a number on the ask before anything is fetched, then run materialize-remote. Eviction is a report, never an act.</p>
-<p class="fa-gloss-meta">Skills of large-datasets · source <a href="https://github.com/litlfred/folio-assistant/blob/main/large-datasets/skills/materialize-on-demand.md"><code>large-datasets/skills/materialize-on-demand.md</code></a></p>
+<p class="fa-gloss-meta">Skills of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/library/large-datasets/materialize-on-demand.md"><code>cat-harness/skills/library/large-datasets/materialize-on-demand.md</code></a></p>
 </dd>
-<dt id="large-datasets--kg-skills--materialize-remote" data-fa-state="extracted" data-fa-gloss="">
+<dt id="cat-harness--kg-skills--materialize-remote" data-fa-state="extracted" data-fa-gloss="">
 materialize-remote <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
 <p>Landing remote content locally — the five gates, the three states, and the two purposes. One process, shared by catalogue import and harness bootstrap, plus the refresh that is not a re-import.</p>
-<p class="fa-gloss-meta">Skills of large-datasets · source <a href="https://github.com/litlfred/folio-assistant/blob/main/large-datasets/skills/materialize-remote.md"><code>large-datasets/skills/materialize-remote.md</code></a></p>
+<p class="fa-gloss-meta">Skills of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/library/large-datasets/materialize-remote.md"><code>cat-harness/skills/library/large-datasets/materialize-remote.md</code></a></p>
 </dd>
 <dt id="cat-harness--kg-skills--mcp-assembly" data-fa-state="extracted" data-fa-gloss="">
 mcp-assembly <span class="fa-gloss-status">candidate, extracted</span>
@@ -1775,12 +1783,12 @@ root-readme <span class="fa-gloss-status">candidate, extracted</span>
 
 <h2 id="letter-S">S</h2>
 <dl class="fa-gloss">
-<dt id="large-datasets--kg-skills--sample-import" data-fa-state="extracted" data-fa-gloss="">
+<dt id="cat-harness--kg-skills--sample-import" data-fa-state="extracted" data-fa-gloss="">
 sample-import <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
 <p>Testing an import of a SAMPLE of a remote source into a knowledge graph or other structured store: scope it, let materialize-remote gate it, land it in the library (permanent) or the kept, unpublished trashcan (trial), import it, and test the import. The gates are called, never copied.</p>
-<p class="fa-gloss-meta">Skills of large-datasets · source <a href="https://github.com/litlfred/folio-assistant/blob/main/large-datasets/skills/sample-import.md"><code>large-datasets/skills/sample-import.md</code></a></p>
+<p class="fa-gloss-meta">Skills of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/library/large-datasets/sample-import.md"><code>cat-harness/skills/library/large-datasets/sample-import.md</code></a></p>
 </dd>
 <dt id="cat-harness--kg-skills--schema-management" data-fa-state="extracted" data-fa-gloss="">
 schema-management <span class="fa-gloss-status">candidate, extracted</span>
@@ -1912,7 +1920,7 @@ smart-launch <span class="fa-gloss-status">candidate, extracted</span>
 smart-stack-layering <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
-<p>Which of the five layers a WHO SMART asset, rule, script or page belongs to, and the one question that settles it. Read before adding anything to fhir-harness, smart-base, smart-l1, smart-dak or smart-ig, before creating a per-IG harness, and before moving a pre/post-processing step.</p>
+<p>Which layer a WHO SMART asset, rule, script or page belongs to — fhir-harness, smart-base (with its L1 and DAK document kinds) or smart-ig — and the one question that settles it. Read before adding anything to fhir-harness, smart-base or smart-ig, before creating a per-IG harness, and before moving a pre/post-processing step.</p>
 <p class="fa-gloss-meta">Skills of smart-base · source <a href="https://github.com/litlfred/folio-assistant/blob/main/smart-base/skills/content/authoring-who-smart-guidelines/smart-stack-layering.md"><code>smart-base/skills/content/authoring-who-smart-guidelines/smart-stack-layering.md</code></a></p>
 </dd>
 <dt id="cat-harness--kg-skills--spec-kit" data-fa-state="extracted" data-fa-gloss="">
@@ -1995,6 +2003,13 @@ technical-documentation <span class="fa-gloss-status">candidate, extracted</span
 <dd>
 <p>Write and review technical documentation of standards, software and knowledge assets as an SDO writes. Carries the RFC 2119 requirement levels as RFC 8174 constrains them, the three questions a first draft is measured against, and the rule that an ingested specification is checked for supersession before it is cited.</p>
 <p class="fa-gloss-meta">Skills of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/authoring/authoring-core/technical-documentation.md"><code>cat-harness/skills/authoring/authoring-core/technical-documentation.md</code></a></p>
+</dd>
+<dt id="cat-harness--kg-skills--term-disagreement" data-fa-state="extracted" data-fa-gloss="">
+term-disagreement <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>When a glossary term the extractor minted and an authorised terminology disagree — the corpus spells a concept differently from the authority, or uses a word the authority does not carry — decide among three outcomes: change the prose, author a local term with its reason, or record that the vocabulary is wrong for this domain. Says which disagreements need a decision at all, how to choose, what each outcome writes and where, and what is NOT this skill (two judges disagreeing about a mapping).</p>
+<p class="fa-gloss-meta">Skills of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/library/library-core/term-disagreement.md"><code>cat-harness/skills/library/library-core/term-disagreement.md</code></a></p>
 </dd>
 <dt id="fhir-harness--kg-skills--terminology-management" data-fa-state="extracted" data-fa-gloss="">
 terminology-management <span class="fa-gloss-status">candidate, extracted</span>

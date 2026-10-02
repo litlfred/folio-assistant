@@ -515,6 +515,9 @@ export interface ContentDirectory extends GraphNodeDirectory {
   /** Whether the agent summary drain may offer a `library`'s blocks; absent means `drain`. See the schema field (bean `x80s`). */
   summaries?: "drain" | "held";
 
+  /** Entry slugs of a `library` held back from the summary drain while the rest of it drains. See the schema field (bean `j7ql`). */
+  heldEntries?: string[];
+
   /**
    * Which theme this subgraph renders on — one answer for every surface that
    * renders it (navbar section, board panel, sticky).
@@ -1376,6 +1379,18 @@ const ContentDirectoryShape = GraphNodeDirectoryShape.extend({
    */
   summaries: z.enum(["drain", "held"]).optional(),
   /**
+   * Entry slugs (`<library>/<slug>/`) held back from the summary drain while
+   * the rest of this `library` drains — the per-entry form of
+   * `summaries: "held"`. It exists because a hold is the OWNER's decision
+   * about a set of documents, and a set can outlive the directory it was
+   * stated on: agent-skills' library was held on 2026-09-24 (bean `x80s`)
+   * and dissolved into cat-harness's on 2026-10-01 (bean `j7ql`), where the
+   * other entries drain. Folding the hold into the directory's would either
+   * drop it or extend it to documents the owner never held. Listed, never
+   * derived, so a move cannot release it silently.
+   */
+  heldEntries: z.array(z.string().min(1)).optional(),
+  /**
    * HOW this graph is shown, and what can be done to it.
    *
    * The visualiser axis, declared PER GRAPH — issue #764, O2, settled by the
@@ -1994,7 +2009,7 @@ export class TopologyConflictError extends Error {
  *
  * ## It is `materialization` at the graph level
  *
- * `folio-assistant-core/schemas/materialization.ts` already names the states a
+ * `schemas/materialization-state.ts` already names the states a
  * body of content is in, and a declared graph is in the same ones: a
  * `ContentDirectory` is **materialized** (bytes here), a `RemoteGraph` is
  * **referenced** (we know it exists and where, we hold none of it).

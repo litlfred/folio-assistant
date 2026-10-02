@@ -91,7 +91,7 @@
   // Same `test/` and `*.e2e.ts` reasoning as above applies to each, which is
   // why these are per-directory globs rather than a bare `*/**/*.ts`.
   "include": ["bootstrap-tools/**/*.ts", "cat-harness/src/**/*.ts", "cat-harness/schemas/**/*.ts", "cat-harness/content/**/*.ts", "cat-harness/scripts/**/*.ts", "cat-harness/skills/**/*.ts", "cat-harness/adapters/**/*.ts", "cat-harness-tools/**/*.ts", "cat-harness/test/health/**/*.ts", "cat-harness/types/**/*.d.ts", "tools/**/*.ts", "folio-assistant-core/schemas/**/*.ts", "folio-assistant-core/adapters/**/*.ts",
-    "folio-assistant-sci/adapters/**/*.ts", "large-datasets/schemas/**/*.ts", "large-datasets/scripts/**/*.ts", "who-iris/scripts/**/*.ts", "who-iris/schemas/**/*.ts"],
+    "folio-assistant-sci/adapters/**/*.ts", "fhir-harness/schemas/**/*.ts", "fhir-harness/scripts/**/*.ts", "who-iris/scripts/**/*.ts", "who-iris/schemas/**/*.ts", "smart-base/schemas/**/*.ts", "smart-base/scripts/**/*.ts", "smart-base/content/**/*.ts", "smart-base/contributions.ts"],
   "exclude": [
     // `block-qa-schema` publishes to npm and owns its compiler settings. Its
     // `tests/` are excluded here for a reason that is NOT tidiness (bean `om30`):
@@ -116,5 +116,16 @@
     // RESIDUAL GAP, stated rather than closed: that test file is now typechecked
     // by nothing. Closing it is the package owner's call — a `tsconfig.test.json`
     // carrying those options, run from its own `scripts.test`.
-    "cat-harness/schemas/block-qa-schema/tests","dist", "node_modules"]
+    "cat-harness/schemas/block-qa-schema/tests","dist", "node_modules",
+    // THE TOOLS GLOB WOULD WIDEN THE PROGRAM, SILENTLY (bean `70lx`, trap T3).
+    // `cat-harness-tools/**/*.ts` is a whole-instance glob, so when the code
+    // move (S5 1a) brings `test/*.e2e.ts` and the one e2e-only fixture across,
+    // they would join this program even though the `test/**` reasoning above
+    // leaves them to Playwright's own pipeline. Excluded BEFORE they arrive so
+    // that every batch of the move conserves the program: measured 1,582 files
+    // (outside `node_modules`) before and after this line. `qa-badge-fixture`
+    // is named because nothing but `qa-badge.e2e.ts` imports it, which is why
+    // it is outside the program today; `instance-fixture` and `qa-fixture` are
+    // imported by unit tests and are in the program either way.
+    "cat-harness-tools/**/*.e2e.ts", "cat-harness-tools/test/support/qa-badge-fixture.ts"]
 }

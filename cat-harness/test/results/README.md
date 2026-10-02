@@ -16,6 +16,7 @@ Part of [C@T Harness](../../README.md) 0.1.0, declared as `qa`, holding `qa`.
 | [`kg-qa.manifest.json`](kg-qa.manifest.json) | data |  |
 | [`lane-documentation.qa-results.json`](lane-documentation.qa-results.json) | data |  |
 | [`layout-norms.qa-results.json`](layout-norms.qa-results.json) | data |  |
+| [`library-entry-qa.qa-results.json`](library-entry-qa.qa-results.json) | data |  |
 | [`lsi-need-an-index.qa-results.json`](lsi-need-an-index.qa-results.json) | data |  |
 | [`methodology-evidence.qa-results.json`](methodology-evidence.qa-results.json) | data |  |
 | [`reference-direction.qa-results.json`](reference-direction.qa-results.json) | data |  |
@@ -26,15 +27,18 @@ Part of [C@T Harness](../../README.md) 0.1.0, declared as `qa`, holding `qa`.
 | [`subgraph-readmes.qa-results.json`](subgraph-readmes.qa-results.json) | data |  |
 | [`term-mapping.qa-results.json`](term-mapping.qa-results.json) | data |  |
 | [`wireframes.qa-results.json`](wireframes.qa-results.json) | data |  |
+| [`agent-skills/`](agent-skills/) | 2 files | |
 | [`block-qa/`](block-qa/) | 122 files | |
 | [`bootstrap/`](bootstrap/) | 22 files | |
 | [`bootstrap-tools/`](bootstrap-tools/) | 7 files | |
 | [`cat-harness-tools/`](cat-harness-tools/) | 2 files | |
-| [`detangle/`](detangle/) | 61 files | |
-| [`kg-qa/`](kg-qa/) | 453 files | |
-| [`library-qa/`](library-qa/) | 59 files | |
-| [`lsi/`](lsi/) | 5 files | |
-| [`tool-runs/`](tool-runs/) | 3 files | |
+| [`detangle/`](detangle/) | 62 files | |
+| [`folio-assistant/`](folio-assistant/) | 2 files | |
+| [`kg-qa/`](kg-qa/) | 498 files | |
+| [`large-datasets/`](large-datasets/) | 2 files | |
+| [`library-qa/`](library-qa/) | 63 files | |
+| [`lsi/`](lsi/) | 4 files | |
+| [`tool-runs/`](tool-runs/) | 4 files | |
 | [`translation-qa/`](translation-qa/) | 35 files | |
 | [`viewer-nav/`](viewer-nav/) | 1 file | |
 | [`witnesses/`](witnesses/) | 163 files | |

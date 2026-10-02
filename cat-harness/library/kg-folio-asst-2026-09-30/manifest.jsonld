@@ -1,5 +1,10 @@
 {
-  "@context": "https://litlfred.github.io/folio-assistant/ns/content/v1.jsonld",
+  "@context": [
+    "https://litlfred.github.io/folio-assistant/ns/content/v1.jsonld",
+    {
+      "@base": "https://litlfred.github.io/folio/"
+    }
+  ],
   "@id": "library/kg-folio-asst-2026-09-30/manifest",
   "@type": [
     "folio-assistant-core:SourceDocument"
@@ -23,6 +28,8 @@
   "provenance": "ingested",
   "meta": {
     "doc_id": "kg-folio-asst-2026-09-30",
+    "title_source": "filename",
+    "title_verified": false,
     "source_file": "kg-folio-asst-2026-09-30.pptx",
     "source_sha256": "bb875471ee78553b84009c26504aebf356297554109f92244c64141afd2c3739",
     "arxiv": null,

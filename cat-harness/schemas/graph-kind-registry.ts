@@ -904,7 +904,7 @@ export const BASE_GRAPH_KINDS: Readonly<Record<string, GraphKindDef>> = {
       "concern-groups/v1": { validator: "schemas/concern-groups.ts#ConcernGroupsSchema" },
       "http://json-schema.org/draft-07/schema#": { external: "JSON Schema draft-07" },
       "https://json-schema.org/draft/2020-12/schema": { external: "JSON Schema 2020-12" },
-      "folio-source-descriptor/v1": { validator: "large-datasets:schemas/source-descriptor.ts#SourceDescriptorSchema" },
+      "folio-source-descriptor/v1": { validator: "cat-harness:schemas/source-descriptor.ts#SourceDescriptorSchema" },
     },
     // bootstrap's own sentence, read rather than restated (bean r3gy, D1).
     summary: BOOTSTRAP_GRAPH_KINDS["schemas"],
@@ -1401,7 +1401,8 @@ export const BASE_GRAPH_KINDS: Readonly<Record<string, GraphKindDef>> = {
     holds: "state",
     // declared-path-literal: this table IS the declaration, as on `health`.
     nodeSchemas: {
-      "folio-extraction/v1": { validator: "folio-assistant-core:schemas/extraction.ts#ExtractionSchema" },
+      // Local since bean `tlat` moved the extraction contract down (placement PR5).
+      "folio-extraction/v1": { validator: "schemas/extraction.ts#ExtractionSchema" },
       "folio-intake/v1": { validator: "schemas/intake.ts#IntakeSchema" },
       // The document adapter writes an upload's description beside its intake
       // (bean `d4lb`), in the same family the IRIS catalogue records use.
@@ -1555,7 +1556,7 @@ export const BASE_GRAPH_KINDS: Readonly<Record<string, GraphKindDef>> = {
     holds: "content",
     // declared-path-literal: this table IS the declaration, as on `health`.
     nodeSchemas: {
-      "folio-fhir-artifact-index/v1": { validator: "folio-assistant-core:schemas/fhir-artifact-index.ts#FhirArtifactIndexSchema" },
+      "folio-fhir-artifact-index/v2": { validator: "fhir-harness:schemas/fhir-artifact-index.ts#FhirArtifactIndexSchema" },
       // The IG's own NAVIGATION, read from its `sushi-config.yaml` — a second
       // family in this directory because it comes from a second SOURCE. The
       // index is harvested from the IG's published OUTPUT; a menu exists only
@@ -1570,7 +1571,13 @@ export const BASE_GRAPH_KINDS: Readonly<Record<string, GraphKindDef>> = {
       // the IG's published output, the menu from its `sushi-config.yaml`, and
       // the chrome from separate template repositories the IG merely depends
       // on. Three provenances, three documents (bean `ajx9`).
-      "folio-ig-chrome/v1": { validator: "fhir-harness:schemas/ig-chrome.ts#IgChromeSchema" },
+      // v2 (stage D, #1767): keyed by the chain's TOP template, not by the IG
+      // it was ingested beside — every IG building with the chain wears it.
+      "folio-ig-chrome/v2": { validator: "fhir-harness:schemas/ig-chrome.ts#IgChromeSchema" },
+      // An IG's own id, canonical and status, read from ITS `sushi-config.yaml`.
+      // A FOURTH family in this directory because status is a fact about one
+      // IG, and the chrome it used to ride in is shared by many.
+      "folio-ig-identity/v1": { validator: "fhir-harness:schemas/ig-identity.ts#IgIdentitySchema" },
       "https://json-schema.org/draft/2020-12/schema": { external: "JSON Schema 2020-12" },
     },
     summary:
@@ -1804,6 +1811,27 @@ export const BASE_GRAPH_KINDS: Readonly<Record<string, GraphKindDef>> = {
       "`kind: sticky | webpage | publication`. The palette vocabulary is shared across " +
       "every kind and only the geometry varies; every value cites where it was measured.",
   },
+  "document-kinds": {
+    renderable: false,
+    // Authored-from-a-source, like `themes`: a document kind is true whether
+    // or not any document has been written in it yet. Core knows that kinds
+    // exist and never which — a harness contributes its own as data (stage
+    // D5 of the smart-* separation, #1767, bean `qvxh`).
+    holds: "content",
+    // declared-path-literal: this table IS the declaration, as on `health`.
+    nodeSchemas: {
+      "folio-document-kind/v1": { validator: "schemas/document-kind.ts#DocumentKindSchema" },
+      // How one subject realises a kind, computed by the kind's owner — a
+      // second family in this directory because it is DERIVED from another
+      // graph (an IG's artefact index), where the kind is authored.
+      "folio-document-kind-coverage/v1": { validator: "schemas/document-kind.ts#DocumentKindCoverageSchema" },
+    },
+    summary:
+      "Document kinds — named structures of sections (fixed or semi-fixed) that a document " +
+      "authored with a harness follows, one `folio-document-kind/v1` JSON each, plus computed " +
+      "`folio-document-kind-coverage/v1` reports of how a subject realises one. Every kind and " +
+      "section names its sources; `computedFrom` names the declared graphs a section derives from.",
+  },
   "todo-feedback": {
     layer: "core",
     renderable: false,
@@ -1852,7 +1880,7 @@ export const BASE_GRAPH_KINDS: Readonly<Record<string, GraphKindDef>> = {
   // rule could not apply to them. Now delete means relocate, and relocate is
   // reversible.
   //
-  // On the name: `.fsh` is FHIR Shorthand in this codebase (`schemas/dak.ts`,
+  // On the name: `.fsh` is FHIR Shorthand in this codebase (`smart-base/schemas/dak.ts`,
   // `jsonld.ts`, `translation-tools.ts`, `block-qa.ts`) and throughout the
   // WHO SMART folios this platform targets. The collision was raised and the
   // owner confirmed the spelling; it is recorded here so the overlap is met

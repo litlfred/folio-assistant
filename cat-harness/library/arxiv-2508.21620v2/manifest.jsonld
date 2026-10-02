@@ -1,10 +1,15 @@
 {
-  "@context": "https://litlfred.github.io/folio-assistant/ns/content/v1.jsonld",
+  "@context": [
+    "https://litlfred.github.io/folio-assistant/ns/content/v1.jsonld",
+    {
+      "@base": "https://litlfred.github.io/folio/"
+    }
+  ],
   "@id": "library/arxiv-2508.21620v2/manifest",
   "@type": [
     "folio-assistant-core:SourceDocument"
   ],
-  "title": "Introduction to the Analysis of Probabilistic",
+  "title": "Introduction to the Analysis of Probabilistic Decision-Making Algorithms",
   "contains": [
     "library/arxiv-2508.21620v2/sections/sec-front-matter",
     "library/arxiv-2508.21620v2/sections/sec-000",
@@ -30,6 +35,8 @@
   "provenance": "ingested",
   "meta": {
     "doc_id": "arxiv-2508.21620v2",
+    "title_source": "metadata",
+    "title_verified": true,
     "source_file": "2508.21620v2.pdf",
     "source_sha256": "df2697ddad3185010a73bdcd37186a23192ae5553d7d6b6cfa6d7a8e3a9bcbeb",
     "pages": 29,

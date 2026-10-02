@@ -68,6 +68,7 @@ import { join, resolve } from "node:path";
 
 import { CONTENT_CONTEXT, CONTENT_CONTEXT_URL } from "../schemas/jsonld.js";
 import { stubOfNamespace } from "../schemas/namespaces.js";
+import { heldProvJsonldContext, PROV_JSONLD_CONTEXT_URL } from "../schemas/prov-jsonld.js";
 
 const REPO = resolve(import.meta.dir, "..", "..");
 
@@ -374,6 +375,13 @@ export function checkPrefixDeclaration(
   const extend = (c: unknown, scope: Set<string>, where: string, check = true): boolean => {
     if (Array.isArray(c)) return c.map((x) => extend(x, scope, where, check)).every(Boolean);
     if (typeof c === "string") {
+      // PROV-JSONLD's context is HELD, sha-pinned, so it is read rather than
+      // reported unresolvable — the same copy `publish:verify` serves.
+      if (c === PROV_JSONLD_CONTEXT_URL) {
+        const held = heldProvJsonldContext(repo) as { "@context": Record<string, unknown> };
+        for (const k of Object.keys(held["@context"])) if (!k.startsWith("@")) scope.add(k);
+        return true;
+      }
       if (c !== contextUrl) {
         unresolvedUrls.add(c);
         return false;

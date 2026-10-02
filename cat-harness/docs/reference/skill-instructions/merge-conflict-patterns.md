@@ -43,6 +43,17 @@ pattern"*, and *"put in merge process bpmn"*.
 A path that **no** pattern names is refused. Adding automation is adding a
 pattern, deliberately, with its reason — never widening a glob on a hunch.
 
+## When one side deleted the file
+
+A modify/delete conflict has no stage for the side that deleted it, so
+`checkout --theirs` (or `--ours`) has nothing to take. Every resolving
+strategy takes the **base's side of the deletion** instead: its copy when the
+base kept the file, `git rm` when the base removed it — `takeBase` in
+`merge-base.ts`, and `provisionalSide` in `qa-resolve-conflicts.ts` for the
+delegated sidecars (#1854). Regeneration recreates the file if it is still
+produced. Classification is by path, so an authored path in a modify/delete
+conflict is refused exactly like any other conflict on it.
+
 ## The patterns
 
 Counts are conflicted files in the 2026-09-30 measurement.
@@ -204,6 +215,34 @@ Uploaded source material: provenance-bearing input, never regenerated.
 3. Add a test that the unsafe neighbour is refused, not only that the case
    resolves.
 4. Add a section here.
+
+## In CI — opt in with the `merge-main` label
+
+`.github/workflows/merge-main.yml` is a second CALLER of the same command,
+never a second resolver (bean `d33q` part B). When `main` moves, it runs
+`bun run merge:main` on every open, same-repository PR labelled `merge-main`
+that is behind `main`, one live run per PR (a newer run cancels an older one).
+
+- **It pushes only a proved merge**, as a fast-forward of the branch it checked
+  out; if the author pushed meanwhile the push is rejected and nothing is
+  overwritten.
+- **A refusal pushes nothing**, labels the PR `needs-merge-human`, and lists
+  the ✗ paths. Adding a pattern stays a person's change, made here.
+- **One comment per PR, edited in place** on every run — except a run that
+  was **cancelled** (a newer push to `main` superseded it) or whose merge step
+  reported no status, which leaves the comment untouched. Before #1854 such a
+  run rewrote it to "**Error** (exit )". The text is composed by
+  `cat-harness/scripts/merge-main-comment.ts`, which is unit-tested.
+- **The merge commit is still judged by CI**: pushed with `MERGE_MAIN_TOKEN`
+  when that secret exists, otherwise followed by a dispatch of
+  `code-quality-gates.yml` on the branch, because a GITHUB_TOKEN push triggers
+  no workflow.
+
+Why it is worth a runner: on #1754 (2026-10-01) one round took 19–46 min in a
+shared agent container while `main` moved every few minutes, and GitHub runs no
+`pull_request` CI on a conflicted PR — a 28-conflict resolution went 'dirty'
+again within a minute of its push. Use the label on a PR that is waiting on
+review rather than on its author; leave it off a branch somebody is pushing to.
 {% endraw %}
 
 ## Processes that run this skill

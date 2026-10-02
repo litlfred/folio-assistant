@@ -1,5 +1,5 @@
 <!-- kg:subgraph:begin -->
-# AI-assisted JSON Schema Creation and Mapping 1st Felix Neubauer , 3rd Benjamin Uekermann
+# AI-assisted JSON Schema Creation and Mapping
 
 ingested source material — attributed to its document, not folio content
 

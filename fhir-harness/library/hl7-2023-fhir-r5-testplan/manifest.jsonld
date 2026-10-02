@@ -1,5 +1,10 @@
 {
-  "@context": "https://litlfred.github.io/folio-assistant/ns/content/v1.jsonld",
+  "@context": [
+    "https://litlfred.github.io/folio-assistant/ns/content/v1.jsonld",
+    {
+      "@base": "https://litlfred.github.io/folio/"
+    }
+  ],
   "@id": "library/hl7-2023-fhir-r5-testplan/manifest",
   "@type": [
     "folio-assistant-core:SourceDocument"
@@ -25,6 +30,8 @@
   "provenance": "ingested",
   "meta": {
     "doc_id": "hl7-2023-fhir-r5-testplan",
+    "title_source": "text",
+    "title_verified": false,
     "source_file": "HL7/fhir source/testplan at v5.0.0",
     "source_sha256": "93b957d26952e59c11cc2b6c1772e345c0513cb4007cb0536e441f2ba1bdf1d5",
     "arxiv": null,

@@ -1,5 +1,10 @@
 {
-  "@context": "https://litlfred.github.io/folio-assistant/ns/content/v1.jsonld",
+  "@context": [
+    "https://litlfred.github.io/folio-assistant/ns/content/v1.jsonld",
+    {
+      "@base": "https://litlfred.github.io/folio/"
+    }
+  ],
   "@id": "library/who-pub-tps-931/manifest",
   "@type": [
     "folio-assistant-core:SourceDocument"
@@ -131,6 +136,8 @@
   "provenance": "ingested",
   "meta": {
     "doc_id": "who-pub-tps-931",
+    "title_source": "text",
+    "title_verified": false,
     "source_file": "WHO_PUB_TPS_93.1.pdf",
     "source_sha256": "ecc88eee9975675557d007de7acab9107d5bbd5e2b83cd15e483f1dfafe3f490",
     "pages": 121,

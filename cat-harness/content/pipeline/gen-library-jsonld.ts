@@ -69,7 +69,7 @@
 
 import { existsSync, mkdirSync, readdirSync, readFileSync, rmSync, statSync, writeFileSync } from "fs";
 import { basename, dirname, join } from "path";
-import { CONTENT_CONTEXT_URL, typesForKind } from "../../schemas/jsonld";
+import { CONTENT_DOCUMENT_CONTEXT, typesForKind } from "../../schemas/jsonld";
 import { LABEL_PREFIXES } from "../../schemas/constraints";
 import { findContentRepoRoot } from "./repo-root";
 import type { DocumentImage, ImagesSidecar } from "../../schemas/document-image.ts";
@@ -94,7 +94,15 @@ interface Structure {
   _schema?: string;
   doc_id: string;
   source?: { file?: string; sha256?: string; pages?: number };
-  metadata?: { title?: string | null; authors_raw?: string | null; arxiv?: string | null; doi?: string | null };
+  metadata?: {
+    title?: string | null;
+    authors_raw?: string | null;
+    arxiv?: string | null;
+    doi?: string | null;
+    title_source?: string;
+    title_verified?: boolean;
+    title_correction?: { title: string; basis: string; corrected_on: string; bean?: string };
+  };
   sections?: StructureSection[];
 }
 
@@ -341,11 +349,20 @@ export function buildDocumentNodes(
     content: node({
       "@id": docIri(docId, "manifest"),
       "@type": ["folio-assistant-core:SourceDocument"],
-      title: structure.metadata?.title ?? docId,
+      // An editor's correction outranks the extracted title; the extracted
+      // one outranks the id (bean `w6fu`). Which of the three answered is
+      // stated in `meta`, so a corrected title never passes for an extracted
+      // one and an unverified one never passes for a checked one.
+      title: structure.metadata?.title_correction?.title ?? structure.metadata?.title ?? docId,
       contains: sectionIris,
       provenance: "ingested",
       meta: {
         doc_id: docId,
+        title_source: structure.metadata?.title_correction ? "editorial" : structure.metadata?.title_source,
+        title_verified: structure.metadata?.title_correction ? true : structure.metadata?.title_verified,
+        title_correction: structure.metadata?.title_correction
+          ? { ...structure.metadata.title_correction, extracted: structure.metadata.title ?? null }
+          : undefined,
         source_file: structure.source?.file,
         source_sha256: structure.source?.sha256,
         pages: structure.source?.pages,
@@ -367,7 +384,7 @@ export function buildDocumentNodes(
 
 /** Serialise, dropping undefined so output is byte-stable. */
 function node(doc: Record<string, unknown>): string {
-  const clean: Record<string, unknown> = { "@context": CONTENT_CONTEXT_URL };
+  const clean: Record<string, unknown> = { "@context": CONTENT_DOCUMENT_CONTEXT };
   for (const [k, v] of Object.entries(doc)) {
     if (v === undefined) continue;
     if (Array.isArray(v) && v.length === 0) continue;
@@ -582,7 +599,7 @@ export function buildEntryNodes(docId: string, dir: string): EntryOutcome {
     }>(join(dir, "referenced.json"));
     if (!record?.source?.sha256) return { state: "unreadable", rung };
     const manifest = {
-      "@context": CONTENT_CONTEXT_URL,
+      "@context": CONTENT_DOCUMENT_CONTEXT,
       "@id": docIri(docId, "manifest"),
       "@type": ["folio-assistant-core:SourceDocument"],
       title: record.identity?.title ?? docId,

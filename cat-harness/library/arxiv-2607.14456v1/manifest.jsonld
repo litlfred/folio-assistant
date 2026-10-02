@@ -1,10 +1,15 @@
 {
-  "@context": "https://litlfred.github.io/folio-assistant/ns/content/v1.jsonld",
+  "@context": [
+    "https://litlfred.github.io/folio-assistant/ns/content/v1.jsonld",
+    {
+      "@base": "https://litlfred.github.io/folio/"
+    }
+  ],
   "@id": "library/arxiv-2607.14456v1/manifest",
   "@type": [
     "folio-assistant-core:SourceDocument"
   ],
-  "title": "arxiv-2607.14456v1",
+  "title": "Beyond Generalist LLMs: Specialist Agentic Systems for Structured Code Workflow Execution",
   "contains": [
     "library/arxiv-2607.14456v1/sections/page-001",
     "library/arxiv-2607.14456v1/sections/page-002",
@@ -34,6 +39,8 @@
   "provenance": "ingested",
   "meta": {
     "doc_id": "arxiv-2607.14456v1",
+    "title_source": "metadata",
+    "title_verified": true,
     "source_file": "2607.14456v1.pdf",
     "source_sha256": "f3f81db565e60f7fb783a997f49f3d0763140109da01d099a44f70a30af97662",
     "arxiv": null,

@@ -1,5 +1,5 @@
 <!-- kg:subgraph:begin -->
-# Algorithmic Approaches to
+# Algorithmic Approaches to Sequential Decision-Making and Social Epistemology
 
 ingested source material — attributed to its document, not folio content
 

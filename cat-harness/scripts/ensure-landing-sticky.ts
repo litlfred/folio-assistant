@@ -74,6 +74,7 @@ import { portableSegment } from "../schemas/portable-path";
 import {
   StickyContributionSchema,
   composeContributions,
+  readerText,
   type DeclaredContribution,
 } from "../schemas/sticky-contribution.js";
 
@@ -417,8 +418,8 @@ export function contributingRoots(root: string): string[] {
  * The contributions every layer declares, composed and ordered.
  *
  * Reads `stickies` off each layer's declaration and pairs it with that layer's
- * own `name` and `description` — `bodyFrom: "description"` means **the declaring
- * instance's** description, so bootstrap's card carries bootstrap's sentence and
+ * own `name`, `summary`, `alsoWritten` and `description`. `bodyFrom` reads **the
+ * declaring instance's** fields, so bootstrap's card carries bootstrap's sentence and
  * not this instance's. Reading the root's for every layer would give a board of
  * one sentence repeated, which is the defect that makes the whole seam pointless.
  */
@@ -438,6 +439,8 @@ export function declaredContributions(root: string): DeclaredContribution[] {
         // silently attribute a card to the wrong file.
         declaredIn: relative(repoRootFor(root), declarationPathIn(layer)!) || (findDeclarationFile(layer) ?? ""),
         ...(decl.description === undefined ? {} : { description: decl.description }),
+        ...(decl.summary === undefined ? {} : { summary: decl.summary }),
+        ...(decl.alsoWritten === undefined ? {} : { alsoWritten: decl.alsoWritten }),
       });
     }
   }
@@ -472,6 +475,51 @@ export function stickiesFor(
     });
     return existing ? { ...wanted, createdAt: existing.createdAt } : wanted;
   });
+}
+
+/**
+ * Every harness sticky whose words are not the reader's text for its harness.
+ *
+ * The owner's ruling on bean `ob3m` finding 3, 2026-10-01: *"Stickies show the
+ * same text as the landing page"*. A card built from its declaration must open
+ * with {@link readerText}: the `summary` (else the description) and the
+ * "Also written" spellings, which is what the landing's harness section shows.
+ * The defect this catches: the folio-assistant card read its `description`,
+ * which opens "The repository itself… NAMED `folio-assistant-checkout`", the
+ * reason the name was chosen, written for a maintainer.
+ *
+ * **Reads the FILES the board renders**, not the declaration's intent, so a
+ * card left stale is caught as well as a declaration that picks the author's
+ * text. `startsWith` rather than equality, because `bodyAppend` may add to the
+ * reader's text without copying it.
+ *
+ * A card with a literal `body` is not judged here. Its words are written for
+ * the card itself, and there is no declaration field to compare them with.
+ */
+export function readerTextProblems(root: string): string[] {
+  const decl = JSON.parse(readFileSync(declarationPathIn(root)!, "utf8")) as {
+    directories?: ContentDirectory[];
+  };
+  const dir = join(root, folioDirPath(decl));
+  const problems: string[] = [];
+  for (const d of declaredContributions(root)) {
+    if (d.contribution.bodyFrom === undefined) continue;
+    const want = readerText(d);
+    if (want === undefined) continue;
+    const file = join(folioDirPath(decl), stickyFile(d.contribution.id));
+    const onDisk = readExistingSticky(join(dir, stickyFile(d.contribution.id)));
+    if (onDisk === undefined) continue; // reported as missing by the main check
+    if (!onDisk.comment.startsWith(want)) {
+      const why =
+        d.contribution.bodyFrom === "description" && d.summary !== undefined
+          ? `declares \`bodyFrom: "description"\` but ${d.declaredIn} has a \`summary\`; use \`bodyFrom: "summary"\``
+          : "is stale";
+      problems.push(
+        `${file} does not show ${d.declaredBy}'s summary and "Also written" (the landing's text): it ${why}`,
+      );
+    }
+  }
+  return problems;
 }
 
 /** What a `--begin` / `--complete` run is asking for. */
@@ -628,6 +676,7 @@ if (import.meta.main) {
         .filter((st) => st.state !== "already")
         .map((st) => `${st.path} is ${st.state === "written" ? "missing" : "stale"}`),
       ...report.pruned.map((f) => `${join(report.folioDir, f)} is declared by no layer`),
+      ...readerTextProblems(root),
     ].filter((p): p is string => p !== undefined);
     if (problems.length === 0) {
       console.log(`✓ folio declared at ${report.folioDir}, ${report.stickies.length} sticky/ies up to date`);

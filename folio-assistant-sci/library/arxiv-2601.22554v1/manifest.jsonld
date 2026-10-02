@@ -1,10 +1,15 @@
 {
-  "@context": "https://litlfred.github.io/folio-assistant/ns/content/v1.jsonld",
+  "@context": [
+    "https://litlfred.github.io/folio-assistant/ns/content/v1.jsonld",
+    {
+      "@base": "https://litlfred.github.io/folio/"
+    }
+  ],
   "@id": "library/arxiv-2601.22554v1/manifest",
   "@type": [
     "folio-assistant-core:SourceDocument"
   ],
-  "title": "LeanArchitect LeanArchitect",
+  "title": "LeanArchitect: Automating Blueprint Generation for Humans and AI",
   "contains": [
     "library/arxiv-2601.22554v1/sections/sec-front-matter",
     "library/arxiv-2601.22554v1/sections/sec-000",
@@ -27,6 +32,15 @@
   "provenance": "ingested",
   "meta": {
     "doc_id": "arxiv-2601.22554v1",
+    "title_source": "editorial",
+    "title_verified": true,
+    "title_correction": {
+      "title": "LeanArchitect: Automating Blueprint Generation for Humans and AI",
+      "basis": "The PDF Title metadata recorded in docinfo; the text walk read the title's two halves apart, keeping 'LeanArchitect' twice as the title and filing 'Automating Blueprint Generation for Humans and AI' as authors_raw, so the page agrees with it.",
+      "corrected_on": "2026-10-02",
+      "bean": "folio-assistant-w6fu",
+      "extracted": "LeanArchitect LeanArchitect"
+    },
     "source_file": "2601.22554v1.pdf",
     "source_sha256": "d5f16d242082321870bd0a478043f7e0dc3c21b81d5e451ac4391b4f37107978",
     "pages": 15,

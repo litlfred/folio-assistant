@@ -1,10 +1,15 @@
 {
-  "@context": "https://litlfred.github.io/folio-assistant/ns/content/v1.jsonld",
+  "@context": [
+    "https://litlfred.github.io/folio-assistant/ns/content/v1.jsonld",
+    {
+      "@base": "https://litlfred.github.io/folio/"
+    }
+  ],
   "@id": "library/who-rhr-1806-eng/manifest",
   "@type": [
     "folio-assistant-core:SourceDocument"
   ],
-  "title": "who-rhr-1806-eng",
+  "title": "Classification of Digital Health Interventions v1.0",
   "contains": [
     "library/who-rhr-1806-eng/sections/page-001",
     "library/who-rhr-1806-eng/sections/page-002",
@@ -30,6 +35,15 @@
   "provenance": "ingested",
   "meta": {
     "doc_id": "who-rhr-1806-eng",
+    "title_source": "editorial",
+    "title_verified": true,
+    "title_correction": {
+      "title": "Classification of Digital Health Interventions v1.0",
+      "basis": "Page 1 prints this title, version included, in its largest type (with zero-width spaces between the words, which are dropped here); the PDF has no Title metadata.",
+      "corrected_on": "2026-10-02",
+      "bean": "folio-assistant-w6fu",
+      "extracted": null
+    },
     "source_file": "WHO-RHR-18.06-eng.pdf",
     "source_sha256": "44be3640bb1730da309256d74090968e757bb10371b4367e97b75248c49998e6",
     "arxiv": null,
