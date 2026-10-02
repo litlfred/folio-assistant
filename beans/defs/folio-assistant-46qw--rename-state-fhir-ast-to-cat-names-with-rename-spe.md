@@ -1,10 +1,13 @@
 ---
 # folio-assistant-46qw
 title: Rename state + fhir-ast/* to cat- names with rename-special-branch.sh (handoff to local agy agent)
-status: todo
+status: in-progress
 type: task
+priority: normal
+tags:
+    - ready-to-close
 created_at: 2026-10-02T21:25:05Z
-updated_at: 2026-10-02T21:25:05Z
+updated_at: 2026-10-02T21:32:14Z
 parent: folio-assistant-fs43
 ---
 
@@ -99,7 +102,47 @@ Not part of this bean, and handed over later once their prerequisites land:
 - `lake-cache/*` in the Lean folios, after #1913 merges.
 
 ## Done when
-- [ ] `cat-state` exists at `d913ea45b8eb`, and `state` is gone (litlfred/folio-assistant)
-- [ ] `cat-fhir-ast/smart.who.int.trust` exists at `f254e5bb`, and `fhir-ast/smart.who.int.trust` is gone (litlfred/smart-trust)
-- [ ] `cat-fhir-ast/smart.who.int.base` exists at `eb7bed83`, and `fhir-ast/smart.who.int.base` is gone (litlfred/smart-base)
+- [x] `cat-state` exists at `d913ea45b8eb`, and `state` is gone (litlfred/folio-assistant)
+- [x] `cat-fhir-ast/smart.who.int.trust` exists at `f254e5bb`, and `fhir-ast/smart.who.int.trust` is gone (litlfred/smart-trust)
+- [x] `cat-fhir-ast/smart.who.int.base` exists at `eb7bed83`, and `fhir-ast/smart.who.int.base` is gone (litlfred/smart-base)
 - [ ] `## Evidence` added and the bean tagged `ready-to-close` by the executor; the steward has verified with `git ls-remote` and closed it
+
+## Evidence (2026-10-02 21:29–21:31 UTC)
+
+Note: script uses HTTPS by default; overrode with `RENAME_SPECIAL_BRANCH_URL` env var for SSH.
+
+### 1. state → cat-state (litlfred/folio-assistant)
+
+```
+APPLY — litlfred/folio-assistant: 1 branch(es)
+  state (d913ea45b8eb) -> cat-state
+    created cat-state at d913ea45b8eb (verified)
+    removed state
+Now on litlfred/folio-assistant:
+    cat-state
+DONE
+```
+
+### 2. fhir-ast/smart.who.int.trust → cat-fhir-ast/smart.who.int.trust (litlfred/smart-trust)
+
+```
+APPLY — litlfred/smart-trust: 1 branch(es)
+  fhir-ast/smart.who.int.trust (f254e5bb6f6b) -> cat-fhir-ast/smart.who.int.trust
+    created cat-fhir-ast/smart.who.int.trust at f254e5bb6f6b (verified)
+    removed fhir-ast/smart.who.int.trust
+Now on litlfred/smart-trust:
+    cat-fhir-ast/smart.who.int.trust
+DONE
+```
+
+### 3. fhir-ast/smart.who.int.base → cat-fhir-ast/smart.who.int.base (litlfred/smart-base)
+
+```
+APPLY — litlfred/smart-base: 1 branch(es)
+  fhir-ast/smart.who.int.base (eb7bed8395af) -> cat-fhir-ast/smart.who.int.base
+    created cat-fhir-ast/smart.who.int.base at eb7bed8395af (verified)
+    removed fhir-ast/smart.who.int.base
+Now on litlfred/smart-base:
+    cat-fhir-ast/smart.who.int.base
+DONE
+```
