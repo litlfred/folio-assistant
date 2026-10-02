@@ -297,12 +297,43 @@ function absent(v: unknown): boolean {
 }
 
 /**
+ * Whether a target's `dependsOn` holds for this record: the declared
+ * CONDITION on a row (bean `lodp`, finding D1).
+ *
+ * A dependency names an attribute the table declares in
+ * `additionalAttribute` and the single value it must have. The record must
+ * ANSWER it: a missing attribute is a thrown error, never a silent "no",
+ * because the point of declaring the condition is that every emitter applying
+ * the table has to decide it. `concept-scheme-naming`'s `isDocument` is the
+ * first: the `sl9u` rule, which two emitters applied and two correctly did
+ * not, with nothing saying why.
+ *
+ * Only a single-valued dependency is evaluated. A `valueSet`, or a dependency
+ * with no value, is refused by name rather than guessed at.
+ */
+function conditionHolds(m: VocabMapping, key: string, t: Target, record: Readonly<Record<string, unknown>>): boolean {
+  for (const d of t.dependsOn ?? []) {
+    if (d.value === undefined || d.valueSet !== undefined) {
+      throw new Error(`${m.id}: "${key}" depends on "${d.attribute}" without a single value, which the applier cannot evaluate`);
+    }
+    const answer = record[d.attribute];
+    if (answer === undefined) {
+      throw new Error(`${m.id}: "${key}" is written only when "${d.attribute}" is ${JSON.stringify(d.value.value)}, and the record does not say whether it is — an emitter applying this table must answer it`);
+    }
+    if (answer !== d.value.value) return false;
+  }
+  return true;
+}
+
+/**
  * Apply a table to one source record: the properties it maps to, in the
  * order the table lists them, with each derived target placed directly after
  * the target it copies.
  *
  * The record's keys are the elements' `code`s. An element with `noMap`, or
- * whose value is absent, writes nothing. Writing one key twice is refused,
+ * whose value is absent, writes nothing. A target with a `dependsOn` is
+ * written only when its condition holds, and the record must answer the
+ * condition ({@link conditionHolds}). Writing one key twice is refused,
  * because two rows that each believe they own a key are the drift this
  * schema exists to make visible.
  */
@@ -320,6 +351,7 @@ export function applyVocabMapping(m: VocabMapping, record: Readonly<Record<strin
       const v = record[e.code];
       for (const t of e.target ?? []) {
         const key = keyOf(t);
+        if (!conditionHolds(m, key, t, record)) continue;
         if (t.authority === "derived") {
           derived.push({ key, from: t.derivedFrom! });
           continue;
@@ -343,6 +375,67 @@ export function applyVocabMapping(m: VocabMapping, record: Readonly<Record<strin
     seen.add(k);
   }
   return Object.fromEntries(out);
+}
+
+/**
+ * The JSON-LD `@context` bindings the given tables' rows imply: JSON key →
+ * predicate IRI, in table order. A generator spreads this into its context
+ * instead of restating each binding, so the key it WRITES with the table and
+ * the predicate a reader EXPANDS it to come from one row (bean `lodp`,
+ * finding D2: fsh-guts said it mapped `description` "exactly as the main
+ * export" and did not).
+ *
+ * A predicate stays a CURIE when the document's own context declares its
+ * prefix (`inContext`), and is otherwise expanded through `prefixes`. That is
+ * the difference between a binding and a bug: `"rdfs:label"` in a context
+ * with no `rdfs` prefix is not RDFS's label but an absolute IRI whose scheme
+ * is `rdfs`, which is what fsh-guts published until this existed. A prefix
+ * neither map knows is refused.
+ *
+ * `only` keeps the rows whose JSON key is listed — a generator that writes two
+ * of a table's keys binds two. A key two rows bind to DIFFERENT predicates is
+ * refused; bound twice to the same one is the same fact and kept once.
+ * Derived targets bind like any other, and `noMap` elements bind nothing.
+ */
+export function contextBindings(
+  tables: readonly VocabMapping[],
+  opts: {
+    inContext: Readonly<Record<string, string>>;
+    prefixes: Readonly<Record<string, string>>;
+    only?: readonly string[];
+  },
+): Record<string, string> {
+  const out = new Map<string, { iri: string; from: string }>();
+  for (const m of tables) {
+    for (const g of m.group) {
+      for (const e of g.element) {
+        if (e.noMap === true) continue;
+        for (const t of e.target ?? []) {
+          const key = t.key ?? t.code;
+          if (key === undefined || t.code === undefined || g.target === undefined) continue;
+          if (opts.only !== undefined && !opts.only.includes(key)) continue;
+          const written = `${g.target}${t.code}`;
+          const curie = /^([A-Za-z][\w.-]*):(?!\/\/)(.*)$/.exec(written);
+          let iri = written;
+          if (curie !== null && opts.inContext[curie[1]!] === undefined) {
+            const ns = opts.prefixes[curie[1]!];
+            if (ns === undefined) throw new Error(`${m.id}: "${written}" uses a prefix neither the document nor the known prefixes declare`);
+            iri = ns + curie[2]!;
+          }
+          const had = out.get(key);
+          if (had !== undefined && had.iri !== iri) {
+            throw new Error(`"${key}" is bound to ${had.iri} by ${had.from} and to ${iri} by ${m.id}: one key, two predicates`);
+          }
+          if (had === undefined) out.set(key, { iri, from: m.id });
+        }
+      }
+    }
+  }
+  if (opts.only !== undefined) {
+    const missing = opts.only.filter((k) => !out.has(k));
+    if (missing.length > 0) throw new Error(`no row of ${tables.map((m) => m.id).join(", ")} writes ${missing.join(", ")}`);
+  }
+  return Object.fromEntries([...out].map(([k, v]) => [k, v.iri]));
 }
 
 // ── Finding the tables ──────────────────────────────────────────────────
