@@ -863,21 +863,23 @@ describe("a package's id is declared, not derived from its path", () => {
   // graph, then `bootstrap-render` (directory `tools/`) until bean `n350`
   // consolidated that package into `bootstrap/skills/` on 2026-09-23.
   //
-  // It is now `large-datasets`: directory `large-datasets/skills/`, basename
-  // `skills`, manifest `large-datasets`. (It was `kg-navigation` until bean
-  // `byql` folded that one into `cat-harness/skills/kg/kg-navigation/`, where the
-  // basename IS the name and the test would no longer discriminate.) Same shape, and a witness the root
-  // graph carries for its own reasons rather than by a declaration made for
-  // one package. The members are READ from its manifest rather than listed,
-  // so adding a skill there is not a test edit.
-  const WITNESS = "large-datasets";
+  // It is now `who-iris`: directory `who-iris/skills/`, basename `skills`,
+  // manifest `who-iris`. (It was `large-datasets` until bean `j7ql` dissolved
+  // that instance into cat-harness on 2026-10-01, where its package sits at
+  // `cat-harness/skills/library/large-datasets/` and the basename IS the name;
+  // before that `kg-navigation`, until bean `byql` folded it into
+  // `cat-harness/skills/kg/kg-navigation/` for the same reason.) Same shape,
+  // and a witness the root graph carries for its own reasons rather than by a
+  // declaration made for one package. The members are READ from its manifest
+  // rather than listed, so adding a skill there is not a test edit.
+  const WITNESS = "who-iris";
   const witness = () => packages().find((x) => String(x["@id"]).endsWith(`#package/${WITNESS}`));
 
   test("a package is named by its manifest, not by its directory", () => {
     const p = witness();
     expect(p, `packages present: ${packages().map((x) => x["name"]).join(", ")}`).toBeDefined();
     expect(p!["name"]).toBe(WITNESS);
-    expect(String(p!["path"])).toContain("large-datasets/skills");
+    expect(String(p!["path"])).toContain("who-iris/skills");
     // And the basename is NOT what it is called — the assertion the rule is
     // actually about, which naming the package alone does not make.
     expect(p!["name"]).not.toBe("skills");
@@ -888,7 +890,7 @@ describe("a package's id is declared, not derived from its path", () => {
     // from ANOTHER package — a count would have gone on passing while one
     // name was swapped for another.
     const manifest = JSON.parse(
-      readFileSync(join(import.meta.dir, "../../..", "large-datasets", "skills", "package-manifest.json"), "utf8"),
+      readFileSync(join(import.meta.dir, "../../..", "who-iris", "skills", "package-manifest.json"), "utf8"),
     ) as { skills: string[] };
     expect(membersOf(String(witness()!["@id"])).sort()).toEqual(manifest.skills.map((k) => `skill/${k}`).sort());
   });

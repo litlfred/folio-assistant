@@ -1,5 +1,11 @@
 # large-datasets
 
+> **Retiring — this instance is empty of content since 2026-10-01.** On the owner's
+> ruling of that day it dissolved into cat-harness's concern groups (bean `j7ql`,
+> issue #1770). What it held now lives at: [`cat-harness/skills/library/large-datasets/`](../cat-harness/skills/library/large-datasets/materialize-remote.md), [`cat-harness/processes/`](../cat-harness/processes/README.md), `cat-harness/schemas/`, `cat-harness-tools/scripts/` and `cat-harness-tools/id-lookup/`, with each corpus's own descriptor and index at `who-iris/sources/`, `who-iris/id-lookup/` and `folio-assistant-sci/sources/`. The text below is the
+> instance as it was, kept until the owner rules on retiring it; its links
+> point at the new locations.
+
 **Taking a subset of a corpus you will never hold** — and publishing artifacts
 too big for the site that describes them.
 
@@ -18,7 +24,7 @@ too big for the site that describes them.
 
 ## Why this is its own subgraph
 
-[`materialize-remote`](skills/materialize-remote.md)
+[`materialize-remote`](../cat-harness/skills/library/large-datasets/materialize-remote.md)
 answers *"may we take this, and what does holding it cost"* — five gates, three
 states. It does **not** answer the question before it:
 
@@ -33,7 +39,7 @@ sits below the content layer and depends on nothing above `cat-harness`. Owner
 ruling 2026-10-01 makes it a subgraph of `cat-harness` (bean `rfuq`); its one
 import that reached up into the content layer — the catalogue-node schema
 `scripts/gen-id-lookup.ts` parsed with — is gone, replaced by
-`CatalogueNodeReadSchema` in [`schemas/id-lookup.ts`](schemas/id-lookup.ts),
+`CatalogueNodeReadSchema` in [`schemas/id-lookup.ts`](../cat-harness/schemas/id-lookup.ts),
 the three fields the lookup actually reads.
 
 ## Two worked descriptors, and the second is the point
@@ -41,7 +47,7 @@ the three fields the lookup actually reads.
 One example is a special case with an interface drawn round it. These two are
 deliberately far apart:
 
-| | [WHO IRIS](sources/who-iris.json) | [Lean mathlib](sources/lean-mathlib.json) |
+| | [WHO IRIS](../who-iris/sources/who-iris.json) | [Lean mathlib](../folio-assistant-sci/sources/lean-mathlib.json) |
 |---|---|---|
 | a node is | a repository item | a declaration |
 | enumerate by | paged REST over communities | the module graph |
@@ -111,7 +117,7 @@ scales is indexing **only what is materialized**, with a separate
 **prefix-sharded identifier lookup** for everything else — ~50 KB in memory at a
 time regardless of corpus size.
 
-That lookup is built: [`id-lookup/`](id-lookup/) holds the client and the
+That lookup is built: [`id-lookup/`](../cat-harness-tools/id-lookup/) holds the client and the
 generated who-iris index, `bun run id-lookup` writes it and `id-lookup:check`
 gates it. It is measured at full IRIS scale in bean `4pm8` (a reader downloads
 one shard of about 14 KB per lookup).
