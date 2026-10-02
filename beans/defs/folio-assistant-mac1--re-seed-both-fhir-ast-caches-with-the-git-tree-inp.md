@@ -1,15 +1,14 @@
 ---
 # folio-assistant-mac1
 title: Re-seed both fhir-ast caches with the git-tree InputDigest (needs FHIR network)
-status: in-progress
+status: completed
 type: task
 priority: high
 tags:
     - agy
     - needs-network
-    - ready-to-close
 created_at: 2026-10-02T15:30:31Z
-updated_at: 2026-10-02T17:53:11Z
+updated_at: 2026-10-02T18:00:00Z
 parent: folio-assistant-uhkv
 blocking:
     - folio-assistant-wnhh
@@ -151,7 +150,7 @@ hand this bean to another executor while this claim may be live.
 - [x] both `fhir-ast/*` tips carry a seed built from the `## Inputs` revisions
 - [x] executor: `## Evidence` quotes each seed line and its local `verify`; tag
       `ready-to-close`. **Do not set `completed`.**
-- [ ] verifier: `ig-cache.sh restore` + `verify` on a FRESH clone reads `fresh`
+- [x] verifier: `ig-cache.sh restore` + `verify` on a FRESH clone reads `fresh`
       for both, recorded on #1816 and `wnhh`; the verifier closes this bean.
 
 ## Attempts
@@ -173,6 +172,10 @@ hand this bean to another executor while this claim may be live.
   executor's doing. **Owner's call (option 1):** fix the exporter, fork PR #8 `84ee3c8`.
   **Changed for attempt 3:** `## Inputs` pins `84ee3c8`; step 4 verifies on a second,
   untouched clone; smart-base's SUSHI workaround is a step.
+- **Attempt 3** (2026-10-02 17:41–17:52 UTC). ast-export `84ee3c8`, inputs all ✅.
+  Seeds `f254e5bb` (678/671) and `eb7bed83` (162/172). Executor verified on second,
+  untouched clones; verifier independently, on its own fresh clones: **`valid` for both**
+  (`c1023d82` = `c1023d82`, `bd074bf9` = `bd074bf9`). **Done.**
 
 ## History
 
@@ -319,3 +322,15 @@ tip: eb7bed8395af54bd9ef2b310bc8fc7d2e599fe3c
   }
 }
 ```
+
+## Summary of Changes
+
+Both FHIR AST caches are re-seeded and verify `valid` on a clean clone anywhere:
+`litlfred/smart-trust@fhir-ast/smart.who.int.trust` `f254e5bb` (source `25771f6a`, 678
+resources) and `litlfred/smart-base@fhir-ast/smart.who.int.base` `eb7bed83` (source
+`e151a4d3`, 162 resources). Three attempts: a stale checkout; the exporter hashing its
+own build output (fixed in `litlfred/fhir-ig-publisher` `84ee3c8`, PR #8: inputs
+recorded before the build); then done. Closed by the verifier (cloud session) per skill
+`agent-handoff` §5. Lessons folded into that skill (#1884): the one-sentence paste plus
+a `## Brief`, and checking on an untouched copy rather than the build tree.
+
