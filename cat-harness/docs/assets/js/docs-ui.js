@@ -5485,6 +5485,9 @@
     function showMeta(card) {
       var rows = card.__faMeta || [];
       if (!rows.length) return;
+      // A card being MOVED is not a card being read — and the popover, drawn
+      // beside the card, landed on the move bar's own −/+ (measured, #1900).
+      if (card.getAttribute("data-fa-moving") === "true") { hideMeta(); return; }
       metaFor = card;
       while (metaPop.firstChild) metaPop.removeChild(metaPop.firstChild);
       var dl = el("dl", { class: "fa-glass-meta-list" });

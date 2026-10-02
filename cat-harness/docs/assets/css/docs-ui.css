@@ -3784,6 +3784,11 @@ a.fa-tile[data-fa-readonly]:focus-visible {
   background: var(--fa-glass-card);
   color: var(--fa-glass-ink);
   border: 1px solid var(--fa-glass-edge);
+  /* BORDER-BOX: with the move bar open the row reaches `max-width: 100%`, and
+     a content-box 100% plus its padding and border overflowed the sheet by
+     18px — so pressing a move-bar button scrolled the glass sideways and the
+     button jumped out from under the pointer (measured, issue #1900). */
+  box-sizing: border-box;
 }
 .fa-glass-zoom-btn {
   min-width: 2.75rem;
