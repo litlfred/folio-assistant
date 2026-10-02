@@ -297,14 +297,14 @@
   "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld",
   "@type": "http://www.w3.org/ns/prov#Entity",
   "repository": "cat-harness",
-  "generatedAt": "2026-10-02T16:15:38.591Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/0e20a22cfc673004c15877506e6cdb61afbeb4a6",
-  "sourceCommitSha": "0e20a22cfc673004c15877506e6cdb61afbeb4a6",
-  "sourceCommitAt": "2026-10-02T18:11:20+02:00",
+  "generatedAt": "2026-10-02T16:39:48.026Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/22ac68dc5eaead6325d2a61ada41d81091ee0e94",
+  "sourceCommitSha": "22ac68dc5eaead6325d2a61ada41d81091ee0e94",
+  "sourceCommitAt": "2026-10-02T18:35:50+02:00",
   "sourceTreeDirty": true,
   "dependsOnUnavailable": "2 dependency edge(s), none expressible as a record — see gaps",
   "counts": {
-    "Skill": 294,
+    "Skill": 295,
     "Actor": 36,
     "Capability": 28,
     "SkillPackage": 35,
@@ -314,7 +314,7 @@
     "Lane": 201,
     "ProcessNode": 940,
     "Tool": 113,
-    "Schema": 150,
+    "Schema": 152,
     "ExternalSchema": 20,
     "GraphKind": 25,
     "Role": 48,
@@ -2001,6 +2001,22 @@
       "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/term-disagreement",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Skill",
+      "name": "term-disagreement",
+      "title": "Term disagreement — the extractor and the terminology disagree",
+      "description": "When a glossary term the extractor minted and an authorised terminology disagree — the corpus spells a concept differently from the authority, or uses a word the authority does not carry — decide among three outcomes: change the prose, author a local term with its reason, or record that the vocabulary is wrong for this domain. Says which disagreements need a decision at all, how to choose, what each outcome writes and where, and what is NOT this skill (two judges disagreeing about a mapping).",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/library-core"
+      ],
+      "instructionsPath": "skills/library/library-core/term-disagreement.md",
+      "instructionLines": 151,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/archiving-arxiv",
       "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Skill",
       "name": "archiving-arxiv",
@@ -2058,7 +2074,7 @@
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/library-core"
       ],
       "instructionsPath": "skills/library/library-core/asset-extraction.md",
-      "instructionLines": 181,
+      "instructionLines": 184,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -6336,6 +6352,7 @@
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/literature-search",
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/ontologist",
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/tabular-metadata",
+        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/term-disagreement",
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/translation-manager",
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/upload-naming",
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/upload-routes",
@@ -44016,6 +44033,14 @@
       "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/schemas"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/extraction",
+      "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#Schema",
+      "name": "extraction",
+      "title": "What an EXTRACTION produced, and when — provenance for assets pulled out of",
+      "module": "schemas/extraction.ts",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/schemas"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/figure-description",
       "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#Schema",
       "name": "figure-description",
@@ -44192,6 +44217,14 @@
       "name": "log-entry",
       "title": "The agent activity log — what an agent did, when, and in which process.",
       "module": "schemas/log-entry.ts",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/schemas"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/materialization-state",
+      "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#Schema",
+      "name": "materialization-state",
+      "title": "The materialization STATE vocabulary — whether the bytes are here, and how",
+      "module": "schemas/materialization-state.ts",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/schemas"
     },
     {
@@ -44555,6 +44588,14 @@
       "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/schemas"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/term-adjudication",
+      "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#Schema",
+      "name": "term-adjudication",
+      "title": "What was decided when a minted glossary term and an authorised terminology",
+      "module": "schemas/term-adjudication.ts",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/schemas"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/term-mapping",
       "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#Schema",
       "name": "term-mapping",
@@ -44825,13 +44866,6 @@
       "name": "dublin-core",
       "title": "Qualified Dublin Core, as a graph node.",
       "module": "../folio-assistant-core/schemas/dublin-core.ts"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/extraction",
-      "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#Schema",
-      "name": "extraction",
-      "title": "What an EXTRACTION produced, and when — provenance for assets pulled out of",
-      "module": "../folio-assistant-core/schemas/extraction.ts"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/glossary",

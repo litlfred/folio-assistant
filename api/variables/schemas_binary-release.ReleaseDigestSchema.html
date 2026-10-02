@@ -13,17 +13,19 @@
 <h1>Variable ReleaseDigestSchema<code class="tsd-tag">Const</code></h1></div>
 <div class="tsd-signature"><span class="tsd-kind-variable">ReleaseDigestSchema</span><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">ZodObject</span><span class="tsd-signature-symbol">&lt;</span><br/>    <span class="tsd-signature-symbol">{</span><br/>        <span class="tsd-kind-property">algorithm</span><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">ZodLiteral</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">&quot;sha256&quot;</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">;</span><br/>        <span class="tsd-kind-property">digest</span><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">ZodString</span><span class="tsd-signature-symbol">;</span><br/>        <span class="tsd-kind-property">verifiedAt</span><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">ZodOptional</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">ZodString</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">;</span><br/>    <span class="tsd-signature-symbol">}</span><span class="tsd-signature-symbol">,</span><br/>    <span class="tsd-signature-type">$strict</span><span class="tsd-signature-symbol">,</span><br/><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> = ...</span></div>
 <div class="tsd-comment tsd-typography"><p>A digest over an asset's bytes.</p>
-<p>The same shape as <code>FixitySchema</code> in core's <code>materialization.ts</code>, restated
-rather than imported — and this is a deliberate duplicate, not an oversight.
-Nothing under <code>cat-harness/</code> imports from <code>folio-assistant-core/</code>, and the
-registry's <code>fhir-artifact-index</code> entry says why in as many words: a harness
-that reached up into core would be that dependency in all but name. When
-this repository splits, the two can be unified from core's side.</p>
+<p>The same shape as <code>FixitySchema</code>, restated rather than imported. It was a
+deliberate duplicate while <code>FixitySchema</code> lived in core's <code>materialization.ts</code>:
+nothing under <code>cat-harness/</code> imports from <code>folio-assistant-core/</code>. Since bean
+<code>tlat</code> (2026-10-02) <code>FixitySchema</code> lives in this instance, in
+<code>materialization-state.ts</code>, so the two CAN now be unified without an upward
+import; that is left as its own change, because this one's <code>verifiedAt</code>
+semantics are a release's, and unifying is a decision about whether they are
+the same claim, not only the same shape.</p>
 <p><code>verifiedAt</code> records when the digest was last RE-COMPUTED against the bytes,
 not when it was written down. An unverified digest ages.</p>
 </div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/litlfred/folio-assistant/blob/0e20a22cfc673004c15877506e6cdb61afbeb4a6/cat-harness/schemas/binary-release.ts#L153">work/folio-assistant/folio-assistant/cat-harness/schemas/binary-release.ts:153</a></li></ul></aside></div>
+<li>Defined in <a href="https://github.com/litlfred/folio-assistant/blob/22ac68dc5eaead6325d2a61ada41d81091ee0e94/cat-harness/schemas/binary-release.ts#L155">work/folio-assistant/folio-assistant/cat-harness/schemas/binary-release.ts:155</a></li></ul></aside></div>
 <div class="col-sidebar">
 <div class="page-menu">
 <div class="tsd-navigation settings">
