@@ -2202,11 +2202,11 @@ export function tools(baseUrl?: string): ToolDefinition[] {
     //
     //   fhir-validation     requires igRoot                      → SATISFIABLE
     //   ig-publication      requires igRoot + versionIncrement    → refused
-    //   l3-fhir-authoring   requires artifactType + l2Source      → refused
+    //   l3-fhir-authoring   requires artifactType + sourceModel   → refused
     //
     // The refusals are not a gap to close later. `fsh-cone` computes a dependency
     // cone over a FSH graph: it publishes nothing and authors nothing, so it has
-    // no version to increment and no L2 source to render from. Declaring those
+    // no version to increment and no source model to render from. Declaring those
     // edges would put this node forward as the mechanism for two jobs it does not
     // do — the `covered-is-not-reachable` shape, manufactured on purpose.
     //

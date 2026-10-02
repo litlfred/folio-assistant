@@ -118,14 +118,14 @@ Each dimension is a **contrast** between two poles, shown by their highest-loadi
 
 | dim | σ | one pole | the other pole |
 |---|---|---|---|
-| 1 | 44.04 | instance, kind, harness, session, directory, graph, block, page | *(none)* |
-| 2 | 21.48 | watcher, slot, sibling, queue, backlog, prs, block, commits | harness, instance, declaration, node, directory, directories, graph, declares |
-| 3 | 17.88 | session, beans, branch, goals, store, window, epic, sessions | slot, chapter, block, edges, formal, project, glossary, proof |
-| 4 | 16.53 | page, block, section, text, blocks, chapter, manifest, sections | ledger, sibling, subdirectory, items, sessions, queue, renderable, relocation |
-| 5 | 14.87 | edges, forward, edge, logical, backward, cross-chapter, energy, sections | locale, page, translated, navbar, translation, theme, staging, site |
-| 6 | 14.78 | lane, actor, requirements, role, feature, task, phase, stakeholders | queue, rung, arm, slide, archive, zip, bytes, sniff |
-| 7 | 14.45 | edges, forward, preview, backward, edge, cross-chapter, energy, logical | actor, lane, role, backlog, rung, criterion, arm, referee |
-| 8 | 14.20 | translation, locale, translated, language, glossary, french, term, back-translation | tile, avatar, theme, card, board, sticky, stylesheet, crop |
+| 1 | 44.02 | instance, kind, harness, session, graph, block, directory, page | *(none)* |
+| 2 | 21.49 | watcher, slot, sibling, queue, prs, backlog, block, commits | harness, instance, declaration, directory, node, directories, graph, declares |
+| 3 | 17.84 | session, beans, branch, goals, store, window, epic, push | slot, chapter, block, edges, formal, glossary, project, proof |
+| 4 | 16.53 | page, text, block, blocks, chapter, manifest, section, pdf | sibling, ledger, subdirectory, items, sessions, session, window, coordination |
+| 5 | 14.94 | rung, queue, withheld, arm, slide, zip, bytes, sniff | lane, role, requirements, actor, feature, phase, task, impact |
+| 6 | 14.86 | locale, navbar, page, translated, translation, theme, staging, french | edges, forward, edge, logical, backward, cross-chapter, energy, ordering |
+| 7 | 14.44 | edges, forward, preview, edge, backward, cross-chapter, energy, logical | actor, lane, role, requirement, login, criterion, task, process |
+| 8 | 14.21 | tile, avatar, card, theme, board, sticky, art, crop | language, glossary, translation, locale, term, pdf, translated, url |
 
 **Findings** — 0 narrow dimension(s), 0 near-duplicate pair(s).
 

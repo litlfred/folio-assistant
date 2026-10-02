@@ -135,7 +135,7 @@ export const AVATARS: Readonly<Record<string, Avatar>> = {
   "smart-base": {
     // A broad base with three narrowing courses above it — the layer the rest
     // of the stack rests on. smart-base is exactly that: `fhir-harness` sits
-    // under it, and `smart-l1`, `smart-dak` and `smart-ig` are built on top,
+    // under it, and `smart-ig` (and the IGs that need it) is built on top,
     // so the glyph reads the instance's position rather than its subject.
     glyph: "M3 18h18M6 14h12M9 10h6M11 6h2",
     tone: 199,
@@ -464,6 +464,14 @@ export const AVATARS: Readonly<Record<string, Avatar>> = {
     glyph: "M10 4a3 3 0 013 3v4a3 3 0 01-6 0V7a3 3 0 013-3zM5 11a5 5 0 0010 0M10 16v4M16 6h5v5h-5zM18.5 8.5h.01",
     tone: 312,
     reads: "a microphone with a tag — an editorial voice specialised for one vendor",
+  },
+  "document-kinds": {
+    // A page outline with ruled sections: a document kind is a STRUCTURE to
+    // fill — the headings are fixed, the content is not. Distinct from
+    // `docs`, which is written pages; this is the shape a page must take.
+    glyph: "M6 3h9l3 3v15H6zM9 9h6M9 13h6M9 17h4",
+    tone: 268,
+    reads: "a page outline with its sections ruled in — a structure to fill, not a page written",
   },
   themes: {
     // A paint swatch with a corner turned: a theme is a palette APPLIED to a
