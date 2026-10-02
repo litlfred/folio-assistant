@@ -199,7 +199,12 @@ jobs:
           set -euo pipefail
           git fetch -q origin main
           git worktree add --detach "$RUNNER_TEMP/tool" origin/main
-          cd "$RUNNER_TEMP/tool" && bun install --frozen-lockfile
+          cd "$RUNNER_TEMP/tool"
+          # merge-base.ts imports the schemas, which import bootstrap-tools — a
+          # submodule a fresh worktree does not have (found by the dry run on
+          # #1777's head that proves this step).
+          git submodule update --init --recursive
+          bun install --frozen-lockfile
 
       - name: merge main in, with main's merge-base.ts
         id: merge
