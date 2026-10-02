@@ -13,7 +13,7 @@ import { join } from "node:path";
 
 import { describe, expect, test } from "bun:test";
 
-import { deriveArtefactChecks, report } from "../check-artefact-verification.ts";
+import { deriveArtefactChecks, deriveUncheckedGenerators, report } from "../check-artefact-verification.ts";
 
 function repo(scripts: Record<string, string>, files: Record<string, string> = {}): string {
   const root = mkdtempSync(join(tmpdir(), "artefact-"));
@@ -92,5 +92,44 @@ describe("three states, and undeclared is the finding", () => {
       none: { "gone:check": "reason" },
     });
     expect(r.stale).toEqual(["gone:check"]);
+  });
+});
+
+describe("a GENERATOR with no --check is visible too (bean `v556`)", () => {
+  // The inventory above is the --check scripts, so an artefact whose generator
+  // has NO --check could never be in it. `kg:export` wrote two committed
+  // qa-results/v1 sidecars carrying three hashes and this gate could not see it.
+  const call = "writeQa" + "Result(root, 'x', doc);";
+
+  test("a qa-results writer that no command runs with --check is listed", () => {
+    const root = repo({ "gen:x": "bun run gen-x.ts" }, { "gen-x.ts": call });
+    expect(deriveUncheckedGenerators(root)).toEqual(["gen-x.ts"]);
+  });
+
+  test("the same writer with a --check invocation is not — it is in the main inventory instead", () => {
+    const root = repo({ "gen:x": "bun run gen-x.ts", "gen:x:check": "bun run gen-x.ts --check" }, { "gen-x.ts": call });
+    expect(deriveUncheckedGenerators(root)).toEqual([]);
+    expect(deriveArtefactChecks(root).map((c) => c.check)).toEqual(["gen:x:check"]);
+  });
+
+  test("the writer's DEFINITION is not a call", () => {
+    const root = repo({ lib: "bun run qa.ts" }, { "qa.ts": "export function writeQa" + "Result(root, stem, r) {}" });
+    expect(deriveUncheckedGenerators(root)).toEqual([]);
+  });
+
+  test("an undeclared unchecked generator is a finding; a declared one is not; a stale one is", () => {
+    const d = { _comment: "", verified: {}, none: {}, unchecked: { "a.ts": "why", "gone.ts": "why" } };
+    const r = report([], d, ["a.ts", "b.ts"]);
+    expect(r.uncheckedUndeclared).toEqual(["b.ts"]);
+    expect(r.uncheckedStale).toEqual(["gone.ts"]);
+  });
+
+  test("an `unchecked` entry with an empty reason is reasonless", () => {
+    const r = report([], { _comment: "", verified: {}, none: {}, unchecked: { "a.ts": " " } }, ["a.ts"]);
+    expect(r.reasonless).toEqual(["a.ts"]);
+  });
+
+  test("the REAL repository: kg-export.ts is no longer an unchecked generator", () => {
+    expect(deriveUncheckedGenerators()).not.toContain("cat-harness/scripts/kg-export.ts");
   });
 });

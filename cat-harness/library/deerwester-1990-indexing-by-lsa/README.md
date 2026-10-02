@@ -1,5 +1,5 @@
 <!-- kg:subgraph:begin -->
-# deerwester-1990-indexing-by-lsa
+# Indexing by Latent Semantic Analysis
 
 ingested source material — attributed to its document, not folio content
 
