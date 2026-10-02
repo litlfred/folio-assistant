@@ -25,7 +25,7 @@ how to build, query and audit an index is the skill `lsi-indexing`.
 
 <div class="lv-grid">
 <div class="lv-stat"><b>4</b><span>committed indexes</span></div>
-<div class="lv-stat"><b>2210</b><span>units indexed</span></div>
+<div class="lv-stat"><b>2211</b><span>units indexed</span></div>
 <div class="lv-stat"><b>5</b><span>graphs that need an index and lack a fresh one</span></div>
 </div>
 
@@ -110,7 +110,7 @@ Each dimension is a **contrast** between two poles, shown by their highest-loadi
 
 ## cat-harness / skills
 
-**219** units · **5897** terms · k = **100** · retains **79.1 %** of the weighted matrix · weighting `log-entropy` · sidecar `cat-harness/test/results/lsi/cat-harness/skills.lsi.json`
+**220** units · **5904** terms · k = **100** · retains **79.0 %** of the weighted matrix · weighting `log-entropy` · sidecar `cat-harness/test/results/lsi/cat-harness/skills.lsi.json`
 
 > Dimension 1 has **no negative pole**: it most likely measures unit length and term frequency (a margin), not a theme. Read the themes from dimension 2 on.
 
@@ -118,13 +118,13 @@ Each dimension is a **contrast** between two poles, shown by their highest-loadi
 
 | dim | σ | one pole | the other pole |
 |---|---|---|---|
-| 1 | 44.17 | instance, kind, harness, session, graph, directory, block, page | *(none)* |
-| 2 | 21.49 | watcher, sibling, queue, slot, prs, backlog, block, commits | harness, instance, declaration, directory, node, directories, graph, declares |
-| 3 | 17.87 | session, beans, branch, goals, window, store, push, epic | slot, chapter, edges, block, formal, glossary, project, proof |
-| 4 | 16.66 | page, block, text, tile, blocks, chapter, manifest, section | sibling, ledger, subdirectory, session, sessions, items, queue, coordination |
-| 5 | 15.07 | tile, board, navbar, theme, avatar, card, tiles, glass | rung, archive, edges, archived, edge, forward, sections, ingest |
-| 6 | 14.93 | queue, rung, withheld, slide, arm, sha, bytes, zip | lane, requirements, role, actor, feature, analysis, task, impact |
-| 7 | 14.59 | tile, avatar, card, glass, strip, board, sticky, fit | preview, url, staging, translation, language, locale, feature, pages |
+| 1 | 44.21 | instance, kind, harness, session, directory, graph, block, page | *(none)* |
+| 2 | 21.50 | watcher, sibling, slot, queue, prs, backlog, block, commits | harness, instance, declaration, directory, node, directories, graph, declares |
+| 3 | 17.87 | session, beans, branch, goals, window, push, store, epic | slot, chapter, edges, block, formal, glossary, project, proof |
+| 4 | 16.66 | page, block, text, tile, blocks, chapter, manifest, section | sibling, ledger, subdirectory, session, sessions, items, coordination, plan |
+| 5 | 15.08 | tile, board, navbar, theme, avatar, card, tiles, glass | rung, archive, edges, edge, archived, forward, sections, logical |
+| 6 | 14.93 | rung, queue, withheld, arm, slide, sha, bytes, zip | lane, requirements, role, actor, feature, task, analysis, impact |
+| 7 | 14.60 | tile, avatar, card, glass, strip, board, sticky, fit | preview, url, staging, translation, feature, language, locale, pages |
 | 8 | 14.47 | edges, forward, edge, backward, cross-chapter, energy, logical, editorial | actor, lane, role, requirement, requirements, criterion, task, login |
 
 **Findings** — 0 narrow dimension(s), 0 near-duplicate pair(s).

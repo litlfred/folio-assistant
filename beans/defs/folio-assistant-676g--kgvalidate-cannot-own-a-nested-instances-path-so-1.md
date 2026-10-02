@@ -1,10 +1,11 @@
 ---
 # folio-assistant-676g
 title: kg:validate cannot own a NESTED instance's path, so 15 instances' committed QA sidecars are consumer-validated by nothing
-status: todo
+status: completed
 type: task
+priority: normal
 created_at: 2026-09-27T16:50:03Z
-updated_at: 2026-09-27T16:50:03Z
+updated_at: 2026-10-02T06:44:57Z
 parent: folio-assistant-1xhc
 ---
 
@@ -59,11 +60,39 @@ seeing less than the declarations say.
 
 ## Done when
 
-- [ ] `kg:validate <nested-instance>/test/results/kg-qa/**` validates rather than
+- [x] `kg:validate <nested-instance>/test/results/kg-qa/**` validates rather than
       reporting "could not determine" — for bootstrap and for the 13 the loop
       added.
-- [ ] a test pins it against a nested instance, not only the auditor's own.
-- [ ] `artefact-verification.json` moves `kg:audit:all:check` from `none` to
+- [x] a test pins it against a nested instance, not only the auditor's own.
+- [x] `artefact-verification.json` moves `kg:audit:all:check` from `none` to
       `verified`, naming what does the validating. That move is the reason this
       bean exists, and the declaration file may only shrink in the `none`
       direction.
+
+Claimed by claude/kg-audit-bugs (session https://claude.ai/code/session_01CVVoavPoCHMLA7AASxG8cH)
+
+## Summary of Changes
+
+Branch `claude/kg-audit-bugs`, PR #1842, issue #1835.
+
+**Reproduced** on `main` `cf3e624`: `kg:validate smart-dak/test/results/kg-qa/scenarios/kg.kg-qa.json` →
+`could not determine: no declared directory owns this path`. The cat-harness sidecar validated.
+
+**Root cause, in two halves**:
+1. `kg-validate.ts` passed its own instance root (`cat-harness/`) for every path, so a nested
+   instance's declaration was never read.
+2. Fixing only (1) gave a new refusal: `schemas/kg-qa.ts does not exist under the instance root …/smart-base`.
+   The `qa` kind's validator refs are relative to the instance whose registry DEFINES the kind (cat-harness),
+   not the instance that owns the file.
+
+**Fix**: `owningInstanceRoot(path, fallback)` returns the deepest instance in the checkout that contains the
+path, by longest prefix, the rule `kindForPath` already uses. `validatePath(file, root, schemaRoot = root)`
+keeps the two roots apart.
+
+**Done when**:
+- [x] All 701 committed kg-audit sidecars across the checkout validate (`✓` 701, `?` 0). That covers bootstrap
+  (hosted), the 13 nested instances and the root instance.
+- [x] `cat-harness/scripts/tests/kg-validate-nested-instances.test.ts` checks the deepest-owner rule. It
+  includes a falsifier showing the old single root refuses a smart-dak sidecar. It then sweeps every
+  instance's `kgQaHomeFor` home, with a floor of at least 5 non-cat-harness instances and more than 50 files.
+- [x] `artefact-verification.json` moves `kg:audit:all:check` from `none` to `verified`, naming that test.

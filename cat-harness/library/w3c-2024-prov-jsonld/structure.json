@@ -724,5 +724,22 @@
       "n_words": 86
     }
   ],
-  "structure_note": "Ingested at PAGE granularity by scripts/pdf-pages.py. This PDF carries no embedded outline and its inferred chapter structure was measurably wrong (bean 6xaz), so no chapter tree is claimed. A page is a determined division; an inferred chapter was not."
+  "structure_note": "Ingested at PAGE granularity by scripts/pdf-pages.py. This PDF carries no embedded outline and its inferred chapter structure was measurably wrong (bean 6xaz), so no chapter tree is claimed. A page is a determined division; an inferred chapter was not.",
+  "metadata": {
+    "title": null,
+    "title_raw": null,
+    "docinfo": {},
+    "title_source": "filename",
+    "title_verified": false,
+    "title_evidence": {
+      "corroborated_by": [],
+      "browser_print": false
+    },
+    "title_correction": {
+      "title": "The PROV-JSONLD Serialization: A JSON-LD Representation for the PROV Data Model",
+      "basis": "Page 1 prints the title and subtitle above 'W3C Member Submission 25 August 2024'; the page-granularity ingest recorded the same string as its sections' doc_title, but no PDF survives to read metadata from.",
+      "corrected_on": "2026-10-02",
+      "bean": "folio-assistant-w6fu"
+    }
+  }
 }
