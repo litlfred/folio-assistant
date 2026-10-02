@@ -1418,7 +1418,8 @@ export const BASE_GRAPH_KINDS: Readonly<Record<string, GraphKindDef>> = {
     holds: "state",
     // declared-path-literal: this table IS the declaration, as on `health`.
     nodeSchemas: {
-      "folio-extraction/v1": { validator: "folio-assistant-core:schemas/extraction.ts#ExtractionSchema" },
+      // Local since bean `tlat` moved the extraction contract down (placement PR5).
+      "folio-extraction/v1": { validator: "schemas/extraction.ts#ExtractionSchema" },
       "folio-intake/v1": { validator: "schemas/intake.ts#IntakeSchema" },
       // The document adapter writes an upload's description beside its intake
       // (bean `d4lb`), in the same family the IRIS catalogue records use.

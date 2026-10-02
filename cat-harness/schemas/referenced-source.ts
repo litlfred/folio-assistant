@@ -6,9 +6,10 @@
  * specifications). The entry identifies the exact bytes (`source.sha256`), its
  * clause outline so a citation can name a clause and a page, and why the text
  * is withheld. `materialization` is a `folio-materialization/v1` record in
- * state `referenced` — the vocabulary core's `materialization.ts` defines,
- * restated here only as far as this harness module may (harness does not
- * depend on core).
+ * state `referenced` — the vocabulary `materialization-state.ts` defines in
+ * this instance since bean `tlat`; the rest of the record (gates, purpose) is
+ * core's `materialization.ts`, restated here only as far as this harness module
+ * may (harness does not depend on core).
  *
  * @module schemas/referenced-source
  * @graphNode schema

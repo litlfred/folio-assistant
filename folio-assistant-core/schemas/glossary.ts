@@ -29,6 +29,8 @@
  */
 import { z } from "zod";
 
+import { PROV_CONTEXT } from "../../cat-harness/schemas/prov.ts";
+
 export const GLOSSARY_SCHEMA_ID = "folio-glossary/v1" as const;
 
 export const SKOS_NS = "http://www.w3.org/2004/02/skos/core#" as const;
@@ -180,6 +182,111 @@ function langValues(t: LangText): Array<{ "@value": string; "@language"?: string
 }
 
 /**
+ * One candidate's AUTOMATED matches, as `check:term-mapping` found them:
+ * `exactMatch` where its label matched a concept's prefLabel, `closeMatch`
+ * where only an altLabel or a cross-vocabulary display did. Every value is an
+ * absolute IRI. Resolving `<scheme>:<id>` is the caller's job, and a value it
+ * cannot resolve is left out rather than invented.
+ */
+export interface AutomatedMatch {
+  term: string;
+  exactMatch: string[];
+  closeMatch: string[];
+}
+
+/**
+ * The named graph a scheme's automated matches live in.
+ *
+ * `_` cannot begin a term id (`LOCAL_ID`), so this never collides with a
+ * term's IRI, which is `<scheme>/<id>`.
+ */
+export function automatedGraphIri(ns: string, g: Pick<Glossary, "id">): string {
+  return `${schemeIri(ns, g)}/_automated-matches`;
+}
+
+/** The blank node naming one run of the check: it has no release address. */
+export const AUTOMATED_RUN = "_:term-mapping-run";
+
+/**
+ * The automated matches, kept apart from everything a person wrote, and
+ * saying so in PROV. Owner, 2026-10-02: publish both `exactMatch` and
+ * `closeMatch`, "each marked as AUTOMATED".
+ *
+ * **A named graph, not the default graph.** Every other triple in a scheme
+ * document is in the default graph and is something a person decided. That
+ * includes an authored term's `skos:exactMatch`. These are a label match.
+ * In their own graph, the assertion and its provenance are one thing: a
+ * triple is in that graph BECAUSE a program matched it. Rejected:
+ *
+ * - **RDF reification** (`rdf:Statement`) DESCRIBES a triple without
+ *   asserting it, so the owner's "publish as `skos:exactMatch`" would not
+ *   hold. Pairing it with the plain triple lets any reader that ignores the
+ *   reification read an unmarked `exactMatch`, which is the one confusion
+ *   the marker exists to prevent.
+ * - **RDF-star / JSON-LD-star** annotation is not in JSON-LD 1.1.
+ * - **`skos:note` on the concept** is a literal that no processor can join
+ *   to the match it is about.
+ *
+ * **The marker is PROV, in PROV-JSONLD's shape** (rule
+ * `ld-prov-in-prov-jsonld-shape`). The graph is an `Entity` with a qualified
+ * `Generation` by an `Activity`. The activity's `Association` names the
+ * agent as a `prov:SoftwareAgent`, and no person appears anywhere in the
+ * chain.
+ *
+ * The activity is a blank node. A run of a check has no release address,
+ * and minting one would be the invented address that
+ * `ld-link-is-the-node-release-address` refuses. No timestamp is written,
+ * so an unchanged result regenerates byte-identically.
+ *
+ * `agent` is the agent's release address, or `undefined` when it has none.
+ * In that case the agent is a blank node that still carries its type. It is
+ * never a string under a term that coerces to `@id`.
+ */
+function automatedNodes(
+  graphIri: string,
+  idOf: (termId: string) => string,
+  matches: readonly AutomatedMatch[],
+  agent: string | undefined,
+): Record<string, unknown>[] {
+  const link = (xs: Iterable<string>) => [...new Set(xs)].sort().map((x) => ({ "@id": x }));
+  const inner = [...matches]
+    .sort((a, b) => (a.term < b.term ? -1 : a.term > b.term ? 1 : 0))
+    .map((m) => {
+      const self = idOf(m.term);
+      const exact = new Set(m.exactMatch.filter((x) => x !== self));
+      // exactMatch is a sub-property of closeMatch in SKOS, so a concept
+      // already stated exact is not restated as close.
+      const close = m.closeMatch.filter((x) => x !== self && !exact.has(x));
+      return {
+        "@id": self,
+        ...(exact.size ? { "skos:exactMatch": link(exact) } : {}),
+        ...(close.length ? { "skos:closeMatch": link(close) } : {}),
+      };
+    })
+    .filter((n) => Object.keys(n).length > 1);
+  if (!inner.length) return [];
+  return [
+    {
+      "@id": graphIri,
+      "@type": "Entity",
+      label: "Automated label matches from check:term-mapping. Not confirmed by a person.",
+      "@graph": inner,
+    },
+    { "@type": "Generation", entity: graphIri, activity: AUTOMATED_RUN },
+    {
+      "@id": AUTOMATED_RUN,
+      "@type": "Activity",
+      label: "check:term-mapping: a normalised-label match against authorised vocabularies, run by a program",
+    },
+    {
+      "@type": "Association",
+      activity: AUTOMATED_RUN,
+      agent: { ...(agent ? { "@id": agent } : {}), "@type": "prov:SoftwareAgent" },
+    },
+  ];
+}
+
+/**
  * The glossary as SKOS JSON-LD. `ns` is the declaring instance's namespace,
  * so the IRIs follow the instance, not the file (bean `lqo9`).
  *
@@ -188,7 +295,11 @@ function langValues(t: LangText): Array<{ "@value": string; "@language"?: string
  * curated definition. Leaving it out would make the graph claim fewer terms
  * than the page shows.
  */
-export function toSkos(g: Glossary, ns: string): Record<string, unknown> {
+export function toSkos(
+  g: Glossary,
+  ns: string,
+  automated?: { matches: readonly AutomatedMatch[]; agent: string | undefined },
+): Record<string, unknown> {
   const scheme = schemeIri(ns, g);
   // A term that names its own concept IRI is referred to by it, everywhere.
   const own = new Map(g.terms.filter((t) => t.iri).map((t) => [t.id, t.iri!]));
@@ -249,8 +360,16 @@ export function toSkos(g: Glossary, ns: string): Record<string, unknown> {
       "skos:member": g.members.map((m) => ({ "@id": m })),
     });
   }
+  const context = { skos: SKOS_NS, dcterms: DCTERMS_NS, rdfs: "http://www.w3.org/2000/01/rdf-schema#" };
+  const prov = automated ? automatedNodes(automatedGraphIri(ns, g), idOf, automated.matches, automated.agent) : [];
+  if (!prov.length) return { "@context": context, "@graph": graph };
+  // PROV-JSONLD's context comes FIRST and ours after it, so our prefixes win
+  // any clash. It is named by URL and never fetched here: a reader that
+  // verifies serves the copy pinned by sha256 (`publish:verify`'s
+  // localLoader). Every @id is absolute, so no @base is relied on; in a
+  // remote context it would be ignored anyway (`ld-no-base-in-a-remote-context`).
   return {
-    "@context": { skos: SKOS_NS, dcterms: DCTERMS_NS, rdfs: "http://www.w3.org/2000/01/rdf-schema#" },
-    "@graph": graph,
+    "@context": [PROV_CONTEXT, { ...context, prov: "http://www.w3.org/ns/prov#" }],
+    "@graph": [...graph, ...prov],
   };
 }
