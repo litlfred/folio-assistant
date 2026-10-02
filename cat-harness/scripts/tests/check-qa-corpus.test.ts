@@ -12,7 +12,7 @@ import { tmpdir } from "node:os";
 import { join, resolve } from "node:path";
 
 import { KG_QA_MANIFEST_SCHEMA, KG_QA_SCHEMA, tally, type KgQaReport } from "../../schemas/kg-qa.ts";
-import { corpusLayout, judgeReport, validateQaTree } from "../check-qa-corpus.ts";
+import { badgePages, corpusLayout, judgeReport, judgeWitnesses, validateQaTree, WITNESS_TREE } from "../check-qa-corpus.ts";
 
 const HOSTED = "cat-harness/test/results/bootstrap";
 const OWN = "cat-harness/test/results";
@@ -148,6 +148,60 @@ describe("validateQaTree over a fixture", () => {
   });
 });
 
+describe("the witness tree the site publishes, against the pages that fetch from it", () => {
+  // A page as `gen-docs-pages.ts` emits it: one openable badge, painted from
+  // the page's index and opening its projection.
+  const badge = (key: string) =>
+    `<button type="button" class="fa-qa-badge fa-qa-pending fa-qa-fam-block" data-qa-key="${key}" ` +
+    `data-qa-src="{{ '/assets/qa/demo/${key}.json' | relative_url }}" ` +
+    `data-qa-index="{{ '/assets/qa/demo/qa-index.json' | relative_url }}">`;
+  const PAGE = { path: "docs/demo.md", text: `# Demo\n${badge("overview.block")}\n${badge("other.block")}\n` };
+  const INDEX = JSON.stringify({ badges: { "overview.block": {}, "other.block": {} } });
+
+  it("a tree holding the index, every row and every projection is clean", () => {
+    const t = tree({
+      [`${WITNESS_TREE}/demo/qa-index.json`]: INDEX,
+      [`${WITNESS_TREE}/demo/overview.block.json`]: "{}",
+      [`${WITNESS_TREE}/demo/other.block.json`]: "{}",
+    });
+    try {
+      expect(judgeWitnesses(t.dir, [PAGE])).toEqual([]);
+      expect(validateQaTree(t.dir, corpusLayout(), [PAGE]).pages).toBe(1);
+    } finally {
+      t.cleanup();
+    }
+  });
+
+  it("names a missing index, a missing row, a missing projection and a `_`-prefixed path", () => {
+    const t = tree({
+      [`${WITNESS_TREE}/demo/qa-index.json`]: JSON.stringify({ badges: { "overview.block": {} } }),
+      [`${WITNESS_TREE}/demo/overview.block.json`]: "{}",
+      [`${WITNESS_TREE}/demo/_hidden.json`]: "{}",
+    });
+    try {
+      expect(judgeWitnesses(t.dir, [PAGE]).map((f) => [f.path, f.problem])).toEqual([
+        [`${WITNESS_TREE}/demo/qa-index.json`, "witness-index-row-missing"],
+        [`${WITNESS_TREE}/demo/other.block.json`, "witness-url-missing"],
+        [`${WITNESS_TREE}/demo/_hidden.json`, "witness-underscore-path"],
+      ]);
+    } finally {
+      t.cleanup();
+    }
+    const empty = tree();
+    try {
+      expect(judgeWitnesses(empty.dir, [PAGE]).map((f) => f.problem)).toContain("witness-index-missing");
+    } finally {
+      empty.cleanup();
+    }
+  });
+
+  it("finds this checkout's generated badge pages — a filter over nothing would pass", () => {
+    // The guard on the guard: the CLI passes these pages, so an empty list
+    // would judge every witness tree clean.
+    expect(badgePages().length).toBeGreaterThan(5);
+  });
+});
+
 describe("the CLI", () => {
   const SCRIPT = resolve(import.meta.dir, "..", "check-qa-corpus.ts");
   const run = (args: string[]) => Bun.spawnSync(["bun", "run", SCRIPT, ...args], { stdout: "pipe", stderr: "pipe" });
@@ -157,7 +211,10 @@ describe("the CLI", () => {
     const good = tree();
     try {
       expect(run(["--dir", bad.dir]).exitCode).toBe(1);
-      expect(run(["--dir", good.dir]).exitCode).toBe(0);
+      // `--no-pages`: the fixture holds no witnesses, so this checkout's
+      // badge pages would (rightly) find every index missing in it.
+      expect(run(["--dir", good.dir, "--no-pages"]).exitCode).toBe(0);
+      expect(run(["--dir", good.dir]).exitCode).toBe(1);
     } finally {
       bad.cleanup();
       good.cleanup();

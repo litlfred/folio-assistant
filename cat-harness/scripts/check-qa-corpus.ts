@@ -38,6 +38,13 @@
  *    without findings, and has no CRITICAL criterion other than pass or n/a.
  * 3. Every home holding kg-qa sidecars holds a `kg-qa.manifest.json` that
  *    validates against `KgQaManifestSchema`.
+ * 4. The witnesses the docs site publishes at `/assets/qa/` (moved here from
+ *    `qa-results.test.ts`, reader audit R64): every generated page's verdict
+ *    index exists in the tree and holds a row for every badge on the page,
+ *    every URL a badge fetches is present, and no published path is
+ *    `_`-prefixed (Pages strips those without `.nojekyll`). The PAGES are this
+ *    checkout's, so judge the entry of the commit you have checked out —
+ *    `--github` does, and `--dir` over a `qa:fetch` of your own HEAD does.
  *
  * ## Four states, and a miss is never clean
  *
@@ -57,16 +64,17 @@
  *   bun run check:qa-corpus --dir <tree>      # a tree already fetched (qa:fetch --into <tree>)
  *   bun run check:qa-corpus --ref <ref>       # fetch main | <sha> | pr/<n>[/<sha>] into a temp dir, then judge
  *   bun run check:qa-corpus --github          # CI: the entry this run published
+ *   ... --no-pages                            # judge the tree without this checkout's badge pages
  *
  * @module scripts/check-qa-corpus
  * @covers qa
  */
-import { mkdirSync, mkdtempSync, readdirSync, readFileSync, rmSync, writeFileSync, type Dirent } from "node:fs";
+import { existsSync, mkdirSync, mkdtempSync, readdirSync, readFileSync, rmSync, statSync, writeFileSync, type Dirent } from "node:fs";
 import { tmpdir } from "node:os";
 import { dirname, join, relative, resolve } from "node:path";
 
 import { checkQaDirs } from "../content/pipeline/qa-graph-integrity.ts";
-import { directoriesForGraph, instanceRootsIn, kgQaHomeFor, repoRootFor } from "../schemas/cat-harness.js";
+import { directoriesForGraph, instanceRootsIn, kgQaHomeFor, repoRootFor, siteDirFor } from "../schemas/cat-harness.js";
 // `directoriesForGraph` reads declarations, which throw on the `folio` kind
 // unless core has registered it — the same side-effect import qa-store carries.
 import "../schemas/folio-graph-kind.js";
@@ -91,7 +99,11 @@ export type CorpusProblem =
   | "fail-without-findings"
   | "critical-failing"
   | "manifest-missing"
-  | "manifest-schema";
+  | "manifest-schema"
+  | "witness-index-missing"
+  | "witness-index-row-missing"
+  | "witness-url-missing"
+  | "witness-underscore-path";
 
 export interface CorpusFinding {
   /** Tree-relative path. */
@@ -114,7 +126,103 @@ export interface CorpusReport {
   homes: CorpusHome[];
   /** Files examined. `0` is not clean: it is `unknown`. */
   examined: number;
+  /** Generated pages whose badges were checked against the witness tree. */
+  pages: number;
   findings: CorpusFinding[];
+}
+
+/** The tree-relative directory the docs build copies to `_site/assets/qa/`. */
+export const WITNESS_TREE = "cat-harness/test/results/witnesses";
+
+/** A generated page carrying QA badges: its path (for messages) and text. */
+export interface BadgePage {
+  path: string;
+  text: string;
+}
+
+/**
+ * Every page `gen-docs-pages.ts` writes that carries a QA badge: the site
+ * root and `guides/`, the only places the generator writes.
+ */
+export function badgePages(instance: string = HARNESS): BadgePage[] {
+  const dir = join(instance, siteDirFor(instance));
+  const out: BadgePage[] = [];
+  const walk = (d: string, depth: number) => {
+    let entries: Dirent[];
+    try {
+      entries = readdirSync(d, { withFileTypes: true });
+    } catch {
+      return;
+    }
+    for (const e of entries) {
+      const p = join(d, e.name);
+      if (e.isDirectory() && e.name === "guides" && depth === 0) walk(p, depth + 1);
+      else if (e.isFile() && e.name.endsWith(".md")) {
+        const text = readFileSync(p, "utf-8");
+        if (text.includes("fa-qa-badge")) out.push({ path: relative(REPO, p).split("\\").join("/"), text });
+      }
+    }
+  };
+  walk(dir, 0);
+  return out.sort((a, b) => a.path.localeCompare(b.path));
+}
+
+/**
+ * The witness half: the tree the site publishes at `/assets/qa/`, checked
+ * against the pages whose badges fetch from it. A page with no badge asks
+ * nothing of the tree.
+ */
+export function judgeWitnesses(tree: string, pages: readonly BadgePage[]): CorpusFinding[] {
+  const root = resolve(tree);
+  const wroot = join(root, WITNESS_TREE);
+  const out: CorpusFinding[] = [];
+  const exists = (p: string): boolean => existsSync(p) && statSync(p).isFile();
+  for (const { path, text } of pages) {
+    const slug = /assets\/qa\/([^/]+)\/qa-index\.json/.exec(text)?.[1];
+    if (slug) {
+      const idxRel = `${WITNESS_TREE}/${slug}/qa-index.json`;
+      const idx = join(root, idxRel);
+      if (!exists(idx)) {
+        out.push({ path: idxRel, problem: "witness-index-missing", detail: `${path} paints its badges from it` });
+      } else {
+        let badges: Record<string, unknown> = {};
+        try {
+          badges = (JSON.parse(readFileSync(idx, "utf-8")) as { badges?: Record<string, unknown> }).badges ?? {};
+        } catch {
+          // unparseable: already a finding of the integrity sweep
+        }
+        for (const m of text.matchAll(/data-qa-key="([^"]+)"/g)) {
+          if (!(m[1]! in badges)) out.push({ path: idxRel, problem: "witness-index-row-missing", detail: `${path}: no row for ${m[1]}` });
+        }
+      }
+    }
+    // The Liquid the generator emits, resolved the way Jekyll resolves it:
+    // `relative_url` prepends the baseurl, and `assets/qa/` is the witness tree.
+    const seen = new Set<string>();
+    for (const m of text.matchAll(/data-qa-(?:index|src)="\{\{ '\/assets\/qa\/([^']+)' \| relative_url \}\}"/g)) {
+      if (seen.has(m[1]!)) continue;
+      seen.add(m[1]!);
+      const target = `${WITNESS_TREE}/${m[1]}`;
+      if (!exists(join(root, target))) out.push({ path: target, problem: "witness-url-missing", detail: `${path} fetches /assets/qa/${m[1]}` });
+    }
+  }
+  // Pages strips `_`-prefixed paths without `.nojekyll`, and this tree is
+  // copied into `_site` after Jekyll has run, so a strip would 404 it.
+  const walk = (d: string): string[] => {
+    let entries: Dirent[];
+    try {
+      entries = readdirSync(d, { withFileTypes: true });
+    } catch {
+      return [];
+    }
+    return entries.flatMap((e) => (e.isDirectory() ? [e.name, ...walk(join(d, e.name)).map((n) => `${e.name}/${n}`)] : [e.name]));
+  };
+  for (const rel of walk(wroot)) {
+    if (rel.split("/").some((seg) => seg.startsWith("_"))) {
+      out.push({ path: `${WITNESS_TREE}/${rel}`, problem: "witness-underscore-path", detail: "GitHub Pages strips `_`-prefixed paths" });
+    }
+  }
+  return out;
 }
 
 /** Every `*.kg-qa.json` under `dir`, recursively. */
@@ -191,6 +299,7 @@ export function judgeKgQa(path: string, doc: unknown): CorpusFinding[] {
 export function validateQaTree(
   tree: string,
   layout: ReturnType<typeof corpusLayout> = corpusLayout(),
+  pages: readonly BadgePage[] = [],
 ): CorpusReport {
   const root = resolve(tree);
   const integrity = checkQaDirs(layout.dirs.map((d) => join(root, d)));
@@ -225,8 +334,9 @@ export function validateQaTree(
     const m = KgQaManifestSchema.safeParse(JSON.parse(text));
     if (!m.success) findings.push({ path: mPath, problem: "manifest-schema", detail: m.error.message });
   }
+  findings.push(...judgeWitnesses(root, pages));
   findings.sort((a, b) => a.path.localeCompare(b.path) || a.problem.localeCompare(b.problem));
-  return { dirs: layout.dirs, homes, examined: integrity.examined, findings };
+  return { dirs: layout.dirs, homes, examined: integrity.examined, pages: pages.length, findings };
 }
 
 /** The judgement a report earns. `examined: 0` is unknown, never ok. */
@@ -250,7 +360,7 @@ function fetchInto(ref: string): { state: "hit"; dir: string; key: string } | { 
 
 function print(r: CorpusReport, from: string): void {
   console.log(`check:qa-corpus — ${from}`);
-  console.log(`  ${r.dirs.length} director(ies) walked, ${r.examined} file(s) examined`);
+  console.log(`  ${r.dirs.length} director(ies) walked, ${r.examined} file(s) examined, ${r.pages} badge page(s) checked against ${WITNESS_TREE}`);
   for (const h of r.homes) console.log(`  ${h.by.padEnd(10)} ${h.home}/kg-qa  ${h.sidecars} sidecar(s)`);
   for (const f of r.findings) console.log(`  ✗ ${f.path} — ${f.problem}: ${f.detail}`);
 }
@@ -269,9 +379,13 @@ export function main(argv: string[]): number {
   if ([dir, ref, github ? "x" : undefined].filter(Boolean).length !== 1) {
     throw new QaUsageError("give exactly one of --dir <tree>, --ref <ref>, --github");
   }
+  // `--no-pages`: judge the tree alone, without checking this checkout's
+  // generated pages against its witnesses — for another commit's entry, or a
+  // fixture.
+  const pages = argv.includes("--no-pages") ? [] : badgePages();
 
   if (dir !== undefined) {
-    const r = validateQaTree(dir);
+    const r = validateQaTree(dir, corpusLayout(), pages);
     print(r, `tree ${dir}`);
     return finish(r);
   }
@@ -306,7 +420,7 @@ export function main(argv: string[]): number {
     return JUDGEMENT_EXIT.unknown;
   }
   try {
-    const r = validateQaTree(f.dir);
+    const r = validateQaTree(f.dir, corpusLayout(), pages);
     print(r, `qa-reports ${f.key}`);
     return finish(r);
   } finally {

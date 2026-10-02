@@ -2357,3 +2357,16 @@ jobs:
         env:
           GATES_RESULT: ${{ needs.gates.result }}
         run: bun run qa:publish --github --gates-result "$GATES_RESULT"
+
+      # Bean `cxcn` (reader audit F7): the corpus VALIDATION the unit tests did
+      # over the committed tree — every kg-qa sidecar validates, no critical
+      # criterion fails, every home carries its manifest, no conflict marker,
+      # every badge's witness is there — run over the entry this job just
+      # stored, read back through qa-store. It walks every HOSTED home
+      # (`cat-harness/test/results/bootstrap/`, …), which the old test never
+      # did. It keys the entry exactly as the publish does, so a fork PR skips
+      # with the same stated notice; any other miss is UNKNOWN (exit 2), never
+      # a pass. In this job, not in `gates`, because it judges the STORED
+      # record, which exists only after the publish.
+      - name: The stored QA entry validates, hosted homes included
+        run: bun run check:qa-corpus --github

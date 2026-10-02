@@ -7,7 +7,7 @@
  * — not its file family and not who fetches it afterwards.
  */
 import { describe, expect, it, test } from "bun:test";
-import { cpSync, existsSync, mkdtempSync, readFileSync, readdirSync, rmSync, writeFileSync } from "node:fs";
+import { existsSync, mkdtempSync, readFileSync, readdirSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join, dirname } from "node:path";
 import { fileURLToPath } from "node:url";
@@ -15,17 +15,14 @@ import { fileURLToPath } from "node:url";
 import {
   buildQaResult,
   mayLeaveMain,
-  qaResultPath,
   qaResultState,
   qaResultsFile,
-  readQaResultFrom,
   sourceHashOf,
   writeQaResult,
   QA_RESULTS_DIR,
 } from "../qa-results.js";
 import { readDeclaration, repoRootFor } from "../../schemas/cat-harness.js";
 import { siteDirFor } from "../../schemas/cat-harness.ts";
-import { exitCodeFor, verifySiteLinks, type CheckableLink } from "../site-links.js";
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), "..", "..");
 
@@ -69,20 +66,18 @@ describe("the results directory is DECLARED, not merely created", () => {
 const BUILD_EXPORT_MS = 30_000;
 
 describe("the result and the document are two renderings of ONE computation", () => {
-  it("every family in the committed result matches the export's own field", async () => {
+  it("every family in a freshly rendered result matches the export's own field", async () => {
     // Two computations can disagree; two renderings of one cannot. This is the
     // rule `feature-staging.yml` follows when it copies the `.json` alias AFTER
     // the staging stamp, and the reason `stagingStamp` is one function rather
-    // than one per exporter. Asserted against the COMMITTED file when there is
-    // one, so a drift between what the exporter computes and what was last
-    // written is caught — and against the exporter's own renderer always, so
-    // the claim still holds with `test/results/` off `main` (bean `id4s`).
+    // than one per exporter. Asserted against the exporter's own renderer, on
+    // a FRESH run: it read the committed file when there was one until bean
+    // `cxcn` (reader audit F7), and a test must not assert on the committed
+    // corpus. Drift between the exporter and what was last written is the
+    // kg-export gate's question, not this test's.
     const { buildExport, kgExportQaDocument } = await import("../kg-export.js");
     const doc = await buildExport();
-    const committed = readQaResultFrom(qaResultPath(ROOT, "kg-export"));
-    // A miss is the only acceptable non-hit: corrupt or unknown is a finding.
-    expect(["hit", "miss"]).toContain(committed.state);
-    const result = committed.state === "hit" ? committed.result : kgExportQaDocument(doc, "kg-export.jsonld");
+    const result = kgExportQaDocument(doc, "kg-export.jsonld");
     expect(result.$schema).toBe("qa-results/v1");
 
     for (const [family, field] of [
@@ -277,120 +272,18 @@ describe("a generated page carries structure, never a verdict", () => {
     }
   });
 
-  it("each page's verdict index exists, and holds a row for every badge on it", () => {
-    // The three-state rule, checked where it is cheapest: a badge whose row is
-    // missing paints `unknown` — honest, but it is honest about an omission
-    // nobody meant to make. `--check` gates the index on existence; this gates
-    // its COVERAGE, which existence cannot.
-    for (const { path, text } of pages()) {
-      const slug = /assets\/qa\/([^/]+)\/qa-index\.json/.exec(text)?.[1];
-      if (!slug) continue;
-      const idx = join(ROOT, "test", "results", "witnesses", slug, "qa-index.json");
-      expect({ page: path, index: idx, there: existsSync(idx) }).toEqual({
-        page: path,
-        index: idx,
-        there: true,
-      });
-      const badges = JSON.parse(readFileSync(idx, "utf-8")).badges as Record<string, unknown>;
-      for (const m of text.matchAll(/data-qa-key="([^"]+)"/g)) {
-        expect({ page: path, key: m[1], inIndex: m[1]! in badges }).toEqual({
-          page: path,
-          key: m[1],
-          inIndex: true,
-        });
-      }
-    }
-  });
+  // "each page's verdict index exists, and holds a row for every badge on it"
+  // read the committed witness tree, so it moved to `check:qa-corpus`
+  // (`witness-index-missing`, `witness-index-row-missing`), which judges the
+  // tree `qa:fetch` materialises — bean `cxcn`, reader audit F7 R64. Its
+  // logic is tested over fixtures in `check-qa-corpus.test.ts`.
 });
 
-describe("the badge URLs resolve against a tree built the way the site is", () => {
-  /**
-   * `_site` as the publishing workflows assemble it, for the `assets/qa/` part.
-   *
-   * Both workflows run `cp -rT test/results/witnesses ./_site/assets/qa` AFTER
-   * Jekyll, because Jekyll builds only `docs/`. Reproduced here rather than
-   * asserted about, because "the workflow contains this string" (which the
-   * test above already checks) says nothing about whether the paths the badges
-   * ask for land where they ask for them.
-   */
-  const build = (): string | undefined => {
-    const src = join(ROOT, "test", "results", "witnesses");
-    if (!existsSync(src)) return undefined;
-    const site = mkdtempSync(join(tmpdir(), "qa-site-"));
-    cpSync(src, join(site, "assets", "qa"), { recursive: true });
-    return site;
-  };
-
-  it("every URL a badge fetches is present in the built tree", () => {
-    const site = build();
-    // Three states. An absent witness tree is `unknown` — `exitCodeFor` maps
-    // that to 2, distinct from the 1 it gives a link positively established as
-    // dead, and a checkout with no build in it must not read as a wall of dead
-    // links. Here it is a hard failure because the tree IS committed; the
-    // distinction is kept so the reason a run failed is legible.
-    expect({ builtTree: site !== undefined }).toEqual({ builtTree: true });
-
-    // `CheckableLink`, not `SiteLink`. `SiteLink.id` is a closed union of the
-    // three navbar tile keys `docs-ui.js` looks a tile up by, and a QA badge
-    // URL is not a tile — tsc said so, correctly, and the fix was to split the
-    // checker's input type out rather than to cast past it. A cast would have
-    // made this file compile while asserting against a value the production
-    // type says cannot occur, which is the same shape as the defect this whole
-    // PR removes.
-    const links: CheckableLink[] = [];
-    const seen = new Set<string>();
-    const dir = join(ROOT, siteDirFor(ROOT));
-    const scan = (d: string, depth: number) => {
-      for (const e of readdirSync(d, { withFileTypes: true })) {
-        const p = join(d, e.name);
-        if (e.isDirectory() && e.name === "guides" && depth === 0) scan(p, depth + 1);
-        else if (e.isFile() && e.name.endsWith(".md")) {
-          const text = readFileSync(p, "utf-8");
-          // The Liquid the generator emits, resolved the way Jekyll resolves
-          // it: `relative_url` prepends the baseurl, and `_site` IS the
-          // baseurl's root, so the path under `_site` is what is inside the
-          // quotes with its leading slash dropped.
-          for (const m of text.matchAll(/data-qa-(?:index|src)="\{\{ '\/([^']+)' \| relative_url \}\}"/g)) {
-            if (seen.has(m[1]!)) continue;
-            seen.add(m[1]!);
-            links.push({ id: `${e.name}:${m[1]}`, target: m[1]! });
-          }
-        }
-      }
-    };
-    scan(dir, 0);
-
-    // Named, not counted: `toHaveLength(279)` breaks on the next page added
-    // and says nothing about what is missing.
-    expect(seen.has("assets/qa/publication-workflow/qa-index.json")).toBe(true);
-    expect(seen.has("assets/qa/publication-workflow/overview.block.json")).toBe(true);
-    expect(links.length).toBeGreaterThan(100);
-
-    const verdicts = verifySiteLinks(site!, links);
-    const bad = verdicts.filter((v) => v.verdict !== "ok").map((v) => v.detail);
-    expect(bad).toEqual([]);
-    expect(exitCodeFor(verdicts)).toBe(0);
-
-    rmSync(site!, { recursive: true, force: true });
-  });
-
-  it("no published path is `_`-prefixed, which Pages strips without `.nojekyll`", () => {
-    // The index was `_qa-index.json` for exactly one commit. GitHub Pages
-    // removes `_`-prefixed paths unless `.nojekyll` is present, and this tree
-    // is copied into `_site` after Jekyll has run — so a strip would 404 every
-    // index and paint every badge on the site `could not determine`. Honest,
-    // and useless. `.nojekyll` is on `gh-pages` today; not depending on it is
-    // cheaper than depending on it.
-    const walk = (d: string): string[] =>
-      readdirSync(d, { withFileTypes: true }).flatMap((e) =>
-        e.isDirectory() ? walk(join(d, e.name)) : [e.name],
-      );
-    const underscored = walk(join(ROOT, "test", "results", "witnesses")).filter((n) =>
-      n.startsWith("_"),
-    );
-    expect(underscored).toEqual([]);
-  });
-});
+// "the badge URLs resolve against a tree built the way the site is" and "no
+// published path is `_`-prefixed" walked the COMMITTED witness tree. Both are
+// `check:qa-corpus` now (`witness-url-missing`, `witness-underscore-path`),
+// over the fetched tree the site build publishes — bean `cxcn`, reader audit
+// F7 R64 — and tested over fixtures in `check-qa-corpus.test.ts`.
 
 /**
  * A result whose findings did not change is not rewritten.
