@@ -2,7 +2,7 @@
   "$schema": "folio-bean-index/v1",
   "tile": {
     "beans": {
-      "count": 638,
+      "count": 642,
       "unit": "beans"
     }
   },
@@ -935,6 +935,22 @@
       "file": "beans/defs/folio-assistant-3fva--arc-qa-test-evidence-off-main-a-commit-keyed-qa-re.md"
     },
     {
+      "id": "folio-assistant-3hk4",
+      "title": "QA-PUBLISH must publish real results once main holds none (5hox blocker)",
+      "status": "todo",
+      "type": "task",
+      "priority": "",
+      "parent": "folio-assistant-3fva",
+      "blocking": [
+        "folio-assistant-5hox"
+      ],
+      "blockedBy": [],
+      "createdAt": "2026-10-02T13:58:10Z",
+      "updatedAt": "2026-10-02T13:58:10Z",
+      "preview": "Found by the 5hox prep (2026-10-02, cat-harness/docs/proposals/5hox-removal-inventory.md). qa-publish publishes what the checkout holds under every declared qa directory. After 5hox removes the working copies, a fresh CI checkout holds almost nothing there (only the bootstrap kg-export sidecar), so every main/<sha> entry would hold ~1 file and every --against main baseline would shrink to nothing.",
+      "file": "beans/defs/folio-assistant-3hk4--qa-publish-must-publish-real-results-once-main-hol.md"
+    },
+    {
       "id": "folio-assistant-3lbz",
       "title": "TOOLS: Zod schemas are not reachable as Tools, and kg-navigation has none — audit + analysis",
       "status": "todo",
@@ -1271,6 +1287,22 @@
       "file": "beans/defs/folio-assistant-4kq7--adopt-githubspec-kit-spec-before-code-gate-one-spe.md"
     },
     {
+      "id": "folio-assistant-4l4d",
+      "title": "GEN-DOCS-PAGES reads QA badges through qa-store (5hox blocker)",
+      "status": "todo",
+      "type": "task",
+      "priority": "",
+      "parent": "folio-assistant-3fva",
+      "blocking": [
+        "folio-assistant-5hox"
+      ],
+      "blockedBy": [],
+      "createdAt": "2026-10-02T13:58:10Z",
+      "updatedAt": "2026-10-02T13:58:10Z",
+      "preview": "Found by the 5hox prep (2026-10-02). docs:pages:check and check:ci-invocations go red with test/results/ absent: committed docs pages embed QA badges, and without the corpus gen-docs-pages writes 'not available', so every page reads stale. Either read the corpus through qa-store (fetch miss = UNKNOWN, never a stale page), or move the badges out of the committed pages into the build.\n\n## Done when\n",
+      "file": "beans/defs/folio-assistant-4l4d--gen-docs-pages-reads-qa-badges-through-qa-store-5h.md"
+    },
+    {
       "id": "folio-assistant-4l5q",
       "title": "B7b (#1168): a skill declares the directories it governs (graph-kinds:, governs:); coverage.skill removed",
       "status": "completed",
@@ -1460,9 +1492,13 @@
       "priority": "normal",
       "parent": "folio-assistant-3fva",
       "blocking": [],
-      "blockedBy": [],
+      "blockedBy": [
+        "folio-assistant-3hk4",
+        "folio-assistant-4l4d",
+        "folio-assistant-f3bh"
+      ],
       "createdAt": "2026-10-01T08:00:47Z",
-      "updatedAt": "2026-10-01T19:22:21Z",
+      "updatedAt": "2026-10-02T13:58:15Z",
       "preview": "Arc `3fva`, proposal §4 item 3.7 and decision D4. **Never on an agent's own initiative** (`deletion-requires-confirmation`).\n\nPreconditions:\n- every reader is migrated;\n- the gates have been green on the branch for 7 days (D4 default);\n- the `qa-reports:main/<head>` tree is byte-identical to main's `test/results` for every moved path, checked by blob hash;\n- attestations stay in place (D2 default)",
       "file": "beans/defs/folio-assistant-5hox--remove-moved-qa-files-from-main-only-on-the-owners.md"
     },
@@ -2647,7 +2683,7 @@
     {
       "id": "folio-assistant-9y9j",
       "title": "JSON-LD VOICE: the rules every emitted JSON-LD document is written and reviewed against, cited to the held W3C texts",
-      "status": "in-progress",
+      "status": "completed",
       "type": "task",
       "priority": "normal",
       "parent": "folio-assistant-scfh",
@@ -3041,12 +3077,12 @@
       "title": "Content JSON-LD: stop relying on @base from the remote context (JSON-LD 1.1 §4.1.3)",
       "status": "todo",
       "type": "task",
-      "priority": "",
+      "priority": "normal",
       "parent": "folio-assistant-scfh",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-10-01T18:30:16Z",
-      "updatedAt": "2026-10-01T18:30:16Z",
+      "updatedAt": "2026-10-01T18:33:37Z",
       "preview": "## Why\nMeasured 2026-10-01 (bean jcet, item 2): emitted content .jsonld reference `https://litlfred.github.io/folio-assistant/ns/content/v1.jsonld` by URL, and relative @ids resolve to `https://litlfred.github.io/folio/…` only because jsonld.js 8.3.3 applies `@base` from a remote context. JSON-LD 1.1 §4.1.3 (held: w3c-2020-json-ld-1-1 sec-033-413-base-iri) says `@base` in a remote context is ignor",
       "file": "beans/defs/folio-assistant-bh4q--content-json-ld-stop-relying-on-base-from-the-remo.md"
     },
@@ -3361,7 +3397,7 @@
     {
       "id": "folio-assistant-cmsl",
       "title": "DEDUPE: 11 directories declared twice — and both obvious fixes are measurably wrong",
-      "status": "in-progress",
+      "status": "completed",
       "type": "task",
       "priority": "normal",
       "parent": "folio-assistant-zzmr",
@@ -3933,6 +3969,22 @@
       "updatedAt": "2026-09-23T10:00:13Z",
       "preview": "Child of d903 (renderer 4 of the five it listed). A text diff of a decision table is unreadable, which is the case that proved a single 'the diff' wrong.\n\nNeeds, before it can be built:\n- the structured shape of each DAK artefact on BOTH sides. The ChangeSet reads manifests as text and never executes them; a field diff needs the parsed artefact (FHIR JSON, a DMN table, a data dictionary row);\n- a ",
       "file": "beans/defs/folio-assistant-f327--diff-renderer-structural-diff-for-dak-artefacts-a.md"
+    },
+    {
+      "id": "folio-assistant-f3bh",
+      "title": "SUBGRAPH-READMES skips stored directories (5hox follow-up)",
+      "status": "todo",
+      "type": "task",
+      "priority": "",
+      "parent": "folio-assistant-3fva",
+      "blocking": [
+        "folio-assistant-5hox"
+      ],
+      "blockedBy": [],
+      "createdAt": "2026-10-02T13:58:10Z",
+      "updatedAt": "2026-10-02T13:58:10Z",
+      "preview": "Found by the 5hox prep (2026-10-02). subgraph-readmes (in bootstrap-tools) lists results/ when a working copy is present and omits it when absent, so after 5hox a contributor who ran qa:fetch gets a different cat-harness/test/README.md from CI. The generator should skip any directory whose declaration carries storage (16ei).\n\n## Done when\n- [ ] the generated README is identical with and without a ",
+      "file": "beans/defs/folio-assistant-f3bh--subgraph-readmes-skips-stored-directories-5hox-fol.md"
     },
     {
       "id": "folio-assistant-f4gj",
@@ -4763,7 +4815,7 @@
     {
       "id": "folio-assistant-jcet",
       "title": "STANDARDS MISMATCHES the W3C methodology nodes recorded: PROV_CONTEXT IRI, JSON-LD @base in an external context, ODRL conflict default",
-      "status": "in-progress",
+      "status": "completed",
       "type": "bug",
       "priority": "normal",
       "parent": "folio-assistant-scfh",
@@ -8487,6 +8539,20 @@
       "file": "beans/defs/folio-assistant-y2jh--beforeafter-preview-one-reviewer-facing-skill-acro.md"
     },
     {
+      "id": "folio-assistant-y4t4",
+      "title": "SMART-* SEPARATION stage C: neutral IG page generator, neutral sidecar overlay, fhir-artifact-index viewer per instance",
+      "status": "in-progress",
+      "type": "task",
+      "priority": "",
+      "parent": "folio-assistant-n3ni",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-10-01T12:15:53Z",
+      "updatedAt": "2026-10-01T12:15:53Z",
+      "preview": "Stage C of cat-harness/docs/proposals/smart-separation-2026-10-01.md (#1767). Owner: go ahead with stage C (2026-10-01); Q3 decided: neutral sidecar overlay.\n\nfhir-harness/AGENTS.md: nothing here may know about WHO. gen-ig-pages (stage A) writes a WHO publish note and DAK API sections; the artefact-index schema carries a WHO-named dak overlay.\n\n## Done when\n- [x] C1 gen-ig-pages neutral: --publish",
+      "file": "beans/defs/folio-assistant-y4t4--smart-separation-stage-c-neutral-ig-page-generator.md"
+    },
+    {
       "id": "folio-assistant-y4uj",
       "title": "Ingest #1614 item 4 sources 7, 8, 11: FHIR TestPlan, ITB docs, CWA 16408, Gherkin ref, MCP spec, hmans/beans README",
       "status": "in-progress",
@@ -8966,6 +9032,24 @@
     }
   ],
   "findings": [
+    {
+      "kind": "blocked-without-expiry",
+      "bean": "folio-assistant-3hk4",
+      "blocks": "folio-assistant-5hox",
+      "detail": "blocks `folio-assistant-5hox` and states no expiry, so the block cannot be told from abandoned work"
+    },
+    {
+      "kind": "blocked-without-expiry",
+      "bean": "folio-assistant-4l4d",
+      "blocks": "folio-assistant-5hox",
+      "detail": "blocks `folio-assistant-5hox` and states no expiry, so the block cannot be told from abandoned work"
+    },
+    {
+      "kind": "blocked-without-expiry",
+      "bean": "folio-assistant-f3bh",
+      "blocks": "folio-assistant-5hox",
+      "detail": "blocks `folio-assistant-5hox` and states no expiry, so the block cannot be told from abandoned work"
+    },
     {
       "kind": "blocked-without-expiry",
       "bean": "folio-assistant-jg8s",

@@ -301,10 +301,10 @@
   ],
   "canonicalDocument": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld",
   "repository": "cat-harness",
-  "generatedAt": "2026-10-02T12:21:10.468Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/51e40d7c49e8b8d306dc9739e2de6f229ee58826",
-  "sourceCommitSha": "51e40d7c49e8b8d306dc9739e2de6f229ee58826",
-  "sourceCommitAt": "2026-10-02T12:15:23Z",
+  "generatedAt": "2026-10-02T14:17:52.876Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/f8b5b20ac7727ee618265eea17547c09e5e524bf",
+  "sourceCommitSha": "f8b5b20ac7727ee618265eea17547c09e5e524bf",
+  "sourceCommitAt": "2026-10-02T14:09:17Z",
   "sourceTreeDirty": true,
   "dependsOnUnavailable": "2 dependency edge(s), none expressible as a record — see gaps",
   "counts": {
@@ -319,7 +319,7 @@
     "ProcessNode": 976,
     "Tool": 112,
     "Schema": 148,
-    "ExternalSchema": 18,
+    "ExternalSchema": 19,
     "GraphKind": 26,
     "Role": 52,
     "Subgraph": 26,
@@ -1729,7 +1729,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#package/kg-core"
       ],
       "instructionsPath": "skills/kg/kg-core/directory-conventions.md",
-      "instructionLines": 1338,
+      "instructionLines": 1341,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -2951,7 +2951,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#package/sdlc-core"
       ],
       "instructionsPath": "skills/sdlc/sdlc-core/qa-reports.md",
-      "instructionLines": 132,
+      "instructionLines": 138,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -49323,14 +49323,6 @@
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/extraction"
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#schema/fhir-artifact-index",
-      "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#Schema",
-      "name": "fhir-artifact-index",
-      "title": "The artefact index of a published FHIR Implementation Guide.",
-      "module": "../folio-assistant-core/schemas/fhir-artifact-index.ts",
-      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/fhir-artifact-index"
-    },
-    {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#schema/glossary",
       "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#Schema",
       "name": "glossary",
@@ -49369,6 +49361,14 @@
       "title": "A reviewer's VERDICT on one version of one block: \"I read this, and here is",
       "module": "../folio-assistant-core/schemas/review-verdict.ts",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/review-verdict"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#schema/fhir-artifact-index",
+      "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#Schema",
+      "name": "fhir-artifact-index",
+      "title": "The artefact index of a published FHIR Implementation Guide.",
+      "module": "../fhir-harness/schemas/fhir-artifact-index.ts",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/fhir-artifact-index"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#schema/ig-chrome",
@@ -49422,6 +49422,20 @@
         "http://hl7.org/fhir/"
       ],
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#externalSchema/hl7-fhir"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#externalSchema/ietf-handle-system",
+      "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#ExternalSchema",
+      "name": "ietf-handle-system",
+      "title": "Handle System Overview (RFC 3650), with its namespace (RFC 3651) and protocol (RFC 3652)",
+      "authority": "IETF",
+      "specVersion": "2003-11",
+      "specUse": "conforms",
+      "specUrl": "https://www.rfc-editor.org/rfc/rfc3650",
+      "namespace": [
+        "https://hdl.handle.net/"
+      ],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#externalSchema/ietf-handle-system"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#externalSchema/omg-bpmn-2.0",
