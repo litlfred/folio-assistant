@@ -7,16 +7,18 @@ summary: >-
   One value, several target vocabularies, today written as a hand-made line in
   each generator. An inventory of 59 such mappings across 17 files, each with
   file:line, plus five places where two generators disagree or a condition is
-  only implicit. Proposes a declarative mapping shape in four options. Option 1
-  is recommended: mapping tables as KG data, applied by one Tool. Waiting on
-  the owner's ruling before glossary-export moves onto it.
+  only implicit. Four options were put to the owner, who chose option 1 on
+  2026-10-02: mapping tables as KG data, applied by one in-process Tool, and
+  interoperating with FHIR ConceptMaps (representable in, producible out,
+  round-trip exact). Built, with glossary-export moved onto it and its output
+  byte-identical.
 ---
 
 # Vocabulary mappings as declared ETL
 
-**Status:** proposal, waiting on the owner's choice of shape. Nothing has been
-built yet. Bean `folio-assistant-k74z`, issue #1872. Measured on
-`origin/main` at `13620da` (2026-10-02).
+**Status:** decided 2026-10-02 (option 1) and built. See
+[Decision](#decision). Bean `folio-assistant-k74z`, issue #1872. The inventory
+was measured on `origin/main` at `13620da` (2026-10-02).
 
 ## The ask
 
@@ -321,10 +323,86 @@ Owner, 2026-10-02, a further statement on the same question, verbatim:
 
 > more so, that existing FHIR Concept Maps are representable, (dont need injection of mapping standard -> fhir stds)
 
+Owner, 2026-10-02, clarifying the two, verbatim:
+
+> we still want to able to produce FHIR ConceptMaps, just we dont need to assume injective map onto FHIR conceptmaps... may be lossy. but should be injective on the inverse image of FHIR ConceptMaps into mapping stadard.
+
 **Option 1 is chosen:** mapping tables as KG data, applied by one in-process
-`vocab-map` Tool. The second statement concerns FHIR ConceptMap support. How
-it is to be read is still being confirmed with the owner, so this section
-records the words and not an interpretation of them.
+`vocab-map` Tool.
+
+**The ConceptMap requirement, stated formally.** Write C for FHIR ConceptMaps
+(R5, and R4 where it differs) and M for `folio-vocab-mapping/v1` tables.
+
+- **ι : C → M** represents a ConceptMap. Every existing ConceptMap must be
+  representable. Where a ConceptMap feature needs a field M lacks, M gains
+  the field; the feature is not dropped.
+- **π : M → C** produces a ConceptMap. It **may be lossy** on M in general,
+  because M says things a ConceptMap cannot (a derived target, a transform,
+  a JSON key). π **reports** every loss and never drops anything silently.
+- **π is injective on ι(C)**, and in fact **π ∘ ι = id_C**: a ConceptMap read
+  and then produced comes back equal, field for field after canonical key
+  ordering.
+
+### What was built
+
+| | where |
+|---|---|
+| M, the table schema (zod), plus the relationship tables and the applier | `cat-harness/schemas/vocab-mapping.ts` |
+| ι `fromConceptMap` and π `toConceptMap`, R4 and R5 | `cat-harness/schemas/vocab-mapping-fhir.ts` |
+| the `vocab-mapping` graph kind and its declared directory | `schemas/graph-kind-registry.ts`, `cat-harness.json` → `cat-harness/vocab-mappings/` |
+| the `vocab-map` Tool node (in-process, satisfies `vocabulary-authority`) | `cat-harness/tools/vocab-map.ts` |
+| the tests | `scripts/tests/vocab-mapping-fhir.test.ts`; the context-agreement test in `scripts/tests/glossary-export.test.ts` |
+
+**Measured, not argued:**
+
+- **π ∘ ι = id holds on all 174 ConceptMap examples HL7 publishes**: 80 in
+  `hl7.fhir.r4.examples@4.0.1` and 94 in `hl7.fhir.r5.examples@5.0.0`. No loss
+  is reported on any of them.
+- **The passthrough bags do not carry the result.** On those 174 maps no
+  group, element, target, unmapped, dependsOn or product key lands in
+  `extra`. `metadata` holds only resource description: `contact`, `text`,
+  `jurisdiction`, `meta`, `identifier`, the resource `id`, and the R5
+  workflow fields.
+- **Four of the examples are committed as fixtures, unmodified**, with their
+  sha256 and source in `fixtures/conceptmap/provenance.json`: R4 and R5
+  `example2` (dependsOn, product, unmapped) and R4 and R5 `101`. A constructed
+  R5 map covers what no small example does: `noMap`, `fixed` unmapped,
+  `valueSet` sources and targets, `target.property`, and an extension on a
+  target. Setting `FHIR_EXAMPLES_DIR` re-runs the whole corpus.
+
+**How M covers what R4 and R5 disagree on.**
+
+- **Relationship.** `relationship` holds the R5 code and is always present.
+  An R4 map's `equivalence` is kept verbatim beside it. Six of R4's ten codes
+  (`equal`, `subsumes`, `specializes`, `inexact`, `unmatched`, `disjoint`)
+  land on a coarser R5 code, so recomputing them would lose them.
+- **Versions.** An R5 `canonical|version` is split into `source` and
+  `sourceVersion` (`target` and `targetVersion` likewise), which is R4's
+  shape, and joined again on output.
+- **Unmapped.** R4 `provided` is R5 `use-source-code`, and R4's `url` is R5's
+  `otherMap`.
+- **dependsOn.** R4's `system` and `display` are kept.
+- **Crossing releases is a conversion, and π reports it.** Producing an R4
+  map as R5 reports each equivalence R5 cannot say. Producing an R5 `noMap`
+  as R4 writes R4's form (a target with equivalence `unmatched`) and reports
+  that it did.
+
+**SKOS.** The terminology work already publishes SKOS matches, so the
+correspondence is in the schema (`SKOS_MATCH_FOR`):
+
+| R5 relationship | SKOS |
+|---|---|
+| `equivalent` | `skos:exactMatch` |
+| `source-is-narrower-than-target` | `skos:broadMatch` |
+| `source-is-broader-than-target` | `skos:narrowMatch` |
+| `related-to` | `skos:relatedMatch`; `skos:closeMatch` also reads back as `related-to`, since R5 has no "close" |
+| `not-related-to` | none. SKOS has no negative match, so this is left undefined rather than guessed |
+
+**Conditional rows.** None of glossary-export's conditions needed
+`dependsOn`. An absent value writes nothing, which is the default, and
+"true or nothing" is `transform: "flag"`. A condition on ANOTHER field's
+value would be a `dependsOn`, which M already represents. The applier does
+not yet evaluate one, and says nothing it cannot do.
 
 ### Facts gathered for the ConceptMap question, from the specification itself
 
@@ -356,31 +434,41 @@ These were read from HL7's own packages, not recalled from memory:
   - cmd-4: `noMap` excludes `target`;
   - cmd-2, cmd-3 and cmd-8–10 constrain `unmapped` by mode.
 
-## 4. The worked example, once the shape is chosen
+## 4. The worked example: glossary-export, done
 
-`glossary-export` moves first, as the bean requires. Under Option 1 that means
-four tables:
+`glossary-export` now writes its nodes through **five tables** in
+`cat-harness/vocab-mappings/`:
 
-- `role→skos:Concept` (rows 1–6);
-- `lane-occurrence→LaneUsage` (rows 7–9);
-- `ledger-entry→skos:Concept` (rows 11–14);
-- `glossary-scheme→skos:ConceptScheme` (row 15, where `dcterms:title` is
-  `derived` from `skos:prefLabel`, which closes `sl9u` as a declaration rather
-  than a comment).
+| table | node | inventory rows |
+|---|---|---|
+| `glossary-role-concept` | `skos:Concept` per role | 1–6 |
+| `glossary-lane-usage` | `LaneUsage` per lane occurrence | 7–9 |
+| `glossary-variable-lane-concept` | `skos:Concept` per variable-performer lane | 10 |
+| `glossary-retired-concept` | deprecated `skos:Concept` per retired term | 11–13 |
+| `glossary-concept-scheme` | the scheme, whose `dcterms:title` is declared `derived` from `skos:prefLabel` | 15, the `sl9u` line |
 
-The generator keeps its corpus walk, its ledger and its retirement logic. Only
-the literals move.
+Five tables rather than the four sketched here, because the variable-lane
+concept is a different node from a role's concept.
 
-**Verified against:** `cat-harness/scripts/tests/glossary-export.test.ts`
-stays green, **and** `_kg/<stub>-glossary.jsonld` is byte-identical before
-and after for both `cat-harness` and `bootstrap`. A worked example that
-changes its output is a migration plus a change, and the two would need
-separate review.
+The generator keeps its corpus walk, its ledger and its retirement logic,
+plus identity (`@id`, `@type`). Only the field-to-predicate lines moved.
 
-**What would falsify the approach:** if more than about a third of
-glossary-export's rows need `transform: "code"`, the closed set is too small
-to be the shape, and Option 2 is the honest answer. Rows 3, 10 and 13 are the
-ones at risk.
+**Verified:**
+
+- `_kg/cat-harness-glossary.jsonld`, `_kg/bootstrap-glossary.jsonld` and
+  `_kg/cat-harness-code-lists.jsonld` are **byte-identical** before and after
+  (`cmp`). Between them the two instances exercise every table: bootstrap has
+  the retired and variable-lane nodes, cat-harness the rest.
+- `glossary-export.test.ts` passes: 27 existing tests, plus one new test that
+  every key a table writes is bound, in the document's `@context`, to that
+  table's target and code. That test checks 27 rows, and it is the guard
+  against D2-style drift.
+
+**The falsifier did not fire.** 27 rows are declared. Four are
+`transform: "code"`, where the value is prepared before mapping:
+`altLabel`, `hiddenLabel`, `changeNote` and `isReplacedBy`. Add the
+ledger-rename pass that stays in code, and that is 5 of 28, about 18%,
+against the "about a third" that would have meant option 2.
 
 ## 5. Not decided here, and counted rather than listed
 

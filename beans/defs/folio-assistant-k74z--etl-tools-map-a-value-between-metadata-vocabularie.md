@@ -5,7 +5,7 @@ status: in-progress
 type: task
 priority: normal
 created_at: 2026-09-23T21:33:31Z
-updated_at: 2026-10-02T15:15:34Z
+updated_at: 2026-10-02T15:29:14Z
 parent: folio-assistant-zzmr
 ---
 
@@ -27,3 +27,5 @@ One value, several target vocabularies. Today every such mapping is a hand-writt
 _2026-10-02T14:12Z_ — Claimed by claude/k74z-vocab-mapping (session https://claude.ai/code/session_01CVVoavPoCHMLA7AASxG8cH).
 
 _2026-10-02T15:15Z_ — Owner ruling, 2026-10-02, verbatim: "1 ... needs to support FHIR Concept Maps downstream". Further, same day, verbatim: "more so, that existing FHIR Concept Maps are representable, (dont need injection of mapping standard -> fhir stds)". Option 1 chosen; the ConceptMap reading is being confirmed with the owner (work held).
+
+_2026-10-02T15:29Z_ — Owner clarification, 2026-10-02, verbatim: "we still want to able to produce FHIR ConceptMaps, just we dont need to assume injective map onto FHIR conceptmaps... may be lossy. but should be injective on the inverse image of FHIR ConceptMaps into mapping stadard." Formally, with C = FHIR ConceptMaps and M = folio-vocab-mapping/v1 tables: iota: C -> M represents every ConceptMap; pi: M -> C may be lossy but reports every loss; pi∘iota = id_C. Built in schemas/vocab-mapping.ts and schemas/vocab-mapping-fhir.ts; holds on all 174 HL7 ConceptMap examples (R4 80, R5 94). glossary-export moved onto 5 tables in vocab-mappings/, output byte-identical for cat-harness and bootstrap.

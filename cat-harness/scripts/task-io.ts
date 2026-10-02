@@ -208,6 +208,7 @@ export const TASK_IO: Readonly<Record<string, ScriptIO>> = {
   "check:workflows": READ_ONLY,
   "check:xml-comments": READ_ONLY,
   "code-lists:check": READ_ONLY,
+  "vocab-mappings:check": READ_ONLY,
   "deps:python:check": READ_ONLY,
   "docs:auto:check": READ_ONLY,
   "docs:harness:check": READ_ONLY,

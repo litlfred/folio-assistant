@@ -340,6 +340,13 @@ nothing renders yet. It is shown rather than omitted: "nothing renders this" and
 - [Folio Assistant]({{ '/cat-harness/uploads/folio-assistant/' | relative_url }})
 - [WHO IRIS]({{ '/cat-harness/uploads/who-iris/' | relative_url }})
 
+### `vocab-mapping`
+
+0 of 1 published.
+{: .fa-hx-dim }
+
+- C@T Harness — *declared, not published*
+
 ### `voices`
 
 5 of 5 published.
