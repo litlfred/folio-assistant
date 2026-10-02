@@ -7,6 +7,7 @@ import { describe, expect, test } from "bun:test";
 
 import {
   graphTiles,
+  kindTileIcon,
   publishedHref,
   tileFindings,
   tilesOn,
@@ -414,3 +415,26 @@ describe("one tile per page (#1168 B7a-2b)", () => {
   });
 });
 
+
+describe("a tile with no icon of its own takes its graph KIND's (ob3m finding 11)", () => {
+  const kinded = (id: string, kinds: string[], icon?: string): TiledDirectory => ({
+    id,
+    graphKinds: kinds,
+    coverage: SubgraphCoverageSchema.parse({ visualiser: [{ ref: `${id}.html`, ...(icon ? { icon } : {}) }] }),
+  });
+
+  test("an undeclared icon falls back to the first kind that has one", () => {
+    const [t] = graphTiles([kinded("who-iris-library", ["library"])]);
+    expect(t?.icon).toBe("library");
+    expect(kindTileIcon(["cat-harness", "schemas"])).toBe("schemas");
+  });
+
+  test("a declared icon still wins over the kind", () => {
+    expect(graphTiles([kinded("skills", ["skills"], "docs")])[0]?.icon).toBe("docs");
+  });
+
+  test("a kind with no icon leaves the tile without one, rather than guessing", () => {
+    expect(graphTiles([kinded("glossary", ["swimlane-glossary"])])[0]).not.toHaveProperty("icon");
+    expect(kindTileIcon(undefined)).toBeUndefined();
+  });
+});
