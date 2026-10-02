@@ -251,6 +251,9 @@ have seen it (bean `391j`).
 
 ## Relationship to other skills
 
+- [`pr-description`](pr-description.md): what the PR body says ABOVE the
+  status checklist (the problem, why, approach, constraints, solution, usage,
+  what is not done), for a reader who was not here.
 - [`/coordinate`](coordinate.md) — cross-PR triage (scope map, sibling
   intent, cherry-picks, ledger). `continual-progress` keeps *your* PR
   legible so `/coordinate` (yours or a sibling's) has something to triage.
