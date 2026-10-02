@@ -19,6 +19,8 @@ A library entry is never judged after ingestion or the KG build. Measured on mai
 - The cause of 'Abies' and of the empty blocks is traced to code and reported on the PR.
 
 
+## 2026-10-01 — withheld rows in the viewer (PR #1818, stacked on #1799)
+Owner ruling on #1794, option 1 ("fix the viewer now"): a withheld entry's row shows its summary when it has one, otherwise "Withheld — copyright and restrictions not granted" with a link to the catalogue record. The entry gets a banner (why, which gate, the record link, N of M sections summarised). Other empty blocks keep the neutral "(no content carried)". Withheld is read from withheld.json, which now carries structured gates[] and record{id,page,uri} written by gen-iris-pages. Row and banner code: cat-harness/scripts/lib/library-withheld-view.ts. Tests: library-withheld-view.test.ts and library-withheld-viewer.e2e.ts. Drafting the summaries is folio-assistant-r96p (todo).
 
 ## 2026-10-01 — title authority order implemented (PR #1822, stacked on #1799)
 

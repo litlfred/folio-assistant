@@ -733,6 +733,42 @@ the library page. It is advisory, never a gate. What the gate does fail is a
 sidecar that does not parse, names another entry, or holds a record for a block
 or source that is not there.
 
+### A WITHHELD entry in the viewer — its summary, else the gate, never "no content" (issue #1794)
+
+An entry whose library root's `withheld.json` names it (bean `cw35`) is listed
+but publishes no verbatim text: `gen-library-viz` reads its blocks with
+`verbatim: false`. Until 2026-10-01 every such row then read **"(no content
+carried)"** — 121 of 121 rows of `who-pub-tps-931`, 250 of 250 of
+`9789241548960-eng` — which is what a page-scan with no text says, so "not ours
+to show" looked exactly like "nothing was extracted". The owner's ruling
+(option 1 of 4, *"Fix the viewer now"*) is the rule:
+
+1. **A row shows the section's summary when one exists**, labelled as a summary
+   and never as the source text. Summaries are our writing and stay published.
+2. **Otherwise, a withheld row says the gate**: *"Withheld — copyright not
+   granted"*, naming every gate that refused (*"copyright and restrictions not
+   granted"*), with a link to the catalogue record — its published page first,
+   its upstream URI second, no link rather than a guessed one.
+3. **Anything else with no content keeps the neutral "(no content carried)"**,
+   because for those it is true.
+4. **A banner tops a withheld entry**: why the text is not shown, which gate
+   refused, the record link, and how many sections have summaries (*"0 of 121
+   sections summarised"*). No banner on any other entry.
+
+**Withheld is READ, never inferred from emptiness.** The flag, the gates and the
+record come from `withheld.json` — `folio-withheld/v1` carries an optional
+structured `gates[]` and `record{id, page, uri}` beside the `reason` sentence,
+which the instance's generator writes from its own data (who-iris:
+`gen-iris-pages.ts`, from the catalogue's publication gates). A list that
+carries only the sentence still works: the row then says the sentence.
+
+The row and banner code is `scripts/lib/library-withheld-view.ts`, embedded in
+the page verbatim so `library-withheld-view.test.ts` runs the same text the
+browser does; `library-withheld-viewer.e2e.ts` opens the rendered page.
+Drafting the summaries is a separate backlog (bean `r96p`):
+`bun run summaries:next -- --entry <slug>` serves a withheld entry's text to the
+summariser like any other.
+
 ### Describing a document's images — and why it is an ARM, not a step you run
 
 `pdf-images.py` classifies by geometry, which answers exactly one question: is

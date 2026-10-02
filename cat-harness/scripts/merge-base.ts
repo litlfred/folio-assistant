@@ -30,6 +30,7 @@
  *   bun run merge:main -- --dry-run    # classify the conflicts, change nothing
  *   bun run cat-harness/scripts/merge-base.ts --base origin/<branch>
  *   bun run cat-harness/scripts/merge-base.ts --root <worktree> --base <sha> --dry-run
+ *   bun run cat-harness/scripts/merge-base.ts --root <worktree> --base <sha> --no-regen  # a train member
  *
  * Exit 0 merged (or already up to date) · 1 refused or unproven, tree restored ·
  * 2 could not start (dirty tree, no such base).
@@ -108,6 +109,12 @@ if (import.meta.main) {
   const args = process.argv.slice(2);
   const opt = (k: string) => { const i = args.indexOf(k); return i >= 0 ? args[i + 1] : undefined; };
   const dryRun = args.includes("--dry-run");
+  // `--no-regen` is for a merge TRAIN: several branches merged one after
+  // another, then ONE `bun run regen` over the result. Regenerating after each
+  // member cost 5-13 min apiece (measured 2026-10-02), and every member's
+  // generated files are rewritten by the final regen anyway. Each member's
+  // merge commit is NOT proved on its own; the train is proved at its end.
+  const noRegen = args.includes("--no-regen");
   const base = opt("--base") ?? "origin/main";
   // `--root` lets the command run against another checkout (a worktree at an
   // old commit, for a replay of a historical merge) without copying itself in.
@@ -199,6 +206,13 @@ if (import.meta.main) {
       writeFileSync(join(root, c.path), resolved);
     } else continue;
     git(root, "add", "--", c.path);
+  }
+
+  if (noRegen) {
+    git(root, "add", "-A");
+    git(root, "commit", "-q", "--no-edit");
+    console.log(`\nmerge-base: merged ${base}; ${p.resolvable.length} conflict(s) resolved by declared pattern. NOT regenerated (--no-regen): run \`bun run regen\` once over the train.`);
+    process.exit(0);
   }
 
   // The merge moves the submodule GITLINKS but not their checkouts, so without
