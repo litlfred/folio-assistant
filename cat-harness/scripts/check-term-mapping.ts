@@ -337,6 +337,16 @@ export interface MappedTerm {
   exact: boolean;
   /** The URIs of the concepts it matched, which is what a reader follows. */
   concepts: string[];
+  /**
+   * The subset of {@link concepts} whose `prefLabel` the term matched — the
+   * only ones an `exactMatch` may point at. Empty when `exact` is false.
+   *
+   * `exact` alone could not say WHICH concept was exact: a term matching
+   * concept A's prefLabel and concept B's altLabel is `exact: true` with both
+   * in `concepts`, and publishing `skos:exactMatch` to B would assert an
+   * equivalence nothing measured (bean `5yhm`, the SKOS-publish slice).
+   */
+  exactConcepts: string[];
 }
 
 /**
@@ -440,6 +450,9 @@ export function perScheme(
           term: r.term,
           exact: r.exact === "mapped",
           concepts: [...new Set((r.matches ?? []).map((m) => m.uri))].sort(),
+          exactConcepts: [
+            ...new Set((r.matches ?? []).filter((m) => m.predicate === "skos:exactMatch").map((m) => m.uri)),
+          ].sort(),
         }))
         .sort(byTerm),
       ...(unmapped > 0 && undetermined > 0
