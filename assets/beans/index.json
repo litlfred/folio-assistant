@@ -2,7 +2,7 @@
   "$schema": "folio-bean-index/v1",
   "tile": {
     "beans": {
-      "count": 649,
+      "count": 650,
       "unit": "beans"
     }
   },
@@ -643,14 +643,14 @@
     {
       "id": "folio-assistant-2h76",
       "title": "STATE BRANCH P2: mechanism — storage keyedBy tip, branch-store splice-write, seed the orphan 'state' branch, session-start mount at state/",
-      "status": "todo",
+      "status": "in-progress",
       "type": "task",
       "priority": "",
       "parent": "folio-assistant-fs43",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-10-02T10:58:10Z",
-      "updatedAt": "2026-10-02T10:58:10Z",
+      "updatedAt": "2026-10-02T22:42:36Z",
       "preview": "Serial, one agent. Reuses the 3fva spike 3ds9 write path (hash-object, mktree, commit-tree, push; never -f).\n\n## Done when\n- [ ] schema field with keyedBy: tip\n- [ ] branch-store.ts with retry over a moved tip\n- [x] state branch seeded with a hash-verified manifest (2026-10-02, see below)\n- [ ] session-start hook mounts state/ and fails LOUDLY when it cannot\n- [ ] bun run state:push\n- [ ] measured",
       "file": "beans/defs/folio-assistant-2h76--state-branch-p2-mechanism-storage-keyedby-tip-bran.md"
     },
@@ -2603,6 +2603,20 @@
       "file": "beans/defs/folio-assistant-9v4m--test-interference-a-profile-gate-test-fails-in-the.md"
     },
     {
+      "id": "folio-assistant-9v5a",
+      "title": "QA BACKFILL: per-content-block adversarial QA over the existing corpus, plus the methodology research it rests on",
+      "status": "todo",
+      "type": "epic",
+      "priority": "normal",
+      "parent": "",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-10-02T22:27:08Z",
+      "updatedAt": "2026-10-02T22:27:08Z",
+      "preview": "Owner, 2026-10-02: *\"Split into TWO epics: gates, and QA backfill\"*. This is the\nsecond half. `nok9` keeps the merge-GATE half.\n\n## Why the cut is here and not elsewhere\n\n`nok9` as written mixed two things with different cadences:\n\n- **Gates** block a merge. They are a merge-pipeline change, they run on a diff,\n  and they are judged per PR. `nok9`'s children A, B, C and E are these.\n- **Backfill**",
+      "file": "beans/defs/folio-assistant-9v5a--qa-backfill-per-content-block-adversarial-qa-over.md"
+    },
+    {
       "id": "folio-assistant-9wb0",
       "title": "PUBLICATION IS A STATE, NOT A BOOLEAN: every asset carries id + version and sits in draft; formal publication is an undefined process",
       "status": "todo",
@@ -4056,7 +4070,7 @@
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-30T22:54:31Z",
-      "updatedAt": "2026-10-01T08:15:15Z",
+      "updatedAt": "2026-10-02T22:49:41Z",
       "preview": "Issue #1719. Proposal: `cat-harness/docs/proposals/kg-subscriptions.md`.\n\nOwner, 2026-09-30: subscribe to external KGs (bootstrap-conformant, with at least one harness); materialise some or all subgraphs and assets; instantiate harnesses so they reach the navbar; list known substrates in cat-harness; a visualizer; an MVP inside the folio separation.\n\n## Done when\n- [x] 1 schema: `subscriptions` on",
       "file": "beans/defs/folio-assistant-fnx4--kg-subscriptions-subscribe-to-an-external-kg-mater.md"
     },
@@ -5215,12 +5229,12 @@
       "title": "MERGE GATE (d): per-content-block adversarial QA for tools, schemas, skills and processes, and the backfill",
       "status": "todo",
       "type": "feature",
-      "priority": "",
-      "parent": "folio-assistant-nok9",
+      "priority": "normal",
+      "parent": "folio-assistant-9v5a",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-10-02T16:29:16Z",
-      "updatedAt": "2026-10-02T16:29:16Z",
+      "updatedAt": "2026-10-02T22:27:13Z",
       "preview": "Child (d) of the merge-gate epic. Design: `cat-harness/docs/proposals/merge-gate-2026-10-02.md` §7.\n\nRun the same adversarial review per **content block** (not per diff) so the existing corpus can be backfilled: Tool nodes, schema modules, skills/guidance, and BPMN/DMN processes. It uses the same verdict shape as the merge gate, keyed to the subject's `source_hash`, so a merge review and a backfil",
       "file": "beans/defs/folio-assistant-lvlv--merge-gate-d-per-content-block-adversarial-qa-for.md"
     },
@@ -5644,7 +5658,7 @@
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-10-02T16:29:09Z",
-      "updatedAt": "2026-10-02T16:41:15Z",
+      "updatedAt": "2026-10-02T22:27:34Z",
       "preview": "Owner, 2026-10-02 (bean for later): update the Merge Manager skills, process and tools so that a merge is GATED on:\n\n- a full agentic adversarial software code review of any change made by one or more agents;\n- no blocking RED FLAG from any agentic review;\n- (math content block) every changed Lean file compiles;\n- (FHIR IG) SUSHI and the IG AST compile;\n- JSON(-LD) plus schema for the KG renders (",
       "file": "beans/defs/folio-assistant-nok9--merge-gate-agentic-adversarial-review-content-type.md"
     },

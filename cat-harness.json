@@ -299,10 +299,10 @@
   "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld",
   "@type": "http://www.w3.org/ns/prov#Entity",
   "repository": "cat-harness",
-  "generatedAt": "2026-10-02T22:36:16.731Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/e89a5f4966668fc243b7f1748135a2dea2bd079c",
-  "sourceCommitSha": "e89a5f4966668fc243b7f1748135a2dea2bd079c",
-  "sourceCommitAt": "2026-10-03T00:31:16+02:00",
+  "generatedAt": "2026-10-02T23:17:58.155Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/edc167d24ad57b2a2b00b8f8225ff4deece3b299",
+  "sourceCommitSha": "edc167d24ad57b2a2b00b8f8225ff4deece3b299",
+  "sourceCommitAt": "2026-10-03T01:12:42+02:00",
   "sourceTreeDirty": true,
   "dependsOnUnavailable": "2 dependency edge(s), none expressible as a record — see gaps",
   "counts": {
@@ -316,7 +316,7 @@
     "Lane": 201,
     "ProcessNode": 940,
     "Tool": 117,
-    "Schema": 155,
+    "Schema": 156,
     "ExternalSchema": 20,
     "GraphKind": 26,
     "Role": 48,
@@ -44707,6 +44707,14 @@
       "module": "../folio-assistant-core/schemas/glossary.ts"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/kg-materialization",
+      "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#Schema",
+      "name": "kg-materialization",
+      "title": "kg-materialization",
+      "summary": "The record of ONE materialised part of a subscribed Knowledge Graph — a",
+      "module": "../folio-assistant-core/schemas/kg-materialization.ts"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/library-ref",
       "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#Schema",
       "name": "library-ref",
@@ -45277,7 +45285,7 @@
       "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#GraphKind",
       "name": "substrate-snapshot",
       "renderable": false,
-      "summary": "The root declaration of each Knowledge Graph this instance subscribes to, cached byte for byte at the pinned commit with its fixity, and what the substrate judgement found in it.",
+      "summary": "The root declaration of each Knowledge Graph this instance subscribes to, cached byte for byte at the pinned commit with its fixity, and what the substrate judgement found in it; and each chosen subgraph or asset materialised from it, with its fixity, provenance and gate answers.",
       "validator": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/substrate-snapshot"
     },
     {
@@ -46299,7 +46307,7 @@
         "https://litlfred.github.io/cat-harness/0.1.0/ns#graphKind/substrate-snapshot"
       ],
       "title": "Subscribed substrates",
-      "description": "The root declaration of each Knowledge Graph this instance subscribes to, cached at the pinned commit: one `<id>.substrate.json` per `subscriptions` entry, holding the upstream bytes, their sha256, and the harnesses and subgraphs the substrate offers. Written by `bun run kg:subscribe`; never edited by hand.",
+      "description": "The root declaration of each Knowledge Graph this instance subscribes to, cached at the pinned commit: one `<id>.substrate.json` per `subscriptions` entry, holding the upstream bytes, their sha256, and the harnesses and subgraphs the substrate offers. Written by `bun run kg:subscribe`; never edited by hand. Each CHOSEN part a subscriber materialises lands here too, under `<id>/subgraphs/<subgraph>/` or `<id>/assets/<path>/`: the upstream bytes under `tree/` and a `materialization.json` beside them with fixity, provenance and the five gates. Written by `bun run kg:materialize`; never edited by hand.",
       "readmePath": "subscriptions/README.md",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/subscriptions"
     },
@@ -46611,8 +46619,8 @@
   ],
   "staging": {
     "branch": "main",
-    "sha": "e89a5f4966668fc243b7f1748135a2dea2bd079c",
+    "sha": "edc167d24ad57b2a2b00b8f8225ff4deece3b299",
     "pr": "main",
-    "run": "37072933979"
+    "run": "37076472285"
   }
 }
