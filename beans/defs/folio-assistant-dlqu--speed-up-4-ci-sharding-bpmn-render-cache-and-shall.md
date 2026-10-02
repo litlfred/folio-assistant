@@ -28,6 +28,8 @@ Another agent is editing `code-quality-gates.yml` for this; other PRs keep their
 - [x] ~~per-job fetch-depth~~ — already depth 1 everywhere in this workflow (see Re-scoped)
 - [ ] measured: CI wall-clock before/after over ≥3 runs
 
+_2026-10-02T22:08:54Z_ — Claimed by claude/zealous-thompson-y8dcf1 — pushed to main so sibling sessions see it before this branch has a PR (bean 35nj).
+
 ## Baseline, measured 2026-10-02 (session_01Jf39Vh4B8EQT6TBYzTtMCA)
 
 `Code-quality gates` on `main`, last three completed push runs, job and step
