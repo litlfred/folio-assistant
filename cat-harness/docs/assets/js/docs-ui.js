@@ -4943,8 +4943,10 @@
      * it is `wireMove` — the one implementation the board window and the
      * floating sticky already share: keyboard first (✥ enters move mode,
      * arrows move, Shift+arrows resize, Escape or Enter leaves), drag as the
-     * accelerator. The −/+ buttons are the low-dexterity path to size, since
-     * Shift+arrow is a chord.
+     * accelerator. Size is a corner drag over the same keyboard path: in the
+     * mode, + and − resize (Shift+arrow is a chord), and the move bar offers
+     * them as buttons for the low-dexterity path (issue #1900 took the card's
+     * own −/+ off it).
      *
      * ZOOM IS SEMANTIC AND AUTOMATIC: below the folio's DECLARED width for
      * the card's kind (`semantic-zoom.json`, via `rendersAvatar`), a card
@@ -5366,7 +5368,7 @@
      * here: the steps, the resize chord and the ways out are the mode's, and
      * the buttons call the SAME step through `wireMove`'s controller. They are
      * the pointer path to the mode for a reader who cannot comfortably press
-     * arrow keys, as −/+ already are for size, and the declared profile here
+     * arrow keys, as its −/+ are for size, and the declared profile here
      * is low-dexterity (WCAG 2.5.7).
      *
      * In the ZOOM BAR's row, because that row is sticky to the top of the
@@ -5389,6 +5391,23 @@
       moveBar.appendChild(b);
       return { b: b, st: st };
     });
+    /* SIZE, AS WELL AS PLACE — issue #1900, owner 2026-10-02: *"is [+] icon
+     * anything differfent then just drag and drop? do we need icon? remove if
+     * not needed"*. The card's own −/+ went; a corner drag is the pointer
+     * accelerator. But a drag is never the ONLY way in (`board-windows`, the
+     * floor; WCAG 2.5.7), so the single-press path to size lives here, in the
+     * mode, beside the steps that move — and in this bar it cannot drift
+     * under the pointer as the card grows, which was the 2026-10-01 complaint
+     * about the card's own buttons. */
+    var sizeButtons = [
+      { d: -1, glyph: "\u2212", word: "smaller" },
+      { d: 1, glyph: "+", word: "larger" },
+    ].map(function (sz) {
+      var b = el("button", { type: "button", class: "fa-glass-zoom-btn fa-glass-move-size", "data-fa-size": sz.word }, sz.glyph);
+      b.addEventListener("click", function () { if (moving && moving.resize) moving.resize(sz.d); });
+      moveBar.appendChild(b);
+      return { b: b, sz: sz };
+    });
     var moveDone = el("button", { type: "button", class: "fa-glass-zoom-btn fa-glass-move-done", "data-fa-step": "done" },
       "Done");
     moveDone.addEventListener("click", function () { if (moving) moving.done(); });
@@ -5404,19 +5423,26 @@
         moving.done();
         return;
       }
+      var grow = resizeKeyOf(e);
+      if (grow && moving.resize) { e.preventDefault(); moving.resize(grow); return; }
       if (moving.mover.step(e.key, e.shiftKey)) e.preventDefault();
     });
     zoomBar.appendChild(moveBar);
 
-    function showMoveBar(card, title, mover, done) {
+    function showMoveBar(card, title, mover, done, resize) {
       if (moving && moving.card !== card) moving.done();
-      moving = { card: card, mover: mover, done: done };
+      moving = { card: card, mover: mover, done: done, resize: resize };
       moveBar.setAttribute("aria-label", "Move " + title);
-      moveSay.textContent = "Moving “" + title + "”: use these buttons or the arrow keys " +
-        "(Shift + arrows resize). Escape or Done to finish.";
+      moveSay.textContent = "Moving “" + title + "”: use these buttons or the arrow keys; " +
+        "+ and − resize (so do Shift + arrows). Escape or Done to finish.";
       stepButtons.forEach(function (x) {
         x.b.setAttribute("aria-label", "Move " + title + " " + x.st.word);
         x.b.title = "Move " + x.st.word;
+      });
+      sizeButtons.forEach(function (x) {
+        x.b.hidden = !resize;
+        x.b.setAttribute("aria-label", "Make " + title + " " + x.sz.word);
+        x.b.title = x.sz.word.charAt(0).toUpperCase() + x.sz.word.slice(1) + " (+ / − keys)";
       });
       moveDone.setAttribute("aria-label", "Done moving " + title);
       moveBar.removeAttribute("hidden");
@@ -5586,6 +5612,141 @@
         });
     }
 
+    /** `+`/`=` grow and `-`/`_` shrink; with a modifier the key is the browser's (Ctrl + = zooms the page). */
+    function resizeKeyOf(e) {
+      if (e.ctrlKey || e.metaKey || e.altKey) return 0;
+      if (e.key === "+" || e.key === "=") return 1;
+      if (e.key === "-" || e.key === "_" || e.key === "−") return -1;
+      return 0;
+    }
+
+    /* WHERE A LIBRARY ASSET LIVES — issue #1900, owner 2026-10-02: *"as will
+     * all library assets in folio, i cant click to open/view them"*.
+     *
+     * Derived from the card's KEY (`<instance>/<id>`, the same split
+     * `libraryMetaRows` reads), never from the stored `href`: that one is
+     * whatever page the reader happened to pull the asset out from, and a
+     * value in `localStorage` is not a value this file may trust.
+     *
+     * THE ENTRY'S OWN PAGE is `/cat-harness/library/<instance>/<id>/` —
+     * every entry its own path IRI (#1881/#1899, owner 2026-10-02: *"no query
+     * strings... each asset gets its own IRI"*), a thin shell the shared
+     * library viewer fills from the published index.
+     *
+     * BUT OPENING GOES TO THE ASSET'S VISUALIZER when it declares one —
+     * owner, 2026-10-02: *"i also expected to be able to click on
+     * "smart-trust" slug and open up the visualizer for smart-trust (which is
+     * what i would expect also when opening the avatar on the folio glass)"*.
+     * That is the index entry's `view` (`viewOf`); the entry page is the
+     * fallback, so a card opens somewhere real before the index answers and
+     * for every entry with no visualizer of its own. */
+    function libraryPlaceOf(key) {
+      var i = key.indexOf("/");
+      if (i <= 0 || i === key.length - 1) return null;
+      var instance = key.slice(0, i);
+      var id = key.slice(i + 1);
+      var library = withBase("/cat-harness/library/" + encodeURIComponent(instance) + "/");
+      return { instance: instance, id: id, library: library,
+               entry: library + id.split("/").map(encodeURIComponent).join("/") + "/" };
+    }
+    /** An index entry's declared visualizer, resolved as every projection href is (site-root → baseurl); "" when none. */
+    function viewOf(entry) {
+      var v = entry && typeof entry.view === "string" ? entry.view.trim() : "";
+      if (!v) return "";
+      return safeHref(v.charAt(0) === "/" ? withBase(v) : v) || "";
+    }
+
+    /* WHAT × SAYS BEFORE IT ACTS — issue #1900, owner 2026-10-02: *"[x]
+     * should confirm returning back to library and tell them which library in
+     * case they need again."*
+     *
+     * The confirm names the place the way back is, and links it — `l4zi` one
+     * level out (`board-windows`: *"the thing to check is that the library
+     * offers the way back"*), now said at the moment of closing rather than
+     * left for the reader to remember. It also says what does NOT happen: the
+     * asset stays in the folio, which is the three-state rule in words.
+     *
+     * A NATIVE MODAL `<dialog>`: focus is trapped and the page behind it is
+     * inert by the browser, not by a script that could miss a case. Escape is
+     * the cancel, never the confirm; focus lands on the safe choice; and the
+     * Escape is stopped here so it does not also put the glass away. Inside
+     * the layer for the glass's theme tokens, with its own `aria-live="off"`
+     * so opening it is not also read out as a live change. */
+    var confirmSeq = 0;
+    function confirmShelve(key, title, kind, opener) {
+      hideMeta();
+      var place = kind === "library" ? libraryPlaceOf(key) : null;
+      var where = place ? "the " + place.instance + " library" : "your Todos";
+      var whereHref = place ? place.library : withBase("/todos/");
+      var n = ++confirmSeq;
+      var dlg = el("dialog", {
+        class: "fa-glass-confirm",
+        "aria-labelledby": "fa-glass-confirm-title-" + n,
+        "aria-describedby": "fa-glass-confirm-say-" + n,
+        "aria-live": "off",
+      });
+      dlg.appendChild(el("h2", { class: "fa-glass-confirm-title", id: "fa-glass-confirm-title-" + n },
+        place ? "Back to the library?" : "Back to your Todos?"));
+      dlg.appendChild(el("p", { class: "fa-glass-confirm-say", id: "fa-glass-confirm-say-" + n },
+        "Put “" + title + "” back in " + where + "? It stays in your folio."));
+      var again = el("p", { class: "fa-glass-confirm-again" }, "To put it on the glass again, open ");
+      again.appendChild(el("a", { href: whereHref }, where));
+      if (place) {
+        again.appendChild(document.createTextNode(" — or go straight to "));
+        again.appendChild(el("a", { href: place.entry }, "its entry"));
+      }
+      again.appendChild(document.createTextNode("."));
+      dlg.appendChild(again);
+      var row = el("div", { class: "fa-glass-confirm-actions" });
+      var cancel = el("button", { type: "button", class: "fa-glass-confirm-cancel" }, "Keep it on the glass");
+      var ok = el("button", { type: "button", class: "fa-glass-confirm-ok" }, "Put it back");
+      row.appendChild(cancel);
+      row.appendChild(ok);
+      dlg.appendChild(row);
+      var done = false;
+      function finish(confirmed) {
+        if (done) return;
+        done = true;
+        if (dlg.open) dlg.close();
+        if (dlg.parentNode) dlg.parentNode.removeChild(dlg);
+        if (!confirmed) {
+          if (opener && opener.isConnected) opener.focus();
+          return;
+        }
+        shelveFromGlass(key);
+        sayShelved(title, where, whereHref);
+        handle.focus();
+      }
+      cancel.addEventListener("click", function () { finish(false); });
+      ok.addEventListener("click", function () { finish(true); });
+      // The browser's own Escape fires `cancel`; ours is stopped from reaching
+      // the glass, whose Escape would put the whole glass away.
+      dlg.addEventListener("cancel", function (e) { e.preventDefault(); finish(false); });
+      dlg.addEventListener("keydown", function (e) {
+        if (e.key !== "Escape") return;
+        e.preventDefault();
+        e.stopPropagation();
+        finish(false);
+      });
+      layer.appendChild(dlg);
+      if (typeof dlg.showModal === "function") dlg.showModal();
+      else dlg.setAttribute("open", "");
+      cancel.focus();
+      return dlg;
+    }
+
+    /* SAID AFTER, WITH THE SAME LINK — a status the reader can also SEE, not
+     * only a live region: the card that was the reader's reference point has
+     * just gone, and "where did it go" is answered where they are looking. */
+    var shelvedSay = el("p", { class: "fa-glass-shelved-say", role: "status" });
+    sheet.insertBefore(shelvedSay, empty);
+    function sayShelved(title, where, whereHref) {
+      while (shelvedSay.firstChild) shelvedSay.removeChild(shelvedSay.firstChild);
+      shelvedSay.appendChild(document.createTextNode("“" + title + "” is back in "));
+      shelvedSay.appendChild(el("a", { href: whereHref }, where));
+      shelvedSay.appendChild(document.createTextNode(" — it stays in your folio."));
+    }
+
     function buildGlassCard(key, a) {
       // ONE LINE, for every accessible name and title built from it. A todo's
       // title is its summary, which may carry raw newlines; an `aria-label`
@@ -5594,14 +5755,22 @@
       // without its markdown stripping, which would mangle a title like
       // "C*-algebras". The visible name keeps `a.title`: rendering collapses it.
       var label = String(a.title || "").replace(/\s+/g, " ").trim();
+      var isLibrary = zoomKindOf(a) === "library";
+      var place = isLibrary ? libraryPlaceOf(key) : null;
       var card = el("article", {
         class: "fa-glass-asset",
         "data-fa-asset": key,
         "data-fa-asset-kind": a.kind || "library",
         "data-fa-zoom-kind": zoomKindOf(a),
         "aria-label": label,
-        tabindex: "-1",
+        // A library card OPENS (issue #1900), so it is a stop in the tab
+        // order: zoomed to its cover the title link is not drawn, and Enter on
+        // the card is then the only key into the entry.
+        tabindex: place ? "0" : "-1",
       });
+      // WHERE A PRESS GOES: the entry page until the index names a visualizer.
+      var opens = place ? place.entry : "";
+      if (place) card.setAttribute("data-fa-opens", opens);
       var live = el("span", { class: "fa-sr-only", "aria-live": "polite" });
       var face = el("div", { class: "fa-glass-asset-face", "data-fa-grip": "" });
       var ava = glassAvatarFor(a, prefs.avatars);
@@ -5610,8 +5779,9 @@
       // store is `localStorage`, which the reader's own devtools can
       // rewrite, so a value sanitised on the way in is not a value that is
       // safe on the way out. The boundary is where the URL reaches an
-      // `href`, and that is here.
-      var href = safeHref(a.href);
+      // `href`, and that is here. A LIBRARY card's title links its entry —
+      // the address composed from its key, the same one a click opens.
+      var href = place ? place.entry : safeHref(a.href);
       face.appendChild(href
         ? el("a", { class: "fa-glass-asset-name", href: href }, a.title)
         : el("span", { class: "fa-glass-asset-name" }, a.title));
@@ -5628,8 +5798,8 @@
         "data-fa-control": "move",
         "aria-label": "Move " + label + " around the glass",
         "aria-pressed": "false",
-        title: "Move (arrow keys; Shift+arrows resize)",
-      }, CONTROL_GLYPHS.move || "\u271C");
+        title: "Move (arrow keys; + and − resize)",
+      }, CONTROL_GLYPHS.move || "✜");
       // Leaving the mode by any route — Escape or Enter on the card, Escape or
       // Done on the move bar — is this one path, so the bar, the pressed state
       // and focus cannot disagree about whether the card is still moving.
@@ -5641,89 +5811,198 @@
         var on = card.getAttribute("data-fa-moving") !== "true";
         if (!on) { leaveMoveMode(); return; }
         setMoveMode(card, true, live);
+        live.textContent = "Move mode on. Arrow keys move this card; + and − resize it; Escape to finish.";
         moveBtn.setAttribute("aria-pressed", "true");
-        showMoveBar(card, label, mover, leaveMoveMode);
+        showMoveBar(card, label, mover, leaveMoveMode, function (dir) { resizeBy(dir * 2 * RESIZE_STEP); });
       });
       card.addEventListener("fa:move-mode", function () {
         moveBtn.setAttribute("aria-pressed", "false");
         hideMoveBar(card);
         moveBtn.focus();
       });
-      /* THE PRESSED BUTTON STAYS UNDER THE POINTER. Owner, 2026-10-01:
-       * *"when zoom in/out, the buttons dont stay same place so have to move
-       * cursor"* — and this instance's profile is low-dexterity, so a target
-       * that moves after each press is a re-aim per press. The card grew from
-       * its top-left corner, and these buttons sit at its bottom-right, so
-       * every press carried them a step down and right. Now the card is
-       * shifted by however far the pressed button drifted, measured rather
-       * than assumed (the tool row wraps, and the avatar state lays it out
-       * differently), in the shelf's own pixels — the view's scale divided
-       * out. */
-      function resizeBy(d, anchor) {
-        var g = geometryOf(card);
-        var before = anchor ? anchor.getBoundingClientRect() : null;
-        var ratio = g.height / g.width;
-        g.width = Math.max(MIN_WINDOW, g.width + d);
-        g.height = Math.max(Math.round(MIN_WINDOW * 0.5), Math.round(g.width * ratio));
+      /* SIZE, from one place for every route in: the corner drag, the `+`/`−`
+       * keys in move mode, and the move bar's size buttons. The card grows
+       * from its top-left corner — every control that sizes it is now either
+       * under the pointer by construction (the corner) or in the move bar,
+       * which does not move with the card, so the 2026-10-01 re-aim defect
+       * the old anchor arithmetic existed for cannot recur. */
+      function resizeTo(g) {
+        g.width = Math.max(MIN_WINDOW, Math.round(g.width));
+        g.height = Math.max(Math.round(MIN_WINDOW * 0.5), Math.round(g.height));
         applyGeometry(card, g);
-        if (before) {
-          zoomGlassCard(card);
-          var after = anchor.getBoundingClientRect();
-          var sc = view.s || 1;
-          g.left = Math.round(g.left + (before.left - after.left) / sc);
-          g.top = Math.round(g.top + (before.top - after.top) / sc);
-          applyGeometry(card, g);
-        }
+        zoomGlassCard(card);
+        return g;
+      }
+      function settleSize(g) {
         placeOnGlass(key, g);
         fitShelf();
         zoomGlassCard(card);
         live.textContent = (card.getAttribute("data-fa-zoom") === "avatar"
           ? "Smaller: showing the avatar only." : "Size " + g.width + " by " + g.height + ".");
       }
-      var smaller = el("button", {
-        type: "button", class: "fa-glass-asset-tool", "aria-label": "Make " + label + " smaller",
-        title: "Smaller",
-      }, "\u2212");
-      var larger = el("button", {
-        type: "button", class: "fa-glass-asset-tool", "aria-label": "Make " + label + " larger",
-        title: "Larger",
-      }, "+");
-      smaller.addEventListener("click", function () { resizeBy(-2 * RESIZE_STEP, smaller); });
-      larger.addEventListener("click", function () { resizeBy(2 * RESIZE_STEP, larger); });
+      function resizeBy(d) {
+        var g = geometryOf(card);
+        var ratio = g.height / g.width;
+        g.width = Math.max(MIN_WINDOW, g.width + d);
+        g.height = Math.round(g.width * ratio);
+        settleSize(resizeTo(g));
+      }
+      // +/= and −/_ in move mode. Seen BEFORE `wireMove`'s own handler (this
+      // listener is added first) and only in the mode, so outside it the keys
+      // are the page's.
+      card.addEventListener("keydown", function (e) {
+        if (e.target !== card) return;
+        if (card.getAttribute("data-fa-moving") === "true") {
+          var dir = resizeKeyOf(e);
+          if (!dir) return;
+          e.preventDefault();
+          e.stopPropagation();
+          resizeBy(dir * 2 * RESIZE_STEP);
+          return;
+        }
+        // ENTER OPENS a library card — the keyboard half of the click below.
+        // Not in move mode: there Enter is "done moving" (`wireMove`).
+        if (place && e.key === "Enter" && !e.defaultPrevented) {
+          e.preventDefault();
+          window.location.assign(opens);
+        }
+      });
+
+      /* THE CORNER: drag to resize, the accelerator over the keys above.
+       * Pointer events, so a finger and a pen size a card as a mouse does; in
+       * the card's own pixels, so the view's scale (`view.s`) is divided out
+       * and the corner stays under the pointer at every zoom. `data-fa-control`
+       * keeps `wireMove` from taking the press as a move. Escape cancels, as
+       * it does a move: a gesture with no inverse is `l4zi` for pointers. */
+      var grip = el("span", {
+        class: "fa-glass-asset-resize",
+        "data-fa-control": "resize",
+        "aria-hidden": "true",
+        title: "Drag to resize (or ✜ then + / −)",
+      });
+      var sizing = null;
+      function endSizing(commit) {
+        if (!sizing) return;
+        var s0 = sizing;
+        sizing = null;
+        document.removeEventListener("pointermove", onSizeMove);
+        document.removeEventListener("pointerup", onSizeUp);
+        document.removeEventListener("pointercancel", onSizeUp);
+        document.removeEventListener("keydown", onSizeKey, true);
+        card.removeAttribute("data-fa-sizing");
+        if (commit) settleSize(geometryOf(card));
+        else { resizeTo(s0.g); live.textContent = "Resize cancelled; back to the size it was."; }
+      }
+      function onSizeMove(e) {
+        if (!sizing || e.pointerId !== sizing.id) return;
+        if (e.pointerType === "mouse" && e.buttons === 0) { endSizing(true); return; }
+        var sc = view.s || 1;
+        resizeTo({ left: sizing.g.left, top: sizing.g.top,
+                   width: sizing.g.width + (e.clientX - sizing.x) / sc,
+                   height: sizing.g.height + (e.clientY - sizing.y) / sc });
+      }
+      function onSizeUp(e) { if (sizing && e.pointerId === sizing.id) endSizing(true); }
+      function onSizeKey(e) {
+        if (!sizing || e.key !== "Escape") return;
+        e.preventDefault();
+        e.stopPropagation();
+        endSizing(false);
+      }
+      grip.addEventListener("pointerdown", function (e) {
+        if (e.pointerType === "mouse" && e.button !== 0) return;
+        e.preventDefault();
+        e.stopPropagation();
+        endSizing(true);
+        sizing = { id: e.pointerId, x: e.clientX, y: e.clientY, g: geometryOf(card) };
+        card.setAttribute("data-fa-sizing", "true");
+        try { grip.setPointerCapture(e.pointerId); } catch (_e) { /* document listeners still see it */ }
+        document.addEventListener("pointermove", onSizeMove);
+        document.addEventListener("pointerup", onSizeUp);
+        document.addEventListener("pointercancel", onSizeUp);
+        document.addEventListener("keydown", onSizeKey, true);
+      });
 
       // CLOSE, and the word matters. "Remove" and "delete" both say the
       // asset stops being the reader's, which is exactly what does NOT
       // happen -- `board-windows`: closing returns it to the middle state
-      // and never to the first. The label says where it goes.
+      // and never to the first. The label says where it goes, and the
+      // confirm (issue #1900) names which library and links it.
+      function closeLabel(t) {
+        return "Put " + t + " back in " + (place ? "the " + place.instance + " library" : "the library view") +
+          " — it stays in your folio";
+      }
       var close = el("button", {
         type: "button",
         class: "fa-glass-asset-tool fa-glass-asset-close",
-        "aria-label": "Put " + label + " back in the library view — it stays in your folio",
-        title: "Back in library view (stays in your folio)",
+        "aria-label": closeLabel(label),
+        title: place ? "Back in the " + place.instance + " library (stays in your folio)"
+          : "Back in library view (stays in your folio)",
       }, "×");
-      close.addEventListener("click", function () { shelveFromGlass(key); });
+      close.addEventListener("click", function () {
+        confirmShelve(key, label, isLibrary ? "library" : "todos", close);
+      });
       tools.appendChild(moveBtn);
-      tools.appendChild(smaller);
-      tools.appendChild(larger);
       tools.appendChild(close);
       card.appendChild(tools);
+      card.appendChild(grip);
       card.appendChild(live);
       wireCardMeta(card);
-      if (zoomKindOf(a) === "library") {
+
+      /* A CLICK OPENS a library card — anywhere on it but its controls, and
+       * never at the end of a drag: a press that travelled is a move (or a
+       * pan, or a resize), and opening the entry under a reader who was only
+       * tidying would take them off the page mid-gesture. Same tab: the
+       * glass is on every page, so the reader's folio comes with them. */
+      var pressAt = null;
+      card.addEventListener("pointerdown", function (e) { pressAt = { x: e.clientX, y: e.clientY }; });
+      card.addEventListener("click", function (e) {
+        if (!place) return;
+        if (e.button !== 0 || e.defaultPrevented) return;
+        if (e.target.closest && e.target.closest("button, a, [data-fa-control], input, select, textarea")) return;
+        if (card.getAttribute("data-fa-moving") === "true") return;
+        var p = pressAt;
+        pressAt = null;
+        if (p && Math.abs(e.clientX - p.x) + Math.abs(e.clientY - p.y) > 4) return;
+        window.location.assign(opens);
+      });
+
+      if (isLibrary) {
         setCardMeta(card, libraryMetaRows(a, key, null));
         glassLibraryIndex(function (idx) {
           var entry = idx && idx[key];
           if (!entry) return;
           setCardMeta(card, libraryMetaRows(a, key, entry));
-          // A row stored before the entry had a real title (or one whose
-          // title IS its id) shows the index's title instead.
-          var better = entry.title && entry.title !== entry.id ? entry.title : "";
-          if (better && (a.title === key || a.title === entry.id)) {
-            var nm = card.querySelector(".fa-glass-asset-name");
-            if (nm) nm.textContent = better;
-            card.setAttribute("aria-label", better);
-            var g = card.querySelector(".fa-glass-asset-gist");
-            if (g) g.textContent = gistOf([better]);
+          // The asset's VISUALIZER, when it declares one, is what opening means.
+          var view = viewOf(entry);
+          if (view) {
+            opens = view;
+            card.setAttribute("data-fa-opens", opens);
+            var link = card.querySelector("a.fa-glass-asset-name");
+            if (link) link.setAttribute("href", opens);
+          }
+          /* THE INDEX'S TITLE WINS whenever it has a real one — issue #1900:
+           * *"Title in popup is right but not avatar"*. The popover already
+           * read the index; the caption only did when the stored title was
+           * the bare key or id, so a row stored with another wrong title
+           * ("Abies" for the WHO editorial style manual) kept it on the card.
+           * Every surface built from the title is renamed together, and the
+           * stored row is corrected — without announcing, which would repaint
+           * the glass under the reader. */
+          var better = entry.title && entry.title !== entry.id ? String(entry.title) : "";
+          if (!better || better === a.title) return;
+          label = better.replace(/\s+/g, " ").trim();
+          var nm = card.querySelector(".fa-glass-asset-name");
+          if (nm) nm.textContent = better;
+          card.setAttribute("aria-label", label);
+          var g = card.querySelector(".fa-glass-asset-gist");
+          if (g) g.textContent = gistOf([better]);
+          moveBtn.setAttribute("aria-label", "Move " + label + " around the glass");
+          close.setAttribute("aria-label", closeLabel(label));
+          zoomGlassCard(card);
+          var all = folioAssets();
+          if (all[key] && all[key].title !== better) {
+            all[key].title = better;
+            setFolioAssets(all);
           }
         });
       } else {

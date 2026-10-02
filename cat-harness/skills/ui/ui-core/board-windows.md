@@ -218,6 +218,20 @@ reachable from a **different surface** than the one that closed it. When you
 implement close, the thing to check is that the library offers the way back —
 not that the glass does.
 
+**So close says where the way back is, at the moment of closing** (issue
+#1900, owner 2026-10-02: *"[x] should confirm returning back to library and
+tell them which library in case they need again"*). The glass's `[x]` opens a
+confirm that names the instance's library and links it, Escape and Cancel
+leave the card where it is, and only the confirm shelves it — after which the
+glass says, with the same link, where the asset went. Naming the library is
+not politeness: a reader holding assets from several libraries otherwise has
+to remember which one each came from to get it back.
+
+A card's other controls follow the floor below. Opening a library card goes to
+the asset's visualizer when its index entry declares one, else to its entry
+page; resizing is a corner drag, with `+`/`−` in move mode and the move bar's
+buttons as the non-drag path, so the drag is never the only way in.
+
 ## Two settings panels, two names, each points to the other
 
 The glass has its own settings (theme, avatars, opacity, blur), and the page
