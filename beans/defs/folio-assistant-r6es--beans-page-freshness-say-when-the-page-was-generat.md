@@ -3,8 +3,10 @@
 title: 'BEANS PAGE FRESHNESS: say when the page was generated and how many commits behind main it is'
 status: in-progress
 type: feature
+priority: normal
 created_at: 2026-10-02T10:45:39Z
-updated_at: 2026-10-02T10:45:39Z
+updated_at: 2026-10-02T11:00:19Z
+parent: folio-assistant-o3xy
 ---
 
 Owner 2026-10-02: the beans page should show a generated date so a reviewer knows how recent it is, and how many commits behind main.

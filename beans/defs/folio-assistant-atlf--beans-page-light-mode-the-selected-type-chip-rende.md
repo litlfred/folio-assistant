@@ -3,8 +3,10 @@
 title: 'BEANS PAGE LIGHT MODE: the selected type chip rendered black on black — it read an undefined --fa-wp-bg'
 status: in-progress
 type: bug
+priority: normal
 created_at: 2026-10-02T10:45:39Z
-updated_at: 2026-10-02T10:45:39Z
+updated_at: 2026-10-02T11:00:18Z
+parent: folio-assistant-o3xy
 ---
 
 Owner screenshot 2026-10-02 of https://litlfred.github.io/folio-assistant/beans/ with type: epic selected: the active chip is a blank black pill in light mode.
