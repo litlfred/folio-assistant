@@ -35,7 +35,7 @@ import type {
   QaCriterionDefinition,
 } from "../../schemas/block-qa";
 import { COMPANION_ROLES } from "../../schemas/block-qa";
-import { ALL_BLOCK_BUILDER_ALT, kindForBuilder } from "../../schemas/block-kinds";
+import { ALL_BLOCK_BUILDER_ALT, blockBuilderAlt, kindForBuilder } from "../../schemas/block-kinds";
 import { QA_CRITERIA_BY_ID } from "./qa-criteria-registry";
 import { findContentRepoRoot } from "./repo-root";
 import { loadBlockModuleSync, type BlockLoadFailure } from "./block-module";
@@ -623,14 +623,33 @@ export interface BlockPaths {
  * them.
  */
 // Alternates over BUILDER names, not kind strings. For the paper adapter the
-// two are the same token; for the `dak` adapter they are not, because a kind
-// like `decision-table` is data and a hyphen is not a valid identifier — so
-// the builder is `decisionTable` and `kindForBuilder` maps back. Longest-first
-// ordering matters in an alternation: without it `profile` would shadow
-// nothing here, but `measure` would shadow a future `measureGroup`.
+// two are the same token; for a CONTRIBUTED adapter they need not be — a `dak`
+// kind like `decision-table` is data and a hyphen is not a valid identifier, so
+// its builder is `decisionTable` and `kindForBuilder` maps back. Longest-first
+// ordering matters in an alternation: a shorter builder must not shadow a
+// longer one it prefixes.
+//
+// The constant is the BUILT-IN builders. A caller holding contributed builders
+// (`ContributionRegistry.contributedBuilders()`) passes them, and gets a regex
+// over both from {@link builderRegexFor} — the `dak` builders were baked in
+// here until bean `1335` moved the adapter to smart-base.
 const BLOCK_BUILDER_RE = new RegExp(
   `export\\s+default\\s+(${ALL_BLOCK_BUILDER_ALT})\\s*\\(`,
 );
+
+/** One regex per contributed-builder map, built once. */
+const builderRegexCache = new WeakMap<ReadonlyMap<string, string>, RegExp>();
+
+/** The builder-call regex over the built-in builders plus `contributed`. */
+function builderRegexFor(contributed: ReadonlyMap<string, string> | undefined): RegExp {
+  if (!contributed || contributed.size === 0) return BLOCK_BUILDER_RE;
+  let re = builderRegexCache.get(contributed);
+  if (!re) {
+    re = new RegExp(`export\\s+default\\s+(${blockBuilderAlt(contributed.keys())})\\s*\\(`);
+    builderRegexCache.set(contributed, re);
+  }
+  return re;
+}
 
 /**
  * Read `export default <kind>({ ... label: "...", ... })` from a .ts
@@ -675,17 +694,18 @@ const BLOCK_BUILDER_RE = new RegExp(
  */
 export function readBlockManifest(
   tsPath: string,
+  contributedBuilders?: ReadonlyMap<string, string>,
 ): { kind: string; label: string } | undefined {
   if (!existsSync(tsPath)) return undefined;
   const src = readFileSync(tsPath, "utf-8");
   const masked = maskStringsAndComments(src);
-  const kindMatch = masked.match(BLOCK_BUILDER_RE);
+  const kindMatch = masked.match(builderRegexFor(contributedBuilders));
   if (!kindMatch) return undefined;
   const label = parseStringField(src, "label");
   if (!label) return undefined;
   // The regex captures a BUILDER name; the block's kind is what it builds.
-  // Identical for paper kinds, different for every multi-word DAK kind.
-  const kind = kindForBuilder(kindMatch[1]!);
+  // Identical for paper kinds, different for a multi-word contributed kind.
+  const kind = kindForBuilder(kindMatch[1]!, contributedBuilders);
   if (!kind) return undefined;
   return { kind, label };
 }
@@ -710,19 +730,32 @@ export function readBlockManifest(
  */
 export function readUnlabelledBlockManifest(
   tsPath: string,
+  contributedBuilders?: ReadonlyMap<string, string>,
 ): { kind: string; label: string } | undefined {
   if (!existsSync(tsPath)) return undefined;
   const src = readFileSync(tsPath, "utf-8");
   if (parseStringField(src, "label")) return undefined; // labelled: not ours
-  const kindMatch = maskStringsAndComments(src).match(BLOCK_BUILDER_RE);
+  const kindMatch = maskStringsAndComments(src).match(builderRegexFor(contributedBuilders));
   if (!kindMatch) return undefined;
   const slug = tsPath.split("/").pop()!.replace(/\.ts$/, "");
-  const kind = kindForBuilder(kindMatch[1]!);
+  const kind = kindForBuilder(kindMatch[1]!, contributedBuilders);
   if (!kind) return undefined;
   return { kind, label: slug };
 }
 
 export interface WalkBlocksOptions {
+  /**
+   * Builders a dependency CONTRIBUTED, builder name → kind —
+   * `ContributionRegistry.contributedBuilders()`.
+   *
+   * Absent means the built-in vocabulary only, which is what every caller got
+   * before bean `1335` minus the `dak` builders that core used to bake in.
+   * Those are smart-base's now; a caller that has loaded contributions (the
+   * sweep does) passes them here, and a contributed manifest is then found,
+   * read and verified exactly as a built-in one is.
+   */
+  contributedBuilders?: ReadonlyMap<string, string>;
+
   /**
    * Also yield blocks that declare **no `label:`** — `prose()` connective
    * tissue (chapter intros and outros, author's notes, the notation register).
@@ -872,6 +905,11 @@ export function* walkBlocks(
   const lakeCache: LakeTreeCache = new Map();
   const verify = opts.verify ?? true;
   const report = makeFailureReporter(opts);
+  // The kinds the loader may accept beyond the built-in ones: whatever the
+  // contributed builders build. Computed once per walk.
+  const contributedKinds = opts.contributedBuilders
+    ? new Set(opts.contributedBuilders.values())
+    : undefined;
 
   // Directories this instance declares as NOT content — `context` or `state`.
   // See {@link WalkBlocksOptions.includeNonContent} for the ruling and the
@@ -931,16 +969,16 @@ export function* walkBlocks(
         // Skip chapter / paper manifests by checking the export shape. The
         // masked builder-call match is the gate on what may be *executed*
         // below; the label is a question about identity, answered after.
-        const textual = readBlockManifest(full);
+        const textual = readBlockManifest(full, opts.contributedBuilders);
         // Reading the unlabelled shape costs a second read + mask, so only pay
         // it when someone can act on the answer.
         const unlabelled =
           textual || !(verify || opts.includeUnlabelled)
             ? undefined
-            : readUnlabelledBlockManifest(full);
+            : readUnlabelledBlockManifest(full, opts.contributedBuilders);
         if (!textual && !unlabelled) continue; // not a block manifest at all
         const manifest = verify
-          ? verifiedManifest(full, textual, unlabelled, report)
+          ? verifiedManifest(full, textual, unlabelled, report, contributedKinds)
           : textualIdentity(textual, unlabelled);
         if (!manifest) continue;
         if (!manifest.labelled && !opts.includeUnlabelled) continue;
@@ -1019,10 +1057,11 @@ function verifiedManifest(
   textual: TextualManifest | undefined,
   unlabelled: TextualManifest | undefined,
   report: FailureReporter,
+  contributedKinds?: ReadonlySet<string>,
 ): VerifiedManifest | undefined {
   const degraded = () => textualIdentity(textual, unlabelled);
   try {
-    const loaded = loadBlockModuleSync(tsPath);
+    const loaded = loadBlockModuleSync(tsPath, contributedKinds);
     // A label the module actually carries. This is the only reading that can
     // be trusted, and it is how a computed `label:` — invisible to the regex —
     // becomes a labelled block rather than being skipped or mistaken for prose.

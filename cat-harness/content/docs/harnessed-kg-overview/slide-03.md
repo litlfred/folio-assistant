@@ -11,7 +11,7 @@
 | 9 | Functional and non-functional requirements | key functions and requirements of a digital tracking and decision-support system |
 | 10 | Test scenarios | test data and scenarios to check a system against the other nine |
 
-The slide drew nine cards and put the tenth, **testing: test data and test harness**, beside them. The squares below give all ten a card, and are generated from `DAK_COMPONENTS` (`scripts/gen-dak-components-figure.ts`), so a component added there cannot go without one.
+The slide drew nine cards and put the tenth, **testing: test data and test harness**, beside them. The squares below give all ten a card, and are generated from `DAK_COMPONENTS` (`smart-base/scripts/gen-dak-components-figure.ts`), so a component added there cannot go without one.
 
 ![The ten components of a WHO Digital Adaptation Kit as numbered coloured squares: 1 Health Interventions and Recommendations, 2 Generic Personas, 3 User Scenarios, 4 Business Processes and Workflows, 5 Core Data Elements, 6 Decision Support Logic, 7 Scheduling Logic (not yet its own DAK model field), 8 Indicators and Monitoring, 9 Functional and Non-functional Requirements, 10 Test Scenarios.](assets/img/dak-components.svg)
 
