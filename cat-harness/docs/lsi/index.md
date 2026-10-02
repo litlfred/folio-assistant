@@ -110,7 +110,7 @@ Each dimension is a **contrast** between two poles, shown by their highest-loadi
 
 ## cat-harness / skills
 
-**220** units · **5904** terms · k = **100** · retains **79.0 %** of the weighted matrix · weighting `log-entropy` · sidecar `cat-harness/test/results/lsi/cat-harness/skills.lsi.json`
+**220** units · **5909** terms · k = **100** · retains **79.0 %** of the weighted matrix · weighting `log-entropy` · sidecar `cat-harness/test/results/lsi/cat-harness/skills.lsi.json`
 
 > Dimension 1 has **no negative pole**: it most likely measures unit length and term frequency (a margin), not a theme. Read the themes from dimension 2 on.
 
@@ -118,14 +118,14 @@ Each dimension is a **contrast** between two poles, shown by their highest-loadi
 
 | dim | σ | one pole | the other pole |
 |---|---|---|---|
-| 1 | 44.14 | instance, kind, harness, session, block, directory, graph, page | *(none)* |
-| 2 | 21.48 | watcher, slot, sibling, queue, prs, backlog, block, commits | harness, instance, declaration, directory, node, directories, graph, declares |
-| 3 | 17.87 | slot, chapter, edges, block, formal, glossary, project, proof | session, beans, branch, goals, store, push, window, epic |
-| 4 | 16.60 | page, block, text, blocks, chapter, manifest, section, pdf | sibling, ledger, subdirectory, items, session, sessions, coordination, window |
-| 5 | 14.98 | preview, staging, navbar, locale, page, translated, translation, build | rung, archive, archived, withheld, sniff, arm, ingest, edges |
-| 6 | 14.92 | lane, role, actor, requirements, task, analysis, impact, edge | sha, queue, slide, rung, bytes, withheld, arm, images |
-| 7 | 14.48 | edges, forward, preview, backward, edge, cross-chapter, energy, logical | actor, lane, role, criterion, backlog, task, login, process |
-| 8 | 14.23 | avatar, tile, card, board, art, sticky, theme, crop | feature, phase, pdf, url, feedback, github, rung, stakeholders |
+| 1 | 44.24 | instance, kind, harness, session, directory, block, page, graph | *(none)* |
+| 2 | 21.54 | watcher, sibling, slot, prs, queue, backlog, commits, block | harness, instance, declaration, directory, node, directories, graph, declares |
+| 3 | 17.93 | slot, chapter, block, edges, formal, project, proof, glossary | session, beans, branch, goals, store, window, push, epic |
+| 4 | 16.64 | page, block, text, blocks, chapter, manifest, pdf, section | sibling, ledger, subdirectory, sessions, items, prs, session, coordination |
+| 5 | 14.98 | preview, staging, navbar, locale, page, translated, translation, build | rung, archive, archived, withheld, sniff, arm, ingest, claim |
+| 6 | 14.91 | lane, role, actor, requirements, task, analysis, edge, impact | sha, queue, slide, rung, bytes, withheld, arm, backlog |
+| 7 | 14.48 | edges, forward, preview, backward, edge, cross-chapter, energy, logical | actor, lane, role, criterion, backlog, login, task, roles |
+| 8 | 14.22 | avatar, tile, card, board, art, sticky, theme, crop | phase, feature, pdf, url, feedback, rung, github, requirements |
 
 **Findings** — 0 narrow dimension(s), 0 near-duplicate pair(s).
 

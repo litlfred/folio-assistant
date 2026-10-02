@@ -4,7 +4,7 @@ nav_exclude: true
 ---
 
 {: .note }
-> Generated from `cat-harness/processes/crdm-requirements-definition.bpmn` by `gen-processes-viz.ts` — do not edit here. [All processes](index.html)
+> Generated from `cat-harness/processes/process/crdm-requirements-definition.bpmn` by `gen-processes-viz.ts` — do not edit here. [All processes](index.html)
 
 {% raw %}
 # CRDM Phases 2–4 — BPA and requirements
@@ -36,7 +36,7 @@ Every one of the 5 step(s) is documented.
 | step | lane | skill / sub-process | what it does |
 |---|---|---|---|
 | **Phase 2: Map current workflow (BPA)**<br>`A_MapWorkflow` | Agent | [`bpmn-authoring`](../reference/skill-instructions/bpmn-authoring.html) | Business-process analysis here means reading the<br>existing diagrams under processes/ and drawing the gap, so the skill<br>that implements this step is the BPMN one. |
-| **Phases 3–4: Define requirements + impact**<br>`A_DefineReqs` | Agent | [`crdm-requirements-workflow`](../reference/skill-instructions/crdm-requirements-workflow.html)<br>[`content-graph`](../reference/skill-instructions/content-graph.html) | Two skills, because this step is two things: the<br>requirements come from the CRDM process, the impact half is a dependency<br>question the content graph answers. |
+| **Phases 3–4: Define requirements + impact**<br>`A_DefineReqs` | Agent | [`crdm-requirements-workflow`](../reference/skill-instructions/crdm-requirements-workflow.html)<br>[`data-modelling`](../reference/skill-instructions/data-modelling.html) | Two skills, because this step is two things: the<br>requirements come from the CRDM process, the impact half is a question about<br>the entities and relations the change touches, which is what data modelling<br>answers. It named `content-graph` until placement PR3 (bean `63wl`): that is a<br>folio-content skill, and this diagram is the harness's own. |
 | **Phase 4a: Compare the viable options**<br>`A_CompareOptions` | Agent | [`decision-comparison`](../reference/skill-instructions/decision-comparison.html) | Phase 4 often ends with a CHOICE rather than a plan,<br>and this is the step that hands it over. Per option: what it does, its pro, its<br>con, what it changes DOWNSTREAM, and how reversible it is — laid out where the<br>rows can be read against each other, then one recommendation and a stated<br>default.<br>A step of its own rather than a line inside A_DefineReqs, because it has a<br>different output and a different reader: the impact analysis is for the record,<br>the comparison is the thing the BA answers from. Folding it in is how it gets<br>skipped — the analysis feels finished, so the options go over as a list of<br>names.<br>Skipped legitimately when the analysis yields ONE viable approach. Do not<br>manufacture alternatives to fill a table. |
 | **Review requirements and impact analysis**<br>`BA_ReviewReqs` | BA / Feature Requestor | [`crdm-requirements-workflow`](../reference/skill-instructions/crdm-requirements-workflow.html) | The BA reviews the formal requirements and the<br>impact analysis the agent produced. |
 | **Approve requirements**<br>`S_ApproveReqs` | Stakeholders | — | Stakeholders approve the requirements and impact analysis on the issue, or send them back for revision. Only their approval moves the work to sign-off; an agent never records an approval on a person's behalf. |
