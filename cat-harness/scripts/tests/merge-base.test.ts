@@ -8,7 +8,7 @@
 import { describe, expect, test } from "bun:test";
 
 import { execFileSync } from "node:child_process";
-import { existsSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from "node:fs";
+import { existsSync, mkdirSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 
@@ -213,6 +213,54 @@ describe("take-base when one side deleted the file", () => {
   });
 
   test("cleanup", () => { for (const d of dirs) rmSync(d, { recursive: true, force: true }); });
+});
+
+describe("modify/delete on DECLARED paths: generated resolves, authored refuses (#1854)", () => {
+  // Real pattern paths rather than a bare `gen.html`, so classification and
+  // the stage handling are exercised together on what git actually reports.
+  const GEN = "cat-harness/docs/cat-harness/docs-auto/index/index.html";
+  const BEAN = "beans/defs/folio-assistant-x--y.md";
+  const mk = (): string => {
+    const dir = mkdtempSync(join(tmpdir(), "merge-base-md2-"));
+    const g = (...a: string[]) => execFileSync("git", a, { cwd: dir, encoding: "utf-8", stdio: ["ignore", "pipe", "pipe"] });
+    g("init", "-q", "-b", "branch");
+    g("config", "user.email", "t@example.invalid");
+    g("config", "user.name", "t");
+    for (const p of [GEN, BEAN]) {
+      mkdirSync(join(dir, p, ".."), { recursive: true });
+      writeFileSync(join(dir, p), "v1\n");
+    }
+    g("add", ".");
+    g("commit", "-qm", "base");
+    g("checkout", "-q", "-b", "main");
+    g("rm", "-q", GEN, BEAN); // main deletes both
+    g("commit", "-qm", "main deletes");
+    g("checkout", "-q", "branch");
+    for (const p of [GEN, BEAN]) writeFileSync(join(dir, p), "branch\n"); // the branch edits both
+    g("commit", "-qam", "branch edits");
+    try { g("merge", "--no-commit", "main"); } catch { /* the conflict is the point */ }
+    return dir;
+  };
+
+  test("the generated page takes main's deletion; the bean is refused", () => {
+    const d = mk();
+    try {
+      const conflicted = execFileSync("git", ["diff", "--name-only", "--diff-filter=U"], { cwd: d, encoding: "utf-8" })
+        .split("\n").filter(Boolean).sort();
+      expect(conflicted).toEqual([BEAN, GEN].sort());
+      const p = plan(conflicted);
+      expect(p.resolvable.map((c) => c.path)).toEqual([GEN]);
+      expect(p.resolvable[0]!.pattern?.id).toBe("docs-auto");
+      expect(p.refused.map((c) => c.path)).toEqual([BEAN]);
+      expect(p.refused[0]!.pattern?.id).toBe("beans");
+      for (const c of p.resolvable) takeBase(d, c.path);
+      expect(existsSync(join(d, GEN))).toBe(false);
+      const left = execFileSync("git", ["diff", "--name-only", "--diff-filter=U"], { cwd: d, encoding: "utf-8" });
+      expect(left.trim()).toBe(BEAN);
+    } finally {
+      rmSync(d, { recursive: true, force: true });
+    }
+  });
 });
 
 describe("qa sidecars of a NESTED instance are in scope", () => {
