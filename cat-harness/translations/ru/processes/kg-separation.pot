@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: kg-separation\n"
-"POT-Creation-Date: 2026-09-30T00:17:11.356Z\n"
+"POT-Creation-Date: 2026-10-02T14:45:26.751Z\n"
 "PO-Revision-Date: \n"
 "Last-Translator: \n"
 "Language: ru\n"
@@ -14,337 +14,337 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: processes/kg-separation.bpmn:115
+#: processes/kg/kg-separation.bpmn:115
 #. Diagram label
 msgid "1–3 · Declare, detangle, isolate"
 msgstr ""
 
-#: processes/kg-separation.bpmn:223
+#: processes/kg/kg-separation.bpmn:223
 #. Diagram label
 msgid "10 · Seed both repositories"
 msgstr ""
 
-#: processes/kg-separation.bpmn:232
+#: processes/kg/kg-separation.bpmn:232
 #. Diagram label
 msgid "11 · Parent consumes, additively"
 msgstr ""
 
-#: processes/kg-separation.bpmn:241
+#: processes/kg/kg-separation.bpmn:241
 #. Diagram label
 msgid "12 · First release"
 msgstr ""
 
-#: processes/kg-separation.bpmn:259
+#: processes/kg/kg-separation.bpmn:259
 #. Diagram label
 msgid "13 · Cutover: delete the parent's copy"
 msgstr ""
 
-#: processes/kg-separation.bpmn:125
+#: processes/kg/kg-separation.bpmn:125
 #. Diagram label
 msgid "4 · Identity: version, iriBase, nodeSchemas"
 msgstr ""
 
-#: processes/kg-separation.bpmn:134
+#: processes/kg/kg-separation.bpmn:134
 #. Diagram label
 msgid "5 · Move harness output about it to the host"
 msgstr ""
 
-#: processes/kg-separation.bpmn:143
+#: processes/kg/kg-separation.bpmn:143
 #. Diagram label
 msgid "6 · Split content from tools"
 msgstr ""
 
-#: processes/kg-separation.bpmn:159
+#: processes/kg/kg-separation.bpmn:159
 #. Diagram label
 msgid "7 · Plan publication"
 msgstr ""
 
-#: processes/kg-separation.bpmn:175
+#: processes/kg/kg-separation.bpmn:175
 #. Diagram label
 msgid "8 · Rehearse standalone"
 msgstr ""
 
-#: processes/kg-separation.bpmn:203
+#: processes/kg/kg-separation.bpmn:203
 #. Diagram label
 msgid "9 · Authorise the extraction"
 msgstr ""
 
-#: processes/kg-separation.bpmn:11
+#: processes/kg/kg-separation.bpmn:11
 #. Diagram label
 msgid "A knowledge graph leaves for its own repositories"
 msgstr ""
 
-#: processes/kg-separation.bpmn:204
+#: processes/kg/kg-separation.bpmn:204
 #. Diagram element documentation
 msgid "A repository cut changes the substrate every other process binds to; that is a person's decision. Declining leaves the graph declared, detangled, isolated and split in place."
 msgstr ""
 
-#: processes/kg-separation.bpmn:67
+#: processes/kg/kg-separation.bpmn:67
 #. Diagram label
 msgid "Administrator"
 msgstr ""
 
-#: processes/kg-separation.bpmn:251
+#: processes/kg/kg-separation.bpmn:251
 #. Diagram element documentation
 msgid "After the release is live, every published identifier resolves to the file it names."
 msgstr ""
 
-#: processes/kg-separation.bpmn:25
+#: processes/kg/kg-separation.bpmn:25
 #. Diagram label
 msgid "Authoring agent"
 msgstr ""
 
-#: processes/kg-separation.bpmn:292
+#: processes/kg/kg-separation.bpmn:292
 #. Diagram label
 msgid "authorised"
 msgstr ""
 
-#: processes/kg-separation.bpmn:85
+#: processes/kg/kg-separation.bpmn:85
 #. Diagram label
 msgid "Brief, and claim the bean"
 msgstr ""
 
-#: processes/kg-separation.bpmn:26
+#: processes/kg/kg-separation.bpmn:26
 #. Diagram element documentation
 msgid "Briefs, measures the signals, runs declare-detangle-isolate, reports what would move, seeds the repositories once they exist, and adopts each later release. Verification is always by re-running a gate, never by a change looking right."
 msgstr ""
 
-#: processes/kg-separation.bpmn:55
+#: processes/kg/kg-separation.bpmn:55
 #. Diagram label
 msgid "Build pipeline"
 msgstr ""
 
-#: processes/kg-separation.bpmn:282
+#: processes/kg/kg-separation.bpmn:282
 #. Diagram label
 msgid "closed"
 msgstr ""
 
-#: processes/kg-separation.bpmn:176
+#: processes/kg/kg-separation.bpmn:176
 #. Diagram element documentation
 msgid "Copy the content and the tools alone into a temporary directory, with nothing else on the path, and run the tools' checks there. An empty tree must exit non-zero, so a rehearsal over nothing cannot pass."
 msgstr ""
 
-#: processes/kg-separation.bpmn:288
+#: processes/kg/kg-separation.bpmn:288
 #. Diagram label
 msgid "could not run"
 msgstr ""
 
-#: processes/kg-separation.bpmn:144
+#: processes/kg/kg-separation.bpmn:144
 #. Diagram element documentation
 msgid "Create <name>-tools as a sibling directory and move the code: the Zod source, the generators, the README and diagram writers, the content checks. Cut its import cone to its own files and declared packages. Both start at the content's version."
 msgstr ""
 
-#: processes/kg-separation.bpmn:215
+#: processes/kg/kg-separation.bpmn:215
 #. Diagram label
 msgid "Create the repositories"
 msgstr ""
 
-#: processes/kg-separation.bpmn:170
+#: processes/kg/kg-separation.bpmn:170
 #. Diagram element documentation
 msgid "Decided by `check:node-iris`: a published node's own identifier ($id or @id) under the release address must be its file's path. A mismatch goes back to the plan: move the file, or change the identifier before it is ever served."
 msgstr ""
 
-#: processes/kg-separation.bpmn:154
+#: processes/kg/kg-separation.bpmn:154
 #. Diagram element documentation
 msgid "Decided by commands, not judgement: `check:tools-closure` (no import leaves the tools directory or names an undeclared package), the content's no-code test (FR-7), and generated files byte-identical before and after the move. Any failure goes back to the split."
 msgstr ""
 
-#: processes/kg-separation.bpmn:275
+#: processes/kg/kg-separation.bpmn:275
 #. Diagram label
 msgid "declined"
 msgstr ""
 
-#: processes/kg-separation.bpmn:250
+#: processes/kg/kg-separation.bpmn:250
 #. Diagram label
 msgid "Every identifier dereferences"
 msgstr ""
 
-#: processes/kg-separation.bpmn:169
+#: processes/kg/kg-separation.bpmn:169
 #. Diagram label
 msgid "Every identifier its file's path?"
 msgstr ""
 
-#: processes/kg-separation.bpmn:160
+#: processes/kg/kg-separation.bpmn:160
 #. Diagram element documentation
 msgid "Every identifier the content mints is a file some step publishes: /<version>/ for what programs read, kept for every version; /v<major>/ for pages people read. Name collisions between published files are resolved here."
 msgstr ""
 
-#: processes/kg-separation.bpmn:285
+#: processes/kg/kg-separation.bpmn:285
 #. Diagram label
 msgid "every one matches"
 msgstr ""
 
-#: processes/kg-separation.bpmn:95
+#: processes/kg/kg-separation.bpmn:95
 #. Diagram element documentation
 msgid "Files and bytes per instance, clone cost (`bun run health`), gate time, merge contention, the candidate's cohesion and cut (`kg:detangle`), wrong-direction edges, and the would-be tools package's import cone. Recorded in the bean; none alone is a trigger."
 msgstr ""
 
-#: processes/kg-separation.bpmn:289
+#: processes/kg/kg-separation.bpmn:289
 #. Diagram label
 msgid "green"
 msgstr ""
 
-#: processes/kg-separation.bpmn:184
+#: processes/kg/kg-separation.bpmn:184
 #. Diagram label
 msgid "Green alone?"
 msgstr ""
 
-#: processes/kg-separation.bpmn:185
+#: processes/kg/kg-separation.bpmn:185
 #. Diagram element documentation
 msgid "Green with nothing else present goes on. Red means an edge the earlier gates did not see, so back to detangling. If the rehearsal could not run, that is not a pass: stop."
 msgstr ""
 
-#: processes/kg-separation.bpmn:281
+#: processes/kg/kg-separation.bpmn:281
 #. Diagram label
 msgid "leaks or stale"
 msgstr ""
 
-#: processes/kg-separation.bpmn:94
+#: processes/kg/kg-separation.bpmn:94
 #. Diagram label
 msgid "Measure the signals"
 msgstr ""
 
-#: processes/kg-separation.bpmn:284
+#: processes/kg/kg-separation.bpmn:284
 #. Diagram label
 msgid "mismatch"
 msgstr ""
 
-#: processes/kg-separation.bpmn:48
+#: processes/kg/kg-separation.bpmn:48
 #. Diagram element documentation
 msgid "Owns where things are published: every identifier the content mints must be a file some step publishes, at /<version>/ for programs and /v<major>/ for people; and the first release."
 msgstr ""
 
-#: processes/kg-separation.bpmn:37
+#: processes/kg/kg-separation.bpmn:37
 #. Diagram label
 msgid "Platform authoring agent"
 msgstr ""
 
-#: processes/kg-separation.bpmn:47
+#: processes/kg/kg-separation.bpmn:47
 #. Diagram label
 msgid "Publication manager"
 msgstr ""
 
-#: processes/kg-separation.bpmn:135
+#: processes/kg/kg-separation.bpmn:135
 #. Diagram element documentation
 msgid "QA verdicts, translation templates, the exported graph and the glossary ledger are harness output ABOUT the graph: they live with the harness (kgQaHomeFor, translationsHomeFor). The content keeps only what its own checks need; the leak test's pending list is empty."
 msgstr ""
 
-#: processes/kg-separation.bpmn:287
+#: processes/kg/kg-separation.bpmn:287
 #. Diagram label
 msgid "red: an unseen edge"
 msgstr ""
 
-#: processes/kg-separation.bpmn:194
+#: processes/kg/kg-separation.bpmn:194
 #. Diagram label
 msgid "Report what moves — sizes, what breaks"
 msgstr ""
 
-#: processes/kg-separation.bpmn:56
+#: processes/kg/kg-separation.bpmn:56
 #. Diagram element documentation
 msgid "Runs the checks that decide the gateways: the tools' import closure and the content's lack of code, node identifiers against file paths, the standalone rehearsal, and dereferencing after release. A gate that cannot tell stops the process; it never reads as clean."
 msgstr ""
 
-#: processes/kg-separation.bpmn:224
+#: processes/kg/kg-separation.bpmn:224
 #. Diagram element documentation
 msgid "Seed main, then bring the content and the tools in as reviewed pull requests with their history, so neither repository's first commit is unreviewable."
 msgstr ""
 
-#: processes/kg-separation.bpmn:276
+#: processes/kg/kg-separation.bpmn:276
 #. Diagram label
 msgid "separate"
 msgstr ""
 
-#: processes/kg-separation.bpmn:103
+#: processes/kg/kg-separation.bpmn:103
 #. Diagram label
 msgid "Separate this graph?"
 msgstr ""
 
-#: processes/kg-separation.bpmn:268
+#: processes/kg/kg-separation.bpmn:268
 #. Diagram label
 msgid "Separated"
 msgstr ""
 
-#: processes/kg-separation.bpmn:212
+#: processes/kg/kg-separation.bpmn:212
 #. Diagram label
 msgid "Stays in place, ready to leave"
 msgstr ""
 
-#: processes/kg-separation.bpmn:112
+#: processes/kg/kg-separation.bpmn:112
 #. Diagram label
 msgid "Stays where it is"
 msgstr ""
 
-#: processes/kg-separation.bpmn:242
+#: processes/kg/kg-separation.bpmn:242
 #. Diagram element documentation
 msgid "Tag each repository, publish /<version>/ and /v<major>/. From here the two are versioned independently; a tools release lists the content majors it supports."
 msgstr ""
 
-#: processes/kg-separation.bpmn:195
+#: processes/kg/kg-separation.bpmn:195
 #. Diagram element documentation
 msgid "The agent reports and waits: what moves, how large, what in the parent breaks, and the rollback. It never relocates a durable artefact on its own initiative."
 msgstr ""
 
-#: processes/kg-separation.bpmn:126
+#: processes/kg/kg-separation.bpmn:126
 #. Diagram element documentation
 msgid "The declaration carries name, version, iriBase, needs and nodeSchemas. A base move is `bun run iri:sync -- --from <old base>`, once; then `iri:sync:check` and `check:node-iris` are green."
 msgstr ""
 
-#: processes/kg-separation.bpmn:116
+#: processes/kg/kg-separation.bpmn:116
 #. Diagram element documentation
 msgid "The graph-detanglement practice, all of its gates: declared in place, zero wrong-direction edges on every axis, and standing alone with its own declaration, namespace and artefact. A plain task on purpose, not a call to graph-detanglement.bpmn: that process ends in its own authorise-and-extract steps, which here are stages 9-13 of this one, and calling it would run them twice."
 msgstr ""
 
-#: processes/kg-separation.bpmn:14
+#: processes/kg/kg-separation.bpmn:14
 #. Diagram element documentation
 msgid "THE METHOD FOR A KNOWLEDGE GRAPH THAT LEAVES FOR ITS OWN REPOSITORIES, AND IT IS TWO REPOSITORIES, NOT ONE. The content (files to read, no code) and its tools (the code that writes and checks it) separate as a pair. `kg-separation.md` is the practice; this is its order and its gates. Stages 1-3 are `graph-detanglement`, reused rather than restated. EVERY GATEWAY IS A COMMAND. `Tools closed?` is `check:tools-closure` with the content's no-code test and a byte-identity check on the generated files; `Every identifier its file's path?` is `check:node-iris`; `Green alone?` is the standalone rehearsal. A check that could not run stops the process rather than reading as clean. A PERSON DECIDES FOUR TIMES, AND THE ADMINISTRATOR LANE SAYS WHERE: whether to separate at all, whether to authorise the extraction, creating the repositories, and the cutover. Nothing is committed to the new repositories before they are created, and the parent keeps its own copy until it consumes the first release. VERSIONS: the pair starts at the content's version at the split, then each is versioned on its own; a tools release lists the content majors it supports. Worked example: bootstrap and bootstrap-tools (beans r3gy, xsqm). cat-harness and cat-harness-tools follow the same stages."
 msgstr ""
 
-#: processes/kg-separation.bpmn:260
+#: processes/kg/kg-separation.bpmn:260
 #. Diagram element documentation
 msgid "The one commit worth reverting, made only after the parent consumes the release and every identifier dereferences."
 msgstr ""
 
-#: processes/kg-separation.bpmn:216
+#: processes/kg/kg-separation.bpmn:216
 #. Diagram element documentation
 msgid "The owner creates the content and tools repositories and their Pages. Nothing is committed to them before this."
 msgstr ""
 
-#: processes/kg-separation.bpmn:104
+#: processes/kg/kg-separation.bpmn:104
 #. Diagram element documentation
 msgid "The owner decides from the measured signals, and also decides the address base for its identifiers, where verdicts about it live, and what its tools repository owns. Declining is a real outcome: the graph stays where it is."
 msgstr ""
 
-#: processes/kg-separation.bpmn:233
+#: processes/kg/kg-separation.bpmn:233
 #. Diagram element documentation
 msgid "The parent pins the pair (a commit while staging, a version once released), repoints its imports, and keeps its own copy until it is green with the dependency declared."
 msgstr ""
 
-#: processes/kg-separation.bpmn:68
+#: processes/kg/kg-separation.bpmn:68
 #. Diagram element documentation
 msgid "The person's decisions: whether to separate at all, authorising the extraction, creating the repositories, and the cutover that deletes the parent's copy. An agent reports and waits at each; none of them may be relaxed by a package."
 msgstr ""
 
-#: processes/kg-separation.bpmn:38
+#: processes/kg/kg-separation.bpmn:38
 #. Diagram element documentation
 msgid "The platform-side stages: the graph's identity (version, iriBase, nodeSchemas), moving harness output about it into the host, splitting the content from its tools, and making the parent consume the pair additively."
 msgstr ""
 
-#: processes/kg-separation.bpmn:82
+#: processes/kg/kg-separation.bpmn:82
 #. Diagram label
 msgid "Too large, or readers and cadence differ"
 msgstr ""
 
-#: processes/kg-separation.bpmn:153
+#: processes/kg/kg-separation.bpmn:153
 #. Diagram label
 msgid "Tools closed, content code-free?"
 msgstr ""
 
-#: processes/kg-separation.bpmn:191
+#: processes/kg/kg-separation.bpmn:191
 #. Diagram label
 msgid "UNKNOWN — stop. Not clean"
 msgstr ""
 
-#: processes/kg-separation.bpmn:86
+#: processes/kg/kg-separation.bpmn:86
 #. Diagram element documentation
 msgid "What is separating and why, what is already measured with its provenance, how it will be done, and what would falsify the approach. Claim the bean so a sibling session sees the work."
 msgstr ""

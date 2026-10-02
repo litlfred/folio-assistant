@@ -44,11 +44,11 @@ Validate authored content against schemas, standards, and clinical accuracy.
 
 | process | step(s) that name it |
 |---|---|
+| [Review task](../../processes/review-task.html) | Accept, or send back |
 | [Authoring a document](../../processes/authoring-a-document.html) | 5 · Check the profile; 6 · Validate |
-| [Authoring a paper](../../processes/authoring-a-paper.html) | 6 · Validate |
 | [Content lifecycle](../../processes/content-lifecycle.html) | Editing and HCI validation (calls a sub-process) |
 | [Draft, review and publish](../../processes/draft-to-publication.html) | Editing and HCI validation (calls a sub-process) |
 | [Editing and HCI validation](../../processes/editing-hci-validation.html) | Schema and constraint checks; Syntax, spelling and links; Collate findings into a report |
-| [Review task](../../processes/review-task.html) | Accept, or send back |
+| [Authoring a paper](../../processes/authoring-a-paper.html) | 6 · Validate |
 | [L2 DAK authoring](../../processes/l2-dak-authoring.html) | Assemble and validate the DAK |
 

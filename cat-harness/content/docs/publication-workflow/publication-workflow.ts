@@ -44,7 +44,7 @@ export default webpage({
       title: "Editing and the HCI validation gate",
       asset: {
         kind: "bpmn",
-        source: "processes/editing-hci-validation.bpmn",
+        source: "../folio-assistant-core/processes/content/editing-hci-validation.bpmn",
         rendered: "assets/img/workflows/editing-hci-validation.svg",
         alt: "BPMN swimlane diagram: an editor describes a change, an authoring agent drafts it, the proposed change fans out through mechanical and non-mechanical validation, the findings are shown to the editor, and only an accepted change is committed to the corpus.",
         sourceLinks: [
@@ -77,7 +77,7 @@ export default webpage({
       title: "From corpus to published folio",
       asset: {
         kind: "bpmn",
-        source: "processes/draft-to-publication.bpmn",
+        source: "../folio-assistant-core/processes/content/draft-to-publication.bpmn",
         rendered: "assets/img/workflows/draft-to-publication.svg",
         alt: "BPMN swimlane diagram: the corpus is built into a draft publication, QA gates run, the publication manager circulates it, the review team and SMEs review in parallel, change requests become beans that re-enter editing, and an approved draft is authorised by the programme manager and published.",
         sourceLinks: [
@@ -93,7 +93,7 @@ export default webpage({
       title: "Content lifecycle overview",
       asset: {
         kind: "bpmn",
-        source: "processes/content-lifecycle.bpmn",
+        source: "../folio-assistant-core/processes/content/content-lifecycle.bpmn",
         rendered: "assets/img/workflows/content-lifecycle.svg",
         alt: "BPMN swimlane diagram: the programme manager plans, the plan is seeded as beans, editing and HCI validation runs, integration test and QA sweep, draft-review-publish, feedback is triaged and filed as beans, then either another cycle or retirement.",
         sourceLinks: [

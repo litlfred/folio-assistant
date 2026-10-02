@@ -205,13 +205,15 @@ nothing renders yet. It is shown rather than omitted: "nothing renders this" and
 
 ### `processes`
 
-5 of 5 published.
+7 of 7 published.
 {: .fa-hx-dim }
 
 - [Bootstrap]({{ '/processes/' | relative_url }})
 - [Bootstrap tools]({{ '/processes/' | relative_url }})
 - [C@T Harness]({{ '/processes/' | relative_url }})
+- [FHIR IG Harness]({{ '/processes/' | relative_url }})
 - [folio-assistant-core]({{ '/processes/' | relative_url }})
+- [folio-assistant-sci]({{ '/processes/' | relative_url }})
 - [SMART Base]({{ '/processes/' | relative_url }})
 
 ### `proposals`
