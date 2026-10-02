@@ -2,6 +2,7 @@
  * Tests for schemas/harness-config.ts — cross-folio dependency schema and resolution.
  */
 import { describe, it, expect, beforeAll, afterAll } from "bun:test";
+import { HARNESS_ROOT } from "../scripts/lib/roots.ts";
 import { mkdirSync, mkdtempSync, writeFileSync, rmSync, readFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
@@ -15,8 +16,8 @@ import {
   resolveSkillDirs,
   resolveTranslationDirs,
   materialiseDeclaredDirectories,
-} from "./harness-config";
-import { instanceConfigPathIn, writeInstanceConfig } from "../test/support/instance-fixture.js";
+} from "../../cat-harness/schemas/harness-config";
+import { instanceConfigPathIn, writeInstanceConfig } from "../../cat-harness/test/support/instance-fixture.js";
 
 const TMP = join(import.meta.dir, "__test_folio_config__");
 
@@ -306,7 +307,7 @@ describe("a dependent instance inherits the ingestion directories", () => {
       JSON.stringify({
         contentType: "document",
         dependencies: {
-          folioAssistant: [{ name: "folio-assistant", path: join(import.meta.dir, "..") }],
+          folioAssistant: [{ name: "folio-assistant", path: HARNESS_ROOT }],
         },
       }),
     );
@@ -396,7 +397,7 @@ describe("a dependent instance materialises its own docs/", () => {
       JSON.stringify({
         contentType: "document",
         dependencies: {
-          folioAssistant: [{ name: "folio-assistant", path: join(import.meta.dir, "..") }],
+          folioAssistant: [{ name: "folio-assistant", path: HARNESS_ROOT }],
         },
       }),
     );
