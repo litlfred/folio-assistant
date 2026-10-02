@@ -3220,6 +3220,20 @@
       "status": "candidate"
     },
     {
+      "id": "contributions.pipelineplugincontribution.implementation",
+      "prefLabel": "PipelinePluginContribution.implementation",
+      "definition": "What fills it. Shape is fixed per kind by `content/pipeline/pipeline-plugins.ts`.",
+      "source": "cat-harness/schemas/contributions.ts#PipelinePluginContribution.implementation",
+      "status": "candidate"
+    },
+    {
+      "id": "contributions.pipelineplugincontribution.kind",
+      "prefLabel": "PipelinePluginContribution.kind",
+      "definition": "The slot this fills, e.g. `\"lean-lexer\"`. One contributor per kind.",
+      "source": "cat-harness/schemas/contributions.ts#PipelinePluginContribution.kind",
+      "status": "candidate"
+    },
+    {
       "id": "contributions.qacheckercontribution.check",
       "prefLabel": "QaCheckerContribution.check",
       "definition": "The checker itself.",
