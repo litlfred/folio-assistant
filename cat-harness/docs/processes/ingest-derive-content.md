@@ -4,7 +4,7 @@ nav_exclude: true
 ---
 
 {: .note }
-> Generated from `cat-harness/processes/ingest-derive-content.bpmn` by `gen-processes-viz.ts` — do not edit here. [All processes](index.html)
+> Generated from `cat-harness/processes/library/ingest-derive-content.bpmn` by `gen-processes-viz.ts` — do not edit here. [All processes](index.html)
 
 {% raw %}
 # Ingestion subprocess — derive content from the assets

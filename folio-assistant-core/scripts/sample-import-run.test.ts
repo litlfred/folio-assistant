@@ -22,7 +22,7 @@ import { runSampleImport, type Handler } from "./sample-import-run.ts";
 
 const REPO = resolve(import.meta.dir, "..", "..");
 const WHO_IRIS = join(REPO, "who-iris");
-const DIAGRAM = join(REPO, "cat-harness", "processes", "sample-import.bpmn");
+const DIAGRAM = join(REPO, "cat-harness", "processes", "library", "sample-import.bpmn");
 const ITEM = "item/18892cf3-5a4f-42a4-923c-a93f4a594dec";
 
 const made: string[] = [];
