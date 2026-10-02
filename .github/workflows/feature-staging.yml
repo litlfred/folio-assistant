@@ -1424,11 +1424,15 @@ jobs:
           # consecutive `pull_request_target` runs failed this way and 80
           # previews had accumulated, 47 of them for PRs already closed.
           submodules: true
+          #
+          # ONE key, from two independent fixes. `main` fixed this in parallel
+          # with its own note — "the old previews piled up past Pages' 10 GB
+          # limit" — and the merge took both `submodules: true` lines, which is
+          # a DUPLICATE YAML KEY and so an invalid workflow. It surfaced as
+          # `audit:coverage` failing rather than as a workflow error, because
+          # that gate parses this file to read every gate's `@covers`
+          # declaration: invalid YAML here reads as a broken audit over there.
           path: source
-          # The platform's scripts import `bootstrap-tools/` (a submodule), so a
-          # checkout without it fails at module load — which is how every preview
-          # removal crashed and the old previews piled up past Pages' 10 GB limit.
-          submodules: true
 
       - uses: oven-sh/setup-bun@v2
         with:
@@ -1777,11 +1781,15 @@ jobs:
           # record writer both import through `cat-harness/schemas/`, which
           # reaches into the `bootstrap-tools` submodule.
           submodules: true
+          #
+          # ONE key, from two independent fixes. `main` fixed this in parallel
+          # with its own note — "the old previews piled up past Pages' 10 GB
+          # limit" — and the merge took both `submodules: true` lines, which is
+          # a DUPLICATE YAML KEY and so an invalid workflow. It surfaced as
+          # `audit:coverage` failing rather than as a workflow error, because
+          # that gate parses this file to read every gate's `@covers`
+          # declaration: invalid YAML here reads as a broken audit over there.
           path: source
-          # The platform's scripts import `bootstrap-tools/` (a submodule), so a
-          # checkout without it fails at module load — which is how every preview
-          # removal crashed and the old previews piled up past Pages' 10 GB limit.
-          submodules: true
 
       - uses: oven-sh/setup-bun@v2
         with:
