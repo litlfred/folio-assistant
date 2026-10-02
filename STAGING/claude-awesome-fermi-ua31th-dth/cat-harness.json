@@ -301,10 +301,10 @@
   ],
   "canonicalDocument": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld",
   "repository": "cat-harness",
-  "generatedAt": "2026-10-02T12:05:57.038Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/6e26ed49c8aa96962a44543706e60d4589ef37e8",
-  "sourceCommitSha": "6e26ed49c8aa96962a44543706e60d4589ef37e8",
-  "sourceCommitAt": "2026-10-02T11:59:42Z",
+  "generatedAt": "2026-10-02T12:27:08.226Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/f6e0b7671c3662bc756686801e4594bf68c809ab",
+  "sourceCommitSha": "f6e0b7671c3662bc756686801e4594bf68c809ab",
+  "sourceCommitAt": "2026-10-02T12:18:58Z",
   "sourceTreeDirty": true,
   "dependsOnUnavailable": "2 dependency edge(s), none expressible as a record — see gaps",
   "counts": {
@@ -47625,14 +47625,6 @@
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/extraction"
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th-dth/cat-harness.jsonld#schema/fhir-artifact-index",
-      "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#Schema",
-      "name": "fhir-artifact-index",
-      "title": "The artefact index of a published FHIR Implementation Guide.",
-      "module": "../folio-assistant-core/schemas/fhir-artifact-index.ts",
-      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/fhir-artifact-index"
-    },
-    {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th-dth/cat-harness.jsonld#schema/glossary",
       "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#Schema",
       "name": "glossary",
@@ -47671,6 +47663,14 @@
       "title": "A reviewer's VERDICT on one version of one block: \"I read this, and here is",
       "module": "../folio-assistant-core/schemas/review-verdict.ts",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/review-verdict"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th-dth/cat-harness.jsonld#schema/fhir-artifact-index",
+      "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#Schema",
+      "name": "fhir-artifact-index",
+      "title": "The artefact index of a published FHIR Implementation Guide.",
+      "module": "../fhir-harness/schemas/fhir-artifact-index.ts",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/fhir-artifact-index"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th-dth/cat-harness.jsonld#schema/ig-chrome",
@@ -49488,8 +49488,8 @@
   ],
   "staging": {
     "branch": "claude/awesome-fermi-ua31th-dth",
-    "sha": "23226e6209159f833055f172825efd16e7d3b884",
+    "sha": "1f9ad5b78ac972c91bc4144af378e4b9c5380bcd",
     "pr": "1852/merge",
-    "run": "37004099128"
+    "run": "37006134004"
   }
 }
