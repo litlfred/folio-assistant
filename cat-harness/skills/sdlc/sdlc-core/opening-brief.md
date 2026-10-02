@@ -94,6 +94,10 @@ Nothing announces this. The number is real, recent, and yours; only the tree
 underneath it moved. So say which tree, and re-run anything load-bearing after
 a branch change — the re-run costs one command and it is the same command.
 
+**Part 2 includes** the result of the collision review in
+[`coordinate`](coordinate.md) §"Starting new work": the siblings that overlap,
+or "no overlap found" and what you checked.
+
 **3. The route and the gate.** How you plan to do it, what you will verify
 against, and **what would falsify the approach**. A plan with no failure mode is
 not a plan; it is an intention. If the gate is a script, name it and its
