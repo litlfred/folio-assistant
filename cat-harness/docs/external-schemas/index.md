@@ -29,7 +29,7 @@ depends on it**, and **which of its terms this repository branches on**.
 <div class="xs-grid">
 <div class="xs-stat"><b>19</b><span>specifications</span></div>
 <div class="xs-stat"><b>105</b><span>operative terms in the graph</span></div>
-<div class="xs-stat"><b>196</b><span>declared uses</span></div>
+<div class="xs-stat"><b>199</b><span>declared uses</span></div>
 <div class="xs-stat"><b>0</b><span>declarations naming no record</span></div>
 </div>
 
@@ -67,10 +67,6 @@ front-matter list, an `xmlns` binding, and a graph kind whose typing module
 declares the spec (bean `u63y`).
 
 Every declaration names a record on this page.
-
-**1 record(s) nothing declares.** A version bump would move nothing that says so:
-
-- [`w3c-xsd11-structures`](#w3c-xsd11-structures)
 
 ## Namespaces the corpus uses against the ones it declares
 
@@ -126,6 +122,7 @@ a registry nobody prunes is one that stops describing the repository.
 |---|---|
 | [`cat-harness/scripts/kg-export.ts`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/scripts/kg-export.ts) | `@conformsTo` tag |
 | [`cat-harness/scripts/ns-export.ts`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/scripts/ns-export.ts) | `@conformsTo` tag |
+| [`folio-assistant-core/schemas/dublin-core-render.ts`](https://github.com/litlfred/folio-assistant/blob/main/folio-assistant-core/schemas/dublin-core-render.ts) | `@conformsTo` tag |
 | [`folio-assistant-core/schemas/dublin-core.ts`](https://github.com/litlfred/folio-assistant/blob/main/folio-assistant-core/schemas/dublin-core.ts) | `@conformsTo` tag |
 | `folio-dublin-core/v1 nodes` | through the module that types it ([`folio-assistant-core/schemas/dublin-core.ts`](https://github.com/litlfred/folio-assistant/blob/main/folio-assistant-core/schemas/dublin-core.ts)) |
 | `folio-dublin-core/v1 nodes` | through the module that types it ([`folio-assistant-core/schemas/dublin-core.ts`](https://github.com/litlfred/folio-assistant/blob/main/folio-assistant-core/schemas/dublin-core.ts)) |
@@ -489,6 +486,7 @@ a subset of the edition rather than a transcription of it.
 |---|---|
 | [`cat-harness/scripts/code-lists.ts`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/scripts/code-lists.ts) | `@conformsTo` tag |
 | [`cat-harness/scripts/ns-export.ts`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/scripts/ns-export.ts) | `@conformsTo` tag |
+| [`folio-assistant-core/schemas/dublin-core-render.ts`](https://github.com/litlfred/folio-assistant/blob/main/folio-assistant-core/schemas/dublin-core-render.ts) | `@conformsTo` tag |
 
 **Operative terms (2).** The terms this repository acts on —
 derived by the tooling from the corpus, never hand-listed, and deliberately
@@ -619,7 +617,11 @@ graph. That is a determined zero, not an unfilled field.
 
 **Note.** Added for bean 7eak. The Dublin Core XML rendering (folio-assistant-core/schemas/dublin-core-render.ts) puts `xsi:type="dcterms:<Scheme>"` on an element to name its encoding scheme. That is how DCMI's Guidelines for implementing Dublin Core in XML (2003-04-02) carry W3CDTF, URI, RFC4646 and MESH. The `xsi` namespace is defined in Part 1 (Structures) §2.7, not in Part 2 (Datatypes), which `w3c-xsd11-datatypes` already pins. So this is a separate record and not an extra namespace on that one.
 
-**What depends on it.** Nothing here declares it.
+**What depends on it.**
+
+| user | declared by |
+|---|---|
+| [`folio-assistant-core/schemas/dublin-core-render.ts`](https://github.com/litlfred/folio-assistant/blob/main/folio-assistant-core/schemas/dublin-core-render.ts) | `@conformsTo` tag |
 
 **No operative terms.** This repository conforms to the specification
 without branching on any of its terms, so none is materialised into the
