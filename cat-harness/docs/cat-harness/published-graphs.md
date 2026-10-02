@@ -92,12 +92,20 @@ nothing renders yet. It is shown rather than omitted: "nothing renders this" and
 - [smart-trust]({{ '/cat-harness/docs-auto/index/docs/smart-trust-docs/' | relative_url }})
 - [WHO IRIS]({{ '/cat-harness/docs-auto/index/docs/who-iris-site/' | relative_url }})
 
-### `external-schema`
+### `document-kinds`
 
 1 of 1 published.
 {: .fa-hx-dim }
 
+- [SMART Base]({{ '/cat-harness/document-kinds/smart-base/' | relative_url }})
+
+### `external-schema`
+
+1 of 2 published.
+{: .fa-hx-dim }
+
 - [C@T Harness]({{ '/external-schemas/' | relative_url }})
+- SMART Base — *declared, not published*
 
 ### `fhir-artifact-index`
 
@@ -215,7 +223,7 @@ nothing renders yet. It is shown rather than omitted: "nothing renders this" and
 
 ### `qa`
 
-1 of 12 published.
+1 of 10 published.
 {: .fa-hx-dim }
 
 - [C@T Harness]({{ '/qa/' | relative_url }})
@@ -223,10 +231,8 @@ nothing renders yet. It is shown rather than omitted: "nothing renders this" and
 - folio-assistant-core — *declared, not published*
 - folio-assistant-sci — *declared, not published*
 - SMART Base — *declared, not published*
-- SMART DAK — *declared, not published*
 - SMART IG — *declared, not published*
 - smart-immunizations — *declared, not published*
-- SMART L1 — *declared, not published*
 - smart-trust — *declared, not published*
 - WHO IRIS — *declared, not published*
 - who-style-guide — *declared, not published*
@@ -291,7 +297,7 @@ nothing renders yet. It is shown rather than omitted: "nothing renders this" and
 0 of 2 published.
 {: .fa-hx-dim }
 
-- smart-trust — *declared, not published*
+- SMART Base — *declared, not published*
 - WHO IRIS — *declared, not published*
 
 ### `todos`

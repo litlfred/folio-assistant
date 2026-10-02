@@ -316,6 +316,47 @@ test.describe("kg viewer", () => {
     expect(res.status()).toBe(200);
   });
 
+  // Bean yhcq, findings 5, 3/4, 8 and 2 — each asserted on the page as drawn.
+  test("the node list is alphabetical by the name shown, not in document order", async ({ page }) => {
+    await page.goto(PAGE);
+    await expect(page.locator("#list li button").first()).toBeVisible();
+    const names = await page.locator("#list li button").evaluateAll((bs) =>
+      bs.map((b) => (b.firstChild?.textContent ?? "").trim().replace(/^[^\p{L}\p{N}]+/u, "")));
+    const collate = new Intl.Collator("en", { sensitivity: "base", numeric: true });
+    let descending = 0;
+    for (let i = 1; i < names.length; i++) if (collate.compare(names[i - 1], names[i]) > 0) descending++;
+    expect(descending).toBe(0);
+  });
+
+  test("a link into another graph says so, and is not followed by 'no links'", async ({ page }) => {
+    await page.goto(PAGE);
+    const ids = new Set(KG["@graph"].map((m) => m["@id"]));
+    const target = KG["@graph"].find((n) =>
+      ([] as unknown[]).concat(n.satisfies ?? []).some((v) =>
+        typeof v === "string" && /^https?:/.test(v) && !ids.has(v)));
+    test.skip(!target, "the export has no node linking only into another graph");
+    await page.locator("#q").fill(String(target!["@id"]).split("#").pop()!);
+    await page.locator("#list li button").first().click();
+    await expect(page.locator(".detail td .elsewhere").first()).toContainText("in another graph");
+    await expect(page.locator(".detail p.empty")).not.toHaveText("No links to or from this node.");
+  });
+
+  test("the page links back to the docs site, relatively", async ({ page }) => {
+    await page.goto(PAGE);
+    await expect(page.locator("#home")).toHaveAttribute("href", "../");
+    await expect(page.locator("#home")).toContainText("Docs site");
+  });
+
+  test("on one column, choosing a node brings its detail into view", async ({ page }) => {
+    await page.setViewportSize({ width: 390, height: 844 });
+    await page.goto(PAGE);
+    await page.locator("#list li button").first().click();
+    const top = await page.locator("#detail").evaluate((d) => d.getBoundingClientRect().top);
+    expect(top).toBeLessThan(844);
+    expect(top).toBeGreaterThanOrEqual(0);
+    await expect(page.locator("#detail")).toBeFocused();
+  });
+
   test("the source commit is linked when the export knew it", async ({ page }) => {
     await page.goto(PAGE);
     const commit = KG.sourceCommit;
