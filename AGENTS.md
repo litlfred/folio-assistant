@@ -300,7 +300,7 @@ different question from `declared`, and the two gaps it reports rather than
 hides.
 
 The processes are executable diagrams, not prose: `board-open-close.bpmn`,
-`board-relocate.bpmn` and `board-place-note.bpmn` under `processes/`,
+`board-relocate.bpmn` and `board-place-note.bpmn` under `folio-assistant-core/processes/ui/`,
 indexed with the rest on the [publication-workflow
 page](cat-harness/docs/publication-workflow.md). **Count the directory rather
 than quoting a number from this paragraph** — `bpmn-processes` says why.

@@ -23,7 +23,8 @@
 import { describe, expect, test } from "bun:test";
 import { readRoleGraph } from "../../schemas/role-graph.ts";
 import { EXTERNAL_SCHEMA_TAG } from "../../schemas/external-schema.ts";
-import { join, resolve } from "node:path";
+import { basename, join, resolve } from "node:path";
+import { workflowFiles } from "../known-skills.ts";
 import { mkdtempSync, readFileSync, readdirSync, rmSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { spawnSync } from "node:child_process";
@@ -1100,12 +1101,13 @@ describe("DMN decisions are nodes, linked to their gateways and to DMN 1.3", () 
   const dmn13 = String(byType("ExternalSchema").find((n) => n.name === "omg-dmn-1.3")?.["@id"]);
 
   test("every decision in every .dmn file is a Decision node conforming to DMN 1.3", () => {
-    const dir = resolve(import.meta.dir, "..", "..", "processes", "decisions");
-    const declared = readdirSync(dir)
+    // Every `.dmn` the harness's corpus declares, wherever it is grouped
+    // (`processes/<group>/decisions/`, placement PR3, bean `63wl`).
+    const declared = workflowFiles(resolve(import.meta.dir, "..", ".."))
       .filter((f) => f.endsWith(".dmn"))
       .flatMap((f) =>
-        [...readFileSync(join(dir, f), "utf-8").matchAll(/<decision\s[^>]*\bid="([^"]+)"/g)].map(
-          (m) => `${f.replace(/\.dmn$/, "")}/${m[1]}`,
+        [...readFileSync(f, "utf-8").matchAll(/<decision\s[^>]*\bid="([^"]+)"/g)].map(
+          (m) => `${basename(f).replace(/\.dmn$/, "")}/${m[1]}`,
         ),
       );
     expect(declared.length).toBeGreaterThan(0);
