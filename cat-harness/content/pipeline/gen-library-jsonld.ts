@@ -595,9 +595,15 @@ export function buildEntryNodes(docId: string, dir: string): EntryOutcome {
   if (rung === "referenced") {
     const record = readJson<{
       identity?: { title?: string };
-      source?: { file?: string; sha256?: string };
+      source?: { file?: string; sha256?: string; kind?: string; url?: string; canonical?: string; version?: string };
     }>(join(dir, "referenced.json"));
-    if (!record?.source?.sha256) return { state: "unreadable", rung };
+    // Two shapes of source (`schemas/referenced-source.ts`): one FILE, whose
+    // bytes were hashed, or a PUBLICATION — a FHIR IG — identified by its
+    // canonical and version, with nothing to hash. A record that is neither
+    // is unreadable, and is reported so rather than guessed at.
+    const src = record?.source;
+    const published = src?.kind === "published" && !!src.canonical && !!src.version;
+    if (!record || !src || (!published && !src.sha256)) return { state: "unreadable", rung };
     const manifest = {
       "@context": CONTENT_DOCUMENT_CONTEXT,
       "@id": docIri(docId, "manifest"),
@@ -609,13 +615,23 @@ export function buildEntryNodes(docId: string, dir: string): EntryOutcome {
       // The same value every manifest carries; `disposition` below says that
       // none of the source's text is held.
       provenance: "ingested",
-      meta: {
-        doc_id: docId,
-        source_file: record.source.file,
-        source_sha256: record.source.sha256,
-        disposition: "referenced source — recorded, text withheld by licence",
-        licence: readLicence(dir),
-      },
+      meta: published
+        ? {
+            // NO new keys here: `meta` is an opaque `@json` literal (finding
+            // D4, #1873), so a field added to it is invisible to any graph
+            // reader. The publication's canonical, version and URL stay in
+            // `referenced.json`, where `ReferencedSourceSchema` types them.
+            doc_id: docId,
+            disposition: "referenced source — an external publication, nothing copied",
+            licence: readLicence(dir),
+          }
+        : {
+            doc_id: docId,
+            source_file: src.file,
+            source_sha256: src.sha256,
+            disposition: "referenced source — recorded, text withheld by licence",
+            licence: readLicence(dir),
+          },
     };
     return {
       state: "built",

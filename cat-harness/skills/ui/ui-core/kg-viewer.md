@@ -46,6 +46,52 @@ to the trust boundary of a page whose entire job is to display *this
 repository's own data*. The graph is the thing being made trustworthy; loading
 it through someone else's script tag is at odds with that.
 
+"No CDN" means no THIRD party's. A script or stylesheet this site publishes
+itself, shared by many of its own pages, is the opposite case and is what the
+next section requires.
+
+## Every asset has its own IRI — a materialized path, loading published JSON-LD
+
+Owner, 2026-10-02 (#1881), in order: *"404 githubpages is a hack. does not work
+according to stanrds"*; *"each link/page needs to be materialized on the CDN
+(gh-pagees), just load the content from the KG json(ld) assets already
+published"*; *"no query strings... each asset gets its own IRI"*. It started
+with `/cat-harness/library/smart-base/smart-trust` returning 404.
+
+Four rules, for every viewer that shows addressable things:
+
+1. **Every addressable asset has its own IRI, and it is a PATH** —
+   `<viewer>/<instance>/<id>/`. Never a query string (`?entry=`, `?id=`) and
+   never a fragment (`#<id>`) as the asset's address. A fragment may still
+   point INSIDE a page; it is not an asset's name.
+2. **The IRI is a real file on gh-pages**, returning 200, written by the
+   viewer's generator and compared by its `--check`. No `404.html` routing,
+   no SPA fallback: a URL that works only because a not-found page rewrote it
+   is a 404 to every crawler, cache and standards-following client.
+3. **The page at that IRI is a thin shell**: identity only (a small JSON
+   config block naming the published data and the asset's id), a
+   `rel=canonical`, a `rel=alternate type=application/ld+json` to the asset's
+   published JSON-LD where there is one, a `<noscript>` link to that data, and
+   the viewer's SHARED stylesheet and script by reference. No content of the
+   asset is written into it; the script loads it from the KG JSON / JSON-LD
+   the site already publishes. If the asset's own serialisation is not yet
+   published, publish the KG's existing one — do not invent a format. A shell
+   is a few KB; inlining chrome into each one is how an IG mirror reached
+   ~230 KB a page.
+4. **An old `#<id>` link is legacy**: the shell normalises it ONCE to the path
+   IRI with `history.replaceState` (or navigates, when the asset belongs to
+   another page), and nothing new emits it.
+
+The page's canonical IRI and the `@id` of the JSON-LD it shows should be the
+same thing. Where they are not — the library's manifests carry
+`@base https://litlfred.github.io/folio/` and `@id library/<id>/manifest`,
+which names neither the instance nor the published path — **report the
+disagreement; do not paper over it** by rewriting one side in the viewer.
+
+Reference implementation: `gen-library-viz.ts` (`viewerHtml`, `VIEWER_JS`,
+`VIEWER_CSS`) and `scripts/lib/library-address.ts`; browser check
+`test/library-entry-iri.e2e.ts`.
+
 ## Do not draw the whole graph
 
 **The instinct is a force-directed node-link diagram of everything. Resist it.**

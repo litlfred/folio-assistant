@@ -213,6 +213,21 @@ export const LibraryIndexEntrySchema = z
     hasImagesJson: z.boolean(),
     // The item's generated README on the repository host (bean `qgjh`).
     readme: z.string().url().optional(),
+    /**
+     * Where else to go for a `referenced` entry — an absolute URL, or a
+     * site-root path with a leading `/` that the viewer composes against its
+     * own base (owner, 2026-10-02: the smart-trust IG as an external reference).
+     */
+    links: z
+      .array(
+        z
+          .object({
+            label: z.string().min(1),
+            href: z.union([z.string().url(), z.string().regex(/^\/[a-z0-9][a-z0-9._/-]*$/)]),
+          })
+          .strict(),
+      )
+      .optional(),
     pageStart: PageNumber,
     pageEnd: PageNumber,
     words: Count,

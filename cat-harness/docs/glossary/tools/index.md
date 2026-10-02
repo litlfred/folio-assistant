@@ -524,7 +524,7 @@ Lean vacuity audit <span class="fa-gloss-status">candidate, extracted</span>
 Library viewer <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
-<p>Render each declared library directory — its entries, intakes and avatars — as a page per subject instance.</p>
+<p>Render each declared library directory — its entries, intakes and avatars — as a page per subject instance, and give every entry its own path IRI (&lt;library&gt;/&lt;instance&gt;/&lt;id&gt;/): a materialized thin shell that loads the entry from the published projection, with its JSON-LD manifest as the alternate.</p>
 <p class="fa-gloss-meta">Tools of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/tools/viewers.ts"><code>cat-harness/tools/viewers.ts#library-viewer</code></a></p>
 </dd>
 <dt id="fhir-harness--kg-tools--ig-ast-diff" data-fa-state="extracted" data-fa-gloss="">

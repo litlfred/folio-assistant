@@ -353,7 +353,7 @@
     {
       "id": "library-viewer",
       "prefLabel": "Library viewer",
-      "definition": "Render each declared library directory — its entries, intakes and avatars — as a page per subject instance.",
+      "definition": "Render each declared library directory — its entries, intakes and avatars — as a page per subject instance, and give every entry its own path IRI (<library>/<instance>/<id>/): a materialized thin shell that loads the entry from the published projection, with its JSON-LD manifest as the alternate.",
       "notation": "library-viewer",
       "source": "cat-harness/tools/viewers.ts#library-viewer",
       "status": "candidate"
