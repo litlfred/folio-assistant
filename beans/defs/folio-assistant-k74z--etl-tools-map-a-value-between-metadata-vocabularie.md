@@ -1,10 +1,11 @@
 ---
 # folio-assistant-k74z
 title: 'ETL TOOLS: map a value between metadata vocabularies by source and target content type'
-status: todo
+status: in-progress
 type: task
+priority: normal
 created_at: 2026-09-23T21:33:31Z
-updated_at: 2026-09-23T21:33:31Z
+updated_at: 2026-10-02T14:12:22Z
 parent: folio-assistant-zzmr
 ---
 
@@ -22,3 +23,5 @@ One value, several target vocabularies. Today every such mapping is a hand-writt
 - [ ] the hand-written mappings in generators are inventoried (source type, target vocabulary, field)
 - [ ] a declarative mapping shape is proposed in docs/proposals/, with options, and put to the owner
 - [ ] one generator (glossary-export) moved onto it as the worked example, with its test still green
+
+_2026-10-02T14:12Z_ — Claimed by claude/k74z-vocab-mapping (session https://claude.ai/code/session_01CVVoavPoCHMLA7AASxG8cH).
