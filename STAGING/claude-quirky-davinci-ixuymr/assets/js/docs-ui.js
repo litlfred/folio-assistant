@@ -1375,7 +1375,55 @@
     '<path d="M9.5 11h5M13 9.5 14.5 11 13 12.5" fill="none" stroke="currentColor" stroke-width="1.3"/>' +
     "</svg>";
 
-  var TILE_GLYPHS = { beans: BEANS_GLYPH, uploads: UPLOADS_GLYPH };
+  /*
+   * SIX KIND GLYPHS, one per graph kind a declared tile opens (ob3m finding
+   * 11: 12 of 14 declared tiles drew the same net, so the More panel told its
+   * tiles apart by caption alone). One drawing per KIND rather than per tile:
+   * "Skills — cat-harness" and "Skills — who-iris" are the same kind of place
+   * in two harnesses, and the caption already says which harness.
+   *
+   * Drawn for 20px on the rule BEANS_GLYPH records — single strokes, no nested
+   * outlines — and each was rendered at that size beside the other eight
+   * before it went in.
+   */
+  var KIND_STROKE =
+    '<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">' +
+    '<g fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">';
+  // A spanner: something you RUN.
+  var TOOLS_GLYPH = KIND_STROKE +
+    '<path d="M14.7 6.3a4 4 0 0 0 4.9 5.1l-8.6 8.6a2.1 2.1 0 0 1-3-3l8.6-8.6a4 4 0 0 0-1.9-2.1z"/>' +
+    '<path d="M14.7 6.3 17.2 3.8"/></g></svg>';
+  // Braces: a SHAPE that data is checked against.
+  var SCHEMA_GLYPH = KIND_STROKE +
+    '<path d="M9 4.5H8a2 2 0 0 0-2 2V10a2 2 0 0 1-2 2 2 2 0 0 1 2 2v3.5a2 2 0 0 0 2 2h1"/>' +
+    '<path d="M15 4.5h1a2 2 0 0 1 2 2V10a2 2 0 0 0 2 2 2 2 0 0 0-2 2v3.5a2 2 0 0 1-2 2h-1"/></g></svg>';
+  // An open book: instructions an agent READS.
+  var SKILLS_GLYPH = KIND_STROKE +
+    '<path d="M12 7c-2-1.6-4.7-2-8-1.6v12c3.3-.4 6 0 8 1.6 2-1.6 4.7-2 8-1.6v-12c-3.3-.4-6 0-8 1.6z"/>' +
+    '<path d="M12 7v12"/></g></svg>';
+  // A compass: a way of working, chosen before the work.
+  var METHOD_GLYPH = KIND_STROKE +
+    '<circle cx="12" cy="12" r="8.2"/>' +
+    '<path d="M15.4 8.6 13.3 13.3 8.6 15.4 10.7 10.7z"/></g></svg>';
+  // Axes and a cluster: an index that places things NEAR each other.
+  var INDEX_GLYPH = KIND_STROKE +
+    '<path d="M4.5 4.5v15h15"/>' +
+    '<circle cx="10" cy="13" r="1.2"/><circle cx="14" cy="9.5" r="1.2"/><circle cx="16.5" cy="13.5" r="1.2"/></g></svg>';
+  // A page with a folded corner: prose to read.
+  var DOCS_GLYPH = KIND_STROKE +
+    '<path d="M13.5 3.5H7a1.8 1.8 0 0 0-1.8 1.8v13.4A1.8 1.8 0 0 0 7 20.5h10a1.8 1.8 0 0 0 1.8-1.8V8.8z"/>' +
+    '<path d="M13.5 3.5v5.3h5.3"/><path d="M8.8 13h6.4M8.8 16.4h4.2"/></g></svg>';
+
+  // Three spines on a shelf: the CORPUS. Not a single book, which is SKILLS'
+  // drawing, and not a tray, which is the uploads INBOX the library is fed from.
+  var LIBRARY_GLYPH = KIND_STROKE +
+    '<path d="M5 4.5v15M9 4.5v15"/><path d="M13.2 5.4l3.6 13.9"/><path d="M3.5 19.5h17"/></g></svg>';
+
+  var TILE_GLYPHS = {
+    beans: BEANS_GLYPH, uploads: UPLOADS_GLYPH, processes: PROCESS_GLYPH, library: LIBRARY_GLYPH,
+    tools: TOOLS_GLYPH, schemas: SCHEMA_GLYPH, skills: SKILLS_GLYPH,
+    methodologies: METHOD_GLYPH, index: INDEX_GLYPH, docs: DOCS_GLYPH
+  };
 
   function glyphFor(name) {
     if (typeof name !== "string") return NET_GLYPH;
@@ -3254,6 +3302,45 @@
   }
 
   /**
+   * WHAT A TEXT CARD SHOWS ONCE IT IS ITS AVATAR — the first words of it,
+   * condensed. Owner, 2026-10-01: *"if todo is small zoomed, it shows no
+   * content at all. instead it should cleanup whitespace and show condended
+   * first part of todo that is dsplay."*
+   *
+   * A book's avatar is its cover, so zooming it out leaves a picture. A
+   * todo's words ARE its face: hiding the title and the body below the
+   * declared width left a blank square (or an empty button on the board),
+   * with nothing to tell one note from another. So semantic zoom keeps the
+   * mechanism and changes only what the small state draws for a text kind:
+   * this gist, which the CSS clamps to what fits.
+   *
+   * Markdown noise is dropped rather than rendered — at this size a heading
+   * or a bullet is a mark that costs a word — and every run of whitespace,
+   * newlines included, becomes one space. `max` is a ceiling on what is
+   * carried, not what is shown; the clamp decides that.
+   */
+  function plainGist(text) {
+    return String(text || "")
+      .replace(/```[^\n]*\n?/g, " ")
+      .replace(/!\[([^\]]*)\]\([^)]*\)/g, "$1")
+      .replace(/\[([^\]]*)\]\([^)]*\)/g, "$1")
+      .replace(/<[^>]+>/g, " ")
+      .replace(/^[ \t]*(?:#{1,6}|>|[-*+]|\d+[.)])[ \t]+/gm, "")
+      .replace(/\*\*|__|~~|[*`]/g, "")
+      .replace(/(^|[^\w])_+|_+(?=[^\w]|$)/g, "$1")
+      .replace(/\s+/g, " ")
+      .trim();
+  }
+  function gistOf(parts, max) {
+    var s = parts.map(plainGist).filter(function (p) { return p !== ""; }).join(" — ");
+    max = max || 280;
+    if (s.length <= max) return s;
+    var cut = s.slice(0, max);
+    var sp = cut.lastIndexOf(" ");
+    return (sp > max * 0.6 ? cut.slice(0, sp) : cut) + "…";
+  }
+
+  /**
    * THE SITE'S BASEURL, derived from a path the server already resolved —
    * the FALLBACK arm of `siteBaseurl`, never called directly.
    *
@@ -4855,7 +4942,28 @@
     function zoomGlassCard(card) {
       var kind = card.getAttribute("data-fa-zoom-kind");
       var w = card.getBoundingClientRect().width || parseFloat(card.style.width) || 0;
-      card.setAttribute("data-fa-zoom", rendersAvatar(kind, w) ? "avatar" : "card");
+      var avatar = rendersAvatar(kind, w);
+      card.setAttribute("data-fa-zoom", avatar ? "avatar" : "card");
+      // The gist is clamped to the WHOLE lines its box holds, so the last
+      // one shown ends in an ellipsis rather than being sliced through.
+      // Both numbers are in the card's own (unscaled) pixels, so the ratio
+      // is right at every view scale. Measured with the box GROWN to the room
+      // it has, then let shrink to the clamped lines: a box left taller than
+      // its clamp paints the lines after the ellipsis.
+      var gist = card.querySelector(".fa-glass-asset-gist");
+      if (gist && avatar) {
+        gist.style.flex = "";
+        var gcs = getComputedStyle(gist);
+        var lh = parseFloat(gcs.lineHeight) || 0;
+        var room = gist.clientHeight - (parseFloat(gcs.paddingTop) || 0) - (parseFloat(gcs.paddingBottom) || 0);
+        var lines = lh ? Math.max(1, Math.floor((room + 1) / lh)) : 3;
+        // A library card's gist is its TITLE, captioning the cover: two lines
+        // at most, so the cover stays the face.
+        if (kind === "library") lines = Math.min(lines, 2);
+        gist.style.webkitLineClamp = String(lines);
+        gist.style.lineClamp = String(lines);
+        gist.style.flex = "0 1 auto";
+      }
     }
 
     /* ── ZOOM AND PAN THE GLASS, AND SNAP BACK HOME ───────────────────────
@@ -4950,6 +5058,9 @@
       shelf.style.transform = atOrigin() ? "" :
         "translate(" + view.x + "px, " + view.y + "px) scale(" + view.s + ")";
       shelf.setAttribute("data-fa-scale", String(view.s));
+      // Read by the avatar-state gist, which is drawn at a constant size ON
+      // SCREEN: words scaled to 25% with the card would be there and unreadable.
+      shelf.style.setProperty("--fa-glass-scale", String(view.s));
       var pct = Math.round(view.s * 100);
       zoomSlider.value = String(pct);
       zoomValue.textContent = pct + "%";
@@ -4958,6 +5069,7 @@
       // so the ResizeObserver never hears of it. Asked here instead.
       Array.prototype.forEach.call(shelf.querySelectorAll(".fa-glass-asset"), zoomGlassCard);
       placePanel();
+      followMeta();
     }
 
     /* A TILE'S POP-OUT RIDES ON THE FOLIO — owner, 2026-09-24: *"dragging
@@ -5217,6 +5329,165 @@
       moveBar.setAttribute("hidden", "hidden");
     }
 
+    /* ── HOVERING (OR FOCUSING) A CARD SHOWS WHAT IT IS ───────────────────
+     *
+     * Owner, 2026-10-01: *"where is title of thing from library? hovering
+     * should show metadata."* A card zoomed to its cover says nothing about
+     * the document behind it, and a todo's gist is cut at a few lines.
+     *
+     * ONE POPOVER FOR THE GLASS, not one per card, and outside the shelf: a
+     * card clips its overflow (the cover fills it) and the shelf is scaled,
+     * so a popover inside either would be cut off or shrunk to 25% with the
+     * view. Drawn at a constant size beside the card.
+     *
+     * HOVER AND FOCUS ALIKE (WCAG 1.4.13): it opens when the pointer is over
+     * the card or focus is inside it (the title link, the tools), stays open
+     * while the pointer moves onto it, and Escape dismisses it without also
+     * putting the glass away. The same facts are the card's accessible
+     * DESCRIPTION (`aria-describedby`), so the popover itself is
+     * `aria-hidden` — a screen reader hears them once, from the card.
+     *
+     * Only what the published data says. The library index records no
+     * author, publisher or year for any entry today, so the popover says
+     * that rather than leaving a reader to wonder whether it was dropped. */
+    var metaPop = el("div", { class: "fa-glass-meta", "aria-hidden": "true", hidden: "hidden" });
+    layer.appendChild(metaPop);
+    var metaFor = null;
+    var metaSeq = 0;
+    function hideMeta() {
+      metaFor = null;
+      metaPop.setAttribute("hidden", "hidden");
+    }
+    function showMeta(card) {
+      var rows = card.__faMeta || [];
+      if (!rows.length) return;
+      metaFor = card;
+      while (metaPop.firstChild) metaPop.removeChild(metaPop.firstChild);
+      var dl = el("dl", { class: "fa-glass-meta-list" });
+      rows.forEach(function (r) {
+        dl.appendChild(el("dt", null, r[0]));
+        dl.appendChild(el("dd", null, r[1]));
+      });
+      metaPop.appendChild(dl);
+      metaPop.removeAttribute("hidden");
+      var rc = card.getBoundingClientRect();
+      var pw = metaPop.offsetWidth, ph = metaPop.offsetHeight;
+      var vw = document.documentElement.clientWidth, vh = window.innerHeight;
+      var left = rc.right + 8;
+      if (left + pw > vw - 8) left = rc.left - pw - 8;
+      if (left < 8) left = Math.max(8, Math.min(vw - pw - 8, rc.left));
+      var top = Math.max(8, Math.min(vh - ph - 8, rc.top));
+      metaPop.style.left = Math.round(left) + "px";
+      metaPop.style.top = Math.round(top) + "px";
+    }
+    metaPop.addEventListener("mouseleave", function (e) {
+      if (metaFor && !(e.relatedTarget && metaFor.contains(e.relatedTarget))) hideMeta();
+    });
+    // CAPTURE, so it runs before the glass's own Escape: one press dismisses
+    // the popover, the next puts the glass away. A card in move mode keeps
+    // Escape for leaving the mode.
+    document.addEventListener("keydown", function (e) {
+      if (e.key !== "Escape" || !metaFor || metaPop.hasAttribute("hidden")) return;
+      if (metaFor.getAttribute("data-fa-moving") === "true") { hideMeta(); return; }
+      hideMeta();
+      e.stopPropagation();
+    }, true);
+    // The glass scrolled or zoomed under an open popover: it follows its card,
+    // and goes when the card has left the screen.
+    function followMeta() {
+      if (!metaFor || metaPop.hasAttribute("hidden")) return;
+      var rc = metaFor.getBoundingClientRect();
+      if (!metaFor.isConnected || rc.bottom < 0 || rc.top > window.innerHeight) { hideMeta(); return; }
+      showMeta(metaFor);
+    }
+    sheet.addEventListener("scroll", followMeta, { passive: true });
+
+    /** Set what a card's popover and accessible description say: `[label, value]` rows. */
+    function setCardMeta(card, rows) {
+      rows = rows.filter(function (r) { return r && r[1] != null && String(r[1]).trim() !== ""; });
+      card.__faMeta = rows;
+      var desc = card.querySelector(".fa-glass-asset-desc");
+      if (desc) desc.textContent = rows.map(function (r) { return r[0] + ": " + r[1]; }).join(". ");
+      if (metaFor === card) showMeta(card);
+    }
+    function wireCardMeta(card) {
+      var id = "fa-glass-desc-" + (++metaSeq);
+      card.appendChild(el("span", { class: "fa-sr-only fa-glass-asset-desc", id: id }));
+      card.setAttribute("aria-describedby", id);
+      card.addEventListener("mouseenter", function () { showMeta(card); });
+      card.addEventListener("mouseleave", function (e) {
+        if (e.relatedTarget && metaPop.contains(e.relatedTarget)) return;
+        if (card.contains(document.activeElement)) return;
+        if (metaFor === card) hideMeta();
+      });
+      card.addEventListener("focusin", function () { showMeta(card); });
+      card.addEventListener("focusout", function (e) {
+        if (e.relatedTarget && card.contains(e.relatedTarget)) return;
+        if (metaFor === card && !card.matches(":hover")) hideMeta();
+      });
+      // A card being dragged is not a card being read.
+      card.addEventListener("pointerdown", function (e) {
+        if (!(e.target && e.target.closest && e.target.closest("button, a"))) hideMeta();
+      });
+    }
+
+    /** The library entry's facts, from the published index; `null` entry means only the stored title is known. */
+    function libraryMetaRows(a, key, entry) {
+      var rows = [["Title", (entry && entry.title && entry.title !== entry.id) ? entry.title : a.title]];
+      if (!entry) {
+        rows.push(["Library", key.split("/")[0]]);
+        return rows;
+      }
+      var who = entry.authors || entry.author || entry.creator;
+      if (Array.isArray(who)) who = who.join(", ");
+      if (who) rows.push(["Author", who]);
+      if (entry.publisher) rows.push(["Publisher", entry.publisher]);
+      if (entry.year || entry.date) rows.push(["Year", entry.year || entry.date]);
+      if (!who && !entry.publisher && !(entry.year || entry.date)) {
+        rows.push(["Author, year", "not recorded in the library index"]);
+      }
+      rows.push(["Kind", entry.documentClass || "library document"]);
+      rows.push(["Library", entry.instance]);
+      if (entry.sourceFile) rows.push(["Source", entry.sourceFile]);
+      if (entry.pageStart != null && entry.pageEnd != null) {
+        rows.push(["Pages", entry.pageStart === entry.pageEnd ? String(entry.pageStart) : entry.pageStart + "–" + entry.pageEnd]);
+      }
+      if (typeof entry.words === "number") rows.push(["Words", entry.words.toLocaleString()]);
+      if (entry.doi) rows.push(["DOI", entry.doi]);
+      if (entry.arxiv) rows.push(["arXiv", entry.arxiv]);
+      return rows;
+    }
+
+    /** The library index, fetched once per page, as `{ "<instance>/<id>": entry }`; `null` when unreadable. */
+    var glassLibIdx;
+    var glassLibWaiting = null;
+    function glassLibraryIndex(done) {
+      if (glassLibIdx !== undefined) return done(glassLibIdx);
+      if (glassLibWaiting) { glassLibWaiting.push(done); return; }
+      glassLibWaiting = [done];
+      function settle(v) {
+        glassLibIdx = v;
+        var w = glassLibWaiting;
+        glassLibWaiting = null;
+        w.forEach(function (f) { f(v); });
+      }
+      var m = document.querySelector('meta[name="fa-library-src"]');
+      fetch((m && m.getAttribute("content")) || withBase("/assets/library/index.json"))
+        .then(function (r) { if (!r.ok) throw new Error("HTTP " + r.status); return r.json(); })
+        .then(function (doc) {
+          var by = {};
+          (doc && Array.isArray(doc.entries) ? doc.entries : []).forEach(function (e) {
+            if (e && e.instance && e.id) by[e.instance + "/" + e.id] = e;
+          });
+          settle(by);
+        })
+        .catch(function (e) {
+          console.warn("docs-ui: the glass could not read the library index (" + e.message +
+                       "); library cards show their stored title only.");
+          settle(null);
+        });
+    }
+
     function buildGlassCard(key, a) {
       var card = el("article", {
         class: "fa-glass-asset",
@@ -5240,6 +5511,10 @@
         ? el("a", { class: "fa-glass-asset-name", href: href }, a.title)
         : el("span", { class: "fa-glass-asset-name" }, a.title));
       card.appendChild(face);
+      // What the card shows once it is its avatar (`gistOf`). Drawn only in
+      // that state — the CSS hides it at full size, where the title and the
+      // body already say it — and a <p>, so it is read as text when shown.
+      card.appendChild(el("p", { class: "fa-glass-asset-gist" }, gistOf([a.title])));
 
       var tools = el("div", { class: "fa-glass-asset-tools" });
       var moveBtn = el("button", {
@@ -5269,12 +5544,31 @@
         hideMoveBar(card);
         moveBtn.focus();
       });
-      function resizeBy(d) {
+      /* THE PRESSED BUTTON STAYS UNDER THE POINTER. Owner, 2026-10-01:
+       * *"when zoom in/out, the buttons dont stay same place so have to move
+       * cursor"* — and this instance's profile is low-dexterity, so a target
+       * that moves after each press is a re-aim per press. The card grew from
+       * its top-left corner, and these buttons sit at its bottom-right, so
+       * every press carried them a step down and right. Now the card is
+       * shifted by however far the pressed button drifted, measured rather
+       * than assumed (the tool row wraps, and the avatar state lays it out
+       * differently), in the shelf's own pixels — the view's scale divided
+       * out. */
+      function resizeBy(d, anchor) {
         var g = geometryOf(card);
+        var before = anchor ? anchor.getBoundingClientRect() : null;
         var ratio = g.height / g.width;
         g.width = Math.max(MIN_WINDOW, g.width + d);
         g.height = Math.max(Math.round(MIN_WINDOW * 0.5), Math.round(g.width * ratio));
         applyGeometry(card, g);
+        if (before) {
+          zoomGlassCard(card);
+          var after = anchor.getBoundingClientRect();
+          var sc = view.s || 1;
+          g.left = Math.round(g.left + (before.left - after.left) / sc);
+          g.top = Math.round(g.top + (before.top - after.top) / sc);
+          applyGeometry(card, g);
+        }
         placeOnGlass(key, g);
         fitShelf();
         zoomGlassCard(card);
@@ -5289,8 +5583,8 @@
         type: "button", class: "fa-glass-asset-tool", "aria-label": "Make " + a.title + " larger",
         title: "Larger",
       }, "+");
-      smaller.addEventListener("click", function () { resizeBy(-2 * RESIZE_STEP); });
-      larger.addEventListener("click", function () { resizeBy(2 * RESIZE_STEP); });
+      smaller.addEventListener("click", function () { resizeBy(-2 * RESIZE_STEP, smaller); });
+      larger.addEventListener("click", function () { resizeBy(2 * RESIZE_STEP, larger); });
 
       // CLOSE, and the word matters. "Remove" and "delete" both say the
       // asset stops being the reader's, which is exactly what does NOT
@@ -5309,6 +5603,27 @@
       tools.appendChild(close);
       card.appendChild(tools);
       card.appendChild(live);
+      wireCardMeta(card);
+      if (zoomKindOf(a) === "library") {
+        setCardMeta(card, libraryMetaRows(a, key, null));
+        glassLibraryIndex(function (idx) {
+          var entry = idx && idx[key];
+          if (!entry) return;
+          setCardMeta(card, libraryMetaRows(a, key, entry));
+          // A row stored before the entry had a real title (or one whose
+          // title IS its id) shows the index's title instead.
+          var better = entry.title && entry.title !== entry.id ? entry.title : "";
+          if (better && (a.title === key || a.title === entry.id)) {
+            var nm = card.querySelector(".fa-glass-asset-name");
+            if (nm) nm.textContent = better;
+            card.setAttribute("aria-label", better);
+            var g = card.querySelector(".fa-glass-asset-gist");
+            if (g) g.textContent = gistOf([better]);
+          }
+        });
+      } else {
+        setCardMeta(card, [["Title", a.title]]);
+      }
 
       // SELECTING ANY PART RAISES IT — the owner's rule for windows,
       // 2026-09-20, and the same one here: a card the reader is touching is
@@ -5402,12 +5717,27 @@
       body.classList.add("fa-glass-sticky-body");
       var tools = card.querySelector(".fa-glass-asset-tools");
       card.insertBefore(body, tools);
+      // The small state's gist now has the note's words, not only its title.
+      var gist = card.querySelector(".fa-glass-asset-gist");
+      if (gist) gist.textContent = gistOf([todo.summary, todo.comment]);
+      // And its popover / description: the WHOLE title, where it stands, and
+      // the node it is attached to.
+      var t = todo.target || {};
+      var on = t.page ? t.page + (t.node ? " › " + t.node : "") : (todo.targetLabel || "");
+      setCardMeta(card, [
+        ["Todo", plainGist(todo.summary) || card.getAttribute("aria-label") || ""],
+        ["Status", String(todo.status || "").replace(/_/g, " ")],
+        ["Priority", todo.priority || ""],
+        ["Attached to", on],
+      ]);
+      zoomGlassCard(card);
     }
 
     function renderShelf() {
       // The cards are about to be rebuilt; a bar for a card that is gone
       // would move nothing.
       hideMoveBar();
+      hideMeta();
       while (shelf.firstChild) shelf.removeChild(shelf.firstChild);
       while (notes.firstChild) notes.removeChild(notes.firstChild);
       var all = folioAssets();
@@ -5459,12 +5789,14 @@
         // Words only: the generic note picture sat behind the sentence.
         var noteAva = noteCard.querySelector(".fa-glass-asset-face > .fa-glass-avatar");
         if (noteAva) noteAva.parentNode.removeChild(noteAva);
-        noteCard.insertBefore(el("p", { class: "fa-glass-shelved-note fa-glass-sticky-body" },
-          (shelved.length === 1
+        var noteWords = (shelved.length === 1
             ? "1 item is in your folio but not displayed. "
             : shelved.length + " items are in your folio but not displayed. ") +
           "Put your folio away, then open the library view to put it back on the glass " +
-          "(for a todo, use the Todos tile below)."), noteCard.querySelector(".fa-glass-asset-tools"));
+          "(for a todo, use the Todos tile below).";
+        noteCard.insertBefore(el("p", { class: "fa-glass-shelved-note fa-glass-sticky-body" }, noteWords),
+          noteCard.querySelector(".fa-glass-asset-tools"));
+        noteCard.querySelector(".fa-glass-asset-gist").textContent = gistOf([noteTitle, noteWords]);
         // The shared close SHELVES an asset; this card is not one, so its ×
         // dismisses instead, and says so.
         var oldClose = noteCard.querySelector(".fa-glass-asset-close");
@@ -6641,6 +6973,12 @@
       }
       handle.setAttribute("aria-label", label);
       handle.title = label;
+      // THE MARK FOLLOWS THE STATE — `ob3m` finding 9: it stayed ▾ with the
+      // glass down, so the one visible cue said "pull down" over a folio that
+      // was already down. Only the accessible name changed. ▴ while open is
+      // "put it away", the same pair the strip toggle already uses.
+      var mark = handle.querySelector(".fa-glass-handle__mark");
+      if (mark) mark.textContent = open ? "\u25B4" : "\u25BE";
     }
     countWaiting();
     document.addEventListener("fa:folio-changed", countWaiting);
@@ -7724,6 +8062,20 @@
         var avatar = rendersAvatar("todo", width);
         slot.classList.toggle("fa-sticky-slot--avatar", avatar);
         slot.setAttribute("data-fa-avatar", avatar ? "true" : "false");
+        // THE NOTE'S FIRST WORDS beside its avatar (`gistOf`; owner,
+        // 2026-10-01: *"if todo is small zoomed, it shows no content at
+        // all"*). Beside rather than in: the avatar is a glyph painted through
+        // a MASK, so words inside it would be cut to the glyph's shape. In the
+        // DOM only while the slot IS its avatar, so at full size the note's
+        // words exist once — the card's — and nothing finds them twice.
+        var gistEl = slot.querySelector(":scope > .fa-sticky-avatar-gist");
+        if (avatar && !gistEl && slot.__faGist) {
+          var opener = slot.querySelector(":scope > .fa-sticky-avatar");
+          slot.insertBefore(el("p", { class: "fa-sticky-avatar-gist" }, slot.__faGist),
+            opener ? opener.nextSibling : slot.firstChild);
+        } else if (!avatar && gistEl) {
+          gistEl.parentNode.removeChild(gistEl);
+        }
       }
     }
 
@@ -7783,8 +8135,11 @@
         // render its answer, so there is no second count to disagree.
         var ab = nodeBadge(todo);
         if (ab) open.appendChild(badgeChip(ab, "avatar"));
+
         open.addEventListener("click", function () { openCard(todo); });
         slot.insertBefore(open, slot.firstChild);
+        // What `applyZoom` shows beside the avatar while the slot is one.
+        slot.__faGist = gistOf([todo.summary, todo.comment], 160);
       })(rows[si].todo);
     }
     applyZoom();

@@ -1122,6 +1122,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr/cat-harness.jsonld#glossary-usage/Process_Editing/Lane_Agent",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr/cat-harness.jsonld#glossary-usage/Process_GraphDetanglement/Lane_Agent",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr/cat-harness.jsonld#glossary-usage/Process_KgSeparation/Lane_Agent",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr/cat-harness.jsonld#glossary-usage/Process_MergeBase/Lane_Agent",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr/cat-harness.jsonld#glossary-usage/Process_MethodologyFromSource/Lane_Agent",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr/cat-harness.jsonld#glossary-usage/Process_RelatedWork/Lane_Agent",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr/cat-harness.jsonld#glossary-usage/Process_SessionStateMachine/Lane_Machine",
@@ -1283,6 +1284,15 @@
       "label": "Authoring agent",
       "scopeNote": "Briefs, measures the signals, runs declare-detangle-isolate, reports what would move, seeds the repositories once they exist, and adopts each later release. Verification is always by re-running a gate, never by a change looking right.",
       "source": "cat-harness/processes/kg-separation.bpmn"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr/cat-harness.jsonld#glossary-usage/Process_MergeBase/Lane_Agent",
+      "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#LaneUsage",
+      "ofConcept": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr/cat-harness.jsonld#role/authoring-agent",
+      "inProcess": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr/cat-harness.jsonld#process/Process_MergeBase",
+      "label": "Authoring agent",
+      "scopeNote": "Reached only when the command refused: an authored conflict, an undeclared path, or a resolution the gates could not reproduce. The refused paths are listed for it; what to do with an authored conflict is judgement.",
+      "source": "cat-harness/processes/merge-base.bpmn"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr/cat-harness.jsonld#glossary-usage/Process_MethodologyFromSource/Lane_Agent",
@@ -1540,7 +1550,8 @@
         "Corpus + build pipeline (system)",
         "Graph audit (system)",
         "Incremental build (system)",
-        "Scheduled log sweep"
+        "Scheduled log sweep",
+        "merge:main command"
       ],
       "notation": "build-pipeline",
       "inScheme": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr/cat-harness-glossary.jsonld",
@@ -1563,6 +1574,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr/cat-harness.jsonld#glossary-usage/Process_KgSeparation/Lane_Pipeline",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr/cat-harness.jsonld#glossary-usage/Process_KgToPortal/Lane_Pipeline",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr/cat-harness.jsonld#glossary-usage/Process_L3Fhir/Lane_Build",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr/cat-harness.jsonld#glossary-usage/Process_MergeBase/Lane_Command",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr/cat-harness.jsonld#glossary-usage/Process_PrChecksPresent/Lane_Ci",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr/cat-harness.jsonld#glossary-usage/Process_PublishAlert/Lane_Ci",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr/cat-harness.jsonld#glossary-usage/Process_PublishVerification/Lane_Ci",
@@ -1734,6 +1746,15 @@
       "label": "Build pipeline — SUSHI · validator · IG Publisher",
       "scopeNote": "Two different jobs share this lane rather than one continuous run. Task_Sushi and Task_Validate turn FSH into validated FHIR JSON and loop straight back to the modeller lane on failure with no bean filed — re-running compile-and-validate is cheap enough that a durable finding would be noise. Task_IgPublisher is the other job, reached only once Lane_Qc has passed, and its output is what Lane_PubMgr actually publishes.",
       "source": "cat-harness/processes/l3-fhir-pipeline.bpmn"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr/cat-harness.jsonld#glossary-usage/Process_MergeBase/Lane_Command",
+      "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#LaneUsage",
+      "ofConcept": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr/cat-harness.jsonld#role/build-pipeline",
+      "inProcess": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr/cat-harness.jsonld#process/Process_MergeBase",
+      "label": "merge:main command",
+      "scopeNote": "Mechanical. Decides nothing a declaration has not decided: a path no pattern names is refused, and the gate set, not this lane, judges the result.",
+      "source": "cat-harness/processes/merge-base.bpmn"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr/cat-harness.jsonld#glossary-usage/Process_PrChecksPresent/Lane_Ci",
