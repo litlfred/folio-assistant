@@ -14,6 +14,25 @@ gap).** It is a document only. No code is written against it, no secret has
 been created for it, and no secret value appears in it or anywhere in this
 change.
 
+> ## Rulings, owner, 2026-10-02 (about 06:40)
+>
+> | decision | ruling | how it was reached |
+> |---|---|---|
+> | **D1** mechanism | **A: one GitHub App owned by the account** | **default applied.** The owner said "no preference", so this can be reopened |
+> | **D2** naming | **A: capability names. (a) becomes `PUBLISH_SITE_BOOTSTRAP` and (b) becomes `PUSH_BRANCH_TRIGGERING_CI`** | **default applied.** The owner said "no preference", so this can be reopened |
+> | **D3** placement | **A: a `credentials/` directory per instance** | **default applied.** The owner did not answer, so this can be reopened |
+> | **D4** signing | **A: declare `sign-artefact` now, and build it after wallet-custody Q1 and Q7** | **ruled by the owner** |
+>
+> Four follow-up beans under epic `5a3l` carry the work. None of them is built
+> yet:
+>
+> - `k3ml`: the `secrets` skill, with the App setup walkthrough for a
+>   personal account
+> - `jzba`: the `secrets:check` tool
+> - `9hxd`: the `credentials/` declarations for bootstrap-tools and
+>   folio-assistant
+> - `8mlt`: the two secret renames
+
 1. TOC
 {:toc}
 

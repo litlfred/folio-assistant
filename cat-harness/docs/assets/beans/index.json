@@ -2,7 +2,7 @@
   "$schema": "folio-bean-index/v1",
   "tile": {
     "beans": {
-      "count": 605,
+      "count": 609,
       "unit": "beans"
     }
   },
@@ -2197,6 +2197,20 @@
       "file": "beans/defs/folio-assistant-8lcl--separation-stage-1b-zod-moves-to-cat-harness-tools.md"
     },
     {
+      "id": "folio-assistant-8mlt",
+      "title": "CREDENTIALS (iv): rename BOOTSTRAP_PAGES_TOKEN -> PUBLISH_SITE_BOOTSTRAP (bootstrap-tools) and MERGE_MAIN_TOKEN -> PUSH_BRANCH_TRIGGERING_CI (merge-main.yml)",
+      "status": "todo",
+      "type": "task",
+      "priority": "",
+      "parent": "folio-assistant-5a3l",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-10-02T06:31:23Z",
+      "updatedAt": "2026-10-02T06:31:23Z",
+      "preview": "From the proposal cat-harness/docs/proposals/credentials-needs-and-supply.md §4.3 (D2=A). Edit the secret references and the error and help messages in bootstrap-tools/.github/workflows/publish-bootstrap.yml and .github/workflows/merge-main.yml. With the App (D1=A), add the create-github-app-token mint step and expose the job variable under the capability name. Both secrets are unset, so the renam",
+      "file": "beans/defs/folio-assistant-8mlt--credentials-iv-rename-bootstrap-pages-token-publis.md"
+    },
+    {
       "id": "folio-assistant-8v0y",
       "title": "A bean that RESTATES a live skill's contract is unchecked — kn0t drifted in four places and one turned a measurement into an impression",
       "status": "completed",
@@ -2335,6 +2349,20 @@
       "updatedAt": "2026-09-29T20:50:34Z",
       "preview": "## Progress — 2026-09-18\n\nStep 1 landed on `claude/festive-galileo-s7ibx0` ([PR #280](https://github.com/litlfred/folio-assistant/pull/280)), two commits.\n\n**`schemas/qa-review.ts`** — `Finding`, `Decision`, `AuditNote` as three\nentities. The two severity vocabularies are kept as orthogonal axes:\n`critical | major | minor` is what kind of breakage (a machine can assign it),\n`blocking | suggestion ",
       "file": "beans/defs/folio-assistant-9gyz--qa-review-schemas-finding-decision-and-auditnote-a.md"
+    },
+    {
+      "id": "folio-assistant-9hxd",
+      "title": "CREDENTIALS (iii): credentials/ declaration (needs, profile, registry) for bootstrap-tools and folio-assistant",
+      "status": "todo",
+      "type": "task",
+      "priority": "",
+      "parent": "folio-assistant-5a3l",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-10-02T06:31:22Z",
+      "updatedAt": "2026-10-02T06:31:22Z",
+      "preview": "From the proposal cat-harness/docs/proposals/credentials-needs-and-supply.md §2.3–2.4 (D3=A). Register three graph kinds: credential-needs (context), credential-profile (context), credential-registry (state). Write the needs for every secret in §1.1. The profile is personal-github with the App (D1=A). Declare sign-artefact as a need with no supply yet (D4=A). bootstrap-tools carries its own file, ",
+      "file": "beans/defs/folio-assistant-9hxd--credentials-iii-credentials-declaration-needs-prof.md"
     },
     {
       "id": "folio-assistant-9rnf",
@@ -4509,6 +4537,34 @@
       "updatedAt": "2026-09-29T18:14:49Z",
       "preview": "**What.** A `ChangeSet` node computed between two refs (`origin/main` and the\nbranch that STAGING rendered). For each block it records one of: added,\nremoved, modified (prose / structure / metadata), moved (new parent or order),\nor renamed (via `renamedFrom`, child 01). It is keyed on folio/ graph ids,\n**not** on file paths.\n\n**Why not reuse `diff`.** The `diff` skill is `git diff origin/main..HEA",
       "file": "beans/defs/folio-assistant-jwox--changeset-a-block-level-diff-of-the-folio-graph-be.md"
+    },
+    {
+      "id": "folio-assistant-jzba",
+      "title": "CREDENTIALS (ii): secrets:check — declared needs vs workflow usage vs secret names vs expiry registry",
+      "status": "todo",
+      "type": "task",
+      "priority": "",
+      "parent": "folio-assistant-5a3l",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-10-02T06:31:22Z",
+      "updatedAt": "2026-10-02T06:31:22Z",
+      "preview": "From the proposal cat-harness/docs/proposals/credentials-needs-and-supply.md §6.2. Code in cat-harness-tools. Names only, never values. Findings per §6.2, including could-not-determine, which outranks clean (exit 2). Warns at 30 and 7 days before expiry. Feeds bun run health. Has the MCP and CLI parity of axis 6. Declares its own need, list-secret-names, supplied by the App. Not built yet.\n\n## Don",
+      "file": "beans/defs/folio-assistant-jzba--credentials-ii-secretscheck-declared-needs-vs-work.md"
+    },
+    {
+      "id": "folio-assistant-k3ml",
+      "title": "CREDENTIALS (i): secrets skill — add/rotate/revoke per mechanism, GitHub App walkthrough for a personal account",
+      "status": "todo",
+      "type": "task",
+      "priority": "",
+      "parent": "folio-assistant-5a3l",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-10-02T06:31:22Z",
+      "updatedAt": "2026-10-02T06:31:22Z",
+      "preview": "From the proposal cat-harness/docs/proposals/credentials-needs-and-supply.md §6.3 (D1=A, the App). Write skills/sdlc/sdlc-core/secrets.md with the human steps per mechanism and the UI paths. Lead with the GitHub App setup on a personal account: register the App, generate its private key, install it on selected repositories, store HARNESS_BOT_ID as a variable and HARNESS_BOT_PRIVATE_KEY as a secret",
+      "file": "beans/defs/folio-assistant-k3ml--credentials-i-secrets-skill-addrotaterevoke-per-me.md"
     },
     {
       "id": "folio-assistant-k3tw",
@@ -7278,7 +7334,7 @@
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-10-02T06:11:00Z",
-      "updatedAt": "2026-10-02T06:11:08Z",
+      "updatedAt": "2026-10-02T06:31:21Z",
       "preview": "Owner, 2026-10-02 (lead session): credentials need a design before any secret\nis created. *\"keys have lots of deployment scenarios, and so will\nfolio-assistant (personal, organizational)\"*. Wants a skill and a tool so\nhumans and agents can add, rotate and revoke secrets. Flagged the name\n`BOOTSTRAP_PAGES_TOKEN` as bad and asked *\"what exactly is being signed?\"*.\nNothing is: that secret only authen",
       "file": "beans/defs/folio-assistant-vobp--credentials-design-capability-needs-declared-deplo.md"
     },
