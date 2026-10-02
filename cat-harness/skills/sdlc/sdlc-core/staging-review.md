@@ -513,6 +513,44 @@ commit instead, stop: that is the unilateral removal
 [`deletion-requires-confirmation`](../../conduct/conduct-core/deletion-requires-confirmation.md) exists to
 stop, and option 2 exists so you do not have to.
 
+### The cap — at most ten previews, the oldest rotated off
+
+**Owner ruling, 2026-10-02 (issue #1868):** *"for going forward, we should cap
+the maximum number of previews (<= 10) and rotate old ones off."*
+
+Why a cap rather than a better threshold: GitHub Pages deploys `gh-pages`
+as-is, every preview is a full copy of the site (~200–500 MB by then, not the
+~38 MB measured above), and nothing bounded how many existed at once. The
+branch passed GitHub's 10 GB Pages artifact limit and the **live** site stopped
+deploying on 2026-10-01. Every removal path above is per-preview and
+event-driven; none bounds the total, which is the quantity the limit is about.
+
+What the `stage` job now does, on every deploy, before its one push:
+
+- **Counts the previews under `STAGING/`, including the one it is staging,
+  and keeps at most ten.** The number lives once, as `MAX_PREVIEWS` in
+  `cat-harness/scripts/staging-rotate.ts`.
+- **Removes the least recently updated beyond that.** "Last updated" is the
+  `STAGING/<slug>/.staged-at` stamp the job writes on every stage, falling back
+  to the latest `rendered` render-log entry, then the record's `builtAt`, then
+  git. The preview being staged is never removed.
+- **Never touches `STAGING/_retired/`** or anything that is not a preview
+  directory.
+- **Leaves a record for each removal** — a `removed` render-log entry with the
+  reason, the preview's `staging-preview.json` retired into `_retired/`, and a
+  line in the commit message and the job log giving slug, age and size.
+
+**This DOES reach open pull requests, and that is the ruling, not a defect.**
+The paragraphs above say nothing here touches an open PR; under the cap, the
+oldest preview goes whatever its PR's state. The ruling is the confirmation
+[`deletion-requires-confirmation`](../../conduct/conduct-core/deletion-requires-confirmation.md)
+asks for, given for the class. It is recoverable because a preview is a build,
+not content: **the next push to that PR's branch re-stages it**, and the run
+that re-stages it can never rotate it off. So when a reviewer's preview link
+404s, check `_render-log/` on `gh-pages` for a `removed` entry for its slug
+before calling it broken — if it says "rotated off", push to the branch (an
+empty commit will do) or re-run the PR's `Feature Staging` workflow.
+
 ### A closed PR is not an abandoned preview
 
 `staging-preview-orphans` does **not** ask "is there an open PR?" any more, and
