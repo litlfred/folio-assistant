@@ -8506,3 +8506,87 @@ a.fa-harness-tab__body:focus-visible {
 /* A filtered-out row must stay out even where a table lays its rows out
  * itself (`.fa-hc-table tr { display: grid }` would otherwise beat `hidden`). */
 table[data-fa-filtered] tr[hidden] { display: none !important; }
+
+/* ── The render state: a client-built region, and what print does about it ──
+ *
+ * AT THE END OF THIS FILE DELIBERATELY, and the reason is coordination rather
+ * than cascade. These rules belong beside the `@media print` block ~1340 lines
+ * up; PR #1808 rewrites lines 1060-1340 of this file and was `ready-to-merge`
+ * on 2026-10-02, and a sibling's in-flight work wins. Nothing here competes
+ * with a selector above it, so the position costs nothing. Move it up when
+ * that lands.
+ *
+ * ## What the two obligations are, and which half is enforceable
+ *
+ * `skills/ui/ui-core/ui-accessibility.md` §"A rendering built client-side owes
+ * two things the static one gave for free", owner 2026-10-02: print and PDF
+ * SHALL wait for load and render, and a load that FAILS SHALL say so.
+ *
+ * For a HEADLESS run the wait is enforceable, and `scripts/dak-pdf.ts`
+ * enforces it: it waits on `data-fa-render` and REFUSES to emit over a page
+ * that is `pending` or `failed`, because a PDF is not re-checkable after the
+ * fact the way a web page is.
+ *
+ * For an INTERACTIVE print it is not, and saying so plainly is better than
+ * implying a mechanism exists. `beforeprint` is synchronous, a `fetch` cannot
+ * be awaited inside it, and no browser lets a script hold the print dialogue
+ * open. `kg-render.js` starts its requests at script evaluation — `defer`red,
+ * so before `DOMContentLoaded` — which makes the common case ready long before
+ * anybody reaches the print command. The rules below cover the uncommon one:
+ * they do not make print wait, they make a premature print SELF-IDENTIFY on
+ * the paper instead of leaving a silent gap.
+ *
+ * A `::before` on the region rather than `display: none` on it, for the same
+ * reason `collapseFloor` opens its `<details>` from script rather than from a
+ * stylesheet: hiding the region would print a page that looks complete and is
+ * not, which is the exact failure this exists to prevent.
+ *
+ * TWO SELECTORS because there are two kinds of client-built region in the tree
+ * today — `[data-fa-workplan]`, which `work-plan.js` fills on the
+ * `beans-and-todos` pages, and `[data-fa-region]`, the generic container.
+ * Both, rather than one and a promise: a print rule that matched nothing would
+ * look like it worked, which is the `gjli` lesson from this repository's own
+ * heading-anchor defect.
+ *
+ * Keyed on the attribute `head_custom.html` writes at first paint, so the rule
+ * holds for a print fired before any script ran. A page that declares no
+ * dynamic region carries no attribute and matches neither selector — the third
+ * state, which must not render as either of the other two. */
+@media print {
+  html[data-fa-render="pending"] [data-fa-region]::before,
+  html[data-fa-render="pending"] [data-fa-workplan]::before {
+    content: "This section had not finished loading when this page was printed. "
+             "The published data file named beside it is the complete record.";
+    display: block;
+    font-style: italic;
+  }
+  html[data-fa-render="failed"] [data-fa-region]::before,
+  html[data-fa-render="failed"] [data-fa-workplan]::before {
+    content: "This section could not be loaded when this page was printed. "
+             "That is not an empty section \2014 see the linked data file.";
+    display: block;
+    font-style: italic;
+  }
+}
+
+/* A client-built region that could not be loaded, and one that is genuinely
+ * empty. `kg-render.js`'s `failureNote` and `emptyNote`.
+ *
+ * TWO CLASSES rather than one, because they are opposite facts — "could not be
+ * read" against "there is nothing here" — and a reader who cannot tell them
+ * apart has been handed the third-state failure this repository guards
+ * everywhere else.
+ *
+ * The failure is NOT painted as an error: no red, no icon. It is a sentence
+ * about what the reader is looking at, and the data file in it is a working
+ * link. An alarming box would be louder than the fact and would not help
+ * anybody read the artefact. */
+.fa-render-failed,
+.fa-render-empty,
+.fa-workplan-failed {
+  font-size: 0.9rem;
+  line-height: 1.5;
+  margin: 0.75rem 0 0;
+}
+.fa-render-failed code,
+.fa-workplan-failed code { word-break: break-all; }

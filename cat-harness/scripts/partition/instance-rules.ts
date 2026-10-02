@@ -849,7 +849,7 @@ export const RULES: Rule[] = [
       "scripts/sync-remote-skills.ts",       // a remote package's declared skills, materialized at its pinned commit (issue #556)
       "scripts/kg-subscribe.ts",             // subscribe to an external Knowledge Graph at a pin: judge its root declaration, record the subscription (issue #1719)
       "scripts/kg-instantiate.ts",           // instantiate a harness a subscription chose: its config at the root and its state directories (issue #1719)
-      "scripts/subscriptions-viz.ts",        // the KG subscriptions page: known substrates, and what each instance subscribed to and chose (issue #1719)
+      "scripts/subscriptions-viz.ts",        // the KG subscriptions page: known substrates, what each instance subscribed to and chose, and each chosen part drawn from its materialisation record (issue #1719)
       "scripts/check-read-only-graphs.ts", // a directory's `readOnly` declaration vs what its nodes say — the DECLARATION half of the same rule
       "scripts/gen-fsh-guts-viz.ts",         // the fsh-guts graph → projection + viewer; staging-only, so the page is withheld from the canonical deploy
       "scripts/gen-handler-index.ts",        // the handler namespace's own index, over the tiles model
@@ -1086,6 +1086,14 @@ export const RULES: Rule[] = [
       "scripts/merge-train.ts",
       "scripts/merge-overlap.ts",
       "scripts/merge-leftover.ts",
+      // `bean-rollover` joins them, and by the same test rather than by
+      // adjacency: what it reads is THIS repository's open pull requests and
+      // its `beans/` store, to answer a question only this repository has —
+      // which bean edits must land before `beans/` can leave `main` (issue
+      // #1850 step 2). It reuses `merge-pipeline-paths`'s classifiers for
+      // exactly that reason. A folio has no bean store of its own to roll
+      // over, so swapping the content could not make it answer differently.
+      "scripts/bean-rollover.ts",
       // Their two shared modules, classified with them rather than beside
       // the generic path helpers: `merge-pipeline-paths` reads path classes
       // out of this repository's `PATTERNS` declaration, and
@@ -1533,6 +1541,7 @@ export const RULES: Rule[] = [
       "scripts/repo-files.ts",              // enumerates files the way a GATE needs
       "scripts/strip-preview-seo.ts",       // the preview site build
       "scripts/set-html-lang.ts",           // ...and the served language on its `<html>` (bean `zru7`). Beside the SEO strip for the same reason: a pass over the EMITTED tree, coupling to no content type and to no theme file
+      "scripts/minify-site.ts",             // ...and the last pass over it: the comments and unrendered whitespace drop out of every emitted page. Harness for the same reason as the two above — it reads the TREE, knows no content type, and could not: it decides by HTML's own rendering rules which bytes a reader can see
       "scripts/staging-banner.ts",          // ...and its banner (bean `g196`)
       "scripts/html-comments.ts",           // the one "is this inside a comment" scan the banner's body-finder and the folio mount's marker check share (bean `ur84`)
       "scripts/folio-mount.ts",             // the fragment that carries the reader's folio onto a library page — machinery, not a content model (bean `jpjt`)
