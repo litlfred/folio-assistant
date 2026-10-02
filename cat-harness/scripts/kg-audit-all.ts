@@ -20,20 +20,14 @@
  * instances — the `dh4f` defect at instance scale, and the whole subject of
  * that bean. A printed verdict cannot close it; committed sidecars can.
  *
- * ## The instance this deliberately does NOT audit
+ * ## The instance at the repository root is audited too
  *
- * The instance declared at the REPOSITORY ROOT. `kg:audit --instance .` exits 1
- * before auditing anything: `kg-audit.ts` computes its repository root as
- * `resolve(root, "..")`, which for that one instance lands outside the
- * checkout, where there is no `package.json`. Bean `pgzn`, reproduced on `main`.
- *
- * It is skipped BY NAME and **counted in the summary as a gap**, never dropped
- * silently — an unaudited instance that nothing reports is the same defect this
- * script exists to close, one level up. And the obvious repair is wrong: the
- * value feeds `rootScripts`, which reads `package.json`, and
- * `siblingScopeFor`'s own docblock warns that substituting it for
- * `repoRootFor` *"would make the repository-furniture question wrong for that
- * same instance, in the other direction"*. So `pgzn` is a separate subject.
+ * It was skipped by name until bean `pgzn`: `kg-audit.ts` computed its
+ * repository root as `resolve(root, "..")`, which for the instance declared AT
+ * the checkout root landed outside it, so `kg:audit --instance .` threw before
+ * auditing anything. The audit now asks `checkoutRootFor`, and this loop runs
+ * over every declared instance with no exclusion. A crash in any one of them is
+ * reported as "produced no report", never dropped.
  *
  * @covers processes, scenarios, skills, tools, cat-harness — the same kinds
  * `kg-audit.ts` covers, because it runs exactly that audit; what differs is its
@@ -63,20 +57,12 @@ interface Outcome {
 }
 
 const roots = instanceRootsIn(REPO);
-/**
- * The root instance, excluded per `pgzn` — see the module docblock.
- *
- * Compared as a resolved path rather than by name, so a repository whose root
- * instance is called something else is still matched.
- */
-const ROOT_INSTANCE = resolve(REPO);
-const targets = roots.filter((r) => r !== ROOT_INSTANCE);
-const skipped = roots.filter((r) => r === ROOT_INSTANCE).map((r) => relative(REPO, r) || ".");
-
 const outcomes: Outcome[] = [];
-for (const root of targets) {
-  const id = relative(REPO, root);
-  const argv = ["bun", "run", "cat-harness/scripts/kg-audit.ts", "--instance", `./${id}`];
+for (const root of roots) {
+  // The root instance's relative path is "", which would print as nothing and
+  // pass `./` — so it is named `.` in both places.
+  const id = relative(REPO, root) || ".";
+  const argv = ["bun", "run", "cat-harness/scripts/kg-audit.ts", "--instance", id === "." ? "." : `./${id}`];
   if (check) argv.push("--check");
   if (strict) argv.push("--strict");
 
@@ -108,15 +94,6 @@ console.log(
   `\n${outcomes.length} instance(s) audited${check ? " (--check: nothing written)" : ""}` +
     ` — ${outcomes.length - crashed.length - failed.length} clean, ${failed.length} failing, ${crashed.length} produced no report.`,
 );
-
-// The skip is printed on EVERY run, clean or not. A gap mentioned only when
-// something else fails is a gap nobody reads on the day it matters.
-for (const s of skipped) {
-  console.log(
-    `  · not audited: ${s} — the instance declared at the repository root. \`kg:audit --instance .\` ` +
-      `exits 1 before auditing anything (bean \`pgzn\`). This sweep covers ${outcomes.length} of ${roots.length} instances.`,
-  );
-}
 
 if (crashed.length > 0) {
   console.error(
