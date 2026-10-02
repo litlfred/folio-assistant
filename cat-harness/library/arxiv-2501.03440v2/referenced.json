@@ -1,0 +1,203 @@
+{
+  "$schema": "folio-referenced-source/v1",
+  "identity": {
+    "title": "CI at Scale: Lean, Green, and Fast",
+    "version": "v2",
+    "document_number": "arXiv:2501.03440v2",
+    "date": "2025-05-19",
+    "publisher": "arXiv",
+    "authors": [
+      "Dhruva Juloori",
+      "Zhongpeng Lin",
+      "Matthew Williams",
+      "Eddy Shin",
+      "Sonal Mahajan"
+    ],
+    "arxiv": "2501.03440v2"
+  },
+  "source": {
+    "file": "2501.03440v2.pdf",
+    "sha256": "d84b6b286cc98f98e2c24a9ccbbb9394a61ec284456db8eba587df48c6c332c5",
+    "bytes": 934667,
+    "mtime": "2026-10-02T17:17:57Z",
+    "mimetype_sniffed": "application/pdf",
+    "mimetype_source": "magic-bytes"
+  },
+  "outline": [
+    {
+      "level": 1,
+      "title": "Introduction",
+      "page": 1
+    },
+    {
+      "level": 1,
+      "title": "Background",
+      "page": 2
+    },
+    {
+      "level": 2,
+      "title": "Importance of a Stable Mainline",
+      "page": 2
+    },
+    {
+      "level": 2,
+      "title": "Other Approaches and Their Limitations",
+      "page": 2
+    },
+    {
+      "level": 2,
+      "title": "The Need for a Robust Change Management System",
+      "page": 3
+    },
+    {
+      "level": 1,
+      "title": "System Overview",
+      "page": 3
+    },
+    {
+      "level": 2,
+      "title": "Enumerator",
+      "page": 3
+    },
+    {
+      "level": 2,
+      "title": "Profiler",
+      "page": 3
+    },
+    {
+      "level": 2,
+      "title": "Prioritizer",
+      "page": 3
+    },
+    {
+      "level": 2,
+      "title": "Selector",
+      "page": 3
+    },
+    {
+      "level": 1,
+      "title": "Bypassing Large Diffs (BLRD)",
+      "page": 4
+    },
+    {
+      "level": 1,
+      "title": "Probabilistic Model",
+      "page": 5
+    },
+    {
+      "level": 2,
+      "title": "Enhanced Probabilistic Model",
+      "page": 5
+    },
+    {
+      "level": 2,
+      "title": "Generalization",
+      "page": 6
+    },
+    {
+      "level": 1,
+      "title": "Evaluating BLRD Eligibility",
+      "page": 6
+    },
+    {
+      "level": 1,
+      "title": "Estimating the Probability of Build Completion Ordering",
+      "page": 6
+    },
+    {
+      "level": 1,
+      "title": "Speculation Threshold",
+      "page": 7
+    },
+    {
+      "level": 1,
+      "title": "Implementation",
+      "page": 7
+    },
+    {
+      "level": 2,
+      "title": "Core Service",
+      "page": 7
+    },
+    {
+      "level": 2,
+      "title": "Model Training",
+      "page": 7
+    },
+    {
+      "level": 2,
+      "title": "Simulation System",
+      "page": 8
+    },
+    {
+      "level": 1,
+      "title": "Evaluation",
+      "page": 8
+    },
+    {
+      "level": 2,
+      "title": "Resource Usage",
+      "page": 8
+    },
+    {
+      "level": 2,
+      "title": "CPU Hours Consumption",
+      "page": 9
+    },
+    {
+      "level": 2,
+      "title": "P95 Waiting Times",
+      "page": 9
+    },
+    {
+      "level": 1,
+      "title": "Related Work",
+      "page": 10
+    },
+    {
+      "level": 2,
+      "title": "Prediction Systems in CI",
+      "page": 10
+    },
+    {
+      "level": 2,
+      "title": "CI Scheduling Algorithms",
+      "page": 10
+    },
+    {
+      "level": 2,
+      "title": "Commutativity in Concurrent Systems",
+      "page": 10
+    },
+    {
+      "level": 1,
+      "title": "Limitations and Future Work",
+      "page": 10
+    },
+    {
+      "level": 1,
+      "title": "Conclusion",
+      "page": 10
+    },
+    {
+      "level": 1,
+      "title": "References",
+      "page": 11
+    }
+  ],
+  "outline_source": "embedded",
+  "materialization": {
+    "$schema": "folio-materialization/v1",
+    "state": "referenced",
+    "provenance": {
+      "upstream": {
+        "url": "https://arxiv.org/abs/2501.03440v2"
+      }
+    },
+    "note": "Text withheld by licence; the bytes identified by `source.sha256` were read once to take this record."
+  },
+  "withheld": {
+    "what": "all text, figures and tables",
+    "why": "The PDF states no licence, copyright or Creative Commons notice, and the licence arXiv records for the submission could not be read (arxiv.org is blocked by this session's egress policy). With no stated licence the source is recorded, not held (adopt-methodology-from-source step 1)."
+  }
+}

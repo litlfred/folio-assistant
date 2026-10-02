@@ -1,0 +1,209 @@
+{
+  "$schema": "folio-referenced-source/v1",
+  "identity": {
+    "title": "Keeping Master Green at Scale",
+    "version": null,
+    "document_number": "ACM ISBN 978-1-4503-6281-8/19/03",
+    "date": "2019-03",
+    "publisher": "ACM, New York, NY, USA",
+    "authors": [
+      "Sundaram Ananthanarayanan",
+      "Masoud Saeida Ardekani",
+      "Denis Haenikel",
+      "Balaji Varadarajan",
+      "Simon Soriano",
+      "Dhaval Patel",
+      "Ali-Reza Adl-Tabatabai"
+    ],
+    "venue": "Fourteenth EuroSys Conference 2019 (EuroSys '19), March 25-28, 2019, Dresden, Germany",
+    "doi": "10.1145/3302424.3303970",
+    "not_stated": [
+      "version"
+    ]
+  },
+  "source": {
+    "file": "ananthanarayanan-2019-keeping-master-green.pdf",
+    "sha256": "6fb61d818506230c305536be9b8721e118833154fbbc201cc9d6d8f107ecbe45",
+    "bytes": 11172491,
+    "mtime": "2026-10-02T17:17:57Z",
+    "mimetype_sniffed": "application/pdf",
+    "mimetype_source": "magic-bytes"
+  },
+  "outline": [
+    {
+      "level": 1,
+      "title": "Abstract",
+      "page": 1
+    },
+    {
+      "level": 1,
+      "title": "1 Introduction",
+      "page": 1
+    },
+    {
+      "level": 1,
+      "title": "2 Background",
+      "page": 2
+    },
+    {
+      "level": 2,
+      "title": "2.1 Intermittently Green Mainline",
+      "page": 2
+    },
+    {
+      "level": 2,
+      "title": "2.2 Always Green Mainline",
+      "page": 3
+    },
+    {
+      "level": 1,
+      "title": "3 Dev Life Cycle & System Overview",
+      "page": 4
+    },
+    {
+      "level": 2,
+      "title": "3.1 Development Life Cycle",
+      "page": 4
+    },
+    {
+      "level": 2,
+      "title": "3.2 SubmitQueue Overview",
+      "page": 4
+    },
+    {
+      "level": 1,
+      "title": "4 Probabilistic Speculation",
+      "page": 4
+    },
+    {
+      "level": 2,
+      "title": "4.1 Speculate Them All",
+      "page": 5
+    },
+    {
+      "level": 2,
+      "title": "4.2 Probabilistic Modeling",
+      "page": 5
+    },
+    {
+      "level": 3,
+      "title": "4.2.1 Value of Build",
+      "page": 5
+    },
+    {
+      "level": 3,
+      "title": "4.2.2 Speculating Independent Changes",
+      "page": 6
+    },
+    {
+      "level": 1,
+      "title": "5 Conflict Analyzer",
+      "page": 6
+    },
+    {
+      "level": 2,
+      "title": "5.1 Build Systems & Targets",
+      "page": 7
+    },
+    {
+      "level": 2,
+      "title": "5.2 Conflict Detection",
+      "page": 7
+    },
+    {
+      "level": 1,
+      "title": "6 Planner Engine & Build Controller",
+      "page": 8
+    },
+    {
+      "level": 1,
+      "title": "7 Implementation",
+      "page": 8
+    },
+    {
+      "level": 2,
+      "title": "7.1 API & Core Services",
+      "page": 8
+    },
+    {
+      "level": 2,
+      "title": "7.2 Model Training",
+      "page": 9
+    },
+    {
+      "level": 1,
+      "title": "8 Evaluation",
+      "page": 9
+    },
+    {
+      "level": 2,
+      "title": "8.1 Setup",
+      "page": 10
+    },
+    {
+      "level": 2,
+      "title": "8.2 Turnaround Time",
+      "page": 10
+    },
+    {
+      "level": 2,
+      "title": "8.3 Throughput",
+      "page": 11
+    },
+    {
+      "level": 2,
+      "title": "8.4 Benefits of Conflict Analyzer",
+      "page": 12
+    },
+    {
+      "level": 2,
+      "title": "8.5 Mainline State Prior to SubmitQueue",
+      "page": 12
+    },
+    {
+      "level": 2,
+      "title": "8.6 Survey on Benefits of SubmitQueue",
+      "page": 13
+    },
+    {
+      "level": 1,
+      "title": "9 Related Work",
+      "page": 13
+    },
+    {
+      "level": 1,
+      "title": "10 Discussion",
+      "page": 14
+    },
+    {
+      "level": 1,
+      "title": "11 Conclusion",
+      "page": 14
+    },
+    {
+      "level": 1,
+      "title": "Acknowledgments",
+      "page": 14
+    },
+    {
+      "level": 1,
+      "title": "References",
+      "page": 14
+    }
+  ],
+  "outline_source": "embedded",
+  "materialization": {
+    "$schema": "folio-materialization/v1",
+    "state": "referenced",
+    "provenance": {
+      "upstream": {
+        "url": "https://doi.org/10.1145/3302424.3303970"
+      }
+    },
+    "note": "Text withheld by licence; the bytes identified by `source.sha256` were read once to take this record."
+  },
+  "withheld": {
+    "what": "all text, figures and tables",
+    "why": "The ACM permission notice on page 1 grants copies for personal or classroom use, not made or distributed for profit, and says 'For all other uses, contact the owner/author(s)'. Posting the text in a public repository is not a use it grants, so the source is recorded, not held."
+  }
+}

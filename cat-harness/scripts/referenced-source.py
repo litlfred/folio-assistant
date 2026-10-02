@@ -121,13 +121,18 @@ def main() -> int:
     ap.add_argument("--identity", type=Path, required=True,
                     help="JSON: title, url, withheld; version, document_number, date, publisher (each a value or null); "
                          "optionally authors, venue, doi, arxiv")
+    # The entry directory. `bun run ingest` passes the slug IT derived, which
+    # reads an arXiv id off page one (`arxiv-2501.03440v2`); deriving it again
+    # here from the file name gave `250103440v2`, so the manifest step looked
+    # in a staging directory nothing had written.
+    ap.add_argument("--slug", help="entry directory name (default: slug of the file name)")
     a = ap.parse_args()
     try:
         doc = record(a.file, json.loads(a.identity.read_text(encoding="utf-8")))
     except (ValueError, OSError) as e:
         print(f"SKIP {a.file.name}: {e}", file=sys.stderr)
         return 1
-    out = a.outdir / _slugify(a.file.stem)
+    out = a.outdir / (a.slug or _slugify(a.file.stem))
     out.mkdir(parents=True, exist_ok=True)
     (out / "referenced.json").write_text(json.dumps(doc, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
     # No manifest here: `gen-library-jsonld.ts --entry` writes it, as it does

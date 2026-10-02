@@ -28,7 +28,7 @@ train. It is not an adoption of their methods. Adoption is the owner's call
 |---|---|---|---|
 | **SQ19** | Ananthanarayanan et al., *Keeping Master Green at Scale*, EuroSys '19, ACM, doi:[10.1145/3302424.3303970](https://doi.org/10.1145/3302424.3303970) | `cat-harness/library/ananthanarayanan-2019-keeping-master-green` | system design + production evaluation at Uber (iOS/Android monorepos, 100–500 changes/hour simulated) |
 | **SQ25** | Juloori, Lin, Williams, Shin, Mahajan, *CI at Scale: Lean, Green, and Fast*, arXiv:[2501.03440v2](https://arxiv.org/abs/2501.03440v2) (19 May 2025) | `cat-harness/library/arxiv-2501.03440v2` | enhancement to SQ19; 21-week before/after on Uber's Go, iOS and Android monorepos |
-| **TAP17** | Memon, Gao, Nguyen, Dhanda, Nickell, Siemborski, Micco, *Taming Google-Scale Continuous Testing* | `cat-harness/library/memon-2017-taming-google-scale-continuous-testing` | empirical study of one month of Google TAP post-submit data (500K+ changelists, Feb–Mar 2016) |
+| **TAP17** | Memon, Gao, Nguyen, Dhanda, Nickell, Siemborski, Micco, *Taming Google-Scale Continuous Testing* | `cat-harness/library/memon-2017-taming-google-scale-testing` | empirical study of one month of Google TAP post-submit data (500K+ changelists, Feb–Mar 2016) |
 
 All three are **recorded, not held**: the library entries carry identity,
 sha256 and outline, and no text, because none of the three states a licence

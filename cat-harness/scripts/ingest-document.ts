@@ -963,7 +963,7 @@ if (import.meta.main) {
       ? {
           rung: "referenced",
           why: "--reference given — recorded with its outline and sha256, text withheld",
-          steps: [["python3", pyHelper("referenced-source.py"), "-o", stagingRoot, pdf, "--identity", reference]],
+          steps: [["python3", pyHelper("referenced-source.py"), "-o", stagingRoot, pdf, "--identity", reference, "--slug", slug]],
         }
       : planFor(pdf, undefined, stagingRoot),
     pdf,
