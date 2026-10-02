@@ -77,7 +77,13 @@ import { dirname, join, relative } from "node:path";
 import { fileURLToPath } from "node:url";
 
 import { exportIdentity } from "./kg-export.js";
-import { UI_STRINGS, loadCatalogues, type LocaleCatalogue } from "./kg-viewer-strings.js";
+import {
+  UI_STRINGS,
+  loadCatalogues,
+  plannedLocales,
+  type LocaleCatalogue,
+  type PlannedLocale,
+} from "./kg-viewer-strings.js";
 import { repoRootFor } from "../schemas/cat-harness.js";
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), "..");
@@ -117,6 +123,7 @@ function safeJson(value: unknown): string {
 export function viewerHtml(
   stub: string,
   catalogues: LocaleCatalogue[] = loadCatalogues(ROOT),
+  planned: PlannedLocale[] = plannedLocales(ROOT),
 ): string {
   const doc = `../${stub}.jsonld`;
 
@@ -245,6 +252,25 @@ export function viewerHtml(
           color: var(--fg); font: inherit; font-size: 13px; cursor: pointer; }
   .lang:hover { background: var(--accent-bg); }
   .lang[aria-pressed="true"] { background: var(--accent); color: var(--on-accent); border-color: var(--accent); }
+  /*
+   * A planned language (bean w6fu): still a 32px target, still focusable, but
+   * dashed and dimmed so it does not read as a choice. --dim on --bg is the
+   * pair the meta line already uses. The hover tint is removed, because a
+   * hover change is how a pointer user is told "this does something".
+   */
+  .lang.planned { background: transparent; color: var(--dim); border-style: dashed; cursor: default; }
+  .lang.planned:hover { background: transparent; }
+  .langs-why { align-self: center; font-size: 12.5px; color: var(--dim); }
+  .langs-why[open] { flex-basis: 100%; }
+  .langs-why > summary { display: inline-flex; align-items: center; min-height: 32px; padding: 0 4px;
+                         cursor: pointer; color: var(--accent); text-underline-offset: 2px; }
+  .langs-why > summary:hover { text-decoration: underline; }
+  /* inline-flex drops the UA disclosure marker, so the state is drawn here:
+     a toggle that does not show whether it is open is half a toggle. */
+  .langs-why > summary::-webkit-details-marker { display: none; }
+  .langs-why > summary::before { content: "ⓘ ▸"; margin-inline-end: 5px; }
+  .langs-why[open] > summary::before { content: "ⓘ ▾"; }
+  .langs-why > p { margin: 2px 0 0; color: var(--fg); max-width: 78ch; }
   .boundary { background: var(--panel); border: 1px solid var(--line); color: var(--fg);
               padding: 8px 11px; border-radius: 6px; font-size: 12.5px;
               margin: 10px 0 0; max-width: 78ch; }
@@ -347,8 +373,10 @@ export function viewerHtml(
   <a class="crumb" id="home" href="../">&larr; <bdi id="home-t">Docs site</bdi></a>
   <h1 id="title">${stub} — knowledge graph</h1>
   <div class="meta" id="meta">loading <code>${doc}</code>…</div>
-  <!-- One button per language that has a catalogue, drawn only when there is
-       more than English to offer. A switcher with one option is furniture. -->
+  <!-- One button per language that has a catalogue, plus a DISABLED one per
+       language whose catalogue is still empty, with the reason beside them
+       (bean w6fu). Drawn only when there is more than English to show or to
+       promise: a switcher with one option and nothing planned is furniture. -->
   <div class="langs" id="langs" role="group" aria-label="Interface language" hidden></div>
   <!-- Where the translation stops. Hidden in English, because in English
        there is no boundary to draw. -->
@@ -401,6 +429,12 @@ const STUB = ${JSON.stringify(stub)};
  */
 const STRINGS = ${safeJson(strings)};
 const LOCALES = ${safeJson(locales)};
+// Languages with a catalogue that translates nothing yet (bean w6fu). Drawn
+// DISABLED beside the real choices, so a reader can see a translation is
+// planned; never selectable, because the page cannot show them. Computed from
+// each catalogue's contents when the page is generated, so the first
+// translated string moves a language from here into LOCALES by itself.
+const PLANNED = ${safeJson(planned)};
 // The SAME key the docs site writes (docs/assets/js/docs-ui.js), so a reader
 // who chose a language there arrives here in it. A second key would be a
 // second answer to one question.
@@ -574,13 +608,35 @@ function drawBoundary() {
  * One button per language with a catalogue, each labelled in ITS OWN language
  * -- which is what a reader looking for that language is looking for, and
  * which leaves no accessible name to get wrong in a language nobody here
- * reads. Nothing is drawn when English is the only option: a switcher with one
- * choice is furniture.
+ * reads.
+ *
+ * Languages that are PLANNED -- a catalogue exists and translates nothing yet
+ * -- are drawn too, disabled (owner's ruling 2026-10-02, bean w6fu), so a
+ * reader can see a translation is coming rather than concluding there will
+ * never be one. Four things make "disabled" accessible rather than merely
+ * grey:
+ *
+ *  - aria-disabled, NOT the disabled attribute. A disabled button leaves the
+ *    tab order, so a keyboard or screen-reader user would never learn the
+ *    language is planned; this one stays focusable and is announced as
+ *    unavailable.
+ *  - a VISIBLE reason, "Translations coming", on the line itself -- never in a
+ *    title tooltip, which a phone cannot show and a keyboard cannot open.
+ *  - that reason is a details/summary toggle, so the full sentence opens on
+ *    tap, Enter or Space; pressing a planned language opens it too, which is
+ *    the answer to "why did nothing happen?" at the place it is asked.
+ *  - each planned button is described by the reason, so it is announced with
+ *    it.
+ *
+ * Nothing is drawn when English is the only language at all: a switcher with
+ * one choice and nothing planned is furniture.
  */
 function drawLangs() {
   const box = el("langs");
+  const was = el("langs-why");
+  const keepOpen = Boolean(was && was.open);
   box.innerHTML = "";
-  if (LOCALES.length < 2) { box.hidden = true; return; }
+  if (LOCALES.length < 2 && PLANNED.length === 0) { box.hidden = true; return; }
   box.hidden = false;
   for (const l of LOCALES) {
     const b = document.createElement("button");
@@ -593,6 +649,41 @@ function drawLangs() {
     b.onclick = () => setLocale(l.locale);
     box.appendChild(b);
   }
+  if (PLANNED.length === 0) return;
+  for (const l of PLANNED) {
+    const b = document.createElement("button");
+    b.className = "lang planned";
+    b.type = "button";
+    b.setAttribute("lang", l.locale);
+    b.setAttribute("dir", l.dir);
+    b.setAttribute("aria-disabled", "true");
+    b.setAttribute("aria-describedby", "langs-why-s");
+    b.textContent = l.name;
+    b.onclick = () => {
+      el("langs-why").open = true;
+      el("langs-why-s").focus();
+    };
+    box.appendChild(b);
+  }
+  const why = document.createElement("details");
+  why.className = "langs-why";
+  why.id = "langs-why";
+  why.open = keepOpen;
+  const s = document.createElement("summary");
+  s.id = "langs-why-s";
+  s.textContent = T("Translations coming");
+  const p = document.createElement("p");
+  p.id = "langs-why-t";
+  // Each name in its own language, isolated, so a right-to-left name in a
+  // left-to-right sentence keeps its place in the list.
+  const names = PLANNED.map((l) =>
+    '<bdi lang="' + escape(l.locale) + '" dir="' + escape(l.dir) + '">' + escape(l.name) + "</bdi>").join(", ");
+  p.innerHTML = fill(
+    T("A translation of this interface into {languages} is planned. Until it is ready, the page is shown in English."),
+    { languages: names });
+  why.appendChild(s);
+  why.appendChild(p);
+  box.appendChild(why);
 }
 
 fetch(DOC)
