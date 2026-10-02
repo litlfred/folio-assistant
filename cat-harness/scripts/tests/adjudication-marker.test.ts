@@ -529,9 +529,9 @@ describe("the split — bean `bvuk`, the owner's shape", () => {
     // three multi-answer sets are the owner's own design, #1156), so
     // no caller runs an adjudication whose answers nobody stated.
     for (const [f, id, codes] of [
-      // large-datasets' own diagram since bean `cjvs` (2026-09-30): it calls
-      // cat-harness's adjudication, which is the direction the arrow allows.
-      ["../../large-datasets/processes/refresh-materialized.bpmn", "Task_Adjudicate", ["defer", "local", "merge", "remote"]],
+      // Back beside its callee since bean `j7ql` (2026-10-01), after a spell
+      // in large-datasets (bean `cjvs`) calling down into cat-harness.
+      ["refresh-materialized.bpmn", "Task_Adjudicate", ["defer", "local", "merge", "remote"]],
       ["translation-workflow.bpmn", "Task_Adjudicate", ["accept", "edit", "retranslate"]],
       ["ingest-l1-completeness-gate.bpmn", "Task_FlagDrift", ["real", "source-wrong", "spurious"]],
       ["content-change-review.bpmn", "Call_Adjudication", ["stands", "withdrawn"]],

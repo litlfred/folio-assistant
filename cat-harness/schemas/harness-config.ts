@@ -329,7 +329,7 @@ export const HarnessConfigSchema = z.object({
 // ── Dependency resolution ───────────────────────────────────────
 
 import { existsSync, readFileSync } from "node:fs";
-import { join, resolve } from "node:path";
+import { join, resolve, sep } from "node:path";
 import { flattenDependencies as flattenSteps } from "./dependency-order";
 import {
   describeRepository,
@@ -981,6 +981,7 @@ const checkoutCache = new Map<string, ResolvedDirectory[]>();
 export function clearCheckoutCache(): void {
   checkoutCache.clear();
   dependentsCache.clear();
+  implementersCache.clear();
   graphCache.clear();
 }
 
@@ -1081,6 +1082,116 @@ export function checkoutDependentsOf(instanceRoot: string): Array<{ name: string
   }
   dependentsCache.set(target, out);
   return out;
+}
+
+const implementersCache = new Map<string, Array<{ name: string; root: string }>>();
+
+/**
+ * The instances that IMPLEMENT `declaringRoot`: those in the checkout whose own
+ * `needs` names it directly.
+ *
+ * ## Why this exists
+ *
+ * Owner rulings T1 and T7 (2026-10-01, bean `70lx`). A harness DEFINITION names
+ * its implementation by an instance-relative path — a Tool's
+ * `invoke.inProcess.module` (`src/tools/x.ts`), a criterion's `source_file`
+ * (`content/pipeline/x.ts`). The code those paths name is moving to the layer
+ * above, and writing that layer's name into the harness
+ * would be a lower layer naming a higher one, which `check:reference-direction`
+ * grades. So the path stays as written, and is resolved against the instance
+ * that implements the definition — found the way the arrow already runs, from
+ * the implementer's `needs` to the definer, never the reverse.
+ *
+ * ## Direct, not transitive
+ *
+ * {@link checkoutDependentsOf} is transitive: every folio in the checkout
+ * depends on the harness eventually, and any of them may hold a
+ * `scripts/x.ts`. Only an instance that names the definer in its OWN `needs`
+ * has taken it on directly, which is the relation "implements" can mean.
+ *
+ * The checkout's aggregate root is excluded even though it `needs`
+ * everything: its directory CONTAINS the definer, so a relative path under it
+ * would be a different path, not the same one somewhere else.
+ */
+export function implementingInstancesOf(declaringRoot: string): Array<{ name: string; root: string }> {
+  const target = resolve(declaringRoot);
+  const cached = implementersCache.get(target);
+  if (cached !== undefined) return cached;
+  let name: string | undefined;
+  try {
+    name = readDeclaration(target)?.name;
+  } catch {
+    // unreadable: it implements nothing we can name; `check:harness-dirs` reports it
+  }
+  const out: Array<{ name: string; root: string }> = [];
+  if (name !== undefined) {
+    for (const dep of checkoutDependentsOf(target)) {
+      const root = resolve(dep.root);
+      if (target.startsWith(`${root}${sep}`)) continue;
+      let needs: readonly string[] = [];
+      try {
+        needs = readDeclaration(root)?.needs ?? [];
+      } catch {
+        continue;
+      }
+      if (needs.includes(name)) out.push({ name: dep.name, root });
+    }
+  }
+  implementersCache.set(target, out);
+  return out;
+}
+
+/** Where an instance-relative path declared by one instance actually is. */
+export type ImplementingPath =
+  /** `via: "own"` — the declaring instance holds it; `"needs"` — one implementer does. */
+  | { state: "found"; root: string; instance: string; via: "own" | "needs" }
+  /** Nobody holds it. `looked` is every root tried, declaring instance first. */
+  | { state: "missing"; looked: string[] }
+  /** More than one implementer holds it. Never resolved by order: both are named. */
+  | { state: "ambiguous"; candidates: Array<{ name: string; root: string }> };
+
+/**
+ * Resolve `relPath`, written in `declaringRoot`'s definitions, to the instance
+ * that holds it: the declaring instance itself first, then exactly one of
+ * {@link implementingInstancesOf}.
+ *
+ * The declaring instance comes first so that a path that has not moved yet
+ * keeps resolving where it always did; that is what lets the code move run in
+ * batches without rewriting a single definition. Two implementers holding the
+ * same path is `ambiguous`, never "the first": picking one by checkout order
+ * is how a check comes to read another instance's file and report it current.
+ */
+export function resolveImplementingPath(declaringRoot: string, relPath: string): ImplementingPath {
+  const own = resolve(declaringRoot);
+  let ownName = own;
+  try {
+    ownName = readDeclaration(own)?.name ?? own;
+  } catch {
+    // named by path
+  }
+  if (existsSync(join(own, relPath))) return { state: "found", root: own, instance: ownName, via: "own" };
+  const implementers = implementingInstancesOf(own);
+  const holding = implementers.filter((i) => existsSync(join(i.root, relPath)));
+  if (holding.length === 1) return { state: "found", root: holding[0]!.root, instance: holding[0]!.name, via: "needs" };
+  if (holding.length > 1) return { state: "ambiguous", candidates: holding };
+  return { state: "missing", looked: [own, ...implementers.map((i) => i.root)] };
+}
+
+/**
+ * The root to read `relPath` against, for a caller that composes
+ * `join(root, relPath)` and already reports a missing file in its own words.
+ *
+ * `missing` returns the declaring root, so such a caller's report is
+ * unchanged. `ambiguous` THROWS: there is no root that would be honest.
+ */
+export function implementingRootFor(declaringRoot: string, relPath: string): string {
+  const r = resolveImplementingPath(declaringRoot, relPath);
+  if (r.state === "found") return r.root;
+  if (r.state === "missing") return resolve(declaringRoot);
+  throw new Error(
+    `${relPath} (declared by ${declaringRoot}) is held by more than one implementing instance: ` +
+      `${r.candidates.map((c) => c.name).join(", ")}. Each declared path must name one file.`,
+  );
 }
 
 /**
