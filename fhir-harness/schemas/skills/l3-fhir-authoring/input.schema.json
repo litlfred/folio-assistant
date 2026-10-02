@@ -1,11 +1,11 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
   "title": "L3 FHIR Authoring Input",
-  "description": "Input schema for L3 FHIR IG authoring. Creates machine-readable FHIR artifacts from L2 DAK specifications.",
+  "description": "Input schema for L3 FHIR IG authoring. Creates machine-readable FHIR artifacts from a source model.",
   "type": "object",
   "required": [
     "artifactType",
-    "l2Source"
+    "sourceModel"
   ],
   "properties": {
     "artifactType": {
@@ -24,9 +24,9 @@
       ],
       "description": "Type of FHIR artifact to author."
     },
-    "l2Source": {
+    "sourceModel": {
       "type": "string",
-      "description": "Path or reference to the L2 DAK source material."
+      "description": "Path or reference to the source model the FHIR artifacts are derived from: a logical model, a business specification, a data dictionary. The layer above supplies which (a WHO SMART guideline passes its DAK's L2 content)."
     },
     "fshOutputDir": {
       "type": "string",
