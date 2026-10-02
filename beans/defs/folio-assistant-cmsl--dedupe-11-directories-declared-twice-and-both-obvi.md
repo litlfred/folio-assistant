@@ -1,7 +1,7 @@
 ---
 # folio-assistant-cmsl
 title: 'DEDUPE: 11 directories declared twice — and both obvious fixes are measurably wrong'
-status: in-progress
+status: completed
 type: task
 priority: normal
 created_at: 2026-09-21T19:18:36Z
@@ -130,9 +130,9 @@ The authored diff (3 files) is preserved; regen also measured ~2x slower `resolv
 - 15 files on main held cmsl step 2's parallel reader while PR0's tests stayed; #1769 restores PR0's version of each (all were touched after PR0 ONLY by cmsl commits).
 - Owner, 2026-10-01: close #1747 once #1769 merges.
 ## Remaining here
-- [ ] Owner's design question: overlay-and-warn along the dependency chain vs the <stub>/<dir> -> <dir>/<stub> rule (belongs with iirv)
+- [x] Owner's design question: overlay-and-warn along the dependency chain vs the <stub>/<dir> -> <dir>/<stub> rule (belongs with iirv) — RULED 2026-10-01 late as Q-A ("placement rule (a) + file-level overlay (b)"; per-instance `<instance>/docs/`, never `docs/<stub>/`), recorded below
 - [x] ~~Delete the 6 cross-instance kg-qa sidecars (approved)~~ — NOT APPLICABLE after PR0, see 2026-10-01 below
-- [ ] Skill docs keyed by owner directory id
+- [x] Skill docs keyed by owner directory id — DONE by placement PR0 (`ejye`): gen-skill-docs.ts keys `core-skills`, `lean-skills`, `data-skills`, `large-datasets-skills`, `who-iris-skills` by the owners' own declarations; docs:auto:check green
 - [x] Remove the duplicate checkoutDirectories in schemas/cat-harness.ts (cmsl's), keeping harness-config.ts's (PR0's)
 
 _2026-10-01T12:25:43Z_ — Claimed by claude/fervent-brahmagupta-rbwhzm — pushed to main so sibling sessions see it before this branch has a PR (bean 35nj).
@@ -158,3 +158,10 @@ Recorded by the separation-arc lead's agent; source: owner, session_01ToWZR4RgTR
 - **SKOS export URLs (X2):** left out of Q-A until ruled.
 
 **Bearing on this bean (the Q-A `<stub>` question):** the per-instance layout is `<instance>/docs/` (`siteDir()`), never `docs/<stub>/`; outputs live in the instance they are about except the auditor's own verdicts (kg-qa, glossary ledgers, detangle), which stay with cat-harness. No published URL changes.
+
+
+## Summary of Changes (closed 2026-10-02, session_01CVVoavPoCHMLA7AASxG8cH)
+Closed on evidence, both remaining items being settled elsewhere:
+- **Design question** — answered by the owner's Q-A ruling (2026-10-01 late, recorded above by the separation-arc lead): placement rule (a) plus file-level overlay (b); outputs live in the instance they are about, except the auditor's own verdicts.
+- **Skill docs keyed by owner directory id** — true on main since placement PR0 (`ejye`, restored by #1769): `SKILLS_CATEGORIES` in gen-skill-docs.ts names the owners' ids; the published `docs-auto/index/skills/` directories are `core-skills`, `data-skills`, `fhir-ig-skills`, `large-datasets-skills`, `lean-skills`, `who-iris-skills`, plus the nested-subgraph roots `folio-assistant-sci-skills` and `smart-base-skills`. Measured 2026-10-02: `bun run docs:auto:check` → "4 type(s) up to date".
+Steps 1–3 landed through #1704 (step 2) and #1769 (step 3's data, PR0); the duplicate `checkoutDirectories` was removed; the cross-instance kg-qa sidecars were found not to be orphans.

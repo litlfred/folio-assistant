@@ -36,13 +36,17 @@
  * report to carry as a finding. An invented address is worse than an honest
  * string (rule `ld-link-is-the-node-release-address`).
  *
- * `prov:used` is NOT converted: its values are workflow targets (`item/<uuid>`)
- * with no single address scheme, and the owner has not ruled on them. It is
- * carried as it was.
+ * `prov:used` values are catalogue items (`item/<uuid>`, a DSpace id). Owner
+ * 2026-10-01, option A: each is linked at its record's HANDLE through the
+ * global resolver (`https://hdl.handle.net/<handle>`), the identifier built to
+ * outlive the publishing host — not at our catalogue record, which has no
+ * release address while its instance declares no `iriBase`. A record with no
+ * Handle, or an id nobody catalogues, stays a literal with its reason.
  *
  * @module schemas/prov-jsonld
  * @graphNode schema
  * @conformsTo w3c-prov-jsonld
+ * @conformsTo ietf-handle-system
  * @covers schemas
  */
 import { existsSync, readdirSync, readFileSync, statSync } from "node:fs";
@@ -70,7 +74,13 @@ export const PROV_JSONLD_CONTEXT_HELD = {
   sha256: "811d5e94d8cb568d7dc4461ef6a247644dd0e775cdc88b65c42238d8e832be1e",
 } as const;
 
-export type AddressKind = "agent" | "role" | "plan";
+/** The `$schema` a catalogue record declares itself with. */
+const CATALOGUE_NODE_SCHEMA = "folio-catalogue-node/v1";
+
+/** The global Handle System resolver. */
+const HANDLE_RESOLVER = "https://hdl.handle.net/";
+
+export type AddressKind = "agent" | "role" | "plan" | "entity";
 
 /** A value's address, or why it has none. */
 export type Address = { iri: string } | { unaddressed: string };
@@ -129,6 +139,34 @@ export function addressBook(repo: string): AddressBook {
       for (const r of doc.roles ?? []) if (r.id && !roles.has(r.id)) roles.set(r.id, { root, path: rel(root, rolesFile), fragment: r.id });
     }
   }
+  // `prov:used` names catalogue items (`item/<uuid>`, a DSpace id). Each
+  // instance's declared `catalogue` graph holds `folio-catalogue-node/v1`
+  // records; one with a Handle is addressed at the global Handle resolver,
+  // the identifier that outlives the publishing host (owner 2026-10-01,
+  // option A). The same rule as `handleIri` in folio-assistant-core's
+  // catalogue schema, restated because importing it here would be an edge
+  // from the platform up into core.
+  const entities = new Map<string, Address>();
+  for (const root of roots) {
+    const dir = instanceDirectoryForGraph(root, "catalogue");
+    if (!dir) continue;
+    for (const f of filesUnder(dir, ".json")) {
+      let n: { $schema?: unknown; id?: unknown; handle?: unknown };
+      try {
+        n = JSON.parse(readFileSync(f, "utf-8")) as typeof n;
+      } catch {
+        continue;
+      }
+      if (n.$schema !== CATALOGUE_NODE_SCHEMA || typeof n.id !== "string" || entities.has(n.id)) continue;
+      entities.set(
+        n.id,
+        typeof n.handle === "string"
+          ? { iri: `${HANDLE_RESOLVER}${n.handle}` }
+          : { unaddressed: `catalogue record ${rel(repo, f)} carries no Handle` },
+      );
+    }
+  }
+
   for (const f of filesUnder(repo, ".bpmn")) {
     const root = owner(f);
     if (!root) continue;
@@ -153,6 +191,9 @@ export function addressBook(repo: string): AddressBook {
       if (kind === "role") {
         const o = roles.get(value);
         return o ? addressOf(o) : { unaddressed: `no instance in this checkout declares role "${value}"` };
+      }
+      if (kind === "entity") {
+        return entities.get(value) ?? { unaddressed: `no instance in this checkout catalogues "${value}"` };
       }
       const [stem, task] = value.split("#") as [string, string | undefined];
       const o = plans.get(stem.toLowerCase());
@@ -203,7 +244,17 @@ export function provJsonldDocument(
       "@type": "Activity",
       startTime: a["prov:startedAtTime"],
       ...(a["prov:endedAtTime"] ? { endTime: a["prov:endedAtTime"] } : {}),
-      ...(a["prov:used"] ? { "prov:used": a["prov:used"] } : {}),
+      // `prov:used` is a compact-IRI KEY, not a context term, so no coercion
+      // applies: a link has to be written as `{"@id"}` explicitly (rule
+      // `ld-coercion-belongs-to-the-term`).
+      ...(a["prov:used"]
+        ? {
+            "prov:used": a["prov:used"].map((u) => {
+              const v = field("entity", u);
+              return typeof v === "string" ? { "@id": v } : v;
+            }),
+          }
+        : {}),
       "cat-harness:underPolicy": a["cat-harness:underPolicy"],
     });
     graph.push({
