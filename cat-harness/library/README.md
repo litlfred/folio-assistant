@@ -19,7 +19,7 @@ Part of [C@T Harness](../README.md) 0.1.0, declared as `library`, holding `libra
 | [`arxiv-2504.21474v1/`](arxiv-2504.21474v1/README.md) | 32 files | |
 | [`arxiv-2508.05192v2/`](arxiv-2508.05192v2/README.md) | 44 files | |
 | [`arxiv-2508.21620v2/`](arxiv-2508.21620v2/README.md) | 65 files | |
-| [`arxiv-2602.12670v4/`](arxiv-2602.12670v4/README.md) | 259 files | |
+| [`arxiv-2602.12670v4/`](arxiv-2602.12670v4/README.md) | 258 files | |
 | [`arxiv-2605.03537v1/`](arxiv-2605.03537v1/README.md) | 62 files | |
 | [`arxiv-2606.04382v1/`](arxiv-2606.04382v1/README.md) | 77 files | |
 | [`arxiv-2607.14456v1/`](arxiv-2607.14456v1/README.md) | 104 files | |
