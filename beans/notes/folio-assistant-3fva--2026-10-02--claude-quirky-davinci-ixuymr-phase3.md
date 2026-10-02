@@ -52,7 +52,7 @@ Derived QA verdicts move off `main` onto `qa-reports`, keyed by commit; judgemen
 | #1764 `claude/quirky-davinci-ixuymr` @ `8df0a71bd` | PR → main | `ready-to-merge`; main brought in by the steward | steward merges | merge steward |
 | #1801 `claude/quirky-davinci-ixuymr-phase3` @ `0f26313a7` | PR (stacked on #1764) | green; ready, `ready-to-merge`, `ready:` posted | merges after #1764 | merge manager |
 | `zlq9` | bean | completed | none | done |
-| QA branch rename | handoff on #1928 | go-ahead posted 22:06 UTC | owner's local agent runs `rename-special-branch.sh` | owner |
+| QA branch rename | handoff on #1928 | go-ahead posted 22:06 UTC; at 22:38 UTC NOT yet run: `ls-remote` shows only `qa-reports` @ `7ddc0af4`, and #1928 has no report for it | owner's local agent runs `rename-special-branch.sh`; it is safe at any time, since #1801 reads all three names and the script deletes under a lease | owner |
 | `5hox` | bean | prep merged; deletion held, NOT pushed | Next in queue, step 4 | this arc, owner go |
 | `zaui` (certification attestation family), `4iey` (per-plan DMN) | beans | todo | none needed yet | this arc |
 
@@ -60,7 +60,7 @@ Derived QA verdicts move off `main` onto `qa-reports`, keyed by commit; judgemen
 | blocker | waits on | since | expires / re-check |
 |---|---|---|---|
 | 5hox: 8 gates red with the files absent | a `main/<sha>` entry on qa-reports, which exists only after #1764 merges | 2026-10-02 | re-check when #1764 merges |
-| the `qa-reports` → `cat/cat-harness/qa-reports` rename | the owner's local agent | 2026-10-02 22:06 | go-ahead on #1928; no-push window ends 22:36 UTC |
+| the `qa-reports` → `cat/cat-harness/qa-reports` rename | the owner's local agent | 2026-10-02 22:06 | not run at 22:38 UTC; nothing in this arc waits on it |
 
 ### Decisions pending (owner)
 - None open. Before the 5hox deletion is pushed, the owner sees the re-measured inventory (count, bytes, oldest age).
