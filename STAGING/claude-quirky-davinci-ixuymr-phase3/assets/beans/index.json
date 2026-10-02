@@ -2,7 +2,7 @@
   "$schema": "folio-bean-index/v1",
   "tile": {
     "beans": {
-      "count": 622,
+      "count": 624,
       "unit": "beans"
     }
   },
@@ -958,7 +958,7 @@
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-10-01T08:00:47Z",
-      "updatedAt": "2026-10-01T19:08:15Z",
+      "updatedAt": "2026-10-02T05:51:43Z",
       "preview": "Arc `3fva`, proposal §3.2 and §4 items 5.4 and 5.5. Blocked on the TEST PLAN schema bean.\n\n`test-plan-execution.bpmn` has five lanes:\n- Requester / SUT: requests certification against plan P.\n- Tester: resolves the plan, binds the test data, executes, writes the run.\n- Untainted checker: re-executes a sample (`untainted-verification`).\n- Certifier: decides, using the DMN that `exitCriteria` names.",
       "file": "beans/defs/folio-assistant-3o5b--test-process-tester-certifier-roles-system-under-t.md"
     },
@@ -1213,6 +1213,20 @@
       "updatedAt": "2026-10-01T06:58:01Z",
       "preview": "Placement proposal §2 (owner rulings 2026-09-30 §6; process: review → resolve issues → staged PRs). Parent of PR0/PR1 is `9umr`; PR2–PR9 sit under the separation epic because D4 (owner, 2026-10-01, option 3) interleaves them with the split stages into one ordered sequence. Every PR: references move with the subject; generated trees regenerated, never hand-edited; `beans/**` not rewritten; kg-qa si",
       "file": "beans/defs/folio-assistant-4fv8--placement-pr4-whole-roles-stories-actors-and-capab.md"
+    },
+    {
+      "id": "folio-assistant-4iey",
+      "title": "PER-PLAN exit-criteria DMN: test-plan-execution looks up the plan's own decision table",
+      "status": "todo",
+      "type": "task",
+      "priority": "",
+      "parent": "folio-assistant-3fva",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-10-02T05:51:37Z",
+      "updatedAt": "2026-10-02T05:51:37Z",
+      "preview": "Follow-up from 3o5b (owner, 2026-10-02: bean, build later). test-plan/v1 lets a plan name its exitCriteria DMN, but GW_ExitCriteria in test-plan-execution.bpmn always evaluates the platform default (processes/decisions/test-certification.dmn).\n\n## Do first (interim guard, small)\n- [ ] kg:audit criterion: a plan whose exitCriteria names a table other than the default is flagged (major), so no plan ",
+      "file": "beans/defs/folio-assistant-4iey--per-plan-exit-criteria-dmn-test-plan-execution-loo.md"
     },
     {
       "id": "folio-assistant-4kj4",
@@ -8625,6 +8639,20 @@
       "updatedAt": "2026-09-30T19:49:54Z",
       "preview": "Found 2026-09-30 during a goal review, and confirmed independently before\nbeing written down.\n\n`bun run audit:coverage` reports the `themes` graph kind as:\n\n```json\n{\"kind\": \"themes\", \"state\": \"covered\", \"directories\": [\"who-iris/themes\"],\n \"criteria\": [], \"gates\": [\"bun run check:theme-art:check\",\n \"bun run theme:page:check\", \"bun run themes:css:check\"],\n \"typed\": true, \"hasFiles\": true}\n```\n\n**N",
       "file": "beans/defs/folio-assistant-z6xd--false-coverage-three-gates-declare-covers-themes-a.md"
+    },
+    {
+      "id": "folio-assistant-zaui",
+      "title": "CERTIFICATION family in qa-attestations/v1: where test-plan-execution files a signed certification",
+      "status": "todo",
+      "type": "task",
+      "priority": "",
+      "parent": "folio-assistant-3fva",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-10-02T05:48:39Z",
+      "updatedAt": "2026-10-02T05:48:39Z",
+      "preview": "Follow-up from 3o5b (owner, 2026-10-02: open a bean). test-plan-execution.bpmn's A_FileCertification names the attestations graph as its destination, but qa-attestations/v1 has no certification family, so the filing step has nowhere to write.\n\n## Do\n- add a `certification` family to qa-attestations/v1 (schema + store paths under test/attestations/certification/)\n- the filing step writes it; corrup",
+      "file": "beans/defs/folio-assistant-zaui--certification-family-in-qa-attestationsv1-where-te.md"
     },
     {
       "id": "folio-assistant-zdfa",
