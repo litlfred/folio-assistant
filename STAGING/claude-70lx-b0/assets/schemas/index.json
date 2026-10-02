@@ -2,7 +2,7 @@
   "$schema": "folio-schema-graph/v1",
   "tile": {
     "schemas": {
-      "count": 186,
+      "count": 190,
       "unit": "modules"
     }
   },
@@ -11,9 +11,10 @@
     "fhir-harness/schemas",
     "folio-assistant-core/schemas",
     "folio-assistant-sci/schemas",
+    "folio-assistant-sci/sources",
     "large-datasets/schemas",
-    "large-datasets/sources",
-    "smart-base/schemas"
+    "smart-base/schemas",
+    "who-iris/sources"
   ],
   "modules": [
     {
@@ -38,6 +39,14 @@
       "name": "archive-contents",
       "graphNode": "schema",
       "summary": "An archive's entry list, as data — bean `twqe`.",
+      "isTest": false
+    },
+    {
+      "module": "cat-harness/schemas/artifact-store.ts",
+      "instance": "cat-harness",
+      "name": "artifact-store",
+      "graphNode": "schema",
+      "summary": "Where a large build artifact goes — and why it is never \"a GitHub Release\".",
       "isTest": false
     },
     {
@@ -521,6 +530,14 @@
       "name": "health-report",
       "graphNode": "schema",
       "summary": "Repository health reports — what the daily sweep under `test/health/` wrote.",
+      "isTest": false
+    },
+    {
+      "module": "cat-harness/schemas/id-lookup.ts",
+      "instance": "cat-harness",
+      "name": "id-lookup",
+      "graphNode": "schema",
+      "summary": "A prefix-sharded identifier lookup for nodes a folio REFERENCES but does not",
       "isTest": false
     },
     {
@@ -1127,6 +1144,23 @@
       "isTest": false
     },
     {
+      "module": "cat-harness/schemas/source-descriptor.test.ts",
+      "instance": "cat-harness",
+      "name": "source-descriptor.test",
+      "graphNode": "none",
+      "reason": "a test",
+      "summary": "Every source descriptor in the checkout parses — bean `w5bn`.",
+      "isTest": true
+    },
+    {
+      "module": "cat-harness/schemas/source-descriptor.ts",
+      "instance": "cat-harness",
+      "name": "source-descriptor",
+      "graphNode": "schema",
+      "summary": "How to enumerate a corpus you will never hold, and how to ask it for a subset.",
+      "isTest": false
+    },
+    {
       "module": "cat-harness/schemas/source-licence.ts",
       "instance": "cat-harness",
       "name": "source-licence",
@@ -1726,48 +1760,6 @@
       "graphNode": "schema",
       "summary": "A reviewer's VERDICT on one version of one block: \"I read this, and here is",
       "isTest": false
-    },
-    {
-      "module": "large-datasets/schemas/artifact-store.ts",
-      "instance": "large-datasets",
-      "name": "artifact-store",
-      "graphNode": "schema",
-      "summary": "Where a large build artifact goes — and why it is never \"a GitHub Release\".",
-      "isTest": false
-    },
-    {
-      "module": "large-datasets/schemas/id-lookup.test.ts",
-      "instance": "large-datasets",
-      "name": "id-lookup.test",
-      "graphNode": "none",
-      "reason": "a test",
-      "summary": "The prefix-sharded identifier lookup — bean `folio-assistant-4pm8`.",
-      "isTest": true
-    },
-    {
-      "module": "large-datasets/schemas/id-lookup.ts",
-      "instance": "large-datasets",
-      "name": "id-lookup",
-      "graphNode": "schema",
-      "summary": "A prefix-sharded identifier lookup for nodes a folio REFERENCES but does not",
-      "isTest": false
-    },
-    {
-      "module": "large-datasets/schemas/source-descriptor.test.ts",
-      "instance": "large-datasets",
-      "name": "source-descriptor.test",
-      "graphNode": "none",
-      "reason": "a test",
-      "summary": "Every descriptor in the declared `sources/` directory parses — bean `w5bn`.",
-      "isTest": true
-    },
-    {
-      "module": "large-datasets/schemas/source-descriptor.ts",
-      "instance": "large-datasets",
-      "name": "source-descriptor",
-      "graphNode": "schema",
-      "summary": "How to enumerate a corpus you will never hold, and how to ask it for a subset.",
-      "isTest": false
     }
   ],
   "decls": [
@@ -2034,6 +2026,124 @@
         "ENTRY_MIMETYPE_SOURCES",
         "z"
       ],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/artifact-store.ts#ArtifactStore",
+      "name": "ArtifactStore",
+      "module": "cat-harness/schemas/artifact-store.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/artifact-store.ts#ArtifactStoreKind",
+      "name": "ArtifactStoreKind",
+      "module": "cat-harness/schemas/artifact-store.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/artifact-store.ts#ArtifactStoreSchema",
+      "name": "ArtifactStoreSchema",
+      "module": "cat-harness/schemas/artifact-store.ts",
+      "kind": "zod-object",
+      "fields": [
+        {
+          "name": "$schema",
+          "type": "z.literal(ARTIFACT_STORE_SCHEMA_TAG).optional()",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "kind",
+          "type": "z.enum(ARTIFACT_STORE_KINDS)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "publicBaseUrl",
+          "type": "z.string().url()",
+          "optional": false,
+          "array": false,
+          "doc": "The base the artifact will be READABLE at. Required, and it is the"
+        },
+        {
+          "name": "immutableUrls",
+          "type": "z.boolean()",
+          "optional": false,
+          "array": false,
+          "doc": "Whether the store's URLs are immutable once published. `true` means a"
+        },
+        {
+          "name": "cacheTtlSeconds",
+          "type": "z.number().int().nonnegative().optional()",
+          "optional": true,
+          "array": false,
+          "doc": "What a CDN in front of this store will hold onto. Absent means unstated, never zero."
+        },
+        {
+          "name": "maxArtifactBytes",
+          "type": "z.number().int().positive().optional()",
+          "optional": true,
+          "array": false,
+          "doc": "Largest single artifact, where the host states one. Absent means unstated, never unlimited."
+        },
+        {
+          "name": "basis",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false,
+          "doc": "Why this store, in one sentence — it is a choice, and a choice with no reason cannot be revisited."
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [
+        "ARTIFACT_STORE_KINDS",
+        "ARTIFACT_STORE_SCHEMA_TAG",
+        "z"
+      ],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/artifact-store.ts#RenderStage",
+      "name": "RenderStage",
+      "module": "cat-harness/schemas/artifact-store.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/artifact-store.ts#SearchIndexPlan",
+      "name": "SearchIndexPlan",
+      "module": "cat-harness/schemas/artifact-store.ts",
+      "kind": "type-alias",
+      "doc": "What the search index should be for a stage — never a boolean.",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
       "exported": true
     },
     {
@@ -6678,6 +6788,13 @@
           "doc": "Whether the agent summary drain may offer a `library`'s blocks; absent means `drain`. See the schema field (bean `x80s`)."
         },
         {
+          "name": "heldEntries",
+          "type": "string[]",
+          "optional": true,
+          "array": true,
+          "doc": "Entry slugs of a `library` held back from the summary drain while the rest of it drains. See the schema field (bean `j7ql`)."
+        },
+        {
           "name": "theme",
           "type": "ThemeRef",
           "optional": true,
@@ -6738,6 +6855,13 @@
           "optional": true,
           "array": false,
           "doc": "Whether the agent summary drain may draft summaries for a `library`"
+        },
+        {
+          "name": "heldEntries",
+          "type": "z.array(z.string().min(1)).optional()",
+          "optional": true,
+          "array": true,
+          "doc": "Entry slugs (`<library>/<slug>/`) held back from the summary drain while"
         },
         {
           "name": "visualisedAs",
@@ -18014,6 +18138,238 @@
       "exported": true
     },
     {
+      "id": "cat-harness/schemas/id-lookup.ts#CatalogueNodeRead",
+      "name": "CatalogueNodeRead",
+      "module": "cat-harness/schemas/id-lookup.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/id-lookup.ts#CatalogueNodeReadSchema",
+      "name": "CatalogueNodeReadSchema",
+      "module": "cat-harness/schemas/id-lookup.ts",
+      "kind": "zod-object",
+      "doc": "The PART of a catalogue node the lookup reads — `id`, `title`, the node's own",
+      "fields": [
+        {
+          "name": "id",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "title",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "materialization",
+          "type": "z.object({ state: z.enum(CATALOGUE_MATERIALIZATION_STATES), provenance: z.object({ upstream: z.string().min(1).optional…",
+          "optional": false,
+          "array": false
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [
+        "CATALOGUE_MATERIALIZATION_STATES",
+        "z"
+      ],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/id-lookup.ts#IdEntry",
+      "name": "IdEntry",
+      "module": "cat-harness/schemas/id-lookup.ts",
+      "kind": "interface",
+      "doc": "One referenced node, as the lookup returns it.",
+      "fields": [
+        {
+          "name": "id",
+          "type": "string",
+          "optional": false,
+          "array": false,
+          "doc": "`kind/local`, lower-case, as the catalogue names the node."
+        },
+        {
+          "name": "title",
+          "type": "string",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "url",
+          "type": "string",
+          "optional": false,
+          "array": false,
+          "doc": "Where the node is held: the source's own page for it."
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/id-lookup.ts#IdLookupManifest",
+      "name": "IdLookupManifest",
+      "module": "cat-harness/schemas/id-lookup.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/id-lookup.ts#IdLookupManifestSchema",
+      "name": "IdLookupManifestSchema",
+      "module": "cat-harness/schemas/id-lookup.ts",
+      "kind": "zod-object",
+      "fields": [
+        {
+          "name": "$schema",
+          "type": "z.literal(ID_LOOKUP_MANIFEST_SCHEMA_TAG)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "source",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false,
+          "doc": "The corpus this indexes, by its instance name."
+        },
+        {
+          "name": "selection",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false,
+          "doc": "Which nodes, and from where. A count with no statement of what was counted cannot be checked."
+        },
+        {
+          "name": "budgetBytes",
+          "type": "z.number().int().positive()",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "entryCount",
+          "type": "z.number().int().positive()",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "namespaces",
+          "type": "z.record(z.string().regex(NAMESPACE), NamespaceIndexSchema)",
+          "optional": false,
+          "array": false
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [
+        "cat-harness/schemas/id-lookup.ts#NamespaceIndexSchema"
+      ],
+      "unresolved": [],
+      "external": [
+        "ID_LOOKUP_MANIFEST_SCHEMA_TAG",
+        "NAMESPACE",
+        "z"
+      ],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/id-lookup.ts#NamespaceIndexSchema",
+      "name": "NamespaceIndexSchema",
+      "module": "cat-harness/schemas/id-lookup.ts",
+      "kind": "zod-object",
+      "fields": [
+        {
+          "name": "prefixLength",
+          "type": "z.number().int().nonnegative()",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "entryCount",
+          "type": "z.number().int().positive()",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "shards",
+          "type": "z.array(z.string().min(1)).min(1)",
+          "optional": false,
+          "array": true,
+          "doc": "Every shard file in this namespace, relative to it. A prefix not listed has no entries, so no request is needed to say so."
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [
+        "z"
+      ],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/id-lookup.ts#Shard",
+      "name": "Shard",
+      "module": "cat-harness/schemas/id-lookup.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/id-lookup.ts#ShardSchema",
+      "name": "ShardSchema",
+      "module": "cat-harness/schemas/id-lookup.ts",
+      "kind": "zod-object",
+      "fields": [
+        {
+          "name": "prefix",
+          "type": "z.string()",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "entries",
+          "type": "z.array(z.tuple([z.string().min(1), z.string().min(1), z.string().url()])).min(1)",
+          "optional": false,
+          "array": true,
+          "doc": "`[id, title, url]`, sorted by id. Arrays rather than objects: the keys would be most of the bytes."
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [
+        "z"
+      ],
+      "exported": true
+    },
+    {
       "id": "cat-harness/schemas/instance-repositories.ts#InstanceRepository",
       "name": "InstanceRepository",
       "module": "cat-harness/schemas/instance-repositories.ts",
@@ -28501,6 +28857,206 @@
         "z"
       ],
       "exported": false
+    },
+    {
+      "id": "cat-harness/schemas/source-descriptor.ts#Availability",
+      "name": "Availability",
+      "module": "cat-harness/schemas/source-descriptor.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/source-descriptor.ts#IdentifierSystemSchema",
+      "name": "IdentifierSystemSchema",
+      "module": "cat-harness/schemas/source-descriptor.ts",
+      "kind": "zod-object",
+      "doc": "One identifier system the source mints, and whether it is the one to resolve by.",
+      "fields": [
+        {
+          "name": "name",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "authoritative",
+          "type": "z.boolean()",
+          "optional": false,
+          "array": false,
+          "doc": "Whether this identifier is guaranteed by an authority outside the source."
+        },
+        {
+          "name": "example",
+          "type": "z.string().min(1).optional()",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "note",
+          "type": "z.string().min(1).optional()",
+          "optional": true,
+          "array": false
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [
+        "z"
+      ],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/source-descriptor.ts#SourceDescriptor",
+      "name": "SourceDescriptor",
+      "module": "cat-harness/schemas/source-descriptor.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/source-descriptor.ts#SourceDescriptorSchema",
+      "name": "SourceDescriptorSchema",
+      "module": "cat-harness/schemas/source-descriptor.ts",
+      "kind": "zod-object",
+      "fields": [
+        {
+          "name": "$schema",
+          "type": "z.literal(SOURCE_DESCRIPTOR_SCHEMA_TAG)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "id",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "title",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "system",
+          "type": "z.string().min(1).optional()",
+          "optional": true,
+          "array": false,
+          "doc": "The software, where there is some — `DSpace 7`, `Lean 4 / Lake`. Descriptors for one system are often reusable."
+        },
+        {
+          "name": "baseUrl",
+          "type": "z.string().url().optional()",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "nodeKind",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false,
+          "doc": "What one node IS in this corpus. Different per source, and never assumed."
+        },
+        {
+          "name": "subsetStrategies",
+          "type": "z.array(z.enum(SUBSET_STRATEGIES)).min(1)",
+          "optional": false,
+          "array": true
+        },
+        {
+          "name": "subsetIsSelfContained",
+          "type": "z.boolean()",
+          "optional": false,
+          "array": false,
+          "doc": "Whether a subset chosen by the strategies above stands on its own."
+        },
+        {
+          "name": "subsetBasis",
+          "type": "z.string().min(1).optional()",
+          "optional": true,
+          "array": false,
+          "doc": "Why `subsetIsSelfContained` has the value it has. Optional, because a"
+        },
+        {
+          "name": "identifiers",
+          "type": "z.array(IdentifierSystemSchema).min(1)",
+          "optional": false,
+          "array": true
+        },
+        {
+          "name": "enumeration",
+          "type": "z .object({ /** How the whole is listed. Prose, because it is an instruction to a human or agent, not a URL template. *…",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "termsUrl",
+          "type": "z.string().url().optional()",
+          "optional": true,
+          "array": false,
+          "doc": "Whether the source states terms, and where. Feeds the `restrictions` and `copyright` gates; `unknown` stays unknown."
+        },
+        {
+          "name": "character",
+          "type": "z .object({ /** Is it somewhere else? A local corpus raises none of these questions. */ remote: z.boolean(), /** * Is a…",
+          "optional": false,
+          "array": false,
+          "doc": "The characterisation the \"ingest a new data source\" process produces."
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [
+        "cat-harness/schemas/source-descriptor.ts#IdentifierSystemSchema"
+      ],
+      "unresolved": [],
+      "external": [
+        "AVAILABILITIES",
+        "SOURCE_DESCRIPTOR_SCHEMA_TAG",
+        "SUBSET_STRATEGIES",
+        "VOLATILITIES",
+        "z"
+      ],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/source-descriptor.ts#SubsetStrategy",
+      "name": "SubsetStrategy",
+      "module": "cat-harness/schemas/source-descriptor.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/source-descriptor.ts#Volatility",
+      "name": "Volatility",
+      "module": "cat-harness/schemas/source-descriptor.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
     },
     {
       "id": "cat-harness/schemas/source-licence.ts#LicenceSearched",
@@ -43520,556 +44076,6 @@
       "unresolved": [],
       "external": [],
       "exported": true
-    },
-    {
-      "id": "large-datasets/schemas/artifact-store.ts#ArtifactStore",
-      "name": "ArtifactStore",
-      "module": "large-datasets/schemas/artifact-store.ts",
-      "kind": "type-alias",
-      "fields": [],
-      "extendsNames": [],
-      "values": [],
-      "refs": [],
-      "unresolved": [],
-      "external": [],
-      "exported": true
-    },
-    {
-      "id": "large-datasets/schemas/artifact-store.ts#ArtifactStoreKind",
-      "name": "ArtifactStoreKind",
-      "module": "large-datasets/schemas/artifact-store.ts",
-      "kind": "type-alias",
-      "fields": [],
-      "extendsNames": [],
-      "values": [],
-      "refs": [],
-      "unresolved": [],
-      "external": [],
-      "exported": true
-    },
-    {
-      "id": "large-datasets/schemas/artifact-store.ts#ArtifactStoreSchema",
-      "name": "ArtifactStoreSchema",
-      "module": "large-datasets/schemas/artifact-store.ts",
-      "kind": "zod-object",
-      "fields": [
-        {
-          "name": "$schema",
-          "type": "z.literal(ARTIFACT_STORE_SCHEMA_TAG).optional()",
-          "optional": true,
-          "array": false
-        },
-        {
-          "name": "kind",
-          "type": "z.enum(ARTIFACT_STORE_KINDS)",
-          "optional": false,
-          "array": false
-        },
-        {
-          "name": "publicBaseUrl",
-          "type": "z.string().url()",
-          "optional": false,
-          "array": false,
-          "doc": "The base the artifact will be READABLE at. Required, and it is the"
-        },
-        {
-          "name": "immutableUrls",
-          "type": "z.boolean()",
-          "optional": false,
-          "array": false,
-          "doc": "Whether the store's URLs are immutable once published. `true` means a"
-        },
-        {
-          "name": "cacheTtlSeconds",
-          "type": "z.number().int().nonnegative().optional()",
-          "optional": true,
-          "array": false,
-          "doc": "What a CDN in front of this store will hold onto. Absent means unstated, never zero."
-        },
-        {
-          "name": "maxArtifactBytes",
-          "type": "z.number().int().positive().optional()",
-          "optional": true,
-          "array": false,
-          "doc": "Largest single artifact, where the host states one. Absent means unstated, never unlimited."
-        },
-        {
-          "name": "basis",
-          "type": "z.string().min(1)",
-          "optional": false,
-          "array": false,
-          "doc": "Why this store, in one sentence — it is a choice, and a choice with no reason cannot be revisited."
-        }
-      ],
-      "extendsNames": [],
-      "values": [],
-      "refs": [],
-      "unresolved": [],
-      "external": [
-        "ARTIFACT_STORE_KINDS",
-        "ARTIFACT_STORE_SCHEMA_TAG",
-        "z"
-      ],
-      "exported": true
-    },
-    {
-      "id": "large-datasets/schemas/artifact-store.ts#RenderStage",
-      "name": "RenderStage",
-      "module": "large-datasets/schemas/artifact-store.ts",
-      "kind": "type-alias",
-      "fields": [],
-      "extendsNames": [],
-      "values": [],
-      "refs": [],
-      "unresolved": [],
-      "external": [],
-      "exported": true
-    },
-    {
-      "id": "large-datasets/schemas/artifact-store.ts#SearchIndexPlan",
-      "name": "SearchIndexPlan",
-      "module": "large-datasets/schemas/artifact-store.ts",
-      "kind": "type-alias",
-      "doc": "What the search index should be for a stage — never a boolean.",
-      "fields": [],
-      "extendsNames": [],
-      "values": [],
-      "refs": [],
-      "unresolved": [],
-      "external": [],
-      "exported": true
-    },
-    {
-      "id": "large-datasets/schemas/id-lookup.ts#CatalogueNodeRead",
-      "name": "CatalogueNodeRead",
-      "module": "large-datasets/schemas/id-lookup.ts",
-      "kind": "type-alias",
-      "fields": [],
-      "extendsNames": [],
-      "values": [],
-      "refs": [],
-      "unresolved": [],
-      "external": [],
-      "exported": true
-    },
-    {
-      "id": "large-datasets/schemas/id-lookup.ts#CatalogueNodeReadSchema",
-      "name": "CatalogueNodeReadSchema",
-      "module": "large-datasets/schemas/id-lookup.ts",
-      "kind": "zod-object",
-      "doc": "The PART of a catalogue node the lookup reads — `id`, `title`, the node's own",
-      "fields": [
-        {
-          "name": "id",
-          "type": "z.string().min(1)",
-          "optional": false,
-          "array": false
-        },
-        {
-          "name": "title",
-          "type": "z.string().min(1)",
-          "optional": false,
-          "array": false
-        },
-        {
-          "name": "materialization",
-          "type": "z.object({ state: z.enum(CATALOGUE_MATERIALIZATION_STATES), provenance: z.object({ upstream: z.string().min(1).optional…",
-          "optional": false,
-          "array": false
-        }
-      ],
-      "extendsNames": [],
-      "values": [],
-      "refs": [],
-      "unresolved": [],
-      "external": [
-        "CATALOGUE_MATERIALIZATION_STATES",
-        "z"
-      ],
-      "exported": true
-    },
-    {
-      "id": "large-datasets/schemas/id-lookup.ts#IdEntry",
-      "name": "IdEntry",
-      "module": "large-datasets/schemas/id-lookup.ts",
-      "kind": "interface",
-      "doc": "One referenced node, as the lookup returns it.",
-      "fields": [
-        {
-          "name": "id",
-          "type": "string",
-          "optional": false,
-          "array": false,
-          "doc": "`kind/local`, lower-case, as the catalogue names the node."
-        },
-        {
-          "name": "title",
-          "type": "string",
-          "optional": false,
-          "array": false
-        },
-        {
-          "name": "url",
-          "type": "string",
-          "optional": false,
-          "array": false,
-          "doc": "Where the node is held: the source's own page for it."
-        }
-      ],
-      "extendsNames": [],
-      "values": [],
-      "refs": [],
-      "unresolved": [],
-      "external": [],
-      "exported": true
-    },
-    {
-      "id": "large-datasets/schemas/id-lookup.ts#IdLookupManifest",
-      "name": "IdLookupManifest",
-      "module": "large-datasets/schemas/id-lookup.ts",
-      "kind": "type-alias",
-      "fields": [],
-      "extendsNames": [],
-      "values": [],
-      "refs": [],
-      "unresolved": [],
-      "external": [],
-      "exported": true
-    },
-    {
-      "id": "large-datasets/schemas/id-lookup.ts#IdLookupManifestSchema",
-      "name": "IdLookupManifestSchema",
-      "module": "large-datasets/schemas/id-lookup.ts",
-      "kind": "zod-object",
-      "fields": [
-        {
-          "name": "$schema",
-          "type": "z.literal(ID_LOOKUP_MANIFEST_SCHEMA_TAG)",
-          "optional": false,
-          "array": false
-        },
-        {
-          "name": "source",
-          "type": "z.string().min(1)",
-          "optional": false,
-          "array": false,
-          "doc": "The corpus this indexes, by its instance name."
-        },
-        {
-          "name": "selection",
-          "type": "z.string().min(1)",
-          "optional": false,
-          "array": false,
-          "doc": "Which nodes, and from where. A count with no statement of what was counted cannot be checked."
-        },
-        {
-          "name": "budgetBytes",
-          "type": "z.number().int().positive()",
-          "optional": false,
-          "array": false
-        },
-        {
-          "name": "entryCount",
-          "type": "z.number().int().positive()",
-          "optional": false,
-          "array": false
-        },
-        {
-          "name": "namespaces",
-          "type": "z.record(z.string().regex(NAMESPACE), NamespaceIndexSchema)",
-          "optional": false,
-          "array": false
-        }
-      ],
-      "extendsNames": [],
-      "values": [],
-      "refs": [
-        "large-datasets/schemas/id-lookup.ts#NamespaceIndexSchema"
-      ],
-      "unresolved": [],
-      "external": [
-        "ID_LOOKUP_MANIFEST_SCHEMA_TAG",
-        "NAMESPACE",
-        "z"
-      ],
-      "exported": true
-    },
-    {
-      "id": "large-datasets/schemas/id-lookup.ts#NamespaceIndexSchema",
-      "name": "NamespaceIndexSchema",
-      "module": "large-datasets/schemas/id-lookup.ts",
-      "kind": "zod-object",
-      "fields": [
-        {
-          "name": "prefixLength",
-          "type": "z.number().int().nonnegative()",
-          "optional": false,
-          "array": false
-        },
-        {
-          "name": "entryCount",
-          "type": "z.number().int().positive()",
-          "optional": false,
-          "array": false
-        },
-        {
-          "name": "shards",
-          "type": "z.array(z.string().min(1)).min(1)",
-          "optional": false,
-          "array": true,
-          "doc": "Every shard file in this namespace, relative to it. A prefix not listed has no entries, so no request is needed to say so."
-        }
-      ],
-      "extendsNames": [],
-      "values": [],
-      "refs": [],
-      "unresolved": [],
-      "external": [
-        "z"
-      ],
-      "exported": true
-    },
-    {
-      "id": "large-datasets/schemas/id-lookup.ts#Shard",
-      "name": "Shard",
-      "module": "large-datasets/schemas/id-lookup.ts",
-      "kind": "type-alias",
-      "fields": [],
-      "extendsNames": [],
-      "values": [],
-      "refs": [],
-      "unresolved": [],
-      "external": [],
-      "exported": true
-    },
-    {
-      "id": "large-datasets/schemas/id-lookup.ts#ShardSchema",
-      "name": "ShardSchema",
-      "module": "large-datasets/schemas/id-lookup.ts",
-      "kind": "zod-object",
-      "fields": [
-        {
-          "name": "prefix",
-          "type": "z.string()",
-          "optional": false,
-          "array": false
-        },
-        {
-          "name": "entries",
-          "type": "z.array(z.tuple([z.string().min(1), z.string().min(1), z.string().url()])).min(1)",
-          "optional": false,
-          "array": true,
-          "doc": "`[id, title, url]`, sorted by id. Arrays rather than objects: the keys would be most of the bytes."
-        }
-      ],
-      "extendsNames": [],
-      "values": [],
-      "refs": [],
-      "unresolved": [],
-      "external": [
-        "z"
-      ],
-      "exported": true
-    },
-    {
-      "id": "large-datasets/schemas/source-descriptor.ts#Availability",
-      "name": "Availability",
-      "module": "large-datasets/schemas/source-descriptor.ts",
-      "kind": "type-alias",
-      "fields": [],
-      "extendsNames": [],
-      "values": [],
-      "refs": [],
-      "unresolved": [],
-      "external": [],
-      "exported": true
-    },
-    {
-      "id": "large-datasets/schemas/source-descriptor.ts#IdentifierSystemSchema",
-      "name": "IdentifierSystemSchema",
-      "module": "large-datasets/schemas/source-descriptor.ts",
-      "kind": "zod-object",
-      "doc": "One identifier system the source mints, and whether it is the one to resolve by.",
-      "fields": [
-        {
-          "name": "name",
-          "type": "z.string().min(1)",
-          "optional": false,
-          "array": false
-        },
-        {
-          "name": "authoritative",
-          "type": "z.boolean()",
-          "optional": false,
-          "array": false,
-          "doc": "Whether this identifier is guaranteed by an authority outside the source."
-        },
-        {
-          "name": "example",
-          "type": "z.string().min(1).optional()",
-          "optional": true,
-          "array": false
-        },
-        {
-          "name": "note",
-          "type": "z.string().min(1).optional()",
-          "optional": true,
-          "array": false
-        }
-      ],
-      "extendsNames": [],
-      "values": [],
-      "refs": [],
-      "unresolved": [],
-      "external": [
-        "z"
-      ],
-      "exported": true
-    },
-    {
-      "id": "large-datasets/schemas/source-descriptor.ts#SourceDescriptor",
-      "name": "SourceDescriptor",
-      "module": "large-datasets/schemas/source-descriptor.ts",
-      "kind": "type-alias",
-      "fields": [],
-      "extendsNames": [],
-      "values": [],
-      "refs": [],
-      "unresolved": [],
-      "external": [],
-      "exported": true
-    },
-    {
-      "id": "large-datasets/schemas/source-descriptor.ts#SourceDescriptorSchema",
-      "name": "SourceDescriptorSchema",
-      "module": "large-datasets/schemas/source-descriptor.ts",
-      "kind": "zod-object",
-      "fields": [
-        {
-          "name": "$schema",
-          "type": "z.literal(SOURCE_DESCRIPTOR_SCHEMA_TAG)",
-          "optional": false,
-          "array": false
-        },
-        {
-          "name": "id",
-          "type": "z.string().min(1)",
-          "optional": false,
-          "array": false
-        },
-        {
-          "name": "title",
-          "type": "z.string().min(1)",
-          "optional": false,
-          "array": false
-        },
-        {
-          "name": "system",
-          "type": "z.string().min(1).optional()",
-          "optional": true,
-          "array": false,
-          "doc": "The software, where there is some — `DSpace 7`, `Lean 4 / Lake`. Descriptors for one system are often reusable."
-        },
-        {
-          "name": "baseUrl",
-          "type": "z.string().url().optional()",
-          "optional": true,
-          "array": false
-        },
-        {
-          "name": "nodeKind",
-          "type": "z.string().min(1)",
-          "optional": false,
-          "array": false,
-          "doc": "What one node IS in this corpus. Different per source, and never assumed."
-        },
-        {
-          "name": "subsetStrategies",
-          "type": "z.array(z.enum(SUBSET_STRATEGIES)).min(1)",
-          "optional": false,
-          "array": true
-        },
-        {
-          "name": "subsetIsSelfContained",
-          "type": "z.boolean()",
-          "optional": false,
-          "array": false,
-          "doc": "Whether a subset chosen by the strategies above stands on its own."
-        },
-        {
-          "name": "subsetBasis",
-          "type": "z.string().min(1).optional()",
-          "optional": true,
-          "array": false,
-          "doc": "Why `subsetIsSelfContained` has the value it has. Optional, because a"
-        },
-        {
-          "name": "identifiers",
-          "type": "z.array(IdentifierSystemSchema).min(1)",
-          "optional": false,
-          "array": true
-        },
-        {
-          "name": "enumeration",
-          "type": "z .object({ /** How the whole is listed. Prose, because it is an instruction to a human or agent, not a URL template. *…",
-          "optional": false,
-          "array": false
-        },
-        {
-          "name": "termsUrl",
-          "type": "z.string().url().optional()",
-          "optional": true,
-          "array": false,
-          "doc": "Whether the source states terms, and where. Feeds the `restrictions` and `copyright` gates; `unknown` stays unknown."
-        },
-        {
-          "name": "character",
-          "type": "z .object({ /** Is it somewhere else? A local corpus raises none of these questions. */ remote: z.boolean(), /** * Is a…",
-          "optional": false,
-          "array": false,
-          "doc": "The characterisation the \"ingest a new data source\" process produces."
-        }
-      ],
-      "extendsNames": [],
-      "values": [],
-      "refs": [
-        "large-datasets/schemas/source-descriptor.ts#IdentifierSystemSchema"
-      ],
-      "unresolved": [],
-      "external": [
-        "AVAILABILITIES",
-        "SOURCE_DESCRIPTOR_SCHEMA_TAG",
-        "SUBSET_STRATEGIES",
-        "VOLATILITIES",
-        "z"
-      ],
-      "exported": true
-    },
-    {
-      "id": "large-datasets/schemas/source-descriptor.ts#SubsetStrategy",
-      "name": "SubsetStrategy",
-      "module": "large-datasets/schemas/source-descriptor.ts",
-      "kind": "type-alias",
-      "fields": [],
-      "extendsNames": [],
-      "values": [],
-      "refs": [],
-      "unresolved": [],
-      "external": [],
-      "exported": true
-    },
-    {
-      "id": "large-datasets/schemas/source-descriptor.ts#Volatility",
-      "name": "Volatility",
-      "module": "large-datasets/schemas/source-descriptor.ts",
-      "kind": "type-alias",
-      "fields": [],
-      "extendsNames": [],
-      "values": [],
-      "refs": [],
-      "unresolved": [],
-      "external": [],
-      "exported": true
     }
   ],
   "edges": [
@@ -46810,6 +46816,14 @@
       "array": true
     },
     {
+      "from": "cat-harness/schemas/id-lookup.ts#IdLookupManifestSchema",
+      "to": "cat-harness/schemas/id-lookup.ts#NamespaceIndexSchema",
+      "via": "namespaces",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
       "from": "cat-harness/schemas/instance-repositories.ts#InstanceRepository",
       "to": "cat-harness/schemas/cat-harness.ts#InstanceLocation",
       "via": "livesAt",
@@ -48512,6 +48526,14 @@
       "kind": "field",
       "optional": false,
       "array": false
+    },
+    {
+      "from": "cat-harness/schemas/source-descriptor.ts#SourceDescriptorSchema",
+      "to": "cat-harness/schemas/source-descriptor.ts#IdentifierSystemSchema",
+      "via": "identifiers",
+      "kind": "field",
+      "optional": false,
+      "array": true
     },
     {
       "from": "cat-harness/schemas/source-licence.ts#SourceLicence",
@@ -50600,22 +50622,6 @@
       "kind": "field",
       "optional": false,
       "array": false
-    },
-    {
-      "from": "large-datasets/schemas/id-lookup.ts#IdLookupManifestSchema",
-      "to": "large-datasets/schemas/id-lookup.ts#NamespaceIndexSchema",
-      "via": "namespaces",
-      "kind": "field",
-      "optional": false,
-      "array": false
-    },
-    {
-      "from": "large-datasets/schemas/source-descriptor.ts#SourceDescriptorSchema",
-      "to": "large-datasets/schemas/source-descriptor.ts#IdentifierSystemSchema",
-      "via": "identifiers",
-      "kind": "field",
-      "optional": false,
-      "array": true
     }
   ]
 }
