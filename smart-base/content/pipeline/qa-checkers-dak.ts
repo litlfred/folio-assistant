@@ -16,7 +16,7 @@
  * profile is valid against its base, whether a CQL library compiles, whether
  * a DMN table is complete over its inputs. Those need the real validators
  * (`fhir-validation`, SUSHI, a DMN engine) and belong to the L3 pipeline in
- * `processes/l3-fhir-pipeline.bpmn`, not to a grep.
+ * `fhir-harness/processes/content/l3-fhir-pipeline.bpmn`, not to a grep.
  *
  * Reimplementing them here would produce a second, weaker verdict that
  * disagrees with the authoritative one — the argument §2c of the ingestion

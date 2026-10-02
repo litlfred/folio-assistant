@@ -115,7 +115,7 @@ comments up is the same defect wearing a different hat.
 
 **Input:** approved needs statement
 
-1. **Find the current workflow** — check `processes/*.bpmn` for existing
+1. **Find the current workflow** — check `processes/**/*.bpmn` for existing
    process diagrams that cover the affected area
 2. **Map the gap** — where in the current workflow does the need appear?
    Identify the specific activity or decision point

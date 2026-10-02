@@ -593,7 +593,7 @@ function readWorkPlanOp(
   // check from the one below, which refuses an unknown op VALUE.
   //
   // The gap between them has a measured cost recorded in
-  // `processes/bean-lifecycle.bpmn`: a diagram carried
+  // `processes/sdlc/bean-lifecycle.bpmn`: a diagram carried
   // `<cat-harness.processes:bean action="create"/>`, the engine reads `op` and never looked at
   // `action`, and "the step silently did nothing for weeks". Nothing could
   // have caught it, because an absent `op` is DOCUMENTED as meaningful —
