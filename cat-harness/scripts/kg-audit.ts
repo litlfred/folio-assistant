@@ -79,7 +79,7 @@ import {
 import { claimsEntry, judgePair, rootScripts } from "./pair-claims.js";
 // `Dirent` for the orphan-sidecar sweep (bean `3jj9`), which walks the
 // results tree with `withFileTypes` to tell a directory from a file.
-import { existsSync, mkdirSync, readFileSync, readdirSync, renameSync, writeFileSync } from "node:fs";
+import { existsSync, mkdirSync, readFileSync, readdirSync, renameSync, writeFileSync, writeSync } from "node:fs";
 import { basename, dirname, join, relative, resolve } from "node:path";
 
 import { corpusPredicate } from "../schemas/git-corpus.ts";
@@ -3038,7 +3038,10 @@ if (orphans.length > 0) {
 }
 
 if (asJson) {
-  console.log(JSON.stringify({ reports, stale }, null, 2));
+  // Written synchronously: the judge below ends in `process.exit`, and a
+  // multi-megabyte `console.log` to a PIPE is not flushed by then — the
+  // callers that parse this saw a truncated array (bean `oqe3`).
+  writeSync(1, JSON.stringify({ reports, stale }, null, 2) + "\n");
 } else {
   const rank: Record<KgSeverity, number> = { minor: 1, major: 2, critical: 3 };
   const counts: Record<KgResult, number> = { pass: 0, fail: 0, "n/a": 0, unknown: 0 };
@@ -3115,6 +3118,10 @@ if (check) {
   const graded = (r: KgQaReport): unknown[] => gradedKgFindings(r, gate);
   const derivedFailing = derivedStored ? 0 : stale.length + orphans.length;
   const committed = staleAttestations.length + attOrphans.length;
+  // `--json` owns stdout: the report array is parsed whole by its callers
+  // (the needs-chain and Tool-subject tests), so the judge's lines go to
+  // stderr there. The verdict and the exit are the same either way.
+  if (asJson) console.log = console.error;
   const verdict = judgeSidecarTree({
     gate: JUDGE_GATE,
     fresh: reports.map((r) => ({ path: sidecarPath(r), findings: graded(r) })),
