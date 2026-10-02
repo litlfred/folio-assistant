@@ -2,7 +2,7 @@
   "$schema": "folio-bean-index/v1",
   "tile": {
     "beans": {
-      "count": 636,
+      "count": 637,
       "unit": "beans"
     }
   },
@@ -2979,6 +2979,20 @@
       "updatedAt": "2026-09-30T20:09:40Z",
       "preview": "Owner 2026-09-30: IG pages use Liquid site.data.fhir.* (IG Publisher convention, e.g. {{site.data.fhir.ig.version}}). Those should be available in the just-the-docs pipeline, with fhir-harness RESPONSIBLE for declaring and populating the FHIR metadata Jekyll data.\n\n## Measured 2026-09-30 (issue #1564 analysis)\n- Nothing in folio-assistant resolves site.data.fhir.*: only the IG Publisher does. dak-",
       "file": "beans/defs/folio-assistant-bamf--fhir-harness-declares-and-populates-fhir-ig-jekyll.md"
+    },
+    {
+      "id": "folio-assistant-bbv3",
+      "title": "Page bytes: the fa-translation-index island is fetched once, not inlined 2356 times (22.34 MB); kg-render.js carries R4's two client-side obligations",
+      "status": "todo",
+      "type": "task",
+      "priority": "normal",
+      "parent": "",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-10-02T17:50:36Z",
+      "updatedAt": "2026-10-02T17:50:51Z",
+      "preview": "## What and why\n\n`#fa-translation-index` was a `<script type=\"application/json\">` island in the `<head>`\nof every page. **Measured on a local build of this repo's docs site, 2026-10-02: 2356\npages carried it, 9482 B each, 22.34 MB in total, ONE distinct payload** (sha1 over the\npayloads). It is now published once at `assets/harness/site.json` and fetched.\n\n`folio-board-requirements.md` §R4 forbade",
+      "file": "beans/defs/folio-assistant-bbv3--page-bytes-the-fa-translation-index-island-is-fetc.md"
     },
     {
       "id": "folio-assistant-bbza",
@@ -8790,7 +8804,7 @@
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-10-02T16:51:57Z",
-      "updatedAt": "2026-10-02T17:46:19Z",
+      "updatedAt": "2026-10-02T17:53:49Z",
       "preview": "Owner-approved, 2026-10-02. Three changes were proposed; two are mine and one stands down.\n\n**Brief — what and why.** The published gh-pages tree holds 2481 MiB of HTML (measured below). About 9-10% of every page is HTML comments: maintainer prose in `head_custom.html` and generator banners, serialised into every one of 14,543 pages. A decision memo proposed hand-converting 30 comments in one incl",
       "file": "beans/defs/folio-assistant-z1x6--page-weight-post-build-html-minification-and-nav-e.md"
     },
