@@ -7,9 +7,8 @@ priority: high
 tags:
     - agy
     - needs-network
-    - ready-to-close
 created_at: 2026-10-02T15:30:31Z
-updated_at: 2026-10-02T17:37:03Z
+updated_at: 2026-10-02T17:50:00Z
 parent: folio-assistant-uhkv
 blocking:
     - folio-assistant-wnhh
@@ -95,11 +94,11 @@ mac1: blocked <step> <error>                                       ← stop
 Re-read #1816 before each `seed --push`: corrections arrive there, never by
 editing this bean.
 
-## Inputs (pinned 2026-10-02 16:45 UTC: stop on any mismatch)
+## Inputs (pinned 2026-10-02 17:50 UTC for attempt 3: stop on any mismatch)
 
 | input | expected |
 |---|---|
-| `litlfred/fhir-ig-publisher@claude/ast-export` | contains `b9004fb` (InputDigest) and `cf52eb7` (optional deps) |
+| `litlfred/fhir-ig-publisher@claude/ast-export` | contains **`84ee3c8`** (digest recorded BEFORE the build), `b9004fb` and `cf52eb7` |
 | `litlfred/smart-trust@main` | `25771f6a8d81e0ecd646167fa2ff98882ffbe8e7` |
 | `litlfred/smart-base@main` | `e151a4d3ca570a34e88fd3820e93edbfeb30728c` |
 
@@ -108,16 +107,22 @@ If `main` has moved, report `mac1: blocked inputs <repo> now <sha>` and wait.
 ## Steps
 
 1. Exporter (once), from `~/space_cats`:
-   `cd ~/space_cats/fhir-ig-publisher && git fetch && git switch claude/ast-export && git pull && git merge-base --is-ancestor b9004fb HEAD && mvn -f ast-export/pom.xml -q install && mvn -f ast-export/pom.xml -q dependency:build-classpath -Dmdep.outputFile=cp.txt`
+   `cd ~/space_cats/fhir-ig-publisher && git fetch && git switch claude/ast-export && git pull && git merge-base --is-ancestor 84ee3c8 HEAD && mvn -f ast-export/pom.xml -q install && mvn -f ast-export/pom.xml -q dependency:build-classpath -Dmdep.outputFile=cp.txt`
 2. **Fresh clones**, never the working checkouts (an earlier seed from a working
    checkout recorded a digest no clean clone reproduces):
    `rm -rf ~/space_cats/fresh && mkdir ~/space_cats/fresh && git clone git@github.com:litlfred/smart-trust.git ~/space_cats/fresh/smart-trust && git clone git@github.com:litlfred/smart-base.git ~/space_cats/fresh/smart-base`
    then print `git -C <clone> rev-parse HEAD` and compare with `## Inputs`.
-3. Seed each, from `~/space_cats` (so `fhir-ig-publisher/ast-export` is found):
+3. Seed each, from `~/space_cats` (so `fhir-ig-publisher/ast-export` is found).
+   smart-base's SUSHI exits 10 on the IG's own pre-existing errors. For smart-base
+   only, run `npx sushi .` in the clone first, then `AstExportCli -no-sushi`, then
+   seed from the existing `output-ast/` (the attempt-2 workaround, now sanctioned):
    `cd ~/space_cats && bash folio-assistant/fhir-harness/scripts/ig-cache.sh seed --ig-root fresh/smart-trust --push`
    `cd ~/space_cats && bash folio-assistant/fhir-harness/scripts/ig-cache.sh seed --ig-root fresh/smart-base --push`
-4. Before pushing the bean: `ig-cache.sh verify --ig-root fresh/<ig>` should
-   print `fresh`; quote its output under `## Evidence`.
+4. Verify on a **second, untouched clone**, never on the clone you built in. That
+   clone holds the build's own files and always agrees with itself: attempt 2
+   read `valid` there and `stale-inputs` everywhere else.
+   `git clone git@github.com:litlfred/<ig>.git ~/space_cats/verify-<ig> && cd ~/space_cats && bash folio-assistant/fhir-harness/scripts/ig-cache.sh restore --ig-root verify-<ig> && bash folio-assistant/fhir-harness/scripts/ig-cache.sh verify --ig-root verify-<ig>`
+   should print `fresh`. Quote its output under `## Evidence`.
 5. Commit **only this bean file** to this branch and push.
 
 ## Boundaries
@@ -132,7 +137,7 @@ If `main` has moved, report `mac1: blocked inputs <repo> now <sha>` and wait.
 
 - any `## Inputs` revision does not match what the clone has;
 - `seed` refuses (a smaller candidate) or any step exits non-zero;
-- your local `verify --ig-root fresh/<ig>` does not print `fresh` after seeding:
+- `verify` on the second, untouched clone (step 4) does not print `fresh`:
   report `mac1: blocked verify <ig> <recorded digest> <computed digest>`;
 - you cannot post to #1816.
 
@@ -142,8 +147,8 @@ hand this bean to another executor while this claim may be live.
 
 ## Done when
 
-- [x] both `fhir-ast/*` tips carry a seed built from the `## Inputs` revisions
-- [x] executor: `## Evidence` quotes each seed line and its local `verify`; tag
+- [ ] both `fhir-ast/*` tips carry a seed built from the `## Inputs` revisions
+- [ ] executor: `## Evidence` quotes each seed line and its local `verify`; tag
       `ready-to-close`. **Do not set `completed`.**
 - [ ] verifier: `ig-cache.sh restore` + `verify` on a FRESH clone reads `fresh`
       for both, recorded on #1816 and `wnhh`; the verifier closes this bean.
@@ -157,6 +162,16 @@ hand this bean to another executor while this claim may be live.
   wrong revision. **Cause:** working checkouts, not fresh clones, plus no input check.
   **Changed for attempt 2:** `## Inputs`, fresh clones in step 2, `## Fails if`.
   A second failure with the same cause goes to the owner (skill `agent-handoff` §7).
+- **Attempt 2** (2026-10-02 17:25–17:36 UTC, claimed, followed the Brief). Inputs all ✅:
+  smart-trust `25771f6`, smart-base `e151a4d`, ast-export `bbefd1cc`. Seeds
+  `0e4e4e5f` (678/671) and `b524a72d` (162/172). Executor's `verify` read `valid`,
+  but it ran in the build clone. Verifier, on untouched clones: `stale-inputs` for
+  both. smart-trust recorded `7c2f6d91…` vs clean `c1023d82…`; smart-base `442e1e0e…`
+  vs `bd074bf9…`. **Cause:** `AstExportCli` took the digest AFTER the build, so files
+  the build writes under `input/` were hashed. This explains attempt 1 too. Not the
+  executor's doing. **Owner's call (option 1):** fix the exporter, fork PR #8 `84ee3c8`.
+  **Changed for attempt 3:** `## Inputs` pins `84ee3c8`; step 4 verifies on a second,
+  untouched clone; smart-base's SUSHI workaround is a step.
 
 ## History
 
