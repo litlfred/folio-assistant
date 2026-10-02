@@ -85,6 +85,7 @@ import {
   tokenOf,
   type IgChrome,
 } from "../schemas/ig-chrome.js";
+import { renderedPath, withRendersFrontMatter } from "../../cat-harness/scripts/viewer-declarations.js";
 import {
   declarationPathIn,
   directoriesForGraph,
@@ -95,12 +96,12 @@ import {
 import {
   FhirArtifactIndexSchema,
   materializationCensus,
-  dakOverlayCensus,
+  sidecarCensus,
   byCategory,
   type FhirArtifact,
   type FhirArtifactIndex,
   type Representation,
-} from "../../folio-assistant-core/schemas/fhir-artifact-index.js";
+} from "../schemas/fhir-artifact-index.js";
 
 /** `--name value`, or undefined. */
 function arg(name: string): string | undefined {
@@ -149,6 +150,20 @@ const LABEL_ARG = arg("--label");
 
 /** Whether the index page opens with the instance's own declaration. */
 const SUMMARY = process.argv.includes("--summary");
+
+/**
+ * The sentence the banner's publish box opens with. A FLAG, because which
+ * publisher an IG mirrors is the caller's to say: fhir-harness knows no
+ * particular one (`fhir-harness/AGENTS.md`), so the default names none.
+ */
+const PUBLISH_NOTE = arg("--publish-note") ?? "This page mirrors a published FHIR Implementation Guide.";
+
+/**
+ * What the IG calls its per-artefact JSON sidecars (JSON Schema, displays,
+ * OpenAPI, JSON-LD). Some publishers brand them; this layer does not, so the
+ * label is the caller's and the default is plain.
+ */
+const SIDECAR_LABEL = arg("--sidecar-label") ?? "API sidecars";
 
 /** The declaration's `name`, or `undefined` when a directory is not an instance. */
 function declaredName(root: string): string | undefined {
@@ -230,7 +245,7 @@ function igBanner(chrome: IgChrome, ix: FhirArtifactIndex): string {
       : `  <div id="ig-status">`,
     `    <p><span class="st-ig-title">${esc(LABEL)}</span><br/><span>${esc(label)}</span></p>`,
     `  </div>`,
-    `  <p id="publish-box">This page mirrors a published WHO Implementation Guide. ` +
+    `  <p id="publish-box">${esc(PUBLISH_NOTE)} ` +
       `The authoritative version is at <a href="${esc(canonical)}">${esc(canonical)}</a>.</p>`,
     `</div>`,
   ].join("\n");
@@ -499,7 +514,7 @@ function repLinks(a: FhirArtifact): string {
 
 function indexPage(ix: FhirArtifactIndex): string {
   const census = materializationCensus(ix.artifacts);
-  const dak = dakOverlayCensus(ix.artifacts);
+  const sc = sidecarCensus(ix.artifacts);
   const cats = byCategory(ix.artifacts);
   // Deterministic: named categories by name, the uncategorised bucket last.
   const ordered = [...cats.entries()].sort(([a], [b]) =>
@@ -583,22 +598,22 @@ function indexPage(ix: FhirArtifactIndex): string {
     `|---|---|`,
     ...provRows,
     ``,
-    `## DAK API surface`,
+    `## ${SIDECAR_LABEL} surface`,
     ``,
-    `The IG publishes a DAK API for ${dak.schema} of its artefacts. The four sidecars are issued`,
+    `The IG publishes a ${SIDECAR_LABEL} for ${sc.schema} of its artefacts. The four sidecars are issued`,
     `independently — every ValueSet gets all four, the logical models get two — which is why they`,
-    `are counted separately rather than as one "has DAK" tally.`,
+    `are counted separately rather than as one "has ${SIDECAR_LABEL}" tally.`,
     ``,
     `<div class="st-grid">`,
-    stat(dak.schema, "JSON Schema"),
-    stat(dak.displays, "displays"),
-    stat(dak.openapi, "OpenAPI"),
-    stat(dak.jsonld, "JSON-LD"),
+    stat(sc.schema, "JSON Schema"),
+    stat(sc.displays, "displays"),
+    stat(sc.openapi, "OpenAPI"),
+    stat(sc.jsonld, "JSON-LD"),
     `</div>`,
     ``,
     `## Every artefact, by category`,
     ``,
-    `Grouped as the IG's own \`artifacts.html\` groups them. An artefact with a DAK API sidecar links`,
+    `Grouped as the IG's own \`artifacts.html\` groups them. An artefact with a ${SIDECAR_LABEL} sidecar links`,
     `through to its own page; the rest link out to the published representations.`,
     ``,
     sections,
@@ -710,7 +725,7 @@ function artifactPage(ix: FhirArtifactIndex, a: FhirArtifact): string {
   const name = a.title ?? a.name ?? a.id;
 
   const dakRows = (["schema", "displays", "openapi", "jsonld"] as const).map((k) => {
-    const r = a.dak?.[k];
+    const r = a.sidecars?.[k];
     const label = { schema: "JSON Schema", displays: "Displays", openapi: "OpenAPI", jsonld: "JSON-LD" }[k];
     if (!r) return `| ${label} | *not published for this artefact* | |`;
     const held = r.localPath ? `\`${mdCell(r.localPath)}\`` : "*by reference*";
@@ -721,11 +736,11 @@ function artifactPage(ix: FhirArtifactIndex, a: FhirArtifact): string {
     `<div class="st-stat"><b>${esc(a.resourceType)}</b><span>resource type</span></div>`,
     `<div class="st-stat"><b>${esc(a.version ?? "—")}</b><span>version</span></div>`,
     `<div class="st-stat"><b>${esc(a.category ?? "—")}</b><span>category</span></div>`,
-    ...(a.dak?.codeCount !== undefined
-      ? [`<div class="st-stat"><b>${a.dak.codeCount}</b><span>codes</span></div>`]
+    ...(a.sidecars?.codeCount !== undefined
+      ? [`<div class="st-stat"><b>${a.sidecars.codeCount}</b><span>codes</span></div>`]
       : []),
-    ...(a.dak?.propertyCount !== undefined
-      ? [`<div class="st-stat"><b>${a.dak.propertyCount}</b><span>properties</span></div>`]
+    ...(a.sidecars?.propertyCount !== undefined
+      ? [`<div class="st-stat"><b>${a.sidecars.propertyCount}</b><span>properties</span></div>`]
       : []),
   ].join("");
 
@@ -758,9 +773,9 @@ function artifactPage(ix: FhirArtifactIndex, a: FhirArtifact): string {
     // artefact*", which is noise dressed as information — so the absence is
     // stated in one line instead, and it is STATED rather than omitted,
     // because a missing section reads as "nobody looked".
-    ...(a.dak
+    ...(a.sidecars
       ? [
-          `## DAK API`,
+          `## ${SIDECAR_LABEL}`,
           ``,
           `The four sidecars are published independently, so an absent one is a fact about the`,
           `IG rather than a gap in this index.`,
@@ -771,18 +786,18 @@ function artifactPage(ix: FhirArtifactIndex, a: FhirArtifact): string {
           ``,
         ]
       : [
-          `## DAK API`,
+          `## ${SIDECAR_LABEL}`,
           ``,
-          `No DAK API sidecar is published for this artefact. That is a fact about the IG,`,
+          `No ${SIDECAR_LABEL} sidecar is published for this artefact. That is a fact about the IG,`,
           `not a gap in this index — sidecars are published per artefact, and`,
-          `${ix.artifacts.filter((x) => x.dak).length} of ${ix.count} carry one.`,
+          `${ix.artifacts.filter((x) => x.sidecars).length} of ${ix.count} carry one.`,
           ``,
         ]),
   ].join("\n");
 
   return shell(
     `${name} — ${LABEL} artefact`,
-    `${a.key} in the ${LABEL} IG, with its canonical URL, published representations and DAK API sidecars.`,
+    `${a.key} in the ${LABEL} IG, with its canonical URL, published representations and ${SIDECAR_LABEL} sidecars.`,
     body,
     { kind: "leaf" },
   );
@@ -820,7 +835,7 @@ function menuGroupPage(menu: IgMenu, group: IgMenuGroup, order: number): string 
           `*${mdCell(group.label)} carries no sub-items in \`sushi-config.yaml\`.*`,
         ]),
     ``,
-    ...(group.href ? [`This section's own page: [${mdCell(group.label)}](${menuHref(menu, group)}).`, ``] : []),
+    ...(group.href ? [`This section's own page: [${mdCell(group.label)}](${menuHref(menu, { href: group.href })}).`, ``] : []),
     `Published by the IG at \`${menu.canonical}\`. This repository holds the IG's`,
     `artefacts, not its narrative pages, so every link above leaves for the canonical copy.`,
   ].join("\n");
@@ -864,6 +879,17 @@ const pages = new Map<string, string>();
 // Jekyll to copy the file verbatim, which is the behaviour this change exists
 // to stop.
 pages.set("index.md", indexPage(ix));
+
+// THE VIEWER DECLARATION (#1767, stage C3). The index page says which
+// directory it renders and which Tool drew it, so `harness-tiles` finds this
+// page as the `fhir-artifact-index` kind's viewer for this instance, the same
+// way every other kind's viewer is found (`viewer-declarations.ts`). The
+// directories come from the instance's own declaration; an instance that
+// declares none (a scratch one) gets no declaration rather than a guessed one.
+{
+  const rendered = directoriesForGraph(INSTANCE, "fhir-artifact-index").map((d) => renderedPath(repoRootFor(INSTANCE), d));
+  pages.set("index.md", withRendersFrontMatter(pages.get("index.md")!, rendered, "ig-pages"));
+}
 
 // EVERY artefact, not only the sidecar-bearing ones. The owner's call,
 // 2026-09-22: full parity with the Publisher's 673 artefact pages, against a
@@ -951,7 +977,7 @@ if (CHECK) {
     mkdirSync(join(abs, ".."), { recursive: true });
     writeFileSync(abs, html);
   }
-  const dak = dakOverlayCensus(ix.artifacts);
+  const sc = sidecarCensus(ix.artifacts);
   console.log(`${INSTANCE_NAME}/docs: ${pages.size} page(s)`);
   console.log(`  index over ${ix.count} artefacts in ${byCategory(ix.artifacts).size} categories`);
   // Counted from the page map, never as `pages.size - 1`. That expression was
@@ -960,7 +986,7 @@ if (CHECK) {
   // pages over a corpus of 674.
   const artefactPages = [...pages.keys()].filter((k) => k.startsWith("artifact/")).length;
   const categoryPages = [...pages.keys()].filter((k) => k.startsWith("category/")).length;
-  console.log(`  ${artefactPages} artefact page(s) — one per artefact; ${dak.schema} carry a DAK schema`);
+  console.log(`  ${artefactPages} artefact page(s) — one per artefact; ${sc.schema} carry a ${SIDECAR_LABEL} schema`);
   console.log(`  ${categoryPages} category page(s) — categories over ${INLINE_LIMIT}, listed off the index`);
   // THE MENU IS REPORTED EITHER WAY. An unreported page is a page nothing
   // checks, and an absent menu reported as silence is indistinguishable from

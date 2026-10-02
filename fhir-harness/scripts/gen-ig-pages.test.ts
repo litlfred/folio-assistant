@@ -15,7 +15,7 @@
  * @module fhir-harness/scripts/gen-ig-pages.test
  */
 import { describe, expect, it } from "bun:test";
-import { readFileSync } from "node:fs";
+import { cpSync, mkdtempSync, readFileSync, rmSync } from "node:fs";
 import { join, resolve } from "node:path";
 
 const ROOT = resolve(import.meta.dir, "..", "..");
@@ -59,5 +59,30 @@ describe("gen-ig-pages --summary: the landing page", () => {
     const src = page("smart-trust");
     expect(src).not.toContain("harness_details.html");
     expect(src).toMatch(/^---\ntitle: "WHO SMART Trust — artefact index"\n/);
+  });
+});
+
+describe("gen-ig-pages defaults: this layer names no publisher (fhir-harness/AGENTS.md)", () => {
+  it("with no --publish-note or --sidecar-label, the pages carry neither WHO's note nor DAK headings", () => {
+    // A scratch instance holding only a copy of a real index, so the run is
+    // not vacuous. A DIRECT CHILD of the checkout, like every real instance,
+    // because the chrome is found through `repoRootFor`, which is the parent
+    // directory: anywhere else no banner is drawn and the publish-note
+    // assertion below passes vacuously (measured: it did, twice). Removed in
+    // `finally`, so no gate sees it.
+    const dir = mkdtempSync(join(ROOT, "gen-ig-pages-scratch-"));
+    try {
+      cpSync(join(ROOT, "smart-trust", "fhir-artifact-index", "index.json"), join(dir, "fhir-artifact-index", "index.json"), { recursive: true });
+      const run = Bun.spawnSync(["bun", "run", join(ROOT, "fhir-harness/scripts/gen-ig-pages.ts"), "--instance", dir, "--chrome-owner", "smart-base"], { cwd: ROOT });
+      expect(run.exitCode).toBe(0);
+      const index = readFileSync(join(dir, "docs", "index.md"), "utf8");
+      // The banner is drawn (a chrome is given), so the publish note is really on the page.
+      expect(index).toContain('<p id="publish-box">This page mirrors a published FHIR Implementation Guide.')
+      expect(index).toContain("## API sidecars surface");
+      expect(index).not.toContain("WHO Implementation Guide");
+      expect(index).not.toMatch(/^## DAK/m);
+    } finally {
+      rmSync(dir, { recursive: true, force: true });
+    }
   });
 });
