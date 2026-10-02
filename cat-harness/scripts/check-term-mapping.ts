@@ -32,7 +32,7 @@
  * @covers glossary
  */
 import { existsSync, readFileSync, readdirSync, statSync } from "node:fs";
-import { join, resolve } from "node:path";
+import { basename, join, resolve } from "node:path";
 
 import {
   MAPPING_TARGETS,
@@ -44,6 +44,12 @@ import {
   normaliseLabel,
 } from "../schemas/term-mapping.ts";
 import { PinnedTerminologySchema } from "../schemas/pinned-terminology.ts";
+import {
+  TERM_ADJUDICATIONS_SUFFIX,
+  TermAdjudicationsFileSchema,
+  adjudicationStatus,
+  type AdjudicationStatus,
+} from "../schemas/term-adjudication.ts";
 import { QA_RESULTS_DIR, buildQaResult, writeQaResult } from "./qa-results.ts";
 
 const ROOT = resolve(import.meta.dir, "../..");
@@ -66,9 +72,9 @@ interface GlossScheme {
   file: string;
 }
 
-/** Every `*.glossary.json` in the checkout, authored and generated alike. */
-export function glossarySchemes(root: string): GlossScheme[] {
-  const out: GlossScheme[] = [];
+/** Every file under the glossary directory whose name ends in `suffix`. */
+function glossaryFiles(root: string, suffix: string): string[] {
+  const out: string[] = [];
   const walk = (dir: string) => {
     let names: string[];
     try {
@@ -76,7 +82,7 @@ export function glossarySchemes(root: string): GlossScheme[] {
     } catch {
       return;
     }
-    for (const n of names) {
+    for (const n of names.sort()) {
       if (n.startsWith(".") || n === "node_modules") continue;
       const abs = join(dir, n);
       let s;
@@ -86,18 +92,66 @@ export function glossarySchemes(root: string): GlossScheme[] {
         continue;
       }
       if (s.isDirectory()) walk(abs);
-      else if (n.endsWith(".glossary.json")) {
-        try {
-          const d = JSON.parse(readFileSync(abs, "utf-8")) as { id?: string; terms?: GlossTerm[] };
-          if (d.terms) out.push({ id: d.id ?? n, terms: d.terms, file: abs.slice(root.length + 1) });
-        } catch {
-          // A scheme that will not parse is `check:glossary`'s finding, not
-          // this one's. Saying it twice would make one defect look like two.
-        }
-      }
+      else if (n.endsWith(suffix)) out.push(abs);
     }
   };
   walk(join(root, "folio-assistant-core", "glossary"));
+  return out;
+}
+
+/**
+ * Every `*.term-adjudications.json` beside the schemes, validated, and each
+ * record set against what this run found (bean `2i5f` leg 1).
+ *
+ * An invalid file FAILS the check. A record that cannot be acted on is a
+ * defect, not a finding. A record's status is only reported: see
+ * {@link adjudicationStatus}.
+ */
+export function adjudications(
+  root: string,
+  mappings: readonly TermMapping[],
+): { files: number; invalid: string[]; status: { key: string; status: AdjudicationStatus }[] } {
+  const files = glossaryFiles(root, TERM_ADJUDICATIONS_SUFFIX);
+  const invalid: string[] = [];
+  const status: { key: string; status: AdjudicationStatus }[] = [];
+  const byKey = new Map(mappings.map((m) => [`${m.scheme}\0${m.term}\0${m.target}`, m]));
+  for (const abs of files) {
+    const rel = abs.slice(root.length + 1);
+    let raw: unknown;
+    try {
+      raw = JSON.parse(readFileSync(abs, "utf-8"));
+    } catch (e) {
+      invalid.push(`${rel}: not JSON (${(e as Error).message})`);
+      continue;
+    }
+    const parsed = TermAdjudicationsFileSchema.safeParse(raw);
+    if (!parsed.success) {
+      for (const i of parsed.error.issues) invalid.push(`${rel} at \`${i.path.join(".") || "(root)"}\`: ${i.message}`);
+      continue;
+    }
+    for (const r of parsed.data.adjudications) {
+      const s = r.subject;
+      status.push({
+        key: `${s.scheme}/${s.term} on ${s.target}`,
+        status: adjudicationStatus(r, byKey.get(`${s.scheme}\0${s.term}\0${s.target}`)),
+      });
+    }
+  }
+  return { files: files.length, invalid, status };
+}
+
+/** Every `*.glossary.json` in the checkout, authored and generated alike. */
+export function glossarySchemes(root: string): GlossScheme[] {
+  const out: GlossScheme[] = [];
+  for (const abs of glossaryFiles(root, ".glossary.json")) {
+    try {
+      const d = JSON.parse(readFileSync(abs, "utf-8")) as { id?: string; terms?: GlossTerm[] };
+      if (d.terms) out.push({ id: d.id ?? basename(abs), terms: d.terms, file: abs.slice(root.length + 1) });
+    } catch {
+      // A scheme that will not parse is `check:glossary`'s finding, not
+      // this one's. Saying it twice would make one defect look like two.
+    }
+  }
   return out;
 }
 
@@ -337,6 +391,16 @@ export interface MappedTerm {
   exact: boolean;
   /** The URIs of the concepts it matched, which is what a reader follows. */
   concepts: string[];
+  /**
+   * The subset of {@link concepts} whose `prefLabel` the term matched — the
+   * only ones an `exactMatch` may point at. Empty when `exact` is false.
+   *
+   * `exact` alone could not say WHICH concept was exact: a term matching
+   * concept A's prefLabel and concept B's altLabel is `exact: true` with both
+   * in `concepts`, and publishing `skos:exactMatch` to B would assert an
+   * equivalence nothing measured (bean `5yhm`, the SKOS-publish slice).
+   */
+  exactConcepts: string[];
 }
 
 /**
@@ -440,6 +504,9 @@ export function perScheme(
           term: r.term,
           exact: r.exact === "mapped",
           concepts: [...new Set((r.matches ?? []).map((m) => m.uri))].sort(),
+          exactConcepts: [
+            ...new Set((r.matches ?? []).filter((m) => m.predicate === "skos:exactMatch").map((m) => m.uri)),
+          ].sort(),
         }))
         .sort(byTerm),
       ...(unmapped > 0 && undetermined > 0
@@ -479,6 +546,22 @@ function main(): number {
     console.log(`    consulted ${s.consulted.length ? s.consulted.join(", ") : "(none declared)"} via ${s.via}`);
     if (s.unreachable_reason) console.log(`    ! ${s.unreachable_reason}`);
   }
+
+  // Leg 1 of `2i5f`: the decisions taken where a candidate and a terminology
+  // disagree. Validated in BOTH modes, because an invalid record is a defect
+  // whether or not anything is being written.
+  const adj = adjudications(ROOT, mappings);
+  if (adj.invalid.length) {
+    console.error(`  ✗ ${adj.invalid.length} problem(s) in *${TERM_ADJUDICATIONS_SUFFIX}:`);
+    for (const i of adj.invalid) console.error(`    ${i}`);
+    return 2;
+  }
+  const tally = (k: AdjudicationStatus) => adj.status.filter((x) => x.status === k).length;
+  console.log(
+    `  adjudications: ${adj.status.length} in ${adj.files} file(s): ${tally("applied")} applied, ` +
+      `${tally("pending")} pending, ${tally("holds")} hold, ${tally("stale")} stale`,
+  );
+  for (const x of adj.status.filter((y) => y.status === "stale")) console.log(`    ! stale: ${x.key}`);
 
   const result = buildQaResult({
     script: "cat-harness/scripts/check-term-mapping.ts",

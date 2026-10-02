@@ -96,11 +96,42 @@ describe("the index matches when it should — the non-vacuity guard", () => {
   test("the committed projection KEEPS the pair: exact and concept-only stay apart (bean 5yhm)", () => {
     const [row] = perScheme(results, "skos", [{ target: "skos", consulted: ["platform"], via: "local" }]);
     expect(row!.mappedTerms).toEqual([
-      { term: "participant", exact: false, concepts: ["platform:actor"] },
-      { term: "policy", exact: true, concepts: ["http://www.w3.org/ns/odrl/2/Policy"] },
+      { term: "participant", exact: false, concepts: ["platform:actor"], exactConcepts: [] },
+      {
+        term: "policy",
+        exact: true,
+        concepts: ["http://www.w3.org/ns/odrl/2/Policy"],
+        exactConcepts: ["http://www.w3.org/ns/odrl/2/Policy"],
+      },
     ]);
     // Not mixed, so no per-term undetermined list: the counts already say it.
     expect(row!.undeterminedTerms).toBeUndefined();
+  });
+});
+
+describe("exactConcepts names WHICH concept was exact (bean 5yhm, SKOS publish)", () => {
+  // One candidate, two concepts: A by prefLabel, B by altLabel. `exact` is
+  // true, and publishing exactMatch to B would assert an equivalence nothing
+  // measured — so the record must say A alone was exact.
+  const schemes = [
+    scheme("platform", [
+      authored("Ledger", { exactMatch: ["http://example.org/A"] }),
+      authored("Journal", { exactMatch: ["http://example.org/B"], altLabel: ["Ledger"] }),
+    ]),
+    scheme("kg-tools", [candidate("Ledger")]),
+  ];
+  const results = resolveSkos(candidates(schemes), skosIndex(schemes));
+
+  test("only the prefLabel hit is in exactConcepts; both are in concepts", () => {
+    const [row] = perScheme(results, "skos", [{ target: "skos", consulted: ["platform"], via: "local" }]);
+    expect(row!.mappedTerms).toEqual([
+      {
+        term: "ledger",
+        exact: true,
+        concepts: ["http://example.org/A", "http://example.org/B"],
+        exactConcepts: ["http://example.org/A"],
+      },
+    ]);
   });
 });
 
@@ -109,7 +140,7 @@ describe("termState — the one place the record becomes a per-term answer (bean
     ({ scheme: "s", target: "fhir", mapped: 0, unmapped: 0, undetermined: 0, mappedTerms: [], ...over }) as SchemeState;
 
   test("mapped carries exact and the concepts", () => {
-    const st = [row({ mapped: 1, mappedTerms: [{ term: "a", exact: false, concepts: ["u"] }] })];
+    const st = [row({ mapped: 1, mappedTerms: [{ term: "a", exact: false, concepts: ["u"], exactConcepts: [] }] })];
     expect(termState(st, "s", "fhir", "a")).toEqual({ state: "mapped", exact: false, concepts: ["u"] });
   });
 
