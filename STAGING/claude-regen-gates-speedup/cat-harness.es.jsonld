@@ -301,10 +301,10 @@
   ],
   "canonicalDocument": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld",
   "repository": "cat-harness",
-  "generatedAt": "2026-10-01T19:38:46.170Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/8242a5312e5fb0753e7fbabc802853fb48128330",
-  "sourceCommitSha": "8242a5312e5fb0753e7fbabc802853fb48128330",
-  "sourceCommitAt": "2026-10-01T19:33:36Z",
+  "generatedAt": "2026-10-02T07:10:21.210Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/3780228af99e4a2af2b84c545b27c2b3a5fa9422",
+  "sourceCommitSha": "3780228af99e4a2af2b84c545b27c2b3a5fa9422",
+  "sourceCommitAt": "2026-10-02T07:05:05Z",
   "sourceTreeDirty": true,
   "dependsOnUnavailable": "2 dependency edge(s), none expressible as a record — see gaps",
   "counts": {
@@ -318,8 +318,8 @@
     "Lane": 201,
     "ProcessNode": 940,
     "Tool": 112,
-    "Schema": 143,
-    "ExternalSchema": 17,
+    "Schema": 144,
+    "ExternalSchema": 18,
     "GraphKind": 23,
     "Role": 48,
     "Subgraph": 25,
@@ -3019,7 +3019,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-regen-gates-speedup/cat-harness.jsonld#package/sdlc-core"
       ],
       "instructionsPath": "skills/sdlc/sdlc-core/merge-conflict-patterns.md",
-      "instructionLines": 177,
+      "instructionLines": 230,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -3796,7 +3796,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-regen-gates-speedup/cat-harness.jsonld#package/ui-core"
       ],
       "instructionsPath": "skills/ui/ui-core/harness-tiles.md",
-      "instructionLines": 414,
+      "instructionLines": 425,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -47195,6 +47195,15 @@
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/property-skills"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-regen-gates-speedup/cat-harness.jsonld#schema/prov-jsonld",
+      "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#Schema",
+      "name": "prov-jsonld",
+      "title": "PROV activities as PROV-JSONLD — links, not strings (beans `jcet`, `9y9j`).",
+      "module": "schemas/prov-jsonld.ts",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-regen-gates-speedup/cat-harness.jsonld#directory/schemas",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/prov-jsonld"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-regen-gates-speedup/cat-harness.jsonld#schema/prov",
       "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#Schema",
       "name": "prov",
@@ -48020,6 +48029,20 @@
         "http://www.w3.org/2002/07/owl#"
       ],
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#externalSchema/w3c-owl2"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-regen-gates-speedup/cat-harness.jsonld#externalSchema/w3c-prov-jsonld",
+      "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#ExternalSchema",
+      "name": "w3c-prov-jsonld",
+      "title": "The PROV-JSONLD Serialization: A JSON-LD Representation for the PROV Data Model",
+      "authority": "W3C",
+      "specVersion": "2024-08-25",
+      "specUse": "conforms",
+      "specUrl": "https://www.w3.org/submissions/2024/SUBM-prov-jsonld-20240825/",
+      "namespace": [
+        "https://openprovenance.org/ns/provext#"
+      ],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#externalSchema/w3c-prov-jsonld"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-regen-gates-speedup/cat-harness.jsonld#externalSchema/w3c-prov-o",
