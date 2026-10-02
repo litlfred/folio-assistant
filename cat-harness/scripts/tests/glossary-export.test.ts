@@ -391,7 +391,7 @@ describe("the vocabulary-mapping tables agree with the document's @context", () 
     const prefixes = { ...STANDARD_PREFIXES, ...NS_PREFIXES };
     const ctx = buildGlossary({ today: () => "2026-09-21" }).doc["@context"] as Record<string, unknown>;
     const ctxPrefixes = Object.fromEntries(Object.entries(ctx).filter(([, v]) => typeof v === "string" && /[#/]$/.test(v as string))) as Record<string, string>;
-    const ids = ["glossary-role-concept", "glossary-lane-usage", "glossary-variable-lane-concept", "glossary-retired-concept", "glossary-concept-scheme"];
+    const ids = ["role-naming", "glossary-role-concept", "glossary-lane-usage", "glossary-variable-lane-concept", "glossary-retired-concept", "concept-scheme-naming", "glossary-concept-scheme"];
     let checked = 0;
     for (const id of ids) {
       for (const g of vocabMapping(HARNESS, id).group) {
@@ -406,6 +406,6 @@ describe("the vocabulary-mapping tables agree with the document's @context", () 
         }
       }
     }
-    expect(checked).toBe(27);
+    expect(checked).toBe(28);
   });
 });
