@@ -266,16 +266,9 @@
       "status": "candidate"
     },
     {
-      "id": "ig-chrome.igchromeschema.canonical",
-      "prefLabel": "IgChromeSchema.canonical",
-      "definition": "Its `canonical`.",
-      "source": "fhir-harness/schemas/ig-chrome.ts#IgChromeSchema.canonical",
-      "status": "candidate"
-    },
-    {
       "id": "ig-chrome.igchromeschema.id",
       "prefLabel": "IgChromeSchema.id",
-      "definition": "The IG's `id` from `sushi-config.yaml`, e.g. `smart.who.int.trust`.",
+      "definition": "The chain's TOP layer — the template package an IG names — e.g. `who.template.root`. v1 put the id of the IG it was ingested beside here; v2 keys the chrome by the template, because every IG building with that chain wears it. An IG's own id and status are `ig-identity.json`'s.",
       "source": "fhir-harness/schemas/ig-chrome.ts#IgChromeSchema.id",
       "status": "candidate"
     },
@@ -287,10 +280,10 @@
       "status": "candidate"
     },
     {
-      "id": "ig-chrome.igchromeschema.status",
-      "prefLabel": "IgChromeSchema.status",
-      "definition": "Its `status` — what selects the watermark. `draft` here.",
-      "source": "fhir-harness/schemas/ig-chrome.ts#IgChromeSchema.status",
+      "id": "ig-chrome.igchromeschema.version",
+      "prefLabel": "IgChromeSchema.version",
+      "definition": "The top layer's version, e.g. `0.5.0`.",
+      "source": "fhir-harness/schemas/ig-chrome.ts#IgChromeSchema.version",
       "status": "candidate"
     },
     {
@@ -319,6 +312,34 @@
       "prefLabel": "IgChromeTokenSchema.value",
       "definition": "The winning value, verbatim.",
       "source": "fhir-harness/schemas/ig-chrome.ts#IgChromeTokenSchema.value",
+      "status": "candidate"
+    },
+    {
+      "id": "ig-identity.igidentityschema.id",
+      "prefLabel": "IgIdentitySchema.id",
+      "definition": "The IG's `id` from `sushi-config.yaml`; SUSHI's `packageId` defaults to it.",
+      "source": "fhir-harness/schemas/ig-identity.ts#IgIdentitySchema.id",
+      "status": "candidate"
+    },
+    {
+      "id": "ig-identity.igidentityschema.readat",
+      "prefLabel": "IgIdentitySchema.readAt",
+      "definition": "When it was read. A status is a fact at a moment, not forever.",
+      "source": "fhir-harness/schemas/ig-identity.ts#IgIdentitySchema.readAt",
+      "status": "candidate"
+    },
+    {
+      "id": "ig-identity.igidentityschema.readfrom",
+      "prefLabel": "IgIdentitySchema.readFrom",
+      "definition": "Where it was read: a repository and file, so the claim can be re-checked.",
+      "source": "fhir-harness/schemas/ig-identity.ts#IgIdentitySchema.readFrom",
+      "status": "candidate"
+    },
+    {
+      "id": "ig-identity.igidentityschema.status",
+      "prefLabel": "IgIdentitySchema.status",
+      "definition": "`draft`, `active`, `retired` … — what selects the template's watermark.",
+      "source": "fhir-harness/schemas/ig-identity.ts#IgIdentitySchema.status",
       "status": "candidate"
     },
     {

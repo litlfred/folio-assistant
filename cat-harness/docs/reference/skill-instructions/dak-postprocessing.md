@@ -14,7 +14,7 @@ parent: Skill instructions
 # dak-postprocessing
 
 > Skill id: `dak-postprocessing` · Package: `authoring-who-smart-guidelines` ·
-> Layer: **`smart-dak`**, except the two Library strippers, which are
+> Layer: **`smart-base`, DAK kind** (was `smart-dak` until stage D, #1767), except the two Library strippers, which are
 > `fhir-harness` — see §"One step is not WHO's".
 
 Everything the WHO build runs between `publisher.jar` finishing and deployment,

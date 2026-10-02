@@ -1,0 +1,72 @@
+classDiagram
+  direction TB
+  namespace smart_base__smart_base_document_kinds {
+    class smart_base_smart_base_document_kinds_folio_document_kind_v1_Source["Source"] {
+      <<json: DocumentKindSchema>>
+      ref [1] string
+      locator [0..1] string
+      note [0..1] string
+    }
+    class smart_base_smart_base_document_kinds_folio_document_kind_v1_Section["Section"] {
+      <<json: DocumentKindSchema>>
+      id [1] string
+      title [1] string
+      required [1] boolean
+      description [1] string
+      computedFrom [0..*] string[]
+      modelledBy [0..*] string[]
+      sources [0..*] Source[]
+    }
+    class smart_base_smart_base_document_kinds_folio_document_kind_v1_folio_document_kind_v1["folio-document-kind/v1"] {
+      <<json: DocumentKindSchema>>
+      $schema [1] 'folio-document-kind/v1'
+      id [1] string
+      title [1] string
+      description [1] string
+      structure [1] fixed | semi-fixed
+      extends [0..1] string
+      sections [1..*] Section[]
+      sources [1..*] Source[]
+      generatedBy [0..1] string
+    }
+    class smart_base_smart_base_document_kinds_folio_document_kind_coverage_v1_Member["Member"] {
+      <<json: DocumentKindCoverageSchema>>
+      key [1] string
+      label [1] string
+    }
+    class smart_base_smart_base_document_kinds_folio_document_kind_coverage_v1_Section["Section"] {
+      <<json: DocumentKindCoverageSchema>>
+      id [1] string
+      members [0..*] Member[]
+    }
+    class smart_base_smart_base_document_kinds_folio_document_kind_coverage_v1_Unplaced["Unplaced"] {
+      <<json: DocumentKindCoverageSchema>>
+      group [1] string
+      count [1] integer
+    }
+    class smart_base_smart_base_document_kinds_folio_document_kind_coverage_v1_folio_document_kind_coverage_v1["folio-document-kind-coverage/v1"] {
+      <<json: DocumentKindCoverageSchema>>
+      $schema [1] 'folio-document-kind-coverage/v1'
+      kind [1] string
+      subject [1] string
+      from [1] string
+      method [1] string
+      total [1] integer
+      sections [0..*] Section[]
+      unplaced [0..*] Unplaced[]
+      generatedBy [1] string
+    }
+  }
+  smart_base_smart_base_document_kinds_folio_document_kind_v1_Section *-- "0..*" smart_base_smart_base_document_kinds_folio_document_kind_v1_Source : sources
+  smart_base_smart_base_document_kinds_folio_document_kind_v1_folio_document_kind_v1 *-- "1..*" smart_base_smart_base_document_kinds_folio_document_kind_v1_Section : sections
+  smart_base_smart_base_document_kinds_folio_document_kind_v1_folio_document_kind_v1 *-- "1..*" smart_base_smart_base_document_kinds_folio_document_kind_v1_Source : sources
+  smart_base_smart_base_document_kinds_folio_document_kind_coverage_v1_Section *-- "0..*" smart_base_smart_base_document_kinds_folio_document_kind_coverage_v1_Member : members
+  smart_base_smart_base_document_kinds_folio_document_kind_coverage_v1_folio_document_kind_coverage_v1 *-- "0..*" smart_base_smart_base_document_kinds_folio_document_kind_coverage_v1_Section : sections
+  smart_base_smart_base_document_kinds_folio_document_kind_coverage_v1_folio_document_kind_coverage_v1 *-- "0..*" smart_base_smart_base_document_kinds_folio_document_kind_coverage_v1_Unplaced : unplaced
+  cssClass "smart_base_smart_base_document_kinds_folio_document_kind_v1_Source" fa_uml_kind_document_kinds
+  cssClass "smart_base_smart_base_document_kinds_folio_document_kind_v1_Section" fa_uml_kind_document_kinds
+  cssClass "smart_base_smart_base_document_kinds_folio_document_kind_v1_folio_document_kind_v1" fa_uml_kind_document_kinds
+  cssClass "smart_base_smart_base_document_kinds_folio_document_kind_coverage_v1_Member" fa_uml_kind_document_kinds
+  cssClass "smart_base_smart_base_document_kinds_folio_document_kind_coverage_v1_Section" fa_uml_kind_document_kinds
+  cssClass "smart_base_smart_base_document_kinds_folio_document_kind_coverage_v1_Unplaced" fa_uml_kind_document_kinds
+  cssClass "smart_base_smart_base_document_kinds_folio_document_kind_coverage_v1_folio_document_kind_coverage_v1" fa_uml_kind_document_kinds

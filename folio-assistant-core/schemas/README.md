@@ -12,6 +12,8 @@ Part of [folio-assistant-core](../README.md) 0.1.0, declared as `core-schemas`, 
 | [`catalogue.ts`](catalogue.ts) | a file |  |
 | [`changeset.test.ts`](changeset.test.ts) | a file |  |
 | [`changeset.ts`](changeset.ts) | a file |  |
+| [`dublin-core-render.test.ts`](dublin-core-render.test.ts) | a file |  |
+| [`dublin-core-render.ts`](dublin-core-render.ts) | a file |  |
 | [`dublin-core.test.ts`](dublin-core.test.ts) | a file |  |
 | [`dublin-core.ts`](dublin-core.ts) | a file |  |
 | [`glossary.test.ts`](glossary.test.ts) | a file |  |
