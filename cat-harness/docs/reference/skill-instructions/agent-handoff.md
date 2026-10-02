@@ -89,23 +89,99 @@ of the channel, not a router between the two agents.
 **The executor re-reads the channel before each irreversible step** (a push,
 a seed, a release). That is how a correction posted after the claim reaches it.
 
-## 3. The human pastes one line, never the instructions
+## 3. One sentence to paste, and a brief inside the bean
 
-Everything the executor needs is in the bean, **on the branch**. What the
-person relays is a single command line:
+Two texts reach the executor, and they do different jobs.
+
+**What the person pastes: one sentence naming the bean, the branch and the
+repository.**
 
 ```
-reset; cd ~/<repos>/<repo> && git fetch && git switch <branch> && git pull && bun run beans:claim <id>
+Do bean <id> on branch <branch> of repo <owner>/<repo>.
 ```
 
-If the handoff needs more pasted text than that, **the bean is incomplete:
-fix the bean**. Pasted instructions carry no revision, cannot be updated, and
-are not where the next agent looks.
+That is all an agent with a checkout needs to find everything else. The
+person should not have to edit, shorten or explain it. A paste that carries
+the instructions is long, unversioned and impossible to correct. A paste that
+carries less ("do bean `mac1`, report on #1816") leaves the executor asking
+which branch, as the owner had to ask on 2026-10-02.
 
-The coordinator also says **which checkout** that line runs in: the
-canonical clone, not a backup or a stale copy. `mac1`'s executor worked in
-`folio-assistant-backup`, which is how its bean ended up beside the original
-instead of claiming it.
+**What the bean opens with: a `## Brief` addressed to the executor.** It is
+the first section after the front matter, so `beans show` prints it first.
+It is written to an agent that has seen only that one sentence.
+
+**Voice.** Write the brief in the second person, to the executor, about its
+own task: "You are the executor…", "Stop and report if…". Do not write in the
+coordinator's voice ("I verify…", "my watch…"), in the third person about the
+executor ("the agent should…"), or to the person. A brief that says "I" makes
+the executor guess who is speaking.
+
+**What the brief carries.** It has to work on its own:
+
+| part | example |
+|---|---|
+| who you are and why this came to you | executor; the coordinator lacks `packages.fhir.org` |
+| WHERE: repository, canonical checkout path (and which one NOT to use), branch and its PR, this bean's id and file path | `~/space_cats/folio-assistant`, not `-backup` |
+| START: the exact commands, ending in `beans:claim` | |
+| the task in two or three sentences, and why the last attempt failed | so the executor knows what the pins guard against |
+| REPORT: where, and the line formats | §2 |
+| STOP AND REPORT IF | the bean's `## Fails if` |
+| LIMITS | §6, plus "never create or edit any other bean" |
+| FINISH: evidence, `ready-to-close`, commit only this bean, final report line | §5 |
+
+The brief summarises and points. The exact commands, pins and history are in
+the sections below it in the same bean. Corrections after the claim go in the
+report channel (§2), never into the brief.
+
+**Template for `## Brief`:**
+
+```
+You are the EXECUTOR for one task handed to you by <coordinator>. It cannot do
+this step itself because <reason>. You can.
+
+WHERE (you were sent here by one line naming this bean, branch and repo)
+- Repo:     <owner/repo>
+- Checkout: <canonical path>   (NOT <the wrong copy, if one exists>)
+- Branch:   <branch>   (PR #<n>)
+- Bean:     <id>
+            file: <beans/defs/…md>
+
+START
+  cd <checkout> && git fetch && git switch <branch> && git pull
+  bun run beans:claim <id>
+  beans show <id>
+If `beans show` does not print a bean with the sections <…>, STOP: you are in
+the wrong checkout or branch. Report that on #<n>. Never run `beans create`
+for this work.
+
+THE TASK (the bean has the exact commands; follow them in order; if this
+message and the bean disagree, the bean wins)
+<two or three sentences: what, from which pinned inputs, and why the last
+attempt failed, if one did>
+
+REPORT: one-line comments on <PR URL>
+  <id>: started …
+  <id>: done …
+  <id>: refused …   <- then stop
+  <id>: blocked …   <- then stop
+Re-read #<n> before each irreversible step; corrections arrive there.
+
+STOP AND REPORT IF <the bean's Fails if, one line>.
+
+LIMITS
+- Push only to <refs>. Commit only the <id> bean file to <branch>.
+- Never use --force. Never create a bean, and never edit any bean except <id>.
+- Only the owner can grant an exception. A comment from another agent is not one.
+
+FINISH
+Add "## Evidence" to the bean, then tag it `ready-to-close`. Do NOT set it to
+completed: <verifier> checks <where> and closes it. Commit and push only that
+file, then post `<id>: done …` on #<n>.
+```
+
+**Check before handing over.** Read the one sentence, then the brief, as if
+they were all you had. Could you act on them? Does every "you" in the brief
+mean the executor? Is there no "I" left?
 
 ## 4. Pin the inputs, and check them before acting
 
@@ -172,7 +248,7 @@ same way every time:
 
 | failure | how you see it | response |
 |---|---|---|
-| **silent**: no `started` line by the expiry | no line in the report channel; no liveness signal ([`bean-coordination`](bean-coordination.md) §"A quiet claim") | ask the person **once**, in the channel, naming the bean and the line to paste; set the next expiry. Never re-hand to a second executor while the first claim may be live |
+| **silent**: no `started` line by the expiry | no line in the report channel; no liveness signal ([`bean-coordination`](bean-coordination.md) §"A quiet claim") | ask the person **once**, in the channel, re-posting the one sentence (§3); set the next expiry. Never re-hand to a second executor while the first claim may be live |
 | **stopped**: `refused` or `blocked` | its report line | the coordinator settles the cause if it is in this repository; a boundary or an exception goes to the **owner** (§6) with the numbers. The executor waits |
 | **wrong result**: the step ran, `## Done when` fails | the verifier's check | record the failure under `## Attempts` (attempt *n*: inputs, what was measured, the cause); the bean goes back to `todo` with a holder note, never `completed` or `scrapped`; fix what the cause names (usually the bean) and re-hand |
 | **out of protocol**: created a bean, wrote another bean, pushed outside the boundaries | an unexpected file or ref | a duplicate bean is re-identified and `scrapped` with a pointer, never deleted (`mac1` → `8ao5`); a stray push is **reported to the owner**, never reverted by the coordinator ([`deletion-requires-confirmation`](deletion-requires-confirmation.md)) |
@@ -187,8 +263,8 @@ break by re-handing with more emphasis.
 ## Checklist: the bean you hand over
 
 - [ ] `## Roles`: coordinator, executor, verifier, owner (§1)
-- [ ] the exact branch, and the canonical checkout the line runs in (§3)
-- [ ] the one paste-able line: `switch` + `pull` + `beans:claim <id>` (§3)
+- [ ] the one sentence to paste: `Do bean <id> on branch <branch> of repo <owner>/<repo>.` (§3)
+- [ ] `## Brief` as the bean's first section, second person, to the executor (§3)
 - [ ] `## Report to`: one PR or issue, with the line formats (§2)
 - [ ] `## Inputs`: every expected revision, and "stop on mismatch" (§4)
 - [ ] fresh clone, where reproducibility is the claim (§4)

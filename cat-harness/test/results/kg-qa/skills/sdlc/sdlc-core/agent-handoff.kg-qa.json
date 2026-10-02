@@ -5,15 +5,20 @@
     "id": "agent-handoff",
     "path": "skills/sdlc/sdlc-core/agent-handoff.md"
   },
-  "source_hash": "96bb97f8b122",
+  "source_hash": "eba085acdef9",
   "criteria": {
     "skill-is-a-stub": {
       "result": "pass",
       "findings": []
     },
     "skill-is-brief": {
-      "result": "pass",
-      "findings": []
+      "result": "fail",
+      "findings": [
+        {
+          "where": "skills/sdlc/sdlc-core/agent-handoff.md",
+          "detail": "289 lines; p75 of the skill corpus is 279."
+        }
+      ]
     },
     "skill-not-a-document": {
       "result": "pass",
@@ -37,8 +42,8 @@
     }
   },
   "totals": {
-    "pass": 5,
-    "fail": 0,
+    "pass": 4,
+    "fail": 1,
     "n/a": 2,
     "unknown": 0
   },
@@ -46,10 +51,10 @@
     {
       "voice": "agent-skill-authoring",
       "instance": "cat-harness",
-      "skill_hash": "96bb97f8b122b510c8f1a013fa95539f52f6754a062f769d357ff745c904479f",
+      "skill_hash": "eba085acdef9a3a738ac675f270899c28d2dae003ad17c3f243c994473fe3b10",
       "voice_hash": "6dccbc641e657a67414b98b8675abf691270236bcfd79b36593cee41eae28d90",
       "by": "agent",
-      "at": "2026-10-02T16:37:15.236Z",
+      "at": "2026-10-02T17:12:41.922Z",
       "verdicts": [
         {
           "rule": "as-assume-general-knowledge",
@@ -59,7 +64,7 @@
         {
           "rule": "as-body-under-500-lines",
           "result": "pass",
-          "note": "~210 lines after §7 (failure handling)"
+          "note": "~285 lines after the §3 brief template"
         },
         {
           "rule": "as-description-states-function-and-trigger",
@@ -69,7 +74,7 @@
         {
           "rule": "as-description-third-person",
           "result": "pass",
-          "note": "rewritten from imperative to 'Governs… States…'"
+          "note": "'Governs… States…'; the body's brief template is deliberately second person, addressed to the executor, and §3 says why"
         },
         {
           "rule": "as-evaluations-before-instructions",
@@ -79,7 +84,7 @@
         {
           "rule": "as-examples-move-to-references",
           "result": "pass",
-          "note": "three short code examples, each disambiguating one rule (report formats, the pasted line, the input mismatch)"
+          "note": "one template (the brief), kept inline because it IS the instruction for §3 and is short; the other examples are one to four lines each"
         },
         {
           "rule": "as-no-name-as-heading",
