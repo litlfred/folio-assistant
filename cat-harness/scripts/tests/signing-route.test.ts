@@ -17,17 +17,19 @@
  * with nothing saying it is unsigned.
  */
 import { describe, expect, test } from "bun:test";
-import { join, resolve } from "path";
+import { resolve } from "path";
 
 import { evaluate, loadDecisionTable, possibleOutcomes } from "../../src/workflow/decision-table";
 import { loadProcessModel } from "../../src/workflow/process-model";
 import { REACH_UNKNOWN, effectiveReach } from "../../schemas/actor-reach";
 import { NETWORK_REACHES } from "../../schemas/cat-harness";
 import { fulfilmentKindsForBpmnType } from "../../schemas/role-graph";
+import { workflowFile } from "../known-skills.ts";
 
-const WF = resolve(import.meta.dir, "../../processes");
-const DEC = join(WF, "decisions");
-const table = () => loadDecisionTable(join(DEC, "signing-route.dmn"), "Decision_SigningRoute");
+/** The harness root; diagrams are found by NAME through its declared `processes` graphs (bean `63wl`). */
+const HARNESS = resolve(import.meta.dir, "../..");
+
+const table = () => loadDecisionTable(workflowFile(HARNESS, "signing-route.dmn"), "Decision_SigningRoute");
 
 /** Every fact combination a real run can present, including the third state. */
 const REACHES = [...NETWORK_REACHES, REACH_UNKNOWN] as const;
@@ -107,7 +109,7 @@ describe("the diagram the table backs", () => {
     // loadProcessModel refuses an outcome with no matching branch; loading the
     // real diagram is what exercises that against this table rather than a
     // fixture.
-    const m = await loadProcessModel(join(WF, "qa-report-signing.bpmn"));
+    const m = await loadProcessModel(workflowFile(HARNESS, "qa-report-signing.bpmn"));
     const gw = m.nodes.get("Gateway_SigningRoute");
     expect(gw?.decisionRef).toContain("signing-route.dmn#Decision_SigningRoute");
   });
@@ -116,7 +118,7 @@ describe("the diagram the table backs", () => {
     // The enforcement that stops the air-gapped route quietly becoming a
     // second machine route. If this task were a serviceTask the diagram would
     // still be valid BPMN and the feature would be gone.
-    const m = await loadProcessModel(join(WF, "qa-report-signing.bpmn"));
+    const m = await loadProcessModel(workflowFile(HARNESS, "qa-report-signing.bpmn"));
     const human = m.nodes.get("Task_HumanSign");
     const api = m.nodes.get("Task_ApiSign");
     // Asserted through the function that ENFORCES it, not through the type
