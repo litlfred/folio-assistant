@@ -16,6 +16,6 @@ Held in the library [`cat-harness/library/`](../README.md) as `arxiv-2602.12670v
 | holds | count |
 |---|---|
 | [sections](sections/) | 164 |
-| [blocks](blocks/) | 85 |
+| [blocks](blocks/) | 84 |
 | images | 6 |
 <!-- kg:subgraph:end -->
