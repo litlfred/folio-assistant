@@ -1,11 +1,11 @@
 ---
 # folio-assistant-cxcn
 title: 'QA READERS F7: tests stop reading the committed QA corpus (15 tests in 6 files fail when it is absent)'
-status: todo
+status: in-progress
 type: task
 priority: normal
 created_at: 2026-10-01T08:47:14Z
-updated_at: 2026-10-01T08:47:14Z
+updated_at: 2026-10-02T05:49:22Z
 parent: folio-assistant-3fva
 blocked_by:
     - folio-assistant-16ei
