@@ -5,7 +5,7 @@ status: in-progress
 type: task
 priority: normal
 created_at: 2026-09-19T11:51:29Z
-updated_at: 2026-10-01T17:41:31Z
+updated_at: 2026-10-01T18:06:46Z
 parent: folio-assistant-vke6
 ---
 
@@ -552,3 +552,5 @@ Recorded by the separation-arc lead's agent; source: owner, session_01ToWZR4RgTR
 - **SKOS export URLs (X2):** left out of Q-A until ruled.
 
 **Bearing on this bean:** confirms the inversion — `<stub>/docs`, not `docs/<stub>` — for generated output too. Committed renderings become build output inside each instance's own site; bootstrap's translations move into bootstrap itself.
+
+_2026-10-01T18:06:46Z_ — Claimed by claude/qa-dup-sidecars for Q-A PR 4 (delete the 37 duplicate kg-qa sidecars, narrow kg-audit), assigned by the separation-arc lead (epic 7x5n). `beans:claim` refused only because the bean was in-progress with no holder recorded; cmsl is held by claude/fervent-brahmagupta-rbwhzm.
