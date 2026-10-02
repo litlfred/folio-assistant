@@ -5,7 +5,7 @@ status: in-progress
 type: task
 priority: normal
 created_at: 2026-09-23T21:33:31Z
-updated_at: 2026-10-02T14:12:22Z
+updated_at: 2026-10-02T15:15:34Z
 parent: folio-assistant-zzmr
 ---
 
@@ -25,3 +25,5 @@ One value, several target vocabularies. Today every such mapping is a hand-writt
 - [ ] one generator (glossary-export) moved onto it as the worked example, with its test still green
 
 _2026-10-02T14:12Z_ — Claimed by claude/k74z-vocab-mapping (session https://claude.ai/code/session_01CVVoavPoCHMLA7AASxG8cH).
+
+_2026-10-02T15:15Z_ — Owner ruling, 2026-10-02, verbatim: "1 ... needs to support FHIR Concept Maps downstream". Further, same day, verbatim: "more so, that existing FHIR Concept Maps are representable, (dont need injection of mapping standard -> fhir stds)". Option 1 chosen; the ConceptMap reading is being confirmed with the owner (work held).

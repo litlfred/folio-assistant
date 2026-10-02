@@ -311,6 +311,51 @@ shared module, and add a lint that flags a node carrying both members of a
 
 **Default if no answer: Option 1.**
 
+## Decision
+
+Owner, 2026-10-02, on the four options above, verbatim:
+
+> 1 ... needs to support FHIR Concept Maps downstream
+
+Owner, 2026-10-02, a further statement on the same question, verbatim:
+
+> more so, that existing FHIR Concept Maps are representable, (dont need injection of mapping standard -> fhir stds)
+
+**Option 1 is chosen:** mapping tables as KG data, applied by one in-process
+`vocab-map` Tool. The second statement concerns FHIR ConceptMap support. How
+it is to be read is still being confirmed with the owner, so this section
+records the words and not an interpretation of them.
+
+### Facts gathered for the ConceptMap question, from the specification itself
+
+These were read from HL7's own packages, not recalled from memory:
+`hl7.fhir.r5.core@5.0.0` and `hl7.fhir.r4.examples@4.0.1` /
+`hl7.fhir.r5.examples@5.0.0` on the npm registry, all published by
+`grahamegrieve`.
+
+- **R5 `ConceptMapRelationship`** (`http://hl7.org/fhir/concept-map-relationship`):
+  `related-to`, with children `equivalent`, `source-is-narrower-than-target`
+  and `source-is-broader-than-target`; and `not-related-to`.
+- **R4 `ConceptMapEquivalence`**: `relatedto`, with children `equivalent`
+  (whose child is `equal`), `wider`, `subsumes`, `narrower`, `specializes`
+  and `inexact`; and `unmatched`, whose child is `disjoint`.
+- **R5 structure a representation must not lose:**
+  - map level: `url`, `version`, `status` (1..1), `sourceScope[x]`,
+    `targetScope[x]`, `property` (code, uri, type, system) and
+    `additionalAttribute`;
+  - `group.source` / `group.target` (canonical, 0..1 each);
+  - `element.code` / `display` / `valueSet` / `noMap`;
+  - `target.code` / `display` / `valueSet` / `relationship` (1..1) /
+    `comment`, plus `property` (code + `value[x]`), `dependsOn` and `product`
+    (attribute + `value[x]` or `valueSet`);
+  - `unmapped.mode` (`use-source-code` / `fixed` / `other-map`) with `code`,
+    `display`, `valueSet`, `relationship` and `otherMap`.
+- **Invariants that bear on a representation:**
+  - cmd-1: `source-is-broader-than-target` and `not-related-to` need a comment
+    unless the map is draft;
+  - cmd-4: `noMap` excludes `target`;
+  - cmd-2, cmd-3 and cmd-8–10 constrain `unmapped` by mode.
+
 ## 4. The worked example, once the shape is chosen
 
 `glossary-export` moves first, as the bean requires. Under Option 1 that means
