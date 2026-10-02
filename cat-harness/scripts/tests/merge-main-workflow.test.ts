@@ -12,6 +12,8 @@ import { describe, expect, test } from "bun:test";
 import { readFileSync } from "node:fs";
 import { join, resolve } from "node:path";
 
+import { composeComment, parseLog, type CommentInput } from "../merge-main-comment.ts";
+
 const WORKFLOW = join(resolve(import.meta.dir, "../../.."), ".github", "workflows", "merge-main.yml");
 
 interface Step { name?: string; uses?: string; run?: string }
@@ -22,6 +24,13 @@ interface Doc {
 }
 const doc = Bun.YAML.parse(readFileSync(WORKFLOW, "utf-8")) as Doc;
 const on = (doc.on ?? doc.true)!;
+
+/** A finished, non-cancelled run with nothing to report; each test sets what it is about. */
+const BASE: CommentInput = {
+  jobStatus: "success", status: "1", merged: "false", pushed: "no", blocked: "", rejected: "",
+  sha: "", log: "", marker: "<!-- merge-main-bot -->", runUrl: "https://example.invalid/run",
+  mainFailing: () => "",
+};
 
 describe("merge-main.yml triggers", () => {
   test("the label trigger is pull_request_target, which fires on a conflicted PR", () => {
@@ -119,7 +128,6 @@ describe("a push refusal is read from stderr, not guessed", () => {
   // and the comment said "the branch moved", which was false.
   const steps = doc.jobs.merge!.steps;
   const push = steps.find((s) => (s as { id?: string }).id === "push")!;
-  const comment = steps.find((s) => s.name?.startsWith("Comment once"))!;
 
   test("(a) stderr is captured and the workflows refusal is recognised before the branch-moved check", () => {
     const run = push.run!;
@@ -132,21 +140,98 @@ describe("a push refusal is read from stderr, not guessed", () => {
   });
 
   test("(b) the workflows refusal labels needs-merge-human and names the credentials design", () => {
-    const run = comment.run!;
-    const branch = run.slice(run.indexOf('[ "$BLOCKED" = workflows ]'), run.indexOf('[ "$REJECTED" = true ]'));
-    expect(branch).toContain("--add-label needs-merge-human");
-    expect(branch).toContain("#1829");
-    expect(branch).not.toContain("branch moved");
+    const p = composeComment({ ...BASE, merged: "true", blocked: "workflows" });
+    if (p.action !== "write") throw new Error("expected a comment");
+    expect(p.labelNeedsHuman).toBe(true);
+    expect(p.body).toContain("#1829");
+    expect(p.body).not.toContain("branch moved");
   });
 
   test("(c) 'the branch moved' is said only when the push step said so", () => {
-    const run = comment.run!;
-    const at = run.indexOf("the branch moved during the run");
-    expect(at).toBeGreaterThan(run.indexOf('[ "$REJECTED" = true ]'));
+    const moved = composeComment({ ...BASE, merged: "true", rejected: "true" });
+    const other = composeComment({ ...BASE, merged: "true" });
+    expect(moved.action === "write" && moved.body).toContain("the branch moved during the run");
+    expect(other.action === "write" && other.body).not.toContain("the branch moved");
   });
 
   test("the dispatch fallback runs every gating workflow, JSON-LD drift included", () => {
     const judge = steps.find((s) => s.name === "Have CI judge the merge commit")!;
     expect(judge.run).toContain("code-quality-gates.yml jsonld-gen-check.yml");
+  });
+});
+
+describe("a cancelled or unfinished run is not an error (#1854)", () => {
+  // Measured 2026-10-02 on #1777 (run 36986362911): a newer push to main
+  // cancelled the job mid-merge, the always() comment step ran with an empty
+  // STATUS, and the comment became "**Error** (exit ) — merge-base failed …".
+  const steps = doc.jobs.merge!.steps;
+  const comment = steps.find((s) => s.name?.startsWith("Comment once"))! as Step & { if?: string; env?: Record<string, string> };
+
+  test("empty status: the comment is left alone, and no error text is composed", () => {
+    const p = composeComment({ ...BASE, status: "" });
+    expect(p.action).toBe("leave");
+    expect(JSON.stringify(p)).not.toContain("**Error**");
+  });
+
+  test("cancelled: superseded, the comment is left alone — even when a status was written", () => {
+    for (const status of ["", "1"]) {
+      const p = composeComment({ ...BASE, jobStatus: "cancelled", status });
+      expect(p.action).toBe("leave");
+      if (p.action === "leave") expect(p.reason).toContain("superseded");
+    }
+  });
+
+  test("a real non-zero status with no refusal or unrepaired check is still the Error text", () => {
+    const p = composeComment({ ...BASE, status: "2" });
+    expect(p.action).toBe("write");
+    if (p.action === "write") {
+      expect(p.body).toContain("**Error** (exit 2) — merge-base failed for a reason that is neither a refusal nor an unrepaired check");
+      expect(p.body.startsWith("<!-- merge-main-bot -->\n")).toBe(true);
+      expect(p.labelNeedsHuman).toBe(false);
+    }
+  });
+
+  test("the other outcomes keep their texts", () => {
+    const log = [
+      "  ✓ cat-harness/docs/glossary/index.md  [glossary: take-base]",
+      "  ✓ cat-harness/docs/lsi/x.md  [glossary: take-base]",
+      "  ✓ a.qa-results.json  [qa-results: take-base]",
+      "  ✗ beans/defs/x.md  [beans: refuse] — authored",
+    ].join("\n");
+    expect(parseLog(log).resolved).toBe("- `glossary`: 2\n- `qa-results`: 1");
+    const refused = composeComment({ ...BASE, log });
+    expect(refused.action === "write" && refused.labelNeedsHuman).toBe(true);
+    expect(refused.action === "write" && refused.body).toContain("**Refused — nothing pushed.**");
+    expect(refused.action === "write" && refused.body).toContain("Refused:\n- beans/defs/x.md  [beans: refuse] — authored");
+    const upToDate = composeComment({ ...BASE, status: "0" });
+    expect(upToDate.action === "write" && upToDate.body).toContain("**Already up to date with `main`.**");
+    const pushed = composeComment({ ...BASE, status: "0", merged: "true", pushed: "success", sha: "0123456789abcdef", log });
+    expect(pushed.action === "write" && pushed.body).toContain("**Merged `main` and pushed `012345678`.**");
+    let asked = 0;
+    const unproved = composeComment({ ...BASE, log: "    ✗ check:x STILL fails", mainFailing: () => { asked++; return "TypeScript"; } });
+    expect(unproved.action === "write" && unproved.body).toContain("Failing on main right now: TypeScript.");
+    expect(asked).toBe(1);
+  });
+
+  test("main's CI is asked only when the outcome reports it", () => {
+    let asked = 0;
+    composeComment({ ...BASE, status: "0", mainFailing: () => { asked++; return ""; } });
+    composeComment({ ...BASE, status: "", mainFailing: () => { asked++; return ""; } });
+    expect(asked).toBe(0);
+  });
+
+  test("the workflow hands the job status to main's copy of the composer", () => {
+    expect(comment.env?.JOB_STATUS).toBe("${{ job.status }}");
+    expect(comment.run).toContain('bun run "$RUNNER_TEMP/tool/cat-harness/scripts/merge-main-comment.ts" --log "$RUNNER_TEMP/merge.log"');
+    // `leave` exits before any write to the PR.
+    const run = comment.run!;
+    expect(run.indexOf("= leave ]")).toBeGreaterThan(0);
+    expect(run.indexOf("= leave ]")).toBeLessThan(run.indexOf("gh api -X PATCH"));
+    expect(run).not.toContain("**Error**");
+  });
+
+  test("a cancelled merge step never trips the failure step", () => {
+    const fail = steps.find((s) => /refused != 'true'/.test((s as { if?: string }).if ?? ""))! as Step & { if?: string };
+    expect(fail.if).toContain("steps.merge.outcome == 'success'");
   });
 });
