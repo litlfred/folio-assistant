@@ -279,7 +279,7 @@
       "href": "/cat-harness/schemas/cat-harness/",
       "hidden": false,
       "icon": "schemas",
-      "count": 190,
+      "count": 187,
       "unit": "modules"
     },
     {
@@ -388,10 +388,8 @@
         "folio-assistant-core",
         "folio-assistant-sci",
         "smart-base",
-        "smart-dak",
         "smart-ig",
         "smart-immunizations",
-        "smart-l1",
         "smart-trust",
         "who-iris",
         "who-style-guide"
@@ -637,12 +635,12 @@
         {
           "id": "directories",
           "label": "declared directories",
-          "value": 5
+          "value": 4
         },
         {
           "id": "kinds",
           "label": "declared graph kinds",
-          "value": 5
+          "value": 4
         },
         {
           "id": "views",
@@ -666,10 +664,6 @@
         },
         {
           "kind": "qa",
-          "note": "no viewer yet"
-        },
-        {
-          "kind": "themes",
           "note": "no viewer yet"
         }
       ],
@@ -705,18 +699,10 @@
           ],
           "where": "local",
           "path": "smart-trust/test/results/"
-        },
-        {
-          "id": "smart-trust-themes",
-          "kinds": [
-            "themes"
-          ],
-          "where": "local",
-          "path": "smart-trust/themes/"
         }
       ],
       "findings": [
-        "smart-trust: declares 3 graph(s) with no published viewer — code, qa, themes. Declared and not rendered is a gap, not a dead link.",
+        "smart-trust: declares 2 graph(s) with no published viewer — code, qa. Declared and not rendered is a gap, not a dead link.",
         "smart-trust: 1 graph(s) hold materialized content and are READ-ONLY — fhir-artifact-index. Readable, not editable here: copy one out to your own folio/ to work on it. Separate from whether a viewer is published.",
         "smart-trust: no avatar declared for this instance — showing the generic mark."
       ],
@@ -819,67 +805,6 @@
       ]
     },
     {
-      "name": "smart-l1",
-      "title": "SMART L1",
-      "label": "SMART L1",
-      "description": "The narrative layer of WHO SMART Guidelines — the guideline text, recommendations and evidence a Digital Adaptation Kit is written from.",
-      "footer": false,
-      "needs": [
-        "smart-base"
-      ],
-      "icon": null,
-      "tone": 0,
-      "toneFrom": "avatar",
-      "reads": "a question mark — no avatar is declared for this kind",
-      "genericAvatar": true,
-      "instantiated": false,
-      "stats": [
-        {
-          "id": "directories",
-          "label": "declared directories",
-          "value": 1
-        },
-        {
-          "id": "kinds",
-          "label": "declared graph kinds",
-          "value": 1
-        },
-        {
-          "id": "views",
-          "label": "visualisations you can open",
-          "value": 0
-        }
-      ],
-      "visualisations": [
-        {
-          "kind": "qa",
-          "note": "no viewer yet"
-        }
-      ],
-      "subgraphs": [
-        {
-          "id": "qa",
-          "kinds": [
-            "qa"
-          ],
-          "where": "local",
-          "path": "smart-l1/test/results/"
-        }
-      ],
-      "findings": [
-        "smart-l1: declares 1 graph(s) with no published viewer — qa. Declared and not rendered is a gap, not a dead link.",
-        "smart-l1: no avatar declared for this instance — showing the generic mark."
-      ],
-      "navbarIcons": [
-        "close",
-        "todos",
-        "beans",
-        "processes",
-        "kg",
-        "launcher"
-      ]
-    },
-    {
       "name": "smart-ig",
       "title": "SMART IG",
       "label": "SMART IG",
@@ -930,67 +855,6 @@
       "findings": [
         "smart-ig: declares 1 graph(s) with no published viewer — qa. Declared and not rendered is a gap, not a dead link.",
         "smart-ig: no avatar declared for this instance — showing the generic mark."
-      ],
-      "navbarIcons": [
-        "close",
-        "todos",
-        "beans",
-        "processes",
-        "kg",
-        "launcher"
-      ]
-    },
-    {
-      "name": "smart-dak",
-      "title": "SMART DAK",
-      "label": "SMART DAK",
-      "description": "The L2 layer — Digital Adaptation Kit components and the authoring transforms over them. The harness every WHO SMART DAK instantiates.",
-      "footer": false,
-      "needs": [
-        "smart-base"
-      ],
-      "icon": null,
-      "tone": 0,
-      "toneFrom": "avatar",
-      "reads": "a question mark — no avatar is declared for this kind",
-      "genericAvatar": true,
-      "instantiated": false,
-      "stats": [
-        {
-          "id": "directories",
-          "label": "declared directories",
-          "value": 1
-        },
-        {
-          "id": "kinds",
-          "label": "declared graph kinds",
-          "value": 1
-        },
-        {
-          "id": "views",
-          "label": "visualisations you can open",
-          "value": 0
-        }
-      ],
-      "visualisations": [
-        {
-          "kind": "qa",
-          "note": "no viewer yet"
-        }
-      ],
-      "subgraphs": [
-        {
-          "id": "qa",
-          "kinds": [
-            "qa"
-          ],
-          "where": "local",
-          "path": "smart-dak/test/results/"
-        }
-      ],
-      "findings": [
-        "smart-dak: declares 1 graph(s) with no published viewer — qa. Declared and not rendered is a gap, not a dead link.",
-        "smart-dak: no avatar declared for this instance — showing the generic mark."
       ],
       "navbarIcons": [
         "close",
@@ -1110,12 +974,12 @@
         {
           "id": "directories",
           "label": "declared directories",
-          "value": 9
+          "value": 10
         },
         {
           "id": "kinds",
           "label": "declared graph kinds",
-          "value": 8
+          "value": 9
         },
         {
           "id": "views",
@@ -1147,6 +1011,10 @@
         },
         {
           "kind": "qa",
+          "note": "no viewer yet"
+        },
+        {
+          "kind": "themes",
           "note": "no viewer yet"
         },
         {
@@ -1224,6 +1092,14 @@
           "path": "smart-base/test/results/"
         },
         {
+          "id": "smart-base-themes",
+          "kinds": [
+            "themes"
+          ],
+          "where": "local",
+          "path": "smart-base/themes/"
+        },
+        {
           "id": "voices",
           "kinds": [
             "voices"
@@ -1233,8 +1109,9 @@
         }
       ],
       "findings": [
-        "smart-base: declares 2 graph(s) with no published viewer — qa, tools. Declared and not rendered is a gap, not a dead link.",
-        "smart-base: 1 graph(s) hold materialized content and are READ-ONLY — fhir-artifact-index. Readable, not editable here: copy one out to your own folio/ to work on it. Separate from whether a viewer is published."
+        "smart-base: declares 3 graph(s) with no published viewer — qa, themes, tools. Declared and not rendered is a gap, not a dead link.",
+        "smart-base: 1 graph(s) hold materialized content and are READ-ONLY — fhir-artifact-index. Readable, not editable here: copy one out to your own folio/ to work on it. Separate from whether a viewer is published.",
+        "smart-base: a viewer is published at /cat-harness/schemas/smart-base/ for a \"schemas\" graph this instance does not declare. Declare it and the tile links it."
       ],
       "navbarIcons": [
         "close",
@@ -2833,12 +2710,6 @@
       "agent": "",
       "human": ""
     },
-    "smart-dak": {
-      "version": "0.1.0",
-      "major": null,
-      "agent": "",
-      "human": ""
-    },
     "smart-ig": {
       "version": "0.1.0",
       "major": null,
@@ -2846,12 +2717,6 @@
       "human": ""
     },
     "smart-immunizations": {
-      "version": "0.1.0",
-      "major": null,
-      "agent": "",
-      "human": ""
-    },
-    "smart-l1": {
       "version": "0.1.0",
       "major": null,
       "agent": "",
@@ -3282,7 +3147,7 @@
           },
           {
             "key": "directories",
-            "summary": "5: smart-trust-artifact-index, smart-trust-docs, smart-trust-scripts, qa, smart-trust-themes"
+            "summary": "4: smart-trust-artifact-index, smart-trust-docs, smart-trust-scripts, qa"
           },
           {
             "key": "stickies",
@@ -3341,52 +3206,6 @@
         ]
       },
       {
-        "name": "smart-l1",
-        "title": "SMART L1",
-        "group": "checkout",
-        "declaredIn": "smart-l1/smart-l1.json",
-        "viewHref": "https://github.com/litlfred/folio-assistant/blob/main/smart-l1/smart-l1.json",
-        "editHref": "https://github.com/litlfred/folio-assistant/edit/main/smart-l1/smart-l1.json",
-        "declared": [
-          {
-            "key": "name",
-            "summary": "smart-l1"
-          },
-          {
-            "key": "title",
-            "summary": "SMART L1"
-          },
-          {
-            "key": "description",
-            "summary": "The narrative layer of WHO SMART Guidelines — the guideline text, recommendations and evi…"
-          },
-          {
-            "key": "assets",
-            "summary": "2: agent-instructions, instance-readme"
-          },
-          {
-            "key": "repository",
-            "summary": "litlfred/smart-l1"
-          },
-          {
-            "key": "livesAt",
-            "summary": "{ repository, path }"
-          },
-          {
-            "key": "directories",
-            "summary": "1: qa"
-          },
-          {
-            "key": "needs",
-            "summary": "smart-base"
-          },
-          {
-            "key": "version",
-            "summary": "0.1.0"
-          }
-        ]
-      },
-      {
         "name": "smart-ig",
         "title": "SMART IG",
         "group": "checkout",
@@ -3413,52 +3232,6 @@
           {
             "key": "repository",
             "summary": "litlfred/smart-ig"
-          },
-          {
-            "key": "livesAt",
-            "summary": "{ repository, path }"
-          },
-          {
-            "key": "directories",
-            "summary": "1: qa"
-          },
-          {
-            "key": "needs",
-            "summary": "smart-base"
-          },
-          {
-            "key": "version",
-            "summary": "0.1.0"
-          }
-        ]
-      },
-      {
-        "name": "smart-dak",
-        "title": "SMART DAK",
-        "group": "checkout",
-        "declaredIn": "smart-dak/smart-dak.json",
-        "viewHref": "https://github.com/litlfred/folio-assistant/blob/main/smart-dak/smart-dak.json",
-        "editHref": "https://github.com/litlfred/folio-assistant/edit/main/smart-dak/smart-dak.json",
-        "declared": [
-          {
-            "key": "name",
-            "summary": "smart-dak"
-          },
-          {
-            "key": "title",
-            "summary": "SMART DAK"
-          },
-          {
-            "key": "description",
-            "summary": "The L2 layer — Digital Adaptation Kit components and the authoring transforms over them. …"
-          },
-          {
-            "key": "assets",
-            "summary": "2: agent-instructions, instance-readme"
-          },
-          {
-            "key": "repository",
-            "summary": "litlfred/smart-dak"
           },
           {
             "key": "livesAt",
@@ -3558,7 +3331,7 @@
           },
           {
             "key": "directories",
-            "summary": "8: smart-base-docs, library, methodologies, processes, smart-base-house-processes, smart-bas…"
+            "summary": "9: smart-base-docs, library, methodologies, processes, smart-base-house-processes, smart-bas…"
           },
           {
             "key": "needs",
