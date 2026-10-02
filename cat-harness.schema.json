@@ -534,6 +534,13 @@
                   "held"
                 ]
               },
+              "heldEntries": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "minLength": 1
+                }
+              },
               "visualisedAs": {
                 "type": "string",
                 "enum": [
@@ -811,6 +818,7 @@
               "bodyFrom": {
                 "type": "string",
                 "enum": [
+                  "summary",
                   "description"
                 ]
               },
@@ -1022,8 +1030,8 @@
   "$comment": "Instance graph: https://litlfred.github.io/folio-assistant/cat-harness.jsonld",
   "staging": {
     "branch": "main",
-    "sha": "87431534f530076b057cc3a4b97566508bd7a681",
+    "sha": "a07c3c66e77e82f2d076ead87478f6aed7bc6c4b",
     "pr": "main",
-    "run": "36920188662"
+    "run": "36987535587"
   }
 }

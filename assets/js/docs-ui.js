@@ -678,6 +678,52 @@
     'fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>' +
     "</svg>";
 
+  /* ── TWO SETTINGS PANELS, TWO NAMES, EACH POINTS TO THE OTHER ──────────
+   *
+   * Bean `ob3m` finding 12. Two unrelated panels were both called "Settings"
+   * and both wore a gear: the GLASS's (theme, avatars, opacity, blur) and the
+   * ▦ Actions launcher's (scheme, reading preferences, Discarded, Declared
+   * kinds). A reader wanting the Discarded fish who opened the glass one found
+   * nothing there and nothing saying where else to look.
+   *
+   * Owner, 2026-10-01, option 2 of 4: *"Rename: 'Glass settings' and 'Page
+   * settings', each with a link to the other."* The names live HERE, once,
+   * because each panel's cross-link names the OTHER panel — a rename made in
+   * one place only would leave a link announcing a panel that no longer
+   * exists under that name.
+   *
+   * The openers are a registry rather than a call from one mount into the
+   * other: the launcher and the glass mount independently, and a page with no
+   * sidebar (a replica, the harness page) has a glass and no launcher. A
+   * cross-link is drawn only when its target registered, so no link can open
+   * nothing — the `dh4f` rule for controls. */
+  var SETTINGS_NAMES = { page: "Page settings", glass: "Glass settings" };
+  var SETTINGS_SCOPES = {
+    page: "scheme, reading, Discarded",
+    glass: "theme, avatars, opacity, blur",
+  };
+  var settingsOpeners = { page: null, glass: null };
+
+  /**
+   * The link at the top of one settings panel that opens the other. A BUTTON:
+   * it opens a panel in place rather than navigating, so a link's semantics
+   * (and a middle-click that opens nothing) would be wrong. Null when the
+   * target is not on this page.
+   */
+  function settingsCrossLink(target, beforeOpen) {
+    if (!settingsOpeners[target]) return null;
+    var b = el("button", {
+      type: "button",
+      class: "fa-settings-crosslink",
+      "data-fa-settings-crosslink": target,
+    }, SETTINGS_NAMES[target] + " (" + SETTINGS_SCOPES[target] + ") →");
+    b.addEventListener("click", function () {
+      if (beforeOpen) beforeOpen();
+      settingsOpeners[target]();
+    });
+    return b;
+  }
+
   function storedPrefs() {
     try {
       var raw = localStorage.getItem(A11Y_KEY);
@@ -1869,6 +1915,12 @@
       built = true;
 
       var settings = el("div", { class: "fa-tile-content" });
+      // FIRST, above the scheme: a reader who came here for the glass's
+      // opacity is told where it is before reading anything else (`ob3m` 12).
+      // The launcher closes first, so focus lands on the glass panel's
+      // heading rather than staying behind in a sidebar the glass covers.
+      var toGlass = settingsCrossLink("glass", function () { open(false); });
+      if (toGlass) settings.appendChild(toGlass);
       settings.appendChild(buildThemeTile());
       settings.appendChild(buildReadingPrefs());
 
@@ -2105,7 +2157,14 @@
     if (searchHolder) {
       grid.appendChild(tileAction(SEARCH_GLYPH, "Search", revealSearch));
     }
-    grid.appendChild(tileButton(GEAR_GLYPH, "Settings", "settings"));
+    var pageSettingsTile = tileButton(GEAR_GLYPH, SETTINGS_NAMES.page, "settings");
+    grid.appendChild(pageSettingsTile);
+    // The glass's "Page settings →" lands HERE: the launcher opened and the
+    // view shown, the same two steps a reader takes by hand (`ob3m` 12).
+    settingsOpeners.page = function () {
+      if (host.getAttribute("data-open") !== "true") open(true);
+      showView("settings", SETTINGS_NAMES.page, pageSettingsTile);
+    };
     grid.appendChild(tileButton(GLOBE_GLYPH, "Language", "language"));
     // The encoder is a separate vendor script. Without it the OTHER tiles must
     // still work -- the old code returned early from the whole mount when it
@@ -4903,29 +4962,68 @@
 
     function zoomKindOf(a) { return a.kind === "todos" ? "todo" : (a.kind || "library"); }
 
-    /** Where a card with no saved place goes: a grid, in key order. */
-    function defaultGlassGeom(a, i) {
+    /** The size a card with no saved place starts at. */
+    function defaultGlassSize(a) {
       var t = zoomThresholdFor(zoomKindOf(a));
       // A DEFAULT card never starts zoomed out: at least the declared width
       // plus a step, so the words show until the reader shrinks it.
       var w = t ? Math.max(GLASS_CARD_W, t.belowPx + RESIZE_STEP) : GLASS_CARD_W;
-      var avail = Math.max(w, shelf.clientWidth || (window.innerWidth - 32));
-      var cols = Math.max(1, Math.floor((avail + GLASS_GAP) / (w + GLASS_GAP)));
       // A BOOK IS PORTRAIT. The cover fills the card (owner, 2026-09-23:
       // *"artefact avatar should cover sheet"*), and a landscape card would
       // show a cover's middle band. 4:3 upright, which every rendered cover
-      // here is near. Rows are laid out at the tallest card's height.
+      // here is near.
       // A STICKY IS SQUARE — owner, 2026-09-24: *"i expected to see themed
       // square sticky avatar"*. A todo is a sticky note everywhere else on
       // this site, and a sticky note is square; the wide 152px strip it used
       // to pop out as read as a list row, not as the note.
       var h = zoomKindOf(a) === "library" && prefs.avatars !== "text"
         ? Math.round(w * 4 / 3) : zoomKindOf(a) === "todo" ? w : GLASS_CARD_H;
-      return {
-        left: (i % cols) * (w + GLASS_GAP),
-        top: Math.floor(i / cols) * (Math.max(h, GLASS_CARD_H) + GLASS_GAP),
-        width: w,
-        height: h,
+      return { width: w, height: h };
+    }
+
+    /* WHERE CARDS WITH NO SAVED PLACE GO: a shelf, in key order, that
+     * advances by each card's ACTUAL size. Issue #1780: each default place
+     * used to be computed from the card's own size alone — a grid of its own
+     * column width and row height — so a portrait library card (288×384) and
+     * a square todo (324×324) placed together landed on each other. Now a
+     * card goes right of the previous one, a row wraps when the next card
+     * would pass the shelf's width, and the next row starts below the
+     * tallest card of the last one.
+     *
+     * A card the READER placed is never moved: it is passed in as `fixed`,
+     * and a default card that would land on one steps past it instead. */
+    function glassPacker(fixed) {
+      var avail = Math.max(GLASS_CARD_W, shelf.clientWidth || (window.innerWidth - 32));
+      var x = 0, y = 0, rowH = 0;
+      function hits(g) {
+        for (var k = 0; k < fixed.length; k++) {
+          var f = fixed[k];
+          if (g.left < f.left + f.width + GLASS_GAP && f.left < g.left + g.width + GLASS_GAP &&
+              g.top < f.top + f.height + GLASS_GAP && f.top < g.top + g.height + GLASS_GAP) return f;
+        }
+        return null;
+      }
+      function wrap() { x = 0; y += rowH + GLASS_GAP; rowH = 0; }
+      return function next(size) {
+        // Bounded: each step moves the cursor right or down past a card.
+        for (var guard = 0; guard < 1000; guard++) {
+          if (x > 0 && x + size.width > avail) wrap();
+          var g = { left: x, top: y, width: size.width, height: size.height };
+          var f = hits(g);
+          if (!f) {
+            x += size.width + GLASS_GAP;
+            rowH = Math.max(rowH, size.height, GLASS_CARD_H);
+            return g;
+          }
+          // Step past the reader's card; if that ends the row, the row is at
+          // least as tall as the part of it this card would have shared.
+          x = f.left + f.width + GLASS_GAP;
+          if (x + size.width > avail) {
+            rowH = Math.max(rowH, f.top + f.height - y);
+            if (x > 0) wrap();
+          }
+        }
+        return { left: 0, top: y, width: size.width, height: size.height };
       };
     }
 
@@ -5489,12 +5587,19 @@
     }
 
     function buildGlassCard(key, a) {
+      // ONE LINE, for every accessible name and title built from it. A todo's
+      // title is its summary, which may carry raw newlines; an `aria-label`
+      // or a `title` with "\n" in it is announced or tooltipped broken, so
+      // every run of whitespace becomes one space — as `plainGist` does, but
+      // without its markdown stripping, which would mangle a title like
+      // "C*-algebras". The visible name keeps `a.title`: rendering collapses it.
+      var label = String(a.title || "").replace(/\s+/g, " ").trim();
       var card = el("article", {
         class: "fa-glass-asset",
         "data-fa-asset": key,
         "data-fa-asset-kind": a.kind || "library",
         "data-fa-zoom-kind": zoomKindOf(a),
-        "aria-label": a.title,
+        "aria-label": label,
         tabindex: "-1",
       });
       var live = el("span", { class: "fa-sr-only", "aria-live": "polite" });
@@ -5521,7 +5626,7 @@
         type: "button",
         class: "fa-glass-asset-tool",
         "data-fa-control": "move",
-        "aria-label": "Move " + a.title + " around the glass",
+        "aria-label": "Move " + label + " around the glass",
         "aria-pressed": "false",
         title: "Move (arrow keys; Shift+arrows resize)",
       }, CONTROL_GLYPHS.move || "\u271C");
@@ -5537,7 +5642,7 @@
         if (!on) { leaveMoveMode(); return; }
         setMoveMode(card, true, live);
         moveBtn.setAttribute("aria-pressed", "true");
-        showMoveBar(card, a.title, mover, leaveMoveMode);
+        showMoveBar(card, label, mover, leaveMoveMode);
       });
       card.addEventListener("fa:move-mode", function () {
         moveBtn.setAttribute("aria-pressed", "false");
@@ -5576,11 +5681,11 @@
           ? "Smaller: showing the avatar only." : "Size " + g.width + " by " + g.height + ".");
       }
       var smaller = el("button", {
-        type: "button", class: "fa-glass-asset-tool", "aria-label": "Make " + a.title + " smaller",
+        type: "button", class: "fa-glass-asset-tool", "aria-label": "Make " + label + " smaller",
         title: "Smaller",
       }, "\u2212");
       var larger = el("button", {
-        type: "button", class: "fa-glass-asset-tool", "aria-label": "Make " + a.title + " larger",
+        type: "button", class: "fa-glass-asset-tool", "aria-label": "Make " + label + " larger",
         title: "Larger",
       }, "+");
       smaller.addEventListener("click", function () { resizeBy(-2 * RESIZE_STEP, smaller); });
@@ -5593,7 +5698,7 @@
       var close = el("button", {
         type: "button",
         class: "fa-glass-asset-tool fa-glass-asset-close",
-        "aria-label": "Put " + a.title + " back in the library view — it stays in your folio",
+        "aria-label": "Put " + label + " back in the library view — it stays in your folio",
         title: "Back in library view (stays in your folio)",
       }, "×");
       close.addEventListener("click", function () { shelveFromGlass(key); });
@@ -5622,7 +5727,7 @@
           }
         });
       } else {
-        setCardMeta(card, [["Title", a.title]]);
+        setCardMeta(card, [["Title", label]]);
       }
 
       // SELECTING ANY PART RAISES IT — the owner's rule for windows,
@@ -5745,11 +5850,13 @@
       keys.sort();
 
       var placed = [];
-      keys.forEach(function (key, i) {
+      var nextSpot = glassPacker(keys.map(function (k) { return all[k].geom; })
+        .filter(function (g) { return g && isFinite(g.left) && isFinite(g.top); }));
+      keys.forEach(function (key) {
         var a = all[key];
         var card = buildGlassCard(key, a);
         shelf.appendChild(card);
-        applyGeometry(card, a.geom || defaultGlassGeom(a, i));
+        applyGeometry(card, a.geom || nextSpot(defaultGlassSize(a)));
         placed.push(card);
       });
       fitShelf();
@@ -5813,7 +5920,7 @@
         // SIZED TO ITS WORDS: measured at each candidate width with the height
         // left to the content, so no line is cut (a fixed 180px cut the last
         // one at 420px wide). Then placed where a card of that size is free.
-        var noteGeom = defaultGlassGeom({ kind: "todos" }, keys.length);
+        var noteGeom = nextSpot(defaultGlassSize({ kind: "todos" }));
         var shapes = [Math.max(noteGeom.width, 420), noteGeom.width].map(function (w) {
           noteCard.style.width = w + "px";
           noteCard.style.height = "auto";
@@ -6032,6 +6139,13 @@
      * buttons beside it. */
     function buildSettings(body) {
       function save() { setGlassPrefs(prefs); applyGlassPrefs(layer, prefs); }
+
+      // FIRST: the way to the OTHER settings, where the Discarded fish and the
+      // reading preferences are (`ob3m` 12). The glass shuts first, because
+      // the launcher's panel lives in the sidebar and the open glass sits
+      // over it — a panel opened underneath the glass has not opened.
+      var toPage = settingsCrossLink("page", function () { setOpen(false); });
+      if (toPage) body.appendChild(toPage);
 
       function radioGroup(legend, name, options, current, onPick) {
         var fs = el("fieldset", { class: "fa-glass-setting" });
@@ -6382,24 +6496,40 @@
     }
     chromeTile("glass-filter", "Filter", "\u25BD", "Filter your glass \u2014 by kind, by where it came from, or item by item", buildFilter);
 
-    // RENAMED 2026-10-01 on the owner's ruling — bean `ob3m` finding 12. Two
-    // unrelated controls were both called "Settings" and both wore a gear:
-    // this one, and the LAUNCHER's at `tileButton(GEAR_GLYPH, "Settings", …)`
-    // around line 2060, which is site chrome (theme, language, QR). Neither
-    // pointed at the other, so a reader met the same name twice for different
-    // things and a screen reader read them identically.
+    // NAMED FOR WHAT IT SETS — bean `ob3m` finding 12, owner's ruling
+    // 2026-10-01 (option 2 of 4): "Glass settings" here and "Page settings"
+    // on the ▦ launcher, each with a link to the other at the top of its
+    // panel. See `SETTINGS_NAMES` for why the names live in one place.
     //
-    // The label comes from this call's OWN title, which already said "Folio
-    // settings" — the rename recovers information the code held rather than
-    // inventing a distinction. The launcher's label is deliberately untouched:
-    // readers have already learned it, and only one of the two had to move.
+    // This SUPERSEDES the comment that stood here, which renamed only this
+    // tile ("Folio settings") and rejected cross-links as asserting "a
+    // relationship between site chrome and board state that does not exist".
+    // The relationship a reader needs is not between the settings but between
+    // the PLACES: someone looking for the Discarded fish in the wrong panel
+    // has to be told where the right one is. The owner chose the links.
+    //
+    // The TITLE leads with the name, because it is both the tile's accessible
+    // name and the panel's heading — a heading reading "Theme, avatars,
+    // opacity" under a tile captioned otherwise was a third name for it.
     //
     // The `id` stays `glass-settings`. Every glass test keys on
     // `data-fa-glass-chrome="glass-settings"` and `STRIP_DEFAULT` lists it, so
-    // the id is the contract and the label is the prose. Cross-linking the two
-    // panels was considered and rejected: it would assert a relationship
-    // between site chrome and board state that does not exist.
-    chromeTile("glass-settings", "Folio settings", "⚙", "Theme, avatars, opacity", buildSettings);
+    // the id is the contract and the label is the prose.
+    chromeTile("glass-settings", SETTINGS_NAMES.glass, "⚙",
+               SETTINGS_NAMES.glass + " \u2014 " + SETTINGS_SCOPES.glass, buildSettings);
+    // The Page settings' "Glass settings →" lands here: the glass pulled down
+    // and this panel open. Never a toggle — `openPanel` CLOSES a panel that is
+    // already open, and a link that sometimes shuts its own target is not a link.
+    settingsOpeners.glass = function () {
+      if (layer.getAttribute("data-fa-glass") !== "open") setOpen(true);
+      if (openPanelId === "glass-settings") {
+        var h = panel.querySelector(".fa-glass-panel-title");
+        if (h) h.focus();
+        return;
+      }
+      var d = chromeDefs["glass-settings"];
+      openPanel("glass-settings", d.title, d.build);
+    };
 
     /* ── HARNESSES — the config panel, issue #1146 ────────────────────────
      *
