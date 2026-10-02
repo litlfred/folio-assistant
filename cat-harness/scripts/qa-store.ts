@@ -84,13 +84,13 @@ import { PUSH_BASE_MS, PUSH_CAP_MS } from "./backoff-sleep.js";
 // ── Constants ────────────────────────────────────────────────────────────
 
 /**
- * The branch's name, and the names it had before (bean `32f6`, owner
- * 2026-10-02: special branches carry the `cat-` prefix). Mirrors the
- * `qa-reports` row of `special-branches.json` (PR #1913). The legacy list
- * empties when bean `oycs` says every remote is renamed.
+ * The branch's name, and the names it had before, newest first. Owner
+ * 2026-10-02: special branches are `cat/<harness>/<name>` (note on `fs43`,
+ * bean `tlk2`), superseding the interim `cat-` prefix of bean `32f6`. The
+ * legacy list empties when bean `oycs` says every remote is renamed.
  */
-export const QA_BRANCH = "cat-qa-reports";
-export const LEGACY_QA_BRANCHES: readonly string[] = ["qa-reports"];
+export const QA_BRANCH = "cat/cat-harness/qa-reports";
+export const LEGACY_QA_BRANCHES: readonly string[] = ["cat-qa-reports", "qa-reports"];
 /** The branch when no declaration names one (proposal §2.4). */
 export const DEFAULT_QA_BRANCH = QA_BRANCH;
 export const MANIFEST_FILE = "manifest.json";
@@ -291,7 +291,7 @@ export function qaBranchCandidates(declared: string): string[] {
 /**
  * The rule, for readers AND writers: the first candidate that exists on the
  * remote, else the first candidate. Writers follow it too, so nothing creates
- * `cat-qa-reports` beside a live `qa-reports` and blocks the rename — GitHub's
+ * the new name beside a live legacy one and blocks the rename — GitHub's
  * branch rename refuses a target that exists, and keeps no redirect for git.
  */
 export function pickQaBranch(candidates: readonly string[], present: ReadonlySet<string>): string {

@@ -32,6 +32,7 @@ describe("qa-reports-unretried", () => {
     ["for attempt in 1 2 3; do git push origin x:qa-reports && break; done"],
     ["git push origin HEAD:refs/heads/cat-qa-reports"],
     ["git push origin x:cat-qa-reports"],
+    ["git push origin x:refs/heads/cat/cat-harness/qa-reports"],
   ])("flags a raw push: %s", (line) => {
     expect(qaReportsUnretried(`jobs:\n  j:\n    steps:\n      - run: |\n          ${line}\n`, "x.yml").map((f) => f.kind)).toEqual(["qa-reports-unretried"]);
   });

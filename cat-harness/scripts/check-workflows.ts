@@ -361,9 +361,9 @@ export function ghPagesWipesStaging(text: string, file: string): WorkflowFinding
   return out;
 }
 
-/** The branch the QA results are published to (owner ruling D1), and its pre-`cat-` name (bean `32f6`). */
-export const QA_REPORTS_BRANCH = "cat-qa-reports";
-export const QA_REPORTS_BRANCH_NAMES: readonly string[] = [QA_REPORTS_BRANCH, "qa-reports"];
+/** The branch the QA results are published to (owner ruling D1), and its earlier names (beans `32f6`, `tlk2`). */
+export const QA_REPORTS_BRANCH = "cat/cat-harness/qa-reports";
+export const QA_REPORTS_BRANCH_NAMES: readonly string[] = [QA_REPORTS_BRANCH, "cat-qa-reports", "qa-reports"];
 
 /**
  * Every write to `qa-reports` must go through `qa-store.ts` — bean `16ei`.
