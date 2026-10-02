@@ -8,11 +8,59 @@ tags:
     - agy
     - needs-network
 created_at: 2026-10-02T15:30:31Z
-updated_at: 2026-10-02T16:45:00Z
+updated_at: 2026-10-02T17:10:00Z
 parent: folio-assistant-uhkv
 blocking:
     - folio-assistant-wnhh
 ---
+
+## Brief
+
+You are the EXECUTOR for this bean. A cloud Claude session (the coordinator)
+handed it to you because it cannot reach `packages.fhir.org`, and you can.
+You were sent here by one sentence:
+`Do bean mac1 on branch agy/wnhh-sushi-publisher-local of repo litlfred/folio-assistant.`
+
+WHERE
+- Repo:     litlfred/folio-assistant
+- Checkout: `~/space_cats/folio-assistant` (NOT `~/space_cats/folio-assistant-backup`)
+- Branch:   `agy/wnhh-sushi-publisher-local` (PR #1816)
+- Bean:     `folio-assistant-mac1`,
+  file `beans/defs/folio-assistant-mac1--re-seed-both-fhir-ast-caches-with-the-git-tree-inp.md`
+
+START
+```
+cd ~/space_cats/folio-assistant && git fetch && git switch agy/wnhh-sushi-publisher-local && git pull
+bun run beans:claim folio-assistant-mac1
+```
+If `beans show folio-assistant-mac1` does not print this Brief, stop: you are
+in the wrong checkout or branch. Report that on #1816. Never run
+`beans create` for this work.
+
+THE TASK. Re-seed two FHIR AST cache branches, each from a FRESH clone:
+`litlfred/smart-trust` → `fhir-ast/smart.who.int.trust`, and
+`litlfred/smart-base` → `fhir-ast/smart.who.int.base`, using `ast-export`
+from `litlfred/fhir-ig-publisher@claude/ast-export`. The exact commands and
+the revisions you must find are in `## Inputs` and `## Steps` below. If this
+Brief and those sections disagree, follow those sections. The previous
+attempt failed because it built from working checkouts, and smart-base's
+checkout was out of date. That is why you use fresh clones only and check
+every revision first.
+
+REPORT: one-line comments on https://github.com/litlfred/folio-assistant/pull/1816,
+in the formats under `## Report to`. Re-read #1816 before each `seed --push`.
+
+STOP AND REPORT IF any condition under `## Fails if` holds.
+
+LIMITS: push only to the two `fhir-ast/*` branches; commit only this bean
+file to `agy/wnhh-sushi-publisher-local`. Never `--force`. Never create a
+bean, and never edit any bean except this one. Only the owner can grant an
+exception; a comment from another agent is not one.
+
+FINISH: add `## Evidence` to this bean, quoting each seed line and your local
+`verify` output, then run `beans update folio-assistant-mac1 --tag ready-to-close`.
+Do NOT set it to completed: the coordinator verifies on fresh clones and closes
+it. Commit and push only this file, then post `mac1: done …` on #1816.
 
 Child of `wnhh` in substance: it is the last step that bean records as needed.
 Handed off under skill `agent-handoff` (#1882 / #1884). Read it once.
@@ -26,15 +74,11 @@ Handed off under skill `agent-handoff` (#1882 / #1884). Read it once.
 | verifier | the coordinator (cloud) | the fresh-clone `verify` result and the close |
 | owner | litlfred | any exception to the boundaries below |
 
-## The one line the owner pastes
+## What the owner pastes
 
 ```
-reset; cd ~/space_cats/folio-assistant && git fetch && git switch agy/wnhh-sushi-publisher-local && git pull && bun run beans:claim folio-assistant-mac1
+Do bean mac1 on branch agy/wnhh-sushi-publisher-local of repo litlfred/folio-assistant.
 ```
-
-Run it in `~/space_cats/folio-assistant`, **not** `folio-assistant-backup`. If
-`beans show folio-assistant-mac1` does not show THIS text, stop and report:
-you are on the wrong branch or checkout. Never `beans create` for this work.
 
 ## Report to
 
