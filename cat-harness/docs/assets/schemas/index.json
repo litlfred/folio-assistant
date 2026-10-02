@@ -2,7 +2,7 @@
   "$schema": "folio-schema-graph/v1",
   "tile": {
     "schemas": {
-      "count": 187,
+      "count": 189,
       "unit": "modules"
     }
   },
@@ -965,6 +965,22 @@
       "name": "render-log",
       "graphNode": "schema",
       "summary": "The render log — what was published to the publish branch, when, and why.",
+      "isTest": false
+    },
+    {
+      "module": "cat-harness/schemas/render-output.test.ts",
+      "instance": "cat-harness",
+      "name": "render-output.test",
+      "graphNode": "undeclared",
+      "summary": "Each row of `RENDER_AS`'s table, held to `renderToolOutput` — bean `q2wm`.",
+      "isTest": true
+    },
+    {
+      "module": "cat-harness/schemas/render-output.ts",
+      "instance": "cat-harness",
+      "name": "render-output",
+      "graphNode": "schema",
+      "summary": "The ONE implementation of a Tool output's render hint — bean `q2wm`, R17.",
       "isTest": false
     },
     {
@@ -10638,6 +10654,12 @@
           "type": "RendererContribution[]",
           "optional": true,
           "array": true
+        },
+        {
+          "name": "pipelinePlugins",
+          "type": "PipelinePluginContribution[]",
+          "optional": true,
+          "array": true
         }
       ],
       "extendsNames": [],
@@ -10645,6 +10667,7 @@
       "refs": [
         "cat-harness/schemas/contributions.ts#AdapterContribution",
         "cat-harness/schemas/contributions.ts#BlockKindContribution",
+        "cat-harness/schemas/contributions.ts#PipelinePluginContribution",
         "cat-harness/schemas/contributions.ts#QaCheckerContribution",
         "cat-harness/schemas/contributions.ts#RendererContribution",
         "cat-harness/schemas/contributions.ts#ToolContribution"
@@ -10678,6 +10701,35 @@
       "unresolved": [],
       "external": [],
       "exported": false
+    },
+    {
+      "id": "cat-harness/schemas/contributions.ts#PipelinePluginContribution",
+      "name": "PipelinePluginContribution",
+      "module": "cat-harness/schemas/contributions.ts",
+      "kind": "interface",
+      "doc": "An implementation a dependency plugs into a named slot of the GENERIC",
+      "fields": [
+        {
+          "name": "kind",
+          "type": "string",
+          "optional": false,
+          "array": false,
+          "doc": "The slot this fills, e.g. `\"lean-lexer\"`. One contributor per kind."
+        },
+        {
+          "name": "implementation",
+          "type": "unknown",
+          "optional": false,
+          "array": false,
+          "doc": "What fills it. Shape is fixed per kind by `content/pipeline/pipeline-plugins.ts`."
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
     },
     {
       "id": "cat-harness/schemas/contributions.ts#QaCheckerContribution",
@@ -33890,6 +33942,19 @@
       "exported": true
     },
     {
+      "id": "cat-harness/schemas/tool.ts#RenderAs",
+      "name": "RenderAs",
+      "module": "cat-harness/schemas/tool.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
       "id": "cat-harness/schemas/tool.ts#SchemaRef",
       "name": "SchemaRef",
       "module": "cat-harness/schemas/tool.ts",
@@ -33970,7 +34035,7 @@
         },
         {
           "name": "io",
-          "type": "z.object({ inputs: z.array(ToolInputSchema), outputs: z.array(ToolPortSchema), })",
+          "type": "z.object({ inputs: z.array(ToolInputSchema), outputs: z.array(ToolOutputSchema), })",
           "optional": false,
           "array": false
         },
@@ -34034,7 +34099,7 @@
         "cat-harness/schemas/tool.ts#ToolInstallSchema",
         "cat-harness/schemas/tool.ts#ToolInvokeSchema",
         "cat-harness/schemas/tool.ts#ToolMaintainsSchema",
-        "cat-harness/schemas/tool.ts#ToolPortSchema",
+        "cat-harness/schemas/tool.ts#ToolOutputSchema",
         "cat-harness/schemas/tool.ts#ToolRequiresSchema",
         "cat-harness/schemas/tool.ts#ToolSelectionSchema"
       ],
@@ -34313,6 +34378,45 @@
       "exported": true
     },
     {
+      "id": "cat-harness/schemas/tool.ts#ToolOutput",
+      "name": "ToolOutput",
+      "module": "cat-harness/schemas/tool.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/tool.ts#ToolOutputSchema",
+      "name": "ToolOutputSchema",
+      "module": "cat-harness/schemas/tool.ts",
+      "kind": "zod-object",
+      "fields": [
+        {
+          "name": "render",
+          "type": "ToolRenderSchema.optional()",
+          "optional": true,
+          "array": false,
+          "doc": "How a renderer may place this output in a page. Absent is `text`. See {@link RENDER_AS}."
+        }
+      ],
+      "extendsNames": [
+        "ToolPortSchema"
+      ],
+      "values": [],
+      "refs": [
+        "cat-harness/schemas/tool.ts#ToolPortSchema",
+        "cat-harness/schemas/tool.ts#ToolRenderSchema"
+      ],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
       "id": "cat-harness/schemas/tool.ts#ToolPort",
       "name": "ToolPort",
       "module": "cat-harness/schemas/tool.ts",
@@ -34357,6 +34461,48 @@
       ],
       "unresolved": [],
       "external": [
+        "z"
+      ],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/tool.ts#ToolRender",
+      "name": "ToolRender",
+      "module": "cat-harness/schemas/tool.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/tool.ts#ToolRenderSchema",
+      "name": "ToolRenderSchema",
+      "module": "cat-harness/schemas/tool.ts",
+      "kind": "zod-object",
+      "fields": [
+        {
+          "name": "as",
+          "type": "z.enum(RENDER_AS)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "reason",
+          "type": "z.string().min(1).optional()",
+          "optional": true,
+          "array": false
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [
+        "RENDER_AS",
         "z"
       ],
       "exported": true
@@ -45797,6 +45943,14 @@
     },
     {
       "from": "cat-harness/schemas/contributions.ts#FolioContribution",
+      "to": "cat-harness/schemas/contributions.ts#PipelinePluginContribution",
+      "via": "pipelinePlugins",
+      "kind": "field",
+      "optional": true,
+      "array": true
+    },
+    {
+      "from": "cat-harness/schemas/contributions.ts#FolioContribution",
       "to": "cat-harness/schemas/contributions.ts#QaCheckerContribution",
       "via": "qaCheckers",
       "kind": "field",
@@ -49229,7 +49383,7 @@
     },
     {
       "from": "cat-harness/schemas/tool.ts#ToolDefinitionSchema",
-      "to": "cat-harness/schemas/tool.ts#ToolPortSchema",
+      "to": "cat-harness/schemas/tool.ts#ToolOutputSchema",
       "via": "io",
       "kind": "field",
       "optional": false,
@@ -49265,6 +49419,22 @@
       "via": "",
       "kind": "extends",
       "optional": false,
+      "array": false
+    },
+    {
+      "from": "cat-harness/schemas/tool.ts#ToolOutputSchema",
+      "to": "cat-harness/schemas/tool.ts#ToolPortSchema",
+      "via": "",
+      "kind": "extends",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "cat-harness/schemas/tool.ts#ToolOutputSchema",
+      "to": "cat-harness/schemas/tool.ts#ToolRenderSchema",
+      "via": "render",
+      "kind": "field",
+      "optional": true,
       "array": false
     },
     {

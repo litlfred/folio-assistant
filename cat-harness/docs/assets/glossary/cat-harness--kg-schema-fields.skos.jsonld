@@ -8640,6 +8640,44 @@
       "skos:note": "candidate"
     },
     {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/contributions.pipelineplugincontribution.implementation",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "PipelinePluginContribution.implementation"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "What fills it. Shape is fixed per kind by `content/pipeline/pipeline-plugins.ts`."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/contributions.ts#PipelinePluginContribution.implementation",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/contributions.pipelineplugincontribution.kind",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "PipelinePluginContribution.kind"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The slot this fills, e.g. `\"lean-lexer\"`. One contributor per kind."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/contributions.ts#PipelinePluginContribution.kind",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/contributions.qacheckercontribution.check",
       "@type": "skos:Concept",
       "skos:inScheme": {
@@ -25129,6 +25167,25 @@
         }
       ],
       "dcterms:source": "cat-harness/schemas/tool.ts#ToolMaintainsSchema.source",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/tool.tooloutputschema.render",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "ToolOutputSchema.render"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "How a renderer may place this output in a page. Absent is `text`. See {@link RENDER_AS}."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/tool.ts#ToolOutputSchema.render",
       "skos:note": "candidate"
     },
     {

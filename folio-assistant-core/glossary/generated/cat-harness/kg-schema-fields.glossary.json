@@ -3185,6 +3185,20 @@
       "status": "candidate"
     },
     {
+      "id": "contributions.pipelineplugincontribution.implementation",
+      "prefLabel": "PipelinePluginContribution.implementation",
+      "definition": "What fills it. Shape is fixed per kind by `content/pipeline/pipeline-plugins.ts`.",
+      "source": "cat-harness/schemas/contributions.ts#PipelinePluginContribution.implementation",
+      "status": "candidate"
+    },
+    {
+      "id": "contributions.pipelineplugincontribution.kind",
+      "prefLabel": "PipelinePluginContribution.kind",
+      "definition": "The slot this fills, e.g. `\"lean-lexer\"`. One contributor per kind.",
+      "source": "cat-harness/schemas/contributions.ts#PipelinePluginContribution.kind",
+      "status": "candidate"
+    },
+    {
       "id": "contributions.qacheckercontribution.check",
       "prefLabel": "QaCheckerContribution.check",
       "definition": "The checker itself.",
@@ -9258,6 +9272,13 @@
       "prefLabel": "ToolMaintainsSchema.source",
       "definition": "Repo-relative module that defines it, e.g. `schemas/tool.ts`.",
       "source": "cat-harness/schemas/tool.ts#ToolMaintainsSchema.source",
+      "status": "candidate"
+    },
+    {
+      "id": "tool.tooloutputschema.render",
+      "prefLabel": "ToolOutputSchema.render",
+      "definition": "How a renderer may place this output in a page. Absent is `text`. See {@link RENDER_AS}.",
+      "source": "cat-harness/schemas/tool.ts#ToolOutputSchema.render",
       "status": "candidate"
     },
     {
