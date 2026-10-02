@@ -4,7 +4,7 @@
  * `t5dm`: a worktree named `pr1290` published `"uploadInstance": "pr1290"`.
  */
 import { afterEach, describe, expect, test } from "bun:test";
-import { mkdirSync, mkdtempSync, rmSync } from "node:fs";
+import { mkdirSync, mkdtempSync, rmSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { instanceOf } from "../library-graph.ts";
@@ -43,8 +43,16 @@ describe("instanceOf (bean t5dm)", () => {
     expect(instanceOf(join(root, "who-iris", "library"), root)).toBe("who-iris");
   });
 
-  test("a root that declares nothing falls back to its folder name", () => {
+  // Issue #1904: the folder-name fallback is gone. An undeclared root belongs
+  // to its single landing harness, and with none decided it is an error.
+  test("a root that declares nothing belongs to its only instantiated harness, not its folder", () => {
+    const root = cloneNamed("smart-trust");
+    writeFileSync(join(root, "smart-base.config.json"), "{}");
+    expect(instanceOf(join(root, "uploads"), root)).toBe("smart-base");
+  });
+
+  test("a root that declares nothing and decides no landing harness is an error, not a guess", () => {
     const root = cloneNamed("bare-folio");
-    expect(instanceOf(join(root, "uploads"), root)).toBe("bare-folio");
+    expect(() => instanceOf(join(root, "uploads"), root)).toThrow(/issue #1904/);
   });
 });

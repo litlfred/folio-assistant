@@ -232,7 +232,18 @@ function instanceDeclaration(o: InitFolioOptions): string {
   ) + "\n";
 }
 
-/** The scaffolded instance's CONFIG — `<slug>.config.json`, beside its declaration. */
+/**
+ * The scaffolded instance's CONFIG — `<slug>.config.json`, beside its declaration.
+ *
+ * NO `site.landing` FLAG, on purpose (issue #1904). A scaffolded folio is the
+ * one harness instantiated at its root, and the owner's ruling makes that the
+ * landing page with no flag: *"If exactly one harness is instantiated, it is
+ * the landing page and no flag is needed."* The flag becomes necessary the day
+ * a SECOND `<name>.config.json` lands beside this one: then exactly one of
+ * them carries `"site": { "landing": true }` (two or more give a neutral hub),
+ * and `check:landing-instance` fails until one does. Writing it now would be
+ * a decision nobody has made yet. Rule: the `harness-tiles` skill.
+ */
 function instanceConfig(o: InitFolioOptions, assistant: string): string {
   return JSON.stringify(
     {
