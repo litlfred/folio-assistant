@@ -2,7 +2,7 @@
   "$schema": "folio-bean-index/v1",
   "tile": {
     "beans": {
-      "count": 602,
+      "count": 603,
       "unit": "beans"
     }
   },
@@ -1737,14 +1737,14 @@
     {
       "id": "folio-assistant-70lx",
       "title": "Separation stage 1a: stage cat-harness-tools/ as a sibling instance and git mv the unambiguous code",
-      "status": "todo",
+      "status": "in-progress",
       "type": "task",
       "priority": "normal",
       "parent": "folio-assistant-iirv",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-10-01T06:58:00Z",
-      "updatedAt": "2026-10-01T17:41:32Z",
+      "updatedAt": "2026-10-01T19:46:46Z",
       "preview": "Stage 1a of the split plan: stage `cat-harness-tools/` as a sibling instance in this repo and `git mv` the unambiguous code (≈1,340 renames). Owner D1 (2026-10-01): ALL cat-harness code moves; dependents' code may import cat-harness-tools. D4 (2026-10-01): 1a runs NOW, before placement PR2.\n\nPlans (session scratchpad, 2026-10-01; to be committed with stage 0): `cat-harness-split-plan.md` (stages 0",
       "file": "beans/defs/folio-assistant-70lx--separation-stage-1a-stage-cat-harness-tools-as-a-s.md"
     },
@@ -4159,6 +4159,20 @@
       "file": "beans/defs/folio-assistant-hylg--workflow-interpreter-descends-into-call-activities.md"
     },
     {
+      "id": "folio-assistant-i2kp",
+      "title": "check:source-licence has no --check, so it writes its own sidecar and no gate can fail on its content",
+      "status": "completed",
+      "type": "task",
+      "priority": "normal",
+      "parent": "folio-assistant-1xhc",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-10-01T07:11:24Z",
+      "updatedAt": "2026-10-01T16:07:52Z",
+      "preview": "Owner, 2026-10-01: **\"and fix 1xhc\"**. This is the fix, scoped and measured.\nHanded over mid-flight: the diagnosis is complete and verified, no code written.\n\n## Defect 1 — `check:source-licence` has no `--check` mode at all\n\n`cat-harness/scripts/check-source-licence.ts`: unless given `--json` it ALWAYS\ncalls `writeQaResult(...)`, and it exits non-zero only on `malformed`.\n\nSo CI runs `bun run che",
+      "file": "beans/defs/folio-assistant-i2kp--checksource-licence-has-no-check-so-it-writes-its.md"
+    },
+    {
       "id": "folio-assistant-i4i1",
       "title": "C: UML — Task implements Skill, Voice->Role, skill I/O schema edges, test->schemas, glossary links (+ Task, UserStory, Test glosses)",
       "status": "completed",
@@ -5322,7 +5336,7 @@
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-23T10:36:15Z",
-      "updatedAt": "2026-10-01T18:26:59Z",
+      "updatedAt": "2026-10-01T12:34:27Z",
       "preview": "Findings from the as-is wireframe `cat-harness/docs/wireframes/navbar/` (intent.md, as-is.html, checks/), observed at 1280×800 and 390×844. Verbatim from its `## Findings`; a finding tagged → is also covered by that cross-cutting bug.\n\n1. **At rest the strip is marks with no labels.** Changed by #1022: the four divider initials are gone, so the harnesses are **not reachable from the strip at all**",
       "file": "beans/defs/folio-assistant-ob3m--navbar-visualiser-12-wireframe-findings.md"
     },
@@ -6835,14 +6849,14 @@
     {
       "id": "folio-assistant-tyo0",
       "title": "smart-base L1 library: add PCMT and the other WHO digital transformation handbooks",
-      "status": "todo",
+      "status": "in-progress",
       "type": "task",
       "priority": "",
       "parent": "folio-assistant-2yyh",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-10-01T08:37:53Z",
-      "updatedAt": "2026-10-01T08:37:53Z",
+      "updatedAt": "2026-10-01T19:57:40Z",
       "preview": "Owner, 2026-10-01 (#1767): \"bean to add PCMT and other who digital transformation handbooks files for smart-l1 library\".\n\nThe L1 document kind is computed from smart-base library/; the library today holds 8 WHO publications. This adds the rest of the WHO digital transformation handbooks and PCMT material, through the normal ingest (bun run ingest ... --library smart-base), with provenance and lice",
       "file": "beans/defs/folio-assistant-tyo0--smart-base-l1-library-add-pcmt-and-the-other-who-d.md"
     },
