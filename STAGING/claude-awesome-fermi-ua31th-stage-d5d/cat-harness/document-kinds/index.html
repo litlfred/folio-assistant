@@ -26,6 +26,12 @@ th, td { text-align:left; vertical-align:top; padding:6px 8px; border-bottom:1px
 th { background:var(--panel); }
 code { font-size:.85em; overflow-wrap:anywhere; }
 main { min-width:0; overflow-wrap:anywhere; }
+/* "overflow-wrap:anywhere" above is for long codes and paths; it also broke the
+   narrow number and required/optional cells mid-word ("1 0", "o pt io n al")
+   once a kind's source column grew long — dth's does. Those cells never wrap,
+   and the section title keeps a width it can be read at. */
+.sec td:nth-child(1), .sec td:nth-child(3) { white-space:nowrap; overflow-wrap:normal; }
+.sec td:nth-child(2) { min-width:11rem; overflow-wrap:normal; }
 /* On a phone a five-column table cannot fit beside the rail: each section
    becomes a stacked card instead, header row hidden, nothing scrolls sideways. */
 @media (max-width: 640px) {

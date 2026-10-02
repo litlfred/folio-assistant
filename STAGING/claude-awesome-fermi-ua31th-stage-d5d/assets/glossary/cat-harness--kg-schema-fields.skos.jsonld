@@ -11091,6 +11091,25 @@
       "skos:note": "candidate"
     },
     {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/document-kind.documentkindsectionschema.modelledby",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "DocumentKindSectionSchema.modelledBy"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The classes of an external vocabulary this section's content instantiates, each as `<system>#<code>` in a PINNED snapshot (`folio-pinned-terminology/v1`) the harness declares. `computedFrom` says where a section's content comes from; this says what KIND of thing it is in a model someone else owns. Resolving the terms is the harness's check, because only it knows which snapshot it pinned — core names no vocabulary."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/document-kind.ts#DocumentKindSectionSchema.modelledBy",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/document-kind.documentkindsectionschema.sources",
       "@type": "skos:Concept",
       "skos:inScheme": {
