@@ -1,0 +1,37 @@
+{
+  "$schema": "folio-intake/v1",
+  "doc_id": "arxiv-2402.02172v5",
+  "title": "CodeAgent: Autonomous Communicative Agents for Code Review",
+  "_comment": "Uploaded by the owner to litlfred/qou in commit 348e299c (2026-10-02) as uploads/2402.02172v5.pdf, which the owner then corrected the same day: \"should have been into folio-assistant, not qou!\". Fetched from that commit by blob and filed here. TITLE AND CATEGORY ARE READ FROM THE PDF, NOT FROM THE arXiv API: export.arxiv.org is denied by this container's network policy (CONNECT tunnel failed, 403, measured 2026-10-02), so the authoritative dcterms record that `archiving-arxiv` asks for is NOT established. Abstract-page URL recorded for whoever can reach it; the version suffix is part of the identity and is kept. Primary arXiv category cs.SE, read from the arXiv stamp in the PDF's own left margin rather than from the API. `source.upstream` is the abstract page, where the authoritative metadata lives for whoever can reach it.",
+  "source": {
+    "local": "uploads/arxiv-2402.02172v5/arxiv-2402.02172v5.pdf (from litlfred/qou 348e299cce96b543d3e736bd86d10d90c0cc7998)",
+    "capturedAt": "2026-10-02T23:09:42Z",
+    "capturedBy": "owner (litlfred), upload via GitHub web to litlfred/qou; refiled into folio-assistant by agent",
+    "upstream": "https://arxiv.org/abs/2402.02172v5"
+  },
+  "files": [
+    {
+      "path": "arxiv-2402.02172v5.pdf",
+      "bytes": 11796138,
+      "sha256": "aedb2b60076ad9516c3238fd81816b0489c5eda06880b5f8368398f5fdf452c5",
+      "type": "publication",
+      "role": "original-bitstream"
+    }
+  ],
+  "licence": {
+    "status": "unknown",
+    "searched": [
+      {
+        "where": "the PDF's own text (arxiv-2402.02172v5.pdf, all pages, pdftotext)",
+        "result": "no licence statement of any kind: no Creative Commons string, no CC BY variant, no arXiv perpetual-licence notice. Only the arXiv identifier stamp.",
+        "on": "2026-10-02"
+      },
+      {
+        "where": "https://export.arxiv.org/api/query?id_list=2402.02172v5 (the per-submission declared licence)",
+        "result": "could not ask: this container's network policy denies the host (curl exit 56, CONNECT tunnel failed, response 403). Not a missing licence \u2014 an unasked question.",
+        "on": "2026-10-02"
+      }
+    ],
+    "note": "arXiv hosting does not imply a redistributable licence, and `archiving-arxiv` states that whether this project may redistribute a source is a PERSON's decision which they can only make if the licence was written down at intake. It is not written down, so redistribution is undecided and must not be assumed by anything downstream. Resolve by allowing export.arxiv.org egress, or by the owner reading the abs page."
+  }
+}
