@@ -1151,7 +1151,10 @@ function processIndex(dir: string): Map<string, string> {
  * first diagram whose callee (`Process_Adjudication`) is in ANOTHER
  * instance — one it is allowed to reach, since large-datasets needs
  * folio-assistant-core, which needs cat-harness. Without this the call went
- * silently opaque: no descent, and `checkAcceptedCodes` never ran.
+ * silently opaque: no descent, and `checkAcceptedCodes` never ran. (Bean
+ * `j7ql`, 2026-10-01, dissolved large-datasets into cat-harness, so the
+ * diagram is back in `cat-harness/processes/` beside its callee; the
+ * dependency search stays, for every other cross-instance call.)
  *
  * Only DEPENDENCIES are searched, never dependents, so a lower layer's
  * diagram cannot descend into a process defined above it — the same arrow

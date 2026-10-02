@@ -1375,7 +1375,55 @@
     '<path d="M9.5 11h5M13 9.5 14.5 11 13 12.5" fill="none" stroke="currentColor" stroke-width="1.3"/>' +
     "</svg>";
 
-  var TILE_GLYPHS = { beans: BEANS_GLYPH, uploads: UPLOADS_GLYPH };
+  /*
+   * SIX KIND GLYPHS, one per graph kind a declared tile opens (ob3m finding
+   * 11: 12 of 14 declared tiles drew the same net, so the More panel told its
+   * tiles apart by caption alone). One drawing per KIND rather than per tile:
+   * "Skills — cat-harness" and "Skills — who-iris" are the same kind of place
+   * in two harnesses, and the caption already says which harness.
+   *
+   * Drawn for 20px on the rule BEANS_GLYPH records — single strokes, no nested
+   * outlines — and each was rendered at that size beside the other eight
+   * before it went in.
+   */
+  var KIND_STROKE =
+    '<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">' +
+    '<g fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">';
+  // A spanner: something you RUN.
+  var TOOLS_GLYPH = KIND_STROKE +
+    '<path d="M14.7 6.3a4 4 0 0 0 4.9 5.1l-8.6 8.6a2.1 2.1 0 0 1-3-3l8.6-8.6a4 4 0 0 0-1.9-2.1z"/>' +
+    '<path d="M14.7 6.3 17.2 3.8"/></g></svg>';
+  // Braces: a SHAPE that data is checked against.
+  var SCHEMA_GLYPH = KIND_STROKE +
+    '<path d="M9 4.5H8a2 2 0 0 0-2 2V10a2 2 0 0 1-2 2 2 2 0 0 1 2 2v3.5a2 2 0 0 0 2 2h1"/>' +
+    '<path d="M15 4.5h1a2 2 0 0 1 2 2V10a2 2 0 0 0 2 2 2 2 0 0 0-2 2v3.5a2 2 0 0 1-2 2h-1"/></g></svg>';
+  // An open book: instructions an agent READS.
+  var SKILLS_GLYPH = KIND_STROKE +
+    '<path d="M12 7c-2-1.6-4.7-2-8-1.6v12c3.3-.4 6 0 8 1.6 2-1.6 4.7-2 8-1.6v-12c-3.3-.4-6 0-8 1.6z"/>' +
+    '<path d="M12 7v12"/></g></svg>';
+  // A compass: a way of working, chosen before the work.
+  var METHOD_GLYPH = KIND_STROKE +
+    '<circle cx="12" cy="12" r="8.2"/>' +
+    '<path d="M15.4 8.6 13.3 13.3 8.6 15.4 10.7 10.7z"/></g></svg>';
+  // Axes and a cluster: an index that places things NEAR each other.
+  var INDEX_GLYPH = KIND_STROKE +
+    '<path d="M4.5 4.5v15h15"/>' +
+    '<circle cx="10" cy="13" r="1.2"/><circle cx="14" cy="9.5" r="1.2"/><circle cx="16.5" cy="13.5" r="1.2"/></g></svg>';
+  // A page with a folded corner: prose to read.
+  var DOCS_GLYPH = KIND_STROKE +
+    '<path d="M13.5 3.5H7a1.8 1.8 0 0 0-1.8 1.8v13.4A1.8 1.8 0 0 0 7 20.5h10a1.8 1.8 0 0 0 1.8-1.8V8.8z"/>' +
+    '<path d="M13.5 3.5v5.3h5.3"/><path d="M8.8 13h6.4M8.8 16.4h4.2"/></g></svg>';
+
+  // Three spines on a shelf: the CORPUS. Not a single book, which is SKILLS'
+  // drawing, and not a tray, which is the uploads INBOX the library is fed from.
+  var LIBRARY_GLYPH = KIND_STROKE +
+    '<path d="M5 4.5v15M9 4.5v15"/><path d="M13.2 5.4l3.6 13.9"/><path d="M3.5 19.5h17"/></g></svg>';
+
+  var TILE_GLYPHS = {
+    beans: BEANS_GLYPH, uploads: UPLOADS_GLYPH, processes: PROCESS_GLYPH, library: LIBRARY_GLYPH,
+    tools: TOOLS_GLYPH, schemas: SCHEMA_GLYPH, skills: SKILLS_GLYPH,
+    methodologies: METHOD_GLYPH, index: INDEX_GLYPH, docs: DOCS_GLYPH
+  };
 
   function glyphFor(name) {
     if (typeof name !== "string") return NET_GLYPH;
@@ -6973,6 +7021,12 @@
       }
       handle.setAttribute("aria-label", label);
       handle.title = label;
+      // THE MARK FOLLOWS THE STATE — `ob3m` finding 9: it stayed ▾ with the
+      // glass down, so the one visible cue said "pull down" over a folio that
+      // was already down. Only the accessible name changed. ▴ while open is
+      // "put it away", the same pair the strip toggle already uses.
+      var mark = handle.querySelector(".fa-glass-handle__mark");
+      if (mark) mark.textContent = open ? "\u25B4" : "\u25BE";
     }
     countWaiting();
     document.addEventListener("fa:folio-changed", countWaiting);
