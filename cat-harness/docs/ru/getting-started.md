@@ -44,7 +44,7 @@ available_locales: ["ar", "zh", "en", "fr", "ru", "es"]
 Сортировка (триаж) — это реальный, читаемый артефакт, а не просто привычка, которая могла бы быть у агента:
 
 - процесс описан в
-  [`processes/getting-started.bpmn`](https://github.com/litlfred/folio-assistant/blob/main/processes/getting-started.bpmn);
+  [`folio-assistant-core/processes/conduct/getting-started.bpmn`](https://github.com/litlfred/folio-assistant/blob/main/processes/getting-started.bpmn);
 - решение в его центре — это
   [`decisions/folio-intent.dmn`](https://github.com/litlfred/folio-assistant/blob/main/processes/decisions/folio-intent.dmn),
   таблица решений DMN, которую можно открыть в любом инструменте DMN и изменить, не прикасаясь к коду.
@@ -53,7 +53,7 @@ available_locales: ["ar", "zh", "en", "fr", "ru", "es"]
   <img src="{{ '/assets/img/workflows/getting-started.svg' | relative_url }}"
        alt="BPMN-процесс: пользователь просит создать фолио; агент определяет модальность взаимодействия, считывает факты о репозитории, и исключающий шлюз, вычисленный на основе folio-intent.dmn, направляет в одну из пяти веток — ask, overlay, new-repo, add-folio или передачу управления процессу создания контента. Каркас наполняет план работы, затем сборка Pages сообщает статус: live, not-yet или unknown.">
 </figure>
-<p class="bpmn-source"><em>Источник: <code>processes/getting-started.bpmn</code> — SVG сгенерирован с помощью <code>bun run render:bpmn</code>.</em></p>
+<p class="bpmn-source"><em>Источник: <code>folio-assistant-core/processes/conduct/getting-started.bpmn</code> — SVG сгенерирован с помощью <code>bun run render:bpmn</code>.</em></p>
 
 ### Три факта
 

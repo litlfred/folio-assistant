@@ -15,7 +15,7 @@ export default webpage({
       title: "The content lifecycle",
       asset: {
         kind: "bpmn",
-        source: "processes/content-lifecycle.bpmn",
+        source: "../folio-assistant-core/processes/content/content-lifecycle.bpmn",
         rendered: "assets/img/workflows/content-lifecycle.svg",
         alt: "BPMN swimlane diagram of one folio cycle: the programme manager plans, the plan is seeded as beans, editing and HCI validation runs per proposed change, an integration test and QA sweep follows, then draft-review-publish; feedback is triaged and filed as beans, and the cycle either repeats or the folio is retired.",
         sourceLinks: [
@@ -32,7 +32,7 @@ export default webpage({
       title: "Documents & policy guidance",
       asset: {
         kind: "bpmn",
-        source: "processes/authoring-a-document.bpmn",
+        source: "../folio-assistant-core/processes/content/authoring-a-document.bpmn",
         rendered: "assets/img/workflows/authoring-a-document.svg",
         alt: "BPMN swimlane diagram of document authoring: the author plans, the plan is seeded as beans, an agent scaffolds the folio and authors blocks, the build pipeline checks the declared profile before validating and rendering to Markdown, HTML and PDF, and a reviewer gates publication.",
         sourceLinks: [
@@ -59,11 +59,11 @@ export default webpage({
       title: "WHO SMART Guidelines DAKs (L2)",
       asset: {
         kind: "bpmn",
-        source: "../smart-base/processes/l2-dak-authoring.bpmn",
+        source: "../smart-base/processes/content/l2-dak-authoring.bpmn",
         rendered: "assets/img/workflows/l2-dak-authoring.svg",
         alt: "BPMN swimlane diagram of L2 DAK authoring: a parallel gateway fans out personas, BPMN processes, DMN decision logic, the data dictionary and indicators across the business-analyst lane alongside the terminologist's bindings, then clinical SME validation gates assembly of the DAK.",
         sourceLinks: [
-          { text: "BPMN 2.0 source", href: "https://github.com/litlfred/folio-assistant/blob/main/smart-base/processes/l2-dak-authoring.bpmn" },
+          { text: "BPMN 2.0 source", href: "https://github.com/litlfred/folio-assistant/blob/main/smart-base/processes/content/l2-dak-authoring.bpmn" },
           { text: "full-size SVG", href: "assets/img/workflows/l2-dak-authoring.svg" },
         ],
         linkStyle: "caption",
@@ -76,7 +76,7 @@ export default webpage({
       title: "WHO SMART Implementation Guides (L3)",
       asset: {
         kind: "bpmn",
-        source: "processes/l3-fhir-pipeline.bpmn",
+        source: "../fhir-harness/processes/content/l3-fhir-pipeline.bpmn",
         rendered: "assets/img/workflows/l3-fhir-pipeline.svg",
         alt: "BPMN swimlane diagram of the L3 pipeline: map L2 to L3, author FSH, SUSHI compile, validate against profiles with a loop back to FSH on failure, QC gates that file findings as beans, IG Publisher build, and publication of the IG site.",
         sourceLinks: [

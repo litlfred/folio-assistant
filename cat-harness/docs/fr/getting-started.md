@@ -45,7 +45,7 @@ base produit un dépôt vide au lieu du paragraphe que vous aviez demandé.
 Le tri constitue un artefact réel et lisible plutôt qu'une habitude arbitraire de l'agent :
 
 - le processus est
-  [`processes/getting-started.bpmn`](https://github.com/litlfred/folio-assistant/blob/main/processes/getting-started.bpmn) ;
+  [`folio-assistant-core/processes/conduct/getting-started.bpmn`](https://github.com/litlfred/folio-assistant/blob/main/processes/getting-started.bpmn) ;
 - la décision en son centre est
   [`decisions/folio-intent.dmn`](https://github.com/litlfred/folio-assistant/blob/main/processes/decisions/folio-intent.dmn),
   une table de décision DMN que vous pouvez ouvrir dans n'importe quel outil DMN et modifier sans toucher au
@@ -55,7 +55,7 @@ Le tri constitue un artefact réel et lisible plutôt qu'une habitude arbitraire
   <img src="{{ '/assets/img/workflows/getting-started.svg' | relative_url }}"
        alt="Processus BPMN : un utilisateur demande à créer un folio ; l'agent détecte la modalité d'interaction, lit les faits du dépôt, et une passerelle exclusive calculée à partir de folio-intent.dmn achemine vers l'une des cinq branches — ask, overlay, new-repo, add-folio, ou un passage de relais à la rédaction de contenu. L'échafaudage amorce le plan de travail, puis la compilation Pages signale live, not-yet ou unknown.">
 </figure>
-<p class="bpmn-source"><em>Source : <code>processes/getting-started.bpmn</code> — le SVG est généré par <code>bun run render:bpmn</code>.</em></p>
+<p class="bpmn-source"><em>Source : <code>folio-assistant-core/processes/conduct/getting-started.bpmn</code> — le SVG est généré par <code>bun run render:bpmn</code>.</em></p>
 
 ### Les trois faits
 

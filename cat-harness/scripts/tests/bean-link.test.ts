@@ -1,7 +1,8 @@
 import { describe, expect, test, beforeEach, afterEach } from "bun:test";
-import { existsSync, mkdtempSync, mkdirSync, readFileSync, rmSync, writeFileSync } from "fs";
+import { mkdtempSync, mkdirSync, readFileSync, rmSync, writeFileSync } from "fs";
 import { tmpdir } from "os";
 import { join, resolve } from "path";
+import { workflowFile } from "../known-skills.ts";
 import { applyWorkPlanOp, findBean, listBeans } from "../../src/workflow/bean-link";
 import { loadProcessModel, UnsupportedBpmn } from "../../src/workflow/process-model";
 
@@ -112,12 +113,12 @@ describe("an instance with no bean", () => {
 
 describe("the diagrams declare which operation each step performs", () => {
   test("every bean-marked activity in the shipped diagrams names an op", async () => {
-    // Each owner's processes directory: `l2-dak-authoring` is smart-base's (#1772).
-    const dirs = [resolve(import.meta.dir, "../../processes"), resolve(import.meta.dir, "../../../smart-base/processes")];
+    // Found by NAME through the declared `processes` graphs: each diagram sits
+    // with its owner (#1772; placement PR3, bean `63wl`), grouped by concern.
     let marked = 0;
     for (const f of ["editing-hci-validation", "draft-to-publication", "content-lifecycle",
                      "authoring-a-paper", "l2-dak-authoring", "l3-fhir-pipeline"]) {
-      const file = dirs.map((d) => join(d, `${f}.bpmn`)).find((p) => existsSync(p)) ?? join(dirs[0]!, `${f}.bpmn`);
+      const file = workflowFile(resolve(import.meta.dir, "../.."), `${f}.bpmn`);
       const model = await loadProcessModel(file);
       for (const n of model.nodes.values()) {
         if (!n.touchesWorkPlan) continue;
@@ -134,7 +135,7 @@ describe("the diagrams declare which operation each step performs", () => {
 
   test("the editing process claims, notes, then resolves — in that order", async () => {
     const model = await loadProcessModel(
-      resolve(import.meta.dir, "../../processes/editing-hci-validation.bpmn"),
+      workflowFile(resolve(import.meta.dir, "../.."), "editing-hci-validation.bpmn"),
     );
     expect(model.nodes.get("Task_ClaimBean")!.workPlanOp).toBe("claim");
     expect(model.nodes.get("Task_LogFindings")!.workPlanOp).toBe("note");
