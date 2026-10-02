@@ -485,7 +485,7 @@ export function tools(baseUrl?: string): ToolDefinition[] {
           // `--body-file -`, which is why `stdin` exists as an arg kind.
           { name: "body", schema: t("Markdown"), required: false, arg: { stdin: true } },
         ],
-        outputs: [{ name: "url", schema: t("Url"), description: "The change proposal or comment created." }],
+        outputs: [{ name: "url", schema: t("Url"), description: "The change proposal or comment created.", render: { as: "url", reason: "a reader follows it to the proposal; the scheme is checked before it reaches an href" } }],
       },
       satisfies: ["prepare-merge-auto", "pickup", "watch", "coordinate"],
       requires: { network: true },
@@ -503,7 +503,7 @@ export function tools(baseUrl?: string): ToolDefinition[] {
           { name: "directory", schema: t("RepoPath"), required: true, arg: { positional: 0 }, description: "The built tree to publish." },
           { name: "baseUrl", schema: t("Url"), required: false, arg: { flag: "--base-url" }, description: "Publication base; a preview passes its own." },
         ],
-        outputs: [{ name: "url", schema: t("Url"), description: "Where the tree is served." }],
+        outputs: [{ name: "url", schema: t("Url"), description: "Where the tree is served.", render: { as: "url", reason: "a reader opens it; the scheme is checked before it reaches an href" } }],
       },
       satisfies: ["kg-export"],
       requires: { network: true },
@@ -535,7 +535,7 @@ export function tools(baseUrl?: string): ToolDefinition[] {
           { name: "cleanup_slug", schema: t("Slug"), required: false, arg: { flag: "--cleanup-slug" }, description: "DELETION: the `STAGING/<slug>` to remove, instead of staging anything. It exists because the label path cannot reach the previews the health sweep reports — being findable as an orphan REQUIRES the pull request to be closed, so the close event has already fired with no label (bean `w2g5`)." },
           { name: "cleanup_confirm", schema: t("Slug"), required: false, arg: { flag: "--cleanup-confirm" }, description: "The slug again, exactly. Anything else refuses. A confirmation therefore cannot be carried over from a previous run against a DIFFERENT preview, which a boolean would have allowed." },
         ],
-        outputs: [{ name: "preview", schema: t("Url"), description: "Where the preview is served. A reviewer cannot assess a rendered artefact from a description of it, which is what this URL is for." }],
+        outputs: [{ name: "preview", schema: t("Url"), description: "Where the preview is served. A reviewer cannot assess a rendered artefact from a description of it, which is what this URL is for.", render: { as: "url", reason: "a reviewer opens the preview; the scheme is checked before it reaches an href" } }],
       },
       satisfies: ["feature-staging"],
       requires: { network: true },
@@ -577,7 +577,7 @@ export function tools(baseUrl?: string): ToolDefinition[] {
           { name: "directory", schema: t("RepoPath"), required: false, arg: { flag: "--dir" }, description: "Tree to serve; defaults to the built site when present." },
           { name: "port", schema: t("Port"), required: false, arg: { flag: "--port" }, description: "0 binds a free port, which is what the tests use." },
         ],
-        outputs: [{ name: "url", schema: t("Url"), description: "Where the tree is being served." }],
+        outputs: [{ name: "url", schema: t("Url"), description: "Where the tree is being served.", render: { as: "url", reason: "a reader opens it; the scheme is checked before it reaches an href" } }],
       },
       satisfies: ["serving-renderings"],
       // No network: it BINDS one, it does not reach out. `requires.network`
@@ -1711,7 +1711,7 @@ export function tools(baseUrl?: string): ToolDefinition[] {
           { name: "out", schema: t("RepoPath"), required: false, arg: { flag: "--out" }, description: "Write the markdown report to a file AND keep the exit code — which `--markdown` cannot do, since it always exits 0. The notifier gets its own flag rather than one API call being spent twice." },
         ],
         outputs: [
-          { name: "report", schema: t("Markdown"), description: "One row per workflow. Five verdicts, not two: green, red, `running`, `superseded` (a red whose workflow file changed after the failing run, so the verdict is against code that no longer exists), and possibly-stale (a red that has not re-run in a week). Three exit codes carry them to a caller that reads no rows: 0 nothing is red, 1 something is, 2 COULD NOT LOOK — the API was unreachable, or `--out` could not be written. A caller must never read 2 as either verdict. `--markdown` and `--warn` always exit 0 by design, so a caller wanting the verdict uses neither."},
+          { name: "report", schema: t("Markdown"), description: "One row per workflow. Five verdicts, not two: green, red, `running`, `superseded` (a red whose workflow file changed after the failing run, so the verdict is against code that no longer exists), and possibly-stale (a red that has not re-run in a week). Three exit codes carry them to a caller that reads no rows: 0 nothing is red, 1 something is, 2 COULD NOT LOOK — the API was unreachable, or `--out` could not be written. A caller must never read 2 as either verdict. `--markdown` and `--warn` always exit 0 by design, so a caller wanting the verdict uses neither.", render: { as: "markdown", reason: "a table a reader reads; rendered with raw HTML off" }},
         ],
       },
       satisfies: ["ci-health"],
@@ -1916,7 +1916,7 @@ export function tools(baseUrl?: string): ToolDefinition[] {
         ],
         // The entry as rendered, so a caller can quote what it actually wrote
         // rather than reconstructing it from the six fields.
-        outputs: [{ name: "entry", schema: t("Markdown"), description: "The entry as posted." }],
+        outputs: [{ name: "entry", schema: t("Markdown"), description: "The entry as posted.", render: { as: "markdown", reason: "a log entry is prose with formatting; rendered with raw HTML off" } }],
       },
       satisfies: ["log-message"],
       requires: { network: false },
