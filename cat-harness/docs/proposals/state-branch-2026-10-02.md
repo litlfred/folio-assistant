@@ -121,7 +121,7 @@ field** rather than adding a second one, and widens its key:
 ```jsonc
 // beans/beans.json
 { "id": "defs", "path": "defs", "graphs": ["bean-defs"],
-  "storage": { "branch": "state", "keyedBy": "tip", "path": "beans/defs" } }
+  "storage": { "branch": "state", "keyedBy": "tip" } }
 
 // test/results — 3fva, unchanged
 { "id": "qa", "path": "test/results", "graphs": ["qa"],
@@ -192,7 +192,7 @@ Inventory, every reader and writer found (Explore sweep, 2026-10-02):
 
 | area | file | change |
 |---|---|---|
-| schema | `schemas/cat-harness.ts` (`ContentDirectory`), `schemas/bean-graph.ts` | `storage { branch, keyedBy, path }` — **shared with 3fva** |
+| schema | `schemas/cat-harness.ts` (`DirectoryStorageSchema`, from #1764), `schemas/bean-graph.ts` | widen `keyedBy` to `commit \| tip` — **shared with 3fva**; no new field |
 | schema | `graph-kind-registry.ts` | `holds: state` ⇒ default `storage.keyedBy: tip`; a check that a declared `state` dir on `main` is a finding once migrated |
 | beans CLI | `.beans.yml` | `path: state/beans/defs` |
 | engine | `cat-harness/src/workflow/store.ts` `WORKFLOW_DIR` | resolve from the declaration, not a constant |
@@ -231,6 +231,17 @@ Phases are serial; items inside a phase can run in parallel (⇉).
 **Phase 0 — align with 3fva (now).** Agree one `storage` field and one
 `branch-store` library with arc 3fva's owner session before either lands. A
 second field over the same question is two answers free to disagree.
+
+*Found 2026-10-02 on #1764's branch:* 3fva already ships
+`DirectoryStorageSchema = { branch, keyedBy: z.literal("commit") }.strict()`
+and `scripts/qa-store.ts`, whose private `Store` class (private bare repo,
+`fetchTip`, `setPath` splice, retry on a moved tip, never `-f`) is the generic
+half. The proposed agreement (posted on #1764) asks nothing of that PR: it lands
+as is, and Phase 2 then (a) extracts `Store` into `branch-store.ts`, which
+`qa-store` imports, and (b) widens `keyedBy` to `z.enum(["commit", "tip"])`.
+**No `path` field:** like `qa-store`, the state branch mirrors the checkout's
+paths (`beans/defs/…` on `state` is `beans/defs/…` in the tree), so the
+declared `path` already says where a file lives on either side.
 
 **Phase 1 — decisions (owner).** §6, D1–D4.
 
