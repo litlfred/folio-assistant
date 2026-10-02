@@ -2,7 +2,7 @@
   "$schema": "folio-schema-graph/v1",
   "tile": {
     "schemas": {
-      "count": 190,
+      "count": 192,
       "unit": "modules"
     }
   },
@@ -1470,6 +1470,22 @@
       "name": "viewer-nav-qa",
       "graphNode": "schema",
       "summary": "The viewer-navbar audit — **what the owner's rule looks like as data**.",
+      "isTest": false
+    },
+    {
+      "module": "cat-harness/schemas/vocab-mapping-fhir.ts",
+      "instance": "cat-harness",
+      "name": "vocab-mapping-fhir",
+      "graphNode": "schema",
+      "summary": "FHIR ConceptMap ⇄ vocabulary mapping tables: ι (represent) and π (produce).",
+      "isTest": false
+    },
+    {
+      "module": "cat-harness/schemas/vocab-mapping.ts",
+      "instance": "cat-harness",
+      "name": "vocab-mapping",
+      "graphNode": "schema",
+      "summary": "A vocabulary mapping: one source vocabulary's values carried into a target",
       "isTest": false
     },
     {
@@ -37722,6 +37738,804 @@
       "exported": true
     },
     {
+      "id": "cat-harness/schemas/vocab-mapping-fhir.ts#FhirRelease",
+      "name": "FhirRelease",
+      "module": "cat-harness/schemas/vocab-mapping-fhir.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [
+        "R4",
+        "R5"
+      ],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/vocab-mapping-fhir.ts#Json",
+      "name": "Json",
+      "module": "cat-harness/schemas/vocab-mapping-fhir.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": false
+    },
+    {
+      "id": "cat-harness/schemas/vocab-mapping-fhir.ts#Loss",
+      "name": "Loss",
+      "module": "cat-harness/schemas/vocab-mapping-fhir.ts",
+      "kind": "interface",
+      "doc": "Something π could not carry into the ConceptMap, or carried only approximately.",
+      "fields": [
+        {
+          "name": "path",
+          "type": "string",
+          "optional": false,
+          "array": false,
+          "doc": "Where in the table, e.g. `group[0].element[2].target[1]`."
+        },
+        {
+          "name": "field",
+          "type": "string",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "kind",
+          "type": "\"dropped\" | \"converted\"",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "detail",
+          "type": "string",
+          "optional": false,
+          "array": false
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/vocab-mapping.ts#Dependency",
+      "name": "Dependency",
+      "module": "cat-harness/schemas/vocab-mapping.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/vocab-mapping.ts#DependencySchema",
+      "name": "DependencySchema",
+      "module": "cat-harness/schemas/vocab-mapping.ts",
+      "kind": "zod-object",
+      "doc": "`dependsOn` / `product`: R5's `attribute`, or R4's `property`, with what each release adds.",
+      "fields": [
+        {
+          "name": "attribute",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false,
+          "doc": "R5 `attribute` (a code); R4 `property` (a URI)."
+        },
+        {
+          "name": "value",
+          "type": "TypedValueSchema.optional()",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "valueSet",
+          "type": "z.string().min(1).optional()",
+          "optional": true,
+          "array": false,
+          "doc": "R5 only."
+        },
+        {
+          "name": "system",
+          "type": "z.string().min(1).optional()",
+          "optional": true,
+          "array": false,
+          "doc": "R4 only."
+        },
+        {
+          "name": "display",
+          "type": "z.string().optional()",
+          "optional": true,
+          "array": false,
+          "doc": "R4 only."
+        },
+        {
+          "name": "extra",
+          "type": "Extra.optional()",
+          "optional": true,
+          "array": false
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [
+        "cat-harness/schemas/vocab-mapping.ts#Extra",
+        "cat-harness/schemas/vocab-mapping.ts#TypedValueSchema"
+      ],
+      "unresolved": [],
+      "external": [
+        "z"
+      ],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/vocab-mapping.ts#Element",
+      "name": "Element",
+      "module": "cat-harness/schemas/vocab-mapping.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/vocab-mapping.ts#ElementSchema",
+      "name": "ElementSchema",
+      "module": "cat-harness/schemas/vocab-mapping.ts",
+      "kind": "zod-object",
+      "fields": [
+        {
+          "name": "code",
+          "type": "z.string().min(1).optional()",
+          "optional": true,
+          "array": false,
+          "doc": "The source term: a field of the source record, or a code in the source system."
+        },
+        {
+          "name": "display",
+          "type": "z.string().optional()",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "valueSet",
+          "type": "z.string().min(1).optional()",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "noMap",
+          "type": "z.boolean().optional()",
+          "optional": true,
+          "array": false,
+          "doc": "Deliberately unmapped: an absence that is a statement, not a gap (R5 `noMap`)."
+        },
+        {
+          "name": "target",
+          "type": "z.array(TargetSchema).optional()",
+          "optional": true,
+          "array": true
+        },
+        {
+          "name": "extra",
+          "type": "Extra.optional()",
+          "optional": true,
+          "array": false
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [
+        "cat-harness/schemas/vocab-mapping.ts#Extra",
+        "cat-harness/schemas/vocab-mapping.ts#TargetSchema"
+      ],
+      "unresolved": [],
+      "external": [
+        "z"
+      ],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/vocab-mapping.ts#Extra",
+      "name": "Extra",
+      "module": "cat-harness/schemas/vocab-mapping.ts",
+      "kind": "zod-record",
+      "doc": "Keys at one level that this schema does not interpret, carried verbatim.",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": false
+    },
+    {
+      "id": "cat-harness/schemas/vocab-mapping.ts#Group",
+      "name": "Group",
+      "module": "cat-harness/schemas/vocab-mapping.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/vocab-mapping.ts#GroupSchema",
+      "name": "GroupSchema",
+      "module": "cat-harness/schemas/vocab-mapping.ts",
+      "kind": "zod-object",
+      "fields": [
+        {
+          "name": "source",
+          "type": "z.string().min(1).optional()",
+          "optional": true,
+          "array": false,
+          "doc": "The source vocabulary: an IRI, or a CURIE whose prefix is declared. Never carries `|version`."
+        },
+        {
+          "name": "sourceVersion",
+          "type": "z.string().min(1).optional()",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "target",
+          "type": "z.string().min(1).optional()",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "targetVersion",
+          "type": "z.string().min(1).optional()",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "element",
+          "type": "z.array(ElementSchema).min(1)",
+          "optional": false,
+          "array": true
+        },
+        {
+          "name": "unmapped",
+          "type": "UnmappedSchema.optional()",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "extra",
+          "type": "Extra.optional()",
+          "optional": true,
+          "array": false
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [
+        "cat-harness/schemas/vocab-mapping.ts#ElementSchema",
+        "cat-harness/schemas/vocab-mapping.ts#Extra",
+        "cat-harness/schemas/vocab-mapping.ts#UnmappedSchema"
+      ],
+      "unresolved": [],
+      "external": [
+        "z"
+      ],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/vocab-mapping.ts#R4Equivalence",
+      "name": "R4Equivalence",
+      "module": "cat-harness/schemas/vocab-mapping.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/vocab-mapping.ts#R4EquivalenceSchema",
+      "name": "R4EquivalenceSchema",
+      "module": "cat-harness/schemas/vocab-mapping.ts",
+      "kind": "zod-enum",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/vocab-mapping.ts#Relationship",
+      "name": "Relationship",
+      "module": "cat-harness/schemas/vocab-mapping.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/vocab-mapping.ts#RelationshipSchema",
+      "name": "RelationshipSchema",
+      "module": "cat-harness/schemas/vocab-mapping.ts",
+      "kind": "zod-enum",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/vocab-mapping.ts#ScopeSchema",
+      "name": "ScopeSchema",
+      "module": "cat-harness/schemas/vocab-mapping.ts",
+      "kind": "zod-object",
+      "doc": "`sourceScope[x]` / `targetScope[x]` in R5; `source[x]` / `target[x]` in R4.",
+      "fields": [
+        {
+          "name": "type",
+          "type": "z.enum([\"Uri\", \"Canonical\"])",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "value",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [
+        "z"
+      ],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/vocab-mapping.ts#Target",
+      "name": "Target",
+      "module": "cat-harness/schemas/vocab-mapping.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/vocab-mapping.ts#TargetPropertySchema",
+      "name": "TargetPropertySchema",
+      "module": "cat-harness/schemas/vocab-mapping.ts",
+      "kind": "zod-object",
+      "fields": [
+        {
+          "name": "code",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "value",
+          "type": "TypedValueSchema",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "extra",
+          "type": "Extra.optional()",
+          "optional": true,
+          "array": false
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [
+        "cat-harness/schemas/vocab-mapping.ts#Extra",
+        "cat-harness/schemas/vocab-mapping.ts#TypedValueSchema"
+      ],
+      "unresolved": [],
+      "external": [
+        "z"
+      ],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/vocab-mapping.ts#TargetSchema",
+      "name": "TargetSchema",
+      "module": "cat-harness/schemas/vocab-mapping.ts",
+      "kind": "zod-object",
+      "fields": [
+        {
+          "name": "code",
+          "type": "z.string().min(1).optional()",
+          "optional": true,
+          "array": false,
+          "doc": "The target term: a predicate's local name, or a code in the target system."
+        },
+        {
+          "name": "display",
+          "type": "z.string().optional()",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "valueSet",
+          "type": "z.string().min(1).optional()",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "relationship",
+          "type": "RelationshipSchema",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "equivalence",
+          "type": "R4EquivalenceSchema.optional()",
+          "optional": true,
+          "array": false,
+          "doc": "The R4 statement, verbatim, when the row came from an R4 map."
+        },
+        {
+          "name": "comment",
+          "type": "z.string().optional()",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "property",
+          "type": "z.array(TargetPropertySchema).optional()",
+          "optional": true,
+          "array": true
+        },
+        {
+          "name": "dependsOn",
+          "type": "z.array(DependencySchema).optional()",
+          "optional": true,
+          "array": true
+        },
+        {
+          "name": "product",
+          "type": "z.array(DependencySchema).optional()",
+          "optional": true,
+          "array": true
+        },
+        {
+          "name": "key",
+          "type": "z.string().min(1).optional()",
+          "optional": true,
+          "array": false,
+          "doc": "The JSON term written, when it is not `code`."
+        },
+        {
+          "name": "authority",
+          "type": "z.enum([\"authoritative\", \"derived\"]).optional()",
+          "optional": true,
+          "array": false,
+          "doc": "`derived`: a rendering of another target's output, copied from it."
+        },
+        {
+          "name": "derivedFrom",
+          "type": "z.string().min(1).optional()",
+          "optional": true,
+          "array": false,
+          "doc": "The `key` (or `code`) of the authoritative target a derived one copies."
+        },
+        {
+          "name": "transform",
+          "type": "z.enum([\"copy\", \"flag\", \"code\"]).optional()",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "extra",
+          "type": "Extra.optional()",
+          "optional": true,
+          "array": false
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [
+        "cat-harness/schemas/vocab-mapping.ts#DependencySchema",
+        "cat-harness/schemas/vocab-mapping.ts#Extra",
+        "cat-harness/schemas/vocab-mapping.ts#R4EquivalenceSchema",
+        "cat-harness/schemas/vocab-mapping.ts#RelationshipSchema",
+        "cat-harness/schemas/vocab-mapping.ts#TargetPropertySchema"
+      ],
+      "unresolved": [],
+      "external": [
+        "z"
+      ],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/vocab-mapping.ts#TypedValue",
+      "name": "TypedValue",
+      "module": "cat-harness/schemas/vocab-mapping.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/vocab-mapping.ts#TypedValueSchema",
+      "name": "TypedValueSchema",
+      "module": "cat-harness/schemas/vocab-mapping.ts",
+      "kind": "zod-object",
+      "doc": "A FHIR `value[x]`: `type` is the suffix (`Coding`, `String`, `Code`, …), so",
+      "fields": [
+        {
+          "name": "type",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "value",
+          "type": "z.unknown()",
+          "optional": false,
+          "array": false
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [
+        "z"
+      ],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/vocab-mapping.ts#UnmappedSchema",
+      "name": "UnmappedSchema",
+      "module": "cat-harness/schemas/vocab-mapping.ts",
+      "kind": "zod-object",
+      "doc": "What happens to a source term no element names. R4's `provided` is R5's `use-source-code`; R4's `url` is `otherMap`.",
+      "fields": [
+        {
+          "name": "mode",
+          "type": "z.enum([\"use-source-code\", \"fixed\", \"other-map\"])",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "code",
+          "type": "z.string().optional()",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "display",
+          "type": "z.string().optional()",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "valueSet",
+          "type": "z.string().optional()",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "relationship",
+          "type": "RelationshipSchema.optional()",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "otherMap",
+          "type": "z.string().optional()",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "extra",
+          "type": "Extra.optional()",
+          "optional": true,
+          "array": false
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [
+        "cat-harness/schemas/vocab-mapping.ts#Extra",
+        "cat-harness/schemas/vocab-mapping.ts#RelationshipSchema"
+      ],
+      "unresolved": [],
+      "external": [
+        "z"
+      ],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/vocab-mapping.ts#VocabMapping",
+      "name": "VocabMapping",
+      "module": "cat-harness/schemas/vocab-mapping.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/vocab-mapping.ts#VocabMappingSchema",
+      "name": "VocabMappingSchema",
+      "module": "cat-harness/schemas/vocab-mapping.ts",
+      "kind": "zod-object",
+      "fields": [
+        {
+          "name": "$schema",
+          "type": "z.literal(VOCAB_MAPPING_SCHEMA)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "id",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false,
+          "doc": "This table's id. A ConceptMap's own resource `id` is metadata, kept in `metadata.id`."
+        },
+        {
+          "name": "url",
+          "type": "z.string().min(1).optional()",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "version",
+          "type": "z.string().min(1).optional()",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "name",
+          "type": "z.string().min(1).optional()",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "title",
+          "type": "z.string().min(1).optional()",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "status",
+          "type": "z.enum([\"draft\", \"active\", \"retired\", \"unknown\"])",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "experimental",
+          "type": "z.boolean().optional()",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "date",
+          "type": "z.string().optional()",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "publisher",
+          "type": "z.string().optional()",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "description",
+          "type": "z.string().optional()",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "purpose",
+          "type": "z.string().optional()",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "copyright",
+          "type": "z.string().optional()",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "sourceScope",
+          "type": "ScopeSchema.optional()",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "targetScope",
+          "type": "ScopeSchema.optional()",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "property",
+          "type": "z.array(z.record(z.string(), z.unknown())).optional()",
+          "optional": true,
+          "array": true,
+          "doc": "R5 map-level `property` and `additionalAttribute` definitions, verbatim."
+        },
+        {
+          "name": "additionalAttribute",
+          "type": "z.array(z.record(z.string(), z.unknown())).optional()",
+          "optional": true,
+          "array": true
+        },
+        {
+          "name": "group",
+          "type": "z.array(GroupSchema)",
+          "optional": false,
+          "array": true
+        },
+        {
+          "name": "metadata",
+          "type": "z.record(z.string(), z.unknown()).optional()",
+          "optional": true,
+          "array": false,
+          "doc": "Every other ConceptMap field (contact, jurisdiction, meta, text, identifier, the resource id, …), verbatim."
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [
+        "cat-harness/schemas/vocab-mapping.ts#GroupSchema",
+        "cat-harness/schemas/vocab-mapping.ts#ScopeSchema"
+      ],
+      "unresolved": [],
+      "external": [
+        "VOCAB_MAPPING_SCHEMA",
+        "z"
+      ],
+      "exported": true
+    },
+    {
       "id": "cat-harness/schemas/vocabulary.ts#TermGloss",
       "name": "TermGloss",
       "module": "cat-harness/schemas/vocabulary.ts",
@@ -50462,6 +51276,166 @@
       "kind": "field",
       "optional": false,
       "array": true
+    },
+    {
+      "from": "cat-harness/schemas/vocab-mapping.ts#DependencySchema",
+      "to": "cat-harness/schemas/vocab-mapping.ts#Extra",
+      "via": "extra",
+      "kind": "field",
+      "optional": true,
+      "array": false
+    },
+    {
+      "from": "cat-harness/schemas/vocab-mapping.ts#DependencySchema",
+      "to": "cat-harness/schemas/vocab-mapping.ts#TypedValueSchema",
+      "via": "value",
+      "kind": "field",
+      "optional": true,
+      "array": false
+    },
+    {
+      "from": "cat-harness/schemas/vocab-mapping.ts#ElementSchema",
+      "to": "cat-harness/schemas/vocab-mapping.ts#Extra",
+      "via": "extra",
+      "kind": "field",
+      "optional": true,
+      "array": false
+    },
+    {
+      "from": "cat-harness/schemas/vocab-mapping.ts#ElementSchema",
+      "to": "cat-harness/schemas/vocab-mapping.ts#TargetSchema",
+      "via": "target",
+      "kind": "field",
+      "optional": true,
+      "array": true
+    },
+    {
+      "from": "cat-harness/schemas/vocab-mapping.ts#GroupSchema",
+      "to": "cat-harness/schemas/vocab-mapping.ts#ElementSchema",
+      "via": "element",
+      "kind": "field",
+      "optional": false,
+      "array": true
+    },
+    {
+      "from": "cat-harness/schemas/vocab-mapping.ts#GroupSchema",
+      "to": "cat-harness/schemas/vocab-mapping.ts#Extra",
+      "via": "extra",
+      "kind": "field",
+      "optional": true,
+      "array": false
+    },
+    {
+      "from": "cat-harness/schemas/vocab-mapping.ts#GroupSchema",
+      "to": "cat-harness/schemas/vocab-mapping.ts#UnmappedSchema",
+      "via": "unmapped",
+      "kind": "field",
+      "optional": true,
+      "array": false
+    },
+    {
+      "from": "cat-harness/schemas/vocab-mapping.ts#TargetPropertySchema",
+      "to": "cat-harness/schemas/vocab-mapping.ts#Extra",
+      "via": "extra",
+      "kind": "field",
+      "optional": true,
+      "array": false
+    },
+    {
+      "from": "cat-harness/schemas/vocab-mapping.ts#TargetPropertySchema",
+      "to": "cat-harness/schemas/vocab-mapping.ts#TypedValueSchema",
+      "via": "value",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "cat-harness/schemas/vocab-mapping.ts#TargetSchema",
+      "to": "cat-harness/schemas/vocab-mapping.ts#DependencySchema",
+      "via": "dependsOn",
+      "kind": "field",
+      "optional": true,
+      "array": true
+    },
+    {
+      "from": "cat-harness/schemas/vocab-mapping.ts#TargetSchema",
+      "to": "cat-harness/schemas/vocab-mapping.ts#DependencySchema",
+      "via": "product",
+      "kind": "field",
+      "optional": true,
+      "array": true
+    },
+    {
+      "from": "cat-harness/schemas/vocab-mapping.ts#TargetSchema",
+      "to": "cat-harness/schemas/vocab-mapping.ts#Extra",
+      "via": "extra",
+      "kind": "field",
+      "optional": true,
+      "array": false
+    },
+    {
+      "from": "cat-harness/schemas/vocab-mapping.ts#TargetSchema",
+      "to": "cat-harness/schemas/vocab-mapping.ts#R4EquivalenceSchema",
+      "via": "equivalence",
+      "kind": "field",
+      "optional": true,
+      "array": false
+    },
+    {
+      "from": "cat-harness/schemas/vocab-mapping.ts#TargetSchema",
+      "to": "cat-harness/schemas/vocab-mapping.ts#RelationshipSchema",
+      "via": "relationship",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "cat-harness/schemas/vocab-mapping.ts#TargetSchema",
+      "to": "cat-harness/schemas/vocab-mapping.ts#TargetPropertySchema",
+      "via": "property",
+      "kind": "field",
+      "optional": true,
+      "array": true
+    },
+    {
+      "from": "cat-harness/schemas/vocab-mapping.ts#UnmappedSchema",
+      "to": "cat-harness/schemas/vocab-mapping.ts#Extra",
+      "via": "extra",
+      "kind": "field",
+      "optional": true,
+      "array": false
+    },
+    {
+      "from": "cat-harness/schemas/vocab-mapping.ts#UnmappedSchema",
+      "to": "cat-harness/schemas/vocab-mapping.ts#RelationshipSchema",
+      "via": "relationship",
+      "kind": "field",
+      "optional": true,
+      "array": false
+    },
+    {
+      "from": "cat-harness/schemas/vocab-mapping.ts#VocabMappingSchema",
+      "to": "cat-harness/schemas/vocab-mapping.ts#GroupSchema",
+      "via": "group",
+      "kind": "field",
+      "optional": false,
+      "array": true
+    },
+    {
+      "from": "cat-harness/schemas/vocab-mapping.ts#VocabMappingSchema",
+      "to": "cat-harness/schemas/vocab-mapping.ts#ScopeSchema",
+      "via": "sourceScope",
+      "kind": "field",
+      "optional": true,
+      "array": false
+    },
+    {
+      "from": "cat-harness/schemas/vocab-mapping.ts#VocabMappingSchema",
+      "to": "cat-harness/schemas/vocab-mapping.ts#ScopeSchema",
+      "via": "targetScope",
+      "kind": "field",
+      "optional": true,
+      "array": false
     },
     {
       "from": "cat-harness/schemas/vocabulary.ts#TermGloss",
