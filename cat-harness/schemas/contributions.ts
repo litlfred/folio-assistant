@@ -195,6 +195,35 @@ export interface RendererContribution {
   validate?: (rendered: string) => { valid: boolean; errors: string[] };
 }
 
+/**
+ * An implementation a dependency plugs into a named slot of the GENERIC
+ * pipeline — the way generic code reaches a higher layer's code without
+ * importing it.
+ *
+ * ## Why this exists (bean `squu`, owner ruling 2026-10-01 ~18:15)
+ *
+ * The sci-bound pipeline files go straight to `folio-assistant-sci`, which sits
+ * above every generic layer. Before that `git mv` can happen, generic code must
+ * stop importing them: a static import from a lower layer into sci is exactly
+ * what `check:import-direction` rejects. A slot inverts the edge — the generic
+ * caller names a KIND, the science layer registers what fills it, and neither
+ * names the other's files.
+ *
+ * ## Why `implementation` is `unknown` here
+ *
+ * The same reason {@link ToolContribution.register} takes `unknown`: what a
+ * slot holds is a pipeline concern (a Lean lexer, a LaTeX preflight), and the
+ * content model should not import the pipeline's shapes. The typed view is
+ * `content/pipeline/pipeline-plugins.ts`, which owns the kind → interface map
+ * and is the only module that reads these.
+ */
+export interface PipelinePluginContribution {
+  /** The slot this fills, e.g. `"lean-lexer"`. One contributor per kind. */
+  kind: string;
+  /** What fills it. Shape is fixed per kind by `content/pipeline/pipeline-plugins.ts`. */
+  implementation: unknown;
+}
+
 export interface FolioContribution {
   /** The contributing instance's name, as declared in the dependency entry. */
   name: string;
@@ -213,12 +242,13 @@ export interface FolioContribution {
   tools?: ToolContribution[];
   qaCheckers?: QaCheckerContribution[];
   renderers?: RendererContribution[];
+  pipelinePlugins?: PipelinePluginContribution[];
 }
 
 /** Thrown when two contributors claim the same kind, adapter or tool name. */
 export class ContributionCollisionError extends Error {
   constructor(
-    readonly what: "kind" | "adapter" | "tool" | "checker" | "renderer",
+    readonly what: "kind" | "adapter" | "tool" | "checker" | "renderer" | "pipeline-plugin",
     readonly id: string,
     readonly incumbent: string,
     readonly challenger: string,
@@ -271,6 +301,7 @@ export class ContributionRegistry {
   private toolGroups = new Map<string, { register: (server: unknown) => void; contributor: string }>();
   private checkers = new Map<string, ContributedChecker & { contributor: string }>();
   private renderers = new Map<string, { renderer: RendererContribution; contributor: string }>();
+  private pipelinePlugins = new Map<string, { implementation: unknown; contributor: string }>();
 
   /**
    * Register one dependency's contribution.
@@ -352,6 +383,18 @@ export class ContributionRegistry {
         throw new ContributionCollisionError("renderer", r.format, existing.contributor, who);
       }
       this.renderers.set(r.format, { renderer: r, contributor: who });
+    }
+
+    for (const p of contribution.pipelinePlugins ?? []) {
+      // Same rule as every slot above: a second contributor for a kind is a
+      // collision, never a fallback chain, so which Lean lexer the generic
+      // pipeline runs cannot depend on the order dependencies are listed in.
+      const existing = this.pipelinePlugins.get(p.kind);
+      if (existing) {
+        if (existing.contributor === who) continue; // diamond
+        throw new ContributionCollisionError("pipeline-plugin", p.kind, existing.contributor, who);
+      }
+      this.pipelinePlugins.set(p.kind, { implementation: p.implementation, contributor: who });
     }
   }
 
@@ -440,6 +483,22 @@ export class ContributionRegistry {
   /** A contributed render target by format, or `undefined`. */
   renderer(format: string): RendererContribution | undefined {
     return this.renderers.get(format)?.renderer;
+  }
+
+  /**
+   * What fills a pipeline slot, or `undefined` when no contributor did.
+   *
+   * Untyped on purpose — see {@link PipelinePluginContribution}. Read it
+   * through `content/pipeline/pipeline-plugins.ts`, which types the kind and
+   * turns `undefined` into an error that names what is missing.
+   */
+  pipelinePlugin(kind: string): unknown {
+    return this.pipelinePlugins.get(kind)?.implementation;
+  }
+
+  /** Every filled pipeline slot, with who filled it. */
+  contributedPipelinePlugins(): Array<{ kind: string; contributor: string }> {
+    return [...this.pipelinePlugins].map(([kind, e]) => ({ kind, contributor: e.contributor }));
   }
 
   /** Every contributed render target, with its format and who added it. */
