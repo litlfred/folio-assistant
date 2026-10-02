@@ -2,7 +2,7 @@
   "$schema": "folio-bean-index/v1",
   "tile": {
     "beans": {
-      "count": 634,
+      "count": 642,
       "unit": "beans"
     }
   },
@@ -343,6 +343,20 @@
       "updatedAt": "2026-09-26T16:58:15Z",
       "preview": "Measured 2026-09-26.\n\n## What happened\n\n- At 15:26Z dependabot commented on #908: *\"Dependabot could not run Bun to update your dependencies due to a configuration error.\"* That came about 13 minutes after #1407 put the same bumps on main.\n- **This is not evidence of a defect in our config.** The same message appeared on 25–26 Sep across many unrelated repos with different setups. Examples: [bun-c",
       "file": "beans/defs/folio-assistant-197s--dependabot-cannot-run-bun-here-could-not-run-bun-c.md"
+    },
+    {
+      "id": "folio-assistant-19wc",
+      "title": "Skill pr-description: a PR body a first-time reader can follow",
+      "status": "in-progress",
+      "type": "task",
+      "priority": "normal",
+      "parent": "folio-assistant-ahvw",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-10-02T15:59:38Z",
+      "updatedAt": "2026-10-02T16:02:32Z",
+      "preview": "Owner, 2026-10-02 (on litlfred/fhir-ig-publisher#8): *\"PR should be readable for human for first time. what probelm trying to address, why, how approached, constratins, soltion... ...usage\"* and *\"make that a general skill when writing/updating PRs. see existing skills/processes\"*. Issue #1879.\n\n## Done when\n- [ ] cat-harness/skills/sdlc/sdlc-core/pr-description.md written and registered (skill:re",
+      "file": "beans/defs/folio-assistant-19wc--skill-pr-description-a-pr-body-a-first-time-reader.md"
     },
     {
       "id": "folio-assistant-1bvx",
@@ -2290,7 +2304,7 @@
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-10-01T16:39:43Z",
-      "updatedAt": "2026-10-01T18:43:42Z",
+      "updatedAt": "2026-10-01T19:40:22Z",
       "preview": "Issue [#1794](https://github.com/litlfred/folio-assistant/issues/1794).\n\nA library entry is never judged after ingestion or the KG build. Measured on main (59 entries): 24 titles equal the slug, at least 5 are implausible (who-pub-tps-931 is 'Abies', OCR noise off a scanned cover), 0 of 59 carry author or year, and who-pub-tps-931 shows 121 'Page N (no content carried)' blocks over 25,714 OCR word",
       "file": "beans/defs/folio-assistant-8iqc--library-qa-after-ingestion-titles-bibliographic-me.md"
     },
@@ -2755,6 +2769,20 @@
       "updatedAt": "2026-09-20T17:11:46Z",
       "preview": "Owner, 2026-09-20, verbatim:\n\n> if a harness is working/active KG repo (not static read only)repo root READM\n> should show at top a  current status of all intiated/partially iniated/etc.\n> quick dashboard (#todos, #beans) for each initiated harness.  todo on render\n> of active KG, beans and todos mapped to thier bpamns rendered nicely as well\n> for project managemtn / visualizaitons.   available a",
       "file": "beans/defs/folio-assistant-aazi--workflow-statemgmt-rendering-a-status-dashboard-at.md"
+    },
+    {
+      "id": "folio-assistant-abmq",
+      "title": "MERGE GATE (c): RED FLAG taxonomy, verdict sidecar shape, and the recorded override path",
+      "status": "todo",
+      "type": "feature",
+      "priority": "",
+      "parent": "folio-assistant-nok9",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-10-02T16:29:16Z",
+      "updatedAt": "2026-10-02T16:29:16Z",
+      "preview": "Child (c) of the merge-gate epic. Design: `cat-harness/docs/proposals/merge-gate-2026-10-02.md` §6.\n\nA RED FLAG is a finding the reviewer asserts **blocks the merge**. It reuses the two existing axes in `schemas/qa-review.ts`: `FindingSeverity` (critical | major | minor: what kind of breakage) and `FindingWeight` (blocking | suggestion | praise: what the reviewer asks of the gate). A RED FLAG is `",
+      "file": "beans/defs/folio-assistant-abmq--merge-gate-c-red-flag-taxonomy-verdict-sidecar-sha.md"
     },
     {
       "id": "folio-assistant-afu3",
@@ -5099,6 +5127,20 @@
       "file": "beans/defs/folio-assistant-lvk9--extraction-list-items-and-blockquotes-are-extracte.md"
     },
     {
+      "id": "folio-assistant-lvlv",
+      "title": "MERGE GATE (d): per-content-block adversarial QA for tools, schemas, skills and processes, and the backfill",
+      "status": "todo",
+      "type": "feature",
+      "priority": "",
+      "parent": "folio-assistant-nok9",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-10-02T16:29:16Z",
+      "updatedAt": "2026-10-02T16:29:16Z",
+      "preview": "Child (d) of the merge-gate epic. Design: `cat-harness/docs/proposals/merge-gate-2026-10-02.md` §7.\n\nRun the same adversarial review per **content block** (not per diff) so the existing corpus can be backfilled: Tool nodes, schema modules, skills/guidance, and BPMN/DMN processes. It uses the same verdict shape as the merge gate, keyed to the subject's `source_hash`, so a merge review and a backfil",
+      "file": "beans/defs/folio-assistant-lvlv--merge-gate-d-per-content-block-adversarial-qa-for.md"
+    },
+    {
       "id": "folio-assistant-lvoa",
       "title": "TYPECHECK PROGRAM: folio-assistant-core/scripts is outside it — 33 files, and every instance-boundary move adds more while typecheck stays green",
       "status": "todo",
@@ -5197,6 +5239,20 @@
       "updatedAt": "2026-09-26T13:39:46Z",
       "preview": "Found 2026-09-26 while wiring bean `1s5s` (the published package's Python half)\ninto `check:published-packages`. Noticed because the new gate **could not be\nverified on a runner** — not because it failed, but because it never ran.\n\n## The measurement\n\n`.github/workflows/code-quality-gates.yml`, job `typescript`, parsed rather\nthan eyeballed:\n\n- `bun test` is **step 5 of 50**, with no `continue-on-",
       "file": "beans/defs/folio-assistant-m5gx--one-red-test-at-step-5-makes-149-gate-commands-unr.md"
+    },
+    {
+      "id": "folio-assistant-m61r",
+      "title": "Bean notes: per-PR files so sibling PRs stop conflicting on one bean",
+      "status": "completed",
+      "type": "task",
+      "priority": "normal",
+      "parent": "folio-assistant-ahvw",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-10-02T11:34:29Z",
+      "updatedAt": "2026-10-02T13:13:34Z",
+      "preview": "`beans/defs/folio-assistant-ob3m--navbar-visualiser-12-wireframe-findings.md` is appended to by many sibling PRs (findings 1, 3, 6, 7/8, 10, 12 …). Each time one merges, every other open PR conflicts on that file, and the merge-main bot refuses bean conflicts on purpose (`beans: refuse` in `merge-conflict-patterns.ts`), so each PR needs a hand-merge. On 2026-10-02 this forced hand-merges of #1798,",
+      "file": "beans/defs/folio-assistant-m61r--bean-notes-per-pr-files-so-sibling-prs-stop-confli.md"
     },
     {
       "id": "folio-assistant-m8gz",
@@ -5495,6 +5551,20 @@
       "file": "beans/defs/folio-assistant-nnpk--schemas-visualiser-5-wireframe-findings.md"
     },
     {
+      "id": "folio-assistant-nok9",
+      "title": "MERGE GATE: agentic adversarial review + content-type compile gates, and per-content-block QA backfill",
+      "status": "todo",
+      "type": "epic",
+      "priority": "normal",
+      "parent": "",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-10-02T16:29:09Z",
+      "updatedAt": "2026-10-02T16:41:15Z",
+      "preview": "Owner, 2026-10-02 (bean for later): update the Merge Manager skills, process and tools so that a merge is GATED on:\n\n- a full agentic adversarial software code review of any change made by one or more agents;\n- no blocking RED FLAG from any agentic review;\n- (math content block) every changed Lean file compiles;\n- (FHIR IG) SUSHI and the IG AST compile;\n- JSON(-LD) plus schema for the KG renders (",
+      "file": "beans/defs/folio-assistant-nok9--merge-gate-agentic-adversarial-review-content-type.md"
+    },
+    {
       "id": "folio-assistant-nsbb",
       "title": "IG PIPELINE LAYERING: a bare FHIR IG pipeline is the base; DAK and SMART are overlays on it, not the thing itself",
       "status": "todo",
@@ -5602,7 +5672,7 @@
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-23T10:36:15Z",
-      "updatedAt": "2026-10-01T18:08:13Z",
+      "updatedAt": "2026-10-01T18:14:39Z",
       "preview": "Findings from the as-is wireframe `cat-harness/docs/wireframes/navbar/` (intent.md, as-is.html, checks/), observed at 1280×800 and 390×844. Verbatim from its `## Findings`; a finding tagged → is also covered by that cross-cutting bug.\n\n1. **At rest the strip is marks with no labels.** Changed by #1022: the four divider initials are gone, so the harnesses are **not reachable from the strip at all**",
       "file": "beans/defs/folio-assistant-ob3m--navbar-visualiser-12-wireframe-findings.md"
     },
@@ -7309,6 +7379,20 @@
       "file": "beans/defs/folio-assistant-u63y--b6a-1168-a-file-that-uses-an-external-spec-declare.md"
     },
     {
+      "id": "folio-assistant-u7be",
+      "title": "MERGE GATE (e): four merge-steward gaps - regen pairs for l1-complete/smart-kg-l1, gitlink fast-forward, no-CI heads in trains, stale needs-merge-human",
+      "status": "todo",
+      "type": "bug",
+      "priority": "",
+      "parent": "folio-assistant-nok9",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-10-02T16:29:16Z",
+      "updatedAt": "2026-10-02T16:29:16Z",
+      "preview": "Child (e) of the merge-gate epic. These are merge-steward gaps measured 2026-10-02 while running merge trains. Each one lets a merge look proved when it is not.\n\n1. `regen-after-merge.ts` has no writer pair for `check:l1-complete`, nor for `smart-base:smart-kg-l1` (the `--entry` form). Both run in `code-quality-gates.yml`, so a train's single `regen` can report \"current\" while CI then goes red.\n2.",
+      "file": "beans/defs/folio-assistant-u7be--merge-gate-e-four-merge-steward-gaps-regen-pairs-f.md"
+    },
+    {
       "id": "folio-assistant-u9r9",
       "title": "TWO TypeDoc steps name a working-directory that does not exist, and both workflows are unjudged so nothing has said so",
       "status": "in-progress",
@@ -7871,6 +7955,20 @@
       "file": "beans/defs/folio-assistant-w82m--test-cost-kg-export-a-preview-says-so-builds-the-e.md"
     },
     {
+      "id": "folio-assistant-w8jq",
+      "title": "MERGE GATE (a): adversarial agentic code review is a required check on any agent-touched PR, with a committed verdict",
+      "status": "todo",
+      "type": "feature",
+      "priority": "",
+      "parent": "folio-assistant-nok9",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-10-02T16:29:16Z",
+      "updatedAt": "2026-10-02T16:29:16Z",
+      "preview": "Child (a) of the merge-gate epic. Design: `cat-harness/docs/proposals/merge-gate-2026-10-02.md` §5.1–5.3.\n\nThe gate: any PR whose commits carry agent provenance (a `Co-Authored-By: Claude …` or `Claude-Session:` trailer, a `claude/` head branch, or a bot author) gets a **full adversarial code review by an agent that did not author it**. That review writes a committed verdict, and a required status",
+      "file": "beans/defs/folio-assistant-w8jq--merge-gate-a-adversarial-agentic-code-review-is-a.md"
+    },
+    {
       "id": "folio-assistant-w91p",
       "title": "B7a (#1168): the 10 gen-*-viz scripts become Tools (renders:, maintains:); coverage.visualiser removed",
       "status": "completed",
@@ -8345,6 +8443,20 @@
       "updatedAt": "2026-10-01T17:26:36Z",
       "preview": "## Why\n\nMeasured by the steward: `bun run regen` runs ~83 check/writer pairs serially\nvia `spawnSync`, up to 3 passes, ~25 min locally. `bun run gates` takes >50 min\nlocally. The box has 4 CPUs shared with other sessions.\n\n## What (owner-approved, 2026-10-01)\n\n1. **Input-hash staleness skipping** in regen: hash each pair's declared inputs\n   plus its script source; skip when it matches the hash re",
       "file": "beans/defs/folio-assistant-xpcu--regen-gates-speed-up-input-hash-staleness-skipping.md"
+    },
+    {
+      "id": "folio-assistant-xqdi",
+      "title": "MERGE GATE (b): content-type compile gates - Lean builds, SUSHI/IG AST compiles, JSON-LD + schema validate; site renders advisory",
+      "status": "todo",
+      "type": "feature",
+      "priority": "",
+      "parent": "folio-assistant-nok9",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-10-02T16:29:16Z",
+      "updatedAt": "2026-10-02T16:29:16Z",
+      "preview": "Child (b) of the merge-gate epic. Design: `cat-harness/docs/proposals/merge-gate-2026-10-02.md` §5.4.\n\nContent-type compile gates, scoped by changed path and **blocking**:\n- `.lean` touched → `lake build` of the affected targets (warm cache via `lean-cache-restore`), plus no new `sorry` and no axiom beyond the declared list;\n- FHIR IG (`input/fsh/**`, `sushi-config.yaml`, IG AST) → SUSHI reports 0",
+      "file": "beans/defs/folio-assistant-xqdi--merge-gate-b-content-type-compile-gates-lean-build.md"
     },
     {
       "id": "folio-assistant-xsqm",

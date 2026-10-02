@@ -301,14 +301,14 @@
   ],
   "canonicalDocument": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld",
   "repository": "cat-harness",
-  "generatedAt": "2026-10-02T17:56:16.628Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/3be328bfb11a549e5c0c1bb28f2450207d647b75",
-  "sourceCommitSha": "3be328bfb11a549e5c0c1bb28f2450207d647b75",
-  "sourceCommitAt": "2026-10-02T17:52:51Z",
+  "generatedAt": "2026-10-02T18:26:36.982Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/82f54435395860f2b5433301d01089ebd6db019f",
+  "sourceCommitSha": "82f54435395860f2b5433301d01089ebd6db019f",
+  "sourceCommitAt": "2026-10-02T18:23:07Z",
   "sourceTreeDirty": true,
   "dependsOnUnavailable": "2 dependency edge(s), none expressible as a record — see gaps",
   "counts": {
-    "Skill": 295,
+    "Skill": 296,
     "Actor": 36,
     "Capability": 28,
     "SkillPackage": 35,
@@ -318,7 +318,7 @@
     "Lane": 201,
     "ProcessNode": 940,
     "Tool": 113,
-    "Schema": 152,
+    "Schema": 153,
     "ExternalSchema": 20,
     "GraphKind": 25,
     "Role": 48,
@@ -1101,7 +1101,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-qa-dup-sidecars/cat-harness.jsonld#package/conduct-core"
       ],
       "instructionsPath": "skills/conduct/conduct-core/interaction-modality.md",
-      "instructionLines": 572,
+      "instructionLines": 574,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -1729,7 +1729,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-qa-dup-sidecars/cat-harness.jsonld#package/kg-core"
       ],
       "instructionsPath": "skills/kg/kg-core/directory-conventions.md",
-      "instructionLines": 1304,
+      "instructionLines": 1305,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -2018,7 +2018,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-qa-dup-sidecars/cat-harness.jsonld#package/library-core"
       ],
       "instructionsPath": "skills/library/library-core/library-ingestion.md",
-      "instructionLines": 871,
+      "instructionLines": 917,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -2783,7 +2783,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-qa-dup-sidecars/cat-harness.jsonld#package/sdlc-core"
       ],
       "instructionsPath": "skills/sdlc/sdlc-core/opening-brief.md",
-      "instructionLines": 228,
+      "instructionLines": 232,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -3002,7 +3002,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-qa-dup-sidecars/cat-harness.jsonld#package/sdlc-core"
       ],
       "instructionsPath": "skills/sdlc/sdlc-core/bean-coordination.md",
-      "instructionLines": 764,
+      "instructionLines": 822,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -3256,7 +3256,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-qa-dup-sidecars/cat-harness.jsonld#package/sdlc-core"
       ],
       "instructionsPath": "skills/sdlc/sdlc-core/prepare-merge.md",
-      "instructionLines": 463,
+      "instructionLines": 464,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -3329,6 +3329,23 @@
       "ambiguous": false,
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-qa-dup-sidecars/cat-harness.jsonld#directory/skills",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/activity-log"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-qa-dup-sidecars/cat-harness.jsonld#skill/pr-description",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Skill",
+      "name": "pr-description",
+      "title": "pr-description — a PR body a first-time reader can follow",
+      "description": "Write or update a pull request's description so that someone who has never seen the work can follow it: the problem, why it matters, how it was approached, what constrained it, the solution, how to use it, and what is not done. Read before opening a PR, before rewriting its body, and whenever the PR's scope changes.",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-qa-dup-sidecars/cat-harness.jsonld#package/sdlc-core"
+      ],
+      "instructionsPath": "skills/sdlc/sdlc-core/pr-description.md",
+      "instructionLines": 154,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-qa-dup-sidecars/cat-harness.jsonld#directory/skills",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/pr-description"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-qa-dup-sidecars/cat-harness.jsonld#skill/bean-blocking",
@@ -3493,7 +3510,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-qa-dup-sidecars/cat-harness.jsonld#package/sdlc-core"
       ],
       "instructionsPath": "skills/sdlc/sdlc-core/continual-progress.md",
-      "instructionLines": 265,
+      "instructionLines": 268,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -4243,7 +4260,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-qa-dup-sidecars/cat-harness.jsonld#package/who-iris"
       ],
       "instructionsPath": "../who-iris/skills/iris-dspace.md",
-      "instructionLines": 226,
+      "instructionLines": 257,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -6878,6 +6895,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-qa-dup-sidecars/cat-harness.jsonld#skill/pending-show",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-qa-dup-sidecars/cat-harness.jsonld#skill/pickup",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-qa-dup-sidecars/cat-harness.jsonld#skill/platform-gates",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-qa-dup-sidecars/cat-harness.jsonld#skill/pr-description",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-qa-dup-sidecars/cat-harness.jsonld#skill/prepare-merge",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-qa-dup-sidecars/cat-harness.jsonld#skill/prepare-merge-auto",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-qa-dup-sidecars/cat-harness.jsonld#skill/publish-verification",
@@ -46007,6 +46025,15 @@
       "module": "schemas/bean-graph.ts",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-qa-dup-sidecars/cat-harness.jsonld#directory/schemas",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/bean-graph"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-qa-dup-sidecars/cat-harness.jsonld#schema/bean-note",
+      "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#Schema",
+      "name": "bean-note",
+      "title": "A BEAN NOTE — one pull request's addendum to a bean, in a file of its own.",
+      "module": "schemas/bean-note.ts",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-qa-dup-sidecars/cat-harness.jsonld#directory/schemas",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/bean-note"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-qa-dup-sidecars/cat-harness.jsonld#schema/bib-verification",
