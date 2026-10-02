@@ -120,6 +120,56 @@ describe("ContributionRegistry", () => {
       .toThrow(ContributionCollisionError);
   });
 
+  // ── What a contributed kind carries (bean 1335) ──────────────────
+
+  it("carries a contributed kind's builder, label prefix and JSON-LD types", () => {
+    const r = new ContributionRegistry();
+    r.register({
+      name: "smart-base",
+      blockKinds: [
+        { kind: "decision-table", adapter: "dak", builder: "decisionTable", labelPrefix: "dt", folioType: "x:DT", docoType: "doco:Table" },
+        { kind: "persona", adapter: "dak", labelPrefix: "pers" },
+      ],
+    });
+    expect(r.kindEntry("decision-table")).toEqual({
+      adapter: "dak",
+      builder: "decisionTable",
+      labelPrefix: "dt",
+      folioType: "x:DT",
+      docoType: "doco:Table",
+    });
+    // An omitted builder is the kind's own name; an omitted docoType is none.
+    expect(r.kindEntry("persona")?.builder).toBe("persona");
+    expect(r.kindEntry("persona")?.docoType).toBeUndefined();
+    expect([...r.contributedBuilders()]).toEqual([["decisionTable", "decision-table"], ["persona", "persona"]]);
+    expect(r.contributedLabelPrefixes().sort()).toEqual(["dt", "pers"]);
+    // A built-in kind is not the registry's to describe.
+    expect(r.kindEntry("theorem")).toBeUndefined();
+  });
+
+  it("refuses a contributed builder that is a built-in builder", () => {
+    // `export default theorem(` must not be able to mean two kinds.
+    const r = new ContributionRegistry();
+    expect(() => r.register({ name: "rogue", blockKinds: [{ kind: "my-thm", adapter: "x", builder: "theorem" }] }))
+      .toThrow(ContributionCollisionError);
+  });
+
+  it("refuses one builder claimed for two contributed kinds", () => {
+    const r = new ContributionRegistry();
+    r.register({ name: "a", blockKinds: [{ kind: "k-one", adapter: "x", builder: "kOne" }] });
+    expect(() => r.register({ name: "b", blockKinds: [{ kind: "k-two", adapter: "y", builder: "kOne" }] }))
+      .toThrow(ContributionCollisionError);
+  });
+
+  it("accepts `dak` as a contributed adapter now that core does not build it in", () => {
+    const r = new ContributionRegistry();
+    r.register({ name: "smart-base", adapter: { name: "dak", module: "./x.ts", companionRoles: ["ts", "dmn"] } });
+    expect(r.contributedAdapters()).toEqual(["dak"]);
+    expect(r.adapterCompanionRoles("dak")).toEqual(["ts", "dmn"]);
+    // An adapter nobody contributed is not "no roles" — it is unknown.
+    expect(r.adapterCompanionRoles("nobody")).toBeUndefined();
+  });
+
   it("refuses a tool group claimed by a different contributor", () => {
     const r = new ContributionRegistry();
     r.register(sci());
