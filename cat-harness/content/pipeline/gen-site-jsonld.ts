@@ -44,7 +44,7 @@ import { readFileSync, writeFileSync, existsSync, readdirSync, mkdirSync } from 
 import { join, dirname, relative, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 import {
-  CONTENT_CONTEXT_URL,
+  CONTENT_DOCUMENT_CONTEXT,
   SITE_PAGE_TYPES,
   SITE_NARRATIVE_TYPES,
   SITE_ASSET_TYPES,
@@ -104,7 +104,7 @@ function emit(path: string, doc: Record<string, unknown>): void {
 
 function nodeDoc(page: WebPage, node: WebPageNode, flat: string): Record<string, unknown> {
   const doc: Record<string, unknown> = {
-    "@context": CONTENT_CONTEXT_URL,
+    "@context": CONTENT_DOCUMENT_CONTEXT,
     "@id": siteIri(page.slug, node.id),
     "@type": [...(node.asset ? SITE_ASSET_TYPES : SITE_NARRATIVE_TYPES)],
     label: node.id,
@@ -168,7 +168,7 @@ for (const flat of flats) {
   const page = ((await import(manifest)) as { default: WebPage }).default;
 
   emit(join(SRC_DIR, flat, `${flat}.jsonld`), {
-    "@context": CONTENT_CONTEXT_URL,
+    "@context": CONTENT_DOCUMENT_CONTEXT,
     "@id": siteIri(page.slug),
     "@type": [...SITE_PAGE_TYPES],
     label: page.slug,
