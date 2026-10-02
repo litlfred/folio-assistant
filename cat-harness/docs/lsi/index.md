@@ -124,7 +124,7 @@ Each dimension is a **contrast** between two poles, shown by their highest-loadi
 | 4 | 16.58 | page, block, text, blocks, chapter, manifest, section, pdf | sibling, ledger, subdirectory, items, sessions, session, coordination, queue |
 | 5 | 14.98 | preview, staging, navbar, locale, page, translated, translation, build | rung, archive, archived, withheld, sniff, arm, ingest, edges |
 | 6 | 14.93 | lane, role, actor, requirements, analysis, task, edge, impact | sha, queue, slide, rung, bytes, withheld, arm, images |
-| 7 | 14.47 | edges, forward, preview, backward, edge, cross-chapter, energy, logical | actor, lane, role, criterion, backlog, login, task, requirement |
+| 7 | 14.46 | edges, forward, preview, backward, edge, cross-chapter, energy, logical | actor, lane, role, criterion, backlog, login, task, requirement |
 | 8 | 14.22 | feature, phase, preview, feedback, pdf, impact, stakeholders, request | locale, avatar, translated, tile, art, claim, translation, card |
 
 **Findings** — 0 narrow dimension(s), 0 near-duplicate pair(s).

@@ -222,6 +222,16 @@ A build log saying "678 resources, 671 edges" is the executor's view of its
 own tree. `mac1`'s criterion was `verify` on a fresh clone, and it failed
 while the log read clean.
 
+**The executor's own check runs on an untouched copy, not on the tree it
+built in.** A build leaves its own files behind, so a check run where the
+work happened agrees with itself whether or not the work is right. In `mac1`
+attempt 2 the executor's `verify` read `valid` in its build clone, and the
+verifier's read `stale-inputs` on untouched clones for both caches. So the
+bean's local-check step names a **second** copy: a new clone, a clean
+container, the published artefact. Never the working directory the step ran
+in. If the step can only be checked in place, say so in `## Evidence`, and
+expect the verifier to disagree.
+
 ## 6. Only the owner grants an exception
 
 A boundary in the bean ("never `--force`", "push only to `fhir-ast/*`", "never
