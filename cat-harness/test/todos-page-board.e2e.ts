@@ -32,6 +32,7 @@ import { readFileSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 import { Liquid } from "liquidjs";
+import { AxeBuilder } from "@axe-core/playwright";
 
 import { siteDirFor } from "../schemas/cat-harness.ts";
 
@@ -63,7 +64,7 @@ async function render(rel: string): Promise<string> {
 }
 
 function shell(body: string): string {
-  return `<!doctype html><html lang="en"><head><meta charset="utf-8">
+  return `<!doctype html><html lang="en"><head><meta charset="utf-8"><title>Todos</title>
 <meta name="fa-todo-src" content="/assets/todos/index.json">
 <style>${CSS}</style></head><body>
 <div class="main-content-wrap"><div class="main-content" id="main-content">
@@ -72,11 +73,19 @@ ${body}
 <script>${JS}</script></body></html>`;
 }
 
-/** The theme's footer, through the same Liquid, so the floor is the shipped one. */
+/**
+ * The floor, exactly as `footer_custom.html` includes it on every page.
+ *
+ * Only the floor and not the whole footer: the footer's other part, the build
+ * stamp, is site-wide chrome styled by the theme this stand-in does not load.
+ * Unstyled, its link fails contrast (browser-default blue at the stamp's 0.6
+ * opacity), which says nothing about this page.
+ */
 async function footer(): Promise<string> {
-  return engine.parseAndRender(readFileSync(join(SITE, "_includes/footer_custom.html"), "utf8"), {
-    site: { data },
-  });
+  const src = readFileSync(join(SITE, "_includes/footer_custom.html"), "utf8");
+  const line = /\{%-?\s*include generated\/todo-listing\.html\s*-?%\}/.exec(src);
+  if (!line) throw new Error("footer_custom.html no longer includes the todo floor");
+  return engine.parseAndRender(line[0], { site: { data } });
 }
 
 async function open(p: Page, rel: string, onlyLandingInclude = false): Promise<void> {
@@ -134,6 +143,23 @@ test.describe("/todos/ is the stickies panel (#1906)", () => {
     expect(onTodos[2]).toBe("todo board inside landing board");
     // And the landing page's panel stays slid away, as the owner asked there.
     await expect(p.locator("details.fa-sticky-panel")).not.toHaveAttribute("open", "");
+  });
+
+  test("the rendered page has no WCAG A/AA violations", async ({ page: p }) => {
+    // The audit `state-dashboards.e2e.ts` runs over every standalone state
+    // page, at the same tags. This page is themed, so it is audited here,
+    // AFTER rendering, rather than as the unbuilt source that spec serves.
+    await open(p, "todos/index.html");
+    const { violations } = await new AxeBuilder({ page: p })
+      .withTags(["wcag2a", "wcag2aa", "wcag21a", "wcag21aa", "wcag22aa"])
+      .analyze();
+    expect(
+      violations.map(
+        (v) =>
+          `${v.id} [${v.impact}] ×${v.nodes.length} — ${v.help}: ` +
+          v.nodes.map((n) => `${n.target.join(" ")} ${n.html} (${n.failureSummary ?? ""})`).join("; "),
+      ),
+    ).toEqual([]);
   });
 
   test("no state-graph list and no plain-text by-node list", async ({ page: p }) => {
