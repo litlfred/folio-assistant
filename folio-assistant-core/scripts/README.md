@@ -21,6 +21,7 @@ Part of [folio-assistant-core](../README.md) 0.1.0, declared as `core-scripts`, 
 | [`codemod-refterm-usage.test.ts`](codemod-refterm-usage.test.ts) | a file |  |
 | [`codemod-refterm.test.ts`](codemod-refterm.test.ts) | a file |  |
 | [`codemod-refterm.ts`](codemod-refterm.ts) | a file |  |
+| [`dc-render.ts`](dc-render.ts) | a file |  |
 | [`extract-assets.ts`](extract-assets.ts) | a file |  |
 | [`gen-covers.test.ts`](gen-covers.test.ts) | a file |  |
 | [`gen-covers.ts`](gen-covers.ts) | a file |  |

@@ -76,9 +76,10 @@
       <bpmn:outgoing>C01</bpmn:outgoing>
     </bpmn:startEvent>
     <bpmn:userTask id="Task_MapL2" name="Map L2 → L3&#10;[l3-fhir-authoring]">
-      <bpmn:documentation>Each data element becomes a profile, each value set a ValueSet, each decision a PlanDefinition / Library.</bpmn:documentation>
+      <bpmn:documentation>Each data element becomes a profile, each value set a ValueSet, each decision a PlanDefinition / Library. The DAK's L2 content is l3-fhir-authoring's sourceModel; this step binds l2-dak-authoring beside it, which is where the WHO L2 → L3 ordering lives now that the generic skill names no DAK (smart-* separation stage D, #1767).</bpmn:documentation>
       <bpmn:extensionElements>
         <bootstrap.processes:skill ref="l3-fhir-authoring" />
+        <bootstrap.processes:skill ref="l2-dak-authoring" />
       </bpmn:extensionElements>
       <bpmn:incoming>C01</bpmn:incoming>
       <bpmn:outgoing>C02</bpmn:outgoing>

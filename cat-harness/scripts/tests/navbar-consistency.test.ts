@@ -206,8 +206,12 @@ describe("the themes set is iterated, not hardcoded", () => {
     // The test was RIGHT to fail. Its name said "at a set size of 1", and the
     // premise expired; asserting a branch that no longer fires would have been
     // a test passing over a state the repository has left.
+    //
+    // `smart-base`, not `smart-trust`, since stage D of the smart-* separation
+    // (#1767): the WHO SMART theme is the template's, so it moved with the
+    // template to smart-base. The set is still 2.
     expect(out).toContain("who-iris");
-    expect(out).toContain("smart-trust");
+    expect(out).toContain("smart-base");
     expect(status).toBe(0);
   });
 
