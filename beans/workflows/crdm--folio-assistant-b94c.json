@@ -1,0 +1,53 @@
+{
+  "$schema": "folio-workflow-instance/v1",
+  "id": "crdm--folio-assistant-b94c",
+  "processId": "Process_CRDM",
+  "source": "cat-harness/methodologies/crdm/workflows/crdm-requirements.bpmn",
+  "subject": "folio-assistant-b94c",
+  "bean": "folio-assistant-b94c",
+  "tokens": ["Call_Needs"],
+  "arrivals": {},
+  "status": "running",
+  "startedAt": "2026-09-21T16:05:00.000Z",
+  "updatedAt": "2026-09-21T16:16:02.000Z",
+  "children": {},
+  "_recordedBy": "hand-written, not engine-written. `bun` is not installed on this checkout, so workflow_start/workflow_next could not run and this file was composed to match the v1 shape observed in crdm--folio-assistant-6lb8.json. It may differ from what the interpreter would emit — in particular `children` is empty where the engine would record the Call_Issue subprocess. Re-derive it with the engine once bun is available, per AGENTS.md: naming the process is the report, the committed instance is the evidence.",
+  "history": [
+    {
+      "at": "2026-09-21T16:05:00.000Z",
+      "node": "Start_BA",
+      "actor": "costateixeira",
+      "note": "Need identified while onboarding on Windows 11: the installation guide could not be followed on this platform."
+    },
+    {
+      "at": "2026-09-21T16:07:00.000Z",
+      "node": "BA_Submit",
+      "actor": "costateixeira",
+      "note": "Request stated, and deliberately widened by the BA from 'add Windows scripts' to 'check that all content and tooling is not Linux specific — whenever that is spotted, make a Windows path'."
+    },
+    {
+      "at": "2026-09-21T16:08:00.000Z",
+      "node": "A_Detect",
+      "actor": "claude",
+      "note": "Classified as a feature request. crdm-detect signals matched in three categories: direct capability request, workflow-gap description, and a platform-level change naming files under scripts/."
+    },
+    {
+      "at": "2026-09-21T16:08:30.000Z",
+      "node": "GW_Feature",
+      "actor": "claude",
+      "note": "Feature? -> yes. Routed to CRDM rather than implemented directly."
+    },
+    {
+      "at": "2026-09-21T16:13:00.000Z",
+      "node": "Call_Issue",
+      "actor": "claude",
+      "note": "Issue linking. Scanned open and closed issues for windows/cross-platform/portability/powershell — no match, and no issue with 'windows' in its title. BA gave explicit permission to create; issue #735 opened. No issue was created before permission, per crdm-detect §'Issue association'."
+    },
+    {
+      "at": "2026-09-21T16:16:02.000Z",
+      "node": "Call_Needs",
+      "actor": "claude",
+      "note": "Phase 1 needs assessment. Needs statement synthesised with measurements taken on this checkout at 3953a35 and posted to #735, not to chat. Precedent found after filing — bean en68 / PR #683 had already fixed a total Windows clone failure and shipped check:portable-paths — and posted as a follow-up comment reframing the request as a generalisation of an accepted pattern. Requester @costateixeira; stakeholder for sign-off @litlfred. Awaiting approval of the needs statement; Phase 1 loops until it is approved."
+    }
+  ]
+}

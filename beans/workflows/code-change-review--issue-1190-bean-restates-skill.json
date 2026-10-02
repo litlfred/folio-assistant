@@ -1,0 +1,62 @@
+{
+  "$schema": "folio-workflow-instance/v1",
+  "id": "code-change-review--issue-1190-bean-restates-skill",
+  "processId": "Process_CodeChangeReview",
+  "source": "cat-harness/processes/code-change-review.bpmn",
+  "subject": "issue-1190-check-bean-restates-skill",
+  "bean": "folio-assistant-8v0y",
+  "tokens": [
+    "End_Merged"
+  ],
+  "arrivals": {},
+  "history": [
+    {
+      "at": "2026-09-23T21:05:00.000Z",
+      "node": "Start_Change",
+      "actor": "claude",
+      "note": "Recorded AT the first commit, not backfilled. `vlhk` is the precedent that makes that worth saying: 54 merges in one window with `beans/workflows/` holding only `.gitkeep`, a STRICT rule whose breach looked exactly like compliance."
+    },
+    {
+      "at": "2026-09-23T21:07:00.000Z",
+      "node": "Task_ClaimBean",
+      "actor": "claude",
+      "note": "Checked for a duplicate first -- `beans create` dedupes on nothing and has produced 14,688 duplicates in this corpus before. Searched the store for `restates`, `bean-restates-skill`, and titles matching restat|drift|copy-of-skill: no existing bean. Created `8v0y` and parented it on epic `1xhc` (CI RELIABILITY), a feature's parent being required to be a milestone or an epic."
+    },
+    {
+      "at": "2026-09-23T21:10:00.000Z",
+      "node": "Task_BranchAndAnnounce",
+      "actor": "claude",
+      "note": "Branch claude/bean-restates-skill-gate; issue #1190 opened with the defect, the Jaccard dead end and the scope."
+    },
+    {
+      "at": "2026-09-23T21:20:00.000Z",
+      "node": "Task_Implement",
+      "actor": "claude",
+      "note": "MEASURED BEFORE BUILDING, and it changed the design twice. (1) Three of the four criterion shapes in the specification do not survive the corpus: `## Proposed phases` and `## Rules` occur ZERO times, `invariant` is ordinary prose in all 7 open hits, and a line matching `exit criterion` flags `kn0t` AFTER its repair -- it fails on its own negative fixture. (2) The conjunction is FALSIFIED: the pre-repair `kn0t` references NO skill by path, and the skill existed at that commit (git cat-file -e f8ed0c1a^: confirmed). Requiring the pointer as a condition would have reproduced the Jaccard failure exactly, so it is reported as context that changes the remedy rather than as a condition that changes the verdict. The rule built instead is a phase-contract table: a criterion column that is not an exit-CODE column, over rows enumerating named units of a plan."
+    },
+    {
+      "at": "2026-09-23T21:35:00.000Z",
+      "node": "Task_RunGates",
+      "actor": "claude",
+      "note": "`bun run gates`, not a hand-picked subset -- 'a subset of the gate set is not the gate set'. The known pre-existing failure on main (`kg export > a preview says so in its type`, a 5s timeout measured at 5884ms on a clean worktree) is confirmed against main rather than assumed."
+    },
+    {
+      "at": "2026-09-24T05:52:00.000Z",
+      "node": "Task_AddressReview",
+      "actor": "claude",
+      "note": "The hand-check in bean `ekp9` (PR #1188) published its classification and it went AGAINST this rule: 50 candidates read by hand, 5 already drifted, 3 live restatements (xies, tfo1, lqo9) that this rule flags none of. Applied rather than argued with, because the commitment in the bean, the PR and three commits was that their reading is ground truth. Three changes: the limit named in the module docs and the clean line narrowed to what was actually measured; the direction no longer assumed, since they found the SKILL wrong in 3 of the 5 drifted pairs and the report previously said 'delete the copy'; and their calibration finding recorded -- kn0t pre-repair shares only 22 ten-word runs, below the >=25 threshold, so the candidate set never contained the calibration case."
+    },
+    {
+      "at": "2026-09-24T05:52:10.000Z",
+      "node": "Task_PrepareMerge",
+      "actor": "owner",
+      "note": "Owner: 'Wait then merge' -- explicit confirmation, conditional on the hand-check landing first. Waited, applied its findings, CI green (9 success / 2 skipped, mergeable_state clean, gates 140/140), merged as e5cf533d. ONE DEFECT IN THE MERGE ITSELF: the PR body and merge commit said 'Closes #1190', which auto-closed the issue -- and an agent never closes an issue on its own say-so. Reopened immediately; the close is the owner's. The lesson is that 'Closes #' in a PR body is an issue closure scheduled in advance, and the rule applies to it."
+    },
+    {
+      "at": "2026-09-24T05:55:00.000Z",
+      "node": "End_Merged",
+      "actor": "claude",
+      "note": "Bean 8v0y completed with a Summary of Changes. One follow-up named and NOT opened: ekp9's 'agreement is not correctness' class -- lqo9 and swimlane-glossary both say 157 where check:lane-documentation measures 182; s8mo and session-context both say six where SessionContextSchema has 8. No bean-vs-skill comparison reaches those; a check comparing a prose count against a command's output would, and that is a different check the owner chooses."
+    }
+  ]
+}

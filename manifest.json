@@ -1,0 +1,43 @@
+{
+  "$schema": "state-manifest/v1",
+  "status": "seed",
+  "authoritative": false,
+  "note": "Seeded from main for arc fs43 (issue #1850). main remains the source of truth until Phase 3 migrates every reader and writer; until then this branch is a verified copy, not the store. Re-seeded at cutover.",
+  "source": {
+    "ref": "main",
+    "sha": "85b9578b630e46d1b82eae3877d915cf05c4591d"
+  },
+  "keyedBy": "tip",
+  "graphs": [
+    {
+      "path": "beans/defs",
+      "tree": "a4c3f109529e27ffa92d09fa06f98bb574ef9dc8",
+      "files": 1239
+    },
+    {
+      "path": "beans/workflows",
+      "tree": "53a8d206eccd292a7a355d24c8dbcdcf479ea83b",
+      "files": 10
+    },
+    {
+      "path": "beans/surveys",
+      "tree": "b745c16dac42d3ffa37828e22f993c1cd4166816",
+      "files": 2
+    },
+    {
+      "path": "todos",
+      "tree": "e10f5b90722f4fc9b0aab470caa75c25acee9027",
+      "files": 11
+    },
+    {
+      "path": "issue-marks",
+      "tree": "a2bdc9faf96b18418de1dc5053cb3ef10f8f07e0",
+      "files": 3
+    },
+    {
+      "path": "cat-harness/test/health/results",
+      "tree": "e60819a22d65fc7b550131f7e0d01d719d4986bc",
+      "files": 2
+    }
+  ]
+}

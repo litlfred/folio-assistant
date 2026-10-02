@@ -1,0 +1,40 @@
+{
+  "_comment": "The todo graph. A TODO is a PERSON's outstanding item — the human half of memory. It is NOT a second work plan: `beans/` is the agent work plan and `AGENTS.md` forbids standing another up beside it. The two sit in different quadrants of one 2x2 — memory against workflow management, human against agent — and conflating them is the drift this repo keeps paying for. A human's memory is a todo; an agent's is `memory/`; an agent's workflow management is `beans/`; and human workflow management is EMPTY, deliberately and still. Two nodes rather than one because the difference is real: an `items` todo is raised about anything, a `feedback` todo against a specific block with the submitter's identity — the same split as `bean-defs` against `workflow-state`. Paths resolve against THIS file's directory, the rule `beans/beans.json` follows, so the whole graph relocates by moving one folder. Schema: schemas/todo-graph.ts; the node shape is schemas/todo.ts.",
+  "name": "folio-assistant",
+  "_defaultTheme_comment": "The theme a todo takes when it does not choose one. `grumpy-cat` is THIS INSTANCE'S OWN — the theme `cat-harness/harness.json` gives its own landing card — and that is the whole reason it is safe as a default. Owner, bean `5y4b`: themes are assigned \"based on content\", \"used jugement\", and a judgement is a CLAIM about the todo. `operations` on a todo that is nothing of the sort says something false; the instance's own theme says only \"this belongs to this folio\", which is true of every todo here. So the default makes no claim and a per-todo override makes one deliberately. Declared here rather than in the generator because a folio's own theme is the folio's to choose, and a literal in shared code would be this repository's answer imposed on every downstream instance.",
+  "defaultTheme": "grumpy-cat",
+  "directories": [
+    {
+      "id": "items",
+      "path": "items",
+      "graphKinds": [
+        "todo-items"
+      ],
+      "description": "One Markdown file per todo, carrying `$schema: folio-todo/v1` in its front matter. Tagged against the knowledge graph — roles, processes, tasks, identities, references and artefacts — so \"what is outstanding here\" is answerable from any node."
+    },
+    {
+      "id": "feedback",
+      "path": "feedback",
+      "graphKinds": [
+        "todo-feedback"
+      ],
+      "description": "Todos raised against a specific block, carrying the submitter's identity. The content-review feedback workflow the `todo-review` skill reads."
+    },
+    {
+      "id": "boards",
+      "path": "boards",
+      "graphKinds": [
+        "boards"
+      ],
+      "description": "One file per board, carrying `$schema: folio-board/v1`. A board is a DIAGRAM OF this folio, not a container of one — it declares what it shows (absent filter means the whole folio) and nothing else. Owner, 2026-09-20: \"treat it like OMG specs and BPMN layout. relationship first, visualiztion alter.\" So this is the semantic half; `positions` beside it is the Diagram Interchange. A folio with no boards is complete, and deleting every board loses layout and no content."
+    },
+    {
+      "id": "positions",
+      "path": "boards",
+      "graphKinds": [
+        "board-positions"
+      ],
+      "description": "`board-positions.json`, the layout layer: keyed by board id then by note id, in board units. It lives BESIDE the boards it lays out and points one way — folio -> board -> position -> note — so a note carries no x, y, board or position, which `schemas/board-positions.test.ts` asserts against the source of four note schemas. `state` rather than `content` because a running process writes it every time somebody moves a note; the boards it refers to are `content`."
+    }
+  ]
+}

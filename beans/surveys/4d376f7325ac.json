@@ -1,0 +1,46 @@
+{
+  "$schema": "folio-session-survey/v1",
+  "from": "811148af01d370b0bc15eb00a01b686acba93e25",
+  "to": "4d376f7325ac3b72dd1f65a3a13c401a73eabf8c",
+  "branch": "origin/main",
+  "takenAt": "2026-09-27T05:09:55.790Z",
+  "by": "https://claude.ai/code/session_01SjvqTkDQsqa6SLLFjBwoD3",
+  "commits": 153,
+  "axes": [
+    {
+      "axis": "ci",
+      "covered": true,
+      "finding": "Re-measured on a PRISTINE origin/main worktree (c6960465301), full `bun run gates`: 1 of 166 failed, and that one is sff8 CONTENTION not a defect \u2014 `buildReport \u2014 absence is absence` took 8352ms and failed under load, then 29 pass / 0 fail / 1031ms in isolation. main is effectively GREEN. The t8g3/tbdg translation drift is RESOLVED (by #1411, 'translation-drift 36 findings to 0 new'); a sibling recorded the same at f54e8c812c8, 'the drift gate is GREEN, so 103 gates now run'. CONSEQUENCE, and the reason this axis matters: `check:artefact-verification` and `docs:harness:check` are ABSENT from the failure list. Earlier in this window I reported both as main's, unreachable behind the drift inside a 106-gate `set -e` batch \u2014 that was true when the batch halted at its third member and is false now. Do not inherit any 'known red' list; there is none."
+    },
+    {
+      "axis": "prs",
+      "covered": true,
+      "finding": "Mine merged in this window: #1419 (e8m3 \u2014 beans/defs/archive/ declared, 631 beans in an undeclared directory, plus check:bean-archive), #1424 (6ptx \u2014 this survey mechanism), #1426 (do70 \u2014 the harness.json bean-census finding). #1430 is OPEN and green, restoring five locales' `description:` and ar's `dir: rtl` that #1427 dropped while retranslating. #1412 is NOT in this window \u2014 it merged before the lower edge; verified, not assumed. 57 merge commits total in the window, most of them siblings'."
+    },
+    {
+      "axis": "beans",
+      "covered": true,
+      "finding": "PARTIAL, and the limit is the point: I read and wrote SPECIFIC beans (sfjo created; do70, ymsu, qook, e8m3, 6ptx read or appended) and ran check:bean-parents. I did NOT sweep the bean store. A later session wanting the work-plan picture must still do that."
+    },
+    {
+      "axis": "generated-artefacts",
+      "covered": true,
+      "finding": "Two defects of one shape, both measured. (1) #1427 dropped front-matter keys while retranslating, and 877aade245f then REGENERATED and committed the loss \u2014 marker count 241\u2192246 in docs-auto/index/docs/index.html \u2014 turning docs:auto:check green by recording the regression. Its commit subject is honest; that is what makes it dangerous. (2) bun test writes 72 script-sidecars mid-gates-run (ymsu, appended with the measurement). RULE: read what a regeneration WRITES before committing it; a generator recording a regression is indistinguishable at the gate from one catching up."
+    },
+    {
+      "axis": "issues",
+      "covered": false,
+      "finding": "Not looked at. No issue was opened, read or swept in this window. #206's standing reservation of translation adjudication to a human was respected but not re-read."
+    },
+    {
+      "axis": "branches",
+      "covered": false,
+      "finding": "Not swept. One orphan branch (claude/cool-fermi-htir5p) is known and blocked on an HTTP 403 through the agent proxy; ten stale /tmp worktrees are reported and awaiting the owner. Neither is a branch sweep."
+    },
+    {
+      "axis": "commit-content",
+      "covered": false,
+      "finding": "Not read individually. 153 commits in the window; I read subjects, the merge conflicts I resolved, and a deliberate 6-commit bisect of docs:auto:check. Claiming to have read 153 diffs would be the overclaim this tool exists to prevent."
+    }
+  ]
+}
