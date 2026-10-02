@@ -168,6 +168,10 @@ export function tools(baseUrl?: string): ToolDefinition[] {
         "Write `<instance>/docs/` — an index page, one page per artefact, a page per over-large category and per menu group — from `fhir-artifact-index/index.json` (and `menu.json` when ingested), styled by the template chrome an owning instance ingested. Moved here from smart-trust because nothing in it was smart-trust's (#1767); smart-base reuses it for its `/smart-base/` landing page with `--summary`. For an IG whose SOURCE is at hand, `build-ig-site` renders the IG's own pages instead; this is for an IG known only by what it published.",
       install: { none: true },
       invoke: { shell: "bun run fhir-harness/scripts/gen-ig-pages.ts" },
+      // The viewer for this kind: each instance's index page declares
+      // `renders` / `rendered-by: ig-pages`, so harness-tiles opens it for
+      // the instance's artefact index (#1767, stage C3).
+      renders: ["fhir-artifact-index"],
       io: {
         inputs: [
           { name: "instance", schema: t("RepoPath"), required: true, description: "The instance directory: holds `fhir-artifact-index/` and receives `docs/`." },
