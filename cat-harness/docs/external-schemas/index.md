@@ -29,7 +29,7 @@ depends on it**, and **which of its terms this repository branches on**.
 <div class="xs-grid">
 <div class="xs-stat"><b>20</b><span>specifications</span></div>
 <div class="xs-stat"><b>104</b><span>operative terms in the graph</span></div>
-<div class="xs-stat"><b>200</b><span>declared uses</span></div>
+<div class="xs-stat"><b>202</b><span>declared uses</span></div>
 <div class="xs-stat"><b>0</b><span>declarations naming no record</span></div>
 </div>
 
@@ -232,7 +232,7 @@ graph. That is a determined zero, not an unfilled field.
 | `fhir-harness/processes/content/*.bpmn (2)` | `xmlns` binding |
 | `folio-assistant-core/processes/conduct/*.bpmn (1)` | `xmlns` binding |
 | `folio-assistant-core/processes/content/*.bpmn (6)` | `xmlns` binding |
-| `folio-assistant-core/processes/library/*.bpmn (5)` | `xmlns` binding |
+| `folio-assistant-core/processes/library/*.bpmn (6)` | `xmlns` binding |
 | `folio-assistant-core/processes/ui/*.bpmn (3)` | `xmlns` binding |
 | `folio-assistant-sci/processes/content/*.bpmn (2)` | `xmlns` binding |
 | `smart-base/methodologies/processes/*.bpmn (1)` | `xmlns` binding |
@@ -291,7 +291,7 @@ a subset of the edition rather than a transcription of it.
 | `fhir-harness/processes/content/*.bpmn (2)` | `xmlns` binding |
 | `folio-assistant-core/processes/conduct/*.bpmn (1)` | `xmlns` binding |
 | `folio-assistant-core/processes/content/*.bpmn (6)` | `xmlns` binding |
-| `folio-assistant-core/processes/library/*.bpmn (5)` | `xmlns` binding |
+| `folio-assistant-core/processes/library/*.bpmn (6)` | `xmlns` binding |
 | `folio-assistant-core/processes/ui/*.bpmn (3)` | `xmlns` binding |
 | `folio-assistant-sci/processes/content/*.bpmn (2)` | `xmlns` binding |
 | `smart-base/methodologies/processes/*.bpmn (1)` | `xmlns` binding |
