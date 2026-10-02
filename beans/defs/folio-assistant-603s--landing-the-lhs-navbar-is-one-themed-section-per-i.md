@@ -252,7 +252,7 @@ territory and is now visible rather than theoretical.
       its own state.
 - [x] **The display panel** showing an instance's named display subgraphs.
       **Built**, and it carries the 2026-09-22 inert-and-labelled ruling.
-- [ ] **A tab for materialised local subgraphs and declared remote graphs**,
+- [x] **A tab for materialised local subgraphs and declared remote graphs**,
       and opening content indicating local or remote. **Still open, and it is
       the only one of the four that is.** No remote/local mechanism exists:
       `remote` appears three times in `docs-ui.js` and not at all in
@@ -591,3 +591,11 @@ Main's schema keeping an undeclared `associatedHarnesses` as `undefined`
 (*"absent is legal, and stays absent"*) and #1238's generator answering `[]`
 are **not** in conflict — different layers, both right. Read as a contradiction
 on first pass, and it is not one.
+
+## 2026-10-01 — the local/remote tab, built (session_01Cw8JgZEDT5VqQ5ergjdMjB)
+
+On the page a harness tab OPENS (\`_includes/harness_details.html\`), per the owner's \`owt6\` ruling — not in the sidebar. Each harness section gains a folded **Subgraphs — N local, M remote** disclosure: every declared directory as **local** with its repository-relative path, every \`remoteGraphs\` entry and every \`subscriptions\` entry as **remote** with its URL (a subscription also shows its pin and the subgraphs materialised here). A subscribed harness's tile marks all its graphs remote. The where-tag is text in the row, not colour; remote also gets a dashed border.
+
+Data: \`subgraphsOf\` in \`harness-tiles.ts\`, read from the declaration, never scanned; the local rows are the same \`dirs\` the "declared directories" stat counts. 3 unit tests in \`harness-tiles.test.ts\`, the remote cases from fixtures.
+
+**Measured on a local build:** who-iris shows 9 local, 0 remote; cat-harness 47 local, 0 remote. **No instance on main declares a remote graph or a subscription today**, so the remote branch of the TEMPLATE has rendered on no real page — only the data path is tested. Recorded rather than discovered later.

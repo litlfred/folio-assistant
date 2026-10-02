@@ -12,14 +12,14 @@ permalink: /glossary/tools/
 
 Candidate terms extracted from every Tool node: `title` as the label, `description` as the definition, the Tool id as the code. Each is the asset's own text, verbatim and not curated, and carries the badge "candidate, extracted". A person promotes one by authoring it. Authored terms, the counts and the sources are on the <a href="{{ '/glossary/' | relative_url }}">glossary index</a>.
 
-From: cat-harness 113 (<a href="{{ '/assets/glossary/cat-harness--kg-tools.skos.jsonld' | relative_url }}">SKOS</a>) · fhir-harness 14 (<a href="{{ '/assets/glossary/fhir-harness--kg-tools.skos.jsonld' | relative_url }}">SKOS</a>) · folio-assistant-core 4 (<a href="{{ '/assets/glossary/folio-assistant-core--kg-tools.skos.jsonld' | relative_url }}">SKOS</a>) · smart-base 9 (<a href="{{ '/assets/glossary/smart-base--kg-tools.skos.jsonld' | relative_url }}">SKOS</a>).
+From: cat-harness 112 (<a href="{{ '/assets/glossary/cat-harness--kg-tools.skos.jsonld' | relative_url }}">SKOS</a>) · fhir-harness 19 (<a href="{{ '/assets/glossary/fhir-harness--kg-tools.skos.jsonld' | relative_url }}">SKOS</a>) · folio-assistant-core 4 (<a href="{{ '/assets/glossary/folio-assistant-core--kg-tools.skos.jsonld' | relative_url }}">SKOS</a>) · smart-base 6 (<a href="{{ '/assets/glossary/smart-base--kg-tools.skos.jsonld' | relative_url }}">SKOS</a>).
 
-**Size:** this page holds 140 terms and is 95 KB before compression, fetched in one request, within its budget of 1.0 MB. There is no search index: the filter below runs over this page, and the A–Z bar jumps within it.
+**Size:** this page holds 141 terms and is 96 KB before compression, fetched in one request, within its budget of 1.0 MB. There is no search index: the filter below runs over this page, and the A–Z bar jumps within it.
 
 <table class="fa-gloss-mapping">
 <caption>Already somebody else's concept? — <code>check:term-mapping</code>, bean <code>7wou</code></caption>
 <thead><tr><th>target</th><th>mapped</th><th>unmapped</th><th>undetermined</th><th>why undetermined</th></tr></thead>
-<tbody><tr><td><code>fhir</code></td><td>0</td><td>140</td><td>0</td><td>—</td></tr><tr><td><code>skos</code></td><td>0</td><td>140</td><td>0</td><td>—</td></tr></tbody>
+<tbody><tr><td><code>fhir</code></td><td>0</td><td>141</td><td>0</td><td>—</td></tr><tr><td><code>skos</code></td><td>0</td><td>141</td><td>0</td><td>—</td></tr></tbody>
 </table>
 <p class="fa-gloss-mapping-note"><strong>Undetermined is never “no match”.</strong> 
 A vocabulary that could not be reached has said nothing, and the column above keeps that 
@@ -28,7 +28,7 @@ be a term this corpus is right to coin.</p>
 
 <label for="fa-gloss-q">Filter terms</label>
 <input id="fa-gloss-q" type="search" autocomplete="off" style="min-height:44px;width:100%;max-width:32rem">
-<p aria-live="polite"><span id="fa-gloss-n">140</span> shown</p>
+<p aria-live="polite"><span id="fa-gloss-n">141</span> shown</p>
 
 <nav aria-label="Letters"><a href="#letter-A">A</a> <a href="#letter-B">B</a> <a href="#letter-C">C</a> <a href="#letter-D">D</a> <a href="#letter-E">E</a> <a href="#letter-F">F</a> <a href="#letter-G">G</a> <a href="#letter-H">H</a> <a href="#letter-I">I</a> <a href="#letter-J">J</a> <a href="#letter-K">K</a> <a href="#letter-L">L</a> <a href="#letter-M">M</a> <a href="#letter-N">N</a> <a href="#letter-O">O</a> <a href="#letter-P">P</a> <a href="#letter-Q">Q</a> <a href="#letter-R">R</a> <a href="#letter-S">S</a> <a href="#letter-T">T</a> <a href="#letter-U">U</a> <a href="#letter-V">V</a> <a href="#letter-W">W</a></nav>
 
@@ -289,6 +289,13 @@ Gates on the merged tree <span class="fa-gloss-status">candidate, extracted</spa
 <p>Build this branch merged with the current base in a throwaway worktree and run the full <code>bun run gates</code> there — the state a merge will actually produce, which neither the branch's CI nor the base's CI evaluates. Exit 0 passes, 1 conflicts or fails, 2 could not determine (never read as clean). The working copy is never touched.</p>
 <p class="fa-gloss-meta">Tools of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/tools/index.ts"><code>cat-harness/tools/index.ts#gates-merged</code></a></p>
 </dd>
+<dt id="fhir-harness--kg-tools--ig-pages" data-fa-state="extracted" data-fa-gloss="">
+Generate an IG instance's reader-facing pages from its artefact index <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>Write <code>&lt;instance&gt;/docs/</code> — an index page, one page per artefact, a page per over-large category and per menu group — from <code>fhir-artifact-index/index.json</code> (and <code>menu.json</code> when ingested), styled by the template chrome an owning instance ingested. Moved here from smart-trust because nothing in it was smart-trust's (#1767); smart-base reuses it for its <code>/smart-base/</code> landing page with <code>--summary</code>. For an IG whose SOURCE is at hand, <a href="#fhir-harness--kg-tools--build-ig-site"><code>build-ig-site</code></a> renders the IG's own pages instead; this is for an IG known only by what it published.</p>
+<p class="fa-gloss-meta">Tools of fhir-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/fhir-harness/tools/index.ts"><code>fhir-harness/tools/index.ts#ig-pages</code></a></p>
+</dd>
 <dt id="cat-harness--kg-tools--docs-auto-viewer" data-fa-state="extracted" data-fa-gloss="">
 Generated index pages <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
@@ -540,12 +547,12 @@ Log a message to the discussion <span class="fa-gloss-status">candidate, extract
 <p>Write a log line where the human actor will read it: the discussion you are already in. Takes the five required fields and the optional body, and renders them as one entry.</p>
 <p class="fa-gloss-meta">Tools of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/tools/index.ts"><code>cat-harness/tools/index.ts#log-message</code></a></p>
 </dd>
-<dt id="smart-base--kg-tools--logical-model-schemas" data-fa-state="extracted" data-fa-gloss="">
+<dt id="fhir-harness--kg-tools--logical-model-schemas" data-fa-state="extracted" data-fa-gloss="">
 Logical models → JSON Schema <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
 <p>A JSON Schema per logical model, from the published FHIR resources.</p>
-<p class="fa-gloss-meta">Tools of smart-base · source <a href="https://github.com/litlfred/folio-assistant/blob/main/smart-base/tools/index.ts"><code>smart-base/tools/index.ts#logical-model-schemas</code></a></p>
+<p class="fa-gloss-meta">Tools of fhir-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/fhir-harness/tools/index.ts"><code>fhir-harness/tools/index.ts#logical-model-schemas</code></a></p>
 </dd>
 </dl>
 
@@ -813,12 +820,12 @@ Skill instruction reference <span class="fa-gloss-status">candidate, extracted</
 <p>Render the skill instruction bodies — the prose an agent actually loads — as browsable pages with an index, so a reader can see what an agent is told without cloning the repository.</p>
 <p class="fa-gloss-meta">Tools of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/tools/index.ts"><code>cat-harness/tools/index.ts#skill-docs</code></a></p>
 </dd>
-<dt id="cat-harness--kg-tools--pin-smart-base-terminology" data-fa-state="extracted" data-fa-gloss="">
+<dt id="fhir-harness--kg-tools--pin-ig-terminology" data-fa-state="extracted" data-fa-gloss="">
 Snapshot a published IG's terminology at its pinned version <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
-<p>Read every CodeSystem concept out of a smart-base clone and write <code>external-schemas/who-smart-base.terminology.json</code>, the offline snapshot <code>check:term-mapping</code> resolves its <code>fhir</code> target against. 585 concepts across 12 code systems at v1.0.0.</p>
-<p class="fa-gloss-meta">Tools of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/tools/index.ts"><code>cat-harness/tools/index.ts#pin-smart-base-terminology</code></a></p>
+<p>Read every CodeSystem concept out of a FHIR IG clone checked out at its pinned tag and write a <code>folio-pinned-terminology/v1</code> snapshot: the offline, version-fixed answer <code>check:term-mapping</code> resolves its <code>fhir</code> target against. Which IG, which pin record and which snapshot path are the caller's (<code>--pin</code>, <code>--out</code>, <code>--source</code>); this layer names none (#1767, stage B′).</p>
+<p class="fa-gloss-meta">Tools of fhir-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/fhir-harness/tools/index.ts"><code>fhir-harness/tools/index.ts#pin-ig-terminology</code></a></p>
 </dd>
 <dt id="cat-harness--kg-tools--tabular-xlsx" data-fa-state="extracted" data-fa-gloss="">
 Spreadsheet tabular metadata (STUB) <span class="fa-gloss-status">candidate, extracted</span>
@@ -1028,19 +1035,19 @@ Validate a translation <span class="fa-gloss-status">candidate, extracted</span>
 <p>Check a .po against its .pot — every msgid present, none obsolete, placeholders preserved.</p>
 <p class="fa-gloss-meta">Tools of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/tools/mcp.ts"><code>cat-harness/tools/mcp.ts#translation-validate</code></a></p>
 </dd>
-<dt id="smart-base--kg-tools--jsonld-vocabularies" data-fa-state="extracted" data-fa-gloss="">
+<dt id="fhir-harness--kg-tools--jsonld-vocabularies" data-fa-state="extracted" data-fa-gloss="">
 ValueSet expansions → JSON-LD <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
 <p>JSON-LD vocabularies built from the ValueSet expansions in the published output.</p>
-<p class="fa-gloss-meta">Tools of smart-base · source <a href="https://github.com/litlfred/folio-assistant/blob/main/smart-base/tools/index.ts"><code>smart-base/tools/index.ts#jsonld-vocabularies</code></a></p>
+<p class="fa-gloss-meta">Tools of fhir-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/fhir-harness/tools/index.ts"><code>fhir-harness/tools/index.ts#jsonld-vocabularies</code></a></p>
 </dd>
-<dt id="smart-base--kg-tools--valueset-schemas" data-fa-state="extracted" data-fa-gloss="">
+<dt id="fhir-harness--kg-tools--valueset-schemas" data-fa-state="extracted" data-fa-gloss="">
 ValueSets → JSON Schema <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
 <p>A JSON Schema per ValueSet, plus the enumeration-response schemas published at the IG root.</p>
-<p class="fa-gloss-meta">Tools of smart-base · source <a href="https://github.com/litlfred/folio-assistant/blob/main/smart-base/tools/index.ts"><code>smart-base/tools/index.ts#valueset-schemas</code></a></p>
+<p class="fa-gloss-meta">Tools of fhir-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/fhir-harness/tools/index.ts"><code>fhir-harness/tools/index.ts#valueset-schemas</code></a></p>
 </dd>
 <dt id="cat-harness--kg-tools--voices-viewer" data-fa-state="extracted" data-fa-gloss="">
 Voices viewer <span class="fa-gloss-status">candidate, extracted</span>

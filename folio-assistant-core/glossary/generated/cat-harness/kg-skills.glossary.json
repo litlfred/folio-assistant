@@ -915,6 +915,14 @@
       "status": "candidate"
     },
     {
+      "id": "merge-conflict-patterns",
+      "prefLabel": "merge-conflict-patterns",
+      "definition": "Merge the base branch in and resolve, without a person, only the conflicts a DECLARED pattern covers — generated files, generated README regions, QA sidecars — then prove the result with the gate set. Refuses the whole merge when any conflict is authored or undeclared. Use for \"merge main\", \"resolve the conflicts\", \"the PR is conflicted again\", \"auto-resolve\", and when adding a pattern for a new kind of churn.",
+      "notation": "merge-conflict-patterns",
+      "source": "cat-harness/skills/sdlc/sdlc-core/merge-conflict-patterns.md",
+      "status": "candidate"
+    },
+    {
       "id": "methodology-adoption",
       "prefLabel": "methodology-adoption",
       "definition": "How a named external methodology enters the knowledge graph, and how an agent picks which one applies. Read before following a judgement method, before adopting a new one, and before writing a house method instead of adopting one.",

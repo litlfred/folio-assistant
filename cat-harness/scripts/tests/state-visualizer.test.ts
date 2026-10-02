@@ -456,7 +456,7 @@ describe("the bucket counts are a KPI row, not nested panels", () => {
   test("a count is never a `.sv-item`, which is the registry's card", () => {
     // The regression this guards: reusing `.sv-item` here is what made a
     // bucket look like a peer of the family that contains it.
-    const panels = read("qa").split('<h2 class="sv-h2">State graphs')[0] ?? "";
+    const panels = read("qa").split(/<h2 class="sv-h2"[^>]*>State graphs/)[0] ?? "";
     expect(panels).toContain("sv-count");
     expect(panels).not.toContain('<li class="sv-item">');
   });
@@ -465,7 +465,7 @@ describe("the bucket counts are a KPI row, not nested panels", () => {
     // fail/pass/warn are status words and the status palette is right for them
     // in general. Here it would assert a shared scale across families that
     // deliberately have none — one has `warn`, the other has no concept of it.
-    const panels = read("qa").split('<h2 class="sv-h2">State graphs')[0] ?? "";
+    const panels = read("qa").split(/<h2 class="sv-h2"[^>]*>State graphs/)[0] ?? "";
     expect(panels).not.toMatch(/sv-count[^"]*"[^>]*class="[^"]*is-(declared|live|elsewhere|unresolved)/);
     expect(panels).not.toMatch(/<li class="sv-count"[^>]*style=/);
   });

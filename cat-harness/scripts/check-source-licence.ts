@@ -35,8 +35,30 @@
  * `check:methodology-evidence`: a citation that claims to resolve and does not
  * is worse than none.
  *
+ * ## `--check` compares the committed sidecar and writes NOTHING (bean `i2kp`)
+ *
+ * Without `--check` this script is the WRITER of
+ * `test/results/source-licence.qa-results.json`. It used to be the only form,
+ * and CI ran it as the gate — so the gate rewrote the very record it should
+ * have judged, the committed sidecar could be arbitrarily stale, and no gate
+ * anywhere failed. Only the local runner's mutation guard noticed. `--check`
+ * is the remedy `qaResultState`'s docblock prescribes: **compute and COMPARE,
+ * never repair**. Each state is decided here, where it is decided:
+ *
+ * | state        | exit | why |
+ * |--------------|------|-----|
+ * | `current`    | 0    | the committed record is what the corpus produces |
+ * | `stale`      | 1    | regenerate (`bun run check:source-licence`) and commit |
+ * | `absent`     | 1    | nothing committed is nothing to compare — a vacuous pass otherwise (`dh4f`) |
+ * | `unreadable` | 2    | the question could not be ASKED; 2 is this script's existing could-not-determine code |
+ * | `unknown`    | 2    | the store could not say (bean `c8uq`: a fetch miss is never a pass); could-not-determine, as `unreadable` |
+ *
+ * `malformed` keeps exit 1 in BOTH modes: it gates on CONTENT, `--check` gates
+ * on FRESHNESS, and folding one into the other would hide either.
+ *
  * Usage:
- *   bun run check:source-licence            # report, write the sidecar
+ *   bun run check:source-licence            # report, write the sidecar (the author's command)
+ *   bun run check:source-licence:check      # the gate: compare, write nothing
  *   bun run check:source-licence -- --json  # print the sidecar document
  *   bun run check:source-licence:check      # JUDGE: compute and judge, write nothing (the gate)
  *
@@ -62,9 +84,12 @@ import {
   judgementOf,
   judgeUsage,
   judging,
+  qaResultPath,
+  qaResultState,
   writeQaResult,
   type Judgement,
   type QaResult,
+  type QaResultState,
 } from "./qa-results.ts";
 
 const INSTANCE_ROOT = resolve(dirname(fileURLToPath(import.meta.url)), "..");
@@ -147,6 +172,29 @@ export function sourceLicenceDocument(r: LicenceReport): QaResult {
   });
 }
 
+/** Bean `i2kp`'s name for {@link sourceLicenceDocument}. */
+export const sourceLicenceDoc = sourceLicenceDocument;
+
+/** Exit code for each freshness state, as tabled in the module docblock. */
+export const CHECK_EXIT: Readonly<Record<QaResultState, number>> = { current: 0, stale: 1, absent: 1, unreadable: 2, unknown: 2 };
+
+/**
+ * The `--check` decision: compare `doc` with the sidecar committed under
+ * `instanceRoot`, write nothing, and return the exit code. A malformed record
+ * fails on content even when the sidecar is current.
+ */
+export function checkMode(
+  instanceRoot: string,
+  r: LicenceReport,
+  doc: QaResult,
+): { state: QaResultState; path: string; exit: number } {
+  const path = qaResultPath(instanceRoot, "source-licence");
+  const state = qaResultState(path, doc);
+  let exit = CHECK_EXIT[state];
+  if (exit === 0 && r.malformed.length > 0) exit = 1;
+  return { state, path, exit };
+}
+
 if (import.meta.main) {
   const GATE = "check:source-licence";
   if (judging()) {
@@ -182,7 +230,16 @@ if (import.meta.main) {
   }
   const doc = sourceLicenceDocument(r);
   if (process.argv.includes("--json")) console.log(JSON.stringify(doc, null, 2));
-  else {
+  else if (process.argv.includes("--check")) {
+    const { state, path, exit } = checkMode(INSTANCE_ROOT, r, doc);
+    const rel = relative(REPO_ROOT, path);
+    if (state === "current") console.log(`source licences: ${rel} is current (${r.entries} library entries)`);
+    else if (state === "stale") console.error(`STALE: ${rel} is not what the corpus produces. Run \`bun run check:source-licence\` and commit.`);
+    else if (state === "absent") console.error(`ABSENT: ${rel} is not committed, so there is nothing to compare. Run \`bun run check:source-licence\` and commit.`);
+    else console.error(`UNDETERMINED: ${rel} could not be read, so freshness could not be asked. This is not a pass.`);
+    for (const m of r.malformed) console.error(`  ✗ ${m.entry}: ${m.problem}`);
+    process.exit(exit);
+  } else {
     writeQaResult(INSTANCE_ROOT, "source-licence", doc);
     console.log(`source licences, ${r.entries} library entries`);
     console.log(`  stated ${r.stated.length} · unknown (searched) ${r.unknown.length} · not recorded ${r.notRecorded.length} · malformed ${r.malformed.length}`);

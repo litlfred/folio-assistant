@@ -5,7 +5,7 @@ status: in-progress
 type: task
 priority: normal
 created_at: 2026-09-21T19:18:36Z
-updated_at: 2026-10-01T12:27:01Z
+updated_at: 2026-10-01T17:41:20Z
 parent: folio-assistant-zzmr
 ---
 
@@ -141,3 +141,20 @@ _2026-10-01T12:25:43Z_ — Claimed by claude/fervent-brahmagupta-rbwhzm — push
 ## 2026-10-01 (later) — two leftovers settled
 - **The cross-instance kg-qa sidecars are not orphans.** Under PR0 the auditor files a subject owned by another instance under its own `test/results/kg-qa/_external/<owner>/`; there are 7 (smart-base 1, folio-assistant-core 1, large-datasets 5). `bun run kg:audit` rewrites them byte-identically and reports no orphan, `kg:audit:check` is green with them, and kg-audit.ts cites the smart-base one as evidence. The step-3 premise ("cat-harness wrote them for subjects it no longer declares") predates PR0. Nothing deleted.
 - **Duplicate checkoutDirectories removed.** schemas/cat-harness.ts held checkoutResolvedDirectories / checkoutDirectories / checkoutDirectoriesForGraph (cmsl step 2's parallel version); all nine importers use schemas/harness-config.ts's (PR0's), and the three only called each other. 79 lines out; tsc, eslint clean; cat-harness, placement-pr0-mechanisms, subgraphs, instance-graph-isolation: 130 pass.
+
+
+## Owner rulings 2026-10-01 late (~17:30) — Q-A, generator retargeting (epic 7x5n)
+
+Recorded by the separation-arc lead's agent; source: owner, session_01ToWZR4RgTRCWeSsgxsSQfT. Plan: Q-A ("placement rule (a) + file-level overlay (b)").
+
+- **Bootstrap outputs, split by kind.**
+  - kg-qa verdicts (29), glossary ledgers (6 in cat-harness + 5 in core) and detangle (3) **stay in cat-harness** as the auditor's output. Owner: *"a harness may discuss its dependencies."*
+  - UML renders of bootstrap and bootstrap-tools (50) are **rendered at build by bootstrap-tools** for bootstrap's site.
+  - Translations of bootstrap's processes (25) **move INTO bootstrap**. bootstrap's index.html links all 6 languages; its README gets one language line linking to the index's translated pages — no translated README files.
+  - Owner: *"bootstrap has no tools, but can use bootstrap-tools rendered content."*
+- **Committed renderings** (UML pages and SVGs, viewer pages) become **deploy-time output**, rendered at build. Published URLs stay unchanged.
+- **Delete the 37 duplicate sidecars** (8 `_external` + 29 tool kg-qa), keeping one copy per subject in its own instance. (This is the deletion confirmation Q-A PR 4 needed.)
+- **`tools/index.ts` module-union:** a name collision THROWS, keeping the `contributions.ts` rule.
+- **SKOS export URLs (X2):** left out of Q-A until ruled.
+
+**Bearing on this bean (the Q-A `<stub>` question):** the per-instance layout is `<instance>/docs/` (`siteDir()`), never `docs/<stub>/`; outputs live in the instance they are about except the auditor's own verdicts (kg-qa, glossary ledgers, detangle), which stay with cat-harness. No published URL changes.

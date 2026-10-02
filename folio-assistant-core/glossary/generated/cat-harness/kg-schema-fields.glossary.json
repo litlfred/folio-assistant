@@ -2002,6 +2002,13 @@
       "status": "candidate"
     },
     {
+      "id": "cat-harness.catharnessdeclaration.alsowritten",
+      "prefLabel": "CatHarnessDeclaration.alsoWritten",
+      "definition": "Other spellings of the name, listed on the landing (`ob3m` 5).",
+      "source": "cat-harness/schemas/cat-harness.ts#CatHarnessDeclaration.alsoWritten",
+      "status": "candidate"
+    },
+    {
       "id": "cat-harness.catharnessdeclaration.assets",
       "prefLabel": "CatHarnessDeclaration.assets",
       "definition": "Non-image artefacts this instance names — `AGENTS.md` first among them.",
@@ -2156,6 +2163,13 @@
       "status": "candidate"
     },
     {
+      "id": "cat-harness.catharnessdeclaration.summary",
+      "prefLabel": "CatHarnessDeclaration.summary",
+      "definition": "A reader's one line — see {@link CatHarnessDeclarationSchema}'s `summary` (`ob3m` 4/5).",
+      "source": "cat-harness/schemas/cat-harness.ts#CatHarnessDeclaration.summary",
+      "status": "candidate"
+    },
+    {
       "id": "cat-harness.catharnessdeclaration.topology",
       "prefLabel": "CatHarnessDeclaration.topology",
       "definition": "The topology axes this deployment declares about itself. See {@link Topology} — every field optional, absent meaning \"has not said\".",
@@ -2167,6 +2181,13 @@
       "prefLabel": "CatHarnessDeclaration.version",
       "definition": "The version, and it is an EXACT semver triple.",
       "source": "cat-harness/schemas/cat-harness.ts#CatHarnessDeclaration.version",
+      "status": "candidate"
+    },
+    {
+      "id": "cat-harness.catharnessdeclarationschema.alsowritten",
+      "prefLabel": "CatHarnessDeclarationSchema.alsoWritten",
+      "definition": "Other ways the instance's name is written, shown on the landing as a small \"also written\" list rather than run into the description as one line. Owner's choice, 2026-10-01: keep the spellings visible, as a list.",
+      "source": "cat-harness/schemas/cat-harness.ts#CatHarnessDeclarationSchema.alsoWritten",
       "status": "candidate"
     },
     {
@@ -2258,6 +2279,13 @@
       "prefLabel": "CatHarnessDeclarationSchema.subscriptions",
       "definition": "External Knowledge Graphs this one subscribes to — see {@link Subscription}. `.optional()` for the reason `associatedHarnesses` is. Ids are unique, and never also in `needs` or `associatedHarnesses` — refined below.",
       "source": "cat-harness/schemas/cat-harness.ts#CatHarnessDeclarationSchema.subscriptions",
+      "status": "candidate"
+    },
+    {
+      "id": "cat-harness.catharnessdeclarationschema.summary",
+      "prefLabel": "CatHarnessDeclarationSchema.summary",
+      "definition": "One line for a READER, where `description` is written for an author.",
+      "source": "cat-harness/schemas/cat-harness.ts#CatHarnessDeclarationSchema.summary",
       "status": "candidate"
     },
     {
@@ -5779,209 +5807,6 @@
       "prefLabel": "HealthThresholdSchema.value",
       "definition": "The limit itself.",
       "source": "cat-harness/schemas/health-report.ts#HealthThresholdSchema.value",
-      "status": "candidate"
-    },
-    {
-      "id": "ig-chrome.igchromeconflictschema.kind",
-      "prefLabel": "IgChromeConflictSchema.kind",
-      "definition": "`shape` — the layers agree the token exists and disagree about what KIND of value it holds, so a consumer substituting one into the other's rule emits something invalid.",
-      "source": "cat-harness/schemas/ig-chrome.ts#IgChromeConflictSchema.kind",
-      "status": "candidate"
-    },
-    {
-      "id": "ig-chrome.igchromeconflictschema.sites",
-      "prefLabel": "IgChromeConflictSchema.sites",
-      "definition": "Where it was seen. `min(1)` rather than `min(2)`: a `shape` conflict needs two layers by definition, but a `malformed` value needs only one, and requiring two would have made the second kind unrepresentable in the schema written to hold it.",
-      "source": "cat-harness/schemas/ig-chrome.ts#IgChromeConflictSchema.sites",
-      "status": "candidate"
-    },
-    {
-      "id": "ig-chrome.igchromelayerschema.of",
-      "prefLabel": "IgChromeLayerSchema.of",
-      "definition": "The repository the bytes were read from.",
-      "source": "cat-harness/schemas/ig-chrome.ts#IgChromeLayerSchema.of",
-      "status": "candidate"
-    },
-    {
-      "id": "ig-chrome.igchromelayerschema.package",
-      "prefLabel": "IgChromeLayerSchema.package",
-      "definition": "The `fhir.template` package name, e.g. `who.template.root`.",
-      "source": "cat-harness/schemas/ig-chrome.ts#IgChromeLayerSchema.package",
-      "status": "candidate"
-    },
-    {
-      "id": "ig-chrome.igchromelayerschema.path",
-      "prefLabel": "IgChromeLayerSchema.path",
-      "definition": "The stylesheet within that repository.",
-      "source": "cat-harness/schemas/ig-chrome.ts#IgChromeLayerSchema.path",
-      "status": "candidate"
-    },
-    {
-      "id": "ig-chrome.igchromelayerschema.ref",
-      "prefLabel": "IgChromeLayerSchema.ref",
-      "definition": "The commit they were read at. Provenance.",
-      "source": "cat-harness/schemas/ig-chrome.ts#IgChromeLayerSchema.ref",
-      "status": "candidate"
-    },
-    {
-      "id": "ig-chrome.igchromelayerschema.version",
-      "prefLabel": "IgChromeLayerSchema.version",
-      "definition": "Its declared version, e.g. `0.5.0`.",
-      "source": "cat-harness/schemas/ig-chrome.ts#IgChromeLayerSchema.version",
-      "status": "candidate"
-    },
-    {
-      "id": "ig-chrome.igchromeruleschema.from",
-      "prefLabel": "IgChromeRuleSchema.from",
-      "definition": "The package the rule was read from.",
-      "source": "cat-harness/schemas/ig-chrome.ts#IgChromeRuleSchema.from",
-      "status": "candidate"
-    },
-    {
-      "id": "ig-chrome.igchromeruleschema.selector",
-      "prefLabel": "IgChromeRuleSchema.selector",
-      "definition": "The selector, verbatim, e.g. `#ig-status.ig-status-draft`.",
-      "source": "cat-harness/schemas/ig-chrome.ts#IgChromeRuleSchema.selector",
-      "status": "candidate"
-    },
-    {
-      "id": "ig-chrome.igchromeschema.canonical",
-      "prefLabel": "IgChromeSchema.canonical",
-      "definition": "Its `canonical`.",
-      "source": "cat-harness/schemas/ig-chrome.ts#IgChromeSchema.canonical",
-      "status": "candidate"
-    },
-    {
-      "id": "ig-chrome.igchromeschema.id",
-      "prefLabel": "IgChromeSchema.id",
-      "definition": "The IG's `id` from `sushi-config.yaml`, e.g. `smart.who.int.trust`.",
-      "source": "cat-harness/schemas/ig-chrome.ts#IgChromeSchema.id",
-      "status": "candidate"
-    },
-    {
-      "id": "ig-chrome.igchromeschema.layers",
-      "prefLabel": "IgChromeSchema.layers",
-      "definition": "The chain, BASE FIRST, so index order is override order.",
-      "source": "cat-harness/schemas/ig-chrome.ts#IgChromeSchema.layers",
-      "status": "candidate"
-    },
-    {
-      "id": "ig-chrome.igchromeschema.status",
-      "prefLabel": "IgChromeSchema.status",
-      "definition": "Its `status` — what selects the watermark. `draft` here.",
-      "source": "cat-harness/schemas/ig-chrome.ts#IgChromeSchema.status",
-      "status": "candidate"
-    },
-    {
-      "id": "ig-chrome.igchrometokenschema.from",
-      "prefLabel": "IgChromeTokenSchema.from",
-      "definition": "The package whose declaration wins.",
-      "source": "cat-harness/schemas/ig-chrome.ts#IgChromeTokenSchema.from",
-      "status": "candidate"
-    },
-    {
-      "id": "ig-chrome.igchrometokenschema.name",
-      "prefLabel": "IgChromeTokenSchema.name",
-      "definition": "The custom property, including its leading `--`.",
-      "source": "cat-harness/schemas/ig-chrome.ts#IgChromeTokenSchema.name",
-      "status": "candidate"
-    },
-    {
-      "id": "ig-chrome.igchrometokenschema.overrides",
-      "prefLabel": "IgChromeTokenSchema.overrides",
-      "definition": "Lower layers this shadows, nearest first. Empty when only one declared it.",
-      "source": "cat-harness/schemas/ig-chrome.ts#IgChromeTokenSchema.overrides",
-      "status": "candidate"
-    },
-    {
-      "id": "ig-chrome.igchrometokenschema.value",
-      "prefLabel": "IgChromeTokenSchema.value",
-      "definition": "The winning value, verbatim.",
-      "source": "cat-harness/schemas/ig-chrome.ts#IgChromeTokenSchema.value",
-      "status": "candidate"
-    },
-    {
-      "id": "ig-menu.igmenugroupschema.href",
-      "prefLabel": "IgMenuGroupSchema.href",
-      "definition": "Set when the group itself is a page rather than only a container.",
-      "source": "cat-harness/schemas/ig-menu.ts#IgMenuGroupSchema.href",
-      "status": "candidate"
-    },
-    {
-      "id": "ig-menu.igmenuschema.canonical",
-      "prefLabel": "IgMenuSchema.canonical",
-      "definition": "Its `canonical`, the base every `href` is relative to.",
-      "source": "cat-harness/schemas/ig-menu.ts#IgMenuSchema.canonical",
-      "status": "candidate"
-    },
-    {
-      "id": "ig-menu.igmenuschema.id",
-      "prefLabel": "IgMenuSchema.id",
-      "definition": "The IG's `id` from `sushi-config.yaml`, e.g. `smart.who.int.trust`.",
-      "source": "cat-harness/schemas/ig-menu.ts#IgMenuSchema.id",
-      "status": "candidate"
-    },
-    {
-      "id": "ig-menu.igmenusourceschema.of",
-      "prefLabel": "IgMenuSourceSchema.of",
-      "definition": "The repository the config was read from.",
-      "source": "cat-harness/schemas/ig-menu.ts#IgMenuSourceSchema.of",
-      "status": "candidate"
-    },
-    {
-      "id": "ig-menu.igmenusourceschema.path",
-      "prefLabel": "IgMenuSourceSchema.path",
-      "definition": "The path within that repository.",
-      "source": "cat-harness/schemas/ig-menu.ts#IgMenuSourceSchema.path",
-      "status": "candidate"
-    },
-    {
-      "id": "ig-menu.igmenusourceschema.ref",
-      "prefLabel": "IgMenuSourceSchema.ref",
-      "definition": "The commit it was read at. Provenance.",
-      "source": "cat-harness/schemas/ig-menu.ts#IgMenuSourceSchema.ref",
-      "status": "candidate"
-    },
-    {
-      "id": "ig-metadata-index.igidentityschema.canonical",
-      "prefLabel": "IgIdentitySchema.canonical",
-      "definition": "The IG's canonical URL, where it declares one.",
-      "source": "cat-harness/schemas/ig-metadata-index.ts#IgIdentitySchema.canonical",
-      "status": "candidate"
-    },
-    {
-      "id": "ig-metadata-index.igidentityschema.packageid",
-      "prefLabel": "IgIdentitySchema.packageId",
-      "definition": "The NPM-style package id, e.g. `who.smart.trust`.",
-      "source": "cat-harness/schemas/ig-metadata-index.ts#IgIdentitySchema.packageId",
-      "status": "candidate"
-    },
-    {
-      "id": "ig-metadata-index.igidentityschema.version",
-      "prefLabel": "IgIdentitySchema.version",
-      "definition": "The IG version this harvest was taken at. An id alone collides across versions.",
-      "source": "cat-harness/schemas/ig-metadata-index.ts#IgIdentitySchema.version",
-      "status": "candidate"
-    },
-    {
-      "id": "ig-metadata-index.igmetadatasourceschema.harvestedat",
-      "prefLabel": "IgMetadataSourceSchema.harvestedAt",
-      "definition": "When the harvest ran.",
-      "source": "cat-harness/schemas/ig-metadata-index.ts#IgMetadataSourceSchema.harvestedAt",
-      "status": "candidate"
-    },
-    {
-      "id": "ig-metadata-index.igmetadatasourceschema.harvestedfrom",
-      "prefLabel": "IgMetadataSourceSchema.harvestedFrom",
-      "definition": "The published site or package the exports were read out of.",
-      "source": "cat-harness/schemas/ig-metadata-index.ts#IgMetadataSourceSchema.harvestedFrom",
-      "status": "candidate"
-    },
-    {
-      "id": "ig-metadata-index.igmetadatasourceschema.runurl",
-      "prefLabel": "IgMetadataSourceSchema.runUrl",
-      "definition": "A URL for the harvest run, if one exists.",
-      "source": "cat-harness/schemas/ig-metadata-index.ts#IgMetadataSourceSchema.runUrl",
       "status": "candidate"
     },
     {
@@ -10938,6 +10763,13 @@
       "prefLabel": "VectorLabelsSidecarSchema.pages",
       "definition": "`null` is could-not-determine and is NOT an empty list.",
       "source": "cat-harness/schemas/vector-labels.ts#VectorLabelsSidecarSchema.pages",
+      "status": "candidate"
+    },
+    {
+      "id": "viewer-nav-qa.viewernavpageschema.flags",
+      "prefLabel": "ViewerNavPageSchema.flags",
+      "definition": "The layout criteria this railed page FAILS. Absent when it fails none.",
+      "source": "cat-harness/schemas/viewer-nav-qa.ts#ViewerNavPageSchema.flags",
       "status": "candidate"
     },
     {
