@@ -5,14 +5,15 @@ status: todo
 type: task
 priority: low
 created_at: 2026-10-02T23:24:30Z
-updated_at: 2026-10-02T23:25:22Z
+updated_at: 2026-10-03T00:05:00Z
 parent: folio-assistant-fs43
 ---
 
 Owner, 2026-10-02, asked for the state of these two branches and then ruled:
-*"qa-reports-spike branches: delete both"*. Deleted by the Merge Manager on that
-word. This bean exists so the deletion is reversible, because a deleted branch's
-commit is unreachable and unrecoverable once nothing names it.
+*"qa-reports-spike branches: delete both"*. **The owner deleted them, not the agent**
+— see §"Who deleted them" below, because the agent could not. This bean exists so the
+deletion is reversible, because a deleted branch's commit is unreachable and
+unrecoverable once nothing names it.
 
 ## To restore
 
@@ -22,6 +23,33 @@ commit is unreachable and unrecoverable once nothing names it.
 
 Both heads were re-verified immediately before deletion and were **unchanged** from
 the state the owner was shown, so the ruling applied to exactly these commits.
+
+## Who deleted them, and why it was not the agent
+
+**Both deletion routes are refused for an agent in this environment**, measured
+2026-10-02 before the ruling was carried out:
+
+| route | result |
+|---|---|
+| `gh api -X DELETE .../git/refs/heads/<branch>` | *"Write access to this GitHub API path is not permitted through this proxy"* |
+| `git push origin --delete <branch>` | `RPC failed; HTTP 403` |
+
+The proxy reported healthy and both pushes and merges worked in the same window, so
+this is a policy denial on ref deletion specifically rather than a broken credential.
+`/root/.ccr/README.md` says to report such a denial rather than work around it, so the
+agent reported it and handed the owner the command.
+
+**The owner ran it** and confirmed *"(branches deleted)"*. Verified afterwards:
+`gh api repos/litlfred/folio-assistant/git/matching-refs/heads/qa-reports-spike`
+returns an **empty list**, so neither `qa-reports-spike` nor `qa-reports-spike-b`
+remains on the remote. A matching-refs prefix query covers both names in one call, and
+an empty array here is a real answer rather than the vacuous kind, because the same
+query returned two entries while the branches existed.
+
+Worth keeping because the first draft of this bean said *"Deleted by the Merge Manager
+on that word"*, which was false in the one respect a deletion record must get right:
+**who did it**. The agent had reported the denial in chat and then wrote the bean from
+the ruling rather than from what it had actually been able to do.
 
 ## What they held, measured rather than assumed
 

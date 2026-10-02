@@ -122,6 +122,23 @@ export function railModel(o: RailOptions): NavbarModel & { graphs: NavGroup } {
   };
 }
 
+const OPT_OUT_RE = /<meta\s+[^>]*name=["']folio-navbar["'][^>]*content=["']none["'][^>]*>/i;
+const OPT_OUT_RE_SWAPPED = /<meta\s+[^>]*content=["']none["'][^>]*name=["']folio-navbar["'][^>]*>/i;
+
+/**
+ * Does this page explicitly decline the navbar (`<meta name="folio-navbar"
+ * content="none">`, either attribute order)?
+ *
+ * HERE, beside {@link injectRail}, so that EVERY pass that injects a rail can
+ * ask it — the generator's own write (`viewer-page.ts`) and the post-build
+ * site walk (`railStandalonePages`). Until #1881 only the first asked, so a
+ * page that declined at generation was railed anyway by the second, in CI only:
+ * a 2.8 KB library entry shell published at 25 KB.
+ */
+export function declinesNavbar(html: string): boolean {
+  return OPT_OUT_RE.test(html) || OPT_OUT_RE_SWAPPED.test(html);
+}
+
 /**
  * Put the rail into a finished document. Refuses a page with no `<body>`.
  *
