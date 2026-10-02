@@ -2,7 +2,7 @@
   "$schema": "qa-results/v1",
   "producer": {
     "script": "cat-harness/scripts/check-reference-direction.ts",
-    "script_hash": "87ab77814831"
+    "script_hash": "999a2478ee55"
   },
   "subject": {
     "kind": "reference-direction",
@@ -16,7 +16,7 @@
     },
     "multi-destination-unlisted": {
       "summary": "A file holding a wrong-direction reference to MORE THAN ONE instance above it, which `PENDING` does not list. `names > 1` is the whole membership rule, so an unlisted one is an unrecorded question rather than a finding somebody can act on: \"move it up\" has no single destination. This is the set the script exits 1 on, and recording it is not resolving it — whether these join `PENDING` or are ruled on is issue #1219's question.",
-      "count": 124,
+      "count": 128,
       "entries": [
         {
           "file": "cat-harness/content/docs/fhir-content/the-three-layers.md",
@@ -36,6 +36,10 @@
         },
         {
           "file": "cat-harness/content/pipeline/pot-extract.ts",
+          "names": 2
+        },
+        {
+          "file": "cat-harness/content/pipeline/qa-checkers-dak.ts",
           "names": 2
         },
         {
@@ -139,6 +143,10 @@
           "names": 7
         },
         {
+          "file": "cat-harness/docs/proposals/index.md",
+          "names": 4
+        },
+        {
           "file": "cat-harness/docs/proposals/instance-versioning.md",
           "names": 2
         },
@@ -159,12 +167,24 @@
           "names": 2
         },
         {
+          "file": "cat-harness/docs/proposals/placement-audit-2026-10-01.json",
+          "names": 12
+        },
+        {
+          "file": "cat-harness/docs/proposals/placement-audit-2026-10-01.md",
+          "names": 14
+        },
+        {
           "file": "cat-harness/docs/proposals/placement-concern-groups-2026-10-01.md",
           "names": 9
         },
         {
           "file": "cat-harness/docs/proposals/separation-arc-2026-10-01.md",
           "names": 10
+        },
+        {
+          "file": "cat-harness/docs/proposals/smart-separation-2026-10-01.md",
+          "names": 8
         },
         {
           "file": "cat-harness/docs/ru/publication-workflow.md",
@@ -479,10 +499,6 @@
           "names": 2
         },
         {
-          "file": "cat-harness/tools/index.ts",
-          "names": 2
-        },
-        {
           "file": "fhir-harness/skills/fhir-ig-base/ig-build-pipeline.md",
           "names": 2
         },
@@ -518,7 +534,7 @@
     },
     "pending-held": {
       "summary": "The files held pending a ruling, as the source declares them. Not findings: the RULING, committed, so a reader with only this file can tell a question nobody has answered from an axis nobody has run. Membership moves only when somebody edits the list, which is why it is graded while the occurrence count it holds is not.",
-      "count": 47,
+      "count": 48,
       "entries": [
         {
           "file": "cat-harness/cat-harness.json",
@@ -569,10 +585,6 @@
           "names": 3
         },
         {
-          "file": "cat-harness/schemas/ig-chrome.ts",
-          "names": 6
-        },
-        {
           "file": "cat-harness/schemas/jsonld.ts",
           "names": 2
         },
@@ -598,10 +610,6 @@
         },
         {
           "file": "cat-harness/scripts/harness-schema-export.ts",
-          "names": 2
-        },
-        {
-          "file": "cat-harness/scripts/ingest-ig-chrome.ts",
           "names": 2
         },
         {
@@ -639,6 +647,18 @@
         {
           "file": "fhir-harness/fhir-harness.json",
           "names": 6
+        },
+        {
+          "file": "fhir-harness/schemas/ig-chrome.ts",
+          "names": 5
+        },
+        {
+          "file": "fhir-harness/scripts/gen-ig-pages.ts",
+          "names": 3
+        },
+        {
+          "file": "fhir-harness/scripts/ingest-ig-chrome.ts",
+          "names": 2
         },
         {
           "file": "fhir-harness/skills/fhir-ig-base/ig-publisher-fork.md",
@@ -712,7 +732,7 @@
     },
     "pending-stale": {
       "summary": "A `PENDING` entry that no longer qualifies — either no wrong-direction reference is left in the file, or it now names exactly one instance and so HAS a destination. The set is compared both ways on purpose: a list that only grows stops meaning anything.",
-      "count": 4,
+      "count": 5,
       "entries": [
         {
           "file": "cat-harness/scripts/layout-norms-baseline.json",
@@ -729,27 +749,31 @@
         {
           "file": "smart-base/skills/content/authoring-who-smart-guidelines/smart-base-tools.md",
           "why": "no wrong-direction reference left"
+        },
+        {
+          "file": "smart-base/tools/index.ts",
+          "why": "no wrong-direction reference left"
         }
       ]
     },
     "verdict-census": {
-      "summary": "Not findings, and NOT graded: what the axis says on the run that wrote this. Verdict counts are recorded because they ARE this axis's answer — a reader holding only this file cannot otherwise tell `audited clean` from `never audited`, which is the whole reason the sidecar exists. They are not graded because they move whenever anybody writes a paragraph, and `audit-coverage` already established that a gate keyed on a number like that is stale by default. FILE counts are not here at all — how many files were skipped as machine-written or self-declared generator output is a census of the tree, not a statement about direction, and stays in the printed report. 47 file(s) held pending; 4 exemption(s) declared, each with a stated reason.",
+      "summary": "Not findings, and NOT graded: what the axis says on the run that wrote this. Verdict counts are recorded because they ARE this axis's answer — a reader holding only this file cannot otherwise tell `audited clean` from `never audited`, which is the whole reason the sidecar exists. They are not graded because they move whenever anybody writes a paragraph, and `audit-coverage` already established that a gate keyed on a number like that is stale by default. FILE counts are not here at all — how many files were skipped as machine-written or self-declared generator output is a census of the tree, not a statement about direction, and stays in the printed report. 48 file(s) held pending; 4 exemption(s) declared, each with a stated reason.",
       "count": 1,
       "entries": [
         {
           "instances": 18,
-          "occurrences": 5977,
+          "occurrences": 8904,
           "allowed": 0,
-          "wrongDirection": 1672,
-          "wrongDirectionFiles": 379,
-          "exempt": 1195,
-          "namesRepository": 2054,
-          "undetermined": 1056,
-          "pendingFiles": 47,
-          "pendingOccurrences": 412
+          "wrongDirection": 4307,
+          "wrongDirectionFiles": 368,
+          "exempt": 1451,
+          "namesRepository": 2078,
+          "undetermined": 1068,
+          "pendingFiles": 48,
+          "pendingOccurrences": 431
         }
       ]
     }
   },
-  "total": 176
+  "total": 182
 }

@@ -35,8 +35,8 @@ Each page shows the diagram, what it is for, who acts in it, every step with the
 |---|---|---|
 | [Render a Knowledge Graph to GitHub Pages](render-kg-to-github-pages.html) | 7 | — |
 | [Complete initialization](complete-initialization.html) | 9 | — |
-| [Determine the harness and repositories](discussion.html) | 5 | — |
-| [Human–agent discussion](human-agent-discussion.html) | 9 | — |
+| [Determine the harness and repositories](discussion.html) | 6 | — |
+| [Human–agent discussion](human-agent-discussion.html) | 13 | — |
 | [Initialize a harness](initialize-harness.html) | 8 | — |
 | [Log a message](log-message.html) | 2 | — |
 | [Agent activity log](activity-log.html) | 8 | — |
