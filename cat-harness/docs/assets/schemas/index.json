@@ -1771,6 +1771,14 @@
       "isTest": false
     },
     {
+      "module": "folio-assistant-core/schemas/kg-materialization.ts",
+      "instance": "folio-assistant-core",
+      "name": "kg-materialization",
+      "graphNode": "schema",
+      "summary": "The record of ONE materialised part of a subscribed Knowledge Graph — a",
+      "isTest": false
+    },
+    {
       "module": "folio-assistant-core/schemas/library-ref.test.ts",
       "instance": "folio-assistant-core",
       "name": "library-ref.test",
@@ -44400,6 +44408,299 @@
       "exported": true
     },
     {
+      "id": "folio-assistant-core/schemas/kg-materialization.ts#KgDecisions",
+      "name": "KgDecisions",
+      "module": "folio-assistant-core/schemas/kg-materialization.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "folio-assistant-core/schemas/kg-materialization.ts#KgDecisionsSchema",
+      "name": "KgDecisionsSchema",
+      "module": "folio-assistant-core/schemas/kg-materialization.ts",
+      "kind": "zod-object",
+      "doc": "What the SUBSCRIBER decides before anything is copied — the lane",
+      "fields": [
+        {
+          "name": "purpose",
+          "type": "z.enum([\"working\", \"archival\", \"both\"]).optional()",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "maxBytes",
+          "type": "z.number().int().positive().optional()",
+          "optional": true,
+          "array": false,
+          "doc": "The size budget, in bytes. Absent: {@link DEFAULT_MAX_BYTES}."
+        },
+        {
+          "name": "expiresAt",
+          "type": "z.string().min(1).optional()",
+          "optional": true,
+          "array": false,
+          "doc": "When the copy expires; recorded as `expiresAt`."
+        },
+        {
+          "name": "gates",
+          "type": "z .object({ restrictions: GatesSchema.shape.restrictions.optional(), retention: GatesSchema.shape.retention.optional(),…",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "decidedBy",
+          "type": "z.string().min(1).optional()",
+          "optional": true,
+          "array": false,
+          "doc": "Who decided, applied to every gate that does not name its own `decidedBy`."
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [
+        "folio-assistant-core/schemas/materialization.ts#GatesSchema"
+      ],
+      "unresolved": [],
+      "external": [
+        "z"
+      ],
+      "exported": true
+    },
+    {
+      "id": "folio-assistant-core/schemas/kg-materialization.ts#KgFileRecordSchema",
+      "name": "KgFileRecordSchema",
+      "module": "folio-assistant-core/schemas/kg-materialization.ts",
+      "kind": "zod-object",
+      "doc": "One held file: the shape `check:materialized-fixity` walks.",
+      "fields": [
+        {
+          "name": "id",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "name",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false,
+          "doc": "Path relative to the part's `tree/` (or the licence's own name)."
+        },
+        {
+          "name": "materialization",
+          "type": "MaterializationSchema",
+          "optional": false,
+          "array": false
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [
+        "folio-assistant-core/schemas/materialization.ts#MaterializationSchema"
+      ],
+      "unresolved": [],
+      "external": [
+        "z"
+      ],
+      "exported": true
+    },
+    {
+      "id": "folio-assistant-core/schemas/kg-materialization.ts#KgMaterializationRecord",
+      "name": "KgMaterializationRecord",
+      "module": "folio-assistant-core/schemas/kg-materialization.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "folio-assistant-core/schemas/kg-materialization.ts#KgMaterializationRecordSchema",
+      "name": "KgMaterializationRecordSchema",
+      "module": "folio-assistant-core/schemas/kg-materialization.ts",
+      "kind": "zod-object",
+      "fields": [
+        {
+          "name": "$schema",
+          "type": "z.literal(KG_PART_RECORD_SCHEMA)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "subscription",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false,
+          "doc": "The `subscriptions[].id` this part belongs to."
+        },
+        {
+          "name": "repository",
+          "type": "RepoFullNameSchema",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "ref",
+          "type": "z.string().regex(/^[0-9a-f]{40}$/)",
+          "optional": false,
+          "array": false,
+          "doc": "The pin the part was asked at — the subscription's `ref` when it was written."
+        },
+        {
+          "name": "part",
+          "type": "KgPartSchema",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "materialization",
+          "type": "MaterializationSchema",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "files",
+          "type": "z.array(KgFileRecordSchema).optional()",
+          "optional": true,
+          "array": true,
+          "doc": "A held SUBGRAPH: one record per file under `tree/`."
+        },
+        {
+          "name": "licence",
+          "type": "KgFileRecordSchema.optional()",
+          "optional": true,
+          "array": false,
+          "doc": "The upstream licence, copied beside the tree so its notice travels with the copy."
+        },
+        {
+          "name": "refusal",
+          "type": "KgRefusalSchema.optional()",
+          "optional": true,
+          "array": false,
+          "doc": "Present iff the part stayed referenced."
+        },
+        {
+          "name": "note",
+          "type": "z.string().min(1).optional()",
+          "optional": true,
+          "array": false
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [
+        "folio-assistant-core/schemas/kg-materialization.ts#KgFileRecordSchema",
+        "folio-assistant-core/schemas/kg-materialization.ts#KgPartSchema",
+        "folio-assistant-core/schemas/kg-materialization.ts#KgRefusalSchema",
+        "folio-assistant-core/schemas/materialization.ts#MaterializationSchema"
+      ],
+      "unresolved": [],
+      "external": [
+        "KG_PART_RECORD_SCHEMA",
+        "RepoFullNameSchema",
+        "z"
+      ],
+      "exported": true
+    },
+    {
+      "id": "folio-assistant-core/schemas/kg-materialization.ts#KgPartRecord",
+      "name": "KgPartRecord",
+      "module": "folio-assistant-core/schemas/kg-materialization.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "folio-assistant-core/schemas/kg-materialization.ts#KgPartSchema",
+      "name": "KgPartSchema",
+      "module": "folio-assistant-core/schemas/kg-materialization.ts",
+      "kind": "zod-union",
+      "doc": "Which part of the substrate this is. A subgraph is named by the substrate's own `directories[].id`.",
+      "fields": [],
+      "extendsNames": [],
+      "values": [
+        "kind",
+        "subgraph",
+        "asset"
+      ],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "folio-assistant-core/schemas/kg-materialization.ts#KgRefusalSchema",
+      "name": "KgRefusalSchema",
+      "module": "folio-assistant-core/schemas/kg-materialization.ts",
+      "kind": "zod-object",
+      "doc": "Why a chosen part stayed referenced: every gate's answer, and which of them stopped it.",
+      "fields": [
+        {
+          "name": "gates",
+          "type": "GatesSchema",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "refused",
+          "type": "z.array(z.enum(GATE_NAMES))",
+          "optional": false,
+          "array": true
+        },
+        {
+          "name": "unanswered",
+          "type": "z.array(z.enum(GATE_NAMES))",
+          "optional": false,
+          "array": true
+        },
+        {
+          "name": "purposeMissing",
+          "type": "z.boolean().optional()",
+          "optional": true,
+          "array": false,
+          "doc": "A purpose is asked FIRST; a part with none cannot have its gates judged."
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [
+        "folio-assistant-core/schemas/materialization.ts#GatesSchema"
+      ],
+      "unresolved": [],
+      "external": [
+        "GATE_NAMES",
+        "z"
+      ],
+      "exported": true
+    },
+    {
+      "id": "folio-assistant-core/schemas/kg-materialization.ts#RelPathSchema",
+      "name": "RelPathSchema",
+      "module": "folio-assistant-core/schemas/kg-materialization.ts",
+      "kind": "zod-scalar",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": false
+    },
+    {
       "id": "folio-assistant-core/schemas/library-ref.ts#LibraryRef",
       "name": "LibraryRef",
       "module": "folio-assistant-core/schemas/library-ref.ts",
@@ -53020,6 +53321,70 @@
       "from": "folio-assistant-core/schemas/glossary.ts#TermSchema",
       "to": "folio-assistant-core/schemas/glossary.ts#LangTextSchema",
       "via": "prefLabel",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "folio-assistant-core/schemas/kg-materialization.ts#KgDecisionsSchema",
+      "to": "folio-assistant-core/schemas/materialization.ts#GatesSchema",
+      "via": "gates",
+      "kind": "field",
+      "optional": true,
+      "array": false
+    },
+    {
+      "from": "folio-assistant-core/schemas/kg-materialization.ts#KgFileRecordSchema",
+      "to": "folio-assistant-core/schemas/materialization.ts#MaterializationSchema",
+      "via": "materialization",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "folio-assistant-core/schemas/kg-materialization.ts#KgMaterializationRecordSchema",
+      "to": "folio-assistant-core/schemas/kg-materialization.ts#KgFileRecordSchema",
+      "via": "files",
+      "kind": "field",
+      "optional": true,
+      "array": true
+    },
+    {
+      "from": "folio-assistant-core/schemas/kg-materialization.ts#KgMaterializationRecordSchema",
+      "to": "folio-assistant-core/schemas/kg-materialization.ts#KgFileRecordSchema",
+      "via": "licence",
+      "kind": "field",
+      "optional": true,
+      "array": false
+    },
+    {
+      "from": "folio-assistant-core/schemas/kg-materialization.ts#KgMaterializationRecordSchema",
+      "to": "folio-assistant-core/schemas/kg-materialization.ts#KgPartSchema",
+      "via": "part",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "folio-assistant-core/schemas/kg-materialization.ts#KgMaterializationRecordSchema",
+      "to": "folio-assistant-core/schemas/kg-materialization.ts#KgRefusalSchema",
+      "via": "refusal",
+      "kind": "field",
+      "optional": true,
+      "array": false
+    },
+    {
+      "from": "folio-assistant-core/schemas/kg-materialization.ts#KgMaterializationRecordSchema",
+      "to": "folio-assistant-core/schemas/materialization.ts#MaterializationSchema",
+      "via": "materialization",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "folio-assistant-core/schemas/kg-materialization.ts#KgRefusalSchema",
+      "to": "folio-assistant-core/schemas/materialization.ts#GatesSchema",
+      "via": "gates",
       "kind": "field",
       "optional": false,
       "array": false
