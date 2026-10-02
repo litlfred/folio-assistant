@@ -517,32 +517,32 @@
   NOT a cache-busting strategy for third-party assets, and not applied to
   them: those are versioned in their own URLs already.
 -->
-<link rel="stylesheet" href="/folio-assistant/assets/css/docs-ui.css?v=1790976534">
+<link rel="stylesheet" href="/folio-assistant/assets/css/docs-ui.css?v=1790978229">
 <!-- Narrow viewports: wide content scrolls in its own box, never the page
      (bean `2r2n`). The standalone viewers inline the same file through
      `withViewerNav`, so both kinds of page read one set of rules. -->
-<link rel="stylesheet" href="/folio-assistant/assets/css/narrow-viewport.css?v=1790976534">
+<link rel="stylesheet" href="/folio-assistant/assets/css/narrow-viewport.css?v=1790978229">
 
 <!--
   The work-plan dashboard's styles, split from docs-ui.css so that
   `state-visualizer.ts` can inline exactly these bytes into the generated
   `<base>/<stub>/state-visualizer/` pages. One rule, two surfaces.
 -->
-<link rel="stylesheet" href="/folio-assistant/assets/css/work-plan.css?v=1790976534">
+<link rel="stylesheet" href="/folio-assistant/assets/css/work-plan.css?v=1790978229">
 <!-- Sticky themes. GENERATED from the theme nodes in `schemas/themes.ts` by
      `bun run themes:css`; `themes:css:check` fails the build when it is stale.
      Loaded AFTER docs-ui.css deliberately: it supplies the `--fa-sticky-*`
      roles that docs-ui.css consumes, and a custom property has to be set on a
      matching element before the rule reading it takes effect. -->
-<link rel="stylesheet" href="/folio-assistant/assets/css/themes.css?v=1790976534">
+<link rel="stylesheet" href="/folio-assistant/assets/css/themes.css?v=1790978229">
 <!-- UML overview colours: one class per graph kind, set on the Mermaid nodes
      that `scripts/gen-uml-overview.ts` writes into docs/uml/overview/. -->
-<link rel="stylesheet" href="/folio-assistant/assets/css/uml.css?v=1790976534">
+<link rel="stylesheet" href="/folio-assistant/assets/css/uml.css?v=1790978229">
 <!-- Kind avatars. GENERATED from `schemas/avatars.ts` by `bun run avatars:css`;
      `avatars:css:check` fails the build when it is stale. One stylesheet
      rather than 68 assets: the glyph is a mask and the colour is a property,
      so a scheme swap is a custom property and the trash state is a selector. -->
-<link rel="stylesheet" href="/folio-assistant/assets/css/avatars.css?v=1790976534">
+<link rel="stylesheet" href="/folio-assistant/assets/css/avatars.css?v=1790978229">
 
 <!--
   The kinds THIS INSTANCE DECLARES, for the avatar fan.
@@ -559,7 +559,7 @@
 <script type="application/json" id="fa-declared-kinds">["beans","cat-harness","code","code-list","docs","external-schema","folio","fsh-guts","health","interaction","issue-marks","library","memory","methodology","policies","processes","qa","scenarios","schemas","skills","substrate-snapshot","swimlane-glossary","todos","tools","translation-sources","uml","uploads","vocab-mapping","waiver"]</script>
 <script src="/folio-assistant/assets/js/vendor/qrcode.js" defer></script>
 <script src="/folio-assistant/assets/js/vendor/qrcode_UTF8.js" defer></script>
-<script src="/folio-assistant/assets/js/docs-ui.js?v=1790976534" defer></script>
+<script src="/folio-assistant/assets/js/docs-ui.js?v=1790978229" defer></script>
 
 <!--
   The work-plan dashboard. SELF-MOUNTING on any page carrying
@@ -814,9 +814,9 @@ is <code class="language-plaintext highlighter-rouge">satisfies</code>, and it r
 to do that</em>, never <em>this skill is a tool</em>.</p>
 
 <div class="tg-grid">
-<div class="tg-stat"><b>114</b><span>Tool nodes</span></div>
-<div class="tg-stat"><b>68</b><span>skills satisfied</span></div>
-<div class="tg-stat"><b>92</b><span>invoked as a shell command</span></div>
+<div class="tg-stat"><b>117</b><span>Tool nodes</span></div>
+<div class="tg-stat"><b>69</b><span>skills satisfied</span></div>
+<div class="tg-stat"><b>95</b><span>invoked as a shell command</span></div>
 <div class="tg-stat"><b>24</b><span>reachable over MCP</span></div>
 </div>
 <h2 id="how-they-are-invoked-and-installed">
@@ -840,7 +840,7 @@ to do that</em>, never <em>this skill is a tool</em>.</p>
   <tbody>
     <tr>
       <td><span class="tg-tag tg-shell">shell</span></td>
-      <td>92</td>
+      <td>95</td>
     </tr>
     <tr>
       <td><span class="tg-tag tg-inproc">inProcess</span></td>
@@ -867,7 +867,7 @@ to do that</em>, never <em>this skill is a tool</em>.</p>
   <tbody>
     <tr>
       <td><code class="language-plaintext highlighter-rouge">none</code></td>
-      <td>105</td>
+      <td>108</td>
     </tr>
     <tr>
       <td><code class="language-plaintext highlighter-rouge">cli</code></td>
@@ -884,7 +884,7 @@ to do that</em>, never <em>this skill is a tool</em>.</p>
 </h2>
     
 
-<p>Yes — all <strong>68</strong> skills named across <strong>114</strong> tools resolve to a
+<p>Yes — all <strong>69</strong> skills named across <strong>117</strong> tools resolve to a
 skill document in this checkout. A <code class="language-plaintext highlighter-rouge">satisfies</code> pointing at nothing would be a
 tool advertising a capability the graph cannot locate.</p>
 <h2 id="every-tool">
@@ -1249,6 +1249,27 @@ tool advertising a capability the graph cannot locate.</p>
       <td><span class="tg-tag tg-shell">shell</span></td>
       <td><a href="../reference/skill-instructions/mcp-contract.html"><code class="language-plaintext highlighter-rouge">mcp-contract</code></a></td>
       <td>1 in / 1 out</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">merge-leftover</code><br />Merge leftover (has a PR’s intent landed?)</td>
+      <td>After a train merged, compare a PR’s head with the base path by path and say whether what it still changes is ONLY generated files, generated README regions, or changes the base already carries (its patch applies in reverse to the base): <code class="language-plaintext highlighter-rouge">landed</code>, <code class="language-plaintext highlighter-rouge">not-landed</code> with the authored paths still different, or <code class="language-plaintext highlighter-rouge">could-not-determine</code>, which is never shown as clean. Only reports; closing the PR stays a steward action.</td>
+      <td><span class="tg-tag tg-shell">shell</span></td>
+      <td><a href="../reference/skill-instructions/merge-conflict-patterns.html"><code class="language-plaintext highlighter-rouge">merge-conflict-patterns</code></a></td>
+      <td>2 in / 1 out</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">merge-overlap</code><br />Merge overlap (conflict prediction)</td>
+      <td>For the open PRs (via <code class="language-plaintext highlighter-rouge">gh</code>, or a list of branches), report which pairs would conflict: pairwise overlap on AUTHORED paths, with generated paths excluded using the merge-conflict-patterns declaration; which PRs touch a shared declaration (an instance’s <code class="language-plaintext highlighter-rouge">&lt;instance&gt;.json</code>, <code class="language-plaintext highlighter-rouge">roles.json</code>, <code class="language-plaintext highlighter-rouge">package.json</code>, <code class="language-plaintext highlighter-rouge">bun.lock</code>, schemas, BPMN/DMN); and which touch <code class="language-plaintext highlighter-rouge">cat-harness/</code> or <code class="language-plaintext highlighter-rouge">cat-harness-tools/</code>. A PR that could not be measured makes no pair independent. JSON (<code class="language-plaintext highlighter-rouge">merge-overlap/v1</code>), the conflict-prediction input for composing trains.</td>
+      <td><span class="tg-tag tg-shell">shell</span></td>
+      <td><a href="../reference/skill-instructions/coordinate.html"><code class="language-plaintext highlighter-rouge">coordinate</code></a><br /><a href="../reference/skill-instructions/merge-conflict-patterns.html"><code class="language-plaintext highlighter-rouge">merge-conflict-patterns</code></a></td>
+      <td>2 in / 1 out</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">merge-train</code><br />Merge train</td>
+      <td>Build a train branch from a base SHA: merge each member (a PR number or branch) with <code class="language-plaintext highlighter-rouge">merge-base.ts --no-regen</code>, refusing — never hand-resolving — a member whose conflicts no declared pattern covers; then one <code class="language-plaintext highlighter-rouge">bun run regen</code>, <code class="language-plaintext highlighter-rouge">check:l1-complete --write</code>, <code class="language-plaintext highlighter-rouge">extract-smart-kg-l1.ts --entry</code> for each stale entry, and <code class="language-plaintext highlighter-rouge">kg:audit:all:check</code>; then merge <code class="language-plaintext highlighter-rouge">origin/main</code>, taking main’s side of generated conflicts and regenerating once more. Emits a <code class="language-plaintext highlighter-rouge">merge-train-report/v1</code> JSON report. Never pushes, opens or merges a PR.</td>
+      <td><span class="tg-tag tg-shell">shell</span></td>
+      <td><a href="../reference/skill-instructions/merge-conflict-patterns.html"><code class="language-plaintext highlighter-rouge">merge-conflict-patterns</code></a><br /><a href="../reference/skill-instructions/prepare-merge.html"><code class="language-plaintext highlighter-rouge">prepare-merge</code></a></td>
+      <td>5 in / 1 out</td>
     </tr>
     <tr>
       <td><code class="language-plaintext highlighter-rouge">methodologies-viewer</code><br />Methodologies viewer</td>
@@ -1898,7 +1919,7 @@ just not tied to the two moments named above.</p>
 </section>
 <p class="text-small mb-0">folio-assistant — code under the Apache License 2.0, documentation under CC BY 3.0. Generated schema and API references are rebuilt from source on every push to main.</p><p class="text-small mb-0 fa-build-stamp">
   deployed
-  <a href="https://github.com/litlfred/folio-assistant/actions/runs/37066939707"><code>909678c</code></a> &middot; 2026-10-02T21:28:47Z</p>
+  <a href="https://github.com/litlfred/folio-assistant/actions/runs/37069705672"><code>49c3ff2</code></a> &middot; 2026-10-02T21:57:04Z</p>
 
 
   <div class="d-md-none mt-4 fs-2">
