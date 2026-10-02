@@ -39,14 +39,9 @@ and still read wrong.
 ## Authoring
 
 **Read the `counterintuitive` rules before you draft.** Each carries a
-`commonError` naming the instinct it corrects. The ones most often wrong in
-practice:
-
-- digitization, digitalization and digital transformation are three steps in
-  an order, not three spellings of one idea
-- a register and a registry are different objects
-- master data excludes the batch- and serial-level data that changes per item
-- a health supply chain information system can be paper
+`commonError` naming the instinct it corrects, and those instincts are the
+ones most often wrong in practice. Read them in `voice.json` rather than from a
+summary here: a pair restated in this file would have no pattern behind it.
 
 ## Two rules rest on a DRAFT
 
