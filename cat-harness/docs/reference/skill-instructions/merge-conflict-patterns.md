@@ -250,7 +250,7 @@ A merge steward builds a **train**: `merge-base.ts --no-regen` for each
 member, then one `bun run regen`, then one CI run. A member is **refused**
 when its merge hits an authored or undeclared conflict, or when the train's
 combined result fails a gate that the member alone did not fail. The steward
-drops it and the train goes on without it. `processes/merge-refusal.bpmn`
+drops it and the train goes on without it. `processes/sdlc/merge-refusal.bpmn`
 executes what happens to the dropped member. The author's side, the queue
 and the bounce-back are the merge-manager SOP in
 [#1802](https://github.com/litlfred/folio-assistant/pull/1802) (steps 10 and
