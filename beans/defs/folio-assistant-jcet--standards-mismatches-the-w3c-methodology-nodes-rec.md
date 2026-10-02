@@ -1,7 +1,7 @@
 ---
 # folio-assistant-jcet
 title: 'STANDARDS MISMATCHES the W3C methodology nodes recorded: PROV_CONTEXT IRI, JSON-LD @base in an external context, ODRL conflict default'
-status: in-progress
+status: completed
 type: bug
 priority: normal
 created_at: 2026-10-01T12:32:06Z
@@ -33,3 +33,10 @@ The owner chose to keep odrl:prohibit as the default conflict strategy, as a STA
 
 ## 2026-10-01 — item 1 done (PR #1791)
 Owner chose PROV-JSONLD (W3C Member Submission 2024-08-25; W3C publishes no JSON-LD context for PROV-O), held locally: the spec ingested as library/w3c-2024-prov-jsonld, its context.jsonld beside it pinned by sha256 811d5e94…, served by publish:verify's localLoader, never fetched. PROV_CONTEXT is now that context's URL. provDocument emits PROV-JSONLD Activity + Association nodes with agent/role/plan at their release addresses (check:node-iris rule). Measured on the 9 reports, links before→after: agent 0→99/100, hadRole 0→100, hadPlan 0→71, activity↔association 0→100. The 30 that stay literal are 'unaddressed' findings with reasons: 29 plans whose owner (large-datasets) declares no iriBase, 1 agent that is a GitHub login. prov:used (27) left as it was, for the owner.
+
+
+## Summary of Changes (closed 2026-10-02, session_01CVVoavPoCHMLA7AASxG8cH)
+All three standards mismatches are resolved, merged in #1791, with follow-ups in #1817:
+1. **PROV context**: PROV is emitted as PROV-JSONLD (W3C Member Submission 2024-08-25), with the context held locally and sha256-pinned. Agent, role and plan are links at their owners' release addresses (0 → 99/100/71 of 100). `prov:used` is linked at IRIS Handles in #1817.
+2. **@base in a remote context**: measured, and documented in voice rule `ld-no-base-in-a-remote-context`. PROV carries `@base` in its own context (#1791), and content documents do too (bean `bh4q`, #1817).
+3. **ODRL conflict default**: owner ruled to keep `prohibit` as a stated profile departure from §2.10, pinned by odrl.test.ts.
