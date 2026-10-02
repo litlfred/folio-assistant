@@ -109,7 +109,7 @@ Each dimension is a **contrast** between two poles, shown by their highest-loadi
 
 ## cat-harness / skills
 
-**219** units · **5885** terms · k = **100** · retains **79.0 %** of the weighted matrix · weighting `log-entropy` · sidecar `cat-harness/test/results/lsi/cat-harness/skills.lsi.json`
+**219** units · **5887** terms · k = **100** · retains **79.1 %** of the weighted matrix · weighting `log-entropy` · sidecar `cat-harness/test/results/lsi/cat-harness/skills.lsi.json`
 
 > Dimension 1 has **no negative pole**: it most likely measures unit length and term frequency (a margin), not a theme. Read the themes from dimension 2 on.
 
@@ -117,13 +117,13 @@ Each dimension is a **contrast** between two poles, shown by their highest-loadi
 
 | dim | σ | one pole | the other pole |
 |---|---|---|---|
-| 1 | 43.94 | instance, kind, harness, session, graph, directory, block, page | *(none)* |
+| 1 | 43.98 | instance, kind, harness, session, graph, directory, block, page | *(none)* |
 | 2 | 21.49 | watcher, sibling, queue, slot, backlog, prs, block, commits | harness, instance, declaration, directory, node, directories, graph, declares |
-| 3 | 17.82 | session, beans, branch, goals, store, window, epic, push | slot, chapter, block, edges, formal, glossary, project, narrative |
-| 4 | 16.54 | page, tile, block, text, section, blocks, avatar, chapter | ledger, sibling, subdirectory, items, sessions, queue, session, relocation |
-| 5 | 15.03 | tile, board, avatar, card, theme, navbar, glass, tiles | forward, edges, edge, chapter, logical, sections, backward, energy |
-| 6 | 14.77 | requirements, lane, role, actor, feature, phase, task, sign-off | rung, queue, arm, archive, slide, zip, sniff, bytes |
-| 7 | 14.50 | tile, avatar, glass, card, strip, board, sticky, tiles | translation, locale, translated, language, french, url, glossary, badge |
+| 3 | 17.81 | session, beans, branch, goals, store, window, epic, push | slot, chapter, edges, block, formal, glossary, project, proof |
+| 4 | 16.59 | page, tile, block, section, text, blocks, chapter, avatar | sibling, ledger, subdirectory, items, sessions, queue, session, relocation |
+| 5 | 15.04 | tile, board, avatar, theme, card, navbar, glass, tiles | forward, edges, edge, logical, chapter, sections, backward, energy |
+| 6 | 14.76 | requirements, lane, actor, role, feature, phase, task, feedback | rung, queue, arm, archive, slide, zip, sniff, bytes |
+| 7 | 14.52 | tile, avatar, glass, card, strip, board, sticky, fit | translation, locale, language, translated, url, french, glossary, badge |
 | 8 | 14.40 | edges, forward, edge, backward, preview, cross-chapter, energy, logical | actor, lane, role, rung, criterion, backlog, requirement, login |
 
 **Findings** — 0 narrow dimension(s), 0 near-duplicate pair(s).
