@@ -75,7 +75,7 @@ import { withInlineCode } from "../../cat-harness/schemas/inline-code.ts";
 import { instanceNamespace } from "../../cat-harness/schemas/instance-repositories.ts";
 import { GlossarySchema, schemeIri, toSkos, termIri, type Glossary, type LangText } from "../schemas/glossary.ts";
 import { ASSET_TYPES, EXTRACTED_PREFIX, assetTypeTitle, assetTypeWhat, extract, type AssetType } from "./glossary-extract.ts";
-import type { SchemeState } from "../../cat-harness/scripts/check-term-mapping.ts";
+import { termState, type SchemeState, type TermStateAnswer } from "../../cat-harness/scripts/check-term-mapping.ts";
 import { GLOSSARY_SUBDIR, potPath, sourceText, templateName, translationsDir } from "./glossary-pot.ts";
 import { parsePo } from "../../cat-harness/content/pipeline/po-inject.ts";
 
@@ -516,7 +516,12 @@ const sourceLink = (src: string) => {
 const pageLink = (k: PageKey, text: string) => `<a href="{{ '${permalinkOf(k)}' | relative_url }}">${esc(text)}</a>`;
 const skosLink = (s: GlossarySource) => `<a href="{{ '/${skosAsset(s)}' | relative_url }}">SKOS</a>`;
 
-function termEntry({ s, t, label }: Row): string {
+/** A term's anchor on its page, which is also its key for a per-term mapping mark. */
+function anchorOf(s: GlossarySource, id: string): string {
+  return `${s.instance}--${s.glossary.id}--${id}`;
+}
+
+function termEntry({ s, t, label }: Row, marks?: ReadonlyMap<string, string>): string {
   const iri = t.iri ?? termIri(s.ns, s.glossary, t.id);
   const matches = (["exactMatch", "closeMatch", "broadMatch", "narrowMatch"] as const).flatMap((m) =>
     (t[m] ?? []).map((u) => `<li>${m}: ${link(u)}</li>`),
@@ -567,6 +572,7 @@ function termEntry({ s, t, label }: Row): string {
       : []),
     `<p class="fa-gloss-meta">${meta}${t.isDefinedBy ? ` · defined by ${link(t.isDefinedBy)}` : ""}${t.source ? ` · source ${sourceLink(t.source)}` : ""}</p>`,
     ...(matches.length ? [`<ul class="fa-gloss-matches">${matches.join("")}</ul>`] : []),
+    ...(marks?.has(anchorOf(s, t.id)) ? [marks.get(anchorOf(s, t.id))!] : []),
     `</dd>`,
   ].join("\n");
 }
@@ -672,6 +678,109 @@ export function mappingBlock(states: SchemeState[] | undefined, schemes: readonl
   ].join("\n");
 }
 
+/** A term on a page, as the per-term mapping marks need it. */
+export interface TermKey {
+  /** The entry's anchor, which keys its mark. */
+  anchor: string;
+  scheme: string;
+  term: string;
+}
+
+/** One target's part of a term's mark. Never a grade: a state, and what it matched. */
+function markPart(target: string, a: TermStateAnswer): string {
+  const t = `<code>${esc(target)}</code>`;
+  switch (a.state) {
+    case "mapped": {
+      const to = a.concepts.length ? `, to ${a.concepts.map((u) => `<code>${esc(u)}</code>`).join(", ")}` : "";
+      return a.exact
+        ? `${t} mapped, exact${to}`
+        : `${t} mapped by concept only (the same concept under a label that is not its authorised one)${to}`;
+    }
+    case "unmapped":
+      return `${t} unmapped`;
+    case "undetermined":
+      return `${t} undetermined (the reason is in the table above)`;
+    case "unknown":
+      return `${t} cannot be told from the committed result: ${codeSpans(a.why)}`;
+  }
+}
+
+/**
+ * Each term's mapping state on a page: a stated default per target, and a
+ * mark on every term that differs from it.
+ *
+ * Bean `5yhm`, Done-when "the glossary page reports mapped / unmapped /
+ * undetermined per term, and grades none of them". A mark on EVERY entry
+ * does not fit: the schema-fields page was 1,019,726 bytes against its
+ * 1 MiB budget when this was written, about 15 bytes of room per term, and
+ * the generator refuses to raise a budget. So the page says once what holds
+ * for every unmarked term, and marks only the terms for which it does not
+ * hold. That still states every term's state, which is what the bean asks.
+ *
+ * A default is stated ONLY when every term not mapped on that target is in
+ * one state, and only when that state is `unmapped` or `undetermined`. With
+ * no such state, every entry carries its own mark for that target. `unknown`
+ * is never a default, because a default for "the record cannot say" would
+ * read as a finding.
+ *
+ * Absent states (no committed result) give no note and no marks. The mapping
+ * table already says "Not checked", and marking terms against a result
+ * nobody wrote would be `dh4f`.
+ */
+export function perTermMapping(
+  states: readonly SchemeState[] | undefined,
+  terms: readonly TermKey[],
+): { note: string; marks: Map<string, string> } {
+  const marks = new Map<string, string>();
+  if (!states || !terms.length) return { note: "", marks };
+  const targets = [...new Set(states.map((s) => s.target))].sort();
+  const parts = new Map<string, string[]>();
+  const said: string[] = [];
+  const seen = new Set<string>();
+  const shared = new Set<string>();
+  for (const k of terms) {
+    const key = `${k.scheme}\0${k.term}`;
+    if (seen.has(key)) shared.add(key);
+    seen.add(key);
+  }
+  for (const target of targets) {
+    // The record keys a term by (scheme, id) and not by instance, because a
+    // scheme id such as `kg-tools` is shared by every instance's extraction.
+    // Ids do not collide today (0 of 2876 checked when this was written), but
+    // if two entries on one page ever share a key, the record cannot say
+    // which of them it meant, so both are `unknown` rather than both badged.
+    const answers = terms.map((k): TermStateAnswer =>
+      shared.has(`${k.scheme}\0${k.term}`)
+        ? { state: "unknown", why: `two entries share the id \`${k.term}\` in scheme \`${k.scheme}\`` }
+        : termState(states, k.scheme, target, k.term),
+    );
+    const rest = new Set(answers.filter((a) => a.state !== "mapped").map((a) => a.state));
+    const only = rest.size === 1 ? [...rest][0] : undefined;
+    const dflt = only === "unmapped" || only === "undetermined" ? only : undefined;
+    said.push(
+      dflt
+        ? `<strong>${dflt}</strong> on <code>${esc(target)}</code>`
+        : rest.size
+          ? `in no single state on <code>${esc(target)}</code>, so each entry states its own`
+          : `<strong>mapped</strong> on <code>${esc(target)}</code>, and each entry says to what`,
+    );
+    answers.forEach((a, i) => {
+      if (a.state === dflt) return;
+      const key = terms[i]!.anchor;
+      parts.set(key, [...(parts.get(key) ?? []), markPart(target, a)]);
+    });
+  }
+  for (const [key, p] of parts) marks.set(key, `<p class="fa-gloss-mapstate">Mapping: ${p.join(" · ")}</p>`);
+  const n = marks.size;
+  const note = [
+    `<p class="fa-gloss-mapping-perterm"><strong>Per term.</strong> `,
+    `Every term on this page is ${said.join(", and ")}, unless its entry says otherwise. `,
+    `${n === 0 ? "No entry says otherwise." : n === 1 ? "1 entry says otherwise." : `${n} entries say otherwise.`}`,
+    `</p>`,
+  ].join("");
+  return { note, marks };
+}
+
 /**
  * A description's inline code that names ANOTHER term of the same scheme
  * becomes a link to that term's entry (bean `qgjh`). Role descriptions say
@@ -716,7 +825,7 @@ ${rows.map((r, i) => termEntry(r).replace(/^(<dt [^>]*>\n)/, `$1<span class="fa-
 }
 
 /** The filter box, the A–Z bar and the terms under their letters: the same on every page. */
-function termsBlock(rows: Row[]): string {
+function termsBlock(rows: Row[], marks?: ReadonlyMap<string, string>): string {
   // A label that does not start with a letter (a digit, a quote) goes under
   // one heading of its own rather than inventing a letter for it.
   const letterOf = (label: string) => {
@@ -739,7 +848,7 @@ function termsBlock(rows: Row[]): string {
 <nav aria-label="Letters">${letters.map((L) => `<a href="#${anchor(L)}">${shown(L)}</a>`).join(" ")}</nav>
 
 ${letters
-  .map((L) => `<h2 id="${anchor(L)}">${shown(L)}</h2>\n<dl class="fa-gloss">\n${byLetter.get(L)!.map(termEntry).join("\n")}\n</dl>`)
+  .map((L) => `<h2 id="${anchor(L)}">${shown(L)}</h2>\n<dl class="fa-gloss">\n${byLetter.get(L)!.map((r) => termEntry(r, marks)).join("\n")}\n</dl>`)
   .join("\n\n")}`;
 }
 
@@ -793,6 +902,11 @@ export function renderTypePage(c: ReturnType<typeof collect>, type: AssetType): 
   const from = schemes.length
     ? schemes.map((s) => `${esc(s.instance)} ${s.glossary.terms.length} (${skosLink(s)})`).join(" · ")
     : "no instance";
+  const states = mappingStates();
+  const perTerm = perTermMapping(
+    states,
+    rows.map((r) => ({ anchor: anchorOf(r.s, r.t.id), scheme: r.s.glossary.id, term: r.t.id })),
+  );
   return sized(
     (size) => `---
 layout: default
@@ -812,9 +926,10 @@ From: ${from}.
 
 **Size:** this page holds ${rows.length} terms and is ${size} before compression, fetched in one request, within its budget of ${sizeLabel(budgetOf(type))}. There is no search index: the filter below runs over this page, and the A–Z bar jumps within it.
 
-${mappingBlock(mappingStates(), [...new Set(rows.map((r) => r.s.glossary.id))])}
+${mappingBlock(states, [...new Set(rows.map((r) => r.s.glossary.id))])}
+${perTerm.note}
 
-${termsBlock(rows)}
+${termsBlock(rows, perTerm.marks)}
 
 ${FILTER_SCRIPT}
 `,

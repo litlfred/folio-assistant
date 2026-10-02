@@ -60,10 +60,59 @@ returning one boolean cannot express any of that.
 
 ## Done when
 
-- [ ] `7wou` — the check exists, with three states and an exact/concept pair
+- [x] `7wou` — the check exists, with three states and an exact/concept pair
+      (#1633; the committed record kept only `concept` until #1837, which
+      projects `exact` too. `7wou` itself stays open on one item: FHIR
+      collections in scope once OCL is reachable)
 - [ ] `2i5f` — disagreement has a named outcome set and CALLS `adjudication`
-- [ ] `ejug` — one terminology service as a Tool node, OCL confirmed first
-- [ ] the glossary page reports mapped / unmapped / undetermined per term,
-      and grades none of them
+- [x] `ejug` — one terminology service as a Tool node, OCL confirmed first
+      (closed 2026-09-30: the Tool is the pin refresher, by owner choice)
+- [x] the glossary page reports mapped / unmapped / undetermined per term,
+      and grades none of them (#1837: a stated default per target and a mark
+      on every term that differs from it, because a mark on every row does not
+      fit the 1 MiB page budget)
 
 Claimed by claude/terminology-adjudication (session https://claude.ai/code/session_01CVVoavPoCHMLA7AASxG8cH) — issue #1836, slice: per-term mapping state on the glossary page.
+
+## Measured 2026-10-02 against `main` at `cf3e62487`, and the slice shipped
+
+`check:term-mapping` reports 2861 candidates, **0 mapped** on both `skos` and
+`fhir`, so `2i5f` leg 2's entry condition (non-zero mapped) is still unmet,
+and the owner's 2026-09-30 "wait" on `2i5f` stands.
+
+Shipped on #1837 (issue #1836):
+
+- `SchemeState.mappedTerms` now records, for each mapped term, `exact`
+  (true/false) and the concept URIs it matched. Before this the projection
+  counted `concept` only, so the gap LCSHBench calls the finding never reached
+  the committed file.
+- `undeterminedTerms` is written only for a row that mixes `unmapped` and
+  `undetermined`, where the counts cannot say which term is which.
+- `termState()` in `check-term-mapping.ts` is the one function that turns the
+  record back into a per-term answer. It answers `unknown` (never `unmapped`)
+  when the record cannot say.
+- Each glossary type page states a default per target ("every term on this
+  page is unmapped on fhir, and unmapped on skos, unless its entry says
+  otherwise") and marks each term that differs, exact and concept-only
+  worded differently. Today no entry differs, so the visible change is that
+  one sentence per page.
+
+## Remaining slices (not code yet)
+
+- [ ] `2i5f` leg 1: the extractor and the terminology disagree. Three
+      outcomes (change the prose, author a local term with its reason, record
+      that the vocabulary is wrong for this domain). Buildable today, and
+      asked of the owner again on #1837 rather than built.
+- [ ] `2i5f` leg 2: two judges disagree about a mapping. CALLS `adjudication`
+      and `untainted-verification`. Blocked on its entry condition: non-zero
+      `mapped` on either target.
+- [ ] publish mapped terms into the scheme's SKOS JSON-LD as
+      `skos:closeMatch` (or `exactMatch` where `exact`), in the
+      `linked-data` voice. This is a public assertion made from an
+      automated label match, so it is the owner's call (asked on #1837).
+- [ ] key the per-scheme record by instance as well as scheme id. A scheme
+      id such as `kg-tools` is shared by every instance's extraction, and
+      term ids are unique across them only by observation (0 collisions in
+      2876). The page answers `unknown` on a collision; the record should
+      not depend on it.
+- [ ] `7wou`'s last item: FHIR collections in scope once OCL is reachable.
