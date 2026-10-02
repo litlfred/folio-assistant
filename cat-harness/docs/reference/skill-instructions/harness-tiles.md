@@ -471,4 +471,19 @@ and another's was five newline-separated spellings that rendered as one line.
 Authoring notes belong in `description` or a `_comment`. The reader-facing
 line goes in `summary`, and alternative spellings go in `alsoWritten` as a
 list, never inline.
+
+**A harness's sticky shows the same text.** The owner's ruling on `ob3m`
+finding 3 (2026-10-01): *"Stickies show the same text as the landing page"*.
+A sticky contribution declares `bodyFrom: "summary"`, and the card's words are
+`readerText` in `schemas/sticky-contribution.ts`: the `summary` (else the
+description), then the `alsoWritten` spellings after "Also written:". That is
+the rule `docs/_includes/harness_details.html` applies, read from the same two
+declaration fields, so there is no copy of the text to keep in step. Before
+the ruling, stickies read `bodyFrom: "description"`. The folio-assistant card
+then opened with "NAMED `folio-assistant-checkout`…", the reason the name was
+chosen, which is written for a maintainer. `bodyFrom: "description"` still
+parses, because the pinned `bootstrap/bootstrap.json` declares it.
+`bun run landing:sticky:check` fails when a card built from its declaration
+does not open with that text. A `bodyAppend` may follow the reader's text,
+and a card with a literal `body` is not compared.
 {% endraw %}

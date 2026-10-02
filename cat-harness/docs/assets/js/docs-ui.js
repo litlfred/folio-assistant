@@ -4962,29 +4962,68 @@
 
     function zoomKindOf(a) { return a.kind === "todos" ? "todo" : (a.kind || "library"); }
 
-    /** Where a card with no saved place goes: a grid, in key order. */
-    function defaultGlassGeom(a, i) {
+    /** The size a card with no saved place starts at. */
+    function defaultGlassSize(a) {
       var t = zoomThresholdFor(zoomKindOf(a));
       // A DEFAULT card never starts zoomed out: at least the declared width
       // plus a step, so the words show until the reader shrinks it.
       var w = t ? Math.max(GLASS_CARD_W, t.belowPx + RESIZE_STEP) : GLASS_CARD_W;
-      var avail = Math.max(w, shelf.clientWidth || (window.innerWidth - 32));
-      var cols = Math.max(1, Math.floor((avail + GLASS_GAP) / (w + GLASS_GAP)));
       // A BOOK IS PORTRAIT. The cover fills the card (owner, 2026-09-23:
       // *"artefact avatar should cover sheet"*), and a landscape card would
       // show a cover's middle band. 4:3 upright, which every rendered cover
-      // here is near. Rows are laid out at the tallest card's height.
+      // here is near.
       // A STICKY IS SQUARE — owner, 2026-09-24: *"i expected to see themed
       // square sticky avatar"*. A todo is a sticky note everywhere else on
       // this site, and a sticky note is square; the wide 152px strip it used
       // to pop out as read as a list row, not as the note.
       var h = zoomKindOf(a) === "library" && prefs.avatars !== "text"
         ? Math.round(w * 4 / 3) : zoomKindOf(a) === "todo" ? w : GLASS_CARD_H;
-      return {
-        left: (i % cols) * (w + GLASS_GAP),
-        top: Math.floor(i / cols) * (Math.max(h, GLASS_CARD_H) + GLASS_GAP),
-        width: w,
-        height: h,
+      return { width: w, height: h };
+    }
+
+    /* WHERE CARDS WITH NO SAVED PLACE GO: a shelf, in key order, that
+     * advances by each card's ACTUAL size. Issue #1780: each default place
+     * used to be computed from the card's own size alone — a grid of its own
+     * column width and row height — so a portrait library card (288×384) and
+     * a square todo (324×324) placed together landed on each other. Now a
+     * card goes right of the previous one, a row wraps when the next card
+     * would pass the shelf's width, and the next row starts below the
+     * tallest card of the last one.
+     *
+     * A card the READER placed is never moved: it is passed in as `fixed`,
+     * and a default card that would land on one steps past it instead. */
+    function glassPacker(fixed) {
+      var avail = Math.max(GLASS_CARD_W, shelf.clientWidth || (window.innerWidth - 32));
+      var x = 0, y = 0, rowH = 0;
+      function hits(g) {
+        for (var k = 0; k < fixed.length; k++) {
+          var f = fixed[k];
+          if (g.left < f.left + f.width + GLASS_GAP && f.left < g.left + g.width + GLASS_GAP &&
+              g.top < f.top + f.height + GLASS_GAP && f.top < g.top + g.height + GLASS_GAP) return f;
+        }
+        return null;
+      }
+      function wrap() { x = 0; y += rowH + GLASS_GAP; rowH = 0; }
+      return function next(size) {
+        // Bounded: each step moves the cursor right or down past a card.
+        for (var guard = 0; guard < 1000; guard++) {
+          if (x > 0 && x + size.width > avail) wrap();
+          var g = { left: x, top: y, width: size.width, height: size.height };
+          var f = hits(g);
+          if (!f) {
+            x += size.width + GLASS_GAP;
+            rowH = Math.max(rowH, size.height, GLASS_CARD_H);
+            return g;
+          }
+          // Step past the reader's card; if that ends the row, the row is at
+          // least as tall as the part of it this card would have shared.
+          x = f.left + f.width + GLASS_GAP;
+          if (x + size.width > avail) {
+            rowH = Math.max(rowH, f.top + f.height - y);
+            if (x > 0) wrap();
+          }
+        }
+        return { left: 0, top: y, width: size.width, height: size.height };
       };
     }
 
@@ -5548,12 +5587,19 @@
     }
 
     function buildGlassCard(key, a) {
+      // ONE LINE, for every accessible name and title built from it. A todo's
+      // title is its summary, which may carry raw newlines; an `aria-label`
+      // or a `title` with "\n" in it is announced or tooltipped broken, so
+      // every run of whitespace becomes one space — as `plainGist` does, but
+      // without its markdown stripping, which would mangle a title like
+      // "C*-algebras". The visible name keeps `a.title`: rendering collapses it.
+      var label = String(a.title || "").replace(/\s+/g, " ").trim();
       var card = el("article", {
         class: "fa-glass-asset",
         "data-fa-asset": key,
         "data-fa-asset-kind": a.kind || "library",
         "data-fa-zoom-kind": zoomKindOf(a),
-        "aria-label": a.title,
+        "aria-label": label,
         tabindex: "-1",
       });
       var live = el("span", { class: "fa-sr-only", "aria-live": "polite" });
@@ -5580,7 +5626,7 @@
         type: "button",
         class: "fa-glass-asset-tool",
         "data-fa-control": "move",
-        "aria-label": "Move " + a.title + " around the glass",
+        "aria-label": "Move " + label + " around the glass",
         "aria-pressed": "false",
         title: "Move (arrow keys; Shift+arrows resize)",
       }, CONTROL_GLYPHS.move || "\u271C");
@@ -5596,7 +5642,7 @@
         if (!on) { leaveMoveMode(); return; }
         setMoveMode(card, true, live);
         moveBtn.setAttribute("aria-pressed", "true");
-        showMoveBar(card, a.title, mover, leaveMoveMode);
+        showMoveBar(card, label, mover, leaveMoveMode);
       });
       card.addEventListener("fa:move-mode", function () {
         moveBtn.setAttribute("aria-pressed", "false");
@@ -5635,11 +5681,11 @@
           ? "Smaller: showing the avatar only." : "Size " + g.width + " by " + g.height + ".");
       }
       var smaller = el("button", {
-        type: "button", class: "fa-glass-asset-tool", "aria-label": "Make " + a.title + " smaller",
+        type: "button", class: "fa-glass-asset-tool", "aria-label": "Make " + label + " smaller",
         title: "Smaller",
       }, "\u2212");
       var larger = el("button", {
-        type: "button", class: "fa-glass-asset-tool", "aria-label": "Make " + a.title + " larger",
+        type: "button", class: "fa-glass-asset-tool", "aria-label": "Make " + label + " larger",
         title: "Larger",
       }, "+");
       smaller.addEventListener("click", function () { resizeBy(-2 * RESIZE_STEP, smaller); });
@@ -5652,7 +5698,7 @@
       var close = el("button", {
         type: "button",
         class: "fa-glass-asset-tool fa-glass-asset-close",
-        "aria-label": "Put " + a.title + " back in the library view — it stays in your folio",
+        "aria-label": "Put " + label + " back in the library view — it stays in your folio",
         title: "Back in library view (stays in your folio)",
       }, "×");
       close.addEventListener("click", function () { shelveFromGlass(key); });
@@ -5681,7 +5727,7 @@
           }
         });
       } else {
-        setCardMeta(card, [["Title", a.title]]);
+        setCardMeta(card, [["Title", label]]);
       }
 
       // SELECTING ANY PART RAISES IT — the owner's rule for windows,
@@ -5804,11 +5850,13 @@
       keys.sort();
 
       var placed = [];
-      keys.forEach(function (key, i) {
+      var nextSpot = glassPacker(keys.map(function (k) { return all[k].geom; })
+        .filter(function (g) { return g && isFinite(g.left) && isFinite(g.top); }));
+      keys.forEach(function (key) {
         var a = all[key];
         var card = buildGlassCard(key, a);
         shelf.appendChild(card);
-        applyGeometry(card, a.geom || defaultGlassGeom(a, i));
+        applyGeometry(card, a.geom || nextSpot(defaultGlassSize(a)));
         placed.push(card);
       });
       fitShelf();
@@ -5872,7 +5920,7 @@
         // SIZED TO ITS WORDS: measured at each candidate width with the height
         // left to the content, so no line is cut (a fixed 180px cut the last
         // one at 420px wide). Then placed where a card of that size is free.
-        var noteGeom = defaultGlassGeom({ kind: "todos" }, keys.length);
+        var noteGeom = nextSpot(defaultGlassSize({ kind: "todos" }));
         var shapes = [Math.max(noteGeom.width, 420), noteGeom.width].map(function (w) {
           noteCard.style.width = w + "px";
           noteCard.style.height = "auto";

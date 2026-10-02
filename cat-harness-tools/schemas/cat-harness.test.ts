@@ -1020,7 +1020,6 @@ describe("instanceRootsIn — discovered, never listed", () => {
     const found = instanceRootsIn(repo).map((r) => r.slice(repo.length + 1) || ".");
     expect(found).toEqual([
       ".",
-      "agent-skills",
       "bootstrap",
       // Added 2026-09-30 when it fired as designed: bootstrap's tools were
       // re-created as the sibling instance `bootstrap-tools/` (bean `xsqm`),
@@ -1048,7 +1047,6 @@ describe("instanceRootsIn — discovered, never listed", () => {
       "fhir-harness",
       "folio-assistant-core",
       "folio-assistant-sci",
-      "large-datasets",
       // Added 2026-09-21 with the FHIR IG artefact-index ingest (issue #689).
       // It fired as designed, which is what this list is for: `smart-trust/`
       // declares a `harness.json` and is therefore an instance, sorting
