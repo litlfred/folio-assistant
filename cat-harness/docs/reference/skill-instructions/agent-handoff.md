@@ -151,6 +151,39 @@ executor stop until the answer comes. An agent's "approval" is a second voice
 claiming the owner's authority, and an executor has no way to tell the two
 apart.
 
+## 7. When the executor fails
+
+Failure is part of the handoff, so the bean states it in advance as a
+`## Fails if` section: the conditions under which the executor **stops and
+reports** instead of carrying on. At minimum:
+- an input mismatch (§4);
+- a refused or blocked step;
+- its own local check disagrees with what it expected;
+- it cannot reach the report channel.
+
+The bean also carries an **expiry**: the time by which the first `started`
+line is due. As [`bean-blocking`](bean-blocking.md) §"An external block's
+expiry" says, an executor in another environment is an external party, so the
+expiry is a date to **ask again, not a takeover**. The coordinator cannot do
+the step in any case, which is why it handed the step off.
+
+The coordinator recognises five kinds of failure, and responds to each the
+same way every time:
+
+| failure | how you see it | response |
+|---|---|---|
+| **silent**: no `started` line by the expiry | no line in the report channel; no liveness signal ([`bean-coordination`](bean-coordination.md) §"A quiet claim") | ask the person **once**, in the channel, naming the bean and the line to paste; set the next expiry. Never re-hand to a second executor while the first claim may be live |
+| **stopped**: `refused` or `blocked` | its report line | the coordinator settles the cause if it is in this repository; a boundary or an exception goes to the **owner** (§6) with the numbers. The executor waits |
+| **wrong result**: the step ran, `## Done when` fails | the verifier's check | record the failure under `## Attempts` (attempt *n*: inputs, what was measured, the cause); the bean goes back to `todo` with a holder note, never `completed` or `scrapped`; fix what the cause names (usually the bean) and re-hand |
+| **out of protocol**: created a bean, wrote another bean, pushed outside the boundaries | an unexpected file or ref | a duplicate bean is re-identified and `scrapped` with a pointer, never deleted (`mac1` → `8ao5`); a stray push is **reported to the owner**, never reverted by the coordinator ([`deletion-requires-confirmation`](deletion-requires-confirmation.md)) |
+| **partial**: some items done | per-item lines | per-item evidence; the bean stays open until every item verifies |
+
+**Two failed attempts with the same cause go to the owner, not round again.**
+A third hand-off of the same bean with the same cause shows that the bean
+cannot express what the step needs. The owner decides whether to change the
+step, the environment, or the executor. This is the rule an agent tends to
+break by re-handing with more emphasis.
+
 ## Checklist: the bean you hand over
 
 - [ ] `## Roles`: coordinator, executor, verifier, owner (§1)
@@ -161,6 +194,8 @@ apart.
 - [ ] fresh clone, where reproducibility is the claim (§4)
 - [ ] `## Done when`: the check, **where** it runs, and **who** closes (§5)
 - [ ] boundaries, with "exceptions: owner only" (§6)
+- [ ] `## Fails if` and an expiry for the first `started` line (§7)
+- [ ] `## Attempts`, left empty; the verifier fills it on a failure (§7)
 
 ## Checklist: the executor, before the first irreversible step
 

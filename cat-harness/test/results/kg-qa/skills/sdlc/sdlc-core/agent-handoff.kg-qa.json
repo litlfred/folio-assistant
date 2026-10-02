@@ -5,7 +5,7 @@
     "id": "agent-handoff",
     "path": "skills/sdlc/sdlc-core/agent-handoff.md"
   },
-  "source_hash": "37a001e0de04",
+  "source_hash": "96bb97f8b122",
   "criteria": {
     "skill-is-a-stub": {
       "result": "pass",
@@ -46,20 +46,20 @@
     {
       "voice": "agent-skill-authoring",
       "instance": "cat-harness",
-      "skill_hash": "37a001e0de0455fe5ab98c8361ba7c59d5214e5a3d58623a44e9ec67028a68d7",
+      "skill_hash": "96bb97f8b122b510c8f1a013fa95539f52f6754a062f769d357ff745c904479f",
       "voice_hash": "6dccbc641e657a67414b98b8675abf691270236bcfd79b36593cee41eae28d90",
       "by": "agent",
-      "at": "2026-10-02T16:21:09.486Z",
+      "at": "2026-10-02T16:37:15.236Z",
       "verdicts": [
         {
           "rule": "as-assume-general-knowledge",
           "result": "pass",
-          "note": "every section is a project convention or a measured failure (bean mac1), no general background"
+          "note": "every section is a project convention or a measured failure (bean mac1), no general background; §7 points to bean-blocking/bean-coordination rather than restating them"
         },
         {
           "rule": "as-body-under-500-lines",
           "result": "pass",
-          "note": "~165 lines"
+          "note": "~210 lines after §7 (failure handling)"
         },
         {
           "rule": "as-description-states-function-and-trigger",
@@ -89,7 +89,7 @@
         {
           "rule": "as-one-default-name-the-exception",
           "result": "pass",
-          "note": "each rule gives one default and the named exception: claim, never create (stop if missing); verifier closes (executor closes only if it can run Done-when itself); owner only"
+          "note": "each rule gives one default and the named exception: claim, never create (stop if missing); verifier closes (executor closes only if it can run Done-when itself); owner only; §7: each failure kind has one response, and two same-cause failures go to the owner instead of another round"
         },
         {
           "rule": "as-read-third-party-skills-in-full",
