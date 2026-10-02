@@ -18387,6 +18387,44 @@
       "skos:note": "candidate"
     },
     {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/prov-jsonld.owned.path",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Owned.path"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Path inside the instance, without extension, `/`-separated."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/prov-jsonld.ts#Owned.path",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/prov-jsonld.owned.root",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Owned.root"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Instance root, absolute."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/prov-jsonld.ts#Owned.root",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/prov.provactivityschema.cat-harness-underpolicy",
       "@type": "skos:Concept",
       "skos:inScheme": {

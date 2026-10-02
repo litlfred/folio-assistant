@@ -192,6 +192,11 @@ export const ENTRY_SIDECARS: readonly string[] = [
   // A slide deck's accessibility report, written by `slides-structure.py`
   // beside its structure.json (bean `scfh`, issue #1614).
   "accessibility.json",
+  // A JSON-LD context the SOURCE ITSELF publishes among its files, held so a
+  // documentLoader can serve it offline instead of fetching it (bean `9y9j`,
+  // the linked-data voice's `ld-no-context-fetched-at-run-time`; first case:
+  // PROV-JSONLD's, pinned by sha256 in schemas/prov.ts).
+  "context.jsonld",
 ];
 
 export const KIND_SIDECAR: ReadonlyArray<readonly [EntryKind, string]> = [
