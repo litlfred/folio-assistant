@@ -55,6 +55,7 @@ Part of [C@T Harness](../README.md) 0.1.0, declared as `processes`, holding `pro
 | [`l3-fhir-pipeline.bpmn`](l3-fhir-pipeline.bpmn) | a [Process](https://github.com/litlfred/bootstrap/blob/main/schemas/README.md#process): L3 FHIR IG pipeline |  |
 | [`materialize-remote.bpmn`](materialize-remote.bpmn) | a [Process](https://github.com/litlfred/bootstrap/blob/main/schemas/README.md#process): Materialize remote content — the shared subprocess | "Sample import into a structured data store", "Subscribe to an external knowledge graph" |
 | [`merge-base.bpmn`](merge-base.bpmn) | a [Process](https://github.com/litlfred/bootstrap/blob/main/schemas/README.md#process): Merge the base branch in | "Code change and review" |
+| [`merge-refusal.bpmn`](merge-refusal.bpmn) | a [Process](https://github.com/litlfred/bootstrap/blob/main/schemas/README.md#process): A refused merge-train member |  |
 | [`methodology-from-source.bpmn`](methodology-from-source.bpmn) | a [Process](https://github.com/litlfred/bootstrap/blob/main/schemas/README.md#process): Adopt a methodology from a source document |  |
 | [`narrative-code-review.bpmn`](narrative-code-review.bpmn) | a [Process](https://github.com/litlfred/bootstrap/blob/main/schemas/README.md#process): Prose and the code it describes | "Review task" |
 | [`ns.jsonld`](ns.jsonld) | cat-harness's diagram elements |  |

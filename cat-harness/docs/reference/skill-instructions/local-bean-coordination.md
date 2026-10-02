@@ -45,4 +45,5 @@ pointers to it. Do not re-add content here — edit the skill.
 |---|---|
 | [Agent bean lifecycle](../../processes/bean-lifecycle.html) | Leave it alone (coordinate instead); Claim it (status: in-progress); Record the blocker and hand back |
 | [Code change and review](../../processes/code-change-review.html) | Claim the work item |
+| [A refused merge-train member](../../processes/merge-refusal.html) | Close the bean, merge commit as evidence; Scrap the bean, with the reason |
 
