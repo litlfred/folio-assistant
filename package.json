@@ -266,6 +266,8 @@
     "init-folio": "bun run cat-harness/scripts/init-folio.ts",
     "iris:covers": "bun run folio-assistant-core/scripts/gen-covers.ts who-iris",
     "iris:covers:check": "bun run folio-assistant-core/scripts/gen-covers.ts who-iris --check",
+    "dc:render": "bun run folio-assistant-core/scripts/dc-render.ts who-iris",
+    "dc:render:check": "bun run folio-assistant-core/scripts/dc-render.ts who-iris --check",
     "iris:pages": "bun run who-iris/scripts/gen-iris-pages.ts",
     "iris:pages:check": "bun run who-iris/scripts/gen-iris-pages.ts --check",
     "sources:liveness": "bun run folio-assistant-core/scripts/source-liveness.ts",

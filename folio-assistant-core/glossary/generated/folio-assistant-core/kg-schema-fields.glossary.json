@@ -315,6 +315,34 @@
       "status": "candidate"
     },
     {
+      "id": "dublin-core-render.dctermsmapping.range",
+      "prefLabel": "DctermsMapping.range",
+      "definition": "`literal` when DCMI gives the term the range `rdfs:Literal` or gives no range and the value is prose; `resource` when the range is a class (Agent, Location, LinguisticSystem, …) or DCMI says the term is \"intended to be used with non-literal values\".",
+      "source": "folio-assistant-core/schemas/dublin-core-render.ts#DctermsMapping.range",
+      "status": "candidate"
+    },
+    {
+      "id": "dublin-core-render.dctermsmapping.ses",
+      "prefLabel": "DctermsMapping.ses",
+      "definition": "A syntax encoding scheme the values are in, by the field's own name. Becomes a datatype (JSON-LD) or `xsi:type` (XML).",
+      "source": "folio-assistant-core/schemas/dublin-core-render.ts#DctermsMapping.ses",
+      "status": "candidate"
+    },
+    {
+      "id": "dublin-core-render.dctermsmapping.term",
+      "prefLabel": "DctermsMapping.term",
+      "definition": "The local name under `http://purl.org/dc/terms/`.",
+      "source": "folio-assistant-core/schemas/dublin-core-render.ts#DctermsMapping.term",
+      "status": "candidate"
+    },
+    {
+      "id": "dublin-core-render.dctermsmapping.ves",
+      "prefLabel": "DctermsMapping.ves",
+      "definition": "A vocabulary encoding scheme the values are members of. Becomes `dcam:memberOf` (JSON-LD) or `xsi:type` (XML).",
+      "source": "folio-assistant-core/schemas/dublin-core-render.ts#DctermsMapping.ves",
+      "status": "candidate"
+    },
+    {
       "id": "dublin-core.dcfieldschema.schema",
       "prefLabel": "DcFieldSchema.schema",
       "definition": "The namespace prefix. `dc` throughout the measured record; DSpace also mints `dcterms`, `local` and others.",

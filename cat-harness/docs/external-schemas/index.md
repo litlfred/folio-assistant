@@ -27,7 +27,7 @@ So each record answers three questions — **which edition**, **what here
 depends on it**, and **which of its terms this repository branches on**.
 
 <div class="xs-grid">
-<div class="xs-stat"><b>18</b><span>specifications</span></div>
+<div class="xs-stat"><b>19</b><span>specifications</span></div>
 <div class="xs-stat"><b>105</b><span>operative terms in the graph</span></div>
 <div class="xs-stat"><b>196</b><span>declared uses</span></div>
 <div class="xs-stat"><b>0</b><span>declarations naming no record</span></div>
@@ -54,6 +54,7 @@ depends on it**, and **which of its terms this repository branches on**.
 | **[SKOS Simple Knowledge Organization System Reference](#w3c-skos)**<br>`w3c-skos` | W3C | [2009-08-18](https://www.w3.org/TR/2009/REC-skos-reference-20090818/) | `conforms` — this repository's artefacts are valid against it |
 | **[Web Annotation Vocabulary](#w3c-web-annotation)**<br>`w3c-web-annotation` | W3C | [2017-02-23](https://www.w3.org/TR/annotation-vocab/) | `conforms` — this repository's artefacts are valid against it |
 | **[XML Schema Definition Language (XSD) 1.1 Part 2: Datatypes](#w3c-xsd11-datatypes)**<br>`w3c-xsd11-datatypes` | W3C | [2012-04-05](https://www.w3.org/TR/xmlschema11-2/) | `conforms` — this repository's artefacts are valid against it |
+| **[W3C XML Schema Definition Language (XSD) 1.1 Part 1: Structures](#w3c-xsd11-structures)**<br>`w3c-xsd11-structures` | W3C | [2012-04-05](https://www.w3.org/TR/xmlschema11-1/) | `conforms` — this repository's artefacts are valid against it |
 | **[WHO SMART Guidelines base IG](#who-smart-base)**<br>`who-smart-base` | other | [v1.0.0](https://smart.who.int/base/) | `reads` — this repository parses documents written in it |
 
 ## Who declares each specification
@@ -67,6 +68,10 @@ declares the spec (bean `u63y`).
 
 Every declaration names a record on this page.
 
+**1 record(s) nothing declares.** A version bump would move nothing that says so:
+
+- [`w3c-xsd11-structures`](#w3c-xsd11-structures)
+
 ## Namespaces the corpus uses against the ones it declares
 
 Read from the BPMN and DMN files themselves — **6** namespace IRI(s)
@@ -75,11 +80,12 @@ vocabulary shows up here instead of going unnoticed.
 
 Every namespace the corpus declares is covered by a record above.
 
-**19 declared and not in use.** Not a defect on its own: a
+**21 declared and not in use.** Not a defect on its own: a
 record may cover a namespace only some artefacts carry. It is here because
 a registry nobody prunes is one that stops describing the repository.
 
 - `http://hl7.org/fhir/`
+- `http://purl.org/dc/dcam/`
 - `http://purl.org/dc/elements/1.1/`
 - `http://purl.org/dc/terms/`
 - `http://purl.org/spar/cito/`
@@ -90,6 +96,7 @@ a registry nobody prunes is one that stops describing the repository.
 - `http://www.w3.org/1999/02/22-rdf-syntax-ns#`
 - `http://www.w3.org/2000/01/rdf-schema#`
 - `http://www.w3.org/2001/XMLSchema#`
+- `http://www.w3.org/2001/XMLSchema-instance`
 - `http://www.w3.org/2002/07/owl#`
 - `http://www.w3.org/2004/02/skos/core#`
 - `http://www.w3.org/ns/csvw#`
@@ -109,6 +116,7 @@ a registry nobody prunes is one that stops describing the repository.
 
 - `http://purl.org/dc/elements/1.1/`
 - `http://purl.org/dc/terms/`
+- `http://purl.org/dc/dcam/`
 
 **Note.** `reads`, not `conforms`: these records describe SOMEBODY ELSE'S metadata — DSpace's — so a DCMI revision is a compatibility question rather than a migration. THE TRANSCRIPTION CAME FIRST AND THAT WAS THE DEFECT. `dublin-core.ts` was written from ONE captured IRIS record and carries the prefix string `dc` with no namespace URI and no edition, so it recorded what one deployment SPELLS rather than what the standard DEFINES — and a transcription with no cited edition cannot say whether a field it lacks is missing or simply not in that edition. The operative terms below are derived from the catalogue records, so they are what IRIS actually sends; DSpace also mints `dcterms`, `local` and other prefixes this repository has not met. A term absent here is UNDECLARED, not unsupported.
 
@@ -596,6 +604,22 @@ graph. That is a determined zero, not an unfilled field.
 |---|---|
 | [`cat-harness/schemas/jsonld.ts`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/jsonld.ts) | `@conformsTo` tag |
 | [`cat-harness/scripts/kg-export.ts`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/scripts/kg-export.ts) | `@conformsTo` tag |
+
+**No operative terms.** This repository conforms to the specification
+without branching on any of its terms, so none is materialised into the
+graph. That is a determined zero, not an unfilled field.
+
+### W3C XML Schema Definition Language (XSD) 1.1 Part 1: Structures {#w3c-xsd11-structures}
+
+`w3c-xsd11-structures` — W3C, edition [2012-04-05](https://www.w3.org/TR/xmlschema11-1/) — `conforms`, meaning this repository's artefacts are valid against it.
+
+**Namespaces.**
+
+- `http://www.w3.org/2001/XMLSchema-instance`
+
+**Note.** Added for bean 7eak. The Dublin Core XML rendering (folio-assistant-core/schemas/dublin-core-render.ts) puts `xsi:type="dcterms:<Scheme>"` on an element to name its encoding scheme. That is how DCMI's Guidelines for implementing Dublin Core in XML (2003-04-02) carry W3CDTF, URI, RFC4646 and MESH. The `xsi` namespace is defined in Part 1 (Structures) §2.7, not in Part 2 (Datatypes), which `w3c-xsd11-datatypes` already pins. So this is a separate record and not an extra namespace on that one.
+
+**What depends on it.** Nothing here declares it.
 
 **No operative terms.** This repository conforms to the specification
 without branching on any of its terms, so none is materialised into the

@@ -1732,6 +1732,22 @@
       "isTest": false
     },
     {
+      "module": "folio-assistant-core/schemas/dublin-core-render.test.ts",
+      "instance": "folio-assistant-core",
+      "name": "dublin-core-render.test",
+      "graphNode": "undeclared",
+      "summary": "Tests for the Dublin Core renderings (bean `7eak`).",
+      "isTest": true
+    },
+    {
+      "module": "folio-assistant-core/schemas/dublin-core-render.ts",
+      "instance": "folio-assistant-core",
+      "name": "dublin-core-render",
+      "graphNode": "schema",
+      "summary": "Dublin Core RENDERINGS of a catalogue record: DC XML for a harvester, and",
+      "isTest": false
+    },
+    {
       "module": "folio-assistant-core/schemas/dublin-core.test.ts",
       "instance": "folio-assistant-core",
       "name": "dublin-core.test",
@@ -41011,6 +41027,102 @@
       "refs": [
         "folio-assistant-core/schemas/changeset.ts#BlockAt"
       ],
+      "unresolved": [],
+      "external": [],
+      "exported": false
+    },
+    {
+      "id": "folio-assistant-core/schemas/dublin-core-render.ts#DcSubject",
+      "name": "DcSubject",
+      "module": "folio-assistant-core/schemas/dublin-core-render.ts",
+      "kind": "interface",
+      "doc": "The subject of a rendering: the item at its Handle when the catalogue",
+      "fields": [
+        {
+          "name": "handle",
+          "type": "string",
+          "optional": true,
+          "array": false
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "folio-assistant-core/schemas/dublin-core-render.ts#DctermsMapping",
+      "name": "DctermsMapping",
+      "module": "folio-assistant-core/schemas/dublin-core-render.ts",
+      "kind": "interface",
+      "doc": "One row: the DCMI term a field IS, and what DCMI says about its values.",
+      "fields": [
+        {
+          "name": "term",
+          "type": "string",
+          "optional": false,
+          "array": false,
+          "doc": "The local name under `http://purl.org/dc/terms/`."
+        },
+        {
+          "name": "range",
+          "type": "\"literal\" | \"resource\"",
+          "optional": false,
+          "array": false,
+          "doc": "`literal` when DCMI gives the term the range `rdfs:Literal` or gives no"
+        },
+        {
+          "name": "ses",
+          "type": "string",
+          "optional": true,
+          "array": false,
+          "doc": "A syntax encoding scheme the values are in, by the field's own name. Becomes a datatype (JSON-LD) or `xsi:type` (XML)."
+        },
+        {
+          "name": "ves",
+          "type": "string",
+          "optional": true,
+          "array": false,
+          "doc": "A vocabulary encoding scheme the values are members of. Becomes `dcam:memberOf` (JSON-LD) or `xsi:type` (XML)."
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "folio-assistant-core/schemas/dublin-core-render.ts#Literal",
+      "name": "Literal",
+      "module": "folio-assistant-core/schemas/dublin-core-render.ts",
+      "kind": "type-alias",
+      "fields": [
+        {
+          "name": "@value",
+          "type": "string",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "@language",
+          "type": "string",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "@type",
+          "type": "string",
+          "optional": true,
+          "array": false
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
       "unresolved": [],
       "external": [],
       "exported": false
