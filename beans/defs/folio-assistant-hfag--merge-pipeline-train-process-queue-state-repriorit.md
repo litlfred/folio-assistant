@@ -5,7 +5,7 @@ status: in-progress
 type: epic
 priority: high
 created_at: 2026-10-02T17:17:27Z
-updated_at: 2026-10-02T17:17:27Z
+updated_at: 2026-10-02T18:52:43Z
 blocking:
     - folio-assistant-7x5n
 ---
@@ -41,3 +41,9 @@ Related, not re-parented: `1hjm` (GitHub's merge queue is unavailable on a perso
 - [ ] a harness tile showing the queue (decisions joined with live GitHub facts at render time)
 - [ ] skill `merge-queue`, registered with `skill:register`
 - [ ] gates, render:bpmn:check and kg:audit:check green on the PR
+
+
+
+## Related epic: nok9 (merge gate), 2026-10-02
+
+The merge-gate epic `nok9` (#1887, on main since train 4 / #1893) is the gate set this epic's `merge-train.bpmn` runs at `Call_Gates`. Re-parenting it under `hfag` was attempted and refused by `beans`: an epic may have only a milestone as parent. Left as a sibling until someone decides between retyping `nok9` to a feature or introducing a milestone over both.
