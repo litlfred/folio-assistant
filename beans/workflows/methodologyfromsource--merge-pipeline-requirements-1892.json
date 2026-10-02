@@ -1,0 +1,256 @@
+{
+  "$schema": "folio-workflow-instance/v1",
+  "id": "methodologyfromsource--merge-pipeline-requirements-1892",
+  "processId": "Process_MethodologyFromSource",
+  "source": "cat-harness/processes/library/methodology-from-source.bpmn",
+  "subject": "merge-pipeline-requirements-1892",
+  "tokens": [
+    "Call_Ingest"
+  ],
+  "arrivals": {},
+  "history": [
+    {
+      "at": "2026-10-02T18:03:51.323Z",
+      "node": "Start_MFS",
+      "note": "instance started"
+    },
+    {
+      "at": "2026-10-02T18:04:01.831Z",
+      "node": "A_Origin",
+      "actor": "claude",
+      "note": "Origin: owner uploads on 2026-10-02 (\"ingest to library for methodologies and as source of requirements for merge pipeline\"). Licences: Ananthanarayanan 2019 = stated (ACM notice, personal/classroom use only); arXiv 2501.03440v2 = unknown (none in PDF, arxiv.org unreachable); Memon 2017 = unknown (no licence, venue, publisher or date printed). All three held at the referenced rung, with no text or PDF committed. Recorded retrospectively; the work landed in ddc4b14/7ba01a8 on PR #1892.",
+      "authz": {
+        "allowed": true,
+        "mode": "strict",
+        "authenticatedBy": "github",
+        "actor": "owner",
+        "account": "litlfred",
+        "role": "authoring-agent",
+        "assignment": "unconstrained",
+        "authorized": "permit",
+        "access": "permit",
+        "findings": []
+      },
+      "prov": {
+        "@type": "prov:Activity",
+        "@id": "methodologyfromsource--merge-pipeline-requirements-1892#1",
+        "prov:startedAtTime": "2026-10-02T18:04:01.831Z",
+        "prov:qualifiedAssociation": {
+          "prov:agent": "owner",
+          "prov:hadRole": "authoring-agent",
+          "prov:hadPlan": "methodology-from-source#A_Origin"
+        },
+        "prov:used": [
+          "cat-harness/library/{ananthanarayanan-2019-keeping-master-green,arxiv-2501.03440v2,memon-2017-taming-google-scale-testing}/licence.json"
+        ],
+        "cat-harness:underPolicy": [
+          "https://litlfred.github.io/folio-assistant/policies/folio-defaults",
+          "https://litlfred.github.io/folio-assistant/policies/http-gateway"
+        ]
+      }
+    }
+  ],
+  "status": "running",
+  "startedAt": "2026-10-02T18:03:51.323Z",
+  "updatedAt": "2026-10-02T18:04:38.395Z",
+  "children": {
+    "Call_Ingest": {
+      "id": "methodologyfromsource--merge-pipeline-requirements-1892/Call_Ingest",
+      "processId": "Process_Ingestion",
+      "source": "cat-harness/processes/library/document-ingestion.bpmn",
+      "subject": "merge-pipeline-requirements-1892",
+      "tokens": [
+        "CallActivity_Extract"
+      ],
+      "arrivals": {},
+      "history": [
+        {
+          "at": "2026-10-02T18:04:01.834Z",
+          "node": "StartEvent_Dropped",
+          "note": "instance started"
+        },
+        {
+          "at": "2026-10-02T18:04:06.060Z",
+          "node": "Task_Place",
+          "actor": "claude",
+          "note": "The three PDFs were staged by `bun run ingest --reference`. No PDF was committed, because none has a licence that permits a copy. Only the referenced.json/licence.json records were placed under cat-harness/library/.",
+          "authz": {
+            "allowed": true,
+            "mode": "strict",
+            "authenticatedBy": "github",
+            "actor": "owner",
+            "account": "litlfred",
+            "role": "user",
+            "assignment": "unconstrained",
+            "authorized": "permit",
+            "findings": []
+          },
+          "prov": {
+            "@type": "prov:Activity",
+            "@id": "methodologyfromsource--merge-pipeline-requirements-1892/Call_Ingest#1",
+            "prov:startedAtTime": "2026-10-02T18:04:06.060Z",
+            "prov:qualifiedAssociation": {
+              "prov:agent": "owner",
+              "prov:hadRole": "user",
+              "prov:hadPlan": "document-ingestion#Task_Place"
+            },
+            "cat-harness:underPolicy": [
+              "https://litlfred.github.io/folio-assistant/policies/folio-defaults",
+              "https://litlfred.github.io/folio-assistant/policies/http-gateway"
+            ]
+          }
+        },
+        {
+          "at": "2026-10-02T18:04:10.342Z",
+          "node": "Task_Detect",
+          "actor": "claude",
+          "note": "All three are application/pdf. Doc ids: ananthanarayanan-2019-keeping-master-green, arxiv-2501.03440v2, memon-2017-taming-google-scale-testing. ingest now passes its slug to referenced-source.py, which fixes the 250103440v2 mismatch.",
+          "authz": {
+            "allowed": true,
+            "mode": "strict",
+            "authenticatedBy": "github",
+            "actor": "owner",
+            "account": "litlfred",
+            "role": "ingestion-agent",
+            "assignment": "unconstrained",
+            "authorized": "permit",
+            "findings": []
+          },
+          "prov": {
+            "@type": "prov:Activity",
+            "@id": "methodologyfromsource--merge-pipeline-requirements-1892/Call_Ingest#2",
+            "prov:startedAtTime": "2026-10-02T18:04:10.342Z",
+            "prov:qualifiedAssociation": {
+              "prov:agent": "owner",
+              "prov:hadRole": "ingestion-agent",
+              "prov:hadPlan": "document-ingestion#Task_Detect"
+            },
+            "cat-harness:underPolicy": [
+              "https://litlfred.github.io/folio-assistant/policies/folio-defaults",
+              "https://litlfred.github.io/folio-assistant/policies/http-gateway"
+            ]
+          }
+        },
+        {
+          "at": "2026-10-02T18:04:14.368Z",
+          "node": "Task_Licence",
+          "actor": "claude",
+          "note": "From the uploads alone: ACM notice on Ananthanarayanan 2019 (personal/classroom only); no licence statement in the arXiv or Memon PDFs. All three are recorded as `referenced` (metadata only, not held).",
+          "authz": {
+            "allowed": true,
+            "mode": "strict",
+            "authenticatedBy": "github",
+            "actor": "owner",
+            "account": "litlfred",
+            "role": "ingestion-agent",
+            "assignment": "unconstrained",
+            "authorized": "permit",
+            "findings": []
+          },
+          "prov": {
+            "@type": "prov:Activity",
+            "@id": "methodologyfromsource--merge-pipeline-requirements-1892/Call_Ingest#3",
+            "prov:startedAtTime": "2026-10-02T18:04:14.368Z",
+            "prov:qualifiedAssociation": {
+              "prov:agent": "owner",
+              "prov:hadRole": "ingestion-agent",
+              "prov:hadPlan": "document-ingestion#Task_Licence"
+            },
+            "cat-harness:underPolicy": [
+              "https://litlfred.github.io/folio-assistant/policies/folio-defaults",
+              "https://litlfred.github.io/folio-assistant/policies/http-gateway"
+            ]
+          }
+        }
+      ],
+      "status": "running",
+      "startedAt": "2026-10-02T18:04:01.834Z",
+      "updatedAt": "2026-10-02T18:04:38.395Z",
+      "children": {
+        "CallActivity_Extract": {
+          "id": "methodologyfromsource--merge-pipeline-requirements-1892/Call_Ingest/CallActivity_Extract",
+          "processId": "Process_ExtractStructure",
+          "source": "cat-harness/processes/library/ingest-extract-structure.bpmn",
+          "subject": "merge-pipeline-requirements-1892",
+          "tokens": [
+            "Task_Sections"
+          ],
+          "arrivals": {},
+          "history": [
+            {
+              "at": "2026-10-02T18:04:14.368Z",
+              "node": "StartEvent_Binary",
+              "note": "instance started"
+            },
+            {
+              "at": "2026-10-02T18:04:19.036Z",
+              "node": "Gateway_HasText",
+              "outcome": "yes",
+              "actor": "claude",
+              "note": "All three PDFs have an embedded text layer, which was used to extract the identity and outline in referenced.json.",
+              "authz": {
+                "allowed": true,
+                "mode": "strict",
+                "authenticatedBy": "github",
+                "actor": "owner",
+                "account": "litlfred",
+                "role": "ingestion-agent",
+                "assignment": "unconstrained",
+                "authorized": "permit",
+                "findings": []
+              },
+              "prov": {
+                "@type": "prov:Activity",
+                "@id": "methodologyfromsource--merge-pipeline-requirements-1892/Call_Ingest/CallActivity_Extract#1",
+                "prov:startedAtTime": "2026-10-02T18:04:19.036Z",
+                "prov:qualifiedAssociation": {
+                  "prov:agent": "owner",
+                  "prov:hadRole": "ingestion-agent",
+                  "prov:hadPlan": "ingest-extract-structure#Gateway_HasText"
+                },
+                "cat-harness:underPolicy": [
+                  "https://litlfred.github.io/folio-assistant/policies/folio-defaults",
+                  "https://litlfred.github.io/folio-assistant/policies/http-gateway"
+                ]
+              }
+            },
+            {
+              "at": "2026-10-02T18:04:38.395Z",
+              "node": "Task_ExtractText",
+              "actor": "claude",
+              "note": "I extracted the text layer only to read each paper's identity, authors and outline (in referenced.json) and the requirements R1-R16 (in docs/proposals/merge-pipeline-requirements.md). No text was committed (referenced rung). The instance stops here: section, structure and claim-candidate extraction, the L1 KG build and the completeness gate were NOT performed, because those steps apply to held content. Whether the referenced rung should take a shorter path through this process is an open question for the owner. Related-work, rendering, placement and owner review are still to do.",
+              "authz": {
+                "allowed": true,
+                "mode": "strict",
+                "authenticatedBy": "github",
+                "actor": "owner",
+                "account": "litlfred",
+                "role": "ingestion-agent",
+                "assignment": "unconstrained",
+                "authorized": "permit",
+                "findings": []
+              },
+              "prov": {
+                "@type": "prov:Activity",
+                "@id": "methodologyfromsource--merge-pipeline-requirements-1892/Call_Ingest/CallActivity_Extract#2",
+                "prov:startedAtTime": "2026-10-02T18:04:38.395Z",
+                "prov:qualifiedAssociation": {
+                  "prov:agent": "owner",
+                  "prov:hadRole": "ingestion-agent",
+                  "prov:hadPlan": "ingest-extract-structure#Task_ExtractText"
+                },
+                "cat-harness:underPolicy": [
+                  "https://litlfred.github.io/folio-assistant/policies/folio-defaults",
+                  "https://litlfred.github.io/folio-assistant/policies/http-gateway"
+                ]
+              }
+            }
+          ],
+          "status": "running",
+          "startedAt": "2026-10-02T18:04:14.368Z",
+          "updatedAt": "2026-10-02T18:04:38.395Z"
+        }
+      }
+    }
+  }
+}
