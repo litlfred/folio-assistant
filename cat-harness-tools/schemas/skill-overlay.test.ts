@@ -13,10 +13,10 @@ import { mkdirSync, mkdtempSync, rmSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 
-import { isKgOnlyDirectory, ownDirectories, resolveDirectories } from "./cat-harness.js";
-import { resolveSkillDirs } from "./harness-config.js";
-import { writeInstanceConfig } from "../test/support/instance-fixture.js";
-import { writeDeclaration } from "../test/support/instance-fixture.js";
+import { isKgOnlyDirectory, ownDirectories, resolveDirectories } from "../../cat-harness/schemas/cat-harness.js";
+import { resolveSkillDirs } from "../../cat-harness/schemas/harness-config.js";
+import { writeInstanceConfig } from "../../cat-harness/test/support/instance-fixture.js";
+import { writeDeclaration } from "../../cat-harness/test/support/instance-fixture.js";
 
 const roots: string[] = [];
 afterAll(() => roots.forEach((r) => rmSync(r, { recursive: true, force: true })));

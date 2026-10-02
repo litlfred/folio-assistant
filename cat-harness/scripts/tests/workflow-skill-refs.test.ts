@@ -15,6 +15,7 @@ import { existsSync, readdirSync } from "node:fs";
 import { join } from "node:path";
 import { loadProcessModel, isActivity } from "../../src/workflow/process-model.ts";
 import { knownSkills as canonicalKnownSkills } from "../known-skills.js";
+import { resolveImplementingPath } from "../../schemas/harness-config.ts";
 
 const ROOT = join(import.meta.dir, "../..");
 
@@ -70,7 +71,7 @@ describe("declared diagram paths resolve", () => {
     for (const ct of CONTENT_TYPE_TRANSLATIONS) {
       for (const f of ct.formats) {
         for (const rel of [f.extractModule, f.injectModule]) {
-          if (rel && !existsSync(join(ROOT, rel))) missing.push(`${ct.contentType}/${f.id} → ${rel}`);
+          if (rel && resolveImplementingPath(ROOT, rel).state !== "found") missing.push(`${ct.contentType}/${f.id} → ${rel}`);
         }
       }
     }

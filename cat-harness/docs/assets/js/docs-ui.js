@@ -678,6 +678,52 @@
     'fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>' +
     "</svg>";
 
+  /* ── TWO SETTINGS PANELS, TWO NAMES, EACH POINTS TO THE OTHER ──────────
+   *
+   * Bean `ob3m` finding 12. Two unrelated panels were both called "Settings"
+   * and both wore a gear: the GLASS's (theme, avatars, opacity, blur) and the
+   * ▦ Actions launcher's (scheme, reading preferences, Discarded, Declared
+   * kinds). A reader wanting the Discarded fish who opened the glass one found
+   * nothing there and nothing saying where else to look.
+   *
+   * Owner, 2026-10-01, option 2 of 4: *"Rename: 'Glass settings' and 'Page
+   * settings', each with a link to the other."* The names live HERE, once,
+   * because each panel's cross-link names the OTHER panel — a rename made in
+   * one place only would leave a link announcing a panel that no longer
+   * exists under that name.
+   *
+   * The openers are a registry rather than a call from one mount into the
+   * other: the launcher and the glass mount independently, and a page with no
+   * sidebar (a replica, the harness page) has a glass and no launcher. A
+   * cross-link is drawn only when its target registered, so no link can open
+   * nothing — the `dh4f` rule for controls. */
+  var SETTINGS_NAMES = { page: "Page settings", glass: "Glass settings" };
+  var SETTINGS_SCOPES = {
+    page: "scheme, reading, Discarded",
+    glass: "theme, avatars, opacity, blur",
+  };
+  var settingsOpeners = { page: null, glass: null };
+
+  /**
+   * The link at the top of one settings panel that opens the other. A BUTTON:
+   * it opens a panel in place rather than navigating, so a link's semantics
+   * (and a middle-click that opens nothing) would be wrong. Null when the
+   * target is not on this page.
+   */
+  function settingsCrossLink(target, beforeOpen) {
+    if (!settingsOpeners[target]) return null;
+    var b = el("button", {
+      type: "button",
+      class: "fa-settings-crosslink",
+      "data-fa-settings-crosslink": target,
+    }, SETTINGS_NAMES[target] + " (" + SETTINGS_SCOPES[target] + ") →");
+    b.addEventListener("click", function () {
+      if (beforeOpen) beforeOpen();
+      settingsOpeners[target]();
+    });
+    return b;
+  }
+
   function storedPrefs() {
     try {
       var raw = localStorage.getItem(A11Y_KEY);
@@ -1869,6 +1915,12 @@
       built = true;
 
       var settings = el("div", { class: "fa-tile-content" });
+      // FIRST, above the scheme: a reader who came here for the glass's
+      // opacity is told where it is before reading anything else (`ob3m` 12).
+      // The launcher closes first, so focus lands on the glass panel's
+      // heading rather than staying behind in a sidebar the glass covers.
+      var toGlass = settingsCrossLink("glass", function () { open(false); });
+      if (toGlass) settings.appendChild(toGlass);
       settings.appendChild(buildThemeTile());
       settings.appendChild(buildReadingPrefs());
 
@@ -2105,7 +2157,14 @@
     if (searchHolder) {
       grid.appendChild(tileAction(SEARCH_GLYPH, "Search", revealSearch));
     }
-    grid.appendChild(tileButton(GEAR_GLYPH, "Settings", "settings"));
+    var pageSettingsTile = tileButton(GEAR_GLYPH, SETTINGS_NAMES.page, "settings");
+    grid.appendChild(pageSettingsTile);
+    // The glass's "Page settings →" lands HERE: the launcher opened and the
+    // view shown, the same two steps a reader takes by hand (`ob3m` 12).
+    settingsOpeners.page = function () {
+      if (host.getAttribute("data-open") !== "true") open(true);
+      showView("settings", SETTINGS_NAMES.page, pageSettingsTile);
+    };
     grid.appendChild(tileButton(GLOBE_GLYPH, "Language", "language"));
     // The encoder is a separate vendor script. Without it the OTHER tiles must
     // still work -- the old code returned early from the whole mount when it
@@ -6033,6 +6092,13 @@
     function buildSettings(body) {
       function save() { setGlassPrefs(prefs); applyGlassPrefs(layer, prefs); }
 
+      // FIRST: the way to the OTHER settings, where the Discarded fish and the
+      // reading preferences are (`ob3m` 12). The glass shuts first, because
+      // the launcher's panel lives in the sidebar and the open glass sits
+      // over it — a panel opened underneath the glass has not opened.
+      var toPage = settingsCrossLink("page", function () { setOpen(false); });
+      if (toPage) body.appendChild(toPage);
+
       function radioGroup(legend, name, options, current, onPick) {
         var fs = el("fieldset", { class: "fa-glass-setting" });
         fs.appendChild(el("legend", {}, legend));
@@ -6382,24 +6448,40 @@
     }
     chromeTile("glass-filter", "Filter", "\u25BD", "Filter your glass \u2014 by kind, by where it came from, or item by item", buildFilter);
 
-    // RENAMED 2026-10-01 on the owner's ruling — bean `ob3m` finding 12. Two
-    // unrelated controls were both called "Settings" and both wore a gear:
-    // this one, and the LAUNCHER's at `tileButton(GEAR_GLYPH, "Settings", …)`
-    // around line 2060, which is site chrome (theme, language, QR). Neither
-    // pointed at the other, so a reader met the same name twice for different
-    // things and a screen reader read them identically.
+    // NAMED FOR WHAT IT SETS — bean `ob3m` finding 12, owner's ruling
+    // 2026-10-01 (option 2 of 4): "Glass settings" here and "Page settings"
+    // on the ▦ launcher, each with a link to the other at the top of its
+    // panel. See `SETTINGS_NAMES` for why the names live in one place.
     //
-    // The label comes from this call's OWN title, which already said "Folio
-    // settings" — the rename recovers information the code held rather than
-    // inventing a distinction. The launcher's label is deliberately untouched:
-    // readers have already learned it, and only one of the two had to move.
+    // This SUPERSEDES the comment that stood here, which renamed only this
+    // tile ("Folio settings") and rejected cross-links as asserting "a
+    // relationship between site chrome and board state that does not exist".
+    // The relationship a reader needs is not between the settings but between
+    // the PLACES: someone looking for the Discarded fish in the wrong panel
+    // has to be told where the right one is. The owner chose the links.
+    //
+    // The TITLE leads with the name, because it is both the tile's accessible
+    // name and the panel's heading — a heading reading "Theme, avatars,
+    // opacity" under a tile captioned otherwise was a third name for it.
     //
     // The `id` stays `glass-settings`. Every glass test keys on
     // `data-fa-glass-chrome="glass-settings"` and `STRIP_DEFAULT` lists it, so
-    // the id is the contract and the label is the prose. Cross-linking the two
-    // panels was considered and rejected: it would assert a relationship
-    // between site chrome and board state that does not exist.
-    chromeTile("glass-settings", "Folio settings", "⚙", "Theme, avatars, opacity", buildSettings);
+    // the id is the contract and the label is the prose.
+    chromeTile("glass-settings", SETTINGS_NAMES.glass, "⚙",
+               SETTINGS_NAMES.glass + " \u2014 " + SETTINGS_SCOPES.glass, buildSettings);
+    // The Page settings' "Glass settings →" lands here: the glass pulled down
+    // and this panel open. Never a toggle — `openPanel` CLOSES a panel that is
+    // already open, and a link that sometimes shuts its own target is not a link.
+    settingsOpeners.glass = function () {
+      if (layer.getAttribute("data-fa-glass") !== "open") setOpen(true);
+      if (openPanelId === "glass-settings") {
+        var h = panel.querySelector(".fa-glass-panel-title");
+        if (h) h.focus();
+        return;
+      }
+      var d = chromeDefs["glass-settings"];
+      openPanel("glass-settings", d.title, d.build);
+    };
 
     /* ── HARNESSES — the config panel, issue #1146 ────────────────────────
      *

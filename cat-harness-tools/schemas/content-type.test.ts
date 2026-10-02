@@ -26,12 +26,12 @@ import {
   ContentTypeConflictError,
   ContentTypeRegistry,
   describeRepository,
-} from "./content-type";
-import { registerBaseContentTypes } from "./content-types-base";
-import { registerDakContentTypes } from "./dak-content-type";
-import { describeRepositoryClosure } from "./harness-config";
-import { writeInstanceConfig } from "../test/support/instance-fixture.js";
-import {  } from "./cat-harness.js";
+} from "../../cat-harness/schemas/content-type";
+import { registerBaseContentTypes } from "../../cat-harness/schemas/content-types-base";
+import { registerDakContentTypes } from "../../cat-harness/schemas/dak-content-type";
+import { describeRepositoryClosure } from "../../cat-harness/schemas/harness-config";
+import { writeInstanceConfig } from "../../cat-harness/test/support/instance-fixture.js";
+import {  } from "../../cat-harness/schemas/cat-harness.js";
 
 const roots: string[] = [];
 afterEach(() => {

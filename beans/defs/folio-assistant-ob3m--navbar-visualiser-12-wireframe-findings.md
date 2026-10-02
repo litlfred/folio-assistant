@@ -306,6 +306,13 @@ Owner: "keep going". On `claude/quirky-hypatia-k3aoh4` (PR #1762).
 Still open here: 1, 3 (sticky half), 6, 7, 12 (needs an editorial call: rename or cross-link the two Settings).
 
 
+_2026-10-01_ — **Finding 12: owner's ruling implemented, in PR #1810 (stacked on #1762).** Owner, choosing option 2 of 4: *"Rename: 'Glass settings' and 'Page settings', each with a link to the other."*
+
+- The glass ⚙ panel is now **Glass settings**: its caption and heading read "Glass settings — theme, avatars, opacity, blur" (the heading used to be "Theme, avatars, opacity"). The ▦ Actions panel is now **Page settings**, in its caption and view heading. Both names come from `SETTINGS_NAMES` in docs-ui.js, declared once.
+- Each panel's first control links to the other: "Page settings (scheme, reading, Discarded) →" and "Glass settings (theme, avatars, opacity, blur) →". Each link OPENS its target: it closes the panel it came from (the glass covers the sidebar), never toggles an already-open target shut, and focuses the target's heading. On a page with no launcher (replica, harness page) the glass draws no Page settings link.
+- **After state, measured on a local build** at 1280×800 and at 390×844: page→glass gives glass open with the glass-settings panel visible, and glass→page gives the launcher open with the "Page settings" heading visible and in the viewport.
+- Tests: `test/settings-crosslinks.e2e.ts` (10/10 pass; 9/10 fail on #1762's head) and `scripts/tests/settings-labels-distinct.test.ts` (6/6 pass; 5/6 fail on the head). Skill: `board-windows` §"Two settings panels, two names, each points to the other".
+- Found, not fixed (also on the head): at 1280×800 the glass panel opens at y≈591, and most of its body sits under the bottom tile strip until the glass is scrolled.
 
 ## 2026-10-01 — finding 1: the owner's ruling, implemented (PR #1805, stacked on #1762)
 

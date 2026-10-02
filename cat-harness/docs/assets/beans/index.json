@@ -2,7 +2,7 @@
   "$schema": "folio-bean-index/v1",
   "tile": {
     "beans": {
-      "count": 605,
+      "count": 606,
       "unit": "beans"
     }
   },
@@ -7953,6 +7953,20 @@
       "updatedAt": "2026-09-22T21:04:32Z",
       "preview": "**Why.** Every child can pass on a ten-block fixture and fall over on a real\nhandbook. Performance, the heat map's legibility at 2,000 cells and the\nnavigation's usefulness can only be judged at scale.\n\n**Candidates, measured 2026-09-22:**\n- `smart-immunizations/`: 748 artefacts indexed, 200 materialised. It is\n  **provisional** (nsbb may remove it) and deliberately renders no HTML, so it\n  can on",
       "file": "beans/defs/folio-assistant-xp72--scale-fixture-a-beforeafter-large-document-pair-wi.md"
+    },
+    {
+      "id": "folio-assistant-xpcu",
+      "title": "REGEN + GATES SPEED-UP: input-hash staleness skipping and a parallel worker pool for regen-after-merge and gates",
+      "status": "in-progress",
+      "type": "feature",
+      "priority": "high",
+      "parent": "folio-assistant-7x5n",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-10-01T17:26:24Z",
+      "updatedAt": "2026-10-01T17:26:36Z",
+      "preview": "## Why\n\nMeasured by the steward: `bun run regen` runs ~83 check/writer pairs serially\nvia `spawnSync`, up to 3 passes, ~25 min locally. `bun run gates` takes >50 min\nlocally. The box has 4 CPUs shared with other sessions.\n\n## What (owner-approved, 2026-10-01)\n\n1. **Input-hash staleness skipping** in regen: hash each pair's declared inputs\n   plus its script source; skip when it matches the hash re",
+      "file": "beans/defs/folio-assistant-xpcu--regen-gates-speed-up-input-hash-staleness-skipping.md"
     },
     {
       "id": "folio-assistant-xsqm",
