@@ -110,8 +110,9 @@ evidence that a split is doing work.
 
 ## Upgrading to the overlay
 
-An IG that wants the DAK surface does not change this pipeline; it instantiates
-`smart-dak` and gets the pre/post steps as an **overlay**. The base takes no
+An IG that wants the DAK surface does not change this pipeline; the WHO harness
+above it (smart-base, whose DAK document kind carries the pre/post steps)
+supplies them as an **overlay**. The base takes no
 position on whether an overlay exists, and must not gain a flag for one — a
 `do_dak` input at this layer would be this layer knowing about DAKs.
 

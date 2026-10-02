@@ -16,6 +16,7 @@ Part of [C@T Harness](../../README.md) 0.1.0, declared as `qa`, holding `qa`.
 | [`kg-qa.manifest.json`](kg-qa.manifest.json) | data |  |
 | [`lane-documentation.qa-results.json`](lane-documentation.qa-results.json) | data |  |
 | [`layout-norms.qa-results.json`](layout-norms.qa-results.json) | data |  |
+| [`library-entry-qa.qa-results.json`](library-entry-qa.qa-results.json) | data |  |
 | [`lsi-need-an-index.qa-results.json`](lsi-need-an-index.qa-results.json) | data |  |
 | [`methodology-evidence.qa-results.json`](methodology-evidence.qa-results.json) | data |  |
 | [`reference-direction.qa-results.json`](reference-direction.qa-results.json) | data |  |
@@ -31,8 +32,8 @@ Part of [C@T Harness](../../README.md) 0.1.0, declared as `qa`, holding `qa`.
 | [`bootstrap/`](bootstrap/) | 22 files | |
 | [`bootstrap-tools/`](bootstrap-tools/) | 7 files | |
 | [`cat-harness-tools/`](cat-harness-tools/) | 2 files | |
-| [`detangle/`](detangle/) | 61 files | |
-| [`kg-qa/`](kg-qa/) | 495 files | |
+| [`detangle/`](detangle/) | 62 files | |
+| [`kg-qa/`](kg-qa/) | 497 files | |
 | [`large-datasets/`](large-datasets/) | 2 files | |
 | [`library-qa/`](library-qa/) | 63 files | |
 | [`lsi/`](lsi/) | 4 files | |
