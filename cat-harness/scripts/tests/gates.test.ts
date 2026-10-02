@@ -13,6 +13,7 @@ import { tmpdir } from "node:os";
 import { join, resolve } from "node:path";
 
 import {
+  carriesUnexpandedVariable,
   GATES_WORKFLOW,
   NoCheckScriptsFound,
   NoGatesFound,
@@ -22,7 +23,10 @@ import {
   commandRunsScript,
   commandsCiRuns,
   gatesFrom,
+  runnableGatesFrom,
+  unresolvedGatesFrom,
   loadGates,
+  loadUnresolved,
   otherWorkflowSteps,
   scriptExemptionFor,
   unclassifiedSteps,
@@ -223,7 +227,17 @@ describe("a strict reader and a loose one agree", () => {
     // with the strict one about the half it never looked at. The floor below
     // is what turned that into a failure instead of a green cross-check.
     const loose = [...yaml.matchAll(/^\s*(?:run:\s*)?(bunx? .+?)\s*$/gm)].map((m) => m[1]!);
-    const found = new Set(loadGates(ROOT, { all: true }).map((g) => g.command));
+    // ACCOUNTED FOR, not merely runnable. `loadGates` is the runner's list and
+    // deliberately omits commands carrying a shell variable this reader
+    // discarded (bean `9zok`); those are REPORTED instead, so the property
+    // this test guards is that every loose-scanned line lands in one of the
+    // two — never in neither. Comparing against `loadGates` alone would have
+    // made a deliberate, printed omission look identical to the silent drop
+    // this test exists to catch, which is the distinction it is for.
+    const found = new Set([
+      ...loadGates(ROOT, { all: true }).map((g) => g.command),
+      ...loadUnresolved(ROOT, { all: true }).map((g) => g.command),
+    ]);
     expect(loose.filter((c) => !found.has(c))).toEqual([]);
     // And the guard is not vacuous — a loose scan that matched nothing would
     // pass the filter above while proving nothing at all.
@@ -362,5 +376,84 @@ describe("every check script is accounted for — the direction nothing asked", 
     } finally {
       rmSync(root, { recursive: true, force: true });
     }
+  });
+});
+
+describe("a command whose shell variable this reader discarded is NOT a gate", () => {
+  // Bean `9zok`. The extraction keeps `bun …` lines and drops the shell that
+  // gave them their variables, so a command referencing one was being run with
+  // the variable's NAME. Measured: that made `bun run gates` report `✗ 1 of
+  // 210` on a clean tree, which made the STRICT pre-push rule in `AGENTS.md`
+  // unsatisfiable on every branch.
+  const WORKFLOW = `name: w
+on: [push]
+jobs:
+  gates:
+    runs-on: ubuntu-latest
+    steps:
+      - name: catalogue
+        run: |
+          base="$(git merge-base origin/main HEAD)"
+          bun run translation:catalogue:check
+          bun run translation:catalogue:check -- --base "$base"
+`;
+
+  test("it is diverted out of the RUNNABLE set, and only that set", () => {
+    // `gatesFrom` still carries it, deliberately. That function answers "what
+    // does CI run", which `unclassifiedSteps` and the `STEP_EXEMPTIONS`
+    // staleness check both read — filtering there made 14 exemptions look
+    // stale and asserted something false about CI, which is how the first
+    // draft of this fix was caught.
+    expect(gatesFrom(WORKFLOW, { all: true }).map((g) => g.command)).toContain(
+      'bun run translation:catalogue:check -- --base "$base"',
+    );
+    const runnable = runnableGatesFrom(WORKFLOW, { all: true }).map((g) => g.command);
+    expect(runnable).toContain("bun run translation:catalogue:check");
+    expect(runnable).not.toContain('bun run translation:catalogue:check -- --base "$base"');
+  });
+
+  test("the two sets PARTITION the extraction — nothing falls out of both", () => {
+    const all = gatesFrom(WORKFLOW, { all: true }).map((g) => g.command).sort();
+    const split = [
+      ...runnableGatesFrom(WORKFLOW, { all: true }),
+      ...unresolvedGatesFrom(WORKFLOW, { all: true }),
+    ]
+      .map((g) => g.command)
+      .sort();
+    expect(split).toEqual(all);
+  });
+
+  test("and reported rather than dropped — the whole point", () => {
+    // A silent skip and a pass are indistinguishable from the exit code, which
+    // is this file's own `NoGatesFound` doctrine applied one command at a time.
+    const skipped = unresolvedGatesFrom(WORKFLOW, { all: true }).map((g) => g.command);
+    expect(skipped).toEqual(['bun run translation:catalogue:check -- --base "$base"']);
+  });
+
+  test("the script keeps its coverage, because CI invokes it BOTH ways", () => {
+    // The reason skipping is safe here rather than merely convenient: the bare
+    // invocation is in the same workflow and is still extracted. If that ever
+    // stops being true this test fails, which is the point of asserting it
+    // rather than noting it in a comment.
+    const runnable = runnableGatesFrom(WORKFLOW, { all: true }).map((g) => g.command);
+    expect(runnable.filter((c) => c.includes("translation:catalogue"))).toHaveLength(1);
+  });
+
+  test("the predicate catches both spellings and leaves ordinary commands alone", () => {
+    expect(carriesUnexpandedVariable('bun run x -- --base "$base"')).toBe(true);
+    expect(carriesUnexpandedVariable("bun run x -- --base ${BASE}")).toBe(true);
+    expect(carriesUnexpandedVariable("bun run gates --all")).toBe(false);
+    // A literal dollar that is not a variable reference must not be caught.
+    expect(carriesUnexpandedVariable("bun run x -- --label '$'")).toBe(false);
+  });
+
+  test("the real workflow carries exactly one, and it is that one", () => {
+    // Pinned deliberately: if a second appears, somebody has written another
+    // command this tool silently will not run, and that should be a decision
+    // rather than a discovery.
+    const real = readFileSync(resolve(import.meta.dir, "../../..", GATES_WORKFLOW), "utf-8");
+    const skipped = unresolvedGatesFrom(real, { all: true });
+    expect(skipped).toHaveLength(1);
+    expect(skipped[0]?.command).toContain("translation:catalogue:check");
   });
 });

@@ -6,6 +6,7 @@ type: task
 priority: normal
 created_at: 2026-10-02T22:16:12Z
 updated_at: 2026-10-02T22:16:33Z
+parent: folio-assistant-1xhc
 ---
 
 

@@ -90,7 +90,7 @@ than one large one.
 | **R1** | the board renders content, not only notes | no — a second rendering of an existing relation |
 | **R2** | semantic zoom, with the threshold **declared** rather than a literal | **yes — the only one** |
 | **R3** | `targetLabel` publishes its parts | no — a bug fix |
-| **R4** | linear collapse, reachable without JavaScript | no, but it constrains R1 |
+| **R4** | linear collapse, reachable without XSS (RELAXED 2026-10-02) | no, but it constrains R1 |
 | **R5** | the badge counts only when `> 1` | no — two lines |
 | **R6** | badge and panel stay **one** query | no — a regression test for something already true |
 | **R7** | badges on avatars | no — R2 plus R6 |
@@ -137,10 +137,61 @@ never parsing, which is exactly why it went unnoticed.
 
 ### R4 — the linear floor
 
-The board SHALL always be collapsible to a linear rendering that works without
-JavaScript. Movement SHALL be **keyboard-operable**; drag MAY be an accelerator
-and SHALL NOT be the only way in — this instance's declared interaction profile
-is low-dexterity.
+As agreed, R4 read *reachable without JavaScript*. The board SHALL always be
+collapsible to a linear rendering; movement SHALL be **keyboard-operable**,
+and drag MAY be an accelerator but SHALL NOT be the only way in — this
+instance's declared interaction profile is low-dexterity.
+
+> **RELAXED by the owner, 2026-10-02**, verbatim:
+>
+> > relax..."reachable without JavaScript" to "reachable without XSS"
+>
+> So the floor is no longer *no JavaScript*. It is **no injected script**: the
+> board's linear rendering MAY fetch and build its content client-side, and
+> MUST NOT be reachable by anything that executes markup it did not author.
+>
+> **What the relaxation does NOT touch**, because the same paragraph states
+> them independently: movement stays keyboard-operable, and drag stays an
+> accelerator rather than the only way in. No byte-count argument reaches the
+> interaction profile.
+
+**The subject of that sentence is the board**, and saying so is a correction
+rather than a clarification. The relaxation was first recorded here with the
+measurement that prompted it — the docs site's `<nav>`, 87.7 KB of identical
+bytes in each of 2,023 published pages — presented as the reason a *board*
+requirement had to move. It was not. Three facts settled it on 2026-10-02:
+
+- **this document is not instruction** — §"What this is, and what it is not"
+  says so in the owner's own ruling, and the rules an agent follows live in
+  the `cat-harness` skills this set produced;
+- **the skill that does bind the docs site is**
+  [`ui-accessibility`](https://litlfred.github.io/folio-assistant/reference/skill-instructions/ui-accessibility.html),
+  which binds "the knowledge-graph viewer, the docs site, the action-icon
+  tiles, anything future" to WCAG 2.2 A/AA, keyboard reachability, 24 px
+  targets, computed contrast, visible focus and announced change — **and
+  carries no no-JavaScript clause**, because WCAG imposes none;
+- **the docs navbar already requires JavaScript.** `mountNavIconRow`,
+  `mountDocumentIndex` and `mountInstanceGraphs` build three of its regions in
+  the DOM at load, shipped in #959, and no gate objects.
+
+So the docs nav never stood on R4 and needed no relaxation to be loaded once.
+What the relaxation *does* reach is the artefact R4 names: the board's linear
+floor is the todo listing, and `cat-harness/test/linear-floor.e2e.ts` is five
+`javaScriptEnabled: false` assertions over it. Relaxing R4 permits converting
+that listing to a fetch; it does not decide whether to, and the test's header
+records what the static floor cost to build (bean `0jtj`: with JavaScript off,
+a reader previously got "no note, no count, no hint that notes exist").
+
+**The two obligations a client-side rendering owes are rules, so they live in
+the skill** — print and PDF wait for load and render before printing; a load
+that fails says so rather than rendering as empty. Both were stated by the
+owner the same day, and both were first written *here*, in a document that
+disclaims being instruction, where nothing enforces them and no agent looking
+for the rule would find them. They are in
+[`ui-accessibility`](https://litlfred.github.io/folio-assistant/reference/skill-instructions/ui-accessibility.html)
+§"A rendering built client-side owes two things the static one gave for free",
+with the measurements and the `console.warn` trap. This entry is the history of
+how they arrived, which is all this file is for.
 
 ### R5 to R7 — the badge
 

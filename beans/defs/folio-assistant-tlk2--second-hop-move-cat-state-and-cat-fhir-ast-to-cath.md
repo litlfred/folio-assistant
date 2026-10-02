@@ -95,7 +95,9 @@ The family dry runs (2 and 3) must list exactly ONE branch each.
 - [x] `cat/fhir-harness/fhir-ast/smart.who.int.base` at `eb7bed8395af`, and no `cat-fhir-ast/smart.who.int.base`
 - [ ] the coordinator has verified and closed it
 
-## Evidence (2026-10-02 21:36–21:40 UTC)
+## Evidence
+
+_Applied 2026-10-02 21:36–21:40 UTC._
 
 Steps 2+3 gate was overridden by the owner (direct `Do bean` directive).
 SSH override: `RENAME_SPECIAL_BRANCH_URL` used for all three.
