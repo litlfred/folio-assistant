@@ -36,5 +36,6 @@ Part of [C@T Harness](../README.md) 0.1.0, declared as `library`, holding `libra
 | [`w3c-2013-prov-o/`](w3c-2013-prov-o/README.md) | 105 files | |
 | [`w3c-2018-odrl-model-2-2/`](w3c-2018-odrl-model-2-2/README.md) | 206 files | |
 | [`w3c-2020-json-ld-1-1/`](w3c-2020-json-ld-1-1/README.md) | 501 files | |
+| [`w3c-2024-prov-jsonld/`](w3c-2024-prov-jsonld/README.md) | 220 files | |
 | [`wang-rangaiah-2026-mcdm-aggregation/`](wang-rangaiah-2026-mcdm-aggregation/README.md) | 138 files | |
 <!-- kg:subgraph:end -->
