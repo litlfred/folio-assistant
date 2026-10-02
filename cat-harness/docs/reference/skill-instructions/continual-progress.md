@@ -278,8 +278,8 @@ have seen it (bean `391j`).
 
 | process | step(s) that name it |
 |---|---|
+| [KG to public portal](../../processes/kg-to-portal.html) | Human eyes on the rendered artefact |
 | [Actor and role administration](../../processes/actor-role-administration.html) | Branch, gates, PR and review (calls a sub-process) |
 | [Code change and review](../../processes/code-change-review.html) | Make the change; Commit, push, open the PR |
-| [KG to public portal](../../processes/kg-to-portal.html) | Human eyes on the rendered artefact |
 | [Merge the base branch in](../../processes/merge-base.html) | Commit the merge |
 

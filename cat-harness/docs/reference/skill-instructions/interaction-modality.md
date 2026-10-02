@@ -13,7 +13,7 @@ parent: Skill instructions
 {% raw %}
 # /interaction-modality — ask in a form the person can answer
 
-Process: [`processes/getting-started.bpmn`](../../processes/getting-started.html),
+Process: [`folio-assistant-core/processes/conduct/getting-started.bpmn`](../../processes/getting-started.html),
 `Task_DetectModality` and `Task_AskIntent`.
 Preferences: `interaction/interaction.json` (committed, read at session start).
 
@@ -580,6 +580,6 @@ reader's font choice silently reconfiguring how an agent talks to the author.
 
 | process | step(s) that name it |
 |---|---|
-| [Getting started](../../processes/getting-started.html) | Detect the interaction modality; Choose from the offered options |
 | [Session state machine](../../processes/session-state-machine.html) | Ask who is acting |
+| [Getting started](../../processes/getting-started.html) | Detect the interaction modality; Choose from the offered options |
 

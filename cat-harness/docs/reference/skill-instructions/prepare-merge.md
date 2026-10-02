@@ -470,9 +470,9 @@ harness git instructions). Do not include the model identifier in the PR.
 | process | step(s) that name it |
 |---|---|
 | [Actor and role administration](../../processes/actor-role-administration.html) | Branch, gates, PR and review (calls a sub-process) |
-| [Code change and review](../../processes/code-change-review.html) | Prepare the merge, and watch it through (calls a sub-process) |
-| [Content Change and Review](../../processes/content-change-review.html) | Merge, on explicit confirmation |
 | [CRDM Phase 6 — implement, MVP, acceptance](../../processes/crdm-deliver.html) | Phase 6: Implement (feature branch + PR) |
+| [Code change and review](../../processes/code-change-review.html) | Prepare the merge, and watch it through (calls a sub-process) |
 | [Merge the base branch in](../../processes/merge-base.html) | Merge the base in, without committing; Regenerate, asking every CI gate; Resolve by hand, then regenerate |
 | [Adopting an upstream version bump](../../processes/upstream-version-adoption.html) | Move the pin and open the PR |
+| [Content Change and Review](../../processes/content-change-review.html) | Merge, on explicit confirmation |
 

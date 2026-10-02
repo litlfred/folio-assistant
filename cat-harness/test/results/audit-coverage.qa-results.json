@@ -10,8 +10,8 @@
   },
   "families": {
     "coverage-measured": {
-      "summary": "Every declared kind with its four counts and its state. Not findings: the measurement itself, so the committed record answers \"what audits this kind\" without rerunning anything. The file COUNTS are printed rather than recorded — a census moves on any commit and a gate keyed on it is stale by default; `hasFiles` carries the only thing it decides. 51 of 51 declared kind(s), 211 gate(s), 73 criteria.",
-      "count": 51,
+      "summary": "Every declared kind with its four counts and its state. Not findings: the measurement itself, so the committed record answers \"what audits this kind\" without rerunning anything. The file COUNTS are printed rather than recorded — a census moves on any commit and a gate keyed on it is stale by default; `hasFiles` carries the only thing it decides. 50 of 50 declared kind(s), 210 gate(s), 73 criteria.",
+      "count": 50,
       "entries": [
         {
           "kind": "bean-defs",
@@ -36,18 +36,6 @@
           "hasFiles": false
         },
         {
-          "kind": "bean-notes",
-          "state": "no-directory",
-          "directories": [],
-          "criteria": [],
-          "subjectKinds": [],
-          "gates": [
-            "bun run beans:notes:check"
-          ],
-          "typed": false,
-          "hasFiles": false
-        },
-        {
           "kind": "beans",
           "state": "covered",
           "directories": [
@@ -56,7 +44,6 @@
           "criteria": [],
           "subjectKinds": [],
           "gates": [
-            "bun run beans:notes:check",
             "bun run check:bean-archive",
             "bun run check:bean-bodies",
             "bun run check:bean-front-matter",
@@ -578,7 +565,9 @@
             "bootstrap-tools/processes",
             "bootstrap/processes",
             "cat-harness/processes",
+            "fhir-harness/processes",
             "folio-assistant-core/processes",
+            "folio-assistant-sci/processes",
             "smart-base/methodologies/processes",
             "smart-base/processes"
           ],
@@ -1093,7 +1082,7 @@
     },
     "kinds-no-directory": {
       "summary": "No instance declares a directory of this kind — a nested kind reached through its parent (`bean-defs` inside `beans/`), or one this repository does not have. Recorded so it cannot be read as a coverage gap, and so a kind that LOSES its directory shows up.",
-      "count": 16,
+      "count": 15,
       "entries": [
         {
           "kind": "bean-defs",
@@ -1110,13 +1099,6 @@
             "bun run check:bean-rollup",
             "bun run check:ready-to-close",
             "bun run check:stale-paths"
-          ]
-        },
-        {
-          "kind": "bean-notes",
-          "criteria": 0,
-          "gates": [
-            "bun run beans:notes:check"
           ]
         },
         {
@@ -1205,10 +1187,10 @@
       "entries": []
     },
     "kinds-unaudited": {
-      "summary": "A declared kind whose directories hold files that NOTHING reaches — no kg-audit criterion, no gate declaring @covers, and no declared validator. All 211 gate(s) have declared, so this is a verdict rather than an upper bound (bean `3srh`).",
+      "summary": "A declared kind whose directories hold files that NOTHING reaches — no kg-audit criterion, no gate declaring @covers, and no declared validator. All 210 gate(s) have declared, so this is a verdict rather than an upper bound (bean `3srh`).",
       "count": 0,
       "entries": []
     }
   },
-  "total": 67
+  "total": 65
 }
