@@ -5,7 +5,7 @@
     "id": "ig-cache",
     "path": null
   },
-  "source_hash": "55f6678a2976",
+  "source_hash": "7cd3a04a1e0a",
   "criteria": {
     "tool-invoke-path-resolves": {
       "result": "pass",
@@ -24,8 +24,13 @@
       "findings": []
     },
     "tool-args-shell-safe": {
-      "result": "pass",
-      "findings": []
+      "result": "fail",
+      "findings": [
+        {
+          "where": "ig-cache",
+          "detail": "command-line input \"remote\" is Text, which can carry a shell payload"
+        }
+      ]
     },
     "tool-alternative-selectable": {
       "result": "n/a",
@@ -41,8 +46,8 @@
     }
   },
   "totals": {
-    "pass": 5,
-    "fail": 0,
+    "pass": 4,
+    "fail": 1,
     "n/a": 3,
     "unknown": 0
   }

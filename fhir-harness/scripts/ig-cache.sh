@@ -5,8 +5,8 @@
 # USAGE
 #   scripts/ig-cache.sh status     [--ig-root DIR]
 #   scripts/ig-cache.sh restore    [--ig-root DIR] [--package NAME] [--branch BR]
-#   scripts/ig-cache.sh seed       [--ig-root DIR] [--package NAME] [--branch BR] [--push] [--force]
-#   scripts/ig-cache.sh contribute [--ig-root DIR] [--package NAME] [--force]
+#   scripts/ig-cache.sh seed       [--ig-root DIR] [--package NAME] [--branch BR] [--remote REM] [--push] [--force]
+#   scripts/ig-cache.sh contribute [--ig-root DIR] [--package NAME] [--remote REM] [--force]
 #   scripts/ig-cache.sh verify     [--ig-root DIR]
 #   scripts/ig-cache.sh doctor     [--ig-root DIR]
 #   scripts/ig-cache.sh list
@@ -40,6 +40,7 @@ CMD="${1:-}"; shift || true
 IG_ROOT=""
 PACKAGE=""
 BRANCH=""
+REMOTE="origin"
 PUSH=0
 FORCE=0
 
@@ -48,6 +49,7 @@ while [ $# -gt 0 ]; do
     --ig-root) IG_ROOT="${2:-}"; shift 2 ;;
     --package) PACKAGE="${2:-}"; shift 2 ;;
     --branch)  BRANCH="${2:-}"; shift 2 ;;
+    --remote)  REMOTE="${2:-}"; shift 2 ;;
     --push)    PUSH=1; shift ;;
     --force)   FORCE=1; shift ;;
     -h|--help) CMD="help"; shift ;;
@@ -83,7 +85,7 @@ resolve_package() {
 }
 
 cmd_list_names() {
-  git ls-remote --heads origin 'refs/heads/fhir-ast/*' | sed -n 's#^.*refs/heads/\(.*\)$#\1#p'
+  git ls-remote --heads "$REMOTE" 'refs/heads/fhir-ast/*' | sed -n 's#^.*refs/heads/\(.*\)$#\1#p'
 }
 
 count_resources() {
@@ -136,8 +138,8 @@ cmd_restore() {
   printf 'restoring %s -> %s\n' "$br" "$out"
   
   git update-ref -d "$PRIVATE_REF" 2>/dev/null || true
-  if ! git fetch --depth=1 origin "+$br:$PRIVATE_REF" 2>/dev/null; then
-    warn "cache branch '$br' not found on origin."
+  if ! git fetch --depth=1 "$REMOTE" "+$br:$PRIVATE_REF" 2>/dev/null; then
+    warn "cache branch '$br' not found on $REMOTE."
     info "A build is required. Afterwards run: $PROG seed"
     return 1
   fi
@@ -195,7 +197,7 @@ would_shrink() {
   local br="$1" cand_res="$2" cand_edges="$3"
   local ref="refs/ig-cache-prevcheck"
   git update-ref -d "$ref" 2>/dev/null || true
-  timeout 60 git fetch --depth=1 --filter=blob:none -q origin "+$br:$ref" 2>/dev/null || return 1
+  timeout 60 git fetch --depth=1 --filter=blob:none -q "$REMOTE" "+$br:$ref" 2>/dev/null || return 1
   local msg; msg=$(git log -1 --format=%s "$ref" 2>/dev/null)
   git update-ref -d "$ref" 2>/dev/null || true
   
@@ -263,7 +265,7 @@ cmd_seed() {
     tree=$(git write-tree) || die "git write-tree failed"
     local commit
     commit=$(git commit-tree "$tree" -m "$subj") || die "git commit-tree failed"
-    git push -f origin "$commit:refs/heads/$br" >/dev/null 2>&1 || die "push failed"
+    git push -f "$REMOTE" "$commit:refs/heads/$br" >/dev/null 2>&1 || die "push failed"
     printf '\npushed %s (%s resources, %s edges)\n' "$br" "$n" "$edges"
   else
     printf '\nFiles written to %s\n' "$tmp"
