@@ -18,7 +18,8 @@
  * the kind, and resolving them against `smart-dak/` reported "does not exist".
  * Both halves are asserted here, over the REAL corpus, because the question is
  * whether the committed sidecars a reader picks up parse — not whether a
- * fixture does.
+ * fixture does. `smart-dak` was retired since (D3, `26eabf673`), so the
+ * nested example below is `smart-base`'s sidecar at the same relative path.
  *
  * ## Anti-vacuity
  *
@@ -59,8 +60,8 @@ function sidecarsByInstance(): Map<string, string[]> {
 
 describe("kg:validate over nested instances (bean `676g`)", () => {
   test("a path is owned by the DEEPEST instance that contains it", () => {
-    expect(owningInstanceRoot(join(REPO, "smart-dak/test/results/kg-qa/scenarios/kg.kg-qa.json"), HARNESS)).toBe(
-      join(REPO, "smart-dak"),
+    expect(owningInstanceRoot(join(REPO, "smart-base/test/results/kg-qa/scenarios/kg.kg-qa.json"), HARNESS)).toBe(
+      join(REPO, "smart-base"),
     );
     expect(owningInstanceRoot(join(HARNESS, "test/results/kg-qa.manifest.json"), HARNESS)).toBe(HARNESS);
     // A file in no nested instance belongs to the instance AT the checkout root.
@@ -70,12 +71,12 @@ describe("kg:validate over nested instances (bean `676g`)", () => {
   test("resolving against the auditor's own instance — the old behaviour — refuses a nested sidecar", async () => {
     // The falsifier: proves the sweep below is not passing for a reason that
     // has nothing to do with ownership.
-    const nested = join(REPO, "smart-dak/test/results/kg-qa/scenarios/kg.kg-qa.json");
+    const nested = join(REPO, "smart-base/test/results/kg-qa/scenarios/kg.kg-qa.json");
     expect(existsSync(nested), "fixture sidecar moved — pick another nested one").toBe(true);
     expect((await validatePath(nested, HARNESS)).state).toBe("undetermined");
     // ...and a nested owner with the nested root as SCHEMA root is the second half.
-    expect((await validatePath(nested, join(REPO, "smart-dak"))).state).toBe("undetermined");
-    expect((await validatePath(nested, join(REPO, "smart-dak"), HARNESS)).state).toBe("valid");
+    expect((await validatePath(nested, join(REPO, "smart-base"))).state).toBe("undetermined");
+    expect((await validatePath(nested, join(REPO, "smart-base"), HARNESS)).state).toBe("valid");
   });
 
   test("every committed kg-audit sidecar, in every instance, validates", async () => {
