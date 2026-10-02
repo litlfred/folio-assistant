@@ -106,13 +106,18 @@ jobs:
     runs-on: ubuntu-latest
     # Serialise on the CONTENDED RESOURCE — `gh-pages` — not on the branch.
     #
-    # `docs-site` pushes to the same `gh-pages` ref that
-    # `feature-staging` does, and a concurrency group serialises only the jobs
-    # that NAME it. `eoix` gave the group to `feature-staging`'s two jobs and
-    # stopped there, so this workflow was still free to race them — which is
-    # what PR #297 hit on 2026-09-18: `! [remote rejected] gh-pages -> gh-pages
-    # (cannot lock ref ... is at 0779d88f but expected f885578d)`, after a full
-    # site build.
+    # A concurrency group serialises only the jobs that NAME it. This one
+    # queues `docs-site` against `publish.yml`'s deploy, the other job that
+    # names `gh-pages-push`. It does NOT queue it against `feature-staging`:
+    # that workflow left the group after `eoix` (a PENDING job is cancelled by
+    # the next arrival, which silently dropped previews) and relies on a retry
+    # instead — and since issue #1868 it does not write `gh-pages` at all; its
+    # previews go to their own branch (`scripts/preview-target.ts`). The
+    # remaining ungrouped writers (`discoverability-docs`, among others) are
+    # covered here by `publish-gh-pages.sh`'s re-read-and-rebuild retry, not by
+    # this group. The race it was first added for: PR #297 on 2026-09-18,
+    # `! [remote rejected] gh-pages -> gh-pages (cannot lock ref ... is at
+    # 0779d88f but expected f885578d)`, after a full site build.
     #
     # `cancel-in-progress: false` is load-bearing and is the same reasoning as
     # `eoix`: a pending run that a later arrival cancels is a DEPLOY SILENTLY
@@ -666,6 +671,20 @@ jobs:
 
       # CARRY THE OPEN PRs' REVIEW PREVIEWS ACROSS THIS DEPLOY — bean `plj1`.
       #
+      # ── SUPERSEDED FOR THE PREVIEWS by issue #1868 (2026-10). ──
+      # Carrying every open PR's `STAGING/<slug>/` here is what took `gh-pages`
+      # past GitHub Pages' 10 GB artifact limit (~27 GB of previews against a
+      # ~0.3 GB site) and froze the live site on 2026-10-01. Previews are now
+      # written by `feature-staging.yml` to their OWN branch, `gh-pages-staging`
+      # (configured in ONE place: `cat-harness/scripts/preview-target.ts`),
+      # which nothing serves — so `gh-pages` holds the main site only, and
+      # **previews are stored, not web-served**, until #1868's hosting decision.
+      # The publish below therefore restores with `--carried-only`: the
+      # branch's own records (`_render-log/`, `STAGING/_retired/`) are still
+      # carried and verified; leftover previews are dropped from the tip (they
+      # stay in the branch's history). The reasoning below is kept because it
+      # still governs those records.
+      #
       # The publish step below is a FULL REPLACE: `peaceiris/actions-gh-pages`
       # with `keep_files` unset clones `gh-pages`, runs
       # `git rm -r --ignore-unmatch '*'` over the whole branch and copies
@@ -747,6 +766,10 @@ jobs:
           PAGES_DIR: ./pages
         run: bash cat-harness/scripts/publish-gh-pages.sh
 
+      # Since #1868 the restore records NO previews (`--carried-only`), so this
+      # step checks the carried records only — still worth a step: a full
+      # replace that loses `_render-log/` loses something nothing can rebuild.
+      #
       # A GREEN DEPLOY IS NOT EVIDENCE HERE — that is the whole shape of `plj1`,
       # where every push succeeded and the artefact was gone anyway. So the
       # previews are checked against the branch AFTER the push, from what the

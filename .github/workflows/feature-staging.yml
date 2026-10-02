@@ -1,9 +1,26 @@
 # bpmn: cat-harness/processes/feature-staging.bpmn
 name: Feature Staging (GitHub Pages)
 
-# Deploy feature-branch rendered content to gh-pages under STAGING/<branch>/
-# so reviewers can preview changes at:
-#   https://<user>.github.io/<repo>/STAGING/<branch-slug>/
+# Build feature-branch rendered content and store it under STAGING/<slug>/ on
+# the PREVIEW BRANCH — `gh-pages-staging` — not on `gh-pages`.
+#
+# ## PREVIEWS ARE STORED, NOT SERVED — issue #1868 (2026-10)
+#
+# Until 2026-10 the previews went to `gh-pages` and were served at
+# `https://<user>.github.io/<repo>/STAGING/<slug>/`. `gh-pages` is deployed
+# as-is, and Pages refuses an artifact over 10 GB: with ~27 GB of previews
+# against a ~0.3 GB main site, the LIVE site stopped deploying on 2026-10-01.
+# So previews now go to a separate branch that NOTHING SERVES. A reviewer can
+# browse or download `STAGING/<slug>/` from the branch on GitHub, but there is
+# no preview URL until #1868's hosting decision. The PR comment says so rather
+# than posting a link that 404s.
+#
+# WHERE they go is configured in ONE place, `cat-harness/scripts/preview-target.ts`
+# (repo, branch, public URL), read here through `preview-target.ts env`. Moving
+# them to a separate repository with its own Pages (e.g.
+# `litlfred/folio-assistant-previews`) is an edit to that file plus a
+# `PREVIEW_PUSH_TOKEN` secret able to push there — GITHUB_TOKEN cannot reach
+# another repository. Nothing in this file spells the branch.
 #
 # This is the "before/after" comparison surface for publication review:
 # - main renders at the Pages root (via docs-site.yml)
@@ -18,7 +35,7 @@ name: Feature Staging (GitHub Pages)
 #   merge to main → STAGING/<slug>/ is cleaned up automatically.
 #
 # Cleanup: when a PR is merged or closed, the STAGING/<slug>/ directory
-# is removed from gh-pages so stale previews don't accumulate.
+# is removed from the preview branch so stale previews don't accumulate.
 #
 # **This workflow is folio-generic.** It builds the docs site (Jekyll +
 # TypeDoc), not the TeX paper PDF. A folio that also needs a staged PDF
@@ -189,6 +206,14 @@ jobs:
 
       - name: Install deps
         run: bun install --frozen-lockfile
+
+      # WHERE the preview is stored and served, from the ONE place that says
+      # (issue #1868): PREVIEW_REPO, PREVIEW_BRANCH, PREVIEW_SERVED,
+      # PREVIEW_PUBLIC_URL (empty while nothing serves it), and
+      # PREVIEW_SITE_URL / PREVIEW_SITE_PATH, the address the build is laid out
+      # for. Every step below reads these rather than spelling a branch or URL.
+      - name: Resolve the preview target
+        run: bun run cat-harness/scripts/preview-target.ts env >> "$GITHUB_ENV"
 
       - name: Determine staging slug
         id: slug
@@ -492,10 +517,14 @@ jobs:
           STAGING_SLUG: ${{ steps.slug.outputs.slug }}
         run: |
           SLUG="$STAGING_SLUG"
-          REPO="${{ github.event.repository.name }}"
+          # The PREVIEW host's path, not this repository's name (#1868): the
+          # two coincide only while the previews would be served from this
+          # repository's Pages. `PREVIEW_SITE_PATH` comes from
+          # `preview-target.ts`, which still derives it from a repo name read
+          # at run time, never spelled — the `kuxk` rule above holds.
           echo "" >> cat-harness/docs/_config.yml
           echo "# Auto-appended by feature-staging.yml" >> cat-harness/docs/_config.yml
-          echo "baseurl: \"/${REPO}/STAGING/${SLUG}\"" >> cat-harness/docs/_config.yml
+          echo "baseurl: \"${PREVIEW_SITE_PATH}/STAGING/${SLUG}\"" >> cat-harness/docs/_config.yml
 
       # COMPOSE the documentation tree before Jekyll sees it.
       #
@@ -635,7 +664,7 @@ jobs:
         env:
           STAGING_SLUG: ${{ steps.slug.outputs.slug }}
         run: |
-          BASE="/${{ github.event.repository.name }}/STAGING/${STAGING_SLUG}"
+          BASE="${PREVIEW_SITE_PATH}/STAGING/${STAGING_SLUG}"
           curl -sSfL -o /tmp/plantuml.jar \
             https://repo1.maven.org/maven2/net/sourceforge/plantuml/plantuml/1.2024.7/plantuml-1.2024.7.jar
           bun run fhir-harness/scripts/stage-ig-sites.ts --work ./_ig --baseurl "$BASE" \
@@ -899,18 +928,32 @@ jobs:
           # rules (`schemas/staging-preview.ts`); this is a thin caller.
           #
           # The record already published for this preview is copied in FIRST,
-          # from the gh-pages fetch above: `create` keeps its `builtAt` (when
+          # from the preview branch fetched below: `create` keeps its `builtAt` (when
           # the preview first appeared) and refuses to overwrite a RETIRED
           # record. If `create` fails — a corrupt record is refused, never
           # treated as absent — the copied original stays in the site, so the
           # deploy cannot silently replace it; the failure is an annotation,
           # not a blocked preview.
+          #
+          # Read from the PREVIEW branch, not `gh-pages` (#1868): the record
+          # lives beside the preview. A missing branch or record leaves no
+          # file, which `create` treats as a first deploy — the same answer
+          # the `|| rm -f` gave before.
           RECORD=./_site/staging-preview.json
-          git show "FETCH_HEAD:STAGING/${STAGING_SLUG}/staging-preview.json" > "$RECORD" 2>/dev/null \
-            || rm -f "$RECORD"
+          rm -f "$RECORD"
+          if git fetch --depth=1 "${GITHUB_SERVER_URL}/${PREVIEW_REPO}.git" "$PREVIEW_BRANCH" >/dev/null 2>&1; then
+            git show "FETCH_HEAD:STAGING/${STAGING_SLUG}/staging-preview.json" > "$RECORD" 2>/dev/null \
+              || rm -f "$RECORD"
+          fi
           PR_ARG=""
           if [ "$PR" != "n/a" ]; then PR_ARG="--pr $PR"; fi
-          # shellcheck disable=SC2086  # PR_ARG is a deliberate two-token flag or empty
+          # `--host` only when something SERVES the preview: the record turns
+          # it into a URL (`movedFrom`), and `schemas/staging-preview.ts` says
+          # a deploy that does not know its host says nothing rather than
+          # guess. While previews are stored-not-served (#1868), there is none.
+          HOST_ARG=""
+          if [ -n "$PREVIEW_PUBLIC_URL" ]; then HOST_ARG="--host $PREVIEW_PUBLIC_URL"; fi
+          # shellcheck disable=SC2086  # PR_ARG / HOST_ARG are deliberate two-token flags or empty
           bun run cat-harness/scripts/staging-record.ts create \
             --out "$RECORD" \
             --slug "$STAGING_SLUG" \
@@ -918,7 +961,7 @@ jobs:
             --commit "${GITHUB_SHA:0:7}" \
             $PR_ARG \
             ${ISSUE:+--issue "$ISSUE"} \
-            --host "https://${{ github.repository_owner }}.github.io/${{ github.event.repository.name }}" \
+            $HOST_ARG \
             || echo "::error title=staging-preview record::not written for STAGING/${STAGING_SLUG} — see the log above; any published record was kept as it was"
 
       # The branch's KG, published beside the branch's site, so the graph a
@@ -935,7 +978,7 @@ jobs:
           KG_BRANCH: ${{ steps.slug.outputs.branch }}
           SLUG: ${{ steps.slug.outputs.slug }}
         run: |
-          BASE="https://${GITHUB_REPOSITORY_OWNER}.github.io/${GITHUB_REPOSITORY#*/}/STAGING/${SLUG}"
+          BASE="${PREVIEW_SITE_URL}/STAGING/${SLUG}"
           STUB=$(bun run cat-harness/scripts/print-stub.ts ./cat-harness)
           # Both exporters stamp their own output with the build identity, from
           # the one `stagingStamp()` in scripts/staging-stamp.ts. It was an

@@ -20,7 +20,8 @@
 #
 # `feature-staging` retries by rebasing, and that is right for IT: its commit
 # adds or removes one `STAGING/<slug>/` directory, so replaying it onto whoever
-# won touches nothing else.
+# won touches nothing else. (Since issue #1868 it does that on its own preview
+# branch, not on this one — see `scripts/preview-target.ts`.)
 #
 # This commit replaces the WHOLE TREE. Rebasing it onto a newer `gh-pages`
 # would re-apply that replacement over whatever landed in between — deleting a
@@ -44,8 +45,9 @@
 #
 #   - FULL REPLACE, via `git rm -r --ignore-unmatch '*'` — the exact call
 #     `peaceiris` makes in `src/git-utils.ts` (`setRepo`). Not `keep_files`:
-#     `docs-site.yml` records at length why that is not the fix, and the
-#     previews are kept by RESTORING them into `_site`, not by never deleting.
+#     `docs-site.yml` records at length why that is not the fix. What must
+#     survive is RESTORED into `_site`, not kept by never deleting — since
+#     issue #1868 that is the branch's own records only, not the previews.
 #   - the commit message `docs(gh-pages): site from <sha>`, which
 #     `check-ci-health` and the render log both read.
 #   - "nothing to commit" is success, not failure: a deploy that changes
@@ -75,14 +77,29 @@ for attempt in 1 2 3; do
   git -C "$PAGES_DIR" fetch --depth=1 origin gh-pages
   git -C "$PAGES_DIR" reset --hard FETCH_HEAD
 
-  # Re-restore against what is on the branch NOW. Exit 2 from the restore means
-  # the branch could not be READ, which must never be published as "there are
-  # no previews to keep" — so it is fatal here too rather than retried.
-  if ! bun run cat-harness/scripts/restore-staging.ts --site "$SITE" --state "$STATE"; then
+  # Re-carry the branch's own records against what is on it NOW. Exit 2 from
+  # the restore means the branch could not be READ, which must never be
+  # published as "there is nothing to keep" — so it is fatal here too rather
+  # than retried.
+  #
+  # `--carried-only` since issue #1868: the per-PR previews no longer live on
+  # this branch. They are written to their own UNSERVED branch
+  # (`scripts/preview-target.ts`), because carrying them here is what pushed
+  # `gh-pages` past Pages' 10 GB artifact limit and froze the live site. What
+  # is still carried is `CARRIED_PREFIXES` — the render log and the retired
+  # preview records — so this full replace drops any leftover `STAGING/<slug>/`
+  # from the tip (history keeps it) without truncating the record of it.
+  #
+  # `|| { rc=$?; ...; }`, NOT `if ! cmd; then rc=$?`: inside that `then`, `$?`
+  # is the status of `!`, which is always 0 there — so the old form reported
+  # "exited 0" and then ran `exit 0`: the publish STEP went green for a deploy
+  # that never happened, and only the verify step's missing state file turned
+  # the run red, one step late and blaming the wrong thing.
+  bun run cat-harness/scripts/restore-staging.ts --site "$SITE" --state "$STATE" --carried-only || {
     rc=$?
-    echo "::error::publish-gh-pages: restore-staging exited $rc — refusing to publish a site whose preview set is unknown" >&2
+    echo "::error::publish-gh-pages: restore-staging exited $rc — refusing to publish a site whose carried records are unknown" >&2
     exit "$rc"
-  fi
+  }
 
   git -C "$PAGES_DIR" rm -r --ignore-unmatch -q '*'
   # `/.` copies the CONTENTS including dotfiles — `.nojekyll` is one, and

@@ -82,7 +82,19 @@
  * ```sh
  * bun run cat-harness/scripts/restore-staging.ts --site ./_site --state ./.staging-state.json
  * bun run cat-harness/scripts/restore-staging.ts --verify --state ./.staging-state.json
+ * bun run cat-harness/scripts/restore-staging.ts --site ./_site --state S --carried-only   # what docs-site runs
  * ```
+ *
+ * ## Since issue #1868: the previews are no longer carried by `docs-site`
+ *
+ * They moved to their own branch (`scripts/preview-target.ts`) because
+ * carrying them kept `gh-pages` past Pages' 10 GB artifact limit and froze the
+ * live site. `docs-site`'s publish now passes `--carried-only`: the branch's
+ * own records ({@link CARRIED_PREFIXES}) are still carried and still verified,
+ * so the first deploy after the move drops the leftover previews from the
+ * branch tip (they remain in its history) and keeps the record of them. The
+ * preview-carrying path below has no caller today; it is kept, tested, as the
+ * default of the general carry rather than deleted in the same change.
  *
  * @module scripts/restore-staging
  */
@@ -136,6 +148,14 @@ export interface RestoreOptions {
   prefix: string;
   /** The publish directory the deploy will replace the branch with. */
   site: string;
+  /**
+   * Carry the previews under {@link RestoreOptions.prefix} as well as
+   * {@link CARRIED_PREFIXES}. Default `true`. `docs-site`'s publish passes
+   * `false` (CLI `--carried-only`) since issue #1868: the previews moved to
+   * their own branch (`scripts/preview-target.ts`), and carrying the ones still
+   * on `gh-pages` is what kept that branch over Pages' 10 GB limit.
+   */
+  previews?: boolean;
 }
 
 /**
@@ -155,6 +175,7 @@ export interface Carried {
 export type RestoreOutcome =
   | { state: "restored"; previews: string[]; carried: Carried[] }
   | { state: "empty"; previews: []; carried: Carried[] }
+  | { state: "carried-only"; previews: []; carried: Carried[] }
   | { state: "no-branch"; previews: []; carried: [] }
   | { state: "unknown"; previews: []; carried: []; reason: string };
 
@@ -295,6 +316,11 @@ export function restoreStaging(o: RestoreOptions): RestoreOutcome {
     carried.push({ prefix, state: "carried" });
   }
 
+  // The previews are NOT on the publish branch's list of things to keep any
+  // more (#1868) — they live on the preview branch. Anything still under the
+  // prefix is a leftover this full replace is meant to drop.
+  if (o.previews === false) return { state: "carried-only", previews: [], carried };
+
   const found = previewsAt(o.repo, "FETCH_HEAD", o.prefix);
   if (!Array.isArray(found)) return { state: "unknown", previews: [], carried: [], reason: found.reason };
   if (found.length === 0) return { state: "empty", previews: [], carried };
@@ -378,6 +404,11 @@ export function describe(outcome: RestoreOutcome | VerifyOutcome): string {
         "the publish branch was read and carries no previews — a determined empty, nothing to restore" +
         carriedNote(outcome.carried)
       );
+    case "carried-only":
+      return (
+        "previews are not carried — they live on the preview branch (scripts/preview-target.ts, #1868)" +
+        carriedNote(outcome.carried)
+      );
     case "no-branch":
       return "the publish branch does not exist yet — nothing to restore";
     case "ok":
@@ -438,6 +469,7 @@ if (import.meta.main) {
     branch: arg("branch", "gh-pages"),
     prefix: arg("prefix", STAGING_PREFIX),
     site: arg("site", "./_site"),
+    previews: !process.argv.includes("--carried-only"),
   };
   const statePath = arg("state", "");
 
