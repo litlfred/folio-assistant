@@ -435,9 +435,9 @@ describe("the DAK API section is on exactly the pages the Publisher puts it on",
    * on nothing else, since an extra section is a difference from the
    * standard render too (bean `jut3`).
    */
-  const full = ix as unknown as { artifacts: { resourceType: string; id: string; dak?: { openapi?: { localPath?: string } } }[] };
+  const full = ix as unknown as { artifacts: { resourceType: string; id: string; sidecars?: { openapi?: { localPath?: string } } }[] };
   const expected = full.artifacts
-    .filter((a) => a.resourceType === "ValueSet" && a.dak?.openapi?.localPath)
+    .filter((a) => a.resourceType === "ValueSet" && a.sidecars?.openapi?.localPath)
     .map((a) => `${a.resourceType}-${a.id}.md`)
     .sort();
   const carrying = artifactFiles.filter((f) => readFileSync(join(ARTIFACTS, f), "utf-8").includes("data-dak-openapi-src")).sort();
