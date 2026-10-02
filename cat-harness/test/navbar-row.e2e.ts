@@ -913,7 +913,15 @@ test.describe("the navbar can be closed, and it stays closed", () => {
 
     // A KEYBOARD READER IS NOT TRAPPED. Focus still opens it -- suppressing
     // that would leave them tabbing through links they cannot see.
+    //
+    // KEYBOARD focus, so it is `:focus-visible`: the pointer is still parked on
+    // the icon column, where `.fa-nav-tip-hold` (#1805) holds the strip shut
+    // for a POINTER and lets go for a keyboard. A bare `.focus()` after two
+    // clicks is pointer-modality focus, which is not what a keyboard reader
+    // makes; a key press first gives it the keyboard's modality.
+    await page.keyboard.press("Shift");
     await page.locator(".side-bar .site-nav a").first().focus();
+    expect(await page.evaluate(() => document.activeElement!.matches(":focus-visible"))).toBe(true);
     await page.waitForTimeout(250);
     const focused = await page.locator(".side-bar").evaluate((n) => Math.round(n.getBoundingClientRect().width));
     expect(focused).toBeGreaterThan(200);

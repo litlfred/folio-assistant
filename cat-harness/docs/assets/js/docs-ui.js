@@ -10201,6 +10201,16 @@
     // nothing" and "never declared". See `navbarRow` in `sync-docs-harness.ts`.
     var notes = row.notes && typeof row.notes === "object" ? row.notes : {};
 
+    /* EVERY CONTROL IN THIS ROW CARRIES `data-fa-tip`, and it is the SAME
+     * string as its `aria-label` — owner's ruling on `ob3m` finding 1,
+     * 2026-10-01: *"show each icon's name as a tooltip on hover or keyboard
+     * focus."* The row is glyphs with no words, so a sighted reader had no
+     * name at all until now; `title` names it for a pointer after a delay and
+     * never for a keyboard. The stylesheet paints the attribute beside the
+     * strip (`[data-fa-tip]::after` in docs-ui.css) with an EMPTY alternative
+     * text, so a screen reader still hears the `aria-label` once and the
+     * tooltip not at all. `check-navbar-consistency.ts` fails a row control
+     * built without it. */
     var host = el("div", { class: "fa-nav-icons", role: "group", "aria-label": "Harness actions" });
 
     var LABELS = {
@@ -10236,7 +10246,7 @@
         // clicks that button rather than minting a rival with its own idea of
         // whether the panel is open. Two toggles over one state is the `l4zi`
         // defect from the other direction.
-        var proxy = el("button", { type: "button", class: "fa-nav-icon", "aria-label": LABELS.launcher });
+        var proxy = el("button", { type: "button", class: "fa-nav-icon", "aria-label": LABELS.launcher, "data-fa-tip": LABELS.launcher });
         proxy.innerHTML = rowGlyph("launcher");
         proxy.addEventListener("click", function () {
           var real = document.querySelector(".fa-tiles-toggle");
@@ -10273,7 +10283,7 @@
       // turn into something else.
       var at = safeHref(withBase(hrefs[id]));
       if (at) {
-        var a = el("a", { class: "fa-nav-icon", href: at, "aria-label": label, title: label });
+        var a = el("a", { class: "fa-nav-icon", href: at, "aria-label": label, title: label, "data-fa-tip": label });
         a.innerHTML = rowGlyph(id);
         host.appendChild(a);
       } else {
@@ -10297,7 +10307,8 @@
         var dead = el("span", {
           class: "fa-nav-icon fa-nav-icon--dead",
           "aria-label": label + " — " + why,
-          title: label + " — " + why
+          title: label + " — " + why,
+          "data-fa-tip": label + " — " + why
         });
         dead.innerHTML = rowGlyph(id);
         host.appendChild(dead);
@@ -10314,6 +10325,7 @@
       scheme.innerHTML = name === "light" ? BULB_ON : BULB_OFF;
       var said = name === "light" ? "Light mode is on — switch to dark" : "Dark mode is on — switch to light";
       scheme.setAttribute("aria-label", said);
+      scheme.setAttribute("data-fa-tip", said);
       scheme.title = said;
       scheme.setAttribute("aria-pressed", name === "dark" ? "true" : "false");
     });
@@ -10324,6 +10336,54 @@
     var header = bar.querySelector(".site-header");
     if (header && header.nextSibling) bar.insertBefore(host, header.nextSibling);
     else bar.appendChild(host);
+
+    holdStripForTips(bar, host);
+  }
+
+  /* ARRIVING ON AN ICON DOES NOT OPEN THE STRIP — bean `ob3m` finding 1.
+   *
+   * Hover widens the strip, and widening re-flows this column into a row, so
+   * the icon a pointer arrived on moved out from under it before its tooltip
+   * could name it. The stylesheet holds the strip at rest while the bar
+   * carries `.fa-nav-tip-hold`; this decides when it does.
+   *
+   * WHY A REMEMBERED BOX, not `:hover` on the column. The column's place is
+   * only true AT REST — once the strip peeks it is a row somewhere else — so
+   * "is the pointer on the column" has to be asked of where the column WAS.
+   * `.fa-nav-icons:hover` alone held the strip shut under a pointer moving
+   * into the open row and made the row's icons unreachable.
+   *
+   * Set on ENTERING the bar only, so a reader already peeking keeps the open
+   * bar; cleared the moment the pointer leaves the box, so moving down the
+   * strip peeks exactly as before. Touch has no hover and is left alone. */
+  function holdStripForTips(bar, host) {
+    var rest = null;
+    function measure() {
+      if (bar.classList.contains("fa-nav-tip-hold")) return;
+      if (bar.matches(":hover") || bar.matches(":focus-within")) return;
+      if (bar.querySelector(".fa-nav-open:checked")) return;
+      var r = host.getBoundingClientRect();
+      if (r.width > 0 && r.height > 0) rest = { l: r.left, r: r.right, t: r.top, b: r.bottom };
+    }
+    function inside(e) {
+      return !!rest && e.clientX >= rest.l && e.clientX < rest.r && e.clientY >= rest.t && e.clientY < rest.b;
+    }
+    measure();
+    window.addEventListener("resize", measure);
+    bar.addEventListener("pointerenter", function (e) {
+      if (e.pointerType === "touch") return;
+      measure();
+      if (inside(e)) bar.classList.add("fa-nav-tip-hold");
+    });
+    bar.addEventListener("pointermove", function (e) {
+      if (bar.classList.contains("fa-nav-tip-hold") && !inside(e)) bar.classList.remove("fa-nav-tip-hold");
+    });
+    bar.addEventListener("pointerleave", function () {
+      bar.classList.remove("fa-nav-tip-hold");
+      // Re-measured once the bar is back at rest, so a box first measured
+      // while the pointer happened to be on the bar at load is not missing.
+      requestAnimationFrame(measure);
+    });
   }
 
   /* ── THE MIDDLE: this instance's controlled folders, then its navigation ──
@@ -10565,13 +10625,25 @@
    *      arrival (*"any indices/toc should be closed"*, 2026-09-23).
    *   2. The page list -- the only group open on arrival, so it gets the
    *      height. The rail's `single-open` rule, applied to this surface.
-   *   3. "Graphs" -- FOLDERS and the harness group, moved out of the footer,
-   *      in ONE disclosure that starts folded. Each keeps its own fold inside
-   *      it, so nothing the owner asked to start closed now starts open.
+   *   3. "Graphs" -- FOLDERS, in a disclosure that starts folded and keeps
+   *      FOLDERS' own fold inside it.
+   *   4. "▦ Harnesses" -- the harness group, moved out of the footer, folded,
+   *      LAST and BESIDE Graphs rather than inside it. That is where the
+   *      viewer rail keeps it too (`navbarHtml`: graphs in the middle,
+   *      harnesses below them), and it is what keeps the owner's ruling on
+   *      finding 1 (#1805): *"Make ▦ Harnesses visible on the landing page
+   *      too"* -- ▦ is a mark in the 56px strip at rest and ONE click shows
+   *      the harnesses. Folded inside Graphs it would be invisible at rest and
+   *      two clicks away, which is the state that ruling removed. Both folded
+   *      headings are pinned to the scroller's bottom edge, ▦ lowest, so the
+   *      one-scroller property of this ruling is unchanged.
    *
    * MOVED, never re-rendered: the folder rows and the harness rows are the
    * nodes the generators already wrote, so their labels, notes and tooltips
-   * are exactly what those generators say. This changes WHERE, not WHAT.
+   * are exactly what those generators say. This changes WHERE, not WHAT --
+   * which is why the harness rows' `data-fa-tip` (#1805) still names their ⚙
+   * after the move: `.side-bar [data-fa-tip]::after` is `position: fixed`, so
+   * the scroller's `overflow` does not clip it.
    *
    * The footer keeps home, which is the one destination `navbar.ts` pins below
    * everything (*"keep home at bottom"*). Only the sidebar's own footer is
@@ -10582,7 +10654,7 @@
     var bar = document.querySelector(".side-bar");
     var nav = bar && bar.querySelector(".site-nav");
     if (!bar || !nav) return;
-    if (bar.querySelector(".fa-nav-graphs-group")) return;
+    if (bar.querySelector(".fa-nav-graphs-group, .fa-nav-harness-group")) return;
 
     // THE ONE SCROLLER. `mountInstanceGraphs` builds it when the folder row
     // could be read; when it could not, the nav still needs a region to share
@@ -10605,20 +10677,41 @@
     var harnesses = foot && foot.querySelector(":scope > details.fa-nav-group");
     if (!folders && !harnesses) return;
 
-    var group = el("details", { class: "fa-nav-graphs-group" });
-    group.appendChild(el("summary", { class: "fa-nav-graphs-group__heading" }, "Graphs"));
-    if (folders) group.appendChild(folders);
-    if (harnesses) group.appendChild(harnesses);
-    middle.appendChild(group);
-
-    // OPENED FROM THE BOTTOM EDGE, the heading is pinned there while folded
+    // OPENED FROM THE BOTTOM EDGE, a heading is pinned there while folded
     // (docs-ui.css), so what it reveals lands below the fold. Bring the group
     // to the top of the one scroller so opening it visibly does something.
-    group.addEventListener("toggle", function () {
-      if (!group.open) return;
-      var by = group.getBoundingClientRect().top - middle.getBoundingClientRect().top;
-      if (by > 0) middle.scrollTop += by;
-    });
+    function toTopOnOpen(d) {
+      d.addEventListener("toggle", function () {
+        if (!d.open) return;
+        var by = d.getBoundingClientRect().top - middle.getBoundingClientRect().top;
+        if (by > 0) middle.scrollTop += by;
+      });
+    }
+
+    if (folders) {
+      var group = el("details", { class: "fa-nav-graphs-group" });
+      group.appendChild(el("summary", { class: "fa-nav-graphs-group__heading" }, "Graphs"));
+      group.appendChild(folders);
+      middle.appendChild(group);
+      toTopOnOpen(group);
+    }
+
+    if (harnesses) {
+      harnesses.classList.add("fa-nav-harness-group");
+      middle.appendChild(harnesses);
+      toTopOnOpen(harnesses);
+      // THE FOLDED GRAPHS HEADING SITS ON TOP OF ▦, not under it: both are
+      // pinned to the bottom edge, so Graphs is offset by ▦'s height. That
+      // height changes between the strip and the open bar, so it is measured
+      // rather than restated (`--fa-nav-harness-rest`, read by docs-ui.css).
+      // The FOLDED box is what sits under Graphs, so it is read only while
+      // folded; the stylesheet stops reading it once ▦ is opened.
+      var setRest = function () {
+        if (!harnesses.open) middle.style.setProperty("--fa-nav-harness-rest", harnesses.offsetHeight + "px");
+      };
+      setRest();
+      if (typeof ResizeObserver === "function") new ResizeObserver(setRest).observe(harnesses);
+    }
   }
 
   /* ── STAY CLOSED, REMEMBERED ─────────────────────────────────────────────

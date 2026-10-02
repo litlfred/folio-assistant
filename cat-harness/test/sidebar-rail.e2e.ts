@@ -23,8 +23,10 @@ import { siteDirFor } from "../schemas/cat-harness.ts";
  *   - exactly ONE element in the sidebar scrolls, and the sidebar itself
  *     hides nothing it cannot scroll to -- on arrival AND with every
  *     disclosure open, because nested scrollers only appear once things open;
- *   - the Graphs group (FOLDERS and the harness group together) is folded on
- *     arrival, and its heading is on screen;
+ *   - the Graphs group (FOLDERS) and the harness group beside it are both
+ *     folded on arrival, and both headings are on screen -- ▦ Harnesses
+ *     stays its own disclosure, as on the viewer rail, so the strip still
+ *     shows it at rest (ob3m finding 1, #1805; `rail-tips.e2e.ts`);
  *   - page-list links are visible in the open sidebar, hit-tested rather than
  *     read off a box, because a link under another region is in the DOM, has
  *     a size, and cannot be clicked.
@@ -194,16 +196,25 @@ test.describe("the theme sidebar has the viewer rail's layout (ob3m finding 7)",
     const order = await page
       .locator(".side-bar > .fa-nav-middle > *")
       .evaluateAll((ns) => ns.map((n) => n.className.split(" ")[0]));
-    expect(order).toEqual(["fa-doc-index", "fa-nav-pages", "site-nav", "fa-nav-graphs-group"]);
+    expect(order).toEqual(["fa-doc-index", "fa-nav-pages", "site-nav", "fa-nav-graphs-group", "fa-nav-group"]);
   });
 
-  test("FOLDERS and the harness links are ONE Graphs group, folded on arrival", async ({ page }) => {
+  test("FOLDERS is the Graphs group and ▦ Harnesses sits beside it, both folded in the one scroller", async ({ page }) => {
     await load(page);
     const group = page.locator(".side-bar .fa-nav-graphs-group");
     await expect(group).toHaveCount(1);
     await expect(group).not.toHaveAttribute("open", "");
     await expect(group.locator(":scope > .fa-nav-folders")).toHaveCount(1);
-    await expect(group.locator(":scope > details.fa-nav-group")).toHaveCount(1);
+    // BESIDE Graphs, not inside it: the viewer rail's order, and what keeps
+    // ▦ a mark in the strip at rest (ob3m finding 1, #1805).
+    const harnesses = page.locator(".side-bar > .fa-nav-middle > details.fa-nav-harness-group");
+    await expect(harnesses).toHaveCount(1);
+    await expect(harnesses).not.toHaveAttribute("open", "");
+    await expect(harnesses.locator(":scope > summary")).toBeInViewport();
+    // Both headings are pinned to the bottom edge; Graphs stands ON TOP of ▦.
+    const g = await group.locator(":scope > summary").boundingBox();
+    const h = await harnesses.locator(":scope > summary").boundingBox();
+    expect(g!.y + g!.height).toBeLessThanOrEqual(h!.y + 1);
     // Nothing of either is left behind in the footer.
     await expect(page.locator(".side-bar .site-footer details")).toHaveCount(0);
     // Home stays pinned in the footer, below everything.
@@ -214,6 +225,33 @@ test.describe("the theme sidebar has the viewer rail's layout (ob3m finding 7)",
     await heading.click();
     await expect(group).toHaveAttribute("open", "");
     await expect(group.locator(".fa-nav-folders__heading")).toBeInViewport();
+  });
+
+  test("the tooltips (#1805) still name the rows AFTER the move", async ({ page }) => {
+    // MOVED, never re-rendered: the harness rows keep the `data-fa-tip` the
+    // generator wrote, and `.side-bar [data-fa-tip]::after` still reaches
+    // them inside the one scroller -- `position: fixed`, so its overflow does
+    // not clip the tooltip.
+    await load(page);
+    const group = page.locator(".side-bar > .fa-nav-middle > details.fa-nav-harness-group");
+    await group.locator(":scope > summary").click();
+    await expect(group).toHaveAttribute("open", "");
+    const gear = group.locator("[data-fa-tip]").first();
+    await expect(gear).toBeInViewport();
+    await gear.hover();
+    await page.waitForTimeout(250);
+    const tip = await gear.evaluate((e) => {
+      const s = getComputedStyle(e, "::after");
+      return { content: s.content, opacity: +s.opacity, position: s.position, label: e.getAttribute("aria-label") };
+    });
+    expect(tip.label).toBeTruthy();
+    expect(tip.content).toContain(tip.label!);
+    expect(tip.position).toBe("fixed");
+    expect(tip.opacity).toBeGreaterThan(0.9);
+    // The icon row's own tooltips are untouched by the rail.
+    const untipped = await page.locator(".side-bar .fa-nav-icons .fa-nav-icon:not([data-fa-tip])").count();
+    expect(untipped).toBe(0);
+    expect(await page.locator(".side-bar .fa-nav-icons [data-fa-tip]").count()).toBeGreaterThan(0);
   });
 
   test("page-list links are visible in the open sidebar at 1280x800", async ({ page }) => {
