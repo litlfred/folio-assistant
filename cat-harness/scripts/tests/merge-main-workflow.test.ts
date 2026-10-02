@@ -128,7 +128,6 @@ describe("a push refusal is read from stderr, not guessed", () => {
   // and the comment said "the branch moved", which was false.
   const steps = doc.jobs.merge!.steps;
   const push = steps.find((s) => (s as { id?: string }).id === "push")!;
-  const comment = steps.find((s) => s.name?.startsWith("Comment once"))!;
 
   test("(a) stderr is captured and the workflows refusal is recognised before the branch-moved check", () => {
     const run = push.run!;
