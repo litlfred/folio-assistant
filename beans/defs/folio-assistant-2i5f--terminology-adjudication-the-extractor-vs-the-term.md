@@ -1,11 +1,11 @@
 ---
 # folio-assistant-2i5f
 title: 'TERMINOLOGY / adjudication: the extractor vs the terminology, and judge vs judge — call the existing process, restate nothing'
-status: todo
+status: in-progress
 type: task
 priority: normal
 created_at: 2026-09-25T04:51:47Z
-updated_at: 2026-09-30T16:10:07Z
+updated_at: 2026-10-02T08:01:23Z
 parent: folio-assistant-5yhm
 ---
 
@@ -114,3 +114,7 @@ any judgement here has to preserve.
 `inspected_by` for the whole file, so two inspectors of two different entries
 are indistinguishable. Not this bean's to fix — it is the same *shape* as leg
 2 one corpus over, and worth naming here so the two are not solved twice.
+
+
+
+Claimed by claude/terminology-followups (session https://claude.ai/code/session_01CVVoavPoCHMLA7AASxG8cH), stacked on #1837 — issue #1836. Slice: LEG 1 only, on the owner's 2026-10-02 ruling: *"split: build leg 1 now as a skill + an outcome schema"*. Leg 2 keeps waiting.

@@ -5,7 +5,7 @@ status: in-progress
 type: feature
 priority: normal
 created_at: 2026-09-25T04:51:06Z
-updated_at: 2026-10-02T06:45:37Z
+updated_at: 2026-10-02T08:01:23Z
 parent: folio-assistant-0lmb
 ---
 
@@ -116,3 +116,7 @@ Shipped on #1837 (issue #1836):
       2876). The page answers `unknown` on a collision; the record should
       not depend on it.
 - [ ] `7wou`'s last item: FHIR collections in scope once OCL is reachable.
+
+
+
+Claimed by claude/terminology-followups (session https://claude.ai/code/session_01CVVoavPoCHMLA7AASxG8cH), stacked on #1837 — issue #1836. Slices: `2i5f` leg 1, and publishing automated matches into each scheme's SKOS JSON-LD (owner rulings 2026-10-02).
