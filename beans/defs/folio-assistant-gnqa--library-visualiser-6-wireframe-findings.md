@@ -1,7 +1,7 @@
 ---
 # folio-assistant-gnqa
 title: 'library visualiser: 6 wireframe findings'
-status: in-progress
+status: completed
 type: task
 priority: normal
 tags:
@@ -9,7 +9,7 @@ tags:
     - ui
     - visualiser-library
 created_at: 2026-09-23T10:36:15Z
-updated_at: 2026-10-02T06:46:04Z
+updated_at: 2026-10-02T07:14:42Z
 parent: folio-assistant-4ccr
 ---
 
@@ -47,3 +47,16 @@ Each finding re-measured on a local build of that commit (`preview-site.sh`, ser
 - **STILL-PRESENT** — 'Referenced by' details in a title tooltip only: The pill span '1 catalogue, 1 voices' holds its paths only in the title attribute. It is not focusable and not in a <details>. (C_lib.mjs)
 
 Claimed by claude/visualiser-wireframes (session https://claude.ai/code/session_01CVVoavPoCHMLA7AASxG8cH) — issue #1838.
+
+## Summary of Changes
+
+Worked on claude/visualiser-wireframes (PR #1839, issue #1838). Re-measured on main cf3e62487 at 1280×800 and 390×844. Pictures are in cat-harness/docs/wireframes/library/rendered-2026-10-02/, and the per-finding record is in that wireframe's intent.md.
+
+1. Fixed. Long cells wrap: the table goes from 3636 px to 1552 px at 1280. The first column is pinned and a right-edge fade cues the overflow.
+2. Fixed. Below 800 px each row is a labelled two-column card, and the uploads table is treated the same way. scrollWidth is 390.
+3. No longer holds (recorded fixed 2026-09-29, re-confirmed).
+4. No longer holds (#1592): titles are links.
+5. Fixed for the named entries: a catalogue title (libraryId) outranks the extracted one, which is kept as extractedTitle. Still open: entries with no catalogue node, and the cover size (owner question on the PR).
+6. Fixed. 'Referenced by' is a <details>, not a title tooltip.
+
+Generators: cat-harness/scripts/gen-library-viz.ts and cat-harness/scripts/library-graph.ts (plus the schema in site-indexes.ts).

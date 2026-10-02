@@ -1,7 +1,7 @@
 ---
 # folio-assistant-n5be
 title: 'glossary visualiser: 6 wireframe findings'
-status: in-progress
+status: completed
 type: task
 priority: normal
 tags:
@@ -9,7 +9,7 @@ tags:
     - ui
     - visualiser-glossary
 created_at: 2026-09-23T10:36:14Z
-updated_at: 2026-10-02T06:46:04Z
+updated_at: 2026-10-02T07:14:42Z
 parent: folio-assistant-4ccr
 ---
 
@@ -47,3 +47,16 @@ Each finding re-measured on a local build of that commit (`preview-site.sh`, ser
 - **STILL-PRESENT** — Count differs from declaration (comment says 44, page shows 46): The page has 48 rows. cat-harness.json@3779d5d27 _visualiser_comment still says 'a real rendering: 44 terms'. (C_gl.mjs; source read to compare the count only)
 
 Claimed by claude/visualiser-wireframes (session https://claude.ai/code/session_01CVVoavPoCHMLA7AASxG8cH) — issue #1838.
+
+## Summary of Changes
+
+Worked on claude/visualiser-wireframes (PR #1839, issue #1838). Re-measured on main cf3e62487 at 1280×800 and 390×844. Pictures are in cat-harness/docs/wireframes/glossary/rendered-2026-10-02/, and the per-finding record is in that wireframe's intent.md.
+
+1. No longer holds: the standalone table filter (0fua) reaches the page.
+2. Fixed. Sorted by the displayed term: 0 descending pairs of 55, against 4.
+3. No longer holds (#1594).
+4. Fixed. The short ledger label replaces the full path. The first column is 20rem, and rows stack below 800 px (390: scrollWidth 390, definition 296 px).
+5. Fixed. The one-row sibling list is dropped and its count moved into the lede.
+6. Fixed. The declaration comment no longer quotes a count.
+
+Generator: cat-harness/scripts/gen-docs-auto.ts (the shared renderer, so every docs-auto page now stacks on a phone). Comment: cat-harness/cat-harness.json.
