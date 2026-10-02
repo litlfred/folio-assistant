@@ -25,6 +25,7 @@ import { join, resolve } from "node:path";
 import type { ContentProfile } from "../../schemas/block-kinds";
 import type { ContributionRegistry } from "../../schemas/contributions";
 import { RENDER_TARGETS } from "../../schemas/render-targets";
+import { implementingRootFor } from "../../schemas/harness-config";
 
 const ROOT = resolve(import.meta.dir, "../..");
 
@@ -95,7 +96,9 @@ export async function resolveRenderTarget(
     };
   }
 
-  const abs = join(ROOT, decl.module);
+  // Read from the instance that implements the declared path (ruling T1,
+  // bean `70lx`): the declaration names it as written, the code may have moved.
+  const abs = join(implementingRootFor(ROOT, decl.module), decl.module);
   if (!existsSync(abs)) {
     return {
       miss: {

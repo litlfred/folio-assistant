@@ -7,7 +7,13 @@
  */
 import { describe, expect, test } from "bun:test";
 
-import { plan } from "../merge-base.js";
+import { execFileSync } from "node:child_process";
+import { existsSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from "node:fs";
+import { tmpdir } from "node:os";
+import { join } from "node:path";
+
+import { plan, takeBase, takeBaseAction, unmergedStages } from "../merge-base.js";
+import { plan as qaPlan } from "../qa-resolve-conflicts.ts";
 import { classify, PATTERNS, resolveGeneratedRegions } from "../merge-conflict-patterns.js";
 
 describe("classify", () => {
@@ -55,6 +61,27 @@ describe("classify", () => {
     expect(classify("cat-harness/docs/ar/index.md").strategy).toBe("refuse");
     expect(classify("cat-harness/docs/fr/getting-started.md").strategy).toBe("refuse");
     expect(classify("cat-harness/docs/de/glossary/index.md").strategy).toBe("refuse");
+  });
+
+  test("generated VIEWERS of uploads/ are taken; uploads/ itself stays refused", () => {
+    // The false positive found on #1764/#1775: `**/uploads/**` caught pages
+    // that render uploads/ rather than being uploads.
+    expect(classify("cat-harness/docs/uploads/index.html").pattern?.id).toBe("viewer-pages");
+    expect(classify("cat-harness/docs/cat-harness/uploads/who-iris/index.html").pattern?.id).toBe("viewer-namespace");
+    for (const p of ["beans", "todos", "health", "issue-marks", "swimlane-glossary"]) {
+      expect(classify(`cat-harness/docs/${p}/index.html`).pattern?.id).toBe("viewer-pages");
+    }
+    for (const seg of ["catalogue", "folio", "library", "schemas", "voices"]) {
+      expect(classify(`cat-harness/docs/cat-harness/${seg}/index.html`).pattern?.id).toBe("viewer-namespace");
+    }
+    expect(classify("cat-harness/docs/_includes/generated/navbar-footer.html").pattern?.id).toBe("navbar-include");
+    expect(classify("cat-harness/test/results/viewer-nav/viewer-nav.qa.json").pattern?.id).toBe("viewer-nav-qa");
+    // The real uploads stay refused, at the root and in any instance.
+    expect(classify("uploads/9789240093362-eng.pdf").pattern?.id).toBe("uploads");
+    expect(classify("who-iris/uploads/x.pdf").pattern?.id).toBe("uploads");
+    // Authored neighbours of the new globs stay refused.
+    expect(classify("cat-harness/docs/beans/notes.md").strategy).toBe("refuse");
+    expect(classify("cat-harness/docs/_includes/head_custom.html").strategy).toBe("refuse");
   });
 
   test("a path no pattern names is REFUSED, with no pattern attached", () => {
@@ -129,5 +156,73 @@ describe("resolveGeneratedRegions", () => {
   test("a file with no conflict comes back unchanged", () => {
     const t = README("| a | 1 |");
     expect(resolveGeneratedRegions(t)).toBe(t);
+  });
+});
+
+/**
+ * A modify/delete conflict: `ours` changes the file, `theirs` (the base being
+ * merged in) deletes it — or the reverse. Measured 2026-10-02 on #1805, where
+ * main deleted docs-auto pages the branch had touched and `checkout --theirs`
+ * threw "does not have their version".
+ */
+function modifyDelete(deletedBy: "theirs" | "ours"): string {
+  const dir = mkdtempSync(join(tmpdir(), "merge-base-md-"));
+  const g = (...a: string[]) => execFileSync("git", a, { cwd: dir, encoding: "utf-8", stdio: ["ignore", "pipe", "pipe"] });
+  g("init", "-q", "-b", "branch");
+  g("config", "user.email", "t@example.invalid");
+  g("config", "user.name", "t");
+  writeFileSync(join(dir, "gen.html"), "v1\n");
+  g("add", ".");
+  g("commit", "-qm", "base");
+  g("checkout", "-q", "-b", "main");
+  if (deletedBy === "theirs") g("rm", "-q", "gen.html");
+  else writeFileSync(join(dir, "gen.html"), "main\n");
+  g("commit", "-qam", "main side");
+  g("checkout", "-q", "branch");
+  if (deletedBy === "ours") g("rm", "-q", "gen.html");
+  else writeFileSync(join(dir, "gen.html"), "branch\n");
+  g("commit", "-qam", "branch side");
+  try { g("merge", "--no-commit", "main"); } catch { /* the conflict is the point */ }
+  return dir;
+}
+
+describe("take-base when one side deleted the file", () => {
+  const dirs: string[] = [];
+  const mk = (by: "theirs" | "ours") => { const d = modifyDelete(by); dirs.push(d); return d; };
+
+  test("the stage set decides: no stage 3 means the base deleted it", () => {
+    expect(takeBaseAction(new Set([1, 2]))).toBe("delete");
+    expect(takeBaseAction(new Set([1, 3]))).toBe("theirs");
+    expect(takeBaseAction(new Set([1, 2, 3]))).toBe("theirs");
+  });
+
+  test("deleted by the base: the deletion is taken, not a throw", () => {
+    const d = mk("theirs");
+    expect([...unmergedStages(d, "gen.html")].sort()).toEqual([1, 2]);
+    takeBase(d, "gen.html");
+    expect(existsSync(join(d, "gen.html"))).toBe(false);
+    expect(execFileSync("git", ["diff", "--name-only", "--diff-filter=U"], { cwd: d, encoding: "utf-8" })).toBe("");
+  });
+
+  test("deleted on the branch, changed on the base: the base's copy is taken", () => {
+    const d = mk("ours");
+    expect([...unmergedStages(d, "gen.html")].sort()).toEqual([1, 3]);
+    takeBase(d, "gen.html");
+    expect(readFileSync(join(d, "gen.html"), "utf-8")).toBe("main\n");
+    expect(execFileSync("git", ["diff", "--name-only", "--diff-filter=U"], { cwd: d, encoding: "utf-8" })).toBe("");
+  });
+
+  test("cleanup", () => { for (const d of dirs) rmSync(d, { recursive: true, force: true }); });
+});
+
+describe("qa sidecars of a NESTED instance are in scope", () => {
+  // Measured 2026-10-02 on #1822: a who-iris kg-qa sidecar was classified
+  // `qa-sidecar` here and then "left alone — outside the declared qa graph"
+  // by the resolver, which knew only the root instance's directory.
+  test("plan accepts every declared qa directory, not only the first", () => {
+    const dirs = ["cat-harness/test/results/", "who-iris/test/results/"];
+    const [o] = qaPlan("/nonexistent", dirs, ["unrelated/x.json"]);
+    expect(o!.action).toBe("skip");
+    expect(o!.reason).toContain("who-iris/test/results/");
   });
 });

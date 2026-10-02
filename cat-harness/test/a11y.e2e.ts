@@ -286,7 +286,7 @@ test.describe("accessibility — the docs-site UI", () => {
   for (const colorScheme of ["light", "dark"] as const) {
     for (const [state, open] of [
       ["the grid", [] as string[]],
-      ["a view", ["Settings"]],
+      ["a view", ["Page settings"]],
       // The search field is the new control and the one most likely to fail
       // contrast: it lands on an opaque sidebar panel it was not styled for.
       ["the search view", ["Search"]],

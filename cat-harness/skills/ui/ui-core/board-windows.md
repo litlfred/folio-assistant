@@ -218,6 +218,48 @@ reachable from a **different surface** than the one that closed it. When you
 implement close, the thing to check is that the library offers the way back —
 not that the glass does.
 
+## Two settings panels, two names, each points to the other
+
+The glass has its own settings (theme, avatars, opacity, blur), and the page
+has its own under ▦ Actions (scheme, reading preferences, the Discarded fish,
+Declared kinds). These are two different things, so they get **two names:
+"Glass settings" and "Page settings"**. Each panel also opens with a link to
+the other, as its first control. Owner, 2026-10-01, choosing option 2 of 4 on
+bean `ob3m` finding 12.
+
+**Why the link and not just the rename.** Before the ruling, both panels were
+called "Settings" and both wore a gear. Renaming only one fixed the
+**collision**: a screen reader no longer read two controls identically. It did
+not fix the **search**. A reader who wants the Discarded items and opens the
+glass panel is in the wrong place, and only a pointer gets them to the right
+one. An earlier attempt renamed the glass panel alone. It rejected the links
+on the grounds that site chrome and board state are unrelated. That is true of
+the settings and false of the places, and a reader moves between places.
+
+Three rules follow, and each one has already been broken once:
+
+- **The names are declared once** (`SETTINGS_NAMES` in `docs-ui.js`), because
+  each panel's link prints the OTHER panel's name. If a panel is renamed in
+  one place only, the other panel's link names something that no longer
+  exists.
+- **The link must OPEN its target, not toggle it, and not open it
+  underneath.** The glass's `openPanel` closes a panel that is already open.
+  The Page settings panel lives in the sidebar, and the open glass covers the
+  sidebar. So the glass-to-page link shuts the glass first, and the
+  page-to-glass link shuts the launcher first. In both cases focus lands on
+  the target panel's heading.
+- **No link to nothing.** A page with a glass and no sidebar has no launcher,
+  for example a replica or the harness page. There, Glass settings draws no
+  Page settings link. Each panel registers an opener, and the link is drawn
+  only when its target registered one.
+
+The same holds for any future pair of panels that share a word, such as two
+"Filters": name each one for what it acts on, and point each one at the other.
+`scripts/tests/settings-labels-distinct.test.ts` checks the source.
+`test/settings-crosslinks.e2e.ts` checks the rendered page at 1280×800 and at
+390×844. It covers the mouse and the keyboard, and checks that each link opens
+the other panel and that focus lands on its heading.
+
 ## Not this skill
 
 The layout layer and why a note carries no coordinates:

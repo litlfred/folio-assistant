@@ -174,7 +174,7 @@ Two gaps, both measured:
 
 ## Done when
 
-- [ ] **owner:** does `cat-harness.config.json` REPLACE `harness.json`, or sit
+- [x] **owner:** does `cat-harness.config.json` REPLACE `harness.json`, or sit
       beside it? (§1 — the ruling predates the question, and the two answers
       diverge immediately)
 - [ ] **owner:** is `<name>.config.json` process-WRITTEN at initialization? If
@@ -519,3 +519,9 @@ was fixed by keying on `CONFIG_SUFFIX` or by going through
 `init-folio` and the test fixtures write two files again. 5172 unit tests,
 89 gates, 222 browser tests — all green.
 
+
+## 2026-10-01 — Done-when 1 answered on evidence (session_01Cw8JgZEDT5VqQ5ergjdMjB, stream 10uc)
+
+**[x] REPLACE or beside?** — Settled by the owner's reversal (2026-09-21): the PAIR, `<name>.json` (declaration) + `<name>.config.json` (config). Verified on `main` (d1a5d6ea): no instance-level `harness.json` remains (the only one is the generated `cat-harness/docs/_data/harness.json`); seven `<name>.config.json` files sit beside their declarations; `findDeclarationFile` (`cat-harness/schemas/cat-harness.ts:186`) resolves the declaration. Ticked on that evidence, not on the ruling alone.
+
+**Not ticked, and why:** item 3 says *"7u3g fixed"*; **7u3g is `scrapped`, not fixed**. Whether scrapping it satisfies this precondition is a judgement about why it was scrapped, and it is left for the owner or the bean's next holder rather than read into the status. Items 2, 4, 5, 6 unchanged.

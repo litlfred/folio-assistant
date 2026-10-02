@@ -593,7 +593,7 @@ test("a discarded sticky is RESTORABLE — the rule the crumpled icon stands for
   // control entirely when the document was absent, which made the discard
   // one-way — a delete wearing a crumpled icon. This test is what found it.
   await page.locator(".fa-tiles-toggle").click();
-  await page.locator('.fa-tiles-grid .fa-tile:has(.fa-tile-caption:text-is("Settings"))').click();
+  await page.locator('.fa-tiles-grid .fa-tile:has(.fa-tile-caption:text-is("Page settings"))').click();
   await page.locator(".fa-discarded-open").click();
   const local = page.locator(".fa-discarded-local");
   await expect(local).toContainText("1 todo you discarded");
