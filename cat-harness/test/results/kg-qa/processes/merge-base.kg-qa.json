@@ -167,8 +167,9 @@
       "prose": "cat-harness/processes/merge-base.bpmn",
       "code": ".github/workflows/merge-main.yml",
       "prose_hash": "6315b7a2a250",
-      "code_hash": "7285326ca02c",
-      "by": "baseline"
+      "code_hash": "4abdf7903050",
+      "by": "agent",
+      "reason": "re-read merge-base.bpmn against merge-main.yml #1832: the bot still executes merge:main (now main's copy, via --root on the PR tree); every process step, gateway and the all-or-nothing/proved-by-regen prose is unchanged"
     }
   ]
 }
