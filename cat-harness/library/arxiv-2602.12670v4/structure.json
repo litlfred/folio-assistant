@@ -21,17 +21,32 @@
   },
   "doi": null,
   "title": "SkillsBench: Benchmarking How Well Agent Skills Work Across Diverse Tasks",
-  "authors_raw": "Xiangyi Li1,*, Yimin Liu1,2,*, Wenbo Chen3,*,\u2020, Bingran You1,4,*, Zonglin Di5,\u2021",
+  "authors_raw": "Xiangyi Li1,*, Yimin Liu1,2,*, Wenbo Chen3,*,†, Bingran You1,4,*, Zonglin Di5,‡",
   "title_lines": [
    "SkillsBench: Benchmarking How Well Agent Skills",
    "Work Across Diverse Tasks"
   ],
-  "abstract": "Agent Skills are structured packages of procedural knowledge that augment large language model (LLM) agents at inference time. Despite rapid adoption, there is no standard way to measure whether they actually help. We present SKILLSBENCH, a benchmark whose current inventory contains 87 tasks across 8 domains paired with curated Skills and deterministic verifiers. Our latest aggregate evaluation runs the 87-task benchmark under matched no-Skills and curated-Skills conditions for 18 model\u2013harness configurations. Curated Skills raise the average pass rate from 33.9% to 50.5% (+16.6 percentage points; 25.5% normalized gain), with configuration-level gains ranging from +4.1 to +25.7 pp. Focused Skills with at most three modules outperform larger or exhaustive bundles, and smaller models with Skills can match larger models without them. SKILLSBENCH establishes paired evaluation as the foundation for rigorous measurement of Skill efficacy on agentic, expertise-heavy work. Skills applications Agent Harness Operating Systems Models CPUs Gemini 3.1 Flash Lite (OH) MiniMax M2.7 (OH) GPT-5.4 Mini (OH) Grok 4.3 (OH) DeepSeek V4 Flash (OH) Claude Sonnet 4.6 (OH) Gemini 3.5 Flash (OH) DeepSeek V4 Pro (OH) Gemini 3.1 Pro (OH) MiniMax M3 (OH) Claude Opus 4.7 (OH) Kimi K2.6 (OH) Claude Opus 4.8 (OH) GLM 5.1 (OH) Gemini 3.1 Pro (GCLI) Claude Opus 4.7 (CC) GPT-5.5 (Codex) GPT-5.5 (OH) 0.0 0.1 0.2 0.3 0.4 0.5 0.6 0.7 Resolution Rate No Skills Skill Lift OpenAI Anthropic Google DeepSeek Moonshot Zhipu MiniMax xAI Skills applications Agent Harness Operating Systems Models CPUs Figure 1: Agent architecture stack and resolution rates across 18 model\u2013harness configurations on 87 SkillsBench tasks. Each bar stacks the no-Skills baseline and curated-Skills lift; open/filled interval markers denote 95% CIs for the baseline/total. Bars are ordered by Curated-Skills pass rate and colored by model family. Harness abbreviations: OH = OpenHands, CC = Claude Code, GCLI = Gemini CLI. 1BenchFlow, 2OSU,",
+  "abstract": "Agent Skills are structured packages of procedural knowledge that augment large language model (LLM) agents at inference time. Despite rapid adoption, there is no standard way to measure whether they actually help. We present SKILLSBENCH, a benchmark whose current inventory contains 87 tasks across 8 domains paired with curated Skills and deterministic verifiers. Our latest aggregate evaluation runs the 87-task benchmark under matched no-Skills and curated-Skills conditions for 18 model–harness configurations. Curated Skills raise the average pass rate from 33.9% to 50.5% (+16.6 percentage points; 25.5% normalized gain), with configuration-level gains ranging from +4.1 to +25.7 pp. Focused Skills with at most three modules outperform larger or exhaustive bundles, and smaller models with Skills can match larger models without them. SKILLSBENCH establishes paired evaluation as the foundation for rigorous measurement of Skill efficacy on agentic, expertise-heavy work. Skills applications Agent Harness Operating Systems Models CPUs Gemini 3.1 Flash Lite (OH) MiniMax M2.7 (OH) GPT-5.4 Mini (OH) Grok 4.3 (OH) DeepSeek V4 Flash (OH) Claude Sonnet 4.6 (OH) Gemini 3.5 Flash (OH) DeepSeek V4 Pro (OH) Gemini 3.1 Pro (OH) MiniMax M3 (OH) Claude Opus 4.7 (OH) Kimi K2.6 (OH) Claude Opus 4.8 (OH) GLM 5.1 (OH) Gemini 3.1 Pro (GCLI) Claude Opus 4.7 (CC) GPT-5.5 (Codex) GPT-5.5 (OH) 0.0 0.1 0.2 0.3 0.4 0.5 0.6 0.7 Resolution Rate No Skills Skill Lift OpenAI Anthropic Google DeepSeek Moonshot Zhipu MiniMax xAI Skills applications Agent Harness Operating Systems Models CPUs Figure 1: Agent architecture stack and resolution rates across 18 model–harness configurations on 87 SkillsBench tasks. Each bar stacks the no-Skills baseline and curated-Skills lift; open/filled interval markers denote 95% CIs for the baseline/total. Bars are ordered by Curated-Skills pass rate and colored by model family. Harness abbreviations: OH = OpenHands, CC = Claude Code, GCLI = Gemini CLI. 1BenchFlow, 2OSU,",
   "docinfo": {
    "Title": "SkillsBench: Benchmarking How Well Agent Skills Work Across Diverse Tasks",
    "Author": "Xiangyi Li; Yimin Liu; Wenbo Chen; Bingran You; Zonglin Di; Yifeng He; Shenghan Zheng; Kyoung Whan Choe; Jiankai Sun; Shuyi Wang; Chujun Tao; Binxu Li; Xuandong Zhao; Hejia Geng; Xiaojun Wu; Junwei Zhou; Xiaokun Chen; Hanwen Xing; Yubo Li; Qunhong Zeng; Di Wang; Yuanli Wang; Roey Ben Chaim; Penghao Jiang; Haotian Shen; Luyang Kong; Xinyi Liu; Runhui Wang; Xuanqing Liu; Jiachen Li; Xin Lan; Yueqian Lin; Wengao Ye; Junwei He; Songlin Li; Yue Zhang; Yipeng Gao; Yijiang Li; Ze Ma; Liqiang Jing; Tianyu Wang; Kaixin Li; Yiqi Xue; Haoran Lyu; Yizhuo He; Yuchen Tian; Shutong Wu; Bowei Wang; Yixuan Gao; Bo Chen; Litong Liu; Sikai Cheng; Jiajun Bao; Shuaicheng Tong; Shuwen Xu; Terry Yue Zhuo; Tinghan Ye; Qi Qi; Miao Li; Longtai Liao; Zelin Tan; Chang Shi; Xilin Tang; Srinath Tankasala; Boqin Yuan; Yaoyao Qian; Jianhong Tu; Chenguang Wang; Yizhou Sun; Wei Wang; Aaron Taylor; Ziyue Yang; Changkun Guan; Zhikang Dong; Xinyu Zhang; Steven Dillmann; Han-chung Lee; Dawn Song",
    "Producer": "pikepdf 8.15.1",
    "Creator": "arXiv GenPDF (tex2pdf:a6404ea)"
+  },
+  "title_raw": "SkillsBench: Benchmarking How Well Agent Skills Work Across Diverse Tasks",
+  "title_source": "metadata",
+  "title_verified": true,
+  "title_evidence": {
+   "metadata": "SkillsBench: Benchmarking How Well Agent Skills Work Across Diverse Tasks",
+   "heading": "SkillsBench: Benchmarking How Well Agent Skills Work Across Diverse Tasks",
+   "outline": "Introduction",
+   "text": "SkillsBench: Benchmarking How Well Agent Skills Work Across Diverse Tasks",
+   "corroborated_by": [
+    "heading",
+    "text",
+    "page"
+   ],
+   "browser_print": false
   }
  },
  "toc": [
@@ -72,7 +87,7 @@
   },
   {
    "level": 2,
-   "title": "Skills Efficacy Across Model\u2013Harness Combinations",
+   "title": "Skills Efficacy Across Model–Harness Combinations",
    "page": 5,
    "source": "outline",
    "number": null
@@ -492,7 +507,7 @@
   },
   {
    "level": 2,
-   "title": "Time\u2013Performance Tradeoff",
+   "title": "Time–Performance Tradeoff",
    "page": 35,
    "source": "outline",
    "number": null
@@ -576,7 +591,7 @@
   },
   {
    "level": 2,
-   "title": "Model\u2013Harness Configurations",
+   "title": "Model–Harness Configurations",
    "page": 42,
    "source": "outline",
    "number": null
@@ -669,7 +684,7 @@
   {
    "id": "sec-005-skills-efficacy-across-modelharness-combinations",
    "number": null,
-   "title": "Skills Efficacy Across Model\u2013Harness Combinations",
+   "title": "Skills Efficacy Across Model–Harness Combinations",
    "level": 2,
    "page_start": 5,
    "page_end": 5,
@@ -1269,7 +1284,7 @@
   {
    "id": "sec-065-timeperformance-tradeoff",
    "number": null,
-   "title": "Time\u2013Performance Tradeoff",
+   "title": "Time–Performance Tradeoff",
    "level": 2,
    "page_start": 35,
    "page_end": 36,
@@ -1399,7 +1414,7 @@
   {
    "id": "sec-078-modelharness-configurations",
    "number": null,
-   "title": "Model\u2013Harness Configurations",
+   "title": "Model–Harness Configurations",
    "level": 2,
    "page_start": 42,
    "page_end": 42,
