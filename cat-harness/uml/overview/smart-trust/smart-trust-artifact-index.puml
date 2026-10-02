@@ -9,18 +9,18 @@ skinparam packageStyle rectangle
 hide empty methods
 
 package "smart-trust/smart-trust-artifact-index" as pkg_smart_trust_smart_trust_artifact_index <<fhir-artifact-index>> {
-  class "Context" as smart_trust_smart_trust_artifact_index_folio_fhir_artifact_index_v1_Context <<json: FhirArtifactIndexSchema>> #f4f4f1 {
+  class "Context" as smart_trust_smart_trust_artifact_index_folio_fhir_artifact_index_v2_Context <<json: FhirArtifactIndexSchema>> #f4f4f1 {
     id [1] : string
     representation [1] : object
     binds [0..*] : string[]
   }
-  class "DakUnbound" as smart_trust_smart_trust_artifact_index_folio_fhir_artifact_index_v1_DakUnbound <<json: FhirArtifactIndexSchema>> #f4f4f1 {
+  class "SidecarsUnbound" as smart_trust_smart_trust_artifact_index_folio_fhir_artifact_index_v2_SidecarsUnbound <<json: FhirArtifactIndexSchema>> #f4f4f1 {
     filename [1] : string
     title [0..1] : string
     enumeration [1] : string
     reason [1] : string
   }
-  class "Artifact" as smart_trust_smart_trust_artifact_index_folio_fhir_artifact_index_v1_Artifact <<json: FhirArtifactIndexSchema>> #f4f4f1 {
+  class "Artifact" as smart_trust_smart_trust_artifact_index_folio_fhir_artifact_index_v2_Artifact <<json: FhirArtifactIndexSchema>> #f4f4f1 {
     $schema [0..1] : 'folio-fhir-artifact/v1'
     key [1] : string
     resourceType [1] : string
@@ -32,11 +32,11 @@ package "smart-trust/smart-trust-artifact-index" as pkg_smart_trust_smart_trust_
     version [0..1] : string
     category [0..1] : string
     published [1] : object
-    dak [0..1] : object
+    sidecars [0..1] : object
     materialization [1] : object
   }
-  class "folio-fhir-artifact-index/v1" as smart_trust_smart_trust_artifact_index_folio_fhir_artifact_index_v1_folio_fhir_artifact_index_v1 <<json: FhirArtifactIndexSchema>> #f4f4f1 {
-    $schema [1] : 'folio-fhir-artifact-index/v1'
+  class "folio-fhir-artifact-index/v2" as smart_trust_smart_trust_artifact_index_folio_fhir_artifact_index_v2_folio_fhir_artifact_index_v2 <<json: FhirArtifactIndexSchema>> #f4f4f1 {
+    $schema [1] : 'folio-fhir-artifact-index/v2'
     id [1] : string
     title [1] : string
     packageId [0..1] : string
@@ -46,9 +46,9 @@ package "smart-trust/smart-trust-artifact-index" as pkg_smart_trust_smart_trust_
     builtAt [0..1] : string
     source [1] : object
     provenance [1] : object
-    dakApi [1] : unknown | absent | present
+    sidecarApi [1] : unknown | absent | present
     contexts [0..*] : Context[]
-    dakUnbound [0..*] : DakUnbound[]
+    sidecarsUnbound [0..*] : SidecarsUnbound[]
     count [1] : integer
     artifacts [0..*] : Artifact[]
   }
@@ -68,6 +68,15 @@ package "smart-trust/smart-trust-artifact-index" as pkg_smart_trust_smart_trust_
     version [0..1] : string
     source [1] : object
     groups [0..*] : Group[]
+  }
+  class "folio-ig-identity/v1" as smart_trust_smart_trust_artifact_index_folio_ig_identity_v1_folio_ig_identity_v1 <<json: IgIdentitySchema>> #f4f4f1 {
+    $schema [1] : 'folio-ig-identity/v1'
+    id [1] : string
+    canonical [1] : string<uri>
+    status [1] : string
+    version [0..1] : string
+    readFrom [1] : string
+    readAt [1] : string
   }
   class "COSE Headers (DRAFT)" as smart_trust_smart_trust_artifact_index_dak_StructureDefinition_COSEHeader_schema_json_COSE_Headers__DRAFT_ <<schema: dak/StructureDefinition-COSEHeader.schema.json>> #f4f4f1 {
     1 [0..1] : string
@@ -179,9 +188,9 @@ package "smart-trust/smart-trust-artifact-index" as pkg_smart_trust_smart_trust_
   }
 }
 
-smart_trust_smart_trust_artifact_index_folio_fhir_artifact_index_v1_folio_fhir_artifact_index_v1 *-- "0..*" smart_trust_smart_trust_artifact_index_folio_fhir_artifact_index_v1_Context : contexts
-smart_trust_smart_trust_artifact_index_folio_fhir_artifact_index_v1_folio_fhir_artifact_index_v1 *-- "0..*" smart_trust_smart_trust_artifact_index_folio_fhir_artifact_index_v1_DakUnbound : dakUnbound
-smart_trust_smart_trust_artifact_index_folio_fhir_artifact_index_v1_folio_fhir_artifact_index_v1 *-- "0..*" smart_trust_smart_trust_artifact_index_folio_fhir_artifact_index_v1_Artifact : artifacts
+smart_trust_smart_trust_artifact_index_folio_fhir_artifact_index_v2_folio_fhir_artifact_index_v2 *-- "0..*" smart_trust_smart_trust_artifact_index_folio_fhir_artifact_index_v2_Context : contexts
+smart_trust_smart_trust_artifact_index_folio_fhir_artifact_index_v2_folio_fhir_artifact_index_v2 *-- "0..*" smart_trust_smart_trust_artifact_index_folio_fhir_artifact_index_v2_SidecarsUnbound : sidecarsUnbound
+smart_trust_smart_trust_artifact_index_folio_fhir_artifact_index_v2_folio_fhir_artifact_index_v2 *-- "0..*" smart_trust_smart_trust_artifact_index_folio_fhir_artifact_index_v2_Artifact : artifacts
 smart_trust_smart_trust_artifact_index_folio_ig_menu_v1_Group *-- "0..*" smart_trust_smart_trust_artifact_index_folio_ig_menu_v1_Item : items
 smart_trust_smart_trust_artifact_index_folio_ig_menu_v1_folio_ig_menu_v1 *-- "0..*" smart_trust_smart_trust_artifact_index_folio_ig_menu_v1_Group : groups
 @enduml

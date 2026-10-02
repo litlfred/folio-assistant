@@ -27,9 +27,12 @@
  *
  * @module scripts/tests/no-silent-first-directory
  */
-import { describe, expect, test } from "bun:test";
-import { readdirSync, readFileSync, statSync } from "node:fs";
+import { afterAll, describe, expect, test } from "bun:test";
+import { mkdirSync, mkdtempSync, readdirSync, readFileSync, rmSync, statSync, writeFileSync } from "node:fs";
+import { tmpdir } from "node:os";
 import { join, relative, resolve } from "node:path";
+
+import { writeDeclaration } from "../../test/support/instance-fixture.js";
 
 import {
   instanceDirectoriesForGraph,
@@ -120,6 +123,37 @@ describe("a call site that wants ONE directory says so with an accessor that ref
 
 /* ─────────── the other half: a PLURAL caller needs a plural accessor ─────────── */
 
+const fixtures: string[] = [];
+afterAll(() => {
+  for (const d of fixtures) rmSync(d, { recursive: true, force: true });
+});
+
+/**
+ * An instance declaring `schemas` at two directories of its own — the shape
+ * `large-datasets` had (`schemas/` and `sources/`) until bean `j7ql`.
+ */
+function fixtureDeclaringSchemasTwice(): string {
+  // A checkout of its own, as the audit expects one: a root `package.json`
+  // beside the instance, and no sibling it did not make.
+  const checkout = mkdtempSync(join(tmpdir(), "schemas-twice-"));
+  fixtures.push(checkout);
+  writeFileSync(join(checkout, "package.json"), JSON.stringify({ name: "fixture", scripts: {} }));
+  const root = join(checkout, "schemas-twice");
+  for (const d of ["schemas", "sources"]) {
+    mkdirSync(join(root, d), { recursive: true });
+    writeFileSync(join(root, d, ".keep"), "");
+  }
+  writeDeclaration(root, {
+    name: "schemas-twice",
+    version: "0.0.0",
+    directories: [
+      { id: "twice-schemas", path: "schemas/", graphKinds: ["schemas"] },
+      { id: "twice-sources", path: "sources/", graphKinds: ["schemas"] },
+    ],
+  });
+  return root;
+}
+
 describe("an instance that declares a kind twice is auditable, not a crash", () => {
   /**
    * The refusal above is right, and it made a real caller CRASH rather than
@@ -162,14 +196,17 @@ describe("an instance that declares a kind twice is auditable, not a crash", () 
     expect(disagreements).toEqual([]);
   });
 
-  test("at least one instance really declares a kind twice, so the case above is live", () => {
+  test("an instance that declares a kind twice really is plural, so the case above is live", () => {
     // Anti-vacuity. With no such instance the assertion above holds trivially
     // and would keep passing after a regression — the shape that let the
-    // original `[0]` survive unnoticed.
-    const plural = instanceRootsIn(REPO).filter(
-      (i) => instanceDirectoriesForGraph(i, "schemas").length > 1,
-    );
-    expect(plural.length, "no instance declares `schemas` twice — the guard above measures nothing").toBeGreaterThan(0);
+    // original `[0]` survive unnoticed. The real one was `large-datasets`
+    // until bean `j7ql` (2026-10-01) dissolved it into cat-harness and its two
+    // `schemas` directories went to two different owners, so the case is a
+    // FIXTURE now: a live case must not depend on the corpus happening to
+    // contain one.
+    const twice = fixtureDeclaringSchemasTwice();
+    expect(instanceDirectoriesForGraph(twice, "schemas")).toHaveLength(2);
+    expect(() => instanceDirectoryForGraph(twice, "schemas")).toThrow();
   });
 
   /**
@@ -186,11 +223,9 @@ describe("an instance that declares a kind twice is auditable, not a crash", () 
    * are not. The assertion is therefore about the CRASH and not the exit code.
    */
   test("kg:audit --instance runs on such an instance instead of throwing", async () => {
-    const plural = instanceRootsIn(REPO).find(
-      (i) => instanceDirectoriesForGraph(i, "schemas").length > 1,
-    );
-    expect(plural, "no instance declares `schemas` twice — nothing to run this against").toBeDefined();
-    const rel = `./${relative(REPO, plural!)}`;
+    const plural = fixtureDeclaringSchemasTwice();
+    expect(instanceDirectoriesForGraph(plural, "schemas").length, "the fixture must declare `schemas` twice").toBe(2);
+    const rel = plural;
 
     const p = Bun.spawn(
       ["bun", "run", "cat-harness/scripts/kg-audit.ts", "--instance", rel, "--check"],

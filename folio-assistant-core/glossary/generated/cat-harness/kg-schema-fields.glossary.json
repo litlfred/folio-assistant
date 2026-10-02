@@ -16,7 +16,7 @@
     {
       "id": "archive-contents.archivecontentsschema.at-context",
       "prefLabel": "ArchiveContentsSchema.@context",
-      "definition": "The published content context — bean `yh6u`. OPTIONAL because folio repositories hold records written before the arm emitted it; when present it must be that context, since any other would bind these keys to terms nobody declared.",
+      "definition": "The published content context — bean `yh6u`. OPTIONAL because folio repositories hold records written before the arm emitted it; when present it must be that context (bare, or with `@base` beside it — bean `bh4q`), since any other would bind these keys to terms nobody declared.",
       "source": "cat-harness/schemas/archive-contents.ts#ArchiveContentsSchema.@context",
       "status": "candidate"
     },
@@ -32,6 +32,41 @@
       "prefLabel": "ArchiveEntrySchema.sha256",
       "definition": "Full 64-hex digest of the entry's bytes; `null` when it could not be read.",
       "source": "cat-harness/schemas/archive-contents.ts#ArchiveEntrySchema.sha256",
+      "status": "candidate"
+    },
+    {
+      "id": "artifact-store.artifactstoreschema.basis",
+      "prefLabel": "ArtifactStoreSchema.basis",
+      "definition": "Why this store, in one sentence — it is a choice, and a choice with no reason cannot be revisited.",
+      "source": "cat-harness/schemas/artifact-store.ts#ArtifactStoreSchema.basis",
+      "status": "candidate"
+    },
+    {
+      "id": "artifact-store.artifactstoreschema.cachettlseconds",
+      "prefLabel": "ArtifactStoreSchema.cacheTtlSeconds",
+      "definition": "What a CDN in front of this store will hold onto. Absent means unstated, never zero.",
+      "source": "cat-harness/schemas/artifact-store.ts#ArtifactStoreSchema.cacheTtlSeconds",
+      "status": "candidate"
+    },
+    {
+      "id": "artifact-store.artifactstoreschema.immutableurls",
+      "prefLabel": "ArtifactStoreSchema.immutableUrls",
+      "definition": "Whether the store's URLs are immutable once published. `true` means a re-publish MUST use a new path; `false` means readers may be served a cached old copy for up to `cacheTtlSeconds`.",
+      "source": "cat-harness/schemas/artifact-store.ts#ArtifactStoreSchema.immutableUrls",
+      "status": "candidate"
+    },
+    {
+      "id": "artifact-store.artifactstoreschema.maxartifactbytes",
+      "prefLabel": "ArtifactStoreSchema.maxArtifactBytes",
+      "definition": "Largest single artifact, where the host states one. Absent means unstated, never unlimited.",
+      "source": "cat-harness/schemas/artifact-store.ts#ArtifactStoreSchema.maxArtifactBytes",
+      "status": "candidate"
+    },
+    {
+      "id": "artifact-store.artifactstoreschema.publicbaseurl",
+      "prefLabel": "ArtifactStoreSchema.publicBaseUrl",
+      "definition": "The base the artifact will be READABLE at. Required, and it is the \"EXTREME care in URL handling\" clause in schema form: a published URL is a promise, and the address has to be decided before the upload rather than discovered from whatever the host returned.",
+      "source": "cat-harness/schemas/artifact-store.ts#ArtifactStoreSchema.publicBaseUrl",
       "status": "candidate"
     },
     {
@@ -2324,6 +2359,13 @@
       "status": "candidate"
     },
     {
+      "id": "cat-harness.contentdirectory.heldentries",
+      "prefLabel": "ContentDirectory.heldEntries",
+      "definition": "Entry slugs of a `library` held back from the summary drain while the rest of it drains. See the schema field (bean `j7ql`).",
+      "source": "cat-harness/schemas/cat-harness.ts#ContentDirectory.heldEntries",
+      "status": "candidate"
+    },
+    {
       "id": "cat-harness.contentdirectory.readonly",
       "prefLabel": "ContentDirectory.readOnly",
       "definition": "This directory holds MATERIALIZED content: readable, and not editable here.",
@@ -2356,6 +2398,13 @@
       "prefLabel": "ContentDirectoryShape.composed",
       "definition": "This directory is AUTHORED FOR THE SITE'S PIPELINE, so compose it into the Jekyll source instead of mounting its built output.",
       "source": "cat-harness/schemas/cat-harness.ts#ContentDirectoryShape.composed",
+      "status": "candidate"
+    },
+    {
+      "id": "cat-harness.contentdirectoryshape.heldentries",
+      "prefLabel": "ContentDirectoryShape.heldEntries",
+      "definition": "Entry slugs (`<library>/<slug>/`) held back from the summary drain while the rest of this `library` drains — the per-entry form of `summaries: \"held\"`. It exists because a hold is the OWNER's decision about a set of documents, and a set can outlive the directory it was stated on: agent-skills' library was held on 2026-09-24 (bean `x80s`) and dissolved into cat-harness's on 2026-10-01 (bean `j7ql`), where the other entries drain. Folding the hold into the directory's would either drop it or extend it to documents the owner never held. Listed, never derived, so a move cannot release it silently.",
+      "source": "cat-harness/schemas/cat-harness.ts#ContentDirectoryShape.heldEntries",
       "status": "candidate"
     },
     {
@@ -3136,6 +3185,20 @@
       "status": "candidate"
     },
     {
+      "id": "contributions.pipelineplugincontribution.implementation",
+      "prefLabel": "PipelinePluginContribution.implementation",
+      "definition": "What fills it. Shape is fixed per kind by `content/pipeline/pipeline-plugins.ts`.",
+      "source": "cat-harness/schemas/contributions.ts#PipelinePluginContribution.implementation",
+      "status": "candidate"
+    },
+    {
+      "id": "contributions.pipelineplugincontribution.kind",
+      "prefLabel": "PipelinePluginContribution.kind",
+      "definition": "The slot this fills, e.g. `\"lean-lexer\"`. One contributor per kind.",
+      "source": "cat-harness/schemas/contributions.ts#PipelinePluginContribution.kind",
+      "status": "candidate"
+    },
+    {
       "id": "contributions.qacheckercontribution.check",
       "prefLabel": "QaCheckerContribution.check",
       "definition": "The checker itself.",
@@ -3252,34 +3315,6 @@
       "prefLabel": "UserScenarioBlock.personas",
       "definition": "Ids of the personas this scenario involves, at least one.",
       "source": "cat-harness/schemas/dak-blocks.ts#UserScenarioBlock.personas",
-      "status": "candidate"
-    },
-    {
-      "id": "dak.dakdeclaration.canonicalurl",
-      "prefLabel": "DakDeclaration.canonicalUrl",
-      "definition": "Where the published DAK lives — the base its `@id`s are minted against.",
-      "source": "cat-harness/schemas/dak.ts#DakDeclaration.canonicalUrl",
-      "status": "candidate"
-    },
-    {
-      "id": "dak.dakdeclaration.name",
-      "prefLabel": "DakDeclaration.name",
-      "definition": "The instance's name, e.g. `\"smart-immunizations\"`.",
-      "source": "cat-harness/schemas/dak.ts#DakDeclaration.name",
-      "status": "candidate"
-    },
-    {
-      "id": "dak.dakdeclaration.previewurl",
-      "prefLabel": "DakDeclaration.previewUrl",
-      "definition": "Where CI previews are served.",
-      "source": "cat-harness/schemas/dak.ts#DakDeclaration.previewUrl",
-      "status": "candidate"
-    },
-    {
-      "id": "dak.dakdeclaration.publicationurl",
-      "prefLabel": "DakDeclaration.publicationUrl",
-      "definition": "Where the built IG is published, when that differs from `canonicalUrl`.",
-      "source": "cat-harness/schemas/dak.ts#DakDeclaration.publicationUrl",
       "status": "candidate"
     },
     {
@@ -4078,6 +4113,97 @@
       "prefLabel": "PlacementSchema.page",
       "definition": "The page it sits on, 1-based as a reader counts.",
       "source": "cat-harness/schemas/document-image.ts#PlacementSchema.page",
+      "status": "candidate"
+    },
+    {
+      "id": "document-kind.documentkindcoverageschema.from",
+      "prefLabel": "DocumentKindCoverageSchema.from",
+      "definition": "Repo-relative path of what was classified.",
+      "source": "cat-harness/schemas/document-kind.ts#DocumentKindCoverageSchema.from",
+      "status": "candidate"
+    },
+    {
+      "id": "document-kind.documentkindcoverageschema.kind",
+      "prefLabel": "DocumentKindCoverageSchema.kind",
+      "definition": "The kind's id.",
+      "source": "cat-harness/schemas/document-kind.ts#DocumentKindCoverageSchema.kind",
+      "status": "candidate"
+    },
+    {
+      "id": "document-kind.documentkindcoverageschema.method",
+      "prefLabel": "DocumentKindCoverageSchema.method",
+      "definition": "The rule, in a sentence a reader can check.",
+      "source": "cat-harness/schemas/document-kind.ts#DocumentKindCoverageSchema.method",
+      "status": "candidate"
+    },
+    {
+      "id": "document-kind.documentkindcoverageschema.subject",
+      "prefLabel": "DocumentKindCoverageSchema.subject",
+      "definition": "The instance whose content was classified.",
+      "source": "cat-harness/schemas/document-kind.ts#DocumentKindCoverageSchema.subject",
+      "status": "candidate"
+    },
+    {
+      "id": "document-kind.documentkindcoverageschema.unplaced",
+      "prefLabel": "DocumentKindCoverageSchema.unplaced",
+      "definition": "What no rule placed, grouped so the remainder is legible.",
+      "source": "cat-harness/schemas/document-kind.ts#DocumentKindCoverageSchema.unplaced",
+      "status": "candidate"
+    },
+    {
+      "id": "document-kind.documentkindschema.extends",
+      "prefLabel": "DocumentKindSchema.extends",
+      "definition": "A parent kind's id; this kind's sections extend the parent's.",
+      "source": "cat-harness/schemas/document-kind.ts#DocumentKindSchema.extends",
+      "status": "candidate"
+    },
+    {
+      "id": "document-kind.documentkindschema.generatedby",
+      "prefLabel": "DocumentKindSchema.generatedBy",
+      "definition": "Set when the file is generated; names the generator, so a hand edit is visibly a defect.",
+      "source": "cat-harness/schemas/document-kind.ts#DocumentKindSchema.generatedBy",
+      "status": "candidate"
+    },
+    {
+      "id": "document-kind.documentkindschema.structure",
+      "prefLabel": "DocumentKindSchema.structure",
+      "definition": "`fixed`: exactly these sections, every one required. `semi-fixed`: the required sections must be present; others are allowed.",
+      "source": "cat-harness/schemas/document-kind.ts#DocumentKindSchema.structure",
+      "status": "candidate"
+    },
+    {
+      "id": "document-kind.documentkindsectionschema.computedfrom",
+      "prefLabel": "DocumentKindSectionSchema.computedFrom",
+      "definition": "Declared graph ids this section is derived from.",
+      "source": "cat-harness/schemas/document-kind.ts#DocumentKindSectionSchema.computedFrom",
+      "status": "candidate"
+    },
+    {
+      "id": "document-kind.documentkindsectionschema.modelledby",
+      "prefLabel": "DocumentKindSectionSchema.modelledBy",
+      "definition": "The classes of an external vocabulary this section's content instantiates, each as `<system>#<code>` in a PINNED snapshot (`folio-pinned-terminology/v1`) the harness declares. `computedFrom` says where a section's content comes from; this says what KIND of thing it is in a model someone else owns. Resolving the terms is the harness's check, because only it knows which snapshot it pinned — core names no vocabulary.",
+      "source": "cat-harness/schemas/document-kind.ts#DocumentKindSectionSchema.modelledBy",
+      "status": "candidate"
+    },
+    {
+      "id": "document-kind.documentkindsectionschema.sources",
+      "prefLabel": "DocumentKindSectionSchema.sources",
+      "definition": "This section's own sources, when they differ from the kind's.",
+      "source": "cat-harness/schemas/document-kind.ts#DocumentKindSectionSchema.sources",
+      "status": "candidate"
+    },
+    {
+      "id": "document-kind.documentkindsourceschema.locator",
+      "prefLabel": "DocumentKindSourceSchema.locator",
+      "definition": "The part of it that says so: a chapter, a section, a table.",
+      "source": "cat-harness/schemas/document-kind.ts#DocumentKindSourceSchema.locator",
+      "status": "candidate"
+    },
+    {
+      "id": "document-kind.documentkindsourceschema.ref",
+      "prefLabel": "DocumentKindSourceSchema.ref",
+      "definition": "A library entry id or a URL — something a reader can open.",
+      "source": "cat-harness/schemas/document-kind.ts#DocumentKindSourceSchema.ref",
       "status": "candidate"
     },
     {
@@ -5772,6 +5898,48 @@
       "prefLabel": "HealthThresholdSchema.value",
       "definition": "The limit itself.",
       "source": "cat-harness/schemas/health-report.ts#HealthThresholdSchema.value",
+      "status": "candidate"
+    },
+    {
+      "id": "id-lookup.identry.id",
+      "prefLabel": "IdEntry.id",
+      "definition": "`kind/local`, lower-case, as the catalogue names the node.",
+      "source": "cat-harness/schemas/id-lookup.ts#IdEntry.id",
+      "status": "candidate"
+    },
+    {
+      "id": "id-lookup.identry.url",
+      "prefLabel": "IdEntry.url",
+      "definition": "Where the node is held: the source's own page for it.",
+      "source": "cat-harness/schemas/id-lookup.ts#IdEntry.url",
+      "status": "candidate"
+    },
+    {
+      "id": "id-lookup.idlookupmanifestschema.selection",
+      "prefLabel": "IdLookupManifestSchema.selection",
+      "definition": "Which nodes, and from where. A count with no statement of what was counted cannot be checked.",
+      "source": "cat-harness/schemas/id-lookup.ts#IdLookupManifestSchema.selection",
+      "status": "candidate"
+    },
+    {
+      "id": "id-lookup.idlookupmanifestschema.source",
+      "prefLabel": "IdLookupManifestSchema.source",
+      "definition": "The corpus this indexes, by its instance name.",
+      "source": "cat-harness/schemas/id-lookup.ts#IdLookupManifestSchema.source",
+      "status": "candidate"
+    },
+    {
+      "id": "id-lookup.namespaceindexschema.shards",
+      "prefLabel": "NamespaceIndexSchema.shards",
+      "definition": "Every shard file in this namespace, relative to it. A prefix not listed has no entries, so no request is needed to say so.",
+      "source": "cat-harness/schemas/id-lookup.ts#NamespaceIndexSchema.shards",
+      "status": "candidate"
+    },
+    {
+      "id": "id-lookup.shardschema.entries",
+      "prefLabel": "ShardSchema.entries",
+      "definition": "`[id, title, url]`, sorted by id. Arrays rather than objects: the keys would be most of the bytes.",
+      "source": "cat-harness/schemas/id-lookup.ts#ShardSchema.entries",
       "status": "candidate"
     },
     {
@@ -7812,6 +7980,13 @@
       "status": "candidate"
     },
     {
+      "id": "site-indexes.libraryindexentryschema.extractedtitle",
+      "prefLabel": "LibraryIndexEntrySchema.extractedTitle",
+      "definition": "The manifest's extracted title, only when a catalogue title replaced it (bean `gnqa`).",
+      "source": "cat-harness/schemas/site-indexes.ts#LibraryIndexEntrySchema.extractedTitle",
+      "status": "candidate"
+    },
+    {
       "id": "site-indexes.libraryindexentryschema.referencedby",
       "prefLabel": "LibraryIndexEntrySchema.referencedBy",
       "definition": "Absent means the reference scan did not run — a third state, not \"none\".",
@@ -7823,6 +7998,13 @@
       "prefLabel": "LibraryIndexEntrySchema.withheld",
       "definition": "Why the entry is withheld (bean `cw35`/`mkao`): no avatar, no verbatim excerpt.",
       "source": "cat-harness/schemas/site-indexes.ts#LibraryIndexEntrySchema.withheld",
+      "status": "candidate"
+    },
+    {
+      "id": "site-indexes.libraryindexentryschema.withheldby",
+      "prefLabel": "LibraryIndexEntrySchema.withheldBy",
+      "definition": "The structured half of `withheld` (issue #1794): which gates refused, and the catalogue record — copied from `folio-withheld/v1`, so the same shapes, never restated.",
+      "source": "cat-harness/schemas/site-indexes.ts#LibraryIndexEntrySchema.withheldBy",
       "status": "candidate"
     },
     {
@@ -7921,6 +8103,55 @@
       "prefLabel": "SkillTopicsSchema.directories",
       "definition": "One node, two lists: the instance directories declared from within.",
       "source": "cat-harness/schemas/skill-topics.ts#SkillTopicsSchema.directories",
+      "status": "candidate"
+    },
+    {
+      "id": "source-descriptor.identifiersystemschema.authoritative",
+      "prefLabel": "IdentifierSystemSchema.authoritative",
+      "definition": "Whether this identifier is guaranteed by an authority outside the source. A Handle is; a DSpace UUID is the source's own; a local slug is neither. The distinction decides which identifier survives the source moving, and IRIS is the worked case — one of its two handles points at a regional instance that was merged away.",
+      "source": "cat-harness/schemas/source-descriptor.ts#IdentifierSystemSchema.authoritative",
+      "status": "candidate"
+    },
+    {
+      "id": "source-descriptor.sourcedescriptorschema.character",
+      "prefLabel": "SourceDescriptorSchema.character",
+      "definition": "The characterisation the \"ingest a new data source\" process produces. Required — these are what decide how the source may be REFERENCED, and a descriptor that has not said cannot answer that question.",
+      "source": "cat-harness/schemas/source-descriptor.ts#SourceDescriptorSchema.character",
+      "status": "candidate"
+    },
+    {
+      "id": "source-descriptor.sourcedescriptorschema.nodekind",
+      "prefLabel": "SourceDescriptorSchema.nodeKind",
+      "definition": "What one node IS in this corpus. Different per source, and never assumed.",
+      "source": "cat-harness/schemas/source-descriptor.ts#SourceDescriptorSchema.nodeKind",
+      "status": "candidate"
+    },
+    {
+      "id": "source-descriptor.sourcedescriptorschema.subsetbasis",
+      "prefLabel": "SourceDescriptorSchema.subsetBasis",
+      "definition": "Why `subsetIsSelfContained` has the value it has. Optional, because a self-contained source (IRIS: fetch an item and you have it) has little to say; the `false` case is the one that needs its reason recorded.",
+      "source": "cat-harness/schemas/source-descriptor.ts#SourceDescriptorSchema.subsetBasis",
+      "status": "candidate"
+    },
+    {
+      "id": "source-descriptor.sourcedescriptorschema.subsetisselfcontained",
+      "prefLabel": "SourceDescriptorSchema.subsetIsSelfContained",
+      "definition": "Whether a subset chosen by the strategies above stands on its own. `false` means every request must be closed over dependencies first.",
+      "source": "cat-harness/schemas/source-descriptor.ts#SourceDescriptorSchema.subsetIsSelfContained",
+      "status": "candidate"
+    },
+    {
+      "id": "source-descriptor.sourcedescriptorschema.system",
+      "prefLabel": "SourceDescriptorSchema.system",
+      "definition": "The software, where there is some — `DSpace 7`, `Lean 4 / Lake`. Descriptors for one system are often reusable.",
+      "source": "cat-harness/schemas/source-descriptor.ts#SourceDescriptorSchema.system",
+      "status": "candidate"
+    },
+    {
+      "id": "source-descriptor.sourcedescriptorschema.termsurl",
+      "prefLabel": "SourceDescriptorSchema.termsUrl",
+      "definition": "Whether the source states terms, and where. Feeds the `restrictions` and `copyright` gates; `unknown` stays unknown.",
+      "source": "cat-harness/schemas/source-descriptor.ts#SourceDescriptorSchema.termsUrl",
       "status": "candidate"
     },
     {
@@ -8134,6 +8365,13 @@
       "status": "candidate"
     },
     {
+      "id": "sticky-contribution.declaredcontribution.alsowritten",
+      "prefLabel": "DeclaredContribution.alsoWritten",
+      "definition": "The declaring instance's `alsoWritten`, for `bodyFrom: \"summary\"`.",
+      "source": "cat-harness/schemas/sticky-contribution.ts#DeclaredContribution.alsoWritten",
+      "status": "candidate"
+    },
+    {
       "id": "sticky-contribution.declaredcontribution.declaredby",
       "prefLabel": "DeclaredContribution.declaredBy",
       "definition": "The declaring instance's `name`.",
@@ -8152,6 +8390,13 @@
       "prefLabel": "DeclaredContribution.description",
       "definition": "The declaring instance's `description`, for `bodyFrom: \"description\"`.",
       "source": "cat-harness/schemas/sticky-contribution.ts#DeclaredContribution.description",
+      "status": "candidate"
+    },
+    {
+      "id": "sticky-contribution.declaredcontribution.summary",
+      "prefLabel": "DeclaredContribution.summary",
+      "definition": "The declaring instance's `summary`, for `bodyFrom: \"summary\"`.",
+      "source": "cat-harness/schemas/sticky-contribution.ts#DeclaredContribution.summary",
       "status": "candidate"
     },
     {
@@ -8367,7 +8612,7 @@
     {
       "id": "tabular-records.tabularrecordsschema.at-context",
       "prefLabel": "TabularRecordsSchema.@context",
-      "definition": "The published content context — bean `yh6u`. OPTIONAL because folio repositories hold records written before the arm emitted it; when present it must be that context, since any other would bind these keys to terms nobody declared.",
+      "definition": "The published content context — bean `yh6u`. OPTIONAL because folio repositories hold records written before the arm emitted it; when present it must be that context (bare, or with `@base` beside it — bean `bh4q`), since any other would bind these keys to terms nobody declared.",
       "source": "cat-harness/schemas/tabular-records.ts#TabularRecordsSchema.@context",
       "status": "candidate"
     },
@@ -9202,6 +9447,13 @@
       "prefLabel": "ToolMaintainsSchema.source",
       "definition": "Repo-relative module that defines it, e.g. `schemas/tool.ts`.",
       "source": "cat-harness/schemas/tool.ts#ToolMaintainsSchema.source",
+      "status": "candidate"
+    },
+    {
+      "id": "tool.tooloutputschema.render",
+      "prefLabel": "ToolOutputSchema.render",
+      "definition": "How a renderer may place this output in a page. Absent is `text`. See {@link RENDER_AS}.",
+      "source": "cat-harness/schemas/tool.ts#ToolOutputSchema.render",
       "status": "candidate"
     },
     {
@@ -11088,6 +11340,13 @@
       "status": "candidate"
     },
     {
+      "id": "withheld.withheldentryschema.gates",
+      "prefLabel": "WithheldEntrySchema.gates",
+      "definition": "The gates that refused, STRUCTURED — issue #1794. Optional because a generator may know only the sentence; when present, a reader shows \"copyright not granted\" from the gate itself rather than parsing {@link reason}, which is prose and free to change shape.",
+      "source": "cat-harness/schemas/withheld.ts#WithheldEntrySchema.gates",
+      "status": "candidate"
+    },
+    {
       "id": "withheld.withheldentryschema.path",
       "prefLabel": "WithheldEntrySchema.path",
       "definition": "Relative to the directory holding the file; a directory takes its whole subtree.",
@@ -11099,6 +11358,13 @@
       "prefLabel": "WithheldEntrySchema.reason",
       "definition": "Why — which gate, which verdict. A withholding with no reason cannot be re-checked.",
       "source": "cat-harness/schemas/withheld.ts#WithheldEntrySchema.reason",
+      "status": "candidate"
+    },
+    {
+      "id": "withheld.withheldentryschema.record",
+      "prefLabel": "WithheldEntrySchema.record",
+      "definition": "Where a reader can see what the work IS without being shown the work — the catalogue record. `page` is a SITE-ROOT path (leading `/`) to a published record page; `uri` is the upstream identifier (a Handle IRI, say). Either may be absent; a viewer links `page` first, `uri` second, and nothing at all rather than a guess.",
+      "source": "cat-harness/schemas/withheld.ts#WithheldEntrySchema.record",
       "status": "candidate"
     }
   ]

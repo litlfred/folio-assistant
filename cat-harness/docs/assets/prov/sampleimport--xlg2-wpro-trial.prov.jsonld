@@ -18,7 +18,9 @@
         "https://litlfred.github.io/folio-assistant/policies/http-gateway"
       ],
       "prov:used": [
-        "item/18892cf3-5a4f-42a4-923c-a93f4a594dec"
+        {
+          "@id": "https://hdl.handle.net/10665/332098"
+        }
       ],
       "startTime": "2026-09-29T22:58:20.202Z"
     },
@@ -26,9 +28,7 @@
       "@type": "Association",
       "activity": "sampleimport--xlg2-wpro-trial#1",
       "agent": "https://litlfred.github.io/cat-harness/0.1.0/scenarios/actors/owner",
-      "plan": {
-        "@value": "sample-import#Task_Scope"
-      },
+      "plan": "https://litlfred.github.io/cat-harness/0.1.0/processes/sample-import#Task_Scope",
       "role": "https://litlfred.github.io/cat-harness/0.1.0/scenarios/roles#user"
     },
     {
@@ -44,9 +44,7 @@
       "@type": "Association",
       "activity": "sampleimport--xlg2-wpro-trial#2",
       "agent": "https://litlfred.github.io/cat-harness/0.1.0/scenarios/actors/claude",
-      "plan": {
-        "@value": "sample-import#Call_Materialize"
-      },
+      "plan": "https://litlfred.github.io/cat-harness/0.1.0/processes/sample-import#Call_Materialize",
       "role": "https://litlfred.github.io/cat-harness/0.1.0/scenarios/roles#ingestion-agent"
     },
     {
@@ -57,7 +55,9 @@
         "https://litlfred.github.io/folio-assistant/policies/http-gateway"
       ],
       "prov:used": [
-        "item/18892cf3-5a4f-42a4-923c-a93f4a594dec"
+        {
+          "@id": "https://hdl.handle.net/10665/332098"
+        }
       ],
       "startTime": "2026-09-29T22:58:26.427Z"
     },
@@ -65,9 +65,7 @@
       "@type": "Association",
       "activity": "sampleimport--xlg2-wpro-trial#3",
       "agent": "https://litlfred.github.io/cat-harness/0.1.0/scenarios/actors/owner",
-      "plan": {
-        "@value": "sample-import#Gateway_Materialized"
-      },
+      "plan": "https://litlfred.github.io/cat-harness/0.1.0/processes/sample-import#Gateway_Materialized",
       "role": "https://litlfred.github.io/cat-harness/0.1.0/scenarios/roles#ingestion-agent"
     },
     {
@@ -78,7 +76,9 @@
         "https://litlfred.github.io/folio-assistant/policies/http-gateway"
       ],
       "prov:used": [
-        "item/18892cf3-5a4f-42a4-923c-a93f4a594dec"
+        {
+          "@id": "https://hdl.handle.net/10665/332098"
+        }
       ],
       "startTime": "2026-09-29T22:58:20.915Z"
     },
@@ -86,9 +86,7 @@
       "@type": "Association",
       "activity": "sampleimport--xlg2-wpro-trial/Call_Materialize#1",
       "agent": "https://litlfred.github.io/cat-harness/0.1.0/scenarios/actors/owner",
-      "plan": {
-        "@value": "materialize-remote#Task_Purpose"
-      },
+      "plan": "https://litlfred.github.io/cat-harness/0.1.0/processes/materialize-remote#Task_Purpose",
       "role": "https://litlfred.github.io/cat-harness/0.1.0/scenarios/roles#user"
     },
     {
@@ -99,7 +97,9 @@
         "https://litlfred.github.io/folio-assistant/policies/http-gateway"
       ],
       "prov:used": [
-        "item/18892cf3-5a4f-42a4-923c-a93f4a594dec"
+        {
+          "@id": "https://hdl.handle.net/10665/332098"
+        }
       ],
       "startTime": "2026-09-29T22:58:21.560Z"
     },
@@ -107,9 +107,7 @@
       "@type": "Association",
       "activity": "sampleimport--xlg2-wpro-trial/Call_Materialize#2",
       "agent": "https://litlfred.github.io/cat-harness/0.1.0/scenarios/actors/owner",
-      "plan": {
-        "@value": "materialize-remote#Task_Enumerate"
-      },
+      "plan": "https://litlfred.github.io/cat-harness/0.1.0/processes/materialize-remote#Task_Enumerate",
       "role": "https://litlfred.github.io/cat-harness/0.1.0/scenarios/roles#ingestion-agent"
     },
     {
@@ -120,7 +118,9 @@
         "https://litlfred.github.io/folio-assistant/policies/http-gateway"
       ],
       "prov:used": [
-        "item/18892cf3-5a4f-42a4-923c-a93f4a594dec"
+        {
+          "@id": "https://hdl.handle.net/10665/332098"
+        }
       ],
       "startTime": "2026-09-29T22:58:22.147Z"
     },
@@ -128,9 +128,7 @@
       "@type": "Association",
       "activity": "sampleimport--xlg2-wpro-trial/Call_Materialize#3",
       "agent": "https://litlfred.github.io/cat-harness/0.1.0/scenarios/actors/owner",
-      "plan": {
-        "@value": "materialize-remote#Task_Size"
-      },
+      "plan": "https://litlfred.github.io/cat-harness/0.1.0/processes/materialize-remote#Task_Size",
       "role": "https://litlfred.github.io/cat-harness/0.1.0/scenarios/roles#ingestion-agent"
     },
     {
@@ -141,7 +139,9 @@
         "https://litlfred.github.io/folio-assistant/policies/http-gateway"
       ],
       "prov:used": [
-        "item/18892cf3-5a4f-42a4-923c-a93f4a594dec"
+        {
+          "@id": "https://hdl.handle.net/10665/332098"
+        }
       ],
       "startTime": "2026-09-29T22:58:22.744Z"
     },
@@ -149,9 +149,7 @@
       "@type": "Association",
       "activity": "sampleimport--xlg2-wpro-trial/Call_Materialize#4",
       "agent": "https://litlfred.github.io/cat-harness/0.1.0/scenarios/actors/owner",
-      "plan": {
-        "@value": "materialize-remote#Task_Restrictions"
-      },
+      "plan": "https://litlfred.github.io/cat-harness/0.1.0/processes/materialize-remote#Task_Restrictions",
       "role": "https://litlfred.github.io/cat-harness/0.1.0/scenarios/roles#ingestion-agent"
     },
     {
@@ -162,7 +160,9 @@
         "https://litlfred.github.io/folio-assistant/policies/http-gateway"
       ],
       "prov:used": [
-        "item/18892cf3-5a4f-42a4-923c-a93f4a594dec"
+        {
+          "@id": "https://hdl.handle.net/10665/332098"
+        }
       ],
       "startTime": "2026-09-29T22:58:23.407Z"
     },
@@ -170,9 +170,7 @@
       "@type": "Association",
       "activity": "sampleimport--xlg2-wpro-trial/Call_Materialize#5",
       "agent": "https://litlfred.github.io/cat-harness/0.1.0/scenarios/actors/owner",
-      "plan": {
-        "@value": "materialize-remote#Task_Copyright"
-      },
+      "plan": "https://litlfred.github.io/cat-harness/0.1.0/processes/materialize-remote#Task_Copyright",
       "role": "https://litlfred.github.io/cat-harness/0.1.0/scenarios/roles#ingestion-agent"
     },
     {
@@ -183,7 +181,9 @@
         "https://litlfred.github.io/folio-assistant/policies/http-gateway"
       ],
       "prov:used": [
-        "item/18892cf3-5a4f-42a4-923c-a93f4a594dec"
+        {
+          "@id": "https://hdl.handle.net/10665/332098"
+        }
       ],
       "startTime": "2026-09-29T22:58:24.023Z"
     },
@@ -191,9 +191,7 @@
       "@type": "Association",
       "activity": "sampleimport--xlg2-wpro-trial/Call_Materialize#6",
       "agent": "https://litlfred.github.io/cat-harness/0.1.0/scenarios/actors/owner",
-      "plan": {
-        "@value": "materialize-remote#Task_Retention"
-      },
+      "plan": "https://litlfred.github.io/cat-harness/0.1.0/processes/materialize-remote#Task_Retention",
       "role": "https://litlfred.github.io/cat-harness/0.1.0/scenarios/roles#ingestion-agent"
     },
     {
@@ -204,7 +202,9 @@
         "https://litlfred.github.io/folio-assistant/policies/http-gateway"
       ],
       "prov:used": [
-        "item/18892cf3-5a4f-42a4-923c-a93f4a594dec"
+        {
+          "@id": "https://hdl.handle.net/10665/332098"
+        }
       ],
       "startTime": "2026-09-29T22:58:24.618Z"
     },
@@ -212,9 +212,7 @@
       "@type": "Association",
       "activity": "sampleimport--xlg2-wpro-trial/Call_Materialize#7",
       "agent": "https://litlfred.github.io/cat-harness/0.1.0/scenarios/actors/owner",
-      "plan": {
-        "@value": "materialize-remote#Task_SourceLoss"
-      },
+      "plan": "https://litlfred.github.io/cat-harness/0.1.0/processes/materialize-remote#Task_SourceLoss",
       "role": "https://litlfred.github.io/cat-harness/0.1.0/scenarios/roles#ingestion-agent"
     },
     {
@@ -225,7 +223,9 @@
         "https://litlfred.github.io/folio-assistant/policies/http-gateway"
       ],
       "prov:used": [
-        "item/18892cf3-5a4f-42a4-923c-a93f4a594dec"
+        {
+          "@id": "https://hdl.handle.net/10665/332098"
+        }
       ],
       "startTime": "2026-09-29T22:58:25.195Z"
     },
@@ -233,9 +233,7 @@
       "@type": "Association",
       "activity": "sampleimport--xlg2-wpro-trial/Call_Materialize#8",
       "agent": "https://litlfred.github.io/cat-harness/0.1.0/scenarios/actors/owner",
-      "plan": {
-        "@value": "materialize-remote#Gateway_Gates"
-      },
+      "plan": "https://litlfred.github.io/cat-harness/0.1.0/processes/materialize-remote#Gateway_Gates",
       "role": "https://litlfred.github.io/cat-harness/0.1.0/scenarios/roles#ingestion-agent"
     },
     {
@@ -246,7 +244,9 @@
         "https://litlfred.github.io/folio-assistant/policies/http-gateway"
       ],
       "prov:used": [
-        "item/18892cf3-5a4f-42a4-923c-a93f4a594dec"
+        {
+          "@id": "https://hdl.handle.net/10665/332098"
+        }
       ],
       "startTime": "2026-09-29T22:58:25.816Z"
     },
@@ -254,9 +254,7 @@
       "@type": "Association",
       "activity": "sampleimport--xlg2-wpro-trial/Call_Materialize#9",
       "agent": "https://litlfred.github.io/cat-harness/0.1.0/scenarios/actors/owner",
-      "plan": {
-        "@value": "materialize-remote#Task_StayRef"
-      },
+      "plan": "https://litlfred.github.io/cat-harness/0.1.0/processes/materialize-remote#Task_StayRef",
       "role": "https://litlfred.github.io/cat-harness/0.1.0/scenarios/roles#corpus"
     }
   ],

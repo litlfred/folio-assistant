@@ -77,18 +77,40 @@ describe("provJsonldDocument — a real checkout's actors, roles and plans", () 
   });
 
   test("an owner with no iriBase keeps the value a LITERAL and says why — never a relative IRI", async () => {
-    // large-datasets declares no iriBase, and holds sample-import.bpmn.
-    const { document, unaddressed } = provJsonldDocument("t--x", [activity("owner", "authoring-agent", "sample-import#Task_Scope")], book);
+    // bootstrap-tools declares no iriBase, and holds render-kg-to-github-pages.bpmn
+    // (it was large-datasets with sample-import.bpmn until bean `j7ql` folded
+    // that diagram into cat-harness, which declares one).
+    const { document, unaddressed } = provJsonldDocument("t--x", [activity("owner", "authoring-agent", "render-kg-to-github-pages#Task_Scope")], book);
     expect(unaddressed).toHaveLength(1);
-    expect(unaddressed[0]).toMatchObject({ kind: "plan", value: "sample-import#Task_Scope" });
+    expect(unaddressed[0]).toMatchObject({ kind: "plan", value: "render-kg-to-github-pages#Task_Scope" });
     expect(unaddressed[0]!.why).toContain("declares no iriBase");
     const assoc = (await expanded(document)).find((n) => (n["@type"] as string[] | undefined)?.includes(`${P}Association`))!;
-    expect(assoc[`${P}hadPlan`]).toEqual([{ "@value": "sample-import#Task_Scope" }]);
+    expect(assoc[`${P}hadPlan`]).toEqual([{ "@value": "render-kg-to-github-pages#Task_Scope" }]);
   });
 
   test("an id nobody declares is unaddressed, with the reason", () => {
     const { unaddressed } = provJsonldDocument("t--x", [activity("nobody-at-all", "authoring-agent", "code-change-review#T")], book);
     expect(unaddressed.map((u) => [u.kind, u.why])).toEqual([["agent", 'no instance in this checkout declares actor "nobody-at-all"']]);
+  });
+});
+
+describe("prov:used — catalogue items linked at their Handle (owner 2026-10-01, option A)", () => {
+  const book = addressBook(REPO);
+  const used = (items: string[]): ProvActivity =>
+    ({ ...activity("owner", "authoring-agent", "code-change-review#T"), "prov:used": items }) as ProvActivity;
+
+  test("a catalogued IRIS item expands to its Handle IRI as a link", async () => {
+    const { document, unaddressed } = provJsonldDocument("t--x", [used(["item/18892cf3-5a4f-42a4-923c-a93f4a594dec"])], book);
+    expect(unaddressed).toEqual([]);
+    const act = (await expanded(document)).find((n) => (n["@type"] as string[] | undefined)?.includes(`${P}Activity`))!;
+    expect(act[`${P}used`]).toEqual([{ "@id": "https://hdl.handle.net/10665/332098" }]);
+  });
+
+  test("an item nobody catalogues stays a literal, with the reason", async () => {
+    const { document, unaddressed } = provJsonldDocument("t--x", [used(["item/not-catalogued"])], book);
+    expect(unaddressed.map((u) => [u.kind, u.why])).toEqual([["entity", 'no instance in this checkout catalogues "item/not-catalogued"']]);
+    const act = (await expanded(document)).find((n) => (n["@type"] as string[] | undefined)?.includes(`${P}Activity`))!;
+    expect(act[`${P}used`]).toEqual([{ "@value": "item/not-catalogued" }]);
   });
 });
 

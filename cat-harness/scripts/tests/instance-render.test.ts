@@ -153,7 +153,6 @@ describe("this repository's own instances", () => {
     const found = instancesIn(REPO).map((p) => (resolve(p) === resolve(REPO) ? readDeclaration(p)?.name : p.split("/").pop()));
     expect(found).toEqual([
       "folio-assistant",
-      "agent-skills",
       "bootstrap",
       // Added 2026-09-30 when it fired as designed: bootstrap's tools were
       // re-created as the sibling instance `bootstrap-tools/` (bean `xsqm`),
@@ -181,7 +180,6 @@ describe("this repository's own instances", () => {
       "fhir-harness",
       "folio-assistant-core",
       "folio-assistant-sci",
-      "large-datasets",
       // Added 2026-09-21 with the FHIR IG artefact-index ingest (issue #689).
       // It fired as designed, which is what this list is for: `smart-trust/`
       // declares a `harness.json` and is therefore an instance, sorting
@@ -199,18 +197,12 @@ describe("this repository's own instances", () => {
       // and that it RENDERS. The duplication is the deliberate cost noted
       // above.
       "smart-base",
-      // Added 2026-09-22 (issue #975) — the three siblings of the owner's
-      // stack ruling, `core->fhir-harness->smart-base->siblings{smart-l1,
-      // smart-dak, smart-ig}`. They were named in the ruling and in
-      // `smart-stack-layering` for a whole PR while no directory declared any
-      // of them, so the stack existed in prose and nowhere a consumer could
-      // read it. Each declares NO directories, deliberately: that is the
-      // `folio-assistant-core` precedent, because a declared-but-absent
-      // directory is the `dh4f` defect.
-      "smart-dak",
+      // `smart-ig`: the one sibling left of the owner's 2026-09-22 stack
+      // ruling (issue #975). `smart-l1` and `smart-dak` were retired in stage
+      // D of the smart-* separation (#1767, owner 2026-10-01): L1 and DAK are
+      // document KINDS inside smart-base, not layers.
       "smart-ig",
       "smart-immunizations",
-      "smart-l1",
       "smart-trust",
       "who-iris",
       "who-style-guide",

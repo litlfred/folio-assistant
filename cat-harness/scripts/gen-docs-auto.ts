@@ -119,6 +119,14 @@ export interface AutoDocItem {
   path: string;
   /** What to call it in a listing. */
   name: string;
+  /**
+   * What to print under the name, when the full `path` would only repeat
+   * what the row already says. The link still goes to `path`. The glossary
+   * sets it: its path is `<ledger>#<notation>`, and the notation is already
+   * a fact on the row, so the full path made the term column a path column
+   * (bean `n5be`, finding 4).
+   */
+  pathLabel?: string;
   /** One line, EXTRACTED from the artefact. Absent means the artefact does not carry one. */
   summary?: string;
   /** Type-specific facts, rendered as a small table. */
@@ -576,6 +584,10 @@ export const TYPES: AutoDocType[] = [
               // at the file and distinguishes itself by `name`. `dedupeByPath`
               // keys on path, so it is deliberately not applied here.
               path: `${relative(REPO, f).split("\\").join("/")}#${key}`,
+              // The ledger, relative to the sub-graph: more than one ledger
+              // lives under it (an instance's own, and bootstrap's), so which
+              // one is still worth a line — the `#key` is the notation fact.
+              pathLabel: relative(d.absPath, f).split("\\").join("/"),
               name: entry.prefLabel ?? key,
               summary: retired
                 ? `Retired ${entry.retiredOn} — kept, never deleted, so retirement and accident do not look alike.`
@@ -592,7 +604,16 @@ export const TYPES: AutoDocType[] = [
           }
         }
       }
-      return items;
+      // ALPHABETICAL BY THE NAME A READER SEES (bean `n5be`, finding 2).
+      // Rows used to follow ledger order and then the notation key, so
+      // "Activity log" (`role/log`) sat after "Librarian", and each ledger
+      // restarted the alphabet. A reader scanning a glossary scans by term.
+      // The notation breaks a tie, so the order stays deterministic.
+      return items.sort(
+        (a, b) =>
+          a.name.localeCompare(b.name, "en", { sensitivity: "base" }) ||
+          a.path.localeCompare(b.path, "en"),
+      );
     },
   },
 ];
@@ -673,7 +694,7 @@ const PAGE_CSS = `<style>
   table { width: 100%; border-collapse: collapse; font-size: .95rem; }
   th, td { text-align: left; padding: .6rem .6rem; border-bottom: 1px solid var(--edge); vertical-align: top; }
   th { background: color-mix(in srgb, var(--edge) 22%, transparent); }
-  td:first-child { width: 26rem; }
+  td:first-child { width: 20rem; }
   /* A repo-relative path is long and has no spaces, so it breaks mid-word
      unless the breakpoints are named. Slashes are where a reader expects it. */
   .p { color: var(--muted); font-size: .8rem; font-family: ui-monospace, monospace; word-break: normal; overflow-wrap: anywhere; line-break: anywhere; }
@@ -689,6 +710,20 @@ const PAGE_CSS = `<style>
   .fa-table-filter-count { font-size: .875em; opacity: .85; }
   table[data-fa-filtered] tr[hidden] { display: none !important; }
   .n { float: right; color: var(--muted); font-variant-numeric: tabular-nums; }
+  /* ON A PHONE THE TERM SITS ABOVE ITS DEFINITION (bean n5be, finding 4).
+     Two side-by-side columns at 390 px left the term 89 px and broke its path
+     over four lines, and narrow-viewport.css then made the table a sideways
+     scroll box. Each row becomes a block: the name, then the definition at
+     the full width of the screen. By id, so it outranks that file's
+     type selector; the header row is dropped because each cell is now
+     self-evidently what it is. */
+  @media (max-width: 799.98px) {
+    #da-index, #da-index tbody, #da-index tr, #da-index td { display: block; width: auto; }
+    #da-index { mask-image: none; animation: none; overflow: visible; }
+    #da-index thead { display: none; }
+    #da-index td { border-bottom: 0; padding: .25rem 0; overflow-wrap: anywhere; }
+    #da-index tr { border-bottom: 1px solid var(--edge); padding: .5rem 0; }
+  }
 </style>`;
 
 /**
@@ -804,7 +839,7 @@ export function autoDocPage(
             .join("")
         : "";
       return `<tr${keyOf(i) ? ` id="${esc(rowId(i))}"` : ""}>
-  <td><a href="${esc(blobUrl(i.path))}"><code>${esc(i.name)}</code></a><br><span class="p">${esc(i.path)}</span></td>
+  <td><a href="${esc(blobUrl(i.path))}"><code>${esc(i.name)}</code></a><br><span class="p">${esc(i.pathLabel ?? i.path)}</span></td>
   <td>${i.summary ? linkCodes(i, withInlineCode(i.summary, esc)) : '<span class="none">no description in the artefact</span>'}${facts}</td>
 </tr>`;
     })
@@ -848,7 +883,7 @@ ${PAGE_CSS}
 ${railNav}
 <div class="wrap">
 <h1>${esc(type.title)}${scope ? ` <span class="p">${esc(scope)}</span>` : ""}</h1>
-<p class="lede">Derived: ${esc(type.extracts)}.${scopePath ? ` Sub-graph <code>${esc(scopePath)}</code>.` : ""}</p>
+<p class="lede">Derived: ${esc(type.extracts)}.${scopePath ? ` Sub-graph <code>${esc(scopePath)}</code>${siblings.length <= 1 ? `, ${items.length} ${items.length === 1 ? "entry" : "entries"}` : ""}.` : ""}</p>
 
 <div class="note">
   <strong>This is an index, not the documentation.</strong> It says what exists and what each
@@ -857,12 +892,15 @@ ${railNav}
   see the <code>docs-auto</code> skill.
 </div>
 
-<ul class="subs">
-${nav}
-</ul>
-
+${
+  // A sibling list of ONE names this page a third time, after the heading
+  // and the lede (bean `n5be`, finding 5): it navigates nowhere. Shown only
+  // when there is somewhere else to go; the count it carried moves into the
+  // lede above.
+  siblings.length > 1 ? `<ul class="subs">\n${nav}\n</ul>\n` : ""
+}
 ${items.length > TABLE_FILTER_MIN ? TABLE_FILTER_BOX : ""}
-<table${items.length > TABLE_FILTER_MIN ? ' data-fa-filtered="true"' : ""}>
+<table id="da-index"${items.length > TABLE_FILTER_MIN ? ' data-fa-filtered="true"' : ""}>
 <thead><tr><th>Artefact</th><th>What it declares about itself</th></tr></thead>
 <tbody>
 ${rows || '<tr><td colspan="2" class="none">Nothing in scope.</td></tr>'}

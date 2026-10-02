@@ -1,5 +1,5 @@
 {
-  "_comment": "The WHO SMART Trust artefact index, staged as a top-level directory ahead of becoming its own repository — the same path who-iris is on, and deliberately the same shape. The owner settled the location 2026-09-21, choosing a root-level sibling over folding it into `smart-kg/`: each ingested IG becomes another sibling, and `smart-kg/` already holds judgement methodologies (GRADE), which is a different job. THE INGESTED INDEX HOLDS NO SUBJECT MATTER AND AUTHORS NOTHING: everything under `fhir-artifact-index/` and `docs/` was reconstructed from WHO's published output by `ingest:ig`, and `ingest:ig:check` re-derives it; a hand-edit THERE is a defect, because the next check will either overwrite it or fail. If something is wrong in the index, the fix is in the pipeline or in the upstream IG, never in those files. THAT SENTENCE USED TO COVER THE WHOLE INSTANCE and stopped being true on 2026-09-30, when `themes/` arrived (bean `7h3u`): a theme is DERIVED from an upstream stylesheet but is not produced by `ingest:ig`, and `themes.test.ts` re-reads the vendored source rather than a pipeline re-deriving it. Narrowed rather than deleted, because the rule is still exactly right for the two directories it names -- and a whole-instance claim that is true of most of it is the stale-guidance defect this repository keeps paying for.",
+  "_comment": "The WHO SMART Trust artefact index, staged as a top-level directory ahead of becoming its own repository — the same path who-iris is on, and deliberately the same shape. The owner settled the location 2026-09-21, choosing a root-level sibling over folding it into `smart-kg/`: each ingested IG becomes another sibling, and `smart-kg/` already holds judgement methodologies (GRADE), which is a different job. THE INGESTED INDEX HOLDS NO SUBJECT MATTER AND AUTHORS NOTHING: everything under `fhir-artifact-index/` and `docs/` was reconstructed from WHO's published output by `ingest:ig`, and `ingest:ig:check` re-derives it; a hand-edit THERE is a defect, because the next check will either overwrite it or fail. If something is wrong in the index, the fix is in the pipeline or in the upstream IG, never in those files. THAT SENTENCE USED TO COVER THE WHOLE INSTANCE and stopped being true on 2026-09-30, when `themes/` arrived (bean `7h3u`; it moved to `smart-base/themes/` in stage D of the smart-* separation, bean `kg83`, because the theme is the WHO template's, not this IG's): a theme is DERIVED from an upstream stylesheet but is not produced by `ingest:ig`, and `themes.test.ts` re-reads the vendored source rather than a pipeline re-deriving it. Narrowed rather than deleted, because the rule is still exactly right for the two directories it names -- and a whole-instance claim that is true of most of it is the stale-guidance defect this repository keeps paying for.",
   "name": "smart-trust",
   "repository": "litlfred/smart-trust",
   "livesAt": {
@@ -49,16 +49,6 @@
       "graphKinds": [
         "qa"
       ]
-    },
-    {
-      "_comment": "The WHO SMART IG template's web theme, DERIVED from the stylesheet the IG actually builds with. Bean `7h3u`, issue #1682, on the owner's 2026-09-30 ruling: theme it, keep the just-the-docs machinery, WHO's styling, and the nav on the LEFT rather than their top bar. THE SOURCE IS NOT THIS IG. `WorldHealthOrganization/smart-trust` carries no branding CSS at all; its `ig.ini` selects `#local-template`, whose package.json declares `base: who.template.root` -- and that is `WorldHealthOrganization/smart-ig-template`, whose `content/assets/css/who.css` is the branding. It is vendored under `upstream/` so the test reads a COMMITTED artefact rather than the network, and because `local-template` depends on `who.template.root#current`, which can re-skin under us at any time. CC0-1.0, stated by that package's own package.json, is what makes vendoring permitted. Declared rather than left implicit because an undeclared directory is the `dh4f` defect: every declaration-driven consumer scans nothing and reports a clean run over it.",
-      "id": "smart-trust-themes",
-      "path": "themes/",
-      "description": "The WHO SMART IG template's web theme, measured from `who.template.root`'s own `who.css` and pinned by commit. Colour and geometry only: the IG's top navbar is deliberately not reproduced, because the owner asked for the nav to stay on the LEFT (2026-09-30). `upstream/who.css` is the vendored source the tests re-read, CC0-1.0.",
-      "_dependents_comment": "skip, not reproduce -- the same reasoning `who-iris-themes` carries. This entry says where THIS instance's theme lives; a dependent with no theme of its own needs no themes/ directory, and reproduce would ship an empty one downstream, which is the `dh4f` shape arriving by inheritance.",
-      "graphKinds": [
-        "themes"
-      ]
     }
   ],
   "assets": [
@@ -90,7 +80,7 @@
         "themeId": "operations"
       },
       "summary": "A published IG, read back as a graph",
-      "bodyFrom": "description"
+      "bodyFrom": "summary"
     }
   ]
 }

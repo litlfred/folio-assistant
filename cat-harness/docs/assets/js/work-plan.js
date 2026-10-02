@@ -725,9 +725,101 @@
     return board;
   }
 
-  /** Swap the board in place, preserving nothing but the scope. */
+  /* ── When was this built, and how far behind main is it? ─────────────
+   *
+   * A reviewer reading counts needs to know WHICH moment they describe. The
+   * stamp is not written into the committed page or its projection: bean
+   * `y7b3` measured a timestamp in a committed generated file as a merge
+   * conflict on every pair of concurrent changes, and the owner ruled them
+   * out. So the deploy writes it — `build.json` at the root of the main site
+   * (`docs-site.yml`), `staging.json` at the root of a preview
+   * (`staging-banner.ts`) — and the page reads it at load time.
+   *
+   * The distance from main is asked of GitHub at load time too, because it
+   * changes with every merge and no build can know it in advance. Every
+   * failure renders as "could not determine", never as "up to date": a
+   * stamp that cannot say how stale it is must not claim to be fresh.
+   */
+  var STAMP = null;
+
+  function fetchJson(url) {
+    return fetch(url, { cache: "no-store" }).then(function (r) {
+      if (!r.ok) throw new Error("HTTP " + r.status);
+      return r.json();
+    });
+  }
+
+  /** The deploy's facts, normalised over the two stamp files' spellings. */
+  function readBuildStamp(src) {
+    var dir = src.replace(/[^/]*$/, "");
+    return fetchJson(src)
+      .catch(function () { return fetchJson(dir + "staging.json"); })
+      .then(function (f) {
+        var sha = f && typeof f.sha === "string" ? f.sha : "";
+        if (!sha) throw new Error("no sha");
+        return { sha: sha, built: f.built || f.builtAt || "", runUrl: f.runUrl || "" };
+      });
+  }
+
+  function ageText(iso) {
+    var t = Date.parse(iso);
+    if (isNaN(t)) return "";
+    var mins = Math.max(0, Math.round((Date.now() - t) / 60000));
+    if (mins < 60) return mins + " min ago";
+    var hrs = Math.round(mins / 60);
+    if (hrs < 48) return hrs + " h ago";
+    return Math.round(hrs / 24) + " days ago";
+  }
+
+  /** `https://github.com/<owner>/<repo>` → the API's compare URL, or null. */
+  function compareUrl(sha) {
+    var m = /^https:\/\/github\.com\/([^/]+)\/([^/]+?)\/?$/.exec(repoWeb);
+    return m ? "https://api.github.com/repos/" + m[1] + "/" + m[2] +
+      "/compare/" + encodeURIComponent(sha) + "...main" : null;
+  }
+
+  function behindText(cmp) {
+    if (!cmp || typeof cmp.ahead_by !== "number") return "commits behind main: could not determine";
+    if (cmp.ahead_by === 0) return "up to date with main";
+    return cmp.ahead_by + (cmp.ahead_by === 1 ? " commit" : " commits") + " behind main";
+  }
+
+  function mountStamp(host) {
+    var meta = document.querySelector('meta[name="fa-build-src"]');
+    var src = meta && meta.getAttribute("content");
+    if (!src) return;
+    STAMP = el("p", { class: "fa-workplan-stamp", role: "status" },
+      "Generated: reading the build stamp\u2026");
+    host.insertBefore(STAMP, host.firstChild);
+    readBuildStamp(src).then(function (b) {
+      STAMP.textContent = "Generated ";
+      if (b.built) {
+        var time = el("time", { datetime: b.built }, b.built.replace("T", " ").replace("Z", " UTC"));
+        STAMP.appendChild(time);
+        var age = ageText(b.built);
+        if (age) STAMP.appendChild(document.createTextNode(" (" + age + ")"));
+        STAMP.appendChild(document.createTextNode(" "));
+      }
+      STAMP.appendChild(document.createTextNode("from "));
+      var code = el("code", null, b.sha.slice(0, 7));
+      var commit = repoWeb ? el("a", { href: repoWeb + "/commit/" + b.sha }) : null;
+      if (commit) { commit.appendChild(code); STAMP.appendChild(commit); } else STAMP.appendChild(code);
+      var behind = document.createTextNode(" \u00b7 checking how far main has moved\u2026");
+      STAMP.appendChild(behind);
+      var url = compareUrl(b.sha);
+      (url ? fetchJson(url) : Promise.reject(new Error("no repo")))
+        .then(function (cmp) { behind.textContent = " \u00b7 " + behindText(cmp); })
+        .catch(function () { behind.textContent = " \u00b7 " + behindText(null); });
+    }).catch(function () {
+      // Absent on a local build; a third state, said rather than hidden.
+      STAMP.textContent = "Generated: no build stamp on this deploy, so its age could not be determined.";
+    });
+  }
+
+  /** Swap the board in place, preserving nothing but the scope and stamp. */
   function renderBoard(host) {
     host.textContent = "";
+    if (STAMP) host.appendChild(STAMP);
     host.appendChild(buildBoard());
   }
 
@@ -804,6 +896,7 @@
         };
 
         renderBoard(host);
+        mountStamp(host);
         wireBoard(host);
       });
     });

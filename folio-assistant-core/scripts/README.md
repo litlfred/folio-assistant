@@ -15,13 +15,13 @@ Part of [folio-assistant-core](../README.md) 0.1.0, declared as `core-scripts`, 
 | [`build-glossary.ts`](build-glossary.ts) | a file |  |
 | [`cache-index.test.ts`](cache-index.test.ts) | a file |  |
 | [`cache-index.ts`](cache-index.ts) | a file |  |
-| [`check-artifact-index.ts`](check-artifact-index.ts) | a file |  |
 | [`check-catalogue.ts`](check-catalogue.ts) | a file |  |
 | [`check-materialized-fixity.ts`](check-materialized-fixity.ts) | a file |  |
 | [`check-voices.ts`](check-voices.ts) | a file |  |
 | [`codemod-refterm-usage.test.ts`](codemod-refterm-usage.test.ts) | a file |  |
 | [`codemod-refterm.test.ts`](codemod-refterm.test.ts) | a file |  |
 | [`codemod-refterm.ts`](codemod-refterm.ts) | a file |  |
+| [`dc-render.ts`](dc-render.ts) | a file |  |
 | [`extract-assets.ts`](extract-assets.ts) | a file |  |
 | [`gen-covers.test.ts`](gen-covers.test.ts) | a file |  |
 | [`gen-covers.ts`](gen-covers.ts) | a file |  |
@@ -31,9 +31,6 @@ Part of [folio-assistant-core](../README.md) 0.1.0, declared as `core-scripts`, 
 | [`glossary-page.ts`](glossary-page.ts) | a file |  |
 | [`glossary-pot.test.ts`](glossary-pot.test.ts) | a file |  |
 | [`glossary-pot.ts`](glossary-pot.ts) | a file |  |
-| [`glossary-skos-automated.test.ts`](glossary-skos-automated.test.ts) | a file |  |
-| [`ingest-ig-artifacts.ts`](ingest-ig-artifacts.ts) | a file |  |
-| [`ingest-ig-invocation.test.ts`](ingest-ig-invocation.test.ts) | a file |  |
 | [`local-path.test.ts`](local-path.test.ts) | a file |  |
 | [`materialized-fixity.test.ts`](materialized-fixity.test.ts) | a file |  |
 | [`review-comment-move.test.ts`](review-comment-move.test.ts) | a file |  |

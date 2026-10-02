@@ -215,34 +215,10 @@ jobs:
       # The BPMN sources under processes/ are the source of truth; the SVGs
       # the workflow pages embed are rendered from them with bpmn-js in headless
       # Chromium, so the published site can never show a stale diagram.
-      # Bean `2i5k`: bpmn-js's raw drawing of each diagram, kept per diagram
-      # under a key covering everything the drawing is a function of (see
-      # `render-bpmn.ts`). The actions key below only decides WHICH directory
-      # comes back; correctness rests on the per-diagram key inside it, so a
-      # partial restore is safe and a stale entry is never read.
-      - name: Restore the BPMN render cache
-        id: bpmn-cache
-        uses: actions/cache@v6
-        with:
-          path: ${{ runner.temp }}/bpmn-render-cache
-          key: bpmn-render-${{ hashFiles('**/*.bpmn', '!**/node_modules/**', 'bootstrap-tools/scripts/render-bpmn.ts', 'bun.lock') }}
-          restore-keys: bpmn-render-
-
       - name: Render BPMN workflow diagrams
-        env:
-          BPMN_RENDER_CACHE: ${{ runner.temp }}/bpmn-render-cache
-          EXACT_HIT: ${{ steps.bpmn-cache.outputs.cache-hit }}
         run: |
-          # On an exact cache hit every diagram is already drawn, so no browser
-          # is launched and the Chromium install is skipped. If anything
-          # still needs drawing, install and
-          # render — the cache only ever removes work, never a diagram.
-          log="$RUNNER_TEMP/render-bpmn.log"
-          if [ "$EXACT_HIT" != "true" ] || ! bun run render:bpmn > "$log" 2>&1; then
-            npx --yes playwright install --with-deps chromium
-            bun run render:bpmn > "$log" 2>&1 || { cat "$log"; exit 1; }
-          fi
-          cat "$log"
+          npx --yes playwright install --with-deps chromium
+          bun run render:bpmn
 
       # Stamp the build so a reader can tell WHAT IS DEPLOYED from the page
       # itself. Without it the only way to know whether a change is live is to
@@ -674,6 +650,19 @@ jobs:
 
       - name: Disable Jekyll on the published branch
         run: touch ./_site/.nojekyll
+
+      # ONE file carries the build's moment, read by the work-plan dashboard
+      # at load time to say "generated … · N commits behind main". Not a page
+      # and not committed: `_data/build.yml` already varies per run for the
+      # footer, and this is the same three facts as JSON for a page Jekyll
+      # never renders (the generated visualisers are copied verbatim).
+      - name: Write the build stamp for client-side readers
+        env:
+          RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+        run: |
+          printf '{\n  "sha": "%s",\n  "built": "%s",\n  "runUrl": "%s"\n}\n' \
+            "$GITHUB_SHA" "$(date -u +%Y-%m-%dT%H:%M:%SZ)" "$RUN_URL" > ./_site/build.json
+          cat ./_site/build.json
 
       # CARRY THE OPEN PRs' REVIEW PREVIEWS ACROSS THIS DEPLOY — bean `plj1`.
       #
