@@ -1,11 +1,11 @@
 ---
 # folio-assistant-5yhm
 title: 'TERMINOLOGY: identification, mapping and adjudication — a glossary term is CHECKED against an existing terminology, never only minted'
-status: todo
+status: in-progress
 type: feature
 priority: normal
 created_at: 2026-09-25T04:51:06Z
-updated_at: 2026-09-29T22:01:05Z
+updated_at: 2026-10-02T06:45:37Z
 parent: folio-assistant-0lmb
 ---
 
@@ -65,3 +65,5 @@ returning one boolean cannot express any of that.
 - [ ] `ejug` — one terminology service as a Tool node, OCL confirmed first
 - [ ] the glossary page reports mapped / unmapped / undetermined per term,
       and grades none of them
+
+Claimed by claude/terminology-adjudication (session https://claude.ai/code/session_01CVVoavPoCHMLA7AASxG8cH) — issue #1836, slice: per-term mapping state on the glossary page.
