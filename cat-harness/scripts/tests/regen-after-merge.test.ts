@@ -191,9 +191,9 @@ describe("regen runs to a FIXPOINT, not one pass — bean `14ve`", () => {
     { check: "b:check", writer: "b" },
   ];
 
-  test("one pass leaves A stale; the fixpoint leaves every check current", () => {
+  test("one pass leaves A stale; the fixpoint leaves every check current", async () => {
     const { v, runner } = tree();
-    const r = regenToFixpoint(pairs, runner);
+    const r = await regenToFixpoint(pairs, runner);
     expect(r.settled).toBe(true);
     // Pass 1: A current (0 === 0), B stale → B writes 1. Pass 2: A stale →
     // repaired. Pass 3: nothing ran.
@@ -202,17 +202,17 @@ describe("regen runs to a FIXPOINT, not one pass — bean `14ve`", () => {
     expect(r.results.map((x) => x.outcome)).toEqual(["regenerated", "regenerated"]);
   });
 
-  test("a single pass really does leave it stale — the control", () => {
+  test("a single pass really does leave it stale — the control", async () => {
     const { v, runner } = tree();
-    const r = regenToFixpoint(pairs, runner, 1);
+    const r = await regenToFixpoint(pairs, runner, 1);
     expect(r.settled).toBe(false);
     expect(v.aOut).not.toBe(v.bOut);
   });
 
-  test("two writers that undo each other stop at the cap and say so", () => {
+  test("two writers that undo each other stop at the cap and say so", async () => {
     let x = 0;
     const flip: Runner = (s) => (s.endsWith(":check") ? false : ((x = 1 - x), true));
-    const r = regenToFixpoint([{ check: "p:check", writer: "p" }], flip, 3);
+    const r = await regenToFixpoint([{ check: "p:check", writer: "p" }], flip, 3);
     expect(r.passes).toBe(3);
     expect(r.settled).toBe(false);
     expect(x === 0 || x === 1).toBe(true);
@@ -236,7 +236,7 @@ describe("UNGATED_INPUTS — writers regen runs without making them gates (bean 
     for (const { check } of UNGATED_INPUTS) expect(gated.has(check), `${check} is gated now`).toBe(false);
   });
 
-  test("an ungated input asked FIRST lets a dependent check settle in one pass", () => {
+  test("an ungated input asked FIRST lets a dependent check settle in one pass", async () => {
     // library:viz writes what methodologies:viz reads. Asked first, the
     // dependent sees the fresh input in the same pass: no second pass needed.
     let libraryFresh = false;
@@ -247,7 +247,7 @@ describe("UNGATED_INPUTS — writers regen runs without making them gates (bean 
       return true;
     };
     const pairs = [{ check: "library:viz:check", writer: "library:viz" }, { check: "methodologies:viz:check", writer: "methodologies:viz" }];
-    const fx = regenToFixpoint(pairs, runner);
+    const fx = await regenToFixpoint(pairs, runner);
     expect(fx.results.map((r) => r.outcome)).toEqual(["regenerated", "current"]);
   });
 });

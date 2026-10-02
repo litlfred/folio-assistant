@@ -458,7 +458,7 @@ export type VoiceSupersession = z.infer<typeof VoiceSupersessionSchema>;
  * and `specification` — whole artefacts, not blocks. Declared here so a typo
  * in either vocabulary fails rather than silently auditing nothing.
  */
-export const VOICE_ARTEFACT_KINDS = ["docs", "skill", "readme", "specification"] as const;
+export const VOICE_ARTEFACT_KINDS = ["docs", "skill", "readme", "specification", "code"] as const;
 
 /** One thing a voice audits: a block kind or a declared artefact kind. */
 export const VoiceTargetSchema = z.union([z.enum(BLOCK_KINDS), z.enum(VOICE_ARTEFACT_KINDS)]);
