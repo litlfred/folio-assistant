@@ -135,6 +135,19 @@ const INDEX = INDEX_ARG ? resolve(process.cwd(), INDEX_ARG) : join(INSTANCE, "fh
  * complete.
  */
 const MENU = join(INSTANCE, "fhir-artifact-index", "menu.json");
+/**
+ * `--compiled-data <dir>`: where a COMPILED index's files are served, as a
+ * path from the docs root (e.g. `../ast-data` beside `docs/`). When set, each
+ * artefact page whose materialization is a compiled copy gets a resource
+ * section its browser fills from that file: the narrative and the JSON, by
+ * the shared loader `assets/ast-resource.js` (skill `visualizer-loading`).
+ * The page keeps identity, layout and the pointer; the content is fetched,
+ * never baked in. Absent means the files are not served, so no page points
+ * at them.
+ */
+const COMPILED_DATA = arg("--compiled-data")?.replace(/\/+$/, "");
+const AST_LOADER = join(import.meta.dir, "templates", "ig-pages", "ast-resource.js");
+
 /** `--out` writes the pages somewhere other than the instance's committed `docs/`. */
 const OUT_ARG = arg("--out");
 const OUT = OUT_ARG ? resolve(process.cwd(), OUT_ARG) : join(INSTANCE, "docs");
@@ -792,6 +805,36 @@ function stateTag(a: FhirArtifact): string {
     : `<span class="st-tag st-ref">referenced</span>`;
 }
 
+/**
+ * The resource itself, for an artefact held as a compiled copy and served
+ * under `--compiled-data`: a pointer the shared loader fills in the browser,
+ * a visible loading state, and the raw file for a reader without JavaScript.
+ * The served tree mirrors the AST directory, so the file's path is its
+ * `localPath` with the AST directory's own name dropped.
+ */
+function compiledResourceSection(a: FhirArtifact): string[] {
+  const m = a.materialization;
+  if (!COMPILED_DATA || m.state !== "materialized" || m.purpose !== "compiled" || !m.localPath) return [];
+  // `artifact/Name.html` → the docs root is `../`.
+  const src = `../${COMPILED_DATA}/${m.localPath.replace(/^[^/]+\//, "")}`;
+  // The narrative is the Publisher's XHTML, whose relative links name the
+  // Publisher's own pages. The loader keeps one that names a page THIS site has
+  // (`ast-pages.json`, the same `Type-id` names) and sends the rest to the
+  // published IG, read off this artefact's own published page.
+  const html = a.published.html?.url;
+  const published = html ? html.slice(0, html.lastIndexOf("/") + 1) : undefined;
+  return [
+    `## Resource`,
+    ``,
+    `<div class="ast-resource" data-ast-src="${esc(src)}" data-ast-pages="../assets/ast-pages.json"${published ? ` data-ast-published="${esc(published)}"` : ""}>`,
+    `<p class="ast-state">Loading the resource from the IG Publisher AST cache…</p>`,
+    `<noscript><p>This section loads in the browser. The resource is <a href="${esc(src)}">its JSON in the AST cache</a>.</p></noscript>`,
+    `</div>`,
+    `<script src="../assets/ast-resource.js" defer></script>`,
+    ``,
+  ];
+}
+
 function artifactPage(ix: FhirArtifactIndex, a: FhirArtifact): string {
   const name = a.title ?? a.name ?? a.id;
 
@@ -844,6 +887,7 @@ function artifactPage(ix: FhirArtifactIndex, a: FhirArtifact): string {
         : "upstream, not held here"
     } |`,
     ``,
+    ...compiledResourceSection(a),
     // The sidecar table is worth a screen when there ARE sidecars. On the 655
     // artefacts with none it was four rows of "*not published for this
     // artefact*", which is noise dressed as information — so the absence is
@@ -980,6 +1024,15 @@ pages.set("index.md", indexPage(ix));
 // upstream links.
 for (const a of ix.artifacts) {
   pages.set(join("artifact", `${pageName(a)}.md`), artifactPage(ix, a));
+}
+// The shared loader, published once beside the pages (never inlined in each)
+// and only when a page points at it.
+if ([...pages.values()].some((p) => p.includes("data-ast-src="))) {
+  pages.set(join("assets", "ast-resource.js"), readFileSync(AST_LOADER, "utf8"));
+  pages.set(
+    join("assets", "ast-pages.json"),
+    `${JSON.stringify(ix.artifacts.map((a) => `${pageName(a)}.html`).sort())}\n`,
+  );
 }
 
 // A page for each category too large to inline, so "too many to list here"

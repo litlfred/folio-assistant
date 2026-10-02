@@ -97,8 +97,15 @@ base_args=()
 bun run "$HERE/ast-to-artifact-index.ts" --ast "$IG_ROOT/output-ast" --instance-id "$(basename "$INSTANCE")" \
   "${base_args[@]}" --out "$OUT/fhir-artifact-index/index.json" "${compare_args[@]}" || exit 3
 
+step "serve the AST's resources"
+# The pages fetch each resource from here in the browser (skill
+# `visualizer-loading`): served verbatim beside docs/, never copied into it.
+rm -rf "$OUT/ast-data" && mkdir -p "$OUT/ast-data"
+cp -R "$IG_ROOT/output-ast/resources" "$OUT/ast-data/resources" || exit 3
+echo "$(find "$OUT/ast-data" -name '*.json' | wc -l | tr -d ' ') resource file(s) -> $OUT/ast-data"
+
 step "pages"
-page_args=(--instance "$INSTANCE" --index "$OUT/fhir-artifact-index/index.json" --out "$OUT/docs")
+page_args=(--instance "$INSTANCE" --index "$OUT/fhir-artifact-index/index.json" --out "$OUT/docs" --compiled-data ../ast-data)
 [ -n "$LABEL" ] && page_args+=(--label "$LABEL")
 [ -n "$CHROME_OWNER" ] && page_args+=(--chrome-owner "$CHROME_OWNER")
 page_args+=("${PAGE_EXTRA[@]}")

@@ -588,6 +588,8 @@ jobs:
               --out "$OUT" --label "$LABEL" "${CHROME_ARGS[@]}" || { echo "AST pipeline failed: $INSTANCE"; continue; }
             mkdir -p "./_docs/${INSTANCE}/ast"
             cp -R "$OUT/docs/." "./_docs/${INSTANCE}/ast/"
+            # The resources the pages load in the browser, beside the pages.
+            rm -rf "./_docs/${INSTANCE}/ast-data" && cp -R "$OUT/ast-data" "./_docs/${INSTANCE}/ast-data"
             cp "$OUT/validity.json" "./_docs/${INSTANCE}/ast/validity.json"
             [ -f "$OUT/parity.json" ] && cp "$OUT/parity.json" "./_docs/${INSTANCE}/ast/parity.json"
             echo "rendered ${INSTANCE} from its AST -> /${INSTANCE}/ast/"
