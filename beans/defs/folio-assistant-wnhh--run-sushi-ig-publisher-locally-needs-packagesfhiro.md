@@ -1,11 +1,11 @@
 ---
 # folio-assistant-wnhh
 title: Run SUSHI + IG Publisher locally (needs packages.fhir.org and tx.fhir.org)
-status: todo
+status: in-progress
 type: task
 priority: normal
 created_at: 2026-10-01T17:11:25Z
-updated_at: 2026-10-01T17:53:00Z
+updated_at: 2026-10-02T11:35:55Z
 parent: folio-assistant-uhkv
 ---
 
