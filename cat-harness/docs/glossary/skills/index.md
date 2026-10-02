@@ -2117,7 +2117,7 @@ turn-reporting <span class="fa-gloss-status">candidate, extracted</span>
 ui-accessibility <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
-<p>Every user interface this project produces must be operable by keyboard, legible at measured contrast, and comfortable to hit. How to build to that, how to check it, and why an automated pass is not the standard.</p>
+<p>Every user interface this project produces must be operable by keyboard, legible at measured contrast, and comfortable to hit. How to build to that, how to check it, why an automated pass is not the standard, and what a rendering built client-side owes a reader — there is no no-JavaScript floor here, and the two gates that look like one are narrower than their names.</p>
 <p class="fa-gloss-meta">Skills of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/ui/ui-core/ui-accessibility.md"><code>cat-harness/skills/ui/ui-core/ui-accessibility.md</code></a></p>
 </dd>
 <dt id="cat-harness--kg-skills--uml-overview" data-fa-state="extracted" data-fa-gloss="">
