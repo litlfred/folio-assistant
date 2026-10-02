@@ -1,13 +1,14 @@
 ---
 # folio-assistant-w6fu
 title: 'Visualiser follow-ups: disabled kg-viewer language switcher, library title extraction'
-status: in-progress
+status: completed
 type: task
+priority: normal
 tags:
     - wireframe-findings
     - ui
 created_at: 2026-10-02T09:01:57Z
-updated_at: 2026-10-02T09:01:57Z
+updated_at: 2026-10-02T12:05:57Z
 parent: folio-assistant-4ccr
 ---
 
@@ -24,3 +25,11 @@ Claimed by claude/visualiser-followups (session https://claude.ai/code/session_0
 - [x] the ingest path resolves titles from corroborated sources and marks the rest unverified; before/after counted over every entry
 - [x] remaining bad titles corrected as data, one entry at a time, each with its basis
 - [x] before/after screenshots at 1280×800 and 390×844 committed and shown in the PR
+
+## Summary of Changes
+
+- kg-viewer (2bc9e808e): every locale with a .po is drawn; an empty catalogue's locale is an aria-disabled, focusable button with a visible 'Translations coming' disclosure (tap/Enter/Space), 32px targets; a catalogue's first string enables it with no code change. Unit + e2e (35 pass).
+- Library titles (a) (792757c15): scripts/_pdf_title.py, shared by pdf-structure.py, pdf-pages.py and ingest-document.ts --refresh-title. Metadata Title, page-1 heading and outline before the text walk; a candidate is taken only when an independent source corroborates it, else the raw title stays with title_verified false and every candidate in title_evidence. Over 57 entries: 19 shown titles changed, 29 verified, slug-only entries 25 -> 18; idempotent. Test: scripts/tests/pdf-title.test.py.
+- Library titles (b) (89eb6c2fa): 19 editorial corrections as metadata.title_correction {title, basis, corrected_on, bean} in each entry's structure.json; the manifest says title_source editorial and keeps the extracted title.
+- Screenshots: wireframes/kg-viewer/rendered-2026-10-02/switcher-*.png and wireframes/library/rendered-2026-10-02/titles-*.png (1280x800, 390x844).
+- Left open (owner question on #1849): kg-folio-asst-2026-09-30 (pptx) and codata-2022 (tabular) are non-PDF entries with no title source.

@@ -308,12 +308,11 @@ def _outline_first(doc: Any) -> str | None:
 
 def evidence_from_pdf(path: str, pages: int = 2) -> dict[str, Any]:
     """Read the three sources and the first pages' text out of a PDF."""
-    try:
-        import pymupdf as fitz  # PyMuPDF >= 1.24
-    except ImportError:  # pragma: no cover - older PyMuPDF
-        import fitz  # type: ignore[no-redef]
+    # `pymupdf`, the name the sibling scripts import and the declaration
+    # (`python-deps`) lists; the legacy `fitz` alias is not declared.
+    import pymupdf
 
-    doc = fitz.open(path)
+    doc = pymupdf.open(path)
     try:
         md = doc.metadata or {}
         first = doc[0] if doc.page_count else None
