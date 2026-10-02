@@ -301,10 +301,10 @@
   ],
   "canonicalDocument": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld",
   "repository": "cat-harness",
-  "generatedAt": "2026-10-02T08:56:08.949Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/dd9d52e84c713e4eb8f9fe55356fea7a95f48f55",
-  "sourceCommitSha": "dd9d52e84c713e4eb8f9fe55356fea7a95f48f55",
-  "sourceCommitAt": "2026-10-02T08:49:20Z",
+  "generatedAt": "2026-10-02T13:35:23.091Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/419944d0575b0b5ff9b7f935a35b61c73cbb0ff1",
+  "sourceCommitSha": "419944d0575b0b5ff9b7f935a35b61c73cbb0ff1",
+  "sourceCommitAt": "2026-10-02T13:28:04Z",
   "sourceTreeDirty": true,
   "dependsOnUnavailable": "2 dependency edge(s), none expressible as a record — see gaps",
   "counts": {
@@ -318,8 +318,8 @@
     "Lane": 201,
     "ProcessNode": 940,
     "Tool": 112,
-    "Schema": 144,
-    "ExternalSchema": 18,
+    "Schema": 145,
+    "ExternalSchema": 19,
     "GraphKind": 25,
     "Role": 48,
     "Subgraph": 25,
@@ -2716,7 +2716,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-hypatia-k3aoh4-one-name/cat-harness.jsonld#package/sdlc-core"
       ],
       "instructionsPath": "skills/sdlc/sdlc-core/before-after-preview.md",
-      "instructionLines": 378,
+      "instructionLines": 387,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -2800,7 +2800,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-hypatia-k3aoh4-one-name/cat-harness.jsonld#package/sdlc-core"
       ],
       "instructionsPath": "skills/sdlc/sdlc-core/staging-review.md",
-      "instructionLines": 596,
+      "instructionLines": 614,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -3881,7 +3881,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-hypatia-k3aoh4-one-name/cat-harness.jsonld#package/ui-core"
       ],
       "instructionsPath": "skills/ui/ui-core/harness-tiles.md",
-      "instructionLines": 425,
+      "instructionLines": 440,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -40963,7 +40963,11 @@
           {
             "name": "url",
             "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-hypatia-k3aoh4-one-name/tool-types.schema.json#/$defs/Url",
-            "description": "The change proposal or comment created."
+            "description": "The change proposal or comment created.",
+            "render": {
+              "as": "url",
+              "reason": "a reader follows it to the proposal; the scheme is checked before it reaches an href"
+            }
           }
         ]
       },
@@ -41015,7 +41019,11 @@
           {
             "name": "url",
             "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-hypatia-k3aoh4-one-name/tool-types.schema.json#/$defs/Url",
-            "description": "Where the tree is served."
+            "description": "Where the tree is served.",
+            "render": {
+              "as": "url",
+              "reason": "a reader opens it; the scheme is checked before it reaches an href"
+            }
           }
         ]
       },
@@ -41073,7 +41081,11 @@
           {
             "name": "preview",
             "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-hypatia-k3aoh4-one-name/tool-types.schema.json#/$defs/Url",
-            "description": "Where the preview is served. A reviewer cannot assess a rendered artefact from a description of it, which is what this URL is for."
+            "description": "Where the preview is served. A reviewer cannot assess a rendered artefact from a description of it, which is what this URL is for.",
+            "render": {
+              "as": "url",
+              "reason": "a reviewer opens the preview; the scheme is checked before it reaches an href"
+            }
           }
         ]
       },
@@ -41122,7 +41134,11 @@
           {
             "name": "url",
             "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-hypatia-k3aoh4-one-name/tool-types.schema.json#/$defs/Url",
-            "description": "Where the tree is being served."
+            "description": "Where the tree is being served.",
+            "render": {
+              "as": "url",
+              "reason": "a reader opens it; the scheme is checked before it reaches an href"
+            }
           }
         ]
       },
@@ -42947,7 +42963,11 @@
           {
             "name": "report",
             "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-hypatia-k3aoh4-one-name/tool-types.schema.json#/$defs/Markdown",
-            "description": "One row per workflow. Five verdicts, not two: green, red, `running`, `superseded` (a red whose workflow file changed after the failing run, so the verdict is against code that no longer exists), and possibly-stale (a red that has not re-run in a week). Three exit codes carry them to a caller that reads no rows: 0 nothing is red, 1 something is, 2 COULD NOT LOOK — the API was unreachable, or `--out` could not be written. A caller must never read 2 as either verdict. `--markdown` and `--warn` always exit 0 by design, so a caller wanting the verdict uses neither."
+            "description": "One row per workflow. Five verdicts, not two: green, red, `running`, `superseded` (a red whose workflow file changed after the failing run, so the verdict is against code that no longer exists), and possibly-stale (a red that has not re-run in a week). Three exit codes carry them to a caller that reads no rows: 0 nothing is red, 1 something is, 2 COULD NOT LOOK — the API was unreachable, or `--out` could not be written. A caller must never read 2 as either verdict. `--markdown` and `--warn` always exit 0 by design, so a caller wanting the verdict uses neither.",
+            "render": {
+              "as": "markdown",
+              "reason": "a table a reader reads; rendered with raw HTML off"
+            }
           }
         ]
       },
@@ -43280,7 +43300,11 @@
           {
             "name": "entry",
             "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-hypatia-k3aoh4-one-name/tool-types.schema.json#/$defs/Markdown",
-            "description": "The entry as posted."
+            "description": "The entry as posted.",
+            "render": {
+              "as": "markdown",
+              "reason": "a log entry is prose with formatting; rendered with raw HTML off"
+            }
           }
         ]
       },
@@ -47071,6 +47095,15 @@
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/render-log"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-hypatia-k3aoh4-one-name/cat-harness.jsonld#schema/render-output",
+      "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#Schema",
+      "name": "render-output",
+      "title": "The ONE implementation of a Tool output's render hint — bean `q2wm`, R17.",
+      "module": "schemas/render-output.ts",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-hypatia-k3aoh4-one-name/cat-harness.jsonld#directory/schemas",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/render-output"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-hypatia-k3aoh4-one-name/cat-harness.jsonld#schema/render-targets",
       "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#Schema",
       "name": "render-targets",
@@ -47592,14 +47625,6 @@
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/extraction"
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-hypatia-k3aoh4-one-name/cat-harness.jsonld#schema/fhir-artifact-index",
-      "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#Schema",
-      "name": "fhir-artifact-index",
-      "title": "The artefact index of a published FHIR Implementation Guide.",
-      "module": "../folio-assistant-core/schemas/fhir-artifact-index.ts",
-      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/fhir-artifact-index"
-    },
-    {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-hypatia-k3aoh4-one-name/cat-harness.jsonld#schema/glossary",
       "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#Schema",
       "name": "glossary",
@@ -47638,6 +47663,14 @@
       "title": "A reviewer's VERDICT on one version of one block: \"I read this, and here is",
       "module": "../folio-assistant-core/schemas/review-verdict.ts",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/review-verdict"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-hypatia-k3aoh4-one-name/cat-harness.jsonld#schema/fhir-artifact-index",
+      "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#Schema",
+      "name": "fhir-artifact-index",
+      "title": "The artefact index of a published FHIR Implementation Guide.",
+      "module": "../fhir-harness/schemas/fhir-artifact-index.ts",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/fhir-artifact-index"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-hypatia-k3aoh4-one-name/cat-harness.jsonld#schema/ig-chrome",
@@ -47691,6 +47724,20 @@
         "http://hl7.org/fhir/"
       ],
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#externalSchema/hl7-fhir"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-hypatia-k3aoh4-one-name/cat-harness.jsonld#externalSchema/ietf-handle-system",
+      "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#ExternalSchema",
+      "name": "ietf-handle-system",
+      "title": "Handle System Overview (RFC 3650), with its namespace (RFC 3651) and protocol (RFC 3652)",
+      "authority": "IETF",
+      "specVersion": "2003-11",
+      "specUse": "conforms",
+      "specUrl": "https://www.rfc-editor.org/rfc/rfc3650",
+      "namespace": [
+        "https://hdl.handle.net/"
+      ],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#externalSchema/ietf-handle-system"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-hypatia-k3aoh4-one-name/cat-harness.jsonld#externalSchema/omg-bpmn-2.0",
@@ -49455,8 +49502,8 @@
   ],
   "staging": {
     "branch": "claude/quirky-hypatia-k3aoh4-one-name",
-    "sha": "c67c0f432d49cd04285ea7f25d6491143e096c40",
+    "sha": "df7a9ca01f06e735160d5802eccfeb0a08f968ef",
     "pr": "1804/merge",
-    "run": "36986242628"
+    "run": "37013193259"
   }
 }
