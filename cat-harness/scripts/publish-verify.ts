@@ -7,8 +7,8 @@
  * Bean `vigi`, owner 2026-09-23: *"a set of post processing tools for
  * verification that a failure triggers an alert to the publisher manager …
  * new sub-process"*, run **before deployment**, blocking. The process is
- * `processes/publish-verification.bpmn`; the alert is
- * `processes/publish-alert.bpmn`, which every failing step after the publish
+ * `processes/sdlc/publish-verification.bpmn`; the alert is
+ * `processes/sdlc/publish-alert.bpmn`, which every failing step after the publish
  * button shares.
  *
  *   bun run cat-harness/scripts/publish-verify.ts --dir ./_site [--report out.md] [--base <url>]... [--instance <dir>] [--search-index borrowed]
