@@ -1509,6 +1509,14 @@ jobs:
           # can see, which is the 35-bean defect e8m3 was filed over.
           bun run check:bean-archive
           bun run check:bean-blocks
+          # Bean `m61r`, issue #1853: a pull request adds to a bean it does not
+          # own by writing a NOTE, one file per branch per bean, instead of
+          # appending — `ob3m` cost five hand-merges in one afternoon because
+          # every append conflicted with every other. This judges each note
+          # (front matter, a bean that exists, and the file name its own front
+          # matter derives — the rule that keeps two writers apart) and fails
+          # on a stale generated index. Writer: `bun run beans:notes`.
+          bun run beans:notes:check
           # Bean `kpcl`, issue #956: `in-progress` stopped carrying information --
           # 99 claims, 77 untouched for a day or more. The obvious sweep assumes
           # its own answer, so this gate owns only the half that is PURE GRAPH:
