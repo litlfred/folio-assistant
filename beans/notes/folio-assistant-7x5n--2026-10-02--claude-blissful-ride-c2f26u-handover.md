@@ -7,69 +7,94 @@ created: "2026-10-02"
 ---
 ## handover: merge steward 2026-10-02
 
-## Handover report: Merge Steward (lead session)
+## Handover report: merge steward (lead session)
 
 - **Session:** https://claude.ai/code/session_01ToWZR4RgTRCWeSsgxsSQfT
-- **Written:** 2026-10-02 ~19:10 UTC, ahead of an expected stall.
-- **Role:** merge steward. I merge green PRs serially ("trains") and drive the separation epic `7x5n`. The owner has authorised merging green PRs.
+- **Written:** 2026-10-02 20:50 UTC.
+  - **Why:** the owner asked for it ahead of an expected stall.
+  - **Subagent stall:** every subagent of this session stopped at about 19:20 UTC on the account session limit.
+  - **Method:** produced with `prepare-for-handover`, so every branch was pushed first.
+- **Role and mandate:**
+  - **Merge steward.** Merge green PRs serially ("trains") and drive the separation epic `7x5n`. Owner: "yes you may merge green PRs".
+  - **Seeding:** no seeding until the owner says so.
+  - **70lx B1:** paused.
 
 ### Where I'm going (current arc)
-1. Drain the merge queue, putting PRs that touch cat-harness first, so the cat-harness and cat-harness-tools seeding review can start.
-2. Build the merge pipeline as its own epic, `hfag` (#1894). It blocks `7x5n`.
-3. **No seeding** until the owner says so. 70lx B1 is **paused**; its plan is in the session scratchpad and is lost if the container goes.
+1. Drain the merge queue, cat-harness first. The aim is a seeding review of cat-harness and cat-harness-tools once the queue is stable.
+2. Build the merge pipeline (epic `hfag`).
+3. Handover and stalled-agent triage tooling (bean `w8j8`).
+4. Branch renames to the `cat-` prefix (bean `32f6`).
+5. New today: the KG publication epic `whlc`.
 
 ### Done today
-- **Merged (about 50 PRs in total)**, including:
+- **Merged:** about 52 PRs, including:
   - trains 1–4 (train 4 is #1893);
-  - #1875, the process regroup (63wl);
-  - #1873, vocabulary mappings;
-  - #1886, #1878, #1859, #1862, #1822 and #1798.
-- **Closed as landed:** #1857, #1805 and #1799.
-- **Owner rulings recorded:**
-  - a `heavy-mover` label, applied to #1873, #1812, #1801, #1756 and #1735;
-  - `seed:ready --rehearse` is opt-in;
-  - #1892 resolves its merge conflicts by taking main's generated files and regenerating;
-  - #1812 deletes 22 more duplicate sidecars;
-  - #1892 writes a methodology page.
+  - #1875 (process regroup);
+  - #1873 (vocab mappings);
+  - #1812 (6e3f515), which deleted 22 more duplicate sidecars after the owner said "1";
+  - #1822 and #1798.
+- **Closed as landed:** #1857, #1805, #1799.
+- **Labels:** `heavy-mover` created and applied to #1801, #1756, #1735 and #1873 (the last since merged).
+- **Skills** (#1912): `prepare-for-handover`, `handover-report`, `stalled-agent-triage`, plus `processes/sdlc/stalled-agent-triage.bpmn`.
+- **Beans:** `w8j8`; KG epic `whlc` with children:
+  - `c1m4`: subgraph contract;
+  - `f233`: skeleton/payload split;
+  - `q8ar`: late materialization (SQLite/OPFS);
+  - `ax6r`: generated workflow index.
 
-### In flight
-| PR | what | state | next |
-|---|---|---|---|
-| #1812 | Q-A PR4, delete duplicate kg-qa sidecars (mine, heavy mover) | d440fbc pushed, CI running | merge when green; it touches cat-harness-tools |
-| #1888 | refused-merge handback skill and `merge-refusal.bpmn` (bean `zacz`) | agent, red CI on WIP | finish |
-| #1892 | three merge-queue papers, requirements note, methodology page | agent | methodology page, then gates |
-| #1894 | epic `hfag`: merge-train.bpmn, merge-priority.dmn, merge-steward role, merge-queue skill | agent done, CI pending | waits on #1888 and #1895; `nok9` re-parent needs an owner decision (retype it, or add a milestone) |
-| #1895 | tools: merge:train, merge:overlap, merge:leftover (bean `blgm`) | pushed, gates not run | gates, then merge |
-| #1896 | seed:ready plus GW_SeedReady in kg-separation (bean `hcpz`) | agent, 2 real test failures (XML comment, partition) | fix |
-| (new) | rename special branches to the `cat-` prefix (qa-reports, …) | agent, inventory stage | report the affected sessions to the steward; **rename only after the steward says "go"** |
+### In flight (head SHAs as pushed at 20:50 UTC)
+Every open PR below shows "dirty" because `main` moved. Each needs `origin/main` merged in and a regenerate before it can merge.
 
-### Queue state at 19:00 UTC
-- **Ready to merge but conflicted:** #1764, #1804, #1808, #1816 and #1819. Their owners need to merge main in.
+| PR | branch @ head | what | state | next |
+|---|---|---|---|---|
+| #1912 | `claude/blissful-ride-c2f26u-handover` @ fef87f9 | handover skills, triage process, these beans, this note | WIP; regen only partly current | `skill:register` + `regen`, merge main, gates |
+| #1888 | `claude/merge-refusal-handback` @ e75ce6b | refused-merge handback skill and `merge-refusal.bpmn` (`zacz`) | agent stalled; WIP commit by steward | merge main, regen, gates |
+| #1892 | `claude/merge-pipeline-library` @ fb3cfdb | 3 merge-queue papers, requirements note | agent stalled before writing the methodology page | **write `cat-harness/methodologies/merge-queue.md`** (owner: "write methodologies page if relevant"); this fixes the `library-ref` test |
+| #1894 | `claude/merge-pipeline-epic` @ af4c52c | epic `hfag`: merge-train.bpmn, merge-priority.dmn, merge-steward role, merge-queue skill | done by its agent | waits on #1888/#1895; **owner decision: retype `nok9` or add a milestone** |
+| #1895 | `claude/merge-pipeline-tools` @ 5205ab3 | merge:train, merge:overlap, merge:leftover (`blgm`); follow-up bean `8rff` | gates not run | merge main, gates |
+| #1896 | `claude/seed-ready` @ f388822 | seed:ready, GW_SeedReady in kg-separation (`hcpz`) | agent stalled; 2 real test failures (malformed XML comment; partition assignment) | fix both, regen, gates |
+| #1913 | `claude/cat-prefix-special-branches` @ 94afb86 | `special-branches.json` and dual-name lake-cache code (`32f6`, `oycs`) | agent stalled | merge main, gates, merge |
+| #1790 | `claude/blissful-ride-c2f26u-pin-bump` @ 3954500 | pin bump | local merge of main pushed | check CI |
+
+### Branch renames (owner, verbatim: "do all four renames as recommended. /coordinate")
+- **`state` → `cat-state`** (fs43 session 01KC89Kn notified; head d913ea4): **NOT DONE.** A read-only check of the fhir-ast branches was **denied by the permission classifier as "Git Destructive"**. Branch renames therefore need an owner permission rule, or the owner runs them. I did not attempt a workaround.
+- **`qa-reports` → `cat-qa-reports`:** HOLD, at session 01LKpuPo's request. It is adding dual-name support to #1801 (ETA about 21:15 UTC) and will then open a 30-minute no-push window. Check `qa-reports-prune` is idle first.
+- **`fhir-ast/*` → `cat-fhir-ast/*`** (litlfred/smart-trust @ f254e5bb, litlfred/smart-base @ eb7bed83): #1816 is dual-name at 40d2286d (session 01PricYF), so this is ready apart from the permission above.
+- **`lake-cache/*` → `cat-lake-cache/*`:** after #1913 merges, in the folio repos (e.g. qou); needs `add_repo`.
+- **Owner decision pending:** what to do with the two `qa-reports-spike*` branches. No deletion is proposed.
+
+### Queue state (19:00 UTC)
+- **Ready-to-merge but conflicted:** #1764, #1804, #1808, #1816, #1819.
 - **Waiting on another PR:** #1898 waits on #1899.
-- **Seeding is NOT ready:**
+- **Heavy movers still open:** #1801, #1756, #1735.
+- **Seeding NOT ready:**
   - 27 open PRs touch cat-harness (the limit is 5);
-  - 5 touch cat-harness-tools (#1899, #1812, #1801, #1790, #1764);
-  - 4 heavy movers are still open (#1812, #1801, #1756, #1735).
+  - 5 touch cat-harness-tools.
 
 ### Blockers and dependencies
-- **CPU:** 4 CPUs at load about 16. A regenerate takes 35+ minutes under load.
-- **Disk:** filled once today and was freed (about 9 GB free now). Check `df -h /` before any heavy step.
-- **Permissions:** taking `--theirs` on generated conflicts needs owner approval; it was given for #1892.
-- **MCP workflow tool:** it writes instance files into the main checkout, not into an agent's worktree.
-- **Safety-check routine:** `trig_012Tkjzfa93eN9uXUtkJNFgu` fires at 19:45 UTC. Re-arm it 45 minutes later.
+| blocker | waits on | since | re-check |
+|---|---|---|---|
+| branch-rename API calls | owner permission rule, or the owner runs them | 19:17 UTC | on owner reply |
+| subagents stopped | account session limit | 19:20 UTC | it reset at 20:40; re-dispatch through `stalled-agent-triage` |
+| CPU / disk | load about 16 on 4 CPUs; 8.3 GB free | all day | `df -h /` before any regen |
+| MCP workflow tool writes into the main checkout | known defect, no bean yet | 18:00 | file a bean |
+
+### Unpushed or at-risk state
+- **Scratchpad (lost with the container; all rebuildable or recorded here):**
+  - `train*.sh`, `ch-impact.sh`;
+  - `70lx-B1-recomputed.md` (the B1 plan; **not committed**);
+  - `staging-readiness.md` (seed-rehearsal report; its summary is in this session's chat and in #1896's survey).
+- **Old worktrees with local-only state (not mine to push, or stale):**
+  - `agent-a5622b7…` on the merged #1812: 13,774 dirty files, a stale regen;
+  - `agent-aedb330…` on #1809: 2 generated files;
+  - `qd-1764`, ahead 1 on #1764's branch, which belongs to another session;
+  - `st-*` detached checkouts.
+- **Safety-check routine:** `trig_012Tkjzfa93eN9uXUtkJNFgu`, fired 19:45; re-arm it.
 
 ### How to resume
-1. Read this note.
-2. Run `bun run merge:overlap` once #1895 has landed; until then, list ready-to-merge PRs over REST.
-3. Merge #1812 when it is green.
-4. Then take the next ready, green, up-to-date PR, putting cat-harness first.
-
-### Update 19:15 UTC
-- **#1812 merged** (6e3f515) after deleting 22 more duplicate sidecars (owner "1"); #1873 merged. Heavy movers still open: #1801, #1756, #1735.
-- **Handover skills** in #1912: `prepare-for-handover`, `handover-report`, `stalled-agent-triage` (+ `processes/sdlc/stalled-agent-triage.bpmn`), bean `w8j8`. Regen in progress; CI red only on stale generated files.
-- **Branch renames, owner-approved 2026-10-02 ("do all four renames as recommended") — coordination state:**
-  - `state` → `cat-state`: fs43 session 01KC89Kn notified; rename scheduled 19:19 UTC (send_later trig_0184DXjWjYk3XhPnKyTbBXgP) unless it asks to hold. Head was d913ea45b.
-  - `qa-reports` → `cat-qa-reports`: session 01LKpuPo (#1764/#1801) **asked to HOLD** until it pushes dual-name support on #1801 (ETA ~2 h) and says green; then a 30-min no-push window; check `qa-reports-prune` isn't running first.
-  - `fhir-ast/*` → `cat-fhir-ast/*` (smart-trust, smart-base): waits on session 01PricYF making #1816 dual-name.
-  - `lake-cache/*` → `cat-lake-cache/*` (folio repos, e.g. qou): waits on #1913 merging and folio pins; those repos need `add_repo` access.
-- **Owner decision pending:** the two `qa-reports-spike*` branches (nobody reads them; no deletion proposed).
+1. Read this note and run `stalled-agent-triage` over 18:00–20:50 UTC. Expect three themes:
+   - **merge pipeline:** #1888, #1892, #1894, #1895;
+   - **separation and seeding:** #1896, #1913, renames;
+   - **handover and KG publication:** #1912, `whlc`.
+2. Get the owner's answer on branch-rename permission. Then rename `state`, then fhir-ast, then `qa-reports` in the agreed window.
+3. Merge main into #1912 and #1913, regenerate, and merge them when green. Then re-dispatch #1892 (methodology page) and #1896 (two test fixes).
