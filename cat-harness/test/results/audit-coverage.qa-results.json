@@ -201,6 +201,8 @@
           "directories": [
             "bootstrap-tools/scripts",
             "cat-harness-tools/adapters",
+            "cat-harness-tools/id-lookup",
+            "cat-harness-tools/scripts",
             "cat-harness-tools/test",
             "cat-harness/adapters",
             "cat-harness/deploy",
@@ -211,10 +213,9 @@
             "folio-assistant-core/adapters",
             "folio-assistant-core/scripts",
             "folio-assistant-sci/adapters",
-            "large-datasets/id-lookup",
-            "large-datasets/scripts",
             "smart-trust/scripts",
             "tools",
+            "who-iris/id-lookup",
             "who-iris/scripts"
           ],
           "criteria": [],
@@ -618,15 +619,15 @@
           "kind": "qa",
           "state": "covered",
           "directories": [
-            "agent-skills/test/results",
             "cat-harness/test/results",
             "fhir-harness/test/results",
             "folio-assistant-core/test/results",
             "folio-assistant-sci/test/results",
-            "large-datasets/test/results",
             "smart-base/test/results",
+            "smart-dak/test/results",
             "smart-ig/test/results",
             "smart-immunizations/test/results",
+            "smart-l1/test/results",
             "smart-trust/test/results",
             "who-iris/test/results",
             "who-style-guide/test/results"
@@ -724,9 +725,10 @@
             "fhir-harness/schemas",
             "folio-assistant-core/schemas",
             "folio-assistant-sci/schemas",
+            "folio-assistant-sci/sources",
             "large-datasets/schemas",
-            "large-datasets/sources",
-            "smart-base/schemas"
+            "smart-base/schemas",
+            "who-iris/sources"
           ],
           "criteria": [],
           "subjectKinds": [],
@@ -857,7 +859,7 @@
           "kind": "themes",
           "state": "covered",
           "directories": [
-            "smart-base/themes",
+            "smart-trust/themes",
             "who-iris/themes"
           ],
           "criteria": [],
@@ -1008,6 +1010,7 @@
           "state": "covered",
           "directories": [
             "agent-skills/skills/voices",
+            "cat-harness/skills/voices",
             "folio-assistant-core/skills/voices",
             "folio-assistant-sci/skills/voices",
             "smart-base/skills/voices",
