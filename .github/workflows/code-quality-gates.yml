@@ -1633,6 +1633,9 @@ jobs:
           # smart-base's DAK document kind, generated from DAK_COMPONENTS
           # (stage D5, #1767): stale the moment a component is added.
           bun run smart-base:document-kinds:check
+          # smart-kg L1 documents kept beside library entries (bean 8pzh):
+          # stale the moment a section text or structure.json they read changes.
+          bun run smart-base:smart-kg-l1:check
           bun run document-kinds:viz:check
           # The fsh-guts index is generated from the graph, so it goes stale the
           # moment a file is relocated there -- which is the ONE operation that
@@ -1821,6 +1824,18 @@ jobs:
           # (2026-09-20). It reads them out of the YAML rather than
           # listing them, so a new one is covered the day it is added.
           bun run check:ci-invocations
+
+          # Its sibling, also reading the workflow YAML rather than a list: a
+          # job that RUNS a platform script must have CHECKED OUT the
+          # platform's submodules, because `cat-harness/schemas/` imports from
+          # `bootstrap-tools`. Measured 2026-10-02 — `feature-staging.yml`'s
+          # `cleanup` job had failed on exactly this for six consecutive runs
+          # and `STAGING/` held 80 previews, 47 for closed PRs. The failure is
+          # worse than a missing cleanup: `rm -rf` runs, then `render-log.ts`
+          # dies and aborts the step under `bash -e`, so the commit and push
+          # never happen — a cleanup that reports failure having changed
+          # nothing, while looking from outside like one that ran.
+          bun run check:workflow-submodules
           # The per-kind state dashboards under `<base>/<graph>/dashboard/`.
           # COMMITTED pages, so a difference is somebody who changed the
           # generator, the renderer it inlines, or the declaration, and did
