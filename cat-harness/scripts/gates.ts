@@ -594,6 +594,15 @@ export const STEP_EXEMPTIONS: StepExemption[] = [
       "`schemas/staging-preview.ts` and covered by `staging-record.test.ts` in `bun test`",
   },
   {
+    match: "staging-rotate.ts",
+    kind: "ci-only",
+    reason:
+      "enforces the preview cap (owner ruling 2026-10-02, issue #1868) by removing previews from a " +
+      "`gh-pages` checkout at deploy time; that checkout exists only in CI. Its rules — the cap counts " +
+      "the current preview, the oldest go, `_retired/` and non-previews are untouched, the age " +
+      "fallbacks — are covered by `staging-rotate.test.ts` in `bun test`",
+  },
+  {
     match: "restore-staging.ts",
     kind: "ci-only",
     reason: "reconciles the `gh-pages` working tree against the open PRs' previews; needs that branch checked out",

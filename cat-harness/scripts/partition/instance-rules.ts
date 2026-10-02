@@ -1131,6 +1131,10 @@ export const RULES: Rule[] = [
       "scripts/render-log.ts",
       "scripts/serve-rendering.ts",
       "scripts/staging-cleanup-preflight.ts",
+      // The preview cap (issue #1868) — same family as its imports above
+      // (`restore-staging`, `render-log`, `staging-record`,
+      // `staging-cleanup-preflight`, `staging-preview`), all harness.
+      "scripts/staging-rotate.ts",
       "src/tools/check-deps.ts",
       "src/tools/capabilities.ts",
       // Beside `capabilities.ts` and for the same reason: it joins a skill's
