@@ -7,8 +7,6 @@ description: >
   without re-deriving anything. Use it when you are told a stall is likely, at
   the end of every long arc, before a risky or long-running step, and whenever
   a steward asks for one. Its reader is `stalled-agent-triage`.
-
-To produce one under time pressure, follow [`prepare-for-handover`](prepare-for-handover.md): it commits and pushes first, then writes this report citing the pushed SHAs.
 ---
 
 # Handover report
@@ -17,6 +15,8 @@ An agent's state lives in three places that do not survive it: the chat, its
 scratchpad, and uncommitted work in its worktree. A **handover report** moves
 the parts that matter into the repository, as a committed bean note, so the
 next agent starts from fact rather than from guesswork.
+
+To produce one under time pressure, follow [`prepare-for-handover`](prepare-for-handover.md): it commits and pushes first, then writes this report citing the pushed SHAs.
 
 This skill is not `agent-handoff` (PR #1884), which hands
 **one task** to a named agent in another environment. A handover report is a
