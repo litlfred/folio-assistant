@@ -16,15 +16,18 @@
  * stopped being worth having.
  */
 import { describe, expect, test } from "bun:test";
-import { join, resolve } from "path";
+import { resolve } from "path";
 
 import { loadProcessModel } from "../../src/workflow/process-model";
 import { fulfilmentKindsForBpmnType, findRole } from "../../schemas/role-graph";
 import { roleGraphFor } from "../known-skills";
+import { workflowFile } from "../known-skills.ts";
+
+/** The harness root; diagrams are found by NAME through its declared `processes` graphs (bean `63wl`). */
+const HARNESS = resolve(import.meta.dir, "../..");
 
 const ROOT = resolve(import.meta.dir, "../..");
-const WF = join(ROOT, "processes");
-const model = () => loadProcessModel(join(WF, "actor-role-administration.bpmn"));
+const model = () => loadProcessModel(workflowFile(HARNESS, "actor-role-administration.bpmn"));
 
 describe("what it adds over code-change-review", () => {
   test("it CALLS that process rather than restating its steps", async () => {
