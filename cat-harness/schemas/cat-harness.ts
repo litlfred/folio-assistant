@@ -515,6 +515,9 @@ export interface ContentDirectory extends GraphNodeDirectory {
   /** Whether the agent summary drain may offer a `library`'s blocks; absent means `drain`. See the schema field (bean `x80s`). */
   summaries?: "drain" | "held";
 
+  /** Entry slugs of a `library` held back from the summary drain while the rest of it drains. See the schema field (bean `j7ql`). */
+  heldEntries?: string[];
+
   /**
    * Which theme this subgraph renders on — one answer for every surface that
    * renders it (navbar section, board panel, sticky).
@@ -598,6 +601,10 @@ export const ContentAdapterDeclarationSchema = z
   .strict();
 
 export interface CatHarnessDeclaration extends KgNodeLabels {
+  /** A reader's one line — see {@link CatHarnessDeclarationSchema}'s `summary` (`ob3m` 4/5). */
+  summary?: string;
+  /** Other spellings of the name, listed on the landing (`ob3m` 5). */
+  alsoWritten?: string[];
   /**
    * Images this instance names — its marks, in the graph rather than beside it.
    *
@@ -1371,6 +1378,18 @@ const ContentDirectoryShape = GraphNodeDirectoryShape.extend({
    * bean, `summaries:next` handed its blocks out FIRST.
    */
   summaries: z.enum(["drain", "held"]).optional(),
+  /**
+   * Entry slugs (`<library>/<slug>/`) held back from the summary drain while
+   * the rest of this `library` drains — the per-entry form of
+   * `summaries: "held"`. It exists because a hold is the OWNER's decision
+   * about a set of documents, and a set can outlive the directory it was
+   * stated on: agent-skills' library was held on 2026-09-24 (bean `x80s`)
+   * and dissolved into cat-harness's on 2026-10-01 (bean `j7ql`), where the
+   * other entries drain. Folding the hold into the directory's would either
+   * drop it or extend it to documents the owner never held. Listed, never
+   * derived, so a move cannot release it silently.
+   */
+  heldEntries: z.array(z.string().min(1)).optional(),
   /**
    * HOW this graph is shown, and what can be done to it.
    *
@@ -2513,6 +2532,22 @@ export const ExactVersionSchema = z
 export const CatHarnessDeclarationSchema = z.object({
   name: z.string().min(1),
   ...kgNodeLabelShape,
+  /**
+   * One line for a READER, where `description` is written for an author.
+   *
+   * `ob3m` findings 4 and 5: the landing's harness sections printed the
+   * declaration's `description`, which here is authoring text — a naming
+   * rationale in one instance, a run of alternative spellings in another.
+   * The landing shows this instead when it is present, and the description
+   * when it is not, so an undeclared summary is today's behaviour.
+   */
+  summary: z.string().min(1).optional(),
+  /**
+   * Other ways the instance's name is written, shown on the landing as a small
+   * "also written" list rather than run into the description as one line.
+   * Owner's choice, 2026-10-01: keep the spellings visible, as a list.
+   */
+  alsoWritten: z.array(z.string().min(1)).nonempty().optional(),
   images: z.array(KgImageSchema).optional(),
   /**
    * Declared non-image artefacts — `AGENTS.md` first among them.

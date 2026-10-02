@@ -34,6 +34,29 @@ package "folio-assistant-sci/sci-methodologies" as pkg_folio_assistant_sci_sci_m
 package "folio-assistant-sci/sci-adapters" as pkg_folio_assistant_sci_sci_adapters <<code>> {
   note "code: no node schema declared\n(no validator registered: could not determine)" as n_folio_assistant_sci_sci_adapters_code
 }
+package "folio-assistant-sci/sci-sources" as pkg_folio_assistant_sci_sci_sources <<schemas>> {
+  class "Identifier" as folio_assistant_sci_sci_sources_folio_source_descriptor_v1_Identifier <<json: SourceDescriptorSchema>> #e9edf3 {
+    name [1] : string
+    authoritative [1] : boolean
+    example [0..1] : string
+    note [0..1] : string
+  }
+  class "folio-source-descriptor/v1" as folio_assistant_sci_sci_sources_folio_source_descriptor_v1_folio_source_descriptor_v1 <<json: SourceDescriptorSchema>> #e9edf3 {
+    $schema [1] : 'folio-source-descriptor/v1'
+    id [1] : string
+    title [1] : string
+    system [0..1] : string
+    baseUrl [0..1] : string<uri>
+    nodeKind [1] : string
+    subsetStrategies [1..*] : list<container | identifier | facet | range | closure>
+    subsetIsSelfContained [1] : boolean
+    subsetBasis [0..1] : string
+    identifiers [1..*] : Identifier[]
+    enumeration [1] : object
+    termsUrl [0..1] : string<uri>
+    character [1] : object
+  }
+}
 package "folio-assistant-sci/qa" as pkg_folio_assistant_sci_qa <<qa>> {
   class "Pair_attestation" as folio_assistant_sci_qa_kg_qa_v1_Pair_attestation <<json: KgQaReportSchema>> #f4e6e6 {
     kind [1] : implements | co-located
@@ -110,7 +133,7 @@ package "folio-assistant-sci/voices" as pkg_folio_assistant_sci_voices <<voices>
     sources [1..*] : Source[]
     rules [1..*] : Rule[]
     overlaySeverity [0..1] : critical | major | minor
-    appliesTo [0..*] : list<enum(16) | docs | skill | readme | specification>
+    appliesTo [0..*] : list<enum(16) | docs | skill | readme | specification | code>
     provenance [1] : assertion | evidence | house
     extends [0..1] : object
     activeIn [0..1] : object
@@ -124,6 +147,7 @@ package "folio-assistant-sci/data-skills" as pkg_folio_assistant_sci_data_skills
   note "skills: no node schema declared\n(no node here carries a $schema family skills names (4 named): could not determine)" as n_folio_assistant_sci_data_skills_skills
 }
 
+folio_assistant_sci_sci_sources_folio_source_descriptor_v1_folio_source_descriptor_v1 *-- "1..*" folio_assistant_sci_sci_sources_folio_source_descriptor_v1_Identifier : identifiers
 folio_assistant_sci_qa_kg_qa_v1_kg_qa_v1 *-- "0..*" folio_assistant_sci_qa_kg_qa_v1_Pair_attestation : pair_attestations
 folio_assistant_sci_qa_kg_qa_v1_Voice_review *-- "0..*" folio_assistant_sci_qa_kg_qa_v1_Verdict : verdicts
 folio_assistant_sci_qa_kg_qa_v1_kg_qa_v1 *-- "0..*" folio_assistant_sci_qa_kg_qa_v1_Voice_review : voice_reviews
@@ -131,10 +155,11 @@ folio_assistant_sci_voices_VoiceProfile *-- "1..*" folio_assistant_sci_voices_So
 folio_assistant_sci_voices_Rule *-- "0..*" folio_assistant_sci_voices_Pattern : patterns
 folio_assistant_sci_voices_Rule *-- "0..*" folio_assistant_sci_voices_Terminology : terminology
 folio_assistant_sci_voices_VoiceProfile *-- "1..*" folio_assistant_sci_voices_Rule : rules
-' grid: portrait, 2 column(s) — pkg_folio_assistant_sci_library pkg_folio_assistant_sci_sci_methodologies pkg_folio_assistant_sci_sci_adapters pkg_folio_assistant_sci_qa pkg_folio_assistant_sci_voices pkg_folio_assistant_sci_lean_skills pkg_folio_assistant_sci_data_skills
+' grid: portrait, 2 column(s) — pkg_folio_assistant_sci_library pkg_folio_assistant_sci_sci_methodologies pkg_folio_assistant_sci_sci_adapters pkg_folio_assistant_sci_sci_sources pkg_folio_assistant_sci_qa pkg_folio_assistant_sci_voices pkg_folio_assistant_sci_lean_skills pkg_folio_assistant_sci_data_skills
 pkg_folio_assistant_sci_library -[hidden]down- pkg_folio_assistant_sci_sci_adapters
-pkg_folio_assistant_sci_sci_methodologies -[hidden]down- pkg_folio_assistant_sci_qa
-pkg_folio_assistant_sci_sci_adapters -[hidden]down- pkg_folio_assistant_sci_voices
+pkg_folio_assistant_sci_sci_methodologies -[hidden]down- pkg_folio_assistant_sci_sci_sources
+pkg_folio_assistant_sci_sci_adapters -[hidden]down- pkg_folio_assistant_sci_qa
+pkg_folio_assistant_sci_sci_sources -[hidden]down- pkg_folio_assistant_sci_voices
 pkg_folio_assistant_sci_qa -[hidden]down- pkg_folio_assistant_sci_lean_skills
 pkg_folio_assistant_sci_voices -[hidden]down- pkg_folio_assistant_sci_data_skills
 @enduml
