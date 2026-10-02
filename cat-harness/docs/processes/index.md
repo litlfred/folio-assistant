@@ -131,7 +131,7 @@ Each page shows the diagram, what it is for, who acts in it, every step with the
 
 The reverse of `<bootstrap.processes:skill ref>`, which is the join nothing else exposes: a skill says what to do, and until now nothing said which processes ask for it.
 
-**114** distinct skill(s) are named by an activity.
+**115** distinct skill(s) are named by an activity.
 
 | skill | run by |
 |---|---|
@@ -159,6 +159,7 @@ The reverse of `<bootstrap.processes:skill ref>`, which is the join nothing else
 | [`content-test`](../reference/skill-instructions/content-test.html) | [`qa-report-signing.bpmn`](qa-report-signing.html), [`upstream-version-adoption.bpmn`](upstream-version-adoption.html), [`content-lifecycle.bpmn`](content-lifecycle.html), [`draft-to-publication.bpmn`](draft-to-publication.html), [`editing-hci-validation.bpmn`](editing-hci-validation.html) |
 | [`content-validate`](../reference/skill-instructions/content-validate.html) | [`review-task.bpmn`](review-task.html), [`authoring-a-document.bpmn`](authoring-a-document.html), [`content-lifecycle.bpmn`](content-lifecycle.html), [`draft-to-publication.bpmn`](draft-to-publication.html), [`editing-hci-validation.bpmn`](editing-hci-validation.html), [`authoring-a-paper.bpmn`](authoring-a-paper.html), [`l2-dak-authoring.bpmn`](l2-dak-authoring.html) |
 | [`continual-progress`](../reference/skill-instructions/continual-progress.html) | [`kg-to-portal.bpmn`](kg-to-portal.html), [`actor-role-administration.bpmn`](actor-role-administration.html), [`code-change-review.bpmn`](code-change-review.html), [`merge-base.bpmn`](merge-base.html) |
+| [`coordinate`](../reference/skill-instructions/coordinate.html) | [`crdm-signoff.bpmn`](crdm-signoff.html) |
 | [`copy-out-materialized`](../reference/skill-instructions/copy-out-materialized.html) | [`copy-out-materialized.bpmn`](copy-out-materialized.html) |
 | [`covered-is-not-reachable`](../reference/skill-instructions/covered-is-not-reachable.html) | [`review-code.bpmn`](review-code.html) |
 | [`crdm-data-model`](../reference/skill-instructions/crdm-data-model.html) | [`crdm-data-model.bpmn`](crdm-data-model.html) |
