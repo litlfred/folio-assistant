@@ -61,3 +61,9 @@ Get the library IRI work (#1899), the coordination rule (#1903) and glass cards 
 1. Read this note; `git fetch` and check #1899 / #1903 mergeable state.
 2. Run the merge-main + regen loop on #1899 first (cat-harness files the steward is holding out of 70lx B1), then #1903, then #1918.
 3. On green: mark Ready, label `ready-to-merge`, comment `ready: <sha>`; then ping the navbar session (#1908) that #1899 merged.
+
+### Update 21:45 UTC (stopping: owner weekly budget ~3%)
+- **#1899** merged main (fb39777; resolved `gen-library-jsonld.ts` as a union of #1822 titles and #1881 IRIs, params `titled?, instance?`), regenerated, pushed **5be6dd8c065198655e98086a24b39a8e4cf6f725**. CI 13/13 green; marked Ready, `ready-to-merge`, `ready:` comment posted and sent to the steward. Staged entry page 6.1 KB (was 25 KB), no injected rail.
+- **#1903** is in steward train 6 (#1924); my separate regen was stopped and discarded. Nothing unpushed.
+- **#1918** glass cards: unchanged (d1f5d3e, WIP, conflicts with main; lands after #1899).
+- No running jobs; every worktree clean or equal to its remote.
