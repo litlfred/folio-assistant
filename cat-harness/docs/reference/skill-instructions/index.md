@@ -341,6 +341,12 @@ roles, and how they compose with the LLM, see [Skills & roles](../../skills.html
 | [document-structure](document-structure.html) | `document-structure` | [schema](../skills/document-structure.html) | Decide and maintain the chapter/section skeleton of a document folio. |
 | [normative-statements](normative-statements.html) | `normative-statements` | [schema](../skills/normative-statements.html) | Carry a **recommendation, requirement or rule** in a document folio — the |
 
+## Catalogue records — Dublin Core renderings (catalogue)
+
+| Skill | Id | Schema | Summary |
+|-------|----|--------|---------|
+| [Dublin Core renderings](dublin-core-renderings.html) | `dublin-core-renderings` | — | Bean `7eak`. The owner, 2026-09-30: *"do we render the proper xml for dublin |
+
 ## Document ingestion methods (ingestion)
 
 | Skill | Id | Schema | Summary |

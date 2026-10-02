@@ -325,6 +325,21 @@ export function run(root: string): { mappings: TermMapping[]; scope: MappingScop
 }
 
 /**
+ * A term that matched, and HOW. Bean `5yhm` asks for the exact/concept pair,
+ * and the gap between the two is the finding: `exact: false` is the right
+ * concept under a different authorised label, which is a different and
+ * specifiable outcome from a miss. Projecting only `concept` dropped that half
+ * on the way to the committed file.
+ */
+export interface MappedTerm {
+  term: string;
+  /** `true` when the label matched a concept's `prefLabel`; `false` when only an `altLabel`, or a cross-vocabulary display, did. */
+  exact: boolean;
+  /** The URIs of the concepts it matched, which is what a reader follows. */
+  concepts: string[];
+}
+
+/**
  * One row per (scheme, target), with all three counts and the mapped terms.
  *
  * Exported because `glossary-page.ts` renders these rows and must not have a
@@ -339,8 +354,63 @@ export interface SchemeState {
   undetermined: number;
   /** Why the whole target could not be determined, where that is the case. */
   reason?: string;
-  /** Term ids that matched, so the page can badge exactly those. */
-  mappedTerms: string[];
+  /** The terms that matched, each saying whether the match was exact. Few by construction. */
+  mappedTerms: MappedTerm[];
+  /**
+   * Present ONLY when a row mixes `unmapped` and `undetermined`. Otherwise a
+   * term's state follows from the counts alone (see {@link termState}), and
+   * listing thousands of ids that all say one thing is what the per-scheme
+   * shape exists to avoid. In a mixed row the counts cannot say which term is
+   * which, so the record names the undetermined ones instead.
+   */
+  undeterminedTerms?: string[];
+}
+
+/**
+ * One term's state on one target, read back from the committed per-scheme rows.
+ *
+ * The ONE place that turns the record into a per-term answer, so the glossary
+ * page holds no second implementation (bean `5yhm`, Done-when "the glossary
+ * page reports mapped / unmapped / undetermined per term").
+ *
+ * `unknown` is a fourth answer and is NOT a mapping state. It means the
+ * committed record cannot say: there is no row for the scheme, there is more
+ * than one, or a mixed row does not name its undetermined terms. It is never
+ * folded into `unmapped`, for the same reason `undetermined` is not (bean
+ * `dh4f`).
+ */
+export type TermStateAnswer =
+  | { state: "mapped"; exact: boolean; concepts: string[] }
+  | { state: "unmapped" }
+  | { state: "undetermined"; reason?: string }
+  | { state: "unknown"; why: string };
+
+export function termState(
+  states: readonly SchemeState[],
+  scheme: string,
+  target: string,
+  term: string,
+): TermStateAnswer {
+  const rows = states.filter((s) => s.scheme === scheme && s.target === target);
+  if (rows.length !== 1) {
+    return {
+      state: "unknown",
+      why: rows.length
+        ? `${rows.length} rows for scheme \`${scheme}\` on \`${target}\`, so the record is ambiguous`
+        : `no row for scheme \`${scheme}\` on \`${target}\``,
+    };
+  }
+  const row = rows[0]!;
+  const hit = row.mappedTerms.find((m) => m.term === term);
+  if (hit) return { state: "mapped", exact: hit.exact, concepts: hit.concepts };
+  const undetermined = (): TermStateAnswer => ({ state: "undetermined", ...(row.reason ? { reason: row.reason } : {}) });
+  if (row.undeterminedTerms) return row.undeterminedTerms.includes(term) ? undetermined() : { state: "unmapped" };
+  if (row.undetermined === 0) return { state: "unmapped" };
+  if (row.unmapped === 0) return undetermined();
+  return {
+    state: "unknown",
+    why: `scheme \`${scheme}\` on \`${target}\` mixes unmapped and undetermined terms and names neither`,
+  };
 }
 
 export function perScheme(
@@ -354,14 +424,27 @@ export function perScheme(
   return schemes.map((scheme) => {
     const rows = of.filter((m) => m.scheme === scheme);
     const n = (k: MatchState) => rows.filter((r) => r.concept === k).length;
+    const unmapped = n("unmapped");
+    const undetermined = n("undetermined");
+    const byTerm = (a: { term: string }, b: { term: string }) => (a.term < b.term ? -1 : a.term > b.term ? 1 : 0);
     return {
       scheme,
       target,
       mapped: n("mapped"),
-      unmapped: n("unmapped"),
-      undetermined: n("undetermined"),
+      unmapped,
+      undetermined,
       ...(reason ? { reason } : {}),
-      mappedTerms: rows.filter((r) => r.concept === "mapped").map((r) => r.term).sort(),
+      mappedTerms: rows
+        .filter((r) => r.concept === "mapped")
+        .map((r) => ({
+          term: r.term,
+          exact: r.exact === "mapped",
+          concepts: [...new Set((r.matches ?? []).map((m) => m.uri))].sort(),
+        }))
+        .sort(byTerm),
+      ...(unmapped > 0 && undetermined > 0
+        ? { undeterminedTerms: rows.filter((r) => r.concept === "undetermined").map((r) => r.term).sort() }
+        : {}),
     };
   });
 }
