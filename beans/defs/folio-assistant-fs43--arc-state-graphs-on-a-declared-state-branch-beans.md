@@ -13,7 +13,7 @@ Proposal, inventory, workplan and decisions D1-D4: cat-harness/docs/proposals/st
 Generalises arc 3fva (qa-reports branch, issue #1763, PRs #1764/#1801) — shares its 'storage' field and write library rather than competing.
 
 ## Done when
-- [ ] owner has ruled D1-D4
+- [x] owner has ruled D1-D4 (2026-10-02, all defaults)
 - [ ] storage field + branch-store library agreed with 3fva
 - [ ] every reader/writer in proposal section 4 reads the branch, gates green
 - [ ] moved files removed from main on the owner's explicit go

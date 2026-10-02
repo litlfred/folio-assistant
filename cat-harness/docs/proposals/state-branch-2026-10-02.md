@@ -11,7 +11,7 @@ summary: >-
 # State graphs on a declared branch
 {: .no_toc }
 
-**Status:** proposal, decisions open (§6). **Nothing has moved.** Epic bean
+**Status:** proposal; D1–D4 ruled 2026-10-02, all defaults (§6). **Nothing has moved yet.** Epic bean
 `folio-assistant-fs43`. Generalises arc `3fva` (issue
 [#1763](https://github.com/litlfred/folio-assistant/issues/1763), PRs
 [#1764](https://github.com/litlfred/folio-assistant/pull/1764) and
@@ -258,6 +258,10 @@ inputs`) with the same field, so every special branch is a declared sub-graph
 and `audit:coverage` can see all of them.
 
 ## 6. Decisions for the owner
+
+> **Ruled by the owner, 2026-10-02:** *"go with defaults for D1-D4"* —
+> **D1 (a)**, **D2 (a)**, **D3 (a)**, **D4 (a)**. The options are kept below
+> as the record of what was weighed.
 
 Recommended option first. **The default applies if no answer comes, and the
 work proceeds on it.**
