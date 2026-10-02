@@ -1470,6 +1470,13 @@ platform-gates <span class="fa-gloss-status">candidate, extracted</span>
 <p><code>bun test</code> passing is not the gates passing. What to run before you push, why the list is derived from the CI workflow rather than written down, and what a <code>*:check</code> failure is actually telling you to do.</p>
 <p class="fa-gloss-meta">Skills of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/sdlc/sdlc-core/platform-gates.md"><code>cat-harness/skills/sdlc/sdlc-core/platform-gates.md</code></a></p>
 </dd>
+<dt id="cat-harness--kg-skills--pr-description" data-fa-state="extracted" data-fa-gloss="">
+pr-description <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>Write or update a pull request's description so that someone who has never seen the work can follow it: the problem, why it matters, how it was approached, what constrained it, the solution, how to use it, and what is not done. Read before opening a PR, before rewriting its body, and whenever the PR's scope changes.</p>
+<p class="fa-gloss-meta">Skills of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/sdlc/sdlc-core/pr-description.md"><code>cat-harness/skills/sdlc/sdlc-core/pr-description.md</code></a></p>
+</dd>
 <dt id="cat-harness--kg-skills--prepare-merge" data-fa-state="extracted" data-fa-gloss="">
 prepare-merge <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
