@@ -60,7 +60,8 @@
  * Usage:
  *   bun run qa:fetch [--ref main|<sha>|main/<sha>|pr/<n>|pr/<n>/<sha>] [--into DIR] [--prefix P]
  *   bun run qa:publish --ref main/<sha>|pr/<n>/<sha> [--root DIR ...] [--gates-result R]
- *   bun run qa:publish --github [--gates-result R]     # CI: derive the key, skip forks
+ *   bun run qa:publish --github --completeness FILE [--gates-result R]   # CI: derive the key, skip forks,
+ *                                                       # refuse an incomplete qa:refresh report (bean 3hk4)
  *   bun run qa:prune [--apply] [--pr-states FILE]       # dry run unless --apply
  *   bun run cat-harness/scripts/qa-store.ts read --ref R <path>
  *   bun run cat-harness/scripts/qa-store.ts where
@@ -142,6 +143,13 @@ export interface QaManifest {
   bytes: number;
   written_at: string;
   producer?: { run?: string; gates?: string };
+  /**
+   * What `qa:refresh` said of the working copy this entry was built from (bean
+   * `3hk4`): `tracked` (the commit's own committed copy) or `computed` (the
+   * declared writers ran into an empty tree), and the files per writer. Absent
+   * on an entry published without a report, which `--github` refuses.
+   */
+  completeness?: { mode: string; files: number; families: Record<string, number> };
 }
 
 export interface QaIndex {
@@ -829,7 +837,7 @@ export function fetchQa(args: { ref: string; into?: string; prefix?: string }, o
 
 // ── Writing ──────────────────────────────────────────────────────────────
 
-export type QaPublishState = "published" | "present" | "empty" | "failed";
+export type QaPublishState = "published" | "present" | "empty" | "incomplete" | "failed";
 
 export interface QaPublishResult {
   state: QaPublishState;
@@ -968,7 +976,20 @@ function writeLoop(
  * - Every other entry on the branch is carried across untouched.
  */
 export function publishQa(
-  args: { ref: string; roots: string[]; checkout?: string; producer?: QaManifest["producer"]; writtenAt?: string },
+  args: {
+    ref: string;
+    roots: string[];
+    checkout?: string;
+    producer?: QaManifest["producer"];
+    writtenAt?: string;
+    /**
+     * The refresh report's account of the tree (bean `3hk4`). When given, the
+     * entry must hold exactly `completeness.files` files, or nothing is
+     * written (`incomplete`): a tree that changed between the account and the
+     * publish is not the tree that was judged complete.
+     */
+    completeness?: QaManifest["completeness"];
+  },
   opts: QaStoreOptions = {},
 ): QaPublishResult {
   const key = parseQaKey(args.ref);
@@ -989,9 +1010,20 @@ export function publishQa(
         written_at: writtenAt,
         ...(args.checkout && args.checkout !== key.sha ? { checkout: args.checkout } : {}),
         ...(args.producer ? { producer: args.producer } : {}),
+        ...(args.completeness ? { completeness: args.completeness } : {}),
       })
     : undefined;
   if (!built) return { state: "empty", key: kp, reason: "no files under any root; nothing to publish", attempts: 0 };
+  if (args.completeness && built.manifest.files !== args.completeness.files) {
+    return {
+      state: "incomplete",
+      key: kp,
+      reason:
+        `the tree holds ${built.manifest.files} file(s) and the refresh report accounted for ${args.completeness.files}; ` +
+        "something wrote or removed files between the two, so this is not the tree that was judged complete — nothing published",
+      attempts: 0,
+    };
+  }
 
   const r = writeLoop(store, opts, `qa-reports: ${kp} (${built.manifest.files} files, ${built.manifest.bytes} bytes)`, (_tip, base) => {
     const existing = base ? store.lookup(base, kp) : undefined;
@@ -1019,6 +1051,31 @@ export function publishQa(
 
 function clearSnapshotsFor(store: Store): void {
   for (const k of snapshots.keys()) if (k.startsWith(`${store.dir}|`)) snapshots.delete(k);
+}
+
+// ── Completeness: what `qa:refresh` said of the tree (bean `3hk4`) ───────
+
+/** The `$schema` of `qa-refresh.ts`'s report. Here, because the publish reads it. */
+export const REFRESH_SCHEMA = "qa-refresh/v1";
+
+/**
+ * Is a `qa:refresh` report well-formed and COMPLETE? The publish's one
+ * question of it. Anything else — absent, foreign, incomplete — is a refusal
+ * with its reason, never a publish of a partial tree as if it were whole.
+ */
+export function refreshReportComplete(
+  r: unknown,
+): { ok: true; completeness: NonNullable<QaManifest["completeness"]> } | { ok: false; reason: string } {
+  const x = r as { $schema?: unknown; files?: unknown; reasons?: unknown; complete?: unknown; mode?: unknown; families?: unknown } | undefined;
+  if (!x || x.$schema !== REFRESH_SCHEMA) return { ok: false, reason: `not a ${REFRESH_SCHEMA} report` };
+  if (typeof x.files !== "number" || !Array.isArray(x.reasons)) return { ok: false, reason: "the report carries no file count or reasons" };
+  if (x.complete !== true) {
+    return { ok: false, reason: `the refresh was INCOMPLETE: ${(x.reasons as string[]).join("; ") || "no reason given"}` };
+  }
+  return {
+    ok: true,
+    completeness: { mode: String(x.mode), files: x.files, families: (x.families ?? {}) as Record<string, number> },
+  };
 }
 
 // ── CI: what to publish, and when not to ────────────────────────────────
@@ -1205,7 +1262,7 @@ function flags(argv: string[]): { pos: string[]; one: (n: string) => string | un
   const pos: string[] = [];
   const vals = new Map<string, string[]>();
   const bools = new Set<string>();
-  const VALUED = new Set(["ref", "into", "prefix", "root", "remote", "branch", "store", "gates-result", "pr-states", "now"]);
+  const VALUED = new Set(["ref", "into", "prefix", "root", "remote", "branch", "store", "gates-result", "pr-states", "now", "completeness"]);
   for (let i = 0; i < argv.length; i++) {
     const a = argv[i]!;
     if (!a.startsWith("--")) {
@@ -1293,10 +1350,37 @@ export function main(argv: string[]): number {
         checkout = d.checkout;
       }
       if (!ref) throw new QaUsageError("publish needs --ref main/<sha> | pr/<n>/<sha>, or --github in CI");
+      // Bean `3hk4`: a CI publish states what produced its tree. Without a
+      // complete `qa:refresh` report, a fresh checkout after `5hox` would be
+      // stored as a one-file entry that reads as the record of the commit.
+      let completeness: QaManifest["completeness"];
+      const reportFile = f.one("completeness");
+      if (reportFile !== undefined || f.has("github")) {
+        if (reportFile === undefined) {
+          console.error("qa:publish INCOMPLETE: --github needs --completeness <qa:refresh report>; nothing published");
+          return QA_EXIT.unknown;
+        }
+        let parsed: unknown;
+        try {
+          parsed = JSON.parse(readFileSync(reportFile, "utf-8"));
+        } catch (e) {
+          console.error(`qa:publish INCOMPLETE: the refresh report ${reportFile} could not be read (${(e as Error).message}); nothing published`);
+          return QA_EXIT.unknown;
+        }
+        const c = refreshReportComplete(parsed);
+        if (!c.ok) {
+          console.error(`qa:publish INCOMPLETE: ${c.reason}; nothing published`);
+          return QA_EXIT.unknown;
+        }
+        completeness = c.completeness;
+      }
       const roots = f.many("root").length ? f.many("root") : resolveQaLocation(repoRoot).directories.filter((d) => d.present).map((d) => d.path);
       const run = process.env.GITHUB_RUN_ID ? `${process.env.GITHUB_SERVER_URL}/${process.env.GITHUB_REPOSITORY}/actions/runs/${process.env.GITHUB_RUN_ID}` : undefined;
       const gates = f.one("gates-result");
-      const r = publishQa({ ref, roots, checkout, ...(run || gates ? { producer: { ...(run ? { run } : {}), ...(gates ? { gates } : {}) } } : {}) }, { ...opts, repoRoot });
+      const r = publishQa(
+        { ref, roots, checkout, ...(run || gates ? { producer: { ...(run ? { run } : {}), ...(gates ? { gates } : {}) } } : {}), ...(completeness ? { completeness } : {}) },
+        { ...opts, repoRoot },
+      );
       say(r, `qa:publish ${r.state.toUpperCase()} ${r.key}: ${r.reason}${r.commit ? ` (${r.commit})` : ""}`);
       return r.state === "published" || r.state === "present" ? 0 : r.state === "empty" ? QA_EXIT.miss : QA_EXIT.unknown;
     }
