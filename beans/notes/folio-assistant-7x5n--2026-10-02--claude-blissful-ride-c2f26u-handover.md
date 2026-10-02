@@ -98,3 +98,10 @@ Every open PR below shows "dirty" because `main` moved. Each needs `origin/main`
    - **handover and KG publication:** #1912, `whlc`.
 2. Get the owner's answer on branch-rename permission. Then rename `state`, then fhir-ast, then `qa-reports` in the agreed window.
 3. Merge main into #1912 and #1913, regenerate, and merge them when green. Then re-dispatch #1892 (methodology page) and #1896 (two test fixes).
+
+### Handover reports received from sibling sessions (input for stalled-agent-triage)
+| session | report (bean note) | branch @ head | most at risk |
+|---|---|---|---|
+| 01PricYF (wnhh, IG cache) | `beans/notes/folio-assistant-wnhh--2026-10-02--agy-wnhh-sushi-publisher-local.md` | agy/wnhh-sushi-publisher-local @ d09cf0fe | #1816 @ 40d2286d re-conflicts with main on ~30 generated files per merge (recipe in report); #1860 @ 10ad4fff red on readme:subgraphs (CI-only); #1884 @ 8bb669fc green, awaits owner review; owes lean-cache-restore dual-name row |
+| 01KC89Kn (fs43 + #1764 merge) | `beans/notes/folio-assistant-fs43--2026-10-02--claude-kind-fermi-bznf5v.md` (PR #1917 @ 736b0c0) | #1916 claude/kind-fermi-1764-merge-wip @ 43ea90c (base: #1764) | #1764: move 10 agent attestations to #1875's new paths (owner ruling "Move them to new paths"), merge main, push in one go. **Says `state` is free to rename** (nothing writes it; phase 2 bean 2h76 will write `cat-state`) |
+| 01CVVoav (KG/library) | `beans/notes/folio-assistant-apcg--2026-10-02--claude-fervent-brahmagupta-rbwhzm.md` (PR #1919 @ 1591b4b) | #1898 @ 49722781 (WIP), #1911 @ 5dfc3bad (WIP) | #1898 TypeScript fix unfinished; waits on #1899; last blocker on beans y4uj, mwzd |

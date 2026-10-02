@@ -23,7 +23,8 @@
  *
  * The auditor's own run already disagreed, in a committed artefact:
  * `cat-harness/test/results/kg-qa/_external/smart-base/…/diig-investment-path.kg-qa.json`
- * records `skill-ref-resolves` **pass (0)** for that same file, because from
+ * recorded `skill-ref-resolves` **pass (0)** for that same file (deleted 2026-10-01
+ * as a duplicate of the owner's own verdict, Q-A PR 4), because from
  * the auditor's root the skill is local. **Two runs, one diagram, two answers**
  * — and the instance-scoped one was wrong.
  *
