@@ -18,6 +18,7 @@ Part of [C@T Harness](../README.md) 0.1.0, declared as `cat-harness-tests`, hold
 | [`fishbone-relocate.e2e.ts`](fishbone-relocate.e2e.ts) | a file |  |
 | [`folio-mount.e2e.ts`](folio-mount.e2e.ts) | a file |  |
 | [`folio-three-states.e2e.ts`](folio-three-states.e2e.ts) | a file |  |
+| [`glass-card-metadata.e2e.ts`](glass-card-metadata.e2e.ts) | a file |  |
 | [`glass-devices.e2e.ts`](glass-devices.e2e.ts) | a file |  |
 | [`glass-filter.e2e.ts`](glass-filter.e2e.ts) | a file |  |
 | [`glass-interactions.e2e.ts`](glass-interactions.e2e.ts) | a file |  |
@@ -25,6 +26,7 @@ Part of [C@T Harness](../README.md) 0.1.0, declared as `cat-harness-tests`, hold
 | [`glass-pop-outs.e2e.ts`](glass-pop-outs.e2e.ts) | a file |  |
 | [`glass-scroll.e2e.ts`](glass-scroll.e2e.ts) | a file |  |
 | [`glass-tiles.e2e.ts`](glass-tiles.e2e.ts) | a file |  |
+| [`glass-zoom-steady.e2e.ts`](glass-zoom-steady.e2e.ts) | a file |  |
 | [`glass.e2e.ts`](glass.e2e.ts) | a file |  |
 | [`graph-tiles.e2e.ts`](graph-tiles.e2e.ts) | a file |  |
 | [`harness-config-panel.e2e.ts`](harness-config-panel.e2e.ts) | a file |  |
@@ -58,6 +60,6 @@ Part of [C@T Harness](../README.md) 0.1.0, declared as `cat-harness-tests`, hold
 | [`test_pypdf_compat.py`](test_pypdf_compat.py) | a file |  |
 | [`translation-badges.e2e.ts`](translation-badges.e2e.ts) | a file |  |
 | [`health/`](health/) | 8 files | |
-| [`results/`](results/README.md) | 991 files | |
+| [`results/`](results/README.md) | 1000 files | |
 | [`support/`](support/) | 3 files | |
 <!-- kg:subgraph:end -->

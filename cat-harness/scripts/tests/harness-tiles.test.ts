@@ -13,7 +13,7 @@ import { tmpdir } from "node:os";
 import { join } from "node:path";
 
 import { siteDir, siteDirFor } from "../../schemas/cat-harness.js";
-import { harnessTiles, inertNote, ownStatePage, subjectPage } from "../harness-tiles.js";
+import { harnessTiles, inertNote, ownStatePage, subgraphsOf, subjectPage } from "../harness-tiles.js";
 import { writeDeclaration } from "../../test/support/instance-fixture.js";
 
 /** A repo with a site-owning harness and any number of siblings. */
@@ -910,5 +910,42 @@ describe("one name per destination (bean `ob3m` finding 6)", () => {
     expect({ href: who.href, kind: who.hrefKind }).toEqual({ href: "/#harness-who", kind: "section" });
     // The graph keeps its own page under its own name.
     expect(who.visualisations).toEqual([{ kind: "processes", label: "Processes", path: "/host/processes/who/" }]);
+  });
+});
+
+describe("subgraphsOf — every declared graph, marked local or remote (603s)", () => {
+  const dirs = [
+    { id: "library", path: "who/library/", graphKinds: ["library"] },
+    { id: "docs", path: "who/docs/", graphKinds: ["docs"] },
+  ];
+
+  test("lists the declared directories as LOCAL, in declared order, with their paths", () => {
+    const rows = subgraphsOf({}, dirs);
+    expect(rows.map((r) => [r.id, r.where])).toEqual([["library", "local"], ["docs", "local"]]);
+    expect(rows[0]).toMatchObject({ path: "who/library/", kinds: ["library"] });
+  });
+
+  test("lists remote graphs and subscriptions as REMOTE, after the local ones", () => {
+    const sha = "0123456789abcdef0123456789abcdef01234567";
+    const rows = subgraphsOf(
+      {
+        remoteGraphs: [{ id: "upstream", url: "https://example.org/kg", graphKinds: ["skills"] }],
+        subscriptions: [{ id: "smart", repository: "WorldHealthOrganization/smart-base", ref: sha, subgraphs: ["library"] }],
+      } as Parameters<typeof subgraphsOf>[0],
+      dirs,
+    );
+    expect(rows.map((r) => r.where)).toEqual(["local", "local", "remote", "remote"]);
+    expect(rows[2]).toMatchObject({ id: "upstream", via: "remote-graph", url: "https://example.org/kg" });
+    expect(rows[3]).toMatchObject({
+      id: "smart",
+      via: "subscription",
+      ref: "0123456",
+      materialised: ["library"],
+      url: `https://github.com/WorldHealthOrganization/smart-base/tree/${sha}`,
+    });
+  });
+
+  test("an instance with nothing remote has zero remote rows, not an absent list", () => {
+    expect(subgraphsOf({ remoteGraphs: [], subscriptions: [] }, dirs).filter((r) => r.where === "remote")).toEqual([]);
   });
 });
