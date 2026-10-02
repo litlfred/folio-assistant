@@ -76,7 +76,8 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-blissful-ride-c2f26u-train-6/cat-harness.jsonld#glossary-usage/Process_SessionStateMachine/Lane_Human",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-blissful-ride-c2f26u-train-6/cat-harness.jsonld#glossary-usage/Process_ActivityLog/Lane_Operator",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-blissful-ride-c2f26u-train-6/cat-harness.jsonld#glossary-usage/Process_FeatureStaging/Lane_Human",
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-blissful-ride-c2f26u-train-6/cat-harness.jsonld#glossary-usage/Process_RelatedWork/Lane_User"
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-blissful-ride-c2f26u-train-6/cat-harness.jsonld#glossary-usage/Process_RelatedWork/Lane_User",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-blissful-ride-c2f26u-train-6/cat-harness.jsonld#glossary-usage/Process_StalledAgentTriage/Lane_User"
       ]
     },
     {
@@ -186,6 +187,15 @@
       "label": "User",
       "scopeNote": "Answers one question: coordinate or not, and how. The question arrives with its context, options and a recommendation, so it can be answered without opening anything (interaction-modality §4.1).",
       "source": "cat-harness/processes/sdlc/related-work.bpmn"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-blissful-ride-c2f26u-train-6/cat-harness.jsonld#glossary-usage/Process_StalledAgentTriage/Lane_User",
+      "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#LaneUsage",
+      "ofConcept": "https://litlfred.github.io/folio-assistant/STAGING/claude-blissful-ride-c2f26u-train-6/cat-harness.jsonld#role/user",
+      "inProcess": "https://litlfred.github.io/folio-assistant/STAGING/claude-blissful-ride-c2f26u-train-6/cat-harness.jsonld#process/Process_StalledAgentTriage",
+      "label": "User",
+      "scopeNote": "Decides one theme at a time: continue, fold into the plan, new epic, park, or scrap.",
+      "source": "cat-harness/processes/sdlc/stalled-agent-triage.bpmn"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-blissful-ride-c2f26u-train-6/cat-harness.jsonld#role/author",
@@ -893,7 +903,8 @@
         "Agent (playing the machine)",
         "Agent (this session)",
         "Agent / platform (automated)",
-        "Designer"
+        "Designer",
+        "Triage agent"
       ],
       "inScheme": "https://litlfred.github.io/folio-assistant/STAGING/claude-blissful-ride-c2f26u-train-6/cat-harness-glossary.jsonld",
       "usage": [
@@ -915,6 +926,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-blissful-ride-c2f26u-train-6/cat-harness.jsonld#glossary-usage/Process_CodeChangeReview/Lane_Agent",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-blissful-ride-c2f26u-train-6/cat-harness.jsonld#glossary-usage/Process_MergeBase/Lane_Agent",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-blissful-ride-c2f26u-train-6/cat-harness.jsonld#glossary-usage/Process_RelatedWork/Lane_Agent",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-blissful-ride-c2f26u-train-6/cat-harness.jsonld#glossary-usage/Process_StalledAgentTriage/Lane_Triage",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-blissful-ride-c2f26u-train-6/cat-harness.jsonld#glossary-usage/Process_UpstreamPinWatch/Lane_Agent",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-blissful-ride-c2f26u-train-6/cat-harness.jsonld#glossary-usage/Process_UpstreamAdoption/Lane_Agent",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-blissful-ride-c2f26u-train-6/cat-harness.jsonld#glossary-usage/Process_WireframeDesignReview/Lane_Designer"
@@ -1081,6 +1093,15 @@
       "label": "Agent",
       "scopeNote": "Searches, sorts and summarizes, and recommends. It never links, blocks, merges or comments on another piece of work before the user has answered, because coordinating is a commitment on behalf of the work's owners.",
       "source": "cat-harness/processes/sdlc/related-work.bpmn"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-blissful-ride-c2f26u-train-6/cat-harness.jsonld#glossary-usage/Process_StalledAgentTriage/Lane_Triage",
+      "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#LaneUsage",
+      "ofConcept": "https://litlfred.github.io/folio-assistant/STAGING/claude-blissful-ride-c2f26u-train-6/cat-harness.jsonld#role/authoring-agent",
+      "inProcess": "https://litlfred.github.io/folio-assistant/STAGING/claude-blissful-ride-c2f26u-train-6/cat-harness.jsonld#process/Process_StalledAgentTriage",
+      "label": "Triage agent",
+      "scopeNote": "Reads the footprint the stalled agents left, collects or reconstructs a handover report per agent, groups the work into 2-4 themes, and recommends. It never finishes, closes or deletes another agent's work.",
+      "source": "cat-harness/processes/sdlc/stalled-agent-triage.bpmn"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-blissful-ride-c2f26u-train-6/cat-harness.jsonld#glossary-usage/Process_UpstreamPinWatch/Lane_Agent",
@@ -1856,7 +1877,22 @@
       "title": "Session coordinator",
       "notation": "session-coordinator",
       "definition": "The authoring agent managing the SESSION rather than the content: what this session intends, what is already in flight elsewhere, and what to pick up next.",
-      "inScheme": "https://litlfred.github.io/folio-assistant/STAGING/claude-blissful-ride-c2f26u-train-6/cat-harness-glossary.jsonld"
+      "altLabel": [
+        "Merge steward"
+      ],
+      "inScheme": "https://litlfred.github.io/folio-assistant/STAGING/claude-blissful-ride-c2f26u-train-6/cat-harness-glossary.jsonld",
+      "usage": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-blissful-ride-c2f26u-train-6/cat-harness.jsonld#glossary-usage/Process_StalledAgentTriage/Lane_Steward"
+      ]
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-blissful-ride-c2f26u-train-6/cat-harness.jsonld#glossary-usage/Process_StalledAgentTriage/Lane_Steward",
+      "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#LaneUsage",
+      "ofConcept": "https://litlfred.github.io/folio-assistant/STAGING/claude-blissful-ride-c2f26u-train-6/cat-harness.jsonld#role/session-coordinator",
+      "inProcess": "https://litlfred.github.io/folio-assistant/STAGING/claude-blissful-ride-c2f26u-train-6/cat-harness.jsonld#process/Process_StalledAgentTriage",
+      "label": "Merge steward",
+      "scopeNote": "Receives the open PRs that lost their driver: which are green and ready, which are mid-merge, which must be re-driven from their PR head.",
+      "source": "cat-harness/processes/sdlc/stalled-agent-triage.bpmn"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-blissful-ride-c2f26u-train-6/cat-harness.jsonld#role/integration-watcher",
