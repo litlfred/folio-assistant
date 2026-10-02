@@ -301,25 +301,25 @@
   ],
   "canonicalDocument": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld",
   "repository": "cat-harness",
-  "generatedAt": "2026-10-02T13:26:01.333Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/f35aab59dbaa8c66524cc74c6919c80ff721a034",
-  "sourceCommitSha": "f35aab59dbaa8c66524cc74c6919c80ff721a034",
-  "sourceCommitAt": "2026-10-02T13:13:45Z",
+  "generatedAt": "2026-10-02T15:37:54.365Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/ae6f94d4aa7f77a954d5513a0deee68419397814",
+  "sourceCommitSha": "ae6f94d4aa7f77a954d5513a0deee68419397814",
+  "sourceCommitAt": "2026-10-02T15:32:43Z",
   "sourceTreeDirty": true,
   "dependsOnUnavailable": "2 dependency edge(s), none expressible as a record — see gaps",
   "counts": {
-    "Skill": 293,
+    "Skill": 294,
     "Actor": 36,
     "Capability": 28,
-    "SkillPackage": 34,
+    "SkillPackage": 35,
     "Decision": 9,
     "Process": 76,
     "SequenceFlow": 996,
     "Lane": 201,
     "ProcessNode": 940,
-    "Tool": 112,
-    "Schema": 146,
-    "ExternalSchema": 19,
+    "Tool": 113,
+    "Schema": 151,
+    "ExternalSchema": 20,
     "GraphKind": 25,
     "Role": 48,
     "Subgraph": 25,
@@ -1729,7 +1729,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-hypatia-k3aoh4-bean-notes/cat-harness.jsonld#package/kg-core"
       ],
       "instructionsPath": "skills/kg/kg-core/directory-conventions.md",
-      "instructionLines": 1304,
+      "instructionLines": 1305,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -2018,7 +2018,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-hypatia-k3aoh4-bean-notes/cat-harness.jsonld#package/library-core"
       ],
       "instructionsPath": "skills/library/library-core/library-ingestion.md",
-      "instructionLines": 835,
+      "instructionLines": 871,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -3104,7 +3104,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-hypatia-k3aoh4-bean-notes/cat-harness.jsonld#package/sdlc-core"
       ],
       "instructionsPath": "skills/sdlc/sdlc-core/merge-conflict-patterns.md",
-      "instructionLines": 230,
+      "instructionLines": 245,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -4013,6 +4013,22 @@
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/document-publishing"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-hypatia-k3aoh4-bean-notes/cat-harness.jsonld#skill/dublin-core-renderings",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Skill",
+      "name": "dublin-core-renderings",
+      "title": "Dublin Core renderings",
+      "description": "Render a catalogue's Dublin Core records in the two standard forms an outside reader can use: Dublin Core XML, which a harvester reads, and JSON-LD bound to DCMI Metadata Terms. Each rendering is published beside the item's page. Covers which records get one, which XML form is used and why, how every field maps from the record's own data (never composed), what cannot be expressed and how that is reported, and the gate. Read this before changing the mapping, adding a catalogue instance, or linking a rendering from a page.",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-hypatia-k3aoh4-bean-notes/cat-harness.jsonld#package/catalogue"
+      ],
+      "instructionsPath": "../folio-assistant-core/skills/library/catalogue/dublin-core-renderings.md",
+      "instructionLines": 164,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/dublin-core-renderings"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-hypatia-k3aoh4-bean-notes/cat-harness.jsonld#skill/document-intake",
       "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Skill",
       "name": "document-intake",
@@ -4067,7 +4083,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-hypatia-k3aoh4-bean-notes/cat-harness.jsonld#package/fhir-ig-authoring"
       ],
       "instructionsPath": "../fhir-harness/skills/content/fhir-ig-authoring/l3-fhir-authoring.md",
-      "instructionLines": 73,
+      "instructionLines": 78,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -4178,7 +4194,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-hypatia-k3aoh4-bean-notes/cat-harness.jsonld#package/fhir-ig-base"
       ],
       "instructionsPath": "../fhir-harness/skills/fhir-ig-base/ig-build-pipeline.md",
-      "instructionLines": 126,
+      "instructionLines": 127,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -5098,7 +5114,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-hypatia-k3aoh4-bean-notes/cat-harness.jsonld#package/authoring-who-smart-guidelines"
       ],
       "instructionsPath": "../smart-base/skills/content/authoring-who-smart-guidelines/ig-artifact-ingestion.md",
-      "instructionLines": 268,
+      "instructionLines": 269,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -5109,12 +5125,12 @@
       "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Skill",
       "name": "smart-stack-layering",
       "title": "smart-stack-layering",
-      "description": "Which of the five layers a WHO SMART asset, rule, script or page belongs to, and the one question that settles it. Read before adding anything to fhir-harness, smart-base, smart-l1, smart-dak or smart-ig, before creating a per-IG harness, and before moving a pre/post-processing step.",
+      "description": "Which layer a WHO SMART asset, rule, script or page belongs to — fhir-harness, smart-base (with its L1 and DAK document kinds) or smart-ig — and the one question that settles it. Read before adding anything to fhir-harness, smart-base or smart-ig, before creating a per-IG harness, and before moving a pre/post-processing step.",
       "inPackage": [
         "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-hypatia-k3aoh4-bean-notes/cat-harness.jsonld#package/authoring-who-smart-guidelines"
       ],
       "instructionsPath": "../smart-base/skills/content/authoring-who-smart-guidelines/smart-stack-layering.md",
-      "instructionLines": 165,
+      "instructionLines": 184,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -6336,6 +6352,14 @@
       "path": "../folio-assistant-core/skills/content/folio-document-adapter",
       "hasManifest": true,
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/folio-document-adapter"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-hypatia-k3aoh4-bean-notes/cat-harness.jsonld#package/catalogue",
+      "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#SkillPackage",
+      "name": "catalogue",
+      "path": "../folio-assistant-core/skills/library/catalogue",
+      "hasManifest": true,
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/catalogue"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-hypatia-k3aoh4-bean-notes/cat-harness.jsonld#package/ingestion",
@@ -29941,7 +29965,8 @@
       "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-hypatia-k3aoh4-bean-notes/cat-harness.jsonld#role/fhir-modeller",
       "inLane": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-hypatia-k3aoh4-bean-notes/cat-harness.jsonld#process/Process_L3Fhir/lane/Lane_Modeller",
       "implementedBy": [
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-hypatia-k3aoh4-bean-notes/cat-harness.jsonld#skill/l3-fhir-authoring"
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-hypatia-k3aoh4-bean-notes/cat-harness.jsonld#skill/l3-fhir-authoring",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-hypatia-k3aoh4-bean-notes/cat-harness.jsonld#skill/l2-dak-authoring"
       ],
       "touchesWorkPlan": false,
       "relaxable": true,
@@ -44624,6 +44649,49 @@
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#tool/voices-viewer"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-hypatia-k3aoh4-bean-notes/cat-harness.jsonld#tool/document-kinds-viewer",
+      "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#Tool",
+      "name": "document-kinds-viewer",
+      "title": "Document kinds viewer",
+      "description": "Render each declared document-kinds directory: every kind's structure, sections and sources, one page per subject instance.",
+      "install": {
+        "none": true
+      },
+      "invoke": {
+        "shell": "bun run document-kinds:viz"
+      },
+      "io": {
+        "inputs": [
+          {
+            "name": "check",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-hypatia-k3aoh4-bean-notes/tool-types.schema.json#/$defs/Flag",
+            "description": "Fail if a page is stale, instead of writing.",
+            "required": false,
+            "arg": {
+              "flag": "--check"
+            }
+          }
+        ],
+        "outputs": [
+          {
+            "name": "pages",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-hypatia-k3aoh4-bean-notes/tool-types.schema.json#/$defs/RepoPath",
+            "description": "The viewer pages, under the published site directory."
+          }
+        ]
+      },
+      "requirements": {
+        "runtime": [
+          "bun"
+        ],
+        "network": false
+      },
+      "satisfies": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-hypatia-k3aoh4-bean-notes/cat-harness.jsonld#skill/graph-rendering"
+      ],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#tool/document-kinds-viewer"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-hypatia-k3aoh4-bean-notes/cat-harness.jsonld#tool/state-viewer",
       "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#Tool",
       "name": "state-viewer",
@@ -46633,33 +46701,6 @@
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/convention"
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-hypatia-k3aoh4-bean-notes/cat-harness.jsonld#schema/dak-blocks",
-      "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#Schema",
-      "name": "dak-blocks",
-      "title": "WHO SMART Guidelines content blocks — the `dak` adapter.",
-      "module": "schemas/dak-blocks.ts",
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-hypatia-k3aoh4-bean-notes/cat-harness.jsonld#directory/schemas",
-      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/dak-blocks"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-hypatia-k3aoh4-bean-notes/cat-harness.jsonld#schema/dak-content-type",
-      "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#Schema",
-      "name": "dak-content-type",
-      "title": "The `dak` and `sushi` content types — registered by the WHO layer, not by core.",
-      "module": "schemas/dak-content-type.ts",
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-hypatia-k3aoh4-bean-notes/cat-harness.jsonld#directory/schemas",
-      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/dak-content-type"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-hypatia-k3aoh4-bean-notes/cat-harness.jsonld#schema/dak",
-      "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#Schema",
-      "name": "dak",
-      "title": "The **DAK** content type — a repository that is a WHO SMART Guidelines",
-      "module": "schemas/dak.ts",
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-hypatia-k3aoh4-bean-notes/cat-harness.jsonld#directory/schemas",
-      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/dak"
-    },
-    {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-hypatia-k3aoh4-bean-notes/cat-harness.jsonld#schema/decision-methodology-context",
       "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#Schema",
       "name": "decision-methodology-context",
@@ -46721,6 +46762,15 @@
       "module": "schemas/document-image.ts",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-hypatia-k3aoh4-bean-notes/cat-harness.jsonld#directory/schemas",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/document-image"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-hypatia-k3aoh4-bean-notes/cat-harness.jsonld#schema/document-kind",
+      "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#Schema",
+      "name": "document-kind",
+      "title": "A document KIND — a named structure of sections that a document authored",
+      "module": "schemas/document-kind.ts",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-hypatia-k3aoh4-bean-notes/cat-harness.jsonld#directory/schemas",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/document-kind"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-hypatia-k3aoh4-bean-notes/cat-harness.jsonld#schema/document-structure",
@@ -47636,6 +47686,14 @@
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/changeset"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-hypatia-k3aoh4-bean-notes/cat-harness.jsonld#schema/dublin-core-render",
+      "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#Schema",
+      "name": "dublin-core-render",
+      "title": "Dublin Core RENDERINGS of a catalogue record: DC XML for a harvester, and",
+      "module": "../folio-assistant-core/schemas/dublin-core-render.ts",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/dublin-core-render"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-hypatia-k3aoh4-bean-notes/cat-harness.jsonld#schema/dublin-core",
       "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#Schema",
       "name": "dublin-core",
@@ -47708,6 +47766,14 @@
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/ig-chrome"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-hypatia-k3aoh4-bean-notes/cat-harness.jsonld#schema/ig-identity",
+      "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#Schema",
+      "name": "ig-identity",
+      "title": "An IG's identity, as its own `sushi-config.yaml` states it — id, canonical,",
+      "module": "../fhir-harness/schemas/ig-identity.ts",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/ig-identity"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-hypatia-k3aoh4-bean-notes/cat-harness.jsonld#schema/ig-menu",
       "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#Schema",
       "name": "ig-menu",
@@ -47724,6 +47790,46 @@
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/ig-metadata-index"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-hypatia-k3aoh4-bean-notes/cat-harness.jsonld#schema/dak-blocks",
+      "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#Schema",
+      "name": "dak-blocks",
+      "title": "WHO SMART Guidelines content blocks — the `dak` adapter.",
+      "module": "../smart-base/schemas/dak-blocks.ts",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/dak-blocks"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-hypatia-k3aoh4-bean-notes/cat-harness.jsonld#schema/dak-content-type",
+      "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#Schema",
+      "name": "dak-content-type",
+      "title": "The `dak` and `sushi` content types — registered by the WHO layer, not by core.",
+      "module": "../smart-base/schemas/dak-content-type.ts",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/dak-content-type"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-hypatia-k3aoh4-bean-notes/cat-harness.jsonld#schema/dak-jsonld",
+      "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#Schema",
+      "name": "dak-jsonld",
+      "title": "JSON-LD typing for the `dak` adapter's block kinds.",
+      "module": "../smart-base/schemas/dak-jsonld.ts",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/dak-jsonld"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-hypatia-k3aoh4-bean-notes/cat-harness.jsonld#schema/dak-kinds",
+      "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#Schema",
+      "name": "dak-kinds",
+      "title": "The `dak` adapter's vocabulary — its block kinds, their builder names and",
+      "module": "../smart-base/schemas/dak-kinds.ts",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/dak-kinds"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-hypatia-k3aoh4-bean-notes/cat-harness.jsonld#schema/dak",
+      "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#Schema",
+      "name": "dak",
+      "title": "The **DAK** content type — a repository that is a WHO SMART Guidelines",
+      "module": "../smart-base/schemas/dak.ts",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/dak"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-hypatia-k3aoh4-bean-notes/cat-harness.jsonld#externalSchema/dcmi-terms",
       "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#ExternalSchema",
       "name": "dcmi-terms",
@@ -47734,7 +47840,8 @@
       "specUrl": "https://www.dublincore.org/specifications/dublin-core/dcmi-terms/2020-01-20/",
       "namespace": [
         "http://purl.org/dc/elements/1.1/",
-        "http://purl.org/dc/terms/"
+        "http://purl.org/dc/terms/",
+        "http://purl.org/dc/dcam/"
       ],
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#externalSchema/dcmi-terms"
     },
@@ -47981,6 +48088,20 @@
         "http://www.w3.org/2001/XMLSchema#"
       ],
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#externalSchema/w3c-xsd11-datatypes"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-hypatia-k3aoh4-bean-notes/cat-harness.jsonld#externalSchema/w3c-xsd11-structures",
+      "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#ExternalSchema",
+      "name": "w3c-xsd11-structures",
+      "title": "W3C XML Schema Definition Language (XSD) 1.1 Part 1: Structures",
+      "authority": "W3C",
+      "specVersion": "2012-04-05",
+      "specUse": "conforms",
+      "specUrl": "https://www.w3.org/TR/xmlschema11-1/",
+      "namespace": [
+        "http://www.w3.org/2001/XMLSchema-instance"
+      ],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#externalSchema/w3c-xsd11-structures"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-hypatia-k3aoh4-bean-notes/cat-harness.jsonld#externalSchema/who-smart-base",

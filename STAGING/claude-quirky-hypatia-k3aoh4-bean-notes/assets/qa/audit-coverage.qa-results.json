@@ -10,8 +10,8 @@
   },
   "families": {
     "coverage-measured": {
-      "summary": "Every declared kind with its four counts and its state. Not findings: the measurement itself, so the committed record answers \"what audits this kind\" without rerunning anything. The file COUNTS are printed rather than recorded — a census moves on any commit and a gate keyed on it is stale by default; `hasFiles` carries the only thing it decides. 50 of 50 declared kind(s), 204 gate(s), 73 criteria.",
-      "count": 50,
+      "summary": "Every declared kind with its four counts and its state. Not findings: the measurement itself, so the committed record answers \"what audits this kind\" without rerunning anything. The file COUNTS are printed rather than recorded — a census moves on any commit and a gate keyed on it is stale by default; `hasFiles` carries the only thing it decides. 51 of 51 declared kind(s), 210 gate(s), 73 criteria.",
+      "count": 51,
       "entries": [
         {
           "kind": "bean-defs",
@@ -201,6 +201,7 @@
           "subjectKinds": [],
           "gates": [
             "bun run check:catalogue",
+            "bun run dc:render:check",
             "bun run id-lookup:check",
             "bun run iris:covers:check",
             "bun run iris:pages:check"
@@ -320,10 +321,26 @@
           "hasFiles": true
         },
         {
+          "kind": "document-kinds",
+          "state": "covered",
+          "directories": [
+            "smart-base/document-kinds"
+          ],
+          "criteria": [],
+          "subjectKinds": [],
+          "gates": [
+            "bun run document-kinds:viz:check",
+            "bun run smart-base:document-kinds:check"
+          ],
+          "typed": true,
+          "hasFiles": true
+        },
+        {
           "kind": "external-schema",
           "state": "covered",
           "directories": [
-            "cat-harness/external-schemas"
+            "cat-harness/external-schemas",
+            "smart-base/external-schemas"
           ],
           "criteria": [],
           "subjectKinds": [],
@@ -475,6 +492,7 @@
           "gates": [
             "bun run check:l1-complete",
             "bun run check:l1-complete -- --check",
+            "bun run check:library-qa:check",
             "bun run check:methodology-evidence",
             "bun run check:soft-hyphens",
             "bun run check:source-licence:check",
@@ -482,7 +500,8 @@
             "bun run check:upload-names:check",
             "bun run check:uploads-retired",
             "bun run gen:jsonld:check",
-            "bun run lsi:skills:check"
+            "bun run lsi:skills:check",
+            "bun run smart-base:smart-kg-l1:check"
           ],
           "typed": true,
           "hasFiles": true
@@ -636,10 +655,8 @@
             "folio-assistant-core/test/results",
             "folio-assistant-sci/test/results",
             "smart-base/test/results",
-            "smart-dak/test/results",
             "smart-ig/test/results",
             "smart-immunizations/test/results",
-            "smart-l1/test/results",
             "smart-trust/test/results",
             "who-iris/test/results",
             "who-style-guide/test/results"
@@ -869,7 +886,7 @@
           "kind": "themes",
           "state": "covered",
           "directories": [
-            "smart-trust/themes",
+            "smart-base/themes",
             "who-iris/themes"
           ],
           "criteria": [],
@@ -1187,10 +1204,10 @@
       "entries": []
     },
     "kinds-unaudited": {
-      "summary": "A declared kind whose directories hold files that NOTHING reaches — no kg-audit criterion, no gate declaring @covers, and no declared validator. All 204 gate(s) have declared, so this is a verdict rather than an upper bound (bean `3srh`).",
+      "summary": "A declared kind whose directories hold files that NOTHING reaches — no kg-audit criterion, no gate declaring @covers, and no declared validator. All 210 gate(s) have declared, so this is a verdict rather than an upper bound (bean `3srh`).",
       "count": 0,
       "entries": []
     }
   },
-  "total": 66
+  "total": 67
 }
