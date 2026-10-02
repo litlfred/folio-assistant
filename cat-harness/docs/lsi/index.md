@@ -130,20 +130,20 @@ Each dimension is a **contrast** between two poles, shown by their highest-loadi
 
 | dim | σ | one pole | the other pole |
 |---|---|---|---|
-| 1 | 43.70 | instance, harness, kind, session, directory, graph, block, page | *(none)* |
-| 2 | 21.42 | watcher, slot, sibling, queue, backlog, prs, block, commits | harness, instance, declaration, directory, node, directories, graph, bootstrap |
+| 1 | 43.70 | instance, harness, kind, directory, session, graph, block, page | *(none)* |
+| 2 | 21.41 | watcher, slot, sibling, queue, backlog, prs, block, commits | harness, instance, declaration, directory, node, directories, graph, bootstrap |
 | 3 | 17.76 | session, beans, goals, branch, store, window, epic, push | slot, chapter, block, edges, formal, glossary, project, narrative |
-| 4 | 16.45 | page, block, section, manifest, sections, text, blocks, chapter | ledger, sibling, subdirectory, items, sessions, window, renderable, relocation |
+| 4 | 16.44 | page, block, section, manifest, sections, blocks, text, chapter | ledger, sibling, subdirectory, items, sessions, window, renderable, relocation |
 | 5 | 14.97 | rung, queue, archive, arm, sniff, zip, archived, slide | requirements, role, feature, lane, actor, phase, sign-off, feedback |
-| 6 | 14.80 | locale, page, translated, navbar, translation, sha, language, french | edges, forward, edge, lane, logical, actor, backward, cross-chapter |
-| 7 | 14.39 | edges, forward, edge, backward, preview, cross-chapter, energy, logical | actor, lane, role, requirement, login, criterion, process, roles |
-| 8 | 14.12 | locale, translated, translation, french, back-translation, claim, trip, badge | preview, feature, phase, impact, option, feedback, staging, post |
+| 6 | 14.80 | locale, page, translated, navbar, translation, sha, language, french | edges, forward, edge, lane, actor, logical, backward, analysis |
+| 7 | 14.39 | edges, forward, edge, backward, preview, cross-chapter, energy, logical | actor, lane, role, requirement, login, criterion, backlog, roles |
+| 8 | 14.12 | locale, translated, translation, french, back-translation, claim, trip, badge | preview, feature, phase, impact, option, feedback, post, staging |
 
 **Findings** — 0 narrow dimension(s), 1 near-duplicate pair(s).
 
 *Near-duplicates* (cosine ≥ 0.95) — similar is not duplicate; read both:
 
-- 0.954 — `cat-harness/skills/sdlc/sdlc-core/delivery-summary.md` ~ `cat-harness/skills/sdlc/sdlc-core/diff.md`
+- 0.952 — `cat-harness/skills/sdlc/sdlc-core/delivery-summary.md` ~ `cat-harness/skills/sdlc/sdlc-core/diff.md`
 
 ## smart-base / library
 
