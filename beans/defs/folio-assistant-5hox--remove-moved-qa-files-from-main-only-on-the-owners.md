@@ -5,7 +5,7 @@ status: todo
 type: task
 priority: normal
 created_at: 2026-10-01T08:00:47Z
-updated_at: 2026-10-01T19:22:21Z
+updated_at: 2026-10-02T13:50:41Z
 parent: folio-assistant-3fva
 blocked_by:
     - folio-assistant-7mwa
@@ -38,3 +38,17 @@ Asked as D4 with four options. The owner chose **right away** over the recommend
 
 
 _2026-10-01_ — Also wait for the recordUntainted store fix (filed under 3fva by the parent session) before removing derived files.
+
+## Prepared on local branch qa-5hox, 2026-10-02 (NOT pushed)
+
+Inventory (derived from the declarations via resolveQaLocation, the same roots qa:publish uses): **1,186 files, 8,520,910 bytes** under the twelve declared qa directories (cat-harness 1,012 / 8.23 MB; folio-assistant-sci 81; fhir-harness 33; smart-base 20; folio-assistant-core 15; who-style-guide 6; who-iris 4; smart-dak, -ig, -immunizations, -l1, -trust 3 each). Oldest file by last change: 6 days (2026-09-26); oldest at its current path: 13 days (2026-09-19). Excluded: test/attestations/ (48 files, D2 (a)), test/health/results/ (2 files; qa:publish does not carry it, so it cannot be hash-verified). Full table: cat-harness/docs/proposals/5hox-removal-inventory.md.
+
+Hash verification: bun run qa:verify-moved --key <entry> (exit 0 identical, 1 differs, 2 unknown, 3 usage; a fetch miss is UNKNOWN). Dry run against pr/1801/51e40d7c4: IDENTICAL, 1,186 of 1,186. main/<head>: UNKNOWN, no main/ entry exists until the arc PR merges. The D4 hash precondition is therefore NOT yet met.
+
+Wiring (files present): storage declared on all twelve qa dirs; working copies ignored (directory-storage.test.ts keeps that equal to the declarations); five judge scripts take --against main in package.json. bun run gates green apart from the CI-only translation:catalogue:check --base.
+
+Deletion is its own final commit. bun run gates with files absent: 16 of 205 red. Groups: (A) stale-compare gates not migrated, bean oqe3: kg:audit:check, kg:audit:all:check, translation:block-qa:check, skill:register:check x2; (B) UNKNOWN for want of a main/ entry: lsi:viz:check, uml:overview:check, check:qa-reviewer-permission, check:orphan-verdicts, check:kind-validators:require-all, check:declared-paths; (C) committed docs pages embed QA badges: docs:pages:check, check:ci-invocations; (E) noise: translation:catalogue:check.
+
+Blocker beyond the gates: after removal, qa-publish has no producer for the working copy (a fresh CI checkout holds nothing under test/results), so main/<sha> entries after the removal would hold one file.
+
+The owner's go: only the D4 ruling quoted above. The first Done-when box is not ticked here.
