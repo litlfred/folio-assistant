@@ -44,6 +44,7 @@ Part of [C@T Harness](../README.md) 0.1.0, declared as `cat-harness-tests`, hold
 | [`qa-badge.e2e.ts`](qa-badge.e2e.ts) | a file |  |
 | [`qa-panel.e2e.ts`](qa-panel.e2e.ts) | a file |  |
 | [`rail-tips.e2e.ts`](rail-tips.e2e.ts) | a file |  |
+| [`render-wait.e2e.ts`](render-wait.e2e.ts) | a file |  |
 | [`review-diff.e2e.ts`](review-diff.e2e.ts) | a file |  |
 | [`review-heat.e2e.ts`](review-heat.e2e.ts) | a file |  |
 | [`review-nav.e2e.ts`](review-nav.e2e.ts) | a file |  |
@@ -53,7 +54,7 @@ Part of [C@T Harness](../README.md) 0.1.0, declared as `cat-harness-tests`, hold
 | [`search-restore.e2e.ts`](search-restore.e2e.ts) | a file |  |
 | [`settings-crosslinks.e2e.ts`](settings-crosslinks.e2e.ts) | a file |  |
 | [`sidebar-panels.e2e.ts`](sidebar-panels.e2e.ts) | a file |  |
-| [`sidebar-rail.e2e.ts`](sidebar-rail.e2e.ts) | a file |  |
+| [`site-index.e2e.ts`](site-index.e2e.ts) | a file |  |
 | [`staging-banner.e2e.ts`](staging-banner.e2e.ts) | a file |  |
 | [`state-dashboards.e2e.ts`](state-dashboards.e2e.ts) | a file |  |
 | [`sticky-home.e2e.ts`](sticky-home.e2e.ts) | a file |  |

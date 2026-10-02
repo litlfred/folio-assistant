@@ -173,6 +173,29 @@ const WORK_PLAN_JS = readFileSync(join(SITE, "assets", "js", "work-plan.js"), "u
 const WORK_PLAN_CSS = readFileSync(join(SITE, "assets", "css", "work-plan.css"), "utf-8");
 
 /**
+ * The shared renderer `work-plan.js` reads `window.faRender` from.
+ *
+ * TWO FILES INLINED RATHER THAN ONE, since 2026-10-02: `el`, the three-state
+ * fetch and the in-DOM failure copy moved out of `work-plan.js` into
+ * `kg-render.js` so a second converted region could use them instead of
+ * copying them. The same argument this file already rests on — *"a second copy
+ * of a renderer is two answers to what the work plan looks like, free to
+ * disagree while both look right in review"* — applies one level down, and it
+ * is why this reads the file rather than growing its own copy of those
+ * helpers.
+ *
+ * ORDER IS LOAD-BEARING. `work-plan.js` reads `window.faRender` at evaluation
+ * and returns early with a console warning if it is absent, so this must be
+ * emitted first. `head_custom.html` states the same constraint for the docs
+ * site, where `defer` preserves document order.
+ *
+ * These pages declare NO `fa-render-regions` meta and therefore carry no
+ * `data-fa-render` attribute. That is the deliberate third state: a page that
+ * never asked is not a page that is pending.
+ */
+const KG_RENDER_JS = readFileSync(join(SITE, "assets", "js", "kg-render.js"), "utf-8");
+
+/**
  * The projection tags this generator knows how to render.
  *
  * Named constants rather than literals at the branch, because the branch is a
@@ -578,6 +601,9 @@ ${WORK_PLAN_CSS}
 <main>
 ${opts.body}
 </main>
+<script>
+${KG_RENDER_JS}
+</script>
 <script>
 ${WORK_PLAN_JS}
 </script>
