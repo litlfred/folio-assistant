@@ -50,9 +50,7 @@ import { existsSync, readFileSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 
-import { defineTool, type ToolDefinition } from "../../cat-harness/schemas/tool.js";
-import { toolTypeIri } from "../../cat-harness/schemas/tool-types.js";
-import { declarationPathIn } from "../../cat-harness/schemas/cat-harness.js";
+import { declarationPathIn, defineTool, toolTypeIri, type ToolDefinition } from "../platform.js";
 
 /** The INSTANCE root — `<repo>/smart-base`, where `smart-base.json` lives. */
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), "..");
