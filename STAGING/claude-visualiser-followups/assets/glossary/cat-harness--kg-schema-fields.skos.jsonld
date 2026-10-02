@@ -18406,6 +18406,101 @@
       "skos:note": "candidate"
     },
     {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/pdf-structure.pdfmetadataschema.title_correction",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "PdfMetadataSchema.title_correction"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "An EDITORIAL correction, outranking every extracted title (bean `w6fu`, step b). Authored, never produced by a rung, and carried over by a re-ingest. `basis` says what the title was read from, so it can be checked rather than trusted."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/pdf-structure.ts#PdfMetadataSchema.title_correction",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/pdf-structure.pdfmetadataschema.title_evidence",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "PdfMetadataSchema.title_evidence"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Every candidate the resolver saw, and which sources agreed — the record an editor decides from."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/pdf-structure.ts#PdfMetadataSchema.title_evidence",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/pdf-structure.pdfmetadataschema.title_raw",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "PdfMetadataSchema.title_raw"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The text walk's title before resolution, kept so a re-run resolves from it rather than from its own answer."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/pdf-structure.ts#PdfMetadataSchema.title_raw",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/pdf-structure.pdfmetadataschema.title_source",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "PdfMetadataSchema.title_source"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Where `title` came from (bean `w6fu`, `scripts/_pdf_title.py`): the PDF's `Title` metadata, its first-page heading or its outline when another source CORROBORATES it, else the text walk's title (`text`) or nothing (`filename`, and the manifest falls back to the entry id)."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/pdf-structure.ts#PdfMetadataSchema.title_source",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/pdf-structure.pdfmetadataschema.title_verified",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "PdfMetadataSchema.title_verified"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "False when no source corroborated the title: the raw title was kept, not guessed at."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/pdf-structure.ts#PdfMetadataSchema.title_verified",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/pdf-structure.pdfstructureschema.granularity",
       "@type": "skos:Concept",
       "skos:inScheme": {
