@@ -13,8 +13,8 @@ import { cpSync, mkdtempSync, readdirSync, readFileSync, rmSync, statSync, write
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 
-import { loadProcessModel } from "../src/workflow/process-model.ts";
-import { BOOTSTRAP_PROCESSES_NS, CAT_HARNESS_PROCESSES_NS, FOLIO_BPMN_NS, ownElementPattern, ownExtensionPrefixes } from "./namespaces.ts";
+import { loadProcessModel } from "../../cat-harness/src/workflow/process-model.ts";
+import { BOOTSTRAP_PROCESSES_NS, CAT_HARNESS_PROCESSES_NS, FOLIO_BPMN_NS, ownElementPattern, ownExtensionPrefixes } from "../../cat-harness/schemas/namespaces.ts";
 import { execSync } from "node:child_process";
 
 const REPO_ROOT = join(import.meta.dir, "..", "..");
