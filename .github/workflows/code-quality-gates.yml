@@ -1584,6 +1584,13 @@ jobs:
           bun run deps:python:check
           bun run check:l1-complete
           bun run check:l1-complete -- --check
+          # Issue #1794, bean `8iqc`: l1-complete asks whether ingestion
+          # PRODUCED each artefact; this asks whether it is any good -- a
+          # title that is the slug, or "Abies" off a scanned cover, passes
+          # every completeness test. ADVISORY: the findings are reported in
+          # the committed sidecar and do not fail; a stale sidecar or a
+          # could-not-determine entry does.
+          bun run check:library-qa:check
           # Bean `q7ey`: an ingested upload retires to `fsh-guts/uploads/`.
           # The rule was written and hand-swept on 2026-09-30, and that one
           # sweep left eight files in two places and a whole harness
@@ -1623,6 +1630,10 @@ jobs:
           # generator (fhir-harness/scripts/gen-ig-pages.ts, #1767).
           bun run smart-base:pages:check
           bun run smart-immunizations:pages:check
+          # smart-base's DAK document kind, generated from DAK_COMPONENTS
+          # (stage D5, #1767): stale the moment a component is added.
+          bun run smart-base:document-kinds:check
+          bun run document-kinds:viz:check
           # The fsh-guts index is generated from the graph, so it goes stale the
           # moment a file is relocated there -- which is the ONE operation that
           # graph exists for. Gated here rather than trusted, same as every
@@ -1914,6 +1925,12 @@ jobs:
           # render, and this one carries byte counts and download links -- the
           # two things a reader would take on trust.
           bun run iris:pages:check
+          # The Dublin Core renderings (DC XML + DCMI-Terms JSON-LD) of every
+          # catalogue record an item names, published beside the replica
+          # pages (bean `7eak`). Fails on a missing, stale or orphaned
+          # rendering -- the item pages link these files, so a stale one is
+          # wrong metadata served under a link a harvester trusts.
+          bun run dc:render:check
           # The prefix-sharded identifier lookup over who-iris's REFERENCED
           # nodes (bean `4pm8`). Gated because a stale shard still answers:
           # it finds a node the catalogue no longer references, and a reader

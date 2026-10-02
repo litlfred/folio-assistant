@@ -38,7 +38,7 @@ const CONFIG = {
       editHref: "https://github.com/x/y/edit/main/cat-harness/cat-harness.json",
       declared: [{ key: "name", summary: "cat-harness" }, { key: "associatedHarnesses", summary: "1: ihris" }],
     },
-    { name: "smart-l1", title: "smart-l1", group: "checkout", declaredIn: "smart-l1/smart-l1.json", declared: [] },
+    { name: "smart-ig", title: "smart-ig", group: "checkout", declaredIn: "smart-ig/smart-ig.json", declared: [] },
   ],
   associated: [
     {
