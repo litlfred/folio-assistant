@@ -117,12 +117,53 @@ function decomment(css: string): string {
   return css.replace(/\/\*[\s\S]*?\*\//g, "");
 }
 
+/**
+ * Split a block body into its declarations, in order.
+ *
+ * A `;` ends a declaration and the FIRST `:` separates property from value —
+ * but only outside a string and outside parentheses. The DRAFT watermark is
+ * `url("data:image/svg+xml;utf8,<svg xmlns='http://…'>…")`: splitting it on
+ * every `;` and `:` (what a `[^;]+` regex does) produced a truncated
+ * `url("data:image/svg+xml` plus a bogus `http` property, and the unterminated
+ * string that left in the mirrored stylesheet made browsers drop every rule
+ * after it — the IG header bar among them.
+ */
+export function declarationsIn(body: string): Array<{ property: string; value: string }> {
+  const out: Array<{ property: string; value: string }> = [];
+  let quote: string | undefined;
+  let depth = 0;
+  let start = 0;
+  let colon = -1;
+  const flush = (end: number): void => {
+    if (colon >= 0) {
+      const property = body.slice(start, colon).trim();
+      const value = body.slice(colon + 1, end).trim();
+      if (/^-{0,2}[\w-]+$/.test(property) && value) out.push({ property, value });
+    }
+    start = end + 1;
+    colon = -1;
+  };
+  for (let i = 0; i < body.length; i++) {
+    const c = body[i]!;
+    if (quote) {
+      if (c === "\\") i++;
+      else if (c === quote) quote = undefined;
+    } else if (c === '"' || c === "'") quote = c;
+    else if (c === "(") depth++;
+    else if (c === ")") depth = Math.max(0, depth - 1);
+    else if (depth === 0 && c === ":" && colon < 0) colon = i;
+    else if (depth === 0 && c === ";") flush(i);
+  }
+  flush(body.length);
+  return out;
+}
+
 /** Every custom property declared in a `:root` block, in file order. */
 export function rootTokens(css: string): Array<{ name: string; value: string }> {
   const out: Array<{ name: string; value: string }> = [];
   for (const block of decomment(css).matchAll(/:root\s*\{([^}]*)\}/g)) {
-    for (const [, name, value] of block[1]!.matchAll(/(--[\w-]+)\s*:\s*([^;]+);/g)) {
-      out.push({ name: name!, value: value!.trim() });
+    for (const d of declarationsIn(block[1]!)) {
+      if (d.property.startsWith("--")) out.push({ name: d.property, value: d.value });
     }
   }
   return out;
@@ -139,10 +180,7 @@ export function ruleFor(css: string, selector: string): Array<{ property: string
   const needle = selector.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
   const m = decomment(css).match(new RegExp(`(?:^|[},])\\s*${needle}\\s*\\{([^}]*)\\}`));
   if (!m) return undefined;
-  const decls = [...m[1]!.matchAll(/([-\w]+)\s*:\s*([^;]+);?/g)].map((d) => ({
-    property: d[1]!,
-    value: d[2]!.trim(),
-  }));
+  const decls = declarationsIn(m[1]!);
   return decls.length > 0 ? decls : undefined;
 }
 
