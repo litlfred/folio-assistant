@@ -230,14 +230,32 @@ jobs:
         if: steps.merge.outputs.merged == 'true'
         env:
           REF: ${{ steps.pr.outputs.ref }}
+          SELECTED: ${{ steps.pr.outputs.sha }}
         run: |
           # No --force of any kind: if the author pushed during the run this is
           # rejected, which is the guard against overwriting their work.
-          git push origin "HEAD:refs/heads/$REF"
-          echo "sha=$(git rev-parse HEAD)" >> "$GITHUB_OUTPUT"
+          #
+          # A REJECTION BECAUSE THE BRANCH MOVED is an expected race, the same
+          # class as a refusal — measured 2026-10-02 on #1790 (run 36981901740),
+          # where it put a red check on the PR that read as a CI failure. So it
+          # is reported (`rejected=true`, and in the comment) and the job stays
+          # green; the next push to main retries. Any OTHER push failure — the
+          # branch did not move, yet the push failed — is a real error.
+          if git push origin "HEAD:refs/heads/$REF"; then
+            echo "sha=$(git rev-parse HEAD)" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+          now=$(git ls-remote origin "refs/heads/$REF" | cut -f1)
+          if [ -n "$now" ] && [ "$now" != "$SELECTED" ]; then
+            echo "::notice::the branch moved during the run ($SELECTED -> $now); nothing overwritten, the next push to main retries"
+            echo "rejected=true" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+          echo "::error::push failed although the branch did not move"
+          exit 1
 
       - name: Have CI judge the merge commit
-        if: steps.push.outcome == 'success'
+        if: steps.push.outputs.sha != ''
         env:
           REF: ${{ steps.pr.outputs.ref }}
           HAS_TOKEN: ${{ secrets.MERGE_MAIN_TOKEN != '' }}
@@ -253,7 +271,7 @@ jobs:
         env:
           STATUS: ${{ steps.merge.outputs.status }}
           MERGED: ${{ steps.merge.outputs.merged }}
-          PUSHED: ${{ steps.push.outcome }}
+          PUSHED: ${{ steps.push.outputs.sha != '' && 'success' || 'no' }}
           SHA: ${{ steps.push.outputs.sha }}
         run: |
           set -euo pipefail

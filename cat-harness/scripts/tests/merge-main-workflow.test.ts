@@ -89,3 +89,26 @@ describe("the merge runs main's tool, and fails loudly", () => {
     expect(runOf(steps[merge]!)).toContain('echo "refused=true"');
   });
 });
+
+describe("a rejected fast-forward is an expected race, not a red check", () => {
+  // Measured 2026-10-02 on #1790 (run 36981901740): the branch moved during
+  // the run, the push was rejected, and the job failed — a red check reading
+  // as a CI failure for something that is, like a refusal, reported and retried.
+  const steps = doc.jobs.merge!.steps;
+  const push = steps.find((s) => (s as { id?: string }).id === "push")!;
+
+  test("the push step exits 0 when the branch moved, and says so", () => {
+    expect(push.run).toContain('echo "rejected=true"');
+    expect(push.run).toMatch(/if \[ -n "\$now" \] && \[ "\$now" != "\$SELECTED" \]; then[\s\S]*?exit 0/);
+  });
+
+  test("any other push failure still fails", () => {
+    expect(push.run).toMatch(/push failed although the branch did not move"\s*\n\s*exit 1/);
+  });
+
+  test("nothing downstream reads the push step's OUTCOME as 'pushed'", () => {
+    for (const s of steps) {
+      expect(JSON.stringify(s)).not.toContain("steps.push.outcome == 'success'");
+    }
+  });
+});
