@@ -20,11 +20,12 @@
  * would have passed on all three.
  */
 import { describe, expect, test } from "bun:test";
+import { HARNESS_ROOT } from "../scripts/lib/roots.ts";
 import { mkdtempSync, mkdirSync, writeFileSync, rmSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 
-import { readSchemaGraph } from "../scripts/schema-graph.ts";
+import { readSchemaGraph } from "../../cat-harness/scripts/schema-graph.ts";
 
 /** A throwaway instance whose `schemas/` holds exactly the given files. */
 function fixture(files: Record<string, string>): { root: string; cleanup: () => void } {
@@ -238,7 +239,7 @@ export const NodeSchema: z.ZodTypeAny = z.lazy(() => z.object({ child: NodeSchem
 });
 
 describe("the real schema graph", () => {
-  const root = join(import.meta.dir, "..");
+  const root = HARNESS_ROOT;
 
   test("reads, and is not empty", () => {
     const g = readSchemaGraph(root);
