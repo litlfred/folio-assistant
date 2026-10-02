@@ -5,7 +5,7 @@ status: in-progress
 type: task
 priority: normal
 created_at: 2026-10-01T00:02:14Z
-updated_at: 2026-10-01T00:02:24Z
+updated_at: 2026-10-02T22:18:46Z
 parent: folio-assistant-kupb
 ---
 
@@ -36,3 +36,7 @@ Three GENERATED files of the retired instance are left at `who-style-guide/test/
 ## Owner ruling 2026-10-01 late (recorded on `ga6u` in #1806; appended here as asked)
 
 The who-iris prose that still described the retired `dependents` field is **reworded in this PR's merge of main**, consistent with Q-B's Q1 (REWORD). Done in the 2026-10-02 merge: the themes entry's comment (key renamed `_inheritance_comment`), the docs entry's `_comment` and the `qa` description now describe the current mechanism — the graph kind's `perInstance` setting and nested subgraphs declared with `"subgraph": true`. The same wording in other declarations stays out of scope.
+
+
+## Holder 2026-10-02 22:40Z
+Driven by https://claude.ai/code/session_01SmeBn6QZsDFaNQ4GtuC2sd (Parcel B, epic 7x5n): merging main into #1735 per the PR's merge plan, regenerating, gates, then ready.
