@@ -12,11 +12,11 @@
 #   rename-special-branch.sh <owner/repo> <old> <new> --apply    # does it
 #
 #   <old> ending in "/" renames a FAMILY: every branch starting with <old>
-#   gets <old> replaced by <new>  (e.g. lake-cache/ cat-lake-cache/).
+#   gets <old> replaced by <new>  (e.g. lake-cache/ cat/folio-assistant-sci/lake-cache/).
 #
 # Examples:
-#   rename-special-branch.sh litlfred/folio-assistant state cat-state --apply
-#   rename-special-branch.sh litlfred/smart-trust fhir-ast/ cat-fhir-ast/ --apply
+#   rename-special-branch.sh litlfred/folio-assistant state cat/cat-harness/state --apply
+#   rename-special-branch.sh litlfred/smart-trust fhir-ast/ cat/fhir-harness/fhir-ast/ --apply
 #
 # Fail-safe, per branch, in this order — any failure stops before the next step:
 #   1. the old branch is read and its commit (SHA) recorded;

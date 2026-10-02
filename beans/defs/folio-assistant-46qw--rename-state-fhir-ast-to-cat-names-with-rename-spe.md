@@ -1,13 +1,11 @@
 ---
 # folio-assistant-46qw
 title: Rename state + fhir-ast/* to cat- names with rename-special-branch.sh (handoff to local agy agent)
-status: in-progress
+status: completed
 type: task
 priority: normal
-tags:
-    - ready-to-close
 created_at: 2026-10-02T21:25:05Z
-updated_at: 2026-10-02T21:32:14Z
+updated_at: 2026-10-02T21:33:31Z
 parent: folio-assistant-fs43
 ---
 
@@ -146,3 +144,10 @@ Now on litlfred/smart-base:
     cat-fhir-ast/smart.who.int.base
 DONE
 ```
+
+## Verification (coordinator, 2026-10-02 ~21:40 UTC)
+- litlfred/folio-assistant: `git ls-remote` shows `cat-state` at `d913ea45b8ebdfcd67d977f286176e539641e9ae`, and no `state`. Verified first-hand.
+- litlfred/smart-trust and litlfred/smart-base: accepted on the script's own read-back ("created … (verified)" above), which matches `## Pins` (`f254e5bb6f6b` and `eb7bed8395af`). This session cannot read those repositories.
+- The owner changed the naming scheme to `cat/<harness>/<name>` after this ran (note on `fs43`). Moving these three branches to their final names is a separate bean.
+
+Closed by the coordinator.
