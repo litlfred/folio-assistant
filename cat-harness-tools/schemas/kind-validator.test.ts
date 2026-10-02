@@ -181,7 +181,11 @@ describe("per-family node schemas (bean rdkm)", () => {
     const { resolveNodeSchemas } = await import("../../cat-harness/schemas/kind-validator");
     const fams = await resolveNodeSchemas("qa", HARNESS);
     expect(fams.map((f) => f.tag).sort()).toEqual([
-      "block-qa/v1", "folio-detangle-sidecar/v1", "folio-lsi-index/v1", "folio-qa-index/v1", "folio-test-run/v1",
+      "block-qa/v1", "folio-detangle-sidecar/v1", "folio-lsi-index/v1", "folio-qa-index/v1",
+      // The authored-page translation list, an asset since bean `4l4d`
+      // (it was the Jekyll data file `_data/translation-qa-pages.json`).
+      "folio-qa-translation-pages/v1",
+      "folio-test-run/v1",
       // A downstream Tool's run record, bean `fq5u`.
       "folio-tool-run/v1",
       // `kg-qa-manifest/v1` joined the `qa` kind on 2026-09-27, from `skills`.
