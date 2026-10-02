@@ -1534,7 +1534,7 @@ export function tools(baseUrl?: string): ToolDefinition[] {
       selection: {
         when: "Before composing a merge train, and whenever deciding which PRs can land together or must be ordered.",
         limits: "Paths, not semantics (requirements T3): two PRs that change different files can still interact, which the shared-declaration list only partly covers. A README counts as authored when its prose changed, as a region when only generated regions did.",
-        cost: "One `gh pr list` and one `git fetch` of every open head, then a `git diff --name-only` per PR. No working tree is touched.",
+        cost: "One REST listing (`gh api …/pulls`; not `gh pr list`, which is GraphQL) and one `git fetch` of every open head, then a `git diff --name-only` per PR. No working tree is touched.",
       },
     }),
     defineTool({

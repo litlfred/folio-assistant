@@ -18,7 +18,7 @@
  *
  * ## Where the PRs come from
  *
- * - default: `gh pr list` for the open PRs, then ONE `git fetch` of their
+ * - default: the open PRs over `gh api` (REST), then ONE `git fetch` of their
  *   heads; every diff is then `git diff --name-only <base>...<head>`, the
  *   same as the branch form, so the two sources cannot disagree on a PR.
  * - `--branches a,b,...` or positional refs: no `gh` at all.
@@ -191,16 +191,35 @@ export interface GhPr {
   title: string;
 }
 
-function ghOpenPrs(root: string, baseBranch: string): GhPr[] | string {
-  const r = spawnSync("gh", ["pr", "list", "--state", "open", "--base", baseBranch, "--limit", "200",
-    "--json", "number,headRefName,headRefOid,isDraft,title"], { cwd: root, encoding: "utf-8" });
-  if (r.error) return `gh is not available: ${r.error.message}`;
-  if (r.status !== 0) return `gh pr list failed: ${(r.stderr ?? "").trim().split("\n")[0]}`;
-  try {
-    return JSON.parse(r.stdout) as GhPr[];
-  } catch {
-    return "gh pr list returned no JSON";
+/**
+ * Parse `gh api … --jq` output: one JSON object per line. A line that does
+ * not parse fails the whole listing, because a PR silently dropped from the
+ * list would be a PR silently called independent of everything.
+ */
+export function parseGhPrLines(text: string): GhPr[] | string {
+  const out: GhPr[] = [];
+  for (const line of text.split("\n").map((l) => l.trim()).filter(Boolean)) {
+    try {
+      out.push(JSON.parse(line) as GhPr);
+    } catch {
+      return `gh returned a line that is not JSON: ${line.slice(0, 80)}`;
+    }
   }
+  return out;
+}
+
+/**
+ * The open PRs, over the REST API. Not `gh pr list`: that is GraphQL, which
+ * some environments (agent sessions among them, measured 2026-10-02) refuse
+ * with a 403 while REST works.
+ */
+function ghOpenPrs(root: string, baseBranch: string): GhPr[] | string {
+  const jq = ".[] | {number, headRefName: .head.ref, headRefOid: .head.sha, isDraft: .draft, title}";
+  const r = spawnSync("gh", ["api", "--paginate", `repos/{owner}/{repo}/pulls?state=open&per_page=100&base=${encodeURIComponent(baseBranch)}`, "--jq", jq],
+    { cwd: root, encoding: "utf-8" });
+  if (r.error) return `gh is not available: ${r.error.message}`;
+  if (r.status !== 0) return `gh api pulls failed: ${(r.stderr ?? "").trim().split("\n")[0]}`;
+  return parseGhPrLines(r.stdout);
 }
 
 /** Measure one member against the base: its changed paths, with READMEs read to tell region-only from authored. */

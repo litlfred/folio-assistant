@@ -4,7 +4,7 @@
  */
 import { afterEach, describe, expect, test } from "bun:test";
 
-import { buildReport, classifyMember, measure, pairsOf, type OverlapMember } from "../merge-overlap.ts";
+import { buildReport, classifyMember, measure, pairsOf, parseGhPrLines, type OverlapMember } from "../merge-overlap.ts";
 import { makeRepo, readme, type Repo } from "./merge-pipeline-fixture.ts";
 
 const GEN = "cat-harness/docs/glossary/index.md";
@@ -63,6 +63,14 @@ describe("pairsOf — the T3 rule", () => {
     const r = buildReport([member("#1", ["a.ts"]), member("#2", ["b.ts"]), member("#3", ["a.ts", "bun.lock"])], { base: "origin/main", base_sha: "x", source: "branches" });
     expect(r.pairs.map((p) => `${p.a}×${p.b}`)).toEqual(["#1×#3", "#2×#3"]);
     expect(r.summary).toMatchObject({ members: 3, touching_shared: 1, conflicting_pairs: 2, undetermined: 0 });
+  });
+});
+
+describe("parseGhPrLines", () => {
+  test("one object per line; a bad line fails the listing rather than dropping a PR", () => {
+    const ok = parseGhPrLines('{"number":1,"headRefName":"a","headRefOid":"x","isDraft":false,"title":"t"}\n\n{"number":2,"headRefName":"b","headRefOid":"y","isDraft":true,"title":"u"}\n');
+    expect(Array.isArray(ok) && ok.map((p) => p.number)).toEqual([1, 2]);
+    expect(typeof parseGhPrLines('{"number":1}\nnot json')).toBe("string");
   });
 });
 
