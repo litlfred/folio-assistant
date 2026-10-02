@@ -33,6 +33,31 @@ classDiagram
       <<could not determine>>
     }
   }
+  namespace folio_assistant_sci__sci_sources {
+    class folio_assistant_sci_sci_sources_folio_source_descriptor_v1_Identifier["Identifier"] {
+      <<json: SourceDescriptorSchema>>
+      name [1] string
+      authoritative [1] boolean
+      example [0..1] string
+      note [0..1] string
+    }
+    class folio_assistant_sci_sci_sources_folio_source_descriptor_v1_folio_source_descriptor_v1["folio-source-descriptor/v1"] {
+      <<json: SourceDescriptorSchema>>
+      $schema [1] 'folio-source-descriptor/v1'
+      id [1] string
+      title [1] string
+      system [0..1] string
+      baseUrl [0..1] string~uri~
+      nodeKind [1] string
+      subsetStrategies [1..*] list~container | identifier | facet | range | closure~
+      subsetIsSelfContained [1] boolean
+      subsetBasis [0..1] string
+      identifiers [1..*] Identifier[]
+      enumeration [1] object
+      termsUrl [0..1] string~uri~
+      character [1] object
+    }
+  }
   namespace folio_assistant_sci__qa {
     class folio_assistant_sci_qa_kg_qa_v1_kg_qa_v1["kg-qa/v1"] {
       <<json: KgQaReportSchema>>
@@ -122,6 +147,9 @@ classDiagram
   cssClass "n_folio_assistant_sci_sci_methodologies_methodology" fa_uml_undetermined
   cssClass "n_folio_assistant_sci_sci_adapters_code" fa_uml_kind_code
   cssClass "n_folio_assistant_sci_sci_adapters_code" fa_uml_undetermined
+  folio_assistant_sci_sci_sources_folio_source_descriptor_v1_folio_source_descriptor_v1 *-- "1..*" folio_assistant_sci_sci_sources_folio_source_descriptor_v1_Identifier : identifiers
+  cssClass "folio_assistant_sci_sci_sources_folio_source_descriptor_v1_Identifier" fa_uml_kind_schemas
+  cssClass "folio_assistant_sci_sci_sources_folio_source_descriptor_v1_folio_source_descriptor_v1" fa_uml_kind_schemas
   cssClass "folio_assistant_sci_qa_kg_qa_v1_kg_qa_v1" fa_uml_kind_qa
   cssClass "folio_assistant_sci_qa_kg_qa_manifest_v1_kg_qa_manifest_v1" fa_uml_kind_qa
   cssClass "folio_assistant_sci_attestations_QaAttestations" fa_uml_kind_attestations

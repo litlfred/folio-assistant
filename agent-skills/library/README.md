@@ -10,19 +10,19 @@ Part of [agent-skills](../README.md) 0.1.0, declared as `library`, holding `libr
 
 | file | what it is | used by |
 |---|---|---|
-| [`image-verdicts.json`](image-verdicts.json) | data |  |
-| [`agent-skill-best-practices---gemini-cli/`](agent-skill-best-practices---gemini-cli/README.md) | 13 files | |
-| [`agent-skills---google-antigravity-docs/`](agent-skills---google-antigravity-docs/README.md) | 16 files | |
-| [`arxiv-2602.12670v4/`](arxiv-2602.12670v4/README.md) | 259 files | |
-| [`arxiv-2607.25032v1/`](arxiv-2607.25032v1/README.md) | 43 files | |
-| [`arxiv-2608.08453v1/`](arxiv-2608.08453v1/README.md) | 67 files | |
-| [`best-practices---google-antigravity-docs/`](best-practices---google-antigravity-docs/README.md) | 16 files | |
-| [`equipping-agents-for-the-real-world-with-agent-skills-anthro/`](equipping-agents-for-the-real-world-with-agent-skills-anthro/README.md) | 52 files | |
-| [`hmans-2026-beans-readme/`](hmans-2026-beans-readme/README.md) | 47 files | |
-| [`mcp-2026-specification-2026-07-28/`](mcp-2026-specification-2026-07-28/README.md) | 1631 files | |
-| [`rfc2119-key-words-requirement-levels/`](rfc2119-key-words-requirement-levels/README.md) | 22 files | |
-| [`rfc8174-uppercase-vs-lowercase-2119-key-words/`](rfc8174-uppercase-vs-lowercase-2119-key-words/README.md) | 28 files | |
-| [`skill-authoring-best-practices---claude-platform-docs/`](skill-authoring-best-practices---claude-platform-docs/README.md) | 106 files | |
-| [`skills-in-openai-api/`](skills-in-openai-api/README.md) | 7 files | |
-| [`skills-in-openai-api-notebook/`](skills-in-openai-api-notebook/README.md) | 41 files | |
+| [`image-verdicts.json`](../../cat-harness/library/image-verdicts.json) | data |  |
+| [`agent-skill-best-practices---gemini-cli/`](../../cat-harness/library/agent-skill-best-practices---gemini-cli/README.md) | 13 files | |
+| [`agent-skills---google-antigravity-docs/`](../../cat-harness/library/agent-skills---google-antigravity-docs/README.md) | 16 files | |
+| [`arxiv-2602.12670v4/`](../../cat-harness/library/arxiv-2602.12670v4/README.md) | 259 files | |
+| [`arxiv-2607.25032v1/`](../../cat-harness/library/arxiv-2607.25032v1/README.md) | 43 files | |
+| [`arxiv-2608.08453v1/`](../../cat-harness/library/arxiv-2608.08453v1/README.md) | 67 files | |
+| [`best-practices---google-antigravity-docs/`](../../cat-harness/library/best-practices---google-antigravity-docs/README.md) | 16 files | |
+| [`equipping-agents-for-the-real-world-with-agent-skills-anthro/`](../../cat-harness/library/equipping-agents-for-the-real-world-with-agent-skills-anthro/README.md) | 52 files | |
+| [`hmans-2026-beans-readme/`](../../cat-harness/library/hmans-2026-beans-readme/README.md) | 47 files | |
+| [`mcp-2026-specification-2026-07-28/`](../../cat-harness/library/mcp-2026-specification-2026-07-28/README.md) | 1631 files | |
+| [`rfc2119-key-words-requirement-levels/`](../../cat-harness/library/rfc2119-key-words-requirement-levels/README.md) | 22 files | |
+| [`rfc8174-uppercase-vs-lowercase-2119-key-words/`](../../cat-harness/library/rfc8174-uppercase-vs-lowercase-2119-key-words/README.md) | 28 files | |
+| [`skill-authoring-best-practices---claude-platform-docs/`](../../cat-harness/library/skill-authoring-best-practices---claude-platform-docs/README.md) | 106 files | |
+| [`skills-in-openai-api/`](../../cat-harness/library/skills-in-openai-api/README.md) | 7 files | |
+| [`skills-in-openai-api-notebook/`](../../cat-harness/library/skills-in-openai-api-notebook/README.md) | 41 files | |
 <!-- kg:subgraph:end -->

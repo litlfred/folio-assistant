@@ -10,6 +10,6 @@ Part of [large-datasets](../README.md) 0.1.0, declared as `large-datasets-script
 
 | file | what it is | used by |
 |---|---|---|
-| [`bench-id-lookup.ts`](bench-id-lookup.ts) | a file |  |
-| [`gen-id-lookup.ts`](gen-id-lookup.ts) | a file |  |
+| [`bench-id-lookup.ts`](../../cat-harness-tools/scripts/bench-id-lookup.ts) | a file |  |
+| [`gen-id-lookup.ts`](../../cat-harness-tools/scripts/gen-id-lookup.ts) | a file |  |
 <!-- kg:subgraph:end -->

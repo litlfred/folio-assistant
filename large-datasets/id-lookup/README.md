@@ -10,8 +10,8 @@ Part of [large-datasets](../README.md) 0.1.0, declared as `large-datasets-id-loo
 
 | file | what it is | used by |
 |---|---|---|
-| [`index.html`](index.html) | a file |  |
-| [`lookup.d.ts`](lookup.d.ts) | a file |  |
-| [`lookup.js`](lookup.js) | a file |  |
-| [`who-iris/`](who-iris/) | 3 files | |
+| [`index.html`](../../cat-harness-tools/id-lookup/index.html) | a file |  |
+| [`lookup.d.ts`](../../cat-harness-tools/id-lookup/lookup.d.ts) | a file |  |
+| [`lookup.js`](../../cat-harness-tools/id-lookup/lookup.js) | a file |  |
+| [`who-iris/`](../../who-iris/id-lookup/) | 3 files | |
 <!-- kg:subgraph:end -->

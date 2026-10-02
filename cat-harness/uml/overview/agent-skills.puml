@@ -8,29 +8,6 @@ skinparam shadowing false
 skinparam packageStyle rectangle
 hide empty methods
 
-package "agent-skills/library" as pkg_agent_skills_library <<library>> {
-  class "folio-document-images/v1" as agent_skills_library_folio_document_images_v1_folio_document_images_v1 <<json: ImagesSidecarSchema>> #f4f4f1 {
-    $schema [1] : 'folio-document-images/v1'
-    doc_id [1] : string
-    images [1] : object[] | null
-    undetermined_reason [0..1] : string
-  }
-}
-package "agent-skills/qa" as pkg_agent_skills_qa <<qa>> {
-  class "kg-qa/v1" as agent_skills_qa_kg_qa_v1_kg_qa_v1 <<json: KgQaReportSchema>> #f4e6e6 {
-    $schema [1] : 'kg-qa/v1'
-    subject [1] : object
-    source_hash [1] : string | null
-    criteria [1] : map<object>
-    totals [1] : map<number>
-    pair_attestations [0..1] : any
-    voice_reviews [0..1] : any
-  }
-  class "kg-qa-manifest/v1" as agent_skills_qa_kg_qa_manifest_v1_kg_qa_manifest_v1 <<json: KgQaManifestSchema>> #f4e6e6 {
-    $schema [1] : 'kg-qa-manifest/v1'
-    auditor [1] : object
-  }
-}
 package "agent-skills/voices" as pkg_agent_skills_voices <<voices>> {
   class "Source" as agent_skills_voices_Source <<json: VoiceProfileSchema>> #e8f0ee {
     title [1] : string
@@ -81,6 +58,4 @@ agent_skills_voices_VoiceProfile *-- "1..*" agent_skills_voices_Source : sources
 agent_skills_voices_Rule *-- "0..*" agent_skills_voices_Pattern : patterns
 agent_skills_voices_Rule *-- "0..*" agent_skills_voices_Terminology : terminology
 agent_skills_voices_VoiceProfile *-- "1..*" agent_skills_voices_Rule : rules
-' grid: portrait, 2 column(s) — pkg_agent_skills_library pkg_agent_skills_qa pkg_agent_skills_voices
-pkg_agent_skills_library -[hidden]down- pkg_agent_skills_voices
 @enduml

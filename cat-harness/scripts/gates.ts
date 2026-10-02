@@ -47,6 +47,11 @@
  *   bun run gates              # the fast set — what the `typescript` job runs
  *   bun run gates --all        # plus the jobs that need a browser
  *   bun run gates --list       # print them and exit, running nothing
+ *   bun run gates --jobs 3     # pool size for read-only gates (default: CPUs - 1)
+ *
+ * Gates whose script declares `outputs: []` in `task-io.ts` run in a worker
+ * pool, output printed in workflow order; every other gate runs alone, as it
+ * always did (bean `xpcu`).
  *
  * @module scripts/gates
  */
@@ -65,6 +70,8 @@ import {
   readTree,
   type GateMutation,
 } from "./gate-tree-guard.js";
+import { jobsFromArgv, orderedEmitter, runCaptured, runPool } from "./task-pool.ts";
+import { gateReadsOnly } from "./task-io.ts";
 
 // The REPOSITORY root. `GATES_WORKFLOW` is `.github/workflows/…`, which
 // belongs to the repository rather than to this instance, and the gates
@@ -1219,6 +1226,31 @@ async function runTee(cmd: string, args: string[]): Promise<{ code: number; outp
   return { code: await child.exited, output: chunks.join("") };
 }
 
+/** A run of consecutive gates: either all read-only (may share the pool) or one that runs alone. */
+export interface GateSegment {
+  parallel: boolean;
+  gates: Gate[];
+}
+
+/**
+ * Split the gate list, in order, into maximal runs of read-only gates and
+ * single serial gates — bean `xpcu`.
+ *
+ * Order across segments is the workflow's: a writing gate is never moved
+ * ahead of or behind a reader, so whatever it repairs, a later reader sees
+ * repaired exactly as it did serially (and the tree guard still names it).
+ */
+export function gateSegments(gates: readonly Gate[], readsOnly: (g: Gate) => boolean): GateSegment[] {
+  const out: GateSegment[] = [];
+  for (const g of gates) {
+    const ro = readsOnly(g);
+    const last = out[out.length - 1];
+    if (ro && last?.parallel) last.gates.push(g);
+    else out.push({ parallel: ro, gates: [g] });
+  }
+  return out;
+}
+
 /**
  * The lines from a failed gate's output worth repeating in the summary.
  *
@@ -1269,6 +1301,7 @@ if (import.meta.main) {
   // `await` below — the gate loop tees each child's output (bean `ucb9`).
   const all = process.argv.includes("--all");
   const listOnly = process.argv.includes("--list");
+  const jobs = jobsFromArgv(process.argv);
 
   // ── The third state (bean `6366`) ──────────────────────────────────────
   //
@@ -1389,28 +1422,73 @@ if (import.meta.main) {
   const undetermined: string[] = baseline.ok ? [] : formatUndetermined(baseline.why);
   const mutations: GateMutation[] = [];
 
+  // ── Read-only gates run in a pool (bean `xpcu`) ────────────────────────
+  //
+  // A gate whose script DECLARES `outputs: []` in `task-io.ts` only reads, so a
+  // run of consecutive such gates goes to a worker pool and its output is
+  // buffered and printed in workflow order. Every other gate — undeclared, or
+  // declared as writing — runs alone and streams live, exactly as before, and
+  // is a barrier: nothing after it starts until it is done. So `bun test`,
+  // which writes, still runs by itself and still has its writes attributed to
+  // it by the tree guard below.
+  //
+  // The tree is snapshotted per SEGMENT. A serial gate's segment is the gate,
+  // so attribution is as exact as it was. A read-only batch that changed the
+  // tree is attributed to the batch, named in full: that is a declaration that
+  // turned out false, and `--jobs 1` re-runs everything one at a time to pin it.
+  const segments = gateSegments(gates, (g) => gateReadsOnly(g.command));
   const failed: { gate: Gate; why: string[] }[] = [];
-  for (const g of gates) {
-    process.stdout.write(`▸ ${g.command}\n`);
-    const [cmd, ...args] = g.command.split(/\s+/);
-    const r = await runTee(cmd!, args);
-    if (r.code !== 0) failed.push({ gate: g, why: salientFailures(r.output) });
-
-    if (seen !== undefined) {
-      const now = readTree(ROOT);
-      if (!now.ok) {
-        // The baseline read fine and this one did not, so the question stops
-        // being answerable PART WAY THROUGH. Reported with the gate it stopped
-        // at, and the comparison is abandoned rather than continued against a
-        // snapshot that is now of unknown age.
-        undetermined.push(...formatUndetermined(`${now.why} (after \`${g.command}\`)`));
-        seen = undefined;
-      } else {
-        const changes = diffReadings(seen, now.entries);
-        if (changes.length > 0) mutations.push({ gate: g.command, changes });
-        seen = now.entries;
+  const t0 = performance.now();
+  const parallelCount = segments.filter((s) => s.parallel).reduce((n, s) => n + s.gates.length, 0);
+  console.log(
+    `${jobs} worker(s): ${parallelCount} read-only gate(s) run in parallel, ` +
+      `${gates.length - parallelCount} one at a time (undeclared or writing)\n`,
+  );
+  for (const seg of segments) {
+    if (!seg.parallel || jobs === 1) {
+      for (const g of seg.gates) {
+        process.stdout.write(`▸ ${g.command}\n`);
+        const [cmd, ...args] = g.command.split(/\s+/);
+        const r = await runTee(cmd!, args);
+        if (r.code !== 0) failed.push({ gate: g, why: salientFailures(r.output) });
+        seen = snapshot(seen, g.command);
       }
+      continue;
     }
+    const emitter = orderedEmitter<{ code: number; output: string; ms: number }>((i, r) => {
+      const g = seg.gates[i]!;
+      process.stdout.write(`▸ ${g.command}   (${(r.ms / 1000).toFixed(1)}s, parallel)\n`);
+      process.stdout.write(r.output);
+      if (r.code !== 0) failed.push({ gate: g, why: salientFailures(r.output) });
+    });
+    await runPool(
+      seg.gates.map((g) => ({
+        id: g.command,
+        outputs: [],
+        run: () => runCaptured(g.command.split(/\s+/), ROOT),
+      })),
+      jobs,
+      (i, r) => emitter.push(i, r),
+    );
+    seen = snapshot(seen, `one of the parallel read-only gates: ${seg.gates.map((g) => g.command).join(", ")}`);
+  }
+  console.log(`\n(${((performance.now() - t0) / 1000).toFixed(0)}s wall for the gate run)`);
+
+  /** Compare the tree with the last snapshot and attribute any change to `who`. */
+  function snapshot(prev: ReadonlyMap<string, string> | undefined, who: string): ReadonlyMap<string, string> | undefined {
+    if (prev === undefined) return undefined;
+    const now = readTree(ROOT);
+    if (!now.ok) {
+      // The baseline read fine and this one did not, so the question stops
+      // being answerable PART WAY THROUGH. Reported with the gate it stopped
+      // at, and the comparison is abandoned rather than continued against a
+      // snapshot that is now of unknown age.
+      undetermined.push(...formatUndetermined(`${now.why} (after \`${who}\`)`));
+      return undefined;
+    }
+    const changes = diffReadings(prev, now.entries);
+    if (changes.length > 0) mutations.push({ gate: who, changes });
+    return now.entries;
   }
 
   console.log("");

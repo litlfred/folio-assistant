@@ -178,6 +178,32 @@ package "who-iris/who-iris-docs" as pkg_who_iris_who_iris_docs <<docs>> {
 package "who-iris/who-iris-scripts" as pkg_who_iris_who_iris_scripts <<code>> {
   note "code: no node schema declared\n(no validator registered: could not determine)" as n_who_iris_who_iris_scripts_code
 }
+package "who-iris/who-iris-sources" as pkg_who_iris_who_iris_sources <<schemas>> {
+  class "Identifier" as who_iris_who_iris_sources_folio_source_descriptor_v1_Identifier <<json: SourceDescriptorSchema>> #e9edf3 {
+    name [1] : string
+    authoritative [1] : boolean
+    example [0..1] : string
+    note [0..1] : string
+  }
+  class "folio-source-descriptor/v1" as who_iris_who_iris_sources_folio_source_descriptor_v1_folio_source_descriptor_v1 <<json: SourceDescriptorSchema>> #e9edf3 {
+    $schema [1] : 'folio-source-descriptor/v1'
+    id [1] : string
+    title [1] : string
+    system [0..1] : string
+    baseUrl [0..1] : string<uri>
+    nodeKind [1] : string
+    subsetStrategies [1..*] : list<container | identifier | facet | range | closure>
+    subsetIsSelfContained [1] : boolean
+    subsetBasis [0..1] : string
+    identifiers [1..*] : Identifier[]
+    enumeration [1] : object
+    termsUrl [0..1] : string<uri>
+    character [1] : object
+  }
+}
+package "who-iris/id-lookup" as pkg_who_iris_id_lookup <<code>> {
+  note "code: no node schema declared\n(no validator registered: could not determine)" as n_who_iris_id_lookup_code
+}
 package "who-iris/qa" as pkg_who_iris_qa <<qa>> {
   class "kg-qa/v1" as who_iris_qa_kg_qa_v1_kg_qa_v1 <<json: KgQaReportSchema>> #f4e6e6 {
     $schema [1] : 'kg-qa/v1'
@@ -203,11 +229,14 @@ who_iris_who_iris_uploads_folio_extraction_v1_folio_extraction_v1 *-- "0..*" who
 who_iris_who_iris_uploads_folio_extraction_v1_folio_extraction_v1 *-- "0..*" who_iris_who_iris_uploads_folio_extraction_v1_Omitted : omitted
 who_iris_who_iris_uploads_folio_intake_v1_folio_intake_v1 *-- "0..*" who_iris_who_iris_uploads_folio_intake_v1_File : files
 who_iris_who_iris_themes_Theme *-- "0..*" who_iris_who_iris_themes_Override : overrides
-' grid: portrait, 3 column(s) — pkg_who_iris_library pkg_who_iris_who_iris_site pkg_who_iris_who_iris_catalogue pkg_who_iris_who_iris_uploads pkg_who_iris_who_iris_skills pkg_who_iris_who_iris_themes pkg_who_iris_who_iris_docs pkg_who_iris_who_iris_scripts pkg_who_iris_qa
+who_iris_who_iris_sources_folio_source_descriptor_v1_folio_source_descriptor_v1 *-- "1..*" who_iris_who_iris_sources_folio_source_descriptor_v1_Identifier : identifiers
+' grid: portrait, 3 column(s) — pkg_who_iris_library pkg_who_iris_who_iris_site pkg_who_iris_who_iris_catalogue pkg_who_iris_who_iris_uploads pkg_who_iris_who_iris_skills pkg_who_iris_who_iris_themes pkg_who_iris_who_iris_docs pkg_who_iris_who_iris_scripts pkg_who_iris_who_iris_sources pkg_who_iris_id_lookup pkg_who_iris_qa
 pkg_who_iris_library -[hidden]down- pkg_who_iris_who_iris_uploads
 pkg_who_iris_who_iris_site -[hidden]down- pkg_who_iris_who_iris_skills
 pkg_who_iris_who_iris_catalogue -[hidden]down- pkg_who_iris_who_iris_themes
 pkg_who_iris_who_iris_uploads -[hidden]down- pkg_who_iris_who_iris_docs
 pkg_who_iris_who_iris_skills -[hidden]down- pkg_who_iris_who_iris_scripts
-pkg_who_iris_who_iris_themes -[hidden]down- pkg_who_iris_qa
+pkg_who_iris_who_iris_themes -[hidden]down- pkg_who_iris_who_iris_sources
+pkg_who_iris_who_iris_docs -[hidden]down- pkg_who_iris_id_lookup
+pkg_who_iris_who_iris_scripts -[hidden]down- pkg_who_iris_qa
 @enduml

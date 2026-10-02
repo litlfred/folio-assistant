@@ -258,7 +258,7 @@ const STRIPPABLE = ["roles", "package", "capability"] as const;
  *
  * Asking the declaration also widens the subject correctly rather than by
  * accident: `kgDirectories` resolves a dependent instance's packages too
- * (`folio-assistant-core/skills/`, `who-iris/skills/`, `large-datasets/skills/`
+ * (`folio-assistant-core/skills/` and `who-iris/skills/`
  * here), so a skill added in one of those is judged by the same gate instead of
  * being a case nobody thought of.
  *
