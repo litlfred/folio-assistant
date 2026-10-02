@@ -7047,6 +7047,16 @@ a.fa-harness-tab__body:focus-visible {
   line-height: 1;
   text-decoration: none;
 }
+/* The window bar's icons are the row's icons (#1925): the same inline SVGs,
+ * filled by the text colour, at the row's size. The fish draws a little
+ * larger, as it does in the row, because its outline is thin. */
+.fa-board-window-control svg { width: 1.05rem; height: 1.05rem; fill: currentColor; }
+.fa-board-window-control[data-fa-control="discard"] svg { width: 1.3rem; height: 1.3rem; }
+/* Pressed is said by the border AND the fill, as the row's pin says it. */
+.fa-board-window-control[data-fa-control="pin"][aria-pressed="true"] {
+  border-color: currentColor;
+  background: rgba(128, 128, 128, 0.22);
+}
 
 /* THE NODE BADGE, on the avatar and on the open window — one query, two
  * surfaces (R7). Sized so the chip reads at avatar scale without covering the
@@ -8307,6 +8317,10 @@ a.fa-harness-tab__body:focus-visible {
   width: var(--fa-sticky-tile-size);
   align-items: stretch;
 }
+/* A sticky sent to fsh-guts is `hidden`, and the cell's own `display` would
+ * otherwise beat the user agent's `[hidden]` rule (see `.fa-tiles-grid`). */
+.fa-sticky-cell[hidden],
+.fa-sticky-slot[hidden] { display: none; }
 /* The process depth's left rule would push one tile right of its neighbours;
  * a tile names its process in words instead (`.fa-sticky-tile-process`). */
 .fa-sticky-cell--tile.fa-sticky-slot-in-process { border-left: 0; padding-left: 0; }
@@ -8518,6 +8532,10 @@ a.fa-harness-tab__body:focus-visible {
  * opened — measured, the second tile could not be clicked. So the layer is
  * anchored to the board's BOTTOM edge with no height of its own, and the
  * windows (and their cascade) hang beneath the tile row, over the page. */
+/* ONE STICKY, ONE WINDOW PLACE (#1925): a todo window on the inline board
+ * opens below the board exactly as a landing window does, so an open window
+ * never covers the tiles next to the one that opened it. */
+.fa-sticky-board--inline > .fa-board-windows,
 .fa-landing-windows {
   top: 100%;
   bottom: auto;
@@ -8525,6 +8543,7 @@ a.fa-harness-tab__body:focus-visible {
   overflow: visible;
   z-index: 20;
 }
+.fa-sticky-board--inline > .fa-board-windows > .fa-board-window { max-height: 70vh; }
 .fa-landing-windows .fa-board-window { top: 0.5rem; max-height: 70vh; }
 .fa-landing-windows .fa-board-window[data-fa-z="2"] { top: 3.5rem; }
 .fa-landing-windows .fa-board-window[data-fa-z="3"] { top: 6.5rem; }

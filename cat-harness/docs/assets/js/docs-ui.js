@@ -1124,7 +1124,11 @@
             count.setAttribute("data-fa-count-state", c.state);
           }
           b.setAttribute("data-fa-count-state", c.state);
-          b.setAttribute("aria-label", "fsh-guts, discarded items — " + c.words);
+          // The hover tip IS the accessible name — one string, not two that
+          // can disagree (`rail-tips`: "the tooltip is the aria-label").
+          var name = "fsh-guts, discarded items — " + c.words;
+          b.setAttribute("aria-label", name);
+          if (b.hasAttribute("data-fa-tip")) b.setAttribute("data-fa-tip", name);
         });
       });
     }
@@ -2497,7 +2501,7 @@
     'stroke-linejoin="round"/><path d="M15 3v4h4" fill="none" stroke="currentColor" ' +
     'stroke-width="1.6" stroke-linejoin="round"/></svg>';
 
-  var todoState = { items: [], floating: {}, floatGeom: {}, processes: {}, themeArt: {} };
+  var todoState = { items: [], processes: {}, themeArt: {} };
 
   /* ═══ Semantic zoom and windows — TWO mechanisms, kept apart ═══════════
    *
@@ -2563,8 +2567,8 @@
     close: { id: "close", label: "Close", needs: "none" },
     view: { id: "view", label: "View source", needs: "source-read" },
     edit: { id: "edit", label: "Edit", needs: "source-write" },
-    pin: { id: "pin", label: "Pin to the page", needs: "none" },
-    discard: { id: "discard", label: "Discard", needs: "none" },
+    pin: { id: "pin", label: "Pin to your folio glass", needs: "none" },
+    discard: { id: "discard", label: "Send to fsh-guts", needs: "none" },
     move: { id: "move", label: "Move or resize", needs: "none" },
     relocate: { id: "relocate", label: "Send to the trashcan", needs: "none" },
   };
@@ -2612,6 +2616,10 @@
     var chip = el("span", {
       class: "fa-node-badge fa-node-badge--" + where,
       "data-fa-notes": String(badge.count),
+      // A NAME needs a role: `aria-label` on a bare span is prohibited ARIA
+      // (axe `aria-prohibited-attr`), found once the open window's bar was
+      // measured (#1925). `img` is what the chip is — a mark with a name.
+      role: "img",
       "aria-label":
         badge.count + (badge.count === 1 ? " note" : " notes") + " on this section",
     });
@@ -3383,21 +3391,44 @@
    */
   var CONTROL_GLYPHS = { close: "\u00D7", relocate: "\u2A37", move: "\u271C" };
 
+  /* THE WINDOW BAR IS ICONS, the same ones the row under every sticky uses
+   * (#1925: "icons are a mess on both. make compact"). Each icon-only
+   * control carries its words twice — `aria-label` for a screen reader,
+   * `title` on hover — never a glyph alone, and never a wide text button. */
+  // A function, not a map: the glyphs are assigned further down this file.
+  function controlSvg(id) {
+    return ({ view: EYE_GLYPH, edit: PENCIL_GLYPH, pin: PIN_GLYPH, discard: FISH_GLYPH })[id];
+  }
+
   function controlButton(control, todo, handlers) {
     if (control.id === "view" || control.id === "edit") {
-      return el("a", {
+      var link = el("a", {
         class: "fa-board-window-control fa-node-edit",
         "data-fa-control": control.id,
         href: safeHref(control.id === "view" ? todo.viewHref : todo.editHref),
         "aria-label": control.label + " — " + todo.summary,
-      }, control.id === "view" ? "\u2398" : "\u270E");
+        title: control.label,
+      });
+      link.innerHTML = controlSvg(control.id);
+      return link;
     }
+    var svg = controlSvg(control.id);
     var b = el("button", {
       type: "button",
       class: "fa-board-window-control",
       "data-fa-control": control.id,
       "aria-label": control.label + " — " + todo.summary,
-    }, CONTROL_GLYPHS[control.id] || control.label);
+      title: control.label,
+    }, svg ? null : (CONTROL_GLYPHS[control.id] || control.label));
+    if (svg) b.innerHTML = svg;
+    if (control.id === "pin") {
+      // The pin is the folio toggle: its pressed state and name come from the
+      // store, kept in step by `syncStickyPins` like the row's pin.
+      var pk = stickyFolioKey("todos", todo.id);
+      b.setAttribute("data-fa-folio-pin", pk);
+      b.setAttribute("data-fa-pin-title", todo.summary);
+      setPinButton(b, todo.summary, folioStateOf(pk) === "glass");
+    }
     // The frame wires what the frame owns; everything else delegates to the
     // behaviour the board already has. A kind declares WHICH controls it
     // offers, never what they do — two panels whose `[x]` did different
@@ -4163,14 +4194,19 @@
       a.innerHTML = pair[1];
       row.appendChild(a);
     });
+    // THE PIN IS A TOGGLE ONTO THE FOLIO GLASS (owner, 2026-10-02: *"pin to
+    // glass should pin to folio glass"*). Its pressed state is the folio
+    // store's answer for `s.folioKey`, set here and by `syncStickyPins`.
     var pin = el("button", {
       type: "button",
       class: "fa-sticky-act fa-sticky-act-pin",
       "data-fa-act": "pin",
+      "data-fa-folio-pin": s.folioKey,
+      "data-fa-pin-title": s.title,
       "aria-pressed": "false",
     });
     pin.innerHTML = PIN_GLYPH;
-    pin.addEventListener("click", function () { s.onPin(pin.getAttribute("aria-pressed") === "true"); });
+    pin.addEventListener("click", function () { toggleStickyPin(s.folioKey, s.onPin); });
     row.appendChild(pin);
     var discard = el("button", {
       type: "button",
@@ -4187,21 +4223,24 @@
       confirmSendToFshGuts(s.title, s.onDiscard, discard);
     });
     row.appendChild(discard);
-    setStickyPinned(row, s.title, false);
+    setPinButton(pin, s.title, folioStateOf(s.folioKey) === "glass");
+    wireStickyPins();
     return row;
   }
 
-  /** Pin is a toggle: its pressed state, name and tooltip say which way it goes. */
-  function setStickyPinned(row, title, pinned) {
-    var pin = row && row.querySelector(".fa-sticky-act-pin");
+  /**
+   * Pin is a toggle: its pressed state, name and tooltip say which way it
+   * goes. Unpinned, it pins to the folio glass; pinned, it takes the sticky
+   * off the glass — it stays in the reader's folio, and the same button puts
+   * it back (`l4zi`).
+   */
+  function setPinButton(pin, title, pinned) {
     if (!pin) return;
     pin.setAttribute("aria-pressed", pinned ? "true" : "false");
     pin.setAttribute("aria-label", pinned
-      ? "Return " + title + " from your glass to this panel"
-      : "Pin " + title + " to your glass");
-    pin.setAttribute("title", pinned ? "Return from your glass" : "Pin to your glass");
-    var slot = row.parentNode;
-    if (slot && slot.classList) slot.classList.toggle("fa-sticky-slot-floating", !!pinned);
+      ? "Take " + title + " off your folio glass"
+      : "Pin " + title + " to your folio glass");
+    pin.setAttribute("title", pinned ? "Take off your folio glass" : "Pin to your folio glass");
   }
 
   /** Where a sticky sent to fsh-guts is restored from, on THIS page, in words. */
@@ -5029,7 +5068,7 @@
 
   /** The avatar an item falls back to with no picture: a note for a todo, the kind glyph otherwise. */
   function fallbackAvatar(kind) {
-    return kind === "todos" ? stickyNoteAvatar() : kindAvatar(kind);
+    return kind === "todos" || kind === "sticky" ? stickyNoteAvatar() : kindAvatar(kind);
   }
 
   /**
@@ -5270,7 +5309,11 @@
     var GLASS_GAP = 12;
     var raiseAt = 1;
 
-    function zoomKindOf(a) { return a.kind === "todos" ? "todo" : (a.kind || "library"); }
+    // A pinned landing sticky (`sticky`) is a sticky note like a todo: square,
+    // and zoomed by the same declared width (#1925).
+    function zoomKindOf(a) {
+      return a.kind === "todos" || a.kind === "sticky" ? "todo" : (a.kind || "library");
+    }
 
     /** The size a card with no saved place starts at. */
     function defaultGlassSize(a) {
@@ -6061,6 +6104,18 @@
           var item = idx && idx.byId[todoId];
           if (item) dressGlassSticky(card, item, idx.themeArt);
         });
+      } else if (a.kind === "sticky" && key.indexOf("landing/") === 0) {
+        // A PINNED LANDING STICKY, dressed by the same function as a todo
+        // (#1925: one sticky). Its theme, picture and words were carried in
+        // the folio entry when it was pinned, because they live on the landing
+        // page rather than in an index; the picture is one crop, so it is the
+        // `card` crop whatever the card's shape.
+        if (a.label) card.setAttribute("data-fa-home-label", String(a.label));
+        var landingArt = {};
+        var artSrc = safeHref(a.art);
+        if (a.theme && artSrc) landingArt[a.theme] = { card: artSrc };
+        dressGlassSticky(card, { theme: a.theme, summary: a.title, comment: a.text || "" },
+          landingArt, [["Sticky", label], ["Home", a.label || ""]]);
       }
       return card;
     }
@@ -6113,7 +6168,7 @@
         });
     }
 
-    function dressGlassSticky(card, todo, themeArt) {
+    function dressGlassSticky(card, todo, themeArt, metaRows) {
       if (card.classList.contains("fa-glass-sticky")) return;
       card.classList.add("fa-glass-sticky");
       var art = todo.theme && themeArt[todo.theme];
@@ -6139,6 +6194,8 @@
       // the node it is attached to.
       var t = todo.target || {};
       var on = t.page ? t.page + (t.node ? " › " + t.node : "") : (todo.targetLabel || "");
+      // A landing sticky has no status or priority: its caller says what it has.
+      if (metaRows) { setCardMeta(card, metaRows); zoomGlassCard(card); return; }
       setCardMeta(card, [
         ["Todo", plainGist(todo.summary) || card.getAttribute("aria-label") || ""],
         ["Status", String(todo.status || "").replace(/_/g, " ")],
@@ -6680,28 +6737,18 @@
       var out = [];
       Array.prototype.forEach.call(layer.querySelectorAll(".fa-glass-asset"), function (c) {
         var key = c.getAttribute("data-fa-asset") || "";
-        var todo = c.getAttribute("data-fa-asset-kind") === "todos";
+        var kind = c.getAttribute("data-fa-asset-kind");
+        // A PINNED STICKY is a folio asset like any other (#1925), so it is
+        // read here with the rest — there is no second, floating list.
+        var todo = kind === "todos";
+        var sticky = kind === "sticky";
         out.push({
           el: c,
           key: key,
           title: c.getAttribute("aria-label") || key,
-          kind: todo ? "todo" : "book",
-          from: todo ? "Todo board" : key.split("/")[0] + " library",
-        });
-      });
-      Array.prototype.forEach.call(layer.querySelectorAll(".fa-sticky-floating"), function (c) {
-        var key = c.getAttribute("data-fa-pin") || "";
-        var panel = key.split("/")[0];
-        var pin = pinnedStickies()[key];
-        var todo = panel === "todos";
-        var title = (pin && pin.title) || c.getAttribute("aria-label") ||
-          ((c.querySelector(".fa-sticky-summary, h3") || {}).textContent || key);
-        out.push({
-          el: c,
-          key: key,
-          title: String(title).trim(),
-          kind: todo ? "todo" : "sticky",
-          from: todo ? "Todo board" : ((pin && pin.label) || "Home page"),
+          kind: todo ? "todo" : sticky ? "sticky" : "book",
+          from: todo ? "Todo board" : sticky ? (c.getAttribute("data-fa-home-label") || "Home page")
+            : key.split("/")[0] + " library",
         });
       });
       return out;
@@ -7338,13 +7385,10 @@
       handle.setAttribute("aria-expanded", open ? "true" : "false");
       labelHandle();
       // The EMPTY LINE is about the glass's contents, not about the sheet:
-      // the sheet is chrome and is always present. `slots` are the cards the
-      // board floats here, so the count is taken from them rather than from
-      // the layer's children, which would count the sheet itself.
-      var floating = layer.querySelectorAll(".fa-sticky-floating").length;
-      // An asset the reader pulled out counts too — a glass holding one asset
-      // and no sticky must not read "Nothing on your folio glass".
-      empty.hidden = floating + renderShelf() > 0;
+      // the sheet is chrome and is always present. Every card on the glass —
+      // a pinned sticky included (#1925) — is a folio asset, so the shelf's
+      // count is the whole answer.
+      empty.hidden = renderShelf() > 0;
       applyGlassFilter();
       if (!open) closePanel();
     }
@@ -7383,11 +7427,11 @@
      * there), so the handle is where a reader learns their folio holds
      * something. A data attribute the stylesheet prints, so the handle's text
      * and accessible name are unchanged on every other screen. Counted from
-     * the DOM because a board sticky floats without touching the folio store. */
+     * the folio store, which holds pinned stickies too (#1925). */
     var waiting = 0;
     function countWaiting() {
-      var n = layer.querySelectorAll(".fa-sticky-floating").length +
-        Object.keys(folioAssets()).filter(function (k) { return folioAssets()[k].shown; }).length;
+      var held = folioAssets();
+      var n = Object.keys(held).filter(function (k) { return held[k].shown; }).length;
       waiting = n;
       if (n > 0) handle.setAttribute("data-fa-count", String(n));
       else handle.removeAttribute("data-fa-count");
@@ -7433,93 +7477,155 @@
     return layer;
   }
 
-  /* ═══ A STICKY'S HOME — the panel it came from ═══════════════════════════
+  /* ═══ A STICKY'S HOME, AND PIN — the panel it came from, the glass it goes to
    *
    * Bean `pv6g`. Owner, 2026-09-21: *"stickies can detach from the panel and
    * placed on the 'display window/glass' and dont scroll when the
    * folio/document/page scrolls. when closed tehy returned to their home
    * display panel."* And 2026-09-23, choosing between three senses of "home":
-   * **"Panel it came from"** — *"each sticky records which panel and slot it
-   * came from, and closing returns it there."*
+   * **"Panel it came from"**.
+   *
+   * ## Pin puts the sticky on the FOLIO GLASS — owner, 2026-10-02
+   *
+   * *"pin to glass should pin to folio glass. its not working right."*
+   *
+   * Pin used to write a SECOND store (`fa-pinned-stickies`) and clone the
+   * card into the layer as a page-level floating copy. That copy was never a
+   * folio-glass item: no glass tools, no folio geometry, no shelve, and the
+   * glass's filter and count had to special-case it. Two stores answering
+   * "what is on my glass" is the defect.
+   *
+   * So a pinned sticky IS a folio asset now — `todo/<id>` (the key the glass's
+   * own Todos panel already pulls a todo out under, so the two ways onto the
+   * glass agree about which todo is there) or `landing/<slot>` — with
+   * `shown: true`, drawn by the glass's own card path (`buildGlassCard` and
+   * `dressGlassSticky`), placed by `placeOnGlass`. Unpin is `shelveFromGlass`:
+   * the entry stays, and the row's pin is the way back (`l4zi`). The pin's
+   * pressed state is `folioStateOf(key) === "glass"` — asked of the store,
+   * never remembered by the button.
    *
    * ## The home is RECORDED, not remembered
    *
-   * `mountTodoBoard` already returned a floated sticky to `slots[todo.id]`,
-   * but that home lived in the board's closure: gone on the next page, and
-   * unaskable of any sticky the board did not build. So a home is now DATA,
-   * declared in markup and stored with the pin:
-   *
    *   a panel  `data-fa-home-panel="<panel>"`   (the landing board, the todo board)
    *   a slot   `data-fa-home-slot="<id>"`        (one per sticky it holds)
-   *   the pin  `{ panel, slot, title, text, href, label, geom }` in this browser
-   *
-   * ## A pinned sticky is on the GLASS, so it is on every page
-   *
-   * The glass is the reader's and comes down over whatever they browse, so a
-   * sticky pinned on the landing page is still pinned on a library page. Off
-   * its home page it renders from the stored TEXT — never stored HTML, which
-   * would be markup read back out of `localStorage` into the DOM — and says
-   * where its home is. Closing it anywhere unpins it; it is back in its slot
-   * the next time the home panel is on screen, because that is where the
-   * slot IS. Per-reader and per-browser, like everything else on the glass.
    */
-  var PIN_KEY = "fa-pinned-stickies";
 
-  function pinnedStickies() {
-    try {
-      var raw = localStorage.getItem(PIN_KEY);
-      var m = raw ? JSON.parse(raw) : {};
-      return m && typeof m === "object" && !Array.isArray(m) ? m : {};
-    } catch (_e) {
-      return {};
-    }
+  /** The folio key a sticky is pinned under. */
+  function stickyFolioKey(panel, slot) {
+    return (panel === "landing" ? "landing/" : "todo/") + slot;
   }
 
-  function setPinnedStickies(m) {
-    try { localStorage.setItem(PIN_KEY, JSON.stringify(m)); } catch (_e) {
-      console.warn("docs-ui: a pinned sticky could not be saved (storage blocked); " +
-                   "it stays pinned for this page view only.");
-    }
+  /** A theme name as `themes.css` selects on it, or "". Never markup. */
+  function cleanThemeName(t) {
+    return String(t || "").replace(/[^A-Za-z0-9_-]/g, "").slice(0, 64);
   }
 
-  function pinKey(panel, slot) { return panel + "/" + slot; }
-
-  /** Record a pin, keeping any place the reader already gave it. */
-  function recordPin(panel, slot, meta) {
-    var all = pinnedStickies();
-    var key = pinKey(panel, slot);
+  /**
+   * Put a sticky on the folio glass. Keeps any place the reader already gave
+   * it, so pin, unpin, pin puts it back where they left it.
+   *
+   * `meta`: title, kind (`todos` | `sticky`), href, and for a landing sticky
+   * theme, art (one URL), text and label (its home page's title) — a landing
+   * sticky's words and picture live in the landing page, not in an index, so
+   * they are carried as TEXT and a URL, never as stored markup.
+   */
+  function pinStickyToGlass(key, meta) {
+    var all = folioAssets();
     var prev = all[key] || {};
-    all[key] = {
-      panel: panel,
-      slot: slot,
-      title: String((meta && meta.title) || prev.title || slot).slice(0, 200),
-      // TEXT, capped. Enough to recognise the note away from home; the whole
-      // note is one click away, at its home.
-      text: String((meta && meta.text) || prev.text || "").replace(/\s+/g, " ").trim().slice(0, 600),
+    var e = {
+      shown: true,
+      title: String((meta && meta.title) || prev.title || key).replace(/\s+/g, " ").trim().slice(0, 200),
       href: safeHref((meta && meta.href) || prev.href) || "",
-      label: String((meta && meta.label) || prev.label || "").slice(0, 200),
+      avatar: "",
+      kind: (meta && meta.kind) || prev.kind || "todos",
     };
-    if (prev.geom) all[key].geom = prev.geom;
-    setPinnedStickies(all);
-    return all[key];
+    var theme = cleanThemeName((meta && meta.theme) || prev.theme);
+    if (theme) e.theme = theme;
+    var art = safeHref((meta && meta.art) || prev.art);
+    if (art) e.art = art;
+    var text = String((meta && meta.text) || prev.text || "").replace(/\s+/g, " ").trim().slice(0, 600);
+    if (text) e.text = text;
+    var label = String((meta && meta.label) || prev.label || "").slice(0, 200);
+    if (label) e.label = label;
+    if (prev.geom) e.geom = prev.geom;
+    all[key] = e;
+    setFolioAssets(all);
+    announceFolio(key, "glass");
   }
 
-  function dropPin(panel, slot) {
-    var all = pinnedStickies();
-    delete all[pinKey(panel, slot)];
-    setPinnedStickies(all);
+  /** Pin or unpin, by what the STORE says — the button is never the source. */
+  function toggleStickyPin(key, pin) {
+    if (folioStateOf(key) === "glass") shelveFromGlass(key);
+    else pin();
   }
 
-  function pinGeom(panel, slot, g) {
-    var all = pinnedStickies();
-    var e = all[pinKey(panel, slot)];
-    if (!e) return;
-    e.geom = { left: Math.round(g.left), top: Math.round(g.top),
-               width: Math.round(g.width), height: Math.round(g.height) };
-    setPinnedStickies(all);
+  /**
+   * Every pin control on the page follows the store: the row's pin under each
+   * sticky and the open window's pin. One listener, so shelving a card with
+   * the glass's own × un-presses the row it came from.
+   */
+  function syncStickyPins() {
+    Array.prototype.forEach.call(document.querySelectorAll("[data-fa-folio-pin]"), function (b) {
+      var on = folioStateOf(b.getAttribute("data-fa-folio-pin")) === "glass";
+      setPinButton(b, b.getAttribute("data-fa-pin-title") || "", on);
+      var row = b.closest(".fa-sticky-actions");
+      var slot = row && row.parentNode;
+      if (slot && slot.classList) slot.classList.toggle("fa-sticky-slot-floating", on);
+    });
+  }
+  var stickyPinsWired = false;
+  function wireStickyPins() {
+    if (stickyPinsWired) return;
+    stickyPinsWired = true;
+    document.addEventListener("fa:folio-changed", syncStickyPins);
   }
 
-  function pinOf(panel, slot) { return pinnedStickies()[pinKey(panel, slot)] || null; }
+  /**
+   * ONE-TIME MIGRATION of the old pin store into the folio, so no reader's
+   * pin is lost when Pin moved to the folio glass (#1925). Each old entry
+   * becomes a shown folio asset, with its place, unless the folio already
+   * holds that key. The old store is removed only once the folio saved —
+   * a blocked write leaves it for the next page.
+   */
+  var OLD_PIN_KEY = "fa-pinned-stickies";
+  function migratePinnedStickies() {
+    var old;
+    try {
+      var raw = localStorage.getItem(OLD_PIN_KEY);
+      if (!raw) return;
+      old = JSON.parse(raw);
+    } catch (_e) {
+      return;
+    }
+    if (!old || typeof old !== "object" || Array.isArray(old)) old = {};
+    var all = folioAssets();
+    Object.keys(old).forEach(function (k) {
+      var p = old[k];
+      if (!p || typeof p.slot !== "string" || (p.panel !== "todos" && p.panel !== "landing")) return;
+      var key = stickyFolioKey(p.panel, p.slot);
+      if (all[key]) return;
+      var todo = p.panel === "todos";
+      var e = {
+        shown: true,
+        title: String(p.title || p.slot).replace(/\s+/g, " ").trim().slice(0, 200),
+        href: todo ? withBase("/todos/") + "#" + encodeURIComponent(p.slot) : (safeHref(p.href) || ""),
+        avatar: "",
+        kind: todo ? "todos" : "sticky",
+      };
+      var text = String(p.text || "").replace(/\s+/g, " ").trim().slice(0, 600);
+      if (!todo && text) e.text = text;
+      if (!todo && p.label) e.label = String(p.label).slice(0, 200);
+      var g = p.geom;
+      if (g && isFinite(g.left) && isFinite(g.top) && isFinite(g.width) && isFinite(g.height)) {
+        e.geom = { left: Math.round(g.left), top: Math.round(g.top),
+                   width: Math.round(g.width), height: Math.round(g.height) };
+      }
+      all[key] = e;
+    });
+    if (setFolioAssets(all)) {
+      try { localStorage.removeItem(OLD_PIN_KEY); } catch (_e) { /* next page tries again */ }
+    }
+  }
 
   /** The home panel element for `panel` on THIS page, or null. */
   function homePanelEl(panel) {
@@ -7550,84 +7656,6 @@
     return Array.prototype.filter.call(panel.querySelectorAll("[data-fa-home-slot]"), function (n) {
       return n.parentElement && n.parentElement.closest("[data-fa-home-panel]") === panel;
     });
-  }
-
-  /** Where a newly pinned card lands with no saved place: the bottom-right, stacked. */
-  function defaultPinGeom(n) {
-    var w = Math.min(352, Math.max(240, window.innerWidth - 32));
-    var h = 220;
-    return {
-      left: Math.max(0, window.innerWidth - w - 16 - n * 12),
-      top: Math.max(0, window.innerHeight - h - 16 - n * 12),
-      width: w,
-      height: h,
-    };
-  }
-
-  /** Say something about a home, once, in the glass's own live region. */
-  function announceHome(text) {
-    var layer = mountGlass();
-    var live = layer.querySelector(".fa-home-live");
-    if (!live) {
-      live = el("p", { class: "fa-sr-only fa-home-live", "aria-live": "polite" });
-      layer.appendChild(live);
-    }
-    live.textContent = text;
-  }
-
-  /**
-   * A pinned sticky shown AWAY FROM HOME, from its stored text.
-   *
-   * Two controls and a link, and the words say what each does: the link goes
-   * to the home page, where the whole note is; "Send home" unpins it, and the
-   * note is back in its slot the next time that panel is on screen.
-   */
-  function awayCard(e, n) {
-    var layer = mountGlass();
-    var key = pinKey(e.panel, e.slot);
-    var card = el("article", {
-      class: "fa-sticky fa-sticky-floating fa-sticky-away",
-      "data-fa-pin": key,
-      "aria-label": e.title,
-      tabindex: "-1",
-    });
-    var live = el("span", { class: "fa-sr-only", "aria-live": "polite" });
-    card.appendChild(el("h3", { class: "fa-sticky-away-title", "data-fa-grip": "" }, e.title));
-    if (e.text) card.appendChild(el("p", { class: "fa-sticky-away-text" }, e.text));
-    var href = safeHref(e.href);
-    var where = e.label ? "its home panel on “" + e.label + "”" : "its home panel";
-    card.appendChild(href
-      ? el("a", { class: "fa-sticky-away-home", href: href }, "Go to " + where)
-      : el("p", { class: "fa-sticky-away-home" }, "Its home is " + where + "."));
-    var tools = el("div", { class: "fa-sticky-tools" });
-    var move = el("button", {
-      type: "button", class: "fa-sticky-move", "data-fa-control": "move",
-      "aria-label": "Move " + e.title + " around the page", "aria-pressed": "false",
-    }, CONTROL_GLYPHS.move);
-    move.addEventListener("click", function () {
-      var on = card.getAttribute("data-fa-moving") !== "true";
-      setMoveMode(card, on, live);
-      move.setAttribute("aria-pressed", on ? "true" : "false");
-    });
-    var home = el("button", {
-      type: "button", class: "fa-sticky-sendhome",
-      "aria-label": "Send " + e.title + " home to " + where,
-      title: "Send home",
-    }, "⌂ Send home");
-    home.addEventListener("click", function () {
-      dropPin(e.panel, e.slot);
-      if (card.parentNode) card.parentNode.removeChild(card);
-      announceHome(e.title + " was sent home to " + where + ".");
-      document.dispatchEvent(new CustomEvent("fa:folio-changed", { detail: { key: key, state: "home" } }));
-    });
-    tools.appendChild(move);
-    tools.appendChild(home);
-    card.appendChild(tools);
-    card.appendChild(live);
-    wireMove(card, card, live, function (g) { pinGeom(e.panel, e.slot, g); });
-    layer.appendChild(card);
-    applyGeometry(card, e.geom || defaultPinGeom(n));
-    return card;
   }
 
   /**
@@ -7661,21 +7689,27 @@
       tileLandingCell(panel, cell, slot, title, art);
       cell.appendChild(stickyActions({
         title: title,
+        folioKey: stickyFolioKey("landing", slot),
         view: view,
         edit: edit,
-        onPin: function (pinned) {
-          if (pinned) { dockLanding(slot, true); return; }
-          pinLanding(slot, title, art);
-        },
+        onPin: function () { pinLanding(slot, title, art); },
         onDiscard: function () { discardLanding(slot, title); },
       }));
       if (gone.indexOf(landingDiscardId(slot)) !== -1) cell.setAttribute("hidden", "hidden");
+      // A pin migrated from the old store carried no picture: this page has
+      // it, so the glass card is given its theme and art — quietly, since
+      // nothing about whether it is on the glass changed.
+      var key = stickyFolioKey("landing", slot);
+      var held = folioAssets();
+      if (held[key] && !held[key].art) {
+        var src = landingArtSrc(art);
+        var theme = cleanThemeName(art.getAttribute("data-fa-sticky-theme"));
+        if (src) held[key].art = src;
+        if (theme) held[key].theme = theme;
+        setFolioAssets(held);
+      }
     });
-    // Restore every landing pin whose slot is on this page.
-    Object.keys(pinnedStickies()).forEach(function (k) {
-      var e = pinnedStickies()[k];
-      if (e && e.panel === "landing" && homeSlotEl("landing", e.slot)) floatLanding(e.slot, false);
-    });
+    syncStickyPins();
     // A RESTORE from fsh-guts puts the sticky straight back: its cell never
     // left the page, it was only hidden.
     document.addEventListener("fa:todos-discarded", function () {
@@ -7690,14 +7724,27 @@
     syncLandingCount();
   }
 
+  /** Pin a landing sticky to the folio glass, carrying its words and picture. */
   function pinLanding(slot, title, art) {
-    recordPin("landing", slot, {
+    pinStickyToGlass(stickyFolioKey("landing", slot), {
       title: title,
+      kind: "sticky",
       text: (art.querySelector(".fa-landing-sticky__body") || art).textContent,
       href: safeHref(location.pathname),
       label: document.title,
+      theme: art.getAttribute("data-fa-sticky-theme"),
+      art: landingArtSrc(art),
     });
-    floatLanding(slot, true);
+  }
+
+  /**
+   * The landing sticky's square crop. `landing.html` names it on the article;
+   * an older page without it falls back to whatever crop the browser chose.
+   */
+  function landingArtSrc(art) {
+    var img = art.querySelector("img.fa-sticky-art");
+    return safeHref(art.getAttribute("data-fa-art-card") ||
+                    (img && (img.currentSrc || img.getAttribute("src"))) || "");
   }
 
   /** The id a landing sticky is discarded under: prefixed, so it can never be a todo's. */
@@ -7705,7 +7752,9 @@
 
   /** Send a landing sticky to fsh-guts. The row asked first. */
   function discardLanding(slot, title) {
-    if (pinOf("landing", slot)) dockLanding(slot, false);
+    // Off the glass as well — shelved, so it is still in the reader's folio.
+    var key = stickyFolioKey("landing", slot);
+    if (folioStateOf(key) === "glass") shelveFromGlass(key);
     if (landingWindowEls["landing:" + slot]) closeLandingWindow(slot);
     var cell = homeSlotEl("landing", slot);
     if (cell) cell.setAttribute("hidden", "hidden");
@@ -7775,12 +7824,8 @@
     if (cell.querySelector(".fa-sticky-tile")) return;
     cell.classList.add("fa-sticky-cell--tile");
     // THE SQUARE CROP, faded — the look the todo stickies had (#1925: "lower
-    // faded avatar/theme looks nicer"). `landing.html` names the card crop on
-    // the article; an older page without it falls back to whatever crop the
-    // browser chose for the card itself.
-    var img = art.querySelector("img.fa-sticky-art");
-    var src = safeHref(art.getAttribute("data-fa-art-card") ||
-                       (img && (img.currentSrc || img.getAttribute("src"))) || "");
+    // faded avatar/theme looks nicer").
+    var src = landingArtSrc(art);
     var tile = stickyTile({
       kind: "landing",
       opens: "landing:" + slot,
@@ -7834,16 +7879,17 @@
       setMoveMode(win, on, live);
       move.setAttribute("aria-pressed", on ? "true" : "false");
     });
+    // The SAME toggle as the row's pin, on the same folio key, so the two
+    // cannot disagree about whether the sticky is on the glass.
+    var pinKey = stickyFolioKey("landing", slot);
     var pinIt = el("button", {
       type: "button", class: "fa-board-window-control", "data-fa-control": "pin",
-      "aria-label": "Pin " + title + " to your glass",
-      title: "Pin to your glass",
+      "data-fa-folio-pin": pinKey, "data-fa-pin-title": title,
     });
-    // The row's pin glyph, not the wide "Pin to glass" text (#1925).
     pinIt.innerHTML = PIN_GLYPH;
+    setPinButton(pinIt, title, folioStateOf(pinKey) === "glass");
     pinIt.addEventListener("click", function () {
-      closeLandingWindow(slot);
-      if (!pinOf("landing", slot)) pinLanding(slot, title, art);
+      toggleStickyPin(pinKey, function () { pinLanding(slot, title, art); });
     });
     var close = el("button", {
       type: "button", class: "fa-board-window-control", "data-fa-control": "close",
@@ -7875,93 +7921,6 @@
     win.focus();
   }
 
-  function floatLanding(slot, focus) {
-    var cell = homeSlotEl("landing", slot);
-    var e = pinOf("landing", slot);
-    if (!cell || !e) return;
-    var layer = mountGlass();
-    var key = pinKey("landing", slot);
-    if (layer.querySelector('[data-fa-pin="' + key.replace(/"/g, '\\"') + '"]')) return;
-    var art = cell.querySelector(".fa-sticky");
-    var card = art.cloneNode(true);
-    // A COPY must not carry the original's ids: two elements with one id make
-    // `aria-labelledby` name whichever the browser finds first.
-    Array.prototype.forEach.call(card.querySelectorAll("[id]"), function (n) { n.removeAttribute("id"); });
-    card.removeAttribute("id");
-    card.removeAttribute("aria-labelledby");
-    card.setAttribute("aria-label", e.title);
-    card.classList.add("fa-sticky-floating");
-    card.setAttribute("data-fa-pin", key);
-    card.setAttribute("tabindex", "-1");
-    var live = el("span", { class: "fa-sr-only", "aria-live": "polite" });
-    var tools = el("div", { class: "fa-sticky-tools fa-home-tools" });
-    var move = el("button", {
-      type: "button", class: "fa-sticky-move", "data-fa-control": "move",
-      "aria-label": "Move " + e.title + " around the page", "aria-pressed": "false",
-    }, CONTROL_GLYPHS.move);
-    move.addEventListener("click", function () {
-      var on = card.getAttribute("data-fa-moving") !== "true";
-      setMoveMode(card, on, live);
-      move.setAttribute("aria-pressed", on ? "true" : "false");
-    });
-    var close = el("button", {
-      type: "button", class: "fa-sticky-sendhome",
-      "aria-label": "Return " + e.title + " to its panel",
-      title: "Return to its panel",
-    }, "⌂ Return");
-    close.addEventListener("click", function () { dockLanding(slot, true); });
-    tools.appendChild(move);
-    tools.appendChild(close);
-    card.appendChild(tools);
-    card.appendChild(live);
-    wireMove(card, card, live, function (g) { pinGeom("landing", slot, g); });
-    layer.appendChild(card);
-    var n = layer.querySelectorAll(".fa-sticky-floating").length - 1;
-    applyGeometry(card, e.geom || defaultPinGeom(n));
-
-    // The slot keeps its place, greyed, and its row's pin shows PRESSED:
-    // pressing it again returns the copy (`l4zi`). It replaced the wide
-    // "… on your glass. Return it here" button (#1925).
-    setStickyPinned(cell.querySelector(".fa-sticky-actions"), e.title, true);
-    if (focus) move.focus();
-    document.dispatchEvent(new CustomEvent("fa:folio-changed", { detail: { key: key, state: "pinned" } }));
-  }
-
-  function dockLanding(slot, focus) {
-    var cell = homeSlotEl("landing", slot);
-    var key = pinKey("landing", slot);
-    var e = pinOf("landing", slot);
-    dropPin("landing", slot);
-    var layer = mountGlass();
-    var card = layer.querySelector('[data-fa-pin="' + key.replace(/"/g, '\\"') + '"]');
-    if (card) card.parentNode.removeChild(card);
-    if (!cell) return;
-    var row = cell.querySelector(".fa-sticky-actions");
-    setStickyPinned(row, (e && e.title) || slot, false);
-    var pinBtn = row && row.querySelector(".fa-sticky-act-pin");
-    if (pinBtn && focus) pinBtn.focus();
-    document.dispatchEvent(new CustomEvent("fa:folio-changed", { detail: { key: key, state: "home" } }));
-  }
-
-  /**
-   * Every pin whose home is NOT on this page, as an away card. Pins whose home
-   * IS here are restored by that home: the landing panel above, the todo board
-   * when it mounts. The todo board mounts wherever the page declares a todo
-   * index, so a todo pin is "away" only on a page that declares none.
-   */
-  function mountAwayPins() {
-    var all = pinnedStickies();
-    var hasTodoBoard = !!document.querySelector('meta[name="fa-todo-src"]');
-    var n = 0;
-    Object.keys(all).forEach(function (k) {
-      var e = all[k];
-      if (!e || typeof e.panel !== "string" || typeof e.slot !== "string") return;
-      if (e.panel === "todos" && hasTodoBoard) return;
-      if (homePanelEl(e.panel)) return;
-      awayCard(e, n++);
-    });
-  }
-
   function mountTodoBoard(items) {
     // THE LANDING FOLIO BOARD FIRST, when the page has one. The owner, 2026-09-20:
     // "i want todo board inside of the landing folio/board."
@@ -7986,8 +7945,9 @@
     // THE LAYER IS THE GLASS, and it is no longer created here. `mountGlass`
     // made it before this ran, because a folio that only exists where a board
     // mounted is not a folio a reader carries. See that function for what the
-    // two guards above used to cost.
-    var layer = mountGlass();
+    // two guards above used to cost. A pinned todo is a folio asset (#1925),
+    // so the board puts nothing on the layer itself; it only needs it to exist.
+    mountGlass();
 
     // VISIBLE on the landing board, hidden everywhere else. On a page whose
     // whole content is a board of stickies, a hidden board of stickies is the
@@ -8140,30 +8100,25 @@
 
     var slots = {};
 
-    function dock(todo) {
-      // THE HOME IS RECORDED, so docking forgets the pin as well as the card
-      // (bean `pv6g`) — or it would float again on the next page.
-      dropPin("todos", todo.id);
-      var f = todoState.floating[todo.id];
-      if (f) {
-        // REMEMBER WHERE IT WAS, because dock DESTROYS the card and float
-        // CONSTRUCTS a new one — the same round-trip that drops a theme
-        // carried on the DOM node. A reader who moves a sticky, docks it and
-        // pins it again has not asked for it to jump back to the corner.
-        // Session-only and this-reader-only, like the window stack: a position
-        // a published page cannot write is not the folio's.
-        todoState.floatGeom[todo.id] = geometryOf(f);
-        layer.removeChild(f);
-        delete todoState.floating[todo.id];
-      }
-      var slot = slots[todo.id];
-      // The pin on the slot's icon row un-presses: it is the inverse (`l4zi`).
-      if (slot) setStickyPinned(slot.querySelector(".fa-sticky-actions"), todo.summary, false);
+    /**
+     * Pin a todo to the folio glass — the key and the meta the glass's own
+     * Todos panel uses, so a todo pulled out there and one pinned here are
+     * the same folio asset. The glass draws it as the themed sticky
+     * (`dressGlassSticky`) from the published index.
+     */
+    function pinTodo(todo) {
+      pinStickyToGlass(stickyFolioKey("todos", todo.id), {
+        title: todo.summary || todo.id,
+        kind: "todos",
+        href: withBase("/todos/") + "#" + encodeURIComponent(todo.id),
+      });
     }
 
     /** Send it to fsh-guts (asked first, by the row), and take it off the board. */
     function discard(todo) {
-      dock(todo);                      // if it was floating, bring it down first
+      // Off the glass too — shelved, so it is still in the reader's folio.
+      var key = stickyFolioKey("todos", todo.id);
+      if (folioStateOf(key) === "glass") shelveFromGlass(key);
       if (windowEls[todo.id]) closeCard(todo);
       var slot = slots[todo.id];
       if (slot && slot.parentNode) slot.parentNode.removeChild(slot);
@@ -8176,122 +8131,6 @@
       }
       // Focus would otherwise land on <body>, which tells a reader nothing.
       heading.focus();
-    }
-
-    /**
-     * Where a newly pinned sticky lands, and why it is computed rather than
-     * left to the cascade.
-     *
-     * The layer used to be a small `inset: auto 1rem 1rem auto` box that
-     * stacked its children in flow, which is exactly the defect the owner
-     * reported as *"you cant move around dispaly"*: the layer decided, and the
-     * sticky had no say. It is a full-viewport frame now, so each card carries
-     * its own geometry — and the default reproduces the old bottom-right pile,
-     * offset per card, so nothing MOVES until a reader moves it.
-     *
-     * `Math.max(0, …)` for the same reason `nudge` clamps: a card placed past
-     * the origin is a card whose controls cannot be reached.
-     */
-    function placeFloating(card, todo) {
-      var pinned = pinOf("todos", todo.id);
-      var saved = todoState.floatGeom[todo.id] || (pinned && pinned.geom);
-      if (saved) { applyGeometry(card, saved); return; }
-      var n = Object.keys(todoState.floating).length;
-      var w = Math.min(352, Math.max(240, window.innerWidth - 32));
-      var h = card.getBoundingClientRect().height || 120;
-      applyGeometry(card, {
-        left: Math.max(0, window.innerWidth - w - 16),
-        top: Math.max(0, window.innerHeight - h - 16 - n * 12),
-        width: w,
-        height: h,
-      });
-    }
-
-    function float(todo, restoring) {
-      if (todoState.floating[todo.id]) return;
-      // Recorded BEFORE the card is placed, so `placeFloating` finds a saved
-      // place on a restore and the store holds the home on a fresh pin.
-      recordPin("todos", todo.id, {
-        title: todo.summary,
-        text: todo.comment || "",
-        href: safeHref(location.pathname),
-        label: document.title,
-      });
-      var card = buildSticky(todo);
-      card.classList.add("fa-sticky-floating");
-      // Its PIN KEY, the same one the store uses, so the glass's filter can
-      // tell a pinned todo from a pinned landing sticky (bean `7m6g`).
-      card.setAttribute("data-fa-pin", "todos/" + todo.id);
-      // Focusable so the move mode has somewhere to put focus and the arrow
-      // keys have a target. `-1`: it is reached BY the Move control, not by
-      // tabbing past every pinned note on the way to the page.
-      card.setAttribute("tabindex", "-1");
-
-      // The live region the move mode announces through. One per card, so a
-      // reader is told about the sticky they are in rather than the last one
-      // anybody touched — the same reason the board window has its own.
-      var live = el("span", { class: "fa-sr-only", "aria-live": "polite" });
-      card.appendChild(live);
-
-      /* THE MOVE CONTROL. `move` is already declared for the `todo` kind in
-       * `panel-chrome.ts` and already mirrored in `KIND_CONTROLS` above — this
-       * surface simply never asked for it. Declared and unoffered is the gap
-       * `t4my`'s three states are about, and this closes it for the one card
-       * that had nowhere to go. */
-      var tools = card.querySelector(".fa-sticky-tools");
-      if (tools) {
-        var moveBtn = el("button", {
-          type: "button",
-          class: "fa-sticky-move",
-          "data-fa-control": "move",
-          // Words, not just the glyph: "✜" alone is a guess, and the mode it
-          // enters changes what the arrow keys do, which a reader must be told.
-          "aria-label": "Move " + todo.summary + " around the page",
-          "aria-pressed": "false",
-        }, CONTROL_GLYPHS.move);
-        moveBtn.addEventListener("click", function () {
-          var on = card.getAttribute("data-fa-moving") !== "true";
-          setMoveMode(card, on, live);
-          moveBtn.setAttribute("aria-pressed", on ? "true" : "false");
-        });
-        // APPENDED, after the other board gestures. This used to insert
-        // before the `⋯` drawer, which no longer exists — the forge links
-        // moved out of the card altogether — so the face is Pin, Discard,
-        // Move and nothing else. `firstChild` was the version before that
-        // and put Move ahead of Pin, which reordered the row every time a
-        // card floated; appending keeps the order stable.
-        tools.appendChild(moveBtn);
-        // THE WAY BACK, on the card itself — a floating card has no icon row
-        // beneath it, and the same words the landing sticky's copy uses.
-        var back = el("button", {
-          type: "button",
-          class: "fa-sticky-sendhome",
-          "aria-label": "Return " + todo.summary + " to its panel",
-          title: "Return to its panel",
-        }, "\u2302 Return");
-        back.addEventListener("click", function () { dock(todo); });
-        tools.appendChild(back);
-      }
-
-      var grip = card.querySelector(".fa-sticky-head");
-      if (grip) grip.setAttribute("data-fa-grip", "");
-      wireMove(card, grip || card, live, function (g) {
-        pinGeom("todos", todo.id, g);
-      });
-      layer.appendChild(card);
-      placeFloating(card, todo);
-      todoState.floating[todo.id] = card;
-
-      // The slot greys and its pin shows PRESSED — pressing it again is the
-      // way back (`l4zi`). It replaced the wide "recall" text button that sat
-      // in the slot (#1925): one control, one place, on every sticky.
-      var slot = slots[todo.id];
-      if (slot) setStickyPinned(slot.querySelector(".fa-sticky-actions"), todo.summary, true);
-      // Focus follows the sticky, or a reader who cannot see the page has no
-      // idea anything happened. NOT on a restore: a page that moved focus on
-      // load would drop a keyboard reader somewhere they did not go.
-      var t = card.querySelector(".fa-sticky-toggle");
-      if (t && !restoring) t.focus();
     }
 
     // Items this browser discarded are off the board. Filtered HERE rather
@@ -8339,22 +8178,15 @@
                                  label: "View the source of " + todo.summary },
         edit: todo.editHref && { href: safeHref(todo.editHref), title: "Edit this todo's markdown on GitHub",
                                  label: "Edit " + todo.summary },
-        onPin: function (pinned) { if (pinned) dock(todo); else float(todo); },
+        folioKey: stickyFolioKey("todos", todo.id),
+        onPin: function () { pinTodo(todo); },
         onDiscard: function () { discard(todo); },
       }));
       return slot;
     }
-    // RESTORE this board's pins, quietly — the reader pinned them on an
-    // earlier page and they are still on their glass.
-    Object.keys(pinnedStickies()).forEach(function (k) {
-      var pe = pinnedStickies()[k];
-      if (!pe || pe.panel !== "todos") return;
-      var t = live.filter(function (x) { return x.id === pe.slot; })[0];
-      if (t && slots[t.id]) float(t, true);
-      // A pin whose todo no longer exists (done, or discarded) has no home
-      // to go back to; drop it rather than float a card for nothing.
-      else if (!t) dropPin("todos", pe.slot);
-    });
+    // Each slot's pin shows what the folio says — a todo pinned on an earlier
+    // page is still on the reader's glass.
+    syncStickyPins();
     if (live.length === 0) {
       grid.appendChild(el("p", { class: "fa-sticky-empty" }, "Nothing outstanding."));
     }
@@ -8499,7 +8331,10 @@
         move: function () {
           setMoveMode(panel, panel.getAttribute("data-fa-moving") !== "true", live);
         },
-        pin: function (t) { float(t); },
+        // The same toggle as the slot's pin, on the same folio key.
+        pin: function (t) {
+          toggleStickyPin(stickyFolioKey("todos", t.id), function () { pinTodo(t); });
+        },
         // ASKED FIRST, like the row's own send (#1925): the window's Discard
         // is the same act, so it takes the same confirmation.
         discard: function (t, button) {
@@ -11183,9 +11018,10 @@
     // THE GLASS FIRST, and unconditionally. It is the reader's folio rather
     // than this page's furniture, so it must not inherit any of the guards
     // that decide whether a BOARD mounts — see `mountGlass`.
+    // The old pin store becomes folio assets BEFORE the glass first paints.
+    migratePinnedStickies();
     mountGlass();
     mountLandingHomes();
-    mountAwayPins();
     mountLibraryPullouts();
     mountTodoStickies();
     mountPageLanguageBar();

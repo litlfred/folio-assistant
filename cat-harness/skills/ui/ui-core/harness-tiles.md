@@ -312,7 +312,11 @@ dropping its last entry overrules that decision without saying so.
 The cap was six until 2026-10-02, when the owner put the fsh-guts trashcan in
 the row *"with the others"* (#1925) rather than in place of one. `fsh-guts` is
 a control, like `launcher`: a button that opens the discarded-items list and
-carries its live count, not a link.
+carries its live count, not a link. It is also the **way back** the discard
+confirmation names — *"make sure confirmed by user"* (owner, 2026-10-02) — so
+that dialog says "the fish in the icon row" only when this icon is on the page,
+and points at Page settings otherwise. The confirmation itself is
+`board-windows` §"Send to fsh-guts asks first".
 
 **The three states are the part to get right, and two of them look the same:**
 
