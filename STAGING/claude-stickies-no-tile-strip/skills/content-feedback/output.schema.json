@@ -1,0 +1,79 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://litlfred.github.io/folio-assistant/STAGING/claude-stickies-no-tile-strip/skills/content-feedback/output.schema.json",
+  "title": "Content Feedback Output",
+  "description": "Output schema for triaged feedback.",
+  "type": "object",
+  "required": [
+    "triagedItems"
+  ],
+  "properties": {
+    "triagedItems": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "id",
+          "priority",
+          "disposition"
+        ],
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "priority": {
+            "type": "string",
+            "enum": [
+              "P0",
+              "P1",
+              "P2",
+              "P3"
+            ]
+          },
+          "disposition": {
+            "type": "string",
+            "enum": [
+              "backlog",
+              "next-sprint",
+              "wont-fix",
+              "duplicate",
+              "needs-info"
+            ]
+          },
+          "assignee": {
+            "type": "string"
+          },
+          "linkedIssue": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "summary": {
+      "type": "object",
+      "properties": {
+        "total": {
+          "type": "integer"
+        },
+        "critical": {
+          "type": "integer"
+        },
+        "major": {
+          "type": "integer"
+        },
+        "minor": {
+          "type": "integer"
+        },
+        "enhancement": {
+          "type": "integer"
+        }
+      }
+    }
+  },
+  "staging": {
+    "branch": "claude/stickies-no-tile-strip",
+    "sha": "4f3560a28d8795ae8d26c630f0192c81a8df3b76",
+    "pr": "1907/merge",
+    "run": "37049396933"
+  }
+}
