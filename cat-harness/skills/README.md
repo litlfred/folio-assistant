@@ -24,4 +24,5 @@ Part of [C@T Harness](../README.md) 0.1.0, declared as `skills`, holding `skills
 | [`sdlc/`](sdlc/) | How work is planned, claimed, reviewed, merged, released and coordinated: the work plan, issues and PRs, CI and gates, requirements (CRDM, spec-kit), and multi-session coordination. | |
 | [`skill-definitions/`](skill-definitions/) | 2 files | |
 | [`ui/`](ui/) | How the corpus is rendered, published and presented: the docs site, viewers, boards, themes, and their QC. | |
+| [`voices/`](voices/README.md) | 7 files | |
 <!-- kg:subgraph:end -->

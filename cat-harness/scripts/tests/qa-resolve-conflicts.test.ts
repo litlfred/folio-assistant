@@ -132,6 +132,24 @@ describe("the guard reads the attestation store (bean 8wj1)", () => {
     expect(o!.action).toBe("refuse");
     expect(o!.reason).toContain("corrupt");
   });
+
+  // Main walks EVERY declared qa directory (#1822); 2gst's store check must
+  // then ask the instance that owns the path's directory, not the root's.
+  test("with several qa directories, each path is checked against ITS instance's store", () => {
+    const iris = "who-iris/test/results/";
+    const irisPath = `${iris}translation-qa/docs/x.fr.translation-qa.json`;
+    const dir = conflicted([{ path: irisPath, ours: sidecar("warn", true), theirs: sidecar("fail", true) }]);
+    const irisInstance = join(dir, "who-iris");
+    writeCriteriaAttestations(irisInstance, attestationKeyForDerived(irisInstance, join(dir, irisPath))!, {
+      "translation-coverage": [agent],
+    });
+    const route = (p: string) => (p.startsWith(iris) ? irisInstance : join(dir, "cat-harness"));
+    const [o] = plan(dir, [QA, iris], unmergedPaths(dir), route);
+    expect(o!.action).toBe("resolve");
+    // ...and the root's store, which does not hold it, would have refused.
+    const [r] = plan(dir, [QA, iris], unmergedPaths(dir), join(dir, "cat-harness"));
+    expect(r!.action).toBe("refuse");
+  });
 });
 
 describe("the guard refuses what regeneration would destroy", () => {

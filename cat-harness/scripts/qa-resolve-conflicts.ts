@@ -91,7 +91,7 @@ import { execFileSync } from "node:child_process";
 import { existsSync, readFileSync } from "node:fs";
 import { join, relative } from "node:path";
 
-import { directoryForGraph, repoRootFor } from "../schemas/cat-harness.ts";
+import { directoriesForGraph, instanceRootsIn, repoRootFor } from "../schemas/cat-harness.ts";
 import { attestationKeyForDerived, attestationPath, entryIdentity, readCriteriaAttestations } from "../schemas/qa-attestations.ts";
 
 const ROOT = join(import.meta.dir, "..");
@@ -234,11 +234,66 @@ export function storeHolds(
   return undefined;
 }
 
-/** Decide, per conflicted path, without touching anything. */
-export function plan(repoRoot: string, qaDir: string, paths: readonly string[], instanceRoot?: string): Outcome[] {
+/**
+ * Which instance's attestation store answers for `path`: the instance owning
+ * the LONGEST declared qa directory that contains it. `undefined` when no
+ * owner is known for that directory.
+ */
+export type InstanceFor = string | ((path: string) => string | undefined);
+
+/**
+ * Pair every declared `qa` directory (repo-relative, trailing `/`) with the
+ * instance that owns it — of the instances declaring it, the deepest one whose
+ * root contains it, else the first to declare it. An instance inherits its
+ * dependencies' declarations, so "declares it" alone does not say whose store
+ * a sidecar's non-script verdicts are held in.
+ */
+export function qaDirOwners(repoRoot: string, instances: readonly string[]): Map<string, string> {
+  const owners = new Map<string, string>();
+  const depth = (p: string) => p.split("/").length;
+  for (const inst of instances) {
+    for (const abs of directoriesForGraph(inst, "qa")) {
+      const rel = relative(repoRoot, abs).replace(/\/*$/, "") + "/";
+      const contains = !relative(inst, abs).startsWith("..");
+      const prev = owners.get(rel);
+      if (prev === undefined) {
+        owners.set(rel, inst);
+        continue;
+      }
+      const prevContains = !relative(prev, abs).startsWith("..");
+      if (contains && (!prevContains || depth(inst) > depth(prev))) owners.set(rel, inst);
+    }
+  }
+  return owners;
+}
+
+/**
+ * Decide, per conflicted path, without touching anything.
+ *
+ * `qaDirs` is EVERY declared `qa` directory in the checkout, repo-relative,
+ * not only the root instance's — measured 2026-10-02 on #1822: a
+ * `who-iris/test/results/kg-qa/…` sidecar was classified `qa-sidecar` by
+ * `merge-conflict-patterns.ts`, handed here, and "left alone — outside the
+ * declared qa graph", because this walked `cat-harness/test/results/` only.
+ * merge-base then aborted on a conflict the pattern had promised to resolve.
+ *
+ * `instanceRoot` names whose attestation store must hold a sidecar's
+ * non-script entries before it may be dropped (bean `2gst`). A string means
+ * one instance for every path; a function answers per path, so a who-iris
+ * sidecar is checked against who-iris's store and not the root's.
+ */
+export function plan(
+  repoRoot: string,
+  qaDirs: string | readonly string[],
+  paths: readonly string[],
+  instanceRoot?: InstanceFor,
+): Outcome[] {
+  const dirs = typeof qaDirs === "string" ? [qaDirs] : qaDirs;
+  const ownerOf = (path: string): string | undefined =>
+    typeof instanceRoot === "function" ? instanceRoot(path) : instanceRoot;
   return paths.map((path) => {
-    if (!path.startsWith(qaDir)) {
-      return { path, action: "skip" as const, reason: `outside the declared \`qa\` graph (${qaDir})` };
+    if (!dirs.some((d) => path.startsWith(d))) {
+      return { path, action: "skip" as const, reason: `outside every declared \`qa\` graph (${dirs.join(", ")})` };
     }
     const scan = scanConflict(repoRoot, path);
     if (scan.unreadable.length > 0) {
@@ -250,7 +305,11 @@ export function plan(repoRoot: string, qaDir: string, paths: readonly string[], 
     }
     if (scan.nonScript.length > 0) {
       const kinds = [...new Set(scan.nonScript.map((s) => s.split("|")[1]))].join(", ");
-      const why = instanceRoot === undefined ? "no instance root was given to find the attestation store" : storeHolds(repoRoot, instanceRoot, path, scan, paths);
+      const owner = ownerOf(path);
+      const why =
+        owner === undefined
+          ? "no instance root was given to find the attestation store"
+          : storeHolds(repoRoot, owner, path, scan, paths);
       if (why !== undefined) {
         return {
           path,
@@ -277,11 +336,12 @@ export function plan(repoRoot: string, qaDir: string, paths: readonly string[], 
 
 if (import.meta.main) {
   const repoRoot = repoRootFor(ROOT);
-  const qaAbs = directoryForGraph(ROOT, "qa");
-  if (qaAbs === undefined) {
-    // NOT a pass. An instance declaring no `qa` graph has no sidecars to
+  // Every instance in the checkout, nested ones included — see `plan`.
+  const qaAbsAll = [...new Set(instanceRootsIn(repoRoot).flatMap((inst) => directoriesForGraph(inst, "qa")))];
+  if (qaAbsAll.length === 0) {
+    // NOT a pass. A checkout declaring no `qa` graph has no sidecars to
     // resolve, and saying so differs from saying there was nothing to do.
-    console.log("qa-resolve-conflicts — this instance declares no `qa` graph, so nothing was considered");
+    console.log("qa-resolve-conflicts — no instance here declares a `qa` graph, so nothing was considered");
     process.exit(0);
   }
   // `directoryForGraph` returns an ABSOLUTE path; `git diff --name-only`
@@ -294,10 +354,11 @@ if (import.meta.main) {
   // **It failed OPEN**, which is the shape this whole command exists to
   // prevent, in the command itself. Found on its first real conflict, not by
   // a test — hence the guard below and the regression beside it.
-  const qaDir = relative(repoRoot, qaAbs).replace(/\/*$/, "") + "/";
-  if (!existsSync(qaAbs)) {
+  const qaDirs = qaAbsAll.map((a) => relative(repoRoot, a).replace(/\/*$/, "") + "/");
+  const missing = qaAbsAll.find((a) => !existsSync(a));
+  if (missing !== undefined) {
     console.error(
-      `qa-resolve-conflicts — the declared \`qa\` directory does not exist: ${qaAbs}\n` +
+      `qa-resolve-conflicts — a declared \`qa\` directory does not exist: ${missing}\n` +
         "  Everything would be reported as 'outside the graph', which is indistinguishable\n" +
         "  from having nothing to do. Refusing rather than exiting clean.",
     );
@@ -310,8 +371,16 @@ if (import.meta.main) {
     process.exit(0);
   }
 
-  // The instance that declares the `qa` directory: its `test/attestations/` is the store.
-  const outcomes = plan(repoRoot, qaDir, paths, ROOT);
+  // The instance that owns the `qa` directory a path lies in: ITS
+  // `test/attestations/` is the store that must hold the path's non-script
+  // verdicts — a who-iris sidecar is judged against who-iris's store, never
+  // the root's. The longest matching directory wins, since homes nest.
+  const owners = qaDirOwners(repoRoot, instanceRootsIn(repoRoot));
+  const instanceFor = (path: string): string | undefined => {
+    const dir = [...owners.keys()].filter((d) => path.startsWith(d)).sort((a, b) => b.length - a.length)[0];
+    return dir === undefined ? undefined : owners.get(dir);
+  };
+  const outcomes = plan(repoRoot, qaDirs, paths, instanceFor);
   const resolve = outcomes.filter((o) => o.action === "resolve");
   const refuse = outcomes.filter((o) => o.action === "refuse");
   const skip = outcomes.filter((o) => o.action === "skip");
@@ -364,7 +433,9 @@ if (import.meta.main) {
   // every writer whose OUTPUT lives under the qa graph. Stated rather than
   // silent: this is the one place the mapping is not read from the data.
   if (wanted.size === 0 && unknown.size === 0) {
-    for (const s of ["kg:audit", "translation:block-qa"]) if (scripts[s] !== undefined) wanted.add(s);
+    // `kg:audit:all` too: a resolved sidecar may belong to a nested instance
+    // (#1822's was who-iris's), which the root-only `kg:audit` does not write.
+    for (const s of ["kg:audit", "kg:audit:all", "translation:block-qa"]) if (scripts[s] !== undefined) wanted.add(s);
   }
 
   for (const s of [...wanted].sort()) {

@@ -105,7 +105,7 @@ describe("every writer regen pairs for these gates turns a STALED artefact's che
   for (const c of CASES) {
     test.skipIf(c.needsBrowser === true && !browser)(
       `${c.check}: red on a staled artefact, green after regen runs \`${writerFor(SCRIPTS, c.check) ?? "(none)"}\``,
-      () => {
+      async () => {
         const writer = writerFor(SCRIPTS, c.check);
         expect(writer, `${c.check} has no writer regen can run`).toBeDefined();
         const rel = c.artefact();
@@ -124,7 +124,7 @@ describe("every writer regen pairs for these gates turns a STALED artefact's che
           writeFileSync(abs, staled);
           // The control: without it a check that is ALWAYS green would pass this test.
           expect(runner(c.check), `${c.check} did not go red on a staled ${rel}`).toBe(false);
-          const { results } = regenPass([{ check: c.check, writer }], runner);
+          const { results } = await regenPass([{ check: c.check, writer }], runner);
           expect(results[0]).toEqual({ check: c.check, writer, outcome: "regenerated" });
           expect(readFileSync(abs, "utf-8"), `${writer} left ${rel} staled`).not.toBe(staled);
         } finally {
