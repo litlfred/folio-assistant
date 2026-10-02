@@ -505,32 +505,32 @@
   NOT a cache-busting strategy for third-party assets, and not applied to
   them: those are versioned in their own URLs already.
 -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-dublin-core-renderings/assets/css/docs-ui.css?v=1790931836">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-dublin-core-renderings/assets/css/docs-ui.css?v=1790933642">
 <!-- Narrow viewports: wide content scrolls in its own box, never the page
      (bean `2r2n`). The standalone viewers inline the same file through
      `withViewerNav`, so both kinds of page read one set of rules. -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-dublin-core-renderings/assets/css/narrow-viewport.css?v=1790931836">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-dublin-core-renderings/assets/css/narrow-viewport.css?v=1790933642">
 
 <!--
   The work-plan dashboard's styles, split from docs-ui.css so that
   `state-visualizer.ts` can inline exactly these bytes into the generated
   `<base>/<stub>/state-visualizer/` pages. One rule, two surfaces.
 -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-dublin-core-renderings/assets/css/work-plan.css?v=1790931836">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-dublin-core-renderings/assets/css/work-plan.css?v=1790933642">
 <!-- Sticky themes. GENERATED from the theme nodes in `schemas/themes.ts` by
      `bun run themes:css`; `themes:css:check` fails the build when it is stale.
      Loaded AFTER docs-ui.css deliberately: it supplies the `--fa-sticky-*`
      roles that docs-ui.css consumes, and a custom property has to be set on a
      matching element before the rule reading it takes effect. -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-dublin-core-renderings/assets/css/themes.css?v=1790931836">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-dublin-core-renderings/assets/css/themes.css?v=1790933642">
 <!-- UML overview colours: one class per graph kind, set on the Mermaid nodes
      that `scripts/gen-uml-overview.ts` writes into docs/uml/overview/. -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-dublin-core-renderings/assets/css/uml.css?v=1790931836">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-dublin-core-renderings/assets/css/uml.css?v=1790933642">
 <!-- Kind avatars. GENERATED from `schemas/avatars.ts` by `bun run avatars:css`;
      `avatars:css:check` fails the build when it is stale. One stylesheet
      rather than 68 assets: the glyph is a mask and the colour is a property,
      so a scheme swap is a custom property and the trash state is a selector. -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-dublin-core-renderings/assets/css/avatars.css?v=1790931836">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-dublin-core-renderings/assets/css/avatars.css?v=1790933642">
 
 <!--
   The kinds THIS INSTANCE DECLARES, for the avatar fan.
@@ -547,7 +547,7 @@
 <script type="application/json" id="fa-declared-kinds">["beans","cat-harness","code","code-list","docs","external-schema","folio","fsh-guts","health","interaction","issue-marks","library","memory","methodology","policies","processes","qa","scenarios","schemas","skills","substrate-snapshot","swimlane-glossary","todos","tools","translation-sources","uml","uploads","waiver"]</script>
 <script src="/folio-assistant/STAGING/claude-dublin-core-renderings/assets/js/vendor/qrcode.js" defer></script>
 <script src="/folio-assistant/STAGING/claude-dublin-core-renderings/assets/js/vendor/qrcode_UTF8.js" defer></script>
-<script src="/folio-assistant/STAGING/claude-dublin-core-renderings/assets/js/docs-ui.js?v=1790931836" defer></script>
+<script src="/folio-assistant/STAGING/claude-dublin-core-renderings/assets/js/docs-ui.js?v=1790933642" defer></script>
 
 <!--
   The work-plan dashboard. SELF-MOUNTING on any page carrying
@@ -824,13 +824,13 @@ window.addEventListener('resize',measure);window.addEventListener('load',measure
 </h1>
     
 
-<p>Every term the instances in this repository define or carry, as W3C SKOS. Terms link to the external concepts they match rather than copying them. 2907 terms: <strong>38 authored</strong> in 4 glossaries, on this page, and <strong>2869 extracted</strong> from knowledge-graph assets in 22 generated schemes, one page per asset type, plus the sources below.</p>
+<p>Every term the instances in this repository define or carry, as W3C SKOS. Terms link to the external concepts they match rather than copying them. 2909 terms: <strong>38 authored</strong> in 4 glossaries, on this page, and <strong>2871 extracted</strong> from knowledge-graph assets in 22 generated schemes, one page per asset type, plus the sources below.</p>
 
 <div class="table-wrapper"><table>
 <thead><tr><th>state</th><th>what it means</th><th>terms</th></tr></thead>
 <tbody>
 <tr><td>authored</td><td>A person wrote or approved the definition.</td><td>38</td></tr>
-<tr><td>candidate, extracted</td><td>Lifted from a knowledge-graph asset's own title and description, verbatim, and not curated. The definition is the asset's text, the source links to the asset, and an asset with no description gives a term with none. A person promotes one by authoring it.</td><td>2869</td></tr>
+<tr><td>candidate, extracted</td><td>Lifted from a knowledge-graph asset's own title and description, verbatim, and not curated. The definition is the asset's text, the source links to the asset, and an asset with no description gives a term with none. A person promotes one by authoring it.</td><td>2871</td></tr>
 <tr><td>could-not-extract</td><td>The source names a term the extractor could not read, and says why.</td><td>0</td></tr>
 </tbody>
 </table></div>
@@ -848,7 +848,7 @@ window.addEventListener('resize',measure);window.addEventListener('load',measure
 <div class="table-wrapper"><table class="fa-gloss-mapping">
 <caption>Already somebody else's concept? — <code>check:term-mapping</code>, bean <code>7wou</code></caption>
 <thead><tr><th>target</th><th>mapped</th><th>unmapped</th><th>undetermined</th><th>why undetermined</th></tr></thead>
-<tbody><tr><td><code>fhir</code></td><td>0</td><td>2869</td><td>0</td><td>—</td></tr><tr><td><code>skos</code></td><td>0</td><td>2869</td><td>0</td><td>—</td></tr></tbody>
+<tbody><tr><td><code>fhir</code></td><td>0</td><td>2871</td><td>0</td><td>—</td></tr><tr><td><code>skos</code></td><td>0</td><td>2871</td><td>0</td><td>—</td></tr></tbody>
 </table></div>
 <p class="fa-gloss-mapping-note"><strong>Undetermined is never “no match”.</strong> 
 A vocabulary that could not be reached has said nothing, and the column above keeps that 
@@ -873,7 +873,7 @@ be a term this corpus is right to coin.</p>
 <tr><td><a href="/folio-assistant/STAGING/claude-dublin-core-renderings/glossary/tools/">Tools</a></td><td>candidates, extracted</td><td>142</td><td>97 KB</td></tr>
 <tr><td><a href="/folio-assistant/STAGING/claude-dublin-core-renderings/glossary/bpmn-activities/">BPMN activities</a></td><td>candidates, extracted</td><td>600</td><td>466 KB</td></tr>
 <tr><td><a href="/folio-assistant/STAGING/claude-dublin-core-renderings/glossary/dmn-decisions/">DMN decisions</a></td><td>candidates, extracted</td><td>9</td><td>8 KB</td></tr>
-<tr><td><a href="/folio-assistant/STAGING/claude-dublin-core-renderings/glossary/schema-fields/">Schema fields</a></td><td>candidates, extracted</td><td>1811</td><td>1000 KB</td></tr>
+<tr><td><a href="/folio-assistant/STAGING/claude-dublin-core-renderings/glossary/schema-fields/">Schema fields</a></td><td>candidates, extracted</td><td>1813</td><td>1001 KB</td></tr>
 </tbody></table></div></div>
 
 <p><strong>Size:</strong> this page holds 38 terms and is 51 KB before compression, within its budget of 64 KB; each asset type’s page has a budget of 1.0 MB. There is no search index: the filter on each page runs over that page, and its A–Z bar jumps within it. The SKOS files in the sources are the machine-readable form.</p>
@@ -1365,13 +1365,13 @@ voice
 <tbody>
 <tr><td>bootstrap</td><td>11 · <a href="/folio-assistant/STAGING/claude-dublin-core-renderings/assets/glossary/bootstrap--kg-skills.skos.jsonld">SKOS</a></td><td>—</td><td>33 · <a href="/folio-assistant/STAGING/claude-dublin-core-renderings/assets/glossary/bootstrap--kg-bpmn-activities.skos.jsonld">SKOS</a></td><td>—</td><td>—</td></tr>
 <tr><td>bootstrap-tools</td><td>2 · <a href="/folio-assistant/STAGING/claude-dublin-core-renderings/assets/glossary/bootstrap-tools--kg-skills.skos.jsonld">SKOS</a></td><td>—</td><td>7 · <a href="/folio-assistant/STAGING/claude-dublin-core-renderings/assets/glossary/bootstrap-tools--kg-bpmn-activities.skos.jsonld">SKOS</a></td><td>—</td><td>28 · <a href="/folio-assistant/STAGING/claude-dublin-core-renderings/assets/glossary/bootstrap-tools--kg-schema-fields.skos.jsonld">SKOS</a></td></tr>
-<tr><td>cat-harness</td><td>212 · <a href="/folio-assistant/STAGING/claude-dublin-core-renderings/assets/glossary/cat-harness--kg-skills.skos.jsonld">SKOS</a></td><td>112 · <a href="/folio-assistant/STAGING/claude-dublin-core-renderings/assets/glossary/cat-harness--kg-tools.skos.jsonld">SKOS</a></td><td>537 · <a href="/folio-assistant/STAGING/claude-dublin-core-renderings/assets/glossary/cat-harness--kg-bpmn-activities.skos.jsonld">SKOS</a></td><td>9 · <a href="/folio-assistant/STAGING/claude-dublin-core-renderings/assets/glossary/cat-harness--kg-dmn-decisions.skos.jsonld">SKOS</a></td><td>1595 · <a href="/folio-assistant/STAGING/claude-dublin-core-renderings/assets/glossary/cat-harness--kg-schema-fields.skos.jsonld">SKOS</a></td></tr>
+<tr><td>cat-harness</td><td>212 · <a href="/folio-assistant/STAGING/claude-dublin-core-renderings/assets/glossary/cat-harness--kg-skills.skos.jsonld">SKOS</a></td><td>112 · <a href="/folio-assistant/STAGING/claude-dublin-core-renderings/assets/glossary/cat-harness--kg-tools.skos.jsonld">SKOS</a></td><td>537 · <a href="/folio-assistant/STAGING/claude-dublin-core-renderings/assets/glossary/cat-harness--kg-bpmn-activities.skos.jsonld">SKOS</a></td><td>9 · <a href="/folio-assistant/STAGING/claude-dublin-core-renderings/assets/glossary/cat-harness--kg-dmn-decisions.skos.jsonld">SKOS</a></td><td>1597 · <a href="/folio-assistant/STAGING/claude-dublin-core-renderings/assets/glossary/cat-harness--kg-schema-fields.skos.jsonld">SKOS</a></td></tr>
 <tr><td>fhir-harness</td><td>11 · <a href="/folio-assistant/STAGING/claude-dublin-core-renderings/assets/glossary/fhir-harness--kg-skills.skos.jsonld">SKOS</a></td><td>19 · <a href="/folio-assistant/STAGING/claude-dublin-core-renderings/assets/glossary/fhir-harness--kg-tools.skos.jsonld">SKOS</a></td><td>—</td><td>—</td><td>29 · <a href="/folio-assistant/STAGING/claude-dublin-core-renderings/assets/glossary/fhir-harness--kg-schema-fields.skos.jsonld">SKOS</a></td></tr>
 <tr><td>folio-assistant-core</td><td>8 · <a href="/folio-assistant/STAGING/claude-dublin-core-renderings/assets/glossary/folio-assistant-core--kg-skills.skos.jsonld">SKOS</a></td><td>5 · <a href="/folio-assistant/STAGING/claude-dublin-core-renderings/assets/glossary/folio-assistant-core--kg-tools.skos.jsonld">SKOS</a></td><td>4 · <a href="/folio-assistant/STAGING/claude-dublin-core-renderings/assets/glossary/folio-assistant-core--kg-bpmn-activities.skos.jsonld">SKOS</a></td><td>—</td><td>159 · <a href="/folio-assistant/STAGING/claude-dublin-core-renderings/assets/glossary/folio-assistant-core--kg-schema-fields.skos.jsonld">SKOS</a></td></tr>
 <tr><td>folio-assistant-sci</td><td>54 · <a href="/folio-assistant/STAGING/claude-dublin-core-renderings/assets/glossary/folio-assistant-sci--kg-skills.skos.jsonld">SKOS</a></td><td>—</td><td>—</td><td>—</td><td>—</td></tr>
 <tr><td>smart-base</td><td>8 · <a href="/folio-assistant/STAGING/claude-dublin-core-renderings/assets/glossary/smart-base--kg-skills.skos.jsonld">SKOS</a></td><td>6 · <a href="/folio-assistant/STAGING/claude-dublin-core-renderings/assets/glossary/smart-base--kg-tools.skos.jsonld">SKOS</a></td><td>19 · <a href="/folio-assistant/STAGING/claude-dublin-core-renderings/assets/glossary/smart-base--kg-bpmn-activities.skos.jsonld">SKOS</a></td><td>—</td><td>—</td></tr>
 <tr><td>who-iris</td><td>1 · <a href="/folio-assistant/STAGING/claude-dublin-core-renderings/assets/glossary/who-iris--kg-skills.skos.jsonld">SKOS</a></td><td>—</td><td>—</td><td>—</td><td>—</td></tr>
-<tr><td><strong>total</strong></td><td><strong>307</strong></td><td><strong>142</strong></td><td><strong>600</strong></td><td><strong>9</strong></td><td><strong>1811</strong></td></tr>
+<tr><td><strong>total</strong></td><td><strong>307</strong></td><td><strong>142</strong></td><td><strong>600</strong></td><td><strong>9</strong></td><td><strong>1813</strong></td></tr>
 </tbody></table></div></div>
 
 <script type="application/ld+json">
