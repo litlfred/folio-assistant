@@ -795,12 +795,12 @@
         {
           "id": "directories",
           "label": "declared directories",
-          "value": 11
+          "value": 12
         },
         {
           "id": "kinds",
           "label": "declared graph kinds",
-          "value": 10
+          "value": 11
         },
         {
           "id": "views",
@@ -816,6 +816,10 @@
         {
           "kind": "document-kinds",
           "path": "/cat-harness/document-kinds/smart-base/"
+        },
+        {
+          "kind": "external-schema",
+          "note": "no viewer yet"
         },
         {
           "kind": "fhir-artifact-index",
@@ -852,7 +856,7 @@
         }
       ],
       "findings": [
-        "smart-base: declares 3 graph(s) with no published viewer — qa, themes, tools. Declared and not rendered is a gap, not a dead link.",
+        "smart-base: declares 4 graph(s) with no published viewer — external-schema, qa, themes, tools. Declared and not rendered is a gap, not a dead link.",
         "smart-base: 1 graph(s) hold materialized content and are READ-ONLY — fhir-artifact-index. Readable, not editable here: copy one out to your own folio/ to work on it. Separate from whether a viewer is published.",
         "smart-base: a viewer is published at /cat-harness/schemas/smart-base/ for a \"schemas\" graph this instance does not declare. Declare it and the tile links it."
       ],
@@ -2535,7 +2539,7 @@
           },
           {
             "key": "directories",
-            "summary": "10: smart-base-docs, library, methodologies, processes, smart-base-house-processes, smart-bas…"
+            "summary": "11: smart-base-docs, library, methodologies, processes, smart-base-house-processes, smart-bas…"
           },
           {
             "key": "needs",

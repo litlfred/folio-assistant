@@ -103,10 +103,11 @@ nothing renders yet. It is shown rather than omitted: "nothing renders this" and
 
 ### `external-schema`
 
-1 of 1 published.
+1 of 2 published.
 {: .fa-hx-dim }
 
 - [C@T Harness]({{ '/external-schemas/' | relative_url }})
+- SMART Base — *declared, not published*
 
 ### `fhir-artifact-index`
 
