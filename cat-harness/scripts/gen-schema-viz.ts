@@ -241,7 +241,7 @@ export function viewerPlacement(
  * and for the same reason: a consumer should not have to load a page builder
  * to ask an ownership question. */
 import { orphanSubjectPages } from "./orphan-pages.ts";
-import { makeEmit, type ViewerNav } from "./viewer-page.ts";
+import { makeEmit, type ViewerNav, subjectSection } from "./viewer-page.ts";
 import { withRenders, withViewers } from "./viewer-declarations.js";
 
 /** This generator's Tool node (`tools/viewers.ts`), named on every page it draws. */
@@ -1275,11 +1275,17 @@ if (import.meta.main) {
     g.roots.filter((r) =>
       subject === undefined || g.modules.some((m) => m.instance === subject && m.module.startsWith(`${r}/`)),
     );
-  emitPage(nav)(join(pageDir, "index.html"), withRenders(viewerHtml(dataHref), drawn(), VIEWER_TOOL));
+  // The rail section (#1757): the static regions the script draws into.
+  const regions = [
+    { label: "Overview", id: "overview" },
+    { label: "Declarations", id: "list" },
+    { label: "Detail", id: "detail" },
+  ];
+  emitPage({ ...nav, section: subjectSection(subjects, undefined, regions) })(join(pageDir, "index.html"), withRenders(viewerHtml(dataHref), drawn(), VIEWER_TOOL));
 
   for (const subject of subjects) {
     const sub = viewerPlacement(site, `${handler}/${seg}/${subject}`, seg);
-    emitPage({ ...nav, instance: subject })(join(sub.pageDir, "index.html"), withRenders(viewerHtml(sub.dataHref, subject), drawn(subject), VIEWER_TOOL));
+    emitPage({ ...nav, instance: subject, section: subjectSection(subjects, subject, regions) })(join(sub.pageDir, "index.html"), withRenders(viewerHtml(sub.dataHref, subject), drawn(subject), VIEWER_TOOL));
   }
 
 

@@ -12,14 +12,14 @@ permalink: /glossary/schema-fields/
 
 Candidate terms extracted from every schema field with a doc comment: `<Declaration>.<field>` as the label, the comment's first paragraph as the definition. Each is the asset's own text, verbatim and not curated, and carries the badge "candidate, extracted". A person promotes one by authoring it. Authored terms, the counts and the sources are on the <a href="{{ '/glossary/' | relative_url }}">glossary index</a>.
 
-From: bootstrap-tools 28 (<a href="{{ '/assets/glossary/bootstrap-tools--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · cat-harness 1568 (<a href="{{ '/assets/glossary/cat-harness--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · fhir-harness 29 (<a href="{{ '/assets/glossary/fhir-harness--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · folio-assistant-core 155 (<a href="{{ '/assets/glossary/folio-assistant-core--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · large-datasets 18 (<a href="{{ '/assets/glossary/large-datasets--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>).
+From: bootstrap-tools 28 (<a href="{{ '/assets/glossary/bootstrap-tools--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · cat-harness 1575 (<a href="{{ '/assets/glossary/cat-harness--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · fhir-harness 29 (<a href="{{ '/assets/glossary/fhir-harness--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · folio-assistant-core 155 (<a href="{{ '/assets/glossary/folio-assistant-core--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · large-datasets 18 (<a href="{{ '/assets/glossary/large-datasets--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>).
 
-**Size:** this page holds 1798 terms and is 992 KB before compression, fetched in one request, within its budget of 1.0 MB. There is no search index: the filter below runs over this page, and the A–Z bar jumps within it.
+**Size:** this page holds 1805 terms and is 996 KB before compression, fetched in one request, within its budget of 1.0 MB. There is no search index: the filter below runs over this page, and the A–Z bar jumps within it.
 
 <table class="fa-gloss-mapping">
 <caption>Already somebody else's concept? — <code>check:term-mapping</code>, bean <code>7wou</code></caption>
 <thead><tr><th>target</th><th>mapped</th><th>unmapped</th><th>undetermined</th><th>why undetermined</th></tr></thead>
-<tbody><tr><td><code>fhir</code></td><td>0</td><td>1798</td><td>0</td><td>—</td></tr><tr><td><code>skos</code></td><td>0</td><td>1798</td><td>0</td><td>—</td></tr></tbody>
+<tbody><tr><td><code>fhir</code></td><td>0</td><td>1805</td><td>0</td><td>—</td></tr><tr><td><code>skos</code></td><td>0</td><td>1805</td><td>0</td><td>—</td></tr></tbody>
 </table>
 <p class="fa-gloss-mapping-note"><strong>Undetermined is never “no match”.</strong> 
 A vocabulary that could not be reached has said nothing, and the column above keeps that 
@@ -28,7 +28,7 @@ be a term this corpus is right to coin.</p>
 
 <label for="fa-gloss-q">Filter terms</label>
 <input id="fa-gloss-q" type="search" autocomplete="off" style="min-height:44px;width:100%;max-width:32rem">
-<p aria-live="polite"><span id="fa-gloss-n">1798</span> shown</p>
+<p aria-live="polite"><span id="fa-gloss-n">1805</span> shown</p>
 
 <nav aria-label="Letters"><a href="#letter-A">A</a> <a href="#letter-B">B</a> <a href="#letter-C">C</a> <a href="#letter-D">D</a> <a href="#letter-E">E</a> <a href="#letter-F">F</a> <a href="#letter-G">G</a> <a href="#letter-H">H</a> <a href="#letter-I">I</a> <a href="#letter-J">J</a> <a href="#letter-K">K</a> <a href="#letter-L">L</a> <a href="#letter-M">M</a> <a href="#letter-N">N</a> <a href="#letter-O">O</a> <a href="#letter-P">P</a> <a href="#letter-Q">Q</a> <a href="#letter-R">R</a> <a href="#letter-S">S</a> <a href="#letter-T">T</a> <a href="#letter-U">U</a> <a href="#letter-V">V</a> <a href="#letter-W">W</a></nav>
 
@@ -1316,6 +1316,13 @@ CategoryGlossaryEntry.required_instances <span class="fa-gloss-status">candidate
 <p>Required Lean typeclasses.</p>
 <p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/formalization-types.ts"><code>cat-harness/schemas/formalization-types.ts#CategoryGlossaryEntry.required_instances</code></a></p>
 </dd>
+<dt id="cat-harness--kg-schema-fields--cat-harness.catharnessdeclaration.alsowritten" data-fa-state="extracted" data-fa-gloss="">
+CatHarnessDeclaration.alsoWritten <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>Other spellings of the name, listed on the landing (<code>ob3m</code> 5).</p>
+<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/cat-harness.ts"><code>cat-harness/schemas/cat-harness.ts#CatHarnessDeclaration.alsoWritten</code></a></p>
+</dd>
 <dt id="cat-harness--kg-schema-fields--cat-harness.catharnessdeclaration.assets" data-fa-state="extracted" data-fa-gloss="">
 CatHarnessDeclaration.assets <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
@@ -1470,6 +1477,13 @@ CatHarnessDeclaration.subscriptions <span class="fa-gloss-status">candidate, ext
 <p>External Knowledge Graphs this one CONSUMES, and which of their parts it chose to hold — &#123;@link Subscription}. Issue #1719.</p>
 <p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/cat-harness.ts"><code>cat-harness/schemas/cat-harness.ts#CatHarnessDeclaration.subscriptions</code></a></p>
 </dd>
+<dt id="cat-harness--kg-schema-fields--cat-harness.catharnessdeclaration.summary" data-fa-state="extracted" data-fa-gloss="">
+CatHarnessDeclaration.summary <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>A reader's one line — see &#123;@link CatHarnessDeclarationSchema}'s <code>summary</code> (<code>ob3m</code> 4/5).</p>
+<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/cat-harness.ts"><code>cat-harness/schemas/cat-harness.ts#CatHarnessDeclaration.summary</code></a></p>
+</dd>
 <dt id="cat-harness--kg-schema-fields--cat-harness.catharnessdeclaration.topology" data-fa-state="extracted" data-fa-gloss="">
 CatHarnessDeclaration.topology <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
@@ -1483,6 +1497,13 @@ CatHarnessDeclaration.version <span class="fa-gloss-status">candidate, extracted
 <dd>
 <p>The version, and it is an EXACT semver triple.</p>
 <p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/cat-harness.ts"><code>cat-harness/schemas/cat-harness.ts#CatHarnessDeclaration.version</code></a></p>
+</dd>
+<dt id="cat-harness--kg-schema-fields--cat-harness.catharnessdeclarationschema.alsowritten" data-fa-state="extracted" data-fa-gloss="">
+CatHarnessDeclarationSchema.alsoWritten <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>Other ways the instance's name is written, shown on the landing as a small &quot;also written&quot; list rather than run into the description as one line. Owner's choice, 2026-10-01: keep the spellings visible, as a list.</p>
+<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/cat-harness.ts"><code>cat-harness/schemas/cat-harness.ts#CatHarnessDeclarationSchema.alsoWritten</code></a></p>
 </dd>
 <dt id="cat-harness--kg-schema-fields--cat-harness.catharnessdeclarationschema.assets" data-fa-state="extracted" data-fa-gloss="">
 CatHarnessDeclarationSchema.assets <span class="fa-gloss-status">candidate, extracted</span>
@@ -1574,6 +1595,13 @@ CatHarnessDeclarationSchema.subscriptions <span class="fa-gloss-status">candidat
 <dd>
 <p>External Knowledge Graphs this one subscribes to — see &#123;@link Subscription}. <code>.optional()</code> for the reason <code>associatedHarnesses</code> is. Ids are unique, and never also in <code>needs</code> or <code>associatedHarnesses</code> — refined below.</p>
 <p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/cat-harness.ts"><code>cat-harness/schemas/cat-harness.ts#CatHarnessDeclarationSchema.subscriptions</code></a></p>
+</dd>
+<dt id="cat-harness--kg-schema-fields--cat-harness.catharnessdeclarationschema.summary" data-fa-state="extracted" data-fa-gloss="">
+CatHarnessDeclarationSchema.summary <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>One line for a READER, where <code>description</code> is written for an author.</p>
+<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/cat-harness.ts"><code>cat-harness/schemas/cat-harness.ts#CatHarnessDeclarationSchema.summary</code></a></p>
 </dd>
 <dt id="cat-harness--kg-schema-fields--cat-harness.catharnessdeclarationschema.version" data-fa-state="extracted" data-fa-gloss="">
 CatHarnessDeclarationSchema.version <span class="fa-gloss-status">candidate, extracted</span>
@@ -6669,6 +6697,20 @@ Overrule.note <span class="fa-gloss-status">candidate, extracted</span>
 <dd>
 <p>&#123;@link AuditNote.id}.</p>
 <p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/qa-review.ts"><code>cat-harness/schemas/qa-review.ts#Overrule.note</code></a></p>
+</dd>
+<dt id="cat-harness--kg-schema-fields--prov-jsonld.owned.path" data-fa-state="extracted" data-fa-gloss="">
+Owned.path <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>Path inside the instance, without extension, <code>/</code>-separated.</p>
+<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/prov-jsonld.ts"><code>cat-harness/schemas/prov-jsonld.ts#Owned.path</code></a></p>
+</dd>
+<dt id="cat-harness--kg-schema-fields--prov-jsonld.owned.root" data-fa-state="extracted" data-fa-gloss="">
+Owned.root <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>Instance root, absolute.</p>
+<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/prov-jsonld.ts"><code>cat-harness/schemas/prov-jsonld.ts#Owned.root</code></a></p>
 </dd>
 </dl>
 
@@ -12003,6 +12045,13 @@ VerificationRoster.entries <span class="fa-gloss-status">candidate, extracted</s
 <dd>
 <p>The verification entries.</p>
 <p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/bib-verification.ts"><code>cat-harness/schemas/bib-verification.ts#VerificationRoster.entries</code></a></p>
+</dd>
+<dt id="cat-harness--kg-schema-fields--viewer-nav-qa.viewernavpageschema.flags" data-fa-state="extracted" data-fa-gloss="">
+ViewerNavPageSchema.flags <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>The layout criteria this railed page FAILS. Absent when it fails none.</p>
+<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/viewer-nav-qa.ts"><code>cat-harness/schemas/viewer-nav-qa.ts#ViewerNavPageSchema.flags</code></a></p>
 </dd>
 <dt id="cat-harness--kg-schema-fields--viewer-nav-qa.viewernavpageschema.path" data-fa-state="extracted" data-fa-gloss="">
 ViewerNavPageSchema.path <span class="fa-gloss-status">candidate, extracted</span>
