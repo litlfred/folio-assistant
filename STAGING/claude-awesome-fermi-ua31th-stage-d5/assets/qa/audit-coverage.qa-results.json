@@ -478,7 +478,7 @@
             "bun run check:l1-complete -- --check",
             "bun run check:methodology-evidence",
             "bun run check:soft-hyphens",
-            "bun run check:source-licence",
+            "bun run check:source-licence:check",
             "bun run check:structure-accessor",
             "bun run check:upload-names:check",
             "bun run check:uploads-retired",
@@ -999,7 +999,7 @@
           "criteria": [],
           "subjectKinds": [],
           "gates": [
-            "bun run check:source-licence",
+            "bun run check:source-licence:check",
             "bun run check:upload-names:check",
             "bun run check:uploads-retired",
             "bun run gen:jsonld:check",
