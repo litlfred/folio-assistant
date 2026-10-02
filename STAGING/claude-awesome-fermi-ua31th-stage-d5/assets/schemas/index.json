@@ -2,7 +2,7 @@
   "$schema": "folio-schema-graph/v1",
   "tile": {
     "schemas": {
-      "count": 203,
+      "count": 188,
       "unit": "modules"
     }
   },
@@ -12,7 +12,6 @@
     "folio-assistant-core/schemas",
     "folio-assistant-sci/schemas",
     "folio-assistant-sci/sources",
-    "large-datasets/schemas",
     "smart-base/schemas",
     "who-iris/sources"
   ],
@@ -211,14 +210,6 @@
       "isTest": false
     },
     {
-      "module": "cat-harness/schemas/cat-harness.test.ts",
-      "instance": "cat-harness",
-      "name": "cat-harness.test",
-      "graphNode": "undeclared",
-      "summary": "Tests for the CatHarness root declaration — issue #223, Phase 0.3.",
-      "isTest": true
-    },
-    {
       "module": "cat-harness/schemas/cat-harness.ts",
       "instance": "cat-harness",
       "name": "cat-harness",
@@ -274,14 +265,6 @@
       "graphNode": "schema",
       "summary": "The content types this layer owns, registered at load time.",
       "isTest": false
-    },
-    {
-      "module": "cat-harness/schemas/contributions.test.ts",
-      "instance": "cat-harness",
-      "name": "contributions.test",
-      "graphNode": "undeclared",
-      "summary": "Tests for the contribution registry and its loader — issue #223, Phase 0.1.",
-      "isTest": true
     },
     {
       "module": "cat-harness/schemas/contributions.ts",
@@ -420,14 +403,6 @@
       "isTest": false
     },
     {
-      "module": "cat-harness/schemas/extension-namespace.test.ts",
-      "instance": "cat-harness",
-      "name": "extension-namespace.test",
-      "graphNode": "undeclared",
-      "summary": "Our BPMN extension elements are recognised by NAMESPACE, never by the prefix",
-      "isTest": true
-    },
-    {
       "module": "cat-harness/schemas/external-schema.ts",
       "instance": "cat-harness",
       "name": "external-schema",
@@ -442,14 +417,6 @@
       "graphNode": "schema",
       "summary": "What a person or agent SAYS a drawn figure shows — bean `a8wy`, under",
       "isTest": false
-    },
-    {
-      "module": "cat-harness/schemas/folio-dir.test.ts",
-      "instance": "cat-harness",
-      "name": "folio-dir.test",
-      "graphNode": "undeclared",
-      "summary": "`folioDir` — a folio says where its content is, and the platform asks.",
-      "isTest": true
     },
     {
       "module": "cat-harness/schemas/folio-graph-kind.ts",
@@ -533,14 +500,6 @@
       "isTest": false
     },
     {
-      "module": "cat-harness/schemas/harness-config.test.ts",
-      "instance": "cat-harness",
-      "name": "harness-config.test",
-      "graphNode": "undeclared",
-      "summary": "Tests for schemas/harness-config.ts — cross-folio dependency schema and resolution.",
-      "isTest": true
-    },
-    {
       "module": "cat-harness/schemas/harness-config.ts",
       "instance": "cat-harness",
       "name": "harness-config",
@@ -604,14 +563,6 @@
       "isTest": false
     },
     {
-      "module": "cat-harness/schemas/instance-versioning.test.ts",
-      "instance": "cat-harness",
-      "name": "instance-versioning.test",
-      "graphNode": "undeclared",
-      "summary": "A minimal valid declaration, extended per test.",
-      "isTest": true
-    },
-    {
       "module": "cat-harness/schemas/intake.ts",
       "instance": "cat-harness",
       "name": "intake",
@@ -660,28 +611,12 @@
       "isTest": false
     },
     {
-      "module": "cat-harness/schemas/kg-qa.test.ts",
-      "instance": "cat-harness",
-      "name": "kg-qa.test",
-      "graphNode": "undeclared",
-      "summary": "The sidecar's own rules — the ones a reader relies on when they read a",
-      "isTest": true
-    },
-    {
       "module": "cat-harness/schemas/kg-qa.ts",
       "instance": "cat-harness",
       "name": "kg-qa",
       "graphNode": "schema",
       "summary": "Knowledge-graph QA sidecars — what is dangling in the process/role/skill graph.",
       "isTest": false
-    },
-    {
-      "module": "cat-harness/schemas/kind-validator.test.ts",
-      "instance": "cat-harness",
-      "name": "kind-validator.test",
-      "graphNode": "undeclared",
-      "summary": "Resolving a graph kind's validator — and above all, the three states.",
-      "isTest": true
     },
     {
       "module": "cat-harness/schemas/kind-validator.ts",
@@ -706,15 +641,6 @@
       "graphNode": "schema",
       "summary": "The landing page, as a board of sticky notes.",
       "isTest": false
-    },
-    {
-      "module": "cat-harness/schemas/layer-direction.test.ts",
-      "instance": "cat-harness",
-      "name": "layer-direction.test",
-      "graphNode": "none",
-      "reason": "a test",
-      "summary": "One wrong-direction verdict for `check:partition` and `kg-detangle` — bean `j79e`.",
-      "isTest": true
     },
     {
       "module": "cat-harness/schemas/layer-direction.ts",
@@ -888,14 +814,6 @@
       "isTest": false
     },
     {
-      "module": "cat-harness/schemas/portable-path.test.ts",
-      "instance": "cat-harness",
-      "name": "portable-path.test",
-      "graphNode": "undeclared",
-      "summary": "The rules a checkout relies on — a filename that is legal here and illegal",
-      "isTest": true
-    },
-    {
       "module": "cat-harness/schemas/portable-path.ts",
       "instance": "cat-harness",
       "name": "portable-path",
@@ -1025,15 +943,6 @@
       "isTest": false
     },
     {
-      "module": "cat-harness/schemas/reference-direction-declaration.test.ts",
-      "instance": "cat-harness",
-      "name": "reference-direction-declaration.test",
-      "graphNode": "none",
-      "reason": "a test",
-      "summary": "What a file has to SAY to be read as generator output — bean `ws99`.",
-      "isTest": true
-    },
-    {
       "module": "cat-harness/schemas/reference-direction.ts",
       "instance": "cat-harness",
       "name": "reference-direction",
@@ -1123,15 +1032,6 @@
       "isTest": false
     },
     {
-      "module": "cat-harness/schemas/schema-graph.test.ts",
-      "instance": "cat-harness",
-      "name": "schema-graph.test",
-      "graphNode": "none",
-      "reason": "a test over the reader, not a schema itself",
-      "summary": "The schema-graph reader, tested against shapes that actually occur here.",
-      "isTest": true
-    },
-    {
       "module": "cat-harness/schemas/script-qa.ts",
       "instance": "cat-harness",
       "name": "script-qa",
@@ -1201,14 +1101,6 @@
       "graphNode": "schema",
       "summary": "Where the JSON workflow-skill definitions and the conventions live.",
       "isTest": false
-    },
-    {
-      "module": "cat-harness/schemas/skill-overlay.test.ts",
-      "instance": "cat-harness",
-      "name": "skill-overlay.test",
-      "graphNode": "undeclared",
-      "summary": "The skill overlay reads declarations and keeps every instance's contribution.",
-      "isTest": true
     },
     {
       "module": "cat-harness/schemas/skill-package.ts",
@@ -1462,14 +1354,6 @@
       "isTest": false
     },
     {
-      "module": "cat-harness/schemas/todo.test.ts",
-      "instance": "cat-harness",
-      "name": "todo.test",
-      "graphNode": "undeclared",
-      "summary": "A todo's KG tags resolve, dangle, or are not checked — and the third is",
-      "isTest": true
-    },
-    {
       "module": "cat-harness/schemas/todo.ts",
       "instance": "cat-harness",
       "name": "todo",
@@ -1571,15 +1455,6 @@
       "graphNode": "schema",
       "summary": "The viewer-navbar audit — **what the owner's rule looks like as data**.",
       "isTest": false
-    },
-    {
-      "module": "cat-harness/schemas/viz-generators.test.ts",
-      "instance": "cat-harness",
-      "name": "viz-generators.test",
-      "graphNode": "none",
-      "reason": "a test over the generators, not a schema itself",
-      "summary": "The two visualiser generators produce a page, and it is a whole one.",
-      "isTest": true
     },
     {
       "module": "cat-harness/schemas/vocabulary.ts",
@@ -17939,6 +17814,20 @@
       "exported": true
     },
     {
+      "id": "cat-harness/schemas/harness-config.ts#ImplementingPath",
+      "name": "ImplementingPath",
+      "module": "cat-harness/schemas/harness-config.ts",
+      "kind": "type-alias",
+      "doc": "Where an instance-relative path declared by one instance actually is.",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
       "id": "cat-harness/schemas/harness-config.ts#InstanceGraph",
       "name": "InstanceGraph",
       "module": "cat-harness/schemas/harness-config.ts",
@@ -30121,6 +30010,20 @@
           "optional": true,
           "array": false,
           "doc": "The declaring instance's `description`, for `bodyFrom: \"description\"`."
+        },
+        {
+          "name": "summary",
+          "type": "string",
+          "optional": true,
+          "array": false,
+          "doc": "The declaring instance's `summary`, for `bodyFrom: \"summary\"`."
+        },
+        {
+          "name": "alsoWritten",
+          "type": "readonly string[]",
+          "optional": true,
+          "array": false,
+          "doc": "The declaring instance's `alsoWritten`, for `bodyFrom: \"summary\"`."
         }
       ],
       "extendsNames": [],
