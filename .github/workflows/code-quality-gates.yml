@@ -854,6 +854,16 @@ jobs:
       - name: knowledge-graph audit, every declared instance
         run: bun run kg:audit:all:check
 
+      # kg-export's committed `qa-results/v1` sidecars are current (bean `v556`).
+      #
+      # It had no `--check` until then, so it was in no verify/write pair and
+      # outside check:artefact-verification's inventory. Measured on main
+      # `cf3e624`: `kg-export.bootstrap.qa-results.json` carried a stale hash
+      # AND hid three findings, with every gate green. Also reports a committed
+      # `kg-export.<stub>` sidecar that no instance owns as an orphan.
+      - name: kg-export QA sidecars are current
+        run: bun run kg:export:check
+
       # WHICH audits reach which kind of node — the neighbour of the audit
       # above, not a second answer to it. `kg:audit:check` judges the nodes it
       # covers; this measures WHAT IS COVERED AT ALL, which nothing asked
