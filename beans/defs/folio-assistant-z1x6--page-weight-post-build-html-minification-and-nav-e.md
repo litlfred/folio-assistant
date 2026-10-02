@@ -5,7 +5,7 @@ status: in-progress
 type: task
 priority: normal
 created_at: 2026-10-02T16:51:57Z
-updated_at: 2026-10-02T17:35:03Z
+updated_at: 2026-10-02T17:46:19Z
 parent: folio-assistant-o3xy
 ---
 
@@ -124,3 +124,27 @@ Nine files, staged by explicit path (three agents share this working tree):
 
 Stays `in-progress`: a merge to `main` needs the owner's explicit word, and
 the real before/after is what the first deploy through the step reports.
+
+
+## CI, 2026-10-02 — green, and it settles the attribution
+
+`Code-quality gates` dispatched at head `a309c3aaa83`: **8/8 jobs success**
+(run 37041933678), including **Repository gates (hard)** — the full 210-gate
+set — and **End-to-end + accessibility (hard)**, the browser job that reaches
+`first-paint-scheme.e2e.ts`.
+
+That is the evidence for the local attribution rather than a badge: my local
+`bun run gates` showed 6 failures in a tree holding three authors'
+UNCOMMITTED work; CI runs the committed branch, where the four I attributed to
+another author's files are absent, and the two that were mine were fixed
+before the push.
+
+**A CI-health fact worth recording (the `xom7` shape).**
+`pull_request`-triggered runs on this branch complete with conclusion
+`action_required` and never execute. Of the runs on
+`claude/wizardly-galileo-feyypz`, only the `push`-triggered "JSON-LD
+generated-file drift" had actually run; `Code-quality gates` had not fired
+since `70502fde1`, across two commits from an hour earlier. The gate set above
+ran because I dispatched it, which is what sibling sessions on other branches
+are doing. **A green PR page here does not mean the gates ran.** Not
+introduced by this change, and not in scope to fix here.
