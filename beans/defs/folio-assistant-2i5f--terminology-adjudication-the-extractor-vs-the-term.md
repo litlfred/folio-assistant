@@ -118,3 +118,36 @@ are indistinguishable. Not this bean's to fix — it is the same *shape* as leg
 
 
 Claimed by claude/terminology-followups (session https://claude.ai/code/session_01CVVoavPoCHMLA7AASxG8cH), stacked on #1837 — issue #1836. Slice: LEG 1 only, on the owner's 2026-10-02 ruling: *"split: build leg 1 now as a skill + an outcome schema"*. Leg 2 keeps waiting.
+
+## Leg 1 BUILT 2026-10-02 (#1846, stacked on #1837) — leg 2 still waiting
+
+Owner, 2026-10-02 (issue #1836): *"split: build LEG 1 now as a SKILL + an
+OUTCOME SCHEMA … Leg 2 (two judges disagree about a mapping) stays waiting —
+do not build it."*
+
+- Skill [`term-disagreement`](../../cat-harness/skills/library/library-core/term-disagreement.md)
+  (library-core): which `exact`/`concept` rows are disagreements at all (the
+  concept-only pair always; a miss only where the authority is MEANT to cover
+  the word; `undetermined` never), the three questions that choose an
+  outcome, who decides (a person), and why `local-term` is the only route to
+  a CONFIRMED mapping now that automated ones are published.
+- Schema `folio-term-adjudications/v1` (`cat-harness/schemas/term-adjudication.ts`):
+  one variant per outcome, `OUTCOME_WRITES` as the what/where table, and the
+  refusals — an undetermined or exact subject, `local-term` with `exactMatch`
+  (that is `change-prose`) or `relatedMatch` (an authored term cannot carry
+  it, so the outcome could not be written), a blank reason, an in-repo
+  `<scheme>:<id>` where an IRI is required, two outcomes for one disagreement.
+- `check:term-mapping` validates every `*.term-adjudications.json` beside the
+  schemes (fails on an invalid one) and reports each record as applied /
+  pending / holds / stale. No file exists: a record is a decision, never
+  seeded.
+
+Done-when, against this bean:
+
+- [x] the two disagreements are named and kept apart (skill §1, schema header)
+- [ ] case 2 CALLS `adjudication` and `untainted-verification`, restating
+      neither — **leg 2, waiting** on its entry condition (non-zero `mapped`
+      on either target; 0 on both, measured 2026-10-02)
+- [x] case 1 has an outcome set, each outcome saying what is written and where
+- [ ] whether a term mapping keeps its dissent or collapses — owner's call,
+      belongs with leg 2

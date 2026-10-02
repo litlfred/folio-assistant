@@ -22757,6 +22757,196 @@
       "skos:note": "candidate"
     },
     {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/term-adjudication.changeproseschema.authorisedlabel",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "ChangeProseSchema.authorisedLabel"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Its authorised label, which the corpus now carries."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/term-adjudication.ts#ChangeProseSchema.authorisedLabel",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/term-adjudication.changeproseschema.changed",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "ChangeProseSchema.changed"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The source assets that were edited, by repository path."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/term-adjudication.ts#ChangeProseSchema.changed",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/term-adjudication.changeproseschema.concept",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "ChangeProseSchema.concept"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The authorised concept the corpus now uses."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/term-adjudication.ts#ChangeProseSchema.concept",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/term-adjudication.localtermschema.concept",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "LocalTermSchema.concept"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The authority's concept, required unless `relation` is `none`."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/term-adjudication.ts#LocalTermSchema.concept",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/term-adjudication.localtermschema.reason",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "LocalTermSchema.reason"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Why the authority's concept does not serve, so the next reader need not re-derive it."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/term-adjudication.ts#LocalTermSchema.reason",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/term-adjudication.subject.scheme",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Subject.scheme"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The candidate's scheme id, as the mapping record keys it (`kg-tools`, …)."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/term-adjudication.ts#Subject.scheme",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/term-adjudication.subject.term",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Subject.term"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The candidate's term id within that scheme."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/term-adjudication.ts#Subject.term",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/term-adjudication.vocabularywrongschema.concept",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "VocabularyWrongSchema.concept"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The concept the label reached, where it reached one."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/term-adjudication.ts#VocabularyWrongSchema.concept",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/term-adjudication.vocabularywrongschema.domain",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "VocabularyWrongSchema.domain"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The domain it does not serve."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/term-adjudication.ts#VocabularyWrongSchema.domain",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/term-adjudication.vocabularywrongschema.vocabulary",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "VocabularyWrongSchema.vocabulary"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The vocabulary consulted, as the check's scope names it (`platform`, `who-smart-base@v1.0.0`, …)."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/term-adjudication.ts#VocabularyWrongSchema.vocabulary",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/term-mapping.conceptmatchschema.scheme",
       "@type": "skos:Concept",
       "skos:inScheme": {

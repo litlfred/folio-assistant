@@ -8386,6 +8386,76 @@
       "status": "candidate"
     },
     {
+      "id": "term-adjudication.changeproseschema.authorisedlabel",
+      "prefLabel": "ChangeProseSchema.authorisedLabel",
+      "definition": "Its authorised label, which the corpus now carries.",
+      "source": "cat-harness/schemas/term-adjudication.ts#ChangeProseSchema.authorisedLabel",
+      "status": "candidate"
+    },
+    {
+      "id": "term-adjudication.changeproseschema.changed",
+      "prefLabel": "ChangeProseSchema.changed",
+      "definition": "The source assets that were edited, by repository path.",
+      "source": "cat-harness/schemas/term-adjudication.ts#ChangeProseSchema.changed",
+      "status": "candidate"
+    },
+    {
+      "id": "term-adjudication.changeproseschema.concept",
+      "prefLabel": "ChangeProseSchema.concept",
+      "definition": "The authorised concept the corpus now uses.",
+      "source": "cat-harness/schemas/term-adjudication.ts#ChangeProseSchema.concept",
+      "status": "candidate"
+    },
+    {
+      "id": "term-adjudication.localtermschema.concept",
+      "prefLabel": "LocalTermSchema.concept",
+      "definition": "The authority's concept, required unless `relation` is `none`.",
+      "source": "cat-harness/schemas/term-adjudication.ts#LocalTermSchema.concept",
+      "status": "candidate"
+    },
+    {
+      "id": "term-adjudication.localtermschema.reason",
+      "prefLabel": "LocalTermSchema.reason",
+      "definition": "Why the authority's concept does not serve, so the next reader need not re-derive it.",
+      "source": "cat-harness/schemas/term-adjudication.ts#LocalTermSchema.reason",
+      "status": "candidate"
+    },
+    {
+      "id": "term-adjudication.subject.scheme",
+      "prefLabel": "Subject.scheme",
+      "definition": "The candidate's scheme id, as the mapping record keys it (`kg-tools`, …).",
+      "source": "cat-harness/schemas/term-adjudication.ts#Subject.scheme",
+      "status": "candidate"
+    },
+    {
+      "id": "term-adjudication.subject.term",
+      "prefLabel": "Subject.term",
+      "definition": "The candidate's term id within that scheme.",
+      "source": "cat-harness/schemas/term-adjudication.ts#Subject.term",
+      "status": "candidate"
+    },
+    {
+      "id": "term-adjudication.vocabularywrongschema.concept",
+      "prefLabel": "VocabularyWrongSchema.concept",
+      "definition": "The concept the label reached, where it reached one.",
+      "source": "cat-harness/schemas/term-adjudication.ts#VocabularyWrongSchema.concept",
+      "status": "candidate"
+    },
+    {
+      "id": "term-adjudication.vocabularywrongschema.domain",
+      "prefLabel": "VocabularyWrongSchema.domain",
+      "definition": "The domain it does not serve.",
+      "source": "cat-harness/schemas/term-adjudication.ts#VocabularyWrongSchema.domain",
+      "status": "candidate"
+    },
+    {
+      "id": "term-adjudication.vocabularywrongschema.vocabulary",
+      "prefLabel": "VocabularyWrongSchema.vocabulary",
+      "definition": "The vocabulary consulted, as the check's scope names it (`platform`, `who-smart-base@v1.0.0`, …).",
+      "source": "cat-harness/schemas/term-adjudication.ts#VocabularyWrongSchema.vocabulary",
+      "status": "candidate"
+    },
+    {
       "id": "term-mapping.conceptmatchschema.scheme",
       "prefLabel": "ConceptMatchSchema.scheme",
       "definition": "The scheme the concept belongs to.",
