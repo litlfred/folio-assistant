@@ -261,7 +261,7 @@
     "ingest": "bun run cat-harness/scripts/ingest-document.ts",
     "ingest:ig": "bun run fhir-harness/scripts/ingest-ig-artifacts.ts",
     "ingest:ig-chrome": "bun run fhir-harness/scripts/ingest-ig-chrome.ts",
-    "ingest:ig-chrome:check": "bun run fhir-harness/scripts/ingest-ig-chrome.ts --out smart-base/fhir-artifact-index --check",
+    "ingest:ig-chrome:check": "bun run fhir-harness/scripts/ingest-ig-chrome.ts --out smart-base/themes --check",
     "ingest:ig-menu": "bun run fhir-harness/scripts/ingest-ig-menu.ts",
     "ingest:ig-menu:check": "bun run fhir-harness/scripts/ingest-ig-menu.ts --out smart-trust/fhir-artifact-index --check",
     "ingest:ig:check": "bun run fhir-harness/scripts/ingest-ig-artifacts.ts --out smart-trust --materialize-sidecars --sidecar-dir dak --check",
