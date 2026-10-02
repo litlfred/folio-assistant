@@ -813,9 +813,11 @@ export const RULES: Rule[] = [
       "scripts/library-refs.ts",             // who references a slug — the L1 property
       "scripts/library-graph.ts",            // library/ + uploads/ → the L1 corpus
       "scripts/gen-library-viz.ts",          // that corpus → projection + viewer
+      "scripts/lib/library-withheld-view.ts", // that viewer's withheld rows + banner (#1794), embedded verbatim
       "scripts/gen-uploads-viz.ts",          // the QUEUE half → a viewer only; the dataset stays library's (bean `flh4`)
       "scripts/voices-graph.ts",             // declared voices/ → voices + their citations
       "scripts/gen-voices-viz.ts",           // those voices → projection + viewer
+      "scripts/gen-document-kinds-viz.ts",   // every harness's document kinds → a viewer (stage D5, #1767)
       "scripts/gen-tools-viz.ts",            // the tools graph → projection + viewer, and its `satisfies` join against the skills corpus
       // The methodology graph → projection + viewer. CORE by the same two
       // counts as its siblings, and by a third: it renders the graph across
@@ -965,6 +967,7 @@ export const RULES: Rule[] = [
       // that happens to live there; the blanket `test/` rule is right for
       // everything else in that tree and wrong for these two.
       "schemas/theme.ts",
+      "schemas/document-kind.ts",            // the document-kind graph kind's schema, beside theme.ts (stage D5, #1767)
       "schemas/themes.ts",
       // Resolves a ThemeRef against its owner's declared themes (bean `v8n5`):
       // the same sticky-note theme layer as the two above, reached through a
@@ -1936,6 +1939,7 @@ export const RULES: Rule[] = [
       // `schemas/tabular-records.ts` — all core — and bought four
       // wrong-direction edges for the tidiness of one homogeneous list.
       "scripts/check-l1-complete.ts",       // is a `library/<bib-slug>/` entry complete
+      "scripts/check-library-qa.ts",        // is a `library/<bib-slug>/` entry any GOOD: title, metadata, blocks (#1794)
       "scripts/check-structure-accessor.ts", // `structure.json` is named only by its accessor (bean rkqp)
       "scripts/ingest-document.ts",         // `uploads/` → `library/<bib-slug>/`
       "scripts/l1-blocks.ts",               // staged entry → manifest + blocks/, the arm between the two

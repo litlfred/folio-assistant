@@ -239,6 +239,16 @@ export function plan(repoRoot: string, qaDirs: string | readonly string[], paths
     if (!dirs.some((d) => path.startsWith(d))) {
       return { path, action: "skip" as const, reason: `outside every declared \`qa\` graph (${dirs.join(", ")})` };
     }
+    // A qa DIRECTORY holds more than sidecars: `test/results/README.md` is a
+    // generated README that `merge-conflict-patterns.ts` resolves by its own
+    // pattern. Measured 2026-10-02 on #1811 and #1830: it was scanned here as
+    // a sidecar, refused as "not valid JSON", and that refusal aborted
+    // merge-base on a conflict another pattern had already promised to
+    // resolve. Only a JSON file can be a sidecar; anything else is skipped and
+    // left to the pattern that names it (or refused there, if none does).
+    if (!path.endsWith(".json")) {
+      return { path, action: "skip" as const, reason: "not a JSON sidecar — left to the merge pattern that names it" };
+    }
     const scan = scanConflict(repoRoot, path);
     if (scan.unreadable.length > 0) {
       return {

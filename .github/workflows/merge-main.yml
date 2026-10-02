@@ -159,12 +159,27 @@ jobs:
           fi
           jq -r '"ref=\(.head.ref)\nsha=\(.head.sha)"' <<<"$pr" >> "$GITHUB_OUTPUT"
 
+      # SHALLOW, THEN ONLY TWO HISTORIES — measured 2026-10-02: with
+      # `fetch-depth: 0` this checkout took 319-543 s of a ~20 min job, because
+      # it fetches every ref's history (2153 refs, 651 branches, and
+      # `gh-pages` with every preview). A merge needs exactly two: the PR
+      # branch and main. They are fetched blobless; git fetches the contents
+      # of the files the merge touches on demand.
       - uses: actions/checkout@v7
         with:
           ref: ${{ steps.pr.outputs.ref }}
-          fetch-depth: 0
+          fetch-depth: 1
           submodules: recursive
           token: ${{ secrets.MERGE_MAIN_TOKEN || secrets.GITHUB_TOKEN }}
+
+      - name: Fetch the history of the PR branch and main only
+        env:
+          REF: ${{ steps.pr.outputs.ref }}
+        run: |
+          set -euo pipefail
+          git fetch -q --unshallow --no-tags --filter=blob:none origin \
+            "+refs/heads/main:refs/remotes/origin/main" \
+            "+refs/heads/$REF:refs/remotes/origin/$REF"
 
       - uses: oven-sh/setup-bun@v2
         with:
