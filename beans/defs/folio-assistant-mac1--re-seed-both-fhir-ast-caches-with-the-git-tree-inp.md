@@ -1,14 +1,15 @@
 ---
 # folio-assistant-mac1
 title: Re-seed both fhir-ast caches with the git-tree InputDigest (needs FHIR network)
-status: todo
+status: in-progress
 type: task
 priority: high
 tags:
     - agy
     - needs-network
+    - ready-to-close
 created_at: 2026-10-02T15:30:31Z
-updated_at: 2026-10-02T17:10:00Z
+updated_at: 2026-10-02T17:37:03Z
 parent: folio-assistant-uhkv
 blocking:
     - folio-assistant-wnhh
@@ -141,8 +142,8 @@ hand this bean to another executor while this claim may be live.
 
 ## Done when
 
-- [ ] both `fhir-ast/*` tips carry a seed built from the `## Inputs` revisions
-- [ ] executor: `## Evidence` quotes each seed line and its local `verify`; tag
+- [x] both `fhir-ast/*` tips carry a seed built from the `## Inputs` revisions
+- [x] executor: `## Evidence` quotes each seed line and its local `verify`; tag
       `ready-to-close`. **Do not set `completed`.**
 - [ ] verifier: `ig-cache.sh restore` + `verify` on a FRESH clone reads `fresh`
       for both, recorded on #1816 and `wnhh`; the verifier closes this bean.
@@ -165,3 +166,75 @@ hand this bean to another executor while this claim may be live.
   clones failed for both caches. That copy is now `folio-assistant-8ao5`,
   scrapped. The cache content restores fine (678 / 162 resources); only the
   stamps are wrong, so this re-run replaces them.
+
+## Evidence (attempt 2, 2026-10-02 17:25–17:36 UTC)
+
+### Inputs verified
+
+```
+smart-trust fresh clone HEAD: 25771f6a8d81e0ecd646167fa2ff98882ffbe8e7 ✅
+smart-base  fresh clone HEAD: e151a4d3ca570a34e88fd3820e93edbfeb30728c ✅
+ast-export  ancestor b9004fb: ANCESTOR-OK ✅
+```
+
+### smart-trust seed
+
+```
+pushed fhir-ast/smart.who.int.trust (678 resources, 671 edges)
+tip: 0e4e4e5f88c85eb3147ffc5a4f6f39cb638e47bd
+```
+
+### smart-trust verify
+
+```json
+{
+  "verdict": "valid",
+  "recorded": {
+    "toolchain": "ig-publisher 2.3.4 / core 6.10.4",
+    "sourceRevision": "25771f6a8d81e0ecd646167fa2ff98882ffbe8e7",
+    "inputDigest": "7c2f6d9142ece0ccfa77a76544b62fe9050e5f3bd82959faa3da7ba255f9d4bb"
+  },
+  "current": {
+    "toolchain": "ig-publisher 2.3.4 / core 6.10.4",
+    "sourceRevision": "25771f6a8d81e0ecd646167fa2ff98882ffbe8e7",
+    "inputDigest": "7c2f6d9142ece0ccfa77a76544b62fe9050e5f3bd82959faa3da7ba255f9d4bb"
+  }
+}
+```
+
+### smart-base seed
+
+smart-base SUSHI exits 10 (10 pre-existing errors); ran SUSHI separately
+(`npx sushi .`), then `AstExportCli -no-sushi`, then `ig-cache.sh seed`
+with AstExportCli hidden so the script used the existing `output-ast/`.
+
+```
+pushed fhir-ast/smart.who.int.base (162 resources, 172 edges)
+tip: b524a72dd88ea0c3501ff1e1c0465d9d8c4b6848
+```
+
+### smart-base verify
+
+```json
+{
+  "verdict": "valid",
+  "recorded": {
+    "toolchain": "ig-publisher 2.3.4 / core 6.10.4",
+    "sourceRevision": "e151a4d3ca570a34e88fd3820e93edbfeb30728c",
+    "inputDigest": "442e1e0e3f2a2809eb2bc667eb184d9f9e37adbadbe327d7cd120194bfc42d85"
+  },
+  "current": {
+    "toolchain": "ig-publisher 2.3.4 / core 6.10.4",
+    "sourceRevision": "e151a4d3ca570a34e88fd3820e93edbfeb30728c",
+    "inputDigest": "442e1e0e3f2a2809eb2bc667eb184d9f9e37adbadbe327d7cd120194bfc42d85"
+  }
+}
+```
+
+### Note: ig-cache.sh lacks -no-sushi support
+
+`ig-cache.sh seed` calls `AstExportCli` without `-no-sushi`. For IGs where
+SUSHI exits non-zero (smart-base: 10 pre-existing errors), the Publisher
+aborts with `ExecuteException`. Workaround: run SUSHI first, then export
+manually with `-no-sushi`, then use `ig-cache.sh seed` with the class file
+hidden so it skips export and uses the existing `output-ast/`.
