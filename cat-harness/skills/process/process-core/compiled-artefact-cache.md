@@ -76,5 +76,35 @@ Preserving these intermediates is what makes subsequent incremental builds (such
 | Key Inputs | `toolchain` (Lean version), `sourceRevision` | `toolchain` (Publisher version), `sourceRevision`, `inputDigest` |
 | Storage Branch | `lake-cache/<package>-<toolchain>` | `fhir-ast/<ig-package-id>` |
 | Service Script | `lake-cache.sh` (9 verbs) | `ig-cache.sh` (7 verbs) |
-| Cone Engine | Lake's `.trace`-based dependency graph | `fsh-cone.ts` + `AstPlanCli` |
+| Cone Engine | Lake's `.trace`-based dependency graph | SUSHI's `fsh-index.json` (forward: file → resource) + `fsh-cone.ts` (reverse: who uses this file) + `AstPlanCli` |
 | Incremental | `lake build` (only stale modules) | `IncrementalBuildCli` (cone rebuild loop) |
+
+## The file-to-resource mapping comes from the toolchain, not from us
+
+**Do not reimplement what the compiler already knows.** SUSHI already writes
+`fsh-generated/data/fsh-index.json` on every run — the authoritative mapping
+from source `.fsh` file to output FHIR resource, with source locations. The AST
+exporter copies it into the AST directory; the incremental planner reads it
+there. No modification to SUSHI is needed.
+
+`fsh-cone` (`cat-harness/content/pipeline/fsh-cone.ts`) provides the **reverse**
+half — who depends on a file — so a changed RuleSet- or Alias-only file (which
+produces no resource itself) can be traced to the resources it affects. These two
+maps together give the planner a complete cone.
+
+Measured 2026-10-01 on smart-trust (678 resources):
+
+| plan input | available | result |
+|---|---|---|
+| No `fsh-index.json`, no `fsh-users` | old | `full` build always |
+| `fsh-index.json` only | new | `incremental`, 2 resources for a single-file change (**0.3% cone**) |
+| `fsh-index.json` + `fsh-users` | new | `incremental` with RuleSet/Alias propagation |
+
+### Timing (smart-trust, 678 resources, one CodeSystem changed)
+
+| build type | time | vs cold |
+|---|---|---|
+| Cold full build | 22:28 | 1× |
+| Warm full build (cached pkgs + tx) | 4:39 | 4.8× |
+| Successive warm (everything cached) | 3:16 | 6.9× |
+| **Projected cone rebuild (2 resources)** | **~15s** | **~90×** |
