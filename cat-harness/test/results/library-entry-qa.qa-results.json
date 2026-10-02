@@ -11,7 +11,7 @@
   "families": {
     "bibliographic-missing": {
       "summary": "No author/publisher, or no year, among the fields the entry itself declares (manifest meta, referenced.json identity, tabular.jsonld source), and no `meta.bibliographic_not_in_source` reason. `readableIn` lists where the value IS on disk but not carried — what a fix would read.",
-      "count": 58,
+      "count": 61,
       "entries": [
         {
           "entry": "agent-skill-best-practices---gemini-cli",
@@ -535,6 +535,24 @@
           "field": "manifest.jsonld meta; referenced.json identity; tabular.jsonld source"
         },
         {
+          "entry": "9789240101197-eng",
+          "instance": "smart-base",
+          "missing": [
+            "author/publisher",
+            "year"
+          ],
+          "field": "manifest.jsonld meta; referenced.json identity; tabular.jsonld source"
+        },
+        {
+          "entry": "9789240116191-eng",
+          "instance": "smart-base",
+          "missing": [
+            "author/publisher",
+            "year"
+          ],
+          "field": "manifest.jsonld meta; referenced.json identity; tabular.jsonld source"
+        },
+        {
           "entry": "9789240120747-eng",
           "instance": "smart-base",
           "missing": [
@@ -573,6 +591,21 @@
             {
               "field": "structure.json metadata.docinfo.Author",
               "value": "Garrett Mehl"
+            }
+          ]
+        },
+        {
+          "entry": "who-dpi-h-reference-architecture-draft-v1",
+          "instance": "smart-base",
+          "missing": [
+            "author/publisher",
+            "year"
+          ],
+          "field": "manifest.jsonld meta; referenced.json identity; tabular.jsonld source",
+          "readableIn": [
+            {
+              "field": "structure.json metadata.docinfo.Author",
+              "value": "Aguilera Millacura, Felipe (Consultant WDC)"
             }
           ]
         },
@@ -693,7 +726,7 @@
     },
     "summary-backlog": {
       "summary": "Prose blocks with no current agent summary, per entry. A count, advisory: the drain is slow on purpose.",
-      "count": 56,
+      "count": 59,
       "entries": [
         {
           "entry": "agent-skill-best-practices---gemini-cli",
@@ -984,6 +1017,18 @@
           "prose": 48
         },
         {
+          "entry": "9789240101197-eng",
+          "instance": "smart-base",
+          "backlog": 78,
+          "prose": 78
+        },
+        {
+          "entry": "9789240116191-eng",
+          "instance": "smart-base",
+          "backlog": 62,
+          "prose": 62
+        },
+        {
           "entry": "9789240120747-eng",
           "instance": "smart-base",
           "backlog": 72,
@@ -1006,6 +1051,12 @@
           "instance": "smart-base",
           "backlog": 2,
           "prose": 2
+        },
+        {
+          "entry": "who-dpi-h-reference-architecture-draft-v1",
+          "instance": "smart-base",
+          "backlog": 129,
+          "prose": 129
         },
         {
           "entry": "who-rhr-1806-eng",
@@ -1182,7 +1233,7 @@
     },
     "title-missing": {
       "summary": "The manifest's title is absent, the slug, or the source's file name — the entry has no title a reader can use. Read from manifest.jsonld `title`.",
-      "count": 26,
+      "count": 28,
       "entries": [
         {
           "entry": "agent-skill-best-practices---gemini-cli",
@@ -1339,6 +1390,20 @@
           "why": "equals the slug"
         },
         {
+          "entry": "9789240101197-eng",
+          "instance": "smart-base",
+          "title": "9789240101197-eng",
+          "field": "manifest.jsonld title",
+          "why": "equals the slug"
+        },
+        {
+          "entry": "9789240116191-eng",
+          "instance": "smart-base",
+          "title": "9789240116191-eng",
+          "field": "manifest.jsonld title",
+          "why": "equals the slug"
+        },
+        {
           "entry": "9789240120747-eng",
           "instance": "smart-base",
           "title": "9789240120747-eng",
@@ -1370,7 +1435,7 @@
     },
     "title-source-absent": {
       "summary": "The source carries no title of its own, so the agreement test in title-implausible was NOT made. Listed so that 'not checked' cannot read as 'agrees'. Only entries that passed title-missing are listed.",
-      "count": 11,
+      "count": 12,
       "entries": [
         {
           "entry": "arxiv-2504.07199v3",
@@ -1437,9 +1502,15 @@
           "instance": "smart-base",
           "title": "Digital transformation handbook for primary health care Optimizing person-centred point of service systems",
           "why": "the PDF Info dictionary carries no usable /Title and no catalogue record names this entry"
+        },
+        {
+          "entry": "who-dpi-h-reference-architecture-draft-v1",
+          "instance": "smart-base",
+          "title": "DRAFT V1.0",
+          "why": "the PDF Info dictionary carries no usable /Title and no catalogue record names this entry"
         }
       ]
     }
   },
-  "total": 168
+  "total": 177
 }
