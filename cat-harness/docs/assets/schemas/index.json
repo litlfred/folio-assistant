@@ -10698,6 +10698,12 @@
           "type": "RendererContribution[]",
           "optional": true,
           "array": true
+        },
+        {
+          "name": "pipelinePlugins",
+          "type": "PipelinePluginContribution[]",
+          "optional": true,
+          "array": true
         }
       ],
       "extendsNames": [],
@@ -10705,6 +10711,7 @@
       "refs": [
         "cat-harness/schemas/contributions.ts#AdapterContribution",
         "cat-harness/schemas/contributions.ts#BlockKindContribution",
+        "cat-harness/schemas/contributions.ts#PipelinePluginContribution",
         "cat-harness/schemas/contributions.ts#QaCheckerContribution",
         "cat-harness/schemas/contributions.ts#RendererContribution",
         "cat-harness/schemas/contributions.ts#ToolContribution"
@@ -10738,6 +10745,35 @@
       "unresolved": [],
       "external": [],
       "exported": false
+    },
+    {
+      "id": "cat-harness/schemas/contributions.ts#PipelinePluginContribution",
+      "name": "PipelinePluginContribution",
+      "module": "cat-harness/schemas/contributions.ts",
+      "kind": "interface",
+      "doc": "An implementation a dependency plugs into a named slot of the GENERIC",
+      "fields": [
+        {
+          "name": "kind",
+          "type": "string",
+          "optional": false,
+          "array": false,
+          "doc": "The slot this fills, e.g. `\"lean-lexer\"`. One contributor per kind."
+        },
+        {
+          "name": "implementation",
+          "type": "unknown",
+          "optional": false,
+          "array": false,
+          "doc": "What fills it. Shape is fixed per kind by `content/pipeline/pipeline-plugins.ts`."
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
     },
     {
       "id": "cat-harness/schemas/contributions.ts#QaCheckerContribution",
@@ -45898,6 +45934,14 @@
       "from": "cat-harness/schemas/contributions.ts#FolioContribution",
       "to": "cat-harness/schemas/contributions.ts#BlockKindContribution",
       "via": "blockKinds",
+      "kind": "field",
+      "optional": true,
+      "array": true
+    },
+    {
+      "from": "cat-harness/schemas/contributions.ts#FolioContribution",
+      "to": "cat-harness/schemas/contributions.ts#PipelinePluginContribution",
+      "via": "pipelinePlugins",
       "kind": "field",
       "optional": true,
       "array": true
