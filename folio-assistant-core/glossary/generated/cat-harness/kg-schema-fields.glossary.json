@@ -8274,6 +8274,13 @@
       "status": "candidate"
     },
     {
+      "id": "sticky-contribution.declaredcontribution.alsowritten",
+      "prefLabel": "DeclaredContribution.alsoWritten",
+      "definition": "The declaring instance's `alsoWritten`, for `bodyFrom: \"summary\"`.",
+      "source": "cat-harness/schemas/sticky-contribution.ts#DeclaredContribution.alsoWritten",
+      "status": "candidate"
+    },
+    {
       "id": "sticky-contribution.declaredcontribution.declaredby",
       "prefLabel": "DeclaredContribution.declaredBy",
       "definition": "The declaring instance's `name`.",
@@ -8292,6 +8299,13 @@
       "prefLabel": "DeclaredContribution.description",
       "definition": "The declaring instance's `description`, for `bodyFrom: \"description\"`.",
       "source": "cat-harness/schemas/sticky-contribution.ts#DeclaredContribution.description",
+      "status": "candidate"
+    },
+    {
+      "id": "sticky-contribution.declaredcontribution.summary",
+      "prefLabel": "DeclaredContribution.summary",
+      "definition": "The declaring instance's `summary`, for `bodyFrom: \"summary\"`.",
+      "source": "cat-harness/schemas/sticky-contribution.ts#DeclaredContribution.summary",
       "status": "candidate"
     },
     {
@@ -9272,6 +9286,13 @@
       "prefLabel": "ToolMaintainsSchema.source",
       "definition": "Repo-relative module that defines it, e.g. `schemas/tool.ts`.",
       "source": "cat-harness/schemas/tool.ts#ToolMaintainsSchema.source",
+      "status": "candidate"
+    },
+    {
+      "id": "tool.tooloutputschema.render",
+      "prefLabel": "ToolOutputSchema.render",
+      "definition": "How a renderer may place this output in a page. Absent is `text`. See {@link RENDER_AS}.",
+      "source": "cat-harness/schemas/tool.ts#ToolOutputSchema.render",
       "status": "candidate"
     },
     {

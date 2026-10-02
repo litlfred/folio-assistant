@@ -64,6 +64,42 @@ function syncSubmodules(root: string): void {
   spawnSync("git", ["-C", root, "submodule", "update", "--init", "--recursive"], { stdio: "inherit" });
 }
 
+/**
+ * What a take-base resolution does with one conflicted path, from the stages
+ * git holds for it (`ls-files -u`: 1 base, 2 ours, 3 theirs).
+ *
+ * Measured 2026-10-02 on #1805: main DELETED generated files (docs-auto pages
+ * under a folded instance) that the branch had modified. There is no stage 3,
+ * so `checkout --theirs` threw "does not have their version" and the run ended
+ * in "Error". Taking the base's side of a deletion IS the deletion: generated
+ * output the base removed stays removed, and regen recreates anything still
+ * produced. The other direction (deleted on the branch, changed on the base)
+ * has stage 3 and takes it, as before.
+ */
+export function takeBaseAction(stages: ReadonlySet<number>): "theirs" | "delete" {
+  return stages.has(3) ? "theirs" : "delete";
+}
+
+/** The stages git holds for an unmerged path. */
+export function unmergedStages(root: string, path: string): Set<number> {
+  const out = new Set<number>();
+  for (const line of git(root, "ls-files", "-u", "--", path).split("\n")) {
+    const stage = Number(line.split(/\s+/)[2]);
+    if (stage) out.add(stage);
+  }
+  return out;
+}
+
+/** Take the base's side of `path`, deletion included; stages the result. */
+export function takeBase(root: string, path: string): void {
+  if (takeBaseAction(unmergedStages(root, path)) === "delete") {
+    git(root, "rm", "-q", "--", path);
+  } else {
+    git(root, "checkout", "--theirs", "--", path);
+    git(root, "add", "--", path);
+  }
+}
+
 function describe(c: Classified): string {
   return c.pattern ? `${c.path}  [${c.pattern.id}: ${c.strategy}]` : `${c.path}  [no declared pattern]`;
 }
@@ -150,8 +186,12 @@ if (import.meta.main) {
     if (qa.status !== 0 || qaLeft.length) abort(`qa:resolve-conflicts left ${qaLeft.length} sidecar(s) conflicted`);
   }
   for (const c of p.resolvable) {
-    if (c.strategy === "take-base") {
-      git(root, "checkout", "--theirs", "--", c.path);
+    // A README one side deleted has no hunks to resolve: it is a take-base
+    // case whichever pattern named it.
+    const oneSided = c.strategy === "generated-regions" && unmergedStages(root, c.path).size < 3;
+    if (c.strategy === "take-base" || oneSided) {
+      takeBase(root, c.path);
+      continue;
     } else if (c.strategy === "generated-regions") {
       const text = readFileSync(join(root, c.path), "utf-8");
       const resolved = resolveGeneratedRegions(text);

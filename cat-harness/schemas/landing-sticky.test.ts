@@ -29,6 +29,7 @@ import {
   StickyContributionSchema,
   StickyIdConflictError,
   composeContributions,
+  readerText,
   type DeclaredContribution,
 } from "./sticky-contribution.js";
 import { CatHarnessDeclarationSchema, siteDirFor, declarationPathIn } from "./cat-harness.js";
@@ -55,6 +56,8 @@ function contributionsOf(rel: string): DeclaredContribution[] {
     declaredBy: d.name,
     declaredIn: `${rel}/harness.json`.replace(/^\//, ""),
     ...(d.description === undefined ? {} : { description: d.description }),
+    ...(d.summary === undefined ? {} : { summary: d.summary }),
+    ...(d.alsoWritten === undefined ? {} : { alsoWritten: d.alsoWritten }),
   }));
 }
 
@@ -339,7 +342,7 @@ describe("`body` and `bodyFrom` are exclusive — both is a contradiction, neith
   });
 });
 
-describe("`bodyFrom: description` reads the DECLARING layer's description", () => {
+describe("`bodyFrom` reads the DECLARING layer's fields", () => {
   test("bootstrap's card carries bootstrap's sentence, not this instance's", () => {
     // The defect that would make the seam pointless: a board of one sentence
     // repeated.
@@ -352,18 +355,23 @@ describe("`bodyFrom: description` reads the DECLARING layer's description", () =
     expect(boot.comment.startsWith(decl("cat-harness").description!)).toBe(false);
   });
 
-  test("this instance's card carries its own description, markdown and verbatim", () => {
+  test("this instance's card carries its summary and its spellings, the landing's text", () => {
     const card = sticky(CAT, "cat-harness");
+    const d = decl("cat-harness");
+    // The owner's ruling on bean `ob3m` finding 3 (2026-10-01): "Stickies show
+    // the same text as the landing page" — the declaration's `summary`, then
+    // `alsoWritten` under "Also written". Read from the declaration rather
+    // than copied, so it cannot drift from the one place it is written.
+    expect(card.comment.startsWith(readerText(d)!)).toBe(true);
+    expect(card.comment.startsWith(d.summary!)).toBe(true);
     // THE ACRONYM CHAIN, and the owner's instruction was explicit: "dont lose
-    // acronym definitions". It is read from the declaration rather than copied,
-    // so it cannot drift from the one place it is written.
-    expect(card.comment.startsWith(decl("cat-harness").description!)).toBe(true);
+    // acronym definitions". It is the Also written list now.
+    expect(card.comment).toContain("Also written:");
     for (const form of ["caaat-harness", "ca&at-harness", "c@t-harness"]) {
-      expect(card.comment).toContain(form);
+      expect(card.comment).toContain(`\`${form}\``);
     }
-    // Markdown, not an image: the derivation chain is several lines, and
-    // rendering it as real text is what keeps it selectable and readable by a
-    // screen reader.
+    // Markdown, not an image, so it stays selectable and readable by a screen
+    // reader.
     expect(card.comment).toContain("\n");
   });
 
@@ -597,9 +605,26 @@ describe("it is recognised by its declared tag, not by its shape", () => {
 
 describe("the summary is derived, not a second field to keep in step", () => {
   test("it is the body's first non-blank line when none is declared", () => {
-    const landing = sticky(CAT, "cat-harness");
-    const first = landing.comment.split("\n").find((l) => l.trim().length > 0)!.trim();
-    expect(landing.summary).toBe(first);
+    // A contribution with NO summary of its own. This used the cat-harness card,
+    // which declares one, and passed only while that summary happened to equal
+    // the description's first line.
+    const landing = stickyFromContribution(
+      {
+        contribution: StickyContributionSchema.parse({
+          id: "x",
+          order: 1,
+          theme: { themeId: "pale-sage" },
+          bodyFrom: "summary",
+        }),
+        declaredBy: "some-instance",
+        declaredIn: "some-instance/harness.json",
+        summary: "First line.",
+        alsoWritten: ["s0me-instance"],
+      },
+      { createdAt: NOW },
+    );
+    expect(landing.summary).toBe("First line.");
+    expect(landing.comment).toBe("First line.\n\nAlso written: `s0me-instance`");
   });
 
   test("a declared summary wins", () => {
