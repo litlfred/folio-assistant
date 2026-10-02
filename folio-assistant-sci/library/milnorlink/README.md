@@ -1,5 +1,5 @@
 <!-- kg:subgraph:begin -->
-# milnorlink
+# Link Groups
 
 ingested source material — attributed to its document, not folio content
 

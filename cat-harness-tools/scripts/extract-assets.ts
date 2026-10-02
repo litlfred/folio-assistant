@@ -7,8 +7,8 @@
  * KG. don't extract contents unless explict ask by user."*
  *
  * Usage:
- *   bun run folio-assistant-core/scripts/extract-assets.ts <container> [--out <file>]
- *   bun run folio-assistant-core/scripts/extract-assets.ts <container> --extract <path> --because "<why>"
+ *   bun run cat-harness-tools/scripts/extract-assets.ts <container> [--out <file>]
+ *   bun run cat-harness-tools/scripts/extract-assets.ts <container> --extract <path> --because "<why>"
  *
  * @module scripts/extract-assets
  */
@@ -21,9 +21,15 @@ import {
   totalBytes,
   type ExtractedAsset,
   type Extraction,
-} from "../schemas/extraction.js";
+} from "../../cat-harness/schemas/extraction.js";
+import { REPO_ROOT } from "./lib/roots.ts";
 
-const REPO = resolve(import.meta.dir, "../..");
+// What recorded paths are relative to. Before bean `tlat` moved this file down
+// from `folio-assistant-core/scripts/` it was `import.meta.dir/../..`, which
+// happens to be the same directory from here — but only inside this checkout.
+// Standalone, this layer has no repository root, and the container being read
+// is the caller's, so the working directory is the honest base.
+const REPO = REPO_ROOT ?? process.cwd();
 
 /**
  * Media type from the extension, or ABSENT.

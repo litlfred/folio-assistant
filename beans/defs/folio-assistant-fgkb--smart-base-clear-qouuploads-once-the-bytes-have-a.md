@@ -1,11 +1,11 @@
 ---
 # folio-assistant-fgkb
 title: 'smart-base: clear qou/uploads once the bytes have a home'
-status: todo
+status: in-progress
 type: task
 priority: normal
 created_at: 2026-09-22T08:35:28Z
-updated_at: 2026-09-22T11:55:45Z
+updated_at: 2026-10-02T12:43:16Z
 parent: folio-assistant-2yyh
 ---
 
@@ -97,3 +97,6 @@ rather than as free text.
 
 *Recorded by stream 3/3 of the #956 consolidation — session_013vZiHGPug7PuHoMxRS82vw.*
 
+## Owner ruling 2026-10-02: "Put in fsh-guts"
+
+Applied to all eight, the home-page print included: relocation is reversible, which is why fsh-guts exists. litlfred/qou#7494 (draft) moves them from uploads/ to fsh-guts/uploads/, each with a folio-fsh-guts/v1 .md sidecar (kind: source, movedFrom, movedOn, bean). sha256 re-run before the move: all seven WHO PDFs equal the source.sha256 recorded by their smart-base/library entries. Merging in qou needs /prepare-merge and the author's 'merge it'. Close this bean when #7494 merges.
