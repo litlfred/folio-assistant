@@ -4,6 +4,7 @@
  * cache, one line each, tab-separated: `<instance-dir> <clone-url> <label> <chrome-owner|->`.
  *
  * @module fhir-harness/scripts/stage-ast-sites
+ * @covers fhir-artifact-index
  *
  * The staging workflow names no IG (see its "Build each IG's own site" step):
  * which IGs are rendered is DATA. Here the data is two facts the repository

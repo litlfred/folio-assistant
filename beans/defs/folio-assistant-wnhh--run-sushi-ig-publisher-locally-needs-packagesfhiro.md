@@ -5,7 +5,7 @@ status: todo
 type: task
 priority: normal
 created_at: 2026-10-01T17:11:25Z
-updated_at: 2026-10-01T17:53:00Z
+updated_at: 2026-10-02T12:30:00Z
 parent: folio-assistant-uhkv
 ---
 
@@ -62,7 +62,59 @@ is a cache, never an authority. The branch carries:
 - [x] Skills/tools/processes updated — `compiled-artefact-cache.md` (generalizable pattern), `ig-ast-delta.md` (fsh-index.json two-map architecture documented), `ig-cache` tool registered with `IgCacheAction` schema, all generators re-run.
 - [x] `fsh-index.json` discovery: SUSHI already writes the authoritative file→resource forward map at `fsh-generated/data/fsh-index.json`. Zero SUSHI modifications needed. AST exporter path fixed (commit `2c49ed77` on `litlfred/fhir-ig-publisher@claude/ast-export`). Incremental planner produces a **0.3% cone** (2/678 resources) in **0.2s** for a single-file change.
 
+## 2026-10-01: the fhir-ast cache tried from the jut3 session (no build access) — SUPERSEDED
 
-## Claim released 2026-09-29
+> **Superseded 2026-10-01 evening:** the AST was seeded at
+> `litlfred/smart-trust@fhir-ast/smart.who.int.trust` (the IG's own repository,
+> not folio-assistant — `ig-cache.sh` reads the IG checkout's origin). The
+> format note below still holds. Kept, not deleted, so the record of what a
+> no-build session can do survives (merged from PR #1766 on 2026-10-02 so both
+> branches carry ONE version of this bean).
 
-Released `in-progress` → `todo` on the owner's instruction (review session https://claude.ai/code/session_014Qj8wncQhqV52QGN1yZDnj). No git change to this bean since before 2026-09-26, no holder recorded, and no open branch touches it; the sessions that held theme D (content folios, SMART/FHIR stack, ingest) work stopped on the 2026-09-25 weekly usage limit. Nothing in the body was changed: re-claim with `bun run beans:claim <id>`.
+`fhir-harness/scripts/ig-cache.sh`, from `agy/wnhh-sushi-publisher-local` at
+`e0e4dc2d`, was run against `/home/user/smart-trust` from a container with
+neither `packages.fhir.org` nor `tx.fhir.org`:
+- `status`: cache ABSENT.
+- `restore`: *"cache branch 'fhir-ast/smart.who.int.trust' not found on
+  origin"*. **The AST that branch dumped (678 resources) was never seeded:**
+  no `fhir-ast/*` branch exists on `origin`. Running
+  `ig-cache.sh seed --push` from the session that holds the dump is the step
+  that makes it reusable by every other session.
+- `doctor`: SUSHI v3.20.1 is present; the Publisher jar is missing from
+  `~/.fhir`; `packages.fhir.org` and `tx.fhir.org` are unreachable. A session
+  like this one can **restore** an AST but cannot **build** one.
+
+Format, as the consumer reads it (`fhir-harness/scripts/ig-ast.ts`): the AST
+is **JSON**, not XML. It uses three families, `ig-ast/v1` (one entry per
+resource, carrying the resource's FHIR JSON), `ig-ast-dependencies/v1` and
+`ig-ast-plan/v1`. They are declared only as TypeScript interfaces: no Zod,
+no JSON Schema, no JSON-LD context.
+
+## 2026-10-02: restore verified from a fresh clone; full AST pipeline; smart-base
+
+Session https://claude.ai/code/session_01PricYFhYhFA5DuMJaWo3CE, on PR #1816.
+
+- **Restore works from any directory**, verified on fresh clones:
+  smart-trust@`25771f6a` → 678 resources + txcache; smart-base → 162
+  resources (its branch `fhir-ast/smart.who.int.base` was seeded too).
+  Fixed on the way: `ig-cache.sh` ran git in the CALLER's repository, so a
+  restore started from folio-assistant fetched folio-assistant's origin and
+  said "not found"; smart-base's CRLF `sushi-config.yaml` made the package id
+  end in `\r`; a failed fetch now retries once and shows git's own error.
+- **`verify` says `stale-inputs` on both**, with source revision and toolchain
+  equal: the recorded `inputDigest` hashed gitignored files on the seeding
+  machine (smart-trust: `b2bbbfc4…` recorded, `c1023d82…` on a clean clone).
+  The TypeScript digest now hashes what git counts as the tree; **the Java
+  `InputDigest` in the AST fork must apply the same filter, then re-seed.**
+- **Full pipeline** (`fhir-harness/scripts/ig-ast-site.sh`, `smart-trust:ast-site`):
+  restore → validity → artefact index (`ast-to-artifact-index.ts`) → parity
+  against the published-output index → pages by the SAME renderer
+  (`gen-ig-pages.ts --index --out`). ~3 s after the clone.
+  smart-trust parity: 673/674 identical or equivalent; 4 artefacts only in the
+  AST (the Ireland participant, newer than the 2026-09-21 published read);
+  456 fields only the AST carries; 1 real text change (`TEST CITY` vs
+  `test city`). smart-base: 109 matching; the rest its own "Conformance"
+  grouping and source drift from the published 0.3.0.
+- **Web view:** each PR preview renders every IG whose repository has a
+  `fhir-ast/*` branch at `/<instance>/ast/`, with `parity.json` and
+  `validity.json` beside it.
