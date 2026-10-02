@@ -1,7 +1,7 @@
 ---
 # folio-assistant-tlat
 title: 'Placement PR5: materialization state vocabulary and the extraction contract move down to cat-harness'
-status: in-progress
+status: completed
 type: task
 priority: normal
 created_at: 2026-10-01T06:58:01Z
@@ -16,7 +16,7 @@ PR5, ruling 2 (2026-09-30): A — only the materialization **state vocabulary** 
 Under D1 (2026-10-01) the moved code lands in cat-harness-tools if stage 1a has run (it has, by the D4 order) — so "down to cat-harness" means the harness's code half.
 
 ## Done when
-- [ ] `yj6r`'s instance-boundary escape count drops by the materialization and extraction clusters (3), measured with `yj6r`'s own command — **NOT tickable as written: it reads 0 before AND after.** See Summary.
+- [ ] `yj6r`'s instance-boundary escape count drops by the materialization and extraction clusters (3), measured with `yj6r`'s own command — **left unticked: it reads 0 before AND 0 after.** These clusters' consumers had already been moved UP by `yj6r`'s tranches (2026-09-30), and `ybp4` then took the count to 0. The INTENT — no harness → core escape from the materialization or extraction clusters — is met. The literal "drops by 3" cannot be shown.
 - [x] no new cat-harness → core import (`check:import-direction --all` green)
 - [x] the harness resolved alone type-checks `asset-extraction`'s tool
 
@@ -65,3 +65,22 @@ half the ruling keeps in core), `sample-import-check.ts` (which imports
 `sample-import` in cat-harness / cat-harness-tools would create four
 tools -> core imports, or drag content schemas down (`yj6r`'s "cheap fix is
 WRONG"). Left `in-progress` for that one item.
+
+## Summary of Changes — owner ruling on `sample-import-run.ts`, 2026-10-02
+
+The owner, 2026-10-02, answering the numbered question in PR #1867: **"1"** —
+*leave it in core*: `sample-import-run.ts` stays in `folio-assistant-core/scripts/`.
+Core driving a cat-harness process is a DOWNWARD reference, which is legal; the
+ruling's "moves beside `sample-import`" is discharged by that ruling rather
+than by a move, because the move would have created four tools → core imports.
+
+With that, every part of PR5 is either landed or ruled on:
+
+- landed: the state vocabulary + fixity (`cat-harness/schemas/materialization-state.ts`),
+  `extraction.ts` (`cat-harness/schemas/`), `extract-assets.ts` (`cat-harness-tools/scripts/`)
+- ruled: `sample-import-run.ts` stays in core (owner, "1", 2026-10-02)
+- Done-when 2 and 3 ticked; Done-when 1 unticked with its reason above (0 → 0;
+  intent met, literal not showable)
+
+Closed `completed` on branch `claude/placement-pr5-tlat`, PR #1867. Issue #1866
+is left open for the owner.
