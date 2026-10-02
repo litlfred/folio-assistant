@@ -12,5 +12,5 @@ Part of [folio-assistant-core](../README.md) 0.1.0, declared as `core-skills`, h
 | [`content/`](content/) | 8 files | |
 | [`library/`](library/) | 2 files | |
 | [`skill-definitions/`](skill-definitions/) | 12 files | |
-| [`voices/`](voices/README.md) | 38 files | |
+| [`voices/`](voices/README.md) | 39 files | |
 <!-- kg:subgraph:end -->

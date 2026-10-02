@@ -24,9 +24,9 @@ The method is [Latent Semantic Indexing](../methodologies/) (node `lsi`), with
 how to build, query and audit an index is the skill `lsi-indexing`.
 
 <div class="lv-grid">
-<div class="lv-stat"><b>5</b><span>committed indexes</span></div>
-<div class="lv-stat"><b>1668</b><span>units indexed</span></div>
-<div class="lv-stat"><b>6</b><span>graphs that need an index and lack a fresh one</span></div>
+<div class="lv-stat"><b>4</b><span>committed indexes</span></div>
+<div class="lv-stat"><b>1966</b><span>units indexed</span></div>
+<div class="lv-stat"><b>5</b><span>graphs that need an index and lack a fresh one</span></div>
 </div>
 
 ## Which graphs need an index
@@ -37,7 +37,6 @@ the same as fine. The same verdict is `kg:audit`'s `tool-downstream-fresh` for t
 
 | graph | verdict | detail |
 |---|---|---|
-| `agent-skills/library` | <span class="lv-fail">fail</span> | no successful run recorded — re-run `bun run lsi index --instance agent-skills --graph library` |
 | `bootstrap-tools/bootstrap-tools-skills` | <span class="lv-na">n/a</span> | below the need-an-index threshold — not judged |
 | `bootstrap/skills` | <span class="lv-na">n/a</span> | below the need-an-index threshold — not judged |
 | `cat-harness/docs` | <span class="lv-fail">fail</span> | needs an LSI index and has none — run `bun run lsi index --instance cat-harness --graph docs` |
@@ -58,7 +57,6 @@ the same as fine. The same verdict is `kg:audit`'s `tool-downstream-fresh` for t
 | `folio-assistant/beans` | <span class="lv-na">n/a</span> | state graph — indexed on demand, never committed |
 | `folio-assistant/memory` | <span class="lv-na">n/a</span> | below the need-an-index threshold — not judged |
 | `folio-assistant/root-docs` | <span class="lv-na">n/a</span> | below the need-an-index threshold — not judged |
-| `large-datasets/large-datasets-skills` | <span class="lv-na">n/a</span> | below the need-an-index threshold — not judged |
 | `smart-base/library` | <span class="lv-fail">fail</span> | no successful run recorded — re-run `bun run lsi index --instance smart-base --graph library` |
 | `smart-base/methodologies` | <span class="lv-na">n/a</span> | below the need-an-index threshold — not judged |
 | `smart-base/smart-base-docs` | <span class="lv-fail">fail</span> | needs an LSI index and has none — run `bun run lsi index --instance smart-base --graph smart-base-docs` |
@@ -69,30 +67,9 @@ the same as fine. The same verdict is `kg:audit`'s `tool-downstream-fresh` for t
 | `who-iris/who-iris-skills` | <span class="lv-na">n/a</span> | below the need-an-index threshold — not judged |
 | `who-style-guide/glossary` | <span class="lv-na">n/a</span> | below the need-an-index threshold — not judged |
 
-## agent-skills / library
-
-**174** units · **2605** terms · k = **100** · retains **88.5 %** of the weighted matrix · weighting `log-entropy` · sidecar `cat-harness/test/results/lsi/agent-skills/library.lsi.json`
-
-> Dimension 1 has **no negative pole**: it most likely measures unit length and term frequency (a margin), not a theme. Read the themes from dimension 2 on.
-
-Each dimension is a **contrast** between two poles, shown by their highest-loading terms. It is not named here: naming it is a reader's act.
-
-| dim | σ | one pole | the other pole |
-|---|---|---|---|
-| 1 | 18.54 | gemini, task, office, science, model, industrial, agent, openhands | *(none)* |
-| 2 | 15.41 | office, industrial, science, finance, media, gpt, opus, deepseek | defects, defect, safety, routing, body, detected, checks, description |
-| 3 | 13.21 | arxiv, wang, zhou, language, yang, yao, jiang, liu | defects, defect, routing, office, industrial, safety, detected, body |
-| 4 | 12.16 | openhands, gemini, gpt, configurations, opus, flash, condition, pro | defects, defect, arxiv, safety, liu, routing, coding, zhang |
-| 5 | 11.34 | openhands, defects, gemini, gpt, flash, pro, opus, defect | reasoning, tool, reference, docs, cookie, file, multimodal, coding |
-| 6 | 10.31 | oracle, human, fraction, verifier, augmentation, pytest, passed, submissions | claude, openhands, opus, gpt, flash, pro, deepseek, gemini |
-| 7 | 9.45 | behaviour, hook, mechanisms, interface, call, external, advisory, ordinary | cookie, claude, services, docs, platform, analyze, usage, policy |
-| 8 | 8.90 | wang, xiangyi, tier, university, spec, retrieved, well, checks | reasoning, yao, generated, spec-aware, providing, framework, chat, hook |
-
-**Findings** — 0 narrow dimension(s), 0 near-duplicate pair(s).
-
 ## cat-harness / library
 
-**350** units · **5861** terms · k = **100** · retains **66.5 %** of the weighted matrix · weighting `log-entropy` · sidecar `cat-harness/test/results/lsi/cat-harness/library.lsi.json`
+**816** units · **8465** terms · k = **100** · retains **53.9 %** of the weighted matrix · weighting `log-entropy` · sidecar `cat-harness/test/results/lsi/cat-harness/library.lsi.json`
 
 > Dimension 1 has **no negative pole**: it most likely measures unit length and term frequency (a margin), not a theme. Read the themes from dimension 2 on.
 
@@ -100,29 +77,39 @@ Each dimension is a **contrast** between two poles, shown by their highest-loadi
 
 | dim | σ | one pole | the other pole |
 |---|---|---|---|
-| 1 | 27.14 | arxiv, conference, proceedings, models, model, subject, systems, data | *(none)* |
-| 2 | 19.08 | arxiv, proceedings, preprint, conference, wang, chen, zhang, yang | matrix, analysis, swot, algorithm, error, approximation, terms, singular |
-| 3 | 17.48 | lce, streaming, lightgcn, incremental, slim, recommendation, items, yelp | subject, records, subjects, annif, qualitative, team, gnd, all-subjects |
-| 4 | 17.19 | swot, organization, strategic, management, business, design, opportunities, threats | recall, embeddings, lce, subject, streaming, terms, subjects, all-subjects |
-| 5 | 16.34 | swot, organization, strategic, lce, streaming, threats, lightgcn, weaknesses | wireframes, wireframe, layout, matrix, approximation, algorithm, design, icon |
-| 6 | 15.73 | wireframes, wireframe, design, mid-fidelity, wiregen, layout, prompt, llms | matrix, approximation, algorithms, arxiv, randomized, algorithm, random, international |
-| 7 | 14.35 | agent, headings, heading, lcgft, workflow, subdivision, workflows, baseline | lsa, documents, swot, similarity, term, document, terms, retrieval |
-| 8 | 13.90 | documents, lsa, terms, document, retrieval, dimensions, query, term | algorithm, random, randomized, approximation, algorithms, wireframes, error, gaussian |
+| 1 | 37.43 | prov, entity, prefix, activity, agent, xsd, value, model | *(none)* |
+| 2 | 30.57 | prov, entity, activity, prefix, xsd, rdfs, qualified, datetime | algorithm, models, reward, learning, arm, model, matrix, best |
+| 3 | 23.81 | json-ld, node, context, iri, graph, term, language, type | arm, reward, instances, algorithm, bound, agent, phd, bandits |
+| 4 | 23.37 | conference, proceedings, arxiv, international, preprint, zhang, chen, yang | json-ld, value, node, definition, iri, arm, term, context |
+| 5 | 19.82 | matrix, error, performance, approximation, matrices, random, method, randomized | json-ld, avrim, iri, node, phd, context, pages, expanded |
+| 6 | 18.60 | matrix, analysis, swot, organization, strategic, management, international, business | subject, records, subjects, annif, gnd, all-subjects, tib, multilingual |
+| 7 | 18.41 | swot, organization, strategic, threats, analysis, opportunities, weaknesses, strengths | algorithm, arm, lce, proceedings, conference, streaming, lightgcn, reward |
+| 8 | 17.56 | lce, streaming, lightgcn, incremental, slim, items, yelp, model | algorithm, pages, algorithms, approximation, matrix, randomized, bound, arm |
 
-**Findings** — 0 narrow dimension(s), 6 near-duplicate pair(s).
+**Findings** — 0 narrow dimension(s), 162 near-duplicate pair(s).
 
 *Near-duplicates* (cosine ≥ 0.95) — similar is not duplicate; read both:
 
-- 0.974 — `cat-harness/library/landauer-foltz-laham-1998-intro-lsa/sections/page-001.md` ~ `cat-harness/library/landauer-foltz-laham-1998-intro-lsa/sections/page-041.md`
-- 0.963 — `cat-harness/library/arxiv-0909.4061v2/sections/page-032.md` ~ `cat-harness/library/arxiv-0909.4061v2/sections/page-033.md`
-- 0.970 — `cat-harness/library/arxiv-0909.4061v2/sections/page-048.md` ~ `cat-harness/library/arxiv-0909.4061v2/sections/page-049.md`
-- 0.956 — `cat-harness/library/qi-hessen-vanderheijden-2023-ca-vs-lsa/sections/sec-014-411-map-as-a-function-of-the-number-of-dimension.md` ~ `cat-harness/library/qi-hessen-vanderheijden-2023-ca-vs-lsa/sections/sec-017-421-weighting-the-elements-of-the-raw-document-t.md`
-- 0.971 — `cat-harness/library/arxiv-2607.14456v1/sections/page-012.md` ~ `cat-harness/library/arxiv-2607.14456v1/sections/page-022.md`
-- 0.951 — `cat-harness/library/arxiv-2607.14456v1/sections/page-015.md` ~ `cat-harness/library/arxiv-2607.14456v1/sections/page-022.md`
+- 0.963 — `cat-harness/library/w3c-2024-prov-jsonld/sections/page-003.md` ~ `cat-harness/library/w3c-2024-prov-jsonld/sections/page-036.md`
+- 0.957 — `cat-harness/library/w3c-2024-prov-jsonld/sections/page-003.md` ~ `cat-harness/library/w3c-2024-prov-jsonld/sections/page-063.md`
+- 0.954 — `cat-harness/library/w3c-2024-prov-jsonld/sections/page-003.md` ~ `cat-harness/library/w3c-2024-prov-jsonld/sections/page-064.md`
+- 0.971 — `cat-harness/library/w3c-2024-prov-jsonld/sections/page-012.md` ~ `cat-harness/library/w3c-2024-prov-jsonld/sections/page-021.md`
+- 0.971 — `cat-harness/library/w3c-2024-prov-jsonld/sections/page-012.md` ~ `cat-harness/library/w3c-2024-prov-jsonld/sections/page-019.md`
+- 0.970 — `cat-harness/library/w3c-2024-prov-jsonld/sections/page-012.md` ~ `cat-harness/library/w3c-2024-prov-jsonld/sections/page-020.md`
+- 0.994 — `cat-harness/library/w3c-2024-prov-jsonld/sections/page-013.md` ~ `cat-harness/library/w3c-2024-prov-jsonld/sections/page-021.md`
+- 0.993 — `cat-harness/library/w3c-2024-prov-jsonld/sections/page-013.md` ~ `cat-harness/library/w3c-2024-prov-jsonld/sections/page-019.md`
+- 0.993 — `cat-harness/library/w3c-2024-prov-jsonld/sections/page-013.md` ~ `cat-harness/library/w3c-2024-prov-jsonld/sections/page-020.md`
+- 0.989 — `cat-harness/library/w3c-2024-prov-jsonld/sections/page-014.md` ~ `cat-harness/library/w3c-2024-prov-jsonld/sections/page-018.md`
+- 0.985 — `cat-harness/library/w3c-2024-prov-jsonld/sections/page-014.md` ~ `cat-harness/library/w3c-2024-prov-jsonld/sections/page-016.md`
+- 0.984 — `cat-harness/library/w3c-2024-prov-jsonld/sections/page-014.md` ~ `cat-harness/library/w3c-2024-prov-jsonld/sections/page-017.md`
+- 0.991 — `cat-harness/library/w3c-2024-prov-jsonld/sections/page-015.md` ~ `cat-harness/library/w3c-2024-prov-jsonld/sections/page-019.md`
+- 0.989 — `cat-harness/library/w3c-2024-prov-jsonld/sections/page-015.md` ~ `cat-harness/library/w3c-2024-prov-jsonld/sections/page-020.md`
+- 0.986 — `cat-harness/library/w3c-2024-prov-jsonld/sections/page-015.md` ~ `cat-harness/library/w3c-2024-prov-jsonld/sections/page-021.md`
+- … and 147 more in the sidecar
 
 ## cat-harness / skills
 
-**213** units · **5843** terms · k = **100** · retains **79.7 %** of the weighted matrix · weighting `log-entropy` · sidecar `cat-harness/test/results/lsi/cat-harness/skills.lsi.json`
+**219** units · **5883** terms · k = **100** · retains **79.0 %** of the weighted matrix · weighting `log-entropy` · sidecar `cat-harness/test/results/lsi/cat-harness/skills.lsi.json`
 
 > Dimension 1 has **no negative pole**: it most likely measures unit length and term frequency (a margin), not a theme. Read the themes from dimension 2 on.
 
@@ -130,20 +117,16 @@ Each dimension is a **contrast** between two poles, shown by their highest-loadi
 
 | dim | σ | one pole | the other pole |
 |---|---|---|---|
-| 1 | 43.70 | instance, harness, kind, session, directory, graph, block, page | *(none)* |
-| 2 | 21.42 | watcher, slot, sibling, queue, prs, backlog, block, commits | harness, instance, declaration, directory, node, directories, graph, bootstrap |
-| 3 | 17.77 | session, beans, goals, branch, store, window, epic, push | slot, chapter, edges, block, formal, glossary, project, proof |
-| 4 | 16.47 | page, sections, block, text, section, blocks, chapter, manifest | ledger, sibling, subdirectory, items, sessions, window, renderable, relocation |
-| 5 | 14.92 | rung, queue, withheld, arm, slide, bytes, zip, sniff | lane, role, requirements, actor, feature, task, impact, analysis |
-| 6 | 14.80 | locale, translated, navbar, translation, page, french, staging, theme | edges, forward, edge, logical, backward, cross-chapter, energy, sections |
-| 7 | 14.41 | edges, forward, edge, preview, backward, cross-chapter, energy, logical | actor, lane, role, requirement, process, login, backlog, task |
-| 8 | 14.13 | locale, translated, translation, claim, french, back-translation, trip, adjudicator | feature, preview, phase, impact, feedback, option, post, staging |
+| 1 | 43.94 | instance, kind, harness, session, graph, directory, block, page | *(none)* |
+| 2 | 21.48 | watcher, slot, sibling, queue, prs, backlog, block, commits | harness, instance, declaration, directory, node, directories, graph, declares |
+| 3 | 17.81 | session, beans, branch, goals, store, window, epic, push | slot, chapter, block, edges, formal, glossary, project, proof |
+| 4 | 16.52 | page, text, block, section, sections, blocks, chapter, manifest | ledger, sibling, subdirectory, items, sessions, window, renderable, relocation |
+| 5 | 14.94 | rung, queue, withheld, arm, slide, bytes, zip, sniff | lane, role, requirements, actor, feature, task, impact, phase |
+| 6 | 14.85 | locale, navbar, translated, page, translation, theme, staging, french | edges, forward, edge, logical, backward, cross-chapter, sections, energy |
+| 7 | 14.43 | edges, forward, edge, backward, preview, cross-chapter, energy, logical | actor, lane, role, requirement, login, task, process, roles |
+| 8 | 14.21 | tile, avatar, card, theme, board, sticky, art, crop | language, translation, glossary, locale, translated, term, french, badge |
 
-**Findings** — 0 narrow dimension(s), 1 near-duplicate pair(s).
-
-*Near-duplicates* (cosine ≥ 0.95) — similar is not duplicate; read both:
-
-- 0.953 — `cat-harness/skills/sdlc/sdlc-core/delivery-summary.md` ~ `cat-harness/skills/sdlc/sdlc-core/diff.md`
+**Findings** — 0 narrow dimension(s), 0 near-duplicate pair(s).
 
 ## smart-base / library
 

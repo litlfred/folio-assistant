@@ -96,11 +96,11 @@
           "state": "covered",
           "directories": [
             "bootstrap-tools/schemas",
+            "cat-harness-tools/schemas",
             "cat-harness/schemas",
             "fhir-harness/schemas",
             "folio-assistant-core/schemas",
             "folio-assistant-sci/schemas",
-            "large-datasets/schemas",
             "smart-base/schemas"
           ],
           "criteria": [
@@ -201,6 +201,9 @@
           "directories": [
             "bootstrap-tools/scripts",
             "cat-harness-tools/adapters",
+            "cat-harness-tools/id-lookup",
+            "cat-harness-tools/schemas",
+            "cat-harness-tools/scripts",
             "cat-harness-tools/test",
             "cat-harness/adapters",
             "cat-harness/deploy",
@@ -211,10 +214,9 @@
             "folio-assistant-core/adapters",
             "folio-assistant-core/scripts",
             "folio-assistant-sci/adapters",
-            "large-datasets/id-lookup",
-            "large-datasets/scripts",
             "smart-trust/scripts",
             "tools",
+            "who-iris/id-lookup",
             "who-iris/scripts"
           ],
           "criteria": [],
@@ -446,7 +448,6 @@
           "kind": "library",
           "state": "covered",
           "directories": [
-            "agent-skills/library",
             "cat-harness/library",
             "fhir-harness/library",
             "folio-assistant-core/library",
@@ -545,7 +546,6 @@
             "bootstrap/processes",
             "cat-harness/processes",
             "folio-assistant-core/processes",
-            "large-datasets/processes",
             "smart-base/methodologies/processes",
             "smart-base/processes"
           ],
@@ -617,12 +617,10 @@
           "kind": "qa",
           "state": "covered",
           "directories": [
-            "agent-skills/test/results",
             "cat-harness/test/results",
             "fhir-harness/test/results",
             "folio-assistant-core/test/results",
             "folio-assistant-sci/test/results",
-            "large-datasets/test/results",
             "smart-base/test/results",
             "smart-dak/test/results",
             "smart-ig/test/results",
@@ -721,13 +719,14 @@
           "directories": [
             "bootstrap-tools/schemas",
             "bootstrap/schemas",
+            "cat-harness-tools/schemas",
             "cat-harness/schemas",
             "fhir-harness/schemas",
             "folio-assistant-core/schemas",
             "folio-assistant-sci/schemas",
-            "large-datasets/schemas",
-            "large-datasets/sources",
-            "smart-base/schemas"
+            "folio-assistant-sci/sources",
+            "smart-base/schemas",
+            "who-iris/sources"
           ],
           "criteria": [],
           "subjectKinds": [],
@@ -769,7 +768,6 @@
           "kind": "skills",
           "state": "covered",
           "directories": [
-            "agent-skills/skills",
             "bootstrap-tools/skills",
             "bootstrap/skills",
             "cat-harness/skills",
@@ -778,7 +776,6 @@
             "folio-assistant-sci/skills",
             "folio-assistant-sci/skills/data",
             "folio-assistant-sci/skills/lean",
-            "large-datasets/skills",
             "smart-base/skills",
             "who-iris/skills",
             "who-style-guide/skills"
@@ -1008,7 +1005,7 @@
           "kind": "voices",
           "state": "covered",
           "directories": [
-            "agent-skills/skills/voices",
+            "cat-harness/skills/voices",
             "folio-assistant-core/skills/voices",
             "folio-assistant-sci/skills/voices",
             "smart-base/skills/voices",

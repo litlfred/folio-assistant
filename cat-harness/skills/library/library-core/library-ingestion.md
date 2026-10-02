@@ -56,8 +56,10 @@ further down dep tree)"*.
 - **`folio-assist-core` owns the remote half**, because `library/` is core's
   graph and so are `materialization.ts` and `library-ref.ts`. A harness that
   cannot hold content must not own the vocabulary for acquiring it.
-- **`large-datasets` owns the question before both**: how to enumerate a corpus
-  and ask it for a subset (`source-descriptor.ts`). Neither entry point can
+- **The `large-datasets` package owns the question before both**
+  ([`skills/library/large-datasets/`](../large-datasets/materialize-remote.md),
+  an instance of its own until bean `j7ql` dissolved it here): how to
+  enumerate a corpus and ask it for a subset (`source-descriptor.ts`). Neither entry point can
   start until something says what is out there.
 - **Further down the tree**, a dependency's declared `remoteGraphs` is what
   makes the second path reachable at all: an instance discovers assets through
