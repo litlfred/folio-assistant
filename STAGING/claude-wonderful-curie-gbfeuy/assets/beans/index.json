@@ -2,7 +2,7 @@
   "$schema": "folio-bean-index/v1",
   "tile": {
     "beans": {
-      "count": 618,
+      "count": 619,
       "unit": "beans"
     }
   },
@@ -597,20 +597,6 @@
       "updatedAt": "2026-09-30T16:10:07Z",
       "preview": "Under `5yhm`. **Two disagreements, not one**, and only the second is already\nsolved here.\n\n1. **The extractor and the terminology disagree.** The corpus uses a word the\n   authorised vocabulary spells differently, or does not carry at all. A\n   *content* decision — change the prose, author a local term with its reason,\n   or record that the vocabulary is wrong for this domain. Nothing covers this.",
       "file": "beans/defs/folio-assistant-2i5f--terminology-adjudication-the-extractor-vs-the-term.md"
-    },
-    {
-      "id": "folio-assistant-2i5k",
-      "title": "CI FASTER: shard bun test 3 ways, cache BPMN SVG renders by input hash, sparse publish-branch checkout",
-      "status": "todo",
-      "type": "task",
-      "priority": "high",
-      "parent": "folio-assistant-7x5n",
-      "blocking": [],
-      "blockedBy": [],
-      "createdAt": "2026-10-01T19:18:56Z",
-      "updatedAt": "2026-10-01T19:18:56Z",
-      "preview": "Owner-approved (via merge steward, 2026-10-01). Measured medians: bun test 6.8 min, BPMN render 5.3 min, playwright 4.5 min, publish-branch checkout 2.4 min. No check dropped or weakened.\n\n## Done when\n- [ ] bun test runs as 3 shards (matrix), every test file still runs in exactly one shard\n- [ ] BPMN renders cached per diagram by a key covering everything the drawing is a function of; render:bpmn",
-      "file": "beans/defs/folio-assistant-2i5k--ci-faster-shard-bun-test-3-ways-cache-bpmn-svg-ren.md"
     },
     {
       "id": "folio-assistant-2j09",
@@ -2794,7 +2780,7 @@
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-10-02T06:29:45Z",
-      "updatedAt": "2026-10-02T06:57:15Z",
+      "updatedAt": "2026-10-02T07:57:50Z",
       "preview": "Owner, 2026-10-02: *\"see what happens on smart-base with binary artefacts on release. add to skills/tools\"*.\n\n**Measured** with `ig-binary-audit` on `litlfred/smart-base` `gh-pages` `64ed896d`:\n- **Size:** 5,029.7 MB in all, of which 966.5 MB is Publisher binaries.\n- **Previews:** 907.1 MB of those binaries (94 %) sit in 29 `branches/` previews.\n- **Largest single file:** `full-ig.zip` takes 644.7",
       "file": "beans/defs/folio-assistant-b8ip--smart-base-binary-artefacts-907-mb-of-preview-copi.md"
     },
@@ -4497,14 +4483,14 @@
     {
       "id": "folio-assistant-j7ql",
       "title": "S4-b: fold agent-skills and large-datasets into cat-harness concern groups (38 rows)",
-      "status": "in-progress",
+      "status": "completed",
       "type": "task",
       "priority": "normal",
       "parent": "folio-assistant-7x5n",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-10-01T12:16:24Z",
-      "updatedAt": "2026-10-01T13:47:13Z",
+      "updatedAt": "2026-10-02T08:59:13Z",
       "preview": "Story S4 (rfuq). Rows: cat-harness/docs/proposals/placement-audit-2026-10-01.json (PR #1778) — pr '(7x5n S4 subgraph ruling)': agent-skills MOVE 21; large-datasets MOVE 11 + CODE 4 (-> cat-harness-tools) + 2 (-> sci / who-iris). Owner: both become cat-harness subgraphs, DISSOLVED into the eight concern groups (Q5). Done in #1776: large-datasets core import 1->0. Remaining: drop needs: folio-assist",
       "file": "beans/defs/folio-assistant-j7ql--s4-b-fold-agent-skills-and-large-datasets-into-cat.md"
     },
@@ -4884,7 +4870,7 @@
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-10-01T19:48:24Z",
-      "updatedAt": "2026-10-01T20:02:55Z",
+      "updatedAt": "2026-10-02T08:10:12Z",
       "preview": "Owner, 2026-10-01: *\"is ast export XML? any utility for downstream use to have it export json(ld)+schema?\"*, then \"1 y\" to building it here.\n\n**State.** The AST is JSON: `ig-ast/v1` (manifest plus one entry per resource), `ig-ast-dependencies/v1` (edges) and `ig-ast-plan/v1`. They exist only as TypeScript interfaces in `fhir-harness/scripts/ig-ast.ts`. The Java exporter (`litlfred/fhir-ig-publishe",
       "file": "beans/defs/folio-assistant-l0lq--ig-ast-formats-zod-json-schema-json-ld-export-for.md"
     },
@@ -5518,7 +5504,7 @@
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-23T10:36:15Z",
-      "updatedAt": "2026-10-01T12:34:27Z",
+      "updatedAt": "2026-10-01T18:08:13Z",
       "preview": "Findings from the as-is wireframe `cat-harness/docs/wireframes/navbar/` (intent.md, as-is.html, checks/), observed at 1280×800 and 390×844. Verbatim from its `## Findings`; a finding tagged → is also covered by that cross-cutting bug.\n\n1. **At rest the strip is marks with no labels.** Changed by #1022: the four divider initials are gone, so the harnesses are **not reachable from the strip at all**",
       "file": "beans/defs/folio-assistant-ob3m--navbar-visualiser-12-wireframe-findings.md"
     },
@@ -6211,6 +6197,20 @@
       "updatedAt": "2026-09-25T16:21:36Z",
       "preview": "Found 2026-09-25 by a `goal-review` sweep, by causing it rather than reading it.\n\n`bun test` on a clean checkout of `main` reported **1 failure**:\n\n    (fail) the real corpus > every spoken prefix is bound and every own prefix is a stub\n    + \"count\": 145,\n    + \"example\": \"cat-harness/ingest-staging/agent-skills---google-antigravity-docs/manifest.jsonld\",\n    + \"prefix\": \"folio\",\n\n`cat-harness/in",
       "file": "beans/defs/folio-assistant-ramz--check-context-emission-scans-gitignored-directorie.md"
+    },
+    {
+      "id": "folio-assistant-rbz3",
+      "title": "Separation stage E rehearsal on litlfred/smart-trust: gates run with 23 platform files; directory name is the instance identity",
+      "status": "in-progress",
+      "type": "task",
+      "priority": "normal",
+      "parent": "folio-assistant-n3ni",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-10-02T07:57:50Z",
+      "updatedAt": "2026-10-02T08:08:25Z",
+      "preview": "Owner, 2026-10-02: *\"use forks litlfred/smart-* as staging before we do it on WHO reps\"*, then *\"start smart-trust fork rehearsal\"*.\n\nRehearsal branch `separation/stage-e-rehearsal` on litlfred/smart-trust, draft PR litlfred/smart-trust#3 (do not merge). It carries `smart-trust/` from folio-assistant `52a35ddf` unchanged, plus `REHEARSAL.md` and `PLATFORM-FILES.txt`.\n\n## Measured\n- **Pages:** `gen",
+      "file": "beans/defs/folio-assistant-rbz3--separation-stage-e-rehearsal-on-litlfredsmart-trus.md"
     },
     {
       "id": "folio-assistant-rdy0",
@@ -8135,6 +8135,20 @@
       "updatedAt": "2026-09-22T21:04:32Z",
       "preview": "**Why.** Every child can pass on a ten-block fixture and fall over on a real\nhandbook. Performance, the heat map's legibility at 2,000 cells and the\nnavigation's usefulness can only be judged at scale.\n\n**Candidates, measured 2026-09-22:**\n- `smart-immunizations/`: 748 artefacts indexed, 200 materialised. It is\n  **provisional** (nsbb may remove it) and deliberately renders no HTML, so it\n  can on",
       "file": "beans/defs/folio-assistant-xp72--scale-fixture-a-beforeafter-large-document-pair-wi.md"
+    },
+    {
+      "id": "folio-assistant-xpcu",
+      "title": "REGEN + GATES SPEED-UP: input-hash staleness skipping and a parallel worker pool for regen-after-merge and gates",
+      "status": "in-progress",
+      "type": "feature",
+      "priority": "high",
+      "parent": "folio-assistant-7x5n",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-10-01T17:26:24Z",
+      "updatedAt": "2026-10-01T17:26:36Z",
+      "preview": "## Why\n\nMeasured by the steward: `bun run regen` runs ~83 check/writer pairs serially\nvia `spawnSync`, up to 3 passes, ~25 min locally. `bun run gates` takes >50 min\nlocally. The box has 4 CPUs shared with other sessions.\n\n## What (owner-approved, 2026-10-01)\n\n1. **Input-hash staleness skipping** in regen: hash each pair's declared inputs\n   plus its script source; skip when it matches the hash re",
+      "file": "beans/defs/folio-assistant-xpcu--regen-gates-speed-up-input-hash-staleness-skipping.md"
     },
     {
       "id": "folio-assistant-xsqm",
