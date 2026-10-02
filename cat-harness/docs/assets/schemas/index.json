@@ -2,7 +2,7 @@
   "$schema": "folio-schema-graph/v1",
   "tile": {
     "schemas": {
-      "count": 191,
+      "count": 195,
       "unit": "modules"
     }
   },
@@ -411,6 +411,14 @@
       "isTest": false
     },
     {
+      "module": "cat-harness/schemas/extraction.ts",
+      "instance": "cat-harness",
+      "name": "extraction",
+      "graphNode": "schema",
+      "summary": "What an EXTRACTION produced, and when — provenance for assets pulled out of",
+      "isTest": false
+    },
+    {
       "module": "cat-harness/schemas/figure-description.ts",
       "instance": "cat-harness",
       "name": "figure-description",
@@ -673,6 +681,14 @@
       "name": "log-entry",
       "graphNode": "schema",
       "summary": "The agent activity log — what an agent did, when, and in which process.",
+      "isTest": false
+    },
+    {
+      "module": "cat-harness/schemas/materialization-state.ts",
+      "instance": "cat-harness",
+      "name": "materialization-state",
+      "graphNode": "schema",
+      "summary": "The materialization STATE vocabulary — whether the bytes are here, and how",
       "isTest": false
     },
     {
@@ -1232,6 +1248,23 @@
       "isTest": false
     },
     {
+      "module": "cat-harness/schemas/term-adjudication.test.ts",
+      "instance": "cat-harness",
+      "name": "term-adjudication.test",
+      "graphNode": "none",
+      "reason": "a test",
+      "summary": "The outcome set for leg 1 of bean `2i5f`: what is refused, and why.",
+      "isTest": true
+    },
+    {
+      "module": "cat-harness/schemas/term-adjudication.ts",
+      "instance": "cat-harness",
+      "name": "term-adjudication",
+      "graphNode": "schema",
+      "summary": "What was decided when a minted glossary term and an authorised terminology",
+      "isTest": false
+    },
+    {
       "module": "cat-harness/schemas/term-mapping.ts",
       "instance": "cat-harness",
       "name": "term-mapping",
@@ -1694,14 +1727,6 @@
       "name": "dublin-core",
       "graphNode": "schema",
       "summary": "Qualified Dublin Core, as a graph node.",
-      "isTest": false
-    },
-    {
-      "module": "folio-assistant-core/schemas/extraction.ts",
-      "instance": "folio-assistant-core",
-      "name": "extraction",
-      "graphNode": "schema",
-      "summary": "What an EXTRACTION produced, and when — provenance for assets pulled out of",
       "isTest": false
     },
     {
@@ -14073,6 +14098,185 @@
       "exported": true
     },
     {
+      "id": "cat-harness/schemas/extraction.ts#ExtractedAsset",
+      "name": "ExtractedAsset",
+      "module": "cat-harness/schemas/extraction.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/extraction.ts#ExtractedAssetSchema",
+      "name": "ExtractedAssetSchema",
+      "module": "cat-harness/schemas/extraction.ts",
+      "kind": "zod-object",
+      "doc": "One entry inside a container.",
+      "fields": [
+        {
+          "name": "path",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false,
+          "doc": "Path INSIDE the container, exactly as the container spells it."
+        },
+        {
+          "name": "bytes",
+          "type": "z.number().int().nonnegative()",
+          "optional": false,
+          "array": false,
+          "doc": "Uncompressed size in bytes, from the container's index."
+        },
+        {
+          "name": "mediaType",
+          "type": "z.string().min(1).optional()",
+          "optional": true,
+          "array": false,
+          "doc": "Media type."
+        },
+        {
+          "name": "modifiedAt",
+          "type": "z.string().min(1).optional()",
+          "optional": true,
+          "array": false,
+          "doc": "The entry's own timestamp, as the container records it."
+        },
+        {
+          "name": "sha256",
+          "type": "z.string().regex(/^[0-9a-f]{64}$/).optional()",
+          "optional": true,
+          "array": false,
+          "doc": "sha256 of the entry's bytes, when it was read rather than indexed."
+        },
+        {
+          "name": "localPath",
+          "type": "z.string().min(1).optional()",
+          "optional": true,
+          "array": false,
+          "doc": "Where the entry was written, IF it was written."
+        },
+        {
+          "name": "extractedBecause",
+          "type": "z.string().min(1).optional()",
+          "optional": true,
+          "array": false,
+          "doc": "Why this one entry was extracted, when one was."
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [
+        "z"
+      ],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/extraction.ts#Extraction",
+      "name": "Extraction",
+      "module": "cat-harness/schemas/extraction.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/extraction.ts#ExtractionMethod",
+      "name": "ExtractionMethod",
+      "module": "cat-harness/schemas/extraction.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/extraction.ts#ExtractionSchema",
+      "name": "ExtractionSchema",
+      "module": "cat-harness/schemas/extraction.ts",
+      "kind": "zod-object",
+      "fields": [
+        {
+          "name": "$schema",
+          "type": "z.literal(EXTRACTION_SCHEMA_TAG)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "container",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false,
+          "doc": "The container this describes, repo-relative."
+        },
+        {
+          "name": "method",
+          "type": "z.enum(EXTRACTION_METHODS)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "capturedAt",
+          "type": "z.string().min(1).optional()",
+          "optional": true,
+          "array": false,
+          "doc": "When the CONTAINER'S CONTENTS were produced — the capture moment."
+        },
+        {
+          "name": "producer",
+          "type": "z.string().min(1).optional()",
+          "optional": true,
+          "array": false,
+          "doc": "The tool that produced the container, verbatim."
+        },
+        {
+          "name": "readAt",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false,
+          "doc": "When THIS record was written — a fact about the reading, not the file."
+        },
+        {
+          "name": "assets",
+          "type": "z.array(ExtractedAssetSchema)",
+          "optional": false,
+          "array": true,
+          "doc": "Every entry the container indexes."
+        },
+        {
+          "name": "omitted",
+          "type": "z .array(z.object({ pattern: z.string().min(1), reason: z.string().min(1), count: z.number().int().nonnegative() }).str…",
+          "optional": true,
+          "array": true,
+          "doc": "Entries deliberately not listed, and why."
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [
+        "cat-harness/schemas/extraction.ts#ExtractedAssetSchema"
+      ],
+      "unresolved": [],
+      "external": [
+        "EXTRACTION_METHODS",
+        "EXTRACTION_SCHEMA_TAG",
+        "z"
+      ],
+      "exported": true
+    },
+    {
       "id": "cat-harness/schemas/figure-description.ts#DescriptionBasis",
       "name": "DescriptionBasis",
       "module": "cat-harness/schemas/figure-description.ts",
@@ -20359,6 +20563,68 @@
       "exported": true
     },
     {
+      "id": "cat-harness/schemas/materialization-state.ts#Fixity",
+      "name": "Fixity",
+      "module": "cat-harness/schemas/materialization-state.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/materialization-state.ts#FixitySchema",
+      "name": "FixitySchema",
+      "module": "cat-harness/schemas/materialization-state.ts",
+      "kind": "zod-object",
+      "doc": "Proof that an archived blob is the blob that was archived.",
+      "fields": [
+        {
+          "name": "algorithm",
+          "type": "z.literal(\"sha256\")",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "digest",
+          "type": "z.string().regex(/^[0-9a-f]{64}$/, \"a sha256 digest is 64 lowercase hex characters\")",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "verifiedAt",
+          "type": "z.string().min(1).optional()",
+          "optional": true,
+          "array": false,
+          "doc": "When the digest was last RE-COMPUTED against the bytes, not when it was recorded. An unverified digest ages."
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [
+        "z"
+      ],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/materialization-state.ts#MaterializationState",
+      "name": "MaterializationState",
+      "module": "cat-harness/schemas/materialization-state.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
       "id": "cat-harness/schemas/memory.ts#Measurement",
       "name": "Measurement",
       "module": "cat-harness/schemas/memory.ts",
@@ -21528,6 +21794,41 @@
           "type": "z.record(z.string(), z.unknown())",
           "optional": false,
           "array": false
+        },
+        {
+          "name": "title_source",
+          "type": "z.enum([\"metadata\", \"heading\", \"outline\", \"text\", \"filename\"]).optional()",
+          "optional": true,
+          "array": false,
+          "doc": "Where `title` came from (bean `w6fu`, `scripts/_pdf_title.py`):"
+        },
+        {
+          "name": "title_verified",
+          "type": "z.boolean().optional()",
+          "optional": true,
+          "array": false,
+          "doc": "False when no source corroborated the title: the raw title was kept, not guessed at."
+        },
+        {
+          "name": "title_raw",
+          "type": "z.string().nullable().optional()",
+          "optional": true,
+          "array": false,
+          "doc": "The text walk's title before resolution, kept so a re-run resolves from it rather than from its own answer."
+        },
+        {
+          "name": "title_evidence",
+          "type": "z.record(z.string(), z.unknown()).optional()",
+          "optional": true,
+          "array": false,
+          "doc": "Every candidate the resolver saw, and which sources agreed — the record an editor decides from."
+        },
+        {
+          "name": "title_correction",
+          "type": "z .object({ title: z.string().min(1), basis: z.string().min(1), corrected_on: z.string().regex(/^\\d{4}-\\d{2}-\\d{2}$/), …",
+          "optional": true,
+          "array": false,
+          "doc": "An EDITORIAL correction, outranking every extracted title (bean `w6fu`,"
         }
       ],
       "extendsNames": [],
@@ -30500,6 +30801,380 @@
       "unresolved": [],
       "external": [
         "SHAPE_SOURCES",
+        "z"
+      ],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/term-adjudication.ts#AdjudicationStatus",
+      "name": "AdjudicationStatus",
+      "module": "cat-harness/schemas/term-adjudication.ts",
+      "kind": "type-alias",
+      "doc": "Each record set against what the check reports NOW, by outcome:",
+      "fields": [],
+      "extendsNames": [],
+      "values": [
+        "applied",
+        "pending",
+        "holds",
+        "stale"
+      ],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/term-adjudication.ts#ChangeProseSchema",
+      "name": "ChangeProseSchema",
+      "module": "cat-harness/schemas/term-adjudication.ts",
+      "kind": "zod-object",
+      "fields": [
+        {
+          "name": "outcome",
+          "type": "z.literal(\"change-prose\")",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "concept",
+          "type": "Iri",
+          "optional": false,
+          "array": false,
+          "doc": "The authorised concept the corpus now uses."
+        },
+        {
+          "name": "authorisedLabel",
+          "type": "z.string().trim().min(1)",
+          "optional": false,
+          "array": false,
+          "doc": "Its authorised label, which the corpus now carries."
+        },
+        {
+          "name": "changed",
+          "type": "z.array(z.string().min(1)).min(1, \"say which source assets were changed, or nothing can be checked\")",
+          "optional": false,
+          "array": true,
+          "doc": "The source assets that were edited, by repository path."
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [
+        "cat-harness/schemas/term-adjudication.ts#Iri"
+      ],
+      "unresolved": [],
+      "external": [
+        "z"
+      ],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/term-adjudication.ts#Common",
+      "name": "Common",
+      "module": "cat-harness/schemas/term-adjudication.ts",
+      "kind": "undetermined",
+      "note": "{ subject: Subject, /** The actor who decided: an id under `scenarios/actors/`. A content decision is a person's. */ decidedBy: z.string().min(1), decidedAt: z…",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": false
+    },
+    {
+      "id": "cat-harness/schemas/term-adjudication.ts#Iri",
+      "name": "Iri",
+      "module": "cat-harness/schemas/term-adjudication.ts",
+      "kind": "zod-scalar",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": false
+    },
+    {
+      "id": "cat-harness/schemas/term-adjudication.ts#LocalTermSchema",
+      "name": "LocalTermSchema",
+      "module": "cat-harness/schemas/term-adjudication.ts",
+      "kind": "zod-object",
+      "fields": [
+        {
+          "name": "outcome",
+          "type": "z.literal(\"local-term\")",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "localTerm",
+          "type": "z .object({ /** The authored glossary file, by repository path. */ glossary: z.string().min(1), id: z.string().regex(LO…",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "reason",
+          "type": "Reason",
+          "optional": false,
+          "array": false,
+          "doc": "Why the authority's concept does not serve, so the next reader need not re-derive it."
+        },
+        {
+          "name": "relation",
+          "type": "z.enum(LOCAL_TERM_RELATIONS)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "concept",
+          "type": "Iri.optional()",
+          "optional": true,
+          "array": false,
+          "doc": "The authority's concept, required unless `relation` is `none`."
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [
+        "cat-harness/schemas/term-adjudication.ts#Iri",
+        "cat-harness/schemas/term-adjudication.ts#Reason"
+      ],
+      "unresolved": [],
+      "external": [
+        "LOCAL_ID",
+        "LOCAL_TERM_RELATIONS",
+        "z"
+      ],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/term-adjudication.ts#Observed",
+      "name": "Observed",
+      "module": "cat-harness/schemas/term-adjudication.ts",
+      "kind": "zod-object",
+      "doc": "The two disagreements, as `check:term-mapping` reported them.",
+      "fields": [
+        {
+          "name": "exact",
+          "type": "z.literal(\"unmapped\")",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "concept",
+          "type": "z.enum([\"mapped\", \"unmapped\"])",
+          "optional": false,
+          "array": false
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [
+        "z"
+      ],
+      "exported": false
+    },
+    {
+      "id": "cat-harness/schemas/term-adjudication.ts#Outcome",
+      "name": "Outcome",
+      "module": "cat-harness/schemas/term-adjudication.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/term-adjudication.ts#Reason",
+      "name": "Reason",
+      "module": "cat-harness/schemas/term-adjudication.ts",
+      "kind": "zod-scalar",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": false
+    },
+    {
+      "id": "cat-harness/schemas/term-adjudication.ts#Subject",
+      "name": "Subject",
+      "module": "cat-harness/schemas/term-adjudication.ts",
+      "kind": "zod-object",
+      "fields": [
+        {
+          "name": "scheme",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false,
+          "doc": "The candidate's scheme id, as the mapping record keys it (`kg-tools`, …)."
+        },
+        {
+          "name": "term",
+          "type": "z.string().regex(LOCAL_ID)",
+          "optional": false,
+          "array": false,
+          "doc": "The candidate's term id within that scheme."
+        },
+        {
+          "name": "target",
+          "type": "z.enum(MAPPING_TARGETS)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "observed",
+          "type": "Observed",
+          "optional": false,
+          "array": false
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [
+        "cat-harness/schemas/term-adjudication.ts#Observed"
+      ],
+      "unresolved": [
+        "MAPPING_TARGETS"
+      ],
+      "external": [
+        "LOCAL_ID",
+        "z"
+      ],
+      "exported": false
+    },
+    {
+      "id": "cat-harness/schemas/term-adjudication.ts#TermAdjudication",
+      "name": "TermAdjudication",
+      "module": "cat-harness/schemas/term-adjudication.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/term-adjudication.ts#TermAdjudicationSchema",
+      "name": "TermAdjudicationSchema",
+      "module": "cat-harness/schemas/term-adjudication.ts",
+      "kind": "zod-union",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/term-adjudication.ts#TermAdjudicationsFile",
+      "name": "TermAdjudicationsFile",
+      "module": "cat-harness/schemas/term-adjudication.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/term-adjudication.ts#TermAdjudicationsFileSchema",
+      "name": "TermAdjudicationsFileSchema",
+      "module": "cat-harness/schemas/term-adjudication.ts",
+      "kind": "zod-object",
+      "fields": [
+        {
+          "name": "$schema",
+          "type": "z.literal(TERM_ADJUDICATIONS_SCHEMA_ID)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "_comment",
+          "type": "z.string().optional()",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "adjudications",
+          "type": "z.array(TermAdjudicationSchema)",
+          "optional": false,
+          "array": true
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [
+        "cat-harness/schemas/term-adjudication.ts#TermAdjudicationSchema"
+      ],
+      "unresolved": [],
+      "external": [
+        "TERM_ADJUDICATIONS_SCHEMA_ID",
+        "z"
+      ],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/term-adjudication.ts#VocabularyWrongSchema",
+      "name": "VocabularyWrongSchema",
+      "module": "cat-harness/schemas/term-adjudication.ts",
+      "kind": "zod-object",
+      "fields": [
+        {
+          "name": "outcome",
+          "type": "z.literal(\"vocabulary-wrong\")",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "vocabulary",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false,
+          "doc": "The vocabulary consulted, as the check's scope names it (`platform`, `who-smart-base@v1.0.0`, …)."
+        },
+        {
+          "name": "domain",
+          "type": "z.string().trim().min(1)",
+          "optional": false,
+          "array": false,
+          "doc": "The domain it does not serve."
+        },
+        {
+          "name": "reason",
+          "type": "Reason",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "concept",
+          "type": "Iri.optional()",
+          "optional": true,
+          "array": false,
+          "doc": "The concept the label reached, where it reached one."
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [
+        "cat-harness/schemas/term-adjudication.ts#Iri",
+        "cat-harness/schemas/term-adjudication.ts#Reason"
+      ],
+      "unresolved": [],
+      "external": [
         "z"
       ],
       "exported": true
@@ -42394,182 +43069,36 @@
       "exported": true
     },
     {
-      "id": "folio-assistant-core/schemas/extraction.ts#ExtractedAsset",
-      "name": "ExtractedAsset",
-      "module": "folio-assistant-core/schemas/extraction.ts",
-      "kind": "type-alias",
-      "fields": [],
-      "extendsNames": [],
-      "values": [],
-      "refs": [],
-      "unresolved": [],
-      "external": [],
-      "exported": true
-    },
-    {
-      "id": "folio-assistant-core/schemas/extraction.ts#ExtractedAssetSchema",
-      "name": "ExtractedAssetSchema",
-      "module": "folio-assistant-core/schemas/extraction.ts",
-      "kind": "zod-object",
-      "doc": "One entry inside a container.",
+      "id": "folio-assistant-core/schemas/glossary.ts#AutomatedMatch",
+      "name": "AutomatedMatch",
+      "module": "folio-assistant-core/schemas/glossary.ts",
+      "kind": "interface",
+      "doc": "One candidate's AUTOMATED matches, as `check:term-mapping` found them:",
       "fields": [
         {
-          "name": "path",
-          "type": "z.string().min(1)",
+          "name": "term",
+          "type": "string",
           "optional": false,
-          "array": false,
-          "doc": "Path INSIDE the container, exactly as the container spells it."
+          "array": false
         },
         {
-          "name": "bytes",
-          "type": "z.number().int().nonnegative()",
+          "name": "exactMatch",
+          "type": "string[]",
           "optional": false,
-          "array": false,
-          "doc": "Uncompressed size in bytes, from the container's index."
+          "array": true
         },
         {
-          "name": "mediaType",
-          "type": "z.string().min(1).optional()",
-          "optional": true,
-          "array": false,
-          "doc": "Media type."
-        },
-        {
-          "name": "modifiedAt",
-          "type": "z.string().min(1).optional()",
-          "optional": true,
-          "array": false,
-          "doc": "The entry's own timestamp, as the container records it."
-        },
-        {
-          "name": "sha256",
-          "type": "z.string().regex(/^[0-9a-f]{64}$/).optional()",
-          "optional": true,
-          "array": false,
-          "doc": "sha256 of the entry's bytes, when it was read rather than indexed."
-        },
-        {
-          "name": "localPath",
-          "type": "z.string().min(1).optional()",
-          "optional": true,
-          "array": false,
-          "doc": "Where the entry was written, IF it was written."
-        },
-        {
-          "name": "extractedBecause",
-          "type": "z.string().min(1).optional()",
-          "optional": true,
-          "array": false,
-          "doc": "Why this one entry was extracted, when one was."
+          "name": "closeMatch",
+          "type": "string[]",
+          "optional": false,
+          "array": true
         }
       ],
       "extendsNames": [],
       "values": [],
       "refs": [],
       "unresolved": [],
-      "external": [
-        "z"
-      ],
-      "exported": true
-    },
-    {
-      "id": "folio-assistant-core/schemas/extraction.ts#Extraction",
-      "name": "Extraction",
-      "module": "folio-assistant-core/schemas/extraction.ts",
-      "kind": "type-alias",
-      "fields": [],
-      "extendsNames": [],
-      "values": [],
-      "refs": [],
-      "unresolved": [],
       "external": [],
-      "exported": true
-    },
-    {
-      "id": "folio-assistant-core/schemas/extraction.ts#ExtractionMethod",
-      "name": "ExtractionMethod",
-      "module": "folio-assistant-core/schemas/extraction.ts",
-      "kind": "type-alias",
-      "fields": [],
-      "extendsNames": [],
-      "values": [],
-      "refs": [],
-      "unresolved": [],
-      "external": [],
-      "exported": true
-    },
-    {
-      "id": "folio-assistant-core/schemas/extraction.ts#ExtractionSchema",
-      "name": "ExtractionSchema",
-      "module": "folio-assistant-core/schemas/extraction.ts",
-      "kind": "zod-object",
-      "fields": [
-        {
-          "name": "$schema",
-          "type": "z.literal(EXTRACTION_SCHEMA_TAG)",
-          "optional": false,
-          "array": false
-        },
-        {
-          "name": "container",
-          "type": "z.string().min(1)",
-          "optional": false,
-          "array": false,
-          "doc": "The container this describes, repo-relative."
-        },
-        {
-          "name": "method",
-          "type": "z.enum(EXTRACTION_METHODS)",
-          "optional": false,
-          "array": false
-        },
-        {
-          "name": "capturedAt",
-          "type": "z.string().min(1).optional()",
-          "optional": true,
-          "array": false,
-          "doc": "When the CONTAINER'S CONTENTS were produced — the capture moment."
-        },
-        {
-          "name": "producer",
-          "type": "z.string().min(1).optional()",
-          "optional": true,
-          "array": false,
-          "doc": "The tool that produced the container, verbatim."
-        },
-        {
-          "name": "readAt",
-          "type": "z.string().min(1)",
-          "optional": false,
-          "array": false,
-          "doc": "When THIS record was written — a fact about the reading, not the file."
-        },
-        {
-          "name": "assets",
-          "type": "z.array(ExtractedAssetSchema)",
-          "optional": false,
-          "array": true,
-          "doc": "Every entry the container indexes."
-        },
-        {
-          "name": "omitted",
-          "type": "z .array(z.object({ pattern: z.string().min(1), reason: z.string().min(1), count: z.number().int().nonnegative() }).str…",
-          "optional": true,
-          "array": true,
-          "doc": "Entries deliberately not listed, and why."
-        }
-      ],
-      "extendsNames": [],
-      "values": [],
-      "refs": [
-        "folio-assistant-core/schemas/extraction.ts#ExtractedAssetSchema"
-      ],
-      "unresolved": [],
-      "external": [
-        "EXTRACTION_METHODS",
-        "EXTRACTION_SCHEMA_TAG",
-        "z"
-      ],
       "exported": true
     },
     {
@@ -43009,55 +43538,6 @@
       "exported": true
     },
     {
-      "id": "folio-assistant-core/schemas/materialization.ts#Fixity",
-      "name": "Fixity",
-      "module": "folio-assistant-core/schemas/materialization.ts",
-      "kind": "type-alias",
-      "fields": [],
-      "extendsNames": [],
-      "values": [],
-      "refs": [],
-      "unresolved": [],
-      "external": [],
-      "exported": true
-    },
-    {
-      "id": "folio-assistant-core/schemas/materialization.ts#FixitySchema",
-      "name": "FixitySchema",
-      "module": "folio-assistant-core/schemas/materialization.ts",
-      "kind": "zod-object",
-      "doc": "Proof that an archived blob is the blob that was archived.",
-      "fields": [
-        {
-          "name": "algorithm",
-          "type": "z.literal(\"sha256\")",
-          "optional": false,
-          "array": false
-        },
-        {
-          "name": "digest",
-          "type": "z.string().regex(/^[0-9a-f]{64}$/, \"a sha256 digest is 64 lowercase hex characters\")",
-          "optional": false,
-          "array": false
-        },
-        {
-          "name": "verifiedAt",
-          "type": "z.string().min(1).optional()",
-          "optional": true,
-          "array": false,
-          "doc": "When the digest was last RE-COMPUTED against the bytes, not when it was recorded. An unverified digest ages."
-        }
-      ],
-      "extendsNames": [],
-      "values": [],
-      "refs": [],
-      "unresolved": [],
-      "external": [
-        "z"
-      ],
-      "exported": true
-    },
-    {
       "id": "folio-assistant-core/schemas/materialization.ts#FreshnessVerdict",
       "name": "FreshnessVerdict",
       "module": "folio-assistant-core/schemas/materialization.ts",
@@ -43339,30 +43819,17 @@
       "values": [],
       "refs": [
         "folio-assistant-core/schemas/materialization.ts#CompiledInputsSchema",
-        "folio-assistant-core/schemas/materialization.ts#FixitySchema",
         "folio-assistant-core/schemas/materialization.ts#GatesSchema"
       ],
       "unresolved": [],
       "external": [
+        "FixitySchema",
         "MATERIALIZATION_PURPOSES",
         "MATERIALIZATION_SCHEMA_TAG",
         "MATERIALIZATION_STATES",
         "SourceProvenanceSchema",
         "z"
       ],
-      "exported": true
-    },
-    {
-      "id": "folio-assistant-core/schemas/materialization.ts#MaterializationState",
-      "name": "MaterializationState",
-      "module": "folio-assistant-core/schemas/materialization.ts",
-      "kind": "type-alias",
-      "fields": [],
-      "extendsNames": [],
-      "values": [],
-      "refs": [],
-      "unresolved": [],
-      "external": [],
       "exported": true
     },
     {
@@ -47066,6 +47533,14 @@
       "array": false
     },
     {
+      "from": "cat-harness/schemas/extraction.ts#ExtractionSchema",
+      "to": "cat-harness/schemas/extraction.ts#ExtractedAssetSchema",
+      "via": "assets",
+      "kind": "field",
+      "optional": false,
+      "array": true
+    },
+    {
       "from": "cat-harness/schemas/figure-description.ts#FigureDescriptionSchema",
       "to": "cat-harness/schemas/attribution.ts#AttributionSchema",
       "via": "described_by",
@@ -49538,6 +50013,62 @@
       "array": true
     },
     {
+      "from": "cat-harness/schemas/term-adjudication.ts#ChangeProseSchema",
+      "to": "cat-harness/schemas/term-adjudication.ts#Iri",
+      "via": "concept",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "cat-harness/schemas/term-adjudication.ts#LocalTermSchema",
+      "to": "cat-harness/schemas/term-adjudication.ts#Iri",
+      "via": "concept",
+      "kind": "field",
+      "optional": true,
+      "array": false
+    },
+    {
+      "from": "cat-harness/schemas/term-adjudication.ts#LocalTermSchema",
+      "to": "cat-harness/schemas/term-adjudication.ts#Reason",
+      "via": "reason",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "cat-harness/schemas/term-adjudication.ts#Subject",
+      "to": "cat-harness/schemas/term-adjudication.ts#Observed",
+      "via": "observed",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "cat-harness/schemas/term-adjudication.ts#TermAdjudicationsFileSchema",
+      "to": "cat-harness/schemas/term-adjudication.ts#TermAdjudicationSchema",
+      "via": "adjudications",
+      "kind": "field",
+      "optional": false,
+      "array": true
+    },
+    {
+      "from": "cat-harness/schemas/term-adjudication.ts#VocabularyWrongSchema",
+      "to": "cat-harness/schemas/term-adjudication.ts#Iri",
+      "via": "concept",
+      "kind": "field",
+      "optional": true,
+      "array": false
+    },
+    {
+      "from": "cat-harness/schemas/term-adjudication.ts#VocabularyWrongSchema",
+      "to": "cat-harness/schemas/term-adjudication.ts#Reason",
+      "via": "reason",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
       "from": "cat-harness/schemas/term-mapping.ts#TermMappingSchema",
       "to": "cat-harness/schemas/term-mapping.ts#ConceptMatchSchema",
       "via": "matches",
@@ -51242,14 +51773,6 @@
       "array": true
     },
     {
-      "from": "folio-assistant-core/schemas/extraction.ts#ExtractionSchema",
-      "to": "folio-assistant-core/schemas/extraction.ts#ExtractedAssetSchema",
-      "via": "assets",
-      "kind": "field",
-      "optional": false,
-      "array": true
-    },
-    {
       "from": "folio-assistant-core/schemas/glossary.ts#GlossarySchema",
       "to": "folio-assistant-core/schemas/glossary.ts#Iri",
       "via": "members",
@@ -51373,14 +51896,6 @@
       "from": "folio-assistant-core/schemas/materialization.ts#MaterializationSchema",
       "to": "folio-assistant-core/schemas/materialization.ts#CompiledInputsSchema",
       "via": "inputs",
-      "kind": "field",
-      "optional": true,
-      "array": false
-    },
-    {
-      "from": "folio-assistant-core/schemas/materialization.ts#MaterializationSchema",
-      "to": "folio-assistant-core/schemas/materialization.ts#FixitySchema",
-      "via": "fixity",
       "kind": "field",
       "optional": true,
       "array": false
