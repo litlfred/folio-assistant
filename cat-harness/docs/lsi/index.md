@@ -118,12 +118,12 @@ Each dimension is a **contrast** between two poles, shown by their highest-loadi
 
 | dim | σ | one pole | the other pole |
 |---|---|---|---|
-| 1 | 44.45 | instance, kind, harness, session, directory, block, page, graph | *(none)* |
-| 2 | 21.55 | watcher, sibling, prs, queue, slot, backlog, commits, block | harness, instance, declaration, node, directory, directories, graph, declares |
-| 3 | 17.98 | slot, chapter, block, edges, formal, project, proof, glossary | session, beans, branch, goals, window, store, sessions, push |
-| 4 | 16.75 | page, text, block, tile, blocks, manifest, pdf, images | sibling, ledger, subdirectory, sessions, items, relocation, plan, session |
-| 5 | 15.26 | rung, archive, sniff, archived, arm, withheld, zip, ingest | tile, theme, avatar, preview, navbar, board, tiles, folio |
-| 6 | 14.97 | lane, actor, edge, requirements, role, analysis, edges, forward | sha, tile, board, idle, queue, avatar, backlog, card |
+| 1 | 44.48 | instance, kind, harness, session, directory, block, page, graph | *(none)* |
+| 2 | 21.56 | watcher, sibling, prs, queue, slot, backlog, commits, block | harness, instance, declaration, node, directory, directories, graph, declares |
+| 3 | 17.99 | slot, chapter, block, edges, formal, project, proof, glossary | session, beans, branch, goals, window, store, sessions, push |
+| 4 | 16.75 | page, text, block, tile, blocks, manifest, pdf, images | sibling, ledger, subdirectory, sessions, items, session, plan, relocation |
+| 5 | 15.26 | rung, archive, sniff, archived, arm, withheld, zip, ingest | tile, theme, avatar, preview, navbar, board, tiles, card |
+| 6 | 14.97 | lane, actor, edge, requirements, role, analysis, edges, forward | sha, tile, board, queue, idle, backlog, avatar, card |
 | 7 | 14.59 | tile, avatar, card, glass, strip, sticky, board, fit | preview, url, staging, translation, feature, locale, language, translated |
 | 8 | 14.51 | edges, forward, edge, backward, cross-chapter, logical, energy, storytelling | actor, lane, role, requirements, requirement, task, login, process |
 
