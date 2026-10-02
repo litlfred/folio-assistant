@@ -15,7 +15,7 @@
   
 
     
-    .site-nav > ul.nav-list:first-child > li:not(:nth-child(55)) > a,
+    .site-nav > ul.nav-list:first-child > li:not(:nth-child(75)) > a,
     .site-nav > ul.nav-list:first-child > li > ul > li a {
       background-image: none;
     }
@@ -25,12 +25,12 @@
       background-image: none;
     }
 
-    .site-nav > ul.nav-list:first-child > li:nth-child(55) > a {
+    .site-nav > ul.nav-list:first-child > li:nth-child(75) > a {
       font-weight: 600;
       text-decoration: none;
-    }.site-nav > ul.nav-list:first-child > li:nth-child(55) > button svg {
+    }.site-nav > ul.nav-list:first-child > li:nth-child(75) > button svg {
       transform: rotate(-90deg);
-    }.site-nav > ul.nav-list:first-child > li.nav-list-item:nth-child(55) > ul.nav-list {
+    }.site-nav > ul.nav-list:first-child > li.nav-list-item:nth-child(75) > ul.nav-list {
       display: block;
     }
   </style>
@@ -50,16 +50,16 @@
 
 
   <!-- Begin Jekyll SEO tag v2.8.0 -->
-<title>LSI — applicability to ingestion, KG development, QA and the work plan | folio-assistant</title>
+<title>State graphs on a declared branch | folio-assistant</title>
 <meta name="generator" content="Jekyll v3.10.0" />
-<meta property="og:title" content="LSI — applicability to ingestion, KG development, QA and the work plan" />
+<meta property="og:title" content="State graphs on a declared branch" />
 <meta property="og:locale" content="en_US" />
 <meta name="description" content="Content-agnostic agent skills framework — author scientific papers, WHO SMART Guidelines, and FHIR Implementation Guides with an LLM, an MCP server, and a typed content-object model." />
 <meta property="og:description" content="Content-agnostic agent skills framework — author scientific papers, WHO SMART Guidelines, and FHIR Implementation Guides with an LLM, an MCP server, and a typed content-object model." />
 <meta property="og:site_name" content="folio-assistant" />
 <meta property="og:type" content="website" />
 <meta name="twitter:card" content="summary" />
-<meta property="twitter:title" content="LSI — applicability to ingestion, KG development, QA and the work plan" />
+<meta property="twitter:title" content="State graphs on a declared branch" />
 <!-- End Jekyll SEO tag -->
 
 
@@ -822,295 +822,713 @@ window.addEventListener('resize',measure);window.addEventListener('load',measure
       <div id="main-content" class="main-content">
         <main>
           
-            <h1 id="latent-semantic-indexing-where-it-applies-here-measured">
+            <h1 class="no_toc" id="state-graphs-on-a-declared-branch">
   
   
-    <a href="#latent-semantic-indexing-where-it-applies-here-measured" class="anchor-heading" aria-labelledby="latent-semantic-indexing-where-it-applies-here-measured"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Latent Semantic Indexing: where it applies here, measured
+    <a href="#state-graphs-on-a-declared-branch" class="anchor-heading" aria-labelledby="state-graphs-on-a-declared-branch"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> State graphs on a declared branch
   
   
 </h1>
     
 
-<p><strong>Method:</strong> <a href="../../methodologies/lsi.md"><code class="language-plaintext highlighter-rouge">methodologies/lsi.md</code></a> · <strong>Skill:</strong>
-<a href="../../skills/kg/graph-management/lsi-indexing.md"><code class="language-plaintext highlighter-rouge">lsi-indexing</code></a> · <strong>Engine:</strong>
-<code class="language-plaintext highlighter-rouge">content/pipeline/lsi.ts</code> · <strong>Bean</strong> <code class="language-plaintext highlighter-rouge">ansc</code>, <strong>issue</strong> #1482.</p>
+<p><strong>Status:</strong> proposal; D1–D4 ruled 2026-10-02, all defaults (§6). <strong>Nothing has moved yet.</strong> Epic bean
+<code class="language-plaintext highlighter-rouge">folio-assistant-fs43</code>. Generalises arc <code class="language-plaintext highlighter-rouge">3fva</code> (issue
+<a href="https://github.com/litlfred/folio-assistant/issues/1763">#1763</a>, PRs
+<a href="https://github.com/litlfred/folio-assistant/pull/1764">#1764</a> and
+<a href="https://github.com/litlfred/folio-assistant/pull/1801">#1801</a>), which moves QA
+evidence to an orphan <code class="language-plaintext highlighter-rouge">qa-reports</code> branch.</p>
 
-<p>Every number below was measured on 2026-09-29 in this checkout, by the commands
-named beside it. None is quoted from the literature.</p>
-<h2 id="1-the-problem-lsi-solves-stated-in-this-repositorys-own-words">
-  
-  
-    <a href="#1-the-problem-lsi-solves-stated-in-this-repositorys-own-words" class="anchor-heading" aria-labelledby="1-the-problem-lsi-solves-stated-in-this-repositorys-own-words"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 1. The problem LSI solves, stated in this repository’s own words
-  
-  
-</h2>
-    
-
-<p><code class="language-plaintext highlighter-rouge">content/pipeline/graph-search.ts</code> already names it in its docblock: a lexical
-search <em>“cannot answer [has anyone worked this topic?] for a prior result
-written in different words — which is the case that actually costs a session,
-because the grep comes back empty and reads as a clean bill.”</em> The graph walk
-it adds recovers the case where the related node is <strong>linked</strong>. LSI recovers the
-case where it is <strong>not linked and not worded the same</strong>, which neither lexical
-search nor the graph can see.</p>
-
-<p>That is the whole argument for adopting it, and it also sets the limit: LSI is a
-retrieval aid, so every output here is a proposal (method refusals 1–4).</p>
-<h2 id="2-applicability-problem-by-problem">
-  
-  
-    <a href="#2-applicability-problem-by-problem" class="anchor-heading" aria-labelledby="2-applicability-problem-by-problem"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 2. Applicability, problem by problem
-  
-  
-</h2>
-    
-<h3 id="21-document-ingestion">
-  
-  
-    <a href="#21-document-ingestion" class="anchor-heading" aria-labelledby="21-document-ingestion"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 2.1 Document ingestion
-  
-  
-</h3>
-    
-
-<div class="table-wrapper"><table>
-  <thead>
-    <tr>
-      <th>use</th>
-      <th>measured on who-iris (3 docs, 342 sections, 47,552 words, ~1 s)</th>
-      <th>verdict</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td><strong>Outlier / non-prose detection</strong> (<code class="language-plaintext highlighter-rouge">narrowDimensions</code>)</td>
-      <td>two dimensions are placeholder text in the WPRO style guide: Lorem-ipsum layout filler (pp. 21, 29–31) and pseudo-Latin font specimens (pp. 14–15, 28). Found on the first run, by nobody looking for it</td>
-      <td><strong>strong</strong> — cheap, and finds what a per-page check cannot, because “unusual” is only defined against the rest of the corpus</td>
-    </tr>
-    <tr>
-      <td><strong>Near-duplicate pages</strong> (<code class="language-plaintext highlighter-rouge">nearDuplicates</code>)</td>
-      <td>12 pairs, all inside the WPRO guide: repeated layout pages (pp. 6–10) and font-specimen pages (14/15, cos 0.993)</td>
-      <td><strong>useful</strong>, needs a person: similar is not duplicate</td>
-    </tr>
-    <tr>
-      <td><strong>Cross-document “about the same thing”</strong></td>
-      <td>query <em>certainty of the evidence</em> → Handbook §9.5.2, §9.1 lexically, then §9.2 <em>GRADE evidence profiles</em> and §9.6 <strong>latent-only</strong>; <em>tuberculosis drug susceptibility</em> → the Handbook’s PICO examples, all latent-only</td>
-      <td><strong>strong</strong> for the vocabulary gap; weak across documents whose vocabularies do not overlap (the style manuals and the guideline handbook share little)</td>
-    </tr>
-    <tr>
-      <td>Prioritising agent summaries (bean <code class="language-plaintext highlighter-rouge">x80s</code>)</td>
-      <td>not run</td>
-      <td>plausible: summarise a dimension’s central units first</td>
-    </tr>
-    <tr>
-      <td>Round-trip translation QA (bean <code class="language-plaintext highlighter-rouge">ktt2</code>)</td>
-      <td>not run</td>
-      <td><strong>not with this node.</strong> Cross-language LSI is a different method (Dumais et al. 1997) and needs a parallel corpus</td>
-    </tr>
-  </tbody>
-</table></div>
-<h3 id="22-knowledge-graph-development">
-  
-  
-    <a href="#22-knowledge-graph-development" class="anchor-heading" aria-labelledby="22-knowledge-graph-development"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 2.2 Knowledge-graph development
-  
-  
-</h3>
-    
-
-<div class="table-wrapper"><table>
-  <thead>
-    <tr>
-      <th>use</th>
-      <th>measured</th>
-      <th>verdict</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td><strong>Vocabulary-gap search beside <code class="language-plaintext highlighter-rouge">graph-search</code></strong></td>
-      <td>see 2.1</td>
-      <td><strong>strong</strong>; report as its own provenance, never merged</td>
-    </tr>
-    <tr>
-      <td>Duplicate / overlapping skills</td>
-      <td>302 skills, 7,514 terms: <strong>0</strong> pairs ≥ 0.95</td>
-      <td>a measured negative — the skills graph is not restating itself at that threshold</td>
-    </tr>
-    <tr>
-      <td><code class="language-plaintext highlighter-rouge">uses[]</code> candidates for a block</td>
-      <td>not run</td>
-      <td><strong>propose only</strong> — <code class="language-plaintext highlighter-rouge">uses[]</code> is editorial; writing it from a score destroys the signal (refusal 3)</td>
-    </tr>
-    <tr>
-      <td>Glossary candidates (bean <code class="language-plaintext highlighter-rouge">lqo9</code>)</td>
-      <td>not run</td>
-      <td>plausible: term–term neighbours in <code class="language-plaintext highlighter-rouge">U_k Σ_k</code> surface synonyms a glossary should reconcile</td>
-    </tr>
-    <tr>
-      <td>Cohesion of a candidate subgraph (bean <code class="language-plaintext highlighter-rouge">j79e</code>, detangle)</td>
-      <td>not run</td>
-      <td>a second, independent cohesion measure; parallel to the structural one, not a replacement</td>
-    </tr>
-    <tr>
-      <td><strong>Formal math content</strong></td>
-      <td>—</td>
-      <td><strong>excluded.</strong> A similarity score is never evidence for a claim, never enters a proof (refusal 4)</td>
-    </tr>
-  </tbody>
-</table></div>
-<h3 id="23-qa">
-  
-  
-    <a href="#23-qa" class="anchor-heading" aria-labelledby="23-qa"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 2.3 QA
-  
-  
-</h3>
-    
-
-<p><code class="language-plaintext highlighter-rouge">bun run lsi:audit</code> — which declared prose graphs need an index, and is each
-fresh. First run: <strong>8 graphs</strong> met the threshold (≥ 100 units, ≥ 20,000 words;
-a house number, basis stated in <code class="language-plaintext highlighter-rouge">scripts/lsi.ts</code>). After this PR: <code class="language-plaintext highlighter-rouge">who-iris/library</code>
-and <code class="language-plaintext highlighter-rouge">cat-harness/skills</code> <strong>pass</strong>; <code class="language-plaintext highlighter-rouge">cat-harness/beans</code> is <strong>n/a by design</strong>
-(a state graph, rebuilt on demand); five still <strong>fail</strong> —
-<code class="language-plaintext highlighter-rouge">agent-skills/library</code>, <code class="language-plaintext highlighter-rouge">cat-harness/library</code>, <code class="language-plaintext highlighter-rouge">cat-harness/docs</code>,
-<code class="language-plaintext highlighter-rouge">smart-base/library</code>, <code class="language-plaintext highlighter-rouge">smart-trust/smart-trust-docs</code>.</p>
-<h3 id="24-the-work-plan--epics">
-  
-  
-    <a href="#24-the-work-plan--epics" class="anchor-heading" aria-labelledby="24-the-work-plan--epics"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 2.4 The work plan — epics
-  
-  
-</h3>
-    
-
-<p><code class="language-plaintext highlighter-rouge">bun run lsi:epics</code> over <strong>1,061 beans</strong> (every status), 21 open epics as
-classes. Full output: <a href="/folio-assistant/STAGING/claude-wonderful-curie-gbfeuy-q4-chrome/proposals/lsi-epic-filing-2026-09-29.html"><code class="language-plaintext highlighter-rouge">lsi-epic-filing-2026-09-29.md</code></a>.</p>
-
-<ul>
-  <li><strong>The store is already well filed</strong>: 7 of 254 open beans have no epic.</li>
-  <li><strong>Calibration</strong>: leave-one-out, LSI’s best epic equals the current one for
-<strong>145 / 247 (59 %)</strong>; chance is ~5 %. Flat across k = 50–250 (59–63 %).
-Log-entropy beat tf-idf (59 % vs 52 %). (Dumais 1991, credited with that
-weighting, is not held, so this is our measurement, not a replication.)</li>
-  <li><strong>34 disputed filings.</strong> The strongest are <em>symptom vs subject</em>: translation
-catalogue beans under CI RELIABILITY (they turned <code class="language-plaintext highlighter-rouge">main</code> red) that LSI puts
-under TRANSLATION (what they are about). Both are defensible; which axis an
-epic means is an owner decision.</li>
-  <li><strong>Duplicates found</strong>: 13 bean pairs ≥ 0.95, e.g. <code class="language-plaintext highlighter-rouge">3ozg</code>/<code class="language-plaintext highlighter-rouge">rmcf</code> (72 sidecars
-churn), <code class="language-plaintext highlighter-rouge">d3yq</code>/<code class="language-plaintext highlighter-rouge">xffc</code> (themes), <code class="language-plaintext highlighter-rouge">gx86</code>/<code class="language-plaintext highlighter-rouge">whwf</code>, <code class="language-plaintext highlighter-rouge">o3p3</code>/<code class="language-plaintext highlighter-rouge">ukfw</code>.</li>
-  <li><strong>Branches</strong>: 145 unmerged. 39 name a bean in their commits (explicit home);
-106 do not and get a latent proposal, mostly with small margins — most are
-one-commit leftovers whose work landed another way.</li>
-</ul>
-<h2 id="3-what-lsi-is-not-good-at-here">
-  
-  
-    <a href="#3-what-lsi-is-not-good-at-here" class="anchor-heading" aria-labelledby="3-what-lsi-is-not-good-at-here"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 3. What LSI is NOT good at, here
-  
-  
-</h2>
-    
-
-<p>Since this page was first written, the sources were ingested and the method
-node was checked against them (<a href="../../methodologies/lsi.md"><code class="language-plaintext highlighter-rouge">lsi</code></a>): the
-engine reproduces the 1990 paper’s worked example, and two claims in the
-first draft were corrected — <code class="language-plaintext highlighter-rouge">k</code> (the paper uses 50–100) and stemming (the
-paper’s CISI result shows stemming captured structure LSI did not).</p>
-
-<ul>
-  <li>
-    <p><strong>The first dimension is a margin.</strong> Qi et al. (2023): LSA’s first
-dimensions mainly show document length and term frequency. Both our
-committed indexes have a dimension 1 with no negative pole — that signature.</p>
+<ol id="markdown-toc">
+  <li><a href="#1-the-ask" id="markdown-toc-1-the-ask">1. The ask</a></li>
+  <li><a href="#2-what-exists-today-measured-2026-10-02-at-b3088cd" id="markdown-toc-2-what-exists-today-measured-2026-10-02-at-b3088cd">2. What exists today (measured 2026-10-02 at <code class="language-plaintext highlighter-rouge">b3088cd</code>)</a>    <ol>
+      <li><a href="#21-the-special-branches" id="markdown-toc-21-the-special-branches">2.1 The special branches</a></li>
+      <li><a href="#22-the-state-graphs-on-main" id="markdown-toc-22-the-state-graphs-on-main">2.2 The state graphs on <code class="language-plaintext highlighter-rouge">main</code></a></li>
+      <li><a href="#23-what-it-costs" id="markdown-toc-23-what-it-costs">2.3 What it costs</a></li>
+    </ol>
   </li>
-  <li><strong>Word order and negation.</strong> Bag of words: “X is not Y” and “X is Y” are the
-same vector. Useless for checking what a text <em>asserts</em>.</li>
-  <li><strong>Polysemy is only partly handled.</strong> A term has one vector — the average of
-its senses; context disambiguates only at the unit level.</li>
-  <li><strong>Small graphs.</strong> Below ~100 units the co-occurrence statistics are thin;
-that is why the audit says <code class="language-plaintext highlighter-rouge">n/a</code>, not <code class="language-plaintext highlighter-rouge">pass</code>.</li>
-  <li><strong><code class="language-plaintext highlighter-rouge">k</code> is empirical.</strong> The literature gives no rule; the calibration above is
-how this repo chose (and found the choice barely matters for filing).</li>
-  <li><strong>Dimensions are identifiable only up to sign and rotation within equal
-singular values.</strong> The engine fixes the sign; naming a dimension is still a
-person’s act.</li>
-</ul>
-<h2 id="4-options-for-skills-tools-and-docs">
+  <li><a href="#3-design" id="markdown-toc-3-design">3. Design</a>    <ol>
+      <li><a href="#31-the-general-rule--content-on-main-everything-else-on-a-declared-ref" id="markdown-toc-31-the-general-rule--content-on-main-everything-else-on-a-declared-ref">3.1 The general rule — content on <code class="language-plaintext highlighter-rouge">main</code>, everything else on a declared ref</a></li>
+      <li><a href="#32-the-declaration--one-field-shared-with-3fva" id="markdown-toc-32-the-declaration--one-field-shared-with-3fva">3.2 The declaration — one field, shared with 3fva</a></li>
+      <li><a href="#33-what-moves-and-what-stays" id="markdown-toc-33-what-moves-and-what-stays">3.3 What moves and what stays</a></li>
+      <li><a href="#34-how-it-is-read-and-written" id="markdown-toc-34-how-it-is-read-and-written">3.4 How it is read and written</a></li>
+      <li><a href="#35-what-a-gate-becomes" id="markdown-toc-35-what-a-gate-becomes">3.5 What a gate becomes</a></li>
+    </ol>
+  </li>
+  <li><a href="#4-what-would-need-to-change" id="markdown-toc-4-what-would-need-to-change">4. What would need to change</a>    <ol>
+      <li><a href="#41-skills-and-processes-to-adjust" id="markdown-toc-41-skills-and-processes-to-adjust">4.1 Skills and processes to adjust</a></li>
+    </ol>
+  </li>
+  <li><a href="#5-workplan" id="markdown-toc-5-workplan">5. Workplan</a></li>
+  <li><a href="#6-decisions-for-the-owner" id="markdown-toc-6-decisions-for-the-owner">6. Decisions for the owner</a></li>
+  <li><a href="#7-what-would-falsify-this" id="markdown-toc-7-what-would-falsify-this">7. What would falsify this</a></li>
+  <li><a href="#8-not-in-scope" id="markdown-toc-8-not-in-scope">8. Not in scope</a></li>
+</ol><hr />
+<h2 id="1-the-ask">
   
   
-    <a href="#4-options-for-skills-tools-and-docs" class="anchor-heading" aria-labelledby="4-options-for-skills-tools-and-docs"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 4. Options for skills, tools and docs
+    <a href="#1-the-ask" class="anchor-heading" aria-labelledby="1-the-ask"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 1. The ask
   
   
 </h2>
     
 
-<p>Built in this PR: the methodology node, the engine, <code class="language-plaintext highlighter-rouge">lsi</code> / <code class="language-plaintext highlighter-rouge">lsi:audit</code> /
-<code class="language-plaintext highlighter-rouge">lsi:epics</code>, the <code class="language-plaintext highlighter-rouge">lsi-indexing</code> skill, committed sidecars for
-who-iris and skills, this page and the epic proposal.</p>
+<p>Owner, 2026-10-02:</p>
+
+<blockquote>
+  <p>just like there are special branches (gh-pages, qa-reports, lean and fhir-ast
+caches) we should have a special branch for state based KG content (e.g.
+todos and beans). and that this branch would be a declared sub-graph. what
+would need to change? develop workplan. this should be a general practice to
+manage a KG and generated content (and that rendered content is
+sub-graph/linking to primary semi-static content graph). review processes
+and adjust</p>
+</blockquote>
+
+<p>Three things are asked, and they are separable:</p>
+
+<ol>
+  <li><strong>A <code class="language-plaintext highlighter-rouge">state</code> branch</strong> for the process-written graphs.</li>
+  <li><strong>“Which ref holds this graph” becomes a declaration</strong>, so the branch is a
+declared sub-graph rather than a convention a script knows about.</li>
+  <li><strong>A general rule</strong>: content on <code class="language-plaintext highlighter-rouge">main</code>; everything a process writes or
+regenerates on a declared ref, as a sub-graph that <em>links back</em> to the
+primary content graph at a commit.</li>
+</ol>
+<h2 id="2-what-exists-today-measured-2026-10-02-at-b3088cd">
+  
+  
+    <a href="#2-what-exists-today-measured-2026-10-02-at-b3088cd" class="anchor-heading" aria-labelledby="2-what-exists-today-measured-2026-10-02-at-b3088cd"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 2. What exists today (measured 2026-10-02 at <code class="language-plaintext highlighter-rouge">b3088cd</code>)
+  
+  
+</h2>
+    
+<h3 id="21-the-special-branches">
+  
+  
+    <a href="#21-the-special-branches" class="anchor-heading" aria-labelledby="21-the-special-branches"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 2.1 The special branches
+  
+  
+</h3>
+    
 
 <div class="table-wrapper"><table>
   <thead>
     <tr>
-      <th>#</th>
-      <th>option</th>
-      <th>what it adds</th>
-      <th>cost</th>
-      <th>recommendation</th>
+      <th>branch</th>
+      <th>writer</th>
+      <th>write shape</th>
+      <th>declared as a graph?</th>
     </tr>
   </thead>
   <tbody>
     <tr>
-      <td>A</td>
-      <td><strong>Semantic check before <code class="language-plaintext highlighter-rouge">beans create</code></strong></td>
-      <td>fold the new title in, show the 3 nearest beans; <code class="language-plaintext highlighter-rouge">beans create</code> dedupes on nothing (the 14,688-duplicate incident)</td>
-      <td>small: one call in the check-before-create recipe</td>
-      <td><strong>do first</strong> — highest value per line</td>
+      <td><code class="language-plaintext highlighter-rouge">gh-pages</code></td>
+      <td><code class="language-plaintext highlighter-rouge">docs-site.yml</code> (full replace), <code class="language-plaintext highlighter-rouge">feature-staging.yml</code> (<code class="language-plaintext highlighter-rouge">STAGING/&lt;slug&gt;/</code>), <code class="language-plaintext highlighter-rouge">discoverability-docs.yml</code></td>
+      <td>replace / keep_files</td>
+      <td><strong>no</strong> — a <code class="language-plaintext highlighter-rouge">branch:</code> string in <code class="language-plaintext highlighter-rouge">schemas/staging-preview.ts</code></td>
     </tr>
     <tr>
-      <td>B</td>
-      <td><strong>Ingestion QA step</strong></td>
-      <td>run <code class="language-plaintext highlighter-rouge">narrowDimensions</code> + <code class="language-plaintext highlighter-rouge">nearDuplicates</code> as a sidecar when a library document is ingested (<code class="language-plaintext highlighter-rouge">library-ingestion</code>)</td>
-      <td>small–medium; one BPMN task</td>
-      <td>do second</td>
+      <td><code class="language-plaintext highlighter-rouge">lake-cache/&lt;pkg&gt;-&lt;slug&gt;</code></td>
+      <td><code class="language-plaintext highlighter-rouge">lake-cache-refresh.yml</code> via <code class="language-plaintext highlighter-rouge">lake-cache.sh seed --push</code></td>
+      <td>orphan, one key per branch, pruned by deletion</td>
+      <td><strong>no</strong> — inferred by name prefix</td>
     </tr>
     <tr>
-      <td>C</td>
-      <td><strong><code class="language-plaintext highlighter-rouge">--latent</code> on <code class="language-plaintext highlighter-rouge">graph-search</code> + an MCP <code class="language-plaintext highlighter-rouge">lsi_query</code> Tool node</strong></td>
-      <td>agents get vocabulary-gap search where they already search, as a separate provenance</td>
-      <td>medium; a Tool node + satisfies</td>
-      <td>do third</td>
-    </tr>
-    <tr>
-      <td>D</td>
-      <td>Fold <code class="language-plaintext highlighter-rouge">lsi-index-fresh</code> into <code class="language-plaintext highlighter-rouge">kg:audit</code> as a sidecar criterion</td>
-      <td>the verdict joins the audited record, like <code class="language-plaintext highlighter-rouge">check:raci</code> did (bean <code class="language-plaintext highlighter-rouge">3kbd</code>)</td>
-      <td>medium; kg:audit sidecar churn, and PR #1472 is reshaping kg:audit now</td>
-      <td>after #1472 lands</td>
-    </tr>
-    <tr>
-      <td>E</td>
-      <td>Index the five remaining graphs</td>
-      <td><code class="language-plaintext highlighter-rouge">bun run lsi index</code> per graph; <code class="language-plaintext highlighter-rouge">docs</code> is 434k words (~10 s)</td>
-      <td>trivial compute, large sidecars to review</td>
-      <td>after deciding sidecar size policy</td>
-    </tr>
-    <tr>
-      <td>F</td>
-      <td>Apply the epic proposal</td>
-      <td><code class="language-plaintext highlighter-rouge">beans update --parent</code> for the 7 unfiled, scrap-with-pointer for confirmed duplicates</td>
-      <td>owner review per bean</td>
-      <td>owner decides</td>
-    </tr>
-    <tr>
-      <td>G</td>
-      <td><strong>Correspondence analysis as its own method node</strong> — ✅ <strong>built and measured 2026-09-29</strong></td>
-      <td><code class="language-plaintext highlighter-rouge">methodologies/correspondence-analysis.md</code>, <code class="language-plaintext highlighter-rouge">content/pipeline/ca.ts</code> (tested on Qi et al.’s Table 1). On the pre-refiling bean store: CA-raw 146 vs LSI-raw 136 of 250 (the paper’s direction, McNemar p = 0.17); vs log-entropy LSI p = 0.71. Removes the margin dimension (who-iris dim 1: LSI 342/342 one side, CA 46/296) but its leading dimensions go to outliers</td>
-      <td>done</td>
-      <td>parallel track; LSI stays the filing default</td>
+      <td><code class="language-plaintext highlighter-rouge">qa-reports</code></td>
+      <td><code class="language-plaintext highlighter-rouge">folio-qa-bot</code> (arc <code class="language-plaintext highlighter-rouge">3fva</code>, not on <code class="language-plaintext highlighter-rouge">main</code> yet)</td>
+      <td>orphan, commit-keyed, append, never <code class="language-plaintext highlighter-rouge">-f</code></td>
+      <td><strong>proposed</strong> — a <code class="language-plaintext highlighter-rouge">storage</code> field on <code class="language-plaintext highlighter-rouge">ContentDirectory</code> (3fva §2.4)</td>
     </tr>
   </tbody>
 </table></div>
+
+<p>There is no witness, LaTeX or fhir-ast cache <em>branch</em> today; those caches are
+Actions caches or <code class="language-plaintext highlighter-rouge">build/</code>. <strong>No declaration field anywhere places a graph on
+another git ref</strong> — every <code class="language-plaintext highlighter-rouge">ref</code> in the schemas is a SHA of another repo, a
+dependency ref, or a page path.</p>
+<h3 id="22-the-state-graphs-on-main">
+  
+  
+    <a href="#22-the-state-graphs-on-main" class="anchor-heading" aria-labelledby="22-the-state-graphs-on-main"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 2.2 The state graphs on <code class="language-plaintext highlighter-rouge">main</code>
+  
+  
+</h3>
+    
+
+<p>Kinds whose <code class="language-plaintext highlighter-rouge">holds</code> is <code class="language-plaintext highlighter-rouge">state</code> (<code class="language-plaintext highlighter-rouge">graph-kind-registry.ts</code>), and where the
+directories declaring them live:</p>
+
+<div class="table-wrapper"><table>
+  <thead>
+    <tr>
+      <th>graph</th>
+      <th>path</th>
+      <th>declared in</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>bean defs (+ archive)</td>
+      <td><code class="language-plaintext highlighter-rouge">beans/defs/</code></td>
+      <td><code class="language-plaintext highlighter-rouge">beans/beans.json</code>, <code class="language-plaintext highlighter-rouge">folio-assistant.json</code></td>
+    </tr>
+    <tr>
+      <td>workflow instances</td>
+      <td><code class="language-plaintext highlighter-rouge">beans/workflows/</code></td>
+      <td><code class="language-plaintext highlighter-rouge">beans/beans.json</code></td>
+    </tr>
+    <tr>
+      <td>session surveys</td>
+      <td><code class="language-plaintext highlighter-rouge">beans/surveys/</code></td>
+      <td><code class="language-plaintext highlighter-rouge">beans/beans.json</code></td>
+    </tr>
+    <tr>
+      <td>todos</td>
+      <td><code class="language-plaintext highlighter-rouge">todos/</code></td>
+      <td><code class="language-plaintext highlighter-rouge">folio-assistant.json</code></td>
+    </tr>
+    <tr>
+      <td>issue marks</td>
+      <td><code class="language-plaintext highlighter-rouge">issue-marks/</code></td>
+      <td><code class="language-plaintext highlighter-rouge">folio-assistant.json</code></td>
+    </tr>
+    <tr>
+      <td>health results</td>
+      <td><code class="language-plaintext highlighter-rouge">test/health/results/</code></td>
+      <td><code class="language-plaintext highlighter-rouge">cat-harness/cat-harness.json</code></td>
+    </tr>
+    <tr>
+      <td>qa</td>
+      <td><code class="language-plaintext highlighter-rouge">test/results/</code></td>
+      <td>four instances — <strong>already arc 3fva’s</strong></td>
+    </tr>
+    <tr>
+      <td>uploads, swimlane glossary</td>
+      <td><code class="language-plaintext highlighter-rouge">uploads/</code>, <code class="language-plaintext highlighter-rouge">glossary/</code></td>
+      <td>see §3.3 — <strong>not</strong> proposed to move</td>
+    </tr>
+  </tbody>
+</table></div>
+<h3 id="23-what-it-costs">
+  
+  
+    <a href="#23-what-it-costs" class="anchor-heading" aria-labelledby="23-what-it-costs"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 2.3 What it costs
+  
+  
+</h3>
+    
+
+<ul>
+  <li><strong>Merge friction.</strong> Bean <code class="language-plaintext highlighter-rouge">y7b3</code> replayed 300 main-into-branch merges: 235
+conflicted, 147 (63 %) <em>only</em> on generated files, and <code class="language-plaintext highlighter-rouge">beans/README.md</code> alone
+accounted for 76 — every one on its file-count line. Bean <code class="language-plaintext highlighter-rouge">cflw</code>: one auditor
+edit rewrote 218 sidecars.</li>
+  <li><strong>Claims are branch-local.</strong> <code class="language-plaintext highlighter-rouge">bean-coordination</code> §”A claim is branch-local”:
+a claim announces rather than reserves until the PR exists, and 97 of 100
+<code class="language-plaintext highlighter-rouge">in-progress</code> beans on <code class="language-plaintext highlighter-rouge">main</code> recorded no holder (bean <code class="language-plaintext highlighter-rouge">c3d7</code>).
+<code class="language-plaintext highlighter-rouge">beans:claim</code> works around this by <strong>pushing a claim commit straight to
+<code class="language-plaintext highlighter-rouge">main</code></strong> from a detached worktree — the one script that treats <code class="language-plaintext highlighter-rouge">main</code> as a
+shared database.</li>
+  <li><strong>Every bean edit is a <code class="language-plaintext highlighter-rouge">main</code> commit</strong>, so it re-triggers the docs site, the
+gate set and every PR’s “behind main” count for a change to no code.</li>
+</ul>
+<h2 id="3-design">
+  
+  
+    <a href="#3-design" class="anchor-heading" aria-labelledby="3-design"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 3. Design
+  
+  
+</h2>
+    
+<h3 id="31-the-general-rule--content-on-main-everything-else-on-a-declared-ref">
+  
+  
+    <a href="#31-the-general-rule--content-on-main-everything-else-on-a-declared-ref" class="anchor-heading" aria-labelledby="31-the-general-rule--content-on-main-everything-else-on-a-declared-ref"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 3.1 The general rule — content on <code class="language-plaintext highlighter-rouge">main</code>, everything else on a declared ref
+  
+  
+</h3>
+    
+
+<p>The layer a kind already declares (<code class="language-plaintext highlighter-rouge">holds</code>) decides where its graph lives by
+default. The declaration makes it explicit and checkable.</p>
+
+<div class="table-wrapper"><table>
+  <thead>
+    <tr>
+      <th>layer (<code class="language-plaintext highlighter-rouge">holds</code>)</th>
+      <th>example</th>
+      <th>default ref</th>
+      <th>keyed by</th>
+      <th>write shape</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">content</code></td>
+      <td>chapters, skills, processes</td>
+      <td><code class="language-plaintext highlighter-rouge">main</code></td>
+      <td>—</td>
+      <td>PR</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">context</code></td>
+      <td>interaction prefs, roles</td>
+      <td><code class="language-plaintext highlighter-rouge">main</code></td>
+      <td>—</td>
+      <td>PR</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">state</code></td>
+      <td>beans, workflow instances, todos</td>
+      <td><strong><code class="language-plaintext highlighter-rouge">state</code></strong></td>
+      <td><strong>tip</strong> — one living tree</td>
+      <td>fetch → splice → push, never <code class="language-plaintext highlighter-rouge">-f</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">derived</code> (verdicts)</td>
+      <td>QA sidecars</td>
+      <td><code class="language-plaintext highlighter-rouge">qa-reports</code> (3fva)</td>
+      <td>commit</td>
+      <td>append under <code class="language-plaintext highlighter-rouge">main/&lt;sha&gt;/</code>, <code class="language-plaintext highlighter-rouge">pr/&lt;n&gt;/&lt;sha&gt;/</code></td>
+    </tr>
+    <tr>
+      <td>rendered</td>
+      <td>the docs site</td>
+      <td><code class="language-plaintext highlighter-rouge">gh-pages</code></td>
+      <td>commit (the build stamp)</td>
+      <td>replace, previews kept</td>
+    </tr>
+    <tr>
+      <td>cache</td>
+      <td>Lake builds</td>
+      <td><code class="language-plaintext highlighter-rouge">lake-cache/*</code></td>
+      <td>toolchain + inputs</td>
+      <td>one key per branch, pruned</td>
+    </tr>
+  </tbody>
+</table></div>
+
+<p>The distinction that matters between <code class="language-plaintext highlighter-rouge">state</code> and <code class="language-plaintext highlighter-rouge">derived</code>: <strong>state is not
+regenerable</strong>. A QA verdict can be recomputed from the tree, so a
+commit-keyed snapshot per run is right and losing one costs a rerun. A bean is
+somebody’s decision; it must be a single living tree whose history is the
+audit trail, and a lost write is lost work. So <code class="language-plaintext highlighter-rouge">state</code> is tip-keyed and its
+write loop must splice, never replace.</p>
+<h3 id="32-the-declaration--one-field-shared-with-3fva">
+  
+  
+    <a href="#32-the-declaration--one-field-shared-with-3fva" class="anchor-heading" aria-labelledby="32-the-declaration--one-field-shared-with-3fva"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 3.2 The declaration — one field, shared with 3fva
+  
+  
+</h3>
+    
+
+<p>Arc 3fva proposes <code class="language-plaintext highlighter-rouge">storage</code> on <code class="language-plaintext highlighter-rouge">ContentDirectory</code>. This proposal <strong>reuses that
+field</strong> rather than adding a second one, and widens its key:</p>
+
+<div class="language-jsonc highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// beans/beans.json</span><span class="w">
+</span><span class="p">{</span><span class="w"> </span><span class="nl">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"defs"</span><span class="p">,</span><span class="w"> </span><span class="nl">"path"</span><span class="p">:</span><span class="w"> </span><span class="s2">"defs"</span><span class="p">,</span><span class="w"> </span><span class="nl">"graphs"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">"bean-defs"</span><span class="p">],</span><span class="w">
+  </span><span class="nl">"storage"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nl">"branch"</span><span class="p">:</span><span class="w"> </span><span class="s2">"state"</span><span class="p">,</span><span class="w"> </span><span class="nl">"keyedBy"</span><span class="p">:</span><span class="w"> </span><span class="s2">"tip"</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="p">}</span><span class="w">
+
+</span><span class="c1">// test/results — 3fva, unchanged</span><span class="w">
+</span><span class="p">{</span><span class="w"> </span><span class="nl">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"qa"</span><span class="p">,</span><span class="w"> </span><span class="nl">"path"</span><span class="p">:</span><span class="w"> </span><span class="s2">"test/results"</span><span class="p">,</span><span class="w"> </span><span class="nl">"graphs"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">"qa"</span><span class="p">],</span><span class="w">
+  </span><span class="nl">"storage"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nl">"branch"</span><span class="p">:</span><span class="w"> </span><span class="s2">"qa-reports"</span><span class="p">,</span><span class="w"> </span><span class="nl">"keyedBy"</span><span class="p">:</span><span class="w"> </span><span class="s2">"commit"</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="p">}</span><span class="w">
+</span></code></pre></div></div>
+
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">keyedBy: "tip"</code> (state) or <code class="language-plaintext highlighter-rouge">"commit"</code> (derived, rendered). The write library
+branches on it; nothing else does.</li>
+  <li><strong>Every node written to a non-<code class="language-plaintext highlighter-rouge">main</code> ref carries a back-link</strong> —
+<code class="language-plaintext highlighter-rouge">{ "source": { "ref": "main", "sha": "&lt;commit&gt;" } }</code> in the branch’s manifest
+— to the content commit it describes. That is the owner’s “rendered content
+is a sub-graph linking to the primary content graph”, made a field. The
+deploy’s <code class="language-plaintext highlighter-rouge">build.json</code> (bean <code class="language-plaintext highlighter-rouge">r6es</code>, this PR) is the first instance: the docs
+site now says which <code class="language-plaintext highlighter-rouge">main</code> commit it is a rendering of, and how far behind.</li>
+  <li><code class="language-plaintext highlighter-rouge">within</code> (already on <code class="language-plaintext highlighter-rouge">GraphKindDef</code>) names the primary graph a sub-graph
+belongs to. <code class="language-plaintext highlighter-rouge">gh-pages</code> gets a declaration for the first time, <code class="language-plaintext highlighter-rouge">within</code> the
+<code class="language-plaintext highlighter-rouge">folio</code> graph it renders.</li>
+  <li><code class="language-plaintext highlighter-rouge">folio_init</code> writes the same declarations, so a folio inherits the layout.</li>
+</ul>
+<h3 id="33-what-moves-and-what-stays">
+  
+  
+    <a href="#33-what-moves-and-what-stays" class="anchor-heading" aria-labelledby="33-what-moves-and-what-stays"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 3.3 What moves and what stays
+  
+  
+</h3>
+    
+
+<div class="table-wrapper"><table>
+  <thead>
+    <tr>
+      <th>class</th>
+      <th>moves</th>
+      <th>why</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">beans/defs/</code>, <code class="language-plaintext highlighter-rouge">beans/defs/archive/</code>, <code class="language-plaintext highlighter-rouge">beans/workflows/</code>, <code class="language-plaintext highlighter-rouge">beans/surveys/</code></td>
+      <td><strong>yes</strong></td>
+      <td>process-written; co-located per the 2026-09-18 ruling (<code class="language-plaintext highlighter-rouge">workflow-state-in-beans.md</code> Option A) — they move <em>together</em></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">todos/</code>, <code class="language-plaintext highlighter-rouge">issue-marks/</code></td>
+      <td><strong>yes</strong></td>
+      <td>process-written</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">test/health/results/</code></td>
+      <td><strong>yes</strong></td>
+      <td>already uploaded as an artifact, not committed by CI</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">beans/beans.json</code>, <code class="language-plaintext highlighter-rouge">.beans.yml</code></td>
+      <td><strong>stay</strong></td>
+      <td>they are the <em>declaration</em>, which is content</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">beans/README.md</code></td>
+      <td><strong>removed from <code class="language-plaintext highlighter-rouge">main</code></strong></td>
+      <td>its count line is the top <code class="language-plaintext highlighter-rouge">y7b3</code> churner; the branch’s own README replaces it</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">uploads/</code></td>
+      <td><strong>no</strong></td>
+      <td>a person’s file is authored input, not process output; <code class="language-plaintext highlighter-rouge">state</code> only by the “a process writes it” test — D1</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">glossary/</code></td>
+      <td><strong>no</strong></td>
+      <td>rendered from content; regenerable — a <code class="language-plaintext highlighter-rouge">derived</code> candidate, not <code class="language-plaintext highlighter-rouge">state</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">interaction/</code></td>
+      <td><strong>no</strong></td>
+      <td><code class="language-plaintext highlighter-rouge">context</code> — read at session start, never written by a process</td>
+    </tr>
+  </tbody>
+</table></div>
+<h3 id="34-how-it-is-read-and-written">
+  
+  
+    <a href="#34-how-it-is-read-and-written" class="anchor-heading" aria-labelledby="34-how-it-is-read-and-written"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 3.4 How it is read and written
+  
+  
+</h3>
+    
+
+<p>The mechanism is 3fva’s, proven by its spike <code class="language-plaintext highlighter-rouge">3ds9</code> (CI push, fresh container
+push, two concurrent disjoint writers both surviving, cold read latency).</p>
+
+<ul>
+  <li><strong>One library, two key shapes.</strong> <code class="language-plaintext highlighter-rouge">branch-store.ts</code>: <code class="language-plaintext highlighter-rouge">read(graph, path)</code>,
+<code class="language-plaintext highlighter-rouge">write(graph, files, message)</code>. Write = fetch tip → <code class="language-plaintext highlighter-rouge">hash-object</code> →
+<code class="language-plaintext highlighter-rouge">mktree</code> splice onto the <em>new</em> tip → <code class="language-plaintext highlighter-rouge">commit-tree -p tip</code> → push; on a
+rejected push, refetch and splice again, up to 3 attempts with
+<code class="language-plaintext highlighter-rouge">backoff-sleep.ts</code>, <strong>never <code class="language-plaintext highlighter-rouge">-f</code></strong>.</li>
+  <li><strong>A working mount for tools that need a directory.</strong> The <code class="language-plaintext highlighter-rouge">beans</code> CLI is
+third-party and reads <code class="language-plaintext highlighter-rouge">beans/defs</code> off disk. The session-start hook mounts the
+<code class="language-plaintext highlighter-rouge">state</code> branch as a git worktree at <code class="language-plaintext highlighter-rouge">state/</code> (ignored on <code class="language-plaintext highlighter-rouge">main</code>), and
+<code class="language-plaintext highlighter-rouge">.beans.yml</code> points at <code class="language-plaintext highlighter-rouge">state/beans/defs</code>. <code class="language-plaintext highlighter-rouge">beans</code> then behaves exactly as
+today; <code class="language-plaintext highlighter-rouge">bun run state:push</code> commits and pushes the worktree through the
+library.</li>
+  <li><strong>A claim becomes global the moment it is written.</strong> <code class="language-plaintext highlighter-rouge">beans:claim</code> already
+pushes to <code class="language-plaintext highlighter-rouge">main</code>; it pushes to <code class="language-plaintext highlighter-rouge">state</code> instead. §”A claim is branch-local” in
+<code class="language-plaintext highlighter-rouge">bean-coordination</code> stops being true — the largest single gain.</li>
+  <li><strong>Pinning to a code commit.</strong> A PR that closes a bean says so in its body
+(<code class="language-plaintext highlighter-rouge">Closes-bean: &lt;id&gt;</code>); <code class="language-plaintext highlighter-rouge">merge-main.yml</code>’s post-merge job transitions the bean
+on <code class="language-plaintext highlighter-rouge">state</code> with <code class="language-plaintext highlighter-rouge">source.sha</code> = the merge commit. Code and bean are no longer
+one commit, so the link is a field rather than co-location.</li>
+</ul>
+<h3 id="35-what-a-gate-becomes">
+  
+  
+    <a href="#35-what-a-gate-becomes" class="anchor-heading" aria-labelledby="35-what-a-gate-becomes"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 3.5 What a gate becomes
+  
+  
+</h3>
+    
+
+<p>The nine bean gates (<code class="language-plaintext highlighter-rouge">check:bean-parents</code>, <code class="language-plaintext highlighter-rouge">bean-blocks</code>, <code class="language-plaintext highlighter-rouge">bean-rollup</code>,
+<code class="language-plaintext highlighter-rouge">bean-bodies</code>, <code class="language-plaintext highlighter-rouge">bean-front-matter</code>, <code class="language-plaintext highlighter-rouge">bean-issue-links</code>, …) stop running on code
+PRs that touch no bean and run <strong>on push to <code class="language-plaintext highlighter-rouge">state</code></strong> instead, as a required
+check on that branch’s own workflow. A gate that cannot fetch the branch
+reports <code class="language-plaintext highlighter-rouge">unknown</code>, never a pass — the same rule as 3fva §2.3.</p>
+<h2 id="4-what-would-need-to-change">
+  
+  
+    <a href="#4-what-would-need-to-change" class="anchor-heading" aria-labelledby="4-what-would-need-to-change"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 4. What would need to change
+  
+  
+</h2>
+    
+
+<p>Inventory, every reader and writer found (Explore sweep, 2026-10-02):</p>
+
+<div class="table-wrapper"><table>
+  <thead>
+    <tr>
+      <th>area</th>
+      <th>file</th>
+      <th>change</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>schema</td>
+      <td><code class="language-plaintext highlighter-rouge">schemas/cat-harness.ts</code> (<code class="language-plaintext highlighter-rouge">DirectoryStorageSchema</code>, from #1764), <code class="language-plaintext highlighter-rouge">schemas/bean-graph.ts</code></td>
+      <td>widen <code class="language-plaintext highlighter-rouge">keyedBy</code> to <code class="language-plaintext highlighter-rouge">commit \| tip</code> — <strong>shared with 3fva</strong>; no new field</td>
+    </tr>
+    <tr>
+      <td>schema</td>
+      <td><code class="language-plaintext highlighter-rouge">graph-kind-registry.ts</code></td>
+      <td><code class="language-plaintext highlighter-rouge">holds: state</code> ⇒ default <code class="language-plaintext highlighter-rouge">storage.keyedBy: tip</code>; a check that a declared <code class="language-plaintext highlighter-rouge">state</code> dir on <code class="language-plaintext highlighter-rouge">main</code> is a finding once migrated</td>
+    </tr>
+    <tr>
+      <td>beans CLI</td>
+      <td><code class="language-plaintext highlighter-rouge">.beans.yml</code></td>
+      <td><code class="language-plaintext highlighter-rouge">path: state/beans/defs</code></td>
+    </tr>
+    <tr>
+      <td>engine</td>
+      <td><code class="language-plaintext highlighter-rouge">cat-harness/src/workflow/store.ts</code> <code class="language-plaintext highlighter-rouge">WORKFLOW_DIR</code></td>
+      <td>resolve from the declaration, not a constant</td>
+    </tr>
+    <tr>
+      <td>claim</td>
+      <td><code class="language-plaintext highlighter-rouge">cat-harness/scripts/claim-bean.ts</code></td>
+      <td>push to <code class="language-plaintext highlighter-rouge">state</code>, not <code class="language-plaintext highlighter-rouge">main</code></td>
+    </tr>
+    <tr>
+      <td>fallback</td>
+      <td><code class="language-plaintext highlighter-rouge">cat-harness/scripts/beans-fallback.ts</code></td>
+      <td>read the mount; fix its stale <code class="language-plaintext highlighter-rouge">beans/*.md</code> header</td>
+    </tr>
+    <tr>
+      <td>landed</td>
+      <td><code class="language-plaintext highlighter-rouge">cat-harness/scripts/beans-landed.ts</code></td>
+      <td>read <code class="language-plaintext highlighter-rouge">Closes-bean:</code> from merges</td>
+    </tr>
+    <tr>
+      <td>session start</td>
+      <td><code class="language-plaintext highlighter-rouge">.claude/settings.json</code> hook, <code class="language-plaintext highlighter-rouge">session-start-coord-sweep.sh</code></td>
+      <td>fetch + mount <code class="language-plaintext highlighter-rouge">state/</code>; report “could not mount” as a finding</td>
+    </tr>
+    <tr>
+      <td>site</td>
+      <td><code class="language-plaintext highlighter-rouge">gen-docs-pages.ts</code> (<code class="language-plaintext highlighter-rouge">assets/beans/index.json</code>), <code class="language-plaintext highlighter-rouge">state-visualizer.ts</code></td>
+      <td>read from the branch at build; <code class="language-plaintext highlighter-rouge">docs-site.yml</code> also triggers on push to <code class="language-plaintext highlighter-rouge">state</code></td>
+    </tr>
+    <tr>
+      <td>gates</td>
+      <td><code class="language-plaintext highlighter-rouge">code-quality-gates.yml</code> (9 bean gates, <code class="language-plaintext highlighter-rouge">check:harness-dirs</code>, <code class="language-plaintext highlighter-rouge">check:harness-state</code>, <code class="language-plaintext highlighter-rouge">kg:audit</code>, <code class="language-plaintext highlighter-rouge">audit:coverage</code>)</td>
+      <td>read <code class="language-plaintext highlighter-rouge">storage</code>; bean gates move to a <code class="language-plaintext highlighter-rouge">state</code>-branch workflow</td>
+    </tr>
+    <tr>
+      <td>health</td>
+      <td><code class="language-plaintext highlighter-rouge">test/health/run.ts</code></td>
+      <td>write results through the library</td>
+    </tr>
+    <tr>
+      <td>todos</td>
+      <td><code class="language-plaintext highlighter-rouge">scripts/todos.ts</code>, <code class="language-plaintext highlighter-rouge">render-pipeline.ts</code></td>
+      <td>write through the library</td>
+    </tr>
+    <tr>
+      <td>issue marks</td>
+      <td><code class="language-plaintext highlighter-rouge">scan-repo-content.ts</code>, <code class="language-plaintext highlighter-rouge">merge-conflict-patterns.ts</code>, <code class="language-plaintext highlighter-rouge">harness-tiles.ts</code></td>
+      <td>read through the library</td>
+    </tr>
+    <tr>
+      <td>scaffold</td>
+      <td><code class="language-plaintext highlighter-rouge">folio_init</code> templates</td>
+      <td>write the declarations and the hook</td>
+    </tr>
+    <tr>
+      <td>docs</td>
+      <td><code class="language-plaintext highlighter-rouge">AGENTS.md</code> (beans section), onboarding guide</td>
+      <td>pointers only</td>
+    </tr>
+  </tbody>
+</table></div>
+<h3 id="41-skills-and-processes-to-adjust">
+  
+  
+    <a href="#41-skills-and-processes-to-adjust" class="anchor-heading" aria-labelledby="41-skills-and-processes-to-adjust"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 4.1 Skills and processes to adjust
+  
+  
+</h3>
+    
+
+<p>These change <strong>after</strong> the decisions in §6, not before — a skill that describes
+a branch that does not exist yet is a rule nobody can follow.</p>
+
+<div class="table-wrapper"><table>
+  <thead>
+    <tr>
+      <th>skill / process</th>
+      <th>adjustment</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">kg-core/content-context-and-state-graphs</code></td>
+      <td>add §”Where each layer lives” — the table in §3.1</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">kg-core/directory-conventions</code></td>
+      <td>the <code class="language-plaintext highlighter-rouge">storage</code> field; “a graph on another ref is still a declared directory”</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">sdlc-core/todo-manager</code></td>
+      <td>the mount; <code class="language-plaintext highlighter-rouge">state:push</code>; “WHEN COMMITTING include bean files” becomes “push the state worktree”</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">sdlc-core/bean-coordination</code></td>
+      <td>retire §”A claim is branch-local”; <code class="language-plaintext highlighter-rouge">Closes-bean:</code> replaces co-located commits</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">sdlc-core/continual-progress</code></td>
+      <td>a bean edit is no longer part of the PR’s commit set</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">process/workflow/workflow-state</code>, <code class="language-plaintext highlighter-rouge">process-state</code></td>
+      <td>instances live on <code class="language-plaintext highlighter-rouge">state</code>; “no instance recorded” reads the branch</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">processes/*.bpmn</code> with <code class="language-plaintext highlighter-rouge">&lt;cat-harness.processes:bean op&gt;</code></td>
+      <td>the engine’s bean op writes through the library — diagrams unchanged</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">proposals/workflow-state-in-beans.md</code></td>
+      <td>§0 addendum: Option A’s co-location is kept; only the ref moves</td>
+    </tr>
+  </tbody>
+</table></div>
+<h2 id="5-workplan">
+  
+  
+    <a href="#5-workplan" class="anchor-heading" aria-labelledby="5-workplan"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 5. Workplan
+  
+  
+</h2>
+    
+
+<p>Phases are serial; items inside a phase can run in parallel (⇉).</p>
+
+<p><strong>Phase 0 — align with 3fva (now).</strong> Agree one <code class="language-plaintext highlighter-rouge">storage</code> field and one
+<code class="language-plaintext highlighter-rouge">branch-store</code> library with arc 3fva’s owner session before either lands. A
+second field over the same question is two answers free to disagree.</p>
+
+<p><em>Found 2026-10-02 on #1764’s branch:</em> 3fva already ships
+<code class="language-plaintext highlighter-rouge">DirectoryStorageSchema = { branch, keyedBy: z.literal("commit") }.strict()</code>
+and <code class="language-plaintext highlighter-rouge">scripts/qa-store.ts</code>, whose private <code class="language-plaintext highlighter-rouge">Store</code> class (private bare repo,
+<code class="language-plaintext highlighter-rouge">fetchTip</code>, <code class="language-plaintext highlighter-rouge">setPath</code> splice, retry on a moved tip, never <code class="language-plaintext highlighter-rouge">-f</code>) is the generic
+half. The proposed agreement (posted on #1764) asks nothing of that PR: it lands
+as is, and Phase 2 then (a) extracts <code class="language-plaintext highlighter-rouge">Store</code> into <code class="language-plaintext highlighter-rouge">branch-store.ts</code>, which
+<code class="language-plaintext highlighter-rouge">qa-store</code> imports, and (b) widens <code class="language-plaintext highlighter-rouge">keyedBy</code> to <code class="language-plaintext highlighter-rouge">z.enum(["commit", "tip"])</code>.
+<strong>No <code class="language-plaintext highlighter-rouge">path</code> field:</strong> like <code class="language-plaintext highlighter-rouge">qa-store</code>, the state branch mirrors the checkout’s
+paths (<code class="language-plaintext highlighter-rouge">beans/defs/…</code> on <code class="language-plaintext highlighter-rouge">state</code> is <code class="language-plaintext highlighter-rouge">beans/defs/…</code> in the tree), so the
+declared <code class="language-plaintext highlighter-rouge">path</code> already says where a file lives on either side.</p>
+
+<p><strong>Phase 1 — decisions (owner).</strong> §6, D1–D4.</p>
+
+<p><strong>Phase 2 — mechanism (serial, one agent).</strong>
+2.1 <code class="language-plaintext highlighter-rouge">storage</code> in the schema, with <code class="language-plaintext highlighter-rouge">keyedBy: tip</code>. 2.2 <code class="language-plaintext highlighter-rouge">branch-store.ts</code>
+(read, splice-write, retry, never <code class="language-plaintext highlighter-rouge">-f</code>) — shared with 3fva’s <code class="language-plaintext highlighter-rouge">qa:fetch</code>.
+2.3 Seed the <code class="language-plaintext highlighter-rouge">state</code> orphan branch from <code class="language-plaintext highlighter-rouge">main</code>’s current <code class="language-plaintext highlighter-rouge">beans/</code>, <code class="language-plaintext highlighter-rouge">todos/</code>,
+<code class="language-plaintext highlighter-rouge">issue-marks/</code> with a hash-verified manifest. 2.4 the session-start mount and
+<code class="language-plaintext highlighter-rouge">state:push</code>.</p>
+
+<p><strong>Phase 3 — migrate readers and writers (⇉ per row of §4).</strong> Each row is one
+bean, each green against the branch before the next phase.</p>
+
+<p><strong>Phase 4 — gates (⇉).</strong> The bean gates move to a <code class="language-plaintext highlighter-rouge">state</code>-branch workflow;
+<code class="language-plaintext highlighter-rouge">check:harness-dirs</code>, <code class="language-plaintext highlighter-rouge">audit:coverage</code>, <code class="language-plaintext highlighter-rouge">kg:audit</code> read <code class="language-plaintext highlighter-rouge">storage</code>.</p>
+
+<p><strong>Phase 5 — skills, processes, docs (⇉ after Phase 3).</strong> §4.1.</p>
+
+<p><strong>Phase 6 — remove from <code class="language-plaintext highlighter-rouge">main</code>, on the owner’s explicit go only</strong>
+(<code class="language-plaintext highlighter-rouge">deletion-requires-confirmation</code>). Not before every reader is green.</p>
+
+<p><strong>Phase 7 — the general practice.</strong> Declare <code class="language-plaintext highlighter-rouge">gh-pages</code> (<code class="language-plaintext highlighter-rouge">within: folio</code>,
+<code class="language-plaintext highlighter-rouge">keyedBy: commit</code>, back-link = <code class="language-plaintext highlighter-rouge">build.json</code>) and <code class="language-plaintext highlighter-rouge">lake-cache/*</code> (<code class="language-plaintext highlighter-rouge">keyedBy:
+inputs</code>) with the same field, so every special branch is a declared sub-graph
+and <code class="language-plaintext highlighter-rouge">audit:coverage</code> can see all of them.</p>
+<h2 id="6-decisions-for-the-owner">
+  
+  
+    <a href="#6-decisions-for-the-owner" class="anchor-heading" aria-labelledby="6-decisions-for-the-owner"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 6. Decisions for the owner
+  
+  
+</h2>
+    
+
+<blockquote>
+  <p><strong>Ruled by the owner, 2026-10-02:</strong> <em>“go with defaults for D1-D4”</em> —
+<strong>D1 (a)</strong>, <strong>D2 (a)</strong>, <strong>D3 (a)</strong>, <strong>D4 (a)</strong>. The options are kept below
+as the record of what was weighed.</p>
+</blockquote>
+
+<p>Recommended option first. <strong>The default applies if no answer comes, and the
+work proceeds on it.</strong></p>
+
+<ul>
+  <li><strong>D1. What moves.</strong> (a) <strong>beans (defs, archive, workflows, surveys), todos,
+issue-marks, health results (recommended)</strong>; (b) beans only, as a pilot;
+(c) (a) plus <code class="language-plaintext highlighter-rouge">uploads/</code>. <em>Default: (a).</em></li>
+  <li><strong>D2. How an agent session writes to <code class="language-plaintext highlighter-rouge">state</code>.</strong> Cloud sessions are told to
+push only to their own branch. (a) <strong>direct push to <code class="language-plaintext highlighter-rouge">state</code> through the
+library, falling back to carrying the edit on the PR branch when the push is
+refused (recommended)</strong> — <code class="language-plaintext highlighter-rouge">beans:claim</code> already has this <code class="language-plaintext highlighter-rouge">fell-back</code> state;
+(b) always carry edits on the PR branch, applied to <code class="language-plaintext highlighter-rouge">state</code> by a post-merge
+workflow — no new permission, but claims stay branch-local; (c) direct push
+only. <em>Default: (a).</em></li>
+  <li><strong>D3. Relation to arc 3fva.</strong> (a) <strong>one <code class="language-plaintext highlighter-rouge">storage</code> field and one library,
+agreed with 3fva before either lands (recommended)</strong>; (b) land 3fva as is
+and widen it here afterwards; (c) independent mechanisms. <em>Default: (a).</em></li>
+  <li><strong>D4. One branch or several.</strong> (a) <strong>one <code class="language-plaintext highlighter-rouge">state</code> branch, graphs as
+directories inside it (recommended)</strong> — one fetch, one mount, one gate
+workflow; (b) one branch per graph (<code class="language-plaintext highlighter-rouge">state/beans</code>, <code class="language-plaintext highlighter-rouge">state/todos</code>) — finer
+retention, more mounts. <em>Default: (a).</em></li>
+</ul>
+<h2 id="7-what-would-falsify-this">
+  
+  
+    <a href="#7-what-would-falsify-this" class="anchor-heading" aria-labelledby="7-what-would-falsify-this"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 7. What would falsify this
+  
+  
+</h2>
+    
+
+<ul>
+  <li><strong>The mount is not there when an agent needs it.</strong> If the session-start
+hook’s fetch fails silently and <code class="language-plaintext highlighter-rouge">beans list</code> returns empty, the agent reads
+“no work” — the third state collapsing into zero. The hook must fail loudly,
+and <code class="language-plaintext highlighter-rouge">beans-fallback</code> must refuse rather than read an empty directory.</li>
+  <li><strong>Concurrent writers lose a bean edit.</strong> 3fva’s spike showed disjoint paths
+survive; two sessions editing the <strong>same</strong> bean is the new case and must be
+measured before Phase 6. A lost edit is a falsifier, not a tuning issue.</li>
+  <li><strong>A reader is found that needs the bean beside the code in one commit</strong> —
+e.g. a review that must see the bean transition in the PR diff. Then D2 (b)
+for that case, and §3.4’s <code class="language-plaintext highlighter-rouge">Closes-bean:</code> gains a rendered view on the PR.</li>
+</ul>
+<h2 id="8-not-in-scope">
+  
+  
+    <a href="#8-not-in-scope" class="anchor-heading" aria-labelledby="8-not-in-scope"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 8. Not in scope
+  
+  
+</h2>
+    
+
+<ul>
+  <li>Changing what a bean or a workflow instance <em>contains</em>.</li>
+  <li>The QA move itself — that is arc 3fva; this proposal only shares its field
+and library.</li>
+  <li>Merge queue / require-up-to-date (<code class="language-plaintext highlighter-rouge">1hjm</code>, <code class="language-plaintext highlighter-rouge">kgho</code>).</li>
+</ul>
 
           
 
