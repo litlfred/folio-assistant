@@ -881,4 +881,4 @@ only from a layer above it: a wrong-direction dependency, and after the split
 
 - [`directory-conventions`](../../kg/kg-core/directory-conventions.md) — the graph kinds and who declares them
 - [`bib-qa`](bib-qa.md) — auditing what is already in `library/`
-- `processes/document-ingestion.bpmn` — the process this sits inside
+- `processes/library/document-ingestion.bpmn` — the process this sits inside

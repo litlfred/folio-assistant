@@ -110,7 +110,7 @@ describe("a name collision", () => {
   test("the root's own diagram shadows the dependency's", () => {
     // cat-harness owns the diagram (again, since bean `j7ql`), and the
     // fixture reaches it by depending on cat-harness (placement PR0).
-    const root = rootWithDependency(join(CAT_HARNESS, "processes", "sample-import.bpmn"));
+    const root = rootWithDependency(join(CAT_HARNESS, "processes", "library", "sample-import.bpmn"));
     const hits = processFiles(root).filter((f) => f.endsWith("/sample-import.bpmn"));
     expect(hits).toEqual([join(root, "processes", "sample-import.bpmn")]);
     expect(readFileSync(hits[0], "utf-8")).toContain("Process_SampleImport");
