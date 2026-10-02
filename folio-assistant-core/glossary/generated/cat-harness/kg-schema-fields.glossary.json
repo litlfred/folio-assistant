@@ -882,6 +882,27 @@
       "status": "candidate"
     },
     {
+      "id": "bean-note.beannotefrontmatterschema.bean",
+      "prefLabel": "BeanNoteFrontMatterSchema.bean",
+      "definition": "The bean this note adds to. It must exist in the bean store.",
+      "source": "cat-harness/schemas/bean-note.ts#BeanNoteFrontMatterSchema.bean",
+      "status": "candidate"
+    },
+    {
+      "id": "bean-note.beannotefrontmatterschema.branch",
+      "prefLabel": "BeanNoteFrontMatterSchema.branch",
+      "definition": "The branch that wrote it — the key that keeps two writers apart.",
+      "source": "cat-harness/schemas/bean-note.ts#BeanNoteFrontMatterSchema.branch",
+      "status": "candidate"
+    },
+    {
+      "id": "bean-note.beannotefrontmatterschema.created",
+      "prefLabel": "BeanNoteFrontMatterSchema.created",
+      "definition": "When this branch started its note on this bean (UTC).",
+      "source": "cat-harness/schemas/bean-note.ts#BeanNoteFrontMatterSchema.created",
+      "status": "candidate"
+    },
+    {
       "id": "bib-verification.keyresult.locator",
       "prefLabel": "KeyResult.locator",
       "definition": "Locator *within the source*: \"Thm 3.2\", \"§4.1\", \"eq. (12)\", \"p. 87\".",
@@ -4438,6 +4459,97 @@
       "status": "candidate"
     },
     {
+      "id": "extraction.extractedassetschema.bytes",
+      "prefLabel": "ExtractedAssetSchema.bytes",
+      "definition": "Uncompressed size in bytes, from the container's index.",
+      "source": "cat-harness/schemas/extraction.ts#ExtractedAssetSchema.bytes",
+      "status": "candidate"
+    },
+    {
+      "id": "extraction.extractedassetschema.extractedbecause",
+      "prefLabel": "ExtractedAssetSchema.extractedBecause",
+      "definition": "Why this one entry was extracted, when one was.",
+      "source": "cat-harness/schemas/extraction.ts#ExtractedAssetSchema.extractedBecause",
+      "status": "candidate"
+    },
+    {
+      "id": "extraction.extractedassetschema.localpath",
+      "prefLabel": "ExtractedAssetSchema.localPath",
+      "definition": "Where the entry was written, IF it was written.",
+      "source": "cat-harness/schemas/extraction.ts#ExtractedAssetSchema.localPath",
+      "status": "candidate"
+    },
+    {
+      "id": "extraction.extractedassetschema.mediatype",
+      "prefLabel": "ExtractedAssetSchema.mediaType",
+      "definition": "Media type.",
+      "source": "cat-harness/schemas/extraction.ts#ExtractedAssetSchema.mediaType",
+      "status": "candidate"
+    },
+    {
+      "id": "extraction.extractedassetschema.modifiedat",
+      "prefLabel": "ExtractedAssetSchema.modifiedAt",
+      "definition": "The entry's own timestamp, as the container records it.",
+      "source": "cat-harness/schemas/extraction.ts#ExtractedAssetSchema.modifiedAt",
+      "status": "candidate"
+    },
+    {
+      "id": "extraction.extractedassetschema.path",
+      "prefLabel": "ExtractedAssetSchema.path",
+      "definition": "Path INSIDE the container, exactly as the container spells it.",
+      "source": "cat-harness/schemas/extraction.ts#ExtractedAssetSchema.path",
+      "status": "candidate"
+    },
+    {
+      "id": "extraction.extractedassetschema.sha256",
+      "prefLabel": "ExtractedAssetSchema.sha256",
+      "definition": "sha256 of the entry's bytes, when it was read rather than indexed.",
+      "source": "cat-harness/schemas/extraction.ts#ExtractedAssetSchema.sha256",
+      "status": "candidate"
+    },
+    {
+      "id": "extraction.extractionschema.assets",
+      "prefLabel": "ExtractionSchema.assets",
+      "definition": "Every entry the container indexes.",
+      "source": "cat-harness/schemas/extraction.ts#ExtractionSchema.assets",
+      "status": "candidate"
+    },
+    {
+      "id": "extraction.extractionschema.capturedat",
+      "prefLabel": "ExtractionSchema.capturedAt",
+      "definition": "When the CONTAINER'S CONTENTS were produced — the capture moment.",
+      "source": "cat-harness/schemas/extraction.ts#ExtractionSchema.capturedAt",
+      "status": "candidate"
+    },
+    {
+      "id": "extraction.extractionschema.container",
+      "prefLabel": "ExtractionSchema.container",
+      "definition": "The container this describes, repo-relative.",
+      "source": "cat-harness/schemas/extraction.ts#ExtractionSchema.container",
+      "status": "candidate"
+    },
+    {
+      "id": "extraction.extractionschema.omitted",
+      "prefLabel": "ExtractionSchema.omitted",
+      "definition": "Entries deliberately not listed, and why.",
+      "source": "cat-harness/schemas/extraction.ts#ExtractionSchema.omitted",
+      "status": "candidate"
+    },
+    {
+      "id": "extraction.extractionschema.producer",
+      "prefLabel": "ExtractionSchema.producer",
+      "definition": "The tool that produced the container, verbatim.",
+      "source": "cat-harness/schemas/extraction.ts#ExtractionSchema.producer",
+      "status": "candidate"
+    },
+    {
+      "id": "extraction.extractionschema.readat",
+      "prefLabel": "ExtractionSchema.readAt",
+      "definition": "When THIS record was written — a fact about the reading, not the file.",
+      "source": "cat-harness/schemas/extraction.ts#ExtractionSchema.readAt",
+      "status": "candidate"
+    },
+    {
       "id": "figure-description.figuredescriptionschema.described_by",
       "prefLabel": "FigureDescriptionSchema.described_by",
       "definition": "Who looked, and when.",
@@ -6643,6 +6755,13 @@
       "status": "candidate"
     },
     {
+      "id": "materialization-state.fixityschema.verifiedat",
+      "prefLabel": "FixitySchema.verifiedAt",
+      "definition": "When the digest was last RE-COMPUTED against the bytes, not when it was recorded. An unverified digest ages.",
+      "source": "cat-harness/schemas/materialization-state.ts#FixitySchema.verifiedAt",
+      "status": "candidate"
+    },
+    {
       "id": "memory.measurementschema.command",
       "prefLabel": "MeasurementSchema.command",
       "definition": "The exact command, runnable as written.",
@@ -6857,6 +6976,41 @@
       "prefLabel": "PanelControl.needs",
       "definition": "What the environment must be able to do for this to work.",
       "source": "cat-harness/schemas/panel-chrome.ts#PanelControl.needs",
+      "status": "candidate"
+    },
+    {
+      "id": "pdf-structure.pdfmetadataschema.title_correction",
+      "prefLabel": "PdfMetadataSchema.title_correction",
+      "definition": "An EDITORIAL correction, outranking every extracted title (bean `w6fu`, step b). Authored, never produced by a rung, and carried over by a re-ingest. `basis` says what the title was read from, so it can be checked rather than trusted.",
+      "source": "cat-harness/schemas/pdf-structure.ts#PdfMetadataSchema.title_correction",
+      "status": "candidate"
+    },
+    {
+      "id": "pdf-structure.pdfmetadataschema.title_evidence",
+      "prefLabel": "PdfMetadataSchema.title_evidence",
+      "definition": "Every candidate the resolver saw, and which sources agreed — the record an editor decides from.",
+      "source": "cat-harness/schemas/pdf-structure.ts#PdfMetadataSchema.title_evidence",
+      "status": "candidate"
+    },
+    {
+      "id": "pdf-structure.pdfmetadataschema.title_raw",
+      "prefLabel": "PdfMetadataSchema.title_raw",
+      "definition": "The text walk's title before resolution, kept so a re-run resolves from it rather than from its own answer.",
+      "source": "cat-harness/schemas/pdf-structure.ts#PdfMetadataSchema.title_raw",
+      "status": "candidate"
+    },
+    {
+      "id": "pdf-structure.pdfmetadataschema.title_source",
+      "prefLabel": "PdfMetadataSchema.title_source",
+      "definition": "Where `title` came from (bean `w6fu`, `scripts/_pdf_title.py`): the PDF's `Title` metadata, its first-page heading or its outline when another source CORROBORATES it, else the text walk's title (`text`) or nothing (`filename`, and the manifest falls back to the entry id).",
+      "source": "cat-harness/schemas/pdf-structure.ts#PdfMetadataSchema.title_source",
+      "status": "candidate"
+    },
+    {
+      "id": "pdf-structure.pdfmetadataschema.title_verified",
+      "prefLabel": "PdfMetadataSchema.title_verified",
+      "definition": "False when no source corroborated the title: the raw title was kept, not guessed at.",
+      "source": "cat-harness/schemas/pdf-structure.ts#PdfMetadataSchema.title_verified",
       "status": "candidate"
     },
     {
@@ -8628,6 +8782,76 @@
       "prefLabel": "TabularSheetSchema.headers",
       "definition": "Row 1, in column order. Empty when the sheet has no readable header row.",
       "source": "cat-harness/schemas/tabular-records.ts#TabularSheetSchema.headers",
+      "status": "candidate"
+    },
+    {
+      "id": "term-adjudication.changeproseschema.authorisedlabel",
+      "prefLabel": "ChangeProseSchema.authorisedLabel",
+      "definition": "Its authorised label, which the corpus now carries.",
+      "source": "cat-harness/schemas/term-adjudication.ts#ChangeProseSchema.authorisedLabel",
+      "status": "candidate"
+    },
+    {
+      "id": "term-adjudication.changeproseschema.changed",
+      "prefLabel": "ChangeProseSchema.changed",
+      "definition": "The source assets that were edited, by repository path.",
+      "source": "cat-harness/schemas/term-adjudication.ts#ChangeProseSchema.changed",
+      "status": "candidate"
+    },
+    {
+      "id": "term-adjudication.changeproseschema.concept",
+      "prefLabel": "ChangeProseSchema.concept",
+      "definition": "The authorised concept the corpus now uses.",
+      "source": "cat-harness/schemas/term-adjudication.ts#ChangeProseSchema.concept",
+      "status": "candidate"
+    },
+    {
+      "id": "term-adjudication.localtermschema.concept",
+      "prefLabel": "LocalTermSchema.concept",
+      "definition": "The authority's concept, required unless `relation` is `none`.",
+      "source": "cat-harness/schemas/term-adjudication.ts#LocalTermSchema.concept",
+      "status": "candidate"
+    },
+    {
+      "id": "term-adjudication.localtermschema.reason",
+      "prefLabel": "LocalTermSchema.reason",
+      "definition": "Why the authority's concept does not serve, so the next reader need not re-derive it.",
+      "source": "cat-harness/schemas/term-adjudication.ts#LocalTermSchema.reason",
+      "status": "candidate"
+    },
+    {
+      "id": "term-adjudication.subject.scheme",
+      "prefLabel": "Subject.scheme",
+      "definition": "The candidate's scheme id, as the mapping record keys it (`kg-tools`, …).",
+      "source": "cat-harness/schemas/term-adjudication.ts#Subject.scheme",
+      "status": "candidate"
+    },
+    {
+      "id": "term-adjudication.subject.term",
+      "prefLabel": "Subject.term",
+      "definition": "The candidate's term id within that scheme.",
+      "source": "cat-harness/schemas/term-adjudication.ts#Subject.term",
+      "status": "candidate"
+    },
+    {
+      "id": "term-adjudication.vocabularywrongschema.concept",
+      "prefLabel": "VocabularyWrongSchema.concept",
+      "definition": "The concept the label reached, where it reached one.",
+      "source": "cat-harness/schemas/term-adjudication.ts#VocabularyWrongSchema.concept",
+      "status": "candidate"
+    },
+    {
+      "id": "term-adjudication.vocabularywrongschema.domain",
+      "prefLabel": "VocabularyWrongSchema.domain",
+      "definition": "The domain it does not serve.",
+      "source": "cat-harness/schemas/term-adjudication.ts#VocabularyWrongSchema.domain",
+      "status": "candidate"
+    },
+    {
+      "id": "term-adjudication.vocabularywrongschema.vocabulary",
+      "prefLabel": "VocabularyWrongSchema.vocabulary",
+      "definition": "The vocabulary consulted, as the check's scope names it (`platform`, `who-smart-base@v1.0.0`, …).",
+      "source": "cat-harness/schemas/term-adjudication.ts#VocabularyWrongSchema.vocabulary",
       "status": "candidate"
     },
     {
@@ -10791,6 +11015,118 @@
       "prefLabel": "ViewerNavQaSchema.root",
       "definition": "The published docs root the audit walked, repo-relative.",
       "source": "cat-harness/schemas/viewer-nav-qa.ts#ViewerNavQaSchema.root",
+      "status": "candidate"
+    },
+    {
+      "id": "vocab-mapping-fhir.loss.path",
+      "prefLabel": "Loss.path",
+      "definition": "Where in the table, e.g. `group[0].element[2].target[1]`.",
+      "source": "cat-harness/schemas/vocab-mapping-fhir.ts#Loss.path",
+      "status": "candidate"
+    },
+    {
+      "id": "vocab-mapping.dependencyschema.attribute",
+      "prefLabel": "DependencySchema.attribute",
+      "definition": "R5 `attribute` (a code); R4 `property` (a URI).",
+      "source": "cat-harness/schemas/vocab-mapping.ts#DependencySchema.attribute",
+      "status": "candidate"
+    },
+    {
+      "id": "vocab-mapping.dependencyschema.display",
+      "prefLabel": "DependencySchema.display",
+      "definition": "R4 only.",
+      "source": "cat-harness/schemas/vocab-mapping.ts#DependencySchema.display",
+      "status": "candidate"
+    },
+    {
+      "id": "vocab-mapping.dependencyschema.system",
+      "prefLabel": "DependencySchema.system",
+      "definition": "R4 only.",
+      "source": "cat-harness/schemas/vocab-mapping.ts#DependencySchema.system",
+      "status": "candidate"
+    },
+    {
+      "id": "vocab-mapping.dependencyschema.valueset",
+      "prefLabel": "DependencySchema.valueSet",
+      "definition": "R5 only.",
+      "source": "cat-harness/schemas/vocab-mapping.ts#DependencySchema.valueSet",
+      "status": "candidate"
+    },
+    {
+      "id": "vocab-mapping.elementschema.code",
+      "prefLabel": "ElementSchema.code",
+      "definition": "The source term: a field of the source record, or a code in the source system.",
+      "source": "cat-harness/schemas/vocab-mapping.ts#ElementSchema.code",
+      "status": "candidate"
+    },
+    {
+      "id": "vocab-mapping.elementschema.nomap",
+      "prefLabel": "ElementSchema.noMap",
+      "definition": "Deliberately unmapped: an absence that is a statement, not a gap (R5 `noMap`).",
+      "source": "cat-harness/schemas/vocab-mapping.ts#ElementSchema.noMap",
+      "status": "candidate"
+    },
+    {
+      "id": "vocab-mapping.groupschema.source",
+      "prefLabel": "GroupSchema.source",
+      "definition": "The source vocabulary: an IRI, or a CURIE whose prefix is declared. Never carries `|version`.",
+      "source": "cat-harness/schemas/vocab-mapping.ts#GroupSchema.source",
+      "status": "candidate"
+    },
+    {
+      "id": "vocab-mapping.targetschema.authority",
+      "prefLabel": "TargetSchema.authority",
+      "definition": "`derived`: a rendering of another target's output, copied from it.",
+      "source": "cat-harness/schemas/vocab-mapping.ts#TargetSchema.authority",
+      "status": "candidate"
+    },
+    {
+      "id": "vocab-mapping.targetschema.code",
+      "prefLabel": "TargetSchema.code",
+      "definition": "The target term: a predicate's local name, or a code in the target system.",
+      "source": "cat-harness/schemas/vocab-mapping.ts#TargetSchema.code",
+      "status": "candidate"
+    },
+    {
+      "id": "vocab-mapping.targetschema.derivedfrom",
+      "prefLabel": "TargetSchema.derivedFrom",
+      "definition": "The `key` (or `code`) of the authoritative target a derived one copies.",
+      "source": "cat-harness/schemas/vocab-mapping.ts#TargetSchema.derivedFrom",
+      "status": "candidate"
+    },
+    {
+      "id": "vocab-mapping.targetschema.equivalence",
+      "prefLabel": "TargetSchema.equivalence",
+      "definition": "The R4 statement, verbatim, when the row came from an R4 map.",
+      "source": "cat-harness/schemas/vocab-mapping.ts#TargetSchema.equivalence",
+      "status": "candidate"
+    },
+    {
+      "id": "vocab-mapping.targetschema.key",
+      "prefLabel": "TargetSchema.key",
+      "definition": "The JSON term written, when it is not `code`.",
+      "source": "cat-harness/schemas/vocab-mapping.ts#TargetSchema.key",
+      "status": "candidate"
+    },
+    {
+      "id": "vocab-mapping.vocabmappingschema.id",
+      "prefLabel": "VocabMappingSchema.id",
+      "definition": "This table's id. A ConceptMap's own resource `id` is metadata, kept in `metadata.id`.",
+      "source": "cat-harness/schemas/vocab-mapping.ts#VocabMappingSchema.id",
+      "status": "candidate"
+    },
+    {
+      "id": "vocab-mapping.vocabmappingschema.metadata",
+      "prefLabel": "VocabMappingSchema.metadata",
+      "definition": "Every other ConceptMap field (contact, jurisdiction, meta, text, identifier, the resource id, …), verbatim.",
+      "source": "cat-harness/schemas/vocab-mapping.ts#VocabMappingSchema.metadata",
+      "status": "candidate"
+    },
+    {
+      "id": "vocab-mapping.vocabmappingschema.property",
+      "prefLabel": "VocabMappingSchema.property",
+      "definition": "R5 map-level `property` and `additionalAttribute` definitions, verbatim.",
+      "source": "cat-harness/schemas/vocab-mapping.ts#VocabMappingSchema.property",
       "status": "candidate"
     },
     {

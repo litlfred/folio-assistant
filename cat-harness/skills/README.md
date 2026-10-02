@@ -14,11 +14,11 @@ Part of [C@T Harness](../README.md) 0.1.0, declared as `skills`, holding `skills
 | [`folio-core/`](folio-core/) | 6 files | |
 | [`framework/`](framework/) | 1 file | |
 | [`kg/`](kg/) | 35 files | |
-| [`library/`](library/) | 29 files | |
+| [`library/`](library/) | 30 files | |
 | [`permissions/`](permissions/) | 1 file | |
 | [`process/`](process/) | 25 files | |
 | [`requirements/`](requirements/) | 7 files | |
-| [`sdlc/`](sdlc/) | 64 files | |
+| [`sdlc/`](sdlc/) | 65 files | |
 | [`skill-definitions/`](skill-definitions/) | 2 files | |
 | [`ui/`](ui/) | 28 files | |
 | [`voices/`](voices/README.md) | 7 files | |

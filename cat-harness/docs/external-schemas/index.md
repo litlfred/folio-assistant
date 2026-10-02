@@ -28,8 +28,8 @@ depends on it**, and **which of its terms this repository branches on**.
 
 <div class="xs-grid">
 <div class="xs-stat"><b>20</b><span>specifications</span></div>
-<div class="xs-stat"><b>105</b><span>operative terms in the graph</span></div>
-<div class="xs-stat"><b>200</b><span>declared uses</span></div>
+<div class="xs-stat"><b>106</b><span>operative terms in the graph</span></div>
+<div class="xs-stat"><b>205</b><span>declared uses</span></div>
 <div class="xs-stat"><b>0</b><span>declarations naming no record</span></div>
 </div>
 
@@ -71,13 +71,13 @@ Every declaration names a record on this page.
 
 ## Namespaces the corpus uses against the ones it declares
 
-Read from the BPMN and DMN files themselves — **6** namespace IRI(s)
+Read from the BPMN and DMN files themselves — **5** namespace IRI(s)
 are in use. Derived rather than listed, so a diagram that adopts a new
 vocabulary shows up here instead of going unnoticed.
 
 Every namespace the corpus declares is covered by a record above.
 
-**22 declared and not in use.** Not a defect on its own: a
+**23 declared and not in use.** Not a defect on its own: a
 record may cover a namespace only some artefacts carry. It is here because
 a registry nobody prunes is one that stops describing the repository.
 
@@ -103,6 +103,7 @@ a registry nobody prunes is one that stops describing the repository.
 - `https://hdl.handle.net/`
 - `https://openprovenance.org/ns/provext#`
 - `https://schema.org/`
+- `https://www.omg.org/spec/DMN/20191111/DMNDI/`
 
 ## Each specification
 
@@ -174,6 +175,9 @@ a subset of the edition rather than a transcription of it.
 | user | declared by |
 |---|---|
 | [`cat-harness/schemas/jsonld.ts`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/jsonld.ts) | `@conformsTo` tag |
+| [`cat-harness/schemas/vocab-mapping-fhir.ts`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/vocab-mapping-fhir.ts) | `@conformsTo` tag |
+| [`cat-harness/schemas/vocab-mapping.ts`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/vocab-mapping.ts) | `@conformsTo` tag |
+| `vocab-mapping graph` | through the module that types it ([`cat-harness/schemas/vocab-mapping.ts`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/vocab-mapping.ts)) |
 
 **Operative terms (1).** The terms this repository acts on —
 derived by the tooling from the corpus, never hand-listed, and deliberately
@@ -219,13 +223,23 @@ graph. That is a determined zero, not an unfilled field.
 
 | user | declared by |
 |---|---|
-| `cat-harness/processes/*.bpmn (73)` | `xmlns` binding |
+| `cat-harness/processes/content/*.bpmn (4)` | `xmlns` binding |
+| `cat-harness/processes/kg/*.bpmn (4)` | `xmlns` binding |
+| `cat-harness/processes/library/*.bpmn (14)` | `xmlns` binding |
+| `cat-harness/processes/process/*.bpmn (12)` | `xmlns` binding |
+| `cat-harness/processes/sdlc/*.bpmn (21)` | `xmlns` binding |
+| `cat-harness/processes/ui/*.bpmn (4)` | `xmlns` binding |
 | [`cat-harness/scripts/kg-export.ts`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/scripts/kg-export.ts) | `@conformsTo` tag |
 | [`cat-harness/scripts/render-bpmn.ts`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/scripts/render-bpmn.ts) | `@conformsTo` tag |
 | [`cat-harness/src/workflow/process-model.ts`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/src/workflow/process-model.ts) | `@conformsTo` tag |
-| `folio-assistant-core/processes/*.bpmn (1)` | `xmlns` binding |
+| `fhir-harness/processes/content/*.bpmn (2)` | `xmlns` binding |
+| `folio-assistant-core/processes/conduct/*.bpmn (1)` | `xmlns` binding |
+| `folio-assistant-core/processes/content/*.bpmn (6)` | `xmlns` binding |
+| `folio-assistant-core/processes/library/*.bpmn (1)` | `xmlns` binding |
+| `folio-assistant-core/processes/ui/*.bpmn (3)` | `xmlns` binding |
+| `folio-assistant-sci/processes/content/*.bpmn (2)` | `xmlns` binding |
 | `smart-base/methodologies/processes/*.bpmn (1)` | `xmlns` binding |
-| `smart-base/processes/*.bpmn (1)` | `xmlns` binding |
+| `smart-base/processes/content/*.bpmn (1)` | `xmlns` binding |
 
 **Operative terms (22).** The terms this repository acts on —
 derived by the tooling from the corpus, never hand-listed, and deliberately
@@ -271,11 +285,21 @@ a subset of the edition rather than a transcription of it.
 
 | user | declared by |
 |---|---|
-| `cat-harness/processes/*.bpmn (73)` | `xmlns` binding |
+| `cat-harness/processes/content/*.bpmn (4)` | `xmlns` binding |
+| `cat-harness/processes/kg/*.bpmn (4)` | `xmlns` binding |
+| `cat-harness/processes/library/*.bpmn (14)` | `xmlns` binding |
+| `cat-harness/processes/process/*.bpmn (12)` | `xmlns` binding |
+| `cat-harness/processes/sdlc/*.bpmn (21)` | `xmlns` binding |
+| `cat-harness/processes/ui/*.bpmn (4)` | `xmlns` binding |
 | [`cat-harness/scripts/render-bpmn.ts`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/scripts/render-bpmn.ts) | `@conformsTo` tag |
-| `folio-assistant-core/processes/*.bpmn (1)` | `xmlns` binding |
+| `fhir-harness/processes/content/*.bpmn (2)` | `xmlns` binding |
+| `folio-assistant-core/processes/conduct/*.bpmn (1)` | `xmlns` binding |
+| `folio-assistant-core/processes/content/*.bpmn (6)` | `xmlns` binding |
+| `folio-assistant-core/processes/library/*.bpmn (1)` | `xmlns` binding |
+| `folio-assistant-core/processes/ui/*.bpmn (3)` | `xmlns` binding |
+| `folio-assistant-sci/processes/content/*.bpmn (2)` | `xmlns` binding |
 | `smart-base/methodologies/processes/*.bpmn (1)` | `xmlns` binding |
-| `smart-base/processes/*.bpmn (1)` | `xmlns` binding |
+| `smart-base/processes/content/*.bpmn (1)` | `xmlns` binding |
 
 **No operative terms.** This repository conforms to the specification
 without branching on any of its terms, so none is materialised into the
@@ -296,7 +320,11 @@ graph. That is a determined zero, not an unfilled field.
 
 | user | declared by |
 |---|---|
-| `cat-harness/processes/decisions/*.dmn (9)` | `xmlns` binding |
+| `cat-harness/processes/kg/decisions/*.dmn (3)` | `xmlns` binding |
+| `cat-harness/processes/sdlc/decisions/*.dmn (1)` | `xmlns` binding |
+| `folio-assistant-core/processes/conduct/decisions/*.dmn (2)` | `xmlns` binding |
+| `folio-assistant-core/processes/content/decisions/*.dmn (2)` | `xmlns` binding |
+| `folio-assistant-sci/processes/content/decisions/*.dmn (1)` | `xmlns` binding |
 
 **No operative terms.** This repository conforms to the specification
 without branching on any of its terms, so none is materialised into the
@@ -558,11 +586,13 @@ a subset of the edition rather than a transcription of it.
 | user | declared by |
 |---|---|
 | [`cat-harness/schemas/jsonld.ts`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/jsonld.ts) | `@conformsTo` tag |
+| [`cat-harness/schemas/vocab-mapping.ts`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/vocab-mapping.ts) | `@conformsTo` tag |
 | [`cat-harness/schemas/vocabulary.ts`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/vocabulary.ts) | `@conformsTo` tag |
 | [`cat-harness/scripts/glossary-export.ts`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/scripts/glossary-export.ts) | `@conformsTo` tag |
 | [`cat-harness/scripts/ns-export.ts`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/scripts/ns-export.ts) | `@conformsTo` tag |
+| `vocab-mapping graph` | through the module that types it ([`cat-harness/schemas/vocab-mapping.ts`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/vocab-mapping.ts)) |
 
-**Operative terms (21).** The terms this repository acts on —
+**Operative terms (22).** The terms this repository acts on —
 derived by the tooling from the corpus, never hand-listed, and deliberately
 a subset of the edition rather than a transcription of it.
 
@@ -583,6 +613,7 @@ a subset of the edition rather than a transcription of it.
 | `skos:inScheme` | Binds a concept to its instance's glossary document. Each concept's `inScheme` names that document's own published URL, so a preview that publishes the graph without the glossary serves a 404ing scheme IRI — which `check:invocation-parity` refuses. |
 | `skos:member` | The external concept IRIs of a glossary's `members` Collection. |
 | `skos:memberList` | derived from the corpus; what this repository does with it is not yet described |
+| `skos:narrowMatch` | The SKOS rendering of FHIR R5's `source-is-broader-than-target` in a vocabulary mapping table (`SKOS_MATCH_FOR`, schemas/vocab-mapping.ts, bean k74z): `A skos:narrowMatch B` says B is narrower. |
 | `skos:notation` | The CODE. `TermGloss`'s prefixed name (`cat:FshGutsNode`) already WAS this, which is why the "coded glossary" requirement was satisfied by data that existed rather than by new authoring. |
 | `skos:note` | The status of a glossary term that is not `authored` (`candidate`, or `could-not-extract` with its reason), so a SKOS-only reader can tell it is not a curated definition (bean `lqo9`). |
 | `skos:prefLabel` | The one name a concept is published under. AUTHORITATIVE for a concept's name — where a node is both a resource and a concept, `dcterms:title` is the derived copy and this is the source. |

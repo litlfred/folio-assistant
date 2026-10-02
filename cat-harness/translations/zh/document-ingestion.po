@@ -123,10 +123,6 @@ msgstr "书目条目可以指向远程资产，而非本地二进制文件。该
 msgid "The pipeline"
 msgstr "流水线"
 
-#: docs/document-ingestion.md:75
-msgid "✎ Edit{: .fa-node-edit title=\"Edit processes/document-ingestion.bpmn\" } QA… TR KG…"
-msgstr "✎ Edit{: .fa-node-edit title=\"Edit processes/document-ingestion.bpmn\" } QA… TR KG…"
-
 #: docs/document-ingestion.md:82
 msgid "Open the BPMN source{: .btn .btn-outline }"
 msgstr "打开 BPMN 源文件{: .btn .btn-outline }"
@@ -155,10 +151,6 @@ msgstr "终点即是创作的起点。 “可作为 L1 来源进行引用”是�
 msgid "Extract structure"
 msgstr "提取结构"
 
-#: docs/document-ingestion.md:106
-msgid "✎ Edit{: .fa-node-edit title=\"Edit processes/ingest-extract-structure.bpmn\" } QA… TR KG…"
-msgstr "✎ Edit{: .fa-node-edit title=\"Edit processes/ingest-extract-structure.bpmn\" } QA… TR KG…"
-
 #: docs/document-ingestion.md:115
 msgid "The OCR branch is the one to know about. A document ingested that way keeps its text in  and only a stub in  — so the documented  grep cannot see its mathematics at all. That asymmetry is why the corpus-grep checklist has a fourth tier, and why a clean  grep is not evidence that the library lacks a topic."
 msgstr "需要特别了解的是 OCR 分支。以这种方式摄取的文档将其文本保留在  中，而在  中只有一个存根（stub） —— 因此已文档化的  grep 根本无法看到其中的数学内容。这种不对称性正是语料库 grep 检查清单设立第四层的原因，也是为什么干净的  grep 结果并不是表明库中缺少某个主题的证据。"
@@ -171,10 +163,6 @@ msgstr "每个章节文件的前置元数据中都带有文档简介。这就是
 msgid "Derive content"
 msgstr "衍生内容"
 
-#: docs/document-ingestion.md:128
-msgid "✎ Edit{: .fa-node-edit title=\"Edit processes/ingest-derive-content.bpmn\" } QA… TR KG…"
-msgstr "✎ Edit{: .fa-node-edit title=\"Edit processes/ingest-derive-content.bpmn\" } QA… TR KG…"
-
 #: docs/document-ingestion.md:137
 msgid "This subprocess is mostly not built yet. Every task in it is tracked; see the table below. It is drawn in full anyway, because the shape of the pipeline is the thing being agreed, and a diagram that shows only what already exists cannot be used to decide what to build."
 msgstr "该子流程大部分尚未构建。 其中的每项任务都处于跟踪状态；参见下表。无论如何它都已完整绘制，因为流水线的形态正是正在商定的内容，而仅展示现有内容的图表无法用于决定要构建什么。"
@@ -186,10 +174,6 @@ msgstr "容易被跳过且事后补救成本高昂的步骤是最后一步。生
 #: docs/document-ingestion.md:148
 msgid "Ingest the theme"
 msgstr "摄取主题"
-
-#: docs/document-ingestion.md:151
-msgid "✎ Edit{: .fa-node-edit title=\"Edit processes/ingest-theme.bpmn\" } QA TR KG…"
-msgstr "✎ Edit{: .fa-node-edit title=\"Edit processes/ingest-theme.bpmn\" } QA TR KG…"
 
 #: docs/document-ingestion.md:160
 msgid "Only some sources are themes, and a person decides which. After content is derived, the gateway A theme source? asks whoever is ingesting whether this document also carries a theme: a deployed site that serves one, or a style guide that states one. There is deliberately no rule that computes the answer. Whether a branded document is a theme source is an authoring judgement, and the owner ruled it so for bean . A source that is not a theme skips straight to building the knowledge graph."
@@ -227,10 +211,6 @@ msgstr "完整的主题会提交给主题与 UI 审阅，其产出是一个 Them
 msgid "Build the L1 knowledge graph"
 msgstr "构建 L1 知识图谱"
 
-#: docs/document-ingestion.md:192
-msgid "✎ Edit{: .fa-node-edit title=\"Edit processes/ingest-build-l1-kg.bpmn\" } QA… TR KG…"
-msgstr "✎ Edit{: .fa-node-edit title=\"Edit processes/ingest-build-l1-kg.bpmn\" } QA… TR KG…"
-
 #: docs/document-ingestion.md:201
 msgid "Each folder gets a standalone  as its record of truth, referenced from .  is already this corpus's JSON-LD vocabulary, so this extends a live context rather than introducing one."
 msgstr "每个文件夹都获得一个独立的  作为其真实的基准记录，由  进行引用。 已经是该语料库的 JSON-LD 词汇表，因此这是对既有活跃上下文的扩展，而非引入新上下文。"
@@ -242,10 +222,6 @@ msgstr "文件夹名称即是书目引用键，因此引用与目录是完全相
 #: docs/document-ingestion.md:208
 msgid "The L1 completeness gate"
 msgstr "L1 完整性关卡"
-
-#: docs/document-ingestion.md:211
-msgid "✎ Edit{: .fa-node-edit title=\"Edit processes/ingest-l1-completeness-gate.bpmn\" } QA… TR KG…"
-msgstr "✎ Edit{: .fa-node-edit title=\"Edit processes/ingest-l1-completeness-gate.bpmn\" } QA… TR KG…"
 
 #: docs/document-ingestion.md:220
 msgid "Without this gate every derivation step above is optional in practice: the document lands in , reads as ingested, and the gap surfaces whenever someone next needs the missing artefact — long after the context is gone."
@@ -386,3 +362,21 @@ msgstr "摄取绝不会编辑语料库内容。它产出 L1 记录；创作和�
 #: docs/document-ingestion.md:288
 msgid "The one coupling worth stating: a drop into  during an editing session starts ingestion in the background. The editor is not blocked, and the new source becomes citeable when the gate passes — not before."
 msgstr "值得说明的一项耦合是：在编辑会话期间向  放入文件会在后台启动摄取。编辑者不会被阻塞，而新来源在关卡通过时即可被引用 —— 绝不会在此之前。"
+
+#~ msgid "✎ Edit{: .fa-node-edit title=\"Edit processes/document-ingestion.bpmn\" } QA… TR KG…"
+#~ msgstr "✎ Edit{: .fa-node-edit title=\"Edit processes/document-ingestion.bpmn\" } QA… TR KG…"
+
+#~ msgid "✎ Edit{: .fa-node-edit title=\"Edit processes/ingest-extract-structure.bpmn\" } QA… TR KG…"
+#~ msgstr "✎ Edit{: .fa-node-edit title=\"Edit processes/ingest-extract-structure.bpmn\" } QA… TR KG…"
+
+#~ msgid "✎ Edit{: .fa-node-edit title=\"Edit processes/ingest-derive-content.bpmn\" } QA… TR KG…"
+#~ msgstr "✎ Edit{: .fa-node-edit title=\"Edit processes/ingest-derive-content.bpmn\" } QA… TR KG…"
+
+#~ msgid "✎ Edit{: .fa-node-edit title=\"Edit processes/ingest-theme.bpmn\" } QA TR KG…"
+#~ msgstr "✎ Edit{: .fa-node-edit title=\"Edit processes/ingest-theme.bpmn\" } QA TR KG…"
+
+#~ msgid "✎ Edit{: .fa-node-edit title=\"Edit processes/ingest-build-l1-kg.bpmn\" } QA… TR KG…"
+#~ msgstr "✎ Edit{: .fa-node-edit title=\"Edit processes/ingest-build-l1-kg.bpmn\" } QA… TR KG…"
+
+#~ msgid "✎ Edit{: .fa-node-edit title=\"Edit processes/ingest-l1-completeness-gate.bpmn\" } QA… TR KG…"
+#~ msgstr "✎ Edit{: .fa-node-edit title=\"Edit processes/ingest-l1-completeness-gate.bpmn\" } QA… TR KG…"

@@ -59,7 +59,7 @@ import { readSchemaGraph } from "./schema-graph.js";
 import { checkTools, unresolvedPaths } from "./check-tools.js";
 import { deriveAlternatives } from "../schemas/tool.js";
 import { tools, toolsOf } from "../tools/discover.js";
-import { kgDirectories, ownKgRoots, workflowDirs, workflowFiles, corpusScopeFor } from "./known-skills.js";
+import { kgDirectories, ownKgRoots, workflowFiles, corpusScopeFor } from "./known-skills.js";
 import { docsLayers } from "./compose-docs.js";
 import { PAIR_CRITERION, discoverPairs, evaluatePairs, readAttestations } from "./prose-code-pairs.js";
 import { VOICE_REVIEW_CRITERION, evaluateVoiceReviews, readVoiceReviews, skillVoices } from "./skill-voice-review.js";
@@ -121,7 +121,7 @@ import { LOCAL_PACKAGES } from "./skill-packages.js";
 import { repoRootFor, DECLARATION_SUFFIX, ownDirectoryById, instanceDirectoriesForGraph, readDeclaration, kgQaHomeFor} from "../schemas/cat-harness.js";
 import { toolDownstreamEntry, undeclaredDownstream } from "./downstream-runs.ts";
 import { VERIFIERS } from "./publish-verify.ts";
-import { orderedDependencies } from "../schemas/harness-config.js";
+import { checkoutRootFor, orderedDependencies } from "../schemas/harness-config.js";
 import { CONVENTION_GROUP } from "../schemas/convention.js";
 import { USER_STORIES_FILENAME, danglingStoryRoles, readUserStories, type UserStoryGraph } from "../schemas/user-story.js";
 import { actorsDir, capabilitiesDir } from "../schemas/role-graph.ts";
@@ -263,9 +263,24 @@ const KG_ROOT = join(root, "skills");
 // graph: that is "no actor registry here", which `readActors` answers with an
 // empty list and the actor criteria then report on. It was the same before the
 // move, when the probed `.claude/skills/actors` simply did not exist.
-const ACTOR_DIR = actorsDir(repoRootFor(root)) ?? "";
+/**
+ * The CHECKOUT the audited instance is staged in — where `package.json`,
+ * `.claude/`, the actor registry and the tracked-file list live, and what every
+ * repo-relative path in a sidecar is relative to (bean `pgzn`).
+ *
+ * NOT `REPO_ROOT`, which is `dirname`. That is right for every instance
+ * nested one level under the repository and wrong for the one declared AT it:
+ * for `--instance .` it climbed out of the checkout, so `rootScripts` threw
+ * `ENOENT …/package.json` before anything was audited — and the other call
+ * sites that asked the same question through `repoRootFor` would have read a
+ * directory above the checkout without saying so. `checkoutRootFor` agrees
+ * with `dirname` for every nested instance and is the root itself for the
+ * root instance; `siblingScopeFor`'s docblock records the same trap.
+ */
+const REPO_ROOT = checkoutRootFor(root);
+const ACTOR_DIR = actorsDir(REPO_ROOT) ?? "";
 // Declared home inside `scenarios` (bean rqao); "" when there is none, as for ACTOR_DIR.
-const CAPABILITY_DIR = capabilitiesDir(repoRootFor(root)) ?? "";
+const CAPABILITY_DIR = capabilitiesDir(REPO_ROOT) ?? "";
 const REQUIREMENT_DIR = join(KG_ROOT, "requirements");
 // declared-path-literal: the convention fallback, at the call site. Same
 // reasoning as `WORKFLOW_DIR`. A Tool node carries NO path of its own — the
@@ -856,7 +871,7 @@ async function auditProcess(
 
   // CONVENTION REFS. The dangling direction only — see the criterion's note
   // in `kg-qa.ts` for why absence is deliberately not a finding.
-  const conventionDir = conventionsDir(repoRootFor(root));
+  const conventionDir = conventionsDir(REPO_ROOT);
   const knownConventions = conventionDir !== undefined && existsSync(conventionDir)
     ? new Set(readdirSync(conventionDir).filter((f) => f.endsWith(".json")).map((f) => f.slice(0, -5)))
     : undefined;
@@ -1024,10 +1039,12 @@ function reachabilityCriteria(m: ProcessModel): Record<string, KgCriterionEntry>
 async function auditDecisions(
   processes: LoadedProcess[],
 ): Promise<KgQaReport[]> {
-  const decisionDirs = workflowDirs(root, corpusScopeFor(root))
-    .map((d) => join(d, "decisions"))
-    .filter((d) => existsSync(d));
-  if (decisionDirs.length === 0) return [];
+  // Every `.dmn` under a declared processes directory, at ANY depth. Was
+  // `<dir>/decisions/` alone, which placement PR3 (bean `63wl`) outgrew: a
+  // decision now sits beside the diagrams that read it, in
+  // `processes/<group>/decisions/`, and a flat read audited none of them.
+  const decisionFiles = workflowFiles(root, corpusScopeFor(root)).filter((f) => f.endsWith(".dmn"));
+  if (decisionFiles.length === 0) return [];
   const referenced = new Set<string>();
   for (const p of processes) {
     for (const n of p.model?.nodes.values() ?? []) {
@@ -1036,9 +1053,7 @@ async function auditDecisions(
   }
 
   const out: KgQaReport[] = [];
-  for (const abs of decisionDirs
-    .flatMap((d) => readdirSync(d).filter((f) => f.endsWith(".dmn")).map((f) => join(d, f)))
-    .sort()) {
+  for (const abs of [...decisionFiles].sort()) {
     const f = basename(abs);
     const rel = relative(root, abs);
     const hash = sha256(readFileSync(abs, "utf-8"));
@@ -1663,7 +1678,7 @@ function arrowDirection(): KgCriterionEntry {
  * undetermined (an output, a folio's file, an example) and never a finding.
  */
 function proseNamesResolve(): KgCriterionEntry {
-  const repo = repoRootFor(root);
+  const repo = REPO_ROOT;
   const ls = Bun.spawnSync(["git", "ls-files"], { cwd: repo });
   if (ls.exitCode !== 0) {
     return { result: "unknown", findings: [{ where: "—", detail: "`git ls-files` failed, so a bare file name cannot be looked up." }] };
@@ -1910,9 +1925,9 @@ function localHarnessSkills(): Set<string> {
   // The `.md` bodies stay in the agent harness's `.claude/skills/local/`; the
   // JSON definitions moved by theme into each owner's `skill-definitions/`
   // (bean `rqao`).
-  const dir = join(repoRootFor(root), ".claude", "skills", "local");
+  const dir = join(REPO_ROOT, ".claude", "skills", "local");
   if (existsSync(dir)) for (const f of readdirSync(dir)) if (f.endsWith(".md")) out.add(f.slice(0, -3));
-  for (const d of skillDefinitionDirs(repoRootFor(root))) {
+  for (const d of skillDefinitionDirs(REPO_ROOT)) {
     for (const f of readdirSync(d)) if (f.endsWith(".json")) out.add(f.slice(0, -5));
   }
   return out;
@@ -1944,7 +1959,7 @@ function manifestEntries(): { pkg: string; skill: string }[] {
  * reader-facing fields only — a Jekyll data file, not an instance.
  */
 function unreadNestedInstances(): KgFinding[] {
-  const repo = repoRootFor(root);
+  const repo = REPO_ROOT;
   const out: KgFinding[] = [];
   const walk = (dir: string, depth: number): void => {
     if (depth > 3) return;
@@ -2713,7 +2728,8 @@ if (!check) {
 // runs, the way a block-qa reviewer entry is. Done before the write loop so
 // `--check` regenerates the same text the writer would.
 {
-  const repoRoot = resolve(root, "..");
+  // `REPO_ROOT`, not `resolve(root, "..")` — see its declaration (bean `pgzn`).
+  const repoRoot = REPO_ROOT;
   const scripts = rootScripts(repoRoot);
   for (const r of reports) {
     if (r.subject.kind !== "process" && r.subject.kind !== "skill") continue;

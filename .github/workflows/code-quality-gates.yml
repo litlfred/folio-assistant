@@ -1,4 +1,4 @@
-# bpmn: cat-harness/processes/code-quality-gates.bpmn
+# bpmn: cat-harness/processes/sdlc/code-quality-gates.bpmn
 # Code-quality gates — cheap, fast static checks that protect compute infra.
 #
 # Four jobs (the first three per
@@ -829,6 +829,16 @@ jobs:
       - name: knowledge-graph audit, every declared instance
         run: bun run kg:audit:all:check
 
+      # kg-export's committed `qa-results/v1` sidecars are current (bean `v556`).
+      #
+      # It had no `--check` until then, so it was in no verify/write pair and
+      # outside check:artefact-verification's inventory. Measured on main
+      # `cf3e624`: `kg-export.bootstrap.qa-results.json` carried a stale hash
+      # AND hid three findings, with every gate green. Also reports a committed
+      # `kg-export.<stub>` sidecar that no instance owns as an orphan.
+      - name: kg-export QA sidecars are current
+        run: bun run kg:export:check
+
       # WHICH audits reach which kind of node — the neighbour of the audit
       # above, not a second answer to it. `kg:audit:check` judges the nodes it
       # covers; this measures WHAT IS COVERED AT ALL, which nothing asked
@@ -1499,6 +1509,14 @@ jobs:
           # can see, which is the 35-bean defect e8m3 was filed over.
           bun run check:bean-archive
           bun run check:bean-blocks
+          # Bean `m61r`, issue #1853: a pull request adds to a bean it does not
+          # own by writing a NOTE, one file per branch per bean, instead of
+          # appending — `ob3m` cost five hand-merges in one afternoon because
+          # every append conflicted with every other. This judges each note
+          # (front matter, a bean that exists, and the file name its own front
+          # matter derives — the rule that keeps two writers apart) and fails
+          # on a stale generated index. Writer: `bun run beans:notes`.
+          bun run beans:notes:check
           # Bean `kpcl`, issue #956: `in-progress` stopped carrying information --
           # 99 claims, 77 untouched for a day or more. The obvious sweep assumes
           # its own answer, so this gate owns only the half that is PURE GRAPH:
@@ -1895,6 +1913,10 @@ jobs:
           # source per code, not a string in an attribute. Owner, 2026-09-23.
           # Refuses a malformed list, and an adjudication naming no list.
           bun run code-lists:check
+          # Vocabulary mapping tables (bean k74z): each parses, each derived
+          # target copies an authoritative one, each system resolves, and each
+          # can be produced as a FHIR ConceptMap. Owner, 2026-10-02.
+          bun run vocab-mappings:check
           bun run docs:harness:check
           # Every instantiated harness ABOVE THE FLOOR owes a board, and the
           # board it owes shows the whole folio. Owner, 2026-09-21: "Any

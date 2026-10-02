@@ -93,6 +93,49 @@ classDiagram
       codes [1..*] Code[]
     }
   }
+  namespace cat_harness__vocab_mappings {
+    class cat_harness_vocab_mappings_Element["Element"] {
+      <<json: VocabMappingSchema>>
+      code [0..1] string
+      display [0..1] string
+      valueSet [0..1] string
+      noMap [0..1] boolean
+      target [0..*] object[]
+      extra [0..1] map~any~
+    }
+    class cat_harness_vocab_mappings_Group["Group"] {
+      <<json: VocabMappingSchema>>
+      source [0..1] string
+      sourceVersion [0..1] string
+      target [0..1] string
+      targetVersion [0..1] string
+      element [1..*] Element[]
+      unmapped [0..1] object
+      extra [0..1] map~any~
+    }
+    class cat_harness_vocab_mappings_VocabMapping["VocabMapping"] {
+      <<json: VocabMappingSchema>>
+      $schema [1] 'folio-vocab-mapping/v1'
+      id [1] string
+      url [0..1] string
+      version [0..1] string
+      name [0..1] string
+      title [0..1] string
+      status [1] draft | active | retired | unknown
+      experimental [0..1] boolean
+      date [0..1] string
+      publisher [0..1] string
+      description [0..1] string
+      purpose [0..1] string
+      copyright [0..1] string
+      sourceScope [0..1] object
+      targetScope [0..1] object
+      property [0..*] map~any~[]
+      additionalAttribute [0..*] map~any~[]
+      group [0..*] Group[]
+      metadata [0..1] map~any~
+    }
+  }
   namespace cat_harness__schemas {
     class cat_harness_schemas_skills_bpmn_authoring_input_schema_json_BPMN_Authoring_Input["BPMN Authoring Input"] {
       <<schema: skills/bpmn-authoring/input.schema.json>>
@@ -646,7 +689,7 @@ classDiagram
       source [1] string
       verdict [1] railed | declined | missing
       reason [0..1] string
-      flags [0..*] list~header | clickable-mark | visualiser-nav | single-open | no-redundant-toggle~
+      flags [0..*] enum(7)[]
     }
     class cat_harness_qa_viewer_nav_qa_v1_viewer_nav_qa_v1["viewer-nav-qa/v1"] {
       <<json: ViewerNavQaSchema>>
@@ -1239,6 +1282,11 @@ classDiagram
   cat_harness_code_lists_CodeList *-- "1..*" cat_harness_code_lists_Code : codes
   cssClass "cat_harness_code_lists_Code" fa_uml_kind_code_list
   cssClass "cat_harness_code_lists_CodeList" fa_uml_kind_code_list
+  cat_harness_vocab_mappings_Group *-- "1..*" cat_harness_vocab_mappings_Element : element
+  cat_harness_vocab_mappings_VocabMapping *-- "0..*" cat_harness_vocab_mappings_Group : group
+  cssClass "cat_harness_vocab_mappings_Element" fa_uml_kind_vocab_mapping
+  cssClass "cat_harness_vocab_mappings_Group" fa_uml_kind_vocab_mapping
+  cssClass "cat_harness_vocab_mappings_VocabMapping" fa_uml_kind_vocab_mapping
   cat_harness_schemas_skills_content_author_output_schema_json_Content_Author_Output *-- "0..*" cat_harness_schemas_skills_content_author_output_schema_json_Artifact : artifacts
   cat_harness_schemas_skills_content_feedback_input_schema_json_Content_Feedback_Input *-- "0..*" cat_harness_schemas_skills_content_feedback_input_schema_json_FeedbackItem : feedbackItems
   cat_harness_schemas_skills_content_feedback_output_schema_json_Content_Feedback_Output *-- "0..*" cat_harness_schemas_skills_content_feedback_output_schema_json_TriagedItem : triagedItems

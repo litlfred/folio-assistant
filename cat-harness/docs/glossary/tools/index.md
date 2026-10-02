@@ -12,9 +12,9 @@ permalink: /glossary/tools/
 
 Candidate terms extracted from every Tool node: `title` as the label, `description` as the definition, the Tool id as the code. Each is the asset's own text, verbatim and not curated, and carries the badge "candidate, extracted". A person promotes one by authoring it. Authored terms, the counts and the sources are on the <a href="{{ '/glossary/' | relative_url }}">glossary index</a>.
 
-From: cat-harness 113 (<a href="{{ '/assets/glossary/cat-harness--kg-tools.skos.jsonld' | relative_url }}">SKOS</a>) · fhir-harness 20 (<a href="{{ '/assets/glossary/fhir-harness--kg-tools.skos.jsonld' | relative_url }}">SKOS</a>) · folio-assistant-core 5 (<a href="{{ '/assets/glossary/folio-assistant-core--kg-tools.skos.jsonld' | relative_url }}">SKOS</a>) · smart-base 6 (<a href="{{ '/assets/glossary/smart-base--kg-tools.skos.jsonld' | relative_url }}">SKOS</a>).
+From: cat-harness 114 (<a href="{{ '/assets/glossary/cat-harness--kg-tools.skos.jsonld' | relative_url }}">SKOS</a>) · fhir-harness 19 (<a href="{{ '/assets/glossary/fhir-harness--kg-tools.skos.jsonld' | relative_url }}">SKOS</a>) · folio-assistant-core 5 (<a href="{{ '/assets/glossary/folio-assistant-core--kg-tools.skos.jsonld' | relative_url }}">SKOS</a>) · smart-base 6 (<a href="{{ '/assets/glossary/smart-base--kg-tools.skos.jsonld' | relative_url }}">SKOS</a>).
 
-**Size:** this page holds 144 terms and is 98 KB before compression, fetched in one request, within its budget of 1.0 MB. There is no search index: the filter below runs over this page, and the A–Z bar jumps within it.
+**Size:** this page holds 144 terms and is 99 KB before compression, fetched in one request, within its budget of 1.0 MB. There is no search index: the filter below runs over this page, and the A–Z bar jumps within it.
 
 <table class="fa-gloss-mapping">
 <caption>Already somebody else's concept? — <code>check:term-mapping</code>, bean <code>7wou</code></caption>
@@ -41,6 +41,13 @@ A paper's block graph as UML <span class="fa-gloss-status">candidate, extracted<
 <dd>
 <p>Draw a paper's block graph from buildContentGraph: chapters as packages, editorial edges (uses / interprets) solid and formal Lean edges (type / value) dashed purple, never one derived from the other, and each block filled by its formalization status from proof-objects.json when given. One diagram for the paper and one per chapter, each in portrait and landscape, stamped with its source's hash. Run from a folio: the platform carries no paper.</p>
 <p class="fa-gloss-meta">Tools of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/tools/index.ts"><code>cat-harness/tools/index.ts#content-graph-uml</code></a></p>
+</dd>
+<dt id="cat-harness--kg-tools--vocab-map" data-fa-state="extracted" data-fa-gloss="">
+Apply a vocabulary mapping table <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>Carry one source record into a target vocabulary by a declared <code>folio-vocab-mapping/v1</code> table: each source field becomes the predicate its row names, in the table's order, with a DERIVED target (such as <code>dcterms:title</code> rendering <code>skos:prefLabel</code>) copied from its authoritative one so the two cannot drift. A table is shaped like a FHIR ConceptMap: an existing ConceptMap, R4 or R5, is representable as one without loss (<code>fromConceptMap</code>), and a table can be produced as a ConceptMap (<code>toConceptMap</code>), which returns every loss rather than dropping anything silently. First consumer: <code>glossary-export</code>.</p>
+<p class="fa-gloss-meta">Tools of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/tools/vocab-map.ts"><code>cat-harness/tools/vocab-map.ts#vocab-map</code></a></p>
 </dd>
 <dt id="cat-harness--kg-tools--readme-audit" data-fa-state="extracted" data-fa-gloss="">
 Audit README links <span class="fa-gloss-status">candidate, extracted</span>
@@ -243,13 +250,6 @@ Fetch a skill <span class="fa-gloss-status">candidate, extracted</span>
 <dd>
 <p>Load one skill's instruction body for the agent to follow, from the local packages or an external bundle.</p>
 <p class="fa-gloss-meta">Tools of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/tools/mcp.ts"><code>cat-harness/tools/mcp.ts#skill-fetch</code></a></p>
-</dd>
-<dt id="fhir-harness--kg-tools--ig-cache" data-fa-state="extracted" data-fa-gloss="">
-FHIR AST cache <span class="fa-gloss-status">candidate, extracted</span>
-</dt>
-<dd>
-<p>Restore, verify, seed and diagnose the prebuilt AST artefacts for an IG. Always try <code>restore</code> first: a full AST build via AstExportCli is expensive, a restore is fast.</p>
-<p class="fa-gloss-meta">Tools of fhir-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/fhir-harness/tools/index.ts"><code>fhir-harness/tools/index.ts#ig-cache</code></a></p>
 </dd>
 <dt id="cat-harness--kg-tools--folio-block-qa-summary" data-fa-state="extracted" data-fa-gloss="">
 Folio block QA summary <span class="fa-gloss-status">candidate, extracted</span>

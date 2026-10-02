@@ -1092,6 +1092,7 @@ export const RULES: Rule[] = [
       // (bean `xl55`). Harness: it indexes the platform's own docs manifests.
       "scripts/process-presentations.ts",
       "scripts/claim-bean.ts",
+      "scripts/bean-notes.ts",              // per-branch notes on a bean and their generated index (bean `m61r`) — the harness's own work plan, no content type
       "scripts/beans-landed.ts",            // open beans named in a merged PR title — reported, never closed (bean `4d22`)
       "scripts/check-duplicate-ids.ts",     // no built page carries one id twice — run on the staged site (bean `uknu`)
       "scripts/front-matter.ts",
@@ -1137,6 +1138,10 @@ export const RULES: Rule[] = [
       "scripts/render-log.ts",
       "scripts/serve-rendering.ts",
       "scripts/staging-cleanup-preflight.ts",
+      // The preview cap (issue #1868) — same family as its imports above
+      // (`restore-staging`, `render-log`, `staging-record`,
+      // `staging-cleanup-preflight`, `staging-preview`), all harness.
+      "scripts/staging-rotate.ts",
       "src/tools/check-deps.ts",
       "src/tools/capabilities.ts",
       // Beside `capabilities.ts` and for the same reason: it joins a skill's
@@ -1326,6 +1331,10 @@ export const RULES: Rule[] = [
       // tooling below; a core placement made `process-model.ts` import down.
       "schemas/code-list.ts",
       "scripts/code-lists.ts",
+      // Vocabulary mapping tables' gate (bean `k74z`), beside the code-list
+      // gate for the same reason: glossary-export, which the publish process
+      // runs, applies the tables, so judging them is harness work.
+      "scripts/vocab-mappings.ts",
       // The pre-deploy verifier set (bean `vigi`): needed to RUN the publish
       // process, so harness, beside the gates it sits among.
       "scripts/publish-verify.ts",
@@ -1944,10 +1953,16 @@ export const RULES: Rule[] = [
       "scripts/notebook-structure.ts",      // the notebook rung: a folio's `.ipynb` → `notebook-structure/v1` (bean rkqp)
       "scripts/text-structure.ts",          // the text rung: Markdown/XML at a commit → `text-structure/v1` (bean y4uj)
       // `scripts/extract-assets.ts` STOOD HERE and is GONE as of bean `yj6r`,
-      // 2026-09-30, for the reason the materialisation trio above gives: it now
-      // lives in `folio-assistant-core/scripts/` beside the
-      // `schemas/extraction.ts` it reads, so the classification is carried by
-      // location. Its reasoning is kept rather than deleted with the entry,
+      // 2026-09-30, for the reason the materialisation trio above gives: it
+      // moved to `folio-assistant-core/scripts/` beside the
+      // `schemas/extraction.ts` it reads, so the classification was carried by
+      // location. SUPERSEDED 2026-10-02 by owner ruling 2 of the placement
+      // proposal (bean `tlat`, PR5): the pair is the tool behind the harness's
+      // own `asset-extraction` skill, so the schema moved DOWN to
+      // `cat-harness/schemas/extraction.ts` and the script to
+      // `cat-harness-tools/scripts/extract-assets.ts`. Neither is in this
+      // core list again; the reasoning below is kept as the record of why it
+      // was ever classified core. Its reasoning is kept rather than deleted with the entry,
       // because the next reader will ask why a container-extraction tool is not
       // adjudicated and "it is, by where it sits" is the answer: same test as
       // the three above — it reads a CONTAINER a folio was given (a zip, a PDF,
