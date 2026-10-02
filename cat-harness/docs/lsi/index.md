@@ -135,9 +135,9 @@ Each dimension is a **contrast** between two poles, shown by their highest-loadi
 | 3 | 17.77 | session, beans, goals, branch, store, window, epic, push | slot, chapter, block, edges, formal, glossary, project, proof |
 | 4 | 16.41 | page, block, section, sections, blocks, chapter, manifest, text | ledger, sibling, subdirectory, items, sessions, window, queue, renderable |
 | 5 | 14.81 | locale, translated, navbar, page, translation, french, staging, theme | edges, forward, edge, logical, backward, cross-chapter, energy, ordering |
-| 6 | 14.76 | requirements, lane, role, actor, feature, phase, task, sign-off | rung, queue, archive, arm, slide, zip, bytes, sniff |
+| 6 | 14.76 | requirements, lane, role, actor, feature, phase, task, sign-off | rung, queue, arm, archive, slide, zip, bytes, sniff |
 | 7 | 14.38 | edges, forward, preview, backward, edge, cross-chapter, energy, logical | actor, lane, role, backlog, rung, criterion, login, roles |
-| 8 | 14.12 | locale, translation, translated, french, back-translation, badge, translations, trip | preview, feature, phase, option, sha, impact, user, theme |
+| 8 | 14.12 | locale, translated, translation, french, back-translation, badge, translations, trip | preview, feature, phase, option, sha, impact, user, theme |
 
 **Findings** — 0 narrow dimension(s), 1 near-duplicate pair(s).
 
