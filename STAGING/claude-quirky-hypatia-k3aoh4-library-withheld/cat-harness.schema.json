@@ -534,6 +534,13 @@
                   "held"
                 ]
               },
+              "heldEntries": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "minLength": 1
+                }
+              },
               "visualisedAs": {
                 "type": "string",
                 "enum": [
@@ -811,6 +818,7 @@
               "bodyFrom": {
                 "type": "string",
                 "enum": [
+                  "summary",
                   "description"
                 ]
               },
@@ -1022,8 +1030,8 @@
   "$comment": "Instance graph: https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-hypatia-k3aoh4-library-withheld/cat-harness.jsonld",
   "staging": {
     "branch": "claude/quirky-hypatia-k3aoh4-library-withheld",
-    "sha": "36ba0ed1f63d1221dee30e818139d7bb36fd298e",
+    "sha": "c3e6e9efae1e9fcbd92350ca09015decd7f3e3ce",
     "pr": "1818/merge",
-    "run": "36917170452"
+    "run": "37009725945"
   }
 }
