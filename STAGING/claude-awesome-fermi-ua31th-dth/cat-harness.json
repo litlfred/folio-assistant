@@ -301,10 +301,10 @@
   ],
   "canonicalDocument": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld",
   "repository": "cat-harness",
-  "generatedAt": "2026-10-02T12:27:08.226Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/f6e0b7671c3662bc756686801e4594bf68c809ab",
-  "sourceCommitSha": "f6e0b7671c3662bc756686801e4594bf68c809ab",
-  "sourceCommitAt": "2026-10-02T12:18:58Z",
+  "generatedAt": "2026-10-02T13:09:30.721Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/9dcf0648c0dd1cd571088b15618173238000c333",
+  "sourceCommitSha": "9dcf0648c0dd1cd571088b15618173238000c333",
+  "sourceCommitAt": "2026-10-02T13:01:40Z",
   "sourceTreeDirty": true,
   "dependsOnUnavailable": "2 dependency edge(s), none expressible as a record — see gaps",
   "counts": {
@@ -319,7 +319,7 @@
     "ProcessNode": 940,
     "Tool": 112,
     "Schema": 145,
-    "ExternalSchema": 18,
+    "ExternalSchema": 19,
     "GraphKind": 25,
     "Role": 48,
     "Subgraph": 25,
@@ -47726,6 +47726,20 @@
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#externalSchema/hl7-fhir"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th-dth/cat-harness.jsonld#externalSchema/ietf-handle-system",
+      "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#ExternalSchema",
+      "name": "ietf-handle-system",
+      "title": "Handle System Overview (RFC 3650), with its namespace (RFC 3651) and protocol (RFC 3652)",
+      "authority": "IETF",
+      "specVersion": "2003-11",
+      "specUse": "conforms",
+      "specUrl": "https://www.rfc-editor.org/rfc/rfc3650",
+      "namespace": [
+        "https://hdl.handle.net/"
+      ],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#externalSchema/ietf-handle-system"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th-dth/cat-harness.jsonld#externalSchema/omg-bpmn-2.0",
       "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#ExternalSchema",
       "name": "omg-bpmn-2.0",
@@ -49488,8 +49502,8 @@
   ],
   "staging": {
     "branch": "claude/awesome-fermi-ua31th-dth",
-    "sha": "1f9ad5b78ac972c91bc4144af378e4b9c5380bcd",
+    "sha": "d42a122b60d99dc42cab8a0b5717ccc6e5e3ae69",
     "pr": "1852/merge",
-    "run": "37006134004"
+    "run": "37010465384"
   }
 }
