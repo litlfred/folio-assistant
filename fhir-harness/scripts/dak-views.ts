@@ -23,6 +23,7 @@ import { readFileSync } from "node:fs";
 import { hasJsonView } from "./resource-views.ts";
 import { basename, join } from "node:path";
 import { artifactPageName, type FhirArtifact, type FhirArtifactIndex } from "../../folio-assistant-core/schemas/fhir-artifact-index.js";
+import { declarationPathIn } from "../../cat-harness/schemas/cat-harness.js";
 
 /** The two sidecars the Publisher renders a page for, in its tab order. */
 export const DAK_VIEW_KINDS = [
@@ -128,12 +129,16 @@ export function dakHubLinks(artifacts: readonly FhirArtifact[], publishedAt: str
  * data as `../<path>` (bean `680p`).
  */
 export function dakServed(instanceRoot: string): { ok: true } | { ok: false; why: string } {
-  const name = basename(instanceRoot);
+  // Found as the file whose stem equals its own `name`, never as
+  // `<directory>.json`: in a separated IG repository the directory is
+  // `smart-base/` and the declaration is still `smart-trust.json` (bean `rbz3`).
+  const at = declarationPathIn(instanceRoot);
+  if (at === undefined) return { ok: false, why: `${basename(instanceRoot)}/ holds no instance declaration` };
   let d: { directories?: { path?: string; graphKinds?: string[]; served?: boolean; instanceRoot?: boolean; composed?: boolean }[] };
   try {
-    d = JSON.parse(readFileSync(join(instanceRoot, `${name}.json`), "utf8"));
+    d = JSON.parse(readFileSync(at, "utf8"));
   } catch {
-    return { ok: false, why: `${name}.json could not be read` };
+    return { ok: false, why: `${basename(at)} could not be read` };
   }
   const dirs = d.directories ?? [];
   const index = dirs.find((x) => x.graphKinds?.includes("fhir-artifact-index"));

@@ -17,6 +17,7 @@
 import { existsSync, readFileSync, writeFileSync } from "node:fs";
 import { join, resolve } from "node:path";
 import { type GitHubRelease, releasesFromGitHub } from "../schemas/ig-releases.ts";
+import { declarationPathIn } from "../../cat-harness/schemas/cat-harness.js";
 
 /** `owner/repo` from a GitHub URL or an `owner/repo` string. */
 export function repoSlug(s: string): string | undefined {
@@ -31,9 +32,10 @@ export function instanceRepo(root: string): string | undefined {
     const of = (JSON.parse(readFileSync(menu, "utf-8")) as { source?: { of?: string } }).source?.of;
     if (of && repoSlug(of)) return repoSlug(of);
   }
-  const name = root.split("/").filter(Boolean).pop()!;
-  const decl = join(root, `${name}.json`);
-  if (existsSync(decl)) {
+  // The declaration is the file whose stem equals its own `name`, not
+  // `<directory>.json`: a separated IG keeps its data under `smart-base/`.
+  const decl = declarationPathIn(root);
+  if (decl !== undefined) {
     const r = (JSON.parse(readFileSync(decl, "utf-8")) as { repository?: string }).repository;
     if (r) return repoSlug(r);
   }

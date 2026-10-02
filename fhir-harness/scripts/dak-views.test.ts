@@ -3,9 +3,10 @@
  * `<Name>.schema.json.html` / `.jsonld.html` show, computed for a template.
  */
 import { describe, expect, it } from "bun:test";
-import { readFileSync } from "node:fs";
+import { mkdirSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from "node:fs";
+import { tmpdir } from "node:os";
 import { join } from "node:path";
-import { DAK_VIEW_SCRIPT, dakHubLinks, dakViewData, dakViews } from "./dak-views.ts";
+import { DAK_VIEW_SCRIPT, dakHubLinks, dakServed, dakViewData, dakViews } from "./dak-views.ts";
 import type { FhirArtifact } from "../../folio-assistant-core/schemas/fhir-artifact-index.js";
 
 const a = {
@@ -66,5 +67,30 @@ describe("dak views", () => {
     const v = dakViews(withJson)[0]!;
     expect(dakViewData(withJson, v).tabs.find((t) => t.label === "JSON")!.href).toBe("https://p/ValueSet-Actors.json");
     expect(dakViewData(withJson, v, "../", true).tabs.find((t) => t.label === "JSON")!.href).toBe("ValueSet-Actors.json.html");
+  });
+});
+
+describe("dakServed finds the declaration by its own name, not the directory's (bean rbz3)", () => {
+  it("a separated IG keeps its data under smart-base/ and its declaration is still <name>.json", () => {
+    const d = mkdtempSync(join(tmpdir(), "dak-served-"));
+    try {
+      const root = join(d, "smart-base");
+      mkdirSync(root);
+      const decl = (name: string) => ({
+        name,
+        directories: [
+          { path: "fhir-artifact-index/", graphKinds: ["fhir-artifact-index"], served: true },
+          { path: "docs/", instanceRoot: true, composed: true },
+        ],
+      });
+      writeFileSync(join(root, "smart-trust.json"), JSON.stringify(decl("smart-trust")));
+      expect(dakServed(root)).toEqual({ ok: true });
+      // A file named after the directory but declaring another name is not a declaration.
+      rmSync(join(root, "smart-trust.json"));
+      writeFileSync(join(root, "smart-base.json"), JSON.stringify(decl("smart-trust")));
+      expect(dakServed(root)).toEqual({ ok: false, why: "smart-base/ holds no instance declaration" });
+    } finally {
+      rmSync(d, { recursive: true, force: true });
+    }
   });
 });

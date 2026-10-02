@@ -91,6 +91,7 @@ import {
   declarationPathIn,
   directoriesForGraph,
   instanceRootsIn,
+  readDeclaration,
   repoRootFor,
 } from "../../cat-harness/schemas/cat-harness.js";
 
@@ -116,7 +117,17 @@ if (!INSTANCE_ARG) {
   process.exit(2);
 }
 const INSTANCE = resolve(process.cwd(), INSTANCE_ARG);
-const INSTANCE_NAME = basename(INSTANCE);
+/**
+ * The instance's IDENTITY: the `name` its declaration gives, and only
+ * without one the directory's name. The two differ in a separated IG
+ * repository, where every IG keeps its data under `smart-base/` (owner,
+ * 2026-10-02, choosing the plan's layout) but must still publish under its
+ * own name. Keyed on the directory, every such IG would publish under
+ * `/smart-base/` and collide once one site subscribes to several (bean
+ * `rbz3`, measured on the litlfred/smart-trust rehearsal: 2,153 pages
+ * changed by the rename alone).
+ */
+const INSTANCE_NAME = readDeclaration(INSTANCE)?.name ?? basename(INSTANCE);
 const INDEX = join(INSTANCE, "fhir-artifact-index", "index.json");
 /**
  * The IG's OWN navigation, ingested from its `sushi-config.yaml`.
