@@ -25,8 +25,8 @@ how to build, query and audit an index is the skill `lsi-indexing`.
 
 <div class="lv-grid">
 <div class="lv-stat"><b>5</b><span>committed indexes</span></div>
-<div class="lv-stat"><b>2378</b><span>units indexed</span></div>
-<div class="lv-stat"><b>4</b><span>graphs that need an index and lack a fresh one</span></div>
+<div class="lv-stat"><b>2140</b><span>units indexed</span></div>
+<div class="lv-stat"><b>5</b><span>graphs that need an index and lack a fresh one</span></div>
 </div>
 
 ## Which graphs need an index
@@ -37,12 +37,11 @@ the same as fine. The same verdict is `kg:audit`'s `tool-downstream-fresh` for t
 
 | graph | verdict | detail |
 |---|---|---|
-| `agent-skills/library` | <span class="lv-fail">fail</span> | no successful run recorded — re-run `bun run lsi index --instance agent-skills --graph library` |
 | `bootstrap-tools/bootstrap-tools-skills` | <span class="lv-na">n/a</span> | below the need-an-index threshold — not judged |
 | `bootstrap/skills` | <span class="lv-na">n/a</span> | below the need-an-index threshold — not judged |
 | `cat-harness/docs` | <span class="lv-fail">fail</span> | needs an LSI index and has none — run `bun run lsi index --instance cat-harness --graph docs` |
 | `cat-harness/folio` | <span class="lv-na">n/a</span> | below the need-an-index threshold — not judged |
-| `cat-harness/library` | <span class="lv-pass">pass</span> | fresh |
+| `cat-harness/library` | <span class="lv-fail">fail</span> | stale — re-run `bun run lsi index --instance cat-harness --graph library` |
 | `cat-harness/methodologies` | <span class="lv-na">n/a</span> | below the need-an-index threshold — not judged |
 | `cat-harness/policies` | <span class="lv-na">n/a</span> | below the need-an-index threshold — not judged |
 | `cat-harness/skills` | <span class="lv-pass">pass</span> | fresh |
@@ -58,8 +57,7 @@ the same as fine. The same verdict is `kg:audit`'s `tool-downstream-fresh` for t
 | `folio-assistant/beans` | <span class="lv-na">n/a</span> | state graph — indexed on demand, never committed |
 | `folio-assistant/memory` | <span class="lv-na">n/a</span> | below the need-an-index threshold — not judged |
 | `folio-assistant/root-docs` | <span class="lv-na">n/a</span> | below the need-an-index threshold — not judged |
-| `large-datasets/large-datasets-skills` | <span class="lv-na">n/a</span> | below the need-an-index threshold — not judged |
-| `smart-base/library` | <span class="lv-pass">pass</span> | fresh |
+| `smart-base/library` | <span class="lv-fail">fail</span> | no successful run recorded — re-run `bun run lsi index --instance smart-base --graph library` |
 | `smart-base/methodologies` | <span class="lv-na">n/a</span> | below the need-an-index threshold — not judged |
 | `smart-base/smart-base-docs` | <span class="lv-fail">fail</span> | needs an LSI index and has none — run `bun run lsi index --instance smart-base --graph smart-base-docs` |
 | `smart-trust/smart-trust-docs` | <span class="lv-fail">fail</span> | needs an LSI index and has none — run `bun run lsi index --instance smart-trust --graph smart-trust-docs` |
@@ -132,7 +130,7 @@ Each dimension is a **contrast** between two poles, shown by their highest-loadi
 
 ## cat-harness / skills
 
-**213** units · **5842** terms · k = **100** · retains **79.7 %** of the weighted matrix · weighting `log-entropy` · sidecar `cat-harness/test/results/lsi/cat-harness/skills.lsi.json`
+**219** units · **5875** terms · k = **100** · retains **79.0 %** of the weighted matrix · weighting `log-entropy` · sidecar `cat-harness/test/results/lsi/cat-harness/skills.lsi.json`
 
 > Dimension 1 has **no negative pole**: it most likely measures unit length and term frequency (a margin), not a theme. Read the themes from dimension 2 on.
 
@@ -140,24 +138,20 @@ Each dimension is a **contrast** between two poles, shown by their highest-loadi
 
 | dim | σ | one pole | the other pole |
 |---|---|---|---|
-| 1 | 43.63 | instance, harness, kind, session, directory, graph, block, page | *(none)* |
-| 2 | 21.41 | watcher, slot, sibling, queue, backlog, prs, block, commits | harness, instance, declaration, directory, node, directories, graph, bootstrap |
-| 3 | 17.77 | session, beans, goals, branch, store, window, epic, push | slot, chapter, block, edges, formal, glossary, project, proof |
-| 4 | 16.41 | page, block, section, sections, blocks, chapter, manifest, text | ledger, sibling, subdirectory, items, sessions, window, queue, renderable |
-| 5 | 14.81 | locale, translated, navbar, page, translation, french, staging, theme | edges, forward, edge, logical, backward, cross-chapter, energy, ordering |
-| 6 | 14.76 | requirements, lane, role, actor, feature, phase, task, sign-off | rung, queue, archive, arm, slide, zip, bytes, sniff |
-| 7 | 14.38 | edges, forward, preview, backward, edge, cross-chapter, energy, logical | actor, lane, role, backlog, rung, criterion, login, roles |
-| 8 | 14.12 | locale, translation, translated, french, back-translation, badge, translations, trip | preview, feature, phase, option, sha, impact, user, theme |
+| 1 | 43.84 | instance, kind, harness, session, graph, directory, block, page | *(none)* |
+| 2 | 21.47 | watcher, slot, sibling, queue, backlog, prs, block, commits | harness, instance, declaration, directory, node, directories, graph, declares |
+| 3 | 17.81 | session, beans, branch, goals, store, window, epic, push | slot, chapter, block, edges, formal, glossary, project, proof |
+| 4 | 16.44 | page, block, section, blocks, sections, chapter, manifest, text | ledger, sibling, subdirectory, items, sessions, queue, window, renderable |
+| 5 | 14.84 | locale, translated, navbar, page, translation, staging, french, theme | edges, forward, edge, logical, backward, cross-chapter, energy, editorial |
+| 6 | 14.77 | requirements, lane, role, actor, feature, phase, task, stakeholders | rung, queue, arm, slide, archive, zip, bytes, sniff |
+| 7 | 14.40 | edges, forward, preview, backward, edge, cross-chapter, energy, logical | actor, lane, role, backlog, criterion, rung, login, roles |
+| 8 | 14.13 | locale, translation, translated, french, back-translation, badge, language, translations | preview, feature, theme, phase, option, sha, impact, staging |
 
-**Findings** — 0 narrow dimension(s), 1 near-duplicate pair(s).
-
-*Near-duplicates* (cosine ≥ 0.95) — similar is not duplicate; read both:
-
-- 0.952 — `cat-harness/skills/sdlc/sdlc-core/delivery-summary.md` ~ `cat-harness/skills/sdlc/sdlc-core/diff.md`
+**Findings** — 0 narrow dimension(s), 0 near-duplicate pair(s).
 
 ## smart-base / library
 
-**839** units · **7506** terms · k = **100** · retains **55.3 %** of the weighted matrix · weighting `log-entropy` · sidecar `cat-harness/test/results/lsi/smart-base/library.lsi.json`
+**595** units · **6151** terms · k = **100** · retains **54.5 %** of the weighted matrix · weighting `log-entropy` · sidecar `cat-harness/test/results/lsi/smart-base/library.lsi.json`
 
 > Dimension 1 has **no negative pole**: it most likely measures unit length and term frequency (a margin), not a theme. Read the themes from dimension 2 on.
 
@@ -165,35 +159,35 @@ Each dimension is a **contrast** between two poles, shown by their highest-loadi
 
 | dim | σ | one pole | the other pole |
 |---|---|---|---|
-| 1 | 50.58 | registry, clinical, governance, facility, record, required, dpi-h, service | *(none)* |
-| 2 | 26.89 | registry, dpi-h, requirement, consuming, limr, mandatory, authoritative, governed | user, intervention, training, accessed, pcposs, testing, interventions, handbook |
-| 3 | 21.66 | provider, transmit, healthcare, registration, manage, facility, location, event | limr, fhir, models, computable, smart, cdse, semantic, standards |
-| 4 | 20.53 | lhr, cdse, surveillance, hmis, phsp, alerts, clinical, transmit | product, master, supplier, identifier, mandatory, chain, canonical, date |
-| 5 | 19.32 | accessed, world, organization, website, geneva, international, pdf, january | pcposs, user, worker, decision-support, logic, intervention, counselling, activity |
-| 6 | 18.30 | accessed, website, world, adaptation, organization, geneva, pcposs, roll-out | architecture, product, infrastructure, goals, chain, supply, dhsc, shared |
-| 7 | 17.87 | healthcare, transmit, provider, manage, fhir, clinical, models, limr | phsp, configurable, indicators, surveillance, lhr, outbreak, threats, investigation |
-| 8 | 16.90 | intervention, limr, mhealth, project, evaluation, axis, consuming, versioning | pcposs, registry, identity, consent, roll-out, foundational, handbook, dpi |
+| 1 | 35.53 | user, requirements, systems, service, care, training, adaptation, pcposs | *(none)* |
+| 2 | 20.36 | transmit, provider, healthcare, manage, event, alerts, diagnostic, commodities | requirements, accessed, handbook, design, adaptation, pcposs, website, user |
+| 3 | 18.89 | accessed, world, website, organization, geneva, international, pdf, january | pcposs, lane, activity, decision-support, swim, symbol, workflows, depict |
+| 4 | 17.14 | intervention, evaluation, axis, project, mhealth, studies, study, projects | pcposs, adaptation, roll-out, handbook, annexes, decision-support, activity, business |
+| 5 | 15.12 | standards, interoperability, enterprise, architecture, software, requirements, fhir, pcposs | research, qualitative, studies, accessed, study, quantitative, lane, client |
+| 6 | 14.58 | material, licence, translation, rights, igo, citation, work, imply | accessed, website, january, doi, pdf, org, qualitative, lane |
+| 7 | 14.06 | studies, qualitative, quantitative, study, designs, element, intervention, methods | axis, points, mhealth, scaling, domain, lane, swim, symbol |
+| 8 | 13.52 | element, hiv, elements, pcposs, testing, workers, forms, duplicated | enterprise, business, studies, qualitative, activities, symbol, quantitative, swim |
 
-**Findings** — 0 narrow dimension(s), 76 near-duplicate pair(s).
+**Findings** — 0 narrow dimension(s), 25 near-duplicate pair(s).
 
 *Near-duplicates* (cosine ≥ 0.95) — similar is not duplicate; read both:
 
-- 0.964 — `smart-base/library/who-dpi-h-reference-architecture-draft-v1/sections/sec-048-372-the-model.md` ~ `smart-base/library/who-dpi-h-reference-architecture-draft-v1/sections/sec-052-376-constructs-and-their-counterparts.md`
-- 0.998 — `smart-base/library/9789240010567-eng/sections/page-004.md` ~ `smart-base/library/9789240116191-eng/sections/page-003.md`
-- 0.997 — `smart-base/library/9789240010567-eng/sections/page-004.md` ~ `smart-base/library/9789240081949-eng/sections/page-004.md`
-- 0.997 — `smart-base/library/9789240010567-eng/sections/page-004.md` ~ `smart-base/library/9789240101197-eng/sections/page-004.md`
-- 0.973 — `smart-base/library/9789240010567-eng/sections/page-014.md` ~ `smart-base/library/who-rhr-1806-eng/sections/page-001.md`
-- 0.993 — `smart-base/library/9789240010567-eng/sections/page-017.md` ~ `smart-base/library/9789240116191-eng/sections/page-013.md`
-- 0.986 — `smart-base/library/9789240010567-eng/sections/page-017.md` ~ `smart-base/library/9789240101197-eng/sections/page-015.md`
-- 0.983 — `smart-base/library/9789240010567-eng/sections/page-017.md` ~ `smart-base/library/9789240120747-eng/sections/page-016.md`
-- 0.958 — `smart-base/library/9789240010567-eng/sections/page-018.md` ~ `smart-base/library/9789240116191-eng/sections/page-013.md`
-- 0.953 — `smart-base/library/9789240010567-eng/sections/page-018.md` ~ `smart-base/library/9789240101197-eng/sections/page-015.md`
-- 0.952 — `smart-base/library/9789240010567-eng/sections/page-021.md` ~ `smart-base/library/9789240010567-eng/sections/page-132.md`
-- 0.965 — `smart-base/library/9789240010567-eng/sections/page-022.md` ~ `smart-base/library/9789240010567-eng/sections/page-132.md`
+- 0.996 — `smart-base/library/9789240010567-eng/sections/page-004.md` ~ `smart-base/library/9789241511766-eng/sections/page-002.md`
+- 0.996 — `smart-base/library/9789240010567-eng/sections/page-004.md` ~ `smart-base/library/9789240081949-eng/sections/page-004.md`
+- 0.994 — `smart-base/library/9789240010567-eng/sections/page-004.md` ~ `smart-base/library/9789240120747-eng/sections/page-004.md`
+- 0.969 — `smart-base/library/9789240010567-eng/sections/page-014.md` ~ `smart-base/library/who-rhr-1806-eng/sections/page-001.md`
+- 0.981 — `smart-base/library/9789240010567-eng/sections/page-017.md` ~ `smart-base/library/9789240120747-eng/sections/page-016.md`
+- 0.969 — `smart-base/library/9789240010567-eng/sections/page-022.md` ~ `smart-base/library/9789240010567-eng/sections/page-132.md`
 - 0.998 — `smart-base/library/9789240010567-eng/sections/page-051.md` ~ `smart-base/library/who-rhr-1806-eng/sections/page-004.md`
-- 0.990 — `smart-base/library/9789240010567-eng/sections/page-059.md` ~ `smart-base/library/who-rhr-1806-eng/sections/page-001.md`
-- 0.987 — `smart-base/library/9789240010567-eng/sections/page-099.md` ~ `smart-base/library/9789240101197-eng/sections/page-033.md`
-- … and 61 more in the sidecar
+- 0.986 — `smart-base/library/9789240010567-eng/sections/page-059.md` ~ `smart-base/library/who-rhr-1806-eng/sections/page-001.md`
+- 0.989 — `smart-base/library/9789240010567-eng/sections/page-099.md` ~ `smart-base/library/9789240120747-eng/sections/page-034.md`
+- 0.986 — `smart-base/library/9789240010567-eng/sections/page-099.md` ~ `smart-base/library/9789240010567-eng/sections/page-173.md`
+- 0.986 — `smart-base/library/9789240010567-eng/sections/page-099.md` ~ `smart-base/library/9789240010567-eng/sections/page-174.md`
+- 0.988 — `smart-base/library/9789240010567-eng/sections/page-116.md` ~ `smart-base/library/9789241511766-eng/sections/page-038.md`
+- 0.952 — `smart-base/library/9789240010567-eng/sections/page-120.md` ~ `smart-base/library/9789241511766-eng/sections/page-064.md`
+- 0.981 — `smart-base/library/9789240010567-eng/sections/page-157.md` ~ `smart-base/library/9789240010567-eng/sections/page-159.md`
+- 0.999 — `smart-base/library/9789240010567-eng/sections/page-173.md` ~ `smart-base/library/9789240010567-eng/sections/page-174.md`
+- … and 10 more in the sidecar
 
 ## who-iris / library
 

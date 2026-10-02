@@ -147,8 +147,13 @@
       "findings": []
     },
     "prose-reviewed-since-code-changed": {
-      "result": "pass",
-      "findings": []
+      "result": "fail",
+      "findings": [
+        {
+          "where": ".github/workflows/merge-main.yml",
+          "detail": ".github/workflows/merge-main.yml changed since cat-harness/processes/merge-base.bpmn was last seen, and the prose did not. Re-read it; if it still holds, run pairs:attest with a reason."
+        }
+      ]
     },
     "prose-claims-resolve": {
       "result": "pass",
@@ -156,8 +161,8 @@
     }
   },
   "totals": {
-    "pass": 14,
-    "fail": 3,
+    "pass": 13,
+    "fail": 4,
     "n/a": 8,
     "unknown": 0
   },

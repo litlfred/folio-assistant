@@ -663,9 +663,25 @@
     {
       "id": "library",
       "path": "library/",
-      "description": "L1 source content — one `<bib-slug>/` per ingested document, holding `sections/*.md`, `structure.json` and, where the source was scanned, `ocr/page-NNN.txt`. THIS INSTANCE HOLDS NONE. Bean `frs5` moved all four entries out (the three IRIS items to who-iris, milnorlink to folio-assistant-sci) because the platform holds no content, and this entry was removed with them. It is back, on the owner's ruling of 2026-09-20, for ONE reason and it is not about this instance: `wwi6` pins the guarantee that a DEPENDENT folio materialises its own `uploads/` and `library/`, and a dependent inherits the convention — an id and a relative path — from what the harness declares. Remove this and every downstream folio silently stops getting a library. IT IS THE `dh4f` SHAPE AND THAT IS KNOWN, NOT OVERLOOKED: a declared directory this instance does not hold is exactly what that bean is about. The cost is paid deliberately and it is bounded — the consumers that scan libraries now fan out over EVERY declared one (bean `a02m`), so an empty one contributes nothing rather than shadowing the two that have content. What it must never become again is the FIRST of several silently taken as the only one. The real fix is the core relocation — `uploads`, `voices`, `translation-sources` and this moving to folio-assistant-core, per the owner's earlier \"voices, uploads library in folio-asst-core\" — after which a dependent inherits them from the layer that owns content and this entry goes for good.",
+      "description": "L1 source content — one `<bib-slug>/` per ingested document, holding `sections/*.md`, `structure.json` and, where the source was scanned, `ocr/page-NNN.txt`. THIS INSTANCE HOLDS NONE. Bean `frs5` moved all four entries out (the three IRIS items to who-iris, milnorlink to folio-assistant-sci) because the platform holds no content, and this entry was removed with them. It is back, on the owner's ruling of 2026-09-20, for ONE reason and it is not about this instance: `wwi6` pins the guarantee that a DEPENDENT folio materialises its own `uploads/` and `library/`, and a dependent inherits the convention — an id and a relative path — from what the harness declares. Remove this and every downstream folio silently stops getting a library. IT IS THE `dh4f` SHAPE AND THAT IS KNOWN, NOT OVERLOOKED: a declared directory this instance does not hold is exactly what that bean is about. The cost is paid deliberately and it is bounded — the consumers that scan libraries now fan out over EVERY declared one (bean `a02m`), so an empty one contributes nothing rather than shadowing the two that have content. What it must never become again is the FIRST of several silently taken as the only one. The real fix is the core relocation — `uploads`, `voices`, `translation-sources` and this moving to folio-assistant-core, per the owner's earlier \"voices, uploads library in folio-asst-core\" — after which a dependent inherits them from the layer that owns content and this entry goes for good. THE AGENT-SKILL CORPUS JOINED IT on 2026-10-01 (owner ruling: agent-skills dissolves into cat-harness's concern groups; bean `j7ql`): the 14 documents listed in `heldEntries` — vendor skill documentation (ASSERTION: a publisher describing its own product) and three arXiv papers (EVIDENCE: a measurement somebody else can repeat); each entry's `structure.json` carries its publisher, which is how a reader tells the two kinds apart. They sit flat here until placement PR8 (bean `f8wp`) regroups `library/` into `library/<group>/<slug>/`; the audit (#1778) assigns them conduct (10), sdlc (`hmans-2026-beans-readme`), tools (`mcp-2026-specification-2026-07-28`) and content (the two RFCs). Their summaries stay HELD, per entry, on the owner's 2026-09-24 ruling (bean `x80s`: 'Library summaries for agent-skills entries — No, keep held back'), which was stated about these documents and not about this directory.",
       "graphKinds": [
         "library"
+      ],
+      "heldEntries": [
+        "agent-skill-best-practices---gemini-cli",
+        "agent-skills---google-antigravity-docs",
+        "arxiv-2602.12670v4",
+        "arxiv-2607.25032v1",
+        "arxiv-2608.08453v1",
+        "best-practices---google-antigravity-docs",
+        "equipping-agents-for-the-real-world-with-agent-skills-anthro",
+        "hmans-2026-beans-readme",
+        "mcp-2026-specification-2026-07-28",
+        "rfc2119-key-words-requirement-levels",
+        "rfc8174-uppercase-vs-lowercase-2119-key-words",
+        "skill-authoring-best-practices---claude-platform-docs",
+        "skills-in-openai-api",
+        "skills-in-openai-api-notebook"
       ]
     },
     {
