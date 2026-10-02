@@ -2,7 +2,7 @@
   "$schema": "folio-bean-index/v1",
   "tile": {
     "beans": {
-      "count": 627,
+      "count": 631,
       "unit": "beans"
     }
   },
@@ -175,6 +175,20 @@
       "updatedAt": "2026-10-01T17:25:48Z",
       "preview": "G4. Main moves ~every 3 min; a merge->regen->CI cycle is ~22 min; three handovers stalled on it.\n\n## Done when\n- [ ] #1754 merged\n- [ ] d33q part B: CI regenerates on the merge result\n- [ ] median PR-green -> merged measured before and after\n\n_2026-10-01T17:25:48Z_ — Claimed by claude/s2-regen-in-ci — pushed to main so sibling sessions see it before this branch has a PR (bean 35nj).",
       "file": "beans/defs/folio-assistant-0mf0--s2-merge-treadmill-land-mergemain-1754-and-regen-i.md"
+    },
+    {
+      "id": "folio-assistant-0qjq",
+      "title": "MERGE-MAIN APPROVAL STALL — CORRECTED: already handled by design; the only gap is `stage`, deliberately preview-only, and the real fix is #1829 D1",
+      "status": "todo",
+      "type": "bug",
+      "priority": "low",
+      "parent": "folio-assistant-d33q",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-10-02T14:10:55Z",
+      "updatedAt": "2026-10-02T14:10:55Z",
+      "preview": "## This bean was filed on a false premise — corrected 2026-10-02\n\n**I filed it without reading `merge-main.yml` first.** That is the error worth\nrecording, because everything the first version \"discovered\" is written in that\nfile, measured on the same day, with its reason and its fix.\n\nThe step is **\"Have CI judge the merge commit\"**:\n\n> Every GATING workflow, so each judges the merge commit: a bo",
+      "file": "beans/defs/folio-assistant-0qjq--merge-main-approval-stall-the-bots-push-creates-ac.md"
     },
     {
       "id": "folio-assistant-0tg5",
@@ -695,6 +709,20 @@
       "updatedAt": "2026-09-19T08:55:36Z",
       "preview": "From [#363](https://github.com/litlfred/folio-assistant/issues/363): \"developer\nmode: likely wants local server hostign the content, run CLI version of tools.\nuses single agent/model for all workflows\".\n\n## The strawperson position\n\nDeveloper mode is a **point in the topology product**, not a special code path:\n\n| axis | value |\n|---|---|\n| forge | local git only, or any — the mode does not care |",
       "file": "beans/defs/folio-assistant-2ngl--mode-developer-local-server-cli-tools-one-model-fo.md"
+    },
+    {
+      "id": "folio-assistant-2q1p",
+      "title": "RETIRED PREVIEWS COME BACK: the full-replace restore carries _retired as a record but never consults it, so a retirement is undone by the next main-site publish",
+      "status": "todo",
+      "type": "bug",
+      "priority": "high",
+      "parent": "folio-assistant-1xhc",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-10-02T12:00:53Z",
+      "updatedAt": "2026-10-02T12:00:53Z",
+      "preview": "Found 2026-10-02 by testing ONE preview retirement before dispatching 57 —\nwhich is the only reason it was found rather than paid for 57 times.\n\n## The failure, measured on `gh-pages`\n\n| commit | what it did |\n|---|---|\n| `a46c58ca9df` | `staging(cleanup): remove STAGING/claude-fervent-brahmagupta-rbwhzm` — **1615 files deleted** |\n| `93ffa64488c` | `docs(gh-pages): site from a07c3c66…` — **all 16",
+      "file": "beans/defs/folio-assistant-2q1p--retired-previews-come-back-the-full-replace-restor.md"
     },
     {
       "id": "folio-assistant-2r2n",
@@ -6127,6 +6155,20 @@
       "file": "beans/defs/folio-assistant-qj9a--staging-size-the-measurement-is-right-and-the-seve.md"
     },
     {
+      "id": "folio-assistant-qml5",
+      "title": "The stale-claim sweep's 7-day threshold is unreachable — and three things it structurally cannot see",
+      "status": "todo",
+      "type": "bug",
+      "priority": "normal",
+      "parent": "folio-assistant-ahvw",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-10-02T06:39:03Z",
+      "updatedAt": "2026-10-02T06:39:03Z",
+      "preview": "Measured 2026-09-22 against `origin/main` @ `937c8d84`, by a dispatched sweep\nwhose every number was then **re-derived independently** before being written\nhere.\n\nFiled under `ahvw` rather than under `kpcl`, which owns this subject, because\n`kpcl` is a `task` and `check:bean-parents` requires a milestone, epic or\nfeature — so `kpcl` is the **sibling stream** this belongs to, not the parent\nthe fro",
+      "file": "beans/defs/folio-assistant-qml5--the-stale-claim-sweeps-7-day-threshold-is-unreacha.md"
+    },
+    {
       "id": "folio-assistant-qmqg",
       "title": "TRANSLATIONS: the convention fallback would have made #1448's declaration edit a silent no-op",
       "status": "todo",
@@ -6969,6 +7011,20 @@
       "updatedAt": "2026-09-23T19:25:46Z",
       "preview": "Found 2026-09-20 while draining bean `rl3h`. **Needs the owner: this is a\ndeletion, and an agent does not remove a durable artefact on its own\ninitiative.**\n\n## The file\n\n`cat-harness/translations/fr/agent-onboarding.md` — 8,656 bytes, added\n2026-09-20 (commit `169b7510b5`, *\"Merge main, and fix the sweep main's\nmemory move made blind\"*).\n\n## Why it looks wrong\n\nIt is the **only `.md` anywhere und",
       "file": "beans/defs/folio-assistant-tc95--blocked-on-owner-translationsfragent-onboardingmd.md"
+    },
+    {
+      "id": "folio-assistant-tcd6",
+      "title": "STAGING CLEANUP IS BROKEN: the cleanup job's checkout omits submodules, so rm -rf runs and the push never does — 6 consecutive failures, 80 previews, 47 for closed PRs",
+      "status": "todo",
+      "type": "bug",
+      "priority": "high",
+      "parent": "folio-assistant-1xhc",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-10-02T07:01:24Z",
+      "updatedAt": "2026-10-02T07:01:24Z",
+      "preview": "Found 2026-10-02 while trying to remove staging previews by hand, and the\nroot cause turned out to be why they could not be removed at all.\n\n## The failure\n\n`feature-staging.yml`'s `cleanup` job checks out the platform with no\n`submodules`. `cat-harness/schemas/graph-kind-registry.ts` imports\n`../../bootstrap-tools/schemas/graph`, and `bootstrap-tools` is a SUBMODULE,\nso every platform script the ",
+      "file": "beans/defs/folio-assistant-tcd6--staging-cleanup-is-broken-the-cleanup-jobs-checkou.md"
     },
     {
       "id": "folio-assistant-tfo1",
