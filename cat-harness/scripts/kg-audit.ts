@@ -118,6 +118,7 @@ import {
   type LoadedActor,
 } from "../schemas/role-graph.js";
 import { ANYONE, ODRL_ACTIONS, readPolicies, readPolicyGrants } from "../schemas/odrl.js";
+import { againstOrUsage, judgeSidecarTree, judgeUsage, qaStorageOf } from "./qa-results.ts";
 import { loadProcessModel, isActivity, isDecision, indistinctBranches, type ProcessModel } from "../src/workflow/process-model.js";
 import { reachability } from "../src/workflow/reachability.js";
 import { raciBreaches, raciRowsOf, type RaciBreachKind } from "./raci-chart.js";
@@ -340,6 +341,32 @@ const ATT_HOME = attestationsHomeFor(root, INSTANCE_RUN ? AUDITOR_ROOT : undefin
 const KG_ATT_TREE = join(ATT_HOME.root, "kg-qa");
 /** The declared directory whose absence makes every read `unknown` (never a re-baseline). */
 const ATT_STORE = ATT_HOME.storeRoot;
+/**
+ * Is the derived kg-qa tree STORED on `qa-reports` (bean `oqe3`)? Then its
+ * working copy is a measurement of the last run, not a record: a stale or
+ * orphaned sidecar there is advisory in judge mode. Unstored, it is still the
+ * committed record and both are findings, as they were.
+ */
+const derivedStored = qaStorageOf(KG_QA_TREE) !== undefined;
+
+/**
+ * The findings `--check` grades in one report: every failing or unknown
+ * criterion at the gate's severities, one entry per finding (or one for the
+ * criterion when it lists none). Per ENTRY, not per report, so a new finding
+ * in a subject that already had an old one is still NEW against a baseline.
+ * `worstSeverity`'s rule — fail and unknown both count — kept exactly.
+ */
+function gradedFindings(r: KgQaReport, gate: readonly KgSeverity[]): unknown[] {
+  const out: unknown[] = [];
+  for (const [id, e] of Object.entries(r.criteria ?? {})) {
+    if (e.result !== "fail" && e.result !== "unknown") continue;
+    const sev = KG_CRITERIA_BY_ID[id]?.severity;
+    if (sev === undefined || !gate.includes(sev)) continue;
+    if (e.findings.length === 0) out.push({ criterion: id, result: e.result });
+    for (const f of e.findings) out.push({ criterion: id, result: e.result, finding: f });
+  }
+  return out;
+}
 
 /**
  * How many criteria this run did not evaluate because they are `repo`-scoped.
@@ -2415,6 +2442,20 @@ if (initAttestations && check) {
   console.error("--init-attestations starts a store; --check writes nothing. Run them separately.");
   process.exit(2);
 }
+/**
+ * Judge mode's prelude (bean `oqe3`): an unknown flag is a usage error — a
+ * misspelt `--chek` would otherwise run the WRITER — and `--against <ref>`
+ * names the `qa-reports` baseline new findings are split from.
+ */
+const JUDGE_GATE = strict ? "kg:audit:strict" : "kg:audit:check";
+let against: string | undefined;
+if (check) {
+  const usage = judgeUsage(JUDGE_GATE, args, ["--instance", "--strict", "--json", "--against"]);
+  if (usage !== undefined) process.exit(usage);
+  const a = againstOrUsage(JUDGE_GATE, args);
+  if (a.exit !== undefined) process.exit(a.exit);
+  against = a.against;
+}
 
 const auditorHash = sha256(readFileSync(join(AUDITOR_ROOT, "scripts", "kg-audit.ts"), "utf-8"));
 const skills = knownSkills(root, corpusScopeFor(root));
@@ -2669,6 +2710,8 @@ reports.push(...auditTools(INSTANCE_RUN ? root : undefined));
 // comment line in this script rewrote 218 sidecars with no verdict changed,
 // which is what made two concurrent branches conflict by construction.
 const stale: string[] = [];
+/** Committed attestation files this run would rewrite — gated in judge mode (bean `oqe3`). */
+const staleAttestations: string[] = [];
 
 const manifest: KgQaManifest = {
   $schema: KG_QA_MANIFEST_SCHEMA,
@@ -2884,8 +2927,11 @@ for (const r of reports) {
   }
   const text = serialiseAttestations(file);
   if (check) {
+    // The attestation store is COMMITTED content on main (ruling D2 (a)), not
+    // a derived file leaving it — so a store this run would rewrite is still
+    // a finding in judge mode (bean `oqe3`), unlike a derived sidecar.
     const current = existsSync(p) ? readFileSync(p, "utf-8") : undefined;
-    if (current !== text) stale.push(relative(root, p));
+    if (current !== text) staleAttestations.push(relative(root, p));
   } else {
     mkdirSync(join(p, ".."), { recursive: true });
     writeFileSync(p, text);
@@ -3049,8 +3095,20 @@ if (asJson) {
   }
 
   if (check && stale.length) {
-    console.error(`${stale.length} sidecar(s) are stale. Run \`bun run kg:audit\` and commit:`);
-    for (const s of stale) console.error(`  · ${s}`);
+    // Bean `oqe3`: a derived sidecar that differs from this run is not a
+    // finding once its directory is stored — the record is rebuilt by
+    // `qa:refresh` in CI, not committed. Said, so a stale working copy is
+    // still SEEN, and gated only where the directory is not stored.
+    console.log(
+      `  ${derivedStored ? "advisory" : "✗"}: ${stale.length} derived sidecar(s) differ from this run's` +
+        (derivedStored ? " (not gated: the kg-qa tree is stored on qa-reports; judge, never compare)" : ". Run `bun run kg:audit`:"),
+    );
+    for (const s of stale.slice(0, derivedStored ? 5 : stale.length)) console.log(`    · ${s}`);
+    if (derivedStored && stale.length > 5) console.log(`    …and ${stale.length - 5} more`);
+  }
+  if (check && staleAttestations.length) {
+    console.error(`${staleAttestations.length} attestation file(s) are not what this run would write. Run \`bun run kg:audit\` and commit:`);
+    for (const s of staleAttestations) console.error(`  · ${s}`);
   }
 
   const worst = reports.map(worstSeverity).filter(Boolean) as KgSeverity[];
@@ -3060,10 +3118,54 @@ if (asJson) {
 
 if (check) {
   const gate: KgSeverity[] = strict ? ["critical", "major"] : ["critical"];
-  const tripped = reports.some((r) => {
-    const w = worstSeverity(r);
-    return w !== undefined && gate.includes(w);
+  // ── JUDGE MODE (bean `oqe3`): compute, judge, write nothing.
+  //
+  // The graded findings are every failing or unknown criterion at the gate's
+  // severity — what `tripped` below used to ask of `worstSeverity`, per entry
+  // rather than per report so a NEW finding in a subject that already had an
+  // old one is still new. Against `--against <ref>` only new ones fail; with
+  // no readable baseline every one fails, as before. "Stale" no longer fails a
+  // derived sidecar in a stored tree (there is nothing committed to be stale
+  // against once 5hox lands); what still fails is what is COMMITTED — an
+  // attestation file this run would rewrite, and an attestation no report
+  // covers — and, where the tree is not stored, a stale or orphaned sidecar.
+  const graded = (r: KgQaReport): unknown[] => gradedFindings(r, gate);
+  const derivedFailing = derivedStored ? 0 : stale.length + orphans.length;
+  const committed = staleAttestations.length + attOrphans.length;
+  const verdict = judgeSidecarTree({
+    gate: JUDGE_GATE,
+    fresh: reports.map((r) => ({ path: sidecarPath(r), findings: graded(r) })),
+    findingsOf: (text) => {
+      try {
+        const prior = JSON.parse(text) as KgQaReport;
+        return prior?.$schema === KG_QA_SCHEMA && prior.criteria ? graded(prior) : undefined;
+      } catch {
+        return undefined;
+      }
+    },
+    mode: "absolute",
+    against,
+    label: (p) => relative(root, p),
+    extraFailing: {
+      count: committed + derivedFailing,
+      detail:
+        `${committed} committed attestation file(s) out of date or orphaned` +
+        (derivedFailing ? `, ${derivedFailing} stale or orphaned sidecar(s) in an unstored tree` : ""),
+    },
+    ...(attUnknown.size > 0 ? { undetermined: `${attUnknown.size} subject(s) whose judgements could not be read — nothing was written for them` } : {}),
   });
+  process.exit(verdict.exit);
+}
+// The history of the judge above, kept because each rule in it was paid for.
+//
+// Until bean `oqe3` the exit was `stale || tripped || orphans || attOrphans ||
+// attUnknown`, with `tripped` = some report's `worstSeverity` at the gate.
+// `stale` and sidecar orphans were about the COMMITTED derived tree; once that
+// tree is stored on `qa-reports` and rebuilt from empty by `qa:refresh`, a
+// stale or orphaned sidecar cannot reach the record, so in a stored tree both
+// are advisory. Everything below still holds where the tree is not stored,
+// and for the committed attestation store, which is why `attOrphans` gates.
+//
   // ORPHANS FAIL, and they did not until the count reached zero.
   //
   // The sweep printed its findings to stderr and `orphans` appeared nowhere in
@@ -3097,8 +3199,6 @@ if (check) {
   //   · Only `--check` gates. Bare `kg:audit` is the WRITER and still exits 0,
   //     or regenerating after a rename would fail the very command you run to
   //     fix it.
-  process.exit(stale.length || tripped || orphans.length > 0 || attOrphans.length > 0 || attUnknown.size > 0 ? 1 : 0);
-}
 // A subject whose judgements could not be moved (ruling 2) was NOT written —
 // the writer says so with its exit code too, or a script running it would
 // read a refusal as a clean save.

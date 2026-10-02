@@ -43,7 +43,7 @@ import { existsSync, mkdirSync, writeFileSync, readFileSync } from "node:fs";
 import { createHash } from "node:crypto";
 import { dirname, join, resolve, sep } from "node:path";
 
-import { parseQaRef, QaUsageError, readQa, resolveQaLocation, type QaStoreOptions } from "./qa-store.js";
+import { parseQaRef, QaUsageError, readQa, readQaManifest, resolveQaLocation, type QaStoreOptions } from "./qa-store.js";
 
 /** Where every QA result is written. Mirrors the `qa-results` declaration. */
 export const QA_RESULTS_DIR = join("test", "results");
@@ -320,6 +320,16 @@ function storedOn(absPath: string, repoRoot?: string): string | undefined {
     // not resolve: nothing here is stored, which is the pre-move default.
     return undefined;
   }
+}
+
+/**
+ * The branch a path's `qa` directory is stored on, or `undefined` when it is
+ * not in a stored directory (bean `oqe3`). A producer asks this to decide
+ * whether its working copy is a RECORD (unstored: stale and orphaned files
+ * there are findings) or a measurement of the last run (stored: advisory).
+ */
+export function qaStorageOf(absPath: string, repoRoot?: string): string | undefined {
+  return storedOn(absPath, repoRoot);
 }
 
 /**
@@ -766,4 +776,174 @@ export function againstOrUsage(gate: string, argv: readonly string[] = process.a
     if (!(e instanceof QaUsageError)) throw e;
     return { exit: concludeJudgement({ gate, judgement: "error", detail: e.message }) };
   }
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// COMPUTE AND JUDGE A SIDECAR TREE (bean `oqe3`)
+// ─────────────────────────────────────────────────────────────────────────────
+
+/** One sidecar a tree-writing producer would write, and the findings it computed for it. */
+export interface FreshSidecar {
+  /** Absolute path of the sidecar — the same path on the branch, repository-relative there. */
+  path: string;
+  /** The findings the gate grades, each in the producer's own shape (identity is canonical JSON). */
+  findings: unknown[];
+}
+
+/** What {@link judgeSidecarTree} decided. */
+export interface TreeVerdict {
+  judgement: Judgement;
+  exit: number;
+  failing: number;
+  /** `hit`: a baseline was read (per file a hit, or a determined miss — a subject new here). */
+  baseline: { state: "hit" | "unknown"; from: string; reason?: string };
+  /** Findings new against the baseline, per sidecar path. */
+  added: Record<string, unknown[]>;
+  inherited: number;
+  resolved: number;
+  unknowns: string[];
+}
+
+/**
+ * The judge for a producer that writes a TREE of sidecars — one per subject,
+ * like `kg-audit` (`kg-qa/**`) and `translation-block-qa` (`translation-qa/**`)
+ * — rather than one `qa-results/v1` document. Bean `oqe3`: those gates used to
+ * compare every fresh sidecar with the committed one and fail on "stale", which
+ * stops meaning anything once the committed copy leaves `main` (`5hox`). So
+ * the gate form COMPUTES the findings, JUDGES them, and writes nothing — the
+ * rule {@link judgeQaResult} keeps for one document, over many files.
+ *
+ * ## The baseline, per sidecar
+ *
+ * With `against`, the ENTRY is asked first ({@link readQaManifest}): an entry
+ * that is not there, or cannot be read, makes the whole baseline unknown —
+ * never "every subject is new". Inside a readable entry a missing path is a
+ * determined miss: that subject had no sidecar at the baseline, so all of its
+ * findings are new. Without `against` the working copy is read, which
+ * {@link readBaseline} answers `unknown` for a directory that declares
+ * `storage`, because that working copy is not a record.
+ *
+ * ## Two grading modes, as {@link judgeQaResult}'s two lists
+ *
+ * - `"absolute"` (`failOn`) — against a branch baseline only NEW findings
+ *   fail. With no readable baseline, or against the working copy, every
+ *   finding fails, exactly as the gate did before: the author's own copy
+ *   cannot excuse their own finding.
+ * - `"new"` (`failOnNew`) — only findings NEW against a readable baseline
+ *   fail. A sidecar whose baseline is unknown is reported UNKNOWN and not
+ *   gated, because an unwritten baseline is not this change's defect.
+ *
+ * `extraFailing` carries findings about something other than the tree (a
+ * COMMITTED file the writer would change). `undetermined` is the run's own
+ * blind spot and is exit 2, outranking a finding.
+ */
+export function judgeSidecarTree(args: {
+  gate: string;
+  fresh: readonly FreshSidecar[];
+  /** Parse a baseline sidecar's text into the same finding entries, or `undefined` if it is not one. */
+  findingsOf: (text: string) => unknown[] | undefined;
+  mode: "absolute" | "new";
+  against?: string;
+  store?: QaStoreOptions;
+  extraFailing?: { count: number; detail: string };
+  undetermined?: string;
+  unknowns?: readonly string[];
+  detail?: string;
+  /** How a path is printed. Default: as given. */
+  label?: (path: string) => string;
+  show?: number;
+}): TreeVerdict {
+  const label = args.label ?? ((p: string) => p);
+  const unknowns = [...(args.unknowns ?? [])];
+  const added: Record<string, unknown[]> = {};
+  let inherited = 0;
+  let resolved = 0;
+  let failing = args.extraFailing?.count ?? 0;
+  let unreadable = 0;
+
+  // The entry first: an absent entry is ONE unknown, never N new subjects.
+  let entry: { state: "hit" | "unknown"; from: string; reason?: string } = { state: "hit", from: "working copy" };
+  if (args.against !== undefined) {
+    const from = `qa-reports:${args.against}`;
+    try {
+      const m = readQaManifest(args.against, args.store);
+      entry = m.state === "hit" ? { state: "hit", from: `qa-reports:${m.key}` } : { state: "unknown", from, reason: `${m.state}: ${m.reason}` };
+    } catch (e) {
+      entry = { state: "unknown", from, reason: (e as Error).message };
+    }
+  }
+  const fromBranch = args.against !== undefined && entry.state === "hit";
+
+  // A stored directory's working copy answers `unknown` for EVERY file; that
+  // is one fact about the run, said once, not a line per sidecar.
+  let storedUnknown: string | undefined;
+  for (const s of args.fresh) {
+    let before: unknown[] | undefined;
+    if (entry.state === "hit") {
+      const b = readBaseline(s.path, { against: args.against, store: args.store });
+      if (b.state === "hit") {
+        before = args.findingsOf(b.text);
+        if (before === undefined) unknowns.push(`${label(s.path)} at ${b.from} is not a readable sidecar`);
+      } else if (b.state === "miss") {
+        before = []; // a determined absence: the subject is new here
+      } else if (b.from === "working copy" && b.state === "unknown") {
+        storedUnknown ??= b.reason;
+      } else {
+        unknowns.push(`${label(s.path)} (${b.from}): ${b.state}, ${b.reason}`);
+      }
+    }
+    if (before === undefined) {
+      unreadable++;
+      if (args.mode === "absolute") failing += s.findings.length;
+      continue;
+    }
+    const prior = new Set(before.map(canonical));
+    const now = new Set(s.findings.map(canonical));
+    const isNew = s.findings.filter((f) => !prior.has(canonical(f)));
+    if (isNew.length > 0) added[s.path] = isNew;
+    inherited += s.findings.length - isNew.length;
+    for (const k of prior) if (!now.has(k)) resolved++;
+    failing += args.mode === "absolute" && !fromBranch ? s.findings.length : isNew.length;
+  }
+
+  const total = args.fresh.reduce((n, s) => n + s.findings.length, 0);
+  const noBaseline = entry.state !== "hit" ? `${entry.from}: ${entry.reason}` : storedUnknown !== undefined ? `working copy: ${storedUnknown}` : undefined;
+  if (noBaseline !== undefined) {
+    unknowns.push(
+      `no baseline to split NEW from inherited findings (${noBaseline}). ` +
+        `Not "no new findings" — the comparison was not made. Not this change's defect either, so not gated` +
+        (args.mode === "absolute" ? `; all ${total} graded finding(s) were judged in full.` : "."),
+    );
+  }
+  if (Object.keys(added).length > 0 || inherited > 0 || resolved > 0 || noBaseline === undefined) {
+    const newCount = Object.values(added).reduce((n, e) => n + e.length, 0);
+    console.log(
+      `  baseline (${entry.from}): ${newCount} NEW finding(s) in ${Object.keys(added).length} sidecar(s), ${inherited} inherited, ${resolved} resolved` +
+        (unreadable ? ` — ${unreadable} sidecar(s) with no readable baseline` : "") +
+        (fromBranch ? "" : " (pass --against <ref> to judge against the qa-reports branch)"),
+    );
+    const show = args.show ?? 10;
+    const rows = Object.entries(added);
+    for (const [p, entries] of rows.slice(0, show)) {
+      console.log(`    new in ${label(p)}:`);
+      for (const e of entries.slice(0, 3)) console.log(`      + ${JSON.stringify(e).slice(0, 300)}`);
+      if (entries.length > 3) console.log(`      …and ${entries.length - 3} more`);
+    }
+    if (rows.length > show) console.log(`    …and ${rows.length - show} more sidecar(s)`);
+  }
+  if (args.extraFailing && args.extraFailing.count > 0) console.error(`  ✗ ${args.extraFailing.detail}`);
+
+  const judgement = judgementOf({ failing, undetermined: args.undetermined !== undefined });
+  const detail = [args.detail, args.undetermined].filter(Boolean).join(" — ") || undefined;
+  const exit = concludeJudgement({ gate: args.gate, judgement, detail, unknowns });
+  return {
+    judgement,
+    exit,
+    failing,
+    baseline: noBaseline === undefined ? { state: "hit", from: entry.from } : { state: "unknown", from: entry.from, reason: noBaseline },
+    added,
+    inherited,
+    resolved,
+    unknowns,
+  };
 }
