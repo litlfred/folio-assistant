@@ -184,6 +184,12 @@ jobs:
         uses: actions/checkout@v7
         with:
           repository: litlfred/folio-assistant
+          # `cat-harness/schemas/` imports from the `bootstrap-tools`
+          # SUBMODULE, so every platform script this job runs needs it. Added
+          # 2026-10-02 with `check:workflow-submodules`, after the same gap
+          # broke `feature-staging.yml`'s cleanup for six consecutive runs and
+          # let 80 staging previews accumulate.
+          submodules: true
           ref: ${{ inputs.platform_ref }}
           path: ${{ steps.platform.outputs.checkout }}
 
@@ -580,6 +586,12 @@ jobs:
         uses: actions/checkout@v7
         with:
           repository: litlfred/folio-assistant
+          # `cat-harness/schemas/` imports from the `bootstrap-tools`
+          # SUBMODULE, so every platform script this job runs needs it. Added
+          # 2026-10-02 with `check:workflow-submodules`, after the same gap
+          # broke `feature-staging.yml`'s cleanup for six consecutive runs and
+          # let 80 staging previews accumulate.
+          submodules: true
           ref: ${{ inputs.platform_ref }}
           path: ${{ steps.platform.outputs.checkout }}
 
@@ -690,6 +702,12 @@ jobs:
         uses: actions/checkout@v7
         with:
           repository: litlfred/folio-assistant
+          # `cat-harness/schemas/` imports from the `bootstrap-tools`
+          # SUBMODULE, so every platform script this job runs needs it. Added
+          # 2026-10-02 with `check:workflow-submodules`, after the same gap
+          # broke `feature-staging.yml`'s cleanup for six consecutive runs and
+          # let 80 staging previews accumulate.
+          submodules: true
           ref: ${{ inputs.platform_ref }}
           path: platform
           persist-credentials: false
