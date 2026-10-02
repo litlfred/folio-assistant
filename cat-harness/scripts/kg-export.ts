@@ -1886,7 +1886,11 @@ function collectSchemas(doc: string, base: string): Node[] {
     "@id": makeIri(doc, "schema", m.name),
     "@type": termIri("Schema"),
     name: m.name,
-    title: m.summary,
+    // Finding D5 (bean `lodp`), owner 2026-10-02: "Make it like the
+    // others". The docblock's first line is a `summary` (rdfs:comment) as on
+    // every other node type; the title is the module's stem.
+    title: m.name,
+    summary: m.summary,
     module: m.module,
     maintainedBy: keeper.get(m.module),
   }));

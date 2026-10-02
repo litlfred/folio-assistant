@@ -19,13 +19,18 @@ Owner default applied, option 1, 2026-10-02: the owner was asked and gave no ans
 - D2: fsh-guts-export reads the SAME table row kg-export uses for name/description (description -> dcterms:description, bean xsqm).
 - D1: the sl9u condition ('a concept scheme that is also a document carries a derived dcterms:title') declared where the tables can express it, so a new emitter reads it rather than rediscovering it.
 - D5: investigate only; one owner question.
+
+## D5 ruling
+Owner, 2026-10-02, chose "2. Make it like the others": a schema module's first docblock line goes to `summary` (rdfs:comment) as on every other node, and its `title` is the module stem. Implemented in kg-export collectSchemas, with a test in kg-export.test.ts.
 - D4: OUT of scope (overlaps PR #1899, gen-library-jsonld.ts).
 
 ## Done when
-- [ ] D3 role naming from one table in both generators, merge test green
-- [ ] D2 fsh-guts reads kg-export's row
-- [ ] D1 condition declared and enforced by the applier
-- [ ] D5 question reported
+- [x] D3 role naming from one table in both generators, merge test green
+- [x] D2 fsh-guts reads kg-export's row
+- [x] D1 condition declared and enforced by the applier
+- [x] D5 question reported
 - [ ] PR green on a head containing current main
 
 _2026-10-02T18:56Z_ — Claimed by claude/vocab-drift-d1-d3 (session https://claude.ai/code/session_01CVVoavPoCHMLA7AASxG8cH). Issue #1910.
+
+_2026-10-02T21:40Z_ — Steward (session https://claude.ai/code/session_01ToWZR4RgTRCWeSsgxsSQfT): ticked D1–D3 on evidence (kg-export + vocab-mapping-apply tests 73/73 pass locally on 41ddc8f plus D5; vocab-mappings:check, ns:check green). D5 asked, ruled, implemented. Remaining: PR green on current main.

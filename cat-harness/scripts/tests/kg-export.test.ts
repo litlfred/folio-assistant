@@ -1155,6 +1155,13 @@ describe("schemas and standards are nodes, and graphs link to them", () => {
     for (const k of withValidator) expect(schemas.has(k.validator)).toBe(true);
   });
 
+  test("a Schema node's docblock line is its summary and its title is the stem (D5)", () => {
+    const schemas = byType("Schema");
+    expect(schemas.length).toBeGreaterThan(0);
+    for (const n of schemas) expect(n.title).toBe(n.name);
+    expect(schemas.some((n) => typeof n.summary === "string")).toBe(true);
+  });
+
   test("every Process links to the standard its own file declares", () => {
     const bpmn = idOf("omg-bpmn-2.0");
     const procs = byType("Process");
