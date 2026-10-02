@@ -71,7 +71,7 @@ Check `.claude/agent-memory/` for rules/traps that reference the changed area.
 - `scripts/tests/` — which tests need updating?
 - E2E tests — affected scenarios?
 - Jekyll docs under `cat-harness/docs/` — pages to update?
-- BPMN diagrams in `cat-harness/processes/*.bpmn` — workflows affected?
+- BPMN diagrams in `cat-harness/processes/**/*.bpmn` — workflows affected?
 
 ## Structured output format
 

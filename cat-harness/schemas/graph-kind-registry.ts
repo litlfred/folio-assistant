@@ -1284,6 +1284,28 @@ export const BASE_GRAPH_KINDS: Readonly<Record<string, GraphKindDef>> = {
       "Work items — one Markdown file each, in the layout the `beans` CLI reads. " +
       "Authored and edited by people and agents.",
   },
+  // Bean `m61r`, issue #1853: one pull request's addendum to a bean, in a file
+  // of its own, so sibling pull requests stop conflicting on one bean they all
+  // append to (`ob3m` cost five hand-merges in one afternoon, 2026-10-02).
+  "bean-notes": {
+    renderable: false,
+    // Written by a session as it works, like the beans it adds to. Not
+    // `context`: a process writes it.
+    holds: "state",
+    // A note is a RECORD about a bean, not a second work item. The work it
+    // describes is the bean's, and is counted there; an agent told this graph
+    // is active would look for work to pick up and find a log.
+    recordsWork: false,
+    schema: "schemas/bean-note.ts",
+    validatorNotApplicable:
+      "no instance declares a directory of this kind — it is nested inside `beans/`, declared by " +
+      "`beans/beans.json`, and its nodes are Markdown with YAML front matter. `beans:notes:check` " +
+      "parses each against `BeanNoteFrontMatterSchema` and re-derives its file name.",
+    summary:
+      "Bean notes — one Markdown file per pull request per bean, `$schema: folio-bean-note/v1` in " +
+      "its front matter, named `<bean>--<date>--<branch>.md` so two pull requests never write one " +
+      "path. Indexed by a generated README.",
+  },
   "session-survey": {
     title: "Session surveys",
     renderable: false,

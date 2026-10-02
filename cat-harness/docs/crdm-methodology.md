@@ -229,7 +229,7 @@ When the agent detects a CRDM trigger, it should:
 ## The process
 {: #the-process data-fa-label="sec:crdm-the-process" }
 
-[✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/processes/crdm-requirements.bpmn){: .fa-node-edit title="Edit processes/crdm-requirements.bpmn" } <span class="fa-qa-badges"><button type="button" class="fa-qa-badge fa-qa-pending fa-qa-fam-block" data-qa-family="block" data-qa-key="the-process.block" data-qa-label="Content QA" data-qa-noun="block" data-qa-src="{{ '/assets/qa/crdm-methodology/the-process.block.json' | relative_url }}" data-qa-index="{{ '/assets/qa/crdm-methodology/qa-index.json' | relative_url }}" aria-expanded="false" aria-busy="true" title="Content QA: loading the verdict…" aria-label="Content QA: loading the verdict…"><span class="fa-qa-tag">QA</span><span class="fa-qa-glyph" aria-hidden="true">…</span></button> <span class="fa-qa-badge fa-qa-unswept fa-qa-fam-translation" title="Translation QA: not swept — no sidecar for this block" aria-label="Translation QA: not swept — no sidecar for this block"><span class="fa-qa-tag">TR</span></span> <button type="button" class="fa-qa-badge fa-qa-pending fa-qa-fam-kg" data-qa-family="kg" data-qa-key="the-process.kg" data-qa-label="Knowledge-graph QA" data-qa-noun="diagram" data-qa-src="{{ '/assets/qa/crdm-methodology/the-process.kg.json' | relative_url }}" data-qa-index="{{ '/assets/qa/crdm-methodology/qa-index.json' | relative_url }}" aria-expanded="false" aria-busy="true" title="Knowledge-graph QA: loading the verdict…" aria-label="Knowledge-graph QA: loading the verdict…"><span class="fa-qa-tag">KG</span><span class="fa-qa-glyph" aria-hidden="true">…</span></button></span>
+[✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/processes/process/crdm-requirements.bpmn){: .fa-node-edit title="Edit processes/process/crdm-requirements.bpmn" } <span class="fa-qa-badges"><button type="button" class="fa-qa-badge fa-qa-pending fa-qa-fam-block" data-qa-family="block" data-qa-key="the-process.block" data-qa-label="Content QA" data-qa-noun="block" data-qa-src="{{ '/assets/qa/crdm-methodology/the-process.block.json' | relative_url }}" data-qa-index="{{ '/assets/qa/crdm-methodology/qa-index.json' | relative_url }}" aria-expanded="false" aria-busy="true" title="Content QA: loading the verdict…" aria-label="Content QA: loading the verdict…"><span class="fa-qa-tag">QA</span><span class="fa-qa-glyph" aria-hidden="true">…</span></button> <span class="fa-qa-badge fa-qa-unswept fa-qa-fam-translation" title="Translation QA: not swept — no sidecar for this block" aria-label="Translation QA: not swept — no sidecar for this block"><span class="fa-qa-tag">TR</span></span> <button type="button" class="fa-qa-badge fa-qa-pending fa-qa-fam-kg" data-qa-family="kg" data-qa-key="the-process.kg" data-qa-label="Knowledge-graph QA" data-qa-noun="diagram" data-qa-src="{{ '/assets/qa/crdm-methodology/the-process.kg.json' | relative_url }}" data-qa-index="{{ '/assets/qa/crdm-methodology/qa-index.json' | relative_url }}" aria-expanded="false" aria-busy="true" title="Knowledge-graph QA: loading the verdict…" aria-label="Knowledge-graph QA: loading the verdict…"><span class="fa-qa-tag">KG</span><span class="fa-qa-glyph" aria-hidden="true">…</span></button></span>
 
 <div class="bpmn-figure" id="figure-the-process">
   <img src="assets/img/workflows/crdm-requirements.svg"
@@ -621,7 +621,7 @@ distinction is kept explicit.
 
 **`crdm_start` and `crdm_status` were proposed here and should not be built.**
 The generic workflow tools already run this process, because
-`processes/crdm-requirements.bpmn` is a loadable BPMN process like every
+`processes/process/crdm-requirements.bpmn` is a loadable BPMN process like every
 other diagram in this repository:
 
 | Instead of | Use |
@@ -722,7 +722,7 @@ there, or lets them assume something exists because nobody updated the list.
   they would be a second answer to "where are we", free to disagree with the
   first.
 - **BPMN diagram of the process itself** —
-  [`processes/crdm-requirements.bpmn`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/crdm-requirements.bpmn),
+  [`processes/process/crdm-requirements.bpmn`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/process/crdm-requirements.bpmn),
   with lanes for the BA / feature requestor, the agent, and stakeholders.
 - **The six-phase workflow as a skill** —
   [`skills/sdlc/crdm/crdm-requirements-workflow.md`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/sdlc/crdm/crdm-requirements-workflow.md),

@@ -1616,9 +1616,10 @@ async function collectProcesses(
     continue;
   }
   await collectDecisions(dir);
-  for (const f of readdirSync(dir)) {
-    if (!f.endsWith(".bpmn")) continue;
-    const path = join(dir, f);
+  // At any depth: since placement PR3 (bean `63wl`) the diagrams sit in
+  // `processes/<group>/`, and a top-level read exported none of them.
+  for (const path of diagramFiles(dir)) {
+    if (!path.endsWith(".bpmn")) continue;
     try {
       const m = await loadProcessModel(path);
       nodes.push({
@@ -1700,7 +1701,7 @@ async function collectProcesses(
         });
       }
     } catch (e) {
-      problems.push(`unloadable process ${rel}/${f}: ${e instanceof Error ? e.message : String(e)}`);
+      problems.push(`unloadable process ${relative(root, path)}: ${e instanceof Error ? e.message : String(e)}`);
     }
   }
   }

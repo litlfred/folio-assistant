@@ -496,7 +496,62 @@ export function navbarCss(): string {
     `.fa-nav:has(.fa-nav-open:checked) .fa-nav-label{opacity:1}`,
     `@media print{.fa-nav{display:none}body{padding-left:0}}`,
     `.fa-nav-sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}`,
+    ...railTipCss(),
   ].join("");
+}
+
+/**
+ * THE TOOLTIP ON AN ICON-ONLY CONTROL — owner's ruling on bean `ob3m`
+ * finding 1, 2026-10-01: *"show each icon's name as a tooltip on hover or
+ * keyboard focus."* Option 1 of 4; always-visible captions were option 2 and
+ * were NOT chosen, so the strip stays `NAV_COLLAPSED_PX` wide.
+ *
+ * WHICH CONTROLS. One whose name is in `aria-label` and nowhere visible — the
+ * `⚙` here, the icon row on the docs site. A row with a `.fa-nav-label` is
+ * NOT one: hover and keyboard focus open this rail, and the label then reads
+ * beside its own mark, which is the name in the place a reader looks. A
+ * tooltip there would say the same word twice, 8px apart.
+ * `check-viewer-nav.ts`' `rail-tips` flag is the rule, read off the markup.
+ *
+ * CSS ONLY, because this rail carries no script (see `navbarCss`). The
+ * pseudo-element is `position:fixed` with `top` left `auto`, so it takes its
+ * STATIC position vertically — level with its own control — while `left`
+ * puts it beyond the strip's right edge, which is what "not covering the
+ * icon" means. Fixed is also what keeps it from being CLIPPED: `.fa-nav` is
+ * `overflow:hidden`, and an `overflow` box clips a fixed descendant only when
+ * it is that descendant's containing block, which nothing here is.
+ *
+ * ONE NAME, NOT TWO. `content: … / ""` gives the generated text an EMPTY
+ * alternative, so it never enters the accessibility tree; the control's name
+ * stays its `aria-label`. The first `content` is the fallback for an engine
+ * that cannot parse the alt syntax and drops the second declaration.
+ *
+ * `docs-ui.css` paints the same tooltip on the docs site's strip under
+ * `.side-bar`, in that theme's two schemes. Different selectors on purpose:
+ * `navbar-css-single-source.test.ts` holds a SHARED selector to one body, and
+ * these two differ in colour and in the widths they read.
+ */
+function railTipCss(): string[] {
+  const at = (w: number) => `${w + 8}px`;
+  return [
+    `.fa-nav [data-fa-tip]::after{content:attr(data-fa-tip);content:attr(data-fa-tip) / "";`,
+    `position:fixed;left:${at(NAV_COLLAPSED_PX)};z-index:2147483001;padding:4px 8px;border-radius:4px;`,
+    `background:#1f2328;color:#ffffff;border:1px solid #58a6ff;box-shadow:0 2px 8px rgba(0,0,0,.35);`,
+    `font:600 13px/1.3 -apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif;`,
+    `letter-spacing:normal;text-transform:none;white-space:nowrap;pointer-events:none;`,
+    // `opacity` alone, not `visibility`: the rail is CLOSED, never hidden, and
+    // `navbar.test.ts` holds this stylesheet to carrying no `visibility:hidden`
+    // at all. With `pointer-events:none` an invisible tooltip intercepts nothing.
+    `opacity:0}`,
+    `.fa-nav [data-fa-tip]:hover::after,.fa-nav [data-fa-tip]:focus-visible::after{opacity:1}`,
+    // Beyond the strip at whatever width it has: open, the controls it names
+    // sit inside a wider rail and the tooltip moves out with its edge.
+    `.fa-nav:hover [data-fa-tip]::after,.fa-nav:has(:focus-visible) [data-fa-tip]::after,`,
+    `.fa-nav:has(.fa-nav-open:checked) [data-fa-tip]::after{left:${at(NAV_OPEN_PX)}}`,
+    `@media(min-width:${NAV_WIDE_MQ_PX}px){.fa-nav:hover [data-fa-tip]::after,`,
+    `.fa-nav:has(:focus-visible) [data-fa-tip]::after,.fa-nav:has(.fa-nav-open:checked) [data-fa-tip]::after{left:${at(NAV_OPEN_WIDE_PX)}}}`,
+    `@media(prefers-reduced-motion:no-preference){.fa-nav [data-fa-tip]::after{transition:opacity .12s ease}}`,
+  ];
 }
 
 /** An item's mark: its avatar when it has one, its glyph otherwise. */
@@ -578,7 +633,7 @@ function itemHtml(i: NavItem, c: Ctx): string {
   // both, so the row and its control stay adjacent in the tab order.
   const action = i.action
     ? `<button type="button" class="fa-nav-action" ${esc(i.action.data)}="${esc(i.action.value)}"` +
-      ` aria-label="${esc(i.action.label)}">${esc(i.action.glyph)}</button>`
+      ` aria-label="${esc(i.action.label)}" data-fa-tip="${esc(i.action.label)}">${esc(i.action.glyph)}</button>`
     : "";
   const kids = i.children?.length
     ? `<div class="fa-nav-kids">${i.children.map((k) => itemHtml(k, c)).join("")}</div>`

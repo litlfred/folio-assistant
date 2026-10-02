@@ -254,6 +254,6 @@ is needed, use a methodology adopted for ranking.**
 - **No step-by-step procedure is invented.** Neither source gives one: the first
   is a theoretical review, the second a reference chapter offering "a toolkit of
   templates" rather than an ordered method. The executable process beside this
-  file (`processes/swot-analysis.bpmn`) draws only the sequence the sources
+  file (`processes/process/swot-analysis.bpmn`) draws only the sequence the sources
   themselves state — scan external, scan internal, pool, cross, hand off — and
   **adds no step neither source supports.**

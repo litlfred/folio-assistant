@@ -10214,6 +10214,16 @@
     // nothing" and "never declared". See `navbarRow` in `sync-docs-harness.ts`.
     var notes = row.notes && typeof row.notes === "object" ? row.notes : {};
 
+    /* EVERY CONTROL IN THIS ROW CARRIES `data-fa-tip`, and it is the SAME
+     * string as its `aria-label` — owner's ruling on `ob3m` finding 1,
+     * 2026-10-01: *"show each icon's name as a tooltip on hover or keyboard
+     * focus."* The row is glyphs with no words, so a sighted reader had no
+     * name at all until now; `title` names it for a pointer after a delay and
+     * never for a keyboard. The stylesheet paints the attribute beside the
+     * strip (`[data-fa-tip]::after` in docs-ui.css) with an EMPTY alternative
+     * text, so a screen reader still hears the `aria-label` once and the
+     * tooltip not at all. `check-navbar-consistency.ts` fails a row control
+     * built without it. */
     var host = el("div", { class: "fa-nav-icons", role: "group", "aria-label": "Harness actions" });
 
     var LABELS = {
@@ -10249,7 +10259,7 @@
         // clicks that button rather than minting a rival with its own idea of
         // whether the panel is open. Two toggles over one state is the `l4zi`
         // defect from the other direction.
-        var proxy = el("button", { type: "button", class: "fa-nav-icon", "aria-label": LABELS.launcher });
+        var proxy = el("button", { type: "button", class: "fa-nav-icon", "aria-label": LABELS.launcher, "data-fa-tip": LABELS.launcher });
         proxy.innerHTML = rowGlyph("launcher");
         proxy.addEventListener("click", function () {
           var real = document.querySelector(".fa-tiles-toggle");
@@ -10286,7 +10296,7 @@
       // turn into something else.
       var at = safeHref(withBase(hrefs[id]));
       if (at) {
-        var a = el("a", { class: "fa-nav-icon", href: at, "aria-label": label, title: label });
+        var a = el("a", { class: "fa-nav-icon", href: at, "aria-label": label, title: label, "data-fa-tip": label });
         a.innerHTML = rowGlyph(id);
         host.appendChild(a);
       } else {
@@ -10310,7 +10320,8 @@
         var dead = el("span", {
           class: "fa-nav-icon fa-nav-icon--dead",
           "aria-label": label + " — " + why,
-          title: label + " — " + why
+          title: label + " — " + why,
+          "data-fa-tip": label + " — " + why
         });
         dead.innerHTML = rowGlyph(id);
         host.appendChild(dead);
@@ -10327,6 +10338,7 @@
       scheme.innerHTML = name === "light" ? BULB_ON : BULB_OFF;
       var said = name === "light" ? "Light mode is on — switch to dark" : "Dark mode is on — switch to light";
       scheme.setAttribute("aria-label", said);
+      scheme.setAttribute("data-fa-tip", said);
       scheme.title = said;
       scheme.setAttribute("aria-pressed", name === "dark" ? "true" : "false");
     });
@@ -10345,6 +10357,11 @@
     var closeCtl = bar.querySelector(".fa-nav-close");
     if (closeCtl && bar.classList.contains("fa-nav-js")) {
       closeCtl.classList.add("fa-nav-icon", "fa-nav-close--in-row");
+      // Its name is in a visually hidden span, so to the eye it is a bare
+      // glyph like the rest of the row and gets the same tooltip. Read off
+      // that span rather than restated, so the two cannot disagree.
+      var closeName = (closeCtl.textContent || "").replace(/\s+/g, " ").replace(/^[\s×x]+/, "").trim();
+      if (closeName) closeCtl.setAttribute("data-fa-tip", closeName);
       host.appendChild(closeCtl);
     }
 
@@ -10352,6 +10369,54 @@
     var header = bar.querySelector(".site-header");
     if (header && header.nextSibling) bar.insertBefore(host, header.nextSibling);
     else bar.appendChild(host);
+
+    holdStripForTips(bar, host);
+  }
+
+  /* ARRIVING ON AN ICON DOES NOT OPEN THE STRIP — bean `ob3m` finding 1.
+   *
+   * Hover widens the strip, and widening re-flows this column into a row, so
+   * the icon a pointer arrived on moved out from under it before its tooltip
+   * could name it. The stylesheet holds the strip at rest while the bar
+   * carries `.fa-nav-tip-hold`; this decides when it does.
+   *
+   * WHY A REMEMBERED BOX, not `:hover` on the column. The column's place is
+   * only true AT REST — once the strip peeks it is a row somewhere else — so
+   * "is the pointer on the column" has to be asked of where the column WAS.
+   * `.fa-nav-icons:hover` alone held the strip shut under a pointer moving
+   * into the open row and made the row's icons and its [x] unreachable.
+   *
+   * Set on ENTERING the bar only, so a reader already peeking keeps the open
+   * bar; cleared the moment the pointer leaves the box, so moving down the
+   * strip peeks exactly as before. Touch has no hover and is left alone. */
+  function holdStripForTips(bar, host) {
+    var rest = null;
+    function measure() {
+      if (bar.classList.contains("fa-nav-tip-hold")) return;
+      if (bar.matches(":hover") || bar.matches(":focus-within")) return;
+      if (bar.querySelector(".fa-nav-open:checked")) return;
+      var r = host.getBoundingClientRect();
+      if (r.width > 0 && r.height > 0) rest = { l: r.left, r: r.right, t: r.top, b: r.bottom };
+    }
+    function inside(e) {
+      return !!rest && e.clientX >= rest.l && e.clientX < rest.r && e.clientY >= rest.t && e.clientY < rest.b;
+    }
+    measure();
+    window.addEventListener("resize", measure);
+    bar.addEventListener("pointerenter", function (e) {
+      if (e.pointerType === "touch") return;
+      measure();
+      if (inside(e)) bar.classList.add("fa-nav-tip-hold");
+    });
+    bar.addEventListener("pointermove", function (e) {
+      if (bar.classList.contains("fa-nav-tip-hold") && !inside(e)) bar.classList.remove("fa-nav-tip-hold");
+    });
+    bar.addEventListener("pointerleave", function () {
+      bar.classList.remove("fa-nav-tip-hold");
+      // Re-measured once the bar is back at rest, so a box first measured
+      // while the pointer happened to be on the bar at load is not missing.
+      requestAnimationFrame(measure);
+    });
   }
 
   /* ── THE MIDDLE: this instance's controlled folders, then its navigation ──
