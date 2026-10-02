@@ -2,6 +2,12 @@
  * DAK block authoring: the kinds declared in the previous change are now real
  * — builders, Zod schemas, label prefixes, and discovery.
  *
+ * Moved from `cat-harness/scripts/tests/dak-blocks.test.ts` with the module it
+ * tests (bean `1335`). Core no longer declares the DAK kinds, so every claim
+ * here about how CORE treats one — discovery, adapter ownership, JSON-LD
+ * typing — is now made through the registry smart-base's contribution fills,
+ * which is the path a running sweep takes.
+ *
  * The subtle part is discovery. `BLOCK_BUILDER_RE` recognises a manifest by
  * scanning for `export default <builder>(`, and until now builder name and
  * kind string were the same token, so the regex alternated over the kinds
@@ -16,6 +22,7 @@ import { describe, test, expect, beforeAll, afterAll } from "bun:test";
 import { mkdtempSync, mkdirSync, writeFileSync, rmSync, existsSync, readFileSync } from "fs";
 import { join } from "path";
 import { tmpdir } from "os";
+import { resolve } from "path";
 import {
   DAK_BLOCK_KINDS,
   DAK_COMPONENTS,
@@ -25,11 +32,14 @@ import {
   DAK_KIND_BUILDERS,
   DAK_UNFORMALIZED_COMPONENTS,
   DAK_LABEL_PREFIXES,
+} from "./dak-kinds";
+import {
   BLOCK_KINDS,
-  ALL_BLOCK_KINDS,
+  CONTENT_PROFILES,
   kindForBuilder,
   adapterForKind,
-} from "../../schemas/block-kinds";
+  profileAcceptsKind,
+} from "../platform.js";
 import {
   decisionTable,
   valueSet,
@@ -40,15 +50,18 @@ import {
   healthIntervention,
   testScenario,
   type DakBlock,
-} from "../../schemas/dak-blocks";
-import { KNOWN_LABEL_PREFIXES } from "../../schemas/constraints";
-import { DAK_KIND_TO_WHO_MODEL } from "../../schemas/jsonld";
-import {
-  assertPrefixesInSync,
-  typesForKind,
-  DAK_KIND_TO_FOLIO_TYPE,
-} from "../../schemas/jsonld";
-import { readBlockManifest } from "../../content/pipeline/qa-utils";
+} from "./dak-blocks";
+import { KNOWN_LABEL_PREFIXES } from "../platform.js";
+import { DAK_KIND_TO_WHO_MODEL, DAK_KIND_TO_FOLIO_TYPE } from "./dak-jsonld";
+import { assertPrefixesInSync, typesForKind } from "../platform.js";
+import { readBlockManifest } from "../platform.js";
+import { ContributionRegistry, composedKindOwner } from "../platform.js";
+import contribute from "../contributions";
+
+/** smart-base's contribution, registered as `loadContributions` would. */
+const registry = new ContributionRegistry();
+registry.register({ ...contribute(), root: resolve(import.meta.dir, "..") });
+const builders = registry.contributedBuilders();
 
 const DIR = mkdtempSync(join(tmpdir(), "dak-blocks-"));
 afterAll(() => {
@@ -108,14 +121,22 @@ describe("builder ↔ kind mapping", () => {
     }
   });
 
-  test("builder names round-trip back to their kind", () => {
+  test("builder names round-trip back to their kind, through the contribution", () => {
     for (const k of DAK_BLOCK_KINDS) {
-      expect(kindForBuilder(DAK_KIND_BUILDERS[k])).toBe(k);
+      expect(kindForBuilder(DAK_KIND_BUILDERS[k], builders)).toBe(k);
+    }
+  });
+
+  test("core does not know a DAK builder without the contribution", () => {
+    // The point of bean 1335: core's built-in vocabulary is paper only.
+    for (const k of DAK_BLOCK_KINDS) {
+      if ((BLOCK_KINDS as readonly string[]).includes(DAK_KIND_BUILDERS[k])) continue;
+      expect(kindForBuilder(DAK_KIND_BUILDERS[k])).toBeUndefined();
     }
   });
 
   test("paper builders still map to themselves", () => {
-    for (const k of BLOCK_KINDS) expect(kindForBuilder(k)).toBe(k);
+    for (const k of BLOCK_KINDS) expect(kindForBuilder(k, builders)).toBe(k);
   });
 
   test("builder names are unique across both adapters", () => {
@@ -124,7 +145,7 @@ describe("builder ↔ kind mapping", () => {
   });
 
   test("an unknown builder maps to undefined", () => {
-    expect(kindForBuilder("notABuilder")).toBeUndefined();
+    expect(kindForBuilder("notABuilder", builders)).toBeUndefined();
   });
 });
 
@@ -144,25 +165,28 @@ describe("label prefixes", () => {
     expect(new Set(v).size).toBe(v.length);
   });
 
-  test("the two prefix lists stay in sync now that DAK kinds are added", () => {
+  test("core's two built-in prefix lists stay in sync", () => {
     // KNOWN_LABEL_PREFIXES (validation) and KIND_PREFIXES (JSON-LD @id
-    // minting) both derive from DAK_LABEL_PREFIXES precisely so adding a kind
-    // cannot update one and miss the other.
+    // minting) list the BUILT-IN prefixes; DAK's left both in bean 1335.
     expect(() => assertPrefixesInSync(KNOWN_LABEL_PREFIXES)).not.toThrow();
   });
 
-  test("every DAK prefix is registered for validation", () => {
+  test("every DAK prefix reaches core through the contribution, and none is built in", () => {
+    const contributed = registry.contributedLabelPrefixes();
     for (const k of DAK_BLOCK_KINDS) {
-      expect(KNOWN_LABEL_PREFIXES).toContain(`${DAK_LABEL_PREFIXES[k]}:`);
+      expect(contributed).toContain(DAK_LABEL_PREFIXES[k]);
+      expect(KNOWN_LABEL_PREFIXES).not.toContain(`${DAK_LABEL_PREFIXES[k]}:`);
     }
   });
 });
 
 describe("JSON-LD typing", () => {
-  test("every DAK kind has a folio type", () => {
+  test("every DAK kind has a folio type, which core reads from the contribution", () => {
     for (const k of DAK_BLOCK_KINDS) {
       expect(DAK_KIND_TO_FOLIO_TYPE[k]).toBeTruthy();
-      expect(typesForKind(k).length).toBeGreaterThan(0);
+      expect(typesForKind(k, registry).length).toBeGreaterThan(0);
+      // Without the registry core does not know the kind, so it types nothing.
+      expect(typesForKind(k)).toEqual([]);
     }
   });
 
@@ -170,16 +194,17 @@ describe("JSON-LD typing", () => {
     // The block is the authored manifest; the FHIR ValueSet is what its .fsh
     // compiles to. Typing the manifest as a FHIR resource would invite a
     // consumer to read FHIR fields off it.
-    expect(typesForKind("value-set")).toEqual(["folio-assistant-core:ValueSet"]);
+    expect(typesForKind("value-set", registry)).toEqual(["folio-assistant-core:ValueSet"]);
   });
 
   test("DoCO co-typing stays sparing", () => {
-    expect(typesForKind("decision-table")).toEqual(["folio-assistant-core:DecisionTable", "doco:Table"]);
-    expect(typesForKind("persona")).toEqual(["folio-assistant-core:Persona"]);
+    expect(typesForKind("decision-table", registry)).toEqual(["folio-assistant-core:DecisionTable", "doco:Table"]);
+    expect(typesForKind("persona", registry)).toEqual(["folio-assistant-core:Persona"]);
   });
 
-  test("paper typing is unchanged", () => {
+  test("paper typing is unchanged, with or without the registry", () => {
     expect(typesForKind("theorem")).toEqual(["folio-assistant-core:Theorem", "doco:Section"]);
+    expect(typesForKind("theorem", registry)).toEqual(["folio-assistant-core:Theorem", "doco:Section"]);
   });
 });
 
@@ -188,7 +213,7 @@ describe("discovery", () => {
     mkdirSync(join(DIR, "ch01"), { recursive: true });
     writeFileSync(
       join(DIR, "ch01", "dt-anc-danger-signs.ts"),
-      `import { decisionTable } from "../../schemas/dak-blocks";
+      `import { decisionTable } from "../../smart-base/schemas/dak-blocks";
 export default decisionTable({ label: "dt:anc-danger-signs" });\n`,
     );
     writeFileSync(
@@ -202,27 +227,33 @@ export default decisionTable({ label: "dt:anc-danger-signs" });\n`,
   });
 
   test("a DAK manifest is discovered under its KIND, not its builder name", () => {
-    const m = readBlockManifest(join(DIR, "ch01", "dt-anc-danger-signs.ts"));
+    const m = readBlockManifest(join(DIR, "ch01", "dt-anc-danger-signs.ts"), builders);
     expect(m).toEqual({ kind: "decision-table", label: "dt:anc-danger-signs" });
   });
 
   test("a multi-word L3 kind too", () => {
-    const m = readBlockManifest(join(DIR, "ch01", "vs-danger-signs.ts"));
+    const m = readBlockManifest(join(DIR, "ch01", "vs-danger-signs.ts"), builders);
     expect(m?.kind).toBe("value-set");
   });
 
-  test("paper manifests are unaffected", () => {
+  test("without the contribution, core does not discover a DAK manifest", () => {
+    expect(readBlockManifest(join(DIR, "ch01", "dt-anc-danger-signs.ts"))).toBeUndefined();
+  });
+
+  test("paper manifests are unaffected, with or without the contribution", () => {
     const m = readBlockManifest(join(DIR, "ch01", "thm-main.ts"));
     expect(m).toEqual({ kind: "theorem", label: "thm:main" });
+    expect(readBlockManifest(join(DIR, "ch01", "thm-main.ts"), builders)).toEqual(m);
   });
 
-  test("a discovered DAK kind resolves to the dak adapter", () => {
-    const m = readBlockManifest(join(DIR, "ch01", "dt-anc-danger-signs.ts"))!;
-    expect(adapterForKind(m.kind)).toBe("dak");
+  test("a discovered DAK kind resolves to the dak adapter, through the registry", () => {
+    const m = readBlockManifest(join(DIR, "ch01", "dt-anc-danger-signs.ts"), builders)!;
+    expect(adapterForKind(m.kind)).toBeUndefined();
+    expect(composedKindOwner(m.kind, registry, adapterForKind)).toBe("dak");
   });
 
-  test("every kind either adapter declares is discoverable in principle", () => {
-    for (const k of ALL_BLOCK_KINDS) expect(adapterForKind(k)).toBeTruthy();
+  test("every DAK kind is owned by the dak adapter once registered", () => {
+    for (const k of DAK_BLOCK_KINDS) expect(composedKindOwner(k, registry, adapterForKind)).toBe("dak");
   });
 });
 
@@ -411,6 +442,61 @@ describe("the two kinds added from WHO's own logical models", () => {
     expect(DAK_KIND_TO_WHO_MODEL["measure"]).toBeUndefined();
     for (const iri of Object.values(DAK_KIND_TO_WHO_MODEL)) {
       expect(iri).toStartWith("http://smart.who.int/base/StructureDefinition/");
+    }
+  });
+});
+
+// Moved from cat-harness/scripts/tests/adapter-scoping.test.ts (bean 1335).
+describe("DAK vocabulary tracks the repo's own L2/L3 schemas", () => {
+  test("carries the L2 DAK components", () => {
+    for (const k of [
+      "persona",
+      "user-scenario",
+      "business-process",
+      "data-element",
+      "decision-table",
+      "scheduling-logic",
+      "indicator",
+      "functional-requirement",
+      "non-functional-requirement",
+    ]) {
+      expect(DAK_BLOCK_KINDS as readonly string[]).toContain(k);
+    }
+  });
+
+  test("carries the L3 FHIR artefact types", () => {
+    for (const k of [
+      "logical-model",
+      "profile",
+      "value-set",
+      "questionnaire",
+      "cql-library",
+      "structure-map",
+      "plan-definition",
+      "measure",
+      "test-case",
+      "actor-definition",
+    ]) {
+      expect(DAK_BLOCK_KINDS as readonly string[]).toContain(k);
+    }
+  });
+
+  test("DAK kinds stay out of the paper union", () => {
+    // They now have builders and Zod schemas (smart-base/schemas/dak-blocks.ts) and their
+    // own exhaustiveness proof against DakBlock — but they must never enter
+    // BLOCK_KINDS, whose proof is against the paper `Block` union and whose
+    // membership is what every paper QA axis is scoped by.
+    for (const k of DAK_BLOCK_KINDS) {
+      expect(BLOCK_KINDS as readonly string[]).not.toContain(k);
+    }
+  });
+});
+
+// Moved from cat-harness/scripts/tests/content-profiles.test.ts (bean 1335).
+describe("profiles do not reach a DAK kind", () => {
+  test("a DAK kind is in no profile — a different adapter, not a narrower paper", () => {
+    for (const k of DAK_BLOCK_KINDS) {
+      for (const p of CONTENT_PROFILES) expect(profileAcceptsKind(p, k)).toBe(false);
     }
   });
 });

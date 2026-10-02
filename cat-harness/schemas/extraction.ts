@@ -9,7 +9,7 @@
  * | | says |
  * |---|---|
  * | `dc.date.issued` | when the PUBLISHER published the work |
- * | `materializedAt` | when WE brought the bytes local (`materialization.ts`) |
+ * | `materializedAt` | when WE brought the bytes local (core's `materialization.ts`) |
  * | `extractedAt` here | when a TOOL produced this file out of something else |
  *
  * Measured on the WHO IRIS capture, 2026-09-20, which is why this is a schema
@@ -38,6 +38,17 @@
  * {@link ExtractedAsset} describes an entry; `localPath` is present only where
  * the owner asked for that entry specifically, and its absence is the normal
  * state rather than a gap.
+ *
+ * ## Why it lives in the harness
+ *
+ * Bean `tlat` (placement PR5, owner ruling 2, 2026-09-30, option A): this is
+ * the contract behind the harness's own `asset-extraction` skill, so it moved
+ * DOWN from `folio-assistant-core/schemas/` together with the tool that writes
+ * it (`cat-harness-tools/scripts/extract-assets.ts`). Nothing here names a
+ * content concept — a container, its entries, three timestamps — and nothing
+ * in core imported it, so the move left no upward edge behind. Like every Zod
+ * module in this directory it follows to `cat-harness-tools/schemas/` at
+ * separation stage 1b (bean `8lcl`).
  *
  * @graphNode schema
  * @module schemas/extraction

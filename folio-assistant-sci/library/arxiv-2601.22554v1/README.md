@@ -1,5 +1,5 @@
 <!-- kg:subgraph:begin -->
-# LeanArchitect LeanArchitect
+# LeanArchitect: Automating Blueprint Generation for Humans and AI
 
 ingested source material — attributed to its document, not folio content
 

@@ -1,5 +1,5 @@
 <!-- kg:subgraph:begin -->
-# wang-rangaiah-2026-mcdm-aggregation
+# Multi-Criteria Decision-Making: Aggregation-Type Methods
 
 ingested source material — attributed to its document, not folio content
 

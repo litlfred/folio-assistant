@@ -7,7 +7,7 @@ import { mkdtempSync, rmSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 
-import { DAK_COMPONENTS, DAK_COMPONENT_FIELDS } from "../platform.js";
+import { DAK_COMPONENTS, DAK_COMPONENT_FIELDS } from "./dak-kinds";
 import {
   DAK_MARKER_FILENAME,
   DAK_TYPE,

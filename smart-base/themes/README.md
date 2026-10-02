@@ -7,6 +7,7 @@ Part of [SMART Base](../README.md) 0.1.0, declared as `smart-base-themes`, holdi
 
 | file | what it is | used by |
 |---|---|---|
+| [`chrome.json`](chrome.json) | data |  |
 | [`themes.test.ts`](themes.test.ts) | a file |  |
 | [`themes.ts`](themes.ts) | a file |  |
 | [`upstream/`](upstream/) | 1 file | |

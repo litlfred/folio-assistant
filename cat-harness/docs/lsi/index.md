@@ -25,7 +25,7 @@ how to build, query and audit an index is the skill `lsi-indexing`.
 
 <div class="lv-grid">
 <div class="lv-stat"><b>4</b><span>committed indexes</span></div>
-<div class="lv-stat"><b>2210</b><span>units indexed</span></div>
+<div class="lv-stat"><b>2211</b><span>units indexed</span></div>
 <div class="lv-stat"><b>5</b><span>graphs that need an index and lack a fresh one</span></div>
 </div>
 
@@ -110,7 +110,7 @@ Each dimension is a **contrast** between two poles, shown by their highest-loadi
 
 ## cat-harness / skills
 
-**219** units · **5886** terms · k = **100** · retains **79.0 %** of the weighted matrix · weighting `log-entropy` · sidecar `cat-harness/test/results/lsi/cat-harness/skills.lsi.json`
+**220** units · **5901** terms · k = **100** · retains **79.0 %** of the weighted matrix · weighting `log-entropy` · sidecar `cat-harness/test/results/lsi/cat-harness/skills.lsi.json`
 
 > Dimension 1 has **no negative pole**: it most likely measures unit length and term frequency (a margin), not a theme. Read the themes from dimension 2 on.
 
@@ -118,14 +118,14 @@ Each dimension is a **contrast** between two poles, shown by their highest-loadi
 
 | dim | σ | one pole | the other pole |
 |---|---|---|---|
-| 1 | 44.02 | instance, kind, harness, session, graph, block, directory, page | *(none)* |
+| 1 | 44.14 | instance, kind, harness, session, block, directory, graph, page | *(none)* |
 | 2 | 21.49 | watcher, slot, sibling, queue, prs, backlog, block, commits | harness, instance, declaration, directory, node, directories, graph, declares |
-| 3 | 17.84 | session, beans, branch, goals, store, window, epic, push | slot, chapter, block, edges, formal, glossary, project, proof |
-| 4 | 16.53 | page, text, block, blocks, chapter, manifest, section, pdf | sibling, ledger, subdirectory, items, sessions, session, window, coordination |
-| 5 | 14.94 | rung, queue, withheld, arm, slide, zip, bytes, sniff | lane, role, requirements, actor, feature, phase, task, impact |
-| 6 | 14.86 | locale, navbar, page, translated, translation, theme, staging, french | edges, forward, edge, logical, backward, cross-chapter, energy, ordering |
-| 7 | 14.44 | edges, forward, preview, edge, backward, cross-chapter, energy, logical | actor, lane, role, requirement, login, criterion, task, process |
-| 8 | 14.21 | tile, avatar, card, theme, board, sticky, art, crop | language, glossary, translation, locale, term, pdf, translated, url |
+| 3 | 17.87 | slot, chapter, edges, block, formal, project, glossary, proof | session, beans, branch, goals, store, push, window, epic |
+| 4 | 16.58 | page, block, blocks, text, chapter, manifest, section, pdf | sibling, ledger, subdirectory, items, session, sessions, coordination, window |
+| 5 | 14.98 | preview, staging, navbar, locale, translated, page, translation, build | rung, archive, archived, withheld, arm, sniff, ingest, edges |
+| 6 | 14.92 | lane, role, actor, requirements, task, analysis, edge, impact | sha, queue, slide, bytes, rung, withheld, arm, images |
+| 7 | 14.48 | edges, forward, preview, backward, edge, cross-chapter, energy, logical | actor, lane, role, criterion, backlog, task, login, requirement |
+| 8 | 14.22 | feature, phase, preview, pdf, feedback, stakeholders, impact, github | avatar, tile, art, card, locale, claim, board, translated |
 
 **Findings** — 0 narrow dimension(s), 0 near-duplicate pair(s).
 

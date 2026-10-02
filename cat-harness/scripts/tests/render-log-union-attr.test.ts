@@ -174,12 +174,16 @@ describe("render-log-union-attr.sh", () => {
   });
 
   test("every gh-pages rebase in feature-staging.yml is preceded by it", () => {
-    // The script is worth nothing where it is not called, and there are FOUR
-    // push loops. This is the check that a fifth one cannot be added silently.
+    // The script is worth nothing where it is not called, and there are THREE
+    // rebasing push loops. This is the check that a fourth one cannot be added
+    // silently. There were four until issue #1868: the `stage` loop now
+    // re-reads `gh-pages` and rebuilds its commit on every attempt instead of
+    // rebasing (its commit carries preview-cap removals, and a replayed
+    // removal is a stale one), so it appends to a fresh log and never merges.
     const wf = WORKFLOW.split("\n");
 
     const pulls = wf.flatMap((l, i) => (/git (?:-C pages )?pull --rebase origin gh-pages/.test(l) ? [i] : []));
-    expect(pulls.length).toBe(4);
+    expect(pulls.length).toBe(3);
     for (const i of pulls) {
       const before = wf.slice(Math.max(0, i - 4), i).join("\n");
       expect(before).toContain("render-log-union-attr.sh");
@@ -198,7 +202,8 @@ describe("render-log-union-attr.sh", () => {
     // checkout layout, then the step's `working-directory:`. Bean `7iog`,
     // scoped to this one script.
     const sites = callSites();
-    expect(sites.length).toBe(4);
+    // Three since issue #1868 — see the count above.
+    expect(sites.length).toBe(3);
 
     const unresolved = sites.filter((s) => s.resolved === null || !existsSync(join(REPO_ROOT, s.resolved)));
     expect(unresolved.map((s) => `${s.job}: ${s.literal} -> ${s.resolved ?? "outside the platform checkout"}`)).toEqual([]);
@@ -208,13 +213,16 @@ describe("render-log-union-attr.sh", () => {
     // Falsifies the check above: `stage` keeps the platform at the job root,
     // so its own literal is bare — and that same literal is what was wrong in
     // `cleanup`. A checker keyed on the text rather than the cwd passes both.
+    //
+    // `stage` no longer calls the script (issue #1868: it re-reads instead of
+    // rebasing), so the bare literal it used to carry is reconstructed here
+    // rather than read from it.
     const byJob = (j: string) => callSites().filter((s) => s.job === j);
-    expect(byJob("stage").length).toBeGreaterThan(0);
+    expect(byJob("stage")).toEqual([]);
     expect(byJob("cleanup").length).toBeGreaterThan(0);
 
-    // `stage` keeps the platform at the job root, so its literal is bare...
-    for (const s of byJob("stage")) expect(s.literal.startsWith("cat-harness/")).toBe(true);
-    // ...and that very literal, which is what shipped in `cleanup`, does not
+    // A job that keeps the platform at the job root would write it bare,
+    // and that very literal, which is what shipped in `cleanup`, does not
     // reach the platform there. A checker keyed on the text passes both.
     for (const s of byJob("cleanup")) {
       expect(s.literal.startsWith("source/cat-harness/")).toBe(true);

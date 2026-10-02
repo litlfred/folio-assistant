@@ -16,12 +16,6 @@
  * @module smart-base/platform
  */
 export {
-  DAK_COMPONENTS,
-  DAK_COMPONENT_FIELDS,
-  type DakComponent,
-  DAK_UNFORMALIZED_COMPONENTS,
-} from "../cat-harness/schemas/block-kinds.js";
-export {
   declarationPathIn,
   directoriesForGraph,
   instanceRootsIn,
@@ -81,8 +75,51 @@ export {
 export { defineTool, type ToolDefinition } from "../cat-harness/schemas/tool.js";
 export { toolTypeIri } from "../cat-harness/schemas/tool-types.js";
 export {
-  DAK_CARDS,
-} from "../cat-harness/scripts/gen-dak-components-figure.js";
-export {
   writeInstanceConfig,
 } from "../cat-harness/test/support/instance-fixture.js";
+export {
+  QA_CRITERIA_REGISTRY,
+} from "../cat-harness/content/pipeline/qa-criteria-registry.js";
+export {
+  readBlockManifest,
+} from "../cat-harness/content/pipeline/qa-utils.js";
+export {
+  BLOCK_KINDS,
+  CONTENT_PROFILES,
+  kindForBuilder,
+  adapterForKind,
+  profileAcceptsKind,
+} from "../cat-harness/schemas/block-kinds.js";
+export {
+  criterionAdapters,
+  incompatibleCompanions,
+  COMPANION_ROLES,
+  type CheckerPaths,
+  type CheckerResult,
+  type CompanionRole,
+} from "../cat-harness/schemas/block-qa.js";
+export {
+  siteDirFor,
+} from "../cat-harness/schemas/cat-harness.js";
+export {
+  KNOWN_LABEL_PREFIXES,
+  BlockBaseSchema,
+} from "../cat-harness/schemas/constraints.js";
+export {
+  ContributionRegistry,
+  composedKindOwner,
+} from "../cat-harness/schemas/contributions.js";
+export {
+  pagesOf,
+  readStructure,
+  STRUCTURE_FILENAME,
+  type BaseSection,
+  type BaseStructure,
+} from "../cat-harness/schemas/document-structure.js";
+export {
+  assertPrefixesInSync,
+  typesForKind,
+} from "../cat-harness/schemas/jsonld.js";
+export {
+  type BlockBase,
+} from "../cat-harness/schemas/types.js";

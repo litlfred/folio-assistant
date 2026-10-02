@@ -22,7 +22,7 @@
 import { existsSync, mkdirSync, readdirSync, readFileSync, writeFileSync } from "node:fs";
 import { join, relative, resolve } from "node:path";
 
-import { DAK_COMPONENTS, DAK_UNFORMALIZED_COMPONENTS } from "../platform.js";
+import { DAK_COMPONENTS, DAK_UNFORMALIZED_COMPONENTS } from "../schemas/dak-kinds.ts";
 import {
   DOCUMENT_KIND_COVERAGE_SCHEMA_TAG,
   DOCUMENT_KIND_SCHEMA_TAG,
@@ -32,7 +32,7 @@ import {
   type DocumentKindCoverage,
 } from "../platform.js";
 import { directoriesForGraph, instanceRootsIn, readDeclaration, repoRootFor } from "../platform.js";
-import { DAK_CARDS } from "../platform.js";
+import { DAK_CARDS } from "./gen-dak-components-figure.ts";
 import { pinnedTerms, snapshotProblem } from "./pin-smart-kg.ts";
 
 const OUT = resolve(import.meta.dir, "..", "document-kinds");

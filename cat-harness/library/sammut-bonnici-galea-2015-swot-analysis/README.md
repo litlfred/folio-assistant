@@ -1,5 +1,5 @@
 <!-- kg:subgraph:begin -->
-# sammut-bonnici-galea-2015-swot-analysis
+# SWOT analysis
 
 ingested source material — attributed to its document, not folio content
 

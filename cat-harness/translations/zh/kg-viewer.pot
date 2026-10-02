@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: kg-viewer\n"
-"POT-Creation-Date: 2026-10-02T06:56:59.896Z\n"
+"POT-Creation-Date: 2026-10-02T09:06:48.341Z\n"
 "PO-Revision-Date: \n"
 "Last-Translator: \n"
 "Language: zh\n"
@@ -14,7 +14,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: scripts/kg-viewer-strings.ts:203
+#: scripts/kg-viewer-strings.ts:211
 #. Last row of the list when there are more results than are drawn. {n} is a number.
 msgid "… and {n} more; narrow the search."
 msgstr ""
@@ -24,17 +24,17 @@ msgstr ""
 msgid "(preview)"
 msgstr ""
 
-#: scripts/kg-viewer-strings.ts:157
+#: scripts/kg-viewer-strings.ts:165
 #. Node count under the heading. {n} is a number, and is 1 or more.
 msgid "{n} nodes"
 msgstr ""
 
-#: scripts/kg-viewer-strings.ts:195
+#: scripts/kg-viewer-strings.ts:203
 #. Announced when the search or filter changes the list. {n} is 0 or 2 and above.
 msgid "{n} nodes match"
 msgstr ""
 
-#: scripts/kg-viewer-strings.ts:213
+#: scripts/kg-viewer-strings.ts:221
 #. First half of the warning above a node's properties, shown in bold. @context is a JSON-LD keyword and is never translated. {n} is a number.
 msgid "{n} of this node's properties are not in the @context"
 msgstr ""
@@ -44,14 +44,19 @@ msgstr ""
 msgid "{stub} — knowledge graph"
 msgstr ""
 
-#: scripts/kg-viewer-strings.ts:235
+#: scripts/kg-viewer-strings.ts:243
 #. Row label listing the nodes that point AT this one. Flip the arrow if the language reads right to left.
 msgid "← referenced by"
 msgstr ""
 
-#: scripts/kg-viewer-strings.ts:191
+#: scripts/kg-viewer-strings.ts:199
 #. Announced when the search or filter leaves exactly one node.
 msgid "1 node matches"
+msgstr ""
+
+#: scripts/kg-viewer-strings.ts:151
+#. The explanation the 'Translations coming' toggle opens. {languages} is a list of language names, each in its own language, so it is not translated.
+msgid "A translation of this interface into {languages} is planned. Until it is ready, the page is shown in English."
 msgstr ""
 
 #: scripts/kg-viewer-strings.ts:119
@@ -59,27 +64,27 @@ msgstr ""
 msgid "All"
 msgstr ""
 
-#: scripts/kg-viewer-strings.ts:161
+#: scripts/kg-viewer-strings.ts:169
 #. The commit the graph was generated from. {sha} is an abbreviated hexadecimal commit id.
 msgid "commit {sha}"
 msgstr ""
 
-#: scripts/kg-viewer-strings.ts:181
+#: scripts/kg-viewer-strings.ts:189
 #. Replaces the provenance line when the graph document could not be fetched. {doc} is a filename, {error} the browser's own message.
 msgid "could not load {doc} — {error}"
 msgstr ""
 
-#: scripts/kg-viewer-strings.ts:259
+#: scripts/kg-viewer-strings.ts:267
 #. Link at the top of the page back to the documentation site the viewer is reached from.
 msgid "Docs site"
 msgstr ""
 
-#: scripts/kg-viewer-strings.ts:173
+#: scripts/kg-viewer-strings.ts:181
 #. Accessible name of that link. The visible text is only the format, so the name has to say what it gets you and from where. {doc} is a filename.
 msgid "Download this graph as JSON-LD ({doc})"
 msgstr ""
 
-#: scripts/kg-viewer-strings.ts:253
+#: scripts/kg-viewer-strings.ts:261
 #. Small note after a link whose target is a node in a different knowledge-graph document, so following it leaves this page. The link itself is the node's short id and is not translated.
 msgid "in another graph"
 msgstr ""
@@ -89,7 +94,7 @@ msgstr ""
 msgid "Interface language"
 msgstr ""
 
-#: scripts/kg-viewer-strings.ts:147
+#: scripts/kg-viewer-strings.ts:155
 #. Announced to a screen reader after the language changes. {language} is the new language's name in its own language.
 msgid "Interface language: {language}"
 msgstr ""
@@ -104,32 +109,32 @@ msgstr ""
 msgid "Kind"
 msgstr ""
 
-#: scripts/kg-viewer-strings.ts:271
+#: scripts/kg-viewer-strings.ts:279
 #. Accessible name of one neighbour in the diagram. {name} is a node's name from the graph and {via} the property that links to it — both stay in the graph's language.
 msgid "Links to {name} via {via}"
 msgstr ""
 
-#: scripts/kg-viewer-strings.ts:153
+#: scripts/kg-viewer-strings.ts:161
 #. Shown under the heading while the graph document is being fetched. {doc} is a filename.
 msgid "loading {doc}…"
 msgstr ""
 
-#: scripts/kg-viewer-strings.ts:247
+#: scripts/kg-viewer-strings.ts:255
 #. Shown in place of the neighbourhood diagram when the node's only links point at nodes in ANOTHER graph document, so none can be drawn here. Without it the page said 'no links' directly under a link.
 msgid "No links to or from other nodes in this graph. The links above lead out of it."
 msgstr ""
 
-#: scripts/kg-viewer-strings.ts:243
+#: scripts/kg-viewer-strings.ts:251
 #. Shown in place of the neighbourhood diagram for an isolated node.
 msgid "No links to or from this node."
 msgstr ""
 
-#: scripts/kg-viewer-strings.ts:199
+#: scripts/kg-viewer-strings.ts:207
 #. Shown in place of the list when nothing matches.
 msgid "No node matches."
 msgstr ""
 
-#: scripts/kg-viewer-strings.ts:209
+#: scripts/kg-viewer-strings.ts:217
 #. Shown when a followed link names a node the document does not contain.
 msgid "No such node."
 msgstr ""
@@ -144,17 +149,17 @@ msgstr ""
 msgid "none"
 msgstr ""
 
-#: scripts/kg-viewer-strings.ts:267
+#: scripts/kg-viewer-strings.ts:275
 #. Accessible name of that diagram. {n} is the number of neighbours drawn, 0 or 2 and above.
 msgid "One-hop neighbourhood, {n} linked nodes"
 msgstr ""
 
-#: scripts/kg-viewer-strings.ts:263
+#: scripts/kg-viewer-strings.ts:271
 #. Accessible name of the diagram under a node's properties when it has exactly one neighbour.
 msgid "One-hop neighbourhood, 1 linked node"
 msgstr ""
 
-#: scripts/kg-viewer-strings.ts:275
+#: scripts/kg-viewer-strings.ts:283
 #. As above, for a neighbour that points AT the selected node rather than away from it. {name} is that node's name and {via} the property it points along; both stay in the graph's language.
 msgid "Referenced by {name} via {via}"
 msgstr ""
@@ -184,17 +189,17 @@ msgstr ""
 msgid "Skip to results"
 msgstr ""
 
-#: scripts/kg-viewer-strings.ts:217
+#: scripts/kg-viewer-strings.ts:225
 #. The same second half, for a document that does not report a graph-wide count. Since bean `2634` the export publishes its QA findings to `test/results/` rather than into the graph, so most documents no longer carry one — and an absent count must not be rendered as zero, which would claim a clean bill of health the document never gave. Keep the two variants consistent: this is the other one minus its final sentence.
 msgid "so a JSON-LD processor drops them. They are shown below, marked."
 msgstr ""
 
-#: scripts/kg-viewer-strings.ts:217
+#: scripts/kg-viewer-strings.ts:225
 #. Second half of that warning, following a comma. {n} is a number — the count across the whole graph, not this node.
 msgid "so a JSON-LD processor drops them. They are shown below, marked. Across the graph: {n} such property names."
 msgstr ""
 
-#: scripts/kg-viewer-strings.ts:177
+#: scripts/kg-viewer-strings.ts:185
 #. Link text to the commit the graph was generated from, on the forge.
 msgid "source commit"
 msgstr ""
@@ -204,22 +209,27 @@ msgstr ""
 msgid "Subgraph"
 msgstr ""
 
-#: scripts/kg-viewer-strings.ts:185
+#: scripts/kg-viewer-strings.ts:193
 #. Shown in the detail panel when the fetch failed. The second sentence matters: an empty index and a failed fetch look identical on screen and mean opposite things.
 msgid "The graph could not be read, so nothing is shown. This is not an empty graph."
 msgstr ""
 
-#: scripts/kg-viewer-strings.ts:284
+#: scripts/kg-viewer-strings.ts:292
 #. Shown under the heading whenever a language other than English is chosen. It states the boundary: a reader must not have to infer from a half-translated screen where the translation stops.
 msgid "The interface is shown in {language}. The graph itself — node names, descriptions and property names — comes from this repository and is shown as written, in English."
 msgstr ""
 
-#: scripts/kg-viewer-strings.ts:288
+#: scripts/kg-viewer-strings.ts:296
 #. Shown with the note above when the chosen language's catalogue is not signed off. Dropped once a reviewer signs it off.
 msgid "This interface translation was produced by an agent and has not been reviewed by a person."
 msgstr ""
 
-#: scripts/kg-viewer-strings.ts:165
+#: scripts/kg-viewer-strings.ts:147
+#. The visible reason beside the language buttons that cannot be chosen yet (bean w6fu). It is also the toggle that opens the longer explanation, so keep it short: it sits on one line beside the buttons.
+msgid "Translations coming"
+msgstr ""
+
+#: scripts/kg-viewer-strings.ts:173
 #. Warns that the working tree had uncommitted changes when the graph was generated, so the commit id does not reproduce it.
 msgid "tree dirty"
 msgstr ""

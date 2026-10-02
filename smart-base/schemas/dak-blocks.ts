@@ -26,13 +26,22 @@
  * The block manifest's job is identity, editorial edges and QA attachment. The
  * companion file is the content.
  *
- * @module schemas/dak-blocks
+ * ## Why this is in smart-base
+ *
+ * It was core's `cat-harness/schemas/dak-blocks.ts`, re-exported from core's
+ * barrel, until bean `1335`. Core's content model named the `dak` adapter, so
+ * the module could not leave without core importing a harness. It left once
+ * the adapter and its kinds became a CONTRIBUTION (`smart-base/contributions.ts`)
+ * — core reads them from a `ContributionRegistry` now, and nothing in core
+ * imports this file.
+ *
+ * @module smart-base/schemas/dak-blocks
  * @graphNode schema
  */
 
 import { z } from "zod";
-import type { BlockBase } from "./types";
-import { BlockBaseSchema } from "./constraints";
+import type { BlockBase } from "../platform.js";
+import { BlockBaseSchema } from "../platform.js";
 import {
   DAK_BLOCK_KINDS,
   DAK_COMPONENTS,
@@ -40,7 +49,7 @@ import {
   DAK_LABEL_PREFIXES,
   type DakBlockKind,
   type DakComponent,
-} from "./block-kinds";
+} from "./dak-kinds";
 
 // ── Base ─────────────────────────────────────────────────────────
 

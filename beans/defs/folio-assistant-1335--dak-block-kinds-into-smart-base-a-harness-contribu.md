@@ -1,10 +1,11 @@
 ---
 # folio-assistant-1335
 title: 'DAK block kinds into smart-base: a harness contributes its content adapter and block kinds to core (dak-blocks.ts, DAK entries of block-kinds.ts)'
-status: todo
+status: completed
 type: task
+priority: normal
 created_at: 2026-10-01T17:45:13Z
-updated_at: 2026-10-01T17:45:13Z
+updated_at: 2026-10-02T15:26:21Z
 parent: folio-assistant-n3ni
 ---
 
@@ -19,7 +20,11 @@ Moving dak-blocks.ts alone makes core import smart-base, which check:partition:e
 The mechanism is bean zlmp's: registration that walks the resolved stack, so CONTENT_ADAPTERS stops being a compile-time union. This bean is the DAK instance of it.
 
 ## Done when
-- [ ] a harness can contribute a content adapter and its block kinds to core at registration time, with no core import of the harness
-- [ ] dak-blocks.ts and the DAK entries of block-kinds.ts live in smart-base; core's barrel no longer re-exports them
-- [ ] jsonld, qa-criteria-registry, translation-tools and gen-dak-components-figure read DAK kinds through the registration
-- [ ] check:partition:edges 0 new edges; kg-export Schema node ids unchanged except for the moved paths
+- [x] a harness can contribute a content adapter and its block kinds to core at registration time, with no core import of the harness
+- [x] dak-blocks.ts and the DAK entries of block-kinds.ts live in smart-base; core's barrel no longer re-exports them
+- [x] jsonld, qa-criteria-registry, translation-tools and gen-dak-components-figure read DAK kinds through the registration
+- [x] check:partition:edges 0 new edges; kg-export Schema node ids unchanged except for the moved paths
+
+## Summary of Changes
+
+Landed on main through merge train #1876 (c6d7d740) from #1855: the dak adapter, its 21 block kinds and the five DAK checkers are smart-base's contribution (smart-base/contributions.ts) through ContributionRegistry; core's CONTENT_ADAPTERS is ["paper"]; reference parsing accepts contributed label prefixes. Design: cat-harness/docs/proposals/dak-kinds-contribution-2026-10-02.md.

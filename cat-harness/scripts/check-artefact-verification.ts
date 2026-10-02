@@ -100,12 +100,64 @@ export function deriveArtefactChecks(root: string = ROOT): ArtefactCheck[] {
   return out.sort((a, b) => a.check.localeCompare(b.check));
 }
 
+/**
+ * A CALL of the `qa-results/v1` writer — not its definition in `qa-results.ts`.
+ * Assembled from two strings so this file's own source does not match it.
+ */
+const WRITES_QA_RESULT = new RegExp("(?<!function )\\bwrite" + "QaResult\\(");
+
+/**
+ * QA-sidecar GENERATORS that no `--check` invocation covers (bean `v556`).
+ *
+ * The inventory above is the `--check` scripts, so an artefact whose generator
+ * has no `--check` at all could never be in it: `kg:export` wrote two committed
+ * `qa-results/v1` sidecars carrying three hashes between them and this gate
+ * could not see it — "cannot be asked" rather than "nobody has said". This is
+ * the second, independent inventory that closes that shape for the family the
+ * bean found it in.
+ *
+ * Derived the same way, from `package.json`: every script a command runs whose
+ * source CALLS `writeQaResult` — the one writer of `qa-results/v1` sidecars —
+ * and which no command runs with `--check`. Each must be declared in
+ * `unchecked` with a reason, or it is a finding.
+ *
+ * Deliberately limited to `writeQaResult` callers. "Writes a file" would sweep
+ * in every generator whose output is gitignored or printed, and a list that
+ * noisy is one nobody reads.
+ */
+export function deriveUncheckedGenerators(root: string = ROOT): string[] {
+  const scripts = (JSON.parse(readFileSync(join(root, "package.json"), "utf-8")) as {
+    scripts?: Record<string, string>;
+  }).scripts ?? {};
+  const referenced = new Map<string, boolean>();
+  for (const cmd of Object.values(scripts)) {
+    for (const m of cmd.matchAll(/([a-zA-Z0-9/._-]+\.ts)\b/g)) {
+      const script = m[1]!;
+      referenced.set(script, (referenced.get(script) ?? false) || cmd.includes("--check"));
+    }
+  }
+  const out: string[] = [];
+  for (const [script, checked] of referenced) {
+    if (checked) continue;
+    const abs = join(root, script);
+    if (!existsSync(abs)) continue;
+    // A CALL, not the definition in `qa-results.ts`.
+    if (WRITES_QA_RESULT.test(readFileSync(abs, "utf-8"))) out.push(script);
+  }
+  return out.sort();
+}
+
 interface Declaration {
   _comment: string;
   /** check name -> what verifies the artefact for a consumer, or an explicit none. */
   verified: Record<string, string>;
   /** check name -> why nothing does. A REASON, never an empty string. */
   none: Record<string, string>;
+  /**
+   * QA-sidecar generator (repo-relative script) with no `--check` -> why it
+   * needs none, or what checks its sidecar instead. Bean `v556`.
+   */
+  unchecked?: Record<string, string>;
 }
 
 function readDeclaration(): Declaration {
@@ -120,29 +172,43 @@ export interface Report {
   reasonless: string[];
   /** A declaration for a check that no longer exists — the list may only shrink. */
   stale: string[];
+  /** QA-sidecar generators with no `--check` and no `unchecked` declaration (bean `v556`). */
+  uncheckedUndeclared: string[];
+  /** An `unchecked` entry naming a script that now HAS a `--check`, or is gone. */
+  uncheckedStale: string[];
 }
 
-export function report(checks: ArtefactCheck[], d: Declaration): Report {
+export function report(checks: ArtefactCheck[], d: Declaration, unchecked: string[] = []): Report {
   const names = new Set(checks.map((c) => c.check));
   const declared = new Set([...Object.keys(d.verified), ...Object.keys(d.none)]);
   return {
     checks,
     undeclared: checks.map((c) => c.check).filter((n) => !declared.has(n)),
-    reasonless: Object.entries(d.none)
+    reasonless: [...Object.entries(d.none), ...Object.entries(d.unchecked ?? {})]
       .filter(([, why]) => String(why ?? "").trim() === "")
       .map(([n]) => n),
     stale: [...declared].filter((n) => !names.has(n)),
+    uncheckedUndeclared: unchecked.filter((g) => !Object.hasOwn(d.unchecked ?? {}, g)),
+    uncheckedStale: Object.keys(d.unchecked ?? {}).filter((g) => !unchecked.includes(g)),
   };
 }
 
 if (import.meta.main) {
   const checks = deriveArtefactChecks();
+  const generators = deriveUncheckedGenerators();
   const d = readDeclaration();
 
   if (process.argv.includes("--write-baseline")) {
     const existing = readDeclaration();
-    const undeclared = report(checks, existing).undeclared;
+    const base = report(checks, existing, generators);
+    const undeclared = base.undeclared;
     const none: Record<string, string> = { ...existing.none };
+    const unchecked: Record<string, string> = { ...(existing.unchecked ?? {}) };
+    for (const g of base.uncheckedUndeclared) {
+      unchecked[g] =
+        "NOT YET ASSESSED — seeded by --write-baseline so the gate fails on a NEW unchecked generator " +
+        "rather than on the backlog. Give it a --check, or say what checks its sidecar instead.";
+    }
     for (const n of undeclared) {
       none[n] =
         "NOT YET ASSESSED — seeded by --write-baseline so the gate fails on a NEW artefact kind " +
@@ -163,6 +229,7 @@ if (import.meta.main) {
             "`none` to `verified`; a declaration for a check that no longer exists is reported stale.",
           verified: existing.verified,
           none,
+          unchecked,
         },
         null,
         2,
@@ -172,7 +239,7 @@ if (import.meta.main) {
     process.exit(0);
   }
 
-  const r = report(checks, d);
+  const r = report(checks, d, generators);
   const noParse = checks.filter((c) => c.classification === "no-parsing").length;
   console.log(
     `Artefact verification (${checks.length} generated-artefact check(s); ` +
@@ -193,12 +260,23 @@ if (import.meta.main) {
     console.log(`  ✗ stale declaration, remove it: ${n}`);
     bad = true;
   }
+  // Bean `v556`: the generators the `--check` inventory above cannot contain.
+  for (const g of r.uncheckedUndeclared) {
+    console.log(`  ✗ ${g} writes a committed qa-results/v1 sidecar and NO command runs it with --check`);
+    console.log("      Give it a --check (so it enters the inventory above), or declare it under `unchecked` with why.");
+    bad = true;
+  }
+  for (const g of r.uncheckedStale) {
+    console.log(`  ✗ stale \`unchecked\` declaration, remove it: ${g} (it now has a --check, or is gone)`);
+    bad = true;
+  }
 
   if (!bad) {
     const assessed = Object.keys(d.verified).length;
     console.log(
       `  ✓ every artefact check is declared — ${assessed} with a consumer-level verification, ` +
-        `${Object.keys(d.none).length} without one and saying why`,
+        `${Object.keys(d.none).length} without one and saying why; ` +
+        `${generators.length} QA-sidecar generator(s) with no --check, each declared`,
     );
     process.exit(0);
   }
