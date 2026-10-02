@@ -1,0 +1,122 @@
+{
+  "$schema": "kg-qa/v1",
+  "subject": {
+    "kind": "skill",
+    "id": "agent-handoff",
+    "path": "skills/sdlc/sdlc-core/agent-handoff.md"
+  },
+  "source_hash": "4ceedc36053e",
+  "criteria": {
+    "skill-is-a-stub": {
+      "result": "pass",
+      "findings": []
+    },
+    "skill-is-brief": {
+      "result": "fail",
+      "findings": [
+        {
+          "where": "skills/sdlc/sdlc-core/agent-handoff.md",
+          "detail": "300 lines; p75 of the skill corpus is 279."
+        }
+      ]
+    },
+    "skill-not-a-document": {
+      "result": "pass",
+      "findings": []
+    },
+    "skill-no-repeated-heading": {
+      "result": "pass",
+      "findings": []
+    },
+    "prose-reviewed-since-code-changed": {
+      "result": "n/a",
+      "findings": []
+    },
+    "prose-claims-resolve": {
+      "result": "n/a",
+      "findings": []
+    },
+    "skill-voice-review-current": {
+      "result": "pass",
+      "findings": []
+    }
+  },
+  "totals": {
+    "pass": 4,
+    "fail": 1,
+    "n/a": 2,
+    "unknown": 0
+  },
+  "voice_reviews": [
+    {
+      "voice": "agent-skill-authoring",
+      "instance": "cat-harness",
+      "skill_hash": "4ceedc36053ea3cc71cbfd15a288b2f3e151fae5c0df6ee15366351a95899cb0",
+      "voice_hash": "6dccbc641e657a67414b98b8675abf691270236bcfd79b36593cee41eae28d90",
+      "by": "agent",
+      "at": "2026-10-02T18:00:15.918Z",
+      "verdicts": [
+        {
+          "rule": "as-assume-general-knowledge",
+          "result": "pass",
+          "note": "every section is a project convention or a measured failure (bean mac1), no general background; §7 points to bean-blocking/bean-coordination rather than restating them"
+        },
+        {
+          "rule": "as-body-under-500-lines",
+          "result": "pass",
+          "note": "~285 lines after the §3 brief template"
+        },
+        {
+          "rule": "as-description-states-function-and-trigger",
+          "result": "pass",
+          "note": "states the six things it settles and 'Use when writing a bean for another agent… and as the receiver'; trigger terms listed"
+        },
+        {
+          "rule": "as-description-third-person",
+          "result": "pass",
+          "note": "'Governs… States…'; the body's brief template is deliberately second person, addressed to the executor, and §3 says why"
+        },
+        {
+          "rule": "as-evaluations-before-instructions",
+          "result": "pass",
+          "note": "written from an observed run without the skill (bean mac1, 2026-10-02): five failures, each mapped to the rule that addresses it in the table"
+        },
+        {
+          "rule": "as-examples-move-to-references",
+          "result": "pass",
+          "note": "one template (the brief), kept inline because it IS the instruction for §3 and is short; the other examples are one to four lines each"
+        },
+        {
+          "rule": "as-no-name-as-heading",
+          "result": "pass",
+          "note": "first heading changed to 'One task, two agents, one human between them'"
+        },
+        {
+          "rule": "as-one-default-name-the-exception",
+          "result": "pass",
+          "note": "each rule gives one default and the named exception: claim, never create (stop if missing); verifier closes (executor closes only if it can run Done-when itself); owner only; §7: each failure kind has one response, and two same-cause failures go to the owner instead of another round"
+        },
+        {
+          "rule": "as-read-third-party-skills-in-full",
+          "result": "n/a",
+          "note": "first-party skill"
+        },
+        {
+          "rule": "as-reference-toc-over-100-lines",
+          "result": "n/a",
+          "note": "no reference files"
+        },
+        {
+          "rule": "as-references-one-level-deep",
+          "result": "n/a",
+          "note": "no reference files; links go to sibling skills (bean-coordination, dispatch-agent) for disambiguation only"
+        },
+        {
+          "rule": "as-state-dependencies",
+          "result": "pass",
+          "note": "added a Needs line: beans CLI via install-beans.sh and bun run beans:claim, with the blocked behaviour"
+        }
+      ]
+    }
+  ]
+}

@@ -30,6 +30,14 @@
       "status": "candidate"
     },
     {
+      "id": "agent-handoff",
+      "prefLabel": "agent-handoff",
+      "definition": "Governs handing ONE task to an agent in another environment — a local agent with network the cloud session lacks, a sibling on a different machine, anything that cannot read the coordinator's context and that a person may relay to. States who writes which bean, where the receiver reports, what the person pastes (one sentence: bean, branch, repository) and the brief the bean opens with (second person, to the executor), what the receiver checks before acting, who closes, who may grant an exception, and how to recognise and answer the five ways an executor fails. Use when writing a bean for another agent to execute, and as the receiver before acting on one. Triggers on: hand off, handoff, local agent, agy, mac agent, needs network, executor failed, agent went silent, re-hand, \"give me a branch and bean for them\", relay, the other agent.",
+      "notation": "agent-handoff",
+      "source": "cat-harness/skills/sdlc/sdlc-core/agent-handoff.md",
+      "status": "candidate"
+    },
+    {
       "id": "agent-memory",
       "prefLabel": "agent-memory",
       "definition": "Durable memory for a subagent — the three entry labels and what each promises, why entries are authored as graph nodes rather than in the generated file, the injection budget that silently truncates, and archiving as the third state between \"reaches everybody\" and \"deleted\".",
