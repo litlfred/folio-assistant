@@ -5,7 +5,7 @@ status: completed
 type: task
 priority: normal
 created_at: 2026-10-01T08:47:14Z
-updated_at: 2026-10-02T07:06:23Z
+updated_at: 2026-10-02T08:02:57Z
 parent: folio-assistant-3fva
 blocked_by:
     - folio-assistant-16ei
@@ -78,3 +78,11 @@ Production changes:
 - R75 `test/health/workflow.test.ts` is the live-defects bean's work.
 - `check:declared-dirs` still reports an absent `qa` directory as `absent`, as 16ei decided (`directory-storage.test.ts`). It goes away when 5hox declares `storage`.
 - Locally, `bun run gates` also fails `translation:catalogue:check -- --base "$base"`. That step is CI-only: `$base` is unset outside CI. It is not this change.
+
+## E2E item done (R72, R73)
+
+Commit `069ca4632` on branch `qa-8iqt-e2e` (not pushed). `qa-badge.e2e.ts` (R72) and `qa-panel.e2e.ts` (R73, both reads) now read committed copies under `cat-harness/test/support/fixtures/qa-e2e/` (`badge-index.json`, `block-witness.json`, `kg-witness.json`). They still go through the verdict-pinning helpers.
+
+- `scripts/tests/qa-e2e-fixtures.test.ts` holds the copies to the generator's shape: `QaIndexSchema`, and the `QaWitnessDoc` / `QaCriterionView` / `QaWitness` keys.
+- `e2e-corpus-coupling.test.ts` gains rule 3: no e2e spec reads a derived results tree at all, raw or through a helper. Run against the pre-change specs, it fires on all three reads.
+- `bunx playwright test` on both specs: 14/14 pass, both with `cat-harness/test/results` present and with it moved aside.
