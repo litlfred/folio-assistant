@@ -11,6 +11,7 @@ Part of [C@T Harness Tools](../README.md) 0.1.0, declared as `cat-harness-tools-
 | file | what it is | used by |
 |---|---|---|
 | [`composition-roots.test.ts`](composition-roots.test.ts) | a file |  |
+| [`id-lookup.test.ts`](id-lookup.test.ts) | a file |  |
 | [`mcp-graph-tools.test.ts`](mcp-graph-tools.test.ts) | a file |  |
 | [`server-path-sinks.test.ts`](server-path-sinks.test.ts) | a file |  |
 <!-- kg:subgraph:end -->

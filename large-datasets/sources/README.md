@@ -10,6 +10,6 @@ Part of [large-datasets](../README.md) 0.1.0, declared as `large-datasets-source
 
 | file | what it is | used by |
 |---|---|---|
-| [`lean-mathlib.json`](lean-mathlib.json) | Lean 4 mathlib |  |
-| [`who-iris.json`](who-iris.json) | WHO IRIS — Institutional Repository for Information Sharing |  |
+| [`lean-mathlib.json`](../../folio-assistant-sci/sources/lean-mathlib.json) | Lean 4 mathlib |  |
+| [`who-iris.json`](../../who-iris/sources/who-iris.json) | WHO IRIS — Institutional Repository for Information Sharing |  |
 <!-- kg:subgraph:end -->
