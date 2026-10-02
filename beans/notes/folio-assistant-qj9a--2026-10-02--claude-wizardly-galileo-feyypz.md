@@ -10,7 +10,7 @@ created: "2026-10-02"
 ## Handover report: preview size / page weight (session `01WmQ8e6wkd4dbzbe1En9znA`)
 
 - **Session:** https://claude.ai/code/session_01WmQ8e6wkd4dbzbe1En9znA
-- **Written:** 2026-10-02T20:45Z, because the owner asked for a handover to the Merge Manager.
+- **Written:** 2026-10-02T20:45Z; **updated 21:45Z**, stopping on the merge steward's report that the owner's weekly budget is at ~3%. Updated in place rather than appended, per `handover-report` rule 6.
 - **Role and mandate:** bean `qj9a` (preview size, issue #843) and what fell out of it. Owner rulings, verbatim and dated:
   - 2026-10-02: *"relax…'reachable without JavaScript' to 'reachable without XSS'"*
   - 2026-10-02: *"print/pdf needs to wait until loaded/rendered before printing (assuming can load assets)"*
@@ -39,11 +39,13 @@ Reduce what a published page and a preview carry, without weakening what a reade
 
 | item | kind | state | next action | owner |
 |---|---|---|---|---|
-| PR #1889 | PR (draft) | head `dd9eccd24d3`, pushed; CI **not** verified on this head | dispatch `code-quality-gates.yml`, then read it | Merge Manager |
-| `qj9a` | bean | in-progress | R1 todo fix, pending #1886's answer on `footer_custom.html` | this session |
-| `dm4j` | bean | todo, parent `o3xy` | subsumed by the R1 fix if that lands | unassigned |
-| #1886 ask | PR comment | posted 20:0xZ, unanswered | wait; nothing blocked | session `013Wb` |
-| #1914, #1915 | issues | open, fixes pushed on #1889 | close when #1889 merges | Merge Manager |
+| **#1889** | PR, ready for review, `ready-to-merge` + `merge-main` | head `e2df58dd6f8`; gate set **in progress**. Last complete run green at `787433bdc3d` | read the dispatch on `e2df58dd6f8`; if red, it is mine | me / Merge Manager |
+| **#1895** | PR, ready for review, `ready-to-merge` | head `14b75e8ce59`; gate set **in progress**. **Green at `b028e5d65f9`**, `ready:` posted | read the dispatch on `14b75e8ce59` | Merge Manager |
+| #1888 | PR | **not started** — stopped on the budget report | the refused-merge handback | unassigned |
+| #1892 | PR | **not started** | write the methodology page | unassigned |
+| #1894 | PR | **not started**; owner ordered it after #1888 and #1895 | the merge-pipeline epic | unassigned |
+
+**#1895 is finished as a piece of work.** Its one unchecked box — "`bun run gates` green" — is done: the set reported 4 of 212 failed, three were its own (`check:partition`'s five unclassified modules, `check:bean-parents`' two orphans `blgm`/`8rff`, and the same two seen through `bun test`), all fixed in `b028e5d65f9`, which then went green. The fourth, `translation:catalogue:check -- --base "$base"`, is bean `9zok` / issue #1915 and fails on every branch; its fix is on #1889.
 
 ### Blockers and dependencies
 
@@ -75,6 +77,11 @@ Not repo-wide — run 6108 on `claude/stickies-no-tile-strip` executed as a `pul
 
 ### How to resume
 
-1. **Dispatch the gates** on `claude/wizardly-galileo-feyypz` and read the result — do not trust the PR page. `code-quality-gates.yml` has `workflow_dispatch`.
-2. **If red**: the four causes already fixed are `kg:audit:check` (attested), `beans/README.md` (regenerate), bean parents (`check:bean-parents`), and the health producer hash. A new red is a new root cause; read the job log rather than assuming.
-3. **Check #1886** for an answer on `footer_custom.html`. If yes, the R1 fix is specified in bean `dm4j`'s revised "Done when".
+1. **Read the two in-flight dispatches** — `e2df58dd6f8` (#1889) and `14b75e8ce59` (#1895). Do NOT read the PR page as the signal; count the check runs on the head (see the risk section).
+2. **If #1889 is red**: the causes already fixed are `kg:audit:check` (attested), `beans/README.md`, two bean parents, the health producer hash, `audit:coverage` twice, and eight generated artefacts the main-merge left on main's side. A new red is a new cause — read the job log.
+3. **Then #1888**, the refused-merge handback, which is where the owner's queue resumes. After it, #1892 (methodology page) and #1894 (the merge-pipeline epic, which the owner ordered last).
+
+### Two traps that cost me time here, both reproducible
+
+- **A `git worktree` does not inherit `node_modules`.** I resolved a generated conflict in one and regenerated there; the generators ran without the TypeScript compiler API, and `regen-after-merge` reported "7 unrepaired — a real defect, not staleness". That verdict was true of its own run and false about the branch — `uml:overview:check` passes in the real checkout. Symptom: `TypeError: undefined is not an object (evaluating 'ts.ScriptTarget.Latest')` inside an unrelated generator. I discarded that output rather than commit it, which left the artefacts stale and cost two further red rounds.
+- **Resolving a generated conflict to either side is only correct if the regeneration then actually runs.** Ten files on #1889 and three on #1895 were resolved to main's side; each needed `skill:register` / `readme:subgraphs` / `library:viz` / `audit:coverage` afterwards. `audit:coverage` is NOT among `skill:register`'s nine, so it stays stale unless asked for by name.
