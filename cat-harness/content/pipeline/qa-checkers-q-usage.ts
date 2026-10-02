@@ -36,7 +36,10 @@
  */
 
 import { existsSync, readFileSync } from "fs";
-import { declarationStarts, stripLeanComments } from "./lean-lexer.js";
+// The Lean lexer and qou's chapter profiles are the science layer's, so they
+// arrive through pipeline slots rather than imports (bean `squu`). Same names,
+// same behaviour; the slot is filled by folio-assistant-sci's contributions.
+import { declarationStarts, registerDefaultChapterProfiles, stripLeanComments } from "./pipeline-plugins.js";
 import { sep } from "path";
 
 // Chapter profiles are FOLIO content and now arrive through a registry, the
@@ -47,7 +50,6 @@ import {
 } from "./chapter-profile-registry-di";
 // Side-effecting: registers qou's profiles as the default until the folio
 // supplies its own. `_folio-chapter-profiles.qou.ts` says how to finish that.
-import { registerDefaultChapterProfiles } from "./_folio-chapter-profiles.qou";
 registerDefaultChapterProfiles();
 
 export interface QUsageHit {
