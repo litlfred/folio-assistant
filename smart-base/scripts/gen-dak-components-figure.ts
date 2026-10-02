@@ -4,7 +4,7 @@
  *
  * The owner's deck (2026-09-30, slide 3) drew nine coloured cards with testing
  * beside them. The owner's count is ten, so the overview page shows ten squares,
- * and the figure is GENERATED from `schemas/block-kinds.ts` rather than drawn:
+ * and the figure is GENERATED from `smart-base/schemas/dak-kinds.ts` rather than drawn:
  * a component added to the vocabulary without a card here fails
  * {@link renderDakComponentsSvg}, and one marked unformalized gets its note
  * from `DAK_UNFORMALIZED_COMPONENTS` rather than from this file.
@@ -13,16 +13,26 @@
  * slide's "testing: test data and test harness" beside the overview table's
  * row. Colours follow the slide's palette, with one new pair for the tenth.
  *
- *   bun run cat-harness/scripts/gen-dak-components-figure.ts           # write
- *   bun run cat-harness/scripts/gen-dak-components-figure.ts --check   # verify
+ *   bun run smart-base/scripts/gen-dak-components-figure.ts           # write
+ *   bun run smart-base/scripts/gen-dak-components-figure.ts --check   # verify
  *
- * @module scripts/gen-dak-components-figure
+ * ## Why it is smart-base's, and why it still writes into cat-harness's site
+ *
+ * Moved from `cat-harness/scripts/` in bean `1335`: it is DAK's figure, built
+ * from DAK's vocabulary, and `gen-document-kinds.ts` beside it already read
+ * its cards. The SVG it writes stays where it was — in cat-harness's docs
+ * site, because the page that shows it (the harnessed-KG overview, slide 3)
+ * is cat-harness's. smart-base needs cat-harness, so writing into that
+ * instance's declared site is the allowed direction; moving the page is a
+ * separate decision this move did not take.
+ *
+ * @module smart-base/scripts/gen-dak-components-figure
  */
 import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import { dirname, join, resolve } from "node:path";
 
-import { DAK_COMPONENTS, DAK_UNFORMALIZED_COMPONENTS, type DakComponent } from "../schemas/block-kinds.ts";
-import { siteDirFor } from "../schemas/cat-harness.ts";
+import { DAK_COMPONENTS, DAK_UNFORMALIZED_COMPONENTS, type DakComponent } from "../schemas/dak-kinds.ts";
+import { siteDirFor } from "../../cat-harness/schemas/cat-harness.ts";
 
 interface Card {
   title: string;
@@ -123,7 +133,7 @@ export function renderDakComponentsSvg(): string {
   const out: string[] = [];
   out.push(
     `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${width} ${height}" width="${width}" height="${height}" role="img" aria-labelledby="dak-title dak-desc">`,
-    `<!-- GENERATED from schemas/block-kinds.ts DAK_COMPONENTS by cat-harness/scripts/gen-dak-components-figure.ts -->`,
+    `<!-- GENERATED from smart-base/schemas/dak-kinds.ts DAK_COMPONENTS by smart-base/scripts/gen-dak-components-figure.ts -->`,
     `<title id="dak-title">The ${DAK_COMPONENTS.length} components of a WHO Digital Adaptation Kit</title>`,
     `<desc id="dak-desc">${esc(DAK_COMPONENTS.map((c, i) => `${i + 1} ${DAK_CARDS[c].title}`).join("; "))}.</desc>`,
     `<rect width="${width}" height="${height}" fill="#FFFFFF"/>`,
@@ -162,7 +172,8 @@ export function renderDakComponentsSvg(): string {
   return out.join("\n");
 }
 
-const H = resolve(import.meta.dir, "..");
+/** cat-harness's instance root — the site the figure is published in. */
+const H = resolve(import.meta.dir, "..", "..", "cat-harness");
 export const DAK_FIGURE_PATH = join(H, siteDirFor(H), "assets/img/dak-components.svg");
 
 if (import.meta.main) {
@@ -171,7 +182,7 @@ if (import.meta.main) {
   if (process.argv.includes("--check")) {
     const cur = existsSync(DAK_FIGURE_PATH) ? readFileSync(DAK_FIGURE_PATH, "utf-8") : "";
     if (cur !== svg) {
-      console.error(`✗ ${rel} is stale — run \`bun run cat-harness/scripts/gen-dak-components-figure.ts\``);
+      console.error(`✗ ${rel} is stale — run \`bun run smart-base/scripts/gen-dak-components-figure.ts\``);
       process.exit(1);
     }
     console.log(`✓ ${rel} is current (${DAK_COMPONENTS.length} components)`);

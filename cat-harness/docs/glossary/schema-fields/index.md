@@ -12,14 +12,14 @@ permalink: /glossary/schema-fields/
 
 Candidate terms extracted from every schema field with a doc comment: `<Declaration>.<field>` as the label, the comment's first paragraph as the definition. Each is the asset's own text, verbatim and not curated, and carries the badge "candidate, extracted". A person promotes one by authoring it. Authored terms, the counts and the sources are on the <a href="{{ '/glossary/' | relative_url }}">glossary index</a>.
 
-From: bootstrap-tools 28 (<a href="{{ '/assets/glossary/bootstrap-tools--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · cat-harness 1614 (<a href="{{ '/assets/glossary/cat-harness--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · fhir-harness 60 (<a href="{{ '/assets/glossary/fhir-harness--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · folio-assistant-core 131 (<a href="{{ '/assets/glossary/folio-assistant-core--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · smart-base 4 (<a href="{{ '/assets/glossary/smart-base--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>).
+From: bootstrap-tools 28 (<a href="{{ '/assets/glossary/bootstrap-tools--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · cat-harness 1614 (<a href="{{ '/assets/glossary/cat-harness--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · fhir-harness 60 (<a href="{{ '/assets/glossary/fhir-harness--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · folio-assistant-core 131 (<a href="{{ '/assets/glossary/folio-assistant-core--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · smart-base 9 (<a href="{{ '/assets/glossary/smart-base--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>).
 
-**Size:** this page holds 1837 terms and is 1016 KB before compression, fetched in one request, within its budget of 1.0 MB. There is no search index: the filter below runs over this page, and the A–Z bar jumps within it.
+**Size:** this page holds 1842 terms and is 1019 KB before compression, fetched in one request, within its budget of 1.0 MB. There is no search index: the filter below runs over this page, and the A–Z bar jumps within it.
 
 <table class="fa-gloss-mapping">
 <caption>Already somebody else's concept? — <code>check:term-mapping</code>, bean <code>7wou</code></caption>
 <thead><tr><th>target</th><th>mapped</th><th>unmapped</th><th>undetermined</th><th>why undetermined</th></tr></thead>
-<tbody><tr><td><code>fhir</code></td><td>0</td><td>1837</td><td>0</td><td>—</td></tr><tr><td><code>skos</code></td><td>0</td><td>1837</td><td>0</td><td>—</td></tr></tbody>
+<tbody><tr><td><code>fhir</code></td><td>0</td><td>1842</td><td>0</td><td>—</td></tr><tr><td><code>skos</code></td><td>0</td><td>1842</td><td>0</td><td>—</td></tr></tbody>
 </table>
 <p class="fa-gloss-mapping-note"><strong>Undetermined is never “no match”.</strong> 
 A vocabulary that could not be reached has said nothing, and the column above keeps that 
@@ -29,7 +29,7 @@ be a term this corpus is right to coin.</p>
 
 <label for="fa-gloss-q">Filter terms</label>
 <input id="fa-gloss-q" type="search" autocomplete="off" style="min-height:44px;width:100%;max-width:32rem">
-<p aria-live="polite"><span id="fa-gloss-n">1837</span> shown</p>
+<p aria-live="polite"><span id="fa-gloss-n">1842</span> shown</p>
 
 <nav aria-label="Letters"><a href="#letter-A">A</a> <a href="#letter-B">B</a> <a href="#letter-C">C</a> <a href="#letter-D">D</a> <a href="#letter-E">E</a> <a href="#letter-F">F</a> <a href="#letter-G">G</a> <a href="#letter-H">H</a> <a href="#letter-I">I</a> <a href="#letter-J">J</a> <a href="#letter-K">K</a> <a href="#letter-L">L</a> <a href="#letter-M">M</a> <a href="#letter-N">N</a> <a href="#letter-O">O</a> <a href="#letter-P">P</a> <a href="#letter-Q">Q</a> <a href="#letter-R">R</a> <a href="#letter-S">S</a> <a href="#letter-T">T</a> <a href="#letter-U">U</a> <a href="#letter-V">V</a> <a href="#letter-W">W</a></nav>
 
@@ -153,6 +153,13 @@ ActorRefSchema.id <span class="fa-gloss-status">candidate, extracted</span>
 <dd>
 <p>The actor's id, or the best name available when none is declared.</p>
 <p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/session-context.ts"><code>cat-harness/schemas/session-context.ts#ActorRefSchema.id</code></a></p>
+</dd>
+<dt id="cat-harness--kg-schema-fields--contributions.adaptercontribution.companionroles" data-fa-state="extracted" data-fa-gloss="">
+AdapterContribution.companionRoles <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>Which companion roles this adapter's blocks can have — the contributed half of <code>ADAPTER_COMPANION_ROLES</code> in <code>schemas/block-qa.ts</code>, which lists the built-in adapters only. Read by <code>incompatibleCompanions</code>, so a criterion scoped to a contributed adapter is checked against what that adapter's blocks can actually carry. Absent means none are declared, and a criterion depending on any companion then reports it as incompatible.</p>
+<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/contributions.ts"><code>cat-harness/schemas/contributions.ts#AdapterContribution.companionRoles</code></a></p>
 </dd>
 <dt id="cat-harness--kg-schema-fields--contributions.adaptercontribution.module" data-fa-state="extracted" data-fa-gloss="">
 AdapterContribution.module <span class="fa-gloss-status">candidate, extracted</span>
@@ -900,12 +907,40 @@ BlockKindContribution.adapter <span class="fa-gloss-status">candidate, extracted
 <p>The adapter namespace claiming it. May be a new namespace.</p>
 <p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/contributions.ts"><code>cat-harness/schemas/contributions.ts#BlockKindContribution.adapter</code></a></p>
 </dd>
+<dt id="cat-harness--kg-schema-fields--contributions.blockkindcontribution.builder" data-fa-state="extracted" data-fa-gloss="">
+BlockKindContribution.builder <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>The builder function a manifest calls — <code>export default &lt;builder&gt;(…)</code>. Absent means the kind's own name. A kebab-case kind needs one: a hyphen is not a valid identifier.</p>
+<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/contributions.ts"><code>cat-harness/schemas/contributions.ts#BlockKindContribution.builder</code></a></p>
+</dd>
+<dt id="cat-harness--kg-schema-fields--contributions.blockkindcontribution.docotype" data-fa-state="extracted" data-fa-gloss="">
+BlockKindContribution.docoType <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>The DoCO co-type, if the kind has one. Absent means it has none.</p>
+<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/contributions.ts"><code>cat-harness/schemas/contributions.ts#BlockKindContribution.docoType</code></a></p>
+</dd>
+<dt id="cat-harness--kg-schema-fields--contributions.blockkindcontribution.foliotype" data-fa-state="extracted" data-fa-gloss="">
+BlockKindContribution.folioType <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>The folio class (<code>BLOCK_KIND_TO_FOLIO_TYPE</code>'s vocabulary) for a block of this kind, if any.</p>
+<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/contributions.ts"><code>cat-harness/schemas/contributions.ts#BlockKindContribution.folioType</code></a></p>
+</dd>
 <dt id="cat-harness--kg-schema-fields--contributions.blockkindcontribution.kind" data-fa-state="extracted" data-fa-gloss="">
 BlockKindContribution.kind <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
 <p>The kind string as it appears in a block manifest, e.g. <code>&quot;theorem&quot;</code>.</p>
 <p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/contributions.ts"><code>cat-harness/schemas/contributions.ts#BlockKindContribution.kind</code></a></p>
+</dd>
+<dt id="cat-harness--kg-schema-fields--contributions.blockkindcontribution.labelprefix" data-fa-state="extracted" data-fa-gloss="">
+BlockKindContribution.labelPrefix <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>The label prefix, without its colon — <code>&quot;dt&quot;</code> for <code>dt:anc-danger-signs</code>.</p>
+<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/contributions.ts"><code>cat-harness/schemas/contributions.ts#BlockKindContribution.labelPrefix</code></a></p>
 </dd>
 <dt id="cat-harness--kg-schema-fields--block-qa.blockqareport.dollar-schema" data-fa-state="extracted" data-fa-gloss="">
 BlockQaReport.$schema <span class="fa-gloss-status">candidate, extracted</span>
@@ -2504,19 +2539,19 @@ CsvwTableSchema.fac:stub <span class="fa-gloss-status">candidate, extracted</spa
 
 <h2 id="letter-D">D</h2>
 <dl class="fa-gloss">
-<dt id="cat-harness--kg-schema-fields--dak-blocks.dakblockbase.layer" data-fa-state="extracted" data-fa-gloss="">
+<dt id="smart-base--kg-schema-fields--dak-blocks.dakblockbase.layer" data-fa-state="extracted" data-fa-gloss="">
 DakBlockBase.layer <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
 <p>The WHO knowledge layer this block belongs to.</p>
-<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/dak-blocks.ts"><code>cat-harness/schemas/dak-blocks.ts#DakBlockBase.layer</code></a></p>
+<p class="fa-gloss-meta">Schema fields of smart-base · source <a href="https://github.com/litlfred/folio-assistant/blob/main/smart-base/schemas/dak-blocks.ts"><code>smart-base/schemas/dak-blocks.ts#DakBlockBase.layer</code></a></p>
 </dd>
-<dt id="cat-harness--kg-schema-fields--dak-blocks.dakblockbase.realises" data-fa-state="extracted" data-fa-gloss="">
+<dt id="smart-base--kg-schema-fields--dak-blocks.dakblockbase.realises" data-fa-state="extracted" data-fa-gloss="">
 DakBlockBase.realises <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
 <p>Label of the L1 recommendation or L2 component this block realises.</p>
-<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/dak-blocks.ts"><code>cat-harness/schemas/dak-blocks.ts#DakBlockBase.realises</code></a></p>
+<p class="fa-gloss-meta">Schema fields of smart-base · source <a href="https://github.com/litlfred/folio-assistant/blob/main/smart-base/schemas/dak-blocks.ts"><code>smart-base/schemas/dak-blocks.ts#DakBlockBase.realises</code></a></p>
 </dd>
 <dt id="smart-base--kg-schema-fields--dak.dakdeclaration.canonicalurl" data-fa-state="extracted" data-fa-gloss="">
 DakDeclaration.canonicalUrl <span class="fa-gloss-status">candidate, extracted</span>
@@ -3379,12 +3414,12 @@ DublinCoreRecordSchema.provenance <span class="fa-gloss-status">candidate, extra
 <p>Where this record was read from, and when. A metadata record with no provenance is the <code>source: null</code> defect bean <code>r1lz</code> was opened over, wearing a different hat.</p>
 <p class="fa-gloss-meta">Schema fields of folio-assistant-core · source <a href="https://github.com/litlfred/folio-assistant/blob/main/folio-assistant-core/schemas/dublin-core.ts"><code>folio-assistant-core/schemas/dublin-core.ts#DublinCoreRecordSchema.provenance</code></a></p>
 </dd>
-<dt id="cat-harness--kg-schema-fields--dak-blocks.dublincoreref.source" data-fa-state="extracted" data-fa-gloss="">
+<dt id="smart-base--kg-schema-fields--dak-blocks.dublincoreref.source" data-fa-state="extracted" data-fa-gloss="">
 DublinCoreRef.source <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
 <p>Canonical URI — an IRIS handle, for WHO publications.</p>
-<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/dak-blocks.ts"><code>cat-harness/schemas/dak-blocks.ts#DublinCoreRef.source</code></a></p>
+<p class="fa-gloss-meta">Schema fields of smart-base · source <a href="https://github.com/litlfred/folio-assistant/blob/main/smart-base/schemas/dak-blocks.ts"><code>smart-base/schemas/dak-blocks.ts#DublinCoreRef.source</code></a></p>
 </dd>
 </dl>
 
@@ -4487,12 +4522,12 @@ HealthFindingSchema.summary <span class="fa-gloss-status">candidate, extracted</
 <p>One line, naming the subject. Assert by naming, not by counting.</p>
 <p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/health-report.ts"><code>cat-harness/schemas/health-report.ts#HealthFindingSchema.summary</code></a></p>
 </dd>
-<dt id="cat-harness--kg-schema-fields--dak-blocks.healthinterventionblock.references" data-fa-state="extracted" data-fa-gloss="">
+<dt id="smart-base--kg-schema-fields--dak-blocks.healthinterventionblock.references" data-fa-state="extracted" data-fa-gloss="">
 HealthInterventionBlock.references <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
 <p>Dublin Core references to the guideline this intervention comes from.</p>
-<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/dak-blocks.ts"><code>cat-harness/schemas/dak-blocks.ts#HealthInterventionBlock.references</code></a></p>
+<p class="fa-gloss-meta">Schema fields of smart-base · source <a href="https://github.com/litlfred/folio-assistant/blob/main/smart-base/schemas/dak-blocks.ts"><code>smart-base/schemas/dak-blocks.ts#HealthInterventionBlock.references</code></a></p>
 </dd>
 <dt id="cat-harness--kg-schema-fields--health-report.healthmeasurementschema.command" data-fa-state="extracted" data-fa-gloss="">
 HealthMeasurementSchema.command <span class="fa-gloss-status">candidate, extracted</span>
@@ -12036,12 +12071,12 @@ UntaintedDispatch.drift <span class="fa-gloss-status">candidate, extracted</span
 <p>What counts as a finding for this criterion, and what does not.</p>
 <p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/block-qa.ts"><code>cat-harness/schemas/block-qa.ts#UntaintedDispatch.drift</code></a></p>
 </dd>
-<dt id="cat-harness--kg-schema-fields--dak-blocks.userscenarioblock.personas" data-fa-state="extracted" data-fa-gloss="">
+<dt id="smart-base--kg-schema-fields--dak-blocks.userscenarioblock.personas" data-fa-state="extracted" data-fa-gloss="">
 UserScenarioBlock.personas <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
 <p>Ids of the personas this scenario involves, at least one.</p>
-<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/dak-blocks.ts"><code>cat-harness/schemas/dak-blocks.ts#UserScenarioBlock.personas</code></a></p>
+<p class="fa-gloss-meta">Schema fields of smart-base · source <a href="https://github.com/litlfred/folio-assistant/blob/main/smart-base/schemas/dak-blocks.ts"><code>smart-base/schemas/dak-blocks.ts#UserScenarioBlock.personas</code></a></p>
 </dd>
 <dt id="cat-harness--kg-schema-fields--user-story.userstoryschema.role" data-fa-state="extracted" data-fa-gloss="">
 UserStorySchema.role <span class="fa-gloss-status">candidate, extracted</span>

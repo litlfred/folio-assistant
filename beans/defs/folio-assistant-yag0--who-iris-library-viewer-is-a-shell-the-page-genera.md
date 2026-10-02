@@ -1,11 +1,11 @@
 ---
 # folio-assistant-yag0
 title: 'WHO-IRIS LIBRARY VIEWER IS A SHELL: the page generates, the link is right, and neither the corpus entry nor the 3 materialized assets appear'
-status: in-progress
+status: completed
 type: bug
 priority: high
 created_at: 2026-09-23T05:46:53Z
-updated_at: 2026-09-30T13:39:18Z
+updated_at: 2026-10-02T13:36:37Z
 parent: folio-assistant-yj32
 ---
 
@@ -167,3 +167,12 @@ Owner's ruling (b), "Fold into v8n5". Branch `claude/magical-archimedes-4qkfxp-v
 - Tested in `navbar.test.ts` §"adjacent graph rows cannot be confused": every row's mark is unique, docs/library carry drawn glyphs with distinct hues, every accessible name is distinct and starts with the visible label.
 - Verified in Chromium on the `preview:site` + mount build: the rail's aria snapshot reads `link "docs — Documentation ABOUT the knowledge graph, who-iris"` and `link "library — L1 source content, who-iris"`.
 
+## Summary of Changes
+
+Closed 2026-10-02 on evidence. Every item in Done when was already checked, and the work they name is on `main`:
+
+- `cat-harness/test/library-viewer-scope.e2e.ts`: the regression test. It takes its expectations from the declarations on disk, not from the viewer's own data.
+- `rendered-verification` §"A STATIC read of a client-rendered page is not verification — in either direction".
+- The rail rows are distinguished (`v8n5`, merged in PR #1611 on 2026-09-30): `cat-harness/scripts/lib/graph-kind-nav.ts` gives each row its own glyph and an accessible name, tested in `navbar.test.ts` §"adjacent graph rows cannot be confused (bean yag0)".
+
+The original "shell page" finding was false. The page always listed who-iris's three entries, and the body records how the error was made.
