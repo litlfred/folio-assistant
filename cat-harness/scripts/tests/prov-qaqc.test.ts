@@ -181,7 +181,11 @@ describe("prov-qaqc: outputs", () => {
     expect(staleness(files, site.assets)).toEqual({ stale: [], orphans: [] });
 
     const log = join(site.assets, "t.prov.jsonld");
-    expect(readFileSync(log, "utf-8")).toContain('"prov:hadPlan": "code-change-review#Task_ClaimBean"');
+    // PROV-JSONLD since 2026-10-01 (beans jcet, 9y9j): the plan is a LINK at
+    // the process's release address, under the context's `plan` term.
+    expect(readFileSync(log, "utf-8")).toContain(
+      '"plan": "https://litlfred.github.io/cat-harness/0.1.0/processes/code-change-review#Task_ClaimBean"',
+    );
     writeFileSync(log, "{}\n");
     expect(staleness(files, site.assets).stale).toEqual([log]);
 
