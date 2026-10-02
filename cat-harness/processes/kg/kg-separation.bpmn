@@ -13,7 +13,7 @@
   <bpmn:process id="Process_KgSeparation" name="A knowledge graph leaves for its own repositories" isExecutable="false">
     <bpmn:documentation>THE METHOD FOR A KNOWLEDGE GRAPH THAT LEAVES FOR ITS OWN REPOSITORIES, AND IT IS TWO REPOSITORIES, NOT ONE. The content (files to read, no code) and its tools (the code that writes and checks it) separate as a pair. `kg-separation.md` is the practice; this is its order and its gates. Stages 1-3 are `graph-detanglement`, reused rather than restated.
 
-EVERY GATEWAY IS A COMMAND. `Tools closed?` is `check:tools-closure` with the content's no-code test and a byte-identity check on the generated files; `Every identifier its file's path?` is `check:node-iris`; `Green alone?` is the standalone rehearsal. A check that could not run stops the process rather than reading as clean.
+EVERY GATEWAY IS A COMMAND. `Tools closed?` is `check:tools-closure` with the content's no-code test and a byte-identity check on the generated files; `Every identifier its file's path?` is `check:node-iris`; `Green alone?` is the standalone rehearsal; `Ready to seed?` is `seed:ready --layer &lt;name&gt; --rehearse`, decided by decisions/seed-readiness-gate.dmn. A check that could not run stops the process rather than reading as clean.
 
 A PERSON DECIDES FOUR TIMES, AND THE ADMINISTRATOR LANE SAYS WHERE: whether to separate at all, whether to authorise the extraction, creating the repositories, and the cutover. Nothing is committed to the new repositories before they are created, and the parent keeps its own copy until it consumes the first release.
 
@@ -32,6 +32,7 @@ VERSIONS: the pair starts at the content's version at the split, then each is ve
         <bpmn:flowNodeRef>Task_Measure</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Task_Detangle</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Task_Propose</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Task_Drain</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Task_Seed</bpmn:flowNodeRef>
       </bpmn:lane>
       <bpmn:lane id="Lane_Platform" name="Platform authoring agent">
@@ -62,6 +63,8 @@ VERSIONS: the pair starts at the content's version at the split, then each is ve
         <bpmn:flowNodeRef>Task_Rehearse</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>GW_Alone</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>End_Unknown</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>GW_SeedReady</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>End_SeedUnknown</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Task_Verify</bpmn:flowNodeRef>
       </bpmn:lane>
       <bpmn:lane id="Lane_Admin" name="Administrator">
@@ -220,13 +223,36 @@ VERSIONS: the pair starts at the content's version at the split, then each is ve
       <bpmn:incoming>F20</bpmn:incoming>
       <bpmn:outgoing>F21</bpmn:outgoing>
     </bpmn:userTask>
+    <bpmn:exclusiveGateway id="GW_SeedReady" name="Ready to&#10;seed?">
+      <bpmn:documentation>Asked AT SEED TIME, because the tree has moved since `8 · Rehearse`. A seed is a snapshot with no history, so every open PR over the layer when it is taken is orphaned into the monorepo. Computed by decisions/seed-readiness-gate.dmn (hit policy FIRST) from `seed:ready --layer &lt;name&gt;`: an open `heavy-mover` PR over the layer or the next one, any open PR on the next layer, more than five over the layer, any that moves a file in it, a red sibling-layout rehearsal, or a direct dependent that discovery cannot find among sibling clones answers `not yet`. A criterion that could not be decided answers `unknown` and stops; it never hides a finding already certain, which is why the `not yet` rows come first. The rehearsal runs only on request (`--rehearse`, owner ruling 2026-10-02), so without it the answer is never `settled`.</bpmn:documentation>
+      <bpmn:extensionElements>
+        <cat-harness.processes:decision ref="decisions/seed-readiness-gate.dmn#Decision_SeedReadiness"/>
+      </bpmn:extensionElements>
+      <bpmn:incoming>F21</bpmn:incoming>
+      <bpmn:incoming>F28</bpmn:incoming>
+      <bpmn:outgoing>F27</bpmn:outgoing>
+      <bpmn:outgoing>F29</bpmn:outgoing>
+      <bpmn:outgoing>F30</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:task id="Task_Drain" name="Drain: land, close or&#10;re-target the open PRs">
+      <bpmn:documentation>Work the PRs `seed:ready` named until the source settles: land or close the heavy movers and the next layer's PRs, bring the layer's open PRs to five or fewer, and finish any move in flight. Fix a red rehearsal or a discovery miss where it is. Nothing is seeded from here; it goes back to the gateway, which re-asks.</bpmn:documentation>
+      <bpmn:extensionElements>
+        <bootstrap.processes:skill ref="kg-separation"/>
+        <cat-harness.processes:bean op="note"/>
+      </bpmn:extensionElements>
+      <bpmn:incoming>F27</bpmn:incoming>
+      <bpmn:outgoing>F28</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:endEvent id="End_SeedUnknown" name="UNKNOWN — do not&#10;seed. Not clean">
+      <bpmn:incoming>F29</bpmn:incoming>
+    </bpmn:endEvent>
     <bpmn:task id="Task_Seed" name="10 · Seed both&#10;repositories">
       <bpmn:documentation>Seed main, then bring the content and the tools in as reviewed pull requests with their history, so neither repository's first commit is unreviewable.</bpmn:documentation>
       <bpmn:extensionElements>
         <bootstrap.processes:skill ref="kg-separation"/>
         <cat-harness.processes:bean op="note"/>
       </bpmn:extensionElements>
-      <bpmn:incoming>F21</bpmn:incoming>
+      <bpmn:incoming>F30</bpmn:incoming>
       <bpmn:outgoing>F22</bpmn:outgoing>
     </bpmn:task>
     <bpmn:callActivity id="Task_Consume" name="11 · Parent consumes,&#10;additively" calledElement="Process_UpstreamAdoption">
@@ -290,7 +316,11 @@ VERSIONS: the pair starts at the content's version at the split, then each is ve
     <bpmn:sequenceFlow id="F18" sourceRef="Task_Propose" targetRef="Task_Authorise"/>
     <bpmn:sequenceFlow id="F19" sourceRef="Task_Authorise" targetRef="End_Declined" name="declined"/>
     <bpmn:sequenceFlow id="F20" sourceRef="Task_Authorise" targetRef="Task_Create" name="authorised"/>
-    <bpmn:sequenceFlow id="F21" sourceRef="Task_Create" targetRef="Task_Seed"/>
+    <bpmn:sequenceFlow id="F21" sourceRef="Task_Create" targetRef="GW_SeedReady"/>
+    <bpmn:sequenceFlow id="F27" sourceRef="GW_SeedReady" targetRef="Task_Drain" name="not yet"/>
+    <bpmn:sequenceFlow id="F28" sourceRef="Task_Drain" targetRef="GW_SeedReady"/>
+    <bpmn:sequenceFlow id="F29" sourceRef="GW_SeedReady" targetRef="End_SeedUnknown" name="unknown"/>
+    <bpmn:sequenceFlow id="F30" sourceRef="GW_SeedReady" targetRef="Task_Seed" name="settled"/>
     <bpmn:sequenceFlow id="F22" sourceRef="Task_Seed" targetRef="Task_Consume"/>
     <bpmn:sequenceFlow id="F23" sourceRef="Task_Consume" targetRef="Task_Release"/>
     <bpmn:sequenceFlow id="F24" sourceRef="Task_Release" targetRef="Task_Verify"/>
@@ -300,22 +330,22 @@ VERSIONS: the pair starts at the content's version at the split, then each is ve
   <bpmndi:BPMNDiagram id="Diagram_Process_KgSeparation">
     <bpmndi:BPMNPlane id="Plane_Process_KgSeparation" bpmnElement="Collaboration_Process_KgSeparation">
       <bpmndi:BPMNShape id="Shape_Participant_Process_KgSeparation" bpmnElement="Participant_Process_KgSeparation" isHorizontal="true">
-        <dc:Bounds x="60" y="60" width="4520" height="850"/>
+        <dc:Bounds x="60" y="60" width="5020" height="850"/>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Shape_Lane_Agent" bpmnElement="Lane_Agent" isHorizontal="true">
-        <dc:Bounds x="90" y="60" width="4490" height="170"/>
+        <dc:Bounds x="90" y="60" width="4990" height="170"/>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Shape_Lane_Platform" bpmnElement="Lane_Platform" isHorizontal="true">
-        <dc:Bounds x="90" y="230" width="4490" height="170"/>
+        <dc:Bounds x="90" y="230" width="4990" height="170"/>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Shape_Lane_Publication" bpmnElement="Lane_Publication" isHorizontal="true">
-        <dc:Bounds x="90" y="400" width="4490" height="170"/>
+        <dc:Bounds x="90" y="400" width="4990" height="170"/>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Shape_Lane_Pipeline" bpmnElement="Lane_Pipeline" isHorizontal="true">
-        <dc:Bounds x="90" y="570" width="4490" height="170"/>
+        <dc:Bounds x="90" y="570" width="4990" height="170"/>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Shape_Lane_Admin" bpmnElement="Lane_Admin" isHorizontal="true">
-        <dc:Bounds x="90" y="740" width="4490" height="170"/>
+        <dc:Bounds x="90" y="740" width="4990" height="170"/>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Shape_Start_Trigger" bpmnElement="Start_Trigger">
         <dc:Bounds x="242" y="127" width="36" height="36"/>
@@ -374,23 +404,32 @@ VERSIONS: the pair starts at the content's version at the split, then each is ve
       <bpmndi:BPMNShape id="Shape_Task_Create" bpmnElement="Task_Create">
         <dc:Bounds x="3210" y="785" width="180" height="80"/>
       </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_GW_SeedReady" bpmnElement="GW_SeedReady" isMarkerVisible="true">
+        <dc:Bounds x="3475" y="630" width="50" height="50"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_Task_Drain" bpmnElement="Task_Drain">
+        <dc:Bounds x="3410" y="105" width="180" height="80"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_End_SeedUnknown" bpmnElement="End_SeedUnknown">
+        <dc:Bounds x="3682" y="637" width="36" height="36"/>
+      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Shape_Task_Seed" bpmnElement="Task_Seed">
-        <dc:Bounds x="3400" y="105" width="180" height="80"/>
+        <dc:Bounds x="3900" y="105" width="180" height="80"/>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Shape_Task_Consume" bpmnElement="Task_Consume" isExpanded="false">
-        <dc:Bounds x="3590" y="275" width="180" height="80"/>
+        <dc:Bounds x="4090" y="275" width="180" height="80"/>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Shape_Task_Release" bpmnElement="Task_Release">
-        <dc:Bounds x="3780" y="445" width="180" height="80"/>
+        <dc:Bounds x="4280" y="445" width="180" height="80"/>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Shape_Task_Verify" bpmnElement="Task_Verify" isExpanded="false">
-        <dc:Bounds x="3970" y="615" width="180" height="80"/>
+        <dc:Bounds x="4470" y="615" width="180" height="80"/>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Shape_Task_Cutover" bpmnElement="Task_Cutover">
-        <dc:Bounds x="4160" y="785" width="180" height="80"/>
+        <dc:Bounds x="4660" y="785" width="180" height="80"/>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Shape_End_Separated" bpmnElement="End_Separated">
-        <dc:Bounds x="4422" y="807" width="36" height="36"/>
+        <dc:Bounds x="4922" y="807" width="36" height="36"/>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="Edge_F0" bpmnElement="F0">
         <di:waypoint x="278" y="145"/>
@@ -500,37 +539,57 @@ VERSIONS: the pair starts at the content's version at the split, then each is ve
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Edge_F21" bpmnElement="F21">
         <di:waypoint x="3390" y="825"/>
-        <di:waypoint x="3395" y="825"/>
-        <di:waypoint x="3395" y="145"/>
+        <di:waypoint x="3500" y="825"/>
+        <di:waypoint x="3500" y="680"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_F27" bpmnElement="F27">
+        <di:waypoint x="3500" y="630"/>
+        <di:waypoint x="3500" y="185"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_F28" bpmnElement="F28">
+        <di:waypoint x="3410" y="145"/>
         <di:waypoint x="3400" y="145"/>
+        <di:waypoint x="3400" y="655"/>
+        <di:waypoint x="3475" y="655"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_F29" bpmnElement="F29">
+        <di:waypoint x="3525" y="655"/>
+        <di:waypoint x="3682" y="655"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_F30" bpmnElement="F30">
+        <di:waypoint x="3525" y="655"/>
+        <di:waypoint x="3560" y="655"/>
+        <di:waypoint x="3560" y="215"/>
+        <di:waypoint x="3990" y="215"/>
+        <di:waypoint x="3990" y="185"/>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Edge_F22" bpmnElement="F22">
-        <di:waypoint x="3580" y="145"/>
-        <di:waypoint x="3585" y="145"/>
-        <di:waypoint x="3585" y="315"/>
-        <di:waypoint x="3590" y="315"/>
+        <di:waypoint x="4080" y="145"/>
+        <di:waypoint x="4085" y="145"/>
+        <di:waypoint x="4085" y="315"/>
+        <di:waypoint x="4090" y="315"/>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Edge_F23" bpmnElement="F23">
-        <di:waypoint x="3770" y="315"/>
-        <di:waypoint x="3775" y="315"/>
-        <di:waypoint x="3775" y="485"/>
-        <di:waypoint x="3780" y="485"/>
+        <di:waypoint x="4270" y="315"/>
+        <di:waypoint x="4275" y="315"/>
+        <di:waypoint x="4275" y="485"/>
+        <di:waypoint x="4280" y="485"/>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Edge_F24" bpmnElement="F24">
-        <di:waypoint x="3960" y="485"/>
-        <di:waypoint x="3965" y="485"/>
-        <di:waypoint x="3965" y="655"/>
-        <di:waypoint x="3970" y="655"/>
+        <di:waypoint x="4460" y="485"/>
+        <di:waypoint x="4465" y="485"/>
+        <di:waypoint x="4465" y="655"/>
+        <di:waypoint x="4470" y="655"/>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Edge_F25" bpmnElement="F25">
-        <di:waypoint x="4150" y="655"/>
-        <di:waypoint x="4155" y="655"/>
-        <di:waypoint x="4155" y="825"/>
-        <di:waypoint x="4160" y="825"/>
+        <di:waypoint x="4650" y="655"/>
+        <di:waypoint x="4655" y="655"/>
+        <di:waypoint x="4655" y="825"/>
+        <di:waypoint x="4660" y="825"/>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Edge_F26" bpmnElement="F26">
-        <di:waypoint x="4340" y="825"/>
-        <di:waypoint x="4422" y="825"/>
+        <di:waypoint x="4840" y="825"/>
+        <di:waypoint x="4922" y="825"/>
       </bpmndi:BPMNEdge>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>
