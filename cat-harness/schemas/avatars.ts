@@ -243,6 +243,13 @@ export const AVATARS: Readonly<Record<string, Avatar>> = {
     tone: 188,
     reads: "two boxes and a flow between them, with a token part-way",
   },
+  // A NOTE pinned to a bean: the bean's outline with a slip beside it, because
+  // a note is an addendum to a bean and never a bean of its own (bean `m61r`).
+  "bean-notes": {
+    glyph: "M8 5c4 0 6 3 6 7s-2 7-6 7c2-3 2-4 2-7s0-4-2-7zM16 8h4v8h-4zM17 11h2M17 13h2",
+    tone: 40,
+    reads: "a bean with a slip of paper beside it — an addendum, not a second item",
+  },
   // A SURVEY of a commit window. Two endpoint marks with a span between them,
   // because the two edge commits ARE the artefact: a survey whose window
   // cannot be pinned tells a reader nothing about today (bean `6ptx`).

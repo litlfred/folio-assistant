@@ -225,3 +225,7 @@ non-obvious, because it has just finished finding them out.
 **Cheapest correct move when you do not want to spend the words: do not start
 the topic.** A task you cannot brief is one you have not understood well enough
 to begin.
+
+The brief's durable form is the PR description. Once the work exists,
+[`pr-description`](pr-description.md) answers the same questions for a
+reader who arrives after it.

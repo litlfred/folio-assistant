@@ -2389,6 +2389,63 @@
       "skos:note": "candidate"
     },
     {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/bean-note.beannotefrontmatterschema.bean",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "BeanNoteFrontMatterSchema.bean"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The bean this note adds to. It must exist in the bean store."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/bean-note.ts#BeanNoteFrontMatterSchema.bean",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/bean-note.beannotefrontmatterschema.branch",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "BeanNoteFrontMatterSchema.branch"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The branch that wrote it — the key that keeps two writers apart."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/bean-note.ts#BeanNoteFrontMatterSchema.branch",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/bean-note.beannotefrontmatterschema.created",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "BeanNoteFrontMatterSchema.created"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "When this branch started its note on this bean (UTC)."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/bean-note.ts#BeanNoteFrontMatterSchema.created",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/bib-verification.keyresult.locator",
       "@type": "skos:Concept",
       "skos:inScheme": {

@@ -36,6 +36,18 @@
           "hasFiles": false
         },
         {
+          "kind": "bean-notes",
+          "state": "no-directory",
+          "directories": [],
+          "criteria": [],
+          "subjectKinds": [],
+          "gates": [
+            "bun run beans:notes:check"
+          ],
+          "typed": false,
+          "hasFiles": false
+        },
+        {
           "kind": "beans",
           "state": "covered",
           "directories": [
@@ -44,6 +56,7 @@
           "criteria": [],
           "subjectKinds": [],
           "gates": [
+            "bun run beans:notes:check",
             "bun run check:bean-archive",
             "bun run check:bean-bodies",
             "bun run check:bean-front-matter",
@@ -1013,20 +1026,6 @@
           "hasFiles": true
         },
         {
-          "kind": "vocab-mapping",
-          "state": "covered",
-          "directories": [
-            "cat-harness/vocab-mappings"
-          ],
-          "criteria": [],
-          "subjectKinds": [],
-          "gates": [
-            "bun run vocab-mappings:check"
-          ],
-          "typed": true,
-          "hasFiles": true
-        },
-        {
           "kind": "voice-vendors",
           "state": "no-directory",
           "directories": [],
@@ -1096,7 +1095,7 @@
     },
     "kinds-no-directory": {
       "summary": "No instance declares a directory of this kind — a nested kind reached through its parent (`bean-defs` inside `beans/`), or one this repository does not have. Recorded so it cannot be read as a coverage gap, and so a kind that LOSES its directory shows up.",
-      "count": 15,
+      "count": 16,
       "entries": [
         {
           "kind": "bean-defs",
@@ -1113,6 +1112,13 @@
             "bun run check:bean-rollup",
             "bun run check:ready-to-close",
             "bun run check:stale-paths"
+          ]
+        },
+        {
+          "kind": "bean-notes",
+          "criteria": 0,
+          "gates": [
+            "bun run beans:notes:check"
           ]
         },
         {
@@ -1206,5 +1212,5 @@
       "entries": []
     }
   },
-  "total": 66
+  "total": 67
 }
