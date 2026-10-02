@@ -16,7 +16,7 @@
     {
       "id": "archive-contents.archivecontentsschema.at-context",
       "prefLabel": "ArchiveContentsSchema.@context",
-      "definition": "The published content context — bean `yh6u`. OPTIONAL because folio repositories hold records written before the arm emitted it; when present it must be that context, since any other would bind these keys to terms nobody declared.",
+      "definition": "The published content context — bean `yh6u`. OPTIONAL because folio repositories hold records written before the arm emitted it; when present it must be that context (bare, or with `@base` beside it — bean `bh4q`), since any other would bind these keys to terms nobody declared.",
       "source": "cat-harness/schemas/archive-contents.ts#ArchiveContentsSchema.@context",
       "status": "candidate"
     },
@@ -8556,7 +8556,7 @@
     {
       "id": "tabular-records.tabularrecordsschema.at-context",
       "prefLabel": "TabularRecordsSchema.@context",
-      "definition": "The published content context — bean `yh6u`. OPTIONAL because folio repositories hold records written before the arm emitted it; when present it must be that context, since any other would bind these keys to terms nobody declared.",
+      "definition": "The published content context — bean `yh6u`. OPTIONAL because folio repositories hold records written before the arm emitted it; when present it must be that context (bare, or with `@base` beside it — bean `bh4q`), since any other would bind these keys to terms nobody declared.",
       "source": "cat-harness/schemas/tabular-records.ts#TabularRecordsSchema.@context",
       "status": "candidate"
     },

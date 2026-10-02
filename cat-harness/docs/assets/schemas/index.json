@@ -603,6 +603,14 @@
       "isTest": false
     },
     {
+      "module": "cat-harness/schemas/jsonld-base.test.ts",
+      "instance": "cat-harness",
+      "name": "jsonld-base.test",
+      "graphNode": "undeclared",
+      "summary": "Bean `bh4q`: a content document's `@id`s must resolve to FOLIO_BASE under a",
+      "isTest": true
+    },
+    {
       "module": "cat-harness/schemas/jsonld.ts",
       "instance": "cat-harness",
       "name": "jsonld",
@@ -1888,7 +1896,7 @@
       "fields": [
         {
           "name": "@context",
-          "type": "z.literal(CONTENT_CONTEXT_URL).optional()",
+          "type": "ContentContextSchema.optional()",
           "optional": true,
           "array": false,
           "doc": "The published content context — bean `yh6u`. OPTIONAL because folio"
@@ -1952,11 +1960,10 @@
       "extendsNames": [],
       "values": [],
       "refs": [
-        "cat-harness/schemas/archive-contents.ts#ArchiveEntrySchema"
+        "cat-harness/schemas/archive-contents.ts#ArchiveEntrySchema",
+        "cat-harness/schemas/jsonld.ts#ContentContextSchema"
       ],
-      "unresolved": [
-        "CONTENT_CONTEXT_URL"
-      ],
+      "unresolved": [],
       "external": [
         "ARCHIVE_CONTENTS_SCHEMA_ID",
         "z"
@@ -18907,6 +18914,22 @@
       "exported": true
     },
     {
+      "id": "cat-harness/schemas/jsonld.ts#ContentContextSchema",
+      "name": "ContentContextSchema",
+      "module": "cat-harness/schemas/jsonld.ts",
+      "kind": "zod-union",
+      "doc": "A content document's `@context`, as a record schema accepts it: the",
+      "fields": [],
+      "extendsNames": [],
+      "values": [
+        "@base"
+      ],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
       "id": "cat-harness/schemas/jsonld.ts#GraphEdgeTerm",
       "name": "GraphEdgeTerm",
       "module": "cat-harness/schemas/jsonld.ts",
@@ -22530,7 +22553,8 @@
       "values": [
         "agent",
         "role",
-        "plan"
+        "plan",
+        "entity"
       ],
       "refs": [],
       "unresolved": [],
@@ -30745,7 +30769,7 @@
       "fields": [
         {
           "name": "@context",
-          "type": "z.literal(CONTENT_CONTEXT_URL).optional()",
+          "type": "ContentContextSchema.optional()",
           "optional": true,
           "array": false,
           "doc": "The published content context — bean `yh6u`. OPTIONAL because folio"
@@ -30803,12 +30827,11 @@
       "extendsNames": [],
       "values": [],
       "refs": [
+        "cat-harness/schemas/jsonld.ts#ContentContextSchema",
         "cat-harness/schemas/narrative.ts#NarrativeSchema",
         "cat-harness/schemas/tabular-records.ts#TabularSheetSchema"
       ],
-      "unresolved": [
-        "CONTENT_CONTEXT_URL"
-      ],
+      "unresolved": [],
       "external": [
         "TABULAR_RECORDS_SCHEMA_ID",
         "z"
@@ -44359,6 +44382,14 @@
       "array": true
     },
     {
+      "from": "cat-harness/schemas/archive-contents.ts#ArchiveContentsSchema",
+      "to": "cat-harness/schemas/jsonld.ts#ContentContextSchema",
+      "via": "@context",
+      "kind": "field",
+      "optional": true,
+      "array": false
+    },
+    {
       "from": "cat-harness/schemas/assistant-package.ts#PackageManifest",
       "to": "cat-harness/schemas/assistant-package.ts#AptDependency",
       "via": "apt",
@@ -48965,6 +48996,14 @@
       "kind": "field",
       "optional": false,
       "array": true
+    },
+    {
+      "from": "cat-harness/schemas/tabular-records.ts#TabularRecordsSchema",
+      "to": "cat-harness/schemas/jsonld.ts#ContentContextSchema",
+      "via": "@context",
+      "kind": "field",
+      "optional": true,
+      "array": false
     },
     {
       "from": "cat-harness/schemas/tabular-records.ts#TabularRecordsSchema",
