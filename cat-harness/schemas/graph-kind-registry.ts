@@ -1810,6 +1810,27 @@ export const BASE_GRAPH_KINDS: Readonly<Record<string, GraphKindDef>> = {
       "`kind: sticky | webpage | publication`. The palette vocabulary is shared across " +
       "every kind and only the geometry varies; every value cites where it was measured.",
   },
+  "document-kinds": {
+    renderable: false,
+    // Authored-from-a-source, like `themes`: a document kind is true whether
+    // or not any document has been written in it yet. Core knows that kinds
+    // exist and never which — a harness contributes its own as data (stage
+    // D5 of the smart-* separation, #1767, bean `qvxh`).
+    holds: "content",
+    // declared-path-literal: this table IS the declaration, as on `health`.
+    nodeSchemas: {
+      "folio-document-kind/v1": { validator: "schemas/document-kind.ts#DocumentKindSchema" },
+      // How one subject realises a kind, computed by the kind's owner — a
+      // second family in this directory because it is DERIVED from another
+      // graph (an IG's artefact index), where the kind is authored.
+      "folio-document-kind-coverage/v1": { validator: "schemas/document-kind.ts#DocumentKindCoverageSchema" },
+    },
+    summary:
+      "Document kinds — named structures of sections (fixed or semi-fixed) that a document " +
+      "authored with a harness follows, one `folio-document-kind/v1` JSON each, plus computed " +
+      "`folio-document-kind-coverage/v1` reports of how a subject realises one. Every kind and " +
+      "section names its sources; `computedFrom` names the declared graphs a section derives from.",
+  },
   "todo-feedback": {
     layer: "core",
     renderable: false,

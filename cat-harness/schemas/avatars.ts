@@ -458,6 +458,14 @@ export const AVATARS: Readonly<Record<string, Avatar>> = {
     tone: 312,
     reads: "a microphone with a tag — an editorial voice specialised for one vendor",
   },
+  "document-kinds": {
+    // A page outline with ruled sections: a document kind is a STRUCTURE to
+    // fill — the headings are fixed, the content is not. Distinct from
+    // `docs`, which is written pages; this is the shape a page must take.
+    glyph: "M6 3h9l3 3v15H6zM9 9h6M9 13h6M9 17h4",
+    tone: 268,
+    reads: "a page outline with its sections ruled in — a structure to fill, not a page written",
+  },
   themes: {
     // A paint swatch with a corner turned: a theme is a palette APPLIED to a
     // surface, not a palette on its own. Distinct from `voices`, which is also
