@@ -46,5 +46,6 @@ Part of [folio-assistant-core](../../README.md) 0.1.0, declared as `voices`, hol
 | [`address-translation-coordinator/`](address-translation-coordinator/) | 1 file | |
 | [`address-translator/`](address-translator/) | 1 file | |
 | [`address-user/`](address-user/) | 1 file | |
+| [`linked-data/`](linked-data/) | 1 file | |
 | [`technical-writer/`](technical-writer/) | 1 file | |
 <!-- kg:subgraph:end -->
