@@ -18,7 +18,7 @@ The after-check for the agentic engine (issue #1180, step 5). The deterministic 
 
 ## Totals
 
-9 instance(s), 100 step(s) checked, 100 `prov:Activity` emitted, 109 finding(s). Policies evaluated: `https://litlfred.github.io/folio-assistant/policies/folio-defaults`, `https://litlfred.github.io/folio-assistant/policies/http-gateway`.
+9 instance(s), 100 step(s) checked, 100 `prov:Activity` emitted, 84 finding(s). Policies evaluated: `https://litlfred.github.io/folio-assistant/policies/folio-defaults`, `https://litlfred.github.io/folio-assistant/policies/http-gateway`.
 
 | finding | count | means |
 |---|---|---|
@@ -30,9 +30,9 @@ The after-check for the agentic engine (issue #1180, step 5). The deterministic 
 | `deny` | 0 | an ODRL policy prohibits `perform-task` here |
 | `authz-disagrees` | 0 | the verdict recorded in the entry's `authz` differs from the one recomputed now |
 | `node-not-in-model` | 4 | the entry names a node its process model does not have |
-| `source-moved` | 10 | the `.bpmn` the instance recorded is gone; the diagram was found by file name, as `workflow_start` resolves one, and its process id matches the instance's |
+| `source-moved` | 14 | the `.bpmn` the instance recorded is gone; the diagram was found by file name, as `workflow_start` resolves one, and its process id matches the instance's |
 | `source-missing` | 0 | the `.bpmn` the instance recorded is gone and no diagram with that name and process id exists; nothing in it can be checked |
-| `unaddressed` | 30 | the agent, role or plan has no release address — its owning instance declares no `iriBase`, or no instance declares it — so the PROV-JSONLD record carries it as a literal, not a link (`linked-data` voice, `ld-link-is-the-node-release-address`) |
+| `unaddressed` | 1 | the agent, role or plan has no release address — its owning instance declares no `iriBase`, or no instance declares it — so the PROV-JSONLD record carries it as a literal, not a link (`linked-data` voice, `ld-link-is-the-node-release-address`) |
 
 ## By instance
 
@@ -163,50 +163,25 @@ The after-check for the agentic engine (issue #1180, step 5). The deterministic 
 
 ### sampleimport--xlg2-wpro-trial
 
-12 step(s) checked, 12 `prov:Activity` emitted, 14 finding(s). Sources: `large-datasets/processes/sample-import.bpmn`, `large-datasets/processes/materialize-remote.bpmn`. [PROV JSON-LD]({{ '/assets/prov/sampleimport--xlg2-wpro-trial.prov.jsonld' | relative_url }})
+12 step(s) checked, 12 `prov:Activity` emitted, 4 finding(s). Sources: `large-datasets/processes/sample-import.bpmn`, `large-datasets/processes/materialize-remote.bpmn`. [PROV JSON-LD]({{ '/assets/prov/sampleimport--xlg2-wpro-trial.prov.jsonld' | relative_url }})
 
 | instance | entry | node | finding | detail |
 |---|---|---|---|---|
+| `sampleimport--xlg2-wpro-trial` | (instance) | `Process_SampleImport` | `source-moved` | large-datasets/processes/sample-import.bpmn does not exist; read cat-harness/processes/sample-import.bpmn, which defines Process_SampleImport |
 | `sampleimport--xlg2-wpro-trial` | 2 | `Call_Materialize` | `not-eligible` | claude may act as authoring-agent, business-analyst, code-reviewer, not as ingestion-agent |
 | `sampleimport--xlg2-wpro-trial` | 2 | `Call_Materialize` | `unknown` | no policy grants perform-task for Process_SampleImport/Call_Materialize as ingestion-agent |
-| `sampleimport--xlg2-wpro-trial` | 1 | `sample-import#Task_Scope` | `unaddressed` | plan: large-datasets declares no iriBase, so processes/sample-import has no release address |
-| `sampleimport--xlg2-wpro-trial` | 2 | `sample-import#Call_Materialize` | `unaddressed` | plan: large-datasets declares no iriBase, so processes/sample-import has no release address |
-| `sampleimport--xlg2-wpro-trial` | 3 | `sample-import#Gateway_Materialized` | `unaddressed` | plan: large-datasets declares no iriBase, so processes/sample-import has no release address |
-| `sampleimport--xlg2-wpro-trial/Call_Materialize` | 1 | `materialize-remote#Task_Purpose` | `unaddressed` | plan: large-datasets declares no iriBase, so processes/materialize-remote has no release address |
-| `sampleimport--xlg2-wpro-trial/Call_Materialize` | 2 | `materialize-remote#Task_Enumerate` | `unaddressed` | plan: large-datasets declares no iriBase, so processes/materialize-remote has no release address |
-| `sampleimport--xlg2-wpro-trial/Call_Materialize` | 3 | `materialize-remote#Task_Size` | `unaddressed` | plan: large-datasets declares no iriBase, so processes/materialize-remote has no release address |
-| `sampleimport--xlg2-wpro-trial/Call_Materialize` | 4 | `materialize-remote#Task_Restrictions` | `unaddressed` | plan: large-datasets declares no iriBase, so processes/materialize-remote has no release address |
-| `sampleimport--xlg2-wpro-trial/Call_Materialize` | 5 | `materialize-remote#Task_Copyright` | `unaddressed` | plan: large-datasets declares no iriBase, so processes/materialize-remote has no release address |
-| `sampleimport--xlg2-wpro-trial/Call_Materialize` | 6 | `materialize-remote#Task_Retention` | `unaddressed` | plan: large-datasets declares no iriBase, so processes/materialize-remote has no release address |
-| `sampleimport--xlg2-wpro-trial/Call_Materialize` | 7 | `materialize-remote#Task_SourceLoss` | `unaddressed` | plan: large-datasets declares no iriBase, so processes/materialize-remote has no release address |
-| `sampleimport--xlg2-wpro-trial/Call_Materialize` | 8 | `materialize-remote#Gateway_Gates` | `unaddressed` | plan: large-datasets declares no iriBase, so processes/materialize-remote has no release address |
-| `sampleimport--xlg2-wpro-trial/Call_Materialize` | 9 | `materialize-remote#Task_StayRef` | `unaddressed` | plan: large-datasets declares no iriBase, so processes/materialize-remote has no release address |
+| `sampleimport--xlg2-wpro-trial/Call_Materialize` | (instance) | `Process_MaterializeRemote` | `source-moved` | large-datasets/processes/materialize-remote.bpmn does not exist; read cat-harness/processes/materialize-remote.bpmn, which defines Process_MaterializeRemote |
 
 ### sampleimport--xlg2-wpro-trial-original
 
-17 step(s) checked, 17 `prov:Activity` emitted, 19 finding(s). Sources: `large-datasets/processes/sample-import.bpmn`, `large-datasets/processes/materialize-remote.bpmn`. [PROV JSON-LD]({{ '/assets/prov/sampleimport--xlg2-wpro-trial-original.prov.jsonld' | relative_url }})
+17 step(s) checked, 17 `prov:Activity` emitted, 4 finding(s). Sources: `large-datasets/processes/sample-import.bpmn`, `large-datasets/processes/materialize-remote.bpmn`. [PROV JSON-LD]({{ '/assets/prov/sampleimport--xlg2-wpro-trial-original.prov.jsonld' | relative_url }})
 
 | instance | entry | node | finding | detail |
 |---|---|---|---|---|
+| `sampleimport--xlg2-wpro-trial-original` | (instance) | `Process_SampleImport` | `source-moved` | large-datasets/processes/sample-import.bpmn does not exist; read cat-harness/processes/sample-import.bpmn, which defines Process_SampleImport |
 | `sampleimport--xlg2-wpro-trial-original` | 2 | `Call_Materialize` | `not-eligible` | claude may act as authoring-agent, business-analyst, code-reviewer, not as ingestion-agent |
 | `sampleimport--xlg2-wpro-trial-original` | 2 | `Call_Materialize` | `unknown` | no policy grants perform-task for Process_SampleImport/Call_Materialize as ingestion-agent |
-| `sampleimport--xlg2-wpro-trial-original` | 1 | `sample-import#Task_Scope` | `unaddressed` | plan: large-datasets declares no iriBase, so processes/sample-import has no release address |
-| `sampleimport--xlg2-wpro-trial-original` | 2 | `sample-import#Call_Materialize` | `unaddressed` | plan: large-datasets declares no iriBase, so processes/sample-import has no release address |
-| `sampleimport--xlg2-wpro-trial-original` | 3 | `sample-import#Gateway_Materialized` | `unaddressed` | plan: large-datasets declares no iriBase, so processes/sample-import has no release address |
-| `sampleimport--xlg2-wpro-trial-original` | 4 | `sample-import#Gateway_Permanent` | `unaddressed` | plan: large-datasets declares no iriBase, so processes/sample-import has no release address |
-| `sampleimport--xlg2-wpro-trial-original` | 5 | `sample-import#Task_Trial` | `unaddressed` | plan: large-datasets declares no iriBase, so processes/sample-import has no release address |
-| `sampleimport--xlg2-wpro-trial-original` | 6 | `sample-import#Task_ImportTest` | `unaddressed` | plan: large-datasets declares no iriBase, so processes/sample-import has no release address |
-| `sampleimport--xlg2-wpro-trial-original` | 7 | `sample-import#Gateway_Passed` | `unaddressed` | plan: large-datasets declares no iriBase, so processes/sample-import has no release address |
-| `sampleimport--xlg2-wpro-trial-original/Call_Materialize` | 1 | `materialize-remote#Task_Purpose` | `unaddressed` | plan: large-datasets declares no iriBase, so processes/materialize-remote has no release address |
-| `sampleimport--xlg2-wpro-trial-original/Call_Materialize` | 2 | `materialize-remote#Task_Enumerate` | `unaddressed` | plan: large-datasets declares no iriBase, so processes/materialize-remote has no release address |
-| `sampleimport--xlg2-wpro-trial-original/Call_Materialize` | 3 | `materialize-remote#Task_Size` | `unaddressed` | plan: large-datasets declares no iriBase, so processes/materialize-remote has no release address |
-| `sampleimport--xlg2-wpro-trial-original/Call_Materialize` | 4 | `materialize-remote#Task_Restrictions` | `unaddressed` | plan: large-datasets declares no iriBase, so processes/materialize-remote has no release address |
-| `sampleimport--xlg2-wpro-trial-original/Call_Materialize` | 5 | `materialize-remote#Task_Copyright` | `unaddressed` | plan: large-datasets declares no iriBase, so processes/materialize-remote has no release address |
-| `sampleimport--xlg2-wpro-trial-original/Call_Materialize` | 6 | `materialize-remote#Task_Retention` | `unaddressed` | plan: large-datasets declares no iriBase, so processes/materialize-remote has no release address |
-| `sampleimport--xlg2-wpro-trial-original/Call_Materialize` | 7 | `materialize-remote#Task_SourceLoss` | `unaddressed` | plan: large-datasets declares no iriBase, so processes/materialize-remote has no release address |
-| `sampleimport--xlg2-wpro-trial-original/Call_Materialize` | 8 | `materialize-remote#Gateway_Gates` | `unaddressed` | plan: large-datasets declares no iriBase, so processes/materialize-remote has no release address |
-| `sampleimport--xlg2-wpro-trial-original/Call_Materialize` | 9 | `materialize-remote#Task_Fetch` | `unaddressed` | plan: large-datasets declares no iriBase, so processes/materialize-remote has no release address |
-| `sampleimport--xlg2-wpro-trial-original/Call_Materialize` | 10 | `materialize-remote#Task_Declare` | `unaddressed` | plan: large-datasets declares no iriBase, so processes/materialize-remote has no release address |
+| `sampleimport--xlg2-wpro-trial-original/Call_Materialize` | (instance) | `Process_MaterializeRemote` | `source-moved` | large-datasets/processes/materialize-remote.bpmn does not exist; read cat-harness/processes/materialize-remote.bpmn, which defines Process_MaterializeRemote |
 
 ## Regenerate
 
