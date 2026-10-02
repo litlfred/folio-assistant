@@ -13,6 +13,57 @@
       "notation": "deep-document-research",
       "source": "folio-assistant-core/skills/deep-document-research.md",
       "status": "candidate"
+    },
+    {
+      "id": "document-authoring",
+      "prefLabel": "document-authoring",
+      "notation": "document-authoring",
+      "source": "folio-assistant-core/skills/content/folio-document-adapter/document-authoring.md",
+      "status": "candidate"
+    },
+    {
+      "id": "document-intake",
+      "prefLabel": "document-intake",
+      "definition": "Process uploaded documents (PDFs, scans, LaTeX, structured/normative guidelines, etc.) from uploads/ into structured content objects. Handles OCR extraction, environment detection, structural analysis, and content-object generation. Supports multi-stage pipelines: raw upload → extracted text → structured blocks → .ts/.md content objects.",
+      "notation": "document-intake",
+      "source": "folio-assistant-core/skills/library/ingestion/document-intake.md",
+      "status": "candidate"
+    },
+    {
+      "id": "document-publishing",
+      "prefLabel": "document-publishing",
+      "notation": "document-publishing",
+      "source": "folio-assistant-core/skills/content/folio-document-adapter/document-publishing.md",
+      "status": "candidate"
+    },
+    {
+      "id": "document-structure",
+      "prefLabel": "document-structure",
+      "notation": "document-structure",
+      "source": "folio-assistant-core/skills/content/folio-document-adapter/document-structure.md",
+      "status": "candidate"
+    },
+    {
+      "id": "dublin-core-renderings",
+      "prefLabel": "dublin-core-renderings",
+      "definition": "Render a catalogue's Dublin Core records in the two standard forms an outside reader can use: Dublin Core XML, which a harvester reads, and JSON-LD bound to DCMI Metadata Terms. Each rendering is published beside the item's page. Covers which records get one, which XML form is used and why, how every field maps from the record's own data (never composed), what cannot be expressed and how that is reported, and the gate. Read this before changing the mapping, adding a catalogue instance, or linking a rendering from a page.",
+      "notation": "dublin-core-renderings",
+      "source": "folio-assistant-core/skills/library/catalogue/dublin-core-renderings.md",
+      "status": "candidate"
+    },
+    {
+      "id": "normative-statements",
+      "prefLabel": "normative-statements",
+      "notation": "normative-statements",
+      "source": "folio-assistant-core/skills/content/folio-document-adapter/normative-statements.md",
+      "status": "candidate"
+    },
+    {
+      "id": "quality-control",
+      "prefLabel": "quality-control",
+      "notation": "quality-control",
+      "source": "folio-assistant-core/skills/content/content-lifecycle-ext/quality-control.md",
+      "status": "candidate"
     }
   ]
 }

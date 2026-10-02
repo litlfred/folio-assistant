@@ -1,0 +1,64 @@
+{
+  "_comment": "Role EXTENSIONS by id (placement PR0b; PR1, bean ybwt). Each entry adds this instance's skills to a role the harness declares, so the edge points DOWN: the harness's scenarios/roles.json names no skill that lives above it. An extension adds skills and nothing else; a role this instance owns outright would go in `roles` (placement PR4 moves whole roles). Schema: cat-harness/schemas/role-graph.ts (RoleExtensionSchema); overlay: cat-harness/schemas/scenario-overlay.ts.",
+  "name": "folio-assistant-core",
+  "roles": [],
+  "extensions": [
+    {
+      "role": "reviewer",
+      "skills": [
+        "document-intake"
+      ]
+    },
+    {
+      "role": "qc-reviewer",
+      "skills": [
+        "quality-control"
+      ]
+    },
+    {
+      "role": "authoring-agent",
+      "skills": [
+        "document-authoring",
+        "document-structure",
+        "normative-statements"
+      ]
+    },
+    {
+      "role": "onboarding-agent",
+      "skills": [
+        "document-intake"
+      ]
+    },
+    {
+      "role": "ingestion-agent",
+      "skills": [
+        "document-intake"
+      ]
+    },
+    {
+      "role": "librarian",
+      "skills": [
+        "document-intake"
+      ]
+    },
+    {
+      "role": "evidence-agent",
+      "skills": [
+        "document-intake"
+      ]
+    },
+    {
+      "role": "build-pipeline",
+      "skills": [
+        "document-publishing",
+        "quality-control"
+      ]
+    },
+    {
+      "role": "corpus",
+      "skills": [
+        "document-intake"
+      ]
+    }
+  ]
+}

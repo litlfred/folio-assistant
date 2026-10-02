@@ -9,7 +9,7 @@ tags:
     - ui
     - visualiser-navbar
 created_at: 2026-09-23T10:36:15Z
-updated_at: 2026-09-30T23:17:23Z
+updated_at: 2026-10-01T18:14:39Z
 parent: folio-assistant-4ccr
 ---
 
@@ -31,6 +31,8 @@ Findings from the as-is wireframe `cat-harness/docs/wireframes/navbar/` (intent.
 Related: `folio-assistant-603s`, `folio-assistant-1le7`, `folio-assistant-z1ug`
 
 When fixed, re-draw `cat-harness/docs/wireframes/navbar/` and re-run `bun run wireframe:check` and `bun run check:wireframes`.
+
+**New notes on this bean go in [`beans/notes/`](../notes/README.md), not here** (bean `m61r`, issue #1853): `bun run beans:note folio-assistant-ob3m --title "…"` writes one file per pull request, so sibling pull requests stop conflicting on this file. The dated sections below were appended before that convention and stay where they are.
 
 ## Re-verified 2026-09-29 on `main` 35402147f
 
@@ -238,3 +240,130 @@ All 23 tests in the spec pass; `docs-ui.js` has no diff after the falsifications
   repair is editorial (rename, or cross-link), not a check's.
 - The remaining ten findings, 11 of which were still present at the last
   re-measure on `main` 3779d5d27.
+
+
+## RULED 2026-10-01 — finding 12: rename the GLASS one
+
+The owner chose, from three options: **rename the glass/board control, leave the
+launcher's `Settings` alone.**
+
+Located both, so the repair names lines rather than descriptions:
+
+| site | call | scope |
+|---|---|---|
+| `docs-ui.js:2060` | `tileButton(GEAR_GLYPH, "Settings", "settings")` | the LAUNCHER — site chrome: theme, language, QR |
+| `docs-ui.js:6053` | `chromeTile("glass-settings", "Settings", "⚙", "Folio settings — theme, avatars, opacity", buildSettings)` | the GLASS BOARD — folio state |
+
+Two different things, both named `Settings`, one drawing `GEAR_GLYPH` and the
+other the `⚙` character, neither pointing at the other — exactly as the finding
+recorded it.
+
+**The glass one is renamed because its own description already says what it is**
+— *"Folio settings — theme, avatars, opacity"*. So the rename RECOVERS
+information the code already holds rather than inventing a distinction, which is
+the cheapest kind of editorial fix and the hardest to get wrong.
+
+**Cross-linking was rejected** and is worth recording as rejected: it would
+imply a relationship between site chrome and board state that does not exist.
+Giving them different glyphs was also rejected — two controls called the same
+thing is the defect, and a different gear does not fix a duplicate name for a
+screen reader.
+
+
+## 2026-10-01 — re-measured on a local build of claude/quirky-hypatia-k3aoh4 (PR #1762)
+
+Built with preview-site.sh, served at /folio-assistant/, 1280×800 and 390×844. Session https://claude.ai/code/session_01Cw8JgZEDT5VqQ5ergjdMjB.
+
+- **8 — FIXED by #1762.** The Jekyll include renders no `.fa-nav-head` (☰) and no `.fa-nav-close` ([x]): zero of either on the built page at both widths. The owner asked for both to go (#1757) because the avatar already toggles the bar. The mobile footer copy still shows '▦Harnesses / ⌂C@T Harness' as a block, which is the harness list rather than a stray control.
+- **2 — FIXED in #1762.** A harness whose folio is the site root now links to its own section on the landing: Folio Assistant → `/#harness-folio-assistant`, C@T Harness → `/#harness-cat-harness` (`harness-tiles.ts`; the ids come from `_includes/harness_details.html`). Two rows no longer open one page.
+- **12 — FIXED on main** (the glass tile is 'Folio settings', docs-ui.js:6070).
+- **1, 3, 4, 5, 9 — STILL PRESENT** as last recorded: resting-strip icons carry aria-label only; the landing descriptions still carry the naming rationale (4) and the run-together spellings (5); the '▾ Folio' handle is still [154,0,82,25] over the site title at 390.
+- 6, 7, 11 not re-measured this round.
+
+
+## 2026-10-01 — findings 4 and 5: a reader's summary, spellings as a list (owner's choice)
+
+Owner chose, from three options: keep the C@T spellings visible, as a list. So the declaration gains two optional fields (`summary`, `alsoWritten`; `CatHarnessDeclarationSchema`), and the landing's harness section (`_includes/harness_details.html`) prints `summary` when declared, else `description` as before, plus an 'Also written:' line. Measured on a local build:
+
+- Folio Assistant: 'This repository as a working instance: the platform and the folios it hosts.' (the naming rationale stays in `description`, where it is for authors)
+- C@T Harness: 'Computable adjudication and agentic test harness.' then 'Also written: caaat-harness, ca&at-harness, .c&at-harness, c@t-harness'
+
+**Not changed:** the two landing STICKIES (`cat-harness/folio/*.json`) are folio content; the C@T card's spellings are the acronym's derivation chain and `landing-sticky.test.ts` pins them on purpose. Finding 3's sticky half is therefore left as authored.
+
+
+## 2026-10-01 — finding 9: FIXED in #1762
+
+- The handle's mark follows the state: ▾ closed, ▴ open (it stayed ▾ with the glass down; only the aria-label changed). Measured: ▾ → ▴ on open → ▾ on Escape, at 1280 and 390.
+- Below 50rem the site title is held left of the handle (`max-width: calc(50vw - 3rem)`, ellipsis, no right padding, auto right margin so the header's icon buttons stay right). Measured on a local build: at 390 the title box ends at 153 and the handle starts at 154, 'C@T Harness' is not truncated, a 32-character title is ellipsised, and 0 header controls sit under the handle at 360, 390 and 700. At 360 'C@T Harness' itself ellipsises — the honest cost at that width.
+
+
+## 2026-10-01 — finding 11 fixed, rendered half measured
+
+Owner: "keep going". On `claude/quirky-hypatia-k3aoh4` (PR #1762).
+
+- **Declared half**: `TILE_GLYPHS` gains seven drawings (tools, schemas, skills, methodologies, index, docs, library; `processes` now shares the row's PROCESS_GLYPH). Every declared tile names one: `check:navbar-consistency` reports **14 of 14** (was 2 of 14), and the corpus no longer emits `tile-without-icon`.
+- **Rendered half**: most tiles are DERIVED from a dependency's directory, not declared, so a declared-only fix left 20 of 29 on the net. `graph-tiles.ts` now falls back to the directory's graph KIND (`KIND_TILE_ICONS`, `kindTileIcon`); a declared icon still wins. `check:navbar-consistency` fails a kind mapped to an undrawn name (falsified: planted `librar`, exit 1).
+- **Measured on a local build, Glass → More at 1280×800: 29 tiles, 11 distinct drawings** (was 2). Six tiles still take the net because their kinds have no drawing: folio, fsh-guts, root-docs, swimlane-glossary, todos, translation-sources.
+
+Still open here: 1, 3 (sticky half), 6, 7, 12 (needs an editorial call: rename or cross-link the two Settings).
+
+
+_2026-10-01_ — **Finding 12: owner's ruling implemented, in PR #1810 (stacked on #1762).** Owner, choosing option 2 of 4: *"Rename: 'Glass settings' and 'Page settings', each with a link to the other."*
+
+- The glass ⚙ panel is now **Glass settings**: its caption and heading read "Glass settings — theme, avatars, opacity, blur" (the heading used to be "Theme, avatars, opacity"). The ▦ Actions panel is now **Page settings**, in its caption and view heading. Both names come from `SETTINGS_NAMES` in docs-ui.js, declared once.
+- Each panel's first control links to the other: "Page settings (scheme, reading, Discarded) →" and "Glass settings (theme, avatars, opacity, blur) →". Each link OPENS its target: it closes the panel it came from (the glass covers the sidebar), never toggles an already-open target shut, and focuses the target's heading. On a page with no launcher (replica, harness page) the glass draws no Page settings link.
+- **After state, measured on a local build** at 1280×800 and at 390×844: page→glass gives glass open with the glass-settings panel visible, and glass→page gives the launcher open with the "Page settings" heading visible and in the viewport.
+- Tests: `test/settings-crosslinks.e2e.ts` (10/10 pass; 9/10 fail on #1762's head) and `scripts/tests/settings-labels-distinct.test.ts` (6/6 pass; 5/6 fail on the head). Skill: `board-windows` §"Two settings panels, two names, each points to the other".
+- Found, not fixed (also on the head): at 1280×800 the glass panel opens at y≈591, and most of its body sits under the bottom tile strip until the glass is scrolled.
+
+
+## Finding 3: ruling and after state (2026-10-01, PR #1807, stacked on #1762)
+
+**Ruling.** The owner picked option 1 of 4: *"Stickies show the same text as the landing page"*. A harness's sticky shows the declaration's `summary` and its `alsoWritten` spellings under "Also written", and never authoring notes.
+
+**After.** Sticky contributions declare `bodyFrom: "summary"`. The card text comes from `readerText` in `schemas/sticky-contribution.ts`: the `summary` (else the description), then "Also written: …". This is the same rule `harness_details.html` uses, so both surfaces read the same two fields.
+- folio-assistant card: was "The repository itself… NAMED `folio-assistant-checkout`…". Now "This repository as a working instance: the platform and the folios it hosts."
+- cat-harness card: was five loose lines of spellings. Now "Computable adjudication and agentic test harness." followed by "Also written:" and the four spellings. Its `bodyAppend` (the cat introduction and the scope line) is kept.
+- smart-trust and who-iris: unchanged. They declare no summary, so they fall back to the description, which the landing shows too.
+- bootstrap: unchanged. It is a pinned submodule still on `bodyFrom: "description"`, and it declares no summary.
+
+`landing:sticky:check` (CI) now fails when a card built from its declaration does not open with that text. It fails when run against the #1762 head files.
+
+## 2026-10-01 — finding 1: the owner's ruling, implemented (PR #1805, stacked on #1762)
+
+**Ruling (option 1 of 4):** "Make ▦ Harnesses visible on the landing page too, and show each icon's name as a tooltip on hover or keyboard focus." The rail stays narrow, 56px at rest. Always-visible captions (option 2) were not chosen.
+
+**After, measured on a local build, compared with #1762's head 644d04b9959 (`preview-site.sh`, Playwright, light and dark):**
+
+| | before | after |
+|---|---|---|
+| landing 1280: ▦ at rest | hidden (opacity 0, max-height 0) | visible in the 56px strip, at x 12–44 |
+| landing 1280: actions to a harness | 2 (hover, then click) | **1** (click ▦; 6 harness links reachable) |
+| viewer pages (todos, cat-harness/schemas) 1280 and 390 | 1 | 1 (unchanged) |
+| landing 390 (theme menu) | menu tap + ▦ tap | unchanged (the strip rules apply only at 50rem and up) |
+| landing icons named on hover | no (hover widened the strip and moved the icon out from under the pointer) | tooltip = aria-label, at left 64px, strip still 56px; all 6 icons |
+| landing icons named on Tab focus | no | tooltip beside the open strip (left 272px), level with the row |
+| strip width at rest | 56 | 56 |
+
+**How:**
+- The bottom disclosure's summary is exempt from the at-rest lists; only its word and caret wait for the strip to open.
+- `[data-fa-tip]::after` is a fixed-position tooltip with alt text `""`, so the accessible name stays the aria-label.
+- Arriving on the icon column holds the strip shut (`.fa-nav-tip-hold`, set from the column's at-rest box) so the icon stays under the pointer. Arriving anywhere else still peeks.
+- New QA flags `rail-tips` and `harnesses-at-rest` in `check-viewer-nav.ts`: `layoutFlags` for viewer pages and `stripFlags` for the docs site's script-built strip.
+
+**Scoped deliberately:** a rail row that has a visible `.fa-nav-label` gets no tooltip. Hover and keyboard focus open the rail, and that label then reads beside its mark.
+
+## Re-verified 2026-10-01 on PR #1762 head 644d04b9959
+
+Re-measured the four findings still open: 1, 3, 6 and 7. Built with `preview-site.sh` from `claude/quirky-hypatia-k3aoh4` at 644d04b9959, which includes main as of today plus the new viewer rail. Served at `/folio-assistant/` and driven by Playwright at 1280×800 and 390×844. Pages: the landing, `/cat-harness/schemas/` and `/todos/`. Every verdict comes from the built page, not from reading code. "Visible" means hit-tested with `elementFromPoint`, because the closed strip clips labels that are still in the DOM. The screenshots are local only (`.screens/ob3m-v-*.png`, git-excluded).
+
+The PR #1762 sections on this bean (2, 4, 5, 8, 9 and 11 fixed) live on that branch. This note sits on main and does not repeat them.
+
+| # | verdict | evidence |
+|---|---|---|
+| 1 | **CHANGED** | Two surfaces now behave differently. **Landing (theme sidebar), 1280:** the strip is 56 px and shows 6 icon controls (Todos, Beans, Processes, Knowledge graph, More actions, scheme). All have innerText `''`, with the name only in aria-label. `▦ Harnesses` is at **opacity 0** at rest, so no harness is visible on the strip. A hover widens it to 264 px and one click on ▦ shows the harness links, so it takes 2 actions. **Viewer rail (schemas/, todos/), 1280 and 390:** at rest it is 56 px and shows avatar, `§`, `▤`, `▦` and `⌂`. `▦` is opaque but unlabelled. One tap opens the rail (264 px / 248 px) with the 6 harnesses listed (F Folio Assistant, S smart-trust, S SMART Base, W WHO IRIS, C@T Harness, B Bootstrap). So harnesses are now reachable from the rail in 1 tap plus the link, but at rest it is still marks with no labels. **Landing at 390:** the theme's inline menu shows labelled `ON THIS PAGE 19 / FOLDERS 23 / PAGES 66 / ▦ HARNESSES`, and one tap shows 14 harness links. |
+| 3 | **CHANGED, landing half fixed, sticky half still present** | `p.fa-harness-section__description` now reads 'This repository as a working instance: the platform and the folios it hosts.' and 'Computable adjudication and agentic test harness.', followed by `.fa-harness-section__also` 'Also written: caaat-harness, ca&at-harness, .c&at-harness, c@t-harness'. The **Stickies** reader (`.fa-landing-sticky__body`, opened by clicking the card) still shows, at both widths, 'The repository itself, acting as an initialized instance. NAMED `folio-assistant-checkout` rather than `folio-assistant`, which `cat-harness/harness.json` already uses: two declarations sharing a name makes `declaredBy` … ambiguous …' (1 `<p>`, code spans). The C@T sticky still opens 'computable adjudication and agentic test harness caaat-harness ca&at-harness .c&at-harness c@t-harness' (7 `<p>`). That half was left as authored on purpose (see the 4–5 note on #1762). |
+| 6 | **STILL-PRESENT, widened from 4 places to 6** | Harness graph kinds now appear in: (A) the sidebar divider kids, 59 links; (B) `FOLDERS`, 23 rows / 17 hrefs; (C) landing 'visualisations you can open', 35 links; (D) **new**, a 'Visualisations' tile row inside the landing Stickies panel; (E) glass `⋯ More`, 15 tiles; (F) **new**, the viewer rail's `▤ Graphs` and `▦ Harnesses`, 27 links on schemas/. 10 destinations appear in all 6, and 6 more in 4. Of the 34 destinations in two or more places, **7 carry more than one name**, ignoring case and plural: `docs/docs/` 'docs' (A,B,C,F) vs 'Docs — cat-harness' (D,E); `skills/skills/` 'skills' vs 'Skills — cat-harness'; `root-docs/` 'docs' (A,C) vs 'root-docs' (D,E); `methodologies/` 'methodology' vs 'Methodologies'; `schemas/cat-harness/` reached as both 'cat-harness' and 'schemas'; `processes/` also as 'Bootstrap' on the rail; `who-iris/` 'The IRIS replica' vs 'WHO IRIS'. The plural fold also hides `external-schemas/` 'external-schema' vs 'External schemas'. Harness names differ too: the sidebar says 'C@T Harness' and the rail's kind descriptions say 'cat-harness'. |
+| 7 | **STILL-PRESENT on theme pages; CHANGED on the viewer rail** | Landing at 1280, sidebar open (264 px), all 4 groups unfolded: **531 links** in `.side-bar` (524 on 2026-09-30). `.fa-nav-middle` is at its **128 px floor** (`min-height: 128px`) with scrollHeight **3682**, or 17634 with every theme subtree forced open. `nav.site-nav` is 2852 px tall with 430 links, and **0 of them are visible** in the middle region without scrolling, because `FOLDERS` (789 px) sits above it in the same region. `.side-bar` also scrolls (2108 / 800), so there are two nested scroll regions. The theme page list is still the squeezed region. **Viewer rail:** 28 links (schemas/) and 27 (todos/), with one scroller, `.fa-nav-graphs` (418 of 1872 px at 1280, 462 of 1872 at 390), and no theme page list. |
+
+Session: https://claude.ai/code/session_01Cw8JgZEDT5VqQ5ergjdMjB

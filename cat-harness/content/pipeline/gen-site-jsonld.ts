@@ -41,10 +41,10 @@
  */
 
 import { readFileSync, writeFileSync, existsSync, readdirSync, mkdirSync } from "node:fs";
-import { join, dirname } from "node:path";
+import { join, dirname, relative, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 import {
-  CONTENT_CONTEXT_URL,
+  CONTENT_DOCUMENT_CONTEXT,
   SITE_PAGE_TYPES,
   SITE_NARRATIVE_TYPES,
   SITE_ASSET_TYPES,
@@ -52,9 +52,30 @@ import {
 } from "../../schemas/jsonld.ts";
 import type { WebPage, WebPageNode } from "../../schemas/webpage.ts";
 import { portableSegment } from "../../schemas/portable-path";
+import { repoRootFor, sourceLinks } from "../../schemas/cat-harness.ts";
+import { detectRepoUrl } from "../../src/core/git-refs.js";
 
 const INSTANCE_ROOT = join(dirname(fileURLToPath(import.meta.url)), "..", "..");
 const SRC_DIR = join(INSTANCE_ROOT, "content", "docs");
+const REPO_ROOT = repoRootFor(INSTANCE_ROOT);
+// The same fallback `gen-docs-pages.ts` uses, so the two generators name one
+// forge — and so the output does not depend on how this checkout was cloned.
+const REPO_WEB = detectRepoUrl(REPO_ROOT) ?? "https://github.com/litlfred/folio-assistant";
+
+/**
+ * `sourceDocument` as an ADDRESS, not a path — #1772. It is a link-type term
+ * (`@id` in the content context), and `check:context-emission` refuses a file
+ * path there: a reader resolving a relative path against the node's own IRI
+ * lands somewhere that is not the file. The asset's `source` is relative to
+ * this instance, and may now leave it (`../smart-base/processes/…`, since a
+ * content-type process lives with its skill), so it is resolved against the
+ * REPOSITORY and published as the forge's view URL — one rule for every asset,
+ * moved or not.
+ */
+function sourceDocumentIri(source: string): string {
+  const repoPath = relative(REPO_ROOT, resolve(INSTANCE_ROOT, source)).split("\\").join("/");
+  return sourceLinks(REPO_WEB, repoPath, "main")?.viewHref ?? source;
+}
 
 const check = process.argv.includes("--check");
 let written = 0;
@@ -83,7 +104,7 @@ function emit(path: string, doc: Record<string, unknown>): void {
 
 function nodeDoc(page: WebPage, node: WebPageNode, flat: string): Record<string, unknown> {
   const doc: Record<string, unknown> = {
-    "@context": CONTENT_CONTEXT_URL,
+    "@context": CONTENT_DOCUMENT_CONTEXT,
     "@id": siteIri(page.slug, node.id),
     "@type": [...(node.asset ? SITE_ASSET_TYPES : SITE_NARRATIVE_TYPES)],
     label: node.id,
@@ -102,7 +123,7 @@ function nodeDoc(page: WebPage, node: WebPageNode, flat: string): Record<string,
     // `sourceDocument` is the EDITABLE source (`.bpmn`), never the rendered
     // `.svg`. The renderer's own rule is that the SVG is never hand-edited, so
     // an edge naming it as the source would point a reader at a build product.
-    doc.sourceDocument = node.asset.source;
+    doc.sourceDocument = sourceDocumentIri(node.asset.source);
     doc.meta = {
       assetKind: node.asset.kind,
       rendered: node.asset.rendered,
@@ -147,7 +168,7 @@ for (const flat of flats) {
   const page = ((await import(manifest)) as { default: WebPage }).default;
 
   emit(join(SRC_DIR, flat, `${flat}.jsonld`), {
-    "@context": CONTENT_CONTEXT_URL,
+    "@context": CONTENT_DOCUMENT_CONTEXT,
     "@id": siteIri(page.slug),
     "@type": [...SITE_PAGE_TYPES],
     label: page.slug,

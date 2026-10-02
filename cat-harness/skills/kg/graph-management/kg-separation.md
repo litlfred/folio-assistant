@@ -15,7 +15,7 @@ description: >-
 # Knowledge Graph separation — the method
 
 > Skill id: `kg-separation` · Package: `graph-management`
-> Process: [`kg-separation.bpmn`](../../../processes/kg-separation.bpmn)
+> Process: [`kg-separation.bpmn`](../../../processes/kg/kg-separation.bpmn)
 
 Owner, 2026-09-29: *"need replicable process for when KG gets too large to
 handle and skills"*, and on cat-harness: *"follow same methodology/house
@@ -90,6 +90,24 @@ Owner rulings that make the pattern (2026-09-29, bean `xsqm`):
   QA verdicts (`kgQaHomeFor`), translation templates (`translationsHomeFor`),
   exported graph and glossary ledger. The content repository carries only
   what its own checks need.
+
+### Staged content with no tools repository yet — the finding, not the silence
+
+An instance can be planned as a content repository before its `-tools` pair
+is authorised (who-iris, 2026-09-30). Declare it — `separation: "content"` in
+`<name>.json`; the content half of an existing pair is read from the tools
+instance's `supports` and needs nothing — and kg:audit's
+`content-instance-holds-code` records a finding naming every code file still
+inside it. It is a `minor` QA **warning**, not a failure, by owner ruling
+(2026-10-01: *"QA warning. not failure.. ok b/c small # tools"*): the owner
+tolerates the code *for now* (*"iris specific tools for now ok in who-iris/"*),
+and the warrant is that the tolerated set is small. It was `major` until then,
+on the argument that FR-7 has no legitimate exceptions. A warning still names
+each file, so the violation is never silent. The remedy splits by what
+the code is: **generic** code (it works for any instance of its kind — any
+DSpace catalogue, any PDF) moves into the platform and takes the instance root
+as an argument; **instance-specific** code waits for `<name>-tools`. Bean
+`eayu`.
 
 ## The stages
 

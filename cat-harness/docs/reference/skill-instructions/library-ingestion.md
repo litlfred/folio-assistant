@@ -58,8 +58,10 @@ further down dep tree)"*.
 - **`folio-assist-core` owns the remote half**, because `library/` is core's
   graph and so are `materialization.ts` and `library-ref.ts`. A harness that
   cannot hold content must not own the vocabulary for acquiring it.
-- **`large-datasets` owns the question before both**: how to enumerate a corpus
-  and ask it for a subset (`source-descriptor.ts`). Neither entry point can
+- **The `large-datasets` package owns the question before both**
+  ([`skills/library/large-datasets/`](materialize-remote.md),
+  an instance of its own until bean `j7ql` dissolved it here): how to
+  enumerate a corpus and ask it for a subset (`source-descriptor.ts`). Neither entry point can
   start until something says what is out there.
 - **Further down the tree**, a dependency's declared `remoteGraphs` is what
   makes the second path reachable at all: an instance discovers assets through
@@ -274,6 +276,7 @@ of declaring one: navigable without being held.
 | `pdf-tables.py` | tables or figures matter | what `pdf-structure/v1`'s Section does not carry |
 | `slides-structure.py` | the package declares a **PPTX or ODP** deck | one section per **slide**, `images.json`, `accessibility.json` |
 | `referenced-source.py` | `--reference` given: the **licence forbids a copy** | `referenced.json` only — identity, sha256, outline; no text |
+| `text-structure.ts` | the source is **text files** — Markdown, MDX, XML — usually fetched from a repository at a commit | `text-structure/v1`: a Markdown file divided by its own ATX headings outside fenced code, any other file one verbatim section, located by **file and line range**; images recorded by digest, never sectioned |
 | `notebook-structure.ts` | the file is JSON with a numeric `nbformat` and a `cells` array — a **Jupyter notebook**, decided by content, never by the `.ipynb` name | `notebook-structure/v1`: one section per markdown heading, located by **cell** range; code kept as fenced code and never run; outputs not kept, and `structure_note` says so |
 
 **A notebook is a variant, not a PDF with odd pages** (bean `rkqp`, owner
@@ -298,8 +301,9 @@ index mistaken for a page number.
 A deck is a zip that **declares** its type (`[Content_Types].xml`, or ODF's
 `mimetype` member), so it routes on the sniff, before the archive rung, exactly
 as a workbook does. `slides-structure.py` writes the same `pdf-structure/v1`
-shape a paged PDF gets — one section per slide, `page_start == page_end ==
-<slide>`, `granularity: "slide"` — so `l1-blocks.ts`, the manifest and
+shape a paged PDF gets — one section per slide,
+`page_start == page_end == <slide>`, `granularity: "slide"` — so
+`l1-blocks.ts`, the manifest and
 `check:l1-complete` read it unchanged. Two differences from the PDF rungs, both
 measured on the #1614 deck:
 
@@ -361,6 +365,42 @@ posting is a reading of the licence, not of the bytes. `check:l1-complete`
 knows the kind, and **refuses** a `referenced` entry that holds `sections/`,
 `blocks/` or `images/`. That would be the copy this kind exists not to make.
 
+## A source published as text in a repository — read it at a commit (bean `y4uj`)
+
+The Gherkin reference, the MCP specification, the `hmans/beans` README and
+FHIR R5's TestPlan resource (issue #1614 item 4) are published as Markdown or
+XML in git repositories. Printing one to PDF so a PDF rung can read it makes
+the recorded sha256 identify a rendering nobody published, so they take their
+own rung instead:
+
+```sh
+bun run cat-harness/scripts/text-structure.ts -o <library> --doc-id <slug> \
+  --base <checkout> --upstream upstream.json [--title T] [--image F]... FILE...
+```
+
+then `l1-blocks.ts -o <entry>` and `gen-library-jsonld.ts --entry <entry>`, as
+for a notebook. What it decides:
+
+- **Divided by the author's headings, or not at all.** A Markdown file splits
+  at its own ATX headings, outside fenced code. A `# comment` inside a
+  `gherkin` block is not a heading. Any other text, and anything that opens
+  with `<`, is one section, fenced verbatim. Nothing is rendered: shortcodes
+  and JSX stay as written, and `structure_note` says so.
+- **`upstream` records the exact revision**: repository, 40-hex commit, ref,
+  path, and in words whether that revision is the **published** text or a
+  working copy. A default branch is often neither, and a reader cannot tell
+  which from a URL. Keep the clone out of the repository tree. The bytes can
+  be fetched again from the commit, so none go to `uploads/` or `fsh-guts/`.
+- **Several files are one source** when the publisher ships them as one, as
+  with a specification version that is a directory of pages. Each file keeps
+  its own sha256. The source's sha256 is the sha256 of their `sha256sum`
+  listing, so `sha256sum -c` against a checkout verifies the entry without
+  this code.
+
+It is not wired into `bun run ingest`. That command reads a dropped file from
+`uploads/`, and text has no magic bytes to route on, so it would have to guess
+from the extension. Routing a dropped `.md` is a separate decision.
+
 ## An inferred chapter tree is refused, not guessed
 
 This is the rule most worth understanding, because the failure it prevents is
@@ -400,6 +440,52 @@ library/<bib-slug>/
 requirement **met**, **unmet**, or **not yet derivable** — the last because the
 per-format arms (images, audio, tables, archives) are tracked separately and a
 check that cannot run must not read as a pass. Bean `pn6j`.
+
+## A manifest's title — the authority order, and never the page-1 parse
+
+The owner's ruling of 2026-10-01 (issue #1794, option 2 of 4). A library
+entry's `manifest.jsonld` `title` is the first of these the entry has:
+
+| rank | `meta.title_source` | read from |
+|---|---|---|
+| 1 | `dc-record` | `dc.title` of the Dublin Core record that the catalogue node naming this entry (`libraryId`) points at through `metadataRef` |
+| 2 | `referenced` | `referenced.json` `identity.title` |
+| 3 | `pdf-info` | `structure.json` `metadata.docinfo.Title`, the PDF Info `/Title`, when it is not junk |
+| 3 | `text-heading` | `structure.json` `metadata.title` of a **text or notebook** structure: front-matter `title:`, `--title`, or the level-1 heading |
+| 4 | `slug` | the entry id. Nothing better exists, and `check:library-qa` reports it as `title-missing` |
+
+**The page-1 front-matter parse is NEVER a title.** On a `pdf-structure/v1`,
+`metadata.title` is `parse_front_matter`'s guess at which lines of page 1 are
+the title. It guessed *Abies* for the WHO editorial style manual, *LeanArchitect
+LeanArchitect*, *Algorithmic Approaches to*, and the whole W3C status block for
+three specifications. A plausible wrong title passes every check that has no
+second source. A slug is honest about being a placeholder and gets flagged.
+The parse may still feed search and the section files' `doc_title`.
+
+`text-heading` shares rank 3 because it is the same kind of fact as `/Title`
+(the source naming itself, in its format's own metadata). The two are exclusive
+by variant, so no entry ever has both. A tabular record's `title` is its source
+file name, which is never a title.
+
+**Junk `/Title`** (`pdfInfoTitleJunk`): shorter than 3 characters or no letters;
+`untitled` and its kin; `Microsoft Word - …`; an arXiv stamp
+(`arXiv:0909.4061v2 [math.NA] …`); anything ending in a file extension; the
+source's file name or stem; the slug. A junk value falls through to the next
+source. It never becomes the title. Records (ranks 1–2) are taken as written,
+because a cataloguer's choice is not a program's default.
+
+**Record the Info dictionary at ingest.** `pdf-structure.py` writes
+`metadata.docinfo`. `pdf-pages.py` did not until #1794, which left 20
+page-granular entries with no `/Title` to read. Backfill an older entry with
+`python3 cat-harness/scripts/pdf-pages.py --docinfo-into <entry> <pdf>`. It
+refuses unless the PDF's sha256 is the one the entry recorded.
+
+One resolver, `cat-harness/content/pipeline/library-title.ts`
+(`resolveLibraryTitle`, `TITLE_AUTHORITY`), is used by both
+`gen-library-jsonld.ts` and `check-library-qa.ts`. The manifest records
+`meta.title_source` and `meta.title_from`, and the QA check re-derives the
+order from the entry's files. So a manifest that claims `pdf-info` while a
+catalogue record exists is reported as `title-implausible`, not believed.
 
 ## `source{}` — the technical facts, written by whichever rung ran
 
@@ -647,6 +733,42 @@ the library page. It is advisory, never a gate. What the gate does fail is a
 sidecar that does not parse, names another entry, or holds a record for a block
 or source that is not there.
 
+### A WITHHELD entry in the viewer — its summary, else the gate, never "no content" (issue #1794)
+
+An entry whose library root's `withheld.json` names it (bean `cw35`) is listed
+but publishes no verbatim text: `gen-library-viz` reads its blocks with
+`verbatim: false`. Until 2026-10-01 every such row then read **"(no content
+carried)"** — 121 of 121 rows of `who-pub-tps-931`, 250 of 250 of
+`9789241548960-eng` — which is what a page-scan with no text says, so "not ours
+to show" looked exactly like "nothing was extracted". The owner's ruling
+(option 1 of 4, *"Fix the viewer now"*) is the rule:
+
+1. **A row shows the section's summary when one exists**, labelled as a summary
+   and never as the source text. Summaries are our writing and stay published.
+2. **Otherwise, a withheld row says the gate**: *"Withheld — copyright not
+   granted"*, naming every gate that refused (*"copyright and restrictions not
+   granted"*), with a link to the catalogue record — its published page first,
+   its upstream URI second, no link rather than a guessed one.
+3. **Anything else with no content keeps the neutral "(no content carried)"**,
+   because for those it is true.
+4. **A banner tops a withheld entry**: why the text is not shown, which gate
+   refused, the record link, and how many sections have summaries (*"0 of 121
+   sections summarised"*). No banner on any other entry.
+
+**Withheld is READ, never inferred from emptiness.** The flag, the gates and the
+record come from `withheld.json` — `folio-withheld/v1` carries an optional
+structured `gates[]` and `record{id, page, uri}` beside the `reason` sentence,
+which the instance's generator writes from its own data (who-iris:
+`gen-iris-pages.ts`, from the catalogue's publication gates). A list that
+carries only the sentence still works: the row then says the sentence.
+
+The row and banner code is `scripts/lib/library-withheld-view.ts`, embedded in
+the page verbatim so `library-withheld-view.test.ts` runs the same text the
+browser does; `library-withheld-viewer.e2e.ts` opens the rendered page.
+Drafting the summaries is a separate backlog (bean `r96p`):
+`bun run summaries:next -- --entry <slug>` serves a withheld entry's text to the
+summariser like any other.
+
 ### Describing a document's images — and why it is an ARM, not a step you run
 
 `pdf-images.py` classifies by geometry, which answers exactly one question: is
@@ -793,7 +915,7 @@ only from a layer above it: a wrong-direction dependency, and after the split
 
 - [`directory-conventions`](directory-conventions.md) — the graph kinds and who declares them
 - [`bib-qa`](bib-qa.md) — auditing what is already in `library/`
-- `processes/document-ingestion.bpmn` — the process this sits inside
+- `processes/library/document-ingestion.bpmn` — the process this sits inside
 {% endraw %}
 
 ## Processes that run this skill

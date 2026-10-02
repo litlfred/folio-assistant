@@ -24,7 +24,7 @@
  *
  * | region | holds | scrolls |
  * |---|---|---|
- * | `top` | the instance, its `[x]`, and the open document's index when there is one | no |
+ * | `top` | the instance's mark (its open/close control, #1757) and the open document's index when there is one | no |
  * | `graphs` | this KG's own content — `docs/`, `library/`, every declared kind that HAS content | **yes** |
  * | `bottom` | the instantiated harnesses, expandable, each with its avatar; then home | no |
  *
@@ -188,12 +188,50 @@ export interface NavbarModel {
   /** The instance this navbar belongs to, shown in the fixed top. */
   instance: string;
   /**
+   * The instance's MARK in the header — its avatar, or failing that its
+   * initial on its tone. Owner, 2026-10-01 (#1757): *"QA flag each page needs
+   * avatar or atleast letter to be clickable"*.
+   *
+   * The header is the navbar's ONE open/close control. It was a bare `☰`
+   * beside the name with a separate `[x]`, and on the Jekyll site the avatar
+   * already toggled the same checkbox — three controls over one bit of state,
+   * which the owner asked to be one: *"the hamburger menu thing and [x] seems
+   * to replicate same functionality as clicking on avatar. excise"*.
+   *
+   * Absent, the header still draws a LETTER: the instance's initial. It never
+   * falls back to a glyph that names an action rather than the instance.
+   */
+  mark?: Pick<NavItem, "avatar" | "tone" | "icon">;
+  /**
+   * Whether this surface renders the header at all — the FOURTH declared
+   * difference between surfaces, beside {@link hrefs} and {@link openControl}.
+   *
+   * `"none"` on the Jekyll sidebar, and only there: the theme already draws
+   * the instance's avatar as `.site-title`, which `docs-ui.js` makes the
+   * open/close control from 50rem up. A second header in the footer was the
+   * `☰` the owner asked to excise (#1757) — the same control, drawn twice.
+   */
+  head?: "mark" | "none";
+  /**
+   * The CURRENT visualiser's own navigation — the section that belongs to the
+   * page being read rather than to the graph it sits in. Owner, 2026-10-01:
+   * *"todos page should have a LHS navbar to help see todos associated the
+   * KG"* and *"by default, only the current pages visualiers LHS navbar is
+   * open"*.
+   *
+   * So when it is present it renders OPEN and {@link graphs} renders FOLDED:
+   * one disclosure open on arrival, and it is the one about this page.
+   * `check-viewer-nav.ts` grades both halves (`visualiser-nav`,
+   * `single-open`).
+   */
+  visualiser?: NavGroup;
+  /**
    * The instance's own themed root — its front door, in the fixed top.
    *
    * NOT inside the graphs group: a group labelled "Graphs" that contains the
    * instance itself is a label that does not tell the truth, and the root is
    * the one destination that should stay reachable when the graphs are folded
-   * away. The `☰` header beside it is a TOGGLE, not a link, so this is the
+   * away. The header beside it (the instance's mark) is a TOGGLE, not a link, so this is the
    * only way to the instance's front page from a page beneath it.
    */
   root?: NavItem;
@@ -274,7 +312,7 @@ export interface NavbarModel {
 }
 
 /** How a rendering pass writes its hrefs. Threaded rather than global. */
-interface Ctx {
+export interface Ctx {
   readonly liquid: boolean;
 }
 
@@ -316,9 +354,10 @@ export { NAV_MARK_PX as NAV_GLYPH_PX } from "./navbar-geometry.js";
  * The navbar's stylesheet, scoped to `.fa-nav` so a host page keeps its own.
  *
  * Three ways in, one way back: `:hover` while the pointer is on it,
- * `:focus-within` for a keyboard, and the `☰` which checks a box so it STAYS
- * open — which is what a touch device needs, having no hover at all. The `[x]`
- * unchecks it. `board-windows`' `l4zi`: an action whose inverse is not
+ * `:focus-visible` inside it for a keyboard, and the header — the instance's mark —
+ * which checks a box so it STAYS open, which is what a touch device needs,
+ * having no hover at all. The same header unchecks it (#1757: the separate
+ * `☰` and `[x]` were two more controls for that one bit). `board-windows`' `l4zi`: an action whose inverse is not
  * reachable is not a toggle.
  *
  * No JavaScript. On a mounted page that is not a preference: those documents
@@ -334,17 +373,22 @@ export function navbarCss(): string {
     `.fa-nav{position:fixed;top:0;left:0;bottom:0;width:${NAV_COLLAPSED_PX}px;z-index:2147483000;`,
     `background:#1f2328;color:#e6edf3;overflow:hidden;transition:width .14s ease;`,
     `font:14px/1.5 -apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif}`,
-    `.fa-nav:hover,.fa-nav:focus-within,.fa-nav:has(.fa-nav-open:checked){width:${NAV_OPEN_PX}px}`,
+    // KEYBOARD focus opens it, not any focus. `:focus-within` matched the
+    // checkbox a CLICK on the header focuses, so the click that unpinned the
+    // rail left it held open by its own focus — measured 264px wide after the
+    // second click, pointer away (#1757). `:focus-visible` is the keyboard's
+    // focus and not the pointer's, which is exactly the split needed.
+    `.fa-nav:hover,.fa-nav:has(:focus-visible),.fa-nav:has(.fa-nav-open:checked){width:${NAV_OPEN_PX}px}`,
     // The folio handle, placed IN this rail by docs-ui.js (owner, 2026-09-24:
     // "folio handle on LHS on navbar"). At rest the strip shows marks only, so
     // its label waits for the rail to open, as every other label here does.
-    `.fa-nav:not(:hover):not(:focus-within):not(:has(.fa-nav-open:checked)) .fa-glass-handle__label{opacity:0}`,
+    `.fa-nav:not(:hover):not(:has(:focus-visible)):not(:has(.fa-nav-open:checked)) .fa-glass-handle__label{opacity:0}`,
     // The theme widens its own sidebar at `mq(lg)` with a `min-width` FLOOR.
     // The rail has no such floor and would simply stay narrower -- which is
     // the same navbar at two widths on one screen size, the defect this
     // whole module exists to have ended.
     `@media(min-width:${NAV_WIDE_MQ_PX}px){`,
-    `.fa-nav:hover,.fa-nav:focus-within,.fa-nav:has(.fa-nav-open:checked){width:${NAV_OPEN_WIDE_PX}px}`,
+    `.fa-nav:hover,.fa-nav:has(:focus-visible),.fa-nav:has(.fa-nav-open:checked){width:${NAV_OPEN_WIDE_PX}px}`,
     `.fa-nav-in{width:${NAV_OPEN_WIDE_PX}px}}`,
     // Clipped in place, never parked at `left:-9999px`: on a right-to-left
     // page that is the scrollable side, and it widened the page ~10,000px
@@ -360,6 +404,11 @@ export function navbarCss(): string {
     `.fa-nav-bottom{flex:0 0 auto;border-top:1px solid #30363d}`,
     `.fa-nav-head{display:flex;align-items:center;gap:8px;padding:10px ${NAV_PAD_PX}px;`,
     `border-bottom:1px solid #30363d;cursor:pointer;user-select:none}`,
+    // The header is a <label>, which is not in the tab order; the checkbox it
+    // drives is, clipped in place. So the keyboard's focus ring is drawn on
+    // the header while the box has focus, or a keyboard user toggles a
+    // control they cannot see is focused.
+    `.fa-nav:has(.fa-nav-open:focus-visible) .fa-nav-head{outline:2px solid #58a6ff;outline-offset:-2px}`,
     `.fa-nav-glyph{flex:0 0 ${NAV_GLYPH_PX}px;text-align:center;font-size:16px}`,
     `.fa-nav-glyph img{width:${NAV_GLYPH_PX}px;height:${NAV_GLYPH_PX}px;display:block}`,
     // A kind's SVG glyph (bean `yag0`): drawn in the ink colour on its tone.
@@ -412,7 +461,7 @@ export function navbarCss(): string {
     `.fa-nav-action{display:none;background:none;border:0;cursor:pointer;`,
     `padding:0 ${NAV_PAD_PX}px;font-size:13px;line-height:1;color:inherit;opacity:.7}`,
     `.fa-nav-action:hover,.fa-nav-action:focus-visible{opacity:1}`,
-    `.fa-nav:hover .fa-nav-action,.fa-nav:focus-within .fa-nav-action,`,
+    `.fa-nav:hover .fa-nav-action,.fa-nav:has(:focus-visible) .fa-nav-action,`,
     `.fa-nav:has(.fa-nav-open:checked) .fa-nav-action{display:block}`,
     // THE EXPLODING MENU. `<details>` so it is keyboard-operable and announces
     // its own state with no script.
@@ -427,27 +476,74 @@ export function navbarCss(): string {
     // LINKED row's mark was pushed past the 56px strip at rest while an inert
     // row's was not — measured on a built /who-iris/ page — so the strip showed
     // marks only for the rows that do not open.
-    `.fa-nav-group .fa-nav-sub a.fa-nav-kind{padding-left:${NAV_PAD_PX}px}`,
+    `.fa-nav-group .fa-nav-sub .fa-nav-dead{padding-left:${NAV_PAD_PX + NAV_GLYPH_PX + 8}px}`,
+    `.fa-nav-group .fa-nav-sub a.fa-nav-kind,.fa-nav-group .fa-nav-sub .fa-nav-dead.fa-nav-kind{padding-left:${NAV_PAD_PX}px}`,
     `.fa-nav-tone{border-radius:3px}`,
-    // THE CLOSE CONTROL, only while pinned open. Alone in a strip this narrow
-    // it would be the only thing in it, and would read as a close button for
-    // the PAGE rather than for the navbar.
-    `.fa-nav-close{display:none}`,
-    `.fa-nav:has(.fa-nav-open:checked) .fa-nav-close{position:sticky;top:0;float:right;`,
-    `display:flex;align-items:center;justify-content:center;width:26px;height:26px;`,
-    `margin:6px 6px 0 0;cursor:pointer;user-select:none;border-radius:4px;`,
-    `background:#1f2328;opacity:.75}`,
-    `.fa-nav-close:hover{opacity:1}`,
     // Labels are held invisible at rest rather than merely clipped: clipping
     // is a geometry argument, and a host stylesheet moves where a label starts
     // without touching any of these numbers. `opacity`, not `display:none` --
     // a screen reader should still reach them.
     `.fa-nav-label{white-space:nowrap;opacity:0;transition:opacity .12s ease}`,
-    `.fa-nav:hover .fa-nav-label,.fa-nav:focus-within .fa-nav-label,`,
+    `.fa-nav:hover .fa-nav-label,.fa-nav:has(:focus-visible) .fa-nav-label,`,
     `.fa-nav:has(.fa-nav-open:checked) .fa-nav-label{opacity:1}`,
     `@media print{.fa-nav{display:none}body{padding-left:0}}`,
     `.fa-nav-sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}`,
+    ...railTipCss(),
   ].join("");
+}
+
+/**
+ * THE TOOLTIP ON AN ICON-ONLY CONTROL — owner's ruling on bean `ob3m`
+ * finding 1, 2026-10-01: *"show each icon's name as a tooltip on hover or
+ * keyboard focus."* Option 1 of 4; always-visible captions were option 2 and
+ * were NOT chosen, so the strip stays `NAV_COLLAPSED_PX` wide.
+ *
+ * WHICH CONTROLS. One whose name is in `aria-label` and nowhere visible — the
+ * `⚙` here, the icon row on the docs site. A row with a `.fa-nav-label` is
+ * NOT one: hover and keyboard focus open this rail, and the label then reads
+ * beside its own mark, which is the name in the place a reader looks. A
+ * tooltip there would say the same word twice, 8px apart.
+ * `check-viewer-nav.ts`' `rail-tips` flag is the rule, read off the markup.
+ *
+ * CSS ONLY, because this rail carries no script (see `navbarCss`). The
+ * pseudo-element is `position:fixed` with `top` left `auto`, so it takes its
+ * STATIC position vertically — level with its own control — while `left`
+ * puts it beyond the strip's right edge, which is what "not covering the
+ * icon" means. Fixed is also what keeps it from being CLIPPED: `.fa-nav` is
+ * `overflow:hidden`, and an `overflow` box clips a fixed descendant only when
+ * it is that descendant's containing block, which nothing here is.
+ *
+ * ONE NAME, NOT TWO. `content: … / ""` gives the generated text an EMPTY
+ * alternative, so it never enters the accessibility tree; the control's name
+ * stays its `aria-label`. The first `content` is the fallback for an engine
+ * that cannot parse the alt syntax and drops the second declaration.
+ *
+ * `docs-ui.css` paints the same tooltip on the docs site's strip under
+ * `.side-bar`, in that theme's two schemes. Different selectors on purpose:
+ * `navbar-css-single-source.test.ts` holds a SHARED selector to one body, and
+ * these two differ in colour and in the widths they read.
+ */
+function railTipCss(): string[] {
+  const at = (w: number) => `${w + 8}px`;
+  return [
+    `.fa-nav [data-fa-tip]::after{content:attr(data-fa-tip);content:attr(data-fa-tip) / "";`,
+    `position:fixed;left:${at(NAV_COLLAPSED_PX)};z-index:2147483001;padding:4px 8px;border-radius:4px;`,
+    `background:#1f2328;color:#ffffff;border:1px solid #58a6ff;box-shadow:0 2px 8px rgba(0,0,0,.35);`,
+    `font:600 13px/1.3 -apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif;`,
+    `letter-spacing:normal;text-transform:none;white-space:nowrap;pointer-events:none;`,
+    // `opacity` alone, not `visibility`: the rail is CLOSED, never hidden, and
+    // `navbar.test.ts` holds this stylesheet to carrying no `visibility:hidden`
+    // at all. With `pointer-events:none` an invisible tooltip intercepts nothing.
+    `opacity:0}`,
+    `.fa-nav [data-fa-tip]:hover::after,.fa-nav [data-fa-tip]:focus-visible::after{opacity:1}`,
+    // Beyond the strip at whatever width it has: open, the controls it names
+    // sit inside a wider rail and the tooltip moves out with its edge.
+    `.fa-nav:hover [data-fa-tip]::after,.fa-nav:has(:focus-visible) [data-fa-tip]::after,`,
+    `.fa-nav:has(.fa-nav-open:checked) [data-fa-tip]::after{left:${at(NAV_OPEN_PX)}}`,
+    `@media(min-width:${NAV_WIDE_MQ_PX}px){.fa-nav:hover [data-fa-tip]::after,`,
+    `.fa-nav:has(:focus-visible) [data-fa-tip]::after,.fa-nav:has(.fa-nav-open:checked) [data-fa-tip]::after{left:${at(NAV_OPEN_WIDE_PX)}}}`,
+    `@media(prefers-reduced-motion:no-preference){.fa-nav [data-fa-tip]::after{transition:opacity .12s ease}}`,
+  ];
 }
 
 /** An item's mark: its avatar when it has one, its glyph otherwise. */
@@ -502,14 +598,21 @@ function itemHtml(i: NavItem, c: Ctx): string {
   // Indent by PADDING rather than by a nested list: a nested `<ul>` would make
   // the document index a different shape from every other group here, and the
   // rows are links either way.
-  const d = i.depth && i.depth > 0 ? ` style="padding-left:${NAV_PAD_PX + (NAV_GLYPH_PX + 8) * i.depth}px"` : "";
+  // `depth + 1`: these rows sit in a group, whose rows are already one step
+  // in. `depth` alone gave a child exactly its parent's indent (#1757).
+  const d = i.depth && i.depth > 0 ? ` style="padding-left:${NAV_PAD_PX + (NAV_GLYPH_PX + 8) * (i.depth + 1)}px"` : "";
   let row: string;
   if (i.href === undefined) {
     // The note is part of the row's TEXT, inside the same element, so an
     // assistive technology reads "catalogue, no viewer yet" as one thing
     // rather than as a label and a detached aside.
     const note = i.note ? `<span class="fa-nav-note">${esc(i.note)}</span>` : "";
-    row = `<span class="fa-nav-dead"${d}${title}>${body}${note}</span>`;
+    // A kind row keeps the kind class whether or not it links, so a dead kind
+    // and a live one sit at the same indent (and a dead NON-kind row at the
+    // same indent as its linked siblings — the schemas rail put `all` one
+    // step left of the subjects beside it, owner 2026-10-01).
+    const deadKind = i.glyphPath && !i.icon ? " fa-nav-kind" : "";
+    row = `<span class="fa-nav-dead${deadKind}"${d}${title}>${body}${note}</span>`;
   } else {
     const kind = i.glyphPath && !i.icon ? ' class="fa-nav-kind"' : "";
     row = `<a href="${href(i.href, c)}"${kind}${d}${title}${i.current ? ' aria-current="page"' : ""}>${body}</a>`;
@@ -520,7 +623,7 @@ function itemHtml(i: NavItem, c: Ctx): string {
   // both, so the row and its control stay adjacent in the tab order.
   const action = i.action
     ? `<button type="button" class="fa-nav-action" ${esc(i.action.data)}="${esc(i.action.value)}"` +
-      ` aria-label="${esc(i.action.label)}">${esc(i.action.glyph)}</button>`
+      ` aria-label="${esc(i.action.label)}" data-fa-tip="${esc(i.action.label)}">${esc(i.action.glyph)}</button>`
     : "";
   const kids = i.children?.length
     ? `<div class="fa-nav-kids">${i.children.map((k) => itemHtml(k, c)).join("")}</div>`
@@ -567,6 +670,22 @@ export function navbarOpenInputHtml(): string {
   return `<input type="checkbox" class="fa-nav-open" id="fa-nav-open">`;
 }
 
+/**
+ * The header: the instance's mark and name, as ONE label for the open box.
+ *
+ * `aria-hidden` stays off the mark when it is an image with `alt=""` — the
+ * image is already silent — and the label's name is the instance, so a
+ * screen reader hears "cat-harness" and the `title` says what a click does.
+ */
+export function headHtml(m: NavbarModel, c: Ctx = { liquid: false }): string {
+  const item: NavItem = { label: m.instance, ...(m.mark ?? {}) };
+  return (
+    `<label class="fa-nav-head" for="fa-nav-open" title="Open or close navigation">` +
+    mark(item, c) +
+    `<span class="fa-nav-name fa-nav-label">${esc(m.instance)}</span></label>`
+  );
+}
+
 export function navbarRegionsHtml(m: NavbarModel): string {
   const c: Ctx = { liquid: m.hrefs === "liquid" };
   return (
@@ -580,18 +699,22 @@ export function navbarRegionsHtml(m: NavbarModel): string {
     // stylesheet reads `.side-bar:has(.fa-nav-open:checked)` and the second
     // input is not in `.side-bar`, so it checked a box nothing reads.
     (m.openControl === "labels" ? "" : navbarOpenInputHtml()) +
-    `<label class="fa-nav-close" for="fa-nav-open" title="Close navigation">` +
-    `<span aria-hidden="true">&times;</span>` +
-    `<span class="fa-nav-sr">Close navigation</span></label>` +
+    // NO `[x]` AND NO `☰` (#1757). The header below is a label for the same
+    // checkbox, so it already opens AND closes: a label toggles. The `[x]`
+    // was a second label for that box and the `☰` was this one wearing a
+    // glyph that named the action instead of the instance.
     `<div class="fa-nav-in">` +
     `<div class="fa-nav-top">` +
-    `<label class="fa-nav-head" for="fa-nav-open" title="Open navigation">` +
-    `<span class="fa-nav-glyph" aria-hidden="true">&#9776;</span>` +
-    `<span class="fa-nav-name fa-nav-label">${esc(m.instance)}</span></label>` +
+    (m.head === "none" ? "" : headHtml(m, c)) +
     (m.root ? itemHtml(m.root, c) : "") +
     (m.documentIndex ? groupHtml(m.documentIndex, c) : "") +
     `</div>` +
-    (m.graphs ? `<div class="fa-nav-graphs">${groupHtml(m.graphs, c)}</div>` : "") +
+    (m.graphs || m.visualiser
+      ? `<div class="fa-nav-graphs">` +
+        (m.visualiser ? groupHtml({ ...m.visualiser, collapsible: true, open: true }, c) : "") +
+        (m.graphs ? groupHtml(m.visualiser ? { ...m.graphs, open: false } : m.graphs, c) : "") +
+        `</div>`
+      : "") +
     `<div class="fa-nav-bottom">` +
     (m.harnesses ? groupHtml(m.harnesses, c) : "") +
     (m.home ? itemHtml(m.home, c) : "") +
@@ -675,5 +798,93 @@ export function documentIndexOf(html: string, label = "Contents"): NavGroup | un
   // single section the reader is looking at is the same defect with a row in
   // it.
   if (items.length < 2) return undefined;
-  return { label, icon: "≡", items, collapsible: true };
+  // `§`, not `≡`: at rest the rail shows only this glyph, directly under the
+  // avatar, and `≡` there reads as the hamburger #1757 excised.
+  return { label, icon: "§", items, collapsible: true };
+}
+
+/** The marker a visualiser puts its own navigation under. */
+export const VISUALISER_NAV_ATTR = "data-fa-visualiser-nav";
+
+/** One row of a declared visualiser section; `items` are its children. */
+export interface VisualiserNavEntry {
+  label: string;
+  href?: string;
+  items?: readonly { label: string; href?: string }[];
+}
+
+/**
+ * The declaration a generator writes into its page — the ONE writer of the
+ * format {@link visualiserNavOf} reads, so the two cannot drift.
+ *
+ * `<` is escaped inside the JSON so a label containing `</script>` cannot close
+ * the element early; `JSON.parse` reads `\u003c` back as `<`.
+ */
+export function visualiserNavDeclaration(entries: readonly VisualiserNavEntry[]): string {
+  const json = JSON.stringify(entries).replace(/</g, "\\u003c");
+  return `<script type="application/json" ${VISUALISER_NAV_ATTR}>${json}</script>`;
+}
+
+/**
+ * A visualiser's DECLARED navigation, read off the page it is injected into.
+ *
+ * Owner, 2026-10-01 (#1757): *"make a qa flag to define LHS navbar for any
+ * visualizer"*. Headings are what {@link documentIndexOf} can find, and a
+ * dashboard whose content is rendered by script has none at build time — the
+ * `/todos/` page is exactly that. So a generator may DECLARE the section:
+ *
+ * ```html
+ * <script type="application/json" data-fa-visualiser-nav>
+ *   [{ "label": "beans-and-todos", "items": [{ "href": "#todo-x", "label": "…" }] }]
+ * </script>
+ * ```
+ *
+ * Each entry is a row; an entry's `items` are its children, one level deep —
+ * enough for "todos grouped by the KG node they are attached to" and no
+ * more, because a deeper tree in a 248px column is a second page.
+ *
+ * Returns `undefined` when the page declares nothing or declares it badly:
+ * a malformed declaration falls back to the headings rather than to an empty
+ * section, and `check-viewer-nav.ts` reports a page with neither.
+ */
+export function visualiserNavOf(html: string, label: string): NavGroup | undefined {
+  const m = new RegExp(
+    `<script\\b[^>]*\\b${VISUALISER_NAV_ATTR}\\b[^>]*>([\\s\\S]*?)</script>`,
+    "i",
+  ).exec(html);
+  if (!m) return undefined;
+  let raw: unknown;
+  try {
+    raw = JSON.parse(m[1]!);
+  } catch {
+    return undefined;
+  }
+  if (!Array.isArray(raw)) return undefined;
+  type Entry = { href?: unknown; label?: unknown; items?: unknown };
+  const row = (e: Entry, depth: number): NavItem | undefined =>
+    typeof e?.label === "string" && e.label
+      ? {
+          label: e.label,
+          // A BULLET, not the row's initial. A letter per row read as a
+          // column of unrelated marks (B, T, P, D — #1757 screenshot); the
+          // initial is the mark for a harness, which these rows are not.
+          icon: depth > 0 ? "·" : "▸",
+          ...(typeof e.href === "string" && e.href ? { href: e.href } : {}),
+          ...(depth > 0 ? { depth } : {}),
+        }
+      : undefined;
+  const items: NavItem[] = [];
+  for (const e of raw as Entry[]) {
+    const r = row(e, 0);
+    if (!r) continue;
+    items.push(r);
+    if (Array.isArray(e.items)) {
+      for (const k of e.items as Entry[]) {
+        const kr = row(k, 1);
+        if (kr) items.push(kr);
+      }
+    }
+  }
+  if (items.length === 0) return undefined;
+  return { label, icon: "§", items, collapsible: true, open: true };
 }

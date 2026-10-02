@@ -123,11 +123,13 @@ decides it.
 | `beans` | **harness** | the work plan as a whole (`beans/`); its inner nodes are declared by `beans/beans.json` | no |
 | `external-schema` | **harness** | the specifications this instance depends on (`external-schemas/`) — one record per specification, pinning the EDITION in use, with the operative terms DERIVED from the corpus rather than hand-listed. `content`, and the call goes against the obvious reading: a process DOES write these files (`external-schemas.ts --write` refreshes `terms[]`), which sounds like `state`, but the axis asks what the graph IS and the subject matter here is a DECISION — which specifications we depend on, at which edition, and what each term operatively means. `derived` would be destructive: it says "regenerate it", and regenerating a deleted record recovers neither the authored edition, nor the `usedBy` blast radius, nor a line of the `operative` prose. UNDECLARED until 2026-09-22, which is `dh4f` inverted — a held directory nothing declares, so every consumer fanning out over declared directories skipped a registry pinning four external namespaces. Governed by [`vocabulary-authority`](vocabulary-authority.md) and [`schema-management`](schema-management.md). | no |
 | `code-list` | **harness** | closed sets of codes (`code-lists/`) — one `folio-code-list/v1` file per list, each code with a label, a definition, a source and, where it stands for one, a value; published as SKOS concept schemes. `content`, by the same argument as `external-schema`: the subject matter is a DECISION — which answers an adjudication may give, which namespaces are ours — and a person makes it. Diagrams (`<cat-harness.processes:adjudication list>`) and `schemas/namespaces.ts` READ these. Owner, 2026-09-23. Governed by [`code-lists`](../../library/library-core/code-lists.md). | no |
+| `vocab-mapping` | **harness** | vocabulary mapping tables (`vocab-mappings/`) — one `folio-vocab-mapping/v1` table per source content type and target node, saying which source field becomes which target predicate and with what relationship. Shaped like a FHIR ConceptMap: an existing ConceptMap is representable here, and a table can be produced as one with every loss reported (`schemas/vocab-mapping-fhir.ts`). `content`, by the `code-list` argument: which predicate a field becomes, and which of two is authoritative, is a DECISION. Generators READ these through the `vocab-map` Tool; nothing writes them. Owner, 2026-10-02 (bean `k74z`). Governed by [`vocabulary-authority`](vocabulary-authority.md). | no |
 | `substrate-snapshot` | **harness** | the root declaration of each Knowledge Graph this instance SUBSCRIBES to (`subscriptions/`), one `folio-substrate-snapshot/v1` file per `subscriptions` entry: the upstream bytes at the pinned commit, their sha256, and the harnesses and subgraphs the substrate offers. `derived`: written by `bun run kg:subscribe` from somebody else's bytes and regenerated, never edited; `kg:subscribe:check` re-hashes and re-judges each one offline. It WRAPS the upstream `<name>.json` rather than copying it, because a bare copy carries `name` equal to its stem and would read as an instance declaration to every scanner. Issue #1719. | no |
 | `glossary` | **core** (registered by `schemas/glossary-graph-kind.ts`), and any layer | Terms and what they mean, as W3C SKOS (`folio-glossary/v1`, `folio-assistant-core/schemas/glossary.ts`): local terms, each `authored`, `candidate` or `could-not-extract`, linked to external SKOS concepts by `exactMatch`/`closeMatch`, and external concepts listed as `members` without being copied. A whole external scheme is a `remoteGraphs` entry with `graphKinds: ["glossary"]`. The `glossary` kind is `perInstance`, so every folio built on core gets one. Rendered on the site's `glossary/` page with SKOS JSON-LD beside it; the swimlane ledger is one more source. Read with the [`glossary-terms`](../../library/library-core/glossary-terms.md) skill; gated by `check:glossary`. | no |
 | `swimlane-glossary` | **harness** | (renamed from `glossary` on 2026-09-23, owner: "Rename harness one") the swimlane glossary's retirement ledger (`glossary/`) — every concept this instance has ever minted, with the date it was first seen and the date it stopped being derivable. `state` but **not** work (`recordsWork: false`): a bean is something somebody is partway through, this is a record that a term exists. Only the ledger is stored — the glossary DOCUMENT is derived from the corpus each run, which is exactly why the ledger has to exist: a derived document has no memory, so without it a retired term and one that never existed look the same. Written by `scripts/glossary-export.ts`; read with the [`swimlane-glossary`](../../process/process-core/swimlane-glossary.md) skill. | no |
 | `models` | **bootstrap** | which languages a model is good at, and whether a human checked (`models/models.json`). `context`: READ when a session opens, never written by a process — a person grants a validation, an agent never does, because a model's own claim about its languages is precisely what the validation state exists to distrust. In BOOTSTRAP because an agent reaching for the language it should communicate in has not yet loaded the harness that would otherwise answer. One INPUT to the [`communication-language`](../../conduct/conduct-core/communication-language.md) determination, never the answer. | no |
 | `bean-defs` | **harness** | work items — one Markdown file each, in the layout the `beans` CLI reads. Authored by people and agents. | no |
+| `bean-notes` | **harness** | one pull request's addendum to a bean — one Markdown file per branch per bean, `$schema: folio-bean-note/v1` in its front matter, named `<bean>--<date>--<branch>.md` so two pull requests never write one path; `README.md` beside them is the generated index. Bean `m61r`: `ob3m` cost five hand-merges in one afternoon while every finding was appended to the bean. `state`, and `recordsWork: false` because a note is a record about a bean, whose work is counted on the bean. Convention: [`bean-coordination`](../../sdlc/sdlc-core/bean-coordination.md) §"Adding to a bean — a note, not an append". | no |
 | `workflow-state` | **harness** | running BPMN instances — one JSON each, `"$schema": "folio-workflow-instance/v1"`. Owned by the interpreter, never hand-edited. | no |
 | `session-survey` | **harness** | published surveys of a commit window — one JSON each, `"$schema": "folio-session-survey/v1"`. Bean `6ptx`: eight sessions surveyed the same ~2435-commit window in one minute and that day produced ONE authored commit. Each records the window's **two edge commits**, so a later session computes the uncovered delta (`bun run survey:owed`) instead of re-deriving the range — staleness decidable rather than guessed, and an unreachable upper edge reads as *unusable*, never as covered. `state` because a running session writes it; `recordsWork: false` because a survey is a READING of work, not work anybody is partway through. | no |
 | `todos` | **harness** | human actors' outstanding work as a whole (`todos/`); its inner nodes are declared by `todos/todos.json` | no |
@@ -144,13 +146,14 @@ decides it.
 | `fsh-guts` | **harness** | Deprecated and throwaway structured content — kept, addressable and exported, and deliberately absent from the site. The destination for anything that would otherwise be deleted. **THAT IS TRUE AGAIN AS OF 2026-09-23, AND WAS NOT FOR SOME TIME.** The kind also held `proposals/` — the LIVE design corpus, cited as the governing scheme by seven skills and four code modules — so an agent that read this row, learned the kind was throwaway and skipped it had skipped the schemes it needed. That is exactly what happened (bean `5kn6`): a session proposed three options for a question `instance-versioning.md` §3.3 and an owner ruling of 2026-09-20 had already settled. **The owner's fix was to move them, not to re-describe the kind** — *"proposals not in fsh-guts but docs/ for needed &lt;stub&gt;"* — so proposals now live in the `docs/` of the instance whose stub they concern, published rather than hidden. What remains here is `retired/` and one-off migration `scripts/`, which are what the label always described. **The lesson survives the fix**: a kind whose name tells an agent to skip it must not hold anything an agent needs. | **no, on purpose** |
 | `uploads` | **harness** | the incoming queue — raw files as dropped, before ingestion. NOT L1, and not greppable as corpus. | no |
 | `catalogue` | **harness** | a remote catalogue modelled BY REFERENCE — communities, collections and items of a corpus the instance does not hold. Every node declares whether its bytes are here (`materialized`), elsewhere (`referenced`) or unestablished (`unknown`), and there is **no default**. Distinct from `library`: that is content which IS here, this is the shape of a collection of which almost none is. Shape in `folio-assistant-core/schemas/catalogue.ts`. | no |
-| `fhir-artifact-index` | **harness** | the artefact index of a published FHIR Implementation Guide, RECONSTRUCTED from its published output — every artefact by canonical URL and published representation, with the DAK API's JSON Schema / JSON-LD sidecars as an overlay where the IG publishes one. No IG publishes such an index itself, so every field records which file it came out of. A SIBLING of `catalogue`, not a flavour of it: a catalogue node is a container or an item, while a FHIR artefact is a `resourceType` at a canonical URL published in several representations at once, in a versioned package, against a FHIR version. Shares `MaterializationSchema` with `catalogue`. Read with the [`ig-artifact-ingestion`](../../authoring/authoring-who-smart-guidelines/ig-artifact-ingestion.md) skill; shape in `folio-assistant-core/schemas/fhir-artifact-index.ts`. | no |
+| `fhir-artifact-index` | **harness** | the artefact index of a published FHIR Implementation Guide, RECONSTRUCTED from its published output — every artefact by canonical URL and published representation, with the DAK API's JSON Schema / JSON-LD sidecars as an overlay where the IG publishes one. No IG publishes such an index itself, so every field records which file it came out of. A SIBLING of `catalogue`, not a flavour of it: a catalogue node is a container or an item, while a FHIR artefact is a `resourceType` at a canonical URL published in several representations at once, in a versioned package, against a FHIR version. Shares `MaterializationSchema` with `catalogue`. Read with the `ig-artifact-ingestion` (smart-base) skill; shape in `folio-assistant-core/schemas/fhir-artifact-index.ts`. | no |
 | `ig-metadata-index` | **harness** | the IG Publisher's OWN metadata exports for one published IG, harvested verbatim — `valueset-ref-list.json`, `codesystem-ref-list.json` and `usage-stats.json`. A SIBLING of `fhir-artifact-index`, not an extension of it, and the line between them is the line between a RECONSTRUCTION and a TRANSCRIPTION: that index answers *what artefacts does this IG contain*, assembled from four partial views because no IG publishes such an index, while this answers *what did the toolchain say about them*, read from three files the IG does publish. Registered 2026-09-30 on the owner's ruling (bean `rjug`, Option B); Option A would have hung a `metadataExports` block off the index, and the bean's own objection to it is why it lost — *"Risks making the index a bag."* `derived`: it does not stand on its own, and re-harvesting an unchanged IG gives the same file back — the clause that separates it from `binary-release`, where re-running produces a different release. Two measured findings from bean `nsbb` are carried as SHAPE rather than prose, because both are absences that must not read as zeros: `uses` is declared-and-never-populated in both IGs measured (a three-state `usesState`, where a bare array would erase the finding), and nothing exports Library / PlanDefinition / Measure edges at all (`IG_METADATA_UNREACHED_TYPES`, so silence over the decision-logic core reads as uninformative rather than clean). Shape in `schemas/ig-metadata-index.ts`. | no |
 | `binary-release` | **harness** | published binary releases — one `folio-binary-release/v1` document per release, carrying its id, version and origin, and for each asset the size, the sha256 where one is known, where it is fetched from, and what became of it. **Never the bytes**: the schema is strict throughout. Registered 2026-09-30 on the owner's ruling (bean `rjug`, Option A); Option B was reusing `materialization`, and bean `gpdo`'s `compiled` purpose landing since has sharpened that mismatch rather than softening it — all four materialization purposes are purposes of A COPY THIS INSTANCE HOLDS, while a release is a publication UPSTREAM that stays true after every local copy is gone. The two compose rather than substitute. `state`: the release pipeline writes it, and re-running produces a DIFFERENT release rather than the same one again, which is why this is not `derived` although `ig-metadata-index` above is. `recordsWork: false` — a published release is a completed fact, not something anybody is partway through. The case it exists for is the deploy purge: after the WHO deploy phase deletes its >100 MB files, nothing else anywhere records that they existed, so a purged asset must still say where to fetch it and why it went — a removal with no recorded reason cannot be told from an accident. Shape in `schemas/binary-release.ts`. | no |
 | `library` | **harness** | L1 source content — one `<bib-slug>/` per ingested document, holding `sections/*.md`, `structure.json` and, where scanned, `ocr/page-NNN.txt`. | no |
 | `voices` | **harness** | editorial voice profiles — one JSON each, `"$schema": "folio-voice/v1"`. Every rule cites its source. **Opt-in**: shipping a voice does not apply it. | no |
 | `voice-vendors` | **harness** | a base voice specialised for one agent vendor — `folio-voice/v1` with `extends` naming the base. A **sub-graph of `voices`** (`within: "voices"`), declared from within: `voices/voices.json` names `vendors/`, and `vendors/vendors.json` names each `<id>/`. `loadVoices` descends only where a declaration says to and **refuses** an undeclared voice directory rather than skipping it. Bean `rkqp`, owner 2026-09-30. | no |
 | `themes` | **harness** | themes an instance DERIVED from a source it holds — a served stylesheet, or a style guide's stated rules. One Theme node each, carrying `kind: sticky \| webpage \| publication`; the palette vocabulary is shared across every kind and only the geometry varies. Every value cites where it was measured. NOT the platform's own twelve themes, which are furniture in `cat-harness/schemas/themes.ts` — a palette read off a WHO style guide is subject matter. | no |
+| `document-kinds` | **harness** | DOCUMENT KINDS a harness contributes — named structures of sections a document authored with it follows, `fixed` (exactly these sections) or `semi-fixed` (these required, others allowed). One `folio-document-kind/v1` JSON each; every kind and section names its sources, and `computedFrom` names the declared graphs a section derives from. Not a content profile: a profile constrains which BLOCK KINDS a folio may contain and is a compile-time union in core; a kind is a structure, contributed as data. Stage D5 of the smart-* separation, #1767. | no |
 | `translation-sources` | **harness** | the gettext side of translation — `.pot` templates, `.po` catalogues and their `TranslationNode` manifests, one directory per target locale. The INPUT to injection; there is deliberately **no kind for the rendered output**. Read with the [`translation-manager`](../../library/library-core/translation-manager.md) skill; shape in `schemas/translation.ts`. | no |
 | `docs` | **harness** | documentation **about** the knowledge graph — how the harness works, what its directories hold, how a process runs. Distinct from `folio` by its SUBJECT, not its format. Added 2026-09-20: this table carried no renderable harness kind until the harness gained a plain just-the-docs renderer, and the rule reads in its true form — a layer owns the kinds it CAN render. | **yes** — the plain just-the-docs pipeline, no extensions |
 | `proposals` | **harness** | proposals for the harness's own features — initial analysis, MVP, options — argued before they are agreed. A **sub-graph of `docs`** (`within: "docs"`), declared from within by `docs/docs.json`; the navbar folds it under Docs. Issue #1164. | no — its pages are built by `docs` |
@@ -563,6 +566,43 @@ resolved **12** directories and created all 12 — six of them the platform's
 own, each with a committed keep marker: `dh4f` shipped downstream.
 `perInstance` keeps that fixed.
 
+### The checkout aggregates — no instance declares another's directory (STRICT)
+
+Owner, 2026-09-30 (bean `cmsl`, round 3, option A), built by placement PR0
+(bean `ejye`). Until then `cat-harness.json` carried 19 `scope: "repository"`
+entries naming its **dependents'** directories (`folio-assistant-core/skills/`,
+`who-iris/library/`, …) so that a corpus-wide tool asking the platform for
+"every library" got every library. Every owner `needs` cat-harness, so the
+platform was naming its users — and 5 of the 19 had already drifted from the
+owner's own id.
+
+The rule now:
+
+- **The checkout's root instance aggregates.** `folio-assistant.json` `needs`
+  every instance the checkout stages, and declares the checkout-level state
+  it physically holds (`beans`, `todos`, `memory`, `interaction`,
+  `issue-marks`, `fsh-guts`, `root-docs` — ids unchanged, new declarer).
+- **Only that instance declares at the checkout's scope.** A
+  `scope: "repository"` entry anywhere else is a MIRROR, and
+  `check:instance-graph` refuses it (`repository-mirror`), as it refuses an
+  instance the root does not reach (`unstaged`).
+- **A corpus-wide question is asked of the checkout, not the platform.**
+  `checkoutDirectories` / `checkoutDirectoriesForGraph` in
+  `schemas/harness-config.ts` resolve every staged instance through its OWN
+  chain and union the members — per instance, because one long chain would
+  override sibling ids (`smart-base`'s `processes` would replace the
+  harness's). A tool shipped BY an instance asks
+  `corpusDirectoriesForGraph(instance, kind)`: that instance plus everything
+  stacked on it, never its own dependencies (those are its overlay).
+  Known-skills callers say which question they ask: `CorpusScope`
+  (`"instance"` | `"checkout"`), and `corpusScopeFor(root)` gives the
+  pre-PR0 behaviour as a rule — the platform's own run is corpus-wide,
+  `--instance <x>` is that instance alone.
+- **Falsifier, kept as a test:** the platform resolved ALONE sees nothing
+  above it. A split checkout running against one folio sees that folio and
+  its dependencies — what it contains, not what the platform remembers having
+  been next to.
+
 ## Nesting is declared FROM WITHIN, by a node in the first subdirectory (STRICT)
 
 Owner's ruling, 2026-09-22:
@@ -612,14 +652,48 @@ entries inward cleared all five of the baselined `skills contains
 skills/voices` pairs. Every `directoriesForGraph(…, "voices")` answer was
 identical before and after, compared instance by instance.
 
-Two rules the resolver holds, both measured the hard way:
+Three rules the resolver holds, all measured the hard way:
 
 - **Never through a mirror.** A `scope: "repository"` entry points at ANOTHER
   instance's directory. Following its declaration file made cat-harness
-  resolve core's `voices/` as its own.
+  resolve core's `voices/` as its own. (Mirrors are retired — see "The
+  checkout aggregates" — but the guard stays for a downstream folio that
+  has not migrated.)
 - **A declaration beats a default.** `skills/voices` is also a built-in
   default; a from-within declaration replaces that convention, while an
   instance-level declaration with the same id still wins over both.
+- **A MEMBER's own declaration file is read, not only the declarer's**
+  (placement PR0c). In sci's chain `skills` is cat-harness's entry, and
+  until PR0 only `cat-harness/skills/skills.json` was opened — so sci's
+  `lean/`, `data/` and `voices/` existed only when sci was resolved alone. A
+  member's from-within entries are now members of the chain too, named
+  `member: "<instance>"`, `within: "<subgraph id>"`.
+
+### Concern groups — a sub-subgraph in every grouping kind (placement PR0c)
+
+Owner, 2026-09-29/30 (bean `9umr`): eight groups — `sdlc`, `process`,
+`tools`, `kg`, `library`, `content`, `ui`, `conduct` — *"built into
+location"*, split across *schemas, skills, uml, processes, library, tests*.
+The same from-within rule, one more use of it:
+
+- **Which kinds group** is a fact about the kind: `GraphKindDef.concernGroups`,
+  with the kind's `declarationFile` as where groups are named —
+  `skills/skills.json` (`topics`), `processes/processes.json`,
+  `schemas/schemas.json`, `library/library.json`, `uml/uml.json`, a test
+  directory's `code.json` (`groups`, `"$schema": "concern-groups/v1"`).
+- **A group is a CODE** of `code-lists/concern-group.json`, which carries its
+  title and definition once; its directory is the code (`processes/sdlc/`).
+  A ninth code is a ruling, not an edit.
+- **Declared once, inherited as members** — option A one level down. The
+  harness declares a group; each higher instance's same-named
+  `<dir>/<group>/` is a member (core's `skills/library/` of the harness's
+  `library`). A higher instance adds no group of its own; content-type work
+  goes in as PACKAGES under `content/`.
+- **Declare only what exists.** A group is declared in the PR that first
+  fills it; a declared-but-absent group throws.
+- **One walker:** `scripts/concern-groups.ts` (`groupedChildrenIn`,
+  `resolveGroups`); `packageDirsIn` delegates to it. `check:concern-groups`
+  holds the four rules and prints each group with its members.
 
 ### The live case this ruling settles
 
@@ -975,8 +1049,8 @@ skills/                         ← this instance's `kg`
   <pkg>/package-manifest.json   which skills a package publishes
 ```
 
-and the processes those roles act in — `processes/*.bpmn` and
-`processes/decisions/*.dmn` — are reached **through the skill that
+and the processes those roles act in — `processes/**/*.bpmn` and
+`processes/**/decisions/*.dmn` — are reached **through the skill that
 describes them**, not as standalone artefacts. A BPMN activity names the skill
 that implements it (`<bootstrap.processes:skill ref>`); a lane names the role that performs it
 (`<bootstrap.processes:role ref>`, or an exact lane-name match in `roles.json`); a role carries

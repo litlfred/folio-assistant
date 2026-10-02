@@ -42,7 +42,7 @@
  */
 import { z } from "zod";
 
-import { SkillNameSchema } from "./tool-types.js";
+import { ProcessIdSchema, SkillNameSchema } from "./tool-types.js";
 
 /** A lowercase, hyphenated id. It is also the MCP tool name stem. */
 const ToolId = z
@@ -64,6 +64,69 @@ export const ToolPortSchema = z.object({
   schema: SchemaRef,
   description: z.string().optional(),
 });
+
+/**
+ * How a renderer may put one OUTPUT into a page — bean `q2wm`, R17 (#602).
+ *
+ * The owner, 2026-09-20: *"skill tool hints for XSS restriction"*. A Tool node
+ * said nothing about whether its output is markup, a link or plain words, so
+ * every consumer decided — and the one that decides wrong is a cross-site
+ * scripting hole in a static site with no server to blame.
+ *
+ * | `as` | a renderer must |
+ * |---|---|
+ * | `text` (the DEFAULT, and what absent means) | escape it: never markup, never a link |
+ * | `url` | pass it through `safeHref` (default-deny on scheme) before any `href`, else render it as text |
+ * | `markdown` | render it with raw HTML OFF and every link through `safeHref` |
+ * | `json` | show it escaped, as data — never evaluate, never inject |
+ *
+ * ON THE OUTPUT, not the Tool: one tool may emit a JSON projection and a
+ * markup fragment, and a Tool-level flag would have to lie about one of them.
+ *
+ * Anything but `text` carries a `reason`, because it asks a renderer to do
+ * more than escape, and that is a claim somebody made. `url` and `markdown`
+ * are allowed only on an output whose schema IS `Url` / `Markdown` — a hint
+ * that disagrees with the type it describes is two answers to one question.
+ *
+ * `renderToolOutput` in `schemas/render-output.ts` is the one implementation;
+ * `render-output.test.ts` holds each row of the table above to it.
+ */
+export const RENDER_AS = ["text", "url", "markdown", "json"] as const;
+export type RenderAs = (typeof RENDER_AS)[number];
+
+export const ToolRenderSchema = z
+  .object({
+    as: z.enum(RENDER_AS),
+    reason: z.string().min(1).optional(),
+  })
+  .strict()
+  .refine((r) => r.as === "text" || r.reason !== undefined, {
+    message: "a render hint other than `text` must state its reason — it asks a renderer to do more than escape",
+  });
+export type ToolRender = z.infer<typeof ToolRenderSchema>;
+
+/** The last segment of a schema IRI — `…#Url` or `…/Url` both give `Url`. */
+export function schemaTypeName(iri: string): string {
+  return iri.split(/[#/]/).filter(Boolean).pop() ?? iri;
+}
+
+/** A schema type a hint may only be declared on, where it is restricted. */
+const RENDER_REQUIRES: Partial<Record<RenderAs, string>> = { url: "Url", markdown: "Markdown" };
+
+export const ToolOutputSchema = ToolPortSchema.extend({
+  /** How a renderer may place this output in a page. Absent is `text`. See {@link RENDER_AS}. */
+  render: ToolRenderSchema.optional(),
+}).superRefine((p, ctx) => {
+  const need = p.render ? RENDER_REQUIRES[p.render.as] : undefined;
+  if (need !== undefined && schemaTypeName(p.schema) !== need) {
+    ctx.addIssue({
+      code: z.ZodIssueCode.custom,
+      path: ["render", "as"],
+      message: `render \`${p.render!.as}\` is only for an output whose schema is ${need}; this one is ${schemaTypeName(p.schema)}`,
+    });
+  }
+});
+export type ToolOutput = z.infer<typeof ToolOutputSchema>;
 
 /**
  * How one input appears on the command line.
@@ -357,7 +420,7 @@ export const ToolDefinitionSchema = z
     invoke: ToolInvokeSchema,
     io: z.object({
       inputs: z.array(ToolInputSchema),
-      outputs: z.array(ToolPortSchema),
+      outputs: z.array(ToolOutputSchema),
     }),
     /** Skills this Tool can satisfy. One skill may have several Tools. */
     satisfies: z.array(SkillNameSchema).min(1, "a Tool must satisfy at least one skill"),
@@ -400,6 +463,26 @@ export const ToolDefinitionSchema = z
      * a Tool restating it would be a second list free to drift.
      */
     renders: z.array(z.string().min(1)).optional(),
+    /**
+     * Process ids of the BPMN this Tool's OWN specific procedure is drawn as.
+     *
+     * Owner, 2026-09-30 (placement ruling 6): *"in general tools can describe
+     * their own specific subprocesses if needed to not bog down general
+     * skills"*. A skill states a capability generically; the steps that are
+     * true of ONE way of exercising it — this tool's retries, its staging
+     * directory, its two-pass mode — belong to the Tool, not to the skill
+     * every other Tool also satisfies. So the Tool points at its
+     * subprocess, the way it points at the skills it `satisfies`: the
+     * dependent holds the pointer, and the general process calls the
+     * subprocess (`calledElement`) only where it chose this Tool.
+     *
+     * Each id is the stem of a `.bpmn` the checkout declares;
+     * `check:tools` reports one that resolves to nothing. By convention it
+     * lives under the declaring instance's `processes/tools/` concern group
+     * (placement PR0c), beside the other tools' procedures rather than
+     * among the general processes.
+     */
+    subprocesses: z.array(ProcessIdSchema).optional(),
   })
   .refine(
     (t) =>

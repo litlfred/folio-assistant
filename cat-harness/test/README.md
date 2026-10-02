@@ -18,13 +18,16 @@ Part of [C@T Harness](../README.md) 0.1.0, declared as `cat-harness-tests`, hold
 | [`fishbone-relocate.e2e.ts`](fishbone-relocate.e2e.ts) | a file |  |
 | [`folio-mount.e2e.ts`](folio-mount.e2e.ts) | a file |  |
 | [`folio-three-states.e2e.ts`](folio-three-states.e2e.ts) | a file |  |
+| [`glass-card-metadata.e2e.ts`](glass-card-metadata.e2e.ts) | a file |  |
 | [`glass-devices.e2e.ts`](glass-devices.e2e.ts) | a file |  |
 | [`glass-filter.e2e.ts`](glass-filter.e2e.ts) | a file |  |
 | [`glass-interactions.e2e.ts`](glass-interactions.e2e.ts) | a file |  |
 | [`glass-navigation.e2e.ts`](glass-navigation.e2e.ts) | a file |  |
+| [`glass-placement.e2e.ts`](glass-placement.e2e.ts) | a file |  |
 | [`glass-pop-outs.e2e.ts`](glass-pop-outs.e2e.ts) | a file |  |
 | [`glass-scroll.e2e.ts`](glass-scroll.e2e.ts) | a file |  |
 | [`glass-tiles.e2e.ts`](glass-tiles.e2e.ts) | a file |  |
+| [`glass-zoom-steady.e2e.ts`](glass-zoom-steady.e2e.ts) | a file |  |
 | [`glass.e2e.ts`](glass.e2e.ts) | a file |  |
 | [`graph-tiles.e2e.ts`](graph-tiles.e2e.ts) | a file |  |
 | [`harness-config-panel.e2e.ts`](harness-config-panel.e2e.ts) | a file |  |
@@ -32,6 +35,7 @@ Part of [C@T Harness](../README.md) 0.1.0, declared as `cat-harness-tests`, hold
 | [`kg-viewer.e2e.ts`](kg-viewer.e2e.ts) | a file |  |
 | [`kind-fan.e2e.ts`](kind-fan.e2e.ts) | a file |  |
 | [`library-viewer-scope.e2e.ts`](library-viewer-scope.e2e.ts) | a file |  |
+| [`library-withheld-viewer.e2e.ts`](library-withheld-viewer.e2e.ts) | a file |  |
 | [`linear-floor.e2e.ts`](linear-floor.e2e.ts) | a file |  |
 | [`nav-locale.e2e.ts`](nav-locale.e2e.ts) | a file |  |
 | [`navbar-row.e2e.ts`](navbar-row.e2e.ts) | a file |  |
@@ -39,12 +43,15 @@ Part of [C@T Harness](../README.md) 0.1.0, declared as `cat-harness-tests`, hold
 | [`panel-chrome.e2e.ts`](panel-chrome.e2e.ts) | a file |  |
 | [`qa-badge.e2e.ts`](qa-badge.e2e.ts) | a file |  |
 | [`qa-panel.e2e.ts`](qa-panel.e2e.ts) | a file |  |
+| [`rail-tips.e2e.ts`](rail-tips.e2e.ts) | a file |  |
 | [`review-diff.e2e.ts`](review-diff.e2e.ts) | a file |  |
 | [`review-heat.e2e.ts`](review-heat.e2e.ts) | a file |  |
 | [`review-nav.e2e.ts`](review-nav.e2e.ts) | a file |  |
 | [`review-visual.e2e.ts`](review-visual.e2e.ts) | a file |  |
 | [`schema-overview-filter.e2e.ts`](schema-overview-filter.e2e.ts) | a file |  |
+| [`search-pinned.e2e.ts`](search-pinned.e2e.ts) | a file |  |
 | [`search-restore.e2e.ts`](search-restore.e2e.ts) | a file |  |
+| [`settings-crosslinks.e2e.ts`](settings-crosslinks.e2e.ts) | a file |  |
 | [`sidebar-panels.e2e.ts`](sidebar-panels.e2e.ts) | a file |  |
 | [`staging-banner.e2e.ts`](staging-banner.e2e.ts) | a file |  |
 | [`state-dashboards.e2e.ts`](state-dashboards.e2e.ts) | a file |  |
@@ -57,6 +64,6 @@ Part of [C@T Harness](../README.md) 0.1.0, declared as `cat-harness-tests`, hold
 | [`test_pypdf_compat.py`](test_pypdf_compat.py) | a file |  |
 | [`translation-badges.e2e.ts`](translation-badges.e2e.ts) | a file |  |
 | [`health/`](health/) | 8 files | |
-| [`results/`](results/README.md) | 1025 files | |
+| [`results/`](results/README.md) | 968 files | |
 | [`support/`](support/) | 3 files | |
 <!-- kg:subgraph:end -->

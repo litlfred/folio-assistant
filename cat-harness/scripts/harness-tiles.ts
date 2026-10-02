@@ -60,7 +60,7 @@
  * SC 1.4.1, the `j66n` rule).
  */
 import { existsSync, readdirSync } from "node:fs";
-import { isAbsolute, join, relative, resolve } from "node:path";
+import { isAbsolute, join, relative, resolve, sep } from "node:path";
 
 import { GENERIC, avatarFor, hasAvatar } from "../schemas/avatars.js";
 import { hexHue, resolveThemeBackdrop } from "../schemas/theme.js";
@@ -82,6 +82,7 @@ import {
   nestedDirectories,
 } from "../schemas/cat-harness.js";
 import { withViewers } from "./viewer-declarations.js";
+import { subscribedHarnesses, subscribedTile } from "./subscribed-harnesses.js";
 // The `folio` graph kind is registered by CORE. This module is a LIBRARY, so it
 // does NOT import that registration: a library's edge is inherited by every
 // module that imports it, and the harness may not depend on core. The
@@ -203,6 +204,10 @@ export type HarnessTile = {
    */
   label: string;
   description: string;
+  /** The reader's one line, when declared (`ob3m` 4/5). The landing prefers it to {@link description}. */
+  summary?: string;
+  /** Other spellings of the name, rendered as a list (`ob3m` 5). */
+  alsoWritten?: readonly string[];
   /**
    * Exempt from owing a visualiser — the declared reason bootstrap sorts
    * last. See the module docs.
@@ -268,6 +273,13 @@ export type HarnessTile = {
   stats: HarnessStat[];
   visualisations: HarnessVisualisation[];
   /**
+   * Every graph this instance declares, each marked LOCAL or REMOTE — `603s`'s
+   * last open item: *"a tab for all materizled local subgraphs and declared
+   * remote graphs. opening up content should indicate if local or remote"*.
+   * See {@link subgraphsOf}.
+   */
+  subgraphs: HarnessSubgraph[];
+  /**
    * The instances this one sits on, as declared. `undefined` is UNDETERMINED
    * — nobody has said — and is a different answer from `[]`, which is an
    * instance asserting it sits on nothing.
@@ -276,6 +288,76 @@ export type HarnessTile = {
   /** Candidates with no published page, and any other honest gap. */
   findings: string[];
 };
+
+/**
+ * One graph an instance declares, and WHERE it is.
+ *
+ * `local` — its bytes are in this checkout, at `path` (repository-relative —
+ * the caller rebases the declaration's instance-relative path).
+ * `remote` — it is declared and lives elsewhere, at `url`: a `remoteGraphs`
+ * entry, or a `subscriptions` entry pinned at `ref`, whose `materialised`
+ * subgraphs have been copied in and are local copies of something remote.
+ *
+ * The distinction must SHOW (`603s`): *"a remote graph that renders
+ * identically to a local one is how somebody edits a copy that is not the
+ * source."*
+ */
+export type HarnessSubgraph =
+  | { readonly id: string; readonly kinds: readonly string[]; readonly where: "local"; readonly path: string }
+  | {
+      readonly id: string;
+      readonly kinds: readonly string[];
+      readonly where: "remote";
+      readonly url: string;
+      readonly via: "remote-graph" | "subscription";
+      /** A subscription's pinned commit, abbreviated for display. */
+      readonly ref?: string;
+      /** A subscription's subgraphs copied into this checkout. */
+      readonly materialised?: readonly string[];
+    };
+
+/**
+ * The graphs an instance declares, local first, then remote — `603s`.
+ *
+ * READ, never scanned: local rows are the declared directories (`dirs`, the
+ * same list the "declared directories" stat counts, so the two cannot
+ * disagree), remote rows are `remoteGraphs` and `subscriptions` as declared.
+ * Each list keeps its declared order within its half.
+ *
+ * Owner's ruling `owt6` (*"dividers, not a dashboard"*) is why this feeds the
+ * page a harness tab OPENS (`_includes/harness_details.html`) rather than the
+ * sidebar.
+ */
+export function subgraphsOf(
+  decl: Pick<CatHarnessDeclaration, "remoteGraphs" | "subscriptions">,
+  dirs: readonly { id: string; path: string; graphKinds?: readonly string[] }[],
+): HarnessSubgraph[] {
+  const local: HarnessSubgraph[] = dirs.map((d) => ({
+    id: d.id,
+    kinds: [...(d.graphKinds ?? [])],
+    where: "local" as const,
+    path: d.path,
+  }));
+  const remote: HarnessSubgraph[] = [
+    ...(decl.remoteGraphs ?? []).map((g) => ({
+      id: g.id,
+      kinds: [...g.graphKinds],
+      where: "remote" as const,
+      url: g.url,
+      via: "remote-graph" as const,
+    })),
+    ...(decl.subscriptions ?? []).map((sub) => ({
+      id: sub.id,
+      kinds: [] as string[],
+      where: "remote" as const,
+      url: `https://github.com/${sub.repository}/tree/${sub.ref}`,
+      via: "subscription" as const,
+      ref: sub.ref.slice(0, 7),
+      ...(sub.subgraphs?.length ? { materialised: [...sub.subgraphs] } : {}),
+    })),
+  ];
+  return [...local, ...remote];
+}
 
 /**
  * A declared icon's path, as the PUBLISHED site serves it.
@@ -563,12 +645,31 @@ function tileFor(
    * resolves on disk but is not published is not something a tile can open,
    * and claiming it would put a 404 behind the tab — `pb04`.
    */
+  // A COMPOSED directory of this instance is the second place a declared ref
+  // can be published, and its URL is as computable as the site prefix's:
+  // `compose-docs.ts` copies the directory to `_docs/<name>/`, so a page in it
+  // is served at `/<name>/<path within it>`. Reading `composed` off the
+  // declaration, as `composedInstances` does, rather than restating the rule.
+  // Before this, an instance's own generated viewer (`<instance>/docs/`, with
+  // `rendered-by` naming a kind's viewer Tool) was found and then reported as
+  // "built and unreachable" — the routing gap the `declaredFor` note below
+  // names. #1767, stage C3.
+  const instanceRel = relative(repoRoot, instanceDir).split(sep).join("/");
+  const composedPrefixes = (decl.directories ?? [])
+    .filter((d) => (d as { composed?: boolean }).composed === true && typeof d.path === "string")
+    .map((d) => `${instanceRel}/${d.path!.replace(/^\.?\/+/, "").replace(/\/*$/, "/")}`);
+  const publishedRefOf = (ref: string): string | undefined => {
+    if (ref.startsWith(sitePrefix)) return publishedUrlOf(ref.slice(sitePrefix.length));
+    const under = composedPrefixes.find((p) => ref.startsWith(p));
+    return under === undefined ? undefined : publishedUrlOf(`${decl.name}/${ref.slice(under.length)}`);
+  };
+
   const declared = new Map<string, string>();
   for (const d of dirs) {
     for (const v of visualisationsOf(d.coverage, d.id)) {
-      if (!v.ref.startsWith(sitePrefix)) continue;
       if (!existsSync(join(repoRoot, v.ref))) continue;
-      const page = publishedUrlOf(v.ref.slice(sitePrefix.length));
+      const page = publishedRefOf(v.ref);
+      if (page === undefined) continue;
       for (const kind of d.graphKinds ?? []) {
         if (!declared.has(kind)) declared.set(kind, page);
       }
@@ -603,7 +704,15 @@ function tileFor(
 
   const visualisations: HarnessVisualisation[] = [];
   for (const kind of kinds) {
-    const candidates = ownsSite
+    // `ownsSite || isRepoRoot`, as `folioRoot` and `siteDirMount` below
+    // already read it: `state-visualizer` rule 3 says the ROOT instance elides
+    // its own name, and since cmsl step 2 (issue #1694) the root declares the
+    // checkout's state graphs, so `/issue-marks/` is its page too. Testing
+    // `ownsSite` alone rendered that tile "no viewer yet".
+    // …but `/<kind>/` is the SITE OWNER's whenever it declares that kind too:
+    // the root's `uploads` would otherwise open cat-harness's `/uploads/`.
+    const ownerHolds = (owner?.decl.directories ?? []).some((d) => (d.graphKinds ?? []).includes(kind));
+    const candidates = ownsSite || (isRepoRoot && !ownerHolds)
       ? [ownStatePage(kind), subjectPage(handler, kind, decl.name)]
       : [subjectPage(handler, kind, decl.name)];
     // `index.md` COUNTS TOO (issue #1164): Jekyll builds it to the same URL,
@@ -1039,7 +1148,14 @@ function tileFor(
         };
   const navMark = themeAvatar ?? iconMark;
 
-  const href = folio ?? firstViewer ?? handled;
+  // A FOLIO AT THE SITE ROOT IS THE LANDING PAGE, which every harness row is
+  // already beside: `ob3m` finding 2 measured Folio Assistant and C@T Harness
+  // both linking to `/`, two rows that open one page and say nothing about
+  // which harness was chosen. The landing gives each harness its own section,
+  // `id="harness-<name>"` (`_includes/harness_details.html`), so that section
+  // is the honest destination — the same page, at this harness's place on it.
+  const rooted = folio === "/" ? `/#harness-${decl.name}` : folio;
+  const href = rooted ?? firstViewer ?? handled;
   if (folio === undefined && firstViewer !== undefined) {
     findings.push(
       `${decl.name}: has no docs/ of its own, so the tile opens a kind handler's viewer ` +
@@ -1060,6 +1176,8 @@ function tileFor(
     // set can say whether this title identifies anything.
     label: decl.title ?? decl.name,
     description: decl.description ?? "",
+    ...(decl.summary ? { summary: decl.summary } : {}),
+    ...(decl.alsoWritten ? { alsoWritten: decl.alsoWritten } : {}),
     footer: isExemptFrom(decl, "visualiser"),
     ...(decl.needs ? { needs: decl.needs } : {}),
     // `avatarRegion` rides the ICON too, when the icon image declares one.
@@ -1130,6 +1248,12 @@ function tileFor(
       { id: "views", label: "visualisations you can open", value: visualisations.filter((v) => v.path).length },
     ],
     visualisations,
+    // Paths REPOSITORY-relative: a declared `path` is the instance's own
+    // (`library/`), and a reader needs to know which `library/`.
+    subgraphs: subgraphsOf(
+      decl,
+      dirs.map((d) => ({ ...d, path: `${relative(repoRoot, join(instanceDir, d.path)).split("\\").join("/")}/` })),
+    ),
     findings,
   };
 }
@@ -1165,7 +1289,12 @@ export function harnessTiles(
     if (!read) continue;
     // Viewers RESOLVED from the pages (#1168 B7a-2b): a directory no longer
     // names its viewer, the page names the directories it draws.
-    const decl = { ...read, directories: withViewers(read.directories ?? [], dir) };
+    // The REPOSITORY root passed explicitly: its default, `repoRootFor(dir)`, is
+    // "the parent directory", which for the checkout root's own declaration is
+    // the directory ABOVE the repository. Since cmsl step 2 (issue #1694) that
+    // declaration holds `beans`/`todos`/`issue-marks`, so their dashboards went
+    // undiscovered and the tiles rendered "no viewer yet".
+    const decl = { ...read, directories: withViewers(read.directories ?? [], dir, repoRoot) };
     decls.push({ dir, decl });
   }
 
@@ -1198,6 +1327,18 @@ export function harnessTiles(
     // here would undo it one layer down.
     if (icons !== undefined) tile.navbarIcons = [...icons];
     tiles.push(tile);
+  }
+
+  // SUBSCRIBED HARNESSES (issue #1719, slice 7): a harness a subscription
+  // chose, with `<name>.config.json` at the root and no local declaration, is
+  // instantiated here and gets a tile drawn from its cached snapshot. A local
+  // instance of the same name wins: `kg:instantiate` refuses that case, and
+  // drawing both would be the duplicate `disambiguate` exists to flag.
+  const local = new Set(decls.map(({ decl }) => decl.name));
+  for (const h of subscribedHarnesses(repoRoot, decls)) {
+    if (!h.instantiated || local.has(h.harness)) continue;
+    local.add(h.harness);
+    tiles.push(subscribedTile(h));
   }
 
   return orderTiles(disambiguate(tiles));

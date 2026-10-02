@@ -4,7 +4,7 @@ nav_exclude: true
 ---
 
 {: .note }
-> Generated from `cat-harness/processes/docs-site-publish.bpmn` by `gen-processes-viz.ts` — do not edit here. [All processes](index.html)
+> Generated from `cat-harness/processes/sdlc/docs-site-publish.bpmn` by `gen-processes-viz.ts` — do not edit here. [All processes](index.html)
 
 {% raw %}
 # Publishing the docs site, and keeping the previews alive
@@ -26,7 +26,7 @@ Mechanical throughout. There is no human lane, which is what makes `build-pipeli
 ## How it connects
 
 - **Called by:** no call activity names this process
-- **Calls:** [Alert the publication manager](publish-alert.html), [Verify the export before it is deployed](publish-verification.html)
+- **Calls:** [Alert the publication manager](publish-alert.html), [Verify the export before it is deployed](publish-verification.html), [Render a Knowledge Graph to a CDN](render-kg-to-cdn.html)
 - **Presented on:** no docs page section shows this diagram
 
 ## Lanes — who acts
@@ -46,7 +46,7 @@ Every one of the 8 step(s) is documented.
 | **Export the knowledge graph and its schema**<br>`Task_Export` | CI/CD Pipeline | — | Export the knowledge graph and its schema into the published tree, then check every maintained artefact is present and no block-level markup escaped. The unpublished graph kinds are stripped on export. |
 | **Verify the export**<br>`Call_Verify` | CI/CD Pipeline | calls [Verify the export before it is deployed](publish-verification.html)<br>[`publish-verification`](../reference/skill-instructions/publish-verification.html) | Process_PublishVerification: the verifier set over the built tree, before anything is deployed. Owner, 2026-09-23: before deployment, blocking. |
 | **Restore the OPEN PRs' staging previews**<br>`Task_Restore` | CI/CD Pipeline | [`feature-staging`](../reference/skill-instructions/feature-staging.html) | Copy every OPEN pull request's STAGING/<slug>/ preview from gh-pages into the publish directory before the replace, once per publish attempt. Without it the full replace deletes every preview, silently (bean plj1). Only open PRs' previews are carried. |
-| **Publish to gh-pages (FULL REPLACE)**<br>`Task_Publish` | CI/CD Pipeline | — | Publish to gh-pages as a FULL REPLACE: anything on the branch this build did not produce is gone unless the restore put it back. The verify step that follows reads the deployed ref to confirm the previews survived. |
+| **Push to the CDN [render-kg-to-cdn] gh-pages, FULL REPLACE**<br>`Task_Publish` | CI/CD Pipeline | calls [Render a Knowledge Graph to a CDN](render-kg-to-cdn.html)<br>[`render-kg-to-cdn`](../reference/skill-instructions/render-kg-to-cdn.html) | THIS SITE IS ONE INSTANCE OF THE GENERAL STEP (owner, 2026-09-30: gh-pages is "one specific tool of general 'publish to CDN'"). Process_RenderKgToCdn, entered with the tree this build already rendered and verified, the site root as the publication root URL, and GitHub Pages as the target — so its `gh-pages` Tool pushes. Here that push is a FULL REPLACE of the `gh-pages` branch: anything on it this build did not produce is gone unless the restore put it back, which is why the restore and the survival check either side of this call stay in THIS process rather than in the general one. The call returns the push's status and message (the gh-pages merge commit and the QA result); a status other than `pushed` takes the `no` branch of Did the deploy succeed?. |
 | **Close the publication manager's alert, if open**<br>`Task_CloseAlert` | CI/CD Pipeline | — | A clean publish resolves whatever the last failure raised: close the open publication-manager tracking issue with a comment naming this run. |
 | **Alert the publication manager**<br>`Call_Alert` | CI/CD Pipeline | calls [Alert the publication manager](publish-alert.html)<br>[`publish-verification`](../reference/skill-instructions/publish-verification.html) | Process_PublishAlert — the ONE alert every failing step after the publish button goes through, whichever step it was. |
 

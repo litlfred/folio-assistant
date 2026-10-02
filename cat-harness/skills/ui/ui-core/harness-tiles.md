@@ -38,6 +38,15 @@ Dependencies keep a group of their own rather than disappearing. Making the
 distinction a **disappearance** would answer *"where did who-iris go"* with
 silence.
 
+**A harness a KG subscription chose is instantiated by the same file**, with
+no local declaration: its declaration is the substrate snapshot `kg:subscribe`
+cached at the pin. `bun run kg:instantiate <subscription> <harness>` writes the
+config and the harness's state directories, and refuses a harness that was not
+chosen, not declared at the pin, or whose `needs` nothing here holds. The tile
+is drawn from the snapshot (`scripts/subscribed-harnesses.ts`): it links
+nowhere, because nothing of it is published here, and a snapshot that cannot
+be read is a finding on the tile rather than an empty one. Issue #1719.
+
 ## "Harness" carries TWO senses, and only one of them is this rule
 
 **Measured 2026-09-23** (bean `ogit`, [#1109](https://github.com/litlfred/folio-assistant/issues/1109)), after the owner asked *"why is detangle a harness? review all things labeled are harnesses -- are they?"*
@@ -402,3 +411,29 @@ Theming comes from the avatar's **declared hue**: one hue, both schemes
 derived, so no tile can be authored legible in one mode and invisible in the
 other. A per-instance palette would be a second colour vocabulary beside
 `theme.ts` — the drift that file exists to have ended.
+
+## `summary` and `alsoWritten` — what a reader sees, kept apart from why it was named
+
+A harness section on the landing page shows the declaration's `summary`, a
+one-line gloss, and lists `alsoWritten`, the other spellings of the name. Both
+exist because `description` was being made to carry them (bean `ob3m` findings
+4–5). One harness's description was a naming rationale with literal backticks,
+and another's was five newline-separated spellings that rendered as one line.
+Authoring notes belong in `description` or a `_comment`. The reader-facing
+line goes in `summary`, and alternative spellings go in `alsoWritten` as a
+list, never inline.
+
+**A harness's sticky shows the same text.** The owner's ruling on `ob3m`
+finding 3 (2026-10-01): *"Stickies show the same text as the landing page"*.
+A sticky contribution declares `bodyFrom: "summary"`, and the card's words are
+`readerText` in `schemas/sticky-contribution.ts`: the `summary` (else the
+description), then the `alsoWritten` spellings after "Also written:". That is
+the rule `docs/_includes/harness_details.html` applies, read from the same two
+declaration fields, so there is no copy of the text to keep in step. Before
+the ruling, stickies read `bodyFrom: "description"`. The folio-assistant card
+then opened with "NAMED `folio-assistant-checkout`…", the reason the name was
+chosen, which is written for a maintainer. `bodyFrom: "description"` still
+parses, because the pinned `bootstrap/bootstrap.json` declares it.
+`bun run landing:sticky:check` fails when a card built from its declaration
+does not open with that text. A `bodyAppend` may follow the reader's text,
+and a card with a literal `body` is not compared.

@@ -6,9 +6,9 @@ parent: Skill instructions
 ---
 
 {: .note }
-> Generated from [`large-datasets/skills/kg-subscription.md`](https://github.com/litlfred/folio-assistant/blob/main/large-datasets/skills/kg-subscription.md) — do not edit here.
+> Generated from [`cat-harness/skills/library/large-datasets/kg-subscription.md`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/library/large-datasets/kg-subscription.md) — do not edit here.
 >
-> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/large-datasets/skills/kg-subscription.md){: .fa-edit-source }
+> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/cat-harness/skills/library/large-datasets/kg-subscription.md){: .fa-edit-source }
 
 {% raw %}
 # Subscribing to a knowledge graph
@@ -29,7 +29,7 @@ one of them disagree, that one wins.
 |---|---|
 | the process | [`subscribe-kg.bpmn`](../../processes/subscribe-kg.html) |
 | the entry | `SubscriptionSchema` in `cat-harness/schemas/cat-harness.ts` |
-| the held-bytes record | `folio-assistant-core/schemas/materialization.ts` |
+| the held-bytes record | the `folio-materialization/v1` record (`MaterializationSchema`, owned by the content layer) |
 | the gates | [`materialize-remote`](materialize-remote.md) and its process |
 | the design | `cat-harness/docs/proposals/kg-subscriptions.md` (epic bean `fnx4`) |
 

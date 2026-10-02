@@ -11,10 +11,11 @@
  * `bun run check:workflow-refs`. This test gates only the unambiguous half.
  */
 import { describe, expect, test } from "bun:test";
-import { existsSync, readdirSync } from "node:fs";
-import { join } from "node:path";
+import { existsSync } from "node:fs";
+import { join, basename } from "node:path";
 import { loadProcessModel, isActivity } from "../../src/workflow/process-model.ts";
-import { knownSkills as canonicalKnownSkills } from "../known-skills.js";
+import { knownSkills as canonicalKnownSkills, workflowFile, workflowFiles } from "../known-skills.js";
+import { resolveImplementingPath } from "../../schemas/harness-config.ts";
 
 const ROOT = join(import.meta.dir, "../..");
 
@@ -70,7 +71,7 @@ describe("declared diagram paths resolve", () => {
     for (const ct of CONTENT_TYPE_TRANSLATIONS) {
       for (const f of ct.formats) {
         for (const rel of [f.extractModule, f.injectModule]) {
-          if (rel && !existsSync(join(ROOT, rel))) missing.push(`${ct.contentType}/${f.id} → ${rel}`);
+          if (rel && resolveImplementingPath(ROOT, rel).state !== "found") missing.push(`${ct.contentType}/${f.id} → ${rel}`);
         }
       }
     }
@@ -87,11 +88,10 @@ describe("workflow skill refs resolve", () => {
 
   test("every folio:skill ref names a skill in this repository", async () => {
     const skills = knownSkills();
-    const dir = join(ROOT, "processes");
     const dangling: string[] = [];
 
-    for (const file of readdirSync(dir).filter((f) => f.endsWith(".bpmn")).sort()) {
-      const model = await loadProcessModel(join(dir, file));
+    for (const file of workflowFiles(ROOT).filter((f) => f.endsWith(".bpmn")).map((p) => basename(p)).sort()) {
+      const model = await loadProcessModel(workflowFile(ROOT, file));
       for (const node of [...model.nodes.values()].filter(isActivity)) {
         for (const ref of node.skills ?? []) {
           if (!skills.has(ref)) dangling.push(`${file} · ${node.id} → "${ref}"`);

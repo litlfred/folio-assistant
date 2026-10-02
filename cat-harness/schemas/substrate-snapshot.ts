@@ -41,6 +41,12 @@ export const SUBSTRATE_SNAPSHOT_SCHEMA = "folio-substrate-snapshot/v1";
  */
 export const KG_PART_RECORD_SCHEMA = "folio-kg-materialization/v1";
 
+/** The graph kind of the directory an instance keeps its snapshots in. Found through the declaration, never by path. */
+export const SNAPSHOT_GRAPH_KIND = "substrate-snapshot";
+
+/** A snapshot's filename: `<subscription id>.substrate.json`. */
+export const SNAPSHOT_SUFFIX = ".substrate.json";
+
 export const SubstrateSnapshotSchema = z
   .object({
     $schema: z.literal(SUBSTRATE_SNAPSHOT_SCHEMA),

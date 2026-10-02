@@ -428,7 +428,7 @@ in the corpus in three places, none of which had been read as answering it:
 | | |
 |---|---|
 | `folio-assistant-core/schemas/materialization.ts` | **three states** — `referenced` (we know where, we hold no bytes), `materialized` (the bytes are here), `unknown` (we have not established which) — with **no default**, plus five gates, and `localPath` present **iff** `materialized` |
-| `large-datasets/processes/materialize-remote.bpmn` | the act itself, as an executable **STRICT** process running five gates in a fixed order; `unknown` on any one keeps the node `referenced` |
+| `cat-harness/processes/library/materialize-remote.bpmn` | the act itself, as an executable **STRICT** process running five gates in a fixed order; `unknown` on any one keeps the node `referenced` |
 | `skills/kg/kg-core/directory-conventions.md` | the `catalogue` graph kind — *"a remote catalogue modelled BY REFERENCE … Distinct from `library`: that is content which IS here, this is the shape of a collection of which almost none is"* |
 
 **So: yes.** The knowledge graph is static and modelled by reference;
@@ -466,7 +466,7 @@ so because this had not been measured yet.
 additionally have put a 40 MB PDF into the site build.
 
 **R27 is therefore already satisfied, and already gated.**
-`who-iris/scripts/check-catalogue.ts` checks that a `materialized` claim names
+`folio-assistant-core/scripts/check-catalogue.ts` checks that a `materialized` claim names
 bytes that exist, with `local-path.ts`'s three states (`ok` / `missing` /
 `unknown`) and bean `yl5w`'s scar behind it: *three claims resolved to nothing
 and the gate said clean*.

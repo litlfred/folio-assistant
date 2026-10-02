@@ -34,7 +34,8 @@ import {
 import { isOwnExtensionNamespace, OWN_BPMN_EXTENSION_NAMESPACES, OWN_NAMESPACE_VALUES, OWN_XML_NAMESPACES, WORKFLOWS_NS } from "../schemas/namespaces.js";
 import { portableSegment } from "../schemas/portable-path";
 import { directoriesForGraph } from "../schemas/cat-harness.js";
-import { workflowFiles } from "./known-skills.js";
+import { workflowFiles, corpusScopeFor } from "./known-skills.js";
+import { corpusDirectoriesForGraph } from "../schemas/harness-config.js";
 
 const ROOT = resolve(import.meta.dir, "..");
 // Read from the DECLARATION rather than hardcoded, and the reason this
@@ -107,7 +108,7 @@ export function namespacesInUse(root = ROOT): string[] {
  * misstates it.
  */
 export function targetNamespacesInUse(
-  files: readonly string[] = workflowFiles(ROOT),
+  files: readonly string[] = workflowFiles(ROOT, corpusScopeFor(ROOT)),
   base = resolve(ROOT, ".."),
 ): Map<string, string[]> {
   // The DECLARED workflow graph, not a literal `processes/`: that reaches a
@@ -157,7 +158,7 @@ export function jsonLdNamespacesInUse(root = ROOT): Map<string, string[]> {
       else visit(p);
     }
   };
-  const codeDirs = [...directoriesForGraph(root, "code"), ...directoriesForGraph(root, "schemas")];
+  const codeDirs = [...directoriesForGraph(root, "code"), ...corpusDirectoriesForGraph(root, "schemas")];
   for (const d of new Set(codeDirs)) {
     walk(d, (f) => {
       if (!f.endsWith(".ts") || f.endsWith(".test.ts")) return;
@@ -203,7 +204,9 @@ export function bpmnTermsInUse(root = ROOT): string[] {
   const dir = join(root, "processes");
   if (!existsSync(dir)) return [];
   const out = new Set<string>();
-  for (const f of readdirSync(dir).filter((f) => f.endsWith(".bpmn"))) {
+  // Recursive since placement PR3 (bean `63wl`): the diagrams sit in
+  // `processes/<group>/`, so a top-level read saw none of them.
+  for (const f of (readdirSync(dir, { recursive: true }) as string[]).filter((f) => f.endsWith(".bpmn"))) {
     for (const m of readFileSync(join(dir, f), "utf-8").matchAll(/<(bpmn:[a-zA-Z]+)/g)) {
       out.add(m[1]!);
     }

@@ -1,10 +1,15 @@
 {
-  "@context": "https://litlfred.github.io/folio-assistant/ns/content/v1.jsonld",
+  "@context": [
+    "https://litlfred.github.io/folio-assistant/ns/content/v1.jsonld",
+    {
+      "@base": "https://litlfred.github.io/folio/"
+    }
+  ],
   "@id": "library/mehl-2021-who-smart-guidelines/manifest",
   "@type": [
     "folio-assistant-core:SourceDocument"
   ],
-  "title": "Comment www.thelancet.com/digital-health Vol 3 April 2021",
+  "title": "WHO SMART guidelines: optimising country-level use of guideline recommendations in the digital age",
   "contains": [
     "library/mehl-2021-who-smart-guidelines/sections/sec-front-matter",
     "library/mehl-2021-who-smart-guidelines/sections/sec-000"
@@ -12,6 +17,8 @@
   "provenance": "ingested",
   "meta": {
     "doc_id": "mehl-2021-who-smart-guidelines",
+    "title_source": "pdf-info",
+    "title_from": "structure.json metadata.docinfo.Title",
     "source_file": "mehl-2021-who-smart-guidelines.pdf",
     "source_sha256": "042a78e86f3dce26dea4de062c2910689c4d04c03604cbb352d01a9cbbf975a7",
     "pages": 4,

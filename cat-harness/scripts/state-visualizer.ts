@@ -131,7 +131,7 @@ import {
   unlinkSync,
   writeFileSync,
 } from "node:fs";
-import { basename, dirname, join, relative, sep } from "node:path";
+import { basename, dirname, join, relative, resolve, sep } from "node:path";
 
 import {
   graphKindsOfLayer,
@@ -147,7 +147,8 @@ import { QA_GRAPH_INDEX_SCHEMA } from "../content/pipeline/qa-graph-index.ts";
 import { unportableSegment } from "../schemas/portable-path";
 import { carriesMarker, orphanSubjectPages } from "./orphan-pages.ts";
 import { withViewerNav } from "./viewer-page.ts";
-import { renderedPath, withRenders, withViewers } from "./viewer-declarations.js";
+import { visualiserNavDeclaration } from "./lib/navbar.ts";
+import { renderedPath, siteDirectories, withRenders, withViewers } from "./viewer-declarations.js";
 
 /** This generator's Tool node (`tools/viewers.ts`), named on every page it draws. */
 const VIEWER_TOOL = "state-viewer";
@@ -742,15 +743,102 @@ function dashboardPage(g: StateGraph, graphs: StateGraph[]): string {
     tag === BEAN_INDEX_SCHEMA
       ? `<meta name="fa-beans-src" content="${src}">`
       : `<meta name="fa-todo-src" content="${src}">`,
+    // The deploy's stamp, at the site root beside this page's directory.
+    // Written by the deploy, never committed — bean `y7b3`.
+    `<meta name="fa-build-src" content="../build.json">`,
   ];
+  // The todo graph is LISTED as well as counted (#1757) — the counts are the
+  // script's, the listing and its rail section are static.
+  const todos = tag === TODO_INDEX_SCHEMA ? todoItemsOf(g.id) : undefined;
+  const listing = todos ? todoListing(todos) : undefined;
   return page({
     title: `${g.id} — state`,
     metas,
-    body: head + `<div class="fa-workplan" data-fa-workplan>
+    body: head + (listing ? listing.nav : "") + `<div class="fa-workplan" data-fa-workplan>
   <p class="fa-workplan-fallback">This view needs JavaScript. The data is
   <a href="${src}">a plain JSON file</a>.</p>
-</div>` + registry(graphs, g.id),
+</div>` + (listing ? listing.html : "") + registry(graphs, g.id),
   });
+}
+
+/** A todo as the projection publishes it — only the fields the listing reads. */
+interface ListedTodo {
+  id: string;
+  summary?: string;
+  status?: string;
+  priority?: string;
+  target?: { page?: string; node?: string };
+}
+
+/**
+ * The todos, LISTED, grouped by the knowledge-graph node each is attached to —
+ * and the rail section that indexes them.
+ *
+ * Owner, 2026-10-01 (#1757): *"todos page should have a LHS navbar to help see
+ * todos associated the KG"*. The page showed two counts and no todo, so there
+ * was nothing a navbar could point at. Rendered SERVER-SIDE, like
+ * {@link qaPanels}: the data is known at generate time, and a list of links
+ * needs no script.
+ *
+ * Grouped by `target.page` — the node the todo is attached to — because that
+ * is the association the owner asked to see. A todo attached to nothing is
+ * grouped as such, by name, rather than dropped: a todo missing from the
+ * listing reads as one that does not exist.
+ *
+ * Returns the HTML and the `data-fa-visualiser-nav` declaration together, so
+ * the anchors the nav links to and the ids the listing carries are minted in
+ * one place and cannot disagree.
+ */
+export function todoListing(items: readonly ListedTodo[]): { html: string; nav: string } {
+  const UNATTACHED = "attached to no node";
+  const groups = new Map<string, ListedTodo[]>();
+  for (const t of items) {
+    const k = t.target?.page ?? UNATTACHED;
+    groups.set(k, [...(groups.get(k) ?? []), t]);
+  }
+  const keys = [...groups.keys()].sort((a, b) =>
+    a === UNATTACHED ? 1 : b === UNATTACHED ? -1 : a.localeCompare(b, "en"),
+  );
+  const slug = (s: string): string => s.replace(/[^A-Za-z0-9_-]+/g, "-");
+  const nav = keys.map((k) => ({
+    label: k,
+    href: `#node-${slug(k)}`,
+    items: groups.get(k)!.map((t) => ({ label: t.summary ?? t.id, href: `#todo-${slug(t.id)}` })),
+  }));
+  const html =
+    `<h2 class="sv-h2">Todos by the node they are attached to — ${items.length}</h2>` +
+    keys
+      .map(
+        (k) =>
+          `<section class="sv-item" id="node-${slug(k)}">` +
+          `<h3>${esc(k)}</h3><ul>` +
+          groups
+            .get(k)!
+            .map(
+              (t) =>
+                `<li id="todo-${slug(t.id)}">${esc(t.summary ?? t.id)}` +
+                (t.status ? ` <span class="sv-tag">${esc(t.status)}</span>` : "") +
+                (t.priority ? ` <span class="sv-tag">${esc(t.priority)}</span>` : "") +
+                (t.target?.node ? ` <span class="sv-sub">· ${esc(t.target.node)}</span>` : "") +
+                `</li>`,
+            )
+            .join("") +
+          `</ul></section>`,
+      )
+      .join("\n");
+  return { html, nav: visualiserNavDeclaration(nav) };
+}
+
+/** The todo items a graph's projection publishes, or `undefined` if unreadable. */
+function todoItemsOf(id: string): ListedTodo[] | undefined {
+  const p = projectionFor(id);
+  if (p === null) return undefined;
+  try {
+    const d = JSON.parse(readFileSync(p, "utf8")) as { items?: ListedTodo[] };
+    return Array.isArray(d.items) ? d.items : undefined;
+  } catch {
+    return undefined;
+  }
 }
 
 /** The `$schema` a graph's published projection declares, or null. */
@@ -852,7 +940,15 @@ if (import.meta.main) main();
 function main(): void {
 // Viewers RESOLVED from the pages (#1168 B7a-2b).
 const declRead = readDeclaration(ROOT);
-const decl = declRead && { ...declRead, directories: withViewers(declRead.directories ?? [], ROOT) };
+// The CHECKOUT's state graphs too (placement PR0, bean `ejye`): `beans`,
+// `todos`, `memory`, `interaction` and `issue-marks` are declared by the
+// checkout's ROOT instance since the platform stopped mirroring them, and
+// this site still draws their dashboards. Read as `repository`-scoped, which
+// is what they are relative to this instance and how `drawnDir` resolves them.
+const decl = declRead && {
+  ...declRead,
+  directories: withViewers(siteDirectories(declRead.directories ?? [], ROOT, REPO_ROOT), ROOT),
+};
 if (!decl) {
   // "Could not determine", and this generator does not get to decide it means
   // "no state". Exit 2 is never rendered as a pass, the same rule
@@ -862,7 +958,19 @@ if (!decl) {
   process.exit(2);
 }
 
-const all = stateGraphsOf(decl);
+// AND the checkout root's own state graphs (bean `cmsl` step 2, issue #1694):
+// `beans/`, `todos/`, `memory/`, `fsh-guts/`, `issue-marks/`, `interaction/`
+// are declared by the root instance since the owner's round-5 ruling, and this
+// site is where their dashboards were always published — every one of them
+// names `cat-harness/docs/<id>/index.html` as its visualiser. Reading only this
+// instance's declaration would orphan all six the moment the entries moved.
+const rootRead = resolve(REPO_ROOT) === resolve(ROOT) ? undefined : readDeclaration(REPO_ROOT);
+const rootDirs = rootRead ? withViewers(rootRead.directories ?? [], REPO_ROOT, REPO_ROOT) : [];
+const ownIds = new Set((decl.directories ?? []).map((d) => d.id));
+const checkoutDirs = rootDirs.filter((d) => !ownIds.has(d.id));
+const all = [...stateGraphsOf(decl), ...stateGraphsOf({ ...decl, directories: checkoutDirs })].sort((a, b) =>
+  a.id.localeCompare(b.id),
+);
 const taken = all.filter((g) => RESERVED_IDS.has(g.id) || g.id.startsWith("_"));
 for (const g of taken) {
   console.error(
@@ -895,7 +1003,10 @@ const graphs = all.filter((g) => !taken.includes(g) && !unportable.includes(g));
 // repository root, any other from this instance's.
 const drawnDir = (g: StateGraph): string => {
   const entry = decl.directories?.find((d) => d.id === g.id);
-  return renderedPath(REPO_ROOT, join(entry?.scope === "repository" ? REPO_ROOT : ROOT, g.path));
+  // An entry the checkout root declares resolves against the root, which is
+  // where a `repository`-scoped entry of this instance resolved too.
+  const base = entry === undefined || entry.scope === "repository" ? REPO_ROOT : ROOT;
+  return renderedPath(REPO_ROOT, join(base, g.path));
 };
 for (const g of graphs) {
   emit(join(SITE, g.id, "index.html"), withRenders(dashboardPage(g, graphs), [drawnDir(g)], VIEWER_TOOL));

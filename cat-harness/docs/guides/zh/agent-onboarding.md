@@ -59,8 +59,8 @@ bun run src/index.ts --check-deps      # what this environment can do
 | 位置 | 它为你提供的内容 |
 |---|---|
 | `skills/folio-core/` | 内容无关：协调、监视器（watchers）、QA、渲染、参考书目 |
-| `skills/authoring/folio-paper-adapter/` | 论文：Lean、LaTeX、证明、模拟器 |
-| `skills/authoring/authoring-who-smart-guidelines/` | WHO SMART DAK / IG |
+| `folio-assistant-sci/skills/content/folio-paper-adapter/` | 论文：Lean、LaTeX、证明、模拟器 |
+| `smart-base/skills/content/authoring-who-smart-guidelines/` | WHO SMART DAK / IG |
 | [技能模式参考](../../reference/skills/) | 每项技能生成的输入/输出契约 |
 | [技能指令](../../reference/skill-instructions/) | 生成的完整指令主体 |
 | [技能与角色](../../skills.html) | 技能、角色与能力如何组合 |

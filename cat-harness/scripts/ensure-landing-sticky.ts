@@ -74,6 +74,7 @@ import { portableSegment } from "../schemas/portable-path";
 import {
   StickyContributionSchema,
   composeContributions,
+  readerText,
   type DeclaredContribution,
 } from "../schemas/sticky-contribution.js";
 
@@ -384,12 +385,26 @@ export function contributingRoots(root: string): string[] {
   // repository has one; a temp directory does not.
   const repoRoot = repoRootFor(own);
   if (repoRoot !== own && existsSync(join(repoRoot, ".git"))) {
+    // THE CHECKOUT ROOT ITSELF, by the same rule: it is an instance the moment
+    // it declares itself. It used to be reached only by accident — cat-harness
+    // declared `beans/` with `scope: "repository"`, and walking up from it found
+    // the root's declaration. cmsl step 2 (issue #1694) moved those entries to
+    // the root, and the root's card silently left the board (measured
+    // 2026-09-30: `cat-harness/folio/folio-assistant.json` pruned).
+    if (findDeclarationFile(resolve(repoRoot)) !== undefined) nested.push(resolve(repoRoot));
     for (const entry of readdirSync(repoRoot, { withFileTypes: true })) {
       if (!entry.isDirectory() || entry.name.startsWith(".")) continue;
       const abs = resolve(repoRoot, entry.name);
       if (abs === own) continue;
       if (findDeclarationFile(abs) !== undefined) nested.push(abs);
     }
+    // THE CHECKOUT'S ROOT INSTANCE, when the repository root is one. It was
+    // reached only through the walk above, because this instance declared
+    // `beans/` at `scope: "repository"` and the root's declaration owns that
+    // path — so the root's card was on the board by accident of a mirror.
+    // Placement PR0 (bean `ejye`) moved `beans/` to the root's own
+    // declaration, and the card went with the accident; it is named here.
+    if (findDeclarationFile(repoRoot) !== undefined) nested.push(resolve(repoRoot));
   }
 
   // The instance LAST, so its own contributions are read after its nested
@@ -403,8 +418,8 @@ export function contributingRoots(root: string): string[] {
  * The contributions every layer declares, composed and ordered.
  *
  * Reads `stickies` off each layer's declaration and pairs it with that layer's
- * own `name` and `description` — `bodyFrom: "description"` means **the declaring
- * instance's** description, so bootstrap's card carries bootstrap's sentence and
+ * own `name`, `summary`, `alsoWritten` and `description`. `bodyFrom` reads **the
+ * declaring instance's** fields, so bootstrap's card carries bootstrap's sentence and
  * not this instance's. Reading the root's for every layer would give a board of
  * one sentence repeated, which is the defect that makes the whole seam pointless.
  */
@@ -424,6 +439,8 @@ export function declaredContributions(root: string): DeclaredContribution[] {
         // silently attribute a card to the wrong file.
         declaredIn: relative(repoRootFor(root), declarationPathIn(layer)!) || (findDeclarationFile(layer) ?? ""),
         ...(decl.description === undefined ? {} : { description: decl.description }),
+        ...(decl.summary === undefined ? {} : { summary: decl.summary }),
+        ...(decl.alsoWritten === undefined ? {} : { alsoWritten: decl.alsoWritten }),
       });
     }
   }
@@ -458,6 +475,51 @@ export function stickiesFor(
     });
     return existing ? { ...wanted, createdAt: existing.createdAt } : wanted;
   });
+}
+
+/**
+ * Every harness sticky whose words are not the reader's text for its harness.
+ *
+ * The owner's ruling on bean `ob3m` finding 3, 2026-10-01: *"Stickies show the
+ * same text as the landing page"*. A card built from its declaration must open
+ * with {@link readerText}: the `summary` (else the description) and the
+ * "Also written" spellings, which is what the landing's harness section shows.
+ * The defect this catches: the folio-assistant card read its `description`,
+ * which opens "The repository itself… NAMED `folio-assistant-checkout`", the
+ * reason the name was chosen, written for a maintainer.
+ *
+ * **Reads the FILES the board renders**, not the declaration's intent, so a
+ * card left stale is caught as well as a declaration that picks the author's
+ * text. `startsWith` rather than equality, because `bodyAppend` may add to the
+ * reader's text without copying it.
+ *
+ * A card with a literal `body` is not judged here. Its words are written for
+ * the card itself, and there is no declaration field to compare them with.
+ */
+export function readerTextProblems(root: string): string[] {
+  const decl = JSON.parse(readFileSync(declarationPathIn(root)!, "utf8")) as {
+    directories?: ContentDirectory[];
+  };
+  const dir = join(root, folioDirPath(decl));
+  const problems: string[] = [];
+  for (const d of declaredContributions(root)) {
+    if (d.contribution.bodyFrom === undefined) continue;
+    const want = readerText(d);
+    if (want === undefined) continue;
+    const file = join(folioDirPath(decl), stickyFile(d.contribution.id));
+    const onDisk = readExistingSticky(join(dir, stickyFile(d.contribution.id)));
+    if (onDisk === undefined) continue; // reported as missing by the main check
+    if (!onDisk.comment.startsWith(want)) {
+      const why =
+        d.contribution.bodyFrom === "description" && d.summary !== undefined
+          ? `declares \`bodyFrom: "description"\` but ${d.declaredIn} has a \`summary\`; use \`bodyFrom: "summary"\``
+          : "is stale";
+      problems.push(
+        `${file} does not show ${d.declaredBy}'s summary and "Also written" (the landing's text): it ${why}`,
+      );
+    }
+  }
+  return problems;
 }
 
 /** What a `--begin` / `--complete` run is asking for. */
@@ -614,6 +676,7 @@ if (import.meta.main) {
         .filter((st) => st.state !== "already")
         .map((st) => `${st.path} is ${st.state === "written" ? "missing" : "stale"}`),
       ...report.pruned.map((f) => `${join(report.folioDir, f)} is declared by no layer`),
+      ...readerTextProblems(root),
     ].filter((p): p is string => p !== undefined);
     if (problems.length === 0) {
       console.log(`✓ folio declared at ${report.folioDir}, ${report.stickies.length} sticky/ies up to date`);

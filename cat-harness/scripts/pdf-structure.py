@@ -27,6 +27,15 @@ text for arXiv papers, both new-style (`arXiv:0706.2213v3 [math.GT]`) and
 old-style (`arXiv:hep-th/0001202v2`). DocInfo is recorded as a
 cross-check, never as the source of truth.
 
+THE TITLE IS THE EXCEPTION (issue #1794, owner's ruling 2026-10-01).
+`metadata.title`, the page-1 front-matter guess, is NEVER a library entry's
+title. It guessed "Abies" for the WHO editorial style manual. The manifest
+title is taken from the catalogue record, then `referenced.json`, then this
+artefact's `metadata.docinfo.Title` (junk-filtered), then the slug. See
+`content/pipeline/library-title.ts`. The guess is still written, for search
+and for the section files' `doc_title`. Keep writing `docinfo`: for a title
+it outranks the guess.
+
 Table of contents comes from the PDF outline when there is one (194 of
 339, 57%) and is otherwise inferred from heading patterns in the text.
 Which route was used is recorded per entry, so a consumer can weight it.
@@ -87,6 +96,10 @@ from _pdf_doc_id import (  # noqa: E402
     find_ocr_cache,
     slugify,
 )
+# The title, from the sources that can vouch for it (bean `w6fu`). Shared with
+# `pdf-pages.py` and `ingest-document.ts --refresh-title`, so the three agree
+# about what a title is.
+from _pdf_title import BROWSER_RE, apply as resolve_title, evidence_from_pdf  # noqa: E402
 
 SCHEMA = "pdf-structure/v1"
 
@@ -1276,6 +1289,21 @@ def _process(path: str, outdir: str | None = None, use_ocr: bool = False,
     empty = sum(1 for p in pages if len(p.strip()) < 20)
     doc_id = derive_doc_id(path, meta)
 
+    # The title is resolved AFTER the doc id, which is derived from the text
+    # walk's metadata and must not move because a better title was found.
+    # PyMuPDF reads the heading; the pypdf backend has no font sizes, so it
+    # offers the metadata title, the outline and the page text only.
+    if reader.name == "pymupdf":
+        evidence = evidence_from_pdf(path)
+    else:
+        evidence = {
+            "metadata": docinfo.get("Title"),
+            "outline": next((e.title for e in outline if e.level == 1), None),
+            "page_text": "\n".join(pages[:2]),
+            "browser": bool(BROWSER_RE.search(f"{docinfo.get('Creator', '')} {docinfo.get('Producer', '')}")),
+        }
+    meta = resolve_title(meta | {"docinfo": docinfo}, evidence, doc_id)
+
     artefact: dict[str, Any] = {
         "_schema": SCHEMA,
         "doc_id": doc_id,
@@ -1305,7 +1333,7 @@ def _process(path: str, outdir: str | None = None, use_ocr: bool = False,
             **{k: v for k, v in _tech_meta(path).items()
                if k in ("mtime", "mimetype_sniffed", "mimetype_source")},
         },
-        "metadata": meta | {"docinfo": docinfo},
+        "metadata": meta,
         "toc": [asdict(e) for e in toc],
         # FOUR states, not three. `none` is a DETERMINED "this document has no
         # discoverable table of contents"; `undetermined` is "one was inferred
@@ -1418,6 +1446,15 @@ def main() -> int:
             # second chance to disagree, which is the whole defect of `rlp5`.
             outdir = os.path.join(root, artefact["doc_id"])
             os.makedirs(outdir, exist_ok=True)
+            # An editor's title correction is not extraction output, so a
+            # re-ingest carries it over rather than erasing it (bean `w6fu`).
+            previous = os.path.join(outdir, "structure.json")
+            if os.path.exists(previous):
+                with contextlib.suppress(ValueError, OSError):
+                    with open(previous) as fh:
+                        kept = (json.load(fh).get("metadata") or {}).get("title_correction")
+                    if kept:
+                        artefact["metadata"]["title_correction"] = kept
             with open(os.path.join(outdir, "structure.json"), "w") as fh:
                 json.dump(artefact, fh, indent=1)
             if not args.no_sections:

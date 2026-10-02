@@ -6,14 +6,14 @@ parent: Skill instructions
 ---
 
 {: .note }
-> Generated from [`cat-harness/skills/authoring/authoring-who-smart-guidelines/ig-publication.md`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/authoring/authoring-who-smart-guidelines/ig-publication.md) — do not edit here. Typed contract: [schema reference](../skills/ig-publication.html).
+> Generated from [`fhir-harness/skills/content/fhir-ig-authoring/ig-publication.md`](https://github.com/litlfred/folio-assistant/blob/main/fhir-harness/skills/content/fhir-ig-authoring/ig-publication.md) — do not edit here. Typed contract: [schema reference](../skills/ig-publication.html).
 >
-> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/cat-harness/skills/authoring/authoring-who-smart-guidelines/ig-publication.md){: .fa-edit-source }
+> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/fhir-harness/skills/content/fhir-ig-authoring/ig-publication.md){: .fa-edit-source }
 
 {% raw %}
 # ig-publication
 
-> Skill id: `ig-publication` · Package: `authoring-who-smart-guidelines` ·
+> Skill id: `ig-publication` · Package: `fhir-ig-authoring` ·
 > The most-referenced skill in this package — named by seven activities across
 > `l3-fhir-pipeline.bpmn`, `ig-incremental-build.bpmn` and
 > `draft-to-publication.bpmn`, in the `Publication manager`,
@@ -29,7 +29,7 @@ site, deploy.
 
 ## Inputs and outputs
 
-`schemas/skills/ig-publication/`:
+`fhir-harness/schemas/skills/ig-publication/`:
 
 - **in** — `igRoot` (required), `versionIncrement` (required), `releaseNotes`,
   `publicationTarget`
@@ -69,8 +69,8 @@ for serving the built site locally.
 
 The Publisher is **one step** in the WHO build, between six pre-processing
 invocations and eight post-processing ones
-([`dak-preprocessing`](dak-preprocessing.md),
-[`dak-postprocessing`](dak-postprocessing.md)). It is easy to credit it with
+(`dak-preprocessing` (smart-base),
+`dak-postprocessing` (smart-base)). It is easy to credit it with
 what the phases around it do, so this is what the run itself produces:
 
 | it produces | notes |
@@ -129,7 +129,7 @@ issue, not only the PR.
 
 | process | step(s) that name it |
 |---|---|
-| [Draft, review and publish](../../processes/draft-to-publication.html) | Version, tag and publish |
 | [Incremental IG build](../../processes/ig-incremental-build.html) | Restore derived state; Full publisher build; Compute the cone of the change (fsh-cone --changed); Restricted checkout of the backward cone; Load or reuse the warm context (fhir_context_load); Re-render the cone's records (fhir_narrative · skip lists); Merge restored and rebuilt records; Rebuild the meta-index (ig_metaindex_rebuild); Assemble the site (template · Jekyll); Deploy the site [content-publish]; Seed the cache from the green build (ig-cache seed · verify · promote) |
 | [L3 FHIR IG pipeline](../../processes/l3-fhir-pipeline.html) | IG Publisher build; Publish the IG site |
+| [Draft, review and publish](../../processes/draft-to-publication.html) | Version, tag and publish |
 

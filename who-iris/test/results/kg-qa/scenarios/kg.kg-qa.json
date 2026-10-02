@@ -110,7 +110,7 @@
       "findings": [
         {
           "where": "—",
-          "detail": "no schemas directory to read `@general` declarations from."
+          "detail": "no BPMN extension element was found in any diagram, so the process half checked nothing."
         }
       ]
     },
@@ -135,11 +135,36 @@
           "detail": "not evaluated: `nested-instance-audited` is `repo`-scoped and this run is scoped to who-iris. `unreadNestedInstances()` walks from `repoRootFor(root)` to find declarations, so it asks a question ABOUT the repository's set of instances. MEASURED 2026-09-26: it fired 15 inside the bootstrap run, reporting bootstrap's siblings as unread from inside bootstrap — which is the root's question being asked in a place that cannot act on it."
         }
       ]
+    },
+    "content-instance-holds-code": {
+      "result": "fail",
+      "findings": [
+        {
+          "where": "scripts/gen-iris-pages.ts",
+          "detail": "scripts/gen-iris-pages.ts is code in a CONTENT instance (`who-iris` declares `separation: \"content\"`). A content repository holds no code (kg-separation, bootstrap FR-7): move it to the platform if it is generic, or to a `<name>-tools` repository once one is authorised. Tolerated for now is still a finding."
+        },
+        {
+          "where": "scripts/tests/catalogue-links.test.ts",
+          "detail": "scripts/tests/catalogue-links.test.ts is code in a CONTENT instance (`who-iris` declares `separation: \"content\"`). A content repository holds no code (kg-separation, bootstrap FR-7): move it to the platform if it is generic, or to a `<name>-tools` repository once one is authorised. Tolerated for now is still a finding."
+        },
+        {
+          "where": "scripts/tests/gen-iris-pages.test.ts",
+          "detail": "scripts/tests/gen-iris-pages.test.ts is code in a CONTENT instance (`who-iris` declares `separation: \"content\"`). A content repository holds no code (kg-separation, bootstrap FR-7): move it to the platform if it is generic, or to a `<name>-tools` repository once one is authorised. Tolerated for now is still a finding."
+        },
+        {
+          "where": "themes/themes.test.ts",
+          "detail": "themes/themes.test.ts is code in a CONTENT instance (`who-iris` declares `separation: \"content\"`). A content repository holds no code (kg-separation, bootstrap FR-7): move it to the platform if it is generic, or to a `<name>-tools` repository once one is authorised. Tolerated for now is still a finding."
+        },
+        {
+          "where": "themes/themes.ts",
+          "detail": "themes/themes.ts is code in a CONTENT instance (`who-iris` declares `separation: \"content\"`). A content repository holds no code (kg-separation, bootstrap FR-7): move it to the platform if it is generic, or to a `<name>-tools` repository once one is authorised. Tolerated for now is still a finding."
+        }
+      ]
     }
   },
   "totals": {
     "pass": 7,
-    "fail": 0,
+    "fail": 1,
     "n/a": 11,
     "unknown": 3
   }

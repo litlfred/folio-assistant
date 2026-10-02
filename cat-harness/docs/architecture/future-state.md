@@ -153,7 +153,7 @@ layered on. It therefore depends on `folio-assistant-core` and not on
 |---|---|
 | WHO L1 document structure, `docs/guides/who-smart-dak.md` (L1 portions) | `smart-kg` |
 | L1 QA criteria | `smart-kg` |
-| `skills/authoring/authoring-who-smart-guidelines/` (L1 portions) | `smart-kg` |
+| `smart-base/skills/content/authoring-who-smart-guidelines/` (L1 portions) | `smart-kg` |
 
 **This is the thinnest mapping on the page**, because L1 is the least-built part
 of the current repo. Most WHO material here is L2 (DAK) and L3 (FHIR IG). The
@@ -169,8 +169,8 @@ L2–L3; adaptation skills; OCL skills.
 |---|---|
 | `schemas/dak-blocks.ts`, the `dak` adapter's kinds | `smart-base` |
 | `content/pipeline/fsh-cone.ts`, FHIR/FSH tooling | `smart-base` |
-| `processes/l2-dak-authoring.bpmn`, `l3-fhir-pipeline.bpmn` | `smart-base` |
-| `docs/guides/who-smart-{dak,ig}.md`, `skills/authoring/authoring-who-smart-guidelines/` (L2–L3) | `smart-base` |
+| `processes/l2-dak-authoring.bpmn` (**moved** 2026-10-01 to `smart-base/processes/`, issue #1772), `l3-fhir-pipeline.bpmn` | `smart-base` |
+| `docs/guides/who-smart-{dak,ig}.md`, `smart-base/skills/content/authoring-who-smart-guidelines/` (L2–L3) | `smart-base` |
 | the DAK translation extractors (PlantUML, ArchiMate, Excel, BPMN) from [PR #237](https://github.com/litlfred/folio-assistant/pull/237) | `smart-base` |
 | OCL skills, adaptation skills | `smart-base` (**mostly not yet written**) |
 | DAK QA criteria (bean `sopq`, the WHO IG starter-kit SOPs) | `smart-base` |

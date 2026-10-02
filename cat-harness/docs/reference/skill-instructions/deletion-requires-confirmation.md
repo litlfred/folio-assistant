@@ -142,6 +142,20 @@ over unlink, a label over a workflow step.
 remove one thing is not a confirmation to remove the class it belongs to. If
 the scope is ambiguous, the answer is another question, not an inference.
 
+**A standing confirmation for a class is possible, and it is the owner's to
+give — never an inference.** The worked case is the staging preview cap. Owner
+ruling, 2026-10-02 (issue #1868): *"cap the maximum number of previews (<= 10)
+and rotate old ones off."* That one sentence confirms, in advance, every
+removal of the least recently updated preview beyond ten, so the `stage` job
+removes them without asking per preview. What the ruling does NOT waive is the
+record: each rotation still names the artefact, its age and its size — in the
+commit message, the job log and a `removed` render-log entry — and retires its
+`staging-preview.json` into `STAGING/_retired/` rather than deleting it. And it
+is scoped exactly as given: it covers rotation over the cap, not any other
+removal of a preview, and it does not extend to `_retired/` or anything else
+on the branch. See [`staging-review`](staging-review.md)
+§"The cap".
+
 ## The failure this skill was written from — bean `plj1`
 
 Not a hypothetical, and not an agent typing `rm`.
@@ -294,10 +308,10 @@ nothing.
 
 | process | step(s) that name it |
 |---|---|
-| [Actor and role administration](../../processes/actor-role-administration.html) | Retire an actor — never delete one |
-| [Board: relocate content to the trashcan](../../processes/board-relocate.html) | Name what will move, and where it lands; Say what moved and where it went |
-| [Staging a feature branch preview, and taking it down](../../processes/feature-staging.html) | Remove the preview AND append `removed` — one commit; Check the slug's SHAPE and that the confirmation repeats it; Re-evaluate liveness AT REMOVAL TIME; Remove it AND append `removed` — one commit; Repeat the slug, exactly, to confirm |
 | [A sub-graph wants to leave](../../processes/graph-detanglement.html) | Report what would move — sizes, and what breaks; Authorise the extraction |
 | [A knowledge graph leaves for its own repositories](../../processes/kg-separation.html) | Report what moves — sizes, what breaks; 9 · Authorise the extraction; 13 · Cutover: delete the parent's copy |
+| [Actor and role administration](../../processes/actor-role-administration.html) | Retire an actor — never delete one |
+| [Staging a feature branch preview, and taking it down](../../processes/feature-staging.html) | Remove the preview AND append `removed` — one commit; Check the slug's SHAPE and that the confirmation repeats it; Re-evaluate liveness AT REMOVAL TIME; Remove it AND append `removed` — one commit; Repeat the slug, exactly, to confirm |
 | [Is the repository itself healthy?](../../processes/repository-health-watch.html) | Run the health checks, keeping the report either way |
+| [Board: relocate content to the trashcan](../../processes/board-relocate.html) | Name what will move, and where it lands; Say what moved and where it went |
 

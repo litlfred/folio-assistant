@@ -1,10 +1,15 @@
 {
-  "@context": "https://litlfred.github.io/folio-assistant/ns/content/v1.jsonld",
+  "@context": [
+    "https://litlfred.github.io/folio-assistant/ns/content/v1.jsonld",
+    {
+      "@base": "https://litlfred.github.io/folio/"
+    }
+  ],
   "@id": "library/arxiv-2508.05192v2/manifest",
   "@type": [
     "folio-assistant-core:SourceDocument"
   ],
-  "title": "AI-assisted JSON Schema Creation and Mapping 1st Felix Neubauer , 3rd Benjamin Uekermann",
+  "title": "AI-assisted JSON Schema Creation and Mapping",
   "contains": [
     "library/arxiv-2508.05192v2/sections/sec-000",
     "library/arxiv-2508.05192v2/sections/sec-001",
@@ -22,6 +27,8 @@
   "provenance": "ingested",
   "meta": {
     "doc_id": "arxiv-2508.05192v2",
+    "title_source": "pdf-info",
+    "title_from": "structure.json metadata.docinfo.Title",
     "source_file": "neubauer-2025-ai-assisted-schema-creation.pdf",
     "source_sha256": "13728ff160553b85006566c9a2312fd0ace858ec1e5a504eab35140170460e47",
     "pages": 5,

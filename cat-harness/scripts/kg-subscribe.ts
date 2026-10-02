@@ -110,6 +110,8 @@ import {
 import { RepoFullNameSchema } from "../schemas/repo-full-name.js";
 import {
   KG_PART_RECORD_SCHEMA,
+  SNAPSHOT_GRAPH_KIND,
+  SNAPSHOT_SUFFIX,
   SUBSTRATE_SNAPSHOT_SCHEMA,
   SubstrateSnapshotSchema,
   type SubstrateSnapshot,
@@ -118,8 +120,8 @@ import { git, pinnedRef, shallowFetch } from "./sync-remote-skills.js";
 
 const INSTANCE = join(import.meta.dir, "..");
 
-/** The graph kind of the directory a snapshot is written to. */
-export const SNAPSHOT_GRAPH_KIND = "substrate-snapshot";
+/** The graph kind of the directory a snapshot is written to, and a snapshot's filename suffix: defined beside the schema. */
+export { SNAPSHOT_GRAPH_KIND, SNAPSHOT_SUFFIX };
 
 /**
  * Bootstrap's Graph Kinds whose Subgraphs hold what makes a Knowledge Graph a
@@ -434,7 +436,6 @@ export async function subscribe(opts: SubscribeOptions): Promise<SubscribeResult
 
 // ── --check: offline, every subscription has a snapshot that still holds ────
 
-export const SNAPSHOT_SUFFIX = ".substrate.json";
 
 /**
  * Offline judgement of one instance's subscriptions and snapshots. Findings,

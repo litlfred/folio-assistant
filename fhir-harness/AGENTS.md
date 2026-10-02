@@ -21,20 +21,26 @@ rather than left as an intention.
 ## Where the layer sits
 
 ```
-folio-assistant-core → fhir-harness → smart-base → {smart-l1, smart-dak, smart-ig}
+folio-assistant-core → fhir-harness → smart-base (L1 and DAK document kinds) → smart-ig
 ```
 
 The owner's ruling, 2026-09-22. An IG that wants the DAK surface does not
-change this pipeline — it instantiates `smart-dak` and gets the pre/post steps
-as an **overlay**. This layer must not gain a `do_dak` flag: that would be this
-layer knowing about DAKs.
+change this pipeline — the DAK document kind in `smart-base` supplies the
+pre/post steps as an **overlay**. (Owner's stack ruling 2026-09-22, revised
+2026-10-01: `smart-l1` and `smart-dak` became document kinds, #1767.) This
+layer must not gain a `do_dak` flag: that would be this layer knowing about
+DAKs.
 
 Placement:
-[`smart-stack-layering`](../cat-harness/skills/authoring/authoring-who-smart-guidelines/smart-stack-layering.md).
+[`smart-stack-layering`](../smart-base/skills/content/authoring-who-smart-guidelines/smart-stack-layering.md).
 
 ## What is here
 
-`skills/fhir-ig-base/` — `ig-build-pipeline` and `ig-render-jekyll`;
+`skills/fhir-ig-base/`: `ig-build-pipeline`, `ig-render-jekyll`,
+`ig-publisher-reduction` (the five phases), `ig-publisher-fork` (the AST
+work, built as a library on top of the Publisher) and `ig-ast-delta` (list,
+check, diff and render IG ASTs; `scripts/ig-ast.ts`). The package manifest is
+the list, not this sentence.
 `skills/fhir-client/` — `smart-launch` and `fhir-client-operations`, which use
 the SMARTerFHIR library. Nothing else, and the declaration says so: a declared-but-absent directory is the
 `dh4f` defect, where a consumer scans nothing and reports a clean run over it.

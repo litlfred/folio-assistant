@@ -6,9 +6,9 @@ parent: Skill instructions
 ---
 
 {: .note }
-> Generated from [`cat-harness/skills/authoring/folio-document-adapter/document-publishing.md`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/authoring/folio-document-adapter/document-publishing.md) — do not edit here. Typed contract: [schema reference](../skills/document-publishing.html).
+> Generated from [`folio-assistant-core/skills/content/folio-document-adapter/document-publishing.md`](https://github.com/litlfred/folio-assistant/blob/main/folio-assistant-core/skills/content/folio-document-adapter/document-publishing.md) — do not edit here. Typed contract: [schema reference](../skills/document-publishing.html).
 >
-> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/cat-harness/skills/authoring/folio-document-adapter/document-publishing.md){: .fa-edit-source }
+> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/folio-assistant-core/skills/content/folio-document-adapter/document-publishing.md){: .fa-edit-source }
 
 {% raw %}
 # document-publishing

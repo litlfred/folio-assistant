@@ -940,6 +940,58 @@ describe("bean-store", () => {
       expect(r.findings[0]!.action).toContain("RE-DERIVE");
     });
 
+    // ── Bean `v9ah`: only a CLOSABLE bean is a finding ────────────────────
+    // `bean-coordination` puts a mid-flight bean off limits; measured
+    // 2026-09-25, every bean this finding named was mid-flight, so every
+    // finding was one nobody could act on. Both excusals are REPORTED.
+    const NOW_V9 = "2026-09-19T12:00:00Z"; // healthyContext's clock
+    const hoursAgo = (h: number) => new Date(Date.parse(NOW_V9) - h * 3_600_000).toISOString();
+
+    it("a ticked claim touched inside the window is mid-flight: counted, not a finding", () => {
+      const r = beanStoreCheck(healthyContext({
+        beans: {
+          state: "ok",
+          value: [
+            bean({ id: "live", status: "in-progress", updatedAt: hoursAgo(10), doneWhen: { kind: "all-ticked", total: 3 } }),
+          ],
+        },
+      }));
+      expect(metrics(r)).toEqual([]);
+      const m = (k: string) => r.measurements.find((x) => x.metric === k)?.value;
+      expect(m("bean-self-declared-done")).toBe(0);
+      expect(m("bean-self-declared-done-mid-flight")).toBe(1);
+    });
+
+    it("a ticked parent with an OPEN child is not done at any age — the `5a3l` case", () => {
+      const r = beanStoreCheck(healthyContext({
+        beans: {
+          state: "ok",
+          value: [
+            bean({ id: "epic", status: "in-progress", updatedAt: hoursAgo(500), doneWhen: { kind: "all-ticked", total: 2 } }),
+            bean({ id: "kid1", status: "todo", parent: "epic" }),
+          ],
+        },
+      }));
+      expect(metrics(r)).not.toContain("bean-self-declared-done");
+      expect(r.measurements.find((x) => x.metric === "bean-self-declared-done-open-children")?.value).toBe(1);
+    });
+
+    it("the same parent with only CLOSED children, past the window, IS a finding — the discrimination", () => {
+      const r = beanStoreCheck(healthyContext({
+        beans: {
+          state: "ok",
+          value: [
+            bean({ id: "epic", status: "in-progress", updatedAt: hoursAgo(500), doneWhen: { kind: "all-ticked", total: 2 } }),
+            bean({ id: "kid1", status: "completed", parent: "epic" }),
+          ],
+        },
+      }));
+      expect(metrics(r)).toContain("bean-self-declared-done");
+      const f = r.findings.find((x) => x.metric === "bean-self-declared-done")!;
+      expect(f.summary).toContain("no open child");
+      expect(f.action).toContain("you MAY act on it");
+    });
+
     it("says nothing about a bean that is ticked but NOT claimed", () => {
       // A completed bean has every box ticked by construction. The finding is
       // about the disagreement between body and front matter, so with no claim

@@ -1,5 +1,5 @@
 <!-- kg:subgraph:begin -->
-# Designing with Language: Wireframing UI Design Intent with Generative Large
+# Designing with Language: Wireframing UI Design Intent with Generative Large Language Models
 
 ingested source material — attributed to its document, not folio content
 
@@ -16,6 +16,6 @@ Held in the library [`cat-harness/library/`](../README.md) as `arxiv-2312.07755v
 | holds | count |
 |---|---|
 | [sections](sections/) | 46 |
-| [blocks](blocks/) | 107 |
+| [blocks](blocks/) | 51 |
 | images | 28 |
 <!-- kg:subgraph:end -->

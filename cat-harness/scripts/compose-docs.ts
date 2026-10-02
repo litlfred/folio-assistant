@@ -148,12 +148,38 @@ export function docsLayers(repo = REPO): { layers: DocsLayer[]; missing: DocsLay
   const decl = JSON.parse(readFileSync(declarationPathIn(join(repo, "cat-harness"))!, "utf-8")) as {
     directories?: DeclEntry[];
   };
+  // AND the checkout root's own declaration (bean `cmsl` step 2, issue #1694):
+  // the repository's overlay layer `root-docs` is declared there since the
+  // owner's round-5 ruling, not by cat-harness with `scope: "repository"`. An
+  // entry the root declares sits at the repository root, which is exactly what
+  // the repository scope meant here, so it is marked as such.
+  const rootPath = declarationPathIn(repo);
+  const rootDecl = rootPath && existsSync(rootPath)
+    ? (JSON.parse(readFileSync(rootPath, "utf-8")) as { directories?: DeclEntry[] })
+    : { directories: [] };
+  const entries: DeclEntry[] = [
+    ...(decl.directories ?? []),
+    ...(rootDecl.directories ?? []).map((e) => ({ ...e, scope: "repository" })),
+  ];
   const found: DocsLayer[] = [];
-  for (const e of decl.directories ?? []) {
+  for (const e of entries) {
     if (!e.path || !e.id || !(e.graphKinds ?? []).includes("docs")) continue;
     const repositoryScoped = e.scope === "repository";
     const root = repositoryScoped ? repo : join(repo, "cat-harness");
     found.push({ id: e.id, dir: join(root, e.path), repositoryScoped });
+  }
+  // The REPOSITORY overlay is the checkout root instance's `docs` entry since
+  // placement PR0 (bean `ejye`): the root declares the directories at its own
+  // root, so the platform no longer reaches up for `root-docs` with
+  // `scope: "repository"`. Same layer, same order — the overlay goes last.
+  const rootDeclPath = declarationPathIn(repo);
+  if (rootDeclPath !== undefined && existsSync(rootDeclPath)) {
+    const rootDecl = JSON.parse(readFileSync(rootDeclPath, "utf-8")) as { directories?: DeclEntry[] };
+    for (const e of rootDecl.directories ?? []) {
+      if (!e.path || !e.id || !(e.graphKinds ?? []).includes("docs")) continue;
+      if (found.some((f) => f.id === e.id)) continue;
+      found.push({ id: e.id, dir: join(repo, e.path), repositoryScoped: true });
+    }
   }
   // Base (instance-scoped) before overlay (repository-scoped): later wins.
   found.sort((a, b) => Number(a.repositoryScoped) - Number(b.repositoryScoped));

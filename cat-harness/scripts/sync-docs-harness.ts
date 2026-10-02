@@ -41,7 +41,7 @@ import { gitTopLevelDirs } from "../schemas/git-corpus.ts";
 import { harnessTiles, instanceDirs } from "./harness-tiles.js";
 import { harnessPanel, skillPageIn } from "./harness-panel.js";
 import { siteLinks } from "./site-links.js";
-import { withViewers } from "./viewer-declarations.js";
+import { siteDirectories, withViewers } from "./viewer-declarations.js";
 
 
 const ROOT = resolve(import.meta.dir, "..");
@@ -292,6 +292,7 @@ function navbarRow(
   }[],
   self: string | undefined,
   siteLinkList: readonly { id: string; path?: string; url?: string }[],
+  checkout?: string,
 ): {
   icons: string[];
   hrefs: Record<string, string>;
@@ -304,10 +305,17 @@ function navbarRow(
   // none" are different answers and the template must be able to tell them
   // apart; `[]` here would report every un-migrated instance as deliberate.
   if (!mine || mine.navbarIcons === undefined) return null;
-  const byKind = new Map((mine.visualisations ?? []).map((v) => [v.kind, v.path ?? undefined]));
-  const noteByKind = new Map(
-    (mine.visualisations ?? []).flatMap((v) => (v.note ? [[v.kind, v.note] as const] : [])),
-  );
+  // This harness's own graphs FIRST, then the CHECKOUT ROOT's for a kind it
+  // does not hold. An icon names a kind, and since cmsl step 2 (issue #1694)
+  // the shared state — `beans`, `todos` — is declared by the root instance,
+  // so cat-harness's own `navbarIcons: ["todos", "beans", …]` found no tile
+  // and rendered both inert, "reason not recorded" (caught by
+  // `navbar-row.e2e.ts`). Its own tile still wins for a kind it does hold.
+  const root = checkout !== undefined && checkout !== self ? harnesses.find((h) => h.name === checkout) : undefined;
+  const ownKinds = new Set((mine.visualisations ?? []).map((v) => v.kind));
+  const vis = [...(mine.visualisations ?? []), ...(root?.visualisations ?? []).filter((v) => !ownKinds.has(v.kind))];
+  const byKind = new Map(vis.map((v) => [v.kind, v.path ?? undefined]));
+  const noteByKind = new Map(vis.flatMap((v) => (v.note ? [[v.kind, v.note] as const] : [])));
   const hrefs: Record<string, string> = {};
   /**
    * WHY a declared icon has no destination, in the words a reader sees.
@@ -416,7 +424,7 @@ const payload = {
   // de-duplicated, because a directory may hold several graphs and two
   // directories may hold the same one — `schemas/` declares both `schemas`
   // and `cat-harness`.
-  declaredKinds: [...new Set((decl.directories ?? []).flatMap((d) => d.graphKinds ?? []))].sort(),
+  declaredKinds: [...new Set(siteDirectories(decl.directories ?? [], ROOT, REPO_ROOT).flatMap((d) => d.graphKinds ?? []))].sort(),
   links,
   // ONE FAT TILE PER INITIATED HARNESS, for the left sidebar.
   //
@@ -438,7 +446,7 @@ const payload = {
    * and says where it shows, never two registries free to disagree about what
    * a tile is. The navbar and the board filter this by `surfaces`. */
   tiles: withTileCounts(
-    graphTiles(withViewers(decl?.directories ?? [], ROOT), relative(REPO_ROOT, join(ROOT, siteDirFor(ROOT)))),
+    graphTiles(withViewers(siteDirectories(decl?.directories ?? [], ROOT, REPO_ROOT), ROOT), relative(REPO_ROOT, join(ROOT, siteDirFor(ROOT)))),
     scanTileCounts(join(ROOT, siteDirFor(ROOT), "assets")),
   ),
   harnesses: allHarnesses,
@@ -462,7 +470,7 @@ const payload = {
    * the page rather than going anywhere, and giving them one would make them
    * look like navigation.
    */
-  navbar: navbarRow(allHarnesses, decl?.name, links),
+  navbar: navbarRow(allHarnesses, decl?.name, links, readDeclaration(REPO_ROOT)?.name),
   /**
    * EVERY INSTANCE'S VERSION, and its release addresses where it declares an
    * `iriBase` — so a page writes `{{ site.data.harness.releases.bootstrap.version }}`

@@ -6,9 +6,9 @@ parent: Skill instructions
 ---
 
 {: .note }
-> Generated from [`cat-harness/skills/authoring/folio-paper-adapter/semantic-review-scoping.md`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/authoring/folio-paper-adapter/semantic-review-scoping.md) — do not edit here.
+> Generated from [`folio-assistant-sci/skills/content/folio-paper-adapter/semantic-review-scoping.md`](https://github.com/litlfred/folio-assistant/blob/main/folio-assistant-sci/skills/content/folio-paper-adapter/semantic-review-scoping.md) — do not edit here.
 >
-> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/cat-harness/skills/authoring/folio-paper-adapter/semantic-review-scoping.md){: .fa-edit-source }
+> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/folio-assistant-sci/skills/content/folio-paper-adapter/semantic-review-scoping.md){: .fa-edit-source }
 
 {% raw %}
 # Semantic review scoping
@@ -92,5 +92,4 @@ statement-level criteria.
 | process | step(s) that name it |
 |---|---|
 | [Content Change and Review](../../processes/content-change-review.html) | Detect change scope & impact |
-| [Review task](../../processes/review-task.html) | Classify what changed |
 

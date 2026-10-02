@@ -6,14 +6,14 @@ parent: Skill instructions
 ---
 
 {: .note }
-> Generated from [`cat-harness/skills/authoring/authoring-who-smart-guidelines/fhir-validation.md`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/authoring/authoring-who-smart-guidelines/fhir-validation.md) — do not edit here. Typed contract: [schema reference](../skills/fhir-validation.html).
+> Generated from [`fhir-harness/skills/content/fhir-ig-authoring/fhir-validation.md`](https://github.com/litlfred/folio-assistant/blob/main/fhir-harness/skills/content/fhir-ig-authoring/fhir-validation.md) — do not edit here. Typed contract: [schema reference](../skills/fhir-validation.html).
 >
-> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/cat-harness/skills/authoring/authoring-who-smart-guidelines/fhir-validation.md){: .fa-edit-source }
+> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/fhir-harness/skills/content/fhir-ig-authoring/fhir-validation.md){: .fa-edit-source }
 
 {% raw %}
 # fhir-validation
 
-> Skill id: `fhir-validation` · Package: `authoring-who-smart-guidelines` ·
+> Skill id: `fhir-validation` · Package: `fhir-ig-authoring` ·
 > Named by `l3-fhir-pipeline.bpmn` (**Validate against profiles**, `Build
 > pipeline` lane) and `ig-incremental-build.bpmn` (**Validate the cone
 > (fhir_validate)**, `Publisher + validator services (JVM)` lane).
@@ -28,7 +28,7 @@ conform to.
 
 ## Inputs and outputs
 
-`schemas/skills/fhir-validation/`:
+`fhir-harness/schemas/skills/fhir-validation/`:
 
 - **in** — `igRoot` (required), `validationLevel`, `targetProfiles`
 - **out** — `overallStatus`, `sushiResult`, `publisherResult`,

@@ -32,11 +32,12 @@
  * it names that does not exist throws too: declare only what exists (bean
  * `dh4f`), and a declared-but-absent directory is the defect, not a no-op.
  */
-import { existsSync, readdirSync, readFileSync, statSync } from "node:fs";
+import { existsSync, readFileSync, statSync } from "node:fs";
 import { join } from "node:path";
 
 import { SkillTopicsSchema, type SkillTopic } from "../schemas/skill-topics.ts";
 import { defaultGraphKinds } from "../schemas/graph-kind-registry.ts";
+import { groupedChildrenIn } from "./concern-groups.ts";
 
 /**
  * The labelling node's file name, inside the skills directory it labels.
@@ -99,21 +100,16 @@ export function topicsOf(skillsDir: string): SkillTopic[] {
  */
 export function packageDirsIn(skillsDir: string): PackageDir[] {
   if (!existsSync(skillsDir)) return [];
-  const topics = new Map(topicsOf(skillsDir).map((t) => [t.path, t]));
-  const out: PackageDir[] = [];
-  const children = (dir: string) =>
-    readdirSync(dir, { withFileTypes: true })
-      .filter((e) => e.isDirectory())
-      .map((e) => e.name);
-  for (const name of children(skillsDir)) {
-    const topic = topics.get(name);
-    if (topic === undefined) {
-      out.push({ name, dir: join(skillsDir, name), rel: name });
-      continue;
-    }
-    for (const inner of children(join(skillsDir, name))) {
-      out.push({ name: inner, dir: join(skillsDir, name, inner), rel: `${name}/${inner}`, topic: topic.id });
-    }
-  }
-  return out.sort((a, b) => a.rel.localeCompare(b.rel));
+  // Validates this directory's own topics (throws on a declared-but-absent
+  // one), then the ONE grouped walk every grouping kind shares (placement
+  // PR0c): it also descends into a topic INHERITED from the same-named
+  // `skills/` below, so core's `skills/library/` is a member of the harness's
+  // `library` topic rather than a package called "library".
+  topicsOf(skillsDir);
+  return groupedChildrenIn(skillsDir, "skills").map((c) => ({
+    name: c.name,
+    dir: c.dir,
+    rel: c.rel,
+    ...(c.group === undefined ? {} : { topic: c.group }),
+  }));
 }

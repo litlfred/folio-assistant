@@ -27,6 +27,10 @@ export const PROPERTY_SKILLS = {
   name: { skills: ["instance-kinds", "directory-conventions"] },
   title: { skills: ["harness-tiles"] },
   description: { skills: ["harness-tiles"] },
+  // The one-line gloss and the other spellings shown under a harness's
+  // section on the landing page (bean `ob3m` findings 4–5).
+  summary: { skills: ["harness-tiles"] },
+  alsoWritten: { skills: ["harness-tiles"] },
   images: { skills: ["theme-declaration", "harness-tiles"] },
   assets: { skills: ["directory-conventions"] },
   icon: { skills: ["theme-declaration", "harness-tiles"] },
@@ -35,6 +39,9 @@ export const PROPERTY_SKILLS = {
   // today (bean 6rmv); `instance-repositories.ts` derives the map from both.
   repository: { skills: ["instance-kinds", "directory-conventions"] },
   livesAt: { skills: ["instance-kinds", "directory-conventions"] },
+  // Content or tools half of the split (bean eayu); a content instance holding
+  // code is a failing kg:audit finding.
+  separation: { skills: ["kg-separation"] },
   stub: { skills: ["directory-conventions"] },
   canonicalUrl: { skills: ["directory-conventions"] },
   previewUrl: { skills: ["directory-conventions"] },

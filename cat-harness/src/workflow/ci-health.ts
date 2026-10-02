@@ -205,6 +205,20 @@ export interface WorkflowHealth {
   /** Newest run, for a link to hand the reader. */
   latestUrl?: string;
   /**
+   * The commit the NEWEST SETTLED FAILING run judged — the starting point for
+   * {@link blameFailingRun}. Bean `kgho`.
+   *
+   * Set here rather than re-derived by the caller because "which run failed" is
+   * a classification fact, and this module already answers it for
+   * `consecutiveFailures`. A second derivation in the CLI would be free to
+   * disagree with this one.
+   *
+   * Absent when the workflow is not red, or when the caller supplied runs
+   * without `head_sha` — which is why the blame path treats its absence as
+   * could-not-determine rather than as nothing to attribute.
+   */
+  failingSha?: string;
+  /**
    * Whole days since the most recent run of any conclusion.
    *
    * Age is what separates an active fire from a stale scorch mark. Two of this
@@ -359,7 +373,19 @@ export interface WorkflowHealth {
 }
 
 /** Conclusions that are not a pass but are also not the workflow's fault. */
-const NOT_A_VERDICT = new Set(["cancelled", "skipped", "neutral"]);
+/**
+ * Conclusions that are NOT a verdict on the commit: the run finished without
+ * judging it. `cancelled` was superseded, `skipped` never ran its body, and
+ * `neutral` is a deliberate abstention.
+ *
+ * EXPORTED since 2026-10-01, because it was re-listed. `conclusionOnCommit` in
+ * `check-ci-health.ts` filtered `cancelled` and `skipped` and forgot `neutral`,
+ * so a neutral-only parent read as a FAILURE there and as a non-verdict here —
+ * and the blame walk then continued past it and could name it as the suspect.
+ * Found by review on #1725. Two spellings of one fact, and the drift only shows
+ * on the conclusion the shorter list forgot.
+ */
+export const NOT_A_VERDICT: ReadonlySet<string> = new Set(["cancelled", "skipped", "neutral"]);
 
 /**
  * Classify one workflow's runs, newest first.
@@ -396,6 +422,11 @@ export function classifyRuns(
     ? Math.floor((now.getTime() - new Date(runs[0].created_at).getTime()) / 86_400_000)
     : undefined;
 
+  // From `settled`, the same list `consecutiveFailures` counts, so the sha and
+  // the count can never describe different runs. `runs[0]` would be wrong
+  // whenever the newest run is still in flight or was cancelled.
+  const failingSha = consecutiveFailures > 0 ? settled[0]?.head_sha : undefined;
+
   // The verdict above is computed from `settled`. When the newest run is not
   // the newest settled one, the verdict is about an older commit and must say
   // so — see `newestUnsettled`. `health === "running"` already covers the case
@@ -414,6 +445,7 @@ export function classifyRuns(
     daysSinceLastRun,
     lastRun: runs[0]?.created_at,
     latestUrl: runs[0]?.html_url,
+    ...(failingSha !== undefined ? { failingSha } : {}),
     ...(newestUnsettled ? { newestUnsettled: true } : {}),
     ...(headSha !== undefined && !headSeen ? { headUnjudged: true } : {}),
   };
@@ -733,7 +765,18 @@ export function describeWindow(w: Window): string {
 
 export function render(
   health: WorkflowHealth[],
-  opts: { unreachable?: string; branch: string; window?: Window },
+  opts: {
+    unreachable?: string;
+    branch: string;
+    window?: Window;
+    /**
+     * Blame verdict per red workflow, by `workflow` name. OPTIONAL, and its
+     * absence is rendered as a sentence rather than as a missing section — a
+     * caller that did not compute blame is a different fact from a red with no
+     * attributable merge, and collapsing them is the `1xhc` shape. Bean `kgho`.
+     */
+    blame?: ReadonlyMap<string, BlameVerdict>;
+  },
 ): string {
   const lines = ["## CI health", ""];
   if (opts.window) {
@@ -900,6 +943,28 @@ export function render(
     lines.push("", `_(no live failures; ${ok.length} workflow(s) green.)_`);
   } else {
     lines.push("", `_(${ok.length} other workflow(s) not failing.)_`);
+  }
+  // WHICH MERGE, for each live failure — bean `kgho`, implementing `391j`'s
+  // "check the parent before blaming the last merge". Deliberately a section
+  // rather than a column: a blame is two shas and a reason, and squeezing it
+  // into the table would cost the reason, which is the part that stops the
+  // reader trusting a guess.
+  if (red.length > 0) {
+    lines.push("", "### Which merge", "");
+    if (opts.blame === undefined) {
+      // NOT silence. A caller that did not ask is a different fact from a red
+      // whose cause could not be found, and a missing section reads as neither.
+      lines.push("_Attribution was not computed for this report._", "");
+    } else {
+      for (const h of red) {
+        const v = opts.blame.get(h.workflow);
+        lines.push(
+          `- **${h.workflow}** — ` +
+            (v ? renderBlame(v) : "no attribution was computed for this workflow."),
+        );
+      }
+      lines.push("");
+    }
   }
   lines.push("");
   return lines.join("\n");
@@ -1356,4 +1421,126 @@ export function renderPages(r: PagesReport): string {
     "",
   );
   return lines.join("\n");
+}
+
+/**
+ * How far back {@link blameFailingRun} will walk before giving up.
+ *
+ * Stated rather than left implicit because an unbounded walk turns a long red
+ * stretch into an API sweep: one request per step, per failing workflow, on a
+ * trigger that fires on every failure. At 10 it examines EXACTLY ten parents —
+ * the loop is exclusive, so the constant is the request budget rather than one
+ * less than it — and covers about 77 minutes of this repository's merge cadence
+ * (7.7 min median, measured over 186 merges in 24h, bean `kgho`), long enough
+ * that a walk hitting the cap is itself worth reporting rather than a routine
+ * outcome.
+ */
+export const BLAME_WALK_CAP = 10;
+
+/** A workflow's outcome on one commit, as {@link blameFailingRun} needs it. */
+export type ConclusionOnCommit = "success" | "failure" | "none" | "unknown";
+
+/**
+ * Which merge a red `main` is attributable to — or, explicitly, that it cannot
+ * be told.
+ *
+ * `stepsBack: 0` means the failing commit itself; anything higher means the
+ * failure predates it and blaming the last merge would have been wrong.
+ */
+export type BlameVerdict =
+  | { kind: "suspect"; sha: string; parentSha: string; stepsBack: number }
+  | { kind: "cannot-determine"; why: BlameUnknown; at: string; stepsBack: number };
+
+/**
+ * Why a blame could not be computed. Each is a DIFFERENT fact with a different
+ * remedy, so they are not collapsed into one "unknown":
+ *
+ * - `no-run-on-parent` — the parent has no run of this workflow. **The one that
+ *   must never be read as "the parent was green"**; see below.
+ * - `no-parent` — the walk reached a commit with no first parent (a root, or a
+ *   shallow clone's boundary, which is why the workflow keeps `fetch-depth: 0`).
+ * - `walk-exhausted` — {@link BLAME_WALK_CAP} steps and still red. The failure
+ *   is older than the window this is willing to pay for.
+ * - `lookup-failed` — the request for a parent's conclusion did not answer.
+ */
+export type BlameUnknown = "no-run-on-parent" | "no-parent" | "walk-exhausted" | "lookup-failed";
+
+/**
+ * Walk first-parents back from a failing commit to the merge that broke it.
+ *
+ * **The parent is checked before the last merge is blamed**, which is bean
+ * `391j`'s rule and the reason this function exists rather than the report
+ * simply naming the failing run's own commit. `391j` blamed #1245's merge when
+ * `main` had already been red one merge earlier at `08fe2c68`; the diagnosis
+ * was confident, cited a real commit, and was wrong.
+ *
+ * **`none` is not `success`.** A commit with no run of this workflow is not a
+ * commit that passed it, and returning a suspect on that basis would put a
+ * false accusation in a tracking issue somebody then acts on. That is the same
+ * false-fire direction `GITHUB_COMMIT_FILES_CAP` and `workflowChangedAt` already
+ * refuse in this module: a wrong answer is worse than no answer. So `none`
+ * ends the walk as `cannot-determine`, never as a verdict.
+ *
+ * Pure: every fact comes from an injected lookup, as {@link assess}'s do, so
+ * the walk is testable without a network or a git tree.
+ */
+export function blameFailingRun(opts: {
+  /** The commit whose run of this workflow failed. */
+  failingSha: string;
+  /** First parent of a commit, or `undefined` if it has none / is unknown. */
+  firstParent: (sha: string) => string | undefined;
+  /** This workflow's conclusion on a commit. */
+  conclusionOn: (sha: string) => ConclusionOnCommit;
+  /** Override the walk bound; defaults to {@link BLAME_WALK_CAP}. */
+  cap?: number;
+}): BlameVerdict {
+  const cap = opts.cap ?? BLAME_WALK_CAP;
+  let cur = opts.failingSha;
+
+  // EXCLUSIVE. `<=` examined `cap + 1` parents and returned `stepsBack: cap + 1`,
+  // while `renderBlame` said "still red 10 first-parents back" and the cap's own
+  // docblock promised "at most ten extra requests" — three numbers, two of them
+  // wrong. Found by review on #1725. The budget is now what the constant says.
+  for (let stepsBack = 0; stepsBack < cap; stepsBack++) {
+    const parent = opts.firstParent(cur);
+    if (parent === undefined) return { kind: "cannot-determine", why: "no-parent", at: cur, stepsBack };
+
+    const c = opts.conclusionOn(parent);
+    if (c === "success") return { kind: "suspect", sha: cur, parentSha: parent, stepsBack };
+    if (c === "none") return { kind: "cannot-determine", why: "no-run-on-parent", at: parent, stepsBack };
+    if (c === "unknown") return { kind: "cannot-determine", why: "lookup-failed", at: parent, stepsBack };
+
+    // `failure`: the parent is red too, so `cur` did not cause it. Keep going.
+    cur = parent;
+  }
+  return { kind: "cannot-determine", why: "walk-exhausted", at: cur, stepsBack: cap };
+}
+
+/**
+ * The blame verdict as one line for the tracking issue.
+ *
+ * Every `cannot-determine` renders as a sentence saying WHAT is not known, never
+ * as an omission — a report that simply leaves the suspect out is
+ * indistinguishable from one where nothing was wrong, which is `1xhc`.
+ */
+export function renderBlame(v: BlameVerdict): string {
+  const short = (s: string) => s.slice(0, 11);
+  if (v.kind === "suspect") {
+    return v.stepsBack === 0
+      ? `Suspect: \`${short(v.sha)}\` — its first parent \`${short(v.parentSha)}\` was green for this workflow.`
+      : `Suspect: \`${short(v.sha)}\`, **${v.stepsBack} merge(s) before the failing one** — ` +
+          `the last green first-parent for this workflow is \`${short(v.parentSha)}\`. ` +
+          `Blaming the most recent merge would have been wrong (bean \`391j\`).`;
+  }
+  const why = {
+    "no-run-on-parent":
+      `\`${short(v.at)}\` has NO run of this workflow, so it cannot be called green. ` +
+      `No suspect is named: a commit with no run is not a commit that passed.`,
+    "no-parent": `\`${short(v.at)}\` has no first parent available, so the walk could not continue.`,
+    "walk-exhausted":
+      `still red ${BLAME_WALK_CAP} first-parents back, at \`${short(v.at)}\`. ` +
+      `The failure is older than this walk pays for — it is not the recent merges.`,
+    "lookup-failed": `the conclusion on \`${short(v.at)}\` could not be fetched.`,
+  }[v.why];
+  return `Suspect merge: **could not determine** — ${why}`;
 }

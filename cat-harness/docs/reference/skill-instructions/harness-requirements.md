@@ -246,6 +246,6 @@ Three rules for reading it, the same three every sweep here follows:
 - `bun run check:subgraph-coverage` — the axis; `schemas/cat-harness.ts`
   `owesVisualiser()` — the visualiser obligation, and
   `SubgraphCoverageSchema.serialisations` — the one that takes no waiver
-- [`url-space`](https://github.com/litlfred/folio-assistant/tree/main/beans/defs) — bean `o7eq` for where a rendered
-  asset is addressed, and why not to compose that URL by hand
+- `url-space` — bean `o7eq` (`beans show folio-assistant-o7eq`) for where a
+  rendered asset is addressed, and why not to compose that URL by hand
 {% endraw %}

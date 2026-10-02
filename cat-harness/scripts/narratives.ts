@@ -34,7 +34,7 @@ import { dirname, join, relative, resolve } from "node:path";
 import { NarrativeSchema, REJECTION_REASONS, type Narrative } from "../schemas/narrative.ts";
 import { SUMMARIES_FILE } from "../schemas/block-summary.ts";
 import { entryItems } from "./summaries.ts";
-import { directoriesForGraph } from "../schemas/cat-harness.ts";
+import { corpusDirectoriesForGraph } from "../schemas/harness-config.js";
 
 const ROOT = resolve(import.meta.dir, "..");
 
@@ -167,7 +167,7 @@ export function queue(root = ROOT): QueueItem[] {
   // library shows a person a shorter list and no sign that it is short —
   // `04vl` is the bean for the last time this queue could not see 24% of what
   // it was for. `directoriesForGraph(...)[0]` until bean `a02m`.
-  const libs = directoriesForGraph(root, "library").filter((d) => existsSync(d));
+  const libs = corpusDirectoriesForGraph(root, "library").filter((d) => existsSync(d));
   if (libs.length === 0) return [];
   const out: QueueItem[] = [];
   for (const lib of libs) for (const slug of readdirSync(lib).sort()) {

@@ -210,6 +210,7 @@ classDiagram
       instance [1] string
       dir [1] string
       title [1] string
+      extractedTitle [0..1] string
       provenance [1] string
       rung [1] paged | tabular | referenced | none
       docId [1] string
@@ -236,6 +237,7 @@ classDiagram
       uploadInstance [1] string
       referencedBy [0..*] ReferencedBy[]
       withheld [0..1] string
+      withheldBy [0..1] object
       avatar [0..1] object
       summaries [0..1] object
     }

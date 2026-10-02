@@ -39,6 +39,7 @@
  *   bun run ingest uploads/FILE.pdf
  *   bun run ingest uploads/FILE.pdf --dry-run
  *   bun run ingest uploads/FILE.pdf --refresh-meta   # technical facts only
+ *   bun run ingest uploads/FILE.pdf --refresh-title  # re-resolve the title (w6fu)
  *   bun run ingest uploads/FILE.pdf --library who-iris
  *
  * `--library` is required only when the repository declares more than one, and
@@ -58,11 +59,11 @@ import { ARCHIVE_MIMETYPES } from "../schemas/archive-contents.ts";
 import { checkEntry, type Requirement } from "./check-l1-complete.ts";
 import { TABULAR_MIMETYPES } from "../schemas/tabular-records.ts";
 import { SLIDE_MIMETYPES } from "../schemas/pdf-structure.ts";
-import { directoriesForGraph } from "../schemas/cat-harness.ts";
 import { refreshLibraryIndex } from "./lsi.ts";
 import { IntakeSchema } from "../schemas/intake.ts";
 import { LICENCE_FILENAME, readLicence } from "../content/pipeline/gen-library-jsonld.ts";
 import { STRUCTURE_FILENAME } from "../schemas/document-structure.ts";
+import { corpusDirectoriesForGraph } from "../schemas/harness-config.js";
 
 /**
  * This module's own instance root — where its `harness.json` is.
@@ -144,7 +145,7 @@ export function libraryRoot(root = INSTANCE_ROOT, choice?: string): string {
   //                     first: a WHO publication landing in the science
   //                     library reads as ingested and is in the wrong corpus,
   //                     and nothing downstream can tell.
-  const declared = directoriesForGraph(root, "library");
+  const declared = corpusDirectoriesForGraph(root, "library");
   if (declared.length === 0) {
     throw new Error(
       "this instance declares no `library` graph in its `<name>.json` — " +
@@ -815,6 +816,34 @@ export function refreshMeta(pdf: string, libRoot = libraryRoot()): string {
 }
 
 /**
+ * `--refresh-title`: re-resolve an existing entry's title from its PDF (bean
+ * `w6fu`, owner's ruling 2026-10-02 on #1838).
+ *
+ * The title rule is `_pdf_title.py`'s, shared with both PDF rungs, so a
+ * refresh and a fresh ingest agree. It replaces the title only with one an
+ * independent source corroborates, records every candidate it saw, keeps the
+ * text walk's title as `title_raw` and never touches an editor's
+ * `title_correction`. Like {@link refreshMeta} it reads the file's indent off
+ * the file rather than choosing one.
+ */
+export function refreshTitle(pdf: string, libRoot = libraryRoot()): string {
+  const slug = bibSlug(pdf);
+  const structure = join(resolve(INSTANCE_ROOT, libRoot), slug, STRUCTURE_FILENAME);
+  if (!existsSync(structure)) throw new Error(`${structure}: no such entry to refresh`);
+  const r = Bun.spawnSync(["python3", pyHelper("_pdf_title.py"), "--refresh", structure, pdf]);
+  if (r.exitCode !== 0) {
+    throw new Error(`refreshing the title of ${slug}: ${new TextDecoder().decode(r.stderr).trim()}`);
+  }
+  const out = JSON.parse(new TextDecoder().decode(r.stdout)) as {
+    before: string | null;
+    after: string | null;
+    source: string;
+    verified: boolean;
+  };
+  return `${slug}: ${JSON.stringify(out.before)} -> ${JSON.stringify(out.after)} [${out.source}${out.verified ? "" : ", unverified"}]`;
+}
+
+/**
  * Which half of the pipeline is being asked for — bean `pn6j`.
  *
  * Exported for the same reason as {@link mayPromote}: the first version read
@@ -874,6 +903,10 @@ if (import.meta.main) {
   }
   if (argv.includes("--refresh-meta")) {
     console.log(refreshMeta(pdf));
+    process.exit(0);
+  }
+  if (argv.includes("--refresh-title")) {
+    console.log(refreshTitle(pdf, libraryRoot(INSTANCE_ROOT, chosenLibrary)));
     process.exit(0);
   }
   const slug = bibSlug(pdf);

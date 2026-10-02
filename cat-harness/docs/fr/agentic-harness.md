@@ -63,13 +63,13 @@ Flux de travail actifs sur cette plateforme :
 
 | Flux de travail | Source BPMN | Activé quand |
 |---|---|---|
-| **Rédaction (article)** | [`authoring-a-paper.bpmn`](../../processes/authoring-a-paper.bpmn) | L'utilisateur demande la rédaction de contenu dans un folio d'article |
-| **Rédaction (document)** | [`authoring-a-document.bpmn`](../../processes/authoring-a-document.bpmn) | L'utilisateur demande la rédaction de contenu dans un folio de document |
-| **Cycle de vie du contenu** | [`content-lifecycle.bpmn`](../../processes/content-lifecycle.bpmn) | Le contenu passe par valider → restituer → publier |
-| **Ingestion de documents** | [`document-ingestion.bpmn`](../../processes/document-ingestion.bpmn) | L'utilisateur dépose un fichier dans `uploads/` |
-| **Du brouillon à la publication** | [`draft-to-publication.bpmn`](../../processes/draft-to-publication.bpmn) | Le contenu passe de brouillon à publié |
-| **Exigences CRDM** | [`crdm-requirements.bpmn`](../../processes/crdm-requirements.bpmn) | L'agent détecte une demande de fonctionnalité |
-| **Récupération de preuves** | [`evidence-retrieval.bpmn`](../../processes/evidence-retrieval.bpmn) | L'agent recherche des preuves à l'appui d'une affirmation |
+| **Rédaction (article)** | [`authoring-a-paper.bpmn`](../../../folio-assistant-sci/processes/content/authoring-a-paper.bpmn) | L'utilisateur demande la rédaction de contenu dans un folio d'article |
+| **Rédaction (document)** | [`authoring-a-document.bpmn`](../../../folio-assistant-core/processes/content/authoring-a-document.bpmn) | L'utilisateur demande la rédaction de contenu dans un folio de document |
+| **Cycle de vie du contenu** | [`content-lifecycle.bpmn`](../../../folio-assistant-core/processes/content/content-lifecycle.bpmn) | Le contenu passe par valider → restituer → publier |
+| **Ingestion de documents** | [`document-ingestion.bpmn`](../../processes/library/document-ingestion.bpmn) | L'utilisateur dépose un fichier dans `uploads/` |
+| **Du brouillon à la publication** | [`draft-to-publication.bpmn`](../../../folio-assistant-core/processes/content/draft-to-publication.bpmn) | Le contenu passe de brouillon à publié |
+| **Exigences CRDM** | [`crdm-requirements.bpmn`](../../processes/process/crdm-requirements.bpmn) | L'agent détecte une demande de fonctionnalité |
+| **Récupération de preuves** | [`evidence-retrieval.bpmn`](../../../folio-assistant-core/processes/content/evidence-retrieval.bpmn) | L'agent recherche des preuves à l'appui d'une affirmation |
 
 **Transitions d'état :** un flux de travail peut être **suspendu** lorsque l'utilisateur demande
 de changer de contexte. L'agent enregistre où il en était (l'activité BPMN en cours) et
@@ -264,7 +264,7 @@ proposition dispose d'un point de comparaison mesurable.
 Lorsqu'une requête est classée comme demande de fonctionnalité, l'agent intègre le
 **flux de travail des exigences CRDM**
 ([documentation complète](https://litlfred.github.io/folio-assistant/crdm-methodology.html),
-[BPMN](../../processes/crdm-requirements.bpmn)).
+[BPMN](../../processes/process/crdm-requirements.bpmn)).
 
 Le flux de travail des demandes de fonctionnalités est le domaine où ce document sur le harnais apporte le plus
 de valeur, car il décrit un comportement qui était auparavant implicite. Les
@@ -401,8 +401,8 @@ dispersés à travers le dépôt. Cette section rattache le comportement consoli
 | Discipline des commits et PR | `AGENTS.md § Commit early, commit often` | [`AGENTS.md`](../../AGENTS.md) |
 | Détection des demandes de fonctionnalités | `crdm-detect.md` | [`skills/sdlc/crdm/crdm-detect.md`](../../skills/sdlc/crdm/crdm-detect.md) |
 | Flux de travail des exigences CRDM | `crdm-requirements-workflow.md` | [`skills/sdlc/crdm/crdm-requirements-workflow.md`](../../skills/sdlc/crdm/crdm-requirements-workflow.md) |
-| Rédaction de contenu (article) | compétences authoring-math | [`skills/authoring/authoring-math/`](../../skills/authoring/authoring-math/) |
-| Rédaction de contenu (document) | compétences folio-document-adapter | [`skills/authoring/folio-document-adapter/`](../../skills/authoring/folio-document-adapter/) |
+| Rédaction de contenu (article) | compétences authoring-math | `skill_list` → `authoring-math` |
+| Rédaction de contenu (document) | compétences folio-document-adapter | `skill_list` → `folio-document-adapter` |
 | Cycle de vie du contenu | compétences content-lifecycle | [`skills/authoring/content-lifecycle/`](../../skills/authoring/content-lifecycle/) |
 | Ingestion de documents | `docs-generation.md` | [`skills/ui/ui-core/docs-generation.md`](../../skills/ui/ui-core/docs-generation.md) |
 | Répartition et coordination | `dispatch-agent.md`, `coordinate.md` | [`skills/folio-core/`](../../skills/folio-core/) |

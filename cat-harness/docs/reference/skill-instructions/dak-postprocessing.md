@@ -6,15 +6,15 @@ parent: Skill instructions
 ---
 
 {: .note }
-> Generated from [`cat-harness/skills/authoring/authoring-who-smart-guidelines/dak-postprocessing.md`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/authoring/authoring-who-smart-guidelines/dak-postprocessing.md) — do not edit here.
+> Generated from [`smart-base/skills/content/authoring-who-smart-guidelines/dak-postprocessing.md`](https://github.com/litlfred/folio-assistant/blob/main/smart-base/skills/content/authoring-who-smart-guidelines/dak-postprocessing.md) — do not edit here.
 >
-> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/cat-harness/skills/authoring/authoring-who-smart-guidelines/dak-postprocessing.md){: .fa-edit-source }
+> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/smart-base/skills/content/authoring-who-smart-guidelines/dak-postprocessing.md){: .fa-edit-source }
 
 {% raw %}
 # dak-postprocessing
 
 > Skill id: `dak-postprocessing` · Package: `authoring-who-smart-guidelines` ·
-> Layer: **`smart-dak`**, except the two Library strippers, which are
+> Layer: **`smart-base`, DAK kind** (was `smart-dak` until stage D, #1767), except the two Library strippers, which are
 > `fhir-harness` — see §"One step is not WHO's".
 
 Everything the WHO build runs between `publisher.jar` finishing and deployment,

@@ -26,7 +26,7 @@ Four objects, each with a home:
 | **Actor** | a concrete participant. Human, agentic or mechanical. Persists across every process. | `cat-harness/scenarios/actors/*.json` (the declared `scenarios` graph, beside the roles; `.claude/skills/actors/` until 2026-09-30, bean `rqao`) |
 | **Role** | **the swimlane** — a persona an actor *takes on* because of the lane it is acting in. Carries a collection of Skills. | `scenarios/roles.json` |
 | **Skill** | an instruction body: what the actor needs to know to perform the task it was handed. | `skills/<pkg>/*.md` (naming its `input:`/`output:` contracts, usually under `schemas/skills/<name>/`); JSON `SkillDefinition`s in each owning instance's `skills/skill-definitions/` (bean `rqao`) |
-| **Process / Decision** | BPMN and DMN. Lanes bind roles; activities name skills; gateways may compute their branch from a table. | `processes/*.bpmn`, `processes/decisions/*.dmn` |
+| **Process / Decision** | BPMN and DMN. Lanes bind roles; activities name skills; gateways may compute their branch from a table. | `processes/**/*.bpmn`, `processes/**/decisions/*.dmn` |
 | **Requirement** | a conformance obligation, **pointed at** by what discharges it: a skill or capability names the statement in `satisfies: req:<id>#<key>`. The requirement points at `actors` (who is bound) and `derivedFrom` (the broader requirement it specialises). | `skills/requirements/*.json` |
 | **Permission** | what an actor is **allowed to do**. Cross-cuts roles. A W3C ODRL 2.2 rule, scoped by Process, Task or Role when it needs to be (issue #1180). | actions: `skills/permissions/permissions.json`; who holds them: `policies/*.jsonld` |
 
@@ -433,6 +433,38 @@ resolveRoleStack(graph, ["editor", "viewer"]) // scoped: the union for this call
 skill any caller ever had, and a closure that broad cannot fail an audit, which
 is the same as not having one.
 
+## A higher instance EXTENDS a role by id — it never edits it (placement PR0b)
+
+A third relation, across instances rather than within one graph. When a skill
+belongs above the harness (a core cataloguing skill, a sci Lean skill), the
+role→skill edge naming it must not stay in `cat-harness/scenarios/roles.json`
+— that is an upward reference. So the **dependent holds the pointer**, the
+way a voice points at the role it addresses and a story at the role it is
+told as (#1168):
+
+```jsonc
+// folio-assistant-core/scenarios/roles.json
+{ "name": "folio-assistant-core", "roles": [],
+  "extensions": [{ "role": "librarian", "skills": ["filing-dublin-core"] }] }
+```
+
+| a dependent's `scenarios/` may | it may NOT |
+|---|---|
+| add skills to a lower role (`extensions`) | change its title, description, `inherits`, `actorKinds` or persona |
+| add a NEW role, which may `inherits` a lower one | redeclare a lower id — refused, "extend it instead" |
+| extend a lower actor: `actors/<f>.json` with `"extends": "<id>"`, adding `roles` / `capabilities` | carry any other field on an extension |
+| extend a capability: `"extends"` adding `requires`; or add a new probe | point an extension UP or sideways — only at an id declared below it |
+
+`schemas/scenario-overlay.ts` applies it (`checkoutRoleGraph`,
+`checkoutActors`, `checkoutCapabilities`); the layers are the checkout's
+instances that depend on the role's owner, deepest first. Resolved alone, the
+harness sees only its own roles. `kg:audit`, `check:raci`,
+`check:fallback-roles`, `check:actor-reach`, `kg-export` and the
+stakeholder map read the checkout's view on the platform's own run.
+
+It does **not** restore `roles:` in skill front matter (above): the edge is
+still on a role graph — just the graph of the instance that owns the skill.
+
 ## Lanes are free text — which is the problem the role graph solves
 
 Measured across the twenty diagrams on 2026-09-18: **60 distinct lane names for
@@ -588,7 +620,7 @@ group of something else is a one-line addition.
 The role graph is the substrate every diagram's lanes bind to. Changing it —
 adding an actor, opening a role, granting a permission, retiring a
 participant — is therefore a process like any other, and it is drawn:
-[`actor-role-administration.bpmn`](../../../processes/actor-role-administration.bpmn),
+[`actor-role-administration.bpmn`](../../../processes/process/actor-role-administration.bpmn),
 in the `administrator` lane.
 
 **That was a question, not a deduction.** Until the owner answered it, there

@@ -30,7 +30,7 @@
  * @covers tools, skills
  */
 import { existsSync, readFileSync } from "node:fs";
-import { dirname, join, resolve } from "node:path";
+import { dirname, join, relative, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 
 import { tools, toolsOf } from "../tools/discover.js";
@@ -38,8 +38,10 @@ import { TOOL_TYPES, isInjectionSafe } from "../schemas/tool-types.js";
 import { alternativesWithoutSelection } from "../schemas/tool.js";
 import { toJsonSchema } from "../schemas/to-json-schema.js";
 import { contractFile, skillContracts } from "./skill-contracts.js";
-import { knownSkills as knownSkillsIn } from "./known-skills.js";
+import { corpusScopeFor, knownSkills as knownSkillsIn, workflowFiles } from "./known-skills.js";
 import { instanceRootsIn, repoRootFor } from "../schemas/cat-harness.js";
+import { resolveImplementingPath } from "../schemas/harness-config.js";
+import type { ToolDefinition } from "../schemas/tool.js";
 
 /**
  * THIS INSTANCE'S OWN `schemas` directory, or the convention.
@@ -112,7 +114,15 @@ const REPO = join(ROOT, "..");
  * | field | resolved against | why |
  * |---|---|---|
  * | `invoke.shell` | the **repository** | it is a command a caller types, and `package.json` and `.github/` are at the repo root |
- * | `invoke.*.module` | the **instance** | it is loaded by this instance's own server, and matches `maintains.source` |
+ * | `invoke.*.module` | the **declaring instance**, then the one instance that **implements** it | it is loaded by the implementing instance's server, and matches `maintains.source` |
+ *
+ * "Implements" is owner ruling T1 (2026-10-01, bean `70lx`): the definitions
+ * stay in the harness and the code moves to the layer above, so a module path
+ * stays as written (`src/tools/x.ts`) and is found in the instance whose own
+ * `needs` names the declarer — `resolveImplementingPath` in
+ * `schemas/harness-config.ts`. Writing the implementer's name into the path
+ * instead would be the harness naming a layer above it. Two implementers
+ * holding the same path is reported, never resolved by order.
  *
  * Getting that backwards would have "fixed" twenty correct paths. The `module`
  * field's own docstring said *"Repo-relative"* while giving `src/tools/workflow.ts`
@@ -130,7 +140,15 @@ export function unresolvedPaths(
   // `REPO` stays the checkout either way: an `invoke` path is repo-relative
   // whichever instance declared the Tool, so narrowing the tool SET must not
   // narrow where its paths are resolved.
-  for (const t of toolsFor(instance)) {
+  //
+  // A `module`, by contrast, is resolved against the instance that DECLARED
+  // the Tool, and then against the instance that implements it — so the Tools
+  // are read per declaring instance rather than as one flat list.
+  const roots = instance === undefined ? instanceRootsIn(REPO) : [instance];
+  const declared: Array<{ declaringRoot: string; t: ToolDefinition }> = roots.flatMap((r) =>
+    toolsOf(r).map((t) => ({ declaringRoot: resolve(r), t })),
+  );
+  for (const { declaringRoot, t } of declared) {
     const inv = t.invoke as Record<string, unknown> | undefined;
     if (!inv) continue;
 
@@ -148,8 +166,22 @@ export function unresolvedPaths(
     for (const arm of ["inProcess", "container", "mcp"]) {
       const a = inv[arm] as { module?: unknown } | undefined;
       const mod = a && typeof a.module === "string" ? a.module : undefined;
-      if (mod !== undefined && !existsSync(join(ROOT, mod))) {
-        out.push({ field: `invoke.${arm}.module`, tool: t.id, value: mod, expected: `${mod} under the instance root` });
+      if (mod === undefined) continue;
+      const found = resolveImplementingPath(declaringRoot, mod);
+      if (found.state === "missing") {
+        out.push({
+          field: `invoke.${arm}.module`,
+          tool: t.id,
+          value: mod,
+          expected: `${mod} under the declaring instance or one instance that needs it (looked in ${found.looked.map((r) => relative(REPO, r) || ".").join(", ")})`,
+        });
+      } else if (found.state === "ambiguous") {
+        out.push({
+          field: `invoke.${arm}.module`,
+          tool: t.id,
+          value: mod,
+          expected: `exactly one implementing instance, but ${found.candidates.map((c) => c.name).join(" and ")} both hold ${mod}`,
+        });
       }
     }
   }
@@ -188,7 +220,7 @@ export function unresolvedPaths(
  * another instance is a thing that exists.
  */
 export function knownSkills(): Set<string> {
-  return knownSkillsIn(ROOT);
+  return knownSkillsIn(ROOT, corpusScopeFor(ROOT));
 }
 
 /**
@@ -207,9 +239,10 @@ export type InputContract =
   | { kind: "ok"; required: string[]; types: Map<string, string> };
 
 export function inputContract(root: string, skill: string): InputContract {
-  const ref = skillContracts(root).get(skill)?.input;
-  if (ref === undefined) return { kind: "absent" };
-  const f = contractFile(root, ref);
+  const c = skillContracts(root).get(skill);
+  const ref = c?.input;
+  if (c === undefined || ref === undefined) return { kind: "absent" };
+  const f = contractFile(c.instanceRoot, ref);
   if (f === undefined) return { kind: "external", ref };
   if (!existsSync(f)) return { kind: "unreadable", ref };
   try {
@@ -278,6 +311,13 @@ export interface ToolCheck {
    * symmetric by construction.
    */
   unselectableAlternatives: Array<{ tool: string; alternatives: string[] }>;
+  /**
+   * A Tool naming a `subprocesses` id no `.bpmn` in the checkout has as its
+   * stem (placement ruling 6: a Tool may describe its own specific
+   * subprocess). A pointer at nothing is the dangling-edge shape `satisfies`
+   * is already held to.
+   */
+  danglingSubprocesses: Array<{ tool: string; process: string }>;
   skillsWithTools: number;
   skillsWithoutTools: number;
 }
@@ -306,6 +346,21 @@ export interface ToolCheck {
  * instance's skills, so adding a sibling cannot silently create an obligation
  * to write Tools for it.
  */
+/**
+ * Every process id (`.bpmn` stem) any instance in this checkout declares —
+ * the set a Tool's `subprocesses` may name. Every instance, for the reason
+ * `satisfiableSkills` gives: not in my overlay is not does not exist.
+ */
+function declaredProcessIds(instance: string = ROOT): Set<string> {
+  const out = new Set<string>();
+  for (const inst of new Set([resolve(instance), ...instanceRootsIn(repoRootFor(instance)).map((r) => resolve(r))])) {
+    for (const f of workflowFiles(inst)) {
+      if (f.endsWith(".bpmn")) out.add(f.replace(/^.*\//, "").slice(0, -".bpmn".length));
+    }
+  }
+  return out;
+}
+
 function satisfiableSkills(instance: string = ROOT): Set<string> {
   const out = new Set(knownSkillsIn(instance));
   // `ROOT` is THIS INSTANCE (`cat-harness/`), not the checkout. Sibling
@@ -337,8 +392,14 @@ export function checkTools(instance?: string): ToolCheck {
   const unreadable = new Set<string>();
   const covered = new Set<string>();
   const unselectableAlternatives: ToolCheck["unselectableAlternatives"] = [];
+  const danglingSubprocesses: ToolCheck["danglingSubprocesses"] = [];
+  let processIds: Set<string> | undefined;
 
   for (const t of toolsFor(instance)) {
+    for (const p of t.subprocesses ?? []) {
+      processIds ??= declaredProcessIds(instance);
+      if (!processIds.has(p)) danglingSubprocesses.push({ tool: t.id, process: p });
+    }
     const portNames = new Set(t.io.inputs.map((i) => i.name));
     for (const s of t.satisfies) {
       if (skills.has(s)) covered.add(s);
@@ -411,6 +472,7 @@ export function checkTools(instance?: string): ToolCheck {
     mistypedContracts,
     unreadableContracts: [...unreadable].sort(),
     unselectableAlternatives,
+    danglingSubprocesses,
     skillsWithTools: covered.size,
     skillsWithoutTools: skills.size - covered.size,
   };
@@ -434,6 +496,11 @@ if (import.meta.main) {
     bad = true;
     console.error(`\n✗ ${r.danglingSatisfies.length} satisfies naming no skill:`);
     for (const d of r.danglingSatisfies) console.error(`    ${d.tool} → ${d.skill}`);
+  }
+  if (r.danglingSubprocesses.length > 0) {
+    bad = true;
+    console.error(`\n✗ ${r.danglingSubprocesses.length} subprocess(es) naming no declared .bpmn:`);
+    for (const d of r.danglingSubprocesses) console.error(`    ${d.tool} → ${d.process}`);
   }
   if (r.unsafeArgs.length > 0) {
     bad = true;

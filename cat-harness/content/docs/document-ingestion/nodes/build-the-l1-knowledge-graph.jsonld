@@ -1,5 +1,10 @@
 {
-  "@context": "https://litlfred.github.io/folio-assistant/ns/content/v1.jsonld",
+  "@context": [
+    "https://litlfred.github.io/folio-assistant/ns/content/v1.jsonld",
+    {
+      "@base": "https://litlfred.github.io/folio/"
+    }
+  ],
   "@id": "site/document-ingestion/nodes/build-the-l1-knowledge-graph",
   "@type": [
     "folio-assistant-core:Figure",
@@ -9,7 +14,7 @@
   "provenance": "authored",
   "title": "Build the L1 knowledge graph",
   "text": "build-the-l1-knowledge-graph.md",
-  "sourceDocument": "processes/ingest-build-l1-kg.bpmn",
+  "sourceDocument": "https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/library/ingest-build-l1-kg.bpmn",
   "meta": {
     "assetKind": "bpmn",
     "rendered": "assets/img/workflows/ingest-build-l1-kg.svg",

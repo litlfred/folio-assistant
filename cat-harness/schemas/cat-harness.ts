@@ -515,6 +515,9 @@ export interface ContentDirectory extends GraphNodeDirectory {
   /** Whether the agent summary drain may offer a `library`'s blocks; absent means `drain`. See the schema field (bean `x80s`). */
   summaries?: "drain" | "held";
 
+  /** Entry slugs of a `library` held back from the summary drain while the rest of it drains. See the schema field (bean `j7ql`). */
+  heldEntries?: string[];
+
   /**
    * Which theme this subgraph renders on — one answer for every surface that
    * renders it (navbar section, board panel, sticky).
@@ -598,6 +601,10 @@ export const ContentAdapterDeclarationSchema = z
   .strict();
 
 export interface CatHarnessDeclaration extends KgNodeLabels {
+  /** A reader's one line — see {@link CatHarnessDeclarationSchema}'s `summary` (`ob3m` 4/5). */
+  summary?: string;
+  /** Other spellings of the name, listed on the landing (`ob3m` 5). */
+  alsoWritten?: string[];
   /**
    * Images this instance names — its marks, in the graph rather than beside it.
    *
@@ -668,6 +675,12 @@ export interface CatHarnessDeclaration extends KgNodeLabels {
    * Absent means it already lives at the root of its own repository.
    */
   livesAt?: InstanceLocation;
+  /**
+   * Which half of a kg-separation pair the planned {@link repository} is —
+   * see `separation` on {@link CatHarnessDeclarationSchema}. Absent is "has
+   * not said". Bean `eayu`.
+   */
+  separation?: "content" | "tools";
   stub?: string;
   /**
    * Where this instance's artefacts are published — the base every `@id` in
@@ -1366,6 +1379,18 @@ const ContentDirectoryShape = GraphNodeDirectoryShape.extend({
    */
   summaries: z.enum(["drain", "held"]).optional(),
   /**
+   * Entry slugs (`<library>/<slug>/`) held back from the summary drain while
+   * the rest of this `library` drains — the per-entry form of
+   * `summaries: "held"`. It exists because a hold is the OWNER's decision
+   * about a set of documents, and a set can outlive the directory it was
+   * stated on: agent-skills' library was held on 2026-09-24 (bean `x80s`)
+   * and dissolved into cat-harness's on 2026-10-01 (bean `j7ql`), where the
+   * other entries drain. Folding the hold into the directory's would either
+   * drop it or extend it to documents the owner never held. Listed, never
+   * derived, so a move cannot release it silently.
+   */
+  heldEntries: z.array(z.string().min(1)).optional(),
+  /**
    * HOW this graph is shown, and what can be done to it.
    *
    * The visualiser axis, declared PER GRAPH — issue #764, O2, settled by the
@@ -1984,7 +2009,7 @@ export class TopologyConflictError extends Error {
  *
  * ## It is `materialization` at the graph level
  *
- * `folio-assistant-core/schemas/materialization.ts` already names the states a
+ * `schemas/materialization-state.ts` already names the states a
  * body of content is in, and a declared graph is in the same ones: a
  * `ContentDirectory` is **materialized** (bytes here), a `RemoteGraph` is
  * **referenced** (we know it exists and where, we hold none of it).
@@ -2507,6 +2532,22 @@ export const ExactVersionSchema = z
 export const CatHarnessDeclarationSchema = z.object({
   name: z.string().min(1),
   ...kgNodeLabelShape,
+  /**
+   * One line for a READER, where `description` is written for an author.
+   *
+   * `ob3m` findings 4 and 5: the landing's harness sections printed the
+   * declaration's `description`, which here is authoring text — a naming
+   * rationale in one instance, a run of alternative spellings in another.
+   * The landing shows this instead when it is present, and the description
+   * when it is not, so an undeclared summary is today's behaviour.
+   */
+  summary: z.string().min(1).optional(),
+  /**
+   * Other ways the instance's name is written, shown on the landing as a small
+   * "also written" list rather than run into the description as one line.
+   * Owner's choice, 2026-10-01: keep the spellings visible, as a list.
+   */
+  alsoWritten: z.array(z.string().min(1)).nonempty().optional(),
   images: z.array(KgImageSchema).optional(),
   /**
    * Declared non-image artefacts — `AGENTS.md` first among them.
@@ -2535,6 +2576,20 @@ export const CatHarnessDeclarationSchema = z.object({
   navbarIcons: NavbarIconsSchema.optional(),
   repository: RepoFullNameSchema.optional(),
   livesAt: InstanceLocationSchema.optional(),
+  /**
+   * Which half of a kg-separation pair this instance's planned `repository`
+   * is: `content` (files to read — no code, bootstrap FR-7) or `tools` (the
+   * code that writes and checks a content repository).
+   *
+   * Optional, and absent is "has not said", never "not content": most staged
+   * instances here have not been through the split, and a default would claim
+   * a decision nobody made. Added 2026-09-30 (bean `eayu`) because who-iris is
+   * staged as a CONTENT repository with no tools repository authorised, so
+   * nothing else in the tree says it must hold no code; kg:audit's
+   * `content-instance-holds-code` reads it. An instance a declared tools
+   * instance `supports` is content too, and is read as such without this.
+   */
+  separation: z.enum(["content", "tools"]).optional(),
   stub: z.string().min(1).optional(),
   canonicalUrl: z.string().url().optional(),
   /**
@@ -3657,9 +3712,37 @@ export function readDeclaration(
   const file = findDeclarationFile(instanceRoot);
   if (file === undefined) return undefined;
   const p = join(instanceRoot, file);
+  let text: string;
+  try {
+    text = readFileSync(p, "utf-8");
+  } catch (e) {
+    throw new Error(`${p} is not valid JSON: ${e instanceof Error ? e.message : String(e)}`);
+  }
+  // MEMOISED ON THE FILE'S TEXT, not its path or mtime: the checkout overlay
+  // (placement PR0) resolves every staged instance through its own chain and
+  // reads each declaration a dozen times per process, and the Zod parse is
+  // the cost (measured: a CLI run went from 0.2 s to 2 s). Keyed on the bytes,
+  // so a test that rewrites a fixture is re-parsed, and on the registry's
+  // size, since kinds are registered at runtime. A clone is returned, so a
+  // caller that mutates its copy cannot poison the next one.
+  const hit = declarationCache.get(p);
+  if (hit !== undefined && hit.text === text && hit.registry === registry && hit.kinds === registry.names().length) {
+    return structuredClone(hit.value);
+  }
+  const value = parseDeclarationText(p, text, registry);
+  declarationCache.set(p, { text, registry, kinds: registry.names().length, value });
+  return structuredClone(value);
+}
+
+const declarationCache = new Map<
+  string,
+  { text: string; registry: GraphKindRegistry; kinds: number; value: CatHarnessDeclaration }
+>();
+
+function parseDeclarationText(p: string, text: string, registry: GraphKindRegistry): CatHarnessDeclaration {
   let raw: unknown;
   try {
-    raw = JSON.parse(readFileSync(p, "utf-8"));
+    raw = JSON.parse(text);
   } catch (e) {
     throw new Error(`${p} is not valid JSON: ${e instanceof Error ? e.message : String(e)}`);
   }
@@ -4053,16 +4136,80 @@ export function resolveDirectories(
   // the same directory as before. Existence-filtered (the `dh4f` rule); a
   // repository-scoped entry has one location by definition; a path another
   // entry already covers is not listed twice.
-  const out = [...byId.values()].map((d) => ({ ...d, member: d.member ?? d.declaredBy }));
+  //
+  // NESTED MEMBERS (placement PR0c, bean `ejye`). The same rule one level
+  // down, for a sub-subgraph declared FROM WITHIN: the harness declares a
+  // group once (`skills/skills.json` naming `library/`), and each instance's
+  // same-named `skills/library/` is a member of it. And a MEMBER's own
+  // declaration file is read as well as the declarer's — before this, sci's
+  // `skills/skills.json` (naming `lean/`, `data/`, `voices/`) was read only
+  // when sci was resolved ALONE, because in sci's chain `skills` is
+  // cat-harness's entry and only cat-harness's `skills.json` was opened. A
+  // worklist, so a member's from-within entry gets members of its own.
+  const out: ResolvedDirectory[] = [...byId.values()].map((d) => ({ ...d, member: d.member ?? d.declaredBy }));
   const seen = new Set(out.map((d) => d.absPath));
   const nameOf = new Map(chain.map((l) => [l.root, readDeclaration(l.root, registry)?.name ?? l.name]));
-  for (const d of [...out]) {
-    if (d.scope === "repository" || d.within !== undefined) continue;
+  const work = [...out];
+  while (work.length > 0) {
+    const d = work.shift()!;
+    if (d.scope === "repository") continue;
     for (const link of chain) {
       const abs = resolve(link.root, d.path);
       if (seen.has(abs) || !existsSync(abs)) continue;
       seen.add(abs);
-      out.push({ ...d, absPath: abs, own: link.own === true, member: nameOf.get(link.root) ?? link.name });
+      const member = nameOf.get(link.root) ?? link.name;
+      const m = { ...d, absPath: abs, own: link.own === true, member };
+      out.push(m);
+      work.push(m);
+      for (const nd of declaredFromWithin(m.absPath, m.graphKinds, registry)) {
+        const nAbs = join(m.absPath, nd.sub);
+        if (seen.has(nAbs)) continue;
+        seen.add(nAbs);
+        const e = {
+          ...nd.entry,
+          path: `${d.path.replace(/\/+$/, "")}/${nd.sub}/`,
+          declaredBy: member,
+          absPath: nAbs,
+          own: m.own,
+          member,
+          within: d.id,
+        } as ResolvedDirectory;
+        out.push(e);
+        work.push(e);
+      }
+    }
+  }
+  return out;
+}
+
+/**
+ * The instance directories a directory's kind-declaration file names FROM
+ * WITHIN (`"subgraph": true` entries), unresolved: each with its single path
+ * segment `sub`. Unparseable or absent files yield nothing —
+ * `check:harness-dirs` owns that finding.
+ */
+function declaredFromWithin(
+  absPath: string,
+  graphKinds: readonly string[],
+  registry: GraphKindRegistry,
+): Array<{ sub: string; entry: ContentDirectory }> {
+  const files = graphKinds
+    .map((g) => registry.get(g)?.declarationFile)
+    .filter((f): f is string => typeof f === "string");
+  const out: Array<{ sub: string; entry: ContentDirectory }> = [];
+  for (const f of [...new Set(files)]) {
+    const p = join(absPath, f);
+    if (!existsSync(p)) continue;
+    let nested: { directories?: Array<Record<string, unknown>> };
+    try {
+      nested = JSON.parse(readFileSync(p, "utf-8"));
+    } catch {
+      continue;
+    }
+    for (const nd of nested.directories ?? []) {
+      if (typeof nd.id !== "string" || typeof nd.path !== "string" || nd.subgraph !== true) continue;
+      const sub = nd.path.replace(/^\.\//, "").replace(/\/+$/, "");
+      out.push({ sub, entry: nd as unknown as ContentDirectory });
     }
   }
   return out;

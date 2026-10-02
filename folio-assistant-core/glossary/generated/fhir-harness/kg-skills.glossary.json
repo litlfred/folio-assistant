@@ -15,11 +15,33 @@
       "status": "candidate"
     },
     {
+      "id": "fhir-validation",
+      "prefLabel": "fhir-validation",
+      "notation": "fhir-validation",
+      "source": "fhir-harness/skills/content/fhir-ig-authoring/fhir-validation.md",
+      "status": "candidate"
+    },
+    {
+      "id": "ig-ast-delta",
+      "prefLabel": "ig-ast-delta",
+      "definition": "List and view what changed between two IG ASTs, check whether an AST is still valid for the IG's current inputs, and render the delta as just-the-docs pages that carry the provisional mark. Read before trusting a cached AST, before reviewing an incremental IG build, and before rendering anything from a cache.",
+      "notation": "ig-ast-delta",
+      "source": "fhir-harness/skills/fhir-ig-base/ig-ast-delta.md",
+      "status": "candidate"
+    },
+    {
       "id": "ig-build-pipeline",
       "prefLabel": "ig-build-pipeline",
       "definition": "The bare FHIR IG pipeline — FSH to SUSHI to the IG Publisher to a pages branch, with no pre-processing and no post-processing. What this layer runs, what it emits, and the list of things it deliberately refuses to know about. Read before adding anything to fhir-harness.",
       "notation": "ig-build-pipeline",
       "source": "fhir-harness/skills/fhir-ig-base/ig-build-pipeline.md",
+      "status": "candidate"
+    },
+    {
+      "id": "ig-publication",
+      "prefLabel": "ig-publication",
+      "notation": "ig-publication",
+      "source": "fhir-harness/skills/content/fhir-ig-authoring/ig-publication.md",
       "status": "candidate"
     },
     {
@@ -47,11 +69,25 @@
       "status": "candidate"
     },
     {
+      "id": "l3-fhir-authoring",
+      "prefLabel": "l3-fhir-authoring",
+      "notation": "l3-fhir-authoring",
+      "source": "fhir-harness/skills/content/fhir-ig-authoring/l3-fhir-authoring.md",
+      "status": "candidate"
+    },
+    {
       "id": "smart-launch",
       "prefLabel": "smart-launch",
       "definition": "How a browser app performs a SMART on FHIR launch — EHR launch and standalone launch — with the SMARTerFHIR library: `SmartLaunchHandler`, the `LAUNCH` and `EMR` enums, the scopes it requests per EHR vendor, how the redirect URI is computed, and where the token ends up. Written against a pinned upstream commit; read before wiring a launch page or a redirect page.",
       "notation": "smart-launch",
       "source": "fhir-harness/skills/fhir-client/smart-launch.md",
+      "status": "candidate"
+    },
+    {
+      "id": "terminology-management",
+      "prefLabel": "terminology-management",
+      "notation": "terminology-management",
+      "source": "fhir-harness/skills/content/fhir-ig-authoring/terminology-management.md",
       "status": "candidate"
     }
   ]

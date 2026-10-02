@@ -46,3 +46,22 @@ Rendered at 1280×800 and 390×844, served from the checkout. Since e112deae the
 ## Update, 2026-09-24: the agent summary beside the extract
 
 The blocks panel (bean `lrmo`) showed a prose block's extract and, in its last column, only a narrative STATE. It now carries the block's agent summary from the entry's `summaries.json` sidecar (`schemas/block-summary.ts`) **beside** the extract, never in its place: two columns at 1280 px, stacked with the extract first at 390 px. The last column is "narrative / summary", and for a prose block it shows the summary's state as a word badge. A header badge counts the backlog of the summary drain (`bun run summaries`) for the entries in scope. Checked by rendering the cat-harness page at both widths with `arxiv-2312.07755v1` opened: no horizontal page scroll at 390 px, and no script errors.
+
+## Update, 2026-10-02: findings re-measured and worked (bean `gnqa`, issue #1838)
+
+Re-measured on a local build of `main` cf3e62487 (`preview:site`, served at `/folio-assistant/`), at 1280×800 and 390×844. Pictures in `rendered-2026-10-02/` (`before-*` is that build, `after-*` the branch). The as-is drawing above is NOT re-drawn; it records the page as it was.
+
+1. **Fixed.** The page now aggregates 60 entries and the table had grown to 3,636 px. Slug, title and source wrap inside bounded widths, so it is 1,552 px. The first column is pinned while it scrolls, and a right-edge fade shows there is more (`after-web.png`, `after-web-scrolled.png`).
+2. **Fixed.** Below 800 px each row is a two-column card with every cell labelled, and the header row stays as the sort controls. The uploads table gets the same treatment. Measured: `scrollWidth` 390, both tables 334 px in a 334 px box (`after-mobile.png`).
+3. **No longer holds** (already recorded fixed 2026-09-29). The handle is at 0–28 and the h1 at 52.
+4. **No longer holds** (#1592). Each title is a link to the entry's README.
+5. **Fixed for the three named entries.** A catalogue node that names the slug in `libraryId` now supplies the title: "Abies" becomes "WHO editorial style manual", "PUBLICATION AND INFORMATION" becomes "Publication and information products style guide", and "Handbook forGuideline…" becomes "WHO handbook for guideline development". The pull-out button's accessible name follows. The extracted title is kept as `extractedTitle` and is still searched. Two parts are left open. Other entries with no catalogue node still show extraction artefacts (e.g. "PROV-O: … Editors:"), which is corpus data. The 34×46 px cover is an open design question on the PR.
+6. **Fixed.** "Referenced by" is a `<details>`, so its files open on tap, Enter or Space. There is no `title` tooltip.
+
+## Update, 2026-10-02: titles of entries with no catalogue record (bean `w6fu`, issue #1838)
+
+The owner ruled on finding 5's open half: **both, in order**. (a) The PDF ingest path now resolves a title from the sources that can vouch for it: the PDF's `Title` metadata, page 1's largest heading, and the outline, before the text walk (`scripts/_pdf_title.py`, shared by both PDF rungs and `ingest-document.ts --refresh-title`). A candidate is taken only when an independent source corroborates it; otherwise the raw title stays, marked `title_verified: false`, with every candidate recorded. Over all 57 entries with a `structure.json`, this changed 19 shown titles. The number of entries that show only their slug went from 25 to 18. (b) The 19 titles still wrong after that are corrected as data, in each entry's own `structure.json` (`metadata.title_correction`, with the basis it was read from). The manifest records `title_source: "editorial"` beside the extracted title.
+
+Pictures in `rendered-2026-10-02/`, at 1280×800 and 390×844, on a local `preview:site` build. `titles-before-*` uses #1839's library index and `titles-after-*` uses this branch's. `titles-w3c-*` filters the list to "w3c", where the run-on titles were. No horizontal page scroll at either width, and no script errors.
+
+Still open: `kg-folio-asst-2026-09-30` (a slide deck with no title metadata) and `codata-2022` (a tabular entry titled by its file name) keep their current titles. Neither is a PDF, and nothing in either says what its title is.

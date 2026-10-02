@@ -1,4 +1,4 @@
-# bpmn: cat-harness/processes/code-quality-gates.bpmn
+# bpmn: cat-harness/processes/sdlc/code-quality-gates.bpmn
 # Code-quality gates — cheap, fast static checks that protect compute infra.
 #
 # Four jobs (the first three per
@@ -829,6 +829,16 @@ jobs:
       - name: knowledge-graph audit, every declared instance
         run: bun run kg:audit:all:check
 
+      # kg-export's committed `qa-results/v1` sidecars are current (bean `v556`).
+      #
+      # It had no `--check` until then, so it was in no verify/write pair and
+      # outside check:artefact-verification's inventory. Measured on main
+      # `cf3e624`: `kg-export.bootstrap.qa-results.json` carried a stale hash
+      # AND hid three findings, with every gate green. Also reports a committed
+      # `kg-export.<stub>` sidecar that no instance owns as an orphan.
+      - name: kg-export QA sidecars are current
+        run: bun run kg:export:check
+
       # WHICH audits reach which kind of node — the neighbour of the audit
       # above, not a second answer to it. `kg:audit:check` judges the nodes it
       # covers; this measures WHAT IS COVERED AT ALL, which nothing asked
@@ -1317,10 +1327,42 @@ jobs:
           # names the range it used either way.
           if [ -n "$CATALOGUE_BASE_SHA" ]; then
             git fetch --no-tags --depth=1 origin "$CATALOGUE_BASE_SHA"
+            bun run translation:catalogue:check
           else
+            # NO pull-request context: a `workflow_dispatch` or `merge_group`
+            # run. `CATALOGUE_BASE_SHA` is empty, and the old fallback then ran
+            # the three-dot path against an `origin/main` this very fetch had
+            # just CREATED as a shallow graft — which has no merge base, so the
+            # script exited 2, "could not determine", every time.
+            #
+            # That made a dispatched run of this workflow UNPASSABLE, which is
+            # not a nuisance but a trap: `check-head-has-run.ts` tells an
+            # operator to dispatch when a head has no run, so following the
+            # repository's own advice attached a red hard gate to a PR that had
+            # not earned it. Measured on #1633, 2026-10-01, run 36789391040 —
+            # the only red among twelve checks, and it was the advice, not the
+            # branch. Issue #823, bean `sddf`.
+            #
+            # Deepen until a merge base EXISTS, then name it. `--base` is the
+            # script's two-dot path and needs no merge base of its own, but a
+            # base still has to be supplied.
             git fetch --no-tags --prune --depth=200 origin main || true
+            base="$(git merge-base origin/main HEAD 2>/dev/null || true)"
+            if [ -z "$base" ]; then
+              git fetch --no-tags --unshallow origin main 2>/dev/null \
+                || git fetch --no-tags --deepen=2000 origin main 2>/dev/null || true
+              base="$(git merge-base origin/main HEAD 2>/dev/null || true)"
+            fi
+            if [ -n "$base" ]; then
+              bun run translation:catalogue:check -- --base "$base"
+            else
+              # Still could-not-determine, and it stays exit 2 rather than
+              # becoming a pass. `dh4f`: the one thing this must never do is
+              # render "I could not look" as "nothing is wrong".
+              echo "::error::no merge base against origin/main after deepening — the catalogue check cannot run on this event"
+              exit 2
+            fi
           fi
-          bun run translation:catalogue:check
 
       - name: gates that were registered and never run
         run: |
@@ -1476,6 +1518,14 @@ jobs:
           # can see, which is the 35-bean defect e8m3 was filed over.
           bun run check:bean-archive
           bun run check:bean-blocks
+          # Bean `m61r`, issue #1853: a pull request adds to a bean it does not
+          # own by writing a NOTE, one file per branch per bean, instead of
+          # appending — `ob3m` cost five hand-merges in one afternoon because
+          # every append conflicted with every other. This judges each note
+          # (front matter, a bean that exists, and the file name its own front
+          # matter derives — the rule that keeps two writers apart) and fails
+          # on a stale generated index. Writer: `bun run beans:notes`.
+          bun run beans:notes:check
           # Bean `kpcl`, issue #956: `in-progress` stopped carrying information --
           # 99 claims, 77 untouched for a day or more. The obvious sweep assumes
           # its own answer, so this gate owns only the half that is PURE GRAPH:
@@ -1493,6 +1543,27 @@ jobs:
           # at the eight the store had, so a NEW one fails and the backlog is
           # listed rather than demanded.
           bun run check:bean-bodies
+          # Bean `7pp6`: a markdown line whose FIRST character is `<` makes
+          # kramdown open a raw HTML block, and with no close tag the REST OF THE
+          # PAGE stays raw -- tables print as rows of pipes. The usual cause is an
+          # inline code span wrapped across a line break.
+          #
+          # `check:escaped-markup` already catches this, but only on a BUILT tree,
+          # and that runs in docs-site.yml AFTER merge. So five of these shipped
+          # green and reddened `main`: four closed at once by `7w1a` (`<agentId>`,
+          # `<branch>`, `<file.json>`, `<name>.config.json`) and `<slide>` by
+          # #1730, which cost NINE consecutive `Docs site` failures. Each was
+          # repaired by reflowing the one source that had it; a fix repeated five
+          # times is a missing gate, not five accidents.
+          #
+          # Column 0 only, outside fences and front matter, with autolinks and
+          # real html elements excused BY NAME -- including the
+          # `<details markdown="1">` that `7w1a` deliberately introduced. Of 6
+          # column-0 matches across 2314 files, four were not this defect, so a
+          # check designed from the one example would fire on valid documentation.
+          # Lands green over 706 sources: it locks the class, it does not open a
+          # backlog.
+          bun run check:escaped-markup:source
           # Bean `t7ao`: check:bean-bodies reads front matter by REGEX, and a
           # regex over a broken document does not notice the document is
           # broken. A bean committed with a literal `\1` where `updated_at:`
@@ -1540,6 +1611,13 @@ jobs:
           bun run deps:python:check
           bun run check:l1-complete
           bun run check:l1-complete -- --check
+          # Issue #1794, bean `8iqc`: l1-complete asks whether ingestion
+          # PRODUCED each artefact; this asks whether it is any good -- a
+          # title that is the slug, or "Abies" off a scanned cover, passes
+          # every completeness test. ADVISORY: the findings are reported in
+          # the committed sidecar and do not fail; a stale sidecar or a
+          # could-not-determine entry does.
+          bun run check:library-qa:check
           # Bean `q7ey`: an ingested upload retires to `fsh-guts/uploads/`.
           # The rule was written and hand-swept on 2026-09-30, and that one
           # sweep left eight files in two places and a whole harness
@@ -1575,6 +1653,17 @@ jobs:
           bun run uml:overview:check
           bun run check:artifact-index
           bun run smart-trust:pages:check
+          # smart-base's landing page and artefact index, from the same generic
+          # generator (fhir-harness/scripts/gen-ig-pages.ts, #1767).
+          bun run smart-base:pages:check
+          bun run smart-immunizations:pages:check
+          # smart-base's DAK document kind, generated from DAK_COMPONENTS
+          # (stage D5, #1767): stale the moment a component is added.
+          bun run smart-base:document-kinds:check
+          # smart-kg L1 documents kept beside library entries (bean 8pzh):
+          # stale the moment a section text or structure.json they read changes.
+          bun run smart-base:smart-kg-l1:check
+          bun run document-kinds:viz:check
           # The fsh-guts index is generated from the graph, so it goes stale the
           # moment a file is relocated there -- which is the ONE operation that
           # graph exists for. Gated here rather than trusted, same as every
@@ -1728,6 +1817,12 @@ jobs:
           # `a1lq`), because a partial checkout looks the same; CI has the
           # whole checkout, so here it fails.
           bun run check:instance-graph
+          # Concern groups (placement PR0c, bean `ejye`): every grouping
+          # kind's groups are declared from within, are codes of
+          # `code-lists/concern-group.json`, are declared once, and a higher
+          # instance's same-named directory is a member rather than a group
+          # of its own.
+          bun run check:concern-groups
           # No module scope resolves the folio directory. `folioDir` throws
           # on a malformed declaration, and a throw during evaluation strands
           # every export below it — which is how bean `95s1` got an error
@@ -1756,6 +1851,18 @@ jobs:
           # (2026-09-20). It reads them out of the YAML rather than
           # listing them, so a new one is covered the day it is added.
           bun run check:ci-invocations
+
+          # Its sibling, also reading the workflow YAML rather than a list: a
+          # job that RUNS a platform script must have CHECKED OUT the
+          # platform's submodules, because `cat-harness/schemas/` imports from
+          # `bootstrap-tools`. Measured 2026-10-02 — `feature-staging.yml`'s
+          # `cleanup` job had failed on exactly this for six consecutive runs
+          # and `STAGING/` held 80 previews, 47 for closed PRs. The failure is
+          # worse than a missing cleanup: `rm -rf` runs, then `render-log.ts`
+          # dies and aborts the step under `bash -e`, so the commit and push
+          # never happen — a cleanup that reports failure having changed
+          # nothing, while looking from outside like one that ran.
+          bun run check:workflow-submodules
           # The per-kind state dashboards under `<base>/<graph>/dashboard/`.
           # COMMITTED pages, so a difference is somebody who changed the
           # generator, the renderer it inlines, or the declaration, and did
@@ -1792,8 +1899,10 @@ jobs:
           # Every ingested source records its licence, or records that nobody
           # could find it and where they looked (issue #1023). It REPORTS
           # absence and `unknown`, because the field is new, and fails only on
-          # a record that claims something it cannot back.
-          bun run check:source-licence
+          # a record that claims something it cannot back. The `:check` form
+          # compares the committed sidecar and writes nothing (bean `i2kp`):
+          # the writing form, run as the gate, rewrote what it should judge.
+          bun run check:source-licence:check
           # Every declared harness visualiser has a wireframe, checked at a web
           # AND a mobile viewport (issue #1023; owner: "need both web and
           # mobile layouts in usability reviews"). Gated: a visualiser added
@@ -1813,6 +1922,10 @@ jobs:
           # source per code, not a string in an attribute. Owner, 2026-09-23.
           # Refuses a malformed list, and an adjudication naming no list.
           bun run code-lists:check
+          # Vocabulary mapping tables (bean k74z): each parses, each derived
+          # target copies an authoritative one, each system resolves, and each
+          # can be produced as a FHIR ConceptMap. Owner, 2026-10-02.
+          bun run vocab-mappings:check
           bun run docs:harness:check
           # Every instantiated harness ABOVE THE FLOOR owes a board, and the
           # board it owes shows the whole folio. Owner, 2026-09-21: "Any
@@ -1846,6 +1959,12 @@ jobs:
           # render, and this one carries byte counts and download links -- the
           # two things a reader would take on trust.
           bun run iris:pages:check
+          # The Dublin Core renderings (DC XML + DCMI-Terms JSON-LD) of every
+          # catalogue record an item names, published beside the replica
+          # pages (bean `7eak`). Fails on a missing, stale or orphaned
+          # rendering -- the item pages link these files, so a stale one is
+          # wrong metadata served under a link a harvester trusts.
+          bun run dc:render:check
           # The prefix-sharded identifier lookup over who-iris's REFERENCED
           # nodes (bean `4pm8`). Gated because a stale shard still answers:
           # it finds a node the catalogue no longer references, and a reader

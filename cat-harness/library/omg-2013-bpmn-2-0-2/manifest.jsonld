@@ -1,5 +1,10 @@
 {
-  "@context": "https://litlfred.github.io/folio-assistant/ns/content/v1.jsonld",
+  "@context": [
+    "https://litlfred.github.io/folio-assistant/ns/content/v1.jsonld",
+    {
+      "@base": "https://litlfred.github.io/folio/"
+    }
+  ],
   "@id": "library/omg-2013-bpmn-2-0-2/manifest",
   "@type": [
     "folio-assistant-core:SourceDocument"
@@ -9,6 +14,8 @@
   "provenance": "ingested",
   "meta": {
     "doc_id": "omg-2013-bpmn-2-0-2",
+    "title_source": "referenced",
+    "title_from": "referenced.json identity.title",
     "source_file": "omg-2013-bpmn-2-0-2.pdf",
     "source_sha256": "d3d9258a70bf808c11ac52becea4ce645540a8b881117535f60a56fbf13e22f2",
     "disposition": "referenced source — recorded, text withheld by licence",

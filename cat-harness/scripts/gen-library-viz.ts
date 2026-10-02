@@ -55,15 +55,17 @@ import { readLibraryGraph, type LibraryGraph, type LibraryBlock,
   readEntryBlocks,
 } from "./library-graph.ts";
 import { tally } from "./summaries.ts";
+import { WITHHELD_VIEW_JS } from "./lib/library-withheld-view.ts";
 import { scanLibraryRefs, type RefSource } from "./library-refs.ts";
 import { orphanSubjectPages, viewerPlacement } from "./gen-schema-viz.ts";
 import { readDeclaration } from "../schemas/cat-harness.ts";
-import { directoriesForGraph, instanceRootsIn, repoRootFor, siteDirFor } from "../schemas/cat-harness.ts";
+import { instanceRootsIn, repoRootFor, siteDirFor } from "../schemas/cat-harness.ts";
 import { directoryByVisualisationRef } from "./graph-tiles.ts";
 import { tileCounts } from "../schemas/tile-count.js";
 import { itemState } from "./gen-uploads-viz.ts";
-import { makeEmit, type ViewerNav } from "./viewer-page.ts";
+import { makeEmit, type ViewerNav, subjectSection } from "./viewer-page.ts";
 import { renderedPath, withRenders, withViewers } from "./viewer-declarations.js";
+import { corpusDirectoriesForGraph } from "../schemas/harness-config.js";
 
 /** This generator's Tool node (`tools/viewers.ts`), named on every page it draws. */
 const VIEWER_TOOL = "library-viewer";
@@ -171,6 +173,14 @@ export function viewerHtml(dataHref: string, scope = "", mount = ""): string {
 #blocks .sum { padding: .55rem .7rem; border: 1px dashed var(--line); border-radius: 6px;
   font-size: 13px; line-height: 1.5; }
 #blocks .sum p { margin: .35rem 0 0; }
+/* A WITHHELD ENTRY -- issue #1794. Said in words, styled as information
+   rather than as an error: not publishing a refused work is the system
+   working, and the banner is there so it is not mistaken for a gap. */
+#blocks .wh-banner { margin: 8px 16px 12px; padding: .6rem .8rem; border: 1px solid var(--info);
+  background: var(--info-soft); border-radius: 8px; font-size: .86rem; line-height: 1.5; }
+#blocks .wh-banner p { margin: 0 0 .35rem; }
+#blocks .wh-banner p:last-child { margin: 0; }
+#blocks .wh-line { color: var(--muted); font-size: .8rem; }
 :root {
   --bg:#fff; --fg:#17191c; --muted:#5b6168; --line:#d9dde2; --panel:#f6f7f9;
   --accent:#276749; --accent-soft:#e6f2ec; --warn:#8a5300; --warn-soft:#fdf3e0;
@@ -247,6 +257,71 @@ p.note { color:var(--muted); font-size:.82rem; margin:0 16px 8px; }
 .lib-ava svg { width:22px; height:22px; fill:none; stroke:var(--muted); stroke-width:1.6; }
 td.lib-first { white-space:nowrap; }
 .card .lib-ava { width:56px; height:76px; }
+/* THE LISTING FITS MORE OF ITSELF, AND SAYS WHEN IT DOES NOT -- bean gnqa,
+   findings 1 and 2. Measured 2026-10-02 at 1280 px: a 3636 px table in a
+   1224 px box, every cell nowrap, so the title and source path alone were
+   2,000 px and nine of thirteen columns sat past the right edge with
+   nothing on screen saying so. The long TEXT cells now wrap inside a
+   bounded width; the short numeric and pill cells keep nowrap, because a
+   count broken over two lines is harder to read than one scrolled to. */
+#listing td.lib-first { white-space:normal; min-width:13rem; max-width:17rem; }
+#listing td.lib-first .slug { overflow-wrap:anywhere; }
+#listing td.t-title { white-space:normal; min-width:14rem; max-width:22rem; }
+#listing td.t-source { white-space:normal; min-width:9rem; max-width:14rem; }
+#listing td.t-source .slug { overflow-wrap:anywhere; }
+#listing td.t-source .pill { white-space:nowrap; }
+#queue td.slug { white-space:normal; overflow-wrap:anywhere; min-width:12rem; max-width:24rem; }
+/* "Referenced by" OPENS rather than hovers -- finding 6. A title tooltip is
+   unreachable by touch and by keyboard; a details element is both. */
+details.refs > summary { cursor:pointer; list-style:none; display:inline-flex; align-items:center; min-height:28px; }
+details.refs > summary::-webkit-details-marker { display:none; }
+details.refs > summary .pill::after { content:" \\25B8"; }
+details.refs[open] > summary .pill::after { content:" \\25BE"; }
+details.refs ul { margin:.3rem 0 0; padding-left:1rem; font-size:.72rem; color:var(--muted);
+  white-space:normal; overflow-wrap:anywhere; max-width:22rem; }
+/* THE EDGE CUE AT DESKTOP WIDTH. narrow-viewport.css fades a table's
+   overflowing edge below 800 px; above it the scroll box is .wrap, and it
+   had mask-image none. Same mask, same scroll-driven animation, so a box
+   that does not overflow shows no fade. */
+@media (min-width: 800px) {
+  /* The entry's identity stays in view while the reader scrolls to its
+     numbers: the first column is pinned to the scroll box's left edge. */
+  #listing th:first-child, #listing td.lib-first { position:sticky; left:0; z-index:1;
+    background:var(--bg); box-shadow:1px 0 0 var(--line); }
+  #listing th:first-child { z-index:2; }
+  @supports (animation-timeline: scroll()) {
+    /* Right edge only: the pinned first column already shows what is to
+       the left, and a left fade would dim the entry's own name. */
+    #listing.wrap, #queue.wrap {
+      mask-image: linear-gradient(to right,
+        #000 calc(100% - var(--fa-cue-r)), transparent 100%);
+      animation: fa-scroll-cue linear both;
+      animation-timeline: scroll(self inline);
+    }
+  }
+}
+/* ON A PHONE A ROW IS A CARD -- finding 2. At 390 px a sideways-scrolling
+   table showed one column of thirteen: the cover, the slug and a button,
+   none of the metadata the listing exists for. Each row now lays its cells
+   out in a two-column grid, every cell labelled from its own header, and
+   the header row stays as the SORT controls. Overrides narrow-viewport.css
+   by id, which outranks its type selector. */
+@media (max-width: 799.98px) {
+  #listing table, #queue table { display:block; mask-image:none; animation:none; overflow:visible; }
+  #listing thead, #queue thead, #listing tbody, #queue tbody { display:block; }
+  #listing thead tr, #queue thead tr { display:flex; flex-wrap:wrap; gap:2px 12px; padding:6px 10px; }
+  #listing thead th, #queue thead th { position:static; border:0; padding:2px 0; }
+  #listing thead tr::before { content:"Sort by"; font-size:.74rem; color:var(--muted); align-self:center; }
+  #listing tbody tr, #queue tbody tr { display:grid; grid-template-columns:1fr 1fr; gap:2px 10px;
+    padding:10px; border-bottom:1px solid var(--line); }
+  #listing tbody td, #queue tbody td { display:block; border:0; padding:2px 0; white-space:normal;
+    min-width:0; max-width:none; text-align:left; overflow-wrap:anywhere; }
+  #listing td.lib-first, #listing td.t-title, #listing td.t-source, #listing td.t-refs,
+  #queue td.slug { grid-column:1 / -1; }
+  #listing td[data-label]::before, #queue td[data-label]::before { content:attr(data-label);
+    display:block; font-size:.66rem; letter-spacing:.04em; text-transform:uppercase; color:var(--muted); }
+  #listing td.lib-first::before, #listing td.t-title::before { content:none; }
+}
 </style>
 </head>
 <body>
@@ -349,7 +424,7 @@ var COLS = [
      page (its generated README) where one exists, and the document's upstream
      record rides beside it: arXiv or DOI, from the identifier its manifest
      records. Nothing is linked that the projection does not carry. */
-  { k:"title",    t:"title",    n:false, f:function(e){
+  { k:"title",    t:"title",    n:false, c:"t-title", f:function(e){
       var t = e.readme ? '<a href="'+esc(e.readme)+'">'+esc(e.title)+"</a>" : esc(e.title);
       var src = e.arxiv ? "https://arxiv.org/abs/"+encodeURIComponent(e.arxiv) : e.doi ? "https://doi.org/"+e.doi : "";
       return t + (src ? ' <a class="src" href="'+esc(src)+'">source</a>' : "");
@@ -363,14 +438,16 @@ var COLS = [
   { k:"pageEnd",  t:"pages",    n:true, f:function(e){ return e.pageStart==null?'<span class="pill">—</span>':esc(e.pageStart+"–"+e.pageEnd); } },
   { k:"words",    t:"words",    n:true, f:function(e){ return e.words.toLocaleString(); } },
   { k:"bytes",    t:"size",     n:true, f:function(e){ return kb(e.bytes); } },
-  { k:"refCount", t:"referenced by", n:true, f:function(e){ var s=refState(e);
-      // The join separator is written with a DOUBLED backslash on purpose:
-      // this page is a template literal, so a single one is eaten by
-      // TypeScript and emitted as a real line break inside the browser's
-      // string — which does not parse, and took the whole viewer down.
-      var files = (e.referencedBy||[]).map(function(r){ return r.from + " (" + r.count + ")"; }).join("\\n");
-      return '<span class="pill '+s.cls+'"'+(files?' title="'+esc(files)+'"':"")+">"+esc(s.label)+"</span>"; } },
-  { k:"upload",   t:"source",   n:false, f:function(e){ var s=uploadState(e);
+  { k:"refCount", t:"referenced by", n:true, c:"t-refs", f:function(e){ var s=refState(e);
+      /* The referencing files used to ride in a title attribute, which touch
+         and keyboard readers cannot reach (bean gnqa, finding 6). A details
+         element is focusable and opens on tap, Enter or Space. */
+      var refs = e.referencedBy || [];
+      var pill = '<span class="pill '+s.cls+'">'+esc(s.label)+"</span>";
+      if (!refs.length) return pill;
+      return '<details class="refs"><summary>'+pill+'</summary><ul>' + refs.map(function(r){
+        return "<li>"+esc(r.from)+" ("+r.count+")</li>"; }).join("") + "</ul></details>"; } },
+  { k:"upload",   t:"source",   n:false, c:"t-source", f:function(e){ var s=uploadState(e);
       return '<span class="pill '+s.cls+'">'+esc(s.label)+"</span>"+(e.sourceFile?'<br><span class="slug" style="font-size:.72rem;color:var(--muted)">'+esc(e.sourceFile)+"</span>":""); } }
 ];
 
@@ -379,7 +456,7 @@ function rows(){
   var r = G.entries.filter(function(e){
     if (!inScope(e)) return false;
     if (!q) return true;
-    return (e.id+" "+e.title+" "+e.sourceFile+" "+e.docId+" "+e.instance).toLowerCase().indexOf(q) >= 0;
+    return (e.id+" "+e.title+" "+(e.extractedTitle||"")+" "+e.sourceFile+" "+e.docId+" "+e.instance).toLowerCase().indexOf(q) >= 0;
   });
   var k = SORT.key, d = SORT.dir;
   return r.sort(function(a,b){
@@ -429,7 +506,9 @@ function renderList(){
       ' data-fa-library-href="' + esc(href) + '"' +
       ' data-fa-library-avatar="' + esc(avatarUrl(e)) + '"' +
       ' data-fa-library-title="' + esc(e.title || e.id) + '">' + COLS.map(function(c, i){
-      return "<td"+(c.n?' class="num"':i===0?' class="lib-first" data-fa-pullout-host':"")+">" + (c.f ? c.f(e) : esc(e[c.k])) + "</td>";
+      var cls = i === 0 ? "lib-first" : [c.n ? "num" : "", c.c || ""].join(" ").trim();
+      return "<td" + (cls ? ' class="'+cls+'"' : "") + (i === 0 ? " data-fa-pullout-host" : "") +
+        ' data-label="'+esc(c.t)+'">' + (c.f ? c.f(e) : esc(e[c.k])) + "</td>";
     }).join("") + "</tr>";
   }).join("") || '<tr><td colspan="'+COLS.length+'"><p class="empty">Nothing matches.</p></td></tr>';
   $("listing").innerHTML = h + "</tbody></table>";
@@ -477,8 +556,8 @@ function renderQueue(){
       : esc(u.ext || "—");
     var label = esc(u.file) + (u.kind === "intake" && u.title
       ? '<br><span style="font-family:inherit;color:var(--muted);font-size:.78rem">' + esc(u.title) + "</span>" : "");
-    return '<tr><td class="slug">' + label + '</td><td><span class="pill">' + esc(u.instance) +
-      "</span></td><td>" + kind + '</td><td class="num">' + kb(u.bytes) + "</td><td>" +
+    return '<tr><td class="slug" data-label="unit">' + label + '</td><td data-label="queue"><span class="pill">' + esc(u.instance) +
+      '</span></td><td data-label="kind">' + kind + '</td><td class="num" data-label="size">' + kb(u.bytes) + '</td><td data-label="state">' +
       (u.ingestedBy ? '<span class="pill ok">ingested → ' + esc(u.ingestedBy) + "</span>"
                     : '<span class="pill warn">uningested</span>') + "</td></tr>";
   }).join("") || '<tr><td colspan="5"><p class="empty">No uploads queue for this subject.</p></td></tr>';
@@ -529,7 +608,7 @@ function honourAnchor(){
   }
   /* The graph of the thing the reader just opened — bean 7nvr. Driven off the
      anchor rather than a click so a shared URL lands on the same view. */
-  loadBlocks(known.id);
+  loadBlocks(known.id, known);
 }
 
 /* THE BLOCK GRAPH OF ONE ENTRY, fetched only when a reader opens one.
@@ -550,7 +629,7 @@ function blocksHref(id){
   var dir = DATA_HREF.slice(0, DATA_HREF.lastIndexOf("/") + 1);
   return dir + "entries/" + encodeURIComponent(id) + ".json";
 }
-function renderBlocks(id, data, err){
+function renderBlocks(id, data, err, entry){
   var el = $("blocks");
   el.hidden = false;
   if (err) {
@@ -574,7 +653,7 @@ function renderBlocks(id, data, err){
     ' prose block(s) summarised, <b>' + (prose - done) + '</b> still in the queue. ' +
     'Summaries are drafted by an agent a few at a time and confirmed only by a person.</p>' : '';
   el.innerHTML = '<h2>Blocks \u2014 ' + esc(id) + ' <span class="note">(' + bs.length +
-    ', in page order)</span></h2>' + drain + '<table><thead><tr>' +
+    ', in page order)</span></h2>' + withheldBanner(entry, bs) + drain + '<table><thead><tr>' +
     '<th>page</th><th>kind</th><th>types</th><th>title</th><th>narrative / summary</th></tr></thead><tbody>' +
     bs.map(function(b){
       /* BOTH types, never one. A block is dual-typed so a DoCO reader gets
@@ -599,22 +678,11 @@ function renderBlocks(id, data, err){
          TRUNCATION IS DECLARED, never inferred from length. A reader who
          cannot tell a short section from a cut one is being shown a claim the
          data does not support. */
-      var title = esc(b.title || '\u2014');
-      var body;
-      if (b.content) {
-        var extract = '<pre>' + esc(b.content) + '</pre>' +
-          (b.truncated ? '<p class="note">Excerpt \u2014 the first 600 characters. The section file holds the rest.</p>' : '');
-        body = '<details><summary>' + title + '</summary><div class="block-body">' +
-          (b.summary
-            ? '<div class="pair"><div><p class="lbl">Extract</p>' + extract + '</div>' +
-              '<div><p class="lbl">Agent summary</p>' + summaryPanel(b.summary) + '</div></div>'
-            : extract) +
-          '</div></details>';
-      } else {
-        /* No content is a DETERMINED answer for a page-scan or an image with
-           no description, and is said plainly rather than left blank. */
-        body = title + ' <span class="note">(no content carried)</span>';
-      }
+      /* THE CONTENT CELL is blockBody -- summary, withheld line, or the
+         neutral "(no content carried)", in that order (issue #1794). Its
+         text lives in scripts/lib/library-withheld-view.ts so a test runs
+         exactly what this page runs. */
+      var body = blockBody(b, entry);
       return '<tr><td class="num">' + esc(pages) + '</td><td>' + esc(b.kind) +
         '</td><td>' + esc((b.types || []).join(' + ')) + '</td><td class="bt">' + body +
         '</td><td>' + nar + '</td></tr>';
@@ -640,6 +708,7 @@ function summaryLabel(s){
     default: return { cls: "", t: "not yet summarised" };
   }
 }
+${WITHHELD_VIEW_JS}
 function summaryBadge(s){
   var l = summaryLabel(s);
   return '<span class="pill ' + l.cls + '">' + esc(l.t) + '</span>';
@@ -662,11 +731,11 @@ function summaryPanel(s){
     (s.text ? '<p>' + esc(s.text) + '</p>' : '<p>' + esc(why || "") + '</p>') +
     (who ? '<p class="note">' + esc(who) + '</p>' : '') + '</div>';
 }
-function loadBlocks(id){
+function loadBlocks(id, entry){
   fetch(blocksHref(id), {cache: "no-store"})
     .then(function(r){ if (!r.ok) throw new Error("HTTP " + r.status); return r.json(); })
-    .then(function(d){ renderBlocks(id, d, null); })
-    .catch(function(e){ renderBlocks(id, null, String(e && e.message || e)); });
+    .then(function(d){ renderBlocks(id, d, null, entry); })
+    .catch(function(e){ renderBlocks(id, null, String(e && e.message || e), entry); });
 }
 
 function setView(v){
@@ -836,7 +905,7 @@ if (import.meta.main) {
   // rule `gen-schema-viz.ts` follows, and for the same reason: writing
   // "library" here would be a second answer to a question `harness.json`
   // already answers, and `check:declared-paths` would be right to say so.
-  const libDirs = directoriesForGraph(ROOT, "library");
+  const libDirs = corpusDirectoriesForGraph(ROOT, "library");
   const seg = libDirs.length > 0 ? basename(libDirs[0]!) : null;
   if (seg === null) {
     // No library directory declared by this instance — the uploads half alone
@@ -1026,10 +1095,18 @@ if (import.meta.main) {
     ]
       .filter(([, instance]) => subject === undefined || instance === subject)
       .map(([p]) => p);
-  emitPage(nav)(join(pageDir, "index.html"), withRenders(viewerHtml(dataHref, "", folioMount), drawn(), VIEWER_TOOL));
+  // The rail section (#1757): the static regions the script draws into.
+  // `#desktop` and `#blocks` are left out — they start `hidden`, and a rail
+  // row that scrolls to nothing is a dead control.
+  const regions = [
+    { label: "Summary", id: "badges" },
+    { label: "Entries", id: "listing" },
+    { label: "Queue", id: "queue" },
+  ];
+  emitPage({ ...nav, section: subjectSection(subjects, undefined, regions) })(join(pageDir, "index.html"), withRenders(viewerHtml(dataHref, "", folioMount), drawn(), VIEWER_TOOL));
   for (const subject of subjects) {
     const sub = viewerPlacement(site, `${handler}/${seg}/${subject}`, seg);
-    emitPage({ ...nav, instance: subject })(
+    emitPage({ ...nav, instance: subject, section: subjectSection(subjects, subject, regions) })(
       join(sub.pageDir, "index.html"),
       withRenders(viewerHtml(sub.dataHref, subject, folioMount), drawn(subject), VIEWER_TOOL),
     );

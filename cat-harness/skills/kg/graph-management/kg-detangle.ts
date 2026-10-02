@@ -38,6 +38,7 @@ import { detangleResultsDir, sidecarFor, sidecarPathFor, staleFields } from "../
 import { gitCorpus } from "../../../schemas/git-corpus.ts";
 import { groupDepthFor } from "./group-depth.ts";
 import { TOPICS_FILE, topicsOf } from "../../../scripts/skill-topics.ts";
+import { defaultGraphKinds } from "../../../schemas/graph-kind-registry.ts";
 import {
   DEFAULT_THRESHOLDS,
   measure,
@@ -52,6 +53,7 @@ import { allowedFromNeeds, directionOf, type LayerRule } from "../../../schemas/
 import { ancestorsOf, flattenDependencies } from "../../../schemas/dependency-order.js";
 import { ownElementPattern } from "../../../schemas/namespaces.js";
 import { isDirectoryReadme } from "../../../schemas/kg-node.ts";
+import { checkoutDirectories, orderedDependencies } from "../../../schemas/harness-config.ts";
 
 const ROOT = resolve(import.meta.dir, "../../../..");
 
@@ -77,7 +79,7 @@ const ROOT = resolve(import.meta.dir, "../../../..");
  * An entry naming a directory that does not exist is REPORTED as a determined
  * empty and left alone — removing it is a person's edit, not this script's.
  */
-const SCAN: Array<{ path: string }> = [
+const LITERAL_SCAN: Array<{ path: string }> = [
   { path: "cat-harness/skills" },
   { path: "cat-harness/processes" },
   { path: "cat-harness/scenarios" },
@@ -92,7 +94,88 @@ const SCAN: Array<{ path: string }> = [
   { path: "bootstrap/processes" },
 ];
 
+/**
+ * Every instance's OWN `skills` directories, resolved from the declarations —
+ * never hardcoded. Owner ruling, 2026-10-01 (separation arc S0, bean `hx65`):
+ * placement PR1 moved eight skill packages out of `cat-harness/skills/` into
+ * the instances that own them, which left their detangle sidecars measuring a
+ * path nobody had. The ruling was to WIDEN THE SCAN rather than delete the
+ * measurements, so a package is measured wherever its owner declares it.
+ *
+ * A declared directory nested inside one already scanned (e.g.
+ * `folio-assistant-sci/skills/lean/` under `folio-assistant-sci/skills/`) is
+ * dropped, because scanning both would count its nodes twice.
+ */
+function declaredSkillScan(literal: ReadonlyArray<{ path: string }>): Array<{ path: string }> {
+  const out = [...literal];
+  const covers = (outer: string, inner: string): boolean => inner === outer || inner.startsWith(`${outer}/`);
+  const declared = checkoutDirectories(ROOT)
+    .filter((d) => d.graphKinds.includes("skills" as never))
+    .map((d) => relative(ROOT, d.absPath).split("\\").join("/").replace(/\/+$/, ""))
+    .filter((p) => p.length > 0 && !p.startsWith(".."))
+    .sort((a, b) => a.length - b.length);
+  for (const p of declared) {
+    if (out.some((s) => covers(s.path, p) || covers(p, s.path))) continue;
+    out.push({ path: p });
+  }
+  return out;
+}
+
+/**
+ * `--gate-direction` keeps the LITERAL scan, for now. Widening it to every
+ * instance's skills turns 104 refs that were dangling (and so excluded) into
+ * resolved WRONG-DIRECTION edges — 91 of them harness BPMN naming skills that
+ * placement PR1 moved up, which PR1 deferred to PR3 (bean `63wl`, which moves
+ * those diagrams to their owners), plus `cat-harness/scenarios/roles.json`
+ * naming upper-layer skills. They are real placement debt, not noise; the
+ * owner's ruling widened the MEASUREMENT (sidecars), and turning a hard gate
+ * red over debt with a scheduled fix is a separate decision. Measured
+ * 2026-10-01 (S0, bean `hx65`): `kg:detangle --gate-direction` over the
+ * widened scan reports 104. Drop this exception when PR3 lands.
+ */
+const GATING_DIRECTION = process.argv.includes("--gate-direction");
+const SCAN: Array<{ path: string }> = GATING_DIRECTION ? [...LITERAL_SCAN] : declaredSkillScan(LITERAL_SCAN);
+const WIDENED = new Set(SCAN.slice(LITERAL_SCAN.length).map((s) => s.path));
+
+/**
+ * Topics a WIDENED skills directory inherits from the instances it stacks on.
+ *
+ * Topic membership is option A (bean `1g4s`): the same-named directory of every
+ * instance stacked on the declarer is a MEMBER of the topic, never a group of
+ * its own — `folio-assistant-core` declares `content`, so
+ * `folio-assistant-sci/skills/content/authoring-math` is the group, exactly as
+ * `cat-harness/skills/authoring/authoring-math` was before placement PR1 moved
+ * it. Only the widened entries inherit: the literal ones were measured with
+ * their own topics before this change, and their groups must not shift.
+ */
+function inheritedTopics(path: string): string[] {
+  if (!WIDENED.has(path)) return [];
+  const instance = join(ROOT, path.split("/")[0]!);
+  const out: string[] = [];
+  let deps: string[] = [];
+  try {
+    deps = orderedDependencies(instance).map((d) => d.rootPath);
+  } catch {
+    return []; // a cycle is `check:instance-graph`'s finding
+  }
+  for (const dep of deps) {
+    const skills = join(dep, "skills");
+    if (!existsSync(skills)) continue;
+    for (const t of topicsOf(skills)) if (existsSync(join(ROOT, path, t.path))) out.push(t.path);
+  }
+  return out;
+}
+
 const EXT = /\.(md|bpmn|dmn|json|ts)$/;
+
+/** The files a grouping kind names its groups in (`skills.json`, `processes.json`, …) — labels, never nodes. */
+const DECLARATION_FILES = new Set<string>([
+  TOPICS_FILE,
+  ...defaultGraphKinds
+    .names()
+    .map((k) => defaultGraphKinds.get(k)?.declarationFile)
+    .filter((f): f is string => typeof f === "string"),
+]);
 
 /** Per-directory file names that name no node — see the name index below. */
 const CONVENTIONAL = new Set(["README", "AGENTS"]);
@@ -207,14 +290,18 @@ for (const { path } of SCAN) {
   // `skills.json` is the same kind of thing as a README one level up: the
   // labelling node that says which subdirectories are TOPICS (bean `9umr`),
   // about the directory rather than a node in it.
+  //
+  // Every concern-group declaration file is that same labelling node —
+  // `processes/processes.json` since placement PR3 (bean `63wl`) — so each is
+  // excluded at its scan root, read from the registry rather than listed.
   const scanned = corpusOf(join(ROOT, path)).filter(
-    (p) => !isDirectoryReadme(p) && !(basename(p) === TOPICS_FILE && dirname(p) === join(ROOT, path)),
+    (p) => !isDirectoryReadme(p) && !(DECLARATION_FILES.has(basename(p)) && dirname(p) === join(ROOT, path)),
   );
   const groupDepth = groupDepthFor(path, scanned);
   // A group that is a declared TOPIC is not a package, it holds packages; the
   // package one level down is the group, so `kg/graph-management` stays the
   // group it was as `graph-management` rather than merging into `kg`.
-  const topics = new Set(topicsOf(join(ROOT, path)).map((t) => t.path));
+  const topics = new Set([...topicsOf(join(ROOT, path)).map((t) => t.path), ...inheritedTopics(path)]);
   for (const abs of scanned) {
     const id = relative(ROOT, abs);
     const segs = id.split("/");
@@ -299,6 +386,21 @@ function link(from: string, toId: string | undefined, ref: string, via: string) 
 }
 
 /**
+ * The node a relative TS import names, as Bun resolves it (bean `cjvs`).
+ *
+ * The first cut rewrote `.js` to `.ts` and stopped, so every EXTENSIONLESS
+ * specifier — `./cat-harness` with no suffix, the house style in `schemas/` — became a
+ * dangling ref: 156 edges the blocking `direction` gate never saw. A specifier
+ * that is not itself a file is tried as `<spec>.ts`, then `<spec>/index.ts`.
+ */
+function tsImportTarget(fromDir: string, spec: string): string {
+  const p = resolve(fromDir, spec.replace(/\.js$/, ".ts"));
+  const candidates = [p, `${p}.ts`, join(p, "index.ts")];
+  const hit = candidates.find((c) => existsSync(c) && statSync(c).isFile()) ?? p;
+  return relative(ROOT, hit);
+}
+
+/**
  * Resolve a name to a node.
  *
  * `kinds` is NOT optional and that is the fix for a measured defect. A first
@@ -379,8 +481,7 @@ for (const n of nodes) {
   }
   if (n.id.endsWith(".ts")) {
     for (const m of text.matchAll(/from\s+"(\.\.?\/[^"]+)"/g)) {
-      const p = resolve(dirname(abs), m[1].replace(/\.js$/, ".ts"));
-      link(n.id, relative(ROOT, p), m[1], "ts-import");
+      link(n.id, tsImportTarget(dirname(abs), m[1]), m[1], "ts-import");
     }
   }
 }

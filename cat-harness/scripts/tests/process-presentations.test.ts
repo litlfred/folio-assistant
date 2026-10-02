@@ -8,10 +8,10 @@
  */
 import { describe, expect, test } from "bun:test";
 import { existsSync, readFileSync, readdirSync } from "node:fs";
-import { dirname, join, resolve } from "node:path";
+import { dirname, join, resolve, basename } from "node:path";
 
 import { siteDirFor } from "../../schemas/cat-harness.ts";
-import { workflowFiles } from "../known-skills.js";
+import { workflowFiles, workflowFile } from "../known-skills.js";
 import { processPresentations, processTarget, type Presentation } from "../process-presentations.js";
 
 const ROOT = resolve(import.meta.dir, "..", "..");
@@ -43,7 +43,7 @@ describe("this repository, right now", () => {
   test("the index is not empty — a check over nothing is not a check", async () => {
     const idx = await processPresentations(ROOT);
     expect(idx.size).toBeGreaterThan(0);
-    expect(idx.get("processes/ingest-theme.bpmn")?.map((x) => `${x.page}#${x.node}`)).toEqual([
+    expect(idx.get("processes/ui/ingest-theme.bpmn")?.map((x) => `${x.page}#${x.node}`)).toEqual([
       "document-ingestion#ingest-the-theme",
     ]);
   });
@@ -89,10 +89,10 @@ describe("this repository, right now", () => {
   });
 
   test("no diagram names a page — the link is the page's to declare", () => {
-    const dir = join(ROOT, "processes");
-    const named = readdirSync(dir)
+    const named = workflowFiles(ROOT)
       .filter((f) => f.endsWith(".bpmn"))
-      .filter((f) => /<[\w.-]+:link\b[^>]*\bhref=/.test(readFileSync(join(dir, f), "utf-8")));
+      .map((p) => basename(p))
+      .filter((f) => /<[\w.-]+:link\b[^>]*\bhref=/.test(readFileSync(workflowFile(ROOT, f), "utf-8")));
     expect(named).toEqual([]);
   });
 });

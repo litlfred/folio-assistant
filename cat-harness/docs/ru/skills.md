@@ -154,7 +154,7 @@ flowchart TD
 | `bean-coordination` | Дисциплина распределения задач и координации между несколькими агентами |
 | `todo-manager` | Дисциплина управления задачами beans-as-todos |
 
-### Платформенные наборы навыков (`skills/folio-core`, `skills/authoring/folio-document-adapter`, `skills/authoring/folio-paper-adapter`)
+### Платформенные наборы навыков (`skills/folio-core`, `folio-assistant-core/skills/content/folio-document-adapter`, `folio-assistant-sci/skills/content/folio-paper-adapter`)
 
 Более крупные **платформенные наборы**, два из которых были перенесены из репозитория контента qou (см.
 [отчет о миграции](migrations/2026-06-29-platform-skills-migration.html) и

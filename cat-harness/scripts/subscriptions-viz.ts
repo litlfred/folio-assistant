@@ -5,7 +5,7 @@
  * `docs/proposals/kg-subscriptions.md` §"Known substrates" and §"The visualizer".
  *
  * ```sh
- * bun run subscriptions:viz          # write cat-harness/docs/subscriptions/index.md
+ * bun run subscriptions:viz          # write the subscriptions page under this instance's site directory
  * bun run subscriptions:viz:check    # fail when it is stale
  * ```
  *
@@ -46,12 +46,13 @@ import {
   type KnownSubstrate,
   type Subscription,
 } from "../schemas/cat-harness.ts";
+import { instanceConfigFilename } from "../schemas/harness-config.ts";
 import { instanceRepositories } from "../schemas/instance-repositories.ts";
 import { partRecordsIn, snapshotDirOf, type PartView } from "./kg-subscribe.ts";
 
 const REPO = resolve(import.meta.dir, "..", "..");
 const INSTANCE = resolve(import.meta.dir, "..");
-// declared-path-literal: a PAGE under the site root (permalink /subscriptions/), not the declared `subscriptions/` directory it shares a name with
+// declared-path-literal: the page's route under the site directory, not the `subscriptions/` snapshot directory of the same name
 export const OUT = join(INSTANCE, siteDirFor(INSTANCE), "subscriptions", "index.md");
 
 export type SubstrateSource = "staged instance" | "associated harness" | "hand-entered";
@@ -103,6 +104,8 @@ export interface SubscriptionCard {
   parts?: readonly PartView[];
   /** Bytes in that directory with no record, relative to the snapshot directory. */
   strays?: readonly string[];
+  /** Chosen harnesses whose `<name>.config.json` sits at the root (`kg:instantiate`, slice 7). */
+  instantiated?: string[];
 }
 
 export function subscriptionCards(repoRoot: string): SubscriptionCard[] {
@@ -115,7 +118,8 @@ export function subscriptionCards(repoRoot: string): SubscriptionCard[] {
     const snapshotDir = snapshotDirOf(root, raw);
     for (const s of d.subscriptions) {
       const { parts, strays } = snapshotDir ? partRecordsIn(snapshotDir, s.id) : { parts: [], strays: [] };
-      out.push({ subscriber: d.name, subscription: s, parts, strays });
+      const instantiated = (s.harnesses ?? []).filter((h) => existsSync(join(repoRoot, instanceConfigFilename(h))));
+      out.push({ subscriber: d.name, subscription: s, parts, strays, ...(instantiated.length ? { instantiated } : {}) });
     }
   }
   return out.sort((a, b) => `${a.subscriber}/${a.subscription.id}`.localeCompare(`${b.subscriber}/${b.subscription.id}`));
@@ -194,7 +198,7 @@ export function render(substrates: readonly SubstrateRow[], cards: readonly Subs
       "",
     );
   }
-  for (const { subscriber, subscription: s, parts = [], strays = [] } of cards) {
+  for (const { subscriber, subscription: s, parts = [], strays = [], instantiated } of cards) {
     lines.push(`### \`${subscriber}\` → ${repoLink(s.repository)} as \`${s.id}\``, "");
     lines.push(`Pinned at \`${s.ref}\`.${s.note ? ` ${s.note}` : ""}`, "");
     lines.push("| part | chosen | state here |", "|---|---|---|");
@@ -218,7 +222,13 @@ export function render(substrates: readonly SubstrateRow[], cards: readonly Subs
       lines.push(`| asset \`${p.slot.path}\` | on demand | ${cell(partState(p, s.ref))} |`);
     }
     for (const st of strays) lines.push(`| \`${st}\` | — | ⚠ bytes with no record |`);
-    for (const h of s.harnesses ?? []) lines.push(`| harness \`${h}\` | ✓ | 🔗 chosen, not yet instantiated |`);
+    for (const h of s.harnesses ?? []) {
+      lines.push(
+        instantiated?.includes(h)
+          ? `| harness \`${h}\` | ✓ | ⬆ instantiated: \`${h}.config.json\` at the root |`
+          : `| harness \`${h}\` | ✓ | 🔗 chosen, not yet instantiated |`,
+      );
+    }
     lines.push(
       "| everything else the substrate offers | — | 🔗 referenced |",
       "",

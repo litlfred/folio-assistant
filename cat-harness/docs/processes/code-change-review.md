@@ -4,7 +4,7 @@ nav_exclude: true
 ---
 
 {: .note }
-> Generated from `cat-harness/processes/code-change-review.bpmn` by `gen-processes-viz.ts` — do not edit here. [All processes](index.html)
+> Generated from `cat-harness/processes/sdlc/code-change-review.bpmn` by `gen-processes-viz.ts` — do not edit here. [All processes](index.html)
 
 {% raw %}
 # Code change and review
@@ -22,7 +22,7 @@ The loop back through "root-cause the failure" is the point of drawing this at a
 ## How it connects
 
 - **Called by:** [Actor and role administration](actor-role-administration.html)
-- **Calls:** none
+- **Calls:** [Merge the base branch in](merge-base.html)
 - **Presented on:** no docs page section shows this diagram
 
 ## Lanes — who acts
@@ -43,13 +43,13 @@ Every one of the 11 step(s) is documented.
 | **Branch, and announce it**<br>`Task_BranchAndAnnounce` | Authoring agent | [`issue-working`](../reference/skill-instructions/issue-working.html) | Announce the branch WHEN IT IS CREATED, not when the work is done.<br>The gap between one agent's view of an issue and everyone else's is<br>what this closes. |
 | **Make the change**<br>`Task_Implement` | Authoring agent | [`continual-progress`](../reference/skill-instructions/continual-progress.html) | The loop's only open-ended step. Everything around it is procedure;<br>this is the work. |
 | **Run the platform's own gates**<br>`Task_RunGates` | Authoring agent | [`platform-gates`](../reference/skill-instructions/platform-gates.html) | Before pushing, not after CI says so. `bun test` passing is NOT the<br>gates passing: measured 2026-09-19, a green unit suite sat beside a<br>`tsc` failure and a missing `@graphNode` tag, and the second broke<br>a QA sidecar comparison as well — one cause, two symptoms, and an<br>agent running only the tests would have pushed all three. |
-| **Commit, push, open the PR**<br>`Task_CommitAndOpenPR` | Authoring agent | [`continual-progress`](../reference/skill-instructions/continual-progress.html) | The PR opens at the FIRST commit, even on a stub, and permission is<br>never asked for it. Holding a green PR back for someone to look at<br>is not caution — it is a blocked reviewer. |
+| **Commit, push, open the PR**<br>`Task_CommitAndOpenPR` | Authoring agent | [`continual-progress`](../reference/skill-instructions/continual-progress.html)<br>[`before-after-preview`](../reference/skill-instructions/before-after-preview.html) | The PR opens at the FIRST commit, even on a stub, and permission is<br>never asked for it. Holding a green PR back for someone to look at<br>is not caution — it is a blocked reviewer. A change to a rendered<br>surface carries a before/after preview in the PR body<br>(skill before-after-preview). |
 | **Root-cause the failure**<br>`Task_Diagnose` | Authoring agent | [`ci-health`](../reference/skill-instructions/ci-health.html) | "Flake" is not a root cause. A red PR is work now, whatever its<br>review state — only a green, mergeable head waits on reviewers. |
 | **Address the review**<br>`Task_AddressReview` | Authoring agent | [`watch`](../reference/skill-instructions/watch.html) | Every finding is answered — implemented, or replied to with why<br>not. A design question does not excuse skipping the nits in the<br>same review. |
-| **Prepare the merge, and watch it through**<br>`Task_PrepareMerge` | Authoring agent | [`prepare-merge`](../reference/skill-instructions/prepare-merge.html) | `prepare-merge` brings the base in, re-runs the gates and pushes —<br>it does NOT merge. `watch` follows the PR until it is merged or<br>closed, because webhooks do not reliably deliver CI success or a<br>merge-conflict transition. |
+| **Prepare the merge, and watch it through**<br>`Task_PrepareMerge` | Authoring agent | calls [Merge the base branch in](merge-base.html)<br>[`prepare-merge`](../reference/skill-instructions/prepare-merge.html) | `prepare-merge` brings the base in, re-runs the gates and pushes —<br>it does NOT merge. Bringing the base in IS `merge-base.bpmn`<br>(`bun run merge:main`): conflicts a declared pattern covers are<br>resolved and proved by the gate set; anything else aborts the merge<br>and comes back to the agent (bean `y7b3`, #1707). `watch` follows the PR until it is merged or<br>closed, because webhooks do not reliably deliver CI success or a<br>merge-conflict transition. |
 | **Record what was done, and close**<br>`Task_CloseBean` | Authoring agent | [`todo-manager`](../reference/skill-instructions/todo-manager.html) | A closed work item is read later by somebody deciding whether to<br>reopen the subject, so "completed" with nothing behind it cannot be<br>audited. An ISSUE is never closed on the agent's own say-so. |
 | **Run the gates against the merge of head into base**<br>`Task_RunCI` | CI/CD pipeline | — | CI tests the MERGE, not the branch. That is why a locally green<br>tree can go red here: the agent's tree and the merge result are<br>different trees, and the difference is invisible from a checkout. |
-| **Review the change**<br>`Task_Review` | Code reviewer | [`code-node-review`](../reference/skill-instructions/code-node-review.html) | A human or an agent acting AS reviewer. Nothing is a reviewer;<br>somebody acts as one for the duration of this lane. |
+| **Review the change**<br>`Task_Review` | Code reviewer | [`code-node-review`](../reference/skill-instructions/code-node-review.html) | A human or an agent acting AS reviewer. Nothing is a reviewer;<br>somebody acts as one for the duration of this lane. For a rendered<br>change the reviewer reads the agent's before/after preview rather<br>than building one. |
 
 ## Decisions
 

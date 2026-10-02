@@ -136,6 +136,7 @@ import { exportIdentity, makeIri } from "./kg-export.js";
 import { codeListDirs, loadCodeLists } from "../schemas/code-list.js";
 import { gitFiles } from "../schemas/git-corpus.ts";
 import { buildCodeListsDoc } from "./code-lists.js";
+import { applyVocabMapping, vocabMapping } from "../schemas/vocab-mapping.js";
 
 const ROOT = resolve(import.meta.dir, "..");
 const SKOS = "http://www.w3.org/2004/02/skos/core#";
@@ -460,24 +461,40 @@ export function buildGlossary(opts: {
   const usageIri = (l: LaneOccurrence): string =>
     makeIri(id.docIri, "glossary-usage", `${l.processId}/${l.laneId}`);
 
+  // Which field becomes which predicate is DECLARED, in the `vocab-mapping`
+  // tables under `vocab-mappings/` (bean `k74z`, owner 2026-10-02), and
+  // applied here by the `vocab-map` Tool. What stays in this file is identity
+  // (`@id`, `@type`) and the values that need preparing first, each of which
+  // its table row marks `transform: "code"`. The tables are this harness's,
+  // read from ROOT whichever instance is being exported.
+  const table = (tableId: string) => vocabMapping(ROOT, tableId);
+  const usageMap = table("glossary-lane-usage");
+  // `role-naming` and `concept-scheme-naming` are SHARED (bean `lodp`):
+  // kg-export names the same role IRI with the first (finding D3), and the
+  // second declares the `sl9u` condition every scheme emitter must answer (D1).
+  const roleNaming = table("role-naming");
+  const roleMap = table("glossary-role-concept");
+  const variableMap = table("glossary-variable-lane-concept");
+  const retiredMap = table("glossary-retired-concept");
+  const schemeNaming = table("concept-scheme-naming");
+  const schemeMap = table("glossary-concept-scheme");
+
   const emitUsages = (conceptIri: string, ls: readonly LaneOccurrence[]): number => {
     let n = 0;
     for (const l of ls) {
       nodes.push({
         "@id": usageIri(l),
         "@type": termIri("LaneUsage"),
-        ofConcept: conceptIri,
-        inProcess: makeIri(id.docIri, "process", l.processId),
-        // The lane's OWN label here, which is the half that varies per
-        // diagram. `rdfs:label` rather than `skos:prefLabel`: a usage is not
-        // a concept, and the preferred label of the TERM is on the concept.
-        // Omitted rather than `null` when the lane is unnamed: in JSON-LD a
-        // null VALUE means "remove this", so emitting one says something
-        // about the property instead of declining to.
-        ...(l.laneName === null ? {} : { label: l.laneName }),
-        // Verbatim. See the header: a wrapped note has no msgid.
-        ...(l.documentation === null ? {} : { scopeNote: l.documentation }),
-        source: l.file,
+        // An unnamed lane or an undocumented one writes NO label or note,
+        // never `null` (in JSON-LD a null VALUE means "remove this"). The
+        // applier omits an absent value, which is that rule, applied once.
+        ...applyVocabMapping(usageMap, {
+          concept: conceptIri,
+          process: makeIri(id.docIri, "process", l.processId),
+          name: l.laneName,
+          documentation: l.documentation,
+          file: l.file,
+        }),
       });
       n += 1;
     }
@@ -508,18 +525,21 @@ export function buildGlossary(opts: {
     nodes.push({
       "@id": iri,
       "@type": "skos:Concept",
-      prefLabel: r.title,
-      ...(r.description ? { definition: r.description } : {}),
-      ...(altLabels.length > 0 ? { altLabel: altLabels } : {}),
-      ...(hiddenLabels.length > 0 ? { hiddenLabel: hiddenLabels } : {}),
-      notation: r.id,
-      inScheme: schemeIri,
+      // The NAME, from the row kg-export reads for the same IRI: prefLabel,
+      // a derived dcterms:title (the `sl9u` precedent), and the id as notation.
+      ...applyVocabMapping(roleNaming, { title: r.title, id: r.id }),
       // `actedUpon` is not decoration: `Work plan — beans`, `Corpus` and
       // `Publish — GitHub Pages` are lanes because tasks act ON them, not
       // because anybody performs them (`audienceProblem` in `role-graph.ts`).
       // A reader looking up "Corpus" must not be told it is a persona.
-      ...(r.actedUpon ? { actedUpon: true } : {}),
-      ...(ls.length > 0 ? { usage: ls.map(usageIri) } : {}),
+      ...applyVocabMapping(roleMap, {
+        description: r.description,
+        altLabels,
+        hiddenLabels,
+        scheme: schemeIri,
+        actedUpon: r.actedUpon,
+        usages: ls.map(usageIri),
+      }),
     });
     usages += emitUsages(iri, ls);
   }
@@ -543,14 +563,10 @@ export function buildGlossary(opts: {
     nodes.push({
       "@id": iri,
       "@type": "skos:Concept",
-      prefLabel: name,
       // NO `definition`, and its absence is an assertion rather than a gap —
       // `performerVaries` says the diagram declined to name a persona because
       // the performer is whoever called the sub-process.
-      performerVaries: true,
-      notation: name,
-      inScheme: schemeIri,
-      usage: ls.map(usageIri),
+      ...applyVocabMapping(variableMap, { name, performerVaries: true, scheme: schemeIri, usages: ls.map(usageIri) }),
     });
     usages += emitUsages(iri, ls);
   }
@@ -585,21 +601,23 @@ export function buildGlossary(opts: {
     retired.push(key);
     concepts[key] = { ...was, retiredOn };
     const [kind, ...rest] = key.split("/");
+    // REPORTED, NEVER DELETED. `owl:deprecated` is the machine-readable
+    // half; the change note is the half a person reads.
+    const to = renamedTo.get(was.prefLabel.trim().toLowerCase());
     nodes.push({
       "@id": makeIri(id.docIri, kind!, rest.join("/")),
       "@type": "skos:Concept",
-      prefLabel: was.prefLabel,
-      notation: rest.join("/"),
-      inScheme: schemeIri,
-      // REPORTED, NEVER DELETED. `owl:deprecated` is the machine-readable
-      // half; the change note is the half a person reads.
-      deprecated: true,
-      ...(() => {
-        const to = renamedTo.get(was.prefLabel.trim().toLowerCase());
-        return to === undefined
-          ? { changeNote: `Retired ${retiredOn}: no swimlane in this instance derives this term.` }
-          : { changeNote: `Retired ${retiredOn}: renamed ${to.title}.`, isReplacedBy: to.iri };
-      })(),
+      ...applyVocabMapping(retiredMap, {
+        prefLabel: was.prefLabel,
+        notation: rest.join("/"),
+        scheme: schemeIri,
+        retired: true,
+        changeNote:
+          to === undefined
+            ? `Retired ${retiredOn}: no swimlane in this instance derives this term.`
+            : `Retired ${retiredOn}: renamed ${to.title}.`,
+        replacedBy: to?.iri,
+      }),
     });
   }
 
@@ -676,17 +694,20 @@ export function buildGlossary(opts: {
     "@type": "skos:ConceptScheme",
     // ONE SOURCE, TWO VOCABULARIES (bean `sl9u`, owner 2026-09-23: keep
     // both). `skos:prefLabel` is what a SKOS reader looks for and
-    // `dcterms:title` what a catalogue reader does; both are kept, and
-    // `title` is COPIED from the label so they cannot drift. The owner named
-    // the general shape — one value mapped into several target vocabularies
-    // by content type — as a family of ETL Tools still to build (bean
-    // `k74z`); this line is one hand-written instance of it.
-    prefLabel: schemeLabel,
-    title: schemeLabel,
-    definition:
-      "Every persona this instance's BPMN diagrams place in a swimlane, one concept each. " +
-      "Labels come from the lanes, definitions from the role registry, and scope notes " +
-      "from each lane's own <bpmn:documentation>. Generated by scripts/glossary-export.ts.",
+    // `dcterms:title` what a catalogue reader does. Since bean `k74z` a
+    // table DECLARES `title` as derived from `prefLabel`, so the applier
+    // copies it and the two cannot drift; since bean `lodp` (finding D1)
+    // that table is the shared `concept-scheme-naming`, whose row carries
+    // the condition itself — a scheme that is ALSO A DOCUMENT gets the title
+    // — and refuses a record that does not answer it. This one does: the
+    // scheme's IRI is the document's, as the `@id` above says.
+    ...applyVocabMapping(schemeNaming, { label: schemeLabel, isDocument: true }),
+    ...applyVocabMapping(schemeMap, {
+      definition:
+        "Every persona this instance's BPMN diagrams place in a swimlane, one concept each. " +
+        "Labels come from the lanes, definitions from the role registry, and scope notes " +
+        "from each lane's own <bpmn:documentation>. Generated by scripts/glossary-export.ts.",
+    }),
     "@graph": nodes,
   };
 

@@ -16,11 +16,35 @@
       "findings": []
     },
     "skill-in-role-or-process": {
-      "result": "unknown",
+      "result": "fail",
       "findings": [
         {
-          "where": "—",
-          "detail": "no role graph declared."
+          "where": "dak-postprocessing",
+          "detail": "no role carries \"dak-postprocessing\" and no activity names it — reached, if at all, by direct invocation. In this instance's graph only (read: `skills` at `skills/`, `scenarios` at `scenarios/`, `processes` at `methodologies/processes/`, `smart-base-house-processes` at `processes/`) — a nested instance may name it, and this audit does not read one."
+        },
+        {
+          "where": "dak-preprocessing",
+          "detail": "no role carries \"dak-preprocessing\" and no activity names it — reached, if at all, by direct invocation. In this instance's graph only (read: `skills` at `skills/`, `scenarios` at `scenarios/`, `processes` at `methodologies/processes/`, `smart-base-house-processes` at `processes/`) — a nested instance may name it, and this audit does not read one."
+        },
+        {
+          "where": "grade",
+          "detail": "no role carries \"grade\" and no activity names it — reached, if at all, by direct invocation. In this instance's graph only (read: `skills` at `skills/`, `scenarios` at `scenarios/`, `processes` at `methodologies/processes/`, `smart-base-house-processes` at `processes/`) — a nested instance may name it, and this audit does not read one."
+        },
+        {
+          "where": "ig-artifact-ingestion",
+          "detail": "no role carries \"ig-artifact-ingestion\" and no activity names it — reached, if at all, by direct invocation. In this instance's graph only (read: `skills` at `skills/`, `scenarios` at `scenarios/`, `processes` at `methodologies/processes/`, `smart-base-house-processes` at `processes/`) — a nested instance may name it, and this audit does not read one."
+        },
+        {
+          "where": "smart-base-tools",
+          "detail": "no role carries \"smart-base-tools\" and no activity names it — reached, if at all, by direct invocation. In this instance's graph only (read: `skills` at `skills/`, `scenarios` at `scenarios/`, `processes` at `methodologies/processes/`, `smart-base-house-processes` at `processes/`) — a nested instance may name it, and this audit does not read one."
+        },
+        {
+          "where": "smart-stack-layering",
+          "detail": "no role carries \"smart-stack-layering\" and no activity names it — reached, if at all, by direct invocation. In this instance's graph only (read: `skills` at `skills/`, `scenarios` at `scenarios/`, `processes` at `methodologies/processes/`, `smart-base-house-processes` at `processes/`) — a nested instance may name it, and this audit does not read one."
+        },
+        {
+          "where": "toolchain-ownership",
+          "detail": "no role carries \"toolchain-ownership\" and no activity names it — reached, if at all, by direct invocation. In this instance's graph only (read: `skills` at `skills/`, `scenarios` at `scenarios/`, `processes` at `methodologies/processes/`, `smart-base-house-processes` at `processes/`) — a nested instance may name it, and this audit does not read one."
         }
       ]
     },
@@ -106,13 +130,8 @@
       "findings": []
     },
     "arrow-direction": {
-      "result": "unknown",
-      "findings": [
-        {
-          "where": "—",
-          "detail": "no schemas directory to read `@general` declarations from."
-        }
-      ]
+      "result": "pass",
+      "findings": []
     },
     "prose-names-resolve": {
       "result": "pass",
@@ -130,12 +149,16 @@
           "detail": "not evaluated: `nested-instance-audited` is `repo`-scoped and this run is scoped to smart-base. `unreadNestedInstances()` walks from `repoRootFor(root)` to find declarations, so it asks a question ABOUT the repository's set of instances. MEASURED 2026-09-26: it fired 15 inside the bootstrap run, reporting bootstrap's siblings as unread from inside bootstrap — which is the root's question being asked in a place that cannot act on it."
         }
       ]
+    },
+    "content-instance-holds-code": {
+      "result": "n/a",
+      "findings": []
     }
   },
   "totals": {
-    "pass": 8,
-    "fail": 0,
-    "n/a": 11,
-    "unknown": 2
+    "pass": 9,
+    "fail": 1,
+    "n/a": 12,
+    "unknown": 0
   }
 }

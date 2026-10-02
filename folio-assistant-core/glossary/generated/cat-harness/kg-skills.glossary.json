@@ -24,7 +24,7 @@
     {
       "id": "adopt-methodology-from-source",
       "prefLabel": "adopt-methodology-from-source",
-      "definition": "The general process for turning a shared paper, book or standard into an adopted methodology: establish origin and licence, ingest the source, find and summarize related beans and issues and ask whether to coordinate, render the method with its adopted and refused parts, place it by ownership, integrate it by calling existing processes, give every tool it uses a Tool node, and put it to the owner. Process: processes/methodology-from-source.bpmn.",
+      "definition": "The general process for turning a shared paper, book or standard into an adopted methodology: establish origin and licence, ingest the source, find and summarize related beans and issues and ask whether to coordinate, render the method with its adopted and refused parts, place it by ownership, integrate it by calling existing processes, give every tool it uses a Tool node, and put it to the owner. Process: processes/library/methodology-from-source.bpmn.",
       "notation": "adopt-methodology-from-source",
       "source": "cat-harness/skills/library/library-core/adopt-methodology-from-source.md",
       "status": "candidate"
@@ -91,6 +91,14 @@
       "definition": "Pointer to the bean-based session work-plan system (the `beans` CLI flat-file issue tracker, data under `beans/`). Operational usage lives in todo-manager.md / session-intent.md; the generic coordinator/orchestrator logic is owned by the folio-assistant platform.",
       "notation": "bean-coordination",
       "source": "cat-harness/skills/sdlc/sdlc-core/bean-coordination.md",
+      "status": "candidate"
+    },
+    {
+      "id": "before-after-preview",
+      "prefLabel": "before-after-preview",
+      "definition": "Make a reviewer-facing BEFORE/AFTER preview of a change to anything that is rendered — a docs site, a paper's PDF, a FHIR IG, a slide deck, a website — and put it where the review and feedback processes expect it. Covers one build with one variable, stable capture, pairing every picture with a measured count and its method, the viewports and colour schemes to shoot, an honest status line, publishing with alt text, a section per content type naming this repository's own build and render tools, and how reviewer feedback on the preview becomes beans. Use before asking anyone to review a rendered change, at the HCI validation gate, and whenever a reviewer asks \"what did it look like before\".",
+      "notation": "before-after-preview",
+      "source": "cat-harness/skills/sdlc/sdlc-core/before-after-preview.md",
       "status": "candidate"
     },
     {
@@ -165,43 +173,11 @@
       "status": "candidate"
     },
     {
-      "id": "build-docs",
-      "prefLabel": "build-docs",
-      "definition": "Builds the Lean HTML documentation (doc-gen4) locally in the workspace, for any paper folio's Lean package.",
-      "notation": "build-docs",
-      "source": "cat-harness/skills/authoring/folio-paper-adapter/build-docs.md",
-      "status": "candidate"
-    },
-    {
-      "id": "build-pdf",
-      "prefLabel": "build-pdf",
-      "definition": "Builds a paper folio's PDF locally in the workspace — the monolithic PDF plus split per-chapter PDFs.",
-      "notation": "build-pdf",
-      "source": "cat-harness/skills/authoring/folio-paper-adapter/build-pdf.md",
-      "status": "candidate"
-    },
-    {
       "id": "canonical-watcher",
       "prefLabel": "canonical-watcher",
       "definition": "Derivation-discipline integration watcher — watches the default branch + open active PRs + newly-opened PRs for non-canonical empirical / fitting / calibration inputs beyond the project's declared set, numerology, or justification/rationalization in place of derivation. Inherits shared mechanics (Monitor, subscriptions, queue, ledger, idle sweep, author-ask, watch-prepared-PRs, witness-drift recovery, billing-quick-fail flake, post-completion one-voice, sibling-PR comment protocol, backlog-found PR spin-up, handover docs) from `local/integration-watcher`.",
       "notation": "canonical-watcher",
       "source": "cat-harness/skills/authoring/authoring-core/canonical-watcher.md",
-      "status": "candidate"
-    },
-    {
-      "id": "category-theory",
-      "prefLabel": "category-theory",
-      "definition": "Category Theory formalization skill — handles diagram chasing, universal properties, functorial translation, and whiskering in Lean 4. Integrates with Mathlib's typeclass-centric category theory and provides tactic strategies for commutativity proofs.",
-      "notation": "category-theory",
-      "source": "cat-harness/skills/authoring/folio-paper-adapter/category-theory.md",
-      "status": "candidate"
-    },
-    {
-      "id": "chapter-analysis",
-      "prefLabel": "chapter-analysis",
-      "definition": "Thorough analysis and Lean 4 formalization of a single manuscript chapter. Extracts all narrative definitions/propositions (excluding remarks), identifies missing glossary terms, writes comprehensive Lean stubs using mathlib, and proves limiting-case and structural theorems where possible.",
-      "notation": "chapter-analysis",
-      "source": "cat-harness/skills/authoring/folio-paper-adapter/chapter-analysis.md",
       "status": "candidate"
     },
     {
@@ -253,22 +229,6 @@
       "status": "candidate"
     },
     {
-      "id": "compute-audit",
-      "prefLabel": "compute-audit",
-      "definition": "Audit compute scripts for a catalogue of correctness and performance antipatterns extracted from a long review of the project's compute history. Distinguishes CORRECTNESS antipatterns from PERFORMANCE antipatterns. Produces a ranked workplan citing concrete files+lines.",
-      "notation": "compute-audit",
-      "source": "cat-harness/skills/authoring/folio-paper-adapter/compute-audit.md",
-      "status": "candidate"
-    },
-    {
-      "id": "compute-author",
-      "prefLabel": "compute-author",
-      "definition": "Pre-work briefing + durable patterns for anyone writing or modifying compute scripts (or the native crates they call). Read this BEFORE you write or change compute code — it covers precision discipline, the native↔script boundary cost, exact-arithmetic choices (big-integer vs big-rational vs arbitrary-precision float), algebraic-preflight requirements before optimization shortcuts, and witness-emission discipline. Sibling to `compute-audit` (post-hoc); this skill is pre-work.",
-      "notation": "compute-author",
-      "source": "cat-harness/skills/authoring/folio-paper-adapter/compute-author.md",
-      "status": "candidate"
-    },
-    {
       "id": "compute-integration-watcher",
       "prefLabel": "compute-integration-watcher",
       "definition": "Cross-layer wiring auditor — watches for newly-landed formal/analytic improvements (proofs, propositions, lemmas, axiom→theorem upgrades, witness data) on the default branch AND on open PRs, and checks whether each one has been wired into the production compute chain. Complements `local/compute-audit` (which scans for performance/correctness antipatterns inside scripts). Runs in two modes: REACTIVE (watch new commits / PR events) and IDLE-SWEEP (walk all existing content blocks and audit wiring).",
@@ -297,14 +257,6 @@
       "prefLabel": "content-author",
       "notation": "content-author",
       "source": "cat-harness/skills/authoring/content-lifecycle/content-author.md",
-      "status": "candidate"
-    },
-    {
-      "id": "content-block-review",
-      "prefLabel": "content-block-review",
-      "definition": "Reviews existing content blocks for adherence to all requirements — structural integrity, Lean proof rules, cross-reference consistency, status accuracy, and naming conventions. Flags violations with actionable diagnostics.",
-      "notation": "content-block-review",
-      "source": "cat-harness/skills/authoring/folio-paper-adapter/content-block-review.md",
       "status": "candidate"
     },
     {
@@ -381,13 +333,6 @@
       "status": "candidate"
     },
     {
-      "id": "content-validation",
-      "prefLabel": "content-validation",
-      "notation": "content-validation",
-      "source": "cat-harness/skills/authoring/folio-paper-adapter/content-validation.md",
-      "status": "candidate"
-    },
-    {
       "id": "continual-progress",
       "prefLabel": "continual-progress",
       "definition": "Make in-flight work trackable by others in real time — open a PR from the first commit, push small coherent increments continuously (never hoard uncommitted work), keep a live status checklist in the PR body, and post brief intent on the PR + any overlapping sibling PRs. Use on any multi-step or long-running task, especially when siblings/agents or the author may need to follow, cherry-pick, or take over mid-flight.",
@@ -401,6 +346,14 @@
       "definition": "Coordinate work across multiple in-flight Claude PRs working toward a shared goal. Post intent + asks on related PRs, identify cherry-pickable work, respond to code-review comments on your own PR, periodically triage sibling PR activity (new comments, CI status, new commits), watch main + newly created branches/PRs, escalate inconsistent findings to the author, and keep a coordination ledger up to date.",
       "notation": "coordinate",
       "source": "cat-harness/skills/sdlc/sdlc-core/coordinate.md",
+      "status": "candidate"
+    },
+    {
+      "id": "copy-out-materialized",
+      "prefLabel": "copy-out-materialized",
+      "definition": "Materialized content is read-only. To work on it you take a copy into your own folio/, and the copy records what it is a copy of — the local-provenance edge, which is not the upstream one.",
+      "notation": "copy-out-materialized",
+      "source": "cat-harness/skills/library/large-datasets/copy-out-materialized.md",
       "status": "candidate"
     },
     {
@@ -475,30 +428,6 @@
       "status": "candidate"
     },
     {
-      "id": "critical-path-analysis",
-      "prefLabel": "critical-path-analysis",
-      "definition": "Analyse the critical path of the paper's argument chain, audit statement and proof contexts (e.g. general vs specialised assumptions), identify blocks that need rewriting, and propose cleanups. Also covers \"statement and proof context review\" — classifying each result by whether its statement, proof, or both require specialisation assumptions.",
-      "notation": "critical-path-analysis",
-      "source": "cat-harness/skills/authoring/folio-paper-adapter/critical-path-analysis.md",
-      "status": "candidate"
-    },
-    {
-      "id": "dak-postprocessing",
-      "prefLabel": "dak-postprocessing",
-      "definition": "What the DAK post-processing phase accomplishes after the IG Publisher runs — the JSON/JSON-LD surface, the DAK API hub, and the metadata-to-Liquid bridge that is the seam the just-the-docs transition cuts at. Read before changing a post-processing step, and before assuming the Publisher produced something it did not.",
-      "notation": "dak-postprocessing",
-      "source": "cat-harness/skills/authoring/authoring-who-smart-guidelines/dak-postprocessing.md",
-      "status": "candidate"
-    },
-    {
-      "id": "dak-preprocessing",
-      "prefLabel": "dak-preprocessing",
-      "definition": "What the DAK pre-processing phase actually accomplishes, step by step, before the IG Publisher runs — and which of its steps exist only to satisfy the Publisher's own page index. Read before changing a pre-processing step, before assuming one is needed, and before moving one to another layer.",
-      "notation": "dak-preprocessing",
-      "source": "cat-harness/skills/authoring/authoring-who-smart-guidelines/dak-preprocessing.md",
-      "status": "candidate"
-    },
-    {
       "id": "data-modelling",
       "prefLabel": "data-modelling",
       "definition": "Build a data model: identify the entities a body of work is actually about, the relations between them, and the cardinalities — then declare it where the tools can read it. Process-agnostic technique; the CRDM phase that invokes it is `crdm-data-model`.",
@@ -528,14 +457,6 @@
       "definition": "Given a decision context, select the applicable methodology from the methodology graph. Reads the graph's applies-when declarations, matches them against the context, and returns the ranked applicable methods with rationale. Extends methodology-adoption's four-question protocol with quantitative method-selection criteria from the MCDM literature.",
       "notation": "decision-methodology-selector",
       "source": "cat-harness/skills/process/process-core/decision-methodology-selector.md",
-      "status": "candidate"
-    },
-    {
-      "id": "definition-clarity-audit",
-      "prefLabel": "definition-clarity-audit",
-      "definition": "Definition / statement clarity + concision audit. A content block can validate (schema-clean, refs resolve, formal-proof sibling present) and still read badly: the defined term is never emphasised, the definition is buried under paragraphs of motivation, or one `definition` block silently bundles three or four distinct definienda. No existing QA axis (voice / structure / bib / proof / …) measures clarity of the statement itself. Use when asked to \"bold defined terms\", \"tighten definitions\", \"no rambling definitions\", \"one definition per block\", \"tight theorem/proposition/lemma statements\", or to set up / run a clarity audit. Also runs the inverse audit — a non-`definition` block that secretly carries a definition (`clarity-defn-misplaced`) — plus a statement-purity check (`clarity-stmt-pure`: a theorem/prop/lemma/conjecture carries only its claim; embedded remark / interpretation moves to a follow-on `remark`) and a register check (`clarity-grad-style`: graduate-level formal-math prose — no contractions, second-person, hype, colloquialism, or emoji). Emits per-block QA sidecar params under the `clarity-*` criteria via `content/pipeline/definition-clarity-audit.ts`.",
-      "notation": "definition-clarity-audit",
-      "source": "cat-harness/skills/authoring/folio-paper-adapter/definition-clarity-audit.md",
       "status": "candidate"
     },
     {
@@ -632,35 +553,6 @@
       "status": "candidate"
     },
     {
-      "id": "document-authoring",
-      "prefLabel": "document-authoring",
-      "notation": "document-authoring",
-      "source": "cat-harness/skills/authoring/folio-document-adapter/document-authoring.md",
-      "status": "candidate"
-    },
-    {
-      "id": "document-intake",
-      "prefLabel": "document-intake",
-      "definition": "Process uploaded documents (PDFs, scans, LaTeX, structured/normative guidelines, etc.) from uploads/ into structured content objects. Handles OCR extraction, environment detection, structural analysis, and content-object generation. Supports multi-stage pipelines: raw upload → extracted text → structured blocks → .ts/.md content objects.",
-      "notation": "document-intake",
-      "source": "cat-harness/skills/authoring/folio-paper-adapter/document-intake.md",
-      "status": "candidate"
-    },
-    {
-      "id": "document-publishing",
-      "prefLabel": "document-publishing",
-      "notation": "document-publishing",
-      "source": "cat-harness/skills/authoring/folio-document-adapter/document-publishing.md",
-      "status": "candidate"
-    },
-    {
-      "id": "document-structure",
-      "prefLabel": "document-structure",
-      "notation": "document-structure",
-      "source": "cat-harness/skills/authoring/folio-document-adapter/document-structure.md",
-      "status": "candidate"
-    },
-    {
       "id": "domain-fencing",
       "prefLabel": "domain-fencing",
       "definition": "How a domain-specific rule is kept out of the platform without being lost — the opt-in axis mechanism, the one criterion that should use it and does not, and the test for whether a rule generalizes at all.",
@@ -715,21 +607,6 @@
       "status": "candidate"
     },
     {
-      "id": "ffi-roundtrip-audit",
-      "prefLabel": "ffi-roundtrip-audit",
-      "definition": "Audit compute scripts for script ↔ native ping-pong patterns — loops that cross the FFI / subprocess boundary per iteration, instead of one boundary crossing for the whole pipeline. Each occurrence forfeits a meaningful fraction of wall time to marshalling + script-side combine overhead. Performance-only — no correctness change.",
-      "notation": "ffi-roundtrip-audit",
-      "source": "cat-harness/skills/authoring/folio-paper-adapter/ffi-roundtrip-audit.md",
-      "status": "candidate"
-    },
-    {
-      "id": "fhir-validation",
-      "prefLabel": "fhir-validation",
-      "notation": "fhir-validation",
-      "source": "cat-harness/skills/authoring/authoring-who-smart-guidelines/fhir-validation.md",
-      "status": "candidate"
-    },
-    {
       "id": "filing-dublin-core",
       "prefLabel": "filing-dublin-core",
       "definition": "Cataloguing a source as it arrives — which facts are `dcterms`, which are this project's own, and why the line is drawn by the vocabulary rather than by convenience. The bibliographic layer only; the derived layer belongs to ingestion.",
@@ -743,14 +620,6 @@
       "definition": "A flushable container is a named store that accumulates by design — a trash you can recover from, a review preview, a console log. It declares a buffer limit, badges when over it, and offers three flush actions: flush all, trim to limit, and select to prune. What \"flush\" means, and which end of the order is expendable, are declared per container and differ.",
       "notation": "flushable-containers",
       "source": "cat-harness/skills/kg/kg-core/flushable-containers.md",
-      "status": "candidate"
-    },
-    {
-      "id": "formalizer",
-      "prefLabel": "formalizer",
-      "definition": "Lean 4 Formalizer — translates the logical skeleton of narrative mathematical proofs into Lean 4 tactic blocks. Uses the Ontologist's glossary to resolve types, maps narrative proof phrases to Lean tactics, and generates sorry-bridged partial proofs that compile.",
-      "notation": "formalizer",
-      "source": "cat-harness/skills/authoring/folio-paper-adapter/formalizer.md",
       "status": "candidate"
     },
     {
@@ -809,14 +678,6 @@
       "status": "candidate"
     },
     {
-      "id": "grade",
-      "prefLabel": "grade",
-      "definition": "GRADE — the grading system a WHO guideline folio declares for certainty of evidence, and the Evidence-to-Decision judgement a recommendation rests on. Read when a folio's `Task_AppraiseGrade` runs under GRADE, before recording a certainty, an EtD judgement or a recommendation's direction and strength.",
-      "notation": "grade",
-      "source": "cat-harness/skills/authoring/authoring-who-smart-guidelines/grade.md",
-      "status": "candidate"
-    },
-    {
       "id": "graph-detanglement",
       "prefLabel": "graph-detanglement",
       "definition": "Drive a tangled graph toward a clean partition, so a sub-graph can be split off when it grows too large or when a business reason separates it. The staged practice — declare in place, detangle, isolate, extract — with the seventeen moves that were measured rather than argued, and the failures each one cost.",
@@ -830,14 +691,6 @@
       "definition": "Draw any graph in a harness (schemas, processes, a paper's block graph, a Lean proof's dependencies, a detangle partition) so the picture is derived, checkable and readable. Ten rules learned on the UML overview, which engine to lay a graph out with and why, and how each graph kind here applies them.",
       "notation": "graph-rendering",
       "source": "cat-harness/skills/kg/graph-management/graph-rendering.md",
-      "status": "candidate"
-    },
-    {
-      "id": "groebner-basis",
-      "prefLabel": "groebner-basis",
-      "definition": "Compute Gröbner bases and normal forms for (possibly non-commutative) algebraic structures using a CAS (e.g. Singular letterplace) or an instrumented project routine. Reduce words to normal form with step-by-step logging, extract invariants, and emit witness JSON.",
-      "notation": "groebner-basis",
-      "source": "cat-harness/skills/authoring/folio-paper-adapter/groebner-basis.md",
       "status": "candidate"
     },
     {
@@ -864,33 +717,11 @@
       "status": "candidate"
     },
     {
-      "id": "hypothesis-generation",
-      "prefLabel": "hypothesis-generation",
-      "definition": "Formulate evidence-bounded scientific questions, candidate hypotheses, rival explanations, causal or associational claims, discriminating predictions, measurements, and preregistration-ready analysis plans. Use when turning observations or preliminary findings into transparent, testable research plans without treating hypotheses as facts.",
-      "notation": "hypothesis-generation",
-      "source": "cat-harness/skills/hypothesis-generation/hypothesis-generation.md",
-      "status": "candidate"
-    },
-    {
       "id": "idle-backlog",
       "prefLabel": "idle-backlog",
       "definition": "While idle or waiting on a long-running async task (a build, a long compute script, a CI run, a background agent), pull the applicable backlog in priority order and work non-conflicting items instead of stalling. Generalises AGENTS.md's 5-minute idle trigger into a reusable skill. Use whenever blocked on an async wait with no substantive output to produce.",
       "notation": "idle-backlog",
       "source": "cat-harness/skills/sdlc/sdlc-core/idle-backlog.md",
-      "status": "candidate"
-    },
-    {
-      "id": "ig-artifact-ingestion",
-      "prefLabel": "ig-artifact-ingestion",
-      "notation": "ig-artifact-ingestion",
-      "source": "cat-harness/skills/authoring/authoring-who-smart-guidelines/ig-artifact-ingestion.md",
-      "status": "candidate"
-    },
-    {
-      "id": "ig-publication",
-      "prefLabel": "ig-publication",
-      "notation": "ig-publication",
-      "source": "cat-harness/skills/authoring/authoring-who-smart-guidelines/ig-publication.md",
       "status": "candidate"
     },
     {
@@ -1006,6 +837,14 @@
       "status": "candidate"
     },
     {
+      "id": "kg-subscription",
+      "prefLabel": "kg-subscription",
+      "definition": "Subscribing a folio or harness to an external knowledge graph — a substrate — and walking its parts from referenced to materialised, one at a time and only through the shared materialisation gates. When to subscribe, what makes a repository a substrate, choosing subgraphs, assets and harnesses, the five gates, instantiating a harness so it reaches the navbar, moving the pin, and what never to do.",
+      "notation": "kg-subscription",
+      "source": "cat-harness/skills/library/large-datasets/kg-subscription.md",
+      "status": "candidate"
+    },
+    {
       "id": "kg-to-portal",
       "prefLabel": "kg-to-portal",
       "definition": "Getting a knowledge graph out to a public portal — the six stages between \"the graph is in the repository\" and \"a reader's browser has the bytes\", why a CDN is a layer rather than a publication host, and which decisions are the deployment's to make rather than the pipeline's.",
@@ -1019,137 +858,6 @@
       "definition": "Render a published knowledge-graph document so a person can read it — faceted index, node detail, followable edges, and an honest account of what the document is missing. Host-agnostic; the publishing is a separate Tool.",
       "notation": "kg-viewer",
       "source": "cat-harness/skills/ui/ui-core/kg-viewer.md",
-      "status": "candidate"
-    },
-    {
-      "id": "l2-dak-authoring",
-      "prefLabel": "l2-dak-authoring",
-      "notation": "l2-dak-authoring",
-      "source": "cat-harness/skills/authoring/authoring-who-smart-guidelines/l2-dak-authoring.md",
-      "status": "candidate"
-    },
-    {
-      "id": "l3-fhir-authoring",
-      "prefLabel": "l3-fhir-authoring",
-      "notation": "l3-fhir-authoring",
-      "source": "cat-harness/skills/authoring/authoring-who-smart-guidelines/l3-fhir-authoring.md",
-      "status": "candidate"
-    },
-    {
-      "id": "latex-authoring",
-      "prefLabel": "latex-authoring",
-      "notation": "latex-authoring",
-      "source": "cat-harness/skills/authoring/authoring-math/latex-authoring.md",
-      "status": "candidate"
-    },
-    {
-      "id": "latex-build-cache",
-      "prefLabel": "latex-build-cache",
-      "definition": "LaTeX build performance — findings + what's safe. The headline goal was to cache a large multi-chapter `report` build (a ~35-chapter / ~2900-block `report` with a heavy `pgf`/`tikz`/`tikz-cd`/`hyperref` preamble + many tikz-cd diagrams). Both standard caching mechanisms were tested on a real engine and FAILED on this toolchain (see §Negative results), so there is currently NO preamble/diagram cache. What DOES work: getting a TeX engine into the sandbox (`cat-harness/scripts/install-tex.sh`) and quick changed-chapter feature builds (`cat-harness/scripts/feature-build.sh`). Read this BEFORE re-attempting a LaTeX cache so you don't re-walk the rakes.",
-      "notation": "latex-build-cache",
-      "source": "cat-harness/skills/authoring/folio-paper-adapter/latex-build-cache.md",
-      "status": "candidate"
-    },
-    {
-      "id": "latex-validation",
-      "prefLabel": "latex-validation",
-      "notation": "latex-validation",
-      "source": "cat-harness/skills/authoring/folio-paper-adapter/latex-validation.md",
-      "status": "candidate"
-    },
-    {
-      "id": "lean-build-fix",
-      "prefLabel": "lean-build-fix",
-      "definition": "Iteratively fix Lean build errors and linter warnings until the build passes cleanly. Uses MCP diagnostics when available, falls back to parsing lake build output.",
-      "notation": "lean-build-fix",
-      "source": "cat-harness/skills/authoring/folio-paper-adapter/lean-build-fix.md",
-      "status": "candidate"
-    },
-    {
-      "id": "lean-cache-restore",
-      "prefLabel": "lean-cache-restore",
-      "definition": "The Lean build loop — restore a warm cache before working, and contribute your build back when done. One command each. A restore is ~2 minutes; a cold Mathlib build is 30-60.",
-      "notation": "lean-cache-restore",
-      "source": "cat-harness/skills/authoring/folio-paper-adapter/lean-cache-restore.md",
-      "status": "candidate"
-    },
-    {
-      "id": "lean-completeness-audit",
-      "prefLabel": "lean-completeness-audit",
-      "definition": "Audit Lean formalization completeness across all papers: verify Lake project setup, check import coverage, identify missing .lean files for content blocks that require them, report formalization gaps, and detect stale witnesses.",
-      "notation": "lean-completeness-audit",
-      "source": "cat-harness/skills/authoring/folio-paper-adapter/lean-completeness-audit.md",
-      "status": "candidate"
-    },
-    {
-      "id": "lean-environment-setup",
-      "prefLabel": "lean-environment-setup",
-      "definition": "Sets up and troubleshoots the Lean 4 environment for Claude Code sessions. Ensures elan, lake, lean are installed so the paper-assistant MCP's Lean tools are operational. Handles sandboxed/cloud environments where downloads may be restricted.",
-      "notation": "lean-environment-setup",
-      "source": "cat-harness/skills/authoring/folio-paper-adapter/lean-environment-setup.md",
-      "status": "candidate"
-    },
-    {
-      "id": "lean-formal-graph",
-      "prefLabel": "lean-formal-graph",
-      "definition": "Build and query the FORMAL dependency graph — what a proof actually invokes, derived from `lean.ref`. Distinct from `uses[]`, which is editorial. Use for impact analysis, exposition gaps, and declaration ownership.",
-      "notation": "lean-formal-graph",
-      "source": "cat-harness/skills/authoring/folio-paper-adapter/lean-formal-graph.md",
-      "status": "candidate"
-    },
-    {
-      "id": "lean-formalization",
-      "prefLabel": "lean-formalization",
-      "notation": "lean-formalization",
-      "source": "cat-harness/skills/authoring/authoring-math/lean-formalization.md",
-      "status": "candidate"
-    },
-    {
-      "id": "lean-generation",
-      "prefLabel": "lean-generation",
-      "definition": "Extract theorem-like objects from LaTeX source and generate corresponding Lean 4 stub files with `sorry` placeholders. Maintains the proof-objects.json manifest linking LaTeX labels to Lean declarations by doc-gen4 URL.",
-      "notation": "lean-generation",
-      "source": "cat-harness/skills/authoring/folio-paper-adapter/lean-generation.md",
-      "status": "candidate"
-    },
-    {
-      "id": "lean-mathlibext-curator",
-      "prefLabel": "lean-mathlibext-curator",
-      "definition": "Curate `<Paper>/MathlibExt.lean` — the staging area for upstream- candidate lemmas (List/sort plumbing, Foldl/foldr at Monoid level, Real-function bridges). Decide what lives in `MathlibExt` vs inline, and tag candidates with `-- TODO upstream: …`.",
-      "notation": "lean-mathlibext-curator",
-      "source": "cat-harness/skills/authoring/folio-paper-adapter/lean-mathlibext-curator.md",
-      "status": "candidate"
-    },
-    {
-      "id": "lean-proof-review",
-      "prefLabel": "lean-proof-review",
-      "definition": "Review Lean 4 proofs for correctness, style, and completeness. Tracks review scores from multiple reviewers (human and agentic) in proof-objects.json. Integrates with the agent-review pipeline.",
-      "notation": "lean-proof-review",
-      "source": "cat-harness/skills/authoring/folio-paper-adapter/lean-proof-review.md",
-      "status": "candidate"
-    },
-    {
-      "id": "lean-proof-vacuity-audit",
-      "prefLabel": "lean-proof-vacuity-audit",
-      "definition": "Detect and fix Lean \"vacuous proof\" anti-patterns — declarations that type-check, are sorry-free and axiom-clean, and whose statement matches the .md, yet carry NO mathematical content (they assume what they claim, conclude something trivially true, or rest on a false premise). These slip past `proof-statement-integrity` (which only checks signature-stability + an axiom sweep), so detection is semantic and agent-checked. Use when auditing Lean for circular / vacuous / trivially-true proofs, after a batch proof-statement-integrity normalization (the batch \"wrap the conclusion in a structure field and project it\" fix produces these), or when a \"theorem\" looks too easy. Emits per-block QA sidecar params under the `proof-no-*` criteria.",
-      "notation": "lean-proof-vacuity-audit",
-      "source": "cat-harness/skills/authoring/folio-paper-adapter/lean-proof-vacuity-audit.md",
-      "status": "candidate"
-    },
-    {
-      "id": "lean-substantive-pass",
-      "prefLabel": "lean-substantive-pass",
-      "definition": "Convert abstract `holds : Prop` / `claim : Prop` placeholder Lean stubs into typed sub-claim contexts with manuscript-semantic field names. Three escalation levels: hand-craft per-block (highest fidelity), bulk-script split on numbered sub-claims, and docstring enrichment (extract first-sentence summaries from .md). Use this skill after `local/lean-generation` has created the placeholder stubs and the backlog is structurally closed.",
-      "notation": "lean-substantive-pass",
-      "source": "cat-harness/skills/authoring/folio-paper-adapter/lean-substantive-pass.md",
-      "status": "candidate"
-    },
-    {
-      "id": "lean-witness-audit",
-      "prefLabel": "lean-witness-audit",
-      "definition": "Audit computation scripts (typically Python) that produce witness statements for Lean formalization. Verify witnesses are complete, self-documenting, use paper notation, link to a content block, and emit Lean-compatible declarations. Detects staleness via script content hash and git commit SHA.",
-      "notation": "lean-witness-audit",
-      "source": "cat-harness/skills/authoring/folio-paper-adapter/lean-witness-audit.md",
       "status": "candidate"
     },
     {
@@ -1192,6 +900,22 @@
       "status": "candidate"
     },
     {
+      "id": "materialize-on-demand",
+      "prefLabel": "materialize-on-demand",
+      "definition": "After bootstrap, a person asks for part of a remote subgraph to be held locally. Check what is already here (cache:index), put a number on the ask before anything is fetched, then run materialize-remote. Eviction is a report, never an act.",
+      "notation": "materialize-on-demand",
+      "source": "cat-harness/skills/library/large-datasets/materialize-on-demand.md",
+      "status": "candidate"
+    },
+    {
+      "id": "materialize-remote",
+      "prefLabel": "materialize-remote",
+      "definition": "Landing remote content locally — the five gates, the three states, and the two purposes. One process, shared by catalogue import and harness bootstrap, plus the refresh that is not a re-import.",
+      "notation": "materialize-remote",
+      "source": "cat-harness/skills/library/large-datasets/materialize-remote.md",
+      "status": "candidate"
+    },
+    {
       "id": "mcp-assembly",
       "prefLabel": "mcp-assembly",
       "definition": "Compose several Tool nodes into one MCP service — naming, collisions, grouping and versioning. Read when a service will expose more than one tool, or when two instances' tools land in the same namespace.",
@@ -1223,6 +947,14 @@
       "status": "candidate"
     },
     {
+      "id": "merge-conflict-patterns",
+      "prefLabel": "merge-conflict-patterns",
+      "definition": "Merge the base branch in and resolve, without a person, only the conflicts a DECLARED pattern covers — generated files, generated README regions, QA sidecars — then prove the result with the gate set. Refuses the whole merge when any conflict is authored or undeclared. Use for \"merge main\", \"resolve the conflicts\", \"the PR is conflicted again\", \"auto-resolve\", and when adding a pattern for a new kind of churn.",
+      "notation": "merge-conflict-patterns",
+      "source": "cat-harness/skills/sdlc/sdlc-core/merge-conflict-patterns.md",
+      "status": "candidate"
+    },
+    {
       "id": "methodology-adoption",
       "prefLabel": "methodology-adoption",
       "definition": "How a named external methodology enters the knowledge graph, and how an agent picks which one applies. Read before following a judgement method, before adopting a new one, and before writing a house method instead of adopting one.",
@@ -1244,13 +976,6 @@
       "definition": "Judge whether the prose side of a declared prose ↔ code pair still says what the code does, when the machine could not settle it. Reads the two mechanical signals first — staleness and resolvable claims — and settles what is left in one of three ways, sending a disagreement with a checker to adjudication. General: the Lean case is a specialisation with its own skill.",
       "notation": "narrative-asserts-code",
       "source": "cat-harness/skills/sdlc/sdlc-core/narrative-asserts-code.md",
-      "status": "candidate"
-    },
-    {
-      "id": "normative-statements",
-      "prefLabel": "normative-statements",
-      "notation": "normative-statements",
-      "source": "cat-harness/skills/authoring/folio-document-adapter/normative-statements.md",
       "status": "candidate"
     },
     {
@@ -1301,14 +1026,6 @@
       "status": "candidate"
     },
     {
-      "id": "paper-importer",
-      "prefLabel": "paper-importer",
-      "definition": "Import external papers from PDF, LaTeX, or arXiv into the content object system. Scans for theorems, definitions, propositions, lemmas, and other formal environments. Generates .ts manifests and .md content files, optionally creates .lean stubs with sorry-bridged proofs citing the original source. Integrates with proof-writer skills so imported theorems can inform and accelerate formalization of the main paper.",
-      "notation": "paper-importer",
-      "source": "cat-harness/skills/authoring/folio-paper-adapter/paper-importer.md",
-      "status": "candidate"
-    },
-    {
       "id": "path-containment",
       "prefLabel": "path-containment",
       "definition": "Turning a value from outside into a path. The two different questions — a URL path versus a single identifier — why collapsing them is a defect, and the three sinks in this repository that had neither check.",
@@ -1349,6 +1066,14 @@
       "status": "candidate"
     },
     {
+      "id": "pr-description",
+      "prefLabel": "pr-description",
+      "definition": "Write or update a pull request's description so that someone who has never seen the work can follow it: the problem, why it matters, how it was approached, what constrained it, the solution, how to use it, and what is not done. Read before opening a PR, before rewriting its body, and whenever the PR's scope changes.",
+      "notation": "pr-description",
+      "source": "cat-harness/skills/sdlc/sdlc-core/pr-description.md",
+      "status": "candidate"
+    },
+    {
       "id": "prepare-merge",
       "prefLabel": "prepare-merge",
       "definition": "Take a feature branch to a clean, conflict-free, green, pushed state so it can be merged with no surprises: base merged in, generated files regenerated, the folio's content-type gates run, then pushed. It does NOT merge and does NOT push to the default branch. Use for \"prepare-merge\", \"make it mergeable\", \"ship it\".",
@@ -1381,106 +1106,11 @@
       "status": "candidate"
     },
     {
-      "id": "proof-conciseness",
-      "prefLabel": "proof-conciseness",
-      "definition": "Tighten narrative (human-readable) proofs without changing mathematical content. Targets verbose prose patterns in `.md` proof files — padding phrases, re-explained elementary steps, redundant restatement, long case analyses that collapse into tables. Complements proof-simplifier (Lean tactics) and readability-editing (chapter prose); this skill operates on the proof block's `.md` specifically and preserves every logical step.",
-      "notation": "proof-conciseness",
-      "source": "cat-harness/skills/authoring/folio-paper-adapter/proof-conciseness.md",
-      "status": "candidate"
-    },
-    {
-      "id": "proof-editor",
-      "prefLabel": "proof-editor",
-      "definition": "Coordinator skill for proof review and repair. Runs the full proof skill suite (gap audit, lean review, completeness, simplifier, triage), deduplicates findings across reviewers, ranks by severity and dependency order, and delivers a single author-ready action plan with concrete suggested edits (never applying them without author approval).",
-      "notation": "proof-editor",
-      "source": "cat-harness/skills/authoring/folio-paper-adapter/proof-editor.md",
-      "status": "candidate"
-    },
-    {
-      "id": "proof-exposition-review",
-      "prefLabel": "proof-exposition-review",
-      "definition": "Paper-wide retrospective review of a single proof block. Given the current state of the paper — including all blocks added since the proof was written — suggest simplifications to the statement, proof, or surrounding exposition. Complements proof-simplifier (which operates on 2-4 block local clusters) by considering the full dependency graph and all recently-added content.",
-      "notation": "proof-exposition-review",
-      "source": "cat-harness/skills/authoring/folio-paper-adapter/proof-exposition-review.md",
-      "status": "candidate"
-    },
-    {
-      "id": "proof-gap-audit",
-      "prefLabel": "proof-gap-audit",
-      "definition": "Audit individual proofs and the network of proofs for gaps. Detects intra-proof gaps (unproved assertions, existence without proof, uniqueness asserted but not shown, hand-waving, missing citations) and inter-proof gaps (missing bridging lemmas, broken chains of implication, unstated propositions needed to tie results together).",
-      "notation": "proof-gap-audit",
-      "source": "cat-harness/skills/authoring/folio-paper-adapter/proof-gap-audit.md",
-      "status": "candidate"
-    },
-    {
-      "id": "proof-integration-watcher",
-      "prefLabel": "proof-integration-watcher",
-      "definition": "Proof-QA integration watcher — watches origin/main + open active PRs + newly-opened PRs for narrative-proof (`.md`) or Lean-proof (`.lean`) changes, runs the proof QA skill suite on every detected change, queues gaps, attempts auto-discharge for easy sorries / naked conjectures with provable scaffolding, and escalates the rest to the author. Inherits shared mechanics (Monitor, subscriptions, queue, ledger, idle sweep, author-ask, watch-prepared-PRs, witness-drift recovery, billing-quick-fail flake, post-completion one-voice, sibling-PR comment protocol) from `local/integration-watcher`.",
-      "notation": "proof-integration-watcher",
-      "source": "cat-harness/skills/authoring/folio-paper-adapter/proof-integration-watcher.md",
-      "status": "candidate"
-    },
-    {
-      "id": "proof-narrative-lean-equivalence",
-      "prefLabel": "proof-narrative-lean-equivalence",
-      "definition": "For each content block with both a narrative proof (.md) and a Lean sibling (.lean), verify the two prove the same thing. Detect stub-weakening (Lean claims less than the paper), overreach (Lean claims more than the paper), hypothesis mismatches, and notation drift. Produces a structured equivalence report; no edits.",
-      "notation": "proof-narrative-lean-equivalence",
-      "source": "cat-harness/skills/authoring/folio-paper-adapter/proof-narrative-lean-equivalence.md",
-      "status": "candidate"
-    },
-    {
-      "id": "proof-simplifier",
-      "prefLabel": "proof-simplifier",
-      "definition": "Analyse small clusters (2–4) of connected proofs to find simplifications: shared lemmas, redundant constructions, factored abstractions, or shorter proof paths through the dependency graph.",
-      "notation": "proof-simplifier",
-      "source": "cat-harness/skills/authoring/folio-paper-adapter/proof-simplifier.md",
-      "status": "candidate"
-    },
-    {
-      "id": "proof-status-tracking",
-      "prefLabel": "proof-status-tracking",
-      "definition": "Maintain the proof-objects.json manifest tracking formalization status, review records, and LaTeX-to-Lean linkages. Generate status dashboards and enforce review policies.",
-      "notation": "proof-status-tracking",
-      "source": "cat-harness/skills/authoring/folio-paper-adapter/proof-status-tracking.md",
-      "status": "candidate"
-    },
-    {
-      "id": "proof-triage",
-      "prefLabel": "proof-triage",
-      "definition": "Systematically triages and resolves `sorry` stubs across the Lean codebase. Inventories all sorry sites, orders them by dependency, attempts proofs using mathlib/library search, and escalates to a proof writer with similar-lemma suggestions when stuck.",
-      "notation": "proof-triage",
-      "source": "cat-harness/skills/authoring/folio-paper-adapter/proof-triage.md",
-      "status": "candidate"
-    },
-    {
-      "id": "proof-verification",
-      "prefLabel": "proof-verification",
-      "notation": "proof-verification",
-      "source": "cat-harness/skills/authoring/authoring-math/proof-verification.md",
-      "status": "candidate"
-    },
-    {
-      "id": "proposition-consolidation-audit",
-      "prefLabel": "proposition-consolidation-audit",
-      "definition": "Scan a chapter (or the whole paper) for propositions/theorems/lemmas that overlap structurally — same boxed equation under different parametrisations, near-identical proof skeletons, explicit \"specialisation of\"/\"case of\"/\"corollary of\" wording in `.md`, or high-overlap on (uses, cites, tags). Reports candidates for consolidation: parent → corollary, true duplicates, mergeable statements. Run after large-scale chapter work or when the user notices the exposition has accreted special cases.",
-      "notation": "proposition-consolidation-audit",
-      "source": "cat-harness/skills/authoring/folio-paper-adapter/proposition-consolidation-audit.md",
-      "status": "candidate"
-    },
-    {
       "id": "publish-verification",
       "prefLabel": "publish-verification",
       "definition": "Verify what a publish produced BEFORE it is deployed, and alert the publication manager whenever any step after the publish button fails — the verifier set, how to add a verifier, what is in scope, and how the publication manager triages the one alert.",
       "notation": "publish-verification",
       "source": "cat-harness/skills/sdlc/sdlc-core/publish-verification.md",
-      "status": "candidate"
-    },
-    {
-      "id": "q-usage-watcher",
-      "prefLabel": "q-usage-watcher",
-      "definition": "q-usage integration watcher — detects how each content block treats the substrate parameter $q$ (symbolic / generic-R / real-positive / q > 1 / |q| > 1 / unit-circle / root-of-unity / fixed q_0 / n/a) and cross-checks the detected regime vector against the chapter's narrative-expected profile. Emits per-block `<block>.qa.json` sidecars under the `q-usage-*` criteria and a global witness JSON. Inherits shared mechanics (Monitor, subscriptions, queue, ledger, idle sweep, author-ask, watch-prepared-PRs, witness-drift recovery, billing-quick-fail flake) from `local/integration-watcher`.",
-      "notation": "q-usage-watcher",
-      "source": "cat-harness/skills/authoring/folio-paper-adapter/q-usage-watcher.md",
       "status": "candidate"
     },
     {
@@ -1496,13 +1126,6 @@
       "definition": "The QA projections under `test/results/witnesses/` — what a `qa-witness/v1` document says, which three families produce one, how to read a verdict and the witness behind it, and why \"could not determine\" is a third state everywhere in them.",
       "notation": "qa-witness",
       "source": "cat-harness/skills/sdlc/sdlc-core/qa-witness.md",
-      "status": "candidate"
-    },
-    {
-      "id": "quality-control",
-      "prefLabel": "quality-control",
-      "notation": "quality-control",
-      "source": "cat-harness/skills/authoring/authoring-who-smart-guidelines/quality-control.md",
       "status": "candidate"
     },
     {
@@ -1531,7 +1154,7 @@
     {
       "id": "related-work-coordination",
       "prefLabel": "related-work-coordination",
-      "definition": "Before new work takes shape, find the work it touches. Search beans, issues and open PRs for relevance; categorize and summarize every hit; then ask the user whether and how to coordinate. Judgement decides the categories and the recommendation, and the user decides the coordination. Called by CRDM when a requirement is initiated or updated in chat, and by methodology adoption. Process: processes/related-work.bpmn.",
+      "definition": "Before new work takes shape, find the work it touches. Search beans, issues and open PRs for relevance; categorize and summarize every hit; then ask the user whether and how to coordinate. Judgement decides the categories and the recommendation, and the user decides the coordination. Called by CRDM when a requirement is initiated or updated in chat, and by methodology adoption. Process: processes/sdlc/related-work.bpmn.",
       "notation": "related-work-coordination",
       "source": "cat-harness/skills/sdlc/sdlc-core/related-work-coordination.md",
       "status": "candidate"
@@ -1553,11 +1176,11 @@
       "status": "candidate"
     },
     {
-      "id": "remark-audit",
-      "prefLabel": "remark-audit",
-      "definition": "Audit remarks for provable content. Every remark must interpret a mathematical statement that can be formalized in Lean. Detects dangling remarks (no `interprets` link), ambiguous domain terms, and missing formalization.",
-      "notation": "remark-audit",
-      "source": "cat-harness/skills/authoring/folio-paper-adapter/remark-audit.md",
+      "id": "render-kg-to-cdn",
+      "prefLabel": "render-kg-to-cdn",
+      "definition": "Render a Knowledge Graph, or a list of its Subgraphs, for publication to a CDN at a publication root URL, and report a status and one message. The same step for a staging preview and for a release — only the root URL and the target differ. Names the target's Tool, never its steps: GitHub Pages (`gh-pages`) is one Tool, and it carries its own subprocess.",
+      "notation": "render-kg-to-cdn",
+      "source": "cat-harness/skills/process/workflow/render-kg-to-cdn.md",
       "status": "candidate"
     },
     {
@@ -1581,22 +1204,6 @@
       "definition": "Confirm a UI change by LOOKING at it in a browser and sending the screenshots to the author, rather than describing it. Use whenever a change touches CSS, a Liquid/HTML template, a generated page, the navbar, a board, a sticky or any rendered surface — before claiming it works, and before asking the author to review it. Covers building the site locally, taking the REAL CI build off `gh-pages` when the question is theme chrome or layout, driving it with Playwright in this environment, measuring computed style rather than reading the stylesheet, hit-testing a control's centre because visible is not usable, asserting the conditions so a check cannot pass over an unstyled page, and the defect classes that are invisible to a green gate set.",
       "notation": "rendered-verification",
       "source": "cat-harness/skills/sdlc/sdlc-core/rendered-verification.md",
-      "status": "candidate"
-    },
-    {
-      "id": "rendering-auditor",
-      "prefLabel": "rendering-auditor",
-      "definition": "Multi-pass rendering auditor for content blocks. Validates markdown+TeX syntax, notation consistency, compilation, layout, and visual output across both HTML and PDF pipelines. Used by author agents after edits and as part of QC reports.",
-      "notation": "rendering-auditor",
-      "source": "cat-harness/skills/authoring/folio-paper-adapter/rendering-auditor.md",
-      "status": "candidate"
-    },
-    {
-      "id": "rendering-fixes",
-      "prefLabel": "rendering-fixes",
-      "definition": "Quick-fix reference for common rendering errors found by the rendering-auditor. Agents should consult this when editing content blocks to avoid introducing issues and to fix flagged problems efficiently.",
-      "notation": "rendering-fixes",
-      "source": "cat-harness/skills/authoring/folio-paper-adapter/rendering-fixes.md",
       "status": "candidate"
     },
     {
@@ -1644,7 +1251,7 @@
       "prefLabel": "sample-import",
       "definition": "Testing an import of a SAMPLE of a remote source into a knowledge graph or other structured store: scope it, let materialize-remote gate it, land it in the library (permanent) or the kept, unpublished trashcan (trial), import it, and test the import. The gates are called, never copied.",
       "notation": "sample-import",
-      "source": "cat-harness/skills/authoring/content-lifecycle/sample-import.md",
+      "source": "cat-harness/skills/library/large-datasets/sample-import.md",
       "status": "candidate"
     },
     {
@@ -1663,35 +1270,11 @@
       "status": "candidate"
     },
     {
-      "id": "scientific-critical-thinking",
-      "prefLabel": "scientific-critical-thinking",
-      "definition": "Evaluate scientific claims and evidence quality. Use for assessing experimental design validity, identifying biases and confounders, applying evidence grading frameworks (GRADE, Cochrane Risk of Bias), or teaching critical analysis. Best for understanding evidence quality, identifying flaws. For formal peer review writing use peer-review.",
-      "notation": "scientific-critical-thinking",
-      "source": "cat-harness/skills/scientific-critical-thinking/scientific-critical-thinking.md",
-      "status": "candidate"
-    },
-    {
-      "id": "scientific-visualization",
-      "prefLabel": "scientific-visualization",
-      "definition": "Create and audit truthful, accessible, publication-ready scientific figures with Matplotlib, Seaborn, or Plotly. Use for figure design, multi-panel layouts, uncertainty and missing-data displays, color/contrast review, image metadata validation, and journal export planning.",
-      "notation": "scientific-visualization",
-      "source": "cat-harness/skills/scientific-visualization/scientific-visualization.md",
-      "status": "candidate"
-    },
-    {
       "id": "security",
       "prefLabel": "security",
       "definition": "The security sub-KG's entry point. What the boundaries are, which machinery already guards each one, and the single rule that unifies them — refuse, never repair. Read this before adding a check, so the answer that already exists is reused rather than rebuilt in a fourth place.",
       "notation": "security",
       "source": "cat-harness/skills/conduct/security/security.md",
-      "status": "candidate"
-    },
-    {
-      "id": "semantic-review-scoping",
-      "prefLabel": "semantic-review-scoping",
-      "definition": "Decide what to review FIRST. Computes which blocks' semantic correctness can actually affect a target theorem, so agent-adjudicated criteria are spent where they matter instead of swept in file order.",
-      "notation": "semantic-review-scoping",
-      "source": "cat-harness/skills/authoring/folio-paper-adapter/semantic-review-scoping.md",
       "status": "candidate"
     },
     {
@@ -1726,21 +1309,6 @@
       "status": "candidate"
     },
     {
-      "id": "simulator",
-      "prefLabel": "simulator",
-      "notation": "simulator",
-      "source": "cat-harness/skills/authoring/folio-paper-adapter/simulator.md",
-      "status": "candidate"
-    },
-    {
-      "id": "simulator-math-audit",
-      "prefLabel": "simulator-math-audit",
-      "definition": "Audit simulator content objects against the formal mathematics they visualise — formulas and physical constants must be derived from the paper's canonical sources, never hardcoded in the visualisation.",
-      "notation": "simulator-math-audit",
-      "source": "cat-harness/skills/authoring/folio-paper-adapter/simulator-math-audit.md",
-      "status": "candidate"
-    },
-    {
       "id": "site-presentation-assets",
       "prefLabel": "site-presentation-assets",
       "definition": "A visual fact — a colour, a glyph, a theme — lives in a graph node, and the stylesheet the site serves is a rendering of it. Read before adding a colour, an icon or a theme, before hand-editing any generated stylesheet, and before referencing a generated asset from a page.",
@@ -1770,21 +1338,6 @@
       "definition": "A skill states a capability generically; a Tool node carries the concrete mechanism. Read before writing or editing any skill, and whenever a skill is about to name a vendor, a CLI, a binary or an API endpoint.",
       "notation": "skills-and-tools",
       "source": "cat-harness/skills/folio-core/skills-and-tools.md",
-      "status": "candidate"
-    },
-    {
-      "id": "smart-base-tools",
-      "prefLabel": "smart-base-tools",
-      "notation": "smart-base-tools",
-      "source": "cat-harness/skills/authoring/authoring-who-smart-guidelines/smart-base-tools.md",
-      "status": "candidate"
-    },
-    {
-      "id": "smart-stack-layering",
-      "prefLabel": "smart-stack-layering",
-      "definition": "Which of the five layers a WHO SMART asset, rule, script or page belongs to, and the one question that settles it. Read before adding anything to fhir-harness, smart-base, smart-l1, smart-dak or smart-ig, before creating a per-IG harness, and before moving a pre/post-processing step.",
-      "notation": "smart-stack-layering",
-      "source": "cat-harness/skills/authoring/authoring-who-smart-guidelines/smart-stack-layering.md",
       "status": "candidate"
     },
     {
@@ -1875,10 +1428,11 @@
       "status": "candidate"
     },
     {
-      "id": "terminology-management",
-      "prefLabel": "terminology-management",
-      "notation": "terminology-management",
-      "source": "cat-harness/skills/authoring/authoring-who-smart-guidelines/terminology-management.md",
+      "id": "term-disagreement",
+      "prefLabel": "term-disagreement",
+      "definition": "When a glossary term the extractor minted and an authorised terminology disagree — the corpus spells a concept differently from the authority, or uses a word the authority does not carry — decide among three outcomes: change the prose, author a local term with its reason, or record that the vocabulary is wrong for this domain. Says which disagreements need a decision at all, how to choose, what each outcome writes and where, and what is NOT this skill (two judges disagreeing about a mapping).",
+      "notation": "term-disagreement",
+      "source": "cat-harness/skills/library/library-core/term-disagreement.md",
       "status": "candidate"
     },
     {
@@ -1958,14 +1512,6 @@
       "definition": "Monitor and triage open feedback across all content blocks. At session start, ask the author if they'd like to work on feedback. Provide overview, let them pick a chapter/section, then review and iterate until done.",
       "notation": "todo-review",
       "source": "cat-harness/skills/authoring/authoring-core/todo-review.md",
-      "status": "candidate"
-    },
-    {
-      "id": "toolchain-ownership",
-      "prefLabel": "toolchain-ownership",
-      "definition": "Taking ownership of the WHO smart-base scripts in a litlfred fork, rewriting them to the Skill I/O contract, and the one gate that governs when a script may actually move. Read before touching, copying or rewriting any upstream smart-base script.",
-      "notation": "toolchain-ownership",
-      "source": "cat-harness/skills/authoring/authoring-who-smart-guidelines/toolchain-ownership.md",
       "status": "candidate"
     },
     {
@@ -2065,14 +1611,6 @@
       "status": "candidate"
     },
     {
-      "id": "verify-local-substrate",
-      "prefLabel": "verify-local-substrate",
-      "definition": "Verify that every result block of a designated class traces back to a designated anchor definition through the uses[] dependency graph. Identifies gaps where claims lack a formal connection to the anchor, and suggests fixes.",
-      "notation": "verify-local-substrate",
-      "source": "cat-harness/skills/authoring/folio-paper-adapter/verify-local-substrate.md",
-      "status": "candidate"
-    },
-    {
       "id": "visual-diff",
       "prefLabel": "visual-diff",
       "definition": "Pictures of a changed figure, diagram or table, before and after, and how much of it changed. Says when to use it, what the percentage means and must NOT be read as, what a missing picture means, and how the staging job and the review process call it. Use when a reviewer asks \"what does this figure look like now\", when a table's markup diff is unreadable, or when a staging preview's pictures are missing.",
@@ -2138,16 +1676,9 @@
     {
       "id": "wireframe-design-review",
       "prefLabel": "wireframe-design-review",
-      "definition": "Design a user interface (a page, a visualiser, a navbar) by the WireGen methodology: a written design intent, at least two mid-fidelity HTML candidates, each with a web AND a mobile layout, mechanical checks at both viewports, a blind per-criterion review, adjudication where reviewers disagree, and a recorded choice. Also how an EXISTING visualiser is wireframed as-is, so that every declared visualiser has a wireframe with a QA sidecar. Process: processes/wireframe-design-review.bpmn.",
+      "definition": "Design a user interface (a page, a visualiser, a navbar) by the WireGen methodology: a written design intent, at least two mid-fidelity HTML candidates, each with a web AND a mobile layout, mechanical checks at both viewports, a blind per-criterion review, adjudication where reviewers disagree, and a recorded choice. Also how an EXISTING visualiser is wireframed as-is, so that every declared visualiser has a wireframe with a QA sidecar. Process: processes/ui/wireframe-design-review.bpmn.",
       "notation": "wireframe-design-review",
       "source": "cat-harness/skills/ui/ui-core/wireframe-design-review.md",
-      "status": "candidate"
-    },
-    {
-      "id": "witnessed-values",
-      "prefLabel": "witnessed-values",
-      "notation": "witnessed-values",
-      "source": "cat-harness/skills/authoring/folio-paper-adapter/witnessed-values.md",
       "status": "candidate"
     },
     {

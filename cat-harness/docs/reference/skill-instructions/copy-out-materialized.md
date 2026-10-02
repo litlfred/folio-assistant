@@ -6,9 +6,9 @@ parent: Skill instructions
 ---
 
 {: .note }
-> Generated from [`large-datasets/skills/copy-out-materialized.md`](https://github.com/litlfred/folio-assistant/blob/main/large-datasets/skills/copy-out-materialized.md) — do not edit here.
+> Generated from [`cat-harness/skills/library/large-datasets/copy-out-materialized.md`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/library/large-datasets/copy-out-materialized.md) — do not edit here.
 >
-> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/large-datasets/skills/copy-out-materialized.md){: .fa-edit-source }
+> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/cat-harness/skills/library/large-datasets/copy-out-materialized.md){: .fa-edit-source }
 
 {% raw %}
 # Working on materialized content — copy it out
@@ -24,7 +24,8 @@ And 2026-09-22, choosing between advising and enforcing: **enforce from the
 start.**
 
 Diagram: [`copy-out-materialized.bpmn`](../../processes/copy-out-materialized.html).
-Schema: `folio-assistant-core/schemas/materialization.ts`. Where they disagree,
+Schema: the `folio-materialization/v1` record (`MaterializationSchema`, owned
+by the content layer above this one — named here, not linked). Where they disagree,
 the schema wins and this file is wrong.
 
 ## What the rule protects, and what it does not
