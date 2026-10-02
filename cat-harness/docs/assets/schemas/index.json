@@ -2,7 +2,7 @@
   "$schema": "folio-schema-graph/v1",
   "tile": {
     "schemas": {
-      "count": 203,
+      "count": 187,
       "unit": "modules"
     }
   },
@@ -12,7 +12,6 @@
     "folio-assistant-core/schemas",
     "folio-assistant-sci/schemas",
     "folio-assistant-sci/sources",
-    "large-datasets/schemas",
     "smart-base/schemas",
     "who-iris/sources"
   ],
@@ -211,14 +210,6 @@
       "isTest": false
     },
     {
-      "module": "cat-harness/schemas/cat-harness.test.ts",
-      "instance": "cat-harness",
-      "name": "cat-harness.test",
-      "graphNode": "undeclared",
-      "summary": "Tests for the CatHarness root declaration — issue #223, Phase 0.3.",
-      "isTest": true
-    },
-    {
       "module": "cat-harness/schemas/cat-harness.ts",
       "instance": "cat-harness",
       "name": "cat-harness",
@@ -274,14 +265,6 @@
       "graphNode": "schema",
       "summary": "The content types this layer owns, registered at load time.",
       "isTest": false
-    },
-    {
-      "module": "cat-harness/schemas/contributions.test.ts",
-      "instance": "cat-harness",
-      "name": "contributions.test",
-      "graphNode": "undeclared",
-      "summary": "Tests for the contribution registry and its loader — issue #223, Phase 0.1.",
-      "isTest": true
     },
     {
       "module": "cat-harness/schemas/contributions.ts",
@@ -397,14 +380,6 @@
       "isTest": false
     },
     {
-      "module": "cat-harness/schemas/document-kind.ts",
-      "instance": "cat-harness",
-      "name": "document-kind",
-      "graphNode": "schema",
-      "summary": "A document KIND — a named structure of sections that a document authored",
-      "isTest": false
-    },
-    {
       "module": "cat-harness/schemas/document-structure.test.ts",
       "instance": "cat-harness",
       "name": "document-structure.test",
@@ -418,14 +393,6 @@
       "graphNode": "schema",
       "summary": "`structure.json` as a BASE with VARIANTS — bean `rkqp`, owner 2026-09-30",
       "isTest": false
-    },
-    {
-      "module": "cat-harness/schemas/extension-namespace.test.ts",
-      "instance": "cat-harness",
-      "name": "extension-namespace.test",
-      "graphNode": "undeclared",
-      "summary": "Our BPMN extension elements are recognised by NAMESPACE, never by the prefix",
-      "isTest": true
     },
     {
       "module": "cat-harness/schemas/external-schema.ts",
@@ -442,14 +409,6 @@
       "graphNode": "schema",
       "summary": "What a person or agent SAYS a drawn figure shows — bean `a8wy`, under",
       "isTest": false
-    },
-    {
-      "module": "cat-harness/schemas/folio-dir.test.ts",
-      "instance": "cat-harness",
-      "name": "folio-dir.test",
-      "graphNode": "undeclared",
-      "summary": "`folioDir` — a folio says where its content is, and the platform asks.",
-      "isTest": true
     },
     {
       "module": "cat-harness/schemas/folio-graph-kind.ts",
@@ -533,14 +492,6 @@
       "isTest": false
     },
     {
-      "module": "cat-harness/schemas/harness-config.test.ts",
-      "instance": "cat-harness",
-      "name": "harness-config.test",
-      "graphNode": "undeclared",
-      "summary": "Tests for schemas/harness-config.ts — cross-folio dependency schema and resolution.",
-      "isTest": true
-    },
-    {
       "module": "cat-harness/schemas/harness-config.ts",
       "instance": "cat-harness",
       "name": "harness-config",
@@ -604,14 +555,6 @@
       "isTest": false
     },
     {
-      "module": "cat-harness/schemas/instance-versioning.test.ts",
-      "instance": "cat-harness",
-      "name": "instance-versioning.test",
-      "graphNode": "undeclared",
-      "summary": "A minimal valid declaration, extended per test.",
-      "isTest": true
-    },
-    {
       "module": "cat-harness/schemas/intake.ts",
       "instance": "cat-harness",
       "name": "intake",
@@ -660,28 +603,12 @@
       "isTest": false
     },
     {
-      "module": "cat-harness/schemas/kg-qa.test.ts",
-      "instance": "cat-harness",
-      "name": "kg-qa.test",
-      "graphNode": "undeclared",
-      "summary": "The sidecar's own rules — the ones a reader relies on when they read a",
-      "isTest": true
-    },
-    {
       "module": "cat-harness/schemas/kg-qa.ts",
       "instance": "cat-harness",
       "name": "kg-qa",
       "graphNode": "schema",
       "summary": "Knowledge-graph QA sidecars — what is dangling in the process/role/skill graph.",
       "isTest": false
-    },
-    {
-      "module": "cat-harness/schemas/kind-validator.test.ts",
-      "instance": "cat-harness",
-      "name": "kind-validator.test",
-      "graphNode": "undeclared",
-      "summary": "Resolving a graph kind's validator — and above all, the three states.",
-      "isTest": true
     },
     {
       "module": "cat-harness/schemas/kind-validator.ts",
@@ -706,15 +633,6 @@
       "graphNode": "schema",
       "summary": "The landing page, as a board of sticky notes.",
       "isTest": false
-    },
-    {
-      "module": "cat-harness/schemas/layer-direction.test.ts",
-      "instance": "cat-harness",
-      "name": "layer-direction.test",
-      "graphNode": "none",
-      "reason": "a test",
-      "summary": "One wrong-direction verdict for `check:partition` and `kg-detangle` — bean `j79e`.",
-      "isTest": true
     },
     {
       "module": "cat-harness/schemas/layer-direction.ts",
@@ -888,14 +806,6 @@
       "isTest": false
     },
     {
-      "module": "cat-harness/schemas/portable-path.test.ts",
-      "instance": "cat-harness",
-      "name": "portable-path.test",
-      "graphNode": "undeclared",
-      "summary": "The rules a checkout relies on — a filename that is legal here and illegal",
-      "isTest": true
-    },
-    {
       "module": "cat-harness/schemas/portable-path.ts",
       "instance": "cat-harness",
       "name": "portable-path",
@@ -1025,15 +935,6 @@
       "isTest": false
     },
     {
-      "module": "cat-harness/schemas/reference-direction-declaration.test.ts",
-      "instance": "cat-harness",
-      "name": "reference-direction-declaration.test",
-      "graphNode": "none",
-      "reason": "a test",
-      "summary": "What a file has to SAY to be read as generator output — bean `ws99`.",
-      "isTest": true
-    },
-    {
       "module": "cat-harness/schemas/reference-direction.ts",
       "instance": "cat-harness",
       "name": "reference-direction",
@@ -1123,15 +1024,6 @@
       "isTest": false
     },
     {
-      "module": "cat-harness/schemas/schema-graph.test.ts",
-      "instance": "cat-harness",
-      "name": "schema-graph.test",
-      "graphNode": "none",
-      "reason": "a test over the reader, not a schema itself",
-      "summary": "The schema-graph reader, tested against shapes that actually occur here.",
-      "isTest": true
-    },
-    {
       "module": "cat-harness/schemas/script-qa.ts",
       "instance": "cat-harness",
       "name": "script-qa",
@@ -1201,14 +1093,6 @@
       "graphNode": "schema",
       "summary": "Where the JSON workflow-skill definitions and the conventions live.",
       "isTest": false
-    },
-    {
-      "module": "cat-harness/schemas/skill-overlay.test.ts",
-      "instance": "cat-harness",
-      "name": "skill-overlay.test",
-      "graphNode": "undeclared",
-      "summary": "The skill overlay reads declarations and keeps every instance's contribution.",
-      "isTest": true
     },
     {
       "module": "cat-harness/schemas/skill-package.ts",
@@ -1462,14 +1346,6 @@
       "isTest": false
     },
     {
-      "module": "cat-harness/schemas/todo.test.ts",
-      "instance": "cat-harness",
-      "name": "todo.test",
-      "graphNode": "undeclared",
-      "summary": "A todo's KG tags resolve, dangle, or are not checked — and the third is",
-      "isTest": true
-    },
-    {
       "module": "cat-harness/schemas/todo.ts",
       "instance": "cat-harness",
       "name": "todo",
@@ -1571,15 +1447,6 @@
       "graphNode": "schema",
       "summary": "The viewer-navbar audit — **what the owner's rule looks like as data**.",
       "isTest": false
-    },
-    {
-      "module": "cat-harness/schemas/viz-generators.test.ts",
-      "instance": "cat-harness",
-      "name": "viz-generators.test",
-      "graphNode": "none",
-      "reason": "a test over the generators, not a schema itself",
-      "summary": "The two visualiser generators produce a page, and it is a whole one.",
-      "isTest": true
     },
     {
       "module": "cat-harness/schemas/vocabulary.ts",
@@ -13516,321 +13383,6 @@
       "exported": true
     },
     {
-      "id": "cat-harness/schemas/document-kind.ts#CoverageMemberSchema",
-      "name": "CoverageMemberSchema",
-      "module": "cat-harness/schemas/document-kind.ts",
-      "kind": "zod-object",
-      "fields": [
-        {
-          "name": "key",
-          "type": "z.string().min(1)",
-          "optional": false,
-          "array": false
-        },
-        {
-          "name": "label",
-          "type": "z.string().min(1)",
-          "optional": false,
-          "array": false
-        }
-      ],
-      "extendsNames": [],
-      "values": [],
-      "refs": [],
-      "unresolved": [],
-      "external": [
-        "z"
-      ],
-      "exported": false
-    },
-    {
-      "id": "cat-harness/schemas/document-kind.ts#DocumentKind",
-      "name": "DocumentKind",
-      "module": "cat-harness/schemas/document-kind.ts",
-      "kind": "type-alias",
-      "fields": [],
-      "extendsNames": [],
-      "values": [],
-      "refs": [],
-      "unresolved": [],
-      "external": [],
-      "exported": true
-    },
-    {
-      "id": "cat-harness/schemas/document-kind.ts#DocumentKindCoverage",
-      "name": "DocumentKindCoverage",
-      "module": "cat-harness/schemas/document-kind.ts",
-      "kind": "type-alias",
-      "fields": [],
-      "extendsNames": [],
-      "values": [],
-      "refs": [],
-      "unresolved": [],
-      "external": [],
-      "exported": true
-    },
-    {
-      "id": "cat-harness/schemas/document-kind.ts#DocumentKindCoverageSchema",
-      "name": "DocumentKindCoverageSchema",
-      "module": "cat-harness/schemas/document-kind.ts",
-      "kind": "zod-object",
-      "fields": [
-        {
-          "name": "$schema",
-          "type": "z.literal(DOCUMENT_KIND_COVERAGE_SCHEMA_TAG)",
-          "optional": false,
-          "array": false
-        },
-        {
-          "name": "kind",
-          "type": "z.string().min(1)",
-          "optional": false,
-          "array": false,
-          "doc": "The kind's id."
-        },
-        {
-          "name": "subject",
-          "type": "z.string().min(1)",
-          "optional": false,
-          "array": false,
-          "doc": "The instance whose content was classified."
-        },
-        {
-          "name": "from",
-          "type": "z.string().min(1)",
-          "optional": false,
-          "array": false,
-          "doc": "Repo-relative path of what was classified."
-        },
-        {
-          "name": "method",
-          "type": "z.string().min(1)",
-          "optional": false,
-          "array": false,
-          "doc": "The rule, in a sentence a reader can check."
-        },
-        {
-          "name": "total",
-          "type": "z.number().int().nonnegative()",
-          "optional": false,
-          "array": false
-        },
-        {
-          "name": "sections",
-          "type": "z.array(z.object({ id: z.string().min(1), members: z.array(CoverageMemberSchema) }))",
-          "optional": false,
-          "array": true
-        },
-        {
-          "name": "unplaced",
-          "type": "z.array(z.object({ group: z.string().min(1), count: z.number().int().positive() }))",
-          "optional": false,
-          "array": true,
-          "doc": "What no rule placed, grouped so the remainder is legible."
-        },
-        {
-          "name": "generatedBy",
-          "type": "z.string().min(1)",
-          "optional": false,
-          "array": false
-        }
-      ],
-      "extendsNames": [],
-      "values": [],
-      "refs": [
-        "cat-harness/schemas/document-kind.ts#CoverageMemberSchema"
-      ],
-      "unresolved": [],
-      "external": [
-        "DOCUMENT_KIND_COVERAGE_SCHEMA_TAG",
-        "z"
-      ],
-      "exported": true
-    },
-    {
-      "id": "cat-harness/schemas/document-kind.ts#DocumentKindSchema",
-      "name": "DocumentKindSchema",
-      "module": "cat-harness/schemas/document-kind.ts",
-      "kind": "zod-object",
-      "fields": [
-        {
-          "name": "$schema",
-          "type": "z.literal(DOCUMENT_KIND_SCHEMA_TAG)",
-          "optional": false,
-          "array": false
-        },
-        {
-          "name": "id",
-          "type": "z.string().regex(/^[a-z0-9][a-z0-9-]*$/)",
-          "optional": false,
-          "array": false
-        },
-        {
-          "name": "title",
-          "type": "z.string().min(1)",
-          "optional": false,
-          "array": false
-        },
-        {
-          "name": "description",
-          "type": "z.string().min(1)",
-          "optional": false,
-          "array": false
-        },
-        {
-          "name": "structure",
-          "type": "z.enum([\"fixed\", \"semi-fixed\"])",
-          "optional": false,
-          "array": false,
-          "doc": "`fixed`: exactly these sections, every one required."
-        },
-        {
-          "name": "extends",
-          "type": "z.string().min(1).optional()",
-          "optional": true,
-          "array": false,
-          "doc": "A parent kind's id; this kind's sections extend the parent's."
-        },
-        {
-          "name": "sections",
-          "type": "z.array(DocumentKindSectionSchema).min(1)",
-          "optional": false,
-          "array": true
-        },
-        {
-          "name": "sources",
-          "type": "z.array(DocumentKindSourceSchema).min(1)",
-          "optional": false,
-          "array": true
-        },
-        {
-          "name": "generatedBy",
-          "type": "z.string().min(1).optional()",
-          "optional": true,
-          "array": false,
-          "doc": "Set when the file is generated; names the generator, so a hand edit is visibly a defect."
-        }
-      ],
-      "extendsNames": [],
-      "values": [],
-      "refs": [
-        "cat-harness/schemas/document-kind.ts#DocumentKindSectionSchema",
-        "cat-harness/schemas/document-kind.ts#DocumentKindSourceSchema"
-      ],
-      "unresolved": [],
-      "external": [
-        "DOCUMENT_KIND_SCHEMA_TAG",
-        "z"
-      ],
-      "exported": true
-    },
-    {
-      "id": "cat-harness/schemas/document-kind.ts#DocumentKindSection",
-      "name": "DocumentKindSection",
-      "module": "cat-harness/schemas/document-kind.ts",
-      "kind": "type-alias",
-      "fields": [],
-      "extendsNames": [],
-      "values": [],
-      "refs": [],
-      "unresolved": [],
-      "external": [],
-      "exported": true
-    },
-    {
-      "id": "cat-harness/schemas/document-kind.ts#DocumentKindSectionSchema",
-      "name": "DocumentKindSectionSchema",
-      "module": "cat-harness/schemas/document-kind.ts",
-      "kind": "zod-object",
-      "fields": [
-        {
-          "name": "id",
-          "type": "z.string().regex(/^[a-z0-9][a-z0-9-]*$/)",
-          "optional": false,
-          "array": false
-        },
-        {
-          "name": "title",
-          "type": "z.string().min(1)",
-          "optional": false,
-          "array": false
-        },
-        {
-          "name": "required",
-          "type": "z.boolean()",
-          "optional": false,
-          "array": false
-        },
-        {
-          "name": "description",
-          "type": "z.string().min(1)",
-          "optional": false,
-          "array": false
-        },
-        {
-          "name": "computedFrom",
-          "type": "z.array(z.string().min(1)).optional()",
-          "optional": true,
-          "array": true,
-          "doc": "Declared graph ids this section is derived from."
-        },
-        {
-          "name": "sources",
-          "type": "z.array(DocumentKindSourceSchema).optional()",
-          "optional": true,
-          "array": true,
-          "doc": "This section's own sources, when they differ from the kind's."
-        }
-      ],
-      "extendsNames": [],
-      "values": [],
-      "refs": [
-        "cat-harness/schemas/document-kind.ts#DocumentKindSourceSchema"
-      ],
-      "unresolved": [],
-      "external": [
-        "z"
-      ],
-      "exported": true
-    },
-    {
-      "id": "cat-harness/schemas/document-kind.ts#DocumentKindSourceSchema",
-      "name": "DocumentKindSourceSchema",
-      "module": "cat-harness/schemas/document-kind.ts",
-      "kind": "zod-object",
-      "doc": "Where a structure, or one section of it, comes from.",
-      "fields": [
-        {
-          "name": "ref",
-          "type": "z.string().min(1)",
-          "optional": false,
-          "array": false,
-          "doc": "A library entry id or a URL — something a reader can open."
-        },
-        {
-          "name": "locator",
-          "type": "z.string().min(1).optional()",
-          "optional": true,
-          "array": false,
-          "doc": "The part of it that says so: a chapter, a section, a table."
-        },
-        {
-          "name": "note",
-          "type": "z.string().min(1).optional()",
-          "optional": true,
-          "array": false
-        }
-      ],
-      "extendsNames": [],
-      "values": [],
-      "refs": [],
-      "unresolved": [],
-      "external": [
-        "z"
-      ],
-      "exported": true
-    },
-    {
       "id": "cat-harness/schemas/document-structure.ts#BaseSection",
       "name": "BaseSection",
       "module": "cat-harness/schemas/document-structure.ts",
@@ -17936,6 +17488,20 @@
       "external": [
         "z"
       ],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/harness-config.ts#ImplementingPath",
+      "name": "ImplementingPath",
+      "module": "cat-harness/schemas/harness-config.ts",
+      "kind": "type-alias",
+      "doc": "Where an instance-relative path declared by one instance actually is.",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
       "exported": true
     },
     {
@@ -30121,6 +29687,20 @@
           "optional": true,
           "array": false,
           "doc": "The declaring instance's `description`, for `bodyFrom: \"description\"`."
+        },
+        {
+          "name": "summary",
+          "type": "string",
+          "optional": true,
+          "array": false,
+          "doc": "The declaring instance's `summary`, for `bodyFrom: \"summary\"`."
+        },
+        {
+          "name": "alsoWritten",
+          "type": "readonly string[]",
+          "optional": true,
+          "array": false,
+          "doc": "The declaring instance's `alsoWritten`, for `bodyFrom: \"summary\"`."
         }
       ],
       "extendsNames": [],
@@ -46662,38 +46242,6 @@
       "kind": "field",
       "optional": false,
       "array": false
-    },
-    {
-      "from": "cat-harness/schemas/document-kind.ts#DocumentKindCoverageSchema",
-      "to": "cat-harness/schemas/document-kind.ts#CoverageMemberSchema",
-      "via": "sections",
-      "kind": "field",
-      "optional": false,
-      "array": true
-    },
-    {
-      "from": "cat-harness/schemas/document-kind.ts#DocumentKindSchema",
-      "to": "cat-harness/schemas/document-kind.ts#DocumentKindSectionSchema",
-      "via": "sections",
-      "kind": "field",
-      "optional": false,
-      "array": true
-    },
-    {
-      "from": "cat-harness/schemas/document-kind.ts#DocumentKindSchema",
-      "to": "cat-harness/schemas/document-kind.ts#DocumentKindSourceSchema",
-      "via": "sources",
-      "kind": "field",
-      "optional": false,
-      "array": true
-    },
-    {
-      "from": "cat-harness/schemas/document-kind.ts#DocumentKindSectionSchema",
-      "to": "cat-harness/schemas/document-kind.ts#DocumentKindSourceSchema",
-      "via": "sources",
-      "kind": "field",
-      "optional": true,
-      "array": true
     },
     {
       "from": "cat-harness/schemas/document-structure.ts#BaseSection",

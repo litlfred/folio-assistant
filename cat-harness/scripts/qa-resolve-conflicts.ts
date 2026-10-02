@@ -79,7 +79,7 @@ import { execFileSync } from "node:child_process";
 import { existsSync, readFileSync } from "node:fs";
 import { join, relative } from "node:path";
 
-import { directoryForGraph, repoRootFor } from "../schemas/cat-harness.ts";
+import { directoriesForGraph, instanceRootsIn, repoRootFor } from "../schemas/cat-harness.ts";
 
 const ROOT = join(import.meta.dir, "..");
 const dryRun = process.argv.includes("--dry-run");
@@ -184,11 +184,21 @@ export interface Outcome {
   reason: string;
 }
 
-/** Decide, per conflicted path, without touching anything. */
-export function plan(repoRoot: string, qaDir: string, paths: readonly string[]): Outcome[] {
+/**
+ * Decide, per conflicted path, without touching anything.
+ *
+ * `qaDirs` is EVERY declared `qa` directory in the checkout, repo-relative,
+ * not only the root instance's — measured 2026-10-02 on #1822: a
+ * `who-iris/test/results/kg-qa/…` sidecar was classified `qa-sidecar` by
+ * `merge-conflict-patterns.ts`, handed here, and "left alone — outside the
+ * declared qa graph", because this walked `cat-harness/test/results/` only.
+ * merge-base then aborted on a conflict the pattern had promised to resolve.
+ */
+export function plan(repoRoot: string, qaDirs: string | readonly string[], paths: readonly string[]): Outcome[] {
+  const dirs = typeof qaDirs === "string" ? [qaDirs] : qaDirs;
   return paths.map((path) => {
-    if (!path.startsWith(qaDir)) {
-      return { path, action: "skip" as const, reason: `outside the declared \`qa\` graph (${qaDir})` };
+    if (!dirs.some((d) => path.startsWith(d))) {
+      return { path, action: "skip" as const, reason: `outside every declared \`qa\` graph (${dirs.join(", ")})` };
     }
     const scan = scanConflict(repoRoot, path);
     if (scan.unreadable.length > 0) {
@@ -218,11 +228,12 @@ export function plan(repoRoot: string, qaDir: string, paths: readonly string[]):
 
 if (import.meta.main) {
   const repoRoot = repoRootFor(ROOT);
-  const qaAbs = directoryForGraph(ROOT, "qa");
-  if (qaAbs === undefined) {
-    // NOT a pass. An instance declaring no `qa` graph has no sidecars to
+  // Every instance in the checkout, nested ones included — see `plan`.
+  const qaAbsAll = [...new Set(instanceRootsIn(repoRoot).flatMap((inst) => directoriesForGraph(inst, "qa")))];
+  if (qaAbsAll.length === 0) {
+    // NOT a pass. A checkout declaring no `qa` graph has no sidecars to
     // resolve, and saying so differs from saying there was nothing to do.
-    console.log("qa-resolve-conflicts — this instance declares no `qa` graph, so nothing was considered");
+    console.log("qa-resolve-conflicts — no instance here declares a `qa` graph, so nothing was considered");
     process.exit(0);
   }
   // `directoryForGraph` returns an ABSOLUTE path; `git diff --name-only`
@@ -235,10 +246,11 @@ if (import.meta.main) {
   // **It failed OPEN**, which is the shape this whole command exists to
   // prevent, in the command itself. Found on its first real conflict, not by
   // a test — hence the guard below and the regression beside it.
-  const qaDir = relative(repoRoot, qaAbs).replace(/\/*$/, "") + "/";
-  if (!existsSync(qaAbs)) {
+  const qaDirs = qaAbsAll.map((a) => relative(repoRoot, a).replace(/\/*$/, "") + "/");
+  const missing = qaAbsAll.find((a) => !existsSync(a));
+  if (missing !== undefined) {
     console.error(
-      `qa-resolve-conflicts — the declared \`qa\` directory does not exist: ${qaAbs}\n` +
+      `qa-resolve-conflicts — a declared \`qa\` directory does not exist: ${missing}\n` +
         "  Everything would be reported as 'outside the graph', which is indistinguishable\n" +
         "  from having nothing to do. Refusing rather than exiting clean.",
     );
@@ -251,7 +263,7 @@ if (import.meta.main) {
     process.exit(0);
   }
 
-  const outcomes = plan(repoRoot, qaDir, paths);
+  const outcomes = plan(repoRoot, qaDirs, paths);
   const resolve = outcomes.filter((o) => o.action === "resolve");
   const refuse = outcomes.filter((o) => o.action === "refuse");
   const skip = outcomes.filter((o) => o.action === "skip");
@@ -304,7 +316,9 @@ if (import.meta.main) {
   // every writer whose OUTPUT lives under the qa graph. Stated rather than
   // silent: this is the one place the mapping is not read from the data.
   if (wanted.size === 0 && unknown.size === 0) {
-    for (const s of ["kg:audit", "translation:block-qa"]) if (scripts[s] !== undefined) wanted.add(s);
+    // `kg:audit:all` too: a resolved sidecar may belong to a nested instance
+    // (#1822's was who-iris's), which the root-only `kg:audit` does not write.
+    for (const s of ["kg:audit", "kg:audit:all", "translation:block-qa"]) if (scripts[s] !== undefined) wanted.add(s);
   }
 
   for (const s of [...wanted].sort()) {

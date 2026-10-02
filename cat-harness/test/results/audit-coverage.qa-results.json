@@ -10,8 +10,8 @@
   },
   "families": {
     "coverage-measured": {
-      "summary": "Every declared kind with its four counts and its state. Not findings: the measurement itself, so the committed record answers \"what audits this kind\" without rerunning anything. The file COUNTS are printed rather than recorded — a census moves on any commit and a gate keyed on it is stale by default; `hasFiles` carries the only thing it decides. 50 of 50 declared kind(s), 205 gate(s), 73 criteria.",
-      "count": 50,
+      "summary": "Every declared kind with its four counts and its state. Not findings: the measurement itself, so the committed record answers \"what audits this kind\" without rerunning anything. The file COUNTS are printed rather than recorded — a census moves on any commit and a gate keyed on it is stale by default; `hasFiles` carries the only thing it decides. 49 of 49 declared kind(s), 203 gate(s), 73 criteria.",
+      "count": 49,
       "entries": [
         {
           "kind": "bean-defs",
@@ -96,11 +96,11 @@
           "state": "covered",
           "directories": [
             "bootstrap-tools/schemas",
+            "cat-harness-tools/schemas",
             "cat-harness/schemas",
             "fhir-harness/schemas",
             "folio-assistant-core/schemas",
             "folio-assistant-sci/schemas",
-            "large-datasets/schemas",
             "smart-base/schemas"
           ],
           "criteria": [
@@ -202,6 +202,7 @@
             "bootstrap-tools/scripts",
             "cat-harness-tools/adapters",
             "cat-harness-tools/id-lookup",
+            "cat-harness-tools/schemas",
             "cat-harness-tools/scripts",
             "cat-harness-tools/test",
             "cat-harness/adapters",
@@ -301,21 +302,6 @@
             "bun run skills:docs:check",
             "bun run subscriptions:viz:check",
             "bun run translated-links:check"
-          ],
-          "typed": true,
-          "hasFiles": true
-        },
-        {
-          "kind": "document-kinds",
-          "state": "covered",
-          "directories": [
-            "smart-base/document-kinds"
-          ],
-          "criteria": [],
-          "subjectKinds": [],
-          "gates": [
-            "bun run document-kinds:viz:check",
-            "bun run smart-base:document-kinds:check"
           ],
           "typed": true,
           "hasFiles": true
@@ -464,7 +450,6 @@
           "kind": "library",
           "state": "covered",
           "directories": [
-            "agent-skills/library",
             "cat-harness/library",
             "fhir-harness/library",
             "folio-assistant-core/library",
@@ -562,7 +547,6 @@
             "bootstrap/processes",
             "cat-harness/processes",
             "folio-assistant-core/processes",
-            "large-datasets/processes",
             "smart-base/methodologies/processes",
             "smart-base/processes"
           ],
@@ -734,12 +718,12 @@
           "directories": [
             "bootstrap-tools/schemas",
             "bootstrap/schemas",
+            "cat-harness-tools/schemas",
             "cat-harness/schemas",
             "fhir-harness/schemas",
             "folio-assistant-core/schemas",
             "folio-assistant-sci/schemas",
             "folio-assistant-sci/sources",
-            "large-datasets/schemas",
             "smart-base/schemas",
             "who-iris/sources"
           ],
@@ -783,7 +767,6 @@
           "kind": "skills",
           "state": "covered",
           "directories": [
-            "agent-skills/skills",
             "bootstrap-tools/skills",
             "bootstrap/skills",
             "cat-harness/skills",
@@ -792,7 +775,6 @@
             "folio-assistant-sci/skills",
             "folio-assistant-sci/skills/data",
             "folio-assistant-sci/skills/lean",
-            "large-datasets/skills",
             "smart-base/skills",
             "who-iris/skills",
             "who-style-guide/skills"
@@ -1022,7 +1004,6 @@
           "kind": "voices",
           "state": "covered",
           "directories": [
-            "agent-skills/skills/voices",
             "cat-harness/skills/voices",
             "folio-assistant-core/skills/voices",
             "folio-assistant-sci/skills/voices",
@@ -1184,10 +1165,10 @@
       "entries": []
     },
     "kinds-unaudited": {
-      "summary": "A declared kind whose directories hold files that NOTHING reaches — no kg-audit criterion, no gate declaring @covers, and no declared validator. All 205 gate(s) have declared, so this is a verdict rather than an upper bound (bean `3srh`).",
+      "summary": "A declared kind whose directories hold files that NOTHING reaches — no kg-audit criterion, no gate declaring @covers, and no declared validator. All 203 gate(s) have declared, so this is a verdict rather than an upper bound (bean `3srh`).",
       "count": 0,
       "entries": []
     }
   },
-  "total": 65
+  "total": 64
 }

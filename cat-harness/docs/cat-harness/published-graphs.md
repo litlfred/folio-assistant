@@ -341,10 +341,9 @@ nothing renders yet. It is shown rather than omitted: "nothing renders this" and
 
 ### `voices`
 
-5 of 6 published.
+5 of 5 published.
 {: .fa-hx-dim }
 
-- agent-skills — *declared, not published*
 - [C@T Harness]({{ '/cat-harness/voices/cat-harness/' | relative_url }})
 - [folio-assistant-core]({{ '/cat-harness/voices/folio-assistant-core/' | relative_url }})
 - [folio-assistant-sci]({{ '/cat-harness/voices/folio-assistant-sci/' | relative_url }})

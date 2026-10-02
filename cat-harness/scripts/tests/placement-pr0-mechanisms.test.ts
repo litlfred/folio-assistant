@@ -371,9 +371,10 @@ describe("this checkout", () => {
     expect(knownSkills(PLATFORM, "instance").has("lean-formal-edges")).toBe(false);
   });
 
-  test("the six libraries the mirrors named are all in the corpus", () => {
+  test("the five libraries the mirrors named are all in the corpus", () => {
+    // Six until bean `j7ql`: agent-skills/library dissolved into cat-harness/library (#1787).
     const libs = corpusDirectoriesForGraph(PLATFORM, "library").map((p) => relative(REPO, p));
-    for (const l of ["cat-harness/library", "agent-skills/library", "folio-assistant-core/library", "folio-assistant-sci/library", "smart-base/library", "who-iris/library"]) {
+    for (const l of ["cat-harness/library", "folio-assistant-core/library", "folio-assistant-sci/library", "smart-base/library", "who-iris/library"]) {
       expect(libs).toContain(l);
     }
   });
