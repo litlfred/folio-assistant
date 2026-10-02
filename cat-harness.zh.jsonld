@@ -297,14 +297,14 @@
   "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld",
   "@type": "http://www.w3.org/ns/prov#Entity",
   "repository": "cat-harness",
-  "generatedAt": "2026-10-02T17:29:10.874Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/7e883d9723c9b1319f1df93e2a3c95ecffac6e7a",
-  "sourceCommitSha": "7e883d9723c9b1319f1df93e2a3c95ecffac6e7a",
-  "sourceCommitAt": "2026-10-02T19:24:33+02:00",
+  "generatedAt": "2026-10-02T18:04:17.958Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/1bfa8058f6a6da2a02d7a68827f30899f598a667",
+  "sourceCommitSha": "1bfa8058f6a6da2a02d7a68827f30899f598a667",
+  "sourceCommitAt": "2026-10-02T19:59:20+02:00",
   "sourceTreeDirty": true,
   "dependsOnUnavailable": "2 dependency edge(s), none expressible as a record — see gaps",
   "counts": {
-    "Skill": 295,
+    "Skill": 296,
     "Actor": 36,
     "Capability": 28,
     "SkillPackage": 35,
@@ -314,7 +314,7 @@
     "Lane": 201,
     "ProcessNode": 940,
     "Tool": 113,
-    "Schema": 152,
+    "Schema": 153,
     "ExternalSchema": 20,
     "GraphKind": 25,
     "Role": 48,
@@ -1052,7 +1052,7 @@
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/conduct-core"
       ],
       "instructionsPath": "skills/conduct/conduct-core/interaction-modality.md",
-      "instructionLines": 572,
+      "instructionLines": 574,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -1643,7 +1643,7 @@
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/kg-core"
       ],
       "instructionsPath": "skills/kg/kg-core/directory-conventions.md",
-      "instructionLines": 1304,
+      "instructionLines": 1305,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -2635,7 +2635,7 @@
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/sdlc-core"
       ],
       "instructionsPath": "skills/sdlc/sdlc-core/opening-brief.md",
-      "instructionLines": 228,
+      "instructionLines": 232,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -2841,7 +2841,7 @@
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/sdlc-core"
       ],
       "instructionsPath": "skills/sdlc/sdlc-core/bean-coordination.md",
-      "instructionLines": 764,
+      "instructionLines": 822,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -3080,7 +3080,7 @@
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/sdlc-core"
       ],
       "instructionsPath": "skills/sdlc/sdlc-core/prepare-merge.md",
-      "instructionLines": 463,
+      "instructionLines": 464,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -3144,6 +3144,22 @@
       ],
       "instructionsPath": "skills/sdlc/sdlc-core/activity-log.md",
       "instructionLines": 230,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/pr-description",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Skill",
+      "name": "pr-description",
+      "title": "pr-description — a PR body a first-time reader can follow",
+      "description": "Write or update a pull request's description so that someone who has never seen the work can follow it: the problem, why it matters, how it was approached, what constrained it, the solution, how to use it, and what is not done. Read before opening a PR, before rewriting its body, and whenever the PR's scope changes.",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/sdlc-core"
+      ],
+      "instructionsPath": "skills/sdlc/sdlc-core/pr-description.md",
+      "instructionLines": 154,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -3303,7 +3319,7 @@
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/sdlc-core"
       ],
       "instructionsPath": "skills/sdlc/sdlc-core/continual-progress.md",
-      "instructionLines": 265,
+      "instructionLines": 268,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -6484,6 +6500,7 @@
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/pending-show",
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/pickup",
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/platform-gates",
+        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/pr-description",
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/prepare-merge",
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/prepare-merge-auto",
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/publish-verification",
@@ -43264,6 +43281,14 @@
       "name": "bean-graph",
       "title": "The bean graph — what `beans/` is, rather than where it happens to be.",
       "module": "schemas/bean-graph.ts",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/schemas"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/bean-note",
+      "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#Schema",
+      "name": "bean-note",
+      "title": "A BEAN NOTE — one pull request's addendum to a bean, in a file of its own.",
+      "module": "schemas/bean-note.ts",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/schemas"
     },
     {

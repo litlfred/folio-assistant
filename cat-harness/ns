@@ -312,6 +312,21 @@
       "layer": "harness"
     },
     {
+      "@id": "cat-harness:graphKind/bean-notes",
+      "@type": [
+        "bootstrap:GraphKind",
+        "skos:Concept"
+      ],
+      "label": "bean-notes",
+      "comment": "Bean notes — one Markdown file per pull request per bean, `$schema: folio-bean-note/v1` in its front matter, named `<bean>--<date>--<branch>.md` so two pull requests never write one path. Indexed by a generated README.",
+      "prefLabel": "bean-notes",
+      "definition": "Bean notes — one Markdown file per pull request per bean, `$schema: folio-bean-note/v1` in its front matter, named `<bean>--<date>--<branch>.md` so two pull requests never write one path. Indexed by a generated README.",
+      "notation": "cat-harness:graphKind/bean-notes",
+      "inScheme": "https://litlfred.github.io/cat-harness/0.1.0/ns",
+      "isDefinedBy": "https://litlfred.github.io/cat-harness/0.1.0/ns",
+      "layer": "harness"
+    },
+    {
       "@id": "cat-harness:graphKind/beans",
       "@type": [
         "bootstrap:GraphKind",
