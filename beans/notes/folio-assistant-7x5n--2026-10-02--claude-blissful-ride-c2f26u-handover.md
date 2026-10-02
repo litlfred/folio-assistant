@@ -114,3 +114,47 @@ Every open PR below shows "dirty" because `main` moved. Each needs `origin/main`
 - `main` @ green (all hard checks pass). Handover-note PRs #1917, #1919, #1920, #1921, #1922 are beans-only; #1920's "Repository gates" failed on its own head (cause not read yet — log not retrievable via the job-log API at the time).
 - Themes: (1) merge-queue unblock → seeding: #1916→#1764→#1801, #1899→#1898, #1903, #1896, #1913 + renames; (2) merge pipeline #1888/#1892/#1894/#1895; (3) sites & UI #1766, #1816, #1918, ob3m navbar #1804/#1808/#1819/#1907/#1909/#1908, UN translation counts (01WmQ8e6, handover requested); (4) handover + KG publication #1912 + note PRs + epic whlc.
 - Recommendation given to owner: theme 1 first as merge trains (notes PRs first). Awaiting owner's choice.
+
+## Triage: 2026-10-02 21:00 UTC (stalled-agent-triage) — two-agent plan
+
+Owner, 2026-10-02: "once all the handover notes are confirmed in, we still have some tokens to burn. but we cant do everything at once. only what you and one other agent. so make a plan for two agents, plus a plan for how to consolidate the remaining work into themes. use skills".
+
+**Inputs.** Handover reports from 8 sessions are received; the 9th (UN language translation counts, session 01WmQ8e6) was requested at 20:48. The handover table above has paths and SHAs.
+
+**Constraint.** Two agents at once: the steward (lead session) plus one agent. Hold to it because 4 CPUs at load 16 make a regenerate take 35+ minutes, and four parallel regenerates filled the disk earlier today. Rule: **only one regenerate runs at a time.** The steward's trains have priority; the agent regenerates only while the steward is merging or waiting on CI.
+
+### Agent A: the steward (this session). Theme 1, queue unblock toward seeding
+Skills used: `merge-conflict-patterns`, `prepare-merge`, `coordinate`. Runs as merge trains, in this order.
+
+| # | PRs | why first | notes |
+|---|---|---|---|
+| 1 | #1917, #1919, #1920, #1921, #1922 (handover notes) + #1912 | beans-only, quick; lands the handovers on main | #1920: read its gates failure first |
+| 2 | #1899 → then #1898 | #1898, #1908 (navbar) and #1918 wait on #1899 | ping 013WbQek, 01CVVoav and the navbar session when it lands |
+| 3 | #1916 (main merged into #1764, by 01KC89Kn) → #1764 → #1801 | 3fva arc; heavy mover #1801; unblocks the qa-reports rename | finish the attestation move first (owner ruled "Move them to new paths") |
+| 4 | #1913 (cat- prefix) | dual-name code must land before the lake-cache renames | — |
+| 5 | renames | `state` and fhir-ast are ready; qa-reports waits on bean zlq9 | **blocked on owner permission** for the rename API |
+| 6 | #1903, #1790 | small; complete | — |
+
+Do not regenerate while the agent's regenerate is running. Re-arm the safety check.
+
+### Agent B: one dispatched agent. Theme 2, finish the merge pipeline
+Skills used: `prepare-for-handover` (on start and at every stop), `skill-registration`, `bpmn-processes`, `methodology-from-source`. One branch at a time, gates-clean before each push. Hand each PR to the steward with `ready: <sha>`.
+
+| order | PR | remaining work | done when |
+|---|---|---|---|
+| 1 | #1895 tools (merge:train, overlap, leftover) | merge main, regen, gates | green and ready; the steward uses `merge:overlap` to plan trains |
+| 2 | #1888 merge-refusal handback (zacz) | merge main (take main's `nok9`), regen, gates | green and ready |
+| 3 | #1892 papers | write `cat-harness/methodologies/merge-queue.md` (owner: "write methodologies page if relevant"); this fixes the `library-ref` test | green and ready; `O_Review` left for the owner |
+| 4 | #1894 epic hfag | merge main after #1888 and #1895 land; fix the remaining audits | green and ready; `nok9` retype still waits on the owner |
+
+Why this theme for agent B: it has no file overlap with theme 1's trains, it is fully specified, and its output (`merge:overlap`, `merge:train`) speeds up agent A's queue.
+
+### Parked themes, each owned by its own session's handover
+| theme | PRs | owner sessions | resume when |
+|---|---|---|---|
+| 3. Sites & UI | #1766, #1816, #1918, #1804/#1808/#1819 (side branches handover-*), #1907, #1909, #1908, UN translation counts | 01DnFZtV (jut3), 01PricYF (wnhh), 013WbQek, 01Cw8JgZ (ob3m), 01WmQ8e6 | after #1899 lands; one session at a time; #1808 starts from handover-1808 @ 7b0e9c7 |
+| 4. Separation follow-through | #1896 seed:ready (2 real test fixes), #1735, #1756, 70lx B1 | steward / hcpz | after theme 1 trains; seeding review once stable |
+| 5. KG publication (epic `whlc`) | c1m4, f233, q8ar, ax6r | unassigned | after separation stabilises; c1m4's measurement step is small enough to slot in |
+
+### Exit for this burn window
+When the token budget nears its end, both agents run `prepare-for-handover`. The next steward starts with `stalled-agent-triage` from this note.
