@@ -6,7 +6,6 @@ renders:
   - bootstrap/processes
   - cat-harness/processes
   - folio-assistant-core/processes
-  - large-datasets/processes
   - smart-base/methodologies/processes
   - smart-base/processes
 rendered-by: processes-viewer
