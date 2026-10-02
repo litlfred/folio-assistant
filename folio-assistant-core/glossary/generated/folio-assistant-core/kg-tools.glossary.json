@@ -7,6 +7,14 @@
   "source": "Tools of folio-assistant-core",
   "terms": [
     {
+      "id": "dublin-core-render",
+      "prefLabel": "Dublin Core renderings",
+      "definition": "Render every `folio-dublin-core/v1` record a catalogue item names as Dublin Core XML (qualified DC, per DCMI's XML guidelines) and as JSON-LD bound to DCMI Metadata Terms. Both are written into the instance's published root (`<instanceRoot>/dublin-core/<stem>.dc.xml` and `.dc.jsonld`), so the site mount publishes them beside the item pages. Deterministic. `--check` fails on a missing, stale or orphaned rendering. Governed by the `dublin-core-renderings` skill (bean `7eak`).",
+      "notation": "dublin-core-render",
+      "source": "folio-assistant-core/tools/index.ts#dublin-core-render",
+      "status": "candidate"
+    },
+    {
       "id": "folio-changeset",
       "prefLabel": "Folio ChangeSet",
       "definition": "What changed in a folio between two git refs, block by block: each block added, removed, or changed — and for a changed block, every aspect that applies (renamed, prose, manifest, moved). Keyed on the block label, which the `id-unique` / `id-stable` QA criteria guard, not on file paths.",

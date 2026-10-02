@@ -10,7 +10,7 @@ Part of [folio-assistant-core](../README.md) 0.1.0, declared as `core-skills`, h
 | [`deep-document-research.md`](deep-document-research.md) | Answer a question from a corpus this folio already holds, iteratively, and stop on a stated condition. | "Deep document research" |
 | [`skills.json`](skills.json) | data |  |
 | [`content/`](content/) | 8 files | |
-| [`library/`](library/) | 2 files | |
+| [`library/`](library/) | 4 files | |
 | [`skill-definitions/`](skill-definitions/) | 12 files | |
 | [`voices/`](voices/README.md) | 39 files | |
 <!-- kg:subgraph:end -->

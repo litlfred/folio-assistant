@@ -118,6 +118,16 @@ describe("the guard refuses what regeneration would destroy", () => {
     expect(o!.reason).toContain("not valid JSON");
   });
 
+  test("a non-JSON file INSIDE the qa graph is skipped, not refused as unreadable", () => {
+    // #1811 / #1830, 2026-10-02: `test/results/README.md` was refused as "not
+    // valid JSON", and the refusal aborted the whole merge.
+    const path = `${QA}README.md`;
+    const dir = conflicted([{ path, ours: "# results\n\nours\n", theirs: "# results\n\ntheirs\n" }]);
+    const [o] = plan(dir, QA, unmergedPaths(dir));
+    expect(o!.action).toBe("skip");
+    expect(o!.reason).toContain("not a JSON sidecar");
+  });
+
   test("a conflict OUTSIDE the declared qa graph is left alone", () => {
     const path = "cat-harness/schemas/thing.ts";
     const dir = conflicted([{ path, ours: "export const a = 1;\n", theirs: "export const a = 2;\n" }]);
