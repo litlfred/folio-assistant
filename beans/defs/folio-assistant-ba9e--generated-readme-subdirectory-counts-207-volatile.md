@@ -3,8 +3,10 @@
 title: 'Generated README subdirectory counts: 207 volatile integers across 54 READMEs — move them to the _data layer'
 status: todo
 type: task
+priority: normal
 created_at: 2026-10-02T22:34:28Z
-updated_at: 2026-10-02T22:34:28Z
+updated_at: 2026-10-02T23:05:21Z
+parent: folio-assistant-hfag
 ---
 
 Child of `y7b3` part 2, which the owner left as "decide later" on 2026-09-30
