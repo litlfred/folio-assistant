@@ -46,7 +46,16 @@ const CSS = readFileSync(join(ROOT, SITE, "assets/css/docs-ui.css"), "utf8");
 const JS = readFileSync(join(ROOT, SITE, "assets/js/docs-ui.js"), "utf8");
 
 const PAGE_MD = join(ROOT, SITE, "publication-workflow.md");
-const INDEX_JSON = join(ROOT, "test/results/witnesses/publication-workflow/qa-index.json");
+/**
+ * The page's badge index, as a COMMITTED FIXTURE — a copy of the generator's
+ * `folio-qa-index/v1` output for this page. It was read from
+ * `test/results/witnesses/…` until bean `cxcn` (reader audit R72): that tree
+ * is a derived artefact leaving `main` (bean `5hox`), so a spec reading it
+ * fails on a checkout that does not carry it. `qa-e2e-fixtures.test.ts`
+ * validates the fixture against `QaIndexSchema`, and `indexWithRows` still
+ * throws by name if a node this spec drives is not in it.
+ */
+const INDEX_JSON = join(ROOT, "test/support/fixtures/qa-e2e/badge-index.json");
 
 /**
  * The nodes this spec drives, named once. Each is asserted to still exist —

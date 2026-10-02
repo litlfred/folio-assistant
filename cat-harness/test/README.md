@@ -65,5 +65,5 @@ Part of [C@T Harness](../README.md) 0.1.0, declared as `cat-harness-tests`, hold
 | [`attestations/`](attestations/README.md) | 33 files | |
 | [`health/`](health/) | 8 files | |
 | [`results/`](results/README.md) | 1000 files | |
-| [`support/`](support/) | 3 files | |
+| [`support/`](support/) | 6 files | |
 <!-- kg:subgraph:end -->
