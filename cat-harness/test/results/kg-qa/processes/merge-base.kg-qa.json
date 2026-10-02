@@ -147,18 +147,33 @@
       "findings": []
     },
     "prose-reviewed-since-code-changed": {
-      "result": "n/a",
-      "findings": []
+      "result": "fail",
+      "findings": [
+        {
+          "where": ".github/workflows/merge-main.yml",
+          "detail": ".github/workflows/merge-main.yml changed since cat-harness/processes/merge-base.bpmn was last seen, and the prose did not. Re-read it; if it still holds, run pairs:attest with a reason."
+        }
+      ]
     },
     "prose-claims-resolve": {
-      "result": "n/a",
+      "result": "pass",
       "findings": []
     }
   },
   "totals": {
-    "pass": 12,
-    "fail": 3,
-    "n/a": 10,
+    "pass": 13,
+    "fail": 4,
+    "n/a": 8,
     "unknown": 0
-  }
+  },
+  "pair_attestations": [
+    {
+      "kind": "implements",
+      "prose": "cat-harness/processes/merge-base.bpmn",
+      "code": ".github/workflows/merge-main.yml",
+      "prose_hash": "6315b7a2a250",
+      "code_hash": "7285326ca02c",
+      "by": "baseline"
+    }
+  ]
 }

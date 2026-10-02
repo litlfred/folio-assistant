@@ -117,6 +117,17 @@ JSON parser reads records; a consumer with a JSON-LD processor reads a graph.
    published documents and fails on a bound prefix nothing speaks unless it
    is listed in `FORWARD_DECLARED` with a reason.
 
+## The voice that holds code to this node
+
+What this node adopts is enforced on CODE through the `linked-data` voice
+(`folio-assistant-core/skills/voices/linked-data/voice.json`, owner 2026-10-01: *"a voice
+for a coding agent, in a code authoring or review task"*). It is in force for the
+`authoring-agent` and `code-reviewer` roles in `Process_CodeChangeReview` and
+`Process_CodeReview`, and each of its seven rules quotes the held text — object
+properties as links, link values at release addresses, no `@base` in a remote
+context (§4.1.3, the tension recorded below), no context fetched at run time,
+coercion belonging to terms, and PROV in PROV-JSONLD's shape.
+
 ## What it refuses, with reasons
 
 1. **No `@vocab`.** §4.1.2 (`sec-032`) lets a default vocabulary expand any

@@ -150,9 +150,10 @@ export function discoverLocalPackages(root: string): Record<string, string> {
     // a person calls it anyway. `src/skills/` stayed `folio-assistant` and
     // `bootstrap/skills/` stays `bootstrap`, both measured unchanged
     // at the time; `theming/` becomes `theming`. Since #760 removed
-    // `src/skills/`, the live subjects of rule 1 are `bootstrap/skills/`,
-    // `large-datasets/skills/` and `who-iris/skills/` — `kg-navigation/skills/`
-    // was one until bean `byql` folded it into `skills/kg/kg-navigation/`.
+    // `src/skills/`, the live subjects of rule 1 are `bootstrap/skills/` and
+    // `who-iris/skills/` — `kg-navigation/skills/` was one until bean `byql`
+    // folded it into `skills/kg/kg-navigation/`, and `large-datasets/skills/`
+    // until bean `j7ql` dissolved it into `skills/library/large-datasets/`.
     //
     // Two `skills`-named directly-held directories in ONE instance would still
     // collide. That is a narrower and more obviously wrong configuration than

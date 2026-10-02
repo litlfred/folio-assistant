@@ -56,7 +56,7 @@ package scenario {
     sources [1..*] : {title, instance, libraryId, path, url, year}[]
     rules [1..*] : {id, title, description, category, severity, source, patterns, terminology, judgementOnly}[]
     overlaySeverity [0..1] : critical | major | minor
-    {field} appliesTo [0..*] : list<enum(16) | docs | skill | readme | specification>
+    {field} appliesTo [0..*] : list<enum(16) | docs | skill | readme | specification | code>
     provenance [1] : assertion | evidence | house
     extends.instance [0..1] : string
     extends.voiceId [1] : string
