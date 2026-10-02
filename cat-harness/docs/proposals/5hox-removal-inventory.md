@@ -207,3 +207,28 @@ directory when a working copy is present and leaves it out when there is none.
 After the removal, a contributor who has run `qa:fetch` would get a different
 `cat-harness/test/README.md` from the one CI gets. The generator should skip a
 stored directory.
+
+## Update, 2026-10-02: beans `3hk4` and `oqe3`
+
+Measured on local branch `qa-3hk4-oqe3`. Not pushed.
+
+**The publish gap is closed by `qa:refresh`.** The gates job cannot hand over
+its working copy, because its gates are in judge mode and write nothing. So
+`qa-publish` runs the declared QA writers (`QA_WRITERS` in
+`scripts/qa-refresh.ts`) when nothing is tracked under the `qa` directories,
+and `qa:publish --completeness` refuses an incomplete tree. While the files
+are still tracked, nothing runs, and `main/<sha>` stays byte-identical to the
+committed copy.
+
+The run with the files absent: 1,288 files from 29 writers. 1,182 of them are
+the inventory's paths. The other four inventory paths are not reproduced: they
+are the `agent-skills/` and `large-datasets/` kg-qa trees of instances folded
+away by `j7ql`, so they are orphans. The 106 new files are block verdicts and
+witnesses for docs blocks no hand sweep had reached.
+
+**`bun run gates` with the files absent: 11 of 206 red, down from 16.** Group
+A is cleared: `kg:audit:check`, `kg:audit:all:check` and
+`translation:block-qa:check` now compute and judge (bean `oqe3`). `readme:subgraphs:check`
+and `bun test` are green too. `skill:register:check` (×2) is still red, but
+only through the group B gates `lsi:viz:check` and `uml:overview:check`. The
+rest is groups B, C and E as above.
