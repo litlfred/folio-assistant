@@ -264,7 +264,7 @@ td.lib-first { white-space:nowrap; }
 #queue td.slug { white-space:normal; overflow-wrap:anywhere; min-width:12rem; max-width:24rem; }
 /* "Referenced by" OPENS rather than hovers -- finding 6. A title tooltip is
    unreachable by touch and by keyboard; a details element is both. */
-details.refs > summary { cursor:pointer; list-style:none; }
+details.refs > summary { cursor:pointer; list-style:none; display:inline-flex; align-items:center; min-height:28px; }
 details.refs > summary::-webkit-details-marker { display:none; }
 details.refs > summary .pill::after { content:" \\25B8"; }
 details.refs[open] > summary .pill::after { content:" \\25BE"; }
