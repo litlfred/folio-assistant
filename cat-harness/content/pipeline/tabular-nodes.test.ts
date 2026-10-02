@@ -12,6 +12,7 @@
  * @module content/pipeline/tabular-nodes.test
  */
 import { describe, expect, test } from "bun:test";
+import { CONTENT_DOCUMENT_CONTEXT } from "../../schemas/jsonld.ts";
 
 import {
   SHEETED_FORMATS,
@@ -156,9 +157,7 @@ describe("every node is loadable JSON-LD", () => {
     );
     expect(files.length).toBe(3); // block, sheet, manifest
     for (const f of files) {
-      expect(JSON.parse(f.content)["@context"]).toBe(
-        "https://litlfred.github.io/folio-assistant/ns/content/v1.jsonld",
-      );
+      expect(JSON.parse(f.content)["@context"]).toEqual([...CONTENT_DOCUMENT_CONTEXT]);
     }
   });
 });
