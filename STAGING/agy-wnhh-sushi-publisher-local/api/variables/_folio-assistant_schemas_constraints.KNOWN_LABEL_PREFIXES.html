@@ -61,14 +61,15 @@ window.addEventListener('resize',measure);window.addEventListener('load',measure
 <li><a href="" aria-current="page">KNOWN_LABEL_PREFIXES</a></li></ul>
 <h1>Variable KNOWN_LABEL_PREFIXES<code class="tsd-tag">Const</code></h1></div>
 <div class="tsd-signature"><span class="tsd-kind-variable">KNOWN_LABEL_PREFIXES</span><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-keyword">readonly</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol"> = ...</span></div>
-<div class="tsd-comment tsd-typography"><p>Every recognised label prefix, with its colon.</p>
-<p>The paper and structural prefixes are written out; the <code>dak</code> adapter's are
-derived from <code>DAK_LABEL_PREFIXES</code> so that this list and <code>KIND_PREFIXES</code> in
-<code>jsonld.ts</code> cannot drift as kinds are added. Their agreement is asserted by
-<code>assertPrefixesInSync</code>.</p>
+<div class="tsd-comment tsd-typography"><p>Every recognised BUILT-IN label prefix, with its colon.</p>
+<p>The paper and structural prefixes, written out; their agreement with
+<code>KIND_PREFIXES</code> in <code>jsonld.ts</code> is asserted by <code>assertPrefixesInSync</code>. The
+<code>dak</code> adapter's prefixes were spread in here until bean <code>1335</code>: they are a
+contributed adapter's now, carried as <code>labelPrefix</code> on each contributed kind
+(<code>ContributionRegistry.contributedLabelPrefixes()</code>).</p>
 </div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/litlfred/folio-assistant/blob/agy/wnhh-sushi-publisher-local/cat-harness/schemas/constraints.ts#L41">cat-harness/schemas/constraints.ts:41</a></li></ul></aside></div>
+<li>Defined in <a href="https://github.com/litlfred/folio-assistant/blob/agy/wnhh-sushi-publisher-local/cat-harness/schemas/constraints.ts#L42">cat-harness/schemas/constraints.ts:42</a></li></ul></aside></div>
 <div class="col-sidebar">
 <div class="page-menu">
 <div class="tsd-navigation settings">

@@ -301,10 +301,10 @@
   ],
   "canonicalDocument": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld",
   "repository": "cat-harness",
-  "generatedAt": "2026-10-02T14:47:05.640Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/8952a82b3ef3c76b5d2aa667711e2694f447ed85",
-  "sourceCommitSha": "8952a82b3ef3c76b5d2aa667711e2694f447ed85",
-  "sourceCommitAt": "2026-10-02T14:31:55Z",
+  "generatedAt": "2026-10-02T15:47:22.481Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/9b917109c168b39dd8bc65860e94f1bbbf7f9aaf",
+  "sourceCommitSha": "9b917109c168b39dd8bc65860e94f1bbbf7f9aaf",
+  "sourceCommitAt": "2026-10-02T15:42:14Z",
   "sourceTreeDirty": true,
   "dependsOnUnavailable": "2 dependency edge(s), none expressible as a record — see gaps",
   "counts": {
@@ -318,7 +318,7 @@
     "Lane": 201,
     "ProcessNode": 940,
     "Tool": 113,
-    "Schema": 148,
+    "Schema": 150,
     "ExternalSchema": 20,
     "GraphKind": 25,
     "Role": 48,
@@ -3121,7 +3121,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/agy-wnhh-sushi-publisher-local/cat-harness.jsonld#package/sdlc-core"
       ],
       "instructionsPath": "skills/sdlc/sdlc-core/merge-conflict-patterns.md",
-      "instructionLines": 230,
+      "instructionLines": 245,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -46710,15 +46710,6 @@
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/convention"
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/STAGING/agy-wnhh-sushi-publisher-local/cat-harness.jsonld#schema/dak-blocks",
-      "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#Schema",
-      "name": "dak-blocks",
-      "title": "WHO SMART Guidelines content blocks — the `dak` adapter.",
-      "module": "schemas/dak-blocks.ts",
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/agy-wnhh-sushi-publisher-local/cat-harness.jsonld#directory/schemas",
-      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/dak-blocks"
-    },
-    {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/agy-wnhh-sushi-publisher-local/cat-harness.jsonld#schema/decision-methodology-context",
       "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#Schema",
       "name": "decision-methodology-context",
@@ -47808,12 +47799,36 @@
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/ig-metadata-index"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/agy-wnhh-sushi-publisher-local/cat-harness.jsonld#schema/dak-blocks",
+      "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#Schema",
+      "name": "dak-blocks",
+      "title": "WHO SMART Guidelines content blocks — the `dak` adapter.",
+      "module": "../smart-base/schemas/dak-blocks.ts",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/dak-blocks"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/agy-wnhh-sushi-publisher-local/cat-harness.jsonld#schema/dak-content-type",
       "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#Schema",
       "name": "dak-content-type",
       "title": "The `dak` and `sushi` content types — registered by the WHO layer, not by core.",
       "module": "../smart-base/schemas/dak-content-type.ts",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/dak-content-type"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/agy-wnhh-sushi-publisher-local/cat-harness.jsonld#schema/dak-jsonld",
+      "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#Schema",
+      "name": "dak-jsonld",
+      "title": "JSON-LD typing for the `dak` adapter's block kinds.",
+      "module": "../smart-base/schemas/dak-jsonld.ts",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/dak-jsonld"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/agy-wnhh-sushi-publisher-local/cat-harness.jsonld#schema/dak-kinds",
+      "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#Schema",
+      "name": "dak-kinds",
+      "title": "The `dak` adapter's vocabulary — its block kinds, their builder names and",
+      "module": "../smart-base/schemas/dak-kinds.ts",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/dak-kinds"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/agy-wnhh-sushi-publisher-local/cat-harness.jsonld#schema/dak",
