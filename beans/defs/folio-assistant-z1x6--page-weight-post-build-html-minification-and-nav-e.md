@@ -5,7 +5,7 @@ status: in-progress
 type: task
 priority: normal
 created_at: 2026-10-02T16:51:57Z
-updated_at: 2026-10-02T17:46:19Z
+updated_at: 2026-10-02T17:53:49Z
 parent: folio-assistant-o3xy
 ---
 
@@ -148,3 +148,36 @@ since `70502fde1`, across two commits from an hour earlier. The gate set above
 ran because I dispatched it, which is what sibling sessions on other branches
 are doing. **A green PR page here does not mean the gates ran.** Not
 introduced by this change, and not in scope to fix here.
+
+
+## Merged-tree re-run, 2026-10-02 — two reds, neither mine (measured to the commit)
+
+Another agent merged `origin/main` into the branch (`b97cb2f5e0d`) after my
+green run, so I dispatched the gates again on the merged head
+`025aa68106c` (run 37043076553). Two jobs red, both failing the SAME gate:
+`skill:register:check` ("every skill is declared, and declares nothing
+absent" in Repository gates, and "the registration chain is current, read
+unmasked" in its own job).
+
+Measured the way `skill-registration` itself prescribes — that ONE check
+against a clean tree, not through `bun run gates`:
+
+| | at `20d029597fc` (parent, not mine) | at `025aa68106c` (with my 2 commits) |
+|---|---|---|
+| | ✗ check:glossary | ✗ check:glossary |
+| | ✗ kg:audit:check | ✗ kg:audit:check |
+| | ✗ kg:detangle:check | ✗ kg:detangle:check |
+| | ✗ lsi:viz:check | ✗ lsi:viz:check |
+| | ✗ uml:overview:check | ✗ uml:overview:check |
+
+**Identical, and my commits add zero findings.** These are the glossary, LSI,
+KG-audit, detangle and UML-overview artefacts a SKILL edit stales — this
+branch's `ui-accessibility.md` work plus the `main` merge. This change adds
+no skill and no KG node.
+
+**Not repaired here, deliberately:** `bun run skill:register` would
+regenerate artefacts embodying another author's in-flight skill edits, and
+sweeping those into my commit is what the shared-tree rule exists to prevent.
+Whoever ships this branch runs `skill:register` after the last skill edit
+lands — possibly twice, since that command's own output warns the chain is not
+at a fixed point.
