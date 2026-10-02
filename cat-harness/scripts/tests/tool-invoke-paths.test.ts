@@ -39,6 +39,7 @@ import { join, resolve } from "node:path";
 
 import { unresolvedPaths } from "../check-tools.ts";
 import { tools } from "../../tools/discover.js";
+import { resolveImplementingPath } from "../../schemas/harness-config.js";
 
 const INSTANCE = resolve(import.meta.dir, "../..");
 const REPO = resolve(INSTANCE, "..");
@@ -71,16 +72,20 @@ describe("the two roots, asserted separately because conflating them breaks 20 n
     expect(broken).toEqual([]);
   });
 
-  test("every `inProcess.module` resolves against the INSTANCE, and NOT against the repo", () => {
+  test("every `inProcess.module` resolves against the INSTANCE that implements it, and NOT against the repo", () => {
     // The second half is the interesting one: it pins the convention, so a future
     // change that "helpfully" rewrites these to repo-relative fails here rather
     // than silently making twenty modules unloadable.
+    //
+    // "The instance" is the declaring one OR the one instance whose own `needs`
+    // names it (owner ruling T1, bean `70lx`): the definitions stay here while
+    // the code moves up a layer, and the path is not rewritten to say so.
     const mods = tools()
       .map((t) => ({ id: t.id, mod: (t.invoke as { inProcess?: { module?: string } })?.inProcess?.module }))
       .filter((x): x is { id: string; mod: string } => typeof x.mod === "string");
     expect(mods.length).toBeGreaterThan(10);
     for (const { id, mod } of mods) {
-      expect(existsSync(join(INSTANCE, mod)), `${id}: ${mod} under the instance`).toBe(true);
+      expect(resolveImplementingPath(INSTANCE, mod).state, `${id}: ${mod} under the implementing instance`).toBe("found");
       expect(existsSync(join(REPO, mod)), `${id}: ${mod} must NOT be repo-relative`).toBe(false);
     }
   });
