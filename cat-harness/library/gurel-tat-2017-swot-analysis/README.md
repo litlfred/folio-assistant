@@ -1,5 +1,5 @@
 <!-- kg:subgraph:begin -->
-# gurel-tat-2017-swot-analysis
+# SWOT Analysis: A Theoretical Review
 
 ingested source material — attributed to its document, not folio content
 

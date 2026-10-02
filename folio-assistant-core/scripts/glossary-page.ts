@@ -73,7 +73,8 @@ import {
 } from "../../cat-harness/schemas/cat-harness.ts";
 import { withInlineCode } from "../../cat-harness/schemas/inline-code.ts";
 import { instanceNamespace } from "../../cat-harness/schemas/instance-repositories.ts";
-import { GlossarySchema, schemeIri, toSkos, termIri, type Glossary, type LangText } from "../schemas/glossary.ts";
+import { GlossarySchema, schemeIri, toSkos, termIri, type AutomatedMatch, type Glossary, type LangText } from "../schemas/glossary.ts";
+import { addressBook } from "../../cat-harness/schemas/prov-jsonld.ts";
 import { ASSET_TYPES, EXTRACTED_PREFIX, assetTypeTitle, assetTypeWhat, extract, type AssetType } from "./glossary-extract.ts";
 import { termState, type SchemeState, type TermStateAnswer } from "../../cat-harness/scripts/check-term-mapping.ts";
 import { GLOSSARY_SUBDIR, potPath, sourceText, templateName, translationsDir } from "./glossary-pot.ts";
@@ -840,6 +841,103 @@ export function perTermMapping(
   return { note, marks };
 }
 
+/** The actor that runs `check:term-mapping`: kind `system`, "exercises no judgement". */
+export const MATCHING_AGENT = "ci-pipeline";
+
+/** `scheme\0term`, the key the mapping record uses. */
+const recordKey = (scheme: string, term: string) => `${scheme}\0${term}`;
+/** `instance\0scheme`, the key one SKOS document is written under. */
+export const sourceKey = (s: Pick<GlossarySource, "instance" | "glossary">) => `${s.instance}\0${s.glossary.id}`;
+
+/**
+ * Every mapped candidate's automated matches, resolved to absolute IRIs and
+ * grouped by the SKOS document they go into. Owner ruling 2026-10-02.
+ *
+ * The record names a concept by its external URI where it has one, and
+ * otherwise as `<scheme>:<id>`. That second form is not an IRI: `platform:`
+ * would expand as a URI scheme nobody owns. So it is resolved to the authored
+ * term's own IRI. If the scheme id is held by more than one instance (today
+ * `platform` is held by two), the value is left OUT and reported. The
+ * `linked-data` voice's rule is that an invented address is worse than none
+ * (`ld-link-is-the-node-release-address`).
+ *
+ * The same holds for the candidate itself. The record keys it by
+ * (scheme, id) and not by instance, so a key held by two extracted schemes
+ * cannot be placed. It is reported, never published into both.
+ *
+ * `exactMatch` goes only to the record's `exactConcepts`. Every other
+ * matched concept is `closeMatch`.
+ */
+export function automatedMatches(
+  states: readonly SchemeState[] | undefined,
+  glossaries: readonly GlossarySource[],
+): { bySource: Map<string, AutomatedMatch[]>; unresolved: string[] } {
+  const bySource = new Map<string, AutomatedMatch[]>();
+  const unresolved: string[] = [];
+  if (!states) return { bySource, unresolved };
+
+  const candidatesAt = new Map<string, GlossarySource[]>();
+  const authoredIri = new Map<string, string[]>();
+  for (const s of glossaries) {
+    for (const t of s.glossary.terms) {
+      if (t.status === "authored") {
+        const k = `${s.glossary.id}:${t.id}`;
+        authoredIri.set(k, [...(authoredIri.get(k) ?? []), t.iri ?? termIri(s.ns, s.glossary, t.id)]);
+      } else {
+        const k = recordKey(s.glossary.id, t.id);
+        candidatesAt.set(k, [...(candidatesAt.get(k) ?? []), s]);
+      }
+    }
+  }
+  const absolute = (u: string) => /^[a-z][a-z0-9+.-]*:\/\//i.test(u);
+  const resolveConcept = (u: string, where: string): string | undefined => {
+    if (absolute(u)) return u;
+    const hits = [...new Set(authoredIri.get(u) ?? [])];
+    if (hits.length === 1) return hits[0];
+    unresolved.push(
+      `${where}: concept \`${u}\` ${hits.length ? `names ${hits.length} authored terms` : "names no authored term"}, so it has no single IRI`,
+    );
+    return undefined;
+  };
+
+  // Merged across targets: one candidate may match on `skos` and on `fhir`.
+  const merged = new Map<string, { source: GlossarySource; m: AutomatedMatch }>();
+  for (const row of states) {
+    for (const mt of row.mappedTerms) {
+      const where = `\`${row.scheme}\`/\`${mt.term}\` on \`${row.target}\``;
+      const sources = candidatesAt.get(recordKey(row.scheme, mt.term)) ?? [];
+      if (sources.length !== 1) {
+        unresolved.push(`${where}: ${sources.length} candidate entries carry this key, so the record cannot place it`);
+        continue;
+      }
+      const source = sources[0]!;
+      const exactSet = new Set(mt.exactConcepts ?? []);
+      const k = `${sourceKey(source)}\0${mt.term}`;
+      const entry = merged.get(k) ?? { source, m: { term: mt.term, exactMatch: [], closeMatch: [] } };
+      for (const u of mt.concepts) {
+        const iri = resolveConcept(u, where);
+        if (iri) (exactSet.has(u) ? entry.m.exactMatch : entry.m.closeMatch).push(iri);
+      }
+      merged.set(k, entry);
+    }
+  }
+  for (const { source, m } of merged.values()) {
+    if (!m.exactMatch.length && !m.closeMatch.length) continue;
+    bySource.set(sourceKey(source), [...(bySource.get(sourceKey(source)) ?? []), m]);
+  }
+  return { bySource, unresolved };
+}
+
+/**
+ * The matching agent's release address, or `undefined` when it has none.
+ * Asked only when there is something to publish, because the address book
+ * walks every diagram in the checkout.
+ */
+export function matchingAgentIri(repo: string = REPO): string | undefined {
+  const a = addressBook(repo).resolve("agent", MATCHING_AGENT);
+  return "iri" in a ? a.iri : undefined;
+}
+
 /**
  * A description's inline code that names ANOTHER term of the same scheme
  * becomes a link to that term's entry (bean `qgjh`). Role descriptions say
@@ -1411,8 +1509,18 @@ export function withTranslations(
 export function outputs(
   c: ReturnType<typeof collect>,
   translations: ReadonlyMap<string, ReadonlyMap<string, SchemeTranslations>> = readGlossaryTranslations(),
+  mapping: { states: readonly SchemeState[] | undefined; agent: () => string | undefined } = {
+    states: mappingStates(),
+    agent: () => matchingAgentIri(),
+  },
+  unresolved: string[] = [],
 ): Map<string, string> {
   const out = new Map<string, string>([...renderPages(c)].map(([k, page]) => [pagePath(k), page] as const));
+  // Automated matches go into each scheme's SKOS (owner, 2026-10-02), in a
+  // named graph marked as a program's work. See `toSkos`.
+  const auto = automatedMatches(mapping.states, c.glossaries);
+  unresolved.push(...auto.unresolved);
+  const agent = auto.bySource.size ? mapping.agent() : undefined;
   // One page per locale that has a translation (bean c592).
   const locales = [...translations.keys()];
   for (const [locale, byScheme] of translations) out.set(localePagePath(locale), renderLocalePage(c, locale, byScheme, locales));
@@ -1424,7 +1532,12 @@ export function outputs(
     // which is what makes that free. On the SKOS side `_generated` is an
     // UNMAPPED term: the `@context` declares `skos` and `dcterms` and no
     // `@vocab`, so a JSON-LD processor drops it and the graph is unchanged.
-    const skos = toSkos(s.extracted ? s.glossary : withTranslations(s, translations), s.ns);
+    const matches = auto.bySource.get(sourceKey(s));
+    const skos = toSkos(
+      s.extracted ? s.glossary : withTranslations(s, translations),
+      s.ns,
+      matches ? { matches, agent } : undefined,
+    );
     const { "@context": context, ...skosRest } = skos;
     out.set(join(SITE, skosAsset(s)), `${JSON.stringify({ "@context": context, _generated: GENERATED_JSON, ...skosRest }, null, 2)}\n`);
     if (s.extracted) {
@@ -1451,7 +1564,11 @@ if (import.meta.main) {
     for (const f of c.findings.invalid) console.error(`  ${f}`);
     process.exit(1);
   }
-  const files = outputs(c);
+  const unresolved: string[] = [];
+  const files = outputs(c, undefined, undefined, unresolved);
+  // Reported, never fatal: a match the record cannot place is left out of the
+  // SKOS rather than invented, and this says which and why.
+  for (const u of unresolved) console.warn(`! automated match not published: ${u}`);
   // Stale output: a scheme removed or renamed leaves its old SKOS behind, and
   // an asset type or instance that stops contributing leaves its generated
   // scheme. Both directories are this generator's alone.
