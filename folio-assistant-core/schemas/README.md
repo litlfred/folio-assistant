@@ -15,7 +15,6 @@ Part of [folio-assistant-core](../README.md) 0.1.0, declared as `core-schemas`, 
 | [`dublin-core.test.ts`](dublin-core.test.ts) | a file |  |
 | [`dublin-core.ts`](dublin-core.ts) | a file |  |
 | [`extraction.ts`](extraction.ts) | a file |  |
-| [`fhir-artifact-index.ts`](fhir-artifact-index.ts) | a file |  |
 | [`glossary.test.ts`](glossary.test.ts) | a file |  |
 | [`glossary.ts`](glossary.ts) | a file |  |
 | [`library-ref.test.ts`](library-ref.test.ts) | a file |  |
