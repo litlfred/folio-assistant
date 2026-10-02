@@ -16,6 +16,18 @@
           "type": "string",
           "minLength": 1
         },
+        "summary": {
+          "type": "string",
+          "minLength": 1
+        },
+        "alsoWritten": {
+          "minItems": 1,
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
         "images": {
           "type": "array",
           "items": {
@@ -1028,8 +1040,8 @@
   "$comment": "Instance graph: https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld",
   "staging": {
     "branch": "claude/quirky-davinci-ixuymr-phase3",
-    "sha": "3ba7562ca7f8e23d511c6e85c7cd3be680e2971f",
+    "sha": "ae760044ba5c9bcbb9d3c800acf047723388c215",
     "pr": "1801/merge",
-    "run": "36970847241"
+    "run": "36981242738"
   }
 }

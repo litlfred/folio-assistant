@@ -301,25 +301,25 @@
   ],
   "canonicalDocument": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld",
   "repository": "cat-harness",
-  "generatedAt": "2026-10-02T05:57:06.864Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/ed455c378a5c3429499fb4da2a191975d25e6cbd",
-  "sourceCommitSha": "ed455c378a5c3429499fb4da2a191975d25e6cbd",
-  "sourceCommitAt": "2026-10-02T05:51:43Z",
+  "generatedAt": "2026-10-02T08:02:57.966Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/93853df9b11538ba02cad8c40c98db6c8c64f572",
+  "sourceCommitSha": "93853df9b11538ba02cad8c40c98db6c8c64f572",
+  "sourceCommitAt": "2026-10-02T07:56:21Z",
   "sourceTreeDirty": true,
   "dependsOnUnavailable": "2 dependency edge(s), none expressible as a record — see gaps",
   "counts": {
-    "Skill": 294,
+    "Skill": 295,
     "Actor": 36,
     "Capability": 28,
     "SkillPackage": 34,
     "Decision": 10,
-    "Process": 77,
-    "SequenceFlow": 1016,
-    "Lane": 205,
-    "ProcessNode": 963,
-    "Tool": 113,
-    "Schema": 146,
-    "ExternalSchema": 17,
+    "Process": 78,
+    "SequenceFlow": 1030,
+    "Lane": 207,
+    "ProcessNode": 976,
+    "Tool": 112,
+    "Schema": 147,
+    "ExternalSchema": 18,
     "GraphKind": 24,
     "Role": 52,
     "Subgraph": 26,
@@ -3027,6 +3027,23 @@
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/prepare-merge-auto"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#skill/merge-conflict-patterns",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Skill",
+      "name": "merge-conflict-patterns",
+      "title": "Merge-conflict patterns — what a merge may resolve on its own",
+      "description": "Merge the base branch in and resolve, without a person, only the conflicts a DECLARED pattern covers — generated files, generated README regions, QA sidecars — then prove the result with the gate set. Refuses the whole merge when any conflict is authored or undeclared. Use for \"merge main\", \"resolve the conflicts\", \"the PR is conflicted again\", \"auto-resolve\", and when adding a pattern for a new kind of churn.",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#package/sdlc-core"
+      ],
+      "instructionsPath": "skills/sdlc/sdlc-core/merge-conflict-patterns.md",
+      "instructionLines": 230,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#directory/skills",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/merge-conflict-patterns"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#skill/todo-manager",
       "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Skill",
       "name": "todo-manager",
@@ -3813,7 +3830,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#package/ui-core"
       ],
       "instructionsPath": "skills/ui/ui-core/harness-tiles.md",
-      "instructionLines": 414,
+      "instructionLines": 425,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -6833,6 +6850,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#skill/integration-watch",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#skill/integration-watcher",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#skill/issue-working",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#skill/merge-conflict-patterns",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#skill/narrative-asserts-code",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#skill/opening-brief",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#skill/package-release",
@@ -14254,6 +14272,475 @@
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CRDM_Close/node/End_Process_CRDM_Close"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#process/Process_MergeBase",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Process",
+      "name": "Merge the base branch in",
+      "enforcement": "strict",
+      "sourcePath": "processes/merge-base.bpmn",
+      "startNode": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#process/Process_MergeBase/node/Start_Merge"
+      ],
+      "nodeCount": 13,
+      "flowCount": 14,
+      "conformsTo": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#externalSchema/omg-bpmn-2.0",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#externalSchema/omg-dd-1.0"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_MergeBase"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#process/Process_MergeBase/flow/m1",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#process/Process_MergeBase",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#process/Process_MergeBase/node/Start_Merge",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#process/Process_MergeBase/node/Task_Merge",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_MergeBase/flow/m1"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#process/Process_MergeBase/flow/m2",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#process/Process_MergeBase",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#process/Process_MergeBase/node/Task_Merge",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#process/Process_MergeBase/node/GW_Conflicts",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_MergeBase/flow/m2"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#process/Process_MergeBase/flow/m3",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#SequenceFlow",
+      "name": "none",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#process/Process_MergeBase",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#process/Process_MergeBase/node/GW_Conflicts",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#process/Process_MergeBase/node/Task_Regen",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_MergeBase/flow/m3"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#process/Process_MergeBase/flow/m4",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#SequenceFlow",
+      "name": {
+        "@value": "نعم",
+        "@language": "ar"
+      },
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#process/Process_MergeBase",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#process/Process_MergeBase/node/GW_Conflicts",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#process/Process_MergeBase/node/Task_Classify",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_MergeBase/flow/m4"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#process/Process_MergeBase/flow/m5",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#process/Process_MergeBase",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#process/Process_MergeBase/node/Task_Classify",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#process/Process_MergeBase/node/GW_AllDeclared",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_MergeBase/flow/m5"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#process/Process_MergeBase/flow/m6",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#SequenceFlow",
+      "name": {
+        "@value": "نعم",
+        "@language": "ar"
+      },
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#process/Process_MergeBase",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#process/Process_MergeBase/node/GW_AllDeclared",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#process/Process_MergeBase/node/Task_Resolve",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_MergeBase/flow/m6"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#process/Process_MergeBase/flow/m7",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#SequenceFlow",
+      "name": {
+        "@value": "لا",
+        "@language": "ar"
+      },
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#process/Process_MergeBase",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#process/Process_MergeBase/node/GW_AllDeclared",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#process/Process_MergeBase/node/Task_Abort",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_MergeBase/flow/m7"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#process/Process_MergeBase/flow/m8",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#process/Process_MergeBase",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#process/Process_MergeBase/node/Task_Resolve",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#process/Process_MergeBase/node/Task_Regen",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_MergeBase/flow/m8"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#process/Process_MergeBase/flow/m9",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#process/Process_MergeBase",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#process/Process_MergeBase/node/Task_Regen",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#process/Process_MergeBase/node/GW_Proved",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_MergeBase/flow/m9"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#process/Process_MergeBase/flow/m10",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#SequenceFlow",
+      "name": {
+        "@value": "نعم",
+        "@language": "ar"
+      },
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#process/Process_MergeBase",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#process/Process_MergeBase/node/GW_Proved",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#process/Process_MergeBase/node/Task_Commit",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_MergeBase/flow/m10"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#process/Process_MergeBase/flow/m11",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#SequenceFlow",
+      "name": {
+        "@value": "لا",
+        "@language": "ar"
+      },
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#process/Process_MergeBase",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#process/Process_MergeBase/node/GW_Proved",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#process/Process_MergeBase/node/Task_Abort",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_MergeBase/flow/m11"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#process/Process_MergeBase/flow/m12",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#process/Process_MergeBase",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#process/Process_MergeBase/node/Task_Commit",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#process/Process_MergeBase/node/End_Merged",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_MergeBase/flow/m12"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#process/Process_MergeBase/flow/m13",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#process/Process_MergeBase",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#process/Process_MergeBase/node/Task_Abort",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#process/Process_MergeBase/node/Task_ByHand",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_MergeBase/flow/m13"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#process/Process_MergeBase/flow/m14",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#process/Process_MergeBase",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#process/Process_MergeBase/node/Task_ByHand",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#process/Process_MergeBase/node/End_ByHand",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_MergeBase/flow/m14"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#process/Process_MergeBase/lane/Lane_Command",
+      "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#Lane",
+      "name": "merge:main command",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#process/Process_MergeBase",
+      "bindsRole": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#role/build-pipeline",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_MergeBase/lane/Lane_Command"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#process/Process_MergeBase/lane/Lane_Agent",
+      "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#Lane",
+      "name": "Authoring agent",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#process/Process_MergeBase",
+      "bindsRole": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#role/authoring-agent",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_MergeBase/lane/Lane_Agent"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#process/Process_MergeBase/node/Start_Merge",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#ProcessNode",
+      "name": "Base moved, or PR conflicted",
+      "nodeKind": "start",
+      "bpmnType": "bpmn:StartEvent",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#process/Process_MergeBase",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#role/build-pipeline",
+      "inLane": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#process/Process_MergeBase/lane/Lane_Command",
+      "implementedBy": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#process/Process_MergeBase/flow/m1"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_MergeBase/node/Start_Merge"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#process/Process_MergeBase/node/Task_Merge",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#ProcessNode",
+      "name": "Merge the base in, without committing",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:Task",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#process/Process_MergeBase",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#role/build-pipeline",
+      "inLane": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#process/Process_MergeBase/lane/Lane_Command",
+      "implementedBy": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#skill/prepare-merge"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#process/Process_MergeBase/flow/m1"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#process/Process_MergeBase/flow/m2"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_MergeBase/node/Task_Merge"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#process/Process_MergeBase/node/GW_Conflicts",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#ProcessNode",
+      "name": "Any conflict?",
+      "nodeKind": "exclusive",
+      "bpmnType": "bpmn:ExclusiveGateway",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#process/Process_MergeBase",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#role/build-pipeline",
+      "inLane": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#process/Process_MergeBase/lane/Lane_Command",
+      "implementedBy": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#process/Process_MergeBase/flow/m2"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#process/Process_MergeBase/flow/m3",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#process/Process_MergeBase/flow/m4"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_MergeBase/node/GW_Conflicts"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#process/Process_MergeBase/node/Task_Classify",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#ProcessNode",
+      "name": "Classify every conflicted path against the declared patterns",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:Task",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#process/Process_MergeBase",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#role/build-pipeline",
+      "inLane": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#process/Process_MergeBase/lane/Lane_Command",
+      "implementedBy": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#skill/merge-conflict-patterns"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#process/Process_MergeBase/flow/m4"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#process/Process_MergeBase/flow/m5"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_MergeBase/node/Task_Classify"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#process/Process_MergeBase/node/GW_AllDeclared",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#ProcessNode",
+      "name": "Every path resolvable?",
+      "nodeKind": "exclusive",
+      "bpmnType": "bpmn:ExclusiveGateway",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#process/Process_MergeBase",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#role/build-pipeline",
+      "inLane": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#process/Process_MergeBase/lane/Lane_Command",
+      "implementedBy": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#process/Process_MergeBase/flow/m5"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#process/Process_MergeBase/flow/m6",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#process/Process_MergeBase/flow/m7"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_MergeBase/node/GW_AllDeclared"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#process/Process_MergeBase/node/Task_Resolve",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#ProcessNode",
+      "name": "Resolve each by its declared strategy",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:Task",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#process/Process_MergeBase",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#role/build-pipeline",
+      "inLane": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#process/Process_MergeBase/lane/Lane_Command",
+      "implementedBy": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#skill/merge-conflict-patterns"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#process/Process_MergeBase/flow/m6"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#process/Process_MergeBase/flow/m8"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_MergeBase/node/Task_Resolve"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#process/Process_MergeBase/node/Task_Regen",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#ProcessNode",
+      "name": "Regenerate, asking every CI gate",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:Task",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#process/Process_MergeBase",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#role/build-pipeline",
+      "inLane": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#process/Process_MergeBase/lane/Lane_Command",
+      "implementedBy": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#skill/prepare-merge"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#process/Process_MergeBase/flow/m3",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#process/Process_MergeBase/flow/m8"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#process/Process_MergeBase/flow/m9"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_MergeBase/node/Task_Regen"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#process/Process_MergeBase/node/GW_Proved",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#ProcessNode",
+      "name": "Every gate reproduced?",
+      "nodeKind": "exclusive",
+      "bpmnType": "bpmn:ExclusiveGateway",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#process/Process_MergeBase",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#role/build-pipeline",
+      "inLane": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#process/Process_MergeBase/lane/Lane_Command",
+      "implementedBy": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#process/Process_MergeBase/flow/m9"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#process/Process_MergeBase/flow/m10",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#process/Process_MergeBase/flow/m11"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_MergeBase/node/GW_Proved"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#process/Process_MergeBase/node/Task_Commit",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#ProcessNode",
+      "name": "Commit the merge",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:Task",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#process/Process_MergeBase",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#role/build-pipeline",
+      "inLane": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#process/Process_MergeBase/lane/Lane_Command",
+      "implementedBy": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#skill/continual-progress"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#process/Process_MergeBase/flow/m10"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#process/Process_MergeBase/flow/m12"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_MergeBase/node/Task_Commit"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#process/Process_MergeBase/node/End_Merged",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#ProcessNode",
+      "name": "Merged, proved",
+      "nodeKind": "end",
+      "bpmnType": "bpmn:EndEvent",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#process/Process_MergeBase",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#role/build-pipeline",
+      "inLane": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#process/Process_MergeBase/lane/Lane_Command",
+      "implementedBy": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#process/Process_MergeBase/flow/m12"
+      ],
+      "outgoing": [],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_MergeBase/node/End_Merged"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#process/Process_MergeBase/node/Task_Abort",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#ProcessNode",
+      "name": "Abort, restore the tree, list what was refused",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:Task",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#process/Process_MergeBase",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#role/build-pipeline",
+      "inLane": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#process/Process_MergeBase/lane/Lane_Command",
+      "implementedBy": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#skill/merge-conflict-patterns"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#process/Process_MergeBase/flow/m7",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#process/Process_MergeBase/flow/m11"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#process/Process_MergeBase/flow/m13"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_MergeBase/node/Task_Abort"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#process/Process_MergeBase/node/Task_ByHand",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#ProcessNode",
+      "name": "Resolve by hand, then regenerate",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:Task",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#process/Process_MergeBase",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#role/authoring-agent",
+      "inLane": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#process/Process_MergeBase/lane/Lane_Agent",
+      "implementedBy": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#skill/prepare-merge"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#process/Process_MergeBase/flow/m13"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#process/Process_MergeBase/flow/m14"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_MergeBase/node/Task_ByHand"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#process/Process_MergeBase/node/End_ByHand",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#ProcessNode",
+      "name": "Merged by a person",
+      "nodeKind": "end",
+      "bpmnType": "bpmn:EndEvent",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#process/Process_MergeBase",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#role/authoring-agent",
+      "inLane": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#process/Process_MergeBase/lane/Lane_Agent",
+      "implementedBy": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#process/Process_MergeBase/flow/m14"
+      ],
+      "outgoing": [],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_MergeBase/node/End_ByHand"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#process/Process_BoardRelocate",
       "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Process",
       "name": "Board: relocate content to the trashcan",
@@ -21046,7 +21533,7 @@
       "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#ProcessNode",
       "name": "Prepare the merge, and watch it through",
       "nodeKind": "activity",
-      "bpmnType": "bpmn:Task",
+      "bpmnType": "bpmn:CallActivity",
       "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#process/Process_CodeChangeReview",
       "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#role/authoring-agent",
       "inLane": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#process/Process_CodeChangeReview/lane/Lane_Agent",
@@ -47204,47 +47691,6 @@
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#tool/package-release-manual"
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#tool/pin-smart-base-terminology",
-      "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#Tool",
-      "name": "pin-smart-base-terminology",
-      "title": "Snapshot a published IG's terminology at its pinned version",
-      "description": "Read every CodeSystem concept out of a smart-base clone and write `external-schemas/who-smart-base.terminology.json`, the offline snapshot `check:term-mapping` resolves its `fhir` target against. 585 concepts across 12 code systems at v1.0.0.",
-      "install": {
-        "none": true
-      },
-      "invoke": {
-        "shell": "bun run cat-harness/scripts/pin-smart-base-terminology.ts --from <clone>"
-      },
-      "io": {
-        "inputs": [
-          {
-            "name": "from",
-            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/tool-types.schema.json#/$defs/FilesystemPath",
-            "description": "A clone of WorldHealthOrganization/smart-base checked out at the PINNED tag, passed as `--from`. The script refuses unless that clone's `sushi-config.yaml` version equals the pin's, so a newer clone cannot silently become the snapshot.",
-            "required": true
-          }
-        ],
-        "outputs": [
-          {
-            "name": "snapshot",
-            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/tool-types.schema.json#/$defs/RepoPath",
-            "description": "`cat-harness/external-schemas/who-smart-base.terminology.json`, `folio-pinned-terminology/v1`: the version, the source, and every `system#code` with its display, sorted."
-          }
-        ]
-      },
-      "requirements": {
-        "runtime": [
-          "bun",
-          "git"
-        ],
-        "network": false
-      },
-      "satisfies": [
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#skill/vocabulary-authority"
-      ],
-      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#tool/pin-smart-base-terminology"
-    },
-    {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#tool/transcribe-whisper-cpp",
       "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#Tool",
       "name": "transcribe-whisper-cpp",
@@ -47808,33 +48254,6 @@
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/health-report"
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#schema/ig-chrome",
-      "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#Schema",
-      "name": "ig-chrome",
-      "title": "ig-chrome.ts — a FHIR IG's published CHROME, as data.",
-      "module": "schemas/ig-chrome.ts",
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#directory/schemas",
-      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/ig-chrome"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#schema/ig-menu",
-      "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#Schema",
-      "name": "ig-menu",
-      "title": "ig-menu.ts — a FHIR IG's own navigation, as data.",
-      "module": "schemas/ig-menu.ts",
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#directory/schemas",
-      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/ig-menu"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#schema/ig-metadata-index",
-      "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#Schema",
-      "name": "ig-metadata-index",
-      "title": "IG metadata indexes — the Publisher's own metadata exports, given somewhere",
-      "module": "schemas/ig-metadata-index.ts",
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#directory/schemas",
-      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/ig-metadata-index"
-    },
-    {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#schema/inline-code",
       "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#Schema",
       "name": "inline-code",
@@ -48034,6 +48453,15 @@
       "module": "schemas/property-skills.ts",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#directory/schemas",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/property-skills"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#schema/prov-jsonld",
+      "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#Schema",
+      "name": "prov-jsonld",
+      "title": "PROV activities as PROV-JSONLD — links, not strings (beans `jcet`, `9y9j`).",
+      "module": "schemas/prov-jsonld.ts",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#directory/schemas",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/prov-jsonld"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#schema/prov",
@@ -48695,6 +49123,30 @@
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/review-verdict"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#schema/ig-chrome",
+      "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#Schema",
+      "name": "ig-chrome",
+      "title": "ig-chrome.ts — a FHIR IG's published CHROME, as data.",
+      "module": "../fhir-harness/schemas/ig-chrome.ts",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/ig-chrome"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#schema/ig-menu",
+      "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#Schema",
+      "name": "ig-menu",
+      "title": "ig-menu.ts — a FHIR IG's own navigation, as data.",
+      "module": "../fhir-harness/schemas/ig-menu.ts",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/ig-menu"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#schema/ig-metadata-index",
+      "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#Schema",
+      "name": "ig-metadata-index",
+      "title": "IG metadata indexes — the Publisher's own metadata exports, given somewhere",
+      "module": "../fhir-harness/schemas/ig-metadata-index.ts",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/ig-metadata-index"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#schema/artifact-store",
       "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#Schema",
       "name": "artifact-store",
@@ -48864,6 +49316,20 @@
         "http://www.w3.org/2002/07/owl#"
       ],
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#externalSchema/w3c-owl2"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#externalSchema/w3c-prov-jsonld",
+      "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#ExternalSchema",
+      "name": "w3c-prov-jsonld",
+      "title": "The PROV-JSONLD Serialization: A JSON-LD Representation for the PROV Data Model",
+      "authority": "W3C",
+      "specVersion": "2024-08-25",
+      "specUse": "conforms",
+      "specUrl": "https://www.w3.org/submissions/2024/SUBM-prov-jsonld-20240825/",
+      "namespace": [
+        "https://openprovenance.org/ns/provext#"
+      ],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#externalSchema/w3c-prov-jsonld"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#externalSchema/w3c-prov-o",
