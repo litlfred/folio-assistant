@@ -47,7 +47,7 @@ Each term is on exactly one page. Extracted candidates are split by asset type, 
 <tr><td><a href="{{ '/glossary/tools/' | relative_url }}">Tools</a></td><td>candidates, extracted</td><td>141</td><td>96 KB</td></tr>
 <tr><td><a href="{{ '/glossary/bpmn-activities/' | relative_url }}">BPMN activities</a></td><td>candidates, extracted</td><td>600</td><td>466 KB</td></tr>
 <tr><td><a href="{{ '/glossary/dmn-decisions/' | relative_url }}">DMN decisions</a></td><td>candidates, extracted</td><td>9</td><td>8 KB</td></tr>
-<tr><td><a href="{{ '/glossary/schema-fields/' | relative_url }}">Schema fields</a></td><td>candidates, extracted</td><td>1815</td><td>1001 KB</td></tr>
+<tr><td><a href="{{ '/glossary/schema-fields/' | relative_url }}">Schema fields</a></td><td>candidates, extracted</td><td>1815</td><td>1002 KB</td></tr>
 </tbody></table></div>
 
 **Size:** this page holds 38 terms and is 51 KB before compression, within its budget of 64 KB; each asset type's page has a budget of 1.0 MB. There is no search index: the filter on each page runs over that page, and its A–Z bar jumps within it. The SKOS files in the sources are the machine-readable form.
