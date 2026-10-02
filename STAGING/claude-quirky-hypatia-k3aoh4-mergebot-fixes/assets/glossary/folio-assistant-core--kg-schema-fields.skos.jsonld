@@ -850,6 +850,82 @@
       "skos:note": "candidate"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant-core/0.1.0/ns#glossary/kg-schema-fields/dublin-core-render.dctermsmapping.range",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant-core/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "DctermsMapping.range"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "`literal` when DCMI gives the term the range `rdfs:Literal` or gives no range and the value is prose; `resource` when the range is a class (Agent, Location, LinguisticSystem, …) or DCMI says the term is \"intended to be used with non-literal values\"."
+        }
+      ],
+      "dcterms:source": "folio-assistant-core/schemas/dublin-core-render.ts#DctermsMapping.range",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant-core/0.1.0/ns#glossary/kg-schema-fields/dublin-core-render.dctermsmapping.ses",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant-core/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "DctermsMapping.ses"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "A syntax encoding scheme the values are in, by the field's own name. Becomes a datatype (JSON-LD) or `xsi:type` (XML)."
+        }
+      ],
+      "dcterms:source": "folio-assistant-core/schemas/dublin-core-render.ts#DctermsMapping.ses",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant-core/0.1.0/ns#glossary/kg-schema-fields/dublin-core-render.dctermsmapping.term",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant-core/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "DctermsMapping.term"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The local name under `http://purl.org/dc/terms/`."
+        }
+      ],
+      "dcterms:source": "folio-assistant-core/schemas/dublin-core-render.ts#DctermsMapping.term",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant-core/0.1.0/ns#glossary/kg-schema-fields/dublin-core-render.dctermsmapping.ves",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant-core/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "DctermsMapping.ves"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "A vocabulary encoding scheme the values are members of. Becomes `dcam:memberOf` (JSON-LD) or `xsi:type` (XML)."
+        }
+      ],
+      "dcterms:source": "folio-assistant-core/schemas/dublin-core-render.ts#DctermsMapping.ves",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant-core/0.1.0/ns#glossary/kg-schema-fields/dublin-core.dcfieldschema.schema",
       "@type": "skos:Concept",
       "skos:inScheme": {

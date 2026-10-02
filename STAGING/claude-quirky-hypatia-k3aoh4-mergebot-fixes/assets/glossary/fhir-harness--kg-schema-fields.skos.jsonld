@@ -717,25 +717,6 @@
       "skos:note": "candidate"
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/ns#glossary/kg-schema-fields/ig-chrome.igchromeschema.canonical",
-      "@type": "skos:Concept",
-      "skos:inScheme": {
-        "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/ns#glossary/kg-schema-fields"
-      },
-      "skos:prefLabel": [
-        {
-          "@value": "IgChromeSchema.canonical"
-        }
-      ],
-      "skos:definition": [
-        {
-          "@value": "Its `canonical`."
-        }
-      ],
-      "dcterms:source": "fhir-harness/schemas/ig-chrome.ts#IgChromeSchema.canonical",
-      "skos:note": "candidate"
-    },
-    {
       "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/ns#glossary/kg-schema-fields/ig-chrome.igchromeschema.id",
       "@type": "skos:Concept",
       "skos:inScheme": {
@@ -748,7 +729,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "The IG's `id` from `sushi-config.yaml`, e.g. `smart.who.int.trust`."
+          "@value": "The chain's TOP layer — the template package an IG names — e.g. `who.template.root`. v1 put the id of the IG it was ingested beside here; v2 keys the chrome by the template, because every IG building with that chain wears it. An IG's own id and status are `ig-identity.json`'s."
         }
       ],
       "dcterms:source": "fhir-harness/schemas/ig-chrome.ts#IgChromeSchema.id",
@@ -774,22 +755,22 @@
       "skos:note": "candidate"
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/ns#glossary/kg-schema-fields/ig-chrome.igchromeschema.status",
+      "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/ns#glossary/kg-schema-fields/ig-chrome.igchromeschema.version",
       "@type": "skos:Concept",
       "skos:inScheme": {
         "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/ns#glossary/kg-schema-fields"
       },
       "skos:prefLabel": [
         {
-          "@value": "IgChromeSchema.status"
+          "@value": "IgChromeSchema.version"
         }
       ],
       "skos:definition": [
         {
-          "@value": "Its `status` — what selects the watermark. `draft` here."
+          "@value": "The top layer's version, e.g. `0.5.0`."
         }
       ],
-      "dcterms:source": "fhir-harness/schemas/ig-chrome.ts#IgChromeSchema.status",
+      "dcterms:source": "fhir-harness/schemas/ig-chrome.ts#IgChromeSchema.version",
       "skos:note": "candidate"
     },
     {
@@ -866,6 +847,82 @@
         }
       ],
       "dcterms:source": "fhir-harness/schemas/ig-chrome.ts#IgChromeTokenSchema.value",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/ns#glossary/kg-schema-fields/ig-identity.igidentityschema.id",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "IgIdentitySchema.id"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The IG's `id` from `sushi-config.yaml`; SUSHI's `packageId` defaults to it."
+        }
+      ],
+      "dcterms:source": "fhir-harness/schemas/ig-identity.ts#IgIdentitySchema.id",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/ns#glossary/kg-schema-fields/ig-identity.igidentityschema.readat",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "IgIdentitySchema.readAt"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "When it was read. A status is a fact at a moment, not forever."
+        }
+      ],
+      "dcterms:source": "fhir-harness/schemas/ig-identity.ts#IgIdentitySchema.readAt",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/ns#glossary/kg-schema-fields/ig-identity.igidentityschema.readfrom",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "IgIdentitySchema.readFrom"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Where it was read: a repository and file, so the claim can be re-checked."
+        }
+      ],
+      "dcterms:source": "fhir-harness/schemas/ig-identity.ts#IgIdentitySchema.readFrom",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/ns#glossary/kg-schema-fields/ig-identity.igidentityschema.status",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "IgIdentitySchema.status"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "`draft`, `active`, `retired` … — what selects the template's watermark."
+        }
+      ],
+      "dcterms:source": "fhir-harness/schemas/ig-identity.ts#IgIdentitySchema.status",
       "skos:note": "candidate"
     },
     {
