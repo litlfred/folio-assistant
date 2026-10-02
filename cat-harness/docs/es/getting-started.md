@@ -44,7 +44,7 @@ habrá producido un repositorio vacío y no el párrafo que pediste.
 El triaje es un artefacto real y legible en lugar de una costumbre que un agente pudiera tener:
 
 - el proceso es
-  [`processes/getting-started.bpmn`](https://github.com/litlfred/folio-assistant/blob/main/processes/getting-started.bpmn);
+  [`folio-assistant-core/processes/conduct/getting-started.bpmn`](https://github.com/litlfred/folio-assistant/blob/main/processes/getting-started.bpmn);
 - la decisión en su núcleo es
   [`decisions/folio-intent.dmn`](https://github.com/litlfred/folio-assistant/blob/main/processes/decisions/folio-intent.dmn),
   una tabla de decisiones DMN que puedes abrir en cualquier herramienta DMN y modificar sin tocar
@@ -54,7 +54,7 @@ El triaje es un artefacto real y legible en lugar de una costumbre que un agente
   <img src="{{ '/assets/img/workflows/getting-started.svg' | relative_url }}"
        alt="Proceso BPMN: un usuario solicita crear un folio; el agente detecta la modalidad de interacción, lee los hechos del repositorio, y una compuerta exclusiva calculada a partir de folio-intent.dmn enruta a una de cinco ramas — ask, overlay, new-repo, add-folio, o una derivación a la autoría de contenido. La estructura inicial siembra el plan de trabajo, luego la compilación de Pages reporta live, not-yet o unknown.">
 </figure>
-<p class="bpmn-source"><em>Fuente: <code>processes/getting-started.bpmn</code> — el SVG es generado por <code>bun run render:bpmn</code>.</em></p>
+<p class="bpmn-source"><em>Fuente: <code>folio-assistant-core/processes/conduct/getting-started.bpmn</code> — el SVG es generado por <code>bun run render:bpmn</code>.</em></p>
 
 ### Los tres hechos
 
