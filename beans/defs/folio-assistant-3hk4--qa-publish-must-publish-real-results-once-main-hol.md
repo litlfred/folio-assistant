@@ -5,7 +5,7 @@ status: in-progress
 type: task
 priority: normal
 created_at: 2026-10-02T13:58:10Z
-updated_at: 2026-10-02T16:32:42Z
+updated_at: 2026-10-02T16:44:16Z
 parent: folio-assistant-3fva
 blocking:
     - folio-assistant-5hox
@@ -55,3 +55,8 @@ The first post-5hox `main` push will show the real entry. Until 5hox lands, CI r
 Tests: `cat-harness/scripts/tests/qa-refresh.test.ts` (17).
 
 Follow-up the measurement exposed: in tracked mode, judge-mode gates no longer fail on a stale derived copy, so `regen` no longer repairs one. The writers must be run by hand until 5hox, which is what commit a3fdc7fe1 did.
+
+
+
+## Owner ruling 2026-10-02 — sweep scope
+Full sweep: every docs block under cat-harness/content/docs gets a verdict (and a badge). The 106 new verdicts are expected, not drift. The scope stays derived from the docs directory; no hand list.
