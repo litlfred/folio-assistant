@@ -919,6 +919,12 @@ export const SCRIPT_EXEMPTIONS: ScriptExemption[] = [
       "SUBSUMED by `check:harness-state:check`, which CI runs: the same script with `--check`, so it examines exactly the same four families and fails on a finding instead of reporting it. Kept as a script because the writer is what refreshes the committed sidecar, and a contributor wants the report without the non-zero exit while they are still fixing things. Bean `h1wq`",
   },
   {
+    script: "check:source-licence",
+    kind: "covered-by",
+    reason:
+      "SUBSUMED by `check:source-licence:check`, which CI runs: the same script with `--check`, so it computes the same report and fails on the same malformed records, and additionally fails when the committed sidecar is not what the corpus produces. The bare form is the WRITER of `test/results/source-licence.qa-results.json`, and it used to be the gate — so the gate rewrote the record it should have judged, and a stale sidecar failed nothing (bean `i2kp`). Kept as the author's command, and as the writer `regen` pairs with the `:check` twin",
+  },
+  {
     script: "audit:coverage:check",
     kind: "covered-by",
     reason:

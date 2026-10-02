@@ -161,6 +161,162 @@ export function tools(baseUrl?: string): ToolDefinition[] {
       },
       requires: { runtime: ["bun"], network: false },
     }),
+    defineTool({
+      id: "ig-pages",
+      title: "Generate an IG instance's reader-facing pages from its artefact index",
+      description:
+        "Write `<instance>/docs/` — an index page, one page per artefact, a page per over-large category and per menu group — from `fhir-artifact-index/index.json` (and `menu.json` when ingested), styled by the template chrome an owning instance ingested. Moved here from smart-trust because nothing in it was smart-trust's (#1767); smart-base reuses it for its `/smart-base/` landing page with `--summary`. For an IG whose SOURCE is at hand, `build-ig-site` renders the IG's own pages instead; this is for an IG known only by what it published.",
+      install: { none: true },
+      invoke: { shell: "bun run fhir-harness/scripts/gen-ig-pages.ts" },
+      io: {
+        inputs: [
+          { name: "instance", schema: t("RepoPath"), required: true, description: "The instance directory: holds `fhir-artifact-index/` and receives `docs/`." },
+          { name: "label", schema: t("Text"), required: false, description: "The IG's display name. The index carries only the package id, which stands in when this is absent." },
+          { name: "chrome-owner", schema: t("Text"), required: false, description: "The instance whose `chrome.json` styles the pages. Absent, the pages are unstyled and the build says so. The banner's identity is always the index's; a chrome ingested from another IG lends its tokens, never its status." },
+          { name: "summary", schema: t("Flag"), required: false, description: "Open the index page with the instance's own declaration (`harness_details.html` with `instance=`), making it the instance's landing page." },
+          { name: "check", schema: t("Flag"), required: false, description: "Write nothing; exit 1 when any page is stale or orphaned." },
+        ],
+        outputs: [
+          { name: "pages", schema: t("Count"), description: "Pages written; the menu and chrome are reported as present or COULD NOT DETERMINE, never silently absent." },
+        ],
+      },
+      satisfies: ["ig-build-pipeline"],
+      selection: {
+        when: "An ingested IG needs a URL on the docs site and its source repository is not at hand.",
+        limits:
+          "Narrative pages are not held — the harvest keeps artefacts — so menu entries link upstream. Bodies are still partly HTML inside markdown (`jut3`).",
+        cost: "Seconds; one file per artefact.",
+      },
+      requires: { runtime: ["bun"], network: false },
+    }),
+    // ── An IG's JSON surface ─────────────────────────────────────────────
+    //
+    // Moved down from the layer above (#1767, stage B′). Each turns ANY IG's
+    // published output into JSON Schema or JSON-LD, so — would an IG with no
+    // overlay need it? — they are this layer's, as the Library strippers
+    // above already are, and they satisfy `ig-build-pipeline` for the same
+    // reason. A skill of the layer above cannot be satisfied from here
+    // without an upward edge. The Python lives in the IG's own `input/scripts/`.
+    defineTool({
+      id: "logical-model-schemas",
+      title: "Logical models → JSON Schema",
+      description: "A JSON Schema per logical model, from the published FHIR resources.",
+      install: { none: true },
+      invoke: { shell: "python3 input/scripts/generate_logical_model_schemas.py" },
+      io: {
+        inputs: [{ name: "igOutput", schema: t("RepoPath"), required: true, description: "The Publisher's `output/`." }],
+        outputs: [{ name: "logicalModelSchemas", schema: t("RepoPath"), description: "`schemas/<stem>.schema.json`, one per logical model." }],
+      },
+      satisfies: ["ig-build-pipeline"],
+      selection: {
+        when: "An IG is to expose its logical models as an addressable JSON Schema surface.",
+        limits: "It describes what the Publisher emitted. A model the Publisher did not publish is not reported as missing.",
+        cost: "Seconds, inside the publisher container.",
+      },
+      requires: { runtime: ["python3"], network: false },
+    }),
+    defineTool({
+      id: "valueset-schemas",
+      title: "ValueSets → JSON Schema",
+      description:
+        "A JSON Schema per ValueSet, plus the enumeration-response schemas published at the IG root.",
+      install: { none: true },
+      invoke: { shell: "python3 input/scripts/generate_valueset_schemas.py" },
+      io: {
+        inputs: [{ name: "igOutput", schema: t("RepoPath"), required: true }],
+        // Named for what it is (#1168, B9a): as `schemas` it matched
+        // `logical-model-schemas` port for port, and the two would derive as
+        // alternatives when they write different schema families.
+        outputs: [{ name: "valueSetSchemas", schema: t("RepoPath"), description: "One schema per ValueSet, plus the enumeration-response schemas at the IG root." }],
+      },
+      satisfies: ["ig-build-pipeline"],
+      selection: {
+        when: "An IG is to expose its terminology as JSON Schema.",
+        limits:
+          "The root `ValueSets.schema.json` it writes is a SCHEMA describing an enumeration response, carrying an `example` that holds the list. It is not an index instance, and reading it as one is the trap `qsf5` recorded — no FHIR IG publishes an artefact-index instance.",
+        cost: "Seconds. Output size scales with the IG — measured at 19 against 198 across two published IGs — so re-derive rather than assume.",
+      },
+      requires: { runtime: ["python3"], network: false },
+    }),
+    defineTool({
+      id: "jsonld-vocabularies",
+      title: "ValueSet expansions → JSON-LD",
+      description: "JSON-LD vocabularies built from the ValueSet expansions in the published output.",
+      install: { none: true },
+      invoke: { shell: "python3 input/scripts/generate_jsonld_vocabularies.py" },
+      io: {
+        inputs: [{ name: "igOutput", schema: t("RepoPath"), required: true }],
+        outputs: [{ name: "vocabularies", schema: t("RepoPath"), description: "`*.jsonld` at the published root." }],
+      },
+      satisfies: ["ig-build-pipeline"],
+      selection: {
+        when: "The terminology is to be reachable as linked data rather than only as FHIR.",
+        limits:
+          "IT DEPENDS ON EXPANSION, which depends on the terminology server the build was given. An IG built against a dead or restricted `tx` produces fewer vocabularies and FAILS NOTHING — the step warns and continues. A thin output is therefore not evidence of a thin ValueSet; check the expansion before concluding anything.",
+        cost: "Seconds locally; the expansion it depends on is the expensive part and happens in the Publisher run.",
+      },
+      requires: { runtime: ["python3"], network: false },
+    }),
+
+    // ── The terminology a mapping check resolves against ─────────────────
+    //
+    // Owner, 2026-09-30, on what the `fhir` half of `check:term-mapping`
+    // asserts: **"published IG at a version"** (bean `ejug`). So this node
+    // refreshes a PIN, and a live terminology service is not this node: "this
+    // code exists in IG X at version V" and "this code is in a curated
+    // collection today" are different claims that can disagree. A service
+    // node, when one is reachable, earns its own node beside this one.
+    //
+    // Moved down from cat-harness, where it was named for, and hard-coded
+    // the paths of, one IG (#1767, stage B′). Which IG is pinned is
+    // the caller's to say, which keeps this layer naming none.
+    //
+    // `satisfies: ["vocabulary-authority"]`: that core skill decides WHICH
+    // vocabulary owns a fact, and this node supplies the FHIR side's
+    // authority. Satisfying a core skill from here is the allowed direction.
+    defineTool({
+      id: "pin-ig-terminology",
+      title: "Snapshot a published IG's terminology at its pinned version",
+      description:
+        "Read every CodeSystem concept out of a FHIR IG clone checked out at its pinned tag and write a `folio-pinned-terminology/v1` snapshot: the offline, version-fixed answer `check:term-mapping` resolves its `fhir` target against. Which IG, which pin record and which snapshot path are the caller's (`--pin`, `--out`, `--source`); this layer names none (#1767, stage B′).",
+      install: { none: true },
+      invoke: { shell: "bun run fhir-harness/scripts/pin-ig-terminology.ts --from <clone> --pin <pin record> --out <snapshot> --source <repository URL>" },
+      // `network: false` is the claim that matters and it is exact: the
+      // script reads a clone from disk and never fetches. The clone is made
+      // by hand at the pinned tag, because cloning an external repository is
+      // not something a gate should do, and because neither IG host is
+      // reachable from here anyway.
+      requires: { runtime: ["bun", "git"], network: false },
+      io: {
+        inputs: [
+          // NO `arg` binding, and that is the type speaking rather than an
+          // omission. `FilesystemPath` exists precisely for a path that may
+          // point OUTSIDE the repository — the clone is made in a scratch
+          // directory — and its own docblock says it is "refused as a
+          // command-line word": `..` is what `RepoPath` forbids, and
+          // weakening `RepoPath` to admit this would remove traversal
+          // protection from every port that uses it. `check:tools` refuses
+          // the pairing (measured 2026-09-30), so declaring `--from` here
+          // would be asserting a safety property the type withholds. The
+          // flag is in `invoke.shell`, where it is a person's command line
+          // rather than a contract a caller may fill from untrusted input.
+          { name: "from", schema: t("FilesystemPath"), required: true, description: "A clone of the IG checked out at the PINNED tag, passed as `--from`. The script refuses unless that clone's `sushi-config.yaml` version equals the pin's, so a newer clone cannot silently become the snapshot." },
+        ],
+        outputs: [
+          { name: "snapshot", schema: t("RepoPath"), description: "The `--out` path, `folio-pinned-terminology/v1`: the version, the source, and every `system#code` with its display, sorted." },
+        ],
+      },
+      satisfies: ["vocabulary-authority"],
+      selection: {
+        when:
+          "The authority a term is checked against must be a fixed artefact a reader can name and re-fetch — a published IG at a version. Also the only option where the vocabulary's host is unreachable, which is the case in this container.",
+        limits:
+          "The version comes from the `--pin` record and NEVER from this script, so refreshing means moving the pin first and re-running; re-running against a newer clone is refused rather than silently accepted. It answers only for what the IG publishes at that version — a code added after it, or curated in a collection rather than published, is absent, and `check:term-mapping` reports that as `unmapped` (a checked miss) and not as `undetermined`. Nothing here dereferences a code system IRI.",
+        cost:
+          "One shallow clone at the tag (~120 KB of FSH at v1.0.0) and a few seconds. The snapshot is committed, so no run at check time.",
+      },
+    }),
+
     // ── The IG AST (bean `a9tx`) ─────────────────────────────────────────────
     // The producer is `ast-export`, a library ON TOP of the IG Publisher in
     // litlfred/fhir-ig-publisher@claude/ast-export; the consumer is

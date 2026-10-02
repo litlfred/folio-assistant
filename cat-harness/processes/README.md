@@ -55,6 +55,7 @@ Part of [C@T Harness](../README.md) 0.1.0, declared as `processes`, holding `pro
 | [`kg-separation.bpmn`](kg-separation.bpmn) | a [Process](https://litlfred.github.io/bootstrap/schemas/#process): A knowledge graph leaves for its own repositories |  |
 | [`kg-to-portal.bpmn`](kg-to-portal.bpmn) | a [Process](https://litlfred.github.io/bootstrap/schemas/#process): KG to public portal |  |
 | [`l3-fhir-pipeline.bpmn`](l3-fhir-pipeline.bpmn) | a [Process](https://litlfred.github.io/bootstrap/schemas/#process): L3 FHIR IG pipeline |  |
+| [`merge-base.bpmn`](merge-base.bpmn) | a [Process](https://litlfred.github.io/bootstrap/schemas/#process): Merge the base branch in | "Code change and review" |
 | [`methodology-from-source.bpmn`](methodology-from-source.bpmn) | a [Process](https://litlfred.github.io/bootstrap/schemas/#process): Adopt a methodology from a source document |  |
 | [`narrative-code-review.bpmn`](narrative-code-review.bpmn) | a [Process](https://litlfred.github.io/bootstrap/schemas/#process): Prose and the code it describes | "Review task" |
 | [`ns.jsonld`](ns.jsonld) | cat-harness's diagram elements |  |

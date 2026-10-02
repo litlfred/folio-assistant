@@ -51,6 +51,29 @@ export const VIEWER_NAV_QA_SCHEMA = "viewer-nav-qa/v1";
 export const ViewerNavVerdictSchema = z.enum(["railed", "declined", "missing"]);
 export type ViewerNavVerdict = z.infer<typeof ViewerNavVerdictSchema>;
 
+/**
+ * The LAYOUT criteria a railed page is held to — owner, 2026-10-01 (#1757).
+ *
+ * | flag | the page FAILS it when |
+ * |---|---|
+ * | `header` | the rail has no `.fa-nav-head` — *"todos/ page has no header in LHS navbar"* |
+ * | `clickable-mark` | the header is not a control for the open box, or carries no mark (avatar or letter) — *"each page needs avatar or atleast letter to be clickable"* |
+ * | `visualiser-nav` | the page declares no section of its own — *"define LHS navbar for any visualizer"* |
+ * | `single-open` | more or fewer than one disclosure arrives open, or the open one is not the page's own — *"only the current pages visualiers LHS navbar is open"* |
+ * | `no-redundant-toggle` | a `☰` or an `[x]` duplicates the header — *"excise [hamburger] and [x]"* |
+ *
+ * Only RAILED pages are graded: a page with no rail is already `missing`, and
+ * failing it five more times would be one finding counted six ways.
+ */
+export const ViewerNavFlagSchema = z.enum([
+  "header",
+  "clickable-mark",
+  "visualiser-nav",
+  "single-open",
+  "no-redundant-toggle",
+]);
+export type ViewerNavFlag = z.infer<typeof ViewerNavFlagSchema>;
+
 export const ViewerNavPageSchema = z.object({
   /** The page's published path, e.g. `/cat-harness/library/who-iris/`. */
   path: z.string().min(1),
@@ -66,6 +89,8 @@ export const ViewerNavPageSchema = z.object({
    * works owes no explanation.
    */
   reason: z.string().min(1).optional(),
+  /** The layout criteria this railed page FAILS. Absent when it fails none. */
+  flags: z.array(ViewerNavFlagSchema).optional(),
 });
 export type ViewerNavPage = z.infer<typeof ViewerNavPageSchema>;
 
@@ -78,6 +103,8 @@ export const ViewerNavQaSchema = z.object({
     railed: z.number().int().nonnegative(),
     declined: z.number().int().nonnegative(),
     missing: z.number().int().nonnegative(),
+    /** Railed pages failing at least one layout flag. */
+    flagged: z.number().int().nonnegative().optional(),
   }),
   /** Every page, sorted by published path, so the diff is stable. */
   pages: z.array(ViewerNavPageSchema),

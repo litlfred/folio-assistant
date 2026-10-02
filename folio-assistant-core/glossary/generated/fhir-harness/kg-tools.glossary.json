@@ -95,11 +95,43 @@
       "status": "candidate"
     },
     {
+      "id": "ig-pages",
+      "prefLabel": "Generate an IG instance's reader-facing pages from its artefact index",
+      "definition": "Write `<instance>/docs/` — an index page, one page per artefact, a page per over-large category and per menu group — from `fhir-artifact-index/index.json` (and `menu.json` when ingested), styled by the template chrome an owning instance ingested. Moved here from smart-trust because nothing in it was smart-trust's (#1767); smart-base reuses it for its `/smart-base/` landing page with `--summary`. For an IG whose SOURCE is at hand, `build-ig-site` renders the IG's own pages instead; this is for an IG known only by what it published.",
+      "notation": "ig-pages",
+      "source": "fhir-harness/tools/index.ts#ig-pages",
+      "status": "candidate"
+    },
+    {
       "id": "ig-site-data",
       "prefLabel": "Populate site.data.fhir for a just-the-docs IG render",
       "definition": "Write the IG Publisher's Jekyll variables (`site.data.fhir.ig.*`, `packageId`, `canonical`) for ONE implementation guide, from `sushi-config.yaml` or a published IG's `fhir-artifact-index`, so pages written for the Publisher render on just-the-docs unchanged. fhir-harness declares `site.data` as a pass-through Liquid prefix; this is what Jekyll then reads (bean `bamf`).",
       "notation": "ig-site-data",
       "source": "fhir-harness/tools/index.ts#ig-site-data",
+      "status": "candidate"
+    },
+    {
+      "id": "jsonld-vocabularies",
+      "prefLabel": "ValueSet expansions → JSON-LD",
+      "definition": "JSON-LD vocabularies built from the ValueSet expansions in the published output.",
+      "notation": "jsonld-vocabularies",
+      "source": "fhir-harness/tools/index.ts#jsonld-vocabularies",
+      "status": "candidate"
+    },
+    {
+      "id": "logical-model-schemas",
+      "prefLabel": "Logical models → JSON Schema",
+      "definition": "A JSON Schema per logical model, from the published FHIR resources.",
+      "notation": "logical-model-schemas",
+      "source": "fhir-harness/tools/index.ts#logical-model-schemas",
+      "status": "candidate"
+    },
+    {
+      "id": "pin-ig-terminology",
+      "prefLabel": "Snapshot a published IG's terminology at its pinned version",
+      "definition": "Read every CodeSystem concept out of a FHIR IG clone checked out at its pinned tag and write a `folio-pinned-terminology/v1` snapshot: the offline, version-fixed answer `check:term-mapping` resolves its `fhir` target against. Which IG, which pin record and which snapshot path are the caller's (`--pin`, `--out`, `--source`); this layer names none (#1767, stage B′).",
+      "notation": "pin-ig-terminology",
+      "source": "fhir-harness/tools/index.ts#pin-ig-terminology",
       "status": "candidate"
     },
     {
@@ -116,6 +148,14 @@
       "definition": "Replace inline CQL/ELM in `Library` resources with a URL reference to the published copy.",
       "notation": "strip-library-content",
       "source": "fhir-harness/tools/index.ts#strip-library-content",
+      "status": "candidate"
+    },
+    {
+      "id": "valueset-schemas",
+      "prefLabel": "ValueSets → JSON Schema",
+      "definition": "A JSON Schema per ValueSet, plus the enumeration-response schemas published at the IG root.",
+      "notation": "valueset-schemas",
+      "source": "fhir-harness/tools/index.ts#valueset-schemas",
       "status": "candidate"
     }
   ]

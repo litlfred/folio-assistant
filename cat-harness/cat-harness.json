@@ -12,6 +12,13 @@
   "_title_comment": "The HUMAN display name, for the LHS navbar's harness tabs. Owner, 2026-09-21: \"harnesses should list the names (they should be named in schmeas, e.g. cat-boostrap should be named 'Boostrap', f-a => Folio Assistant, cat-harness => C@T Harness)\". `name` stays the machine identifier that filenames, `needs` edges and `declaredBy` resolve against; `title` is what a reader sees and nothing resolves against. Bean t3n8. THIS ONE WAS WRONG RATHER THAN ABSENT: it declared `title: \"folio-assistant\"`, the ROOT instance's name, so two instances carried one title and `disambiguate()` correctly qualified this tab to \"folio-assistant (cat-harness)\" — the label the owner reported. The disambiguator behaved as designed; the declaration was the defect.",
   "title": "C@T Harness",
   "description": "computable adjudication and agentic test harness\n\ncaaat-harness\n\nca&at-harness\n\n.c&at-harness\n\n c@t-harness",
+  "summary": "Computable adjudication and agentic test harness.",
+  "alsoWritten": [
+    "caaat-harness",
+    "ca&at-harness",
+    ".c&at-harness",
+    "c@t-harness"
+  ],
   "icon": "mark",
   "navbarIcons": [
     "close",
@@ -509,7 +516,8 @@
         "tools"
       ],
       "tile": {
-        "title": "Tools"
+        "title": "Tools",
+        "icon": "tools"
       }
     },
     {
@@ -523,7 +531,8 @@
         "_visualiser_comment": "Declared 2026-09-23 under bean `yunp`: `external-schema` was one of the kinds with no published viewer, so the navbar listed it disabled and four records — an authority, an edition, its namespace IRIs, its dependents and its operative terms each — were reachable only by opening the JSON. ADDED TO THE COVERAGE BLOCK THAT WAS ALREADY HERE, not beside it: the first attempt wrote a second `coverage` key into the same object, which JSON permits and every parser resolves by taking the last — so the visualiser was silently discarded and the generator reported `no visualiser declared`. A duplicate key is not a merge."
       },
       "tile": {
-        "title": "External schemas"
+        "title": "External schemas",
+        "icon": "schemas"
       }
     },
     {
@@ -571,7 +580,8 @@
         "skills"
       ],
       "tile": {
-        "title": "Skills — cat-harness"
+        "title": "Skills — cat-harness",
+        "icon": "skills"
       }
     },
     {
@@ -612,7 +622,8 @@
         "methodology"
       ],
       "tile": {
-        "title": "Methodologies"
+        "title": "Methodologies",
+        "icon": "methodologies"
       }
     },
     {
@@ -623,7 +634,8 @@
         "qa"
       ],
       "tile": {
-        "title": "Latent semantic indexes"
+        "title": "Latent semantic indexes",
+        "icon": "index"
       }
     },
     {
@@ -695,7 +707,8 @@
         "docs"
       ],
       "tile": {
-        "title": "Docs — cat-harness"
+        "title": "Docs — cat-harness",
+        "icon": "docs"
       }
     },
     {

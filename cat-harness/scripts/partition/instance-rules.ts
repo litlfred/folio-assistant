@@ -411,6 +411,12 @@ export const RULES: Rule[] = [
       // matter — a folio could not make it repair differently, only give it
       // more gates.
       "scripts/regen-after-merge.ts",        // artefacts a merge left wrong, repaired by asking the gates
+      // The merge step that calls it, and harness-level for the same reason:
+      // it classifies conflicted PATHS against declared patterns and proves
+      // the result through `regen`. A folio could not make it resolve
+      // differently, only give it more generated files (bean `d33q`).
+      "scripts/merge-base.ts",               // merge the base in, resolve only declared patterns, prove
+      "scripts/merge-conflict-patterns.ts",  // the declared patterns that merge reads
       "scripts/sync-docs-harness.ts",        // the declaration's title/mark → the docs data file
       // Its tile half, and harness-level for the same reason: it reads every
       // INSTANCE's declaration and the published viewer tree, and asks which
@@ -1476,7 +1482,6 @@ export const RULES: Rule[] = [
       "scripts/viewer-declarations.ts",     // which viewer page draws a directory, read from the pages (#1168 B7a-2)
       "scripts/governing-process.ts",       // which BPMN process governs a directory, read from `coverage.process`
       "scripts/check-published-refs.ts",  // a SHA may stage, only a version may publish (issue #592)
-      "scripts/ingest-ig-menu.ts",        // a FHIR IG's own navigation, read from its sushi-config (bean `0818`)
       "scripts/check-code-accounting.ts", // the two questions about a code file, kept apart (bean `ylj7`)
       "scripts/check-publishable.ts",     // is an instance PUBLISHED at all — the declaration, three-state (instance-versioning §3.1)
       "scripts/check-version-bump.ts",    // the bump computed from the exported surface (instance-versioning §4.1)
