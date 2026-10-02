@@ -53,12 +53,28 @@ worse than an empty one, because the reader believes it was answered.
 Markdown, in this order. Every part is required; an absent part is **stated**,
 not dropped.
 
-1. **Where to start** — one line, one URL: the one that best answers the input,
+1. **What changed, in prose** — a short narrative, before any link: what a
+   reader of the site will now see or do differently, in plain sentences,
+   and why (the request it answers, in the requester's words where there
+   are any). One paragraph per PR or per coherent change. A table of URLs
+   tells a reviewer *where* to look; only the narrative tells them *what
+   they are looking for*, and a reviewer who has not read the code cannot
+   reconstruct it from a filename (owner, 2026-10-01: *"provide/show
+   before/after, provide narrative description of change"*).
+2. **Where to start** — one line, one URL: the one that best answers the input,
    or the page with the most change behind it when there was none. A reader
    opens one thing first whether or not you choose it for them.
-2. **The comparison table** below — before (main), after (staging), what to
-   review.
-3. **What could not be checked**, per the three states below.
+3. **The comparison table** below — before (main), after (staging), what to
+   review. Links are **deep** — to the page, and to the anchor on it where
+   the change sits (`…/#harness-cat-harness`), never the site root with
+   "scroll down".
+4. **The pictures** — a before/after pair for each visual change, SHOWN to
+   the reviewer (sent as images where the surface allows it), not only
+   linked. A link asks the reviewer to do the comparison; a pair does it
+   for them. How to make a fair pair is
+   [`before-after-preview`](before-after-preview.md). If a pair could not be
+   made, say which and why — that is part 5, not a silent gap.
+5. **What could not be checked**, per the three states below.
 
 ### The third column is the one with value
 
@@ -352,7 +368,9 @@ When an author has made content changes on a feature branch:
    with the most changed blocks is where a reviewer's time goes first.
 2. **Construct before/after URLs** for each changed docs page, and for each
    page carrying a changed block
-3. **Present the comparison table** to the author
+3. **Present the change to the author** in the Output order above: the
+   narrative first, then the deep-linked comparison table, then the
+   before/after pictures themselves
 4. **Offer to run the staging workflow** if not already running
 
 ### Finding your way on the review page (bean `eb4l`)
