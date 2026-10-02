@@ -97,3 +97,85 @@ test("a referenced entry that holds section text is REFUSED", () => {
   expect(req?.state).toBe("unmet");
   expect(req?.detail).toContain("sections/");
 });
+
+// ── A paper, not a specification ─────────────────────────────────────────────
+//
+// A paper prints authors and a DOI and often no version or document number; a
+// preprint may print no publisher or date. Such a field is an explicit null
+// NAMED in `not_stated`, so the null is a reading of the document rather than
+// an omission, and both failure directions are refused.
+const PAPER_BASE = {
+  $schema: "folio-referenced-source/v1",
+  source: {
+    file: "paper.pdf",
+    sha256: "b".repeat(64),
+    bytes: 1,
+    mtime: null,
+    mimetype_sniffed: "application/pdf",
+    mimetype_source: "magic-bytes",
+  },
+  outline: [],
+  outline_source: "none",
+  materialization: {
+    $schema: "folio-materialization/v1",
+    state: "referenced",
+    provenance: { upstream: { url: "https://doi.org/10.1145/0000000.0000000" } },
+    note: "withheld",
+  },
+  withheld: { what: "all text", why: "no licence permits posting a copy" },
+};
+const paper = (identity: Record<string, unknown>) => ReferencedSourceSchema.safeParse({ ...PAPER_BASE, identity });
+
+test("a paper's identity: authors, venue, DOI, and a not-stated field named", () => {
+  const r = paper({
+    title: "A Paper",
+    version: null,
+    document_number: "10.1145/0000000.0000000",
+    date: "2019-03",
+    publisher: "ACM",
+    authors: ["A. Author", "B. Author"],
+    venue: "Some Conference",
+    doi: "10.1145/0000000.0000000",
+    not_stated: ["version"],
+  });
+  expect(r.success).toBe(true);
+});
+
+test("a null the record does not name in not_stated is refused", () => {
+  const r = paper({ title: "A Paper", version: null, document_number: "x", date: "2019", publisher: "ACM" });
+  expect(r.success).toBe(false);
+  expect(JSON.stringify(r.error?.issues)).toContain("not_stated");
+});
+
+test("not_stated naming a field that HAS a value is refused", () => {
+  const r = paper({ title: "A Paper", version: "1", document_number: "x", date: "2019", publisher: "ACM", not_stated: ["version"] });
+  expect(r.success).toBe(false);
+});
+
+test("an arXiv id without its version is refused", () => {
+  const r = paper({
+    title: "A Paper",
+    version: "v2",
+    document_number: "arXiv:2501.03440v2",
+    date: "2025-05-19",
+    publisher: "arXiv",
+    arxiv: "2501.03440",
+  });
+  expect(r.success).toBe(false);
+});
+
+test("the writer refuses a statable field that is ABSENT, naming it", () => {
+  const d = mkdtempSync(join(tmpdir(), "ref-"));
+  made.push(d);
+  writeFileSync(join(d, "a.pdf"), "%PDF-1.4\n");
+  // `publisher` absent: nobody read the document for it. Explicit nulls for the rest.
+  writeFileSync(
+    join(d, "id.json"),
+    JSON.stringify({ title: "x", url: "https://example.org/", withheld: "w", version: null, document_number: null, date: null }),
+  );
+  const w = Bun.spawnSync(["python3", SCRIPT, "-o", d, join(d, "a.pdf"), "--identity", join(d, "id.json")]);
+  expect(w.exitCode).toBe(1);
+  const err = new TextDecoder().decode(w.stderr);
+  expect(err).toContain("publisher");
+  expect(err).not.toContain("version,");
+});

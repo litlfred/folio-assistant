@@ -12,7 +12,10 @@ its keys are not read as JSON-LD terms — into `<out>/<slug>/`; `gen-library-js
 writes its manifest. It holds:
 
 - **what the document is** — title, version, document number and date, read
-  off its first page by the caller and passed in, never guessed from the name;
+  off its first page by the caller and passed in, never guessed from the name.
+  A field the document does not print is an explicit `null`, recorded in
+  `not_stated`; a paper adds `authors`, `venue`, `doi` or `arxiv` when it
+  prints them;
 - **which bytes were looked at** — `source{}`, the same `_tech_meta` block every
   rung writes, so the full sha256 identifies the exact PDF;
 - **its outline** — heading titles and page numbers from the PDF's embedded
@@ -65,18 +68,39 @@ def outline(path: Path) -> list[dict]:
         return [{"level": lvl, "title": t.strip(), "page": p if p > 0 else None} for lvl, t, p in d.get_toc()]
 
 
-REQUIRED = ("title", "version", "document_number", "date", "publisher", "url", "withheld")
+REQUIRED = ("title", "url", "withheld")
+# A document may not print these — a paper states no document number, a
+# preprint may state no publisher. Each must still be ANSWERED: a value, or an
+# explicit JSON null meaning "the document does not state it". A key that is
+# absent is refused, because nobody read the document for it.
+STATABLE = ("version", "document_number", "date", "publisher")
+# Read off the document when it prints them; passed through when given.
+OPTIONAL = ("authors", "venue", "doi", "arxiv")
+
+
+def identity_of(ident: dict) -> dict:
+    missing = [k for k in REQUIRED if not ident.get(k)]
+    missing += [k for k in STATABLE if k not in ident or ident[k] == ""]
+    if missing:
+        raise ValueError(
+            f"identity file lacks {', '.join(missing)} — read them off the document, never guess "
+            "(a field the document does not state is an explicit null)"
+        )
+    out = {k: ident[k] for k in ("title", *STATABLE)}
+    out.update({k: ident[k] for k in OPTIONAL if ident.get(k)})
+    not_stated = [k for k in STATABLE if ident[k] is None]
+    if not_stated:
+        out["not_stated"] = not_stated
+    return out
 
 
 def record(path: Path, ident: dict) -> dict:
-    missing = [k for k in REQUIRED if not ident.get(k)]
-    if missing:
-        raise ValueError(f"identity file lacks {', '.join(missing)} — read them off the document, never guess")
+    identity = identity_of(ident)
     meta = _tm.tech_meta(str(path))
     toc = outline(path)
     return {
         "$schema": SCHEMA,
-        "identity": {k: ident[k] for k in ("title", "version", "document_number", "date", "publisher")},
+        "identity": identity,
         "source": meta,
         "outline": toc,
         "outline_source": "embedded" if toc else "none",
@@ -95,7 +119,8 @@ def main() -> int:
     ap.add_argument("file", type=Path)
     ap.add_argument("-o", "--outdir", type=Path, required=True)
     ap.add_argument("--identity", type=Path, required=True,
-                    help="JSON: title, version, document_number, date, publisher, url, withheld")
+                    help="JSON: title, url, withheld; version, document_number, date, publisher (each a value or null); "
+                         "optionally authors, venue, doi, arxiv")
     a = ap.parse_args()
     try:
         doc = record(a.file, json.loads(a.identity.read_text(encoding="utf-8")))

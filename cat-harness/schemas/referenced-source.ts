@@ -18,18 +18,49 @@ import { z } from "zod";
 
 export const REFERENCED_SOURCE_SCHEMA_ID = "folio-referenced-source/v1" as const;
 
+/**
+ * The identity fields a document may simply not print. A specification states
+ * all four; a paper often states no version and no document number, and a
+ * preprint may state no publisher or date at all. Such a field is `null` and is
+ * NAMED in `not_stated` — so a null is a reading of the document, never an
+ * omission. A field that is absent from the record is still refused.
+ */
+export const NULLABLE_IDENTITY_FIELDS = ["version", "document_number", "date", "publisher"] as const;
+
+export const ReferencedIdentitySchema = z
+  .object({
+    title: z.string().min(1),
+    version: z.string().min(1).nullable(),
+    document_number: z.string().min(1).nullable(),
+    date: z.string().min(1).nullable(),
+    publisher: z.string().min(1).nullable(),
+    /**
+     * Bibliographic fields a paper carries and a specification usually does
+     * not. Optional, and each is read off the document. `authors` is the key
+     * `check-library-qa.ts` already reads.
+     */
+    authors: z.array(z.string().min(1)).min(1).optional(),
+    venue: z.string().min(1).optional(),
+    doi: z.string().regex(/^10\.\d{4,9}\/\S+$/).optional(),
+    arxiv: z.string().regex(/^\d{4}\.\d{4,5}v\d+$/, "a VERSIONED arXiv id (archiving-arxiv)").optional(),
+    /** Each nullable field the document does not state, and only those. */
+    not_stated: z.array(z.enum(NULLABLE_IDENTITY_FIELDS)).optional(),
+  })
+  .strict()
+  .superRefine((id, ctx) => {
+    const listed = new Set(id.not_stated ?? []);
+    for (const k of NULLABLE_IDENTITY_FIELDS) {
+      if (id[k] === null && !listed.has(k))
+        ctx.addIssue({ code: z.ZodIssueCode.custom, path: [k], message: `null but not named in not_stated` });
+      if (id[k] !== null && listed.has(k))
+        ctx.addIssue({ code: z.ZodIssueCode.custom, path: ["not_stated"], message: `names ${k}, which has a value` });
+    }
+  });
+
 export const ReferencedSourceSchema = z
   .object({
     $schema: z.literal(REFERENCED_SOURCE_SCHEMA_ID),
-    identity: z
-      .object({
-        title: z.string().min(1),
-        version: z.string().min(1),
-        document_number: z.string().min(1),
-        date: z.string().min(1),
-        publisher: z.string().min(1),
-      })
-      .strict(),
+    identity: ReferencedIdentitySchema,
     source: z
       .object({
         file: z.string().min(1),
