@@ -84,13 +84,13 @@ should go.
 
 ## Where tools are available
 
-A toolset may perform the checks for you. bootstrap-tools' `init` command
+A toolset may perform the checks for you — for example https://github.com/litlfred/bootstrap-tools, whose `init` command
 reads the same declarations, does what a tool can (regenerating README
 sections; switching Pages on when an authenticated `gh` is present), and
 prints each step in these four states with what to do next:
 
 ```sh
-bun run scripts/init.ts --root ../<instance>        # from a bootstrap-tools checkout beside it
+bun run scripts/init.ts --root ../<instance>        # from a toolset checkout beside it
 bun run scripts/init.ts --root ../<instance> --dry-run   # check only
 ```
 

@@ -21,7 +21,7 @@ FOUR STATES, NOT TWO. done; not done; could not determine — the check could no
 
 THE PRIMARY STEP IS DRAWN, not left in the list: A_CheckDocuments, the harness's JSON Schemas and JSON-LD at the IRIs they name, checked first after the declarations are read. Everything after it — directories, README, the site — is either how those documents are reached or how a person reads about them.
 
-WHERE TOOLS ARE AVAILABLE, a toolset may perform the checks: bootstrap-tools' `init` command reads the same declarations, performs what a tool can (README sections; switching Pages on with an authenticated `gh`), and reports each step in these four states. Where they are not, the agent does the same by reading files. The diagram is the same either way.
+WHERE TOOLS ARE AVAILABLE, a toolset may perform the checks: its `init` command, where it has one, reads the same declarations, performs what a tool can (README sections; switching Pages on with an authenticated `gh`), and reports each step in these four states. Where they are not, the agent does the same by reading files. The diagram is the same either way.
 
 NO work-plan element on any activity, and isExecutable is false, for the reasons initialize-harness gives.</bpmn:documentation>
     <bpmn:laneSet id="LaneSet_Process_CompleteInitialization">
