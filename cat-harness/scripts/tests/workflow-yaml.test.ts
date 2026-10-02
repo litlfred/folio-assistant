@@ -143,6 +143,35 @@ describe("GitHub Actions workflows", () => {
     expect(runs).toContain("bun run lint");
     expect(runs).toContain("tsc --noEmit");
   });
+
+  test("a sharded `bun test` covers every shard — the split cannot drop files", () => {
+    // Bean `2i5k`. The job runs as a matrix and each copy runs `bun test` with
+    // `--shard=<n>/<N>` in BUN_OPTIONS. If N ever disagreed with the matrix —
+    // three shards declared, two jobs run — a third of the test files would
+    // silently never run, and every job would still be green.
+    const doc = Bun.YAML.parse(
+      readFileSync(join(WORKFLOW_DIR, "code-quality-gates.yml"), "utf-8"),
+    ) as {
+      jobs: Record<string, {
+        strategy?: { matrix?: { shard?: number[] } };
+        steps: Array<{ run?: string; if?: string; env?: Record<string, string> }>;
+      }>;
+    };
+    const job = doc.jobs.typescript!;
+    const test = job.steps.find((s) => s.run?.trim() === "bun test");
+    expect(test).toBeDefined();
+    const opt = test!.env?.BUN_OPTIONS ?? "";
+    const m = /--shard=\$\{\{ matrix\.shard \}\}\/(\d+)/.exec(opt);
+    expect(m, `bun test must take its shard from the matrix (got BUN_OPTIONS=${opt})`).not.toBeNull();
+    const shards = job.strategy?.matrix?.shard ?? [];
+    const total = Number(m![1]);
+    expect(shards).toEqual(Array.from({ length: total }, (_, i) => i + 1));
+    // And the once-only checks each run on a shard that exists.
+    for (const s of job.steps.filter((x) => x.if)) {
+      const n = Number(/matrix\.shard == (\d+)/.exec(s.if!)?.[1]);
+      expect(shards).toContain(n);
+    }
+  });
 });
 
 /**
