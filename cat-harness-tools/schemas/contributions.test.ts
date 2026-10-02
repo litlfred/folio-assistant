@@ -14,10 +14,10 @@ import {
   ContributionCollisionError,
   composedKindOwner,
   type FolioContribution,
-} from "./contributions";
-import { loadContributions } from "./harness-config";
-import { adapterForKind } from "./block-kinds";
-import { writeInstanceConfig } from "../test/support/instance-fixture.js";
+} from "../../cat-harness/schemas/contributions";
+import { loadContributions } from "../../cat-harness/schemas/harness-config";
+import { adapterForKind } from "../../cat-harness/schemas/block-kinds";
+import { writeInstanceConfig } from "../../cat-harness/test/support/instance-fixture.js";
 
 const TMP = join(import.meta.dir, "__test_contributions__");
 
