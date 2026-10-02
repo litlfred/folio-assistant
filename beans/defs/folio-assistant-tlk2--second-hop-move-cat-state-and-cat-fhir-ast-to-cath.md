@@ -4,8 +4,10 @@ title: 'Second hop: move cat-state and cat-fhir-ast/* to cat/<harness>/<name> (h
 status: in-progress
 type: task
 priority: normal
+tags:
+    - ready-to-close
 created_at: 2026-10-02T21:33:58Z
-updated_at: 2026-10-02T21:36:44Z
+updated_at: 2026-10-02T21:41:29Z
 parent: folio-assistant-fs43
 ---
 
@@ -88,7 +90,48 @@ The family dry runs (2 and 3) must list exactly ONE branch each.
 - any line reads STOP or KEPT.
 
 ## Done when
-- [ ] `cat/cat-harness/state` at `d913ea45b8eb`, and no `cat-state`
-- [ ] `cat/fhir-harness/fhir-ast/smart.who.int.trust` at `f254e5bb6f6b`, and no `cat-fhir-ast/smart.who.int.trust`
-- [ ] `cat/fhir-harness/fhir-ast/smart.who.int.base` at `eb7bed8395af`, and no `cat-fhir-ast/smart.who.int.base`
+- [x] `cat/cat-harness/state` at `d913ea45b8eb`, and no `cat-state`
+- [x] `cat/fhir-harness/fhir-ast/smart.who.int.trust` at `f254e5bb6f6b`, and no `cat-fhir-ast/smart.who.int.trust`
+- [x] `cat/fhir-harness/fhir-ast/smart.who.int.base` at `eb7bed8395af`, and no `cat-fhir-ast/smart.who.int.base`
 - [ ] the coordinator has verified and closed it
+
+## Evidence (2026-10-02 21:36–21:40 UTC)
+
+Steps 2+3 gate was overridden by the owner (direct `Do bean` directive).
+SSH override: `RENAME_SPECIAL_BRANCH_URL` used for all three.
+
+### 1. cat-state → cat/cat-harness/state (litlfred/folio-assistant)
+
+```
+APPLY — litlfred/folio-assistant: 1 branch(es)
+  cat-state (d913ea45b8eb) -> cat/cat-harness/state
+    created cat/cat-harness/state at d913ea45b8eb (verified)
+    removed cat-state
+Now on litlfred/folio-assistant:
+    cat/cat-harness/state
+DONE
+```
+
+### 2. cat-fhir-ast/smart.who.int.trust → cat/fhir-harness/fhir-ast/smart.who.int.trust (litlfred/smart-trust)
+
+```
+APPLY — litlfred/smart-trust: 1 branch(es)
+  cat-fhir-ast/smart.who.int.trust (f254e5bb6f6b) -> cat/fhir-harness/fhir-ast/smart.who.int.trust
+    created cat/fhir-harness/fhir-ast/smart.who.int.trust at f254e5bb6f6b (verified)
+    removed cat-fhir-ast/smart.who.int.trust
+Now on litlfred/smart-trust:
+    cat/fhir-harness/fhir-ast/smart.who.int.trust
+DONE
+```
+
+### 3. cat-fhir-ast/smart.who.int.base → cat/fhir-harness/fhir-ast/smart.who.int.base (litlfred/smart-base)
+
+```
+APPLY — litlfred/smart-base: 1 branch(es)
+  cat-fhir-ast/smart.who.int.base (eb7bed8395af) -> cat/fhir-harness/fhir-ast/smart.who.int.base
+    created cat/fhir-harness/fhir-ast/smart.who.int.base at eb7bed8395af (verified)
+    removed cat-fhir-ast/smart.who.int.base
+Now on litlfred/smart-base:
+    cat/fhir-harness/fhir-ast/smart.who.int.base
+DONE
+```
