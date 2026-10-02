@@ -6783,6 +6783,41 @@
       "status": "candidate"
     },
     {
+      "id": "pdf-structure.pdfmetadataschema.title_correction",
+      "prefLabel": "PdfMetadataSchema.title_correction",
+      "definition": "An EDITORIAL correction, outranking every extracted title (bean `w6fu`, step b). Authored, never produced by a rung, and carried over by a re-ingest. `basis` says what the title was read from, so it can be checked rather than trusted.",
+      "source": "cat-harness/schemas/pdf-structure.ts#PdfMetadataSchema.title_correction",
+      "status": "candidate"
+    },
+    {
+      "id": "pdf-structure.pdfmetadataschema.title_evidence",
+      "prefLabel": "PdfMetadataSchema.title_evidence",
+      "definition": "Every candidate the resolver saw, and which sources agreed — the record an editor decides from.",
+      "source": "cat-harness/schemas/pdf-structure.ts#PdfMetadataSchema.title_evidence",
+      "status": "candidate"
+    },
+    {
+      "id": "pdf-structure.pdfmetadataschema.title_raw",
+      "prefLabel": "PdfMetadataSchema.title_raw",
+      "definition": "The text walk's title before resolution, kept so a re-run resolves from it rather than from its own answer.",
+      "source": "cat-harness/schemas/pdf-structure.ts#PdfMetadataSchema.title_raw",
+      "status": "candidate"
+    },
+    {
+      "id": "pdf-structure.pdfmetadataschema.title_source",
+      "prefLabel": "PdfMetadataSchema.title_source",
+      "definition": "Where `title` came from (bean `w6fu`, `scripts/_pdf_title.py`): the PDF's `Title` metadata, its first-page heading or its outline when another source CORROBORATES it, else the text walk's title (`text`) or nothing (`filename`, and the manifest falls back to the entry id).",
+      "source": "cat-harness/schemas/pdf-structure.ts#PdfMetadataSchema.title_source",
+      "status": "candidate"
+    },
+    {
+      "id": "pdf-structure.pdfmetadataschema.title_verified",
+      "prefLabel": "PdfMetadataSchema.title_verified",
+      "definition": "False when no source corroborated the title: the raw title was kept, not guessed at.",
+      "source": "cat-harness/schemas/pdf-structure.ts#PdfMetadataSchema.title_verified",
+      "status": "candidate"
+    },
+    {
       "id": "pdf-structure.pdfstructureschema.granularity",
       "prefLabel": "PdfStructureSchema.granularity",
       "definition": "`page`: written by `pdf-pages.py`, one section per page. `slide`: written by `slides-structure.py`, one section per slide (bean `scfh`).",

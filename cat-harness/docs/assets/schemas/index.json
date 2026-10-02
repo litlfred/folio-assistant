@@ -21898,6 +21898,41 @@
           "type": "z.record(z.string(), z.unknown())",
           "optional": false,
           "array": false
+        },
+        {
+          "name": "title_source",
+          "type": "z.enum([\"metadata\", \"heading\", \"outline\", \"text\", \"filename\"]).optional()",
+          "optional": true,
+          "array": false,
+          "doc": "Where `title` came from (bean `w6fu`, `scripts/_pdf_title.py`):"
+        },
+        {
+          "name": "title_verified",
+          "type": "z.boolean().optional()",
+          "optional": true,
+          "array": false,
+          "doc": "False when no source corroborated the title: the raw title was kept, not guessed at."
+        },
+        {
+          "name": "title_raw",
+          "type": "z.string().nullable().optional()",
+          "optional": true,
+          "array": false,
+          "doc": "The text walk's title before resolution, kept so a re-run resolves from it rather than from its own answer."
+        },
+        {
+          "name": "title_evidence",
+          "type": "z.record(z.string(), z.unknown()).optional()",
+          "optional": true,
+          "array": false,
+          "doc": "Every candidate the resolver saw, and which sources agreed — the record an editor decides from."
+        },
+        {
+          "name": "title_correction",
+          "type": "z .object({ title: z.string().min(1), basis: z.string().min(1), corrected_on: z.string().regex(/^\\d{4}-\\d{2}-\\d{2}$/), …",
+          "optional": true,
+          "array": false,
+          "doc": "An EDITORIAL correction, outranking every extracted title (bean `w6fu`,"
         }
       ],
       "extendsNames": [],

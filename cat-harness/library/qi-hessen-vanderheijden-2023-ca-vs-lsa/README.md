@@ -1,5 +1,5 @@
 <!-- kg:subgraph:begin -->
-# RESEARCH Improving information retrieval through correspondence analysis instead of latent semantic analysis Qianqian Qi1 · David J. Hessen1 · Peter G.M. van der Heijden1,2 © The Author(s) 2023
+# Improving information retrieval through correspondence analysis instead of latent semantic analysis
 
 ingested source material — attributed to its document, not folio content
 
