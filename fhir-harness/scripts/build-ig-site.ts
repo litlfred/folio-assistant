@@ -41,6 +41,7 @@ import { parse as parseYaml } from "yaml";
 import { describeSiteData, igSiteData, type IgSiteDataResult } from "./ig-site-data";
 import { artifactPageName } from "../../folio-assistant-core/schemas/fhir-artifact-index.js";
 import { wrapRaw } from "../../cat-harness/scripts/lib/liquid-raw.ts";
+import type { IgReleases } from "../schemas/ig-releases.ts";
 
 /** One page's navigation, from `sushi-config.yaml` `pages:`. */
 export interface PageNav {
@@ -190,6 +191,12 @@ export interface StageOptions {
    * business (`stage-ig-sites.ts`).
    */
   fills?: ReadonlyArray<{ marker: string; body: string; data: Record<string, unknown> }>;
+  /**
+   * The IG's GitHub releases as pointers to their binary assets
+   * (`fhir-artifact-index/releases.json`, `ig-releases/v1`). Given, a
+   * `releases` page lists them; the bytes stay on GitHub (bean `b8ip`).
+   */
+  releases?: IgReleases;
 }
 
 /** The fields of a `folio-fhir-artifact/v1` entry this build reads. */
@@ -326,6 +333,28 @@ export function tocPage(pages: unknown, has: (stem: string) => boolean): string 
  * template lives"), found relative to this one.
  */
 export const ARTIFACTS_TEMPLATE_PATH = resolve(import.meta.dir, "templates/ig-site/artifacts.liquid");
+export const RELEASES_TEMPLATE_PATH = resolve(import.meta.dir, "templates/ig-site/releases.liquid");
+
+/** A byte count as the Publisher's download pages show one: one decimal, in KB or MB. */
+export function sizeLabel(bytes: number): string {
+  return bytes >= 1e6 ? `${(bytes / 1e6).toFixed(1)} MB` : `${Math.max(1, Math.round(bytes / 1e3))} KB`;
+}
+
+/** `site.data.ig_releases`, which `releases.liquid` reads: every value computed here, none in Liquid. */
+export function releaseVariables(r: IgReleases) {
+  return {
+    repository: r.repository,
+    read_at: r.readAt,
+    releases: r.releases.map((x) => ({
+      tag: x.tag,
+      name: x.name ?? x.tag,
+      url: x.url,
+      published: x.publishedAt.slice(0, 10),
+      prerelease: x.prerelease,
+      assets: x.assets.map((a) => ({ name: a.name, url: a.url, size: sizeLabel(a.bytes), digest: a.digest ?? null })),
+    })),
+  };
+}
 
 /**
  * The four roles a theme palette carries (`ThemePaletteSchema` in
@@ -481,6 +510,13 @@ export function stageIgSite(igSrc: string, out: string, opts: StageOptions = {})
     const n = nav.get("artifacts") ?? { title: "Artifacts Summary", navOrder: 999, navExclude: true };
     writeFileSync(join(out, "artifacts.md"), frontMatter(n) + readFileSync(ARTIFACTS_TEMPLATE_PATH, "utf-8"));
     generated.push("artifacts.md");
+  }
+  if (opts.releases && !pages.includes("releases.md")) {
+    // Listed in the nav, last: the owner asked for the release binaries to be
+    // findable from the IG's pages (bean `b8ip`).
+    writeFileSync(join(out, "releases.md"), frontMatter(nav.get("releases") ?? { title: "Releases", navOrder: 998 }) + readFileSync(RELEASES_TEMPLATE_PATH, "utf-8"));
+    writeFileSync(join(out, "_data", "ig_releases.json"), JSON.stringify(releaseVariables(opts.releases), null, 2) + "\n");
+    generated.push("releases.md");
   }
   if (!pages.includes("toc.md")) {
     const has = (stem: string) => pages.includes(`${stem}.md`) || generated.includes(`${stem}.md`) || stem === "toc";

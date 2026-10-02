@@ -243,6 +243,55 @@
       "definition": "A URL for the harvest run, if one exists.",
       "source": "fhir-harness/schemas/ig-metadata-index.ts#IgMetadataSourceSchema.runUrl",
       "status": "candidate"
+    },
+    {
+      "id": "ig-releases.igreleaseschema.commitish",
+      "prefLabel": "IgReleaseSchema.commitish",
+      "definition": "The commit the tag points at, where GitHub reports it.",
+      "source": "fhir-harness/schemas/ig-releases.ts#IgReleaseSchema.commitish",
+      "status": "candidate"
+    },
+    {
+      "id": "ig-releases.igreleaseschema.url",
+      "prefLabel": "IgReleaseSchema.url",
+      "definition": "The release's page on GitHub.",
+      "source": "fhir-harness/schemas/ig-releases.ts#IgReleaseSchema.url",
+      "status": "candidate"
+    },
+    {
+      "id": "ig-releases.igreleasesschema.readat",
+      "prefLabel": "IgReleasesSchema.readAt",
+      "definition": "When they were read (UTC date). A release made later is not here until the next read.",
+      "source": "fhir-harness/schemas/ig-releases.ts#IgReleasesSchema.readAt",
+      "status": "candidate"
+    },
+    {
+      "id": "ig-releases.igreleasesschema.releases",
+      "prefLabel": "IgReleasesSchema.releases",
+      "definition": "Newest first, as GitHub lists them. Drafts are never recorded: they are not published.",
+      "source": "fhir-harness/schemas/ig-releases.ts#IgReleasesSchema.releases",
+      "status": "candidate"
+    },
+    {
+      "id": "ig-releases.igreleasesschema.repository",
+      "prefLabel": "IgReleasesSchema.repository",
+      "definition": "`owner/repo` the releases were read from.",
+      "source": "fhir-harness/schemas/ig-releases.ts#IgReleasesSchema.repository",
+      "status": "candidate"
+    },
+    {
+      "id": "ig-releases.releaseassetschema.digest",
+      "prefLabel": "ReleaseAssetSchema.digest",
+      "definition": "`sha256:<hex>` as GitHub reports it; absent on assets uploaded before GitHub computed digests.",
+      "source": "fhir-harness/schemas/ig-releases.ts#ReleaseAssetSchema.digest",
+      "status": "candidate"
+    },
+    {
+      "id": "ig-releases.releaseassetschema.url",
+      "prefLabel": "ReleaseAssetSchema.url",
+      "definition": "Where to fetch the bytes: GitHub's `browser_download_url`.",
+      "source": "fhir-harness/schemas/ig-releases.ts#ReleaseAssetSchema.url",
+      "status": "candidate"
     }
   ]
 }

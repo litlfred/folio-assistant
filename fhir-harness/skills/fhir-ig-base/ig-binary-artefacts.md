@@ -54,15 +54,27 @@ because each copy is under the limit.
 
 ## Where each one goes
 
-1. **A preview carries no binaries.** A reviewer reads pages. The package
-   they might want is the release's, or the build artefact of the CI run.
+Owner ruling, 2026-10-02: *"previews dont get binary, only releaes. KG should
+point to release binaries so people can materialze if they want. also so can
+list on ig justthedocs pages somewhere"*.
+
+1. **A preview carries no binaries.** A reviewer reads pages, and binaries
+   are published only on releases.
 2. **A release carries the package and whatever the IG promises to
    distribute.** Upload them as release assets, and link the release from
    the downloads page. The link names the repository it is built in, never a
    hard-coded upstream.
-3. **The published IG's root may keep `package.tgz`**, since FHIR tooling
+3. **The knowledge graph points at release assets and does not hold them.**
+   `fhir-artifact-index/releases.json` (`ig-releases/v1`) records each asset's
+   name, size, digest and download URL. Anyone who wants the bytes fetches
+   them from there. `ingest-ig-releases` (Tool of the same name) writes it
+   from GitHub's release list.
+4. **The IG's just-the-docs site lists them** on a generated `releases`
+   page (`templates/ig-site/releases.liquid`): file, size and SHA-256 per
+   release, each linking to the asset.
+5. **The published IG's root may keep `package.tgz`**, since FHIR tooling
    fetches `<canonical>/package.tgz`. Nothing else needs to be there.
-4. **What this pipeline renders from the package reads it from the served
+6. **What this pipeline renders from the package reads it from the served
    knowledge graph**, never from a pages branch. The resource JSON views
    fetch the `package.tgz` that `ingest-ig-artifacts --materialize-package`
    holds in `fhir-artifact-index/` (bean `680p`).

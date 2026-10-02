@@ -35,6 +35,7 @@ import { basename, join, resolve } from "node:path";
 import { instanceRootsIn, readDeclaration } from "../../cat-harness/schemas/cat-harness.js";
 import { instanceThemes } from "../../cat-harness/schemas/theme-by-ref.js";
 import { describeStage, stageIgSite, type IgMenu, type IndexedArtifact, type SitePalette, type StageOptions } from "./build-ig-site";
+import { IgReleasesSchema, type IgReleases } from "../schemas/ig-releases.ts";
 
 interface MenuFile extends IgMenu {
   source?: { kind?: string; of?: string; ref?: string };
@@ -74,6 +75,17 @@ export function artifactsFor(root: string): StageOptions["artifacts"] {
   if (!existsSync(index) || !existsSync(join(root, "docs", "artifact"))) return undefined;
   const ix = JSON.parse(readFileSync(index, "utf-8")) as { artifacts: IndexedArtifact[] };
   return { list: ix.artifacts, pagesHref: "../artifact/" };
+}
+
+/**
+ * The instance's recorded GitHub releases (`fhir-artifact-index/releases.json`),
+ * validated, for the IG site's `releases` page; undefined when none was
+ * recorded. A file that does not validate throws: a wrong download link is
+ * worse than none.
+ */
+export function releasesFor(root: string): IgReleases | undefined {
+  const at = join(root, "fhir-artifact-index", "releases.json");
+  return existsSync(at) ? IgReleasesSchema.parse(JSON.parse(readFileSync(at, "utf-8"))) : undefined;
 }
 
 /** Every instance whose IG menu records a cloneable sushi-config source. */
@@ -123,6 +135,7 @@ if (import.meta.main) {
       menu: JSON.parse(readFileSync(ig.menuPath, "utf-8")) as IgMenu,
       remoteTheme: opt("--remote-theme"),
       artifacts: artifactsFor(ig.root),
+      releases: releasesFor(ig.root),
       // The IG's post-processing output, where its source holds only a marker.
       fills: [dakHubFill(ig.root)].filter((x) => x !== undefined),
     });

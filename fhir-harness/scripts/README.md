@@ -21,6 +21,7 @@ Part of [FHIR IG Harness](../README.md) 0.1.0, declared as `fhir-ig-scripts`, ho
 | [`ig-site-data.ts`](ig-site-data.ts) | a file |  |
 | [`ingest-ig-chrome.ts`](ingest-ig-chrome.ts) | a file |  |
 | [`ingest-ig-menu.ts`](ingest-ig-menu.ts) | a file |  |
+| [`ingest-ig-releases.ts`](ingest-ig-releases.ts) | a file |  |
 | [`p2-refusals.test.ts`](p2-refusals.test.ts) | a file |  |
 | [`p2-refusals.ts`](p2-refusals.ts) | a file |  |
 | [`pin-ig-terminology.ts`](pin-ig-terminology.ts) | a file |  |
@@ -29,6 +30,6 @@ Part of [FHIR IG Harness](../README.md) 0.1.0, declared as `fhir-ig-scripts`, ho
 | [`resource-views.ts`](resource-views.ts) | a file |  |
 | [`stage-ig-sites.test.ts`](stage-ig-sites.test.ts) | a file |  |
 | [`stage-ig-sites.ts`](stage-ig-sites.ts) | a file |  |
-| [`templates/`](templates/) | 11 files | |
+| [`templates/`](templates/) | 12 files | |
 | [`tests/`](tests/) | 1 file | |
 <!-- kg:subgraph:end -->

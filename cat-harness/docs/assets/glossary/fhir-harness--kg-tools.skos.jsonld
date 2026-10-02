@@ -314,6 +314,26 @@
       "skos:note": "candidate"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/ns#glossary/kg-tools/ingest-ig-releases",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/ns#glossary/kg-tools"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Record an IG's GitHub releases as pointers to their binary assets"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Read an IG repository's GitHub releases and write `fhir-artifact-index/releases.json` (`ig-releases/v1`): each asset's name, size, SHA-256 digest and download URL, never its bytes. The IG site's generated `releases` page lists them (bean `b8ip`)."
+        }
+      ],
+      "skos:notation": "ingest-ig-releases",
+      "dcterms:source": "fhir-harness/tools/index.ts#ingest-ig-releases",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/ns#glossary/kg-tools/jsonld-vocabularies",
       "@type": "skos:Concept",
       "skos:inScheme": {

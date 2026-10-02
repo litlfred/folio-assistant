@@ -9,5 +9,6 @@ Part of [SMART Base](../README.md) 0.1.0, declared as `smart-base-artifact-index
 |---|---|---|
 | [`chrome.json`](chrome.json) | data |  |
 | [`index.json`](index.json) | smart.who.int.base — artefact index |  |
+| [`releases.json`](releases.json) | data |  |
 | [`dak/`](dak/) | 138 files | |
 <!-- kg:subgraph:end -->

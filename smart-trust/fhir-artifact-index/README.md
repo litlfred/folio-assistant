@@ -10,5 +10,6 @@ Part of [smart-trust](../README.md) 0.1.0, declared as `smart-trust-artifact-ind
 | [`index.json`](index.json) | smart.who.int.trust — artefact index |  |
 | [`menu.json`](menu.json) | data |  |
 | [`package.tgz`](package.tgz) | a file |  |
+| [`releases.json`](releases.json) | data |  |
 | [`dak/`](dak/) | 70 files | |
 <!-- kg:subgraph:end -->

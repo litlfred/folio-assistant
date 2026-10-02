@@ -8,7 +8,8 @@ import { existsSync, mkdirSync, mkdtempSync, readFileSync, rmSync, writeFileSync
 import { tmpdir } from "node:os";
 import { spawnSync } from "node:child_process";
 import { join } from "node:path";
-import { ARTIFACTS_TEMPLATE_PATH, artifactVariables, colourScheme, contrast, dedupeIds, includeTargets, pageNav, stageIgSite, tocPage, type StageResult } from "./build-ig-site";
+import { ARTIFACTS_TEMPLATE_PATH, artifactVariables, colourScheme, contrast, dedupeIds, includeTargets, pageNav, RELEASES_TEMPLATE_PATH, releaseVariables, sizeLabel, stageIgSite, tocPage, type StageResult } from "./build-ig-site";
+import type { IgReleases } from "../schemas/ig-releases.ts";
 import { artifactPageName } from "../../folio-assistant-core/schemas/fhir-artifact-index.js";
 
 let dir: string;
@@ -249,6 +250,60 @@ describe("post-processing fills: content a step writes after the Publisher, at a
       expect(page).toContain("Intro.\n\nfilled {{ page.k.v }}");
       expect(page).not.toContain("<!-- MARK -->");
       expect(res.fills).toEqual({ filled: ["hub.md (<!-- MARK -->)"], unused: ["<!-- NOWHERE -->"] });
+    } finally {
+      rmSync(d, { recursive: true, force: true });
+    }
+  });
+});
+
+describe("the releases page: pointers to release binaries, never the bytes (bean b8ip)", () => {
+  const releases: IgReleases = {
+    $schema: "ig-releases/v1",
+    repository: "o/r",
+    readAt: "2026-10-02",
+    releases: [
+      {
+        tag: "v1.0.0",
+        url: "https://github.com/o/r/releases/tag/v1.0.0",
+        publishedAt: "2026-03-23T17:39:19Z",
+        prerelease: false,
+        assets: [
+          { name: "package.tgz", url: "https://github.com/o/r/releases/download/v1.0.0/package.tgz", bytes: 915317, digest: `sha256:${"a".repeat(64)}` },
+          { name: "package.db", url: "https://github.com/o/r/releases/download/v1.0.0/package.db", bytes: 13864960 },
+        ],
+      },
+    ],
+  };
+
+  test("sizes are labelled as a reader reads them", () => {
+    expect(sizeLabel(915317)).toBe("915 KB");
+    expect(sizeLabel(13864960)).toBe("13.9 MB");
+    expect(sizeLabel(10)).toBe("1 KB");
+  });
+
+  test("every value the template shows is computed here", () => {
+    const v = releaseVariables(releases);
+    expect(v.releases[0]).toMatchObject({ tag: "v1.0.0", name: "v1.0.0", published: "2026-03-23", prerelease: false });
+    expect(v.releases[0].assets.map((a) => [a.name, a.size, a.digest])).toEqual([
+      ["package.tgz", "915 KB", `sha256:${"a".repeat(64)}`],
+      ["package.db", "13.9 MB", null],
+    ]);
+  });
+
+  test("given releases, the page and its data are written and reported as generated; absent, neither is", () => {
+    const d = mkdtempSync(join(tmpdir(), "ig-rel-"));
+    try {
+      const src = join(d, "src");
+      mkdirSync(join(src, "input", "pagecontent"), { recursive: true });
+      writeFileSync(join(src, "sushi-config.yaml"), "id: x\ncanonical: http://x\nname: X\nversion: 0.1.0\nfhirVersion: 4.0.1\npages:\n  index.md:\n    title: Home\n");
+      writeFileSync(join(src, "input", "pagecontent", "index.md"), "# Home\n");
+      const res = stageIgSite(src, join(d, "with"), { releases });
+      expect(res.generated).toContain("releases.md");
+      expect(readFileSync(join(d, "with", "releases.md"), "utf-8")).toContain(readFileSync(RELEASES_TEMPLATE_PATH, "utf-8"));
+      expect(JSON.parse(readFileSync(join(d, "with", "_data", "ig_releases.json"), "utf-8"))).toEqual(releaseVariables(releases));
+      const none = stageIgSite(src, join(d, "without"), {});
+      expect(none.generated).not.toContain("releases.md");
+      expect(existsSync(join(d, "without", "_data", "ig_releases.json"))).toBe(false);
     } finally {
       rmSync(d, { recursive: true, force: true });
     }

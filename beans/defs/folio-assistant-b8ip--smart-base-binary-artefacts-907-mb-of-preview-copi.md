@@ -1,11 +1,11 @@
 ---
 # folio-assistant-b8ip
 title: 'smart-base binary artefacts: 907 MB of preview copies on gh-pages, release carries only package.tgz, downloads page promises 19 assets'
-status: todo
+status: in-progress
 type: task
 priority: normal
 created_at: 2026-10-02T06:29:45Z
-updated_at: 2026-10-02T06:51:49Z
+updated_at: 2026-10-02T06:57:15Z
 parent: folio-assistant-uhkv
 ---
 
@@ -33,3 +33,22 @@ Related, and NOT the same question: `rjug` §2 (whether a binary release is a de
 - [ ] the owner has chosen among 1–3
 - [ ] the chosen changes are proposed as PRs on the WHO repositories (or the fork), not here
 - [ ] `ig-binary-audit` re-run on the branch after the change, with the numbers recorded here
+
+## Owner ruling 2026-10-02
+
+*"previews dont get binary, only releaes. KG should point to release binaries so people can materialze if they want. also so can list on ig justthedocs pages somewhere"*
+
+1. **A preview carries no Publisher binaries.** Releases are the only place they are published.
+2. **The KG holds pointers, not bytes.** Each release asset is recorded with its name, size, digest and download URL, so anyone can materialise it on demand.
+3. **The IG's just-the-docs site lists them**, on a page generated from those pointers.
+
+Option 3 of the proposal (removing the existing preview binaries from `gh-pages`) is a deletion. It is still not decided, and it is not part of this ruling.
+
+## 2026-10-02: pointers and page built
+
+- `fhir-harness/schemas/ig-releases.ts` declares `ig-releases/v1`. `ingest-ig-releases.ts` (a Tool) writes `<instance>/fhir-artifact-index/releases.json` from GitHub's release list. It records pointers only: name, size, SHA-256 and download URL.
+- **smart-base:** 2 releases and 10 asset pointers, from `litlfred/smart-base`.
+- **smart-trust:** 0 releases.
+- `build-ig-site` writes a generated `releases` page when the instance has a record. I rendered it in Jekyll with smart-base's record: 10 download links and 2 tables.
+- **Gap:** smart-base has no `menu.json`, so `stage-ig-sites` does not stage its IG site, and the page only shows on smart-trust's site, which has no releases yet.
+- **Open, for the owner:** our own staging preview still serves `smart-trust/fhir-artifact-index/package.tgz` (228,587 bytes), which the resource JSON views read in the browser. "Previews dont get binary" would remove it, so the views would need another source.
