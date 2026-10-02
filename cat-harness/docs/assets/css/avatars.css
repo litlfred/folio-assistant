@@ -248,6 +248,13 @@
   mask-image: var(--fa-avatar-glyph);
 }
 
+.fa-avatar[data-fa-kind="vocab-mapping"] {
+  /* a crosswalk — source rows on the left, lines crossing to target rows on the right — one value carried into another vocabulary */
+  --fa-avatar-glyph: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M3 6h4M3 12h4M3 18h4M8 6l8 6M8 12l8-6M8 18h8M17 6h4M17 12h4M17 18h4' fill='none' stroke='black' stroke-width='1.7' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+  -webkit-mask-image: var(--fa-avatar-glyph);
+  mask-image: var(--fa-avatar-glyph);
+}
+
 .fa-avatar[data-fa-kind="uml"] {
   /* a class box with an association leaving it — a diagram of what the nodes are, derived and never drawn by hand */
   --fa-avatar-glyph: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M3 4h9v12H3zM3 8h9M12 10h4M16 7h5v6h-5z' fill='none' stroke='black' stroke-width='1.7' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
@@ -469,6 +476,7 @@
   .fa-avatar[data-fa-kind="external-schema"] { background-color: hsl(208 46% 34%); }
   .fa-avatar[data-fa-kind="substrate-snapshot"] { background-color: hsl(216 46% 34%); }
   .fa-avatar[data-fa-kind="code-list"] { background-color: hsl(180 46% 34%); }
+  .fa-avatar[data-fa-kind="vocab-mapping"] { background-color: hsl(120 46% 34%); }
   .fa-avatar[data-fa-kind="uml"] { background-color: hsl(220 46% 34%); }
   .fa-avatar[data-fa-kind="swimlane-glossary"] { background-color: hsl(92 46% 34%); }
   .fa-avatar[data-fa-kind="glossary"] { background-color: hsl(84 46% 34%); }
@@ -530,6 +538,7 @@
     .fa-avatar[data-fa-kind="external-schema"] { background-color: hsl(208 46% 34%); }
     .fa-avatar[data-fa-kind="substrate-snapshot"] { background-color: hsl(216 46% 34%); }
     .fa-avatar[data-fa-kind="code-list"] { background-color: hsl(180 46% 34%); }
+    .fa-avatar[data-fa-kind="vocab-mapping"] { background-color: hsl(120 46% 34%); }
     .fa-avatar[data-fa-kind="uml"] { background-color: hsl(220 46% 34%); }
     .fa-avatar[data-fa-kind="swimlane-glossary"] { background-color: hsl(92 46% 34%); }
     .fa-avatar[data-fa-kind="glossary"] { background-color: hsl(84 46% 34%); }
@@ -592,6 +601,7 @@
   .fa-avatar[data-fa-kind="external-schema"] { background-color: hsl(208 42% 72%); }
   .fa-avatar[data-fa-kind="substrate-snapshot"] { background-color: hsl(216 42% 72%); }
   .fa-avatar[data-fa-kind="code-list"] { background-color: hsl(180 42% 72%); }
+  .fa-avatar[data-fa-kind="vocab-mapping"] { background-color: hsl(120 42% 72%); }
   .fa-avatar[data-fa-kind="uml"] { background-color: hsl(220 42% 72%); }
   .fa-avatar[data-fa-kind="swimlane-glossary"] { background-color: hsl(92 42% 72%); }
   .fa-avatar[data-fa-kind="glossary"] { background-color: hsl(84 42% 72%); }
@@ -653,6 +663,7 @@
     .fa-avatar[data-fa-kind="external-schema"] { background-color: hsl(208 42% 72%); }
     .fa-avatar[data-fa-kind="substrate-snapshot"] { background-color: hsl(216 42% 72%); }
     .fa-avatar[data-fa-kind="code-list"] { background-color: hsl(180 42% 72%); }
+    .fa-avatar[data-fa-kind="vocab-mapping"] { background-color: hsl(120 42% 72%); }
     .fa-avatar[data-fa-kind="uml"] { background-color: hsl(220 42% 72%); }
     .fa-avatar[data-fa-kind="swimlane-glossary"] { background-color: hsl(92 42% 72%); }
     .fa-avatar[data-fa-kind="glossary"] { background-color: hsl(84 42% 72%); }
@@ -717,6 +728,7 @@
   .fa-avatar[data-fa-kind="external-schema"][data-fa-trash="true"] { background-color: hsl(208 16% 52%); }
   .fa-avatar[data-fa-kind="substrate-snapshot"][data-fa-trash="true"] { background-color: hsl(216 16% 52%); }
   .fa-avatar[data-fa-kind="code-list"][data-fa-trash="true"] { background-color: hsl(180 16% 52%); }
+  .fa-avatar[data-fa-kind="vocab-mapping"][data-fa-trash="true"] { background-color: hsl(120 16% 52%); }
   .fa-avatar[data-fa-kind="uml"][data-fa-trash="true"] { background-color: hsl(220 16% 52%); }
   .fa-avatar[data-fa-kind="swimlane-glossary"][data-fa-trash="true"] { background-color: hsl(92 16% 52%); }
   .fa-avatar[data-fa-kind="glossary"][data-fa-trash="true"] { background-color: hsl(84 16% 52%); }
@@ -777,6 +789,7 @@
     .fa-avatar[data-fa-kind="external-schema"][data-fa-trash="true"] { background-color: hsl(208 16% 52%); }
     .fa-avatar[data-fa-kind="substrate-snapshot"][data-fa-trash="true"] { background-color: hsl(216 16% 52%); }
     .fa-avatar[data-fa-kind="code-list"][data-fa-trash="true"] { background-color: hsl(180 16% 52%); }
+    .fa-avatar[data-fa-kind="vocab-mapping"][data-fa-trash="true"] { background-color: hsl(120 16% 52%); }
     .fa-avatar[data-fa-kind="uml"][data-fa-trash="true"] { background-color: hsl(220 16% 52%); }
     .fa-avatar[data-fa-kind="swimlane-glossary"][data-fa-trash="true"] { background-color: hsl(92 16% 52%); }
     .fa-avatar[data-fa-kind="glossary"][data-fa-trash="true"] { background-color: hsl(84 16% 52%); }
@@ -837,6 +850,7 @@
   .fa-avatar[data-fa-kind="external-schema"][data-fa-trash="true"] { background-color: hsl(208 14% 56%); }
   .fa-avatar[data-fa-kind="substrate-snapshot"][data-fa-trash="true"] { background-color: hsl(216 14% 56%); }
   .fa-avatar[data-fa-kind="code-list"][data-fa-trash="true"] { background-color: hsl(180 14% 56%); }
+  .fa-avatar[data-fa-kind="vocab-mapping"][data-fa-trash="true"] { background-color: hsl(120 14% 56%); }
   .fa-avatar[data-fa-kind="uml"][data-fa-trash="true"] { background-color: hsl(220 14% 56%); }
   .fa-avatar[data-fa-kind="swimlane-glossary"][data-fa-trash="true"] { background-color: hsl(92 14% 56%); }
   .fa-avatar[data-fa-kind="glossary"][data-fa-trash="true"] { background-color: hsl(84 14% 56%); }
@@ -897,6 +911,7 @@
     .fa-avatar[data-fa-kind="external-schema"][data-fa-trash="true"] { background-color: hsl(208 14% 56%); }
     .fa-avatar[data-fa-kind="substrate-snapshot"][data-fa-trash="true"] { background-color: hsl(216 14% 56%); }
     .fa-avatar[data-fa-kind="code-list"][data-fa-trash="true"] { background-color: hsl(180 14% 56%); }
+    .fa-avatar[data-fa-kind="vocab-mapping"][data-fa-trash="true"] { background-color: hsl(120 14% 56%); }
     .fa-avatar[data-fa-kind="uml"][data-fa-trash="true"] { background-color: hsl(220 14% 56%); }
     .fa-avatar[data-fa-kind="swimlane-glossary"][data-fa-trash="true"] { background-color: hsl(92 14% 56%); }
     .fa-avatar[data-fa-kind="glossary"][data-fa-trash="true"] { background-color: hsl(84 14% 56%); }
