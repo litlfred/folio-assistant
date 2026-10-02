@@ -28,6 +28,7 @@ WRAPPED=(
   .claude/skills/hooks/session-start.sh
   cat-harness/scripts/audit-library-coherence.sh
   cat-harness/scripts/check-branch-todos.sh
+  cat-harness/scripts/rename-special-branch.sh
   cat-harness/scripts/check-no-lean-artifacts.sh
   cat-harness/scripts/check-todos.sh
   cat-harness/scripts/check-upstream.sh
