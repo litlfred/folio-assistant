@@ -2,7 +2,7 @@
   "$schema": "folio-schema-graph/v1",
   "tile": {
     "schemas": {
-      "count": 193,
+      "count": 191,
       "unit": "modules"
     }
   },
@@ -291,30 +291,6 @@
       "isTest": false
     },
     {
-      "module": "cat-harness/schemas/dak-content-type.ts",
-      "instance": "cat-harness",
-      "name": "dak-content-type",
-      "graphNode": "schema",
-      "summary": "The `dak` and `sushi` content types — registered by the WHO layer, not by core.",
-      "isTest": false
-    },
-    {
-      "module": "cat-harness/schemas/dak.test.ts",
-      "instance": "cat-harness",
-      "name": "dak.test",
-      "graphNode": "undeclared",
-      "summary": "What the DAK placeholder promises, and — more usefully — what it promises",
-      "isTest": true
-    },
-    {
-      "module": "cat-harness/schemas/dak.ts",
-      "instance": "cat-harness",
-      "name": "dak",
-      "graphNode": "schema",
-      "summary": "The **DAK** content type — a repository that is a WHO SMART Guidelines",
-      "isTest": false
-    },
-    {
       "module": "cat-harness/schemas/decision-methodology-context.ts",
       "instance": "cat-harness",
       "name": "decision-methodology-context",
@@ -401,6 +377,14 @@
       "name": "document-image",
       "graphNode": "schema",
       "summary": "An image placed on a page of an ingested document — bean `d5f1`.",
+      "isTest": false
+    },
+    {
+      "module": "cat-harness/schemas/document-kind.ts",
+      "instance": "cat-harness",
+      "name": "document-kind",
+      "graphNode": "schema",
+      "summary": "A document KIND — a named structure of sections that a document authored",
       "isTest": false
     },
     {
@@ -1592,6 +1576,22 @@
       "isTest": false
     },
     {
+      "module": "fhir-harness/schemas/ig-identity.test.ts",
+      "instance": "fhir-harness",
+      "name": "ig-identity.test",
+      "graphNode": "undeclared",
+      "summary": "`ig-identity.json` — an IG's own identity and status, refused when it names",
+      "isTest": true
+    },
+    {
+      "module": "fhir-harness/schemas/ig-identity.ts",
+      "instance": "fhir-harness",
+      "name": "ig-identity",
+      "graphNode": "schema",
+      "summary": "An IG's identity, as its own `sushi-config.yaml` states it — id, canonical,",
+      "isTest": false
+    },
+    {
       "module": "fhir-harness/schemas/ig-menu.test.ts",
       "instance": "fhir-harness",
       "name": "ig-menu.test",
@@ -1662,6 +1662,22 @@
       "name": "changeset",
       "graphNode": "schema",
       "summary": "A ChangeSet: what changed in a folio between two git refs, block by block.",
+      "isTest": false
+    },
+    {
+      "module": "folio-assistant-core/schemas/dublin-core-render.test.ts",
+      "instance": "folio-assistant-core",
+      "name": "dublin-core-render.test",
+      "graphNode": "undeclared",
+      "summary": "Tests for the Dublin Core renderings (bean `7eak`).",
+      "isTest": true
+    },
+    {
+      "module": "folio-assistant-core/schemas/dublin-core-render.ts",
+      "instance": "folio-assistant-core",
+      "name": "dublin-core-render",
+      "graphNode": "schema",
+      "summary": "Dublin Core RENDERINGS of a catalogue record: DC XML for a harvester, and",
       "isTest": false
     },
     {
@@ -1782,6 +1798,38 @@
       "name": "review-verdict",
       "graphNode": "schema",
       "summary": "A reviewer's VERDICT on one version of one block: \"I read this, and here is",
+      "isTest": false
+    },
+    {
+      "module": "smart-base/schemas/content-types-stack.test.ts",
+      "instance": "smart-base",
+      "name": "content-types-stack.test",
+      "graphNode": "undeclared",
+      "summary": "Asking a repository what it is, and getting a SET back.",
+      "isTest": true
+    },
+    {
+      "module": "smart-base/schemas/dak-content-type.ts",
+      "instance": "smart-base",
+      "name": "dak-content-type",
+      "graphNode": "schema",
+      "summary": "The `dak` and `sushi` content types — registered by the WHO layer, not by core.",
+      "isTest": false
+    },
+    {
+      "module": "smart-base/schemas/dak.test.ts",
+      "instance": "smart-base",
+      "name": "dak.test",
+      "graphNode": "undeclared",
+      "summary": "What the DAK placeholder promises, and — more usefully — what it promises",
+      "isTest": true
+    },
+    {
+      "module": "smart-base/schemas/dak.ts",
+      "instance": "smart-base",
+      "name": "dak",
+      "graphNode": "schema",
+      "summary": "The **DAK** content type — a repository that is a WHO SMART Guidelines",
       "isTest": false
     }
   ],
@@ -11629,123 +11677,6 @@
       "exported": true
     },
     {
-      "id": "cat-harness/schemas/dak.ts#componentShape",
-      "name": "componentShape",
-      "module": "cat-harness/schemas/dak.ts",
-      "kind": "zod-object",
-      "doc": "The component fields, built from {@link DAK_COMPONENT_FIELDS} rather",
-      "fields": [],
-      "extendsNames": [
-        "Object"
-      ],
-      "values": [],
-      "refs": [],
-      "unresolved": [],
-      "external": [],
-      "exported": false
-    },
-    {
-      "id": "cat-harness/schemas/dak.ts#DakComponentEntries",
-      "name": "DakComponentEntries",
-      "module": "cat-harness/schemas/dak.ts",
-      "kind": "type-alias",
-      "doc": "One component's contents, as read from a `dak.config.json`.",
-      "fields": [],
-      "extendsNames": [],
-      "values": [],
-      "refs": [],
-      "unresolved": [],
-      "external": [],
-      "exported": true
-    },
-    {
-      "id": "cat-harness/schemas/dak.ts#DakDeclaration",
-      "name": "DakDeclaration",
-      "module": "cat-harness/schemas/dak.ts",
-      "kind": "interface",
-      "doc": "A `dak.config.json`, as much of it as is settled.",
-      "fields": [
-        {
-          "name": "name",
-          "type": "string",
-          "optional": false,
-          "array": false,
-          "doc": "The instance's name, e.g. `\"smart-immunizations\"`."
-        },
-        {
-          "name": "canonicalUrl",
-          "type": "string",
-          "optional": true,
-          "array": false,
-          "doc": "Where the published DAK lives — the base its `@id`s are minted against."
-        },
-        {
-          "name": "publicationUrl",
-          "type": "string",
-          "optional": true,
-          "array": false,
-          "doc": "Where the built IG is published, when that differs from `canonicalUrl`."
-        },
-        {
-          "name": "previewUrl",
-          "type": "string",
-          "optional": true,
-          "array": false,
-          "doc": "Where CI previews are served."
-        }
-      ],
-      "extendsNames": [
-        "KgNodeLabels"
-      ],
-      "values": [],
-      "refs": [
-        "cat-harness/schemas/kg-node.ts#KgNodeLabels"
-      ],
-      "unresolved": [],
-      "external": [],
-      "exported": true
-    },
-    {
-      "id": "cat-harness/schemas/dak.ts#DakDeclarationSchema",
-      "name": "DakDeclarationSchema",
-      "module": "cat-harness/schemas/dak.ts",
-      "kind": "zod-object",
-      "fields": [
-        {
-          "name": "name",
-          "type": "z.string().min(1)",
-          "optional": false,
-          "array": false
-        },
-        {
-          "name": "canonicalUrl",
-          "type": "z.string().url().optional()",
-          "optional": true,
-          "array": false
-        },
-        {
-          "name": "publicationUrl",
-          "type": "z.string().url().optional()",
-          "optional": true,
-          "array": false
-        },
-        {
-          "name": "previewUrl",
-          "type": "z.string().url().optional()",
-          "optional": true,
-          "array": false
-        }
-      ],
-      "extendsNames": [],
-      "values": [],
-      "refs": [],
-      "unresolved": [],
-      "external": [
-        "z"
-      ],
-      "exported": true
-    },
-    {
       "id": "cat-harness/schemas/decision-methodology-context.ts#DataTypeSchema",
       "name": "DataTypeSchema",
       "module": "cat-harness/schemas/decision-methodology-context.ts",
@@ -13523,6 +13454,328 @@
           "optional": true,
           "array": false,
           "doc": "What this copy serves HERE — never what the image is, which is the"
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [
+        "z"
+      ],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/document-kind.ts#CoverageMemberSchema",
+      "name": "CoverageMemberSchema",
+      "module": "cat-harness/schemas/document-kind.ts",
+      "kind": "zod-object",
+      "fields": [
+        {
+          "name": "key",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "label",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [
+        "z"
+      ],
+      "exported": false
+    },
+    {
+      "id": "cat-harness/schemas/document-kind.ts#DocumentKind",
+      "name": "DocumentKind",
+      "module": "cat-harness/schemas/document-kind.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/document-kind.ts#DocumentKindCoverage",
+      "name": "DocumentKindCoverage",
+      "module": "cat-harness/schemas/document-kind.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/document-kind.ts#DocumentKindCoverageSchema",
+      "name": "DocumentKindCoverageSchema",
+      "module": "cat-harness/schemas/document-kind.ts",
+      "kind": "zod-object",
+      "fields": [
+        {
+          "name": "$schema",
+          "type": "z.literal(DOCUMENT_KIND_COVERAGE_SCHEMA_TAG)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "kind",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false,
+          "doc": "The kind's id."
+        },
+        {
+          "name": "subject",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false,
+          "doc": "The instance whose content was classified."
+        },
+        {
+          "name": "from",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false,
+          "doc": "Repo-relative path of what was classified."
+        },
+        {
+          "name": "method",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false,
+          "doc": "The rule, in a sentence a reader can check."
+        },
+        {
+          "name": "total",
+          "type": "z.number().int().nonnegative()",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "sections",
+          "type": "z.array(z.object({ id: z.string().min(1), members: z.array(CoverageMemberSchema) }))",
+          "optional": false,
+          "array": true
+        },
+        {
+          "name": "unplaced",
+          "type": "z.array(z.object({ group: z.string().min(1), count: z.number().int().positive() }))",
+          "optional": false,
+          "array": true,
+          "doc": "What no rule placed, grouped so the remainder is legible."
+        },
+        {
+          "name": "generatedBy",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [
+        "cat-harness/schemas/document-kind.ts#CoverageMemberSchema"
+      ],
+      "unresolved": [],
+      "external": [
+        "DOCUMENT_KIND_COVERAGE_SCHEMA_TAG",
+        "z"
+      ],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/document-kind.ts#DocumentKindSchema",
+      "name": "DocumentKindSchema",
+      "module": "cat-harness/schemas/document-kind.ts",
+      "kind": "zod-object",
+      "fields": [
+        {
+          "name": "$schema",
+          "type": "z.literal(DOCUMENT_KIND_SCHEMA_TAG)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "id",
+          "type": "z.string().regex(/^[a-z0-9][a-z0-9-]*$/)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "title",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "description",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "structure",
+          "type": "z.enum([\"fixed\", \"semi-fixed\"])",
+          "optional": false,
+          "array": false,
+          "doc": "`fixed`: exactly these sections, every one required."
+        },
+        {
+          "name": "extends",
+          "type": "z.string().min(1).optional()",
+          "optional": true,
+          "array": false,
+          "doc": "A parent kind's id; this kind's sections extend the parent's."
+        },
+        {
+          "name": "sections",
+          "type": "z.array(DocumentKindSectionSchema).min(1)",
+          "optional": false,
+          "array": true
+        },
+        {
+          "name": "sources",
+          "type": "z.array(DocumentKindSourceSchema).min(1)",
+          "optional": false,
+          "array": true
+        },
+        {
+          "name": "generatedBy",
+          "type": "z.string().min(1).optional()",
+          "optional": true,
+          "array": false,
+          "doc": "Set when the file is generated; names the generator, so a hand edit is visibly a defect."
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [
+        "cat-harness/schemas/document-kind.ts#DocumentKindSectionSchema",
+        "cat-harness/schemas/document-kind.ts#DocumentKindSourceSchema"
+      ],
+      "unresolved": [],
+      "external": [
+        "DOCUMENT_KIND_SCHEMA_TAG",
+        "z"
+      ],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/document-kind.ts#DocumentKindSection",
+      "name": "DocumentKindSection",
+      "module": "cat-harness/schemas/document-kind.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/document-kind.ts#DocumentKindSectionSchema",
+      "name": "DocumentKindSectionSchema",
+      "module": "cat-harness/schemas/document-kind.ts",
+      "kind": "zod-object",
+      "fields": [
+        {
+          "name": "id",
+          "type": "z.string().regex(/^[a-z0-9][a-z0-9-]*$/)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "title",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "required",
+          "type": "z.boolean()",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "description",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "computedFrom",
+          "type": "z.array(z.string().min(1)).optional()",
+          "optional": true,
+          "array": true,
+          "doc": "Declared graph ids this section is derived from."
+        },
+        {
+          "name": "modelledBy",
+          "type": "z.array(z.string().regex(/^[a-z0-9][a-z0-9.-]*#[A-Za-z0-9][A-Za-z0-9._-]*$/, \"a term is `<system>#<code>`\")).optional()",
+          "optional": true,
+          "array": true,
+          "doc": "The classes of an external vocabulary this section's content instantiates,"
+        },
+        {
+          "name": "sources",
+          "type": "z.array(DocumentKindSourceSchema).optional()",
+          "optional": true,
+          "array": true,
+          "doc": "This section's own sources, when they differ from the kind's."
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [
+        "cat-harness/schemas/document-kind.ts#DocumentKindSourceSchema"
+      ],
+      "unresolved": [],
+      "external": [
+        "z"
+      ],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/document-kind.ts#DocumentKindSourceSchema",
+      "name": "DocumentKindSourceSchema",
+      "module": "cat-harness/schemas/document-kind.ts",
+      "kind": "zod-object",
+      "doc": "Where a structure, or one section of it, comes from.",
+      "fields": [
+        {
+          "name": "ref",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false,
+          "doc": "A library entry id or a URL — something a reader can open."
+        },
+        {
+          "name": "locator",
+          "type": "z.string().min(1).optional()",
+          "optional": true,
+          "array": false,
+          "doc": "The part of it that says so: a chapter, a section, a table."
+        },
+        {
+          "name": "note",
+          "type": "z.string().min(1).optional()",
+          "optional": true,
+          "array": false
         }
       ],
       "extendsNames": [],
@@ -26771,6 +27024,13 @@
           "array": false
         },
         {
+          "name": "extractedTitle",
+          "type": "z.string().optional()",
+          "optional": true,
+          "array": false,
+          "doc": "The manifest's extracted title, only when a catalogue title replaced it (bean `gnqa`)."
+        },
+        {
           "name": "provenance",
           "type": "z.string()",
           "optional": false,
@@ -26929,6 +27189,13 @@
           "doc": "Why the entry is withheld (bean `cw35`/`mkao`): no avatar, no verbatim excerpt."
         },
         {
+          "name": "withheldBy",
+          "type": "z .object({ gates: WithheldEntrySchema.shape.gates, record: WithheldEntrySchema.shape.record, }) .strict() .optional()",
+          "optional": true,
+          "array": false,
+          "doc": "The structured half of `withheld` (issue #1794): which gates refused,"
+        },
+        {
           "name": "avatar",
           "type": "z.object({ href: z.string(), src: z.string(), source: z.enum([\"cover\", \"figure\"]) }).strict().optional()",
           "optional": true,
@@ -26945,7 +27212,8 @@
       "values": [],
       "refs": [
         "cat-harness/schemas/site-indexes.ts#Count",
-        "cat-harness/schemas/site-indexes.ts#PageNumber"
+        "cat-harness/schemas/site-indexes.ts#PageNumber",
+        "cat-harness/schemas/withheld.ts#WithheldEntrySchema"
       ],
       "unresolved": [],
       "external": [
@@ -39558,6 +39826,51 @@
           "optional": false,
           "array": false,
           "doc": "Why — which gate, which verdict. A withholding with no reason cannot be re-checked."
+        },
+        {
+          "name": "gates",
+          "type": "z.array(WithheldGateSchema).min(1).optional()",
+          "optional": true,
+          "array": true,
+          "doc": "The gates that refused, STRUCTURED — issue #1794. Optional because a"
+        },
+        {
+          "name": "record",
+          "type": "z .object({ id: z.string().min(1).optional(), page: z.string().regex(/^\\//, \"a site-root path, beginning with /\").optio…",
+          "optional": true,
+          "array": false,
+          "doc": "Where a reader can see what the work IS without being shown the work —"
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [
+        "cat-harness/schemas/withheld.ts#WithheldGateSchema"
+      ],
+      "unresolved": [],
+      "external": [
+        "z"
+      ],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/withheld.ts#WithheldGateSchema",
+      "name": "WithheldGateSchema",
+      "module": "cat-harness/schemas/withheld.ts",
+      "kind": "zod-object",
+      "doc": "One publication gate that did not permit publication, and its verdict (e.g. `refused`).",
+      "fields": [
+        {
+          "name": "gate",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "verdict",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false
         }
       ],
       "extendsNames": [],
@@ -40494,27 +40807,14 @@
           "type": "z.string().min(1)",
           "optional": false,
           "array": false,
-          "doc": "The IG's `id` from `sushi-config.yaml`, e.g. `smart.who.int.trust`."
-        },
-        {
-          "name": "canonical",
-          "type": "z.string().url()",
-          "optional": false,
-          "array": false,
-          "doc": "Its `canonical`."
-        },
-        {
-          "name": "status",
-          "type": "z.string().min(1)",
-          "optional": false,
-          "array": false,
-          "doc": "Its `status` — what selects the watermark. `draft` here."
+          "doc": "The chain's TOP layer — the template package an IG names — e.g."
         },
         {
           "name": "version",
-          "type": "z.string().min(1).optional()",
-          "optional": true,
-          "array": false
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false,
+          "doc": "The top layer's version, e.g. `0.5.0`."
         },
         {
           "name": "layers",
@@ -40611,6 +40911,82 @@
       "refs": [],
       "unresolved": [],
       "external": [
+        "z"
+      ],
+      "exported": true
+    },
+    {
+      "id": "fhir-harness/schemas/ig-identity.ts#IgIdentity",
+      "name": "IgIdentity",
+      "module": "fhir-harness/schemas/ig-identity.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "fhir-harness/schemas/ig-identity.ts#IgIdentitySchema",
+      "name": "IgIdentitySchema",
+      "module": "fhir-harness/schemas/ig-identity.ts",
+      "kind": "zod-object",
+      "fields": [
+        {
+          "name": "$schema",
+          "type": "z.literal(IG_IDENTITY_SCHEMA_TAG)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "id",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false,
+          "doc": "The IG's `id` from `sushi-config.yaml`; SUSHI's `packageId` defaults to it."
+        },
+        {
+          "name": "canonical",
+          "type": "z.string().url()",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "status",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false,
+          "doc": "`draft`, `active`, `retired` … — what selects the template's watermark."
+        },
+        {
+          "name": "version",
+          "type": "z.string().min(1).optional()",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "readFrom",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false,
+          "doc": "Where it was read: a repository and file, so the claim can be re-checked."
+        },
+        {
+          "name": "readAt",
+          "type": "z.string().regex(/^\\d{4}-\\d{2}-\\d{2}$/)",
+          "optional": false,
+          "array": false,
+          "doc": "When it was read. A status is a fact at a moment, not forever."
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [
+        "IG_IDENTITY_SCHEMA_TAG",
         "z"
       ],
       "exported": true
@@ -42335,6 +42711,102 @@
       "refs": [
         "folio-assistant-core/schemas/changeset.ts#BlockAt"
       ],
+      "unresolved": [],
+      "external": [],
+      "exported": false
+    },
+    {
+      "id": "folio-assistant-core/schemas/dublin-core-render.ts#DcSubject",
+      "name": "DcSubject",
+      "module": "folio-assistant-core/schemas/dublin-core-render.ts",
+      "kind": "interface",
+      "doc": "The subject of a rendering: the item at its Handle when the catalogue",
+      "fields": [
+        {
+          "name": "handle",
+          "type": "string",
+          "optional": true,
+          "array": false
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "folio-assistant-core/schemas/dublin-core-render.ts#DctermsMapping",
+      "name": "DctermsMapping",
+      "module": "folio-assistant-core/schemas/dublin-core-render.ts",
+      "kind": "interface",
+      "doc": "One row: the DCMI term a field IS, and what DCMI says about its values.",
+      "fields": [
+        {
+          "name": "term",
+          "type": "string",
+          "optional": false,
+          "array": false,
+          "doc": "The local name under `http://purl.org/dc/terms/`."
+        },
+        {
+          "name": "range",
+          "type": "\"literal\" | \"resource\"",
+          "optional": false,
+          "array": false,
+          "doc": "`literal` when DCMI gives the term the range `rdfs:Literal` or gives no"
+        },
+        {
+          "name": "ses",
+          "type": "string",
+          "optional": true,
+          "array": false,
+          "doc": "A syntax encoding scheme the values are in, by the field's own name. Becomes a datatype (JSON-LD) or `xsi:type` (XML)."
+        },
+        {
+          "name": "ves",
+          "type": "string",
+          "optional": true,
+          "array": false,
+          "doc": "A vocabulary encoding scheme the values are members of. Becomes `dcam:memberOf` (JSON-LD) or `xsi:type` (XML)."
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "folio-assistant-core/schemas/dublin-core-render.ts#Literal",
+      "name": "Literal",
+      "module": "folio-assistant-core/schemas/dublin-core-render.ts",
+      "kind": "type-alias",
+      "fields": [
+        {
+          "name": "@value",
+          "type": "string",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "@language",
+          "type": "string",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "@type",
+          "type": "string",
+          "optional": true,
+          "array": false
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
       "unresolved": [],
       "external": [],
       "exported": false
@@ -44280,6 +44752,123 @@
       "unresolved": [],
       "external": [],
       "exported": true
+    },
+    {
+      "id": "smart-base/schemas/dak.ts#componentShape",
+      "name": "componentShape",
+      "module": "smart-base/schemas/dak.ts",
+      "kind": "zod-object",
+      "doc": "The component fields, built from {@link DAK_COMPONENT_FIELDS} rather",
+      "fields": [],
+      "extendsNames": [
+        "Object"
+      ],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": false
+    },
+    {
+      "id": "smart-base/schemas/dak.ts#DakComponentEntries",
+      "name": "DakComponentEntries",
+      "module": "smart-base/schemas/dak.ts",
+      "kind": "type-alias",
+      "doc": "One component's contents, as read from a `dak.config.json`.",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "smart-base/schemas/dak.ts#DakDeclaration",
+      "name": "DakDeclaration",
+      "module": "smart-base/schemas/dak.ts",
+      "kind": "interface",
+      "doc": "A `dak.config.json`, as much of it as is settled.",
+      "fields": [
+        {
+          "name": "name",
+          "type": "string",
+          "optional": false,
+          "array": false,
+          "doc": "The instance's name, e.g. `\"smart-immunizations\"`."
+        },
+        {
+          "name": "canonicalUrl",
+          "type": "string",
+          "optional": true,
+          "array": false,
+          "doc": "Where the published DAK lives — the base its `@id`s are minted against."
+        },
+        {
+          "name": "publicationUrl",
+          "type": "string",
+          "optional": true,
+          "array": false,
+          "doc": "Where the built IG is published, when that differs from `canonicalUrl`."
+        },
+        {
+          "name": "previewUrl",
+          "type": "string",
+          "optional": true,
+          "array": false,
+          "doc": "Where CI previews are served."
+        }
+      ],
+      "extendsNames": [
+        "KgNodeLabels"
+      ],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [
+        "KgNodeLabels"
+      ],
+      "exported": true
+    },
+    {
+      "id": "smart-base/schemas/dak.ts#DakDeclarationSchema",
+      "name": "DakDeclarationSchema",
+      "module": "smart-base/schemas/dak.ts",
+      "kind": "zod-object",
+      "fields": [
+        {
+          "name": "name",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "canonicalUrl",
+          "type": "z.string().url().optional()",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "publicationUrl",
+          "type": "z.string().url().optional()",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "previewUrl",
+          "type": "z.string().url().optional()",
+          "optional": true,
+          "array": false
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [
+        "z"
+      ],
+      "exported": true
     }
   ],
   "edges": [
@@ -46148,14 +46737,6 @@
       "array": false
     },
     {
-      "from": "cat-harness/schemas/dak.ts#DakDeclaration",
-      "to": "cat-harness/schemas/kg-node.ts#KgNodeLabels",
-      "via": "",
-      "kind": "extends",
-      "optional": false,
-      "array": false
-    },
-    {
       "from": "cat-harness/schemas/decision-methodology-context.ts#DecisionContextSchema",
       "to": "cat-harness/schemas/decision-methodology-context.ts#DataTypeSchema",
       "via": "dataType",
@@ -46370,6 +46951,38 @@
       "kind": "field",
       "optional": false,
       "array": false
+    },
+    {
+      "from": "cat-harness/schemas/document-kind.ts#DocumentKindCoverageSchema",
+      "to": "cat-harness/schemas/document-kind.ts#CoverageMemberSchema",
+      "via": "sections",
+      "kind": "field",
+      "optional": false,
+      "array": true
+    },
+    {
+      "from": "cat-harness/schemas/document-kind.ts#DocumentKindSchema",
+      "to": "cat-harness/schemas/document-kind.ts#DocumentKindSectionSchema",
+      "via": "sections",
+      "kind": "field",
+      "optional": false,
+      "array": true
+    },
+    {
+      "from": "cat-harness/schemas/document-kind.ts#DocumentKindSchema",
+      "to": "cat-harness/schemas/document-kind.ts#DocumentKindSourceSchema",
+      "via": "sources",
+      "kind": "field",
+      "optional": false,
+      "array": true
+    },
+    {
+      "from": "cat-harness/schemas/document-kind.ts#DocumentKindSectionSchema",
+      "to": "cat-harness/schemas/document-kind.ts#DocumentKindSourceSchema",
+      "via": "sources",
+      "kind": "field",
+      "optional": true,
+      "array": true
     },
     {
       "from": "cat-harness/schemas/document-structure.ts#BaseSection",
@@ -48348,6 +48961,14 @@
       "array": false
     },
     {
+      "from": "cat-harness/schemas/site-indexes.ts#LibraryIndexEntrySchema",
+      "to": "cat-harness/schemas/withheld.ts#WithheldEntrySchema",
+      "via": "withheldBy",
+      "kind": "field",
+      "optional": true,
+      "array": false
+    },
+    {
       "from": "cat-harness/schemas/site-indexes.ts#LibraryIndexSchema",
       "to": "cat-harness/schemas/site-indexes.ts#Count",
       "via": "queues",
@@ -50234,6 +50855,14 @@
       "kind": "field",
       "optional": true,
       "array": false
+    },
+    {
+      "from": "cat-harness/schemas/withheld.ts#WithheldEntrySchema",
+      "to": "cat-harness/schemas/withheld.ts#WithheldGateSchema",
+      "via": "gates",
+      "kind": "field",
+      "optional": true,
+      "array": true
     },
     {
       "from": "cat-harness/schemas/withheld.ts#WithheldSchema",
