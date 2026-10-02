@@ -139,6 +139,20 @@ over unlink, a label over a workflow step.
 remove one thing is not a confirmation to remove the class it belongs to. If
 the scope is ambiguous, the answer is another question, not an inference.
 
+**A standing confirmation for a class is possible, and it is the owner's to
+give — never an inference.** The worked case is the staging preview cap. Owner
+ruling, 2026-10-02 (issue #1868): *"cap the maximum number of previews (<= 10)
+and rotate old ones off."* That one sentence confirms, in advance, every
+removal of the least recently updated preview beyond ten, so the `stage` job
+removes them without asking per preview. What the ruling does NOT waive is the
+record: each rotation still names the artefact, its age and its size — in the
+commit message, the job log and a `removed` render-log entry — and retires its
+`staging-preview.json` into `STAGING/_retired/` rather than deleting it. And it
+is scoped exactly as given: it covers rotation over the cap, not any other
+removal of a preview, and it does not extend to `_retired/` or anything else
+on the branch. See [`staging-review`](../../sdlc/sdlc-core/staging-review.md)
+§"The cap".
+
 ## The failure this skill was written from — bean `plj1`
 
 Not a hypothetical, and not an agent typing `rm`.
