@@ -95,6 +95,45 @@ export function unmergedPaths(repoRoot: string): string[] {
   return out.split("\n").map((s) => s.trim()).filter((s) => s.length > 0);
 }
 
+/** The stages git holds for an unmerged path (1 base, 2 ours, 3 theirs). */
+export function unmergedStages(repoRoot: string, path: string): Set<number> {
+  const out = new Set<number>();
+  for (const line of git(repoRoot, ["ls-files", "-u", "--", path]).split("\n")) {
+    const stage = Number(line.split(/\s+/)[2]);
+    if (stage) out.add(stage);
+  }
+  return out;
+}
+
+/**
+ * Which side stands in for a resolved sidecar until regeneration rewrites it.
+ *
+ * Both sides present: either will do, and this has always taken ours. ONE side
+ * missing is a modify/delete conflict, and `checkout --ours` throws on it
+ * ("does not have our version") — the qa-sidecar half of issue #1854, the
+ * same crash `takeBase` in `merge-base.ts` fixed for take-base paths. Then
+ * the side being merged in (the base, "theirs") decides, as it does there:
+ * its copy when it kept the file, its deletion when it removed it. Taking a
+ * deletion loses nothing the guard protects — `plan` has already refused any
+ * file whose surviving side carries a non-script verdict — and regeneration
+ * recreates the sidecar if its subject is still audited.
+ */
+export function provisionalSide(stages: ReadonlySet<number>): "ours" | "theirs" | "delete" {
+  if (stages.has(2) && stages.has(3)) return "ours";
+  return stages.has(3) ? "theirs" : "delete";
+}
+
+/** Apply `provisionalSide` to one path and stage the result. */
+export function takeProvisionalSide(repoRoot: string, path: string): void {
+  const side = provisionalSide(unmergedStages(repoRoot, path));
+  if (side === "delete") {
+    git(repoRoot, ["rm", "-q", "--", path]);
+    return;
+  }
+  git(repoRoot, ["checkout", `--${side}`, "--", path]);
+  git(repoRoot, ["add", "--", path]);
+}
+
 /** How a file's two sides look to the guard. */
 export interface SideScan {
   /** Every `reviewer.kind` seen, across both sides. */
@@ -304,9 +343,9 @@ if (import.meta.main) {
 
   // Take either side. Which one does not matter: the regeneration below
   // overwrites it from the MERGED tree, and both sides are stale with respect
-  // to that tree by definition.
-  for (const o of resolve) git(repoRoot, ["checkout", "--ours", "--", o.path]);
-  git(repoRoot, ["add", "--", ...resolve.map((o) => o.path)]);
+  // to that tree by definition. A side that does not exist (modify/delete)
+  // cannot be taken — see `provisionalSide`.
+  for (const o of resolve) takeProvisionalSide(repoRoot, o.path);
 
   // Which generators. Read from the files themselves, then matched against
   // package.json — never guessed.
@@ -359,7 +398,10 @@ if (import.meta.main) {
     process.exit(1);
   }
 
-  git(repoRoot, ["add", "--", ...resolve.map((o) => o.path)]);
+  // A sidecar taken as a deletion and not recreated is already staged by
+  // `git rm`; naming it to `git add` would fail on a path that is gone.
+  const present = resolve.map((o) => o.path).filter((p) => existsSync(join(repoRoot, p)));
+  if (present.length > 0) git(repoRoot, ["add", "--", ...present]);
   console.log(`\n  ✓ ${resolve.length} sidecar(s) regenerated and staged.`);
   for (const o of refuse) console.log(`  ✗ ${o.path} left conflicted — ${o.reason}`);
   for (const o of skip) console.log(`  · ${o.path} left alone — ${o.reason}`);
