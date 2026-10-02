@@ -44,9 +44,6 @@ import { folioDir } from "../../schemas/cat-harness.js";
 import { existsSync, readdirSync, readFileSync, statSync, writeFileSync } from "fs";
 import { basename, join, relative, resolve } from "path";
 
-/** The PLATFORM root — where the science layer would be installed. */
-const ROOT = resolve(import.meta.dir, "../..");
-
 /**
  * Is `dir` the root of a git submodule? A submodule's `.git` is a FILE (a
  * `gitdir:` pointer), a checkout's own is a directory — the one marker that
@@ -65,6 +62,7 @@ import {
   type ReadmeTocConfig,
 } from "./readme-toc";
 import { findContentRepoRoot } from "./repo-root";
+import { optionalPipelinePlugin } from "./pipeline-plugins";
 import { expectedInstanceConfigPath } from "../../schemas/harness-config";
 import {
   AGENT_INSTRUCTIONS_ROLE,
@@ -948,19 +946,17 @@ export function syncSections(
 /**
  * Load the science layer's coverage computation, if it is installed.
  *
- * A VARIABLE specifier, so this module names no science-layer file and the
- * repository partition records no edge — the same mechanism
- * `qa-checker-discovery` and `render-discovery` use. `undefined` on any
- * failure, which the coverage section renders as "could not determine" rather
- * than as an empty table.
+ * Through the `lean-coverage` pipeline slot, which folio-assistant-sci fills
+ * (bean `squu`). This used to import `scripts/lean-coverage.ts` by a variable
+ * path under THIS instance's root, which named no file to the partition but
+ * would have found nothing once that script moves to the science layer, and
+ * reported "could not determine" for a reason nobody could see. `undefined` on
+ * any failure, which the coverage section renders as "could not determine"
+ * rather than as an empty table.
  */
 async function loadLeanCoverage(): Promise<LeanCoverageStats | undefined> {
-  const rel = "scripts/lean-coverage.ts";
-  const abs = join(ROOT, rel);
-  if (!existsSync(abs)) return undefined;
   try {
-    const mod = (await import(abs)) as Record<string, unknown>;
-    const fn = mod.computeStats;
+    const fn = optionalPipelinePlugin("lean-coverage")?.computeStats;
     return typeof fn === "function" ? (fn as LeanCoverageStats) : undefined;
   } catch {
     return undefined;
