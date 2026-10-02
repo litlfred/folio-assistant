@@ -20287,6 +20287,44 @@
       "skos:note": "candidate"
     },
     {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/referenced-source.referencedidentityschema.authors",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "ReferencedIdentitySchema.authors"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Bibliographic fields a paper carries and a specification usually does not. Optional, and each is read off the document. `authors` is the key `check-library-qa.ts` already reads."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/referenced-source.ts#ReferencedIdentitySchema.authors",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/referenced-source.referencedidentityschema.not_stated",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "ReferencedIdentitySchema.not_stated"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Each nullable field the document does not state, and only those."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/referenced-source.ts#ReferencedIdentitySchema.not_stated",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/render-log.renderlogentryschema.branch",
       "@type": "skos:Concept",
       "skos:inScheme": {

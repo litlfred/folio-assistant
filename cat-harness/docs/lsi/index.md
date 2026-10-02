@@ -25,8 +25,8 @@ how to build, query and audit an index is the skill `lsi-indexing`.
 
 <div class="lv-grid">
 <div class="lv-stat"><b>4</b><span>committed indexes</span></div>
-<div class="lv-stat"><b>2211</b><span>units indexed</span></div>
-<div class="lv-stat"><b>5</b><span>graphs that need an index and lack a fresh one</span></div>
+<div class="lv-stat"><b>2770</b><span>units indexed</span></div>
+<div class="lv-stat"><b>4</b><span>graphs that need an index and lack a fresh one</span></div>
 </div>
 
 ## Which graphs need an index
@@ -41,7 +41,7 @@ the same as fine. The same verdict is `kg:audit`'s `tool-downstream-fresh` for t
 | `bootstrap/skills` | <span class="lv-na">n/a</span> | below the need-an-index threshold — not judged |
 | `cat-harness/docs` | <span class="lv-fail">fail</span> | needs an LSI index and has none — run `bun run lsi index --instance cat-harness --graph docs` |
 | `cat-harness/folio` | <span class="lv-na">n/a</span> | below the need-an-index threshold — not judged |
-| `cat-harness/library` | <span class="lv-fail">fail</span> | stale — re-run `bun run lsi index --instance cat-harness --graph library` |
+| `cat-harness/library` | <span class="lv-pass">pass</span> | fresh |
 | `cat-harness/methodologies` | <span class="lv-na">n/a</span> | below the need-an-index threshold — not judged |
 | `cat-harness/policies` | <span class="lv-na">n/a</span> | below the need-an-index threshold — not judged |
 | `cat-harness/skills` | <span class="lv-pass">pass</span> | fresh |
@@ -70,7 +70,7 @@ the same as fine. The same verdict is `kg:audit`'s `tool-downstream-fresh` for t
 
 ## cat-harness / library
 
-**816** units · **8465** terms · k = **100** · retains **53.9 %** of the weighted matrix · weighting `log-entropy` · sidecar `cat-harness/test/results/lsi/cat-harness/library.lsi.json`
+**1375** units · **10063** terms · k = **100** · retains **47.4 %** of the weighted matrix · weighting `log-entropy` · sidecar `cat-harness/test/results/lsi/cat-harness/library.lsi.json`
 
 > Dimension 1 has **no negative pole**: it most likely measures unit length and term frequency (a margin), not a theme. Read the themes from dimension 2 on.
 
@@ -78,35 +78,35 @@ Each dimension is a **contrast** between two poles, shown by their highest-loadi
 
 | dim | σ | one pole | the other pole |
 |---|---|---|---|
-| 1 | 37.43 | prov, entity, prefix, activity, agent, xsd, value, model | *(none)* |
-| 2 | 30.57 | prov, entity, activity, prefix, xsd, rdfs, qualified, datetime | algorithm, models, reward, learning, arm, model, matrix, best |
-| 3 | 23.81 | json-ld, node, context, iri, graph, term, language, type | arm, reward, instances, algorithm, bound, agent, phd, bandits |
-| 4 | 23.37 | conference, proceedings, arxiv, international, preprint, zhang, chen, yang | json-ld, value, node, definition, iri, arm, term, context |
-| 5 | 19.82 | matrix, error, performance, approximation, matrices, random, method, randomized | json-ld, avrim, iri, node, phd, context, pages, expanded |
-| 6 | 18.60 | matrix, analysis, swot, organization, strategic, management, international, business | subject, records, subjects, annif, gnd, all-subjects, tib, multilingual |
-| 7 | 18.41 | swot, organization, strategic, threats, analysis, opportunities, weaknesses, strengths | algorithm, arm, lce, proceedings, conference, streaming, lightgcn, reward |
-| 8 | 17.56 | lce, streaming, lightgcn, incremental, slim, items, yelp, model | algorithm, pages, algorithms, approximation, matrix, randomized, bound, arm |
+| 1 | 39.79 | prov, entity, prefix, agent, activity, value, model, used | *(none)* |
+| 2 | 31.75 | prov, entity, activity, prefix, xsd, rdfs, qualified, datetime | algorithm, models, learning, reward, arm, matrix, model, arxiv |
+| 3 | 25.59 | quot, nbsp, string, x7b, json-ld, type, node, object | arm, reward, prov, entity, activity, learning, instances, agent |
+| 4 | 24.72 | arxiv, conference, proceedings, preprint, zhang, international, wang, chen | arm, reward, algorithm, bound, instances, proof, theorem, instance |
+| 5 | 22.95 | quot, nbsp, x7b, x5b, x5f, inherited, meta, copy | json-ld, node, term, iri, graph, expanded, document, map |
+| 6 | 20.85 | matrix, skill, skills, task, claude, agent, performance, table | json-ld, iri, node, proceedings, expanded, avrim, conference, object |
+| 7 | 20.42 | matrix, quot, approximation, algorithm, matrices, random, randomized, algorithms | skills, skill, claude, agent, gemini, task, openhands, agents |
+| 8 | 19.13 | swot, analysis, organization, strategic, matrix, management, threats, business | arm, subject, reward, records, subjects, annif, gnd, embeddings |
 
-**Findings** — 0 narrow dimension(s), 162 near-duplicate pair(s).
+**Findings** — 0 narrow dimension(s), 410 near-duplicate pair(s).
 
 *Near-duplicates* (cosine ≥ 0.95) — similar is not duplicate; read both:
 
-- 0.963 — `cat-harness/library/w3c-2024-prov-jsonld/sections/page-003.md` ~ `cat-harness/library/w3c-2024-prov-jsonld/sections/page-036.md`
-- 0.957 — `cat-harness/library/w3c-2024-prov-jsonld/sections/page-003.md` ~ `cat-harness/library/w3c-2024-prov-jsonld/sections/page-063.md`
-- 0.954 — `cat-harness/library/w3c-2024-prov-jsonld/sections/page-003.md` ~ `cat-harness/library/w3c-2024-prov-jsonld/sections/page-064.md`
-- 0.971 — `cat-harness/library/w3c-2024-prov-jsonld/sections/page-012.md` ~ `cat-harness/library/w3c-2024-prov-jsonld/sections/page-021.md`
-- 0.971 — `cat-harness/library/w3c-2024-prov-jsonld/sections/page-012.md` ~ `cat-harness/library/w3c-2024-prov-jsonld/sections/page-019.md`
-- 0.970 — `cat-harness/library/w3c-2024-prov-jsonld/sections/page-012.md` ~ `cat-harness/library/w3c-2024-prov-jsonld/sections/page-020.md`
+- 0.956 — `cat-harness/library/arxiv-2607.25032v1/sections/sec-000-introduction.md` ~ `cat-harness/library/arxiv-2607.25032v1/sections/sec-front-matter.md`
+- 0.971 — `cat-harness/library/w3c-2024-prov-jsonld/sections/page-003.md` ~ `cat-harness/library/w3c-2024-prov-jsonld/sections/page-063.md`
+- 0.969 — `cat-harness/library/w3c-2024-prov-jsonld/sections/page-003.md` ~ `cat-harness/library/w3c-2024-prov-jsonld/sections/page-036.md`
+- 0.962 — `cat-harness/library/w3c-2024-prov-jsonld/sections/page-003.md` ~ `cat-harness/library/w3c-2024-prov-jsonld/sections/page-064.md`
+- 0.972 — `cat-harness/library/w3c-2024-prov-jsonld/sections/page-012.md` ~ `cat-harness/library/w3c-2024-prov-jsonld/sections/page-027.md`
+- 0.968 — `cat-harness/library/w3c-2024-prov-jsonld/sections/page-012.md` ~ `cat-harness/library/w3c-2024-prov-jsonld/sections/page-026.md`
+- 0.966 — `cat-harness/library/w3c-2024-prov-jsonld/sections/page-012.md` ~ `cat-harness/library/w3c-2024-prov-jsonld/sections/page-013.md`
 - 0.994 — `cat-harness/library/w3c-2024-prov-jsonld/sections/page-013.md` ~ `cat-harness/library/w3c-2024-prov-jsonld/sections/page-021.md`
 - 0.993 — `cat-harness/library/w3c-2024-prov-jsonld/sections/page-013.md` ~ `cat-harness/library/w3c-2024-prov-jsonld/sections/page-019.md`
 - 0.993 — `cat-harness/library/w3c-2024-prov-jsonld/sections/page-013.md` ~ `cat-harness/library/w3c-2024-prov-jsonld/sections/page-020.md`
 - 0.989 — `cat-harness/library/w3c-2024-prov-jsonld/sections/page-014.md` ~ `cat-harness/library/w3c-2024-prov-jsonld/sections/page-018.md`
-- 0.985 — `cat-harness/library/w3c-2024-prov-jsonld/sections/page-014.md` ~ `cat-harness/library/w3c-2024-prov-jsonld/sections/page-016.md`
-- 0.984 — `cat-harness/library/w3c-2024-prov-jsonld/sections/page-014.md` ~ `cat-harness/library/w3c-2024-prov-jsonld/sections/page-017.md`
-- 0.991 — `cat-harness/library/w3c-2024-prov-jsonld/sections/page-015.md` ~ `cat-harness/library/w3c-2024-prov-jsonld/sections/page-019.md`
-- 0.989 — `cat-harness/library/w3c-2024-prov-jsonld/sections/page-015.md` ~ `cat-harness/library/w3c-2024-prov-jsonld/sections/page-020.md`
-- 0.986 — `cat-harness/library/w3c-2024-prov-jsonld/sections/page-015.md` ~ `cat-harness/library/w3c-2024-prov-jsonld/sections/page-021.md`
-- … and 147 more in the sidecar
+- 0.987 — `cat-harness/library/w3c-2024-prov-jsonld/sections/page-014.md` ~ `cat-harness/library/w3c-2024-prov-jsonld/sections/page-016.md`
+- 0.986 — `cat-harness/library/w3c-2024-prov-jsonld/sections/page-014.md` ~ `cat-harness/library/w3c-2024-prov-jsonld/sections/page-022.md`
+- 0.992 — `cat-harness/library/w3c-2024-prov-jsonld/sections/page-015.md` ~ `cat-harness/library/w3c-2024-prov-jsonld/sections/page-019.md`
+- 0.991 — `cat-harness/library/w3c-2024-prov-jsonld/sections/page-015.md` ~ `cat-harness/library/w3c-2024-prov-jsonld/sections/page-020.md`
+- … and 395 more in the sidecar
 
 ## cat-harness / skills
 
