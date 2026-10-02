@@ -10,8 +10,8 @@
   },
   "families": {
     "enumerating-scripts": {
-      "summary": "Every script that binds a root constant and enumerates the filesystem, with whether its scan is SEEDED at that root and whether it asks git. A FLOOR, not a count: both filters are syntactic, so a scanner spelled differently is missed — which is not hypothetical, since `xd1g`'s own list of eleven was one short (`kg-audit`, found by a sibling session). The two filters disagree by design: 0 seeded at a root against 74 enumerating at all, and that GAP is the finding — it is why a syntactic check cannot answer this question and the guard lives in `scripts/tests/git-corpus-conversions.test.ts` instead.",
-      "count": 74,
+      "summary": "Every script that binds a root constant and enumerates the filesystem, with whether its scan is SEEDED at that root and whether it asks git. A FLOOR, not a count: both filters are syntactic, so a scanner spelled differently is missed — which is not hypothetical, since `xd1g`'s own list of eleven was one short (`kg-audit`, found by a sibling session). The two filters disagree by design: 0 seeded at a root against 73 enumerating at all, and that GAP is the finding — it is why a syntactic check cannot answer this question and the guard lives in `scripts/tests/git-corpus-conversions.test.ts` instead.",
+      "count": 73,
       "entries": [
         {
           "file": "cat-harness/scripts/agent-memory.ts",
@@ -359,19 +359,14 @@
           "gitAware": false
         },
         {
+          "file": "fhir-harness/scripts/check-artifact-index.ts",
+          "seededAtRoot": false,
+          "gitAware": true
+        },
+        {
           "file": "fhir-harness/scripts/pin-ig-terminology.ts",
           "seededAtRoot": false,
           "gitAware": false
-        },
-        {
-          "file": "fhir-harness/scripts/stage-ast-sites.ts",
-          "seededAtRoot": false,
-          "gitAware": false
-        },
-        {
-          "file": "folio-assistant-core/scripts/check-artifact-index.ts",
-          "seededAtRoot": false,
-          "gitAware": true
         },
         {
           "file": "folio-assistant-core/scripts/check-voices.ts",
@@ -429,7 +424,7 @@
           "instance": "folio-assistant-core",
           "path": "folio-assistant-core/scripts",
           "state": "scanned",
-          "enumerating": 2
+          "enumerating": 1
         },
         {
           "instance": "folio-assistant-sci",
@@ -488,10 +483,10 @@
       ]
     },
     "seeded-at-root-not-git-aware": {
-      "summary": "The shape that actually costs something: a scan whose start argument IS a root constant, that does not ask git. 0 of 0 such scans, 74 enumerating scripts in all, across 7 instance(s)' scripts/ (bootstrap-tools, cat-harness, cat-harness-tools, fhir-harness, folio-assistant-core, smart-trust, who-iris). Reported and NEVER failed — the owner's ruling of 2026-09-27, over the objection that a check which cannot fail is the 1xhc pattern; what CAN fail here is the sidecar going stale.",
+      "summary": "The shape that actually costs something: a scan whose start argument IS a root constant, that does not ask git. 0 of 0 such scans, 73 enumerating scripts in all, across 7 instance(s)' scripts/ (bootstrap-tools, cat-harness, cat-harness-tools, fhir-harness, folio-assistant-core, smart-trust, who-iris). Reported and NEVER failed — the owner's ruling of 2026-09-27, over the objection that a check which cannot fail is the 1xhc pattern; what CAN fail here is the sidecar going stale.",
       "count": 0,
       "entries": []
     }
   },
-  "total": 90
+  "total": 89
 }

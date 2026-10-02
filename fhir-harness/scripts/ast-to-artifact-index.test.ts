@@ -16,7 +16,7 @@ import { dirname, join } from "node:path";
 
 import { astToArtifactIndex, compareIndexes, publisherCategory, readerText, withCrossVersionFields } from "./ast-to-artifact-index";
 import { readAst } from "./ig-ast";
-import { FhirArtifactIndexSchema, type FhirArtifactIndex } from "../../folio-assistant-core/schemas/fhir-artifact-index.js";
+import { FhirArtifactIndexSchema, type FhirArtifactIndex } from "../schemas/fhir-artifact-index.js";
 
 const X = "http://example.org/ig";
 

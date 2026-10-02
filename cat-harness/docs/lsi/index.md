@@ -25,8 +25,8 @@ how to build, query and audit an index is the skill `lsi-indexing`.
 
 <div class="lv-grid">
 <div class="lv-stat"><b>4</b><span>committed indexes</span></div>
-<div class="lv-stat"><b>2211</b><span>units indexed</span></div>
-<div class="lv-stat"><b>4</b><span>graphs that need an index and lack a fresh one</span></div>
+<div class="lv-stat"><b>2210</b><span>units indexed</span></div>
+<div class="lv-stat"><b>5</b><span>graphs that need an index and lack a fresh one</span></div>
 </div>
 
 ## Which graphs need an index
@@ -60,6 +60,7 @@ the same as fine. The same verdict is `kg:audit`'s `tool-downstream-fresh` for t
 | `smart-base/library` | <span class="lv-pass">pass</span> | fresh |
 | `smart-base/methodologies` | <span class="lv-na">n/a</span> | below the need-an-index threshold — not judged |
 | `smart-base/smart-base-docs` | <span class="lv-fail">fail</span> | needs an LSI index and has none — run `bun run lsi index --instance smart-base --graph smart-base-docs` |
+| `smart-immunizations/smart-immunizations-docs` | <span class="lv-fail">fail</span> | needs an LSI index and has none — run `bun run lsi index --instance smart-immunizations --graph smart-immunizations-docs` |
 | `smart-trust/smart-trust-docs` | <span class="lv-fail">fail</span> | needs an LSI index and has none — run `bun run lsi index --instance smart-trust --graph smart-trust-docs` |
 | `who-iris/library` | <span class="lv-pass">pass</span> | fresh |
 | `who-iris/who-iris-docs` | <span class="lv-na">n/a</span> | below the need-an-index threshold — not judged |
@@ -109,7 +110,7 @@ Each dimension is a **contrast** between two poles, shown by their highest-loadi
 
 ## cat-harness / skills
 
-**220** units · **5899** terms · k = **100** · retains **78.8 %** of the weighted matrix · weighting `log-entropy` · sidecar `cat-harness/test/results/lsi/cat-harness/skills.lsi.json`
+**219** units · **5884** terms · k = **100** · retains **79.0 %** of the weighted matrix · weighting `log-entropy` · sidecar `cat-harness/test/results/lsi/cat-harness/skills.lsi.json`
 
 > Dimension 1 has **no negative pole**: it most likely measures unit length and term frequency (a margin), not a theme. Read the themes from dimension 2 on.
 
@@ -117,14 +118,14 @@ Each dimension is a **contrast** between two poles, shown by their highest-loadi
 
 | dim | σ | one pole | the other pole |
 |---|---|---|---|
-| 1 | 43.96 | instance, kind, harness, session, graph, block, directory, page | *(none)* |
+| 1 | 43.91 | instance, kind, harness, session, graph, directory, block, page | *(none)* |
 | 2 | 21.48 | watcher, slot, sibling, queue, backlog, prs, block, commits | harness, instance, declaration, directory, node, directories, graph, declares |
-| 3 | 17.81 | session, beans, goals, branch, store, window, epic, push | slot, chapter, block, edges, formal, glossary, project, proof |
-| 4 | 16.51 | page, block, section, blocks, text, chapter, sections, manifest | ledger, sibling, subdirectory, items, queue, sessions, coordination, window |
-| 5 | 14.89 | locale, navbar, page, translated, translation, theme, staging, board | edges, forward, edge, logical, backward, cross-chapter, energy, sections |
-| 6 | 14.77 | requirements, lane, actor, role, feature, phase, task, stakeholders | queue, rung, arm, slide, archive, zip, bytes, sniff |
-| 7 | 14.41 | edges, forward, preview, backward, edge, cross-chapter, energy, logical | actor, lane, role, backlog, criterion, rung, login, referee |
-| 8 | 14.20 | tile, avatar, theme, card, board, sticky, crop, stylesheet | translation, locale, translated, language, glossary, french, term, back-translation |
+| 3 | 17.81 | session, beans, branch, goals, store, window, epic, push | slot, chapter, block, edges, formal, glossary, project, proof |
+| 4 | 16.50 | page, block, section, blocks, text, chapter, sections, manifest | ledger, sibling, subdirectory, items, sessions, queue, coordination, window |
+| 5 | 14.88 | locale, navbar, page, translated, translation, theme, staging, board | edges, forward, edge, logical, backward, cross-chapter, energy, sections |
+| 6 | 14.77 | requirements, lane, actor, role, feature, phase, task, stakeholders | rung, queue, arm, archive, slide, zip, bytes, sniff |
+| 7 | 14.41 | edges, forward, preview, backward, edge, cross-chapter, energy, editorial | actor, lane, role, backlog, criterion, rung, login, roles |
+| 8 | 14.19 | tile, avatar, theme, card, board, sticky, crop, glass | translation, locale, translated, language, glossary, french, term, back-translation |
 
 **Findings** — 0 narrow dimension(s), 0 near-duplicate pair(s).
 

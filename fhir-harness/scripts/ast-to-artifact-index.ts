@@ -48,7 +48,7 @@ import {
   type FhirArtifact,
   type FhirArtifactIndex,
   type PublishedFormats,
-} from "../../folio-assistant-core/schemas/fhir-artifact-index.js";
+} from "../schemas/fhir-artifact-index.js";
 
 /** The fields of a FHIR resource the index reads. */
 interface ResourceJson {
@@ -264,9 +264,9 @@ export function astToArtifactIndex(ast: Ast, opts: AstIndexOptions): AstIndexRes
       readAt: (m.generatedAt ?? new Date().toISOString()).slice(0, 10),
     },
     provenance: {},
-    // The AST is the FHIR build; whether a DAK API sits beside it is not
+    // The AST is the FHIR build; whether a sidecar API sits beside it is not
     // something the AST can tell.
-    dakApi: "unknown",
+    sidecarApi: "unknown",
     count: artifacts.length,
     artifacts,
   });

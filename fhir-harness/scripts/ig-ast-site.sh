@@ -11,7 +11,12 @@
 # USAGE
 #   fhir-harness/scripts/ig-ast-site.sh --ig-root DIR --instance DIR --out DIR
 #       [--label NAME] [--chrome-owner INSTANCE] [--published-base URL]
-#       [--remote REM] [--jekyll]
+#       [--remote REM] [--jekyll] [--publish-note TEXT] [--sidecar-label TEXT]
+#       [-- <other gen-ig-pages.ts flags>]
+#
+#   --publish-note / --sidecar-label, and anything after `--`, are passed to
+#   gen-ig-pages.ts unchanged: a publisher's own wording, which this layer
+#   must not know.
 #
 #   --ig-root   a checkout of the IG source (the repository with sushi-config.yaml)
 #   --instance  the folio instance directory holding fhir-artifact-index/ (menu,
@@ -39,8 +44,10 @@ step() { printf '\n== %s\n' "$*"; }
 HERE=$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)
 
 IG_ROOT="" INSTANCE="" OUT="" LABEL="" CHROME_OWNER="" PUBLISHED_BASE="" REMOTE="" JEKYLL=0
+PAGE_EXTRA=()
 while [ $# -gt 0 ]; do
   case "$1" in
+    --) shift; PAGE_EXTRA+=("$@"); break ;;
     --ig-root) IG_ROOT="${2:-}"; shift 2 ;;
     --instance) INSTANCE="${2:-}"; shift 2 ;;
     --out) OUT="${2:-}"; shift 2 ;;
@@ -49,6 +56,9 @@ while [ $# -gt 0 ]; do
     --published-base) PUBLISHED_BASE="${2:-}"; shift 2 ;;
     --remote) REMOTE="${2:-}"; shift 2 ;;
     --jekyll) JEKYLL=1; shift ;;
+    # Forwarded to gen-ig-pages.ts verbatim: the publisher's own wording,
+    # which this layer passes on and never chooses.
+    --publish-note|--sidecar-label) PAGE_EXTRA+=("$1" "${2:-}"); shift 2 ;;
     -h|--help) grep '^#' "$0" | cut -c 3-; exit 0 ;;
     *) die "unknown option: $1" ;;
   esac
@@ -91,6 +101,7 @@ step "pages"
 page_args=(--instance "$INSTANCE" --index "$OUT/fhir-artifact-index/index.json" --out "$OUT/docs")
 [ -n "$LABEL" ] && page_args+=(--label "$LABEL")
 [ -n "$CHROME_OWNER" ] && page_args+=(--chrome-owner "$CHROME_OWNER")
+page_args+=("${PAGE_EXTRA[@]}")
 bun run "$HERE/gen-ig-pages.ts" "${page_args[@]}" || exit 3
 PAGES=$(find "$OUT/docs" -name '*.md' -not -name README.md | wc -l | tr -d ' ')
 T2=$(date +%s)
