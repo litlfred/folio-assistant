@@ -15,7 +15,7 @@ user_invocable: false
 
 # Merge-conflict patterns — what a merge may resolve on its own
 
-`bun run merge:main` is the command; `processes/merge-base.bpmn` is the
+`bun run merge:main` is the command; `processes/sdlc/merge-base.bpmn` is the
 process it executes, called from `Task_PrepareMerge` in
 `code-change-review.bpmn`. The patterns themselves are data in
 `cat-harness/scripts/merge-conflict-patterns.ts`. This page says what each one
