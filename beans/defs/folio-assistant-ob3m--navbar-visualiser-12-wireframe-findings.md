@@ -315,6 +315,18 @@ _2026-10-01_ — **Finding 12: owner's ruling implemented, in PR #1810 (stacked 
 - Found, not fixed (also on the head): at 1280×800 the glass panel opens at y≈591, and most of its body sits under the bottom tile strip until the glass is scrolled.
 
 
+## Finding 3: ruling and after state (2026-10-01, PR #1807, stacked on #1762)
+
+**Ruling.** The owner picked option 1 of 4: *"Stickies show the same text as the landing page"*. A harness's sticky shows the declaration's `summary` and its `alsoWritten` spellings under "Also written", and never authoring notes.
+
+**After.** Sticky contributions declare `bodyFrom: "summary"`. The card text comes from `readerText` in `schemas/sticky-contribution.ts`: the `summary` (else the description), then "Also written: …". This is the same rule `harness_details.html` uses, so both surfaces read the same two fields.
+- folio-assistant card: was "The repository itself… NAMED `folio-assistant-checkout`…". Now "This repository as a working instance: the platform and the folios it hosts."
+- cat-harness card: was five loose lines of spellings. Now "Computable adjudication and agentic test harness." followed by "Also written:" and the four spellings. Its `bodyAppend` (the cat introduction and the scope line) is kept.
+- smart-trust and who-iris: unchanged. They declare no summary, so they fall back to the description, which the landing shows too.
+- bootstrap: unchanged. It is a pinned submodule still on `bodyFrom: "description"`, and it declares no summary.
+
+`landing:sticky:check` (CI) now fails when a card built from its declaration does not open with that text. It fails when run against the #1762 head files.
+
 ## Re-verified 2026-10-01 on PR #1762 head 644d04b9959
 
 Re-measured the four findings still open: 1, 3, 6 and 7. Built with `preview-site.sh` from `claude/quirky-hypatia-k3aoh4` at 644d04b9959, which includes main as of today plus the new viewer rail. Served at `/folio-assistant/` and driven by Playwright at 1280×800 and 390×844. Pages: the landing, `/cat-harness/schemas/` and `/todos/`. Every verdict comes from the built page, not from reading code. "Visible" means hit-tested with `elementFromPoint`, because the closed strip clips labels that are still in the DOM. The screenshots are local only (`.screens/ob3m-v-*.png`, git-excluded).
