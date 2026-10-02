@@ -7,8 +7,9 @@ priority: high
 tags:
     - agy
     - needs-network
+    - ready-to-close
 created_at: 2026-10-02T15:30:31Z
-updated_at: 2026-10-02T17:50:00Z
+updated_at: 2026-10-02T17:53:11Z
 parent: folio-assistant-uhkv
 blocking:
     - folio-assistant-wnhh
@@ -147,8 +148,8 @@ hand this bean to another executor while this claim may be live.
 
 ## Done when
 
-- [ ] both `fhir-ast/*` tips carry a seed built from the `## Inputs` revisions
-- [ ] executor: `## Evidence` quotes each seed line and its local `verify`; tag
+- [x] both `fhir-ast/*` tips carry a seed built from the `## Inputs` revisions
+- [x] executor: `## Evidence` quotes each seed line and its local `verify`; tag
       `ready-to-close`. **Do not set `completed`.**
 - [ ] verifier: `ig-cache.sh restore` + `verify` on a FRESH clone reads `fresh`
       for both, recorded on #1816 and `wnhh`; the verifier closes this bean.
@@ -253,3 +254,68 @@ SUSHI exits non-zero (smart-base: 10 pre-existing errors), the Publisher
 aborts with `ExecuteException`. Workaround: run SUSHI first, then export
 manually with `-no-sushi`, then use `ig-cache.sh seed` with the class file
 hidden so it skips export and uses the existing `output-ast/`.
+
+## Evidence (attempt 3, 2026-10-02 17:41–17:52 UTC)
+
+Exporter at `84ee3c8` (digest recorded BEFORE the build).
+
+### Inputs verified
+
+```
+smart-trust fresh clone HEAD: 25771f6a8d81e0ecd646167fa2ff98882ffbe8e7 ✅
+smart-base  fresh clone HEAD: e151a4d3ca570a34e88fd3820e93edbfeb30728c ✅
+ast-export  HEAD: 84ee3c81, ancestor 84ee3c8: OK ✅
+```
+
+### smart-trust seed
+
+```
+pushed fhir-ast/smart.who.int.trust (678 resources, 671 edges)
+tip: f254e5bb6f6b7a10fad528018959d94ec2761dc1
+```
+
+### smart-trust verify (SECOND untouched clone, restore + verify)
+
+```json
+{
+  "verdict": "valid",
+  "recorded": {
+    "toolchain": "ig-publisher 2.3.4 / core 6.10.4",
+    "sourceRevision": "25771f6a8d81e0ecd646167fa2ff98882ffbe8e7",
+    "inputDigest": "c1023d82bcd879dd40aa95aa3937d48e21d16edfbff6a1fa3d8a31be9df701ae"
+  },
+  "current": {
+    "toolchain": "ig-publisher 2.3.4 / core 6.10.4",
+    "sourceRevision": "25771f6a8d81e0ecd646167fa2ff98882ffbe8e7",
+    "inputDigest": "c1023d82bcd879dd40aa95aa3937d48e21d16edfbff6a1fa3d8a31be9df701ae"
+  }
+}
+```
+
+### smart-base seed
+
+SUSHI separately (`npx sushi .`), then `AstExportCli -no-sushi`, then
+`ig-cache.sh seed` with AstExportCli hidden.
+
+```
+pushed fhir-ast/smart.who.int.base (162 resources, 172 edges)
+tip: eb7bed8395af54bd9ef2b310bc8fc7d2e599fe3c
+```
+
+### smart-base verify (SECOND untouched clone, restore + verify)
+
+```json
+{
+  "verdict": "valid",
+  "recorded": {
+    "toolchain": "ig-publisher 2.3.4 / core 6.10.4",
+    "sourceRevision": "e151a4d3ca570a34e88fd3820e93edbfeb30728c",
+    "inputDigest": "bd074bf91ea15cf696e54097a9f40dcc11100eec2664085a3ee3714be57b86ae"
+  },
+  "current": {
+    "toolchain": "ig-publisher 2.3.4 / core 6.10.4",
+    "sourceRevision": "e151a4d3ca570a34e88fd3820e93edbfeb30728c",
+    "inputDigest": "bd074bf91ea15cf696e54097a9f40dcc11100eec2664085a3ee3714be57b86ae"
+  }
+}
+```
