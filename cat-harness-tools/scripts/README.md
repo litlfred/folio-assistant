@@ -1,7 +1,7 @@
 <!-- kg:subgraph:begin -->
 # cat-harness-tools-scripts
 
-Scripts this layer runs. Today the identifier lookup's pair, moved here from large-datasets when it dissolved into cat-harness (bean `j7ql`, 2026-10-01; D1: code goes to cat-harness-tools): `gen-id-lookup.ts` builds the prefix-sharded lookup over a catalogue's REFERENCED nodes for every instance that declares an `id-lookup` directory, and writes it THERE (`bun run id-lookup`, gated by `id-lookup:check`); `bench-id-lookup.ts` measures it at full catalogue scale on a seeded synthetic corpus (bean `4pm8`). Neither names a corpus: both read the checkout's declarations.
+Scripts this layer runs. Holds `lib/roots.ts`, the one place that names the three roots a moved file can mean (HARNESS_ROOT, TOOLS_ROOT, REPO_ROOT), and its test; the harness's own `scripts/` arrives here batch by batch in the code move (bean `70lx`). Also the identifier lookup's pair, moved here from large-datasets when it dissolved into cat-harness (bean `j7ql`, 2026-10-01; D1: code goes to cat-harness-tools): `gen-id-lookup.ts` builds the prefix-sharded lookup over a catalogue's REFERENCED nodes for every instance that declares an `id-lookup` directory, and writes it THERE (`bun run id-lookup`, gated by `id-lookup:check`); `bench-id-lookup.ts` measures it at full catalogue scale on a seeded synthetic corpus (bean `4pm8`). Neither names a corpus: both read the checkout's declarations.
 
 Part of [C@T Harness Tools](../README.md) 0.1.0, declared as `cat-harness-tools-scripts`, holding `code`.
 
@@ -9,4 +9,6 @@ Part of [C@T Harness Tools](../README.md) 0.1.0, declared as `cat-harness-tools-
 |---|---|---|
 | [`bench-id-lookup.ts`](bench-id-lookup.ts) | a file |  |
 | [`gen-id-lookup.ts`](gen-id-lookup.ts) | a file |  |
+| [`lib/`](lib/) | 1 file | |
+| [`tests/`](tests/) | 2 files | |
 <!-- kg:subgraph:end -->

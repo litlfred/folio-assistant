@@ -6,23 +6,24 @@
  * directories without restating them.
  */
 import { describe, it, test, expect, beforeAll, afterAll } from "bun:test";
+import { HARNESS_ROOT } from "../scripts/lib/roots.ts";
 import { existsSync, mkdirSync, mkdtempSync, writeFileSync, rmSync } from "node:fs";
 import { join, resolve } from "node:path";
 import { tmpdir } from "node:os";
 import { readFileSync } from "node:fs";
-import { registerFolioGraphKind } from "./folio-graph-kind";
-import { THEMES } from "./themes";
-import { BEAN_GRAPH_FILE } from "./bean-graph";
-import { TODO_GRAPH_FILE } from "./todo-graph";
-import { defaultGraphKinds, graphKindIri, GraphKindRegistry, graphLayer, isContentGraph, isContextGraph, isStateGraph, processMayWrite, graphKindsOfLayer, BASE_GRAPH_KINDS, GraphKindConflictError, isRenderable, readDeclaration, keepMarker, materialiseDirectories, renderableDirectories, DEFAULT_DIRECTORIES, declaredKinds, directoryForGraph, directoriesForGraph, resolveDirectories, resolveGraphKind, ContentDirectorySchema, GraphNodeDirectorySchema, instanceRootsIn, ownDirectoryById, toJsonLd, type ResolvedDirectory } from "./cat-harness";
-import { writeDeclaration } from "../test/support/instance-fixture.js";
-import { checkoutDirectories, corpusDirectoriesForGraph } from "./harness-config";
+import { registerFolioGraphKind } from "../../cat-harness/schemas/folio-graph-kind";
+import { THEMES } from "../../cat-harness/schemas/themes";
+import { BEAN_GRAPH_FILE } from "../../cat-harness/schemas/bean-graph";
+import { TODO_GRAPH_FILE } from "../../cat-harness/schemas/todo-graph";
+import { defaultGraphKinds, graphKindIri, GraphKindRegistry, graphLayer, isContentGraph, isContextGraph, isStateGraph, processMayWrite, graphKindsOfLayer, BASE_GRAPH_KINDS, GraphKindConflictError, isRenderable, readDeclaration, keepMarker, materialiseDirectories, renderableDirectories, DEFAULT_DIRECTORIES, declaredKinds, directoryForGraph, directoriesForGraph, resolveDirectories, resolveGraphKind, ContentDirectorySchema, GraphNodeDirectorySchema, instanceRootsIn, ownDirectoryById, toJsonLd, type ResolvedDirectory } from "../../cat-harness/schemas/cat-harness";
+import { writeDeclaration } from "../../cat-harness/test/support/instance-fixture.js";
+import { checkoutDirectories, corpusDirectoriesForGraph } from "../../cat-harness/schemas/harness-config";
 
 const TMP = join(import.meta.dir, "__test_agent_harness__");
-const INSTANCE_ROOT = resolve(import.meta.dir, "..");
+const INSTANCE_ROOT = HARNESS_ROOT;
 const HARNESS = join(TMP, "agentic-harness");
 /** This repository itself — the instance that declares all seven. */
-const ROOT = resolve(import.meta.dir, "..");
+const ROOT = HARNESS_ROOT;
 const CORE = join(TMP, "folio-assist-core");
 const RELOCATED = join(TMP, "relocated");
 const BROKEN = join(TMP, "broken");
@@ -200,7 +201,7 @@ describe("layering", () => {
     // its own type IRIs — a harness -> core edge, already the largest
     // wrong-direction group, and the coupling the split exists to undo.
     // The namespace comes from the leaf `./namespaces` instead.
-    const src = readFileSync(join(import.meta.dir, "cat-harness.ts"), "utf-8");
+    const src = readFileSync(join(HARNESS_ROOT, "schemas", "cat-harness.ts"), "utf-8");
     expect(src).not.toMatch(/from "\.\/jsonld"/);
     expect(src).not.toMatch(/from "\.\/block-kinds"/);
     expect(src).toMatch(/from "\.\/namespaces"/);
