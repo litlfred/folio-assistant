@@ -5,7 +5,7 @@ status: in-progress
 type: bug
 priority: normal
 created_at: 2026-09-25T18:10:30Z
-updated_at: 2026-10-02T16:59:32Z
+updated_at: 2026-10-02T17:38:56Z
 parent: folio-assistant-1xhc
 ---
 
@@ -315,3 +315,82 @@ already met.
 pass → fail (481 lines, p90 391), `totals.fail` 2 → 3. `kg:audit:check` fails
 only on `critical`, so it stays green; `kg:audit:strict` adds `major`, and the
 PR carries `ready-to-merge`.
+
+
+## The linear floor, measured on `origin/gh-pages` 2026-10-02 — and a 5x error corrected
+
+**The 19.5 MB figure in circulation for `fa-todo-listing` is wrong by about 5x.**
+It was relayed from an agent report and I repeated it without deriving it.
+Measured directly:
+
+- the listing section is **12,876 bytes, byte-identical** on every page that
+  carries it — six pages sampled across `reference/`, `smart-trust/` and the
+  root all gave the same number, because it is a GLOBAL listing, not
+  page-specific;
+- it renders **3 notes**, so ~4.3 KB per note;
+- it is injected by `cat-harness/docs/_includes/footer_custom.html:40`, so
+  every Jekyll page gets it.
+
+| tree | HTML pages | carrying it | bytes |
+|---|---|---|---|
+| main site, non-`api/` | 2,505 | ~2,405 (24 of 25 sampled) | **31.0 MB** |
+| main site, `api/` (TypeDoc) | 2,206 | **0** | — |
+| `STAGING/` previews | 11,096 | ~51 % by carry-rate | ~73 MB (estimated by rate, NOT counted) |
+| | | | **~104 MB** |
+
+The STAGING row is an estimate from the carry-rate, not a count. Stated as
+such because the main-site row IS counted and the two must not be read as
+equally firm.
+
+### The `api/` absence is the rule working, not a hole
+
+`footer_custom.html` justifies per-page inclusion thus: *"the board is
+launched from every page, so a floor that exists on some of them is not a
+floor."* 2,206 pages lack the listing, which looks like a contradiction. It is
+not: `api/` pages load **no `docs-ui.js`**, so no board can launch there and no
+floor is owed. Checked, not assumed.
+
+### Where the rule does rest on a conflation
+
+**The board IS JavaScript**, so a reader with JS off never gets a board to
+collapse. Two readers are being served by one artefact:
+
+- **JS-on** — `docs-ui.js` collapses the listing into a disclosure. The
+  content could be FETCHED; relaxed R4 permits exactly that.
+- **JS-off** — no board, ever. For them this is not "the board's fallback on
+  this page", it is a global notes index duplicated ~2,405 times. What bean
+  `0jtj` actually complained of is *"no note, no count, no hint that notes
+  exist"* — a count, a hint and a path satisfy it.
+
+### A live defect found while measuring
+
+**`todos/index.html` serves ZERO items and carries no listing section at
+all.** It is one of the eight JS shells in `first-paint-scheme.e2e.ts`. So
+today a no-JS reader gets the full listing on `accessibility.html` and
+**nothing on the notes page** — the one page most about notes is the only one
+with no floor. That is `0jtj`'s defect, still live, at the destination.
+
+### The option this implies, which is better than convert-or-keep
+
+A footer **stub** (~300 B/page: `Open notes (3)`, linking to `todos/`), the
+full static listing moved INTO `todos/index.html` where it is missing, and the
+board fetching bodies. Recovers ~97 % of the ~104 MB, and leaves the no-JS
+reader better off than today: count and path on every page, plus a served
+listing at the destination that does not currently exist.
+
+Two costs, both real:
+
+1. `footer_custom.html` is `nav_footer_custom` — **#1886 phase C territory**,
+   so this needs that session's agreement.
+2. **The stub's count must not be `data-fa-todo-count` on a
+   `fa-todo-listing` section.** `linear-floor.e2e.ts` test 5 asserts that
+   attribute equals the panel's own cardinality; a stub carrying `3` with zero
+   items is precisely the number-somebody-maintains that R6 designed out. It
+   is a link label, not a panel count.
+
+Test disposition: three of the five move to `todos/` (bodies, document order,
+attachment/status), one stays (board-did-not-run), one splits. **None is
+deleted, and the floor gets stronger** — one authoritative served listing
+instead of 2,405 copies and an empty destination.
+
+Put to the owner as a decision; not acted on.
