@@ -6236,6 +6236,20 @@
       "kind": "interface",
       "fields": [
         {
+          "name": "summary",
+          "type": "string",
+          "optional": true,
+          "array": false,
+          "doc": "A reader's one line — see {@link CatHarnessDeclarationSchema}'s `summary` (`ob3m` 4/5)."
+        },
+        {
+          "name": "alsoWritten",
+          "type": "string[]",
+          "optional": true,
+          "array": true,
+          "doc": "Other spellings of the name, listed on the landing (`ob3m` 5)."
+        },
+        {
           "name": "images",
           "type": "KgImage[]",
           "optional": true,
@@ -6448,6 +6462,20 @@
           "type": "z.string().min(1)",
           "optional": false,
           "array": false
+        },
+        {
+          "name": "summary",
+          "type": "z.string().min(1).optional()",
+          "optional": true,
+          "array": false,
+          "doc": "One line for a READER, where `description` is written for an author."
+        },
+        {
+          "name": "alsoWritten",
+          "type": "z.array(z.string().min(1)).nonempty().optional()",
+          "optional": true,
+          "array": true,
+          "doc": "Other ways the instance's name is written, shown on the landing as a small"
         },
         {
           "name": "images",
@@ -37158,6 +37186,39 @@
       "exported": true
     },
     {
+      "id": "cat-harness/schemas/viewer-nav-qa.ts#ViewerNavFlag",
+      "name": "ViewerNavFlag",
+      "module": "cat-harness/schemas/viewer-nav-qa.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/viewer-nav-qa.ts#ViewerNavFlagSchema",
+      "name": "ViewerNavFlagSchema",
+      "module": "cat-harness/schemas/viewer-nav-qa.ts",
+      "kind": "zod-enum",
+      "doc": "The LAYOUT criteria a railed page is held to — owner, 2026-10-01 (#1757).",
+      "fields": [],
+      "extendsNames": [],
+      "values": [
+        "header",
+        "clickable-mark",
+        "visualiser-nav",
+        "single-open",
+        "no-redundant-toggle"
+      ],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
       "id": "cat-harness/schemas/viewer-nav-qa.ts#ViewerNavPage",
       "name": "ViewerNavPage",
       "module": "cat-harness/schemas/viewer-nav-qa.ts",
@@ -37202,11 +37263,19 @@
           "optional": true,
           "array": false,
           "doc": "Why, for anything other than `railed`."
+        },
+        {
+          "name": "flags",
+          "type": "z.array(ViewerNavFlagSchema).optional()",
+          "optional": true,
+          "array": true,
+          "doc": "The layout criteria this railed page FAILS. Absent when it fails none."
         }
       ],
       "extendsNames": [],
       "values": [],
       "refs": [
+        "cat-harness/schemas/viewer-nav-qa.ts#ViewerNavFlagSchema",
         "cat-harness/schemas/viewer-nav-qa.ts#ViewerNavVerdictSchema"
       ],
       "unresolved": [],
@@ -49585,6 +49654,14 @@
       "via": "removed",
       "kind": "field",
       "optional": false,
+      "array": true
+    },
+    {
+      "from": "cat-harness/schemas/viewer-nav-qa.ts#ViewerNavPageSchema",
+      "to": "cat-harness/schemas/viewer-nav-qa.ts#ViewerNavFlagSchema",
+      "via": "flags",
+      "kind": "field",
+      "optional": true,
       "array": true
     },
     {

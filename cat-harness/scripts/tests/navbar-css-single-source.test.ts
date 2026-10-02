@@ -96,6 +96,9 @@ describe("the two navbar stylesheets cannot disagree", () => {
     //
     // This assertion is how that day announces itself instead of being noticed.
     // Raising the bound is a decision; leaving it is not maintenance.
-    expect(shared.sort()).toEqual([".fa-nav-close", ".fa-nav-close:hover", ".fa-nav-open"]);
+    //
+    // Two of the three went with the `[x]` (#1757): the rail no longer renders
+    // a close control, so `navbarCss()` no longer styles one.
+    expect(shared.sort()).toEqual([".fa-nav-open"]);
   });
 });
