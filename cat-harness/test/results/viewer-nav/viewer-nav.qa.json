@@ -2,10 +2,11 @@
   "$schema": "viewer-nav-qa/v1",
   "root": "cat-harness/docs",
   "totals": {
-    "pages": 59,
-    "railed": 59,
+    "pages": 61,
+    "railed": 61,
     "declined": 0,
-    "missing": 0
+    "missing": 0,
+    "flagged": 0
   },
   "pages": [
     {
@@ -51,6 +52,11 @@
     {
       "path": "/cat-harness/docs-auto/index/docs/root-docs/",
       "source": "cat-harness/docs/cat-harness/docs-auto/index/docs/root-docs/index.html",
+      "verdict": "railed"
+    },
+    {
+      "path": "/cat-harness/docs-auto/index/docs/smart-base-docs/",
+      "source": "cat-harness/docs/cat-harness/docs-auto/index/docs/smart-base-docs/index.html",
       "verdict": "railed"
     },
     {
@@ -206,6 +212,11 @@
     {
       "path": "/cat-harness/schemas/cat-harness/",
       "source": "cat-harness/docs/cat-harness/schemas/cat-harness/index.html",
+      "verdict": "railed"
+    },
+    {
+      "path": "/cat-harness/schemas/fhir-harness/",
+      "source": "cat-harness/docs/cat-harness/schemas/fhir-harness/index.html",
       "verdict": "railed"
     },
     {

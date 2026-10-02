@@ -354,7 +354,14 @@ if (import.meta.main) {
   emit(join(dataDir, "index.json"), JSON.stringify(projection(g), null, 2) + "\n");
   const nav: ViewerNav = { built: basename(ROOT), docsRoot: site };
   // The page says which directories it draws (#1168 B7a-2).
-  emitPage(nav)(
+  // The rail section (#1757): the static regions the script draws into. One
+  // page, no subjects, so no `subjectSection`.
+  const section = [
+    { label: "Summary", href: "#badges" },
+    { label: "Directories", href: "#dirs" },
+    { label: "Nodes", href: "#nodes" },
+  ];
+  emitPage({ ...nav, section })(
     join(pageDir, "index.html"),
     withRenders(viewerHtml(dataHref, mount), g.directories.filter((d) => d.present).map((d) => d.dir), VIEWER_TOOL),
   );

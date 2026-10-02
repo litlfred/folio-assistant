@@ -268,6 +268,44 @@ thing is the defect, and a different gear does not fix a duplicate name for a
 screen reader.
 
 
+## 2026-10-01 — re-measured on a local build of claude/quirky-hypatia-k3aoh4 (PR #1762)
+
+Built with preview-site.sh, served at /folio-assistant/, 1280×800 and 390×844. Session https://claude.ai/code/session_01Cw8JgZEDT5VqQ5ergjdMjB.
+
+- **8 — FIXED by #1762.** The Jekyll include renders no `.fa-nav-head` (☰) and no `.fa-nav-close` ([x]): zero of either on the built page at both widths. The owner asked for both to go (#1757) because the avatar already toggles the bar. The mobile footer copy still shows '▦Harnesses / ⌂C@T Harness' as a block, which is the harness list rather than a stray control.
+- **2 — FIXED in #1762.** A harness whose folio is the site root now links to its own section on the landing: Folio Assistant → `/#harness-folio-assistant`, C@T Harness → `/#harness-cat-harness` (`harness-tiles.ts`; the ids come from `_includes/harness_details.html`). Two rows no longer open one page.
+- **12 — FIXED on main** (the glass tile is 'Folio settings', docs-ui.js:6070).
+- **1, 3, 4, 5, 9 — STILL PRESENT** as last recorded: resting-strip icons carry aria-label only; the landing descriptions still carry the naming rationale (4) and the run-together spellings (5); the '▾ Folio' handle is still [154,0,82,25] over the site title at 390.
+- 6, 7, 11 not re-measured this round.
+
+
+## 2026-10-01 — findings 4 and 5: a reader's summary, spellings as a list (owner's choice)
+
+Owner chose, from three options: keep the C@T spellings visible, as a list. So the declaration gains two optional fields (`summary`, `alsoWritten`; `CatHarnessDeclarationSchema`), and the landing's harness section (`_includes/harness_details.html`) prints `summary` when declared, else `description` as before, plus an 'Also written:' line. Measured on a local build:
+
+- Folio Assistant: 'This repository as a working instance: the platform and the folios it hosts.' (the naming rationale stays in `description`, where it is for authors)
+- C@T Harness: 'Computable adjudication and agentic test harness.' then 'Also written: caaat-harness, ca&at-harness, .c&at-harness, c@t-harness'
+
+**Not changed:** the two landing STICKIES (`cat-harness/folio/*.json`) are folio content; the C@T card's spellings are the acronym's derivation chain and `landing-sticky.test.ts` pins them on purpose. Finding 3's sticky half is therefore left as authored.
+
+
+## 2026-10-01 — finding 9: FIXED in #1762
+
+- The handle's mark follows the state: ▾ closed, ▴ open (it stayed ▾ with the glass down; only the aria-label changed). Measured: ▾ → ▴ on open → ▾ on Escape, at 1280 and 390.
+- Below 50rem the site title is held left of the handle (`max-width: calc(50vw - 3rem)`, ellipsis, no right padding, auto right margin so the header's icon buttons stay right). Measured on a local build: at 390 the title box ends at 153 and the handle starts at 154, 'C@T Harness' is not truncated, a 32-character title is ellipsised, and 0 header controls sit under the handle at 360, 390 and 700. At 360 'C@T Harness' itself ellipsises — the honest cost at that width.
+
+
+## 2026-10-01 — finding 11 fixed, rendered half measured
+
+Owner: "keep going". On `claude/quirky-hypatia-k3aoh4` (PR #1762).
+
+- **Declared half**: `TILE_GLYPHS` gains seven drawings (tools, schemas, skills, methodologies, index, docs, library; `processes` now shares the row's PROCESS_GLYPH). Every declared tile names one: `check:navbar-consistency` reports **14 of 14** (was 2 of 14), and the corpus no longer emits `tile-without-icon`.
+- **Rendered half**: most tiles are DERIVED from a dependency's directory, not declared, so a declared-only fix left 20 of 29 on the net. `graph-tiles.ts` now falls back to the directory's graph KIND (`KIND_TILE_ICONS`, `kindTileIcon`); a declared icon still wins. `check:navbar-consistency` fails a kind mapped to an undrawn name (falsified: planted `librar`, exit 1).
+- **Measured on a local build, Glass → More at 1280×800: 29 tiles, 11 distinct drawings** (was 2). Six tiles still take the net because their kinds have no drawing: folio, fsh-guts, root-docs, swimlane-glossary, todos, translation-sources.
+
+Still open here: 1, 3 (sticky half), 6, 7, 12 (needs an editorial call: rename or cross-link the two Settings).
+
+
 ## Re-verified 2026-10-01 on PR #1762 head 644d04b9959
 
 Re-measured the four findings still open: 1, 3, 6 and 7. Built with `preview-site.sh` from `claude/quirky-hypatia-k3aoh4` at 644d04b9959, which includes main as of today plus the new viewer rail. Served at `/folio-assistant/` and driven by Playwright at 1280×800 and 390×844. Pages: the landing, `/cat-harness/schemas/` and `/todos/`. Every verdict comes from the built page, not from reading code. "Visible" means hit-tested with `elementFromPoint`, because the closed strip clips labels that are still in the DOM. The screenshots are local only (`.screens/ob3m-v-*.png`, git-excluded).

@@ -5,7 +5,7 @@ status: in-progress
 type: task
 priority: normal
 created_at: 2026-09-23T22:51:10Z
-updated_at: 2026-09-24T11:52:37Z
+updated_at: 2026-10-01T17:41:32Z
 parent: folio-assistant-vke6
 ---
 
@@ -50,3 +50,16 @@ Every reduction was a file that **declares itself** generated — no thresholds,
 The owner rules on the 116 (move vs reword), `PENDING` reflects it, and the advisory entry flips to `kind: "gate"` pointing at `check:reference-direction:strict` once the count is zero.
 
 No `beans/workflows/` instance recorded: the workflow engine is driven by MCP tools this session does not hold, and hand-writing a state file the engine did not produce would make the store say something no process did.
+
+
+## Owner rulings 2026-10-01 late (~17:30) — Q-B, reference direction (epic 7x5n)
+
+Source: owner, session_01ToWZR4RgTRCWeSsgxsSQfT. Plan: Q-B (`check:reference-direction` baseline, ratchet, CI, then drain).
+
+- **Q1: REWORD, not move-to-lowest-common-dependent.** Multi-destination files stay where they are; their prose is rewritten so it does not name higher layers. The "names a chain → moves to the top of the chain" rule is NOT adopted.
+- **X3 adopted:** the 3 layering specifications — `cat-harness/scripts/partition/instance-rules.ts`, `smart-base/…/smart-stack-layering.md`, `cat-harness/scripts/check-reference-direction.ts` — are an `EXEMPTIONS` class: their subject IS the instance graph.
+- **A.10: the ratchet ALSO covers single-name files** (≈215 baselined), so a new file naming one higher instance fails CI too.
+- **X1 adopted:** translation mirrors (the 10 locale copies of `docs/skills.md` / `guides/agent-onboarding.md`, `lang:` ≠ en + `translation_source:`) are exempt — the source page is counted once.
+- X2 (exempt dated decision records) was not ruled. Under REWORD, the RD-04 proposals are reworded in place or stay in the baseline.
+
+Implementation: steps (1)+(2) — baseline store, `applyRatchet`, `--seed`, CI step — are the next PR under beans `1bvx`/`vzo5`.
