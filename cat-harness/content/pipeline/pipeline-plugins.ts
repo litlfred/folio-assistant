@@ -238,9 +238,21 @@ export function declarationStarts(stripped: string): LeanDeclStart[] {
   return pipelinePlugin("lean-lexer").declarationStarts(stripped);
 }
 
-/** `chapter-profile-defaults` slot: configure the folio's default chapter profiles. */
+/**
+ * `chapter-profile-defaults` slot: configure the folio's default chapter
+ * profiles, IF a dependency supplies them.
+ *
+ * The one OPTIONAL slot, and on purpose. It runs at module load of
+ * `qa-checkers-q-usage.ts`, and "no defaults" is already a documented state
+ * of `chapter-profile-registry-di` (unconfigured, which reads as empty and is
+ * reported by `chapterProfilesConfigured()`). A folio that does not depend on
+ * the science layer, such as the fixture in `q-usage-audit-roots.test.ts`,
+ * must still be able to load the checker and get its own "found NO blocks"
+ * answer, rather than a load-time throw about a slot it never needed. A
+ * contributor that is declared but broken still throws, from the loader.
+ */
 export function registerDefaultChapterProfiles(): void {
-  pipelinePlugin("chapter-profile-defaults").registerDefaults();
+  optionalPipelinePlugin("chapter-profile-defaults")?.registerDefaults();
 }
 
 /** `latex-preflight` slot: macro lint over a generated compile unit. */
