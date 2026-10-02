@@ -23,9 +23,10 @@
  * | links to beans and epics | the changed-file list, and what it touches |
  *
  * A stored copy of a GitHub fact is a second answer to a question GitHub
- * already answers, and it goes stale the moment anybody pushes. The tile and
- * the steward JOIN the two at the moment of use (`scripts/merge-queue.ts`
- * `joinLive`); they never write the right-hand column back.
+ * already answers, and it goes stale the moment anybody pushes. The steward
+ * computes the right-hand column at decision time (`scripts/merge-queue.ts`
+ * `deriveFacts`), and the queue tile joins it in the reader's browser at view
+ * time; neither writes it back.
  *
  * {@link MergeQueueEntrySchema} enforces it structurally: the object is
  * `strict`, and the keys a well-meaning writer would reach for first

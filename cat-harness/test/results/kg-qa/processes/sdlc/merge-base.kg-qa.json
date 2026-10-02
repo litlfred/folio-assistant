@@ -72,20 +72,12 @@
       "result": "fail",
       "findings": [
         {
-          "where": "Task_Merge",
-          "detail": "needs skill \"prepare-merge\", but its lane's role \"build-pipeline\" does not carry it."
-        },
-        {
           "where": "Task_Classify",
           "detail": "needs skill \"merge-conflict-patterns\", but its lane's role \"build-pipeline\" does not carry it."
         },
         {
           "where": "Task_Resolve",
           "detail": "needs skill \"merge-conflict-patterns\", but its lane's role \"build-pipeline\" does not carry it."
-        },
-        {
-          "where": "Task_Regen",
-          "detail": "needs skill \"prepare-merge\", but its lane's role \"build-pipeline\" does not carry it."
         },
         {
           "where": "Task_Commit",
