@@ -441,7 +441,7 @@ function headerFooter(title: string): { header: string; footer: string } {
  * Generous on purpose: the cost of waiting is seconds, and the cost of not
  * waiting is a PDF that looks finished and is not.
  */
-const RENDER_WAIT_MS = 30_000;
+export const RENDER_WAIT_MS = 30_000;
 
 /**
  * Wait for every client-built region on the page, or THROW.
@@ -469,6 +469,15 @@ const RENDER_WAIT_MS = 30_000;
  * cannot be made to wait at all — `beforeprint` is synchronous and no browser
  * lets a script block the print dialogue.
  *
+ * ## Exported so the refusal is TESTED rather than asserted
+ *
+ * This is the only place in the repository where "print waits for render" is
+ * actually enforceable, so it is the one place where a claim about it can be
+ * falsified. `test/render-wait.e2e.ts` drives all four outcomes against real
+ * Chromium. Exported for that and for no other caller: a refusal nothing
+ * exercises is a refusal that silently stops refusing, which is this
+ * repository's standing complaint about a printed verdict.
+ *
  * ## The absent attribute is not a failure
  *
  * A page that declares no dynamic region carries no `data-fa-render`, and that
@@ -477,7 +486,7 @@ const RENDER_WAIT_MS = 30_000;
  * such a page, so this costs the current caller one `waitForFunction` that
  * returns immediately.
  */
-async function waitForRender(page: import("playwright").Page): Promise<void> {
+export async function waitForRender(page: import("playwright").Page): Promise<void> {
   try {
     await page.waitForFunction(
       () => document.documentElement.getAttribute("data-fa-render") !== "pending",
