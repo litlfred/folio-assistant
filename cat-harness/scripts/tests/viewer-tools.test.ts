@@ -11,7 +11,10 @@ import { describe, expect, it } from "bun:test";
 import { resolve } from "node:path";
 
 import { instanceRootsIn, instanceDirectories, isPublishedGraphKind } from "../../schemas/cat-harness.js";
-import { tools } from "../../tools/index.js";
+// Every instance's Tools, as `viewer-declarations` reads them: a viewer Tool
+// may live in a dependency's `tools` graph (fhir-harness's `ig-pages`), and the
+// cat-harness barrel alone would report its pages as naming no renderer.
+import { tools } from "../../tools/discover.js";
 import { viewerPages } from "../viewer-declarations.js";
 
 const REPO = resolve(import.meta.dir, "..", "..", "..");
