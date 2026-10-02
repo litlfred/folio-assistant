@@ -20,7 +20,7 @@ Follow-up to beans `gnqa` (library) and `yhcq` (kg-viewer), stacked on PR #1839.
 Claimed by claude/visualiser-followups (session https://claude.ai/code/session_01CVVoavPoCHMLA7AASxG8cH) — issue #1838.
 
 ## Done when
-- [ ] kg-viewer draws a disabled switcher listing the planned languages, with a visible, keyboard- and tap-reachable reason; e2e covers it and the enable-on-content path
-- [ ] the ingest path resolves titles from corroborated sources and marks the rest unverified; before/after counted over every entry
-- [ ] remaining bad titles corrected as data, one entry at a time, each with its basis
-- [ ] before/after screenshots at 1280×800 and 390×844 committed and shown in the PR
+- [x] kg-viewer draws a disabled switcher listing the planned languages, with a visible, keyboard- and tap-reachable reason; e2e covers it and the enable-on-content path
+- [x] the ingest path resolves titles from corroborated sources and marks the rest unverified; before/after counted over every entry
+- [x] remaining bad titles corrected as data, one entry at a time, each with its basis
+- [x] before/after screenshots at 1280×800 and 390×844 committed and shown in the PR
