@@ -43,6 +43,7 @@ Part of [C@T Harness](../README.md) 0.1.0, declared as `cat-harness-tests`, hold
 | [`panel-chrome.e2e.ts`](panel-chrome.e2e.ts) | a file |  |
 | [`qa-badge.e2e.ts`](qa-badge.e2e.ts) | a file |  |
 | [`qa-panel.e2e.ts`](qa-panel.e2e.ts) | a file |  |
+| [`rail-tips.e2e.ts`](rail-tips.e2e.ts) | a file |  |
 | [`review-diff.e2e.ts`](review-diff.e2e.ts) | a file |  |
 | [`review-heat.e2e.ts`](review-heat.e2e.ts) | a file |  |
 | [`review-nav.e2e.ts`](review-nav.e2e.ts) | a file |  |
@@ -63,6 +64,6 @@ Part of [C@T Harness](../README.md) 0.1.0, declared as `cat-harness-tests`, hold
 | [`test_pypdf_compat.py`](test_pypdf_compat.py) | a file |  |
 | [`translation-badges.e2e.ts`](translation-badges.e2e.ts) | a file |  |
 | [`health/`](health/) | 8 files | |
-| [`results/`](results/README.md) | 1018 files | |
+| [`results/`](results/README.md) | 965 files | |
 | [`support/`](support/) | 3 files | |
 <!-- kg:subgraph:end -->

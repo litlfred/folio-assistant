@@ -1,7 +1,7 @@
 ---
 # folio-assistant-72gk
 title: 'todos visualiser: 5 wireframe findings'
-status: todo
+status: in-progress
 type: task
 priority: normal
 tags:
@@ -9,7 +9,7 @@ tags:
     - ui
     - visualiser-todos
 created_at: 2026-09-23T10:36:15Z
-updated_at: 2026-09-30T16:12:46Z
+updated_at: 2026-10-02T18:41:04Z
 parent: folio-assistant-4ccr
 ---
 
@@ -42,3 +42,5 @@ Each finding re-measured on a local build of that commit (`preview-site.sh`, ser
 - **STILL-PRESENT** — First screen is mostly the list of other graphs: At both 1280×800 and 390×844 the workplan panel is 117px tall at y=112. 'State graphs this harness declares' starts at y=292 and fills the rest (7 cards). (D/p_todo.js)
 - **STILL-PRESENT** — Heading order skips a level; tags run into names: The headings go H1 'todos' → H3 'Todos — the human half' → H2, skipping h2. The card h2 textContent runs 'beanslive', 'healthdeclared', 'todoslive', … with no separator. (D/p_todo.js)
 - **STILL-PRESENT** — No way back to the site; dark by default, no scheme control: PARTIAL, as on 2026-09-29. nav.fa-nav[aria-label=folio-assistant] is present with 3 home links, so the way back stays fixed. With prefers-color-scheme: light and nothing saved, the body is still rgb(13,13,13) on #fff and data-fa-scheme is null. Only a saved fa-color-scheme=light turns it light (rgb(249,249,247)). There is no scheme button on the page. — 805bbd1ba (scheme.mjs)
+
+_2026-10-02T18:41:04Z_ — Claimed by claude/todos-page-stickies — pushed to main so sibling sessions see it before this branch has a PR (bean 35nj).

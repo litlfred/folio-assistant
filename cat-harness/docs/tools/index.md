@@ -36,9 +36,9 @@ is `satisfies`, and it runs **from a tool to a skill** — *this tool is one way
 to do that*, never *this skill is a tool*.
 
 <div class="tg-grid">
-<div class="tg-stat"><b>116</b><span>Tool nodes</span></div>
+<div class="tg-stat"><b>114</b><span>Tool nodes</span></div>
 <div class="tg-stat"><b>68</b><span>skills satisfied</span></div>
-<div class="tg-stat"><b>95</b><span>invoked as a shell command</span></div>
+<div class="tg-stat"><b>92</b><span>invoked as a shell command</span></div>
 <div class="tg-stat"><b>24</b><span>reachable over MCP</span></div>
 </div>
 
@@ -48,19 +48,19 @@ A tool may declare more than one invocation, so these do not sum to the total.
 
 | invocation | tools |
 |---|---|
-| <span class="tg-tag tg-shell">shell</span> | 95 |
-| <span class="tg-tag tg-inproc">inProcess</span> | 24 |
+| <span class="tg-tag tg-shell">shell</span> | 92 |
+| <span class="tg-tag tg-inproc">inProcess</span> | 25 |
 | <span class="tg-tag tg-mcp">mcp</span> | 24 |
 | <span class="tg-tag tg-manual">manual</span> | 7 |
 
 | installation | tools |
 |---|---|
-| `none` | 107 |
+| `none` | 105 |
 | `cli` | 9 |
 
 ## Does every `satisfies` name a skill that exists?
 
-Yes — all **68** skills named across **116** tools resolve to a
+Yes — all **68** skills named across **114** tools resolve to a
 skill document in this checkout. A `satisfies` pointing at nothing would be a
 tool advertising a capability the graph cannot locate.
 
@@ -117,9 +117,6 @@ tool advertising a capability the graph cannot locate.
 | `lsi-query`<br>Latent Semantic Indexing over a prose graph | Find units of a declared prose graph (a library, the skills, the beans, docs) that discuss a query in OTHER words — the vocabulary gap lexical search cannot reach. Each hit is labelled lexical+latent or latent only, and the score is a cosine in the latent space, never merged with a lexical result. | <span class="tg-tag tg-inproc">inProcess</span> <span class="tg-tag tg-mcp">mcp</span> <span class="tg-tag tg-shell">shell</span> | [`lsi-indexing`](../reference/skill-instructions/lsi-indexing.html) | 3 in / 1 out |
 | `lsi-viewer`<br>Latent semantic index viewer | Render every committed LSI index — dimensions as two poles, narrow-dimension and near-duplicate findings — and which declared prose graphs still need one. | <span class="tg-tag tg-shell">shell</span> | [`graph-rendering`](../reference/skill-instructions/graph-rendering.html) | 1 in / 1 out |
 | `mcp-capture`<br>What this instance's MCP server serves | Read the real tool surface from the registrars by mounting each against a capture object — the same objects the server asks, so the Zod shapes and their optionality are the served ones rather than a reading of the source. | <span class="tg-tag tg-shell">shell</span> | [`mcp-contract`](../reference/skill-instructions/mcp-contract.html) | 1 in / 1 out |
-| `merge-leftover`<br>Merge leftover (has a PR's intent landed?) | After a train merged, compare a PR's head with the base path by path and say whether what it still changes is ONLY generated files, generated README regions, or changes the base already carries (its patch applies in reverse to the base): `landed`, `not-landed` with the authored paths still different, or `could-not-determine`, which is never shown as clean. Only reports; closing the PR stays a steward action. | <span class="tg-tag tg-shell">shell</span> | [`merge-conflict-patterns`](../reference/skill-instructions/merge-conflict-patterns.html) | 2 in / 1 out |
-| `merge-overlap`<br>Merge overlap (conflict prediction) | For the open PRs (via `gh`, or a list of branches), report which pairs would conflict: pairwise overlap on AUTHORED paths, with generated paths excluded using the merge-conflict-patterns declaration; which PRs touch a shared declaration (an instance's `<instance>.json`, `roles.json`, `package.json`, `bun.lock`, schemas, BPMN/DMN); and which touch `cat-harness/` or `cat-harness-tools/`. A PR that could not be measured makes no pair independent. JSON (`merge-overlap/v1`), the conflict-prediction input for composing trains. | <span class="tg-tag tg-shell">shell</span> | [`coordinate`](../reference/skill-instructions/coordinate.html)<br>[`merge-conflict-patterns`](../reference/skill-instructions/merge-conflict-patterns.html) | 2 in / 1 out |
-| `merge-train`<br>Merge train | Build a train branch from a base SHA: merge each member (a PR number or branch) with `merge-base.ts --no-regen`, refusing — never hand-resolving — a member whose conflicts no declared pattern covers; then one `bun run regen`, `check:l1-complete --write`, `extract-smart-kg-l1.ts --entry` for each stale entry, and `kg:audit:all:check`; then merge `origin/main`, taking main's side of generated conflicts and regenerating once more. Emits a `merge-train-report/v1` JSON report. Never pushes, opens or merges a PR. | <span class="tg-tag tg-shell">shell</span> | [`merge-conflict-patterns`](../reference/skill-instructions/merge-conflict-patterns.html)<br>[`prepare-merge`](../reference/skill-instructions/prepare-merge.html) | 5 in / 1 out |
 | `methodologies-viewer`<br>Methodologies viewer | Render the declared methodology graph as one page. | <span class="tg-tag tg-shell">shell</span> | [`graph-rendering`](../reference/skill-instructions/graph-rendering.html) | 1 in / 1 out |
 | `narrative-queue`<br>What narratives are waiting on a person | List the agent-drafted narratives awaiting human confirmation, numbered, with the numbered rejection reasons beside them. The queue is the only place a draft's state is visible before someone accepts it. | <span class="tg-tag tg-shell">shell</span> | [`library-ingestion`](../reference/skill-instructions/library-ingestion.html) | 0 in / 1 out |
 | `ns-vocabulary`<br>Namespace vocabulary | Emit the folio namespace as a document that dereferences — one node per class and property, each with an @id, a type, a label and a definition, so a consumer holding only the JSON-LD can resolve any term it meets. | <span class="tg-tag tg-shell">shell</span> | [`kg-export`](../reference/skill-instructions/kg-export.html) | 2 in / 1 out |
@@ -176,6 +173,7 @@ tool advertising a capability the graph cannot locate.
 | `upload-url`<br>Where to drop a file — the queue's upload URL | Compose the forge URL a person can drop a file at, from the instance's own declaration: the `uploads` graph's directory, resolved against the ROOT its scope names, expressed relative to the repository, and appended to the origin remote as GitHub's `/upload/<branch>/<path>`. Every failure is NAMED and no URL is guessed — no declaration, no declared `uploads` graph, a declared queue absent from disk, no `origin` remote, and a non-github.com remote each return a reason and a remedy instead. It exists because the obvious composition mints a live 404: the declared path `uploads/` is relative to the INSTANCE and a forge URL needs it relative to the REPOSITORY, so pasting the declared path drops the `cat-harness/` segment. Owner, 2026-09-20, on the hand-written form: "were it to exist, but it doesmt on main!!!!!" | <span class="tg-tag tg-shell">shell</span> | [`content-acquisition`](../reference/skill-instructions/content-acquisition.html)<br>[`upload-routes`](../reference/skill-instructions/upload-routes.html) | 1 in / 1 out |
 | `uploads-viewer`<br>Uploads viewer | Render each declared uploads directory's intakes as a page per subject instance. | <span class="tg-tag tg-shell">shell</span> | [`graph-rendering`](../reference/skill-instructions/graph-rendering.html) | 1 in / 1 out |
 | `user-auth`<br>Who is asking, and what may they do | User authentication and authorization (issue #1207). Asks GitHub for the caller's login and repository role, maps the role to a gateway actor, and answers from the ODRL policies — for an action, or for a BPMN step. Always states that GitHub's role covers the whole repository, not a sub-graph, node or query path. | <span class="tg-tag tg-inproc">inProcess</span> <span class="tg-tag tg-mcp">mcp</span> | [`deployment-auth`](../reference/skill-instructions/deployment-auth.html)<br>[`task-authorization`](../reference/skill-instructions/task-authorization.html) | 6 in / 1 out |
+| `vocab-map`<br>Apply a vocabulary mapping table | Carry one source record into a target vocabulary by a declared `folio-vocab-mapping/v1` table: each source field becomes the predicate its row names, in the table's order, with a DERIVED target (such as `dcterms:title` rendering `skos:prefLabel`) copied from its authoritative one so the two cannot drift. A table is shaped like a FHIR ConceptMap: an existing ConceptMap, R4 or R5, is representable as one without loss (`fromConceptMap`), and a table can be produced as a ConceptMap (`toConceptMap`), which returns every loss rather than dropping anything silently. First consumer: `glossary-export`. | <span class="tg-tag tg-inproc">inProcess</span> | [`vocabulary-authority`](../reference/skill-instructions/vocabulary-authority.html) | 2 in / 1 out |
 | `voices-viewer`<br>Voices viewer | Render each declared voices directory as a page per subject instance. | <span class="tg-tag tg-shell">shell</span> | [`graph-rendering`](../reference/skill-instructions/graph-rendering.html) | 1 in / 1 out |
 | `wireframe-check`<br>Wireframe check at web and mobile viewports | Render each mid-fidelity wireframe candidate at a web viewport (1280x800) and a mobile viewport (390x844). For each viewport it records `script` entries for renders, no-overflow and no-placeholder, each pass or fail with a note. It writes a screenshot per viewport and a report.json, and exits non-zero on any fail. | <span class="tg-tag tg-shell">shell</span> | [`wireframe-design-review`](../reference/skill-instructions/wireframe-design-review.html) | 2 in / 1 out |
 | `work-plan-prime`<br>Prime the work plan | Load the current work plan for this session — the same committed beans store the CLI reads, so a fresh container starts from the plan rather than from nothing. | <span class="tg-tag tg-inproc">inProcess</span> <span class="tg-tag tg-mcp">mcp</span> <span class="tg-tag tg-shell">shell</span> | [`bean-coordination`](../reference/skill-instructions/bean-coordination.html)<br>[`pending-show`](../reference/skill-instructions/pending-show.html)<br>[`session-intent`](../reference/skill-instructions/session-intent.html)<br>[`todo-manager`](../reference/skill-instructions/todo-manager.html) | 0 in / 1 out |
