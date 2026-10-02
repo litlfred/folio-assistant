@@ -5,12 +5,13 @@ status: todo
 type: task
 priority: normal
 created_at: 2026-10-01T08:00:47Z
-updated_at: 2026-10-02T13:50:41Z
+updated_at: 2026-10-02T13:58:15Z
 parent: folio-assistant-3fva
 blocked_by:
     - folio-assistant-7mwa
     - folio-assistant-2gst
     - folio-assistant-8wj1
+    - folio-assistant-oqe3
 ---
 
 Arc `3fva`, proposal §4 item 3.7 and decision D4. **Never on an agent's own initiative** (`deletion-requires-confirmation`).
