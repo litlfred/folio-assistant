@@ -13650,6 +13650,13 @@
           "doc": "Declared graph ids this section is derived from."
         },
         {
+          "name": "modelledBy",
+          "type": "z.array(z.string().regex(/^[a-z0-9][a-z0-9.-]*#[A-Za-z0-9][A-Za-z0-9._-]*$/, \"a term is `<system>#<code>`\")).optional()",
+          "optional": true,
+          "array": true,
+          "doc": "The classes of an external vocabulary this section's content instantiates,"
+        },
+        {
           "name": "sources",
           "type": "z.array(DocumentKindSourceSchema).optional()",
           "optional": true,

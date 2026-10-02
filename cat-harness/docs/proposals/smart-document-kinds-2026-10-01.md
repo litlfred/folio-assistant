@@ -114,6 +114,38 @@ Owner, 2026-10-01:
 - **Q2 → computed from resource type**, with every artefact no rule places shown
   as unplaced.
 
+### D5d, 2026-10-02
+
+- **Three L1 kinds, not two.** Mehl 2021 defines L1 as *"traditional guidelines
+  and guidance"*, and the evidence agrees: the WHO guideline handbook (§12.1
+  "Guideline format") and the three DTHs share only a frame — introduction, how
+  it was developed, contributors, references, annexes. A DTH has no
+  recommendations, no PICO and no GRADE. So `l1` is that frame, and
+  `l1-guideline` and `dth` each `extends: l1` with their own body. A `dth` that
+  extended a guideline-shaped `l1` would have required recommendations no DTH
+  has.
+- **smart-kg is pinned, not copied** (owner: *"utilize
+  https://github.com/litlfred/smart-kg for L1 related stuff"*, *"perhaps
+  subgraph in smart-base"*; and 2026-09-23, bean `wg7r`, *"that is its own repo
+  already"*). `smart-base/external-schemas/who-smart-kg.json` pins a commit;
+  `who-smart-kg.terms.json` holds its L1 and L2 class ids, derived by
+  `smart-base/scripts/pin-smart-kg.ts`. A section names what it instantiates
+  with `modelledBy` (`sgkg-l1#recommendation`), and
+  `smart-base:document-kinds:check` fails on a term not in the pin, an
+  `extends` that names no kind, a loop, or a child redeclaring its parent's
+  section. Bean `pebe`; feeding smart-kg instance documents is bean `8pzh`.
+- **A finding the mapping surfaced:** guideline sections map onto smart-kg
+  **L1** classes, DTH sections onto **L2** (DAK) classes — persona, user
+  scenario, business process, data element, requirements. A DTH states for a
+  health-system area what a DAK states for a guideline.
+- **Where a DTH sits in the DIIG.** The primary health care DTH places itself
+  in DIIG Phase 5, *"Determining health content requirements"*; the Reference
+  Architecture's Figure 1 puts the supply chain and product catalogue DTHs in
+  Phase 7 and itself across Phases 1–4. No ingested DTH cites the Reference
+  Architecture; `dth`'s `architecture` section cites it (Figure 3.2) as the
+  owner's rule requires. `smart-base/methodologies/diig.md` models the DIIG's
+  nine chapters and not these seven phases — recorded, not changed here.
+
 ## Staging
 
 | step | what |
@@ -121,4 +153,4 @@ Owner, 2026-10-01:
 | D5a | this note; the `document-kind` schema + graph kind + registry entry in core |
 | D5b | `smart-base/document-kinds/dak.json` generated from `DAK_COMPONENTS` + its gate; the per-kind viewer |
 | D5c | the DAK view of each ingested IG (smart-trust, smart-base, smart-immunizations) |
-| D5d | `l1.json` once Q1 is answered; `dth.json` with bean `5blc` |
+| D5d | `l1.json`, `l1-guideline.json`, `dth.json`, authored from the sources; the smart-kg pin (bean `pebe`) |

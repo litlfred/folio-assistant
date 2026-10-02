@@ -28,6 +28,8 @@
  * - **"Computed from" is a claim to check, not a description.** A section's
  *   `computedFrom` names DECLARED graph ids (e.g. `library`), so a reader can
  *   ask whether the graph exists rather than take the prose's word for it.
+ *   `modelledBy` is the same discipline for the other question — what kind of
+ *   thing the section holds, in a pinned external model (bean `pebe`).
  */
 import { z } from "zod";
 
@@ -49,6 +51,15 @@ export const DocumentKindSectionSchema = z.object({
   description: z.string().min(1),
   /** Declared graph ids this section is derived from. */
   computedFrom: z.array(z.string().min(1)).optional(),
+  /**
+   * The classes of an external vocabulary this section's content instantiates,
+   * each as `<system>#<code>` in a PINNED snapshot (`folio-pinned-terminology/v1`)
+   * the harness declares. `computedFrom` says where a section's content comes
+   * from; this says what KIND of thing it is in a model someone else owns.
+   * Resolving the terms is the harness's check, because only it knows which
+   * snapshot it pinned — core names no vocabulary.
+   */
+  modelledBy: z.array(z.string().regex(/^[a-z0-9][a-z0-9.-]*#[A-Za-z0-9][A-Za-z0-9._-]*$/, "a term is `<system>#<code>`")).optional(),
   /** This section's own sources, when they differ from the kind's. */
   sources: z.array(DocumentKindSourceSchema).optional(),
 });
