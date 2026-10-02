@@ -1,7 +1,7 @@
 ---
 # folio-assistant-n5be
 title: 'glossary visualiser: 6 wireframe findings'
-status: todo
+status: in-progress
 type: task
 priority: normal
 tags:
@@ -9,7 +9,7 @@ tags:
     - ui
     - visualiser-glossary
 created_at: 2026-09-23T10:36:14Z
-updated_at: 2026-09-30T16:12:47Z
+updated_at: 2026-10-02T06:46:04Z
 parent: folio-assistant-4ccr
 ---
 
@@ -45,3 +45,5 @@ Each finding re-measured on a local build of that commit (`preview-site.sh`, ser
 - **STILL-PRESENT** — Term column wide and dominated by the ledger path, breaks mid-token: Each first cell still carries span.p 'cat-harness/glossary/glossary-ledger.json#role/<id>'. The column widths are 435/653px at 1280 and 89/214px at 390. At 390 the path span is 156px tall. (C_gl.mjs)
 - **STILL-PRESENT** — Heading repetitive: scope stated three times before first term: h1 'Glossary swimlane-glossary'. The lede still ends 'Sub-graph cat-harness/glossary.', and the subs row reads 'swimlane-glossary cat-harness/glossary 48'. (C_gl.mjs)
 - **STILL-PRESENT** — Count differs from declaration (comment says 44, page shows 46): The page has 48 rows. cat-harness.json@3779d5d27 _visualiser_comment still says 'a real rendering: 44 terms'. (C_gl.mjs; source read to compare the count only)
+
+Claimed by claude/visualiser-wireframes (session https://claude.ai/code/session_01CVVoavPoCHMLA7AASxG8cH) — issue #1838.
