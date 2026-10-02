@@ -220,9 +220,11 @@ twice without a word for it: `who-iris` taking three items out of a 361.55 GB
 catalogue, and `bootstrap` fetching a harness and landing it locally, with
 `upstream-pins.json` as half of that second one's refresh.
 
-All five diagrams below live in `large-datasets/processes/`, not in
-`cat-harness/processes/`: 25 of their steps name a skill only `large-datasets` holds,
-and cat-harness depends only on `bootstrap` (bean `cjvs`, 2026-09-30).
+All five diagrams below live in `cat-harness/processes/`, beside the skills
+their steps name in `cat-harness/skills/library/large-datasets/`. They spent
+2026-09-30 in a `large-datasets` instance (bean `cjvs`), because those skills
+were there and cat-harness depends only on `bootstrap`; the owner's 2026-10-01
+ruling dissolved that instance into cat-harness (bean `j7ql`), skills and all.
 
 | Diagram | Answers |
 |---------|---------|
