@@ -18,16 +18,17 @@
  * the subtler version — a truncated document that still parses.
  */
 import { describe, expect, test } from "bun:test";
+import { HARNESS_ROOT } from "../scripts/lib/roots.ts";
 import { readFileSync } from "node:fs";
 import { basename, join } from "node:path";
 
-import { viewerHtml as schemaViewer, viewerPlacement } from "../scripts/gen-schema-viz.ts";
-import { viewerHtml as libraryViewer } from "../scripts/gen-library-viz.ts";
-import { readSchemaGraph } from "../scripts/schema-graph.ts";
-import { readLibraryGraph } from "../scripts/library-graph.ts";
-import { directoriesForGraph, repoRootFor, siteDirFor } from "./cat-harness.ts";
+import { viewerHtml as schemaViewer, viewerPlacement } from "../../cat-harness/scripts/gen-schema-viz.ts";
+import { viewerHtml as libraryViewer } from "../../cat-harness/scripts/gen-library-viz.ts";
+import { readSchemaGraph } from "../../cat-harness/scripts/schema-graph.ts";
+import { readLibraryGraph } from "../../cat-harness/scripts/library-graph.ts";
+import { directoriesForGraph, repoRootFor, siteDirFor } from "../../cat-harness/schemas/cat-harness.ts";
 
-const ROOT = join(import.meta.dir, "..");
+const ROOT = HARNESS_ROOT;
 
 /**
  * THE GRAPHS ARE READ ONCE, HERE — not inside the tests that assert on them.
