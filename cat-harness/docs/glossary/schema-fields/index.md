@@ -14,7 +14,7 @@ Candidate terms extracted from every schema field with a doc comment: `<Declarat
 
 From: bootstrap-tools 28 (<a href="{{ '/assets/glossary/bootstrap-tools--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · cat-harness 1601 (<a href="{{ '/assets/glossary/cat-harness--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · fhir-harness 57 (<a href="{{ '/assets/glossary/fhir-harness--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · folio-assistant-core 127 (<a href="{{ '/assets/glossary/folio-assistant-core--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>).
 
-**Size:** this page holds 1813 terms and is 1000 KB before compression, fetched in one request, within its budget of 1.0 MB. There is no search index: the filter below runs over this page, and the A–Z bar jumps within it.
+**Size:** this page holds 1813 terms and is 1001 KB before compression, fetched in one request, within its budget of 1.0 MB. There is no search index: the filter below runs over this page, and the A–Z bar jumps within it.
 
 <table class="fa-gloss-mapping">
 <caption>Already somebody else's concept? — <code>check:term-mapping</code>, bean <code>7wou</code></caption>
@@ -318,7 +318,7 @@ AptDependency.version <span class="fa-gloss-status">candidate, extracted</span>
 ArchiveContentsSchema.@context <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
-<p>The published content context — bean <code>yh6u</code>. OPTIONAL because folio repositories hold records written before the arm emitted it; when present it must be that context, since any other would bind these keys to terms nobody declared.</p>
+<p>The published content context — bean <code>yh6u</code>. OPTIONAL because folio repositories hold records written before the arm emitted it; when present it must be that context (bare, or with <code>@base</code> beside it — bean <code>bh4q</code>), since any other would bind these keys to terms nobody declared.</p>
 <p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/archive-contents.ts"><code>cat-harness/schemas/archive-contents.ts#ArchiveContentsSchema.@context</code></a></p>
 </dd>
 <dt id="cat-harness--kg-schema-fields--archive-contents.archivecontentsschema.archive" data-fa-state="extracted" data-fa-gloss="">
@@ -10425,7 +10425,7 @@ TabularCsvwSchema.tables <span class="fa-gloss-status">candidate, extracted</spa
 TabularRecordsSchema.@context <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
-<p>The published content context — bean <code>yh6u</code>. OPTIONAL because folio repositories hold records written before the arm emitted it; when present it must be that context, since any other would bind these keys to terms nobody declared.</p>
+<p>The published content context — bean <code>yh6u</code>. OPTIONAL because folio repositories hold records written before the arm emitted it; when present it must be that context (bare, or with <code>@base</code> beside it — bean <code>bh4q</code>), since any other would bind these keys to terms nobody declared.</p>
 <p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/tabular-records.ts"><code>cat-harness/schemas/tabular-records.ts#TabularRecordsSchema.@context</code></a></p>
 </dd>
 <dt id="cat-harness--kg-schema-fields--tabular-records.tabularrecordsschema.header_vocabulary" data-fa-state="extracted" data-fa-gloss="">
