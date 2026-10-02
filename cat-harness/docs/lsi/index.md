@@ -109,7 +109,7 @@ Each dimension is a **contrast** between two poles, shown by their highest-loadi
 
 ## cat-harness / skills
 
-**219** units · **5883** terms · k = **100** · retains **79.0 %** of the weighted matrix · weighting `log-entropy` · sidecar `cat-harness/test/results/lsi/cat-harness/skills.lsi.json`
+**219** units · **5885** terms · k = **100** · retains **79.0 %** of the weighted matrix · weighting `log-entropy` · sidecar `cat-harness/test/results/lsi/cat-harness/skills.lsi.json`
 
 > Dimension 1 has **no negative pole**: it most likely measures unit length and term frequency (a margin), not a theme. Read the themes from dimension 2 on.
 
@@ -117,14 +117,14 @@ Each dimension is a **contrast** between two poles, shown by their highest-loadi
 
 | dim | σ | one pole | the other pole |
 |---|---|---|---|
-| 1 | 43.95 | instance, kind, harness, session, graph, directory, block, page | *(none)* |
+| 1 | 43.98 | instance, kind, harness, session, graph, directory, block, page | *(none)* |
 | 2 | 21.48 | watcher, slot, sibling, queue, backlog, prs, block, commits | harness, instance, declaration, directory, node, directories, graph, declares |
-| 3 | 17.81 | session, beans, branch, goals, store, window, epic, push | slot, chapter, block, edges, formal, glossary, project, narrative |
-| 4 | 16.49 | page, block, section, text, manifest, sections, blocks, chapter | ledger, sibling, subdirectory, items, sessions, renderable, relocation, window |
-| 5 | 14.98 | rung, archive, queue, arm, sniff, archived, zip, ingest | feature, requirements, role, folio, phase, feedback, preview, navbar |
-| 6 | 14.85 | page, locale, navbar, sha, translated, board, translation, theme | edge, forward, edges, lane, actor, role, analysis, logical |
-| 7 | 14.41 | edges, forward, edge, backward, preview, cross-chapter, energy, logical | actor, lane, role, requirement, login, criterion, roles, task |
-| 8 | 14.23 | tile, avatar, card, theme, board, sticky, crop, art | translation, language, locale, glossary, translated, term, french, badge |
+| 3 | 17.80 | session, beans, branch, goals, store, window, epic, push | slot, chapter, block, edges, formal, glossary, project, proof |
+| 4 | 16.53 | page, block, section, text, manifest, blocks, sections, chapter | ledger, sibling, subdirectory, items, sessions, renderable, relocation, window |
+| 5 | 14.99 | rung, archive, arm, queue, sniff, archived, zip, ingest | feature, preview, requirements, navbar, folio, feedback, phase, staging |
+| 6 | 14.86 | lane, actor, edge, role, forward, edges, analysis, requirements | sha, page, locale, navbar, translated, board, idle, translation |
+| 7 | 14.41 | edges, forward, edge, backward, preview, cross-chapter, energy, logical | actor, lane, role, criterion, login, requirement, backlog, roles |
+| 8 | 14.23 | tile, avatar, card, theme, board, sticky, art, crop | language, glossary, translation, locale, translated, term, manifest, french |
 
 **Findings** — 0 narrow dimension(s), 0 near-duplicate pair(s).
 
