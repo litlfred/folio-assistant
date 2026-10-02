@@ -192,6 +192,8 @@ export const LibraryIndexEntrySchema = z
     instance: z.string(),
     dir: z.string(),
     title: z.string(),
+    /** The manifest's extracted title, only when a catalogue title replaced it (bean `gnqa`). */
+    extractedTitle: z.string().optional(),
     provenance: z.string(),
     rung: z.enum(INGEST_RUNGS),
     docId: z.string(),
