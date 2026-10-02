@@ -118,14 +118,14 @@ Each dimension is a **contrast** between two poles, shown by their highest-loadi
 
 | dim | σ | one pole | the other pole |
 |---|---|---|---|
-| 1 | 44.10 | instance, kind, harness, session, graph, block, directory, page | *(none)* |
-| 2 | 21.48 | watcher, slot, sibling, queue, prs, backlog, block, commits | harness, instance, declaration, directory, node, directories, graph, declares |
+| 1 | 44.13 | instance, kind, harness, session, graph, directory, block, page | *(none)* |
+| 2 | 21.49 | watcher, slot, sibling, queue, prs, backlog, block, commits | harness, instance, declaration, directory, node, directories, graph, declares |
 | 3 | 17.87 | slot, chapter, edges, block, formal, glossary, project, proof | session, beans, branch, goals, store, window, push, epic |
-| 4 | 16.58 | page, block, blocks, text, chapter, manifest, section, pdf | sibling, ledger, subdirectory, items, session, sessions, coordination, queue |
+| 4 | 16.58 | page, block, blocks, text, chapter, manifest, section, pdf | sibling, ledger, subdirectory, items, session, sessions, coordination, window |
 | 5 | 14.97 | preview, staging, navbar, locale, translated, translation, build, page | rung, archive, archived, withheld, arm, sniff, ingest, zip |
-| 6 | 14.92 | lane, role, actor, requirements, task, analysis, edge, process | sha, queue, slide, bytes, rung, withheld, images, arm |
+| 6 | 14.92 | lane, role, actor, requirements, analysis, task, edge, process | sha, queue, slide, bytes, rung, withheld, images, arm |
 | 7 | 14.48 | edges, forward, preview, backward, edge, cross-chapter, energy, logical | actor, lane, role, criterion, backlog, task, login, requirement |
-| 8 | 14.22 | feature, phase, preview, pdf, feedback, stakeholders, impact, github | avatar, tile, art, locale, translated, card, claim, board |
+| 8 | 14.22 | avatar, tile, art, card, board, claim, locale, sidebar | feature, phase, preview, pdf, feedback, stakeholders, impact, github |
 
 **Findings** — 0 narrow dimension(s), 0 near-duplicate pair(s).
 

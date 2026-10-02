@@ -251,6 +251,23 @@ describe("applying a table (the vocab-map Tool)", () => {
   });
 });
 
+describe("the vocab-mappings:check gate's own judgements", () => {
+  test("a clean table passes; a derived target with no authoritative source, and an undeclared prefix, are each a finding", async () => {
+    const { tableFindings } = await import("../vocab-mappings");
+    const { STANDARD_PREFIXES } = await import("../../schemas/vocab-mapping-fhir");
+    const { NS_PREFIXES } = await import("../../schemas/namespaces.js");
+    const prefixes = { ...STANDARD_PREFIXES, ...NS_PREFIXES };
+    expect(tableFindings(SCHEME, prefixes)).toEqual([]);
+    const orphan = VocabMappingSchema.parse({
+      ...SCHEME,
+      group: [{ ...SCHEME.group[1], element: [{ code: "label", target: [{ code: "title", relationship: "equivalent", authority: "derived", derivedFrom: "prefLabel" }] }] }],
+    });
+    expect(tableFindings(orphan, prefixes).join("\n")).toMatch(/derives from "prefLabel", which no authoritative target/);
+    const unknown = VocabMappingSchema.parse({ ...SCHEME, group: [{ ...SCHEME.group[0], target: "nope:" }] });
+    expect(tableFindings(unknown, prefixes).join("\n")).toMatch(/"nope:" uses an undeclared prefix/);
+  });
+});
+
 // The full HL7 example corpus, when a local copy is available. Not run in CI:
 // the packages are not vendored here (fixtures are a sample, with provenance).
 const CORPUS = process.env["FHIR_EXAMPLES_DIR"];
