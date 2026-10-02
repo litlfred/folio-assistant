@@ -180,7 +180,7 @@ describe("the platform can FIND this theme, not just resolve it", () => {
   // done and is reached by nobody.
 
   test("`instanceThemes` resolves it through the declaration, by name", async () => {
-    const { instanceThemes } = await import("../../cat-harness/schemas/theme-by-ref.js");
+    const { instanceThemes } = await import("../platform.js");
     const found = instanceThemes(join(import.meta.dir, "..", ".."), THEME_INSTANCE);
     // The whole result on a miss, not a boolean: `no-themes-directory` and
     // `no-themes-module` are different faults with different fixes, and a bare
@@ -190,7 +190,7 @@ describe("the platform can FIND this theme, not just resolve it", () => {
   });
 
   test("it is the instance's ONE webpage theme, so the generator has no choice to make", async () => {
-    const { instanceWebpageThemes } = await import("../../cat-harness/schemas/theme-by-ref.js");
+    const { instanceWebpageThemes } = await import("../platform.js");
     const owned = instanceWebpageThemes(join(import.meta.dir, "..", ".."));
     expect(owned.filter((o) => o.instance === THEME_INSTANCE).map((o) => o.theme.id)).toEqual(["who-smart-ig"]);
   });

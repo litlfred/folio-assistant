@@ -37,7 +37,7 @@
  * @module smart-base/contributions
  */
 
-import type { CheckerPaths, CheckerResult, CompanionRole } from "../cat-harness/schemas/block-qa.js";
+import type { CheckerPaths, CheckerResult, CompanionRole } from "./platform.js";
 import { DAK_ADAPTER, DAK_BLOCK_KINDS, DAK_KIND_BUILDERS, DAK_LABEL_PREFIXES } from "./schemas/dak-kinds.js";
 import { DAK_KIND_TO_DOCO_TYPE, DAK_KIND_TO_FOLIO_TYPE } from "./schemas/dak-jsonld.js";
 import { DAK_AUTOMATED_CHECKERS } from "./content/pipeline/qa-checkers-dak.js";

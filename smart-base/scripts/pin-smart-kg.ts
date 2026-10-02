@@ -32,13 +32,13 @@ import { execFileSync } from "node:child_process";
 import { existsSync, readFileSync, writeFileSync } from "node:fs";
 import { join, relative, resolve } from "node:path";
 
-import { ExternalSchemaSchema } from "../../cat-harness/schemas/external-schema.ts";
+import { ExternalSchemaSchema } from "../platform.js";
 import {
   PINNED_TERMINOLOGY_TAG,
   PinnedTerminologySchema,
   type PinnedConcept,
   type PinnedTerminologyFile,
-} from "../../cat-harness/schemas/pinned-terminology.ts";
+} from "../platform.js";
 
 const HERE = resolve(import.meta.dir, "..");
 export const SMART_KG_PIN = join(HERE, "external-schemas", "who-smart-kg.json");

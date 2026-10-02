@@ -28,13 +28,13 @@ import {
   WORKBOOK_BACKED_KINDS,
   isGeneratedArtefact,
 } from "./qa-checkers-dak";
-import { QA_CRITERIA_REGISTRY } from "../../../cat-harness/content/pipeline/qa-criteria-registry";
+import { QA_CRITERIA_REGISTRY } from "../../platform.js";
 import {
   criterionAdapters,
   incompatibleCompanions,
   COMPANION_ROLES,
-} from "../../../cat-harness/schemas/block-qa";
-import { ContributionRegistry } from "../../../cat-harness/schemas/contributions";
+} from "../../platform.js";
+import { ContributionRegistry } from "../../platform.js";
 import contribute, { DAK_COMPANION_ROLES } from "../../contributions";
 
 /** smart-base's contribution, registered as `loadContributions` would. */

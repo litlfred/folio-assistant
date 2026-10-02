@@ -54,8 +54,8 @@ import { join } from "node:path";
 import { z } from "zod";
 
 import { DAK_COMPONENTS, DAK_COMPONENT_FIELDS, type DakComponent } from "./dak-kinds";
-import { kgNodeLabelShape, type KgNodeLabels } from "../../cat-harness/schemas/kg-node";
-import { SMART_BASE_NS } from "../../cat-harness/schemas/jsonld";
+import { kgNodeLabelShape, type KgNodeLabels } from "../platform.js";
+import { SMART_BASE_NS } from "../platform.js";
 
 /**
  * The file whose presence at a repository root declares it a DAK.
