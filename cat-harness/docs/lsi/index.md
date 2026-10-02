@@ -118,14 +118,14 @@ Each dimension is a **contrast** between two poles, shown by their highest-loadi
 
 | dim | σ | one pole | the other pole |
 |---|---|---|---|
-| 1 | 44.14 | instance, kind, harness, session, block, directory, graph, page | *(none)* |
-| 2 | 21.49 | watcher, slot, sibling, queue, prs, backlog, block, commits | harness, instance, declaration, directory, node, directories, graph, declares |
-| 3 | 17.87 | slot, chapter, edges, block, formal, project, glossary, proof | session, beans, branch, goals, store, push, window, epic |
-| 4 | 16.58 | page, block, blocks, text, chapter, manifest, section, pdf | sibling, ledger, subdirectory, items, session, sessions, coordination, window |
+| 1 | 44.17 | instance, kind, harness, session, directory, block, graph, page | *(none)* |
+| 2 | 21.50 | watcher, slot, sibling, queue, prs, backlog, block, commits | harness, instance, declaration, directory, node, directories, graph, declares |
+| 3 | 17.88 | slot, chapter, edges, block, formal, project, glossary, proof | session, beans, branch, goals, store, push, window, epic |
+| 4 | 16.59 | page, block, blocks, text, chapter, manifest, section, pdf | sibling, ledger, subdirectory, items, session, sessions, coordination, window |
 | 5 | 14.98 | preview, staging, navbar, locale, translated, page, translation, build | rung, archive, archived, withheld, arm, sniff, ingest, edges |
 | 6 | 14.92 | lane, role, actor, requirements, task, analysis, edge, impact | sha, queue, slide, bytes, rung, withheld, arm, images |
 | 7 | 14.48 | edges, forward, preview, backward, edge, cross-chapter, energy, logical | actor, lane, role, criterion, backlog, task, login, requirement |
-| 8 | 14.22 | feature, phase, preview, pdf, feedback, stakeholders, impact, github | avatar, tile, art, card, locale, claim, board, translated |
+| 8 | 14.22 | avatar, tile, art, card, board, claim, sidebar, sticky | feature, phase, pdf, preview, feedback, stakeholders, impact, github |
 
 **Findings** — 0 narrow dimension(s), 0 near-duplicate pair(s).
 
