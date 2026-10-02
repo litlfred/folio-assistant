@@ -1,10 +1,11 @@
 ---
 # folio-assistant-tlat
 title: 'Placement PR5: materialization state vocabulary and the extraction contract move down to cat-harness'
-status: todo
+status: in-progress
 type: task
+priority: normal
 created_at: 2026-10-01T06:58:01Z
-updated_at: 2026-10-01T06:58:01Z
+updated_at: 2026-10-02T13:42:04Z
 parent: folio-assistant-iirv
 ---
 
@@ -18,3 +19,5 @@ Under D1 (2026-10-01) the moved code lands in cat-harness-tools if stage 1a has 
 - [ ] `yj6r`'s instance-boundary escape count drops by the materialization and extraction clusters (3), measured with `yj6r`'s own command
 - [ ] no new cat-harness → core import (`check:import-direction --all` green)
 - [ ] the harness resolved alone type-checks `asset-extraction`'s tool
+
+_2026-10-02_ — Claimed by claude/placement-pr5-tlat (session https://claude.ai/code/session_01CVVoavPoCHMLA7AASxG8cH), assigned by the merge steward.
