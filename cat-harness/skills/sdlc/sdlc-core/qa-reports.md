@@ -60,7 +60,8 @@ else writes the branch. `check:workflows` fails a raw push
 |---|---|
 | `bun run qa:fetch [--ref main\|<sha>\|pr/<n>]` | read an entry |
 | `bun run qa:publish --ref main/<sha>\|pr/<n>/<sha>` | write one. Fetch the tip, splice, `commit-tree -p`, push **without `-f`**, 3 attempts with backoff |
-| `bun run qa:publish --github` | CI's form: derive the key, and skip a fork PR with a `::notice` |
+| `bun run qa:refresh` | produce the working copy a publish stores, and say whether it is complete (below) |
+| `bun run qa:publish --github --completeness <report>` | CI's form: derive the key, skip a fork PR with a `::notice`, and refuse an incomplete refresh |
 | `bun run qa:prune [--apply]` | retention, as a dry run unless `--apply`. Daily in `qa-reports-prune.yml` |
 
 **A read answers one of five states.** `hit` exits 0, `miss` 1, `usage` 2,
@@ -69,6 +70,20 @@ that turns an absent entry into an empty, clean directory is the `dh4f`
 defect, and the readers audit
 (`docs/proposals/qa-readers-audit-2026-10-01.md`) is a catalogue of exactly
 that.
+
+**What `qa-publish` stores is produced in that job, not handed over by the
+gates** (bean `3hk4`). The gates are in judge mode and write nothing, so their
+checkout holds only what is committed, which after `5hox` is one file. So
+`qa:refresh` runs first. While the checkout still tracks `test/results/`, it
+runs nothing, because the commit's own copy is the record and `5hox` needs
+`main/<sha>` byte-identical to it. Once nothing is tracked there, it runs every
+writer declared in `QA_WRITERS` (`scripts/qa-refresh.ts`) into the empty tree.
+Then it checks three things. A file no writer claims, a writer that produced
+nothing, or a writer that exited outside its declared exits makes the run
+INCOMPLETE: the job fails, and `qa:publish --completeness` refuses to store
+it. A partial entry is never published as the commit's record. Adding a QA
+writer means adding it to `QA_WRITERS`, or the first CI run after its first
+file lands goes red naming the unclaimed path.
 
 **`qa-publish` is a job, not a gate.** It runs after `gates` whatever they
 concluded (the evidence of a red commit is evidence too). It is the only job

@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: qa-publish\n"
-"POT-Creation-Date: 2026-10-01T18:24:46.751Z\n"
+"POT-Creation-Date: 2026-10-02T15:09:16.931Z\n"
 "PO-Revision-Date: \n"
 "Last-Translator: \n"
 "Language: es\n"
@@ -94,14 +94,14 @@ msgstr ""
 msgid "Fetch the branch tip, splice this entry into its tree, `commit-tree -p <tip>`, and push without `-f`, with `pack.useSparse=false` so blobs already on the remote under another key are not resent. Writers own disjoint keys, so splicing onto whatever tip is current loses nobody's entry."
 msgstr ""
 
+#: processes/qa-publish.bpmn:109
+#. Diagram element documentation
+msgid "First the working copy is produced (`qa:refresh`, bean `3hk4`): while the checkout still tracks `test/results/`, the commit's own copy is the record and nothing runs; once it does not, every declared QA writer runs into the empty tree, because the gates are in judge mode and wrote nothing a publish could carry. A refresh that leaves a writer failed, a family empty or a file unclaimed is INCOMPLETE: the job goes red and `qa:publish --completeness` refuses, so a partial tree is never stored as the commit's record — the \"Not stored\" outcome, reached before any push. Then it hashes the working copy of every declared `qa` directory (`<instance>/test/results/**`, byte-identical to the checkout's layout) into a tree through a private index, and writes `manifest.json` (`qa-reports-manifest/v1`): inputs, producers, verdict counts and the gates' result. Identical JSON is the same blob, so an unchanged family costs nothing to store again. Its git objects live in a private bare repository, never in the checkout's own store."
+msgstr ""
+
 #: processes/qa-publish.bpmn:82
 #. Diagram label
 msgid "Gates finished (any conclusion)"
-msgstr ""
-
-#: processes/qa-publish.bpmn:109
-#. Diagram element documentation
-msgid "Hashes the working copy of every declared `qa` directory (`<instance>/test/results/**`, byte-identical to the checkout's layout) into a tree through a private index, and writes `manifest.json` (`qa-reports-manifest/v1`): inputs, producers, verdict counts and the gates' result. Identical JSON is the same blob, so an unchanged family costs nothing to store again. Its git objects live in a private bare repository, never in the checkout's own store."
 msgstr ""
 
 #: processes/qa-publish.bpmn:42

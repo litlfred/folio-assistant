@@ -14,7 +14,7 @@ Candidate terms extracted from every BPMN task and call activity: `name` as the 
 
 From: bootstrap 38 (<a href="{{ '/assets/glossary/bootstrap--kg-bpmn-activities.skos.jsonld' | relative_url }}">SKOS</a>) · bootstrap-tools 7 (<a href="{{ '/assets/glossary/bootstrap-tools--kg-bpmn-activities.skos.jsonld' | relative_url }}">SKOS</a>) · cat-harness 557 (<a href="{{ '/assets/glossary/cat-harness--kg-bpmn-activities.skos.jsonld' | relative_url }}">SKOS</a>) · folio-assistant-core 4 (<a href="{{ '/assets/glossary/folio-assistant-core--kg-bpmn-activities.skos.jsonld' | relative_url }}">SKOS</a>) · smart-base 19 (<a href="{{ '/assets/glossary/smart-base--kg-bpmn-activities.skos.jsonld' | relative_url }}">SKOS</a>).
 
-**Size:** this page holds 625 terms and is 489 KB before compression, fetched in one request, within its budget of 1.0 MB. There is no search index: the filter below runs over this page, and the A–Z bar jumps within it.
+**Size:** this page holds 625 terms and is 490 KB before compression, fetched in one request, within its budget of 1.0 MB. There is no search index: the filter below runs over this page, and the A–Z bar jumps within it.
 
 <table class="fa-gloss-mapping">
 <caption>Already somebody else's concept? — <code>check:term-mapping</code>, bean <code>7wou</code></caption>
@@ -760,7 +760,7 @@ Build the draft publication [content-publish] <span class="fa-gloss-status">cand
 Build the entry [tree + manifest] <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
-<p>Hashes the working copy of every declared <code>qa</code> directory (<code>&lt;instance&gt;/test/results/**</code>, byte-identical to the checkout's layout) into a tree through a private index, and writes <code>manifest.json</code> (<code>qa-reports-manifest/v1</code>): inputs, producers, verdict counts and the gates' result. Identical JSON is the same blob, so an unchanged family costs nothing to store again. Its git objects live in a private bare repository, never in the checkout's own store.</p>
+<p>First the working copy is produced (<code>qa:refresh</code>, bean <code>3hk4</code>): while the checkout still tracks <code>test/results/</code>, the commit's own copy is the record and nothing runs; once it does not, every declared QA writer runs into the empty tree, because the gates are in judge mode and wrote nothing a publish could carry. A refresh that leaves a writer failed, a family empty or a file unclaimed is INCOMPLETE: the job goes red and <code>qa:publish --completeness</code> refuses, so a partial tree is never stored as the commit's record — the &quot;Not stored&quot; outcome, reached before any push. Then it hashes the working copy of every declared <code>qa</code> directory (<code>&lt;instance&gt;/test/results/**</code>, byte-identical to the checkout's layout) into a tree through a private index, and writes <code>manifest.json</code> (<code>qa-reports-manifest/v1</code>): inputs, producers, verdict counts and the gates' result. Identical JSON is the same blob, so an unchanged family costs nothing to store again. Its git objects live in a private bare repository, never in the checkout's own store.</p>
 <p class="fa-gloss-meta">BPMN activities of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/qa-publish.bpmn"><code>cat-harness/processes/qa-publish.bpmn#Task_BuildEntry</code></a></p>
 </dd>
 <dt id="cat-harness--kg-bpmn-activities--process_docssite.task_build" data-fa-state="extracted" data-fa-gloss="">

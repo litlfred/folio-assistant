@@ -110,7 +110,7 @@ Each dimension is a **contrast** between two poles, shown by their highest-loadi
 
 ## cat-harness / skills
 
-**221** units · **5913** terms · k = **100** · retains **78.7 %** of the weighted matrix · weighting `log-entropy` · sidecar `cat-harness/test/results/lsi/cat-harness/skills.lsi.json`
+**221** units · **5913** terms · k = **100** · retains **78.6 %** of the weighted matrix · weighting `log-entropy` · sidecar `cat-harness/test/results/lsi/cat-harness/skills.lsi.json`
 
 > Dimension 1 has **no negative pole**: it most likely measures unit length and term frequency (a margin), not a theme. Read the themes from dimension 2 on.
 
@@ -122,7 +122,7 @@ Each dimension is a **contrast** between two poles, shown by their highest-loadi
 | 2 | 21.51 | watcher, slot, sibling, queue, backlog, prs, block, commits | harness, instance, declaration, directory, node, directories, declares, graph |
 | 3 | 17.83 | session, beans, goals, store, green, branch, window, push | slot, chapter, edges, block, formal, glossary, project, proof |
 | 4 | 16.62 | page, block, section, chapter, blocks, text, manifest, sections | ledger, sibling, subdirectory, items, queue, sessions, plan, window |
-| 5 | 14.86 | page, navbar, locale, translated, theme, translation, staging, board | edges, forward, edge, logical, backward, cross-chapter, energy, ordering |
+| 5 | 14.86 | page, navbar, locale, translated, translation, theme, staging, board | edges, forward, edge, logical, backward, cross-chapter, energy, ordering |
 | 6 | 14.76 | lane, requirements, role, actor, feature, phase, task, feedback | rung, queue, arm, archive, slide, zip, sniff, bytes |
 | 7 | 14.41 | edges, forward, preview, backward, edge, cross-chapter, energy, merge | actor, lane, role, backlog, rung, criterion, referee, arm |
 | 8 | 14.19 | translation, locale, translated, language, glossary, french, term, back-translation | tile, avatar, theme, card, board, sticky, crop, stylesheet |
