@@ -4438,6 +4438,97 @@
       "status": "candidate"
     },
     {
+      "id": "extraction.extractedassetschema.bytes",
+      "prefLabel": "ExtractedAssetSchema.bytes",
+      "definition": "Uncompressed size in bytes, from the container's index.",
+      "source": "cat-harness/schemas/extraction.ts#ExtractedAssetSchema.bytes",
+      "status": "candidate"
+    },
+    {
+      "id": "extraction.extractedassetschema.extractedbecause",
+      "prefLabel": "ExtractedAssetSchema.extractedBecause",
+      "definition": "Why this one entry was extracted, when one was.",
+      "source": "cat-harness/schemas/extraction.ts#ExtractedAssetSchema.extractedBecause",
+      "status": "candidate"
+    },
+    {
+      "id": "extraction.extractedassetschema.localpath",
+      "prefLabel": "ExtractedAssetSchema.localPath",
+      "definition": "Where the entry was written, IF it was written.",
+      "source": "cat-harness/schemas/extraction.ts#ExtractedAssetSchema.localPath",
+      "status": "candidate"
+    },
+    {
+      "id": "extraction.extractedassetschema.mediatype",
+      "prefLabel": "ExtractedAssetSchema.mediaType",
+      "definition": "Media type.",
+      "source": "cat-harness/schemas/extraction.ts#ExtractedAssetSchema.mediaType",
+      "status": "candidate"
+    },
+    {
+      "id": "extraction.extractedassetschema.modifiedat",
+      "prefLabel": "ExtractedAssetSchema.modifiedAt",
+      "definition": "The entry's own timestamp, as the container records it.",
+      "source": "cat-harness/schemas/extraction.ts#ExtractedAssetSchema.modifiedAt",
+      "status": "candidate"
+    },
+    {
+      "id": "extraction.extractedassetschema.path",
+      "prefLabel": "ExtractedAssetSchema.path",
+      "definition": "Path INSIDE the container, exactly as the container spells it.",
+      "source": "cat-harness/schemas/extraction.ts#ExtractedAssetSchema.path",
+      "status": "candidate"
+    },
+    {
+      "id": "extraction.extractedassetschema.sha256",
+      "prefLabel": "ExtractedAssetSchema.sha256",
+      "definition": "sha256 of the entry's bytes, when it was read rather than indexed.",
+      "source": "cat-harness/schemas/extraction.ts#ExtractedAssetSchema.sha256",
+      "status": "candidate"
+    },
+    {
+      "id": "extraction.extractionschema.assets",
+      "prefLabel": "ExtractionSchema.assets",
+      "definition": "Every entry the container indexes.",
+      "source": "cat-harness/schemas/extraction.ts#ExtractionSchema.assets",
+      "status": "candidate"
+    },
+    {
+      "id": "extraction.extractionschema.capturedat",
+      "prefLabel": "ExtractionSchema.capturedAt",
+      "definition": "When the CONTAINER'S CONTENTS were produced — the capture moment.",
+      "source": "cat-harness/schemas/extraction.ts#ExtractionSchema.capturedAt",
+      "status": "candidate"
+    },
+    {
+      "id": "extraction.extractionschema.container",
+      "prefLabel": "ExtractionSchema.container",
+      "definition": "The container this describes, repo-relative.",
+      "source": "cat-harness/schemas/extraction.ts#ExtractionSchema.container",
+      "status": "candidate"
+    },
+    {
+      "id": "extraction.extractionschema.omitted",
+      "prefLabel": "ExtractionSchema.omitted",
+      "definition": "Entries deliberately not listed, and why.",
+      "source": "cat-harness/schemas/extraction.ts#ExtractionSchema.omitted",
+      "status": "candidate"
+    },
+    {
+      "id": "extraction.extractionschema.producer",
+      "prefLabel": "ExtractionSchema.producer",
+      "definition": "The tool that produced the container, verbatim.",
+      "source": "cat-harness/schemas/extraction.ts#ExtractionSchema.producer",
+      "status": "candidate"
+    },
+    {
+      "id": "extraction.extractionschema.readat",
+      "prefLabel": "ExtractionSchema.readAt",
+      "definition": "When THIS record was written — a fact about the reading, not the file.",
+      "source": "cat-harness/schemas/extraction.ts#ExtractionSchema.readAt",
+      "status": "candidate"
+    },
+    {
       "id": "figure-description.figuredescriptionschema.described_by",
       "prefLabel": "FigureDescriptionSchema.described_by",
       "definition": "Who looked, and when.",
@@ -6640,6 +6731,13 @@
       "prefLabel": "LogReferenceSchema.title",
       "definition": "Human-readable, for a reader skimming rather than dereferencing.",
       "source": "cat-harness/schemas/log-entry.ts#LogReferenceSchema.title",
+      "status": "candidate"
+    },
+    {
+      "id": "materialization-state.fixityschema.verifiedat",
+      "prefLabel": "FixitySchema.verifiedAt",
+      "definition": "When the digest was last RE-COMPUTED against the bytes, not when it was recorded. An unverified digest ages.",
+      "source": "cat-harness/schemas/materialization-state.ts#FixitySchema.verifiedAt",
       "status": "candidate"
     },
     {
