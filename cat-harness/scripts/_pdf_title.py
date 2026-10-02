@@ -396,7 +396,11 @@ def refresh(structure_path: str, pdf: str | None) -> dict[str, Any]:
         info = (doc.get("metadata") or {}).get("docinfo") or {}
         toc = doc.get("toc") or []
         first = next((t.get("title") for t in toc if isinstance(t, dict) and t.get("level") == 1), None)
-        ev = {"metadata": info.get("Title"), "outline": first,
+        # A heading read from the PDF on an earlier run is kept: it was read
+        # off the document, and losing it because the upload has since gone
+        # would make a refresh without the PDF undo one made with it.
+        seen = (doc.get("metadata") or {}).get("title_evidence") or {}
+        ev = {"metadata": info.get("Title"), "outline": first, "heading": seen.get("heading"),
               "browser": bool(BROWSER_RE.search(f"{info.get('Creator') or ''} {info.get('Producer') or ''}"))}
     doc["metadata"] = apply(doc.get("metadata"), ev, doc.get("doc_id") or "")
     with open(structure_path, "w", encoding="utf-8") as fh:
