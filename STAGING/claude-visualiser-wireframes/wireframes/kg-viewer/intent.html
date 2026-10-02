@@ -505,32 +505,32 @@
   NOT a cache-busting strategy for third-party assets, and not applied to
   them: those are versioned in their own URLs already.
 -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-visualiser-wireframes/assets/css/docs-ui.css?v=1790924177">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-visualiser-wireframes/assets/css/docs-ui.css?v=1790925948">
 <!-- Narrow viewports: wide content scrolls in its own box, never the page
      (bean `2r2n`). The standalone viewers inline the same file through
      `withViewerNav`, so both kinds of page read one set of rules. -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-visualiser-wireframes/assets/css/narrow-viewport.css?v=1790924177">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-visualiser-wireframes/assets/css/narrow-viewport.css?v=1790925948">
 
 <!--
   The work-plan dashboard's styles, split from docs-ui.css so that
   `state-visualizer.ts` can inline exactly these bytes into the generated
   `<base>/<stub>/state-visualizer/` pages. One rule, two surfaces.
 -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-visualiser-wireframes/assets/css/work-plan.css?v=1790924177">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-visualiser-wireframes/assets/css/work-plan.css?v=1790925948">
 <!-- Sticky themes. GENERATED from the theme nodes in `schemas/themes.ts` by
      `bun run themes:css`; `themes:css:check` fails the build when it is stale.
      Loaded AFTER docs-ui.css deliberately: it supplies the `--fa-sticky-*`
      roles that docs-ui.css consumes, and a custom property has to be set on a
      matching element before the rule reading it takes effect. -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-visualiser-wireframes/assets/css/themes.css?v=1790924177">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-visualiser-wireframes/assets/css/themes.css?v=1790925948">
 <!-- UML overview colours: one class per graph kind, set on the Mermaid nodes
      that `scripts/gen-uml-overview.ts` writes into docs/uml/overview/. -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-visualiser-wireframes/assets/css/uml.css?v=1790924177">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-visualiser-wireframes/assets/css/uml.css?v=1790925948">
 <!-- Kind avatars. GENERATED from `schemas/avatars.ts` by `bun run avatars:css`;
      `avatars:css:check` fails the build when it is stale. One stylesheet
      rather than 68 assets: the glyph is a mask and the colour is a property,
      so a scheme swap is a custom property and the trash state is a selector. -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-visualiser-wireframes/assets/css/avatars.css?v=1790924177">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-visualiser-wireframes/assets/css/avatars.css?v=1790925948">
 
 <!--
   The kinds THIS INSTANCE DECLARES, for the avatar fan.
@@ -547,7 +547,7 @@
 <script type="application/json" id="fa-declared-kinds">["beans","cat-harness","code","code-list","docs","external-schema","folio","fsh-guts","health","interaction","issue-marks","library","memory","methodology","policies","processes","qa","scenarios","schemas","skills","substrate-snapshot","swimlane-glossary","todos","tools","translation-sources","uml","uploads","waiver"]</script>
 <script src="/folio-assistant/STAGING/claude-visualiser-wireframes/assets/js/vendor/qrcode.js" defer></script>
 <script src="/folio-assistant/STAGING/claude-visualiser-wireframes/assets/js/vendor/qrcode_UTF8.js" defer></script>
-<script src="/folio-assistant/STAGING/claude-visualiser-wireframes/assets/js/docs-ui.js?v=1790924177" defer></script>
+<script src="/folio-assistant/STAGING/claude-visualiser-wireframes/assets/js/docs-ui.js?v=1790925948" defer></script>
 
 <!--
   The work-plan dashboard. SELF-MOUNTING on any page carrying
@@ -929,6 +929,27 @@ window.addEventListener('resize',measure);window.addEventListener('load',measure
   <li><strong>Neighbourhood labels are cut to 26 characters</strong>, for example “Produce &gt;= 2 candidates, w” and “Mechanical checks, both vi”, and on web the labels crowd the edges of the diagram. The full name is in each neighbour’s accessible name and in the back-link list above it, so the cut is visual only.</li>
   <li><strong>The language switcher never appears.</strong> <code class="language-plaintext highlighter-rouge">.po</code> catalogues exist for ar, es, fr, ru and zh, but the group stays <code class="language-plaintext highlighter-rouge">hidden</code>. The skill says <em>“offer only what the page can show”</em>, and all five catalogues have 0 translated <code class="language-plaintext highlighter-rouge">msgstr</code> entries, so <code class="language-plaintext highlighter-rouge">LOCALES</code> holds only English and <code class="language-plaintext highlighter-rouge">drawLangs</code> hides the group. This is correct behaviour, but the translation-boundary note the skill requires never gets a chance to show.</li>
   <li><strong>No link back to the docs site.</strong> The page is reached from the docs navbar’s ⌘ icon, but it carries none of that chrome and no “back to site” link. Returning depends on the browser’s Back button.</li>
+</ol>
+<h2 id="update-2026-10-02-findings-re-measured-and-worked-bean-yhcq-issue-1838">
+  
+  
+    <a href="#update-2026-10-02-findings-re-measured-and-worked-bean-yhcq-issue-1838" class="anchor-heading" aria-labelledby="update-2026-10-02-findings-re-measured-and-worked-bean-yhcq-issue-1838"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Update, 2026-10-02: findings re-measured and worked (bean <code class="language-plaintext highlighter-rouge">yhcq</code>, issue #1838)
+  
+  
+</h2>
+    
+
+<p>Re-measured on a local build of <code class="language-plaintext highlighter-rouge">main</code> cf3e62487, with the viewer generated by <code class="language-plaintext highlighter-rouge">kg-viewer.ts --out &lt;site&gt;/cat-harness/index.html</code> as <code class="language-plaintext highlighter-rouge">docs-site.yml</code> does, at 1280×800 and 390×844. Pictures in <code class="language-plaintext highlighter-rouge">rendered-2026-10-02/</code>. The as-is drawing above is NOT re-drawn.</p>
+
+<ol>
+  <li><strong>No longer holds.</strong> At 390 before any facet, <code class="language-plaintext highlighter-rouge">scrollWidth</code> is 390 and <code class="language-plaintext highlighter-rouge">main</code> is <code class="language-plaintext highlighter-rouge">390px</code>. The grid track is clamped now.</li>
+  <li><strong>Fixed.</strong> Below 860 px, selecting a node scrolls <code class="language-plaintext highlighter-rouge">#detail</code> into view and focuses it. Measured with the Tool facet and the first row: detail top at 101 px with focus inside, against 1,028 px with no focus before.</li>
+  <li><strong>Fixed.</strong> A node whose only links lead into another graph document now reads “No links to or from other nodes in this graph. The links above lead out of it.”</li>
+  <li><strong>Fixed.</strong> Every outbound <code class="language-plaintext highlighter-rouge">&lt;a&gt;</code> in the detail table carries a ↗. A link-valued property whose target is not a node here also says “(in another graph)”, so <code class="language-plaintext highlighter-rouge">satisfies skill/discussion</code> no longer reads as a local edge.</li>
+  <li><strong>Fixed.</strong> The node list sorts by the shown name, ignoring leading punctuation, with the id as a tie-break.</li>
+  <li><strong>Fixed.</strong> Neighbour labels wrap to two lines of about 24 characters, with an ellipsis only when two lines cannot hold the name (“Produce &gt;= 2 candidates, / web + mobile”).</li>
+  <li><strong>Still holds, by design.</strong> All five <code class="language-plaintext highlighter-rouge">.po</code> catalogues have 0 translated entries, so the switcher correctly offers nothing. The three new strings are added to each catalogue as empty stubs. This needs translation work, not a viewer change, and is an open question on the PR.</li>
+  <li><strong>Fixed.</strong> A “← Docs site” link (<code class="language-plaintext highlighter-rouge">../</code>) at the top, translated with the rest of the chrome.</li>
 </ol>
 
           

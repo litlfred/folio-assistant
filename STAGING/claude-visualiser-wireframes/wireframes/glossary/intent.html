@@ -505,32 +505,32 @@
   NOT a cache-busting strategy for third-party assets, and not applied to
   them: those are versioned in their own URLs already.
 -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-visualiser-wireframes/assets/css/docs-ui.css?v=1790924177">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-visualiser-wireframes/assets/css/docs-ui.css?v=1790925948">
 <!-- Narrow viewports: wide content scrolls in its own box, never the page
      (bean `2r2n`). The standalone viewers inline the same file through
      `withViewerNav`, so both kinds of page read one set of rules. -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-visualiser-wireframes/assets/css/narrow-viewport.css?v=1790924177">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-visualiser-wireframes/assets/css/narrow-viewport.css?v=1790925948">
 
 <!--
   The work-plan dashboard's styles, split from docs-ui.css so that
   `state-visualizer.ts` can inline exactly these bytes into the generated
   `<base>/<stub>/state-visualizer/` pages. One rule, two surfaces.
 -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-visualiser-wireframes/assets/css/work-plan.css?v=1790924177">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-visualiser-wireframes/assets/css/work-plan.css?v=1790925948">
 <!-- Sticky themes. GENERATED from the theme nodes in `schemas/themes.ts` by
      `bun run themes:css`; `themes:css:check` fails the build when it is stale.
      Loaded AFTER docs-ui.css deliberately: it supplies the `--fa-sticky-*`
      roles that docs-ui.css consumes, and a custom property has to be set on a
      matching element before the rule reading it takes effect. -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-visualiser-wireframes/assets/css/themes.css?v=1790924177">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-visualiser-wireframes/assets/css/themes.css?v=1790925948">
 <!-- UML overview colours: one class per graph kind, set on the Mermaid nodes
      that `scripts/gen-uml-overview.ts` writes into docs/uml/overview/. -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-visualiser-wireframes/assets/css/uml.css?v=1790924177">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-visualiser-wireframes/assets/css/uml.css?v=1790925948">
 <!-- Kind avatars. GENERATED from `schemas/avatars.ts` by `bun run avatars:css`;
      `avatars:css:check` fails the build when it is stale. One stylesheet
      rather than 68 assets: the glyph is a mask and the colour is a property,
      so a scheme swap is a custom property and the trash state is a selector. -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-visualiser-wireframes/assets/css/avatars.css?v=1790924177">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-visualiser-wireframes/assets/css/avatars.css?v=1790925948">
 
 <!--
   The kinds THIS INSTANCE DECLARES, for the avatar fan.
@@ -547,7 +547,7 @@
 <script type="application/json" id="fa-declared-kinds">["beans","cat-harness","code","code-list","docs","external-schema","folio","fsh-guts","health","interaction","issue-marks","library","memory","methodology","policies","processes","qa","scenarios","schemas","skills","substrate-snapshot","swimlane-glossary","todos","tools","translation-sources","uml","uploads","waiver"]</script>
 <script src="/folio-assistant/STAGING/claude-visualiser-wireframes/assets/js/vendor/qrcode.js" defer></script>
 <script src="/folio-assistant/STAGING/claude-visualiser-wireframes/assets/js/vendor/qrcode_UTF8.js" defer></script>
-<script src="/folio-assistant/STAGING/claude-visualiser-wireframes/assets/js/docs-ui.js?v=1790924177" defer></script>
+<script src="/folio-assistant/STAGING/claude-visualiser-wireframes/assets/js/docs-ui.js?v=1790925948" defer></script>
 
 <!--
   The work-plan dashboard. SELF-MOUNTING on any page carrying
@@ -882,6 +882,25 @@ window.addEventListener('resize',measure);window.addEventListener('load',measure
   <li><strong>The term column is wide and dominated by the path.</strong> Each term is followed by the full <code class="language-plaintext highlighter-rouge">cat-harness/glossary/glossary-ledger.json#role/…</code> path, which breaks mid-token (<code class="language-plaintext highlighter-rouge">…#role/adjudi / cator</code>). At 390 px this leaves about 200 px for the definition, the part the reader came for.</li>
   <li><strong>The heading is repetitive.</strong> “Glossary <code class="language-plaintext highlighter-rouge">glossary</code>”, the sub-graph path in the lede and the single sibling row all state the same scope three times before the first term.</li>
   <li><strong>The count differs from the declaration.</strong> The <code class="language-plaintext highlighter-rouge">glossary</code> declaration’s comment says “44 terms”, but the page shows 46.</li>
+</ol>
+<h2 id="update-2026-10-02-findings-re-measured-and-worked-bean-n5be-issue-1838">
+  
+  
+    <a href="#update-2026-10-02-findings-re-measured-and-worked-bean-n5be-issue-1838" class="anchor-heading" aria-labelledby="update-2026-10-02-findings-re-measured-and-worked-bean-n5be-issue-1838"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Update, 2026-10-02: findings re-measured and worked (bean <code class="language-plaintext highlighter-rouge">n5be</code>, issue #1838)
+  
+  
+</h2>
+    
+
+<p>Re-measured on a local build of <code class="language-plaintext highlighter-rouge">main</code> cf3e62487, at 1280×800 and 390×844. Pictures in <code class="language-plaintext highlighter-rouge">rendered-2026-10-02/</code>. The as-is drawing above is NOT re-drawn.</p>
+
+<ol>
+  <li><strong>No longer holds.</strong> The page has a “Filter this table” box (bean <code class="language-plaintext highlighter-rouge">0fua</code>, the standalone table filter). There is still no A–Z jump. With the order fixed (2), the filter is the way in.</li>
+  <li><strong>Fixed.</strong> Rows sort by the displayed term, with the notation as a tie-break. Measured: 0 descending pairs over 55 rows, against 4 before. Before, each ledger restarted the alphabet (“Agent, Actor, …”).</li>
+  <li><strong>No longer holds</strong> (#1594). There are 0 literal backticks, and inline code renders as <code class="language-plaintext highlighter-rouge">&lt;code&gt;</code> and links.</li>
+  <li><strong>Fixed.</strong> The term cell prints the ledger relative to the sub-graph (<code class="language-plaintext highlighter-rouge">glossary-ledger.json</code> or <code class="language-plaintext highlighter-rouge">bootstrap/glossary-ledger.json</code>). The <code class="language-plaintext highlighter-rouge">#key</code> is already the <code class="language-plaintext highlighter-rouge">notation</code> fact, and the link still goes to the full path. The first column is 20rem (was 26rem). Below 800 px every docs-auto row stacks the term above its definition at full width. Measured at 390: <code class="language-plaintext highlighter-rouge">scrollWidth</code> 390, and the definition is 296 px wide (was 214 px beside an 89 px term).</li>
+  <li><strong>Fixed.</strong> The one-row sibling list is dropped. Its count moves into the lede (“Sub-graph <code class="language-plaintext highlighter-rouge">cat-harness/glossary</code>, 55 entries.”). The scope now appears twice, as the h1 id and the lede path, and these are two different facts.</li>
+  <li><strong>Fixed.</strong> The declaration comment no longer quotes a count. It had said 44 while the page showed 46, then 48, then 55.</li>
 </ol>
 
           
