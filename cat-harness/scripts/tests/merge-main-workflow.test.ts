@@ -60,3 +60,32 @@ describe("the write token never meets a fork", () => {
     expect(steps[guard]!.run).toContain("exit 1");
   });
 });
+
+describe("the merge runs main's tool, and fails loudly", () => {
+  // Measured 2026-10-02 on 7 real runs: `bun run merge:main` resolved the
+  // script from the PR's OWN package.json, which an old branch lacks —
+  // `Script not found` every time, and every job green.
+  const steps = doc.jobs.merge!.steps;
+  const runOf = (s: Step) => s.run ?? "";
+  const merge = steps.findIndex((s) => (s as { id?: string }).id === "merge");
+  const tool = steps.findIndex((s) => runOf(s).includes('worktree add --detach "$RUNNER_TEMP/tool" origin/main'));
+
+  test("main's merge-base.ts is checked out outside the tree, before the merge", () => {
+    expect(tool).toBeGreaterThanOrEqual(0);
+    expect(merge).toBeGreaterThan(tool);
+  });
+
+  test("the merge step runs that copy against the PR with --root, never the PR's script", () => {
+    const run = runOf(steps[merge]!);
+    expect(run).toContain('bun run "$RUNNER_TEMP/tool/cat-harness/scripts/merge-base.ts" --root "$GITHUB_WORKSPACE"');
+    for (const s of steps) expect(runOf(s)).not.toMatch(/bun run merge:main\b/);
+  });
+
+  test("a non-zero exit that is not a refusal fails the job, after the comment", () => {
+    const fail = steps.findIndex((s) => /refused != 'true'/.test((s as { if?: string }).if ?? ""));
+    const comment = steps.findIndex((s) => s.name?.startsWith("Comment once"));
+    expect(fail).toBeGreaterThan(comment);
+    expect(runOf(steps[fail]!)).toContain("exit 1");
+    expect(runOf(steps[merge]!)).toContain('echo "refused=true"');
+  });
+});
