@@ -737,6 +737,51 @@ export interface Gate {
  * here by design, and running their bodies locally would report a clean scan
  * of nothing, which is the thing this module refuses to do.
  */
+/**
+ * `$VAR` or `${VAR}` — a shell variable this reader cannot resolve.
+ *
+ * ## Why a command carrying one is NOT a gate
+ *
+ * The extraction keeps `bun …` lines and discards everything else, which
+ * necessarily discards the shell that gave those lines their variables.
+ * `code-quality-gates.yml` writes
+ *
+ *     base="$(git merge-base origin/main HEAD 2>/dev/null || true)"   # :1345
+ *     bun run translation:catalogue:check -- --base "$base"           # :1348
+ *
+ * and only the second line survives. Run as written, git is handed a ref
+ * literally named `$base`, so the check exits 2 with *"could not determine:
+ * git would not list what this change adds (`$base..HEAD`)"* — on every
+ * branch, forever. Measured 2026-10-02, bean `9zok`: this made
+ * `bun run gates` report `✗ 1 of 210` on a clean tree, which means the STRICT
+ * pre-push rule in `AGENTS.md` was unsatisfiable as written.
+ *
+ * ## Why skipping loses nothing, and why that was checked rather than assumed
+ *
+ * The obvious worry is that skipping hides a gate. It does not here, and the
+ * reason is measurable: the SAME script is invoked twice in that workflow —
+ * once with `--base` for CI, which has a PR base sha, and once bare at :1321
+ * for when it does not. Both are extracted, so the bare form already runs in
+ * the same sweep. Measured on this workflow: 2 `translation:catalogue`
+ * invocations extracted, and exactly 1 command in the whole set carrying an
+ * unexpanded variable.
+ *
+ * ## It is reported, never silently dropped
+ *
+ * This file's own `NoGatesFound` doctrine is that a reader finding nothing is
+ * not a clean sweep. The same applies one command at a time: a skipped
+ * command is printed every run under its own heading, so "this reader cannot
+ * run it" stays distinguishable from "it passed". Resolving the variable
+ * properly would mean executing the workflow's shell, which is a different
+ * and much larger thing than reading it.
+ */
+const SHELL_VAR = /\$\{?[A-Za-z_][A-Za-z0-9_]*\}?/;
+
+/** Whether a command references a shell variable this reader cannot resolve. */
+export function carriesUnexpandedVariable(command: string): boolean {
+  return SHELL_VAR.test(command);
+}
+
 export function gatesFrom(workflowText: string, opts: { all?: boolean } = {}): Gate[] {
   const doc = parse(workflowText) as {
     jobs?: Record<string, { steps?: { name?: string; run?: string }[] }>;
@@ -759,6 +804,31 @@ export function gatesFrom(workflowText: string, opts: { all?: boolean } = {}): G
   return out;
 }
 
+/**
+ * The commands this reader READ but cannot run.
+ *
+ * A VIEW over {@link gatesFrom}, not a narrowing of it, and that distinction
+ * was paid for: the first version of this fix filtered inside `gatesFrom`
+ * itself, which broke two tests that were right to break. `gatesFrom` answers
+ * **"what does CI run"** — `unclassifiedSteps` and the `STEP_EXEMPTIONS`
+ * staleness check both read it that way, and 14 exemptions went stale the
+ * moment a command vanished from it — while *this* answers "what can I run
+ * here". CI runs the `--base` command correctly, with a shell; only this tool
+ * cannot. Removing it from the first answer asserted something false about CI.
+ */
+export function unresolvedGatesFrom(workflowText: string, opts: { all?: boolean } = {}): Gate[] {
+  return gatesFrom(workflowText, opts).filter((g) => carriesUnexpandedVariable(g.command));
+}
+
+/**
+ * What this tool will actually run: {@link gatesFrom} minus
+ * {@link unresolvedGatesFrom}. The two partition the extraction, so a command
+ * is in exactly one of them and none goes missing from both.
+ */
+export function runnableGatesFrom(workflowText: string, opts: { all?: boolean } = {}): Gate[] {
+  return gatesFrom(workflowText, opts).filter((g) => !carriesUnexpandedVariable(g.command));
+}
+
 /** Thrown when the extraction finds nothing — never reported as a clean run. */
 export class NoGatesFound extends Error {
   constructor(path: string) {
@@ -772,10 +842,26 @@ export class NoGatesFound extends Error {
   }
 }
 
+/**
+ * The commands this reader could not run, for the CLI to print.
+ *
+ * Separate from {@link loadGates} rather than returned beside it, because a
+ * caller that wants the runnable set must not have to destructure an
+ * "and also these" it can then ignore — that is how a skipped gate becomes a
+ * silent one.
+ */
+export function loadUnresolved(root: string, opts: { all?: boolean } = {}): Gate[] {
+  return unresolvedGatesFrom(readFileSync(join(root, GATES_WORKFLOW), "utf-8"), opts);
+}
+
 /** Read and parse, refusing an empty result. */
 export function loadGates(root: string, opts: { all?: boolean } = {}): Gate[] {
   const path = join(root, GATES_WORKFLOW);
-  const gates = gatesFrom(readFileSync(path, "utf-8"), opts);
+  // The RUNNER's list, so the filter belongs here rather than in `gatesFrom`:
+  // a command referencing a shell variable this reader discarded cannot be run
+  // as written, but CI does run it, and `gatesFrom` is what the accounting
+  // checks read as "what CI runs". `reportUnresolved` prints what this drops.
+  const gates = runnableGatesFrom(readFileSync(path, "utf-8"), opts);
   if (gates.length === 0) throw new NoGatesFound(GATES_WORKFLOW);
   if (!opts.all) return gates;
 
@@ -1157,6 +1243,34 @@ export function unrunScripts(root: string): string[] {
 }
 
 /**
+ * Print the commands the extraction read but cannot run.
+ *
+ * Unconditional: printed on a green run as well as a red one. A line that
+ * appears only when something else is already wrong is a line nobody reads,
+ * and the fact being reported — that this tool is not covering a command CI
+ * does run — is exactly as true on a clean tree.
+ */
+function reportUnresolved(root: string, opts: { all?: boolean }): void {
+  let skipped: Gate[];
+  try {
+    skipped = loadUnresolved(root, opts);
+  } catch {
+    return;
+  }
+  if (skipped.length === 0) return;
+  console.log(
+    `\n· ${skipped.length} command(s) COULD NOT BE EXTRACTED — not run, and not counted clean:`,
+  );
+  for (const g of skipped) console.log(`    ${g.command}   (${g.job} / ${g.step})`);
+  console.log(
+    `  Each references a shell variable defined on a line this reader discards\n` +
+      `  (it keeps \`bun …\` lines only), so running it as written would pass the\n` +
+      `  variable's NAME to the script. CI runs these correctly; this tool does not\n` +
+      `  run them at all. Bean \`9zok\`.`,
+  );
+}
+
+/**
  * What to print when the gate set could not be derived.
  *
  * Pure, and exported, for one reason: the CLI's `ROOT` is computed from this
@@ -1379,6 +1493,10 @@ if (import.meta.main) {
 
   if (listOnly) {
     for (const g of gates) console.log(`  ${g.command.padEnd(52)} ${g.step}`);
+    // `--list` is where somebody goes to learn what this tool covers, so the
+    // commands it will NOT run belong here most of all. Omitting them would
+    // make the list read as the whole gate set.
+    reportUnresolved(ROOT, { all });
     console.log(
       all ? "" : "\n`--all` adds the jobs that need a browser (bpmn-js renders through Chromium).",
     );
@@ -1482,6 +1600,7 @@ if (import.meta.main) {
     // the clean line.
     if (mutations.length === 0) {
       console.log(`✓ ${gates.length} gate(s) pass — the ${all ? "whole" : "fast"} set.`);
+      reportUnresolved(ROOT, { all });
       if (!all) console.log("  `bun run gates --all` adds the browser jobs before you push.");
       process.exit(0);
     }
@@ -1501,6 +1620,7 @@ if (import.meta.main) {
     );
     process.exit(1);
   }
+  reportUnresolved(ROOT, { all });
   console.log(`✗ ${failed.length} of ${gates.length} failed:`);
   for (const { gate, why } of failed) {
     console.log(`  · ${gate.command}   (${gate.job} / ${gate.step})`);
