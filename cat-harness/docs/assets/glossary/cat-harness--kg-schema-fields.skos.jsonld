@@ -22586,6 +22586,25 @@
       "skos:note": "candidate"
     },
     {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/sticky-contribution.declaredcontribution.alsowritten",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "DeclaredContribution.alsoWritten"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The declaring instance's `alsoWritten`, for `bodyFrom: \"summary\"`."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/sticky-contribution.ts#DeclaredContribution.alsoWritten",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/sticky-contribution.declaredcontribution.declaredby",
       "@type": "skos:Concept",
       "skos:inScheme": {
@@ -22640,6 +22659,25 @@
         }
       ],
       "dcterms:source": "cat-harness/schemas/sticky-contribution.ts#DeclaredContribution.description",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/sticky-contribution.declaredcontribution.summary",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "DeclaredContribution.summary"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The declaring instance's `summary`, for `bodyFrom: \"summary\"`."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/sticky-contribution.ts#DeclaredContribution.summary",
       "skos:note": "candidate"
     },
     {
