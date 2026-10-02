@@ -45,7 +45,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "The published content context — bean `yh6u`. OPTIONAL because folio repositories hold records written before the arm emitted it; when present it must be that context, since any other would bind these keys to terms nobody declared."
+          "@value": "The published content context — bean `yh6u`. OPTIONAL because folio repositories hold records written before the arm emitted it; when present it must be that context (bare, or with `@base` beside it — bean `bh4q`), since any other would bind these keys to terms nobody declared."
         }
       ],
       "dcterms:source": "cat-harness/schemas/archive-contents.ts#ArchiveContentsSchema.@context",
@@ -8637,6 +8637,44 @@
         }
       ],
       "dcterms:source": "cat-harness/schemas/contributions.ts#FolioContribution.root",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/contributions.pipelineplugincontribution.implementation",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "PipelinePluginContribution.implementation"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "What fills it. Shape is fixed per kind by `content/pipeline/pipeline-plugins.ts`."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/contributions.ts#PipelinePluginContribution.implementation",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/contributions.pipelineplugincontribution.kind",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "PipelinePluginContribution.kind"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The slot this fills, e.g. `\"lean-lexer\"`. One contributor per kind."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/contributions.ts#PipelinePluginContribution.kind",
       "skos:note": "candidate"
     },
     {
@@ -23130,7 +23168,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "The published content context — bean `yh6u`. OPTIONAL because folio repositories hold records written before the arm emitted it; when present it must be that context, since any other would bind these keys to terms nobody declared."
+          "@value": "The published content context — bean `yh6u`. OPTIONAL because folio repositories hold records written before the arm emitted it; when present it must be that context (bare, or with `@base` beside it — bean `bh4q`), since any other would bind these keys to terms nobody declared."
         }
       ],
       "dcterms:source": "cat-harness/schemas/tabular-records.ts#TabularRecordsSchema.@context",
