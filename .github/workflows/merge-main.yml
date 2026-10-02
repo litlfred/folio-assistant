@@ -50,13 +50,22 @@ name: Merge main into opted-in PRs
 on:
   push:
     branches: [main]
-  pull_request:
+  # `pull_request_target`, NOT `pull_request` — measured 2026-10-02: adding
+  # the label to 4 conflicted PRs started 0 runs. GitHub runs no
+  # `pull_request` workflow for a PR with no merge ref, and a conflicted PR has
+  # none — so the trigger was blind to exactly the PRs this exists for.
+  # `pull_request_target` runs in the BASE context and fires regardless of
+  # mergeability. It also carries a write token, which is why every job below
+  # refuses a PR whose head is not in this repository (only people with write
+  # access can push such a branch) BEFORE anything is checked out.
+  pull_request_target:
     types: [labeled]
   workflow_dispatch:
     inputs:
       pr:
-        description: "PR number to merge main into (it must carry the merge-main label)"
-        required: true
+        description: "PR number to merge main into (must carry the merge-main label). Empty: sweep every labelled PR, as a push to main does."
+        required: false
+        default: ""
 
 permissions:
   contents: read
@@ -67,7 +76,7 @@ jobs:
     name: Select opted-in PRs that are behind main
     runs-on: ubuntu-latest
     timeout-minutes: 5
-    if: github.event_name != 'pull_request' || github.event.label.name == 'merge-main'
+    if: github.event_name != 'pull_request_target' || github.event.label.name == 'merge-main'
     permissions:
       pull-requests: read
     outputs:
@@ -83,10 +92,14 @@ jobs:
           INPUT_PR: ${{ github.event.inputs.pr }}
         run: |
           set -euo pipefail
+          candidates=""
           case "$EVENT" in
-            pull_request) candidates="$LABELLED_PR" ;;
+            pull_request_target) candidates="$LABELLED_PR" ;;
             workflow_dispatch) candidates="$INPUT_PR" ;;
-            *) candidates=$(gh api "repos/$REPO/pulls?state=open&base=main&per_page=100" --paginate \
+          esac
+          # An empty dispatch sweeps like a push does.
+          case "$candidates" in
+            "") candidates=$(gh api "repos/$REPO/pulls?state=open&base=main&per_page=100" --paginate \
                  --jq '.[] | select(any(.labels[]; .name == "merge-main")) | .number') ;;
           esac
           prs=()
@@ -137,7 +150,14 @@ jobs:
         id: pr
         run: |
           set -euo pipefail
-          gh api "repos/$REPO/pulls/$PR" --jq '"ref=\(.head.ref)\nsha=\(.head.sha)"' >> "$GITHUB_OUTPUT"
+          pr=$(gh api "repos/$REPO/pulls/$PR")
+          # Checked again here, before the checkout, not only in `select`:
+          # under `pull_request_target` this job holds a write token, and a
+          # fork's head must never be checked out with it.
+          if [ "$(jq -r '.head.repo.full_name == .base.repo.full_name' <<<"$pr")" != true ]; then
+            echo "::error::#$PR's head is not in $REPO — refusing to check it out"; exit 1
+          fi
+          jq -r '"ref=\(.head.ref)\nsha=\(.head.sha)"' <<<"$pr" >> "$GITHUB_OUTPUT"
 
       - uses: actions/checkout@v7
         with:
