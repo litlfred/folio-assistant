@@ -1,11 +1,11 @@
 ---
 # folio-assistant-zlq9
 title: 'CAT-QA-REPORTS: read and write either branch name before the rename (PR #1913, bean 32f6)'
-status: todo
+status: completed
 type: task
 priority: normal
 created_at: 2026-10-02T19:14:12Z
-updated_at: 2026-10-02T21:41:53Z
+updated_at: 2026-10-02T22:05:44Z
 parent: folio-assistant-3fva
 ---
 
@@ -31,3 +31,7 @@ cat-qa-reports if it exists, else qa-reports if it exists, else cat-qa-reports. 
 - The 10 instance declarations now name `cat-qa-reports` (either spelling resolves to both).
 - `check-workflows.ts` raw-push guard matches both names.
 - Tests: neither, only-legacy (read + write extend it, no cat- branch created), both (new wins, legacy untouched).
+
+
+## Done 2026-10-02 (evidence)
+Three names, not two: owner ruling (note on fs43, bean tlk2) made the target `cat/cat-harness/qa-reports`. Resolution order is cat/cat-harness/qa-reports, then cat-qa-reports, then qa-reports. #1801 at 0f26313a7 is green: 12 checks passed and 2 cleanup jobs were skipped, the QA publish included. Posted 'dual-name pushed and green' on #1928, the rename handoff.

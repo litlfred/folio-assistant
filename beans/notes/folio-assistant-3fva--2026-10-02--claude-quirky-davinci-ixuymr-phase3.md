@@ -10,7 +10,7 @@ created: "2026-10-02"
 ## Handover report: QA-reports arc lead (arc 3fva)
 
 - **Session:** https://claude.ai/code/session_01LKpuPotV3Ve5Za75DQ3AQR
-- **Written:** 2026-10-02 ~20:50 UTC; updated ~21:20 UTC (#1801 green). The owner asked for "Prepare for Handover" (skill from PR #1912), to be sent to the Merge Manager.
+- **Written:** 2026-10-02 ~20:50 UTC; updated ~21:20 UTC (#1801 green) and ~22:10 UTC (zlq9 done, `ready:` posted, rename handed off). The owner asked for "Prepare for Handover" (skill from PR #1912), to be sent to the Merge Manager.
 - **Role and mandate:** lead for arc `3fva`: derived QA leaves `main` for the orphan `qa-reports` branch, and the test-plan/test-report process. Owner rulings:
   - **MERGE POLICY (verbatim):** "Do NOT merge to main yourself. When your PR is green on every CI job, mark it 'Ready for review', add the label `ready-to-merge`, and comment 'ready: <head sha>'."
   - **Main:** "Only nothing into main".
@@ -40,24 +40,19 @@ Derived QA verdicts move off `main` onto `qa-reports`, keyed by commit; judgemen
   - f3bh: subgraph-readmes skips stored directories.
 
 ### Next in queue
-1. **Done (21:17 UTC):** #1801 is green on all 13 checks at `edf28c4c3`, QA publish included. The fixes: the staging asset count; stale `artefact-verification.json` entries; the committed witness copy refreshed with `bun run docs:pages`, its 7 new files added with `-f` past the 5hox ignore; and the generated outputs those files staled (`beans/README.md`, `cat-harness/test/README.md`, the UML overviews, `/qa/`, `harness.json`, the library index). **Lesson:** after adding or removing anything under a stored `test/results/`, run `bun run regen` and `bun run skill:register`, because several generated files count those files.
-2. **Bean `zlq9`: support both branch names.** Rule: `cat-qa-reports` if it exists, else `qa-reports` if it exists, else `cat-qa-reports`; writers use the same rule. This is for the steward's rename (#1913, bean `32f6`). Sites:
-   - `qa-store.ts` `DEFAULT_QA_BRANCH` and every read and write;
-   - `qa-site-assets.ts`, `qa-verify-moved.ts`;
-   - `storage.branch` in 10 instance declarations;
-   - `cat-harness.ts`;
-   - workflows: qa-publish, qa-reports-prune, docs-site, `folio-staging.yml`.
-
-   Then tell the steward "dual-name pushed and green", and do not push to #1764 or #1801 for 30 minutes so it can rename.
-3. Once #1801 is green, it carries `ready:` (it is stacked; it retargets to `main` after #1764 merges).
-4. After #1764 merges: wait for `main/<sha>` on `qa-reports`, then run `bun run qa:verify-moved --key main/<sha>`. If IDENTICAL, re-measure the inventory (now 10 instances, not 12: smart-dak and smart-l1 were removed upstream) and show the owner the numbers. Only then push the 5hox deletion.
+1. **Done:** #1801 green at `edf28c4c3` (fixes and the regen lesson are in the git history of this note).
+2. **Done (22:05 UTC): bean `zlq9`.** The owner changed the scheme to `cat/<harness>/<name>` (note on `fs43`, bean `tlk2`), so `qa-store.ts` resolves THREE names, in this order: `cat/cat-harness/qa-reports`, then `cat-qa-reports`, then `qa-reports`. A declaration naming any of them looks for all three; writers create the new path only when none exists. The 10 declarations name the new path, and the raw-push guard in `check-workflows.ts` matches all three. #1801 is green at `0f26313a7`.
+3. **Done (22:06 UTC):** "zlq9: dual-name pushed and green" posted on #1928, the rename handoff; the merge steward was stood down by the owner. No pushes to #1764/#1801 until 22:36 UTC. #1801 is marked ready, labelled `ready-to-merge`, and has `ready: 0f26313a7`.
+4. **Watch:** #1764's own `qa-store.ts` knows only `qa-reports`. If #1764 runs CI after the rename and before #1801 merges, its publish job (not a gate) can recreate a stray `qa-reports` branch. If that happens, report it to the owner; deleting the branch needs their confirmation.
+5. After #1764 merges: wait for `main/<sha>` on the QA branch (whichever name exists), then run `bun run qa:verify-moved --key main/<sha>`. If IDENTICAL, re-measure the inventory (10 instances) and show the owner the numbers. Only then push the 5hox deletion.
 
 ### In flight
 | item | kind | state | next action | owner |
 |---|---|---|---|---|
 | #1764 `claude/quirky-davinci-ixuymr` @ `8df0a71bd` | PR → main | `ready-to-merge`; main brought in by the steward | steward merges | merge steward |
-| #1801 `claude/quirky-davinci-ixuymr-phase3` @ `edf28c4c3` | PR (stacked on #1764) | green, 13/13 | zlq9, then `ready:` | this arc |
-| `zlq9` | bean | todo | Next in queue, step 2 | this arc |
+| #1801 `claude/quirky-davinci-ixuymr-phase3` @ `0f26313a7` | PR (stacked on #1764) | green; ready, `ready-to-merge`, `ready:` posted | merges after #1764 | merge manager |
+| `zlq9` | bean | completed | none | done |
+| QA branch rename | handoff on #1928 | go-ahead posted 22:06 UTC | owner's local agent runs `rename-special-branch.sh` | owner |
 | `5hox` | bean | prep merged; deletion held, NOT pushed | Next in queue, step 4 | this arc, owner go |
 | `zaui` (certification attestation family), `4iey` (per-plan DMN) | beans | todo | none needed yet | this arc |
 
@@ -65,7 +60,7 @@ Derived QA verdicts move off `main` onto `qa-reports`, keyed by commit; judgemen
 | blocker | waits on | since | expires / re-check |
 |---|---|---|---|
 | 5hox: 8 gates red with the files absent | a `main/<sha>` entry on qa-reports, which exists only after #1764 merges | 2026-10-02 | re-check when #1764 merges |
-| the `qa-reports` → `cat-qa-reports` rename | zlq9 pushed and green | 2026-10-02 19:14 | steward holds the rename until told |
+| the `qa-reports` → `cat/cat-harness/qa-reports` rename | the owner's local agent | 2026-10-02 22:06 | go-ahead on #1928; no-push window ends 22:36 UTC |
 
 ### Decisions pending (owner)
 - None open. Before the 5hox deletion is pushed, the owner sees the re-measured inventory (count, bytes, oldest age).
@@ -80,5 +75,5 @@ Derived QA verdicts move off `main` onto `qa-reports`, keyed by commit; judgemen
 
 ### How to resume
 1. Read #1801's CI on its current head; it was green at `edf28c4c3`. Before any push, run `bun run gates`. A subset is not the gate set: two pushes here went red that way.
-2. Do zlq9, then message the steward with session `01ToWZR4…` or its successor (see #1912 and #1913).
+2. zlq9 is done. The rename handoff and its reports live on #1928; the steward `01ToWZR4…` was stood down.
 3. On every merge of #1764 into #1801, take `ours` only for generated paths matched by folder or extension, never by substring. A "glossary" substring once swallowed `glossary-page.ts`. Run regen, then check every staged deletion is absent on MERGE_HEAD.
