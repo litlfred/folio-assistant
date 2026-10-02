@@ -2611,6 +2611,53 @@
       "status": "candidate"
     },
     {
+      "id": "process_stalledagenttriage.a_collect",
+      "prefLabel": "Collect or reconstruct a handover report per agent",
+      "definition": "Use the agent's own report and check it against live state; if none, ask the agent if it is still reachable, else reconstruct with the handover-report template and mark it reconstructed. Unpushed state is unknown, never empty.",
+      "notation": "A_Collect",
+      "source": "cat-harness/processes/sdlc/stalled-agent-triage.bpmn#A_Collect",
+      "status": "candidate"
+    },
+    {
+      "id": "process_stalledagenttriage.a_consolidate",
+      "prefLabel": "Consolidate into 2-4 themes, with a recommendation each",
+      "definition": "Group by what the work delivers, not by agent. Each theme gets its epic, members, dependencies, risk, and one of: continue, fold in, new epic, park, scrap (owner only).",
+      "notation": "A_Consolidate",
+      "source": "cat-harness/processes/sdlc/stalled-agent-triage.bpmn#A_Consolidate",
+      "status": "candidate"
+    },
+    {
+      "id": "process_stalledagenttriage.a_footprint",
+      "prefLabel": "Find the footprint",
+      "definition": "handover notes (beans/notes, title 'handover:'), open PRs and branches by session or time window, in-progress beans, workflow instances, last PR and issue comments. REST, one batched pass.",
+      "notation": "A_Footprint",
+      "source": "cat-harness/processes/sdlc/stalled-agent-triage.bpmn#A_Footprint",
+      "status": "candidate"
+    },
+    {
+      "id": "process_stalledagenttriage.a_record",
+      "prefLabel": "Record the triage and claim the picked-up work",
+      "definition": "A 'triage: <date>' bean note on each theme's epic; new or re-parented beans; claims via beans:claim. Owning sessions still alive are notified before their branches are touched.",
+      "notation": "A_Record",
+      "source": "cat-harness/processes/sdlc/stalled-agent-triage.bpmn#A_Record",
+      "status": "candidate"
+    },
+    {
+      "id": "process_stalledagenttriage.s_reroute",
+      "prefLabel": "Re-route open PRs that lost their driver",
+      "definition": "Green, up-to-date PRs join the queue; mid-merge branches are re-driven from the PR head, never guessed at; red PRs go back to the new driver.",
+      "notation": "S_Reroute",
+      "source": "cat-harness/processes/sdlc/stalled-agent-triage.bpmn#S_Reroute",
+      "status": "candidate"
+    },
+    {
+      "id": "process_stalledagenttriage.u_decide",
+      "prefLabel": "Decide each theme",
+      "notation": "U_Decide",
+      "source": "cat-harness/processes/sdlc/stalled-agent-triage.bpmn#U_Decide",
+      "status": "candidate"
+    },
+    {
       "id": "process_subscribekg.call_materialize",
       "prefLabel": "Materialise the part [materialize-remote]",
       "definition": "The ONLY way bytes arrive. Purpose first, then the five gates — size, restrictions, copyright, retention, source loss — then fetch with fixity, or stay referenced with the refusing gate's basis recorded. Both ends of that subprocess return here and the walk continues: one part refused is not the subscription refused.",

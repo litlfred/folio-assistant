@@ -694,6 +694,14 @@
       "status": "candidate"
     },
     {
+      "id": "handover-report",
+      "prefLabel": "handover-report",
+      "definition": "Write a handover report: a templated snapshot of an agent's current state, committed as a bean note, so that a session or subagent that stalls, runs out of context, or loses its container can be picked up by another agent without re-deriving anything. Use it when you are told a stall is likely, at the end of every long arc, before a risky or long-running step, and whenever a steward asks for one. Its reader is `stalled-agent-triage`.",
+      "notation": "handover-report",
+      "source": "cat-harness/skills/sdlc/sdlc-core/handover-report.md",
+      "status": "candidate"
+    },
+    {
       "id": "harness-requirements",
       "prefLabel": "harness-requirements",
       "definition": "What an instance OWES for every directory it declares — a visualiser, a documentation entry, a governing skill, json/jsonld/schema.json serialisations at the directory's URL and at every node beneath it, and a starting README of its own. Read before declaring a directory, before adding a graph kind, and when reading `check:subgraph-coverage`. Carries which obligations are ranked as unmet promises rather than unanswered questions, why the discriminator is \"is this the static knowledge graph\", and which single obligation a harness may never waive.",
@@ -1074,6 +1082,14 @@
       "status": "candidate"
     },
     {
+      "id": "prepare-for-handover",
+      "prefLabel": "prepare-for-handover",
+      "definition": "Prepare for a handover: commit and push everything you hold, then write a handover report that cites the commits. Use it when told a stall, timeout or container loss is coming (\"you may stall in N minutes\"), before a long or risky step, or whenever a steward or the owner says \"prepare for handover\". It is the producing half; `handover-report` is the format and `stalled-agent-triage` is the reader.",
+      "notation": "prepare-for-handover",
+      "source": "cat-harness/skills/sdlc/sdlc-core/prepare-for-handover.md",
+      "status": "candidate"
+    },
+    {
       "id": "prepare-merge",
       "prefLabel": "prepare-merge",
       "definition": "Take a feature branch to a clean, conflict-free, green, pushed state so it can be merged with no surprises: base merged in, generated files regenerated, the folio's content-type gates run, then pushed. It does NOT merge and does NOT push to the default branch. Use for \"prepare-merge\", \"make it mergeable\", \"ship it\".",
@@ -1362,6 +1378,14 @@
       "definition": "Staging preview and before/after comparison for content review. Takes one optional string — what the reader wants to look at, in their own words — and returns a list of URLs, each looked up in the publish ref, with what is published at it and what to review there. Provides before (MAIN) and after (STAGING) pairs so reviewers can compare rather than guess. Used by the CRDM feature development workflow, content authoring review sessions, and whenever a staging preview deploys or someone asks to see it.",
       "notation": "staging-review",
       "source": "cat-harness/skills/sdlc/sdlc-core/staging-review.md",
+      "status": "candidate"
+    },
+    {
+      "id": "stalled-agent-triage",
+      "prefLabel": "stalled-agent-triage",
+      "definition": "Triage incoming work from stalled agents. Given named agents or sessions, or a time window, find what they left (handover reports, open PRs, branches, beans, issue and PR discussions, workflow instances), collect as many handover reports as exist, reconstruct the rest, consolidate the workstreams into 2–4 themes, recommend how to fold them into the current or a new work plan, and coordinate open PRs with their owners (the merge steward above all). Use when a session or a swarm has stalled, timed out or lost its container, or when the owner says \"pick up what X was doing\".",
+      "notation": "stalled-agent-triage",
+      "source": "cat-harness/skills/sdlc/sdlc-core/stalled-agent-triage.md",
       "status": "candidate"
     },
     {
