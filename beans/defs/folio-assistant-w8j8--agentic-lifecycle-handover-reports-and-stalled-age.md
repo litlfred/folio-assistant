@@ -3,8 +3,10 @@
 title: 'AGENTIC LIFECYCLE: handover reports and stalled-agent triage (skills, process, collector tool)'
 status: in-progress
 type: feature
+priority: normal
 created_at: 2026-10-02T19:08:53Z
-updated_at: 2026-10-02T19:08:53Z
+updated_at: 2026-10-02T21:03:20Z
+parent: folio-assistant-ahvw
 ---
 
 Owner, 2026-10-02, verbatim: "prepare for you and your current siblings to stall out in the next 5-30 minutes … each agent should prepare a templated 'handover report' … an 'incoming stalled agent triage' process … consolidate the various workstreams into 2-4 themes … coordinate with relevant agents (e.g. the Merge Manager) … update processes, skills, tools etc. include as part of SDLC under agentic coding (and managing agentic coding lifecycles as they work on epics)".
