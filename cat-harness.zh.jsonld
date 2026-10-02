@@ -297,10 +297,10 @@
   "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld",
   "@type": "http://www.w3.org/ns/prov#Entity",
   "repository": "cat-harness",
-  "generatedAt": "2026-10-02T18:04:17.958Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/1bfa8058f6a6da2a02d7a68827f30899f598a667",
-  "sourceCommitSha": "1bfa8058f6a6da2a02d7a68827f30899f598a667",
-  "sourceCommitAt": "2026-10-02T19:59:20+02:00",
+  "generatedAt": "2026-10-02T18:34:22.929Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/cea2925b0e2b0947cc4e4337052b9a61b03e8401",
+  "sourceCommitSha": "cea2925b0e2b0947cc4e4337052b9a61b03e8401",
+  "sourceCommitAt": "2026-10-02T20:29:36+02:00",
   "sourceTreeDirty": true,
   "dependsOnUnavailable": "2 dependency edge(s), none expressible as a record — see gaps",
   "counts": {
@@ -313,12 +313,12 @@
     "SequenceFlow": 996,
     "Lane": 201,
     "ProcessNode": 940,
-    "Tool": 113,
-    "Schema": 153,
+    "Tool": 114,
+    "Schema": 155,
     "ExternalSchema": 20,
-    "GraphKind": 25,
+    "GraphKind": 26,
     "Role": 48,
-    "Subgraph": 25,
+    "Subgraph": 26,
     "Asset": 3
   },
   "@graph": [
@@ -1643,7 +1643,7 @@
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/kg-core"
       ],
       "instructionsPath": "skills/kg/kg-core/directory-conventions.md",
-      "instructionLines": 1305,
+      "instructionLines": 1306,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -1915,7 +1915,7 @@
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/library-core"
       ],
       "instructionsPath": "skills/library/library-core/library-ingestion.md",
-      "instructionLines": 871,
+      "instructionLines": 917,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -4023,7 +4023,7 @@
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/who-iris"
       ],
       "instructionsPath": "../who-iris/skills/iris-dspace.md",
-      "instructionLines": 226,
+      "instructionLines": 257,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false
@@ -41000,6 +41000,51 @@
       ]
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#tool/vocab-map",
+      "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#Tool",
+      "name": "vocab-map",
+      "title": "Apply a vocabulary mapping table",
+      "description": "Carry one source record into a target vocabulary by a declared `folio-vocab-mapping/v1` table: each source field becomes the predicate its row names, in the table's order, with a DERIVED target (such as `dcterms:title` rendering `skos:prefLabel`) copied from its authoritative one so the two cannot drift. A table is shaped like a FHIR ConceptMap: an existing ConceptMap, R4 or R5, is representable as one without loss (`fromConceptMap`), and a table can be produced as a ConceptMap (`toConceptMap`), which returns every loss rather than dropping anything silently. First consumer: `glossary-export`.",
+      "install": {
+        "none": true
+      },
+      "invoke": {
+        "inProcess": {
+          "module": "schemas/vocab-mapping.ts",
+          "register": "applyVocabMapping"
+        }
+      },
+      "io": {
+        "inputs": [
+          {
+            "name": "table",
+            "schema": "https://litlfred.github.io/folio-assistant/tool-types.schema.json#/$defs/Slug",
+            "description": "The table's id, resolved from this instance's declared `vocab-mapping` directories. An unknown id is an error naming the directories searched, never an empty result.",
+            "required": true
+          },
+          {
+            "name": "record",
+            "schema": "https://litlfred.github.io/folio-assistant/tool-types.schema.json#/$defs/Text",
+            "description": "The source record, as a JSON object whose keys are the table's element codes. An absent, null, empty-string or empty-array value writes nothing.",
+            "required": true
+          }
+        ],
+        "outputs": [
+          {
+            "name": "properties",
+            "schema": "https://litlfred.github.io/folio-assistant/tool-types.schema.json#/$defs/Text",
+            "description": "The mapped properties as a JSON object, keyed by each target's JSON term. Two rows writing one key is refused, not resolved."
+          }
+        ]
+      },
+      "requirements": {
+        "network": false
+      },
+      "satisfies": [
+        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/vocabulary-authority"
+      ]
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#tool/external-schemas-viewer",
       "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#Tool",
       "name": "external-schemas-viewer",
@@ -44235,6 +44280,22 @@
       "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/schemas"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/vocab-mapping-fhir",
+      "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#Schema",
+      "name": "vocab-mapping-fhir",
+      "title": "FHIR ConceptMap ⇄ vocabulary mapping tables: ι (represent) and π (produce).",
+      "module": "schemas/vocab-mapping-fhir.ts",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/schemas"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/vocab-mapping",
+      "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#Schema",
+      "name": "vocab-mapping",
+      "title": "A vocabulary mapping: one source vocabulary's values carried into a target",
+      "module": "schemas/vocab-mapping.ts",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/schemas"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/vocabulary",
       "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#Schema",
       "name": "vocabulary",
@@ -44804,6 +44865,14 @@
       "renderable": false,
       "summary": "Closed sets of codes — adjudication answers, the namespaces this project mints — one file per list, every code carrying its definition and source, published as SKOS.",
       "validatorRef": "schemas/code-list.ts#CodeListSchema"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#graphKind/vocab-mapping",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#GraphKind",
+      "name": "vocab-mapping",
+      "renderable": false,
+      "summary": "Vocabulary mappings — which source field becomes which target predicate, with its stated relationship, one ConceptMap-shaped table per source and target; representable from and producible as a FHIR ConceptMap.",
+      "validator": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/vocab-mapping"
     },
     {
       "@id": "https://litlfred.github.io/bootstrap/0.1.0/ns#graphKind/schemas",
@@ -45874,6 +45943,18 @@
       "description": "Closed sets of codes, one `\"$schema\": \"folio-code-list/v1\"` file per list, each code carrying a label, a definition, a source and, where it stands for one, a value. Owner, 2026-09-23: \"we need an expandable option, not just declared in code. list of codes and corresponding narrative desc and source should be part of a node/asset\", and SKOS as the published form. Two consumers today: adjudication steps name the list their `codes` come from (`<folio:adjudication list=\"…\">`, checked when a diagram loads), and `schemas/namespaces.ts` reads every namespace this project mints from `own-namespaces.json` instead of carrying them as constants. Exported as SKOS concept schemes to `_kg/<stub>-code-lists.jsonld` by `scripts/glossary-export.ts`, beside the swimlane glossary. `dependents: skip` — a dependent INHERITS these through the dependency overlay (`codeListDirs`), and declares its own directory only when it has a list of its own.",
       "readmePath": "code-lists/README.md",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/code-lists"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/vocab-mappings",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Subgraph",
+      "name": "vocab-mappings",
+      "path": "vocab-mappings/",
+      "holdsGraph": [
+        "https://litlfred.github.io/cat-harness/0.1.0/ns#graphKind/vocab-mapping"
+      ],
+      "description": "Vocabulary mappings: one `\"$schema\": \"folio-vocab-mapping/v1\"` table per source content type and target node, saying which source field becomes which target predicate and with what relationship. A table is shaped like a FHIR ConceptMap, so an existing ConceptMap is representable here and a table can be produced as one, with the loss reported (`schemas/vocab-mapping-fhir.ts`). Owner, 2026-09-23 (bean sl9u): \"need Tools for this type of ETL procedure depending on source / target content type and other metadata\". Ruled 2026-10-02 (bean k74z): option 1, tables as KG data applied by the in-process `vocab-map` Tool. First consumer: `scripts/glossary-export.ts`. `dependents: skip`: a table belongs to the Tool that applies it, which lives here.",
+      "readmePath": "vocab-mappings/README.md",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/vocab-mappings"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/schemas",

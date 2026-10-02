@@ -2304,7 +2304,7 @@
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-10-01T16:39:43Z",
-      "updatedAt": "2026-10-01T18:43:42Z",
+      "updatedAt": "2026-10-01T19:40:22Z",
       "preview": "Issue [#1794](https://github.com/litlfred/folio-assistant/issues/1794).\n\nA library entry is never judged after ingestion or the KG build. Measured on main (59 entries): 24 titles equal the slug, at least 5 are implausible (who-pub-tps-931 is 'Abies', OCR noise off a scanned cover), 0 of 59 carry author or year, and who-pub-tps-931 shows 121 'Page N (no content carried)' blocks over 25,714 OCR word",
       "file": "beans/defs/folio-assistant-8iqc--library-qa-after-ingestion-titles-bibliographic-me.md"
     },
@@ -4807,14 +4807,14 @@
     {
       "id": "folio-assistant-k74z",
       "title": "ETL TOOLS: map a value between metadata vocabularies by source and target content type",
-      "status": "todo",
+      "status": "completed",
       "type": "task",
-      "priority": "",
+      "priority": "normal",
       "parent": "folio-assistant-zzmr",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-23T21:33:31Z",
-      "updatedAt": "2026-09-23T21:33:31Z",
+      "updatedAt": "2026-10-02T17:49:13Z",
       "preview": "Owner, 2026-09-23, choosing to keep a glossary scheme's name in both skos:prefLabel and dcterms:title from one source (bean sl9u): 'this is going to be common pattern... need Tools for this type of ETL procedure depending on source / target content type and other metadata'.\n\n## The pattern\nOne value, several target vocabularies. Today every such mapping is a hand-written line in a generator (gloss",
       "file": "beans/defs/folio-assistant-k74z--etl-tools-map-a-value-between-metadata-vocabularie.md"
     },
