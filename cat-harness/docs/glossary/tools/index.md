@@ -12,9 +12,9 @@ permalink: /glossary/tools/
 
 Candidate terms extracted from every Tool node: `title` as the label, `description` as the definition, the Tool id as the code. Each is the asset's own text, verbatim and not curated, and carries the badge "candidate, extracted". A person promotes one by authoring it. Authored terms, the counts and the sources are on the <a href="{{ '/glossary/' | relative_url }}">glossary index</a>.
 
-From: cat-harness 112 (<a href="{{ '/assets/glossary/cat-harness--kg-tools.skos.jsonld' | relative_url }}">SKOS</a>) · fhir-harness 19 (<a href="{{ '/assets/glossary/fhir-harness--kg-tools.skos.jsonld' | relative_url }}">SKOS</a>) · folio-assistant-core 5 (<a href="{{ '/assets/glossary/folio-assistant-core--kg-tools.skos.jsonld' | relative_url }}">SKOS</a>) · smart-base 6 (<a href="{{ '/assets/glossary/smart-base--kg-tools.skos.jsonld' | relative_url }}">SKOS</a>).
+From: cat-harness 113 (<a href="{{ '/assets/glossary/cat-harness--kg-tools.skos.jsonld' | relative_url }}">SKOS</a>) · fhir-harness 19 (<a href="{{ '/assets/glossary/fhir-harness--kg-tools.skos.jsonld' | relative_url }}">SKOS</a>) · folio-assistant-core 4 (<a href="{{ '/assets/glossary/folio-assistant-core--kg-tools.skos.jsonld' | relative_url }}">SKOS</a>) · smart-base 6 (<a href="{{ '/assets/glossary/smart-base--kg-tools.skos.jsonld' | relative_url }}">SKOS</a>).
 
-**Size:** this page holds 142 terms and is 97 KB before compression, fetched in one request, within its budget of 1.0 MB. There is no search index: the filter below runs over this page, and the A–Z bar jumps within it.
+**Size:** this page holds 142 terms and is 96 KB before compression, fetched in one request, within its budget of 1.0 MB. There is no search index: the filter below runs over this page, and the A–Z bar jumps within it.
 
 <table class="fa-gloss-mapping">
 <caption>Already somebody else's concept? — <code>check:term-mapping</code>, bean <code>7wou</code></caption>
@@ -25,7 +25,6 @@ From: cat-harness 112 (<a href="{{ '/assets/glossary/cat-harness--kg-tools.skos.
 A vocabulary that could not be reached has said nothing, and the column above keeps that 
 apart from a checked miss. The counts are reported and not graded: an unmapped candidate may 
 be a term this corpus is right to coin.</p>
-<p class="fa-gloss-mapping-perterm"><strong>Per term.</strong> Every term on this page is <strong>unmapped</strong> on <code>fhir</code>, and <strong>unmapped</strong> on <code>skos</code>, unless its entry says otherwise. No entry says otherwise.</p>
 
 <label for="fa-gloss-q">Filter terms</label>
 <input id="fa-gloss-q" type="search" autocomplete="off" style="min-height:44px;width:100%;max-width:32rem">
@@ -194,12 +193,12 @@ Do the Tool nodes agree with their skills? <span class="fa-gloss-status">candida
 <p>Check every Tool node's joins: that each <code>satisfies</code> resolves to a real skill and agrees with that skill's declared contract, that every io port names a declared type, and that no argv input has a type able to express a shell payload.</p>
 <p class="fa-gloss-meta">Tools of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/tools/index.ts"><code>cat-harness/tools/index.ts#check-tools</code></a></p>
 </dd>
-<dt id="folio-assistant-core--kg-tools--dublin-core-render" data-fa-state="extracted" data-fa-gloss="">
-Dublin Core renderings <span class="fa-gloss-status">candidate, extracted</span>
+<dt id="cat-harness--kg-tools--document-kinds-viewer" data-fa-state="extracted" data-fa-gloss="">
+Document kinds viewer <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
-<p>Render every <code>folio-dublin-core/v1</code> record a catalogue item names as Dublin Core XML (qualified DC, per DCMI's XML guidelines) and as JSON-LD bound to DCMI Metadata Terms. Both are written into the instance's published root (<code>&lt;instanceRoot&gt;/dublin-core/&lt;stem&gt;.dc.xml</code> and <code>.dc.jsonld</code>), so the site mount publishes them beside the item pages. Deterministic. <code>--check</code> fails on a missing, stale or orphaned rendering. Governed by the <code>dublin-core-renderings</code> skill (bean <code>7eak</code>).</p>
-<p class="fa-gloss-meta">Tools of folio-assistant-core · source <a href="https://github.com/litlfred/folio-assistant/blob/main/folio-assistant-core/tools/index.ts"><code>folio-assistant-core/tools/index.ts#dublin-core-render</code></a></p>
+<p>Render each declared document-kinds directory: every kind's structure, sections and sources, one page per subject instance.</p>
+<p class="fa-gloss-meta">Tools of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/tools/viewers.ts"><code>cat-harness/tools/viewers.ts#document-kinds-viewer</code></a></p>
 </dd>
 </dl>
 

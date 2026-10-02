@@ -2,7 +2,7 @@
   "$schema": "folio-schema-graph/v1",
   "tile": {
     "schemas": {
-      "count": 189,
+      "count": 188,
       "unit": "modules"
     }
   },
@@ -377,6 +377,14 @@
       "name": "document-image",
       "graphNode": "schema",
       "summary": "An image placed on a page of an ingested document — bean `d5f1`.",
+      "isTest": false
+    },
+    {
+      "module": "cat-harness/schemas/document-kind.ts",
+      "instance": "cat-harness",
+      "name": "document-kind",
+      "graphNode": "schema",
+      "summary": "A document KIND — a named structure of sections that a document authored",
       "isTest": false
     },
     {
@@ -965,22 +973,6 @@
       "name": "render-log",
       "graphNode": "schema",
       "summary": "The render log — what was published to the publish branch, when, and why.",
-      "isTest": false
-    },
-    {
-      "module": "cat-harness/schemas/render-output.test.ts",
-      "instance": "cat-harness",
-      "name": "render-output.test",
-      "graphNode": "undeclared",
-      "summary": "Each row of `RENDER_AS`'s table, held to `renderToolOutput` — bean `q2wm`.",
-      "isTest": true
-    },
-    {
-      "module": "cat-harness/schemas/render-output.ts",
-      "instance": "cat-harness",
-      "name": "render-output",
-      "graphNode": "schema",
-      "summary": "The ONE implementation of a Tool output's render hint — bean `q2wm`, R17.",
       "isTest": false
     },
     {
@@ -10654,12 +10646,6 @@
           "type": "RendererContribution[]",
           "optional": true,
           "array": true
-        },
-        {
-          "name": "pipelinePlugins",
-          "type": "PipelinePluginContribution[]",
-          "optional": true,
-          "array": true
         }
       ],
       "extendsNames": [],
@@ -10667,7 +10653,6 @@
       "refs": [
         "cat-harness/schemas/contributions.ts#AdapterContribution",
         "cat-harness/schemas/contributions.ts#BlockKindContribution",
-        "cat-harness/schemas/contributions.ts#PipelinePluginContribution",
         "cat-harness/schemas/contributions.ts#QaCheckerContribution",
         "cat-harness/schemas/contributions.ts#RendererContribution",
         "cat-harness/schemas/contributions.ts#ToolContribution"
@@ -10701,35 +10686,6 @@
       "unresolved": [],
       "external": [],
       "exported": false
-    },
-    {
-      "id": "cat-harness/schemas/contributions.ts#PipelinePluginContribution",
-      "name": "PipelinePluginContribution",
-      "module": "cat-harness/schemas/contributions.ts",
-      "kind": "interface",
-      "doc": "An implementation a dependency plugs into a named slot of the GENERIC",
-      "fields": [
-        {
-          "name": "kind",
-          "type": "string",
-          "optional": false,
-          "array": false,
-          "doc": "The slot this fills, e.g. `\"lean-lexer\"`. One contributor per kind."
-        },
-        {
-          "name": "implementation",
-          "type": "unknown",
-          "optional": false,
-          "array": false,
-          "doc": "What fills it. Shape is fixed per kind by `content/pipeline/pipeline-plugins.ts`."
-        }
-      ],
-      "extendsNames": [],
-      "values": [],
-      "refs": [],
-      "unresolved": [],
-      "external": [],
-      "exported": true
     },
     {
       "id": "cat-harness/schemas/contributions.ts#QaCheckerContribution",
@@ -13423,6 +13379,321 @@
           "optional": true,
           "array": false,
           "doc": "What this copy serves HERE — never what the image is, which is the"
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [
+        "z"
+      ],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/document-kind.ts#CoverageMemberSchema",
+      "name": "CoverageMemberSchema",
+      "module": "cat-harness/schemas/document-kind.ts",
+      "kind": "zod-object",
+      "fields": [
+        {
+          "name": "key",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "label",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [
+        "z"
+      ],
+      "exported": false
+    },
+    {
+      "id": "cat-harness/schemas/document-kind.ts#DocumentKind",
+      "name": "DocumentKind",
+      "module": "cat-harness/schemas/document-kind.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/document-kind.ts#DocumentKindCoverage",
+      "name": "DocumentKindCoverage",
+      "module": "cat-harness/schemas/document-kind.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/document-kind.ts#DocumentKindCoverageSchema",
+      "name": "DocumentKindCoverageSchema",
+      "module": "cat-harness/schemas/document-kind.ts",
+      "kind": "zod-object",
+      "fields": [
+        {
+          "name": "$schema",
+          "type": "z.literal(DOCUMENT_KIND_COVERAGE_SCHEMA_TAG)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "kind",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false,
+          "doc": "The kind's id."
+        },
+        {
+          "name": "subject",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false,
+          "doc": "The instance whose content was classified."
+        },
+        {
+          "name": "from",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false,
+          "doc": "Repo-relative path of what was classified."
+        },
+        {
+          "name": "method",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false,
+          "doc": "The rule, in a sentence a reader can check."
+        },
+        {
+          "name": "total",
+          "type": "z.number().int().nonnegative()",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "sections",
+          "type": "z.array(z.object({ id: z.string().min(1), members: z.array(CoverageMemberSchema) }))",
+          "optional": false,
+          "array": true
+        },
+        {
+          "name": "unplaced",
+          "type": "z.array(z.object({ group: z.string().min(1), count: z.number().int().positive() }))",
+          "optional": false,
+          "array": true,
+          "doc": "What no rule placed, grouped so the remainder is legible."
+        },
+        {
+          "name": "generatedBy",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [
+        "cat-harness/schemas/document-kind.ts#CoverageMemberSchema"
+      ],
+      "unresolved": [],
+      "external": [
+        "DOCUMENT_KIND_COVERAGE_SCHEMA_TAG",
+        "z"
+      ],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/document-kind.ts#DocumentKindSchema",
+      "name": "DocumentKindSchema",
+      "module": "cat-harness/schemas/document-kind.ts",
+      "kind": "zod-object",
+      "fields": [
+        {
+          "name": "$schema",
+          "type": "z.literal(DOCUMENT_KIND_SCHEMA_TAG)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "id",
+          "type": "z.string().regex(/^[a-z0-9][a-z0-9-]*$/)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "title",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "description",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "structure",
+          "type": "z.enum([\"fixed\", \"semi-fixed\"])",
+          "optional": false,
+          "array": false,
+          "doc": "`fixed`: exactly these sections, every one required."
+        },
+        {
+          "name": "extends",
+          "type": "z.string().min(1).optional()",
+          "optional": true,
+          "array": false,
+          "doc": "A parent kind's id; this kind's sections extend the parent's."
+        },
+        {
+          "name": "sections",
+          "type": "z.array(DocumentKindSectionSchema).min(1)",
+          "optional": false,
+          "array": true
+        },
+        {
+          "name": "sources",
+          "type": "z.array(DocumentKindSourceSchema).min(1)",
+          "optional": false,
+          "array": true
+        },
+        {
+          "name": "generatedBy",
+          "type": "z.string().min(1).optional()",
+          "optional": true,
+          "array": false,
+          "doc": "Set when the file is generated; names the generator, so a hand edit is visibly a defect."
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [
+        "cat-harness/schemas/document-kind.ts#DocumentKindSectionSchema",
+        "cat-harness/schemas/document-kind.ts#DocumentKindSourceSchema"
+      ],
+      "unresolved": [],
+      "external": [
+        "DOCUMENT_KIND_SCHEMA_TAG",
+        "z"
+      ],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/document-kind.ts#DocumentKindSection",
+      "name": "DocumentKindSection",
+      "module": "cat-harness/schemas/document-kind.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/document-kind.ts#DocumentKindSectionSchema",
+      "name": "DocumentKindSectionSchema",
+      "module": "cat-harness/schemas/document-kind.ts",
+      "kind": "zod-object",
+      "fields": [
+        {
+          "name": "id",
+          "type": "z.string().regex(/^[a-z0-9][a-z0-9-]*$/)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "title",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "required",
+          "type": "z.boolean()",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "description",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "computedFrom",
+          "type": "z.array(z.string().min(1)).optional()",
+          "optional": true,
+          "array": true,
+          "doc": "Declared graph ids this section is derived from."
+        },
+        {
+          "name": "sources",
+          "type": "z.array(DocumentKindSourceSchema).optional()",
+          "optional": true,
+          "array": true,
+          "doc": "This section's own sources, when they differ from the kind's."
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [
+        "cat-harness/schemas/document-kind.ts#DocumentKindSourceSchema"
+      ],
+      "unresolved": [],
+      "external": [
+        "z"
+      ],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/document-kind.ts#DocumentKindSourceSchema",
+      "name": "DocumentKindSourceSchema",
+      "module": "cat-harness/schemas/document-kind.ts",
+      "kind": "zod-object",
+      "doc": "Where a structure, or one section of it, comes from.",
+      "fields": [
+        {
+          "name": "ref",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false,
+          "doc": "A library entry id or a URL — something a reader can open."
+        },
+        {
+          "name": "locator",
+          "type": "z.string().min(1).optional()",
+          "optional": true,
+          "array": false,
+          "doc": "The part of it that says so: a chapter, a section, a table."
+        },
+        {
+          "name": "note",
+          "type": "z.string().min(1).optional()",
+          "optional": true,
+          "array": false
         }
       ],
       "extendsNames": [],
@@ -33942,19 +34213,6 @@
       "exported": true
     },
     {
-      "id": "cat-harness/schemas/tool.ts#RenderAs",
-      "name": "RenderAs",
-      "module": "cat-harness/schemas/tool.ts",
-      "kind": "type-alias",
-      "fields": [],
-      "extendsNames": [],
-      "values": [],
-      "refs": [],
-      "unresolved": [],
-      "external": [],
-      "exported": true
-    },
-    {
       "id": "cat-harness/schemas/tool.ts#SchemaRef",
       "name": "SchemaRef",
       "module": "cat-harness/schemas/tool.ts",
@@ -34035,7 +34293,7 @@
         },
         {
           "name": "io",
-          "type": "z.object({ inputs: z.array(ToolInputSchema), outputs: z.array(ToolOutputSchema), })",
+          "type": "z.object({ inputs: z.array(ToolInputSchema), outputs: z.array(ToolPortSchema), })",
           "optional": false,
           "array": false
         },
@@ -34099,7 +34357,7 @@
         "cat-harness/schemas/tool.ts#ToolInstallSchema",
         "cat-harness/schemas/tool.ts#ToolInvokeSchema",
         "cat-harness/schemas/tool.ts#ToolMaintainsSchema",
-        "cat-harness/schemas/tool.ts#ToolOutputSchema",
+        "cat-harness/schemas/tool.ts#ToolPortSchema",
         "cat-harness/schemas/tool.ts#ToolRequiresSchema",
         "cat-harness/schemas/tool.ts#ToolSelectionSchema"
       ],
@@ -34378,45 +34636,6 @@
       "exported": true
     },
     {
-      "id": "cat-harness/schemas/tool.ts#ToolOutput",
-      "name": "ToolOutput",
-      "module": "cat-harness/schemas/tool.ts",
-      "kind": "type-alias",
-      "fields": [],
-      "extendsNames": [],
-      "values": [],
-      "refs": [],
-      "unresolved": [],
-      "external": [],
-      "exported": true
-    },
-    {
-      "id": "cat-harness/schemas/tool.ts#ToolOutputSchema",
-      "name": "ToolOutputSchema",
-      "module": "cat-harness/schemas/tool.ts",
-      "kind": "zod-object",
-      "fields": [
-        {
-          "name": "render",
-          "type": "ToolRenderSchema.optional()",
-          "optional": true,
-          "array": false,
-          "doc": "How a renderer may place this output in a page. Absent is `text`. See {@link RENDER_AS}."
-        }
-      ],
-      "extendsNames": [
-        "ToolPortSchema"
-      ],
-      "values": [],
-      "refs": [
-        "cat-harness/schemas/tool.ts#ToolPortSchema",
-        "cat-harness/schemas/tool.ts#ToolRenderSchema"
-      ],
-      "unresolved": [],
-      "external": [],
-      "exported": true
-    },
-    {
       "id": "cat-harness/schemas/tool.ts#ToolPort",
       "name": "ToolPort",
       "module": "cat-harness/schemas/tool.ts",
@@ -34461,48 +34680,6 @@
       ],
       "unresolved": [],
       "external": [
-        "z"
-      ],
-      "exported": true
-    },
-    {
-      "id": "cat-harness/schemas/tool.ts#ToolRender",
-      "name": "ToolRender",
-      "module": "cat-harness/schemas/tool.ts",
-      "kind": "type-alias",
-      "fields": [],
-      "extendsNames": [],
-      "values": [],
-      "refs": [],
-      "unresolved": [],
-      "external": [],
-      "exported": true
-    },
-    {
-      "id": "cat-harness/schemas/tool.ts#ToolRenderSchema",
-      "name": "ToolRenderSchema",
-      "module": "cat-harness/schemas/tool.ts",
-      "kind": "zod-object",
-      "fields": [
-        {
-          "name": "as",
-          "type": "z.enum(RENDER_AS)",
-          "optional": false,
-          "array": false
-        },
-        {
-          "name": "reason",
-          "type": "z.string().min(1).optional()",
-          "optional": true,
-          "array": false
-        }
-      ],
-      "extendsNames": [],
-      "values": [],
-      "refs": [],
-      "unresolved": [],
-      "external": [
-        "RENDER_AS",
         "z"
       ],
       "exported": true
@@ -45943,14 +46120,6 @@
     },
     {
       "from": "cat-harness/schemas/contributions.ts#FolioContribution",
-      "to": "cat-harness/schemas/contributions.ts#PipelinePluginContribution",
-      "via": "pipelinePlugins",
-      "kind": "field",
-      "optional": true,
-      "array": true
-    },
-    {
-      "from": "cat-harness/schemas/contributions.ts#FolioContribution",
       "to": "cat-harness/schemas/contributions.ts#QaCheckerContribution",
       "via": "qaCheckers",
       "kind": "field",
@@ -46396,6 +46565,38 @@
       "kind": "field",
       "optional": false,
       "array": false
+    },
+    {
+      "from": "cat-harness/schemas/document-kind.ts#DocumentKindCoverageSchema",
+      "to": "cat-harness/schemas/document-kind.ts#CoverageMemberSchema",
+      "via": "sections",
+      "kind": "field",
+      "optional": false,
+      "array": true
+    },
+    {
+      "from": "cat-harness/schemas/document-kind.ts#DocumentKindSchema",
+      "to": "cat-harness/schemas/document-kind.ts#DocumentKindSectionSchema",
+      "via": "sections",
+      "kind": "field",
+      "optional": false,
+      "array": true
+    },
+    {
+      "from": "cat-harness/schemas/document-kind.ts#DocumentKindSchema",
+      "to": "cat-harness/schemas/document-kind.ts#DocumentKindSourceSchema",
+      "via": "sources",
+      "kind": "field",
+      "optional": false,
+      "array": true
+    },
+    {
+      "from": "cat-harness/schemas/document-kind.ts#DocumentKindSectionSchema",
+      "to": "cat-harness/schemas/document-kind.ts#DocumentKindSourceSchema",
+      "via": "sources",
+      "kind": "field",
+      "optional": true,
+      "array": true
     },
     {
       "from": "cat-harness/schemas/document-structure.ts#BaseSection",
@@ -49383,7 +49584,7 @@
     },
     {
       "from": "cat-harness/schemas/tool.ts#ToolDefinitionSchema",
-      "to": "cat-harness/schemas/tool.ts#ToolOutputSchema",
+      "to": "cat-harness/schemas/tool.ts#ToolPortSchema",
       "via": "io",
       "kind": "field",
       "optional": false,
@@ -49419,22 +49620,6 @@
       "via": "",
       "kind": "extends",
       "optional": false,
-      "array": false
-    },
-    {
-      "from": "cat-harness/schemas/tool.ts#ToolOutputSchema",
-      "to": "cat-harness/schemas/tool.ts#ToolPortSchema",
-      "via": "",
-      "kind": "extends",
-      "optional": false,
-      "array": false
-    },
-    {
-      "from": "cat-harness/schemas/tool.ts#ToolOutputSchema",
-      "to": "cat-harness/schemas/tool.ts#ToolRenderSchema",
-      "via": "render",
-      "kind": "field",
-      "optional": true,
       "array": false
     },
     {

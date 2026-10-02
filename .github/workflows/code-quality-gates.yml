@@ -1630,6 +1630,10 @@ jobs:
           # generator (fhir-harness/scripts/gen-ig-pages.ts, #1767).
           bun run smart-base:pages:check
           bun run smart-immunizations:pages:check
+          # smart-base's DAK document kind, generated from DAK_COMPONENTS
+          # (stage D5, #1767): stale the moment a component is added.
+          bun run smart-base:document-kinds:check
+          bun run document-kinds:viz:check
           # The fsh-guts index is generated from the graph, so it goes stale the
           # moment a file is relocated there -- which is the ONE operation that
           # graph exists for. Gated here rather than trusted, same as every

@@ -371,6 +371,8 @@
     "smart-trust:pages": "bun run fhir-harness/scripts/gen-ig-pages.ts --instance smart-trust --publish-note \"This page mirrors a published WHO Implementation Guide.\" --sidecar-label \"DAK API\" --label \"WHO SMART Trust\" --chrome-owner smart-base",
     "smart-trust:pages:check": "bun run fhir-harness/scripts/gen-ig-pages.ts --instance smart-trust --publish-note \"This page mirrors a published WHO Implementation Guide.\" --sidecar-label \"DAK API\" --label \"WHO SMART Trust\" --chrome-owner smart-base --check",
     "smart-base:pages": "bun run fhir-harness/scripts/gen-ig-pages.ts --instance smart-base --publish-note \"This page mirrors a published WHO Implementation Guide.\" --sidecar-label \"DAK API\" --label \"WHO SMART Base\" --chrome-owner smart-base --summary",
+    "smart-base:document-kinds": "bun run smart-base/scripts/gen-document-kinds.ts",
+    "smart-base:document-kinds:check": "bun run smart-base/scripts/gen-document-kinds.ts --check",
     "smart-base:pages:check": "bun run fhir-harness/scripts/gen-ig-pages.ts --instance smart-base --publish-note \"This page mirrors a published WHO Implementation Guide.\" --sidecar-label \"DAK API\" --label \"WHO SMART Base\" --chrome-owner smart-base --summary --check",
     "smart-immunizations:pages": "bun run fhir-harness/scripts/gen-ig-pages.ts --instance smart-immunizations --publish-note \"This page mirrors a published WHO Implementation Guide.\" --sidecar-label \"DAK API\" --label \"WHO SMART Immunizations\" --chrome-owner smart-base --summary",
     "smart-immunizations:pages:check": "bun run fhir-harness/scripts/gen-ig-pages.ts --instance smart-immunizations --publish-note \"This page mirrors a published WHO Implementation Guide.\" --sidecar-label \"DAK API\" --label \"WHO SMART Immunizations\" --chrome-owner smart-base --summary --check",
@@ -431,6 +433,8 @@
     "viewer:nav:audit": "bun run cat-harness/scripts/check-viewer-nav.ts",
     "viewer:nav:strict": "bun run cat-harness/scripts/check-viewer-nav.ts --check --strict",
     "voices:graph": "bun run cat-harness/scripts/voices-graph.ts",
+    "document-kinds:viz": "bun run cat-harness/scripts/gen-document-kinds-viz.ts",
+    "document-kinds:viz:check": "bun run cat-harness/scripts/gen-document-kinds-viz.ts --check",
     "voices:viz": "bun run cat-harness/scripts/gen-voices-viz.ts",
     "voices:viz:check": "bun run cat-harness/scripts/gen-voices-viz.ts --check",
     "wireframe:check": "bun run cat-harness/scripts/wireframe-check.mjs"
