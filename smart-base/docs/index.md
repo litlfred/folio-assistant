@@ -2,6 +2,9 @@
 title: "WHO SMART Base"
 description: "All 225 artefacts of the WHO SMART Base IG 0.3.0, reconstructed from its published output."
 has_children: true
+renders:
+  - smart-base/fhir-artifact-index
+rendered-by: ig-pages
 ---
 <style>
 .st-tag{display:inline-block;padding:.05rem .4rem;border-radius:3px;font-size:.75rem;
@@ -121,7 +124,7 @@ enumeration response, carrying an `example` that happens to hold the list. So th
 | canonicals | `canonicals.json` |
 | packageIndex | `package.tgz!package/.index.json` |
 | artifactsHtml | `artifacts.html` |
-| dakEnumerations | `LogicalModels.schema.json, ValueSets.schema.json` |
+| sidecarEnumerations | `LogicalModels.schema.json, ValueSets.schema.json` |
 | source | `gh-pages` — `https://worldhealthorganization.github.io/smart-base` (read 2026-09-22) |
 | canonical base | `http://smart.who.int/base` |
 
@@ -129,7 +132,7 @@ enumeration response, carrying an `example` that happens to hold the list. So th
 
 The IG publishes a DAK API for 47 of its artefacts. The four sidecars are issued
 independently — every ValueSet gets all four, the logical models get two — which is why they
-are counted separately rather than as one "has DAK" tally.
+are counted separately rather than as one "has DAK API" tally.
 
 <div class="st-grid">
 <div class="st-stat"><b>47</b><span>JSON Schema</span></div>
