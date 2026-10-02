@@ -160,6 +160,13 @@ If working on an existing bean, run `bun run beans:claim <id>` — not
 After step 4, run `/coordinate` to post intent on relevant sibling PRs
 + triage their review comments. Then start work.
 
+If the intent is a **platform refactor**, follow `coordinate`
+§"Before a platform refactor" first. That means a collision review of the open
+PRs, the `in-progress` beans and their owning sessions, recorded in your
+workplan bean before any edit. The same applies when you **pick up** someone
+else's refactor (§"Hand-off pickup protocol"). Their review is dated, and PRs
+may have opened since it was written.
+
 ## Session-end protocol (3 steps)
 
 > Run these BEFORE pushing the final commit. The push triggers PR
@@ -246,6 +253,9 @@ or partial result):
 2. Read the bean discussion/comments (`beans show <id>`) — that's the technical state.
 3. Read the partial PR (if open) — that's the code state.
 4. Declare your intent normally (create your session bean and append a comment to the existing bean).
+5. If the work is a platform refactor, re-run the collision review in
+   `coordinate` §"Before a platform refactor" before your first edit.
+   Add the result to the bean; do not rely on the previous session's copy.
 
 ## Anti-patterns
 
