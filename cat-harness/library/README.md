@@ -11,9 +11,11 @@ Part of [C@T Harness](../README.md) 0.1.0, declared as `library`, holding `libra
 | [`image-verdicts.json`](image-verdicts.json) | data |  |
 | [`agent-skill-best-practices---gemini-cli/`](agent-skill-best-practices---gemini-cli/README.md) | 13 files | |
 | [`agent-skills---google-antigravity-docs/`](agent-skills---google-antigravity-docs/README.md) | 16 files | |
+| [`ananthanarayanan-2019-keeping-master-green/`](ananthanarayanan-2019-keeping-master-green/README.md) | 4 files | |
 | [`arxiv-0909.4061v2/`](arxiv-0909.4061v2/README.md) | 227 files | |
 | [`arxiv-2202.02427v1/`](arxiv-2202.02427v1/README.md) | 73 files | |
 | [`arxiv-2312.07755v1/`](arxiv-2312.07755v1/README.md) | 130 files | |
+| [`arxiv-2501.03440v2/`](arxiv-2501.03440v2/README.md) | 4 files | |
 | [`arxiv-2504.07199v3/`](arxiv-2504.07199v3/README.md) | 77 files | |
 | [`arxiv-2504.19675v2/`](arxiv-2504.19675v2/README.md) | 83 files | |
 | [`arxiv-2504.21474v1/`](arxiv-2504.21474v1/README.md) | 32 files | |
@@ -35,6 +37,7 @@ Part of [C@T Harness](../README.md) 0.1.0, declared as `library`, holding `libra
 | [`kg-folio-asst-2026-09-30/`](kg-folio-asst-2026-09-30/README.md) | 72 files | |
 | [`landauer-foltz-laham-1998-intro-lsa/`](landauer-foltz-laham-1998-intro-lsa/README.md) | 128 files | |
 | [`mcp-2026-specification-2026-07-28/`](mcp-2026-specification-2026-07-28/README.md) | 1631 files | |
+| [`memon-2017-taming-google-scale-testing/`](memon-2017-taming-google-scale-testing/README.md) | 4 files | |
 | [`omg-2013-bpmn-2-0-2/`](omg-2013-bpmn-2-0-2/README.md) | 4 files | |
 | [`omg-2024-dmn-1-5/`](omg-2024-dmn-1-5/README.md) | 4 files | |
 | [`qi-hessen-vanderheijden-2023-ca-vs-lsa/`](qi-hessen-vanderheijden-2023-ca-vs-lsa/README.md) | 78 files | |

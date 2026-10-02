@@ -151,8 +151,13 @@
     },
     "stated": {
       "summary": "The licence is known, and the record says where it is stated.",
-      "count": 16,
+      "count": 17,
       "entries": [
+        {
+          "entry": "cat-harness/library/ananthanarayanan-2019-keeping-master-green",
+          "id": "LicenseRef-ACM-Author-Permission-Notice",
+          "basis": "PDF page 1, the ACM permission block: \"Permission to make digital or hard copies of part or all of this work for personal or classroom use is granted without fee provided that copies are not made or distributed for profit or commercial advantage and that copies bear this notice and the full citation on the first page. Copyrights for third-party components of this work must be honored. For all other uses, contact the owner/author(s).\" and \"© 2019 Copyright held by the owner/author(s).\" Posting the text in a public repository is not a use it grants, so this entry records the source and holds none of its text."
+        },
         {
           "entry": "cat-harness/library/hmans-2026-beans-readme",
           "id": "Apache-2.0",
@@ -237,8 +242,18 @@
     },
     "unknown": {
       "summary": "Somebody looked and could not establish the licence. Each entry records where it searched. Holding the source may still be the owner's call, but a reader must not assume it is openly licensed.",
-      "count": 4,
+      "count": 6,
       "entries": [
+        {
+          "entry": "cat-harness/library/arxiv-2501.03440v2",
+          "searched": 2,
+          "note": "Recorded, not held, because no licence is stated. Next place to look: the arXiv abstract page's licence link, from an environment that can reach arxiv.org. A CC licence there would allow re-ingesting the text."
+        },
+        {
+          "entry": "cat-harness/library/memon-2017-taming-google-scale-testing",
+          "searched": 2,
+          "note": "Recorded, not held, because no licence is stated. The year in the slug is the PDF's /CreationDate, not a printed publication date. Keeping Master Green at Scale (EuroSys '19, ref. [33], p. 14) cites this paper as ICSE-SEIP 2017, pp. 233-242; that citation is not recorded in referenced.json because this PDF does not state it."
+        },
         {
           "entry": "folio-assistant-sci/library/arxiv-2406.01940v2",
           "searched": 2,
@@ -262,5 +277,5 @@
       ]
     }
   },
-  "total": 63
+  "total": 66
 }

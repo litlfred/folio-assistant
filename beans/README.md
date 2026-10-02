@@ -10,5 +10,5 @@ Part of [Folio Assistant](../README.md) 0.1.0, declared as `beans`, holding `bea
 | [`beans.json`](beans.json) | data |  |
 | [`defs/`](defs/) | 1265 files | |
 | [`surveys/`](surveys/README.md) | 2 files | |
-| [`workflows/`](workflows/) | 9 files | |
+| [`workflows/`](workflows/) | 10 files | |
 <!-- kg:subgraph:end -->

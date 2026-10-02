@@ -11,7 +11,7 @@
   "families": {
     "bibliographic-missing": {
       "summary": "No author/publisher, or no year, among the fields the entry itself declares (manifest meta, referenced.json identity, tabular.jsonld source), and no `meta.bibliographic_not_in_source` reason. `readableIn` lists where the value IS on disk but not carried — what a fix would read.",
-      "count": 61,
+      "count": 62,
       "entries": [
         {
           "entry": "agent-skill-best-practices---gemini-cli",
@@ -325,6 +325,14 @@
           "instance": "cat-harness",
           "missing": [
             "author/publisher",
+            "year"
+          ],
+          "field": "manifest.jsonld meta; referenced.json identity; tabular.jsonld source"
+        },
+        {
+          "entry": "memon-2017-taming-google-scale-testing",
+          "instance": "cat-harness",
+          "missing": [
             "year"
           ],
           "field": "manifest.jsonld meta; referenced.json identity; tabular.jsonld source"
@@ -1437,5 +1445,5 @@
       ]
     }
   },
-  "total": 163
+  "total": 164
 }

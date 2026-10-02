@@ -18,7 +18,7 @@ The after-check for the agentic engine (issue #1180, step 5). The deterministic 
 
 ## Totals
 
-9 instance(s), 100 step(s) checked, 100 `prov:Activity` emitted, 88 finding(s). Policies evaluated: `https://litlfred.github.io/folio-assistant/policies/folio-defaults`, `https://litlfred.github.io/folio-assistant/policies/http-gateway`.
+10 instance(s), 106 step(s) checked, 106 `prov:Activity` emitted, 89 finding(s). Policies evaluated: `https://litlfred.github.io/folio-assistant/policies/folio-defaults`, `https://litlfred.github.io/folio-assistant/policies/http-gateway`.
 
 | finding | count | means |
 |---|---|---|
@@ -32,7 +32,7 @@ The after-check for the agentic engine (issue #1180, step 5). The deterministic 
 | `node-not-in-model` | 4 | the entry names a node its process model does not have |
 | `source-moved` | 18 | the `.bpmn` the instance recorded is gone; the diagram was found by file name, as `workflow_start` resolves one, and its process id matches the instance's |
 | `source-missing` | 0 | the `.bpmn` the instance recorded is gone and no diagram with that name and process id exists; nothing in it can be checked |
-| `unaddressed` | 1 | the agent, role or plan has no release address — its owning instance declares no `iriBase`, or no instance declares it — so the PROV-JSONLD record carries it as a literal, not a link (`linked-data` voice, `ld-link-is-the-node-release-address`) |
+| `unaddressed` | 2 | the agent, role or plan has no release address — its owning instance declares no `iriBase`, or no instance declares it — so the PROV-JSONLD record carries it as a literal, not a link (`linked-data` voice, `ld-link-is-the-node-release-address`) |
 
 ## By instance
 
@@ -164,6 +164,14 @@ The after-check for the agentic engine (issue #1180, step 5). The deterministic 
 | `crdm--issue-607-kg-to-cdn-portal/Call_Needs` | (instance) | `Process_CRDM_Needs` | `source-moved` | cat-harness/methodologies/crdm/processes/crdm-needs.bpmn does not exist; read cat-harness/processes/process/crdm-needs.bpmn, which defines Process_CRDM_Needs |
 | `crdm--issue-607-kg-to-cdn-portal/Call_Needs` | 1 | `A_Stakeholders` | `unknown` | no policy grants perform-task for Process_CRDM_Needs/A_Stakeholders as authoring-agent |
 | `crdm--issue-607-kg-to-cdn-portal/Call_Needs` | 2 | `A_Synthesise` | `unknown` | no policy grants perform-task for Process_CRDM_Needs/A_Synthesise as authoring-agent |
+
+### methodologyfromsource--merge-pipeline-requirements-1892
+
+6 step(s) checked, 6 `prov:Activity` emitted, 1 finding(s). Sources: `cat-harness/processes/library/methodology-from-source.bpmn`, `cat-harness/processes/library/document-ingestion.bpmn`, `cat-harness/processes/library/ingest-extract-structure.bpmn`. [PROV JSON-LD]({{ '/assets/prov/methodologyfromsource--merge-pipeline-requirements-1892.prov.jsonld' | relative_url }})
+
+| instance | entry | node | finding | detail |
+|---|---|---|---|---|
+| `methodologyfromsource--merge-pipeline-requirements-1892` | 1 | `cat-harness/library/{ananthanarayanan-2019-keeping-master-green,arxiv-2501.03440v2,memon-2017-taming-google-scale-testing}/licence.json` | `unaddressed` | entity: no instance in this checkout catalogues "cat-harness/library/{ananthanarayanan-2019-keeping-master-green,arxiv-2501.03440v2,memon-2017-taming-google-scale-testing}/licence.json" |
 
 ### sampleimport--xlg2-wpro-trial
 
