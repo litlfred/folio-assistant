@@ -469,9 +469,14 @@ export function buildGlossary(opts: {
   // read from ROOT whichever instance is being exported.
   const table = (tableId: string) => vocabMapping(ROOT, tableId);
   const usageMap = table("glossary-lane-usage");
+  // `role-naming` and `concept-scheme-naming` are SHARED (bean `lodp`):
+  // kg-export names the same role IRI with the first (finding D3), and the
+  // second declares the `sl9u` condition every scheme emitter must answer (D1).
+  const roleNaming = table("role-naming");
   const roleMap = table("glossary-role-concept");
   const variableMap = table("glossary-variable-lane-concept");
   const retiredMap = table("glossary-retired-concept");
+  const schemeNaming = table("concept-scheme-naming");
   const schemeMap = table("glossary-concept-scheme");
 
   const emitUsages = (conceptIri: string, ls: readonly LaneOccurrence[]): number => {
@@ -520,16 +525,17 @@ export function buildGlossary(opts: {
     nodes.push({
       "@id": iri,
       "@type": "skos:Concept",
+      // The NAME, from the row kg-export reads for the same IRI: prefLabel,
+      // a derived dcterms:title (the `sl9u` precedent), and the id as notation.
+      ...applyVocabMapping(roleNaming, { title: r.title, id: r.id }),
       // `actedUpon` is not decoration: `Work plan — beans`, `Corpus` and
       // `Publish — GitHub Pages` are lanes because tasks act ON them, not
       // because anybody performs them (`audienceProblem` in `role-graph.ts`).
       // A reader looking up "Corpus" must not be told it is a persona.
       ...applyVocabMapping(roleMap, {
-        title: r.title,
         description: r.description,
         altLabels,
         hiddenLabels,
-        id: r.id,
         scheme: schemeIri,
         actedUpon: r.actedUpon,
         usages: ls.map(usageIri),
@@ -688,11 +694,15 @@ export function buildGlossary(opts: {
     "@type": "skos:ConceptScheme",
     // ONE SOURCE, TWO VOCABULARIES (bean `sl9u`, owner 2026-09-23: keep
     // both). `skos:prefLabel` is what a SKOS reader looks for and
-    // `dcterms:title` what a catalogue reader does. Since bean `k74z` the
-    // table `glossary-concept-scheme` DECLARES `title` as derived from
-    // `prefLabel`, so the applier copies it and the two cannot drift.
+    // `dcterms:title` what a catalogue reader does. Since bean `k74z` a
+    // table DECLARES `title` as derived from `prefLabel`, so the applier
+    // copies it and the two cannot drift; since bean `lodp` (finding D1)
+    // that table is the shared `concept-scheme-naming`, whose row carries
+    // the condition itself — a scheme that is ALSO A DOCUMENT gets the title
+    // — and refuses a record that does not answer it. This one does: the
+    // scheme's IRI is the document's, as the `@id` above says.
+    ...applyVocabMapping(schemeNaming, { label: schemeLabel, isDocument: true }),
     ...applyVocabMapping(schemeMap, {
-      label: schemeLabel,
       definition:
         "Every persona this instance's BPMN diagrams place in a swimlane, one concept each. " +
         "Labels come from the lanes, definitions from the role registry, and scope notes " +
