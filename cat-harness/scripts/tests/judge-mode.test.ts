@@ -77,11 +77,16 @@ function gitStatus(): string {
  * The sidecar's BYTES are compared, not only `git status`: a sidecar that was
  * already dirty before the run would hide a second write from a status diff.
  */
-function judgeRun(script: string, stem: string, extra: string[] = []): { exit: number | null; wrote: boolean; out: string } {
+function judgeRun(
+  script: string,
+  stem: string,
+  extra: string[] = [],
+  flag = "--check",
+): { exit: number | null; wrote: boolean; out: string } {
   const sidecar = qaResultPath(INSTANCE_ROOT, stem);
   const before = existsSync(sidecar) ? readFileSync(sidecar, "utf-8") : undefined;
   const statusBefore = gitStatus();
-  const r = spawnSync("bun", ["run", join(INSTANCE_ROOT, "scripts", script), "--check", ...extra], {
+  const r = spawnSync("bun", ["run", join(INSTANCE_ROOT, "scripts", script), flag, ...extra], {
     cwd: REPO_ROOT,
     encoding: "utf-8",
     timeout: 120_000,
@@ -438,7 +443,7 @@ describe("check:lane-documentation", () => {
   }, 120_000);
 });
 
-describe("kg:export", () => {
+describe("kg:export:judge", () => {
   const CLEAN = { rootUndeclared: 0, collisions: 0, undeclaredTerms: 0, problems: 0 };
 
   test("CORRUPTED: an undeclared term, a root field, a collision → exit 1 each", () => {
@@ -456,7 +461,7 @@ describe("kg:export", () => {
   test("CLI on this checkout: exit 0, no sidecar written, no `_kg/` document written", () => {
     const kg = join(REPO_ROOT, "_kg");
     const kgBefore = existsSync(kg) ? spawnSync("ls", ["-l", "--time-style=full-iso", kg], { encoding: "utf-8" }).stdout : "";
-    const run = judgeRun("kg-export.ts", "kg-export");
+    const run = judgeRun("kg-export.ts", "kg-export", [], "--judge");
     const kgAfter = existsSync(kg) ? spawnSync("ls", ["-l", "--time-style=full-iso", kg], { encoding: "utf-8" }).stdout : "";
     expect(run.wrote).toBe(false);
     expect(kgAfter).toBe(kgBefore);
@@ -464,7 +469,7 @@ describe("kg:export", () => {
   }, 120_000);
 
   test("CLI refuses a writer's flag in judge mode (2)", () => {
-    const run = judgeRun("kg-export.ts", "kg-export", ["--out", "/dev/null"]);
+    const run = judgeRun("kg-export.ts", "kg-export", ["--out", "/dev/null"], "--judge");
     expect(run.exit).toBe(2);
     expect(run.wrote).toBe(false);
   }, 120_000);

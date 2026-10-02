@@ -850,6 +850,82 @@
       "skos:note": "candidate"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant-core/0.1.0/ns#glossary/kg-schema-fields/dublin-core-render.dctermsmapping.range",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant-core/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "DctermsMapping.range"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "`literal` when DCMI gives the term the range `rdfs:Literal` or gives no range and the value is prose; `resource` when the range is a class (Agent, Location, LinguisticSystem, …) or DCMI says the term is \"intended to be used with non-literal values\"."
+        }
+      ],
+      "dcterms:source": "folio-assistant-core/schemas/dublin-core-render.ts#DctermsMapping.range",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant-core/0.1.0/ns#glossary/kg-schema-fields/dublin-core-render.dctermsmapping.ses",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant-core/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "DctermsMapping.ses"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "A syntax encoding scheme the values are in, by the field's own name. Becomes a datatype (JSON-LD) or `xsi:type` (XML)."
+        }
+      ],
+      "dcterms:source": "folio-assistant-core/schemas/dublin-core-render.ts#DctermsMapping.ses",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant-core/0.1.0/ns#glossary/kg-schema-fields/dublin-core-render.dctermsmapping.term",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant-core/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "DctermsMapping.term"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The local name under `http://purl.org/dc/terms/`."
+        }
+      ],
+      "dcterms:source": "folio-assistant-core/schemas/dublin-core-render.ts#DctermsMapping.term",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant-core/0.1.0/ns#glossary/kg-schema-fields/dublin-core-render.dctermsmapping.ves",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant-core/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "DctermsMapping.ves"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "A vocabulary encoding scheme the values are members of. Becomes `dcam:memberOf` (JSON-LD) or `xsi:type` (XML)."
+        }
+      ],
+      "dcterms:source": "folio-assistant-core/schemas/dublin-core-render.ts#DctermsMapping.ves",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant-core/0.1.0/ns#glossary/kg-schema-fields/dublin-core.dcfieldschema.schema",
       "@type": "skos:Concept",
       "skos:inScheme": {
@@ -961,253 +1037,6 @@
         }
       ],
       "dcterms:source": "folio-assistant-core/schemas/dublin-core.ts#DublinCoreRecordSchema.provenance",
-      "skos:note": "candidate"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant-core/0.1.0/ns#glossary/kg-schema-fields/extraction.extractedassetschema.bytes",
-      "@type": "skos:Concept",
-      "skos:inScheme": {
-        "@id": "https://litlfred.github.io/folio-assistant-core/0.1.0/ns#glossary/kg-schema-fields"
-      },
-      "skos:prefLabel": [
-        {
-          "@value": "ExtractedAssetSchema.bytes"
-        }
-      ],
-      "skos:definition": [
-        {
-          "@value": "Uncompressed size in bytes, from the container's index."
-        }
-      ],
-      "dcterms:source": "folio-assistant-core/schemas/extraction.ts#ExtractedAssetSchema.bytes",
-      "skos:note": "candidate"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant-core/0.1.0/ns#glossary/kg-schema-fields/extraction.extractedassetschema.extractedbecause",
-      "@type": "skos:Concept",
-      "skos:inScheme": {
-        "@id": "https://litlfred.github.io/folio-assistant-core/0.1.0/ns#glossary/kg-schema-fields"
-      },
-      "skos:prefLabel": [
-        {
-          "@value": "ExtractedAssetSchema.extractedBecause"
-        }
-      ],
-      "skos:definition": [
-        {
-          "@value": "Why this one entry was extracted, when one was."
-        }
-      ],
-      "dcterms:source": "folio-assistant-core/schemas/extraction.ts#ExtractedAssetSchema.extractedBecause",
-      "skos:note": "candidate"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant-core/0.1.0/ns#glossary/kg-schema-fields/extraction.extractedassetschema.localpath",
-      "@type": "skos:Concept",
-      "skos:inScheme": {
-        "@id": "https://litlfred.github.io/folio-assistant-core/0.1.0/ns#glossary/kg-schema-fields"
-      },
-      "skos:prefLabel": [
-        {
-          "@value": "ExtractedAssetSchema.localPath"
-        }
-      ],
-      "skos:definition": [
-        {
-          "@value": "Where the entry was written, IF it was written."
-        }
-      ],
-      "dcterms:source": "folio-assistant-core/schemas/extraction.ts#ExtractedAssetSchema.localPath",
-      "skos:note": "candidate"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant-core/0.1.0/ns#glossary/kg-schema-fields/extraction.extractedassetschema.mediatype",
-      "@type": "skos:Concept",
-      "skos:inScheme": {
-        "@id": "https://litlfred.github.io/folio-assistant-core/0.1.0/ns#glossary/kg-schema-fields"
-      },
-      "skos:prefLabel": [
-        {
-          "@value": "ExtractedAssetSchema.mediaType"
-        }
-      ],
-      "skos:definition": [
-        {
-          "@value": "Media type."
-        }
-      ],
-      "dcterms:source": "folio-assistant-core/schemas/extraction.ts#ExtractedAssetSchema.mediaType",
-      "skos:note": "candidate"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant-core/0.1.0/ns#glossary/kg-schema-fields/extraction.extractedassetschema.modifiedat",
-      "@type": "skos:Concept",
-      "skos:inScheme": {
-        "@id": "https://litlfred.github.io/folio-assistant-core/0.1.0/ns#glossary/kg-schema-fields"
-      },
-      "skos:prefLabel": [
-        {
-          "@value": "ExtractedAssetSchema.modifiedAt"
-        }
-      ],
-      "skos:definition": [
-        {
-          "@value": "The entry's own timestamp, as the container records it."
-        }
-      ],
-      "dcterms:source": "folio-assistant-core/schemas/extraction.ts#ExtractedAssetSchema.modifiedAt",
-      "skos:note": "candidate"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant-core/0.1.0/ns#glossary/kg-schema-fields/extraction.extractedassetschema.path",
-      "@type": "skos:Concept",
-      "skos:inScheme": {
-        "@id": "https://litlfred.github.io/folio-assistant-core/0.1.0/ns#glossary/kg-schema-fields"
-      },
-      "skos:prefLabel": [
-        {
-          "@value": "ExtractedAssetSchema.path"
-        }
-      ],
-      "skos:definition": [
-        {
-          "@value": "Path INSIDE the container, exactly as the container spells it."
-        }
-      ],
-      "dcterms:source": "folio-assistant-core/schemas/extraction.ts#ExtractedAssetSchema.path",
-      "skos:note": "candidate"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant-core/0.1.0/ns#glossary/kg-schema-fields/extraction.extractedassetschema.sha256",
-      "@type": "skos:Concept",
-      "skos:inScheme": {
-        "@id": "https://litlfred.github.io/folio-assistant-core/0.1.0/ns#glossary/kg-schema-fields"
-      },
-      "skos:prefLabel": [
-        {
-          "@value": "ExtractedAssetSchema.sha256"
-        }
-      ],
-      "skos:definition": [
-        {
-          "@value": "sha256 of the entry's bytes, when it was read rather than indexed."
-        }
-      ],
-      "dcterms:source": "folio-assistant-core/schemas/extraction.ts#ExtractedAssetSchema.sha256",
-      "skos:note": "candidate"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant-core/0.1.0/ns#glossary/kg-schema-fields/extraction.extractionschema.assets",
-      "@type": "skos:Concept",
-      "skos:inScheme": {
-        "@id": "https://litlfred.github.io/folio-assistant-core/0.1.0/ns#glossary/kg-schema-fields"
-      },
-      "skos:prefLabel": [
-        {
-          "@value": "ExtractionSchema.assets"
-        }
-      ],
-      "skos:definition": [
-        {
-          "@value": "Every entry the container indexes."
-        }
-      ],
-      "dcterms:source": "folio-assistant-core/schemas/extraction.ts#ExtractionSchema.assets",
-      "skos:note": "candidate"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant-core/0.1.0/ns#glossary/kg-schema-fields/extraction.extractionschema.capturedat",
-      "@type": "skos:Concept",
-      "skos:inScheme": {
-        "@id": "https://litlfred.github.io/folio-assistant-core/0.1.0/ns#glossary/kg-schema-fields"
-      },
-      "skos:prefLabel": [
-        {
-          "@value": "ExtractionSchema.capturedAt"
-        }
-      ],
-      "skos:definition": [
-        {
-          "@value": "When the CONTAINER'S CONTENTS were produced — the capture moment."
-        }
-      ],
-      "dcterms:source": "folio-assistant-core/schemas/extraction.ts#ExtractionSchema.capturedAt",
-      "skos:note": "candidate"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant-core/0.1.0/ns#glossary/kg-schema-fields/extraction.extractionschema.container",
-      "@type": "skos:Concept",
-      "skos:inScheme": {
-        "@id": "https://litlfred.github.io/folio-assistant-core/0.1.0/ns#glossary/kg-schema-fields"
-      },
-      "skos:prefLabel": [
-        {
-          "@value": "ExtractionSchema.container"
-        }
-      ],
-      "skos:definition": [
-        {
-          "@value": "The container this describes, repo-relative."
-        }
-      ],
-      "dcterms:source": "folio-assistant-core/schemas/extraction.ts#ExtractionSchema.container",
-      "skos:note": "candidate"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant-core/0.1.0/ns#glossary/kg-schema-fields/extraction.extractionschema.omitted",
-      "@type": "skos:Concept",
-      "skos:inScheme": {
-        "@id": "https://litlfred.github.io/folio-assistant-core/0.1.0/ns#glossary/kg-schema-fields"
-      },
-      "skos:prefLabel": [
-        {
-          "@value": "ExtractionSchema.omitted"
-        }
-      ],
-      "skos:definition": [
-        {
-          "@value": "Entries deliberately not listed, and why."
-        }
-      ],
-      "dcterms:source": "folio-assistant-core/schemas/extraction.ts#ExtractionSchema.omitted",
-      "skos:note": "candidate"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant-core/0.1.0/ns#glossary/kg-schema-fields/extraction.extractionschema.producer",
-      "@type": "skos:Concept",
-      "skos:inScheme": {
-        "@id": "https://litlfred.github.io/folio-assistant-core/0.1.0/ns#glossary/kg-schema-fields"
-      },
-      "skos:prefLabel": [
-        {
-          "@value": "ExtractionSchema.producer"
-        }
-      ],
-      "skos:definition": [
-        {
-          "@value": "The tool that produced the container, verbatim."
-        }
-      ],
-      "dcterms:source": "folio-assistant-core/schemas/extraction.ts#ExtractionSchema.producer",
-      "skos:note": "candidate"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant-core/0.1.0/ns#glossary/kg-schema-fields/extraction.extractionschema.readat",
-      "@type": "skos:Concept",
-      "skos:inScheme": {
-        "@id": "https://litlfred.github.io/folio-assistant-core/0.1.0/ns#glossary/kg-schema-fields"
-      },
-      "skos:prefLabel": [
-        {
-          "@value": "ExtractionSchema.readAt"
-        }
-      ],
-      "skos:definition": [
-        {
-          "@value": "When THIS record was written — a fact about the reading, not the file."
-        }
-      ],
-      "dcterms:source": "folio-assistant-core/schemas/extraction.ts#ExtractionSchema.readAt",
       "skos:note": "candidate"
     },
     {
@@ -1550,25 +1379,6 @@
         }
       ],
       "dcterms:source": "folio-assistant-core/schemas/materialization.ts#CompiledInputsSchema.toolchain",
-      "skos:note": "candidate"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant-core/0.1.0/ns#glossary/kg-schema-fields/materialization.fixityschema.verifiedat",
-      "@type": "skos:Concept",
-      "skos:inScheme": {
-        "@id": "https://litlfred.github.io/folio-assistant-core/0.1.0/ns#glossary/kg-schema-fields"
-      },
-      "skos:prefLabel": [
-        {
-          "@value": "FixitySchema.verifiedAt"
-        }
-      ],
-      "skos:definition": [
-        {
-          "@value": "When the digest was last RE-COMPUTED against the bytes, not when it was recorded. An unverified digest ages."
-        }
-      ],
-      "dcterms:source": "folio-assistant-core/schemas/materialization.ts#FixitySchema.verifiedAt",
       "skos:note": "candidate"
     },
     {

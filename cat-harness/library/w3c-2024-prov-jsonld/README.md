@@ -1,5 +1,5 @@
 <!-- kg:subgraph:begin -->
-# w3c-2024-prov-jsonld
+# The PROV-JSONLD Serialization: A JSON-LD Representation for the PROV Data Model
 
 ingested source material — attributed to its document, not folio content
 

@@ -53,13 +53,23 @@
  * of a template checkout at a named commit by `ingest-ig-chrome.ts`, and the
  * provenance is per LAYER because there is no single source to point at.
  *
+ * ## v2: the chrome is the TEMPLATE's, not an IG's
+ *
+ * v1 also carried `id`, `canonical`, `status` and `version` from the IG it was
+ * ingested beside. Every IG building with the same chain wears the same
+ * chrome, so that identity became a claim about IGs it did not describe: the
+ * one committed chrome sat in smart-base and said `smart.who.int.trust` 1.8.0,
+ * `draft` (stage A, #1767). v2 is keyed by the chain's top layer, and an IG's
+ * own identity and status are read into `ig-identity.json` beside its index
+ * ({@link "./ig-identity"}). Stage D of the smart-* separation, bean `kg83`.
+ *
  * @graphNode schema
  * @module schemas/ig-chrome
  */
 
 import { z } from "zod";
 
-export const IG_CHROME_SCHEMA_TAG = "folio-ig-chrome/v1";
+export const IG_CHROME_SCHEMA_TAG = "folio-ig-chrome/v2";
 
 /**
  * One template package in the chain, and where its bytes were read.
@@ -169,13 +179,15 @@ export const IgChromeConflictSchema = z.object({
 
 export const IgChromeSchema = z.object({
   $schema: z.literal(IG_CHROME_SCHEMA_TAG),
-  /** The IG's `id` from `sushi-config.yaml`, e.g. `smart.who.int.trust`. */
+  /**
+   * The chain's TOP layer — the template package an IG names — e.g.
+   * `who.template.root`. v1 put the id of the IG it was ingested beside here;
+   * v2 keys the chrome by the template, because every IG building with that
+   * chain wears it. An IG's own id and status are `ig-identity.json`'s.
+   */
   id: z.string().min(1),
-  /** Its `canonical`. */
-  canonical: z.string().url(),
-  /** Its `status` — what selects the watermark. `draft` here. */
-  status: z.string().min(1),
-  version: z.string().min(1).optional(),
+  /** The top layer's version, e.g. `0.5.0`. */
+  version: z.string().min(1),
   /** The chain, BASE FIRST, so index order is override order. */
   layers: z.array(IgChromeLayerSchema).min(1),
   tokens: z.array(IgChromeTokenSchema),
@@ -238,6 +250,9 @@ export function chromeCss(chrome: IgChrome, scope: string): string {
 /** The filename an ingested chrome document is written under. */
 export const CHROME_FILENAME = "chrome.json";
 
+/** Where a chrome may live, in lookup order. */
+export const CHROME_GRAPHS = ["themes", "fhir-artifact-index"] as const;
+
 /**
  * Where a named instance's ingested chrome sits — **asked, not composed.**
  *
@@ -249,8 +264,8 @@ export const CHROME_FILENAME = "chrome.json";
  *
  * ## Why the instance is NAMED rather than walked to
  *
- * The owner placed the chrome at `smart-base` so `smart-l1`, `smart-dak` and
- * `smart-ig` inherit it instead of each re-copying it. The obvious
+ * The owner placed the chrome at `smart-base` so every WHO SMART IG (through
+ * `smart-ig`) inherits it instead of each re-copying it. The obvious
  * implementation is to walk `needs` from the consumer upward — and it does not
  * work: `smart-trust` needs `smart-ig`, while `smart-base` needs
  * `fhir-harness`, so **there is no `needs` path from smart-trust to
@@ -275,7 +290,11 @@ export function chromeFileFor(
 ): string | undefined {
   for (const root of deps.instanceRootsIn(repoRoot)) {
     if (deps.declarationNameOf(root) !== instanceName) continue;
-    for (const dir of deps.directoriesForGraph(root, "fhir-artifact-index")) {
+    // The chrome is the TEMPLATE's styling, so it ships with the harness that
+    // carries the template's theme (plan Q4; rehearsed on litlfred/smart-base,
+    // bean `rbz3`): a `themes` directory first, then, for an instance that
+    // keeps it beside its artefact index, `fhir-artifact-index`.
+    for (const dir of CHROME_GRAPHS.flatMap((g) => deps.directoriesForGraph(root, g))) {
       const p = deps.join(dir, CHROME_FILENAME);
       if (deps.exists(p)) return p;
     }

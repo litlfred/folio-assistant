@@ -14,7 +14,7 @@ Candidate terms extracted from every BPMN task and call activity: `name` as the 
 
 From: bootstrap 38 (<a href="{{ '/assets/glossary/bootstrap--kg-bpmn-activities.skos.jsonld' | relative_url }}">SKOS</a>) · bootstrap-tools 7 (<a href="{{ '/assets/glossary/bootstrap-tools--kg-bpmn-activities.skos.jsonld' | relative_url }}">SKOS</a>) · cat-harness 538 (<a href="{{ '/assets/glossary/cat-harness--kg-bpmn-activities.skos.jsonld' | relative_url }}">SKOS</a>) · folio-assistant-core 4 (<a href="{{ '/assets/glossary/folio-assistant-core--kg-bpmn-activities.skos.jsonld' | relative_url }}">SKOS</a>) · smart-base 19 (<a href="{{ '/assets/glossary/smart-base--kg-bpmn-activities.skos.jsonld' | relative_url }}">SKOS</a>).
 
-**Size:** this page holds 606 terms and is 474 KB before compression, fetched in one request, within its budget of 1.0 MB. There is no search index: the filter below runs over this page, and the A–Z bar jumps within it.
+**Size:** this page holds 606 terms and is 475 KB before compression, fetched in one request, within its budget of 1.0 MB. There is no search index: the filter below runs over this page, and the A–Z bar jumps within it.
 
 <table class="fa-gloss-mapping">
 <caption>Already somebody else's concept? — <code>check:term-mapping</code>, bean <code>7wou</code></caption>
@@ -25,6 +25,7 @@ From: bootstrap 38 (<a href="{{ '/assets/glossary/bootstrap--kg-bpmn-activities.
 A vocabulary that could not be reached has said nothing, and the column above keeps that 
 apart from a checked miss. The counts are reported and not graded: an unmapped candidate may 
 be a term this corpus is right to coin.</p>
+<p class="fa-gloss-mapping-perterm"><strong>Per term.</strong> Every term on this page is <strong>unmapped</strong> on <code>fhir</code>, and <strong>unmapped</strong> on <code>skos</code>, unless its entry says otherwise. No entry says otherwise.</p>
 
 <label for="fa-gloss-q">Filter terms</label>
 <input id="fa-gloss-q" type="search" autocomplete="off" style="min-height:44px;width:100%;max-width:32rem">
@@ -2218,7 +2219,7 @@ Make the value proposition and set next steps <span class="fa-gloss-status">cand
 Map L2 → L3 [l3-fhir-authoring] <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
-<p>Each data element becomes a profile, each value set a ValueSet, each decision a PlanDefinition / Library.</p>
+<p>Each data element becomes a profile, each value set a ValueSet, each decision a PlanDefinition / Library. The DAK's L2 content is l3-fhir-authoring's sourceModel; this step binds l2-dak-authoring beside it, which is where the WHO L2 → L3 ordering lives now that the generic skill names no DAK (smart-* separation stage D, #1767).</p>
 <p class="fa-gloss-meta">BPMN activities of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/l3-fhir-pipeline.bpmn"><code>cat-harness/processes/l3-fhir-pipeline.bpmn#Task_MapL2</code></a></p>
 </dd>
 <dt id="smart-base--kg-bpmn-activities--process_diig.a_mapcurrentstate" data-fa-state="extracted" data-fa-gloss="">
@@ -2776,7 +2777,7 @@ Push to the CDN [render-kg-to-cdn] gh-pages, FULL REPLACE <span class="fa-gloss-
 Push to the CDN at STAGING/&amp;lt;slug&amp;gt;/ [render-kg-to-cdn] <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
-<p>A PREVIEW IS THE GENERAL STEP WITH A DIFFERENT ROOT (owner, 2026-09-30: &quot;independent of staging vs publication … just rendering&quot;). Process_RenderKgToCdn, entered with the tree Task_Build rendered, <code>STAGING/&lt;slug&gt;/</code> under the site root as the publication root URL, and GitHub Pages as the target, so its <code>gh-pages</code> Tool pushes. For this target the push is <code>keep_files: true</code> with a <code>destination_dir</code>, so it adds one directory beside whatever else is on the branch; it is also RETRIED once: five other workflows push to <code>gh-pages</code> without joining this one's concurrency group, and a queue does not help because GitHub CANCELS a pending job when a newer one arrives for the same group rather than queueing it. Measured 2026-09-19: three staging runs from three different branches inside 17 seconds, two cancelled. The call returns the push's status and message; the render log and the PR comment that follow are this process's own.</p>
+<p>A PREVIEW IS THE GENERAL STEP WITH A DIFFERENT ROOT (owner, 2026-09-30: &quot;independent of staging vs publication … just rendering&quot;). Process_RenderKgToCdn, entered with the tree Task_Build rendered, <code>STAGING/&lt;slug&gt;/</code> under the site root as the publication root URL, and GitHub Pages as the target, so its <code>gh-pages</code> Tool pushes. For this target the push is <code>keep_files: true</code> with a <code>destination_dir</code>, so it adds one directory beside whatever else is on the branch; it is also RETRIED once: five other workflows push to <code>gh-pages</code> without joining this one's concurrency group, and a queue does not help because GitHub CANCELS a pending job when a newer one arrives for the same group rather than queueing it. Measured 2026-09-19: three staging runs from three different branches inside 17 seconds, two cancelled. The call returns the push's status and message; the render log and the PR comment that follow are this process's own. THE PREVIEW CAP rides in the same commit (owner ruling 2026-10-02, issue #1868: &quot;cap the maximum number of previews (&lt;= 10) and rotate old ones off&quot;): <code>staging-rotate.ts</code> keeps this preview plus the most recently updated others up to MAX_PREVIEWS = 10 and removes the rest, each with a <code>removed</code> render-log entry and its record retired into STAGING/_retired/. Every push attempt re-reads <code>gh-pages</code> and re-decides rather than rebasing, so a lost race never pushes a stale removal. A rotated-off preview is regenerated by the next push to its PR branch.</p>
 <p class="fa-gloss-meta">BPMN activities of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/feature-staging.bpmn"><code>cat-harness/processes/feature-staging.bpmn#Task_Deploy</code></a></p>
 </dd>
 <dt id="cat-harness--kg-bpmn-activities--process_codequalitygates.task_python" data-fa-state="extracted" data-fa-gloss="">

@@ -11,4 +11,5 @@ Part of [SMART Base](../../README.md) 0.1.0, declared as `voices`, holding `voic
 | file | what it is | used by |
 |---|---|---|
 | [`who-digital-health/`](who-digital-health/) | 2 files | |
+| [`who-digital-transformation-handbook/`](who-digital-transformation-handbook/) | 2 files | |
 <!-- kg:subgraph:end -->

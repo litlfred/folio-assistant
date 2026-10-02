@@ -32,7 +32,7 @@
  * @covers glossary
  */
 import { existsSync, readFileSync, readdirSync, statSync } from "node:fs";
-import { join, resolve } from "node:path";
+import { basename, join, resolve } from "node:path";
 
 import {
   MAPPING_TARGETS,
@@ -44,6 +44,12 @@ import {
   normaliseLabel,
 } from "../schemas/term-mapping.ts";
 import { PinnedTerminologySchema } from "../schemas/pinned-terminology.ts";
+import {
+  TERM_ADJUDICATIONS_SUFFIX,
+  TermAdjudicationsFileSchema,
+  adjudicationStatus,
+  type AdjudicationStatus,
+} from "../schemas/term-adjudication.ts";
 import { QA_RESULTS_DIR, buildQaResult, writeQaResult } from "./qa-results.ts";
 
 const ROOT = resolve(import.meta.dir, "../..");
@@ -66,9 +72,9 @@ interface GlossScheme {
   file: string;
 }
 
-/** Every `*.glossary.json` in the checkout, authored and generated alike. */
-export function glossarySchemes(root: string): GlossScheme[] {
-  const out: GlossScheme[] = [];
+/** Every file under the glossary directory whose name ends in `suffix`. */
+function glossaryFiles(root: string, suffix: string): string[] {
+  const out: string[] = [];
   const walk = (dir: string) => {
     let names: string[];
     try {
@@ -76,7 +82,7 @@ export function glossarySchemes(root: string): GlossScheme[] {
     } catch {
       return;
     }
-    for (const n of names) {
+    for (const n of names.sort()) {
       if (n.startsWith(".") || n === "node_modules") continue;
       const abs = join(dir, n);
       let s;
@@ -86,18 +92,66 @@ export function glossarySchemes(root: string): GlossScheme[] {
         continue;
       }
       if (s.isDirectory()) walk(abs);
-      else if (n.endsWith(".glossary.json")) {
-        try {
-          const d = JSON.parse(readFileSync(abs, "utf-8")) as { id?: string; terms?: GlossTerm[] };
-          if (d.terms) out.push({ id: d.id ?? n, terms: d.terms, file: abs.slice(root.length + 1) });
-        } catch {
-          // A scheme that will not parse is `check:glossary`'s finding, not
-          // this one's. Saying it twice would make one defect look like two.
-        }
-      }
+      else if (n.endsWith(suffix)) out.push(abs);
     }
   };
   walk(join(root, "folio-assistant-core", "glossary"));
+  return out;
+}
+
+/**
+ * Every `*.term-adjudications.json` beside the schemes, validated, and each
+ * record set against what this run found (bean `2i5f` leg 1).
+ *
+ * An invalid file FAILS the check. A record that cannot be acted on is a
+ * defect, not a finding. A record's status is only reported: see
+ * {@link adjudicationStatus}.
+ */
+export function adjudications(
+  root: string,
+  mappings: readonly TermMapping[],
+): { files: number; invalid: string[]; status: { key: string; status: AdjudicationStatus }[] } {
+  const files = glossaryFiles(root, TERM_ADJUDICATIONS_SUFFIX);
+  const invalid: string[] = [];
+  const status: { key: string; status: AdjudicationStatus }[] = [];
+  const byKey = new Map(mappings.map((m) => [`${m.scheme}\0${m.term}\0${m.target}`, m]));
+  for (const abs of files) {
+    const rel = abs.slice(root.length + 1);
+    let raw: unknown;
+    try {
+      raw = JSON.parse(readFileSync(abs, "utf-8"));
+    } catch (e) {
+      invalid.push(`${rel}: not JSON (${(e as Error).message})`);
+      continue;
+    }
+    const parsed = TermAdjudicationsFileSchema.safeParse(raw);
+    if (!parsed.success) {
+      for (const i of parsed.error.issues) invalid.push(`${rel} at \`${i.path.join(".") || "(root)"}\`: ${i.message}`);
+      continue;
+    }
+    for (const r of parsed.data.adjudications) {
+      const s = r.subject;
+      status.push({
+        key: `${s.scheme}/${s.term} on ${s.target}`,
+        status: adjudicationStatus(r, byKey.get(`${s.scheme}\0${s.term}\0${s.target}`)),
+      });
+    }
+  }
+  return { files: files.length, invalid, status };
+}
+
+/** Every `*.glossary.json` in the checkout, authored and generated alike. */
+export function glossarySchemes(root: string): GlossScheme[] {
+  const out: GlossScheme[] = [];
+  for (const abs of glossaryFiles(root, ".glossary.json")) {
+    try {
+      const d = JSON.parse(readFileSync(abs, "utf-8")) as { id?: string; terms?: GlossTerm[] };
+      if (d.terms) out.push({ id: d.id ?? basename(abs), terms: d.terms, file: abs.slice(root.length + 1) });
+    } catch {
+      // A scheme that will not parse is `check:glossary`'s finding, not
+      // this one's. Saying it twice would make one defect look like two.
+    }
+  }
   return out;
 }
 
@@ -325,6 +379,31 @@ export function run(root: string): { mappings: TermMapping[]; scope: MappingScop
 }
 
 /**
+ * A term that matched, and HOW. Bean `5yhm` asks for the exact/concept pair,
+ * and the gap between the two is the finding: `exact: false` is the right
+ * concept under a different authorised label, which is a different and
+ * specifiable outcome from a miss. Projecting only `concept` dropped that half
+ * on the way to the committed file.
+ */
+export interface MappedTerm {
+  term: string;
+  /** `true` when the label matched a concept's `prefLabel`; `false` when only an `altLabel`, or a cross-vocabulary display, did. */
+  exact: boolean;
+  /** The URIs of the concepts it matched, which is what a reader follows. */
+  concepts: string[];
+  /**
+   * The subset of {@link concepts} whose `prefLabel` the term matched — the
+   * only ones an `exactMatch` may point at. Empty when `exact` is false.
+   *
+   * `exact` alone could not say WHICH concept was exact: a term matching
+   * concept A's prefLabel and concept B's altLabel is `exact: true` with both
+   * in `concepts`, and publishing `skos:exactMatch` to B would assert an
+   * equivalence nothing measured (bean `5yhm`, the SKOS-publish slice).
+   */
+  exactConcepts: string[];
+}
+
+/**
  * One row per (scheme, target), with all three counts and the mapped terms.
  *
  * Exported because `glossary-page.ts` renders these rows and must not have a
@@ -339,8 +418,63 @@ export interface SchemeState {
   undetermined: number;
   /** Why the whole target could not be determined, where that is the case. */
   reason?: string;
-  /** Term ids that matched, so the page can badge exactly those. */
-  mappedTerms: string[];
+  /** The terms that matched, each saying whether the match was exact. Few by construction. */
+  mappedTerms: MappedTerm[];
+  /**
+   * Present ONLY when a row mixes `unmapped` and `undetermined`. Otherwise a
+   * term's state follows from the counts alone (see {@link termState}), and
+   * listing thousands of ids that all say one thing is what the per-scheme
+   * shape exists to avoid. In a mixed row the counts cannot say which term is
+   * which, so the record names the undetermined ones instead.
+   */
+  undeterminedTerms?: string[];
+}
+
+/**
+ * One term's state on one target, read back from the committed per-scheme rows.
+ *
+ * The ONE place that turns the record into a per-term answer, so the glossary
+ * page holds no second implementation (bean `5yhm`, Done-when "the glossary
+ * page reports mapped / unmapped / undetermined per term").
+ *
+ * `unknown` is a fourth answer and is NOT a mapping state. It means the
+ * committed record cannot say: there is no row for the scheme, there is more
+ * than one, or a mixed row does not name its undetermined terms. It is never
+ * folded into `unmapped`, for the same reason `undetermined` is not (bean
+ * `dh4f`).
+ */
+export type TermStateAnswer =
+  | { state: "mapped"; exact: boolean; concepts: string[] }
+  | { state: "unmapped" }
+  | { state: "undetermined"; reason?: string }
+  | { state: "unknown"; why: string };
+
+export function termState(
+  states: readonly SchemeState[],
+  scheme: string,
+  target: string,
+  term: string,
+): TermStateAnswer {
+  const rows = states.filter((s) => s.scheme === scheme && s.target === target);
+  if (rows.length !== 1) {
+    return {
+      state: "unknown",
+      why: rows.length
+        ? `${rows.length} rows for scheme \`${scheme}\` on \`${target}\`, so the record is ambiguous`
+        : `no row for scheme \`${scheme}\` on \`${target}\``,
+    };
+  }
+  const row = rows[0]!;
+  const hit = row.mappedTerms.find((m) => m.term === term);
+  if (hit) return { state: "mapped", exact: hit.exact, concepts: hit.concepts };
+  const undetermined = (): TermStateAnswer => ({ state: "undetermined", ...(row.reason ? { reason: row.reason } : {}) });
+  if (row.undeterminedTerms) return row.undeterminedTerms.includes(term) ? undetermined() : { state: "unmapped" };
+  if (row.undetermined === 0) return { state: "unmapped" };
+  if (row.unmapped === 0) return undetermined();
+  return {
+    state: "unknown",
+    why: `scheme \`${scheme}\` on \`${target}\` mixes unmapped and undetermined terms and names neither`,
+  };
 }
 
 export function perScheme(
@@ -354,14 +488,30 @@ export function perScheme(
   return schemes.map((scheme) => {
     const rows = of.filter((m) => m.scheme === scheme);
     const n = (k: MatchState) => rows.filter((r) => r.concept === k).length;
+    const unmapped = n("unmapped");
+    const undetermined = n("undetermined");
+    const byTerm = (a: { term: string }, b: { term: string }) => (a.term < b.term ? -1 : a.term > b.term ? 1 : 0);
     return {
       scheme,
       target,
       mapped: n("mapped"),
-      unmapped: n("unmapped"),
-      undetermined: n("undetermined"),
+      unmapped,
+      undetermined,
       ...(reason ? { reason } : {}),
-      mappedTerms: rows.filter((r) => r.concept === "mapped").map((r) => r.term).sort(),
+      mappedTerms: rows
+        .filter((r) => r.concept === "mapped")
+        .map((r) => ({
+          term: r.term,
+          exact: r.exact === "mapped",
+          concepts: [...new Set((r.matches ?? []).map((m) => m.uri))].sort(),
+          exactConcepts: [
+            ...new Set((r.matches ?? []).filter((m) => m.predicate === "skos:exactMatch").map((m) => m.uri)),
+          ].sort(),
+        }))
+        .sort(byTerm),
+      ...(unmapped > 0 && undetermined > 0
+        ? { undeterminedTerms: rows.filter((r) => r.concept === "undetermined").map((r) => r.term).sort() }
+        : {}),
     };
   });
 }
@@ -396,6 +546,22 @@ function main(): number {
     console.log(`    consulted ${s.consulted.length ? s.consulted.join(", ") : "(none declared)"} via ${s.via}`);
     if (s.unreachable_reason) console.log(`    ! ${s.unreachable_reason}`);
   }
+
+  // Leg 1 of `2i5f`: the decisions taken where a candidate and a terminology
+  // disagree. Validated in BOTH modes, because an invalid record is a defect
+  // whether or not anything is being written.
+  const adj = adjudications(ROOT, mappings);
+  if (adj.invalid.length) {
+    console.error(`  ✗ ${adj.invalid.length} problem(s) in *${TERM_ADJUDICATIONS_SUFFIX}:`);
+    for (const i of adj.invalid) console.error(`    ${i}`);
+    return 2;
+  }
+  const tally = (k: AdjudicationStatus) => adj.status.filter((x) => x.status === k).length;
+  console.log(
+    `  adjudications: ${adj.status.length} in ${adj.files} file(s): ${tally("applied")} applied, ` +
+      `${tally("pending")} pending, ${tally("holds")} hold, ${tally("stale")} stale`,
+  );
+  for (const x of adj.status.filter((y) => y.status === "stale")) console.log(`    ! stale: ${x.key}`);
 
   const result = buildQaResult({
     script: "cat-harness/scripts/check-term-mapping.ts",

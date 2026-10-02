@@ -1,5 +1,5 @@
 <!-- kg:subgraph:begin -->
-# Work in progress PROCESS-DRIVEN AUTOFORMALIZATION IN LEAN 4
+# Process-Driven Autoformalization in Lean 4
 
 ingested source material — attributed to its document, not folio content
 

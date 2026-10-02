@@ -197,6 +197,11 @@ export const ENTRY_SIDECARS: readonly string[] = [
   // the linked-data voice's `ld-no-context-fetched-at-run-time`; first case:
   // PROV-JSONLD's, pinned by sha256 in schemas/prov.ts).
   "context.jsonld",
+  // A smart-kg L1 graph document (publication → section → recommendation)
+  // DERIVED from this entry by smart-base/scripts/extract-smart-kg-l1.ts and
+  // kept beside it, owner default (bean `8pzh`); its --check keeps it current.
+  // `.json`, not `.jsonld`: its @context is smart-kg's, not held here.
+  "smart-kg-l1.json",
 ];
 
 export const KIND_SIDECAR: ReadonlyArray<readonly [EntryKind, string]> = [

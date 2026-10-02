@@ -173,6 +173,7 @@ roles, and how they compose with the LLM, see [Skills & roles](../../skills.html
 | [Literature search](literature-search.html) | `literature-search` | — | A node cites a source. Nothing in any declared library holds it. This skill is |
 | [Semantic Ontologist (Ambiguity Detection & Glossary)](ontologist.html) | `ontologist` | — |  |
 | [Tabular metadata](tabular-metadata.html) | `tabular-metadata` | — | **The model is CSVW and nothing custom.** Bean `ulqj`, decided by the owner: |
+| [Term disagreement](term-disagreement.html) | `term-disagreement` | — | > Skill id: `term-disagreement` · Package: `library-core` |
 | [Translation manager](translation-manager.html) | `translation-manager` | — | > Skill id: `translation-manager` · Package: |
 | [Upload naming](upload-naming.html) | `upload-naming` | — | > **Lives in `library-core`, not `folio-core`.** It was written into |
 | [Two mechanisms and a persona](upload-routes.html) | `upload-routes` | — | [`content-acquisition`](content-acquisition.md) decides *what channel* a |
@@ -339,6 +340,12 @@ roles, and how they compose with the LLM, see [Skills & roles](../../skills.html
 | [document-publishing](document-publishing.html) | `document-publishing` | [schema](../skills/document-publishing.html) | Take a document folio from corpus to published artifact — without a TeX |
 | [document-structure](document-structure.html) | `document-structure` | [schema](../skills/document-structure.html) | Decide and maintain the chapter/section skeleton of a document folio. |
 | [normative-statements](normative-statements.html) | `normative-statements` | [schema](../skills/normative-statements.html) | Carry a **recommendation, requirement or rule** in a document folio — the |
+
+## Catalogue records — Dublin Core renderings (catalogue)
+
+| Skill | Id | Schema | Summary |
+|-------|----|--------|---------|
+| [Dublin Core renderings](dublin-core-renderings.html) | `dublin-core-renderings` | — | Bean `7eak`. The owner, 2026-09-30: *"do we render the proper xml for dublin |
 
 ## Document ingestion methods (ingestion)
 
