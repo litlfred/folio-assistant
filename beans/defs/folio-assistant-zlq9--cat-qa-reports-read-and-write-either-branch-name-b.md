@@ -3,8 +3,9 @@
 title: 'CAT-QA-REPORTS: read and write either branch name before the rename (PR #1913, bean 32f6)'
 status: todo
 type: task
+priority: normal
 created_at: 2026-10-02T19:14:12Z
-updated_at: 2026-10-02T19:14:12Z
+updated_at: 2026-10-02T21:41:53Z
 parent: folio-assistant-3fva
 ---
 
@@ -23,3 +24,10 @@ cat-qa-reports if it exists, else qa-reports if it exists, else cat-qa-reports. 
 ## Done when
 - [ ] every reader and writer resolves the branch by the rule, with tests for all three cases (only old, only new, both)
 - [ ] #1801 green with the change; steward told, and a 30-minute no-push window given
+
+
+## Progress 2026-10-02 (session 01LKpuPo)
+- `qa-store.ts`: `QA_BRANCH = cat-qa-reports`, `LEGACY_QA_BRANCHES = [qa-reports]`; `qaBranchCandidates` + `pickQaBranch`. Each `fetchTip` asks ls-remote for every candidate in one call and settles the name; reads, publish and prune all go through it.
+- The 10 instance declarations now name `cat-qa-reports` (either spelling resolves to both).
+- `check-workflows.ts` raw-push guard matches both names.
+- Tests: neither, only-legacy (read + write extend it, no cat- branch created), both (new wins, legacy untouched).

@@ -83,8 +83,16 @@ import { PUSH_BASE_MS, PUSH_CAP_MS } from "./backoff-sleep.js";
 
 // ── Constants ────────────────────────────────────────────────────────────
 
+/**
+ * The branch's name, and the names it had before (bean `32f6`, owner
+ * 2026-10-02: special branches carry the `cat-` prefix). Mirrors the
+ * `qa-reports` row of `special-branches.json` (PR #1913). The legacy list
+ * empties when bean `oycs` says every remote is renamed.
+ */
+export const QA_BRANCH = "cat-qa-reports";
+export const LEGACY_QA_BRANCHES: readonly string[] = ["qa-reports"];
 /** The branch when no declaration names one (proposal §2.4). */
-export const DEFAULT_QA_BRANCH = "qa-reports";
+export const DEFAULT_QA_BRANCH = QA_BRANCH;
 export const MANIFEST_FILE = "manifest.json";
 export const MANIFEST_SCHEMA = "qa-reports-manifest/v1";
 export const INDEX_FILE = "index.json";
@@ -269,6 +277,27 @@ export function resolveQaLocation(repoRoot: string = gitTopLevel()): QaLocation 
   return { branch: branches[0] ?? DEFAULT_QA_BRANCH, keyedBy: "commit", declared: branches.length === 1, directories };
 }
 
+// ── Which name the branch has ────────────────────────────────────────────
+
+/**
+ * The names to look for, in order. A declaration naming EITHER spelling of the
+ * QA branch gets both, new first, so a folio whose declaration predates the
+ * rename still finds a renamed remote; any other name is taken as given.
+ */
+export function qaBranchCandidates(declared: string): string[] {
+  return declared === QA_BRANCH || LEGACY_QA_BRANCHES.includes(declared) ? [QA_BRANCH, ...LEGACY_QA_BRANCHES] : [declared];
+}
+
+/**
+ * The rule, for readers AND writers: the first candidate that exists on the
+ * remote, else the first candidate. Writers follow it too, so nothing creates
+ * `cat-qa-reports` beside a live `qa-reports` and blocks the rename — GitHub's
+ * branch rename refuses a target that exists, and keeps no redirect for git.
+ */
+export function pickQaBranch(candidates: readonly string[], present: ReadonlySet<string>): string {
+  return candidates.find((c) => present.has(c)) ?? candidates[0]!;
+}
+
 // ── Git plumbing ─────────────────────────────────────────────────────────
 
 interface GitResult {
@@ -292,16 +321,19 @@ function gitTopLevel(cwd = process.cwd()): string {
 class Store {
   readonly env: NodeJS.ProcessEnv;
   readonly log: (line: string) => void;
+  /** The name in use: re-resolved by every {@link fetchTip}, the first candidate until then. */
+  branch: string;
   private seq = 0;
 
   constructor(
     readonly dir: string,
     readonly remote: string,
-    readonly branch: string,
+    readonly candidates: readonly string[],
     authEnv: Record<string, string>,
     log?: (line: string) => void,
   ) {
     this.log = log ?? ((l) => console.error(l));
+    this.branch = candidates[0]!;
     this.env = {
       ...process.env,
       ...authEnv,
@@ -350,12 +382,22 @@ class Store {
 
   /**
    * The branch tip, trees only. `absent` is a DETERMINED absence (ls-remote
-   * answered, and answered nothing); a failed ls-remote is `unknown`.
+   * answered, and answered nothing); a failed ls-remote is `unknown`. Asks for
+   * every candidate name in the one call and settles {@link branch} by
+   * {@link pickQaBranch}, so a write lands on whichever name the remote has.
    */
   fetchTip(): { state: "ok"; tip: string } | { state: "absent" } | { state: "unknown"; reason: string } {
-    const ls = this.git(["ls-remote", "--heads", "origin", `refs/heads/${this.branch}`]);
+    const ls = this.git(["ls-remote", "--heads", "origin", ...this.candidates.map((c) => `refs/heads/${c}`)]);
     if (ls.status !== 0) return { state: "unknown", reason: `ls-remote failed: ${ls.stderr.trim()}` };
-    if (ls.stdout.toString().trim() === "") return { state: "absent" };
+    const present = new Set(
+      ls.stdout
+        .toString()
+        .split("\n")
+        .map((l) => l.split("\t")[1]?.trim().replace(/^refs\/heads\//, ""))
+        .filter((b): b is string => Boolean(b)),
+    );
+    this.branch = pickQaBranch(this.candidates, present);
+    if (!present.has(this.branch)) return { state: "absent" };
     const ref = this.privateRef("tip");
     const f = this.git(["fetch", "-q", "--no-tags", "--depth=1", "--filter=blob:none", "origin", `+refs/heads/${this.branch}:${ref}`]);
     if (f.status !== 0) return { state: "unknown", reason: `fetch of ${this.branch} failed: ${f.stderr.trim()}` };
@@ -547,10 +589,11 @@ function openStore(opts: QaStoreOptions = {}): { store: Store; repoRoot: string 
     if (c.status !== 0) throw new QaUsageError(`cannot find the git directory of ${repoRoot}`);
     storeDir = join(c.stdout.trim(), "qa-store.git");
   }
-  const id = `${resolve(storeDir)}|${remote}|${branch}`;
+  const candidates = qaBranchCandidates(branch);
+  const id = `${resolve(storeDir)}|${remote}|${candidates.join(",")}`;
   let store = stores.get(id);
   if (!store) {
-    store = new Store(resolve(storeDir), remote, branch, authEnvFrom(repoRoot), opts.log);
+    store = new Store(resolve(storeDir), remote, candidates, authEnvFrom(repoRoot), opts.log);
     stores.set(id, store);
   }
   return { store, repoRoot };
@@ -647,7 +690,7 @@ function verifyEntry(store: Store, entry: string, key: string): { state: "ok"; m
 function snapshot(ref: string, opts: QaStoreOptions): SnapshotResult {
   const spec = parseQaRef(ref);
   const { store } = openStore(opts);
-  const memo = `${store.dir}|${store.remote}|${store.branch}|${ref}`;
+  const memo = `${store.dir}|${store.remote}|${store.candidates.join(",")}|${ref}`;
   const hit = snapshots.get(memo);
   if (hit) return hit;
   let result: SnapshotResult;
