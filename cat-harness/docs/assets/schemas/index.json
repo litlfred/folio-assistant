@@ -29780,6 +29780,20 @@
           "optional": true,
           "array": false,
           "doc": "The declaring instance's `description`, for `bodyFrom: \"description\"`."
+        },
+        {
+          "name": "summary",
+          "type": "string",
+          "optional": true,
+          "array": false,
+          "doc": "The declaring instance's `summary`, for `bodyFrom: \"summary\"`."
+        },
+        {
+          "name": "alsoWritten",
+          "type": "readonly string[]",
+          "optional": true,
+          "array": false,
+          "doc": "The declaring instance's `alsoWritten`, for `bodyFrom: \"summary\"`."
         }
       ],
       "extendsNames": [],
