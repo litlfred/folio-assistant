@@ -25,6 +25,7 @@ From: bootstrap-tools 28 (<a href="{{ '/assets/glossary/bootstrap-tools--kg-sche
 A vocabulary that could not be reached has said nothing, and the column above keeps that 
 apart from a checked miss. The counts are reported and not graded: an unmapped candidate may 
 be a term this corpus is right to coin.</p>
+<p class="fa-gloss-mapping-perterm"><strong>Per term.</strong> Every term on this page is <strong>unmapped</strong> on <code>fhir</code>, and <strong>unmapped</strong> on <code>skos</code>, unless its entry says otherwise. No entry says otherwise.</p>
 
 <label for="fa-gloss-q">Filter terms</label>
 <input id="fa-gloss-q" type="search" autocomplete="off" style="min-height:44px;width:100%;max-width:32rem">
