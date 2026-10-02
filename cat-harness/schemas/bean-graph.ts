@@ -103,7 +103,7 @@ import {
  * one declaration knows the other. This constant is a convenience for callers
  * that want the bean-specific subset, never a second source of truth.
  */
-export const BEAN_NODE_KINDS = ["bean-defs", "workflow-state"] as const;
+export const BEAN_NODE_KINDS = ["bean-defs", "bean-notes", "workflow-state"] as const;
 export type BeanNodeKind = (typeof BEAN_NODE_KINDS)[number];
 
 /**

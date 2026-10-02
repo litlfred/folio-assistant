@@ -1093,6 +1093,7 @@ export const RULES: Rule[] = [
       // (bean `xl55`). Harness: it indexes the platform's own docs manifests.
       "scripts/process-presentations.ts",
       "scripts/claim-bean.ts",
+      "scripts/bean-notes.ts",              // per-branch notes on a bean and their generated index (bean `m61r`) — the harness's own work plan, no content type
       "scripts/beans-landed.ts",            // open beans named in a merged PR title — reported, never closed (bean `4d22`)
       "scripts/check-duplicate-ids.ts",     // no built page carries one id twice — run on the staged site (bean `uknu`)
       "scripts/front-matter.ts",
@@ -1331,6 +1332,10 @@ export const RULES: Rule[] = [
       // tooling below; a core placement made `process-model.ts` import down.
       "schemas/code-list.ts",
       "scripts/code-lists.ts",
+      // Vocabulary mapping tables' gate (bean `k74z`), beside the code-list
+      // gate for the same reason: glossary-export, which the publish process
+      // runs, applies the tables, so judging them is harness work.
+      "scripts/vocab-mappings.ts",
       // The pre-deploy verifier set (bean `vigi`): needed to RUN the publish
       // process, so harness, beside the gates it sits among.
       "scripts/publish-verify.ts",

@@ -2114,6 +2114,26 @@
       "skos:note": "candidate"
     },
     {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-tools/vocab-map",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-tools"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Apply a vocabulary mapping table"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Carry one source record into a target vocabulary by a declared `folio-vocab-mapping/v1` table: each source field becomes the predicate its row names, in the table's order, with a DERIVED target (such as `dcterms:title` rendering `skos:prefLabel`) copied from its authoritative one so the two cannot drift. A table is shaped like a FHIR ConceptMap: an existing ConceptMap, R4 or R5, is representable as one without loss (`fromConceptMap`), and a table can be produced as a ConceptMap (`toConceptMap`), which returns every loss rather than dropping anything silently. First consumer: `glossary-export`."
+        }
+      ],
+      "skos:notation": "vocab-map",
+      "dcterms:source": "cat-harness/tools/vocab-map.ts#vocab-map",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-tools/voices-viewer",
       "@type": "skos:Concept",
       "skos:inScheme": {
