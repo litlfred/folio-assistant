@@ -1,0 +1,41 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://litlfred.github.io/folio-assistant/STAGING/claude-vocab-drift-d1-d3/skills/content-review/input.schema.json",
+  "title": "Content Review Input",
+  "description": "Input schema for formal content review and approval workflow.",
+  "type": "object",
+  "required": [
+    "reviewType",
+    "contentRef"
+  ],
+  "properties": {
+    "reviewType": {
+      "type": "string",
+      "enum": [
+        "l2-to-l3-gate",
+        "l3-to-publish-gate",
+        "change-assessment",
+        "final-signoff"
+      ],
+      "description": "Type of review phase gate."
+    },
+    "contentRef": {
+      "type": "string",
+      "description": "Git ref or path to the content being reviewed."
+    },
+    "previousVersion": {
+      "type": "string",
+      "description": "Git ref of the previous approved version (for diff)."
+    },
+    "validationReport": {
+      "type": "string",
+      "description": "Path to the validation report for this content."
+    }
+  },
+  "staging": {
+    "branch": "claude/vocab-drift-d1-d3",
+    "sha": "59e2e944b2b176ce3dfd420d1834d868ecb05cb5",
+    "pr": "1911/merge",
+    "run": "37062438864"
+  }
+}
