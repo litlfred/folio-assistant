@@ -23,7 +23,7 @@ A shard that silently runs nothing is green. So: the aggregate must check that e
 Another agent is editing `code-quality-gates.yml` for this; other PRs keep their workflow edits to single added steps so merges stay trivial.
 
 ## Done when
-- [ ] shards + aggregate, with a test that every gate is in exactly one shard
+- [x] parallelism: `bun test --parallel` in-job; e2e as 3 shards + an aggregate that is red unless every shard succeeded; unrun-gates step in its own job
 - [x] ~~BPMN render cache keyed on inputs~~ — measured, not worth building (see Re-scoped)
 - [x] ~~per-job fetch-depth~~ — already depth 1 everywhere in this workflow (see Re-scoped)
 - [ ] measured: CI wall-clock before/after over ≥3 runs
@@ -57,3 +57,30 @@ The critical path is the TypeScript job, and ~90 % of it is one step.
 A constraint the work must respect: `gatesFrom` (`gates.ts`) splits a `bun`
 line on whitespace and runs it with NO shell, so a `${{ matrix.* }}` or `$VAR`
 in a `bun` line reaches the local gate run as literal text — the `9zok` shape.
+
+## After `bun test --parallel` — measured, and the count gap explained
+
+Local (4 cores, `BUN_OPTIONS=--smol`): sequential 903 s, 14,136 pass / 57 skip
+/ 4 fail (all four 5.4–6.7 s timeouts against Bun's 5,000 ms default — this
+container's slowness, all four green in CI); `--parallel` 364 s, 14,140 pass /
+52 skip / 0 fail. CI, dispatched run on `16c43cf40`: the `bun test` step
+**3m28s** (was 7m30s–7m45s), the TypeScript job 4m13s, the workflow 5m20s —
+e2e (5m16s, playwright 4m33s at `workers: 1`) became the critical path, which
+is why e2e was sharded and the 1m46s–2m28s unrun-gates step split out.
+
+**The 5 tests the parallel count lacks are never-executed ones, and their
+absence is the correct state.** All 5 are the per-package block in
+`lean-projects.test.ts` (`for (const pkg of LEAN_PACKAGES) describe.skipIf(!folio)…`),
+skipped in BOTH modes because the platform has no folio. They are REGISTERED
+sequentially only because `lean-ref-coverage.test.ts` calls
+`configureLeanPackages()` and leaves the module-level registry populated for
+every file loaded after it. Under `--parallel` (which implies `--isolate`) each
+file starts with the registry empty, so the loop registers nothing. Measured by
+per-test JUnit over the full sequential run vs the same 11 skip-bearing files
+run alone: identical skip sets except those 5 names. No test that executes is
+lost; the leak is a latent order-dependence `--isolate` removes.
+
+**Bun defect found on the way:** `bun test --parallel --reporter=junit` hung
+for 2,086 s (one worker at 99 % CPU) on 11 files that finish in 5 s without
+`--reporter=junit`. CI does not use that reporter; anyone who adds it to the
+parallel step will hit this.
