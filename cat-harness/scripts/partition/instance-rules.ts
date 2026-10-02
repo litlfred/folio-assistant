@@ -1075,6 +1075,24 @@ export const RULES: Rule[] = [
       // job that runs the harness's own scripts checked out the harness's own
       // submodules. A folio could not make it answer differently.
       "scripts/check-workflow-submodules.ts",
+      // The five merge-pipeline modules (bean `blgm`, PR #1895). Harness by
+      // their subject, and not marginally: what they read is THIS
+      // repository's open pull requests, its `merge-conflict-patterns`
+      // declaration and its own branches. `merge-train` builds a train of
+      // this repo's PRs; `merge-overlap` predicts conflicts between them;
+      // `merge-leftover` asks whether a PR's intent reached this repo's
+      // main. A folio has no queue for them to operate on, so none of the
+      // five could be made to answer differently by swapping the content.
+      "scripts/merge-train.ts",
+      "scripts/merge-overlap.ts",
+      "scripts/merge-leftover.ts",
+      // Their two shared modules, classified with them rather than beside
+      // the generic path helpers: `merge-pipeline-paths` reads path classes
+      // out of this repository's `PATTERNS` declaration, and
+      // `merge-pipeline-git` resolves member specs against this repository's
+      // refs. Both are about this queue, not about paths or git in general.
+      "scripts/merge-pipeline-paths.ts",
+      "scripts/merge-pipeline-git.ts",
       // Builds every package this REPOSITORY publishes to npm (bean `rsi6`).
       // Harness by its subject: the thing it builds is this repository's own
       // shipped artefact, and a folio publishes prose and proofs rather than
