@@ -1,10 +1,11 @@
 ---
 # folio-assistant-1335
 title: 'DAK block kinds into smart-base: a harness contributes its content adapter and block kinds to core (dak-blocks.ts, DAK entries of block-kinds.ts)'
-status: todo
+status: completed
 type: task
+priority: normal
 created_at: 2026-10-01T17:45:13Z
-updated_at: 2026-10-01T17:45:13Z
+updated_at: 2026-10-02T15:26:21Z
 parent: folio-assistant-n3ni
 ---
 
@@ -23,3 +24,7 @@ The mechanism is bean zlmp's: registration that walks the resolved stack, so CON
 - [ ] dak-blocks.ts and the DAK entries of block-kinds.ts live in smart-base; core's barrel no longer re-exports them
 - [ ] jsonld, qa-criteria-registry, translation-tools and gen-dak-components-figure read DAK kinds through the registration
 - [ ] check:partition:edges 0 new edges; kg-export Schema node ids unchanged except for the moved paths
+
+## Summary of Changes
+
+Landed on main through merge train #1876 (c6d7d740) from #1855: the dak adapter, its 21 block kinds and the five DAK checkers are smart-base's contribution (smart-base/contributions.ts) through ContributionRegistry; core's CONTENT_ADAPTERS is ["paper"]; reference parsing accepts contributed label prefixes. Design: cat-harness/docs/proposals/dak-kinds-contribution-2026-10-02.md.
