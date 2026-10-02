@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # The full IG Publisher AST pipeline, end to end, for ANY FHIR IG:
 #
-#   restore  — the AST cache from the IG repository's `cat-fhir-ast/<package>` (or, until #1913, `fhir-ast/<package>`) branch
+#   restore  — the AST cache from the IG repository's `cat/fhir-harness/fhir-ast/<package>` branch (or an older `cat-fhir-ast/` or `fhir-ast/` name)
 #   validity — whether it was built from the inputs the checkout has now
 #   index    — the artefact index the AST describes (ast-to-artifact-index.ts)
 #   parity   — where that index disagrees with the published-output index

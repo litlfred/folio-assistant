@@ -100,26 +100,28 @@ resolve_package() {
 
 cmd_list_names() {
   IGIT_ROOT=$(resolve_ig_root)
-  igit ls-remote --heads "$REMOTE" 'refs/heads/cat-fhir-ast/*' 'refs/heads/fhir-ast/*' | sed -n 's#^.*refs/heads/\(.*\)$#\1#p'
+  igit ls-remote --heads "$REMOTE" 'refs/heads/cat/fhir-harness/fhir-ast/*' 'refs/heads/cat-fhir-ast/*' 'refs/heads/fhir-ast/*' | sed -n 's#^.*refs/heads/\(.*\)$#\1#p'
 }
 
-# The cache branch for a package. Special branches are being renamed with a
-# `cat-` prefix (#1913, bean 32f6), so both names must work until the rename
-# lands: the `cat-` name if it exists, else the old name if it exists, else
-# the `cat-` name (a first seed creates the new one). `--branch` overrides.
+# The cache branch for a package. Special branches are moving to the owner's
+# final scheme `cat/<harness>/<name>` (bean tlk2, after #1913's interim
+# `cat-` prefix), so every name must work until the moves land: the first of
+# `cat/fhir-harness/fhir-ast/<pkg>`, `cat-fhir-ast/<pkg>`, `fhir-ast/<pkg>`
+# that exists, else the final name (a first seed creates it). `--branch`
+# overrides.
 # IGIT_ROOT must be set. A remote that cannot be reached is an error, not
 # "absent": reading it as absent would seed a second branch beside the first.
 resolve_branch() {
   local pkg="$1"
   if [ -n "$BRANCH" ]; then printf '%s\n' "$BRANCH"; return; fi
   local name rc
-  for name in "cat-fhir-ast/$pkg" "fhir-ast/$pkg"; do
+  for name in "cat/fhir-harness/fhir-ast/$pkg" "cat-fhir-ast/$pkg" "fhir-ast/$pkg"; do
     igit ls-remote --exit-code --heads "$REMOTE" "refs/heads/$name" >/dev/null 2>&1
     rc=$?
     if [ "$rc" -eq 0 ]; then printf '%s\n' "$name"; return; fi
     [ "$rc" -eq 2 ] || die "could not reach remote '$REMOTE' to look up $name (git ls-remote exit $rc)"
   done
-  printf '%s\n' "cat-fhir-ast/$pkg"
+  printf '%s\n' "cat/fhir-harness/fhir-ast/$pkg"
 }
 
 count_resources() {
