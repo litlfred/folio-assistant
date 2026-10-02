@@ -215,7 +215,7 @@ nothing renders yet. It is shown rather than omitted: "nothing renders this" and
 
 ### `qa`
 
-1 of 12 published.
+1 of 10 published.
 {: .fa-hx-dim }
 
 - [C@T Harness]({{ '/qa/' | relative_url }})
