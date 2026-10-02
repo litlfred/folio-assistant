@@ -303,10 +303,10 @@
   ],
   "canonicalDocument": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld",
   "repository": "cat-harness",
-  "generatedAt": "2026-10-02T23:06:27.332Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/a75c50d9301e1d597996ca291d5b5ac44afe20e6",
-  "sourceCommitSha": "a75c50d9301e1d597996ca291d5b5ac44afe20e6",
-  "sourceCommitAt": "2026-10-02T23:04:07Z",
+  "generatedAt": "2026-10-02T23:28:59.859Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/196c8c43fa53d72c06289c366017c09af952b151",
+  "sourceCommitSha": "196c8c43fa53d72c06289c366017c09af952b151",
+  "sourceCommitAt": "2026-10-02T23:26:31Z",
   "sourceTreeDirty": true,
   "dependsOnUnavailable": "2 dependency edge(s), none expressible as a record — see gaps",
   "counts": {
@@ -320,7 +320,7 @@
     "Lane": 204,
     "ProcessNode": 948,
     "Tool": 117,
-    "Schema": 155,
+    "Schema": 156,
     "ExternalSchema": 20,
     "GraphKind": 26,
     "Role": 48,
@@ -48298,6 +48298,15 @@
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/glossary"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-blissful-ride-c2f26u-train-6/cat-harness.jsonld#schema/kg-materialization",
+      "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#Schema",
+      "name": "kg-materialization",
+      "title": "kg-materialization",
+      "summary": "The record of ONE materialised part of a subscribed Knowledge Graph — a",
+      "module": "../folio-assistant-core/schemas/kg-materialization.ts",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/kg-materialization"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-blissful-ride-c2f26u-train-6/cat-harness.jsonld#schema/library-ref",
       "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#Schema",
       "name": "library-ref",
@@ -48902,7 +48911,7 @@
       "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#GraphKind",
       "name": "substrate-snapshot",
       "renderable": false,
-      "summary": "The root declaration of each Knowledge Graph this instance subscribes to, cached byte for byte at the pinned commit with its fixity, and what the substrate judgement found in it.",
+      "summary": "The root declaration of each Knowledge Graph this instance subscribes to, cached byte for byte at the pinned commit with its fixity, and what the substrate judgement found in it; and each chosen subgraph or asset materialised from it, with its fixity, provenance and gate answers.",
       "validator": "https://litlfred.github.io/folio-assistant/STAGING/claude-blissful-ride-c2f26u-train-6/cat-harness.jsonld#schema/substrate-snapshot"
     },
     {
@@ -49975,7 +49984,7 @@
         "https://litlfred.github.io/cat-harness/0.1.0/ns#graphKind/substrate-snapshot"
       ],
       "title": "Subscribed substrates",
-      "description": "The root declaration of each Knowledge Graph this instance subscribes to, cached at the pinned commit: one `<id>.substrate.json` per `subscriptions` entry, holding the upstream bytes, their sha256, and the harnesses and subgraphs the substrate offers. Written by `bun run kg:subscribe`; never edited by hand.",
+      "description": "The root declaration of each Knowledge Graph this instance subscribes to, cached at the pinned commit: one `<id>.substrate.json` per `subscriptions` entry, holding the upstream bytes, their sha256, and the harnesses and subgraphs the substrate offers. Written by `bun run kg:subscribe`; never edited by hand. Each CHOSEN part a subscriber materialises lands here too, under `<id>/subgraphs/<subgraph>/` or `<id>/assets/<path>/`: the upstream bytes under `tree/` and a `materialization.json` beside them with fixity, provenance and the five gates. Written by `bun run kg:materialize`; never edited by hand.",
       "readmePath": "subscriptions/README.md",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-blissful-ride-c2f26u-train-6/cat-harness.jsonld#directory/subscriptions",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/subscriptions"
