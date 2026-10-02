@@ -1607,7 +1607,7 @@ export const BASE_GRAPH_KINDS: Readonly<Record<string, GraphKindDef>> = {
     holds: "content",
     // declared-path-literal: this table IS the declaration, as on `health`.
     nodeSchemas: {
-      "folio-fhir-artifact-index/v1": { validator: "folio-assistant-core:schemas/fhir-artifact-index.ts#FhirArtifactIndexSchema" },
+      "folio-fhir-artifact-index/v2": { validator: "fhir-harness:schemas/fhir-artifact-index.ts#FhirArtifactIndexSchema" },
       // The IG's own NAVIGATION, read from its `sushi-config.yaml` — a second
       // family in this directory because it comes from a second SOURCE. The
       // index is harvested from the IG's published OUTPUT; a menu exists only
