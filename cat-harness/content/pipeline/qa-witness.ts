@@ -56,10 +56,12 @@
 
 import { createHash } from "node:crypto";
 import { existsSync, readFileSync, readdirSync } from "node:fs";
-import { basename, dirname, join } from "node:path";
+import { basename, dirname, join, relative } from "node:path";
 
 import type { BlockQaReport, QaCriterionEntry } from "../../schemas/block-qa.ts";
-import { KG_QA_MANIFEST_PATH, kgQaSidecarPath } from "../../schemas/kg-qa.ts";
+import { KG_QA_MANIFEST_PATH, kgQaSidecarPath, owningInstanceOf, subjectEscapes } from "../../schemas/kg-qa.ts";
+import { instanceRootsIn } from "../../schemas/cat-harness.ts";
+import { checkoutRootFor } from "../../schemas/harness-config.ts";
 import type { KgQaManifest, KgQaReport } from "../../schemas/kg-qa.ts";
 import type { ScriptQaReport } from "../../schemas/script-qa.ts";
 import { existingBlockQaPath, translationQaPath } from "./qa-paths.ts";
@@ -339,6 +341,17 @@ export function sidecarPaths(family: QaFamily, subjectPath: string, repoRoot: st
       // The SAME function the auditor writes with. Composing the path here a
       // second time is how a reader ends up looking where nothing was
       // written — and finding nothing reads as "unaudited", a false pass.
+      //
+      // A subject OUTSIDE `repoRoot` has no sidecar in this tree: its owner
+      // audits it and holds the one verdict (Q-A PR 4, 2026-10-01), so the
+      // writer refuses the path. Read the OWNER's tree instead — the same
+      // function, rooted where the verdict actually is. No owner in the
+      // checkout means no verdict, which reads as unaudited, as it should.
+      if (subjectEscapes(repoRoot, dir)) {
+        const owner = owningInstanceOf(dir, instanceRootsIn(checkoutRootFor(repoRoot)));
+        if (owner === undefined || subjectEscapes(owner, dir)) return [];
+        return [kgQaSidecarPath(owner, dir, stem)].filter((p) => existsSync(p));
+      }
       return [kgQaSidecarPath(repoRoot, dir, stem)].filter((p) => existsSync(p));
   }
 }
@@ -515,7 +528,9 @@ export function readWitnessDoc(
 ): QaWitnessDoc | undefined {
   const paths = sidecarPaths(family, subjectPath, repoRoot);
   if (paths.length === 0) return undefined;
-  const rel = (p: string) => p.slice(repoRoot.length).replace(/^\//, "");
+  // `relative`, not a prefix slice: a kg sidecar can sit in the OWNER's tree
+  // (Q-A PR 4), outside `repoRoot`, and slicing would cut into its path.
+  const rel = (p: string) => relative(repoRoot, p);
   const dir = dirname(subjectPath);
   const stem = basename(subjectPath).replace(/\.[^.]+$/, "");
 
