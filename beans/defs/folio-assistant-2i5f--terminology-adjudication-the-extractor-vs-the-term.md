@@ -52,9 +52,9 @@ one; noted here because it is where the evidence points.
 
 ## Done when
 
-- [ ] the two disagreements are named and kept apart
+- [x] the two disagreements are named and kept apart
 - [ ] case 2 CALLS `adjudication` and `untainted-verification`, restating neither
-- [ ] case 1 has an outcome set, each outcome saying what is written and where
+- [x] case 1 has an outcome set, each outcome saying what is written and where
 - [ ] whether a term mapping keeps its dissent or collapses — owner's call
 
 
@@ -142,12 +142,9 @@ do not build it."*
   pending / holds / stale. No file exists: a record is a decision, never
   seeded.
 
-Done-when, against this bean:
-
-- [x] the two disagreements are named and kept apart (skill §1, schema header)
-- [ ] case 2 CALLS `adjudication` and `untainted-verification`, restating
-      neither — **leg 2, waiting** on its entry condition (non-zero `mapped`
-      on either target; 0 on both, measured 2026-10-02)
-- [x] case 1 has an outcome set, each outcome saying what is written and where
-- [ ] whether a term mapping keeps its dissent or collapses — owner's call,
-      belongs with leg 2
+Against `## Done when` above: the first and third items are ticked there.
+The two disagreements are kept apart in the skill's first section and in the
+schema header, and the outcome set states what is written and where
+(`OUTCOME_WRITES`). The second and fourth items stay open. They are leg 2,
+which waits on its entry condition: non-zero `mapped` on either target, and
+both were 0 when measured on 2026-10-02.
