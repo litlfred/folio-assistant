@@ -131,7 +131,7 @@ the files are reachable through the repository and the JSON-LD.
 
 ## On the name
 
-`.fsh` is **FHIR Shorthand** — in `schemas/dak.ts`, `jsonld.ts`,
+`.fsh` is **FHIR Shorthand** — in `smart-base/schemas/dak.ts`, `jsonld.ts`,
 `translation-tools.ts`, `block-qa.ts`, and throughout the WHO SMART folios
 this platform targets. The overlap was raised and the owner confirmed this
 spelling anyway.

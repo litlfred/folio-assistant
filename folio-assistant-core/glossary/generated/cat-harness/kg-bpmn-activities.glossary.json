@@ -2721,7 +2721,7 @@
     {
       "id": "process_l3fhir.task_mapl2",
       "prefLabel": "Map L2 → L3 [l3-fhir-authoring]",
-      "definition": "Each data element becomes a profile, each value set a ValueSet, each decision a PlanDefinition / Library.",
+      "definition": "Each data element becomes a profile, each value set a ValueSet, each decision a PlanDefinition / Library. The DAK's L2 content is l3-fhir-authoring's sourceModel; this step binds l2-dak-authoring beside it, which is where the WHO L2 → L3 ordering lives now that the generic skill names no DAK (smart-* separation stage D, #1767).",
       "notation": "Task_MapL2",
       "source": "cat-harness/processes/l3-fhir-pipeline.bpmn#Task_MapL2",
       "status": "candidate"

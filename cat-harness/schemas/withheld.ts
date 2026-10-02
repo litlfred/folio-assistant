@@ -17,12 +17,42 @@
  */
 import { z } from "zod";
 
+/** One publication gate that did not permit publication, and its verdict (e.g. `refused`). */
+export const WithheldGateSchema = z
+  .object({
+    gate: z.string().min(1),
+    verdict: z.string().min(1),
+  })
+  .strict();
+
 export const WithheldEntrySchema = z
   .object({
     /** Relative to the directory holding the file; a directory takes its whole subtree. */
     path: z.string().min(1),
     /** Why — which gate, which verdict. A withholding with no reason cannot be re-checked. */
     reason: z.string().min(1),
+    /**
+     * The gates that refused, STRUCTURED — issue #1794. Optional because a
+     * generator may know only the sentence; when present, a reader shows
+     * "copyright not granted" from the gate itself rather than parsing
+     * {@link reason}, which is prose and free to change shape.
+     */
+    gates: z.array(WithheldGateSchema).min(1).optional(),
+    /**
+     * Where a reader can see what the work IS without being shown the work —
+     * the catalogue record. `page` is a SITE-ROOT path (leading `/`) to a
+     * published record page; `uri` is the upstream identifier (a Handle IRI,
+     * say). Either may be absent; a viewer links `page` first, `uri` second,
+     * and nothing at all rather than a guess.
+     */
+    record: z
+      .object({
+        id: z.string().min(1).optional(),
+        page: z.string().regex(/^\//, "a site-root path, beginning with /").optional(),
+        uri: z.string().url().optional(),
+      })
+      .strict()
+      .optional(),
   })
   .strict();
 

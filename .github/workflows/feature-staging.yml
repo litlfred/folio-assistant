@@ -1439,11 +1439,27 @@ jobs:
       - name: Check out the platform, to write the render log
         uses: actions/checkout@v7
         with:
-          path: source
-          # The platform's scripts import `bootstrap-tools/` (a submodule), so a
-          # checkout without it fails at module load — which is how every preview
-          # removal crashed and the old previews piled up past Pages' 10 GB limit.
+          # REQUIRED, not an optimisation: `cat-harness/schemas/` imports from
+          # the `bootstrap-tools` SUBMODULE, so without it every `bun run` of a
+          # platform script below dies on `Cannot find module
+          # '../../bootstrap-tools/schemas/graph'`. That is not a loud failure
+          # in the right place — `rm -rf` has already run by then, and the
+          # `render-log.ts` call that dies is what aborts the step under
+          # `bash -e`, so the commit and push never happen. The preview is
+          # removed in the runner and left on `gh-pages`: a cleanup that
+          # reports failure having changed nothing. Measured 2026-10-02 — six
+          # consecutive `pull_request_target` runs failed this way and 80
+          # previews had accumulated, 47 of them for PRs already closed.
           submodules: true
+          #
+          # ONE key, from two independent fixes. `main` fixed this in parallel
+          # with its own note — "the old previews piled up past Pages' 10 GB
+          # limit" — and the merge took both `submodules: true` lines, which is
+          # a DUPLICATE YAML KEY and so an invalid workflow. It surfaced as
+          # `audit:coverage` failing rather than as a workflow error, because
+          # that gate parses this file to read every gate's `@covers`
+          # declaration: invalid YAML here reads as a broken audit over there.
+          path: source
 
       - uses: oven-sh/setup-bun@v2
         with:
@@ -1788,11 +1804,19 @@ jobs:
           # than guessing, and saying so REFUSES — so a shallow checkout here
           # would make every dispatch fail.
           fetch-depth: 0
-          path: source
-          # The platform's scripts import `bootstrap-tools/` (a submodule), so a
-          # checkout without it fails at module load — which is how every preview
-          # removal crashed and the old previews piled up past Pages' 10 GB limit.
+          # Same reason as the `cleanup` job above: the preflight and the
+          # record writer both import through `cat-harness/schemas/`, which
+          # reaches into the `bootstrap-tools` submodule.
           submodules: true
+          #
+          # ONE key, from two independent fixes. `main` fixed this in parallel
+          # with its own note — "the old previews piled up past Pages' 10 GB
+          # limit" — and the merge took both `submodules: true` lines, which is
+          # a DUPLICATE YAML KEY and so an invalid workflow. It surfaced as
+          # `audit:coverage` failing rather than as a workflow error, because
+          # that gate parses this file to read every gate's `@covers`
+          # declaration: invalid YAML here reads as a broken audit over there.
+          path: source
 
       - uses: oven-sh/setup-bun@v2
         with:
