@@ -24,6 +24,10 @@ words. It is passed through verbatim and it **narrows** the list.
    the deployment's own URL, rather than one composed from a formula.
 2. `git fetch origin gh-pages`, then **list** `STAGING/<slug>/`. Never fetch a
    page: a rendered page here is ~100 KB, and the listing answers the question.
+   If it is absent, look for a `removed` entry for the slug in `_render-log/`:
+   at most ten previews are kept and the oldest are rotated off (owner ruling
+   2026-10-02, #1868), and the next push to the branch re-stages it — skill
+   §"The cap".
 3. Diff the branch against the default branch and map changed files to
    published surfaces. A schema, a test or a gate maps to **no page**.
 4. Emit: the start-here line, the before/after table with what to review in the
