@@ -657,14 +657,14 @@
     {
       "id": "folio-assistant-2h76",
       "title": "STATE BRANCH P2: mechanism — storage keyedBy tip, branch-store splice-write, seed the orphan 'state' branch, session-start mount at state/",
-      "status": "todo",
+      "status": "in-progress",
       "type": "task",
       "priority": "",
       "parent": "folio-assistant-fs43",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-10-02T10:58:10Z",
-      "updatedAt": "2026-10-02T10:58:10Z",
+      "updatedAt": "2026-10-02T22:42:36Z",
       "preview": "Serial, one agent. Reuses the 3fva spike 3ds9 write path (hash-object, mktree, commit-tree, push; never -f).\n\n## Done when\n- [ ] schema field with keyedBy: tip\n- [ ] branch-store.ts with retry over a moved tip\n- [x] state branch seeded with a hash-verified manifest (2026-10-02, see below)\n- [ ] session-start hook mounts state/ and fails LOUDLY when it cannot\n- [ ] bun run state:push\n- [ ] measured",
       "file": "beans/defs/folio-assistant-2h76--state-branch-p2-mechanism-storage-keyedby-tip-bran.md"
     },
