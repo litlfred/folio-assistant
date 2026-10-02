@@ -3,6 +3,7 @@
 title: 'Page bytes: the fa-translation-index island is fetched once, not inlined 2356 times (22.34 MB); kg-render.js carries R4''s two client-side obligations'
 status: todo
 type: task
+parent: folio-assistant-o3xy
 priority: normal
 created_at: 2026-10-02T17:50:36Z
 updated_at: 2026-10-02T17:50:51Z
@@ -45,3 +46,17 @@ and `assets/js/kg-render.js` is where this instance satisfies them.
   `javaScriptEnabled: false` assertions over `#fa-todo-listing` that bean `0jtj` bought,
   and converting it makes them assert a weaker floor. That is the owner's call, not an
   agent's. Put to them on the PR.
+
+## Parent: `o3xy` (UI & ACCESSIBILITY), not `1xhc` (CI RELIABILITY)
+
+Recorded because it was a judgement rather than an obvious fit, and the
+alternative had a real argument. `g196` — *"every preview stores a full copy of
+the site because per-preview facts are baked into every page"* — and `xxku`
+both sit under `1xhc`, and this bean **closes `g196`'s numbered cause 3**
+verbatim, so following its siblings would have been consistent.
+
+`o3xy` wins because the bytes were the easy half. What this change actually had
+to get right is reader-facing: a print that fires mid-fetch, a PDF that
+captures a shell, a failed load that renders as an empty one. Those are
+`o3xy`'s subject — *"the rendered site is the artefact a reader judges"* — and
+they are the half that needed new discipline rather than a new fetch.
