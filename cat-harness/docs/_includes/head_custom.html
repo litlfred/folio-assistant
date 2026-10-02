@@ -492,6 +492,14 @@
   half should not fetch 239 beans to get three todos.
 -->
 <meta name="fa-beans-src" content="{{ '/assets/beans/index.json' | relative_url }}">
+<!--
+  The deploy's stamp — when it was built and from which commit — which the
+  work-plan dashboard turns into "generated … · N commits behind main".
+  `build.json` on the main site, `staging.json` on a preview; written by the
+  deploy, never committed, because a committed timestamp is a merge conflict
+  on every pair of concurrent changes (bean `y7b3`).
+-->
+<meta name="fa-build-src" content="{{ '/build.json' | relative_url }}">
 
 <!--
   The discarded-items document — `fsh-guts.jsonld`, published at the base by
