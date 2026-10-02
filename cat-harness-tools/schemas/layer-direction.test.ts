@@ -6,10 +6,10 @@
  */
 import { describe, expect, test } from "bun:test";
 
-import { allowedFromNeeds, directionOf, type LayerRule } from "./layer-direction.ts";
-import { ancestorsOf, flattenDependencies } from "./dependency-order.ts";
-import { ALLOWED } from "../scripts/partition/instance-rules.ts";
-import { classifyByDirection } from "./detangle.ts";
+import { allowedFromNeeds, directionOf, type LayerRule } from "../../cat-harness/schemas/layer-direction.ts";
+import { ancestorsOf, flattenDependencies } from "../../cat-harness/schemas/dependency-order.ts";
+import { ALLOWED } from "../../cat-harness/scripts/partition/instance-rules.ts";
+import { classifyByDirection } from "../../cat-harness/schemas/detangle.ts";
 
 /** This repository's instance stack, as `kg-detangle` reads it: three declared, one not. */
 function needsRule(): LayerRule {
