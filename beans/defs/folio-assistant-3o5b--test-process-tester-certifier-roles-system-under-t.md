@@ -5,7 +5,7 @@ status: completed
 type: feature
 priority: normal
 created_at: 2026-10-01T08:00:47Z
-updated_at: 2026-10-01T19:08:15Z
+updated_at: 2026-10-02T05:51:43Z
 parent: folio-assistant-3fva
 blocked_by:
     - folio-assistant-ygzh
@@ -43,3 +43,10 @@ Claim: worktree agent-aeed952a1045a7b02 (branch worktree-agent-aeed952a1045a7b02
 - **Skill** `sdlc/sdlc-core/test-plan-execution.md`, registered; links (does not edit) `test-engineer` and `content-test`.
 - **Proof it runs**: `scripts/tests/test-plan-execution.test.ts` (31 tests) drives the diagram on `scripts/tests/fixtures/test-plan-execution/tiny.test-plan.json` through all three endings with facts read off a real `buildTestRun` run and `test-report/v1` report, including the signing subprocess through its own DMN; also the DMN rows, the facet, and each criterion pass/fail/unknown/n/a. Engine-level (`startInstance`/`enabled`/`complete`) — the MCP tools add only GitHub auth and bean side-effects.
 - Not done: a `qa-attestations/v1` family for certifications (the filing step names the graph; the family does not exist yet); per-plan DMN dispatch (the gateway carries the platform default).
+
+
+
+## Owner rulings (2026-10-02)
+- test-requester stays its own role.
+- Certification family in qa-attestations/v1: follow-up bean zaui.
+- Per-plan exit-criteria DMN: follow-up bean 4iey (interim kg:audit guard first, dispatch when a plan needs it).
