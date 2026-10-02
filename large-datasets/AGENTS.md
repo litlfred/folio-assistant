@@ -1,5 +1,11 @@
 # AGENTS.md — large-datasets
 
+> **Retiring — this instance is empty of content since 2026-10-01.** On the owner's
+> ruling of that day it dissolved into cat-harness's concern groups (bean `j7ql`,
+> issue #1770). What it held now lives at: [`cat-harness/skills/library/large-datasets/`](../cat-harness/skills/library/large-datasets/materialize-remote.md), [`cat-harness/processes/`](../cat-harness/processes/README.md), `cat-harness/schemas/`, `cat-harness-tools/scripts/` and `cat-harness-tools/id-lookup/`, with each corpus's own descriptor and index at `who-iris/sources/`, `who-iris/id-lookup/` and `folio-assistant-sci/sources/`. The text below is the
+> instance as it was, kept until the owner rules on retiring it; its links
+> point at the new locations.
+
 What binds everywhere is the repository's [`AGENTS.md`](../AGENTS.md); what
 this layer *is* is [`README.md`](README.md). The rule here is about a question
 this layer does **not** answer.
@@ -7,7 +13,7 @@ this layer does **not** answer.
 ## This layer does not decide whether to take something
 
 *"May we take this, and what does holding it cost"* is
-[`materialize-remote`](skills/materialize-remote.md) — five gates, three
+[`materialize-remote`](../cat-harness/skills/library/large-datasets/materialize-remote.md) — five gates, three
 states, recorded as a `folio-materialization/v1` record. This layer answers the
 question before it:
 
