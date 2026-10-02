@@ -15,6 +15,8 @@
     "title": "http://purl.org/dc/terms/title",
     "description": "http://purl.org/dc/terms/description",
     "summary": "rdfs:comment",
+    "prefLabel": "http://www.w3.org/2004/02/skos/core#prefLabel",
+    "notation": "http://www.w3.org/2004/02/skos/core#notation",
     "generatedAt": {
       "@id": "http://www.w3.org/ns/prov#generatedAtTime",
       "@type": "http://www.w3.org/2001/XMLSchema#dateTime"
@@ -301,10 +303,10 @@
   ],
   "canonicalDocument": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld",
   "repository": "cat-harness",
-  "generatedAt": "2026-10-02T21:21:58.034Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/594f41ea0e6c8a9f08ff521df590620c98d0f493",
-  "sourceCommitSha": "594f41ea0e6c8a9f08ff521df590620c98d0f493",
-  "sourceCommitAt": "2026-10-02T21:18:34Z",
+  "generatedAt": "2026-10-02T21:42:07.384Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/91f19c88b191c8de18347b71e07f6ad5ff4e27b5",
+  "sourceCommitSha": "91f19c88b191c8de18347b71e07f6ad5ff4e27b5",
+  "sourceCommitAt": "2026-10-02T21:38:37Z",
   "sourceTreeDirty": true,
   "dependsOnUnavailable": "2 dependency edge(s), none expressible as a record — see gaps",
   "counts": {
@@ -46328,7 +46330,8 @@
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-blissful-ride-c2f26u-handover/cat-harness.jsonld#schema/actor-reach",
       "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#Schema",
       "name": "actor-reach",
-      "title": "**Network reach is a property of an ACTOR**, and how it composes with the",
+      "title": "actor-reach",
+      "summary": "**Network reach is a property of an ACTOR**, and how it composes with the",
       "module": "schemas/actor-reach.ts",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-blissful-ride-c2f26u-handover/cat-harness.jsonld#directory/schemas",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/actor-reach"
@@ -46337,7 +46340,8 @@
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-blissful-ride-c2f26u-handover/cat-harness.jsonld#schema/archive-contents",
       "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#Schema",
       "name": "archive-contents",
-      "title": "An archive's entry list, as data — bean `twqe`.",
+      "title": "archive-contents",
+      "summary": "An archive's entry list, as data — bean `twqe`.",
       "module": "schemas/archive-contents.ts",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-blissful-ride-c2f26u-handover/cat-harness.jsonld#directory/schemas",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/archive-contents"
@@ -46346,7 +46350,8 @@
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-blissful-ride-c2f26u-handover/cat-harness.jsonld#schema/artifact-store",
       "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#Schema",
       "name": "artifact-store",
-      "title": "Where a large build artifact goes — and why it is never \"a GitHub Release\".",
+      "title": "artifact-store",
+      "summary": "Where a large build artifact goes — and why it is never \"a GitHub Release\".",
       "module": "schemas/artifact-store.ts",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-blissful-ride-c2f26u-handover/cat-harness.jsonld#directory/schemas",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/artifact-store"
@@ -46355,7 +46360,8 @@
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-blissful-ride-c2f26u-handover/cat-harness.jsonld#schema/assistant-package",
       "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#Schema",
       "name": "assistant-package",
-      "title": "Package Manifest — Docker and system dependency declarations.",
+      "title": "assistant-package",
+      "summary": "Package Manifest — Docker and system dependency declarations.",
       "module": "schemas/assistant-package.ts",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-blissful-ride-c2f26u-handover/cat-harness.jsonld#directory/schemas",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/assistant-package"
@@ -46364,7 +46370,8 @@
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-blissful-ride-c2f26u-handover/cat-harness.jsonld#schema/assistant-types",
       "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#Schema",
       "name": "assistant-types",
-      "title": "Assistant Framework — Schema definitions for the agent skills system.",
+      "title": "assistant-types",
+      "summary": "Assistant Framework — Schema definitions for the agent skills system.",
       "module": "schemas/assistant-types.ts",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-blissful-ride-c2f26u-handover/cat-harness.jsonld#directory/schemas",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/assistant-types"
@@ -46373,7 +46380,8 @@
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-blissful-ride-c2f26u-handover/cat-harness.jsonld#schema/assistant-workflow",
       "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#Schema",
       "name": "assistant-workflow",
-      "title": "Assistant Workflow — Content lifecycle state machine.",
+      "title": "assistant-workflow",
+      "summary": "Assistant Workflow — Content lifecycle state machine.",
       "module": "schemas/assistant-workflow.ts",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-blissful-ride-c2f26u-handover/cat-harness.jsonld#directory/schemas",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/assistant-workflow"
@@ -46382,7 +46390,8 @@
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-blissful-ride-c2f26u-handover/cat-harness.jsonld#schema/attribution",
       "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#Schema",
       "name": "attribution",
-      "title": "Who wrote a piece of derived content — bean `iqim`.",
+      "title": "attribution",
+      "summary": "Who wrote a piece of derived content — bean `iqim`.",
       "module": "schemas/attribution.ts",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-blissful-ride-c2f26u-handover/cat-harness.jsonld#directory/schemas",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/attribution"
@@ -46391,7 +46400,8 @@
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-blissful-ride-c2f26u-handover/cat-harness.jsonld#schema/avatars",
       "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#Schema",
       "name": "avatars",
-      "title": "An avatar for every declared kind — in and out of the trash, in both",
+      "title": "avatars",
+      "summary": "An avatar for every declared kind — in and out of the trash, in both",
       "module": "schemas/avatars.ts",
       "maintainedBy": [
         "https://litlfred.github.io/folio-assistant/STAGING/claude-blissful-ride-c2f26u-handover/cat-harness.jsonld#tool/avatars-css"
@@ -46403,7 +46413,8 @@
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-blissful-ride-c2f26u-handover/cat-harness.jsonld#schema/bean-graph",
       "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#Schema",
       "name": "bean-graph",
-      "title": "The bean graph — what `beans/` is, rather than where it happens to be.",
+      "title": "bean-graph",
+      "summary": "The bean graph — what `beans/` is, rather than where it happens to be.",
       "module": "schemas/bean-graph.ts",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-blissful-ride-c2f26u-handover/cat-harness.jsonld#directory/schemas",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/bean-graph"
@@ -46412,7 +46423,8 @@
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-blissful-ride-c2f26u-handover/cat-harness.jsonld#schema/bean-note",
       "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#Schema",
       "name": "bean-note",
-      "title": "A BEAN NOTE — one pull request's addendum to a bean, in a file of its own.",
+      "title": "bean-note",
+      "summary": "A BEAN NOTE — one pull request's addendum to a bean, in a file of its own.",
       "module": "schemas/bean-note.ts",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-blissful-ride-c2f26u-handover/cat-harness.jsonld#directory/schemas",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/bean-note"
@@ -46421,7 +46433,8 @@
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-blissful-ride-c2f26u-handover/cat-harness.jsonld#schema/bib-verification",
       "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#Schema",
       "name": "bib-verification",
-      "title": "Bibliography verification schema — `content/bib-qa-verifications.json`.",
+      "title": "bib-verification",
+      "summary": "Bibliography verification schema — `content/bib-qa-verifications.json`.",
       "module": "schemas/bib-verification.ts",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-blissful-ride-c2f26u-handover/cat-harness.jsonld#directory/schemas",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/bib-verification"
@@ -46430,7 +46443,8 @@
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-blissful-ride-c2f26u-handover/cat-harness.jsonld#schema/binary-release",
       "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#Schema",
       "name": "binary-release",
-      "title": "Binary releases — what was published, under what version, with what digest.",
+      "title": "binary-release",
+      "summary": "Binary releases — what was published, under what version, with what digest.",
       "module": "schemas/binary-release.ts",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-blissful-ride-c2f26u-handover/cat-harness.jsonld#directory/schemas",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/binary-release"
@@ -46439,7 +46453,8 @@
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-blissful-ride-c2f26u-handover/cat-harness.jsonld#schema/block-kinds",
       "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#Schema",
       "name": "block-kinds",
-      "title": "The block kinds, as a runtime value — in a leaf module so anything can",
+      "title": "block-kinds",
+      "summary": "The block kinds, as a runtime value — in a leaf module so anything can",
       "module": "schemas/block-kinds.ts",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-blissful-ride-c2f26u-handover/cat-harness.jsonld#directory/schemas",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/block-kinds"
@@ -46448,7 +46463,8 @@
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-blissful-ride-c2f26u-handover/cat-harness.jsonld#schema/block-qa",
       "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#Schema",
       "name": "block-qa",
-      "title": "Per-content-block QA report schema.",
+      "title": "block-qa",
+      "summary": "Per-content-block QA report schema.",
       "module": "schemas/block-qa.ts",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-blissful-ride-c2f26u-handover/cat-harness.jsonld#directory/schemas",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/block-qa"
@@ -46457,7 +46473,8 @@
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-blissful-ride-c2f26u-handover/cat-harness.jsonld#schema/block-summary",
       "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#Schema",
       "name": "block-summary",
-      "title": "An agent's summary of a library block, kept BESIDE the block — the QA",
+      "title": "block-summary",
+      "summary": "An agent's summary of a library block, kept BESIDE the block — the QA",
       "module": "schemas/block-summary.ts",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-blissful-ride-c2f26u-handover/cat-harness.jsonld#directory/schemas",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/block-summary"
@@ -46466,7 +46483,8 @@
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-blissful-ride-c2f26u-handover/cat-harness.jsonld#schema/board-positions",
       "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#Schema",
       "name": "board-positions",
-      "title": "Where a note sits on a board — a layer ON TOP of the notes, never inside them.",
+      "title": "board-positions",
+      "summary": "Where a note sits on a board — a layer ON TOP of the notes, never inside them.",
       "module": "schemas/board-positions.ts",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-blissful-ride-c2f26u-handover/cat-harness.jsonld#directory/schemas",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/board-positions"
@@ -46475,7 +46493,8 @@
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-blissful-ride-c2f26u-handover/cat-harness.jsonld#schema/board",
       "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#Schema",
       "name": "board",
-      "title": "A board — the surface a folio's notes and its content are read on together.",
+      "title": "board",
+      "summary": "A board — the surface a folio's notes and its content are read on together.",
       "module": "schemas/board.ts",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-blissful-ride-c2f26u-handover/cat-harness.jsonld#directory/schemas",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/board"
@@ -46484,7 +46503,8 @@
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-blissful-ride-c2f26u-handover/cat-harness.jsonld#schema/carried-note",
       "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#Schema",
       "name": "carried-note",
-      "title": "What an actor carries forward, attached to a node of the knowledge graph.",
+      "title": "carried-note",
+      "summary": "What an actor carries forward, attached to a node of the knowledge graph.",
       "module": "schemas/carried-note.ts",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-blissful-ride-c2f26u-handover/cat-harness.jsonld#directory/schemas",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/carried-note"
@@ -46493,7 +46513,8 @@
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-blissful-ride-c2f26u-handover/cat-harness.jsonld#schema/cat-harness",
       "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#Schema",
       "name": "cat-harness",
-      "title": "The `CatHarness` declaration — what an instance IS, at its root.",
+      "title": "cat-harness",
+      "summary": "The `CatHarness` declaration — what an instance IS, at its root.",
       "module": "schemas/cat-harness.ts",
       "maintainedBy": [
         "https://litlfred.github.io/folio-assistant/STAGING/claude-blissful-ride-c2f26u-handover/cat-harness.jsonld#tool/cat-harness-schema"
@@ -46505,7 +46526,8 @@
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-blissful-ride-c2f26u-handover/cat-harness.jsonld#schema/concern-groups",
       "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#Schema",
       "name": "concern-groups",
-      "title": "The shape of a kind's FROM-WITHIN declaration file when it names concern",
+      "title": "concern-groups",
+      "summary": "The shape of a kind's FROM-WITHIN declaration file when it names concern",
       "module": "schemas/concern-groups.ts",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-blissful-ride-c2f26u-handover/cat-harness.jsonld#directory/schemas",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/concern-groups"
@@ -46514,7 +46536,8 @@
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-blissful-ride-c2f26u-handover/cat-harness.jsonld#schema/constraints",
       "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#Schema",
       "name": "constraints",
-      "title": "These schemas provide runtime validation and are used by the",
+      "title": "constraints",
+      "summary": "These schemas provide runtime validation and are used by the",
       "module": "schemas/constraints.ts",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-blissful-ride-c2f26u-handover/cat-harness.jsonld#directory/schemas",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/constraints"
@@ -46523,7 +46546,8 @@
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-blissful-ride-c2f26u-handover/cat-harness.jsonld#schema/content-type",
       "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#Schema",
       "name": "content-type",
-      "title": "What a repository IS — the markers it carries, as a resolvable set.",
+      "title": "content-type",
+      "summary": "What a repository IS — the markers it carries, as a resolvable set.",
       "module": "schemas/content-type.ts",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-blissful-ride-c2f26u-handover/cat-harness.jsonld#directory/schemas",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/content-type"
@@ -46532,7 +46556,8 @@
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-blissful-ride-c2f26u-handover/cat-harness.jsonld#schema/content-types-base",
       "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#Schema",
       "name": "content-types-base",
-      "title": "The content types this layer owns, registered at load time.",
+      "title": "content-types-base",
+      "summary": "The content types this layer owns, registered at load time.",
       "module": "schemas/content-types-base.ts",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-blissful-ride-c2f26u-handover/cat-harness.jsonld#directory/schemas",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/content-types-base"
@@ -46541,7 +46566,8 @@
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-blissful-ride-c2f26u-handover/cat-harness.jsonld#schema/contributions",
       "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#Schema",
       "name": "contributions",
-      "title": "Contribution registry — what a folio-assistant *dependency* may add to the",
+      "title": "contributions",
+      "summary": "Contribution registry — what a folio-assistant *dependency* may add to the",
       "module": "schemas/contributions.ts",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-blissful-ride-c2f26u-handover/cat-harness.jsonld#directory/schemas",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/contributions"
@@ -46550,7 +46576,8 @@
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-blissful-ride-c2f26u-handover/cat-harness.jsonld#schema/convention",
       "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#Schema",
       "name": "convention",
-      "title": "A coding convention — context attached to a PROCESS, not loaded everywhere.",
+      "title": "convention",
+      "summary": "A coding convention — context attached to a PROCESS, not loaded everywhere.",
       "module": "schemas/convention.ts",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-blissful-ride-c2f26u-handover/cat-harness.jsonld#directory/schemas",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/convention"
@@ -46559,7 +46586,8 @@
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-blissful-ride-c2f26u-handover/cat-harness.jsonld#schema/decision-methodology-context",
       "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#Schema",
       "name": "decision-methodology-context",
-      "title": "The context an agent provides when asking \"which decision methodology fits?\"",
+      "title": "decision-methodology-context",
+      "summary": "The context an agent provides when asking \"which decision methodology fits?\"",
       "module": "schemas/decision-methodology-context.ts",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-blissful-ride-c2f26u-handover/cat-harness.jsonld#directory/schemas",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/decision-methodology-context"
@@ -46568,7 +46596,8 @@
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-blissful-ride-c2f26u-handover/cat-harness.jsonld#schema/decision-request",
       "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#Schema",
       "name": "decision-request",
-      "title": "A decision handed to a person, as a shape rather than as a habit.",
+      "title": "decision-request",
+      "summary": "A decision handed to a person, as a shape rather than as a habit.",
       "module": "schemas/decision-request.ts",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-blissful-ride-c2f26u-handover/cat-harness.jsonld#directory/schemas",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/decision-request"
@@ -46577,7 +46606,8 @@
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-blissful-ride-c2f26u-handover/cat-harness.jsonld#schema/depends-on",
       "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#Schema",
       "name": "depends-on",
-      "title": "depends-on.ts — `instance-versioning.md` §3.4's record, and the gaps it",
+      "title": "depends-on",
+      "summary": "depends-on.ts — `instance-versioning.md` §3.4's record, and the gaps it",
       "module": "schemas/depends-on.ts",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-blissful-ride-c2f26u-handover/cat-harness.jsonld#directory/schemas",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/depends-on"
@@ -46586,7 +46616,8 @@
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-blissful-ride-c2f26u-handover/cat-harness.jsonld#schema/detangle-sidecar",
       "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#Schema",
       "name": "detangle-sidecar",
-      "title": "The durable record of a detangle measurement — what is pinned, and what is not.",
+      "title": "detangle-sidecar",
+      "summary": "The durable record of a detangle measurement — what is pinned, and what is not.",
       "module": "schemas/detangle-sidecar.ts",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-blissful-ride-c2f26u-handover/cat-harness.jsonld#directory/schemas",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/detangle-sidecar"
@@ -46595,7 +46626,8 @@
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-blissful-ride-c2f26u-handover/cat-harness.jsonld#schema/detangle",
       "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#Schema",
       "name": "detangle",
-      "title": "Detangling — is this candidate subgraph really a subgraph?",
+      "title": "detangle",
+      "summary": "Detangling — is this candidate subgraph really a subgraph?",
       "module": "schemas/detangle.ts",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-blissful-ride-c2f26u-handover/cat-harness.jsonld#directory/schemas",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/detangle"
@@ -46604,7 +46636,8 @@
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-blissful-ride-c2f26u-handover/cat-harness.jsonld#schema/diff-renderers",
       "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#Schema",
       "name": "diff-renderers",
-      "title": "The diff renderers a reviewer chooses between on the review page. Bean",
+      "title": "diff-renderers",
+      "summary": "The diff renderers a reviewer chooses between on the review page. Bean",
       "module": "schemas/diff-renderers.ts",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-blissful-ride-c2f26u-handover/cat-harness.jsonld#directory/schemas",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/diff-renderers"
@@ -46613,7 +46646,8 @@
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-blissful-ride-c2f26u-handover/cat-harness.jsonld#schema/document-image",
       "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#Schema",
       "name": "document-image",
-      "title": "An image placed on a page of an ingested document — bean `d5f1`.",
+      "title": "document-image",
+      "summary": "An image placed on a page of an ingested document — bean `d5f1`.",
       "module": "schemas/document-image.ts",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-blissful-ride-c2f26u-handover/cat-harness.jsonld#directory/schemas",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/document-image"
@@ -46622,7 +46656,8 @@
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-blissful-ride-c2f26u-handover/cat-harness.jsonld#schema/document-kind",
       "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#Schema",
       "name": "document-kind",
-      "title": "A document KIND — a named structure of sections that a document authored",
+      "title": "document-kind",
+      "summary": "A document KIND — a named structure of sections that a document authored",
       "module": "schemas/document-kind.ts",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-blissful-ride-c2f26u-handover/cat-harness.jsonld#directory/schemas",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/document-kind"
@@ -46631,7 +46666,8 @@
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-blissful-ride-c2f26u-handover/cat-harness.jsonld#schema/document-structure",
       "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#Schema",
       "name": "document-structure",
-      "title": "`structure.json` as a BASE with VARIANTS — bean `rkqp`, owner 2026-09-30",
+      "title": "document-structure",
+      "summary": "`structure.json` as a BASE with VARIANTS — bean `rkqp`, owner 2026-09-30",
       "module": "schemas/document-structure.ts",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-blissful-ride-c2f26u-handover/cat-harness.jsonld#directory/schemas",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/document-structure"
@@ -46640,7 +46676,8 @@
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-blissful-ride-c2f26u-handover/cat-harness.jsonld#schema/external-schema",
       "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#Schema",
       "name": "external-schema",
-      "title": "A specification this repository DEPENDS ON and does not hold.",
+      "title": "external-schema",
+      "summary": "A specification this repository DEPENDS ON and does not hold.",
       "module": "schemas/external-schema.ts",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-blissful-ride-c2f26u-handover/cat-harness.jsonld#directory/schemas",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/external-schema"
@@ -46649,7 +46686,8 @@
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-blissful-ride-c2f26u-handover/cat-harness.jsonld#schema/extraction",
       "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#Schema",
       "name": "extraction",
-      "title": "What an EXTRACTION produced, and when — provenance for assets pulled out of",
+      "title": "extraction",
+      "summary": "What an EXTRACTION produced, and when — provenance for assets pulled out of",
       "module": "schemas/extraction.ts",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-blissful-ride-c2f26u-handover/cat-harness.jsonld#directory/schemas",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/extraction"
@@ -46658,7 +46696,8 @@
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-blissful-ride-c2f26u-handover/cat-harness.jsonld#schema/figure-description",
       "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#Schema",
       "name": "figure-description",
-      "title": "What a person or agent SAYS a drawn figure shows — bean `a8wy`, under",
+      "title": "figure-description",
+      "summary": "What a person or agent SAYS a drawn figure shows — bean `a8wy`, under",
       "module": "schemas/figure-description.ts",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-blissful-ride-c2f26u-handover/cat-harness.jsonld#directory/schemas",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/figure-description"
@@ -46667,7 +46706,8 @@
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-blissful-ride-c2f26u-handover/cat-harness.jsonld#schema/folio-graph-kind",
       "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#Schema",
       "name": "folio-graph-kind",
-      "title": "The `folio` graph kind — registered by **core**, not declared by the harness.",
+      "title": "folio-graph-kind",
+      "summary": "The `folio` graph kind — registered by **core**, not declared by the harness.",
       "module": "schemas/folio-graph-kind.ts",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-blissful-ride-c2f26u-handover/cat-harness.jsonld#directory/schemas",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/folio-graph-kind"
@@ -46676,7 +46716,8 @@
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-blissful-ride-c2f26u-handover/cat-harness.jsonld#schema/formal-ref",
       "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#Schema",
       "name": "formal-ref",
-      "title": "Dependency injection point for FORMAL REFERENCES — the `lean:` field's",
+      "title": "formal-ref",
+      "summary": "Dependency injection point for FORMAL REFERENCES — the `lean:` field's",
       "module": "schemas/formal-ref.ts",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-blissful-ride-c2f26u-handover/cat-harness.jsonld#directory/schemas",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/formal-ref"
@@ -46685,7 +46726,8 @@
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-blissful-ride-c2f26u-handover/cat-harness.jsonld#schema/formalization-types",
       "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#Schema",
       "name": "formalization-types",
-      "title": "Formalization Pipeline Types — Proof Objects, Glossary, and Test Reports.",
+      "title": "formalization-types",
+      "summary": "Formalization Pipeline Types — Proof Objects, Glossary, and Test Reports.",
       "module": "schemas/formalization-types.ts",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-blissful-ride-c2f26u-handover/cat-harness.jsonld#directory/schemas",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/formalization-types"
@@ -46694,7 +46736,8 @@
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-blissful-ride-c2f26u-handover/cat-harness.jsonld#schema/front-matter",
       "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#Schema",
       "name": "front-matter",
-      "title": "The one YAML front-matter reader for this repository's self-declaring files.",
+      "title": "front-matter",
+      "summary": "The one YAML front-matter reader for this repository's self-declaring files.",
       "module": "schemas/front-matter.ts",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-blissful-ride-c2f26u-handover/cat-harness.jsonld#directory/schemas",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/front-matter"
@@ -46703,7 +46746,8 @@
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-blissful-ride-c2f26u-handover/cat-harness.jsonld#schema/glossary-graph-kind",
       "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#Schema",
       "name": "glossary-graph-kind",
-      "title": "The `glossary` graph kind — registered by **core**, not declared by the harness.",
+      "title": "glossary-graph-kind",
+      "summary": "The `glossary` graph kind — registered by **core**, not declared by the harness.",
       "module": "schemas/glossary-graph-kind.ts",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-blissful-ride-c2f26u-handover/cat-harness.jsonld#directory/schemas",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/glossary-graph-kind"
@@ -46712,7 +46756,8 @@
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-blissful-ride-c2f26u-handover/cat-harness.jsonld#schema/glossary-ledger",
       "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#Schema",
       "name": "glossary-ledger",
-      "title": "The swimlane glossary's retirement ledger: its tag and its shape.",
+      "title": "glossary-ledger",
+      "summary": "The swimlane glossary's retirement ledger: its tag and its shape.",
       "module": "schemas/glossary-ledger.ts",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-blissful-ride-c2f26u-handover/cat-harness.jsonld#directory/schemas",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/glossary-ledger"
@@ -46721,7 +46766,8 @@
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-blissful-ride-c2f26u-handover/cat-harness.jsonld#schema/graph-kind-registry",
       "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#Schema",
       "name": "graph-kind-registry",
-      "title": "The graph-kind registry — **a leaf, and that is its whole job**.",
+      "title": "graph-kind-registry",
+      "summary": "The graph-kind registry — **a leaf, and that is its whole job**.",
       "module": "schemas/graph-kind-registry.ts",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-blissful-ride-c2f26u-handover/cat-harness.jsonld#directory/schemas",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/graph-kind-registry"
@@ -46730,7 +46776,8 @@
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-blissful-ride-c2f26u-handover/cat-harness.jsonld#schema/harness-config",
       "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#Schema",
       "name": "harness-config",
-      "title": "Cross-folio dependency schema for folio-assistant instances.",
+      "title": "harness-config",
+      "summary": "Cross-folio dependency schema for folio-assistant instances.",
       "module": "schemas/harness-config.ts",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-blissful-ride-c2f26u-handover/cat-harness.jsonld#directory/schemas",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/harness-config"
@@ -46739,7 +46786,8 @@
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-blissful-ride-c2f26u-handover/cat-harness.jsonld#schema/health-report",
       "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#Schema",
       "name": "health-report",
-      "title": "Repository health reports — what the daily sweep under `test/health/` wrote.",
+      "title": "health-report",
+      "summary": "Repository health reports — what the daily sweep under `test/health/` wrote.",
       "module": "schemas/health-report.ts",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-blissful-ride-c2f26u-handover/cat-harness.jsonld#directory/schemas",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/health-report"
@@ -46748,7 +46796,8 @@
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-blissful-ride-c2f26u-handover/cat-harness.jsonld#schema/id-lookup",
       "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#Schema",
       "name": "id-lookup",
-      "title": "A prefix-sharded identifier lookup for nodes a folio REFERENCES but does not",
+      "title": "id-lookup",
+      "summary": "A prefix-sharded identifier lookup for nodes a folio REFERENCES but does not",
       "module": "schemas/id-lookup.ts",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-blissful-ride-c2f26u-handover/cat-harness.jsonld#directory/schemas",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/id-lookup"
@@ -46757,7 +46806,8 @@
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-blissful-ride-c2f26u-handover/cat-harness.jsonld#schema/inline-code",
       "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#Schema",
       "name": "inline-code",
-      "title": "Backtick spans in authored prose, rendered as `<code>` — bean `mylx`.",
+      "title": "inline-code",
+      "summary": "Backtick spans in authored prose, rendered as `<code>` — bean `mylx`.",
       "module": "schemas/inline-code.ts",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-blissful-ride-c2f26u-handover/cat-harness.jsonld#directory/schemas",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/inline-code"
@@ -46766,7 +46816,8 @@
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-blissful-ride-c2f26u-handover/cat-harness.jsonld#schema/instance-repositories",
       "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#Schema",
       "name": "instance-repositories",
-      "title": "The `owner/repo ↔ instance` map — DERIVED, never kept by hand (bean `6rmv`).",
+      "title": "instance-repositories",
+      "summary": "The `owner/repo ↔ instance` map — DERIVED, never kept by hand (bean `6rmv`).",
       "module": "schemas/instance-repositories.ts",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-blissful-ride-c2f26u-handover/cat-harness.jsonld#directory/schemas",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/instance-repositories"
@@ -46775,7 +46826,8 @@
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-blissful-ride-c2f26u-handover/cat-harness.jsonld#schema/intake",
       "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#Schema",
       "name": "intake",
-      "title": "An intake record — what one capture put into `uploads/<doc>/`, and where it",
+      "title": "intake",
+      "summary": "An intake record — what one capture put into `uploads/<doc>/`, and where it",
       "module": "schemas/intake.ts",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-blissful-ride-c2f26u-handover/cat-harness.jsonld#directory/schemas",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/intake"
@@ -46784,7 +46836,8 @@
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-blissful-ride-c2f26u-handover/cat-harness.jsonld#schema/interaction",
       "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#Schema",
       "name": "interaction",
-      "title": "How a person wants to be asked — the `interaction` graph's one node kind.",
+      "title": "interaction",
+      "summary": "How a person wants to be asked — the `interaction` graph's one node kind.",
       "module": "schemas/interaction.ts",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-blissful-ride-c2f26u-handover/cat-harness.jsonld#directory/schemas",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/interaction"
@@ -46793,7 +46846,8 @@
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-blissful-ride-c2f26u-handover/cat-harness.jsonld#schema/jsonld",
       "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#Schema",
       "name": "jsonld",
-      "title": "JSON-LD projection of the content block model.",
+      "title": "jsonld",
+      "summary": "JSON-LD projection of the content block model.",
       "module": "schemas/jsonld.ts",
       "maintainedBy": [
         "https://litlfred.github.io/folio-assistant/STAGING/claude-blissful-ride-c2f26u-handover/cat-harness.jsonld#tool/content-context"
@@ -46805,7 +46859,8 @@
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-blissful-ride-c2f26u-handover/cat-harness.jsonld#schema/kg-node",
       "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#Schema",
       "name": "kg-node",
-      "title": "The two labels every knowledge-graph node may carry.",
+      "title": "kg-node",
+      "summary": "The two labels every knowledge-graph node may carry.",
       "module": "schemas/kg-node.ts",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-blissful-ride-c2f26u-handover/cat-harness.jsonld#directory/schemas",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/kg-node"
@@ -46814,7 +46869,8 @@
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-blissful-ride-c2f26u-handover/cat-harness.jsonld#schema/kg-qa",
       "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#Schema",
       "name": "kg-qa",
-      "title": "Knowledge-graph QA sidecars — what is dangling in the process/role/skill graph.",
+      "title": "kg-qa",
+      "summary": "Knowledge-graph QA sidecars — what is dangling in the process/role/skill graph.",
       "module": "schemas/kg-qa.ts",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-blissful-ride-c2f26u-handover/cat-harness.jsonld#directory/schemas",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/kg-qa"
@@ -46823,7 +46879,8 @@
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-blissful-ride-c2f26u-handover/cat-harness.jsonld#schema/kind-validator",
       "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#Schema",
       "name": "kind-validator",
-      "title": "Resolving a graph kind's **validator** — the one parameter that turns",
+      "title": "kind-validator",
+      "summary": "Resolving a graph kind's **validator** — the one parameter that turns",
       "module": "schemas/kind-validator.ts",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-blissful-ride-c2f26u-handover/cat-harness.jsonld#directory/schemas",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/kind-validator"
@@ -46832,7 +46889,8 @@
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-blissful-ride-c2f26u-handover/cat-harness.jsonld#schema/landing-sticky",
       "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#Schema",
       "name": "landing-sticky",
-      "title": "The landing page, as a board of sticky notes.",
+      "title": "landing-sticky",
+      "summary": "The landing page, as a board of sticky notes.",
       "module": "schemas/landing-sticky.ts",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-blissful-ride-c2f26u-handover/cat-harness.jsonld#directory/schemas",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/landing-sticky"
@@ -46841,7 +46899,8 @@
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-blissful-ride-c2f26u-handover/cat-harness.jsonld#schema/lean-packages",
       "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#Schema",
       "name": "lean-packages",
-      "title": "The `lean.ref` grammar and the package registry it resolves against.",
+      "title": "lean-packages",
+      "summary": "The `lean.ref` grammar and the package registry it resolves against.",
       "module": "schemas/lean-packages.ts",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-blissful-ride-c2f26u-handover/cat-harness.jsonld#directory/schemas",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/lean-packages"
@@ -46850,7 +46909,8 @@
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-blissful-ride-c2f26u-handover/cat-harness.jsonld#schema/log-entry",
       "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#Schema",
       "name": "log-entry",
-      "title": "The agent activity log — what an agent did, when, and in which process.",
+      "title": "log-entry",
+      "summary": "The agent activity log — what an agent did, when, and in which process.",
       "module": "schemas/log-entry.ts",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-blissful-ride-c2f26u-handover/cat-harness.jsonld#directory/schemas",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/log-entry"
@@ -46859,7 +46919,8 @@
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-blissful-ride-c2f26u-handover/cat-harness.jsonld#schema/materialization-state",
       "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#Schema",
       "name": "materialization-state",
-      "title": "The materialization STATE vocabulary — whether the bytes are here, and how",
+      "title": "materialization-state",
+      "summary": "The materialization STATE vocabulary — whether the bytes are here, and how",
       "module": "schemas/materialization-state.ts",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-blissful-ride-c2f26u-handover/cat-harness.jsonld#directory/schemas",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/materialization-state"
@@ -46868,7 +46929,8 @@
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-blissful-ride-c2f26u-handover/cat-harness.jsonld#schema/memory",
       "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#Schema",
       "name": "memory",
-      "title": "An agent's memory — what it carries into the next task, as a graph node.",
+      "title": "memory",
+      "summary": "An agent's memory — what it carries into the next task, as a graph node.",
       "module": "schemas/memory.ts",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-blissful-ride-c2f26u-handover/cat-harness.jsonld#directory/schemas",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/memory"
@@ -46877,7 +46939,8 @@
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-blissful-ride-c2f26u-handover/cat-harness.jsonld#schema/methodology",
       "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#Schema",
       "name": "methodology",
-      "title": "A methodology node's front matter — `folio-methodology/v1`.",
+      "title": "methodology",
+      "summary": "A methodology node's front matter — `folio-methodology/v1`.",
       "module": "schemas/methodology.ts",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-blissful-ride-c2f26u-handover/cat-harness.jsonld#directory/schemas",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/methodology"
@@ -46886,7 +46949,8 @@
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-blissful-ride-c2f26u-handover/cat-harness.jsonld#schema/narrative",
       "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#Schema",
       "name": "narrative",
-      "title": "A generated narrative, and who stands behind it — bean `ju0u`.",
+      "title": "narrative",
+      "summary": "A generated narrative, and who stands behind it — bean `ju0u`.",
       "module": "schemas/narrative.ts",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-blissful-ride-c2f26u-handover/cat-harness.jsonld#directory/schemas",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/narrative"
@@ -46895,7 +46959,8 @@
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-blissful-ride-c2f26u-handover/cat-harness.jsonld#schema/note-anchor",
       "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#Schema",
       "name": "note-anchor",
-      "title": "Where a note is attached, as a three-state answer.",
+      "title": "note-anchor",
+      "summary": "Where a note is attached, as a three-state answer.",
       "module": "schemas/note-anchor.ts",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-blissful-ride-c2f26u-handover/cat-harness.jsonld#directory/schemas",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/note-anchor"
@@ -46904,7 +46969,8 @@
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-blissful-ride-c2f26u-handover/cat-harness.jsonld#schema/odrl",
       "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#Schema",
       "name": "odrl",
-      "title": "W3C ODRL 2.2 policies: what an Actor may do, scoped by Process, Task and Role.",
+      "title": "odrl",
+      "summary": "W3C ODRL 2.2 policies: what an Actor may do, scoped by Process, Task and Role.",
       "module": "schemas/odrl.ts",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-blissful-ride-c2f26u-handover/cat-harness.jsonld#directory/schemas",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/odrl"
@@ -46913,7 +46979,8 @@
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-blissful-ride-c2f26u-handover/cat-harness.jsonld#schema/panel-chrome",
       "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#Schema",
       "name": "panel-chrome",
-      "title": "What a card's open panel offers — the kind declares, the platform fixes.",
+      "title": "panel-chrome",
+      "summary": "What a card's open panel offers — the kind declares, the platform fixes.",
       "module": "schemas/panel-chrome.ts",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-blissful-ride-c2f26u-handover/cat-harness.jsonld#directory/schemas",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/panel-chrome"
@@ -46922,7 +46989,8 @@
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-blissful-ride-c2f26u-handover/cat-harness.jsonld#schema/pdf-structure",
       "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#Schema",
       "name": "pdf-structure",
-      "title": "`structure.json`: the structure of an ingested PDF, tagged `_schema: pdf-structure/v1`.",
+      "title": "pdf-structure",
+      "summary": "`structure.json`: the structure of an ingested PDF, tagged `_schema: pdf-structure/v1`.",
       "module": "schemas/pdf-structure.ts",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-blissful-ride-c2f26u-handover/cat-harness.jsonld#directory/schemas",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/pdf-structure"
@@ -46931,7 +46999,8 @@
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-blissful-ride-c2f26u-handover/cat-harness.jsonld#schema/pinned-terminology",
       "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#Schema",
       "name": "pinned-terminology",
-      "title": "The codes a PUBLISHED IG carries at ONE pinned version — bean `7wou`.",
+      "title": "pinned-terminology",
+      "summary": "The codes a PUBLISHED IG carries at ONE pinned version — bean `7wou`.",
       "module": "schemas/pinned-terminology.ts",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-blissful-ride-c2f26u-handover/cat-harness.jsonld#directory/schemas",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/pinned-terminology"
@@ -46940,7 +47009,8 @@
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-blissful-ride-c2f26u-handover/cat-harness.jsonld#schema/precision-scalar",
       "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#Schema",
       "name": "precision-scalar",
-      "title": "§S7 — `PrecisionScalar` envelope for round-tripping high-precision",
+      "title": "precision-scalar",
+      "summary": "§S7 — `PrecisionScalar` envelope for round-tripping high-precision",
       "module": "schemas/precision-scalar.ts",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-blissful-ride-c2f26u-handover/cat-harness.jsonld#directory/schemas",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/precision-scalar"
@@ -46949,7 +47019,8 @@
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-blissful-ride-c2f26u-handover/cat-harness.jsonld#schema/process-element-id",
       "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#Schema",
       "name": "process-element-id",
-      "title": "The id a BPMN `<process>` element declares — `Process_CRDM`,",
+      "title": "process-element-id",
+      "summary": "The id a BPMN `<process>` element declares — `Process_CRDM`,",
       "module": "schemas/process-element-id.ts",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-blissful-ride-c2f26u-handover/cat-harness.jsonld#directory/schemas",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/process-element-id"
@@ -46958,7 +47029,8 @@
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-blissful-ride-c2f26u-handover/cat-harness.jsonld#schema/property-skills",
       "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#Schema",
       "name": "property-skills",
-      "title": "Which skill edits which declaration property: the \"edit skills\" column of the",
+      "title": "property-skills",
+      "summary": "Which skill edits which declaration property: the \"edit skills\" column of the",
       "module": "schemas/property-skills.ts",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-blissful-ride-c2f26u-handover/cat-harness.jsonld#directory/schemas",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/property-skills"
@@ -46967,7 +47039,8 @@
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-blissful-ride-c2f26u-handover/cat-harness.jsonld#schema/prov-jsonld",
       "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#Schema",
       "name": "prov-jsonld",
-      "title": "PROV activities as PROV-JSONLD — links, not strings (beans `jcet`, `9y9j`).",
+      "title": "prov-jsonld",
+      "summary": "PROV activities as PROV-JSONLD — links, not strings (beans `jcet`, `9y9j`).",
       "module": "schemas/prov-jsonld.ts",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-blissful-ride-c2f26u-handover/cat-harness.jsonld#directory/schemas",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/prov-jsonld"
@@ -46976,7 +47049,8 @@
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-blissful-ride-c2f26u-handover/cat-harness.jsonld#schema/prov",
       "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#Schema",
       "name": "prov",
-      "title": "W3C PROV-O: the record of a task being performed. Issue #1180.",
+      "title": "prov",
+      "summary": "W3C PROV-O: the record of a task being performed. Issue #1180.",
       "module": "schemas/prov.ts",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-blissful-ride-c2f26u-handover/cat-harness.jsonld#directory/schemas",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/prov"
@@ -46985,7 +47059,8 @@
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-blissful-ride-c2f26u-handover/cat-harness.jsonld#schema/python-deps",
       "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#Schema",
       "name": "python-deps",
-      "title": "The Python packages this repository's scripts need — declared once.",
+      "title": "python-deps",
+      "summary": "The Python packages this repository's scripts need — declared once.",
       "module": "schemas/python-deps.ts",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-blissful-ride-c2f26u-handover/cat-harness.jsonld#directory/schemas",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/python-deps"
@@ -46994,7 +47069,8 @@
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-blissful-ride-c2f26u-handover/cat-harness.jsonld#schema/qa-report",
       "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#Schema",
       "name": "qa-report",
-      "title": "QA reports — what a pipeline TOOL recorded about its own run.",
+      "title": "qa-report",
+      "summary": "QA reports — what a pipeline TOOL recorded about its own run.",
       "module": "schemas/qa-report.ts",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-blissful-ride-c2f26u-handover/cat-harness.jsonld#directory/schemas",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/qa-report"
@@ -47003,7 +47079,8 @@
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-blissful-ride-c2f26u-handover/cat-harness.jsonld#schema/qa-review",
       "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#Schema",
       "name": "qa-review",
-      "title": "QA review — findings, decisions, and the audit notes that justify them.",
+      "title": "qa-review",
+      "summary": "QA review — findings, decisions, and the audit notes that justify them.",
       "module": "schemas/qa-review.ts",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-blissful-ride-c2f26u-handover/cat-harness.jsonld#directory/schemas",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/qa-review"
@@ -47012,7 +47089,8 @@
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-blissful-ride-c2f26u-handover/cat-harness.jsonld#schema/reader-filter",
       "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#Schema",
       "name": "reader-filter",
-      "title": "The filter a READER applies to a board, which commits nothing.",
+      "title": "reader-filter",
+      "summary": "The filter a READER applies to a board, which commits nothing.",
       "module": "schemas/reader-filter.ts",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-blissful-ride-c2f26u-handover/cat-harness.jsonld#directory/schemas",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/reader-filter"
@@ -47021,7 +47099,8 @@
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-blissful-ride-c2f26u-handover/cat-harness.jsonld#schema/refactor-strategy",
       "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#Schema",
       "name": "refactor-strategy",
-      "title": "Lean proof-refactoring strategy database.",
+      "title": "refactor-strategy",
+      "summary": "Lean proof-refactoring strategy database.",
       "module": "schemas/refactor-strategy.ts",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-blissful-ride-c2f26u-handover/cat-harness.jsonld#directory/schemas",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/refactor-strategy"
@@ -47030,7 +47109,8 @@
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-blissful-ride-c2f26u-handover/cat-harness.jsonld#schema/referenced-source",
       "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#Schema",
       "name": "referenced-source",
-      "title": "`referenced.json`: a library entry that RECORDS a source and holds none of",
+      "title": "referenced-source",
+      "summary": "`referenced.json`: a library entry that RECORDS a source and holds none of",
       "module": "schemas/referenced-source.ts",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-blissful-ride-c2f26u-handover/cat-harness.jsonld#directory/schemas",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/referenced-source"
@@ -47039,7 +47119,8 @@
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-blissful-ride-c2f26u-handover/cat-harness.jsonld#schema/render-log",
       "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#Schema",
       "name": "render-log",
-      "title": "The render log — what was published to the publish branch, when, and why.",
+      "title": "render-log",
+      "summary": "The render log — what was published to the publish branch, when, and why.",
       "module": "schemas/render-log.ts",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-blissful-ride-c2f26u-handover/cat-harness.jsonld#directory/schemas",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/render-log"
@@ -47048,7 +47129,8 @@
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-blissful-ride-c2f26u-handover/cat-harness.jsonld#schema/render-output",
       "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#Schema",
       "name": "render-output",
-      "title": "The ONE implementation of a Tool output's render hint — bean `q2wm`, R17.",
+      "title": "render-output",
+      "summary": "The ONE implementation of a Tool output's render hint — bean `q2wm`, R17.",
       "module": "schemas/render-output.ts",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-blissful-ride-c2f26u-handover/cat-harness.jsonld#directory/schemas",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/render-output"
@@ -47057,7 +47139,8 @@
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-blissful-ride-c2f26u-handover/cat-harness.jsonld#schema/render-targets",
       "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#Schema",
       "name": "render-targets",
-      "title": "Which render target a content profile validates against — declared as data,",
+      "title": "render-targets",
+      "summary": "Which render target a content profile validates against — declared as data,",
       "module": "schemas/render-targets.ts",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-blissful-ride-c2f26u-handover/cat-harness.jsonld#directory/schemas",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/render-targets"
@@ -47066,7 +47149,8 @@
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-blissful-ride-c2f26u-handover/cat-harness.jsonld#schema/repo-full-name",
       "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#Schema",
       "name": "repo-full-name",
-      "title": "`owner/name` — a forge repository's full name, in its own module so a",
+      "title": "repo-full-name",
+      "summary": "`owner/name` — a forge repository's full name, in its own module so a",
       "module": "schemas/repo-full-name.ts",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-blissful-ride-c2f26u-handover/cat-harness.jsonld#directory/schemas",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/repo-full-name"
@@ -47075,7 +47159,8 @@
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-blissful-ride-c2f26u-handover/cat-harness.jsonld#schema/role-graph",
       "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#Schema",
       "name": "role-graph",
-      "title": "Actors, Roles and Skills — who does a BPMN task, and what they need to know.",
+      "title": "role-graph",
+      "summary": "Actors, Roles and Skills — who does a BPMN task, and what they need to know.",
       "module": "schemas/role-graph.ts",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-blissful-ride-c2f26u-handover/cat-harness.jsonld#directory/schemas",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/role-graph"
@@ -47084,7 +47169,8 @@
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-blissful-ride-c2f26u-handover/cat-harness.jsonld#schema/safe-url",
       "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#Schema",
       "name": "safe-url",
-      "title": "Which URL schemes may reach an `href`, and why the answer is a list.",
+      "title": "safe-url",
+      "summary": "Which URL schemes may reach an `href`, and why the answer is a list.",
       "module": "schemas/safe-url.ts",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-blissful-ride-c2f26u-handover/cat-harness.jsonld#directory/schemas",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/safe-url"
@@ -47093,7 +47179,8 @@
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-blissful-ride-c2f26u-handover/cat-harness.jsonld#schema/scenario-overlay",
       "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#Schema",
       "name": "scenario-overlay",
-      "title": "Roles, actors and capabilities EXTENDED BY ID from a higher instance's own",
+      "title": "scenario-overlay",
+      "summary": "Roles, actors and capabilities EXTENDED BY ID from a higher instance's own",
       "module": "schemas/scenario-overlay.ts",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-blissful-ride-c2f26u-handover/cat-harness.jsonld#directory/schemas",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/scenario-overlay"
@@ -47102,7 +47189,8 @@
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-blissful-ride-c2f26u-handover/cat-harness.jsonld#schema/script-qa",
       "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#Schema",
       "name": "script-qa",
-      "title": "Per-script QA report schema.",
+      "title": "script-qa",
+      "summary": "Per-script QA report schema.",
       "module": "schemas/script-qa.ts",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-blissful-ride-c2f26u-handover/cat-harness.jsonld#directory/schemas",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/script-qa"
@@ -47111,7 +47199,8 @@
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-blissful-ride-c2f26u-handover/cat-harness.jsonld#schema/section-verdicts",
       "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#Schema",
       "name": "section-verdicts",
-      "title": "Section verdicts — which ingested sections are not PROSE. Bean `fnqn`.",
+      "title": "section-verdicts",
+      "summary": "Section verdicts — which ingested sections are not PROSE. Bean `fnqn`.",
       "module": "schemas/section-verdicts.ts",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-blissful-ride-c2f26u-handover/cat-harness.jsonld#directory/schemas",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/section-verdicts"
@@ -47120,7 +47209,8 @@
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-blissful-ride-c2f26u-handover/cat-harness.jsonld#schema/semantic-zoom",
       "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#Schema",
       "name": "semantic-zoom",
-      "title": "When a card stops rendering its words and becomes its avatar.",
+      "title": "semantic-zoom",
+      "summary": "When a card stops rendering its words and becomes its avatar.",
       "module": "schemas/semantic-zoom.ts",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-blissful-ride-c2f26u-handover/cat-harness.jsonld#directory/schemas",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/semantic-zoom"
@@ -47129,7 +47219,8 @@
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-blissful-ride-c2f26u-handover/cat-harness.jsonld#schema/session-context",
       "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#Schema",
       "name": "session-context",
-      "title": "What a state machine tracks across a SESSION, as opposed to an instance.",
+      "title": "session-context",
+      "summary": "What a state machine tracks across a SESSION, as opposed to an instance.",
       "module": "schemas/session-context.ts",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-blissful-ride-c2f26u-handover/cat-harness.jsonld#directory/schemas",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/session-context"
@@ -47138,7 +47229,8 @@
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-blissful-ride-c2f26u-handover/cat-harness.jsonld#schema/session-survey",
       "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#Schema",
       "name": "session-survey",
-      "title": "A PUBLISHED SURVEY of a commit window — so the next session reads it instead",
+      "title": "session-survey",
+      "summary": "A PUBLISHED SURVEY of a commit window — so the next session reads it instead",
       "module": "schemas/session-survey.ts",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-blissful-ride-c2f26u-handover/cat-harness.jsonld#directory/schemas",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/session-survey"
@@ -47147,7 +47239,8 @@
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-blissful-ride-c2f26u-handover/cat-harness.jsonld#schema/site-indexes",
       "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#Schema",
       "name": "site-indexes",
-      "title": "The published index files the site's viewers read — each `$schema` family",
+      "title": "site-indexes",
+      "summary": "The published index files the site's viewers read — each `$schema` family",
       "module": "schemas/site-indexes.ts",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-blissful-ride-c2f26u-handover/cat-harness.jsonld#directory/schemas",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/site-indexes"
@@ -47156,7 +47249,8 @@
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-blissful-ride-c2f26u-handover/cat-harness.jsonld#schema/skill-definitions-dir",
       "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#Schema",
       "name": "skill-definitions-dir",
-      "title": "Where the JSON workflow-skill definitions and the conventions live.",
+      "title": "skill-definitions-dir",
+      "summary": "Where the JSON workflow-skill definitions and the conventions live.",
       "module": "schemas/skill-definitions-dir.ts",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-blissful-ride-c2f26u-handover/cat-harness.jsonld#directory/schemas",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/skill-definitions-dir"
@@ -47165,7 +47259,8 @@
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-blissful-ride-c2f26u-handover/cat-harness.jsonld#schema/skill-package",
       "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#Schema",
       "name": "skill-package",
-      "title": "The SKILL-FRAMEWORK vocabulary — actors, capabilities, skills, requirements,",
+      "title": "skill-package",
+      "summary": "The SKILL-FRAMEWORK vocabulary — actors, capabilities, skills, requirements,",
       "module": "schemas/skill-package.ts",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-blissful-ride-c2f26u-handover/cat-harness.jsonld#directory/schemas",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/skill-package"
@@ -47174,7 +47269,8 @@
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-blissful-ride-c2f26u-handover/cat-harness.jsonld#schema/skill-topics",
       "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#Schema",
       "name": "skill-topics",
-      "title": "The shape of `skills.json`, the labelling node that says which",
+      "title": "skill-topics",
+      "summary": "The shape of `skills.json`, the labelling node that says which",
       "module": "schemas/skill-topics.ts",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-blissful-ride-c2f26u-handover/cat-harness.jsonld#directory/schemas",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/skill-topics"
@@ -47183,7 +47279,8 @@
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-blissful-ride-c2f26u-handover/cat-harness.jsonld#schema/slides-accessibility",
       "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#Schema",
       "name": "slides-accessibility",
-      "title": "`accessibility.json`: a slide deck's accessibility report, written by",
+      "title": "slides-accessibility",
+      "summary": "`accessibility.json`: a slide deck's accessibility report, written by",
       "module": "schemas/slides-accessibility.ts",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-blissful-ride-c2f26u-handover/cat-harness.jsonld#directory/schemas",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/slides-accessibility"
@@ -47192,7 +47289,8 @@
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-blissful-ride-c2f26u-handover/cat-harness.jsonld#schema/source-descriptor",
       "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#Schema",
       "name": "source-descriptor",
-      "title": "How to enumerate a corpus you will never hold, and how to ask it for a subset.",
+      "title": "source-descriptor",
+      "summary": "How to enumerate a corpus you will never hold, and how to ask it for a subset.",
       "module": "schemas/source-descriptor.ts",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-blissful-ride-c2f26u-handover/cat-harness.jsonld#directory/schemas",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/source-descriptor"
@@ -47201,7 +47299,8 @@
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-blissful-ride-c2f26u-handover/cat-harness.jsonld#schema/source-licence",
       "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#Schema",
       "name": "source-licence",
-      "title": "A source's licence, as one record wherever it is written — bean `7bg9`.",
+      "title": "source-licence",
+      "summary": "A source's licence, as one record wherever it is written — bean `7bg9`.",
       "module": "schemas/source-licence.ts",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-blissful-ride-c2f26u-handover/cat-harness.jsonld#directory/schemas",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/source-licence"
@@ -47210,7 +47309,8 @@
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-blissful-ride-c2f26u-handover/cat-harness.jsonld#schema/source-provenance",
       "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#Schema",
       "name": "source-provenance",
-      "title": "WHERE BYTES CAME FROM — the source-side provenance pair, and a signature.",
+      "title": "source-provenance",
+      "summary": "WHERE BYTES CAME FROM — the source-side provenance pair, and a signature.",
       "module": "schemas/source-provenance.ts",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-blissful-ride-c2f26u-handover/cat-harness.jsonld#directory/schemas",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/source-provenance"
@@ -47219,7 +47319,8 @@
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-blissful-ride-c2f26u-handover/cat-harness.jsonld#schema/staging-preview",
       "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#Schema",
       "name": "staging-preview",
-      "title": "`staging-preview` — a node of the trashcan that describes one review preview.",
+      "title": "staging-preview",
+      "summary": "`staging-preview` — a node of the trashcan that describes one review preview.",
       "module": "schemas/staging-preview.ts",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-blissful-ride-c2f26u-handover/cat-harness.jsonld#directory/schemas",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/staging-preview"
@@ -47228,7 +47329,8 @@
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-blissful-ride-c2f26u-handover/cat-harness.jsonld#schema/staging",
       "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#Schema",
       "name": "staging",
-      "title": "Staging comparison schema — before/after URL pairs for content review.",
+      "title": "staging",
+      "summary": "Staging comparison schema — before/after URL pairs for content review.",
       "module": "schemas/staging.ts",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-blissful-ride-c2f26u-handover/cat-harness.jsonld#directory/schemas",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/staging"
@@ -47237,7 +47339,8 @@
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-blissful-ride-c2f26u-handover/cat-harness.jsonld#schema/sticky-contribution",
       "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#Schema",
       "name": "sticky-contribution",
-      "title": "A sticky is a CONTRIBUTION from a layer, declared by that layer.",
+      "title": "sticky-contribution",
+      "summary": "A sticky is a CONTRIBUTION from a layer, declared by that layer.",
       "module": "schemas/sticky-contribution.ts",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-blissful-ride-c2f26u-handover/cat-harness.jsonld#directory/schemas",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/sticky-contribution"
@@ -47246,7 +47349,8 @@
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-blissful-ride-c2f26u-handover/cat-harness.jsonld#schema/substrate-snapshot",
       "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#Schema",
       "name": "substrate-snapshot",
-      "title": "A SUBSTRATE SNAPSHOT: the root declaration of a subscribed Knowledge Graph,",
+      "title": "substrate-snapshot",
+      "summary": "A SUBSTRATE SNAPSHOT: the root declaration of a subscribed Knowledge Graph,",
       "module": "schemas/substrate-snapshot.ts",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-blissful-ride-c2f26u-handover/cat-harness.jsonld#directory/schemas",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/substrate-snapshot"
@@ -47255,7 +47359,8 @@
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-blissful-ride-c2f26u-handover/cat-harness.jsonld#schema/tabular-csvw",
       "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#Schema",
       "name": "tabular-csvw",
-      "title": "A tabular source as CSVW, annotated with what CSVW cannot say — bean `eief`.",
+      "title": "tabular-csvw",
+      "summary": "A tabular source as CSVW, annotated with what CSVW cannot say — bean `eief`.",
       "module": "schemas/tabular-csvw.ts",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-blissful-ride-c2f26u-handover/cat-harness.jsonld#directory/schemas",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/tabular-csvw"
@@ -47264,7 +47369,8 @@
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-blissful-ride-c2f26u-handover/cat-harness.jsonld#schema/tabular-records",
       "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#Schema",
       "name": "tabular-records",
-      "title": "What makes a dataset findable — bean `p67i`.",
+      "title": "tabular-records",
+      "summary": "What makes a dataset findable — bean `p67i`.",
       "module": "schemas/tabular-records.ts",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-blissful-ride-c2f26u-handover/cat-harness.jsonld#directory/schemas",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/tabular-records"
@@ -47273,7 +47379,8 @@
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-blissful-ride-c2f26u-handover/cat-harness.jsonld#schema/term-adjudication",
       "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#Schema",
       "name": "term-adjudication",
-      "title": "What was decided when a minted glossary term and an authorised terminology",
+      "title": "term-adjudication",
+      "summary": "What was decided when a minted glossary term and an authorised terminology",
       "module": "schemas/term-adjudication.ts",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-blissful-ride-c2f26u-handover/cat-harness.jsonld#directory/schemas",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/term-adjudication"
@@ -47282,7 +47389,8 @@
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-blissful-ride-c2f26u-handover/cat-harness.jsonld#schema/term-mapping",
       "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#Schema",
       "name": "term-mapping",
-      "title": "Whether a glossary term the extractor MINTED already exists as a concept",
+      "title": "term-mapping",
+      "summary": "Whether a glossary term the extractor MINTED already exists as a concept",
       "module": "schemas/term-mapping.ts",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-blissful-ride-c2f26u-handover/cat-harness.jsonld#directory/schemas",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/term-mapping"
@@ -47291,7 +47399,8 @@
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-blissful-ride-c2f26u-handover/cat-harness.jsonld#schema/test-preload",
       "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#Schema",
       "name": "test-preload",
-      "title": "Register core's graph kinds before any test reads a declaration.",
+      "title": "test-preload",
+      "summary": "Register core's graph kinds before any test reads a declaration.",
       "module": "schemas/test-preload.ts",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-blissful-ride-c2f26u-handover/cat-harness.jsonld#directory/schemas",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/test-preload"
@@ -47300,7 +47409,8 @@
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-blissful-ride-c2f26u-handover/cat-harness.jsonld#schema/test-run",
       "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#Schema",
       "name": "test-run",
-      "title": "A TEST RUN — what was measured, with what, and whether it can be redone.",
+      "title": "test-run",
+      "summary": "A TEST RUN — what was measured, with what, and whether it can be redone.",
       "module": "schemas/test-run.ts",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-blissful-ride-c2f26u-handover/cat-harness.jsonld#directory/schemas",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/test-run"
@@ -47309,7 +47419,8 @@
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-blissful-ride-c2f26u-handover/cat-harness.jsonld#schema/theme-art-intake",
       "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#Schema",
       "name": "theme-art-intake",
-      "title": "Theme art arriving as three files — accepted, or refused with a reason.",
+      "title": "theme-art-intake",
+      "summary": "Theme art arriving as three files — accepted, or refused with a reason.",
       "module": "schemas/theme-art-intake.ts",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-blissful-ride-c2f26u-handover/cat-harness.jsonld#directory/schemas",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/theme-art-intake"
@@ -47318,7 +47429,8 @@
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-blissful-ride-c2f26u-handover/cat-harness.jsonld#schema/theme",
       "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#Schema",
       "name": "theme",
-      "title": "A sticky theme — named colour roles plus the three layouts, as a graph node.",
+      "title": "theme",
+      "summary": "A sticky theme — named colour roles plus the three layouts, as a graph node.",
       "module": "schemas/theme.ts",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-blissful-ride-c2f26u-handover/cat-harness.jsonld#directory/schemas",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/theme"
@@ -47327,7 +47439,8 @@
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-blissful-ride-c2f26u-handover/cat-harness.jsonld#schema/themes",
       "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#Schema",
       "name": "themes",
-      "title": "The themes this instance ships, and the default.",
+      "title": "themes",
+      "summary": "The themes this instance ships, and the default.",
       "module": "schemas/themes.ts",
       "maintainedBy": [
         "https://litlfred.github.io/folio-assistant/STAGING/claude-blissful-ride-c2f26u-handover/cat-harness.jsonld#tool/themes-css"
@@ -47339,7 +47452,8 @@
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-blissful-ride-c2f26u-handover/cat-harness.jsonld#schema/tile-count",
       "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#Schema",
       "name": "tile-count",
-      "title": "The number a graph tile shows, DECLARED BY THE PROJECTION.",
+      "title": "tile-count",
+      "summary": "The number a graph tile shows, DECLARED BY THE PROJECTION.",
       "module": "schemas/tile-count.ts",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-blissful-ride-c2f26u-handover/cat-harness.jsonld#directory/schemas",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/tile-count"
@@ -47348,7 +47462,8 @@
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-blissful-ride-c2f26u-handover/cat-harness.jsonld#schema/todo-graph",
       "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#Schema",
       "name": "todo-graph",
-      "title": "The todo graph — what `todos/` is, rather than where it happens to be.",
+      "title": "todo-graph",
+      "summary": "The todo graph — what `todos/` is, rather than where it happens to be.",
       "module": "schemas/todo-graph.ts",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-blissful-ride-c2f26u-handover/cat-harness.jsonld#directory/schemas",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/todo-graph"
@@ -47357,7 +47472,8 @@
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-blissful-ride-c2f26u-handover/cat-harness.jsonld#schema/todo-index",
       "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#Schema",
       "name": "todo-index",
-      "title": "The published todo index — `folio-todo-index/v1`, described at last.",
+      "title": "todo-index",
+      "summary": "The published todo index — `folio-todo-index/v1`, described at last.",
       "module": "schemas/todo-index.ts",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-blissful-ride-c2f26u-handover/cat-harness.jsonld#directory/schemas",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/todo-index"
@@ -47366,7 +47482,8 @@
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-blissful-ride-c2f26u-handover/cat-harness.jsonld#schema/todo",
       "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#Schema",
       "name": "todo",
-      "title": "A TODO — one human actor's work state, as a knowledge-graph node.",
+      "title": "todo",
+      "summary": "A TODO — one human actor's work state, as a knowledge-graph node.",
       "module": "schemas/todo.ts",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-blissful-ride-c2f26u-handover/cat-harness.jsonld#directory/schemas",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/todo"
@@ -47375,7 +47492,8 @@
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-blissful-ride-c2f26u-handover/cat-harness.jsonld#schema/tool-invocation",
       "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#Schema",
       "name": "tool-invocation",
-      "title": "What happened when a Tool ran, and under whose authority.",
+      "title": "tool-invocation",
+      "summary": "What happened when a Tool ran, and under whose authority.",
       "module": "schemas/tool-invocation.ts",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-blissful-ride-c2f26u-handover/cat-harness.jsonld#directory/schemas",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/tool-invocation"
@@ -47384,7 +47502,8 @@
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-blissful-ride-c2f26u-handover/cat-harness.jsonld#schema/tool-run",
       "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#Schema",
       "name": "tool-run",
-      "title": "A TOOL RUN RECORD — did the downstream tool run, did it succeed, and over",
+      "title": "tool-run",
+      "summary": "A TOOL RUN RECORD — did the downstream tool run, did it succeed, and over",
       "module": "schemas/tool-run.ts",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-blissful-ride-c2f26u-handover/cat-harness.jsonld#directory/schemas",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/tool-run"
@@ -47393,7 +47512,8 @@
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-blissful-ride-c2f26u-handover/cat-harness.jsonld#schema/tool-types",
       "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#Schema",
       "name": "tool-types",
-      "title": "The shared I/O type vocabulary Tool ports reference.",
+      "title": "tool-types",
+      "summary": "The shared I/O type vocabulary Tool ports reference.",
       "module": "schemas/tool-types.ts",
       "maintainedBy": [
         "https://litlfred.github.io/folio-assistant/STAGING/claude-blissful-ride-c2f26u-handover/cat-harness.jsonld#tool/tool-types-schema"
@@ -47405,7 +47525,8 @@
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-blissful-ride-c2f26u-handover/cat-harness.jsonld#schema/tool",
       "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#Schema",
       "name": "tool",
-      "title": "What a Tool is.",
+      "title": "tool",
+      "summary": "What a Tool is.",
       "module": "schemas/tool.ts",
       "maintainedBy": [
         "https://litlfred.github.io/folio-assistant/STAGING/claude-blissful-ride-c2f26u-handover/cat-harness.jsonld#tool/tool-schema"
@@ -47417,7 +47538,8 @@
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-blissful-ride-c2f26u-handover/cat-harness.jsonld#schema/translation-tools",
       "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#Schema",
       "name": "translation-tools",
-      "title": "Content-type-specific translation tool registry.",
+      "title": "translation-tools",
+      "summary": "Content-type-specific translation tool registry.",
       "module": "schemas/translation-tools.ts",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-blissful-ride-c2f26u-handover/cat-harness.jsonld#directory/schemas",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/translation-tools"
@@ -47426,7 +47548,8 @@
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-blissful-ride-c2f26u-handover/cat-harness.jsonld#schema/translation",
       "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#Schema",
       "name": "translation",
-      "title": "Translation status, metadata, and node schemas for localized content.",
+      "title": "translation",
+      "summary": "Translation status, metadata, and node schemas for localized content.",
       "module": "schemas/translation.ts",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-blissful-ride-c2f26u-handover/cat-harness.jsonld#directory/schemas",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/translation"
@@ -47435,7 +47558,8 @@
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-blissful-ride-c2f26u-handover/cat-harness.jsonld#schema/types",
       "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#Schema",
       "name": "types",
-      "title": "ALL types are inferred from Zod schemas in constraints.ts, which is the",
+      "title": "types",
+      "summary": "ALL types are inferred from Zod schemas in constraints.ts, which is the",
       "module": "schemas/types.ts",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-blissful-ride-c2f26u-handover/cat-harness.jsonld#directory/schemas",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/types"
@@ -47444,7 +47568,8 @@
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-blissful-ride-c2f26u-handover/cat-harness.jsonld#schema/user-story",
       "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#Schema",
       "name": "user-story",
-      "title": "User stories — what a reader acting in a role is trying to do.",
+      "title": "user-story",
+      "summary": "User stories — what a reader acting in a role is trying to do.",
       "module": "schemas/user-story.ts",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-blissful-ride-c2f26u-handover/cat-harness.jsonld#directory/schemas",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/user-story"
@@ -47453,7 +47578,8 @@
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-blissful-ride-c2f26u-handover/cat-harness.jsonld#schema/vector-labels",
       "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#Schema",
       "name": "vector-labels",
-      "title": "The positioned TEXT on a page that declares a figure — bean `a8wy`, under",
+      "title": "vector-labels",
+      "summary": "The positioned TEXT on a page that declares a figure — bean `a8wy`, under",
       "module": "schemas/vector-labels.ts",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-blissful-ride-c2f26u-handover/cat-harness.jsonld#directory/schemas",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/vector-labels"
@@ -47462,7 +47588,8 @@
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-blissful-ride-c2f26u-handover/cat-harness.jsonld#schema/version-bump",
       "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#Schema",
       "name": "version-bump",
-      "title": "version-bump.ts — `instance-versioning.md` §4: what a version MEANS, and",
+      "title": "version-bump",
+      "summary": "version-bump.ts — `instance-versioning.md` §4: what a version MEANS, and",
       "module": "schemas/version-bump.ts",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-blissful-ride-c2f26u-handover/cat-harness.jsonld#directory/schemas",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/version-bump"
@@ -47471,7 +47598,8 @@
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-blissful-ride-c2f26u-handover/cat-harness.jsonld#schema/viewer-nav-qa",
       "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#Schema",
       "name": "viewer-nav-qa",
-      "title": "The viewer-navbar audit — **what the owner's rule looks like as data**.",
+      "title": "viewer-nav-qa",
+      "summary": "The viewer-navbar audit — **what the owner's rule looks like as data**.",
       "module": "schemas/viewer-nav-qa.ts",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-blissful-ride-c2f26u-handover/cat-harness.jsonld#directory/schemas",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/viewer-nav-qa"
@@ -47480,7 +47608,8 @@
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-blissful-ride-c2f26u-handover/cat-harness.jsonld#schema/vocab-mapping-fhir",
       "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#Schema",
       "name": "vocab-mapping-fhir",
-      "title": "FHIR ConceptMap ⇄ vocabulary mapping tables: ι (represent) and π (produce).",
+      "title": "vocab-mapping-fhir",
+      "summary": "FHIR ConceptMap ⇄ vocabulary mapping tables: ι (represent) and π (produce).",
       "module": "schemas/vocab-mapping-fhir.ts",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-blissful-ride-c2f26u-handover/cat-harness.jsonld#directory/schemas",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/vocab-mapping-fhir"
@@ -47489,7 +47618,8 @@
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-blissful-ride-c2f26u-handover/cat-harness.jsonld#schema/vocab-mapping",
       "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#Schema",
       "name": "vocab-mapping",
-      "title": "A vocabulary mapping: one source vocabulary's values carried into a target",
+      "title": "vocab-mapping",
+      "summary": "A vocabulary mapping: one source vocabulary's values carried into a target",
       "module": "schemas/vocab-mapping.ts",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-blissful-ride-c2f26u-handover/cat-harness.jsonld#directory/schemas",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/vocab-mapping"
@@ -47498,7 +47628,8 @@
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-blissful-ride-c2f26u-handover/cat-harness.jsonld#schema/vocabulary",
       "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#Schema",
       "name": "vocabulary",
-      "title": "What each term in the folio namespace MEANS — one brief gloss apiece.",
+      "title": "vocabulary",
+      "summary": "What each term in the folio namespace MEANS — one brief gloss apiece.",
       "module": "schemas/vocabulary.ts",
       "maintainedBy": [
         "https://litlfred.github.io/folio-assistant/STAGING/claude-blissful-ride-c2f26u-handover/cat-harness.jsonld#tool/ns-vocabulary",
@@ -47511,7 +47642,8 @@
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-blissful-ride-c2f26u-handover/cat-harness.jsonld#schema/voice-skill",
       "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#Schema",
       "name": "voice-skill",
-      "title": "A VOICE SKILL — a voice as a first-class member of the knowledge graph.",
+      "title": "voice-skill",
+      "summary": "A VOICE SKILL — a voice as a first-class member of the knowledge graph.",
       "module": "schemas/voice-skill.ts",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-blissful-ride-c2f26u-handover/cat-harness.jsonld#directory/schemas",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/voice-skill"
@@ -47520,7 +47652,8 @@
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-blissful-ride-c2f26u-handover/cat-harness.jsonld#schema/voices",
       "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#Schema",
       "name": "voices",
-      "title": "Voices — named editorial profiles that overlay the base house voice.",
+      "title": "voices",
+      "summary": "Voices — named editorial profiles that overlay the base house voice.",
       "module": "schemas/voices.ts",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-blissful-ride-c2f26u-handover/cat-harness.jsonld#directory/schemas",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/voices"
@@ -47529,7 +47662,8 @@
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-blissful-ride-c2f26u-handover/cat-harness.jsonld#schema/waiver",
       "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#Schema",
       "name": "waiver",
-      "title": "A confirmation the owner has given **in advance**, scoped and dated.",
+      "title": "waiver",
+      "summary": "A confirmation the owner has given **in advance**, scoped and dated.",
       "module": "schemas/waiver.ts",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-blissful-ride-c2f26u-handover/cat-harness.jsonld#directory/schemas",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/waiver"
@@ -47538,7 +47672,8 @@
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-blissful-ride-c2f26u-handover/cat-harness.jsonld#schema/webpage",
       "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#Schema",
       "name": "webpage",
-      "title": "`webpage` — a published documentation page, modelled as a graph node that",
+      "title": "webpage",
+      "summary": "`webpage` — a published documentation page, modelled as a graph node that",
       "module": "schemas/webpage.ts",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-blissful-ride-c2f26u-handover/cat-harness.jsonld#directory/schemas",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/webpage"
@@ -47547,7 +47682,8 @@
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-blissful-ride-c2f26u-handover/cat-harness.jsonld#schema/window-stack",
       "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#Schema",
       "name": "window-stack",
-      "title": "Which cards are OPEN on a board, and in what order they stack.",
+      "title": "window-stack",
+      "summary": "Which cards are OPEN on a board, and in what order they stack.",
       "module": "schemas/window-stack.ts",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-blissful-ride-c2f26u-handover/cat-harness.jsonld#directory/schemas",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/window-stack"
@@ -47556,7 +47692,8 @@
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-blissful-ride-c2f26u-handover/cat-harness.jsonld#schema/withheld",
       "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#Schema",
       "name": "withheld",
-      "title": "`folio-withheld/v1` — what a mounted directory must NOT publish.",
+      "title": "withheld",
+      "summary": "`folio-withheld/v1` — what a mounted directory must NOT publish.",
       "module": "schemas/withheld.ts",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-blissful-ride-c2f26u-handover/cat-harness.jsonld#directory/schemas",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/withheld"
@@ -47565,7 +47702,8 @@
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-blissful-ride-c2f26u-handover/cat-harness.jsonld#schema/adjudication",
       "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#Schema",
       "name": "adjudication",
-      "title": "The adjudication contract — what a judgement is ASKED and what it ANSWERS.",
+      "title": "adjudication",
+      "summary": "The adjudication contract — what a judgement is ASKED and what it ANSWERS.",
       "module": "../folio-assistant-core/schemas/adjudication.ts",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/adjudication"
     },
@@ -47573,7 +47711,8 @@
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-blissful-ride-c2f26u-handover/cat-harness.jsonld#schema/catalogue",
       "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#Schema",
       "name": "catalogue",
-      "title": "A remote catalogue, modelled in the graph without holding it.",
+      "title": "catalogue",
+      "summary": "A remote catalogue, modelled in the graph without holding it.",
       "module": "../folio-assistant-core/schemas/catalogue.ts",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/catalogue"
     },
@@ -47581,7 +47720,8 @@
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-blissful-ride-c2f26u-handover/cat-harness.jsonld#schema/changeset",
       "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#Schema",
       "name": "changeset",
-      "title": "A ChangeSet: what changed in a folio between two git refs, block by block.",
+      "title": "changeset",
+      "summary": "A ChangeSet: what changed in a folio between two git refs, block by block.",
       "module": "../folio-assistant-core/schemas/changeset.ts",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/changeset"
     },
@@ -47589,7 +47729,8 @@
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-blissful-ride-c2f26u-handover/cat-harness.jsonld#schema/dublin-core-render",
       "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#Schema",
       "name": "dublin-core-render",
-      "title": "Dublin Core RENDERINGS of a catalogue record: DC XML for a harvester, and",
+      "title": "dublin-core-render",
+      "summary": "Dublin Core RENDERINGS of a catalogue record: DC XML for a harvester, and",
       "module": "../folio-assistant-core/schemas/dublin-core-render.ts",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/dublin-core-render"
     },
@@ -47597,7 +47738,8 @@
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-blissful-ride-c2f26u-handover/cat-harness.jsonld#schema/dublin-core",
       "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#Schema",
       "name": "dublin-core",
-      "title": "Qualified Dublin Core, as a graph node.",
+      "title": "dublin-core",
+      "summary": "Qualified Dublin Core, as a graph node.",
       "module": "../folio-assistant-core/schemas/dublin-core.ts",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/dublin-core"
     },
@@ -47605,7 +47747,8 @@
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-blissful-ride-c2f26u-handover/cat-harness.jsonld#schema/glossary",
       "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#Schema",
       "name": "glossary",
-      "title": "`folio-glossary/v1`: a glossary as W3C SKOS. Core's `glossary` graph kind",
+      "title": "glossary",
+      "summary": "`folio-glossary/v1`: a glossary as W3C SKOS. Core's `glossary` graph kind",
       "module": "../folio-assistant-core/schemas/glossary.ts",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/glossary"
     },
@@ -47613,7 +47756,8 @@
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-blissful-ride-c2f26u-handover/cat-harness.jsonld#schema/library-ref",
       "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#Schema",
       "name": "library-ref",
-      "title": "A reference to an L1 source — in this instance, or in another one.",
+      "title": "library-ref",
+      "summary": "A reference to an L1 source — in this instance, or in another one.",
       "module": "../folio-assistant-core/schemas/library-ref.ts",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/library-ref"
     },
@@ -47621,7 +47765,8 @@
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-blissful-ride-c2f26u-handover/cat-harness.jsonld#schema/materialization",
       "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#Schema",
       "name": "materialization",
-      "title": "Materialising remote content — the three states, and the five gates.",
+      "title": "materialization",
+      "summary": "Materialising remote content — the three states, and the five gates.",
       "module": "../folio-assistant-core/schemas/materialization.ts",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/materialization"
     },
@@ -47629,7 +47774,8 @@
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-blissful-ride-c2f26u-handover/cat-harness.jsonld#schema/review-comment",
       "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#Schema",
       "name": "review-comment",
-      "title": "A reviewer's comment on one block of a folio: a todo with more structure",
+      "title": "review-comment",
+      "summary": "A reviewer's comment on one block of a folio: a todo with more structure",
       "module": "../folio-assistant-core/schemas/review-comment.ts",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/review-comment"
     },
@@ -47637,7 +47783,8 @@
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-blissful-ride-c2f26u-handover/cat-harness.jsonld#schema/review-verdict",
       "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#Schema",
       "name": "review-verdict",
-      "title": "A reviewer's VERDICT on one version of one block: \"I read this, and here is",
+      "title": "review-verdict",
+      "summary": "A reviewer's VERDICT on one version of one block: \"I read this, and here is",
       "module": "../folio-assistant-core/schemas/review-verdict.ts",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/review-verdict"
     },
@@ -47645,7 +47792,8 @@
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-blissful-ride-c2f26u-handover/cat-harness.jsonld#schema/fhir-artifact-index",
       "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#Schema",
       "name": "fhir-artifact-index",
-      "title": "The artefact index of a published FHIR Implementation Guide.",
+      "title": "fhir-artifact-index",
+      "summary": "The artefact index of a published FHIR Implementation Guide.",
       "module": "../fhir-harness/schemas/fhir-artifact-index.ts",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/fhir-artifact-index"
     },
@@ -47653,7 +47801,8 @@
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-blissful-ride-c2f26u-handover/cat-harness.jsonld#schema/ig-chrome",
       "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#Schema",
       "name": "ig-chrome",
-      "title": "ig-chrome.ts — a FHIR IG's published CHROME, as data.",
+      "title": "ig-chrome",
+      "summary": "ig-chrome.ts — a FHIR IG's published CHROME, as data.",
       "module": "../fhir-harness/schemas/ig-chrome.ts",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/ig-chrome"
     },
@@ -47661,7 +47810,8 @@
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-blissful-ride-c2f26u-handover/cat-harness.jsonld#schema/ig-identity",
       "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#Schema",
       "name": "ig-identity",
-      "title": "An IG's identity, as its own `sushi-config.yaml` states it — id, canonical,",
+      "title": "ig-identity",
+      "summary": "An IG's identity, as its own `sushi-config.yaml` states it — id, canonical,",
       "module": "../fhir-harness/schemas/ig-identity.ts",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/ig-identity"
     },
@@ -47669,7 +47819,8 @@
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-blissful-ride-c2f26u-handover/cat-harness.jsonld#schema/ig-menu",
       "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#Schema",
       "name": "ig-menu",
-      "title": "ig-menu.ts — a FHIR IG's own navigation, as data.",
+      "title": "ig-menu",
+      "summary": "ig-menu.ts — a FHIR IG's own navigation, as data.",
       "module": "../fhir-harness/schemas/ig-menu.ts",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/ig-menu"
     },
@@ -47677,7 +47828,8 @@
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-blissful-ride-c2f26u-handover/cat-harness.jsonld#schema/ig-metadata-index",
       "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#Schema",
       "name": "ig-metadata-index",
-      "title": "IG metadata indexes — the Publisher's own metadata exports, given somewhere",
+      "title": "ig-metadata-index",
+      "summary": "IG metadata indexes — the Publisher's own metadata exports, given somewhere",
       "module": "../fhir-harness/schemas/ig-metadata-index.ts",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/ig-metadata-index"
     },
@@ -47685,7 +47837,8 @@
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-blissful-ride-c2f26u-handover/cat-harness.jsonld#schema/dak-blocks",
       "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#Schema",
       "name": "dak-blocks",
-      "title": "WHO SMART Guidelines content blocks — the `dak` adapter.",
+      "title": "dak-blocks",
+      "summary": "WHO SMART Guidelines content blocks — the `dak` adapter.",
       "module": "../smart-base/schemas/dak-blocks.ts",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/dak-blocks"
     },
@@ -47693,7 +47846,8 @@
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-blissful-ride-c2f26u-handover/cat-harness.jsonld#schema/dak-content-type",
       "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#Schema",
       "name": "dak-content-type",
-      "title": "The `dak` and `sushi` content types — registered by the WHO layer, not by core.",
+      "title": "dak-content-type",
+      "summary": "The `dak` and `sushi` content types — registered by the WHO layer, not by core.",
       "module": "../smart-base/schemas/dak-content-type.ts",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/dak-content-type"
     },
@@ -47701,7 +47855,8 @@
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-blissful-ride-c2f26u-handover/cat-harness.jsonld#schema/dak-jsonld",
       "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#Schema",
       "name": "dak-jsonld",
-      "title": "JSON-LD typing for the `dak` adapter's block kinds.",
+      "title": "dak-jsonld",
+      "summary": "JSON-LD typing for the `dak` adapter's block kinds.",
       "module": "../smart-base/schemas/dak-jsonld.ts",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/dak-jsonld"
     },
@@ -47709,7 +47864,8 @@
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-blissful-ride-c2f26u-handover/cat-harness.jsonld#schema/dak-kinds",
       "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#Schema",
       "name": "dak-kinds",
-      "title": "The `dak` adapter's vocabulary — its block kinds, their builder names and",
+      "title": "dak-kinds",
+      "summary": "The `dak` adapter's vocabulary — its block kinds, their builder names and",
       "module": "../smart-base/schemas/dak-kinds.ts",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/dak-kinds"
     },
@@ -47717,7 +47873,8 @@
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-blissful-ride-c2f26u-handover/cat-harness.jsonld#schema/dak",
       "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#Schema",
       "name": "dak",
-      "title": "The **DAK** content type — a repository that is a WHO SMART Guidelines",
+      "title": "dak",
+      "summary": "The **DAK** content type — a repository that is a WHO SMART Guidelines",
       "module": "../smart-base/schemas/dak.ts",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/dak"
     },
@@ -48221,8 +48378,9 @@
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-blissful-ride-c2f26u-handover/cat-harness.jsonld#role/user",
       "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Role",
-      "name": "user",
+      "prefLabel": "User",
       "title": "User",
+      "notation": "user",
       "description": "The person the assistant is working for. States intent, answers the questions the agent cannot decide from the filesystem, and confirms anything irreversible.",
       "sourceKind": "role-registry",
       "actorKinds": [
@@ -48242,8 +48400,9 @@
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-blissful-ride-c2f26u-handover/cat-harness.jsonld#role/author",
       "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Role",
-      "name": "author",
+      "prefLabel": "Author",
       "title": "Author",
+      "notation": "author",
       "description": "Writes and revises folio content. The position, not the person: an editor and a guideline developer both act as author when they are changing a block.",
       "sourceKind": "role-registry",
       "actorKinds": [
@@ -48264,8 +48423,9 @@
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-blissful-ride-c2f26u-handover/cat-harness.jsonld#role/editor",
       "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Role",
-      "name": "editor",
+      "prefLabel": "Editor",
       "title": "Editor",
+      "notation": "editor",
       "description": "Author plus the authority to accept a change into the corpus. The lane that sees QA findings and decides.",
       "sourceKind": "role-registry",
       "actorKinds": [
@@ -48281,8 +48441,9 @@
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-blissful-ride-c2f26u-handover/cat-harness.jsonld#role/reviewer",
       "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Role",
-      "name": "reviewer",
+      "prefLabel": "Reviewer / SME",
       "title": "Reviewer / SME",
+      "notation": "reviewer",
       "description": "Reads a change and judges it. Cannot accept it — that is the editor's lane — and the separation is why review findings are advice rather than commits. The GENERIC review position: what kind of thing changed decides which subprocess it descends into (review-task.bpmn), and the actor takes on that inner lane's role for the call path only.",
       "sourceKind": "role-registry",
       "actorKinds": [
@@ -48311,8 +48472,9 @@
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-blissful-ride-c2f26u-handover/cat-harness.jsonld#role/review-coordinator",
       "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Role",
-      "name": "review-coordinator",
+      "prefLabel": "Review coordinator",
       "title": "Review coordinator",
+      "notation": "review-coordinator",
       "description": "Organises a review without deciding it. Pulls tagged review comments in, splits a large change into slices by section, assigns each slice to a reviewer of the right role, and watches coverage until every changed block has a verdict or a reasoned waiver. Cannot accept or reject: that is the editor's lane, and the separation is the owner's ruling (2026-09-23, bean en2d). Not a reviewer: it does not inherit one, because assigning a slice is not reading it.",
       "sourceKind": "role-registry",
       "actorKinds": [
@@ -48330,8 +48492,9 @@
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-blissful-ride-c2f26u-handover/cat-harness.jsonld#role/narrative-reviewer",
       "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Role",
-      "name": "narrative-reviewer",
+      "prefLabel": "Narrative reviewer",
       "title": "Narrative reviewer",
+      "notation": "narrative-reviewer",
       "description": "Judges PROSE — register and voice, the editorial dependencies a reader needs, and translation. Entered by DESCENDING into Process_NarrativeReview: the actor keeps its outer review role and adds these skills along that call path, rather than every reviewer carrying them everywhere.",
       "sourceKind": "role-registry",
       "actorKinds": [
@@ -48352,8 +48515,9 @@
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-blissful-ride-c2f26u-handover/cat-harness.jsonld#role/code-reviewer",
       "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Role",
-      "name": "code-reviewer",
+      "prefLabel": "Code reviewer",
       "title": "Code reviewer",
+      "notation": "code-reviewer",
       "description": "Judges the knowledge graph's CODE nodes — Tool definitions in the `tools` graph and schema definition nodes under `schemas/`. Not ordinary code review: the question is whether the NODE is sound — does it declare what it is, do its references resolve, is the mechanism it advertises the one that runs — which a passing test suite does not answer. Entered by DESCENDING into Process_CodeReview.",
       "sourceKind": "role-registry",
       "actorKinds": [
@@ -48374,8 +48538,9 @@
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-blissful-ride-c2f26u-handover/cat-harness.jsonld#role/qc-reviewer",
       "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Role",
-      "name": "qc-reviewer",
+      "prefLabel": "QC reviewer",
       "title": "QC reviewer",
+      "notation": "qc-reviewer",
       "description": "Reviewer with the publication quality gate. Checks the built artefact, not only the source.",
       "sourceKind": "role-registry",
       "actorKinds": [
@@ -48393,8 +48558,9 @@
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-blissful-ride-c2f26u-handover/cat-harness.jsonld#role/clinical-sme",
       "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Role",
-      "name": "clinical-sme",
+      "prefLabel": "Clinical / scientific SME",
       "title": "Clinical / scientific SME",
+      "notation": "clinical-sme",
       "description": "Reviewer whose judgement is about the subject matter rather than the artefact.",
       "sourceKind": "role-registry",
       "actorKinds": [
@@ -48406,8 +48572,9 @@
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-blissful-ride-c2f26u-handover/cat-harness.jsonld#role/administrator",
       "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Role",
-      "name": "administrator",
+      "prefLabel": "Administrator",
       "title": "Administrator",
+      "notation": "administrator",
       "description": "Administers the role graph itself: who exists, what they may act as, and what they may do. The ONE lane whose activities change the substrate every other diagram's lanes bind to — which is why it is drawn rather than left as a filesystem edit. Declared 2026-09-20 on the owner's answer that administration is a swimlane; `role-model.md`'s rule is that a role is never invented to make a diagram drawable, so it waited for that.",
       "sourceKind": "role-registry",
       "actorKinds": [
@@ -48425,8 +48592,9 @@
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-blissful-ride-c2f26u-handover/cat-harness.jsonld#role/programme-manager",
       "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Role",
-      "name": "programme-manager",
+      "prefLabel": "Programme manager",
       "title": "Programme manager",
+      "notation": "programme-manager",
       "description": "Owns what gets worked on and holds release authority. The lane that authorises, and the one step no policy may relax.",
       "sourceKind": "role-registry",
       "actorKinds": [
@@ -48444,8 +48612,9 @@
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-blissful-ride-c2f26u-handover/cat-harness.jsonld#role/publication-manager",
       "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Role",
-      "name": "publication-manager",
+      "prefLabel": "Publication manager",
       "title": "Publication manager",
+      "notation": "publication-manager",
       "description": "Takes an authorised release to its published form and is accountable for what is live.",
       "sourceKind": "role-registry",
       "actorKinds": [
@@ -48467,8 +48636,9 @@
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-blissful-ride-c2f26u-handover/cat-harness.jsonld#role/business-analyst",
       "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Role",
-      "name": "business-analyst",
+      "prefLabel": "Business analyst",
       "title": "Business analyst",
+      "notation": "business-analyst",
       "description": "Turns a stated need into a modelled requirement. Owns the CRDM lane and the BPMN/DMN that come out of it.",
       "sourceKind": "role-registry",
       "actorKinds": [
@@ -48490,8 +48660,9 @@
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-blissful-ride-c2f26u-handover/cat-harness.jsonld#role/terminologist",
       "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Role",
-      "name": "terminologist",
+      "prefLabel": "Terminologist",
       "title": "Terminologist",
+      "notation": "terminologist",
       "description": "Owns coded concepts and value sets — the vocabulary a DAK is expressed in.",
       "sourceKind": "role-registry",
       "actorKinds": [
@@ -48507,8 +48678,9 @@
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-blissful-ride-c2f26u-handover/cat-harness.jsonld#role/fhir-modeller",
       "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Role",
-      "name": "fhir-modeller",
+      "prefLabel": "FHIR modeller",
       "title": "FHIR modeller",
+      "notation": "fhir-modeller",
       "description": "Authors the L3 profiles, extensions and examples an IG is built from.",
       "sourceKind": "role-registry",
       "actorKinds": [
@@ -48522,8 +48694,9 @@
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-blissful-ride-c2f26u-handover/cat-harness.jsonld#role/translation-coordinator",
       "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Role",
-      "name": "translation-coordinator",
+      "prefLabel": "Translation coordinator",
       "title": "Translation coordinator",
+      "notation": "translation-coordinator",
       "description": "Decides what is translated, into which languages, and when a translation is accepted.",
       "sourceKind": "role-registry",
       "actorKinds": [
@@ -48537,8 +48710,9 @@
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-blissful-ride-c2f26u-handover/cat-harness.jsonld#role/translator",
       "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Role",
-      "name": "translator",
+      "prefLabel": "Human translator",
       "title": "Human translator",
+      "notation": "translator",
       "description": "Produces the target-language text. Distinct from the coordinator because accepting one's own translation is the gate this separation removes.",
       "sourceKind": "role-registry",
       "actorKinds": [
@@ -48552,8 +48726,9 @@
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-blissful-ride-c2f26u-handover/cat-harness.jsonld#role/translation-adjudicator",
       "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Role",
-      "name": "translation-adjudicator",
+      "prefLabel": "Translation adjudicator",
       "title": "Translation adjudicator",
+      "notation": "translation-adjudicator",
       "description": "Adjudicator who settles a disagreement between machine and human translation. The first specialisation of `adjudicator`, and the only one that existed before the role did — its lane documentation in translation-workflow.bpmn is where \"a reviewer reports, an adjudicator settles\" was written down.",
       "sourceKind": "role-registry",
       "actorKinds": [
@@ -48567,8 +48742,9 @@
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-blissful-ride-c2f26u-handover/cat-harness.jsonld#role/adjudicator",
       "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Role",
-      "name": "adjudicator",
+      "prefLabel": "Adjudicator",
       "title": "Adjudicator",
+      "notation": "adjudicator",
       "description": "Settles a criterion whose reviewer entries disagree, and records WHY. Inherits `reviewer` because an adjudicator is a reviewer with one added entitlement — the `adjudication` permission — and the separation is the point: a reviewer reports, an adjudicator settles, and a process where every reviewer could settle has no way to say who decided. The KNOWLEDGE spreads (several roles carry the `adjudication` skill, because each has to tell an adjudicable disagreement from a complaint); the ENTITLEMENT does not, and lives on the actor as a permission.",
       "sourceKind": "role-registry",
       "actorKinds": [
@@ -48585,8 +48761,9 @@
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-blissful-ride-c2f26u-handover/cat-harness.jsonld#role/feedback-provider",
       "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Role",
-      "name": "feedback-provider",
+      "prefLabel": "Feedback provider",
       "title": "Feedback provider",
+      "notation": "feedback-provider",
       "description": "Offers a finding on content or code — a script checker, a review agent, a reader, an SME. PLURAL by design: an adjudication is the judgement of one or more feedback providers' feedback, and the process draws the lane once for any number of them. Not an adjudicator: this role states what it found and on what evidence, and has no entitlement to settle the disagreement its finding creates.",
       "sourceKind": "role-registry",
       "actorKinds": [
@@ -48604,8 +48781,9 @@
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-blissful-ride-c2f26u-handover/cat-harness.jsonld#role/stakeholder",
       "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Role",
-      "name": "stakeholder",
+      "prefLabel": "Stakeholder",
       "title": "Stakeholder",
+      "notation": "stakeholder",
       "description": "Signs off that a requirement is met. Carries no skills deliberately: sign-off is a judgement, not a procedure, and a skill here would suggest an agent could supply it.",
       "sourceKind": "role-registry",
       "actorKinds": [
@@ -48618,8 +48796,9 @@
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-blissful-ride-c2f26u-handover/cat-harness.jsonld#role/authoring-agent",
       "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Role",
-      "name": "authoring-agent",
+      "prefLabel": "Authoring agent",
       "title": "Authoring agent",
+      "notation": "authoring-agent",
       "description": "The session agent doing the work. The broadest skill set here, and the one whose membership most needs auditing.",
       "sourceKind": "role-registry",
       "actorKinds": [
@@ -48674,8 +48853,9 @@
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-blissful-ride-c2f26u-handover/cat-harness.jsonld#role/onboarding-agent",
       "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Role",
-      "name": "onboarding-agent",
+      "prefLabel": "Onboarding agent",
       "title": "Onboarding agent",
+      "notation": "onboarding-agent",
       "description": "The authoring agent acting before there is a folio: clarifying what the user means by \"create a folio\", scanning an existing repo, and scaffolding.",
       "sourceKind": "role-registry",
       "actorKinds": [
@@ -48692,8 +48872,9 @@
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-blissful-ride-c2f26u-handover/cat-harness.jsonld#role/ingestion-agent",
       "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Role",
-      "name": "ingestion-agent",
+      "prefLabel": "Ingestion engine",
       "title": "Ingestion engine",
+      "notation": "ingestion-agent",
       "description": "Runs unattended over a source corpus. No user is in the room, so every gate it reaches must be decidable from the material.",
       "sourceKind": "role-registry",
       "actorKinds": [
@@ -48714,8 +48895,9 @@
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-blissful-ride-c2f26u-handover/cat-harness.jsonld#role/librarian",
       "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Role",
-      "name": "librarian",
+      "prefLabel": "Librarian",
       "title": "Librarian",
+      "notation": "librarian",
       "description": "Acquires a source and files it. Distinct from `ingestion-agent`, which DERIVES structure from a source already in hand: this role decides what to capture, how faithfully, and what must be recorded at the moment of capture because nobody can reconstruct it later.",
       "sourceKind": "role-registry",
       "actorKinds": [
@@ -48734,8 +48916,9 @@
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-blissful-ride-c2f26u-handover/cat-harness.jsonld#role/deep-researcher",
       "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Role",
-      "name": "deep-researcher",
+      "prefLabel": "Deep researcher",
       "title": "Deep researcher",
+      "notation": "deep-researcher",
       "description": "Answers a question FROM a corpus already held, and is answerable for the answer. Distinct from `librarian`, which decides what to capture, and from `ingestion-agent`, which derives structure from what was captured: both produce the corpus, and this role consumes it. Added 2026-09-23 with the `doc-researcher` methodology, because the accountability it names — somebody who must stand behind a synthesis and its citations — belonged to no declared role. THE LANE IT BINDS IS DRAWN IN ANOTHER INSTANCE — the `Deep researcher` lane of `folio-assistant-core/processes/library/deep-document-research.bpmn`, which names this role with `<folio:role ref>`. It carried a `lanes[]` here for about an hour on 2026-09-23 before #1168 landed and inverted the relation: a lane names its role, and a role does not list its lanes, because a general node never names its users. The binding is therefore stated once, on the lane, and this role says nothing about where it is drawn.",
       "sourceKind": "role-registry",
       "actorKinds": [
@@ -48750,8 +48933,9 @@
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-blissful-ride-c2f26u-handover/cat-harness.jsonld#role/evidence-agent",
       "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Role",
-      "name": "evidence-agent",
+      "prefLabel": "Evidence agent",
       "title": "Evidence agent",
+      "notation": "evidence-agent",
       "description": "Retrieves and appraises external evidence for a guideline claim.",
       "sourceKind": "role-registry",
       "actorKinds": [
@@ -48765,8 +48949,9 @@
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-blissful-ride-c2f26u-handover/cat-harness.jsonld#role/sibling-session",
       "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Role",
-      "name": "sibling-session",
+      "prefLabel": "Sibling session",
       "title": "Sibling session",
+      "notation": "sibling-session",
       "description": "Another agent or human working the same store. Present in bean-lifecycle precisely to mark what is NOT yours to close.",
       "sourceKind": "role-registry",
       "actorKinds": [
@@ -48780,8 +48965,9 @@
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-blissful-ride-c2f26u-handover/cat-harness.jsonld#role/build-pipeline",
       "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Role",
-      "name": "build-pipeline",
+      "prefLabel": "Build pipeline",
       "title": "Build pipeline",
+      "notation": "build-pipeline",
       "description": "Validates, renders and publishes, and watches whether that actually worked. A system lane: it runs a fixed program and exercises no judgement, so anything needing a decision belongs in a different lane. It carries `todo-manager` for the two CI-watcher dispatch points in `content-change-review`, which `claim` and `note` a bean and never `resolve` one -- claim is idempotent and note appends, both fixed programs, while deciding that a publish SUCCEEDED is the judgement this lane must not make (bean xom7: docs-site.yml failed 30 times while reporting its own exit code).",
       "sourceKind": "role-registry",
       "actorKinds": [
@@ -48817,8 +49003,9 @@
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-blissful-ride-c2f26u-handover/cat-harness.jsonld#role/board-renderer",
       "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Role",
-      "name": "board-renderer",
+      "prefLabel": "Board renderer",
       "title": "Board renderer",
+      "notation": "board-renderer",
       "description": "Draws a board and performs what the reader has already decided: reads each kind's declared zoom threshold and the layout layer, swaps a card for its avatar, projects an open window onto the canvas, and carries out a confirmed relocation. A system lane — it runs a fixed program and exercises no judgement, which is exactly why every decision in board-open-close.bpmn and board-relocate.bpmn sits in the reader's lane instead. It is NOT the build pipeline: it runs where the reader is, once per request, and publishes nothing.",
       "sourceKind": "role-registry",
       "actorKinds": [
@@ -48835,8 +49022,9 @@
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-blissful-ride-c2f26u-handover/cat-harness.jsonld#role/validation-pipeline",
       "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Role",
-      "name": "validation-pipeline",
+      "prefLabel": "Validation pipeline",
       "title": "Validation pipeline",
+      "notation": "validation-pipeline",
       "description": "The mechanical half of the HCI validation gate. Its findings are inputs to the editor's decision, never the decision.",
       "sourceKind": "role-registry",
       "actorKinds": [
@@ -48851,8 +49039,9 @@
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-blissful-ride-c2f26u-handover/cat-harness.jsonld#role/publish-target",
       "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Role",
-      "name": "publish-target",
+      "prefLabel": "Publish target",
       "title": "Publish target",
+      "notation": "publish-target",
       "description": "GitHub Pages, or wherever the folio is served from. Reached, probed and reported on — never assumed live.",
       "sourceKind": "role-registry",
       "actorKinds": [
@@ -48867,8 +49056,9 @@
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-blissful-ride-c2f26u-handover/cat-harness.jsonld#role/lean-toolchain",
       "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Role",
-      "name": "lean-toolchain",
+      "prefLabel": "Lean toolchain",
       "title": "Lean toolchain",
+      "notation": "lean-toolchain",
       "description": "Elaborates and checks the formal half of a paper folio. Answers only what Lean can answer.",
       "sourceKind": "role-registry",
       "actorKinds": [
@@ -48883,8 +49073,9 @@
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-blissful-ride-c2f26u-handover/cat-harness.jsonld#role/ig-publisher-service",
       "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Role",
-      "name": "ig-publisher-service",
+      "prefLabel": "IG publisher + validator",
       "title": "IG publisher + validator",
+      "notation": "ig-publisher-service",
       "description": "The JVM services an IG build shells out to. External in behaviour, internal in configuration.",
       "sourceKind": "role-registry",
       "actorKinds": [
@@ -48899,8 +49090,9 @@
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-blissful-ride-c2f26u-handover/cat-harness.jsonld#role/attestation-service",
       "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Role",
-      "name": "attestation-service",
+      "prefLabel": "Attestation service",
       "title": "Attestation service",
+      "notation": "attestation-service",
       "description": "Signs a QA report's run hashes over an API. A MECHANICAL role, and the one that DISAPPEARS when the actor performing it cannot reach out — which is why the signing process carries a second, human lane rather than a retry.",
       "sourceKind": "role-registry",
       "actorKinds": [
@@ -48914,8 +49106,9 @@
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-blissful-ride-c2f26u-handover/cat-harness.jsonld#role/work-plan",
       "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Role",
-      "name": "work-plan",
+      "prefLabel": "Work plan (beans)",
       "title": "Work plan (beans)",
+      "notation": "work-plan",
       "description": "The shared store, modelled as a lane because tasks act ON it and a reader needs to see where the plan is touched. No actor takes this role on; it is acted upon.",
       "sourceKind": "role-registry",
       "actorKinds": [
@@ -48931,8 +49124,9 @@
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-blissful-ride-c2f26u-handover/cat-harness.jsonld#role/corpus",
       "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Role",
-      "name": "corpus",
+      "prefLabel": "Corpus",
       "title": "Corpus",
+      "notation": "corpus",
       "description": "The versioned content store and the L1 source knowledge graph. Like the work plan, a lane that is written to rather than a participant that acts.",
       "sourceKind": "role-registry",
       "actorKinds": [
@@ -48949,8 +49143,9 @@
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-blissful-ride-c2f26u-handover/cat-harness.jsonld#role/external-registry",
       "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Role",
-      "name": "external-registry",
+      "prefLabel": "External registry",
       "title": "External registry",
+      "notation": "external-registry",
       "description": "Trusted registries and observatories outside this instance's control. Carries no skills because nothing here instructs it.",
       "sourceKind": "role-registry",
       "actorKinds": [
@@ -48963,8 +49158,9 @@
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-blissful-ride-c2f26u-handover/cat-harness.jsonld#role/log",
       "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Role",
-      "name": "log",
+      "prefLabel": "Activity log",
       "title": "Activity log",
+      "notation": "log",
       "description": "The agent activity log. A MECHANICAL role and an `actedUpon` one: it is written to at task start and task end, and emptied by an actor — one entry, all of them, or on a periodic sweep — and it decides nothing. Modelled on `work-plan` and `corpus`, the two existing stores that are acted upon rather than acting. Its entries are held in the instance's unpublished store and never reach a published graph; the `activity-log` skill names the location, which is deliberately not repeated here because a role description IS published.",
       "sourceKind": "role-registry",
       "actorKinds": [
@@ -48979,8 +49175,9 @@
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-blissful-ride-c2f26u-handover/cat-harness.jsonld#role/session-record",
       "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Role",
-      "name": "session-record",
+      "prefLabel": "Session record",
       "title": "Session record",
+      "notation": "session-record",
       "description": "A session's context — who is acting, which instances are open, what it waits on. A MECHANICAL role and an `actedUpon` one: written to as the session moves and read by a sibling deciding whether a claim is live, and it decides nothing. Modelled on `work-plan`, `corpus` and `log`, the stores that are acted upon rather than acting. It carries `session-context` because the shape of what is written IS the discipline here — unlike `work-plan`, whose store has a CLI, this one is written by a machine that may be an LLM playing the part, so the schema is the contract.",
       "sourceKind": "role-registry",
       "actorKinds": [
@@ -48995,8 +49192,9 @@
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-blissful-ride-c2f26u-handover/cat-harness.jsonld#role/editorial-authoring-agent",
       "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Role",
-      "name": "editorial-authoring-agent",
+      "prefLabel": "Editorial authoring agent",
       "title": "Editorial authoring agent",
+      "notation": "editorial-authoring-agent",
       "description": "The authoring agent in the editorial lane: auditing a block's prose, structure and sourcing rather than writing new subject matter.",
       "sourceKind": "role-registry",
       "actorKinds": [
@@ -49022,8 +49220,9 @@
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-blissful-ride-c2f26u-handover/cat-harness.jsonld#role/docs-authoring-agent",
       "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Role",
-      "name": "docs-authoring-agent",
+      "prefLabel": "Docs authoring agent",
       "title": "Docs authoring agent",
+      "notation": "docs-authoring-agent",
       "description": "The authoring agent producing what a person reads ABOUT the instance — generated references, the glossary, sticky notes, theme art and deployment documentation.",
       "sourceKind": "role-registry",
       "actorKinds": [
@@ -49043,8 +49242,9 @@
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-blissful-ride-c2f26u-handover/cat-harness.jsonld#role/platform-authoring-agent",
       "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Role",
-      "name": "platform-authoring-agent",
+      "prefLabel": "Platform authoring agent",
       "title": "Platform authoring agent",
+      "notation": "platform-authoring-agent",
       "description": "The authoring agent working on how this instance PUBLISHES itself — the MCP projection, its contract, and the rendering endpoints.",
       "sourceKind": "role-registry",
       "actorKinds": [
@@ -49067,8 +49267,9 @@
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-blissful-ride-c2f26u-handover/cat-harness.jsonld#role/session-coordinator",
       "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Role",
-      "name": "session-coordinator",
+      "prefLabel": "Session coordinator",
       "title": "Session coordinator",
+      "notation": "session-coordinator",
       "description": "The authoring agent managing the SESSION rather than the content: what this session intends, what is already in flight elsewhere, and what to pick up next.",
       "sourceKind": "role-registry",
       "actorKinds": [
@@ -49092,8 +49293,9 @@
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-blissful-ride-c2f26u-handover/cat-harness.jsonld#role/integration-watcher",
       "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Role",
-      "name": "integration-watcher",
+      "prefLabel": "Integration watcher",
       "title": "Integration watcher",
+      "notation": "integration-watcher",
       "description": "Watches the default branch and open branches for newly-landed work that an existing audit axis should be re-run over. Reports findings; does not author the fix.",
       "sourceKind": "role-registry",
       "actorKinds": [
@@ -49117,8 +49319,9 @@
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-blissful-ride-c2f26u-handover/cat-harness.jsonld#role/lean-authoring-agent",
       "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Role",
-      "name": "lean-authoring-agent",
+      "prefLabel": "Lean authoring agent",
       "title": "Lean authoring agent",
+      "notation": "lean-authoring-agent",
       "description": "Writes and repairs the Lean 4 formalization — translating narrative mathematics into declarations, keeping the build green, and curating what is staged for upstream.",
       "sourceKind": "role-registry",
       "actorKinds": [
@@ -49143,8 +49346,9 @@
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-blissful-ride-c2f26u-handover/cat-harness.jsonld#role/proof-review-agent",
       "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Role",
-      "name": "proof-review-agent",
+      "prefLabel": "Proof review agent",
       "title": "Proof review agent",
+      "notation": "proof-review-agent",
       "description": "Reviews proofs — narrative and formal — for gaps, vacuity, redundancy and divergence between the two renderings of the same claim.",
       "sourceKind": "role-registry",
       "actorKinds": [
@@ -49170,8 +49374,9 @@
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-blissful-ride-c2f26u-handover/cat-harness.jsonld#role/compute-authoring-agent",
       "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Role",
-      "name": "compute-authoring-agent",
+      "prefLabel": "Compute authoring agent",
       "title": "Compute authoring agent",
+      "notation": "compute-authoring-agent",
       "description": "Writes and audits the computation scripts and simulators that produce witnessed values, and keeps the paper's numbers and its computations from drifting apart.",
       "sourceKind": "role-registry",
       "actorKinds": [
