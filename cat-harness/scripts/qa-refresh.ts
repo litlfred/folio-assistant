@@ -180,8 +180,11 @@ export const QA_WRITERS: readonly QaWriter[] = [
   {
     id: "readme:subgraphs",
     run: ["readme:subgraphs"],
-    writes: ["*/test/results/README.md", `${R}/subgraph-readmes.qa-results.json`],
-    because: "each declared directory's README describes its files, so it runs last",
+    // Its findings sidecar only. It writes no README into a `qa` directory
+    // any more: a STORED directory is skipped (bean `f3bh`), so the README and
+    // the findings cannot depend on whether a working copy was fetched.
+    writes: [`${R}/subgraph-readmes.qa-results.json`],
+    because: "its findings cover every declared directory's README, so it runs last",
   },
 ];
 
