@@ -122,7 +122,7 @@ the executor guess who is speaking.
 |---|---|
 | who you are and why this came to you | executor; the coordinator lacks `packages.fhir.org` |
 | WHERE: repository, canonical checkout path (and which one NOT to use), branch and its PR, this bean's id and file path | `~/space_cats/folio-assistant`, not `-backup` |
-| START: the exact commands, ending in `beans:claim` | |
+| START: the exact commands, with a test that FAILS in the wrong checkout, ending in `beans:claim` | naming the checkout is not enough: `mac1`'s executor ran from `-backup` in all three attempts |
 | the task in two or three sentences, and why the last attempt failed | so the executor knows what the pins guard against |
 | REPORT: where, and the line formats | §2 |
 | STOP AND REPORT IF | the bean's `## Fails if` |
@@ -146,13 +146,14 @@ WHERE (you were sent here by one line naming this bean, branch and repo)
 - Bean:     <id>
             file: <beans/defs/…md>
 
-START
+START (every command after this runs in <checkout>; never `cd` elsewhere)
   cd <checkout> && git fetch && git switch <branch> && git pull
+  test "$(git rev-parse --show-toplevel)" = "$(cd <checkout> && pwd -P)" || { echo "WRONG CHECKOUT"; exit 1; }
   bun run beans:claim <id>
   beans show <id>
-If `beans show` does not print a bean with the sections <…>, STOP: you are in
-the wrong checkout or branch. Report that on #<n>. Never run `beans create`
-for this work.
+If the checkout test fails, or `beans show` does not print a bean with the
+sections <…>, STOP: you are in the wrong checkout or branch. Report that on
+#<n>. Never run `beans create` for this work.
 
 THE TASK (the bean has the exact commands; follow them in order; if this
 message and the bean disagree, the bean wins)
