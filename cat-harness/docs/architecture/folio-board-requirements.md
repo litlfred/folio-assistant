@@ -90,7 +90,7 @@ than one large one.
 | **R1** | the board renders content, not only notes | no — a second rendering of an existing relation |
 | **R2** | semantic zoom, with the threshold **declared** rather than a literal | **yes — the only one** |
 | **R3** | `targetLabel` publishes its parts | no — a bug fix |
-| **R4** | linear collapse, reachable without JavaScript | no, but it constrains R1 |
+| **R4** | linear collapse, reachable without XSS (RELAXED 2026-10-02) | no, but it constrains R1 |
 | **R5** | the badge counts only when `> 1` | no — two lines |
 | **R6** | badge and panel stay **one** query | no — a regression test for something already true |
 | **R7** | badges on avatars | no — R2 plus R6 |
@@ -137,10 +137,41 @@ never parsing, which is exactly why it went unnoticed.
 
 ### R4 — the linear floor
 
-The board SHALL always be collapsible to a linear rendering that works without
-JavaScript. Movement SHALL be **keyboard-operable**; drag MAY be an accelerator
+> **RELAXED by the owner, 2026-10-02**, verbatim:
+>
+> > relax..."reachable without JavaScript" to "reachable without XSS"
+>
+> So the floor is no longer *no JavaScript*. It is **no injected script**: a
+> rendering MAY fetch and build its content client-side, and MUST NOT be
+> reachable by anything that executes markup it did not author. What this
+> buys is why the ruling came: the dominant cost in a published preview is
+> content serialised into every page — measured 2026-10-02, `<nav>` alone is
+> 87.7 KB of identical bytes in each of 2,023 pages — and a no-JS floor
+> forbade the obvious remedy of loading it once.
+>
+> **What the relaxation does NOT touch**, because the same paragraph states
+> them independently: movement stays keyboard-operable, and drag stays an
+> accelerator rather than the only way in. The declared interaction profile is
+> low-dexterity and no byte-count argument reaches it.
+
+The board SHALL always be collapsible to a linear rendering reachable **without
+XSS** — client-side construction is permitted; executing unauthored markup is
+not. Movement SHALL be **keyboard-operable**; drag MAY be an accelerator
 and SHALL NOT be the only way in — this instance's declared interaction profile
 is low-dexterity.
+
+**A dynamically built rendering owes two things the static one gave for free**,
+and they are requirements rather than implementation notes:
+
+- **print and PDF SHALL wait for load and render before printing.** A
+  `window.print()` that fires before the fetch resolves produces a blank or
+  partial page, and a PDF is not re-checkable after the fact the way a web page
+  is. Owner, 2026-10-02: *"print/pdf needs to wait until loaded/rendered before
+  printing (assuming can load assets)"*.
+- **a load that FAILS SHALL say so** rather than render as empty. "Could not
+  load" and "there is nothing here" are the third-state distinction this
+  repository applies everywhere else; a client-side fetch is the one place it is
+  easiest to lose.
 
 ### R5 to R7 — the badge
 
