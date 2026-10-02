@@ -272,4 +272,4 @@ the other panel and that focus lands on its heading.
 The layout layer and why a note carries no coordinates:
 [`board-diagram-interchange`](board-diagram-interchange.md). Relocating content
 out of a folio is `deletion-requires-confirmation`, applied by
-`processes/board-relocate.bpmn` rather than restated here.
+`folio-assistant-core/processes/ui/board-relocate.bpmn` rather than restated here.

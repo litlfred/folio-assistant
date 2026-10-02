@@ -51,20 +51,20 @@ pointers to it. Do not re-add content here — edit the skill.
 
 | process | step(s) that name it |
 |---|---|
-| [Authoring a document](../../processes/authoring-a-document.html) | 2 · Seed the work plan |
-| [Authoring a paper](../../processes/authoring-a-paper.html) | 2 · Seed the work plan |
+| [Is the incremental IG AST what a full build would have produced?](../../processes/ig-ast-delta-review.html) | Note the missed coupling on the bean |
+| [Document ingestion — uploads/ to the L1 source knowledge graph](../../processes/document-ingestion.html) | Record the gap as a bean |
+| [CRDM Phase 5 — beans and sign-off](../../processes/crdm-signoff.html) | Phase 5: Create beans |
 | [Agent bean lifecycle](../../processes/bean-lifecycle.html) | Check before you create (exact-title search); Create the bean (agent CLI, not an engine op); Work, keeping the body current (this is 'edit'); Complete (no unchecked todos left); Scrap with reasons NEVER delete |
 | [Code change and review](../../processes/code-change-review.html) | Record what was done, and close |
+| [Incremental IG build](../../processes/ig-incremental-build.html) | Log the environment error on the bean; Log findings on the bean; File QC findings as beans |
+| [L3 FHIR IG pipeline](../../processes/l3-fhir-pipeline.html) | File QC findings as beans |
+| [Getting started](../../processes/getting-started.html) | Seed the work plan |
+| [Authoring a document](../../processes/authoring-a-document.html) | 2 · Seed the work plan |
 | [Content Change and Review](../../processes/content-change-review.html) | Open the branch-watch bean; Note the main-branch watch |
 | [Content lifecycle](../../processes/content-lifecycle.html) | Seed the work plan; File feedback as beans |
-| [CRDM Phase 5 — beans and sign-off](../../processes/crdm-signoff.html) | Phase 5: Create beans |
-| [Document ingestion — uploads/ to the L1 source knowledge graph](../../processes/document-ingestion.html) | Record the gap as a bean |
 | [Draft, review and publish](../../processes/draft-to-publication.html) | Open or claim the release bean; Open beans for the change requests; Close the release beans |
 | [Editing and HCI validation](../../processes/editing-hci-validation.html) | Claim or open the bean; Log findings on the bean; Resolve or re-open the bean |
 | [Evidence for a recommendation](../../processes/evidence-retrieval.html) | Open a bean for the unverified citation; Record the evidence gap |
-| [Getting started](../../processes/getting-started.html) | Seed the work plan |
-| [Is the incremental IG AST what a full build would have produced?](../../processes/ig-ast-delta-review.html) | Note the missed coupling on the bean |
-| [Incremental IG build](../../processes/ig-incremental-build.html) | Log the environment error on the bean; Log findings on the bean; File QC findings as beans |
-| [L3 FHIR IG pipeline](../../processes/l3-fhir-pipeline.html) | File QC findings as beans |
+| [Authoring a paper](../../processes/authoring-a-paper.html) | 2 · Seed the work plan |
 | [L2 DAK authoring](../../processes/l2-dak-authoring.html) | Seed the work plan |
 
