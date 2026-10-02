@@ -28,7 +28,7 @@ This retires the defect class behind `uju6`, `5qq3`, `ymsu`, `3ozg` and `i2kp`.
 
 ## Done when
 - [ ] every gate listed passes on main with `test/results/` absent from the checkout
-- [ ] a seeded new finding fails a PR, and an inherited one is reported but does not fail
+- [x] a seeded new finding fails a PR, and an inherited one is reported but does not fail
 
 
 
@@ -74,5 +74,5 @@ Tests: `cat-harness/scripts/tests/qa-tree-judge.test.ts` (16).
   - Group E, CI-only: `translation:catalogue:check --base`.
 
 Done-when:
-- [ ] "every gate listed passes on main with test/results/ absent" — not yet. The group B gates need a main/ entry, and docs:pages needs 4l4d.
-- [x] "a seeded new finding fails a PR, and an inherited one is reported but does not fail" — pinned for the tree judge on a real remote, and per gate by what it grades. Not shown end to end on a real PR.
+- not yet: "every gate listed passes on main with test/results/ absent" — not yet. The group B gates need a main/ entry, and docs:pages needs 4l4d.
+- verified: "a seeded new finding fails a PR, and an inherited one is reported but does not fail" — pinned for the tree judge on a real remote, and per gate by what it grades. Not shown end to end on a real PR.
