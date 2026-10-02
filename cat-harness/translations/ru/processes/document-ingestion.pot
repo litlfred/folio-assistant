@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: document-ingestion\n"
-"POT-Creation-Date: 2026-10-02T17:47:02.152Z\n"
+"POT-Creation-Date: 2026-10-02T19:03:13.247Z\n"
 "PO-Revision-Date: \n"
 "Last-Translator: \n"
 "Language: ru\n"
@@ -14,17 +14,17 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: processes/library/document-ingestion.bpmn:67
+#: processes/library/document-ingestion.bpmn:65
 #. Diagram label
 msgid "A contributor has a file for the folio"
 msgstr ""
 
-#: processes/library/document-ingestion.bpmn:108
+#: processes/library/document-ingestion.bpmn:106
 #. Diagram element documentation
 msgid "Answered from the materialization state (`schemas/materialization-state.ts`): `materialized` means the bytes are here; `referenced` means we know where they are and hold none. `unknown` is not a third branch here because a node must DECLARE its state — there is no default — and an asset this flow cannot classify is recorded as referenced-with-a-reason rather than placed as if held. Collapsing referenced into materialized is the failure the vocabulary exists to stop: corpus-grep searches library/ only, so a referenced node placed as held reads as present to every consumer."
 msgstr ""
 
-#: processes/library/document-ingestion.bpmn:135
+#: processes/library/document-ingestion.bpmn:133
 #. Diagram label
 msgid "Asset catalogued"
 msgstr ""
@@ -39,12 +39,7 @@ msgstr ""
 msgid "Contributor (human or agent)"
 msgstr ""
 
-#: processes/library/document-ingestion.bpmn:61
-#. Diagram label
-msgid "Corpus — library/"
-msgstr ""
-
-#: processes/library/document-ingestion.bpmn:95
+#: processes/library/document-ingestion.bpmn:93
 #. Diagram label
 msgid "Extract its metadata into the KG [asset-extraction]"
 msgstr ""
@@ -59,69 +54,64 @@ msgstr ""
 msgid "Ingestion Engine (agent, runs unattended)"
 msgstr ""
 
-#: processes/library/document-ingestion.bpmn:142
+#: processes/library/document-ingestion.bpmn:140
 #. Diagram label
 msgid "materialized"
 msgstr ""
 
-#: processes/library/document-ingestion.bpmn:107
+#: processes/library/document-ingestion.bpmn:105
 #. Diagram label
 msgid "Materialized?"
 msgstr ""
 
-#: processes/library/document-ingestion.bpmn:69
+#: processes/library/document-ingestion.bpmn:67
 #. Diagram element documentation
 msgid "ONE OF TWO ENTRY POINTS, and this said \"the only\" one until 2026-09-20. A drop during an editing session triggers ingestion in the background; the contributor does not wait for it. THE OTHER is materialization: an asset listed in a remote graph that this instance, or one of its dependencies, declares in `remoteGraphs`. Owner, 2026-09-20: \"things can enter library through uploads/ -> library/ document ingestion or through retrieval / materialization of asset known through listed external KG in one of the dependent harnesses.\" That path runs materialize-remote.bpmn FIRST -- purpose, then the five gates -- and re-enters at the metadata step with a file that already carries its provenance and its fixity. It does NOT pass through uploads/, and that is deliberate: uploads/ is a queue for things somebody dropped, and a materialized asset was never dropped. Recording it as an upload would lose the one fact that distinguishes the two, which is that somebody decided it could be held. RENAMED 2026-09-30, and the id is deliberately unchanged. This event was named \"A file lands in uploads/\" — an ARRIVAL, which is why the owner could say the chain's first link was missing: the process began after the file was already in the queue, so nothing in it modelled, governed or documented how the file got there. Task_Place is that step, and an event named for the arrival could not sit in front of it without contradicting it. The id stays `StartEvent_Dropped` because it is referenced from `skills/library/library-core/content-acquisition.md` and from five translation catalogues, and an id is an identifier rather than a description."
 msgstr ""
 
-#: processes/library/document-ingestion.bpmn:78
+#: processes/library/document-ingestion.bpmn:76
 #. Diagram label
 msgid "Place it in uploads/ by a declared route [upload-routes]"
 msgstr ""
 
-#: processes/library/document-ingestion.bpmn:113
+#: processes/library/document-ingestion.bpmn:111
 #. Diagram label
 msgid "Place the asset in library/<slug>/ [library-ingestion]"
 msgstr ""
 
-#: processes/library/document-ingestion.bpmn:125
+#: processes/library/document-ingestion.bpmn:123
 #. Diagram label
 msgid "Record it in library/ as referenced [library-ingestion]"
 msgstr ""
 
-#: processes/library/document-ingestion.bpmn:143
+#: processes/library/document-ingestion.bpmn:141
 #. Diagram label
 msgid "referenced"
 msgstr ""
 
 #: processes/library/document-ingestion.bpmn:54
 #. Diagram element documentation
-msgid "Runs the basic flow from the metadata step to the placement in library/, unattended: every decision in it is decidable from the material and its declarations. It asks one question — is the asset materialized? — and that is answered from the materialization state vocabulary (`schemas/materialization-state.ts`, placement PR5), not by judgement. It does NOT choose a reader for the bytes, derive sections or blocks, or describe images: those are a refining process's work, which calls this flow first."
+msgid "Runs the basic flow from the metadata step to the placement in library/, unattended: every decision in it is decidable from the material and its declarations. It asks one question — is the asset materialized? — and that is answered from the materialization state vocabulary (`schemas/materialization-state.ts`, placement PR5), not by judgement. It does NOT choose a reader for the bytes, derive sections or blocks, or describe images: those are a refining process's work, which calls this flow first. THE FLOW ENDS IN THIS LANE. The asset catalogued in library/ — held, or recorded as referenced — is the terminal state, and every knowledge-graph reference to it resolves through library/ from here; a refining process continues from it rather than being drawn into this one. There is no separate corpus lane: it would hold only the end event, and a lane with no activity has no performer to describe."
 msgstr ""
 
-#: processes/library/document-ingestion.bpmn:81
+#: processes/library/document-ingestion.bpmn:79
 #. Diagram element documentation
 msgid "THE FIRST LINK, and it did not exist until 2026-09-30. Everything downstream of here takes a file that is already in the queue, and both ingest Tools type their first input as \"The upload to ingest, under the declared `uploads` graph\". So the act of PUTTING it there was performed by three different mechanisms and governed by none of them. WHAT THIS STEP IS. The basic flow's ACCEPT step: choosing an arrival route, writing the bytes into the declared queue of the instance that will own them, and discharging what that route does not discharge for you. The routes, what each writer owes, and the two that are mechanisms against the one that is a persona are in the `upload-routes` skill; `upload-url` composes the forge URL for the web route from the declaration rather than from a literal, because a hand-written one 404'd. WHY A PLAIN `bpmn:task` AND NOT A `userTask`. A `userTask` asserts a human performs it, and this lane is named \"Contributor (human or agent)\" precisely because both do — measured over this repository's own history, files have reached `uploads/` in commits authored by `Carl Leitner` and in commits authored by `Claude`. Asserting human-only here would be the `activity-fulfilment-kind` contradiction written deliberately: the diagram saying one thing and the lane's role graph another. A plain task asserts nothing about the performer, which is the truth. WHY THE BEAN OP IS `note` AND NOT `claim`. Placing a file claims nothing; it adds to a queue. What it owes the work plan is visibility — three batches of PDFs arrived through the forge's web UI (`c8349950fa5`, `f4ddfc65c8d`, `b8549160bb1`) with no bean, no PR and no note, and the first sibling to notice was a generator going stale. A note against the ingestion bean is what makes the queue's growth something another session can see."
 msgstr ""
 
-#: processes/library/document-ingestion.bpmn:116
+#: processes/library/document-ingestion.bpmn:114
 #. Diagram element documentation
 msgid "The materialized branch. The asset lands in library/<slug>/ with its metadata record, its provenance and its fixity. The folder name IS the citation key, so a citation and a directory are the same string. The upload is then RETIRED, not left and not deleted: it moves to fsh-guts/uploads/ beside a sidecar naming where it came from and when (owner, 2026-09-29), and `check:uploads-retired` finds one that was not. A refining process that derives content from the bytes does so before that retirement; `library-ingestion` carries the rule."
 msgstr ""
 
-#: processes/library/document-ingestion.bpmn:98
+#: processes/library/document-ingestion.bpmn:96
 #. Diagram element documentation
 msgid "THE METADATA STEP. What enters the knowledge graph is the asset's INDEX — what it is, how big, what type, when it says it was written — and, for a container, what is in it; its contents do not go in unless somebody asks, with a reason. Owner, 2026-09-20: \"make sure you have zip ingestion skills to extract metadata of assets into KG. don't extract contents unless explict ask by user.\" The tool is `cat-harness-tools/scripts/extract-assets.ts`, writing a `folio-extraction/v1` record (`schemas/extraction.ts`, moved down to this layer in placement PR5). The media type is sniffed from the leading bytes, never taken from the extension."
 msgstr ""
 
-#: processes/library/document-ingestion.bpmn:128
+#: processes/library/document-ingestion.bpmn:126
 #. Diagram element documentation
 msgid "The referenced branch. Nothing is fetched and no bytes are written: the catalogue record says where the asset is and that we hold none. A reference is not a fetch — it stays navigable without being held, and materializing it later is `materialize-remote.bpmn`'s decision, with its purpose and five gates, not this flow's."
-msgstr ""
-
-#: processes/library/document-ingestion.bpmn:62
-#. Diagram element documentation
-msgid "The terminal state the flow exists to reach: the asset is catalogued in library/ — held, or recorded as referenced — and every knowledge-graph reference to it resolves through library/ from here. It is the boundary this diagram stops at; a refining process continues from it rather than being drawn into this one."
 msgstr ""
 
 #: processes/library/document-ingestion.bpmn:44

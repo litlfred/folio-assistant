@@ -257,7 +257,7 @@ The reverse of `<bootstrap.processes:skill ref>`, which is the join nothing else
 
 A lane IS a role. The NAME is free text — `process-model.ts` notes that sixty lanes spell two dozen positions — so `<bootstrap.processes:role ref>` is the join that does not depend on spelling, and it is reported separately below rather than merged into the name.
 
-**112** distinct lane name(s).
+**111** distinct lane name(s).
 
 | lane | in |
 |---|---|
@@ -311,7 +311,6 @@ A lane IS a role. The NAME is free text — `process-model.ts` notes that sixty 
 | Content Author | 1 |
 | Contributor | 1 |
 | Copier's own folio/ | 1 |
-| Corpus — library/ | 1 |
 | Corpus — the subscriber's declaration | 1 |
 | Corpus (versioned store) | 1 |
 | Corpus + build pipeline (system) | 1 |

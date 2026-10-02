@@ -51,16 +51,14 @@ WHAT THE LANE IS ACCOUNTABLE FOR, and where it ends. Choosing a route, writing t
         <bpmn:flowNodeRef>Task_Place</bpmn:flowNodeRef>
       </bpmn:lane>
       <bpmn:lane id="Lane_1" name="Ingestion Engine (agent, runs unattended)">
-        <bpmn:documentation>Runs the basic flow from the metadata step to the placement in library/, unattended: every decision in it is decidable from the material and its declarations. It asks one question — is the asset materialized? — and that is answered from the materialization state vocabulary (`schemas/materialization-state.ts`, placement PR5), not by judgement. It does NOT choose a reader for the bytes, derive sections or blocks, or describe images: those are a refining process's work, which calls this flow first.</bpmn:documentation>
+        <bpmn:documentation>Runs the basic flow from the metadata step to the placement in library/, unattended: every decision in it is decidable from the material and its declarations. It asks one question — is the asset materialized? — and that is answered from the materialization state vocabulary (`schemas/materialization-state.ts`, placement PR5), not by judgement. It does NOT choose a reader for the bytes, derive sections or blocks, or describe images: those are a refining process's work, which calls this flow first.
+
+THE FLOW ENDS IN THIS LANE. The asset catalogued in library/ — held, or recorded as referenced — is the terminal state, and every knowledge-graph reference to it resolves through library/ from here; a refining process continues from it rather than being drawn into this one. There is no separate corpus lane: it would hold only the end event, and a lane with no activity has no performer to describe.</bpmn:documentation>
         <bpmn:extensionElements><bootstrap.processes:role ref="ingestion-agent"/></bpmn:extensionElements>
         <bpmn:flowNodeRef>Task_ExtractMetadata</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Gateway_Materialized</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Task_PlaceInLibrary</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Task_CatalogueReference</bpmn:flowNodeRef>
-      </bpmn:lane>
-      <bpmn:lane id="Lane_3" name="Corpus — library/">
-        <bpmn:documentation>The terminal state the flow exists to reach: the asset is catalogued in library/ — held, or recorded as referenced — and every knowledge-graph reference to it resolves through library/ from here. It is the boundary this diagram stops at; a refining process continues from it rather than being drawn into this one.</bpmn:documentation>
-        <bpmn:extensionElements><bootstrap.processes:role ref="corpus"/></bpmn:extensionElements>
         <bpmn:flowNodeRef>EndEvent_Catalogued</bpmn:flowNodeRef>
       </bpmn:lane>
     </bpmn:laneSet>
@@ -146,24 +144,23 @@ as referenced
   </bpmn:process>
   <bpmndi:BPMNDiagram id="Diagram_Ingestion">
     <bpmndi:BPMNPlane id="Plane_Ingestion" bpmnElement="Collaboration_Ingestion">
-      <bpmndi:BPMNShape id="Participant_Ingestion_di" bpmnElement="Participant_Ingestion" isHorizontal="true"><dc:Bounds x="160" y="80" width="1150" height="540" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Participant_Ingestion_di" bpmnElement="Participant_Ingestion" isHorizontal="true"><dc:Bounds x="160" y="80" width="1150" height="360" /></bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Lane_0_di" bpmnElement="Lane_0" isHorizontal="true"><dc:Bounds x="190" y="80" width="1120" height="180" /></bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Lane_1_di" bpmnElement="Lane_1" isHorizontal="true"><dc:Bounds x="190" y="260" width="1120" height="180" /></bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Lane_3_di" bpmnElement="Lane_3" isHorizontal="true"><dc:Bounds x="190" y="440" width="1120" height="180" /></bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="StartEvent_Dropped_di" bpmnElement="StartEvent_Dropped"><dc:Bounds x="227" y="152" width="36" height="36" /></bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Task_Place_di" bpmnElement="Task_Place"><dc:Bounds x="310" y="130" width="150" height="80" /></bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Task_ExtractMetadata_di" bpmnElement="Task_ExtractMetadata"><dc:Bounds x="410" y="310" width="150" height="80" /></bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Gateway_Materialized_di" bpmnElement="Gateway_Materialized" isMarkerVisible="true"><dc:Bounds x="620" y="325" width="50" height="50" /></bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Task_PlaceInLibrary_di" bpmnElement="Task_PlaceInLibrary"><dc:Bounds x="740" y="275" width="150" height="80" /></bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Task_CatalogueReference_di" bpmnElement="Task_CatalogueReference"><dc:Bounds x="930" y="350" width="150" height="80" /></bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="EndEvent_Catalogued_di" bpmnElement="EndEvent_Catalogued"><dc:Bounds x="1167" y="512" width="36" height="36" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="EndEvent_Catalogued_di" bpmnElement="EndEvent_Catalogued"><dc:Bounds x="1167" y="332" width="36" height="36" /></bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="Flow_i1_di" bpmnElement="Flow_i1"><di:waypoint x="263" y="170" /><di:waypoint x="310" y="170" /></bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_i2_di" bpmnElement="Flow_i2"><di:waypoint x="385" y="210" /><di:waypoint x="385" y="350" /><di:waypoint x="410" y="350" /></bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_i3_di" bpmnElement="Flow_i3"><di:waypoint x="560" y="350" /><di:waypoint x="620" y="350" /></bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_held_di" bpmnElement="Flow_held"><di:waypoint x="645" y="325" /><di:waypoint x="645" y="315" /><di:waypoint x="740" y="315" /></bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_referenced_di" bpmnElement="Flow_referenced"><di:waypoint x="645" y="375" /><di:waypoint x="645" y="390" /><di:waypoint x="930" y="390" /></bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_held_done_di" bpmnElement="Flow_held_done"><di:waypoint x="890" y="315" /><di:waypoint x="1185" y="315" /><di:waypoint x="1185" y="512" /></bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_referenced_done_di" bpmnElement="Flow_referenced_done"><di:waypoint x="1080" y="390" /><di:waypoint x="1130" y="390" /><di:waypoint x="1130" y="530" /><di:waypoint x="1167" y="530" /></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_held_done_di" bpmnElement="Flow_held_done"><di:waypoint x="890" y="315" /><di:waypoint x="1185" y="315" /><di:waypoint x="1185" y="332" /></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_referenced_done_di" bpmnElement="Flow_referenced_done"><di:waypoint x="1080" y="390" /><di:waypoint x="1185" y="390" /><di:waypoint x="1185" y="368" /></bpmndi:BPMNEdge>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>
 </bpmn:definitions>
