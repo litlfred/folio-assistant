@@ -1069,6 +1069,11 @@ export const RULES: Rule[] = [
       // its subject twice over: it reads THIS repository's workflows,
       // and what it runs are the harness's own generators.
       "scripts/check-ci-invocations.ts",
+      // Its sibling, and harness for the same reason twice over: it reads
+      // THIS repository's workflow YAML, and what it asks about is whether a
+      // job that runs the harness's own scripts checked out the harness's own
+      // submodules. A folio could not make it answer differently.
+      "scripts/check-workflow-submodules.ts",
       // Builds every package this REPOSITORY publishes to npm (bean `rsi6`).
       // Harness by its subject: the thing it builds is this repository's own
       // shipped artefact, and a folio publishes prose and proofs rather than

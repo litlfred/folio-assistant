@@ -1451,6 +1451,18 @@ jobs:
       - name: Check out the platform, to write the render log
         uses: actions/checkout@v7
         with:
+          # REQUIRED, not an optimisation: `cat-harness/schemas/` imports from
+          # the `bootstrap-tools` SUBMODULE, so without it every `bun run` of a
+          # platform script below dies on `Cannot find module
+          # '../../bootstrap-tools/schemas/graph'`. That is not a loud failure
+          # in the right place — `rm -rf` has already run by then, and the
+          # `render-log.ts` call that dies is what aborts the step under
+          # `bash -e`, so the commit and push never happen. The preview is
+          # removed in the runner and left on `gh-pages`: a cleanup that
+          # reports failure having changed nothing. Measured 2026-10-02 — six
+          # consecutive `pull_request_target` runs failed this way and 80
+          # previews had accumulated, 47 of them for PRs already closed.
+          submodules: true
           path: source
 
       - uses: oven-sh/setup-bun@v2
@@ -1796,6 +1808,10 @@ jobs:
           # than guessing, and saying so REFUSES — so a shallow checkout here
           # would make every dispatch fail.
           fetch-depth: 0
+          # Same reason as the `cleanup` job above: the preflight and the
+          # record writer both import through `cat-harness/schemas/`, which
+          # reaches into the `bootstrap-tools` submodule.
+          submodules: true
           path: source
 
       - uses: oven-sh/setup-bun@v2

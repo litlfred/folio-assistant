@@ -1834,6 +1834,18 @@ jobs:
           # (2026-09-20). It reads them out of the YAML rather than
           # listing them, so a new one is covered the day it is added.
           bun run check:ci-invocations
+
+          # Its sibling, also reading the workflow YAML rather than a list: a
+          # job that RUNS a platform script must have CHECKED OUT the
+          # platform's submodules, because `cat-harness/schemas/` imports from
+          # `bootstrap-tools`. Measured 2026-10-02 — `feature-staging.yml`'s
+          # `cleanup` job had failed on exactly this for six consecutive runs
+          # and `STAGING/` held 80 previews, 47 for closed PRs. The failure is
+          # worse than a missing cleanup: `rm -rf` runs, then `render-log.ts`
+          # dies and aborts the step under `bash -e`, so the commit and push
+          # never happen — a cleanup that reports failure having changed
+          # nothing, while looking from outside like one that ran.
+          bun run check:workflow-submodules
           # The per-kind state dashboards under `<base>/<graph>/dashboard/`.
           # COMMITTED pages, so a difference is somebody who changed the
           # generator, the renderer it inlines, or the declaration, and did
