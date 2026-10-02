@@ -1,5 +1,5 @@
 <!-- kg:subgraph:begin -->
-# equipping-agents-for-the-real-world-with-agent-skills-anthro
+# Equipping agents for the real world with Agent Skills
 
 ingested source material — attributed to its document, not folio content
 

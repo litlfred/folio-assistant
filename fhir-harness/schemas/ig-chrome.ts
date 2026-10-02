@@ -250,6 +250,9 @@ export function chromeCss(chrome: IgChrome, scope: string): string {
 /** The filename an ingested chrome document is written under. */
 export const CHROME_FILENAME = "chrome.json";
 
+/** Where a chrome may live, in lookup order. */
+export const CHROME_GRAPHS = ["themes", "fhir-artifact-index"] as const;
+
 /**
  * Where a named instance's ingested chrome sits — **asked, not composed.**
  *
@@ -287,7 +290,11 @@ export function chromeFileFor(
 ): string | undefined {
   for (const root of deps.instanceRootsIn(repoRoot)) {
     if (deps.declarationNameOf(root) !== instanceName) continue;
-    for (const dir of deps.directoriesForGraph(root, "fhir-artifact-index")) {
+    // The chrome is the TEMPLATE's styling, so it ships with the harness that
+    // carries the template's theme (plan Q4; rehearsed on litlfred/smart-base,
+    // bean `rbz3`): a `themes` directory first, then, for an instance that
+    // keeps it beside its artefact index, `fhir-artifact-index`.
+    for (const dir of CHROME_GRAPHS.flatMap((g) => deps.directoriesForGraph(root, g))) {
       const p = deps.join(dir, CHROME_FILENAME);
       if (deps.exists(p)) return p;
     }

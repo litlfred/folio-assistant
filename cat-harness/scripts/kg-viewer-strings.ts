@@ -144,6 +144,14 @@ export const UI_STRINGS: readonly UiString[] = [
     comment: "Accessible name of the language switcher — the group of buttons, not one of them. The buttons themselves carry each language's own name and are not translated.",
   },
   {
+    en: "Translations coming",
+    comment: "The visible reason beside the language buttons that cannot be chosen yet (bean w6fu). It is also the toggle that opens the longer explanation, so keep it short: it sits on one line beside the buttons.",
+  },
+  {
+    en: "A translation of this interface into {languages} is planned. Until it is ready, the page is shown in English.",
+    comment: "The explanation the 'Translations coming' toggle opens. {languages} is a list of language names, each in its own language, so it is not translated.",
+  },
+  {
     en: "Interface language: {language}",
     comment: "Announced to a screen reader after the language changes. {language} is the new language's name in its own language.",
   },
@@ -382,13 +390,43 @@ export function poHeader(poText: string, field: string): string | undefined {
 }
 
 /**
- * Load every locale that has a `translations/<locale>/kg-viewer.po`.
+ * A language somebody has started a catalogue for, with nothing in it yet.
+ *
+ * Owner's ruling 2026-10-02 (issue #1838, bean `w6fu`): the switcher SHOWS
+ * these, disabled, so a reader can see a translation is planned. They are
+ * still never offered as a CHOICE, because the page cannot show them.
+ */
+export interface PlannedLocale {
+  locale: string;
+  /** The language's own name. */
+  name: string;
+  dir: "ltr" | "rtl";
+}
+
+/**
+ * Load every locale that has a `translations/<locale>/kg-viewer.po` with at
+ * least one translated string.
  *
  * A locale with no `.po` is simply absent — not an error, and not an empty
  * catalogue either. "Not translated yet" is the ordinary state of nearly every
- * language, and the switcher offers only what the page can actually show.
+ * language, and the switcher offers as a CHOICE only what the page can
+ * actually show. A `.po` that exists and is empty is a PLANNED language:
+ * {@link plannedLocales} reads those, and the switcher draws them disabled.
+ * Both are decided by the catalogue's contents, so a catalogue that gains its
+ * first string moves from one list to the other with no code change.
  */
 export function loadCatalogues(root: string): LocaleCatalogue[] {
+  return readCatalogues(root).filter((c) => c.translated > 0);
+}
+
+/** Locales whose `kg-viewer.po` exists and translates nothing yet. */
+export function plannedLocales(root: string): PlannedLocale[] {
+  return readCatalogues(root)
+    .filter((c) => c.translated === 0)
+    .map(({ locale, name, dir }) => ({ locale, name, dir }));
+}
+
+function readCatalogues(root: string): LocaleCatalogue[] {
   const dir = translationsRoot(root);
   if (!existsSync(dir)) return [];
   const out: LocaleCatalogue[] = [];
@@ -407,7 +445,6 @@ export function loadCatalogues(root: string): LocaleCatalogue[] {
         translated++;
       }
     }
-    if (translated === 0) continue;
     out.push({
       locale: entry.name,
       name: localeName(entry.name),

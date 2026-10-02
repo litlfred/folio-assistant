@@ -412,6 +412,7 @@ export const RULES: Rule[] = [
       // differently, only give it more generated files (bean `d33q`).
       "scripts/merge-base.ts",               // merge the base in, resolve only declared patterns, prove
       "scripts/merge-conflict-patterns.ts",  // the declared patterns that merge reads
+      "scripts/merge-main-comment.ts",       // the merge-main bot's PR comment, composed and tested (#1854)
       "scripts/sync-docs-harness.ts",        // the declaration's title/mark → the docs data file
       // Its tile half, and harness-level for the same reason: it reads every
       // INSTANCE's declaration and the published viewer tree, and asks which
@@ -683,19 +684,16 @@ export const RULES: Rule[] = [
     repo: "core",
     triaged: true,
     exact: [
-      // CORE despite matching the smart-base keyword rule, and the core's own
-      // declaration is the evidence: `schemas/block-kinds.ts` (core) declares
-      // `CONTENT_ADAPTERS = ["paper", "dak"]` and `DAK_BLOCK_KINDS`, so a DAK
-      // block kind is part of the core content model. The module defining
-      // their schemas cannot be in a different repository from the union that
-      // names them — and calling it smart-base made the CORE barrel
-      // `schemas/index.ts` re-export a smart-base module, which was the single
-      // `folio-assist-core → smart-base` wrong-direction edge. The
-      // classification was wrong, not the import.
-      //
-      // What stays smart-base is the L2/L3 AUTHORING skills: the procedures
-      // for producing a DAK, as against the block kinds a folio may contain.
-      "schemas/dak-blocks.ts",
+      // `schemas/dak-blocks.ts` was listed here as CORE until bean `1335`,
+      // because core's `schemas/block-kinds.ts` then declared
+      // `CONTENT_ADAPTERS = ["paper", "dak"]` and `DAK_BLOCK_KINDS`, and the
+      // module defining their schemas could not sit in a different repository
+      // from the union naming them. That premise was removed rather than the
+      // classification argued again: smart-base now CONTRIBUTES the `dak`
+      // adapter and its kinds (`smart-base/contributions.ts`), core's built-in
+      // vocabulary is `paper` only, and `dak-blocks.ts`, `qa-checkers-dak.ts`
+      // and `gen-dak-components-figure.ts` moved to `smart-base/`, outside this
+      // tool's scope. Nothing under `cat-harness/` imports them.
       "adapters/manifest-entries.ts",        // reads author-written manifests
       "scripts/gen-docs-pages.ts",           // webpage manifest → docs/<slug>.md
       // CORE, not harness beside gen-uml-overview: it needs a folio to have
@@ -1075,6 +1073,11 @@ export const RULES: Rule[] = [
       // its subject twice over: it reads THIS repository's workflows,
       // and what it runs are the harness's own generators.
       "scripts/check-ci-invocations.ts",
+      // Its sibling, and harness for the same reason twice over: it reads
+      // THIS repository's workflow YAML, and what it asks about is whether a
+      // job that runs the harness's own scripts checked out the harness's own
+      // submodules. A folio could not make it answer differently.
+      "scripts/check-workflow-submodules.ts",
       // Builds every package this REPOSITORY publishes to npm (bean `rsi6`).
       // Harness by its subject: the thing it builds is this repository's own
       // shipped artefact, and a folio publishes prose and proofs rather than
@@ -1137,6 +1140,10 @@ export const RULES: Rule[] = [
       "scripts/render-log.ts",
       "scripts/serve-rendering.ts",
       "scripts/staging-cleanup-preflight.ts",
+      // The preview cap (issue #1868) — same family as its imports above
+      // (`restore-staging`, `render-log`, `staging-record`,
+      // `staging-cleanup-preflight`, `staging-preview`), all harness.
+      "scripts/staging-rotate.ts",
       "src/tools/check-deps.ts",
       "src/tools/capabilities.ts",
       // Beside `capabilities.ts` and for the same reason: it joins a skill's
@@ -1591,8 +1598,9 @@ export const RULES: Rule[] = [
     exact: [
       // The simulator-asset validator (bean `023p`). It falls to `sci` on the
       // keyword rule further down, which matches the WORD `simulator` — and
-      // that is the CLASSIFICATION being wrong rather than the import, exactly
-      // as `schemas/dak-blocks.ts` was in the `smart-base` block.
+      // that is the CLASSIFICATION being wrong rather than the import, as
+      // `schemas/dak-blocks.ts`'s was in the `smart-base` block before bean
+      // `1335` moved that module to smart-base outright.
       //
       // MEASURED: `simulator` is in core's own `DOCUMENT_BLOCK_KINDS` and NOT
       // in `MATH_BLOCK_KINDS`. A simulator block is part of the generic
@@ -1717,17 +1725,12 @@ export const RULES: Rule[] = [
   // smart-base rule here until placement PR1 (bean `ybwt`, 2026-10-01) moved
   // the package to `smart-base/skills/content/` and its four generic FHIR IG
   // skills to `fhir-harness/skills/content/fhir-ig-authoring/`. Its note stays:
-  // `schemas/dak-blocks.ts` was here and is CORE. Measured: core's own
-  // `schemas/block-kinds.ts` already declares `CONTENT_ADAPTERS =
-  // ["paper", "dak"]` and `DAK_BLOCK_KINDS`, so the DAK block kinds are
-  // part of the core content model by the core's own declaration. Calling
-  // the module that defines their schemas `smart-base` made the core barrel
-  // re-export a smart-base module — the one `folio-assist-core → smart-base`
-  // wrong-direction edge, and it was the classification that was wrong
-  // rather than the import.
-  //
-  // What IS smart-base is the L2/L3 AUTHORING skills above: the procedures
-  // for producing a DAK, as against the block kinds a folio may contain.
+  // `schemas/dak-blocks.ts` was here, then re-triaged CORE because core's
+  // `block-kinds.ts` declared `CONTENT_ADAPTERS = ["paper", "dak"]` and
+  // `DAK_BLOCK_KINDS`. Bean `1335` removed that premise instead: the `dak`
+  // adapter and its kinds are a smart-base CONTRIBUTION now, and the module —
+  // with `qa-checkers-dak.ts` and `gen-dak-components-figure.ts` — lives in
+  // `smart-base/`, which this tool does not scan.
   {
     repo: "base",
     exact: [
@@ -1948,10 +1951,16 @@ export const RULES: Rule[] = [
       "scripts/notebook-structure.ts",      // the notebook rung: a folio's `.ipynb` → `notebook-structure/v1` (bean rkqp)
       "scripts/text-structure.ts",          // the text rung: Markdown/XML at a commit → `text-structure/v1` (bean y4uj)
       // `scripts/extract-assets.ts` STOOD HERE and is GONE as of bean `yj6r`,
-      // 2026-09-30, for the reason the materialisation trio above gives: it now
-      // lives in `folio-assistant-core/scripts/` beside the
-      // `schemas/extraction.ts` it reads, so the classification is carried by
-      // location. Its reasoning is kept rather than deleted with the entry,
+      // 2026-09-30, for the reason the materialisation trio above gives: it
+      // moved to `folio-assistant-core/scripts/` beside the
+      // `schemas/extraction.ts` it reads, so the classification was carried by
+      // location. SUPERSEDED 2026-10-02 by owner ruling 2 of the placement
+      // proposal (bean `tlat`, PR5): the pair is the tool behind the harness's
+      // own `asset-extraction` skill, so the schema moved DOWN to
+      // `cat-harness/schemas/extraction.ts` and the script to
+      // `cat-harness-tools/scripts/extract-assets.ts`. Neither is in this
+      // core list again; the reasoning below is kept as the record of why it
+      // was ever classified core. Its reasoning is kept rather than deleted with the entry,
       // because the next reader will ask why a container-extraction tool is not
       // adjudicated and "it is, by where it sits" is the answer: same test as
       // the three above — it reads a CONTAINER a folio was given (a zip, a PDF,

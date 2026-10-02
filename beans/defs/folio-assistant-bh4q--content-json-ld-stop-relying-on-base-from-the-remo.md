@@ -1,12 +1,12 @@
 ---
 # folio-assistant-bh4q
 title: 'Content JSON-LD: stop relying on @base from the remote context (JSON-LD 1.1 §4.1.3)'
-status: todo
+status: completed
 type: task
 priority: normal
-parent: folio-assistant-scfh
 created_at: 2026-10-01T18:30:16Z
-updated_at: 2026-10-01T18:33:37Z
+updated_at: 2026-10-02T13:36:37Z
+parent: folio-assistant-scfh
 ---
 
 ## Why
@@ -26,3 +26,13 @@ Voice rule `ld-no-base-in-a-remote-context` (folio-assistant-core/skills/voices/
 
 ## 2026-10-01 — owner ruled: option 2
 Put `@base` in each document's own (embedded) context beside the remote URL — the same shape schemas/prov-jsonld.ts already emits.
+
+## Summary of Changes
+
+Closed 2026-10-02 on evidence: PR #1817 merged at `85b9578b6`, and issue #1815 closed with it.
+
+- Content documents now carry `CONTENT_DOCUMENT_CONTEXT` = `[CONTENT_CONTEXT_URL, {"@base": FOLIO_BASE}]` (owner option 2), so their `@id`s resolve against FOLIO_BASE even under a strict JSON-LD 1.1 processor, which ignores `@base` in a remote context (§4.1.3).
+- The four content emitters were switched: `gen-block-jsonld`, `gen-site-jsonld`, `tabular-nodes` and `gen-library-jsonld`.
+- `ContentContextSchema` accepts the two-part form and the bare URL that older records carry, and refuses anything else.
+- The falsifier is `cat-harness/schemas/jsonld-base.test.ts`. It simulates a strict processor (context served without `@base`, document at a foreign URL), with a control case that shows the defect.
+- 182 orphaned library figure blocks, the only documents the regeneration missed, were moved to `fsh-guts/retired/library-orphaned-figure-blocks` on the owner's ruling.

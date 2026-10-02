@@ -1,5 +1,5 @@
 <!-- kg:subgraph:begin -->
-# Comment www.thelancet.com/digital-health Vol 3 April 2021
+# WHO SMART guidelines: optimising country-level use of guideline recommendations in the digital age
 
 ingested source material — attributed to its document, not folio content
 
