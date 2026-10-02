@@ -301,10 +301,10 @@
   ],
   "canonicalDocument": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld",
   "repository": "cat-harness",
-  "generatedAt": "2026-10-02T11:51:36.222Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/cfd9e2be84634dafa832466a986a8682caeb5d5d",
-  "sourceCommitSha": "cfd9e2be84634dafa832466a986a8682caeb5d5d",
-  "sourceCommitAt": "2026-10-02T11:43:51Z",
+  "generatedAt": "2026-10-02T13:02:12.051Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/000bc47b3fca8d3595b33115a8bf355ad76982f0",
+  "sourceCommitSha": "000bc47b3fca8d3595b33115a8bf355ad76982f0",
+  "sourceCommitAt": "2026-10-02T12:54:23Z",
   "sourceTreeDirty": true,
   "dependsOnUnavailable": "2 dependency edge(s), none expressible as a record — see gaps",
   "counts": {
@@ -319,7 +319,7 @@
     "ProcessNode": 940,
     "Tool": 112,
     "Schema": 146,
-    "ExternalSchema": 18,
+    "ExternalSchema": 19,
     "GraphKind": 25,
     "Role": 48,
     "Subgraph": 25,
@@ -47634,14 +47634,6 @@
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/extraction"
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-hypatia-k3aoh4-bean-notes/cat-harness.jsonld#schema/fhir-artifact-index",
-      "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#Schema",
-      "name": "fhir-artifact-index",
-      "title": "The artefact index of a published FHIR Implementation Guide.",
-      "module": "../folio-assistant-core/schemas/fhir-artifact-index.ts",
-      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/fhir-artifact-index"
-    },
-    {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-hypatia-k3aoh4-bean-notes/cat-harness.jsonld#schema/glossary",
       "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#Schema",
       "name": "glossary",
@@ -47680,6 +47672,14 @@
       "title": "A reviewer's VERDICT on one version of one block: \"I read this, and here is",
       "module": "../folio-assistant-core/schemas/review-verdict.ts",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/review-verdict"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-hypatia-k3aoh4-bean-notes/cat-harness.jsonld#schema/fhir-artifact-index",
+      "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#Schema",
+      "name": "fhir-artifact-index",
+      "title": "The artefact index of a published FHIR Implementation Guide.",
+      "module": "../fhir-harness/schemas/fhir-artifact-index.ts",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/fhir-artifact-index"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-hypatia-k3aoh4-bean-notes/cat-harness.jsonld#schema/ig-chrome",
@@ -47733,6 +47733,20 @@
         "http://hl7.org/fhir/"
       ],
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#externalSchema/hl7-fhir"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-hypatia-k3aoh4-bean-notes/cat-harness.jsonld#externalSchema/ietf-handle-system",
+      "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#ExternalSchema",
+      "name": "ietf-handle-system",
+      "title": "Handle System Overview (RFC 3650), with its namespace (RFC 3651) and protocol (RFC 3652)",
+      "authority": "IETF",
+      "specVersion": "2003-11",
+      "specUse": "conforms",
+      "specUrl": "https://www.rfc-editor.org/rfc/rfc3650",
+      "namespace": [
+        "https://hdl.handle.net/"
+      ],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#externalSchema/ietf-handle-system"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-hypatia-k3aoh4-bean-notes/cat-harness.jsonld#externalSchema/omg-bpmn-2.0",
@@ -49497,8 +49511,8 @@
   ],
   "staging": {
     "branch": "claude/quirky-hypatia-k3aoh4-bean-notes",
-    "sha": "cd63322e065dce18b1fa7e190d45048c1ebb02e2",
+    "sha": "da7db67c7a14e045410ef64a1176619e002993de",
     "pr": "1857/merge",
-    "run": "37002661407"
+    "run": "37009599085"
   }
 }
