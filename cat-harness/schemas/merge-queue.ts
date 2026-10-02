@@ -273,8 +273,18 @@ export const MemberFactsSchema = z
     authoredPaths: z.array(z.string()),
     /** Touches a shared declaration: a schema, generator, `<instance>.json`, BPMN or DMN (T3, R6). */
     touchesShared: z.boolean(),
-    /** An authored path under `cat-harness/` or `cat-harness-tools/` — input (a). */
+    /**
+     * An authored path under `cat-harness/` or `cat-harness-tools/`. The raw
+     * measurement behind input (a) — NOT input (a) itself: measured
+     * 2026-10-02, it was true for 11 of the 11 PRs in that day's queue.
+     */
     touchesHarness: z.boolean(),
+    /**
+     * Input (a): `touchesHarness` AND a linked bean descends from the
+     * separation goal — the PR seeds the staging repos, which is the reason
+     * the owner gave for (a). See `merge-priority.dmn`'s note.
+     */
+    seedsStaging: z.boolean(),
     /** Open PRs or beans this unblocks, or tangle edges it removes — input (b). */
     unblocks: z.number().int().nonnegative(),
     /** Tagged MVP / feature-priority, by epic or label — input (c). */
