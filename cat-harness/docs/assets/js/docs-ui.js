@@ -941,18 +941,20 @@
    */
   function buildDiscardedTodos() {
     var wrap = el("section", { class: "fa-discarded-local",
-                               "aria-label": "Todos you discarded in this browser" });
+                               "aria-label": "Stickies you discarded in this browser" });
     var ids = discardedTodoIds();
     if (ids.length === 0) return wrap;   // nothing to say, and no empty heading
 
+    // "stickies", not "todos": a landing sticky goes to fsh-guts too (#1925).
     wrap.appendChild(el("h4", { class: "fa-discarded-local-title" },
-      ids.length === 1 ? "1 todo you discarded" : ids.length + " todos you discarded"));
+      ids.length === 1 ? "1 sticky you discarded" : ids.length + " stickies you discarded"));
     wrap.appendChild(el("p", { class: "fa-discarded-local-note" },
       "Discarded in this browser only — saved here, not sent anywhere, and not " +
       "discarded for anyone else."));
 
     var byId = {};
     (todoState.items || []).forEach(function (t) { byId[t.id] = t; });
+    var names = discardedTitles();
 
     var ul = el("ul", { class: "fa-discarded-list" });
     ids.forEach(function (id) {
@@ -961,11 +963,11 @@
       // The id is the fallback, not a blank: a discarded todo whose entry has
       // since left the published index still has to be nameable to be
       // restorable.
-      li.appendChild(el("span", { class: "fa-discarded-item-name" },
-                        todo ? todo.summary : id));
+      var name = todo ? todo.summary : (names[id] || id);
+      var home = id.indexOf("landing/") === 0 ? " to the stickies panel" : " to the todo board";
+      li.appendChild(el("span", { class: "fa-discarded-item-name" }, name));
       var b = el("button", { type: "button", class: "fa-discarded-restore",
-                             "aria-label": "Restore " + (todo ? todo.summary : id) +
-                                           " to the todo board" }, "Restore");
+                             "aria-label": "Restore " + name + home }, "Restore");
       b.addEventListener("click", function () {
         restoreTodo(id);
         li.parentNode.removeChild(li);
@@ -1037,6 +1039,103 @@
     return wrap;
   }
 
+
+  /* ── fsh-guts in the navbar's TOP — issue #1925 ─────────────────────────
+   *
+   * Owner, 2026-10-02: *"(also add fsh-guts icon to LHS top navbar)"*. It is
+   * where a sticky sent to fsh-guts is restored from, so the send's
+   * confirmation can point at something a reader can see on every page,
+   * rather than at a control two levels inside ▦ Actions.
+   *
+   * The button is GENERATED into `.fa-nav-top` (`gen-navbar-include.ts`), with
+   * `hidden`, because everything behind it is script: the list is fetched and
+   * the restore writes `localStorage`. With no script it stays absent rather
+   * than being a button that does nothing (`pb04`).
+   *
+   * THE COUNT HAS FOUR STATES, and three of them are the ones that must not
+   * collapse (the same rule `7vhe` set for the Settings control):
+   *
+   *   absent   this build published no fsh-guts document and nothing was
+   *            discarded here — "–", never "0", because there is nothing to
+   *            count, which is a different fact from counting nothing
+   *   zero     the document says the trashcan is empty, and so does this browser
+   *   some     n, the document's nodes plus this browser's discards
+   *   error    the document could not be read — "?", never "0"
+   *
+   * THE FETCH NOW HAPPENS ON EVERY PAGE, and that reverses a recorded trade:
+   * the Settings control fetched only on open because the document is ~64 KB.
+   * A count that is always on screen cannot wait for a click. So the fetch
+   * waits for idle instead of for load, and the browser's HTTP cache serves
+   * the repeat views; the bytes are paid once per cache lifetime, not per page.
+   */
+  function fshGutsCount(state) {
+    var local = discardedTodoIds().length;
+    if (state.error) return { state: "error", text: "?", words: "could not be read (" + state.error + ")" };
+    if (state.absent && local === 0) {
+      return { state: "absent", text: "–", words: "no discarded-items document is published here" };
+    }
+    var n = (state.nodes || []).length + local;
+    return { state: n === 0 ? "zero" : "some", text: String(n),
+             words: n === 0 ? "empty" : n === 1 ? "1 item" : n + " items" };
+  }
+
+  function openFshGutsDialog(opener) {
+    fetchDiscarded(function (state) {
+      var dialog = el("dialog", { class: "fa-fsh-guts-dialog", "aria-labelledby": "fa-fsh-guts-dialog-title" });
+      var head = el("div", { class: "fa-fsh-guts-dialog-head" });
+      head.appendChild(el("h2", { id: "fa-fsh-guts-dialog-title" }, "fsh-guts — discarded items"));
+      var close = el("button", { type: "button", class: "fa-fsh-guts-dialog-close",
+                                 "aria-label": "Close fsh-guts", title: "Close" }, "×");
+      head.appendChild(close);
+      dialog.appendChild(head);
+      // THE SAME list and restore the Settings control opens, not a second one.
+      dialog.appendChild(buildDiscardedView(state.absent ? { nodes: [] } : state));
+      function done() {
+        if (dialog.open && typeof dialog.close === "function") dialog.close();
+        if (dialog.parentNode) dialog.parentNode.removeChild(dialog);
+        if (opener && opener.isConnected) opener.focus();
+      }
+      close.addEventListener("click", done);
+      dialog.addEventListener("cancel", function (e) { e.preventDefault(); done(); });
+      dialog.addEventListener("keydown", function (e) {
+        if (e.key === "Escape") { e.preventDefault(); e.stopPropagation(); done(); }
+      });
+      document.body.appendChild(dialog);
+      if (typeof dialog.showModal === "function") dialog.showModal();
+      else dialog.setAttribute("open", "");
+      var first = dialog.querySelector(".fa-discarded-restore, .fa-discarded-item") || close;
+      first.focus();
+    });
+  }
+
+  function mountFshGutsNav() {
+    var buttons = document.querySelectorAll("[data-fa-fsh-guts-open]");
+    if (!buttons.length) return;
+    function paint() {
+      fetchDiscarded(function (state) {
+        var c = fshGutsCount(state);
+        Array.prototype.forEach.call(buttons, function (b) {
+          var count = b.querySelector(".fa-nav-count");
+          if (count) {
+            count.textContent = c.text;
+            count.setAttribute("data-fa-count-state", c.state);
+          }
+          b.setAttribute("data-fa-count-state", c.state);
+          b.setAttribute("aria-label", "fsh-guts, discarded items — " + c.words);
+        });
+      });
+    }
+    Array.prototype.forEach.call(buttons, function (b) {
+      b.removeAttribute("hidden");
+      b.addEventListener("click", function (e) {
+        e.preventDefault();
+        openFshGutsDialog(b);
+      });
+    });
+    document.addEventListener("fa:todos-discarded", paint);
+    if (typeof window.requestIdleCallback === "function") window.requestIdleCallback(paint, { timeout: 2000 });
+    else setTimeout(paint, 0);
+  }
 
   /* ── The kind fan (bean `4kj4`) ────────────────────────────────────────
    *
@@ -1953,6 +2052,16 @@
         discardedSlot.innerHTML = "";
         // Re-attached because a previous pass may have removed it.
         if (!discardedSlot.parentNode) settings.appendChild(discardedSlot);
+        // NOT A SECOND CONTROL when the navbar carries fsh-guts (#1925): the
+        // same list, count and restore one click away at the top of the
+        // navigation. A pointer instead, for the reader who looked here.
+        // Pages with no generated navbar keep the control — it is then the
+        // only way back.
+        if (document.querySelector("[data-fa-fsh-guts-open]")) {
+          discardedSlot.appendChild(el("p", { class: "fa-discarded-moved" },
+            "Discarded items are in fsh-guts: the fish in the side navigation, above Harnesses."));
+          return;
+        }
         var localCount = discardedTodoIds().length;
         if (state.absent) {
           // This build published no document. Not an error and not an empty
@@ -3756,15 +3865,10 @@
    * disabled"*). So the close control's old job survives without it.
    */
 
-  var CRUMPLED_GLYPH =
-    '<svg class="fa-crumpled-glyph" viewBox="0 0 24 24" aria-hidden="true" focusable="false">' +
-    // A sticky square with its corner turned in and creases across it.
-    '<path d="M4 5h13l3 3v11H4z" fill="none" stroke="currentColor" stroke-width="1.6" ' +
-    'stroke-linejoin="round"/>' +
-    '<path d="M17 5v3h3" fill="none" stroke="currentColor" stroke-width="1.6" ' +
-    'stroke-linejoin="round"/>' +
-    '<path d="M7 9l4 4-3 2 5 3M14 10l-2 3 4 1" fill="none" stroke="currentColor" ' +
-    'stroke-width="1.3" stroke-linejoin="round" stroke-linecap="round"/></svg>';
+  /* THE CRUMPLED-STICKY GLYPH IS GONE (#1925). The owner, looking at it:
+   * *"[x] is what? send to fsh-guts?"*. The send now wears fsh-guts' own dead
+   * fish (`FISH_GLYPH`), the same mark as the place it goes and is restored
+   * from, and its name says "Send … to fsh-guts". */
 
   var DISCARDED_TODOS_KEY = "fa-discarded-todos";
 
@@ -3792,10 +3896,30 @@
     }
   }
 
-  function discardTodo(id) {
+  /* THE NAME IT WENT IN UNDER, kept beside the id (#1925). A landing sticky
+   * sent to fsh-guts from the home page is listed in fsh-guts on EVERY page,
+   * and away from home there is no card to read its title from — a row that
+   * said "landing/folio-assistant" would be restorable but not recognisable. */
+  var DISCARDED_TITLES_KEY = "fa-discarded-titles";
+
+  function discardedTitles() {
+    try {
+      var m = JSON.parse(localStorage.getItem(DISCARDED_TITLES_KEY) || "{}");
+      return m && typeof m === "object" && !Array.isArray(m) ? m : {};
+    } catch (_e) {
+      return {};
+    }
+  }
+
+  function discardTodo(id, title) {
     var ids = discardedTodoIds();
     if (ids.indexOf(id) === -1) ids.push(id);
     setDiscardedTodoIds(ids);
+    if (title) {
+      var names = discardedTitles();
+      names[id] = String(title).slice(0, 200);
+      try { localStorage.setItem(DISCARDED_TITLES_KEY, JSON.stringify(names)); } catch (_e) { /* the id still restores */ }
+    }
     document.dispatchEvent(new CustomEvent("fa:todos-discarded", { detail: { id: id } }));
   }
 
@@ -3946,6 +4070,207 @@
     return row;
   }
 
+  /* ═══ ONE STICKY — issue #1925 ═══════════════════════════════════════════
+   *
+   * Owner, 2026-10-02: *"dont treat stickies differently. combine best of
+   * each. lower faded avatar/theme looks nicer. upper smaller same size
+   * closed looks niceer. icons are a mess on both. make compact underneath.
+   * [x] is what? send to fsh-guts? make sure confirmed by user"*.
+   *
+   * So a landing sticky and a todo sticky are drawn by the SAME two functions:
+   *
+   *   `stickyTile`     the closed sticky — small, every one the same size, the
+   *                    theme's art behind a scrim (the todo stickies' faded
+   *                    look), its title on top. Pressing it opens the shared
+   *                    board window (`openWindowFor`).
+   *   `stickyActions`  ONE compact icon row UNDER it, always in this order:
+   *                    view, edit, pin, send to fsh-guts. Nothing inside the
+   *                    card body.
+   *
+   * The two callers differ only in what the buttons DO — a landing sticky
+   * pins a copy of its server-rendered card, a todo pins a built one — and
+   * never in what the reader sees. View and Edit stay ABSENT, not disabled,
+   * when the pipeline has no forge (`pb04`); the order of what is present
+   * never changes.
+   *
+   * THE INVERSE OF EVERY ACTION IS ON THE SAME ROW OR ONE CLICK AWAY (`l4zi`).
+   * Pin is a toggle: pressed, it returns the sticky from the glass. Send to
+   * fsh-guts asks first (`confirmSendToFshGuts`) and the dialog names where
+   * the sticky can be restored from.
+   */
+  var PIN_GLYPH =
+    '<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">' +
+    // A pushpin, head up-right, point down-left.
+    '<path d="M14.6 2.6l6.8 6.8-1.9.5-3.6 3.6.4 4.6-1.9 1.9-4.2-4.2L4.6 21l-1.6-1.6 5.2-5.6' +
+    '-4.2-4.2 1.9-1.9 4.6.4 3.6-3.6z"/></svg>';
+
+  /** The closed sticky. `s`: kind, opens, title, theme, art, process, badge, onOpen. */
+  function stickyTile(s) {
+    var tile = el("button", {
+      type: "button",
+      // `fa-sticky-avatar` is kept because a tile IS the avatar that opens the
+      // window (`board-windows`: "start everything in avatar"), and the window
+      // code returns focus to it by that class.
+      class: "fa-sticky-tile fa-sticky-avatar" + (s.art ? " fa-sticky--backdrop" : ""),
+      "data-fa-sticky-kind": s.kind,
+      "data-fa-sticky-theme": s.theme || undefined,
+      "data-fa-opens": s.opens,
+      "aria-label": "Open " + s.title,
+      title: s.title,
+    });
+    if (s.art) {
+      // The same `<picture>` + scrim the full card uses, so the fade is the
+      // theme's `--fa-sticky-scrim` and not a second number.
+      var pic = el("picture", { "aria-hidden": "true" });
+      pic.appendChild(el("img", { class: "fa-sticky-art", src: s.art, alt: "", loading: "lazy" }));
+      tile.appendChild(pic);
+    }
+    tile.appendChild(el("span", { class: "fa-sticky-tile-title" }, s.title));
+    if (s.process) tile.appendChild(el("span", { class: "fa-sticky-tile-process" }, s.process));
+    if (s.badge) tile.appendChild(s.badge);
+    tile.addEventListener("click", s.onOpen);
+    return tile;
+  }
+
+  /**
+   * The icon row under every sticky. `s`: title, view {href, title, label},
+   * edit {href, title, label}, onPin, onDiscard.
+   *
+   * Icon-only, so each control carries `aria-label` (the name a screen reader
+   * announces) AND `title` (the same words on hover). Not interchangeable.
+   */
+  function stickyActions(s) {
+    var row = el("div", {
+      class: "fa-sticky-actions",
+      role: "group",
+      "aria-label": "Actions for " + s.title,
+    });
+    [["view", EYE_GLYPH], ["edit", PENCIL_GLYPH]].forEach(function (pair) {
+      var link = s[pair[0]];
+      var href = link && safeHref(link.href);
+      if (!href) return;            // absent, never a dead link (`pb04`)
+      var a = el("a", {
+        class: "fa-sticky-act fa-sticky-act-" + pair[0],
+        "data-fa-act": pair[0],
+        href: href,
+        rel: "noopener",
+        title: link.title,
+        "aria-label": link.label,
+      });
+      a.innerHTML = pair[1];
+      row.appendChild(a);
+    });
+    var pin = el("button", {
+      type: "button",
+      class: "fa-sticky-act fa-sticky-act-pin",
+      "data-fa-act": "pin",
+      "aria-pressed": "false",
+    });
+    pin.innerHTML = PIN_GLYPH;
+    pin.addEventListener("click", function () { s.onPin(pin.getAttribute("aria-pressed") === "true"); });
+    row.appendChild(pin);
+    var discard = el("button", {
+      type: "button",
+      class: "fa-sticky-act fa-sticky-act-discard",
+      "data-fa-act": "discard",
+      title: "Send to fsh-guts",
+      // WHERE IT GOES, in the name. The old control was a crumpled icon named
+      // "Discard … to the trashcan", and the owner's question was "[x] is
+      // what?" — a control a reader has to ask about has not said.
+      "aria-label": "Send " + s.title + " to fsh-guts",
+    });
+    discard.innerHTML = FISH_GLYPH;
+    discard.addEventListener("click", function () {
+      confirmSendToFshGuts(s.title, s.onDiscard, discard);
+    });
+    row.appendChild(discard);
+    setStickyPinned(row, s.title, false);
+    return row;
+  }
+
+  /** Pin is a toggle: its pressed state, name and tooltip say which way it goes. */
+  function setStickyPinned(row, title, pinned) {
+    var pin = row && row.querySelector(".fa-sticky-act-pin");
+    if (!pin) return;
+    pin.setAttribute("aria-pressed", pinned ? "true" : "false");
+    pin.setAttribute("aria-label", pinned
+      ? "Return " + title + " from your glass to this panel"
+      : "Pin " + title + " to your glass");
+    pin.setAttribute("title", pinned ? "Return from your glass" : "Pin to your glass");
+    var slot = row.parentNode;
+    if (slot && slot.classList) slot.classList.toggle("fa-sticky-slot-floating", !!pinned);
+  }
+
+  /** Where a sticky sent to fsh-guts is restored from, on THIS page, in words. */
+  function fshGutsRestoreWhere() {
+    return document.querySelector("[data-fa-fsh-guts-open]")
+      ? "fsh-guts (the fish in the side navigation, above Harnesses)"
+      : "Page settings (under ▦ Actions), then Discarded";
+  }
+
+  /**
+   * Ask before sending a sticky to fsh-guts. The owner: *"make sure confirmed
+   * by user"*.
+   *
+   * The NATIVE `<dialog>`, opened modal: focus is trapped and returned by the
+   * browser, Escape fires `cancel`, and the dialog sits in the top layer above
+   * every board window. Escape and Cancel do nothing but close it — a dialog
+   * whose dismissal performs the action did not ask. Focus starts on Cancel,
+   * the recoverable choice.
+   *
+   * It names the sticky, says the send is restorable and per-browser, and says
+   * WHERE it is restored from — a reversible action whose way back the reader
+   * has to discover is one-way in practice (`l4zi`).
+   */
+  var confirmSeq = 0;
+  function confirmSendToFshGuts(title, onConfirm, opener) {
+    var n = ++confirmSeq;
+    var dialog = el("dialog", {
+      class: "fa-fsh-confirm",
+      "aria-labelledby": "fa-fsh-confirm-title-" + n,
+      "aria-describedby": "fa-fsh-confirm-body-" + n,
+    });
+    dialog.appendChild(el("h2", { class: "fa-fsh-confirm-title", id: "fa-fsh-confirm-title-" + n },
+      "Send “" + title + "” to fsh-guts?"));
+    var body = el("div", { id: "fa-fsh-confirm-body-" + n });
+    body.appendChild(el("p", null,
+      "fsh-guts is the trashcan that is kept. This takes the sticky off your panel in " +
+      "this browser only; nobody else's view changes."));
+    body.appendChild(el("p", null,
+      "It is restorable: open " + fshGutsRestoreWhere() + ", and choose Restore."));
+    dialog.appendChild(body);
+    var row = el("div", { class: "fa-fsh-confirm-actions" });
+    var cancel = el("button", { type: "button", class: "fa-fsh-confirm-cancel" }, "Cancel");
+    var ok = el("button", { type: "button", class: "fa-fsh-confirm-ok" }, "Send to fsh-guts");
+    row.appendChild(cancel);
+    row.appendChild(ok);
+    dialog.appendChild(row);
+
+    var confirmed = false;
+    var done = false;
+    function finish() {
+      if (done) return;
+      done = true;
+      if (dialog.open && typeof dialog.close === "function") dialog.close();
+      if (dialog.parentNode) dialog.parentNode.removeChild(dialog);
+      if (confirmed) onConfirm();
+      else if (opener && opener.isConnected) opener.focus();
+    }
+    cancel.addEventListener("click", finish);
+    ok.addEventListener("click", function () { confirmed = true; finish(); });
+    // Escape: the browser fires `cancel` and closes; nothing else happens.
+    dialog.addEventListener("cancel", function (e) { e.preventDefault(); finish(); });
+    // And by hand, for a browser with no modal dialog to fire `cancel`.
+    dialog.addEventListener("keydown", function (e) {
+      if (e.key === "Escape") { e.preventDefault(); e.stopPropagation(); finish(); }
+    });
+    document.body.appendChild(dialog);
+    if (typeof dialog.showModal === "function") dialog.showModal();
+    else dialog.setAttribute("open", "");
+    cancel.focus();
+    return dialog;
+  }
+
   /**
    * One line of text, from prose that was never one line.
    *
@@ -3983,8 +4308,7 @@
       .trim();
   }
 
-  function buildSticky(todo, onFloat, onDock, onDiscard, opts) {
-    var compact = opts && opts.compact;
+  function buildSticky(todo) {
     var attrs = {
       class: "fa-sticky fa-sticky-p-" + (todo.priority || "medium"),
       "data-todo-id": todo.id,
@@ -4132,29 +4456,12 @@
     // Close have nothing to do: pinning it would move it AWAY from the thing
     // it annotates, and closing it would hide a block-level annotation with no
     // way back. The board is where those two controls mean something.
-    if (!compact) {
-      var pin = el("button", {
-        type: "button",
-        class: "fa-sticky-pin",
-        "aria-label": "Pin " + todo.summary + " to the page",
-      }, "⇱ Pin");
-      pin.addEventListener("click", function () { onFloat(todo); });
-      tools.appendChild(pin);
-
-      // WAS `×`, which returned a floating sticky to the board. It is now a
-      // discard, per the owner — and the old job survives on the greyed
-      // board slot, which is a real button that docks it.
-      var discard = el("button", {
-        type: "button",
-        class: "fa-sticky-close fa-sticky-discard",
-        // The name says where it goes and that it is reversible. "Close"
-        // said neither, and a crumpled icon with no words is a guess.
-        "aria-label": "Discard " + todo.summary + " to the trashcan (restorable, this browser only)",
-      });
-      discard.innerHTML = CRUMPLED_GLYPH;
-      discard.addEventListener("click", function () { onDiscard(todo); });
-      tools.appendChild(discard);
-    }
+    // PIN AND DISCARD ARE NOT ON THE CARD ANY MORE — issue #1925, the owner:
+    // *"icons are a mess on both. make compact underneath."* They are in the
+    // one icon row under every sticky (`stickyActions`), with View and Edit,
+    // in the same order on a landing sticky and a todo. The card keeps only
+    // what it needs once FLOATING on the glass — Move and Return, added by
+    // `float` — because a floating card has no row beneath it.
 
     /* THE `⋯` DRAWER IS GONE, and this note is why rather than a silence.
      *
@@ -7321,43 +7628,106 @@
   }
 
   /**
-   * THE LANDING PANEL as a home: each landing sticky gets a Pin control, and a
-   * pinned one floats onto the glass as a copy of the real card, leaving a
-   * "Return" button in its slot. Closing it — from the card or the slot —
-   * returns it there. The owner's option text: *"Landing stickies get a Pin
-   * button too."*
+   * THE LANDING PANEL as a home: each landing sticky is the ONE sticky
+   * component (#1925) — a tile with the icon row under it. Pin floats a copy
+   * of the real card onto the glass and presses the row's pin; pressing it
+   * again, or Return on the copy, brings it back. The owner's option text
+   * (`pv6g`): *"Landing stickies get a Pin button too."*
    */
   function mountLandingHomes() {
     var panel = homePanelEl("landing");
     if (!panel) return;
+    var gone = discardedTodoIds();
     ownSlots(panel).forEach(function (cell) {
       var slot = cell.getAttribute("data-fa-home-slot");
       var art = cell.querySelector(".fa-sticky");
-      if (!art || cell.querySelector(".fa-home-pin")) return;
+      if (!art || cell.querySelector(".fa-sticky-actions")) return;
       var titleEl = art.querySelector("[id$='-summary']") || art.querySelector("h2, h3");
       var title = (titleEl && titleEl.textContent.trim()) || slot;
-      var pin = el("button", {
-        type: "button",
-        class: "fa-sticky-pin fa-home-pin",
-        "aria-label": "Pin " + title + " to your glass — closing it brings it back here",
-      }, "Pin to glass");
-      pin.addEventListener("click", function () {
-        recordPin("landing", slot, {
-          title: title,
-          text: (art.querySelector(".fa-landing-sticky__body") || art).textContent,
-          href: safeHref(location.pathname),
-          label: document.title,
-        });
-        floatLanding(slot, true);
-      });
-      cell.appendChild(pin);
-      tileLandingCell(panel, cell, slot, title, art, pin);
+      // The server-rendered View/Edit caption is the no-JS floor; with script
+      // its two links move INTO the row, in the row's order, and the caption goes.
+      var links = cell.querySelector(".fa-sticky-links");
+      function linkOf(cls) {
+        var a = links && links.querySelector(cls);
+        return a ? { href: a.getAttribute("href"), title: a.getAttribute("title"),
+                     label: a.getAttribute("aria-label") } : null;
+      }
+      var view = linkOf(".fa-sticky-view");
+      var edit = linkOf(".fa-sticky-edit");
+      if (links) links.parentNode.removeChild(links);
+      tileLandingCell(panel, cell, slot, title, art);
+      cell.appendChild(stickyActions({
+        title: title,
+        view: view,
+        edit: edit,
+        onPin: function (pinned) {
+          if (pinned) { dockLanding(slot, true); return; }
+          pinLanding(slot, title, art);
+        },
+        onDiscard: function () { discardLanding(slot, title); },
+      }));
+      if (gone.indexOf(landingDiscardId(slot)) !== -1) cell.setAttribute("hidden", "hidden");
     });
     // Restore every landing pin whose slot is on this page.
     Object.keys(pinnedStickies()).forEach(function (k) {
       var e = pinnedStickies()[k];
       if (e && e.panel === "landing" && homeSlotEl("landing", e.slot)) floatLanding(e.slot, false);
     });
+    // A RESTORE from fsh-guts puts the sticky straight back: its cell never
+    // left the page, it was only hidden.
+    document.addEventListener("fa:todos-discarded", function () {
+      var now = discardedTodoIds();
+      ownSlots(panel).forEach(function (cell) {
+        var id = landingDiscardId(cell.getAttribute("data-fa-home-slot"));
+        if (now.indexOf(id) === -1) cell.removeAttribute("hidden");
+        else cell.setAttribute("hidden", "hidden");
+      });
+      syncLandingCount();
+    });
+    syncLandingCount();
+  }
+
+  function pinLanding(slot, title, art) {
+    recordPin("landing", slot, {
+      title: title,
+      text: (art.querySelector(".fa-landing-sticky__body") || art).textContent,
+      href: safeHref(location.pathname),
+      label: document.title,
+    });
+    floatLanding(slot, true);
+  }
+
+  /** The id a landing sticky is discarded under: prefixed, so it can never be a todo's. */
+  function landingDiscardId(slot) { return "landing/" + slot; }
+
+  /** Send a landing sticky to fsh-guts. The row asked first. */
+  function discardLanding(slot, title) {
+    if (pinOf("landing", slot)) dockLanding(slot, false);
+    if (landingWindowEls["landing:" + slot]) closeLandingWindow(slot);
+    var cell = homeSlotEl("landing", slot);
+    if (cell) cell.setAttribute("hidden", "hidden");
+    discardTodo(landingDiscardId(slot), title);
+    // Focus would otherwise land on <body>: put it on the panel's next tile.
+    var next = document.querySelector('[data-fa-home-panel="landing"] .fa-sticky-cell:not([hidden]) .fa-sticky-tile');
+    if (next) next.focus();
+  }
+
+  /**
+   * The panel's count is the number of stickies it SHOWS (`1rta`): the
+   * server's number, less the landing stickies this browser sent to
+   * fsh-guts, plus the todo cards the board mounted.
+   */
+  var landingTodoCount = 0;
+  function syncLandingCount() {
+    var panelCount = document.querySelector(".fa-sticky-panel__count");
+    var panel = homePanelEl("landing");
+    if (!panelCount) return;
+    var declared = parseInt(panelCount.getAttribute("data-fa-sticky-count"), 10);
+    // NaN when the attribute is missing or not a number. Falling back to 0
+    // would report only the todos: a wrong number rather than a missing one.
+    if (isNaN(declared)) return;
+    var hidden = !panel ? 0 : ownSlots(panel).filter(function (c) { return c.hasAttribute("hidden"); }).length;
+    panelCount.textContent = String(declared - hidden + landingTodoCount);
   }
 
   /* ═══ LANDING STICKIES START AS TILES — bean `z1ug` ═════════════════════
@@ -7398,27 +7768,26 @@
     });
   }
 
-  function tileLandingCell(panel, cell, slot, title, art, pin) {
-    if (cell.querySelector(".fa-landing-tile")) return;
+  function tileLandingCell(panel, cell, slot, title, art) {
+    if (cell.querySelector(".fa-sticky-tile")) return;
     cell.classList.add("fa-sticky-cell--tile");
-    var tile = el("button", {
-      type: "button",
-      class: "fa-sticky-avatar fa-landing-tile",
+    // THE SQUARE CROP, faded — the look the todo stickies had (#1925: "lower
+    // faded avatar/theme looks nicer"). `landing.html` names the card crop on
+    // the article; an older page without it falls back to whatever crop the
+    // browser chose for the card itself.
+    var img = art.querySelector("img.fa-sticky-art");
+    var src = safeHref(art.getAttribute("data-fa-art-card") ||
+                       (img && (img.currentSrc || img.getAttribute("src"))) || "");
+    var tile = stickyTile({
+      kind: "landing",
+      opens: "landing:" + slot,
+      title: title,
       // THE STICKY'S OWN THEME, so its surface, ink and edge are the ones the
       // card uses — a tile with no theme drew pale words on a pale surface.
-      "data-fa-sticky-theme": art.getAttribute("data-fa-sticky-theme") || undefined,
-      "data-fa-opens": "landing:" + slot,
-      "aria-label": "Open " + title,
-      title: title,
+      theme: art.getAttribute("data-fa-sticky-theme"),
+      art: src || null,
+      onOpen: function () { openLandingWindow(panel, cell, slot, title, art); },
     });
-    // The card's own art, as the tile's picture. `currentSrc` is the crop the
-    // browser actually chose for this viewport; the `src` fallback covers an
-    // image that has not decided yet.
-    var img = art.querySelector("img.fa-sticky-art");
-    var src = img && safeHref(img.currentSrc || img.getAttribute("src") || "");
-    if (src) tile.appendChild(el("img", { class: "fa-landing-tile-art", src: src, alt: "", loading: "lazy" }));
-    tile.appendChild(el("span", { class: "fa-landing-tile-title" }, title));
-    tile.addEventListener("click", function () { openLandingWindow(panel, cell, slot, title, art, pin); });
     cell.insertBefore(tile, cell.firstChild);
   }
 
@@ -7430,11 +7799,12 @@
     delete landingWindowEls[id];
     renderLandingStack();
     // Focus returns to the tile that opened it — the tile IS the way back (`l4zi`).
-    var t = document.querySelector('.fa-landing-tile[data-fa-opens="' + id.replace(/"/g, '\\"') + '"]');
+    var t = document.querySelector('.fa-sticky-tile[data-fa-opens="' + id.replace(/"/g, '\\"') + '"]');
     if (t) t.focus();
   }
 
-  function openLandingWindow(panel, cell, slot, title, art, pin) {
+  function openLandingWindow(panel, cell, slot, title, art) {
+
     var id = "landing:" + slot;
     openWindowFor(id);
     if (landingWindowEls[id]) { renderLandingStack(); landingWindowEls[id].focus(); return; }
@@ -7464,10 +7834,13 @@
     var pinIt = el("button", {
       type: "button", class: "fa-board-window-control", "data-fa-control": "pin",
       "aria-label": "Pin " + title + " to your glass",
-    }, "Pin to glass");
+      title: "Pin to your glass",
+    });
+    // The row's pin glyph, not the wide "Pin to glass" text (#1925).
+    pinIt.innerHTML = PIN_GLYPH;
     pinIt.addEventListener("click", function () {
       closeLandingWindow(slot);
-      pin.click();
+      if (!pinOf("landing", slot)) pinLanding(slot, title, art);
     });
     var close = el("button", {
       type: "button", class: "fa-board-window-control", "data-fa-control": "close",
@@ -7543,18 +7916,10 @@
     var n = layer.querySelectorAll(".fa-sticky-floating").length - 1;
     applyGeometry(card, e.geom || defaultPinGeom(n));
 
-    // The slot keeps its place and says where the note went. A REAL button,
-    // as on the todo board: a reader who clicks the grey space gets it back.
-    art.setAttribute("hidden", "hidden");
-    cell.classList.add("fa-sticky-slot-floating");
-    var pinBtn = cell.querySelector(".fa-home-pin");
-    if (pinBtn) pinBtn.hidden = true;
-    var recall = el("button", {
-      type: "button", class: "fa-sticky-recall",
-      "aria-label": "Return " + e.title + " from your glass to this panel",
-    }, e.title + " — on your glass. Return it here");
-    recall.addEventListener("click", function () { dockLanding(slot, true); });
-    cell.appendChild(recall);
+    // The slot keeps its place, greyed, and its row's pin shows PRESSED:
+    // pressing it again returns the copy (`l4zi`). It replaced the wide
+    // "… on your glass. Return it here" button (#1925).
+    setStickyPinned(cell.querySelector(".fa-sticky-actions"), e.title, true);
     if (focus) move.focus();
     document.dispatchEvent(new CustomEvent("fa:folio-changed", { detail: { key: key, state: "pinned" } }));
   }
@@ -7562,21 +7927,16 @@
   function dockLanding(slot, focus) {
     var cell = homeSlotEl("landing", slot);
     var key = pinKey("landing", slot);
+    var e = pinOf("landing", slot);
     dropPin("landing", slot);
     var layer = mountGlass();
     var card = layer.querySelector('[data-fa-pin="' + key.replace(/"/g, '\\"') + '"]');
     if (card) card.parentNode.removeChild(card);
     if (!cell) return;
-    var art = cell.querySelector(".fa-sticky");
-    if (art) art.removeAttribute("hidden");
-    cell.classList.remove("fa-sticky-slot-floating");
-    var recall = cell.querySelector(".fa-sticky-recall");
-    if (recall) recall.parentNode.removeChild(recall);
-    var pinBtn = cell.querySelector(".fa-home-pin");
-    if (pinBtn) {
-      pinBtn.hidden = false;
-      if (focus) pinBtn.focus();
-    }
+    var row = cell.querySelector(".fa-sticky-actions");
+    setStickyPinned(row, (e && e.title) || slot, false);
+    var pinBtn = row && row.querySelector(".fa-sticky-act-pin");
+    if (pinBtn && focus) pinBtn.focus();
     document.dispatchEvent(new CustomEvent("fa:folio-changed", { detail: { key: key, state: "home" } }));
   }
 
@@ -7794,22 +8154,20 @@
         delete todoState.floating[todo.id];
       }
       var slot = slots[todo.id];
-      if (slot) {
-        slot.classList.remove("fa-sticky-slot-floating");
-        var b = slot.querySelector(".fa-sticky-recall");
-        if (b) slot.removeChild(b);
-        var card = slot.querySelector(".fa-sticky");
-        if (card) card.removeAttribute("hidden");
-      }
+      // The pin on the slot's icon row un-presses: it is the inverse (`l4zi`).
+      if (slot) setStickyPinned(slot.querySelector(".fa-sticky-actions"), todo.summary, false);
     }
 
-    /** Crumple it into the trashcan, and take it off the board. */
+    /** Send it to fsh-guts (asked first, by the row), and take it off the board. */
     function discard(todo) {
       dock(todo);                      // if it was floating, bring it down first
+      if (windowEls[todo.id]) closeCard(todo);
       var slot = slots[todo.id];
       if (slot && slot.parentNode) slot.parentNode.removeChild(slot);
       delete slots[todo.id];
-      discardTodo(todo.id);
+      discardTodo(todo.id, todo.summary);
+      landingTodoCount = Math.max(0, landingTodoCount - 1);
+      syncLandingCount();
       if (Object.keys(slots).length === 0 && !grid.querySelector(".fa-sticky-empty")) {
         grid.appendChild(el("p", { class: "fa-sticky-empty" }, "Nothing outstanding."));
       }
@@ -7856,7 +8214,7 @@
         href: safeHref(location.pathname),
         label: document.title,
       });
-      var card = buildSticky(todo, float, dock, discard);
+      var card = buildSticky(todo);
       card.classList.add("fa-sticky-floating");
       // Its PIN KEY, the same one the store uses, so the glass's filter can
       // tell a pinned todo from a pinned landing sticky (bean `7m6g`).
@@ -7900,6 +8258,16 @@
         // and put Move ahead of Pin, which reordered the row every time a
         // card floated; appending keeps the order stable.
         tools.appendChild(moveBtn);
+        // THE WAY BACK, on the card itself — a floating card has no icon row
+        // beneath it, and the same words the landing sticky's copy uses.
+        var back = el("button", {
+          type: "button",
+          class: "fa-sticky-sendhome",
+          "aria-label": "Return " + todo.summary + " to its panel",
+          title: "Return to its panel",
+        }, "\u2302 Return");
+        back.addEventListener("click", function () { dock(todo); });
+        tools.appendChild(back);
       }
 
       var grip = card.querySelector(".fa-sticky-head");
@@ -7911,22 +8279,11 @@
       placeFloating(card, todo);
       todoState.floating[todo.id] = card;
 
+      // The slot greys and its pin shows PRESSED — pressing it again is the
+      // way back (`l4zi`). It replaced the wide "recall" text button that sat
+      // in the slot (#1925): one control, one place, on every sticky.
       var slot = slots[todo.id];
-      if (slot) {
-        slot.classList.add("fa-sticky-slot-floating");
-        var inner = slot.querySelector(".fa-sticky");
-        if (inner) inner.setAttribute("hidden", "hidden");
-        // The greyed entry is a REAL button, not a disabled one. `disabled`
-        // removes it from the tab order, and the owner asked that clicking it
-        // bring the sticky back -- a control you cannot reach is not a control.
-        var recall = el("button", {
-          type: "button",
-          class: "fa-sticky-recall",
-          "aria-label": "Return " + todo.summary + " to the board",
-        }, todo.summary);
-        recall.addEventListener("click", function () { dock(todo); });
-        slot.appendChild(recall);
-      }
+      if (slot) setStickyPinned(slot.querySelector(".fa-sticky-actions"), todo.summary, true);
       // Focus follows the sticky, or a reader who cannot see the page has no
       // idea anything happened. NOT on a restore: a page that moved focus on
       // load would drop a keyboard reader somewhere they did not go.
@@ -7942,23 +8299,47 @@
     var rows = stackTodos(live, todoState.processes);
     for (var i = 0; i < rows.length; i++) {
       var row = rows[i];
+      slots[row.todo.id] = todoSlot(row);
+      grid.appendChild(slots[row.todo.id]);
+    }
+
+    /* ONE STICKY (#1925): the same tile and icon row a landing sticky gets.
+     * The full card stays in the slot, undrawn while the slot is a tile
+     * (`fa-sticky-cell--tile`), because it is what the window and the glass
+     * render; the no-JS floor is the generated todo listing, not this. */
+    function todoSlot(row) {
+      var todo = row.todo;
       var slot = el("div", {
-        class: "fa-sticky-slot" + (row.process ? " fa-sticky-slot-in-process" : ""),
-        "data-fa-home-slot": row.todo.id,
+        class: "fa-sticky-slot fa-sticky-cell--tile" + (row.process ? " fa-sticky-slot-in-process" : ""),
+        "data-fa-home-slot": todo.id,
       });
-      if (row.process) {
-        // The process is named ON the sticky rather than as a run-in heading,
-        // so the grid stays a grid: a full-width heading between cards would
-        // break the `auto-fill` columns into one per group.
-        slot.setAttribute("data-fa-depth", String(row.depth));
-        slot.appendChild(el("span", { class: "fa-sticky-process" }, row.process));
-      }
-      slot.appendChild(buildSticky(row.todo, float, dock, discard));
-      // BELOW the card, and it stays here when the card is pinned away.
-      var links = buildSourceLinks(row.todo);
-      if (links) slot.appendChild(links);
-      slots[row.todo.id] = slot;
-      grid.appendChild(slot);
+      // The process is named ON the tile rather than as a run-in heading, so
+      // the grid stays a grid and every tile stays the same size.
+      if (row.process) slot.setAttribute("data-fa-depth", String(row.depth));
+      var art = todo.theme && todoState.themeArt[todo.theme];
+      var nb = nodeBadge(todo);
+      slot.appendChild(stickyTile({
+        kind: "todo",
+        opens: todo.id,
+        title: condense(todo.summary),
+        theme: todo.theme,
+        art: art ? (art.card || art.mobile || art.laptop) : null,
+        process: row.process,
+        // R7: the same badge as the open window, from the same query.
+        badge: nb ? badgeChip(nb, "avatar") : null,
+        onOpen: function () { openCard(todo); },
+      }));
+      slot.appendChild(buildSticky(todo));
+      slot.appendChild(stickyActions({
+        title: todo.summary,
+        view: todo.viewHref && { href: todo.viewHref, title: "View this todo's source on GitHub",
+                                 label: "View the source of " + todo.summary },
+        edit: todo.editHref && { href: todo.editHref, title: "Edit this todo's markdown on GitHub",
+                                 label: "Edit " + todo.summary },
+        onPin: function (pinned) { if (pinned) dock(todo); else float(todo); },
+        onDiscard: function () { discard(todo); },
+      }));
+      return slot;
     }
     // RESTORE this board's pins, quietly — the reader pinned them on an
     // earlier page and they are still on their glass.
@@ -8116,7 +8497,11 @@
           setMoveMode(panel, panel.getAttribute("data-fa-moving") !== "true", live);
         },
         pin: function (t) { float(t); },
-        discard: function (t) { closeCard(t); discard(t); },
+        // ASKED FIRST, like the row's own send (#1925): the window's Discard
+        // is the same act, so it takes the same confirmation.
+        discard: function (t, button) {
+          confirmSendToFshGuts(t.summary, function () { discard(t); }, button);
+        },
         // THE FISHBONE. The only control that asks first, because it is the
         // only one whose subject is the content rather than this reader's
         // view of it.
@@ -8151,7 +8536,7 @@
       // already carries the frame's `[x]` — a second Close inside it would be
       // two controls for one act, and they would not agree about what they
       // close. Which controls a kind may declare here is `t4my`'s.
-      panel.appendChild(buildSticky(todo, float, dock, discard, { compact: true }));
+      panel.appendChild(buildSticky(todo));
       // SELECTING ANY PART RAISES — the owner's words, so the listener is on
       // the panel rather than on its title bar. `mousedown` and not `click`,
       // so the raise happens before a control inside the panel acts on it.
@@ -8175,104 +8560,14 @@
       panel.focus();
     }
 
-    /* ── Semantic zoom, which never asks what is open ─────────────────────
+    /* ── No semantic zoom on the board any more — #1925 ─────────────────
      *
-     * Measured on the SLOT's rendered width, in CSS pixels after zoom, which
-     * is what `semantic-zoom.ts` says the declared number is about:
-     * legibility is a property of what reaches the reader's eye.
-     *
-     * With no declaration the threshold is `null` and every card keeps its
-     * words. That is the third state carried through rather than filled in.
-     */
-    function applyZoom() {
-      for (var id in slots) {
-        if (!Object.prototype.hasOwnProperty.call(slots, id)) continue;
-        var slot = slots[id];
-        var width = slot.getBoundingClientRect().width;
-        var avatar = rendersAvatar("todo", width);
-        slot.classList.toggle("fa-sticky-slot--avatar", avatar);
-        slot.setAttribute("data-fa-avatar", avatar ? "true" : "false");
-        // THE NOTE'S FIRST WORDS beside its avatar (`gistOf`; owner,
-        // 2026-10-01: *"if todo is small zoomed, it shows no content at
-        // all"*). Beside rather than in: the avatar is a glyph painted through
-        // a MASK, so words inside it would be cut to the glyph's shape. In the
-        // DOM only while the slot IS its avatar, so at full size the note's
-        // words exist once — the card's — and nothing finds them twice.
-        var gistEl = slot.querySelector(":scope > .fa-sticky-avatar-gist");
-        if (avatar && !gistEl && slot.__faGist) {
-          var opener = slot.querySelector(":scope > .fa-sticky-avatar");
-          slot.insertBefore(el("p", { class: "fa-sticky-avatar-gist" }, slot.__faGist),
-            opener ? opener.nextSibling : slot.firstChild);
-        } else if (!avatar && gistEl) {
-          gistEl.parentNode.removeChild(gistEl);
-        }
-      }
-    }
-
-    if (typeof ResizeObserver === "function") {
-      var ro = new ResizeObserver(function () { applyZoom(); });
-      // EVERY SLOT, not the grid. The threshold is measured on the slot's own
-      // rendered width, and a grid can re-lay its tracks without its own box
-      // changing at all — `grid-template-columns` from `400px` to `180px` in a
-      // wider container is exactly that. Observing the grid meant the cards
-      // never flipped, which looked like the zoom not working and was the
-      // observer watching the wrong box.
-      for (var oid in slots) {
-        if (Object.prototype.hasOwnProperty.call(slots, oid)) ro.observe(slots[oid]);
-      }
-    } else {
-      // No ResizeObserver: the width is still read once and on resize, so the
-      // feature degrades to "correct at every layout change the window
-      // reports" rather than to "always words".
-      window.addEventListener("resize", applyZoom);
-    }
-
-    /* ── The avatar that opens the card ───────────────────────────────────
-     *
-     * Every slot gets one, at every width — the owner's *"start everyrting in
-     * avatar"*. It is what semantic zoom leaves behind when the board shrinks
-     * and it is the control that opens the window, so the two mechanisms meet
-     * at exactly one element and nowhere else.
-     *
-     * A BUTTON, because this instance's declared interaction profile is
-     * low-dexterity and every board action has to be keyboard-operable.
-     */
-    for (var si = 0; si < rows.length; si++) {
-      (function (todo) {
-        var slot = slots[todo.id];
-        if (!slot) return;
-        var open = el("button", {
-          type: "button",
-          class: "fa-avatar fa-sticky-avatar",
-          "data-fa-kind": "todo",
-          // WHICH card this avatar opens. The board stacks by BPMN subprocess
-          // depth, so DOM order is not the index order of anything a caller
-          // holds — an avatar addressed by position is addressed by a fact
-          // the board is free to change.
-          //
-          // `data-fa-opens`, NOT `data-fa-todo`: the linear floor already uses
-          // that name for a listing entry, and one attribute over two
-          // different objects means every `[data-fa-todo]` selector silently
-          // returns both. Caught by `linear-floor.e2e.ts` asserting its
-          // listing is not duplicated — which it was not; it had been joined
-          // by a control from another surface.
-          "data-fa-opens": todo.id,
-          "aria-label": "Open " + todo.summary,
-          title: todo.summary,
-        });
-        // R7: a node rendered as its avatar carries the same badge as its open
-        // window, from ONE query. `nodeBadge` is the query; both surfaces
-        // render its answer, so there is no second count to disagree.
-        var ab = nodeBadge(todo);
-        if (ab) open.appendChild(badgeChip(ab, "avatar"));
-
-        open.addEventListener("click", function () { openCard(todo); });
-        slot.insertBefore(open, slot.firstChild);
-        // What `applyZoom` shows beside the avatar while the slot is one.
-        slot.__faGist = gistOf([todo.summary, todo.comment], 160);
-      })(rows[si].todo);
-    }
-    applyZoom();
+     * Every slot is its closed tile at every width (owner, 2026-10-02:
+     * *"upper smaller same size closed looks niceer"*), so there is no width
+     * at which a board slot would show more words; the tile already IS the
+     * avatar that opens the window, and the window survives anything the
+     * grid does because it is a separate layer. Semantic zoom still decides
+     * what a card shows ON THE GLASS, where a card is resized freely. */
 
     /**
      * The way back, and on the landing board it has to be ON THE PAGE.
@@ -8362,14 +8657,8 @@
      * No panel (an ordinary page, or a landing page with no stickies) is not
      * a failure — there is simply nothing to relabel, and the board's own
      * heading already carries the count there. */
-    var panelCount = document.querySelector(".fa-sticky-panel__count");
-    if (panelCount) {
-      var declared = parseInt(panelCount.getAttribute("data-fa-sticky-count"), 10);
-      // NaN when the attribute is missing or not a number. Falling back to 0
-      // would silently drop the stickies from the total and report only the
-      // todos, which is a wrong number rather than a missing one.
-      if (!isNaN(declared)) panelCount.textContent = String(declared + live.length);
-    }
+    landingTodoCount = live.length;
+    syncLandingCount();
 
     return {
       toggle: function () { return setOpen(board.hasAttribute("hidden")); },
@@ -8450,7 +8739,7 @@
            * Close and Discard — that is the point of the inline case, which
            * drops the BOARD's controls and keeps the content object's. */
           var cell = el("div", { class: "fa-sticky-cell" });
-          cell.appendChild(buildSticky(mine[k], function () {}, function () {}, function () {}, { compact: true }));
+          cell.appendChild(buildSticky(mine[k]));
           var inlineLinks = buildSourceLinks(mine[k]);
           if (inlineLinks) cell.appendChild(inlineLinks);
           list.appendChild(cell);
@@ -10843,6 +11132,9 @@
     // close control on, and a control offered before its handler exists is a
     // control that does the wrong thing if pressed in that window.
     mountNavPreference();
+    // BEFORE the tiles: Page settings drops its own Discarded control when the
+    // navbar already carries fsh-guts (#1925), and asks by looking for it.
+    mountFshGutsNav();
     mountActionTiles();
     // AFTER the tiles: the row's launcher proxies that panel's button, so the
     // button has to exist before anything can click it.
