@@ -12,23 +12,24 @@ permalink: /glossary/schema-fields/
 
 Candidate terms extracted from every schema field with a doc comment: `<Declaration>.<field>` as the label, the comment's first paragraph as the definition. Each is the asset's own text, verbatim and not curated, and carries the badge "candidate, extracted". A person promotes one by authoring it. Authored terms, the counts and the sources are on the <a href="{{ '/glossary/' | relative_url }}">glossary index</a>.
 
-From: bootstrap-tools 28 (<a href="{{ '/assets/glossary/bootstrap-tools--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · cat-harness 1604 (<a href="{{ '/assets/glossary/cat-harness--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · fhir-harness 60 (<a href="{{ '/assets/glossary/fhir-harness--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · folio-assistant-core 127 (<a href="{{ '/assets/glossary/folio-assistant-core--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · smart-base 4 (<a href="{{ '/assets/glossary/smart-base--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>).
+From: bootstrap-tools 28 (<a href="{{ '/assets/glossary/bootstrap-tools--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · cat-harness 1613 (<a href="{{ '/assets/glossary/cat-harness--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · fhir-harness 60 (<a href="{{ '/assets/glossary/fhir-harness--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · folio-assistant-core 131 (<a href="{{ '/assets/glossary/folio-assistant-core--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · smart-base 4 (<a href="{{ '/assets/glossary/smart-base--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>).
 
-**Size:** this page holds 1823 terms and is 1006 KB before compression, fetched in one request, within its budget of 1.0 MB. There is no search index: the filter below runs over this page, and the A–Z bar jumps within it.
+**Size:** this page holds 1836 terms and is 1015 KB before compression, fetched in one request, within its budget of 1.0 MB. There is no search index: the filter below runs over this page, and the A–Z bar jumps within it.
 
 <table class="fa-gloss-mapping">
 <caption>Already somebody else's concept? — <code>check:term-mapping</code>, bean <code>7wou</code></caption>
 <thead><tr><th>target</th><th>mapped</th><th>unmapped</th><th>undetermined</th><th>why undetermined</th></tr></thead>
-<tbody><tr><td><code>fhir</code></td><td>0</td><td>1823</td><td>0</td><td>—</td></tr><tr><td><code>skos</code></td><td>0</td><td>1823</td><td>0</td><td>—</td></tr></tbody>
+<tbody><tr><td><code>fhir</code></td><td>0</td><td>1836</td><td>0</td><td>—</td></tr><tr><td><code>skos</code></td><td>0</td><td>1836</td><td>0</td><td>—</td></tr></tbody>
 </table>
 <p class="fa-gloss-mapping-note"><strong>Undetermined is never “no match”.</strong> 
 A vocabulary that could not be reached has said nothing, and the column above keeps that 
 apart from a checked miss. The counts are reported and not graded: an unmapped candidate may 
 be a term this corpus is right to coin.</p>
+<p class="fa-gloss-mapping-perterm"><strong>Per term.</strong> Every term on this page is <strong>unmapped</strong> on <code>fhir</code>, and <strong>unmapped</strong> on <code>skos</code>, unless its entry says otherwise. No entry says otherwise.</p>
 
 <label for="fa-gloss-q">Filter terms</label>
 <input id="fa-gloss-q" type="search" autocomplete="off" style="min-height:44px;width:100%;max-width:32rem">
-<p aria-live="polite"><span id="fa-gloss-n">1823</span> shown</p>
+<p aria-live="polite"><span id="fa-gloss-n">1836</span> shown</p>
 
 <nav aria-label="Letters"><a href="#letter-A">A</a> <a href="#letter-B">B</a> <a href="#letter-C">C</a> <a href="#letter-D">D</a> <a href="#letter-E">E</a> <a href="#letter-F">F</a> <a href="#letter-G">G</a> <a href="#letter-H">H</a> <a href="#letter-I">I</a> <a href="#letter-J">J</a> <a href="#letter-K">K</a> <a href="#letter-L">L</a> <a href="#letter-M">M</a> <a href="#letter-N">N</a> <a href="#letter-O">O</a> <a href="#letter-P">P</a> <a href="#letter-Q">Q</a> <a href="#letter-R">R</a> <a href="#letter-S">S</a> <a href="#letter-T">T</a> <a href="#letter-U">U</a> <a href="#letter-V">V</a> <a href="#letter-W">W</a></nav>
 
@@ -318,7 +319,7 @@ AptDependency.version <span class="fa-gloss-status">candidate, extracted</span>
 ArchiveContentsSchema.@context <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
-<p>The published content context — bean <code>yh6u</code>. OPTIONAL because folio repositories hold records written before the arm emitted it; when present it must be that context, since any other would bind these keys to terms nobody declared.</p>
+<p>The published content context — bean <code>yh6u</code>. OPTIONAL because folio repositories hold records written before the arm emitted it; when present it must be that context (bare, or with <code>@base</code> beside it — bean <code>bh4q</code>), since any other would bind these keys to terms nobody declared.</p>
 <p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/archive-contents.ts"><code>cat-harness/schemas/archive-contents.ts#ArchiveContentsSchema.@context</code></a></p>
 </dd>
 <dt id="cat-harness--kg-schema-fields--archive-contents.archivecontentsschema.archive" data-fa-state="extracted" data-fa-gloss="">
@@ -2559,6 +2560,34 @@ DcFieldSchema.values <span class="fa-gloss-status">candidate, extracted</span>
 <p>Every value, in the order the source gave them. Never collapsed.</p>
 <p class="fa-gloss-meta">Schema fields of folio-assistant-core · source <a href="https://github.com/litlfred/folio-assistant/blob/main/folio-assistant-core/schemas/dublin-core.ts"><code>folio-assistant-core/schemas/dublin-core.ts#DcFieldSchema.values</code></a></p>
 </dd>
+<dt id="folio-assistant-core--kg-schema-fields--dublin-core-render.dctermsmapping.range" data-fa-state="extracted" data-fa-gloss="">
+DctermsMapping.range <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p><code>literal</code> when DCMI gives the term the range <code>rdfs:Literal</code> or gives no range and the value is prose; <code>resource</code> when the range is a class (Agent, Location, LinguisticSystem, …) or DCMI says the term is &quot;intended to be used with non-literal values&quot;.</p>
+<p class="fa-gloss-meta">Schema fields of folio-assistant-core · source <a href="https://github.com/litlfred/folio-assistant/blob/main/folio-assistant-core/schemas/dublin-core-render.ts"><code>folio-assistant-core/schemas/dublin-core-render.ts#DctermsMapping.range</code></a></p>
+</dd>
+<dt id="folio-assistant-core--kg-schema-fields--dublin-core-render.dctermsmapping.ses" data-fa-state="extracted" data-fa-gloss="">
+DctermsMapping.ses <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>A syntax encoding scheme the values are in, by the field's own name. Becomes a datatype (JSON-LD) or <code>xsi:type</code> (XML).</p>
+<p class="fa-gloss-meta">Schema fields of folio-assistant-core · source <a href="https://github.com/litlfred/folio-assistant/blob/main/folio-assistant-core/schemas/dublin-core-render.ts"><code>folio-assistant-core/schemas/dublin-core-render.ts#DctermsMapping.ses</code></a></p>
+</dd>
+<dt id="folio-assistant-core--kg-schema-fields--dublin-core-render.dctermsmapping.term" data-fa-state="extracted" data-fa-gloss="">
+DctermsMapping.term <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>The local name under <code>http://purl.org/dc/terms/</code>.</p>
+<p class="fa-gloss-meta">Schema fields of folio-assistant-core · source <a href="https://github.com/litlfred/folio-assistant/blob/main/folio-assistant-core/schemas/dublin-core-render.ts"><code>folio-assistant-core/schemas/dublin-core-render.ts#DctermsMapping.term</code></a></p>
+</dd>
+<dt id="folio-assistant-core--kg-schema-fields--dublin-core-render.dctermsmapping.ves" data-fa-state="extracted" data-fa-gloss="">
+DctermsMapping.ves <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>A vocabulary encoding scheme the values are members of. Becomes <code>dcam:memberOf</code> (JSON-LD) or <code>xsi:type</code> (XML).</p>
+<p class="fa-gloss-meta">Schema fields of folio-assistant-core · source <a href="https://github.com/litlfred/folio-assistant/blob/main/folio-assistant-core/schemas/dublin-core-render.ts"><code>folio-assistant-core/schemas/dublin-core-render.ts#DctermsMapping.ves</code></a></p>
+</dd>
 <dt id="folio-assistant-core--kg-schema-fields--dublin-core.dcvalueschema.authority" data-fa-state="extracted" data-fa-gloss="">
 DcValueSchema.authority <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
@@ -2776,6 +2805,13 @@ DecisionRequestSchema.recommends <span class="fa-gloss-status">candidate, extrac
 <p>The <code>label</code> of the recommended option. Checked to be one of them.</p>
 <p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/decision-request.ts"><code>cat-harness/schemas/decision-request.ts#DecisionRequestSchema.recommends</code></a></p>
 </dd>
+<dt id="cat-harness--kg-schema-fields--sticky-contribution.declaredcontribution.alsowritten" data-fa-state="extracted" data-fa-gloss="">
+DeclaredContribution.alsoWritten <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>The declaring instance's <code>alsoWritten</code>, for <code>bodyFrom: &quot;summary&quot;</code>.</p>
+<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/sticky-contribution.ts"><code>cat-harness/schemas/sticky-contribution.ts#DeclaredContribution.alsoWritten</code></a></p>
+</dd>
 <dt id="cat-harness--kg-schema-fields--sticky-contribution.declaredcontribution.declaredby" data-fa-state="extracted" data-fa-gloss="">
 DeclaredContribution.declaredBy <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
@@ -2796,6 +2832,13 @@ DeclaredContribution.description <span class="fa-gloss-status">candidate, extrac
 <dd>
 <p>The declaring instance's <code>description</code>, for <code>bodyFrom: &quot;description&quot;</code>.</p>
 <p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/sticky-contribution.ts"><code>cat-harness/schemas/sticky-contribution.ts#DeclaredContribution.description</code></a></p>
+</dd>
+<dt id="cat-harness--kg-schema-fields--sticky-contribution.declaredcontribution.summary" data-fa-state="extracted" data-fa-gloss="">
+DeclaredContribution.summary <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>The declaring instance's <code>summary</code>, for <code>bodyFrom: &quot;summary&quot;</code>.</p>
+<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/sticky-contribution.ts"><code>cat-harness/schemas/sticky-contribution.ts#DeclaredContribution.summary</code></a></p>
 </dd>
 <dt id="cat-harness--kg-schema-fields--cat-harness.declaredgraph.abspath" data-fa-state="extracted" data-fa-gloss="">
 DeclaredGraph.absPath <span class="fa-gloss-status">candidate, extracted</span>
@@ -5797,6 +5840,13 @@ LedgerEntry.status <span class="fa-gloss-status">candidate, extracted</span>
 <p>Source-verification status. <code>unreviewed</code> for a freshly-indexed upload that nothing has looked at.</p>
 <p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/bib-verification.ts"><code>cat-harness/schemas/bib-verification.ts#LedgerEntry.status</code></a></p>
 </dd>
+<dt id="cat-harness--kg-schema-fields--site-indexes.libraryindexentryschema.extractedtitle" data-fa-state="extracted" data-fa-gloss="">
+LibraryIndexEntrySchema.extractedTitle <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>The manifest's extracted title, only when a catalogue title replaced it (bean <code>gnqa</code>).</p>
+<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/site-indexes.ts"><code>cat-harness/schemas/site-indexes.ts#LibraryIndexEntrySchema.extractedTitle</code></a></p>
+</dd>
 <dt id="cat-harness--kg-schema-fields--site-indexes.libraryindexentryschema.referencedby" data-fa-state="extracted" data-fa-gloss="">
 LibraryIndexEntrySchema.referencedBy <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
@@ -5810,6 +5860,13 @@ LibraryIndexEntrySchema.withheld <span class="fa-gloss-status">candidate, extrac
 <dd>
 <p>Why the entry is withheld (bean <code>cw35</code>/<code>mkao</code>): no avatar, no verbatim excerpt.</p>
 <p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/site-indexes.ts"><code>cat-harness/schemas/site-indexes.ts#LibraryIndexEntrySchema.withheld</code></a></p>
+</dd>
+<dt id="cat-harness--kg-schema-fields--site-indexes.libraryindexentryschema.withheldby" data-fa-state="extracted" data-fa-gloss="">
+LibraryIndexEntrySchema.withheldBy <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>The structured half of <code>withheld</code> (issue #1794): which gates refused, and the catalogue record — copied from <code>folio-withheld/v1</code>, so the same shapes, never restated.</p>
+<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/site-indexes.ts"><code>cat-harness/schemas/site-indexes.ts#LibraryIndexEntrySchema.withheldBy</code></a></p>
 </dd>
 <dt id="folio-assistant-core--kg-schema-fields--library-ref.libraryref.instance" data-fa-state="extracted" data-fa-gloss="">
 LibraryRef.instance <span class="fa-gloss-status">candidate, extracted</span>
@@ -7086,6 +7143,20 @@ PinnedTerminologySchema.version <span class="fa-gloss-status">candidate, extract
 <dd>
 <p>The pinned version, which must equal that record's.</p>
 <p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/pinned-terminology.ts"><code>cat-harness/schemas/pinned-terminology.ts#PinnedTerminologySchema.version</code></a></p>
+</dd>
+<dt id="cat-harness--kg-schema-fields--contributions.pipelineplugincontribution.implementation" data-fa-state="extracted" data-fa-gloss="">
+PipelinePluginContribution.implementation <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>What fills it. Shape is fixed per kind by <code>content/pipeline/pipeline-plugins.ts</code>.</p>
+<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/contributions.ts"><code>cat-harness/schemas/contributions.ts#PipelinePluginContribution.implementation</code></a></p>
+</dd>
+<dt id="cat-harness--kg-schema-fields--contributions.pipelineplugincontribution.kind" data-fa-state="extracted" data-fa-gloss="">
+PipelinePluginContribution.kind <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>The slot this fills, e.g. <code>&quot;lean-lexer&quot;</code>. One contributor per kind.</p>
+<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/contributions.ts"><code>cat-harness/schemas/contributions.ts#PipelinePluginContribution.kind</code></a></p>
 </dd>
 <dt id="cat-harness--kg-schema-fields--document-image.placementschema.coverage" data-fa-state="extracted" data-fa-gloss="">
 PlacementSchema.coverage <span class="fa-gloss-status">candidate, extracted</span>
@@ -10502,7 +10573,7 @@ TabularCsvwSchema.tables <span class="fa-gloss-status">candidate, extracted</spa
 TabularRecordsSchema.@context <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
-<p>The published content context — bean <code>yh6u</code>. OPTIONAL because folio repositories hold records written before the arm emitted it; when present it must be that context, since any other would bind these keys to terms nobody declared.</p>
+<p>The published content context — bean <code>yh6u</code>. OPTIONAL because folio repositories hold records written before the arm emitted it; when present it must be that context (bare, or with <code>@base</code> beside it — bean <code>bh4q</code>), since any other would bind these keys to terms nobody declared.</p>
 <p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/tabular-records.ts"><code>cat-harness/schemas/tabular-records.ts#TabularRecordsSchema.@context</code></a></p>
 </dd>
 <dt id="cat-harness--kg-schema-fields--tabular-records.tabularrecordsschema.header_vocabulary" data-fa-state="extracted" data-fa-gloss="">
@@ -11505,6 +11576,13 @@ ToolMaintainsSchema.source <span class="fa-gloss-status">candidate, extracted</s
 <dd>
 <p>Repo-relative module that defines it, e.g. <code>schemas/tool.ts</code>.</p>
 <p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/tool.ts"><code>cat-harness/schemas/tool.ts#ToolMaintainsSchema.source</code></a></p>
+</dd>
+<dt id="cat-harness--kg-schema-fields--tool.tooloutputschema.render" data-fa-state="extracted" data-fa-gloss="">
+ToolOutputSchema.render <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>How a renderer may place this output in a page. Absent is <code>text</code>. See &#123;@link RENDER_AS}.</p>
+<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/tool.ts"><code>cat-harness/schemas/tool.ts#ToolOutputSchema.render</code></a></p>
 </dd>
 <dt id="cat-harness--kg-schema-fields--tool-run.toolrunrecordschema.detail" data-fa-state="extracted" data-fa-gloss="">
 ToolRunRecordSchema.detail <span class="fa-gloss-status">candidate, extracted</span>
@@ -12827,6 +12905,13 @@ WebPageNode.title <span class="fa-gloss-status">candidate, extracted</span>
 <p>Heading text. Free to change without breaking a link.</p>
 <p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/webpage.ts"><code>cat-harness/schemas/webpage.ts#WebPageNode.title</code></a></p>
 </dd>
+<dt id="cat-harness--kg-schema-fields--withheld.withheldentryschema.gates" data-fa-state="extracted" data-fa-gloss="">
+WithheldEntrySchema.gates <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>The gates that refused, STRUCTURED — issue #1794. Optional because a generator may know only the sentence; when present, a reader shows &quot;copyright not granted&quot; from the gate itself rather than parsing &#123;@link reason}, which is prose and free to change shape.</p>
+<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/withheld.ts"><code>cat-harness/schemas/withheld.ts#WithheldEntrySchema.gates</code></a></p>
+</dd>
 <dt id="cat-harness--kg-schema-fields--withheld.withheldentryschema.path" data-fa-state="extracted" data-fa-gloss="">
 WithheldEntrySchema.path <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
@@ -12840,6 +12925,13 @@ WithheldEntrySchema.reason <span class="fa-gloss-status">candidate, extracted</s
 <dd>
 <p>Why — which gate, which verdict. A withholding with no reason cannot be re-checked.</p>
 <p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/withheld.ts"><code>cat-harness/schemas/withheld.ts#WithheldEntrySchema.reason</code></a></p>
+</dd>
+<dt id="cat-harness--kg-schema-fields--withheld.withheldentryschema.record" data-fa-state="extracted" data-fa-gloss="">
+WithheldEntrySchema.record <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>Where a reader can see what the work IS without being shown the work — the catalogue record. <code>page</code> is a SITE-ROOT path (leading <code>/</code>) to a published record page; <code>uri</code> is the upstream identifier (a Handle IRI, say). Either may be absent; a viewer links <code>page</code> first, <code>uri</code> second, and nothing at all rather than a guess.</p>
+<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/withheld.ts"><code>cat-harness/schemas/withheld.ts#WithheldEntrySchema.record</code></a></p>
 </dd>
 <dt id="cat-harness--kg-schema-fields--assistant-workflow.workflowdefinition.bindings" data-fa-state="extracted" data-fa-gloss="">
 WorkflowDefinition.bindings <span class="fa-gloss-status">candidate, extracted</span>

@@ -2,7 +2,7 @@
   "$schema": "folio-schema-graph/v1",
   "tile": {
     "schemas": {
-      "count": 188,
+      "count": 191,
       "unit": "modules"
     }
   },
@@ -579,6 +579,14 @@
       "isTest": false
     },
     {
+      "module": "cat-harness/schemas/jsonld-base.test.ts",
+      "instance": "cat-harness",
+      "name": "jsonld-base.test",
+      "graphNode": "undeclared",
+      "summary": "Bean `bh4q`: a content document's `@id`s must resolve to FOLIO_BASE under a",
+      "isTest": true
+    },
+    {
       "module": "cat-harness/schemas/jsonld.ts",
       "instance": "cat-harness",
       "name": "jsonld",
@@ -973,6 +981,22 @@
       "name": "render-log",
       "graphNode": "schema",
       "summary": "The render log — what was published to the publish branch, when, and why.",
+      "isTest": false
+    },
+    {
+      "module": "cat-harness/schemas/render-output.test.ts",
+      "instance": "cat-harness",
+      "name": "render-output.test",
+      "graphNode": "undeclared",
+      "summary": "Each row of `RENDER_AS`'s table, held to `renderToolOutput` — bean `q2wm`.",
+      "isTest": true
+    },
+    {
+      "module": "cat-harness/schemas/render-output.ts",
+      "instance": "cat-harness",
+      "name": "render-output",
+      "graphNode": "schema",
+      "summary": "The ONE implementation of a Tool output's render hint — bean `q2wm`, R17.",
       "isTest": false
     },
     {
@@ -1641,6 +1665,22 @@
       "isTest": false
     },
     {
+      "module": "folio-assistant-core/schemas/dublin-core-render.test.ts",
+      "instance": "folio-assistant-core",
+      "name": "dublin-core-render.test",
+      "graphNode": "undeclared",
+      "summary": "Tests for the Dublin Core renderings (bean `7eak`).",
+      "isTest": true
+    },
+    {
+      "module": "folio-assistant-core/schemas/dublin-core-render.ts",
+      "instance": "folio-assistant-core",
+      "name": "dublin-core-render",
+      "graphNode": "schema",
+      "summary": "Dublin Core RENDERINGS of a catalogue record: DC XML for a harvester, and",
+      "isTest": false
+    },
+    {
       "module": "folio-assistant-core/schemas/dublin-core.test.ts",
       "instance": "folio-assistant-core",
       "name": "dublin-core.test",
@@ -1896,7 +1936,7 @@
       "fields": [
         {
           "name": "@context",
-          "type": "z.literal(CONTENT_CONTEXT_URL).optional()",
+          "type": "ContentContextSchema.optional()",
           "optional": true,
           "array": false,
           "doc": "The published content context — bean `yh6u`. OPTIONAL because folio"
@@ -1960,11 +2000,10 @@
       "extendsNames": [],
       "values": [],
       "refs": [
-        "cat-harness/schemas/archive-contents.ts#ArchiveEntrySchema"
+        "cat-harness/schemas/archive-contents.ts#ArchiveEntrySchema",
+        "cat-harness/schemas/jsonld.ts#ContentContextSchema"
       ],
-      "unresolved": [
-        "CONTENT_CONTEXT_URL"
-      ],
+      "unresolved": [],
       "external": [
         "ARCHIVE_CONTENTS_SCHEMA_ID",
         "z"
@@ -10646,6 +10685,12 @@
           "type": "RendererContribution[]",
           "optional": true,
           "array": true
+        },
+        {
+          "name": "pipelinePlugins",
+          "type": "PipelinePluginContribution[]",
+          "optional": true,
+          "array": true
         }
       ],
       "extendsNames": [],
@@ -10653,6 +10698,7 @@
       "refs": [
         "cat-harness/schemas/contributions.ts#AdapterContribution",
         "cat-harness/schemas/contributions.ts#BlockKindContribution",
+        "cat-harness/schemas/contributions.ts#PipelinePluginContribution",
         "cat-harness/schemas/contributions.ts#QaCheckerContribution",
         "cat-harness/schemas/contributions.ts#RendererContribution",
         "cat-harness/schemas/contributions.ts#ToolContribution"
@@ -10686,6 +10732,35 @@
       "unresolved": [],
       "external": [],
       "exported": false
+    },
+    {
+      "id": "cat-harness/schemas/contributions.ts#PipelinePluginContribution",
+      "name": "PipelinePluginContribution",
+      "module": "cat-harness/schemas/contributions.ts",
+      "kind": "interface",
+      "doc": "An implementation a dependency plugs into a named slot of the GENERIC",
+      "fields": [
+        {
+          "name": "kind",
+          "type": "string",
+          "optional": false,
+          "array": false,
+          "doc": "The slot this fills, e.g. `\"lean-lexer\"`. One contributor per kind."
+        },
+        {
+          "name": "implementation",
+          "type": "unknown",
+          "optional": false,
+          "array": false,
+          "doc": "What fills it. Shape is fixed per kind by `content/pipeline/pipeline-plugins.ts`."
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
     },
     {
       "id": "cat-harness/schemas/contributions.ts#QaCheckerContribution",
@@ -18996,6 +19071,22 @@
       "exported": true
     },
     {
+      "id": "cat-harness/schemas/jsonld.ts#ContentContextSchema",
+      "name": "ContentContextSchema",
+      "module": "cat-harness/schemas/jsonld.ts",
+      "kind": "zod-union",
+      "doc": "A content document's `@context`, as a record schema accepts it: the",
+      "fields": [],
+      "extendsNames": [],
+      "values": [
+        "@base"
+      ],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
       "id": "cat-harness/schemas/jsonld.ts#GraphEdgeTerm",
       "name": "GraphEdgeTerm",
       "module": "cat-harness/schemas/jsonld.ts",
@@ -22619,7 +22710,8 @@
       "values": [
         "agent",
         "role",
-        "plan"
+        "plan",
+        "entity"
       ],
       "refs": [],
       "unresolved": [],
@@ -26932,6 +27024,13 @@
           "array": false
         },
         {
+          "name": "extractedTitle",
+          "type": "z.string().optional()",
+          "optional": true,
+          "array": false,
+          "doc": "The manifest's extracted title, only when a catalogue title replaced it (bean `gnqa`)."
+        },
+        {
           "name": "provenance",
           "type": "z.string()",
           "optional": false,
@@ -27090,6 +27189,13 @@
           "doc": "Why the entry is withheld (bean `cw35`/`mkao`): no avatar, no verbatim excerpt."
         },
         {
+          "name": "withheldBy",
+          "type": "z .object({ gates: WithheldEntrySchema.shape.gates, record: WithheldEntrySchema.shape.record, }) .strict() .optional()",
+          "optional": true,
+          "array": false,
+          "doc": "The structured half of `withheld` (issue #1794): which gates refused,"
+        },
+        {
           "name": "avatar",
           "type": "z.object({ href: z.string(), src: z.string(), source: z.enum([\"cover\", \"figure\"]) }).strict().optional()",
           "optional": true,
@@ -27106,7 +27212,8 @@
       "values": [],
       "refs": [
         "cat-harness/schemas/site-indexes.ts#Count",
-        "cat-harness/schemas/site-indexes.ts#PageNumber"
+        "cat-harness/schemas/site-indexes.ts#PageNumber",
+        "cat-harness/schemas/withheld.ts#WithheldEntrySchema"
       ],
       "unresolved": [],
       "external": [
@@ -30834,7 +30941,7 @@
       "fields": [
         {
           "name": "@context",
-          "type": "z.literal(CONTENT_CONTEXT_URL).optional()",
+          "type": "ContentContextSchema.optional()",
           "optional": true,
           "array": false,
           "doc": "The published content context — bean `yh6u`. OPTIONAL because folio"
@@ -30892,12 +30999,11 @@
       "extendsNames": [],
       "values": [],
       "refs": [
+        "cat-harness/schemas/jsonld.ts#ContentContextSchema",
         "cat-harness/schemas/narrative.ts#NarrativeSchema",
         "cat-harness/schemas/tabular-records.ts#TabularSheetSchema"
       ],
-      "unresolved": [
-        "CONTENT_CONTEXT_URL"
-      ],
+      "unresolved": [],
       "external": [
         "TABULAR_RECORDS_SCHEMA_ID",
         "z"
@@ -34220,6 +34326,19 @@
       "exported": true
     },
     {
+      "id": "cat-harness/schemas/tool.ts#RenderAs",
+      "name": "RenderAs",
+      "module": "cat-harness/schemas/tool.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
       "id": "cat-harness/schemas/tool.ts#SchemaRef",
       "name": "SchemaRef",
       "module": "cat-harness/schemas/tool.ts",
@@ -34300,7 +34419,7 @@
         },
         {
           "name": "io",
-          "type": "z.object({ inputs: z.array(ToolInputSchema), outputs: z.array(ToolPortSchema), })",
+          "type": "z.object({ inputs: z.array(ToolInputSchema), outputs: z.array(ToolOutputSchema), })",
           "optional": false,
           "array": false
         },
@@ -34364,7 +34483,7 @@
         "cat-harness/schemas/tool.ts#ToolInstallSchema",
         "cat-harness/schemas/tool.ts#ToolInvokeSchema",
         "cat-harness/schemas/tool.ts#ToolMaintainsSchema",
-        "cat-harness/schemas/tool.ts#ToolPortSchema",
+        "cat-harness/schemas/tool.ts#ToolOutputSchema",
         "cat-harness/schemas/tool.ts#ToolRequiresSchema",
         "cat-harness/schemas/tool.ts#ToolSelectionSchema"
       ],
@@ -34643,6 +34762,45 @@
       "exported": true
     },
     {
+      "id": "cat-harness/schemas/tool.ts#ToolOutput",
+      "name": "ToolOutput",
+      "module": "cat-harness/schemas/tool.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/tool.ts#ToolOutputSchema",
+      "name": "ToolOutputSchema",
+      "module": "cat-harness/schemas/tool.ts",
+      "kind": "zod-object",
+      "fields": [
+        {
+          "name": "render",
+          "type": "ToolRenderSchema.optional()",
+          "optional": true,
+          "array": false,
+          "doc": "How a renderer may place this output in a page. Absent is `text`. See {@link RENDER_AS}."
+        }
+      ],
+      "extendsNames": [
+        "ToolPortSchema"
+      ],
+      "values": [],
+      "refs": [
+        "cat-harness/schemas/tool.ts#ToolPortSchema",
+        "cat-harness/schemas/tool.ts#ToolRenderSchema"
+      ],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
       "id": "cat-harness/schemas/tool.ts#ToolPort",
       "name": "ToolPort",
       "module": "cat-harness/schemas/tool.ts",
@@ -34687,6 +34845,48 @@
       ],
       "unresolved": [],
       "external": [
+        "z"
+      ],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/tool.ts#ToolRender",
+      "name": "ToolRender",
+      "module": "cat-harness/schemas/tool.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/tool.ts#ToolRenderSchema",
+      "name": "ToolRenderSchema",
+      "module": "cat-harness/schemas/tool.ts",
+      "kind": "zod-object",
+      "fields": [
+        {
+          "name": "as",
+          "type": "z.enum(RENDER_AS)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "reason",
+          "type": "z.string().min(1).optional()",
+          "optional": true,
+          "array": false
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [
+        "RENDER_AS",
         "z"
       ],
       "exported": true
@@ -39604,6 +39804,51 @@
           "optional": false,
           "array": false,
           "doc": "Why — which gate, which verdict. A withholding with no reason cannot be re-checked."
+        },
+        {
+          "name": "gates",
+          "type": "z.array(WithheldGateSchema).min(1).optional()",
+          "optional": true,
+          "array": true,
+          "doc": "The gates that refused, STRUCTURED — issue #1794. Optional because a"
+        },
+        {
+          "name": "record",
+          "type": "z .object({ id: z.string().min(1).optional(), page: z.string().regex(/^\\//, \"a site-root path, beginning with /\").optio…",
+          "optional": true,
+          "array": false,
+          "doc": "Where a reader can see what the work IS without being shown the work —"
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [
+        "cat-harness/schemas/withheld.ts#WithheldGateSchema"
+      ],
+      "unresolved": [],
+      "external": [
+        "z"
+      ],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/withheld.ts#WithheldGateSchema",
+      "name": "WithheldGateSchema",
+      "module": "cat-harness/schemas/withheld.ts",
+      "kind": "zod-object",
+      "doc": "One publication gate that did not permit publication, and its verdict (e.g. `refused`).",
+      "fields": [
+        {
+          "name": "gate",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "verdict",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false
         }
       ],
       "extendsNames": [],
@@ -42449,6 +42694,102 @@
       "exported": false
     },
     {
+      "id": "folio-assistant-core/schemas/dublin-core-render.ts#DcSubject",
+      "name": "DcSubject",
+      "module": "folio-assistant-core/schemas/dublin-core-render.ts",
+      "kind": "interface",
+      "doc": "The subject of a rendering: the item at its Handle when the catalogue",
+      "fields": [
+        {
+          "name": "handle",
+          "type": "string",
+          "optional": true,
+          "array": false
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "folio-assistant-core/schemas/dublin-core-render.ts#DctermsMapping",
+      "name": "DctermsMapping",
+      "module": "folio-assistant-core/schemas/dublin-core-render.ts",
+      "kind": "interface",
+      "doc": "One row: the DCMI term a field IS, and what DCMI says about its values.",
+      "fields": [
+        {
+          "name": "term",
+          "type": "string",
+          "optional": false,
+          "array": false,
+          "doc": "The local name under `http://purl.org/dc/terms/`."
+        },
+        {
+          "name": "range",
+          "type": "\"literal\" | \"resource\"",
+          "optional": false,
+          "array": false,
+          "doc": "`literal` when DCMI gives the term the range `rdfs:Literal` or gives no"
+        },
+        {
+          "name": "ses",
+          "type": "string",
+          "optional": true,
+          "array": false,
+          "doc": "A syntax encoding scheme the values are in, by the field's own name. Becomes a datatype (JSON-LD) or `xsi:type` (XML)."
+        },
+        {
+          "name": "ves",
+          "type": "string",
+          "optional": true,
+          "array": false,
+          "doc": "A vocabulary encoding scheme the values are members of. Becomes `dcam:memberOf` (JSON-LD) or `xsi:type` (XML)."
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "folio-assistant-core/schemas/dublin-core-render.ts#Literal",
+      "name": "Literal",
+      "module": "folio-assistant-core/schemas/dublin-core-render.ts",
+      "kind": "type-alias",
+      "fields": [
+        {
+          "name": "@value",
+          "type": "string",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "@language",
+          "type": "string",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "@type",
+          "type": "string",
+          "optional": true,
+          "array": false
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": false
+    },
+    {
       "id": "folio-assistant-core/schemas/dublin-core.ts#DcField",
       "name": "DcField",
       "module": "folio-assistant-core/schemas/dublin-core.ts",
@@ -44534,6 +44875,14 @@
       "array": true
     },
     {
+      "from": "cat-harness/schemas/archive-contents.ts#ArchiveContentsSchema",
+      "to": "cat-harness/schemas/jsonld.ts#ContentContextSchema",
+      "via": "@context",
+      "kind": "field",
+      "optional": true,
+      "array": false
+    },
+    {
       "from": "cat-harness/schemas/assistant-package.ts#PackageManifest",
       "to": "cat-harness/schemas/assistant-package.ts#AptDependency",
       "via": "apt",
@@ -46121,6 +46470,14 @@
       "from": "cat-harness/schemas/contributions.ts#FolioContribution",
       "to": "cat-harness/schemas/contributions.ts#BlockKindContribution",
       "via": "blockKinds",
+      "kind": "field",
+      "optional": true,
+      "array": true
+    },
+    {
+      "from": "cat-harness/schemas/contributions.ts#FolioContribution",
+      "to": "cat-harness/schemas/contributions.ts#PipelinePluginContribution",
+      "via": "pipelinePlugins",
       "kind": "field",
       "optional": true,
       "array": true
@@ -48582,6 +48939,14 @@
       "array": false
     },
     {
+      "from": "cat-harness/schemas/site-indexes.ts#LibraryIndexEntrySchema",
+      "to": "cat-harness/schemas/withheld.ts#WithheldEntrySchema",
+      "via": "withheldBy",
+      "kind": "field",
+      "optional": true,
+      "array": false
+    },
+    {
       "from": "cat-harness/schemas/site-indexes.ts#LibraryIndexSchema",
       "to": "cat-harness/schemas/site-indexes.ts#Count",
       "via": "queues",
@@ -49143,6 +49508,14 @@
     },
     {
       "from": "cat-harness/schemas/tabular-records.ts#TabularRecordsSchema",
+      "to": "cat-harness/schemas/jsonld.ts#ContentContextSchema",
+      "via": "@context",
+      "kind": "field",
+      "optional": true,
+      "array": false
+    },
+    {
+      "from": "cat-harness/schemas/tabular-records.ts#TabularRecordsSchema",
       "to": "cat-harness/schemas/narrative.ts#NarrativeSchema",
       "via": "narrative",
       "kind": "field",
@@ -49591,7 +49964,7 @@
     },
     {
       "from": "cat-harness/schemas/tool.ts#ToolDefinitionSchema",
-      "to": "cat-harness/schemas/tool.ts#ToolPortSchema",
+      "to": "cat-harness/schemas/tool.ts#ToolOutputSchema",
       "via": "io",
       "kind": "field",
       "optional": false,
@@ -49627,6 +50000,22 @@
       "via": "",
       "kind": "extends",
       "optional": false,
+      "array": false
+    },
+    {
+      "from": "cat-harness/schemas/tool.ts#ToolOutputSchema",
+      "to": "cat-harness/schemas/tool.ts#ToolPortSchema",
+      "via": "",
+      "kind": "extends",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "cat-harness/schemas/tool.ts#ToolOutputSchema",
+      "to": "cat-harness/schemas/tool.ts#ToolRenderSchema",
+      "via": "render",
+      "kind": "field",
+      "optional": true,
       "array": false
     },
     {
@@ -50444,6 +50833,14 @@
       "kind": "field",
       "optional": true,
       "array": false
+    },
+    {
+      "from": "cat-harness/schemas/withheld.ts#WithheldEntrySchema",
+      "to": "cat-harness/schemas/withheld.ts#WithheldGateSchema",
+      "via": "gates",
+      "kind": "field",
+      "optional": true,
+      "array": true
     },
     {
       "from": "cat-harness/schemas/withheld.ts#WithheldSchema",
