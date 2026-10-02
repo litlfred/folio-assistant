@@ -8015,10 +8015,31 @@
       "status": "candidate"
     },
     {
+      "id": "site-indexes.qaindexschema.corpus",
+      "prefLabel": "QaIndexSchema.corpus",
+      "definition": "Whether the build that wrote this had the derived QA corpus (bean `4l4d`). `absent`: every badge on the page reads \"not available in this build\", and `badges` and `unswept` are empty because nothing was known. Optional only for an index written before that bean, which the painter reads as `present` with no `unswept` list — what it then meant.",
+      "source": "cat-harness/schemas/site-indexes.ts#QaIndexSchema.corpus",
+      "status": "candidate"
+    },
+    {
       "id": "site-indexes.qaindexschema.page",
       "prefLabel": "QaIndexSchema.page",
       "definition": "The page's slug.",
       "source": "cat-harness/schemas/site-indexes.ts#QaIndexSchema.page",
+      "status": "candidate"
+    },
+    {
+      "id": "site-indexes.qaindexschema.unswept",
+      "prefLabel": "QaIndexSchema.unswept",
+      "definition": "Keys whose subject has NO sidecar — \"not swept\", painted inert. Decided here rather than in the committed page since bean `4l4d`.",
+      "source": "cat-harness/schemas/site-indexes.ts#QaIndexSchema.unswept",
+      "status": "candidate"
+    },
+    {
+      "id": "site-indexes.qatranslationpagesschema.pages",
+      "prefLabel": "QaTranslationPagesSchema.pages",
+      "definition": "Page slugs (path, `/` → `-`). Empty with `corpus: \"absent\"`.",
+      "source": "cat-harness/schemas/site-indexes.ts#QaTranslationPagesSchema.pages",
       "status": "candidate"
     },
     {

@@ -25,10 +25,6 @@ msgstr ""
 msgid "Agentic harness"
 msgstr "智能代理框架"
 
-#: docs/agentic-harness.md:16
-msgid "TR"
-msgstr "TR"
-
 #: docs/agentic-harness.md:18
 msgid "On this page"
 msgstr "本页目录"
@@ -36,10 +32,6 @@ msgstr "本页目录"
 #: docs/agentic-harness.md:25
 msgid "This page is generated from  — each section below links to its own source."
 msgstr "本页面生成自  — 下方每个小节都链接至其自身的源文件。"
-
-#: docs/agentic-harness.md:27
-msgid "✎ Edit{: .fa-node-edit title=\"Edit content/docs/agentic-harness/overview.md\" } QA… TR"
-msgstr "✎ Edit{: .fa-node-edit title=\"Edit content/docs/agentic-harness/overview.md\" } QA… TR"
 
 #: docs/agentic-harness.md:29
 msgid "The agentic harness is the interaction model that folio-assistant runs on — the rules, states, and workflows that govern how an agent and a user collaborate inside this platform. Much of this behaviour is already described across individual skills and guidance documents; this page consolidates it into one reference so that an agent entering a session can look up the expected behaviour rather than reconstructing it from scattered rules."
@@ -52,10 +44,6 @@ msgstr "这并不涉及智能体的内部架构，而是关乎智能体与用户
 #: docs/agentic-harness.md:43
 msgid "Interaction states"
 msgstr "交互状态"
-
-#: docs/agentic-harness.md:46
-msgid "✎ Edit{: .fa-node-edit title=\"Edit content/docs/agentic-harness/interaction-states.md\" } QA… TR"
-msgstr "✎ Edit{: .fa-node-edit title=\"Edit content/docs/agentic-harness/interaction-states.md\" } QA… TR"
 
 #: docs/agentic-harness.md:48
 msgid "A user–agent interaction is always in exactly one of two states:"
@@ -161,10 +149,6 @@ msgstr "核心规则：智能体始终清楚自己处于哪个工作流中。如
 msgid "Session lifecycle"
 msgstr "会话生命周期"
 
-#: docs/agentic-harness.md:85
-msgid "✎ Edit{: .fa-node-edit title=\"Edit content/docs/agentic-harness/session-lifecycle.md\" } QA… TR"
-msgstr "✎ Edit{: .fa-node-edit title=\"Edit content/docs/agentic-harness/session-lifecycle.md\" } QA… TR"
-
 #: docs/agentic-harness.md:87
 msgid "Every agent session follows the same lifecycle:"
 msgstr "每个智能体会话都遵循相同的生命周期："
@@ -208,10 +192,6 @@ msgstr "聊天记录是瞬态的；其他所有内容均会留存"
 #: docs/agentic-harness.md:111
 msgid "Request classification"
 msgstr "请求分类"
-
-#: docs/agentic-harness.md:114
-msgid "✎ Edit{: .fa-node-edit title=\"Edit content/docs/agentic-harness/request-classification.md\" } QA… TR"
-msgstr "✎ Edit{: .fa-node-edit title=\"Edit content/docs/agentic-harness/request-classification.md\" } QA… TR"
 
 #: docs/agentic-harness.md:116
 msgid "Every user request is classified into one of these categories. The classification determines which workflow the agent enters."
@@ -341,10 +321,6 @@ msgstr "当无法确定时，智能体会询问：“这听起来可能需要修
 msgid "Content workflows"
 msgstr "内容工作流"
 
-#: docs/agentic-harness.md:148
-msgid "✎ Edit{: .fa-node-edit title=\"Edit content/docs/agentic-harness/content-workflows.md\" } QA… TR"
-msgstr "✎ Edit{: .fa-node-edit title=\"Edit content/docs/agentic-harness/content-workflows.md\" } QA… TR"
-
 #: docs/agentic-harness.md:150
 msgid "When a request is classified as content work (authoring, review, ingestion), the agent follows the corresponding BPMN workflow. The existing documentation pages describe these in detail:"
 msgstr "当请求被归类为内容工作（撰写、评审、摄取）时，智能体将遵循相应的 BPMN 工作流。现有文档页面对此进行了详细阐述："
@@ -385,10 +361,6 @@ msgstr "本框架并未重新定义这些工作流。它提供了入口点——
 msgid "Deterministic and agentic processing"
 msgstr "确定性与智能体化处理"
 
-#: docs/agentic-harness.md:177
-msgid "✎ Edit{: .fa-node-edit title=\"Edit content/docs/agentic-harness/deterministic-and-agentic.md\" } QA TR"
-msgstr "✎ Edit{: .fa-node-edit title=\"Edit content/docs/agentic-harness/deterministic-and-agentic.md\" } QA TR"
-
 #: docs/agentic-harness.md:179
 msgid "Workflow processing here is a spectrum, not a switch, and the harness is already at four different points on it without ever having named the axis:  decides whether a step that is not enabled is refused or merely noted;  decides whether a package may negotiate a base step away;  decides whether a branch is computed from a table rather than chosen; and the commit-boundary gate refuses the write by something that is not the agent."
 msgstr "在此，工作流处理是一个光谱，而非开关，而本框架在尚未为该维度命名时，就已经处于其上的四个不同点位： 决定未启用的步骤是被拒绝还是仅予记录； 决定程序包是否可以通过协商省去某个基础步骤； 决定分支是由表格计算得出还是由人工选择；而提交边界关卡则由智能体之外的机制来拒绝写入。"
@@ -408,10 +380,6 @@ msgstr "这一统计数据的用途在于研究，且该议题保持开放。 �
 #: docs/agentic-harness.md:211
 msgid "BPMN execution: one skill, two engines"
 msgstr "BPMN 执行：一项技能，两个引擎"
-
-#: docs/agentic-harness.md:214
-msgid "✎ Edit{: .fa-node-edit title=\"Edit content/docs/agentic-harness/bpmn-execution.md\" } QA TR"
-msgstr "✎ Edit{: .fa-node-edit title=\"Edit content/docs/agentic-harness/bpmn-execution.md\" } TR TR"
 
 #: docs/agentic-harness.md:216
 msgid "The owner, 2026-09-23, naming the skill this spectrum is about:"
@@ -513,10 +481,6 @@ msgstr "部分已构建。 尚未接入 BPMN 引擎。机械化 QA/QC 报告现�
 msgid "Feature-request workflow (CRDM)"
 msgstr "功能需求工作流（CRDM）"
 
-#: docs/agentic-harness.md:262
-msgid "✎ Edit{: .fa-node-edit title=\"Edit content/docs/agentic-harness/feature-request-workflow.md\" } QA… TR"
-msgstr "✎ Edit{: .fa-node-edit title=\"Edit content/docs/agentic-harness/feature-request-workflow.md\" } QA… TR"
-
 #: docs/agentic-harness.md:264
 msgid "When a request is classified as a feature request, the agent enters the CRDM requirements workflow (full documentation, BPMN)."
 msgstr "当请求被归类为功能需求时，智能体进入 CRDM 需求工作流（完整文档，BPMN）。"
@@ -580,10 +544,6 @@ msgstr "退出时，若先前有被挂起的内容工作流，智能体将予以
 #: docs/agentic-harness.md:308
 msgid "User-provided content and sources"
 msgstr "用户提供的内容与源材料"
-
-#: docs/agentic-harness.md:311
-msgid "✎ Edit{: .fa-node-edit title=\"Edit content/docs/agentic-harness/user-provided-content.md\" } QA… TR"
-msgstr "✎ Edit{: .fa-node-edit title=\"Edit content/docs/agentic-harness/user-provided-content.md\" } QA… TR"
 
 #: docs/agentic-harness.md:313
 msgid "Users provide content and source material through multiple channels. The agent should accept all of them and route them into the appropriate pipeline:"
@@ -704,10 +664,6 @@ msgstr "示例：用户上传了一份公众咨询反馈的 Excel 表格。智�
 #: docs/agentic-harness.md:339
 msgid "Issue and bean discipline"
 msgstr "Issue 与 Bean 纪律"
-
-#: docs/agentic-harness.md:342
-msgid "✎ Edit{: .fa-node-edit title=\"Edit content/docs/agentic-harness/issue-and-bean-discipline.md\" } QA… TR"
-msgstr "✎ Edit{: .fa-node-edit title=\"Edit content/docs/agentic-harness/issue-and-bean-discipline.md\" } QA… TR"
 
 #: docs/agentic-harness.md:344
 msgid "Feature work must be linked to a GitHub issue. Content work uses beans. The two are related but not synonymous."
@@ -837,10 +793,6 @@ msgstr "Bean 不是 Issue。  用于工作计划项。Issue 则面向利益相�
 msgid "Consolidated skill references"
 msgstr "综合技能参考"
 
-#: docs/agentic-harness.md:391
-msgid "✎ Edit{: .fa-node-edit title=\"Edit content/docs/agentic-harness/consolidated-skill-references.md\" } QA… TR"
-msgstr "✎ Edit{: .fa-node-edit title=\"Edit content/docs/agentic-harness/consolidated-skill-references.md\" } QA… TR"
-
 #: docs/agentic-harness.md:393
 msgid "The behaviour described on this page draws from skills and guidance documents scattered across the repository. This section maps the consolidated behaviour back to its authoritative sources."
 msgstr "本页描述的行为提炼自分散在仓库各处的技能和指导文档。本节将整合后的行为映射回其权威源头。"
@@ -917,10 +869,6 @@ msgstr "当某项技能与本页面存在分歧时，以技能为准。 本页�
 msgid "What is not built yet"
 msgstr "尚未构建的内容"
 
-#: docs/agentic-harness.md:418
-msgid "✎ Edit{: .fa-node-edit title=\"Edit content/docs/agentic-harness/what-is-not-built-yet.md\" } QA… TR"
-msgstr "✎ Edit{: .fa-node-edit title=\"Edit content/docs/agentic-harness/what-is-not-built-yet.md\" } QA… TR"
-
 #: docs/agentic-harness.md:420
 msgid "Workflow state persistence — the harness describes workflow suspension and resumption, but there is no mechanism to persist the agent's workflow state across sessions. Today this relies on beans and issue comments as proxies."
 msgstr "工作流状态持久化 — 本框架描述了工作流的挂起与恢复，但目前尚无跨会话持久化智能体工作流状态的机制。当前这依赖于 beans 和 Issue 评论作为代理。"
@@ -944,3 +892,42 @@ msgstr "会话交接协议 — 会话结束前需要提交的内容规则已在 
 #: docs/agentic-harness.md:441
 msgid "Tracked in: #203"
 msgstr "跟进于： #203"
+
+#~ msgid "TR"
+#~ msgstr "TR"
+
+#~ msgid "✎ Edit{: .fa-node-edit title=\"Edit content/docs/agentic-harness/overview.md\" } QA… TR"
+#~ msgstr "✎ Edit{: .fa-node-edit title=\"Edit content/docs/agentic-harness/overview.md\" } QA… TR"
+
+#~ msgid "✎ Edit{: .fa-node-edit title=\"Edit content/docs/agentic-harness/interaction-states.md\" } QA… TR"
+#~ msgstr "✎ Edit{: .fa-node-edit title=\"Edit content/docs/agentic-harness/interaction-states.md\" } QA… TR"
+
+#~ msgid "✎ Edit{: .fa-node-edit title=\"Edit content/docs/agentic-harness/session-lifecycle.md\" } QA… TR"
+#~ msgstr "✎ Edit{: .fa-node-edit title=\"Edit content/docs/agentic-harness/session-lifecycle.md\" } QA… TR"
+
+#~ msgid "✎ Edit{: .fa-node-edit title=\"Edit content/docs/agentic-harness/request-classification.md\" } QA… TR"
+#~ msgstr "✎ Edit{: .fa-node-edit title=\"Edit content/docs/agentic-harness/request-classification.md\" } QA… TR"
+
+#~ msgid "✎ Edit{: .fa-node-edit title=\"Edit content/docs/agentic-harness/content-workflows.md\" } QA… TR"
+#~ msgstr "✎ Edit{: .fa-node-edit title=\"Edit content/docs/agentic-harness/content-workflows.md\" } QA… TR"
+
+#~ msgid "✎ Edit{: .fa-node-edit title=\"Edit content/docs/agentic-harness/deterministic-and-agentic.md\" } QA TR"
+#~ msgstr "✎ Edit{: .fa-node-edit title=\"Edit content/docs/agentic-harness/deterministic-and-agentic.md\" } QA TR"
+
+#~ msgid "✎ Edit{: .fa-node-edit title=\"Edit content/docs/agentic-harness/bpmn-execution.md\" } QA TR"
+#~ msgstr "✎ Edit{: .fa-node-edit title=\"Edit content/docs/agentic-harness/bpmn-execution.md\" } TR TR"
+
+#~ msgid "✎ Edit{: .fa-node-edit title=\"Edit content/docs/agentic-harness/feature-request-workflow.md\" } QA… TR"
+#~ msgstr "✎ Edit{: .fa-node-edit title=\"Edit content/docs/agentic-harness/feature-request-workflow.md\" } QA… TR"
+
+#~ msgid "✎ Edit{: .fa-node-edit title=\"Edit content/docs/agentic-harness/user-provided-content.md\" } QA… TR"
+#~ msgstr "✎ Edit{: .fa-node-edit title=\"Edit content/docs/agentic-harness/user-provided-content.md\" } QA… TR"
+
+#~ msgid "✎ Edit{: .fa-node-edit title=\"Edit content/docs/agentic-harness/issue-and-bean-discipline.md\" } QA… TR"
+#~ msgstr "✎ Edit{: .fa-node-edit title=\"Edit content/docs/agentic-harness/issue-and-bean-discipline.md\" } QA… TR"
+
+#~ msgid "✎ Edit{: .fa-node-edit title=\"Edit content/docs/agentic-harness/consolidated-skill-references.md\" } QA… TR"
+#~ msgstr "✎ Edit{: .fa-node-edit title=\"Edit content/docs/agentic-harness/consolidated-skill-references.md\" } QA… TR"
+
+#~ msgid "✎ Edit{: .fa-node-edit title=\"Edit content/docs/agentic-harness/what-is-not-built-yet.md\" } QA… TR"
+#~ msgstr "✎ Edit{: .fa-node-edit title=\"Edit content/docs/agentic-harness/what-is-not-built-yet.md\" } QA… TR"

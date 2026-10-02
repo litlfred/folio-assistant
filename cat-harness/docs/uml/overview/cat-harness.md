@@ -666,7 +666,9 @@ classDiagram
       <<json: QaIndexSchema>>
       $schema [1] 'folio-qa-index/v1'
       page [1] string
+      corpus [0..1] present | absent
       badges [1] map~object~
+      unswept [0..*] string[]
     }
     class cat_harness_qa_folio_detangle_sidecar_v1["folio-detangle-sidecar/v1"] {
       <<ts: DetangleSidecar>>
