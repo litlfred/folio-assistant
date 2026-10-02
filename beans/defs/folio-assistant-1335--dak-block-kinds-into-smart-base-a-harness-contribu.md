@@ -20,10 +20,10 @@ Moving dak-blocks.ts alone makes core import smart-base, which check:partition:e
 The mechanism is bean zlmp's: registration that walks the resolved stack, so CONTENT_ADAPTERS stops being a compile-time union. This bean is the DAK instance of it.
 
 ## Done when
-- [ ] a harness can contribute a content adapter and its block kinds to core at registration time, with no core import of the harness
-- [ ] dak-blocks.ts and the DAK entries of block-kinds.ts live in smart-base; core's barrel no longer re-exports them
-- [ ] jsonld, qa-criteria-registry, translation-tools and gen-dak-components-figure read DAK kinds through the registration
-- [ ] check:partition:edges 0 new edges; kg-export Schema node ids unchanged except for the moved paths
+- [x] a harness can contribute a content adapter and its block kinds to core at registration time, with no core import of the harness
+- [x] dak-blocks.ts and the DAK entries of block-kinds.ts live in smart-base; core's barrel no longer re-exports them
+- [x] jsonld, qa-criteria-registry, translation-tools and gen-dak-components-figure read DAK kinds through the registration
+- [x] check:partition:edges 0 new edges; kg-export Schema node ids unchanged except for the moved paths
 
 ## Summary of Changes
 

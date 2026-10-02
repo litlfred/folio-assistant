@@ -15,7 +15,7 @@
  */
 import { describe, test, expect, beforeAll, afterAll } from "bun:test";
 import { mkdtempSync, writeFileSync, rmSync } from "fs";
-import { join } from "path";
+import { join, resolve } from "path";
 import { tmpdir } from "os";
 import {
   checkDakCompanionPresent,
@@ -27,13 +27,19 @@ import {
   REQUIRED_COMPANION,
   WORKBOOK_BACKED_KINDS,
   isGeneratedArtefact,
-} from "../../content/pipeline/qa-checkers-dak";
-import { QA_CRITERIA_REGISTRY } from "../../content/pipeline/qa-criteria-registry";
+} from "./qa-checkers-dak";
+import { QA_CRITERIA_REGISTRY } from "../../../cat-harness/content/pipeline/qa-criteria-registry";
 import {
   criterionAdapters,
+  incompatibleCompanions,
   COMPANION_ROLES,
-  ADAPTER_COMPANION_ROLES,
-} from "../../schemas/block-qa";
+} from "../../../cat-harness/schemas/block-qa";
+import { ContributionRegistry } from "../../../cat-harness/schemas/contributions";
+import contribute, { DAK_COMPANION_ROLES } from "../../contributions";
+
+/** smart-base's contribution, registered as `loadContributions` would. */
+const registry = new ContributionRegistry();
+registry.register({ ...contribute(), root: resolve(import.meta.dir, "../..") });
 
 const DIR = mkdtempSync(join(tmpdir(), "dak-checkers-"));
 const p = (n: string) => join(DIR, n);
@@ -116,7 +122,7 @@ describe("dak-companion-present", () => {
     // requirement would fail every block that satisfies it.
     for (const [, role] of Object.entries(REQUIRED_COMPANION)) {
       expect(COMPANION_ROLES).toContain(role);
-      expect(ADAPTER_COMPANION_ROLES.dak).toContain(role);
+      expect(DAK_COMPANION_ROLES).toContain(role);
     }
   });
 
@@ -210,10 +216,21 @@ describe("registration", () => {
     expect(registered.sort()).toEqual(Object.keys(DAK_AUTOMATED_CHECKERS).sort());
   });
 
-  test("all of them are dak-scoped and automated", () => {
+  test("all of them are dak-scoped, automated, and answered by smart-base", () => {
     for (const def of QA_CRITERIA_REGISTRY.filter((d) => d.domain === "dak")) {
       expect(criterionAdapters(def)).toEqual(["dak"]);
       expect(def.automated).toBe(true);
+      // The rule is core's; the checker is this instance's (bean 1335).
+      expect(def.checker_contributed).toBe(true);
+      const entry = registry.qaCheckerEntry(def.id);
+      expect(entry?.label).toBe("smart-base/content/pipeline/qa-checkers-dak.ts");
+      expect(entry?.check).toBe(DAK_AUTOMATED_CHECKERS[def.id]);
+    }
+  });
+
+  test("no DAK criterion depends on a companion a DAK block cannot have", () => {
+    for (const def of QA_CRITERIA_REGISTRY.filter((d) => d.domain === "dak")) {
+      expect({ id: def.id, bad: incompatibleCompanions(def, registry) }).toEqual({ id: def.id, bad: [] });
     }
   });
 });

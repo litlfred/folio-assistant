@@ -81,8 +81,17 @@ export const BLOCK_KIND_ALT = BLOCK_KINDS.join("|");
  * platform ships `adapters/paper/`. This names the dimension so that block
  * kinds and QA criteria can be scoped to it instead of living in one global
  * pool.
+ *
+ * These are the BUILT-IN adapters only. `dak` was listed here until bean
+ * `1335`; it is smart-base's now, contributed through
+ * `ContributionRegistry` like any adapter a harness adds, and
+ * `register` refuses a contribution that names a built-in one — which is what
+ * made narrowing this list safe rather than a collision waiting to happen.
+ * Where a criterion or a reader needs to name a contributed adapter, it uses
+ * a plain string (`QaCriterionDefinition.adapters`), because a content type is
+ * data and not an import.
  */
-export const CONTENT_ADAPTERS = ["paper", "dak"] as const;
+export const CONTENT_ADAPTERS = ["paper"] as const;
 export type ContentAdapter = (typeof CONTENT_ADAPTERS)[number];
 
 /**
@@ -303,63 +312,34 @@ export function profileForContentType(contentType: string | undefined): ContentP
   return contentType === "document" ? "document" : "paper";
 }
 
+// ── Every kind: built in, and contributed ────────────────────────
+//
+// The `dak` adapter's 21 kinds, their builder names and label prefixes, and
+// the WHO DAK component tables were declared HERE until bean `1335`. They live
+// in `smart-base/schemas/dak-kinds.ts` now and reach core by registration:
+// smart-base's `contributions.ts` contributes the adapter and its kinds, and
+// `loadContributions` hands them to a `ContributionRegistry`.
+//
+// So everything below answers for the BUILT-IN vocabulary — what core owns —
+// and a question about "every kind, including contributed ones" is a runtime
+// question asked of a registry. A runtime contribution cannot feed a
+// compile-time union, which is why `AnyBlockKind` and `DakBlockKind` are gone
+// rather than widened: the compile-time types narrow to what core owns.
+
 /**
- * The `dak` adapter's block kinds — WHO SMART Guidelines L2 and L3.
+ * Every BUILT-IN kind. Contributed kinds are not here — ask the registry
+ * (`ContributionRegistry.contributedKinds()`).
  *
- * Taken from the component lists this repo already treats as canonical:
- * `smart-base/schemas/skills/l2-dak-authoring/input.schema.json` (the nine DAK
- * components) and `fhir-harness/schemas/skills/l3-fhir-authoring/input.schema.json` (the
- * ten FHIR artefact types). WHO's own starter kit could not be consulted
- * directly — `smart.who.int` and `build.fhir.org` return the same 403 policy
- * denial as `who.int` — so these mirror the repo's schemas, not the published
- * IG.
- *
- * ## Declared, not yet authorable
- *
- * These kinds are **not** members of the `Block` union and have no builder,
- * no Zod schema and no viewer registration. Authoring a DAK block is a
- * separate piece of work; what exists today is the vocabulary, so that QA
- * criteria can be scoped by adapter and so the ingest writer has names to
- * emit. `walkBlocks` will not discover a `.ts` declaring one of these until
- * that work lands — which is the honest state, rather than a kind that looks
- * supported and silently yields nothing.
+ * The paper vocabulary today, because `paper` is the one built-in adapter.
+ * Kept as its own name so a reader looking for "every kind core knows" finds
+ * it, and so it widens without its callers changing if a second adapter is
+ * ever built in again.
  */
-export const DAK_BLOCK_KINDS = [
-  // L2 — Digital Adaptation Kit components.
-  "health-intervention",
-  "persona",
-  "user-scenario",
-  "business-process",
-  "data-element",
-  "decision-table",
-  "scheduling-logic",
-  "indicator",
-  "functional-requirement",
-  "non-functional-requirement",
-  "test-scenario",
-  // L3 — FHIR implementation-guide artefacts.
-  "logical-model",
-  "profile",
-  "value-set",
-  "questionnaire",
-  "cql-library",
-  "structure-map",
-  "plan-definition",
-  "measure",
-  "test-case",
-  "actor-definition",
-] as const;
+export const ALL_BLOCK_KINDS = [...PAPER_BLOCK_KINDS] as const;
 
-export type DakBlockKind = (typeof DAK_BLOCK_KINDS)[number];
-
-/** Every kind any adapter recognises. */
-export const ALL_BLOCK_KINDS = [...PAPER_BLOCK_KINDS, ...DAK_BLOCK_KINDS] as const;
-export type AnyBlockKind = BlockKind | DakBlockKind;
-
-/** Which kinds belong to which adapter. */
+/** Which kinds belong to which BUILT-IN adapter. */
 export const ADAPTER_BLOCK_KINDS: Record<ContentAdapter, readonly string[]> = {
   paper: PAPER_BLOCK_KINDS,
-  dak: DAK_BLOCK_KINDS,
 };
 
 const KIND_TO_ADAPTER: ReadonlyMap<string, ContentAdapter> = new Map(
@@ -369,257 +349,70 @@ const KIND_TO_ADAPTER: ReadonlyMap<string, ContentAdapter> = new Map(
 );
 
 /**
- * The adapter a block kind belongs to, or `undefined` for an unknown kind.
+ * The BUILT-IN adapter a block kind belongs to, or `undefined` for a kind core
+ * does not own.
  *
  * `undefined` is deliberately not defaulted to `"paper"`. A criterion that
  * silently treats an unrecognised kind as a paper block is how a math axis
  * would come to run against a ValueSet — the caller must decide what an
  * unknown kind means rather than inherit a guess.
+ *
+ * A CONTRIBUTED kind is also `undefined` here. A caller holding a registry
+ * asks `composedKindOwner(kind, registry, adapterForKind)` in
+ * `schemas/contributions.ts`, which consults this first and the registry
+ * second.
  */
 export function adapterForKind(kind: string): ContentAdapter | undefined {
   return KIND_TO_ADAPTER.get(kind);
 }
 
 /**
- * Builder function name for each DAK kind.
+ * Builder name → kind, for the BUILT-IN kinds.
  *
  * Paper kinds are single lowercase words, so builder name and kind string are
- * the same token and `BLOCK_BUILDER_RE` can alternate over the kinds directly.
- * DAK kinds are multi-word (`decision-table`), and a hyphen is not a valid
- * identifier — so the two namespaces separate here for the first time: the
- * kind stays kebab-case because it is *data*, and the builder is camelCase
- * because it is an *identifier*.
- *
- * Anything scanning a `.ts` for `export default <builder>(` must alternate
- * over these values and map back through {@link kindForBuilder}. Deriving one
- * from the other by string munging is what this map exists to prevent.
+ * the same token. A contributed kind may differ — a DAK kind is multi-word
+ * (`decision-table`), a hyphen is not a valid identifier, so its builder is
+ * `decisionTable` — which is why a contribution carries its builder name and
+ * this map is never derived by string munging.
  */
-export const DAK_KIND_BUILDERS: Record<DakBlockKind, string> = {
-  "health-intervention": "healthIntervention",
-  persona: "persona",
-  "user-scenario": "userScenario",
-  "business-process": "businessProcess",
-  "data-element": "dataElement",
-  "decision-table": "decisionTable",
-  "scheduling-logic": "schedulingLogic",
-  indicator: "indicator",
-  "functional-requirement": "functionalRequirement",
-  "non-functional-requirement": "nonFunctionalRequirement",
-  "test-scenario": "testScenario",
-  "logical-model": "logicalModel",
-  profile: "profile",
-  "value-set": "valueSet",
-  questionnaire: "questionnaire",
-  "cql-library": "cqlLibrary",
-  "structure-map": "structureMap",
-  "plan-definition": "planDefinition",
-  measure: "measure",
-  "test-case": "testCase",
-  "actor-definition": "actorDefinition",
-};
+const BUILDER_TO_KIND: ReadonlyMap<string, string> = new Map(
+  PAPER_BLOCK_KINDS.map((k) => [k, k] as [string, string]),
+);
 
-const BUILDER_TO_KIND: ReadonlyMap<string, string> = new Map([
-  ...PAPER_BLOCK_KINDS.map((k) => [k, k] as [string, string]),
-  ...(Object.entries(DAK_KIND_BUILDERS) as Array<[string, string]>).map(
-    ([kind, builder]) => [builder, kind] as [string, string],
-  ),
-]);
-
-/** The block kind a builder name introduces, or `undefined` if it is not one. */
-export function kindForBuilder(builder: string): string | undefined {
-  return BUILDER_TO_KIND.get(builder);
+/** Is `builder` the name of a BUILT-IN kind's builder? */
+export function isBuiltInBuilder(builder: string): boolean {
+  return BUILDER_TO_KIND.has(builder);
 }
 
 /**
- * Every builder name, for the regex alternation that recognises a block
- * manifest by scanning its source. Longest first, so `actorDefinition` is not
- * shadowed by a shorter prefix in an alternation.
+ * The block kind a builder name introduces, or `undefined` if it is not one.
+ *
+ * `contributed` maps a CONTRIBUTED builder to its kind —
+ * `ContributionRegistry.contributedBuilders()`. Built-ins are consulted first,
+ * so a contributed builder can never shadow one; `register` refuses that
+ * collision outright as well.
  */
-export const ALL_BLOCK_BUILDER_ALT = [...BUILDER_TO_KIND.keys()]
-  .sort((a, b) => b.length - a.length)
-  .join("|");
+export function kindForBuilder(
+  builder: string,
+  contributed?: ReadonlyMap<string, string>,
+): string | undefined {
+  return BUILDER_TO_KIND.get(builder) ?? contributed?.get(builder);
+}
 
 /**
- * Label prefix for each DAK kind, without the colon.
+ * Builder names as a regex alternation, for the places that recognise a block
+ * manifest by scanning its source. Longest first, so a longer builder is not
+ * shadowed by a shorter prefix of it.
  *
- * Canonical here rather than in `constraints.ts` so that `KNOWN_LABEL_PREFIXES`
- * (validation) and `KIND_PREFIXES` (JSON-LD `@id` minting) both derive from
- * one list. Those two already have a sync assertion; a third hand-written copy
- * is what it exists to prevent.
- *
- * None collide with the paper and structural prefixes (`def`, `thm`, `lem`,
- * `prop`, `cor`, `rem`, `ex`, `conj`, `prf`, `sim`, `eq`, `fig`, `tbl`, `sec`,
- * `chap`, `app`, `bib`) — asserted by test.
+ * `contributed` adds a registry's builders (the keys of
+ * `ContributionRegistry.contributedBuilders()`); without it the alternation is
+ * the built-in builders only, which is {@link ALL_BLOCK_BUILDER_ALT}.
  */
-export const DAK_LABEL_PREFIXES: Record<DakBlockKind, string> = {
-  "health-intervention": "hi",
-  persona: "pers",
-  "user-scenario": "scen",
-  "business-process": "bp",
-  "data-element": "de",
-  "decision-table": "dt",
-  "scheduling-logic": "sched",
-  indicator: "ind",
-  "functional-requirement": "freq",
-  "non-functional-requirement": "nfreq",
-  "test-scenario": "tscen",
-  "logical-model": "lm",
-  profile: "prof",
-  "value-set": "vs",
-  questionnaire: "quest",
-  "cql-library": "cql",
-  "structure-map": "sm",
-  "plan-definition": "pd",
-  measure: "meas",
-  "test-case": "tc",
-  "actor-definition": "actor",
-};
+export function blockBuilderAlt(contributed?: Iterable<string>): string {
+  return [...new Set([...BUILDER_TO_KIND.keys(), ...(contributed ?? [])])]
+    .sort((a, b) => b.length - a.length)
+    .join("|");
+}
 
-// ── WHO DAK components, and this repo's coverage of them ─────────
-
-/**
- * The WHO SMART Guidelines DAK components, in WHO's own order.
- *
- * The canonical list is eight components as published, plus **test scenarios**,
- * added later. Four WHO-side sources state it and they do not all agree, so the
- * list is pinned here rather than recited:
- *
- * | Source | Says |
- * |---|---|
- * | `smart-base` `input/fsh/models/DAK.fsh` | These nine, ending `testScenarios` — its own description says "all 9 DAK components" |
- * | `smart-ig-starter-kit` `l2_dak_authoring.md`, **the table** | These nine, identically numbered |
- * | `smart-ig-starter-kit` `l2_dak_authoring.md`, **the intro prose** | A different nine: scheduling logic promoted to #7, test scenarios absent — stale, and contradicted by the table directly beneath it |
- * | `sgex` `.github/copilot-instructions.md` | Eight (predates test scenarios), *plus* a second list of artefact types that is not the components at all |
- *
- * Three of the four agree, including both machine-readable ones — but the
- * owner ruled, 2026-09-30, that the DAK has **ten**: the original eight, plus
- * scheduling logic and test scenarios (issue #1614). Scheduling logic is
- * authored as DMN decision tables but is not yet formalized as its own L2
- * logical-model field or L3 artefact, so it is listed here AND named in
- * {@link DAK_UNFORMALIZED_COMPONENTS}; the other nine match `DAK.fsh`
- * field for field. Anything counting components against one source alone is
- * off by one, silently.
- *
- * Published guidance:
- * - <https://www.who.int/publications/i/item/9789240099456>
- * - <https://www.who.int/publications/i/item/9789240085138>
- * - <https://www.who.int/publications/i/item/9789240020306>
- *
- * This exists to make coverage answerable rather than assumed:
- * {@link DAK_COMPONENT_KINDS} maps each component to the block kinds that
- * represent it, and a component mapping to none is a documented gap, not an
- * oversight nobody noticed.
- */
-export const DAK_COMPONENTS = [
-  "health-interventions-and-recommendations",
-  "generic-personas",
-  "user-scenarios",
-  "generic-business-processes-and-workflows",
-  "core-data-elements",
-  "decision-support-logic",
-  "scheduling-logic",
-  "programme-indicators",
-  "functional-and-non-functional-requirements",
-  "test-scenarios",
-] as const;
-
-export type DakComponent = (typeof DAK_COMPONENTS)[number];
-
-/**
- * Components the owner counts that WHO's `DAK` logical model does not yet
- * declare as a field of their own (owner, 2026-09-30, #1614). Each still has a
- * {@link DAK_COMPONENT_FIELDS} entry — the name the field would take — so a
- * `dak.config.json` can carry it; the check against `DAK.fsh` skips these and
- * checks the rest field for field. When WHO formalizes one, it leaves this list.
- */
-export const DAK_UNFORMALIZED_COMPONENTS: readonly DakComponent[] = ["scheduling-logic"];
-
-/**
- * The field each component occupies in WHO's own `DAK` logical model.
- *
- * From `smart-base` `input/fsh/models/DAK.fsh`, where every component is
- * declared `0..* <Name>Source`. Carrying the field names makes this table
- * checkable against WHO's model rather than merely parallel to it, and gives a
- * DAK read from `dak.config.json` somewhere to land.
- */
-export const DAK_COMPONENT_FIELDS: Record<DakComponent, string> = {
-  "health-interventions-and-recommendations": "healthInterventions",
-  "generic-personas": "personas",
-  "user-scenarios": "userScenarios",
-  "generic-business-processes-and-workflows": "businessProcesses",
-  "core-data-elements": "dataElements",
-  "decision-support-logic": "decisionLogic",
-  // Not in `DAK.fsh` yet — see DAK_UNFORMALIZED_COMPONENTS.
-  "scheduling-logic": "schedulingLogic",
-  "programme-indicators": "indicators",
-  "functional-and-non-functional-requirements": "requirements",
-  "test-scenarios": "testScenarios",
-};
-
-/** One-line statement of what each component is for, in WHO's terms. */
-export const DAK_COMPONENT_DESCRIPTIONS: Record<DakComponent, string> = {
-  "health-interventions-and-recommendations":
-    "Links clinical and public health guidance to specific digital actions.",
-  "generic-personas":
-    "Defines the target users, such as primary healthcare workers, clients, or managers.",
-  "user-scenarios":
-    "Illustrates how different personas interact with digital tools in real-world settings.",
-  "generic-business-processes-and-workflows":
-    "Maps out step-by-step clinical and administrative routines.",
-  "core-data-elements":
-    "Lists required variables mapped to international terminology standards like ICD.",
-  "decision-support-logic":
-    "Outlines logical rules, alerts, and algorithms for clinical guidance.",
-  "scheduling-logic":
-    "Decision tables (DMN) that schedule follow-up visits and services by care plan; not yet formalized as its own L2 or L3 artefact.",
-  "programme-indicators":
-    "Specifies metrics used to evaluate health program performance and reporting.",
-  "functional-and-non-functional-requirements":
-    "Details system specifications, performance bounds, and security needs.",
-  "test-scenarios":
-    "Exercises the guidance end to end; added after the original eight components.",
-};
-
-/**
- * Which block kinds represent each WHO component.
- *
- * Deliberately **not** one-to-one in either direction:
- *
- * - `functional-and-non-functional-requirements` is one WHO component that
- *   this repo splits into two kinds, because the component's own name is a
- *   conjunction and the two halves have different reviewers.
- * - `scheduling-logic` is its own component (owner, 2026-09-30), holding the
- *   `scheduling-logic` kind. It was folded into `decision-support-logic` until
- *   then, because WHO's SOP table and `DAK.fsh` both keep it there; the owner
- *   counts it separately because it is authored separately, as its own DMN
- *   decision tables, even though no L2/L3 artefact formalizes it yet.
- * - `core-data-elements` collects everything describing a variable's shape,
- *   including the L3 `structure-map` that transforms between two of them.
- *
- * Coverage is asserted by test: every kind lands in exactly one component, and
- * exactly one component — `health-interventions-and-recommendations` — names
- * no kind at all. `dakComponentsWithoutL2` reports the sharper gap: components
- * with no *L2* kind, which is that one plus `test-scenarios`.
- */
-export const DAK_COMPONENT_KINDS: Record<DakComponent, readonly DakBlockKind[]> = {
-  "health-interventions-and-recommendations": ["health-intervention"],
-  "generic-personas": ["persona", "actor-definition"],
-  "user-scenarios": ["user-scenario"],
-  "generic-business-processes-and-workflows": ["business-process", "plan-definition"],
-  "core-data-elements": [
-    "data-element",
-    "logical-model",
-    "profile",
-    "value-set",
-    "questionnaire",
-    "structure-map",
-  ],
-  "decision-support-logic": ["decision-table", "cql-library"],
-  "scheduling-logic": ["scheduling-logic"],
-  "programme-indicators": ["indicator", "measure"],
-  "functional-and-non-functional-requirements": [
-    "functional-requirement",
-    "non-functional-requirement",
-  ],
-  "test-scenarios": ["test-scenario", "test-case"],
-};
+/** {@link blockBuilderAlt} over the BUILT-IN builders. */
+export const ALL_BLOCK_BUILDER_ALT = blockBuilderAlt();
