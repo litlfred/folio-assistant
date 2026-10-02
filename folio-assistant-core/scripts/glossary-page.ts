@@ -461,10 +461,50 @@ function sizeLabel(bytes: number): string {
 // to the page of its asset type. A term is on exactly one page: authored on
 // the index, extracted on its type's. The SKOS files do not change.
 
-/** Which page a term is on: `index` for an authored scheme's, else its asset type. */
-export type PageKey = "index" | AssetType;
-/** Every page, index first. A page exists for every asset type even when it holds no term, so the index can link each one. */
-export const PAGE_KEYS: readonly PageKey[] = ["index", ...ASSET_TYPES];
+/**
+ * An asset type whose page outgrew its budget is split by the FIRST LETTER of
+ * each term's label into fixed ranges, one page each.
+ *
+ * Measured 2026-10-02: `kg-schema-fields` was 1,042,497 bytes against its
+ * 1 MiB budget on `main`, and every PR adding schema fields tipped it over.
+ * Splitting by instance does not help, because one instance (cat-harness)
+ * holds 1,613 of 1,841 terms. The ranges are FIXED rather than balanced, so
+ * a term's URL does not move when other terms are added. The type's own URL
+ * stays and becomes a landing page linking its parts.
+ */
+export const LETTER_PARTS: Readonly<Partial<Record<AssetType, readonly string[]>>> = {
+  "kg-schema-fields": ["a-e", "f-l", "m-r", "s-z"],
+};
+
+/** A label's first letter, upper-case, or `#` for a label that starts with no letter. */
+export function letterOf(label: string): string {
+  const L = label.normalize("NFD")[0]!.toUpperCase();
+  return /[A-Z]/.test(L) ? L : "#";
+}
+
+/** The part of a split type a label belongs to. A label with no leading letter goes to the first part. */
+export function partOfLabel(type: AssetType, label: string): string {
+  const parts = LETTER_PARTS[type]!;
+  const L = letterOf(label).toLowerCase();
+  return parts.find((r) => L >= r[0]! && L <= r[r.length - 1]!) ?? parts[0]!;
+}
+
+/** One part of a split asset type's page: `<type>/<range>`. */
+export type PartKey = `${AssetType}/${string}`;
+/** Which page a term is on: `index` for an authored scheme's, else its asset type, or a part of it. */
+export type PageKey = "index" | AssetType | PartKey;
+export function isPart(k: PageKey): k is PartKey {
+  return k.includes("/");
+}
+function splitPart(k: PartKey): [AssetType, string] {
+  const i = k.indexOf("/");
+  return [k.slice(0, i) as AssetType, k.slice(i + 1)];
+}
+/** Every page, index first, each split type followed by its parts. A page exists for every asset type even when it holds no term, so the index can link each one. */
+export const PAGE_KEYS: readonly PageKey[] = [
+  "index",
+  ...ASSET_TYPES.flatMap((t): PageKey[] => [t, ...(LETTER_PARTS[t] ?? []).map((r) => `${t}/${r}` as PartKey)]),
+];
 
 /**
  * The most a page may weigh before compression, in bytes. A budget, stated on
@@ -484,19 +524,38 @@ export function pageOf(s: GlossarySource): PageKey {
   return s.extracted ?? "index";
 }
 export function pagePath(k: PageKey): string {
-  return k === "index" ? PAGE : join(dirname(PAGE), typeSlug(k), "index.md");
+  if (k === "index") return PAGE;
+  if (isPart(k)) {
+    const [t, r] = splitPart(k);
+    return join(dirname(PAGE), typeSlug(t), r, "index.md");
+  }
+  return join(dirname(PAGE), typeSlug(k), "index.md");
 }
 export function permalinkOf(k: PageKey): string {
-  return k === "index" ? "/glossary/" : `/glossary/${typeSlug(k)}/`;
+  if (k === "index") return "/glossary/";
+  if (isPart(k)) {
+    const [t, r] = splitPart(k);
+    return `/glossary/${typeSlug(t)}/${r}/`;
+  }
+  return `/glossary/${typeSlug(k)}/`;
 }
 export function pageTitle(k: PageKey): string {
-  return k === "index" ? "Glossary" : `Glossary: ${assetTypeTitle(k)}`;
+  if (k === "index") return "Glossary";
+  if (isPart(k)) {
+    const [t, r] = splitPart(k);
+    return `Glossary: ${assetTypeTitle(t)}, ${r.toUpperCase().replace("-", "–")}`;
+  }
+  return `Glossary: ${assetTypeTitle(k)}`;
 }
 
 type Row = { s: GlossarySource; t: Glossary["terms"][number]; label: string };
 
 /** The terms on one page, sorted by label. */
 export function rowsOn(c: ReturnType<typeof collect>, k: PageKey): Row[] {
+  if (isPart(k)) {
+    const [t, r] = splitPart(k);
+    return rowsOn(c, t).filter((row) => partOfLabel(t, row.label) === r);
+  }
   return c.glossaries
     .filter((s) => pageOf(s) === k)
     .flatMap((s) => s.glossary.terms.map((t) => ({ s, t, label: first(t.prefLabel) })))
@@ -895,7 +954,14 @@ export function linkTermCodes(s: GlossarySource, self: string, html: string): st
   return html.replace(/<code>([^<]+)<\/code>/g, (whole, text: string) => {
     const id = text.replace(/&amp;/g, "&");
     if (id === self || !ids.has(id)) return whole;
-    return `<a href="#${esc(`${s.instance}--${s.glossary.id}--${id}`)}">${whole}</a>`;
+    const anchor = esc(`${s.instance}--${s.glossary.id}--${id}`);
+    // On a split type the target may be on another part, so the link names
+    // its page; on any other page it stays a same-page anchor.
+    if (s.extracted && LETTER_PARTS[s.extracted]) {
+      const page = permalinkOf(`${s.extracted}/${partOfLabel(s.extracted, labelOf(s, id))}`);
+      return `<a href="{{ '${page}' | relative_url }}#${anchor}">${whole}</a>`;
+    }
+    return `<a href="#${anchor}">${whole}</a>`;
   });
 }
 
@@ -925,11 +991,7 @@ ${rows.map((r, i) => termEntry(r).replace(/^(<dt [^>]*>\n)/, `$1<span class="fa-
 /** The filter box, the A–Z bar and the terms under their letters: the same on every page. */
 function termsBlock(rows: Row[], marks?: ReadonlyMap<string, string>): string {
   // A label that does not start with a letter (a digit, a quote) goes under
-  // one heading of its own rather than inventing a letter for it.
-  const letterOf = (label: string) => {
-    const L = label.normalize("NFD")[0]!.toUpperCase();
-    return /[A-Z]/.test(L) ? L : "#";
-  };
+  // one heading of its own rather than inventing a letter for it (`letterOf`).
   const byLetter = new Map<string, Row[]>();
   for (const r of rows) {
     const L = letterOf(r.label);
@@ -993,9 +1055,51 @@ function sized(render: (size: string) => string): string {
   return render(sizeLabel(Buffer.byteLength(render("…"), "utf-8")));
 }
 
-/** One asset type's page: its extracted terms, from every instance. */
-export function renderTypePage(c: ReturnType<typeof collect>, type: AssetType): string {
-  const rows = rowsOn(c, type);
+/**
+ * A split asset type's own URL: what the type is, where it comes from, and a
+ * link to each part with its term count. It holds no terms itself.
+ */
+export function renderLandingPage(c: ReturnType<typeof collect>, type: AssetType): string {
+  const parts = LETTER_PARTS[type]!;
+  const schemes = c.glossaries.filter((s) => s.extracted === type);
+  const from = schemes.length
+    ? schemes.map((s) => `${esc(s.instance)} ${s.glossary.terms.length} (${skosLink(s)})`).join(" · ")
+    : "no instance";
+  const total = rowsOn(c, type).length;
+  const items = parts.map((r) => {
+    const k = `${type}/${r}` as PartKey;
+    return `<li>${pageLink(k, r.toUpperCase().replace("-", "–"))}: ${rowsOn(c, k).length} terms</li>`;
+  });
+  return `---
+layout: default
+${GENERATED_FM}
+title: "${pageTitle(type)}"
+parent: Glossary
+has_children: true
+nav_order: ${ASSET_TYPES.indexOf(type) + 1}
+permalink: ${permalinkOf(type)}
+---
+${GENERATED}
+
+# ${pageTitle(type)}
+
+Candidate terms extracted from ${assetTypeWhat(type)}. Each is the asset's own text, verbatim and not curated, and carries the badge "candidate, extracted". A person promotes one by authoring it. Authored terms, the counts and the sources are on the ${pageLink("index", "glossary index")}.
+
+From: ${from}.
+
+**Split by first letter.** ${total} terms are too many for one page within its budget of ${sizeLabel(PAGE_BUDGET.type)}, so they are on ${parts.length} pages by the first letter of the label. The ranges are fixed, so a term's address does not move as terms are added. A label that does not start with a letter is on the first page.
+
+<ul>
+${items.join("\n")}
+</ul>
+`;
+}
+
+/** One asset type's page, or one part of a split type: its extracted terms, from every instance. */
+export function renderTypePage(c: ReturnType<typeof collect>, key: AssetType | PartKey): string {
+  if (!isPart(key) && LETTER_PARTS[key]) return renderLandingPage(c, key);
+  const type = isPart(key) ? splitPart(key)[0] : key;
+  const rows = rowsOn(c, key);
   const schemes = c.glossaries.filter((s) => s.extracted === type);
   const from = schemes.length
     ? schemes.map((s) => `${esc(s.instance)} ${s.glossary.terms.length} (${skosLink(s)})`).join(" · ")
@@ -1009,20 +1113,19 @@ export function renderTypePage(c: ReturnType<typeof collect>, type: AssetType): 
     (size) => `---
 layout: default
 ${GENERATED_FM}
-title: "${pageTitle(type)}"
-parent: Glossary
-nav_order: ${ASSET_TYPES.indexOf(type) + 1}
-permalink: ${permalinkOf(type)}
+title: "${pageTitle(key)}"
+${isPart(key) ? `parent: "${pageTitle(type)}"\ngrand_parent: Glossary\nnav_order: ${LETTER_PARTS[type]!.indexOf(splitPart(key)[1]) + 1}` : `parent: Glossary\nnav_order: ${ASSET_TYPES.indexOf(type) + 1}`}
+permalink: ${permalinkOf(key)}
 ---
 ${GENERATED}
 
-# ${pageTitle(type)}
+# ${pageTitle(key)}
 
 Candidate terms extracted from ${assetTypeWhat(type)}. Each is the asset's own text, verbatim and not curated, and carries the badge "candidate, extracted". A person promotes one by authoring it. Authored terms, the counts and the sources are on the ${pageLink("index", "glossary index")}.
 
 From: ${from}.
 
-**Size:** this page holds ${rows.length} terms and is ${size} before compression, fetched in one request, within its budget of ${sizeLabel(budgetOf(type))}. There is no search index: the filter below runs over this page, and the A–Z bar jumps within it.
+${isPart(key) ? `One of ${LETTER_PARTS[type]!.length} pages of this type, split by the first letter of the label: ${pageLink(type, "all parts")}.\n\n` : ""}**Size:** this page holds ${rows.length} terms and is ${size} before compression, fetched in one request, within its budget of ${sizeLabel(budgetOf(key))}. There is no search index: the filter below runs over this page, and the A–Z bar jumps within it.
 
 ${mappingBlock(states, [...new Set(rows.map((r) => r.s.glossary.id))])}
 ${perTerm.note}
@@ -1035,7 +1138,9 @@ ${FILTER_SCRIPT}
 }
 
 /** The index: authored terms, the counts, the sources, and a link to every asset type's page. */
-export function renderIndex(c: ReturnType<typeof collect>, typePages: ReadonlyMap<AssetType, string> = typePagesOf(c)): string {
+export function renderIndex(c: ReturnType<typeof collect>, typePages: ReadonlyMap<AssetType | PartKey, string> = typePagesOf(c)): string {
+  const typeBytes = (t: AssetType) =>
+    [t, ...(LETTER_PARTS[t] ?? []).map((r) => `${t}/${r}` as PartKey)].reduce((n, k) => n + Buffer.byteLength(typePages.get(k) ?? "", "utf-8"), 0);
   const rows = rowsOn(c, "index");
   // Ordered schemes are shown in their own order, ahead of the A–Z list.
   const ordered = c.glossaries.filter((s) => pageOf(s) === "index" && s.glossary.ordered);
@@ -1070,7 +1175,7 @@ export function renderIndex(c: ReturnType<typeof collect>, typePages: ReadonlyMa
       `<tr><td>this page</td><td>authored terms, counts and sources</td><td>${rows.length}</td><td>${indexSize}</td></tr>`,
       ...ASSET_TYPES.map(
         (t) =>
-          `<tr><td>${pageLink(t, assetTypeTitle(t))}</td><td>candidates, extracted</td><td>${typeTotal(t)}</td><td>${sizeLabel(Buffer.byteLength(typePages.get(t) ?? "", "utf-8"))}</td></tr>`,
+          `<tr><td>${pageLink(t, assetTypeTitle(t))}</td><td>candidates, extracted</td><td>${typeTotal(t)}</td><td>${sizeLabel(typeBytes(t))}</td></tr>`,
       ),
       `</tbody></table></div>`,
     ].join("\n");
@@ -1359,9 +1464,13 @@ export function renderLocalePage(
   return L.join("\n") + "\n";
 }
 
-/** Every asset type's page, rendered. The index reads their sizes. */
-export function typePagesOf(c: ReturnType<typeof collect>): Map<AssetType, string> {
-  return new Map(ASSET_TYPES.map((t) => [t, renderTypePage(c, t)] as const));
+/**
+ * Every asset type's pages, rendered: the type's own page, then its parts if
+ * it is split. The index reads their sizes, a split type's being its parts'
+ * total.
+ */
+export function typePagesOf(c: ReturnType<typeof collect>): Map<AssetType | PartKey, string> {
+  return new Map(PAGE_KEYS.filter((k): k is AssetType | PartKey => k !== "index").map((k) => [k, renderTypePage(c, k)] as const));
 }
 
 /** Every glossary page, keyed by page, index first. */
