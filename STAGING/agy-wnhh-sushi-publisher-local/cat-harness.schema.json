@@ -16,6 +16,18 @@
           "type": "string",
           "minLength": 1
         },
+        "summary": {
+          "type": "string",
+          "minLength": 1
+        },
+        "alsoWritten": {
+          "minItems": 1,
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
         "images": {
           "type": "array",
           "items": {
@@ -522,6 +534,13 @@
                   "held"
                 ]
               },
+              "heldEntries": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "minLength": 1
+                }
+              },
               "visualisedAs": {
                 "type": "string",
                 "enum": [
@@ -799,6 +818,7 @@
               "bodyFrom": {
                 "type": "string",
                 "enum": [
+                  "summary",
                   "description"
                 ]
               },
@@ -1010,8 +1030,8 @@
   "$comment": "Instance graph: https://litlfred.github.io/folio-assistant/STAGING/agy-wnhh-sushi-publisher-local/cat-harness.jsonld",
   "staging": {
     "branch": "agy/wnhh-sushi-publisher-local",
-    "sha": "5b80de682a684776f742c9bb11dfc281387581a8",
+    "sha": "2f59147647ed0011bfdc8168a90e7187ddd028b0",
     "pr": "1816/merge",
-    "run": "36973438284"
+    "run": "37007899427"
   }
 }

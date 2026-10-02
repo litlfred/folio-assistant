@@ -167,6 +167,28 @@
                   },
                   "description": {
                     "type": "string"
+                  },
+                  "render": {
+                    "type": "object",
+                    "properties": {
+                      "as": {
+                        "type": "string",
+                        "enum": [
+                          "text",
+                          "url",
+                          "markdown",
+                          "json"
+                        ]
+                      },
+                      "reason": {
+                        "type": "string",
+                        "minLength": 1
+                      }
+                    },
+                    "required": [
+                      "as"
+                    ],
+                    "additionalProperties": false
                   }
                 },
                 "required": [
@@ -323,8 +345,8 @@
   "description": "One concrete way to exercise a skill. A skill states a capability generically; a Tool names the skills it satisfies and how to install and invoke it. Generated from schemas/tool.ts, which is authoritative.",
   "staging": {
     "branch": "agy/wnhh-sushi-publisher-local",
-    "sha": "5b80de682a684776f742c9bb11dfc281387581a8",
+    "sha": "2f59147647ed0011bfdc8168a90e7187ddd028b0",
     "pr": "1816/merge",
-    "run": "36973438284"
+    "run": "37007899427"
   }
 }
