@@ -4,7 +4,7 @@ nav_exclude: true
 ---
 
 {: .note }
-> Generated from `cat-harness/processes/review-task.bpmn` by `gen-processes-viz.ts` — do not edit here. [All processes](index.html)
+> Generated from `cat-harness/processes/content/review-task.bpmn` by `gen-processes-viz.ts` — do not edit here. [All processes](index.html)
 
 {% raw %}
 # Review task
@@ -21,7 +21,7 @@ The accept-or-send-back decision lives here and nowhere beneath it. The subproce
 
 ## How it connects
 
-- **Called by:** [Content Change and Review](content-change-review.html), [CRDM Phase 6 — implement, MVP, acceptance](crdm-deliver.html)
+- **Called by:** [CRDM Phase 6 — implement, MVP, acceptance](crdm-deliver.html), [Content Change and Review](content-change-review.html)
 - **Calls:** [Code node review](review-code.html), [Prose and the code it describes](narrative-code-review.html), [Narrative review](review-narrative.html)
 - **Presented on:** no docs page section shows this diagram
 
@@ -38,7 +38,7 @@ Every one of the 6 step(s) is documented.
 
 | step | lane | skill / sub-process | what it does |
 |---|---|---|---|
-| **Classify what changed**<br>`Task_ClassifyChange` | Reviewer / SME | [`semantic-review-scoping`](../reference/skill-instructions/semantic-review-scoping.html) | Prose, code nodes, or both. This is the only decision the generic lane<br>makes on its own: everything after it is made inside a subprocess by<br>the role that lane binds. |
+| **Classify what changed**<br>`Task_ClassifyChange` | Reviewer / SME | [`content-review`](../reference/skill-instructions/content-review.html) | Prose, code nodes, or both. This is the only decision the generic lane<br>makes on its own: everything after it is made inside a subprocess by<br>the role that lane binds.<br>Binds `content-review`, the same skill as Task_Consolidate in this lane,<br>since placement PR3 (bean `63wl`): it named `semantic-review-scoping`,<br>a paper skill folio-assistant-sci owns, which this harness diagram<br>cannot reach. A paper process that wants semantic scoping adds it by<br>calling this process. |
 | **Narrative review**<br>`Call_NarrativeReview` | Reviewer / SME | calls [Narrative review](review-narrative.html) | Descend into Process_NarrativeReview. The actor takes on the<br>`narrative-reviewer` lane for this call path only. |
 | **Code node review**<br>`Call_CodeReview` | Reviewer / SME | calls [Code node review](review-code.html) | Descend into Process_CodeReview. The actor takes on the `code-reviewer`<br>lane for this call path only. |
 | **Prose and the code it describes**<br>`Call_NarrativeCodeReview` | Reviewer / SME | calls [Prose and the code it describes](narrative-code-review.html) | Descend into Process_NarrativeCodeReview: judge what the pair checks<br>could not settle (a stale pair, a false or undetermined claim), and<br>send a disagreement with a checker to adjudication. Issue #1042, stage C. |
