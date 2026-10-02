@@ -2,7 +2,7 @@
   "$schema": "folio-bean-index/v1",
   "tile": {
     "beans": {
-      "count": 602,
+      "count": 606,
       "unit": "beans"
     }
   },
@@ -1737,14 +1737,14 @@
     {
       "id": "folio-assistant-70lx",
       "title": "Separation stage 1a: stage cat-harness-tools/ as a sibling instance and git mv the unambiguous code",
-      "status": "todo",
+      "status": "in-progress",
       "type": "task",
       "priority": "normal",
       "parent": "folio-assistant-iirv",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-10-01T06:58:00Z",
-      "updatedAt": "2026-10-01T17:41:32Z",
+      "updatedAt": "2026-10-01T19:46:46Z",
       "preview": "Stage 1a of the split plan: stage `cat-harness-tools/` as a sibling instance in this repo and `git mv` the unambiguous code (≈1,340 renames). Owner D1 (2026-10-01): ALL cat-harness code moves; dependents' code may import cat-harness-tools. D4 (2026-10-01): 1a runs NOW, before placement PR2.\n\nPlans (session scratchpad, 2026-10-01; to be committed with stage 0): `cat-harness-split-plan.md` (stages 0",
       "file": "beans/defs/folio-assistant-70lx--separation-stage-1a-stage-cat-harness-tools-as-a-s.md"
     },
@@ -2449,6 +2449,20 @@
       "file": "beans/defs/folio-assistant-9x9r--checkhead-has-run-passes-on-any-run-naming-the-sha.md"
     },
     {
+      "id": "folio-assistant-9y9j",
+      "title": "JSON-LD VOICE: the rules every emitted JSON-LD document is written and reviewed against, cited to the held W3C texts",
+      "status": "in-progress",
+      "type": "task",
+      "priority": "normal",
+      "parent": "folio-assistant-scfh",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-10-01T16:24:38Z",
+      "updatedAt": "2026-10-01T17:29:04Z",
+      "preview": "Owner, 2026-10-01: 'make sure that these issues are part of the one voice for jsonld'; then chose option 1 — a new voice, with 'jsonld' added as a voice target, owned by cat-harness, each rule cited (check:voices enforces citations).\n\nRules (from jcet and the PROV measurement, each to be cited verbatim to a held source):\n1. object properties are links (@type @id), never literals — measured: 100 ac",
+      "file": "beans/defs/folio-assistant-9y9j--json-ld-voice-the-rules-every-emitted-json-ld-docu.md"
+    },
+    {
       "id": "folio-assistant-a0s3",
       "title": "B8 (#1168): string-to-reference sweep — typed refs on ~25 bare-string fields; delete SkillDefinition.roles and front-matter package:",
       "status": "completed",
@@ -2825,6 +2839,20 @@
       "updatedAt": "2026-09-30T16:12:46Z",
       "preview": "Findings from the as-is wireframe `cat-harness/docs/wireframes/translation-status/` (intent.md, as-is.html, checks/), observed at 1280×800 and 390×844. Verbatim from its `## Findings`; a finding tagged → is also covered by that cross-cutting bug.\n\n1. **Horizontal scroll at phone width.** At 390 px the document is 509 px wide (`scrollWidth` 509). The *fuzzy* and *untranslated* columns start off-scr",
       "file": "beans/defs/folio-assistant-bgrz--translation-status-visualiser-6-wireframe-findings.md"
+    },
+    {
+      "id": "folio-assistant-bh4q",
+      "title": "Content JSON-LD: stop relying on @base from the remote context (JSON-LD 1.1 §4.1.3)",
+      "status": "todo",
+      "type": "task",
+      "priority": "",
+      "parent": "folio-assistant-scfh",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-10-01T18:30:16Z",
+      "updatedAt": "2026-10-01T18:30:16Z",
+      "preview": "## Why\nMeasured 2026-10-01 (bean jcet, item 2): emitted content .jsonld reference `https://litlfred.github.io/folio-assistant/ns/content/v1.jsonld` by URL, and relative @ids resolve to `https://litlfred.github.io/folio/…` only because jsonld.js 8.3.3 applies `@base` from a remote context. JSON-LD 1.1 §4.1.3 (held: w3c-2020-json-ld-1-1 sec-033-413-base-iri) says `@base` in a remote context is ignor",
+      "file": "beans/defs/folio-assistant-bh4q--content-json-ld-stop-relying-on-base-from-the-remo.md"
     },
     {
       "id": "folio-assistant-biz4",
@@ -4159,6 +4187,20 @@
       "file": "beans/defs/folio-assistant-hylg--workflow-interpreter-descends-into-call-activities.md"
     },
     {
+      "id": "folio-assistant-i2kp",
+      "title": "check:source-licence has no --check, so it writes its own sidecar and no gate can fail on its content",
+      "status": "completed",
+      "type": "task",
+      "priority": "normal",
+      "parent": "folio-assistant-1xhc",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-10-01T07:11:24Z",
+      "updatedAt": "2026-10-01T16:07:52Z",
+      "preview": "Owner, 2026-10-01: **\"and fix 1xhc\"**. This is the fix, scoped and measured.\nHanded over mid-flight: the diagnosis is complete and verified, no code written.\n\n## Defect 1 — `check:source-licence` has no `--check` mode at all\n\n`cat-harness/scripts/check-source-licence.ts`: unless given `--json` it ALWAYS\ncalls `writeQaResult(...)`, and it exits non-zero only on `malformed`.\n\nSo CI runs `bun run che",
+      "file": "beans/defs/folio-assistant-i2kp--checksource-licence-has-no-check-so-it-writes-its.md"
+    },
+    {
       "id": "folio-assistant-i4i1",
       "title": "C: UML — Task implements Skill, Voice->Role, skill I/O schema edges, test->schemas, glossary links (+ Task, UserStory, Test glosses)",
       "status": "completed",
@@ -4392,7 +4434,7 @@
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-10-01T12:32:06Z",
-      "updatedAt": "2026-10-01T15:58:34Z",
+      "updatedAt": "2026-10-01T16:32:32Z",
       "preview": "Found while writing the three W3C methodology nodes (bean 6306, PR #1769), each quoted against the HELD spec in cat-harness/library/. None is fixed: each needs a decision, not a mechanical edit.\n\n1. **PROV_CONTEXT** (cat-harness/schemas/prov.ts:29) = \"http://www.w3.org/ns/prov-o\". That IRI is the PROV-O OWL ontology document; the namespace is http://www.w3.org/ns/prov# and W3C's JSON-LD context is",
       "file": "beans/defs/folio-assistant-jcet--standards-mismatches-the-w3c-methodology-nodes-rec.md"
     },
@@ -6835,14 +6877,14 @@
     {
       "id": "folio-assistant-tyo0",
       "title": "smart-base L1 library: add PCMT and the other WHO digital transformation handbooks",
-      "status": "todo",
+      "status": "in-progress",
       "type": "task",
       "priority": "",
       "parent": "folio-assistant-2yyh",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-10-01T08:37:53Z",
-      "updatedAt": "2026-10-01T08:37:53Z",
+      "updatedAt": "2026-10-01T19:57:40Z",
       "preview": "Owner, 2026-10-01 (#1767): \"bean to add PCMT and other who digital transformation handbooks files for smart-l1 library\".\n\nThe L1 document kind is computed from smart-base library/; the library today holds 8 WHO publications. This adds the rest of the WHO digital transformation handbooks and PCMT material, through the normal ingest (bun run ingest ... --library smart-base), with provenance and lice",
       "file": "beans/defs/folio-assistant-tyo0--smart-base-l1-library-add-pcmt-and-the-other-who-d.md"
     },
@@ -7911,6 +7953,20 @@
       "updatedAt": "2026-09-22T21:04:32Z",
       "preview": "**Why.** Every child can pass on a ten-block fixture and fall over on a real\nhandbook. Performance, the heat map's legibility at 2,000 cells and the\nnavigation's usefulness can only be judged at scale.\n\n**Candidates, measured 2026-09-22:**\n- `smart-immunizations/`: 748 artefacts indexed, 200 materialised. It is\n  **provisional** (nsbb may remove it) and deliberately renders no HTML, so it\n  can on",
       "file": "beans/defs/folio-assistant-xp72--scale-fixture-a-beforeafter-large-document-pair-wi.md"
+    },
+    {
+      "id": "folio-assistant-xpcu",
+      "title": "REGEN + GATES SPEED-UP: input-hash staleness skipping and a parallel worker pool for regen-after-merge and gates",
+      "status": "in-progress",
+      "type": "feature",
+      "priority": "high",
+      "parent": "folio-assistant-7x5n",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-10-01T17:26:24Z",
+      "updatedAt": "2026-10-01T17:26:36Z",
+      "preview": "## Why\n\nMeasured by the steward: `bun run regen` runs ~83 check/writer pairs serially\nvia `spawnSync`, up to 3 passes, ~25 min locally. `bun run gates` takes >50 min\nlocally. The box has 4 CPUs shared with other sessions.\n\n## What (owner-approved, 2026-10-01)\n\n1. **Input-hash staleness skipping** in regen: hash each pair's declared inputs\n   plus its script source; skip when it matches the hash re",
+      "file": "beans/defs/folio-assistant-xpcu--regen-gates-speed-up-input-hash-staleness-skipping.md"
     },
     {
       "id": "folio-assistant-xsqm",
