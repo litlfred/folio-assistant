@@ -327,8 +327,5 @@ describe("an instance's library is ITS OWN, not the first one declared", () => {
     }
     // Declares voices and no corpus — a determined "none", not a failure.
     expect(libraryDirOf(resolve(REPO, "who-style-guide"))).toBeUndefined();
-    // Emptied when its corpus dissolved into cat-harness's (bean `j7ql`): a
-    // determined "none" until the owner rules on retiring the declaration.
-    expect(libraryDirOf(resolve(REPO, "agent-skills"))).toBeUndefined();
   });
 });
