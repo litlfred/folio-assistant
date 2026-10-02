@@ -109,7 +109,7 @@ Each dimension is a **contrast** between two poles, shown by their highest-loadi
 
 ## cat-harness / skills
 
-**219** units · **5889** terms · k = **100** · retains **79.0 %** of the weighted matrix · weighting `log-entropy` · sidecar `cat-harness/test/results/lsi/cat-harness/skills.lsi.json`
+**219** units · **5891** terms · k = **100** · retains **79.0 %** of the weighted matrix · weighting `log-entropy` · sidecar `cat-harness/test/results/lsi/cat-harness/skills.lsi.json`
 
 > Dimension 1 has **no negative pole**: it most likely measures unit length and term frequency (a margin), not a theme. Read the themes from dimension 2 on.
 
@@ -117,14 +117,14 @@ Each dimension is a **contrast** between two poles, shown by their highest-loadi
 
 | dim | σ | one pole | the other pole |
 |---|---|---|---|
-| 1 | 44.00 | instance, kind, harness, session, directory, graph, block, page | *(none)* |
+| 1 | 44.04 | instance, kind, harness, session, directory, graph, block, page | *(none)* |
 | 2 | 21.50 | watcher, slot, sibling, queue, backlog, prs, block, commits | harness, instance, declaration, directory, node, directories, graph, declares |
 | 3 | 17.83 | session, beans, goals, branch, store, window, epic, push | slot, chapter, block, edges, formal, glossary, project, proof |
-| 4 | 16.53 | page, block, section, chapter, blocks, text, sections, manifest | ledger, sibling, subdirectory, items, sessions, queue, window, plan |
-| 5 | 14.86 | navbar, locale, page, translated, translation, theme, board, tile | edges, forward, edge, logical, backward, cross-chapter, energy, ordering |
+| 4 | 16.57 | page, block, section, blocks, chapter, text, sections, manifest | ledger, sibling, subdirectory, items, sessions, queue, window, plan |
+| 5 | 14.88 | locale, navbar, page, translated, translation, theme, staging, board | edges, forward, edge, logical, backward, cross-chapter, energy, ordering |
 | 6 | 14.77 | lane, role, requirements, actor, feature, phase, task, feedback | rung, queue, arm, archive, slide, zip, sniff, bytes |
-| 7 | 14.39 | edges, forward, preview, backward, edge, cross-chapter, energy, logical | actor, lane, role, backlog, rung, criterion, login, roles |
-| 8 | 14.20 | tile, avatar, theme, card, board, sticky, crop, glass | translation, locale, language, translated, glossary, term, french, back-translation |
+| 7 | 14.40 | edges, forward, preview, backward, edge, cross-chapter, energy, logical | actor, lane, role, backlog, criterion, rung, login, roles |
+| 8 | 14.19 | tile, avatar, theme, card, board, sticky, crop, stylesheet | translation, locale, translated, language, glossary, french, term, back-translation |
 
 **Findings** — 0 narrow dimension(s), 0 near-duplicate pair(s).
 
