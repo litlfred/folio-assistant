@@ -6,11 +6,11 @@
 import { describe, expect, test } from "bun:test";
 import { join } from "node:path";
 
-import { scriptSidecarPath } from "../content/pipeline/qa-utils";
-import { detailFileName, detailRelPath } from "../scripts/agent-memory";
-import { stickyFile } from "../scripts/ensure-landing-sticky";
-import { kgQaSidecarPath } from "./kg-qa";
-import { portableSegment, unportablePath, unportableSegment } from "./portable-path";
+import { scriptSidecarPath } from "../../cat-harness/content/pipeline/qa-utils";
+import { detailFileName, detailRelPath } from "../../cat-harness/scripts/agent-memory";
+import { stickyFile } from "../../cat-harness/scripts/ensure-landing-sticky";
+import { kgQaSidecarPath } from "../../cat-harness/schemas/kg-qa";
+import { portableSegment, unportablePath, unportableSegment } from "../../cat-harness/schemas/portable-path";
 
 describe("unportableSegment", () => {
   test("accepts the ordinary names this repository is full of", () => {
