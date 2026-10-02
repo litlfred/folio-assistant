@@ -208,3 +208,70 @@ Handover for issue #1925, draft PR #1926, branch `claude/stickies-one-component`
 
 ## Screenshots
 The before/after PNGs are in the session scratchpad, at `stickies-shots/{before,after}-{panel,window}-{1280,390}.png`, `after-confirm-*.png` and `after-navbar-*.png`. They are local to that session.| #1926 one sticky component | draft PR, issue #1925, bean `dxje` | head `d55651b`: the sticky unification is pushed; the fsh-guts icon is now in the top icon row (cap raised to 7, owner: *"i wanted fsh guts icon here with the others"*); the navbar-row e2e passes. **Not done:** the sticky e2e specs (about 10 files), the new specs, the `board-windows` skill, the window bar's text buttons, full gates. Owner on the screenshots: *"looking good. dont need visualization tiels"*; the strip goes away when #1907 merges | merge main after #1907, finish the specs and the skill, gates, then the ready protocol | open; see the `dxje` handover note on that branch |
+
+## handover: ob3m series driver 2026-10-02
+
+Handover for issue #1925, draft PR #1926, branch `claude/stickies-one-component`. The work stopped because the budget ran out. Last feature commit: `e2a1d921ab1`. The commit that carries this note follows it.
+
+## Done (committed)
+- **One sticky component** in `cat-harness/docs/assets/js/docs-ui.js`:
+  - `stickyTile`: the closed square tile. Every tile is `--fa-sticky-tile-size` (9rem) and shows the theme art faded behind `.fa-sticky--backdrop`.
+  - `stickyActions`: the icon row under each tile, in the order view, edit, pin, send to fsh-guts. Pin is a toggle (`aria-pressed`) and is its own inverse.
+  - Landing stickies (`mountLandingHomes`/`tileLandingCell`) and todo stickies (`mountTodoBoard` → `todoSlot`) both use these two functions.
+  - `buildSticky(todo)` no longer has Pin or Discard on the card face.
+  - A floating todo card now gets Move and "⌂ Return".
+  - Semantic zoom was removed from the board, since every board slot is now a closed tile. It still applies on the glass.
+- **Confirmation before discard**: `confirmSendToFshGuts`, a native `<dialog>` opened with showModal.
+  - It names the sticky, says the discard is restorable and per-browser, and says where to restore it from.
+  - Cancel or Escape closes it and does nothing else. Focus starts on Cancel.
+  - The window bar's Discard goes through the same dialog.
+- **Landing stickies can be discarded**, stored as `landing/<slot>` in `fa-discarded-todos`, with titles kept in `fa-discarded-titles`. Restoring one un-hides it straight away. The panel count follows (`syncLandingCount`).
+- **fsh-guts in the navbar**:
+  - `NavbarModel.fshGuts` and `fshGutsHtml` in `cat-harness/scripts/lib/navbar.ts`. `gen-navbar-include.ts` emits it when the `fsh-guts` tile is declared, and the include has been regenerated.
+  - Client code: `mountFshGutsNav`. The count has four states: absent "–", zero, n, error "?". Clicking opens the existing list and restore in a `<dialog>`.
+  - Page settings shows a pointer instead of a second Discarded control when the navbar icon is present.
+  - It renders in the `.fa-nav-top` region of the sidebar footer, which is above ▦ Harnesses and not the very top of the sidebar. The topmost icon row is the declared `navbarIcons` row, which is capped at 6 and already full.
+- `landing.html`: `data-fa-art-card` on each article.
+- The 3 unguarded hrefs flagged by `href-safety.test.ts` are wrapped in `safeHref`, and the test passes.
+
+## Not done
+- **e2e specs are NOT updated yet.** Expect failures in `sticky-home`, `sticky-todos`, `board-windows`, `discarded-items`, `fishbone-relocate`, `glass-zoom-steady` (board half), `a11y`, `panel-chrome`, `glass-devices` and `board-move-filter`. They still reference `.fa-home-pin`, `.fa-sticky-pin`, `.fa-sticky-discard`, `.fa-sticky-recall`, `.fa-landing-tile` and board semantic zoom.
+- No new spec yet for:
+  - both kinds rendering the same component;
+  - the same row in the same order;
+  - equal closed sizes;
+  - Confirm/Cancel, then restore;
+  - the navbar icon and its count.
+- Skills not updated: `board-windows` (semantic zoom is now glass-only; pin toggle; the confirm) and `harness-tiles`/`fsh-guts`. The 2026-10-02 ruling should be quoted in each.
+- The full `bun run gates` has not been run. CI was red on readme:subgraphs (regenerated in this commit) and on href-safety (fixed in this commit).
+
+## Screenshots
+The before/after PNGs are in the session scratchpad, at `stickies-shots/{before,after}-{panel,window}-{1280,390}.png`, `after-confirm-*.png` and `after-navbar-*.png`. They are local to that session.| #1926 one sticky component | draft PR, issue #1925, bean `dxje` | head `d55651b`: the sticky unification is pushed; the fsh-guts icon is now in the top icon row (cap raised to 7, owner: *"i wanted fsh guts icon here with the others"*); the navbar-row e2e passes. **Not done:** the sticky e2e specs (about 10 files), the new specs, the `board-windows` skill, the window bar's text buttons, full gates. Owner on the screenshots: *"looking good. dont need visualization tiels"*; the strip goes away when #1907 merges | merge main after #1907, finish the specs and the skill, gates, then the ready protocol | open; see the `dxje` handover note on that branch |
+
+### Update 22:50Z: agents in flight and the beans/todos branch move
+
+**Owner instructions, verbatim:**
+- "1 and communicate with NEW merge manager" / "2 + 3" / "then 5"
+- "go with cat/cat-harness/todos and cat/cat-harness/beans as their own named sub-graph branches"
+- "(not all named subgraphs get own branch, especially not semi-static KG content)"
+- "once beans. moves over, neeed to move active beans and update tools"
+- "/coordinate on cat/cat-harness/beans w/ Merge Manager and other active siblings"
+- "ask Merge Manager to coordinate change over"
+- "keep workong. fix gaps"
+- "contnue"
+- "first handover report"
+
+| item | state (pushed SHA) | owner / next |
+|---|---|---|
+| #1907, #1909 | in merge train 6 (#1924, head `68e3595`, not landed) | new steward (on #1924; no session id known) |
+| #1929 | this note, `3cd231c`, ready | steward |
+| #1926 + pin-to-folio-glass | head `d55651b`, dirty; agent finishing pin → folio store, e2e specs, `board-windows` skill, window icons | agent; resume from the `dxje` note |
+| #1804 / #1808 / #1819 | unpaused; agent resuming from the handover branches. #1808 is at `c296766` (bean conflict resolved; only docs-ui.js conflicts after main moved); #1819 `3ece4fd`; #1804 `3ad2870` | agent; order 1808 → 1819 → 1804 |
+| storage gaps (keyedBy `tip` + generic `branch-store.ts`) | agent building `claude/state-branch-store`, STACKED on #1764. Approved: a type-only edit to `qa-store.ts` line 218 plus a schema rule refusing `tip` on qa dirs. Overlaps #1801 at `directory-storage.test.ts` ~l.127: keep both | agent; 3fva (01LKpuPo) informed |
+| #1904 site landing flag + hub | agent building `claude/site-landing-instance` (resolver, `check:landing-instance` gate, `cat-harness` flagged). Avoids docs-ui.js | agent |
+| `cat/cat-harness/beans` @ `b3709ad`, `cat/cat-harness/todos` @ `7ad5854` | orphan **seeds**, read by nothing; `main` stays authoritative. `cat/cat-harness/state` untouched | fs43 owner (01KC89) asked to own the tool switch; steward asked to run the freeze; protocol on #1850 |
+| #1902, #1908 | not started: #1902 waits on #1808; #1908 waits on #1899 (train 6) and the todos switch | me, next |
+
+**Changeover ledger:** #1850 (protocol comment `5962515204`; 3fva's gap answer `5962532789`). Active sessions told: 01PricYF, 01WmQ8, 013Wb, 01CVVoav, 01DnFZtV, 01KC89, 01LKpuPo.
+
+**Unpushed / at risk:** none in this session's checkouts beyond the agents' own worktrees. Each agent follows prepare-for-handover. Scratch scripts are reproducible: `ready-once.sh` (now marks drafts ready via the CCR route) and `subbr/mk.sh` (seeds a subgraph branch from main).
