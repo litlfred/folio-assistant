@@ -586,7 +586,7 @@ export function tools(baseUrl?: string): ToolDefinition[] {
         ],
         outputs: [{ name: "result", schema: t("Text"), description: "A real hit, a miss, or a diagnosis — never a miss that reads as a hit." }],
       },
-      satisfies: ["ig-ast-cache-restore"],
+      satisfies: ["compiled-artefact-cache", "ig-ast-delta"],
       requires: { runtime: ["bash", "git"], network: true },
     }),
   ];
