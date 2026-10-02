@@ -7,6 +7,202 @@
   "source": "Schema fields of fhir-harness",
   "terms": [
     {
+      "id": "fhir-artifact-index.fhirartifactindexschema.builtat",
+      "prefLabel": "FhirArtifactIndexSchema.builtAt",
+      "definition": "The IG's own build timestamp, verbatim from `package.manifest.json`. Not reformatted: a transcription that normalises is no longer a transcription.",
+      "source": "fhir-harness/schemas/fhir-artifact-index.ts#FhirArtifactIndexSchema.builtAt",
+      "status": "candidate"
+    },
+    {
+      "id": "fhir-artifact-index.fhirartifactindexschema.canonicalbase",
+      "prefLabel": "FhirArtifactIndexSchema.canonicalBase",
+      "definition": "The canonical base every artefact's canonical URL extends, e.g. `http://smart.who.int/trust`.",
+      "source": "fhir-harness/schemas/fhir-artifact-index.ts#FhirArtifactIndexSchema.canonicalBase",
+      "status": "candidate"
+    },
+    {
+      "id": "fhir-artifact-index.fhirartifactindexschema.id",
+      "prefLabel": "FhirArtifactIndexSchema.id",
+      "definition": "Instance id — the directory this index lives in, e.g. `smart-trust`.",
+      "source": "fhir-harness/schemas/fhir-artifact-index.ts#FhirArtifactIndexSchema.id",
+      "status": "candidate"
+    },
+    {
+      "id": "fhir-artifact-index.fhirartifactindexschema.packageid",
+      "prefLabel": "FhirArtifactIndexSchema.packageId",
+      "definition": "NPM-style package id, e.g. `smart.who.int.trust`.",
+      "source": "fhir-harness/schemas/fhir-artifact-index.ts#FhirArtifactIndexSchema.packageId",
+      "status": "candidate"
+    },
+    {
+      "id": "fhir-artifact-index.fhirartifactindexschema.sidecarsunbound",
+      "prefLabel": "FhirArtifactIndexSchema.sidecarsUnbound",
+      "definition": "Sidecars an enumeration listed that bound to no artefact. Absent means none; an empty array is not written. See {@link UnboundSidecarSchema} for why these are recorded rather than warned about and forgotten.",
+      "source": "fhir-harness/schemas/fhir-artifact-index.ts#FhirArtifactIndexSchema.sidecarsUnbound",
+      "status": "candidate"
+    },
+    {
+      "id": "fhir-artifact-index.fhirartifactschema.canonical",
+      "prefLabel": "FhirArtifactSchema.canonical",
+      "definition": "FHIR canonical URL. Absent for examples and instances; see the doc above.",
+      "source": "fhir-harness/schemas/fhir-artifact-index.ts#FhirArtifactSchema.canonical",
+      "status": "candidate"
+    },
+    {
+      "id": "fhir-artifact-index.fhirartifactschema.category",
+      "prefLabel": "FhirArtifactSchema.category",
+      "definition": "Editorial grouping from `artifacts.html`. Absent means the IG published no artefact page.",
+      "source": "fhir-harness/schemas/fhir-artifact-index.ts#FhirArtifactSchema.category",
+      "status": "candidate"
+    },
+    {
+      "id": "fhir-artifact-index.fhirartifactschema.key",
+      "prefLabel": "FhirArtifactSchema.key",
+      "definition": "Stable within the index: `<resourceType>/<id>`, which is unique where a bare id is not.",
+      "source": "fhir-harness/schemas/fhir-artifact-index.ts#FhirArtifactSchema.key",
+      "status": "candidate"
+    },
+    {
+      "id": "fhir-artifact-index.igsourceschema.of",
+      "prefLabel": "IgSourceSchema.of",
+      "definition": "The URI the artefacts are published AT — what a `published` URL is resolved against.",
+      "source": "fhir-harness/schemas/fhir-artifact-index.ts#IgSourceSchema.of",
+      "status": "candidate"
+    },
+    {
+      "id": "fhir-artifact-index.igsourceschema.readat",
+      "prefLabel": "IgSourceSchema.readAt",
+      "definition": "When the source was read. An index with no read date cannot be told from a current one.",
+      "source": "fhir-harness/schemas/fhir-artifact-index.ts#IgSourceSchema.readAt",
+      "status": "candidate"
+    },
+    {
+      "id": "fhir-artifact-index.igsourceschema.revision",
+      "prefLabel": "IgSourceSchema.revision",
+      "definition": "Git revision of the branch read, when the source was a checkout. Absent means not established.",
+      "source": "fhir-harness/schemas/fhir-artifact-index.ts#IgSourceSchema.revision",
+      "status": "candidate"
+    },
+    {
+      "id": "fhir-artifact-index.indexprovenanceschema.artifactshtml",
+      "prefLabel": "IndexProvenanceSchema.artifactsHtml",
+      "definition": "`artifacts.html` — the ONLY source of an artefact's editorial category.",
+      "source": "fhir-harness/schemas/fhir-artifact-index.ts#IndexProvenanceSchema.artifactsHtml",
+      "status": "candidate"
+    },
+    {
+      "id": "fhir-artifact-index.indexprovenanceschema.canonicals",
+      "prefLabel": "IndexProvenanceSchema.canonicals",
+      "definition": "`canonicals.json` — the spine for anything with a canonical URL.",
+      "source": "fhir-harness/schemas/fhir-artifact-index.ts#IndexProvenanceSchema.canonicals",
+      "status": "candidate"
+    },
+    {
+      "id": "fhir-artifact-index.indexprovenanceschema.packageindex",
+      "prefLabel": "IndexProvenanceSchema.packageIndex",
+      "definition": "`package.tgz` -> `package/.index.json` — the spine for everything else. Lossy; see the module doc.",
+      "source": "fhir-harness/schemas/fhir-artifact-index.ts#IndexProvenanceSchema.packageIndex",
+      "status": "candidate"
+    },
+    {
+      "id": "fhir-artifact-index.indexprovenanceschema.packagemanifest",
+      "prefLabel": "IndexProvenanceSchema.packageManifest",
+      "definition": "`package.manifest.json` — package id, version, FHIR version, build date.",
+      "source": "fhir-harness/schemas/fhir-artifact-index.ts#IndexProvenanceSchema.packageManifest",
+      "status": "candidate"
+    },
+    {
+      "id": "fhir-artifact-index.indexprovenanceschema.sidecarenumerations",
+      "prefLabel": "IndexProvenanceSchema.sidecarEnumerations",
+      "definition": "The DAK API enumeration schemas, when present.",
+      "source": "fhir-harness/schemas/fhir-artifact-index.ts#IndexProvenanceSchema.sidecarEnumerations",
+      "status": "candidate"
+    },
+    {
+      "id": "fhir-artifact-index.jsonldcontextschema.binds",
+      "prefLabel": "JsonLdContextSchema.binds",
+      "definition": "Canonical URLs of the artefacts whose terms this context binds, where that could be established.",
+      "source": "fhir-harness/schemas/fhir-artifact-index.ts#JsonLdContextSchema.binds",
+      "status": "candidate"
+    },
+    {
+      "id": "fhir-artifact-index.representationschema.localpath",
+      "prefLabel": "RepresentationSchema.localPath",
+      "definition": "Instance-relative path, present iff these bytes were materialised.",
+      "source": "fhir-harness/schemas/fhir-artifact-index.ts#RepresentationSchema.localPath",
+      "status": "candidate"
+    },
+    {
+      "id": "fhir-artifact-index.sidecaroverlayschema.codecount",
+      "prefLabel": "SidecarOverlaySchema.codeCount",
+      "definition": "Number of codes, for a ValueSet.",
+      "source": "fhir-harness/schemas/fhir-artifact-index.ts#SidecarOverlaySchema.codeCount",
+      "status": "candidate"
+    },
+    {
+      "id": "fhir-artifact-index.sidecaroverlayschema.displays",
+      "prefLabel": "SidecarOverlaySchema.displays",
+      "definition": "`schemas/<name>.displays.json` — display strings, keyed by code.",
+      "source": "fhir-harness/schemas/fhir-artifact-index.ts#SidecarOverlaySchema.displays",
+      "status": "candidate"
+    },
+    {
+      "id": "fhir-artifact-index.sidecaroverlayschema.jsonld",
+      "prefLabel": "SidecarOverlaySchema.jsonld",
+      "definition": "`<name>.jsonld` — the JSON-LD vocabulary, published at the IG ROOT, not under `schemas/`.",
+      "source": "fhir-harness/schemas/fhir-artifact-index.ts#SidecarOverlaySchema.jsonld",
+      "status": "candidate"
+    },
+    {
+      "id": "fhir-artifact-index.sidecaroverlayschema.openapi",
+      "prefLabel": "SidecarOverlaySchema.openapi",
+      "definition": "`schemas/<name>.openapi.json` — this ARTEFACT's OpenAPI fragment. Never `openapi/openapi.json`; see the module doc.",
+      "source": "fhir-harness/schemas/fhir-artifact-index.ts#SidecarOverlaySchema.openapi",
+      "status": "candidate"
+    },
+    {
+      "id": "fhir-artifact-index.sidecaroverlayschema.propertycount",
+      "prefLabel": "SidecarOverlaySchema.propertyCount",
+      "definition": "Number of properties, for a logical model.",
+      "source": "fhir-harness/schemas/fhir-artifact-index.ts#SidecarOverlaySchema.propertyCount",
+      "status": "candidate"
+    },
+    {
+      "id": "fhir-artifact-index.sidecaroverlayschema.schema",
+      "prefLabel": "SidecarOverlaySchema.schema",
+      "definition": "`schemas/<name>.schema.json` — the JSON Schema for this artefact.",
+      "source": "fhir-harness/schemas/fhir-artifact-index.ts#SidecarOverlaySchema.schema",
+      "status": "candidate"
+    },
+    {
+      "id": "fhir-artifact-index.unboundsidecarschema.enumeration",
+      "prefLabel": "UnboundSidecarSchema.enumeration",
+      "definition": "Which enumeration listed it.",
+      "source": "fhir-harness/schemas/fhir-artifact-index.ts#UnboundSidecarSchema.enumeration",
+      "status": "candidate"
+    },
+    {
+      "id": "fhir-artifact-index.unboundsidecarschema.filename",
+      "prefLabel": "UnboundSidecarSchema.filename",
+      "definition": "The sidecar file the enumeration named.",
+      "source": "fhir-harness/schemas/fhir-artifact-index.ts#UnboundSidecarSchema.filename",
+      "status": "candidate"
+    },
+    {
+      "id": "fhir-artifact-index.unboundsidecarschema.reason",
+      "prefLabel": "UnboundSidecarSchema.reason",
+      "definition": "Why no artefact matched: the strategies tried, in order.",
+      "source": "fhir-harness/schemas/fhir-artifact-index.ts#UnboundSidecarSchema.reason",
+      "status": "candidate"
+    },
+    {
+      "id": "fhir-artifact-index.unboundsidecarschema.title",
+      "prefLabel": "UnboundSidecarSchema.title",
+      "definition": "Its title, as the enumeration gives it — usually the only human handle on what was missed.",
+      "source": "fhir-harness/schemas/fhir-artifact-index.ts#UnboundSidecarSchema.title",
+      "status": "candidate"
+    },
+    {
       "id": "ig-chrome.igchromeconflictschema.kind",
       "prefLabel": "IgChromeConflictSchema.kind",
       "definition": "`shape` — the layers agree the token exists and disagree about what KIND of value it holds, so a consumer substituting one into the other's rule emits something invalid.",
