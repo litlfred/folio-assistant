@@ -27,9 +27,9 @@ So each record answers three questions — **which edition**, **what here
 depends on it**, and **which of its terms this repository branches on**.
 
 <div class="xs-grid">
-<div class="xs-stat"><b>18</b><span>specifications</span></div>
+<div class="xs-stat"><b>19</b><span>specifications</span></div>
 <div class="xs-stat"><b>105</b><span>operative terms in the graph</span></div>
-<div class="xs-stat"><b>201</b><span>declared uses</span></div>
+<div class="xs-stat"><b>202</b><span>declared uses</span></div>
 <div class="xs-stat"><b>0</b><span>declarations naming no record</span></div>
 </div>
 
@@ -39,6 +39,7 @@ depends on it**, and **which of its terms this repository branches on**.
 |---|---|---|---|
 | **[DCMI Metadata Terms](#dcmi-terms)**<br>`dcmi-terms` | DCMI | [2020-01-20](https://www.dublincore.org/specifications/dublin-core/dcmi-terms/2020-01-20/) | `reads` — this repository parses documents written in it |
 | **[HL7 FHIR](#hl7-fhir)**<br>`hl7-fhir` | HL7 | [unpinned](https://hl7.org/fhir/) | `reads` — this repository parses documents written in it |
+| **[Handle System Overview (RFC 3650), with its namespace (RFC 3651) and protocol (RFC 3652)](#ietf-handle-system)**<br>`ietf-handle-system` | IETF | [2003-11](https://www.rfc-editor.org/rfc/rfc3650) | `conforms` — this repository's artefacts are valid against it |
 | **[Business Process Model and Notation (BPMN)](#omg-bpmn-2.0)**<br>`omg-bpmn-2.0` | OMG | [2.0](https://www.omg.org/spec/BPMN/2.0/) | `conforms` — this repository's artefacts are valid against it |
 | **[Diagram Definition (DD)](#omg-dd-1.0)**<br>`omg-dd-1.0` | OMG | [1.0](https://www.omg.org/spec/DD/1.0/) | `conforms` — this repository's artefacts are valid against it |
 | **[Decision Model and Notation (DMN)](#omg-dmn-1.3)**<br>`omg-dmn-1.3` | OMG | [1.3](https://www.omg.org/spec/DMN/1.3/) | `conforms` — this repository's artefacts are valid against it |
@@ -75,7 +76,7 @@ vocabulary shows up here instead of going unnoticed.
 
 Every namespace the corpus declares is covered by a record above.
 
-**19 declared and not in use.** Not a defect on its own: a
+**20 declared and not in use.** Not a defect on its own: a
 record may cover a namespace only some artefacts carry. It is here because
 a registry nobody prunes is one that stops describing the repository.
 
@@ -96,6 +97,7 @@ a registry nobody prunes is one that stops describing the repository.
 - `http://www.w3.org/ns/oa#`
 - `http://www.w3.org/ns/odrl/2/`
 - `http://www.w3.org/ns/prov#`
+- `https://hdl.handle.net/`
 - `https://openprovenance.org/ns/provext#`
 - `https://schema.org/`
 
@@ -175,6 +177,26 @@ a subset of the edition rather than a transcription of it.
 | term | what it means here |
 |---|---|
 | `fhir:ValueSet` | derived from the corpus; what this repository does with it is not yet described |
+
+### Handle System Overview (RFC 3650), with its namespace (RFC 3651) and protocol (RFC 3652) {#ietf-handle-system}
+
+`ietf-handle-system` — IETF, edition [2003-11](https://www.rfc-editor.org/rfc/rfc3650) — `conforms`, meaning this repository's artefacts are valid against it.
+
+**Namespaces.**
+
+- `https://hdl.handle.net/`
+
+**Note.** The persistent identifiers DSpace mints (`<prefix>/<suffix>`, e.g. WHO IRIS's 10665/332098), written as IRIs through the global HTTP resolver https://hdl.handle.net/. Emitted by schemas/prov-jsonld.ts for PROV `prov:used`: owner decision 2026-10-01 (option A) links a catalogue item at its Handle, the identifier that outlives the publishing host, rather than at the host's own item URL. folio-assistant-core's catalogue schema (HandleSchema, handleIri) applies the same rule to catalogue records. The RFCs are Informational and define the identifier system; the hdl.handle.net proxy is the resolver its operators run, not a namespace in the vocabulary sense.
+
+**What depends on it.**
+
+| user | declared by |
+|---|---|
+| [`cat-harness/schemas/prov-jsonld.ts`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/prov-jsonld.ts) | `@conformsTo` tag |
+
+**No operative terms.** This repository conforms to the specification
+without branching on any of its terms, so none is materialised into the
+graph. That is a determined zero, not an unfilled field.
 
 ### Business Process Model and Notation (BPMN) {#omg-bpmn-2.0}
 

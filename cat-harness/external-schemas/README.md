@@ -12,6 +12,7 @@ Part of [C@T Harness](../README.md) 0.1.0, declared as `external-schemas`, holdi
 |---|---|---|
 | [`dcmi-terms.json`](dcmi-terms.json) | DCMI Metadata Terms |  |
 | [`hl7-fhir.json`](hl7-fhir.json) | HL7 FHIR |  |
+| [`ietf-handle-system.json`](ietf-handle-system.json) | Handle System Overview (RFC 3650), with its namespace (RFC 3651) and protocol (RFC 3652) |  |
 | [`omg-bpmn-2.0.json`](omg-bpmn-2.0.json) | Business [Process](https://litlfred.github.io/bootstrap/schemas/#process) Model and Notation (BPMN) |  |
 | [`omg-dd-1.0.json`](omg-dd-1.0.json) | Diagram Definition (DD) |  |
 | [`omg-dmn-1.3.json`](omg-dmn-1.3.json) | Decision Model and Notation (DMN) |  |

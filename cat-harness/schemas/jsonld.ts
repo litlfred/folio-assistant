@@ -44,11 +44,11 @@
  *
  * ## Why `@id` is relative
  *
- * Emitted IRIs are relative (`papers/<paper>/blocks/def-foo`) and `@base`
- * lives in the published context. That keeps generator output identical
- * regardless of where a folio is deployed — which matters because the
- * generated siblings are committed and gated on drift: a base-URL change must
- * not rewrite thousands of files.
+ * Emitted IRIs are relative (`papers/<paper>/blocks/def-foo`). `@base` lived
+ * only in the published context, so that a base-URL change would not rewrite
+ * thousands of committed files. JSON-LD 1.1 §4.1.3 ignores `@base` in a remote
+ * context, so since bean `bh4q` it is ALSO in each document's own context
+ * ({@link CONTENT_DOCUMENT_CONTEXT}) — and a base change does rewrite them.
  *
  * @module schemas/jsonld
  * @graphNode schema
@@ -81,6 +81,8 @@ import {
  * harness-layer module must not import the content vocabulary — see that
  * module's note.
  */
+import { z } from "zod";
+
 import { CORE_NS, FOLIO_BASE } from "./namespaces";
 
 // Content terms are folio-assist-core's, so they hang off core's namespace —
@@ -130,10 +132,36 @@ export const CONTENT_CONTEXT_URL =
   "https://litlfred.github.io/folio-assistant/ns/content/v1.jsonld";
 
 /**
- * Base every minted `@id` is relative to. Declared in the context rather
- * than baked into emitted files — see the module docstring.
+ * Base every minted `@id` is relative to. Declared in the published context
+ * AND in each document's own context — see {@link CONTENT_DOCUMENT_CONTEXT}.
  */
 export { FOLIO_BASE };
+
+/**
+ * The `@context` every emitted content document carries: the published
+ * context by URL, then `@base` in the document's OWN context (bean `bh4q`,
+ * owner 2026-10-01, option 2).
+ *
+ * JSON-LD 1.1 §4.1.3 says `@base` in a remote context is ignored, so a
+ * conforming processor resolves our relative `@id`s against each document's
+ * own URL. jsonld.js applies it anyway — measured — which is why this went
+ * unnoticed. Rule `ld-no-base-in-a-remote-context` in the `linked-data` voice.
+ *
+ * The cost, accepted: a base-URL change now rewrites every emitted file,
+ * which is what keeping `@base` only in the context had avoided.
+ */
+export const CONTENT_DOCUMENT_CONTEXT = [CONTENT_CONTEXT_URL, { "@base": FOLIO_BASE }] as const;
+
+/**
+ * A content document's `@context`, as a record schema accepts it: the
+ * two-part form above, or the bare URL that records written before bean
+ * `bh4q` carry. Any other context would bind their keys to terms nobody
+ * declared, so nothing else is accepted.
+ */
+export const ContentContextSchema = z.union([
+  z.literal(CONTENT_CONTEXT_URL),
+  z.tuple([z.literal(CONTENT_CONTEXT_URL), z.object({ "@base": z.literal(FOLIO_BASE) }).strict()]),
+]);
 
 // ── Block kind → RDF types ───────────────────────────────────────
 
