@@ -37,9 +37,10 @@
  *
  * ## Where the component vocabulary lives
  *
- * `schemas/block-kinds.ts`, not here: {@link DAK_COMPONENTS} names the ten,
+ * `smart-base/schemas/dak-kinds.ts` (core's `block-kinds.ts` until bean
+ * `1335`), not here: {@link DAK_COMPONENTS} names the ten,
  * {@link DAK_COMPONENT_FIELDS} maps each to its field in WHO's own model, and
- * `scripts/tests/dak-blocks.test.ts` checks those names against a real
+ * `smart-base/schemas/dak-blocks.test.ts` checks those names against a real
  * `DAK.fsh` when a `smart-base` checkout is present — reporting `n/a`, never a
  * pass, when it is not. This module builds its shape **from** that table rather
  * than restating it, so the two cannot drift.
@@ -52,7 +53,7 @@ import { existsSync, readFileSync } from "node:fs";
 import { join } from "node:path";
 import { z } from "zod";
 
-import { DAK_COMPONENTS, DAK_COMPONENT_FIELDS, type DakComponent } from "../../cat-harness/schemas/block-kinds";
+import { DAK_COMPONENTS, DAK_COMPONENT_FIELDS, type DakComponent } from "./dak-kinds";
 import { kgNodeLabelShape, type KgNodeLabels } from "../../cat-harness/schemas/kg-node";
 import { SMART_BASE_NS } from "../../cat-harness/schemas/jsonld";
 
