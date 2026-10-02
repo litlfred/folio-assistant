@@ -58,7 +58,9 @@ is a cache, never an authority. The branch carries:
 - [x] the AST fork builds — **`ast-export` module builds clean** (Maven, tests skipped). `AstExportCli` runs, produces 678 resources, 5 edges, 3.7MB AST dump. **Blocker:** `ast-export/pom.xml` needs `apache-poi` as explicit dependency (Publisher marks it `optional`, so not pulled transitively). Workaround: add POI jars to classpath manually.
 - [x] smart-trust's AST dumped — **678 resources, 5 dependency edges, `authority: "cache"`, `inputDigest: dfc08134...`**. Publisher v2.3.4 / core 6.10.4. Warm build (cached packages + tx): **4m39s (4.8× faster than cold 22m28s)**.
 - [ ] smart-base re-ingested from fresh `gh-pages` — smart-base has no `gh-pages` branch on `litlfred/smart-base` (shallow clone). Deferred: requires `WorldHealthOrganization/smart-base` gh-pages access.
-
+- [x] AST cache seeded to `fhir-ast/smart.who.int.trust` orphan branch — 678 resources, 671 edges, `fsh-index.json` (677 entries), `txcache/` (524K). Restore roundtrip verified: `ig-cache.sh seed --push` then `ig-cache.sh restore` → 678 resources.
+- [x] Skills/tools/processes updated — `compiled-artefact-cache.md` (generalizable pattern), `ig-ast-delta.md` (fsh-index.json two-map architecture documented), `ig-cache` tool registered with `IgCacheAction` schema, all generators re-run.
+- [x] `fsh-index.json` discovery: SUSHI already writes the authoritative file→resource forward map at `fsh-generated/data/fsh-index.json`. Zero SUSHI modifications needed. AST exporter path fixed (commit `2c49ed77` on `litlfred/fhir-ig-publisher@claude/ast-export`). Incremental planner produces a **0.3% cone** (2/678 resources) in **0.2s** for a single-file change.
 
 
 ## Claim released 2026-09-29
