@@ -6,7 +6,7 @@ movedOn: 2026-09-30
 movedFrom: "uploads/Skill authoring best practices - Claude Platform Docs.pdf"
 bean: folio-assistant-q7ey
 summary: >-
-  The archival copy of the source ingested to `agent-skills/library/skill-authoring-best-practices---claude-platform-docs`
+  The archival copy of the source ingested to `cat-harness/library/skill-authoring-best-practices---claude-platform-docs`
   (sha256 b91e7aa4b3483fca…). Retired here after promotion, per the owner's ruling
   2026-09-29 that an ingested upload is archival and belongs in `fsh-guts`,
   not in the queue and not deleted.
@@ -17,12 +17,12 @@ summary: >-
 
 # `Skill authoring best practices - Claude Platform Docs.pdf`
 
-Ingested to [`agent-skills/library/skill-authoring-best-practices---claude-platform-docs`](../../agent-skills/library/skill-authoring-best-practices---claude-platform-docs/), which holds what was derived
+Ingested to [`cat-harness/library/skill-authoring-best-practices---claude-platform-docs`](../../cat-harness/library/skill-authoring-best-practices---claude-platform-docs/), which holds what was derived
 from it — `sections/`, `blocks/`, `images/`, `structure.json` and the manifest.
 A library entry may not hold the source bytes: `check:l1-complete`'s `contents`
 check refuses an unexpected child, so this is where the original lives.
 
-`agent-skills/library/skill-authoring-best-practices---claude-platform-docs/manifest.jsonld` records `source_sha256`, which is what lets a
+`cat-harness/library/skill-authoring-best-practices---claude-platform-docs/manifest.jsonld` records `source_sha256`, which is what lets a
 re-derivation be checked against this file.
 
 The rule and its reasoning are in

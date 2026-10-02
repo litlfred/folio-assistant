@@ -1,5 +1,11 @@
 # agent-skills
 
+> **Retiring — this instance is empty of content since 2026-10-01.** On the owner's
+> ruling of that day it dissolved into cat-harness's concern groups (bean `j7ql`,
+> issue #1770). What it held now lives at: [`cat-harness/library/`](../cat-harness/library/README.md) (the 14 documents, summaries still held) and [`cat-harness/skills/voices/`](../cat-harness/skills/voices/voices.json) (the voices). The text below is the
+> instance as it was, kept until the owner rules on retiring it; its links
+> point at the new locations.
+
 Published guidance on **authoring and operating agent skills**, ingested as L1
 source content, and the voices read out of it.
 
