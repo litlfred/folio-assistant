@@ -5,7 +5,7 @@ status: in-progress
 type: task
 priority: normal
 created_at: 2026-10-02T06:29:45Z
-updated_at: 2026-10-02T06:57:15Z
+updated_at: 2026-10-02T07:57:50Z
 parent: folio-assistant-uhkv
 ---
 
@@ -52,3 +52,6 @@ Option 3 of the proposal (removing the existing preview binaries from `gh-pages`
 - `build-ig-site` writes a generated `releases` page when the instance has a record. I rendered it in Jekyll with smart-base's record: 10 download links and 2 tables.
 - **Gap:** smart-base has no `menu.json`, so `stage-ig-sites` does not stage its IG site, and the page only shows on smart-trust's site, which has no releases yet.
 - **Open, for the owner:** our own staging preview still serves `smart-trust/fhir-artifact-index/package.tgz` (228,587 bytes), which the resource JSON views read in the browser. "Previews dont get binary" would remove it, so the views would need another source.
+
+## Owner, 2026-10-02: "2y"
+Read as agreeing to the stated default: our staging preview keeps serving `smart-trust/fhir-artifact-index/package.tgz` (228,587 bytes) for now, because the resource JSON views read it in the browser. This is a recorded exception to "previews dont get binary", and it stays until the JSON views have another source. If the owner meant to remove it, this is the line to change.
