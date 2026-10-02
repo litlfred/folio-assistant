@@ -1,10 +1,11 @@
 ---
 # folio-assistant-tlk2
 title: 'Second hop: move cat-state and cat-fhir-ast/* to cat/<harness>/<name> (handoff to local agy agent)'
-status: todo
+status: in-progress
 type: task
+priority: normal
 created_at: 2026-10-02T21:33:58Z
-updated_at: 2026-10-02T21:33:58Z
+updated_at: 2026-10-02T21:36:44Z
 parent: folio-assistant-fs43
 ---
 
