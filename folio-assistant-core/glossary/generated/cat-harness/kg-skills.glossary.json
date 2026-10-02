@@ -1003,6 +1003,14 @@
       "status": "candidate"
     },
     {
+      "id": "pr-description",
+      "prefLabel": "pr-description",
+      "definition": "Write or update a pull request's description so that someone who has never seen the work can follow it: the problem, why it matters, how it was approached, what constrained it, the solution, how to use it, and what is not done. Read before opening a PR, before rewriting its body, and whenever the PR's scope changes.",
+      "notation": "pr-description",
+      "source": "cat-harness/skills/sdlc/sdlc-core/pr-description.md",
+      "status": "candidate"
+    },
+    {
       "id": "prepare-merge",
       "prefLabel": "prepare-merge",
       "definition": "Take a feature branch to a clean, conflict-free, green, pushed state so it can be merged with no surprises: base merged in, generated files regenerated, the folio's content-type gates run, then pushed. It does NOT merge and does NOT push to the default branch. Use for \"prepare-merge\", \"make it mergeable\", \"ship it\".",

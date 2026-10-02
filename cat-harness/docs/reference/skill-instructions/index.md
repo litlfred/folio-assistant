@@ -251,6 +251,7 @@ roles, and how they compose with the LLM, see [Skills & roles](../../skills.html
 | [/pending-show](pending-show.html) | `pending-show` | — | Quick status display. Read-only. Run any time to answer "where am I?" |
 | [Pickup](pickup.html) | `pickup` | — | Continue work on existing open PRs with minimal wasted tokens. This skill |
 | [The platform's own gates](platform-gates.html) | `platform-gates` | — | **One command:** |
+| [pr-description](pr-description.html) | `pr-description` | — | Owner, 2026-10-02, on litlfred/fhir-ig-publisher#8: *"PR should be readable |
 | [/prepare-merge-auto](prepare-merge-auto.html) | `prepare-merge-auto` | — | Runs the full `/prepare-merge` workflow PLUS: |
 | [Prepare-merge](prepare-merge.html) | `prepare-merge` | — | Canonical, repo-agnostic skill for taking a `claude/*` (or any feature) branch |
 | [Publish verification, and the one alert](publish-verification.html) | `publish-verification` | — | Bean `vigi`. Owner, 2026-09-23: *"a set of post processing tools for |
