@@ -66,6 +66,69 @@ export const ToolPortSchema = z.object({
 });
 
 /**
+ * How a renderer may put one OUTPUT into a page — bean `q2wm`, R17 (#602).
+ *
+ * The owner, 2026-09-20: *"skill tool hints for XSS restriction"*. A Tool node
+ * said nothing about whether its output is markup, a link or plain words, so
+ * every consumer decided — and the one that decides wrong is a cross-site
+ * scripting hole in a static site with no server to blame.
+ *
+ * | `as` | a renderer must |
+ * |---|---|
+ * | `text` (the DEFAULT, and what absent means) | escape it: never markup, never a link |
+ * | `url` | pass it through `safeHref` (default-deny on scheme) before any `href`, else render it as text |
+ * | `markdown` | render it with raw HTML OFF and every link through `safeHref` |
+ * | `json` | show it escaped, as data — never evaluate, never inject |
+ *
+ * ON THE OUTPUT, not the Tool: one tool may emit a JSON projection and a
+ * markup fragment, and a Tool-level flag would have to lie about one of them.
+ *
+ * Anything but `text` carries a `reason`, because it asks a renderer to do
+ * more than escape, and that is a claim somebody made. `url` and `markdown`
+ * are allowed only on an output whose schema IS `Url` / `Markdown` — a hint
+ * that disagrees with the type it describes is two answers to one question.
+ *
+ * `renderToolOutput` in `schemas/render-output.ts` is the one implementation;
+ * `render-output.test.ts` holds each row of the table above to it.
+ */
+export const RENDER_AS = ["text", "url", "markdown", "json"] as const;
+export type RenderAs = (typeof RENDER_AS)[number];
+
+export const ToolRenderSchema = z
+  .object({
+    as: z.enum(RENDER_AS),
+    reason: z.string().min(1).optional(),
+  })
+  .strict()
+  .refine((r) => r.as === "text" || r.reason !== undefined, {
+    message: "a render hint other than `text` must state its reason — it asks a renderer to do more than escape",
+  });
+export type ToolRender = z.infer<typeof ToolRenderSchema>;
+
+/** The last segment of a schema IRI — `…#Url` or `…/Url` both give `Url`. */
+export function schemaTypeName(iri: string): string {
+  return iri.split(/[#/]/).filter(Boolean).pop() ?? iri;
+}
+
+/** A schema type a hint may only be declared on, where it is restricted. */
+const RENDER_REQUIRES: Partial<Record<RenderAs, string>> = { url: "Url", markdown: "Markdown" };
+
+export const ToolOutputSchema = ToolPortSchema.extend({
+  /** How a renderer may place this output in a page. Absent is `text`. See {@link RENDER_AS}. */
+  render: ToolRenderSchema.optional(),
+}).superRefine((p, ctx) => {
+  const need = p.render ? RENDER_REQUIRES[p.render.as] : undefined;
+  if (need !== undefined && schemaTypeName(p.schema) !== need) {
+    ctx.addIssue({
+      code: z.ZodIssueCode.custom,
+      path: ["render", "as"],
+      message: `render \`${p.render!.as}\` is only for an output whose schema is ${need}; this one is ${schemaTypeName(p.schema)}`,
+    });
+  }
+});
+export type ToolOutput = z.infer<typeof ToolOutputSchema>;
+
+/**
  * How one input appears on the command line.
  *
  * **Explicit, per input — never a template and never a convention.** The
@@ -357,7 +420,7 @@ export const ToolDefinitionSchema = z
     invoke: ToolInvokeSchema,
     io: z.object({
       inputs: z.array(ToolInputSchema),
-      outputs: z.array(ToolPortSchema),
+      outputs: z.array(ToolOutputSchema),
     }),
     /** Skills this Tool can satisfy. One skill may have several Tools. */
     satisfies: z.array(SkillNameSchema).min(1, "a Tool must satisfy at least one skill"),
