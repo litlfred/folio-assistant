@@ -11,7 +11,7 @@
   "families": {
     "bibliographic-missing": {
       "summary": "No author/publisher, or no year, among the fields the entry itself declares (manifest meta, referenced.json identity, tabular.jsonld source), and no `meta.bibliographic_not_in_source` reason. `readableIn` lists where the value IS on disk but not carried — what a fix would read.",
-      "count": 58,
+      "count": 61,
       "entries": [
         {
           "entry": "agent-skill-best-practices---gemini-cli",
@@ -569,6 +569,24 @@
           "field": "manifest.jsonld meta; referenced.json identity; tabular.jsonld source"
         },
         {
+          "entry": "9789240101197-eng",
+          "instance": "smart-base",
+          "missing": [
+            "author/publisher",
+            "year"
+          ],
+          "field": "manifest.jsonld meta; referenced.json identity; tabular.jsonld source"
+        },
+        {
+          "entry": "9789240116191-eng",
+          "instance": "smart-base",
+          "missing": [
+            "author/publisher",
+            "year"
+          ],
+          "field": "manifest.jsonld meta; referenced.json identity; tabular.jsonld source"
+        },
+        {
           "entry": "9789240120747-eng",
           "instance": "smart-base",
           "missing": [
@@ -607,6 +625,21 @@
             {
               "field": "structure.json metadata.docinfo.Author",
               "value": "Garrett Mehl"
+            }
+          ]
+        },
+        {
+          "entry": "who-dpi-h-reference-architecture-draft-v1",
+          "instance": "smart-base",
+          "missing": [
+            "author/publisher",
+            "year"
+          ],
+          "field": "manifest.jsonld meta; referenced.json identity; tabular.jsonld source",
+          "readableIn": [
+            {
+              "field": "structure.json metadata.docinfo.Author",
+              "value": "Aguilera Millacura, Felipe (Consultant WDC)"
             }
           ]
         },
@@ -727,7 +760,7 @@
     },
     "summary-backlog": {
       "summary": "Prose blocks with no current agent summary, per entry. A count, advisory: the drain is slow on purpose.",
-      "count": 56,
+      "count": 59,
       "entries": [
         {
           "entry": "agent-skill-best-practices---gemini-cli",
@@ -1018,6 +1051,18 @@
           "prose": 48
         },
         {
+          "entry": "9789240101197-eng",
+          "instance": "smart-base",
+          "backlog": 78,
+          "prose": 78
+        },
+        {
+          "entry": "9789240116191-eng",
+          "instance": "smart-base",
+          "backlog": 62,
+          "prose": 62
+        },
+        {
           "entry": "9789240120747-eng",
           "instance": "smart-base",
           "backlog": 72,
@@ -1040,6 +1085,12 @@
           "instance": "smart-base",
           "backlog": 2,
           "prose": 2
+        },
+        {
+          "entry": "who-dpi-h-reference-architecture-draft-v1",
+          "instance": "smart-base",
+          "backlog": 129,
+          "prose": 129
         },
         {
           "entry": "who-rhr-1806-eng",
@@ -1082,7 +1133,7 @@
     },
     "title-missing": {
       "summary": "The manifest's title is absent, the slug, or the source's file name — the entry has no title a reader can use. Read from manifest.jsonld `title` and `meta.title_source`: `slug` means no source offered one, which the owner's ruling of 2026-10-01 says is shown as the slug and flagged here, never filled from the page-1 parse.",
-      "count": 20,
+      "count": 23,
       "entries": [
         {
           "entry": "arxiv-0909.4061v2",
@@ -1197,6 +1248,20 @@
           "why": "no source offers a title (no catalogue record, referenced.json, usable PDF /Title or text heading), so the slug stands"
         },
         {
+          "entry": "9789240101197-eng",
+          "instance": "smart-base",
+          "title": "9789240101197-eng",
+          "field": "manifest.jsonld meta.title_source",
+          "why": "no source offers a title (no catalogue record, referenced.json, usable PDF /Title or text heading), so the slug stands"
+        },
+        {
+          "entry": "9789240116191-eng",
+          "instance": "smart-base",
+          "title": "9789240116191-eng",
+          "field": "manifest.jsonld meta.title_source",
+          "why": "no source offers a title (no catalogue record, referenced.json, usable PDF /Title or text heading), so the slug stands"
+        },
+        {
           "entry": "9789240120747-eng",
           "instance": "smart-base",
           "title": "9789240120747-eng",
@@ -1214,6 +1279,13 @@
           "entry": "9789241511766-eng",
           "instance": "smart-base",
           "title": "9789241511766-eng",
+          "field": "manifest.jsonld meta.title_source",
+          "why": "no source offers a title (no catalogue record, referenced.json, usable PDF /Title or text heading), so the slug stands"
+        },
+        {
+          "entry": "who-dpi-h-reference-architecture-draft-v1",
+          "instance": "smart-base",
+          "title": "who-dpi-h-reference-architecture-draft-v1",
           "field": "manifest.jsonld meta.title_source",
           "why": "no source offers a title (no catalogue record, referenced.json, usable PDF /Title or text heading), so the slug stands"
         },
@@ -1478,5 +1550,5 @@
       ]
     }
   },
-  "total": 172
+  "total": 181
 }
