@@ -1995,6 +1995,13 @@
       "status": "candidate"
     },
     {
+      "id": "cat-harness.catharnessdeclaration.alsowritten",
+      "prefLabel": "CatHarnessDeclaration.alsoWritten",
+      "definition": "Other spellings of the name, listed on the landing (`ob3m` 5).",
+      "source": "cat-harness/schemas/cat-harness.ts#CatHarnessDeclaration.alsoWritten",
+      "status": "candidate"
+    },
+    {
       "id": "cat-harness.catharnessdeclaration.assets",
       "prefLabel": "CatHarnessDeclaration.assets",
       "definition": "Non-image artefacts this instance names — `AGENTS.md` first among them.",
@@ -2149,6 +2156,13 @@
       "status": "candidate"
     },
     {
+      "id": "cat-harness.catharnessdeclaration.summary",
+      "prefLabel": "CatHarnessDeclaration.summary",
+      "definition": "A reader's one line — see {@link CatHarnessDeclarationSchema}'s `summary` (`ob3m` 4/5).",
+      "source": "cat-harness/schemas/cat-harness.ts#CatHarnessDeclaration.summary",
+      "status": "candidate"
+    },
+    {
       "id": "cat-harness.catharnessdeclaration.topology",
       "prefLabel": "CatHarnessDeclaration.topology",
       "definition": "The topology axes this deployment declares about itself. See {@link Topology} — every field optional, absent meaning \"has not said\".",
@@ -2160,6 +2174,13 @@
       "prefLabel": "CatHarnessDeclaration.version",
       "definition": "The version, and it is an EXACT semver triple.",
       "source": "cat-harness/schemas/cat-harness.ts#CatHarnessDeclaration.version",
+      "status": "candidate"
+    },
+    {
+      "id": "cat-harness.catharnessdeclarationschema.alsowritten",
+      "prefLabel": "CatHarnessDeclarationSchema.alsoWritten",
+      "definition": "Other ways the instance's name is written, shown on the landing as a small \"also written\" list rather than run into the description as one line. Owner's choice, 2026-10-01: keep the spellings visible, as a list.",
+      "source": "cat-harness/schemas/cat-harness.ts#CatHarnessDeclarationSchema.alsoWritten",
       "status": "candidate"
     },
     {
@@ -2251,6 +2272,13 @@
       "prefLabel": "CatHarnessDeclarationSchema.subscriptions",
       "definition": "External Knowledge Graphs this one subscribes to — see {@link Subscription}. `.optional()` for the reason `associatedHarnesses` is. Ids are unique, and never also in `needs` or `associatedHarnesses` — refined below.",
       "source": "cat-harness/schemas/cat-harness.ts#CatHarnessDeclarationSchema.subscriptions",
+      "status": "candidate"
+    },
+    {
+      "id": "cat-harness.catharnessdeclarationschema.summary",
+      "prefLabel": "CatHarnessDeclarationSchema.summary",
+      "definition": "One line for a READER, where `description` is written for an author.",
+      "source": "cat-harness/schemas/cat-harness.ts#CatHarnessDeclarationSchema.summary",
       "status": "candidate"
     },
     {
@@ -6790,6 +6818,20 @@
       "status": "candidate"
     },
     {
+      "id": "prov-jsonld.owned.path",
+      "prefLabel": "Owned.path",
+      "definition": "Path inside the instance, without extension, `/`-separated.",
+      "source": "cat-harness/schemas/prov-jsonld.ts#Owned.path",
+      "status": "candidate"
+    },
+    {
+      "id": "prov-jsonld.owned.root",
+      "prefLabel": "Owned.root",
+      "definition": "Instance root, absolute.",
+      "source": "cat-harness/schemas/prov-jsonld.ts#Owned.root",
+      "status": "candidate"
+    },
+    {
       "id": "prov.provactivityschema.cat-harness-underpolicy",
       "prefLabel": "ProvActivitySchema.cat-harness:underPolicy",
       "definition": "The ODRL policy uid(s) the run was under. Required: a run under no policy cannot be checked. An array when several policies were in force, which is how JSON-LD writes several values of one property: `decide` evaluates every policy an instance holds, so naming only one would misstate what the verdict was computed against.",
@@ -10518,6 +10560,13 @@
       "prefLabel": "VectorLabelsSidecarSchema.pages",
       "definition": "`null` is could-not-determine and is NOT an empty list.",
       "source": "cat-harness/schemas/vector-labels.ts#VectorLabelsSidecarSchema.pages",
+      "status": "candidate"
+    },
+    {
+      "id": "viewer-nav-qa.viewernavpageschema.flags",
+      "prefLabel": "ViewerNavPageSchema.flags",
+      "definition": "The layout criteria this railed page FAILS. Absent when it fails none.",
+      "source": "cat-harness/schemas/viewer-nav-qa.ts#ViewerNavPageSchema.flags",
       "status": "candidate"
     },
     {

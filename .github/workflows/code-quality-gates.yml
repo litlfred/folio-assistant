@@ -255,6 +255,27 @@ jobs:
     # bpmn-node: Task_TypeScript
     name: TypeScript — tests, lint, types (hard)
     runs-on: ubuntu-latest
+    # ## Three shards — bean `2i5k`
+    #
+    # `bun test` was the slowest step in CI (median 6.8 min, measured
+    # 2026-10-01), so this job runs as three copies, each running a third of
+    # the test FILES. Bun splits the sorted file list deterministically, so the
+    # three shards together run every file exactly once — nothing is dropped.
+    # `workflow-yaml.test.ts` pins that the shard count in `BUN_OPTIONS` equals
+    # the matrix length, which is the one way a split could silently skip files.
+    #
+    # Lint and typecheck run ONCE, on shards 1 and 2 respectively, so the three
+    # jobs finish at about the same time instead of one carrying all of it.
+    #
+    # The shard rides in `BUN_OPTIONS` rather than as a flag on the `bun test`
+    # line on purpose: `gates.ts` runs that line verbatim, with no shell, so a
+    # `${{ matrix.shard }}` there would break `bun run gates` locally — and the
+    # `bun test` spelling is what `check:red-gate-is-last` locates. Locally,
+    # with no `BUN_OPTIONS`, the same line runs the whole suite.
+    strategy:
+      fail-fast: false
+      matrix:
+        shard: [1, 2, 3]
     steps:
       - uses: actions/checkout@v7
         with:
@@ -284,6 +305,7 @@ jobs:
       # Exits 0 on warnings by design; a non-zero exit means a rule that had
       # been driven to zero has regressed.
       - name: bun run lint
+        if: matrix.shard == 1
         run: bun run lint
 
       # TypeScript 7 typechecks; TypeScript 6 stays installed as `typescript`
@@ -295,12 +317,15 @@ jobs:
       # names the TS7 launcher by path, which can only be TS7 (same command
       # as the `typecheck` script).
       - name: tsc --noEmit
+        if: matrix.shard == 2
         run: bun node_modules/typescript7/bin/tsc --noEmit -p tsconfig.json
 
       # Each step is a separate gate so the Actions UI names the one that
       # broke, rather than a single opaque "quality" failure. LAST on purpose —
       # see the ordering note above.
       - name: bun test
+        env:
+          BUN_OPTIONS: --shard=${{ matrix.shard }}/3
         run: bun test
 
 
@@ -1850,8 +1875,10 @@ jobs:
           # Every ingested source records its licence, or records that nobody
           # could find it and where they looked (issue #1023). It REPORTS
           # absence and `unknown`, because the field is new, and fails only on
-          # a record that claims something it cannot back.
-          bun run check:source-licence
+          # a record that claims something it cannot back. The `:check` form
+          # compares the committed sidecar and writes nothing (bean `i2kp`):
+          # the writing form, run as the gate, rewrote what it should judge.
+          bun run check:source-licence:check
           # Every declared harness visualiser has a wireframe, checked at a web
           # AND a mobile viewport (issue #1023; owner: "need both web and
           # mobile layouts in usability reviews"). Gated: a visualiser added
@@ -2151,7 +2178,22 @@ jobs:
       # through Chromium, which only this job installs. Before the e2e run so
       # a stale SVG is reported on its own terms rather than inside a browser
       # test's output.
+      # Bean `2i5k`: bpmn-js's raw drawing of each diagram, kept per diagram
+      # under a key covering everything the drawing is a function of (see
+      # `render-bpmn.ts`). The actions key below only decides WHICH directory
+      # comes back; correctness rests on the per-diagram key inside it, so a
+      # partial restore is safe and a stale entry is never read.
+      - name: Restore the BPMN render cache
+        id: bpmn-cache
+        uses: actions/cache@v6
+        with:
+          path: ${{ runner.temp }}/bpmn-render-cache
+          key: bpmn-render-${{ hashFiles('**/*.bpmn', '!**/node_modules/**', 'bootstrap-tools/scripts/render-bpmn.ts', 'bun.lock') }}
+          restore-keys: bpmn-render-
+
       - name: rendered BPMN SVGs are current
+        env:
+          BPMN_RENDER_CACHE: ${{ runner.temp }}/bpmn-render-cache
         run: bun run render:bpmn:check
 
       - name: playwright test

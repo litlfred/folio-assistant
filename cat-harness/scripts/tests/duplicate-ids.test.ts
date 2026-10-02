@@ -39,13 +39,16 @@ describe("the generated navbar include: one checkbox, labels in every copy", () 
     expect(inputs.length).toBe(1);
     expect(code).toMatch(/\{%-?\s*if fa_nav_copy == 1\s*-?%\}\s*<input[^>]*id="fa-nav-open"/);
   });
-  test("both labels point at the one checkbox the stylesheet reads", () => {
+  test("no label drives the checkbox here — the theme's avatar is the control (#1757)", () => {
     // PER RENDERED VARIANT, not per file. The generated include carries the
-    // canonical and staging renderings behind one Liquid conditional, so the
-    // file holds four `for=` and a PAGE receives two — which is the property
-    // that matters and the one a whole-file count silently doubled.
+    // canonical and staging renderings behind one Liquid conditional.
+    //
+    // There were two labels per page, the `☰` and the `[x]`, and the owner
+    // asked for both to go: `docs-ui.js` already makes `.site-title` (the
+    // avatar) toggle this checkbox, so they were the same control drawn three
+    // times. The checkbox stays — the stylesheet reads it — with one writer.
     const variants = code.split("{%- else -%}");
     expect(variants.length).toBe(2);
-    for (const v of variants) expect(v.match(/for="fa-nav-open"/g)?.length).toBe(2);
+    for (const v of variants) expect(v.match(/for="fa-nav-open"/g)).toBeNull();
   });
 });

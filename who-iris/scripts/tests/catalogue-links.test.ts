@@ -15,7 +15,9 @@ const REPO = resolve(INSTANCE, "..");
 const HARNESS = join(REPO, "cat-harness");
 const PAGE = join(HARNESS, siteDirFor(HARNESS), "cat-harness", "catalogue", "who-iris", "index.html");
 const html = existsSync(PAGE) ? readFileSync(PAGE, "utf-8") : "";
-const table = html.slice(html.indexOf("<h2>Every node</h2>"));
+// Matched by TEXT, not by exact markup: the rail step gives an id-less heading
+// an id (#1757), so `<h2>Every node</h2>` is `<h2 id="…">Every node</h2>`.
+const table = html.slice(html.search(/<h2\b[^>]*>Every node<\/h2>/));
 const nodes = table.slice(0, table.indexOf("</table>"));
 
 describe("the catalogue's rows lead somewhere (qgjh)", () => {
