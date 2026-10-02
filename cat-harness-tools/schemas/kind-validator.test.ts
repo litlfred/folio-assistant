@@ -7,6 +7,7 @@
  * most of the corpus.
  */
 import { describe, expect, test } from "bun:test";
+import { HARNESS_ROOT } from "../scripts/lib/roots.ts";
 import { mkdtempSync, mkdirSync, rmSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join, resolve } from "node:path";
@@ -16,10 +17,10 @@ import {
   isZodSchema,
   parseValidatorRef,
   resolveKindValidator,
-} from "./kind-validator";
-import { GraphKindRegistry, type GraphKindDef } from "./cat-harness";
+} from "../../cat-harness/schemas/kind-validator";
+import { GraphKindRegistry, type GraphKindDef } from "../../cat-harness/schemas/cat-harness";
 
-const INSTANCE = resolve(import.meta.dir, "..");
+const INSTANCE = HARNESS_ROOT;
 
 function registryWith(def: Partial<GraphKindDef> & { validator?: string }): GraphKindRegistry {
   const r = new GraphKindRegistry({});
@@ -130,7 +131,7 @@ describe("this instance's own kinds", () => {
   test("every declared validator resolves, and the count is not asserted", async () => {
     // Named states rather than a count: a number here reports a new graph
     // kind as a failure. What must hold is that nothing DECLARED is broken.
-    const { sweep } = await import("../scripts/check-kind-validators");
+    const { sweep } = await import("../../cat-harness/scripts/check-kind-validators");
     const r = await sweep(INSTANCE);
     expect(r.unresolvable).toEqual([]);
     expect(r.resolved.length + r.undeclared.length).toBeGreaterThan(0);
@@ -143,7 +144,7 @@ describe("this instance's own kinds", () => {
 
 describe("kindForPath", () => {
   test("the LONGEST matching directory wins, because declarations nest", async () => {
-    const { kindForPath } = await import("../scripts/kg-validate");
+    const { kindForPath } = await import("../../cat-harness/scripts/kg-validate");
     const root = mkdtempSync(join(tmpdir(), "kfp-"));
     mkdirSync(join(root, "beans", "defs"), { recursive: true });
     writeFileSync(join(root, "beans", "defs", "a.md"), "");
@@ -158,7 +159,7 @@ describe("kindForPath", () => {
   test("a directory declaring SEVERAL graphs yields nothing, rather than guessing", async () => {
     // `schemas/` declares two. Picking one would be the lie of precision the
     // `cat-harness` kind's own doc comment warns about.
-    const { kindForPath } = await import("../scripts/kg-validate");
+    const { kindForPath } = await import("../../cat-harness/scripts/kg-validate");
     const root = mkdtempSync(join(tmpdir(), "kfp2-"));
     mkdirSync(join(root, "schemas"), { recursive: true });
     const dirs = [{ path: "schemas/", graphKinds: ["schemas", "cat-harness"] }];
@@ -167,17 +168,17 @@ describe("kindForPath", () => {
   });
 
   test("a path outside the root belongs to no kind", async () => {
-    const { kindForPath } = await import("../scripts/kg-validate");
+    const { kindForPath } = await import("../../cat-harness/scripts/kg-validate");
     expect(kindForPath("/etc/passwd", "/tmp/x", [{ path: "a/", graphKinds: ["beans"] }]))
       .toBeUndefined();
   });
 });
 
 describe("per-family node schemas (bean rdkm)", () => {
-  const HARNESS = resolve(import.meta.dir, "..");
+  const HARNESS = HARNESS_ROOT;
 
   test("qa names every family, and each resolves to a schema, a shape, or a recorded absence", async () => {
-    const { resolveNodeSchemas } = await import("./kind-validator");
+    const { resolveNodeSchemas } = await import("../../cat-harness/schemas/kind-validator");
     const fams = await resolveNodeSchemas("qa", HARNESS);
     expect(fams.map((f) => f.tag).sort()).toEqual([
       "block-qa/v1", "folio-detangle-sidecar/v1", "folio-lsi-index/v1", "folio-qa-index/v1", "folio-test-run/v1",
@@ -204,7 +205,7 @@ describe("per-family node schemas (bean rdkm)", () => {
   });
 
   test("a shape is read from source, fields and optionality included", async () => {
-    const { readShape } = await import("./kind-validator");
+    const { readShape } = await import("../../cat-harness/schemas/kind-validator");
     const dir = mkdtempSync(join(tmpdir(), "shape-"));
     writeFileSync(join(dir, "m.ts"), "export interface Thing { id: string; note?: number }\n");
     const r = readShape(dir, "m.ts#Thing");
@@ -220,7 +221,7 @@ describe("per-family node schemas (bean rdkm)", () => {
   });
 
   test("kg-validate routes a qa node by its $schema tag", async () => {
-    const { validatePath } = await import("../scripts/kg-validate");
+    const { validatePath } = await import("../../cat-harness/scripts/kg-validate");
     const dir = join(HARNESS, "test", "results");
     const { readdirSync, readFileSync, statSync } = await import("node:fs");
     const find = (d: string, tag: string): string | undefined => {
@@ -248,25 +249,25 @@ describe("per-family node schemas (bean rdkm)", () => {
 
 describe("instance-qualified references (bean quda)", () => {
   test("`name:module#Export` resolves through the instance that declares the name", async () => {
-    const { parseValidatorRef, rootOf } = await import("./kind-validator");
+    const { parseValidatorRef, rootOf } = await import("../../cat-harness/schemas/kind-validator");
     expect(parseValidatorRef("folio-assistant-core:schemas/catalogue.ts#CatalogueSchema")).toEqual({
       instance: "folio-assistant-core",
       module: "schemas/catalogue.ts",
       exportName: "CatalogueSchema",
     });
-    const here = resolve(import.meta.dir, "..");
+    const here = HARNESS_ROOT;
     expect(rootOf("folio-assistant-core", here)).toBe(resolve(here, "..", "folio-assistant-core"));
     expect(rootOf("no-such-instance", here)).toBeUndefined();
     expect(rootOf(undefined, here)).toBe(here);
   });
 
   test("an escaping path is still refused — the name is the only way out", async () => {
-    const { parseValidatorRef } = await import("./kind-validator");
+    const { parseValidatorRef } = await import("../../cat-harness/schemas/kind-validator");
     expect(() => parseValidatorRef("../folio-assistant-core/schemas/catalogue.ts#CatalogueSchema")).toThrow();
   });
 
   test("top-level `_` annotations are dropped before a node is checked", async () => {
-    const { stripAnnotations } = await import("./kind-validator");
+    const { stripAnnotations } = await import("../../cat-harness/schemas/kind-validator");
     expect(stripAnnotations({ _comment: "x", a: 1, b: { _keep: 2 } })).toEqual({ a: 1, b: { _keep: 2 } });
     expect(stripAnnotations([1])).toEqual([1]);
   });
