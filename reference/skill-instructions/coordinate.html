@@ -520,32 +520,32 @@
   NOT a cache-busting strategy for third-party assets, and not applied to
   them: those are versioned in their own URLs already.
 -->
-<link rel="stylesheet" href="/folio-assistant/assets/css/docs-ui.css?v=1790959028">
+<link rel="stylesheet" href="/folio-assistant/assets/css/docs-ui.css?v=1790960302">
 <!-- Narrow viewports: wide content scrolls in its own box, never the page
      (bean `2r2n`). The standalone viewers inline the same file through
      `withViewerNav`, so both kinds of page read one set of rules. -->
-<link rel="stylesheet" href="/folio-assistant/assets/css/narrow-viewport.css?v=1790959028">
+<link rel="stylesheet" href="/folio-assistant/assets/css/narrow-viewport.css?v=1790960302">
 
 <!--
   The work-plan dashboard's styles, split from docs-ui.css so that
   `state-visualizer.ts` can inline exactly these bytes into the generated
   `<base>/<stub>/state-visualizer/` pages. One rule, two surfaces.
 -->
-<link rel="stylesheet" href="/folio-assistant/assets/css/work-plan.css?v=1790959028">
+<link rel="stylesheet" href="/folio-assistant/assets/css/work-plan.css?v=1790960302">
 <!-- Sticky themes. GENERATED from the theme nodes in `schemas/themes.ts` by
      `bun run themes:css`; `themes:css:check` fails the build when it is stale.
      Loaded AFTER docs-ui.css deliberately: it supplies the `--fa-sticky-*`
      roles that docs-ui.css consumes, and a custom property has to be set on a
      matching element before the rule reading it takes effect. -->
-<link rel="stylesheet" href="/folio-assistant/assets/css/themes.css?v=1790959028">
+<link rel="stylesheet" href="/folio-assistant/assets/css/themes.css?v=1790960302">
 <!-- UML overview colours: one class per graph kind, set on the Mermaid nodes
      that `scripts/gen-uml-overview.ts` writes into docs/uml/overview/. -->
-<link rel="stylesheet" href="/folio-assistant/assets/css/uml.css?v=1790959028">
+<link rel="stylesheet" href="/folio-assistant/assets/css/uml.css?v=1790960302">
 <!-- Kind avatars. GENERATED from `schemas/avatars.ts` by `bun run avatars:css`;
      `avatars:css:check` fails the build when it is stale. One stylesheet
      rather than 68 assets: the glyph is a mask and the colour is a property,
      so a scheme swap is a custom property and the trash state is a selector. -->
-<link rel="stylesheet" href="/folio-assistant/assets/css/avatars.css?v=1790959028">
+<link rel="stylesheet" href="/folio-assistant/assets/css/avatars.css?v=1790960302">
 
 <!--
   The kinds THIS INSTANCE DECLARES, for the avatar fan.
@@ -562,7 +562,7 @@
 <script type="application/json" id="fa-declared-kinds">["beans","cat-harness","code","code-list","docs","external-schema","folio","fsh-guts","health","interaction","issue-marks","library","memory","methodology","policies","processes","qa","scenarios","schemas","skills","substrate-snapshot","swimlane-glossary","todos","tools","translation-sources","uml","uploads","waiver"]</script>
 <script src="/folio-assistant/assets/js/vendor/qrcode.js" defer></script>
 <script src="/folio-assistant/assets/js/vendor/qrcode_UTF8.js" defer></script>
-<script src="/folio-assistant/assets/js/docs-ui.js?v=1790959028" defer></script>
+<script src="/folio-assistant/assets/js/docs-ui.js?v=1790960302" defer></script>
 
 <!--
   The work-plan dashboard. SELF-MOUNTING on any page carrying
@@ -891,6 +891,10 @@ beans = coordinate”</em>. How to read a sibling’s state out of the
 store, and the boundary of that inference, is
 <a href="/folio-assistant/reference/skill-instructions/bean-coordination.html"><code class="language-plaintext highlighter-rouge">bean-coordination</code></a> §”Where a sibling
 session is visible from” — not restated here.</li>
+  <li><strong>Before a PLATFORM REFACTOR — always, before the first edit.</strong> A
+change to something many pages or PRs depend on runs the five-step
+collision review in §”Before a platform refactor” below and records
+it in the workplan bean. Owner, 2026-10-02 (#1885).</li>
 </ul>
 <h2 id="inputs">
   
@@ -1306,6 +1310,147 @@ and both were competent; the second was free to skip. Before re-deriving a
 measurement, check whether a sibling’s <strong>pushed commit</strong> already carries it:
 an open PR’s diff is a fact, and reading it costs one call against a session’s
 worth of re-measurement.</p>
+<h2 id="before-a-platform-refactor--a-collision-review-recorded-before-the-first-edit-strict">
+  
+  
+    <a href="#before-a-platform-refactor--a-collision-review-recorded-before-the-first-edit-strict" class="anchor-heading" aria-labelledby="before-a-platform-refactor--a-collision-review-recorded-before-the-first-edit-strict"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Before a platform refactor — a collision review, recorded before the first edit (STRICT)
+  
+  
+</h2>
+    
+
+<p>Owner, 2026-10-02, on issue #1885, verbatim:</p>
+
+<blockquote>
+  <p><em>“(in genreal update agent-agent coorindation/hadover skills - if you are
+working on a refactor of the platform, review active agents/beans for impact
+and coordiante)”</em></p>
+</blockquote>
+
+<p><strong>This section is the rule’s only home.</strong> <code class="language-plaintext highlighter-rouge">bean-coordination</code>, <code class="language-plaintext highlighter-rouge">session-intent</code>
+and <code class="language-plaintext highlighter-rouge">continual-progress</code> point here. They do not restate it.</p>
+<h3 id="what-counts-as-a-platform-refactor">
+  
+  
+    <a href="#what-counts-as-a-platform-refactor" class="anchor-heading" aria-labelledby="what-counts-as-a-platform-refactor"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> What counts as a platform refactor
+  
+  
+</h3>
+    
+
+<p>A platform refactor is a change to something that many pages, generators or
+open PRs depend on. Examples:</p>
+
+<ul>
+  <li>shared layout and includes: <code class="language-plaintext highlighter-rouge">_includes/</code>, <code class="language-plaintext highlighter-rouge">docs-ui.css</code>, <code class="language-plaintext highlighter-rouge">docs-ui.js</code>, the navbar;</li>
+  <li>a generator whose output is committed or published, such as <code class="language-plaintext highlighter-rouge">gen-ig-pages.ts</code>
+or <code class="language-plaintext highlighter-rouge">gen-navbar-include.ts</code>;</li>
+  <li>a schema, a BPMN process, or a gate that other work is checked against.</li>
+</ul>
+
+<p>The test is the blast radius, not the size of the diff. A ten-line change to a
+shared include collides with every PR that regenerates it.</p>
+
+<p>The bean trigger above catches a sibling working on the same <strong>subject</strong>.
+§”The collision surface is FILES” catches two sessions editing the same
+<strong>file</strong> from different subjects. A refactor causes both kinds at once, which
+is why it gets a review of its own and does not rely on either trigger.</p>
+<h3 id="the-five-steps-in-order-before-any-file-is-edited">
+  
+  
+    <a href="#the-five-steps-in-order-before-any-file-is-edited" class="anchor-heading" aria-labelledby="the-five-steps-in-order-before-any-file-is-edited"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> The five steps, in order, before any file is edited
+  
+  
+</h3>
+    
+
+<ol>
+  <li><strong>List the open PRs and the files they change.</strong> Use
+<code class="language-plaintext highlighter-rouge">gh pr list --state open --json number,title,headRefName,files</code>, or
+<code class="language-plaintext highlighter-rouge">pull_request_read</code> with the <code class="language-plaintext highlighter-rouge">get_files</code> method for each PR. Intersect the
+result with the files the refactor will touch. A PR that changes only
+<strong>generated</strong> files you will also regenerate is not a collision; say so
+and move on.</li>
+  <li><strong>Scan the <code class="language-plaintext highlighter-rouge">in-progress</code> beans for overlapping scope.</strong> Use
+<code class="language-plaintext highlighter-rouge">beans list --status in-progress --search &lt;term&gt;</code>, and search the subject
+as well as the ids: the file names, the generator, the page type. A bean id finds nothing
+when the overlapping work has no bean of its own; see
+<a href="/folio-assistant/reference/skill-instructions/bean-coordination.html"><code class="language-plaintext highlighter-rouge">bean-coordination</code></a> §”The trigger is STARTING WORK”.</li>
+  <li><strong>Name the owning sessions.</strong> Use <code class="language-plaintext highlighter-rouge">list_sessions</code>, the <code class="language-plaintext highlighter-rouge">Claude-Session:</code>
+trailers on each PR’s commits, and <code class="language-plaintext highlighter-rouge">bun run sessions --since &lt;window&gt;</code>.
+<a href="/folio-assistant/reference/skill-instructions/bean-coordination.html"><code class="language-plaintext highlighter-rouge">bean-coordination</code></a> §”Where a sibling session is
+visible from” says how far that inference goes.</li>
+  <li><strong>Message each owner with your intent and your asks.</strong> State what you will
+change, phase by phase, and the files each phase touches. Then ask two
+things: which order do we land in, and who owns each overlapping file.
+Send it through a channel that actually reaches them; §”What actually
+reaches a sibling” says which ones do. A PR comment also leaves a durable
+copy.</li>
+  <li><strong>Record the review in the workplan bean before editing.</strong> Write down each
+overlapping session, its PRs and beans, the files you share, and the phases
+affected. A review that exists only in the chat is gone when the container
+goes, and the next session has to run it again.</li>
+</ol>
+
+<p><strong>Phases that overlap a sibling wait.</strong> They wait until the sibling has agreed
+an order, or until its overlapping PR has landed. Phases that touch none of the
+sibling’s files can go ahead, and the review says which ones those are.</p>
+<h3 id="worked-example--1885-bean-gp2f">
+  
+  
+    <a href="#worked-example--1885-bean-gp2f" class="anchor-heading" aria-labelledby="worked-example--1885-bean-gp2f"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Worked example — #1885, bean <code class="language-plaintext highlighter-rouge">gp2f</code>
+  
+  
+</h3>
+    
+
+<p>The refactor moves the per-page nav, the harness bar, icons, scripts and the
+IG chrome CSS into shared cached assets. It touches the layout of every page
+on the site. Before any edit, the review found active sibling work on <strong>every
+layout file the plan needed</strong>:</p>
+
+<div class="table-wrapper"><table>
+  <thead>
+    <tr>
+      <th>sibling</th>
+      <th>its PRs</th>
+      <th>shared files</th>
+      <th><code class="language-plaintext highlighter-rouge">gp2f</code> phases affected</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>navbar session (bean <code class="language-plaintext highlighter-rouge">ob3m</code>)</td>
+      <td>#1804, #1805, #1808, #1819</td>
+      <td><code class="language-plaintext highlighter-rouge">docs-ui.css</code>, <code class="language-plaintext highlighter-rouge">docs-ui.js</code>, <code class="language-plaintext highlighter-rouge">_includes/generated/navbar-footer.html</code>, <code class="language-plaintext highlighter-rouge">harness_details.html</code>, <code class="language-plaintext highlighter-rouge">head_custom.html</code>, <code class="language-plaintext highlighter-rouge">harness-tiles.md</code></td>
+      <td>B, C, D, E</td>
+    </tr>
+    <tr>
+      <td>fhir-ast session (bean <code class="language-plaintext highlighter-rouge">wnhh</code>)</td>
+      <td>#1816</td>
+      <td><code class="language-plaintext highlighter-rouge">fhir-harness/scripts/gen-ig-pages.ts</code></td>
+      <td>A</td>
+    </tr>
+    <tr>
+      <td>smart-trust IG session</td>
+      <td>#1766</td>
+      <td>the <code class="language-plaintext highlighter-rouge">gen-ig-pages</code> area</td>
+      <td>A</td>
+    </tr>
+  </tbody>
+</table></div>
+
+<p>If the review had been skipped, five PRs would have been rebased into a
+refactor of the files they were editing.</p>
+
+<p>What happened instead:</p>
+
+<ul>
+  <li>The review went into <code class="language-plaintext highlighter-rouge">gp2f</code> before any edit.</li>
+  <li>The three owning sessions were messaged with the plan and asked for an order.</li>
+  <li>The only work that started was work that touches none of their files: this
+section, and a read-only baseline measurement of page sizes.</li>
+</ul>
 <h2 id="related-skills">
   
   
@@ -2282,7 +2427,7 @@ just not tied to the two moments named above.</p>
 </section>
 <p class="text-small mb-0">folio-assistant — code under the Apache License 2.0, documentation under CC BY 3.0. Generated schema and API references are rebuilt from source on every push to main.</p><p class="text-small mb-0 fa-build-stamp">
   deployed
-  <a href="https://github.com/litlfred/folio-assistant/actions/runs/37035019312"><code>22ac68d</code></a> &middot; 2026-10-02T16:37:01Z</p>
+  <a href="https://github.com/litlfred/folio-assistant/actions/runs/37037429047"><code>8f89ebd</code></a> &middot; 2026-10-02T16:58:18Z</p>
 
 
   <div class="d-md-none mt-4 fs-2">

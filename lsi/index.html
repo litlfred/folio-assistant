@@ -517,32 +517,32 @@
   NOT a cache-busting strategy for third-party assets, and not applied to
   them: those are versioned in their own URLs already.
 -->
-<link rel="stylesheet" href="/folio-assistant/assets/css/docs-ui.css?v=1790959028">
+<link rel="stylesheet" href="/folio-assistant/assets/css/docs-ui.css?v=1790960302">
 <!-- Narrow viewports: wide content scrolls in its own box, never the page
      (bean `2r2n`). The standalone viewers inline the same file through
      `withViewerNav`, so both kinds of page read one set of rules. -->
-<link rel="stylesheet" href="/folio-assistant/assets/css/narrow-viewport.css?v=1790959028">
+<link rel="stylesheet" href="/folio-assistant/assets/css/narrow-viewport.css?v=1790960302">
 
 <!--
   The work-plan dashboard's styles, split from docs-ui.css so that
   `state-visualizer.ts` can inline exactly these bytes into the generated
   `<base>/<stub>/state-visualizer/` pages. One rule, two surfaces.
 -->
-<link rel="stylesheet" href="/folio-assistant/assets/css/work-plan.css?v=1790959028">
+<link rel="stylesheet" href="/folio-assistant/assets/css/work-plan.css?v=1790960302">
 <!-- Sticky themes. GENERATED from the theme nodes in `schemas/themes.ts` by
      `bun run themes:css`; `themes:css:check` fails the build when it is stale.
      Loaded AFTER docs-ui.css deliberately: it supplies the `--fa-sticky-*`
      roles that docs-ui.css consumes, and a custom property has to be set on a
      matching element before the rule reading it takes effect. -->
-<link rel="stylesheet" href="/folio-assistant/assets/css/themes.css?v=1790959028">
+<link rel="stylesheet" href="/folio-assistant/assets/css/themes.css?v=1790960302">
 <!-- UML overview colours: one class per graph kind, set on the Mermaid nodes
      that `scripts/gen-uml-overview.ts` writes into docs/uml/overview/. -->
-<link rel="stylesheet" href="/folio-assistant/assets/css/uml.css?v=1790959028">
+<link rel="stylesheet" href="/folio-assistant/assets/css/uml.css?v=1790960302">
 <!-- Kind avatars. GENERATED from `schemas/avatars.ts` by `bun run avatars:css`;
      `avatars:css:check` fails the build when it is stale. One stylesheet
      rather than 68 assets: the glyph is a mask and the colour is a property,
      so a scheme swap is a custom property and the trash state is a selector. -->
-<link rel="stylesheet" href="/folio-assistant/assets/css/avatars.css?v=1790959028">
+<link rel="stylesheet" href="/folio-assistant/assets/css/avatars.css?v=1790960302">
 
 <!--
   The kinds THIS INSTANCE DECLARES, for the avatar fan.
@@ -559,7 +559,7 @@
 <script type="application/json" id="fa-declared-kinds">["beans","cat-harness","code","code-list","docs","external-schema","folio","fsh-guts","health","interaction","issue-marks","library","memory","methodology","policies","processes","qa","scenarios","schemas","skills","substrate-snapshot","swimlane-glossary","todos","tools","translation-sources","uml","uploads","waiver"]</script>
 <script src="/folio-assistant/assets/js/vendor/qrcode.js" defer></script>
 <script src="/folio-assistant/assets/js/vendor/qrcode_UTF8.js" defer></script>
-<script src="/folio-assistant/assets/js/docs-ui.js?v=1790959028" defer></script>
+<script src="/folio-assistant/assets/js/docs-ui.js?v=1790960302" defer></script>
 
 <!--
   The work-plan dashboard. SELF-MOUNTING on any page carrying
@@ -1089,7 +1089,7 @@ the same as fine. The same verdict is <code class="language-plaintext highlighte
 </h2>
     
 
-<p><strong>220</strong> units · <strong>5901</strong> terms · k = <strong>100</strong> · retains <strong>79.0 %</strong> of the weighted matrix · weighting <code class="language-plaintext highlighter-rouge">log-entropy</code> · sidecar <code class="language-plaintext highlighter-rouge">cat-harness/test/results/lsi/cat-harness/skills.lsi.json</code></p>
+<p><strong>220</strong> units · <strong>5906</strong> terms · k = <strong>100</strong> · retains <strong>79.0 %</strong> of the weighted matrix · weighting <code class="language-plaintext highlighter-rouge">log-entropy</code> · sidecar <code class="language-plaintext highlighter-rouge">cat-harness/test/results/lsi/cat-harness/skills.lsi.json</code></p>
 
 <blockquote>
   <p>Dimension 1 has <strong>no negative pole</strong>: it most likely measures unit length and term frequency (a margin), not a theme. Read the themes from dimension 2 on.</p>
@@ -1109,33 +1109,33 @@ the same as fine. The same verdict is <code class="language-plaintext highlighte
   <tbody>
     <tr>
       <td>1</td>
-      <td>44.14</td>
-      <td>instance, kind, harness, session, block, directory, graph, page</td>
+      <td>44.24</td>
+      <td>instance, kind, harness, session, directory, block, graph, page</td>
       <td><em>(none)</em></td>
     </tr>
     <tr>
       <td>2</td>
-      <td>21.49</td>
-      <td>watcher, slot, sibling, queue, prs, backlog, block, commits</td>
+      <td>21.54</td>
+      <td>watcher, sibling, slot, prs, queue, backlog, commits, block</td>
       <td>harness, instance, declaration, directory, node, directories, graph, declares</td>
     </tr>
     <tr>
       <td>3</td>
-      <td>17.87</td>
-      <td>slot, chapter, edges, block, formal, project, glossary, proof</td>
-      <td>session, beans, branch, goals, store, push, window, epic</td>
+      <td>17.93</td>
+      <td>slot, chapter, block, edges, formal, project, proof, glossary</td>
+      <td>session, beans, branch, goals, store, window, push, sessions</td>
     </tr>
     <tr>
       <td>4</td>
-      <td>16.58</td>
-      <td>page, block, blocks, text, chapter, manifest, section, pdf</td>
-      <td>sibling, ledger, subdirectory, items, session, sessions, coordination, window</td>
+      <td>16.62</td>
+      <td>page, block, text, blocks, chapter, manifest, pdf, section</td>
+      <td>sibling, ledger, subdirectory, sessions, items, prs, session, coordination</td>
     </tr>
     <tr>
       <td>5</td>
       <td>14.98</td>
-      <td>preview, staging, navbar, locale, translated, page, translation, build</td>
-      <td>rung, archive, archived, withheld, arm, sniff, ingest, edges</td>
+      <td>preview, staging, navbar, locale, page, translated, translation, build</td>
+      <td>rung, archive, archived, withheld, arm, sniff, ingest, claim</td>
     </tr>
     <tr>
       <td>6</td>
@@ -1145,15 +1145,15 @@ the same as fine. The same verdict is <code class="language-plaintext highlighte
     </tr>
     <tr>
       <td>7</td>
-      <td>14.48</td>
+      <td>14.49</td>
       <td>edges, forward, preview, backward, edge, cross-chapter, energy, logical</td>
-      <td>actor, lane, role, criterion, backlog, task, login, requirement</td>
+      <td>actor, lane, role, criterion, backlog, login, task, process</td>
     </tr>
     <tr>
       <td>8</td>
       <td>14.22</td>
-      <td>feature, phase, preview, pdf, feedback, stakeholders, impact, github</td>
-      <td>avatar, tile, art, card, locale, claim, board, translated</td>
+      <td>avatar, tile, card, art, board, claim, sidebar, sticky</td>
+      <td>feature, phase, pdf, feedback, preview, stakeholders, impact, github</td>
     </tr>
   </tbody>
 </table></div>
@@ -1545,7 +1545,7 @@ just not tied to the two moments named above.</p>
 </section>
 <p class="text-small mb-0">folio-assistant — code under the Apache License 2.0, documentation under CC BY 3.0. Generated schema and API references are rebuilt from source on every push to main.</p><p class="text-small mb-0 fa-build-stamp">
   deployed
-  <a href="https://github.com/litlfred/folio-assistant/actions/runs/37035019312"><code>22ac68d</code></a> &middot; 2026-10-02T16:37:01Z</p>
+  <a href="https://github.com/litlfred/folio-assistant/actions/runs/37037429047"><code>8f89ebd</code></a> &middot; 2026-10-02T16:58:18Z</p>
 
 
   <div class="d-md-none mt-4 fs-2">
