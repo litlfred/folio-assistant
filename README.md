@@ -217,13 +217,13 @@ editor; only an accepted change is written to the corpus.
 
 <img src="cat-harness/docs/assets/img/workflows/editing-hci-validation.svg" alt="BPMN swimlane diagram of the editing process and its HCI validation gate" width="100%">
 
-[BPMN source](cat-harness/processes/editing-hci-validation.bpmn)
+[BPMN source](folio-assistant-core/processes/content/editing-hci-validation.bpmn)
 
 ### Corpus → draft → review team → published
 
 <img src="cat-harness/docs/assets/img/workflows/draft-to-publication.svg" alt="BPMN swimlane diagram: corpus to draft publication, review team and SME sign-off, programme-manager authorisation, publication" width="100%">
 
-[BPMN source](cat-harness/processes/draft-to-publication.bpmn)
+[BPMN source](folio-assistant-core/processes/content/draft-to-publication.bpmn)
 
 ### One cycle of a folio, plan → retire
 
@@ -234,16 +234,16 @@ findings, resolved on commit — so a human and an agent read the same answer to
 
 <img src="cat-harness/docs/assets/img/workflows/content-lifecycle.svg" alt="BPMN swimlane diagram of the content lifecycle from plan to retire" width="100%">
 
-[BPMN source](cat-harness/processes/content-lifecycle.bpmn)
+[BPMN source](folio-assistant-core/processes/content/content-lifecycle.bpmn)
 
 ### Per content type
 
 | Diagram | Content type |
 |---------|--------------|
-| [`authoring-a-document.bpmn`](cat-harness/processes/authoring-a-document.bpmn) · [SVG](cat-harness/docs/assets/img/workflows/authoring-a-document.svg) | Documents & policy guidance |
-| [`authoring-a-paper.bpmn`](cat-harness/processes/authoring-a-paper.bpmn) · [SVG](cat-harness/docs/assets/img/workflows/authoring-a-paper.svg) | Scientific papers & books |
-| [`l2-dak-authoring.bpmn`](smart-base/processes/l2-dak-authoring.bpmn) · [SVG](cat-harness/docs/assets/img/workflows/l2-dak-authoring.svg) | WHO SMART Guidelines DAK (L2) |
-| [`l3-fhir-pipeline.bpmn`](cat-harness/processes/l3-fhir-pipeline.bpmn) · [SVG](cat-harness/docs/assets/img/workflows/l3-fhir-pipeline.svg) | WHO SMART Implementation Guide (L3) |
+| [`authoring-a-document.bpmn`](folio-assistant-core/processes/content/authoring-a-document.bpmn) · [SVG](cat-harness/docs/assets/img/workflows/authoring-a-document.svg) | Documents & policy guidance |
+| [`authoring-a-paper.bpmn`](folio-assistant-sci/processes/content/authoring-a-paper.bpmn) · [SVG](cat-harness/docs/assets/img/workflows/authoring-a-paper.svg) | Scientific papers & books |
+| [`l2-dak-authoring.bpmn`](smart-base/processes/content/l2-dak-authoring.bpmn) · [SVG](cat-harness/docs/assets/img/workflows/l2-dak-authoring.svg) | WHO SMART Guidelines DAK (L2) |
+| [`l3-fhir-pipeline.bpmn`](fhir-harness/processes/content/l3-fhir-pipeline.bpmn) · [SVG](cat-harness/docs/assets/img/workflows/l3-fhir-pipeline.svg) | WHO SMART Implementation Guide (L3) |
 
 ---
 

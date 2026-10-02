@@ -4,7 +4,7 @@ nav_exclude: true
 ---
 
 {: .note }
-> Generated from `cat-harness/processes/ig-incremental-build.bpmn` by `gen-processes-viz.ts` — do not edit here. [All processes](index.html)
+> Generated from `fhir-harness/processes/content/ig-incremental-build.bpmn` by `gen-processes-viz.ts` — do not edit here. [All processes](index.html)
 
 {% raw %}
 # Incremental IG build

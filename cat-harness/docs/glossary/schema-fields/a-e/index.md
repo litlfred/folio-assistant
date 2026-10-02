@@ -13,16 +13,16 @@ permalink: /glossary/schema-fields/a-e/
 
 Candidate terms extracted from every schema field with a doc comment: `<Declaration>.<field>` as the label, the comment's first paragraph as the definition. Each is the asset's own text, verbatim and not curated, and carries the badge "candidate, extracted". A person promotes one by authoring it. Authored terms, the counts and the sources are on the <a href="{{ '/glossary/' | relative_url }}">glossary index</a>.
 
-From: bootstrap-tools 28 (<a href="{{ '/assets/glossary/bootstrap-tools--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · cat-harness 1642 (<a href="{{ '/assets/glossary/cat-harness--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · fhir-harness 60 (<a href="{{ '/assets/glossary/fhir-harness--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · folio-assistant-core 117 (<a href="{{ '/assets/glossary/folio-assistant-core--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · smart-base 9 (<a href="{{ '/assets/glossary/smart-base--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>).
+From: bootstrap-tools 28 (<a href="{{ '/assets/glossary/bootstrap-tools--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · cat-harness 1661 (<a href="{{ '/assets/glossary/cat-harness--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · fhir-harness 60 (<a href="{{ '/assets/glossary/fhir-harness--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · folio-assistant-core 117 (<a href="{{ '/assets/glossary/folio-assistant-core--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · smart-base 9 (<a href="{{ '/assets/glossary/smart-base--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>).
 
 One of 4 pages of this type, split by the first letter of the label: <a href="{{ '/glossary/schema-fields/' | relative_url }}">all parts</a>.
 
-**Size:** this page holds 514 terms and is 290 KB before compression, fetched in one request, within its budget of 1.0 MB. There is no search index: the filter below runs over this page, and the A–Z bar jumps within it.
+**Size:** this page holds 523 terms and is 295 KB before compression, fetched in one request, within its budget of 1.0 MB. There is no search index: the filter below runs over this page, and the A–Z bar jumps within it.
 
 <table class="fa-gloss-mapping">
 <caption>Already somebody else's concept? — <code>check:term-mapping</code>, bean <code>7wou</code></caption>
 <thead><tr><th>target</th><th>mapped</th><th>unmapped</th><th>undetermined</th><th>why undetermined</th></tr></thead>
-<tbody><tr><td><code>fhir</code></td><td>0</td><td>1856</td><td>0</td><td>—</td></tr><tr><td><code>skos</code></td><td>0</td><td>1856</td><td>0</td><td>—</td></tr></tbody>
+<tbody><tr><td><code>fhir</code></td><td>0</td><td>1875</td><td>0</td><td>—</td></tr><tr><td><code>skos</code></td><td>0</td><td>1875</td><td>0</td><td>—</td></tr></tbody>
 </table>
 <p class="fa-gloss-mapping-note"><strong>Undetermined is never “no match”.</strong> 
 A vocabulary that could not be reached has said nothing, and the column above keeps that 
@@ -32,7 +32,7 @@ be a term this corpus is right to coin.</p>
 
 <label for="fa-gloss-q">Filter terms</label>
 <input id="fa-gloss-q" type="search" autocomplete="off" style="min-height:44px;width:100%;max-width:32rem">
-<p aria-live="polite"><span id="fa-gloss-n">514</span> shown</p>
+<p aria-live="polite"><span id="fa-gloss-n">523</span> shown</p>
 
 <nav aria-label="Letters"><a href="#letter-A">A</a> <a href="#letter-B">B</a> <a href="#letter-C">C</a> <a href="#letter-D">D</a> <a href="#letter-E">E</a></nav>
 
@@ -699,6 +699,27 @@ BeanIndexItemSchema.preview <span class="fa-gloss-status">candidate, extracted</
 <dd>
 <p>The body, trimmed to its first 400 characters.</p>
 <p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/site-indexes.ts"><code>cat-harness/schemas/site-indexes.ts#BeanIndexItemSchema.preview</code></a></p>
+</dd>
+<dt id="cat-harness--kg-schema-fields--bean-note.beannotefrontmatterschema.bean" data-fa-state="extracted" data-fa-gloss="">
+BeanNoteFrontMatterSchema.bean <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>The bean this note adds to. It must exist in the bean store.</p>
+<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/bean-note.ts"><code>cat-harness/schemas/bean-note.ts#BeanNoteFrontMatterSchema.bean</code></a></p>
+</dd>
+<dt id="cat-harness--kg-schema-fields--bean-note.beannotefrontmatterschema.branch" data-fa-state="extracted" data-fa-gloss="">
+BeanNoteFrontMatterSchema.branch <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>The branch that wrote it — the key that keeps two writers apart.</p>
+<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/bean-note.ts"><code>cat-harness/schemas/bean-note.ts#BeanNoteFrontMatterSchema.branch</code></a></p>
+</dd>
+<dt id="cat-harness--kg-schema-fields--bean-note.beannotefrontmatterschema.created" data-fa-state="extracted" data-fa-gloss="">
+BeanNoteFrontMatterSchema.created <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>When this branch started its note on this bean (UTC).</p>
+<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/bean-note.ts"><code>cat-harness/schemas/bean-note.ts#BeanNoteFrontMatterSchema.created</code></a></p>
 </dd>
 <dt id="folio-assistant-core--kg-schema-fields--catalogue.bitstreamschema.maskedregions" data-fa-state="extracted" data-fa-gloss="">
 BitstreamSchema.maskedRegions <span class="fa-gloss-status">candidate, extracted</span>
@@ -2955,6 +2976,34 @@ DependencyEdge.to <span class="fa-gloss-status">candidate, extracted</span>
 <p>Label of the object being used.</p>
 <p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/formalization-types.ts"><code>cat-harness/schemas/formalization-types.ts#DependencyEdge.to</code></a></p>
 </dd>
+<dt id="cat-harness--kg-schema-fields--vocab-mapping.dependencyschema.attribute" data-fa-state="extracted" data-fa-gloss="">
+DependencySchema.attribute <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>R5 <code>attribute</code> (a code); R4 <code>property</code> (a URI).</p>
+<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/vocab-mapping.ts"><code>cat-harness/schemas/vocab-mapping.ts#DependencySchema.attribute</code></a></p>
+</dd>
+<dt id="cat-harness--kg-schema-fields--vocab-mapping.dependencyschema.display" data-fa-state="extracted" data-fa-gloss="">
+DependencySchema.display <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>R4 only.</p>
+<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/vocab-mapping.ts"><code>cat-harness/schemas/vocab-mapping.ts#DependencySchema.display</code></a></p>
+</dd>
+<dt id="cat-harness--kg-schema-fields--vocab-mapping.dependencyschema.system" data-fa-state="extracted" data-fa-gloss="">
+DependencySchema.system <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>R4 only.</p>
+<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/vocab-mapping.ts"><code>cat-harness/schemas/vocab-mapping.ts#DependencySchema.system</code></a></p>
+</dd>
+<dt id="cat-harness--kg-schema-fields--vocab-mapping.dependencyschema.valueset" data-fa-state="extracted" data-fa-gloss="">
+DependencySchema.valueSet <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>R5 only.</p>
+<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/vocab-mapping.ts"><code>cat-harness/schemas/vocab-mapping.ts#DependencySchema.valueSet</code></a></p>
+</dd>
 <dt id="cat-harness--kg-schema-fields--depends-on.dependsonexport.records" data-fa-state="extracted" data-fa-gloss="">
 DependsOnExport.records <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
@@ -3449,6 +3498,20 @@ DublinCoreRef.source <span class="fa-gloss-status">candidate, extracted</span>
 
 <h2 id="letter-E">E</h2>
 <dl class="fa-gloss">
+<dt id="cat-harness--kg-schema-fields--vocab-mapping.elementschema.code" data-fa-state="extracted" data-fa-gloss="">
+ElementSchema.code <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>The source term: a field of the source record, or a code in the source system.</p>
+<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/vocab-mapping.ts"><code>cat-harness/schemas/vocab-mapping.ts#ElementSchema.code</code></a></p>
+</dd>
+<dt id="cat-harness--kg-schema-fields--vocab-mapping.elementschema.nomap" data-fa-state="extracted" data-fa-gloss="">
+ElementSchema.noMap <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>Deliberately unmapped: an absence that is a statement, not a gap (R5 <code>noMap</code>).</p>
+<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/vocab-mapping.ts"><code>cat-harness/schemas/vocab-mapping.ts#ElementSchema.noMap</code></a></p>
+</dd>
 <dt id="cat-harness--kg-schema-fields--types.equationblock.label" data-fa-state="extracted" data-fa-gloss="">
 EquationBlock.label <span class="fa-gloss-status">candidate, extracted</span>
 </dt>

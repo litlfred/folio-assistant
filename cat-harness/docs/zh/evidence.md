@@ -46,7 +46,7 @@ _本页面生成自 [`content/docs/evidence/`](https://github.com/litlfred/folio
 ## 子流程
 {: #the-subprocess data-fa-label="sec:evidence-the-subprocess" }
 
-[✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/processes/evidence-retrieval.bpmn){: .fa-node-edit title="Edit processes/evidence-retrieval.bpmn" } <span class="fa-qa-badges"><button type="button" class="fa-qa-badge fa-qa-pending fa-qa-fam-kg" data-qa-family="kg" data-qa-key="the-subprocess.kg" data-qa-label="Knowledge-graph QA" data-qa-noun="diagram" data-qa-src="{{ '/assets/qa/evidence/the-subprocess.kg.json' | relative_url }}" data-qa-index="{{ '/assets/qa/evidence/qa-index.json' | relative_url }}" aria-expanded="false" aria-busy="true" title="Knowledge-graph QA: loading the verdict…" aria-label="Knowledge-graph QA: loading the verdict…"><span class="fa-qa-tag">KG</span><span class="fa-qa-glyph" aria-hidden="true">…</span></button></span>
+[✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/processes/evidence-retrieval.bpmn){: .fa-node-edit title="Edit folio-assistant-core/processes/content/evidence-retrieval.bpmn" } <span class="fa-qa-badges"><button type="button" class="fa-qa-badge fa-qa-pending fa-qa-fam-kg" data-qa-family="kg" data-qa-key="the-subprocess.kg" data-qa-label="Knowledge-graph QA" data-qa-noun="diagram" data-qa-src="{{ '/assets/qa/evidence/the-subprocess.kg.json' | relative_url }}" data-qa-index="{{ '/assets/qa/evidence/qa-index.json' | relative_url }}" aria-expanded="false" aria-busy="true" title="Knowledge-graph QA: loading the verdict…" aria-label="Knowledge-graph QA: loading the verdict…"><span class="fa-qa-tag">KG</span><span class="fa-qa-glyph" aria-hidden="true">…</span></button></span>
 
 划分为四个泳道，是因为涉及四种不同类型的参与者，而将它们混为一谈正是问责机制失效的根源：
 
