@@ -46,7 +46,8 @@ import { basename, join, resolve } from "node:path";
 // through both writers therefore carried a second, unreferenced, byte-identical
 // copy of every prose block: 91 of them across four documents when measured
 // (2026-09-23). Two naming rules for one block is one rule too many.
-import { blockId, sectionKey } from "../content/pipeline/gen-library-jsonld.ts";
+import { blockId, libraryInstanceOf, sectionKey } from "../content/pipeline/gen-library-jsonld.ts";
+import { libraryAssetIri } from "../schemas/library-iri.ts";
 import { STRUCTURE_FILENAME, pagesOf, readStructure } from "../schemas/document-structure.ts";
 
 /** The `@context` every ingested node already carries. Read from a sibling, never retyped. */
@@ -105,6 +106,10 @@ export function buildL1(dir: string, write = true): BuildResult {
   if (missing.length > 0) return { docId: st.doc_id, blocks: 0, missing };
 
   const base = stem(st.doc_id);
+  // The asset's own IRI once the entry sits in an instance's library (#1881);
+  // a STAGED entry keeps the relative form until promotion regenerates it.
+  const instance = libraryInstanceOf(dir);
+  const manifestIri = instance !== undefined ? libraryAssetIri(instance, st.doc_id) : `${base}/manifest`;
   const blocksDir = join(dir, "blocks");
   if (write) mkdirSync(blocksDir, { recursive: true });
 
@@ -120,8 +125,8 @@ export function buildL1(dir: string, write = true): BuildResult {
       // by cells, and a cell index is never written as a page number.
       ...(pagesOf(s) ? { pageStart: pagesOf(s)!.start, pageEnd: pagesOf(s)!.end } : {}),
       text: `../sections/${s.id}.md`,
-      derivedFrom: `${base}/manifest`,
-      sourceDocument: `${base}/manifest`,
+      derivedFrom: manifestIri,
+      sourceDocument: manifestIri,
       provenance: "ingested",
     };
     if (write) {
@@ -144,7 +149,7 @@ export function buildL1(dir: string, write = true): BuildResult {
   }
   const manifest = {
     "@context": CONTEXT,
-    "@id": `${base}/manifest`,
+    "@id": manifestIri,
     "@type": ["folio-assistant-core:SourceDocument"],
     title: st.doc_id,
     // The section NODE is `sections/sec-NNN` — the generator's name for it. The

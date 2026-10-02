@@ -20,7 +20,7 @@ import { siteDirFor } from "../schemas/cat-harness.ts";
  * `docs-ui.js`, the GENERATED bottom region (`_includes/generated/
  * navbar-footer.html`, its Liquid resolved the way `relative_url` would), the
  * row this instance resolved (`_data/harness.json`), and a GENERATED viewer
- * page (`todos/index.html`) exactly as committed. Only the theme's own
+ * page (`beans/index.html`) exactly as committed. Only the theme's own
  * sidebar container is hand-built, as `navbar-row.e2e.ts` does, because the
  * theme arrives through `remote_theme` and is not in this checkout.
  *
@@ -44,7 +44,10 @@ const FOOTER = (() => {
   return line.replace(/\{\{\s*'([^']*)'\s*\|\s*relative_url\s*\}\}/g, (_m, p: string) => BASEURL + p);
 })();
 
-const VIEWER = readFileSync(join(SITE, "todos/index.html"), "utf8");
+// `beans/`, not `todos/`: since #1906 `todos/` is a THEMED page (Jekyll front
+// matter, the site's own sidebar), so it carries no standalone rail to test.
+// `beans/` is the same generator's standalone viewer page.
+const VIEWER = readFileSync(join(SITE, "beans/index.html"), "utf8");
 
 function landing(): string {
   return `<!doctype html><html lang="en"><head><meta charset="utf-8">

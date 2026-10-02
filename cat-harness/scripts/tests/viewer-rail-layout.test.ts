@@ -9,7 +9,6 @@ import { join } from "node:path";
 import { siteDirFor } from "../../schemas/cat-harness.ts";
 import { layoutFlags, stripFlags, untippedControls } from "../check-viewer-nav.ts";
 import { injectRail } from "../lib/harness-rail.ts";
-import { todoListing } from "../state-visualizer.ts";
 import { withHeadingIds } from "../viewer-page.ts";
 
 const page = (body: string): string => `<!doctype html><html><head></head><body>${body}</body></html>`;
@@ -169,30 +168,6 @@ describe("stripFlags — the same two questions of the docs site's strip", () =>
     const css = CSS.replace(/\.side-bar \.fa-nav-bottom > \.fa-nav-group > summary(?:,\s*[^{,]+)* \{[^}]*\}/, "");
     expect(css).not.toBe(CSS);
     expect(stripFlags(JS, css)).toEqual(["harnesses-at-rest"]);
-  });
-});
-
-describe("todoListing", () => {
-  const items = [
-    { id: "a", summary: "first", target: { page: "beans-and-todos" } },
-    { id: "b", summary: "second", target: { page: "publication-workflow" } },
-    { id: "c", summary: "loose" },
-  ];
-
-  it("groups by the node a todo is attached to, unattached last", () => {
-    const { html } = todoListing(items);
-    const order = [...html.matchAll(/<h3>([^<]*)<\/h3>/g)].map((m) => m[1]);
-    expect(order).toEqual(["beans-and-todos", "publication-workflow", "attached to no node"]);
-  });
-
-  it("links every nav row to an id the listing carries", () => {
-    const { html, nav } = todoListing(items);
-    for (const m of nav.matchAll(/"href":"#([^"]+)"/g)) expect(html).toContain(`id="${m[1]}"`);
-  });
-
-  it("cannot close its own script element", () => {
-    const { nav } = todoListing([{ id: "x", summary: "</script><b>" }]);
-    expect(nav.indexOf("</script>")).toBe(nav.length - "</script>".length);
   });
 });
 

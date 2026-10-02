@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: crdm-signoff\n"
-"POT-Creation-Date: 2026-10-02T14:45:26.817Z\n"
+"POT-Creation-Date: 2026-10-02T17:59:36.654Z\n"
 "PO-Revision-Date: \n"
 "Last-Translator: \n"
 "Language: ar\n"
@@ -14,17 +14,17 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: processes/process/crdm-signoff.bpmn:92
+#: processes/process/crdm-signoff.bpmn:98
 #. Diagram label
 msgid "A destination?"
 msgstr ""
 
-#: processes/process/crdm-signoff.bpmn:115
+#: processes/process/crdm-signoff.bpmn:121
 #. Diagram label
 msgid "a graph"
 msgstr ""
 
-#: processes/process/crdm-signoff.bpmn:82
+#: processes/process/crdm-signoff.bpmn:88
 #. Diagram element documentation
 msgid "A PERSON'S STEP, and `none` is one of the answers rather than a refusal to answer. A requirement whose whole content is carried by the code becomes a commit and nothing else; a graph that acquires a node for it is a graph with a node nobody will ever read. The default creates NOTHING. An agent that decides on its own that a requirement \"is really a skill\" has manufactured a node nobody asked for, in a graph somebody else maintains — which is what this step exists to prevent."
 msgstr ""
@@ -44,7 +44,7 @@ msgstr ""
 msgid "BA / Feature Requestor"
 msgstr ""
 
-#: processes/process/crdm-signoff.bpmn:81
+#: processes/process/crdm-signoff.bpmn:87
 #. Diagram label
 msgid "Choose a destination, or none"
 msgstr ""
@@ -54,7 +54,7 @@ msgstr ""
 msgid "CRDM Phase 5 — beans and sign-off"
 msgstr ""
 
-#: processes/process/crdm-signoff.bpmn:93
+#: processes/process/crdm-signoff.bpmn:99
 #. Diagram element documentation
 msgid "Drawn as a branch rather than folded into the task above, because `none` being a real outcome is the property worth being able to see. A diagram where every path ends in a created node is a diagram of a ritual."
 msgstr ""
@@ -64,19 +64,19 @@ msgstr ""
 msgid "Makes two decisions of different character here: BA_Signoff approves what was drafted, and BA_ChooseKg commits it — or explicitly does not — to a knowledge-graph destination, where NONE is a legitimate answer rather than a refusal to answer. Only this lane may decide that a requirement is fully carried by the code and becomes a commit and nothing else; an agent that decided so on its own would be placing a node in somebody else's graph."
 msgstr ""
 
-#: processes/process/crdm-signoff.bpmn:117
+#: processes/process/crdm-signoff.bpmn:123
 #. Diagram label
 msgid "none — recorded as an answer"
 msgstr ""
 
-#: processes/process/crdm-signoff.bpmn:69
+#: processes/process/crdm-signoff.bpmn:75
 #. Diagram label
 msgid "Offer the knowledge-graph destinations for the agreed set"
 msgstr ""
 
 #: processes/process/crdm-signoff.bpmn:52
 #. Diagram element documentation
-msgid "On CREATING the feature branch, comment on the issue: the branch name, the process and phase, and the beans claimed. Visibility is the whole point — without it a sibling session or a human cannot tell that work has begun, only that it has finished. Deliberately on this edge and not inside Phase 6. The three loops back into A_Implement (increment rejected, MVP not ready, feedback translated) re-enter implementation on the SAME branch, and re-announcing on each would be noise. Announce once, when the branch is created."
+msgid "On CREATING the feature branch, comment on the issue: the branch name, the process and phase, and the beans claimed. Visibility is the whole point — without it a sibling session or a human cannot tell that work has begun, only that it has finished. Deliberately on this edge and not inside Phase 6. The three loops back into A_Implement (increment rejected, MVP not ready, feedback translated) re-enter implementation on the SAME branch, and re-announcing on each would be noise. Announce once, when the branch is created. Before announcing, run the collision review that starts any new unit of work (coordinate, \"Starting new work\"): open PRs and in-progress beans checked against the branch's files and subject, scaled to the blast radius, and the result recorded in the bean before the first edit."
 msgstr ""
 
 #: processes/process/crdm-signoff.bpmn:35
@@ -89,12 +89,12 @@ msgstr ""
 msgid "Phase begins"
 msgstr ""
 
-#: processes/process/crdm-signoff.bpmn:66
+#: processes/process/crdm-signoff.bpmn:72
 #. Diagram label
 msgid "Phase complete"
 msgstr ""
 
-#: processes/process/crdm-signoff.bpmn:101
+#: processes/process/crdm-signoff.bpmn:107
 #. Diagram label
 msgid "Run placement, and raise a bean for the authoring"
 msgstr ""
@@ -119,12 +119,12 @@ msgstr ""
 msgid "The business analyst / requester signs off on the agreed requirement set, on the issue: what was agreed and what was deferred. Recorded as their decision, with its reason, never by an agent on their behalf."
 msgstr ""
 
-#: processes/process/crdm-signoff.bpmn:102
+#: processes/process/crdm-signoff.bpmn:108
 #. Diagram element documentation
 msgid "The offer produces a DECISION, not a node. `placement` then decides instance, graph and node kind — it is the step that catches a hardcoded path or a literal naming one folio — and the authoring itself becomes a bean, because work here is a bean before it is a file. `op=\"note\"` and not `create`, for the reason `A_CreateBeans` above states: the engine has no `create` op — it claims, notes and resolves the instance's OWN bean. The agent mints the authoring bean itself with `beans create`, running the exact-title existence check first, and what this step records is a note that the decision was taken."
 msgstr ""
 
-#: processes/process/crdm-signoff.bpmn:70
+#: processes/process/crdm-signoff.bpmn:76
 #. Diagram element documentation
 msgid "THE STEP THAT WAS MISSING. Requirements were elicited, agreed and signed off, and then existed as an issue and a conversation — so the output of the process that exists to produce durable requirements was the one thing the knowledge graph never learned. ONE question for the SET, not one per requirement: a six-phase run can agree many, and asking six times is the same failure as a form that re-asks what it was already told. The options are DERIVED from the graphs this instance declares in `<name>.json`, read at the time of asking, so an instance that adds a graph gets it in the offer without anybody editing a skill. Never a list typed from memory."
 msgstr ""
