@@ -132,13 +132,14 @@ them is a working copy whose record lives on the `qa-reports` branch, and a
 regeneration cannot reproduce an agent ruling (arc `3fva`, owner ruling D2
 (a)).
 
-Today `recordUntainted` still writes into the derived sidecar. That is safe
-but not finished: the next writer to save that file **moves** the judgement
-into the store (owner ruling 2, 2026-10-01), and `bun run
-qa:attestations:migrate` does the whole instance at once. So after recording,
-run `bun run qa:attestations:migrate:check` — it exits 1 while any judgement is
-still only in a derived file — and commit the store file it names. A corrupt
-store reads UNKNOWN and is refused rather than overwritten.
+`recordUntainted` writes the store **first**, through the same
+`resolvePrior` / `finalizeCriteria` API as every other attesting writer (bean
+`8iqt`), and refreshes the derived report only if one already exists — it
+never invents one. So the verdict lands whether or not the derived file is on
+the branch, and the store file it returns is the one to commit. What puts a
+subject in scope is the subject existing (`<subject>.md` or `.ts`), not its
+derived report, which no longer lives beside it. A corrupt or unreadable store
+reads UNKNOWN and is refused, with nothing written, rather than overwritten.
 
 ## Why the instrument is the thing to watch
 
