@@ -124,7 +124,7 @@ describe("resolveQaLocation", () => {
     ]);
 
     const plain = instance([{ id: "qa", path: "test/results/", graphKinds: ["qa"] }]);
-    expect(resolveQaLocation(plain)).toMatchObject({ branch: "qa-reports", declared: false });
+    expect(resolveQaLocation(plain)).toMatchObject({ branch: "cat-qa-reports", declared: false });
   });
 
   test("two qa directories naming different branches are refused, not resolved by order", () => {
