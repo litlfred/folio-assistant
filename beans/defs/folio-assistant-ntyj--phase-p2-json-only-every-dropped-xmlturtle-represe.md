@@ -5,10 +5,8 @@ status: in-progress
 type: feature
 priority: normal
 created_at: 2026-10-01T12:32:21Z
-updated_at: 2026-10-01T18:14:34Z
+updated_at: 2026-10-02T18:00:38Z
 parent: folio-assistant-uhkv
-blocked_by:
-    - folio-assistant-qrnz
 ---
 
 Phase P2 of `ig-publisher-reduction` (approved 2026-09-30). Opened in the 2026-10-01 phased-transition review.
@@ -22,7 +20,7 @@ Phase P2 of `ig-publisher-reduction` (approved 2026-09-30). Opened in the 2026-1
 ## Done when
 - [x] a refusal record per IG: which XML/TTL representations the Publisher published that this pipeline does not render
 - [x] the JSON view pages render for every artefact with a JSON representation
-- [ ] the combined report across at least 2 IGs (after `qrnz`)
+- [ ] the combined report across at least 2 IGs (smart-trust and smart-immunizations, both ingested)
 
 ## Owner ruling 2026-10-01: every phase renders equivalent to the standard IG render
 
@@ -51,3 +49,8 @@ In the owner's words: *"Keep P2 as approved: drop XML and Turtle, and treat the 
 **JSON views:** 672 of 672 equivalent in Chromium (see `jut3`).
 
 **Still open:** the combined report across at least two IGs. It needs the second IG (`qrnz`), so `blocked_by` stands for that item only.
+
+
+
+## 2026-10-02: unblocked
+The second IG landed: `qrnz` is completed, and smart-immunizations is ingested at `smart-immunizations/fhir-artifact-index/`. The combined report is now ordinary work, no longer blocked, so the Done-when names the two IGs instead of the closed bean (`check:stale-paths`).

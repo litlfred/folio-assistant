@@ -5,10 +5,8 @@ status: todo
 type: feature
 priority: normal
 created_at: 2026-10-01T12:32:20Z
-updated_at: 2026-10-01T12:35:16Z
+updated_at: 2026-10-02T18:00:38Z
 parent: folio-assistant-uhkv
-blocked_by:
-    - folio-assistant-qrnz
 ---
 
 Phase P1 of `fhir-harness/skills/fhir-ig-base/ig-publisher-reduction.md` (approved 2026-09-30). Opened 2026-10-01 in the phased-transition review: closing `kn0t` had left the phase with no work-plan entry.
@@ -22,7 +20,7 @@ Phase P1 of `fhir-harness/skills/fhir-ig-base/ig-publisher-reduction.md` (approv
 ## Done when
 - [ ] a nav-diff tool: `bamf`'s derived nav against the Publisher's `toc` and menu, read from a Publisher `gh-pages` tree
 - [ ] smart-trust's diff: empty, or explained entry by entry
-- [ ] the combined report across at least 2 IGs (after `qrnz`)
+- [ ] the combined report across at least 2 IGs (smart-trust and smart-immunizations, both ingested)
 
 ## Owner ruling 2026-10-01: every phase renders equivalent to the standard IG render
 
@@ -42,3 +40,8 @@ In the owner's words: *"see bean about QA that every harness viewer needs to hav
   - `603s` (in progress): the LHS navbar has one themed section per instance.
 
   To confirm with the owner.
+
+
+
+## 2026-10-02: unblocked
+The second IG landed: `qrnz` is completed, and smart-immunizations is ingested at `smart-immunizations/fhir-artifact-index/`. The combined report is now ordinary work, no longer blocked, so the Done-when names the two IGs instead of the closed bean (`check:stale-paths`).
