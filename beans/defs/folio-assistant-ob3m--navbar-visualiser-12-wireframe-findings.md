@@ -337,3 +337,16 @@ _2026-10-01_ — **Finding 12: owner's ruling implemented, in PR #1810 (stacked 
 - **After state, measured on a local build** at 1280×800 and at 390×844: page→glass gives glass open with the glass-settings panel visible, and glass→page gives the launcher open with the "Page settings" heading visible and in the viewport.
 - Tests: `test/settings-crosslinks.e2e.ts` (10/10 pass; 9/10 fail on #1762's head) and `scripts/tests/settings-labels-distinct.test.ts` (6/6 pass; 5/6 fail on the head). Skill: `board-windows` §"Two settings panels, two names, each points to the other".
 - Found, not fixed (also on the head): at 1280×800 the glass panel opens at y≈591, and most of its body sits under the bottom tile strip until the glass is scrolled.
+
+
+## Finding 3: ruling and after state (2026-10-01, PR #1807, stacked on #1762)
+
+**Ruling.** The owner picked option 1 of 4: *"Stickies show the same text as the landing page"*. A harness's sticky shows the declaration's `summary` and its `alsoWritten` spellings under "Also written", and never authoring notes.
+
+**After.** Sticky contributions declare `bodyFrom: "summary"`. The card text comes from `readerText` in `schemas/sticky-contribution.ts`: the `summary` (else the description), then "Also written: …". This is the same rule `harness_details.html` uses, so both surfaces read the same two fields.
+- folio-assistant card: was "The repository itself… NAMED `folio-assistant-checkout`…". Now "This repository as a working instance: the platform and the folios it hosts."
+- cat-harness card: was five loose lines of spellings. Now "Computable adjudication and agentic test harness." followed by "Also written:" and the four spellings. Its `bodyAppend` (the cat introduction and the scope line) is kept.
+- smart-trust and who-iris: unchanged. They declare no summary, so they fall back to the description, which the landing shows too.
+- bootstrap: unchanged. It is a pinned submodule still on `bodyFrom: "description"`, and it declares no summary.
+
+`landing:sticky:check` (CI) now fails when a card built from its declaration does not open with that text. It fails when run against the #1762 head files.
