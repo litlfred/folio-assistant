@@ -7,11 +7,13 @@
  * bun run seed:ready --layer cat-harness --fixture prs.json   # offline
  * ```
  *
- * This evaluates `GW_Settled` — "Source settled?" — in
- * `processes/kg-separation.bpmn`, the gateway in front of `10 · Seed`. The
- * decision itself is `processes/decisions/seed-readiness-gate.dmn`; this
- * script gathers the facts and hands them to the table, so **every threshold
- * lives in the table and none lives here**. Change the table, not this file.
+ * This evaluates `GW_SeedReady` — "Ready to seed?" — in `kg-separation.bpmn`,
+ * the gateway between `Create the repositories` and `10 · Seed`. The decision
+ * itself is `seed-readiness-gate.dmn`, found by NAME through `workflowFile`
+ * rather than by a composed path, so the next regroup of `processes/` does not
+ * break it. This script gathers the facts and hands them to the table, so
+ * **every threshold lives in the table and none lives here**. Change the
+ * table, not this file.
  *
  * ## Why a seed waits for the source to settle
  *
@@ -27,8 +29,24 @@
  * | `heavyMoversOpen`  | open PRs labelled `heavy-mover` that touch L or the next layer |
  * | `nextLayerPrs`     | open PRs touching the NEXT layer (L+1)                       |
  * | `layerPrs`         | open PRs touching L                                          |
- * | `layerMovingPrs`   | open PRs that rename or delete a file in L, or rename one in |
+ * | `layerMovingPrs`   | open PRs that delete a file in L, or rename one into or out of it |
+ * | `standaloneRed`    | failing tests when L and what it needs run as sibling clones |
+ * | `siblingDiscoveryMisses` | instances needing L directly that discovery cannot find in a sibling layout |
  * | `undetermined`     | criteria this run could not decide                           |
+ *
+ * The first four ask whether the SOURCE is still moving; the last two re-ask,
+ * at seed time, whether the layer can stand alone — `8 · Rehearse` asked it
+ * once, and main has moved since.
+ *
+ * ## The rehearsal runs only on request — the owner's ruling
+ *
+ * Owner, 2026-10-02: "Optional, run only on request with --rehearse."
+ * `--rehearse` copies the layer and everything it needs into a scratch
+ * workspace of sibling directories and runs `bun test` there; for cat-harness
+ * that is ~150 MB and ~8,000 tests. Without it the standalone criterion is
+ * `could-not-determine`, so `seed:ready` cannot answer `settled` until a
+ * rehearsal has run. That consequence is ONE constant,
+ * {@link SETTLED_REQUIRES_REHEARSAL}.
  *
  * ## The layer map is derived, never written here
  *
@@ -58,16 +76,46 @@
  *
  * @module cat-harness/scripts/seed-ready
  */
-import { execFileSync } from "node:child_process";
-import { readFileSync } from "node:fs";
-import { relative, resolve } from "node:path";
+import { execFileSync, spawnSync } from "node:child_process";
+import {
+  copyFileSync,
+  existsSync,
+  mkdirSync,
+  mkdtempSync,
+  readdirSync,
+  readFileSync,
+  rmSync,
+  statfsSync,
+  symlinkSync,
+} from "node:fs";
+import { tmpdir } from "node:os";
+import { basename, dirname, join, relative, resolve } from "node:path";
 
 import { instanceRootsIn, readDeclaration, repoRootFor } from "../schemas/cat-harness.js";
+import { clearCheckoutCache, implementingInstancesOf } from "../schemas/harness-config.js";
 import { evaluate, loadDecisionTable, type DecisionTable } from "../src/workflow/decision-table.js";
+import { workflowFile } from "./known-skills.js";
 
-/** The decision table this script evaluates. */
-export const SEED_READINESS_DMN = resolve(import.meta.dir, "../processes/decisions/seed-readiness-gate.dmn");
+/** This instance's root — where the declared `processes` graph is found from. */
+const INSTANCE_ROOT = resolve(import.meta.dir, "..");
+
+/** The decision table's FILE NAME; {@link seedReadinessDmn} finds it. */
+export const SEED_READINESS_DMN_NAME = "seed-readiness-gate.dmn";
 export const SEED_READINESS_DECISION = "Decision_SeedReadiness";
+
+/** The decision table this script evaluates, wherever the declared `processes` graph put it. */
+export function seedReadinessDmn(root: string = INSTANCE_ROOT): string {
+  return workflowFile(root, SEED_READINESS_DMN_NAME);
+}
+
+/**
+ * Whether `settled` needs a rehearsal to have run. Owner, 2026-10-02:
+ * "Optional, run only on request with --rehearse" — and an un-run rehearsal
+ * is `could-not-determine`, never a pass. `false` would report it `not-run`
+ * and leave it out of the decision; that is a change to the ruling, not a
+ * tuning knob.
+ */
+export const SETTLED_REQUIRES_REHEARSAL = true;
 
 /** The PR label that marks a heavy mover. One label, one place. */
 export const HEAVY_MOVER_LABEL = "heavy-mover";
@@ -85,6 +133,8 @@ export interface LayerDecl {
   needs: string[];
   /** `livesAt.repository` — present only for a layer staged in another repo. */
   stagedIn?: string;
+  /** Absolute path of the directory the declaration was read from. */
+  root?: string;
 }
 
 /**
@@ -106,6 +156,7 @@ export function readLayers(repoRoot: string): LayerDecl[] {
       dir: d.livesAt?.path ?? relative(root, at),
       needs: d.needs ?? [],
       stagedIn: d.livesAt?.repository,
+      root: resolve(at),
     });
   }
   return out;
@@ -206,12 +257,23 @@ function gh(args: string[]): string {
   return execFileSync("gh", args, { encoding: "utf-8", maxBuffer: 256 * 1024 * 1024, stdio: ["ignore", "pipe", "pipe"] });
 }
 
-/** JSON-lines output of a paginated `gh api --jq '.[] | …'`. */
+/**
+ * JSON-lines output of `gh api --jq '.[] | …'` over every page.
+ *
+ * Paged by `page=N` rather than `--paginate`: GitHub's `Link` headers name
+ * the `repositories/{id}/…` form, which the agent proxy refuses (HTTP 403),
+ * so `--paginate` fails on the second page of exactly the repositories that
+ * have one. `path` must already carry `per_page=100`.
+ */
 function ghLines<T>(path: string, jq: string): T[] {
-  return gh(["api", "--paginate", path, "--jq", jq])
-    .split("\n")
-    .filter((l) => l.trim() !== "")
-    .map((l) => JSON.parse(l) as T);
+  const out: T[] = [];
+  for (let page = 1; ; page++) {
+    const lines = gh(["api", `${path}&page=${page}`, "--jq", jq])
+      .split("\n")
+      .filter((l) => l.trim() !== "");
+    for (const l of lines) out.push(JSON.parse(l) as T);
+    if (lines.length < 100) return out;
+  }
 }
 
 /** Read the open PRs of `repository` through the `gh` CLI. Never throws. */
@@ -252,7 +314,8 @@ export function fetchForge(repository: string): ForgeSnapshot {
 
 // ─── the criteria ───────────────────────────────────────────────────────────
 
-export type Verdict = "pass" | "fail" | "could-not-determine";
+/** `not-run`: an opt-in probe that was not asked for and is not required. */
+export type Verdict = "pass" | "fail" | "could-not-determine" | "not-run";
 
 /** One PR's part in a criterion. */
 export interface Offender {
@@ -263,10 +326,19 @@ export interface Offender {
   pathCount: number;
 }
 
+export type CriterionId = "heavy-movers" | "next-layer" | "layer-load" | "layer-moves" | "standalone" | "sibling-discovery";
+export type Fact =
+  | "heavyMoversOpen"
+  | "nextLayerPrs"
+  | "layerPrs"
+  | "layerMovingPrs"
+  | "standaloneRed"
+  | "siblingDiscoveryMisses";
+
 export interface CriterionReport {
-  id: "heavy-movers" | "next-layer" | "layer-load" | "layer-moves";
+  id: CriterionId;
   /** The fact this criterion hands the decision table. */
-  fact: "heavyMoversOpen" | "nextLayerPrs" | "layerPrs" | "layerMovingPrs";
+  fact: Fact;
   statement: string;
   verdict: Verdict;
   /** PRs that certainly count. */
@@ -274,7 +346,25 @@ export interface CriterionReport {
   offenders: Offender[];
   /** PRs whose unseen files could change the answer. */
   undetermined: number[];
+  /** For the two non-PR criteria: what was found (failing tests, missed instances). */
+  findings?: string[];
   note?: string;
+}
+
+/**
+ * A probe that is not about PRs — the rehearsal, sibling discovery. `measured`
+ * carries the count the table sees and what made it up; `not-run` is a probe
+ * nobody asked for; `error` is a probe that was asked and could not answer,
+ * which is never a pass.
+ */
+export type Probe =
+  | { state: "measured"; count: number; findings: string[]; note?: string }
+  | { state: "not-run"; note: string }
+  | { state: "error"; note: string };
+
+export interface Probes {
+  standalone: Probe;
+  discovery: Probe;
 }
 
 export interface ReadinessReport {
@@ -327,7 +417,15 @@ function classify(prs: PrPathSet[], match: (f: PrFile) => boolean): { hit: Offen
 }
 
 /** The facts all at their clean value — the baseline a single criterion is judged against. */
-const CLEAN = { heavyMoversOpen: 0, nextLayerPrs: 0, layerPrs: 0, layerMovingPrs: 0, undetermined: 0 };
+export const CLEAN: Record<Fact | "undetermined", number> = {
+  heavyMoversOpen: 0,
+  nextLayerPrs: 0,
+  layerPrs: 0,
+  layerMovingPrs: 0,
+  standaloneRed: 0,
+  siblingDiscoveryMisses: 0,
+  undetermined: 0,
+};
 
 /**
  * Judge the layer. Pure: the plan, the forge snapshot and the table in, the
@@ -338,13 +436,26 @@ const CLEAN = { heavyMoversOpen: 0, nextLayerPrs: 0, layerPrs: 0, layerMovingPrs
  * DMN and stated nowhere else. The overall outcome is the table over all the
  * facts together.
  */
-export function assess(plan: LayerPlan, forge: ForgeSnapshot, table: DecisionTable): ReadinessReport {
+export function assess(
+  plan: LayerPlan,
+  forge: ForgeSnapshot,
+  table: DecisionTable,
+  probes: Probes = {
+    standalone: { state: "not-run", note: "rehearsal not requested (--rehearse)" },
+    discovery: { state: "not-run", note: "sibling discovery not probed" },
+  },
+  decision = `${SEED_READINESS_DMN_NAME}#${SEED_READINESS_DECISION}`,
+): ReadinessReport {
   const L = [plan.layer.dir];
   const N = plan.next.map((n) => n.dir);
   const errors = [...forge.errors];
 
   const criteria: CriterionReport[] = [];
-  const add = (c: Omit<CriterionReport, "verdict">, cannotAsk: boolean): void => {
+  const add = (c: Omit<CriterionReport, "verdict">, cannotAsk: boolean, notRun = false): void => {
+    if (notRun) {
+      criteria.push({ ...c, verdict: "not-run" });
+      return;
+    }
     const partial = cannotAsk || c.undetermined.length > 0;
     const r = evaluate(table, { ...CLEAN, [c.fact]: c.count, undetermined: partial ? 1 : 0 });
     const verdict: Verdict = r.outcome === "settled" ? "pass" : r.outcome === "not yet" ? "fail" : "could-not-determine";
@@ -353,7 +464,7 @@ export function assess(plan: LayerPlan, forge: ForgeSnapshot, table: DecisionTab
 
   const prs = forge.prs;
   if (prs === undefined) {
-    for (const [id, fact, statement] of STATEMENTS(plan)) {
+    for (const [id, fact, statement] of STATEMENTS(plan).slice(0, 4)) {
       add({ id, fact, statement, count: 0, offenders: [], undetermined: [], note: "open PRs could not be read" }, true);
     }
   } else {
@@ -406,6 +517,22 @@ export function assess(plan: LayerPlan, forge: ForgeSnapshot, table: DecisionTab
     }
   }
 
+  // The two probes — not about PRs, so they have no path sets to classify.
+  const probeCriterion = (i: 4 | 5, p: Probe, requiredWhenNotRun: boolean): void => {
+    const [id, fact, statement] = STATEMENTS(plan)[i];
+    const base = { id, fact, statement, offenders: [], undetermined: [] };
+    if (p.state === "measured") {
+      add({ ...base, count: p.count, findings: p.findings, note: p.note }, false);
+    } else if (p.state === "error") {
+      add({ ...base, count: 0, note: p.note }, true);
+    } else {
+      add({ ...base, count: 0, note: p.note }, requiredWhenNotRun, !requiredWhenNotRun);
+    }
+  };
+  probeCriterion(4, probes.standalone, SETTLED_REQUIRES_REHEARSAL);
+  // Discovery is cheap and the CLI always probes it; not probing it is never a pass.
+  probeCriterion(5, probes.discovery, true);
+
   const facts: Record<string, number> = { ...CLEAN };
   for (const c of criteria) facts[c.fact] = c.count;
   facts.undetermined = criteria.filter((c) => c.verdict === "could-not-determine").length;
@@ -422,11 +549,11 @@ export function assess(plan: LayerPlan, forge: ForgeSnapshot, table: DecisionTab
     facts,
     criteria,
     errors,
-    decision: `${relative(process.cwd(), SEED_READINESS_DMN)}#${SEED_READINESS_DECISION}`,
+    decision,
   };
 }
 
-function STATEMENTS(plan: LayerPlan): [CriterionReport["id"], CriterionReport["fact"], string][] {
+function STATEMENTS(plan: LayerPlan): [CriterionId, Fact, string][] {
   const L = `\`${plan.layer.dir}/\``;
   const N = plan.next.length === 0 ? "(none)" : plan.next.map((n) => `\`${n.dir}/\``).join(", ");
   return [
@@ -434,7 +561,188 @@ function STATEMENTS(plan: LayerPlan): [CriterionReport["id"], CriterionReport["f
     ["next-layer", "nextLayerPrs", `no open PR touches the next layer: ${N}`],
     ["layer-load", "layerPrs", `few open PRs touch ${L} (the limit is the decision table's)`],
     ["layer-moves", "layerMovingPrs", `no open PR renames or deletes a file in ${L}`],
+    ["standalone", "standaloneRed", `${L} is green with only what it needs beside it, as sibling clones`],
+    [
+      "sibling-discovery",
+      "siblingDiscoveryMisses",
+      `in a sibling layout with no aggregate root, discovery finds every instance that needs ${L} directly`,
+    ],
   ];
+}
+
+// ─── the two standalone probes ──────────────────────────────────────────────
+
+/** Where a declaration actually sits on disk — `root` when read, else `dir` under the checkout. */
+const rootOf = (repoRoot: string, d: LayerDecl): string => d.root ?? resolve(repoRoot, d.dir);
+
+const message = (e: unknown): string => (e instanceof Error ? e.message : String(e)).trim().split("\n")[0]!;
+
+/**
+ * Lay every declared instance out as a sibling of every other, in a scratch
+ * directory with NO declaration at its root — the workspace of separate
+ * clones the seeded repositories will live in — and ask discovery which
+ * instances implement this layer there.
+ *
+ * Only the instances' top-level `.json` files are copied: discovery reads
+ * declarations and nothing else, so this costs kilobytes. The expected set is
+ * every instance whose own `needs` names the layer, which is exactly what
+ * `implementingInstancesOf` answers in the monorepo; each one it cannot find
+ * in the sibling layout is a path resolved through it that fails the day the
+ * layer is seeded.
+ */
+export function probeSiblingDiscovery(repoRoot: string, layerName: string, decls: LayerDecl[]): Probe {
+  const expected = decls
+    .filter((d) => d.name !== layerName && d.needs.includes(layerName))
+    .map((d) => d.name)
+    .sort();
+  if (expected.length === 0) {
+    return { state: "measured", count: 0, findings: [], note: "no instance needs this layer directly" };
+  }
+  const names = new Map<string, string>();
+  for (const d of decls) {
+    const b = basename(rootOf(repoRoot, d));
+    const other = names.get(b);
+    if (other !== undefined) {
+      return { state: "error", note: `${other} and ${d.name} share the directory name \`${b}\`; they cannot be siblings` };
+    }
+    names.set(b, d.name);
+  }
+
+  let ws: string | undefined;
+  try {
+    ws = mkdtempSync(join(tmpdir(), "seed-ready-siblings-"));
+    for (const d of decls) {
+      const src = rootOf(repoRoot, d);
+      const dst = join(ws, basename(src));
+      mkdirSync(dst, { recursive: true });
+      for (const f of readdirSync(src)) if (f.endsWith(".json")) copyFileSync(join(src, f), join(dst, f));
+    }
+    const layer = decls.find((d) => d.name === layerName);
+    if (!layer) return { state: "error", note: `no declaration named \`${layerName}\`` };
+    clearCheckoutCache();
+    const found = new Set(implementingInstancesOf(join(ws, basename(rootOf(repoRoot, layer)))).map((i) => i.name));
+    const missed = expected.filter((n) => !found.has(n));
+    return {
+      state: "measured",
+      count: missed.length,
+      findings: missed.map((n) => `${n} needs ${layerName} directly, and discovery does not find it beside it`),
+      note: `expected ${expected.length}: ${expected.join(", ")}`,
+    };
+  } catch (e) {
+    return { state: "error", note: `sibling discovery could not be probed: ${message(e)}` };
+  } finally {
+    clearCheckoutCache();
+    if (ws) rmSync(ws, { recursive: true, force: true });
+  }
+}
+
+/** Free space the rehearsal insists on before copying a layer. */
+export const REHEARSAL_MIN_FREE_BYTES = 3 * 1024 ** 3;
+
+/** The layer and everything it needs, transitively, among the declarations here. */
+export function closureOf(decls: LayerDecl[], name: string): LayerDecl[] {
+  const byName = new Map(decls.map((d) => [d.name, d]));
+  const out = new Map<string, LayerDecl>();
+  const walk = (n: string): void => {
+    const d = byName.get(n);
+    if (!d || out.has(n)) return;
+    out.set(n, d);
+    for (const x of d.needs) walk(x);
+  };
+  walk(name);
+  return [...out.values()];
+}
+
+/** `N fail` from `bun test`'s summary, and the `(fail)` lines above it. */
+export function parseBunTest(output: string): { failed: number; names: string[] } | undefined {
+  const m = /^\s*(\d+)\s+fail\b/m.exec(output);
+  if (!m) return undefined;
+  const names = output
+    .split("\n")
+    .filter((l) => l.trimStart().startsWith("(fail)"))
+    .map((l) => l.trim().replace(/^\(fail\)\s*/, ""));
+  return { failed: Number(m[1]), names: [...new Set(names)] };
+}
+
+/**
+ * The standalone rehearsal, run only with `--rehearse` (owner, 2026-10-02).
+ *
+ * Copies the TRACKED files of the layer and of everything it needs into a
+ * scratch workspace as sibling directories — no aggregate declaration at the
+ * root — links the checkout's `node_modules` beside them, and runs `bun test`
+ * in the layer's directory. The root `package.json`, `tsconfig.json` and
+ * `bunfig.toml` are copied too, standing in for the ones each seeded
+ * repository will carry; none of them is a declaration, so discovery still
+ * sees no aggregate.
+ *
+ * Anything that stops it from producing a test summary — too little disk, a
+ * timeout, an unparseable run — is `error`, never a pass.
+ */
+export function probeStandalone(
+  repoRoot: string,
+  layerName: string,
+  decls: LayerDecl[],
+  opts: { timeoutMs?: number } = {},
+): Probe {
+  try {
+    const st = statfsSync(tmpdir());
+    const free = Number(st.bavail) * Number(st.bsize);
+    if (free < REHEARSAL_MIN_FREE_BYTES) {
+      return { state: "error", note: `only ${(free / 1024 ** 3).toFixed(1)} GB free under ${tmpdir()}; the rehearsal needs 3` };
+    }
+  } catch (e) {
+    return { state: "error", note: `could not ask how much disk is free: ${message(e)}` };
+  }
+
+  const members = closureOf(decls, layerName);
+  const layer = members.find((d) => d.name === layerName);
+  if (!layer) return { state: "error", note: `no declaration named \`${layerName}\`` };
+
+  let ws: string | undefined;
+  try {
+    ws = mkdtempSync(join(tmpdir(), "seed-ready-rehearsal-"));
+    for (const d of members) {
+      const rel = relative(repoRoot, rootOf(repoRoot, d));
+      const listed = execFileSync("git", ["-C", repoRoot, "ls-files", "-z", "--recurse-submodules", "--", rel], {
+        encoding: "utf-8",
+        maxBuffer: 256 * 1024 * 1024,
+      })
+        .split("\0")
+        .filter((f) => f !== "");
+      for (const f of listed) {
+        const src = join(repoRoot, f);
+        if (!existsSync(src)) continue; // deleted in the worktree but still in the index
+        const dst = join(ws, f);
+        mkdirSync(dirname(dst), { recursive: true });
+        copyFileSync(src, dst);
+      }
+    }
+    for (const f of ["package.json", "tsconfig.json", "bunfig.toml"]) {
+      if (existsSync(join(repoRoot, f))) copyFileSync(join(repoRoot, f), join(ws, f));
+    }
+    if (existsSync(join(repoRoot, "node_modules"))) symlinkSync(join(repoRoot, "node_modules"), join(ws, "node_modules"));
+
+    const cwd = join(ws, relative(repoRoot, rootOf(repoRoot, layer)));
+    const run = spawnSync("bun", ["test"], {
+      cwd,
+      encoding: "utf-8",
+      maxBuffer: 512 * 1024 * 1024,
+      timeout: opts.timeoutMs ?? 60 * 60 * 1000,
+    });
+    if (run.error) return { state: "error", note: `bun test could not run: ${message(run.error)}` };
+    const parsed = parseBunTest(`${run.stdout}\n${run.stderr}`);
+    if (!parsed) return { state: "error", note: `bun test exited ${run.status} with no summary to read` };
+    return {
+      state: "measured",
+      count: parsed.failed,
+      findings: parsed.names,
+      note: `${members.map((m) => m.name).join(", ")} laid out as siblings`,
+    };
+  } catch (e) {
+    return { state: "error", note: `the rehearsal could not be set up: ${message(e)}` };
+  } finally {
+    if (ws) rmSync(ws, { recursive: true, force: true });
+  }
 }
 
 // ─── the report ─────────────────────────────────────────────────────────────
@@ -443,10 +751,13 @@ export function renderText(r: ReadinessReport): string {
   const lines: string[] = [];
   lines.push(`seed:ready --layer ${r.layer}  (${r.dir}/, depth ${r.depth}; next: ${r.next.map((n) => n.name).join(", ") || "none"})`);
   lines.push(`repository: ${r.repository}`);
-  lines.push(`gateway "Source settled?" → ${r.outcome}   [${r.rule}]`);
+  lines.push(`gateway "Ready to seed?" → ${r.outcome}   [${r.rule}]`);
   lines.push("");
   for (const c of r.criteria) {
-    lines.push(`  ${c.verdict.padEnd(19)} ${c.statement} — ${c.count} PR(s)`);
+    const unit = c.id === "standalone" ? "failing test(s)" : c.id === "sibling-discovery" ? "missed" : "PR(s)";
+    lines.push(`  ${c.verdict.padEnd(19)} ${c.statement} — ${c.count} ${unit}`);
+    for (const f of (c.findings ?? []).slice(0, 10)) lines.push(`      ${f}`);
+    if ((c.findings?.length ?? 0) > 10) lines.push(`      (+${c.findings!.length - 10} more)`);
     for (const o of c.offenders) {
       const more = o.pathCount > o.paths.length ? ` (+${o.pathCount - o.paths.length} more)` : "";
       lines.push(`      #${o.number} ${o.title.slice(0, 70)}`);
@@ -478,11 +789,12 @@ function arg(name: string, argv: string[]): string | undefined {
 async function main(argv: string[]): Promise<number> {
   const name = arg("--layer", argv);
   if (!name) {
-    console.error("usage: seed:ready --layer <instance> [--fixture <file.json>] [--text]");
+    console.error("usage: seed:ready --layer <instance> [--rehearse] [--fixture <file.json>] [--text]");
     return 2;
   }
-  const repoRoot = repoRootFor(resolve(import.meta.dir, ".."));
-  const plan = planLayer(readLayers(repoRoot), name);
+  const repoRoot = repoRootFor(INSTANCE_ROOT);
+  const decls = readLayers(repoRoot);
+  const plan = planLayer(decls, name);
   if (!plan.layer.stagedIn) {
     console.error(
       `\`${name}\` declares no \`livesAt\`: it is not staged in this repository, so there is nothing here to seed it from.`,
@@ -495,8 +807,16 @@ async function main(argv: string[]): Promise<number> {
     ? { errors: [], ...(JSON.parse(readFileSync(fixture, "utf-8")) as Omit<ForgeSnapshot, "errors">) }
     : fetchForge(plan.layer.stagedIn);
 
-  const table = await loadDecisionTable(SEED_READINESS_DMN, SEED_READINESS_DECISION);
-  const report = assess(plan, forge, table);
+  const probes: Probes = {
+    standalone: argv.includes("--rehearse")
+      ? probeStandalone(repoRoot, name, decls)
+      : { state: "not-run", note: "run only on request: pass --rehearse (owner, 2026-10-02)" },
+    discovery: probeSiblingDiscovery(repoRoot, name, decls),
+  };
+
+  const dmn = seedReadinessDmn();
+  const table = await loadDecisionTable(dmn, SEED_READINESS_DECISION);
+  const report = assess(plan, forge, table, probes, `${relative(process.cwd(), dmn)}#${SEED_READINESS_DECISION}`);
   console.log(argv.includes("--text") ? renderText(report) : JSON.stringify(report, null, 2));
   return exitCodeFor(report.outcome);
 }
