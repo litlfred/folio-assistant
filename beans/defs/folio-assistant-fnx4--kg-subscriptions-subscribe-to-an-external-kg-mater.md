@@ -5,7 +5,7 @@ status: in-progress
 type: epic
 priority: normal
 created_at: 2026-09-30T22:54:31Z
-updated_at: 2026-10-01T08:15:15Z
+updated_at: 2026-10-02T22:49:41Z
 parent: folio-assistant-vuip
 ---
 
@@ -41,3 +41,7 @@ It follows `Process_MaterializeRemote`'s gate order (purpose first, then the fou
 Parts land under the subscriber's declared `substrate-snapshot` directory, at `<sub>/subgraphs/<id>/tree/` and `<sub>/assets/<path>/tree/`, NOT at slice 7's `<repoRoot>/<harness>/`. The reasons: a subscription named after a staged instance (`who-iris`) would collide with that instance's directory at the root; somebody else's read-only bytes would share a root with writable harness state; and the root is not a declared directory. This is open between the two slices.
 
 Live-checked 2026-10-01 against litlfred/ihris@8a5a05b831e5 in a scratch instance, with no bytes committed. Subgraph `skills` (src/skills/, 15 files, 42.7 KiB of 2269 files at the pin) and asset `library/arxiv-2312.07755/structure.json` were materialised, the check was clean and check:materialized-fixity verified them. ihris carries no root licence, and the record says so.
+
+
+## Holder 2026-10-02 23:00Z
+Driven by https://claude.ai/code/session_01SmeBn6QZsDFaNQ4GtuC2sd (Parcel B, epic 7x5n): main merged into #1756, regenerated, gates, then ready. The original session (01SiFEMu) last pushed 2026-10-01T07:00Z.
