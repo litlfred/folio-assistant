@@ -508,32 +508,32 @@
   NOT a cache-busting strategy for third-party assets, and not applied to
   them: those are versioned in their own URLs already.
 -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/agy-wnhh-sushi-publisher-local/assets/css/docs-ui.css?v=1790881423">
+<link rel="stylesheet" href="/folio-assistant/STAGING/agy-wnhh-sushi-publisher-local/assets/css/docs-ui.css?v=1790921621">
 <!-- Narrow viewports: wide content scrolls in its own box, never the page
      (bean `2r2n`). The standalone viewers inline the same file through
      `withViewerNav`, so both kinds of page read one set of rules. -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/agy-wnhh-sushi-publisher-local/assets/css/narrow-viewport.css?v=1790881423">
+<link rel="stylesheet" href="/folio-assistant/STAGING/agy-wnhh-sushi-publisher-local/assets/css/narrow-viewport.css?v=1790921621">
 
 <!--
   The work-plan dashboard's styles, split from docs-ui.css so that
   `state-visualizer.ts` can inline exactly these bytes into the generated
   `<base>/<stub>/state-visualizer/` pages. One rule, two surfaces.
 -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/agy-wnhh-sushi-publisher-local/assets/css/work-plan.css?v=1790881423">
+<link rel="stylesheet" href="/folio-assistant/STAGING/agy-wnhh-sushi-publisher-local/assets/css/work-plan.css?v=1790921621">
 <!-- Sticky themes. GENERATED from the theme nodes in `schemas/themes.ts` by
      `bun run themes:css`; `themes:css:check` fails the build when it is stale.
      Loaded AFTER docs-ui.css deliberately: it supplies the `--fa-sticky-*`
      roles that docs-ui.css consumes, and a custom property has to be set on a
      matching element before the rule reading it takes effect. -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/agy-wnhh-sushi-publisher-local/assets/css/themes.css?v=1790881423">
+<link rel="stylesheet" href="/folio-assistant/STAGING/agy-wnhh-sushi-publisher-local/assets/css/themes.css?v=1790921621">
 <!-- UML overview colours: one class per graph kind, set on the Mermaid nodes
      that `scripts/gen-uml-overview.ts` writes into docs/uml/overview/. -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/agy-wnhh-sushi-publisher-local/assets/css/uml.css?v=1790881423">
+<link rel="stylesheet" href="/folio-assistant/STAGING/agy-wnhh-sushi-publisher-local/assets/css/uml.css?v=1790921621">
 <!-- Kind avatars. GENERATED from `schemas/avatars.ts` by `bun run avatars:css`;
      `avatars:css:check` fails the build when it is stale. One stylesheet
      rather than 68 assets: the glyph is a mask and the colour is a property,
      so a scheme swap is a custom property and the trash state is a selector. -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/agy-wnhh-sushi-publisher-local/assets/css/avatars.css?v=1790881423">
+<link rel="stylesheet" href="/folio-assistant/STAGING/agy-wnhh-sushi-publisher-local/assets/css/avatars.css?v=1790921621">
 
 <!--
   The kinds THIS INSTANCE DECLARES, for the avatar fan.
@@ -550,7 +550,7 @@
 <script type="application/json" id="fa-declared-kinds">["beans","cat-harness","code","code-list","docs","external-schema","folio","fsh-guts","health","interaction","issue-marks","library","memory","methodology","policies","processes","qa","scenarios","schemas","skills","substrate-snapshot","swimlane-glossary","todos","tools","translation-sources","uml","uploads","waiver"]</script>
 <script src="/folio-assistant/STAGING/agy-wnhh-sushi-publisher-local/assets/js/vendor/qrcode.js" defer></script>
 <script src="/folio-assistant/STAGING/agy-wnhh-sushi-publisher-local/assets/js/vendor/qrcode_UTF8.js" defer></script>
-<script src="/folio-assistant/STAGING/agy-wnhh-sushi-publisher-local/assets/js/docs-ui.js?v=1790881423" defer></script>
+<script src="/folio-assistant/STAGING/agy-wnhh-sushi-publisher-local/assets/js/docs-ui.js?v=1790921621" defer></script>
 
 <!--
   The work-plan dashboard. SELF-MOUNTING on any page carrying
@@ -900,6 +900,11 @@ exists only in a log or a JSON field does not meet it.</p>
       <td>every edge, <code class="language-plaintext highlighter-rouge">resolved</code> to a resource in this IG or <code class="language-plaintext highlighter-rouge">null</code> when the target is elsewhere</td>
     </tr>
     <tr>
+      <td><code class="language-plaintext highlighter-rouge">fsh-index.json</code></td>
+      <td><strong>SUSHI</strong> (copied by <code class="language-plaintext highlighter-rouge">AstExportCli</code>)</td>
+      <td>the authoritative mapping from source <code class="language-plaintext highlighter-rouge">.fsh</code> file → output resource filename, with source line ranges. Written by SUSHI to <code class="language-plaintext highlighter-rouge">fsh-generated/data/fsh-index.json</code> on every run; the AST exporter copies it so a later delta can map even a file that has since been deleted</td>
+    </tr>
+    <tr>
       <td><code class="language-plaintext highlighter-rouge">plan.json</code> (<code class="language-plaintext highlighter-rouge">ig-ast-plan/v1</code>)</td>
       <td><code class="language-plaintext highlighter-rouge">AstPlanCli</code></td>
       <td>what a delta of changed files means: rebuild, load from cache, remove, or a full build and why</td>
@@ -1039,13 +1044,27 @@ produced. The steps, in order:</p>
 <ol>
   <li><code class="language-plaintext highlighter-rouge">validity</code> on the base AST. <strong><code class="language-plaintext highlighter-rouge">stale-inputs</code> or <code class="language-plaintext highlighter-rouge">cannot-tell</code> means no
 incremental build</strong>; run a full one.</li>
-  <li><code class="language-plaintext highlighter-rouge">AstPlanCli</code> for the delta of changed files.</li>
+  <li><code class="language-plaintext highlighter-rouge">AstPlanCli</code> for the delta of changed files. The planner uses <strong>two maps</strong>:
+    <ul>
+      <li><strong>Forward</strong> (<code class="language-plaintext highlighter-rouge">fsh-index.json</code>, from SUSHI): which <code class="language-plaintext highlighter-rouge">.fsh</code> file produces
+which FHIR resource. This is the authoritative answer — SUSHI already
+writes it, and the AST exporter copies it.</li>
+      <li><strong>Reverse</strong> (<code class="language-plaintext highlighter-rouge">fsh-file-users/v1</code>, from <code class="language-plaintext highlighter-rouge">fsh-cone --file-users</code>): which
+files depend on a given file. This is how a changed RuleSet- or
+Alias-only file (which produces no resource itself) reaches the resources
+it affects.</li>
+    </ul>
+  </li>
   <li><code class="language-plaintext highlighter-rouge">IncrementalBuildCli</code> (or a full build, if the plan says so).</li>
   <li><code class="language-plaintext highlighter-rouge">diff base head --plan plan.json --site &lt;site&gt;/ast-delta/</code>.</li>
   <li>The reviewer reads the rendered delta. <strong>A difference they cannot explain
 is a missed coupling</strong> in the cone rules, not a curiosity. File it on bean
 <code class="language-plaintext highlighter-rouge">a9tx</code>, W8.</li>
 </ol>
+
+<p><strong>Measured 2026-10-01</strong> on smart-trust (678 resources, one CodeSystem
+changed): the planner correctly identified a <strong>2-resource cone</strong> (0.3%) —
+<code class="language-plaintext highlighter-rouge">CodeSystem/Domains</code> and its dependent <code class="language-plaintext highlighter-rouge">ValueSet/Domains</code> — in 0.2 seconds.</p>
 
 <p>That diagram predates the AST work and is not yet edited to show these steps.
 Until it is, this section is where they are written down.</p>

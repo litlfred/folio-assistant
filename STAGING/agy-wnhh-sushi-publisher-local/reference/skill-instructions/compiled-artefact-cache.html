@@ -508,32 +508,32 @@
   NOT a cache-busting strategy for third-party assets, and not applied to
   them: those are versioned in their own URLs already.
 -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/agy-wnhh-sushi-publisher-local/assets/css/docs-ui.css?v=1790881423">
+<link rel="stylesheet" href="/folio-assistant/STAGING/agy-wnhh-sushi-publisher-local/assets/css/docs-ui.css?v=1790921621">
 <!-- Narrow viewports: wide content scrolls in its own box, never the page
      (bean `2r2n`). The standalone viewers inline the same file through
      `withViewerNav`, so both kinds of page read one set of rules. -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/agy-wnhh-sushi-publisher-local/assets/css/narrow-viewport.css?v=1790881423">
+<link rel="stylesheet" href="/folio-assistant/STAGING/agy-wnhh-sushi-publisher-local/assets/css/narrow-viewport.css?v=1790921621">
 
 <!--
   The work-plan dashboard's styles, split from docs-ui.css so that
   `state-visualizer.ts` can inline exactly these bytes into the generated
   `<base>/<stub>/state-visualizer/` pages. One rule, two surfaces.
 -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/agy-wnhh-sushi-publisher-local/assets/css/work-plan.css?v=1790881423">
+<link rel="stylesheet" href="/folio-assistant/STAGING/agy-wnhh-sushi-publisher-local/assets/css/work-plan.css?v=1790921621">
 <!-- Sticky themes. GENERATED from the theme nodes in `schemas/themes.ts` by
      `bun run themes:css`; `themes:css:check` fails the build when it is stale.
      Loaded AFTER docs-ui.css deliberately: it supplies the `--fa-sticky-*`
      roles that docs-ui.css consumes, and a custom property has to be set on a
      matching element before the rule reading it takes effect. -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/agy-wnhh-sushi-publisher-local/assets/css/themes.css?v=1790881423">
+<link rel="stylesheet" href="/folio-assistant/STAGING/agy-wnhh-sushi-publisher-local/assets/css/themes.css?v=1790921621">
 <!-- UML overview colours: one class per graph kind, set on the Mermaid nodes
      that `scripts/gen-uml-overview.ts` writes into docs/uml/overview/. -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/agy-wnhh-sushi-publisher-local/assets/css/uml.css?v=1790881423">
+<link rel="stylesheet" href="/folio-assistant/STAGING/agy-wnhh-sushi-publisher-local/assets/css/uml.css?v=1790921621">
 <!-- Kind avatars. GENERATED from `schemas/avatars.ts` by `bun run avatars:css`;
      `avatars:css:check` fails the build when it is stale. One stylesheet
      rather than 68 assets: the glyph is a mask and the colour is a property,
      so a scheme swap is a custom property and the trash state is a selector. -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/agy-wnhh-sushi-publisher-local/assets/css/avatars.css?v=1790881423">
+<link rel="stylesheet" href="/folio-assistant/STAGING/agy-wnhh-sushi-publisher-local/assets/css/avatars.css?v=1790921621">
 
 <!--
   The kinds THIS INSTANCE DECLARES, for the avatar fan.
@@ -550,7 +550,7 @@
 <script type="application/json" id="fa-declared-kinds">["beans","cat-harness","code","code-list","docs","external-schema","folio","fsh-guts","health","interaction","issue-marks","library","memory","methodology","policies","processes","qa","scenarios","schemas","skills","substrate-snapshot","swimlane-glossary","todos","tools","translation-sources","uml","uploads","waiver"]</script>
 <script src="/folio-assistant/STAGING/agy-wnhh-sushi-publisher-local/assets/js/vendor/qrcode.js" defer></script>
 <script src="/folio-assistant/STAGING/agy-wnhh-sushi-publisher-local/assets/js/vendor/qrcode_UTF8.js" defer></script>
-<script src="/folio-assistant/STAGING/agy-wnhh-sushi-publisher-local/assets/js/docs-ui.js?v=1790881423" defer></script>
+<script src="/folio-assistant/STAGING/agy-wnhh-sushi-publisher-local/assets/js/docs-ui.js?v=1790921621" defer></script>
 
 <!--
   The work-plan dashboard. SELF-MOUNTING on any page carrying
@@ -1026,12 +1026,100 @@ window.addEventListener('resize',measure);window.addEventListener('load',measure
     <tr>
       <td>Cone Engine</td>
       <td>Lake’s <code class="language-plaintext highlighter-rouge">.trace</code>-based dependency graph</td>
-      <td><code class="language-plaintext highlighter-rouge">fsh-cone.ts</code> + <code class="language-plaintext highlighter-rouge">AstPlanCli</code></td>
+      <td>SUSHI’s <code class="language-plaintext highlighter-rouge">fsh-index.json</code> (forward: file → resource) + <code class="language-plaintext highlighter-rouge">fsh-cone.ts</code> (reverse: who uses this file) + <code class="language-plaintext highlighter-rouge">AstPlanCli</code></td>
     </tr>
     <tr>
       <td>Incremental</td>
       <td><code class="language-plaintext highlighter-rouge">lake build</code> (only stale modules)</td>
       <td><code class="language-plaintext highlighter-rouge">IncrementalBuildCli</code> (cone rebuild loop)</td>
+    </tr>
+  </tbody>
+</table></div>
+<h2 id="the-file-to-resource-mapping-comes-from-the-toolchain-not-from-us">
+  
+  
+    <a href="#the-file-to-resource-mapping-comes-from-the-toolchain-not-from-us" class="anchor-heading" aria-labelledby="the-file-to-resource-mapping-comes-from-the-toolchain-not-from-us"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> The file-to-resource mapping comes from the toolchain, not from us
+  
+  
+</h2>
+    
+
+<p><strong>Do not reimplement what the compiler already knows.</strong> SUSHI already writes
+<code class="language-plaintext highlighter-rouge">fsh-generated/data/fsh-index.json</code> on every run — the authoritative mapping
+from source <code class="language-plaintext highlighter-rouge">.fsh</code> file to output FHIR resource, with source locations. The AST
+exporter copies it into the AST directory; the incremental planner reads it
+there. No modification to SUSHI is needed.</p>
+
+<p><code class="language-plaintext highlighter-rouge">fsh-cone</code> (<code class="language-plaintext highlighter-rouge">cat-harness/content/pipeline/fsh-cone.ts</code>) provides the <strong>reverse</strong>
+half — who depends on a file — so a changed RuleSet- or Alias-only file (which
+produces no resource itself) can be traced to the resources it affects. These two
+maps together give the planner a complete cone.</p>
+
+<p>Measured 2026-10-01 on smart-trust (678 resources):</p>
+
+<div class="table-wrapper"><table>
+  <thead>
+    <tr>
+      <th>plan input</th>
+      <th>available</th>
+      <th>result</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>No <code class="language-plaintext highlighter-rouge">fsh-index.json</code>, no <code class="language-plaintext highlighter-rouge">fsh-users</code></td>
+      <td>old</td>
+      <td><code class="language-plaintext highlighter-rouge">full</code> build always</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">fsh-index.json</code> only</td>
+      <td>new</td>
+      <td><code class="language-plaintext highlighter-rouge">incremental</code>, 2 resources for a single-file change (<strong>0.3% cone</strong>)</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">fsh-index.json</code> + <code class="language-plaintext highlighter-rouge">fsh-users</code></td>
+      <td>new</td>
+      <td><code class="language-plaintext highlighter-rouge">incremental</code> with RuleSet/Alias propagation</td>
+    </tr>
+  </tbody>
+</table></div>
+<h3 id="timing-smart-trust-678-resources-one-codesystem-changed">
+  
+  
+    <a href="#timing-smart-trust-678-resources-one-codesystem-changed" class="anchor-heading" aria-labelledby="timing-smart-trust-678-resources-one-codesystem-changed"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Timing (smart-trust, 678 resources, one CodeSystem changed)
+  
+  
+</h3>
+    
+
+<div class="table-wrapper"><table>
+  <thead>
+    <tr>
+      <th>build type</th>
+      <th>time</th>
+      <th>vs cold</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Cold full build</td>
+      <td>22:28</td>
+      <td>1×</td>
+    </tr>
+    <tr>
+      <td>Warm full build (cached pkgs + tx)</td>
+      <td>4:39</td>
+      <td>4.8×</td>
+    </tr>
+    <tr>
+      <td>Successive warm (everything cached)</td>
+      <td>3:16</td>
+      <td>6.9×</td>
+    </tr>
+    <tr>
+      <td><strong>Projected cone rebuild (2 resources)</strong></td>
+      <td><strong>~15s</strong></td>
+      <td><strong>~90×</strong></td>
     </tr>
   </tbody>
 </table></div>
