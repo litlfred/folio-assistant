@@ -8,8 +8,8 @@
   },
   "directories": [
     {
-      "instance": "agent-skills",
-      "dir": "agent-skills/skills/voices",
+      "instance": "cat-harness",
+      "dir": "cat-harness/skills/voices",
       "present": true,
       "voices": [
         "agent-skill-authoring"
@@ -1280,8 +1280,8 @@
       "id": "agent-skill-authoring",
       "title": "Agent skill authoring — the base voice, read from two ingested papers",
       "description": "The voice for writing and reviewing agent skills: what a SKILL.md's description must carry to be routed to at all, how much may sit in the body, where references and examples go, and what to do before trusting somebody else's skill. Twelve rules, every one cited to a page of an ingested paper. This is the SHARED BASE — the part the vendors agree on. Anything specific to one vendor's platform belongs in an override under `vendors/`, declaring this voice in its `extends` field.",
-      "instance": "agent-skills",
-      "path": "agent-skills/skills/voices/agent-skill-authoring",
+      "instance": "cat-harness",
+      "path": "cat-harness/skills/voices/agent-skill-authoring",
       "provenance": "evidence",
       "overlaySeverity": "major",
       "criterion": "voice-overlay-agent-skill-authoring",
@@ -1312,8 +1312,8 @@
           "pages": "4-5",
           "quote": "State both what the skill does and when it should be used, and include the concrete terms a relevant task would contain.",
           "links": {
-            "viewer": "cat-harness/library/agent-skills/#agent-skills%2Farxiv-2607.25032v1",
-            "readme": "https://github.com/litlfred/folio-assistant/blob/main/agent-skills/library/arxiv-2607.25032v1/README.md",
+            "viewer": "cat-harness/library/cat-harness/#cat-harness%2Farxiv-2607.25032v1",
+            "readme": "https://github.com/litlfred/folio-assistant/blob/main/cat-harness/library/arxiv-2607.25032v1/README.md",
             "source": "https://arxiv.org/abs/2607.25032v1"
           }
         },
@@ -1331,8 +1331,8 @@
           "pages": "4-5",
           "quote": "Write it in the third person, since it is read by the model as part of its own context, and a first or second person voice can degrade matching.",
           "links": {
-            "viewer": "cat-harness/library/agent-skills/#agent-skills%2Farxiv-2607.25032v1",
-            "readme": "https://github.com/litlfred/folio-assistant/blob/main/agent-skills/library/arxiv-2607.25032v1/README.md",
+            "viewer": "cat-harness/library/cat-harness/#cat-harness%2Farxiv-2607.25032v1",
+            "readme": "https://github.com/litlfred/folio-assistant/blob/main/cat-harness/library/arxiv-2607.25032v1/README.md",
             "source": "https://arxiv.org/abs/2607.25032v1"
           }
         },
@@ -1350,8 +1350,8 @@
           "pages": "4",
           "quote": "The body should stay under about five hundred lines, a few thousand tokens, so that once loaded it does not crowd out the conversation and other context",
           "links": {
-            "viewer": "cat-harness/library/agent-skills/#agent-skills%2Farxiv-2607.25032v1",
-            "readme": "https://github.com/litlfred/folio-assistant/blob/main/agent-skills/library/arxiv-2607.25032v1/README.md",
+            "viewer": "cat-harness/library/cat-harness/#cat-harness%2Farxiv-2607.25032v1",
+            "readme": "https://github.com/litlfred/folio-assistant/blob/main/cat-harness/library/arxiv-2607.25032v1/README.md",
             "source": "https://arxiv.org/abs/2607.25032v1"
           }
         },
@@ -1369,8 +1369,8 @@
           "pages": "5",
           "quote": "Assume the model already holds general knowledge, and add only what it does not have: project conventions, non-obvious procedures, specific file locations, rules that must hold.",
           "links": {
-            "viewer": "cat-harness/library/agent-skills/#agent-skills%2Farxiv-2607.25032v1",
-            "readme": "https://github.com/litlfred/folio-assistant/blob/main/agent-skills/library/arxiv-2607.25032v1/README.md",
+            "viewer": "cat-harness/library/cat-harness/#cat-harness%2Farxiv-2607.25032v1",
+            "readme": "https://github.com/litlfred/folio-assistant/blob/main/cat-harness/library/arxiv-2607.25032v1/README.md",
             "source": "https://arxiv.org/abs/2607.25032v1"
           }
         },
@@ -1388,8 +1388,8 @@
           "pages": "5",
           "quote": "those files should not chain onward to further files, because the model may preview a deeply linked file with a partial read and then act on incomplete information",
           "links": {
-            "viewer": "cat-harness/library/agent-skills/#agent-skills%2Farxiv-2607.25032v1",
-            "readme": "https://github.com/litlfred/folio-assistant/blob/main/agent-skills/library/arxiv-2607.25032v1/README.md",
+            "viewer": "cat-harness/library/cat-harness/#cat-harness%2Farxiv-2607.25032v1",
+            "readme": "https://github.com/litlfred/folio-assistant/blob/main/cat-harness/library/arxiv-2607.25032v1/README.md",
             "source": "https://arxiv.org/abs/2607.25032v1"
           }
         },
@@ -1407,8 +1407,8 @@
           "pages": "5",
           "quote": "For any reference file longer than about one hundred lines, place a short table of contents at the top so the model can see the full scope even on a partial read",
           "links": {
-            "viewer": "cat-harness/library/agent-skills/#agent-skills%2Farxiv-2607.25032v1",
-            "readme": "https://github.com/litlfred/folio-assistant/blob/main/agent-skills/library/arxiv-2607.25032v1/README.md",
+            "viewer": "cat-harness/library/cat-harness/#cat-harness%2Farxiv-2607.25032v1",
+            "readme": "https://github.com/litlfred/folio-assistant/blob/main/cat-harness/library/arxiv-2607.25032v1/README.md",
             "source": "https://arxiv.org/abs/2607.25032v1"
           }
         },
@@ -1426,8 +1426,8 @@
           "pages": "8",
           "quote": "Offering many alternatives leaves the model to choose without grounds, so give one default and name the exception.",
           "links": {
-            "viewer": "cat-harness/library/agent-skills/#agent-skills%2Farxiv-2607.25032v1",
-            "readme": "https://github.com/litlfred/folio-assistant/blob/main/agent-skills/library/arxiv-2607.25032v1/README.md",
+            "viewer": "cat-harness/library/cat-harness/#cat-harness%2Farxiv-2607.25032v1",
+            "readme": "https://github.com/litlfred/folio-assistant/blob/main/cat-harness/library/arxiv-2607.25032v1/README.md",
             "source": "https://arxiv.org/abs/2607.25032v1"
           }
         },
@@ -1445,8 +1445,8 @@
           "pages": "8",
           "quote": "Assuming a package is installed fails when it is not, so state dependencies explicitly.",
           "links": {
-            "viewer": "cat-harness/library/agent-skills/#agent-skills%2Farxiv-2607.25032v1",
-            "readme": "https://github.com/litlfred/folio-assistant/blob/main/agent-skills/library/arxiv-2607.25032v1/README.md",
+            "viewer": "cat-harness/library/cat-harness/#cat-harness%2Farxiv-2607.25032v1",
+            "readme": "https://github.com/litlfred/folio-assistant/blob/main/cat-harness/library/arxiv-2607.25032v1/README.md",
             "source": "https://arxiv.org/abs/2607.25032v1"
           }
         },
@@ -1464,8 +1464,8 @@
           "pages": "8",
           "quote": "Write evaluations before writing the skill.",
           "links": {
-            "viewer": "cat-harness/library/agent-skills/#agent-skills%2Farxiv-2607.25032v1",
-            "readme": "https://github.com/litlfred/folio-assistant/blob/main/agent-skills/library/arxiv-2607.25032v1/README.md",
+            "viewer": "cat-harness/library/cat-harness/#cat-harness%2Farxiv-2607.25032v1",
+            "readme": "https://github.com/litlfred/folio-assistant/blob/main/cat-harness/library/arxiv-2607.25032v1/README.md",
             "source": "https://arxiv.org/abs/2607.25032v1"
           }
         },
@@ -1483,8 +1483,8 @@
           "pages": "9",
           "quote": "a skill from a third party should be read in full before it is used.",
           "links": {
-            "viewer": "cat-harness/library/agent-skills/#agent-skills%2Farxiv-2607.25032v1",
-            "readme": "https://github.com/litlfred/folio-assistant/blob/main/agent-skills/library/arxiv-2607.25032v1/README.md",
+            "viewer": "cat-harness/library/cat-harness/#cat-harness%2Farxiv-2607.25032v1",
+            "readme": "https://github.com/litlfred/folio-assistant/blob/main/cat-harness/library/arxiv-2607.25032v1/README.md",
             "source": "https://arxiv.org/abs/2607.25032v1"
           }
         },
@@ -1502,8 +1502,8 @@
           "pages": "4",
           "quote": "The three most prevalent individual defects are all spec violations: R1.3 miss- ing trigger guidance (52.3%), R2.4 name-as-heading dupli- cation (44.3%), and R3.2 too many inline examples (32.1%).",
           "links": {
-            "viewer": "cat-harness/library/agent-skills/#agent-skills%2Farxiv-2608.08453v1",
-            "readme": "https://github.com/litlfred/folio-assistant/blob/main/agent-skills/library/arxiv-2608.08453v1/README.md",
+            "viewer": "cat-harness/library/cat-harness/#cat-harness%2Farxiv-2608.08453v1",
+            "readme": "https://github.com/litlfred/folio-assistant/blob/main/cat-harness/library/arxiv-2608.08453v1/README.md",
             "source": "https://arxiv.org/abs/2608.08453v1"
           }
         },
@@ -1521,8 +1521,8 @@
           "pages": "4",
           "quote": "The three most prevalent individual defects are all spec violations: R1.3 miss- ing trigger guidance (52.3%), R2.4 name-as-heading dupli- cation (44.3%), and R3.2 too many inline examples (32.1%).",
           "links": {
-            "viewer": "cat-harness/library/agent-skills/#agent-skills%2Farxiv-2608.08453v1",
-            "readme": "https://github.com/litlfred/folio-assistant/blob/main/agent-skills/library/arxiv-2608.08453v1/README.md",
+            "viewer": "cat-harness/library/cat-harness/#cat-harness%2Farxiv-2608.08453v1",
+            "readme": "https://github.com/litlfred/folio-assistant/blob/main/cat-harness/library/arxiv-2608.08453v1/README.md",
             "source": "https://arxiv.org/abs/2608.08453v1"
           }
         }
@@ -1532,8 +1532,8 @@
       "id": "agent-skill-authoring-claude",
       "title": "Agent skill authoring — Claude override",
       "description": "What Anthropic's own 'Skill authoring best practices' (Claude Platform Docs) adds to the shared base voice agent-skill-authoring: Claude's front-matter validation, its naming conventions, forward-slash paths, and three authoring methods (plan-validate-execute, no voodoo constants, author with one instance and test with another). MODEL-SPECIFIC by the owner's ruling (bean rkqp): a vendor's advice is evidence about that vendor's platform. Provenance ASSERTION: a publisher describing its own product. Rules the base already carries — much of it traceable to this very document (the ~500-line body, one-level references, a table of contents over ~100 lines, third-person descriptions, evaluations before instructions) — are inherited through extends, not repeated. Conformance is an agentic review, never a schema gate.",
-      "instance": "agent-skills",
-      "path": "agent-skills/skills/voices/vendors/agent-skill-authoring-claude",
+      "instance": "cat-harness",
+      "path": "cat-harness/skills/voices/vendors/agent-skill-authoring-claude",
       "provenance": "assertion",
       "overlaySeverity": "major",
       "criterion": "voice-overlay-agent-skill-authoring-claude",
@@ -1560,8 +1560,8 @@
           "pages": "29",
           "quote": "The SKILL.md frontmatter requires name and description fields with specific validation rules: name : Maximum 64 characters, lowercase letters/numbers/hyphens only, no XML tags, no reserved words description : Maximum 1,024 characters, non-empty, no XML tags",
           "links": {
-            "viewer": "cat-harness/library/agent-skills/#agent-skills%2Fskill-authoring-best-practices---claude-platform-docs",
-            "readme": "https://github.com/litlfred/folio-assistant/blob/main/agent-skills/library/skill-authoring-best-practices---claude-platform-docs/README.md"
+            "viewer": "cat-harness/library/cat-harness/#cat-harness%2Fskill-authoring-best-practices---claude-platform-docs",
+            "readme": "https://github.com/litlfred/folio-assistant/blob/main/cat-harness/library/skill-authoring-best-practices---claude-platform-docs/README.md"
           }
         },
         {
@@ -1578,8 +1578,8 @@
           "pages": "5",
           "quote": "Remember that the name field must use lowercase letters, numbers, and hyphens only. Good naming examples (gerund form): processing-pdfs analyzing-spreadsheets managing-databases testing-code writing-documentation Acceptable alternatives: Noun phrases: pdf-processing , spreadsheet-analysis Action-oriented: process-pdfs , analyze-spreadsheets",
           "links": {
-            "viewer": "cat-harness/library/agent-skills/#agent-skills%2Fskill-authoring-best-practices---claude-platform-docs",
-            "readme": "https://github.com/litlfred/folio-assistant/blob/main/agent-skills/library/skill-authoring-best-practices---claude-platform-docs/README.md"
+            "viewer": "cat-harness/library/cat-harness/#cat-harness%2Fskill-authoring-best-practices---claude-platform-docs",
+            "readme": "https://github.com/litlfred/folio-assistant/blob/main/cat-harness/library/skill-authoring-best-practices---claude-platform-docs/README.md"
           }
         },
         {
@@ -1596,8 +1596,8 @@
           "pages": "5",
           "quote": "Avoid: Vague names: helper , utils , tools Overly generic: documents , data , files Reserved words: anthropic-helper , claude-tools Inconsistent patterns within your skill collection",
           "links": {
-            "viewer": "cat-harness/library/agent-skills/#agent-skills%2Fskill-authoring-best-practices---claude-platform-docs",
-            "readme": "https://github.com/litlfred/folio-assistant/blob/main/agent-skills/library/skill-authoring-best-practices---claude-platform-docs/README.md"
+            "viewer": "cat-harness/library/cat-harness/#cat-harness%2Fskill-authoring-best-practices---claude-platform-docs",
+            "readme": "https://github.com/litlfred/folio-assistant/blob/main/cat-harness/library/skill-authoring-best-practices---claude-platform-docs/README.md"
           }
         },
         {
@@ -1614,8 +1614,8 @@
           "pages": "21",
           "quote": "Always use forward slashes in file paths, even on Windows: ✓ Good: scripts/helper.py , reference/guide.md ✗ Avoid: scripts\\helper.py , reference\\guide.md Unix-style paths work across all platforms, while Windows-style paths cause errors on Unix systems.",
           "links": {
-            "viewer": "cat-harness/library/agent-skills/#agent-skills%2Fskill-authoring-best-practices---claude-platform-docs",
-            "readme": "https://github.com/litlfred/folio-assistant/blob/main/agent-skills/library/skill-authoring-best-practices---claude-platform-docs/README.md"
+            "viewer": "cat-harness/library/cat-harness/#cat-harness%2Fskill-authoring-best-practices---claude-platform-docs",
+            "readme": "https://github.com/litlfred/folio-assistant/blob/main/cat-harness/library/skill-authoring-best-practices---claude-platform-docs/README.md"
           }
         },
         {
@@ -1632,8 +1632,8 @@
           "pages": "23",
           "quote": "Configuration parameters should also be justified and documented to avoid \"voodoo constants\" (Ousterhout's law). If you don't know the right value, how will Claude determine it?",
           "links": {
-            "viewer": "cat-harness/library/agent-skills/#agent-skills%2Fskill-authoring-best-practices---claude-platform-docs",
-            "readme": "https://github.com/litlfred/folio-assistant/blob/main/agent-skills/library/skill-authoring-best-practices---claude-platform-docs/README.md"
+            "viewer": "cat-harness/library/cat-harness/#cat-harness%2Fskill-authoring-best-practices---claude-platform-docs",
+            "readme": "https://github.com/litlfred/folio-assistant/blob/main/cat-harness/library/skill-authoring-best-practices---claude-platform-docs/README.md"
           }
         },
         {
@@ -1650,8 +1650,8 @@
           "pages": "26",
           "quote": "When Claude performs complex, open-ended tasks, it can make mistakes. The \"plan-validate- execute\" pattern catches errors early by having Claude first create a plan in a structured format, then validate that plan with a script before executing it.",
           "links": {
-            "viewer": "cat-harness/library/agent-skills/#agent-skills%2Fskill-authoring-best-practices---claude-platform-docs",
-            "readme": "https://github.com/litlfred/folio-assistant/blob/main/agent-skills/library/skill-authoring-best-practices---claude-platform-docs/README.md"
+            "viewer": "cat-harness/library/cat-harness/#cat-harness%2Fskill-authoring-best-practices---claude-platform-docs",
+            "readme": "https://github.com/litlfred/folio-assistant/blob/main/cat-harness/library/skill-authoring-best-practices---claude-platform-docs/README.md"
           }
         },
         {
@@ -1668,8 +1668,8 @@
           "pages": "15",
           "quote": "Use consistent terminology Choose one term and use it throughout the Skill: Good - Consistent: Always \"API endpoint\" Always \"field\" Always \"extract\"",
           "links": {
-            "viewer": "cat-harness/library/agent-skills/#agent-skills%2Fskill-authoring-best-practices---claude-platform-docs",
-            "readme": "https://github.com/litlfred/folio-assistant/blob/main/agent-skills/library/skill-authoring-best-practices---claude-platform-docs/README.md"
+            "viewer": "cat-harness/library/cat-harness/#cat-harness%2Fskill-authoring-best-practices---claude-platform-docs",
+            "readme": "https://github.com/litlfred/folio-assistant/blob/main/cat-harness/library/skill-authoring-best-practices---claude-platform-docs/README.md"
           }
         },
         {
@@ -1686,8 +1686,8 @@
           "pages": "19",
           "quote": "Claude (\"Claude A\") to create a Skill that is used by other instances (\"Claude B\"). Claude A helps you design and refine instructions, while Claude B tests them in real tasks.",
           "links": {
-            "viewer": "cat-harness/library/agent-skills/#agent-skills%2Fskill-authoring-best-practices---claude-platform-docs",
-            "readme": "https://github.com/litlfred/folio-assistant/blob/main/agent-skills/library/skill-authoring-best-practices---claude-platform-docs/README.md"
+            "viewer": "cat-harness/library/cat-harness/#cat-harness%2Fskill-authoring-best-practices---claude-platform-docs",
+            "readme": "https://github.com/litlfred/folio-assistant/blob/main/cat-harness/library/skill-authoring-best-practices---claude-platform-docs/README.md"
           }
         }
       ]
@@ -1696,8 +1696,8 @@
       "id": "agent-skill-authoring-gemini-cli",
       "title": "Agent skill authoring — Gemini CLI override",
       "description": "What Gemini CLI's own documentation adds to the shared base voice (agent-skill-authoring): its loading budget in words, its degrees-of-freedom rule, its folder names, script ergonomics and security. MODEL-SPECIFIC by the owner's ruling (bean rkqp, 2026-09-20): a vendor's advice is evidence about that vendor's platform, so it is a separate voice extending the base rather than caveats folded into it — a rule that turns out to be Gemini-only can then be dropped without touching the rest. Provenance is ASSERTION: a publisher describing its own product, revisable without notice. Rules the base already states (description carries function and trigger; read third-party skills before installing) are inherited through extends, not repeated. Conformance is an agentic review, never a schema gate — the owner's instruction, because 'best practice' drifts.",
-      "instance": "agent-skills",
-      "path": "agent-skills/skills/voices/vendors/agent-skill-authoring-gemini-cli",
+      "instance": "cat-harness",
+      "path": "cat-harness/skills/voices/vendors/agent-skill-authoring-gemini-cli",
       "provenance": "assertion",
       "overlaySeverity": "major",
       "criterion": "voice-overlay-agent-skill-authoring-gemini-cli",
@@ -1724,8 +1724,8 @@
           "pages": "1",
           "quote": "Avoid overlap: Ensure your skill descriptions are distinct from one another and from the general capabilities of the model.",
           "links": {
-            "viewer": "cat-harness/library/agent-skills/#agent-skills%2Fagent-skill-best-practices---gemini-cli",
-            "readme": "https://github.com/litlfred/folio-assistant/blob/main/agent-skills/library/agent-skill-best-practices---gemini-cli/README.md"
+            "viewer": "cat-harness/library/cat-harness/#cat-harness%2Fagent-skill-best-practices---gemini-cli",
+            "readme": "https://github.com/litlfred/folio-assistant/blob/main/cat-harness/library/agent-skill-best-practices---gemini-cli/README.md"
           }
         },
         {
@@ -1742,8 +1742,8 @@
           "pages": "1",
           "quote": "1. Metadata (name + description): Always in context (~100 words). 2. SKILL.md body: Loaded only after the skill triggers (<5k words). 3. Bundled resources: Loaded only as needed by the model.",
           "links": {
-            "viewer": "cat-harness/library/agent-skills/#agent-skills%2Fagent-skill-best-practices---gemini-cli",
-            "readme": "https://github.com/litlfred/folio-assistant/blob/main/agent-skills/library/agent-skill-best-practices---gemini-cli/README.md"
+            "viewer": "cat-harness/library/cat-harness/#cat-harness%2Fagent-skill-best-practices---gemini-cli",
+            "readme": "https://github.com/litlfred/folio-assistant/blob/main/cat-harness/library/agent-skill-best-practices---gemini-cli/README.md"
           }
         },
         {
@@ -1760,8 +1760,8 @@
           "pages": "2",
           "quote": "Degrees of freedom Match the level of instruction specificity to the task’s fragility. High freedom (text-based instructions): Use when multiple approaches are valid or decisions depend heavily on context. Medium freedom (pseudocode or scripts with parameters): Use when a preferred pattern exists but some variation is acceptable. Low freedom (specific scripts, few parameters): Use when operations are fragile and error-prone, or a specific sequence MUST be followed.",
           "links": {
-            "viewer": "cat-harness/library/agent-skills/#agent-skills%2Fagent-skill-best-practices---gemini-cli",
-            "readme": "https://github.com/litlfred/folio-assistant/blob/main/agent-skills/library/agent-skill-best-practices---gemini-cli/README.md"
+            "viewer": "cat-harness/library/cat-harness/#cat-harness%2Fagent-skill-best-practices---gemini-cli",
+            "readme": "https://github.com/litlfred/folio-assistant/blob/main/cat-harness/library/agent-skill-best-practices---gemini-cli/README.md"
           }
         },
         {
@@ -1778,8 +1778,8 @@
           "pages": "2",
           "quote": "Use scripts for deterministic tasks: If a task can be automated with a script (for example, running a linter, fetching data from an API), bundle it in the scripts/ folder.",
           "links": {
-            "viewer": "cat-harness/library/agent-skills/#agent-skills%2Fagent-skill-best-practices---gemini-cli",
-            "readme": "https://github.com/litlfred/folio-assistant/blob/main/agent-skills/library/agent-skill-best-practices---gemini-cli/README.md"
+            "viewer": "cat-harness/library/cat-harness/#cat-harness%2Fagent-skill-best-practices---gemini-cli",
+            "readme": "https://github.com/litlfred/folio-assistant/blob/main/cat-harness/library/agent-skill-best-practices---gemini-cli/README.md"
           }
         },
         {
@@ -1796,8 +1796,8 @@
           "pages": "2",
           "quote": "Agentic ergonomics: Ensure scripts output LLM-friendly stdout. Suppress verbose tracebacks and provide clear, concise success/failure messages.",
           "links": {
-            "viewer": "cat-harness/library/agent-skills/#agent-skills%2Fagent-skill-best-practices---gemini-cli",
-            "readme": "https://github.com/litlfred/folio-assistant/blob/main/agent-skills/library/agent-skill-best-practices---gemini-cli/README.md"
+            "viewer": "cat-harness/library/cat-harness/#cat-harness%2Fagent-skill-best-practices---gemini-cli",
+            "readme": "https://github.com/litlfred/folio-assistant/blob/main/cat-harness/library/agent-skill-best-practices---gemini-cli/README.md"
           }
         },
         {
@@ -1814,8 +1814,8 @@
           "pages": "2",
           "quote": "Provide templates: Include common file headers or boilerplate code in the assets/ folder to ensure the agent produces consistent output.",
           "links": {
-            "viewer": "cat-harness/library/agent-skills/#agent-skills%2Fagent-skill-best-practices---gemini-cli",
-            "readme": "https://github.com/litlfred/folio-assistant/blob/main/agent-skills/library/agent-skill-best-practices---gemini-cli/README.md"
+            "viewer": "cat-harness/library/cat-harness/#cat-harness%2Fagent-skill-best-practices---gemini-cli",
+            "readme": "https://github.com/litlfred/folio-assistant/blob/main/cat-harness/library/agent-skill-best-practices---gemini-cli/README.md"
           }
         },
         {
@@ -1832,8 +1832,8 @@
           "pages": "2",
           "quote": "my-skill/ ├── SKILL.md (Required) Core instructions and metadata ├── scripts/ (Optional) Executable logic (Node.js, Python, etc.) ├── references/ (Optional) Documentation to be loaded as needed └── assets/ (Optional) Templates and non-executable resources",
           "links": {
-            "viewer": "cat-harness/library/agent-skills/#agent-skills%2Fagent-skill-best-practices---gemini-cli",
-            "readme": "https://github.com/litlfred/folio-assistant/blob/main/agent-skills/library/agent-skill-best-practices---gemini-cli/README.md"
+            "viewer": "cat-harness/library/cat-harness/#cat-harness%2Fagent-skill-best-practices---gemini-cli",
+            "readme": "https://github.com/litlfred/folio-assistant/blob/main/cat-harness/library/agent-skill-best-practices---gemini-cli/README.md"
           }
         },
         {
@@ -1850,8 +1850,8 @@
           "pages": "2",
           "quote": "Best practice: Keep the SKILL.md body focused on core procedural instructions. Move detailed reference material, schemas, and examples into separate files in a references/ directory.",
           "links": {
-            "viewer": "cat-harness/library/agent-skills/#agent-skills%2Fagent-skill-best-practices---gemini-cli",
-            "readme": "https://github.com/litlfred/folio-assistant/blob/main/agent-skills/library/agent-skill-best-practices---gemini-cli/README.md"
+            "viewer": "cat-harness/library/cat-harness/#cat-harness%2Fagent-skill-best-practices---gemini-cli",
+            "readme": "https://github.com/litlfred/folio-assistant/blob/main/cat-harness/library/agent-skill-best-practices---gemini-cli/README.md"
           }
         },
         {
@@ -1868,8 +1868,8 @@
           "pages": "3",
           "quote": "Avoid hardcoded secrets: Never include API keys or passwords in your skill’s scripts or documentation.",
           "links": {
-            "viewer": "cat-harness/library/agent-skills/#agent-skills%2Fagent-skill-best-practices---gemini-cli",
-            "readme": "https://github.com/litlfred/folio-assistant/blob/main/agent-skills/library/agent-skill-best-practices---gemini-cli/README.md"
+            "viewer": "cat-harness/library/cat-harness/#cat-harness%2Fagent-skill-best-practices---gemini-cli",
+            "readme": "https://github.com/litlfred/folio-assistant/blob/main/cat-harness/library/agent-skill-best-practices---gemini-cli/README.md"
           }
         },
         {
@@ -1886,8 +1886,8 @@
           "pages": "3",
           "quote": "Limit scope: Design skills to be as focused as possible to minimize the potential impact of errors.",
           "links": {
-            "viewer": "cat-harness/library/agent-skills/#agent-skills%2Fagent-skill-best-practices---gemini-cli",
-            "readme": "https://github.com/litlfred/folio-assistant/blob/main/agent-skills/library/agent-skill-best-practices---gemini-cli/README.md"
+            "viewer": "cat-harness/library/cat-harness/#cat-harness%2Fagent-skill-best-practices---gemini-cli",
+            "readme": "https://github.com/litlfred/folio-assistant/blob/main/cat-harness/library/agent-skill-best-practices---gemini-cli/README.md"
           }
         }
       ]
@@ -1896,8 +1896,8 @@
       "id": "agent-skill-authoring-openai",
       "title": "Agent skill authoring — OpenAI override",
       "description": "What OpenAI's 'Skills in OpenAI API' cookbook notebook adds to the shared base voice agent-skill-authoring: front matter as the router, explicit use/don't-use routing with negative examples, scripts that behave like tiny CLIs, verification in SKILL.md, what may leave over the network, version pinning, and the platform's upload limits. MODEL-SPECIFIC by the owner's ruling (bean rkqp): a vendor's advice is evidence about that vendor's platform. Provenance ASSERTION: a publisher describing its own product. Read from the full notebook (ingested through the notebook rung, MIT-licensed), not the one-page PDF capture skills-in-openai-api, which is almost all code. Rules the base already carries — description states function and trigger, one default, state dependencies — are inherited through extends, not repeated. Conformance is an agentic review, never a schema gate.",
-      "instance": "agent-skills",
-      "path": "agent-skills/skills/voices/vendors/agent-skill-authoring-openai",
+      "instance": "cat-harness",
+      "path": "cat-harness/skills/voices/vendors/agent-skill-authoring-openai",
       "provenance": "assertion",
       "overlaySeverity": "major",
       "criterion": "voice-overlay-agent-skill-authoring-openai",
@@ -1923,8 +1923,8 @@
           "cites": "skills-in-openai-api-notebook#s007-skill-md-frontmatter",
           "quote": "OpenAI models expect names and descriptions to come from frontmatter (important for discovery and routing).",
           "links": {
-            "viewer": "cat-harness/library/agent-skills/#agent-skills%2Fskills-in-openai-api-notebook",
-            "readme": "https://github.com/litlfred/folio-assistant/blob/main/agent-skills/library/skills-in-openai-api-notebook/README.md"
+            "viewer": "cat-harness/library/cat-harness/#cat-harness%2Fskills-in-openai-api-notebook",
+            "readme": "https://github.com/litlfred/folio-assistant/blob/main/cat-harness/library/skills-in-openai-api-notebook/README.md"
           }
         },
         {
@@ -1940,8 +1940,8 @@
           "cites": "skills-in-openai-api-notebook#s011-operational-best-practices",
           "quote": "Add explicit routing guidance: “Use when…” vs. “Don’t use when…”, and a few key edge cases, all in `SKILL.md`.",
           "links": {
-            "viewer": "cat-harness/library/agent-skills/#agent-skills%2Fskills-in-openai-api-notebook",
-            "readme": "https://github.com/litlfred/folio-assistant/blob/main/agent-skills/library/skills-in-openai-api-notebook/README.md"
+            "viewer": "cat-harness/library/cat-harness/#cat-harness%2Fskills-in-openai-api-notebook",
+            "readme": "https://github.com/litlfred/folio-assistant/blob/main/cat-harness/library/skills-in-openai-api-notebook/README.md"
           }
         },
         {
@@ -1957,8 +1957,8 @@
           "cites": "skills-in-openai-api-notebook#s011-operational-best-practices",
           "quote": "Include negative examples (when the skill should *not* be triggered) alongside positive examples to improve routing accuracy.",
           "links": {
-            "viewer": "cat-harness/library/agent-skills/#agent-skills%2Fskills-in-openai-api-notebook",
-            "readme": "https://github.com/litlfred/folio-assistant/blob/main/agent-skills/library/skills-in-openai-api-notebook/README.md"
+            "viewer": "cat-harness/library/cat-harness/#cat-harness%2Fskills-in-openai-api-notebook",
+            "readme": "https://github.com/litlfred/folio-assistant/blob/main/cat-harness/library/skills-in-openai-api-notebook/README.md"
           }
         },
         {
@@ -1974,8 +1974,8 @@
           "cites": "skills-in-openai-api-notebook#s011-operational-best-practices",
           "quote": "If routing feels inconsistent, iterate on name, description, and examples before changing code.",
           "links": {
-            "viewer": "cat-harness/library/agent-skills/#agent-skills%2Fskills-in-openai-api-notebook",
-            "readme": "https://github.com/litlfred/folio-assistant/blob/main/agent-skills/library/skills-in-openai-api-notebook/README.md"
+            "viewer": "cat-harness/library/cat-harness/#cat-harness%2Fskills-in-openai-api-notebook",
+            "readme": "https://github.com/litlfred/folio-assistant/blob/main/cat-harness/library/skills-in-openai-api-notebook/README.md"
           }
         },
         {
@@ -1991,8 +1991,8 @@
           "cites": "skills-in-openai-api-notebook#s011-operational-best-practices",
           "quote": "Prints deterministic stdout",
           "links": {
-            "viewer": "cat-harness/library/agent-skills/#agent-skills%2Fskills-in-openai-api-notebook",
-            "readme": "https://github.com/litlfred/folio-assistant/blob/main/agent-skills/library/skills-in-openai-api-notebook/README.md"
+            "viewer": "cat-harness/library/cat-harness/#cat-harness%2Fskills-in-openai-api-notebook",
+            "readme": "https://github.com/litlfred/folio-assistant/blob/main/cat-harness/library/skills-in-openai-api-notebook/README.md"
           }
         },
         {
@@ -2008,8 +2008,8 @@
           "cites": "skills-in-openai-api-notebook#s011-operational-best-practices",
           "quote": "Add concrete templates and worked examples inside the skill (inputs → commands → expected outputs)",
           "links": {
-            "viewer": "cat-harness/library/agent-skills/#agent-skills%2Fskills-in-openai-api-notebook",
-            "readme": "https://github.com/litlfred/folio-assistant/blob/main/agent-skills/library/skills-in-openai-api-notebook/README.md"
+            "viewer": "cat-harness/library/cat-harness/#cat-harness%2Fskills-in-openai-api-notebook",
+            "readme": "https://github.com/litlfred/folio-assistant/blob/main/cat-harness/library/skills-in-openai-api-notebook/README.md"
           }
         },
         {
@@ -2025,8 +2025,8 @@
           "cites": "skills-in-openai-api-notebook#s011-operational-best-practices",
           "quote": "add explicit verification steps and output checks in `SKILL.md`.",
           "links": {
-            "viewer": "cat-harness/library/agent-skills/#agent-skills%2Fskills-in-openai-api-notebook",
-            "readme": "https://github.com/litlfred/folio-assistant/blob/main/agent-skills/library/skills-in-openai-api-notebook/README.md"
+            "viewer": "cat-harness/library/cat-harness/#cat-harness%2Fskills-in-openai-api-notebook",
+            "readme": "https://github.com/litlfred/folio-assistant/blob/main/cat-harness/library/skills-in-openai-api-notebook/README.md"
           }
         },
         {
@@ -2042,8 +2042,8 @@
           "cites": "skills-in-openai-api-notebook#s011-operational-best-practices",
           "quote": "If the system prompt repeats the entire procedure, people will:",
           "links": {
-            "viewer": "cat-harness/library/agent-skills/#agent-skills%2Fskills-in-openai-api-notebook",
-            "readme": "https://github.com/litlfred/folio-assistant/blob/main/agent-skills/library/skills-in-openai-api-notebook/README.md"
+            "viewer": "cat-harness/library/cat-harness/#cat-harness%2Fskills-in-openai-api-notebook",
+            "readme": "https://github.com/litlfred/folio-assistant/blob/main/cat-harness/library/skills-in-openai-api-notebook/README.md"
           }
         },
         {
@@ -2059,8 +2059,8 @@
           "cites": "skills-in-openai-api-notebook#s011-operational-best-practices",
           "quote": "If network access is required, pair allowlists with explicit “what data is allowed to leave” guidance.",
           "links": {
-            "viewer": "cat-harness/library/agent-skills/#agent-skills%2Fskills-in-openai-api-notebook",
-            "readme": "https://github.com/litlfred/folio-assistant/blob/main/agent-skills/library/skills-in-openai-api-notebook/README.md"
+            "viewer": "cat-harness/library/cat-harness/#cat-harness%2Fskills-in-openai-api-notebook",
+            "readme": "https://github.com/litlfred/folio-assistant/blob/main/cat-harness/library/skills-in-openai-api-notebook/README.md"
           }
         },
         {
@@ -2076,8 +2076,8 @@
           "cites": "skills-in-openai-api-notebook#s011-operational-best-practices",
           "quote": "Consider pinning the model and skill version together for reproducible behavior across deployments.",
           "links": {
-            "viewer": "cat-harness/library/agent-skills/#agent-skills%2Fskills-in-openai-api-notebook",
-            "readme": "https://github.com/litlfred/folio-assistant/blob/main/agent-skills/library/skills-in-openai-api-notebook/README.md"
+            "viewer": "cat-harness/library/cat-harness/#cat-harness%2Fskills-in-openai-api-notebook",
+            "readme": "https://github.com/litlfred/folio-assistant/blob/main/cat-harness/library/skills-in-openai-api-notebook/README.md"
           }
         },
         {
@@ -2093,8 +2093,8 @@
           "cites": "skills-in-openai-api-notebook#s011-operational-best-practices",
           "quote": "Exactly one manifest file allowed (`skill.md`/`SKILL.md`)",
           "links": {
-            "viewer": "cat-harness/library/agent-skills/#agent-skills%2Fskills-in-openai-api-notebook",
-            "readme": "https://github.com/litlfred/folio-assistant/blob/main/agent-skills/library/skills-in-openai-api-notebook/README.md"
+            "viewer": "cat-harness/library/cat-harness/#cat-harness%2Fskills-in-openai-api-notebook",
+            "readme": "https://github.com/litlfred/folio-assistant/blob/main/cat-harness/library/skills-in-openai-api-notebook/README.md"
           }
         },
         {
@@ -2110,8 +2110,8 @@
           "cites": "skills-in-openai-api-notebook#s003-when-to-use-skills",
           "quote": "The procedure changes every day (skills shine when the workflow stabilizes).",
           "links": {
-            "viewer": "cat-harness/library/agent-skills/#agent-skills%2Fskills-in-openai-api-notebook",
-            "readme": "https://github.com/litlfred/folio-assistant/blob/main/agent-skills/library/skills-in-openai-api-notebook/README.md"
+            "viewer": "cat-harness/library/cat-harness/#cat-harness%2Fskills-in-openai-api-notebook",
+            "readme": "https://github.com/litlfred/folio-assistant/blob/main/cat-harness/library/skills-in-openai-api-notebook/README.md"
           }
         }
       ]
@@ -2522,7 +2522,7 @@
           "judgementOnly": false,
           "citation": "library",
           "cites": "rfc2119-key-words-requirement-levels#page-001",
-          "citesInstance": "litlfred/agent-skills",
+          "citesInstance": "litlfred/cat-harness",
           "pages": "1",
           "quote": "1. MUST   This word, or the terms \"REQUIRED\" or \"SHALL\", mean that the definition is an absolute requirement of the specification."
         },
@@ -2537,7 +2537,7 @@
           "judgementOnly": false,
           "citation": "library",
           "cites": "rfc2119-key-words-requirement-levels#page-001",
-          "citesInstance": "litlfred/agent-skills",
+          "citesInstance": "litlfred/cat-harness",
           "pages": "1",
           "quote": "2. MUST NOT   This phrase, or the phrase \"SHALL NOT\", mean that the definition is an absolute prohibition of the specification."
         },
@@ -2552,7 +2552,7 @@
           "judgementOnly": false,
           "citation": "library",
           "cites": "rfc2119-key-words-requirement-levels#page-002",
-          "citesInstance": "litlfred/agent-skills",
+          "citesInstance": "litlfred/cat-harness",
           "pages": "2",
           "quote": "3. SHOULD   This word, or the adjective \"RECOMMENDED\", mean that there may exist valid reasons in particular circumstances to ignore a particular item, but the full implications must be understood and carefully weighed before choosing a different course."
         },
@@ -2567,7 +2567,7 @@
           "judgementOnly": false,
           "citation": "library",
           "cites": "rfc2119-key-words-requirement-levels#page-003",
-          "citesInstance": "litlfred/agent-skills",
+          "citesInstance": "litlfred/cat-harness",
           "pages": "3",
           "quote": "Imperatives of the type defined in this memo must be used with care and sparingly.  In particular, they MUST only be used where it is actually required for interoperation or to limit behavior which has potential for causing harm (e.g., limiting retransmisssions)  For example, they must not be used to try to impose a particular method on implementors where the method is not required for interoperability."
         },
@@ -2582,7 +2582,7 @@
           "judgementOnly": false,
           "citation": "library",
           "cites": "rfc8174-uppercase-vs-lowercase-2119-key-words#page-001",
-          "citesInstance": "litlfred/agent-skills",
+          "citesInstance": "litlfred/cat-harness",
           "pages": "1",
           "quote": "This document updates RFC 2119 by clarifying that only UPPERCASE usage of the key words have the defined special meanings."
         },
@@ -2597,7 +2597,7 @@
           "judgementOnly": false,
           "citation": "library",
           "cites": "rfc2119-key-words-requirement-levels#page-003",
-          "citesInstance": "litlfred/agent-skills",
+          "citesInstance": "litlfred/cat-harness",
           "pages": "3",
           "quote": "Document authors should take the time to elaborate the security implications of not following recommendations or requirements as most implementors will not have had the benefit of the experience and discussion that produced the specification."
         },

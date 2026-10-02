@@ -28,9 +28,7 @@
       "@type": "Association",
       "activity": "sampleimport--xlg2-wpro-trial-original#1",
       "agent": "https://litlfred.github.io/cat-harness/0.1.0/scenarios/actors/owner",
-      "plan": {
-        "@value": "sample-import#Task_Scope"
-      },
+      "plan": "https://litlfred.github.io/cat-harness/0.1.0/processes/sample-import#Task_Scope",
       "role": "https://litlfred.github.io/cat-harness/0.1.0/scenarios/roles#user"
     },
     {
@@ -46,9 +44,7 @@
       "@type": "Association",
       "activity": "sampleimport--xlg2-wpro-trial-original#2",
       "agent": "https://litlfred.github.io/cat-harness/0.1.0/scenarios/actors/claude",
-      "plan": {
-        "@value": "sample-import#Call_Materialize"
-      },
+      "plan": "https://litlfred.github.io/cat-harness/0.1.0/processes/sample-import#Call_Materialize",
       "role": "https://litlfred.github.io/cat-harness/0.1.0/scenarios/roles#ingestion-agent"
     },
     {
@@ -69,9 +65,7 @@
       "@type": "Association",
       "activity": "sampleimport--xlg2-wpro-trial-original#3",
       "agent": "https://litlfred.github.io/cat-harness/0.1.0/scenarios/actors/owner",
-      "plan": {
-        "@value": "sample-import#Gateway_Materialized"
-      },
+      "plan": "https://litlfred.github.io/cat-harness/0.1.0/processes/sample-import#Gateway_Materialized",
       "role": "https://litlfred.github.io/cat-harness/0.1.0/scenarios/roles#ingestion-agent"
     },
     {
@@ -92,9 +86,7 @@
       "@type": "Association",
       "activity": "sampleimport--xlg2-wpro-trial-original#4",
       "agent": "https://litlfred.github.io/cat-harness/0.1.0/scenarios/actors/owner",
-      "plan": {
-        "@value": "sample-import#Gateway_Permanent"
-      },
+      "plan": "https://litlfred.github.io/cat-harness/0.1.0/processes/sample-import#Gateway_Permanent",
       "role": "https://litlfred.github.io/cat-harness/0.1.0/scenarios/roles#ingestion-agent"
     },
     {
@@ -115,9 +107,7 @@
       "@type": "Association",
       "activity": "sampleimport--xlg2-wpro-trial-original#5",
       "agent": "https://litlfred.github.io/cat-harness/0.1.0/scenarios/actors/owner",
-      "plan": {
-        "@value": "sample-import#Task_Trial"
-      },
+      "plan": "https://litlfred.github.io/cat-harness/0.1.0/processes/sample-import#Task_Trial",
       "role": "https://litlfred.github.io/cat-harness/0.1.0/scenarios/roles#ingestion-agent"
     },
     {
@@ -138,9 +128,7 @@
       "@type": "Association",
       "activity": "sampleimport--xlg2-wpro-trial-original#6",
       "agent": "https://litlfred.github.io/cat-harness/0.1.0/scenarios/actors/owner",
-      "plan": {
-        "@value": "sample-import#Task_ImportTest"
-      },
+      "plan": "https://litlfred.github.io/cat-harness/0.1.0/processes/sample-import#Task_ImportTest",
       "role": "https://litlfred.github.io/cat-harness/0.1.0/scenarios/roles#ingestion-agent"
     },
     {
@@ -161,9 +149,7 @@
       "@type": "Association",
       "activity": "sampleimport--xlg2-wpro-trial-original#7",
       "agent": "https://litlfred.github.io/cat-harness/0.1.0/scenarios/actors/owner",
-      "plan": {
-        "@value": "sample-import#Gateway_Passed"
-      },
+      "plan": "https://litlfred.github.io/cat-harness/0.1.0/processes/sample-import#Gateway_Passed",
       "role": "https://litlfred.github.io/cat-harness/0.1.0/scenarios/roles#ingestion-agent"
     },
     {
@@ -184,9 +170,7 @@
       "@type": "Association",
       "activity": "sampleimport--xlg2-wpro-trial-original/Call_Materialize#1",
       "agent": "https://litlfred.github.io/cat-harness/0.1.0/scenarios/actors/owner",
-      "plan": {
-        "@value": "materialize-remote#Task_Purpose"
-      },
+      "plan": "https://litlfred.github.io/cat-harness/0.1.0/processes/materialize-remote#Task_Purpose",
       "role": "https://litlfred.github.io/cat-harness/0.1.0/scenarios/roles#user"
     },
     {
@@ -207,9 +191,7 @@
       "@type": "Association",
       "activity": "sampleimport--xlg2-wpro-trial-original/Call_Materialize#2",
       "agent": "https://litlfred.github.io/cat-harness/0.1.0/scenarios/actors/owner",
-      "plan": {
-        "@value": "materialize-remote#Task_Enumerate"
-      },
+      "plan": "https://litlfred.github.io/cat-harness/0.1.0/processes/materialize-remote#Task_Enumerate",
       "role": "https://litlfred.github.io/cat-harness/0.1.0/scenarios/roles#ingestion-agent"
     },
     {
@@ -230,9 +212,7 @@
       "@type": "Association",
       "activity": "sampleimport--xlg2-wpro-trial-original/Call_Materialize#3",
       "agent": "https://litlfred.github.io/cat-harness/0.1.0/scenarios/actors/owner",
-      "plan": {
-        "@value": "materialize-remote#Task_Size"
-      },
+      "plan": "https://litlfred.github.io/cat-harness/0.1.0/processes/materialize-remote#Task_Size",
       "role": "https://litlfred.github.io/cat-harness/0.1.0/scenarios/roles#ingestion-agent"
     },
     {
@@ -253,9 +233,7 @@
       "@type": "Association",
       "activity": "sampleimport--xlg2-wpro-trial-original/Call_Materialize#4",
       "agent": "https://litlfred.github.io/cat-harness/0.1.0/scenarios/actors/owner",
-      "plan": {
-        "@value": "materialize-remote#Task_Restrictions"
-      },
+      "plan": "https://litlfred.github.io/cat-harness/0.1.0/processes/materialize-remote#Task_Restrictions",
       "role": "https://litlfred.github.io/cat-harness/0.1.0/scenarios/roles#ingestion-agent"
     },
     {
@@ -276,9 +254,7 @@
       "@type": "Association",
       "activity": "sampleimport--xlg2-wpro-trial-original/Call_Materialize#5",
       "agent": "https://litlfred.github.io/cat-harness/0.1.0/scenarios/actors/owner",
-      "plan": {
-        "@value": "materialize-remote#Task_Copyright"
-      },
+      "plan": "https://litlfred.github.io/cat-harness/0.1.0/processes/materialize-remote#Task_Copyright",
       "role": "https://litlfred.github.io/cat-harness/0.1.0/scenarios/roles#ingestion-agent"
     },
     {
@@ -299,9 +275,7 @@
       "@type": "Association",
       "activity": "sampleimport--xlg2-wpro-trial-original/Call_Materialize#6",
       "agent": "https://litlfred.github.io/cat-harness/0.1.0/scenarios/actors/owner",
-      "plan": {
-        "@value": "materialize-remote#Task_Retention"
-      },
+      "plan": "https://litlfred.github.io/cat-harness/0.1.0/processes/materialize-remote#Task_Retention",
       "role": "https://litlfred.github.io/cat-harness/0.1.0/scenarios/roles#ingestion-agent"
     },
     {
@@ -322,9 +296,7 @@
       "@type": "Association",
       "activity": "sampleimport--xlg2-wpro-trial-original/Call_Materialize#7",
       "agent": "https://litlfred.github.io/cat-harness/0.1.0/scenarios/actors/owner",
-      "plan": {
-        "@value": "materialize-remote#Task_SourceLoss"
-      },
+      "plan": "https://litlfred.github.io/cat-harness/0.1.0/processes/materialize-remote#Task_SourceLoss",
       "role": "https://litlfred.github.io/cat-harness/0.1.0/scenarios/roles#ingestion-agent"
     },
     {
@@ -345,9 +317,7 @@
       "@type": "Association",
       "activity": "sampleimport--xlg2-wpro-trial-original/Call_Materialize#8",
       "agent": "https://litlfred.github.io/cat-harness/0.1.0/scenarios/actors/owner",
-      "plan": {
-        "@value": "materialize-remote#Gateway_Gates"
-      },
+      "plan": "https://litlfred.github.io/cat-harness/0.1.0/processes/materialize-remote#Gateway_Gates",
       "role": "https://litlfred.github.io/cat-harness/0.1.0/scenarios/roles#ingestion-agent"
     },
     {
@@ -368,9 +338,7 @@
       "@type": "Association",
       "activity": "sampleimport--xlg2-wpro-trial-original/Call_Materialize#9",
       "agent": "https://litlfred.github.io/cat-harness/0.1.0/scenarios/actors/owner",
-      "plan": {
-        "@value": "materialize-remote#Task_Fetch"
-      },
+      "plan": "https://litlfred.github.io/cat-harness/0.1.0/processes/materialize-remote#Task_Fetch",
       "role": "https://litlfred.github.io/cat-harness/0.1.0/scenarios/roles#ingestion-agent"
     },
     {
@@ -391,9 +359,7 @@
       "@type": "Association",
       "activity": "sampleimport--xlg2-wpro-trial-original/Call_Materialize#10",
       "agent": "https://litlfred.github.io/cat-harness/0.1.0/scenarios/actors/owner",
-      "plan": {
-        "@value": "materialize-remote#Task_Declare"
-      },
+      "plan": "https://litlfred.github.io/cat-harness/0.1.0/processes/materialize-remote#Task_Declare",
       "role": "https://litlfred.github.io/cat-harness/0.1.0/scenarios/roles#corpus"
     }
   ],

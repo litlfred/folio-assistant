@@ -534,6 +534,13 @@
                   "held"
                 ]
               },
+              "heldEntries": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "minLength": 1
+                }
+              },
               "visualisedAs": {
                 "type": "string",
                 "enum": [
@@ -811,6 +818,7 @@
               "bodyFrom": {
                 "type": "string",
                 "enum": [
+                  "summary",
                   "description"
                 ]
               },
@@ -1022,8 +1030,8 @@
   "$comment": "Instance graph: https://litlfred.github.io/folio-assistant/STAGING/claude-bh4q-content-base/cat-harness.jsonld",
   "staging": {
     "branch": "claude/bh4q-content-base",
-    "sha": "9ab2bf24b7e04e8e2742302eda03ff5d5678c4f0",
+    "sha": "6f183d18d511a6e0c5640ba0ca0cfb5e54e35919",
     "pr": "1817/merge",
-    "run": "36973955751"
+    "run": "36999943692"
   }
 }
