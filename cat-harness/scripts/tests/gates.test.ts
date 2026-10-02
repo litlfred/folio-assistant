@@ -79,7 +79,12 @@ describe("the gates come from the workflow, not from a list", () => {
     // Order matters: `bun test` before the slower graph audits is what makes
     // the runner usable, and it is the workflow's order rather than a sort.
     const cmds = gates.map((g) => g.command);
-    expect(cmds.indexOf("bun test")).toBeLessThan(cmds.indexOf("bun run kg:audit:check"));
+    // Found by prefix, never by exact string: the step became
+    // `bun test --parallel` (bean `dlqu`), and an exact `indexOf` would then
+    // return -1, which is less than any index — a vacuous pass.
+    const test = cmds.findIndex((c) => /^bun test\b/.test(c));
+    expect(test).toBeGreaterThanOrEqual(0);
+    expect(test).toBeLessThan(cmds.indexOf("bun run kg:audit:check"));
   });
 
   test("each gate carries the step name the Actions UI shows", () => {

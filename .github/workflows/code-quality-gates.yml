@@ -300,8 +300,18 @@ jobs:
       # Each step is a separate gate so the Actions UI names the one that
       # broke, rather than a single opaque "quality" failure. LAST on purpose —
       # see the ordering note above.
+      #
+      # `--parallel` (bean `dlqu`): this step was 7m30s-7m45s of an 8m14s-8m33s
+      # job, the workflow's critical path, measured over three `main` runs on
+      # 2026-10-02. Bun runs test files across one worker per core, each file
+      # isolated (`--parallel` implies `--isolate`), so the `bunfig.toml`
+      # preload runs per worker and no file inherits another's module state.
+      # In-job rather than a matrix of `--shard=i/N` jobs for two reasons:
+      # the check keeps its one name, which branch protection and dozens of
+      # beans cite; and `gatesFrom` runs a `bun` line with no shell, so a
+      # `${{ matrix.* }}` here would reach the local gate run as literal text.
       - name: bun test
-        run: bun test
+        run: bun test --parallel
 
 
 
