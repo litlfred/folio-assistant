@@ -1,7 +1,7 @@
 ---
 # folio-assistant-72gk
 title: 'todos visualiser: 5 wireframe findings'
-status: todo
+status: in-progress
 type: task
 priority: normal
 tags:
@@ -9,7 +9,7 @@ tags:
     - ui
     - visualiser-todos
 created_at: 2026-09-23T10:36:15Z
-updated_at: 2026-09-30T16:12:46Z
+updated_at: 2026-10-02T18:41:07Z
 parent: folio-assistant-4ccr
 ---
 
