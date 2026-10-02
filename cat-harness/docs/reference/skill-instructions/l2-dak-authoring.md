@@ -87,5 +87,6 @@ This skill has its own process: **[L2 DAK authoring](../../processes/l2-dak-auth
 
 | process | step(s) that name it |
 |---|---|
+| [L3 FHIR IG pipeline](../../processes/l3-fhir-pipeline.html) | Map L2 → L3 |
 | [L2 DAK authoring](../../processes/l2-dak-authoring.html) | Personas and scenarios; Data dictionary and core data elements; Indicators and requirements |
 
