@@ -5,7 +5,7 @@ status: todo
 type: task
 priority: normal
 created_at: 2026-10-02T17:41:46Z
-updated_at: 2026-10-02T17:42:06Z
+updated_at: 2026-10-02T17:45:31Z
 ---
 
 Found while measuring the linear floor for `qj9a`, 2026-10-02, on
@@ -75,3 +75,84 @@ the site cannot disagree about any of it". The shell is written by
 If `qj9a`'s footer-stub option is taken, this bean is subsumed by it: that
 option moves the full listing INTO `todos/index.html` precisely because it is
 missing here. Check before doing both.
+
+
+## The owner's correction, 2026-10-02: a todo IS a content node, so R1 already decides this
+
+Owner, on being shown the footer-stub option: *"1 but shouldnt todos be put
+into proper Todo content nodes?"*
+
+**They already are, and that is the point.** `todos/todos.json` declares the
+graph with the same `ContentDirectory` schema as `beans/beans.json` and
+`<instance>.json`; `folio-assistant.json` declares `todos` among its
+directories; the kinds are `todo-items`, `todo-feedback`, `boards`,
+`board-positions`; each item carries `$schema: folio-todo/v1`; the shape is
+`schemas/todo.ts` and the graph `schemas/todo-graph.ts`. They are tagged
+against the knowledge graph — roles, processes, tasks, identities, references,
+artefacts.
+
+**So the footer is violating a requirement that is already written.** R1:
+
+> The board SHALL render content nodes alongside notes, and a note attached to
+> a content node SHALL render **at that node** rather than at an independent
+> position.
+
+The footer does the exact inverse: it renders **every** note at **every**
+node. Measured — all three todos carry a `targetLabel`, so every one is
+attached:
+
+| todo | `targetLabel` | page it is about |
+|---|---|---|
+| `human-todos-page-says-not-built-yet` | `sec:beans-and-todos-human-todos` | `beans-and-todos` |
+| `subagent-roles-for-the-two-judgement-agents` | `sec:publication-workflow-agents-and-system-actors` | `publication-workflow` |
+| `what-kick-off-means-for-a-ci-watcher` | `sec:publication-workflow-agents-and-system-actors` | `publication-workflow` |
+
+**Three notes belonging to two pages are being served on ~2,405 pages.**
+
+### What this supersedes
+
+The footer-stub option (stub everywhere + fetch for bodies) is no longer the
+best answer, and **the fetch is not needed at all**:
+
+- a page with no attached todo carries **zero** listing bytes — 2,403 of 2,405;
+- `beans-and-todos` carries its one todo, `publication-workflow` its two,
+  statically, in the served bytes, **at the node the note is about**;
+- `todos/` carries the global listing, which fixes this bean;
+- a todo attached to nothing has no page to render at, so `todos/` is its
+  home — R1's "attached to nothing is an existing declared state".
+
+Main site: 31.0 MB becomes roughly three pages' worth, ~39 KB. With STAGING,
+~104 MB becomes negligible. **Better than the stub's ~97 %, with no
+JavaScript, no fetch, and a STRONGER no-JS floor than today** — a reader with
+JS off gets the note on the page it concerns, which they do not get now
+(today they get all three notes on every page, which is noise, and none on
+`todos/`, which is the defect).
+
+### Consequence worth stating plainly
+
+**R4's relaxation was not needed for this either.** The premise that the
+no-JS floor had to be weakened to shrink this artefact was wrong twice over:
+the docs nav was never under R4 (see the note above), and this listing is
+shrunk by applying R1 rather than by relaxing R4. Nothing here fetches.
+
+### Gap noticed while checking
+
+The todo graph is **declared but not published as a graph rendering**. Every
+instance publishes `<stub>.jsonld` / `.json` / `.schema.json` / `<stub>/` per
+`serving-renderings.md`, and `origin/gh-pages` carries no todo `.jsonld` at
+all. Not in this bean's scope; recorded so it is not re-discovered.
+
+### Revised done-when
+
+- [ ] `renderTodoListing` is called per page with the todos whose `targetLabel`
+      resolves to that page, and with the full set only on `todos/`
+- [ ] a page with no attached todo emits NO listing markup (not an empty
+      section — `could not determine` and `nothing here` stay distinct)
+- [ ] `todos/index.html` serves its listing with JavaScript disabled
+- [ ] `first-paint-scheme.e2e.ts` still passes for all eight shells
+- [ ] `linear-floor.e2e.ts` asserts the per-page case AND the `todos/` case;
+      no test deleted
+- [ ] the count on a page is that page's own cardinality, never the global
+      total (R6: a count that is not the panel's own cardinality is a number
+      somebody will act on)
+- [ ] coordinated with #1886, since `footer_custom.html` is its phase C
