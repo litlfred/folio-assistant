@@ -55,8 +55,19 @@ export const KNOWN_LABEL_PREFIXES: readonly string[] = [
   "sec:", "chap:", "app:", "bib:",
 ];
 
-export function isCrossPaperRef(label: string): boolean {
-  return label.includes(":") && !KNOWN_LABEL_PREFIXES.some(p => label.startsWith(p));
+/**
+ * Whether `label` points outside this paper.
+ *
+ * `contributedPrefixes` are the label prefixes a registry's contributed kinds
+ * carry (`ContributionRegistry.contributedLabelPrefixes()`, which records them
+ * without the colon — `"dt"` — so one is added here before matching).
+ * Without them a contributed kind's own label — a DAK `dt:` since bean `1335`
+ * — reads as cross-paper, because core's list is the built-in prefixes only.
+ */
+export function isCrossPaperRef(label: string, contributedPrefixes: readonly string[] = []): boolean {
+  if (!label.includes(":")) return false;
+  const contributed = contributedPrefixes.map(p => (p.endsWith(":") ? p : `${p}:`));
+  return ![...KNOWN_LABEL_PREFIXES, ...contributed].some(p => label.startsWith(p));
 }
 
 // ── Label patterns ───────────────────────────────────────────────

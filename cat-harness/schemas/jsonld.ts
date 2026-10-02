@@ -321,7 +321,7 @@ export type ParsedReference =
  * (`def:foo:bar`), which is why the *first* kind prefix wins rather than the
  * last colon losing.
  */
-export function parseReference(ref: string): ParsedReference {
+export function parseReference(ref: string, contributedPrefixes: readonly string[] = []): ParsedReference {
   if (/^https?:\/\//i.test(ref)) return { form: "absolute", iri: ref };
   if (!ref.includes(":")) {
     // NOT unresolvable. A colon-free reference is a same-paper label that
@@ -343,7 +343,10 @@ export function parseReference(ref: string): ParsedReference {
   }
 
   const parts = ref.split(":");
-  const pivot = parts.findIndex((p) => KIND_PREFIX_SET.has(p));
+  // A contributed kind's prefix is a pivot too (bean `1335`): core's set is
+  // the built-in prefixes only, so a registry-holding caller passes the rest.
+  const contributed = new Set(contributedPrefixes.map((p) => p.replace(/:$/, "")));
+  const pivot = parts.findIndex((p) => KIND_PREFIX_SET.has(p) || contributed.has(p));
   if (pivot < 0) {
     return {
       form: "unresolvable",
@@ -402,8 +405,12 @@ export function segmentToLabel(segment: string): string | undefined {
  * convention deviation worth REPORTING (`prose` aside, labels carry a prefix)
  * but not worth DROPPING AN EDGE over — see the note in {@link parseReference}.
  */
-export function resolveLabel(ref: string, paper: string): string | undefined {
-  const parsed = parseReference(ref);
+export function resolveLabel(
+  ref: string,
+  paper: string,
+  contributedPrefixes: readonly string[] = [],
+): string | undefined {
+  const parsed = parseReference(ref, contributedPrefixes);
   switch (parsed.form) {
     case "absolute":
       return parsed.iri;
