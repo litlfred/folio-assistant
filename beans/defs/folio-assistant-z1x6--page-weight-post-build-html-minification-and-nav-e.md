@@ -5,7 +5,7 @@ status: in-progress
 type: task
 priority: normal
 created_at: 2026-10-02T16:51:57Z
-updated_at: 2026-10-02T17:29:17Z
+updated_at: 2026-10-02T17:35:03Z
 parent: folio-assistant-o3xy
 ---
 
@@ -106,3 +106,21 @@ its `index.md` carries 301 links. Cost: those 299 lose their left-rail entry.
 ## Issue
 
 #1890.
+
+
+## Landed, 2026-10-02
+
+Commit `d4766eebdbd` on `claude/wizardly-galileo-feyypz`, inside draft PR
+**#1889** — that branch already had an open PR and GitHub allows one per head
+branch, so this joined it rather than getting its own. Issue **#1890**.
+Write-up: https://github.com/litlfred/folio-assistant/pull/1889#issuecomment-5957830080
+Coordination comment to #1886 carrying the phase-C and phase-D measurements:
+https://github.com/litlfred/folio-assistant/pull/1886#issuecomment-5957838285
+
+Nine files, staged by explicit path (three agents share this working tree):
+`minify-site.ts`, `tests/minify-site.test.ts`, both site workflows,
+`gates.ts`, `partition/instance-rules.ts`, `beans/README.md`,
+`cat-harness/scripts/README.md`, this bean.
+
+Stays `in-progress`: a merge to `main` needs the owner's explicit word, and
+the real before/after is what the first deploy through the step reports.
