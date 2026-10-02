@@ -1,10 +1,10 @@
 ---
 # folio-assistant-dlqu
 title: 'SPEED-UP 4: CI sharding, BPMN render cache and shallow checkout'
-status: todo
+status: in-progress
 type: task
 created_at: 2026-10-01T17:42:24Z
-updated_at: 2026-10-01T17:42:24Z
+updated_at: 2026-10-02T22:08:54Z
 parent: folio-assistant-7x5n
 ---
 
@@ -27,3 +27,5 @@ Another agent is editing `code-quality-gates.yml` for this; other PRs keep their
 - [ ] BPMN render cache keyed on inputs
 - [ ] per-job fetch-depth, each deep one justified
 - [ ] measured: CI wall-clock before/after over ≥3 runs
+
+_2026-10-02T22:08:54Z_ — Claimed by claude/zealous-thompson-y8dcf1 — pushed to main so sibling sessions see it before this branch has a PR (bean 35nj).
