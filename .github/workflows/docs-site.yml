@@ -698,6 +698,19 @@ jobs:
       - name: Disable Jekyll on the published branch
         run: touch ./_site/.nojekyll
 
+      # ONE file carries the build's moment, read by the work-plan dashboard
+      # at load time to say "generated … · N commits behind main". Not a page
+      # and not committed: `_data/build.yml` already varies per run for the
+      # footer, and this is the same three facts as JSON for a page Jekyll
+      # never renders (the generated visualisers are copied verbatim).
+      - name: Write the build stamp for client-side readers
+        env:
+          RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+        run: |
+          printf '{\n  "sha": "%s",\n  "built": "%s",\n  "runUrl": "%s"\n}\n' \
+            "$GITHUB_SHA" "$(date -u +%Y-%m-%dT%H:%M:%SZ)" "$RUN_URL" > ./_site/build.json
+          cat ./_site/build.json
+
       # CARRY THE OPEN PRs' REVIEW PREVIEWS ACROSS THIS DEPLOY — bean `plj1`.
       #
       # The publish step below is a FULL REPLACE: `peaceiris/actions-gh-pages`
