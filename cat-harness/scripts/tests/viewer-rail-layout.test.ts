@@ -164,7 +164,9 @@ describe("stripFlags — the same two questions of the docs site's strip", () =>
   });
 
   it("flags ▦ Harnesses left to the at-rest lists, which hide it", () => {
-    const css = CSS.replace(/\.side-bar \.fa-nav-bottom > \.fa-nav-group > summary \{[^}]*\}/, "");
+    // The rule may be a selector LIST: #1808 adds the rail's
+    // `.fa-nav-harness-group` beside the footer's group in one rule.
+    const css = CSS.replace(/\.side-bar \.fa-nav-bottom > \.fa-nav-group > summary(?:,\s*[^{,]+)* \{[^}]*\}/, "");
     expect(css).not.toBe(CSS);
     expect(stripFlags(JS, css)).toEqual(["harnesses-at-rest"]);
   });
