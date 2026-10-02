@@ -1,10 +1,11 @@
 ---
 # folio-assistant-676g
 title: kg:validate cannot own a NESTED instance's path, so 15 instances' committed QA sidecars are consumer-validated by nothing
-status: todo
+status: in-progress
 type: task
+priority: normal
 created_at: 2026-09-27T16:50:03Z
-updated_at: 2026-09-27T16:50:03Z
+updated_at: 2026-10-02T06:44:57Z
 parent: folio-assistant-1xhc
 ---
 
@@ -67,3 +68,5 @@ seeing less than the declarations say.
       `verified`, naming what does the validating. That move is the reason this
       bean exists, and the declaration file may only shrink in the `none`
       direction.
+
+Claimed by claude/kg-audit-bugs (session https://claude.ai/code/session_01CVVoavPoCHMLA7AASxG8cH)

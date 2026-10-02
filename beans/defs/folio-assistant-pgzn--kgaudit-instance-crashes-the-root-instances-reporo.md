@@ -1,11 +1,11 @@
 ---
 # folio-assistant-pgzn
 title: 'kg:audit --instance . crashes: the ROOT instance''s repoRoot resolves outside the checkout'
-status: todo
+status: in-progress
 type: task
 priority: normal
 created_at: 2026-09-27T08:00:22Z
-updated_at: 2026-09-27T08:19:24Z
+updated_at: 2026-10-02T06:44:57Z
 parent: folio-assistant-1xhc
 ---
 
@@ -62,3 +62,5 @@ Absorbing it into that change would widen the PR past what the failure needs.
 - The root-instance case is exercised by a test, not only by a manual run.
 - `scripts/tests/resolution-across-needs.test.ts` drops its `ROOT_INSTANCE`
   exclusion, which names this bean as the reason it exists.
+
+Claimed by claude/kg-audit-bugs (session https://claude.ai/code/session_01CVVoavPoCHMLA7AASxG8cH)

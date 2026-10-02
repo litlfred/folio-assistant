@@ -1,10 +1,11 @@
 ---
 # folio-assistant-v556
 title: 'Two kg-export sidecars carry three script hashes between them, and no gate can see it: a generator with no --check is invisible to check:artefact-verification'
-status: todo
+status: in-progress
 type: task
+priority: normal
 created_at: 2026-09-22T10:24:29Z
-updated_at: 2026-09-22T10:24:29Z
+updated_at: 2026-10-02T06:44:57Z
 parent: folio-assistant-1swy
 ---
 
@@ -46,3 +47,5 @@ An earlier reading of mine in session `017PqeiS` said `kg-export.test.ts` writes
 - [ ] Either give `kg:export` a `--check` mode so it enters the verify/write pairs and the artefact-verification inventory, or record why it should not be checked
 - [ ] Close the inventory blind spot: `check:artefact-verification` should be able to report a GENERATOR with no `--check`, rather than being structurally unable to see one. "Nobody has said" is its own stated finding; "cannot be asked" is worse
 - [ ] Re-measure: on a clean tree, one run of one generator leaves one hash
+
+Claimed by claude/kg-audit-bugs (session https://claude.ai/code/session_01CVVoavPoCHMLA7AASxG8cH)
