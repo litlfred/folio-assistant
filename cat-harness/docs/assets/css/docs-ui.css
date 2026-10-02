@@ -3788,7 +3788,9 @@ a.fa-tile[data-fa-readonly]:focus-visible {
   box-shadow: inset 0 0 0 2px var(--fa-glass-accent);
 }
 .fa-glass-zoom-slider { width: 9rem; height: 2.75rem; accent-color: var(--fa-glass-accent); }
-.fa-glass-zoom-value { min-width: 3.2rem; text-align: right; font-weight: 700; font-variant-numeric: tabular-nums; }
+/* A FIXED width, not a minimum: the bar is right-aligned, so any change in the
+   readout's width ("100%" → "90%") would slide − and the slider sideways. */
+.fa-glass-zoom-value { flex: 0 0 auto; width: 3.6rem; white-space: nowrap; text-align: right; font-weight: 700; font-variant-numeric: tabular-nums; }
 .fa-glass-zoom button:focus-visible,
 .fa-glass-zoom input:focus-visible {
   outline: 3px solid var(--fa-glass-accent);
@@ -3864,6 +3866,38 @@ a.fa-tile[data-fa-readonly]:focus-visible {
    the picture loses nothing by the zoom. */
 .fa-glass-asset[data-fa-zoom="avatar"] .fa-glass-asset-name { display: none; }
 .fa-glass-asset[data-fa-zoom="avatar"] .fa-glass-asset-face { justify-content: center; }
+/* …EXCEPT A TEXT CARD, whose words are its face. Owner, 2026-10-01: *"if todo
+   is small zoomed, it shows no content at all. instead it should cleanup
+   whitespace and show condended first part of todo"*. A todo (and the
+   shelved-items note, which is drawn as one) shows its GIST in the avatar
+   state: whitespace collapsed and markdown dropped by `gistOf`, clamped here
+   to the whole lines that fit (the count is set by `zoomGlassCard`). Drawn
+   at a constant size on screen — the shelf's scale divided out — because
+   words zoomed to 25% with the card are present and unreadable. Hidden at
+   full size, where the title and the body already say it. */
+/* A LIBRARY card's gist is its title, the same way and for the same reason —
+   owner, 2026-10-01: *"where is title of thing from library?"*. Zoomed to its
+   cover, a book card had a picture and nothing saying which book; the caption
+   is clamped to two lines (`zoomGlassCard`) so the cover stays its face. */
+.fa-glass-asset-gist { display: none; }
+.fa-glass-asset[data-fa-zoom-kind="todo"][data-fa-zoom="avatar"] .fa-glass-asset-gist,
+.fa-glass-asset[data-fa-zoom-kind="library"][data-fa-zoom="avatar"] .fa-glass-asset-gist {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+  line-clamp: 3;
+  flex: 1 1 0;
+  min-height: 1.3em;
+  overflow: hidden;
+  margin: 0;
+  /* Above the theme's art and scrim, which sit at negative z in the card. */
+  position: relative;
+  z-index: 1;
+  font-size: calc(0.8rem / var(--fa-glass-scale, 1));
+  line-height: 1.3;
+  font-weight: 600;
+  overflow-wrap: anywhere;
+}
 .fa-glass-avatar {
   flex: 0 0 auto;
   width: 3.5rem;
@@ -4107,6 +4141,12 @@ a.fa-glass-asset-name { text-decoration: underline; text-underline-offset: 2px; 
   padding: 3rem 1rem 8.5rem;
   scroll-padding-bottom: 8.5rem;
   overflow: auto;
+  /* THE GUTTER IS RESERVED, so the zoom bar does not jump. Zooming in grows
+     the shelf until the glass overflows, a classic (non-overlay) scrollbar
+     appears, the content box narrows by its width, and the right-aligned zoom
+     bar slid 15px left under the pointer — measured 2026-10-01 at 1280×680,
+     on the click from 95% to 105%, and back again on Home. */
+  scrollbar-gutter: stable;
 }
 .fa-sticky-layer[data-fa-glass="closed"] .fa-glass-sheet { visibility: hidden; }
 
@@ -6530,13 +6570,31 @@ a.fa-harness-tab__body:focus-visible {
 }
 
 .fa-harness-section__gap,
-.fa-harness-section__findings {
+.fa-harness-section__findings,
+.fa-harness-section__subgraphs {
   font-size: 0.8125rem;
   opacity: 0.85;
   margin: 0;
 }
 
-.fa-harness-section__findings summary {
+/* LOCAL / REMOTE as a word in a box (`603s`). No colour of its own — the word
+   is the signal, so it survives a missing stylesheet and reads the same to a
+   screen reader; the box only lines the tags up. A REMOTE tag is drawn with a
+   dashed border as a second, shape-based cue. */
+.fa-harness-section__subgraphs ul { margin: 0.25rem 0 0; padding-left: 1rem; }
+.fa-harness-section__where {
+  display: inline-block;
+  min-width: 3.75rem;
+  padding: 0 0.3rem;
+  border: 1px solid currentColor;
+  border-radius: 3px;
+  font-size: 0.75rem;
+  text-align: center;
+}
+.fa-harness-section__subgraphs [data-fa-where="remote"] .fa-harness-section__where { border-style: dashed; }
+
+.fa-harness-section__findings summary,
+.fa-harness-section__subgraphs summary {
   cursor: pointer;
   min-height: 2rem;
   display: flex;
@@ -6731,6 +6789,29 @@ a.fa-harness-tab__body:focus-visible {
   /* The avatar is the whole slot now, so centre it in the track it kept. */
   display: flex;
   justify-content: center;
+}
+
+/* THE AVATAR CARRIES THE NOTE'S FIRST WORDS — owner, 2026-10-01: *"if todo is
+ * small zoomed, it shows no content at all"*. A glyph alone could not tell one
+ * note from its neighbours. Shown only in the avatar state, under the glyph;
+ * at full size the card says it. Collapsed and de-marked by `gistOf`. */
+.fa-sticky-avatar-gist { display: none; }
+.fa-sticky-slot--avatar {
+  flex-direction: column;
+  align-items: center;
+}
+.fa-sticky-slot--avatar > .fa-sticky-avatar-gist {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+  line-clamp: 3;
+  overflow: hidden;
+  max-width: 100%;
+  margin: 0;
+  font-size: 0.8rem;
+  line-height: 1.3;
+  text-align: center;
+  overflow-wrap: anywhere;
 }
 
 /* THE WINDOW LAYER. Projected onto the board, so it is positioned against the
@@ -7855,6 +7936,36 @@ a.fa-harness-tab__body:focus-visible {
   border: 1px dashed var(--fa-glass-edge);
 }
 
+/* ── A CARD'S METADATA, on hover and on focus — owner, 2026-10-01 ─────────
+ *
+ * *"hovering should show metadata."* One popover for the glass, outside the
+ * scaled shelf, so it is drawn at reading size whatever the view's zoom; the
+ * card's `aria-describedby` carries the same facts for a screen reader. */
+.fa-glass-meta {
+  position: fixed;
+  z-index: 1000;
+  pointer-events: auto;
+  max-width: min(22rem, calc(100vw - 1rem));
+  box-sizing: border-box;
+  padding: 0.5rem 0.7rem;
+  background: var(--fa-glass-card);
+  color: var(--fa-glass-ink);
+  border: 1px solid var(--fa-glass-edge);
+  border-radius: 6px;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.25);
+  font-size: 0.85rem;
+  line-height: 1.35;
+}
+.fa-glass-meta[hidden] { display: none; }
+.fa-glass-meta-list {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 0.15rem 0.6rem;
+  margin: 0;
+}
+.fa-glass-meta-list dt { font-weight: 700; }
+.fa-glass-meta-list dd { margin: 0; overflow-wrap: anywhere; }
+
 /* ── The avatar COVERS the card — owner, 2026-09-23 ──────────────────────
  *
  * *"artefact avatar should cover sheet"*; offered three shapes, the owner
@@ -7905,6 +8016,19 @@ a.fa-harness-tab__body:focus-visible {
   padding: 0.35rem 0.5rem;
 }
 .fa-glass-asset:has(> .fa-glass-asset-face > .fa-glass-avatar) .fa-glass-asset-tools { margin: 0 -0.5rem -0.5rem; }
+/* The avatar-state gist rides the same strip, so a todo's words sit over its
+   plain note rather than through it. A themed sticky has no picture here —
+   its art is the backdrop, faded by the theme's scrim — and keeps its ink. */
+.fa-glass-asset:has(> .fa-glass-asset-face > .fa-glass-avatar) .fa-glass-asset-gist {
+  margin: 0 -0.5rem;
+  /* The strip's top and bottom are BORDERS, not padding: a clamped box clips
+     at its padding edge, so bottom padding showed the top of the line after
+     the ellipsis (measured on a two-line library caption). */
+  padding: 0 0.45em;
+  border-block: 0.2em solid var(--fa-glass-card);
+  background: var(--fa-glass-card);
+  color: var(--fa-glass-ink);
+}
 
 /* ── A popped-out STICKY: the themed sticky, square, its words on top ────
  *

@@ -1,5 +1,11 @@
 # AGENTS.md — agent-skills
 
+> **Retiring — this instance is empty of content since 2026-10-01.** On the owner's
+> ruling of that day it dissolved into cat-harness's concern groups (bean `j7ql`,
+> issue #1770). What it held now lives at: [`cat-harness/library/`](../cat-harness/library/README.md) (the 14 documents, summaries still held) and [`cat-harness/skills/voices/`](../cat-harness/skills/voices/voices.json) (the voices). The text below is the
+> instance as it was, kept until the owner rules on retiring it; its links
+> point at the new locations.
+
 What binds everywhere is the repository's [`AGENTS.md`](../AGENTS.md); what
 this layer *is* is [`README.md`](README.md). This says what to do here, and
 the first thing is a warning.

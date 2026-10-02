@@ -1,11 +1,11 @@
 ---
 # folio-assistant-70lx
 title: 'Separation stage 1a: stage cat-harness-tools/ as a sibling instance and git mv the unambiguous code'
-status: todo
+status: in-progress
 type: task
 priority: normal
 created_at: 2026-10-01T06:58:00Z
-updated_at: 2026-10-01T17:41:32Z
+updated_at: 2026-10-01T19:46:46Z
 parent: folio-assistant-iirv
 blocked_by:
     - folio-assistant-pyds
@@ -47,3 +47,5 @@ Source: owner, session_01ToWZR4RgTRCWeSsgxsSQfT.
 
 - **Trap 1:** `inProcess("src/tools/...")` paths resolve against the IMPLEMENTING instance (`cat-harness-tools`), found through `needs`. **No `cat-harness-tools` paths are written into cat-harness.**
 - **Still open (not ruled):** how a sidecar's `source_file` is resolved; whether sci-bound files ride to tools in 1a.
+
+_2026-10-01T19:46:46Z_ — Claimed by claude/70lx-b0 — pushed to main so sibling sessions see it before this branch has a PR (bean 35nj).
