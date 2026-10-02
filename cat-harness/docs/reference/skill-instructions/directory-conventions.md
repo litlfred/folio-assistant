@@ -824,11 +824,14 @@ the checkout (bean `16ei`, arc `3fva`; schema `DirectoryStorageSchema` in
   from the checkout is not "declared but absent", and `harness:dirs` does not
   create it empty. `audit:coverage` reads its kind as `stored`.
 
-Two facts to hold while the arc is in flight. **No real declaration sets
-`storage` yet** — flipping one before every reader has migrated would tell the
-presence checks to stop looking while readers still read the checkout. And
-the derived files are **still committed on `main`** until bean `5hox` removes
-them; until then a directory whose every kind is one the arc moves off `main`
+Two facts to hold while the arc is in flight. **Every `qa` directory declares
+`storage` since bean `5hox`**, and only after every reader had migrated —
+flipping one earlier would have told the presence checks to stop looking while
+readers still read the checkout. Each stored working copy is ignored by
+version control, one line per declared directory, kept equal to the
+declarations by `directory-storage.test.ts`. And the derived files are
+**committed on `main`** until bean `5hox`'s removal lands; until then, and
+after, a directory whose every kind is one the arc moves off `main`
 (`qa`, `health` — `mayLeaveMain` in `scripts/qa-results.ts`) may be absent
 from a checkout without that being a finding. **Judgements never move**: they
 are the `attestations` kind at `test/attestations/`, on `main`, because a
