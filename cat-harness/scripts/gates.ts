@@ -356,6 +356,14 @@ export const STEP_EXEMPTIONS: StepExemption[] = [
     kind: "covered-by",
     reason: "`gen-docs-pages.ts --check` is in the gate set; the site build runs the writer",
   },
+  {
+    // Bean `5hox` prep, owner ruling 2026-10-01: the /qa/ page is regenerated
+    // from the QA results the site build fetched, so it cannot freeze once QA
+    // leaves `main`.
+    match: "bun run state:visualizer",
+    kind: "covered-by",
+    reason: "`state:visualizer:check` is in the gate set; the site build runs the writer over the results it fetched",
+  },
   // The two projection writers are run by the SITE BUILD and by nothing else.
   //
   // Their `--check` twins are deliberately not in the gate set (owner,
