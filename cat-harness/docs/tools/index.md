@@ -36,8 +36,8 @@ is `satisfies`, and it runs **from a tool to a skill** — *this tool is one way
 to do that*, never *this skill is a tool*.
 
 <div class="tg-grid">
-<div class="tg-stat"><b>113</b><span>Tool nodes</span></div>
-<div class="tg-stat"><b>67</b><span>skills satisfied</span></div>
+<div class="tg-stat"><b>114</b><span>Tool nodes</span></div>
+<div class="tg-stat"><b>68</b><span>skills satisfied</span></div>
 <div class="tg-stat"><b>92</b><span>invoked as a shell command</span></div>
 <div class="tg-stat"><b>24</b><span>reachable over MCP</span></div>
 </div>
@@ -49,18 +49,18 @@ A tool may declare more than one invocation, so these do not sum to the total.
 | invocation | tools |
 |---|---|
 | <span class="tg-tag tg-shell">shell</span> | 92 |
-| <span class="tg-tag tg-inproc">inProcess</span> | 24 |
+| <span class="tg-tag tg-inproc">inProcess</span> | 25 |
 | <span class="tg-tag tg-mcp">mcp</span> | 24 |
 | <span class="tg-tag tg-manual">manual</span> | 7 |
 
 | installation | tools |
 |---|---|
-| `none` | 104 |
+| `none` | 105 |
 | `cli` | 9 |
 
 ## Does every `satisfies` name a skill that exists?
 
-Yes — all **67** skills named across **113** tools resolve to a
+Yes — all **68** skills named across **114** tools resolve to a
 skill document in this checkout. A `satisfies` pointing at nothing would be a
 tool advertising a capability the graph cannot locate.
 
@@ -173,6 +173,7 @@ tool advertising a capability the graph cannot locate.
 | `upload-url`<br>Where to drop a file — the queue's upload URL | Compose the forge URL a person can drop a file at, from the instance's own declaration: the `uploads` graph's directory, resolved against the ROOT its scope names, expressed relative to the repository, and appended to the origin remote as GitHub's `/upload/<branch>/<path>`. Every failure is NAMED and no URL is guessed — no declaration, no declared `uploads` graph, a declared queue absent from disk, no `origin` remote, and a non-github.com remote each return a reason and a remedy instead. It exists because the obvious composition mints a live 404: the declared path `uploads/` is relative to the INSTANCE and a forge URL needs it relative to the REPOSITORY, so pasting the declared path drops the `cat-harness/` segment. Owner, 2026-09-20, on the hand-written form: "were it to exist, but it doesmt on main!!!!!" | <span class="tg-tag tg-shell">shell</span> | [`content-acquisition`](../reference/skill-instructions/content-acquisition.html)<br>[`upload-routes`](../reference/skill-instructions/upload-routes.html) | 1 in / 1 out |
 | `uploads-viewer`<br>Uploads viewer | Render each declared uploads directory's intakes as a page per subject instance. | <span class="tg-tag tg-shell">shell</span> | [`graph-rendering`](../reference/skill-instructions/graph-rendering.html) | 1 in / 1 out |
 | `user-auth`<br>Who is asking, and what may they do | User authentication and authorization (issue #1207). Asks GitHub for the caller's login and repository role, maps the role to a gateway actor, and answers from the ODRL policies — for an action, or for a BPMN step. Always states that GitHub's role covers the whole repository, not a sub-graph, node or query path. | <span class="tg-tag tg-inproc">inProcess</span> <span class="tg-tag tg-mcp">mcp</span> | [`deployment-auth`](../reference/skill-instructions/deployment-auth.html)<br>[`task-authorization`](../reference/skill-instructions/task-authorization.html) | 6 in / 1 out |
+| `vocab-map`<br>Apply a vocabulary mapping table | Carry one source record into a target vocabulary by a declared `folio-vocab-mapping/v1` table: each source field becomes the predicate its row names, in the table's order, with a DERIVED target (such as `dcterms:title` rendering `skos:prefLabel`) copied from its authoritative one so the two cannot drift. A table is shaped like a FHIR ConceptMap: an existing ConceptMap, R4 or R5, is representable as one without loss (`fromConceptMap`), and a table can be produced as a ConceptMap (`toConceptMap`), which returns every loss rather than dropping anything silently. First consumer: `glossary-export`. | <span class="tg-tag tg-inproc">inProcess</span> | [`vocabulary-authority`](../reference/skill-instructions/vocabulary-authority.html) | 2 in / 1 out |
 | `voices-viewer`<br>Voices viewer | Render each declared voices directory as a page per subject instance. | <span class="tg-tag tg-shell">shell</span> | [`graph-rendering`](../reference/skill-instructions/graph-rendering.html) | 1 in / 1 out |
 | `wireframe-check`<br>Wireframe check at web and mobile viewports | Render each mid-fidelity wireframe candidate at a web viewport (1280x800) and a mobile viewport (390x844). For each viewport it records `script` entries for renders, no-overflow and no-placeholder, each pass or fail with a note. It writes a screenshot per viewport and a report.json, and exits non-zero on any fail. | <span class="tg-tag tg-shell">shell</span> | [`wireframe-design-review`](../reference/skill-instructions/wireframe-design-review.html) | 2 in / 1 out |
 | `work-plan-prime`<br>Prime the work plan | Load the current work plan for this session — the same committed beans store the CLI reads, so a fresh container starts from the plan rather than from nothing. | <span class="tg-tag tg-inproc">inProcess</span> <span class="tg-tag tg-mcp">mcp</span> <span class="tg-tag tg-shell">shell</span> | [`bean-coordination`](../reference/skill-instructions/bean-coordination.html)<br>[`pending-show`](../reference/skill-instructions/pending-show.html)<br>[`session-intent`](../reference/skill-instructions/session-intent.html)<br>[`todo-manager`](../reference/skill-instructions/todo-manager.html) | 0 in / 1 out |
