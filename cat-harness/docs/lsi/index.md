@@ -118,14 +118,14 @@ Each dimension is a **contrast** between two poles, shown by their highest-loadi
 
 | dim | σ | one pole | the other pole |
 |---|---|---|---|
-| 1 | 44.09 | instance, kind, harness, session, graph, directory, block, page | *(none)* |
+| 1 | 44.10 | instance, kind, harness, session, graph, directory, block, page | *(none)* |
 | 2 | 21.50 | watcher, sibling, queue, slot, prs, backlog, block, commits | harness, instance, declaration, directory, node, directories, graph, declares |
 | 3 | 17.84 | session, beans, branch, goals, store, window, epic, push | slot, chapter, block, edges, formal, glossary, project, proof |
 | 4 | 16.61 | page, text, tile, block, blocks, chapter, section, manifest | sibling, ledger, subdirectory, items, session, sessions, relocation, coordination |
-| 5 | 15.02 | tile, board, avatar, theme, card, navbar, glass, tiles | forward, edges, rung, edge, archive, sections, logical, archived |
-| 6 | 14.93 | rung, queue, withheld, arm, slide, bytes, sha, zip | lane, role, requirements, actor, feature, task, analysis, impact |
+| 5 | 15.02 | tile, board, avatar, theme, card, navbar, glass, tiles | forward, edges, rung, edge, archive, sections, logical, chapter |
+| 6 | 14.93 | rung, queue, withheld, arm, slide, bytes, sha, zip | lane, role, requirements, actor, feature, task, impact, analysis |
 | 7 | 14.54 | tile, avatar, glass, card, board, strip, slot, sticky | translation, locale, language, translated, url, glossary, french, badge |
-| 8 | 14.44 | edges, forward, preview, backward, edge, cross-chapter, energy, logical | actor, lane, role, criterion, login, backlog, process, task |
+| 8 | 14.44 | edges, forward, preview, backward, edge, cross-chapter, energy, logical | actor, lane, role, criterion, login, backlog, requirement, task |
 
 **Findings** — 0 narrow dimension(s), 0 near-duplicate pair(s).
 

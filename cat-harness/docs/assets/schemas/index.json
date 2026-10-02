@@ -2,7 +2,7 @@
   "$schema": "folio-schema-graph/v1",
   "tile": {
     "schemas": {
-      "count": 191,
+      "count": 190,
       "unit": "modules"
     }
   },
@@ -280,14 +280,6 @@
       "name": "convention",
       "graphNode": "schema",
       "summary": "A coding convention — context attached to a PROCESS, not loaded everywhere.",
-      "isTest": false
-    },
-    {
-      "module": "cat-harness/schemas/dak-blocks.ts",
-      "instance": "cat-harness",
-      "name": "dak-blocks",
-      "graphNode": "schema",
-      "summary": "WHO SMART Guidelines content blocks — the `dak` adapter.",
       "isTest": false
     },
     {
@@ -1809,11 +1801,43 @@
       "isTest": true
     },
     {
+      "module": "smart-base/schemas/dak-blocks.test.ts",
+      "instance": "smart-base",
+      "name": "dak-blocks.test",
+      "graphNode": "undeclared",
+      "summary": "DAK block authoring: the kinds declared in the previous change are now real",
+      "isTest": true
+    },
+    {
+      "module": "smart-base/schemas/dak-blocks.ts",
+      "instance": "smart-base",
+      "name": "dak-blocks",
+      "graphNode": "schema",
+      "summary": "WHO SMART Guidelines content blocks — the `dak` adapter.",
+      "isTest": false
+    },
+    {
       "module": "smart-base/schemas/dak-content-type.ts",
       "instance": "smart-base",
       "name": "dak-content-type",
       "graphNode": "schema",
       "summary": "The `dak` and `sushi` content types — registered by the WHO layer, not by core.",
+      "isTest": false
+    },
+    {
+      "module": "smart-base/schemas/dak-jsonld.ts",
+      "instance": "smart-base",
+      "name": "dak-jsonld",
+      "graphNode": "schema",
+      "summary": "JSON-LD typing for the `dak` adapter's block kinds.",
+      "isTest": false
+    },
+    {
+      "module": "smart-base/schemas/dak-kinds.ts",
+      "instance": "smart-base",
+      "name": "dak-kinds",
+      "graphNode": "schema",
+      "summary": "The `dak` adapter's vocabulary — its block kinds, their builder names and",
       "isTest": false
     },
     {
@@ -4495,19 +4519,6 @@
       "exported": true
     },
     {
-      "id": "cat-harness/schemas/block-kinds.ts#AnyBlockKind",
-      "name": "AnyBlockKind",
-      "module": "cat-harness/schemas/block-kinds.ts",
-      "kind": "type-alias",
-      "fields": [],
-      "extendsNames": [],
-      "values": [],
-      "refs": [],
-      "unresolved": [],
-      "external": [],
-      "exported": true
-    },
-    {
       "id": "cat-harness/schemas/block-kinds.ts#BlockKind",
       "name": "BlockKind",
       "module": "cat-harness/schemas/block-kinds.ts",
@@ -4549,32 +4560,6 @@
     {
       "id": "cat-harness/schemas/block-kinds.ts#ContentProfile",
       "name": "ContentProfile",
-      "module": "cat-harness/schemas/block-kinds.ts",
-      "kind": "type-alias",
-      "fields": [],
-      "extendsNames": [],
-      "values": [],
-      "refs": [],
-      "unresolved": [],
-      "external": [],
-      "exported": true
-    },
-    {
-      "id": "cat-harness/schemas/block-kinds.ts#DakBlockKind",
-      "name": "DakBlockKind",
-      "module": "cat-harness/schemas/block-kinds.ts",
-      "kind": "type-alias",
-      "fields": [],
-      "extendsNames": [],
-      "values": [],
-      "refs": [],
-      "unresolved": [],
-      "external": [],
-      "exported": true
-    },
-    {
-      "id": "cat-harness/schemas/block-kinds.ts#DakComponent",
-      "name": "DakComponent",
       "module": "cat-harness/schemas/block-kinds.ts",
       "kind": "type-alias",
       "fields": [],
@@ -4818,7 +4803,7 @@
         },
         {
           "name": "adapters",
-          "type": "ContentAdapter[]",
+          "type": "string[]",
           "optional": true,
           "array": true,
           "doc": "Which content adapters this criterion applies to."
@@ -4910,7 +4895,6 @@
       "extendsNames": [],
       "values": [],
       "refs": [
-        "cat-harness/schemas/block-kinds.ts#ContentAdapter",
         "cat-harness/schemas/block-kinds.ts#ContentProfile",
         "cat-harness/schemas/block-qa.ts#CompanionRole",
         "cat-harness/schemas/block-qa.ts#QaCriterionSubject",
@@ -10621,11 +10605,20 @@
           "optional": false,
           "array": false,
           "doc": "Module specifier, resolved relative to the contributing folio's root."
+        },
+        {
+          "name": "companionRoles",
+          "type": "CompanionRole[]",
+          "optional": true,
+          "array": true,
+          "doc": "Which companion roles this adapter's blocks can have — the contributed"
         }
       ],
       "extendsNames": [],
       "values": [],
-      "refs": [],
+      "refs": [
+        "cat-harness/schemas/block-qa.ts#CompanionRole"
+      ],
       "unresolved": [],
       "external": [],
       "exported": true
@@ -10650,6 +10643,34 @@
           "optional": false,
           "array": false,
           "doc": "The adapter namespace claiming it. May be a new namespace."
+        },
+        {
+          "name": "builder",
+          "type": "string",
+          "optional": true,
+          "array": false,
+          "doc": "The builder function a manifest calls — `export default <builder>(…)`."
+        },
+        {
+          "name": "labelPrefix",
+          "type": "string",
+          "optional": true,
+          "array": false,
+          "doc": "The label prefix, without its colon — `\"dt\"` for `dt:anc-danger-signs`."
+        },
+        {
+          "name": "folioType",
+          "type": "string",
+          "optional": true,
+          "array": false,
+          "doc": "The folio class (`BLOCK_KIND_TO_FOLIO_TYPE`'s vocabulary) for a block of this kind, if any."
+        },
+        {
+          "name": "docoType",
+          "type": "string",
+          "optional": true,
+          "array": false,
+          "doc": "The DoCO co-type, if the kind has one. Absent means it has none."
         }
       ],
       "extendsNames": [],
@@ -10700,6 +10721,20 @@
         "cat-harness/schemas/block-qa.ts#CheckerPaths",
         "cat-harness/schemas/block-qa.ts#CheckerResult"
       ],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/contributions.ts#ContributedKind",
+      "name": "ContributedKind",
+      "module": "cat-harness/schemas/contributions.ts",
+      "kind": "type-alias",
+      "doc": "What the registry knows about one contributed kind.",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
       "unresolved": [],
       "external": [],
       "exported": true
@@ -10791,6 +10826,30 @@
           "name": "contributor",
           "type": "string",
           "optional": false,
+          "array": false
+        },
+        {
+          "name": "builder",
+          "type": "string",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "labelPrefix",
+          "type": "string",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "folioType",
+          "type": "string",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "docoType",
+          "type": "string",
+          "optional": true,
           "array": false
         }
       ],
@@ -11006,740 +11065,6 @@
       "extendsNames": [],
       "values": [],
       "refs": [],
-      "unresolved": [],
-      "external": [],
-      "exported": true
-    },
-    {
-      "id": "cat-harness/schemas/dak-blocks.ts#_MutuallyExhaustive",
-      "name": "_MutuallyExhaustive",
-      "module": "cat-harness/schemas/dak-blocks.ts",
-      "kind": "type-alias",
-      "doc": "Compile-time proof that `DAK_BLOCK_KINDS` and `DakBlock[\"kind\"]` cover each",
-      "fields": [],
-      "extendsNames": [],
-      "values": [],
-      "refs": [],
-      "unresolved": [],
-      "external": [],
-      "exported": false
-    },
-    {
-      "id": "cat-harness/schemas/dak-blocks.ts#ActorDefinitionBlock",
-      "name": "ActorDefinitionBlock",
-      "module": "cat-harness/schemas/dak-blocks.ts",
-      "kind": "interface",
-      "doc": "L3 — a FHIR ActorDefinition.",
-      "fields": [
-        {
-          "name": "kind",
-          "type": "\"actor-definition\"",
-          "optional": false,
-          "array": false
-        }
-      ],
-      "extendsNames": [
-        "DakBlockBase"
-      ],
-      "values": [],
-      "refs": [
-        "cat-harness/schemas/dak-blocks.ts#DakBlockBase"
-      ],
-      "unresolved": [],
-      "external": [],
-      "exported": true
-    },
-    {
-      "id": "cat-harness/schemas/dak-blocks.ts#BusinessProcessBlock",
-      "name": "BusinessProcessBlock",
-      "module": "cat-harness/schemas/dak-blocks.ts",
-      "kind": "interface",
-      "doc": "L2 — a business process, authored as BPMN 2.0 in the `.bpmn` companion.",
-      "fields": [
-        {
-          "name": "kind",
-          "type": "\"business-process\"",
-          "optional": false,
-          "array": false
-        }
-      ],
-      "extendsNames": [
-        "DakBlockBase"
-      ],
-      "values": [],
-      "refs": [
-        "cat-harness/schemas/dak-blocks.ts#DakBlockBase"
-      ],
-      "unresolved": [],
-      "external": [],
-      "exported": true
-    },
-    {
-      "id": "cat-harness/schemas/dak-blocks.ts#CqlLibraryBlock",
-      "name": "CqlLibraryBlock",
-      "module": "cat-harness/schemas/dak-blocks.ts",
-      "kind": "interface",
-      "doc": "L3 — a CQL library, authored in the `.cql` companion.",
-      "fields": [
-        {
-          "name": "kind",
-          "type": "\"cql-library\"",
-          "optional": false,
-          "array": false
-        }
-      ],
-      "extendsNames": [
-        "DakBlockBase"
-      ],
-      "values": [],
-      "refs": [
-        "cat-harness/schemas/dak-blocks.ts#DakBlockBase"
-      ],
-      "unresolved": [],
-      "external": [],
-      "exported": true
-    },
-    {
-      "id": "cat-harness/schemas/dak-blocks.ts#DAK_SCHEMA_EXTENSIONS",
-      "name": "DAK_SCHEMA_EXTENSIONS",
-      "module": "cat-harness/schemas/dak-blocks.ts",
-      "kind": "undetermined",
-      "note": "{ \"health-intervention\": { references: z.array(DublinCoreRefSchema).min(1, { message: \"A health intervention needs at least one reference (WHO models it 1..*)\"…",
-      "doc": "Per-kind additions to the shared shape.",
-      "fields": [],
-      "extendsNames": [],
-      "values": [],
-      "refs": [],
-      "unresolved": [],
-      "external": [],
-      "exported": false
-    },
-    {
-      "id": "cat-harness/schemas/dak-blocks.ts#DakBlock",
-      "name": "DakBlock",
-      "module": "cat-harness/schemas/dak-blocks.ts",
-      "kind": "type-alias",
-      "doc": "Every DAK block kind, as a discriminated union.",
-      "fields": [],
-      "extendsNames": [],
-      "values": [],
-      "refs": [],
-      "unresolved": [],
-      "external": [],
-      "exported": true
-    },
-    {
-      "id": "cat-harness/schemas/dak-blocks.ts#DakBlockBase",
-      "name": "DakBlockBase",
-      "module": "cat-harness/schemas/dak-blocks.ts",
-      "kind": "interface",
-      "doc": "Shared shape of every DAK block.",
-      "fields": [
-        {
-          "name": "layer",
-          "type": "\"L2\" | \"L3\"",
-          "optional": true,
-          "array": false,
-          "doc": "The WHO knowledge layer this block belongs to."
-        },
-        {
-          "name": "realises",
-          "type": "string",
-          "optional": true,
-          "array": false,
-          "doc": "Label of the L1 recommendation or L2 component this block realises."
-        }
-      ],
-      "extendsNames": [
-        "BlockBase"
-      ],
-      "values": [],
-      "refs": [
-        "cat-harness/schemas/types.ts#BlockBase"
-      ],
-      "unresolved": [],
-      "external": [],
-      "exported": true
-    },
-    {
-      "id": "cat-harness/schemas/dak-blocks.ts#DakInput",
-      "name": "DakInput",
-      "module": "cat-harness/schemas/dak-blocks.ts",
-      "kind": "type-alias",
-      "fields": [],
-      "extendsNames": [],
-      "values": [],
-      "refs": [],
-      "unresolved": [],
-      "external": [],
-      "exported": false
-    },
-    {
-      "id": "cat-harness/schemas/dak-blocks.ts#DataElementBlock",
-      "name": "DataElementBlock",
-      "module": "cat-harness/schemas/dak-blocks.ts",
-      "kind": "interface",
-      "doc": "L2 — one core data element of the data dictionary.",
-      "fields": [
-        {
-          "name": "kind",
-          "type": "\"data-element\"",
-          "optional": false,
-          "array": false
-        }
-      ],
-      "extendsNames": [
-        "DakBlockBase"
-      ],
-      "values": [],
-      "refs": [
-        "cat-harness/schemas/dak-blocks.ts#DakBlockBase"
-      ],
-      "unresolved": [],
-      "external": [],
-      "exported": true
-    },
-    {
-      "id": "cat-harness/schemas/dak-blocks.ts#DecisionTableBlock",
-      "name": "DecisionTableBlock",
-      "module": "cat-harness/schemas/dak-blocks.ts",
-      "kind": "interface",
-      "doc": "L2 — decision-support logic, authored as DMN in the `.dmn` companion.",
-      "fields": [
-        {
-          "name": "kind",
-          "type": "\"decision-table\"",
-          "optional": false,
-          "array": false
-        }
-      ],
-      "extendsNames": [
-        "DakBlockBase"
-      ],
-      "values": [],
-      "refs": [
-        "cat-harness/schemas/dak-blocks.ts#DakBlockBase"
-      ],
-      "unresolved": [],
-      "external": [],
-      "exported": true
-    },
-    {
-      "id": "cat-harness/schemas/dak-blocks.ts#DublinCoreRef",
-      "name": "DublinCoreRef",
-      "module": "cat-harness/schemas/dak-blocks.ts",
-      "kind": "interface",
-      "doc": "The Dublin Core elements WHO's `DublinCore.fsh` declares, as far as a DAK",
-      "fields": [
-        {
-          "name": "title",
-          "type": "string",
-          "optional": false,
-          "array": false
-        },
-        {
-          "name": "identifier",
-          "type": "string",
-          "optional": true,
-          "array": false
-        },
-        {
-          "name": "source",
-          "type": "string",
-          "optional": true,
-          "array": false,
-          "doc": "Canonical URI — an IRIS handle, for WHO publications."
-        },
-        {
-          "name": "date",
-          "type": "string",
-          "optional": true,
-          "array": false
-        },
-        {
-          "name": "publisher",
-          "type": "string",
-          "optional": true,
-          "array": false
-        },
-        {
-          "name": "language",
-          "type": "string",
-          "optional": true,
-          "array": false
-        }
-      ],
-      "extendsNames": [],
-      "values": [],
-      "refs": [],
-      "unresolved": [],
-      "external": [],
-      "exported": true
-    },
-    {
-      "id": "cat-harness/schemas/dak-blocks.ts#DublinCoreRefSchema",
-      "name": "DublinCoreRefSchema",
-      "module": "cat-harness/schemas/dak-blocks.ts",
-      "kind": "zod-object",
-      "doc": "A Dublin Core reference, per WHO's `DublinCore.fsh`.",
-      "fields": [
-        {
-          "name": "title",
-          "type": "z.string().min(1)",
-          "optional": false,
-          "array": false
-        },
-        {
-          "name": "identifier",
-          "type": "z.string().min(1).optional()",
-          "optional": true,
-          "array": false
-        },
-        {
-          "name": "source",
-          "type": "z.string().min(1).optional()",
-          "optional": true,
-          "array": false
-        },
-        {
-          "name": "date",
-          "type": "z.string().min(1).optional()",
-          "optional": true,
-          "array": false
-        },
-        {
-          "name": "publisher",
-          "type": "z.string().min(1).optional()",
-          "optional": true,
-          "array": false
-        },
-        {
-          "name": "language",
-          "type": "z.string().min(1).optional()",
-          "optional": true,
-          "array": false
-        }
-      ],
-      "extendsNames": [],
-      "values": [],
-      "refs": [],
-      "unresolved": [],
-      "external": [
-        "z"
-      ],
-      "exported": false
-    },
-    {
-      "id": "cat-harness/schemas/dak-blocks.ts#FunctionalRequirementBlock",
-      "name": "FunctionalRequirementBlock",
-      "module": "cat-harness/schemas/dak-blocks.ts",
-      "kind": "interface",
-      "doc": "L2 — a functional requirement.",
-      "fields": [
-        {
-          "name": "kind",
-          "type": "\"functional-requirement\"",
-          "optional": false,
-          "array": false
-        }
-      ],
-      "extendsNames": [
-        "DakBlockBase"
-      ],
-      "values": [],
-      "refs": [
-        "cat-harness/schemas/dak-blocks.ts#DakBlockBase"
-      ],
-      "unresolved": [],
-      "external": [],
-      "exported": true
-    },
-    {
-      "id": "cat-harness/schemas/dak-blocks.ts#HealthInterventionBlock",
-      "name": "HealthInterventionBlock",
-      "module": "cat-harness/schemas/dak-blocks.ts",
-      "kind": "interface",
-      "doc": "L2 — a health intervention or recommendation the DAK digitises.",
-      "fields": [
-        {
-          "name": "kind",
-          "type": "\"health-intervention\"",
-          "optional": false,
-          "array": false
-        },
-        {
-          "name": "references",
-          "type": "DublinCoreRef[]",
-          "optional": false,
-          "array": true,
-          "doc": "Dublin Core references to the guideline this intervention comes from."
-        }
-      ],
-      "extendsNames": [
-        "DakBlockBase"
-      ],
-      "values": [],
-      "refs": [
-        "cat-harness/schemas/dak-blocks.ts#DakBlockBase",
-        "cat-harness/schemas/dak-blocks.ts#DublinCoreRef"
-      ],
-      "unresolved": [],
-      "external": [],
-      "exported": true
-    },
-    {
-      "id": "cat-harness/schemas/dak-blocks.ts#IndicatorBlock",
-      "name": "IndicatorBlock",
-      "module": "cat-harness/schemas/dak-blocks.ts",
-      "kind": "interface",
-      "doc": "L2 — a programme indicator.",
-      "fields": [
-        {
-          "name": "kind",
-          "type": "\"indicator\"",
-          "optional": false,
-          "array": false
-        }
-      ],
-      "extendsNames": [
-        "DakBlockBase"
-      ],
-      "values": [],
-      "refs": [
-        "cat-harness/schemas/dak-blocks.ts#DakBlockBase"
-      ],
-      "unresolved": [],
-      "external": [],
-      "exported": true
-    },
-    {
-      "id": "cat-harness/schemas/dak-blocks.ts#LogicalModelBlock",
-      "name": "LogicalModelBlock",
-      "module": "cat-harness/schemas/dak-blocks.ts",
-      "kind": "interface",
-      "doc": "L3 — a DAK logical model.",
-      "fields": [
-        {
-          "name": "kind",
-          "type": "\"logical-model\"",
-          "optional": false,
-          "array": false
-        }
-      ],
-      "extendsNames": [
-        "DakBlockBase"
-      ],
-      "values": [],
-      "refs": [
-        "cat-harness/schemas/dak-blocks.ts#DakBlockBase"
-      ],
-      "unresolved": [],
-      "external": [],
-      "exported": true
-    },
-    {
-      "id": "cat-harness/schemas/dak-blocks.ts#MeasureBlock",
-      "name": "MeasureBlock",
-      "module": "cat-harness/schemas/dak-blocks.ts",
-      "kind": "interface",
-      "doc": "L3 — a FHIR Measure, realising an L2 indicator.",
-      "fields": [
-        {
-          "name": "kind",
-          "type": "\"measure\"",
-          "optional": false,
-          "array": false
-        }
-      ],
-      "extendsNames": [
-        "DakBlockBase"
-      ],
-      "values": [],
-      "refs": [
-        "cat-harness/schemas/dak-blocks.ts#DakBlockBase"
-      ],
-      "unresolved": [],
-      "external": [],
-      "exported": true
-    },
-    {
-      "id": "cat-harness/schemas/dak-blocks.ts#NonFunctionalRequirementBlock",
-      "name": "NonFunctionalRequirementBlock",
-      "module": "cat-harness/schemas/dak-blocks.ts",
-      "kind": "interface",
-      "doc": "L2 — a non-functional requirement.",
-      "fields": [
-        {
-          "name": "kind",
-          "type": "\"non-functional-requirement\"",
-          "optional": false,
-          "array": false
-        }
-      ],
-      "extendsNames": [
-        "DakBlockBase"
-      ],
-      "values": [],
-      "refs": [
-        "cat-harness/schemas/dak-blocks.ts#DakBlockBase"
-      ],
-      "unresolved": [],
-      "external": [],
-      "exported": true
-    },
-    {
-      "id": "cat-harness/schemas/dak-blocks.ts#PersonaBlock",
-      "name": "PersonaBlock",
-      "module": "cat-harness/schemas/dak-blocks.ts",
-      "kind": "interface",
-      "doc": "L2 — a generic persona the guideline is written for.",
-      "fields": [
-        {
-          "name": "kind",
-          "type": "\"persona\"",
-          "optional": false,
-          "array": false
-        }
-      ],
-      "extendsNames": [
-        "DakBlockBase"
-      ],
-      "values": [],
-      "refs": [
-        "cat-harness/schemas/dak-blocks.ts#DakBlockBase"
-      ],
-      "unresolved": [],
-      "external": [],
-      "exported": true
-    },
-    {
-      "id": "cat-harness/schemas/dak-blocks.ts#PlanDefinitionBlock",
-      "name": "PlanDefinitionBlock",
-      "module": "cat-harness/schemas/dak-blocks.ts",
-      "kind": "interface",
-      "doc": "L3 — a FHIR PlanDefinition: the machine-readable form of a recommendation.",
-      "fields": [
-        {
-          "name": "kind",
-          "type": "\"plan-definition\"",
-          "optional": false,
-          "array": false
-        }
-      ],
-      "extendsNames": [
-        "DakBlockBase"
-      ],
-      "values": [],
-      "refs": [
-        "cat-harness/schemas/dak-blocks.ts#DakBlockBase"
-      ],
-      "unresolved": [],
-      "external": [],
-      "exported": true
-    },
-    {
-      "id": "cat-harness/schemas/dak-blocks.ts#ProfileBlock",
-      "name": "ProfileBlock",
-      "module": "cat-harness/schemas/dak-blocks.ts",
-      "kind": "interface",
-      "doc": "L3 — a FHIR profile, authored as FSH in the `.fsh` companion.",
-      "fields": [
-        {
-          "name": "kind",
-          "type": "\"profile\"",
-          "optional": false,
-          "array": false
-        }
-      ],
-      "extendsNames": [
-        "DakBlockBase"
-      ],
-      "values": [],
-      "refs": [
-        "cat-harness/schemas/dak-blocks.ts#DakBlockBase"
-      ],
-      "unresolved": [],
-      "external": [],
-      "exported": true
-    },
-    {
-      "id": "cat-harness/schemas/dak-blocks.ts#QuestionnaireBlock",
-      "name": "QuestionnaireBlock",
-      "module": "cat-harness/schemas/dak-blocks.ts",
-      "kind": "interface",
-      "doc": "L3 — a FHIR Questionnaire.",
-      "fields": [
-        {
-          "name": "kind",
-          "type": "\"questionnaire\"",
-          "optional": false,
-          "array": false
-        }
-      ],
-      "extendsNames": [
-        "DakBlockBase"
-      ],
-      "values": [],
-      "refs": [
-        "cat-harness/schemas/dak-blocks.ts#DakBlockBase"
-      ],
-      "unresolved": [],
-      "external": [],
-      "exported": true
-    },
-    {
-      "id": "cat-harness/schemas/dak-blocks.ts#SchedulingLogicBlock",
-      "name": "SchedulingLogicBlock",
-      "module": "cat-harness/schemas/dak-blocks.ts",
-      "kind": "interface",
-      "doc": "L2 — scheduling logic (periodic or event-driven timing rules).",
-      "fields": [
-        {
-          "name": "kind",
-          "type": "\"scheduling-logic\"",
-          "optional": false,
-          "array": false
-        }
-      ],
-      "extendsNames": [
-        "DakBlockBase"
-      ],
-      "values": [],
-      "refs": [
-        "cat-harness/schemas/dak-blocks.ts#DakBlockBase"
-      ],
-      "unresolved": [],
-      "external": [],
-      "exported": true
-    },
-    {
-      "id": "cat-harness/schemas/dak-blocks.ts#StructureMapBlock",
-      "name": "StructureMapBlock",
-      "module": "cat-harness/schemas/dak-blocks.ts",
-      "kind": "interface",
-      "doc": "L3 — a FHIR StructureMap.",
-      "fields": [
-        {
-          "name": "kind",
-          "type": "\"structure-map\"",
-          "optional": false,
-          "array": false
-        }
-      ],
-      "extendsNames": [
-        "DakBlockBase"
-      ],
-      "values": [],
-      "refs": [
-        "cat-harness/schemas/dak-blocks.ts#DakBlockBase"
-      ],
-      "unresolved": [],
-      "external": [],
-      "exported": true
-    },
-    {
-      "id": "cat-harness/schemas/dak-blocks.ts#TestCaseBlock",
-      "name": "TestCaseBlock",
-      "module": "cat-harness/schemas/dak-blocks.ts",
-      "kind": "interface",
-      "doc": "L3 — a conformance test case.",
-      "fields": [
-        {
-          "name": "kind",
-          "type": "\"test-case\"",
-          "optional": false,
-          "array": false
-        }
-      ],
-      "extendsNames": [
-        "DakBlockBase"
-      ],
-      "values": [],
-      "refs": [
-        "cat-harness/schemas/dak-blocks.ts#DakBlockBase"
-      ],
-      "unresolved": [],
-      "external": [],
-      "exported": true
-    },
-    {
-      "id": "cat-harness/schemas/dak-blocks.ts#TestScenarioBlock",
-      "name": "TestScenarioBlock",
-      "module": "cat-harness/schemas/dak-blocks.ts",
-      "kind": "interface",
-      "doc": "L2 — a narrative test scenario validating the DAK end to end.",
-      "fields": [
-        {
-          "name": "kind",
-          "type": "\"test-scenario\"",
-          "optional": false,
-          "array": false
-        }
-      ],
-      "extendsNames": [
-        "DakBlockBase"
-      ],
-      "values": [],
-      "refs": [
-        "cat-harness/schemas/dak-blocks.ts#DakBlockBase"
-      ],
-      "unresolved": [],
-      "external": [],
-      "exported": true
-    },
-    {
-      "id": "cat-harness/schemas/dak-blocks.ts#UserScenarioBlock",
-      "name": "UserScenarioBlock",
-      "module": "cat-harness/schemas/dak-blocks.ts",
-      "kind": "interface",
-      "doc": "L2 — a user scenario / narrative walkthrough.",
-      "fields": [
-        {
-          "name": "kind",
-          "type": "\"user-scenario\"",
-          "optional": false,
-          "array": false
-        },
-        {
-          "name": "personas",
-          "type": "string[]",
-          "optional": false,
-          "array": true,
-          "doc": "Ids of the personas this scenario involves, at least one."
-        }
-      ],
-      "extendsNames": [
-        "DakBlockBase"
-      ],
-      "values": [],
-      "refs": [
-        "cat-harness/schemas/dak-blocks.ts#DakBlockBase"
-      ],
-      "unresolved": [],
-      "external": [],
-      "exported": true
-    },
-    {
-      "id": "cat-harness/schemas/dak-blocks.ts#ValueSetBlock",
-      "name": "ValueSetBlock",
-      "module": "cat-harness/schemas/dak-blocks.ts",
-      "kind": "interface",
-      "doc": "L3 — a FHIR ValueSet.",
-      "fields": [
-        {
-          "name": "kind",
-          "type": "\"value-set\"",
-          "optional": false,
-          "array": false
-        }
-      ],
-      "extendsNames": [
-        "DakBlockBase"
-      ],
-      "values": [],
-      "refs": [
-        "cat-harness/schemas/dak-blocks.ts#DakBlockBase"
-      ],
       "unresolved": [],
       "external": [],
       "exported": true
@@ -44800,6 +44125,766 @@
       "exported": true
     },
     {
+      "id": "smart-base/schemas/dak-blocks.ts#_MutuallyExhaustive",
+      "name": "_MutuallyExhaustive",
+      "module": "smart-base/schemas/dak-blocks.ts",
+      "kind": "type-alias",
+      "doc": "Compile-time proof that `DAK_BLOCK_KINDS` and `DakBlock[\"kind\"]` cover each",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": false
+    },
+    {
+      "id": "smart-base/schemas/dak-blocks.ts#ActorDefinitionBlock",
+      "name": "ActorDefinitionBlock",
+      "module": "smart-base/schemas/dak-blocks.ts",
+      "kind": "interface",
+      "doc": "L3 — a FHIR ActorDefinition.",
+      "fields": [
+        {
+          "name": "kind",
+          "type": "\"actor-definition\"",
+          "optional": false,
+          "array": false
+        }
+      ],
+      "extendsNames": [
+        "DakBlockBase"
+      ],
+      "values": [],
+      "refs": [
+        "smart-base/schemas/dak-blocks.ts#DakBlockBase"
+      ],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "smart-base/schemas/dak-blocks.ts#BusinessProcessBlock",
+      "name": "BusinessProcessBlock",
+      "module": "smart-base/schemas/dak-blocks.ts",
+      "kind": "interface",
+      "doc": "L2 — a business process, authored as BPMN 2.0 in the `.bpmn` companion.",
+      "fields": [
+        {
+          "name": "kind",
+          "type": "\"business-process\"",
+          "optional": false,
+          "array": false
+        }
+      ],
+      "extendsNames": [
+        "DakBlockBase"
+      ],
+      "values": [],
+      "refs": [
+        "smart-base/schemas/dak-blocks.ts#DakBlockBase"
+      ],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "smart-base/schemas/dak-blocks.ts#CqlLibraryBlock",
+      "name": "CqlLibraryBlock",
+      "module": "smart-base/schemas/dak-blocks.ts",
+      "kind": "interface",
+      "doc": "L3 — a CQL library, authored in the `.cql` companion.",
+      "fields": [
+        {
+          "name": "kind",
+          "type": "\"cql-library\"",
+          "optional": false,
+          "array": false
+        }
+      ],
+      "extendsNames": [
+        "DakBlockBase"
+      ],
+      "values": [],
+      "refs": [
+        "smart-base/schemas/dak-blocks.ts#DakBlockBase"
+      ],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "smart-base/schemas/dak-blocks.ts#DAK_SCHEMA_EXTENSIONS",
+      "name": "DAK_SCHEMA_EXTENSIONS",
+      "module": "smart-base/schemas/dak-blocks.ts",
+      "kind": "undetermined",
+      "note": "{ \"health-intervention\": { references: z.array(DublinCoreRefSchema).min(1, { message: \"A health intervention needs at least one reference (WHO models it 1..*)\"…",
+      "doc": "Per-kind additions to the shared shape.",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": false
+    },
+    {
+      "id": "smart-base/schemas/dak-blocks.ts#DakBlock",
+      "name": "DakBlock",
+      "module": "smart-base/schemas/dak-blocks.ts",
+      "kind": "type-alias",
+      "doc": "Every DAK block kind, as a discriminated union.",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "smart-base/schemas/dak-blocks.ts#DakBlockBase",
+      "name": "DakBlockBase",
+      "module": "smart-base/schemas/dak-blocks.ts",
+      "kind": "interface",
+      "doc": "Shared shape of every DAK block.",
+      "fields": [
+        {
+          "name": "layer",
+          "type": "\"L2\" | \"L3\"",
+          "optional": true,
+          "array": false,
+          "doc": "The WHO knowledge layer this block belongs to."
+        },
+        {
+          "name": "realises",
+          "type": "string",
+          "optional": true,
+          "array": false,
+          "doc": "Label of the L1 recommendation or L2 component this block realises."
+        }
+      ],
+      "extendsNames": [
+        "BlockBase"
+      ],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [
+        "BlockBase"
+      ],
+      "exported": true
+    },
+    {
+      "id": "smart-base/schemas/dak-blocks.ts#DakInput",
+      "name": "DakInput",
+      "module": "smart-base/schemas/dak-blocks.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": false
+    },
+    {
+      "id": "smart-base/schemas/dak-blocks.ts#DataElementBlock",
+      "name": "DataElementBlock",
+      "module": "smart-base/schemas/dak-blocks.ts",
+      "kind": "interface",
+      "doc": "L2 — one core data element of the data dictionary.",
+      "fields": [
+        {
+          "name": "kind",
+          "type": "\"data-element\"",
+          "optional": false,
+          "array": false
+        }
+      ],
+      "extendsNames": [
+        "DakBlockBase"
+      ],
+      "values": [],
+      "refs": [
+        "smart-base/schemas/dak-blocks.ts#DakBlockBase"
+      ],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "smart-base/schemas/dak-blocks.ts#DecisionTableBlock",
+      "name": "DecisionTableBlock",
+      "module": "smart-base/schemas/dak-blocks.ts",
+      "kind": "interface",
+      "doc": "L2 — decision-support logic, authored as DMN in the `.dmn` companion.",
+      "fields": [
+        {
+          "name": "kind",
+          "type": "\"decision-table\"",
+          "optional": false,
+          "array": false
+        }
+      ],
+      "extendsNames": [
+        "DakBlockBase"
+      ],
+      "values": [],
+      "refs": [
+        "smart-base/schemas/dak-blocks.ts#DakBlockBase"
+      ],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "smart-base/schemas/dak-blocks.ts#DublinCoreRef",
+      "name": "DublinCoreRef",
+      "module": "smart-base/schemas/dak-blocks.ts",
+      "kind": "interface",
+      "doc": "The Dublin Core elements WHO's `DublinCore.fsh` declares, as far as a DAK",
+      "fields": [
+        {
+          "name": "title",
+          "type": "string",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "identifier",
+          "type": "string",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "source",
+          "type": "string",
+          "optional": true,
+          "array": false,
+          "doc": "Canonical URI — an IRIS handle, for WHO publications."
+        },
+        {
+          "name": "date",
+          "type": "string",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "publisher",
+          "type": "string",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "language",
+          "type": "string",
+          "optional": true,
+          "array": false
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "smart-base/schemas/dak-blocks.ts#DublinCoreRefSchema",
+      "name": "DublinCoreRefSchema",
+      "module": "smart-base/schemas/dak-blocks.ts",
+      "kind": "zod-object",
+      "doc": "A Dublin Core reference, per WHO's `DublinCore.fsh`.",
+      "fields": [
+        {
+          "name": "title",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "identifier",
+          "type": "z.string().min(1).optional()",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "source",
+          "type": "z.string().min(1).optional()",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "date",
+          "type": "z.string().min(1).optional()",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "publisher",
+          "type": "z.string().min(1).optional()",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "language",
+          "type": "z.string().min(1).optional()",
+          "optional": true,
+          "array": false
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [
+        "z"
+      ],
+      "exported": false
+    },
+    {
+      "id": "smart-base/schemas/dak-blocks.ts#FunctionalRequirementBlock",
+      "name": "FunctionalRequirementBlock",
+      "module": "smart-base/schemas/dak-blocks.ts",
+      "kind": "interface",
+      "doc": "L2 — a functional requirement.",
+      "fields": [
+        {
+          "name": "kind",
+          "type": "\"functional-requirement\"",
+          "optional": false,
+          "array": false
+        }
+      ],
+      "extendsNames": [
+        "DakBlockBase"
+      ],
+      "values": [],
+      "refs": [
+        "smart-base/schemas/dak-blocks.ts#DakBlockBase"
+      ],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "smart-base/schemas/dak-blocks.ts#HealthInterventionBlock",
+      "name": "HealthInterventionBlock",
+      "module": "smart-base/schemas/dak-blocks.ts",
+      "kind": "interface",
+      "doc": "L2 — a health intervention or recommendation the DAK digitises.",
+      "fields": [
+        {
+          "name": "kind",
+          "type": "\"health-intervention\"",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "references",
+          "type": "DublinCoreRef[]",
+          "optional": false,
+          "array": true,
+          "doc": "Dublin Core references to the guideline this intervention comes from."
+        }
+      ],
+      "extendsNames": [
+        "DakBlockBase"
+      ],
+      "values": [],
+      "refs": [
+        "smart-base/schemas/dak-blocks.ts#DakBlockBase",
+        "smart-base/schemas/dak-blocks.ts#DublinCoreRef"
+      ],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "smart-base/schemas/dak-blocks.ts#IndicatorBlock",
+      "name": "IndicatorBlock",
+      "module": "smart-base/schemas/dak-blocks.ts",
+      "kind": "interface",
+      "doc": "L2 — a programme indicator.",
+      "fields": [
+        {
+          "name": "kind",
+          "type": "\"indicator\"",
+          "optional": false,
+          "array": false
+        }
+      ],
+      "extendsNames": [
+        "DakBlockBase"
+      ],
+      "values": [],
+      "refs": [
+        "smart-base/schemas/dak-blocks.ts#DakBlockBase"
+      ],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "smart-base/schemas/dak-blocks.ts#LogicalModelBlock",
+      "name": "LogicalModelBlock",
+      "module": "smart-base/schemas/dak-blocks.ts",
+      "kind": "interface",
+      "doc": "L3 — a DAK logical model.",
+      "fields": [
+        {
+          "name": "kind",
+          "type": "\"logical-model\"",
+          "optional": false,
+          "array": false
+        }
+      ],
+      "extendsNames": [
+        "DakBlockBase"
+      ],
+      "values": [],
+      "refs": [
+        "smart-base/schemas/dak-blocks.ts#DakBlockBase"
+      ],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "smart-base/schemas/dak-blocks.ts#MeasureBlock",
+      "name": "MeasureBlock",
+      "module": "smart-base/schemas/dak-blocks.ts",
+      "kind": "interface",
+      "doc": "L3 — a FHIR Measure, realising an L2 indicator.",
+      "fields": [
+        {
+          "name": "kind",
+          "type": "\"measure\"",
+          "optional": false,
+          "array": false
+        }
+      ],
+      "extendsNames": [
+        "DakBlockBase"
+      ],
+      "values": [],
+      "refs": [
+        "smart-base/schemas/dak-blocks.ts#DakBlockBase"
+      ],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "smart-base/schemas/dak-blocks.ts#NonFunctionalRequirementBlock",
+      "name": "NonFunctionalRequirementBlock",
+      "module": "smart-base/schemas/dak-blocks.ts",
+      "kind": "interface",
+      "doc": "L2 — a non-functional requirement.",
+      "fields": [
+        {
+          "name": "kind",
+          "type": "\"non-functional-requirement\"",
+          "optional": false,
+          "array": false
+        }
+      ],
+      "extendsNames": [
+        "DakBlockBase"
+      ],
+      "values": [],
+      "refs": [
+        "smart-base/schemas/dak-blocks.ts#DakBlockBase"
+      ],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "smart-base/schemas/dak-blocks.ts#PersonaBlock",
+      "name": "PersonaBlock",
+      "module": "smart-base/schemas/dak-blocks.ts",
+      "kind": "interface",
+      "doc": "L2 — a generic persona the guideline is written for.",
+      "fields": [
+        {
+          "name": "kind",
+          "type": "\"persona\"",
+          "optional": false,
+          "array": false
+        }
+      ],
+      "extendsNames": [
+        "DakBlockBase"
+      ],
+      "values": [],
+      "refs": [
+        "smart-base/schemas/dak-blocks.ts#DakBlockBase"
+      ],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "smart-base/schemas/dak-blocks.ts#PlanDefinitionBlock",
+      "name": "PlanDefinitionBlock",
+      "module": "smart-base/schemas/dak-blocks.ts",
+      "kind": "interface",
+      "doc": "L3 — a FHIR PlanDefinition: the machine-readable form of a recommendation.",
+      "fields": [
+        {
+          "name": "kind",
+          "type": "\"plan-definition\"",
+          "optional": false,
+          "array": false
+        }
+      ],
+      "extendsNames": [
+        "DakBlockBase"
+      ],
+      "values": [],
+      "refs": [
+        "smart-base/schemas/dak-blocks.ts#DakBlockBase"
+      ],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "smart-base/schemas/dak-blocks.ts#ProfileBlock",
+      "name": "ProfileBlock",
+      "module": "smart-base/schemas/dak-blocks.ts",
+      "kind": "interface",
+      "doc": "L3 — a FHIR profile, authored as FSH in the `.fsh` companion.",
+      "fields": [
+        {
+          "name": "kind",
+          "type": "\"profile\"",
+          "optional": false,
+          "array": false
+        }
+      ],
+      "extendsNames": [
+        "DakBlockBase"
+      ],
+      "values": [],
+      "refs": [
+        "smart-base/schemas/dak-blocks.ts#DakBlockBase"
+      ],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "smart-base/schemas/dak-blocks.ts#QuestionnaireBlock",
+      "name": "QuestionnaireBlock",
+      "module": "smart-base/schemas/dak-blocks.ts",
+      "kind": "interface",
+      "doc": "L3 — a FHIR Questionnaire.",
+      "fields": [
+        {
+          "name": "kind",
+          "type": "\"questionnaire\"",
+          "optional": false,
+          "array": false
+        }
+      ],
+      "extendsNames": [
+        "DakBlockBase"
+      ],
+      "values": [],
+      "refs": [
+        "smart-base/schemas/dak-blocks.ts#DakBlockBase"
+      ],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "smart-base/schemas/dak-blocks.ts#SchedulingLogicBlock",
+      "name": "SchedulingLogicBlock",
+      "module": "smart-base/schemas/dak-blocks.ts",
+      "kind": "interface",
+      "doc": "L2 — scheduling logic (periodic or event-driven timing rules).",
+      "fields": [
+        {
+          "name": "kind",
+          "type": "\"scheduling-logic\"",
+          "optional": false,
+          "array": false
+        }
+      ],
+      "extendsNames": [
+        "DakBlockBase"
+      ],
+      "values": [],
+      "refs": [
+        "smart-base/schemas/dak-blocks.ts#DakBlockBase"
+      ],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "smart-base/schemas/dak-blocks.ts#StructureMapBlock",
+      "name": "StructureMapBlock",
+      "module": "smart-base/schemas/dak-blocks.ts",
+      "kind": "interface",
+      "doc": "L3 — a FHIR StructureMap.",
+      "fields": [
+        {
+          "name": "kind",
+          "type": "\"structure-map\"",
+          "optional": false,
+          "array": false
+        }
+      ],
+      "extendsNames": [
+        "DakBlockBase"
+      ],
+      "values": [],
+      "refs": [
+        "smart-base/schemas/dak-blocks.ts#DakBlockBase"
+      ],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "smart-base/schemas/dak-blocks.ts#TestCaseBlock",
+      "name": "TestCaseBlock",
+      "module": "smart-base/schemas/dak-blocks.ts",
+      "kind": "interface",
+      "doc": "L3 — a conformance test case.",
+      "fields": [
+        {
+          "name": "kind",
+          "type": "\"test-case\"",
+          "optional": false,
+          "array": false
+        }
+      ],
+      "extendsNames": [
+        "DakBlockBase"
+      ],
+      "values": [],
+      "refs": [
+        "smart-base/schemas/dak-blocks.ts#DakBlockBase"
+      ],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "smart-base/schemas/dak-blocks.ts#TestScenarioBlock",
+      "name": "TestScenarioBlock",
+      "module": "smart-base/schemas/dak-blocks.ts",
+      "kind": "interface",
+      "doc": "L2 — a narrative test scenario validating the DAK end to end.",
+      "fields": [
+        {
+          "name": "kind",
+          "type": "\"test-scenario\"",
+          "optional": false,
+          "array": false
+        }
+      ],
+      "extendsNames": [
+        "DakBlockBase"
+      ],
+      "values": [],
+      "refs": [
+        "smart-base/schemas/dak-blocks.ts#DakBlockBase"
+      ],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "smart-base/schemas/dak-blocks.ts#UserScenarioBlock",
+      "name": "UserScenarioBlock",
+      "module": "smart-base/schemas/dak-blocks.ts",
+      "kind": "interface",
+      "doc": "L2 — a user scenario / narrative walkthrough.",
+      "fields": [
+        {
+          "name": "kind",
+          "type": "\"user-scenario\"",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "personas",
+          "type": "string[]",
+          "optional": false,
+          "array": true,
+          "doc": "Ids of the personas this scenario involves, at least one."
+        }
+      ],
+      "extendsNames": [
+        "DakBlockBase"
+      ],
+      "values": [],
+      "refs": [
+        "smart-base/schemas/dak-blocks.ts#DakBlockBase"
+      ],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "smart-base/schemas/dak-blocks.ts#ValueSetBlock",
+      "name": "ValueSetBlock",
+      "module": "smart-base/schemas/dak-blocks.ts",
+      "kind": "interface",
+      "doc": "L3 — a FHIR ValueSet.",
+      "fields": [
+        {
+          "name": "kind",
+          "type": "\"value-set\"",
+          "optional": false,
+          "array": false
+        }
+      ],
+      "extendsNames": [
+        "DakBlockBase"
+      ],
+      "values": [],
+      "refs": [
+        "smart-base/schemas/dak-blocks.ts#DakBlockBase"
+      ],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "smart-base/schemas/dak-kinds.ts#DakBlockKind",
+      "name": "DakBlockKind",
+      "module": "smart-base/schemas/dak-kinds.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "smart-base/schemas/dak-kinds.ts#DakComponent",
+      "name": "DakComponent",
+      "module": "smart-base/schemas/dak-kinds.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
       "id": "smart-base/schemas/dak.ts#componentShape",
       "name": "componentShape",
       "module": "smart-base/schemas/dak.ts",
@@ -45380,14 +45465,6 @@
       "via": "hits",
       "kind": "field",
       "optional": false,
-      "array": true
-    },
-    {
-      "from": "cat-harness/schemas/block-qa.ts#QaCriterionDefinition",
-      "to": "cat-harness/schemas/block-kinds.ts#ContentAdapter",
-      "via": "adapters",
-      "kind": "field",
-      "optional": true,
       "array": true
     },
     {
@@ -46527,6 +46604,14 @@
       "array": true
     },
     {
+      "from": "cat-harness/schemas/contributions.ts#AdapterContribution",
+      "to": "cat-harness/schemas/block-qa.ts#CompanionRole",
+      "via": "companionRoles",
+      "kind": "field",
+      "optional": true,
+      "array": true
+    },
+    {
       "from": "cat-harness/schemas/contributions.ts#ContributedChecker",
       "to": "cat-harness/schemas/block-qa.ts#CheckerPaths",
       "via": "check",
@@ -46603,198 +46688,6 @@
       "to": "cat-harness/schemas/block-qa.ts#CheckerResult",
       "via": "check",
       "kind": "field",
-      "optional": false,
-      "array": false
-    },
-    {
-      "from": "cat-harness/schemas/dak-blocks.ts#ActorDefinitionBlock",
-      "to": "cat-harness/schemas/dak-blocks.ts#DakBlockBase",
-      "via": "",
-      "kind": "extends",
-      "optional": false,
-      "array": false
-    },
-    {
-      "from": "cat-harness/schemas/dak-blocks.ts#BusinessProcessBlock",
-      "to": "cat-harness/schemas/dak-blocks.ts#DakBlockBase",
-      "via": "",
-      "kind": "extends",
-      "optional": false,
-      "array": false
-    },
-    {
-      "from": "cat-harness/schemas/dak-blocks.ts#CqlLibraryBlock",
-      "to": "cat-harness/schemas/dak-blocks.ts#DakBlockBase",
-      "via": "",
-      "kind": "extends",
-      "optional": false,
-      "array": false
-    },
-    {
-      "from": "cat-harness/schemas/dak-blocks.ts#DakBlockBase",
-      "to": "cat-harness/schemas/types.ts#BlockBase",
-      "via": "",
-      "kind": "extends",
-      "optional": false,
-      "array": false
-    },
-    {
-      "from": "cat-harness/schemas/dak-blocks.ts#DataElementBlock",
-      "to": "cat-harness/schemas/dak-blocks.ts#DakBlockBase",
-      "via": "",
-      "kind": "extends",
-      "optional": false,
-      "array": false
-    },
-    {
-      "from": "cat-harness/schemas/dak-blocks.ts#DecisionTableBlock",
-      "to": "cat-harness/schemas/dak-blocks.ts#DakBlockBase",
-      "via": "",
-      "kind": "extends",
-      "optional": false,
-      "array": false
-    },
-    {
-      "from": "cat-harness/schemas/dak-blocks.ts#FunctionalRequirementBlock",
-      "to": "cat-harness/schemas/dak-blocks.ts#DakBlockBase",
-      "via": "",
-      "kind": "extends",
-      "optional": false,
-      "array": false
-    },
-    {
-      "from": "cat-harness/schemas/dak-blocks.ts#HealthInterventionBlock",
-      "to": "cat-harness/schemas/dak-blocks.ts#DakBlockBase",
-      "via": "",
-      "kind": "extends",
-      "optional": false,
-      "array": false
-    },
-    {
-      "from": "cat-harness/schemas/dak-blocks.ts#HealthInterventionBlock",
-      "to": "cat-harness/schemas/dak-blocks.ts#DublinCoreRef",
-      "via": "references",
-      "kind": "field",
-      "optional": false,
-      "array": true
-    },
-    {
-      "from": "cat-harness/schemas/dak-blocks.ts#IndicatorBlock",
-      "to": "cat-harness/schemas/dak-blocks.ts#DakBlockBase",
-      "via": "",
-      "kind": "extends",
-      "optional": false,
-      "array": false
-    },
-    {
-      "from": "cat-harness/schemas/dak-blocks.ts#LogicalModelBlock",
-      "to": "cat-harness/schemas/dak-blocks.ts#DakBlockBase",
-      "via": "",
-      "kind": "extends",
-      "optional": false,
-      "array": false
-    },
-    {
-      "from": "cat-harness/schemas/dak-blocks.ts#MeasureBlock",
-      "to": "cat-harness/schemas/dak-blocks.ts#DakBlockBase",
-      "via": "",
-      "kind": "extends",
-      "optional": false,
-      "array": false
-    },
-    {
-      "from": "cat-harness/schemas/dak-blocks.ts#NonFunctionalRequirementBlock",
-      "to": "cat-harness/schemas/dak-blocks.ts#DakBlockBase",
-      "via": "",
-      "kind": "extends",
-      "optional": false,
-      "array": false
-    },
-    {
-      "from": "cat-harness/schemas/dak-blocks.ts#PersonaBlock",
-      "to": "cat-harness/schemas/dak-blocks.ts#DakBlockBase",
-      "via": "",
-      "kind": "extends",
-      "optional": false,
-      "array": false
-    },
-    {
-      "from": "cat-harness/schemas/dak-blocks.ts#PlanDefinitionBlock",
-      "to": "cat-harness/schemas/dak-blocks.ts#DakBlockBase",
-      "via": "",
-      "kind": "extends",
-      "optional": false,
-      "array": false
-    },
-    {
-      "from": "cat-harness/schemas/dak-blocks.ts#ProfileBlock",
-      "to": "cat-harness/schemas/dak-blocks.ts#DakBlockBase",
-      "via": "",
-      "kind": "extends",
-      "optional": false,
-      "array": false
-    },
-    {
-      "from": "cat-harness/schemas/dak-blocks.ts#QuestionnaireBlock",
-      "to": "cat-harness/schemas/dak-blocks.ts#DakBlockBase",
-      "via": "",
-      "kind": "extends",
-      "optional": false,
-      "array": false
-    },
-    {
-      "from": "cat-harness/schemas/dak-blocks.ts#SchedulingLogicBlock",
-      "to": "cat-harness/schemas/dak-blocks.ts#DakBlockBase",
-      "via": "",
-      "kind": "extends",
-      "optional": false,
-      "array": false
-    },
-    {
-      "from": "cat-harness/schemas/dak-blocks.ts#StructureMapBlock",
-      "to": "cat-harness/schemas/dak-blocks.ts#DakBlockBase",
-      "via": "",
-      "kind": "extends",
-      "optional": false,
-      "array": false
-    },
-    {
-      "from": "cat-harness/schemas/dak-blocks.ts#TestCaseBlock",
-      "to": "cat-harness/schemas/dak-blocks.ts#DakBlockBase",
-      "via": "",
-      "kind": "extends",
-      "optional": false,
-      "array": false
-    },
-    {
-      "from": "cat-harness/schemas/dak-blocks.ts#TestScenarioBlock",
-      "to": "cat-harness/schemas/dak-blocks.ts#DakBlockBase",
-      "via": "",
-      "kind": "extends",
-      "optional": false,
-      "array": false
-    },
-    {
-      "from": "cat-harness/schemas/dak-blocks.ts#UserScenarioBlock",
-      "to": "cat-harness/schemas/dak-blocks.ts#DakBlockBase",
-      "via": "",
-      "kind": "extends",
-      "optional": false,
-      "array": false
-    },
-    {
-      "from": "cat-harness/schemas/dak-blocks.ts#UserScenarioBlock",
-      "to": "cat-harness/schemas/role-graph.ts#RoleDef",
-      "via": "personas",
-      "kind": "id-ref",
-      "optional": false,
-      "array": true
-    },
-    {
-      "from": "cat-harness/schemas/dak-blocks.ts#ValueSetBlock",
-      "to": "cat-harness/schemas/dak-blocks.ts#DakBlockBase",
-      "via": "",
-      "kind": "extends",
       "optional": false,
       "array": false
     },
@@ -51547,6 +51440,190 @@
       "to": "folio-assistant-core/schemas/review-verdict.ts#ReviewVerdictValue",
       "via": "verdict",
       "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "smart-base/schemas/dak-blocks.ts#ActorDefinitionBlock",
+      "to": "smart-base/schemas/dak-blocks.ts#DakBlockBase",
+      "via": "",
+      "kind": "extends",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "smart-base/schemas/dak-blocks.ts#BusinessProcessBlock",
+      "to": "smart-base/schemas/dak-blocks.ts#DakBlockBase",
+      "via": "",
+      "kind": "extends",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "smart-base/schemas/dak-blocks.ts#CqlLibraryBlock",
+      "to": "smart-base/schemas/dak-blocks.ts#DakBlockBase",
+      "via": "",
+      "kind": "extends",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "smart-base/schemas/dak-blocks.ts#DataElementBlock",
+      "to": "smart-base/schemas/dak-blocks.ts#DakBlockBase",
+      "via": "",
+      "kind": "extends",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "smart-base/schemas/dak-blocks.ts#DecisionTableBlock",
+      "to": "smart-base/schemas/dak-blocks.ts#DakBlockBase",
+      "via": "",
+      "kind": "extends",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "smart-base/schemas/dak-blocks.ts#FunctionalRequirementBlock",
+      "to": "smart-base/schemas/dak-blocks.ts#DakBlockBase",
+      "via": "",
+      "kind": "extends",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "smart-base/schemas/dak-blocks.ts#HealthInterventionBlock",
+      "to": "smart-base/schemas/dak-blocks.ts#DakBlockBase",
+      "via": "",
+      "kind": "extends",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "smart-base/schemas/dak-blocks.ts#HealthInterventionBlock",
+      "to": "smart-base/schemas/dak-blocks.ts#DublinCoreRef",
+      "via": "references",
+      "kind": "field",
+      "optional": false,
+      "array": true
+    },
+    {
+      "from": "smart-base/schemas/dak-blocks.ts#IndicatorBlock",
+      "to": "smart-base/schemas/dak-blocks.ts#DakBlockBase",
+      "via": "",
+      "kind": "extends",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "smart-base/schemas/dak-blocks.ts#LogicalModelBlock",
+      "to": "smart-base/schemas/dak-blocks.ts#DakBlockBase",
+      "via": "",
+      "kind": "extends",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "smart-base/schemas/dak-blocks.ts#MeasureBlock",
+      "to": "smart-base/schemas/dak-blocks.ts#DakBlockBase",
+      "via": "",
+      "kind": "extends",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "smart-base/schemas/dak-blocks.ts#NonFunctionalRequirementBlock",
+      "to": "smart-base/schemas/dak-blocks.ts#DakBlockBase",
+      "via": "",
+      "kind": "extends",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "smart-base/schemas/dak-blocks.ts#PersonaBlock",
+      "to": "smart-base/schemas/dak-blocks.ts#DakBlockBase",
+      "via": "",
+      "kind": "extends",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "smart-base/schemas/dak-blocks.ts#PlanDefinitionBlock",
+      "to": "smart-base/schemas/dak-blocks.ts#DakBlockBase",
+      "via": "",
+      "kind": "extends",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "smart-base/schemas/dak-blocks.ts#ProfileBlock",
+      "to": "smart-base/schemas/dak-blocks.ts#DakBlockBase",
+      "via": "",
+      "kind": "extends",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "smart-base/schemas/dak-blocks.ts#QuestionnaireBlock",
+      "to": "smart-base/schemas/dak-blocks.ts#DakBlockBase",
+      "via": "",
+      "kind": "extends",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "smart-base/schemas/dak-blocks.ts#SchedulingLogicBlock",
+      "to": "smart-base/schemas/dak-blocks.ts#DakBlockBase",
+      "via": "",
+      "kind": "extends",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "smart-base/schemas/dak-blocks.ts#StructureMapBlock",
+      "to": "smart-base/schemas/dak-blocks.ts#DakBlockBase",
+      "via": "",
+      "kind": "extends",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "smart-base/schemas/dak-blocks.ts#TestCaseBlock",
+      "to": "smart-base/schemas/dak-blocks.ts#DakBlockBase",
+      "via": "",
+      "kind": "extends",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "smart-base/schemas/dak-blocks.ts#TestScenarioBlock",
+      "to": "smart-base/schemas/dak-blocks.ts#DakBlockBase",
+      "via": "",
+      "kind": "extends",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "smart-base/schemas/dak-blocks.ts#UserScenarioBlock",
+      "to": "cat-harness/schemas/role-graph.ts#RoleDef",
+      "via": "personas",
+      "kind": "id-ref",
+      "optional": false,
+      "array": true
+    },
+    {
+      "from": "smart-base/schemas/dak-blocks.ts#UserScenarioBlock",
+      "to": "smart-base/schemas/dak-blocks.ts#DakBlockBase",
+      "via": "",
+      "kind": "extends",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "smart-base/schemas/dak-blocks.ts#ValueSetBlock",
+      "to": "smart-base/schemas/dak-blocks.ts#DakBlockBase",
+      "via": "",
+      "kind": "extends",
       "optional": false,
       "array": false
     }

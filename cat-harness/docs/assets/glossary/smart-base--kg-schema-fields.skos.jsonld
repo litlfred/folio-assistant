@@ -14,6 +14,101 @@
       "dcterms:source": "Schema fields of smart-base"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/smart-base/ns#glossary/kg-schema-fields/dak-blocks.dakblockbase.layer",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/smart-base/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "DakBlockBase.layer"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The WHO knowledge layer this block belongs to."
+        }
+      ],
+      "dcterms:source": "smart-base/schemas/dak-blocks.ts#DakBlockBase.layer",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/smart-base/ns#glossary/kg-schema-fields/dak-blocks.dakblockbase.realises",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/smart-base/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "DakBlockBase.realises"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Label of the L1 recommendation or L2 component this block realises."
+        }
+      ],
+      "dcterms:source": "smart-base/schemas/dak-blocks.ts#DakBlockBase.realises",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/smart-base/ns#glossary/kg-schema-fields/dak-blocks.dublincoreref.source",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/smart-base/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "DublinCoreRef.source"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Canonical URI — an IRIS handle, for WHO publications."
+        }
+      ],
+      "dcterms:source": "smart-base/schemas/dak-blocks.ts#DublinCoreRef.source",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/smart-base/ns#glossary/kg-schema-fields/dak-blocks.healthinterventionblock.references",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/smart-base/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "HealthInterventionBlock.references"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Dublin Core references to the guideline this intervention comes from."
+        }
+      ],
+      "dcterms:source": "smart-base/schemas/dak-blocks.ts#HealthInterventionBlock.references",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/smart-base/ns#glossary/kg-schema-fields/dak-blocks.userscenarioblock.personas",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/smart-base/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "UserScenarioBlock.personas"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Ids of the personas this scenario involves, at least one."
+        }
+      ],
+      "dcterms:source": "smart-base/schemas/dak-blocks.ts#UserScenarioBlock.personas",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/smart-base/ns#glossary/kg-schema-fields/dak.dakdeclaration.canonicalurl",
       "@type": "skos:Concept",
       "skos:inScheme": {
