@@ -760,6 +760,29 @@ export function readQaManifest(ref: string, opts: QaStoreOptions = {}): (QaReadH
   return { state: "hit", key: s.snap.key, tip: s.snap.tip, manifest: s.snap.manifest };
 }
 
+/**
+ * Every payload path of an entry with its BLOB ID, read from trees alone — no
+ * blob is fetched, so comparing a whole checkout against an entry costs one
+ * trees-only fetch. Bean `5hox`: removal is gated on the entry holding a
+ * hash-identical copy, and a hash is exactly what a tree already records.
+ * Paths are repository-relative, as in the checkout; the manifest is excluded.
+ */
+export function readQaBlobIds(ref: string, opts: QaStoreOptions = {}): (QaReadHit & { blobs: Map<string, string> }) | QaNotHit {
+  const s = snapshot(ref, opts);
+  if (s.state !== "hit") return s;
+  const { store } = openStore(opts);
+  const r = store.git(["ls-tree", "-r", "-z", s.snap.entry], { env: { GIT_NO_LAZY_FETCH: "1" } });
+  if (r.status !== 0) return { state: "unknown", reason: `ls-tree of ${s.snap.key} failed: ${r.stderr.trim()}` };
+  const blobs = new Map<string, string>();
+  for (const l of r.stdout.toString().split("\0").filter(Boolean)) {
+    const tab = l.indexOf("\t");
+    const [, type, sha] = l.slice(0, tab).split(" ");
+    const path = l.slice(tab + 1);
+    if (type === "blob" && path !== MANIFEST_FILE) blobs.set(path, sha!);
+  }
+  return { state: "hit", key: s.snap.key, tip: s.snap.tip, blobs };
+}
+
 export interface QaFetchResult {
   state: QaState;
   reason?: string;

@@ -128,3 +128,38 @@ branch. Their merges are in the history (for example `523456048`, "Merge
 id4s+0dav"). Bean `7mwa` (retire `qa:resolve-conflicts` and the `test/results`
 entries in the repository attributes file, and declare `storage`) is still
 `todo`. Its `storage` half is done here.
+
+## Hash verification: the dry run
+
+`bun run qa:verify-moved --key <entry>` (`cat-harness/scripts/qa-verify-moved.ts`)
+compares the blob id of every inventoried path in the working tree with the
+same path in a `qa-reports` entry. The entry's ids are read from its trees, so
+no blob is downloaded. It answers one of four states: `identical` (exit 0),
+`differs` (1, which covers a path that differs and a path the entry lacks),
+`unknown` (2) and usage (3). An entry it cannot read is `unknown`, never a pass.
+
+**Dry run, 2026-10-02**, against the newest PR entry on `origin/qa-reports`:
+
+```
+$ bun run qa:verify-moved --key pr/1801/51e40d7c49e8b8d306dc9739e2de6f229ee58826
+qa:verify-moved IDENTICAL: all 1186 file(s) identical in pr/1801/51e40d7c49e8b8d306dc9739e2de6f229ee58826
+```
+
+The entry's manifest records 1,186 files and 8,520,910 bytes, published by run
+`37005618245` with gates `success`, from the PR's merge checkout
+`c0d55751f`. That matches the inventory above exactly.
+
+**This is not the verification D4 asks for.** D4 asks for `main/<head>`, and
+the branch holds no `main/` entry yet. `qa-publish` writes `main/<sha>` on a
+push to `main`, and that job reaches `main` only when the arc PR merges.
+Against today's `main` head the tool answers UNKNOWN, as it must:
+
+```
+$ bun run qa:verify-moved --key main/85b9578b630e46d1b82eae3877d915cf05c4591d
+qa:verify-moved UNKNOWN: entry main/85b9578b… is MISS: no entry main/85b9578b… — an unread entry verifies nothing — this is NOT a pass
+```
+
+The order this forces: merge the arc without the deletion, and let
+`qa-publish` write `main/<merge-sha>`. Then run
+`bun run qa:verify-moved --key main/<merge-sha>` on that commit, and push the
+deletion only on IDENTICAL.
