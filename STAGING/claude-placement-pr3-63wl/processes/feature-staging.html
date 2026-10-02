@@ -497,32 +497,32 @@
   NOT a cache-busting strategy for third-party assets, and not applied to
   them: those are versioned in their own URLs already.
 -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-placement-pr3-63wl/assets/css/docs-ui.css?v=1790955681">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-placement-pr3-63wl/assets/css/docs-ui.css?v=1790957110">
 <!-- Narrow viewports: wide content scrolls in its own box, never the page
      (bean `2r2n`). The standalone viewers inline the same file through
      `withViewerNav`, so both kinds of page read one set of rules. -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-placement-pr3-63wl/assets/css/narrow-viewport.css?v=1790955681">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-placement-pr3-63wl/assets/css/narrow-viewport.css?v=1790957110">
 
 <!--
   The work-plan dashboard's styles, split from docs-ui.css so that
   `state-visualizer.ts` can inline exactly these bytes into the generated
   `<base>/<stub>/state-visualizer/` pages. One rule, two surfaces.
 -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-placement-pr3-63wl/assets/css/work-plan.css?v=1790955681">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-placement-pr3-63wl/assets/css/work-plan.css?v=1790957110">
 <!-- Sticky themes. GENERATED from the theme nodes in `schemas/themes.ts` by
      `bun run themes:css`; `themes:css:check` fails the build when it is stale.
      Loaded AFTER docs-ui.css deliberately: it supplies the `--fa-sticky-*`
      roles that docs-ui.css consumes, and a custom property has to be set on a
      matching element before the rule reading it takes effect. -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-placement-pr3-63wl/assets/css/themes.css?v=1790955681">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-placement-pr3-63wl/assets/css/themes.css?v=1790957110">
 <!-- UML overview colours: one class per graph kind, set on the Mermaid nodes
      that `scripts/gen-uml-overview.ts` writes into docs/uml/overview/. -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-placement-pr3-63wl/assets/css/uml.css?v=1790955681">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-placement-pr3-63wl/assets/css/uml.css?v=1790957110">
 <!-- Kind avatars. GENERATED from `schemas/avatars.ts` by `bun run avatars:css`;
      `avatars:css:check` fails the build when it is stale. One stylesheet
      rather than 68 assets: the glyph is a mask and the colour is a property,
      so a scheme swap is a custom property and the trash state is a selector. -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-placement-pr3-63wl/assets/css/avatars.css?v=1790955681">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-placement-pr3-63wl/assets/css/avatars.css?v=1790957110">
 
 <!--
   The kinds THIS INSTANCE DECLARES, for the avatar fan.
@@ -539,7 +539,7 @@
 <script type="application/json" id="fa-declared-kinds">["beans","cat-harness","code","code-list","docs","external-schema","folio","fsh-guts","health","interaction","issue-marks","library","memory","methodology","policies","processes","qa","scenarios","schemas","skills","substrate-snapshot","swimlane-glossary","todos","tools","translation-sources","uml","uploads","waiver"]</script>
 <script src="/folio-assistant/STAGING/claude-placement-pr3-63wl/assets/js/vendor/qrcode.js" defer></script>
 <script src="/folio-assistant/STAGING/claude-placement-pr3-63wl/assets/js/vendor/qrcode_UTF8.js" defer></script>
-<script src="/folio-assistant/STAGING/claude-placement-pr3-63wl/assets/js/docs-ui.js?v=1790955681" defer></script>
+<script src="/folio-assistant/STAGING/claude-placement-pr3-63wl/assets/js/docs-ui.js?v=1790957110" defer></script>
 
 <!--
   The work-plan dashboard. SELF-MOUNTING on any page carrying
@@ -904,7 +904,7 @@ window.addEventListener('resize',measure);window.addEventListener('load',measure
       <td><strong>Push to the CDN at STAGING/&lt;slug&gt;/</strong><br /><code class="language-plaintext highlighter-rouge">Task_Deploy</code></td>
       <td>CI/CD Pipeline</td>
       <td>calls <a href="render-kg-to-cdn.html">Render a Knowledge Graph to a CDN</a><br /><a href="../reference/skill-instructions/render-kg-to-cdn.html"><code class="language-plaintext highlighter-rouge">render-kg-to-cdn</code></a></td>
-      <td>A PREVIEW IS THE GENERAL STEP WITH A DIFFERENT ROOT (owner, 2026-09-30: “independent of staging vs publication … just rendering”). Process_RenderKgToCdn, entered with the tree Task_Build rendered, <code class="language-plaintext highlighter-rouge">STAGING/&lt;slug&gt;/</code> under the site root as the publication root URL, and GitHub Pages as the target, so its <code class="language-plaintext highlighter-rouge">gh-pages</code> Tool pushes. For this target the push is <code class="language-plaintext highlighter-rouge">keep_files: true</code> with a <code class="language-plaintext highlighter-rouge">destination_dir</code>, so it adds one directory beside whatever else is on the branch; it is also RETRIED once: five other workflows push to <code class="language-plaintext highlighter-rouge">gh-pages</code> without joining this one’s concurrency group, and a queue does not help because GitHub CANCELS a pending job when a newer one arrives for the same group rather than queueing it. Measured 2026-09-19: three staging runs from three different branches inside 17 seconds, two cancelled. The call returns the push’s status and message; the render log and the PR comment that follow are this process’s own.</td>
+      <td>A PREVIEW IS THE GENERAL STEP WITH A DIFFERENT ROOT (owner, 2026-09-30: “independent of staging vs publication … just rendering”). Process_RenderKgToCdn, entered with the tree Task_Build rendered, <code class="language-plaintext highlighter-rouge">STAGING/&lt;slug&gt;/</code> under the site root as the publication root URL, and GitHub Pages as the target, so its <code class="language-plaintext highlighter-rouge">gh-pages</code> Tool pushes. For this target the push is <code class="language-plaintext highlighter-rouge">keep_files: true</code> with a <code class="language-plaintext highlighter-rouge">destination_dir</code>, so it adds one directory beside whatever else is on the branch; it is also RETRIED once: five other workflows push to <code class="language-plaintext highlighter-rouge">gh-pages</code> without joining this one’s concurrency group, and a queue does not help because GitHub CANCELS a pending job when a newer one arrives for the same group rather than queueing it. Measured 2026-09-19: three staging runs from three different branches inside 17 seconds, two cancelled. The call returns the push’s status and message; the render log and the PR comment that follow are this process’s own. THE PREVIEW CAP rides in the same commit (owner ruling 2026-10-02, issue #1868: “cap the maximum number of previews (&lt;= 10) and rotate old ones off”): <code class="language-plaintext highlighter-rouge">staging-rotate.ts</code> keeps this preview plus the most recently updated others up to MAX_PREVIEWS = 10 and removes the rest, each with a <code class="language-plaintext highlighter-rouge">removed</code> render-log entry and its record retired into STAGING/_retired/. Every push attempt re-reads <code class="language-plaintext highlighter-rouge">gh-pages</code> and re-decides rather than rebasing, so a lost race never pushes a stale removal. A rotated-off preview is regenerated by the next push to its PR branch.</td>
     </tr>
     <tr>
       <td><strong>Append <code class="language-plaintext highlighter-rouge">rendered</code> to the render log</strong><br /><code class="language-plaintext highlighter-rouge">Task_LogRendered</code></td>
