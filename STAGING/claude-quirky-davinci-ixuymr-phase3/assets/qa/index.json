@@ -1,12 +1,12 @@
 {
   "tile": {
     "qa": {
-      "count": 1024,
+      "count": 1025,
       "unit": "documents"
     }
   },
   "$schema": "folio-qa-graph/v1",
-  "files": 1024,
+  "files": 1025,
   "families": [
     {
       "schema": "kg-qa/v1",
@@ -69,6 +69,11 @@
     {
       "schema": "folio-tool-run/v1",
       "files": 4,
+      "rollUpField": null
+    },
+    {
+      "schema": "folio-qa-translation-pages/v1",
+      "files": 1,
       "rollUpField": null
     },
     {
