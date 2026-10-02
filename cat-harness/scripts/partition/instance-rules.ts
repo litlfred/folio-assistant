@@ -1337,6 +1337,10 @@ export const RULES: Rule[] = [
       // tooling below; a core placement made `process-model.ts` import down.
       "schemas/code-list.ts",
       "scripts/code-lists.ts",
+      // Vocabulary mapping tables' gate (bean `k74z`), beside the code-list
+      // gate for the same reason: glossary-export, which the publish process
+      // runs, applies the tables, so judging them is harness work.
+      "scripts/vocab-mappings.ts",
       // The pre-deploy verifier set (bean `vigi`): needed to RUN the publish
       // process, so harness, beside the gates it sits among.
       "scripts/publish-verify.ts",

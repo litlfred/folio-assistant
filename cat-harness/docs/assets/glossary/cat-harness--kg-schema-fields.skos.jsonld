@@ -29920,6 +29920,310 @@
       "skos:note": "candidate"
     },
     {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/vocab-mapping-fhir.loss.path",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Loss.path"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Where in the table, e.g. `group[0].element[2].target[1]`."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/vocab-mapping-fhir.ts#Loss.path",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/vocab-mapping.dependencyschema.attribute",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "DependencySchema.attribute"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "R5 `attribute` (a code); R4 `property` (a URI)."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/vocab-mapping.ts#DependencySchema.attribute",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/vocab-mapping.dependencyschema.display",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "DependencySchema.display"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "R4 only."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/vocab-mapping.ts#DependencySchema.display",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/vocab-mapping.dependencyschema.system",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "DependencySchema.system"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "R4 only."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/vocab-mapping.ts#DependencySchema.system",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/vocab-mapping.dependencyschema.valueset",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "DependencySchema.valueSet"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "R5 only."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/vocab-mapping.ts#DependencySchema.valueSet",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/vocab-mapping.elementschema.code",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "ElementSchema.code"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The source term: a field of the source record, or a code in the source system."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/vocab-mapping.ts#ElementSchema.code",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/vocab-mapping.elementschema.nomap",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "ElementSchema.noMap"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Deliberately unmapped: an absence that is a statement, not a gap (R5 `noMap`)."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/vocab-mapping.ts#ElementSchema.noMap",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/vocab-mapping.groupschema.source",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "GroupSchema.source"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The source vocabulary: an IRI, or a CURIE whose prefix is declared. Never carries `|version`."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/vocab-mapping.ts#GroupSchema.source",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/vocab-mapping.targetschema.authority",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "TargetSchema.authority"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "`derived`: a rendering of another target's output, copied from it."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/vocab-mapping.ts#TargetSchema.authority",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/vocab-mapping.targetschema.code",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "TargetSchema.code"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The target term: a predicate's local name, or a code in the target system."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/vocab-mapping.ts#TargetSchema.code",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/vocab-mapping.targetschema.derivedfrom",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "TargetSchema.derivedFrom"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The `key` (or `code`) of the authoritative target a derived one copies."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/vocab-mapping.ts#TargetSchema.derivedFrom",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/vocab-mapping.targetschema.equivalence",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "TargetSchema.equivalence"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The R4 statement, verbatim, when the row came from an R4 map."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/vocab-mapping.ts#TargetSchema.equivalence",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/vocab-mapping.targetschema.key",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "TargetSchema.key"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The JSON term written, when it is not `code`."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/vocab-mapping.ts#TargetSchema.key",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/vocab-mapping.vocabmappingschema.id",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "VocabMappingSchema.id"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "This table's id. A ConceptMap's own resource `id` is metadata, kept in `metadata.id`."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/vocab-mapping.ts#VocabMappingSchema.id",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/vocab-mapping.vocabmappingschema.metadata",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "VocabMappingSchema.metadata"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Every other ConceptMap field (contact, jurisdiction, meta, text, identifier, the resource id, …), verbatim."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/vocab-mapping.ts#VocabMappingSchema.metadata",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/vocab-mapping.vocabmappingschema.property",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "VocabMappingSchema.property"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "R5 map-level `property` and `additionalAttribute` definitions, verbatim."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/vocab-mapping.ts#VocabMappingSchema.property",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/vocabulary.termgloss.gloss",
       "@type": "skos:Concept",
       "skos:inScheme": {

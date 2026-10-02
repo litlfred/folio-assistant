@@ -847,6 +847,14 @@
       "status": "candidate"
     },
     {
+      "id": "vocab-map",
+      "prefLabel": "Apply a vocabulary mapping table",
+      "definition": "Carry one source record into a target vocabulary by a declared `folio-vocab-mapping/v1` table: each source field becomes the predicate its row names, in the table's order, with a DERIVED target (such as `dcterms:title` rendering `skos:prefLabel`) copied from its authoritative one so the two cannot drift. A table is shaped like a FHIR ConceptMap: an existing ConceptMap, R4 or R5, is representable as one without loss (`fromConceptMap`), and a table can be produced as a ConceptMap (`toConceptMap`), which returns every loss rather than dropping anything silently. First consumer: `glossary-export`.",
+      "notation": "vocab-map",
+      "source": "cat-harness/tools/vocab-map.ts#vocab-map",
+      "status": "candidate"
+    },
+    {
       "id": "voices-viewer",
       "prefLabel": "Voices viewer",
       "definition": "Render each declared voices directory as a page per subject instance.",
