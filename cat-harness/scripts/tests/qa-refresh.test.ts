@@ -108,9 +108,16 @@ describe("the declaration", () => {
       "cat-harness/test/results/kg-export.bootstrap.qa-results.json": "kg-export:bootstrap",
       "cat-harness/test/results/kg-export.qa-results.json": "kg:export",
       "cat-harness/test/results/audit-coverage.qa-results.json": "audit:coverage",
-      "smart-dak/test/results/README.md": "readme:subgraphs",
+      "cat-harness/test/results/subgraph-readmes.qa-results.json": "readme:subgraphs",
     };
     for (const [path, id] of Object.entries(sample)) expect(claimants(path), path).toEqual([id]);
+  });
+
+  test("no writer claims a README inside a `qa` directory any more (bean `f3bh`)", () => {
+    // `readme:subgraphs` skips a stored directory, so a README there would be
+    // a file nobody produces — and `qa:refresh` must say so, not store it.
+    expect(claimants("smart-dak/test/results/README.md")).toEqual([]);
+    expect(claimants("cat-harness/test/results/README.md")).toEqual([]);
   });
 
   test("the two folded instances' orphans are claimed by nobody — the record loses them, and says so", () => {

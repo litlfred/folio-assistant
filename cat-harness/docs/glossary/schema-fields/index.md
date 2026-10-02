@@ -12,14 +12,14 @@ permalink: /glossary/schema-fields/
 
 Candidate terms extracted from every schema field with a doc comment: `<Declaration>.<field>` as the label, the comment's first paragraph as the definition. Each is the asset's own text, verbatim and not curated, and carries the badge "candidate, extracted". A person promotes one by authoring it. Authored terms, the counts and the sources are on the <a href="{{ '/glossary/' | relative_url }}">glossary index</a>.
 
-From: bootstrap-tools 28 (<a href="{{ '/assets/glossary/bootstrap-tools--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · cat-harness 1640 (<a href="{{ '/assets/glossary/cat-harness--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · fhir-harness 57 (<a href="{{ '/assets/glossary/fhir-harness--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · folio-assistant-core 127 (<a href="{{ '/assets/glossary/folio-assistant-core--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>).
+From: bootstrap-tools 28 (<a href="{{ '/assets/glossary/bootstrap-tools--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · cat-harness 1643 (<a href="{{ '/assets/glossary/cat-harness--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · fhir-harness 57 (<a href="{{ '/assets/glossary/fhir-harness--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · folio-assistant-core 127 (<a href="{{ '/assets/glossary/folio-assistant-core--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>).
 
-**Size:** this page holds 1852 terms and is 1022 KB before compression, fetched in one request, within its budget of 1.0 MB. There is no search index: the filter below runs over this page, and the A–Z bar jumps within it.
+**Size:** this page holds 1855 terms and is 1024 KB before compression, fetched in one request, within its budget of 1.0 MB. There is no search index: the filter below runs over this page, and the A–Z bar jumps within it.
 
 <table class="fa-gloss-mapping">
 <caption>Already somebody else's concept? — <code>check:term-mapping</code>, bean <code>7wou</code></caption>
 <thead><tr><th>target</th><th>mapped</th><th>unmapped</th><th>undetermined</th><th>why undetermined</th></tr></thead>
-<tbody><tr><td><code>fhir</code></td><td>0</td><td>1852</td><td>0</td><td>—</td></tr><tr><td><code>skos</code></td><td>0</td><td>1852</td><td>0</td><td>—</td></tr></tbody>
+<tbody><tr><td><code>fhir</code></td><td>0</td><td>1855</td><td>0</td><td>—</td></tr><tr><td><code>skos</code></td><td>0</td><td>1855</td><td>0</td><td>—</td></tr></tbody>
 </table>
 <p class="fa-gloss-mapping-note"><strong>Undetermined is never “no match”.</strong> 
 A vocabulary that could not be reached has said nothing, and the column above keeps that 
@@ -28,7 +28,7 @@ be a term this corpus is right to coin.</p>
 
 <label for="fa-gloss-q">Filter terms</label>
 <input id="fa-gloss-q" type="search" autocomplete="off" style="min-height:44px;width:100%;max-width:32rem">
-<p aria-live="polite"><span id="fa-gloss-n">1852</span> shown</p>
+<p aria-live="polite"><span id="fa-gloss-n">1855</span> shown</p>
 
 <nav aria-label="Letters"><a href="#letter-A">A</a> <a href="#letter-B">B</a> <a href="#letter-C">C</a> <a href="#letter-D">D</a> <a href="#letter-E">E</a> <a href="#letter-F">F</a> <a href="#letter-G">G</a> <a href="#letter-H">H</a> <a href="#letter-I">I</a> <a href="#letter-J">J</a> <a href="#letter-K">K</a> <a href="#letter-L">L</a> <a href="#letter-M">M</a> <a href="#letter-N">N</a> <a href="#letter-O">O</a> <a href="#letter-P">P</a> <a href="#letter-Q">Q</a> <a href="#letter-R">R</a> <a href="#letter-S">S</a> <a href="#letter-T">T</a> <a href="#letter-U">U</a> <a href="#letter-V">V</a> <a href="#letter-W">W</a></nav>
 
@@ -7742,12 +7742,26 @@ QaIndexSchema.badges <span class="fa-gloss-status">candidate, extracted</span>
 <p>Keyed <code>&lt;nodeId&gt;.&lt;family&gt;</code> or <code>page.&lt;family&gt;</code>; may be empty.</p>
 <p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/site-indexes.ts"><code>cat-harness/schemas/site-indexes.ts#QaIndexSchema.badges</code></a></p>
 </dd>
+<dt id="cat-harness--kg-schema-fields--site-indexes.qaindexschema.corpus" data-fa-state="extracted" data-fa-gloss="">
+QaIndexSchema.corpus <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>Whether the build that wrote this had the derived QA corpus (bean <code>4l4d</code>). <code>absent</code>: every badge on the page reads &quot;not available in this build&quot;, and <code>badges</code> and <code>unswept</code> are empty because nothing was known. Optional only for an index written before that bean, which the painter reads as <code>present</code> with no <code>unswept</code> list — what it then meant.</p>
+<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/site-indexes.ts"><code>cat-harness/schemas/site-indexes.ts#QaIndexSchema.corpus</code></a></p>
+</dd>
 <dt id="cat-harness--kg-schema-fields--site-indexes.qaindexschema.page" data-fa-state="extracted" data-fa-gloss="">
 QaIndexSchema.page <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
 <p>The page's slug.</p>
 <p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/site-indexes.ts"><code>cat-harness/schemas/site-indexes.ts#QaIndexSchema.page</code></a></p>
+</dd>
+<dt id="cat-harness--kg-schema-fields--site-indexes.qaindexschema.unswept" data-fa-state="extracted" data-fa-gloss="">
+QaIndexSchema.unswept <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>Keys whose subject has NO sidecar — &quot;not swept&quot;, painted inert. Decided here rather than in the committed page since bean <code>4l4d</code>.</p>
+<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/site-indexes.ts"><code>cat-harness/schemas/site-indexes.ts#QaIndexSchema.unswept</code></a></p>
 </dd>
 <dt id="cat-harness--kg-schema-fields--qa-report.qareportentryschema.details" data-fa-state="extracted" data-fa-gloss="">
 QaReportEntrySchema.details <span class="fa-gloss-status">candidate, extracted</span>
@@ -7944,6 +7958,13 @@ QaScriptSidecar.source_file <span class="fa-gloss-status">candidate, extracted</
 <dd>
 <p>Path (repo-relative) to the checker's source file.</p>
 <p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/block-qa.ts"><code>cat-harness/schemas/block-qa.ts#QaScriptSidecar.source_file</code></a></p>
+</dd>
+<dt id="cat-harness--kg-schema-fields--site-indexes.qatranslationpagesschema.pages" data-fa-state="extracted" data-fa-gloss="">
+QaTranslationPagesSchema.pages <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>Page slugs (path, <code>/</code> → <code>-</code>). Empty with <code>corpus: &quot;absent&quot;</code>.</p>
+<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/site-indexes.ts"><code>cat-harness/schemas/site-indexes.ts#QaTranslationPagesSchema.pages</code></a></p>
 </dd>
 </dl>
 

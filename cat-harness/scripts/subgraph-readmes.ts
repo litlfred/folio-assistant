@@ -106,6 +106,12 @@ export function subdirDescriptions(
   return out;
 }
 
+/** Does a directory declaration carry `storage` — its record lives on a branch, not in the checkout? */
+export function isStored(d: unknown): boolean {
+  const s = (d as { storage?: { branch?: unknown } }).storage;
+  return typeof s === "object" && s !== null && typeof s.branch === "string" && s.branch !== "";
+}
+
 /**
  * Every instance under `repo`, with this harness's Extensions resolved: the
  * declared README (scope-aware), each directory's real location, and whether
@@ -134,7 +140,17 @@ export function harnessInstances(repo: string): InstanceInput[] {
       // Own entries AND those declared from within (bean `cmsl`): the five
       // `voices/` READMEs dropped out of coverage when the entries moved into
       // `skills/skills.json` (75 → 70, measured 2026-09-30, bean `2j2r`).
-      dirs: instanceDirectories(inst, decl).map((d) => {
+      //
+      // A STORED directory (`storage`, bean `16ei`) is skipped — bean `f3bh`.
+      // Its contents live on their branch and the checkout holds at most a
+      // working copy, so a README written from it, and the findings about it,
+      // would depend on whether this contributor ran `qa:fetch`: the 12 `qa`
+      // directories added 12 READMEs and 12 `no-title` findings when present
+      // and none when absent. The parent's README already omits them, because
+      // `.gitignore` lists every working copy and the writer lists only what
+      // git would commit; `directory-storage.test.ts` keeps that list equal to
+      // the declarations.
+      dirs: instanceDirectories(inst, decl).filter((d) => !isStored(d)).map((d) => {
         const base = (d as { scope?: string }).scope === "repository" ? repo : inst;
         const abs = resolve(base, d.path);
         // Absent declaration means the writer gets nothing and prints no

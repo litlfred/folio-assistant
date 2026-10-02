@@ -195,6 +195,36 @@ describe("the witness tree the site publishes, against the pages that fetch from
     }
   });
 
+  it("a key the index lists as `unswept` needs no row and no projection (bean `4l4d`)", () => {
+    const t = tree({
+      [`${WITNESS_TREE}/demo/qa-index.json`]: JSON.stringify({
+        corpus: "present",
+        badges: { "overview.block": {} },
+        unswept: ["other.block"],
+      }),
+      [`${WITNESS_TREE}/demo/overview.block.json`]: "{}",
+    });
+    try {
+      expect(judgeWitnesses(t.dir, [PAGE])).toEqual([]);
+    } finally {
+      t.cleanup();
+    }
+  });
+
+  it("an index written WITHOUT the corpus is a finding in a published tree", () => {
+    const t = tree({
+      [`${WITNESS_TREE}/demo/qa-index.json`]: JSON.stringify({ corpus: "absent", badges: {}, unswept: [] }),
+    });
+    try {
+      const problems = judgeWitnesses(t.dir, [PAGE]).map((f) => f.problem);
+      expect(problems).toContain("witness-index-corpus-absent");
+      // And it is not silently clean on the rows either.
+      expect(problems).toContain("witness-index-row-missing");
+    } finally {
+      t.cleanup();
+    }
+  });
+
   it("finds this checkout's generated badge pages — a filter over nothing would pass", () => {
     // The guard on the guard: the CLI passes these pages, so an empty list
     // would judge every witness tree clean.

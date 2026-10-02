@@ -27669,11 +27669,25 @@
           "doc": "The page's slug."
         },
         {
+          "name": "corpus",
+          "type": "z.enum([\"present\", \"absent\"]).optional()",
+          "optional": true,
+          "array": false,
+          "doc": "Whether the build that wrote this had the derived QA corpus (bean"
+        },
+        {
           "name": "badges",
           "type": "z.record(z.string().min(1), QaIndexBadgeSchema)",
           "optional": false,
           "array": false,
           "doc": "Keyed `<nodeId>.<family>` or `page.<family>`; may be empty."
+        },
+        {
+          "name": "unswept",
+          "type": "z.array(z.string().min(1)).optional()",
+          "optional": true,
+          "array": true,
+          "doc": "Keys whose subject has NO sidecar — \"not swept\", painted inert. Decided"
         }
       ],
       "extendsNames": [],
@@ -27681,6 +27695,42 @@
       "refs": [
         "cat-harness/schemas/site-indexes.ts#QaIndexBadgeSchema"
       ],
+      "unresolved": [],
+      "external": [
+        "z"
+      ],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/site-indexes.ts#QaTranslationPagesSchema",
+      "name": "QaTranslationPagesSchema",
+      "module": "cat-harness/schemas/site-indexes.ts",
+      "kind": "zod-object",
+      "doc": "Which HAND-AUTHORED pages have a translation projection; fetched by `docs-ui.js` (bean `4l4d`).",
+      "fields": [
+        {
+          "name": "$schema",
+          "type": "z.literal(\"folio-qa-translation-pages/v1\")",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "corpus",
+          "type": "z.enum([\"present\", \"absent\"])",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "pages",
+          "type": "z.array(z.string().min(1))",
+          "optional": false,
+          "array": true,
+          "doc": "Page slugs (path, `/` → `-`). Empty with `corpus: \"absent\"`."
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
       "unresolved": [],
       "external": [
         "z"

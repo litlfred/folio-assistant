@@ -61,6 +61,15 @@ describe("e2e QA fixtures — the generator's shape, not the corpus's verdicts",
     expect(r.success ? [] : r.error.issues.map((i) => `${i.path.join(".")}: ${i.message}`)).toEqual([]);
   });
 
+  test("badge-index.json is the CURRENT shape: it says the corpus was present and which keys are unswept", () => {
+    // Since bean `4l4d` the page carries a uniform placeholder and the index
+    // alone decides "not swept"; a fixture without `unswept` would leave the
+    // never-swept spec painting `could not determine` instead.
+    const doc = read("badge-index.json");
+    expect(doc.corpus).toBe("present");
+    expect(Array.isArray(doc.unswept) && (doc.unswept as unknown[]).length > 0).toBe(true);
+  });
+
   test("block-witness.json is a block qa-witness/v1 doc", () => {
     const doc = read("block-witness.json");
     expect(witnessDocDefects(doc)).toEqual([]);

@@ -21750,6 +21750,25 @@
       "skos:note": "candidate"
     },
     {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/site-indexes.qaindexschema.corpus",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "QaIndexSchema.corpus"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Whether the build that wrote this had the derived QA corpus (bean `4l4d`). `absent`: every badge on the page reads \"not available in this build\", and `badges` and `unswept` are empty because nothing was known. Optional only for an index written before that bean, which the painter reads as `present` with no `unswept` list — what it then meant."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/site-indexes.ts#QaIndexSchema.corpus",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/site-indexes.qaindexschema.page",
       "@type": "skos:Concept",
       "skos:inScheme": {
@@ -21766,6 +21785,44 @@
         }
       ],
       "dcterms:source": "cat-harness/schemas/site-indexes.ts#QaIndexSchema.page",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/site-indexes.qaindexschema.unswept",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "QaIndexSchema.unswept"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Keys whose subject has NO sidecar — \"not swept\", painted inert. Decided here rather than in the committed page since bean `4l4d`."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/site-indexes.ts#QaIndexSchema.unswept",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/site-indexes.qatranslationpagesschema.pages",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "QaTranslationPagesSchema.pages"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Page slugs (path, `/` → `-`). Empty with `corpus: \"absent\"`."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/site-indexes.ts#QaTranslationPagesSchema.pages",
       "skos:note": "candidate"
     },
     {
