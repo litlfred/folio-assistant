@@ -1637,6 +1637,26 @@ export function tally(criteria: Record<string, KgCriterionEntry>): Record<KgResu
  * against its `critical` criteria too, so it still fails — which is the case
  * the promotion was reaching for.
  */
+/**
+ * The findings `kg:audit:check` grades in one report (bean `oqe3`): every
+ * failing or unknown criterion at one of `gate`'s severities, one entry per
+ * finding — or one for the criterion when it lists none. {@link worstSeverity}'s
+ * rule (fail and unknown both count), kept exactly; per ENTRY rather than per
+ * report, so a new finding in a subject that already had an old one is still
+ * NEW against a baseline.
+ */
+export function gradedKgFindings(report: Pick<KgQaReport, "criteria">, gate: readonly KgSeverity[]): unknown[] {
+  const out: unknown[] = [];
+  for (const [id, e] of Object.entries(report.criteria ?? {})) {
+    if (e.result !== "fail" && e.result !== "unknown") continue;
+    const sev = KG_CRITERIA_BY_ID[id]?.severity;
+    if (sev === undefined || !gate.includes(sev)) continue;
+    if ((e.findings ?? []).length === 0) out.push({ criterion: id, result: e.result });
+    for (const f of e.findings ?? []) out.push({ criterion: id, result: e.result, finding: f });
+  }
+  return out;
+}
+
 export function worstSeverity(report: KgQaReport): KgSeverity | undefined {
   let worst: KgSeverity | undefined;
   const rank: Record<KgSeverity, number> = { minor: 1, major: 2, critical: 3 };

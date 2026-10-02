@@ -97,6 +97,7 @@ import {
   criteriaFor,
   tally,
   worstSeverity,
+  gradedKgFindings,
   type KgCriterionEntry,
   type KgFinding,
   type KgQaManifest,
@@ -349,24 +350,6 @@ const ATT_STORE = ATT_HOME.storeRoot;
  */
 const derivedStored = qaStorageOf(KG_QA_TREE) !== undefined;
 
-/**
- * The findings `--check` grades in one report: every failing or unknown
- * criterion at the gate's severities, one entry per finding (or one for the
- * criterion when it lists none). Per ENTRY, not per report, so a new finding
- * in a subject that already had an old one is still NEW against a baseline.
- * `worstSeverity`'s rule — fail and unknown both count — kept exactly.
- */
-function gradedFindings(r: KgQaReport, gate: readonly KgSeverity[]): unknown[] {
-  const out: unknown[] = [];
-  for (const [id, e] of Object.entries(r.criteria ?? {})) {
-    if (e.result !== "fail" && e.result !== "unknown") continue;
-    const sev = KG_CRITERIA_BY_ID[id]?.severity;
-    if (sev === undefined || !gate.includes(sev)) continue;
-    if (e.findings.length === 0) out.push({ criterion: id, result: e.result });
-    for (const f of e.findings) out.push({ criterion: id, result: e.result, finding: f });
-  }
-  return out;
-}
 
 /**
  * How many criteria this run did not evaluate because they are `repo`-scoped.
@@ -3129,7 +3112,7 @@ if (check) {
   // against once 5hox lands); what still fails is what is COMMITTED — an
   // attestation file this run would rewrite, and an attestation no report
   // covers — and, where the tree is not stored, a stale or orphaned sidecar.
-  const graded = (r: KgQaReport): unknown[] => gradedFindings(r, gate);
+  const graded = (r: KgQaReport): unknown[] => gradedKgFindings(r, gate);
   const derivedFailing = derivedStored ? 0 : stale.length + orphans.length;
   const committed = staleAttestations.length + attOrphans.length;
   const verdict = judgeSidecarTree({
