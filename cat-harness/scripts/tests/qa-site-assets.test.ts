@@ -72,6 +72,22 @@ describe("countResults / countPublished", () => {
     expect(countPublished(join(dir, "nope"))).toEqual({ witnesses: 0, results: 0 });
     cleanup();
   });
+
+  test("a top-level file the witness tree carries is counted on both sides (4l4d's translation-qa-pages.json)", () => {
+    // Measured on PR #1801 staging: the tree held 170, the site 169, because
+    // `gen-docs-pages` writes `witnesses/translation-qa-pages.json` at the top.
+    const { dir, cleanup } = tree([
+      "witnesses/translation-qa-pages.json",
+      "witnesses/page-a/n1.block.json",
+      "assets/qa/translation-qa-pages.json",
+      "assets/qa/index.json",
+      "assets/qa/availability.json",
+      "assets/qa/page-a/n1.block.json",
+    ]);
+    expect(countResults(dir).witnesses).toBe(2);
+    expect(countPublished(dir)).toEqual({ witnesses: 2, results: 0 });
+    cleanup();
+  });
 });
 
 describe("decideSource", () => {

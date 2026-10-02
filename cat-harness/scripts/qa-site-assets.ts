@@ -154,6 +154,9 @@ export function countResults(resultsDir: string): QaAssetCounts {
  * generator writes through Jekyll, and this module's own `availability.json`,
  * and neither is evidence.
  */
+/** Top-level files under `assets/qa/` that the witness tree did not put there. */
+export const PUBLISHED_NOT_EVIDENCE: readonly string[] = ["index.json", "availability.json"];
+
 export function countPublished(siteDir: string): Pick<QaAssetCounts, "witnesses" | "results"> {
   const qa = join(siteDir, "assets", "qa");
   if (!existsSync(qa)) return { witnesses: 0, results: 0 };
@@ -162,6 +165,12 @@ export function countPublished(siteDir: string): Pick<QaAssetCounts, "witnesses"
   for (const e of readdirSync(qa, { withFileTypes: true })) {
     if (e.isDirectory()) witnesses += walkFiles(join(qa, e.name)).filter((f) => f.endsWith(".json")).length;
     else if (e.isFile() && e.name.endsWith(RESULT_SUFFIX)) results++;
+    // A top-level file the witness tree itself carries (bean `4l4d`:
+    // `translation-qa-pages.json`, the shared list the badge script fetches)
+    // is copied here like the rest, and `countResults` counts it — so it is
+    // counted here too, or every build reads one short. The two top-level
+    // files that are NOT from the tree are excluded, as the docblock says.
+    else if (e.isFile() && e.name.endsWith(".json") && !PUBLISHED_NOT_EVIDENCE.includes(e.name)) witnesses++;
   }
   return { witnesses, results };
 }
