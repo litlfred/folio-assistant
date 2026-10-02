@@ -505,32 +505,32 @@
   NOT a cache-busting strategy for third-party assets, and not applied to
   them: those are versioned in their own URLs already.
 -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-awesome-fermi-ua31th-tyo0/assets/css/docs-ui.css?v=1790923285">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-awesome-fermi-ua31th-tyo0/assets/css/docs-ui.css?v=1790924455">
 <!-- Narrow viewports: wide content scrolls in its own box, never the page
      (bean `2r2n`). The standalone viewers inline the same file through
      `withViewerNav`, so both kinds of page read one set of rules. -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-awesome-fermi-ua31th-tyo0/assets/css/narrow-viewport.css?v=1790923285">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-awesome-fermi-ua31th-tyo0/assets/css/narrow-viewport.css?v=1790924455">
 
 <!--
   The work-plan dashboard's styles, split from docs-ui.css so that
   `state-visualizer.ts` can inline exactly these bytes into the generated
   `<base>/<stub>/state-visualizer/` pages. One rule, two surfaces.
 -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-awesome-fermi-ua31th-tyo0/assets/css/work-plan.css?v=1790923285">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-awesome-fermi-ua31th-tyo0/assets/css/work-plan.css?v=1790924455">
 <!-- Sticky themes. GENERATED from the theme nodes in `schemas/themes.ts` by
      `bun run themes:css`; `themes:css:check` fails the build when it is stale.
      Loaded AFTER docs-ui.css deliberately: it supplies the `--fa-sticky-*`
      roles that docs-ui.css consumes, and a custom property has to be set on a
      matching element before the rule reading it takes effect. -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-awesome-fermi-ua31th-tyo0/assets/css/themes.css?v=1790923285">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-awesome-fermi-ua31th-tyo0/assets/css/themes.css?v=1790924455">
 <!-- UML overview colours: one class per graph kind, set on the Mermaid nodes
      that `scripts/gen-uml-overview.ts` writes into docs/uml/overview/. -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-awesome-fermi-ua31th-tyo0/assets/css/uml.css?v=1790923285">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-awesome-fermi-ua31th-tyo0/assets/css/uml.css?v=1790924455">
 <!-- Kind avatars. GENERATED from `schemas/avatars.ts` by `bun run avatars:css`;
      `avatars:css:check` fails the build when it is stale. One stylesheet
      rather than 68 assets: the glyph is a mask and the colour is a property,
      so a scheme swap is a custom property and the trash state is a selector. -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-awesome-fermi-ua31th-tyo0/assets/css/avatars.css?v=1790923285">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-awesome-fermi-ua31th-tyo0/assets/css/avatars.css?v=1790924455">
 
 <!--
   The kinds THIS INSTANCE DECLARES, for the avatar fan.
@@ -547,7 +547,7 @@
 <script type="application/json" id="fa-declared-kinds">["beans","cat-harness","code","code-list","docs","external-schema","folio","fsh-guts","health","interaction","issue-marks","library","memory","methodology","policies","processes","qa","scenarios","schemas","skills","substrate-snapshot","swimlane-glossary","todos","tools","translation-sources","uml","uploads","waiver"]</script>
 <script src="/folio-assistant/STAGING/claude-awesome-fermi-ua31th-tyo0/assets/js/vendor/qrcode.js" defer></script>
 <script src="/folio-assistant/STAGING/claude-awesome-fermi-ua31th-tyo0/assets/js/vendor/qrcode_UTF8.js" defer></script>
-<script src="/folio-assistant/STAGING/claude-awesome-fermi-ua31th-tyo0/assets/js/docs-ui.js?v=1790923285" defer></script>
+<script src="/folio-assistant/STAGING/claude-awesome-fermi-ua31th-tyo0/assets/js/docs-ui.js?v=1790924455" defer></script>
 
 <!--
   The work-plan dashboard. SELF-MOUNTING on any page carrying
@@ -830,8 +830,8 @@ how to build, query and audit an index is the skill <code class="language-plaint
 
 <div class="lv-grid">
 <div class="lv-stat"><b>5</b><span>committed indexes</span></div>
-<div class="lv-stat"><b>2134</b><span>units indexed</span></div>
-<div class="lv-stat"><b>5</b><span>graphs that need an index and lack a fresh one</span></div>
+<div class="lv-stat"><b>2378</b><span>units indexed</span></div>
+<div class="lv-stat"><b>4</b><span>graphs that need an index and lack a fresh one</span></div>
 </div>
 <h2 id="which-graphs-need-an-index">
   
@@ -967,8 +967,8 @@ the same as fine. The same verdict is <code class="language-plaintext highlighte
     </tr>
     <tr>
       <td><code class="language-plaintext highlighter-rouge">smart-base/library</code></td>
-      <td><span class="lv-fail">fail</span></td>
-      <td>no successful run recorded — re-run <code class="language-plaintext highlighter-rouge">bun run lsi index --instance smart-base --graph library</code></td>
+      <td><span class="lv-pass">pass</span></td>
+      <td>fresh</td>
     </tr>
     <tr>
       <td><code class="language-plaintext highlighter-rouge">smart-base/methodologies</code></td>
@@ -1285,7 +1285,7 @@ the same as fine. The same verdict is <code class="language-plaintext highlighte
 </h2>
     
 
-<p><strong>595</strong> units · <strong>6151</strong> terms · k = <strong>100</strong> · retains <strong>54.5 %</strong> of the weighted matrix · weighting <code class="language-plaintext highlighter-rouge">log-entropy</code> · sidecar <code class="language-plaintext highlighter-rouge">cat-harness/test/results/lsi/smart-base/library.lsi.json</code></p>
+<p><strong>839</strong> units · <strong>7506</strong> terms · k = <strong>100</strong> · retains <strong>55.3 %</strong> of the weighted matrix · weighting <code class="language-plaintext highlighter-rouge">log-entropy</code> · sidecar <code class="language-plaintext highlighter-rouge">cat-harness/test/results/lsi/smart-base/library.lsi.json</code></p>
 
 <blockquote>
   <p>Dimension 1 has <strong>no negative pole</strong>: it most likely measures unit length and term frequency (a margin), not a theme. Read the themes from dimension 2 on.</p>
@@ -1305,76 +1305,76 @@ the same as fine. The same verdict is <code class="language-plaintext highlighte
   <tbody>
     <tr>
       <td>1</td>
-      <td>35.53</td>
-      <td>user, requirements, systems, service, care, training, adaptation, pcposs</td>
+      <td>50.58</td>
+      <td>registry, clinical, governance, facility, record, required, dpi-h, service</td>
       <td><em>(none)</em></td>
     </tr>
     <tr>
       <td>2</td>
-      <td>20.36</td>
-      <td>transmit, provider, healthcare, manage, event, alerts, diagnostic, commodities</td>
-      <td>requirements, accessed, handbook, design, adaptation, pcposs, website, user</td>
+      <td>26.89</td>
+      <td>registry, dpi-h, requirement, consuming, limr, mandatory, authoritative, governed</td>
+      <td>user, intervention, training, accessed, pcposs, testing, interventions, handbook</td>
     </tr>
     <tr>
       <td>3</td>
-      <td>18.89</td>
-      <td>accessed, world, website, organization, geneva, international, pdf, january</td>
-      <td>pcposs, lane, activity, decision-support, swim, symbol, workflows, depict</td>
+      <td>21.66</td>
+      <td>provider, transmit, healthcare, registration, manage, facility, location, event</td>
+      <td>limr, fhir, models, computable, smart, cdse, semantic, standards</td>
     </tr>
     <tr>
       <td>4</td>
-      <td>17.14</td>
-      <td>intervention, evaluation, axis, project, mhealth, studies, study, projects</td>
-      <td>pcposs, adaptation, roll-out, handbook, annexes, decision-support, activity, business</td>
+      <td>20.53</td>
+      <td>lhr, cdse, surveillance, hmis, phsp, alerts, clinical, transmit</td>
+      <td>product, master, supplier, identifier, mandatory, chain, canonical, date</td>
     </tr>
     <tr>
       <td>5</td>
-      <td>15.12</td>
-      <td>standards, interoperability, enterprise, architecture, software, requirements, fhir, pcposs</td>
-      <td>research, qualitative, studies, accessed, study, quantitative, lane, client</td>
+      <td>19.32</td>
+      <td>accessed, world, organization, website, geneva, international, pdf, january</td>
+      <td>pcposs, user, worker, decision-support, logic, intervention, counselling, activity</td>
     </tr>
     <tr>
       <td>6</td>
-      <td>14.58</td>
-      <td>material, licence, translation, rights, igo, citation, work, imply</td>
-      <td>accessed, website, january, doi, pdf, org, qualitative, lane</td>
+      <td>18.30</td>
+      <td>accessed, website, world, adaptation, organization, geneva, pcposs, roll-out</td>
+      <td>architecture, product, infrastructure, goals, chain, supply, dhsc, shared</td>
     </tr>
     <tr>
       <td>7</td>
-      <td>14.06</td>
-      <td>studies, qualitative, quantitative, study, designs, element, intervention, methods</td>
-      <td>axis, points, mhealth, scaling, domain, lane, swim, symbol</td>
+      <td>17.87</td>
+      <td>healthcare, transmit, provider, manage, fhir, clinical, models, limr</td>
+      <td>phsp, configurable, indicators, surveillance, lhr, outbreak, threats, investigation</td>
     </tr>
     <tr>
       <td>8</td>
-      <td>13.52</td>
-      <td>element, hiv, elements, pcposs, testing, workers, forms, duplicated</td>
-      <td>enterprise, business, studies, qualitative, activities, symbol, quantitative, swim</td>
+      <td>16.90</td>
+      <td>intervention, limr, mhealth, project, evaluation, axis, consuming, versioning</td>
+      <td>pcposs, registry, identity, consent, roll-out, foundational, handbook, dpi</td>
     </tr>
   </tbody>
 </table></div>
 
-<p><strong>Findings</strong> — 0 narrow dimension(s), 25 near-duplicate pair(s).</p>
+<p><strong>Findings</strong> — 0 narrow dimension(s), 76 near-duplicate pair(s).</p>
 
 <p><em>Near-duplicates</em> (cosine ≥ 0.95) — similar is not duplicate; read both:</p>
 
 <ul>
-  <li>0.996 — <code class="language-plaintext highlighter-rouge">smart-base/library/9789240010567-eng/sections/page-004.md</code> ~ <code class="language-plaintext highlighter-rouge">smart-base/library/9789241511766-eng/sections/page-002.md</code></li>
-  <li>0.996 — <code class="language-plaintext highlighter-rouge">smart-base/library/9789240010567-eng/sections/page-004.md</code> ~ <code class="language-plaintext highlighter-rouge">smart-base/library/9789240081949-eng/sections/page-004.md</code></li>
-  <li>0.994 — <code class="language-plaintext highlighter-rouge">smart-base/library/9789240010567-eng/sections/page-004.md</code> ~ <code class="language-plaintext highlighter-rouge">smart-base/library/9789240120747-eng/sections/page-004.md</code></li>
-  <li>0.969 — <code class="language-plaintext highlighter-rouge">smart-base/library/9789240010567-eng/sections/page-014.md</code> ~ <code class="language-plaintext highlighter-rouge">smart-base/library/who-rhr-1806-eng/sections/page-001.md</code></li>
-  <li>0.981 — <code class="language-plaintext highlighter-rouge">smart-base/library/9789240010567-eng/sections/page-017.md</code> ~ <code class="language-plaintext highlighter-rouge">smart-base/library/9789240120747-eng/sections/page-016.md</code></li>
-  <li>0.969 — <code class="language-plaintext highlighter-rouge">smart-base/library/9789240010567-eng/sections/page-022.md</code> ~ <code class="language-plaintext highlighter-rouge">smart-base/library/9789240010567-eng/sections/page-132.md</code></li>
+  <li>0.964 — <code class="language-plaintext highlighter-rouge">smart-base/library/who-dpi-h-reference-architecture-draft-v1/sections/sec-048-372-the-model.md</code> ~ <code class="language-plaintext highlighter-rouge">smart-base/library/who-dpi-h-reference-architecture-draft-v1/sections/sec-052-376-constructs-and-their-counterparts.md</code></li>
+  <li>0.998 — <code class="language-plaintext highlighter-rouge">smart-base/library/9789240010567-eng/sections/page-004.md</code> ~ <code class="language-plaintext highlighter-rouge">smart-base/library/9789240116191-eng/sections/page-003.md</code></li>
+  <li>0.997 — <code class="language-plaintext highlighter-rouge">smart-base/library/9789240010567-eng/sections/page-004.md</code> ~ <code class="language-plaintext highlighter-rouge">smart-base/library/9789240081949-eng/sections/page-004.md</code></li>
+  <li>0.997 — <code class="language-plaintext highlighter-rouge">smart-base/library/9789240010567-eng/sections/page-004.md</code> ~ <code class="language-plaintext highlighter-rouge">smart-base/library/9789240101197-eng/sections/page-004.md</code></li>
+  <li>0.973 — <code class="language-plaintext highlighter-rouge">smart-base/library/9789240010567-eng/sections/page-014.md</code> ~ <code class="language-plaintext highlighter-rouge">smart-base/library/who-rhr-1806-eng/sections/page-001.md</code></li>
+  <li>0.993 — <code class="language-plaintext highlighter-rouge">smart-base/library/9789240010567-eng/sections/page-017.md</code> ~ <code class="language-plaintext highlighter-rouge">smart-base/library/9789240116191-eng/sections/page-013.md</code></li>
+  <li>0.986 — <code class="language-plaintext highlighter-rouge">smart-base/library/9789240010567-eng/sections/page-017.md</code> ~ <code class="language-plaintext highlighter-rouge">smart-base/library/9789240101197-eng/sections/page-015.md</code></li>
+  <li>0.983 — <code class="language-plaintext highlighter-rouge">smart-base/library/9789240010567-eng/sections/page-017.md</code> ~ <code class="language-plaintext highlighter-rouge">smart-base/library/9789240120747-eng/sections/page-016.md</code></li>
+  <li>0.958 — <code class="language-plaintext highlighter-rouge">smart-base/library/9789240010567-eng/sections/page-018.md</code> ~ <code class="language-plaintext highlighter-rouge">smart-base/library/9789240116191-eng/sections/page-013.md</code></li>
+  <li>0.953 — <code class="language-plaintext highlighter-rouge">smart-base/library/9789240010567-eng/sections/page-018.md</code> ~ <code class="language-plaintext highlighter-rouge">smart-base/library/9789240101197-eng/sections/page-015.md</code></li>
+  <li>0.952 — <code class="language-plaintext highlighter-rouge">smart-base/library/9789240010567-eng/sections/page-021.md</code> ~ <code class="language-plaintext highlighter-rouge">smart-base/library/9789240010567-eng/sections/page-132.md</code></li>
+  <li>0.965 — <code class="language-plaintext highlighter-rouge">smart-base/library/9789240010567-eng/sections/page-022.md</code> ~ <code class="language-plaintext highlighter-rouge">smart-base/library/9789240010567-eng/sections/page-132.md</code></li>
   <li>0.998 — <code class="language-plaintext highlighter-rouge">smart-base/library/9789240010567-eng/sections/page-051.md</code> ~ <code class="language-plaintext highlighter-rouge">smart-base/library/who-rhr-1806-eng/sections/page-004.md</code></li>
-  <li>0.986 — <code class="language-plaintext highlighter-rouge">smart-base/library/9789240010567-eng/sections/page-059.md</code> ~ <code class="language-plaintext highlighter-rouge">smart-base/library/who-rhr-1806-eng/sections/page-001.md</code></li>
-  <li>0.989 — <code class="language-plaintext highlighter-rouge">smart-base/library/9789240010567-eng/sections/page-099.md</code> ~ <code class="language-plaintext highlighter-rouge">smart-base/library/9789240120747-eng/sections/page-034.md</code></li>
-  <li>0.986 — <code class="language-plaintext highlighter-rouge">smart-base/library/9789240010567-eng/sections/page-099.md</code> ~ <code class="language-plaintext highlighter-rouge">smart-base/library/9789240010567-eng/sections/page-173.md</code></li>
-  <li>0.986 — <code class="language-plaintext highlighter-rouge">smart-base/library/9789240010567-eng/sections/page-099.md</code> ~ <code class="language-plaintext highlighter-rouge">smart-base/library/9789240010567-eng/sections/page-174.md</code></li>
-  <li>0.988 — <code class="language-plaintext highlighter-rouge">smart-base/library/9789240010567-eng/sections/page-116.md</code> ~ <code class="language-plaintext highlighter-rouge">smart-base/library/9789241511766-eng/sections/page-038.md</code></li>
-  <li>0.952 — <code class="language-plaintext highlighter-rouge">smart-base/library/9789240010567-eng/sections/page-120.md</code> ~ <code class="language-plaintext highlighter-rouge">smart-base/library/9789241511766-eng/sections/page-064.md</code></li>
-  <li>0.981 — <code class="language-plaintext highlighter-rouge">smart-base/library/9789240010567-eng/sections/page-157.md</code> ~ <code class="language-plaintext highlighter-rouge">smart-base/library/9789240010567-eng/sections/page-159.md</code></li>
-  <li>0.999 — <code class="language-plaintext highlighter-rouge">smart-base/library/9789240010567-eng/sections/page-173.md</code> ~ <code class="language-plaintext highlighter-rouge">smart-base/library/9789240010567-eng/sections/page-174.md</code></li>
-  <li>… and 10 more in the sidecar</li>
+  <li>0.990 — <code class="language-plaintext highlighter-rouge">smart-base/library/9789240010567-eng/sections/page-059.md</code> ~ <code class="language-plaintext highlighter-rouge">smart-base/library/who-rhr-1806-eng/sections/page-001.md</code></li>
+  <li>0.987 — <code class="language-plaintext highlighter-rouge">smart-base/library/9789240010567-eng/sections/page-099.md</code> ~ <code class="language-plaintext highlighter-rouge">smart-base/library/9789240101197-eng/sections/page-033.md</code></li>
+  <li>… and 61 more in the sidecar</li>
 </ul>
 <h2 id="who-iris--library">
   
