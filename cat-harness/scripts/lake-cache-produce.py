@@ -5,7 +5,9 @@ Implements the design at
 docs/audits/2026-06-07-lake-cache-only-new-content-design.md:
 
   - Walk `lake-manifest.json` to discover dependency packages
-  - For each package: create the orphan branch `lake-cache/<pkg>-<toolchain>`
+  - For each package: create the orphan branch `cat-lake-cache/<pkg>-<toolchain>`
+    (or keep writing the legacy `lake-cache/<pkg>-<toolchain>` where only that
+    exists, until the remotes are renamed — bean folio-assistant-32f6)
     containing ONLY that package's `.olean` files + a `cache-index.json`
     master index for regenerating small metadata at restore time
   - Strip the non-essential derivable artefacts (.c codegen, .ilean
@@ -17,7 +19,7 @@ Usage:
     ./scripts/lake-cache-produce.py                 # all packages, dry-run by default
     ./scripts/lake-cache-produce.py --push          # actually push
     ./scripts/lake-cache-produce.py --packages mathlib,aesop --push
-    ./scripts/lake-cache-produce.py --branch-suffix test  # use lake-cache/<pkg>-<tc>-test
+    ./scripts/lake-cache-produce.py --branch-suffix test  # use cat-lake-cache/<pkg>-<tc>-test
 
 Exit codes:
   0 = success (or dry-run completed)
@@ -63,6 +65,25 @@ def run(cmd: list[str], cwd: Path | None = None, check: bool = True,
         cmd, cwd=cwd, check=check,
         capture_output=capture, text=capture,
     )
+
+
+# Family prefixes, declared in cat-harness/scripts/special-branches.ts (id
+# `lake-cache`) and checked against this copy by
+# tests/special-branches.test.ts. New name first, then the legacy one, until
+# bean folio-assistant-oycs removes the fallback.
+CACHE_PREFIXES = ("cat-lake-cache/", "lake-cache/")
+
+
+def resolve_branch(key: str) -> str:
+    """The branch to WRITE for `key`: the first candidate that already exists
+    on origin, else the new name. Writers resolve like readers so nothing
+    creates a `cat-` branch beside a legacy one and blocks the rename."""
+    for prefix in CACHE_PREFIXES:
+        r = run(["git", "ls-remote", "--exit-code", "--heads", "origin",
+                 f"refs/heads/{prefix}{key}"], cwd=REPO_ROOT, check=False, capture=True)
+        if r.returncode == 0:
+            return prefix + key
+    return CACHE_PREFIXES[0] + key
 
 
 def toolchain_slug() -> str:
@@ -355,7 +376,7 @@ def main() -> int:
           f"{'PUSH' if args.push else 'DRY-RUN'}")
     stats = []
     for pkg in pkgs:
-        branch = f"lake-cache/{pkg['name']}-{slug}{suffix}"
+        branch = resolve_branch(f"{pkg['name']}-{slug}{suffix}")
         try:
             stats.append(produce_one(pkg, slug, branch, args.push))
         except subprocess.CalledProcessError as e:

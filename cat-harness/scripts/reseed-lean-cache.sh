@@ -120,7 +120,16 @@ ABS_LAKE="$REPO/$LAKE_ROOT"
 TOOLCHAIN=$(cat "$ABS_LAKE/lean-toolchain" 2>/dev/null || cat "$REPO/lean-toolchain")
 TOOLCHAIN="$(printf '%s' "$TOOLCHAIN" | tr -d '[:space:]')"
 SLUG="$(printf '%s' "${TOOLCHAIN##*:}" | tr . -)"
-PROD_BRANCH="lake-cache/$PACKAGE-$SLUG"
+# Family names: declared in cat-harness/scripts/special-branches.ts (id
+# `lake-cache`), checked against this copy by tests/special-branches.test.ts.
+# Resolve new-name-first, then legacy, for the WRITE too: publishing a `cat-`
+# branch beside a live legacy one would block the owner's rename (bean
+# folio-assistant-32f6). The fallback goes with bean folio-assistant-oycs.
+PROD_BRANCH="cat-lake-cache/$PACKAGE-$SLUG"
+if ! git -C "$REPO" ls-remote --exit-code --heads origin "refs/heads/$PROD_BRANCH" >/dev/null 2>&1 \
+   && git -C "$REPO" ls-remote --exit-code --heads origin "refs/heads/lake-cache/$PACKAGE-$SLUG" >/dev/null 2>&1; then
+  PROD_BRANCH="lake-cache/$PACKAGE-$SLUG"
+fi
 TEST_BRANCH="$PROD_BRANCH-test"
 
 # elan's on-disk name for a pin: `/` -> `--`, `:` -> `---`, giving
