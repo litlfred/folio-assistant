@@ -3,8 +3,9 @@
 title: 'STAGING SIZE: the measurement is right and the SEVERITY is an unverifiable claim — critical predicts a failed publish, and nothing in this repo can observe enforcement'
 status: in-progress
 type: bug
+priority: normal
 created_at: 2026-09-25T18:10:30Z
-updated_at: 2026-09-25T18:10:30Z
+updated_at: 2026-10-02T16:56:12Z
 parent: folio-assistant-1xhc
 ---
 
@@ -197,3 +198,57 @@ warn about: the registry summary still advertised *"owner's 100 MB warning"* aft
 the raise to 500 MB, and the check's own summary still claimed the previews had
 *"grown past what a GitHub Pages site can carry"* — a publish claim, in the check
 that just had one taken away.
+
+
+## R4's scope — settled 2026-10-02, and it was my own commit that needed correcting
+
+The question (raised by the nav-options agent against commit `2eb113ea280`):
+does R4's linear floor govern the **docs nav** or only the **board**? Only the
+board — and the nav was never under it, so relaxing R4 was not merely
+mis-scoped, it was **unnecessary** for the nav work.
+
+Evidence, all checkable:
+
+- `cat-harness/docs/architecture/folio-board-requirements.md` §"What this is,
+  and what it is not" states on the owner's own ruling that the file is
+  "history, not instruction", and that the rules an agent follows live in the
+  `cat-harness` skills. R4 governs nothing *directly*, board or docs.
+- R4's normative sentence names its subject: "**The board** SHALL always be
+  collapsible…".
+- The skill that DOES bind the docs site is `ui-accessibility` — it says so:
+  "it binds every surface this project produces: the knowledge-graph viewer,
+  **the docs site**, the action-icon tiles, anything future". Its standard is
+  WCAG 2.2 A/AA + keyboard + 24 px targets + computed contrast + visible focus
+  + announced change. **No no-JavaScript clause**, and WCAG imposes none.
+- The docs navbar **already requires JavaScript**: `mountNavIconRow`,
+  `mountDocumentIndex`, `mountInstanceGraphs` build three of its regions in the
+  DOM at load (shipped #959; `cat-harness/test/navbar-row.e2e.ts` opens "The
+  three JS-mounted navbar regions"). No gate objects.
+
+So a client-side docs nav is permitted by the rules as written **today**,
+independently of the relaxation. That unblocks the nav-duplication options.
+
+**Exactly two `javaScriptEnabled: false` contexts exist in this repository**,
+measured today, and neither is the nav:
+
+| gate | what it requires | what it does not reach |
+|---|---|---|
+| `cat-harness/test/linear-floor.e2e.ts:117` | the **todo listing** (`#fa-todo-listing`) is in the served bytes, in document order, with count = own cardinality | anything else on the page |
+| `cat-harness/test/first-paint-scheme.e2e.ts:247` | eight generated dashboards **first-paint dark from CSS alone** in a light-preferring browser | the page's content — it is a colour assertion |
+
+**The relaxation's real target is therefore the todo listing**, which is
+`gen-docs-pages.ts`'s 19.5 MB floor and R4's actual subject. Converting it to a
+fetch is now *permitted*; it is not thereby *decided*. The test header records
+what the static floor cost to build (bean `0jtj`: with JS off, a reader
+previously got "no note, no count, no hint that notes exist"), so those five
+tests must not be deleted to go green. Both running agents have been told.
+
+**Second defect in the same commit, independent of scope.** It added two NEW
+`SHALL` obligations — print/PDF waits for load and render; a failed load says
+so — to a document that disclaims being instruction. Nothing enforced them and
+nothing looking for the rule would have found them: the AGENTS.md banner's
+failure mode, one directory over. Re-homed to `ui-accessibility` §"A rendering
+built client-side owes two things the static one gave for free", with the
+`console.warn` trap stated and the reason a PDF is the strictest case.
+
+Fixed in `166507acd1b`.
