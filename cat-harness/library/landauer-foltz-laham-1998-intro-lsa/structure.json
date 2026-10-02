@@ -424,5 +424,30 @@
       "n_words": 99
     }
   ],
-  "structure_note": "Ingested at PAGE granularity by scripts/pdf-pages.py. This PDF carries no embedded outline and its inferred chapter structure was measurably wrong (bean 6xaz), so no chapter tree is claimed. A page is a determined division; an inferred chapter was not."
+  "structure_note": "Ingested at PAGE granularity by scripts/pdf-pages.py. This PDF carries no embedded outline and its inferred chapter structure was measurably wrong (bean 6xaz), so no chapter tree is claimed. A page is a determined division; an inferred chapter was not.",
+  "metadata": {
+    "title": null,
+    "title_raw": null,
+    "docinfo": {
+      "Title": "(Microsoft Word - dp1.LSA_Intr\\311)",
+      "Author": "(Darrell Laham)",
+      "Producer": "AFPL Ghostscript 7.04",
+      "Creator": "(Microsoft Word: PSPrinter 8.3.1)",
+      "CreationDate": "(10:59 AM Saturday, September 12, 1998)"
+    },
+    "title_source": "filename",
+    "title_verified": false,
+    "title_evidence": {
+      "metadata": "(Microsoft Word - dp1.LSA_Intr\\311)",
+      "heading": "An Introduction to Latent Semantic Analysis",
+      "corroborated_by": [],
+      "browser_print": false
+    },
+    "title_correction": {
+      "title": "An Introduction to Latent Semantic Analysis",
+      "basis": "Page 1's largest heading, repeated in its running head ('INTRODUCTION TO LATENT SEMANTIC ANALYSIS') and in the citation printed on the same page; the PDF Title metadata is a production label ('Microsoft Word - dp1.LSA_Intr…').",
+      "corrected_on": "2026-10-02",
+      "bean": "folio-assistant-w6fu"
+    }
+  }
 }

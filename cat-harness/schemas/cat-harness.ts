@@ -2009,7 +2009,7 @@ export class TopologyConflictError extends Error {
  *
  * ## It is `materialization` at the graph level
  *
- * `folio-assistant-core/schemas/materialization.ts` already names the states a
+ * `schemas/materialization-state.ts` already names the states a
  * body of content is in, and a declared graph is in the same ones: a
  * `ContentDirectory` is **materialized** (bytes here), a `RemoteGraph` is
  * **referenced** (we know it exists and where, we hold none of it).

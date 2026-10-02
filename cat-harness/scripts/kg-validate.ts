@@ -28,7 +28,8 @@
 import { existsSync, readFileSync } from "node:fs";
 import { relative, resolve, sep } from "node:path";
 
-import { instanceDirectories, readDeclaration } from "../schemas/cat-harness.js";
+import { instanceDirectories, instanceRootsIn, readDeclaration } from "../schemas/cat-harness.js";
+import { checkoutRootFor } from "../schemas/harness-config.js";
 import type { z } from "zod";
 
 import { resolveKindValidator, resolveNodeSchemas, stripAnnotations } from "../schemas/kind-validator.js";
@@ -69,7 +70,65 @@ export function kindForPath(
   return best?.kind;
 }
 
-export async function validatePath(filePath: string, root: string): Promise<Verdict> {
+/**
+ * The declared instance that OWNS a path: the deepest instance root in the
+ * checkout that contains it, or `fallback` when none does (bean `676g`).
+ *
+ * ## Why this exists
+ *
+ * `kg:validate` resolved every path against ONE root — its own instance,
+ * `cat-harness/` — so a file inside a NESTED instance was refused rather than
+ * validated. Measured on `main` `cf3e624`:
+ *
+ * ```
+ * kg:validate smart-dak/test/results/kg-qa/scenarios/kg.kg-qa.json
+ *   ? … could not determine: no declared directory owns this path
+ * ```
+ *
+ * `smart-dak.json` declares `test/results/` as `qa` — one kind — so the
+ * failing branch was "no directory owns it": the resolver never read that
+ * instance's declaration at all. ~150 committed sidecars across 13 instances
+ * sat in that gap, which is why `kg:audit:all:check` could prove them current
+ * but nothing could prove they PARSE for a consumer.
+ *
+ * ## Why the deepest, not the first
+ *
+ * Instances nest inside the checkout, and the instance declared AT the
+ * checkout root contains every other one. Answering with the outer one would
+ * resolve a nested instance's path against the root's declaration — the same
+ * refusal, one level up. Longest-prefix is the rule `kindForPath` already
+ * applies to directories, for the same reason.
+ */
+export function owningInstanceRoot(filePath: string, fallback: string): string {
+  const abs = resolve(filePath);
+  let best: string | undefined;
+  for (const r of instanceRootsIn(checkoutRootFor(fallback))) {
+    const rel = relative(r, abs);
+    if (rel.startsWith("..") || resolve(r, rel) !== abs) continue;
+    if (best === undefined || r.length > best.length) best = r;
+  }
+  return best ?? fallback;
+}
+
+/**
+ * Validate one file.
+ *
+ * Two roots, because they answer two questions (bean `676g`):
+ *
+ * - `root` — the instance whose DECLARATION says which directory owns the
+ *   path, and therefore its graph kind. For a nested instance's file that is
+ *   the nested instance (see {@link owningInstanceRoot}).
+ * - `schemaRoot` — what the kind's unqualified `module#Export` validator refs
+ *   resolve against: the instance whose registry DEFINES the kind. The
+ *   registry here is `defaultGraphKinds`, defined in this instance, so its
+ *   refs (`schemas/kg-qa.ts#…`) are relative to `cat-harness/`. Resolving them
+ *   against `smart-dak/` instead reported "schemas/kg-qa.ts does not exist"
+ *   for every nested sidecar — the second half of the same refusal.
+ *
+ * `schemaRoot` defaults to `root`, so a caller validating the registry's own
+ * instance is unchanged.
+ */
+export async function validatePath(filePath: string, root: string, schemaRoot: string = root): Promise<Verdict> {
   if (!existsSync(filePath)) {
     return { path: filePath, state: "undetermined", reason: "no such file" };
   }
@@ -105,7 +164,7 @@ export async function validatePath(filePath: string, root: string): Promise<Verd
   // Bean `rdkm`: a kind that names its `$schema` families routes the node by
   // its own tag first — `qa` holds seven families, and the kind-level
   // validator would check six of them against the wrong shape.
-  const families = await resolveNodeSchemas(kind, root);
+  const families = await resolveNodeSchemas(kind, schemaRoot);
   let schema: z.ZodTypeAny;
   if (families.length) {
     const tag = (data as { $schema?: unknown } | null)?.$schema;
@@ -122,7 +181,7 @@ export async function validatePath(filePath: string, root: string): Promise<Verd
     }
     schema = fam.schema;
   } else {
-    const v = await resolveKindValidator(kind, root);
+    const v = await resolveKindValidator(kind, schemaRoot);
     if (v.state !== "resolved") {
       return { path: filePath, state: "undetermined", kind, reason: v.reason };
     }
@@ -149,7 +208,10 @@ async function main(): Promise<number> {
   let bad = 0;
   let undetermined = 0;
   for (const p of args) {
-    const v = await validatePath(resolve(p), instanceRoot);
+    // Against the instance that OWNS the path, not this script's own (bean
+    // `676g`) — see `owningInstanceRoot`.
+    const abs = resolve(p);
+    const v = await validatePath(abs, owningInstanceRoot(abs, instanceRoot), instanceRoot);
     if (v.state === "valid") {
       console.log(`✓ ${v.path}  [${v.kind}]`);
     } else if (v.state === "invalid") {
