@@ -1,0 +1,38 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://litlfred.github.io/folio-assistant/STAGING/claude-smart-separation-platform-shims/skills/dmn-authoring/output.schema.json",
+  "title": "DMN Authoring Output",
+  "description": "Output schema for DMN decision table authoring.",
+  "type": "object",
+  "required": [
+    "dmnFile"
+  ],
+  "properties": {
+    "dmnFile": {
+      "type": "string"
+    },
+    "decisionTableCount": {
+      "type": "integer"
+    },
+    "ruleCount": {
+      "type": "integer"
+    },
+    "hitPolicy": {
+      "type": "string",
+      "enum": [
+        "UNIQUE",
+        "FIRST",
+        "PRIORITY",
+        "ANY",
+        "COLLECT",
+        "RULE ORDER"
+      ]
+    }
+  },
+  "staging": {
+    "branch": "claude/smart-separation-platform-shims",
+    "sha": "94e796efa297be0f1384ceb3cacf98b64f17af5d",
+    "pr": "1860/merge",
+    "run": "37035331832"
+  }
+}
