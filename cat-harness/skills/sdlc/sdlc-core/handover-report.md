@@ -7,6 +7,8 @@ description: >
   without re-deriving anything. Use it when you are told a stall is likely, at
   the end of every long arc, before a risky or long-running step, and whenever
   a steward asks for one. Its reader is `stalled-agent-triage`.
+
+To produce one under time pressure, follow [`prepare-for-handover`](prepare-for-handover.md): it commits and pushes first, then writes this report citing the pushed SHAs.
 ---
 
 # Handover report
