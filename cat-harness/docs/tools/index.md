@@ -36,9 +36,9 @@ is `satisfies`, and it runs **from a tool to a skill** — *this tool is one way
 to do that*, never *this skill is a tool*.
 
 <div class="tg-grid">
-<div class="tg-stat"><b>112</b><span>Tool nodes</span></div>
+<div class="tg-stat"><b>113</b><span>Tool nodes</span></div>
 <div class="tg-stat"><b>67</b><span>skills satisfied</span></div>
-<div class="tg-stat"><b>91</b><span>invoked as a shell command</span></div>
+<div class="tg-stat"><b>92</b><span>invoked as a shell command</span></div>
 <div class="tg-stat"><b>24</b><span>reachable over MCP</span></div>
 </div>
 
@@ -48,19 +48,19 @@ A tool may declare more than one invocation, so these do not sum to the total.
 
 | invocation | tools |
 |---|---|
-| <span class="tg-tag tg-shell">shell</span> | 91 |
+| <span class="tg-tag tg-shell">shell</span> | 92 |
 | <span class="tg-tag tg-inproc">inProcess</span> | 24 |
 | <span class="tg-tag tg-mcp">mcp</span> | 24 |
 | <span class="tg-tag tg-manual">manual</span> | 7 |
 
 | installation | tools |
 |---|---|
-| `none` | 103 |
+| `none` | 104 |
 | `cli` | 9 |
 
 ## Does every `satisfies` name a skill that exists?
 
-Yes — all **67** skills named across **112** tools resolve to a
+Yes — all **67** skills named across **113** tools resolve to a
 skill document in this checkout. A `satisfies` pointing at nothing would be a
 tool advertising a capability the graph cannot locate.
 
@@ -84,6 +84,7 @@ tool advertising a capability the graph cannot locate.
 | `context-prefixes`<br>JSON-LD prefix check | Check every committed JSON-LD document in both directions: each prefix a context binds is spoken by something (or forward-declared with a reason), each prefix a document SPEAKS as a key or `@type` is bound in its context, each binding onto one of our own namespaces is spelt as that instance's stub, and every plain key in a document on the published content context is a declared term (never descending into an `@json` value). A context it cannot resolve is reported as undetermined, never clean. | <span class="tg-tag tg-shell">shell</span> | [`kg-export`](../reference/skill-instructions/kg-export.html) | 1 in / 1 out |
 | `discuss`<br>discussion | Put a question to a person or a sibling agent and receive an answer, to determine which harness this repository should become and which repositories are read from and written to. The two facts no file holds. | <span class="tg-tag tg-manual">manual</span> | `discussion` | 2 in / 1 out |
 | `docs-auto-viewer`<br>Generated index pages | Render index pages for the declared skills, docs and swimlane-glossary directories, one per directory. | <span class="tg-tag tg-shell">shell</span> | [`graph-rendering`](../reference/skill-instructions/graph-rendering.html) | 1 in / 1 out |
+| `document-kinds-viewer`<br>Document kinds viewer | Render each declared document-kinds directory: every kind's structure, sections and sources, one page per subject instance. | <span class="tg-tag tg-shell">shell</span> | [`graph-rendering`](../reference/skill-instructions/graph-rendering.html) | 1 in / 1 out |
 | `external-schemas-viewer`<br>External schemas viewer | Render the declared external schemas, and which of this instance's modules conform to each, as one page. | <span class="tg-tag tg-shell">shell</span> | [`graph-rendering`](../reference/skill-instructions/graph-rendering.html) | 1 in / 1 out |
 | `feature-staging`<br>Stage a branch's preview | Publish a branch's built site to `STAGING/<slug>/` on the publish branch, so a reviewer compares a rendered before and after rather than a description of one. Stamps the commit SHA, and removes the preview when its pull request closes. | <span class="tg-tag tg-shell">shell</span> | [`feature-staging`](../reference/skill-instructions/feature-staging.html) | 3 in / 1 out |
 | `folio-block-qa-summary`<br>Folio block QA summary | Summarise a folio's committed per-block QA verdicts into one `block-qa.json` a staging preview publishes: each block is failing (a FRESH verdict failed, with the worst severity), stale (a verdict predates the block's current files), passing, or unaudited. Freshness is the QA sweep's own rule, including the uses-graph hash for graph-scoped criteria. Runs no checker and writes no verdict. | <span class="tg-tag tg-shell">shell</span> | [`review-heatmap`](../reference/skill-instructions/review-heatmap.html) | 3 in / 1 out |

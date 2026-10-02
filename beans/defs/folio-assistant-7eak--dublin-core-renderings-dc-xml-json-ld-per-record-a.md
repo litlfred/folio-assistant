@@ -1,10 +1,10 @@
 ---
 # folio-assistant-7eak
 title: 'Dublin Core renderings: DC XML + JSON(-LD) per record, as a skill and tool in the rendering pipeline, published to gh-pages; who-iris links to both'
-status: todo
+status: in-progress
 type: task
 created_at: 2026-09-30T08:54:51Z
-updated_at: 2026-09-30T08:54:51Z
+updated_at: 2026-10-02T00:00:00Z
 parent: folio-assistant-7deg
 ---
 
@@ -30,3 +30,7 @@ parent: folio-assistant-7deg
 ## Not now
 
 Owner: keep the primary focus on the bootstrap / bootstrap-tools staging separation (bean `xsqm`). This is queued, not started.
+
+## Claim
+
+Claimed by claude/dublin-core-renderings (session https://claude.ai/code/session_01CVVoavPoCHMLA7AASxG8cH). Issue #1840.

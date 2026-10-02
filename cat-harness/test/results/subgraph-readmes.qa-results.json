@@ -16,7 +16,7 @@
     },
     "long-description": {
       "summary": "Declared directories whose description runs over 60 words: shown to readers under the README heading, so history and argument belong in a `_comment` instead.",
-      "count": 82,
+      "count": 80,
       "entries": [
         {
           "instance": "folio-assistant",
@@ -319,11 +319,6 @@
           "path": "smart-base/skills/voices"
         },
         {
-          "instance": "smart-dak",
-          "directory": "qa",
-          "path": "smart-dak/test/results"
-        },
-        {
           "instance": "smart-ig",
           "directory": "qa",
           "path": "smart-ig/test/results"
@@ -342,11 +337,6 @@
           "instance": "smart-immunizations",
           "directory": "qa",
           "path": "smart-immunizations/test/results"
-        },
-        {
-          "instance": "smart-l1",
-          "directory": "qa",
-          "path": "smart-l1/test/results"
         },
         {
           "instance": "smart-trust",
@@ -832,13 +822,23 @@
         },
         {
           "instance": "smart-base",
-          "directory": "voices",
-          "path": "smart-base/skills/voices"
+          "directory": "smart-base-themes",
+          "path": "smart-base/themes"
         },
         {
-          "instance": "smart-dak",
-          "directory": "qa",
-          "path": "smart-dak/test/results"
+          "instance": "smart-base",
+          "directory": "smart-base-document-kinds",
+          "path": "smart-base/document-kinds"
+        },
+        {
+          "instance": "smart-base",
+          "directory": "smart-base-external-schemas",
+          "path": "smart-base/external-schemas"
+        },
+        {
+          "instance": "smart-base",
+          "directory": "voices",
+          "path": "smart-base/skills/voices"
         },
         {
           "instance": "smart-ig",
@@ -861,11 +861,6 @@
           "path": "smart-immunizations/test/results"
         },
         {
-          "instance": "smart-l1",
-          "directory": "qa",
-          "path": "smart-l1/test/results"
-        },
-        {
           "instance": "smart-trust",
           "directory": "smart-trust-artifact-index",
           "path": "smart-trust/fhir-artifact-index"
@@ -884,11 +879,6 @@
           "instance": "smart-trust",
           "directory": "qa",
           "path": "smart-trust/test/results"
-        },
-        {
-          "instance": "smart-trust",
-          "directory": "smart-trust-themes",
-          "path": "smart-trust/themes"
         },
         {
           "instance": "who-iris",
@@ -984,5 +974,5 @@
       "entries": []
     }
   },
-  "total": 188
+  "total": 186
 }
