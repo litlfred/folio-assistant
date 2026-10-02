@@ -792,6 +792,21 @@
       "layer": "harness"
     },
     {
+      "@id": "cat-harness:graphKind/vocab-mapping",
+      "@type": [
+        "bootstrap:GraphKind",
+        "skos:Concept"
+      ],
+      "label": "vocab-mapping",
+      "comment": "Vocabulary mappings — which source field becomes which target predicate, with its stated relationship, one ConceptMap-shaped table per source and target; representable from and producible as a FHIR ConceptMap.",
+      "prefLabel": "vocab-mapping",
+      "definition": "Vocabulary mappings — which source field becomes which target predicate, with its stated relationship, one ConceptMap-shaped table per source and target; representable from and producible as a FHIR ConceptMap.",
+      "notation": "cat-harness:graphKind/vocab-mapping",
+      "inScheme": "https://litlfred.github.io/cat-harness/0.1.0/ns",
+      "isDefinedBy": "https://litlfred.github.io/cat-harness/0.1.0/ns",
+      "layer": "harness"
+    },
+    {
       "@id": "cat-harness:graphKind/waiver",
       "@type": [
         "bootstrap:GraphKind",
