@@ -358,6 +358,7 @@ roles, and how they compose with the LLM, see [Skills & roles](../../skills.html
 | Skill | Id | Schema | Summary |
 |-------|----|--------|---------|
 | [ig-ast-delta](ig-ast-delta.html) | `ig-ast-delta` | — | > Skill id: `ig-ast-delta` · Package: `fhir-ig-base` · Instance: |
+| [ig-binary-artefacts](ig-binary-artefacts.html) | `ig-binary-artefacts` | — | > Skill id: `ig-binary-artefacts` · Package: `fhir-ig-base` · Instance: |
 | [ig-build-pipeline](ig-build-pipeline.html) | `ig-build-pipeline` | — | > Skill id: `ig-build-pipeline` · Package: `fhir-ig-base` · Instance: |
 | [ig-publisher-fork](ig-publisher-fork.html) | `ig-publisher-fork` | — | > Skill id: `ig-publisher-fork` · Package: `fhir-ig-base` · Instance: |
 | [ig-publisher-reduction](ig-publisher-reduction.html) | `ig-publisher-reduction` | — | > Skill id: `ig-publisher-reduction` · Package: `fhir-ig-base` · Instance: |

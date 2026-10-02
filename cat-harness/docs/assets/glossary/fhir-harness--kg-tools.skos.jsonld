@@ -254,6 +254,26 @@
       "skos:note": "candidate"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/ns#glossary/kg-tools/ig-binary-audit",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/ns#glossary/kg-tools"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Measure the IG Publisher's binary outputs on a pages branch"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Read a pages branch's git tree and report the Publisher's binary outputs (full-ig.zip, package.tgz and variants, package.db, validator packs, the definitions/examples/expansions zips, spreadsheets) by name: copies, bytes, and how much of it sits in branch previews. Reads the tree, never a checkout, so a multi-gigabyte branch costs a depth-1 fetch."
+        }
+      ],
+      "skos:notation": "ig-binary-audit",
+      "dcterms:source": "fhir-harness/tools/index.ts#ig-binary-audit",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/ns#glossary/kg-tools/ig-pages",
       "@type": "skos:Concept",
       "skos:inScheme": {

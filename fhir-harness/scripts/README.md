@@ -15,6 +15,8 @@ Part of [FHIR IG Harness](../README.md) 0.1.0, declared as `fhir-ig-scripts`, ho
 | [`gen-ig-pages.ts`](gen-ig-pages.ts) | a file |  |
 | [`ig-ast.test.ts`](ig-ast.test.ts) | a file |  |
 | [`ig-ast.ts`](ig-ast.ts) | a file |  |
+| [`ig-binary-audit.test.ts`](ig-binary-audit.test.ts) | a file |  |
+| [`ig-binary-audit.ts`](ig-binary-audit.ts) | a file |  |
 | [`ig-site-data.test.ts`](ig-site-data.test.ts) | a file |  |
 | [`ig-site-data.ts`](ig-site-data.ts) | a file |  |
 | [`ingest-ig-chrome.ts`](ingest-ig-chrome.ts) | a file |  |
