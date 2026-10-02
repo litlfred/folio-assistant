@@ -2,7 +2,7 @@
   "$schema": "folio-bean-index/v1",
   "tile": {
     "beans": {
-      "count": 631,
+      "count": 633,
       "unit": "beans"
     }
   },
@@ -643,14 +643,14 @@
     {
       "id": "folio-assistant-2i5f",
       "title": "TERMINOLOGY / adjudication: the extractor vs the terminology, and judge vs judge — call the existing process, restate nothing",
-      "status": "todo",
+      "status": "in-progress",
       "type": "task",
       "priority": "normal",
       "parent": "folio-assistant-5yhm",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-25T04:51:47Z",
-      "updatedAt": "2026-09-30T16:10:07Z",
+      "updatedAt": "2026-10-02T08:01:23Z",
       "preview": "Under `5yhm`. **Two disagreements, not one**, and only the second is already\nsolved here.\n\n1. **The extractor and the terminology disagree.** The corpus uses a word the\n   authorised vocabulary spells differently, or does not carry at all. A\n   *content* decision — change the prose, author a local term with its reason,\n   or record that the vocabulary is wrong for this domain. Nothing covers this.",
       "file": "beans/defs/folio-assistant-2i5f--terminology-adjudication-the-extractor-vs-the-term.md"
     },
@@ -1476,7 +1476,7 @@
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-25T04:51:06Z",
-      "updatedAt": "2026-10-02T06:45:37Z",
+      "updatedAt": "2026-10-02T08:01:23Z",
       "preview": "Owner, 2026-09-25: *\"extracting exsiting glossary needs compaision to existing\ntermonology/coding. there needs to be a whole set of skills on terminiology\nindetificatio. mapping. ajdudication. bean up as todo. we will integrate, for\nexample, OCL at some point as a Tool\"*.\n\n## RE-SCOPED 2026-09-29 against what has since landed on `main`\n\nThis bean was written when the glossary only extracted. Three",
       "file": "beans/defs/folio-assistant-5yhm--terminology-identification-mapping-and-adjudicatio.md"
     },
@@ -1567,28 +1567,28 @@
     {
       "id": "folio-assistant-63wl",
       "title": "Placement PR3: BPMN and DMN move up to their owners; harness processes regroup by concern",
-      "status": "in-progress",
+      "status": "completed",
       "type": "task",
       "priority": "normal",
       "parent": "folio-assistant-iirv",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-10-01T06:58:00Z",
-      "updatedAt": "2026-10-02T14:14:56Z",
+      "updatedAt": "2026-10-02T16:25:17Z",
       "preview": "Placement proposal §2 (owner rulings 2026-09-30 §6; process: review → resolve issues → staged PRs). Parent of PR0/PR1 is `9umr`; PR2–PR9 sit under the separation epic because D4 (owner, 2026-10-01, option 3) interleaves them with the split stages into one ordered sequence. Every PR: references move with the subject; generated trees regenerated, never hand-edited; `beans/**` not rewritten; kg-qa si",
       "file": "beans/defs/folio-assistant-63wl--placement-pr3-bpmn-and-dmn-move-up-to-their-owners.md"
     },
     {
       "id": "folio-assistant-676g",
       "title": "kg:validate cannot own a NESTED instance's path, so 15 instances' committed QA sidecars are consumer-validated by nothing",
-      "status": "todo",
+      "status": "completed",
       "type": "task",
-      "priority": "",
+      "priority": "normal",
       "parent": "folio-assistant-1xhc",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-27T16:50:03Z",
-      "updatedAt": "2026-09-27T16:50:03Z",
+      "updatedAt": "2026-10-02T06:44:57Z",
       "preview": "## What was measured\n\n`kg:validate` resolves declared directories from ONE instance root, so a sidecar\nin a nested instance is refused rather than validated. Measured 2026-09-27, from\nthe repository root:\n\n    bun run cat-harness/scripts/kg-validate.ts cat-harness/test/results/kg-qa/processes/adjudication.kg-qa.json\n      ✓ … [qa]\n\n    bun run cat-harness/scripts/kg-validate.ts bootstrap/test/resu",
       "file": "beans/defs/folio-assistant-676g--kgvalidate-cannot-own-a-nested-instances-path-so-1.md"
     },
@@ -1661,6 +1661,20 @@
       "updatedAt": "2026-09-30T15:42:28Z",
       "preview": "Owner 2026-09-30: fix the platform; first analyze consistency with the just-the-docs pipeline, and how to namespace values by source (paper, dataset e.g. CODATA with provenance via ingestion, FHIR IG metadata).\n\n## Done when\n- [x] prose :val resolves names with underscores (render-latex), tested and calibrated\n- [x] consistency analysis across PDF / just-the-docs / blueprint / FHIR IG, recorded (b",
       "file": "beans/defs/folio-assistant-6dvy--witnessed-values-val-prose-bug-just-the-docs-subst.md"
+    },
+    {
+      "id": "folio-assistant-6eiw",
+      "title": "Library titles for non-PDF entries (pptx deck, CODATA table)",
+      "status": "todo",
+      "type": "task",
+      "priority": "",
+      "parent": "folio-assistant-4ccr",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-10-02T12:55:31Z",
+      "updatedAt": "2026-10-02T12:55:31Z",
+      "preview": "## Why\n\nBean `w6fu` (PR #1849) gave PDF library entries a verified title: a title is\nused only when two independent sources agree, or when an editorial\n`title_correction` exists. Two entries are not PDFs, so that resolver never\nreaches them, and they still show placeholder titles:\n\n| entry | format | what shows now | evidence in the file |\n|---|---|---|---|\n| `cat-harness/library/kg-folio-asst-202",
+      "file": "beans/defs/folio-assistant-6eiw--library-titles-for-non-pdf-entries-pptx-deck-codat.md"
     },
     {
       "id": "folio-assistant-6h47",
@@ -3881,14 +3895,14 @@
     {
       "id": "folio-assistant-fgkb",
       "title": "smart-base: clear qou/uploads once the bytes have a home",
-      "status": "todo",
+      "status": "in-progress",
       "type": "task",
       "priority": "normal",
       "parent": "folio-assistant-2yyh",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-22T08:35:28Z",
-      "updatedAt": "2026-09-22T11:55:45Z",
+      "updatedAt": "2026-10-02T12:43:16Z",
       "preview": "Issue #877. The eight PDFs are in `litlfred/qou` as https://github.com/litlfred/qou/commit/a3d2266a1b08018af5f8f88c222c1e7b45e6a36c — a mathematics repository, which is not their home.\n\n**`deletion-requires-confirmation` governs and this is not the agent's call.** What follows is the report the skill requires: what would go, with sizes, and the evidence that nothing would be lost. Nothing has been",
       "file": "beans/defs/folio-assistant-fgkb--smart-base-clear-qouuploads-once-the-bytes-have-a.md"
     },
@@ -5877,14 +5891,14 @@
     {
       "id": "folio-assistant-pgzn",
       "title": "kg:audit --instance . crashes: the ROOT instance's repoRoot resolves outside the checkout",
-      "status": "todo",
+      "status": "completed",
       "type": "task",
       "priority": "normal",
       "parent": "folio-assistant-1xhc",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-27T08:00:22Z",
-      "updatedAt": "2026-09-27T08:19:24Z",
+      "updatedAt": "2026-10-02T06:44:57Z",
       "preview": "## What was measured\n\n`bun run cat-harness/scripts/kg-audit.ts --instance .` exits 1 before auditing\nanything. Measured 2026-09-27 on `main` (b4d85f2cf4) as well as on the branch, so\nit is pre-existing and not introduced by the skill-resolution fix that found it:\n\n    ENOENT: no such file or directory, open '/home/user/package.json'\n      at rootScripts (cat-harness/scripts/pair-claims.ts:181:26)\n",
       "file": "beans/defs/folio-assistant-pgzn--kgaudit-instance-crashes-the-root-instances-reporo.md"
     },
@@ -6227,14 +6241,14 @@
     {
       "id": "folio-assistant-qrnz",
       "title": "SECOND IG: ingest smart-immunizations, and find out whether the artefact-index pipeline actually generalises",
-      "status": "todo",
+      "status": "completed",
       "type": "feature",
       "priority": "high",
       "parent": "folio-assistant-uhkv",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-21T14:13:32Z",
-      "updatedAt": "2026-09-29T20:52:41Z",
+      "updatedAt": "2026-10-02T12:27:27Z",
       "preview": "The generalisation test qsf5 deferred. Until a second DAK-API IG goes through, \"generalisable across many IGs\" is a design claim.\n\nSubject: `smart.who.int.immunizations` v0.2.0, FHIR **4.0.1** (smart-trust is 5.0.0), gh-pages, 232,040 published files.\n\nMeasured 2026-09-21 before writing any code:\n\n| | smart-trust | smart-immunizations |\n|---|---|---|\n| artefacts (.index.json) | 674 | 712 |\n| canon",
       "file": "beans/defs/folio-assistant-qrnz--second-ig-ingest-smart-immunizations-and-find-out.md"
     },
@@ -7073,14 +7087,14 @@
     {
       "id": "folio-assistant-tlat",
       "title": "Placement PR5: materialization state vocabulary and the extraction contract move down to cat-harness",
-      "status": "todo",
+      "status": "completed",
       "type": "task",
-      "priority": "",
+      "priority": "normal",
       "parent": "folio-assistant-iirv",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-10-01T06:58:01Z",
-      "updatedAt": "2026-10-01T06:58:01Z",
+      "updatedAt": "2026-10-02T13:42:04Z",
       "preview": "Placement proposal §2 (owner rulings 2026-09-30 §6; process: review → resolve issues → staged PRs). Parent of PR0/PR1 is `9umr`; PR2–PR9 sit under the separation epic because D4 (owner, 2026-10-01, option 3) interleaves them with the split stages into one ordered sequence. Every PR: references move with the subject; generated trees regenerated, never hand-edited; `beans/**` not rewritten; kg-qa si",
       "file": "beans/defs/folio-assistant-tlat--placement-pr5-materialization-state-vocabulary-and.md"
     },
@@ -7451,14 +7465,14 @@
     {
       "id": "folio-assistant-v556",
       "title": "Two kg-export sidecars carry three script hashes between them, and no gate can see it: a generator with no --check is invisible to check:artefact-verification",
-      "status": "todo",
+      "status": "completed",
       "type": "task",
-      "priority": "",
+      "priority": "normal",
       "parent": "folio-assistant-1swy",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-22T10:24:29Z",
-      "updatedAt": "2026-09-22T10:24:29Z",
+      "updatedAt": "2026-10-02T06:44:57Z",
       "preview": "MEASURED 2026-09-22 on main at `f4de6c1e20`, clean tree, by running `bun run kg:export` and reading both committed sidecars back.\n\n`scripts/kg-export.ts` writes two `qa-results/v1` sidecars. Between them and the script actually in the tree there are **three different hashes for one script**:\n\n| file | committed `producer.script_hash` |\n|---|---|\n| `cat-harness/test/results/kg-export.qa-results.jso",
       "file": "beans/defs/folio-assistant-v556--two-kg-export-sidecars-carry-three-script-hashes-b.md"
     },
@@ -7813,6 +7827,20 @@
       "updatedAt": "2026-09-25T17:34:06Z",
       "preview": "Group 9 of 13 in `d308`. **14 files, 1 entry point.**\n\n`render-markdown`, `markdown-ast`, `block-module`, `front-matter`,\n`build-foreshadows`, `generate-index`, `readme-toc`, `section-story-audit`,\n`audit-status-sections`, `extract-status-sections`, `find-dangling-remarks`,\n`conditional-class-banner-audit`, `language-trap-audit`, `check-voices`.\n\n**BPMN:** `authoring-a-paper · Task_AuthorBlocks` (",
       "file": "beans/defs/folio-assistant-w5h0--tool-913-task-authorblocks-block-authoring-prose-s.md"
+    },
+    {
+      "id": "folio-assistant-w6fu",
+      "title": "Visualiser follow-ups: disabled kg-viewer language switcher, library title extraction",
+      "status": "completed",
+      "type": "task",
+      "priority": "normal",
+      "parent": "folio-assistant-4ccr",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-10-02T09:01:57Z",
+      "updatedAt": "2026-10-02T12:05:57Z",
+      "preview": "Follow-up to beans `gnqa` (library) and `yhcq` (kg-viewer), stacked on PR #1839. Owner rulings 2026-10-02 on issue #1838:\n\n1. Library cover size stays 34×46 — no work.\n2. **kg-viewer language switcher: shown, DISABLED**, so readers see translations are planned while every catalogue is empty. Accessible: visible reason, `aria-disabled`, an explanation reachable by keyboard and tap (not hover-only),",
+      "file": "beans/defs/folio-assistant-w6fu--visualiser-follow-ups-disabled-kg-viewer-language.md"
     },
     {
       "id": "folio-assistant-w82m",
@@ -8538,7 +8566,7 @@
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-10-01T05:31:12Z",
-      "updatedAt": "2026-10-01T15:09:31Z",
+      "updatedAt": "2026-10-02T16:25:26Z",
       "preview": "PR1 of the approved placement proposal (owner rulings 2026-09-30; bean 9umr's eight groups; PR0 mechanisms in bean ejye). Move the content-type skill packages out of `cat-harness/skills/` to the instance that owns them, into the `content` / `library` concern group there:\n\n- paper / formal-math (`folio-paper-adapter`, `authoring-math`) and the three `claude-scientific-skills` packages -> `folio-ass",
       "file": "beans/defs/folio-assistant-ybwt--placement-pr1-content-type-skill-packages-move-up.md"
     },
