@@ -24,8 +24,8 @@ The method is [Latent Semantic Indexing](../methodologies/) (node `lsi`), with
 how to build, query and audit an index is the skill `lsi-indexing`.
 
 <div class="lv-grid">
-<div class="lv-stat"><b>5</b><span>committed indexes</span></div>
-<div class="lv-stat"><b>2136</b><span>units indexed</span></div>
+<div class="lv-stat"><b>4</b><span>committed indexes</span></div>
+<div class="lv-stat"><b>1968</b><span>units indexed</span></div>
 <div class="lv-stat"><b>5</b><span>graphs that need an index and lack a fresh one</span></div>
 </div>
 
@@ -37,12 +37,11 @@ the same as fine. The same verdict is `kg:audit`'s `tool-downstream-fresh` for t
 
 | graph | verdict | detail |
 |---|---|---|
-| `agent-skills/library` | <span class="lv-fail">fail</span> | no successful run recorded — re-run `bun run lsi index --instance agent-skills --graph library` |
 | `bootstrap-tools/bootstrap-tools-skills` | <span class="lv-na">n/a</span> | below the need-an-index threshold — not judged |
 | `bootstrap/skills` | <span class="lv-na">n/a</span> | below the need-an-index threshold — not judged |
 | `cat-harness/docs` | <span class="lv-fail">fail</span> | needs an LSI index and has none — run `bun run lsi index --instance cat-harness --graph docs` |
 | `cat-harness/folio` | <span class="lv-na">n/a</span> | below the need-an-index threshold — not judged |
-| `cat-harness/library` | <span class="lv-pass">pass</span> | fresh |
+| `cat-harness/library` | <span class="lv-fail">fail</span> | stale — re-run `bun run lsi index --instance cat-harness --graph library` |
 | `cat-harness/methodologies` | <span class="lv-na">n/a</span> | below the need-an-index threshold — not judged |
 | `cat-harness/policies` | <span class="lv-na">n/a</span> | below the need-an-index threshold — not judged |
 | `cat-harness/skills` | <span class="lv-pass">pass</span> | fresh |
@@ -58,7 +57,6 @@ the same as fine. The same verdict is `kg:audit`'s `tool-downstream-fresh` for t
 | `folio-assistant/beans` | <span class="lv-na">n/a</span> | state graph — indexed on demand, never committed |
 | `folio-assistant/memory` | <span class="lv-na">n/a</span> | below the need-an-index threshold — not judged |
 | `folio-assistant/root-docs` | <span class="lv-na">n/a</span> | below the need-an-index threshold — not judged |
-| `large-datasets/large-datasets-skills` | <span class="lv-na">n/a</span> | below the need-an-index threshold — not judged |
 | `smart-base/library` | <span class="lv-fail">fail</span> | no successful run recorded — re-run `bun run lsi index --instance smart-base --graph library` |
 | `smart-base/methodologies` | <span class="lv-na">n/a</span> | below the need-an-index threshold — not judged |
 | `smart-base/smart-base-docs` | <span class="lv-fail">fail</span> | needs an LSI index and has none — run `bun run lsi index --instance smart-base --graph smart-base-docs` |
@@ -68,27 +66,6 @@ the same as fine. The same verdict is `kg:audit`'s `tool-downstream-fresh` for t
 | `who-iris/who-iris-site` | <span class="lv-na">n/a</span> | below the need-an-index threshold — not judged |
 | `who-iris/who-iris-skills` | <span class="lv-na">n/a</span> | below the need-an-index threshold — not judged |
 | `who-style-guide/glossary` | <span class="lv-na">n/a</span> | below the need-an-index threshold — not judged |
-
-## agent-skills / library
-
-**174** units · **2605** terms · k = **100** · retains **88.5 %** of the weighted matrix · weighting `log-entropy` · sidecar `cat-harness/test/results/lsi/agent-skills/library.lsi.json`
-
-> Dimension 1 has **no negative pole**: it most likely measures unit length and term frequency (a margin), not a theme. Read the themes from dimension 2 on.
-
-Each dimension is a **contrast** between two poles, shown by their highest-loading terms. It is not named here: naming it is a reader's act.
-
-| dim | σ | one pole | the other pole |
-|---|---|---|---|
-| 1 | 18.54 | gemini, task, office, science, model, industrial, agent, openhands | *(none)* |
-| 2 | 15.41 | office, industrial, science, finance, media, gpt, opus, deepseek | defects, defect, safety, routing, body, detected, checks, description |
-| 3 | 13.21 | arxiv, wang, zhou, language, yang, yao, jiang, liu | defects, defect, routing, office, industrial, safety, detected, body |
-| 4 | 12.16 | openhands, gemini, gpt, configurations, opus, flash, condition, pro | defects, defect, arxiv, safety, liu, routing, coding, zhang |
-| 5 | 11.34 | openhands, defects, gemini, gpt, flash, pro, opus, defect | reasoning, tool, reference, docs, cookie, file, multimodal, coding |
-| 6 | 10.31 | oracle, human, fraction, verifier, augmentation, pytest, passed, submissions | claude, openhands, opus, gpt, flash, pro, deepseek, gemini |
-| 7 | 9.45 | behaviour, hook, mechanisms, interface, call, external, advisory, ordinary | cookie, claude, services, docs, platform, analyze, usage, policy |
-| 8 | 8.90 | wang, xiangyi, tier, university, spec, retrieved, well, checks | reasoning, yao, generated, spec-aware, providing, framework, chat, hook |
-
-**Findings** — 0 narrow dimension(s), 0 near-duplicate pair(s).
 
 ## cat-harness / library
 
@@ -132,7 +109,7 @@ Each dimension is a **contrast** between two poles, shown by their highest-loadi
 
 ## cat-harness / skills
 
-**215** units · **5872** terms · k = **100** · retains **79.2 %** of the weighted matrix · weighting `log-entropy` · sidecar `cat-harness/test/results/lsi/cat-harness/skills.lsi.json`
+**221** units · **5910** terms · k = **100** · retains **78.6 %** of the weighted matrix · weighting `log-entropy` · sidecar `cat-harness/test/results/lsi/cat-harness/skills.lsi.json`
 
 > Dimension 1 has **no negative pole**: it most likely measures unit length and term frequency (a margin), not a theme. Read the themes from dimension 2 on.
 
@@ -140,14 +117,14 @@ Each dimension is a **contrast** between two poles, shown by their highest-loadi
 
 | dim | σ | one pole | the other pole |
 |---|---|---|---|
-| 1 | 44.00 | instance, kind, harness, directory, session, graph, block, page | *(none)* |
-| 2 | 21.44 | watcher, slot, sibling, queue, backlog, prs, block, commits | harness, instance, declaration, directory, node, directories, bootstrap, graph |
-| 3 | 17.79 | session, beans, goals, store, green, epic, branch, window | slot, chapter, edges, block, formal, glossary, project, proof |
-| 4 | 16.53 | page, block, chapter, section, sections, blocks, manifest, text | ledger, sibling, subdirectory, items, window, sessions, queue, plan |
-| 5 | 14.79 | locale, page, navbar, translated, translation, theme, staging, french | edges, forward, edge, logical, backward, actor, cross-chapter, lane |
-| 6 | 14.76 | lane, role, requirements, actor, feature, phase, sign-off, task | rung, queue, archive, arm, slide, zip, sniff, bytes |
-| 7 | 14.38 | edges, forward, preview, backward, edge, cross-chapter, energy, merge | actor, lane, role, backlog, rung, criterion, arm, referee |
-| 8 | 14.11 | locale, translation, translated, french, back-translation, badge, translations, trip | preview, feature, phase, option, impact, user, theme, sha |
+| 1 | 44.24 | kind, instance, harness, directory, session, graph, block, page | *(none)* |
+| 2 | 21.51 | watcher, slot, sibling, queue, backlog, prs, block, commits | harness, instance, declaration, directory, node, directories, declares, graph |
+| 3 | 17.84 | session, beans, goals, store, branch, green, window, push | slot, chapter, block, edges, formal, glossary, project, proof |
+| 4 | 16.58 | page, block, section, text, chapter, blocks, sections, manifest | ledger, sibling, subdirectory, items, sessions, queue, plan, window |
+| 5 | 14.84 | navbar, page, locale, translated, theme, translation, board, tile | edges, forward, edge, logical, backward, cross-chapter, energy, ordering |
+| 6 | 14.76 | lane, requirements, role, actor, feature, phase, task, sign-off | rung, queue, archive, arm, slide, zip, sniff, bytes |
+| 7 | 14.40 | edges, forward, preview, backward, edge, cross-chapter, energy, merge | actor, lane, role, backlog, rung, criterion, arm, referee |
+| 8 | 14.19 | tile, avatar, theme, card, board, sticky, crop, glass | translation, locale, translated, language, glossary, french, term, back-translation |
 
 **Findings** — 0 narrow dimension(s), 0 near-duplicate pair(s).
 
