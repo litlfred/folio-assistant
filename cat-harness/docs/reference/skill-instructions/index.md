@@ -72,9 +72,9 @@ roles, and how they compose with the LLM, see [Skills & roles](../../skills.html
 | [A confirmation can be waived](confirmation-waiver.html) | `confirmation-waiver` | — | Several rules here stop an agent and hand a decision back: merging to `main`, |
 | [The comparison goes BEFORE the question, not inside the options](decision-comparison.html) | `decision-comparison` | — | [`interaction-modality`](interaction-modality.md) §4.1 fixes the *order* — |
 | [Deletion requires explicit confirmation](deletion-requires-confirmation.html) | `deletion-requires-confirmation` | — | **One rule, and it has no exceptions worth the word:** |
-| [/getting-started](getting-started.html) | `getting-started` | — | Process: [`processes/getting-started.bpmn`](../../processes/getting-started.html). |
-| [/interaction-modality](interaction-modality.html) | `interaction-modality` | — | Process: [`processes/getting-started.bpmn`](../../processes/getting-started.html), |
-| [/repo-conversion](repo-conversion.html) | `repo-conversion` | — | Process: [`processes/getting-started.bpmn`](../../processes/getting-started.html), |
+| [/getting-started](getting-started.html) | `getting-started` | — | Process: [`folio-assistant-core/processes/conduct/getting-started.bpmn`](../../processes/getting-sta |
+| [/interaction-modality](interaction-modality.html) | `interaction-modality` | — | Process: [`folio-assistant-core/processes/conduct/getting-started.bpmn`](../../processes/getting-sta |
+| [/repo-conversion](repo-conversion.html) | `repo-conversion` | — | Process: [`folio-assistant-core/processes/conduct/getting-started.bpmn`](../../processes/getting-sta |
 | [A falling-off retry rate, on every error](retry-backoff.html) | `retry-backoff` | — | Owner, 2026-09-20: **"as rule, use logarithmic fall-off on all errors. core |
 | [symbiotic-interaction](symbiotic-interaction.html) | `symbiotic-interaction` | — |  |
 | [Untrusted input](untrusted-input.html) | `untrusted-input` | — | One defect, three substrates. In every case something **substitutes a value |
@@ -252,7 +252,7 @@ roles, and how they compose with the LLM, see [Skills & roles](../../skills.html
 | [/integration-watch](integration-watch.html) | `integration-watch` | — | A thin dispatcher in front of [`integration-watcher`](integration-watcher.md) |
 | [integration-watcher (abstract parent)](integration-watcher.html) | `integration-watcher` | — | A concrete watcher (this skill's child) **watches incoming activity** |
 | [Working an issue](issue-working.html) | `issue-working` | — | Two rules. Both exist because **your view of an issue and everyone else's |
-| [Merge-conflict patterns](merge-conflict-patterns.html) | `merge-conflict-patterns` | — | `bun run merge:main` is the command; `processes/merge-base.bpmn` is the |
+| [Merge-conflict patterns](merge-conflict-patterns.html) | `merge-conflict-patterns` | — | `bun run merge:main` is the command; `processes/sdlc/merge-base.bpmn` is the |
 | [Does the prose say what the code does?](narrative-asserts-code.html) | `narrative-asserts-code` | — | Issue #1042, feature bean `flbx`, stage C. The owner, 2026-09-21: *"need to see |
 | [Opening brief](opening-brief.html) | `opening-brief` | — | Split out of `todo-manager.md` on 2026-09-19 (bean `tdmg`), which had reached |
 | [Cutting a package release](package-release.html) | `package-release` | — | A **release** is a version number that one commit keeps from then on: a tag, |

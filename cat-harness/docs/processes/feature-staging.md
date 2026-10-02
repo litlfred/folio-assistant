@@ -4,7 +4,7 @@ nav_exclude: true
 ---
 
 {: .note }
-> Generated from `cat-harness/processes/feature-staging.bpmn` by `gen-processes-viz.ts` — do not edit here. [All processes](index.html)
+> Generated from `cat-harness/processes/sdlc/feature-staging.bpmn` by `gen-processes-viz.ts` — do not edit here. [All processes](index.html)
 
 {% raw %}
 # Staging a feature branch preview, and taking it down
@@ -27,7 +27,7 @@ The single human step is the dispatch confirmation. Everything else is mechanica
 
 - **Called by:** no call activity names this process
 - **Calls:** [Render a Knowledge Graph to a CDN](render-kg-to-cdn.html)
-- **Names the `feature-staging` skill without calling this process:** [Content Change and Review](content-change-review.html), [CRDM Phase 6 — implement, MVP, acceptance](crdm-deliver.html), [Publishing the docs site, and keeping the previews alive](docs-site-publish.html), [Adopting an upstream version bump](upstream-version-adoption.html) — `activity-calls-skill-process` asks whether each should be a call activity.
+- **Names the `feature-staging` skill without calling this process:** [CRDM Phase 6 — implement, MVP, acceptance](crdm-deliver.html), [Publishing the docs site, and keeping the previews alive](docs-site-publish.html), [Adopting an upstream version bump](upstream-version-adoption.html), [Content Change and Review](content-change-review.html) — `activity-calls-skill-process` asks whether each should be a call activity.
 - **Presented on:** no docs page section shows this diagram
 - **Skill:** [`feature-staging`](../reference/skill-instructions/feature-staging.html)
 

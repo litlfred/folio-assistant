@@ -161,7 +161,7 @@ When an author requests a content change:
    `<pages-url>/STAGING/<slug>/`
 6. **Iterate** — each push updates the staging deployment with a new SHA
 
-The BPMN for this workflow is `processes/content-change-review.bpmn`.
+The BPMN for this workflow is `folio-assistant-core/processes/content/content-change-review.bpmn`.
 
 ## Staleness detection
 

@@ -164,7 +164,7 @@ When an author requests a content change:
    `<pages-url>/STAGING/<slug>/`
 6. **Iterate** — each push updates the staging deployment with a new SHA
 
-The BPMN for this workflow is `processes/content-change-review.bpmn`.
+The BPMN for this workflow is `folio-assistant-core/processes/content/content-change-review.bpmn`.
 
 ## Staleness detection
 
@@ -229,9 +229,9 @@ This skill has its own process: **[Staging a feature branch preview, and taking 
 
 | process | step(s) that name it |
 |---|---|
-| [Content Change and Review](../../processes/content-change-review.html) | Create feature branch; Build staging site; Deploy to STAGING/<slug>/; Comment staging URL on PR; Remove STAGING/<slug>/ |
 | [CRDM Phase 6 — implement, MVP, acceptance](../../processes/crdm-deliver.html) | Deploy the MVP to staging |
 | [Publishing the docs site, and keeping the previews alive](../../processes/docs-site-publish.html) | Restore the OPEN PRs' staging previews |
 | [Staging a feature branch preview, and taking it down](../../processes/feature-staging.html) | Build the docs site Jekyll · TypeDoc · KG export; Derive the slug from the head ref |
 | [Adopting an upstream version bump](../../processes/upstream-version-adoption.html) | MVP: build the candidate on a staging branch |
+| [Content Change and Review](../../processes/content-change-review.html) | Create feature branch; Build staging site; Deploy to STAGING/<slug>/; Comment staging URL on PR; Remove STAGING/<slug>/ |
 

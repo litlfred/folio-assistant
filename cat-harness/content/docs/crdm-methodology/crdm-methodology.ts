@@ -34,7 +34,7 @@ export default webpage({
       title: "The process",
       asset: {
         kind: "bpmn",
-        source: "processes/crdm-requirements.bpmn",
+        source: "processes/process/crdm-requirements.bpmn",
         rendered: "assets/img/workflows/crdm-requirements.svg",
         alt: "BPMN swimlane diagram: three lanes — BA/Feature Requestor, Agent, and Stakeholders. The BA submits a request; the agent detects whether it is a feature, scans for issues, and runs through the six CRDM phases. The BA reviews and coordinates with stakeholders at each phase. In Phase 6, two loops: an inner loop where the BA and agent iterate rapidly on increments, and an outer loop where the BA shares accumulated MVPs with stakeholders for testing. Stakeholders provide findings, the BA translates them into agent direction, and the cycle repeats until feature sign-off.",
         sourceLinks: [

@@ -18,7 +18,7 @@ import { join, resolve } from "node:path";
 import { siteDirFor } from "../../schemas/cat-harness.ts";
 import { DAK_COMPONENTS, DAK_UNFORMALIZED_COMPONENTS } from "../../schemas/block-kinds.ts";
 import { ActorDefSchema } from "../../schemas/role-graph.ts";
-import { ownKgRoots } from "../known-skills.ts";
+import { ownKgRoots, workflowFile } from "../known-skills.ts";
 import { DAK_CARDS, DAK_FIGURE_PATH, renderDakComponentsSvg } from "../gen-dak-components-figure.ts";
 
 const H = resolve(import.meta.dir, "../..");
@@ -56,7 +56,7 @@ describe("living deck: every claim about the KG still holds", () => {
   });
 
   test("slide 6 — the lifecycle process still has the six lanes and eight tasks shown", () => {
-    const x = read(join(H, "processes/content-lifecycle.bpmn"));
+    const x = read(workflowFile(H, "content-lifecycle.bpmn"));
     expect([...x.matchAll(/<bpmn:lane [^>]*name=/g)]).toHaveLength(6);
     for (const skill of ["content-plan", "todo-manager", "content-author", "content-test",
       "content-publish", "content-feedback", "content-retire"]) expect(x).toContain(`[${skill}]`);
