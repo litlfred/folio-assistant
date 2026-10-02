@@ -103,7 +103,9 @@ export type PriorityClass = z.infer<typeof PriorityClassSchema>;
 
 /**
  * Keys that name a GitHub-owned fact. Refused on a queue entry BY NAME, so the
- * writer is told the rule rather than that a key is unrecognised.
+ * writer is told the rule rather than that a key is unrecognised. None of
+ * these values is trustworthy once stored; `mergeable_state` in particular can
+ * serve a pre-merge view (bean `fx5r`), which is why it is read live.
  */
 export const FORBIDDEN_FACT_KEYS = [
   "headSha",
@@ -119,7 +121,7 @@ export const FORBIDDEN_FACT_KEYS = [
   "head_sha_matches_ci",
   "mergeable",
   "mergeableState",
-  "mergeable_state",
+  "mergeable_state", // read live only: bean `fx5r` measured it serving a pre-merge view
   "labels",
   "draft",
   "authoredPaths",
