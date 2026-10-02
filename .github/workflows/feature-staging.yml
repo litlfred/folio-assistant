@@ -1425,6 +1425,10 @@ jobs:
           # previews had accumulated, 47 of them for PRs already closed.
           submodules: true
           path: source
+          # The platform's scripts import `bootstrap-tools/` (a submodule), so a
+          # checkout without it fails at module load — which is how every preview
+          # removal crashed and the old previews piled up past Pages' 10 GB limit.
+          submodules: true
 
       - uses: oven-sh/setup-bun@v2
         with:
@@ -1774,6 +1778,10 @@ jobs:
           # reaches into the `bootstrap-tools` submodule.
           submodules: true
           path: source
+          # The platform's scripts import `bootstrap-tools/` (a submodule), so a
+          # checkout without it fails at module load — which is how every preview
+          # removal crashed and the old previews piled up past Pages' 10 GB limit.
+          submodules: true
 
       - uses: oven-sh/setup-bun@v2
         with:
