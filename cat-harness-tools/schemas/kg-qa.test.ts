@@ -3,6 +3,7 @@
  * committed `.kg-qa.json` without re-running the audit.
  */
 import { describe, expect, test } from "bun:test";
+import { HARNESS_ROOT } from "../scripts/lib/roots.ts";
 import { readdirSync, readFileSync, existsSync } from "node:fs";
 import { join } from "node:path";
 
@@ -18,9 +19,9 @@ import {
   KG_QA_RESULTS_DIR,
   KG_SUBJECT_GRAPH_KINDS,
   KG_SUBJECT_KINDS,
-} from "./kg-qa";
-import { defaultGraphKinds, kgQaHomeFor, repoRootFor } from "./cat-harness.js";
-import { actorsDir } from "./role-graph.ts";
+} from "../../cat-harness/schemas/kg-qa";
+import { defaultGraphKinds, kgQaHomeFor, repoRootFor } from "../../cat-harness/schemas/cat-harness.js";
+import { actorsDir } from "../../cat-harness/schemas/role-graph.ts";
 
 describe("the criteria registry", () => {
   test("ids are unique", () => {
@@ -125,7 +126,7 @@ describe("the sidecars committed in this repository", () => {
   // the auditor writes with — three hardcoded roots is how this test came to
   // read an empty set when the corpus moved, which its own "there are some"
   // guard then caught. The tree mirrors each subject's path, so it nests.
-  const root = join(import.meta.dir, "..", KG_QA_RESULTS_DIR);
+  const root = join(HARNESS_ROOT, KG_QA_RESULTS_DIR);
   const walk = (d: string): string[] =>
     !existsSync(d)
       ? []
@@ -198,14 +199,14 @@ describe("reachability reads the serving registry, not just manifests", () => {
     // The defect this whole change came from: `skills/authoring/content-lifecycle` was
     // absent from LOCAL_PACKAGES while 52 activities named its skills. A
     // package pointing at a missing directory is the same failure one step on.
-    const { LOCAL_PACKAGES } = await import("../src/tools/skill-fetch.js");
+    const { LOCAL_PACKAGES } = await import("../../cat-harness/src/tools/skill-fetch.js");
     const { existsSync } = await import("node:fs");
     const missing = Object.entries(LOCAL_PACKAGES).filter(([, dir]) => !existsSync(dir));
     expect(missing).toEqual([]);
   });
 
   test("every directory holding `<skill>.md` that a diagram can name is served", async () => {
-    const { LOCAL_PACKAGES } = await import("../src/tools/skill-fetch.js");
+    const { LOCAL_PACKAGES } = await import("../../cat-harness/src/tools/skill-fetch.js");
     const served = new Set(Object.keys(LOCAL_PACKAGES));
     // `content-lifecycle` is the one this change added; pin it so a future
     // edit to the table cannot silently drop it again.
@@ -244,7 +245,7 @@ describe("requirements are the fifth node kind and only point", () => {
   test("every committed requirement resolves every reference it makes", async () => {
     const { readdirSync, readFileSync, existsSync } = await import("node:fs");
     const { join } = await import("node:path");
-    const root = join(import.meta.dir, "..");
+    const root = HARNESS_ROOT;
     const dir = join(root, "skills", "requirements");
     expect(existsSync(dir)).toBe(true);
 
@@ -275,7 +276,7 @@ describe("requirements are the fifth node kind and only point", () => {
   test("`req:agent-workflow` exists — three requirements derive from it", async () => {
     const { existsSync } = await import("node:fs");
     const { join } = await import("node:path");
-    expect(existsSync(join(import.meta.dir, "..", "skills", "requirements", "agent-workflow.json"))).toBe(true);
+    expect(existsSync(join(HARNESS_ROOT, "skills", "requirements", "agent-workflow.json"))).toBe(true);
   });
 });
 
@@ -312,7 +313,7 @@ describe("KG_SUBJECT_GRAPH_KINDS — the bridge to the graph-kind registry", () 
 describe("where an instance's verdicts live (kgQaHomeFor)", () => {
   // Bean r3gy, decision 2 (owner, 2026-09-29): bootstrap's verdicts are harness
   // output ABOUT bootstrap, so they live in cat-harness, not in bootstrap.
-  const repo = repoRootFor(join(import.meta.dir, ".."));
+  const repo = repoRootFor(HARNESS_ROOT);
   const harness = join(repo, "cat-harness");
   const bootstrap = join(repo, "bootstrap");
 
