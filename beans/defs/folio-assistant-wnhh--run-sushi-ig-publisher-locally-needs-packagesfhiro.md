@@ -118,3 +118,11 @@ Session https://claude.ai/code/session_01PricYFhYhFA5DuMJaWo3CE, on PR #1816.
 - **Web view:** each PR preview renders every IG whose repository has a
   `fhir-ast/*` branch at `/<instance>/ast/`, with `parity.json` and
   `validity.json` beside it.
+
+## 2026-10-02 (later): the Java half — fork PRs, tested here
+
+Maven Central is reachable from this environment, so `ast-export` builds and tests here against `org.hl7.fhir.publisher.core` 2.3.4 (the FHIR package and terminology hosts are still blocked, so SUSHI and a full export are not).
+
+- **litlfred/fhir-ig-publisher#6** — `InputDigest` hashes only what git counts as the work tree, the same rule as `ig-ast.ts`. `mvn test` 23/23, including the golden vector (unchanged) and a new git-work-tree test. Compiled alone, the Java digest equals the TypeScript one on the golden vector, a clean smart-trust clone (`c1023d82…`) and a clean smart-base clone (`bd074bf9…`).
+- **litlfred/fhir-ig-publisher#7** — the blocker recorded above (*"`ast-export/pom.xml` needs `apache-poi` as explicit dependency"*): the Publisher's six OPTIONAL dependencies (POI ×3 at 5.4.1, commonmark ×2 at 0.21.0, txtmark 0.13) declared in `ast-export/pom.xml`. `mvn test` 22/22; `dependency:build-classpath` now carries all six.
+- **Still needed, on a machine with FHIR access:** with #6 (and #7) in, re-export and re-seed both caches (`fhir-ast/smart.who.int.trust`, `fhir-ast/smart.who.int.base`), so `ig-cache.sh verify` passes on a clean clone. Steps are on folio-assistant#1816.
