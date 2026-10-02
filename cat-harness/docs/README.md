@@ -53,7 +53,7 @@ Part of [C@T Harness](../README.md) 0.1.0, declared as `docs`, holding `docs`.
 | [`external-schemas/`](external-schemas/) | 1 file | |
 | [`fr/`](fr/) | 14 files | |
 | [`fsh-guts/`](fsh-guts/) | 1 file | |
-| [`glossary/`](glossary/) | 6 files | |
+| [`glossary/`](glossary/) | 10 files | |
 | [`guides/`](guides/) | 14 files | |
 | [`health/`](health/) | 1 file | |
 | [`issue-marks/`](issue-marks/) | 1 file | |
