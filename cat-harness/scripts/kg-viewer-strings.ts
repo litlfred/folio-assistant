@@ -244,6 +244,22 @@ export const UI_STRINGS: readonly UiString[] = [
     comment: "Shown in place of the neighbourhood diagram for an isolated node.",
   },
   {
+    en: "No links to or from other nodes in this graph. The links above lead out of it.",
+    comment:
+      "Shown in place of the neighbourhood diagram when the node's only links point at nodes in ANOTHER " +
+      "graph document, so none can be drawn here. Without it the page said 'no links' directly under a link.",
+  },
+  {
+    en: "in another graph",
+    comment:
+      "Small note after a link whose target is a node in a different knowledge-graph document, so following " +
+      "it leaves this page. The link itself is the node's short id and is not translated.",
+  },
+  {
+    en: "Docs site",
+    comment: "Link at the top of the page back to the documentation site the viewer is reached from.",
+  },
+  {
     en: "One-hop neighbourhood, 1 linked node",
     comment: "Accessible name of the diagram under a node's properties when it has exactly one neighbour.",
   },

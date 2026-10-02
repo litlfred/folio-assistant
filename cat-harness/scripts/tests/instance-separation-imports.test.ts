@@ -20,8 +20,10 @@
  * answer to a question already answered. The smart-* instances are pinned as
  * opted in, so the rule cannot quietly become vacuous.
  *
- * Measured 2026-10-02: six climbs in three files (smart-base/tools/index.ts,
- * smart-trust/themes/themes.ts and its test), all now through platform.ts.
+ * Measured 2026-10-02: six climbs in three files before stage D (#1767)
+ * moved smart-trust's themes/ and the DAK schemas and scripts into
+ * smart-base; after it, 25 climbs in 10 smart-base files, all now through
+ * smart-base/platform.ts.
  *
  * @module cat-harness/scripts/tests/instance-separation-imports.test
  */
@@ -80,8 +82,10 @@ function climbsOutOf(instance: string): string[] {
 describe("staged instances reach the platform only through platform.ts", () => {
   const optedIn = stagedInstances().filter((i) => existsSync(join(ROOT, i, SHIM)));
 
-  test("smart-base and smart-trust have opted in (the rule is not vacuous)", () => {
-    expect(optedIn).toEqual(expect.arrayContaining(["smart-base", "smart-trust"]));
+  test("smart-base has opted in (the rule is not vacuous)", () => {
+    // smart-trust opted in too until stage D (#1767) moved its themes/ into
+    // smart-base; it has no code that climbs out any more, so no shim.
+    expect(optedIn).toEqual(expect.arrayContaining(["smart-base"]));
   });
 
   test("in an opted-in instance, no file but platform.ts imports from outside it", () => {
