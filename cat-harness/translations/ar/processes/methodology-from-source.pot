@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: methodology-from-source\n"
-"POT-Creation-Date: 2026-10-02T14:45:26.788Z\n"
+"POT-Creation-Date: 2026-10-02T17:47:02.162Z\n"
 "PO-Revision-Date: \n"
 "Last-Translator: \n"
 "Language: ar\n"
@@ -74,11 +74,6 @@ msgstr ""
 msgid "Every skill and tool used becomes a Tool"
 msgstr ""
 
-#: processes/library/methodology-from-source.bpmn:43
-#. Diagram element documentation
-msgid "folio-assistant's document ingestion, choosing the rung mechanically (embedded outline, pages, OCR). Section text is written only when the licence allows it."
-msgstr ""
-
 #: processes/library/methodology-from-source.bpmn:42
 #. Diagram label
 msgid "Ingest into library/"
@@ -137,6 +132,11 @@ msgstr ""
 #: processes/library/methodology-from-source.bpmn:14
 #. Diagram element documentation
 msgid "The general process an agent follows when someone shares a paper, book or standard and asks for its method to be used: establish origin and licence, ingest it, render what the method says with what is adopted and refused, place it by ownership, integrate it into the processes that already exist by calling them rather than copying them, make every skill and tool it uses a declared Tool, relate it to existing beans and issues, and put the adoption to the owner. Written 2026-09-23 while adopting WireGen (arXiv:2312.07755) as the worked case. Operating skill: adopt-methodology-from-source; the adoption rules themselves are folio-assistant's methodology-adoption."
+msgstr ""
+
+#: processes/library/methodology-from-source.bpmn:43
+#. Diagram element documentation
+msgid "The harness's basic ingestion flow (`document-ingestion.bpmn`, `Process_Ingestion`): the source is accepted, its metadata goes into the KG, and it is catalogued in library/ — held if materialized, recorded as referenced if not. Since placement PR6 (bean `apcg`) the flow makes no content-type decision: reading a document into sections and blocks — choosing the rung mechanically (embedded outline, pages, OCR), and writing section text only when the licence allows it — is a refinement in the layer above, which calls this same flow first."
 msgstr ""
 
 #: processes/library/methodology-from-source.bpmn:57

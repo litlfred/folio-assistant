@@ -257,7 +257,7 @@ document run through a JSON-LD processor, with **zero** expanded IRIs outside
 
 **Where a prefix cannot be bound at all, a different spelling is never the
 answer.** CSVW metadata allows only `@language` and `@base` in its local
-context, so the `fac:` keys in [`tabular-metadata`](../../library/library-core/tabular-metadata.md)
+context, so the `fac:` keys in `tabular-metadata`
 dangled under ANY prefix. The two real answers are absolute IRIs, or not being
 JSON-LD at all. Bean `792y` took the second: the record became plain JSON and
 the CSVW document is derived from it. **A file whose extension says `.jsonld`

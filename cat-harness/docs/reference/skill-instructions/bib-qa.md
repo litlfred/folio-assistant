@@ -6,9 +6,9 @@ parent: Skill instructions
 ---
 
 {: .note }
-> Generated from [`cat-harness/skills/library/library-core/bib-qa.md`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/library/library-core/bib-qa.md) — do not edit here.
+> Generated from [`folio-assistant-core/skills/library/cataloguing/bib-qa.md`](https://github.com/litlfred/folio-assistant/blob/main/folio-assistant-core/skills/library/cataloguing/bib-qa.md) — do not edit here.
 >
-> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/cat-harness/skills/library/library-core/bib-qa.md){: .fa-edit-source }
+> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/folio-assistant-core/skills/library/cataloguing/bib-qa.md){: .fa-edit-source }
 
 {% raw %}
 # Bibliography QA Skill
@@ -35,7 +35,7 @@ beside this file. Nothing was deleted.
 | what | where |
 |---|---|
 | purpose, when to invoke, workflow, file layout, checklists, output format, the verification classes | **here** |
-| the QA tag vocabulary, per reference | [`bib-qa/qa-tags.md`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/library/library-core/bib-qa/qa-tags.md) — consult a row when tagging |
+| the QA tag vocabulary, per reference | [`bib-qa/qa-tags.md`](https://github.com/litlfred/folio-assistant/blob/main/folio-assistant-core/skills/library/cataloguing/bib-qa/qa-tags.md) — consult a row when tagging |
 
 ## When to Invoke
 

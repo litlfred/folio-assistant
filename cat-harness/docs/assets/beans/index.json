@@ -2,7 +2,7 @@
   "$schema": "folio-bean-index/v1",
   "tile": {
     "beans": {
-      "count": 633,
+      "count": 634,
       "unit": "beans"
     }
   },
@@ -2843,14 +2843,14 @@
     {
       "id": "folio-assistant-apcg",
       "title": "Placement PR6: library/ingestion split — basic flow stays in the harness, l1-document-ingestion goes to core",
-      "status": "todo",
+      "status": "in-progress",
       "type": "task",
-      "priority": "",
+      "priority": "normal",
       "parent": "folio-assistant-iirv",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-10-01T06:58:01Z",
-      "updatedAt": "2026-10-01T06:58:01Z",
+      "updatedAt": "2026-10-02T17:53:42Z",
       "preview": "Placement proposal §2 (owner rulings 2026-09-30 §6; process: review → resolve issues → staged PRs). Parent of PR0/PR1 is `9umr`; PR2–PR9 sit under the separation epic because D4 (owner, 2026-10-01, option 3) interleaves them with the split stages into one ordered sequence. Every PR: references move with the subject; generated trees regenerated, never hand-edited; `beans/**` not rewritten; kg-qa si",
       "file": "beans/defs/folio-assistant-apcg--placement-pr6-libraryingestion-split-basic-flow-st.md"
     },
@@ -4157,6 +4157,20 @@
       "updatedAt": "2026-10-02T07:14:42Z",
       "preview": "Findings from the as-is wireframe `cat-harness/docs/wireframes/library/` (intent.md, as-is.html, checks/), observed at 1280×800 and 390×844. Verbatim from its `## Findings`; a finding tagged → is also covered by that cross-cutting bug.\n\n1. **Five columns are off-screen even at desktop width.** The page action is now reachable: \"Pull out to folio\" moved to the first cell, so finding 1 of the earlie",
       "file": "beans/defs/folio-assistant-gnqa--library-visualiser-6-wireframe-findings.md"
+    },
+    {
+      "id": "folio-assistant-gp2f",
+      "title": "PAGE WEIGHT: move per-page nav, harness bar, icons, scripts and IG chrome CSS into shared cached assets (#1885)",
+      "status": "in-progress",
+      "type": "task",
+      "priority": "",
+      "parent": "folio-assistant-p5wm",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-10-02T16:39:55Z",
+      "updatedAt": "2026-10-02T16:39:55Z",
+      "preview": "Issue #1885.\n\nOwner rulings, 2026-10-02:\n- \"~230KB per IG page mostly navigation/styling overhead... can we condense into common styling/libraries? so page size is small?\"\n- \"1 do all.\"\n- \"first document workplan and /coordinate in case active work on pages happening\"\n- \"(in genreal update agent-agent coorindation/hadover skills - if you are working on a refactor of the platform, review active age",
+      "file": "beans/defs/folio-assistant-gp2f--page-weight-move-per-page-nav-harness-bar-icons-sc.md"
     },
     {
       "id": "folio-assistant-gpdo",

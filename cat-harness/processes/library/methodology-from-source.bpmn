@@ -40,7 +40,7 @@
       <bpmn:extensionElements><bootstrap.processes:skill ref="adopt-methodology-from-source"/></bpmn:extensionElements>
     </bpmn:task>
     <bpmn:callActivity id="Call_Ingest" name="Ingest into library/" calledElement="Process_Ingestion">
-      <bpmn:documentation>folio-assistant's document ingestion, choosing the rung mechanically (embedded outline, pages, OCR). Section text is written only when the licence allows it.</bpmn:documentation>
+      <bpmn:documentation>The harness's basic ingestion flow (`document-ingestion.bpmn`, `Process_Ingestion`): the source is accepted, its metadata goes into the KG, and it is catalogued in library/ — held if materialized, recorded as referenced if not. Since placement PR6 (bean `apcg`) the flow makes no content-type decision: reading a document into sections and blocks — choosing the rung mechanically (embedded outline, pages, OCR), and writing section text only when the licence allows it — is a refinement in the layer above, which calls this same flow first.</bpmn:documentation>
     </bpmn:callActivity>
     <bpmn:callActivity id="Call_RelatedWork" name="Related work: find, sort, ask" calledElement="Process_RelatedWork">
       <bpmn:documentation>Search beans, issues and open PRs for work the method touches, categorize and summarize them, and ask the owner whether and how to coordinate. CRDM calls the same sub-process.</bpmn:documentation>

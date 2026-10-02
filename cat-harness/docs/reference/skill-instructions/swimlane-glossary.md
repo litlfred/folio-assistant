@@ -19,7 +19,7 @@ Extract the personas an instance's BPMN diagrams put in swimlanes as a
 SKOS concept scheme, and keep the retirement ledger that lets a dropped
 term be told from an accident. Issue #596, bean `lqo9` slice 2.
 
-**Not the paper glossary.** [`glossary-build`](glossary-build.md) walks a
+**Not the paper glossary.** `glossary-build` walks a
 paper's blocks and writes a LaTeX chapter from `defines[]`. This walks a
 knowledge graph and writes JSON-LD. Different corpus, different output,
 different consumer — and there is a live ruling on whether they ever
@@ -173,7 +173,7 @@ must never be reachable as `unbound`.
 
 ## Related
 
-- [`glossary-build`](glossary-build.md) — the paper glossary, a different
+- `glossary-build` — the paper glossary, a different
   mechanism on a different corpus.
 - [`role-model`](role-model.md) — what a role is, and why `actedUpon`
   means a reader must not be told `Corpus` is a persona.

@@ -4,7 +4,7 @@ nav_exclude: true
 ---
 
 {: .note }
-> Generated from `cat-harness/processes/library/ingest-extract-structure.bpmn` by `gen-processes-viz.ts` — do not edit here. [All processes](index.html)
+> Generated from `folio-assistant-core/processes/library/ingest-extract-structure.bpmn` by `gen-processes-viz.ts` — do not edit here. [All processes](index.html)
 
 {% raw %}
 # Ingestion subprocess — extract structure
@@ -25,7 +25,7 @@ work plan in beans/.
 
 ## How it connects
 
-- **Called by:** [Document ingestion — uploads/ to the L1 source knowledge graph](document-ingestion.html)
+- **Called by:** [L1 document ingestion — a document to the L1 source knowledge graph](l1-document-ingestion.html)
 - **Calls:** none
 - **Presented on:** [Document ingestion — Extract structure](../document-ingestion.html#extract-structure)
 

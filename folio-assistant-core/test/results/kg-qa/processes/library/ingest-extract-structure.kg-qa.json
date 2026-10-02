@@ -2,10 +2,10 @@
   "$schema": "kg-qa/v1",
   "subject": {
     "kind": "process",
-    "id": "Process_L1Gate",
-    "path": "processes/library/ingest-l1-completeness-gate.bpmn"
+    "id": "Process_ExtractStructure",
+    "path": "processes/library/ingest-extract-structure.bpmn"
   },
-  "source_hash": "sha256:5347900bbce0cbcbf257e88f3f2660d6d9c4c70c864d8bc2f39a667156397691",
+  "source_hash": "sha256:87a4126fcfea483eac60a05807107c6dcebc50fbc02a082904cd5a8d4cfcba41",
   "criteria": {
     "raci-role-resolves": {
       "result": "n/a",
@@ -32,13 +32,8 @@
       "findings": []
     },
     "activity-skill-has-tool": {
-      "result": "fail",
-      "findings": [
-        {
-          "where": "Task_FlagDrift",
-          "detail": "names skill \"adjudication\", which no Tool declares `satisfies` for — the step's mechanism is still prose."
-        }
-      ]
+      "result": "pass",
+      "findings": []
     },
     "decision-ref-resolves": {
       "result": "n/a",
@@ -69,11 +64,11 @@
       "findings": []
     },
     "activity-fulfilment-kind": {
-      "result": "pass",
+      "result": "n/a",
       "findings": []
     },
     "call-activity-resolves": {
-      "result": "pass",
+      "result": "n/a",
       "findings": []
     },
     "process-diagram-published": {
@@ -114,9 +109,9 @@
     }
   },
   "totals": {
-    "pass": 16,
-    "fail": 1,
-    "n/a": 8,
+    "pass": 15,
+    "fail": 0,
+    "n/a": 10,
     "unknown": 0
   }
 }

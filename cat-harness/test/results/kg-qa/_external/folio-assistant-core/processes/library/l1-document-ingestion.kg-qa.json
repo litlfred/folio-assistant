@@ -2,10 +2,10 @@
   "$schema": "kg-qa/v1",
   "subject": {
     "kind": "process",
-    "id": "Process_BuildL1Kg",
-    "path": "processes/library/ingest-build-l1-kg.bpmn"
+    "id": "Process_L1DocumentIngestion",
+    "path": "../folio-assistant-core/processes/library/l1-document-ingestion.bpmn"
   },
-  "source_hash": "sha256:a2b9fadd5be72f81b87b88c6985deba4f35066049707079773da22f6ad7ecf19",
+  "source_hash": "sha256:3b226372f3653009e777c1b7f32a8e16fa7993ea39737b5ac7d6436f5325a3cf",
   "criteria": {
     "raci-role-resolves": {
       "result": "n/a",
@@ -32,8 +32,21 @@
       "findings": []
     },
     "activity-skill-has-tool": {
-      "result": "pass",
-      "findings": []
+      "result": "fail",
+      "findings": [
+        {
+          "where": "CallActivity_IngestTheme",
+          "detail": "names skill \"theme-art-intake\", which no Tool declares `satisfies` for — the step's mechanism is still prose."
+        },
+        {
+          "where": "CallActivity_Gate",
+          "detail": "names skill \"l1-document-ingestion\", which no Tool declares `satisfies` for — the step's mechanism is still prose."
+        },
+        {
+          "where": "Task_SummaryQueue",
+          "detail": "names skill \"l1-document-ingestion\", which no Tool declares `satisfies` for — the step's mechanism is still prose."
+        }
+      ]
     },
     "decision-ref-resolves": {
       "result": "n/a",
@@ -68,7 +81,7 @@
       "findings": []
     },
     "call-activity-resolves": {
-      "result": "n/a",
+      "result": "pass",
       "findings": []
     },
     "process-diagram-published": {
@@ -84,11 +97,11 @@
       "findings": []
     },
     "gateway-documented": {
-      "result": "n/a",
+      "result": "pass",
       "findings": []
     },
     "gateway-branches-named": {
-      "result": "n/a",
+      "result": "pass",
       "findings": []
     },
     "node-reachable": {
@@ -109,9 +122,9 @@
     }
   },
   "totals": {
-    "pass": 14,
-    "fail": 0,
-    "n/a": 11,
+    "pass": 16,
+    "fail": 1,
+    "n/a": 8,
     "unknown": 0
   }
 }
