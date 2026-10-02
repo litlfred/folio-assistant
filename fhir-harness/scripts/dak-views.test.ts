@@ -7,7 +7,7 @@ import { mkdirSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from "nod
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { DAK_VIEW_SCRIPT, dakHubLinks, dakServed, dakViewData, dakViews } from "./dak-views.ts";
-import type { FhirArtifact } from "../../folio-assistant-core/schemas/fhir-artifact-index.js";
+import type { FhirArtifact } from "../schemas/fhir-artifact-index.js";
 
 const a = {
   key: "ValueSet/Actors",
@@ -15,7 +15,7 @@ const a = {
   id: "Actors",
   title: "Actors",
   published: { xml: { url: "https://p/ValueSet-Actors.xml" }, json: { url: "https://p/ValueSet-Actors.json" } },
-  dak: {
+  sidecars: {
     schema: { url: "https://p/schemas/ValueSet-Actors.schema.json", localPath: "fhir-artifact-index/dak/ValueSet-Actors.schema.json" },
     jsonld: { url: "https://p/ValueSet-Actors.jsonld", localPath: "fhir-artifact-index/dak/ValueSet-Actors.jsonld" },
     displays: { url: "https://p/schemas/ValueSet-Actors.displays.json", localPath: "fhir-artifact-index/dak/ValueSet-Actors.displays.json" },
@@ -25,7 +25,7 @@ const a = {
 describe("dak views", () => {
   it("has a page for each HELD schema and JSON-LD sidecar, in the Publisher's tab order, and none for displays", () => {
     expect(dakViews(a).map((v) => v.file)).toEqual(["ValueSet-Actors.schema.json", "ValueSet-Actors.jsonld"]);
-    const byRef = { ...a, dak: { schema: { url: "https://p/x.schema.json" } } } as unknown as FhirArtifact;
+    const byRef = { ...a, sidecars: { schema: { url: "https://p/x.schema.json" } } } as unknown as FhirArtifact;
     expect(dakViews(byRef)).toEqual([]);
   });
 

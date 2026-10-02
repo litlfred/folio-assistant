@@ -417,6 +417,8 @@ const SKILLS_CATEGORIES: Record<string, string> = {
   "fhir-ig-authoring": "FHIR IG authoring (fhir-ig-authoring)",
   "content-lifecycle-ext": "Content lifecycle refinements (content-lifecycle-ext)",
   ingestion: "Document ingestion methods (ingestion)",
+  // Bean `7eak`: rendering catalogue records as standard Dublin Core.
+  catalogue: "Catalogue records — Dublin Core renderings (catalogue)",
   // Declared directories that hold their skills DIRECTLY, so they are keyed by
   // the declaration's id, like `crdm` and `bootstrap` below. All three were
   // declared in `cat-harness.json` with no label here, which made

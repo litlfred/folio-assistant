@@ -1,5 +1,5 @@
 {
-  "$schema": "folio-fhir-artifact-index/v1",
+  "$schema": "folio-fhir-artifact-index/v2",
   "id": "smart-trust",
   "title": "smart.who.int.trust — artefact index",
   "packageId": "smart.who.int.trust",
@@ -19,12 +19,12 @@
     "canonicals": "canonicals.json",
     "packageIndex": "package.tgz!package/.index.json",
     "artifactsHtml": "artifacts.html",
-    "dakEnumerations": [
+    "sidecarEnumerations": [
       "LogicalModels.schema.json",
       "ValueSets.schema.json"
     ]
   },
-  "dakApi": "present",
+  "sidecarApi": "present",
   "contexts": [
     {
       "id": "tng-context/v1-DEV",
@@ -18922,7 +18922,7 @@
       "listedAt": 36,
       "title": "COSE Headers (DRAFT)",
       "description": "Data elements for COSE Headers https://www.iana.org/assignments/cose/cose.xhtml#header-parameters",
-      "dak": {
+      "sidecars": {
         "schema": {
           "url": "https://litlfred.github.io/smart-trust/StructureDefinition-COSEHeader.schema.json",
           "localPath": "fhir-artifact-index/dak/StructureDefinition-COSEHeader.schema.json",
@@ -18995,7 +18995,7 @@
       "listedAt": 34,
       "title": "CBOR Web Token (CWT) Claim",
       "description": "Logical Model for Data elements in CBOR Web Token (CWT) https://www.iana.org/assignments/cwt/cwt.xhtml",
-      "dak": {
+      "sidecars": {
         "schema": {
           "url": "https://litlfred.github.io/smart-trust/StructureDefinition-CWT.schema.json",
           "localPath": "fhir-artifact-index/dak/StructureDefinition-CWT.schema.json",
@@ -19068,7 +19068,7 @@
       "listedAt": 35,
       "title": "CBOR Web Token (CWT) Payload (Common)",
       "description": "Logical Model for CBOR Web Token (CWT) Payload Logical Modelin CWT Payload https://www.iana.org/assignments/cwt/cwt.xhtml",
-      "dak": {
+      "sidecars": {
         "schema": {
           "url": "https://litlfred.github.io/smart-trust/StructureDefinition-CWTPayload.schema.json",
           "localPath": "fhir-artifact-index/dak/StructureDefinition-CWTPayload.schema.json",
@@ -19141,7 +19141,7 @@
       "listedAt": 37,
       "title": "Health Certificate",
       "description": "Logical Model for the HCERT",
-      "dak": {
+      "sidecars": {
         "schema": {
           "url": "https://litlfred.github.io/smart-trust/StructureDefinition-HCert.schema.json",
           "localPath": "fhir-artifact-index/dak/StructureDefinition-HCert.schema.json",
@@ -19214,7 +19214,7 @@
       "listedAt": 38,
       "title": "Scheme Information",
       "description": "Logical Model for Information on the trusted list and its issuing scheme",
-      "dak": {
+      "sidecars": {
         "schema": {
           "url": "https://litlfred.github.io/smart-trust/StructureDefinition-SchemeInformation.schema.json",
           "localPath": "fhir-artifact-index/dak/StructureDefinition-SchemeInformation.schema.json",
@@ -19287,7 +19287,7 @@
       "listedAt": 42,
       "title": "WHO GDHCN Actor ValueSet of actor codes",
       "description": "ValueSet of codes for actor codes",
-      "dak": {
+      "sidecars": {
         "schema": {
           "url": "https://litlfred.github.io/smart-trust/ValueSet-Actors.schema.json",
           "localPath": "fhir-artifact-index/dak/ValueSet-Actors.schema.json",
@@ -19369,7 +19369,7 @@
       "listedAt": 43,
       "title": "WHO GDHCN Connection Types",
       "description": "ValueSet of GDHCN Trust Network Connection Types",
-      "dak": {
+      "sidecars": {
         "schema": {
           "url": "https://litlfred.github.io/smart-trust/ValueSet-ConnectionTypes.schema.json",
           "localPath": "fhir-artifact-index/dak/ValueSet-ConnectionTypes.schema.json",
@@ -19451,7 +19451,7 @@
       "listedAt": 46,
       "title": "WHO GDHCN Trust Domains",
       "description": "ValueSet of WHO GDHCN Trust Domains for Production environment",
-      "dak": {
+      "sidecars": {
         "schema": {
           "url": "https://litlfred.github.io/smart-trust/ValueSet-Domains.schema.json",
           "localPath": "fhir-artifact-index/dak/ValueSet-Domains.schema.json",
@@ -19533,7 +19533,7 @@
       "listedAt": 47,
       "title": "WHO GDHCN Trust Domains - DEV",
       "description": "ValueSet of WHO GDHCN Trust Domains for Development environment",
-      "dak": {
+      "sidecars": {
         "schema": {
           "url": "https://litlfred.github.io/smart-trust/ValueSet-Domains-DEV.schema.json",
           "localPath": "fhir-artifact-index/dak/ValueSet-Domains-DEV.schema.json",
@@ -19615,7 +19615,7 @@
       "listedAt": 48,
       "title": "WHO GDHCN Trust Domains - UAT",
       "description": "ValueSet of WHO GDHCN Trust Domains for User Acceptance Testing environment",
-      "dak": {
+      "sidecars": {
         "schema": {
           "url": "https://litlfred.github.io/smart-trust/ValueSet-Domains-UAT.schema.json",
           "localPath": "fhir-artifact-index/dak/ValueSet-Domains-UAT.schema.json",
@@ -19697,7 +19697,7 @@
       "listedAt": 39,
       "title": "WHO GDHCN Key Usage ValueSet",
       "description": "ValueSet of codes for key usage codes for Production environment",
-      "dak": {
+      "sidecars": {
         "schema": {
           "url": "https://litlfred.github.io/smart-trust/ValueSet-KeyUsage.schema.json",
           "localPath": "fhir-artifact-index/dak/ValueSet-KeyUsage.schema.json",
@@ -19779,7 +19779,7 @@
       "listedAt": 40,
       "title": "WHO GDHCN Key Usage ValueSet - DEV",
       "description": "ValueSet of codes for key usage codes for Development environment",
-      "dak": {
+      "sidecars": {
         "schema": {
           "url": "https://litlfred.github.io/smart-trust/ValueSet-KeyUsage-DEV.schema.json",
           "localPath": "fhir-artifact-index/dak/ValueSet-KeyUsage-DEV.schema.json",
@@ -19861,7 +19861,7 @@
       "listedAt": 41,
       "title": "WHO GDHCN Key Usage ValueSet - UAT",
       "description": "ValueSet of codes for key usage codes for User Acceptance Testing environment",
-      "dak": {
+      "sidecars": {
         "schema": {
           "url": "https://litlfred.github.io/smart-trust/ValueSet-KeyUsage-UAT.schema.json",
           "localPath": "fhir-artifact-index/dak/ValueSet-KeyUsage-UAT.schema.json",
@@ -19943,7 +19943,7 @@
       "listedAt": 49,
       "title": "WHO GDHCN Trust Network Participant",
       "description": "ValueSet of GDHCN Trust Network Participants for Production environment",
-      "dak": {
+      "sidecars": {
         "schema": {
           "url": "https://litlfred.github.io/smart-trust/ValueSet-Participants.schema.json",
           "localPath": "fhir-artifact-index/dak/ValueSet-Participants.schema.json",
@@ -20025,7 +20025,7 @@
       "listedAt": 50,
       "title": "WHO GDHCN Trust Network Participant - DEV",
       "description": "ValueSet of GDHCN Trust Network Participants for Development environment",
-      "dak": {
+      "sidecars": {
         "schema": {
           "url": "https://litlfred.github.io/smart-trust/ValueSet-Participants-DEV.schema.json",
           "localPath": "fhir-artifact-index/dak/ValueSet-Participants-DEV.schema.json",
@@ -20107,7 +20107,7 @@
       "listedAt": 51,
       "title": "WHO GDHCN Trust Network Participant - UAT",
       "description": "ValueSet of GDHCN Trust Network Participants for User Acceptance Testing environment",
-      "dak": {
+      "sidecars": {
         "schema": {
           "url": "https://litlfred.github.io/smart-trust/ValueSet-Participants-UAT.schema.json",
           "localPath": "fhir-artifact-index/dak/ValueSet-Participants-UAT.schema.json",
@@ -20189,7 +20189,7 @@
       "listedAt": 44,
       "title": "WHO GDHCN Payload Types",
       "description": "ValueSet of GDHCN Trust Network Payload Types",
-      "dak": {
+      "sidecars": {
         "schema": {
           "url": "https://litlfred.github.io/smart-trust/ValueSet-PayloadTypes.schema.json",
           "localPath": "fhir-artifact-index/dak/ValueSet-PayloadTypes.schema.json",
@@ -20271,7 +20271,7 @@
       "listedAt": 45,
       "title": "WHO GDHCN Transaction Codes",
       "description": "ValueSet of WHO GDHCN Transaction Codes",
-      "dak": {
+      "sidecars": {
         "schema": {
           "url": "https://litlfred.github.io/smart-trust/ValueSet-Transactions.schema.json",
           "localPath": "fhir-artifact-index/dak/ValueSet-Transactions.schema.json",
@@ -20353,7 +20353,7 @@
       "listedAt": 52,
       "title": "WHO Regional Offices",
       "description": "ValueSet of WHO Regional Offices",
-      "dak": {
+      "sidecars": {
         "schema": {
           "url": "https://litlfred.github.io/smart-trust/ValueSet-WHORegionalOffices.schema.json",
           "localPath": "fhir-artifact-index/dak/ValueSet-WHORegionalOffices.schema.json",

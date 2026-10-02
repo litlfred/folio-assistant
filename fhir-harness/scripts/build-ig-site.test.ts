@@ -10,7 +10,7 @@ import { spawnSync } from "node:child_process";
 import { join } from "node:path";
 import { ARTIFACTS_TEMPLATE_PATH, artifactVariables, colourScheme, contrast, dedupeIds, includeTargets, pageNav, RELEASES_TEMPLATE_PATH, releaseVariables, sizeLabel, stageIgSite, tocPage, type StageResult } from "./build-ig-site";
 import type { IgReleases } from "../schemas/ig-releases.ts";
-import { artifactPageName } from "../../folio-assistant-core/schemas/fhir-artifact-index.js";
+import { artifactPageName } from "../schemas/fhir-artifact-index.js";
 
 let dir: string;
 let out: string;

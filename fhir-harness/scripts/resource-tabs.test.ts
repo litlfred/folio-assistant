@@ -5,7 +5,7 @@
  */
 import { describe, expect, it } from "bun:test";
 import { VIEW_PAGE, examplesPage, historyPage, mdText, resourceFacts, statusLine, testingPage } from "./resource-views.ts";
-import type { FhirArtifact } from "../../folio-assistant-core/schemas/fhir-artifact-index.js";
+import type { FhirArtifact } from "../schemas/fhir-artifact-index.js";
 
 const vs = resourceFacts({ resourceType: "ValueSet", id: "Actors", name: "Actors", title: "Actor codes", status: "active", date: "2026-10-01T11:40:21+00:00", experimental: true, url: "http://x/ValueSet/Actors" });
 const ep = resourceFacts({ resourceType: "Endpoint", id: "E-1", name: "Latvia trust list", status: "active" });

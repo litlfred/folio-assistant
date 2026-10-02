@@ -4,7 +4,7 @@
  */
 import { describe, expect, it } from "bun:test";
 import { publisherViewPage, refusals } from "./p2-refusals.ts";
-import type { FhirArtifactIndex } from "../../folio-assistant-core/schemas/fhir-artifact-index.js";
+import type { FhirArtifactIndex } from "../schemas/fhir-artifact-index.js";
 
 const ix = {
   id: "x",

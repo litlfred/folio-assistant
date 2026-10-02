@@ -14,7 +14,7 @@
  */
 import { readFileSync } from "node:fs";
 import { gunzipSync } from "node:zlib";
-import { artifactPageName, type FhirArtifact } from "../../folio-assistant-core/schemas/fhir-artifact-index.js";
+import { artifactPageName, type FhirArtifact } from "../schemas/fhir-artifact-index.js";
 
 /** Where the generator publishes the loader, under the instance's docs root. */
 export const JSON_VIEW_SCRIPT = "assets/resource-json.js";

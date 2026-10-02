@@ -15,14 +15,14 @@
  * table, because a generic generator cannot import from an instance above it.
  * That is a TENSION, not a settled placement: fhir-harness's one rule is that
  * it knows nothing of WHO, and the DAK API is WHO's post-processing. The
- * rendering is driven entirely by `a.dak` being present, so an IG without the
+ * rendering is driven entirely by `a.sidecars` being present, so an IG without the
  * overlay gets none of it; moving the overlay into smart-base as a pluggable
  * renderer is the layering fix (recorded on bean `jut3`).
  */
 import { readFileSync } from "node:fs";
 import { hasJsonView } from "./resource-views.ts";
 import { basename, join } from "node:path";
-import { artifactPageName, type FhirArtifact, type FhirArtifactIndex } from "../../folio-assistant-core/schemas/fhir-artifact-index.js";
+import { artifactPageName, type FhirArtifact, type FhirArtifactIndex } from "../schemas/fhir-artifact-index.js";
 import { declarationPathIn } from "../../cat-harness/schemas/cat-harness.js";
 
 /** The two sidecars the Publisher renders a page for, in its tab order. */
@@ -42,7 +42,7 @@ export interface DakView {
 /** The view pages one artefact has: a held schema and/or JSON-LD sidecar. A referenced-only sidecar has no bytes here, so no page. */
 export function dakViews(a: FhirArtifact): DakView[] {
   return DAK_VIEW_KINDS.flatMap(({ key, label }) => {
-    const r = a.dak?.[key];
+    const r = a.sidecars?.[key];
     return r?.localPath ? [{ file: basename(r.localPath), localPath: r.localPath, label }] : [];
   });
 }
@@ -109,7 +109,7 @@ export function dakHubLinks(artifacts: readonly FhirArtifact[], publishedAt: str
   const pagesByName = new Set(artifacts.map((a) => `${artifactPageName(a)}.html`));
   const held = new Map<string, string>();
   for (const a of artifacts) {
-    for (const r of Object.values(a.dak ?? {})) {
+    for (const r of Object.values(a.sidecars ?? {})) {
       if (typeof r === "object" && r && "localPath" in r && r.localPath) held.set(r.localPath.split("/").pop()!, r.localPath);
     }
   }

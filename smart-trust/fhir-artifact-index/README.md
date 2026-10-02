@@ -7,6 +7,7 @@ Part of [smart-trust](../README.md) 0.1.0, declared as `smart-trust-artifact-ind
 
 | file | what it is | used by |
 |---|---|---|
+| [`ig-identity.json`](ig-identity.json) | data |  |
 | [`index.json`](index.json) | smart.who.int.trust — artefact index |  |
 | [`menu.json`](menu.json) | data |  |
 | [`package.tgz`](package.tgz) | a file |  |

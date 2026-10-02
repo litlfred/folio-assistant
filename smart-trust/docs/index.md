@@ -2,6 +2,9 @@
 title: "WHO SMART Trust — artefact index"
 description: "All 678 artefacts of the WHO SMART Trust IG 1.8.0, reconstructed from its published output."
 has_children: true
+renders:
+  - smart-trust/fhir-artifact-index
+rendered-by: ig-pages
 ---
 <link rel="stylesheet" href="{{ '/smart-trust/assets/ig-pages.css' | relative_url }}">
 <link rel="stylesheet" href="{{ '/smart-trust/assets/ig-chrome.css' | relative_url }}">
@@ -40,7 +43,7 @@ enumeration response, carrying an `example` that happens to hold the list. So th
 | canonicals | `canonicals.json` |
 | packageIndex | `package.tgz!package/.index.json` |
 | artifactsHtml | `artifacts.html` |
-| dakEnumerations | `LogicalModels.schema.json, ValueSets.schema.json` |
+| sidecarEnumerations | `LogicalModels.schema.json, ValueSets.schema.json` |
 | source | `gh-pages` — `https://litlfred.github.io/smart-trust` (read 2026-10-01) |
 | canonical base | `http://smart.who.int/trust` |
 
@@ -48,7 +51,7 @@ enumeration response, carrying an `example` that happens to hold the list. So th
 
 The IG publishes a DAK API for 19 of its artefacts. The four sidecars are issued
 independently — every ValueSet gets all four, the logical models get two — which is why they
-are counted separately rather than as one "has DAK" tally.
+are counted separately rather than as one "has DAK API" tally.
 
 <div class="st-grid">
 <div class="st-stat"><b>19</b><span>JSON Schema</span></div>

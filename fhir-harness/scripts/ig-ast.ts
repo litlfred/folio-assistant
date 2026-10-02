@@ -58,6 +58,7 @@ import {
   resourceIri,
   type AstEdge,
   type AstManifest,
+  type AstResource,
 } from "../schemas/ig-ast.ts";
 
 import {

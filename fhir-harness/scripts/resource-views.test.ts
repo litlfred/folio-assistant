@@ -6,7 +6,7 @@ import { describe, expect, it } from "bun:test";
 import { readFileSync } from "node:fs";
 import { join } from "node:path";
 import { JSON_VIEW_SCRIPT, hasJsonView, jsonViewData } from "./resource-views.ts";
-import type { FhirArtifact } from "../../folio-assistant-core/schemas/fhir-artifact-index.js";
+import type { FhirArtifact } from "../schemas/fhir-artifact-index.js";
 
 const vs = {
   key: "ValueSet/Actors",

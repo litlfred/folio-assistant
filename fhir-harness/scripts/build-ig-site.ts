@@ -39,7 +39,7 @@ import { copyFileSync, existsSync, mkdirSync, readdirSync, readFileSync, statSyn
 import { basename, extname, join, resolve } from "node:path";
 import { parse as parseYaml } from "yaml";
 import { describeSiteData, igSiteData, type IgSiteDataResult } from "./ig-site-data";
-import { artifactPageName } from "../../folio-assistant-core/schemas/fhir-artifact-index.js";
+import { artifactPageName } from "../schemas/fhir-artifact-index.js";
 import { wrapRaw } from "../../cat-harness/scripts/lib/liquid-raw.ts";
 import type { IgReleases } from "../schemas/ig-releases.ts";
 
