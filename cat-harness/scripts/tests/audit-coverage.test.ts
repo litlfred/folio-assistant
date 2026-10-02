@@ -274,8 +274,10 @@ describe("the report is a fixpoint", () => {
     expect(qa).toBeDefined();
     // With `test/results/` absent from the checkout — QA on the `qa-reports`
     // branch (bean 0dav) — there is nothing to count, and the row must say
-    // UNKNOWN rather than `empty` (readers-audit C8).
-    if (qa!.state === "unknown") {
+    // UNKNOWN rather than `empty` (readers-audit C8). Since bean `5hox` every
+    // `qa` directory declares `storage`, and the census skips a stored
+    // directory whether or not a working copy is there: the row is `stored`.
+    if (qa!.state === "unknown" || qa!.state === "stored") {
       expect(qa!.files).toBe(0);
       return;
     }

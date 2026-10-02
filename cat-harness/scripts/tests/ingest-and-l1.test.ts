@@ -32,6 +32,7 @@ import {
   ENTRY_DIRECTORIES,
   ENTRY_SIDECARS,
 } from "../check-l1-complete.ts";
+import { resolveQaLocation } from "../qa-store.ts";
 import { NARRATIVE_BEARING } from "../narratives.ts";
 import {
   OCR_THRESHOLD_CHARS,
@@ -411,6 +412,14 @@ describe("the verdict as a committed sidecar", () => {
     expect(states.length).toBeGreaterThan(0);
     if (!existsSync(join(root, "test", "results", "library-qa"))) {
       expect(new Set(states.map((x) => x.state))).toEqual(new Set(["absent"]));
+      return;
+    }
+    // Bean 5hox: the directory declares `storage`, so its working copy is not
+    // a record and, with no `--against`, every verdict reads UNKNOWN — never
+    // `current` about a copy nobody stored.
+    const results = join(root, "test", "results");
+    if (resolveQaLocation(join(root, "..")).directories.some((d) => d.absPath === results && d.storage)) {
+      expect(new Set(states.map((x) => x.state))).toEqual(new Set(["unknown"]));
       return;
     }
     expect(staleSidecars(root, all ?? [])).toEqual([]);

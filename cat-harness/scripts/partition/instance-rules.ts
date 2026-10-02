@@ -406,6 +406,7 @@ export const RULES: Rule[] = [
       // same reason as its two neighbours — it reads the declaration and git,
       // and no folio's subject matter could make it answer differently.
       "scripts/qa-store.ts",                 // the qa-reports branch: readQa / publishQa / pruneQa
+      "scripts/qa-verify-moved.ts",          // bean 5hox: hash-verify the moved QA files against a qa-reports entry
       "scripts/qa-site-assets.ts",           // a site build's QA evidence: fetch from qa-reports, verify the copy (tfqf)
       "scripts/check-qa-corpus.ts",          // the fetched qa tree validates, hosted homes included (cxcn)
       // Its clean-merge counterpart, and harness-level for the same reason: it

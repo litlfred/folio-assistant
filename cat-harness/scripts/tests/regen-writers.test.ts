@@ -82,11 +82,12 @@ const CASES: Case[] = [
     artefact: () => firstIn("cat-harness/translations/es/processes", ".pot"),
     stale: (t) => `${t}\nmsgid "a string no diagram carries (i1q7 fixture)"\nmsgstr ""\n`,
   },
-  {
-    check: "check:published-instance-exports",
-    artefact: () => "cat-harness/test/results/kg-export.bootstrap.qa-results.json",
-    stale: (t) => t.replace(/"script_hash":\s*"[0-9a-f]+"/, '"script_hash": "000000000000"'),
-  },
+  // `check:published-instance-exports` was a case here, staling
+  // `test/results/kg-export.bootstrap.qa-results.json`. Since bean `5hox` that
+  // directory declares `storage`: the check reads its baseline from the
+  // `qa-reports` branch (`--against`) or reports UNKNOWN, and a staled WORKING
+  // copy is no longer a record it can go red on. Staleness of a stored file is
+  // not a regen question; the record is written by `qa-publish`.
   {
     check: "bat:sync:check",
     artefact: () => firstIn("cat-harness/scripts", ".bat"),
