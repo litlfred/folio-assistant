@@ -1,11 +1,11 @@
 ---
 # folio-assistant-8pzh
 title: 'smart-base: extract smart-kg L1 instance documents (publication, section, recommendation) from ingested guideline PDFs'
-status: todo
+status: in-progress
 type: task
 priority: normal
 created_at: 2026-10-02T06:16:07Z
-updated_at: 2026-10-02T12:02:18Z
+updated_at: 2026-10-02T12:02:31Z
 parent: folio-assistant-qvxh
 ---
 
