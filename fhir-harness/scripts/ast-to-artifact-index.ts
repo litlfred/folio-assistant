@@ -128,12 +128,41 @@ export interface AstIndexOptions {
   astPath?: string;
 }
 
+/** A cross-version extension URL: `http://hl7.org/fhir/<ver>/StructureDefinition/extension-<Type>.<field>`. */
+const XVER = /^http:\/\/hl7\.org\/fhir\/[\d.]+\/StructureDefinition\/extension-([A-Za-z]+)\.([A-Za-z]+)$/;
+
+/**
+ * The fields of a resource type the target FHIR version lacks, read back from
+ * its cross-version extensions.
+ *
+ * An R4 IG cannot hold an R5 `ActorDefinition`, so the Publisher writes it as
+ * a `Basic` whose `code` names the type and whose `url`, `title`,
+ * `description`… sit in `extension-ActorDefinition.<field>` extensions. The
+ * manifest still calls it an ActorDefinition. Without this, smart-base's 63
+ * personas and skills lost their canonical, title and category (2026-10-02).
+ * Top-level fields win; only absent ones are filled.
+ */
+export function withCrossVersionFields(json: ResourceJson & { extension?: unknown }, manifestType: string): ResourceJson {
+  if (json.resourceType === manifestType || !Array.isArray(json.extension)) return json;
+  const out: ResourceJson & Record<string, unknown> = { ...json, resourceType: manifestType };
+  for (const e of json.extension as { url?: string; [k: string]: unknown }[]) {
+    const m = e.url ? XVER.exec(e.url) : null;
+    if (!m || m[1] !== manifestType) continue;
+    const field = m[2]!;
+    if (out[field] !== undefined) continue;
+    const valueKey = Object.keys(e).find((k) => k.startsWith("value"));
+    const v = valueKey ? e[valueKey] : undefined;
+    if (typeof v === "string") out[field] = v;
+  }
+  return out;
+}
+
 /** Read one AST resource file, or undefined when it is missing or unparseable. */
 function readResource(ast: Ast, r: AstResource): ResourceJson | undefined {
   const p = join(ast.dir, r.file);
   if (!existsSync(p)) return undefined;
   try {
-    return JSON.parse(readFileSync(p, "utf-8")) as ResourceJson;
+    return withCrossVersionFields(JSON.parse(readFileSync(p, "utf-8")) as ResourceJson, r.resourceType);
   } catch {
     return undefined;
   }
@@ -182,7 +211,9 @@ export function astToArtifactIndex(ast: Ast, opts: AstIndexOptions): AstIndexRes
     // text as the description, and so does the ingested index; follow it, so
     // a difference reported below is a real one and not a naming convention.
     const canonicalResource = nonEmpty(json.url) !== undefined;
-    const title = nonEmpty(json.title) ?? (canonicalResource ? undefined : r.id);
+    // The Publisher's list shows an untitled canonical resource under its
+    // `name` (smart-base's `LinkIdExt`), and an instance under its id.
+    const title = nonEmpty(json.title) ?? (canonicalResource ? nonEmpty(json.name) : r.id);
     const description = nonEmpty(json.description) ?? (canonicalResource ? undefined : nonEmpty(json.name)?.replace(/\s+/g, " ").trim());
     const name = canonicalResource ? nonEmpty(json.name) : undefined;
     artifacts.push({

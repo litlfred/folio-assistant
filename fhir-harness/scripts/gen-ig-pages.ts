@@ -641,7 +641,7 @@ function indexPage(ix: FhirArtifactIndex): string {
     : "";
   return shell(
     INDEX_TITLE,
-    `All ${ix.count} artefacts of the ${LABEL} IG ${ix.version ?? ""}, reconstructed from its published output.`,
+    `All ${ix.count} artefacts of the ${LABEL} IG ${ix.version ?? ""}, ${fromBuild ? "derived from its IG Publisher AST cache" : "reconstructed from its published output"}.`,
     summary + body,
   );
 }

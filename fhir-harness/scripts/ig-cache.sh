@@ -89,7 +89,10 @@ resolve_package() {
   
   if [ -f "$root/sushi-config.yaml" ]; then
     local id
-    id=$(grep '^id:' "$root/sushi-config.yaml" | head -1 | sed 's/^id:[[:space:]]*//' | tr -d '"'\''')
+    # Carriage returns stripped too: smart-base's sushi-config.yaml has CRLF
+    # line endings, and its id read as `smart.who.int.base<CR>`, naming a
+    # cache branch nobody has (2026-10-02).
+    id=$(grep '^id:' "$root/sushi-config.yaml" | head -1 | sed 's/^id:[[:space:]]*//' | tr -d '"'\''\r' | sed 's/[[:space:]]*$//')
     [ -n "$id" ] && { printf '%s\n' "$id"; return; }
   fi
   return 1
@@ -151,10 +154,22 @@ cmd_restore() {
   printf 'restoring %s -> %s\n' "$br" "$out"
   
   igit update-ref -d "$PRIVATE_REF" 2>/dev/null || true
-  if ! igit fetch --depth=1 "$REMOTE" "+$br:$PRIVATE_REF" 2>/dev/null; then
-    warn "cache branch '$br' not found on $REMOTE."
-    info "A build is required. Afterwards run: $PROG seed"
-    return 1
+  # One retry: a transfer refused by a proxy or rate limit is not a missing
+  # branch, and the two used to print the same "not found". The error git
+  # gave is shown either way, so the next reader can tell them apart.
+  local ferr
+  if ! ferr=$(igit fetch --depth=1 "$REMOTE" "+$br:$PRIVATE_REF" 2>&1); then
+    sleep 5
+    if ! ferr=$(igit fetch --depth=1 "$REMOTE" "+$br:$PRIVATE_REF" 2>&1); then
+      if igit ls-remote --exit-code --heads "$REMOTE" "refs/heads/$br" >/dev/null 2>&1; then
+        warn "cache branch '$br' EXISTS on $REMOTE but could not be fetched:"
+        printf '%s\n' "$ferr" | tail -3 | sed 's/^/      /' >&2
+        return 2
+      fi
+      warn "cache branch '$br' not found on $REMOTE."
+      info "A build is required. Afterwards run: $PROG seed"
+      return 1
+    fi
   fi
   
   mkdir -p "$out"

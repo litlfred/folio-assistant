@@ -14,7 +14,7 @@ import { mkdirSync, mkdtempSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { dirname, join } from "node:path";
 
-import { astToArtifactIndex, compareIndexes, publisherCategory, readerText } from "./ast-to-artifact-index";
+import { astToArtifactIndex, compareIndexes, publisherCategory, readerText, withCrossVersionFields } from "./ast-to-artifact-index";
 import { readAst } from "./ig-ast";
 import { FhirArtifactIndexSchema, type FhirArtifactIndex } from "../../folio-assistant-core/schemas/fhir-artifact-index.js";
 
@@ -109,6 +109,35 @@ describe("astToArtifactIndex", () => {
   test("an AST that records no source revision is not claimed as materialized", () => {
     const { index: noRev } = astToArtifactIndex(syntheticAst(null), { instanceId: "example" });
     expect(noRev.artifacts.every((a) => a.materialization.state === "unknown" && a.materialization.note)).toBe(true);
+  });
+});
+
+describe("withCrossVersionFields", () => {
+  const xv = (f: string) => `http://hl7.org/fhir/5.0/StructureDefinition/extension-ActorDefinition.${f}`;
+  const basic = {
+    resourceType: "Basic",
+    id: "P",
+    extension: [
+      { url: xv("url"), valueUri: `${X}/ActorDefinition/P` },
+      { url: xv("title"), valueString: "A Persona" },
+      { url: xv("description"), valueMarkdown: "Someone." },
+      { url: xv("experimental"), valueBoolean: true },
+      { url: "http://hl7.org/fhir/5.0/StructureDefinition/extension-Other.title", valueString: "not mine" },
+    ],
+  };
+
+  test("an R5 type written as an R4 Basic reads its fields back from its own extensions", () => {
+    const r = withCrossVersionFields(basic, "ActorDefinition");
+    expect(r.resourceType).toBe("ActorDefinition");
+    expect(r.url).toBe(`${X}/ActorDefinition/P`);
+    expect(r.title).toBe("A Persona");
+    expect(r.description).toBe("Someone.");
+    expect(publisherCategory(r)).toBe("Requirements: Actor Definitions");
+  });
+
+  test("a resource already of the manifest's type is returned as is", () => {
+    const cs = { resourceType: "CodeSystem", id: "c", title: "t" };
+    expect(withCrossVersionFields(cs, "CodeSystem")).toBe(cs);
   });
 });
 
