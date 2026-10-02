@@ -23,7 +23,7 @@
  */
 
 import { folioDirDeferred } from "../../schemas/cat-harness.js";
-import { stripLeanComments } from "./lean-lexer.js";
+import { stripLeanComments } from "./pipeline-plugins.js"; // science-layer slot (bean squu)
 import { existsSync, readFileSync, readdirSync } from "fs";
 import type { CheckerPaths, CheckerHit, CheckerResult } from "../../schemas/block-qa";
 import { resolve, dirname, join, relative } from "path";
