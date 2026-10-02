@@ -86,6 +86,9 @@
       <input id="In_Risk" label="(d) conflict risk, T3">
         <inputExpression id="Expr_Risk" typeRef="string"><text>conflictRisk</text></inputExpression>
       </input>
+      <input id="In_HeadRun" label="(T2) the owed CI runs on the head">
+        <inputExpression id="Expr_HeadRun" typeRef="string"><text>ownCi</text></inputExpression>
+      </input>
       <output id="Out_Route" name="route" typeRef="string" />
       <output id="Out_Class" name="class" typeRef="string" />
       <output id="Out_Rank" name="rank" typeRef="number" />
@@ -100,6 +103,7 @@
         <inputEntry id="IE_Ov_5"><text>-</text></inputEntry>
         <inputEntry id="IE_Ov_6"><text>-</text></inputEntry>
         <inputEntry id="IE_Ov_7"><text>-</text></inputEntry>
+        <inputEntry id="IE_Ov_8"><text>-</text></inputEntry>
         <outputEntry id="OE_Ov_1"><text>"admit"</text></outputEntry>
         <outputEntry id="OE_Ov_2"><text>"override"</text></outputEntry>
         <outputEntry id="OE_Ov_3"><text>0</text></outputEntry>
@@ -114,10 +118,26 @@
         <inputEntry id="IE_Rf_5"><text>-</text></inputEntry>
         <inputEntry id="IE_Rf_6"><text>-</text></inputEntry>
         <inputEntry id="IE_Rf_7"><text>-</text></inputEntry>
+        <inputEntry id="IE_Rf_8"><text>-</text></inputEntry>
         <outputEntry id="OE_Rf_1"><text>"hand back"</text></outputEntry>
         <outputEntry id="OE_Rf_2"><text>"hand-back"</text></outputEntry>
         <outputEntry id="OE_Rf_3"><text>90</text></outputEntry>
         <outputEntry id="OE_Rf_4"><text>"alone"</text></outputEntry>
+      </rule>
+      <rule id="Rule_HeadNotGreen">
+        <description>T2. The head does NOT carry every CI run owed for its event, so the train has no evidence about it. Handed back rather than admitted: a member admitted on an absence of red is a member nobody judged. `green` is the ONLY admitting value and the other four are kept apart on purpose -- `red` (an owed run failed), `missing-required` (it HAS runs, but not the owed ones), `none` (GitHub answered and nothing names this head) and `unknown` (could not ask: no network, rate limit, HTTP error). Measured 2026-10-02 on #1889's head 7ab6119405: 9 runs present and all 9 gating job NAMES matching, yet 3 runs `in_progress` with a null conclusion and 3 check SUITES completed as `action_required` having executed nothing -- so a filter for conclusion = failure finds zero. Counting the runs does not catch it; only asking which runs are OWED does, which is `check:head-has-run` (bean `3pqn`). `unknown` is handed back too, never admitted and never reported as red (bean `0qjq`): telling somebody their head is unverified when you merely could not look trains them to ignore the signal.</description>
+        <inputEntry id="IE_Hng_1"><text>-</text></inputEntry>
+        <inputEntry id="IE_Hng_2"><text>false</text></inputEntry>
+        <inputEntry id="IE_Hng_3"><text>-</text></inputEntry>
+        <inputEntry id="IE_Hng_4"><text>-</text></inputEntry>
+        <inputEntry id="IE_Hng_5"><text>-</text></inputEntry>
+        <inputEntry id="IE_Hng_6"><text>-</text></inputEntry>
+        <inputEntry id="IE_Hng_7"><text>-</text></inputEntry>
+        <inputEntry id="IE_Hng_8"><text>not("green")</text></inputEntry>
+        <outputEntry id="OE_Hng_1"><text>"hand back"</text></outputEntry>
+        <outputEntry id="OE_Hng_2"><text>"ci-not-green"</text></outputEntry>
+        <outputEntry id="OE_Hng_3"><text>91</text></outputEntry>
+        <outputEntry id="OE_Hng_4"><text>"alone"</text></outputEntry>
       </rule>
 
       <rule id="Rule_SeedSmallClean">
@@ -129,6 +149,7 @@
         <inputEntry id="IE_S0_5"><text>-</text></inputEntry>
         <inputEntry id="IE_S0_6"><text>"small"</text></inputEntry>
         <inputEntry id="IE_S0_7"><text>"low"</text></inputEntry>
+        <inputEntry id="IE_S0_8"><text>-</text></inputEntry>
         <outputEntry id="OE_S0_1"><text>"admit"</text></outputEntry>
         <outputEntry id="OE_S0_2"><text>"harness-seed"</text></outputEntry>
         <outputEntry id="OE_S0_3"><text>10</text></outputEntry>
@@ -143,6 +164,7 @@
         <inputEntry id="IE_S1_5"><text>-</text></inputEntry>
         <inputEntry id="IE_S1_6"><text>-</text></inputEntry>
         <inputEntry id="IE_S1_7"><text>"low"</text></inputEntry>
+        <inputEntry id="IE_S1_8"><text>-</text></inputEntry>
         <outputEntry id="OE_S1_1"><text>"admit"</text></outputEntry>
         <outputEntry id="OE_S1_2"><text>"harness-seed"</text></outputEntry>
         <outputEntry id="OE_S1_3"><text>11</text></outputEntry>
@@ -157,6 +179,7 @@
         <inputEntry id="IE_S2_5"><text>-</text></inputEntry>
         <inputEntry id="IE_S2_6"><text>-</text></inputEntry>
         <inputEntry id="IE_S2_7"><text>-</text></inputEntry>
+        <inputEntry id="IE_S2_8"><text>-</text></inputEntry>
         <outputEntry id="OE_S2_1"><text>"admit"</text></outputEntry>
         <outputEntry id="OE_S2_2"><text>"harness-seed"</text></outputEntry>
         <outputEntry id="OE_S2_3"><text>12</text></outputEntry>
@@ -172,6 +195,7 @@
         <inputEntry id="IE_U0_5"><text>-</text></inputEntry>
         <inputEntry id="IE_U0_6"><text>"small"</text></inputEntry>
         <inputEntry id="IE_U0_7"><text>"low"</text></inputEntry>
+        <inputEntry id="IE_U0_8"><text>-</text></inputEntry>
         <outputEntry id="OE_U0_1"><text>"admit"</text></outputEntry>
         <outputEntry id="OE_U0_2"><text>"unblocker"</text></outputEntry>
         <outputEntry id="OE_U0_3"><text>20</text></outputEntry>
@@ -186,6 +210,7 @@
         <inputEntry id="IE_U1_5"><text>-</text></inputEntry>
         <inputEntry id="IE_U1_6"><text>-</text></inputEntry>
         <inputEntry id="IE_U1_7"><text>"low"</text></inputEntry>
+        <inputEntry id="IE_U1_8"><text>-</text></inputEntry>
         <outputEntry id="OE_U1_1"><text>"admit"</text></outputEntry>
         <outputEntry id="OE_U1_2"><text>"unblocker"</text></outputEntry>
         <outputEntry id="OE_U1_3"><text>21</text></outputEntry>
@@ -200,6 +225,7 @@
         <inputEntry id="IE_U2_5"><text>-</text></inputEntry>
         <inputEntry id="IE_U2_6"><text>-</text></inputEntry>
         <inputEntry id="IE_U2_7"><text>-</text></inputEntry>
+        <inputEntry id="IE_U2_8"><text>-</text></inputEntry>
         <outputEntry id="OE_U2_1"><text>"admit"</text></outputEntry>
         <outputEntry id="OE_U2_2"><text>"unblocker"</text></outputEntry>
         <outputEntry id="OE_U2_3"><text>22</text></outputEntry>
@@ -215,6 +241,7 @@
         <inputEntry id="IE_M0_5"><text>true</text></inputEntry>
         <inputEntry id="IE_M0_6"><text>"small"</text></inputEntry>
         <inputEntry id="IE_M0_7"><text>"low"</text></inputEntry>
+        <inputEntry id="IE_M0_8"><text>-</text></inputEntry>
         <outputEntry id="OE_M0_1"><text>"admit"</text></outputEntry>
         <outputEntry id="OE_M0_2"><text>"mvp"</text></outputEntry>
         <outputEntry id="OE_M0_3"><text>30</text></outputEntry>
@@ -229,6 +256,7 @@
         <inputEntry id="IE_M1_5"><text>true</text></inputEntry>
         <inputEntry id="IE_M1_6"><text>-</text></inputEntry>
         <inputEntry id="IE_M1_7"><text>"low"</text></inputEntry>
+        <inputEntry id="IE_M1_8"><text>-</text></inputEntry>
         <outputEntry id="OE_M1_1"><text>"admit"</text></outputEntry>
         <outputEntry id="OE_M1_2"><text>"mvp"</text></outputEntry>
         <outputEntry id="OE_M1_3"><text>31</text></outputEntry>
@@ -243,6 +271,7 @@
         <inputEntry id="IE_M2_5"><text>true</text></inputEntry>
         <inputEntry id="IE_M2_6"><text>-</text></inputEntry>
         <inputEntry id="IE_M2_7"><text>-</text></inputEntry>
+        <inputEntry id="IE_M2_8"><text>-</text></inputEntry>
         <outputEntry id="OE_M2_1"><text>"admit"</text></outputEntry>
         <outputEntry id="OE_M2_2"><text>"mvp"</text></outputEntry>
         <outputEntry id="OE_M2_3"><text>32</text></outputEntry>
@@ -258,6 +287,7 @@
         <inputEntry id="IE_D0_5"><text>-</text></inputEntry>
         <inputEntry id="IE_D0_6"><text>"small"</text></inputEntry>
         <inputEntry id="IE_D0_7"><text>"low"</text></inputEntry>
+        <inputEntry id="IE_D0_8"><text>-</text></inputEntry>
         <outputEntry id="OE_D0_1"><text>"admit"</text></outputEntry>
         <outputEntry id="OE_D0_2"><text>"standard"</text></outputEntry>
         <outputEntry id="OE_D0_3"><text>40</text></outputEntry>
@@ -272,6 +302,7 @@
         <inputEntry id="IE_D1_5"><text>-</text></inputEntry>
         <inputEntry id="IE_D1_6"><text>-</text></inputEntry>
         <inputEntry id="IE_D1_7"><text>"low"</text></inputEntry>
+        <inputEntry id="IE_D1_8"><text>-</text></inputEntry>
         <outputEntry id="OE_D1_1"><text>"admit"</text></outputEntry>
         <outputEntry id="OE_D1_2"><text>"standard"</text></outputEntry>
         <outputEntry id="OE_D1_3"><text>41</text></outputEntry>
@@ -286,6 +317,7 @@
         <inputEntry id="IE_D2_5"><text>-</text></inputEntry>
         <inputEntry id="IE_D2_6"><text>-</text></inputEntry>
         <inputEntry id="IE_D2_7"><text>-</text></inputEntry>
+        <inputEntry id="IE_D2_8"><text>-</text></inputEntry>
         <outputEntry id="OE_D2_1"><text>"admit"</text></outputEntry>
         <outputEntry id="OE_D2_2"><text>"standard"</text></outputEntry>
         <outputEntry id="OE_D2_3"><text>42</text></outputEntry>

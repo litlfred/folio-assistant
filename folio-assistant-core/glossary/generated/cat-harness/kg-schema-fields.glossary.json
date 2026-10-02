@@ -6876,7 +6876,7 @@
     {
       "id": "merge-queue.memberfactsschema.conflictrisk",
       "prefLabel": "MemberFactsSchema.conflictRisk",
-      "definition": "Shares an authored path or a shared declaration with another queued PR — input (d), T3.",
+      "definition": "Shares an AUTHORED path with another live queued PR — input (d), T3.",
       "source": "cat-harness/schemas/merge-queue.ts#MemberFactsSchema.conflictRisk",
       "status": "candidate"
     },
@@ -6892,6 +6892,13 @@
       "prefLabel": "MemberFactsSchema.mvp",
       "definition": "Tagged MVP / feature-priority, by epic or label — input (c).",
       "source": "cat-harness/schemas/merge-queue.ts#MemberFactsSchema.mvp",
+      "status": "candidate"
+    },
+    {
+      "id": "merge-queue.memberfactsschema.overlapkind",
+      "prefLabel": "MemberFactsSchema.overlapKind",
+      "definition": "WHICH KIND of collision this PR has with the rest of the live queue.",
+      "source": "cat-harness/schemas/merge-queue.ts#MemberFactsSchema.overlapKind",
       "status": "candidate"
     },
     {

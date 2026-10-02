@@ -115,7 +115,7 @@ export interface LivePr {
   beans: string[];
   labels: string[];
   /** The PR's own CI on its head (T2). */
-  ownCi?: "green" | "red" | "none";
+  ownCi?: "green" | "red" | "missing-required" | "none" | "unknown";
   /** Did CI run on the head that would be merged (T2). */
   headShaMatchesCi?: boolean;
 }
@@ -140,9 +140,20 @@ export interface FactContext {
 /**
  * The table's inputs for every PR in the candidate set.
  *
- * `conflictRisk` is PAIRWISE (T3): "high" when the PR shares an authored path,
- * or the same shared declaration, with another candidate that is not itself
- * refused — a refused PR does not enter a train, so it cannot conflict in one.
+ * `conflictRisk` is PAIRWISE (T3): "high" when the PR shares an authored path
+ * with another candidate that is not itself refused — a refused PR does not
+ * enter a train, so it cannot conflict in one.
+ *
+ * **That sentence read "or the same shared declaration" until 2026-10-02 and
+ * the code never did it**, which is the worse of the two possible errors: a
+ * reader checking whether declarations were handled would have found a
+ * promise, stopped looking, and shipped a steward that trains every pair
+ * touching `package.json`. Declarations are carried by `touchesShared`, as
+ * its own DMN input, and distinguished by `overlapKind`.
+ *
+ * `overlapKind` says WHICH KIND the collision is, which is the question a
+ * steward actually has: `conflictRisk` answers "is there one". The two are
+ * computed from the same pass so they cannot disagree.
  */
 export function deriveFacts(prs: readonly LivePr[], ctx: FactContext): MemberFacts[] {
   const roots = ctx.separationRoots ?? SEPARATION_ROOTS;
@@ -152,9 +163,28 @@ export function deriveFacts(prs: readonly LivePr[], ctx: FactContext): MemberFac
   return prs.map((p) => {
     const authored = authoredBy.get(p.pr)!;
     const mine = new Set(authored);
-    const overlaps = live.some(
-      (q) => q.pr !== p.pr && authoredBy.get(q.pr)!.some((path) => mine.has(path)),
+    const others = live.filter((q) => q.pr !== p.pr);
+    /** Authored paths this PR shares with a live member — the train-worthy kind. */
+    const sharedAuthored = others.flatMap((q) =>
+      authoredBy.get(q.pr)!.filter((path) => mine.has(path)),
     );
+    const overlaps = sharedAuthored.length > 0;
+    /**
+     * Any path at all shared with a live member. Computed over ALL changed
+     * files rather than the authored ones, because a generated-only collision
+     * is invisible to `authoredPaths` by construction and it is exactly the
+     * case that must NOT read as "no overlap": it needs a regeneration.
+     */
+    const allMine = new Set(p.files);
+    const sharesAnyPath = others.some((q) => q.files.some((f) => allMine.has(f)));
+    const overlapKind: MemberFacts["overlapKind"] =
+      sharedAuthored.some((f) => !isSharedDeclaration(f))
+        ? "authored"
+        : overlaps
+          ? "shared-declaration"
+          : sharesAnyPath
+            ? "generated-only"
+            : "none";
     const harness = authored.some((f) => /^cat-harness(-tools)?\//.test(f));
     const facts: MemberFacts = {
       pr: p.pr,
@@ -171,6 +201,7 @@ export function deriveFacts(prs: readonly LivePr[], ctx: FactContext): MemberFac
           ? "small"
           : "large",
       conflictRisk: overlaps ? "high" : "low",
+      overlapKind,
       refused: ctx.refused.has(p.pr),
       ownCi: p.ownCi ?? "none",
       headShaMatchesCi: p.headShaMatchesCi ?? false,

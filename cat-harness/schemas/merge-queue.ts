@@ -294,12 +294,85 @@ export const MemberFactsSchema = z
     mvp: z.boolean(),
     /** Changed files plus changed lines, banded — input (d). */
     sizeBand: z.enum(["small", "large"]),
-    /** Shares an authored path or a shared declaration with another queued PR — input (d), T3. */
+    /**
+     * Shares an AUTHORED path with another live queued PR — input (d), T3.
+     *
+     * Read {@link overlapKind} for which kind of collision it is. This field
+     * said "or a shared declaration" until 2026-10-02 and the code never did:
+     * `deriveFacts` compares `authoredPaths` only. A shared declaration is
+     * carried separately by {@link touchesShared}, as its own DMN input, and
+     * conflating them here would have made every pair that merely edits
+     * `package.json` look like a pair needing a train.
+     */
     conflictRisk: z.enum(["low", "high"]),
+    /**
+     * WHICH KIND of collision this PR has with the rest of the live queue.
+     *
+     * `conflictRisk` answers "is there one"; a steward building a train needs
+     * "is it the kind a train is for". `merge:overlap` measured the gap on
+     * 2026-10-02 across all 36 open PRs (459 pairs): **#1907 × #1909 have
+     * `authored_overlap = 0` yet `independent: false`**, colliding only on
+     * generated regions and shared declarations. A train built for that pair
+     * is a train nobody needed, because regeneration resolves it.
+     *
+     * | value | means | what it needs |
+     * |---|---|---|
+     * | `none` | no path shared with any live member | nothing |
+     * | `generated-only` | shares paths, every one resolved by a declared pattern | **regeneration**, not a train |
+     * | `shared-declaration` | the only authored paths shared are shared DECLARATIONS | **coordination** — order them, do not train them |
+     * | `authored` | shares an authored path that is not a declaration | **a train** |
+     *
+     * Four values, not three, and the reason is measured. A shared
+     * declaration is a SUBSET of an authored path, not a sibling of one:
+     * `classify("package.json").strategy` is `refuse`, so it is authored,
+     * **and** `isSharedDeclaration("package.json")` is true (both measured
+     * 2026-10-02). A three-value partition therefore files #1907 × #1909
+     * under `authored` on the strength of `package.json` alone, which is
+     * precisely the train nobody needed.
+     *
+     * By contrast `cat-harness/skills/sdlc/sdlc-core/merge-queue.md` is
+     * `refuse` and NOT a shared declaration — a real content collision, and
+     * the only one of the three that a train is the right answer to.
+     *
+     * The order is significant and the values are a partition: `authored`
+     * wins over `shared-declaration`, which wins over `generated-only`,
+     * because at each step the earlier kind is the one that cannot be
+     * resolved by the later kind's remedy.
+     */
+    overlapKind: z.enum(["none", "generated-only", "shared-declaration", "authored"]),
     /** A declared merge pattern refuses a conflicted path, or GitHub reports it dirty. */
     refused: z.boolean(),
-    /** The PR's own CI on its head: T2's first evidence. */
-    ownCi: z.enum(["green", "red", "none"]),
+    /**
+     * The PR's own CI on its head: T2's first evidence.
+     *
+     * **`green` means every workflow OWED FOR THE EVENT ran and succeeded** —
+     * never "nothing is red". The three non-green states are kept apart
+     * because collapsing any two of them is the defect, and they are exactly
+     * the states `check-head-has-run.ts` distinguishes (bean `3pqn`):
+     *
+     * | value | means | `check:head-has-run` |
+     * |---|---|---|
+     * | `green` | every owed run present and successful | exit 0 |
+     * | `red` | an owed run ran and failed | — |
+     * | `missing-required` | it HAS runs, but not the ones owed | exit 1 |
+     * | `none` | GitHub answered and nothing names this head | exit 1 |
+     * | `unknown` | could not ask: no network, rate limit, HTTP error | exit 2 |
+     *
+     * `missing-required` is the value this enum existed without, and its
+     * absence is why a steward could read a partial check set as a pass.
+     * Measured 2026-10-02 on #1889's head `7ab6119405`: 9 check runs, all 9
+     * gating job NAMES present, 3 of them `in_progress` with `conclusion:
+     * null`, and 3 check SUITES `completed` with `conclusion:
+     * action_required` and `latest_check_runs_count: 0` — suites that
+     * completed having executed nothing. A filter for `conclusion ==
+     * "failure"` finds zero. Counting runs does not catch it either; only
+     * asking which runs are OWED does.
+     *
+     * **`unknown` is never a pass, and never a failure.** Telling somebody
+     * their head is unverified when you merely could not look trains them to
+     * ignore the signal, which costs more than the gap.
+     */
+    ownCi: z.enum(["green", "red", "missing-required", "none", "unknown"]),
     /** Did CI run on the head that would be merged (T2; bean `u7be` item 3). */
     headShaMatchesCi: z.boolean(),
   })

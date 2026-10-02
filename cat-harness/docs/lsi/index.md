@@ -110,7 +110,7 @@ Each dimension is a **contrast** between two poles, shown by their highest-loadi
 
 ## cat-harness / skills
 
-**222** units · **5919** terms · k = **100** · retains **78.8 %** of the weighted matrix · weighting `log-entropy` · sidecar `cat-harness/test/results/lsi/cat-harness/skills.lsi.json`
+**222** units · **5922** terms · k = **100** · retains **78.6 %** of the weighted matrix · weighting `log-entropy` · sidecar `cat-harness/test/results/lsi/cat-harness/skills.lsi.json`
 
 > Dimension 1 has **no negative pole**: it most likely measures unit length and term frequency (a margin), not a theme. Read the themes from dimension 2 on.
 
@@ -118,16 +118,20 @@ Each dimension is a **contrast** between two poles, shown by their highest-loadi
 
 | dim | σ | one pole | the other pole |
 |---|---|---|---|
-| 1 | 44.39 | instance, kind, harness, session, directory, block, graph, page | *(none)* |
-| 2 | 21.54 | watcher, sibling, slot, prs, queue, backlog, commits, block | harness, instance, declaration, node, directory, directories, graph, declares |
-| 3 | 18.00 | slot, chapter, block, edges, formal, project, proof, glossary | session, beans, branch, goals, store, window, sessions, push |
-| 4 | 16.64 | page, block, text, blocks, pdf, manifest, chapter, preview | sibling, ledger, subdirectory, sessions, items, coordination, prs, renderable |
-| 5 | 14.98 | preview, staging, feature, translated, build, locale, page, translation | rung, archive, archived, withheld, arm, sniff, ingest, zip |
-| 6 | 14.91 | lane, actor, role, requirements, task, edge, analysis, process | sha, slide, bytes, queue, images, withheld, backlog, rung |
-| 7 | 14.54 | edges, forward, preview, backward, edge, cross-chapter, energy, logical | actor, lane, role, backlog, criterion, task, login, requirement |
-| 8 | 14.23 | locale, translated, translation, french, back-translation, claim, translations, nav | feature, phase, preview, impact, feedback, pdf, stakeholders, bytes |
+| 1 | 44.31 | instance, kind, harness, session, directory, block, graph, page | *(none)* |
+| 2 | 21.52 | watcher, sibling, slot, prs, queue, backlog, commits, block | harness, instance, declaration, node, directory, directories, graph, declares |
+| 3 | 17.99 | slot, chapter, block, edges, formal, project, proof, glossary | session, beans, branch, goals, store, window, sessions, push |
+| 4 | 16.63 | page, text, block, blocks, pdf, manifest, chapter, preview | sibling, ledger, subdirectory, sessions, items, coordination, prs, relocation |
+| 5 | 14.97 | preview, staging, feature, build, feedback, translated, locale, translation | rung, archive, archived, withheld, arm, sniff, queue, zip |
+| 6 | 14.90 | lane, actor, role, requirements, edge, task, analysis, process | sha, slide, bytes, queue, backlog, images, idle, withheld |
+| 7 | 14.52 | edges, forward, preview, backward, edge, cross-chapter, energy, logical | actor, lane, role, criterion, backlog, task, requirement, login |
+| 8 | 14.22 | locale, translated, translation, french, back-translation, translations, badge, back-translator | feature, preview, phase, impact, feedback, option, pdf, stakeholders |
 
-**Findings** — 0 narrow dimension(s), 0 near-duplicate pair(s).
+**Findings** — 0 narrow dimension(s), 1 near-duplicate pair(s).
+
+*Near-duplicates* (cosine ≥ 0.95) — similar is not duplicate; read both:
+
+- 0.951 — `cat-harness/skills/sdlc/sdlc-core/delivery-summary.md` ~ `cat-harness/skills/sdlc/sdlc-core/diff.md`
 
 ## smart-base / library
 
