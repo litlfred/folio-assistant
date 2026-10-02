@@ -3,7 +3,7 @@
   "subject": {
     "kind": "process",
     "id": "Process_FeatureStaging",
-    "path": "processes/feature-staging.bpmn"
+    "path": "processes/sdlc/feature-staging.bpmn"
   },
   "source_hash": "sha256:6ceda742cca06e22203c505cfa86426495cc653c27f20f11d9191966d341499a",
   "criteria": {
@@ -167,7 +167,7 @@
       "findings": [
         {
           "where": ".github/workflows/feature-staging.yml",
-          "detail": ".github/workflows/feature-staging.yml changed since cat-harness/processes/feature-staging.bpmn was last attested (agent), and the prose did not. Re-read it; if it still holds, run pairs:attest with a reason."
+          "detail": ".github/workflows/feature-staging.yml changed since cat-harness/processes/sdlc/feature-staging.bpmn was last attested (agent), and the prose did not. Re-read it; if it still holds, run pairs:attest with a reason."
         }
       ]
     },
@@ -185,7 +185,7 @@
   "pair_attestations": [
     {
       "kind": "implements",
-      "prose": "cat-harness/processes/feature-staging.bpmn",
+      "prose": "cat-harness/processes/sdlc/feature-staging.bpmn",
       "code": ".github/workflows/feature-staging.yml",
       "prose_hash": "6ceda742cca0",
       "code_hash": "2f1e42f672c5",
