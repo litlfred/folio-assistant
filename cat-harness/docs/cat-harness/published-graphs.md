@@ -215,7 +215,7 @@ nothing renders yet. It is shown rather than omitted: "nothing renders this" and
 
 ### `qa`
 
-1 of 12 published.
+1 of 10 published.
 {: .fa-hx-dim }
 
 - [C@T Harness]({{ '/qa/' | relative_url }})
@@ -223,10 +223,8 @@ nothing renders yet. It is shown rather than omitted: "nothing renders this" and
 - folio-assistant-core — *declared, not published*
 - folio-assistant-sci — *declared, not published*
 - SMART Base — *declared, not published*
-- SMART DAK — *declared, not published*
 - SMART IG — *declared, not published*
 - smart-immunizations — *declared, not published*
-- SMART L1 — *declared, not published*
 - smart-trust — *declared, not published*
 - WHO IRIS — *declared, not published*
 - who-style-guide — *declared, not published*
@@ -291,7 +289,7 @@ nothing renders yet. It is shown rather than omitted: "nothing renders this" and
 0 of 2 published.
 {: .fa-hx-dim }
 
-- smart-trust — *declared, not published*
+- SMART Base — *declared, not published*
 - WHO IRIS — *declared, not published*
 
 ### `todos`

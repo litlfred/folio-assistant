@@ -85,6 +85,7 @@ import {
   tokenOf,
   type IgChrome,
 } from "../schemas/ig-chrome.js";
+import { readIgIdentity, statusOf, type IgIdentity } from "../schemas/ig-identity.js";
 import { renderedPath, withRendersFrontMatter } from "../../cat-harness/scripts/viewer-declarations.js";
 import {
   declarationPathIn,
@@ -208,6 +209,21 @@ function loadChrome(): IgChrome | undefined {
 const CHROME = loadChrome();
 
 /**
+ * THIS IG's identity and status, from `ig-identity.json` beside its own index.
+ *
+ * Not the chrome's: the chrome is the template chain's and every IG building
+ * with it wears it (`folio-ig-chrome/v2`). Absent -> no status is stated and
+ * no watermark is drawn, which is the third state rather than "published".
+ */
+const IDENTITY: IgIdentity | undefined = (() => {
+  for (const d of directoriesForGraph(INSTANCE, "fhir-artifact-index")) {
+    const found = readIgIdentity(d);
+    if (found) return found;
+  }
+  return undefined;
+})();
+
+/**
  * Where the mirrored chrome applies.
  *
  * SCOPED, never `:root`. The IG Publisher can put WHO's palette on `:root`
@@ -232,11 +248,11 @@ const CHROME_SCOPE = ".st-ig";
  * `fragment-pagebegin.html` does it. Nothing here decides that smart-trust is
  * a draft.
  */
-function igBanner(chrome: IgChrome, ix: FhirArtifactIndex): string {
-  const title = ix.packageId ?? chrome.id;
-  const canonical = ix.canonicalBase ?? chrome.canonical;
-  const status = statusFor(chrome, ix);
-  const label = [ix.version ?? chrome.version, status].filter(Boolean).join(" — ");
+function igBanner(ix: FhirArtifactIndex): string {
+  const title = ix.packageId ?? IDENTITY?.id ?? INSTANCE_NAME;
+  const canonical = ix.canonicalBase ?? IDENTITY?.canonical ?? "";
+  const status = statusFor(ix);
+  const label = [ix.version ?? IDENTITY?.version, status].filter(Boolean).join(" — ");
   return [
     `<div class="${CHROME_SCOPE.slice(1)}">`,
     `  <div class="st-ig-bar"><a href="${esc(canonical)}">${esc(title)}</a></div>`,
@@ -252,12 +268,12 @@ function igBanner(chrome: IgChrome, ix: FhirArtifactIndex): string {
 }
 
 /**
- * The IG's publication status — from the chrome only when the chrome was
- * ingested from THIS IG. See the module doc: another IG's `draft` is not a
- * fact about this one, and `undefined` draws no watermark rather than a wrong one.
+ * The IG's publication status — from ITS OWN `ig-identity.json`, and only when
+ * that file names this index's package. Another IG's `draft` is not a fact
+ * about this one, and `undefined` draws no watermark rather than a wrong one.
  */
-function statusFor(chrome: IgChrome, ix: FhirArtifactIndex): string | undefined {
-  return ix.packageId !== undefined && chrome.id === ix.packageId ? chrome.status : undefined;
+function statusFor(ix: FhirArtifactIndex): string | undefined {
+  return statusOf(IDENTITY, ix.packageId);
 }
 
 /**
@@ -483,7 +499,7 @@ function shell(
   // reported by the build, never faked with a hand-typed palette.
   const wearsChrome = chrome === "fixture" && CHROME !== undefined;
   const style = wearsChrome ? `${CSS}\n${chromeStyles(CHROME!)}` : CSS;
-  const banner = wearsChrome ? `${igBanner(CHROME!, IX)}\n\n` : "";
+  const banner = wearsChrome ? `${igBanner(IX)}\n\n` : "";
   return `${fm}<style>${style}</style>\n\n${banner}${body.trim()}\n`;
 }
 
@@ -1005,15 +1021,15 @@ if (CHECK) {
   // build log that only mentions the chrome when it is there.
   if (CHROME) {
     const conflicted = CHROME.conflicts.length;
-    if (statusFor(CHROME, ix) === undefined) {
-      console.log(
-        `  status NOT determined — the chrome was ingested from ${CHROME.id}, not ${ix.packageId ?? "this IG"}; ` +
-          `no watermark drawn`,
-      );
-    }
+    const status = statusFor(ix);
+    console.log(
+      status === undefined
+        ? `  status NOT determined — ${IDENTITY ? `ig-identity.json names ${IDENTITY.id}, not ${ix.packageId ?? "this IG"}` : "no ig-identity.json beside the index"}; no watermark drawn`
+        : `  status "${status}" — from ig-identity.json (${IDENTITY!.readFrom}, read ${IDENTITY!.readAt})`,
+    );
     console.log(
       `  chrome mirrored on every page — ${CHROME.tokens.length} token(s) over ` +
-        `${CHROME.layers.length} template layer(s), ${CHROME.rules.length} rule(s); the chrome's own IG is ${CHROME.id} (status "${CHROME.status}")`,
+        `${CHROME.layers.length} template layer(s), ${CHROME.rules.length} rule(s); the chrome is ${CHROME.id} ${CHROME.version}`,
     );
     for (const l of CHROME.layers) console.log(`    ${l.package} ${l.version} @ ${l.ref.slice(0, 8)}`);
     if (conflicted > 0) {

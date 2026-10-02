@@ -135,7 +135,7 @@ export const AVATARS: Readonly<Record<string, Avatar>> = {
   "smart-base": {
     // A broad base with three narrowing courses above it — the layer the rest
     // of the stack rests on. smart-base is exactly that: `fhir-harness` sits
-    // under it, and `smart-l1`, `smart-dak` and `smart-ig` are built on top,
+    // under it, and `smart-ig` (and the IGs that need it) is built on top,
     // so the glyph reads the instance's position rather than its subject.
     glyph: "M3 18h18M6 14h12M9 10h6M11 6h2",
     tone: 199,
