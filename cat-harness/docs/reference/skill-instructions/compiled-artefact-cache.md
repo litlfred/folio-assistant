@@ -1,7 +1,7 @@
 ---
 layout: default
 generated: scripts/gen-skill-docs.ts — do not hand-edit; edit the skill
-title: 'Compiled artefact cache'
+title: 'Compiled Artefact Cache'
 parent: Skill instructions
 ---
 
@@ -11,7 +11,6 @@ parent: Skill instructions
 > [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/cat-harness/skills/process/process-core/compiled-artefact-cache.md){: .fa-edit-source }
 
 {% raw %}
-
 # Compiled Artefact Cache
 
 This skill documents the generalisable pattern for caching compiled artefacts (such as Lean caches and FHIR ASTs). It is the shared contract that specific implementations (e.g. `lean-cache-restore` and `ig-ast-delta`) adhere to.
