@@ -603,6 +603,10 @@ describe("a RETIRED preview is not restored", () => {
 
     const v = verifyStaging({ repo, remote: bare, site: built, ...BRANCH }, restored.previews, ["STAGING/_retired"]);
     expect(v.state).toBe("ok");
+    // Narrowed rather than asserted through: `present` is absent from the
+    // `unknown` variant, and an `unknown` read as "nothing present" would pass
+    // this test while saying nothing — the third-state rule, in a test.
+    if (v.state === "unknown") throw new Error(`verify could not run: ${v.reason}`);
     expect(v.present).not.toContain("claude-gone");
   });
 
