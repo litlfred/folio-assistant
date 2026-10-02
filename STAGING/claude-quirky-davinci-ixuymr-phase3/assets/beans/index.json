@@ -2339,14 +2339,14 @@
     {
       "id": "folio-assistant-8iqt",
       "title": "recordUntainted writes agent verdicts into the DERIVED block-qa file, not the attestation store",
-      "status": "todo",
+      "status": "in-progress",
       "type": "bug",
       "priority": "normal",
       "parent": "folio-assistant-3fva",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-10-01T19:22:21Z",
-      "updatedAt": "2026-10-01T19:22:21Z",
+      "updatedAt": "2026-10-02T07:57:02Z",
       "preview": "Found by the d6bw agent, 2026-10-01.\n\n`recordUntainted` (the untainted-verification writer) still writes an agent verdict into the derived block-qa report. Since 8wj1/2gst, judgements live in the declared `attestations` graph (`test/attestations/`, `qa-attestations/v1`). The verdict reaches the store only when a later writer runs and auto-moves it (owner ruling 2). So nothing is lost today. But on",
       "file": "beans/defs/folio-assistant-8iqt--recorduntainted-writes-agent-verdicts-into-the-der.md"
     },
@@ -3466,7 +3466,7 @@
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-10-01T08:47:14Z",
-      "updatedAt": "2026-10-02T07:06:23Z",
+      "updatedAt": "2026-10-02T08:02:57Z",
       "preview": "Arc `3fva`, from reader audit `gxvk` (`cat-harness/docs/proposals/qa-readers-audit-2026-10-01.md`, §5.5 family F7). Blocked on `16ei`. Do it last: the fixtures follow the APIs that the other reader beans settle.\n\nMeasured on the same 21 test files: with the corpus present, 8 tests fail, none of them about a missing file. With it moved aside, 20 fail. **15 tests fail only when the corpus is absent,",
       "file": "beans/defs/folio-assistant-cxcn--qa-readers-f7-tests-stop-reading-the-committed-qa.md"
     },
