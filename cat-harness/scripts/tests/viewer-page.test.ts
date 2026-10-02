@@ -117,7 +117,10 @@ describe("the audit records a verdict per page", () => {
   test("three verdicts, and the Jekyll source page is not one of them", () => {
     const { docs, repo } = tree();
     const r = audit(docs, repo);
-    expect(r.totals).toEqual({ pages: 3, railed: 1, declined: 1, missing: 1 });
+    // `flagged: 1` — the fixture's rail is a bare `<nav class="fa-nav">`, which
+    // has no header, so it fails the #1757 layout flags. That is the flags
+    // working, and grading them is `viewer-rail-layout.test.ts`'s job.
+    expect(r.totals).toEqual({ pages: 3, railed: 1, declined: 1, missing: 1, flagged: 1 });
     expect(r.pages.map((p) => p.path)).toEqual(["/declined/", "/railed/", "/unwired/"]);
   });
 
