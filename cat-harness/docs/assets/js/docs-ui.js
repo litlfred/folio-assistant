@@ -7649,7 +7649,7 @@
       var links = cell.querySelector(".fa-sticky-links");
       function linkOf(cls) {
         var a = links && links.querySelector(cls);
-        return a ? { href: a.getAttribute("href"), title: a.getAttribute("title"),
+        return a ? { href: safeHref(a.getAttribute("href")), title: a.getAttribute("title"),
                      label: a.getAttribute("aria-label") } : null;
       }
       var view = linkOf(".fa-sticky-view");
@@ -8332,9 +8332,9 @@
       slot.appendChild(buildSticky(todo));
       slot.appendChild(stickyActions({
         title: todo.summary,
-        view: todo.viewHref && { href: todo.viewHref, title: "View this todo's source on GitHub",
+        view: todo.viewHref && { href: safeHref(todo.viewHref), title: "View this todo's source on GitHub",
                                  label: "View the source of " + todo.summary },
-        edit: todo.editHref && { href: todo.editHref, title: "Edit this todo's markdown on GitHub",
+        edit: todo.editHref && { href: safeHref(todo.editHref), title: "Edit this todo's markdown on GitHub",
                                  label: "Edit " + todo.summary },
         onPin: function (pinned) { if (pinned) dock(todo); else float(todo); },
         onDiscard: function () { discard(todo); },
