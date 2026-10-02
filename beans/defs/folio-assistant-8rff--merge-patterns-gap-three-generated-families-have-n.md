@@ -3,8 +3,10 @@
 title: 'MERGE PATTERNS GAP: three generated families have no declared merge-conflict pattern, so merge:main refuses them and merge:overlap counts them as authored'
 status: todo
 type: bug
+priority: normal
 created_at: 2026-10-02T17:46:34Z
-updated_at: 2026-10-02T17:46:34Z
+updated_at: 2026-10-02T21:22:55Z
+parent: folio-assistant-d33q
 ---
 
 Found by merge:overlap's first live run (bean blgm, PR #1895, 2026-10-02): 32 open PRs; 109 pairs overlapped on authored paths, and 19 of those overlapped ONLY on these three generated families. None is named in cat-harness/scripts/merge-conflict-patterns.ts PATTERNS or in .gitattributes, so they classify as authored.
