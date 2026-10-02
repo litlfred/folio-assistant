@@ -9,7 +9,7 @@ tags:
     - ui
     - visualiser-navbar
 created_at: 2026-09-23T10:36:15Z
-updated_at: 2026-10-01T18:08:13Z
+updated_at: 2026-10-01T18:14:39Z
 parent: folio-assistant-4ccr
 ---
 
@@ -31,6 +31,8 @@ Findings from the as-is wireframe `cat-harness/docs/wireframes/navbar/` (intent.
 Related: `folio-assistant-603s`, `folio-assistant-1le7`, `folio-assistant-z1ug`
 
 When fixed, re-draw `cat-harness/docs/wireframes/navbar/` and re-run `bun run wireframe:check` and `bun run check:wireframes`.
+
+**New notes on this bean go in [`beans/notes/`](../notes/README.md), not here** (bean `m61r`, issue #1853): `bun run beans:note folio-assistant-ob3m --title "…"` writes one file per pull request, so sibling pull requests stop conflicting on this file. The dated sections below were appended before that convention and stay where they are.
 
 ## Re-verified 2026-09-29 on `main` 35402147f
 
@@ -326,3 +328,27 @@ _2026-10-01_ — **Finding 12: owner's ruling implemented, in PR #1810 (stacked 
 - bootstrap: unchanged. It is a pinned submodule still on `bodyFrom: "description"`, and it declares no summary.
 
 `landing:sticky:check` (CI) now fails when a card built from its declaration does not open with that text. It fails when run against the #1762 head files.
+
+## 2026-10-01 — finding 1: the owner's ruling, implemented (PR #1805, stacked on #1762)
+
+**Ruling (option 1 of 4):** "Make ▦ Harnesses visible on the landing page too, and show each icon's name as a tooltip on hover or keyboard focus." The rail stays narrow, 56px at rest. Always-visible captions (option 2) were not chosen.
+
+**After, measured on a local build, compared with #1762's head 644d04b9959 (`preview-site.sh`, Playwright, light and dark):**
+
+| | before | after |
+|---|---|---|
+| landing 1280: ▦ at rest | hidden (opacity 0, max-height 0) | visible in the 56px strip, at x 12–44 |
+| landing 1280: actions to a harness | 2 (hover, then click) | **1** (click ▦; 6 harness links reachable) |
+| viewer pages (todos, cat-harness/schemas) 1280 and 390 | 1 | 1 (unchanged) |
+| landing 390 (theme menu) | menu tap + ▦ tap | unchanged (the strip rules apply only at 50rem and up) |
+| landing icons named on hover | no (hover widened the strip and moved the icon out from under the pointer) | tooltip = aria-label, at left 64px, strip still 56px; all 6 icons |
+| landing icons named on Tab focus | no | tooltip beside the open strip (left 272px), level with the row |
+| strip width at rest | 56 | 56 |
+
+**How:**
+- The bottom disclosure's summary is exempt from the at-rest lists; only its word and caret wait for the strip to open.
+- `[data-fa-tip]::after` is a fixed-position tooltip with alt text `""`, so the accessible name stays the aria-label.
+- Arriving on the icon column holds the strip shut (`.fa-nav-tip-hold`, set from the column's at-rest box) so the icon stays under the pointer. Arriving anywhere else still peeks.
+- New QA flags `rail-tips` and `harnesses-at-rest` in `check-viewer-nav.ts`: `layoutFlags` for viewer pages and `stripFlags` for the docs site's script-built strip.
+
+**Scoped deliberately:** a rail row that has a visible `.fa-nav-label` gets no tooltip. Hover and keyboard focus open the rail, and that label then reads beside its mark.
