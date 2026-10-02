@@ -67,7 +67,7 @@ def run(cmd: list[str], cwd: Path | None = None, check: bool = True,
     )
 
 
-# Family prefixes, declared in cat-harness/scripts/special-branches.ts (id
+# Family prefixes, declared in cat-harness/scripts/special-branches.json (id
 # `lake-cache`) and checked against this copy by
 # tests/special-branches.test.ts. New name first, then the legacy one, until
 # bean folio-assistant-oycs removes the fallback.

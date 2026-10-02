@@ -62,7 +62,7 @@ if [ -z "$BRANCH" ]; then
     exit 1
   fi
   slug=$(echo "$toolchain" | tr '.' '-')
-  # Family names are declared in cat-harness/scripts/special-branches.ts
+  # Family names are declared in cat-harness/scripts/special-branches.json
   # (id `lake-cache`) and checked against this copy by
   # tests/special-branches.test.ts. New name first, then the legacy one,
   # until bean folio-assistant-oycs removes the fallback.

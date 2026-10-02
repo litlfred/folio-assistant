@@ -104,7 +104,7 @@ jobs:
           echo "$EOF" >> "$GITHUB_OUTPUT"
           EOF=$(dd if=/dev/urandom bs=15 count=1 status=none | base64)
           # The family moved to `cat-lake-cache/` (bean folio-assistant-32f6;
-          # names declared in cat-harness/scripts/special-branches.ts). The
+          # names declared in cat-harness/scripts/special-branches.json). The
           # push step resolves this key through lake-cache.sh, which writes
           # to the legacy `lake-cache/` name only while that is the one that
           # exists — a `cat-` branch beside a live legacy one would block the

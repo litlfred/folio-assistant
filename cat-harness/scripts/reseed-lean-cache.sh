@@ -120,7 +120,7 @@ ABS_LAKE="$REPO/$LAKE_ROOT"
 TOOLCHAIN=$(cat "$ABS_LAKE/lean-toolchain" 2>/dev/null || cat "$REPO/lean-toolchain")
 TOOLCHAIN="$(printf '%s' "$TOOLCHAIN" | tr -d '[:space:]')"
 SLUG="$(printf '%s' "${TOOLCHAIN##*:}" | tr . -)"
-# Family names: declared in cat-harness/scripts/special-branches.ts (id
+# Family names: declared in cat-harness/scripts/special-branches.json (id
 # `lake-cache`), checked against this copy by tests/special-branches.test.ts.
 # Resolve new-name-first, then legacy, for the WRITE too: publishing a `cat-`
 # branch beside a live legacy one would block the owner's rename (bean

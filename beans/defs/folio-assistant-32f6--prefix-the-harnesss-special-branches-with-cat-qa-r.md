@@ -13,12 +13,12 @@ Owner, 2026-10-02, verbatim: "need to prefix 'special' branches with cat-, cat-q
 Parent: fs43, not 7x5n — fs43 is the arc whose subject is the special branches (its P7, rva2, declares every special branch with one field); 7x5n is the separation workplan this was asked from.
 
 ## Done when
-- [ ] Inventory of special branches with references and writers (PR body)
-- [ ] One declared source of truth for the names (cat-harness/special-branches.json) with a gate that every copy agrees
-- [ ] Readers and writers resolve new-then-legacy name, so nothing breaks across the rename
-- [ ] Collision review recorded: #1764/#1801 (qa-reports), #1816 (fhir-ast), state branch session
+- [x] Inventory of special branches with references and writers (PR body)
+- [x] One declared source of truth for the names (`cat-harness/scripts/special-branches.json`) with a test that every copy agrees
+- [x] Readers and writers resolve new-then-legacy name, so nothing breaks across the rename
+- [x] Collision review recorded: #1764/#1801 (qa-reports), #1816 (fhir-ast), state branch session
 - [ ] Owner approves the renames; renames done through the rename API (keeps a redirect), never delete
-- [ ] Follow-up bean for removing the legacy fallback
+- [x] Follow-up bean (folio-assistant-oycs) for removing the legacy fallback
 
 ## Collision review (coordinate §"Before a platform refactor"), 2026-10-02, before the first edit
 

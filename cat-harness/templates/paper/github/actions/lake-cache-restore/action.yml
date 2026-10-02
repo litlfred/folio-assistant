@@ -65,7 +65,7 @@ runs:
         echo "toolchain-slug=$slug" >> "$GITHUB_OUTPUT"
         # The cache-branch family moved to `cat-lake-cache/` (bean
         # folio-assistant-32f6; names declared in
-        # cat-harness/scripts/special-branches.ts). Tier 2 resolves the
+        # cat-harness/scripts/special-branches.json). Tier 2 resolves the
         # key new-name-first, then the legacy `lake-cache/` name.
         echo "orphan-key=${PACKAGE}-$slug" >> "$GITHUB_OUTPUT"
         echo "orphan-branch=cat-lake-cache/${PACKAGE}-$slug" >> "$GITHUB_OUTPUT"

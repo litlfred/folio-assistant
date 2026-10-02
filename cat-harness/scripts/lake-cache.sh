@@ -64,7 +64,7 @@ PRIVATE_REF="refs/lake-cache-restore"
 
 # ── Branch family names ─────────────────────────────────────────────
 #
-# Declared in cat-harness/scripts/special-branches.ts (id `lake-cache`);
+# Declared in cat-harness/scripts/special-branches.json (id `lake-cache`);
 # copied here because a folio may restore a cache with no `bun` on the
 # path. tests/special-branches.test.ts fails if the copy disagrees.
 #
