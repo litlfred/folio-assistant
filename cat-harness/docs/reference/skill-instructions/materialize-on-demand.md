@@ -6,9 +6,9 @@ parent: Skill instructions
 ---
 
 {: .note }
-> Generated from [`large-datasets/skills/materialize-on-demand.md`](https://github.com/litlfred/folio-assistant/blob/main/large-datasets/skills/materialize-on-demand.md) — do not edit here.
+> Generated from [`cat-harness/skills/library/large-datasets/materialize-on-demand.md`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/library/large-datasets/materialize-on-demand.md) — do not edit here.
 >
-> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/large-datasets/skills/materialize-on-demand.md){: .fa-edit-source }
+> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/cat-harness/skills/library/large-datasets/materialize-on-demand.md){: .fa-edit-source }
 
 {% raw %}
 # Materialize on demand
@@ -46,7 +46,8 @@ If what they want is already held and fresh, stop: point them at it.
 calling `materialize-remote`:
 
 - **Name the subset** in the source's own terms: its identifiers, or a subset
-  strategy its descriptor (`large-datasets/sources/`) supports.
+  strategy its descriptor (in the owning instance's declared `sources/`, e.g.
+  `who-iris/sources/`) supports.
 - **Close it over dependencies** if the descriptor says the subset is not
   self-contained (`subsetIsSelfContained: false`, mathlib). The size that
   matters is the closure's.
