@@ -133,7 +133,7 @@
       "href": "/beans/",
       "hidden": false,
       "icon": "beans",
-      "count": 611,
+      "count": 633,
       "unit": "beans"
     },
     {
@@ -251,7 +251,7 @@
       "href": "/lsi/",
       "hidden": false,
       "icon": "index",
-      "count": 1000,
+      "count": 1014,
       "unit": "documents"
     },
     {
@@ -1345,17 +1345,17 @@
         {
           "id": "directories",
           "label": "declared directories",
-          "value": 9
+          "value": 10
         },
         {
           "id": "kinds",
           "label": "declared graph kinds",
-          "value": 8
+          "value": 9
         },
         {
           "id": "views",
           "label": "visualisations you can open",
-          "value": 4
+          "value": 5
         }
       ],
       "visualisations": [
@@ -1374,6 +1374,10 @@
         {
           "kind": "methodology",
           "path": "/methodologies/"
+        },
+        {
+          "kind": "processes",
+          "path": "/processes/"
         },
         {
           "kind": "qa",
@@ -1424,6 +1428,14 @@
           ],
           "where": "local",
           "path": "folio-assistant-sci/sources/"
+        },
+        {
+          "id": "sci-processes",
+          "kinds": [
+            "processes"
+          ],
+          "where": "local",
+          "path": "folio-assistant-sci/processes/"
         },
         {
           "id": "qa",
@@ -1501,23 +1513,27 @@
         {
           "id": "directories",
           "label": "declared directories",
-          "value": 4
+          "value": 5
         },
         {
           "id": "kinds",
           "label": "declared graph kinds",
-          "value": 4
+          "value": 5
         },
         {
           "id": "views",
           "label": "visualisations you can open",
-          "value": 2
+          "value": 3
         }
       ],
       "visualisations": [
         {
           "kind": "library",
           "path": "/cat-harness/library/fhir-harness/"
+        },
+        {
+          "kind": "processes",
+          "path": "/processes/"
         },
         {
           "kind": "qa",
@@ -1556,6 +1572,14 @@
           ],
           "where": "local",
           "path": "fhir-harness/tools/"
+        },
+        {
+          "id": "fhir-harness-processes",
+          "kinds": [
+            "processes"
+          ],
+          "where": "local",
+          "path": "fhir-harness/processes/"
         },
         {
           "id": "qa",
@@ -3484,7 +3508,7 @@
           },
           {
             "key": "directories",
-            "summary": "6: library, sci-methodologies, sci-adapters, sci-sources, qa, attestations"
+            "summary": "7: library, sci-methodologies, sci-adapters, sci-sources, sci-processes, qa, attestations"
           },
           {
             "key": "needs",
@@ -3538,7 +3562,7 @@
           },
           {
             "key": "directories",
-            "summary": "4: library, fhir-ig-skills, fhir-ig-tools, qa"
+            "summary": "5: library, fhir-ig-skills, fhir-ig-tools, fhir-harness-processes, qa"
           },
           {
             "key": "needs",

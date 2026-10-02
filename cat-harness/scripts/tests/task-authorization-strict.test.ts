@@ -9,22 +9,21 @@
  * paragraph nobody re-runs.
  */
 import { describe, expect, test } from "bun:test";
-import { readdirSync } from "node:fs";
-import { join } from "node:path";
+import { join, basename } from "node:path";
 
 import { isActivity, loadProcessModel } from "../../src/workflow/process-model.js";
 import { authorizeTask } from "../../src/workflow/authorize.js";
 import { loadAccessContext, principalFromEnv } from "../../src/core/access.js";
 import { githubPrincipalFor } from "../../src/core/github-auth.js";
+import { workflowFile, workflowFiles } from "../known-skills.ts";
 
 const ROOT = join(import.meta.dir, "..", "..");
 const CTX = loadAccessContext(ROOT);
 
 async function everyStep() {
-  const dir = join(ROOT, "processes");
   const out: { process: string; task: string; role?: string }[] = [];
-  for (const f of readdirSync(dir).filter((f) => f.endsWith(".bpmn"))) {
-    const m = await loadProcessModel(join(dir, f));
+  for (const f of workflowFiles(ROOT).filter((f) => f.endsWith(".bpmn")).map((p) => basename(p))) {
+    const m = await loadProcessModel(workflowFile(ROOT, f));
     for (const n of m.nodes.values()) {
       if (isActivity(n) || n.kind === "exclusive") out.push({ process: m.id, task: n.id, role: n.roleRef });
     }

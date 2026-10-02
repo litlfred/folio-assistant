@@ -10,5 +10,5 @@ Part of [C@T Harness](../../README.md) 0.1.0, declared as `attestations`, holdin
 
 | file | what it is | used by |
 |---|---|---|
-| [`kg-qa/`](kg-qa/) | 19 files | |
+| [`kg-qa/`](kg-qa/) | 29 files | |
 <!-- kg:subgraph:end -->

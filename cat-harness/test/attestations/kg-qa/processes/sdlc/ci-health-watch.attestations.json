@@ -1,0 +1,19 @@
+{
+  "$schema": "qa-attestations/v1",
+  "family": "kg-qa",
+  "subject": {
+    "kind": "process",
+    "id": "Process_CiHealth",
+    "path": "processes/sdlc/ci-health-watch.bpmn"
+  },
+  "pair_attestations": [
+    {
+      "kind": "implements",
+      "prose": "cat-harness/processes/sdlc/ci-health-watch.bpmn",
+      "code": ".github/workflows/ci-health.yml",
+      "prose_hash": "764b54e3b47d",
+      "code_hash": "9045170b93c5",
+      "by": "baseline"
+    }
+  ]
+}

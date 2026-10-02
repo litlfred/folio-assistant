@@ -60,7 +60,7 @@ import { readSchemaGraph } from "./schema-graph.js";
 import { checkTools, unresolvedPaths } from "./check-tools.js";
 import { deriveAlternatives } from "../schemas/tool.js";
 import { tools, toolsOf } from "../tools/discover.js";
-import { kgDirectories, ownKgRoots, workflowDirs, workflowFiles, corpusScopeFor } from "./known-skills.js";
+import { kgDirectories, ownKgRoots, workflowFiles, corpusScopeFor } from "./known-skills.js";
 import { docsLayers } from "./compose-docs.js";
 import { PAIR_CRITERION, discoverPairs, evaluatePairsFrom, readAttestations, type PairAttestation } from "./prose-code-pairs.js";
 import { VOICE_REVIEW_CRITERION, evaluateVoiceReviewsFrom, readVoiceReviews, skillVoices, type VoiceReview } from "./skill-voice-review.js";
@@ -1062,10 +1062,12 @@ function reachabilityCriteria(m: ProcessModel): Record<string, KgCriterionEntry>
 async function auditDecisions(
   processes: LoadedProcess[],
 ): Promise<KgQaReport[]> {
-  const decisionDirs = workflowDirs(root, corpusScopeFor(root))
-    .map((d) => join(d, "decisions"))
-    .filter((d) => existsSync(d));
-  if (decisionDirs.length === 0) return [];
+  // Every `.dmn` under a declared processes directory, at ANY depth. Was
+  // `<dir>/decisions/` alone, which placement PR3 (bean `63wl`) outgrew: a
+  // decision now sits beside the diagrams that read it, in
+  // `processes/<group>/decisions/`, and a flat read audited none of them.
+  const decisionFiles = workflowFiles(root, corpusScopeFor(root)).filter((f) => f.endsWith(".dmn"));
+  if (decisionFiles.length === 0) return [];
   const referenced = new Set<string>();
   for (const p of processes) {
     for (const n of p.model?.nodes.values() ?? []) {
@@ -1074,9 +1076,7 @@ async function auditDecisions(
   }
 
   const out: KgQaReport[] = [];
-  for (const abs of decisionDirs
-    .flatMap((d) => readdirSync(d).filter((f) => f.endsWith(".dmn")).map((f) => join(d, f)))
-    .sort()) {
+  for (const abs of [...decisionFiles].sort()) {
     const f = basename(abs);
     const rel = relative(root, abs);
     const hash = sha256(readFileSync(abs, "utf-8"));

@@ -1,0 +1,19 @@
+{
+  "$schema": "qa-attestations/v1",
+  "family": "kg-qa",
+  "subject": {
+    "kind": "process",
+    "id": "Process_JsonLdDrift",
+    "path": "processes/sdlc/jsonld-drift-check.bpmn"
+  },
+  "pair_attestations": [
+    {
+      "kind": "implements",
+      "prose": "cat-harness/processes/sdlc/jsonld-drift-check.bpmn",
+      "code": ".github/workflows/jsonld-gen-check.yml",
+      "prose_hash": "0caddcfa7850",
+      "code_hash": "879605cc8ba8",
+      "by": "baseline"
+    }
+  ]
+}

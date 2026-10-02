@@ -65,8 +65,8 @@ Part of [C@T Harness](../README.md) 0.1.0, declared as `cat-harness-tests`, hold
 | [`test-server.e2e.ts`](test-server.e2e.ts) | a file |  |
 | [`test_pypdf_compat.py`](test_pypdf_compat.py) | a file |  |
 | [`translation-badges.e2e.ts`](translation-badges.e2e.ts) | a file |  |
-| [`attestations/`](attestations/README.md) | 20 files | |
+| [`attestations/`](attestations/README.md) | 30 files | |
 | [`health/`](health/) | 8 files | |
-| [`results/`](results/README.md) | 1010 files | |
+| [`results/`](results/README.md) | 1015 files | |
 | [`support/`](support/) | 3 files | |
 <!-- kg:subgraph:end -->

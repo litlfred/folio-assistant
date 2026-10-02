@@ -1,0 +1,19 @@
+{
+  "$schema": "qa-attestations/v1",
+  "family": "kg-qa",
+  "subject": {
+    "kind": "process",
+    "id": "Process_UpstreamPinWatch",
+    "path": "processes/sdlc/upstream-pin-watch.bpmn"
+  },
+  "pair_attestations": [
+    {
+      "kind": "implements",
+      "prose": "cat-harness/processes/sdlc/upstream-pin-watch.bpmn",
+      "code": ".github/workflows/upstream-pins.yml",
+      "prose_hash": "c09e1e1ec549",
+      "code_hash": "4530e0aabeda",
+      "by": "baseline"
+    }
+  ]
+}

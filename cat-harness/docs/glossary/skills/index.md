@@ -53,7 +53,7 @@ adjudication <span class="fa-gloss-status">candidate, extracted</span>
 adopt-methodology-from-source <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
-<p>The general process for turning a shared paper, book or standard into an adopted methodology: establish origin and licence, ingest the source, find and summarize related beans and issues and ask whether to coordinate, render the method with its adopted and refused parts, place it by ownership, integrate it by calling existing processes, give every tool it uses a Tool node, and put it to the owner. Process: processes/methodology-from-source.bpmn.</p>
+<p>The general process for turning a shared paper, book or standard into an adopted methodology: establish origin and licence, ingest the source, find and summarize related beans and issues and ask whether to coordinate, render the method with its adopted and refused parts, place it by ownership, integrate it by calling existing processes, give every tool it uses a Tool node, and put it to the owner. Process: processes/library/methodology-from-source.bpmn.</p>
 <p class="fa-gloss-meta">Skills of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/library/library-core/adopt-methodology-from-source.md"><code>cat-harness/skills/library/library-core/adopt-methodology-from-source.md</code></a></p>
 </dd>
 <dt id="cat-harness--kg-skills--agent-memory" data-fa-state="extracted" data-fa-gloss="">
@@ -1664,7 +1664,7 @@ reference-dataset-ingestion <span class="fa-gloss-status">candidate, extracted</
 related-work-coordination <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
-<p>Before new work takes shape, find the work it touches. Search beans, issues and open PRs for relevance; categorize and summarize every hit; then ask the user whether and how to coordinate. Judgement decides the categories and the recommendation, and the user decides the coordination. Called by CRDM when a requirement is initiated or updated in chat, and by methodology adoption. Process: processes/related-work.bpmn.</p>
+<p>Before new work takes shape, find the work it touches. Search beans, issues and open PRs for relevance; categorize and summarize every hit; then ask the user whether and how to coordinate. Judgement decides the categories and the recommendation, and the user decides the coordination. Called by CRDM when a requirement is initiated or updated in chat, and by methodology adoption. Process: processes/sdlc/related-work.bpmn.</p>
 <p class="fa-gloss-meta">Skills of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/sdlc/sdlc-core/related-work-coordination.md"><code>cat-harness/skills/sdlc/sdlc-core/related-work-coordination.md</code></a></p>
 </dd>
 <dt id="cat-harness--kg-skills--release-epic-planning" data-fa-state="extracted" data-fa-gloss="">
@@ -2258,7 +2258,7 @@ where-does-this-go <span class="fa-gloss-status">candidate, extracted</span>
 wireframe-design-review <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
-<p>Design a user interface (a page, a visualiser, a navbar) by the WireGen methodology: a written design intent, at least two mid-fidelity HTML candidates, each with a web AND a mobile layout, mechanical checks at both viewports, a blind per-criterion review, adjudication where reviewers disagree, and a recorded choice. Also how an EXISTING visualiser is wireframed as-is, so that every declared visualiser has a wireframe with a QA sidecar. Process: processes/wireframe-design-review.bpmn.</p>
+<p>Design a user interface (a page, a visualiser, a navbar) by the WireGen methodology: a written design intent, at least two mid-fidelity HTML candidates, each with a web AND a mobile layout, mechanical checks at both viewports, a blind per-criterion review, adjudication where reviewers disagree, and a recorded choice. Also how an EXISTING visualiser is wireframed as-is, so that every declared visualiser has a wireframe with a QA sidecar. Process: processes/ui/wireframe-design-review.bpmn.</p>
 <p class="fa-gloss-meta">Skills of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/ui/ui-core/wireframe-design-review.md"><code>cat-harness/skills/ui/ui-core/wireframe-design-review.md</code></a></p>
 </dd>
 <dt id="folio-assistant-sci--kg-skills--witnessed-values" data-fa-state="extracted" data-fa-gloss="">

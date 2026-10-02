@@ -117,10 +117,6 @@ msgstr "Una entrada bibliográfica puede apuntar a un recurso (asset) remoto en 
 msgid "The pipeline"
 msgstr "La canalización"
 
-#: docs/document-ingestion.md:75
-msgid "✎ Edit{: .fa-node-edit title=\"Edit processes/document-ingestion.bpmn\" } QA… TR KG…"
-msgstr "✎ Edit{: .fa-node-edit title=\"Edit processes/document-ingestion.bpmn\" } QA… TR KG…"
-
 #: docs/document-ingestion.md:82
 msgid "Open the BPMN source{: .btn .btn-outline }"
 msgstr "Abrir la fuente BPMN{: .btn .btn-outline }"
@@ -149,10 +145,6 @@ msgstr "El final es donde comienza la autoría. «Disponible para citar como fue
 msgid "Extract structure"
 msgstr "Extraer estructura"
 
-#: docs/document-ingestion.md:106
-msgid "✎ Edit{: .fa-node-edit title=\"Edit processes/ingest-extract-structure.bpmn\" } QA… TR KG…"
-msgstr "✎ Edit{: .fa-node-edit title=\"Edit processes/ingest-extract-structure.bpmn\" } QA… TR KG…"
-
 #: docs/document-ingestion.md:115
 msgid "The OCR branch is the one to know about. A document ingested that way keeps its text in  and only a stub in  — so the documented  grep cannot see its mathematics at all. That asymmetry is why the corpus-grep checklist has a fourth tier, and why a clean  grep is not evidence that the library lacks a topic."
 msgstr "La rama de OCR es la que conviene conocer. Un documento ingerido de esa manera conserva su texto en  y solo un fragmento básico (stub) en  —por lo que la búsqueda grep documentada sobre  no puede ver en absoluto sus fórmulas matemáticas. Esa asimetría es la razón por la que la lista de comprobación de búsquedas grep del corpus tiene un cuarto nivel, y por la que un grep limpio en  no es prueba de que la biblioteca carezca de un tema."
@@ -165,10 +157,6 @@ msgstr "Cada archivo de sección incluye el resumen del documento (document brie
 msgid "Derive content"
 msgstr "Derivar contenido"
 
-#: docs/document-ingestion.md:128
-msgid "✎ Edit{: .fa-node-edit title=\"Edit processes/ingest-derive-content.bpmn\" } QA… TR KG…"
-msgstr "✎ Edit{: .fa-node-edit title=\"Edit processes/ingest-derive-content.bpmn\" } QA… TR KG…"
-
 #: docs/document-ingestion.md:137
 msgid "This subprocess is mostly not built yet. Every task in it is tracked; see the table below. It is drawn in full anyway, because the shape of the pipeline is the thing being agreed, and a diagram that shows only what already exists cannot be used to decide what to build."
 msgstr "Este subproceso en su mayor parte aún no está construido. Cada tarea dentro de él está bajo seguimiento; consulta la tabla más abajo. Se dibuja completo de todos modos, porque la forma de la canalización es lo que se está acordando, y un diagrama que solo muestre lo que ya existe no se puede utilizar para decidir qué construir."
@@ -180,10 +168,6 @@ msgstr "El paso que resulta fácil omitir y costoso de incorporar a posteriori e
 #: docs/document-ingestion.md:148
 msgid "Ingest the theme"
 msgstr "Ingerir el tema"
-
-#: docs/document-ingestion.md:151
-msgid "✎ Edit{: .fa-node-edit title=\"Edit processes/ingest-theme.bpmn\" } QA TR KG…"
-msgstr "✎ Edit{: .fa-node-edit title=\"Edit processes/ingest-theme.bpmn\" } QA TR KG…"
 
 #: docs/document-ingestion.md:160
 msgid "Only some sources are themes, and a person decides which. After content is derived, the gateway A theme source? asks whoever is ingesting whether this document also carries a theme: a deployed site that serves one, or a style guide that states one. There is deliberately no rule that computes the answer. Whether a branded document is a theme source is an authoring judgement, and the owner ruled it so for bean . A source that is not a theme skips straight to building the knowledge graph."
@@ -221,10 +205,6 @@ msgstr "Un tema completo pasa a la revisión de tema y de UI, y el resultado es 
 msgid "Build the L1 knowledge graph"
 msgstr "Construir el grafo de conocimiento L1"
 
-#: docs/document-ingestion.md:192
-msgid "✎ Edit{: .fa-node-edit title=\"Edit processes/ingest-build-l1-kg.bpmn\" } QA… TR KG…"
-msgstr "✎ Edit{: .fa-node-edit title=\"Edit processes/ingest-build-l1-kg.bpmn\" } QA… TR KG…"
-
 #: docs/document-ingestion.md:201
 msgid "Each folder gets a standalone  as its record of truth, referenced from .  is already this corpus's JSON-LD vocabulary, so this extends a live context rather than introducing one."
 msgstr "Cada carpeta obtiene un  independiente como su registro fidedigno de referencia, referenciado desde .  ya es el vocabulario JSON-LD de este corpus, por lo que esto extiende un contexto existente en lugar de introducir uno nuevo."
@@ -236,10 +216,6 @@ msgstr "El nombre de la carpeta es la clave de citación bibliográfica, de modo
 #: docs/document-ingestion.md:208
 msgid "The L1 completeness gate"
 msgstr "La compuerta de completitud L1"
-
-#: docs/document-ingestion.md:211
-msgid "✎ Edit{: .fa-node-edit title=\"Edit processes/ingest-l1-completeness-gate.bpmn\" } QA… TR KG…"
-msgstr "✎ Edit{: .fa-node-edit title=\"Edit processes/ingest-l1-completeness-gate.bpmn\" } QA… TR KG…"
 
 #: docs/document-ingestion.md:220
 msgid "Without this gate every derivation step above is optional in practice: the document lands in , reads as ingested, and the gap surfaces whenever someone next needs the missing artefact — long after the context is gone."
@@ -380,3 +356,21 @@ msgstr "La ingestión nunca edita el contenido del corpus. Produce registros L1;
 #: docs/document-ingestion.md:288
 msgid "The one coupling worth stating: a drop into  during an editing session starts ingestion in the background. The editor is not blocked, and the new source becomes citeable when the gate passes — not before."
 msgstr "El único acoplamiento que vale la pena destacar: depositar un archivo en  durante una sesión de edición inicia la ingestión en segundo plano. El editor no queda bloqueado, y la nueva fuente pasa a ser citable cuando la compuerta se supera —no antes."
+
+#~ msgid "✎ Edit{: .fa-node-edit title=\"Edit processes/document-ingestion.bpmn\" } QA… TR KG…"
+#~ msgstr "✎ Edit{: .fa-node-edit title=\"Edit processes/document-ingestion.bpmn\" } QA… TR KG…"
+
+#~ msgid "✎ Edit{: .fa-node-edit title=\"Edit processes/ingest-extract-structure.bpmn\" } QA… TR KG…"
+#~ msgstr "✎ Edit{: .fa-node-edit title=\"Edit processes/ingest-extract-structure.bpmn\" } QA… TR KG…"
+
+#~ msgid "✎ Edit{: .fa-node-edit title=\"Edit processes/ingest-derive-content.bpmn\" } QA… TR KG…"
+#~ msgstr "✎ Edit{: .fa-node-edit title=\"Edit processes/ingest-derive-content.bpmn\" } QA… TR KG…"
+
+#~ msgid "✎ Edit{: .fa-node-edit title=\"Edit processes/ingest-theme.bpmn\" } QA TR KG…"
+#~ msgstr "✎ Edit{: .fa-node-edit title=\"Edit processes/ingest-theme.bpmn\" } QA TR KG…"
+
+#~ msgid "✎ Edit{: .fa-node-edit title=\"Edit processes/ingest-build-l1-kg.bpmn\" } QA… TR KG…"
+#~ msgstr "✎ Edit{: .fa-node-edit title=\"Edit processes/ingest-build-l1-kg.bpmn\" } QA… TR KG…"
+
+#~ msgid "✎ Edit{: .fa-node-edit title=\"Edit processes/ingest-l1-completeness-gate.bpmn\" } QA… TR KG…"
+#~ msgstr "✎ Edit{: .fa-node-edit title=\"Edit processes/ingest-l1-completeness-gate.bpmn\" } QA… TR KG…"

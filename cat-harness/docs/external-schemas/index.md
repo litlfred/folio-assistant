@@ -71,13 +71,13 @@ Every declaration names a record on this page.
 
 ## Namespaces the corpus uses against the ones it declares
 
-Read from the BPMN and DMN files themselves — **6** namespace IRI(s)
+Read from the BPMN and DMN files themselves — **5** namespace IRI(s)
 are in use. Derived rather than listed, so a diagram that adopts a new
 vocabulary shows up here instead of going unnoticed.
 
 Every namespace the corpus declares is covered by a record above.
 
-**22 declared and not in use.** Not a defect on its own: a
+**23 declared and not in use.** Not a defect on its own: a
 record may cover a namespace only some artefacts carry. It is here because
 a registry nobody prunes is one that stops describing the repository.
 
@@ -103,6 +103,7 @@ a registry nobody prunes is one that stops describing the repository.
 - `https://hdl.handle.net/`
 - `https://openprovenance.org/ns/provext#`
 - `https://schema.org/`
+- `https://www.omg.org/spec/DMN/20191111/DMNDI/`
 
 ## Each specification
 
@@ -219,13 +220,23 @@ graph. That is a determined zero, not an unfilled field.
 
 | user | declared by |
 |---|---|
-| `cat-harness/processes/*.bpmn (73)` | `xmlns` binding |
+| `cat-harness/processes/content/*.bpmn (4)` | `xmlns` binding |
+| `cat-harness/processes/kg/*.bpmn (4)` | `xmlns` binding |
+| `cat-harness/processes/library/*.bpmn (14)` | `xmlns` binding |
+| `cat-harness/processes/process/*.bpmn (12)` | `xmlns` binding |
+| `cat-harness/processes/sdlc/*.bpmn (21)` | `xmlns` binding |
+| `cat-harness/processes/ui/*.bpmn (4)` | `xmlns` binding |
 | [`cat-harness/scripts/kg-export.ts`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/scripts/kg-export.ts) | `@conformsTo` tag |
 | [`cat-harness/scripts/render-bpmn.ts`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/scripts/render-bpmn.ts) | `@conformsTo` tag |
 | [`cat-harness/src/workflow/process-model.ts`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/src/workflow/process-model.ts) | `@conformsTo` tag |
-| `folio-assistant-core/processes/*.bpmn (1)` | `xmlns` binding |
+| `fhir-harness/processes/content/*.bpmn (2)` | `xmlns` binding |
+| `folio-assistant-core/processes/conduct/*.bpmn (1)` | `xmlns` binding |
+| `folio-assistant-core/processes/content/*.bpmn (6)` | `xmlns` binding |
+| `folio-assistant-core/processes/library/*.bpmn (1)` | `xmlns` binding |
+| `folio-assistant-core/processes/ui/*.bpmn (3)` | `xmlns` binding |
+| `folio-assistant-sci/processes/content/*.bpmn (2)` | `xmlns` binding |
 | `smart-base/methodologies/processes/*.bpmn (1)` | `xmlns` binding |
-| `smart-base/processes/*.bpmn (1)` | `xmlns` binding |
+| `smart-base/processes/content/*.bpmn (1)` | `xmlns` binding |
 
 **Operative terms (22).** The terms this repository acts on —
 derived by the tooling from the corpus, never hand-listed, and deliberately
@@ -271,11 +282,21 @@ a subset of the edition rather than a transcription of it.
 
 | user | declared by |
 |---|---|
-| `cat-harness/processes/*.bpmn (73)` | `xmlns` binding |
+| `cat-harness/processes/content/*.bpmn (4)` | `xmlns` binding |
+| `cat-harness/processes/kg/*.bpmn (4)` | `xmlns` binding |
+| `cat-harness/processes/library/*.bpmn (14)` | `xmlns` binding |
+| `cat-harness/processes/process/*.bpmn (12)` | `xmlns` binding |
+| `cat-harness/processes/sdlc/*.bpmn (21)` | `xmlns` binding |
+| `cat-harness/processes/ui/*.bpmn (4)` | `xmlns` binding |
 | [`cat-harness/scripts/render-bpmn.ts`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/scripts/render-bpmn.ts) | `@conformsTo` tag |
-| `folio-assistant-core/processes/*.bpmn (1)` | `xmlns` binding |
+| `fhir-harness/processes/content/*.bpmn (2)` | `xmlns` binding |
+| `folio-assistant-core/processes/conduct/*.bpmn (1)` | `xmlns` binding |
+| `folio-assistant-core/processes/content/*.bpmn (6)` | `xmlns` binding |
+| `folio-assistant-core/processes/library/*.bpmn (1)` | `xmlns` binding |
+| `folio-assistant-core/processes/ui/*.bpmn (3)` | `xmlns` binding |
+| `folio-assistant-sci/processes/content/*.bpmn (2)` | `xmlns` binding |
 | `smart-base/methodologies/processes/*.bpmn (1)` | `xmlns` binding |
-| `smart-base/processes/*.bpmn (1)` | `xmlns` binding |
+| `smart-base/processes/content/*.bpmn (1)` | `xmlns` binding |
 
 **No operative terms.** This repository conforms to the specification
 without branching on any of its terms, so none is materialised into the
@@ -296,7 +317,11 @@ graph. That is a determined zero, not an unfilled field.
 
 | user | declared by |
 |---|---|
-| `cat-harness/processes/decisions/*.dmn (9)` | `xmlns` binding |
+| `cat-harness/processes/kg/decisions/*.dmn (3)` | `xmlns` binding |
+| `cat-harness/processes/sdlc/decisions/*.dmn (1)` | `xmlns` binding |
+| `folio-assistant-core/processes/conduct/decisions/*.dmn (2)` | `xmlns` binding |
+| `folio-assistant-core/processes/content/decisions/*.dmn (2)` | `xmlns` binding |
+| `folio-assistant-sci/processes/content/decisions/*.dmn (1)` | `xmlns` binding |
 
 **No operative terms.** This repository conforms to the specification
 without branching on any of its terms, so none is materialised into the

@@ -1,0 +1,19 @@
+{
+  "$schema": "qa-attestations/v1",
+  "family": "kg-qa",
+  "subject": {
+    "kind": "process",
+    "id": "Process_FeatureStaging",
+    "path": "processes/sdlc/feature-staging.bpmn"
+  },
+  "pair_attestations": [
+    {
+      "kind": "implements",
+      "prose": "cat-harness/processes/sdlc/feature-staging.bpmn",
+      "code": ".github/workflows/feature-staging.yml",
+      "prose_hash": "6ceda742cca0",
+      "code_hash": "8a3ef3a2196d",
+      "by": "baseline"
+    }
+  ]
+}
