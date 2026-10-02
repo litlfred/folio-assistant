@@ -1,10 +1,11 @@
 ---
 # folio-assistant-4l4d
 title: GEN-DOCS-PAGES reads QA badges through qa-store (5hox blocker)
-status: todo
+status: in-progress
 type: task
+priority: normal
 created_at: 2026-10-02T13:58:10Z
-updated_at: 2026-10-02T13:58:10Z
+updated_at: 2026-10-02T16:54:07Z
 parent: folio-assistant-3fva
 blocking:
     - folio-assistant-5hox

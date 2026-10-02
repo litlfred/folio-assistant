@@ -1,10 +1,11 @@
 ---
 # folio-assistant-f3bh
 title: SUBGRAPH-READMES skips stored directories (5hox follow-up)
-status: todo
+status: in-progress
 type: task
+priority: normal
 created_at: 2026-10-02T13:58:10Z
-updated_at: 2026-10-02T13:58:10Z
+updated_at: 2026-10-02T16:54:07Z
 parent: folio-assistant-3fva
 blocking:
     - folio-assistant-5hox

@@ -982,6 +982,9 @@ export const BASE_GRAPH_KINDS: Readonly<Record<string, GraphKindDef>> = {
       // not invented. `qa-graph-index.ts` names the tag only to say it is
       // NOT its own (`NOT_TO_BE_CONFUSED_WITH`).
       "folio-qa-index/v1": { validator: "schemas/site-indexes.ts#QaIndexSchema", generated: true },
+      // Which authored pages have a translation projection (bean `4l4d`) —
+      // the list `head_custom.html` once read from `_data/`, now an asset.
+      "folio-qa-translation-pages/v1": { validator: "schemas/site-indexes.ts#QaTranslationPagesSchema", generated: true },
       // The detangle sidecars, in cat-harness
       // qa directory. `detangle` was its own instance until 2026-09-23 and is
       // now a directory of this harness (bean `byql`), so the shape is an

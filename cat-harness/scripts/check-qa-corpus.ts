@@ -102,6 +102,7 @@ export type CorpusProblem =
   | "manifest-schema"
   | "witness-index-missing"
   | "witness-index-row-missing"
+  | "witness-index-corpus-absent"
   | "witness-url-missing"
   | "witness-underscore-path";
 
@@ -179,6 +180,7 @@ export function judgeWitnesses(tree: string, pages: readonly BadgePage[]): Corpu
   const exists = (p: string): boolean => existsSync(p) && statSync(p).isFile();
   for (const { path, text } of pages) {
     const slug = /assets\/qa\/([^/]+)\/qa-index\.json/.exec(text)?.[1];
+    const unswept = new Set<string>();
     if (slug) {
       const idxRel = `${WITNESS_TREE}/${slug}/qa-index.json`;
       const idx = join(root, idxRel);
@@ -186,20 +188,34 @@ export function judgeWitnesses(tree: string, pages: readonly BadgePage[]): Corpu
         out.push({ path: idxRel, problem: "witness-index-missing", detail: `${path} paints its badges from it` });
       } else {
         let badges: Record<string, unknown> = {};
+        let corpus: unknown;
         try {
-          badges = (JSON.parse(readFileSync(idx, "utf-8")) as { badges?: Record<string, unknown> }).badges ?? {};
+          const doc = JSON.parse(readFileSync(idx, "utf-8")) as { badges?: Record<string, unknown>; unswept?: unknown; corpus?: unknown };
+          badges = doc.badges ?? {};
+          corpus = doc.corpus;
+          // Since bean `4l4d` every badge is the same placeholder and the
+          // index answers "not swept" as its own list — a key there is
+          // accounted for, and has no projection to fetch.
+          if (Array.isArray(doc.unswept)) for (const k of doc.unswept) if (typeof k === "string") unswept.add(k);
         } catch {
           // unparseable: already a finding of the integrity sweep
         }
+        // A published entry's index must have been written WITH the corpus;
+        // `absent` here means the tree was produced by a build that had none.
+        if (corpus === "absent") out.push({ path: idxRel, problem: "witness-index-corpus-absent", detail: `${path} paints from an index written without the QA corpus` });
         for (const m of text.matchAll(/data-qa-key="([^"]+)"/g)) {
-          if (!(m[1]! in badges)) out.push({ path: idxRel, problem: "witness-index-row-missing", detail: `${path}: no row for ${m[1]}` });
+          if (!(m[1]! in badges) && !unswept.has(m[1]!)) out.push({ path: idxRel, problem: "witness-index-row-missing", detail: `${path}: no row for ${m[1]}` });
         }
       }
     }
     // The Liquid the generator emits, resolved the way Jekyll resolves it:
     // `relative_url` prepends the baseurl, and `assets/qa/` is the witness tree.
+    // An `unswept` key's projection does not exist by definition, so its URL
+    // is not asked for.
+    const unsweptSrc = new Set([...unswept].map((k) => `${slug}/${k}.json`));
     const seen = new Set<string>();
     for (const m of text.matchAll(/data-qa-(?:index|src)="\{\{ '\/assets\/qa\/([^']+)' \| relative_url \}\}"/g)) {
+      if (unsweptSrc.has(m[1]!)) continue;
       if (seen.has(m[1]!)) continue;
       seen.add(m[1]!);
       const target = `${WITNESS_TREE}/${m[1]}`;
