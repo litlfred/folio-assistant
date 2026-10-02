@@ -100,7 +100,26 @@ resolve_package() {
 
 cmd_list_names() {
   IGIT_ROOT=$(resolve_ig_root)
-  igit ls-remote --heads "$REMOTE" 'refs/heads/fhir-ast/*' | sed -n 's#^.*refs/heads/\(.*\)$#\1#p'
+  igit ls-remote --heads "$REMOTE" 'refs/heads/cat-fhir-ast/*' 'refs/heads/fhir-ast/*' | sed -n 's#^.*refs/heads/\(.*\)$#\1#p'
+}
+
+# The cache branch for a package. Special branches are being renamed with a
+# `cat-` prefix (#1913, bean 32f6), so both names must work until the rename
+# lands: the `cat-` name if it exists, else the old name if it exists, else
+# the `cat-` name (a first seed creates the new one). `--branch` overrides.
+# IGIT_ROOT must be set. A remote that cannot be reached is an error, not
+# "absent": reading it as absent would seed a second branch beside the first.
+resolve_branch() {
+  local pkg="$1"
+  if [ -n "$BRANCH" ]; then printf '%s\n' "$BRANCH"; return; fi
+  local name rc
+  for name in "cat-fhir-ast/$pkg" "fhir-ast/$pkg"; do
+    igit ls-remote --exit-code --heads "$REMOTE" "refs/heads/$name" >/dev/null 2>&1
+    rc=$?
+    if [ "$rc" -eq 0 ]; then printf '%s\n' "$name"; return; fi
+    [ "$rc" -eq 2 ] || die "could not reach remote '$REMOTE' to look up $name (git ls-remote exit $rc)"
+  done
+  printf '%s\n' "cat-fhir-ast/$pkg"
 }
 
 count_resources() {
@@ -141,8 +160,8 @@ cmd_status() {
 cmd_restore() {
   local root; root=$(resolve_ig_root)
   local pkg; pkg=$(resolve_package "$root") || die "could not resolve package id from $root/sushi-config.yaml"
-  local br="${BRANCH:-fhir-ast/$pkg}"
   IGIT_ROOT="$root"
+  local br; br=$(resolve_branch "$pkg") || exit 2
   
   local out="$root/output-ast"
   if [ -d "$out" ] && [ "$(count_resources "$out")" -gt 0 ]; then
@@ -243,8 +262,8 @@ would_shrink() {
 cmd_seed() {
   local root; root=$(resolve_ig_root)
   local pkg; pkg=$(resolve_package "$root") || die "pass --package NAME"
-  local br="${BRANCH:-fhir-ast/$pkg}"
   IGIT_ROOT="$root"
+  local br; br=$(resolve_branch "$pkg") || exit 2
   
   local out="$root/output-ast"
   
