@@ -145,6 +145,42 @@ export function labelVisualisations<V extends { kind: string; path?: string | nu
   return rows;
 }
 
+/**
+ * A viewer row whose page IS the instance's own root is the harness's
+ * destination again, so it takes the harness's name and is listed once.
+ *
+ * Stage C of #1767 made each ingested IG's generated landing declare itself
+ * the `fhir-artifact-index` viewer (`rendered-by: ig-pages`), so that kind's
+ * row opened `/smart-base/` — the page the harness row already opens as
+ * "SMART Base". One page was then "SMART Base" on the harness row and "FHIR
+ * artefact index" one row below it, on the sidebar, the landing and the rail.
+ * The harness name wins because the page is the instance's front door first:
+ * a harness row never takes a graph's name (bean `ob3m` finding 6), and the
+ * converse — renaming the harness after one of its graphs — would make the
+ * harness's name depend on which viewer happens to live at its root.
+ *
+ * `sameAs` is set to the harness's NAME (not a kind) so every list of
+ * destinations skips the row exactly as it skips a kind sharing a page.
+ *
+ * @param root the instance's own root as published (`folio`), or undefined
+ *   when it has none — then no row can be it and nothing changes.
+ */
+export function nameInstanceRoot<V extends { path?: string | null; label?: string; sameAs?: string }>(
+  rows: V[],
+  root: string | undefined,
+  harness: { name: string; title?: string | null },
+): V[] {
+  if (root === undefined) return rows;
+  const home = normaliseDestination(root);
+  if (home === undefined) return rows;
+  for (const r of rows) {
+    if (!r.path || normaliseDestination(r.path) !== home) continue;
+    r.label = harnessTitle(harness);
+    r.sameAs = harness.name;
+  }
+  return rows;
+}
+
 /** The label and qualifier as one line of text, for a `title` or an accessible name. */
 export function labelText(l: NavLabel): string {
   return l.qualifier ? `${l.label}${QUALIFIER_SEPARATOR}${l.qualifier}` : l.label;

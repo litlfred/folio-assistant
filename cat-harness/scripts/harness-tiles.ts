@@ -83,7 +83,7 @@ import {
 } from "../schemas/cat-harness.js";
 import { withViewers } from "./viewer-declarations.js";
 import { subscribedHarnesses, subscribedTile } from "./subscribed-harnesses.js";
-import { labelVisualisations } from "./lib/nav-label.js";
+import { labelVisualisations, nameInstanceRoot } from "./lib/nav-label.js";
 // The `folio` graph kind is registered by CORE. This module is a LIBRARY, so it
 // does NOT import that registration: a library's edge is inherited by every
 // module that imports it, and the harness may not depend on core. The
@@ -122,8 +122,9 @@ export type HarnessVisualisation = {
   label?: string;
   /**
    * Set when this kind's page is the SAME destination as another kind's row
-   * of this instance, and names that kind. A list of destinations skips the
-   * row, so one page is listed once, under one name.
+   * of this instance, and names that kind — or, when the page is the
+   * instance's own root, names the HARNESS (`nameInstanceRoot`). A list of
+   * destinations skips the row, so one page is listed once, under one name.
    */
   sameAs?: string;
   /**
@@ -1186,6 +1187,10 @@ function tileFor(
   const instantiated = existsSync(join(repoRoot, instanceConfigFilename(decl.name)));
   const section = rooted === undefined && instantiated ? `/#harness-${decl.name}` : undefined;
   const href = rooted ?? section ?? firstViewer ?? handled;
+  // A VIEWER AT THE INSTANCE'S OWN ROOT is the harness's page again, and
+  // takes the harness's name (stage C of #1767 put the `fhir-artifact-index`
+  // viewer at `/smart-base/`). See `nameInstanceRoot`.
+  nameInstanceRoot(visualisations, folio, decl);
   if (folio === undefined && section !== undefined) {
     findings.push(
       `${decl.name}: has no docs/ of its own, so the tile opens its section of the landing ` +

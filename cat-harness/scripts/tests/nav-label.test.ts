@@ -20,6 +20,7 @@ import {
   kindTitle,
   labelText,
   labelVisualisations,
+  nameInstanceRoot,
   normaliseDestination,
   stripQualifier,
   tileLabel,
@@ -97,6 +98,44 @@ describe("two kinds on one page share one name", () => {
     const rows: { kind: string; path?: string; label?: string }[] = [{ kind: "waiver" }, { kind: "memory" }];
     labelVisualisations(rows, [{ graphKinds: ["memory", "waiver"] }]);
     expect(rows.map((r) => r.label)).toEqual(["Waivers", "Memory"]);
+  });
+});
+
+describe("a viewer at the instance's own root is the harness's page", () => {
+  // Stage C of #1767: an ingested IG's generated landing declares itself the
+  // `fhir-artifact-index` viewer, so that row opened `/smart-base/` — the page
+  // the harness row already opens. Without this it was "SMART Base" on one
+  // row and "FHIR artefact index" on the next.
+  test("the row takes the harness's name and is listed once", () => {
+    const rows: { kind: string; path?: string; label?: string; sameAs?: string }[] = [
+      { kind: "docs", path: "/cat-harness/docs-auto/index/docs/smart-base-docs/" },
+      { kind: "fhir-artifact-index", path: "/smart-base/" },
+      { kind: "qa" },
+    ];
+    labelVisualisations(rows, [{ graphKinds: ["docs"] }, { graphKinds: ["fhir-artifact-index"] }, { graphKinds: ["qa"] }]);
+    expect(rows[1]!.label).toBe("FHIR artefact index");
+    nameInstanceRoot(rows, "/smart-base/", { name: "smart-base", title: "SMART Base" });
+    expect(rows.map((r) => r.label)).toEqual(["Docs", "SMART Base", "QA"]);
+    expect(rows.map((r) => r.sameAs)).toEqual([undefined, "smart-base", undefined]);
+  });
+
+  test("the root is compared as a destination, not as a string", () => {
+    const rows = [{ kind: "fhir-artifact-index", path: "/smart-trust/index.html", label: "FHIR artefact index" } as {
+      kind: string;
+      path: string;
+      label?: string;
+      sameAs?: string;
+    }];
+    nameInstanceRoot(rows, "/smart-trust/", { name: "smart-trust" });
+    expect(rows[0]!.label).toBe("smart-trust");
+    expect(rows[0]!.sameAs).toBe("smart-trust");
+  });
+
+  test("an instance with no root of its own changes nothing", () => {
+    const rows = [{ kind: "processes", path: "/processes/", label: "Processes" } as { kind: string; path: string; label?: string; sameAs?: string }];
+    nameInstanceRoot(rows, undefined, { name: "bootstrap", title: "Bootstrap" });
+    expect(rows[0]!.label).toBe("Processes");
+    expect(rows[0]!.sameAs).toBeUndefined();
   });
 });
 
