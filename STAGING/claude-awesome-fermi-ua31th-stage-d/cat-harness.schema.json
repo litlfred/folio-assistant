@@ -16,6 +16,18 @@
           "type": "string",
           "minLength": 1
         },
+        "summary": {
+          "type": "string",
+          "minLength": 1
+        },
+        "alsoWritten": {
+          "minItems": 1,
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
         "images": {
           "type": "array",
           "items": {
@@ -1010,8 +1022,8 @@
   "$comment": "Instance graph: https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th-stage-d/cat-harness.jsonld",
   "staging": {
     "branch": "claude/awesome-fermi-ua31th-stage-d",
-    "sha": "05cbc22b284385eefba4fb5ff2cfec2953d2cb51",
+    "sha": "d885e5975dc93592cd98aab0d48eff11b2681455",
     "pr": "1795/merge",
-    "run": "36908138936"
+    "run": "36978408282"
   }
 }
