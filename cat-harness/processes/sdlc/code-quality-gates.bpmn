@@ -40,6 +40,7 @@ Mechanical throughout. Nothing here waits on a person, which is what makes `buil
         <bpmn:flowNodeRef>Task_Python</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Task_TypeScript</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Task_RepositoryGates</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Task_UnrunGates</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Task_SkillChain</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Task_E2E</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Task_Rust</bpmn:flowNodeRef>
@@ -53,7 +54,7 @@ Mechanical throughout. Nothing here waits on a person, which is what makes `buil
     <bpmn:startEvent id="Start_Change" name="Pull request, push to main,&#10;or dispatch">
       <bpmn:outgoing>Flow_0</bpmn:outgoing>
     </bpmn:startEvent>
-    <bpmn:parallelGateway id="GW_Fork" name="All eight,&#10;in parallel">
+    <bpmn:parallelGateway id="GW_Fork" name="Every job,&#10;in parallel">
       <bpmn:incoming>Flow_0</bpmn:incoming>
       <bpmn:outgoing>Flow_1</bpmn:outgoing>
       <bpmn:outgoing>Flow_2</bpmn:outgoing>
@@ -62,6 +63,7 @@ Mechanical throughout. Nothing here waits on a person, which is what makes `buil
       <bpmn:outgoing>Flow_5</bpmn:outgoing>
       <bpmn:outgoing>Flow_14</bpmn:outgoing>
       <bpmn:outgoing>Flow_16</bpmn:outgoing>
+      <bpmn:outgoing>Flow_20</bpmn:outgoing>
     </bpmn:parallelGateway>
     <bpmn:task id="Task_Lean" name="Lean: no bare&#10;`import Mathlib` (HARD)">
       <bpmn:documentation>Fail on any bare `import Mathlib` in content/**/*.lean — targeted imports only. In this platform repo there is no content/, so the job prints SKIP and states that nothing was scanned rather than passing silently.</bpmn:documentation>
@@ -88,12 +90,13 @@ Mechanical throughout. Nothing here waits on a person, which is what makes `buil
       <bpmn:outgoing>Flow_8</bpmn:outgoing>
     </bpmn:task>
     <bpmn:task id="Task_E2E" name="End-to-end +&#10;accessibility (HARD)">
-      <bpmn:documentation>Install Chromium, check the rendered BPMN SVGs are current, then run the Playwright suite, which includes the accessibility checks. Hard: a failure blocks the PR.</bpmn:documentation>
+      <bpmn:documentation>Install Chromium, check the rendered BPMN SVGs are current, then run the Playwright suite, which includes the accessibility checks. Hard: a failure blocks the PR. PARALLEL MULTI-INSTANCE since bean `dlqu`: the suite runs as three `e2e-shard` jobs (`E2E_SHARD=i/3`, one Playwright worker per core in each), and the `e2e` job that carries this check's name completes the task only when every instance succeeded — a shard that failed, was cancelled or never ran is a red check, never a skipped one. Measured before the split: `playwright test` alone was 4m33s of a 5m16s job, the workflow's slowest once `bun test` ran in parallel. The BPMN-render and `.bat`-wrapper checks run in shard 1 only, so they are asked once.</bpmn:documentation>
       <bpmn:extensionElements>
         <bootstrap.processes:skill ref="platform-gates"/>
       </bpmn:extensionElements>
       <bpmn:incoming>Flow_4</bpmn:incoming>
       <bpmn:outgoing>Flow_9</bpmn:outgoing>
+      <bpmn:multiInstanceLoopCharacteristics isSequential="false"/>
     </bpmn:task>
     <bpmn:task id="Task_Rust" name="Rust wildcard imports&#10;(WARN-ONLY)">
       <bpmn:documentation>Report non-test `use …::*;` in tools/**/*.rs, excluding `use super::*;`. continue-on-error: it reports and never blocks, which is why it is labelled WARN-ONLY rather than drawn like the hard jobs.</bpmn:documentation>
@@ -119,6 +122,14 @@ Mechanical throughout. Nothing here waits on a person, which is what makes `buil
       <bpmn:incoming>Flow_16</bpmn:incoming>
       <bpmn:outgoing>Flow_17</bpmn:outgoing>
     </bpmn:task>
+    <bpmn:task id="Task_UnrunGates" name="Registered gates&#10;that never run (HARD)">
+      <bpmn:documentation>`check:gates-registered`, split out of Task_RepositoryGates by bean `dlqu`: one step of that job measured 1m46s-2m28s across four runs, the longest step in it by a factor of four, and a sequential job is as slow as the sum of its steps. In its own job it runs beside the rest rather than after them. It still asks the same question — is every gate a script registers actually run somewhere — and is still hard.</bpmn:documentation>
+      <bpmn:extensionElements>
+        <bootstrap.processes:skill ref="platform-gates"/>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_20</bpmn:incoming>
+      <bpmn:outgoing>Flow_21</bpmn:outgoing>
+    </bpmn:task>
     <bpmn:task id="Task_SkillChain" name="Skill-registration chain&#10;(UNMASKED)">
       <bpmn:documentation>Runs the five `--check` commands that adding a skill stales, each on its own: gen-skill-docs, check:glossary, docs:auto:check, kg:audit:check, kg:detangle:check. CORRECTED 2026-09-26, after main split this workflow: the original justification is GONE. It read "the only place those five are read against the tree as checked out", because at the time all six lived in one job behind `bun test`, which runs the kg-audit and detangle WRITERS and repaired two artefacts before their checks read them (bean `ymsu`). Task_RepositoryGates is now a separate job that runs all six and never runs `bun test`, so they are unmasked THERE. What survives is narrower and is the reason this is kept: one command a skill author runs (`bun run skill:register`) that regenerates and verifies the chain together, a committed QA sidecar saying which steps ran, and ONE named failure instead of six unrelated generated files — which is bean `v625`'s actual complaint. The unmasking argument belongs to Task_RepositoryGates now. Its first CI run earned the place: it went red on `kg:detangle:check` and the cause was `kg-detangle.ts` counting 1214 files of a gitignored `node_modules/` as graph nodes — 1441 where a clean checkout computes 227, pinned in a committed sidecar. Not a step in front of `bun test` either: measured on main's run 36234052354, a failing step SKIPS every step behind it, so a red there would turn one named failure into forty-five unevaluated ones. 13s, in parallel. Beans `v625`, `fjwi`.</bpmn:documentation>
       <bpmn:extensionElements>
@@ -135,6 +146,7 @@ Mechanical throughout. Nothing here waits on a person, which is what makes `buil
       <bpmn:incoming>Flow_10</bpmn:incoming>
       <bpmn:incoming>Flow_15</bpmn:incoming>
       <bpmn:incoming>Flow_17</bpmn:incoming>
+      <bpmn:incoming>Flow_21</bpmn:incoming>
       <bpmn:outgoing>Flow_11</bpmn:outgoing>
     </bpmn:parallelGateway>
     <bpmn:exclusiveGateway id="GW_Hard" name="Any HARD&#10;gate red?">
@@ -169,14 +181,16 @@ Mechanical throughout. Nothing here waits on a person, which is what makes `buil
     <bpmn:sequenceFlow id="Flow_17" sourceRef="Task_RepositoryGates" targetRef="GW_Join"/>
     <bpmn:sequenceFlow id="Flow_18" sourceRef="GW_Fork" targetRef="Task_SkillChain"/>
     <bpmn:sequenceFlow id="Flow_19" sourceRef="Task_SkillChain" targetRef="GW_Join"/>
+    <bpmn:sequenceFlow id="Flow_20" sourceRef="GW_Fork" targetRef="Task_UnrunGates"/>
+    <bpmn:sequenceFlow id="Flow_21" sourceRef="Task_UnrunGates" targetRef="GW_Join"/>
   </bpmn:process>
   <bpmndi:BPMNDiagram id="Diagram_Process_CodeQualityGates">
     <bpmndi:BPMNPlane id="Plane_Process_CodeQualityGates" bpmnElement="Collaboration_Process_CodeQualityGates">
       <bpmndi:BPMNShape id="Shape_Participant_Process_CodeQualityGates" bpmnElement="Participant_Process_CodeQualityGates" isHorizontal="true">
-        <dc:Bounds x="60" y="60" width="1640" height="1070"/>
+        <dc:Bounds x="60" y="60" width="1640" height="1190"/>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Shape_Lane_Ci" bpmnElement="Lane_Ci" isHorizontal="true">
-        <dc:Bounds x="90" y="60" width="1610" height="960"/>
+        <dc:Bounds x="90" y="60" width="1610" height="1080"/>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Shape_Start_Change" bpmnElement="Start_Change">
         <dc:Bounds x="122" y="332" width="36" height="36"/>
@@ -207,6 +221,9 @@ Mechanical throughout. Nothing here waits on a person, which is what makes `buil
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Shape_Task_SkillChain" bpmnElement="Task_SkillChain">
         <dc:Bounds x="550" y="910" width="180" height="80"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_Task_UnrunGates" bpmnElement="Task_UnrunGates">
+        <dc:Bounds x="550" y="1030" width="180" height="80"/>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Shape_GW_Join" bpmnElement="GW_Join">
         <dc:Bounds x="865" y="325" width="50" height="50"/>
@@ -303,6 +320,17 @@ Mechanical throughout. Nothing here waits on a person, which is what makes `buil
       <bpmndi:BPMNEdge id="Edge_Flow_17" bpmnElement="Flow_17">
         <di:waypoint x="730" y="830"/>
         <di:waypoint x="890" y="830"/>
+        <di:waypoint x="890" y="375"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_Flow_20" bpmnElement="Flow_20">
+        <di:waypoint x="415" y="350"/>
+        <di:waypoint x="480" y="350"/>
+        <di:waypoint x="480" y="1070"/>
+        <di:waypoint x="550" y="1070"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_Flow_21" bpmnElement="Flow_21">
+        <di:waypoint x="730" y="1070"/>
+        <di:waypoint x="890" y="1070"/>
         <di:waypoint x="890" y="375"/>
       </bpmndi:BPMNEdge>
     </bpmndi:BPMNPlane>
