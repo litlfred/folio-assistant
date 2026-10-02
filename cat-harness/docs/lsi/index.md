@@ -118,14 +118,14 @@ Each dimension is a **contrast** between two poles, shown by their highest-loadi
 
 | dim | σ | one pole | the other pole |
 |---|---|---|---|
-| 1 | 44.41 | instance, kind, harness, session, directory, block, page, graph | *(none)* |
+| 1 | 44.42 | instance, kind, harness, session, directory, block, page, graph | *(none)* |
 | 2 | 21.55 | watcher, sibling, slot, prs, queue, backlog, commits, block | harness, instance, declaration, node, directory, directories, graph, declares |
 | 3 | 17.99 | slot, chapter, block, edges, formal, project, proof, glossary | session, beans, branch, goals, store, window, sessions, push |
-| 4 | 16.68 | page, text, block, pdf, blocks, manifest, slide, images | sibling, ledger, subdirectory, sessions, items, coordination, prs, renderable |
-| 5 | 15.18 | rung, archive, withheld, queue, arm, sniff, archived, zip | preview, feature, staging, requirements, role, build, folio, feedback |
-| 6 | 14.91 | sha, page, locale, staging, pages, preview, main, url | edge, lane, edges, actor, role, forward, logical, process |
-| 7 | 14.52 | edges, forward, backward, edge, preview, cross-chapter, energy, logical | actor, lane, role, task, requirement, criterion, login, process |
-| 8 | 14.25 | avatar, tile, card, art, board, sticky, claim, slot | feature, phase, feedback, preview, pdf, stakeholders, impact, requirements |
+| 4 | 16.69 | page, text, block, pdf, blocks, manifest, slide, images | sibling, ledger, subdirectory, sessions, items, coordination, prs, relocation |
+| 5 | 15.18 | rung, archive, withheld, queue, arm, sniff, archived, zip | preview, feature, staging, requirements, build, role, folio, feedback |
+| 6 | 14.91 | sha, page, locale, staging, pages, main, preview, url | edge, lane, edges, actor, role, forward, logical, process |
+| 7 | 14.52 | edges, forward, backward, edge, cross-chapter, preview, energy, logical | actor, lane, role, task, requirement, criterion, login, process |
+| 8 | 14.26 | avatar, tile, card, art, board, sticky, theme, crop | feature, phase, feedback, preview, pdf, stakeholders, impact, requirements |
 
 **Findings** — 0 narrow dimension(s), 0 near-duplicate pair(s).
 

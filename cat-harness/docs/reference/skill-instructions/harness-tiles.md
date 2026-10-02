@@ -305,11 +305,16 @@ the list lives: *"should be in each harness config which are shown (so some
 could show none, but make this default in cat-harness that is inherited)."*
 
 `navbarIcons` on the instance declaration. A **closed** set — `close`,
-`todos`, `beans`, `processes`, `kg`, `launcher` — because a free string lets an
-instance name an icon nothing draws, and the failure is a silent gap in a row
-capped at six. Six is the cap and it is **refused, never truncated**: an
-instance that declared seven has made a decision, and silently dropping its
-last entry overrules that decision without saying so.
+`todos`, `beans`, `processes`, `kg`, `fsh-guts`, `launcher` — because a free
+string lets an instance name an icon nothing draws, and the failure is a silent
+gap in a row capped at seven. Seven is the cap and it is **refused, never
+truncated**: an instance that declared eight has made a decision, and silently
+dropping its last entry overrules that decision without saying so.
+
+The cap was six until 2026-10-02, when the owner put the fsh-guts trashcan in
+the row *"with the others"* (#1925) rather than in place of one. `fsh-guts` is
+a control, like `launcher`: a button that opens the discarded-items list and
+carries its live count, not a link.
 
 **The three states are the part to get right, and two of them look the same:**
 

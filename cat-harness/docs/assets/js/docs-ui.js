@@ -1109,8 +1109,11 @@
   }
 
   function mountFshGutsNav() {
-    var buttons = document.querySelectorAll("[data-fa-fsh-guts-open]");
+    var buttons = Array.prototype.filter.call(
+      document.querySelectorAll("[data-fa-fsh-guts-open]"),
+      function (b) { return !b.hasAttribute("data-fa-fsh-guts-wired"); });
     if (!buttons.length) return;
+    buttons.forEach(function (b) { b.setAttribute("data-fa-fsh-guts-wired", ""); });
     function paint() {
       fetchDiscarded(function (state) {
         var c = fshGutsCount(state);
@@ -2059,7 +2062,7 @@
         // only way back.
         if (document.querySelector("[data-fa-fsh-guts-open]")) {
           discardedSlot.appendChild(el("p", { class: "fa-discarded-moved" },
-            "Discarded items are in fsh-guts: the fish in the side navigation, above Harnesses."));
+            "Discarded items are in fsh-guts: the fish in the icon row at the top of the side navigation."));
           return;
         }
         var localCount = discardedTodoIds().length;
@@ -4204,7 +4207,7 @@
   /** Where a sticky sent to fsh-guts is restored from, on THIS page, in words. */
   function fshGutsRestoreWhere() {
     return document.querySelector("[data-fa-fsh-guts-open]")
-      ? "fsh-guts (the fish in the side navigation, above Harnesses)"
+      ? "fsh-guts (the fish in the icon row at the top of the side navigation)"
       : "Page settings (under ▦ Actions), then Discarded";
   }
 
@@ -10504,7 +10507,7 @@
 
     var LABELS = {
       todos: "Todos", beans: "Beans", processes: "Processes",
-      kg: "Knowledge graph", launcher: "More actions"
+      kg: "Knowledge graph", launcher: "More actions", "fsh-guts": "fsh-guts, discarded items"
     };
 
     // BUILT HERE, not at module scope, and the reason is ordering: STICKY_GLYPH
@@ -10528,6 +10531,21 @@
       // `close` is the CSS-placed label described above. Skipped rather than
       // dropped from the declaration, so the instance's list still says six.
       if (id === "close") continue;
+
+      if (id === "fsh-guts") {
+        // THE TRASHCAN IN THE ROW, "with the others" — owner, 2026-10-02
+        // (#1925). A button, not a link: it opens the fsh-guts list and
+        // restore dialog and carries the live count, which `mountFshGutsNav`
+        // paints through `data-fa-fsh-guts-open` exactly as before.
+        var fish = el("button", {
+          type: "button", class: "fa-nav-icon fa-nav-icon--fsh-guts", "data-fa-fsh-guts-open": "",
+          "aria-label": LABELS["fsh-guts"], title: LABELS["fsh-guts"], "data-fa-tip": LABELS["fsh-guts"]
+        });
+        fish.innerHTML = FISH_GLYPH;
+        fish.appendChild(el("span", { class: "fa-nav-count", "data-fa-count-state": "pending", "aria-hidden": "true" }, "\u2026"));
+        host.appendChild(fish);
+        continue;
+      }
 
       if (id === "launcher") {
         // The launcher is the EXISTING control, moved -- not a second one.
@@ -11139,6 +11157,9 @@
     // AFTER the tiles: the row's launcher proxies that panel's button, so the
     // button has to exist before anything can click it.
     mountNavIconRow();
+    // AGAIN, now that the row exists: the row's fsh-guts button is built by
+    // `mountNavIconRow`, after the first call. Idempotent per button.
+    mountFshGutsNav();
     // BEFORE `mountInstanceGraphs`, and the order is load-bearing rather than
     // tidy: that function MOVES `.site-nav` into a wrapper, and this one
     // inserts before `.site-nav`. Run the other way round, `insertBefore` gets

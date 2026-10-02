@@ -8492,6 +8492,24 @@ a.fa-harness-tab__body:focus-visible {
   font-variant-numeric: tabular-nums;
   text-align: center;
 }
+/* fsh-guts IN THE ICON ROW (#1925, owner 2026-10-02: "with the others"): the
+ * count rides as a small badge on the fish so the row keeps one glyph width. */
+.fa-nav-icon--fsh-guts { position: relative; }
+.fa-nav-icon--fsh-guts .fa-nav-count {
+  position: absolute;
+  right: -0.35rem;
+  top: -0.3rem;
+  min-width: 1rem;
+  padding: 0 0.2rem;
+  border-radius: 0.5rem;
+  background: rgba(128, 128, 128, 0.85);
+  color: #fff;
+  font-size: 0.625rem;
+  line-height: 1rem;
+  font-variant-numeric: tabular-nums;
+  text-align: center;
+  pointer-events: none;
+}
 /* The copy inside a window is shaped to the window, not to the square dock. */
 .fa-landing-window .fa-landing-sticky--fixed { aspect-ratio: auto; min-height: 16rem; }
 /* THE LANDING WINDOWS OPEN BELOW THE TILES, not over them. On the todo board

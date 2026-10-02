@@ -2411,19 +2411,23 @@ export function renderExemptionProblems(
  * from a dead link: a slot that renders nothing reads as a navbar that lost
  * something.
  *
- * ## SIX, and the cap is the owner's
+ * ## SEVEN, and the cap is the owner's
+ *
+ * It was six until 2026-10-02, when the owner added fsh-guts to the row
+ * rather than in place of anything: *"i wanted fsh guts icon here with the
+ * others"* (#1925). The cap moved with the ruling; it is still a cap.
  *
  * Refused rather than truncated. Truncating drops whichever the instance
  * listed last, silently, and an instance that declared seven has made a
  * decision the navbar would then be overruling without saying so.
  */
-export const NAVBAR_ICONS = ["close", "todos", "beans", "processes", "kg", "launcher"] as const;
+export const NAVBAR_ICONS = ["close", "todos", "beans", "processes", "kg", "fsh-guts", "launcher"] as const;
 
 export type NavbarIcon = (typeof NAVBAR_ICONS)[number];
 
 export const NavbarIconsSchema = z
   .array(z.enum(NAVBAR_ICONS))
-  .max(6, { message: "the navbar icon row holds at most 6 — the owner's cap" })
+  .max(7, { message: "the navbar icon row holds at most 7 — the owner's cap" })
   .refine((xs) => new Set(xs).size === xs.length, {
     message: "an icon listed twice is two slots doing one job",
   });

@@ -262,8 +262,10 @@ function main(): void {
     title?: string;
     tiles?: { id?: string }[];
   };
-  const fshGuts = (data.tiles ?? []).some((t) => t.id === "fsh-guts");
-  const next = render(data.harnesses ?? [], data.title ?? "folio-assistant", fshGuts);
+  // fsh-guts is NOT emitted into `.fa-nav-top` any more: the owner put it in
+  // the declared icon row, "with the others" (2026-10-02, #1925), which
+  // `mountNavIconRow` draws from `navbarIcons`. One placement, not two.
+  const next = render(data.harnesses ?? [], data.title ?? "folio-assistant", false);
 
   let current: string | undefined;
   try {
