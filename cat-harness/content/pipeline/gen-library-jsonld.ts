@@ -97,8 +97,17 @@ export interface ManifestTitle {
  * The manifest fields that carry the title's provenance. `meta.title_source`
  * is one of `LIBRARY_TITLE_SOURCES`, and `check:library-qa` judges against it.
  */
-function titleMeta(t: ManifestTitle): Record<string, string | undefined> {
-  return { title_source: t.source, title_from: t.from };
+function titleMeta(t: ManifestTitle, md?: Structure["metadata"]): Record<string, unknown> {
+  return {
+    title_source: t.source,
+    title_from: t.from,
+    // Bean `w6fu`: an editor's title and a corroborated one are each a CHECKED
+    // title, and a corrected one keeps what extraction said beside it, so a
+    // correction never passes for an extraction.
+    title_verified: t.source === "editorial" || t.source === "corroborated" ? true : undefined,
+    title_correction:
+      t.source === "editorial" && md?.title_correction ? { ...md.title_correction, extracted: md.title ?? null } : undefined,
+  };
 }
 
 interface StructureSection {
@@ -116,7 +125,15 @@ interface Structure {
   _schema?: string;
   doc_id: string;
   source?: { file?: string; sha256?: string; pages?: number };
-  metadata?: { title?: string | null; authors_raw?: string | null; arxiv?: string | null; doi?: string | null };
+  metadata?: {
+    title?: string | null;
+    authors_raw?: string | null;
+    arxiv?: string | null;
+    doi?: string | null;
+    title_source?: string;
+    title_verified?: boolean;
+    title_correction?: { title: string; basis: string; corrected_on: string; bean?: string };
+  };
   sections?: StructureSection[];
 }
 
@@ -374,14 +391,16 @@ export function buildDocumentNodes(
     content: node({
       "@id": docIri(docId, "manifest"),
       "@type": ["folio-assistant-core:SourceDocument"],
-      // NEVER `structure.metadata.title` — the page-1 parse (#1794, ruling of
-      // 2026-10-01). See `library-title.ts` for the order.
+      // NEVER the unverified `structure.metadata.title` — the page-1 parse
+      // (#1794, ruling of 2026-10-01). An editor's `title_correction` and a
+      // corroborated extraction (bean `w6fu`, ruling of 2026-10-02 on #1838)
+      // each have a slot. See `library-title.ts` for the order.
       title: resolvedTitle.title,
       contains: sectionIris,
       provenance: "ingested",
       meta: {
         doc_id: docId,
-        ...titleMeta(resolvedTitle),
+        ...titleMeta(resolvedTitle, structure.metadata),
         source_file: structure.source?.file,
         source_sha256: structure.source?.sha256,
         pages: structure.source?.pages,

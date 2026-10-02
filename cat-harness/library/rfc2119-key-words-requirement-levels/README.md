@@ -1,5 +1,5 @@
 <!-- kg:subgraph:begin -->
-# RFC 2119: Key words for use in RFCs to Indicate Requirement Levels | RFC Editor
+# Key words for use in RFCs to Indicate Requirement Levels
 
 ingested source material — attributed to its document, not folio content
 

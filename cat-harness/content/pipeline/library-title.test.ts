@@ -1,7 +1,9 @@
 /**
  * The library title authority order (issue #1794, owner's ruling 2026-10-01):
  * catalogue record → `referenced.json` → PDF Info `/Title` → slug, and never
- * the page-1 front-matter parse.
+ * the page-1 front-matter parse. Bean `w6fu` (ruling of 2026-10-02 on #1838)
+ * adds an editor's correction at the top and a CORROBORATED extraction just
+ * above the slug.
  *
  * Every junk string below is a `/Title` this corpus actually carries. The
  * fixtures for the order are the three who-iris entries whose page-1 parse was
@@ -26,8 +28,8 @@ describe("resolveLibraryTitle — the order", () => {
     "text-heading": "A text heading",
   };
 
-  test("the order is exactly the ruling's, with the slug as the floor", () => {
-    expect(TITLE_AUTHORITY).toEqual(["dc-record", "referenced", "pdf-info", "text-heading"]);
+  test("the order is exactly the rulings', with the slug as the floor", () => {
+    expect(TITLE_AUTHORITY).toEqual(["editorial", "dc-record", "referenced", "pdf-info", "text-heading", "corroborated"]);
     expect(LIBRARY_TITLE_SOURCES.at(-1)).toBe("slug");
   });
 
@@ -60,6 +62,22 @@ describe("resolveLibraryTitle — the order", () => {
     expect(resolveLibraryTitle({ slug: "s", "dc-record": "Untitled" }).source).toBe("dc-record");
   });
 
+  test("an editor's correction outranks even the catalogue record (w6fu)", () => {
+    expect(resolveLibraryTitle({ ...all, editorial: "An editor's title" })).toEqual({ title: "An editor's title", source: "editorial" });
+  });
+
+  test("a corroborated extraction ranks below every other source and above the slug (w6fu)", () => {
+    expect(resolveLibraryTitle({ slug: "s", "pdf-info": "Link Groups", corroborated: "Something else" }).source).toBe("pdf-info");
+    expect(resolveLibraryTitle({ slug: "s", corroborated: "Agent Skill best practices" })).toEqual({
+      title: "Agent Skill best practices",
+      source: "corroborated",
+    });
+  });
+
+  test("a corroborated extraction still passes the junk filter", () => {
+    expect(resolveLibraryTitle({ slug: "s", corroborated: "Microsoft Word - dp1.doc" }).source).toBe("slug");
+  });
+
   test("whitespace inside a title is collapsed", () => {
     expect(resolveLibraryTitle({ slug: "s", "pdf-info": "JSON-LD\n  1.1" }).title).toBe("JSON-LD 1.1");
   });
@@ -88,6 +106,35 @@ describe("structureTitleCandidates — the page-1 parse is never a title", () =>
     });
     expect(st.candidates["pdf-info"]).toBe("JSON-LD 1.1");
     expect(st.from["pdf-info"]).toBe("structure.json metadata.docinfo.Title");
+  });
+
+  test("an UNVERIFIED metadata.title is still the page-1 parse and is never offered", () => {
+    const st = structureTitleCandidates({
+      _schema: "pdf-structure/v1",
+      source: { file: "x.pdf" },
+      metadata: { title: "Algorithmic Approaches to", title_verified: false },
+    });
+    expect(st.candidates.corroborated).toBeUndefined();
+  });
+
+  test("a VERIFIED metadata.title is offered as corroborated (w6fu)", () => {
+    const st = structureTitleCandidates({
+      _schema: "pdf-structure/v1",
+      source: { file: "x.pdf" },
+      metadata: { title: "Agent Skills", title_source: "heading", title_verified: true },
+    });
+    expect(st.candidates.corroborated).toBe("Agent Skills");
+    expect(st.from.corroborated).toBe("structure.json metadata.title");
+  });
+
+  test("an editor's title_correction is offered as editorial, on any variant (w6fu)", () => {
+    const st = structureTitleCandidates({
+      _schema: "pdf-structure/v1",
+      source: { file: "x.pdf" },
+      metadata: { title: "Digital implementation", title_correction: { title: "Digital implementation investment guide (DIIG)" } },
+    });
+    expect(st.candidates.editorial).toBe("Digital implementation investment guide (DIIG)");
+    expect(resolveLibraryTitle({ slug: "x", ...st.candidates }).source).toBe("editorial");
   });
 
   test("a text or notebook structure offers its declared title as text-heading", () => {

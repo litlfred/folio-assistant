@@ -48,7 +48,10 @@ function realStructure(variant: "pdf" | "text", edit: (raw: Record<string, unkno
   throw new Error(`no ${variant} structure in the corpus to build a fixture from`);
 }
 const withMeta = (meta: Record<string, unknown>, file: string) => (raw: Record<string, unknown>) => {
-  raw.metadata = { ...(raw.metadata as object), ...meta };
+  // The borrowed entry's own title verdicts (bean `w6fu`) would otherwise
+  // leak into the fixture as an `editorial` or `corroborated` candidate.
+  const { title_verified: _v, title_correction: _c, ...borrowed } = (raw.metadata ?? {}) as Record<string, unknown>;
+  raw.metadata = { ...borrowed, ...meta };
   raw.source = { ...(raw.source as object), file };
 };
 

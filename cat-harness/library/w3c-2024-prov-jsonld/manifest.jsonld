@@ -9,7 +9,7 @@
   "@type": [
     "folio-assistant-core:SourceDocument"
   ],
-  "title": "w3c-2024-prov-jsonld",
+  "title": "The PROV-JSONLD Serialization: A JSON-LD Representation for the PROV Data Model",
   "contains": [
     "library/w3c-2024-prov-jsonld/sections/page-001",
     "library/w3c-2024-prov-jsonld/sections/page-002",
@@ -86,7 +86,16 @@
   "provenance": "ingested",
   "meta": {
     "doc_id": "w3c-2024-prov-jsonld",
-    "title_source": "slug",
+    "title_source": "editorial",
+    "title_from": "structure.json metadata.title_correction.title",
+    "title_verified": true,
+    "title_correction": {
+      "title": "The PROV-JSONLD Serialization: A JSON-LD Representation for the PROV Data Model",
+      "basis": "Page 1 prints the title and subtitle above 'W3C Member Submission 25 August 2024'; the page-granularity ingest recorded the same string as its sections' doc_title, but no PDF survives to read metadata from.",
+      "corrected_on": "2026-10-02",
+      "bean": "folio-assistant-w6fu",
+      "extracted": null
+    },
     "source_file": "w3c-2024-prov-jsonld.pdf",
     "source_sha256": "ab826cd4a4cfe750c6b7eac6a8439b21c1114af747e3a1a05f48de7b4472c230",
     "arxiv": null,

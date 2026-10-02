@@ -1,5 +1,5 @@
 <!-- kg:subgraph:begin -->
-# arxiv-2504.07199v3
+# SemEval-2025 Task 5: LLMs4Subjects - LLM-based Automated Subject Tagging for a National Technical Library’s Open-Access Catalog
 
 ingested source material — attributed to its document, not folio content
 

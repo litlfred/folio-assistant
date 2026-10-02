@@ -1,5 +1,5 @@
 <!-- kg:subgraph:begin -->
-# arxiv-2406.01940v2
+# Process-Driven Autoformalization in Lean 4
 
 ingested source material — attributed to its document, not folio content
 

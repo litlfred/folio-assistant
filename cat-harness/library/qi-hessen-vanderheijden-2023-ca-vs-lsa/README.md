@@ -1,5 +1,5 @@
 <!-- kg:subgraph:begin -->
-# qi-hessen-vanderheijden-2023-ca-vs-lsa
+# Improving information retrieval through correspondence analysis instead of latent semantic analysis
 
 ingested source material — attributed to its document, not folio content
 

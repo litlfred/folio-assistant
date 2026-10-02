@@ -5,7 +5,7 @@ status: in-progress
 type: feature
 priority: normal
 created_at: 2026-09-25T04:51:06Z
-updated_at: 2026-10-02T06:45:37Z
+updated_at: 2026-10-02T08:01:23Z
 parent: folio-assistant-0lmb
 ---
 
@@ -65,6 +65,7 @@ returning one boolean cannot express any of that.
       projects `exact` too. `7wou` itself stays open on one item: FHIR
       collections in scope once OCL is reachable)
 - [ ] `2i5f` — disagreement has a named outcome set and CALLS `adjudication`
+      (outcome set: done, leg 1, #1846; CALLS `adjudication`: leg 2, waiting)
 - [x] `ejug` — one terminology service as a Tool node, OCL confirmed first
       (closed 2026-09-30: the Tool is the pin refresher, by owner choice)
 - [x] the glossary page reports mapped / unmapped / undetermined per term,
@@ -99,20 +100,38 @@ Shipped on #1837 (issue #1836):
 
 ## Remaining slices (not code yet)
 
-- [ ] `2i5f` leg 1: the extractor and the terminology disagree. Three
+- [x] `2i5f` leg 1: the extractor and the terminology disagree. Three
       outcomes (change the prose, author a local term with its reason, record
-      that the vocabulary is wrong for this domain). Buildable today, and
-      asked of the owner again on #1837 rather than built.
+      that the vocabulary is wrong for this domain). Built on #1846 after the
+      owner's 2026-10-02 ruling ("split").
 - [ ] `2i5f` leg 2: two judges disagree about a mapping. CALLS `adjudication`
       and `untainted-verification`. Blocked on its entry condition: non-zero
       `mapped` on either target.
-- [ ] publish mapped terms into the scheme's SKOS JSON-LD as
+- [x] publish mapped terms into the scheme's SKOS JSON-LD as
       `skos:closeMatch` (or `exactMatch` where `exact`), in the
-      `linked-data` voice. This is a public assertion made from an
-      automated label match, so it is the owner's call (asked on #1837).
+      `linked-data` voice. Owner, 2026-10-02: both, each marked automated.
+      Built on #1846: a PROV-marked named graph.
 - [ ] key the per-scheme record by instance as well as scheme id. A scheme
       id such as `kg-tools` is shared by every instance's extraction, and
       term ids are unique across them only by observation (0 collisions in
       2876). The page answers `unknown` on a collision; the record should
       not depend on it.
 - [ ] `7wou`'s last item: FHIR collections in scope once OCL is reachable.
+
+
+
+Claimed by claude/terminology-followups (session https://claude.ai/code/session_01CVVoavPoCHMLA7AASxG8cH), stacked on #1837 — issue #1836. Slices: `2i5f` leg 1, and publishing automated matches into each scheme's SKOS JSON-LD (owner rulings 2026-10-02).
+
+## Shipped 2026-10-02 on #1846 (stacked on #1837), owner rulings of that date
+
+- [x] `2i5f` leg 1 — skill `term-disagreement` + schema
+      `folio-term-adjudications/v1`, validated by `check:term-mapping`. Leg 2
+      still waits on non-zero mapped.
+- [x] publish mapped terms into each scheme's SKOS JSON-LD: `skos:exactMatch`
+      where exact, `skos:closeMatch` where concept-only, **in a named graph**
+      `<scheme>/_automated-matches` whose PROV-JSONLD says a program made it
+      (qualified `Generation` → `Activity` → `Association` → `ci-pipeline`,
+      typed `prov:SoftwareAgent`). The default graph keeps only what people
+      wrote. `exactMatch` targets only the record's new `exactConcepts`; an
+      in-repo `<scheme>:<id>` that names two authored terms is left out and
+      reported. Today 0 terms map, so no committed SKOS file changes.

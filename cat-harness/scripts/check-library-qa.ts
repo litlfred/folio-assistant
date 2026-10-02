@@ -27,7 +27,10 @@
  *
  * The owner's ruling of 2026-10-01 fixed the order a title is taken in:
  * catalogue record (Dublin Core) → `referenced.json` → PDF Info `/Title` →
- * slug. The page-1 front-matter parse is NEVER a title.
+ * slug. The page-1 front-matter parse is NEVER a title. Bean `w6fu` (ruling
+ * of 2026-10-02 on #1838) added an editor's `title_correction` above the
+ * catalogue and a CORROBORATED extracted title (`title_verified: true`) just
+ * above the slug; an unverified one is still the excluded guess.
  * `content/pipeline/library-title.ts` implements the order, and the generator
  * records which source won in `manifest.jsonld` `meta.title_source`. These
  * checks read that field. They also re-derive the order from the entry's
@@ -81,6 +84,7 @@ import {
   catalogueRecordFor,
   dcValue,
   LIBRARY_TITLE_SOURCES,
+  MACHINE_TITLE_SOURCES,
   pdfInfoTitleJunk,
   readTitleCandidates,
   resolveLibraryTitle,
@@ -203,7 +207,7 @@ export function readEntryFacts(dir: string, id: string, instance: string): Entry
   const sourceTitles = TITLE_AUTHORITY.flatMap((source) => {
     const v = (titles.candidates[source] ?? "").trim();
     if (!v) return [];
-    if ((source === "pdf-info" || source === "text-heading") && pdfInfoTitleJunk(v, titles.candidates.sourceFiles ?? [], id)) return [];
+    if (MACHINE_TITLE_SOURCES.includes(source) && pdfInfoTitleJunk(v, titles.candidates.sourceFiles ?? [], id)) return [];
     const [file, field] = (titles.from[source] ?? " ").split(" ");
     return [{ file: file!, field: field!, value: v, source }];
   });
@@ -319,7 +323,7 @@ export function titleMissing(
   const at = { file: "manifest.jsonld", field: "title", value: f.title ?? "" };
   if (!t) return { ...at, why: "absent" };
   if (f.titleSource === "slug") {
-    return { ...at, field: "meta.title_source", why: "no source offers a title (no catalogue record, referenced.json, usable PDF /Title or text heading), so the slug stands" };
+    return { ...at, field: "meta.title_source", why: "no source offers a title (no editorial correction, catalogue record, referenced.json, usable PDF /Title, text heading or corroborated extraction), so the slug stands" };
   }
   if (t === f.id || (f.docId && t === f.docId)) return { ...at, why: "equals the slug" };
   const file = f.sourceFiles.find((s) => sameName(t, s.value));

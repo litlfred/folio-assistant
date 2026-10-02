@@ -9,7 +9,7 @@
   "@type": [
     "folio-assistant-core:SourceDocument"
   ],
-  "title": "deerwester-1990-indexing-by-lsa",
+  "title": "Indexing by Latent Semantic Analysis",
   "contains": [
     "library/deerwester-1990-indexing-by-lsa/sections/page-001",
     "library/deerwester-1990-indexing-by-lsa/sections/page-002",
@@ -49,7 +49,16 @@
   "provenance": "ingested",
   "meta": {
     "doc_id": "deerwester-1990-indexing-by-lsa",
-    "title_source": "slug",
+    "title_source": "editorial",
+    "title_from": "structure.json metadata.title_correction.title",
+    "title_verified": true,
+    "title_correction": {
+      "title": "Indexing by Latent Semantic Analysis",
+      "basis": "Page 1 prints this title above the authors (Deerwester, Dumais, Furnas, Landauer, Harshman); the PDF has no Title metadata, and the heading reader ran the title on into the author block.",
+      "corrected_on": "2026-10-02",
+      "bean": "folio-assistant-w6fu",
+      "extracted": null
+    },
     "source_file": "deerwester-1990-indexing-by-lsa.pdf",
     "source_sha256": "481bc284ba24c9a62281aeb96dbe6b166d0a8b92d182609789238f820fc9b7aa",
     "arxiv": null,

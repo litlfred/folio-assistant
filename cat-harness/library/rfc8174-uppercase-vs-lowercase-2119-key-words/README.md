@@ -1,5 +1,5 @@
 <!-- kg:subgraph:begin -->
-# RFC 8174: Ambiguity of Uppercase vs Lowercase in RFC 2119 Key Words | RFC Editor
+# Ambiguity of Uppercase vs Lowercase in RFC 2119 Key Words
 
 ingested source material — attributed to its document, not folio content
 

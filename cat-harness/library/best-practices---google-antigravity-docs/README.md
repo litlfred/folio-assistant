@@ -1,5 +1,5 @@
 <!-- kg:subgraph:begin -->
-# Best Practices | Google Antigravity Docs
+# Best practices for Antigravity CLI
 
 ingested source material — attributed to its document, not folio content
 

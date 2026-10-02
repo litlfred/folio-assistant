@@ -42,6 +42,23 @@
  * `text-heading`, whose writer falls back to the file name or the slug when
  * the source declares nothing. A junk `/Title` therefore reads as
  * "no title" rather than as a wrong title.
+ *
+ * ## Two slots from bean `w6fu` (owner's ruling of 2026-10-02 on #1838)
+ *
+ * Ruling 3 of #1838 came a day after #1794's: *first improve the code that
+ * extracts titles from PDFs, then fix whatever it still gets wrong as data,
+ * one entry at a time.* It produced two things a `pdf-structure/v1` entry can
+ * now carry, and each takes a slot here without reopening #1794:
+ *
+ * - `editorial` — `metadata.title_correction.title`, an editor's record made
+ *   for one entry with its `basis`. It is the TOP of the order: it is data a
+ *   person wrote after looking, which is what the catalogue record is too,
+ *   only closer to the entry. Taken as written, like the other records.
+ * - `corroborated` — `metadata.title` ONLY when `metadata.title_verified` is
+ *   `true`, i.e. `_pdf_title.py` found an independent source agreeing with it.
+ *   It ranks below `/Title` and `text-heading` and above the slug. An
+ *   UNVERIFIED `metadata.title` is still the page-1 guess #1794 excludes, and
+ *   is never read. The junk filter applies, as to every machine-read source.
  */
 import { existsSync, readdirSync, readFileSync } from "node:fs";
 import { basename, dirname, extname, join } from "node:path";
@@ -49,7 +66,15 @@ import { basename, dirname, extname, join } from "node:path";
 import { directoriesForGraph } from "../../schemas/cat-harness.js";
 
 /** Where a manifest's title came from. Recorded as `meta.title_source`. */
-export const LIBRARY_TITLE_SOURCES = ["dc-record", "referenced", "pdf-info", "text-heading", "slug"] as const;
+export const LIBRARY_TITLE_SOURCES = [
+  "editorial",
+  "dc-record",
+  "referenced",
+  "pdf-info",
+  "text-heading",
+  "corroborated",
+  "slug",
+] as const;
 export type LibraryTitleSource = (typeof LIBRARY_TITLE_SOURCES)[number];
 
 /**
@@ -57,15 +82,25 @@ export type LibraryTitleSource = (typeof LIBRARY_TITLE_SOURCES)[number];
  * A test mutates this order and expects to go red.
  */
 export const TITLE_AUTHORITY: readonly Exclude<LibraryTitleSource, "slug">[] = [
+  "editorial",
   "dc-record",
   "referenced",
   "pdf-info",
   "text-heading",
+  "corroborated",
 ];
+
+/**
+ * The sources a program read rather than a person transcribed. Each passes
+ * {@link pdfInfoTitleJunk} before it can win; a record is taken as written.
+ */
+export const MACHINE_TITLE_SOURCES: readonly LibraryTitleSource[] = ["pdf-info", "text-heading", "corroborated"];
 
 /** What an entry offers, one value per source, each already read off disk. */
 export interface TitleCandidates {
   slug: string;
+  /** `structure.json` `metadata.title_correction.title`: an editor's record (bean `w6fu`). */
+  editorial?: string | null;
   /** The catalogue's Dublin Core `dc.title`, via the node whose `libraryId` is the slug. */
   "dc-record"?: string | null;
   /** `referenced.json` `identity.title`. */
@@ -74,6 +109,8 @@ export interface TitleCandidates {
   "pdf-info"?: string | null;
   /** `structure.json` `metadata.title`, on a text or notebook entry ONLY. */
   "text-heading"?: string | null;
+  /** `structure.json` `metadata.title` on a `pdf-structure/v1` entry, ONLY when `metadata.title_verified` is true. */
+  corroborated?: string | null;
   /** The source file name(s), so a `/Title` that merely repeats one is refused. */
   sourceFiles?: readonly string[];
 }
@@ -131,7 +168,7 @@ export function resolveLibraryTitle(
     if (!v) continue;
     // The source's OWN declared title, either variant, may be junk. A record
     // someone transcribed (DC, referenced.json) is taken as written.
-    if ((source === "pdf-info" || source === "text-heading") && pdfInfoTitleJunk(v, c.sourceFiles ?? [], c.slug)) continue;
+    if (MACHINE_TITLE_SOURCES.includes(source) && pdfInfoTitleJunk(v, c.sourceFiles ?? [], c.slug)) continue;
     return { title: v, source };
   }
   return { title: c.slug, source: "slug" };
@@ -205,23 +242,36 @@ export function catalogueRecordFor(
 /**
  * What a parsed `structure.json` offers, read without touching the disk.
  *
- * On a `pdf-structure/v1` it reads ONLY `metadata.docinfo.Title`.
- * `metadata.title` there is the page-1 parse, and the ruling is that it is
- * never a title. On a text or notebook variant `metadata.title` is the
- * format's declared title (`text-heading`).
+ * On a `pdf-structure/v1` it reads `metadata.docinfo.Title`, and
+ * `metadata.title` ONLY when `metadata.title_verified` is true
+ * (`corroborated`). An unverified `metadata.title` there is the page-1 parse,
+ * and the ruling is that it is never a title. On a text or notebook variant
+ * `metadata.title` is the format's declared title (`text-heading`). On any
+ * variant `metadata.title_correction.title` is an editor's record
+ * (`editorial`).
  */
 export function structureTitleCandidates(structure: Json): Pick<EntryTitleRead, "from"> & {
-  candidates: Pick<TitleCandidates, "pdf-info" | "text-heading" | "sourceFiles">;
+  candidates: Pick<TitleCandidates, StructureTitleSource | "sourceFiles">;
 } {
   const meta = obj(structure.metadata);
   const file = str(obj(structure.source).file);
-  const candidates: Pick<TitleCandidates, "pdf-info" | "text-heading" | "sourceFiles"> = { sourceFiles: file ? [file] : [] };
+  const candidates: Pick<TitleCandidates, StructureTitleSource | "sourceFiles"> = { sourceFiles: file ? [file] : [] };
   const from: EntryTitleRead["from"] = {};
+  const corrected = str(obj(meta.title_correction).title);
+  if (corrected) {
+    candidates.editorial = corrected;
+    from.editorial = "structure.json metadata.title_correction.title";
+  }
   if (structure._schema === "pdf-structure/v1") {
     const t = str(obj(meta.docinfo).Title);
     if (t) {
       candidates["pdf-info"] = t;
       from["pdf-info"] = "structure.json metadata.docinfo.Title";
+    }
+    const verified = meta.title_verified === true ? str(meta.title) : "";
+    if (verified) {
+      candidates.corroborated = verified;
+      from.corroborated = "structure.json metadata.title";
     }
   } else {
     const t = str(meta.title);
@@ -232,6 +282,10 @@ export function structureTitleCandidates(structure: Json): Pick<EntryTitleRead, 
   }
   return { candidates, from };
 }
+
+/** The sources a parsed `structure.json` can offer. */
+export const STRUCTURE_TITLE_SOURCES = ["editorial", "pdf-info", "text-heading", "corroborated"] as const;
+type StructureTitleSource = (typeof STRUCTURE_TITLE_SOURCES)[number];
 
 /** The candidates for one entry, and where each was read. */
 export interface EntryTitleRead {
@@ -273,7 +327,7 @@ export function readTitleCandidates(
 
   if (pre.structure) {
     const st = structureTitleCandidates(pre.structure);
-    for (const k of ["pdf-info", "text-heading"] as const) {
+    for (const k of STRUCTURE_TITLE_SOURCES) {
       if (st.candidates[k]) {
         candidates[k] = st.candidates[k];
         from[k] = st.from[k];

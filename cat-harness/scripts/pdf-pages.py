@@ -64,6 +64,7 @@ from _pdf_doc_id import (  # noqa: E402
     ocr_cache_dir,
     slugify as _slugify,
 )
+from _pdf_title import apply as resolve_title, evidence_from_pdf  # noqa: E402
 
 
 def slug(text: str) -> str:
@@ -373,6 +374,16 @@ def main() -> int:
                 "an inferred chapter was not."
             ),
         })
+        # The title (bean `w6fu`). This rung has no text walk, so the only raw
+        # title is the one the caller passed with --title, or none -- and with
+        # none the manifest falls back to the doc id, as it always did. The
+        # resolver replaces it only with a title another source CORROBORATES,
+        # marks it unverified otherwise, and never touches an editor's
+        # `title_correction`.
+        prior = existing.get("metadata") or {}
+        if a.title and "title_raw" not in prior:
+            prior = {**prior, "title": a.title}
+        existing["metadata"] = resolve_title(prior, evidence_from_pdf(str(pdf)), doc_id)
         manifest.write_text(json.dumps(existing, indent=2) + "\n", encoding="utf-8")
         print(f"ok  {doc_id:34s} {written:3d} pages  [{source}]")
     return 0

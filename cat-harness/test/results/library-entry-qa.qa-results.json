@@ -2,7 +2,7 @@
   "$schema": "qa-results/v1",
   "producer": {
     "script": "scripts/check-library-qa.ts",
-    "script_hash": "898091c83849"
+    "script_hash": "0d4e26476027"
   },
   "subject": {
     "kind": "library",
@@ -1133,174 +1133,48 @@
     },
     "title-missing": {
       "summary": "The manifest's title is absent, the slug, or the source's file name — the entry has no title a reader can use. Read from manifest.jsonld `title` and `meta.title_source`: `slug` means no source offered one, which the owner's ruling of 2026-10-01 says is shown as the slug and flagged here, never filled from the page-1 parse.",
-      "count": 23,
+      "count": 5,
       "entries": [
-        {
-          "entry": "arxiv-0909.4061v2",
-          "instance": "cat-harness",
-          "title": "arxiv-0909.4061v2",
-          "field": "manifest.jsonld meta.title_source",
-          "why": "no source offers a title (no catalogue record, referenced.json, usable PDF /Title or text heading), so the slug stands"
-        },
-        {
-          "entry": "arxiv-2504.07199v3",
-          "instance": "cat-harness",
-          "title": "arxiv-2504.07199v3",
-          "field": "manifest.jsonld meta.title_source",
-          "why": "no source offers a title (no catalogue record, referenced.json, usable PDF /Title or text heading), so the slug stands"
-        },
-        {
-          "entry": "arxiv-2504.21474v1",
-          "instance": "cat-harness",
-          "title": "arxiv-2504.21474v1",
-          "field": "manifest.jsonld meta.title_source",
-          "why": "no source offers a title (no catalogue record, referenced.json, usable PDF /Title or text heading), so the slug stands"
-        },
-        {
-          "entry": "deerwester-1990-indexing-by-lsa",
-          "instance": "cat-harness",
-          "title": "deerwester-1990-indexing-by-lsa",
-          "field": "manifest.jsonld meta.title_source",
-          "why": "no source offers a title (no catalogue record, referenced.json, usable PDF /Title or text heading), so the slug stands"
-        },
-        {
-          "entry": "dusengumuremyi-2026-ai-mediated-raci",
-          "instance": "cat-harness",
-          "title": "dusengumuremyi-2026-ai-mediated-raci",
-          "field": "manifest.jsonld meta.title_source",
-          "why": "no source offers a title (no catalogue record, referenced.json, usable PDF /Title or text heading), so the slug stands"
-        },
-        {
-          "entry": "gurel-tat-2017-swot-analysis",
-          "instance": "cat-harness",
-          "title": "gurel-tat-2017-swot-analysis",
-          "field": "manifest.jsonld meta.title_source",
-          "why": "no source offers a title (no catalogue record, referenced.json, usable PDF /Title or text heading), so the slug stands"
-        },
         {
           "entry": "kg-folio-asst-2026-09-30",
           "instance": "cat-harness",
           "title": "kg-folio-asst-2026-09-30",
           "field": "manifest.jsonld meta.title_source",
-          "why": "no source offers a title (no catalogue record, referenced.json, usable PDF /Title or text heading), so the slug stands"
-        },
-        {
-          "entry": "landauer-foltz-laham-1998-intro-lsa",
-          "instance": "cat-harness",
-          "title": "landauer-foltz-laham-1998-intro-lsa",
-          "field": "manifest.jsonld meta.title_source",
-          "why": "no source offers a title (no catalogue record, referenced.json, usable PDF /Title or text heading), so the slug stands"
-        },
-        {
-          "entry": "qi-hessen-vanderheijden-2023-ca-vs-lsa",
-          "instance": "cat-harness",
-          "title": "qi-hessen-vanderheijden-2023-ca-vs-lsa",
-          "field": "manifest.jsonld meta.title_source",
-          "why": "no source offers a title (no catalogue record, referenced.json, usable PDF /Title or text heading), so the slug stands"
-        },
-        {
-          "entry": "w3c-2024-prov-jsonld",
-          "instance": "cat-harness",
-          "title": "w3c-2024-prov-jsonld",
-          "field": "manifest.jsonld meta.title_source",
-          "why": "no source offers a title (no catalogue record, referenced.json, usable PDF /Title or text heading), so the slug stands"
-        },
-        {
-          "entry": "wang-rangaiah-2026-mcdm-aggregation",
-          "instance": "cat-harness",
-          "title": "wang-rangaiah-2026-mcdm-aggregation",
-          "field": "manifest.jsonld meta.title_source",
-          "why": "no source offers a title (no catalogue record, referenced.json, usable PDF /Title or text heading), so the slug stands"
-        },
-        {
-          "entry": "arxiv-2406.01940v2",
-          "instance": "folio-assistant-sci",
-          "title": "arxiv-2406.01940v2",
-          "field": "manifest.jsonld meta.title_source",
-          "why": "no source offers a title (no catalogue record, referenced.json, usable PDF /Title or text heading), so the slug stands"
+          "why": "no source offers a title (no editorial correction, catalogue record, referenced.json, usable PDF /Title, text heading or corroborated extraction), so the slug stands"
         },
         {
           "entry": "codata-2022",
           "instance": "folio-assistant-sci",
           "title": "codata-2022",
           "field": "manifest.jsonld meta.title_source",
-          "why": "no source offers a title (no catalogue record, referenced.json, usable PDF /Title or text heading), so the slug stands"
-        },
-        {
-          "entry": "9789240010567-eng",
-          "instance": "smart-base",
-          "title": "9789240010567-eng",
-          "field": "manifest.jsonld meta.title_source",
-          "why": "no source offers a title (no catalogue record, referenced.json, usable PDF /Title or text heading), so the slug stands"
-        },
-        {
-          "entry": "9789240081949-eng",
-          "instance": "smart-base",
-          "title": "9789240081949-eng",
-          "field": "manifest.jsonld meta.title_source",
-          "why": "no source offers a title (no catalogue record, referenced.json, usable PDF /Title or text heading), so the slug stands"
-        },
-        {
-          "entry": "9789240093362-eng",
-          "instance": "smart-base",
-          "title": "9789240093362-eng",
-          "field": "manifest.jsonld meta.title_source",
-          "why": "no source offers a title (no catalogue record, referenced.json, usable PDF /Title or text heading), so the slug stands"
+          "why": "no source offers a title (no editorial correction, catalogue record, referenced.json, usable PDF /Title, text heading or corroborated extraction), so the slug stands"
         },
         {
           "entry": "9789240101197-eng",
           "instance": "smart-base",
           "title": "9789240101197-eng",
           "field": "manifest.jsonld meta.title_source",
-          "why": "no source offers a title (no catalogue record, referenced.json, usable PDF /Title or text heading), so the slug stands"
+          "why": "no source offers a title (no editorial correction, catalogue record, referenced.json, usable PDF /Title, text heading or corroborated extraction), so the slug stands"
         },
         {
           "entry": "9789240116191-eng",
           "instance": "smart-base",
           "title": "9789240116191-eng",
           "field": "manifest.jsonld meta.title_source",
-          "why": "no source offers a title (no catalogue record, referenced.json, usable PDF /Title or text heading), so the slug stands"
-        },
-        {
-          "entry": "9789240120747-eng",
-          "instance": "smart-base",
-          "title": "9789240120747-eng",
-          "field": "manifest.jsonld meta.title_source",
-          "why": "no source offers a title (no catalogue record, referenced.json, usable PDF /Title or text heading), so the slug stands"
-        },
-        {
-          "entry": "9789241509510-eng",
-          "instance": "smart-base",
-          "title": "9789241509510-eng",
-          "field": "manifest.jsonld meta.title_source",
-          "why": "no source offers a title (no catalogue record, referenced.json, usable PDF /Title or text heading), so the slug stands"
-        },
-        {
-          "entry": "9789241511766-eng",
-          "instance": "smart-base",
-          "title": "9789241511766-eng",
-          "field": "manifest.jsonld meta.title_source",
-          "why": "no source offers a title (no catalogue record, referenced.json, usable PDF /Title or text heading), so the slug stands"
+          "why": "no source offers a title (no editorial correction, catalogue record, referenced.json, usable PDF /Title, text heading or corroborated extraction), so the slug stands"
         },
         {
           "entry": "who-dpi-h-reference-architecture-draft-v1",
           "instance": "smart-base",
           "title": "who-dpi-h-reference-architecture-draft-v1",
           "field": "manifest.jsonld meta.title_source",
-          "why": "no source offers a title (no catalogue record, referenced.json, usable PDF /Title or text heading), so the slug stands"
-        },
-        {
-          "entry": "who-rhr-1806-eng",
-          "instance": "smart-base",
-          "title": "who-rhr-1806-eng",
-          "field": "manifest.jsonld meta.title_source",
-          "why": "no source offers a title (no catalogue record, referenced.json, usable PDF /Title or text heading), so the slug stands"
+          "why": "no source offers a title (no editorial correction, catalogue record, referenced.json, usable PDF /Title, text heading or corroborated extraction), so the slug stands"
         }
       ]
     },
     "title-self-declared": {
       "summary": "The title is the source's own word for itself (PDF Info /Title, or a text/notebook heading) and no catalogue record or referenced.json corroborates it. Listed so that 'nothing to check it against' cannot read as 'checked'. Only entries that passed title-missing are listed.",
-      "count": 35,
+      "count": 30,
       "entries": [
         {
           "entry": "agent-skill-best-practices---gemini-cli",
@@ -1401,13 +1275,6 @@
           "field": "structure.json metadata.docinfo.Title"
         },
         {
-          "entry": "best-practices---google-antigravity-docs",
-          "instance": "cat-harness",
-          "title": "Best Practices | Google Antigravity Docs",
-          "source": "pdf-info",
-          "field": "structure.json metadata.docinfo.Title"
-        },
-        {
           "entry": "equipping-agents-for-the-real-world-with-agent-skills-anthro",
           "instance": "cat-harness",
           "title": "Equipping agents for the real world with Agent Skills \\ Anthropic",
@@ -1429,20 +1296,6 @@
           "field": "structure.json metadata.title"
         },
         {
-          "entry": "rfc2119-key-words-requirement-levels",
-          "instance": "cat-harness",
-          "title": "RFC 2119: Key words for use in RFCs to Indicate Requirement Levels | RFC Editor",
-          "source": "pdf-info",
-          "field": "structure.json metadata.docinfo.Title"
-        },
-        {
-          "entry": "rfc8174-uppercase-vs-lowercase-2119-key-words",
-          "instance": "cat-harness",
-          "title": "RFC 8174: Ambiguity of Uppercase vs Lowercase in RFC 2119 Key Words | RFC Editor",
-          "source": "pdf-info",
-          "field": "structure.json metadata.docinfo.Title"
-        },
-        {
           "entry": "sammut-bonnici-galea-2015-swot-analysis",
           "instance": "cat-harness",
           "title": "\"SWOT analysis\" in: Wiley Encyclopedia of Management Online",
@@ -1453,13 +1306,6 @@
           "entry": "skill-authoring-best-practices---claude-platform-docs",
           "instance": "cat-harness",
           "title": "Skill authoring best practices - Claude Platform Docs",
-          "source": "pdf-info",
-          "field": "structure.json metadata.docinfo.Title"
-        },
-        {
-          "entry": "skills-in-openai-api",
-          "instance": "cat-harness",
-          "title": "Skills in OpenAI API",
           "source": "pdf-info",
           "field": "structure.json metadata.docinfo.Title"
         },
@@ -1520,13 +1366,6 @@
           "field": "structure.json metadata.docinfo.Title"
         },
         {
-          "entry": "arxiv-2601.22554v1",
-          "instance": "folio-assistant-sci",
-          "title": "LeanArchitect: Automating Blueprint Generation for Humans and AI",
-          "source": "pdf-info",
-          "field": "structure.json metadata.docinfo.Title"
-        },
-        {
           "entry": "arxiv-2602.16554v1",
           "instance": "folio-assistant-sci",
           "title": "MerLean: An Agentic Framework for Autoformalization in Quantum Computation",
@@ -1550,5 +1389,5 @@
       ]
     }
   },
-  "total": 181
+  "total": 158
 }

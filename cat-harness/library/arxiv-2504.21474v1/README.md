@@ -1,5 +1,5 @@
 <!-- kg:subgraph:begin -->
-# arxiv-2504.21474v1
+# Homa at SemEval-2025 Task 5: Aligning Librarian Records with OntoAligner for Subject Tagging
 
 ingested source material — attributed to its document, not folio content
 
