@@ -155,6 +155,8 @@ Six parts, in order:
 explicit question tool: the end-of-turn "next" line, a bean's `## Done when`, a
 PR body asking the author to choose, a comment on an issue. Those are where it
 is most often broken, because they feel like reporting rather than asking.
+A PR body as a whole, not only its question, is governed by
+[`pr-description`](pr-description.md).
 
 **Feature work breaks this more than content work, and for a specific reason:
 the agent has just finished an impact analysis, and the vocabulary it built
