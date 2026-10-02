@@ -43,3 +43,13 @@ Handover for issue #1925, draft PR #1926, branch `claude/stickies-one-component`
 
 ## Screenshots
 The before/after PNGs are in the session scratchpad, at `stickies-shots/{before,after}-{panel,window}-{1280,390}.png`, `after-confirm-*.png` and `after-navbar-*.png`. They are local to that session.
+
+### Update, 2026-10-02 ~22:10Z (parent session, owner said "fix, then prepare for handover")
+
+- **Done at `53ee5a8`:** fsh-guts moved into the top `navbarIcons` row, per the owner: *"i wanted fsh guts icon here with the others"*.
+  - `NAVBAR_ICONS` gains `fsh-guts`, and the cap rises from 6 to 7.
+  - The `.fa-nav-top` placement is no longer emitted.
+  - The `harness-tiles` skill is updated.
+  - Verified: navbar-row e2e passes (47), and the unit tests, lint, typecheck, `skill:register:check` and `readme:subgraphs:check` pass.
+- **Still open** (unchanged from above): the sticky e2e specs (about 10 files on old selectors), the new specs, the `board-windows` skill (zoom glass-only, pin toggle, confirmation), the window bar's text buttons, and the full `bun run gates`.
+- **Merge `origin/main` once #1907 has landed.** The Visualisations strip in the screenshots disappears then. The owner said: *"looking good. dont need visualization tiels"*. Do not remove the strip here.
