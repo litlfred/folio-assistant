@@ -35,6 +35,27 @@
 # A run that finds the branch already contains `main` exits "already up to
 # date" without pushing.
 #
+# ## Whose `merge:main` runs — MAIN's, never the branch's (issue #1832)
+#
+# The first version ran `bun run merge:main` inside the PR's checkout, so it
+# ran whatever the BRANCH carried. A branch cut before the script reached
+# `main` (2026-10-01) carried nothing: `error: Script not found "merge:main"`,
+# exit 1, and a comment reading "Could not run" on exactly the old branches
+# this bot exists for — run 36970916099 hit all four PRs it selected.
+#
+# So the job checks out twice: the PR into `pr/` and `main` into `tool/`
+# (with submodules — the platform imports `bootstrap-tools/` at module load),
+# and runs main's `merge:main` with `--root` pointing at `pr/`. Both are
+# siblings, never nested: `merge-base.ts` refuses an untracked file, and a
+# tool tree inside the PR's worktree would be one. The script is invoked by
+# NAME from main's `package.json`, so what "merge:main" means is decided by
+# `main` in one place. Its `regen` still runs in `pr/`, against the merged
+# tree, which is where the proof has to be made.
+#
+# A tool that is missing from `main`, or that cannot load, is reported as
+# such and fails the job — it is the bot's defect, not the PR's, and the
+# comment says so rather than "Could not run".
+#
 # ## The push and the PR's own CI
 #
 # A push made with GITHUB_TOKEN deliberately triggers no workflow, so the
@@ -142,9 +163,19 @@ jobs:
       - uses: actions/checkout@v7
         with:
           ref: ${{ steps.pr.outputs.ref }}
+          path: pr
           fetch-depth: 0
           submodules: recursive
           token: ${{ secrets.MERGE_MAIN_TOKEN || secrets.GITHUB_TOKEN }}
+
+      # MAIN's merge tool, beside the PR's tree rather than inside it. Pinned
+      # to `main` explicitly: on a `pull_request` event the default ref is the
+      # PR's merge ref, which would run the branch's tool again (issue #1832).
+      - uses: actions/checkout@v7
+        with:
+          ref: main
+          path: tool
+          submodules: recursive
 
       - uses: oven-sh/setup-bun@v2
         with:
@@ -157,27 +188,50 @@ jobs:
           python-version: "3.12"
 
       - name: Install dependencies
-        run: bun install --frozen-lockfile
+        run: |
+          bun install --cwd "$GITHUB_WORKSPACE/tool" --frozen-lockfile
+          bun install --cwd "$GITHUB_WORKSPACE/pr" --frozen-lockfile
 
       - name: Check the branch did not move since selection
         env:
           SELECTED: ${{ steps.pr.outputs.sha }}
         run: |
-          test "$(git rev-parse HEAD)" = "$SELECTED" || { echo "::notice::head moved since selection; the next run will pick it up"; exit 1; }
+          test "$(git -C pr rev-parse HEAD)" = "$SELECTED" || { echo "::notice::head moved since selection; the next run will pick it up"; exit 1; }
 
-      - name: bun run merge:main
-        id: merge
+      # Separates "the tool is not there / will not load" from a merge that
+      # ran and failed. Without it both read as exit 1.
+      - name: Load main's merge tool
+        id: tool
         run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          before=$(git rev-parse HEAD)
+          script=$(jq -r '.scripts["merge:main"] // empty' tool/package.json)
+          entry=$(sed -nE 's/.*bun run ([^ ]+\.ts).*/\1/p' <<<"$script")
+          if [ -z "$script" ] || [ -z "$entry" ] || [ ! -f "tool/$entry" ]; then
+            echo "status=missing" >> "$GITHUB_OUTPUT"
+            echo "::error::main's package.json has no runnable merge:main (script: '${script}')"
+            exit 0
+          fi
+          if bun --cwd "$GITHUB_WORKSPACE/tool" -e "await import(process.cwd() + '/$entry')" > "$RUNNER_TEMP/tool.log" 2>&1; then
+            echo "status=ok" >> "$GITHUB_OUTPUT"
+          else
+            cat "$RUNNER_TEMP/tool.log"
+            echo "status=unloadable" >> "$GITHUB_OUTPUT"
+            echo "::error::main's merge tool ($entry) failed to load"
+          fi
+
+      - name: main's merge:main, against the PR's tree
+        id: merge
+        if: steps.tool.outputs.status == 'ok'
+        run: |
+          git -C pr config user.name "github-actions[bot]"
+          git -C pr config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          before=$(git -C pr rev-parse HEAD)
           set +e
-          bun run merge:main > "$RUNNER_TEMP/merge.log" 2>&1
+          bun run --cwd "$GITHUB_WORKSPACE/tool" merge:main --root "$GITHUB_WORKSPACE/pr" > "$RUNNER_TEMP/merge.log" 2>&1
           status=$?
           set -e
           cat "$RUNNER_TEMP/merge.log"
           echo "status=$status" >> "$GITHUB_OUTPUT"
-          if [ "$status" = 0 ] && [ "$(git rev-parse HEAD)" != "$before" ]; then
+          if [ "$status" = 0 ] && [ "$(git -C pr rev-parse HEAD)" != "$before" ]; then
             echo "merged=true" >> "$GITHUB_OUTPUT"
           else
             echo "merged=false" >> "$GITHUB_OUTPUT"
@@ -191,8 +245,8 @@ jobs:
         run: |
           # No --force of any kind: if the author pushed during the run this is
           # rejected, which is the guard against overwriting their work.
-          git push origin "HEAD:refs/heads/$REF"
-          echo "sha=$(git rev-parse HEAD)" >> "$GITHUB_OUTPUT"
+          git -C pr push origin "HEAD:refs/heads/$REF"
+          echo "sha=$(git -C pr rev-parse HEAD)" >> "$GITHUB_OUTPUT"
 
       - name: Have CI judge the merge commit
         if: steps.push.outcome == 'success'
@@ -207,8 +261,9 @@ jobs:
           fi
 
       - name: Comment once, edited in place
-        if: always() && steps.merge.outcome != 'skipped'
+        if: always() && steps.tool.outcome != 'skipped'
         env:
+          TOOL: ${{ steps.tool.outputs.status }}
           STATUS: ${{ steps.merge.outputs.status }}
           MERGED: ${{ steps.merge.outputs.merged }}
           PUSHED: ${{ steps.push.outcome }}
@@ -216,10 +271,14 @@ jobs:
         run: |
           set -euo pipefail
           log="$RUNNER_TEMP/merge.log"
+          touch "$log"
           resolved=$(grep -E '^  ✓ .*  \[[a-z0-9-]+: ' "$log" | sed -E 's/.*\[([^:]+):.*/\1/' | sort | uniq -c | awk '{printf "- `%s`: %s\n", $2, $1}' || true)
           refused=$(grep -E '^  ✗ .*  \[' "$log" | sed -E 's/^  ✗ /- /' || true)
           unrepaired=$(grep -E 'STILL fails' "$log" | sed -E 's/^ *✗ /- /' || true)
-          if [ "$MERGED" = true ] && [ "$PUSHED" = success ]; then
+          if [ "$TOOL" != ok ] || grep -q 'Script not found "merge:main"' "$log"; then
+            # Checked FIRST: nothing was attempted, so no merge state below applies.
+            head="**Did not run: \`main\`'s merge tool is ${TOOL:-missing} on this runner** (\`missing\` = \`main\`'s \`package.json\` names no runnable \`merge:main\`; \`unloadable\` = it would not import). Nothing was merged and nothing pushed. This is a defect in the bot or in \`main\`, not in this branch — the branch does not need the script."
+          elif [ "$MERGED" = true ] && [ "$PUSHED" = success ]; then
             head="**Merged \`main\` and pushed \`${SHA:0:9}\`.** Every conflict was resolved by a declared pattern and the gate set reproduced the result; CI now judges it."
           elif [ "$MERGED" = true ]; then
             head="**Merged and proved, but the push was rejected** — the branch moved during the run. Nothing was overwritten; the next push to \`main\` retries."
@@ -227,7 +286,7 @@ jobs:
             head="**Already up to date with \`main\`.** Nothing to push."
           elif [ -n "$refused" ]; then
             head="**Refused — nothing pushed.** These conflicts are authored or named by no declared pattern, so they need a person. Adding a pattern is a deliberate change with its reason (skill \`merge-conflict-patterns\`), never a widened glob."
-            gh label create needs-merge-human --color D93F0B --description "merge:main refused: an authored or undeclared conflict" --force >/dev/null
+            gh label create needs-merge-human --repo "$REPO" --color D93F0B --description "merge:main refused: an authored or undeclared conflict" --force >/dev/null
             gh pr edit "$PR" --repo "$REPO" --add-label needs-merge-human >/dev/null
           elif [ -n "$unrepaired" ]; then
             main_ci=$(gh api "repos/$REPO/commits/main/check-runs?per_page=100" --jq '[.check_runs[] | select(.conclusion == "failure") | .name] | join(", ")')
@@ -253,3 +312,11 @@ jobs:
           else
             gh api -X POST "repos/$REPO/issues/$PR/comments" -f body="$body" >/dev/null
           fi
+
+      - name: Fail when main's tool could not run
+        if: always() && steps.tool.outcome == 'success' && steps.tool.outputs.status != 'ok'
+        env:
+          TOOL: ${{ steps.tool.outputs.status }}
+        run: |
+          echo "::error::merge tool on main is $TOOL — the bot is broken, not the PR (issue #1832)"
+          exit 1
