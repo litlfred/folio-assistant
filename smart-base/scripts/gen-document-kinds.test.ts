@@ -8,7 +8,7 @@ import { describe, expect, it } from "bun:test";
 import { readFileSync } from "node:fs";
 import { join } from "node:path";
 
-import { DAK_COMPONENTS } from "../../cat-harness/schemas/block-kinds.ts";
+import { DAK_COMPONENTS } from "../schemas/dak-kinds.ts";
 import { DocumentKindSchema } from "../../cat-harness/schemas/document-kind.ts";
 import { dakCoverage, dakKind, kindSetProblems } from "./gen-document-kinds.ts";
 import { pinnedTerms } from "./pin-smart-kg.ts";
