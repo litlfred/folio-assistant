@@ -35,6 +35,7 @@
  */
 export {
   documentIndexOf,
+  visualiserNavOf,
   NAV_COLLAPSED_PX,
   NAV_GLYPH_PX,
   NAV_OPEN_PX,
@@ -45,7 +46,7 @@ export {
 } from "./navbar.js";
 export type { NavGroup, NavItem, NavbarModel } from "./navbar.js";
 
-import { documentIndexOf, injectNavbar, type NavGroup, type NavItem, type NavbarModel } from "./navbar.js";
+import { documentIndexOf, injectNavbar, visualiserNavOf, type NavGroup, type NavItem, type NavbarModel } from "./navbar.js";
 
 /** What a mounted page needs in order to describe its own navbar. */
 export interface RailOptions {
@@ -75,6 +76,17 @@ export interface RailOptions {
    * page has no index" and "we did not look" must not render the same.
    */
   documentIndex?: NavGroup;
+  /**
+   * The instance's mark for the header — avatar, or tone for its initial.
+   * `instanceMark` in `mount-instance-docs.ts` reads it off the same
+   * `_data/harness.json` the harnesses region comes from.
+   */
+  mark?: NavbarModel["mark"];
+  /**
+   * What the page's own section is CALLED — the visualiser's name, `todos` on
+   * `/todos/`. Absent on a mounted document, whose section is its "Contents".
+   */
+  visualiserLabel?: string;
 }
 
 /**
@@ -91,11 +103,19 @@ export function railModel(o: RailOptions): NavbarModel & { graphs: NavGroup } {
       : { label: "Harnesses", icon: "\u25A6", items: o.harnesses, collapsible: true };
   return {
     instance: o.instance,
+    ...(o.mark ? { mark: o.mark } : {}),
     ...(o.root ? { root: o.root } : {}),
-    ...(o.documentIndex ? { documentIndex: o.documentIndex } : {}),
+    // THE PAGE'S OWN INDEX IS ITS VISUALISER SECTION (#1757), open on arrival,
+    // and it sits at the head of the scrolling middle rather than in the fixed
+    // top. It was a "Contents" disclosure in the top that arrived FOLDED while
+    // "Graphs" arrived open — the one section about this page was the one you
+    // had to open. *"by default, only the current pages visualiers LHS navbar
+    // is open"*.
+    ...(o.documentIndex ? { visualiser: o.documentIndex } : {}),
     // Collapsible so the whole stack folds in one click -- the owner's
-    // "librarues should be in hambuger menu so can collase all" -- and OPEN
-    // by default, because a navbar whose content arrives folded looks empty.
+    // "librarues should be in hambuger menu so can collase all". Open only
+    // when the page has no section of its own; `navbarRegionsHtml` folds it
+    // whenever a visualiser section is present.
     graphs: { label: "Graphs", icon: "\u25A4", items: o.links, collapsible: true, open: true },
     ...(harnesses ? { harnesses } : {}),
     home: { href: `${o.toRoot}/`, label: "folio-assistant", icon: "\u2302" },
@@ -115,6 +135,7 @@ export function railModel(o: RailOptions): NavbarModel & { graphs: NavGroup } {
  * answer than the headings — a declared index in the graph, say.
  */
 export function injectRail(html: string, o: RailOptions): string | undefined {
-  const documentIndex = o.documentIndex ?? documentIndexOf(html);
+  const label = o.visualiserLabel ?? "Contents";
+  const documentIndex = o.documentIndex ?? visualiserNavOf(html, label) ?? documentIndexOf(html, label);
   return injectNavbar(html, railModel({ ...o, ...(documentIndex ? { documentIndex } : {}) }));
 }
