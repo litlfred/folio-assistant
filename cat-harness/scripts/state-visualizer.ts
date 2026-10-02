@@ -743,6 +743,9 @@ function dashboardPage(g: StateGraph, graphs: StateGraph[]): string {
     tag === BEAN_INDEX_SCHEMA
       ? `<meta name="fa-beans-src" content="${src}">`
       : `<meta name="fa-todo-src" content="${src}">`,
+    // The deploy's stamp, at the site root beside this page's directory.
+    // Written by the deploy, never committed — bean `y7b3`.
+    `<meta name="fa-build-src" content="../build.json">`,
   ];
   // The todo graph is LISTED as well as counted (#1757) — the counts are the
   // script's, the listing and its rail section are static.
