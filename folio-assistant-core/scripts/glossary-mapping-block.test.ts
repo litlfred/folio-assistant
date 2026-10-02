@@ -221,7 +221,10 @@ describe("per term — bean `5yhm`, every term's state, none of them graded", ()
   });
 
   test("the rendered type pages carry the per-term note", async () => {
-    for (const p of ["cat-harness/docs/glossary/dmn-decisions/index.md", "cat-harness/docs/glossary/schema-fields/index.md"]) {
+    // schema-fields is split by first letter (its page outgrew the budget), so
+    // the note is on each part; the type's own page is a landing page.
+    const parts = ["a-e", "f-l", "m-r", "s-z"].map((r) => `cat-harness/docs/glossary/schema-fields/${r}/index.md`);
+    for (const p of ["cat-harness/docs/glossary/dmn-decisions/index.md", ...parts]) {
       const html = await Bun.file(p).text();
       expect(html, `${p} has no per-term note`).toContain('class="fa-gloss-mapping-perterm"');
     }
