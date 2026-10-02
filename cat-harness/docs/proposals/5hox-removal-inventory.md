@@ -163,3 +163,47 @@ The order this forces: merge the arc without the deletion, and let
 `qa-publish` write `main/<merge-sha>`. Then run
 `bun run qa:verify-moved --key main/<merge-sha>` on that commit, and push the
 deletion only on IDENTICAL.
+
+## The wiring, and the gates with the files absent
+
+Done on `qa-5hox`, with the files still present. `bun run gates` is green,
+apart from `translation:catalogue:check --base`, which runs only in CI.
+
+- All twelve `qa` directories declare
+  `storage: { branch: qa-reports, keyedBy: commit }`.
+- The root ignore file lists the twelve working copies.
+  `directory-storage.test.ts` keeps that list equal to the declarations, and
+  checks that `test/attestations/` is not ignored.
+- Five judge scripts split new findings from inherited ones:
+  `audit:coverage:require-all`, `audit:coverage:strict`,
+  `root-scan-census:check`, `readme:subgraphs:check` and `check:viewer-nav`.
+  Each carries `--against main` in `package.json`. The flag is not in the
+  workflow's run lines, because regen pairs a gate with its writer by script
+  name. With no `main/` entry these gates print UNKNOWN and are not gated.
+
+The removal is its own commit. **`bun run gates` with the files absent: 16 of
+205 red**, in five groups.
+
+| group | gates | why | what clears it |
+|---|---|---|---|
+| A. stale-compare gates not migrated | `kg:audit:check`, `kg:audit:all:check`, `translation:block-qa:check`, and `skill:register:check` (twice) through its chain | They still compare a fresh run with the committed sidecar. With nothing committed, all 505 kg-qa sidecars and every translation-qa file read "stale". | Bean `oqe3` (still `todo`): compute and judge, with `--against`. |
+| B. UNKNOWN because no `main/` entry exists | `lsi:viz:check`, `uml:overview:check`, `check:qa-reviewer-permission`, `check:orphan-verdicts`, `check:kind-validators:require-all`, `check:declared-paths` | Each reads the corpus through qa-store or reports it absent. The branch has no `main/<sha>`, so each answers UNKNOWN, which is never a pass. | A `main/` entry from the arc merge, plus a `qa:fetch --ref main` step (or `--against main`) before these run in CI. |
+| C. committed pages that embed QA | `docs:pages:check`, `check:ci-invocations` (it runs `gen-docs-pages --check`) | The committed docs pages carry QA badges. Without the corpus the generator would write "not available", so every page reads stale. | `gen-docs-pages` reads the corpus through qa-store, or the badges leave the committed pages. This reader is not migrated yet. |
+| D. fixed in the removal | `readme:subgraphs:check` (`cat-harness/test/README.md` listed `results/`), `bun test` (`ingest-and-l1`) | | Done. |
+| E. known noise | `translation:catalogue:check --base` | Runs only in CI. | — |
+
+**The most important gap is not a gate.** `qa-publish` publishes "what the
+checkout holds under every declared `qa` directory", in the words of its own
+comment in `code-quality-gates.yml`. After the removal, a fresh CI checkout
+holds almost nothing there, because the job writes only the bootstrap
+kg-export sidecar. So every `main/<sha>` written after the removal would hold
+one file, and every `--against main` baseline would shrink with it. The job's
+comment already names two fixes: the gates job hands its working copy over as
+an artifact, or the publish job runs the QA writers before it publishes.
+Neither exists yet. **Do not push the removal until one of them does.**
+
+One more finding: `subgraph-readmes` (in `bootstrap-tools`) lists a `results/`
+directory when a working copy is present and leaves it out when there is none.
+After the removal, a contributor who has run `qa:fetch` would get a different
+`cat-harness/test/README.md` from the one CI gets. The generator should skip a
+stored directory.
