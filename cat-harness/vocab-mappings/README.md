@@ -7,9 +7,12 @@ Part of [C@T Harness](../README.md) 0.1.0, declared as `vocab-mappings`, holding
 
 | file | what it is | used by |
 |---|---|---|
+| [`concept-scheme-naming.json`](concept-scheme-naming.json) | Concept scheme → its name, and when that name is also a document title |  |
 | [`glossary-concept-scheme.json`](glossary-concept-scheme.json) | Swimlane glossary → SKOS concept scheme |  |
 | [`glossary-lane-usage.json`](glossary-lane-usage.json) | Lane occurrence → lane usage node (swimlane glossary) |  |
 | [`glossary-retired-concept.json`](glossary-retired-concept.json) | Retired glossary term → deprecated SKOS concept (swimlane glossary) |  |
 | [`glossary-role-concept.json`](glossary-role-concept.json) | [Role](https://github.com/litlfred/bootstrap/blob/main/schemas/README.md#role) → SKOS concept (swimlane glossary) |  |
 | [`glossary-variable-lane-concept.json`](glossary-variable-lane-concept.json) | Lane whose performer varies → SKOS concept (swimlane glossary) |  |
+| [`kg-node-naming.json`](kg-node-naming.json) | Knowledge-graph node → name, title, description and summary (kg-export, fsh-guts-export) |  |
+| [`role-naming.json`](role-naming.json) | [Role](https://github.com/litlfred/bootstrap/blob/main/schemas/README.md#role) → its name and identifier (kg-export and glossary-export alike) |  |
 <!-- kg:subgraph:end -->
