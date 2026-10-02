@@ -51,6 +51,160 @@
   var ZOOM_STEPS = [0.5, 0.67, 0.8, 1, 1.25, 1.5, 2, 3, 4];
   var DEFAULT_STEP = 3; // index of 1.0
 
+  /* ═══ The site index ═════════════════════════════════════════════════════
+   *
+   * The translation index used to be inlined into the `<head>` of every page
+   * as `<script type="application/json" id="fa-translation-index">`. Measured
+   * 2026-10-02 over 1571 pages of one preview: **9.3 KB per page, 14.26 MB in
+   * total, and ONE distinct payload** — the largest duplicated payload in a
+   * published preview, by a wide margin. It is now published once at
+   * `assets/harness/site.json` and fetched here.
+   *
+   * It was never reader-facing. `mountNavLocale` was its only consumer, so
+   * nothing a reader sees moves behind a fetch, and nothing a link checker or
+   * the site search index reads moves at all — a `<script>` body is not
+   * indexed, and the nav hrefs this rewrites were ALREADY rewritten in the
+   * browser before this change.
+   *
+   * The two obligations that come with building a rendering client-side are in
+   * `skills/ui/ui-core/ui-accessibility.md` §"A rendering built client-side
+   * owes two things the static one gave for free": print and PDF must wait for
+   * load and render, and a load that FAILS must say so. `assets/js/kg-render.js`
+   * carries both, and this file reports into it through {@link siteIndexRegion}.
+   *
+   * ## The island still wins where there is one
+   *
+   * `getTranslationIndex` reads its island FIRST and falls back to this
+   * document. That is not a migration artefact, it is the contract
+   * `assets/harness/tiles.json` already states for the tile list: one
+   * declaration, two ways it reaches a page. A page Jekyll did not build
+   * carries neither the island nor the `<meta>`; an e2e fixture carries the
+   * island and has no server to fetch from. Both must work.
+   *
+   * ## Only `mountNavLocale` waits, and that is deliberate
+   *
+   * `init()` is a strictly ordered sequence and its own comments say why —
+   * `mountActionTiles` before `mountNavIconRow` because the row proxies that
+   * panel's button, and `mountDocumentIndex` before `mountInstanceGraphs`
+   * because the second MOVES the node the first inserts against. Gating the
+   * whole of it on a fetch would put every mount on this page — the figures,
+   * the QA panels, the glass — behind one request, which is a far worse
+   * failure than a navbar that is not localised.
+   *
+   * So the fetch gates exactly the one function that needs it.
+   * `mountNavLocale` only sets attributes on `.site-nav` and rewrites nav
+   * hrefs in place; nothing later in `init()` reads what it wrote.
+   *
+   * Started at script evaluation rather than at `DOMContentLoaded`: this file
+   * is `defer`red, so evaluation happens before that event and the request is
+   * usually resolved by the time anything wants it.
+   *
+   * `SITE_INDEX_WAIT_MS` is the cap. On timeout the index settles as `null`,
+   * which `getTranslationIndex` already handles — it is the same answer as a
+   * missing island, which is the state that function was written for, and it
+   * leaves the navbar exactly as built rather than claiming the folio has no
+   * translations.
+   */
+  var SITE_INDEX_WAIT_MS = 2500;
+
+  /**
+   * The fetched document, or `null` once we know we are not getting one.
+   *
+   * THREE states while loading and they are kept apart: `undefined` means the
+   * request has not settled, `null` means it settled with no document (no
+   * `<meta>`, a 404, a parse error or the timeout), and an object means it was
+   * read. Nothing reads this until {@link withSiteIndex} has called back, so
+   * `undefined` can never be mistaken for `null`.
+   */
+  var SITE_INDEX;
+
+  var SITE_INDEX_WAITERS = [];
+  var SITE_INDEX_SRC = (function () {
+    var m = document.querySelector('meta[name="fa-site-index-src"]');
+    return (m && m.getAttribute("content")) || "";
+  })();
+
+  /**
+   * Tell `kg-render.js` how this region ended, so the PAGE can say whether it
+   * finished rendering.
+   *
+   * A no-op where `kg-render.js` did not load — a generated dashboard that
+   * writes its own `<head>`. Absent is a real answer there rather than a
+   * failure to report: such a page declares no regions, so it carries no
+   * `data-fa-render` either, and the two agree.
+   */
+  function siteIndexRegion() {
+    return (window.faRender && window.faRender.region)
+      ? window.faRender.region("site-index")
+      : { ready: function () {}, empty: function () {}, failed: function () {} };
+  }
+
+  /**
+   * Record how the site index turned out, and tell the page.
+   *
+   * THE REGION REPORTS ON EVERY PATH, including the one where there was
+   * nothing to fetch. The three states of the DATA — never asked, asked and
+   * failed, read — are not the same question as the three states of the PAGE,
+   * and conflating them was a real defect caught by
+   * `test/site-index.e2e.ts`: a page carrying no `fa-site-index-src` left the
+   * region unregistered, so `kg-render.js` saw a declared region that never
+   * registered and reported the whole page as `failed`. "This page never asked
+   * for a site index" is a COMPLETE rendering — there is nothing pending and
+   * nothing broken — so it is `ready`.
+   *
+   * Only the middle case is `failed`, and it is `failed` in the DOM as well as
+   * in the console: `ui-accessibility` is explicit that a `console.warn` alone
+   * reaches a developer with the console open and no reader ever. Both happen
+   * rather than one replacing the other, because they reach different people.
+   */
+  function siteIndexSettled(doc, failure) {
+    if (SITE_INDEX !== undefined) return;         // first answer wins
+    SITE_INDEX = doc == null ? null : doc;
+    if (SITE_INDEX === null && SITE_INDEX_SRC) {
+      siteIndexRegion().failed();
+      console.warn("docs-ui: could not read the site index at " + SITE_INDEX_SRC +
+                   " (" + (failure || "no reason reported") + "); the navbar is left " +
+                   "exactly as built. This is NOT a claim that the folio has no " +
+                   "translations. Run: bun run translation:index");
+    } else {
+      // Read, or never asked. A document with `translations: null` lands here
+      // too and belongs here: the build DETERMINED that there is no
+      // translation data, which is an answer rather than a failure, and
+      // `getTranslationIndex` turns it into the same `null` a missing island
+      // gives. The navbar says `unknown`; the page is `ready`.
+      siteIndexRegion().ready();
+    }
+    var waiting = SITE_INDEX_WAITERS;
+    SITE_INDEX_WAITERS = [];
+    for (var i = 0; i < waiting.length; i++) waiting[i]();
+  }
+
+  /** Call `done` once the site index has settled, or the cap has elapsed. */
+  function withSiteIndex(done) {
+    if (SITE_INDEX !== undefined) return done();
+    SITE_INDEX_WAITERS.push(done);
+  }
+
+  (function startSiteIndex() {
+    if (!SITE_INDEX_SRC) {
+      // No `<meta>`: this page never asked for a site index, so the island is
+      // the only source and this is exactly the pre-2026-10-02 path. NOT a
+      // failure, and not reported as one.
+      return siteIndexSettled(undefined, undefined);
+    }
+    var fetchJson = window.faRender && window.faRender.fetchJson;
+    if (!fetchJson) {
+      // `kg-render.js` did not load. Said rather than worked around: a second
+      // copy of the three-state fetch would be a second answer to what a
+      // failed load means.
+      return siteIndexSettled(null, "kg-render.js did not load");
+    }
+    fetchJson(SITE_INDEX_SRC, siteIndexSettled);
+    window.setTimeout(function () {
+      siteIndexSettled(null, "the request did not settle within " + SITE_INDEX_WAIT_MS + " ms");
+    }, SITE_INDEX_WAIT_MS);
+  })();
+
   function el(tag, attrs, text) {
     var node = document.createElement(tag);
     if (attrs) Object.keys(attrs).forEach(function (k) {
@@ -3421,9 +3575,11 @@
    * `gen-docs-pages.ts` cannot write the baseurl in: the SAME index file is
    * served from the canonical prefix and from every staging prefix, so a
    * baked-in prefix is wrong on all but one. Liquid could pass it, and
-   * `#fa-translation-index` does carry `site.baseurl` — but that island is
-   * about translations and may legitimately be absent, which would make the
-   * art depend on an unrelated feature being switched on.
+   * the site index does carry `site.baseurl` — but that document is about
+   * translations and may legitimately be absent, which would make the art
+   * depend on an unrelated feature being switched on. It is now FETCHED as
+   * well (2026-10-02), so reading it here would also make the art wait on a
+   * request: a second reason for the same answer.
    *
    * `meta[name="fa-todo-src"]` is the honest source: it is emitted through
    * `relative_url`, so the SERVER has already resolved the prefix, and the
@@ -9117,13 +9273,33 @@
     return path.replace(/^\/+|\/+$/g, "");
   }
 
-  /** The published index, or null when this build could not determine one. */
+  /**
+   * The published index, or null when this build could not determine one.
+   *
+   * ISLAND FIRST, then the site index, where the same two fields are
+   * `baseurl` and `translations`. The island was 9.3 KB in every page's
+   * `<head>` and the SAME 9.3 KB in all 1571 of them — 14.26 MB of one
+   * answer, the largest duplicated payload in a published preview.
+   *
+   * `null` keeps meaning exactly what it meant: this build could not
+   * determine an index. It covers `translations: null` (the data file was not
+   * there when the site was built) and now also a site index that could not
+   * be fetched. Those are different facts and `data-fa-render` is where they
+   * are told apart — here they have the same consequence, which is to leave
+   * the navbar exactly as built.
+   */
   function getTranslationIndex() {
     var node = document.getElementById("fa-translation-index");
-    if (!node) return null;
     var parsed;
-    try { parsed = JSON.parse(node.textContent); } catch (_e) { return null; }
-    if (!parsed || typeof parsed !== "object") return null;
+    if (node) {
+      try { parsed = JSON.parse(node.textContent); } catch (_e) { return null; }
+      if (!parsed || typeof parsed !== "object") return null;
+      parsed = { baseurl: parsed.baseurl, index: parsed.index };
+    } else if (SITE_INDEX) {
+      parsed = { baseurl: SITE_INDEX.baseurl, index: SITE_INDEX.translations };
+    } else {
+      return null;
+    }
     // `index: null` is the deliberate signal that `docs/_data/translations.json`
     // was not there when the site was built. It is NOT an empty index.
     if (!parsed.index || typeof parsed.index !== "object") return null;
@@ -9174,7 +9350,8 @@
       nav.setAttribute("data-fa-nav-index", "unknown");
       if (window.console && console.warn) {
         console.warn(
-          "docs-ui: no readable translation index (#fa-translation-index). " +
+          "docs-ui: no readable translation index (#fa-translation-index, or " +
+          "assets/harness/site.json). " +
           "The navbar is left exactly as built -- this is NOT a claim that " +
           "the folio has no translations. Run: bun run translation:index"
         );
@@ -10796,9 +10973,19 @@
     mountInstanceGraphs();
     // AFTER the wrapper exists, so the heading lands beside the nav inside it.
     mountNavPagesHeading();
-    // Before the badges: both read the same translation metadata, and the nav
-    // is the thing a reader sees first.
-    mountNavLocale();
+    // AFTER THE SITE INDEX, which is fetched rather than inlined since
+    // 2026-10-02 — see the site-index block at the top of this file. It is the
+    // ONE deferred call in this sequence: `mountNavLocale` sets attributes on
+    // `.site-nav` and rewrites nav hrefs in place, and nothing below reads
+    // what it wrote. `withSiteIndex` calls back synchronously once the fetch
+    // has settled, so on a page carrying the island (every e2e fixture) or no
+    // `<meta>` at all this runs exactly where it used to.
+    //
+    // It used to be ordered "before the badges: both read the same translation
+    // metadata, and the nav is the thing a reader sees first". The badges read
+    // `fa-translation-meta`, which is per-page and still inline, so that order
+    // was a preference about paint rather than a dependency.
+    withSiteIndex(mountNavLocale);
     mountTranslationBadges();
     mountQaPanels();
     paintQaBadges();

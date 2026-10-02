@@ -46,13 +46,16 @@
  *
  * ## What is deliberately NOT fixed here
  *
- * Causes 2 and 3 in `g196`: Jekyll's `relative_url` prepends `baseurl` to
- * ~235 hrefs per page, and the `fa-translation-index` island publishes
- * `site.baseurl` to JavaScript. Pages therefore still differ **between**
- * previews by slug. They no longer differ **across rebuilds of one preview**,
- * which is the unbounded half. The two are coupled to the language switcher
- * (`navKey()` strips the baseurl; the switcher rebuilds hrefs from it), so
- * they are one change and not this one.
+ * Cause 2 in `g196`: Jekyll's `relative_url` prepends `baseurl` to ~235 hrefs
+ * per page. Pages therefore still differ **between** previews by slug. They no
+ * longer differ **across rebuilds of one preview**, which is the unbounded
+ * half.
+ *
+ * Cause 3 — the `fa-translation-index` island publishing `site.baseurl` to
+ * JavaScript — is **done** as of 2026-10-02: the island is gone and the facts
+ * are fetched once from `assets/harness/site.json`, the same move this file
+ * made for the banner. Measured on a local build the day it landed: 2356 pages
+ * carried it at 9482 B each, 22.34 MB on ONE distinct payload.
  *
  * ## The footer carries the same stamp, and it is filled the same way
  *
