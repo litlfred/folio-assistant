@@ -26,7 +26,7 @@
   "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#FshGutsGraph",
   "name": "cat-harness — fsh-guts",
   "description": "The trashcan that is kept: deprecated and throwaway structured content, addressable and exported and deliberately absent from the rendered site. Reachable BY NAME only — every other published graph has its references stripped, so nothing links here. Activity logs live under this tree and are excluded: a file is included only if it declares itself folio-fsh-guts/v1.",
-  "nodeCount": 75,
+  "nodeCount": 76,
   "@graph": [
     {
       "@id": "https://litlfred.github.io/folio-assistant/fsh-guts.jsonld#fsh-guts/retired/bootstrap-split.md",
@@ -75,6 +75,19 @@
       "bean": "folio-assistant-y7b3",
       "description": "A qa-results/v1 sidecar last written at commit 9b6e540d9 (2026-09-23), by the pre-split producer path scripts/kg-export.ts. The exporter now names the host instance's sidecar plain \"kg-export\" (kg-export.ts, qaStem), so nothing has written this file since and nothing reads it. Found while removing updated_at from every produced sidecar (#1714, #1707): it was the only one left carrying a stamp. Owner, 2026-09-30: \"ok move to fsh-guts\". Kept inside this manifest rather than as a loose .json so no scanner mistakes it for a live sidecar.",
       "body": "# The orphaned `kg-export.@litlfred/folio-assistant` sidecar\n\nThe file as it stood at `9b6e540d9`. Do not restore it: the live sidecar for\nthe host instance is `cat-harness/test/results/kg-export.qa-results.json`.\n\n```json\n{\n  \"$schema\": \"qa-results/v1\",\n  \"producer\": {\n    \"script\": \"scripts/kg-export.ts\",\n    \"script_hash\": \"c88d684ce169\"\n  },\n  \"subject\": {\n    \"kind\": \"graph\",\n    \"id\": \"@litlfred/folio-assistant.jsonld\"\n  },\n  \"updated_at\": \"2026-09-21T18:21:29.282Z\",\n  \"families\": {\n    \"danglingLinks\": {\n      \"summary\": \"Internal links whose target node is not in `@graph`. A DATA defect, not an export failure.\",\n      \"count\": 0,\n      \"entries\": []\n    },\n    \"problems\": {\n      \"summary\": \"Sources that could not be read. Never empty-by-omission.\",\n      \"count\": 0,\n      \"entries\": []\n    },\n    \"undeclaredSchemaModules\": {\n      \"summary\": \"Modules in the declared schemas/ directory that do not say what they are, so they are absent from the graph.\",\n      \"count\": 0,\n      \"entries\": []\n    },\n    \"undeclaredTerms\": {\n      \"summary\": \"Property names used in `@graph` that the `@context` does not declare. Dropped outright by a JSON-LD processor.\",\n      \"count\": 0,\n      \"entries\": []\n    }\n  },\n  \"total\": 0\n}\n```"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/fsh-guts.jsonld#fsh-guts/retired/library-orphaned-figure-blocks.md",
+      "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#FshGutsNode",
+      "name": "182 library figure blocks that no section references any more",
+      "nodeKind": "orphaned-generator-output",
+      "sourcePath": "fsh-guts/retired/library-orphaned-figure-blocks.md",
+      "movedOn": "2026-10-01",
+      "movedFrom": "six library entries' blocks/ directories (agent-skills, cat-harness, smart-base)",
+      "issue": "1815",
+      "bean": "folio-assistant-bh4q",
+      "description": "`figure-img-p*.jsonld` block nodes that `gen-library-jsonld` reported as orphaned: written by an earlier image ingest, and referenced by no section, sheet or manifest since their images left `images.json` (the one checked, arxiv-2602.12670v4 p026, is the same \"Pass Rate\" colour scale already kept as p025). Found while regenerating every content document for bean bh4q, which they were the only documents to miss. Owner, 2026-10-01: \"fsh-guts\". Packed from commit 597810687 by `git archive` as one archive beside this file, rather than left loose, so no scanner reads them as live nodes — several carry agent-drafted figure narratives worth keeping.",
+      "body": "# Orphaned library figure blocks\n\n`library-orphaned-figure-blocks.tar.gz` beside this file holds 182 block\nnodes, each at the path it had in the checkout. List them with\n`tar -tzf library-orphaned-figure-blocks.tar.gz`, or read them at commit\n`597810687`.\n\n| library entry | files |\n|---|---:|\n| `smart-base/library/9789241509510-eng` | 59 |\n| `cat-harness/library/arxiv-2312.07755v1` | 56 |\n| `smart-base/library/9789241511766-eng` | 55 |\n| `smart-base/library/9789240010567-eng` | 6 |\n| `smart-base/library/9789240081949-eng` | 5 |\n| `agent-skills/library/arxiv-2602.12670v4` | 1 |\n\n**How they were found.** The list is exactly what `orphanedBlocks` in\n`cat-harness/content/pipeline/gen-library-jsonld.ts` reports: a block file in\n`blocks/` whose id no `manifest.jsonld`, section or sheet `contains`. None had\nan `.md` sibling. The generator's own `--prune` would have deleted them; this\nrelocates them instead, which is reversible.\n\n**They still carry the bare context URL.** They predate bean bh4q, so their\n`@context` is the published URL alone, without `@base` beside it. Do not\nunpack them back into place: re-ingest the entry instead, and the generator\nwrites current nodes for whatever images it now keeps."
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/fsh-guts.jsonld#fsh-guts/retired/remote-stubs-package.md",
@@ -941,6 +954,10 @@
     },
     {
       "path": "fsh-guts/retired/detangle-schema-viewer.html",
+      "reason": "declares no $schema, so it is not a node of this graph"
+    },
+    {
+      "path": "fsh-guts/retired/library-orphaned-figure-blocks.tar.gz",
       "reason": "declares no $schema, so it is not a node of this graph"
     },
     {

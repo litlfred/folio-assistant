@@ -2,7 +2,7 @@
   "$schema": "folio-schema-graph/v1",
   "tile": {
     "schemas": {
-      "count": 190,
+      "count": 191,
       "unit": "modules"
     }
   },
@@ -291,30 +291,6 @@
       "isTest": false
     },
     {
-      "module": "cat-harness/schemas/dak-content-type.ts",
-      "instance": "cat-harness",
-      "name": "dak-content-type",
-      "graphNode": "schema",
-      "summary": "The `dak` and `sushi` content types — registered by the WHO layer, not by core.",
-      "isTest": false
-    },
-    {
-      "module": "cat-harness/schemas/dak.test.ts",
-      "instance": "cat-harness",
-      "name": "dak.test",
-      "graphNode": "undeclared",
-      "summary": "What the DAK placeholder promises, and — more usefully — what it promises",
-      "isTest": true
-    },
-    {
-      "module": "cat-harness/schemas/dak.ts",
-      "instance": "cat-harness",
-      "name": "dak",
-      "graphNode": "schema",
-      "summary": "The **DAK** content type — a repository that is a WHO SMART Guidelines",
-      "isTest": false
-    },
-    {
       "module": "cat-harness/schemas/decision-methodology-context.ts",
       "instance": "cat-harness",
       "name": "decision-methodology-context",
@@ -401,6 +377,14 @@
       "name": "document-image",
       "graphNode": "schema",
       "summary": "An image placed on a page of an ingested document — bean `d5f1`.",
+      "isTest": false
+    },
+    {
+      "module": "cat-harness/schemas/document-kind.ts",
+      "instance": "cat-harness",
+      "name": "document-kind",
+      "graphNode": "schema",
+      "summary": "A document KIND — a named structure of sections that a document authored",
       "isTest": false
     },
     {
@@ -593,6 +577,14 @@
       "graphNode": "schema",
       "summary": "How a person wants to be asked — the `interaction` graph's one node kind.",
       "isTest": false
+    },
+    {
+      "module": "cat-harness/schemas/jsonld-base.test.ts",
+      "instance": "cat-harness",
+      "name": "jsonld-base.test",
+      "graphNode": "undeclared",
+      "summary": "Bean `bh4q`: a content document's `@id`s must resolve to FOLIO_BASE under a",
+      "isTest": true
     },
     {
       "module": "cat-harness/schemas/jsonld.ts",
@@ -989,6 +981,22 @@
       "name": "render-log",
       "graphNode": "schema",
       "summary": "The render log — what was published to the publish branch, when, and why.",
+      "isTest": false
+    },
+    {
+      "module": "cat-harness/schemas/render-output.test.ts",
+      "instance": "cat-harness",
+      "name": "render-output.test",
+      "graphNode": "undeclared",
+      "summary": "Each row of `RENDER_AS`'s table, held to `renderToolOutput` — bean `q2wm`.",
+      "isTest": true
+    },
+    {
+      "module": "cat-harness/schemas/render-output.ts",
+      "instance": "cat-harness",
+      "name": "render-output",
+      "graphNode": "schema",
+      "summary": "The ONE implementation of a Tool output's render hint — bean `q2wm`, R17.",
       "isTest": false
     },
     {
@@ -1545,6 +1553,14 @@
       "isTest": false
     },
     {
+      "module": "fhir-harness/schemas/fhir-artifact-index.ts",
+      "instance": "fhir-harness",
+      "name": "fhir-artifact-index",
+      "graphNode": "schema",
+      "summary": "The artefact index of a published FHIR Implementation Guide.",
+      "isTest": false
+    },
+    {
       "module": "fhir-harness/schemas/ig-chrome.test.ts",
       "instance": "fhir-harness",
       "name": "ig-chrome.test",
@@ -1557,6 +1573,22 @@
       "name": "ig-chrome",
       "graphNode": "schema",
       "summary": "ig-chrome.ts — a FHIR IG's published CHROME, as data.",
+      "isTest": false
+    },
+    {
+      "module": "fhir-harness/schemas/ig-identity.test.ts",
+      "instance": "fhir-harness",
+      "name": "ig-identity.test",
+      "graphNode": "undeclared",
+      "summary": "`ig-identity.json` — an IG's own identity and status, refused when it names",
+      "isTest": true
+    },
+    {
+      "module": "fhir-harness/schemas/ig-identity.ts",
+      "instance": "fhir-harness",
+      "name": "ig-identity",
+      "graphNode": "schema",
+      "summary": "An IG's identity, as its own `sushi-config.yaml` states it — id, canonical,",
       "isTest": false
     },
     {
@@ -1633,6 +1665,22 @@
       "isTest": false
     },
     {
+      "module": "folio-assistant-core/schemas/dublin-core-render.test.ts",
+      "instance": "folio-assistant-core",
+      "name": "dublin-core-render.test",
+      "graphNode": "undeclared",
+      "summary": "Tests for the Dublin Core renderings (bean `7eak`).",
+      "isTest": true
+    },
+    {
+      "module": "folio-assistant-core/schemas/dublin-core-render.ts",
+      "instance": "folio-assistant-core",
+      "name": "dublin-core-render",
+      "graphNode": "schema",
+      "summary": "Dublin Core RENDERINGS of a catalogue record: DC XML for a harvester, and",
+      "isTest": false
+    },
+    {
       "module": "folio-assistant-core/schemas/dublin-core.test.ts",
       "instance": "folio-assistant-core",
       "name": "dublin-core.test",
@@ -1654,14 +1702,6 @@
       "name": "extraction",
       "graphNode": "schema",
       "summary": "What an EXTRACTION produced, and when — provenance for assets pulled out of",
-      "isTest": false
-    },
-    {
-      "module": "folio-assistant-core/schemas/fhir-artifact-index.ts",
-      "instance": "folio-assistant-core",
-      "name": "fhir-artifact-index",
-      "graphNode": "schema",
-      "summary": "The artefact index of a published FHIR Implementation Guide.",
       "isTest": false
     },
     {
@@ -1758,6 +1798,38 @@
       "name": "review-verdict",
       "graphNode": "schema",
       "summary": "A reviewer's VERDICT on one version of one block: \"I read this, and here is",
+      "isTest": false
+    },
+    {
+      "module": "smart-base/schemas/content-types-stack.test.ts",
+      "instance": "smart-base",
+      "name": "content-types-stack.test",
+      "graphNode": "undeclared",
+      "summary": "Asking a repository what it is, and getting a SET back.",
+      "isTest": true
+    },
+    {
+      "module": "smart-base/schemas/dak-content-type.ts",
+      "instance": "smart-base",
+      "name": "dak-content-type",
+      "graphNode": "schema",
+      "summary": "The `dak` and `sushi` content types — registered by the WHO layer, not by core.",
+      "isTest": false
+    },
+    {
+      "module": "smart-base/schemas/dak.test.ts",
+      "instance": "smart-base",
+      "name": "dak.test",
+      "graphNode": "undeclared",
+      "summary": "What the DAK placeholder promises, and — more usefully — what it promises",
+      "isTest": true
+    },
+    {
+      "module": "smart-base/schemas/dak.ts",
+      "instance": "smart-base",
+      "name": "dak",
+      "graphNode": "schema",
+      "summary": "The **DAK** content type — a repository that is a WHO SMART Guidelines",
       "isTest": false
     }
   ],
@@ -1864,7 +1936,7 @@
       "fields": [
         {
           "name": "@context",
-          "type": "z.literal(CONTENT_CONTEXT_URL).optional()",
+          "type": "ContentContextSchema.optional()",
           "optional": true,
           "array": false,
           "doc": "The published content context — bean `yh6u`. OPTIONAL because folio"
@@ -1928,11 +2000,10 @@
       "extendsNames": [],
       "values": [],
       "refs": [
-        "cat-harness/schemas/archive-contents.ts#ArchiveEntrySchema"
+        "cat-harness/schemas/archive-contents.ts#ArchiveEntrySchema",
+        "cat-harness/schemas/jsonld.ts#ContentContextSchema"
       ],
-      "unresolved": [
-        "CONTENT_CONTEXT_URL"
-      ],
+      "unresolved": [],
       "external": [
         "ARCHIVE_CONTENTS_SCHEMA_ID",
         "z"
@@ -10614,6 +10685,12 @@
           "type": "RendererContribution[]",
           "optional": true,
           "array": true
+        },
+        {
+          "name": "pipelinePlugins",
+          "type": "PipelinePluginContribution[]",
+          "optional": true,
+          "array": true
         }
       ],
       "extendsNames": [],
@@ -10621,6 +10698,7 @@
       "refs": [
         "cat-harness/schemas/contributions.ts#AdapterContribution",
         "cat-harness/schemas/contributions.ts#BlockKindContribution",
+        "cat-harness/schemas/contributions.ts#PipelinePluginContribution",
         "cat-harness/schemas/contributions.ts#QaCheckerContribution",
         "cat-harness/schemas/contributions.ts#RendererContribution",
         "cat-harness/schemas/contributions.ts#ToolContribution"
@@ -10654,6 +10732,35 @@
       "unresolved": [],
       "external": [],
       "exported": false
+    },
+    {
+      "id": "cat-harness/schemas/contributions.ts#PipelinePluginContribution",
+      "name": "PipelinePluginContribution",
+      "module": "cat-harness/schemas/contributions.ts",
+      "kind": "interface",
+      "doc": "An implementation a dependency plugs into a named slot of the GENERIC",
+      "fields": [
+        {
+          "name": "kind",
+          "type": "string",
+          "optional": false,
+          "array": false,
+          "doc": "The slot this fills, e.g. `\"lean-lexer\"`. One contributor per kind."
+        },
+        {
+          "name": "implementation",
+          "type": "unknown",
+          "optional": false,
+          "array": false,
+          "doc": "What fills it. Shape is fixed per kind by `content/pipeline/pipeline-plugins.ts`."
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
     },
     {
       "id": "cat-harness/schemas/contributions.ts#QaCheckerContribution",
@@ -11567,123 +11674,6 @@
       ],
       "unresolved": [],
       "external": [],
-      "exported": true
-    },
-    {
-      "id": "cat-harness/schemas/dak.ts#componentShape",
-      "name": "componentShape",
-      "module": "cat-harness/schemas/dak.ts",
-      "kind": "zod-object",
-      "doc": "The component fields, built from {@link DAK_COMPONENT_FIELDS} rather",
-      "fields": [],
-      "extendsNames": [
-        "Object"
-      ],
-      "values": [],
-      "refs": [],
-      "unresolved": [],
-      "external": [],
-      "exported": false
-    },
-    {
-      "id": "cat-harness/schemas/dak.ts#DakComponentEntries",
-      "name": "DakComponentEntries",
-      "module": "cat-harness/schemas/dak.ts",
-      "kind": "type-alias",
-      "doc": "One component's contents, as read from a `dak.config.json`.",
-      "fields": [],
-      "extendsNames": [],
-      "values": [],
-      "refs": [],
-      "unresolved": [],
-      "external": [],
-      "exported": true
-    },
-    {
-      "id": "cat-harness/schemas/dak.ts#DakDeclaration",
-      "name": "DakDeclaration",
-      "module": "cat-harness/schemas/dak.ts",
-      "kind": "interface",
-      "doc": "A `dak.config.json`, as much of it as is settled.",
-      "fields": [
-        {
-          "name": "name",
-          "type": "string",
-          "optional": false,
-          "array": false,
-          "doc": "The instance's name, e.g. `\"smart-immunizations\"`."
-        },
-        {
-          "name": "canonicalUrl",
-          "type": "string",
-          "optional": true,
-          "array": false,
-          "doc": "Where the published DAK lives — the base its `@id`s are minted against."
-        },
-        {
-          "name": "publicationUrl",
-          "type": "string",
-          "optional": true,
-          "array": false,
-          "doc": "Where the built IG is published, when that differs from `canonicalUrl`."
-        },
-        {
-          "name": "previewUrl",
-          "type": "string",
-          "optional": true,
-          "array": false,
-          "doc": "Where CI previews are served."
-        }
-      ],
-      "extendsNames": [
-        "KgNodeLabels"
-      ],
-      "values": [],
-      "refs": [
-        "cat-harness/schemas/kg-node.ts#KgNodeLabels"
-      ],
-      "unresolved": [],
-      "external": [],
-      "exported": true
-    },
-    {
-      "id": "cat-harness/schemas/dak.ts#DakDeclarationSchema",
-      "name": "DakDeclarationSchema",
-      "module": "cat-harness/schemas/dak.ts",
-      "kind": "zod-object",
-      "fields": [
-        {
-          "name": "name",
-          "type": "z.string().min(1)",
-          "optional": false,
-          "array": false
-        },
-        {
-          "name": "canonicalUrl",
-          "type": "z.string().url().optional()",
-          "optional": true,
-          "array": false
-        },
-        {
-          "name": "publicationUrl",
-          "type": "z.string().url().optional()",
-          "optional": true,
-          "array": false
-        },
-        {
-          "name": "previewUrl",
-          "type": "z.string().url().optional()",
-          "optional": true,
-          "array": false
-        }
-      ],
-      "extendsNames": [],
-      "values": [],
-      "refs": [],
-      "unresolved": [],
-      "external": [
-        "z"
-      ],
       "exported": true
     },
     {
@@ -13464,6 +13454,328 @@
           "optional": true,
           "array": false,
           "doc": "What this copy serves HERE — never what the image is, which is the"
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [
+        "z"
+      ],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/document-kind.ts#CoverageMemberSchema",
+      "name": "CoverageMemberSchema",
+      "module": "cat-harness/schemas/document-kind.ts",
+      "kind": "zod-object",
+      "fields": [
+        {
+          "name": "key",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "label",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [
+        "z"
+      ],
+      "exported": false
+    },
+    {
+      "id": "cat-harness/schemas/document-kind.ts#DocumentKind",
+      "name": "DocumentKind",
+      "module": "cat-harness/schemas/document-kind.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/document-kind.ts#DocumentKindCoverage",
+      "name": "DocumentKindCoverage",
+      "module": "cat-harness/schemas/document-kind.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/document-kind.ts#DocumentKindCoverageSchema",
+      "name": "DocumentKindCoverageSchema",
+      "module": "cat-harness/schemas/document-kind.ts",
+      "kind": "zod-object",
+      "fields": [
+        {
+          "name": "$schema",
+          "type": "z.literal(DOCUMENT_KIND_COVERAGE_SCHEMA_TAG)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "kind",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false,
+          "doc": "The kind's id."
+        },
+        {
+          "name": "subject",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false,
+          "doc": "The instance whose content was classified."
+        },
+        {
+          "name": "from",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false,
+          "doc": "Repo-relative path of what was classified."
+        },
+        {
+          "name": "method",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false,
+          "doc": "The rule, in a sentence a reader can check."
+        },
+        {
+          "name": "total",
+          "type": "z.number().int().nonnegative()",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "sections",
+          "type": "z.array(z.object({ id: z.string().min(1), members: z.array(CoverageMemberSchema) }))",
+          "optional": false,
+          "array": true
+        },
+        {
+          "name": "unplaced",
+          "type": "z.array(z.object({ group: z.string().min(1), count: z.number().int().positive() }))",
+          "optional": false,
+          "array": true,
+          "doc": "What no rule placed, grouped so the remainder is legible."
+        },
+        {
+          "name": "generatedBy",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [
+        "cat-harness/schemas/document-kind.ts#CoverageMemberSchema"
+      ],
+      "unresolved": [],
+      "external": [
+        "DOCUMENT_KIND_COVERAGE_SCHEMA_TAG",
+        "z"
+      ],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/document-kind.ts#DocumentKindSchema",
+      "name": "DocumentKindSchema",
+      "module": "cat-harness/schemas/document-kind.ts",
+      "kind": "zod-object",
+      "fields": [
+        {
+          "name": "$schema",
+          "type": "z.literal(DOCUMENT_KIND_SCHEMA_TAG)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "id",
+          "type": "z.string().regex(/^[a-z0-9][a-z0-9-]*$/)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "title",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "description",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "structure",
+          "type": "z.enum([\"fixed\", \"semi-fixed\"])",
+          "optional": false,
+          "array": false,
+          "doc": "`fixed`: exactly these sections, every one required."
+        },
+        {
+          "name": "extends",
+          "type": "z.string().min(1).optional()",
+          "optional": true,
+          "array": false,
+          "doc": "A parent kind's id; this kind's sections extend the parent's."
+        },
+        {
+          "name": "sections",
+          "type": "z.array(DocumentKindSectionSchema).min(1)",
+          "optional": false,
+          "array": true
+        },
+        {
+          "name": "sources",
+          "type": "z.array(DocumentKindSourceSchema).min(1)",
+          "optional": false,
+          "array": true
+        },
+        {
+          "name": "generatedBy",
+          "type": "z.string().min(1).optional()",
+          "optional": true,
+          "array": false,
+          "doc": "Set when the file is generated; names the generator, so a hand edit is visibly a defect."
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [
+        "cat-harness/schemas/document-kind.ts#DocumentKindSectionSchema",
+        "cat-harness/schemas/document-kind.ts#DocumentKindSourceSchema"
+      ],
+      "unresolved": [],
+      "external": [
+        "DOCUMENT_KIND_SCHEMA_TAG",
+        "z"
+      ],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/document-kind.ts#DocumentKindSection",
+      "name": "DocumentKindSection",
+      "module": "cat-harness/schemas/document-kind.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/document-kind.ts#DocumentKindSectionSchema",
+      "name": "DocumentKindSectionSchema",
+      "module": "cat-harness/schemas/document-kind.ts",
+      "kind": "zod-object",
+      "fields": [
+        {
+          "name": "id",
+          "type": "z.string().regex(/^[a-z0-9][a-z0-9-]*$/)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "title",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "required",
+          "type": "z.boolean()",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "description",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "computedFrom",
+          "type": "z.array(z.string().min(1)).optional()",
+          "optional": true,
+          "array": true,
+          "doc": "Declared graph ids this section is derived from."
+        },
+        {
+          "name": "modelledBy",
+          "type": "z.array(z.string().regex(/^[a-z0-9][a-z0-9.-]*#[A-Za-z0-9][A-Za-z0-9._-]*$/, \"a term is `<system>#<code>`\")).optional()",
+          "optional": true,
+          "array": true,
+          "doc": "The classes of an external vocabulary this section's content instantiates,"
+        },
+        {
+          "name": "sources",
+          "type": "z.array(DocumentKindSourceSchema).optional()",
+          "optional": true,
+          "array": true,
+          "doc": "This section's own sources, when they differ from the kind's."
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [
+        "cat-harness/schemas/document-kind.ts#DocumentKindSourceSchema"
+      ],
+      "unresolved": [],
+      "external": [
+        "z"
+      ],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/document-kind.ts#DocumentKindSourceSchema",
+      "name": "DocumentKindSourceSchema",
+      "module": "cat-harness/schemas/document-kind.ts",
+      "kind": "zod-object",
+      "doc": "Where a structure, or one section of it, comes from.",
+      "fields": [
+        {
+          "name": "ref",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false,
+          "doc": "A library entry id or a URL — something a reader can open."
+        },
+        {
+          "name": "locator",
+          "type": "z.string().min(1).optional()",
+          "optional": true,
+          "array": false,
+          "doc": "The part of it that says so: a chapter, a section, a table."
+        },
+        {
+          "name": "note",
+          "type": "z.string().min(1).optional()",
+          "optional": true,
+          "array": false
         }
       ],
       "extendsNames": [],
@@ -18759,6 +19071,22 @@
       "exported": true
     },
     {
+      "id": "cat-harness/schemas/jsonld.ts#ContentContextSchema",
+      "name": "ContentContextSchema",
+      "module": "cat-harness/schemas/jsonld.ts",
+      "kind": "zod-union",
+      "doc": "A content document's `@context`, as a record schema accepts it: the",
+      "fields": [],
+      "extendsNames": [],
+      "values": [
+        "@base"
+      ],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
       "id": "cat-harness/schemas/jsonld.ts#GraphEdgeTerm",
       "name": "GraphEdgeTerm",
       "module": "cat-harness/schemas/jsonld.ts",
@@ -22382,7 +22710,8 @@
       "values": [
         "agent",
         "role",
-        "plan"
+        "plan",
+        "entity"
       ],
       "refs": [],
       "unresolved": [],
@@ -26695,6 +27024,13 @@
           "array": false
         },
         {
+          "name": "extractedTitle",
+          "type": "z.string().optional()",
+          "optional": true,
+          "array": false,
+          "doc": "The manifest's extracted title, only when a catalogue title replaced it (bean `gnqa`)."
+        },
+        {
           "name": "provenance",
           "type": "z.string()",
           "optional": false,
@@ -26853,6 +27189,13 @@
           "doc": "Why the entry is withheld (bean `cw35`/`mkao`): no avatar, no verbatim excerpt."
         },
         {
+          "name": "withheldBy",
+          "type": "z .object({ gates: WithheldEntrySchema.shape.gates, record: WithheldEntrySchema.shape.record, }) .strict() .optional()",
+          "optional": true,
+          "array": false,
+          "doc": "The structured half of `withheld` (issue #1794): which gates refused,"
+        },
+        {
           "name": "avatar",
           "type": "z.object({ href: z.string(), src: z.string(), source: z.enum([\"cover\", \"figure\"]) }).strict().optional()",
           "optional": true,
@@ -26869,7 +27212,8 @@
       "values": [],
       "refs": [
         "cat-harness/schemas/site-indexes.ts#Count",
-        "cat-harness/schemas/site-indexes.ts#PageNumber"
+        "cat-harness/schemas/site-indexes.ts#PageNumber",
+        "cat-harness/schemas/withheld.ts#WithheldEntrySchema"
       ],
       "unresolved": [],
       "external": [
@@ -30597,7 +30941,7 @@
       "fields": [
         {
           "name": "@context",
-          "type": "z.literal(CONTENT_CONTEXT_URL).optional()",
+          "type": "ContentContextSchema.optional()",
           "optional": true,
           "array": false,
           "doc": "The published content context — bean `yh6u`. OPTIONAL because folio"
@@ -30655,12 +30999,11 @@
       "extendsNames": [],
       "values": [],
       "refs": [
+        "cat-harness/schemas/jsonld.ts#ContentContextSchema",
         "cat-harness/schemas/narrative.ts#NarrativeSchema",
         "cat-harness/schemas/tabular-records.ts#TabularSheetSchema"
       ],
-      "unresolved": [
-        "CONTENT_CONTEXT_URL"
-      ],
+      "unresolved": [],
       "external": [
         "TABULAR_RECORDS_SCHEMA_ID",
         "z"
@@ -33983,6 +34326,19 @@
       "exported": true
     },
     {
+      "id": "cat-harness/schemas/tool.ts#RenderAs",
+      "name": "RenderAs",
+      "module": "cat-harness/schemas/tool.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
       "id": "cat-harness/schemas/tool.ts#SchemaRef",
       "name": "SchemaRef",
       "module": "cat-harness/schemas/tool.ts",
@@ -34063,7 +34419,7 @@
         },
         {
           "name": "io",
-          "type": "z.object({ inputs: z.array(ToolInputSchema), outputs: z.array(ToolPortSchema), })",
+          "type": "z.object({ inputs: z.array(ToolInputSchema), outputs: z.array(ToolOutputSchema), })",
           "optional": false,
           "array": false
         },
@@ -34127,7 +34483,7 @@
         "cat-harness/schemas/tool.ts#ToolInstallSchema",
         "cat-harness/schemas/tool.ts#ToolInvokeSchema",
         "cat-harness/schemas/tool.ts#ToolMaintainsSchema",
-        "cat-harness/schemas/tool.ts#ToolPortSchema",
+        "cat-harness/schemas/tool.ts#ToolOutputSchema",
         "cat-harness/schemas/tool.ts#ToolRequiresSchema",
         "cat-harness/schemas/tool.ts#ToolSelectionSchema"
       ],
@@ -34406,6 +34762,45 @@
       "exported": true
     },
     {
+      "id": "cat-harness/schemas/tool.ts#ToolOutput",
+      "name": "ToolOutput",
+      "module": "cat-harness/schemas/tool.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/tool.ts#ToolOutputSchema",
+      "name": "ToolOutputSchema",
+      "module": "cat-harness/schemas/tool.ts",
+      "kind": "zod-object",
+      "fields": [
+        {
+          "name": "render",
+          "type": "ToolRenderSchema.optional()",
+          "optional": true,
+          "array": false,
+          "doc": "How a renderer may place this output in a page. Absent is `text`. See {@link RENDER_AS}."
+        }
+      ],
+      "extendsNames": [
+        "ToolPortSchema"
+      ],
+      "values": [],
+      "refs": [
+        "cat-harness/schemas/tool.ts#ToolPortSchema",
+        "cat-harness/schemas/tool.ts#ToolRenderSchema"
+      ],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
       "id": "cat-harness/schemas/tool.ts#ToolPort",
       "name": "ToolPort",
       "module": "cat-harness/schemas/tool.ts",
@@ -34450,6 +34845,48 @@
       ],
       "unresolved": [],
       "external": [
+        "z"
+      ],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/tool.ts#ToolRender",
+      "name": "ToolRender",
+      "module": "cat-harness/schemas/tool.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/tool.ts#ToolRenderSchema",
+      "name": "ToolRenderSchema",
+      "module": "cat-harness/schemas/tool.ts",
+      "kind": "zod-object",
+      "fields": [
+        {
+          "name": "as",
+          "type": "z.enum(RENDER_AS)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "reason",
+          "type": "z.string().min(1).optional()",
+          "optional": true,
+          "array": false
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [
+        "RENDER_AS",
         "z"
       ],
       "exported": true
@@ -39367,6 +39804,51 @@
           "optional": false,
           "array": false,
           "doc": "Why — which gate, which verdict. A withholding with no reason cannot be re-checked."
+        },
+        {
+          "name": "gates",
+          "type": "z.array(WithheldGateSchema).min(1).optional()",
+          "optional": true,
+          "array": true,
+          "doc": "The gates that refused, STRUCTURED — issue #1794. Optional because a"
+        },
+        {
+          "name": "record",
+          "type": "z .object({ id: z.string().min(1).optional(), page: z.string().regex(/^\\//, \"a site-root path, beginning with /\").optio…",
+          "optional": true,
+          "array": false,
+          "doc": "Where a reader can see what the work IS without being shown the work —"
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [
+        "cat-harness/schemas/withheld.ts#WithheldGateSchema"
+      ],
+      "unresolved": [],
+      "external": [
+        "z"
+      ],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/withheld.ts#WithheldGateSchema",
+      "name": "WithheldGateSchema",
+      "module": "cat-harness/schemas/withheld.ts",
+      "kind": "zod-object",
+      "doc": "One publication gate that did not permit publication, and its verdict (e.g. `refused`).",
+      "fields": [
+        {
+          "name": "gate",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "verdict",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false
         }
       ],
       "extendsNames": [],
@@ -39408,6 +39890,688 @@
       "refs": [
         "cat-harness/schemas/withheld.ts#WithheldEntrySchema"
       ],
+      "unresolved": [],
+      "external": [
+        "z"
+      ],
+      "exported": true
+    },
+    {
+      "id": "fhir-harness/schemas/fhir-artifact-index.ts#FhirArtifact",
+      "name": "FhirArtifact",
+      "module": "fhir-harness/schemas/fhir-artifact-index.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "fhir-harness/schemas/fhir-artifact-index.ts#FhirArtifactIndex",
+      "name": "FhirArtifactIndex",
+      "module": "fhir-harness/schemas/fhir-artifact-index.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "fhir-harness/schemas/fhir-artifact-index.ts#FhirArtifactIndexSchema",
+      "name": "FhirArtifactIndexSchema",
+      "module": "fhir-harness/schemas/fhir-artifact-index.ts",
+      "kind": "zod-object",
+      "fields": [
+        {
+          "name": "$schema",
+          "type": "z.literal(FHIR_ARTIFACT_INDEX_SCHEMA_TAG)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "id",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false,
+          "doc": "Instance id — the directory this index lives in, e.g. `smart-trust`."
+        },
+        {
+          "name": "title",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "packageId",
+          "type": "z.string().min(1).optional()",
+          "optional": true,
+          "array": false,
+          "doc": "NPM-style package id, e.g. `smart.who.int.trust`."
+        },
+        {
+          "name": "version",
+          "type": "z.string().min(1).optional()",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "fhirVersion",
+          "type": "z.array(z.string().min(1)).optional()",
+          "optional": true,
+          "array": true
+        },
+        {
+          "name": "canonicalBase",
+          "type": "z.string().min(1).optional()",
+          "optional": true,
+          "array": false,
+          "doc": "The canonical base every artefact's canonical URL extends, e.g. `http://smart.who.int/trust`."
+        },
+        {
+          "name": "builtAt",
+          "type": "z.string().min(1).optional()",
+          "optional": true,
+          "array": false,
+          "doc": "The IG's own build timestamp, verbatim from `package.manifest.json`. Not reformatted: a transcription that normalises is no longer a transcription."
+        },
+        {
+          "name": "source",
+          "type": "IgSourceSchema",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "provenance",
+          "type": "IndexProvenanceSchema",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "sidecarApi",
+          "type": "z.enum(SIDECAR_API_STATES)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "contexts",
+          "type": "z.array(JsonLdContextSchema).optional()",
+          "optional": true,
+          "array": true
+        },
+        {
+          "name": "sidecarsUnbound",
+          "type": "z.array(UnboundSidecarSchema).optional()",
+          "optional": true,
+          "array": true,
+          "doc": "Sidecars an enumeration listed that bound to no artefact. Absent means"
+        },
+        {
+          "name": "count",
+          "type": "z.number().int().nonnegative()",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "artifacts",
+          "type": "z.array(FhirArtifactSchema)",
+          "optional": false,
+          "array": true
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [
+        "fhir-harness/schemas/fhir-artifact-index.ts#FhirArtifactSchema",
+        "fhir-harness/schemas/fhir-artifact-index.ts#IgSourceSchema",
+        "fhir-harness/schemas/fhir-artifact-index.ts#IndexProvenanceSchema",
+        "fhir-harness/schemas/fhir-artifact-index.ts#JsonLdContextSchema",
+        "fhir-harness/schemas/fhir-artifact-index.ts#UnboundSidecarSchema"
+      ],
+      "unresolved": [],
+      "external": [
+        "FHIR_ARTIFACT_INDEX_SCHEMA_TAG",
+        "SIDECAR_API_STATES",
+        "z"
+      ],
+      "exported": true
+    },
+    {
+      "id": "fhir-harness/schemas/fhir-artifact-index.ts#FhirArtifactSchema",
+      "name": "FhirArtifactSchema",
+      "module": "fhir-harness/schemas/fhir-artifact-index.ts",
+      "kind": "zod-object",
+      "doc": "One artefact of the IG.",
+      "fields": [
+        {
+          "name": "$schema",
+          "type": "z.literal(FHIR_ARTIFACT_SCHEMA_TAG).optional()",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "key",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false,
+          "doc": "Stable within the index: `<resourceType>/<id>`, which is unique where a bare id is not."
+        },
+        {
+          "name": "resourceType",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "id",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "name",
+          "type": "z.string().min(1).optional()",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "title",
+          "type": "z.string().min(1).optional()",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "description",
+          "type": "z.string().min(1).optional()",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "canonical",
+          "type": "z.string().min(1).optional()",
+          "optional": true,
+          "array": false,
+          "doc": "FHIR canonical URL. Absent for examples and instances; see the doc above."
+        },
+        {
+          "name": "version",
+          "type": "z.string().min(1).optional()",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "category",
+          "type": "z.string().min(1).optional()",
+          "optional": true,
+          "array": false,
+          "doc": "Editorial grouping from `artifacts.html`. Absent means the IG published no artefact page."
+        },
+        {
+          "name": "published",
+          "type": "PublishedFormatsSchema",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "sidecars",
+          "type": "SidecarOverlaySchema.optional()",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "materialization",
+          "type": "MaterializationSchema",
+          "optional": false,
+          "array": false
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [
+        "fhir-harness/schemas/fhir-artifact-index.ts#PublishedFormatsSchema",
+        "fhir-harness/schemas/fhir-artifact-index.ts#SidecarOverlaySchema"
+      ],
+      "unresolved": [],
+      "external": [
+        "FHIR_ARTIFACT_SCHEMA_TAG",
+        "MaterializationSchema",
+        "z"
+      ],
+      "exported": true
+    },
+    {
+      "id": "fhir-harness/schemas/fhir-artifact-index.ts#IgSource",
+      "name": "IgSource",
+      "module": "fhir-harness/schemas/fhir-artifact-index.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "fhir-harness/schemas/fhir-artifact-index.ts#IgSourceKind",
+      "name": "IgSourceKind",
+      "module": "fhir-harness/schemas/fhir-artifact-index.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "fhir-harness/schemas/fhir-artifact-index.ts#IgSourceSchema",
+      "name": "IgSourceSchema",
+      "module": "fhir-harness/schemas/fhir-artifact-index.ts",
+      "kind": "zod-object",
+      "fields": [
+        {
+          "name": "kind",
+          "type": "z.enum(IG_SOURCE_KINDS)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "of",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false,
+          "doc": "The URI the artefacts are published AT — what a `published` URL is resolved against."
+        },
+        {
+          "name": "revision",
+          "type": "z.string().min(1).optional()",
+          "optional": true,
+          "array": false,
+          "doc": "Git revision of the branch read, when the source was a checkout. Absent means not established."
+        },
+        {
+          "name": "readAt",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false,
+          "doc": "When the source was read. An index with no read date cannot be told from a current one."
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [
+        "IG_SOURCE_KINDS",
+        "z"
+      ],
+      "exported": true
+    },
+    {
+      "id": "fhir-harness/schemas/fhir-artifact-index.ts#IndexProvenance",
+      "name": "IndexProvenance",
+      "module": "fhir-harness/schemas/fhir-artifact-index.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "fhir-harness/schemas/fhir-artifact-index.ts#IndexProvenanceSchema",
+      "name": "IndexProvenanceSchema",
+      "module": "fhir-harness/schemas/fhir-artifact-index.ts",
+      "kind": "zod-object",
+      "doc": "Which published file each part of the index came out of.",
+      "fields": [
+        {
+          "name": "packageManifest",
+          "type": "z.string().min(1).optional()",
+          "optional": true,
+          "array": false,
+          "doc": "`package.manifest.json` — package id, version, FHIR version, build date."
+        },
+        {
+          "name": "canonicals",
+          "type": "z.string().min(1).optional()",
+          "optional": true,
+          "array": false,
+          "doc": "`canonicals.json` — the spine for anything with a canonical URL."
+        },
+        {
+          "name": "packageIndex",
+          "type": "z.string().min(1).optional()",
+          "optional": true,
+          "array": false,
+          "doc": "`package.tgz` -> `package/.index.json` — the spine for everything else. Lossy; see the module doc."
+        },
+        {
+          "name": "artifactsHtml",
+          "type": "z.string().min(1).optional()",
+          "optional": true,
+          "array": false,
+          "doc": "`artifacts.html` — the ONLY source of an artefact's editorial category."
+        },
+        {
+          "name": "sidecarEnumerations",
+          "type": "z.array(z.string().min(1)).optional()",
+          "optional": true,
+          "array": true,
+          "doc": "The DAK API enumeration schemas, when present."
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [
+        "z"
+      ],
+      "exported": true
+    },
+    {
+      "id": "fhir-harness/schemas/fhir-artifact-index.ts#JsonLdContext",
+      "name": "JsonLdContext",
+      "module": "fhir-harness/schemas/fhir-artifact-index.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "fhir-harness/schemas/fhir-artifact-index.ts#JsonLdContextSchema",
+      "name": "JsonLdContextSchema",
+      "module": "fhir-harness/schemas/fhir-artifact-index.ts",
+      "kind": "zod-object",
+      "doc": "A JSON-LD context the IG publishes for its own consumers.",
+      "fields": [
+        {
+          "name": "id",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "representation",
+          "type": "RepresentationSchema",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "binds",
+          "type": "z.array(z.string().min(1)).optional()",
+          "optional": true,
+          "array": true,
+          "doc": "Canonical URLs of the artefacts whose terms this context binds, where that could be established."
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [
+        "fhir-harness/schemas/fhir-artifact-index.ts#RepresentationSchema"
+      ],
+      "unresolved": [],
+      "external": [
+        "z"
+      ],
+      "exported": true
+    },
+    {
+      "id": "fhir-harness/schemas/fhir-artifact-index.ts#PublishedFormats",
+      "name": "PublishedFormats",
+      "module": "fhir-harness/schemas/fhir-artifact-index.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "fhir-harness/schemas/fhir-artifact-index.ts#PublishedFormatsSchema",
+      "name": "PublishedFormatsSchema",
+      "module": "fhir-harness/schemas/fhir-artifact-index.ts",
+      "kind": "zod-object",
+      "doc": "The representations the IG publisher emits for every artefact.",
+      "fields": [
+        {
+          "name": "json",
+          "type": "RepresentationSchema.optional()",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "xml",
+          "type": "RepresentationSchema.optional()",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "ttl",
+          "type": "RepresentationSchema.optional()",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "html",
+          "type": "RepresentationSchema.optional()",
+          "optional": true,
+          "array": false
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [
+        "fhir-harness/schemas/fhir-artifact-index.ts#RepresentationSchema"
+      ],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "fhir-harness/schemas/fhir-artifact-index.ts#Representation",
+      "name": "Representation",
+      "module": "fhir-harness/schemas/fhir-artifact-index.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "fhir-harness/schemas/fhir-artifact-index.ts#RepresentationSchema",
+      "name": "RepresentationSchema",
+      "module": "fhir-harness/schemas/fhir-artifact-index.ts",
+      "kind": "zod-object",
+      "doc": "One published representation of one artefact.",
+      "fields": [
+        {
+          "name": "url",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "localPath",
+          "type": "z.string().min(1).optional()",
+          "optional": true,
+          "array": false,
+          "doc": "Instance-relative path, present iff these bytes were materialised."
+        },
+        {
+          "name": "bytes",
+          "type": "z.number().int().nonnegative().optional()",
+          "optional": true,
+          "array": false
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [
+        "z"
+      ],
+      "exported": true
+    },
+    {
+      "id": "fhir-harness/schemas/fhir-artifact-index.ts#SidecarApiState",
+      "name": "SidecarApiState",
+      "module": "fhir-harness/schemas/fhir-artifact-index.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "fhir-harness/schemas/fhir-artifact-index.ts#SidecarOverlay",
+      "name": "SidecarOverlay",
+      "module": "fhir-harness/schemas/fhir-artifact-index.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "fhir-harness/schemas/fhir-artifact-index.ts#SidecarOverlaySchema",
+      "name": "SidecarOverlaySchema",
+      "module": "fhir-harness/schemas/fhir-artifact-index.ts",
+      "kind": "zod-object",
+      "doc": "The DAK API overlay — the JSON Schema / JSON-LD surface, where one exists.",
+      "fields": [
+        {
+          "name": "schema",
+          "type": "RepresentationSchema.optional()",
+          "optional": true,
+          "array": false,
+          "doc": "`schemas/<name>.schema.json` — the JSON Schema for this artefact."
+        },
+        {
+          "name": "displays",
+          "type": "RepresentationSchema.optional()",
+          "optional": true,
+          "array": false,
+          "doc": "`schemas/<name>.displays.json` — display strings, keyed by code."
+        },
+        {
+          "name": "openapi",
+          "type": "RepresentationSchema.optional()",
+          "optional": true,
+          "array": false,
+          "doc": "`schemas/<name>.openapi.json` — this ARTEFACT's OpenAPI fragment. Never `openapi/openapi.json`; see the module doc."
+        },
+        {
+          "name": "jsonld",
+          "type": "RepresentationSchema.optional()",
+          "optional": true,
+          "array": false,
+          "doc": "`<name>.jsonld` — the JSON-LD vocabulary, published at the IG ROOT, not under `schemas/`."
+        },
+        {
+          "name": "codeCount",
+          "type": "z.number().int().nonnegative().optional()",
+          "optional": true,
+          "array": false,
+          "doc": "Number of codes, for a ValueSet."
+        },
+        {
+          "name": "propertyCount",
+          "type": "z.number().int().nonnegative().optional()",
+          "optional": true,
+          "array": false,
+          "doc": "Number of properties, for a logical model."
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [
+        "fhir-harness/schemas/fhir-artifact-index.ts#RepresentationSchema"
+      ],
+      "unresolved": [],
+      "external": [
+        "z"
+      ],
+      "exported": true
+    },
+    {
+      "id": "fhir-harness/schemas/fhir-artifact-index.ts#UnboundSidecar",
+      "name": "UnboundSidecar",
+      "module": "fhir-harness/schemas/fhir-artifact-index.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "fhir-harness/schemas/fhir-artifact-index.ts#UnboundSidecarSchema",
+      "name": "UnboundSidecarSchema",
+      "module": "fhir-harness/schemas/fhir-artifact-index.ts",
+      "kind": "zod-object",
+      "doc": "A DAK sidecar the enumeration lists that could not be bound to an artefact.",
+      "fields": [
+        {
+          "name": "filename",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false,
+          "doc": "The sidecar file the enumeration named."
+        },
+        {
+          "name": "title",
+          "type": "z.string().min(1).optional()",
+          "optional": true,
+          "array": false,
+          "doc": "Its title, as the enumeration gives it — usually the only human handle on what was missed."
+        },
+        {
+          "name": "enumeration",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false,
+          "doc": "Which enumeration listed it."
+        },
+        {
+          "name": "reason",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false,
+          "doc": "Why no artefact matched: the strategies tried, in order."
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
       "unresolved": [],
       "external": [
         "z"
@@ -39621,27 +40785,14 @@
           "type": "z.string().min(1)",
           "optional": false,
           "array": false,
-          "doc": "The IG's `id` from `sushi-config.yaml`, e.g. `smart.who.int.trust`."
-        },
-        {
-          "name": "canonical",
-          "type": "z.string().url()",
-          "optional": false,
-          "array": false,
-          "doc": "Its `canonical`."
-        },
-        {
-          "name": "status",
-          "type": "z.string().min(1)",
-          "optional": false,
-          "array": false,
-          "doc": "Its `status` — what selects the watermark. `draft` here."
+          "doc": "The chain's TOP layer — the template package an IG names — e.g."
         },
         {
           "name": "version",
-          "type": "z.string().min(1).optional()",
-          "optional": true,
-          "array": false
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false,
+          "doc": "The top layer's version, e.g. `0.5.0`."
         },
         {
           "name": "layers",
@@ -39738,6 +40889,82 @@
       "refs": [],
       "unresolved": [],
       "external": [
+        "z"
+      ],
+      "exported": true
+    },
+    {
+      "id": "fhir-harness/schemas/ig-identity.ts#IgIdentity",
+      "name": "IgIdentity",
+      "module": "fhir-harness/schemas/ig-identity.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "fhir-harness/schemas/ig-identity.ts#IgIdentitySchema",
+      "name": "IgIdentitySchema",
+      "module": "fhir-harness/schemas/ig-identity.ts",
+      "kind": "zod-object",
+      "fields": [
+        {
+          "name": "$schema",
+          "type": "z.literal(IG_IDENTITY_SCHEMA_TAG)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "id",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false,
+          "doc": "The IG's `id` from `sushi-config.yaml`; SUSHI's `packageId` defaults to it."
+        },
+        {
+          "name": "canonical",
+          "type": "z.string().url()",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "status",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false,
+          "doc": "`draft`, `active`, `retired` … — what selects the template's watermark."
+        },
+        {
+          "name": "version",
+          "type": "z.string().min(1).optional()",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "readFrom",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false,
+          "doc": "Where it was read: a repository and file, so the claim can be re-checked."
+        },
+        {
+          "name": "readAt",
+          "type": "z.string().regex(/^\\d{4}-\\d{2}-\\d{2}$/)",
+          "optional": false,
+          "array": false,
+          "doc": "When it was read. A status is a fact at a moment, not forever."
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [
+        "IG_IDENTITY_SCHEMA_TAG",
         "z"
       ],
       "exported": true
@@ -41467,6 +42694,102 @@
       "exported": false
     },
     {
+      "id": "folio-assistant-core/schemas/dublin-core-render.ts#DcSubject",
+      "name": "DcSubject",
+      "module": "folio-assistant-core/schemas/dublin-core-render.ts",
+      "kind": "interface",
+      "doc": "The subject of a rendering: the item at its Handle when the catalogue",
+      "fields": [
+        {
+          "name": "handle",
+          "type": "string",
+          "optional": true,
+          "array": false
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "folio-assistant-core/schemas/dublin-core-render.ts#DctermsMapping",
+      "name": "DctermsMapping",
+      "module": "folio-assistant-core/schemas/dublin-core-render.ts",
+      "kind": "interface",
+      "doc": "One row: the DCMI term a field IS, and what DCMI says about its values.",
+      "fields": [
+        {
+          "name": "term",
+          "type": "string",
+          "optional": false,
+          "array": false,
+          "doc": "The local name under `http://purl.org/dc/terms/`."
+        },
+        {
+          "name": "range",
+          "type": "\"literal\" | \"resource\"",
+          "optional": false,
+          "array": false,
+          "doc": "`literal` when DCMI gives the term the range `rdfs:Literal` or gives no"
+        },
+        {
+          "name": "ses",
+          "type": "string",
+          "optional": true,
+          "array": false,
+          "doc": "A syntax encoding scheme the values are in, by the field's own name. Becomes a datatype (JSON-LD) or `xsi:type` (XML)."
+        },
+        {
+          "name": "ves",
+          "type": "string",
+          "optional": true,
+          "array": false,
+          "doc": "A vocabulary encoding scheme the values are members of. Becomes `dcam:memberOf` (JSON-LD) or `xsi:type` (XML)."
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "folio-assistant-core/schemas/dublin-core-render.ts#Literal",
+      "name": "Literal",
+      "module": "folio-assistant-core/schemas/dublin-core-render.ts",
+      "kind": "type-alias",
+      "fields": [
+        {
+          "name": "@value",
+          "type": "string",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "@language",
+          "type": "string",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "@type",
+          "type": "string",
+          "optional": true,
+          "array": false
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": false
+    },
+    {
       "id": "folio-assistant-core/schemas/dublin-core.ts#DcField",
       "name": "DcField",
       "module": "folio-assistant-core/schemas/dublin-core.ts",
@@ -41822,688 +43145,6 @@
       "external": [
         "EXTRACTION_METHODS",
         "EXTRACTION_SCHEMA_TAG",
-        "z"
-      ],
-      "exported": true
-    },
-    {
-      "id": "folio-assistant-core/schemas/fhir-artifact-index.ts#DakApiState",
-      "name": "DakApiState",
-      "module": "folio-assistant-core/schemas/fhir-artifact-index.ts",
-      "kind": "type-alias",
-      "fields": [],
-      "extendsNames": [],
-      "values": [],
-      "refs": [],
-      "unresolved": [],
-      "external": [],
-      "exported": true
-    },
-    {
-      "id": "folio-assistant-core/schemas/fhir-artifact-index.ts#DakOverlay",
-      "name": "DakOverlay",
-      "module": "folio-assistant-core/schemas/fhir-artifact-index.ts",
-      "kind": "type-alias",
-      "fields": [],
-      "extendsNames": [],
-      "values": [],
-      "refs": [],
-      "unresolved": [],
-      "external": [],
-      "exported": true
-    },
-    {
-      "id": "folio-assistant-core/schemas/fhir-artifact-index.ts#DakOverlaySchema",
-      "name": "DakOverlaySchema",
-      "module": "folio-assistant-core/schemas/fhir-artifact-index.ts",
-      "kind": "zod-object",
-      "doc": "The DAK API overlay — the JSON Schema / JSON-LD surface, where one exists.",
-      "fields": [
-        {
-          "name": "schema",
-          "type": "RepresentationSchema.optional()",
-          "optional": true,
-          "array": false,
-          "doc": "`schemas/<name>.schema.json` — the JSON Schema for this artefact."
-        },
-        {
-          "name": "displays",
-          "type": "RepresentationSchema.optional()",
-          "optional": true,
-          "array": false,
-          "doc": "`schemas/<name>.displays.json` — display strings, keyed by code."
-        },
-        {
-          "name": "openapi",
-          "type": "RepresentationSchema.optional()",
-          "optional": true,
-          "array": false,
-          "doc": "`schemas/<name>.openapi.json` — this ARTEFACT's OpenAPI fragment. Never `openapi/openapi.json`; see the module doc."
-        },
-        {
-          "name": "jsonld",
-          "type": "RepresentationSchema.optional()",
-          "optional": true,
-          "array": false,
-          "doc": "`<name>.jsonld` — the JSON-LD vocabulary, published at the IG ROOT, not under `schemas/`."
-        },
-        {
-          "name": "codeCount",
-          "type": "z.number().int().nonnegative().optional()",
-          "optional": true,
-          "array": false,
-          "doc": "Number of codes, for a ValueSet."
-        },
-        {
-          "name": "propertyCount",
-          "type": "z.number().int().nonnegative().optional()",
-          "optional": true,
-          "array": false,
-          "doc": "Number of properties, for a logical model."
-        }
-      ],
-      "extendsNames": [],
-      "values": [],
-      "refs": [
-        "folio-assistant-core/schemas/fhir-artifact-index.ts#RepresentationSchema"
-      ],
-      "unresolved": [],
-      "external": [
-        "z"
-      ],
-      "exported": true
-    },
-    {
-      "id": "folio-assistant-core/schemas/fhir-artifact-index.ts#FhirArtifact",
-      "name": "FhirArtifact",
-      "module": "folio-assistant-core/schemas/fhir-artifact-index.ts",
-      "kind": "type-alias",
-      "fields": [],
-      "extendsNames": [],
-      "values": [],
-      "refs": [],
-      "unresolved": [],
-      "external": [],
-      "exported": true
-    },
-    {
-      "id": "folio-assistant-core/schemas/fhir-artifact-index.ts#FhirArtifactIndex",
-      "name": "FhirArtifactIndex",
-      "module": "folio-assistant-core/schemas/fhir-artifact-index.ts",
-      "kind": "type-alias",
-      "fields": [],
-      "extendsNames": [],
-      "values": [],
-      "refs": [],
-      "unresolved": [],
-      "external": [],
-      "exported": true
-    },
-    {
-      "id": "folio-assistant-core/schemas/fhir-artifact-index.ts#FhirArtifactIndexSchema",
-      "name": "FhirArtifactIndexSchema",
-      "module": "folio-assistant-core/schemas/fhir-artifact-index.ts",
-      "kind": "zod-object",
-      "fields": [
-        {
-          "name": "$schema",
-          "type": "z.literal(FHIR_ARTIFACT_INDEX_SCHEMA_TAG)",
-          "optional": false,
-          "array": false
-        },
-        {
-          "name": "id",
-          "type": "z.string().min(1)",
-          "optional": false,
-          "array": false,
-          "doc": "Instance id — the directory this index lives in, e.g. `smart-trust`."
-        },
-        {
-          "name": "title",
-          "type": "z.string().min(1)",
-          "optional": false,
-          "array": false
-        },
-        {
-          "name": "packageId",
-          "type": "z.string().min(1).optional()",
-          "optional": true,
-          "array": false,
-          "doc": "NPM-style package id, e.g. `smart.who.int.trust`."
-        },
-        {
-          "name": "version",
-          "type": "z.string().min(1).optional()",
-          "optional": true,
-          "array": false
-        },
-        {
-          "name": "fhirVersion",
-          "type": "z.array(z.string().min(1)).optional()",
-          "optional": true,
-          "array": true
-        },
-        {
-          "name": "canonicalBase",
-          "type": "z.string().min(1).optional()",
-          "optional": true,
-          "array": false,
-          "doc": "The canonical base every artefact's canonical URL extends, e.g. `http://smart.who.int/trust`."
-        },
-        {
-          "name": "builtAt",
-          "type": "z.string().min(1).optional()",
-          "optional": true,
-          "array": false,
-          "doc": "The IG's own build timestamp, verbatim from `package.manifest.json`. Not reformatted: a transcription that normalises is no longer a transcription."
-        },
-        {
-          "name": "source",
-          "type": "IgSourceSchema",
-          "optional": false,
-          "array": false
-        },
-        {
-          "name": "provenance",
-          "type": "IndexProvenanceSchema",
-          "optional": false,
-          "array": false
-        },
-        {
-          "name": "dakApi",
-          "type": "z.enum(DAK_API_STATES)",
-          "optional": false,
-          "array": false
-        },
-        {
-          "name": "contexts",
-          "type": "z.array(JsonLdContextSchema).optional()",
-          "optional": true,
-          "array": true
-        },
-        {
-          "name": "dakUnbound",
-          "type": "z.array(UnboundSidecarSchema).optional()",
-          "optional": true,
-          "array": true,
-          "doc": "Sidecars an enumeration listed that bound to no artefact. Absent means"
-        },
-        {
-          "name": "count",
-          "type": "z.number().int().nonnegative()",
-          "optional": false,
-          "array": false
-        },
-        {
-          "name": "artifacts",
-          "type": "z.array(FhirArtifactSchema)",
-          "optional": false,
-          "array": true
-        }
-      ],
-      "extendsNames": [],
-      "values": [],
-      "refs": [
-        "folio-assistant-core/schemas/fhir-artifact-index.ts#FhirArtifactSchema",
-        "folio-assistant-core/schemas/fhir-artifact-index.ts#IgSourceSchema",
-        "folio-assistant-core/schemas/fhir-artifact-index.ts#IndexProvenanceSchema",
-        "folio-assistant-core/schemas/fhir-artifact-index.ts#JsonLdContextSchema",
-        "folio-assistant-core/schemas/fhir-artifact-index.ts#UnboundSidecarSchema"
-      ],
-      "unresolved": [],
-      "external": [
-        "DAK_API_STATES",
-        "FHIR_ARTIFACT_INDEX_SCHEMA_TAG",
-        "z"
-      ],
-      "exported": true
-    },
-    {
-      "id": "folio-assistant-core/schemas/fhir-artifact-index.ts#FhirArtifactSchema",
-      "name": "FhirArtifactSchema",
-      "module": "folio-assistant-core/schemas/fhir-artifact-index.ts",
-      "kind": "zod-object",
-      "doc": "One artefact of the IG.",
-      "fields": [
-        {
-          "name": "$schema",
-          "type": "z.literal(FHIR_ARTIFACT_SCHEMA_TAG).optional()",
-          "optional": true,
-          "array": false
-        },
-        {
-          "name": "key",
-          "type": "z.string().min(1)",
-          "optional": false,
-          "array": false,
-          "doc": "Stable within the index: `<resourceType>/<id>`, which is unique where a bare id is not."
-        },
-        {
-          "name": "resourceType",
-          "type": "z.string().min(1)",
-          "optional": false,
-          "array": false
-        },
-        {
-          "name": "id",
-          "type": "z.string().min(1)",
-          "optional": false,
-          "array": false
-        },
-        {
-          "name": "name",
-          "type": "z.string().min(1).optional()",
-          "optional": true,
-          "array": false
-        },
-        {
-          "name": "title",
-          "type": "z.string().min(1).optional()",
-          "optional": true,
-          "array": false
-        },
-        {
-          "name": "description",
-          "type": "z.string().min(1).optional()",
-          "optional": true,
-          "array": false
-        },
-        {
-          "name": "canonical",
-          "type": "z.string().min(1).optional()",
-          "optional": true,
-          "array": false,
-          "doc": "FHIR canonical URL. Absent for examples and instances; see the doc above."
-        },
-        {
-          "name": "version",
-          "type": "z.string().min(1).optional()",
-          "optional": true,
-          "array": false
-        },
-        {
-          "name": "category",
-          "type": "z.string().min(1).optional()",
-          "optional": true,
-          "array": false,
-          "doc": "Editorial grouping from `artifacts.html`. Absent means the IG published no artefact page."
-        },
-        {
-          "name": "published",
-          "type": "PublishedFormatsSchema",
-          "optional": false,
-          "array": false
-        },
-        {
-          "name": "dak",
-          "type": "DakOverlaySchema.optional()",
-          "optional": true,
-          "array": false
-        },
-        {
-          "name": "materialization",
-          "type": "MaterializationSchema",
-          "optional": false,
-          "array": false
-        }
-      ],
-      "extendsNames": [],
-      "values": [],
-      "refs": [
-        "folio-assistant-core/schemas/fhir-artifact-index.ts#DakOverlaySchema",
-        "folio-assistant-core/schemas/fhir-artifact-index.ts#PublishedFormatsSchema",
-        "folio-assistant-core/schemas/materialization.ts#MaterializationSchema"
-      ],
-      "unresolved": [],
-      "external": [
-        "FHIR_ARTIFACT_SCHEMA_TAG",
-        "z"
-      ],
-      "exported": true
-    },
-    {
-      "id": "folio-assistant-core/schemas/fhir-artifact-index.ts#IgSource",
-      "name": "IgSource",
-      "module": "folio-assistant-core/schemas/fhir-artifact-index.ts",
-      "kind": "type-alias",
-      "fields": [],
-      "extendsNames": [],
-      "values": [],
-      "refs": [],
-      "unresolved": [],
-      "external": [],
-      "exported": true
-    },
-    {
-      "id": "folio-assistant-core/schemas/fhir-artifact-index.ts#IgSourceKind",
-      "name": "IgSourceKind",
-      "module": "folio-assistant-core/schemas/fhir-artifact-index.ts",
-      "kind": "type-alias",
-      "fields": [],
-      "extendsNames": [],
-      "values": [],
-      "refs": [],
-      "unresolved": [],
-      "external": [],
-      "exported": true
-    },
-    {
-      "id": "folio-assistant-core/schemas/fhir-artifact-index.ts#IgSourceSchema",
-      "name": "IgSourceSchema",
-      "module": "folio-assistant-core/schemas/fhir-artifact-index.ts",
-      "kind": "zod-object",
-      "fields": [
-        {
-          "name": "kind",
-          "type": "z.enum(IG_SOURCE_KINDS)",
-          "optional": false,
-          "array": false
-        },
-        {
-          "name": "of",
-          "type": "z.string().min(1)",
-          "optional": false,
-          "array": false,
-          "doc": "The URI the artefacts are published AT — what a `published` URL is resolved against."
-        },
-        {
-          "name": "revision",
-          "type": "z.string().min(1).optional()",
-          "optional": true,
-          "array": false,
-          "doc": "Git revision of the branch read, when the source was a checkout. Absent means not established."
-        },
-        {
-          "name": "readAt",
-          "type": "z.string().min(1)",
-          "optional": false,
-          "array": false,
-          "doc": "When the source was read. An index with no read date cannot be told from a current one."
-        }
-      ],
-      "extendsNames": [],
-      "values": [],
-      "refs": [],
-      "unresolved": [],
-      "external": [
-        "IG_SOURCE_KINDS",
-        "z"
-      ],
-      "exported": true
-    },
-    {
-      "id": "folio-assistant-core/schemas/fhir-artifact-index.ts#IndexProvenance",
-      "name": "IndexProvenance",
-      "module": "folio-assistant-core/schemas/fhir-artifact-index.ts",
-      "kind": "type-alias",
-      "fields": [],
-      "extendsNames": [],
-      "values": [],
-      "refs": [],
-      "unresolved": [],
-      "external": [],
-      "exported": true
-    },
-    {
-      "id": "folio-assistant-core/schemas/fhir-artifact-index.ts#IndexProvenanceSchema",
-      "name": "IndexProvenanceSchema",
-      "module": "folio-assistant-core/schemas/fhir-artifact-index.ts",
-      "kind": "zod-object",
-      "doc": "Which published file each part of the index came out of.",
-      "fields": [
-        {
-          "name": "packageManifest",
-          "type": "z.string().min(1).optional()",
-          "optional": true,
-          "array": false,
-          "doc": "`package.manifest.json` — package id, version, FHIR version, build date."
-        },
-        {
-          "name": "canonicals",
-          "type": "z.string().min(1).optional()",
-          "optional": true,
-          "array": false,
-          "doc": "`canonicals.json` — the spine for anything with a canonical URL."
-        },
-        {
-          "name": "packageIndex",
-          "type": "z.string().min(1).optional()",
-          "optional": true,
-          "array": false,
-          "doc": "`package.tgz` -> `package/.index.json` — the spine for everything else. Lossy; see the module doc."
-        },
-        {
-          "name": "artifactsHtml",
-          "type": "z.string().min(1).optional()",
-          "optional": true,
-          "array": false,
-          "doc": "`artifacts.html` — the ONLY source of an artefact's editorial category."
-        },
-        {
-          "name": "dakEnumerations",
-          "type": "z.array(z.string().min(1)).optional()",
-          "optional": true,
-          "array": true,
-          "doc": "The DAK API enumeration schemas, when present."
-        }
-      ],
-      "extendsNames": [],
-      "values": [],
-      "refs": [],
-      "unresolved": [],
-      "external": [
-        "z"
-      ],
-      "exported": true
-    },
-    {
-      "id": "folio-assistant-core/schemas/fhir-artifact-index.ts#JsonLdContext",
-      "name": "JsonLdContext",
-      "module": "folio-assistant-core/schemas/fhir-artifact-index.ts",
-      "kind": "type-alias",
-      "fields": [],
-      "extendsNames": [],
-      "values": [],
-      "refs": [],
-      "unresolved": [],
-      "external": [],
-      "exported": true
-    },
-    {
-      "id": "folio-assistant-core/schemas/fhir-artifact-index.ts#JsonLdContextSchema",
-      "name": "JsonLdContextSchema",
-      "module": "folio-assistant-core/schemas/fhir-artifact-index.ts",
-      "kind": "zod-object",
-      "doc": "A JSON-LD context the IG publishes for its own consumers.",
-      "fields": [
-        {
-          "name": "id",
-          "type": "z.string().min(1)",
-          "optional": false,
-          "array": false
-        },
-        {
-          "name": "representation",
-          "type": "RepresentationSchema",
-          "optional": false,
-          "array": false
-        },
-        {
-          "name": "binds",
-          "type": "z.array(z.string().min(1)).optional()",
-          "optional": true,
-          "array": true,
-          "doc": "Canonical URLs of the artefacts whose terms this context binds, where that could be established."
-        }
-      ],
-      "extendsNames": [],
-      "values": [],
-      "refs": [
-        "folio-assistant-core/schemas/fhir-artifact-index.ts#RepresentationSchema"
-      ],
-      "unresolved": [],
-      "external": [
-        "z"
-      ],
-      "exported": true
-    },
-    {
-      "id": "folio-assistant-core/schemas/fhir-artifact-index.ts#PublishedFormats",
-      "name": "PublishedFormats",
-      "module": "folio-assistant-core/schemas/fhir-artifact-index.ts",
-      "kind": "type-alias",
-      "fields": [],
-      "extendsNames": [],
-      "values": [],
-      "refs": [],
-      "unresolved": [],
-      "external": [],
-      "exported": true
-    },
-    {
-      "id": "folio-assistant-core/schemas/fhir-artifact-index.ts#PublishedFormatsSchema",
-      "name": "PublishedFormatsSchema",
-      "module": "folio-assistant-core/schemas/fhir-artifact-index.ts",
-      "kind": "zod-object",
-      "doc": "The representations the IG publisher emits for every artefact.",
-      "fields": [
-        {
-          "name": "json",
-          "type": "RepresentationSchema.optional()",
-          "optional": true,
-          "array": false
-        },
-        {
-          "name": "xml",
-          "type": "RepresentationSchema.optional()",
-          "optional": true,
-          "array": false
-        },
-        {
-          "name": "ttl",
-          "type": "RepresentationSchema.optional()",
-          "optional": true,
-          "array": false
-        },
-        {
-          "name": "html",
-          "type": "RepresentationSchema.optional()",
-          "optional": true,
-          "array": false
-        }
-      ],
-      "extendsNames": [],
-      "values": [],
-      "refs": [
-        "folio-assistant-core/schemas/fhir-artifact-index.ts#RepresentationSchema"
-      ],
-      "unresolved": [],
-      "external": [],
-      "exported": true
-    },
-    {
-      "id": "folio-assistant-core/schemas/fhir-artifact-index.ts#Representation",
-      "name": "Representation",
-      "module": "folio-assistant-core/schemas/fhir-artifact-index.ts",
-      "kind": "type-alias",
-      "fields": [],
-      "extendsNames": [],
-      "values": [],
-      "refs": [],
-      "unresolved": [],
-      "external": [],
-      "exported": true
-    },
-    {
-      "id": "folio-assistant-core/schemas/fhir-artifact-index.ts#RepresentationSchema",
-      "name": "RepresentationSchema",
-      "module": "folio-assistant-core/schemas/fhir-artifact-index.ts",
-      "kind": "zod-object",
-      "doc": "One published representation of one artefact.",
-      "fields": [
-        {
-          "name": "url",
-          "type": "z.string().min(1)",
-          "optional": false,
-          "array": false
-        },
-        {
-          "name": "localPath",
-          "type": "z.string().min(1).optional()",
-          "optional": true,
-          "array": false,
-          "doc": "Instance-relative path, present iff these bytes were materialised."
-        },
-        {
-          "name": "bytes",
-          "type": "z.number().int().nonnegative().optional()",
-          "optional": true,
-          "array": false
-        }
-      ],
-      "extendsNames": [],
-      "values": [],
-      "refs": [],
-      "unresolved": [],
-      "external": [
-        "z"
-      ],
-      "exported": true
-    },
-    {
-      "id": "folio-assistant-core/schemas/fhir-artifact-index.ts#UnboundSidecar",
-      "name": "UnboundSidecar",
-      "module": "folio-assistant-core/schemas/fhir-artifact-index.ts",
-      "kind": "type-alias",
-      "fields": [],
-      "extendsNames": [],
-      "values": [],
-      "refs": [],
-      "unresolved": [],
-      "external": [],
-      "exported": true
-    },
-    {
-      "id": "folio-assistant-core/schemas/fhir-artifact-index.ts#UnboundSidecarSchema",
-      "name": "UnboundSidecarSchema",
-      "module": "folio-assistant-core/schemas/fhir-artifact-index.ts",
-      "kind": "zod-object",
-      "doc": "A DAK sidecar the enumeration lists that could not be bound to an artefact.",
-      "fields": [
-        {
-          "name": "filename",
-          "type": "z.string().min(1)",
-          "optional": false,
-          "array": false,
-          "doc": "The sidecar file the enumeration named."
-        },
-        {
-          "name": "title",
-          "type": "z.string().min(1).optional()",
-          "optional": true,
-          "array": false,
-          "doc": "Its title, as the enumeration gives it — usually the only human handle on what was missed."
-        },
-        {
-          "name": "enumeration",
-          "type": "z.string().min(1)",
-          "optional": false,
-          "array": false,
-          "doc": "Which enumeration listed it."
-        },
-        {
-          "name": "reason",
-          "type": "z.string().min(1)",
-          "optional": false,
-          "array": false,
-          "doc": "Why no artefact matched: the strategies tried, in order."
-        }
-      ],
-      "extendsNames": [],
-      "values": [],
-      "refs": [],
-      "unresolved": [],
-      "external": [
         "z"
       ],
       "exported": true
@@ -44089,6 +44730,123 @@
       "unresolved": [],
       "external": [],
       "exported": true
+    },
+    {
+      "id": "smart-base/schemas/dak.ts#componentShape",
+      "name": "componentShape",
+      "module": "smart-base/schemas/dak.ts",
+      "kind": "zod-object",
+      "doc": "The component fields, built from {@link DAK_COMPONENT_FIELDS} rather",
+      "fields": [],
+      "extendsNames": [
+        "Object"
+      ],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": false
+    },
+    {
+      "id": "smart-base/schemas/dak.ts#DakComponentEntries",
+      "name": "DakComponentEntries",
+      "module": "smart-base/schemas/dak.ts",
+      "kind": "type-alias",
+      "doc": "One component's contents, as read from a `dak.config.json`.",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "smart-base/schemas/dak.ts#DakDeclaration",
+      "name": "DakDeclaration",
+      "module": "smart-base/schemas/dak.ts",
+      "kind": "interface",
+      "doc": "A `dak.config.json`, as much of it as is settled.",
+      "fields": [
+        {
+          "name": "name",
+          "type": "string",
+          "optional": false,
+          "array": false,
+          "doc": "The instance's name, e.g. `\"smart-immunizations\"`."
+        },
+        {
+          "name": "canonicalUrl",
+          "type": "string",
+          "optional": true,
+          "array": false,
+          "doc": "Where the published DAK lives — the base its `@id`s are minted against."
+        },
+        {
+          "name": "publicationUrl",
+          "type": "string",
+          "optional": true,
+          "array": false,
+          "doc": "Where the built IG is published, when that differs from `canonicalUrl`."
+        },
+        {
+          "name": "previewUrl",
+          "type": "string",
+          "optional": true,
+          "array": false,
+          "doc": "Where CI previews are served."
+        }
+      ],
+      "extendsNames": [
+        "KgNodeLabels"
+      ],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [
+        "KgNodeLabels"
+      ],
+      "exported": true
+    },
+    {
+      "id": "smart-base/schemas/dak.ts#DakDeclarationSchema",
+      "name": "DakDeclarationSchema",
+      "module": "smart-base/schemas/dak.ts",
+      "kind": "zod-object",
+      "fields": [
+        {
+          "name": "name",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "canonicalUrl",
+          "type": "z.string().url().optional()",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "publicationUrl",
+          "type": "z.string().url().optional()",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "previewUrl",
+          "type": "z.string().url().optional()",
+          "optional": true,
+          "array": false
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [
+        "z"
+      ],
+      "exported": true
     }
   ],
   "edges": [
@@ -44115,6 +44873,14 @@
       "kind": "field",
       "optional": false,
       "array": true
+    },
+    {
+      "from": "cat-harness/schemas/archive-contents.ts#ArchiveContentsSchema",
+      "to": "cat-harness/schemas/jsonld.ts#ContentContextSchema",
+      "via": "@context",
+      "kind": "field",
+      "optional": true,
+      "array": false
     },
     {
       "from": "cat-harness/schemas/assistant-package.ts#PackageManifest",
@@ -45710,6 +46476,14 @@
     },
     {
       "from": "cat-harness/schemas/contributions.ts#FolioContribution",
+      "to": "cat-harness/schemas/contributions.ts#PipelinePluginContribution",
+      "via": "pipelinePlugins",
+      "kind": "field",
+      "optional": true,
+      "array": true
+    },
+    {
+      "from": "cat-harness/schemas/contributions.ts#FolioContribution",
       "to": "cat-harness/schemas/contributions.ts#QaCheckerContribution",
       "via": "qaCheckers",
       "kind": "field",
@@ -45941,14 +46715,6 @@
       "array": false
     },
     {
-      "from": "cat-harness/schemas/dak.ts#DakDeclaration",
-      "to": "cat-harness/schemas/kg-node.ts#KgNodeLabels",
-      "via": "",
-      "kind": "extends",
-      "optional": false,
-      "array": false
-    },
-    {
       "from": "cat-harness/schemas/decision-methodology-context.ts#DecisionContextSchema",
       "to": "cat-harness/schemas/decision-methodology-context.ts#DataTypeSchema",
       "via": "dataType",
@@ -46163,6 +46929,38 @@
       "kind": "field",
       "optional": false,
       "array": false
+    },
+    {
+      "from": "cat-harness/schemas/document-kind.ts#DocumentKindCoverageSchema",
+      "to": "cat-harness/schemas/document-kind.ts#CoverageMemberSchema",
+      "via": "sections",
+      "kind": "field",
+      "optional": false,
+      "array": true
+    },
+    {
+      "from": "cat-harness/schemas/document-kind.ts#DocumentKindSchema",
+      "to": "cat-harness/schemas/document-kind.ts#DocumentKindSectionSchema",
+      "via": "sections",
+      "kind": "field",
+      "optional": false,
+      "array": true
+    },
+    {
+      "from": "cat-harness/schemas/document-kind.ts#DocumentKindSchema",
+      "to": "cat-harness/schemas/document-kind.ts#DocumentKindSourceSchema",
+      "via": "sources",
+      "kind": "field",
+      "optional": false,
+      "array": true
+    },
+    {
+      "from": "cat-harness/schemas/document-kind.ts#DocumentKindSectionSchema",
+      "to": "cat-harness/schemas/document-kind.ts#DocumentKindSourceSchema",
+      "via": "sources",
+      "kind": "field",
+      "optional": true,
+      "array": true
     },
     {
       "from": "cat-harness/schemas/document-structure.ts#BaseSection",
@@ -48141,6 +48939,14 @@
       "array": false
     },
     {
+      "from": "cat-harness/schemas/site-indexes.ts#LibraryIndexEntrySchema",
+      "to": "cat-harness/schemas/withheld.ts#WithheldEntrySchema",
+      "via": "withheldBy",
+      "kind": "field",
+      "optional": true,
+      "array": false
+    },
+    {
       "from": "cat-harness/schemas/site-indexes.ts#LibraryIndexSchema",
       "to": "cat-harness/schemas/site-indexes.ts#Count",
       "via": "queues",
@@ -48702,6 +49508,14 @@
     },
     {
       "from": "cat-harness/schemas/tabular-records.ts#TabularRecordsSchema",
+      "to": "cat-harness/schemas/jsonld.ts#ContentContextSchema",
+      "via": "@context",
+      "kind": "field",
+      "optional": true,
+      "array": false
+    },
+    {
+      "from": "cat-harness/schemas/tabular-records.ts#TabularRecordsSchema",
       "to": "cat-harness/schemas/narrative.ts#NarrativeSchema",
       "via": "narrative",
       "kind": "field",
@@ -49150,7 +49964,7 @@
     },
     {
       "from": "cat-harness/schemas/tool.ts#ToolDefinitionSchema",
-      "to": "cat-harness/schemas/tool.ts#ToolPortSchema",
+      "to": "cat-harness/schemas/tool.ts#ToolOutputSchema",
       "via": "io",
       "kind": "field",
       "optional": false,
@@ -49186,6 +50000,22 @@
       "via": "",
       "kind": "extends",
       "optional": false,
+      "array": false
+    },
+    {
+      "from": "cat-harness/schemas/tool.ts#ToolOutputSchema",
+      "to": "cat-harness/schemas/tool.ts#ToolPortSchema",
+      "via": "",
+      "kind": "extends",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "cat-harness/schemas/tool.ts#ToolOutputSchema",
+      "to": "cat-harness/schemas/tool.ts#ToolRenderSchema",
+      "via": "render",
+      "kind": "field",
+      "optional": true,
       "array": false
     },
     {
@@ -50005,12 +50835,148 @@
       "array": false
     },
     {
+      "from": "cat-harness/schemas/withheld.ts#WithheldEntrySchema",
+      "to": "cat-harness/schemas/withheld.ts#WithheldGateSchema",
+      "via": "gates",
+      "kind": "field",
+      "optional": true,
+      "array": true
+    },
+    {
       "from": "cat-harness/schemas/withheld.ts#WithheldSchema",
       "to": "cat-harness/schemas/withheld.ts#WithheldEntrySchema",
       "via": "paths",
       "kind": "field",
       "optional": false,
       "array": true
+    },
+    {
+      "from": "fhir-harness/schemas/fhir-artifact-index.ts#FhirArtifactIndexSchema",
+      "to": "fhir-harness/schemas/fhir-artifact-index.ts#FhirArtifactSchema",
+      "via": "artifacts",
+      "kind": "field",
+      "optional": false,
+      "array": true
+    },
+    {
+      "from": "fhir-harness/schemas/fhir-artifact-index.ts#FhirArtifactIndexSchema",
+      "to": "fhir-harness/schemas/fhir-artifact-index.ts#IgSourceSchema",
+      "via": "source",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "fhir-harness/schemas/fhir-artifact-index.ts#FhirArtifactIndexSchema",
+      "to": "fhir-harness/schemas/fhir-artifact-index.ts#IndexProvenanceSchema",
+      "via": "provenance",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "fhir-harness/schemas/fhir-artifact-index.ts#FhirArtifactIndexSchema",
+      "to": "fhir-harness/schemas/fhir-artifact-index.ts#JsonLdContextSchema",
+      "via": "contexts",
+      "kind": "field",
+      "optional": true,
+      "array": true
+    },
+    {
+      "from": "fhir-harness/schemas/fhir-artifact-index.ts#FhirArtifactIndexSchema",
+      "to": "fhir-harness/schemas/fhir-artifact-index.ts#UnboundSidecarSchema",
+      "via": "sidecarsUnbound",
+      "kind": "field",
+      "optional": true,
+      "array": true
+    },
+    {
+      "from": "fhir-harness/schemas/fhir-artifact-index.ts#FhirArtifactSchema",
+      "to": "fhir-harness/schemas/fhir-artifact-index.ts#PublishedFormatsSchema",
+      "via": "published",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "fhir-harness/schemas/fhir-artifact-index.ts#FhirArtifactSchema",
+      "to": "fhir-harness/schemas/fhir-artifact-index.ts#SidecarOverlaySchema",
+      "via": "sidecars",
+      "kind": "field",
+      "optional": true,
+      "array": false
+    },
+    {
+      "from": "fhir-harness/schemas/fhir-artifact-index.ts#JsonLdContextSchema",
+      "to": "fhir-harness/schemas/fhir-artifact-index.ts#RepresentationSchema",
+      "via": "representation",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "fhir-harness/schemas/fhir-artifact-index.ts#PublishedFormatsSchema",
+      "to": "fhir-harness/schemas/fhir-artifact-index.ts#RepresentationSchema",
+      "via": "html",
+      "kind": "field",
+      "optional": true,
+      "array": false
+    },
+    {
+      "from": "fhir-harness/schemas/fhir-artifact-index.ts#PublishedFormatsSchema",
+      "to": "fhir-harness/schemas/fhir-artifact-index.ts#RepresentationSchema",
+      "via": "json",
+      "kind": "field",
+      "optional": true,
+      "array": false
+    },
+    {
+      "from": "fhir-harness/schemas/fhir-artifact-index.ts#PublishedFormatsSchema",
+      "to": "fhir-harness/schemas/fhir-artifact-index.ts#RepresentationSchema",
+      "via": "ttl",
+      "kind": "field",
+      "optional": true,
+      "array": false
+    },
+    {
+      "from": "fhir-harness/schemas/fhir-artifact-index.ts#PublishedFormatsSchema",
+      "to": "fhir-harness/schemas/fhir-artifact-index.ts#RepresentationSchema",
+      "via": "xml",
+      "kind": "field",
+      "optional": true,
+      "array": false
+    },
+    {
+      "from": "fhir-harness/schemas/fhir-artifact-index.ts#SidecarOverlaySchema",
+      "to": "fhir-harness/schemas/fhir-artifact-index.ts#RepresentationSchema",
+      "via": "displays",
+      "kind": "field",
+      "optional": true,
+      "array": false
+    },
+    {
+      "from": "fhir-harness/schemas/fhir-artifact-index.ts#SidecarOverlaySchema",
+      "to": "fhir-harness/schemas/fhir-artifact-index.ts#RepresentationSchema",
+      "via": "jsonld",
+      "kind": "field",
+      "optional": true,
+      "array": false
+    },
+    {
+      "from": "fhir-harness/schemas/fhir-artifact-index.ts#SidecarOverlaySchema",
+      "to": "fhir-harness/schemas/fhir-artifact-index.ts#RepresentationSchema",
+      "via": "openapi",
+      "kind": "field",
+      "optional": true,
+      "array": false
+    },
+    {
+      "from": "fhir-harness/schemas/fhir-artifact-index.ts#SidecarOverlaySchema",
+      "to": "fhir-harness/schemas/fhir-artifact-index.ts#RepresentationSchema",
+      "via": "schema",
+      "kind": "field",
+      "optional": true,
+      "array": false
     },
     {
       "from": "fhir-harness/schemas/ig-chrome.ts#IgChromeSchema",
@@ -50275,142 +51241,6 @@
       "kind": "field",
       "optional": false,
       "array": true
-    },
-    {
-      "from": "folio-assistant-core/schemas/fhir-artifact-index.ts#DakOverlaySchema",
-      "to": "folio-assistant-core/schemas/fhir-artifact-index.ts#RepresentationSchema",
-      "via": "displays",
-      "kind": "field",
-      "optional": true,
-      "array": false
-    },
-    {
-      "from": "folio-assistant-core/schemas/fhir-artifact-index.ts#DakOverlaySchema",
-      "to": "folio-assistant-core/schemas/fhir-artifact-index.ts#RepresentationSchema",
-      "via": "jsonld",
-      "kind": "field",
-      "optional": true,
-      "array": false
-    },
-    {
-      "from": "folio-assistant-core/schemas/fhir-artifact-index.ts#DakOverlaySchema",
-      "to": "folio-assistant-core/schemas/fhir-artifact-index.ts#RepresentationSchema",
-      "via": "openapi",
-      "kind": "field",
-      "optional": true,
-      "array": false
-    },
-    {
-      "from": "folio-assistant-core/schemas/fhir-artifact-index.ts#DakOverlaySchema",
-      "to": "folio-assistant-core/schemas/fhir-artifact-index.ts#RepresentationSchema",
-      "via": "schema",
-      "kind": "field",
-      "optional": true,
-      "array": false
-    },
-    {
-      "from": "folio-assistant-core/schemas/fhir-artifact-index.ts#FhirArtifactIndexSchema",
-      "to": "folio-assistant-core/schemas/fhir-artifact-index.ts#FhirArtifactSchema",
-      "via": "artifacts",
-      "kind": "field",
-      "optional": false,
-      "array": true
-    },
-    {
-      "from": "folio-assistant-core/schemas/fhir-artifact-index.ts#FhirArtifactIndexSchema",
-      "to": "folio-assistant-core/schemas/fhir-artifact-index.ts#IgSourceSchema",
-      "via": "source",
-      "kind": "field",
-      "optional": false,
-      "array": false
-    },
-    {
-      "from": "folio-assistant-core/schemas/fhir-artifact-index.ts#FhirArtifactIndexSchema",
-      "to": "folio-assistant-core/schemas/fhir-artifact-index.ts#IndexProvenanceSchema",
-      "via": "provenance",
-      "kind": "field",
-      "optional": false,
-      "array": false
-    },
-    {
-      "from": "folio-assistant-core/schemas/fhir-artifact-index.ts#FhirArtifactIndexSchema",
-      "to": "folio-assistant-core/schemas/fhir-artifact-index.ts#JsonLdContextSchema",
-      "via": "contexts",
-      "kind": "field",
-      "optional": true,
-      "array": true
-    },
-    {
-      "from": "folio-assistant-core/schemas/fhir-artifact-index.ts#FhirArtifactIndexSchema",
-      "to": "folio-assistant-core/schemas/fhir-artifact-index.ts#UnboundSidecarSchema",
-      "via": "dakUnbound",
-      "kind": "field",
-      "optional": true,
-      "array": true
-    },
-    {
-      "from": "folio-assistant-core/schemas/fhir-artifact-index.ts#FhirArtifactSchema",
-      "to": "folio-assistant-core/schemas/fhir-artifact-index.ts#DakOverlaySchema",
-      "via": "dak",
-      "kind": "field",
-      "optional": true,
-      "array": false
-    },
-    {
-      "from": "folio-assistant-core/schemas/fhir-artifact-index.ts#FhirArtifactSchema",
-      "to": "folio-assistant-core/schemas/fhir-artifact-index.ts#PublishedFormatsSchema",
-      "via": "published",
-      "kind": "field",
-      "optional": false,
-      "array": false
-    },
-    {
-      "from": "folio-assistant-core/schemas/fhir-artifact-index.ts#FhirArtifactSchema",
-      "to": "folio-assistant-core/schemas/materialization.ts#MaterializationSchema",
-      "via": "materialization",
-      "kind": "field",
-      "optional": false,
-      "array": false
-    },
-    {
-      "from": "folio-assistant-core/schemas/fhir-artifact-index.ts#JsonLdContextSchema",
-      "to": "folio-assistant-core/schemas/fhir-artifact-index.ts#RepresentationSchema",
-      "via": "representation",
-      "kind": "field",
-      "optional": false,
-      "array": false
-    },
-    {
-      "from": "folio-assistant-core/schemas/fhir-artifact-index.ts#PublishedFormatsSchema",
-      "to": "folio-assistant-core/schemas/fhir-artifact-index.ts#RepresentationSchema",
-      "via": "html",
-      "kind": "field",
-      "optional": true,
-      "array": false
-    },
-    {
-      "from": "folio-assistant-core/schemas/fhir-artifact-index.ts#PublishedFormatsSchema",
-      "to": "folio-assistant-core/schemas/fhir-artifact-index.ts#RepresentationSchema",
-      "via": "json",
-      "kind": "field",
-      "optional": true,
-      "array": false
-    },
-    {
-      "from": "folio-assistant-core/schemas/fhir-artifact-index.ts#PublishedFormatsSchema",
-      "to": "folio-assistant-core/schemas/fhir-artifact-index.ts#RepresentationSchema",
-      "via": "ttl",
-      "kind": "field",
-      "optional": true,
-      "array": false
-    },
-    {
-      "from": "folio-assistant-core/schemas/fhir-artifact-index.ts#PublishedFormatsSchema",
-      "to": "folio-assistant-core/schemas/fhir-artifact-index.ts#RepresentationSchema",
-      "via": "xml",
-      "kind": "field",
-      "optional": true,
-      "array": false
     },
     {
       "from": "folio-assistant-core/schemas/glossary.ts#GlossarySchema",

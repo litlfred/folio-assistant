@@ -40,9 +40,12 @@ found at all, the value stays a LITERAL — written as an explicit
 resolved against an unrelated <code>@base</code> — and the reason is returned, for the
 report to carry as a finding. An invented address is worse than an honest
 string (rule <code>ld-link-is-the-node-release-address</code>).</p>
-<p><code>prov:used</code> is NOT converted: its values are workflow targets (<code>item/&lt;uuid&gt;</code>)
-with no single address scheme, and the owner has not ruled on them. It is
-carried as it was.</p>
+<p><code>prov:used</code> values are catalogue items (<code>item/&lt;uuid&gt;</code>, a DSpace id). Owner
+2026-10-01, option A: each is linked at its record's HANDLE through the
+global resolver (<code>https://hdl.handle.net/&lt;handle&gt;</code>), the identifier built to
+outlive the publishing host — not at our catalogue record, which has no
+release address while its instance declares no <code>iriBase</code>. A record with no
+Handle, or an id nobody catalogues, stays a literal with its reason.</p>
 </div>
 <div class="tsd-comment tsd-typography">
 <div class="tsd-tag-graphNode">
@@ -50,6 +53,9 @@ carried as it was.</p>
 </div>
 <div class="tsd-tag-conformsTo">
 <h4 class="tsd-anchor-link" id="conforms-to">Conforms To<a href="#conforms-to" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h4><p>w3c-prov-jsonld</p>
+</div>
+<div class="tsd-tag-conformsTo">
+<h4 class="tsd-anchor-link" id="conforms-to-1">Conforms To<a href="#conforms-to-1" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h4><p>ietf-handle-system</p>
 </div>
 <div class="tsd-tag-covers">
 <h4 class="tsd-anchor-link" id="covers">Covers<a href="#covers" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h4><p>schemas</p>

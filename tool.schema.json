@@ -167,6 +167,28 @@
                   },
                   "description": {
                     "type": "string"
+                  },
+                  "render": {
+                    "type": "object",
+                    "properties": {
+                      "as": {
+                        "type": "string",
+                        "enum": [
+                          "text",
+                          "url",
+                          "markdown",
+                          "json"
+                        ]
+                      },
+                      "reason": {
+                        "type": "string",
+                        "minLength": 1
+                      }
+                    },
+                    "required": [
+                      "as"
+                    ],
+                    "additionalProperties": false
                   }
                 },
                 "required": [
@@ -323,8 +345,8 @@
   "description": "One concrete way to exercise a skill. A skill states a capability generically; a Tool names the skills it satisfies and how to install and invoke it. Generated from schemas/tool.ts, which is authoritative.",
   "staging": {
     "branch": "main",
-    "sha": "a07c3c66e77e82f2d076ead87478f6aed7bc6c4b",
+    "sha": "c7cb4ab0913cb8b0e39dc170d526df47aff3e042",
     "pr": "main",
-    "run": "36987535587"
+    "run": "37022197583"
   }
 }
