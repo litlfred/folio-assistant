@@ -32,8 +32,8 @@ Part of [C@T Harness](../../README.md) 0.1.0, declared as `qa`, holding `qa`.
 | [`bootstrap/`](bootstrap/) | 22 files | |
 | [`bootstrap-tools/`](bootstrap-tools/) | 7 files | |
 | [`cat-harness-tools/`](cat-harness-tools/) | 2 files | |
-| [`detangle/`](detangle/) | 61 files | |
-| [`kg-qa/`](kg-qa/) | 495 files | |
+| [`detangle/`](detangle/) | 62 files | |
+| [`kg-qa/`](kg-qa/) | 496 files | |
 | [`large-datasets/`](large-datasets/) | 2 files | |
 | [`library-qa/`](library-qa/) | 63 files | |
 | [`lsi/`](lsi/) | 4 files | |

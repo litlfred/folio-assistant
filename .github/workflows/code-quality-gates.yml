@@ -1909,6 +1909,12 @@ jobs:
           # render, and this one carries byte counts and download links -- the
           # two things a reader would take on trust.
           bun run iris:pages:check
+          # The Dublin Core renderings (DC XML + DCMI-Terms JSON-LD) of every
+          # catalogue record an item names, published beside the replica
+          # pages (bean `7eak`). Fails on a missing, stale or orphaned
+          # rendering -- the item pages link these files, so a stale one is
+          # wrong metadata served under a link a harvester trusts.
+          bun run dc:render:check
           # The prefix-sharded identifier lookup over who-iris's REFERENCED
           # nodes (bean `4pm8`). Gated because a stale shard still answers:
           # it finds a node the catalogue no longer references, and a reader

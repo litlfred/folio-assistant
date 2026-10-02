@@ -57,6 +57,7 @@ import { withViewerNav } from "../../cat-harness/scripts/viewer-page.ts";
 import { whoThemeById } from "../themes/themes.js";
 import { bytesFor, repoRelative } from "../../folio-assistant-core/scripts/lib/bytes.js";
 import { resolvableIri, type CatalogueNode } from "../../folio-assistant-core/schemas/catalogue.js";
+import { dcRenderingsFor } from "../../folio-assistant-core/scripts/dc-render.ts";
 import { publicationBlockers } from "../../folio-assistant-core/schemas/materialization.js";
 import { withInlineCode } from "../../cat-harness/schemas/inline-code.ts";
 
@@ -1647,6 +1648,28 @@ function metadataCell(n: Node): string {
 }
 
 /**
+ * The record's two standard renderings — DC XML and DCMI-Terms JSON-LD —
+ * written by `dc-render.ts` beside these pages (bean `7eak`, owner:
+ * *"who-iris should link to json and xml renderings"*).
+ *
+ * The path comes from `dcRenderingsFor`, the same function the renderer
+ * writes with, so the link and the file cannot name two places. A file that
+ * is not there is NOT linked: a link to a rendering nobody wrote reads exactly
+ * like one that works. `dc:render:check` is what makes "not there" a failure.
+ */
+function renderingsCell(n: Node): string {
+  if (!n.metadataRef) return `<span class="none">no record, so nothing to render</span>`;
+  const r = dcRenderingsFor(INSTANCE, n.metadataRef);
+  if (r === undefined) return `<span class="none">this instance declares no published root</span>`;
+  const link = (abs: string, label: string): string =>
+    existsSync(abs)
+      ? `<a href="${esc(encPath(relative(SITE, abs).split(sep).join("/")))}">${label}</a>`
+      : `<span class="none">${label}: not rendered (run <code>bun run dc:render</code>)</span>`;
+  return `${link(r.xml, "Dublin Core XML")}
+      <br>${link(r.jsonld, "JSON-LD (DCMI Terms)")}`;
+}
+
+/**
  * Where this item can be read FROM — upstream and here, side by side.
  *
  * The owner's *"both links there"*: the IRIS source, and this repository's own
@@ -1751,6 +1774,7 @@ ${bits}
 <tr><td>Ingested text (L1)</td>
     <td>${n.libraryId ? `<a href="https://github.com/litlfred/folio-assistant/tree/main/who-iris/library/${esc(n.libraryId)}/sections">who-iris/library/${esc(n.libraryId)}/sections/</a>` : "—"}</td></tr>
 <tr><td>Dublin Core record</td><td>${metadataCell(n)}</td></tr>
+<tr><td>Dublin Core renderings</td><td>${renderingsCell(n)}</td></tr>
 </tbody>
 </table>
 
