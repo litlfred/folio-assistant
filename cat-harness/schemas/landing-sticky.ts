@@ -87,6 +87,7 @@ import {
   StickyLinkSchema,
   StickyTextSchema,
   isExternalLink,
+  readerText,
   type DeclaredContribution,
   type Initiation,
   type StickyLink,
@@ -278,6 +279,9 @@ export function stickyFromContribution(
   ctx: StickyBuildContext,
 ): LandingSticky {
   const { contribution: c, declaredBy, description } = declared;
+  // `bodyFrom: "summary"` is the landing's reader text (`ob3m` finding 3);
+  // `bodyFrom: "description"` is the author's text, kept for a pinned layer.
+  const fromDeclaration = c.bodyFrom === "summary" ? readerText(declared) : description;
   // `body`, then the declaring instance's `description`, then its `name` — and
   // the last step is a DELIBERATE non-failure, carried over from the fixed-set
   // version rather than re-decided here: *"an instance with no description still
@@ -286,7 +290,7 @@ export function stickyFromContribution(
   // instead would make initiation fail over a declaration nobody has filled in
   // yet, and initiation failing is worse than a thin card. `name` is required by
   // the declaration schema, so the chain always terminates in something.
-  const declaredBody = c.body ?? description;
+  const declaredBody = c.body ?? fromDeclaration;
   const base =
     declaredBody !== undefined && declaredBody.trim().length > 0 ? declaredBody : declaredBy;
   // Appended AFTER the fallback chain, so a card that reads its instance's
