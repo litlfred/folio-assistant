@@ -160,7 +160,10 @@
      and words for one into another graph, where the short id hides that. */
   td a[href]::after { content: " \2197"; font-size: .85em; }
   .elsewhere { color: var(--dim); font-size: 12px; }
-  .crumb { display: inline-block; font-size: 13px; margin: 0 0 4px; color: var(--accent); text-underline-offset: 2px; }
+  /* 28px tall like the edges: a 13px line alone is under the 24px floor
+     (SC 2.5.8), and this instance's profile is low-dexterity. */
+  .crumb { display: inline-flex; align-items: center; min-height: 28px; font-size: 13px; margin: 0 0 2px;
+           color: var(--accent); text-underline-offset: 2px; }
   .undeclared { color: var(--warn); }
   .undeclared::after { content: " ⚠"; }
   .note { background: var(--warn-bg); border: 1px solid var(--warn); color: var(--warn);
