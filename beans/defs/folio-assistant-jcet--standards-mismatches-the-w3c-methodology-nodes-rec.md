@@ -5,7 +5,7 @@ status: in-progress
 type: bug
 priority: normal
 created_at: 2026-10-01T12:32:06Z
-updated_at: 2026-10-01T15:58:34Z
+updated_at: 2026-10-01T16:32:32Z
 parent: folio-assistant-scfh
 ---
 
@@ -16,8 +16,8 @@ Found while writing the three W3C methodology nodes (bean 6306, PR #1769), each 
 3. **ODRL conflict default** is odrl:prohibit (schemas/odrl.ts FOLIO_DEFAULT_CONFLICT); ODRL 2.2 §2.10 says a policy with no conflict property defaults to invalid. Also: target optional (ODRL requires it), circular inheritFrom tolerated (§2.9 MUST NOT), cross-policy any-deny-wins vs ODRL's void. These are permission-policy choices; the methodology node odrl-policies.md lists each departure.
 
 ## Done when
-- [ ] PROV_CONTEXT decided and fixed; @id coercion for the three object properties
-- [ ] @base verified against a real resolution; moved or documented
+- [x] PROV_CONTEXT decided and fixed; @id coercion for the three object properties (owner: PROV-JSONLD, held locally; PR #1791)
+- [x] @base verified against a real resolution; moved or documented (documented: bean text, voice rule `ld-no-base-in-a-remote-context`; PROV moved in #1791; content documents → bean `bh4q`)
 - [x] Owner ruling on the ODRL conflict default (keep prohibit as a stated profile departure, or follow §2.10)
 
 
@@ -29,3 +29,7 @@ _2026-10-01T15:57:39Z_ — Claimed by claude/fervent-brahmagupta-rbwhzm — push
 
 ## 2026-10-01 — item 3 ruled: keep prohibit, documented (owner, option 1)
 The owner chose to keep odrl:prohibit as the default conflict strategy, as a STATED profile departure from ODRL 2.2 §2.10's invalid. Recorded at FOLIO_DEFAULT_CONFLICT (schemas/odrl.ts, with the §2.10 quote), in methodologies/odrl-policies.md departure 4, and pinned by a test in schemas/odrl.test.ts. Also fixed: policies/folio-defaults.jsonld's comment named scripts/tests/odrl-policies.test.ts, which never existed; the check it describes is schemas/odrl.test.ts.
+
+
+## 2026-10-01 — item 1 done (PR #1791)
+Owner chose PROV-JSONLD (W3C Member Submission 2024-08-25; W3C publishes no JSON-LD context for PROV-O), held locally: the spec ingested as library/w3c-2024-prov-jsonld, its context.jsonld beside it pinned by sha256 811d5e94…, served by publish:verify's localLoader, never fetched. PROV_CONTEXT is now that context's URL. provDocument emits PROV-JSONLD Activity + Association nodes with agent/role/plan at their release addresses (check:node-iris rule). Measured on the 9 reports, links before→after: agent 0→99/100, hadRole 0→100, hadPlan 0→71, activity↔association 0→100. The 30 that stay literal are 'unaddressed' findings with reasons: 29 plans whose owner (large-datasets) declares no iriBase, 1 agent that is a GitHub login. prov:used (27) left as it was, for the owner.

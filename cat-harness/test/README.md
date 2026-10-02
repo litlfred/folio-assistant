@@ -23,6 +23,7 @@ Part of [C@T Harness](../README.md) 0.1.0, declared as `cat-harness-tests`, hold
 | [`glass-filter.e2e.ts`](glass-filter.e2e.ts) | a file |  |
 | [`glass-interactions.e2e.ts`](glass-interactions.e2e.ts) | a file |  |
 | [`glass-navigation.e2e.ts`](glass-navigation.e2e.ts) | a file |  |
+| [`glass-placement.e2e.ts`](glass-placement.e2e.ts) | a file |  |
 | [`glass-pop-outs.e2e.ts`](glass-pop-outs.e2e.ts) | a file |  |
 | [`glass-scroll.e2e.ts`](glass-scroll.e2e.ts) | a file |  |
 | [`glass-tiles.e2e.ts`](glass-tiles.e2e.ts) | a file |  |
@@ -48,6 +49,7 @@ Part of [C@T Harness](../README.md) 0.1.0, declared as `cat-harness-tests`, hold
 | [`schema-overview-filter.e2e.ts`](schema-overview-filter.e2e.ts) | a file |  |
 | [`search-pinned.e2e.ts`](search-pinned.e2e.ts) | a file |  |
 | [`search-restore.e2e.ts`](search-restore.e2e.ts) | a file |  |
+| [`settings-crosslinks.e2e.ts`](settings-crosslinks.e2e.ts) | a file |  |
 | [`sidebar-panels.e2e.ts`](sidebar-panels.e2e.ts) | a file |  |
 | [`staging-banner.e2e.ts`](staging-banner.e2e.ts) | a file |  |
 | [`state-dashboards.e2e.ts`](state-dashboards.e2e.ts) | a file |  |
@@ -60,6 +62,6 @@ Part of [C@T Harness](../README.md) 0.1.0, declared as `cat-harness-tests`, hold
 | [`test_pypdf_compat.py`](test_pypdf_compat.py) | a file |  |
 | [`translation-badges.e2e.ts`](translation-badges.e2e.ts) | a file |  |
 | [`health/`](health/) | 8 files | |
-| [`results/`](results/README.md) | 990 files | |
+| [`results/`](results/README.md) | 999 files | |
 | [`support/`](support/) | 3 files | |
 <!-- kg:subgraph:end -->
