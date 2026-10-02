@@ -1,102 +1,107 @@
 ---
 # folio-assistant-0qjq
-title: 'MERGE-MAIN APPROVAL STALL: the bot''s push creates action_required runs a human''s push does not, so the label that ends the hand-merge treadmill leaves the PR mergeable_state unstable'
+title: 'MERGE-MAIN APPROVAL STALL — CORRECTED: already handled by design; the only gap is `stage`, deliberately preview-only, and the real fix is #1829 D1'
 status: todo
 type: bug
-priority: normal
+priority: low
 parent: folio-assistant-d33q
 created_at: 2026-10-02T14:10:55Z
 updated_at: 2026-10-02T14:10:55Z
 ---
 
-Found 2026-10-02 on PR #1844, the first PR in this session to carry the
-`merge-main` label. The label did exactly what it promises and then blocked the
-merge it was meant to unblock.
+## This bean was filed on a false premise — corrected 2026-10-02
 
-## Measured
+**I filed it without reading `merge-main.yml` first.** That is the error worth
+recording, because everything the first version "discovered" is written in that
+file, measured on the same day, with its reason and its fix.
 
-`merge-main` merged `main` and pushed `4bade842ee5`, resolving one conflict by
-the `readme-generated-regions` pattern — correct, and it replaced four rounds of
-hand-merging (60, 46 and 37 commits of `main`, plus the first).
+The step is **"Have CI judge the merge commit"**:
 
-Then, on that head:
+> Every GATING workflow, so each judges the merge commit: a bot-actor push
+> leaves their `pull_request` runs at action_required (measured 2026-10-02),
+> and only a dispatch actually runs. Feature Staging is preview-only and stays
+> as it is. The real fix is a GitHub App token (#1829), whose pushes trigger
+> the PR's own runs.
+
+```yaml
+for wf in code-quality-gates.yml jsonld-gen-check.yml; do
+  gh workflow run "$wf" --repo "$REPO" --ref "$REF"
+done
+```
+
+So the `action_required` behaviour is known, the gating workflows ARE made to
+judge the merge commit by dispatch, and `Feature Staging` is excluded **on
+purpose**.
+
+## What the original measurement actually showed
+
+The numbers were right; the conclusion drawn from them was not.
 
 | | |
 |---|---|
-| check runs | **9, all `success`** — every `(hard)` gate included |
-| workflow runs at `action_required` | **3** |
-| combined commit status | `pending`, `total_count: 0` |
-| `mergeable_state` | **`unstable`** |
+| check runs on the bot's head `4bade842ee5` | 9, all `success` |
+| workflow runs at `action_required` | 3 |
+| of those, with a SEPARATE successful run | 2 — `code-quality-gates`, `jsonld-gen-check` |
+| with no other run | 1 — `Feature Staging` |
 
-The three awaiting approval, all `event=pull_request`:
+Those two recovered **because the workflow dispatched them**. That is the
+design working, not a defect. The third is the documented exclusion. So
+`mergeable_state: unstable` traces entirely to `stage` never reporting, and
+`stage` is the preview deploy.
 
-- `37016039406` Feature Staging (GitHub Pages)
-- `37016040141` Code-quality gates
-- `37016040161` JSON-LD generated-file drift
+## Two claims from the first version that do not hold
 
-Two of them have a SEPARATE successful run, so they recovered.
-**`Feature Staging` has only the unapproved one**, so `stage` never reported,
-no commit status was ever posted, and the combined status stays `pending` —
-which is what holds `mergeable_state` at `unstable`.
+- **"Mutually defeating."** Too strong. The gating workflows do judge the merge
+  commit, so `ready-to-merge`'s "green on every CI job" is satisfied in
+  substance. Only the preview-only job is missing.
+- **"Needs a human click."** Wrong, but be precise about how far the
+  measurement goes. `rerun_workflow_run` **escapes `action_required`**: run
+  `37016039406` moved `action_required` -> `queued` -> `in_progress` without
+  any approval. It then finished **`cancelled`**, almost certainly by the
+  workflow's concurrency group once a later push superseded that head — so
+  *that a re-run yields a SUCCESSFUL `stage`* is **not** established, only that
+  the approval gate itself is escapable. And the gating workflows never needed
+  clearing at all, because the dispatch already covers them.
 
-**The previous head, `f2573c2bc4d`, was `clean` with the same code.** The only
-difference is who pushed: my push needed no approval, the bot's does.
+## Confirmed since, from the opposite direction
 
-## Why this matters beyond one PR
+A later push to the same branch **by me rather than the bot** created **10
+workflow runs with 0 at `action_required`**. So the gate is specific to the
+bot-actor push, exactly as the workflow's comment states — independent evidence
+for its diagnosis rather than against it.
 
-`ready-to-merge` means *"Green on every CI job; the Merge Steward merges it"*.
-The PR IS green on every CI job and is not mergeable-clean, so the label's
-precondition and the Steward's gate have come apart. Every PR that opts into
-`merge-main` will reach this state, which makes the two labels mutually
-defeating: one removes the hand-merge cost and the other then cannot fire.
+## What is genuinely left
 
-## What I could not do, and it is a capability limit rather than a judgement
+One question, and it is the one the first version asserted without measuring:
 
-An agent in this container **cannot approve a workflow run**:
+- [ ] does a re-run of `Feature Staging` on a head that is NOT immediately
+      superseded actually complete? Mine was cancelled, so the question stands.
 
-- `GITHUB_TOKEN` is present but **empty** (length 0), so a direct
-  `POST /actions/runs/<id>/approve-workflow-run` goes out unauthenticated and
-  returns 404;
-- the GitHub MCP server has write access but exposes no approval tool —
-  `actions_run_trigger` offers `run_workflow`, `rerun_workflow_run`,
-  `rerun_failed_jobs`, `cancel_workflow_run`, `delete_workflow_run_logs`, and
-  nothing else.
+- [ ] **does `mergeable_state: unstable` actually stop the Merge Steward?** If
+      the Steward reads check runs, nothing here blocks anything and this bean
+      is closable. If it reads `mergeable_state`, then a PR can be green on
+      every gating job and still never merge, and the remedy is the Steward's
+      rather than the bot's. Unmeasured either way — I never found the
+      Steward's logic.
 
-So the stall needs a human click, or a mechanism that avoids creating an
-approval-gated run in the first place.
+- [ ] #1829 **D1** is the real fix and is the owner's to decide: one GitHub App
+      vs a fine-grained token per need, with `MERGE_MAIN_TOKEN` renamed
+      `PUSH_BRANCH_TRIGGERING_CI`. Setting it makes the bot's push fire the PR's
+      own CI and the whole question disappears. Waiting on a decision, not on
+      code.
 
-## SETTLED: a re-run clears the gate, so an agent CAN unstall itself
+**Do not "fix" this by re-running Feature Staging.** That contradicts a stated
+decision in the workflow, and the owner asked for exactly that change on
+2026-10-02 before this correction was found; it was declined with the reason,
+not implemented.
 
-Filed this as undetermined and then established it in the same sitting, so the
-answer is here rather than in a follow-up.
+## Why this is kept rather than scrapped
 
-`actions_run_trigger` with `rerun_workflow_run` on `37016039406` moved it
-`action_required` -> `queued` -> `in_progress`. The approval requirement
-applies to the run as CREATED by the bot's push; re-requesting it from an
-authorized app does not re-ask. So the stall is **self-clearing by an agent**
-and does not need a human click.
+`scrapped` would say the work was unwanted. The subject is real and #1829 D1 is
+open, so the bean stays — demoted to `low`, re-titled to what is actually
+unresolved, and carrying the record of how a bean gets filed against a file
+nobody read. `surprise-to-corpus`: the next agent to meet an `action_required`
+run on a bot push should read `merge-main.yml`'s own comment first.
 
-That lowers the severity and changes the remedy. The pair is usable today:
-after a `merge-main` push, re-run whatever sits at `action_required`. What
-remains is that **nothing does this automatically** — the PR sits `unstable`
-until somebody notices, and `ready-to-merge` is already on it by then, so the
-Steward sees a labelled PR it will not merge and no signal saying why.
-
-The capability limit above still holds for *approval* specifically: there is
-no approve tool and the token is empty. Re-running is a different endpoint and
-is available.
-
-## Done when
-
-- [x] settle whether `rerun_workflow_run` clears `action_required` — it does
-- [ ] decide where the fix belongs. Now that a re-run clears it, the cheapest
-      is for `merge-main.yml` to re-run its own `action_required` runs after
-      pushing — it already knows the head it created. The alternatives are a
-      credential whose pushes need no approval, or the Steward treating
-      `unstable`-with-every-check-green as mergeable.
-- [ ] whichever is chosen, `ready-to-merge` and `merge-main` must be usable
-      together, since the whole point of the pair is an unattended merge
-
-Related: `d33q` (the bot itself), `mc8h` (the owner ruling to keep merging
-forward by hand, which this label exists to make cheap), `1xhc` (CI
-reliability).
+Related: `d33q` (the bot), #1829 (credentials design, D1), `mc8h` (the
+merge-forward ruling this label exists to make cheap).
