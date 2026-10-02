@@ -153,7 +153,12 @@ cmd_restore() {
   }
   
   # The AST files sit at the root of the branch, along with txcache/
-  find "$tmp" -maxdepth 1 -name '*.json' -exec mv {} "$out/" \;
+  # Move everything except txcache into output-ast
+  for item in "$tmp"/*; do
+    local base; base=$(basename "$item")
+    [ "$base" = "txcache" ] && continue
+    cp -R "$item" "$out/"
+  done
   
   if [ -d "$tmp/txcache" ]; then
     info "restoring txcache -> $root/input-cache/txcache"
@@ -242,7 +247,8 @@ cmd_seed() {
   local tmp; tmp=$(mktemp -d) || die "mktemp failed"
   trap "rm -rf '$tmp'" RETURN
   
-  cp -R "$out/"*.json "$tmp/" 2>/dev/null || true
+  cp -R "$out/"* "$tmp/" 2>/dev/null || true
+  # txcache goes alongside AST on the branch
   if [ -d "$root/input-cache/txcache" ]; then
     cp -R "$root/input-cache/txcache" "$tmp/"
   fi
