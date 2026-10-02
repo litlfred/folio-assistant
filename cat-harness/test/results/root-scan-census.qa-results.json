@@ -381,18 +381,12 @@
       ]
     },
     "scope": {
-      "summary": "Which instances this census covered — the denominator, so a drop in enumerating scripts can be told from a drop in scope (bean `tqv4`). Every declared instance is a row: `scanned` with its count, or `no-scripts-dir`, which is neither a finding nor a pass. 8 of 16 declared instance(s) have a scripts/ directory.",
+      "summary": "Which instances this census covered — the denominator, so a drop in enumerating scripts can be told from a drop in scope (bean `tqv4`). Every declared instance is a row: `scanned` with its count, or `no-scripts-dir`, which is neither a finding nor a pass. 7 of 16 declared instance(s) have a scripts/ directory.",
       "count": 16,
       "entries": [
         {
           "instance": "folio-assistant",
           "path": "scripts",
-          "state": "no-scripts-dir",
-          "enumerating": 0
-        },
-        {
-          "instance": "agent-skills",
-          "path": "agent-skills/scripts",
           "state": "no-scripts-dir",
           "enumerating": 0
         },
@@ -439,14 +433,14 @@
           "enumerating": 0
         },
         {
-          "instance": "large-datasets",
-          "path": "large-datasets/scripts",
-          "state": "scanned",
+          "instance": "smart-base",
+          "path": "smart-base/scripts",
+          "state": "no-scripts-dir",
           "enumerating": 0
         },
         {
-          "instance": "smart-base",
-          "path": "smart-base/scripts",
+          "instance": "smart-dak",
+          "path": "smart-dak/scripts",
           "state": "no-scripts-dir",
           "enumerating": 0
         },
@@ -459,6 +453,12 @@
         {
           "instance": "smart-immunizations",
           "path": "smart-immunizations/scripts",
+          "state": "no-scripts-dir",
+          "enumerating": 0
+        },
+        {
+          "instance": "smart-l1",
+          "path": "smart-l1/scripts",
           "state": "no-scripts-dir",
           "enumerating": 0
         },
@@ -483,7 +483,7 @@
       ]
     },
     "seeded-at-root-not-git-aware": {
-      "summary": "The shape that actually costs something: a scan whose start argument IS a root constant, that does not ask git. 0 of 0 such scans, 73 enumerating scripts in all, across 8 instance(s)' scripts/ (bootstrap-tools, cat-harness, cat-harness-tools, fhir-harness, folio-assistant-core, large-datasets, smart-trust, who-iris). Reported and NEVER failed — the owner's ruling of 2026-09-27, over the objection that a check which cannot fail is the 1xhc pattern; what CAN fail here is the sidecar going stale.",
+      "summary": "The shape that actually costs something: a scan whose start argument IS a root constant, that does not ask git. 0 of 0 such scans, 73 enumerating scripts in all, across 7 instance(s)' scripts/ (bootstrap-tools, cat-harness, cat-harness-tools, fhir-harness, folio-assistant-core, smart-trust, who-iris). Reported and NEVER failed — the owner's ruling of 2026-09-27, over the objection that a check which cannot fail is the 1xhc pattern; what CAN fail here is the sidecar going stale.",
       "count": 0,
       "entries": []
     }

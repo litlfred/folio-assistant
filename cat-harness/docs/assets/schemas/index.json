@@ -2,7 +2,7 @@
   "$schema": "folio-schema-graph/v1",
   "tile": {
     "schemas": {
-      "count": 202,
+      "count": 190,
       "unit": "modules"
     }
   },
@@ -12,7 +12,6 @@
     "folio-assistant-core/schemas",
     "folio-assistant-sci/schemas",
     "folio-assistant-sci/sources",
-    "large-datasets/schemas",
     "smart-base/schemas",
     "who-iris/sources"
   ],
@@ -211,14 +210,6 @@
       "isTest": false
     },
     {
-      "module": "cat-harness/schemas/cat-harness.test.ts",
-      "instance": "cat-harness",
-      "name": "cat-harness.test",
-      "graphNode": "undeclared",
-      "summary": "Tests for the CatHarness root declaration — issue #223, Phase 0.3.",
-      "isTest": true
-    },
-    {
       "module": "cat-harness/schemas/cat-harness.ts",
       "instance": "cat-harness",
       "name": "cat-harness",
@@ -276,14 +267,6 @@
       "isTest": false
     },
     {
-      "module": "cat-harness/schemas/contributions.test.ts",
-      "instance": "cat-harness",
-      "name": "contributions.test",
-      "graphNode": "undeclared",
-      "summary": "Tests for the contribution registry and its loader — issue #223, Phase 0.1.",
-      "isTest": true
-    },
-    {
       "module": "cat-harness/schemas/contributions.ts",
       "instance": "cat-harness",
       "name": "contributions",
@@ -305,6 +288,30 @@
       "name": "dak-blocks",
       "graphNode": "schema",
       "summary": "WHO SMART Guidelines content blocks — the `dak` adapter.",
+      "isTest": false
+    },
+    {
+      "module": "cat-harness/schemas/dak-content-type.ts",
+      "instance": "cat-harness",
+      "name": "dak-content-type",
+      "graphNode": "schema",
+      "summary": "The `dak` and `sushi` content types — registered by the WHO layer, not by core.",
+      "isTest": false
+    },
+    {
+      "module": "cat-harness/schemas/dak.test.ts",
+      "instance": "cat-harness",
+      "name": "dak.test",
+      "graphNode": "undeclared",
+      "summary": "What the DAK placeholder promises, and — more usefully — what it promises",
+      "isTest": true
+    },
+    {
+      "module": "cat-harness/schemas/dak.ts",
+      "instance": "cat-harness",
+      "name": "dak",
+      "graphNode": "schema",
+      "summary": "The **DAK** content type — a repository that is a WHO SMART Guidelines",
       "isTest": false
     },
     {
@@ -412,14 +419,6 @@
       "isTest": false
     },
     {
-      "module": "cat-harness/schemas/extension-namespace.test.ts",
-      "instance": "cat-harness",
-      "name": "extension-namespace.test",
-      "graphNode": "undeclared",
-      "summary": "Our BPMN extension elements are recognised by NAMESPACE, never by the prefix",
-      "isTest": true
-    },
-    {
       "module": "cat-harness/schemas/external-schema.ts",
       "instance": "cat-harness",
       "name": "external-schema",
@@ -434,14 +433,6 @@
       "graphNode": "schema",
       "summary": "What a person or agent SAYS a drawn figure shows — bean `a8wy`, under",
       "isTest": false
-    },
-    {
-      "module": "cat-harness/schemas/folio-dir.test.ts",
-      "instance": "cat-harness",
-      "name": "folio-dir.test",
-      "graphNode": "undeclared",
-      "summary": "`folioDir` — a folio says where its content is, and the platform asks.",
-      "isTest": true
     },
     {
       "module": "cat-harness/schemas/folio-graph-kind.ts",
@@ -525,14 +516,6 @@
       "isTest": false
     },
     {
-      "module": "cat-harness/schemas/harness-config.test.ts",
-      "instance": "cat-harness",
-      "name": "harness-config.test",
-      "graphNode": "undeclared",
-      "summary": "Tests for schemas/harness-config.ts — cross-folio dependency schema and resolution.",
-      "isTest": true
-    },
-    {
       "module": "cat-harness/schemas/harness-config.ts",
       "instance": "cat-harness",
       "name": "harness-config",
@@ -596,14 +579,6 @@
       "isTest": false
     },
     {
-      "module": "cat-harness/schemas/instance-versioning.test.ts",
-      "instance": "cat-harness",
-      "name": "instance-versioning.test",
-      "graphNode": "undeclared",
-      "summary": "A minimal valid declaration, extended per test.",
-      "isTest": true
-    },
-    {
       "module": "cat-harness/schemas/intake.ts",
       "instance": "cat-harness",
       "name": "intake",
@@ -652,28 +627,12 @@
       "isTest": false
     },
     {
-      "module": "cat-harness/schemas/kg-qa.test.ts",
-      "instance": "cat-harness",
-      "name": "kg-qa.test",
-      "graphNode": "undeclared",
-      "summary": "The sidecar's own rules — the ones a reader relies on when they read a",
-      "isTest": true
-    },
-    {
       "module": "cat-harness/schemas/kg-qa.ts",
       "instance": "cat-harness",
       "name": "kg-qa",
       "graphNode": "schema",
       "summary": "Knowledge-graph QA sidecars — what is dangling in the process/role/skill graph.",
       "isTest": false
-    },
-    {
-      "module": "cat-harness/schemas/kind-validator.test.ts",
-      "instance": "cat-harness",
-      "name": "kind-validator.test",
-      "graphNode": "undeclared",
-      "summary": "Resolving a graph kind's validator — and above all, the three states.",
-      "isTest": true
     },
     {
       "module": "cat-harness/schemas/kind-validator.ts",
@@ -698,15 +657,6 @@
       "graphNode": "schema",
       "summary": "The landing page, as a board of sticky notes.",
       "isTest": false
-    },
-    {
-      "module": "cat-harness/schemas/layer-direction.test.ts",
-      "instance": "cat-harness",
-      "name": "layer-direction.test",
-      "graphNode": "none",
-      "reason": "a test",
-      "summary": "One wrong-direction verdict for `check:partition` and `kg-detangle` — bean `j79e`.",
-      "isTest": true
     },
     {
       "module": "cat-harness/schemas/layer-direction.ts",
@@ -880,14 +830,6 @@
       "isTest": false
     },
     {
-      "module": "cat-harness/schemas/portable-path.test.ts",
-      "instance": "cat-harness",
-      "name": "portable-path.test",
-      "graphNode": "undeclared",
-      "summary": "The rules a checkout relies on — a filename that is legal here and illegal",
-      "isTest": true
-    },
-    {
       "module": "cat-harness/schemas/portable-path.ts",
       "instance": "cat-harness",
       "name": "portable-path",
@@ -1017,15 +959,6 @@
       "isTest": false
     },
     {
-      "module": "cat-harness/schemas/reference-direction-declaration.test.ts",
-      "instance": "cat-harness",
-      "name": "reference-direction-declaration.test",
-      "graphNode": "none",
-      "reason": "a test",
-      "summary": "What a file has to SAY to be read as generator output — bean `ws99`.",
-      "isTest": true
-    },
-    {
       "module": "cat-harness/schemas/reference-direction.ts",
       "instance": "cat-harness",
       "name": "reference-direction",
@@ -1115,15 +1048,6 @@
       "isTest": false
     },
     {
-      "module": "cat-harness/schemas/schema-graph.test.ts",
-      "instance": "cat-harness",
-      "name": "schema-graph.test",
-      "graphNode": "none",
-      "reason": "a test over the reader, not a schema itself",
-      "summary": "The schema-graph reader, tested against shapes that actually occur here.",
-      "isTest": true
-    },
-    {
       "module": "cat-harness/schemas/script-qa.ts",
       "instance": "cat-harness",
       "name": "script-qa",
@@ -1193,14 +1117,6 @@
       "graphNode": "schema",
       "summary": "Where the JSON workflow-skill definitions and the conventions live.",
       "isTest": false
-    },
-    {
-      "module": "cat-harness/schemas/skill-overlay.test.ts",
-      "instance": "cat-harness",
-      "name": "skill-overlay.test",
-      "graphNode": "undeclared",
-      "summary": "The skill overlay reads declarations and keeps every instance's contribution.",
-      "isTest": true
     },
     {
       "module": "cat-harness/schemas/skill-package.ts",
@@ -1454,14 +1370,6 @@
       "isTest": false
     },
     {
-      "module": "cat-harness/schemas/todo.test.ts",
-      "instance": "cat-harness",
-      "name": "todo.test",
-      "graphNode": "undeclared",
-      "summary": "A todo's KG tags resolve, dangle, or are not checked — and the third is",
-      "isTest": true
-    },
-    {
       "module": "cat-harness/schemas/todo.ts",
       "instance": "cat-harness",
       "name": "todo",
@@ -1565,15 +1473,6 @@
       "isTest": false
     },
     {
-      "module": "cat-harness/schemas/viz-generators.test.ts",
-      "instance": "cat-harness",
-      "name": "viz-generators.test",
-      "graphNode": "none",
-      "reason": "a test over the generators, not a schema itself",
-      "summary": "The two visualiser generators produce a page, and it is a whole one.",
-      "isTest": true
-    },
-    {
       "module": "cat-harness/schemas/vocabulary.ts",
       "instance": "cat-harness",
       "name": "vocabulary",
@@ -1666,22 +1565,6 @@
       "name": "ig-chrome",
       "graphNode": "schema",
       "summary": "ig-chrome.ts — a FHIR IG's published CHROME, as data.",
-      "isTest": false
-    },
-    {
-      "module": "fhir-harness/schemas/ig-identity.test.ts",
-      "instance": "fhir-harness",
-      "name": "ig-identity.test",
-      "graphNode": "undeclared",
-      "summary": "`ig-identity.json` — an IG's own identity and status, refused when it names",
-      "isTest": true
-    },
-    {
-      "module": "fhir-harness/schemas/ig-identity.ts",
-      "instance": "fhir-harness",
-      "name": "ig-identity",
-      "graphNode": "schema",
-      "summary": "An IG's identity, as its own `sushi-config.yaml` states it — id, canonical,",
       "isTest": false
     },
     {
@@ -1875,38 +1758,6 @@
       "name": "review-verdict",
       "graphNode": "schema",
       "summary": "A reviewer's VERDICT on one version of one block: \"I read this, and here is",
-      "isTest": false
-    },
-    {
-      "module": "smart-base/schemas/content-types-stack.test.ts",
-      "instance": "smart-base",
-      "name": "content-types-stack.test",
-      "graphNode": "undeclared",
-      "summary": "Asking a repository what it is, and getting a SET back.",
-      "isTest": true
-    },
-    {
-      "module": "smart-base/schemas/dak-content-type.ts",
-      "instance": "smart-base",
-      "name": "dak-content-type",
-      "graphNode": "schema",
-      "summary": "The `dak` and `sushi` content types — registered by the WHO layer, not by core.",
-      "isTest": false
-    },
-    {
-      "module": "smart-base/schemas/dak.test.ts",
-      "instance": "smart-base",
-      "name": "dak.test",
-      "graphNode": "undeclared",
-      "summary": "What the DAK placeholder promises, and — more usefully — what it promises",
-      "isTest": true
-    },
-    {
-      "module": "smart-base/schemas/dak.ts",
-      "instance": "smart-base",
-      "name": "dak",
-      "graphNode": "schema",
-      "summary": "The **DAK** content type — a repository that is a WHO SMART Guidelines",
       "isTest": false
     }
   ],
@@ -11719,6 +11570,123 @@
       "exported": true
     },
     {
+      "id": "cat-harness/schemas/dak.ts#componentShape",
+      "name": "componentShape",
+      "module": "cat-harness/schemas/dak.ts",
+      "kind": "zod-object",
+      "doc": "The component fields, built from {@link DAK_COMPONENT_FIELDS} rather",
+      "fields": [],
+      "extendsNames": [
+        "Object"
+      ],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": false
+    },
+    {
+      "id": "cat-harness/schemas/dak.ts#DakComponentEntries",
+      "name": "DakComponentEntries",
+      "module": "cat-harness/schemas/dak.ts",
+      "kind": "type-alias",
+      "doc": "One component's contents, as read from a `dak.config.json`.",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/dak.ts#DakDeclaration",
+      "name": "DakDeclaration",
+      "module": "cat-harness/schemas/dak.ts",
+      "kind": "interface",
+      "doc": "A `dak.config.json`, as much of it as is settled.",
+      "fields": [
+        {
+          "name": "name",
+          "type": "string",
+          "optional": false,
+          "array": false,
+          "doc": "The instance's name, e.g. `\"smart-immunizations\"`."
+        },
+        {
+          "name": "canonicalUrl",
+          "type": "string",
+          "optional": true,
+          "array": false,
+          "doc": "Where the published DAK lives — the base its `@id`s are minted against."
+        },
+        {
+          "name": "publicationUrl",
+          "type": "string",
+          "optional": true,
+          "array": false,
+          "doc": "Where the built IG is published, when that differs from `canonicalUrl`."
+        },
+        {
+          "name": "previewUrl",
+          "type": "string",
+          "optional": true,
+          "array": false,
+          "doc": "Where CI previews are served."
+        }
+      ],
+      "extendsNames": [
+        "KgNodeLabels"
+      ],
+      "values": [],
+      "refs": [
+        "cat-harness/schemas/kg-node.ts#KgNodeLabels"
+      ],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/dak.ts#DakDeclarationSchema",
+      "name": "DakDeclarationSchema",
+      "module": "cat-harness/schemas/dak.ts",
+      "kind": "zod-object",
+      "fields": [
+        {
+          "name": "name",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "canonicalUrl",
+          "type": "z.string().url().optional()",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "publicationUrl",
+          "type": "z.string().url().optional()",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "previewUrl",
+          "type": "z.string().url().optional()",
+          "optional": true,
+          "array": false
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [
+        "z"
+      ],
+      "exported": true
+    },
+    {
       "id": "cat-harness/schemas/decision-methodology-context.ts#DataTypeSchema",
       "name": "DataTypeSchema",
       "module": "cat-harness/schemas/decision-methodology-context.ts",
@@ -17613,6 +17581,20 @@
       "external": [
         "z"
       ],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/harness-config.ts#ImplementingPath",
+      "name": "ImplementingPath",
+      "module": "cat-harness/schemas/harness-config.ts",
+      "kind": "type-alias",
+      "doc": "Where an instance-relative path declared by one instance actually is.",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
       "exported": true
     },
     {
@@ -29798,6 +29780,20 @@
           "optional": true,
           "array": false,
           "doc": "The declaring instance's `description`, for `bodyFrom: \"description\"`."
+        },
+        {
+          "name": "summary",
+          "type": "string",
+          "optional": true,
+          "array": false,
+          "doc": "The declaring instance's `summary`, for `bodyFrom: \"summary\"`."
+        },
+        {
+          "name": "alsoWritten",
+          "type": "readonly string[]",
+          "optional": true,
+          "array": false,
+          "doc": "The declaring instance's `alsoWritten`, for `bodyFrom: \"summary\"`."
         }
       ],
       "extendsNames": [],
@@ -40307,14 +40303,27 @@
           "type": "z.string().min(1)",
           "optional": false,
           "array": false,
-          "doc": "The chain's TOP layer — the template package an IG names — e.g."
+          "doc": "The IG's `id` from `sushi-config.yaml`, e.g. `smart.who.int.trust`."
         },
         {
-          "name": "version",
+          "name": "canonical",
+          "type": "z.string().url()",
+          "optional": false,
+          "array": false,
+          "doc": "Its `canonical`."
+        },
+        {
+          "name": "status",
           "type": "z.string().min(1)",
           "optional": false,
           "array": false,
-          "doc": "The top layer's version, e.g. `0.5.0`."
+          "doc": "Its `status` — what selects the watermark. `draft` here."
+        },
+        {
+          "name": "version",
+          "type": "z.string().min(1).optional()",
+          "optional": true,
+          "array": false
         },
         {
           "name": "layers",
@@ -40411,82 +40420,6 @@
       "refs": [],
       "unresolved": [],
       "external": [
-        "z"
-      ],
-      "exported": true
-    },
-    {
-      "id": "fhir-harness/schemas/ig-identity.ts#IgIdentity",
-      "name": "IgIdentity",
-      "module": "fhir-harness/schemas/ig-identity.ts",
-      "kind": "type-alias",
-      "fields": [],
-      "extendsNames": [],
-      "values": [],
-      "refs": [],
-      "unresolved": [],
-      "external": [],
-      "exported": true
-    },
-    {
-      "id": "fhir-harness/schemas/ig-identity.ts#IgIdentitySchema",
-      "name": "IgIdentitySchema",
-      "module": "fhir-harness/schemas/ig-identity.ts",
-      "kind": "zod-object",
-      "fields": [
-        {
-          "name": "$schema",
-          "type": "z.literal(IG_IDENTITY_SCHEMA_TAG)",
-          "optional": false,
-          "array": false
-        },
-        {
-          "name": "id",
-          "type": "z.string().min(1)",
-          "optional": false,
-          "array": false,
-          "doc": "The IG's `id` from `sushi-config.yaml`; SUSHI's `packageId` defaults to it."
-        },
-        {
-          "name": "canonical",
-          "type": "z.string().url()",
-          "optional": false,
-          "array": false
-        },
-        {
-          "name": "status",
-          "type": "z.string().min(1)",
-          "optional": false,
-          "array": false,
-          "doc": "`draft`, `active`, `retired` … — what selects the template's watermark."
-        },
-        {
-          "name": "version",
-          "type": "z.string().min(1).optional()",
-          "optional": true,
-          "array": false
-        },
-        {
-          "name": "readFrom",
-          "type": "z.string().min(1)",
-          "optional": false,
-          "array": false,
-          "doc": "Where it was read: a repository and file, so the claim can be re-checked."
-        },
-        {
-          "name": "readAt",
-          "type": "z.string().regex(/^\\d{4}-\\d{2}-\\d{2}$/)",
-          "optional": false,
-          "array": false,
-          "doc": "When it was read. A status is a fact at a moment, not forever."
-        }
-      ],
-      "extendsNames": [],
-      "values": [],
-      "refs": [],
-      "unresolved": [],
-      "external": [
-        "IG_IDENTITY_SCHEMA_TAG",
         "z"
       ],
       "exported": true
@@ -44156,123 +44089,6 @@
       "unresolved": [],
       "external": [],
       "exported": true
-    },
-    {
-      "id": "smart-base/schemas/dak.ts#componentShape",
-      "name": "componentShape",
-      "module": "smart-base/schemas/dak.ts",
-      "kind": "zod-object",
-      "doc": "The component fields, built from {@link DAK_COMPONENT_FIELDS} rather",
-      "fields": [],
-      "extendsNames": [
-        "Object"
-      ],
-      "values": [],
-      "refs": [],
-      "unresolved": [],
-      "external": [],
-      "exported": false
-    },
-    {
-      "id": "smart-base/schemas/dak.ts#DakComponentEntries",
-      "name": "DakComponentEntries",
-      "module": "smart-base/schemas/dak.ts",
-      "kind": "type-alias",
-      "doc": "One component's contents, as read from a `dak.config.json`.",
-      "fields": [],
-      "extendsNames": [],
-      "values": [],
-      "refs": [],
-      "unresolved": [],
-      "external": [],
-      "exported": true
-    },
-    {
-      "id": "smart-base/schemas/dak.ts#DakDeclaration",
-      "name": "DakDeclaration",
-      "module": "smart-base/schemas/dak.ts",
-      "kind": "interface",
-      "doc": "A `dak.config.json`, as much of it as is settled.",
-      "fields": [
-        {
-          "name": "name",
-          "type": "string",
-          "optional": false,
-          "array": false,
-          "doc": "The instance's name, e.g. `\"smart-immunizations\"`."
-        },
-        {
-          "name": "canonicalUrl",
-          "type": "string",
-          "optional": true,
-          "array": false,
-          "doc": "Where the published DAK lives — the base its `@id`s are minted against."
-        },
-        {
-          "name": "publicationUrl",
-          "type": "string",
-          "optional": true,
-          "array": false,
-          "doc": "Where the built IG is published, when that differs from `canonicalUrl`."
-        },
-        {
-          "name": "previewUrl",
-          "type": "string",
-          "optional": true,
-          "array": false,
-          "doc": "Where CI previews are served."
-        }
-      ],
-      "extendsNames": [
-        "KgNodeLabels"
-      ],
-      "values": [],
-      "refs": [],
-      "unresolved": [],
-      "external": [
-        "KgNodeLabels"
-      ],
-      "exported": true
-    },
-    {
-      "id": "smart-base/schemas/dak.ts#DakDeclarationSchema",
-      "name": "DakDeclarationSchema",
-      "module": "smart-base/schemas/dak.ts",
-      "kind": "zod-object",
-      "fields": [
-        {
-          "name": "name",
-          "type": "z.string().min(1)",
-          "optional": false,
-          "array": false
-        },
-        {
-          "name": "canonicalUrl",
-          "type": "z.string().url().optional()",
-          "optional": true,
-          "array": false
-        },
-        {
-          "name": "publicationUrl",
-          "type": "z.string().url().optional()",
-          "optional": true,
-          "array": false
-        },
-        {
-          "name": "previewUrl",
-          "type": "z.string().url().optional()",
-          "optional": true,
-          "array": false
-        }
-      ],
-      "extendsNames": [],
-      "values": [],
-      "refs": [],
-      "unresolved": [],
-      "external": [
-        "z"
-      ],
-      "exported": true
     }
   ],
   "edges": [
@@ -46119,6 +45935,14 @@
     {
       "from": "cat-harness/schemas/dak-blocks.ts#ValueSetBlock",
       "to": "cat-harness/schemas/dak-blocks.ts#DakBlockBase",
+      "via": "",
+      "kind": "extends",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "cat-harness/schemas/dak.ts#DakDeclaration",
+      "to": "cat-harness/schemas/kg-node.ts#KgNodeLabels",
       "via": "",
       "kind": "extends",
       "optional": false,
