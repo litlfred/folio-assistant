@@ -151,7 +151,7 @@
     },
     "stated": {
       "summary": "The licence is known, and the record says where it is stated.",
-      "count": 15,
+      "count": 13,
       "entries": [
         {
           "entry": "agent-skills/library/hmans-2026-beans-readme",
@@ -194,6 +194,11 @@
           "basis": "The document's own copyright paragraph, under its header: \"Copyright © 2010-2020 W3C® (MIT, ERCIM, Keio, Beihang). W3C liability, trademark and permissive document license rules apply\", where 'permissive document license' links to https://www.w3.org/Consortium/Legal/2015/copyright-software-and-document (the W3C Software and Document License, SPDX W3C-20150513). That licence permits copying, modifying and distributing the work provided the notice, any pre-existing notices, and a statement of changes go with every copy; the notice is in `note`, so this entry holds the text in full (issue #1614)."
         },
         {
+          "entry": "cat-harness/library/w3c-2024-prov-jsonld",
+          "id": "LicenseRef-W3C-Document-License",
+          "basis": "The document's own copyright paragraph, under its header: \"Copyright © 2016-2024 World Wide Web Consortium. W3C® liability, trademark and W3C Document License rules apply.\", where 'W3C Document License' links to the W3C Document License (https://www.w3.org/copyright/document-license/; no SPDX id). It permits copying and distributing the document's contents, or portions of them, in any medium for any purpose, provided every copy carries a link to the original, the pre-existing copyright notice, and the document's status; it grants NO right to modify. So this entry holds the text verbatim and changes no wording: the link, notice and status are on its first two page sections (page-001, page-002) and repeated in `note`. Splitting it into per-page files is a reading of 'portions' and of 'any medium', recorded here so the owner can overrule it, as for w3c-2013-prov-o (issue #1614)."
+        },
+        {
           "entry": "fhir-harness/library/cucumber-2024-gherkin-reference",
           "id": "MIT",
           "basis": "https://github.com/cucumber/docs/blob/3c93e6cee4c6164f40ed69dfe84ac440c2983120/LICENSE — the repository's LICENSE at the ingested commit, 'The MIT License (MIT) / Copyright (c) Cucumber Ltd', read 2026-10-01. The text is held in full; the notice MIT requires is reproduced in THIRD-PARTY-NOTICES.md."
@@ -209,24 +214,9 @@
           "basis": "https://github.com/ISAITB/gitb/blob/e3cb6c00ef57792b6464b03cea27c8e84a6565bc/LICENCE.txt and NOTICE.md at the ingested commit, read 2026-10-01: 'Copyright (C) 2026 European Union. Licensed under the EUPL, Version 1.2 or – as soon they will be approved by the European Commission - subsequent versions of the EUPL (the \"Licence\")'. EUPL-1.2 permits reproduction and distribution of the Work provided the copyright notice and licence notice are kept, so the README is held in full, unmodified, and the notice is reproduced in THIRD-PARTY-NOTICES.md."
         },
         {
-          "entry": "smart-base/library/9789240101197-eng",
-          "id": "CC-BY-NC-SA-3.0-IGO",
-          "basis": "The PDF's imprint page (p. 4): '© World Health Organization 2024. Some rights reserved. This work is available under the Creative Commons Attribution-NonCommercial-ShareAlike 3.0 IGO licence (CC BY-NC-SA 3.0 IGO; https://creativecommons.org/licenses/by-nc-sa/3.0/igo)', read 2026-10-01"
-        },
-        {
-          "entry": "smart-base/library/9789240116191-eng",
-          "id": "CC-BY-NC-SA-3.0-IGO",
-          "basis": "The PDF's imprint page (p. 3): '© World Health Organization 2025. Some rights reserved. This work is available under the Creative Commons Attribution-NonCommercial-ShareAlike 3.0 IGO licence (CC BY-NC-SA 3.0 IGO; https://creativecommons.org/licenses/by-nc-sa/3.0/igo)', read 2026-10-01"
-        },
-        {
           "entry": "smart-base/library/mehl-2021-who-smart-guidelines",
           "id": "CC-BY-3.0-IGO",
           "basis": "The article's own footer, p. e215: \"Copyright © 2021 World Health Organization; licensee Elsevier. This is an Open Access article published under the CC BY 3.0 IGO license.\""
-        },
-        {
-          "entry": "smart-base/library/who-dpi-h-reference-architecture-draft-v1",
-          "id": "CC-BY-NC-SA-3.0-IGO",
-          "basis": "The owner (litlfred), 2026-10-01, in session chat: 'CC BY-NC-SA 3.0 IGO, = the draft Reference Architecture.  i am responsible'. The PDF itself states no licence: all 254 pages were searched for licence/Creative Commons/CC BY/copyright/© on 2026-10-01, and the only matches are about third-party works (SNOMED CT, Archi, World Bank) cited inside it."
         }
       ]
     },
@@ -257,5 +247,5 @@
       ]
     }
   },
-  "total": 62
+  "total": 60
 }
