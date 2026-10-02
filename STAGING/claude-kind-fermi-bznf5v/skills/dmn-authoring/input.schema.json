@@ -1,0 +1,52 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://litlfred.github.io/folio-assistant/STAGING/claude-kind-fermi-bznf5v/skills/dmn-authoring/input.schema.json",
+  "title": "DMN Authoring Input",
+  "description": "Input schema for DMN (Decision Model and Notation) decision table authoring.",
+  "type": "object",
+  "required": [
+    "decisionName",
+    "inputVariables"
+  ],
+  "properties": {
+    "decisionName": {
+      "type": "string",
+      "description": "Name of the decision to model."
+    },
+    "inputVariables": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "name",
+          "type"
+        ],
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "type": {
+            "type": "string",
+            "enum": [
+              "string",
+              "integer",
+              "boolean",
+              "date",
+              "codeable-concept"
+            ]
+          }
+        }
+      }
+    },
+    "sourceLogic": {
+      "type": "string",
+      "description": "Reference to the clinical decision logic being modeled."
+    }
+  },
+  "staging": {
+    "branch": "claude/kind-fermi-bznf5v",
+    "sha": "8930a5d6476831b8d8c9f43a65e8524aa44eb5dd",
+    "pr": "1851/merge",
+    "run": "36998498509"
+  }
+}
