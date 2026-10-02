@@ -210,6 +210,7 @@ classDiagram
       instance [1] string
       dir [1] string
       title [1] string
+      extractedTitle [0..1] string
       provenance [1] string
       rung [1] paged | tabular | referenced | none
       docId [1] string

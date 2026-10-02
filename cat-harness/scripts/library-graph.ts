@@ -115,7 +115,18 @@ export interface LibraryEntry {
   instance: string;
   /** Repo-relative directory. */
   dir: string;
+  /**
+   * The title a reader is shown. A catalogue record's title when a catalogue
+   * node names this slug (`libraryId`), else the manifest's, else the slug —
+   * see `catalogueTitles` for why the order is that way round (bean `gnqa`).
+   */
   title: string;
+  /**
+   * The manifest's own title, present ONLY when a catalogue title replaced
+   * it. Kept rather than dropped: the extraction is still evidence of what
+   * the ingest saw, and search still matches it.
+   */
+  extractedTitle?: string;
   /** From the manifest — `ingested`, `authored`, … or `""`. */
   provenance: string;
   /** Which ingest rung: `paged`, `tabular`, or a determined `none`. */
@@ -637,6 +648,42 @@ export function readEntryBlocks(dir: string, opts: { verbatim?: boolean } = {}):
 }
 
 /**
+ * Catalogue titles by library slug, for one instance root (bean `gnqa`,
+ * finding 5).
+ *
+ * A manifest's `title` is whatever the extractor found on the first page, and
+ * for a scanned or designed cover that is often not the title at all —
+ * measured 2026-10-02: `who-pub-tps-931` read "Abies", `wpr-rdo-2020-003-eng`
+ * read "PUBLICATION AND INFORMATION", and `9789241548960-eng` read "Handbook
+ * forGuideline Development 2nd edition". Each of the three already has a
+ * catalogue node that names the slug in `libraryId` and carries the
+ * publisher's own title. A record somebody catalogued outranks a string an
+ * extractor guessed, so the catalogue answers first and the manifest only
+ * where no catalogue node names the entry.
+ *
+ * Read from the instance's DECLARED `catalogue` graph, the same lookup
+ * `intakeTitle` uses — never a hardcoded `catalogue/nodes` path.
+ */
+const catalogueTitleCache = new Map<string, Map<string, string>>();
+function catalogueTitles(instanceRoot: string): Map<string, string> {
+  const hit = catalogueTitleCache.get(instanceRoot);
+  if (hit) return hit;
+  const out = new Map<string, string>();
+  for (const cat of directoriesForGraph(instanceRoot, "catalogue")) {
+    const nodes = join(cat, "nodes");
+    if (!existsSync(nodes)) continue;
+    for (const f of readdirSync(nodes).filter((n) => n.endsWith(".json")).sort()) {
+      const node = readJson<{ libraryId?: unknown; title?: unknown }>(join(nodes, f));
+      if (typeof node?.libraryId === "string" && typeof node.title === "string" && node.title.trim()) {
+        if (!out.has(node.libraryId)) out.set(node.libraryId, node.title.trim());
+      }
+    }
+  }
+  catalogueTitleCache.set(instanceRoot, out);
+  return out;
+}
+
+/**
  * What an intake is a capture OF, as a title (bean `d4lb`).
  *
  * `folio-intake/v1` no longer repeats what another record says: it names a
@@ -759,7 +806,13 @@ export function readLibraryGraph(roots: string[], repoRoot: string = repoRootFor
         id: slug,
         instance,
         dir: relative(repoRoot, dir).split("\\").join("/"),
-        title: manifest?.title ?? slug,
+        ...(() => {
+          const extracted = manifest?.title ?? slug;
+          const catalogued = catalogueTitles(dirname(libDir)).get(slug);
+          return catalogued && catalogued !== extracted
+            ? { title: catalogued, extractedTitle: extracted }
+            : { title: extracted };
+        })(),
         provenance: manifest?.provenance ?? "",
         rung: ingestRungOf(has),
         docId: str("doc_id"),

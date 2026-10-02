@@ -108,6 +108,13 @@ const VIEWERS: Viewer[] = [
     renders: ["voices"],
   },
   {
+    id: "document-kinds-viewer",
+    title: "Document kinds viewer",
+    description: "Render each declared document-kinds directory: every kind's structure, sections and sources, one page per subject instance.",
+    script: "document-kinds:viz",
+    renders: ["document-kinds"],
+  },
+  {
     id: "state-viewer",
     title: "State graph viewer",
     description: "Render each declared state graph with a projection as a dashboard page: what the work plan holds, and what state it is in.",
