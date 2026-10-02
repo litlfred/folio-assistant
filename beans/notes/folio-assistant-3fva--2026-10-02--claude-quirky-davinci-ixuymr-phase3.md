@@ -10,7 +10,7 @@ created: "2026-10-02"
 ## Handover report: QA-reports arc lead (arc 3fva)
 
 - **Session:** https://claude.ai/code/session_01LKpuPotV3Ve5Za75DQ3AQR
-- **Written:** 2026-10-02 ~20:50 UTC. The owner asked for "Prepare for Handover" (skill from PR #1912), to be sent to the Merge Manager.
+- **Written:** 2026-10-02 ~20:50 UTC; updated ~21:20 UTC (#1801 green). The owner asked for "Prepare for Handover" (skill from PR #1912), to be sent to the Merge Manager.
 - **Role and mandate:** lead for arc `3fva`: derived QA leaves `main` for the orphan `qa-reports` branch, and the test-plan/test-report process. Owner rulings:
   - **MERGE POLICY (verbatim):** "Do NOT merge to main yourself. When your PR is green on every CI job, mark it 'Ready for review', add the label `ready-to-merge`, and comment 'ready: <head sha>'."
   - **Main:** "Only nothing into main".
@@ -40,12 +40,7 @@ Derived QA verdicts move off `main` onto `qa-reports`, keyed by commit; judgemen
   - f3bh: subgraph-readmes skips stored directories.
 
 ### Next in queue
-1. **Get #1801 green at `06ec92cba` or later.** The push fixes `stage` and `check:artefact-verification`. Still open: **qa-publish → `check:qa-corpus` reports 370 findings.** The committed witness copy (`cat-harness/test/results/witnesses/`) lags the docs pages:
-   - the directory is stored, so regen no longer refreshes it;
-   - main added pages;
-   - 4l4d's index changed shape.
-
-   Fix: run `bun run docs:pages` to rewrite the committed witnesses, check with `bun run check:qa-corpus -- --dir .`, then commit. A full `bun run gates` before pushing was cut off by a 2-hour time limit and has not completed.
+1. **Done (21:17 UTC):** #1801 is green on all 13 checks at `edf28c4c3`, QA publish included. The fixes: the staging asset count; stale `artefact-verification.json` entries; the committed witness copy refreshed with `bun run docs:pages`, its 7 new files added with `-f` past the 5hox ignore; and the generated outputs those files staled (`beans/README.md`, `cat-harness/test/README.md`, the UML overviews, `/qa/`, `harness.json`, the library index). **Lesson:** after adding or removing anything under a stored `test/results/`, run `bun run regen` and `bun run skill:register`, because several generated files count those files.
 2. **Bean `zlq9`: support both branch names.** Rule: `cat-qa-reports` if it exists, else `qa-reports` if it exists, else `cat-qa-reports`; writers use the same rule. This is for the steward's rename (#1913, bean `32f6`). Sites:
    - `qa-store.ts` `DEFAULT_QA_BRANCH` and every read and write;
    - `qa-site-assets.ts`, `qa-verify-moved.ts`;
@@ -61,7 +56,7 @@ Derived QA verdicts move off `main` onto `qa-reports`, keyed by commit; judgemen
 | item | kind | state | next action | owner |
 |---|---|---|---|---|
 | #1764 `claude/quirky-davinci-ixuymr` @ `8df0a71bd` | PR → main | `ready-to-merge`; main brought in by the steward | steward merges | merge steward |
-| #1801 `claude/quirky-davinci-ixuymr-phase3` @ `06ec92cba` | PR (stacked on #1764) | CI pending; qa-publish's `check:qa-corpus` expected red (370) | Next in queue, step 1 | this arc |
+| #1801 `claude/quirky-davinci-ixuymr-phase3` @ `edf28c4c3` | PR (stacked on #1764) | green, 13/13 | zlq9, then `ready:` | this arc |
 | `zlq9` | bean | todo | Next in queue, step 2 | this arc |
 | `5hox` | bean | prep merged; deletion held, NOT pushed | Next in queue, step 4 | this arc, owner go |
 | `zaui` (certification attestation family), `4iey` (per-plan DMN) | beans | todo | none needed yet | this arc |
@@ -84,6 +79,6 @@ Derived QA verdicts move off `main` onto `qa-reports`, keyed by commit; judgemen
 - Nothing else is unpushed. The scratchpad was lost in a container restart; nothing in it was needed.
 
 ### How to resume
-1. Read #1801's CI on its current head and fix it per Next in queue, step 1. Before any push, run `bun run gates`. A subset is not the gate set: two pushes here went red that way.
+1. Read #1801's CI on its current head; it was green at `edf28c4c3`. Before any push, run `bun run gates`. A subset is not the gate set: two pushes here went red that way.
 2. Do zlq9, then message the steward with session `01ToWZR4…` or its successor (see #1912 and #1913).
 3. On every merge of #1764 into #1801, take `ours` only for generated paths matched by folder or extension, never by substring. A "glossary" substring once swallowed `glossary-page.ts`. Run regen, then check every staged deletion is absent on MERGE_HEAD.
