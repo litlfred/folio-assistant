@@ -19,7 +19,7 @@ Found by the 5hox prep (2026-10-02). docs:pages:check and check:ci-invocations g
 
 ## Done on local branch qa-4l4d-f3bh, 2026-10-02 (NOT pushed)
 
-Commits d6ec93bae (design), 5471946b8 (regen), c2b29408c (kind-validator test).
+Commits d6ec93bae (design), f121c7f8a (regen), c2b29408c (kind-validator test).
 
 Design: committed pages carry only a stable badge placeholder; the QA data is a separate JSON asset.
 
