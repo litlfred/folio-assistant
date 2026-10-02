@@ -261,7 +261,6 @@
             "cat-harness/docs",
             "docs",
             "smart-base/docs",
-            "smart-immunizations/docs",
             "smart-trust/docs",
             "who-iris/docs",
             "who-iris/site"
@@ -334,7 +333,6 @@
           "gates": [
             "bun run check:artifact-index",
             "bun run smart-base:pages:check",
-            "bun run smart-immunizations:pages:check",
             "bun run smart-trust:pages:check"
           ],
           "typed": true,
@@ -462,6 +460,7 @@
           "gates": [
             "bun run check:l1-complete",
             "bun run check:l1-complete -- --check",
+            "bun run check:library-qa:check",
             "bun run check:methodology-evidence",
             "bun run check:soft-hyphens",
             "bun run check:source-licence:check",

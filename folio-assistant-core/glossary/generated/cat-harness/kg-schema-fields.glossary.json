@@ -7938,6 +7938,13 @@
       "status": "candidate"
     },
     {
+      "id": "site-indexes.libraryindexentryschema.withheldby",
+      "prefLabel": "LibraryIndexEntrySchema.withheldBy",
+      "definition": "The structured half of `withheld` (issue #1794): which gates refused, and the catalogue record — copied from `folio-withheld/v1`, so the same shapes, never restated.",
+      "source": "cat-harness/schemas/site-indexes.ts#LibraryIndexEntrySchema.withheldBy",
+      "status": "candidate"
+    },
+    {
       "id": "site-indexes.qaindexschema.badges",
       "prefLabel": "QaIndexSchema.badges",
       "definition": "Keyed `<nodeId>.<family>` or `page.<family>`; may be empty.",
@@ -11200,6 +11207,13 @@
       "status": "candidate"
     },
     {
+      "id": "withheld.withheldentryschema.gates",
+      "prefLabel": "WithheldEntrySchema.gates",
+      "definition": "The gates that refused, STRUCTURED — issue #1794. Optional because a generator may know only the sentence; when present, a reader shows \"copyright not granted\" from the gate itself rather than parsing {@link reason}, which is prose and free to change shape.",
+      "source": "cat-harness/schemas/withheld.ts#WithheldEntrySchema.gates",
+      "status": "candidate"
+    },
+    {
       "id": "withheld.withheldentryschema.path",
       "prefLabel": "WithheldEntrySchema.path",
       "definition": "Relative to the directory holding the file; a directory takes its whole subtree.",
@@ -11211,6 +11225,13 @@
       "prefLabel": "WithheldEntrySchema.reason",
       "definition": "Why — which gate, which verdict. A withholding with no reason cannot be re-checked.",
       "source": "cat-harness/schemas/withheld.ts#WithheldEntrySchema.reason",
+      "status": "candidate"
+    },
+    {
+      "id": "withheld.withheldentryschema.record",
+      "prefLabel": "WithheldEntrySchema.record",
+      "definition": "Where a reader can see what the work IS without being shown the work — the catalogue record. `page` is a SITE-ROOT path (leading `/`) to a published record page; `uri` is the upstream identifier (a Handle IRI, say). Either may be absent; a viewer links `page` first, `uri` second, and nothing at all rather than a guess.",
+      "source": "cat-harness/schemas/withheld.ts#WithheldEntrySchema.record",
       "status": "candidate"
     }
   ]

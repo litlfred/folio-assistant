@@ -1584,6 +1584,13 @@ jobs:
           bun run deps:python:check
           bun run check:l1-complete
           bun run check:l1-complete -- --check
+          # Issue #1794, bean `8iqc`: l1-complete asks whether ingestion
+          # PRODUCED each artefact; this asks whether it is any good -- a
+          # title that is the slug, or "Abies" off a scanned cover, passes
+          # every completeness test. ADVISORY: the findings are reported in
+          # the committed sidecar and do not fail; a stale sidecar or a
+          # could-not-determine entry does.
+          bun run check:library-qa:check
           # Bean `q7ey`: an ingested upload retires to `fsh-guts/uploads/`.
           # The rule was written and hand-swept on 2026-09-30, and that one
           # sweep left eight files in two places and a whole harness

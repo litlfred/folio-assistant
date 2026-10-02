@@ -490,7 +490,12 @@ function assetHref(
  * own gates. The item's catalogue PAGE stays: it is metadata, and it says why.
  */
 export function withheldManifest(all: Node[]): string {
-  const paths: { path: string; reason: string }[] = [];
+  const paths: {
+    path: string;
+    reason: string;
+    gates?: { gate: string; verdict: string }[];
+    record?: { id: string; page?: string; uri?: string };
+  }[] = [];
   for (const n of all) {
     for (const b of n.bitstreams ?? []) {
       const blocked = publicationBlockers(b.materialization?.gates);
@@ -498,7 +503,25 @@ export function withheldManifest(all: Node[]): string {
       const reason = `${n.id} ${b.bundle} "${b.name}": ${blocked
         .map((k) => `${k} ${b.materialization?.gates?.[k]?.verdict ?? "not recorded"}`)
         .join(", ")}`;
-      if (b.bundle === "ORIGINAL" && n.libraryId) paths.push({ path: `${n.libraryId}/`, reason });
+      // The ENTRY carries its gates and its catalogue record as data (issue
+      // #1794), so the library viewer can say which gate refused and send the
+      // reader to the record without parsing `reason`. The record page is the
+      // replica's item page, at the route the declaration gives it; the URI is
+      // the item's own resolvable IRI, absent when it records none.
+      if (b.bundle === "ORIGINAL" && n.libraryId) {
+        const page = replicaPageOf(n);
+        const uri = sourceOf(n);
+        paths.push({
+          path: `${n.libraryId}/`,
+          reason,
+          gates: blocked.map((k) => ({ gate: k, verdict: b.materialization?.gates?.[k]?.verdict ?? "not recorded" })),
+          record: {
+            id: n.id,
+            ...(page ? { page: `/${REPLICA_ROUTE}/${page}` } : {}),
+            ...(uri ? { uri } : {}),
+          },
+        });
+      }
       const lp = b.materialization?.localPath;
       if (b.bundle === "THUMBNAIL" && lp?.startsWith("library/")) paths.push({ path: lp.slice("library/".length), reason });
     }
@@ -1442,7 +1465,8 @@ function replicaPageOf(n: Node): string | undefined {
  */
 const LIBRARY_LINKS = libraryResolver(repoRootFor(HARNESS_ROOT), HARNESS_ROOT);
 
-const REPLICA_FROM_CATALOGUE = (() => {
+/** The replica's route from the site root (no slashes), as `withRoutes` gives it. */
+const REPLICA_ROUTE = (() => {
   const declared = (readDeclaration(INSTANCE)?.directories ?? []).flatMap((d) =>
     (d.graphKinds ?? []).map((kind) => ({ name: SUBJECT, kind, dir: d.path, instanceRoot: (d as { instanceRoot?: boolean }).instanceRoot === true })),
   );
@@ -1454,10 +1478,15 @@ const REPLICA_FROM_CATALOGUE = (() => {
         "catalogue page to link. Mark the replica's directory, or this link is a guess.",
     );
   }
-  const route = root.route;
-  const from = subjectPage(HANDLER, CATALOGUE_KIND, SUBJECT).replace(/^\/|\/$/g, "");
-  return posix.relative(from, route);
+  return root.route;
 })();
+
+/* Relative from the catalogue page, built on the one route above, which the
+   withheld list also uses (issue #1794) — two consumers, one route. */
+const REPLICA_FROM_CATALOGUE = posix.relative(
+  subjectPage(HANDLER, CATALOGUE_KIND, SUBJECT).replace(/^\/|\/$/g, ""),
+  REPLICA_ROUTE,
+);
 
 /**
  * The item's upstream URI, or undefined when it has none.

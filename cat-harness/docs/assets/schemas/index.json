@@ -26936,6 +26936,13 @@
           "doc": "Why the entry is withheld (bean `cw35`/`mkao`): no avatar, no verbatim excerpt."
         },
         {
+          "name": "withheldBy",
+          "type": "z .object({ gates: WithheldEntrySchema.shape.gates, record: WithheldEntrySchema.shape.record, }) .strict() .optional()",
+          "optional": true,
+          "array": false,
+          "doc": "The structured half of `withheld` (issue #1794): which gates refused,"
+        },
+        {
           "name": "avatar",
           "type": "z.object({ href: z.string(), src: z.string(), source: z.enum([\"cover\", \"figure\"]) }).strict().optional()",
           "optional": true,
@@ -26952,7 +26959,8 @@
       "values": [],
       "refs": [
         "cat-harness/schemas/site-indexes.ts#Count",
-        "cat-harness/schemas/site-indexes.ts#PageNumber"
+        "cat-harness/schemas/site-indexes.ts#PageNumber",
+        "cat-harness/schemas/withheld.ts#WithheldEntrySchema"
       ],
       "unresolved": [],
       "external": [
@@ -39543,6 +39551,51 @@
           "optional": false,
           "array": false,
           "doc": "Why — which gate, which verdict. A withholding with no reason cannot be re-checked."
+        },
+        {
+          "name": "gates",
+          "type": "z.array(WithheldGateSchema).min(1).optional()",
+          "optional": true,
+          "array": true,
+          "doc": "The gates that refused, STRUCTURED — issue #1794. Optional because a"
+        },
+        {
+          "name": "record",
+          "type": "z .object({ id: z.string().min(1).optional(), page: z.string().regex(/^\\//, \"a site-root path, beginning with /\").optio…",
+          "optional": true,
+          "array": false,
+          "doc": "Where a reader can see what the work IS without being shown the work —"
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [
+        "cat-harness/schemas/withheld.ts#WithheldGateSchema"
+      ],
+      "unresolved": [],
+      "external": [
+        "z"
+      ],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/withheld.ts#WithheldGateSchema",
+      "name": "WithheldGateSchema",
+      "module": "cat-harness/schemas/withheld.ts",
+      "kind": "zod-object",
+      "doc": "One publication gate that did not permit publication, and its verdict (e.g. `refused`).",
+      "fields": [
+        {
+          "name": "gate",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "verdict",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false
         }
       ],
       "extendsNames": [],
@@ -48333,6 +48386,14 @@
       "array": false
     },
     {
+      "from": "cat-harness/schemas/site-indexes.ts#LibraryIndexEntrySchema",
+      "to": "cat-harness/schemas/withheld.ts#WithheldEntrySchema",
+      "via": "withheldBy",
+      "kind": "field",
+      "optional": true,
+      "array": false
+    },
+    {
       "from": "cat-harness/schemas/site-indexes.ts#LibraryIndexSchema",
       "to": "cat-harness/schemas/site-indexes.ts#Count",
       "via": "queues",
@@ -50219,6 +50280,14 @@
       "kind": "field",
       "optional": true,
       "array": false
+    },
+    {
+      "from": "cat-harness/schemas/withheld.ts#WithheldEntrySchema",
+      "to": "cat-harness/schemas/withheld.ts#WithheldGateSchema",
+      "via": "gates",
+      "kind": "field",
+      "optional": true,
+      "array": true
     },
     {
       "from": "cat-harness/schemas/withheld.ts#WithheldSchema",
