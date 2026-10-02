@@ -26458,6 +26458,13 @@
           "array": false
         },
         {
+          "name": "extractedTitle",
+          "type": "z.string().optional()",
+          "optional": true,
+          "array": false,
+          "doc": "The manifest's extracted title, only when a catalogue title replaced it (bean `gnqa`)."
+        },
+        {
           "name": "provenance",
           "type": "z.string()",
           "optional": false,
