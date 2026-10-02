@@ -5,7 +5,7 @@ status: completed
 type: task
 priority: normal
 created_at: 2026-10-01T19:48:24Z
-updated_at: 2026-10-01T20:02:55Z
+updated_at: 2026-10-02T08:10:12Z
 parent: folio-assistant-uhkv
 ---
 
@@ -27,3 +27,15 @@ Owner, 2026-10-01: *"is ast export XML? any utility for downstream use to have i
 - Tests: generated AST files validate under ajv; a non-cache authority is refused by both Zod and the schema; JSON-LD ids and edges; committed files current.
 
 Not done: validating a real Publisher-written AST against the schemas. That needs an ast-export run, which is bean wnhh's dispatched session (fhir-ast seeding).
+
+## 2026-10-02: real Publisher-written ASTs validate
+
+The two ASTs agy seeded with `ig-cache.sh` both validate against the generated draft-07 schemas under ajv:
+- `fhir-ast/smart.who.int.trust` on litlfred/smart-trust: 678 resources.
+- `fhir-ast/smart.who.int.base` on litlfred/smart-base: 162 resources, 172 edges.
+
+Checked per AST:
+- `manifest.json` against `ig-ast.schema.json`;
+- `dependencies.json` against `ig-ast-dependencies.schema.json`.
+
+`ig-ast.ts list` (Zod, through `readAst`) reads both. This closes the "Not done" line above.
