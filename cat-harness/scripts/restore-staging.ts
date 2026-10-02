@@ -192,17 +192,64 @@ function branchState(o: RestoreOptions): "present" | "absent" | { reason: string
   return { reason: `git ls-remote ${o.remote} ${o.branch} exited ${r.code}: ${r.err.trim() || r.out.trim()}` };
 }
 
-/** The preview directory names under `prefix` at `rev`, or a reason it could not be read. */
+/**
+ * The slugs that have been RETIRED, read from {@link RETIRED_DIR} at `rev`.
+ *
+ * A retirement record is `<slug>.json`, so the store IS the set and no second
+ * list has to be kept in step with it.
+ *
+ * **A missing store is a determined empty set; an unreadable one is a reason.**
+ * Those must not collapse: "could not read the retirements" answered as "there
+ * are none" restores every retired preview, which is the exact defect this
+ * function exists to stop.
+ */
+function retiredSlugs(repo: string, rev: string, prefix: string): Set<string> | { reason: string } {
+  const dir = `${prefix}/${RETIRED_DIR}`;
+  const has = prefixExists(repo, rev, dir);
+  if (typeof has === "object") return has;
+  if (!has) return new Set();
+  const kids = git(repo, ["ls-tree", "--name-only", `${rev}:${dir}`]);
+  if (kids.code !== 0) return { reason: `git ls-tree ${rev}:${dir} exited ${kids.code}: ${kids.err.trim()}` };
+  return new Set(
+    kids.out
+      .split("\n")
+      .map((s) => s.trim())
+      .filter((s) => s.endsWith(".json"))
+      .map((s) => s.slice(0, -".json".length)),
+  );
+}
+
+/**
+ * The preview directory names under `prefix` at `rev` that a deploy must carry,
+ * or a reason they could not be read.
+ *
+ * **A RETIRED preview is not one of them**, and that is the whole point of this
+ * function rather than a tidy-up in it. `feature-staging.yml`'s cleanup removes
+ * the directory and writes `_retired/<slug>.json` in ONE commit; a full-replace
+ * deploy then restored the branch's previews from a read taken before that
+ * commit and put all of them back. Measured 2026-10-02 on `gh-pages`:
+ * `a46c58ca9df` removed 1615 files under
+ * `STAGING/claude-fervent-brahmagupta-rbwhzm/` and `93ffa64488c`, the next
+ * `docs(gh-pages)` full replace, re-added all 1615 — leaving a retirement
+ * record asserting a removal that had been undone.
+ *
+ * The record is what settles it. It is carried UNCONDITIONALLY
+ * ({@link CARRIED_PREFIXES}) precisely so it outlives the preview, so it is on
+ * the branch at restore time and says what a reader needs: this slug is gone on
+ * purpose. Consulting it makes the record authoritative rather than decorative.
+ */
 function previewsAt(repo: string, rev: string, prefix: string): string[] | { reason: string } {
   const has = prefixExists(repo, rev, prefix);
   if (typeof has === "object") return has;
   if (!has) return [];
+  const retired = retiredSlugs(repo, rev, prefix);
+  if (!(retired instanceof Set)) return retired;
   const kids = git(repo, ["ls-tree", "-d", "--name-only", `${rev}:${prefix}`]);
   if (kids.code !== 0) return { reason: `git ls-tree ${rev}:${prefix} exited ${kids.code}: ${kids.err.trim()}` };
   return kids.out
     .split("\n")
     .map((s) => s.trim())
-    .filter((s) => s !== "" && !(prefix === STAGING_PREFIX && s === RETIRED_DIR))
+    .filter((s) => s !== "" && !(prefix === STAGING_PREFIX && s === RETIRED_DIR) && !retired.has(s))
     .sort();
 }
 
@@ -214,25 +261,37 @@ function prefixExists(repo: string, rev: string, prefix: string): boolean | { re
 }
 
 /**
- * Copy one prefix out of `rev` into `into`, or say why it could not be.
+ * Copy the given paths out of `rev` into `into`, or say why they could not be.
  *
  * `git archive` piped through `tar` rather than a checkout: the branch is
  * fetched at depth 1 into the CURRENT repository, which is the site's working
  * tree, so checking it out would replace the tree the deploy is about to
  * publish.
+ *
+ * **A LIST rather than one prefix**, because the previews are no longer carried
+ * wholesale: a retired slug must not be laid back down, and archiving
+ * `STAGING/` entire would copy it whatever the caller had decided. Naming the
+ * paths keeps the decision in {@link previewsAt}, where it is tested, instead
+ * of writing the directories out and deleting some again.
+ *
+ * **Refuses an empty list rather than archiving everything.** `git archive rev`
+ * with no pathspec is the whole tree, so a caller whose filter removed every
+ * path would silently publish a copy of the branch over the site it built.
  */
-function copyPrefix(repo: string, rev: string, prefix: string, into: string): true | { reason: string } {
+function copyPaths(repo: string, rev: string, paths: readonly string[], into: string): true | { reason: string } {
+  if (paths.length === 0) return { reason: `git archive ${rev} called with no paths — refusing a whole-tree archive` };
   mkdirSync(into, { recursive: true });
   const work = mkdtempSync(join(tmpdir(), "restore-staging-"));
+  const shown = paths.length === 1 ? (paths[0] ?? "") : `${paths.length} path(s)`;
   try {
     const tar = join(work, "carry.tar");
-    const archived = git(repo, ["archive", "--format=tar", "-o", tar, rev, prefix]);
+    const archived = git(repo, ["archive", "--format=tar", "-o", tar, rev, ...paths]);
     if (archived.code !== 0) {
-      return { reason: `git archive ${rev} ${prefix} exited ${archived.code}: ${archived.err.trim()}` };
+      return { reason: `git archive ${rev} ${shown} exited ${archived.code}: ${archived.err.trim()}` };
     }
     const untar = spawnSync("tar", ["-xf", tar, "-C", into], { encoding: "utf-8" });
     if (untar.error !== undefined || untar.status !== 0) {
-      return { reason: `tar -xf ${prefix} exited ${untar.status ?? "?"}: ${String(untar.error ?? untar.stderr ?? "").trim()}` };
+      return { reason: `tar -xf ${shown} exited ${untar.status ?? "?"}: ${String(untar.error ?? untar.stderr ?? "").trim()}` };
     }
   } finally {
     rmSync(work, { recursive: true, force: true });
@@ -285,7 +344,7 @@ export function restoreStaging(o: RestoreOptions): RestoreOutcome {
       carried.push({ prefix, state: "absent" });
       continue;
     }
-    const copied = copyPrefix(o.repo, "FETCH_HEAD", prefix, into);
+    const copied = copyPaths(o.repo, "FETCH_HEAD", [prefix], into);
     if (copied !== true) {
       // A carry that failed is not a warning. The deploy that follows is a
       // full replace, so continuing here DELETES the branch's own record of
@@ -299,7 +358,9 @@ export function restoreStaging(o: RestoreOptions): RestoreOutcome {
   if (!Array.isArray(found)) return { state: "unknown", previews: [], carried: [], reason: found.reason };
   if (found.length === 0) return { state: "empty", previews: [], carried };
 
-  const copied = copyPrefix(o.repo, "FETCH_HEAD", o.prefix, into);
+  // Only the previews `previewsAt` kept — naming them is what leaves a retired
+  // slug on the branch instead of laying it back down.
+  const copied = copyPaths(o.repo, "FETCH_HEAD", found.map((s) => `${o.prefix}/${s}`), into);
   if (copied !== true) return { state: "unknown", previews: [], carried: [], reason: copied.reason };
   return { state: "restored", previews: found, carried };
 }
