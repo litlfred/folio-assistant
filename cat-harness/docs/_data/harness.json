@@ -132,7 +132,7 @@
       "href": "/beans/",
       "hidden": false,
       "icon": "beans",
-      "count": 597,
+      "count": 603,
       "unit": "beans"
     },
     {
@@ -146,7 +146,8 @@
         "glass"
       ],
       "href": "/cat-harness/docs-auto/index/docs/docs/",
-      "hidden": false
+      "hidden": false,
+      "icon": "docs"
     },
     {
       "id": "external-schemas",
@@ -159,7 +160,8 @@
         "glass"
       ],
       "href": "/external-schemas/",
-      "hidden": false
+      "hidden": false,
+      "icon": "schemas"
     },
     {
       "id": "folio",
@@ -202,7 +204,8 @@
       ],
       "href": "/cat-harness/library/cat-harness/",
       "hidden": false,
-      "count": 25,
+      "icon": "library",
+      "count": 40,
       "unit": "entries"
     },
     {
@@ -217,6 +220,7 @@
       ],
       "href": "/methodologies/",
       "hidden": false,
+      "icon": "methodologies",
       "theme": "analyst"
     },
     {
@@ -230,7 +234,8 @@
         "glass"
       ],
       "href": "/processes/",
-      "hidden": false
+      "hidden": false,
+      "icon": "processes"
     },
     {
       "id": "qa",
@@ -244,7 +249,8 @@
       ],
       "href": "/lsi/",
       "hidden": false,
-      "count": 987,
+      "icon": "index",
+      "count": 998,
       "unit": "documents"
     },
     {
@@ -272,7 +278,8 @@
       ],
       "href": "/cat-harness/schemas/cat-harness/",
       "hidden": false,
-      "count": 202,
+      "icon": "schemas",
+      "count": 208,
       "unit": "modules"
     },
     {
@@ -287,7 +294,8 @@
       ],
       "href": "/cat-harness/docs-auto/index/skills/skills/",
       "hidden": false,
-      "readOnly": false
+      "readOnly": false,
+      "icon": "skills"
     },
     {
       "id": "swimlane-glossary",
@@ -328,7 +336,8 @@
         "glass"
       ],
       "href": "/tools/",
-      "hidden": false
+      "hidden": false,
+      "icon": "tools"
     },
     {
       "id": "translation-sources",
@@ -358,7 +367,7 @@
       "href": "/cat-harness/uploads/cat-harness/",
       "hidden": false,
       "icon": "uploads",
-      "count": 16,
+      "count": 19,
       "unit": "waiting"
     }
   ],
@@ -368,6 +377,7 @@
       "title": "Folio Assistant",
       "label": "Folio Assistant",
       "description": "The repository itself, acting as an initialized instance. NAMED `folio-assistant-checkout` rather than `folio-assistant`, which `cat-harness/harness.json` already uses: two declarations sharing a name makes `declaredBy` and a sticky's `contributedBy` ambiguous, so a directory can be attributed to the wrong instance while reading correctly. It declares the directories a person drops things into, which belong to the checkout rather than to any one layer inside it.",
+      "summary": "This repository as a working instance: the platform and the folios it hosts.",
       "footer": false,
       "needs": [
         "agent-skills",
@@ -426,7 +436,7 @@
       "reads": "a leaf of paper held in a frame — the folio, and the instance that holds it",
       "genericAvatar": false,
       "instantiated": true,
-      "href": "/",
+      "href": "/#harness-folio-assistant",
       "hrefKind": "folio",
       "stats": [
         {
@@ -486,6 +496,81 @@
         {
           "kind": "waiver",
           "note": "no viewer yet"
+        }
+      ],
+      "subgraphs": [
+        {
+          "id": "uploads",
+          "kinds": [
+            "uploads"
+          ],
+          "where": "local",
+          "path": "uploads/"
+        },
+        {
+          "id": "root-tools",
+          "kinds": [
+            "code"
+          ],
+          "where": "local",
+          "path": "tools/"
+        },
+        {
+          "id": "fsh-guts",
+          "kinds": [
+            "fsh-guts"
+          ],
+          "where": "local",
+          "path": "fsh-guts/"
+        },
+        {
+          "id": "beans",
+          "kinds": [
+            "beans"
+          ],
+          "where": "local",
+          "path": "beans/"
+        },
+        {
+          "id": "todos",
+          "kinds": [
+            "todos"
+          ],
+          "where": "local",
+          "path": "todos/"
+        },
+        {
+          "id": "memory",
+          "kinds": [
+            "memory",
+            "waiver"
+          ],
+          "where": "local",
+          "path": "memory/"
+        },
+        {
+          "id": "interaction",
+          "kinds": [
+            "interaction"
+          ],
+          "where": "local",
+          "path": "interaction/"
+        },
+        {
+          "id": "issue-marks",
+          "kinds": [
+            "issue-marks"
+          ],
+          "where": "local",
+          "path": "issue-marks/"
+        },
+        {
+          "id": "root-docs",
+          "kinds": [
+            "docs"
+          ],
+          "where": "local",
+          "path": "docs/"
         }
       ],
       "findings": [
@@ -590,6 +675,48 @@
           "note": "no viewer yet"
         }
       ],
+      "subgraphs": [
+        {
+          "id": "smart-trust-artifact-index",
+          "kinds": [
+            "fhir-artifact-index"
+          ],
+          "where": "local",
+          "path": "smart-trust/fhir-artifact-index/"
+        },
+        {
+          "id": "smart-trust-docs",
+          "kinds": [
+            "docs"
+          ],
+          "where": "local",
+          "path": "smart-trust/docs/"
+        },
+        {
+          "id": "smart-trust-scripts",
+          "kinds": [
+            "code"
+          ],
+          "where": "local",
+          "path": "smart-trust/scripts/"
+        },
+        {
+          "id": "qa",
+          "kinds": [
+            "qa"
+          ],
+          "where": "local",
+          "path": "smart-trust/test/results/"
+        },
+        {
+          "id": "smart-trust-themes",
+          "kinds": [
+            "themes"
+          ],
+          "where": "local",
+          "path": "smart-trust/themes/"
+        }
+      ],
       "findings": [
         "smart-trust: declares 4 graph(s) with no published viewer — code, fhir-artifact-index, qa, themes. Declared and not rendered is a gap, not a dead link.",
         "smart-trust: 1 graph(s) hold materialized content and are READ-ONLY — fhir-artifact-index. Readable, not editable here: copy one out to your own folio/ to work on it. Separate from whether a viewer is published.",
@@ -647,6 +774,24 @@
           "note": "no viewer yet"
         }
       ],
+      "subgraphs": [
+        {
+          "id": "smart-immunizations-artifact-index",
+          "kinds": [
+            "fhir-artifact-index"
+          ],
+          "where": "local",
+          "path": "smart-immunizations/fhir-artifact-index/"
+        },
+        {
+          "id": "qa",
+          "kinds": [
+            "qa"
+          ],
+          "where": "local",
+          "path": "smart-immunizations/test/results/"
+        }
+      ],
       "findings": [
         "smart-immunizations: declares 2 graph(s) with no published viewer — fhir-artifact-index, qa. Declared and not rendered is a gap, not a dead link.",
         "smart-immunizations: 1 graph(s) hold materialized content and are READ-ONLY — fhir-artifact-index. Readable, not editable here: copy one out to your own folio/ to work on it. Separate from whether a viewer is published.",
@@ -697,6 +842,16 @@
         {
           "kind": "qa",
           "note": "no viewer yet"
+        }
+      ],
+      "subgraphs": [
+        {
+          "id": "qa",
+          "kinds": [
+            "qa"
+          ],
+          "where": "local",
+          "path": "smart-l1/test/results/"
         }
       ],
       "findings": [
@@ -750,6 +905,16 @@
           "note": "no viewer yet"
         }
       ],
+      "subgraphs": [
+        {
+          "id": "qa",
+          "kinds": [
+            "qa"
+          ],
+          "where": "local",
+          "path": "smart-ig/test/results/"
+        }
+      ],
       "findings": [
         "smart-ig: declares 1 graph(s) with no published viewer — qa. Declared and not rendered is a gap, not a dead link.",
         "smart-ig: no avatar declared for this instance — showing the generic mark."
@@ -799,6 +964,16 @@
         {
           "kind": "qa",
           "note": "no viewer yet"
+        }
+      ],
+      "subgraphs": [
+        {
+          "id": "qa",
+          "kinds": [
+            "qa"
+          ],
+          "where": "local",
+          "path": "smart-dak/test/results/"
         }
       ],
       "findings": [
@@ -860,6 +1035,32 @@
         {
           "kind": "voices",
           "path": "/cat-harness/voices/who-style-guide/"
+        }
+      ],
+      "subgraphs": [
+        {
+          "id": "glossary",
+          "kinds": [
+            "glossary"
+          ],
+          "where": "local",
+          "path": "who-style-guide/glossary/"
+        },
+        {
+          "id": "qa",
+          "kinds": [
+            "qa"
+          ],
+          "where": "local",
+          "path": "who-style-guide/test/results/"
+        },
+        {
+          "id": "voices",
+          "kinds": [
+            "voices"
+          ],
+          "where": "local",
+          "path": "who-style-guide/skills/voices/"
         }
       ],
       "findings": [
@@ -945,6 +1146,80 @@
           "path": "/cat-harness/voices/smart-base/"
         }
       ],
+      "subgraphs": [
+        {
+          "id": "smart-base-docs",
+          "kinds": [
+            "docs"
+          ],
+          "where": "local",
+          "path": "smart-base/docs/"
+        },
+        {
+          "id": "library",
+          "kinds": [
+            "library"
+          ],
+          "where": "local",
+          "path": "smart-base/library/"
+        },
+        {
+          "id": "methodologies",
+          "kinds": [
+            "methodology"
+          ],
+          "where": "local",
+          "path": "smart-base/methodologies/"
+        },
+        {
+          "id": "processes",
+          "kinds": [
+            "processes"
+          ],
+          "where": "local",
+          "path": "smart-base/methodologies/processes/"
+        },
+        {
+          "id": "smart-base-house-processes",
+          "kinds": [
+            "processes"
+          ],
+          "where": "local",
+          "path": "smart-base/processes/"
+        },
+        {
+          "id": "smart-base-artifact-index",
+          "kinds": [
+            "fhir-artifact-index"
+          ],
+          "where": "local",
+          "path": "smart-base/fhir-artifact-index/"
+        },
+        {
+          "id": "tools",
+          "kinds": [
+            "tools"
+          ],
+          "where": "local",
+          "path": "smart-base/tools/"
+        },
+        {
+          "id": "qa",
+          "kinds": [
+            "qa"
+          ],
+          "where": "local",
+          "path": "smart-base/test/results/"
+        },
+        {
+          "id": "voices",
+          "kinds": [
+            "voices"
+          ],
+          "where": "local",
+          "path": "smart-base/skills/voices/"
+        }
+      ],
       "findings": [
         "smart-base: declares 3 graph(s) with no published viewer — fhir-artifact-index, qa, tools. Declared and not rendered is a gap, not a dead link.",
         "smart-base: 1 graph(s) hold materialized content and are READ-ONLY — fhir-artifact-index. Readable, not editable here: copy one out to your own folio/ to work on it. Separate from whether a viewer is published."
@@ -979,17 +1254,17 @@
         {
           "id": "directories",
           "label": "declared directories",
-          "value": 9
+          "value": 11
         },
         {
           "id": "kinds",
           "label": "declared graph kinds",
-          "value": 8
+          "value": 9
         },
         {
           "id": "views",
           "label": "visualisations you can open",
-          "value": 5
+          "value": 6
         }
       ],
       "visualisations": [
@@ -1015,6 +1290,10 @@
           "note": "no viewer yet"
         },
         {
+          "kind": "schemas",
+          "path": "/cat-harness/schemas/"
+        },
+        {
           "kind": "skills",
           "path": "/cat-harness/docs-auto/index/skills/who-iris-skills/"
         },
@@ -1028,83 +1307,99 @@
           "readOnly": false
         }
       ],
+      "subgraphs": [
+        {
+          "id": "library",
+          "kinds": [
+            "library"
+          ],
+          "where": "local",
+          "path": "who-iris/library/"
+        },
+        {
+          "id": "who-iris-site",
+          "kinds": [
+            "docs"
+          ],
+          "where": "local",
+          "path": "who-iris/site/"
+        },
+        {
+          "id": "who-iris-catalogue",
+          "kinds": [
+            "catalogue"
+          ],
+          "where": "local",
+          "path": "who-iris/catalogue/"
+        },
+        {
+          "id": "who-iris-uploads",
+          "kinds": [
+            "uploads"
+          ],
+          "where": "local",
+          "path": "who-iris/uploads/"
+        },
+        {
+          "id": "who-iris-skills",
+          "kinds": [
+            "skills"
+          ],
+          "where": "local",
+          "path": "who-iris/skills/"
+        },
+        {
+          "id": "who-iris-themes",
+          "kinds": [
+            "themes"
+          ],
+          "where": "local",
+          "path": "who-iris/themes/"
+        },
+        {
+          "id": "who-iris-docs",
+          "kinds": [
+            "docs"
+          ],
+          "where": "local",
+          "path": "who-iris/docs/"
+        },
+        {
+          "id": "who-iris-scripts",
+          "kinds": [
+            "code"
+          ],
+          "where": "local",
+          "path": "who-iris/scripts/"
+        },
+        {
+          "id": "who-iris-sources",
+          "kinds": [
+            "schemas"
+          ],
+          "where": "local",
+          "path": "who-iris/sources/"
+        },
+        {
+          "id": "id-lookup",
+          "kinds": [
+            "code"
+          ],
+          "where": "local",
+          "path": "who-iris/id-lookup/"
+        },
+        {
+          "id": "qa",
+          "kinds": [
+            "qa"
+          ],
+          "where": "local",
+          "path": "who-iris/test/results/"
+        }
+      ],
       "findings": [
         "who-iris: declares 3 graph(s) with no published viewer — code, qa, themes. Declared and not rendered is a gap, not a dead link.",
         "who-iris: 1 graph(s) hold materialized content and are READ-ONLY — catalogue. Readable, not editable here: copy one out to your own folio/ to work on it. Separate from whether a viewer is published."
-      ],
-      "navbarIcons": [
-        "close",
-        "todos",
-        "beans",
-        "processes",
-        "kg",
-        "launcher"
-      ]
-    },
-    {
-      "name": "large-datasets",
-      "title": "large-datasets",
-      "label": "large-datasets",
-      "description": "Taking a subset of a corpus you will never hold — and publishing artifacts too big for the site that describes them.",
-      "footer": false,
-      "needs": [
-        "folio-assistant-core"
-      ],
-      "icon": null,
-      "tone": 0,
-      "toneFrom": "avatar",
-      "reads": "a question mark — no avatar is declared for this kind",
-      "genericAvatar": true,
-      "instantiated": false,
-      "href": "/cat-harness/schemas/large-datasets/",
-      "hrefKind": "viewer",
-      "stats": [
-        {
-          "id": "directories",
-          "label": "declared directories",
-          "value": 7
-        },
-        {
-          "id": "kinds",
-          "label": "declared graph kinds",
-          "value": 6
-        },
-        {
-          "id": "views",
-          "label": "visualisations you can open",
-          "value": 4
-        }
-      ],
-      "visualisations": [
-        {
-          "kind": "cat-harness",
-          "path": "/cat-harness/schemas/large-datasets/"
-        },
-        {
-          "kind": "code",
-          "note": "no viewer yet"
-        },
-        {
-          "kind": "processes",
-          "path": "/processes/"
-        },
-        {
-          "kind": "qa",
-          "note": "no viewer yet"
-        },
-        {
-          "kind": "schemas",
-          "path": "/cat-harness/schemas/large-datasets/"
-        },
-        {
-          "kind": "skills",
-          "path": "/cat-harness/docs-auto/index/skills/large-datasets-skills/"
-        }
-      ],
-      "findings": [
-        "large-datasets: declares 2 graph(s) with no published viewer — code, qa. Declared and not rendered is a gap, not a dead link.",
-        "large-datasets: no avatar declared for this instance — showing the generic mark.",
-        "large-datasets: has no docs/ of its own, so the tile opens a kind handler's viewer (/cat-harness/schemas/large-datasets/) rather than the instance's own themed root."
       ],
       "navbarIcons": [
         "close",
@@ -1136,17 +1431,17 @@
         {
           "id": "directories",
           "label": "declared directories",
-          "value": 7
+          "value": 8
         },
         {
           "id": "kinds",
           "label": "declared graph kinds",
-          "value": 6
+          "value": 7
         },
         {
           "id": "views",
           "label": "visualisations you can open",
-          "value": 3
+          "value": 4
         }
       ],
       "visualisations": [
@@ -1167,12 +1462,82 @@
           "note": "no viewer yet"
         },
         {
+          "kind": "schemas",
+          "path": "/cat-harness/schemas/"
+        },
+        {
           "kind": "skills",
           "note": "no viewer yet"
         },
         {
           "kind": "voices",
           "path": "/cat-harness/voices/folio-assistant-sci/"
+        }
+      ],
+      "subgraphs": [
+        {
+          "id": "library",
+          "kinds": [
+            "library"
+          ],
+          "where": "local",
+          "path": "folio-assistant-sci/library/"
+        },
+        {
+          "id": "sci-methodologies",
+          "kinds": [
+            "methodology"
+          ],
+          "where": "local",
+          "path": "folio-assistant-sci/methodologies/"
+        },
+        {
+          "id": "sci-adapters",
+          "kinds": [
+            "code"
+          ],
+          "where": "local",
+          "path": "folio-assistant-sci/adapters/"
+        },
+        {
+          "id": "sci-sources",
+          "kinds": [
+            "schemas"
+          ],
+          "where": "local",
+          "path": "folio-assistant-sci/sources/"
+        },
+        {
+          "id": "qa",
+          "kinds": [
+            "qa"
+          ],
+          "where": "local",
+          "path": "folio-assistant-sci/test/results/"
+        },
+        {
+          "id": "voices",
+          "kinds": [
+            "voices"
+          ],
+          "where": "local",
+          "path": "folio-assistant-sci/skills/voices/"
+        },
+        {
+          "id": "lean-skills",
+          "kinds": [
+            "skills"
+          ],
+          "where": "local",
+          "path": "folio-assistant-sci/skills/lean/"
+        },
+        {
+          "id": "data-skills",
+          "kinds": [
+            "skills"
+          ],
+          "where": "local",
+          "path": "folio-assistant-sci/skills/data/"
         }
       ],
       "findings": [
@@ -1241,73 +1606,45 @@
           "note": "no viewer yet"
         }
       ],
+      "subgraphs": [
+        {
+          "id": "library",
+          "kinds": [
+            "library"
+          ],
+          "where": "local",
+          "path": "fhir-harness/library/"
+        },
+        {
+          "id": "fhir-ig-skills",
+          "kinds": [
+            "skills"
+          ],
+          "where": "local",
+          "path": "fhir-harness/skills/"
+        },
+        {
+          "id": "fhir-ig-tools",
+          "kinds": [
+            "tools"
+          ],
+          "where": "local",
+          "path": "fhir-harness/tools/"
+        },
+        {
+          "id": "qa",
+          "kinds": [
+            "qa"
+          ],
+          "where": "local",
+          "path": "fhir-harness/test/results/"
+        }
+      ],
       "findings": [
         "fhir-harness: declares 2 graph(s) with no published viewer — qa, tools. Declared and not rendered is a gap, not a dead link.",
         "fhir-harness: a viewer is published at /cat-harness/schemas/fhir-harness/ for a \"schemas\" graph this instance does not declare. Declare it and the tile links it.",
         "fhir-harness: no avatar declared for this instance — showing the generic mark.",
         "fhir-harness: has no docs/ of its own, so the tile opens a kind handler's viewer (/cat-harness/library/fhir-harness/) rather than the instance's own themed root."
-      ],
-      "navbarIcons": [
-        "close",
-        "todos",
-        "beans",
-        "processes",
-        "kg",
-        "launcher"
-      ]
-    },
-    {
-      "name": "agent-skills",
-      "title": "agent-skills",
-      "label": "agent-skills",
-      "description": "Published guidance on authoring and operating agent skills — vendor documentation and peer-reviewed evidence — and the voices derived from it.",
-      "footer": false,
-      "needs": [
-        "folio-assistant-core"
-      ],
-      "icon": null,
-      "tone": 0,
-      "toneFrom": "avatar",
-      "reads": "a question mark — no avatar is declared for this kind",
-      "genericAvatar": true,
-      "instantiated": false,
-      "href": "/cat-harness/library/agent-skills/",
-      "hrefKind": "viewer",
-      "stats": [
-        {
-          "id": "directories",
-          "label": "declared directories",
-          "value": 3
-        },
-        {
-          "id": "kinds",
-          "label": "declared graph kinds",
-          "value": 3
-        },
-        {
-          "id": "views",
-          "label": "visualisations you can open",
-          "value": 2
-        }
-      ],
-      "visualisations": [
-        {
-          "kind": "library",
-          "path": "/cat-harness/library/agent-skills/"
-        },
-        {
-          "kind": "qa",
-          "note": "no viewer yet"
-        },
-        {
-          "kind": "voices",
-          "path": "/cat-harness/voices/agent-skills/"
-        }
-      ],
-      "findings": [
-        "agent-skills: declares 1 graph(s) with no published viewer — qa. Declared and not rendered is a gap, not a dead link.",
-        "agent-skills: no avatar declared for this instance — showing the generic mark.",
-        "agent-skills: has no docs/ of its own, so the tile opens a kind handler's viewer (/cat-harness/library/agent-skills/) rather than the instance's own themed root."
       ],
       "navbarIcons": [
         "close",
@@ -1435,9 +1772,154 @@
           "path": "/cat-harness/voices/folio-assistant-core/"
         }
       ],
+      "subgraphs": [
+        {
+          "id": "core-schemas",
+          "kinds": [
+            "schemas",
+            "cat-harness"
+          ],
+          "where": "local",
+          "path": "folio-assistant-core/schemas/"
+        },
+        {
+          "id": "folios",
+          "kinds": [
+            "folio"
+          ],
+          "where": "local",
+          "path": "folio-assistant-core/folios/"
+        },
+        {
+          "id": "glossary",
+          "kinds": [
+            "glossary"
+          ],
+          "where": "local",
+          "path": "folio-assistant-core/glossary/"
+        },
+        {
+          "id": "core-tools",
+          "kinds": [
+            "tools"
+          ],
+          "where": "local",
+          "path": "folio-assistant-core/tools/"
+        },
+        {
+          "id": "core-adapters",
+          "kinds": [
+            "code"
+          ],
+          "where": "local",
+          "path": "folio-assistant-core/adapters/"
+        },
+        {
+          "id": "core-scripts",
+          "kinds": [
+            "code"
+          ],
+          "where": "local",
+          "path": "folio-assistant-core/scripts/"
+        },
+        {
+          "id": "core-library",
+          "kinds": [
+            "library"
+          ],
+          "where": "local",
+          "path": "folio-assistant-core/library/"
+        },
+        {
+          "id": "core-methodologies",
+          "kinds": [
+            "methodology"
+          ],
+          "where": "local",
+          "path": "folio-assistant-core/methodologies/"
+        },
+        {
+          "id": "core-skills",
+          "kinds": [
+            "skills"
+          ],
+          "where": "local",
+          "path": "folio-assistant-core/skills/"
+        },
+        {
+          "id": "core-processes",
+          "kinds": [
+            "processes"
+          ],
+          "where": "local",
+          "path": "folio-assistant-core/processes/"
+        },
+        {
+          "id": "qa",
+          "kinds": [
+            "qa"
+          ],
+          "where": "local",
+          "path": "folio-assistant-core/test/results/"
+        },
+        {
+          "id": "voices",
+          "kinds": [
+            "voices"
+          ],
+          "where": "local",
+          "path": "folio-assistant-core/skills/voices/"
+        }
+      ],
       "findings": [
         "folio-assistant-core: declares 4 graph(s) with no published viewer — code, folio, qa, tools. Declared and not rendered is a gap, not a dead link.",
         "folio-assistant-core: has no docs/ of its own, so the tile opens a kind handler's viewer (/cat-harness/schemas/folio-assistant-core/) rather than the instance's own themed root."
+      ],
+      "navbarIcons": [
+        "close",
+        "todos",
+        "beans",
+        "processes",
+        "kg",
+        "launcher"
+      ]
+    },
+    {
+      "name": "large-datasets",
+      "title": "large-datasets",
+      "label": "large-datasets",
+      "description": "Taking a subset of a corpus you will never hold — and publishing artifacts too big for the site that describes them.",
+      "footer": false,
+      "needs": [
+        "cat-harness"
+      ],
+      "icon": null,
+      "tone": 0,
+      "toneFrom": "avatar",
+      "reads": "a question mark — no avatar is declared for this kind",
+      "genericAvatar": true,
+      "instantiated": false,
+      "stats": [
+        {
+          "id": "directories",
+          "label": "declared directories",
+          "value": 0
+        },
+        {
+          "id": "kinds",
+          "label": "declared graph kinds",
+          "value": 0
+        },
+        {
+          "id": "views",
+          "label": "visualisations you can open",
+          "value": 0
+        }
+      ],
+      "visualisations": [],
+      "subgraphs": [],
+      "findings": [
+        "large-datasets: no avatar declared for this instance — showing the generic mark."
       ],
       "navbarIcons": [
         "close",
@@ -1468,7 +1950,7 @@
         {
           "id": "directories",
           "label": "declared directories",
-          "value": 2
+          "value": 4
         },
         {
           "id": "kinds",
@@ -1487,9 +1969,104 @@
           "note": "no viewer yet"
         }
       ],
+      "subgraphs": [
+        {
+          "id": "cat-harness-tools-adapters",
+          "kinds": [
+            "code"
+          ],
+          "where": "local",
+          "path": "cat-harness-tools/adapters/"
+        },
+        {
+          "id": "cat-harness-tools-scripts",
+          "kinds": [
+            "code"
+          ],
+          "where": "local",
+          "path": "cat-harness-tools/scripts/"
+        },
+        {
+          "id": "cat-harness-tools-id-lookup",
+          "kinds": [
+            "code"
+          ],
+          "where": "local",
+          "path": "cat-harness-tools/id-lookup/"
+        },
+        {
+          "id": "cat-harness-tools-tests",
+          "kinds": [
+            "code"
+          ],
+          "where": "local",
+          "path": "cat-harness-tools/test/"
+        }
+      ],
       "findings": [
         "cat-harness-tools: declares 1 graph(s) with no published viewer — code. Declared and not rendered is a gap, not a dead link.",
         "cat-harness-tools: no avatar declared for this instance — showing the generic mark."
+      ],
+      "navbarIcons": [
+        "close",
+        "todos",
+        "beans",
+        "processes",
+        "kg",
+        "launcher"
+      ]
+    },
+    {
+      "name": "agent-skills",
+      "title": "agent-skills",
+      "label": "agent-skills",
+      "description": "Published guidance on authoring and operating agent skills — vendor documentation and peer-reviewed evidence — and the voices derived from it.",
+      "footer": false,
+      "needs": [
+        "cat-harness"
+      ],
+      "icon": null,
+      "tone": 0,
+      "toneFrom": "avatar",
+      "reads": "a question mark — no avatar is declared for this kind",
+      "genericAvatar": true,
+      "instantiated": false,
+      "stats": [
+        {
+          "id": "directories",
+          "label": "declared directories",
+          "value": 1
+        },
+        {
+          "id": "kinds",
+          "label": "declared graph kinds",
+          "value": 1
+        },
+        {
+          "id": "views",
+          "label": "visualisations you can open",
+          "value": 0
+        }
+      ],
+      "visualisations": [
+        {
+          "kind": "voices",
+          "note": "no viewer yet"
+        }
+      ],
+      "subgraphs": [
+        {
+          "id": "voices",
+          "kinds": [
+            "voices"
+          ],
+          "where": "local",
+          "path": "agent-skills/skills/voices/"
+        }
+      ],
+      "findings": [
+        "agent-skills: declares 1 graph(s) with no published viewer — voices. Declared and not rendered is a gap, not a dead link.",
+        "agent-skills: no avatar declared for this instance — showing the generic mark."
       ],
       "navbarIcons": [
         "close",
@@ -1505,6 +2082,13 @@
       "title": "C@T Harness",
       "label": "C@T Harness",
       "description": "computable adjudication and agentic test harness\n\ncaaat-harness\n\nca&at-harness\n\n.c&at-harness\n\n c@t-harness",
+      "summary": "Computable adjudication and agentic test harness.",
+      "alsoWritten": [
+        "caaat-harness",
+        "ca&at-harness",
+        ".c&at-harness",
+        "c@t-harness"
+      ],
       "footer": false,
       "needs": [
         "bootstrap",
@@ -1551,23 +2135,23 @@
       "reads": "a framed face with ears — the harness the instance is held in",
       "genericAvatar": false,
       "instantiated": true,
-      "href": "/",
+      "href": "/#harness-cat-harness",
       "hrefKind": "folio",
       "stats": [
         {
           "id": "directories",
           "label": "declared directories",
-          "value": 27
+          "value": 28
         },
         {
           "id": "kinds",
           "label": "declared graph kinds",
-          "value": 23
+          "value": 24
         },
         {
           "id": "views",
           "label": "visualisations you can open",
-          "value": 17
+          "value": 18
         }
       ],
       "visualisations": [
@@ -1665,6 +2249,237 @@
         {
           "kind": "uploads",
           "path": "/uploads/"
+        },
+        {
+          "kind": "voices",
+          "path": "/cat-harness/voices/cat-harness/"
+        }
+      ],
+      "subgraphs": [
+        {
+          "id": "tools",
+          "kinds": [
+            "tools"
+          ],
+          "where": "local",
+          "path": "cat-harness/tools/"
+        },
+        {
+          "id": "external-schemas",
+          "kinds": [
+            "external-schema"
+          ],
+          "where": "local",
+          "path": "cat-harness/external-schemas/"
+        },
+        {
+          "id": "subscriptions",
+          "kinds": [
+            "substrate-snapshot"
+          ],
+          "where": "local",
+          "path": "cat-harness/subscriptions/"
+        },
+        {
+          "id": "code-lists",
+          "kinds": [
+            "code-list"
+          ],
+          "where": "local",
+          "path": "cat-harness/code-lists/"
+        },
+        {
+          "id": "schemas",
+          "kinds": [
+            "schemas",
+            "cat-harness"
+          ],
+          "where": "local",
+          "path": "cat-harness/schemas/"
+        },
+        {
+          "id": "uml",
+          "kinds": [
+            "uml"
+          ],
+          "where": "local",
+          "path": "cat-harness/uml/"
+        },
+        {
+          "id": "skills",
+          "kinds": [
+            "skills"
+          ],
+          "where": "local",
+          "path": "cat-harness/skills/"
+        },
+        {
+          "id": "scenarios",
+          "kinds": [
+            "scenarios"
+          ],
+          "where": "local",
+          "path": "cat-harness/scenarios/"
+        },
+        {
+          "id": "policies",
+          "kinds": [
+            "policies"
+          ],
+          "where": "local",
+          "path": "cat-harness/policies/"
+        },
+        {
+          "id": "processes",
+          "kinds": [
+            "processes"
+          ],
+          "where": "local",
+          "path": "cat-harness/processes/"
+        },
+        {
+          "id": "methodologies",
+          "kinds": [
+            "methodology"
+          ],
+          "where": "local",
+          "path": "cat-harness/methodologies/"
+        },
+        {
+          "id": "qa",
+          "kinds": [
+            "qa"
+          ],
+          "where": "local",
+          "path": "cat-harness/test/results/"
+        },
+        {
+          "id": "health",
+          "kinds": [
+            "health"
+          ],
+          "where": "local",
+          "path": "cat-harness/test/health/results/"
+        },
+        {
+          "id": "uploads",
+          "kinds": [
+            "uploads"
+          ],
+          "where": "local",
+          "path": "cat-harness/uploads/"
+        },
+        {
+          "id": "library",
+          "kinds": [
+            "library"
+          ],
+          "where": "local",
+          "path": "cat-harness/library/"
+        },
+        {
+          "id": "translation-sources",
+          "kinds": [
+            "translation-sources"
+          ],
+          "where": "local",
+          "path": "cat-harness/translations/"
+        },
+        {
+          "id": "folio",
+          "kinds": [
+            "folio"
+          ],
+          "where": "local",
+          "path": "cat-harness/folio/"
+        },
+        {
+          "id": "docs",
+          "kinds": [
+            "docs"
+          ],
+          "where": "local",
+          "path": "cat-harness/docs/"
+        },
+        {
+          "id": "swimlane-glossary",
+          "kinds": [
+            "swimlane-glossary"
+          ],
+          "where": "local",
+          "path": "cat-harness/glossary/"
+        },
+        {
+          "id": "cat-harness-scripts",
+          "kinds": [
+            "code"
+          ],
+          "where": "local",
+          "path": "cat-harness/scripts/"
+        },
+        {
+          "id": "cat-harness-src",
+          "kinds": [
+            "code"
+          ],
+          "where": "local",
+          "path": "cat-harness/src/"
+        },
+        {
+          "id": "cat-harness-adapters",
+          "kinds": [
+            "code"
+          ],
+          "where": "local",
+          "path": "cat-harness/adapters/"
+        },
+        {
+          "id": "cat-harness-tests",
+          "kinds": [
+            "code"
+          ],
+          "where": "local",
+          "path": "cat-harness/test/"
+        },
+        {
+          "id": "folio-templates",
+          "kinds": [
+            "code"
+          ],
+          "where": "local",
+          "path": "cat-harness/templates/"
+        },
+        {
+          "id": "cat-harness-deploy",
+          "kinds": [
+            "code"
+          ],
+          "where": "local",
+          "path": "cat-harness/deploy/"
+        },
+        {
+          "id": "docs/proposals",
+          "kinds": [
+            "proposals"
+          ],
+          "where": "local",
+          "path": "cat-harness/docs/proposals/"
+        },
+        {
+          "id": "docs/requirements",
+          "kinds": [
+            "requirements"
+          ],
+          "where": "local",
+          "path": "cat-harness/docs/requirements/"
+        },
+        {
+          "id": "voices",
+          "kinds": [
+            "voices"
+          ],
+          "where": "local",
+          "path": "cat-harness/skills/voices/"
         }
       ],
       "findings": [
@@ -1733,6 +2548,48 @@
         {
           "kind": "skills",
           "note": "no viewer yet"
+        }
+      ],
+      "subgraphs": [
+        {
+          "id": "bootstrap-tools-schemas",
+          "kinds": [
+            "schemas"
+          ],
+          "where": "local",
+          "path": "bootstrap-tools/schemas/"
+        },
+        {
+          "id": "bootstrap-tools-scripts",
+          "kinds": [
+            "code"
+          ],
+          "where": "local",
+          "path": "bootstrap-tools/scripts/"
+        },
+        {
+          "id": "bootstrap-tools-skills",
+          "kinds": [
+            "skills"
+          ],
+          "where": "local",
+          "path": "bootstrap-tools/skills/"
+        },
+        {
+          "id": "bootstrap-tools-processes",
+          "kinds": [
+            "processes"
+          ],
+          "where": "local",
+          "path": "bootstrap-tools/processes/"
+        },
+        {
+          "id": "bootstrap-tools-scenarios",
+          "kinds": [
+            "scenarios"
+          ],
+          "where": "local",
+          "path": "bootstrap-tools/scenarios/"
         }
       ],
       "findings": [
@@ -1833,6 +2690,48 @@
         {
           "kind": "skills",
           "note": "no viewer by design"
+        }
+      ],
+      "subgraphs": [
+        {
+          "id": "skills",
+          "kinds": [
+            "skills"
+          ],
+          "where": "local",
+          "path": "bootstrap/skills/"
+        },
+        {
+          "id": "schemas",
+          "kinds": [
+            "schemas"
+          ],
+          "where": "local",
+          "path": "bootstrap/schemas/"
+        },
+        {
+          "id": "scenarios",
+          "kinds": [
+            "scenarios"
+          ],
+          "where": "local",
+          "path": "bootstrap/scenarios/"
+        },
+        {
+          "id": "processes",
+          "kinds": [
+            "processes"
+          ],
+          "where": "local",
+          "path": "bootstrap/processes/"
+        },
+        {
+          "id": "models",
+          "kinds": [
+            "models"
+          ],
+          "where": "local",
+          "path": "bootstrap/models/"
         }
       ],
       "findings": [
@@ -1959,6 +2858,10 @@
       {
         "kind": "uploads",
         "path": "/uploads/"
+      },
+      {
+        "kind": "voices",
+        "path": "/cat-harness/voices/cat-harness/"
       }
     ]
   },
@@ -2098,6 +3001,24 @@
       },
       {
         "key": "description",
+        "skills": [
+          {
+            "name": "harness-tiles",
+            "path": "/reference/skill-instructions/harness-tiles.html"
+          }
+        ]
+      },
+      {
+        "key": "summary",
+        "skills": [
+          {
+            "name": "harness-tiles",
+            "path": "/reference/skill-instructions/harness-tiles.html"
+          }
+        ]
+      },
+      {
+        "key": "alsoWritten",
         "skills": [
           {
             "name": "harness-tiles",
@@ -2399,6 +3320,10 @@
           {
             "key": "description",
             "summary": "The repository itself, acting as an initialized instance. NAMED `folio-assistant-checkout…"
+          },
+          {
+            "key": "summary",
+            "summary": "This repository as a working instance: the platform and the folios it hosts."
           },
           {
             "key": "assets",
@@ -2786,53 +3711,11 @@
           },
           {
             "key": "directories",
-            "summary": "9: library, who-iris-site, who-iris-catalogue, who-iris-uploads, who-iris-skills, who-iris-t…"
+            "summary": "11: library, who-iris-site, who-iris-catalogue, who-iris-uploads, who-iris-skills, who-iris-t…"
           },
           {
             "key": "stickies",
             "summary": "1: who-iris"
-          },
-          {
-            "key": "needs",
-            "summary": "folio-assistant-core"
-          },
-          {
-            "key": "version",
-            "summary": "0.1.0"
-          }
-        ]
-      },
-      {
-        "name": "large-datasets",
-        "title": "large-datasets",
-        "group": "checkout",
-        "declaredIn": "large-datasets/large-datasets.json",
-        "viewHref": "https://github.com/litlfred/folio-assistant/blob/main/large-datasets/large-datasets.json",
-        "editHref": "https://github.com/litlfred/folio-assistant/edit/main/large-datasets/large-datasets.json",
-        "declared": [
-          {
-            "key": "name",
-            "summary": "large-datasets"
-          },
-          {
-            "key": "description",
-            "summary": "Taking a subset of a corpus you will never hold — and publishing artifacts too big for th…"
-          },
-          {
-            "key": "assets",
-            "summary": "2: agent-instructions, readme"
-          },
-          {
-            "key": "repository",
-            "summary": "litlfred/large-datasets"
-          },
-          {
-            "key": "livesAt",
-            "summary": "{ repository, path }"
-          },
-          {
-            "key": "directories",
-            "summary": "7: large-datasets-schemas, large-datasets-sources, large-datasets-skills, large-datasets-pro…"
           },
           {
             "key": "needs",
@@ -2874,7 +3757,7 @@
           },
           {
             "key": "directories",
-            "summary": "4: library, sci-methodologies, sci-adapters, qa"
+            "summary": "5: library, sci-methodologies, sci-adapters, sci-sources, qa"
           },
           {
             "key": "needs",
@@ -2945,48 +3828,6 @@
         ]
       },
       {
-        "name": "agent-skills",
-        "title": "agent-skills",
-        "group": "checkout",
-        "declaredIn": "agent-skills/agent-skills.json",
-        "viewHref": "https://github.com/litlfred/folio-assistant/blob/main/agent-skills/agent-skills.json",
-        "editHref": "https://github.com/litlfred/folio-assistant/edit/main/agent-skills/agent-skills.json",
-        "declared": [
-          {
-            "key": "name",
-            "summary": "agent-skills"
-          },
-          {
-            "key": "description",
-            "summary": "Published guidance on authoring and operating agent skills — vendor documentation and pee…"
-          },
-          {
-            "key": "assets",
-            "summary": "2: agent-instructions, readme"
-          },
-          {
-            "key": "repository",
-            "summary": "litlfred/agent-skills"
-          },
-          {
-            "key": "livesAt",
-            "summary": "{ repository, path }"
-          },
-          {
-            "key": "directories",
-            "summary": "2: library, qa"
-          },
-          {
-            "key": "needs",
-            "summary": "folio-assistant-core"
-          },
-          {
-            "key": "version",
-            "summary": "0.1.0"
-          }
-        ]
-      },
-      {
         "name": "folio-assistant-core",
         "title": "folio-assistant-core",
         "group": "checkout",
@@ -3041,6 +3882,44 @@
         ]
       },
       {
+        "name": "large-datasets",
+        "title": "large-datasets",
+        "group": "checkout",
+        "declaredIn": "large-datasets/large-datasets.json",
+        "viewHref": "https://github.com/litlfred/folio-assistant/blob/main/large-datasets/large-datasets.json",
+        "editHref": "https://github.com/litlfred/folio-assistant/edit/main/large-datasets/large-datasets.json",
+        "declared": [
+          {
+            "key": "name",
+            "summary": "large-datasets"
+          },
+          {
+            "key": "description",
+            "summary": "Taking a subset of a corpus you will never hold — and publishing artifacts too big for th…"
+          },
+          {
+            "key": "assets",
+            "summary": "2: agent-instructions, readme"
+          },
+          {
+            "key": "repository",
+            "summary": "litlfred/large-datasets"
+          },
+          {
+            "key": "livesAt",
+            "summary": "{ repository, path }"
+          },
+          {
+            "key": "needs",
+            "summary": "cat-harness"
+          },
+          {
+            "key": "version",
+            "summary": "0.1.0"
+          }
+        ]
+      },
+      {
         "name": "cat-harness-tools",
         "title": "C@T Harness Tools",
         "group": "checkout",
@@ -3078,7 +3957,7 @@
           },
           {
             "key": "directories",
-            "summary": "2: cat-harness-tools-adapters, cat-harness-tools-tests"
+            "summary": "4: cat-harness-tools-adapters, cat-harness-tools-scripts, cat-harness-tools-id-lookup, cat-h…"
           },
           {
             "key": "needs",
@@ -3087,6 +3966,44 @@
           {
             "key": "liquid",
             "summary": "{ prefix, passThrough }"
+          },
+          {
+            "key": "version",
+            "summary": "0.1.0"
+          }
+        ]
+      },
+      {
+        "name": "agent-skills",
+        "title": "agent-skills",
+        "group": "checkout",
+        "declaredIn": "agent-skills/agent-skills.json",
+        "viewHref": "https://github.com/litlfred/folio-assistant/blob/main/agent-skills/agent-skills.json",
+        "editHref": "https://github.com/litlfred/folio-assistant/edit/main/agent-skills/agent-skills.json",
+        "declared": [
+          {
+            "key": "name",
+            "summary": "agent-skills"
+          },
+          {
+            "key": "description",
+            "summary": "Published guidance on authoring and operating agent skills — vendor documentation and pee…"
+          },
+          {
+            "key": "assets",
+            "summary": "2: agent-instructions, readme"
+          },
+          {
+            "key": "repository",
+            "summary": "litlfred/agent-skills"
+          },
+          {
+            "key": "livesAt",
+            "summary": "{ repository, path }"
+          },
+          {
+            "key": "needs",
+            "summary": "cat-harness"
           },
           {
             "key": "version",
@@ -3113,6 +4030,14 @@
           {
             "key": "description",
             "summary": "computable adjudication and agentic test harness\n\ncaaat-harness\n\nca&at-harness\n\n.c&at-har…"
+          },
+          {
+            "key": "summary",
+            "summary": "Computable adjudication and agentic test harness."
+          },
+          {
+            "key": "alsoWritten",
+            "summary": "caaat-harness, ca&at-harness, .c&at-harness, c@t-harness"
           },
           {
             "key": "images",

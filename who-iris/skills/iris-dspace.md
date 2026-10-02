@@ -222,4 +222,4 @@ had been allowed to believe the placeholder.
 
 Enumeration cost, subsetting and the characterisation that decides whether IRIS
 may be cited at all are in
-[`large-datasets/sources/who-iris.json`](../../large-datasets/sources/who-iris.json).
+[`who-iris/sources/who-iris.json`](../sources/who-iris.json).

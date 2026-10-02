@@ -198,6 +198,8 @@ function model(harnesses: Harness[], title: string, staging: boolean, openContro
     instance: title,
     hrefs: "liquid",
     openControl,
+    // The theme's `.site-title` avatar IS the header here (#1757).
+    head: "none",
     ...(shown.length > 0 ? { harnesses: group } : {}),
     // Home is last in the fixed bottom, outside the disclosure, so folding the
     // harnesses away cannot take it with it — *"keep home at bottom for who

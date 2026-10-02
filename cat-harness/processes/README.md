@@ -9,7 +9,7 @@ Part of [C@T Harness](../README.md) 0.1.0, declared as `processes`, holding `pro
 |---|---|---|
 | [`activity-log.bpmn`](activity-log.bpmn) | a [Process](https://github.com/litlfred/bootstrap/blob/main/schemas/README.md#process): Agent activity log |  |
 | [`actor-role-administration.bpmn`](actor-role-administration.bpmn) | a [Process](https://github.com/litlfred/bootstrap/blob/main/schemas/README.md#process): [Actor](https://github.com/litlfred/bootstrap/blob/main/schemas/README.md#actor) and role administration |  |
-| [`adjudication.bpmn`](adjudication.bpmn) | a [Process](https://github.com/litlfred/bootstrap/blob/main/schemas/README.md#process): Adjudication | "Content Change and Review", "Criterion adjudication", "Ingestion subprocess — the L1 completeness gate" |
+| [`adjudication.bpmn`](adjudication.bpmn) | a [Process](https://github.com/litlfred/bootstrap/blob/main/schemas/README.md#process): Adjudication | "Content Change and Review", "Criterion adjudication", "Ingestion subprocess — the L1 completeness gate", "Refresh materialized remote content" |
 | [`atomic-mass-drift-check.bpmn`](atomic-mass-drift-check.bpmn) | a [Process](https://github.com/litlfred/bootstrap/blob/main/schemas/README.md#process): Is AtomicMass.lean still in sync with its data table? |  |
 | [`authoring-a-document.bpmn`](authoring-a-document.bpmn) | a [Process](https://github.com/litlfred/bootstrap/blob/main/schemas/README.md#process): Authoring a document |  |
 | [`authoring-a-paper.bpmn`](authoring-a-paper.bpmn) | a [Process](https://github.com/litlfred/bootstrap/blob/main/schemas/README.md#process): Authoring a paper |  |
@@ -23,6 +23,7 @@ Part of [C@T Harness](../README.md) 0.1.0, declared as `processes`, holding `pro
 | [`content-acquisition.bpmn`](content-acquisition.bpmn) | a [Process](https://github.com/litlfred/bootstrap/blob/main/schemas/README.md#process): [Content](https://github.com/litlfred/bootstrap/blob/main/schemas/README.md#content) acquisition |  |
 | [`content-change-review.bpmn`](content-change-review.bpmn) | a [Process](https://github.com/litlfred/bootstrap/blob/main/schemas/README.md#process): [Content](https://github.com/litlfred/bootstrap/blob/main/schemas/README.md#content) Change and Review |  |
 | [`content-lifecycle.bpmn`](content-lifecycle.bpmn) | a [Process](https://github.com/litlfred/bootstrap/blob/main/schemas/README.md#process): [Content](https://github.com/litlfred/bootstrap/blob/main/schemas/README.md#content) lifecycle |  |
+| [`copy-out-materialized.bpmn`](copy-out-materialized.bpmn) | a [Process](https://github.com/litlfred/bootstrap/blob/main/schemas/README.md#process): Copy out materialized content — to work on somebody else's bytes |  |
 | [`crdm-close.bpmn`](crdm-close.bpmn) | a [Process](https://github.com/litlfred/bootstrap/blob/main/schemas/README.md#process): CRDM close-out | "CRDM requirements" |
 | [`crdm-data-model.bpmn`](crdm-data-model.bpmn) | a [Process](https://github.com/litlfred/bootstrap/blob/main/schemas/README.md#process): CRDM data model | "CRDM requirements" |
 | [`crdm-deliver.bpmn`](crdm-deliver.bpmn) | a [Process](https://github.com/litlfred/bootstrap/blob/main/schemas/README.md#process): CRDM Phase 6 — implement, MVP, acceptance | "CRDM requirements" |
@@ -52,6 +53,8 @@ Part of [C@T Harness](../README.md) 0.1.0, declared as `processes`, holding `pro
 | [`kg-separation.bpmn`](kg-separation.bpmn) | a [Process](https://github.com/litlfred/bootstrap/blob/main/schemas/README.md#process): A knowledge graph leaves for its own repositories |  |
 | [`kg-to-portal.bpmn`](kg-to-portal.bpmn) | a [Process](https://github.com/litlfred/bootstrap/blob/main/schemas/README.md#process): KG to public portal |  |
 | [`l3-fhir-pipeline.bpmn`](l3-fhir-pipeline.bpmn) | a [Process](https://github.com/litlfred/bootstrap/blob/main/schemas/README.md#process): L3 FHIR IG pipeline |  |
+| [`materialize-remote.bpmn`](materialize-remote.bpmn) | a [Process](https://github.com/litlfred/bootstrap/blob/main/schemas/README.md#process): Materialize remote content — the shared subprocess | "Sample import into a structured data store", "Subscribe to an external knowledge graph" |
+| [`merge-base.bpmn`](merge-base.bpmn) | a [Process](https://github.com/litlfred/bootstrap/blob/main/schemas/README.md#process): Merge the base branch in | "Code change and review" |
 | [`methodology-from-source.bpmn`](methodology-from-source.bpmn) | a [Process](https://github.com/litlfred/bootstrap/blob/main/schemas/README.md#process): Adopt a methodology from a source document |  |
 | [`narrative-code-review.bpmn`](narrative-code-review.bpmn) | a [Process](https://github.com/litlfred/bootstrap/blob/main/schemas/README.md#process): Prose and the code it describes | "Review task" |
 | [`ns.jsonld`](ns.jsonld) | cat-harness's diagram elements |  |
@@ -60,14 +63,17 @@ Part of [C@T Harness](../README.md) 0.1.0, declared as `processes`, holding `pro
 | [`publish-alert.bpmn`](publish-alert.bpmn) | a [Process](https://github.com/litlfred/bootstrap/blob/main/schemas/README.md#process): Alert the publication manager | "Publishing the docs site, and keeping the previews alive" |
 | [`publish-verification.bpmn`](publish-verification.bpmn) | a [Process](https://github.com/litlfred/bootstrap/blob/main/schemas/README.md#process): Verify the export before it is deployed | "Publishing the docs site, and keeping the previews alive", "A knowledge graph leaves for its own repositories" |
 | [`qa-report-signing.bpmn`](qa-report-signing.bpmn) | a [Process](https://github.com/litlfred/bootstrap/blob/main/schemas/README.md#process): QA report signing |  |
+| [`refresh-materialized.bpmn`](refresh-materialized.bpmn) | a [Process](https://github.com/litlfred/bootstrap/blob/main/schemas/README.md#process): Refresh materialized remote content | "Sample import into a structured data store", "Subscribe to an external knowledge graph" |
 | [`related-work.bpmn`](related-work.bpmn) | a [Process](https://github.com/litlfred/bootstrap/blob/main/schemas/README.md#process): Related work: find, sort, summarize, ask to coordinate | "CRDM — link the work to an issue", "Adopt a methodology from a source document" |
 | [`render-kg-to-cdn.bpmn`](render-kg-to-cdn.bpmn) | a [Process](https://github.com/litlfred/bootstrap/blob/main/schemas/README.md#process): Render a [Knowledge Graph](https://github.com/litlfred/bootstrap/blob/main/schemas/README.md#knowledge-graph) to a CDN | "Publishing the docs site, and keeping the previews alive", "Staging a feature branch preview, and taking it down" |
 | [`repository-health-watch.bpmn`](repository-health-watch.bpmn) | a [Process](https://github.com/litlfred/bootstrap/blob/main/schemas/README.md#process): Is the repository itself healthy? |  |
 | [`review-code.bpmn`](review-code.bpmn) | a [Process](https://github.com/litlfred/bootstrap/blob/main/schemas/README.md#process): Code node review | "Review task" |
 | [`review-narrative.bpmn`](review-narrative.bpmn) | a [Process](https://github.com/litlfred/bootstrap/blob/main/schemas/README.md#process): Narrative review | "Review task" |
 | [`review-task.bpmn`](review-task.bpmn) | a [Process](https://github.com/litlfred/bootstrap/blob/main/schemas/README.md#process): Review task | "Content Change and Review", "CRDM Phase 6 — implement, MVP, acceptance" |
+| [`sample-import.bpmn`](sample-import.bpmn) | a [Process](https://github.com/litlfred/bootstrap/blob/main/schemas/README.md#process): Sample import into a structured data store |  |
 | [`session-state-machine.bpmn`](session-state-machine.bpmn) | a [Process](https://github.com/litlfred/bootstrap/blob/main/schemas/README.md#process): Session state machine |  |
 | [`staging-render-log.bpmn`](staging-render-log.bpmn) | a [Process](https://github.com/litlfred/bootstrap/blob/main/schemas/README.md#process): Render log — the publish branch keeps its own history |  |
+| [`subscribe-kg.bpmn`](subscribe-kg.bpmn) | a [Process](https://github.com/litlfred/bootstrap/blob/main/schemas/README.md#process): Subscribe to an external knowledge graph |  |
 | [`swot-analysis.bpmn`](swot-analysis.bpmn) | a [Process](https://github.com/litlfred/bootstrap/blob/main/schemas/README.md#process): SWOT situation analysis |  |
 | [`theme-ui-review.bpmn`](theme-ui-review.bpmn) | a [Process](https://github.com/litlfred/bootstrap/blob/main/schemas/README.md#process): Theme and UI review — at ingestion | "Ingestion subprocess — ingest a theme" |
 | [`translation-workflow.bpmn`](translation-workflow.bpmn) | a [Process](https://github.com/litlfred/bootstrap/blob/main/schemas/README.md#process): translation-workflow.bpmn |  |

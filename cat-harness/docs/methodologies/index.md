@@ -342,6 +342,7 @@ these.
 **Ingested sources:**
 
 - [`library/w3c-2013-prov-o`](../cat-harness/library/cat-harness/#cat-harness%2Fw3c-2013-prov-o) · [item page](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/library/w3c-2013-prov-o/README.md)
+- [`library/w3c-2024-prov-jsonld`](../cat-harness/library/cat-harness/#cat-harness%2Fw3c-2024-prov-jsonld) · [item page](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/library/w3c-2024-prov-jsonld/README.md)
 
 ### RACI — who is involved in an activity, and in which of four ways
 
