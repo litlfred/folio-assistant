@@ -53,7 +53,7 @@ const artifactFiles = existsSync(ARTIFACTS)
  */
 const ix = JSON.parse(
   readFileSync(join(INSTANCE, "fhir-artifact-index", "index.json"), "utf-8"),
-) as { artifacts: { key: string; dak?: unknown; materialization: { state: string } }[] };
+) as { artifacts: { key: string; sidecars?: unknown; materialization: { state: string } }[] };
 
 const indexSrc = existsSync(join(DOCS, "index.md"))
   ? readFileSync(join(DOCS, "index.md"), "utf-8")
@@ -98,7 +98,7 @@ describe("smart-trust pages are generated at all", () => {
   /**
    * TWO ORACLES, ONE ANSWER, BY COINCIDENCE — pinned so it cannot go quiet.
    *
-   * The generator gates on `if (!a.dak) continue`: a page exists for an
+   * The generator gates on `if (!a.sidecars) continue`: a page exists for an
    * artefact carrying a **DAK sidecar**. The index reports a different
    * property, `materialization.state === "materialized"`. Today both sets are
    * the same 19 keys, so the count above is green whichever property the
@@ -117,7 +117,7 @@ describe("smart-trust pages are generated at all", () => {
    * measuring two different things.
    */
   it("the DAK-sidecar set and the materialized set coincide — for now", () => {
-    const dak = ix.artifacts.filter((a: { dak?: unknown }) => a.dak !== undefined);
+    const dak = ix.artifacts.filter((a: { sidecars?: unknown }) => a.sidecars !== undefined);
     const materialized = ix.artifacts.filter(
       (a: { materialization: { state: string } }) => a.materialization.state === "materialized",
     );
