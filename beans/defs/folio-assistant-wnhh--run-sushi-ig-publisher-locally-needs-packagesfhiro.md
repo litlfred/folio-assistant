@@ -6,7 +6,7 @@ type: task
 priority: normal
 created_at: 2026-10-01T17:11:25Z
 updated_at: 2026-10-01T17:53:00Z
-parent: folio-assistant-jut3
+parent: folio-assistant-uhkv
 ---
 
 For a session whose environment allows **`packages.fhir.org`** and **`tx.fhir.org`**. On 2026-10-01 the jut3 session's proxy denied both (403), along with `hl7.org`, `build.fhir.org`, `smart.who.int` and `litlfred.github.io`. Owner: "bean for agent with more open access".
