@@ -32,6 +32,8 @@ Related: `folio-assistant-603s`, `folio-assistant-1le7`, `folio-assistant-z1ug`
 
 When fixed, re-draw `cat-harness/docs/wireframes/navbar/` and re-run `bun run wireframe:check` and `bun run check:wireframes`.
 
+**New notes on this bean go in [`beans/notes/`](../notes/README.md), not here** (bean `m61r`, issue #1853): `bun run beans:note folio-assistant-ob3m --title "…"` writes one file per pull request, so sibling pull requests stop conflicting on this file. The dated sections below were appended before that convention and stay where they are.
+
 ## Re-verified 2026-09-29 on `main` 35402147f
 
 Each finding re-measured on a local build of that commit, at 1280×800 and 390×844, both colour schemes where contrast is involved. 11 still present, 1 fixed, 0 could not be determined. FIXED means observed on the built page, not read from code.

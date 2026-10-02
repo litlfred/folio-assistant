@@ -19,6 +19,14 @@
       "description": "The same kind as `defs`, moved aside. Bean `e8m3`: the owner ruled 2026-09-26 that archiving is a VIEW rather than a terminal state, so an archived bean keeps its status and is still part of the store. Declared because it holds 631 bean-defs and nothing declared it — a present-but-undeclared directory, which the directory checks cannot see because they compare declarations against disk and not the reverse. `check:bean-archive` holds the invariant the ruling implies: every bean in here is terminal, because a non-terminal one is open work invisible to every count."
     },
     {
+      "id": "notes",
+      "path": "notes",
+      "graphKinds": [
+        "bean-notes"
+      ],
+      "description": "One pull request's addendum to a bean, in a file of its own: `<bean>--<date>--<branch>.md`, so two pull requests adding to one bean never write one path. `README.md` is the generated index (`bun run beans:notes`). Bean `m61r`, issue #1853."
+    },
+    {
       "id": "workflows",
       "path": "workflows",
       "graphKinds": [
