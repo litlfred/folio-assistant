@@ -8469,6 +8469,25 @@
       "skos:note": "candidate"
     },
     {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/contributions.adaptercontribution.companionroles",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "AdapterContribution.companionRoles"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Which companion roles this adapter's blocks can have — the contributed half of `ADAPTER_COMPANION_ROLES` in `schemas/block-qa.ts`, which lists the built-in adapters only. Read by `incompatibleCompanions`, so a criterion scoped to a contributed adapter is checked against what that adapter's blocks can actually carry. Absent means none are declared, and a criterion depending on any companion then reports it as incompatible."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/contributions.ts#AdapterContribution.companionRoles",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/contributions.adaptercontribution.module",
       "@type": "skos:Concept",
       "skos:inScheme": {
@@ -8526,6 +8545,63 @@
       "skos:note": "candidate"
     },
     {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/contributions.blockkindcontribution.builder",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "BlockKindContribution.builder"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The builder function a manifest calls — `export default <builder>(…)`. Absent means the kind's own name. A kebab-case kind needs one: a hyphen is not a valid identifier."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/contributions.ts#BlockKindContribution.builder",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/contributions.blockkindcontribution.docotype",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "BlockKindContribution.docoType"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The DoCO co-type, if the kind has one. Absent means it has none."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/contributions.ts#BlockKindContribution.docoType",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/contributions.blockkindcontribution.foliotype",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "BlockKindContribution.folioType"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The folio class (`BLOCK_KIND_TO_FOLIO_TYPE`'s vocabulary) for a block of this kind, if any."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/contributions.ts#BlockKindContribution.folioType",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/contributions.blockkindcontribution.kind",
       "@type": "skos:Concept",
       "skos:inScheme": {
@@ -8542,6 +8618,25 @@
         }
       ],
       "dcterms:source": "cat-harness/schemas/contributions.ts#BlockKindContribution.kind",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/contributions.blockkindcontribution.labelprefix",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "BlockKindContribution.labelPrefix"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The label prefix, without its colon — `\"dt\"` for `dt:anc-danger-signs`."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/contributions.ts#BlockKindContribution.labelPrefix",
       "skos:note": "candidate"
     },
     {
@@ -8865,101 +8960,6 @@
         }
       ],
       "dcterms:source": "cat-harness/schemas/convention.ts#ConventionSchema.statement",
-      "skos:note": "candidate"
-    },
-    {
-      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/dak-blocks.dakblockbase.layer",
-      "@type": "skos:Concept",
-      "skos:inScheme": {
-        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
-      },
-      "skos:prefLabel": [
-        {
-          "@value": "DakBlockBase.layer"
-        }
-      ],
-      "skos:definition": [
-        {
-          "@value": "The WHO knowledge layer this block belongs to."
-        }
-      ],
-      "dcterms:source": "cat-harness/schemas/dak-blocks.ts#DakBlockBase.layer",
-      "skos:note": "candidate"
-    },
-    {
-      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/dak-blocks.dakblockbase.realises",
-      "@type": "skos:Concept",
-      "skos:inScheme": {
-        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
-      },
-      "skos:prefLabel": [
-        {
-          "@value": "DakBlockBase.realises"
-        }
-      ],
-      "skos:definition": [
-        {
-          "@value": "Label of the L1 recommendation or L2 component this block realises."
-        }
-      ],
-      "dcterms:source": "cat-harness/schemas/dak-blocks.ts#DakBlockBase.realises",
-      "skos:note": "candidate"
-    },
-    {
-      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/dak-blocks.dublincoreref.source",
-      "@type": "skos:Concept",
-      "skos:inScheme": {
-        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
-      },
-      "skos:prefLabel": [
-        {
-          "@value": "DublinCoreRef.source"
-        }
-      ],
-      "skos:definition": [
-        {
-          "@value": "Canonical URI — an IRIS handle, for WHO publications."
-        }
-      ],
-      "dcterms:source": "cat-harness/schemas/dak-blocks.ts#DublinCoreRef.source",
-      "skos:note": "candidate"
-    },
-    {
-      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/dak-blocks.healthinterventionblock.references",
-      "@type": "skos:Concept",
-      "skos:inScheme": {
-        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
-      },
-      "skos:prefLabel": [
-        {
-          "@value": "HealthInterventionBlock.references"
-        }
-      ],
-      "skos:definition": [
-        {
-          "@value": "Dublin Core references to the guideline this intervention comes from."
-        }
-      ],
-      "dcterms:source": "cat-harness/schemas/dak-blocks.ts#HealthInterventionBlock.references",
-      "skos:note": "candidate"
-    },
-    {
-      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/dak-blocks.userscenarioblock.personas",
-      "@type": "skos:Concept",
-      "skos:inScheme": {
-        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
-      },
-      "skos:prefLabel": [
-        {
-          "@value": "UserScenarioBlock.personas"
-        }
-      ],
-      "skos:definition": [
-        {
-          "@value": "Ids of the personas this scenario involves, at least one."
-        }
-      ],
-      "dcterms:source": "cat-harness/schemas/dak-blocks.ts#UserScenarioBlock.personas",
       "skos:note": "candidate"
     },
     {

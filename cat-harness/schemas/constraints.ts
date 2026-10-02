@@ -17,7 +17,7 @@ import {
 import type { Block } from "./types.js";
 // Leaf module — importing the kind list from `types.js` would be a runtime
 // cycle, and `appliesTo` is built at module init, exactly when that bites.
-import { BLOCK_KINDS, DAK_LABEL_PREFIXES } from "./block-kinds.js";
+import { BLOCK_KINDS } from "./block-kinds.js";
 import { NarrativeSchema } from "./narrative.ts";
 
 
@@ -31,12 +31,13 @@ export * from "./skill-package.js";
 
 
 /**
- * Every recognised label prefix, with its colon.
+ * Every recognised BUILT-IN label prefix, with its colon.
  *
- * The paper and structural prefixes are written out; the `dak` adapter's are
- * derived from `DAK_LABEL_PREFIXES` so that this list and `KIND_PREFIXES` in
- * `jsonld.ts` cannot drift as kinds are added. Their agreement is asserted by
- * `assertPrefixesInSync`.
+ * The paper and structural prefixes, written out; their agreement with
+ * `KIND_PREFIXES` in `jsonld.ts` is asserted by `assertPrefixesInSync`. The
+ * `dak` adapter's prefixes were spread in here until bean `1335`: they are a
+ * contributed adapter's now, carried as `labelPrefix` on each contributed kind
+ * (`ContributionRegistry.contributedLabelPrefixes()`).
  */
 export const KNOWN_LABEL_PREFIXES: readonly string[] = [
   "def:", "thm:", "lem:", "prop:", "cor:", "rem:", "ex:", "conj:",
@@ -52,7 +53,6 @@ export const KNOWN_LABEL_PREFIXES: readonly string[] = [
   // dangling link to an algorithm would never have been reported.
   "alg:", "prose:",
   "sec:", "chap:", "app:", "bib:",
-  ...Object.values(DAK_LABEL_PREFIXES).map((p) => `${p}:`),
 ];
 
 export function isCrossPaperRef(label: string): boolean {
@@ -246,7 +246,7 @@ export const AuthorNoteSchema = z.object({
 
 /**
  * Shared block fields, exported so the `dak` adapter's schemas in
- * `dak-blocks.ts` extend the same base rather than restating it.
+ * `smart-base/schemas/dak-blocks.ts` extend the same base rather than restating it.
  */
 export const BlockBaseSchema = z.object({
   title: z.string().optional(),

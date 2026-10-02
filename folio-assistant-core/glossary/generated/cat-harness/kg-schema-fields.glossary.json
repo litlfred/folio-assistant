@@ -3122,6 +3122,13 @@
       "status": "candidate"
     },
     {
+      "id": "contributions.adaptercontribution.companionroles",
+      "prefLabel": "AdapterContribution.companionRoles",
+      "definition": "Which companion roles this adapter's blocks can have — the contributed half of `ADAPTER_COMPANION_ROLES` in `schemas/block-qa.ts`, which lists the built-in adapters only. Read by `incompatibleCompanions`, so a criterion scoped to a contributed adapter is checked against what that adapter's blocks can actually carry. Absent means none are declared, and a criterion depending on any companion then reports it as incompatible.",
+      "source": "cat-harness/schemas/contributions.ts#AdapterContribution.companionRoles",
+      "status": "candidate"
+    },
+    {
       "id": "contributions.adaptercontribution.module",
       "prefLabel": "AdapterContribution.module",
       "definition": "Module specifier, resolved relative to the contributing folio's root.",
@@ -3143,10 +3150,38 @@
       "status": "candidate"
     },
     {
+      "id": "contributions.blockkindcontribution.builder",
+      "prefLabel": "BlockKindContribution.builder",
+      "definition": "The builder function a manifest calls — `export default <builder>(…)`. Absent means the kind's own name. A kebab-case kind needs one: a hyphen is not a valid identifier.",
+      "source": "cat-harness/schemas/contributions.ts#BlockKindContribution.builder",
+      "status": "candidate"
+    },
+    {
+      "id": "contributions.blockkindcontribution.docotype",
+      "prefLabel": "BlockKindContribution.docoType",
+      "definition": "The DoCO co-type, if the kind has one. Absent means it has none.",
+      "source": "cat-harness/schemas/contributions.ts#BlockKindContribution.docoType",
+      "status": "candidate"
+    },
+    {
+      "id": "contributions.blockkindcontribution.foliotype",
+      "prefLabel": "BlockKindContribution.folioType",
+      "definition": "The folio class (`BLOCK_KIND_TO_FOLIO_TYPE`'s vocabulary) for a block of this kind, if any.",
+      "source": "cat-harness/schemas/contributions.ts#BlockKindContribution.folioType",
+      "status": "candidate"
+    },
+    {
       "id": "contributions.blockkindcontribution.kind",
       "prefLabel": "BlockKindContribution.kind",
       "definition": "The kind string as it appears in a block manifest, e.g. `\"theorem\"`.",
       "source": "cat-harness/schemas/contributions.ts#BlockKindContribution.kind",
+      "status": "candidate"
+    },
+    {
+      "id": "contributions.blockkindcontribution.labelprefix",
+      "prefLabel": "BlockKindContribution.labelPrefix",
+      "definition": "The label prefix, without its colon — `\"dt\"` for `dt:anc-danger-signs`.",
+      "source": "cat-harness/schemas/contributions.ts#BlockKindContribution.labelPrefix",
       "status": "candidate"
     },
     {
@@ -3266,41 +3301,6 @@
       "prefLabel": "ConventionSchema.statement",
       "definition": "What the convention actually requires, in one line a reader can act on.",
       "source": "cat-harness/schemas/convention.ts#ConventionSchema.statement",
-      "status": "candidate"
-    },
-    {
-      "id": "dak-blocks.dakblockbase.layer",
-      "prefLabel": "DakBlockBase.layer",
-      "definition": "The WHO knowledge layer this block belongs to.",
-      "source": "cat-harness/schemas/dak-blocks.ts#DakBlockBase.layer",
-      "status": "candidate"
-    },
-    {
-      "id": "dak-blocks.dakblockbase.realises",
-      "prefLabel": "DakBlockBase.realises",
-      "definition": "Label of the L1 recommendation or L2 component this block realises.",
-      "source": "cat-harness/schemas/dak-blocks.ts#DakBlockBase.realises",
-      "status": "candidate"
-    },
-    {
-      "id": "dak-blocks.dublincoreref.source",
-      "prefLabel": "DublinCoreRef.source",
-      "definition": "Canonical URI — an IRIS handle, for WHO publications.",
-      "source": "cat-harness/schemas/dak-blocks.ts#DublinCoreRef.source",
-      "status": "candidate"
-    },
-    {
-      "id": "dak-blocks.healthinterventionblock.references",
-      "prefLabel": "HealthInterventionBlock.references",
-      "definition": "Dublin Core references to the guideline this intervention comes from.",
-      "source": "cat-harness/schemas/dak-blocks.ts#HealthInterventionBlock.references",
-      "status": "candidate"
-    },
-    {
-      "id": "dak-blocks.userscenarioblock.personas",
-      "prefLabel": "UserScenarioBlock.personas",
-      "definition": "Ids of the personas this scenario involves, at least one.",
-      "source": "cat-harness/schemas/dak-blocks.ts#UserScenarioBlock.personas",
       "status": "candidate"
     },
     {

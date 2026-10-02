@@ -55,17 +55,56 @@
  * @graphNode schema
  */
 
-import type { CheckerPaths, CheckerResult } from "./block-qa";
-import { ADAPTER_BLOCK_KINDS, CONTENT_ADAPTERS, type ContentAdapter } from "./block-kinds";
+import type { CheckerPaths, CheckerResult, CompanionRole } from "./block-qa";
+import {
+  ADAPTER_BLOCK_KINDS,
+  CONTENT_ADAPTERS,
+  isBuiltInBuilder,
+  type ContentAdapter,
+} from "./block-kinds";
 
 // ── What a dependency may contribute ────────────────────────────
 
-/** A block kind a dependency adds, and the adapter namespace that owns it. */
+/**
+ * A block kind a dependency adds, and the adapter namespace that owns it.
+ *
+ * ## What a contributed kind carries, and why
+ *
+ * Until bean `1335` this was `kind` and `adapter` only, which was enough while
+ * nothing contributed a kind. The first contributor — the WHO DAK layer, with the
+ * `dak` adapter's 21 kinds — moved kinds that core used to declare itself, and
+ * core's readers had been reading three more facts about each one out of core
+ * tables. A contributed kind has to carry what a built-in one carries, or
+ * moving it silently drops what the readers knew:
+ *
+ * | field | built-in source | read by |
+ * |---|---|---|
+ * | `builder` | `BUILDER_TO_KIND` in `block-kinds.ts` | manifest discovery (`readBlockManifest`) |
+ * | `labelPrefix` | `KNOWN_LABEL_PREFIXES` / `KIND_PREFIXES` | prefix lists |
+ * | `folioType`, `docoType` | `BLOCK_KIND_TO_FOLIO_TYPE` / `_DOCO_TYPE` | `typesForKind` (JSON-LD) |
+ *
+ * All optional, and only as far as a moved reader needs: a kind that omits
+ * `builder` is built by a function of its own name, one that omits `docoType`
+ * has no DoCO counterpart — which is a statement, the same one an absent
+ * `BLOCK_KIND_TO_DOCO_TYPE` entry makes.
+ */
 export interface BlockKindContribution {
   /** The kind string as it appears in a block manifest, e.g. `"theorem"`. */
   kind: string;
   /** The adapter namespace claiming it. May be a new namespace. */
   adapter: string;
+  /**
+   * The builder function a manifest calls — `export default <builder>(…)`.
+   * Absent means the kind's own name. A kebab-case kind needs one: a hyphen
+   * is not a valid identifier.
+   */
+  builder?: string;
+  /** The label prefix, without its colon — `"dt"` for `dt:anc-danger-signs`. */
+  labelPrefix?: string;
+  /** The folio class (`BLOCK_KIND_TO_FOLIO_TYPE`'s vocabulary) for a block of this kind, if any. */
+  folioType?: string;
+  /** The DoCO co-type, if the kind has one. Absent means it has none. */
+  docoType?: string;
 }
 
 /** A content adapter a dependency provides. */
@@ -74,6 +113,15 @@ export interface AdapterContribution {
   name: string;
   /** Module specifier, resolved relative to the contributing folio's root. */
   module: string;
+  /**
+   * Which companion roles this adapter's blocks can have — the contributed
+   * half of `ADAPTER_COMPANION_ROLES` in `schemas/block-qa.ts`, which lists the
+   * built-in adapters only. Read by `incompatibleCompanions`, so a criterion
+   * scoped to a contributed adapter is checked against what that adapter's
+   * blocks can actually carry. Absent means none are declared, and a
+   * criterion depending on any companion then reports it as incompatible.
+   */
+  companionRoles?: CompanionRole[];
 }
 
 /**
@@ -255,7 +303,14 @@ export interface ContributedChecker {
 interface KindEntry {
   adapter: string;
   contributor: string;
+  builder: string;
+  labelPrefix?: string;
+  folioType?: string;
+  docoType?: string;
 }
+
+/** What the registry knows about one contributed kind. */
+export type ContributedKind = Readonly<Omit<KindEntry, "contributor">>;
 
 /**
  * Accumulates contributions as the dependency tree is walked.
@@ -267,7 +322,11 @@ interface KindEntry {
  */
 export class ContributionRegistry {
   private kinds = new Map<string, KindEntry>();
-  private adapters = new Map<string, { module: string; contributor: string }>();
+  private adapters = new Map<
+    string,
+    { module: string; contributor: string; companionRoles?: readonly CompanionRole[] }
+  >();
+  private builders = new Map<string, string>();
   private toolGroups = new Map<string, { register: (server: unknown) => void; contributor: string }>();
   private checkers = new Map<string, ContributedChecker & { contributor: string }>();
   private renderers = new Map<string, { renderer: RendererContribution; contributor: string }>();
@@ -294,7 +353,30 @@ export class ContributionRegistry {
         if (existing.contributor === who && existing.adapter === bk.adapter) continue; // diamond
         throw new ContributionCollisionError("kind", bk.kind, existing.contributor, who);
       }
-      this.kinds.set(bk.kind, { adapter: bk.adapter, contributor: who });
+
+      // The builder is what DISCOVERY matches on, so it is an identifier with
+      // the same uniqueness obligation as the kind: a contributed builder equal
+      // to a built-in one would make `export default <builder>(` mean two
+      // kinds, and the one `kindForBuilder` returned would depend on which map
+      // it asked first.
+      const builder = bk.builder ?? bk.kind;
+      if (isBuiltInBuilder(builder)) {
+        throw new ContributionCollisionError("kind", `${bk.kind} (builder ${builder})`, "platform", who);
+      }
+      const builderOwner = this.builders.get(builder);
+      if (builderOwner !== undefined) {
+        const owner = this.kinds.get(builderOwner)?.contributor ?? "?";
+        throw new ContributionCollisionError("kind", `${bk.kind} (builder ${builder})`, owner, who);
+      }
+      this.builders.set(builder, bk.kind);
+      this.kinds.set(bk.kind, {
+        adapter: bk.adapter,
+        contributor: who,
+        builder,
+        labelPrefix: bk.labelPrefix,
+        folioType: bk.folioType,
+        docoType: bk.docoType,
+      });
     }
 
     if (contribution.adapter) {
@@ -306,7 +388,11 @@ export class ContributionRegistry {
       if (existing && !(existing.contributor === who && existing.module === a.module)) {
         throw new ContributionCollisionError("adapter", a.name, existing.contributor, who);
       }
-      this.adapters.set(a.name, { module: a.module, contributor: who });
+      this.adapters.set(a.name, {
+        module: a.module,
+        contributor: who,
+        companionRoles: a.companionRoles,
+      });
     }
 
     for (const t of contribution.tools ?? []) {
@@ -368,7 +454,42 @@ export class ContributionRegistry {
 
   /** Every contributed kind, with its adapter and contributor. */
   contributedKinds(): Array<{ kind: string; adapter: string; contributor: string }> {
-    return [...this.kinds].map(([kind, e]) => ({ kind, ...e }));
+    return [...this.kinds].map(([kind, e]) => ({ kind, adapter: e.adapter, contributor: e.contributor }));
+  }
+
+  /**
+   * Everything the registry holds about one contributed kind — its builder,
+   * label prefix and JSON-LD types — or `undefined` for a kind nobody
+   * contributed. A built-in kind is `undefined` here too: ask core's tables.
+   */
+  kindEntry(kind: string): ContributedKind | undefined {
+    const e = this.kinds.get(kind);
+    if (!e) return undefined;
+    const { contributor: _who, ...rest } = e;
+    return rest;
+  }
+
+  /**
+   * Contributed builder name → kind, for manifest discovery. Pass it to
+   * `kindForBuilder` / `blockBuilderAlt` in `block-kinds.ts`, or as
+   * `walkBlocks`' `contributedBuilders`.
+   */
+  contributedBuilders(): ReadonlyMap<string, string> {
+    return new Map(this.builders);
+  }
+
+  /** Every contributed kind's label prefix, without its colon. */
+  contributedLabelPrefixes(): string[] {
+    return [...this.kinds.values()].flatMap((e) => (e.labelPrefix ? [e.labelPrefix] : []));
+  }
+
+  /**
+   * The companion roles a contributed adapter's blocks can have, or
+   * `undefined` when no contributor supplied that adapter.
+   */
+  adapterCompanionRoles(name: string): readonly CompanionRole[] | undefined {
+    const a = this.adapters.get(name);
+    return a ? (a.companionRoles ?? []) : undefined;
   }
 
   /** A contributed adapter's module specifier, or `undefined`. */
