@@ -40,7 +40,14 @@ test("the smart-trust entry's own IRI renders it from the published data", async
   // Content the shell does NOT carry, so it came from the projection.
   await expect(row).toContainText("WHO SMART Trust");
   await expect(row.locator('a[href="http://smart.who.int/trust"]')).toHaveCount(1);
-  await expect(row.locator('a[href$="/smart-trust/"]')).toHaveCount(1);
+  // The artefact index: this site's /smart-trust/ (the title also ends in
+  // /smart-trust/, but under the library route).
+  await expect(row.locator('a.src[href$="/smart-trust/"]', { hasText: "artefact index" })).toHaveCount(1);
+  // The SLUG opens the entry's visualiser — smart-trust's own IG viewer at the
+  // site root's /smart-trust/ — from the projection's generated `view`.
+  await expect(row.locator("a.lib-view")).toHaveAttribute("href", "/cat-harness/docs/smart-trust/");
+  // The TITLE opens the entry's own page, not a README the entry may not have.
+  await expect(row.locator("a.lib-title")).toHaveAttribute("href", `${LIB}/smart-base/smart-trust/`);
   // The row's own address is the path IRI — never a fragment or a query.
   const href = await row.getAttribute("data-fa-library-href");
   expect(href).toBe(`${LIB}/smart-base/smart-trust/`);
@@ -49,7 +56,13 @@ test("the smart-trust entry's own IRI renders it from the published data", async
   const alt = await page.locator('link[rel="alternate"][type="application/ld+json"]').getAttribute("href");
   const ld = await page.request.get(new URL(alt!, page.url()).href);
   expect(ld.status()).toBe(200);
-  expect(((await ld.json()) as { title?: string }).title).toBe("WHO SMART Trust");
+  const asset = (await ld.json()) as { title?: string; "@id"?: string };
+  expect(asset.title).toBe("WHO SMART Trust");
+  // The ASSET's IRI is its published file's address — a different resource
+  // from this page, which only renders it (owner, 2026-10-02).
+  expect(asset["@id"]).toBe(
+    "https://litlfred.github.io/folio-assistant/assets/library/jsonld/smart-base/smart-trust/manifest.jsonld",
+  );
   expect(errors).toEqual([]);
 });
 

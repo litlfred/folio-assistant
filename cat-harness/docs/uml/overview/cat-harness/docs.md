@@ -234,6 +234,7 @@ classDiagram
       hasImagesJson [1] boolean
       readme [0..1] string~uri~
       links [0..*] Link[]
+      view [0..1] string
       pageStart [1] integer | null
       pageEnd [1] integer | null
       words [1] integer

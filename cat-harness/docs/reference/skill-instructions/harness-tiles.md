@@ -102,6 +102,10 @@ are both shorter than the ambiguity is expensive.
 
 ## A tile opens the INSTANCE, not a kind handler's view of it
 
+(A viewer page is a RENDERING with its own IRI, separate from the asset it
+shows; how the two IRIs relate is in `kg-viewer` §"The asset and its rendering
+are two resources with two IRIs".)
+
 `scripts/mount-instance-docs.ts` carries the owner's own rule for the two
 routes:
 

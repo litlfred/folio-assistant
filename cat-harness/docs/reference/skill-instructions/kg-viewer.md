@@ -87,11 +87,35 @@ Four rules, for every viewer that shows addressable things:
    IRI with `history.replaceState` (or navigates, when the asset belongs to
    another page), and nothing new emits it.
 
-The page's canonical IRI and the `@id` of the JSON-LD it shows should be the
-same thing. Where they are not — the library's manifests carry
-`@base https://litlfred.github.io/folio/` and `@id library/<id>/manifest`,
-which names neither the instance nor the published path — **report the
-disagreement; do not paper over it** by rewriting one side in the viewer.
+### The asset and its rendering are two resources with two IRIs
+
+Owner, 2026-10-02 (#1881): *"each asset should have one IRI, but the view page
+is a rendering of that asset, a different page. fix IRIs"*; and, against
+putting `schema:subjectOf` on the asset, *"hard to maintain? asset doesnt know
+about its renderings"*. **This is the one place the rule is stated**; other
+skills point here.
+
+- **The asset's IRI is the address of its published JSON-LD**, and its `@id`
+  says so: absolute, instance-qualified, under the site root the docs are
+  served at, and it dereferences to that file. A library entry's is
+  `<site>/assets/library/jsonld/<instance>/<id>/manifest.jsonld`, minted by
+  ONE function (`schemas/library-iri.ts`) that both the `@id`'s writer and
+  the file's publisher call, so the two cannot drift.
+- **The rendering has its own IRI** — the viewer page — and it **points to the
+  asset**: `rel=alternate type=application/ld+json`, and if the page ever
+  carries JSON-LD of its own, `about`/`mainEntity` naming the asset's `@id`.
+- **The asset never references its renderings** — no `subjectOf`, no
+  `foaf:page`, no viewer URL in its JSON-LD. Renderings change with every
+  visualiser; the asset would have to be rewritten each time.
+- **A rendering's IRI is DERIVED from the declared visualiser** for the graph
+  kind (`coverage.visualiser` in the instance declaration), never authored into
+  the asset. If an index of renderings is useful, generate it; never store it in
+  the asset. The library does exactly this: each entry in the GENERATED
+  projection (`assets/library/index.json`) carries `view` — the site-root path
+  of the page that renders it (another instance's declared root route for an
+  entry that instance renders, e.g. smart-trust's `/smart-trust/`; else the
+  entry's own library page) — and the row's slug links there. Owner,
+  2026-10-02: *"click on "smart-trust" slug and open up the visualizer"*.
 
 Reference implementation: `gen-library-viz.ts` (`viewerHtml`, `VIEWER_JS`,
 `VIEWER_CSS`) and `scripts/lib/library-address.ts`; browser check

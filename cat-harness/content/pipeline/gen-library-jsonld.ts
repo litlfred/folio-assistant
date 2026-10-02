@@ -78,6 +78,8 @@ import { TABULAR_CSVW_FILENAME } from "../../schemas/tabular-csvw.ts";
 import { readStructure, STRUCTURE_FILENAME } from "../../schemas/document-structure.ts";
 import type { INGEST_RUNGS } from "../../schemas/site-indexes.ts";
 import { corpusDirectoriesForGraph } from "../../schemas/harness-config.js";
+import { libraryAssetIri } from "../../schemas/library-iri.ts";
+import { readDeclaration } from "../../schemas/cat-harness.ts";
 
 interface StructureSection {
   id: string;
@@ -179,6 +181,29 @@ function docIri(docId: string, rest: string): string {
   return `library/${docId}/${rest}`;
 }
 
+/**
+ * The entry's node IRIs. Every node keeps its relative `library/<id>/…` id
+ * EXCEPT the manifest — the asset itself — which is named by the address its
+ * JSON-LD is published at when the entry's instance is known (#1881,
+ * `schemas/library-iri.ts`). A staged entry, outside any library, has no
+ * instance yet and keeps the relative form until it is promoted and
+ * regenerated; `--check` then reports it stale, so it cannot linger.
+ */
+function iriFor(docId: string, instance: string | undefined): (rest: string) => string {
+  return (rest) => (rest === "manifest" && instance !== undefined ? libraryAssetIri(instance, docId) : docIri(docId, rest));
+}
+
+/**
+ * The instance whose library holds `entryDir` — the folder holding the
+ * library, when that folder declares an instance — else `undefined`. The same
+ * answer `library-graph.ts` `instanceOf` gives, so the IRI minted here and
+ * the page the viewer draws name one instance.
+ */
+export function libraryInstanceOf(entryDir: string): string | undefined {
+  const instanceRoot = dirname(dirname(entryDir));
+  return readDeclaration(instanceRoot) !== undefined ? basename(instanceRoot) : undefined;
+}
+
 /** Everything one document contributes, as files to write. */
 export function buildDocumentNodes(
   docId: string,
@@ -187,8 +212,10 @@ export function buildDocumentNodes(
   hasSectionMd: (sid: string) => boolean,
   images?: ImagesSidecar,
   licence?: unknown,
+  instance?: string,
 ): Array<{ path: string; content: string }> {
   const out: Array<{ path: string; content: string }> = [];
+  const iri = iriFor(docId, instance);
   const sections = structure.sections ?? [];
 
   // Group candidates by the section file they were extracted from.
@@ -245,19 +272,19 @@ export function buildDocumentNodes(
     // The section's own prose, pointing at the file Stage A already wrote.
     if (hasSectionMd(sec.id)) {
       const bid = blockId("prose", key);
-      contained.push(docIri(docId, `blocks/${bid}`));
+      contained.push(iri(`blocks/${bid}`));
       out.push({
         path: `blocks/${bid}.jsonld`,
         content: node({
-          "@id": docIri(docId, `blocks/${bid}`),
+          "@id": iri(`blocks/${bid}`),
           "@type": typesForKind("prose"),
           kind: "prose",
           title: sec.title,
           pageStart: sec.page_start ?? undefined,
           pageEnd: sec.page_end ?? undefined,
           text: `../sections/${sec.id}.md`,
-          derivedFrom: docIri(docId, "manifest"),
-          sourceDocument: docIri(docId, "manifest"),
+          derivedFrom: iri("manifest"),
+          sourceDocument: iri("manifest"),
           provenance: "ingested",
         }),
       });
@@ -268,19 +295,19 @@ export function buildDocumentNodes(
     cands.forEach((c, i) => {
       const bid = blockId(c.kind, key, i + 1);
       const statement = (c.statement ?? "").trim();
-      contained.push(docIri(docId, `blocks/${bid}`));
+      contained.push(iri(`blocks/${bid}`));
       out.push({
         path: `blocks/${bid}.jsonld`,
         content: node({
-          "@id": docIri(docId, `blocks/${bid}`),
+          "@id": iri(`blocks/${bid}`),
           "@type": typesForKind(c.kind),
           kind: c.kind,
           title: c.name ?? undefined,
           pageStart: sec.page_start ?? undefined,
           pageEnd: sec.page_end ?? undefined,
           text: statement ? `${bid}.md` : undefined,
-          derivedFrom: docIri(docId, `sections/${key}`),
-          sourceDocument: docIri(docId, "manifest"),
+          derivedFrom: iri(`sections/${key}`),
+          sourceDocument: iri("manifest"),
           provenance: "ingested",
         }),
       });
@@ -300,11 +327,11 @@ export function buildDocumentNodes(
           if (figureOwned.has(img.id)) continue;
           figureOwned.add(img.id);
           const bid = `figure-${img.id}`;
-          contained.push(docIri(docId, `blocks/${bid}`));
+          contained.push(iri(`blocks/${bid}`));
           out.push({
             path: `blocks/${bid}.jsonld`,
             content: node({
-              "@id": docIri(docId, `blocks/${bid}`),
+              "@id": iri(`blocks/${bid}`),
               "@type": typesForKind("figure"),
               kind: "figure",
               // Relative to the block, as `text` already is for prose.
@@ -315,8 +342,8 @@ export function buildDocumentNodes(
               // not merely its absence: "nobody has written one" and "a human
               // rejected the draft" are different facts.
               narrative: img.narrative ?? undefined,
-              derivedFrom: docIri(docId, `sections/${key}`),
-              sourceDocument: docIri(docId, "manifest"),
+              derivedFrom: iri(`sections/${key}`),
+              sourceDocument: iri("manifest"),
               provenance: "ingested",
             }),
           });
@@ -324,7 +351,7 @@ export function buildDocumentNodes(
       }
     }
 
-    const sIri = docIri(docId, `sections/${key}`);
+    const sIri = iri(`sections/${key}`);
     sectionIris.push(sIri);
     out.push({
       path: `sections/${key}.jsonld`,
@@ -337,8 +364,8 @@ export function buildDocumentNodes(
         // Ordered: reading order is the document's, and losing it would make
         // the section a bag rather than a sequence.
         contains: contained,
-        derivedFrom: docIri(docId, "manifest"),
-        sourceDocument: docIri(docId, "manifest"),
+        derivedFrom: iri("manifest"),
+        sourceDocument: iri("manifest"),
         provenance: "ingested",
       }),
     });
@@ -347,7 +374,7 @@ export function buildDocumentNodes(
   out.push({
     path: "manifest.jsonld",
     content: node({
-      "@id": docIri(docId, "manifest"),
+      "@id": iri("manifest"),
       "@type": ["folio-assistant-core:SourceDocument"],
       // An editor's correction outranks the extracted title; the extracted
       // one outranks the id (bean `w6fu`). Which of the three answered is
@@ -538,6 +565,8 @@ export type EntryOutcome =
   | { state: "unreadable"; rung: IngestRung };
 
 export function buildEntryNodes(docId: string, dir: string): EntryOutcome {
+  const instance = libraryInstanceOf(dir);
+  const iri = iriFor(docId, instance);
   // Two ingest rungs reach this walk, and a tabular entry has no Stage A
   // output at all — no `structure.json`, no `sections/*.md` — so it is not a
   // `buildDocumentNodes` with different arguments. Its own branch, which is
@@ -565,6 +594,7 @@ export function buildEntryNodes(docId: string, dir: string): EntryOutcome {
         (sid) => existsSync(join(dir, "sections", `${sid}.md`)),
         images,
         licence,
+        instance,
       ),
     };
   }
@@ -583,7 +613,7 @@ export function buildEntryNodes(docId: string, dir: string): EntryOutcome {
       rung,
       files: buildTabularNodes(shape, {
         title: shape.title ?? docId,
-        iri: (rest) => docIri(docId, rest),
+        iri,
         // Where the headers and shape came from. The manifest points at
         // sheets and blocks; without this nothing in the graph says which
         // record produced them.
@@ -606,7 +636,7 @@ export function buildEntryNodes(docId: string, dir: string): EntryOutcome {
     if (!record || !src || (!published && !src.sha256)) return { state: "unreadable", rung };
     const manifest = {
       "@context": CONTENT_DOCUMENT_CONTEXT,
-      "@id": docIri(docId, "manifest"),
+      "@id": iri("manifest"),
       "@type": ["folio-assistant-core:SourceDocument"],
       title: record.identity?.title ?? docId,
       // EMPTY on purpose: the entry holds no content nodes. The manifest says

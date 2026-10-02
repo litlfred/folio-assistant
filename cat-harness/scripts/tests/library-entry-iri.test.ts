@@ -20,11 +20,12 @@ import { existsSync, readdirSync, readFileSync, statSync } from "node:fs";
 import { join, resolve } from "node:path";
 
 import { ADDRESS_JS } from "../lib/library-address.ts";
-import { isEntryShellFor, isSubjectShell, libraryConfigOf, VIEWER_JS, viewerHtml } from "../gen-library-viz.ts";
+import { entryView, instanceRootRoutes, isEntryShellFor, isSubjectShell, libraryConfigOf, VIEWER_JS, viewerHtml } from "../gen-library-viz.ts";
 import { ReferencedSourceSchema } from "../../schemas/referenced-source.ts";
 import { LibraryIndexSchema } from "../../schemas/site-indexes.ts";
 import { checkEntry } from "../check-l1-complete.ts";
 import { readDeclaration, siteDirFor } from "../../schemas/cat-harness.ts";
+import { DOCS_SITE, libraryAssetIri, libraryAssetSitePath } from "../../schemas/library-iri.ts";
 
 const HARNESS = resolve(import.meta.dir, "../..");
 const REPO = resolve(HARNESS, "..");
@@ -74,6 +75,47 @@ describe("a legacy #key is read once, to be normalised to the path", () => {
   test("normalisation is a replaceState to the entry's path, never a new fragment", () => {
     expect(VIEWER_JS).toContain("history.replaceState(null, \"\", to)");
     expect(VIEWER_JS).not.toMatch(/"#" \+ encodeURIComponent/);
+  });
+});
+
+describe("a row's TITLE opens the entry's own page (owner, 2026-10-02)", () => {
+  // The shipped script, run against stubs: the projection fetch never
+  // resolves, so only the module-level definitions run and COLS is returned.
+  const pageUrl = "https://example.test/folio-assistant/cat-harness/library/smart-base/";
+  const run = new Function(
+    "document",
+    "location",
+    "fetch",
+    "window",
+    "history",
+    `${VIEWER_JS}\nreturn { COLS: COLS };`,
+  ) as (...a: unknown[]) => { COLS: { k: string; f: (e: unknown) => string }[] };
+  const { COLS } = run(
+    {
+      getElementById: () => ({ textContent: JSON.stringify({ data: "../../../assets/library/index.json", scope: "smart-base", libRoot: "../" }) }),
+      addEventListener: () => {},
+      querySelector: () => null,
+    },
+    { href: pageUrl, pathname: new URL(pageUrl).pathname, hash: "" },
+    () => new Promise(() => {}),
+    { addEventListener: () => {} },
+    { replaceState: () => {} },
+  );
+  const title = COLS.find((c) => c.k === "title")!;
+  test("a referenced entry with no README: the title links its path IRI", () => {
+    const html = title.f({ instance: "smart-base", id: "smart-trust", title: "WHO SMART Trust", links: [] });
+    expect(html).toContain('href="/folio-assistant/cat-harness/library/smart-base/smart-trust/">WHO SMART Trust</a>');
+    expect(html).not.toContain("github.com");
+  });
+  test("the SLUG links the entry's `view`, composed against the site root", () => {
+    const slug = COLS.find((c) => c.k === "id")!;
+    const html = slug.f({ instance: "smart-base", id: "smart-trust", title: "T", view: "/smart-trust/" });
+    expect(html).toContain('<a class="lib-view" href="/folio-assistant/smart-trust/">');
+  });
+  test("an entry WITH a README keeps it, as a secondary link only", () => {
+    const html = title.f({ instance: "smart-base", id: "x", title: "X", readme: "https://github.com/o/r/blob/main/x/README.md" });
+    expect(html).toMatch(/^<a class="lib-title" href="\/folio-assistant\/cat-harness\/library\/smart-base\/x\/">X<\/a>/);
+    expect(html).toContain('<a class="src" href="https://github.com/o/r/blob/main/x/README.md">README</a>');
   });
 });
 
@@ -129,6 +171,62 @@ describe("the committed tree: one materialized shell per entry", () => {
       const alt = /<link rel="alternate" type="application\/ld\+json" href="([^"]+)">/.exec(readFileSync(f, "utf-8"))?.[1];
       expect(alt, `${e.instance}/${e.id} names no JSON-LD`).toBeDefined();
       expect(existsSync(resolve(join(LIB, e.instance, e.id), alt!)), `${e.instance}/${e.id}: ${alt}`).toBe(true);
+    }
+  });
+});
+
+describe("asset and rendering: two resources, two IRIs (owner, 2026-10-02)", () => {
+  // "each asset should have one IRI, but the view page is a rendering of that
+  // asset, a different page. fix IRIs" — and "asset doesnt know about its
+  // renderings".
+  const index = LibraryIndexSchema.parse(JSON.parse(readFileSync(join(SITE, "assets", "library", "index.json"), "utf-8")));
+  test("the site root the IRIs are minted under is the one the site is served at", () => {
+    const cfg = readFileSync(join(SITE, "_config.yml"), "utf-8");
+    const url = /^url:\s*"?([^"\n]+)"?/m.exec(cfg)?.[1];
+    const baseurl = /^baseurl:\s*"?([^"\n]*)"?/m.exec(cfg)?.[1];
+    expect(DOCS_SITE).toBe(`${url}${baseurl}/`);
+  });
+  test("every entry's @id IS the address of its published JSON-LD, and that file is published", () => {
+    for (const e of index.entries) {
+      const m = JSON.parse(readFileSync(join(REPO, e.dir, "manifest.jsonld"), "utf-8")) as { "@id": string };
+      expect(m["@id"], e.dir).toBe(libraryAssetIri(e.instance, e.id));
+      const published = join(SITE, libraryAssetSitePath(e.instance, e.id));
+      expect(existsSync(published), published).toBe(true);
+      expect((JSON.parse(readFileSync(published, "utf-8")) as { "@id": string })["@id"]).toBe(m["@id"]);
+    }
+  });
+  test("the rendering points TO the asset: its alternate resolves to the asset's file", () => {
+    for (const e of index.entries) {
+      const shellDir = join(LIB, e.instance, e.id);
+      const alt = /<link rel="alternate" type="application\/ld\+json" href="([^"]+)">/.exec(
+        readFileSync(join(shellDir, "index.html"), "utf-8"),
+      )?.[1];
+      expect(resolve(shellDir, alt!)).toBe(join(SITE, libraryAssetSitePath(e.instance, e.id)));
+    }
+  });
+  test("every entry's `view` is GENERATED into the projection: another instance's declared root, else its own page", () => {
+    const byKey = new Map(index.entries.map((e) => [`${e.instance}/${e.id}`, e]));
+    // A referenced entry the smart-trust instance renders, at its declared root.
+    expect(byKey.get("smart-base/smart-trust")?.view).toBe("/smart-trust/");
+    // An ingested PDF: rendered by the library viewer, at its own entry page.
+    expect(byKey.get("smart-base/who-rhr-1806-eng")?.view).toBe("/cat-harness/library/smart-base/who-rhr-1806-eng/");
+    for (const e of index.entries) {
+      expect(e.view, `${e.instance}/${e.id}`).toBeDefined();
+      // Every view is a page that exists on the site, or an instance root route.
+      if (e.view!.startsWith("/cat-harness/library/")) expect(existsSync(join(SITE, e.view!, "index.html"))).toBe(true);
+    }
+  });
+  test("entryView takes a link only when it is a DECLARED root, never any page", () => {
+    const roots = new Map([["smart-trust", "/smart-trust/"]]);
+    expect(entryView({ links: [{ href: "/smart-trust/" }] }, roots, "x/y/z")).toBe("/smart-trust/");
+    expect(entryView({ links: [{ href: "/somewhere-else/" }] }, roots, "x/y/z")).toBe("/x/y/z/");
+    expect(entryView({}, roots, "x/y/z")).toBe("/x/y/z/");
+    expect(instanceRootRoutes(REPO).get("smart-trust")).toBe("/smart-trust/");
+  });
+  test("the asset never references a rendering of itself", () => {
+    for (const e of index.entries) {
+      const text = readFileSync(join(SITE, libraryAssetSitePath(e.instance, e.id)), "utf-8");
+      expect(text, e.id).not.toMatch(/subjectOf|foaf:page|"page"|\/library\/[^"]*\/index\.html|cat-harness\/library\//);
     }
   });
 });

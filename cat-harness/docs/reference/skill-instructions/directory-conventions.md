@@ -824,7 +824,9 @@ one is argued.
 5. **`coverage`** — the `skill` that governs it, the `docs` that say what it is
    for, the `visualiser` that renders it; an opt-out carries its reason
    (`SubgraphCoverageSchema`). Without a skill the directory is unreachable
-   by an agent even where a person can read it.
+   by an agent even where a person can read it. The visualiser is where a
+   node's RENDERING IRIs are derived from; the node never names them —
+   `kg-viewer` §"The asset and its rendering are two resources with two IRIs".
 6. **The files inside declare what they are** — front matter, a `$schema`, a
    leading comment — never an extension or a location
    (§"A sub-sub-graph", §"Every other marker"). The README's "what it is"

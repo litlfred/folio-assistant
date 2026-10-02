@@ -2,7 +2,7 @@
   "$schema": "folio-schema-graph/v1",
   "tile": {
     "schemas": {
-      "count": 194,
+      "count": 195,
       "unit": "modules"
     }
   },
@@ -665,6 +665,15 @@
       "name": "lean-packages",
       "graphNode": "schema",
       "summary": "The `lean.ref` grammar and the package registry it resolves against.",
+      "isTest": false
+    },
+    {
+      "module": "cat-harness/schemas/library-iri.ts",
+      "instance": "cat-harness",
+      "name": "library-iri",
+      "graphNode": "none",
+      "reason": "a mint rule, not a schema",
+      "summary": "A library entry's ONE IRI — the address of its published JSON-LD.",
       "isTest": false
     },
     {
@@ -26915,6 +26924,13 @@
           "optional": true,
           "array": true,
           "doc": "Where else to go for a `referenced` entry — an absolute URL, or a"
+        },
+        {
+          "name": "view",
+          "type": "z.string().regex(/^\\/[a-z0-9][a-z0-9._/-]*\\/$/).optional()",
+          "optional": true,
+          "array": false,
+          "doc": "The page that RENDERS this entry, site-root path with a leading `/` and"
         },
         {
           "name": "pageStart",

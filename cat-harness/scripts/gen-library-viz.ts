@@ -57,6 +57,7 @@ import { readLibraryGraph, type LibraryGraph, type LibraryBlock,
 import { tally } from "./summaries.ts";
 import { WITHHELD_VIEW_JS } from "./lib/library-withheld-view.ts";
 import { ADDRESS_JS } from "./lib/library-address.ts";
+import { LIBRARY_JSONLD_SITE_DIR, libraryAssetSitePath } from "../schemas/library-iri.ts";
 import { scanLibraryRefs, type RefSource } from "./library-refs.ts";
 import { orphanSubjectPages, viewerPlacement } from "./gen-schema-viz.ts";
 import { readDeclaration } from "../schemas/cat-harness.ts";
@@ -433,15 +434,27 @@ function uploadState(e){
 }
 
 var COLS = [
-  { k:"id",       t:"slug",     n:false, f:function(e){ return avatarHtml(e) + '<span class="slug">'+esc(e.id)+"</span>"; } },
+  /* THE SLUG OPENS THE ENTRY'S VISUALISER -- e.view, generated per entry by
+     the projection (owner, 2026-10-02: "click on smart-trust slug and open
+     up the visualizer"). A site-root path, composed like an avatar; an entry
+     whose projection carries none keeps a plain slug. */
+  { k:"id",       t:"slug",     n:false, f:function(e){
+      var v = typeof e.view === "string" && e.view.charAt(0) === "/" ? SITE_ROOT + e.view.slice(1) : "";
+      var s = '<span class="slug">'+esc(e.id)+"</span>";
+      return avatarHtml(e) + (v ? '<a class="lib-view" href="'+esc(v)+'">'+s+"</a>" : s); } },
   /* Bean qgjh: an entry can be OPENED. The title is a link to the item's own
      page (its generated README) where one exists, and the document's upstream
      record rides beside it: arXiv or DOI, from the identifier its manifest
      records. Nothing is linked that the projection does not carry. */
   { k:"title",    t:"title",    n:false, c:"t-title", f:function(e){
-      var t = e.readme ? '<a href="'+esc(e.readme)+'">'+esc(e.title)+"</a>" : esc(e.title);
+      /* THE TITLE OPENS THE ENTRY'S OWN PAGE -- its path IRI (#1881). It
+         used to open the item's README on GitHub, which a referenced entry
+         may not have (owner, 2026-10-02: the smart-trust title went to a
+         404). The README stays as a secondary link, only when one exists. */
+      var t = '<a class="lib-title" href="'+esc(entryHref(e))+'">'+esc(e.title)+"</a>";
       var src = e.arxiv ? "https://arxiv.org/abs/"+encodeURIComponent(e.arxiv) : e.doi ? "https://doi.org/"+e.doi : "";
-      return t + (src ? ' <a class="src" href="'+esc(src)+'">source</a>' : "") + linksHtml(e);
+      return t + (src ? ' <a class="src" href="'+esc(src)+'">source</a>' : "") +
+        (e.readme ? ' <a class="src" href="'+esc(e.readme)+'">README</a>' : "") + linksHtml(e);
     } },
   { k:"instance", t:"instance", n:false, f:function(e){ return '<span class="pill">'+esc(e.instance)+"</span>"; } },
   { k:"rung",     t:"rung",     n:false, f:function(e){ return '<span class="pill '+(e.rung==="none"?"warn":"ok")+'">'+esc(e.rung)+"</span>"; } },
@@ -959,6 +972,54 @@ export function orphanFiles(root: string, wanted: ReadonlySet<string>): string[]
   return out.sort();
 }
 
+/**
+ * Every instance whose declaration publishes a renderable directory at its
+ * ROOT route (`instanceRoot: true`), by name → its site-root path `/<name>/`.
+ * The route rule is `mount-instance-docs.ts` `withRoutes`: a declared root
+ * answers at `/<instance>/`.
+ */
+export function instanceRootRoutes(repoRoot: string): Map<string, string> {
+  const out = new Map<string, string>();
+  for (const inst of instanceRootsIn(repoRoot)) {
+    let decl;
+    try {
+      decl = readDeclaration(inst);
+    } catch {
+      continue; // an unreadable declaration is check:declaration-filename's to report
+    }
+    const name = decl?.name;
+    if (!name) continue;
+    const rooted = (decl?.directories ?? []).some((d) => (d as { instanceRoot?: boolean }).instanceRoot === true);
+    if (rooted) out.set(name, `/${name}/`);
+  }
+  return out;
+}
+
+/**
+ * An entry's `view` — the site-root path of the page that RENDERS it.
+ *
+ * Owner, 2026-10-02: *"i also expected to be able to click on "smart-trust"
+ * slug and open up the visualizer for smart-trust"*. Two cases:
+ *
+ * - a REFERENCED entry whose record links a `site_path` that is another
+ *   instance's DECLARED root route (`instanceRootRoutes`) is rendered there —
+ *   smart-trust's IG viewer at `/smart-trust/`. The link chooses the
+ *   candidate; the declaration is what makes it a visualiser rather than a
+ *   page that merely exists, so a link to anything else is not taken;
+ * - every other entry is rendered by this viewer, at its own entry page.
+ *
+ * Generated into the projection, never stored in the asset.
+ */
+export function entryView(
+  e: { links?: { href: string }[] },
+  roots: ReadonlyMap<string, string>,
+  entryPage: string,
+): string {
+  const declared = new Set(roots.values());
+  const hit = (e.links ?? []).map((l) => l.href).find((h) => declared.has(h));
+  return hit ?? `/${entryPage}/`;
+}
+
 let stale = 0;
 /**
  * The shared viewer `emit` — the navbar comes with the write (bean `edx7`).
@@ -1175,6 +1236,16 @@ if (import.meta.main) {
     e.summaries = tally(blocks.flatMap((b) => (b.summary ? [b.summary] : [])));
   }
 
+  // ── EACH ENTRY'S RENDERING, DERIVED (owner, 2026-10-02, #1881) ────────
+  //
+  // `view` is where the entry is SHOWN — written here, into this generated
+  // index, and never into the asset ("asset doesnt know about its
+  // renderings"). See `entryView` for the rule.
+  const roots = instanceRootRoutes(repoRoot);
+  for (const e of g.entries) {
+    e.view = entryView(e, roots, relative(site, join(pageDir, e.instance, e.id)).split(sep).join("/"));
+  }
+
   emit(join(dataDir, "index.json"), JSON.stringify(projection(g, scoped), null, 2) + "\n");
 
   // ── PER-ENTRY BLOCK GRAPHS (bean `7nvr`) ──────────────────────────────
@@ -1291,7 +1362,9 @@ if (import.meta.main) {
       const src = join(repoRoot, e.dir, "manifest.jsonld");
       let jsonld: string | undefined;
       if (existsSync(src)) {
-        const dest = join(dataDir, "jsonld", subject, e.id, "manifest.jsonld");
+        // At the path its IRI names (`schemas/library-iri.ts`), so the entry's
+        // `@id` dereferences to exactly this file — one function decides both.
+        const dest = join(site, libraryAssetSitePath(subject, e.id));
         wantedJsonld.add(dest);
         emitBytes(dest, readFileSync(src));
         jsonld = relative(shellDir, dest).split(sep).join("/");
@@ -1329,7 +1402,7 @@ if (import.meta.main) {
   // Published JSON-LD no entry names any more — the avatar rule (bean `cw35`):
   // the directory is this generator's alone, so pruned on a write and a
   // finding under `--check`.
-  for (const abs of orphanFiles(join(dataDir, "jsonld"), wantedJsonld)) {
+  for (const abs of orphanFiles(join(site, LIBRARY_JSONLD_SITE_DIR), wantedJsonld)) {
     if (check) {
       console.error(`  ✗ ${abs} is an orphan — no entry publishes it`);
       stale++;

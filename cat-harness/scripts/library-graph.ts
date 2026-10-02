@@ -224,6 +224,12 @@ export interface LibraryEntry {
    */
   summaries?: SummaryTally;
   /**
+   * The site-root path of the page that RENDERS this entry — attached by the
+   * caller (`gen-library-viz` `entryView`), derived from the declarations and
+   * never read from the asset (#1881). Absent when nobody derived it.
+   */
+  view?: string;
+  /**
    * Where else a reader can go for this entry — read from a `referenced`
    * entry's own `links` (`schemas/referenced-source.ts`). Owner, 2026-10-02:
    * the smart-trust IG is in smart-base's library as an EXTERNAL reference,

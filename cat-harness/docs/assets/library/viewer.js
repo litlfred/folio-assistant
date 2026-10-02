@@ -126,15 +126,27 @@ function uploadState(e){
 }
 
 var COLS = [
-  { k:"id",       t:"slug",     n:false, f:function(e){ return avatarHtml(e) + '<span class="slug">'+esc(e.id)+"</span>"; } },
+  /* THE SLUG OPENS THE ENTRY'S VISUALISER -- e.view, generated per entry by
+     the projection (owner, 2026-10-02: "click on smart-trust slug and open
+     up the visualizer"). A site-root path, composed like an avatar; an entry
+     whose projection carries none keeps a plain slug. */
+  { k:"id",       t:"slug",     n:false, f:function(e){
+      var v = typeof e.view === "string" && e.view.charAt(0) === "/" ? SITE_ROOT + e.view.slice(1) : "";
+      var s = '<span class="slug">'+esc(e.id)+"</span>";
+      return avatarHtml(e) + (v ? '<a class="lib-view" href="'+esc(v)+'">'+s+"</a>" : s); } },
   /* Bean qgjh: an entry can be OPENED. The title is a link to the item's own
      page (its generated README) where one exists, and the document's upstream
      record rides beside it: arXiv or DOI, from the identifier its manifest
      records. Nothing is linked that the projection does not carry. */
   { k:"title",    t:"title",    n:false, c:"t-title", f:function(e){
-      var t = e.readme ? '<a href="'+esc(e.readme)+'">'+esc(e.title)+"</a>" : esc(e.title);
+      /* THE TITLE OPENS THE ENTRY'S OWN PAGE -- its path IRI (#1881). It
+         used to open the item's README on GitHub, which a referenced entry
+         may not have (owner, 2026-10-02: the smart-trust title went to a
+         404). The README stays as a secondary link, only when one exists. */
+      var t = '<a class="lib-title" href="'+esc(entryHref(e))+'">'+esc(e.title)+"</a>";
       var src = e.arxiv ? "https://arxiv.org/abs/"+encodeURIComponent(e.arxiv) : e.doi ? "https://doi.org/"+e.doi : "";
-      return t + (src ? ' <a class="src" href="'+esc(src)+'">source</a>' : "") + linksHtml(e);
+      return t + (src ? ' <a class="src" href="'+esc(src)+'">source</a>' : "") +
+        (e.readme ? ' <a class="src" href="'+esc(e.readme)+'">README</a>' : "") + linksHtml(e);
     } },
   { k:"instance", t:"instance", n:false, f:function(e){ return '<span class="pill">'+esc(e.instance)+"</span>"; } },
   { k:"rung",     t:"rung",     n:false, f:function(e){ return '<span class="pill '+(e.rung==="none"?"warn":"ok")+'">'+esc(e.rung)+"</span>"; } },
