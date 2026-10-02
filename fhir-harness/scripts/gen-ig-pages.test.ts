@@ -9,8 +9,15 @@
  * keeps current — so they assert what a reader is served, not what a function
  * returns.
  *
- * Calibrated: making `statusFor` return `chrome.status` unconditionally puts
- * `class="ig-status-draft"` on smart-base's banner and fails the second test.
+ * Since stage D (#1767) the chrome is the TEMPLATE's (`folio-ig-chrome/v2`)
+ * and states no IG's status; each IG's status is its own `ig-identity.json`.
+ * smart-trust carries one (read from its sushi-config); smart-base does not.
+ *
+ * Calibrated: making `statusFor` ignore the identity's package (returning
+ * `IDENTITY.status` for any IG) still leaves smart-base bare, because it has no
+ * identity file — so the identity-mismatch rule is pinned in
+ * `ig-identity.test.ts` instead, and here deleting smart-trust's
+ * `ig-identity.json` fails the first test.
  *
  * @module fhir-harness/scripts/gen-ig-pages.test
  */

@@ -25,6 +25,7 @@ From: bootstrap 33 (<a href="{{ '/assets/glossary/bootstrap--kg-bpmn-activities.
 A vocabulary that could not be reached has said nothing, and the column above keeps that 
 apart from a checked miss. The counts are reported and not graded: an unmapped candidate may 
 be a term this corpus is right to coin.</p>
+<p class="fa-gloss-mapping-perterm"><strong>Per term.</strong> Every term on this page is <strong>unmapped</strong> on <code>fhir</code>, and <strong>unmapped</strong> on <code>skos</code>, unless its entry says otherwise. No entry says otherwise.</p>
 
 <label for="fa-gloss-q">Filter terms</label>
 <input id="fa-gloss-q" type="search" autocomplete="off" style="min-height:44px;width:100%;max-width:32rem">
@@ -2183,7 +2184,7 @@ Make the value proposition and set next steps <span class="fa-gloss-status">cand
 Map L2 → L3 [l3-fhir-authoring] <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
-<p>Each data element becomes a profile, each value set a ValueSet, each decision a PlanDefinition / Library.</p>
+<p>Each data element becomes a profile, each value set a ValueSet, each decision a PlanDefinition / Library. The DAK's L2 content is l3-fhir-authoring's sourceModel; this step binds l2-dak-authoring beside it, which is where the WHO L2 → L3 ordering lives now that the generic skill names no DAK (smart-* separation stage D, #1767).</p>
 <p class="fa-gloss-meta">BPMN activities of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/l3-fhir-pipeline.bpmn"><code>cat-harness/processes/l3-fhir-pipeline.bpmn#Task_MapL2</code></a></p>
 </dd>
 <dt id="smart-base--kg-bpmn-activities--process_diig.a_mapcurrentstate" data-fa-state="extracted" data-fa-gloss="">
