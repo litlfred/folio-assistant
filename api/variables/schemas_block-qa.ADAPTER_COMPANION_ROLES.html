@@ -12,17 +12,20 @@
 <li><a href="" aria-current="page">ADAPTER_COMPANION_ROLES</a></li></ul>
 <h1>Variable ADAPTER_COMPANION_ROLES<code class="tsd-tag">Const</code></h1></div>
 <div class="tsd-signature"><span class="tsd-kind-variable">ADAPTER_COMPANION_ROLES</span><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">Record</span><span class="tsd-signature-symbol">&lt;</span><a href="../types/schemas_block-kinds.ContentAdapter.html" class="tsd-signature-type tsd-kind-type-alias">ContentAdapter</a><span class="tsd-signature-symbol">,</span> <span class="tsd-signature-keyword">readonly</span> <a href="../types/schemas_block-qa.CompanionRole.html" class="tsd-signature-type tsd-kind-type-alias">CompanionRole</a><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> = ...</span></div>
-<div class="tsd-comment tsd-typography"><p>Which companion roles each adapter's blocks can actually have.</p>
-<p><code>md</code> and <code>ts</code> are shared: every block has a manifest, and either kind of
-block may carry prose. <code>lean</code> is paper-only; the BPMN/DMN/FSH/CQL/XLSX
-artefacts are DAK-only.</p>
+<div class="tsd-comment tsd-typography"><p>Which companion roles each BUILT-IN adapter's blocks can actually have.</p>
+<p><code>md</code> and <code>ts</code> are shared: every block has a manifest, and every kind of
+block may carry prose. <code>lean</code> is paper-only.</p>
+<p>A CONTRIBUTED adapter declares its own on its <code>AdapterContribution</code>
+(<code>companionRoles</code>) — the <code>dak</code> row that stood here until bean <code>1335</code>, with
+BPMN/DMN/FSH/CQL/XLSX/feature, is its contributor's now — and
+<a href="../functions/schemas_block-qa.incompatibleCompanions.html" class="tsd-kind-function">incompatibleCompanions</a> reads it from the registry.</p>
 <p>Stated here so that &quot;a paper criterion depends on <code>.dmn</code>&quot; is a <em>checkable</em>
 mistake rather than one that shows up as a criterion which silently never
 applies — <code>depends_on</code> gates applicability, so a mismatched pair produces a
 permanent <code>n/a</code> and no error.</p>
 </div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/litlfred/folio-assistant/blob/c7cb4ab0913cb8b0e39dc170d526df47aff3e042/cat-harness/schemas/block-qa.ts#L228">work/folio-assistant/folio-assistant/cat-harness/schemas/block-qa.ts:228</a></li></ul></aside></div>
+<li>Defined in <a href="https://github.com/litlfred/folio-assistant/blob/c6d7d7409dc98d376ebbbd76b8e7c92f515bd229/cat-harness/schemas/block-qa.ts#L233">work/folio-assistant/folio-assistant/cat-harness/schemas/block-qa.ts:233</a></li></ul></aside></div>
 <div class="col-sidebar">
 <div class="page-menu">
 <div class="tsd-navigation settings">

@@ -14,21 +14,26 @@
 <section class="tsd-panel">
 <ul class="tsd-signatures">
 <li class="">
-<div class="tsd-signature tsd-anchor-link" id="adapterforkind"><span class="tsd-kind-call-signature">adapterForKind</span><span class="tsd-signature-symbol">(</span><span class="tsd-kind-parameter">kind</span><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">&quot;paper&quot;</span> <span class="tsd-signature-symbol">|</span> <span class="tsd-signature-type">&quot;dak&quot;</span> <span class="tsd-signature-symbol">|</span> <span class="tsd-signature-type">undefined</span><a href="#adapterforkind" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></div>
+<div class="tsd-signature tsd-anchor-link" id="adapterforkind"><span class="tsd-kind-call-signature">adapterForKind</span><span class="tsd-signature-symbol">(</span><span class="tsd-kind-parameter">kind</span><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">&quot;paper&quot;</span> <span class="tsd-signature-symbol">|</span> <span class="tsd-signature-type">undefined</span><a href="#adapterforkind" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></div>
 <div class="tsd-description">
-<div class="tsd-comment tsd-typography"><p>The adapter a block kind belongs to, or <code>undefined</code> for an unknown kind.</p>
+<div class="tsd-comment tsd-typography"><p>The BUILT-IN adapter a block kind belongs to, or <code>undefined</code> for a kind core
+does not own.</p>
 <p><code>undefined</code> is deliberately not defaulted to <code>&quot;paper&quot;</code>. A criterion that
 silently treats an unrecognised kind as a paper block is how a math axis
 would come to run against a ValueSet — the caller must decide what an
 unknown kind means rather than inherit a guess.</p>
+<p>A CONTRIBUTED kind is also <code>undefined</code> here. A caller holding a registry
+asks <code>composedKindOwner(kind, registry, adapterForKind)</code> in
+<code>schemas/contributions.ts</code>, which consults this first and the registry
+second.</p>
 </div>
 <div class="tsd-parameters">
 <h4 class="tsd-parameters-title">Parameters</h4>
 <ul class="tsd-parameter-list">
 <li><span><span class="tsd-kind-parameter">kind</span>: <span class="tsd-signature-type">string</span></span></li></ul></div>
-<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">&quot;paper&quot;</span> <span class="tsd-signature-symbol">|</span> <span class="tsd-signature-type">&quot;dak&quot;</span> <span class="tsd-signature-symbol">|</span> <span class="tsd-signature-type">undefined</span></h4><aside class="tsd-sources">
+<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">&quot;paper&quot;</span> <span class="tsd-signature-symbol">|</span> <span class="tsd-signature-type">undefined</span></h4><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/litlfred/folio-assistant/blob/c7cb4ab0913cb8b0e39dc170d526df47aff3e042/cat-harness/schemas/block-kinds.ts#L379">work/folio-assistant/folio-assistant/cat-harness/schemas/block-kinds.ts:379</a></li></ul></aside></div></li></ul></section></div>
+<li>Defined in <a href="https://github.com/litlfred/folio-assistant/blob/c6d7d7409dc98d376ebbbd76b8e7c92f515bd229/cat-harness/schemas/block-kinds.ts#L365">work/folio-assistant/folio-assistant/cat-harness/schemas/block-kinds.ts:365</a></li></ul></aside></div></li></ul></section></div>
 <div class="col-sidebar">
 <div class="page-menu">
 <div class="tsd-navigation settings">

@@ -11,15 +11,23 @@
 <li><a href="../modules/schemas_block-kinds.html">schemas/block-kinds</a></li>
 <li><a href="" aria-current="page">CONTENT_ADAPTERS</a></li></ul>
 <h1>Variable CONTENT_ADAPTERS<code class="tsd-tag">Const</code></h1></div>
-<div class="tsd-signature"><span class="tsd-kind-variable">CONTENT_ADAPTERS</span><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-keyword">readonly</span> <span class="tsd-signature-symbol">[</span><span class="tsd-signature-type">&quot;paper&quot;</span><span class="tsd-signature-symbol">,</span> <span class="tsd-signature-type">&quot;dak&quot;</span><span class="tsd-signature-symbol">]</span><span class="tsd-signature-symbol"> = ...</span></div>
+<div class="tsd-signature"><span class="tsd-kind-variable">CONTENT_ADAPTERS</span><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-keyword">readonly</span> <span class="tsd-signature-symbol">[</span><span class="tsd-signature-type">&quot;paper&quot;</span><span class="tsd-signature-symbol">]</span><span class="tsd-signature-symbol"> = ...</span></div>
 <div class="tsd-comment tsd-typography"><p>The content adapters a folio can hold.</p>
 <p><code>harness.config.json</code> already carries <code>contentType</code> and <code>adapter</code>, and the
 platform ships <code>adapters/paper/</code>. This names the dimension so that block
 kinds and QA criteria can be scoped to it instead of living in one global
 pool.</p>
+<p>These are the BUILT-IN adapters only. <code>dak</code> was listed here until bean
+<code>1335</code>; it is smart-base's now, contributed through
+<code>ContributionRegistry</code> like any adapter a harness adds, and
+<code>register</code> refuses a contribution that names a built-in one — which is what
+made narrowing this list safe rather than a collision waiting to happen.
+Where a criterion or a reader needs to name a contributed adapter, it uses
+a plain string (<code>QaCriterionDefinition.adapters</code>), because a content type is
+data and not an import.</p>
 </div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/litlfred/folio-assistant/blob/c7cb4ab0913cb8b0e39dc170d526df47aff3e042/cat-harness/schemas/block-kinds.ts#L85">work/folio-assistant/folio-assistant/cat-harness/schemas/block-kinds.ts:85</a></li></ul></aside></div>
+<li>Defined in <a href="https://github.com/litlfred/folio-assistant/blob/c6d7d7409dc98d376ebbbd76b8e7c92f515bd229/cat-harness/schemas/block-kinds.ts#L94">work/folio-assistant/folio-assistant/cat-harness/schemas/block-kinds.ts:94</a></li></ul></aside></div>
 <div class="col-sidebar">
 <div class="page-menu">
 <div class="tsd-navigation settings">
