@@ -977,3 +977,10 @@ If a sibling has not answered an ask after 1 calendar day in an
 async setting, restate the ask in a fresh comment and tag the
 author.  Do not block indefinitely.
 {% endraw %}
+
+## Processes that run this skill
+
+| process | step(s) that name it |
+|---|---|
+| [Stalled-agent triage: collect handovers, consolidate themes, recommend, re-route](../../processes/stalled-agent-triage.html) | Re-route open PRs that lost their driver |
+

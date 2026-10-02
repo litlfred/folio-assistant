@@ -18,6 +18,8 @@ scratchpad, and uncommitted work in its worktree. A **handover report** moves
 the parts that matter into the repository, as a committed bean note, so the
 next agent starts from fact rather than from guesswork.
 
+To produce one under time pressure, follow [`prepare-for-handover`](prepare-for-handover.md): it commits and pushes first, then writes this report citing the pushed SHAs.
+
 This skill is not `agent-handoff` (PR #1884), which hands
 **one task** to a named agent in another environment. A handover report is a
 **snapshot of everything one agent is holding**, written for whoever turns up
@@ -110,3 +112,10 @@ the prose is what a person reads.
 6. **Update in place.** Re-run `beans:note` on the same branch and bean, which
    gives the same file. Do not append a second report.
 {% endraw %}
+
+## Processes that run this skill
+
+| process | step(s) that name it |
+|---|---|
+| [Stalled-agent triage: collect handovers, consolidate themes, recommend, re-route](../../processes/stalled-agent-triage.html) | Collect or reconstruct a handover report per agent |
+

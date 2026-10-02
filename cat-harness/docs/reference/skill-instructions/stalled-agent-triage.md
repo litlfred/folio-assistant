@@ -114,3 +114,14 @@ rest ([`interaction-modality`](interaction-modality.md)
   CPU headroom: four agents regenerating at once filled a 9 GB allowance on
   2026-10-02.
 {% endraw %}
+
+## Processes that run this skill
+
+This skill has its own process: **[Stalled-agent triage: collect handovers, consolidate themes, recommend, re-route](../../processes/stalled-agent-triage.html)**.
+
+<img src="../../assets/img/workflows/stalled-agent-triage.svg" alt="BPMN diagram: Stalled-agent triage: collect handovers, consolidate themes, recommend, re-route" style="max-width:100%">
+
+| process | step(s) that name it |
+|---|---|
+| [Stalled-agent triage: collect handovers, consolidate themes, recommend, re-route](../../processes/stalled-agent-triage.html) | Find the footprint; Consolidate into 2-4 themes, with a recommendation each |
+

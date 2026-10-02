@@ -262,6 +262,7 @@ roles, and how they compose with the LLM, see [Skills & roles](../../skills.html
 | [Pickup](pickup.html) | `pickup` | — | Continue work on existing open PRs with minimal wasted tokens. This skill |
 | [The platform's own gates](platform-gates.html) | `platform-gates` | — | **One command:** |
 | [pr-description](pr-description.html) | `pr-description` | — | Owner, 2026-10-02, on litlfred/fhir-ig-publisher#8: *"PR should be readable |
+| [Prepare for a handover](prepare-for-handover.html) | `prepare-for-handover` | — | When a session stalls, what survives is what is **on the remote**: commits on |
 | [/prepare-merge-auto](prepare-merge-auto.html) | `prepare-merge-auto` | — | Runs the full `/prepare-merge` workflow PLUS: |
 | [Prepare-merge](prepare-merge.html) | `prepare-merge` | — | Canonical, repo-agnostic skill for taking a `claude/*` (or any feature) branch |
 | [Publish verification, and the one alert](publish-verification.html) | `publish-verification` | — | Bean `vigi`. Owner, 2026-09-23: *"a set of post processing tools for |
