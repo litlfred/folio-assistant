@@ -55,7 +55,7 @@ describe("provJsonldDocument — a real checkout's actors, roles and plans", () 
     expect(assoc[`${P}agent`]).toEqual([{ "@id": "https://litlfred.github.io/cat-harness/0.1.0/scenarios/actors/owner" }]);
     expect(assoc[`${P}hadRole`]).toEqual([{ "@id": "https://litlfred.github.io/cat-harness/0.1.0/scenarios/roles#authoring-agent" }]);
     expect(assoc[`${P}hadPlan`]).toEqual([
-      { "@id": "https://litlfred.github.io/cat-harness/0.1.0/processes/code-change-review#Task_ClaimBean" },
+      { "@id": "https://litlfred.github.io/cat-harness/0.1.0/processes/sdlc/code-change-review#Task_ClaimBean" },
     ]);
   });
 

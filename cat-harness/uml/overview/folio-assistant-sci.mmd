@@ -58,6 +58,33 @@ classDiagram
       character [1] object
     }
   }
+  namespace folio_assistant_sci__sci_processes {
+    class folio_assistant_sci_sci_processes_omg_bpmn_2_0["Business Process Model and Notation (BPMN)"] {
+      <<ext: omg-bpmn-2.0>>
+      bpmn:callActivity [0..*] element
+      bpmn:collaboration [0..*] element
+      bpmn:definitions [0..*] element
+      bpmn:documentation [0..*] element
+      bpmn:endEvent [0..*] element
+      bpmn:exclusiveGateway [0..*] element
+      bpmn:extensionElements [0..*] element
+      bpmn:flowNodeRef [0..*] element
+      bpmn:import [0..*] element
+      bpmn:incoming [0..*] element
+      bpmn:lane [0..*] element
+      bpmn:laneSet [0..*] element
+      bpmn:outgoing [0..*] element
+      bpmn:parallelGateway [0..*] element
+      bpmn:participant [0..*] element
+      bpmn:process [0..*] element
+      bpmn:sequenceFlow [0..*] element
+      bpmn:serviceTask [0..*] element
+      bpmn:startEvent [0..*] element
+      bpmn:task [0..*] element
+      bpmn:timerEventDefinition [0..*] element
+      bpmn:userTask [0..*] element
+    }
+  }
   namespace folio_assistant_sci__qa {
     class folio_assistant_sci_qa_kg_qa_v1_Pair_attestation["Pair_attestation"] {
       <<json: KgQaReportSchema>>
@@ -171,6 +198,7 @@ classDiagram
   folio_assistant_sci_sci_sources_folio_source_descriptor_v1_folio_source_descriptor_v1 *-- "1..*" folio_assistant_sci_sci_sources_folio_source_descriptor_v1_Identifier : identifiers
   cssClass "folio_assistant_sci_sci_sources_folio_source_descriptor_v1_Identifier" fa_uml_kind_schemas
   cssClass "folio_assistant_sci_sci_sources_folio_source_descriptor_v1_folio_source_descriptor_v1" fa_uml_kind_schemas
+  cssClass "folio_assistant_sci_sci_processes_omg_bpmn_2_0" fa_uml_kind_processes
   folio_assistant_sci_qa_kg_qa_v1_kg_qa_v1 *-- "0..*" folio_assistant_sci_qa_kg_qa_v1_Pair_attestation : pair_attestations
   folio_assistant_sci_qa_kg_qa_v1_Voice_review *-- "0..*" folio_assistant_sci_qa_kg_qa_v1_Verdict : verdicts
   folio_assistant_sci_qa_kg_qa_v1_kg_qa_v1 *-- "0..*" folio_assistant_sci_qa_kg_qa_v1_Voice_review : voice_reviews
