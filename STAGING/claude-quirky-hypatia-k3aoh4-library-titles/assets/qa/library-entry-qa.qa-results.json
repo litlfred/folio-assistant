@@ -11,11 +11,11 @@
   "families": {
     "bibliographic-missing": {
       "summary": "No author/publisher, or no year, among the fields the entry itself declares (manifest meta, referenced.json identity, tabular.jsonld source), and no `meta.bibliographic_not_in_source` reason. `readableIn` lists where the value IS on disk but not carried — what a fix would read.",
-      "count": 57,
+      "count": 58,
       "entries": [
         {
           "entry": "agent-skill-best-practices---gemini-cli",
-          "instance": "agent-skills",
+          "instance": "cat-harness",
           "missing": [
             "author/publisher",
             "year"
@@ -24,133 +24,7 @@
         },
         {
           "entry": "agent-skills---google-antigravity-docs",
-          "instance": "agent-skills",
-          "missing": [
-            "author/publisher",
-            "year"
-          ],
-          "field": "manifest.jsonld meta; referenced.json identity; tabular.jsonld source"
-        },
-        {
-          "entry": "arxiv-2602.12670v4",
-          "instance": "agent-skills",
-          "missing": [
-            "author/publisher",
-            "year"
-          ],
-          "field": "manifest.jsonld meta; referenced.json identity; tabular.jsonld source",
-          "readableIn": [
-            {
-              "field": "structure.json metadata.docinfo.Author",
-              "value": "Xiangyi Li; Yimin Liu; Wenbo Chen; Bingran You; Zonglin Di; Yifeng He; Shengh..."
-            }
-          ]
-        },
-        {
-          "entry": "arxiv-2607.25032v1",
-          "instance": "agent-skills",
-          "missing": [
-            "author/publisher",
-            "year"
-          ],
-          "field": "manifest.jsonld meta; referenced.json identity; tabular.jsonld source",
-          "readableIn": [
-            {
-              "field": "structure.json metadata.docinfo.Author",
-              "value": "Giuseppe Destefanis"
-            }
-          ]
-        },
-        {
-          "entry": "arxiv-2608.08453v1",
-          "instance": "agent-skills",
-          "missing": [
-            "author/publisher",
-            "year"
-          ],
-          "field": "manifest.jsonld meta; referenced.json identity; tabular.jsonld source",
-          "readableIn": [
-            {
-              "field": "structure.json metadata.docinfo.Author",
-              "value": "Chi Zhang; Yimin Liu; Xinze Chen; Ping Ji"
-            }
-          ]
-        },
-        {
-          "entry": "best-practices---google-antigravity-docs",
-          "instance": "agent-skills",
-          "missing": [
-            "author/publisher",
-            "year"
-          ],
-          "field": "manifest.jsonld meta; referenced.json identity; tabular.jsonld source"
-        },
-        {
-          "entry": "equipping-agents-for-the-real-world-with-agent-skills-anthro",
-          "instance": "agent-skills",
-          "missing": [
-            "author/publisher",
-            "year"
-          ],
-          "field": "manifest.jsonld meta; referenced.json identity; tabular.jsonld source"
-        },
-        {
-          "entry": "hmans-2026-beans-readme",
-          "instance": "agent-skills",
-          "missing": [
-            "author/publisher",
-            "year"
-          ],
-          "field": "manifest.jsonld meta; referenced.json identity; tabular.jsonld source"
-        },
-        {
-          "entry": "mcp-2026-specification-2026-07-28",
-          "instance": "agent-skills",
-          "missing": [
-            "author/publisher",
-            "year"
-          ],
-          "field": "manifest.jsonld meta; referenced.json identity; tabular.jsonld source"
-        },
-        {
-          "entry": "rfc2119-key-words-requirement-levels",
-          "instance": "agent-skills",
-          "missing": [
-            "author/publisher",
-            "year"
-          ],
-          "field": "manifest.jsonld meta; referenced.json identity; tabular.jsonld source"
-        },
-        {
-          "entry": "rfc8174-uppercase-vs-lowercase-2119-key-words",
-          "instance": "agent-skills",
-          "missing": [
-            "author/publisher",
-            "year"
-          ],
-          "field": "manifest.jsonld meta; referenced.json identity; tabular.jsonld source"
-        },
-        {
-          "entry": "skill-authoring-best-practices---claude-platform-docs",
-          "instance": "agent-skills",
-          "missing": [
-            "author/publisher",
-            "year"
-          ],
-          "field": "manifest.jsonld meta; referenced.json identity; tabular.jsonld source"
-        },
-        {
-          "entry": "skills-in-openai-api",
-          "instance": "agent-skills",
-          "missing": [
-            "author/publisher",
-            "year"
-          ],
-          "field": "manifest.jsonld meta; referenced.json identity; tabular.jsonld source"
-        },
-        {
-          "entry": "skills-in-openai-api-notebook",
-          "instance": "agent-skills",
+          "instance": "cat-harness",
           "missing": [
             "author/publisher",
             "year"
@@ -248,6 +122,21 @@
           ]
         },
         {
+          "entry": "arxiv-2602.12670v4",
+          "instance": "cat-harness",
+          "missing": [
+            "author/publisher",
+            "year"
+          ],
+          "field": "manifest.jsonld meta; referenced.json identity; tabular.jsonld source",
+          "readableIn": [
+            {
+              "field": "structure.json metadata.docinfo.Author",
+              "value": "Xiangyi Li; Yimin Liu; Wenbo Chen; Bingran You; Zonglin Di; Yifeng He; Shengh..."
+            }
+          ]
+        },
+        {
           "entry": "arxiv-2605.03537v1",
           "instance": "cat-harness",
           "missing": [
@@ -308,6 +197,45 @@
           ]
         },
         {
+          "entry": "arxiv-2607.25032v1",
+          "instance": "cat-harness",
+          "missing": [
+            "author/publisher",
+            "year"
+          ],
+          "field": "manifest.jsonld meta; referenced.json identity; tabular.jsonld source",
+          "readableIn": [
+            {
+              "field": "structure.json metadata.docinfo.Author",
+              "value": "Giuseppe Destefanis"
+            }
+          ]
+        },
+        {
+          "entry": "arxiv-2608.08453v1",
+          "instance": "cat-harness",
+          "missing": [
+            "author/publisher",
+            "year"
+          ],
+          "field": "manifest.jsonld meta; referenced.json identity; tabular.jsonld source",
+          "readableIn": [
+            {
+              "field": "structure.json metadata.docinfo.Author",
+              "value": "Chi Zhang; Yimin Liu; Xinze Chen; Ping Ji"
+            }
+          ]
+        },
+        {
+          "entry": "best-practices---google-antigravity-docs",
+          "instance": "cat-harness",
+          "missing": [
+            "author/publisher",
+            "year"
+          ],
+          "field": "manifest.jsonld meta; referenced.json identity; tabular.jsonld source"
+        },
+        {
           "entry": "deerwester-1990-indexing-by-lsa",
           "instance": "cat-harness",
           "missing": [
@@ -332,6 +260,15 @@
           ]
         },
         {
+          "entry": "equipping-agents-for-the-real-world-with-agent-skills-anthro",
+          "instance": "cat-harness",
+          "missing": [
+            "author/publisher",
+            "year"
+          ],
+          "field": "manifest.jsonld meta; referenced.json identity; tabular.jsonld source"
+        },
+        {
           "entry": "gurel-tat-2017-swot-analysis",
           "instance": "cat-harness",
           "missing": [
@@ -345,6 +282,15 @@
               "value": "pc"
             }
           ]
+        },
+        {
+          "entry": "hmans-2026-beans-readme",
+          "instance": "cat-harness",
+          "missing": [
+            "author/publisher",
+            "year"
+          ],
+          "field": "manifest.jsonld meta; referenced.json identity; tabular.jsonld source"
         },
         {
           "entry": "kg-folio-asst-2026-09-30",
@@ -375,6 +321,15 @@
           ]
         },
         {
+          "entry": "mcp-2026-specification-2026-07-28",
+          "instance": "cat-harness",
+          "missing": [
+            "author/publisher",
+            "year"
+          ],
+          "field": "manifest.jsonld meta; referenced.json identity; tabular.jsonld source"
+        },
+        {
           "entry": "qi-hessen-vanderheijden-2023-ca-vs-lsa",
           "instance": "cat-harness",
           "missing": [
@@ -384,7 +339,52 @@
           "field": "manifest.jsonld meta; referenced.json identity; tabular.jsonld source"
         },
         {
+          "entry": "rfc2119-key-words-requirement-levels",
+          "instance": "cat-harness",
+          "missing": [
+            "author/publisher",
+            "year"
+          ],
+          "field": "manifest.jsonld meta; referenced.json identity; tabular.jsonld source"
+        },
+        {
+          "entry": "rfc8174-uppercase-vs-lowercase-2119-key-words",
+          "instance": "cat-harness",
+          "missing": [
+            "author/publisher",
+            "year"
+          ],
+          "field": "manifest.jsonld meta; referenced.json identity; tabular.jsonld source"
+        },
+        {
           "entry": "sammut-bonnici-galea-2015-swot-analysis",
+          "instance": "cat-harness",
+          "missing": [
+            "author/publisher",
+            "year"
+          ],
+          "field": "manifest.jsonld meta; referenced.json identity; tabular.jsonld source"
+        },
+        {
+          "entry": "skill-authoring-best-practices---claude-platform-docs",
+          "instance": "cat-harness",
+          "missing": [
+            "author/publisher",
+            "year"
+          ],
+          "field": "manifest.jsonld meta; referenced.json identity; tabular.jsonld source"
+        },
+        {
+          "entry": "skills-in-openai-api",
+          "instance": "cat-harness",
+          "missing": [
+            "author/publisher",
+            "year"
+          ],
+          "field": "manifest.jsonld meta; referenced.json identity; tabular.jsonld source"
+        },
+        {
+          "entry": "skills-in-openai-api-notebook",
           "instance": "cat-harness",
           "missing": [
             "author/publisher",
@@ -412,6 +412,15 @@
         },
         {
           "entry": "w3c-2020-json-ld-1-1",
+          "instance": "cat-harness",
+          "missing": [
+            "author/publisher",
+            "year"
+          ],
+          "field": "manifest.jsonld meta; referenced.json identity; tabular.jsonld source"
+        },
+        {
+          "entry": "w3c-2024-prov-jsonld",
           "instance": "cat-harness",
           "missing": [
             "author/publisher",
@@ -718,91 +727,19 @@
     },
     "summary-backlog": {
       "summary": "Prose blocks with no current agent summary, per entry. A count, advisory: the drain is slow on purpose.",
-      "count": 55,
+      "count": 56,
       "entries": [
         {
           "entry": "agent-skill-best-practices---gemini-cli",
-          "instance": "agent-skills",
+          "instance": "cat-harness",
           "backlog": 3,
           "prose": 3
         },
         {
           "entry": "agent-skills---google-antigravity-docs",
-          "instance": "agent-skills",
+          "instance": "cat-harness",
           "backlog": 4,
           "prose": 4
-        },
-        {
-          "entry": "arxiv-2602.12670v4",
-          "instance": "agent-skills",
-          "backlog": 81,
-          "prose": 81
-        },
-        {
-          "entry": "arxiv-2607.25032v1",
-          "instance": "agent-skills",
-          "backlog": 13,
-          "prose": 13
-        },
-        {
-          "entry": "arxiv-2608.08453v1",
-          "instance": "agent-skills",
-          "backlog": 20,
-          "prose": 20
-        },
-        {
-          "entry": "best-practices---google-antigravity-docs",
-          "instance": "agent-skills",
-          "backlog": 4,
-          "prose": 4
-        },
-        {
-          "entry": "equipping-agents-for-the-real-world-with-agent-skills-anthro",
-          "instance": "agent-skills",
-          "backlog": 12,
-          "prose": 12
-        },
-        {
-          "entry": "hmans-2026-beans-readme",
-          "instance": "agent-skills",
-          "backlog": 14,
-          "prose": 14
-        },
-        {
-          "entry": "mcp-2026-specification-2026-07-28",
-          "instance": "agent-skills",
-          "backlog": 542,
-          "prose": 542
-        },
-        {
-          "entry": "rfc2119-key-words-requirement-levels",
-          "instance": "agent-skills",
-          "backlog": 6,
-          "prose": 6
-        },
-        {
-          "entry": "rfc8174-uppercase-vs-lowercase-2119-key-words",
-          "instance": "agent-skills",
-          "backlog": 8,
-          "prose": 8
-        },
-        {
-          "entry": "skill-authoring-best-practices---claude-platform-docs",
-          "instance": "agent-skills",
-          "backlog": 32,
-          "prose": 32
-        },
-        {
-          "entry": "skills-in-openai-api",
-          "instance": "agent-skills",
-          "backlog": 1,
-          "prose": 1
-        },
-        {
-          "entry": "skills-in-openai-api-notebook",
-          "instance": "agent-skills",
-          "backlog": 12,
-          "prose": 12
         },
         {
           "entry": "arxiv-0909.4061v2",
@@ -847,6 +784,12 @@
           "prose": 20
         },
         {
+          "entry": "arxiv-2602.12670v4",
+          "instance": "cat-harness",
+          "backlog": 81,
+          "prose": 81
+        },
+        {
           "entry": "arxiv-2605.03537v1",
           "instance": "cat-harness",
           "backlog": 19,
@@ -871,6 +814,24 @@
           "prose": 141
         },
         {
+          "entry": "arxiv-2607.25032v1",
+          "instance": "cat-harness",
+          "backlog": 13,
+          "prose": 13
+        },
+        {
+          "entry": "arxiv-2608.08453v1",
+          "instance": "cat-harness",
+          "backlog": 20,
+          "prose": 20
+        },
+        {
+          "entry": "best-practices---google-antigravity-docs",
+          "instance": "cat-harness",
+          "backlog": 4,
+          "prose": 4
+        },
+        {
           "entry": "deerwester-1990-indexing-by-lsa",
           "instance": "cat-harness",
           "backlog": 34,
@@ -883,10 +844,22 @@
           "prose": 6
         },
         {
+          "entry": "equipping-agents-for-the-real-world-with-agent-skills-anthro",
+          "instance": "cat-harness",
+          "backlog": 12,
+          "prose": 12
+        },
+        {
           "entry": "gurel-tat-2017-swot-analysis",
           "instance": "cat-harness",
           "backlog": 13,
           "prose": 13
+        },
+        {
+          "entry": "hmans-2026-beans-readme",
+          "instance": "cat-harness",
+          "backlog": 14,
+          "prose": 14
         },
         {
           "entry": "kg-folio-asst-2026-09-30",
@@ -901,16 +874,52 @@
           "prose": 41
         },
         {
+          "entry": "mcp-2026-specification-2026-07-28",
+          "instance": "cat-harness",
+          "backlog": 542,
+          "prose": 542
+        },
+        {
           "entry": "qi-hessen-vanderheijden-2023-ca-vs-lsa",
           "instance": "cat-harness",
           "backlog": 21,
           "prose": 21
         },
         {
+          "entry": "rfc2119-key-words-requirement-levels",
+          "instance": "cat-harness",
+          "backlog": 6,
+          "prose": 6
+        },
+        {
+          "entry": "rfc8174-uppercase-vs-lowercase-2119-key-words",
+          "instance": "cat-harness",
+          "backlog": 8,
+          "prose": 8
+        },
+        {
           "entry": "sammut-bonnici-galea-2015-swot-analysis",
           "instance": "cat-harness",
           "backlog": 9,
           "prose": 9
+        },
+        {
+          "entry": "skill-authoring-best-practices---claude-platform-docs",
+          "instance": "cat-harness",
+          "backlog": 32,
+          "prose": 32
+        },
+        {
+          "entry": "skills-in-openai-api",
+          "instance": "cat-harness",
+          "backlog": 1,
+          "prose": 1
+        },
+        {
+          "entry": "skills-in-openai-api-notebook",
+          "instance": "cat-harness",
+          "backlog": 12,
+          "prose": 12
         },
         {
           "entry": "w3c-2013-prov-o",
@@ -929,6 +938,12 @@
           "instance": "cat-harness",
           "backlog": 139,
           "prose": 139
+        },
+        {
+          "entry": "w3c-2024-prov-jsonld",
+          "instance": "cat-harness",
+          "backlog": 71,
+          "prose": 71
         },
         {
           "entry": "wang-rangaiah-2026-mcdm-aggregation",
@@ -1058,7 +1073,7 @@
       "entries": [
         {
           "entry": "hmans-2026-beans-readme",
-          "instance": "agent-skills",
+          "instance": "cat-harness",
           "title": "beans",
           "field": "manifest.jsonld title",
           "why": "a single short token"
@@ -1067,7 +1082,7 @@
     },
     "title-missing": {
       "summary": "The manifest's title is absent, the slug, or the source's file name — the entry has no title a reader can use. Read from manifest.jsonld `title` and `meta.title_source`: `slug` means no source offered one, which the owner's ruling of 2026-10-01 says is shown as the slug and flagged here, never filled from the page-1 parse.",
-      "count": 19,
+      "count": 20,
       "entries": [
         {
           "entry": "arxiv-0909.4061v2",
@@ -1131,6 +1146,13 @@
           "title": "qi-hessen-vanderheijden-2023-ca-vs-lsa",
           "field": "manifest.jsonld meta.title_source",
           "why": "no source offers a title (no catalogue record, referenced.json, usable PDF /Title or text heading), so the slug stands"
+        },
+        {
+          "entry": "w3c-2024-prov-jsonld",
+          "instance": "cat-harness",
+          "title": "w3c-2024-prov-jsonld",
+          "field": "manifest.jsonld title",
+          "why": "equals the slug"
         },
         {
           "entry": "wang-rangaiah-2026-mcdm-aggregation",
@@ -1210,101 +1232,17 @@
       "entries": [
         {
           "entry": "agent-skill-best-practices---gemini-cli",
-          "instance": "agent-skills",
+          "instance": "cat-harness",
           "title": "Agent Skill best practices | Gemini CLI",
           "source": "pdf-info",
           "field": "structure.json metadata.docinfo.Title"
         },
         {
           "entry": "agent-skills---google-antigravity-docs",
-          "instance": "agent-skills",
+          "instance": "cat-harness",
           "title": "Agent Skills | Google Antigravity Docs",
           "source": "pdf-info",
           "field": "structure.json metadata.docinfo.Title"
-        },
-        {
-          "entry": "arxiv-2602.12670v4",
-          "instance": "agent-skills",
-          "title": "SkillsBench: Benchmarking How Well Agent Skills Work Across Diverse Tasks",
-          "source": "pdf-info",
-          "field": "structure.json metadata.docinfo.Title"
-        },
-        {
-          "entry": "arxiv-2607.25032v1",
-          "instance": "agent-skills",
-          "title": "Authoring Agent Skills: A Software-Engineering Approach",
-          "source": "pdf-info",
-          "field": "structure.json metadata.docinfo.Title"
-        },
-        {
-          "entry": "arxiv-2608.08453v1",
-          "instance": "agent-skills",
-          "title": "What Keeps Agent Skills from Being Reusable? Evidence from 138K SKILL.md Files",
-          "source": "pdf-info",
-          "field": "structure.json metadata.docinfo.Title"
-        },
-        {
-          "entry": "best-practices---google-antigravity-docs",
-          "instance": "agent-skills",
-          "title": "Best Practices | Google Antigravity Docs",
-          "source": "pdf-info",
-          "field": "structure.json metadata.docinfo.Title"
-        },
-        {
-          "entry": "equipping-agents-for-the-real-world-with-agent-skills-anthro",
-          "instance": "agent-skills",
-          "title": "Equipping agents for the real world with Agent Skills \\ Anthropic",
-          "source": "pdf-info",
-          "field": "structure.json metadata.docinfo.Title"
-        },
-        {
-          "entry": "hmans-2026-beans-readme",
-          "instance": "agent-skills",
-          "title": "beans",
-          "source": "text-heading",
-          "field": "structure.json metadata.title"
-        },
-        {
-          "entry": "mcp-2026-specification-2026-07-28",
-          "instance": "agent-skills",
-          "title": "Model Context Protocol Specification, version 2026-07-28",
-          "source": "text-heading",
-          "field": "structure.json metadata.title"
-        },
-        {
-          "entry": "rfc2119-key-words-requirement-levels",
-          "instance": "agent-skills",
-          "title": "RFC 2119: Key words for use in RFCs to Indicate Requirement Levels | RFC Editor",
-          "source": "pdf-info",
-          "field": "structure.json metadata.docinfo.Title"
-        },
-        {
-          "entry": "rfc8174-uppercase-vs-lowercase-2119-key-words",
-          "instance": "agent-skills",
-          "title": "RFC 8174: Ambiguity of Uppercase vs Lowercase in RFC 2119 Key Words | RFC Editor",
-          "source": "pdf-info",
-          "field": "structure.json metadata.docinfo.Title"
-        },
-        {
-          "entry": "skill-authoring-best-practices---claude-platform-docs",
-          "instance": "agent-skills",
-          "title": "Skill authoring best practices - Claude Platform Docs",
-          "source": "pdf-info",
-          "field": "structure.json metadata.docinfo.Title"
-        },
-        {
-          "entry": "skills-in-openai-api",
-          "instance": "agent-skills",
-          "title": "Skills in OpenAI API",
-          "source": "pdf-info",
-          "field": "structure.json metadata.docinfo.Title"
-        },
-        {
-          "entry": "skills-in-openai-api-notebook",
-          "instance": "agent-skills",
-          "title": "Skills in OpenAI API",
-          "source": "text-heading",
-          "field": "structure.json metadata.title"
         },
         {
           "entry": "arxiv-2202.02427v1",
@@ -1342,6 +1280,13 @@
           "field": "structure.json metadata.docinfo.Title"
         },
         {
+          "entry": "arxiv-2602.12670v4",
+          "instance": "cat-harness",
+          "title": "SkillsBench: Benchmarking How Well Agent Skills Work Across Diverse Tasks",
+          "source": "pdf-info",
+          "field": "structure.json metadata.docinfo.Title"
+        },
+        {
           "entry": "arxiv-2605.03537v1",
           "instance": "cat-harness",
           "title": "A Skill-Based AI Agentic Pipeline for Library of Congress Subject Indexing",
@@ -1370,11 +1315,88 @@
           "field": "structure.json metadata.docinfo.Title"
         },
         {
+          "entry": "arxiv-2607.25032v1",
+          "instance": "cat-harness",
+          "title": "Authoring Agent Skills: A Software-Engineering Approach",
+          "source": "pdf-info",
+          "field": "structure.json metadata.docinfo.Title"
+        },
+        {
+          "entry": "arxiv-2608.08453v1",
+          "instance": "cat-harness",
+          "title": "What Keeps Agent Skills from Being Reusable? Evidence from 138K SKILL.md Files",
+          "source": "pdf-info",
+          "field": "structure.json metadata.docinfo.Title"
+        },
+        {
+          "entry": "best-practices---google-antigravity-docs",
+          "instance": "cat-harness",
+          "title": "Best Practices | Google Antigravity Docs",
+          "source": "pdf-info",
+          "field": "structure.json metadata.docinfo.Title"
+        },
+        {
+          "entry": "equipping-agents-for-the-real-world-with-agent-skills-anthro",
+          "instance": "cat-harness",
+          "title": "Equipping agents for the real world with Agent Skills \\ Anthropic",
+          "source": "pdf-info",
+          "field": "structure.json metadata.docinfo.Title"
+        },
+        {
+          "entry": "hmans-2026-beans-readme",
+          "instance": "cat-harness",
+          "title": "beans",
+          "source": "text-heading",
+          "field": "structure.json metadata.title"
+        },
+        {
+          "entry": "mcp-2026-specification-2026-07-28",
+          "instance": "cat-harness",
+          "title": "Model Context Protocol Specification, version 2026-07-28",
+          "source": "text-heading",
+          "field": "structure.json metadata.title"
+        },
+        {
+          "entry": "rfc2119-key-words-requirement-levels",
+          "instance": "cat-harness",
+          "title": "RFC 2119: Key words for use in RFCs to Indicate Requirement Levels | RFC Editor",
+          "source": "pdf-info",
+          "field": "structure.json metadata.docinfo.Title"
+        },
+        {
+          "entry": "rfc8174-uppercase-vs-lowercase-2119-key-words",
+          "instance": "cat-harness",
+          "title": "RFC 8174: Ambiguity of Uppercase vs Lowercase in RFC 2119 Key Words | RFC Editor",
+          "source": "pdf-info",
+          "field": "structure.json metadata.docinfo.Title"
+        },
+        {
           "entry": "sammut-bonnici-galea-2015-swot-analysis",
           "instance": "cat-harness",
           "title": "\"SWOT analysis\" in: Wiley Encyclopedia of Management Online",
           "source": "pdf-info",
           "field": "structure.json metadata.docinfo.Title"
+        },
+        {
+          "entry": "skill-authoring-best-practices---claude-platform-docs",
+          "instance": "cat-harness",
+          "title": "Skill authoring best practices - Claude Platform Docs",
+          "source": "pdf-info",
+          "field": "structure.json metadata.docinfo.Title"
+        },
+        {
+          "entry": "skills-in-openai-api",
+          "instance": "cat-harness",
+          "title": "Skills in OpenAI API",
+          "source": "pdf-info",
+          "field": "structure.json metadata.docinfo.Title"
+        },
+        {
+          "entry": "skills-in-openai-api-notebook",
+          "instance": "cat-harness",
+          "title": "Skills in OpenAI API",
+          "source": "text-heading",
+          "field": "structure.json metadata.title"
         },
         {
           "entry": "w3c-2013-prov-o",
@@ -1456,5 +1478,5 @@
       ]
     }
   },
-  "total": 169
+  "total": 172
 }
