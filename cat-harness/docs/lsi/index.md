@@ -110,7 +110,7 @@ Each dimension is a **contrast** between two poles, shown by their highest-loadi
 
 ## cat-harness / skills
 
-**221** units · **5918** terms · k = **100** · retains **78.9 %** of the weighted matrix · weighting `log-entropy` · sidecar `cat-harness/test/results/lsi/cat-harness/skills.lsi.json`
+**221** units · **5921** terms · k = **100** · retains **78.9 %** of the weighted matrix · weighting `log-entropy` · sidecar `cat-harness/test/results/lsi/cat-harness/skills.lsi.json`
 
 > Dimension 1 has **no negative pole**: it most likely measures unit length and term frequency (a margin), not a theme. Read the themes from dimension 2 on.
 
@@ -118,14 +118,14 @@ Each dimension is a **contrast** between two poles, shown by their highest-loadi
 
 | dim | σ | one pole | the other pole |
 |---|---|---|---|
-| 1 | 44.41 | instance, kind, harness, session, directory, block, page, graph | *(none)* |
-| 2 | 21.55 | watcher, sibling, slot, prs, queue, backlog, commits, block | harness, instance, declaration, node, directory, directories, graph, declares |
-| 3 | 17.99 | slot, chapter, block, edges, formal, project, proof, glossary | session, beans, branch, goals, store, window, sessions, push |
+| 1 | 44.38 | instance, kind, harness, session, directory, block, graph, page | *(none)* |
+| 2 | 21.52 | watcher, sibling, slot, prs, queue, backlog, commits, block | harness, instance, declaration, node, directory, directories, graph, declares |
+| 3 | 17.96 | slot, chapter, block, edges, formal, project, proof, glossary | session, beans, branch, goals, store, window, sessions, push |
 | 4 | 16.68 | page, text, block, pdf, blocks, manifest, slide, images | sibling, ledger, subdirectory, sessions, items, coordination, prs, renderable |
 | 5 | 15.18 | rung, archive, withheld, queue, arm, sniff, archived, zip | preview, feature, staging, requirements, role, build, folio, feedback |
-| 6 | 14.91 | sha, page, locale, staging, pages, preview, main, url | edge, lane, edges, actor, role, forward, logical, process |
-| 7 | 14.52 | edges, forward, backward, edge, preview, cross-chapter, energy, logical | actor, lane, role, task, requirement, criterion, login, process |
-| 8 | 14.25 | avatar, tile, card, art, board, sticky, claim, slot | feature, phase, feedback, preview, pdf, stakeholders, impact, requirements |
+| 6 | 14.91 | sha, page, locale, staging, pages, main, preview, url | edge, lane, edges, actor, forward, role, logical, process |
+| 7 | 14.51 | edges, forward, backward, edge, preview, cross-chapter, energy, logical | actor, lane, role, task, requirement, login, process, criterion |
+| 8 | 14.25 | avatar, tile, card, art, board, sticky, claim, sidebar | feature, phase, preview, feedback, pdf, impact, stakeholders, url |
 
 **Findings** — 0 narrow dimension(s), 0 near-duplicate pair(s).
 

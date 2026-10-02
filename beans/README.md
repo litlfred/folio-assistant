@@ -8,7 +8,7 @@ Part of [Folio Assistant](../README.md) 0.1.0, declared as `beans`, holding `bea
 | file | what it is | used by |
 |---|---|---|
 | [`beans.json`](beans.json) | data |  |
-| [`defs/`](defs/) | 1276 files | |
+| [`defs/`](defs/) | 1277 files | |
 | [`notes/`](notes/README.md) | 6 files | |
 | [`surveys/`](surveys/README.md) | 2 files | |
 | [`workflows/`](workflows/) | 9 files | |

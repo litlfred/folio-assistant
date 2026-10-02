@@ -5,7 +5,7 @@ status: in-progress
 type: task
 priority: normal
 created_at: 2026-10-02T17:22:19Z
-updated_at: 2026-10-02T17:22:27Z
+updated_at: 2026-10-02T22:27:27Z
 parent: folio-assistant-7x5n
 ---
 
@@ -61,3 +61,7 @@ Next:
   - Sibling discovery misses 2 and 1 instances respectively. Separate work needs to make discovery work without the aggregate root.
 - **Proxy:** `gh pr edit` fails because GraphQL is blocked. Use `gh api -X PATCH repos/litlfred/folio-assistant/pulls/1896`.
 - **Disk:** check `df -h /` before heavy steps and stop under 3 GB. The rehearsal refuses below 3 GB on its own.
+
+
+## Holder 2026-10-02 22:55Z
+Driven by https://claude.ai/code/session_01SmeBn6QZsDFaNQ4GtuC2sd (Parcel B): main merged in, regenerated, gates. Re-measured the handover's '2 real test failures' first: both were already fixed in f388822; the full suite on that head had no failures of its own.
