@@ -76,9 +76,10 @@ packages it merely depends on.
 
 | document | schema | source | what its provenance names |
 |---|---|---|---|
-| `index.json` | `folio-fhir-artifact-index/v1` | the IG's published **output** (a gh-pages tree) | `{kind: "gh-pages", of, readAt}` |
+| `index.json` | `folio-fhir-artifact-index/v2` | the IG's published **output** (a gh-pages tree) | `{kind: "gh-pages", of, readAt}` |
 | `menu.json` | `folio-ig-menu/v1` | the IG's own **`sushi-config.yaml`** | repository + **commit** + path |
-| `chrome.json` | `folio-ig-chrome/v1` | the **`fhir.template` chain** its `ig.ini` names | one block **per layer**, each with its own commit |
+| `ig-identity.json` | `folio-ig-identity/v1` | the IG's own **`sushi-config.yaml`**: id, canonical, version, **status** | `readFrom` + `readAt` |
+| `chrome.json` | `folio-ig-chrome/v2` | the **`fhir.template` chain** its `ig.ini` names — keyed by the chain's top template, so it lives once, in smart-base's `themes/` beside the template's theme (plan Q4), and every IG wears it | one block **per layer**, each with its own commit |
 
 **Folding any two together would give one file two answers to "where did this
 come from".** That is the whole argument, and it is `0818`'s (the menu) and

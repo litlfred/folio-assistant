@@ -13,7 +13,7 @@ Part of [SMART Base](../README.md) 0.1.0, declared as `library`, holding `librar
 | [`image-verdicts.json`](image-verdicts.json) | data |  |
 | [`9789240010567-eng/`](9789240010567-eng/README.md) | 573 files | |
 | [`9789240081949-eng/`](9789240081949-eng/README.md) | 213 files | |
-| [`9789240093362-eng/`](9789240093362-eng/README.md) | 167 files | |
+| [`9789240093362-eng/`](9789240093362-eng/README.md) | 168 files | |
 | [`9789240101197-eng/`](9789240101197-eng/README.md) | 255 files | |
 | [`9789240116191-eng/`](9789240116191-eng/README.md) | 194 files | |
 | [`9789240120747-eng/`](9789240120747-eng/README.md) | 221 files | |

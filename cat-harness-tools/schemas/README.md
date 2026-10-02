@@ -11,7 +11,6 @@ Part of [C@T Harness Tools](../README.md) 0.1.0, declared as `cat-harness-tools-
 | file | what it is | used by |
 |---|---|---|
 | [`cat-harness.test.ts`](cat-harness.test.ts) | a file |  |
-| [`content-type.test.ts`](content-type.test.ts) | a file |  |
 | [`contributions.test.ts`](contributions.test.ts) | a file |  |
 | [`extension-namespace.test.ts`](extension-namespace.test.ts) | a file |  |
 | [`folio-dir.test.ts`](folio-dir.test.ts) | a file |  |

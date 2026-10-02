@@ -2,7 +2,7 @@
   "$schema": "qa-results/v1",
   "producer": {
     "script": "scripts/subgraph-readmes.ts",
-    "script_hash": "79bd4b6d5c89"
+    "script_hash": "2cc41103bbc9"
   },
   "subject": {
     "kind": "graph",
@@ -16,7 +16,7 @@
     },
     "long-description": {
       "summary": "Declared directories whose description runs over 60 words: shown to readers under the README heading, so history and argument belong in a `_comment` instead.",
-      "count": 84,
+      "count": 72,
       "entries": [
         {
           "instance": "folio-assistant",
@@ -115,11 +115,6 @@
         },
         {
           "instance": "cat-harness",
-          "directory": "qa",
-          "path": "cat-harness/test/results"
-        },
-        {
-          "instance": "cat-harness",
           "directory": "attestations",
           "path": "cat-harness/test/attestations"
         },
@@ -194,11 +189,6 @@
           "path": "fhir-harness/tools"
         },
         {
-          "instance": "fhir-harness",
-          "directory": "qa",
-          "path": "fhir-harness/test/results"
-        },
-        {
           "instance": "folio-assistant-core",
           "directory": "folios",
           "path": "folio-assistant-core/folios"
@@ -235,11 +225,6 @@
         },
         {
           "instance": "folio-assistant-core",
-          "directory": "qa",
-          "path": "folio-assistant-core/test/results"
-        },
-        {
-          "instance": "folio-assistant-core",
           "directory": "voices",
           "path": "folio-assistant-core/skills/voices"
         },
@@ -262,11 +247,6 @@
           "instance": "folio-assistant-sci",
           "directory": "sci-sources",
           "path": "folio-assistant-sci/sources"
-        },
-        {
-          "instance": "folio-assistant-sci",
-          "directory": "qa",
-          "path": "folio-assistant-sci/test/results"
         },
         {
           "instance": "folio-assistant-sci",
@@ -320,23 +300,8 @@
         },
         {
           "instance": "smart-base",
-          "directory": "qa",
-          "path": "smart-base/test/results"
-        },
-        {
-          "instance": "smart-base",
           "directory": "voices",
           "path": "smart-base/skills/voices"
-        },
-        {
-          "instance": "smart-dak",
-          "directory": "qa",
-          "path": "smart-dak/test/results"
-        },
-        {
-          "instance": "smart-ig",
-          "directory": "qa",
-          "path": "smart-ig/test/results"
         },
         {
           "instance": "smart-immunizations",
@@ -347,16 +312,6 @@
           "instance": "smart-immunizations",
           "directory": "smart-immunizations-artifact-index",
           "path": "smart-immunizations/fhir-artifact-index"
-        },
-        {
-          "instance": "smart-immunizations",
-          "directory": "qa",
-          "path": "smart-immunizations/test/results"
-        },
-        {
-          "instance": "smart-l1",
-          "directory": "qa",
-          "path": "smart-l1/test/results"
         },
         {
           "instance": "smart-trust",
@@ -372,11 +327,6 @@
           "instance": "smart-trust",
           "directory": "smart-trust-scripts",
           "path": "smart-trust/scripts"
-        },
-        {
-          "instance": "smart-trust",
-          "directory": "qa",
-          "path": "smart-trust/test/results"
         },
         {
           "instance": "who-iris",
@@ -419,19 +369,9 @@
           "path": "who-iris/id-lookup"
         },
         {
-          "instance": "who-iris",
-          "directory": "qa",
-          "path": "who-iris/test/results"
-        },
-        {
           "instance": "who-style-guide",
           "directory": "glossary",
           "path": "who-style-guide/glossary"
-        },
-        {
-          "instance": "who-style-guide",
-          "directory": "qa",
-          "path": "who-style-guide/test/results"
         },
         {
           "instance": "who-style-guide",
@@ -458,7 +398,7 @@
     },
     "no-title": {
       "summary": "Declared directories with no `title`: their README heading falls back to the id.",
-      "count": 104,
+      "count": 94,
       "entries": [
         {
           "instance": "folio-assistant",
@@ -582,11 +522,6 @@
         },
         {
           "instance": "cat-harness",
-          "directory": "qa",
-          "path": "cat-harness/test/results"
-        },
-        {
-          "instance": "cat-harness",
           "directory": "attestations",
           "path": "cat-harness/test/attestations"
         },
@@ -701,11 +636,6 @@
           "path": "fhir-harness/tools"
         },
         {
-          "instance": "fhir-harness",
-          "directory": "qa",
-          "path": "fhir-harness/test/results"
-        },
-        {
           "instance": "folio-assistant-core",
           "directory": "core-schemas",
           "path": "folio-assistant-core/schemas"
@@ -757,11 +687,6 @@
         },
         {
           "instance": "folio-assistant-core",
-          "directory": "qa",
-          "path": "folio-assistant-core/test/results"
-        },
-        {
-          "instance": "folio-assistant-core",
           "directory": "voices",
           "path": "folio-assistant-core/skills/voices"
         },
@@ -784,11 +709,6 @@
           "instance": "folio-assistant-sci",
           "directory": "sci-sources",
           "path": "folio-assistant-sci/sources"
-        },
-        {
-          "instance": "folio-assistant-sci",
-          "directory": "qa",
-          "path": "folio-assistant-sci/test/results"
         },
         {
           "instance": "folio-assistant-sci",
@@ -847,23 +767,23 @@
         },
         {
           "instance": "smart-base",
-          "directory": "qa",
-          "path": "smart-base/test/results"
+          "directory": "smart-base-themes",
+          "path": "smart-base/themes"
+        },
+        {
+          "instance": "smart-base",
+          "directory": "smart-base-document-kinds",
+          "path": "smart-base/document-kinds"
+        },
+        {
+          "instance": "smart-base",
+          "directory": "smart-base-external-schemas",
+          "path": "smart-base/external-schemas"
         },
         {
           "instance": "smart-base",
           "directory": "voices",
           "path": "smart-base/skills/voices"
-        },
-        {
-          "instance": "smart-dak",
-          "directory": "qa",
-          "path": "smart-dak/test/results"
-        },
-        {
-          "instance": "smart-ig",
-          "directory": "qa",
-          "path": "smart-ig/test/results"
         },
         {
           "instance": "smart-immunizations",
@@ -874,16 +794,6 @@
           "instance": "smart-immunizations",
           "directory": "smart-immunizations-artifact-index",
           "path": "smart-immunizations/fhir-artifact-index"
-        },
-        {
-          "instance": "smart-immunizations",
-          "directory": "qa",
-          "path": "smart-immunizations/test/results"
-        },
-        {
-          "instance": "smart-l1",
-          "directory": "qa",
-          "path": "smart-l1/test/results"
         },
         {
           "instance": "smart-trust",
@@ -899,16 +809,6 @@
           "instance": "smart-trust",
           "directory": "smart-trust-scripts",
           "path": "smart-trust/scripts"
-        },
-        {
-          "instance": "smart-trust",
-          "directory": "qa",
-          "path": "smart-trust/test/results"
-        },
-        {
-          "instance": "smart-trust",
-          "directory": "smart-trust-themes",
-          "path": "smart-trust/themes"
         },
         {
           "instance": "who-iris",
@@ -961,19 +861,9 @@
           "path": "who-iris/id-lookup"
         },
         {
-          "instance": "who-iris",
-          "directory": "qa",
-          "path": "who-iris/test/results"
-        },
-        {
           "instance": "who-style-guide",
           "directory": "glossary",
           "path": "who-style-guide/glossary"
-        },
-        {
-          "instance": "who-style-guide",
-          "directory": "qa",
-          "path": "who-style-guide/test/results"
         },
         {
           "instance": "who-style-guide",
@@ -1004,5 +894,5 @@
       "entries": []
     }
   },
-  "total": 192
+  "total": 170
 }

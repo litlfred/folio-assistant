@@ -218,6 +218,10 @@ export const WRITER_OVERRIDES: Readonly<Record<string, string>> = {
   // `kg-export.ts --instance ./bootstrap` rewrites exactly that sidecar. A red
   // that is NOT staleness (the export itself failing) comes back `unrepaired`.
   "check:published-instance-exports": "kg:export:bootstrap",
+  // Bean `v556`: the convention's `kg:export` writes the HOST's document and
+  // sidecar only, so a stale `kg-export.<stub>` sidecar would come back
+  // `unrepaired`. `--sidecars` rewrites exactly the set `--check` compares.
+  "kg:export:check": "kg:export:sidecars",
 };
 
 /**

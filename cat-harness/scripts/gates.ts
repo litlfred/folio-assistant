@@ -638,6 +638,15 @@ export const STEP_EXEMPTIONS: StepExemption[] = [
       "`schemas/staging-preview.ts` and covered by `staging-record.test.ts` in `bun test`",
   },
   {
+    match: "staging-rotate.ts",
+    kind: "ci-only",
+    reason:
+      "enforces the preview cap (owner ruling 2026-10-02, issue #1868) by removing previews from a " +
+      "`gh-pages` checkout at deploy time; that checkout exists only in CI. Its rules — the cap counts " +
+      "the current preview, the oldest go, `_retired/` and non-previews are untouched, the age " +
+      "fallbacks — are covered by `staging-rotate.test.ts` in `bun test`",
+  },
+  {
     match: "restore-staging.ts",
     kind: "ci-only",
     reason: "reconciles the `gh-pages` working tree against the open PRs' previews; needs that branch checked out",
@@ -962,6 +971,12 @@ export const SCRIPT_EXEMPTIONS: ScriptExemption[] = [
     kind: "covered-by",
     reason:
       "SUBSUMED by `check:source-licence:check`, which CI runs: the same script with `--check`, so it computes the same report and fails on the same malformed records, and additionally fails when the committed sidecar is not what the corpus produces. The bare form is the WRITER of `test/results/source-licence.qa-results.json`, and it used to be the gate — so the gate rewrote the record it should have judged, and a stale sidecar failed nothing (bean `i2kp`). Kept as the author's command, and as the writer `regen` pairs with the `:check` twin",
+  },
+  {
+    script: "check:library-qa",
+    kind: "covered-by",
+    reason:
+      "SUBSUMED by `check:library-qa:check`, which CI runs: the same script with `--check`, so it judges exactly the same library entries and fails on a stale sidecar or a could-not-determine entry instead of rewriting the sidecar. Kept as a script because the writer is what refreshes `library-entry-qa.qa-results.json` after an ingest. Issue #1794, bean `8iqc`",
   },
   {
     script: "audit:coverage:check",

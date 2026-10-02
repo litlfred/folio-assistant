@@ -1,5 +1,5 @@
 <!-- kg:subgraph:begin -->
-# MERLEAN: AN AGENTIC FRAMEWORK FOR AUTOFOR- MALIZATION IN QUANTUM COMPUTATION
+# MerLean: An Agentic Framework for Autoformalization in Quantum Computation
 
 ingested source material — attributed to its document, not folio content
 

@@ -2346,12 +2346,29 @@ const RENDER: QaCriterionDefinition[] = [
  * Every entry declares `adapters: ["dak"]`. Omitting it would silently scope
  * the criterion to `paper` — see `criterionAdapters` — and it would then
  * never run on the blocks it was written for.
+ *
+ * ## The rule stays here; the checker is the contributor's
+ *
+ * `dak` is a CONTRIBUTED adapter since bean `1335`: the harness that owns it
+ * contributes it, its kinds and these five checkers from its own
+ * `contributions.ts` (see `dak-kinds-contribution-2026-10-02.md`). The
+ * criteria stay declared in core, marked `checker_contributed`, which is the
+ * cut `folio-assistant-sci` made for the elaboration-cost checkers — a
+ * criterion is a rule about content, a checker is the tooling that answers it.
+ * `adapters: ["dak"]` is a plain string: it names the adapter as data, not as
+ * an import, so core holds no edge to the contributor for it. Where the
+ * contributor is not loaded the criteria resolve no checker and are reported as such, never
+ * as a pass — and no block can reach them anyway, because without the
+ * contribution no block is a `dak` block.
  */
 const DAK: QaCriterionDefinition[] = [
   {
     id: "dak-companion-present",
     domain: "dak",
     adapters: ["dak"],
+    // The rule is core's; the checker is contributed (bean `1335`). See the
+    // domain note above and `checker_contributed`.
+    checker_contributed: true,
     description:
       "A DAK block declares the artefact its kind promises: business-process " +
       "has a .bpmn, decision-table and scheduling-logic a .dmn, cql-library a " +
@@ -2369,6 +2386,9 @@ const DAK: QaCriterionDefinition[] = [
     id: "dak-bpmn-has-process",
     domain: "dak",
     adapters: ["dak"],
+    // The rule is core's; the checker is contributed (bean `1335`). See the
+    // domain note above and `checker_contributed`.
+    checker_contributed: true,
     description:
       "The .bpmn parses as XML and declares at least one <process>. Catches a " +
       "placeholder or truncated export before it reaches the IG build.",
@@ -2380,6 +2400,9 @@ const DAK: QaCriterionDefinition[] = [
     id: "dak-dmn-has-decision-table",
     domain: "dak",
     adapters: ["dak"],
+    // The rule is core's; the checker is contributed (bean `1335`). See the
+    // domain note above and `checker_contributed`.
+    checker_contributed: true,
     description:
       "The .dmn declares a <decision> containing a <decisionTable>. A " +
       "definitions shell with no table is decision logic that expresses no " +
@@ -2392,6 +2415,9 @@ const DAK: QaCriterionDefinition[] = [
     id: "dak-fsh-declares-kind",
     domain: "dak",
     adapters: ["dak"],
+    // The rule is core's; the checker is contributed (bean `1335`). See the
+    // domain note above and `checker_contributed`.
+    checker_contributed: true,
     description:
       "The .fsh declares a resource of the kind the block claims — a " +
       "value-set block's FSH says ValueSet, not Profile. Catches the " +
@@ -2406,6 +2432,9 @@ const DAK: QaCriterionDefinition[] = [
     id: "dak-label-prefix-matches-kind",
     domain: "dak",
     adapters: ["dak"],
+    // The rule is core's; the checker is contributed (bean `1335`). See the
+    // domain note above and `checker_contributed`.
+    checker_contributed: true,
     description:
       "The label prefix matches the kind its builder introduces. Zod enforces " +
       "this at construction, so this catches a manifest hand-edited " +
@@ -2644,8 +2673,13 @@ export const USES_CHECKER_FILE = "content/pipeline/qa-checkers-uses.ts";
 /** Hosts the machine-triviality oracle checker (scaffold). */
 export const TRIVIALITY_CHECKER_FILE = "content/pipeline/qa-checkers-triviality.ts";
 
-/** Hosts the WHO L2 DAK companion checkers. */
-export const DAK_CHECKER_FILE = "content/pipeline/qa-checkers-dak.ts";
+// The WHO L2 DAK companion checkers were hosted in core as
+// `content/pipeline/qa-checkers-dak.ts`, named by a `DAK_CHECKER_FILE` constant
+// here. They moved out on 2026-10-02 (bean `1335`), with the `dak`
+// adapter itself, and the constant is gone rather than repointed for the same
+// reason the cost checkers' is: a core module holding a path into another
+// instance is core naming a higher layer. The five criteria carry
+// `checker_contributed: true`.
 
 // ── The allow-list, and why getting it wrong is silent ─────────────
 //
@@ -2688,15 +2722,6 @@ const VOICE_FILE_IDS = new Set<string>([
   "cite-named-theorem",
 ]);
 
-/** The five WHO L2 DAK companion criteria, all in `qa-checkers-dak.ts`. */
-const DAK_FILE_IDS = new Set<string>([
-  "dak-companion-present",
-  "dak-bpmn-has-process",
-  "dak-dmn-has-decision-table",
-  "dak-fsh-declares-kind",
-  "dak-label-prefix-matches-kind",
-]);
-
 /**
  * Resolve a criterion's source file. Honours the explicit
  * `source_file` field on the registry entry; otherwise applies
@@ -2721,7 +2746,6 @@ export function getCriterionSourceFile(criterionId: string): string {
   }
   if (def?.source_file) return def.source_file;
   if (VOICE_FILE_IDS.has(criterionId)) return VOICE_CHECKER_FILE;
-  if (DAK_FILE_IDS.has(criterionId)) return DAK_CHECKER_FILE;
   if (criterionId.startsWith("uses-") || criterionId === "lean-ref-owns-decl")
     return USES_CHECKER_FILE;
   if (criterionId === "proof-not-machine-trivial") return TRIVIALITY_CHECKER_FILE;

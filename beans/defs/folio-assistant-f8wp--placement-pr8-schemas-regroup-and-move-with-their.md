@@ -3,8 +3,9 @@
 title: 'Placement PR8: schemas regroup and move with their importers; library sources by group; residual gate'
 status: todo
 type: task
+priority: normal
 created_at: 2026-10-01T06:58:01Z
-updated_at: 2026-10-01T06:58:01Z
+updated_at: 2026-10-01T17:45:24Z
 parent: folio-assistant-iirv
 blocked_by:
     - folio-assistant-70lx
@@ -24,3 +25,5 @@ Blocked by stage 1a and PR6 (library sources regroup after the library split).
 - [ ] `kg-export` has the same Schema node count and ids
 - [ ] `uml:overview:check` emits one `.puml`/`.mmd` pair per declared sub-subgraph and none for an undeclared one
 - [ ] the residual gate exists in CI and was watched red on a planted upward reference
+
+_2026-10-01_ — Stage D of the smart-* separation (bean kg83, #1767, PR #1795) MOVED three of this bean's 28 above-harness schemas already: cat-harness/schemas/dak.ts, dak-content-type.ts and dak.test.ts to smart-base/schemas/ (plus content-type.test.ts as smart-base/schemas/content-types-stack.test.ts, since it registers the full stack). dak-blocks.ts did NOT move: core's block-kinds.ts names the dak adapter and DAK_BLOCK_KINDS, so it waits on a registration extension point, bean 1335. Do not re-do these three here.
