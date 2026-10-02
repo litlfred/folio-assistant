@@ -301,10 +301,10 @@
   ],
   "canonicalDocument": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld",
   "repository": "cat-harness",
-  "generatedAt": "2026-10-02T12:47:14.645Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/88560486aebfa368892faa1415a225888ff18d9a",
-  "sourceCommitSha": "88560486aebfa368892faa1415a225888ff18d9a",
-  "sourceCommitAt": "2026-10-02T12:38:20Z",
+  "generatedAt": "2026-10-02T14:08:40.058Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/c4aff94750ab13cf9a1c95f284cfa6710e7673d8",
+  "sourceCommitSha": "c4aff94750ab13cf9a1c95f284cfa6710e7673d8",
+  "sourceCommitAt": "2026-10-02T13:59:41Z",
   "sourceTreeDirty": true,
   "dependsOnUnavailable": "2 dependency edge(s), none expressible as a record — see gaps",
   "counts": {
@@ -319,7 +319,7 @@
     "ProcessNode": 940,
     "Tool": 112,
     "Schema": 145,
-    "ExternalSchema": 18,
+    "ExternalSchema": 19,
     "GraphKind": 25,
     "Role": 48,
     "Subgraph": 25,
@@ -47760,6 +47760,20 @@
         "http://hl7.org/fhir/"
       ],
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#externalSchema/hl7-fhir"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/agy-wnhh-sushi-publisher-local/cat-harness.jsonld#externalSchema/ietf-handle-system",
+      "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#ExternalSchema",
+      "name": "ietf-handle-system",
+      "title": "Handle System Overview (RFC 3650), with its namespace (RFC 3651) and protocol (RFC 3652)",
+      "authority": "IETF",
+      "specVersion": "2003-11",
+      "specUse": "conforms",
+      "specUrl": "https://www.rfc-editor.org/rfc/rfc3650",
+      "namespace": [
+        "https://hdl.handle.net/"
+      ],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#externalSchema/ietf-handle-system"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/agy-wnhh-sushi-publisher-local/cat-harness.jsonld#externalSchema/omg-bpmn-2.0",

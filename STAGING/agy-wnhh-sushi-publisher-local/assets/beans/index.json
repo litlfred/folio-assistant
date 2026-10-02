@@ -2,7 +2,7 @@
   "$schema": "folio-bean-index/v1",
   "tile": {
     "beans": {
-      "count": 609,
+      "count": 620,
       "unit": "beans"
     }
   },
@@ -175,6 +175,20 @@
       "updatedAt": "2026-10-01T17:25:48Z",
       "preview": "G4. Main moves ~every 3 min; a merge->regen->CI cycle is ~22 min; three handovers stalled on it.\n\n## Done when\n- [ ] #1754 merged\n- [ ] d33q part B: CI regenerates on the merge result\n- [ ] median PR-green -> merged measured before and after\n\n_2026-10-01T17:25:48Z_ — Claimed by claude/s2-regen-in-ci — pushed to main so sibling sessions see it before this branch has a PR (bean 35nj).",
       "file": "beans/defs/folio-assistant-0mf0--s2-merge-treadmill-land-mergemain-1754-and-regen-i.md"
+    },
+    {
+      "id": "folio-assistant-0tg5",
+      "title": "STATE BRANCH P4: bean gates run on push to 'state'; harness-dirs, audit:coverage, kg:audit read the storage field",
+      "status": "todo",
+      "type": "task",
+      "priority": "",
+      "parent": "folio-assistant-fs43",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-10-02T10:58:10Z",
+      "updatedAt": "2026-10-02T10:58:10Z",
+      "preview": "Nine bean gates in code-quality-gates.yml move to a state-branch workflow. A gate that cannot fetch the branch reports unknown, never a pass.\n\n## Done when\n- [ ] state-branch workflow with the bean gates\n- [ ] check:harness-dirs / audit:coverage / kg:audit read storage\n\nProposal: cat-harness/docs/proposals/state-branch-2026-10-02.md",
+      "file": "beans/defs/folio-assistant-0tg5--state-branch-p4-bean-gates-run-on-push-to-state-ha.md"
     },
     {
       "id": "folio-assistant-0uu2",
@@ -583,6 +597,20 @@
       "updatedAt": "2026-09-30T12:36:35Z",
       "preview": "Owner, 2026-09-30: Lane node. kg-export mints role/<lane name> per lane, so one role can get two nodes or merge by accident. Emit process/<p>/lane/<id> (type Lane) with bindsRole; performedBy goes to role/<roleRef>.\n\n## Done when\n- [ ] lanes exported as Lane nodes, not Role nodes\n- [ ] performedBy resolves to registry Role nodes, 0 dangling\n\n\n\n## Done — #1587\nLane nodes (process/<p>/lane/<id>, par",
       "file": "beans/defs/folio-assistant-2e39--b9b-1168-a-bpmn-lane-is-its-own-node-performedby-p.md"
+    },
+    {
+      "id": "folio-assistant-2h76",
+      "title": "STATE BRANCH P2: mechanism — storage keyedBy tip, branch-store splice-write, seed the orphan 'state' branch, session-start mount at state/",
+      "status": "todo",
+      "type": "task",
+      "priority": "",
+      "parent": "folio-assistant-fs43",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-10-02T10:58:10Z",
+      "updatedAt": "2026-10-02T10:58:10Z",
+      "preview": "Serial, one agent. Reuses the 3fva spike 3ds9 write path (hash-object, mktree, commit-tree, push; never -f).\n\n## Done when\n- [ ] schema field with keyedBy: tip\n- [ ] branch-store.ts with retry over a moved tip\n- [x] state branch seeded with a hash-verified manifest (2026-10-02, see below)\n- [ ] session-start hook mounts state/ and fails LOUDLY when it cannot\n- [ ] bun run state:push\n- [ ] measured",
+      "file": "beans/defs/folio-assistant-2h76--state-branch-p2-mechanism-storage-keyedby-tip-bran.md"
     },
     {
       "id": "folio-assistant-2i5f",
@@ -2113,6 +2141,20 @@
       "file": "beans/defs/folio-assistant-88mg--consolidation-one-voice-over-bootstrap-and-cat-har.md"
     },
     {
+      "id": "folio-assistant-89cl",
+      "title": "STATE BRANCH P5: adjust skills and processes — content-context-and-state-graphs, directory-conventions, todo-manager, bean-coordination, continual-progress, workflow-state, process-state",
+      "status": "todo",
+      "type": "task",
+      "priority": "",
+      "parent": "folio-assistant-fs43",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-10-02T10:58:10Z",
+      "updatedAt": "2026-10-02T10:58:10Z",
+      "preview": "Proposal section 4.1. AFTER the decisions and Phase 3, not before: a skill describing a branch that does not exist yet is a rule nobody can follow.\n\n## Done when\n- [ ] each skill in section 4.1 adjusted\n- [ ] workflow-state-in-beans.md section 0 addendum\n- [ ] AGENTS.md beans section pointers updated\n\nProposal: cat-harness/docs/proposals/state-branch-2026-10-02.md",
+      "file": "beans/defs/folio-assistant-89cl--state-branch-p5-adjust-skills-and-processes-conten.md"
+    },
+    {
       "id": "folio-assistant-89wq",
       "title": "Four QA checkers are unconditional n/a stubs — 8949 sidecar entries indistinguishable from a correct decline, two of them proof-build-green / proof-no-axiom-growth",
       "status": "todo",
@@ -2125,6 +2167,20 @@
       "updatedAt": "2026-09-27T10:37:00Z",
       "preview": "Measured 2026-09-27 against this branch's `cat-harness/`, and cross-checked\nagainst qou's committed sidecars at platform pin `37a36ce`.\n\n## Four exported checkers whose entire body is `return { result: \"n/a\", hits: [] }`\n\nFound by parsing every `export function check*` in\n`cat-harness/content/pipeline/qa-checkers*.ts` and keeping those with exactly\none `return` statement, which returns `n/a`:\n\n| c",
       "file": "beans/defs/folio-assistant-89wq--four-qa-checkers-are-unconditional-na-stubs-8949-s.md"
+    },
+    {
+      "id": "folio-assistant-8ez4",
+      "title": "STATE BRANCH P0: agree ONE storage field and ONE branch-store library with arc 3fva before either lands",
+      "status": "in-progress",
+      "type": "task",
+      "priority": "normal",
+      "parent": "folio-assistant-fs43",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-10-02T10:58:09Z",
+      "updatedAt": "2026-10-02T12:12:49Z",
+      "preview": "Arc 3fva proposes ContentDirectory.storage {branch, keyedBy: commit} for qa-reports. State needs keyedBy: tip (one living tree, splice-write, never -f). One field, one library — a second field over the same question is two answers free to disagree.\n\n## Done when\n- [x] 3fva owner session consulted (PR #1764, comment 2026-10-02)\n- [ ] field shape agreed: 3fva's {branch, keyedBy} widened to commit|ti",
+      "file": "beans/defs/folio-assistant-8ez4--state-branch-p0-agree-one-storage-field-and-one-br.md"
     },
     {
       "id": "folio-assistant-8fq9",
@@ -2323,6 +2379,20 @@
       "file": "beans/defs/folio-assistant-9gyz--qa-review-schemas-finding-decision-and-auditnote-a.md"
     },
     {
+      "id": "folio-assistant-9ofm",
+      "title": "STATE BRANCH P3: migrate every reader and writer of beans/, todos/, issue-marks/, health results to the branch",
+      "status": "todo",
+      "type": "task",
+      "priority": "",
+      "parent": "folio-assistant-fs43",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-10-02T10:58:10Z",
+      "updatedAt": "2026-10-02T10:58:10Z",
+      "preview": "Proposal section 4 table, one row per change: .beans.yml, workflow/store.ts WORKFLOW_DIR, claim-bean.ts, beans-fallback.ts, beans-landed.ts, gen-docs-pages.ts, state-visualizer.ts, test/health/run.ts, todos.ts, render-pipeline.ts, issue-marks readers, folio_init templates.\n\n## Done when\n- [ ] every row green against the branch\n\nProposal: cat-harness/docs/proposals/state-branch-2026-10-02.md",
+      "file": "beans/defs/folio-assistant-9ofm--state-branch-p3-migrate-every-reader-and-writer-of.md"
+    },
+    {
       "id": "folio-assistant-9rnf",
       "title": "DISCOVERY: publishedPairs scans the site root only, so a translated page in a subdirectory is invisible to every catalogue tool",
       "status": "completed",
@@ -2451,7 +2521,7 @@
     {
       "id": "folio-assistant-9y9j",
       "title": "JSON-LD VOICE: the rules every emitted JSON-LD document is written and reviewed against, cited to the held W3C texts",
-      "status": "in-progress",
+      "status": "completed",
       "type": "task",
       "priority": "normal",
       "parent": "folio-assistant-scfh",
@@ -2701,6 +2771,20 @@
       "file": "beans/defs/folio-assistant-apui--ingest-one-pipeline-entry-point-uploads-to-library.md"
     },
     {
+      "id": "folio-assistant-atlf",
+      "title": "BEANS PAGE LIGHT MODE: the selected type chip rendered black on black — it read an undefined --fa-wp-bg",
+      "status": "in-progress",
+      "type": "bug",
+      "priority": "normal",
+      "parent": "folio-assistant-o3xy",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-10-02T10:45:39Z",
+      "updatedAt": "2026-10-02T11:00:18Z",
+      "preview": "Owner screenshot 2026-10-02 of https://litlfred.github.io/folio-assistant/beans/ with type: epic selected: the active chip is a blank black pill in light mode.\n\n## Cause\nwork-plan.css .fa-workplan-type-btn.is-active set color: var(--fa-wp-bg, #0d0d0d). Nothing defines --fa-wp-bg, so the fallback #0d0d0d painted on the light scheme's ink #0b0b0b.\n\n## Done when\n- [x] use --fa-wp-surface (defined in ",
+      "file": "beans/defs/folio-assistant-atlf--beans-page-light-mode-the-selected-type-chip-rende.md"
+    },
+    {
       "id": "folio-assistant-ay3x",
       "title": "VECTOR FIGURE ARM: render vector drawings, and the role threshold nobody may pick from this corpus",
       "status": "todo",
@@ -2845,12 +2929,12 @@
       "title": "Content JSON-LD: stop relying on @base from the remote context (JSON-LD 1.1 §4.1.3)",
       "status": "todo",
       "type": "task",
-      "priority": "",
+      "priority": "normal",
       "parent": "folio-assistant-scfh",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-10-01T18:30:16Z",
-      "updatedAt": "2026-10-01T18:30:16Z",
+      "updatedAt": "2026-10-01T18:33:37Z",
       "preview": "## Why\nMeasured 2026-10-01 (bean jcet, item 2): emitted content .jsonld reference `https://litlfred.github.io/folio-assistant/ns/content/v1.jsonld` by URL, and relative @ids resolve to `https://litlfred.github.io/folio/…` only because jsonld.js 8.3.3 applies `@base` from a remote context. JSON-LD 1.1 §4.1.3 (held: w3c-2020-json-ld-1-1 sec-033-413-base-iri) says `@base` in a remote context is ignor",
       "file": "beans/defs/folio-assistant-bh4q--content-json-ld-stop-relying-on-base-from-the-remo.md"
     },
@@ -3137,7 +3221,7 @@
     {
       "id": "folio-assistant-cmsl",
       "title": "DEDUPE: 11 directories declared twice — and both obvious fixes are measurably wrong",
-      "status": "in-progress",
+      "status": "completed",
       "type": "task",
       "priority": "normal",
       "parent": "folio-assistant-zzmr",
@@ -3795,6 +3879,20 @@
       "file": "beans/defs/folio-assistant-fq5u--downstream-tools-in-qa-a-run-record-per-downstream.md"
     },
     {
+      "id": "folio-assistant-fs43",
+      "title": "ARC: state graphs on a declared 'state' branch — beans, workflow instances, todos, issue-marks off main; 'which ref holds this graph' becomes a declaration",
+      "status": "in-progress",
+      "type": "epic",
+      "priority": "",
+      "parent": "",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-10-02T10:57:54Z",
+      "updatedAt": "2026-10-02T10:57:54Z",
+      "preview": "Owner 2026-10-02: a special branch for state-based KG content (todos, beans), declared as a sub-graph, as a general practice for managing a KG and its generated content (rendered content = sub-graph linking back to the primary content graph). Review processes and adjust.\n\nProposal, inventory, workplan and decisions D1-D4: cat-harness/docs/proposals/state-branch-2026-10-02.md.\nGeneralises arc 3fva ",
+      "file": "beans/defs/folio-assistant-fs43--arc-state-graphs-on-a-declared-state-branch-beans.md"
+    },
+    {
       "id": "folio-assistant-ftu0",
       "title": "GLOSSARY: WHO guideline terms — 'quality of the evidence' (77) vs 'certainty of the evidence' (1) as prefLabel/altLabel, and who owns the glossary",
       "status": "completed",
@@ -4427,7 +4525,7 @@
     {
       "id": "folio-assistant-jcet",
       "title": "STANDARDS MISMATCHES the W3C methodology nodes recorded: PROV_CONTEXT IRI, JSON-LD @base in an external context, ODRL conflict default",
-      "status": "in-progress",
+      "status": "completed",
       "type": "bug",
       "priority": "normal",
       "parent": "folio-assistant-scfh",
@@ -4775,6 +4873,20 @@
       "updatedAt": "2026-09-30T17:47:45Z",
       "preview": "MADR decision record for slide 2 of the owner's deck `cat-harness/library/kg-folio-asst-2026-09-30` (\"Accessing WHO L1 corpus\"). Issue #1614. Parent: `xies` (publish to CDN).\n\n## Status\n\n**Proposed — no outcome.** Owner, 2026-09-30: record the options, decide later. Nothing has been measured at the scale slide 2 names, so an outcome here would be a guess.\n\n## Context and problem statement\n\nSlide 2",
       "file": "beans/defs/folio-assistant-l9v6--decision-proposed-which-cdn-layer-if-any-in-front.md"
+    },
+    {
+      "id": "folio-assistant-laqs",
+      "title": "STATE BRANCH P1: owner rules D1-D4 — what moves, how agent sessions write, relation to 3fva, one branch or several",
+      "status": "completed",
+      "type": "task",
+      "priority": "normal",
+      "parent": "folio-assistant-fs43",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-10-02T10:58:09Z",
+      "updatedAt": "2026-10-02T11:56:41Z",
+      "preview": "Proposal section 6. Defaults: D1 (a) beans+todos+issue-marks+health; D2 (a) direct push with PR-branch fallback; D3 (a) shared with 3fva; D4 (a) one 'state' branch.\n\n## Done when\n- [x] D1 [x] D2 [x] D3 [x] D4 ruled, rulings recorded in the proposal section 6\n\nProposal: cat-harness/docs/proposals/state-branch-2026-10-02.md\n\n## Summary of Changes\n\nOwner 2026-10-02: \"go with defaults for D1-D4\" — D1 ",
+      "file": "beans/defs/folio-assistant-laqs--state-branch-p1-owner-rules-d1-d4-what-moves-how-a.md"
     },
     {
       "id": "folio-assistant-lfxa",
@@ -5565,6 +5677,20 @@
       "file": "beans/defs/folio-assistant-p11x--checkpartition-cannot-see-cross-instance-edges-its.md"
     },
     {
+      "id": "folio-assistant-p3ny",
+      "title": "STATE BRANCH P6: remove the moved state files from main — ONLY on the owner's explicit go",
+      "status": "todo",
+      "type": "task",
+      "priority": "",
+      "parent": "folio-assistant-fs43",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-10-02T10:58:10Z",
+      "updatedAt": "2026-10-02T10:58:10Z",
+      "preview": "deletion-requires-confirmation. Not before every reader in P3 and gate in P4 is green on the branch.\n\n## Done when\n- [ ] owner's go recorded\n- [ ] files removed; beans/README.md count-line churn (y7b3) gone\n\nProposal: cat-harness/docs/proposals/state-branch-2026-10-02.md",
+      "file": "beans/defs/folio-assistant-p3ny--state-branch-p6-remove-the-moved-state-files-from.md"
+    },
+    {
       "id": "folio-assistant-p5wm",
       "title": "GOAL 2: LHS navbar working with instantiated harness, showing folios with the bootstrap exception, and stickies that move around on the folio",
       "status": "in-progress",
@@ -6017,6 +6143,20 @@
       "file": "beans/defs/folio-assistant-r3gy--bootstrap-outward-references-plan-to-reach-zero-be.md"
     },
     {
+      "id": "folio-assistant-r6es",
+      "title": "BEANS PAGE FRESHNESS: say when the page was generated and how many commits behind main it is",
+      "status": "in-progress",
+      "type": "feature",
+      "priority": "normal",
+      "parent": "folio-assistant-o3xy",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-10-02T10:45:39Z",
+      "updatedAt": "2026-10-02T11:00:19Z",
+      "preview": "Owner 2026-10-02: the beans page should show a generated date so a reviewer knows how recent it is, and how many commits behind main.\n\n## Constraint\nBean y7b3: no timestamp in a committed generated file (owner ruling 2026-09-30). So the stamp is written by the DEPLOY (docs-site.yml -> _site/build.json; previews already have staging.json) and read at load time; the behind-count is asked of the GitH",
+      "file": "beans/defs/folio-assistant-r6es--beans-page-freshness-say-when-the-page-was-generat.md"
+    },
+    {
       "id": "folio-assistant-r8br",
       "title": "BLOCKER: pdf-images classifies browser-print nav icons as figures, so 7 documents cannot be promoted",
       "status": "completed",
@@ -6281,6 +6421,20 @@
       "updatedAt": "2026-09-30T16:12:47Z",
       "preview": "Tag and badge colours are fixed hex values that measure about 2.0–2.7:1 on the dark ground, below the WCAG 4.5:1 minimum for small text. Move them onto theme tokens that are validated in both schemes.\n\nObserved on: `external-schemas`, `fsh-guts`, `kg-viewer`, `methodologies`, `navbar`, `tools` (see each `cat-harness/docs/wireframes/<kind>/intent.md`). Per-page detail is in each visualiser's task u",
       "file": "beans/defs/folio-assistant-rtuo--state-tags-and-badges-fail-colour-contrast-on-the.md"
+    },
+    {
+      "id": "folio-assistant-rva2",
+      "title": "STATE BRANCH P7: declare every special branch with the same field — gh-pages (within folio, keyed by commit, back-link = build.json) and lake-cache/*",
+      "status": "todo",
+      "type": "task",
+      "priority": "",
+      "parent": "folio-assistant-fs43",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-10-02T10:58:10Z",
+      "updatedAt": "2026-10-02T10:58:10Z",
+      "preview": "The general practice: every graph not on main is a declared sub-graph with a back-link {ref, sha} to the content commit it describes. build.json (bean r6es) is the first back-link.\n\n## Done when\n- [ ] gh-pages declared\n- [ ] lake-cache/* declared\n- [ ] audit:coverage sees all special branches\n\nProposal: cat-harness/docs/proposals/state-branch-2026-10-02.md",
+      "file": "beans/defs/folio-assistant-rva2--state-branch-p7-declare-every-special-branch-with.md"
     },
     {
       "id": "folio-assistant-s0ki",
