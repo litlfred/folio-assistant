@@ -1435,9 +1435,61 @@ export async function loadContributions<C extends { name: string }, S extends Co
   folioRoot: string,
   registry: S,
 ): Promise<S> {
-  const flat = orderedDependencies(folioRoot);
+  for (const { dep, modulePath } of contributingDependencies(folioRoot)) {
+    const fn = contributeFunction(dep, modulePath, await import(modulePath));
+    registerPinned(registry, dep, await (fn as () => C | Promise<C>)());
+  }
+  return registry;
+}
 
-  for (const dep of flat) {
+/**
+ * {@link loadContributions}, synchronously.
+ *
+ * ## Why a second loader exists
+ *
+ * The generic pipeline reaches the science layer's code through slots that a
+ * dependency fills (`content/pipeline/pipeline-plugins.ts`, bean `squu`), and
+ * the callers of those slots are synchronous: a QA checker inside the sweep's
+ * hot loop, a module-load side effect, a build step. Threading an awaited
+ * registry through every one of them would change the checker signatures the
+ * dispatch tables are keyed on. Bun's `require` loads a `.ts` module
+ * synchronously — the same property `schemas/theme-by-ref.ts` relies on.
+ *
+ * It shares {@link contributingDependencies}, {@link contributeFunction} and
+ * {@link registerPinned} with the async loader, so the two differ only in how
+ * a module is loaded and cannot drift on which dependencies contribute, what
+ * counts as a broken contribution, or which fields are pinned.
+ *
+ * A contributor whose default export returns a Promise is refused here rather
+ * than awaited: a synchronous caller cannot wait for it, and silently skipping
+ * it would be the "appears wired and is not" failure the async loader refuses.
+ */
+export function loadContributionsSync<C extends { name: string }, S extends ContributionSink<C>>(
+  folioRoot: string,
+  registry: S,
+): S {
+  for (const { dep, modulePath } of contributingDependencies(folioRoot)) {
+    // eslint-disable-next-line @typescript-eslint/no-require-imports
+    const fn = contributeFunction(dep, modulePath, require(modulePath));
+    const contribution = (fn as () => C | Promise<C>)();
+    if (contribution instanceof Promise) {
+      throw new Error(
+        `folio dependency "${dep.dependency.name}" contributes module ` +
+          `${modulePath} returns a Promise, so it cannot be loaded synchronously. ` +
+          `Return the contribution directly.`,
+      );
+    }
+    registerPinned(registry, dep, contribution);
+  }
+  return registry;
+}
+
+/** Every dependency declaring a `contributes` module, with its resolved path. */
+function contributingDependencies(
+  folioRoot: string,
+): Array<{ dep: ResolvedDependency; modulePath: string }> {
+  const out: Array<{ dep: ResolvedDependency; modulePath: string }> = [];
+  for (const dep of orderedDependencies(folioRoot)) {
     const spec = dep.config?.contributes;
     if (!spec) continue;
 
@@ -1450,40 +1502,49 @@ export async function loadContributions<C extends { name: string }, S extends Co
           `contributing nothing is how a dependency appears wired and is not.`,
       );
     }
-
-    const mod: unknown = await import(modulePath);
-    const fn = (mod as { default?: unknown }).default;
-    if (typeof fn !== "function") {
-      throw new Error(
-        `folio dependency "${dep.dependency.name}" contributes module ` +
-          `${modulePath} has no callable default export.`,
-      );
-    }
-
-    const contribution = (await (fn as () => C | Promise<C>)());
-    // The dependency entry's name is authoritative over whatever the module
-    // says about itself: the root declared the name, and a contributor that
-    // could rename itself could impersonate another contributor's namespace
-    // and turn a collision into a silent merge.
-    //
-    // `root` is pinned here for the same reason and is not the same field as
-    // `name`: it is where the contributor's FILES are, and a contributed QA
-    // checker's source file is resolved against it in order to be
-    // freshness-hashed. A contributor that could name its own root could point
-    // the sweep at bytes it does not own, and the resulting `script_hash`
-    // would be computed over a file the contribution never mentions.
-    //
-    // The spread widens `C` to `C & { name: string; root: string }`, which is
-    // C's own shape with two fields pinned; the cast states that rather than
-    // loosening the parameter.
-    registry.register({
-      ...contribution,
-      name: dep.dependency.name,
-      root: dep.rootPath,
-    } as C);
+    out.push({ dep, modulePath });
   }
+  return out;
+}
 
-  return registry;
+/** The module's callable default export, or a loud error naming the dependency. */
+function contributeFunction(dep: ResolvedDependency, modulePath: string, mod: unknown): unknown {
+  const fn = (mod as { default?: unknown }).default;
+  if (typeof fn !== "function") {
+    throw new Error(
+      `folio dependency "${dep.dependency.name}" contributes module ` +
+        `${modulePath} has no callable default export.`,
+    );
+  }
+  return fn;
+}
+
+/** Hand one contribution to the registry with `name` and `root` pinned. */
+function registerPinned<C extends { name: string }>(
+  registry: ContributionSink<C>,
+  dep: ResolvedDependency,
+  contribution: C,
+): void {
+  // The dependency entry's name is authoritative over whatever the module
+  // says about itself: the root declared the name, and a contributor that
+  // could rename itself could impersonate another contributor's namespace
+  // and turn a collision into a silent merge.
+  //
+  // `root` is pinned here for the same reason and is not the same field as
+  // `name`: it is where the contributor's FILES are, and a contributed QA
+  // checker's source file is resolved against it in order to be
+  // freshness-hashed. A contributor that could name its own root could point
+  // the sweep at bytes it does not own, and the resulting `script_hash`
+  // would be computed over a file the contribution never mentions.
+  //
+  // The spread widens `C` to `C & { name: string; root: string }`, which is
+  // C's own shape with two fields pinned; the cast states that rather than
+  // loosening the parameter.
+  registry.register({
+    ...contribution,
+    name: dep.dependency.name,
+    root: dep.rootPath,
+  } as C);
 }
 
 // ── What a repository IS, closed under the dependency tree ──────────

@@ -45,6 +45,18 @@ const INSTANCE = resolve(import.meta.dir, "..", "..");
 const ROOT = repoRootFor(INSTANCE);
 const CANONICAL = "cat-harness/content/pipeline/lean-lexer.ts";
 
+/**
+ * Modules allowed a `stripLeanComments` definition that strips NOTHING.
+ *
+ * `pipeline-plugins.ts` (bean `squu`) defines one that forwards to the
+ * `lean-lexer` pipeline slot, which folio-assistant-sci fills with the
+ * canonical function above. It is how generic code reaches the lexer without
+ * importing a file that moves to the science layer. Exempt by NAME rather than
+ * by pattern, and asserted below to be a pure forward, so a real second
+ * stripper cannot hide behind it.
+ */
+const DELEGATES = new Set(["cat-harness/content/pipeline/pipeline-plugins.ts"]);
+
 /** A definition of a stripper — `function f(` or `const f = `. */
 const DEFINES = /(?:function\s+stripLeanComments\s*\(|(?:const|let|var)\s+stripLeanComments\s*[:=])/;
 
@@ -68,13 +80,21 @@ describe("there is exactly one Lean comment stripper", () => {
     const offenders: string[] = [];
     for (const f of files) {
       const rel = relative(ROOT, f);
-      if (rel === CANONICAL) continue;
+      if (rel === CANONICAL || DELEGATES.has(rel)) continue;
       for (const [i, line] of readFileSync(f, "utf-8").split("\n").entries()) {
         if (/^\s*(\*|\/\/)/.test(line)) continue; // a comment describing one is not one
         if (DEFINES.test(line)) offenders.push(`${rel}:${i + 1}`);
       }
     }
     expect(offenders).toEqual([]);
+  });
+
+  test("an exempt delegate only forwards to the slot", () => {
+    for (const rel of DELEGATES) {
+      const src = readFileSync(resolve(ROOT, rel), "utf-8");
+      const body = src.match(/function\s+stripLeanComments\s*\([^)]*\)[^{]*\{([^}]*)\}/)?.[1] ?? "";
+      expect(body.trim()).toBe('return pipelinePlugin("lean-lexer").stripLeanComments(src);');
+    }
   });
 
   test("...and it is actually used, so the rule is not vacuously satisfied", () => {
