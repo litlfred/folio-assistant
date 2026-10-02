@@ -25,6 +25,7 @@ import {
   tileLabel,
 } from "../lib/nav-label.js";
 import { GraphKindRegistry } from "../../schemas/graph-kind-registry.js";
+import { subjectSection } from "../viewer-page.js";
 
 describe("a kind is called by its display name, never its kind word", () => {
   test("the registered title is used", () => {
@@ -113,5 +114,22 @@ describe("a destination is compared by its normalised href", () => {
   test("an external URL is not a destination here", () => {
     expect(normaliseDestination("https://github.com/litlfred/folio-assistant")).toBeUndefined();
     expect(normaliseDestination("")).toBeUndefined();
+  });
+});
+
+describe("a handler viewer's whole-view row is one more destination", () => {
+  // Since bean `j7ql` an instance with a `schemas` graph but no subject page of
+  // its own (who-iris, folio-assistant-sci) links `/cat-harness/schemas/`, and
+  // the sidebar calls that page "Schemas". The rail called it "all": two names.
+  const name = (s: string | undefined) => (s === undefined ? { label: "Schemas" } : { label: "Schemas", qualifier: s });
+
+  test("named by the namer, unqualified, on the whole-view page and on a subject page", () => {
+    expect(subjectSection(["a"], undefined, [], name)[0]).toMatchObject({ label: "Schemas" });
+    expect(subjectSection(["a"], "a", [], name)[0]).toEqual({ label: "Schemas", href: "../" });
+    expect(subjectSection(["a"], "a", [], name)[0]).not.toHaveProperty("qualifier");
+  });
+
+  test("\"all\" only when no namer is given", () => {
+    expect(subjectSection(["a"], "a", [])[0]).toEqual({ label: "all", href: "../" });
   });
 });

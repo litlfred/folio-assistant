@@ -152,14 +152,21 @@ export function subjectSection(
    * the Graphs group), so its row takes that one name with the harness as the
    * qualifier: "Schemas · C@T Harness". Bean `ob3m` finding 6. Omitted, a row
    * is the bare segment, as before.
+   *
+   * Called with `undefined`, it names the WHOLE-VIEW page. That page is a
+   * destination too: an instance with a graph of this kind but no subject page
+   * of its own (who-iris's and folio-assistant-sci's `schemas`, since bean
+   * `j7ql`) links it, and the sidebar and landing call it "Schemas". Naming it
+   * "all" here was a second name for that one page. Omitted, it is "all".
    */
-  name?: (subject: string) => { label: string; qualifier?: string },
+  name?: (subject: string | undefined) => { label: string; qualifier?: string },
 ): VisualiserNavEntry[] {
   const anchors = regions.map((r) => ({ label: r.label, href: `#${r.id}` }));
   const up = current === undefined ? "" : "../";
   const named = (s: string): { label: string; qualifier?: string } => name?.(s) ?? { label: s };
+  const whole = name?.(undefined) ?? { label: "all" };
   return [
-    current === undefined ? { label: "all", items: anchors } : { label: "all", href: up },
+    current === undefined ? { ...whole, items: anchors } : { ...whole, href: up },
     ...subjects.map((s) =>
       s === current ? { ...named(s), items: anchors } : { ...named(s), href: `${up}${s}/` },
     ),
@@ -171,9 +178,12 @@ export function subjectSection(
  * display name, qualified by each subject harness's own name from
  * `_data/harness.json` (its directory name when the data cannot say).
  */
-export function subjectNames(built: string, kind: string): (subject: string) => { label: string; qualifier: string } {
+export function subjectNames(
+  built: string,
+  kind: string,
+): (subject: string | undefined) => { label: string; qualifier?: string } {
   const label = kindTitle(kind);
-  return (subject) => ({ label, qualifier: railNames(built, subject).harness ?? subject });
+  return (subject) => (subject === undefined ? { label } : { label, qualifier: railNames(built, subject).harness ?? subject });
 }
 
 /**
