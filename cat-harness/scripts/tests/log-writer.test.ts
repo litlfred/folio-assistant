@@ -19,7 +19,7 @@ import {
   LogReferenceSchema,
   logDirs,
 } from "../../schemas/log-entry.ts";
-import { workflowFiles } from "../known-skills.js";
+import { workflowFile, workflowFiles } from "../known-skills.js";
 import { loadProcessModel } from "../../src/workflow/process-model.ts";
 import { describeCapture, writeLogEntry } from "../../src/logging/log-writer.ts";
 import {  } from "../../schemas/cat-harness.js";
@@ -245,7 +245,8 @@ describe("command execution", () => {
  * route would have broken.
  */
 describe("the process says whether running it is logged", () => {
-  const dir = join(import.meta.dir, "../../processes");
+  // Diagrams by NAME through the declared `processes` graphs (placement PR3, bean `63wl`).
+  const diagram = (name: string): string => workflowFile(join(import.meta.dir, "../.."), name);
 
   test("the three processes the owner named declare capture", async () => {
     // Located through `workflowFiles`, not composed from a literal
@@ -271,7 +272,7 @@ describe("the process says whether running it is logged", () => {
     // The whole reason the field is three-valued. `undefined` here resolves
     // to `unknown` in the writer — nobody decided — which is a different
     // claim from a process that declared `off`.
-    const m = await loadProcessModel(join(dir, "authoring-a-paper.bpmn"));
+    const m = await loadProcessModel(diagram("authoring-a-paper.bpmn"));
     expect(m.logCapture).toBeUndefined();
     expect(writeLogEntry(instance(), { event: "message", summary: "x" }, m.logCapture).capture)
       .toBe("unknown");
@@ -282,7 +283,7 @@ describe("the process says whether running it is logged", () => {
     // engine does not have must not load and quietly log nothing. That is
     // worse here than elsewhere, because the missing artefact IS the record.
     const root = mkdtempSync(join(tmpdir(), "log-bpmn-"));
-    const good = readFileSync(join(dir, "content-lifecycle.bpmn"), "utf-8");
+    const good = readFileSync(diagram("content-lifecycle.bpmn"), "utf-8");
     const bad = good.replace('<cat-harness.processes:log capture="on" />', '<cat-harness.processes:log capture="sometimes" />');
     expect(bad).not.toBe(good);
     const p = join(root, "content-lifecycle.bpmn");
@@ -297,7 +298,7 @@ describe("the process says whether running it is logged", () => {
     // in order — changing what the diagram says about work nobody asked to
     // reorder. An extension element adds no node and no flow.
     for (const stem of ["editing-hci-validation", "content-lifecycle"]) {
-      const m = await loadProcessModel(join(dir, `${stem}.bpmn`));
+      const m = await loadProcessModel(diagram(`${stem}.bpmn`));
       expect(m.enforcement).toBe("strict");
       // No node anywhere in the process mentions the log process.
       for (const n of m.nodes.values()) expect(n.calledElement).not.toBe("Process_ActivityLog");

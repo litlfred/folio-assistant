@@ -1,5 +1,5 @@
 <!-- kg:subgraph:begin -->
-# skill-authoring-best-practices---claude-platform-docs
+# Skill authoring best practices - Claude Platform Docs
 
 ingested source material — attributed to its document, not folio content
 

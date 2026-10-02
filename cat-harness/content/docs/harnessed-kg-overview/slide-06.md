@@ -36,7 +36,7 @@ BPMN picture and lines tie each one to a part of it:
 So the slide says a user story names a role, a role is a lane, a task is a node
 in it, a skill belongs to a task, and a test belongs to a skill.
 
-**Sources:** `processes/content-lifecycle.bpmn` (the picture above is generated
+**Sources:** `folio-assistant-core/processes/content/content-lifecycle.bpmn` (the picture above is generated
 from it); [beans and todos](beans-and-todos.html).
 
 > **Aligned:** the snapshot's diagram and today's process have the same six

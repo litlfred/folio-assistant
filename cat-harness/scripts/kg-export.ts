@@ -38,6 +38,11 @@
  * than no export: a consumer sees a well-formed graph and cannot tell it is
  * looking at part of one. Bean `dh4f` is the local precedent.
  *
+ * As the `kg:export:check` gate (bean `v556`) it judges the committed
+ * `kg-export*.qa-results.json` sidecars under the declared `test/results/`.
+ *
+ * @covers qa
+ *
  * @module scripts/kg-export
  *
  * @conformsTo dcmi-terms
@@ -47,7 +52,8 @@
  * @conformsTo w3c-rdfs
  * @conformsTo w3c-xsd11-datatypes
  */
-import { readFileSync, readdirSync, existsSync, writeFileSync, mkdirSync } from "node:fs";
+import { readFileSync, readdirSync, existsSync, writeFileSync, mkdirSync, mkdtempSync, rmSync } from "node:fs";
+import { tmpdir } from "node:os";
 import { basename, join, dirname, relative, resolve, sep } from "node:path";
 import { spawnSync } from "node:child_process";
 import { fileURLToPath } from "node:url";
@@ -91,10 +97,10 @@ import { declaredNamespaces } from "../schemas/external-schema.js";
 import { toolsOf } from "../tools/discover.js";
 import { skillIoIri } from "./harness-schema-export.js";
 import { stagingFields } from "./staging-stamp.js";
-import { buildQaResult, writeQaResult } from "./qa-results.js";
+import { QA_RESULTS_DIR, buildQaResult, qaResultPath, qaResultState, readQaResult, writeQaResult } from "./qa-results.js";
 import { loadProcessModel } from "../src/workflow/process-model.js";
 import { listDecisions } from "../src/workflow/decision-table.js";
-import { corpusDirectoriesForGraph } from "../schemas/harness-config.js";
+import { checkoutRootFor, corpusDirectoriesForGraph } from "../schemas/harness-config.js";
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), "..");
 
@@ -1610,9 +1616,10 @@ async function collectProcesses(
     continue;
   }
   await collectDecisions(dir);
-  for (const f of readdirSync(dir)) {
-    if (!f.endsWith(".bpmn")) continue;
-    const path = join(dir, f);
+  // At any depth: since placement PR3 (bean `63wl`) the diagrams sit in
+  // `processes/<group>/`, and a top-level read exported none of them.
+  for (const path of diagramFiles(dir)) {
+    if (!path.endsWith(".bpmn")) continue;
     try {
       const m = await loadProcessModel(path);
       nodes.push({
@@ -1694,7 +1701,7 @@ async function collectProcesses(
         });
       }
     } catch (e) {
-      problems.push(`unloadable process ${rel}/${f}: ${e instanceof Error ? e.message : String(e)}`);
+      problems.push(`unloadable process ${relative(root, path)}: ${e instanceof Error ? e.message : String(e)}`);
     }
   }
   }
@@ -2795,6 +2802,112 @@ export async function buildExport(opts: ExportOptions = {}): Promise<Export> {
   };
 }
 
+
+// ── `--check` / `--sidecars`: the committed QA sidecars as a verify/write pair
+//    (bean `v556`) ──────────────────────────────────────────────────────────
+//
+// This script writes `qa-results/v1` sidecars under `test/results/`, and until
+// `v556` it had no `--check`. So it was in no verify/write pair, `regen`
+// ignored it, and `check:artefact-verification` — whose inventory is the
+// `--check` scripts in `package.json` — could not contain it. Measured on
+// `main` `f4de6c1e20`: two committed sidecars and the script carried THREE
+// different hashes; on `cf3e624` the host sidecar had caught up and
+// `kg-export.bootstrap.qa-results.json` was still stale (`47109f5daf3d`
+// against `e95fab417728`), with every gate green. Its only reader,
+// `check:published-instance-exports`, stopped exporting bootstrap through
+// this script when the deploy moved bootstrap to `export-graph.ts`, so nothing
+// read it at all.
+//
+// The subjects are DERIVED from what is committed, never listed: the host's
+// bare `kg-export` stem, plus every `kg-export.<stub>` sidecar, matched to the
+// instance whose declared stub it carries. A committed sidecar no instance
+// owns is reported as an ORPHAN — it can be neither checked nor regenerated,
+// and that is a finding, not a pass.
+//
+// Each subject is computed by spawning this script with `--qa-root` pointed at
+// a temp directory — the exact command a person runs, as
+// `check:published-instance-exports` does — so the comparison is against the
+// real producer and not against a second implementation of it.
+
+/** One committed (or expected) kg-export sidecar and the instance it is ABOUT. */
+export interface SidecarSubject {
+  stem: string;
+  /** `--instance` value, absolute; undefined for the host. */
+  instance?: string;
+}
+
+export function sidecarSubjects(
+  dir: string = join(ROOT, QA_RESULTS_DIR),
+  roots: string[] = instanceRootsIn(checkoutRootFor(ROOT)),
+): { subjects: SidecarSubject[]; orphans: string[] } {
+  const subjects: SidecarSubject[] = [{ stem: "kg-export" }];
+  const orphans: string[] = [];
+  const byStub = new Map<string, string>();
+  for (const r of roots) {
+    try {
+      const d = readDeclaration(r);
+      if (d) byStub.set(artefactStub(d), r);
+    } catch {
+      // an unreadable declaration names no stub
+    }
+  }
+  const files = existsSync(dir) ? readdirSync(dir).map(String).sort() : [];
+  for (const f of files) {
+    const m = /^kg-export\.(.+)\.qa-results\.json$/.exec(f);
+    if (!m) continue;
+    const inst = byStub.get(m[1]!);
+    if (inst === undefined || resolve(inst) === resolve(ROOT)) orphans.push(f);
+    else subjects.push({ stem: `kg-export.${m[1]}`, instance: inst });
+  }
+  return { subjects, orphans };
+}
+
+async function sidecarMode(mode: "check" | "write", baseUrl: string | undefined): Promise<number> {
+  const { subjects, orphans } = sidecarSubjects();
+  const tmp = mkdtempSync(join(tmpdir(), "kg-export-sidecars-"));
+  let bad = 0;
+  try {
+    for (const s of subjects) {
+      const out = join(tmp, s.stem);
+      const args = ["run", fileURLToPath(import.meta.url), "--out", join(out, "doc.jsonld"), "--qa-root", out];
+      if (s.instance) args.push("--instance", s.instance);
+      if (baseUrl) args.push("--base-url", baseUrl);
+      spawnSync("bun", args, { cwd: repoRootFor(ROOT), encoding: "utf-8" });
+      const fresh = readQaResult(qaResultPath(out, s.stem));
+      const label = `${s.stem}.qa-results.json`;
+      if (fresh === undefined) {
+        bad++;
+        console.log(`  ? ${label} — the export wrote no QA result, so currency could not be determined`);
+        continue;
+      }
+      if (mode === "write") {
+        writeQaResult(ROOT, s.stem, fresh);
+        console.log(`  ✓ ${label} written`);
+        continue;
+      }
+      const state = qaResultState(qaResultPath(ROOT, s.stem), fresh);
+      if (state === "current") {
+        console.log(`  ✓ ${label} current (${fresh.producer.script_hash})`);
+      } else {
+        bad++;
+        const committed = readQaResult(qaResultPath(ROOT, s.stem));
+        const was = committed ? ` — committed hash ${committed.producer.script_hash}, true ${fresh.producer.script_hash}` : "";
+        console.log(`  ✗ ${label} ${state.toUpperCase()}${was}`);
+      }
+    }
+  } finally {
+    rmSync(tmp, { recursive: true, force: true });
+  }
+  for (const o of orphans) {
+    bad++;
+    console.log(`  ✗ ${o} ORPHAN — no instance in this checkout declares that stub, so nothing can produce or check it`);
+  }
+  if (bad > 0 && mode === "check") {
+    console.log(`\n${bad} kg-export QA sidecar(s) not current. Run \`bun run kg:export:sidecars\` and commit.`);
+  }
+  return bad > 0 ? 1 : 0;
+}
+
 if (import.meta.main) {
   const arg = (flag: string): string | undefined => {
     const i = process.argv.indexOf(flag);
@@ -2837,6 +2950,10 @@ if (import.meta.main) {
   // the producer still writes the committed sidecar, and only a caller that
   // says otherwise gets a different destination.
   const qaRoot = arg("--qa-root") ?? ROOT;
+  // Bean `v556` — see `sidecarMode`. Neither writes the JSON-LD document.
+  if (process.argv.includes("--check") || process.argv.includes("--sidecars")) {
+    process.exit(await sidecarMode(process.argv.includes("--check") ? "check" : "write", baseUrl));
+  }
   const { stub, docPath } = exportIdentity({ baseUrl, instanceRoot });
   // Named after the repository, per the stub convention — `<stub>.jsonld`,
   // never a generic `kg.json`. `.jsonld` because it IS JSON-LD; the extension

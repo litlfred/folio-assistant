@@ -13,16 +13,16 @@ permalink: /glossary/schema-fields/m-r/
 
 Candidate terms extracted from every schema field with a doc comment: `<Declaration>.<field>` as the label, the comment's first paragraph as the definition. Each is the asset's own text, verbatim and not curated, and carries the badge "candidate, extracted". A person promotes one by authoring it. Authored terms, the counts and the sources are on the <a href="{{ '/glossary/' | relative_url }}">glossary index</a>.
 
-From: bootstrap-tools 28 (<a href="{{ '/assets/glossary/bootstrap-tools--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · cat-harness 1613 (<a href="{{ '/assets/glossary/cat-harness--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · fhir-harness 60 (<a href="{{ '/assets/glossary/fhir-harness--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · folio-assistant-core 131 (<a href="{{ '/assets/glossary/folio-assistant-core--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · smart-base 9 (<a href="{{ '/assets/glossary/smart-base--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>).
+From: bootstrap-tools 28 (<a href="{{ '/assets/glossary/bootstrap-tools--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · cat-harness 1661 (<a href="{{ '/assets/glossary/cat-harness--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · fhir-harness 60 (<a href="{{ '/assets/glossary/fhir-harness--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · folio-assistant-core 117 (<a href="{{ '/assets/glossary/folio-assistant-core--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · smart-base 9 (<a href="{{ '/assets/glossary/smart-base--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>).
 
 One of 4 pages of this type, split by the first letter of the label: <a href="{{ '/glossary/schema-fields/' | relative_url }}">all parts</a>.
 
-**Size:** this page holds 455 terms and is 255 KB before compression, fetched in one request, within its budget of 1.0 MB. There is no search index: the filter below runs over this page, and the A–Z bar jumps within it.
+**Size:** this page holds 460 terms and is 258 KB before compression, fetched in one request, within its budget of 1.0 MB. There is no search index: the filter below runs over this page, and the A–Z bar jumps within it.
 
 <table class="fa-gloss-mapping">
 <caption>Already somebody else's concept? — <code>check:term-mapping</code>, bean <code>7wou</code></caption>
 <thead><tr><th>target</th><th>mapped</th><th>unmapped</th><th>undetermined</th><th>why undetermined</th></tr></thead>
-<tbody><tr><td><code>fhir</code></td><td>0</td><td>1841</td><td>0</td><td>—</td></tr><tr><td><code>skos</code></td><td>0</td><td>1841</td><td>0</td><td>—</td></tr></tbody>
+<tbody><tr><td><code>fhir</code></td><td>0</td><td>1875</td><td>0</td><td>—</td></tr><tr><td><code>skos</code></td><td>0</td><td>1875</td><td>0</td><td>—</td></tr></tbody>
 </table>
 <p class="fa-gloss-mapping-note"><strong>Undetermined is never “no match”.</strong> 
 A vocabulary that could not be reached has said nothing, and the column above keeps that 
@@ -32,7 +32,7 @@ be a term this corpus is right to coin.</p>
 
 <label for="fa-gloss-q">Filter terms</label>
 <input id="fa-gloss-q" type="search" autocomplete="off" style="min-height:44px;width:100%;max-width:32rem">
-<p aria-live="polite"><span id="fa-gloss-n">455</span> shown</p>
+<p aria-live="polite"><span id="fa-gloss-n">460</span> shown</p>
 
 <nav aria-label="Letters"><a href="#letter-M">M</a> <a href="#letter-N">N</a> <a href="#letter-O">O</a> <a href="#letter-P">P</a> <a href="#letter-Q">Q</a> <a href="#letter-R">R</a></nav>
 
@@ -1029,6 +1029,41 @@ PDCrossing.strands <span class="fa-gloss-status">candidate, extracted</span>
 <dd>
 <p>Four strand indices meeting at the crossing [i, j, k, l].</p>
 <p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/formalization-types.ts"><code>cat-harness/schemas/formalization-types.ts#PDCrossing.strands</code></a></p>
+</dd>
+<dt id="cat-harness--kg-schema-fields--pdf-structure.pdfmetadataschema.title_correction" data-fa-state="extracted" data-fa-gloss="">
+PdfMetadataSchema.title_correction <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>An EDITORIAL correction, outranking every extracted title (bean <code>w6fu</code>, step b). Authored, never produced by a rung, and carried over by a re-ingest. <code>basis</code> says what the title was read from, so it can be checked rather than trusted.</p>
+<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/pdf-structure.ts"><code>cat-harness/schemas/pdf-structure.ts#PdfMetadataSchema.title_correction</code></a></p>
+</dd>
+<dt id="cat-harness--kg-schema-fields--pdf-structure.pdfmetadataschema.title_evidence" data-fa-state="extracted" data-fa-gloss="">
+PdfMetadataSchema.title_evidence <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>Every candidate the resolver saw, and which sources agreed — the record an editor decides from.</p>
+<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/pdf-structure.ts"><code>cat-harness/schemas/pdf-structure.ts#PdfMetadataSchema.title_evidence</code></a></p>
+</dd>
+<dt id="cat-harness--kg-schema-fields--pdf-structure.pdfmetadataschema.title_raw" data-fa-state="extracted" data-fa-gloss="">
+PdfMetadataSchema.title_raw <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>The text walk's title before resolution, kept so a re-run resolves from it rather than from its own answer.</p>
+<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/pdf-structure.ts"><code>cat-harness/schemas/pdf-structure.ts#PdfMetadataSchema.title_raw</code></a></p>
+</dd>
+<dt id="cat-harness--kg-schema-fields--pdf-structure.pdfmetadataschema.title_source" data-fa-state="extracted" data-fa-gloss="">
+PdfMetadataSchema.title_source <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>Where <code>title</code> came from (bean <code>w6fu</code>, <code>scripts/_pdf_title.py</code>): the PDF's <code>Title</code> metadata, its first-page heading or its outline when another source CORROBORATES it, else the text walk's title (<code>text</code>) or nothing (<code>filename</code>, and the manifest falls back to the entry id).</p>
+<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/pdf-structure.ts"><code>cat-harness/schemas/pdf-structure.ts#PdfMetadataSchema.title_source</code></a></p>
+</dd>
+<dt id="cat-harness--kg-schema-fields--pdf-structure.pdfmetadataschema.title_verified" data-fa-state="extracted" data-fa-gloss="">
+PdfMetadataSchema.title_verified <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>False when no source corroborated the title: the raw title was kept, not guessed at.</p>
+<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/pdf-structure.ts"><code>cat-harness/schemas/pdf-structure.ts#PdfMetadataSchema.title_verified</code></a></p>
 </dd>
 <dt id="cat-harness--kg-schema-fields--pdf-structure.pdfstructureschema.granularity" data-fa-state="extracted" data-fa-gloss="">
 PdfStructureSchema.granularity <span class="fa-gloss-status">candidate, extracted</span>

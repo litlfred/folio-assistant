@@ -59,7 +59,7 @@ import { readSchemaGraph } from "./schema-graph.js";
 import { checkTools, unresolvedPaths } from "./check-tools.js";
 import { deriveAlternatives } from "../schemas/tool.js";
 import { tools, toolsOf } from "../tools/discover.js";
-import { kgDirectories, ownKgRoots, workflowDirs, workflowFiles, corpusScopeFor } from "./known-skills.js";
+import { kgDirectories, ownKgRoots, workflowFiles, corpusScopeFor } from "./known-skills.js";
 import { docsLayers } from "./compose-docs.js";
 import { PAIR_CRITERION, discoverPairs, evaluatePairs, readAttestations } from "./prose-code-pairs.js";
 import { VOICE_REVIEW_CRITERION, evaluateVoiceReviews, readVoiceReviews, skillVoices } from "./skill-voice-review.js";
@@ -75,6 +75,7 @@ import {
   KG_QA_SCHEMA,
   KG_QA_DIRNAME,
   kgQaSidecarPath,
+  partitionBySubjectOwner,
   sweepOrphans,
   type OrphanSidecar,
   KG_QA_MANIFEST_SCHEMA,
@@ -118,10 +119,10 @@ import {
   remotePackageSkills,
 } from "./known-skills.js";
 import { LOCAL_PACKAGES } from "./skill-packages.js";
-import { repoRootFor, DECLARATION_SUFFIX, ownDirectoryById, instanceDirectoriesForGraph, readDeclaration, kgQaHomeFor} from "../schemas/cat-harness.js";
+import { repoRootFor, DECLARATION_SUFFIX, ownDirectoryById, instanceDirectoriesForGraph, instanceRootsIn, readDeclaration, kgQaHomeFor} from "../schemas/cat-harness.js";
 import { toolDownstreamEntry, undeclaredDownstream } from "./downstream-runs.ts";
 import { VERIFIERS } from "./publish-verify.ts";
-import { orderedDependencies } from "../schemas/harness-config.js";
+import { checkoutRootFor, orderedDependencies } from "../schemas/harness-config.js";
 import { CONVENTION_GROUP } from "../schemas/convention.js";
 import { USER_STORIES_FILENAME, danglingStoryRoles, readUserStories, type UserStoryGraph } from "../schemas/user-story.js";
 import { actorsDir, capabilitiesDir } from "../schemas/role-graph.ts";
@@ -263,9 +264,24 @@ const KG_ROOT = join(root, "skills");
 // graph: that is "no actor registry here", which `readActors` answers with an
 // empty list and the actor criteria then report on. It was the same before the
 // move, when the probed `.claude/skills/actors` simply did not exist.
-const ACTOR_DIR = actorsDir(repoRootFor(root)) ?? "";
+/**
+ * The CHECKOUT the audited instance is staged in — where `package.json`,
+ * `.claude/`, the actor registry and the tracked-file list live, and what every
+ * repo-relative path in a sidecar is relative to (bean `pgzn`).
+ *
+ * NOT `REPO_ROOT`, which is `dirname`. That is right for every instance
+ * nested one level under the repository and wrong for the one declared AT it:
+ * for `--instance .` it climbed out of the checkout, so `rootScripts` threw
+ * `ENOENT …/package.json` before anything was audited — and the other call
+ * sites that asked the same question through `repoRootFor` would have read a
+ * directory above the checkout without saying so. `checkoutRootFor` agrees
+ * with `dirname` for every nested instance and is the root itself for the
+ * root instance; `siblingScopeFor`'s docblock records the same trap.
+ */
+const REPO_ROOT = checkoutRootFor(root);
+const ACTOR_DIR = actorsDir(REPO_ROOT) ?? "";
 // Declared home inside `scenarios` (bean rqao); "" when there is none, as for ACTOR_DIR.
-const CAPABILITY_DIR = capabilitiesDir(repoRootFor(root)) ?? "";
+const CAPABILITY_DIR = capabilitiesDir(REPO_ROOT) ?? "";
 const REQUIREMENT_DIR = join(KG_ROOT, "requirements");
 // declared-path-literal: the convention fallback, at the call site. Same
 // reasoning as `WORKFLOW_DIR`. A Tool node carries NO path of its own — the
@@ -856,7 +872,7 @@ async function auditProcess(
 
   // CONVENTION REFS. The dangling direction only — see the criterion's note
   // in `kg-qa.ts` for why absence is deliberately not a finding.
-  const conventionDir = conventionsDir(repoRootFor(root));
+  const conventionDir = conventionsDir(REPO_ROOT);
   const knownConventions = conventionDir !== undefined && existsSync(conventionDir)
     ? new Set(readdirSync(conventionDir).filter((f) => f.endsWith(".json")).map((f) => f.slice(0, -5)))
     : undefined;
@@ -1024,10 +1040,12 @@ function reachabilityCriteria(m: ProcessModel): Record<string, KgCriterionEntry>
 async function auditDecisions(
   processes: LoadedProcess[],
 ): Promise<KgQaReport[]> {
-  const decisionDirs = workflowDirs(root, corpusScopeFor(root))
-    .map((d) => join(d, "decisions"))
-    .filter((d) => existsSync(d));
-  if (decisionDirs.length === 0) return [];
+  // Every `.dmn` under a declared processes directory, at ANY depth. Was
+  // `<dir>/decisions/` alone, which placement PR3 (bean `63wl`) outgrew: a
+  // decision now sits beside the diagrams that read it, in
+  // `processes/<group>/decisions/`, and a flat read audited none of them.
+  const decisionFiles = workflowFiles(root, corpusScopeFor(root)).filter((f) => f.endsWith(".dmn"));
+  if (decisionFiles.length === 0) return [];
   const referenced = new Set<string>();
   for (const p of processes) {
     for (const n of p.model?.nodes.values() ?? []) {
@@ -1036,9 +1054,7 @@ async function auditDecisions(
   }
 
   const out: KgQaReport[] = [];
-  for (const abs of decisionDirs
-    .flatMap((d) => readdirSync(d).filter((f) => f.endsWith(".dmn")).map((f) => join(d, f)))
-    .sort()) {
+  for (const abs of [...decisionFiles].sort()) {
     const f = basename(abs);
     const rel = relative(root, abs);
     const hash = sha256(readFileSync(abs, "utf-8"));
@@ -1291,8 +1307,15 @@ function auditTools(instance?: string): KgQaReport[] {
   const alternatives = deriveAlternatives(instance === undefined ? tools() : toolsOf(instance));
   const unreadable = new Set(check.unreadableContracts);
 
+  // SUBJECTS are this instance's own Tools, on every run. The CHECKS above
+  // still read the whole checkout on the default run, because a Tool here may
+  // name one there — resolution widens, coverage does not (`satisfiableSkills`
+  // in `check-tools.ts`, ruling `pve3`). Until 2026-10-01 the default run
+  // iterated `tools()`, so it wrote 29 sidecars about Tools that fhir-harness
+  // (19), folio-assistant-core (4) and smart-base (6) declare and audit
+  // themselves — a second copy of each verdict, free to drift (Q-A PR 4).
   const out: KgQaReport[] = [];
-  for (const t of instance === undefined ? tools() : toolsOf(instance)) {
+  for (const t of toolsOf(instance ?? root)) {
     const f = (rows: { detail: string }[] | undefined): KgFinding[] =>
       (rows ?? []).map((r) => ({ where: t.id, detail: r.detail }));
 
@@ -1663,7 +1686,7 @@ function arrowDirection(): KgCriterionEntry {
  * undetermined (an output, a folio's file, an example) and never a finding.
  */
 function proseNamesResolve(): KgCriterionEntry {
-  const repo = repoRootFor(root);
+  const repo = REPO_ROOT;
   const ls = Bun.spawnSync(["git", "ls-files"], { cwd: repo });
   if (ls.exitCode !== 0) {
     return { result: "unknown", findings: [{ where: "—", detail: "`git ls-files` failed, so a bare file name cannot be looked up." }] };
@@ -1910,9 +1933,9 @@ function localHarnessSkills(): Set<string> {
   // The `.md` bodies stay in the agent harness's `.claude/skills/local/`; the
   // JSON definitions moved by theme into each owner's `skill-definitions/`
   // (bean `rqao`).
-  const dir = join(repoRootFor(root), ".claude", "skills", "local");
+  const dir = join(REPO_ROOT, ".claude", "skills", "local");
   if (existsSync(dir)) for (const f of readdirSync(dir)) if (f.endsWith(".md")) out.add(f.slice(0, -3));
-  for (const d of skillDefinitionDirs(repoRootFor(root))) {
+  for (const d of skillDefinitionDirs(REPO_ROOT)) {
     for (const f of readdirSync(d)) if (f.endsWith(".json")) out.add(f.slice(0, -5));
   }
   return out;
@@ -1944,7 +1967,7 @@ function manifestEntries(): { pkg: string; skill: string }[] {
  * reader-facing fields only — a Jekyll data file, not an instance.
  */
 function unreadNestedInstances(): KgFinding[] {
-  const repo = repoRootFor(root);
+  const repo = REPO_ROOT;
   const out: KgFinding[] = [];
   const walk = (dir: string, depth: number): void => {
     if (depth > 3) return;
@@ -2374,9 +2397,11 @@ const skills = knownSkills(root, corpusScopeFor(root));
  * correct.
  *
  * The auditor's own run already knew: `test/results/kg-qa/_external/smart-base/`
- * records `skill-ref-resolves` **pass (0)** for that same diagram, because from
+ * recorded `skill-ref-resolves` **pass (0)** for that same diagram, because from
  * here the skill is local. So the two runs disagreed about one file, and the
- * instance-scoped one was wrong.
+ * instance-scoped one was wrong. (That `_external/` copy was itself the
+ * defect's enabler — two verdicts about one subject — and was deleted with the
+ * other seven on 2026-10-01, Q-A PR 4; the owner's run now holds the only one.)
  *
  * ## This is the FIFTH cross-instance defect, and the only DOWNWARD one
  *
@@ -2598,6 +2623,33 @@ reports.push(...auditSkills());
 reports.push(auditGraph(graph, processes, actors, skills, stories, danglingSatisfies(requirements, satisfiers)));
 reports.push(...auditTools(INSTANCE_RUN ? root : undefined));
 
+/**
+ * Drop every subject ANOTHER instance owns — it audits that subject itself.
+ *
+ * The default run walks the CHECKOUT (`corpusScopeFor`), so it loads
+ * smart-base's, large-datasets' and folio-assistant-core's diagrams beside its
+ * own. Loading them is right: a call activity here may name one, and the
+ * graph-level criteria need the whole corpus. Writing a VERDICT about them is
+ * not — each owner's `kg:audit:all` run already writes one under its own
+ * `test/results/kg-qa/`, and until 2026-10-01 this run wrote a second under
+ * `_external/`. Eight duplicates, deleted with the owner's confirmation
+ * (Q-A PR 4, epic `7x5n`); `kgQaSidecarPath` now refuses the path, so this
+ * filter is what keeps the run from throwing rather than a courtesy.
+ *
+ * A subject outside this instance that NO checkout instance owns is refused
+ * loudly: dropping it would be a clean run over nothing (`dh4f`), and giving
+ * it a path is what `_external/` was.
+ */
+const ownership = partitionBySubjectOwner(reports, root, instanceRootsIn(checkoutRootFor(root)));
+if (ownership.unowned.length > 0) {
+  console.error(`${ownership.unowned.length} subject(s) lie outside ${root} and no instance in the checkout owns them:`);
+  for (const r of ownership.unowned) console.error(`  · ${r.subject.kind}:${r.subject.id}  ${r.subject.path}`);
+  console.error("This is NOT a pass. Nothing was written; declare the owning instance, or stop discovering the subject.");
+  process.exit(2);
+}
+reports.splice(0, reports.length, ...ownership.kept);
+const ownerAudited = ownership.skipped.length;
+
 // Write or compare.
 //
 // THE MANIFEST IS ONE FILE, AND THAT IS THE POINT. The auditor's hash used to
@@ -2713,7 +2765,8 @@ if (!check) {
 // runs, the way a block-qa reviewer entry is. Done before the write loop so
 // `--check` regenerates the same text the writer would.
 {
-  const repoRoot = resolve(root, "..");
+  // `REPO_ROOT`, not `resolve(root, "..")` — see its declaration (bean `pgzn`).
+  const repoRoot = REPO_ROOT;
   const scripts = rootScripts(repoRoot);
   for (const r of reports) {
     if (r.subject.kind !== "process" && r.subject.kind !== "skill") continue;
@@ -2830,6 +2883,11 @@ if (asJson) {
 
   console.log(`Knowledge-graph audit  (${reports.length} subjects, ${skills.size} skills, ${graph?.roles.length ?? 0} roles)\n`);
   console.log(`  pass ${counts.pass}   fail ${counts.fail}   n/a ${counts["n/a"]}   unknown ${counts.unknown}\n`);
+  // Said, not silent: a subject left to its owner is still a subject this run
+  // saw, and a reader comparing counts across runs needs the difference named.
+  if (ownerAudited > 0) {
+    console.log(`  ${ownerAudited} subject(s) another instance owns were left to that instance's own audit.\n`);
+  }
   // The scope line, printed only when it has something to say. A run at the
   // auditor's own root suppresses nothing, so a `0 suppressed` line there would
   // be noise; an instance run states the number and where to read the argument,

@@ -64,6 +64,7 @@ from _pdf_doc_id import (  # noqa: E402
     ocr_cache_dir,
     slugify as _slugify,
 )
+from _pdf_title import apply as resolve_title, evidence_from_pdf  # noqa: E402
 
 
 def slug(text: str) -> str:
@@ -126,6 +127,74 @@ def outline_state(pdf: Path) -> str:
     return "outline" if usable else "outline-unusable"
 
 
+def pdf_docinfo(pdf: Path) -> dict[str, str]:
+    """The PDF Info dictionary, in the key names `pdf-structure.py` writes.
+
+    Issue #1794. This rung wrote no `metadata` at all, so for 20 page-granular
+    entries the PDF's own `/Title` was never on disk. The ruling of 2026-10-01
+    makes `/Title` the third authority for a library entry's title (after the
+    catalogue's Dublin Core record and `referenced.json`), so its absence
+    pushed every one of them to the slug. Some of those PDFs carry a real
+    `/Title` ("RFC 2119: Key words for use in RFCs ...", "Link Groups").
+
+    Recorded verbatim, junk included ("Microsoft Word - gurel_emet.doc"). The
+    junk filter belongs to the reader (`content/pipeline/library-title.ts`),
+    because a filter applied here would hide the evidence it judged.
+    """
+    keys = (("title", "Title"), ("author", "Author"), ("producer", "Producer"),
+            ("creator", "Creator"), ("creationDate", "CreationDate"))
+    try:
+        import pymupdf
+        md = pymupdf.open(pdf).metadata or {}
+        return {out: str(md[k]) for k, out in keys if md.get(k)}
+    except ImportError:
+        pass
+    from _pypdf_compat import import_pypdf
+    reader = import_pypdf("PdfReader")(str(pdf))
+    info = reader.metadata or {}
+    return {k.lstrip("/"): str(v) for k, v in info.items()
+            if k in ("/Title", "/Author", "/Producer", "/Creator", "/CreationDate") and str(v)}
+
+
+def merge_docinfo(existing: dict, docinfo: dict[str, str]) -> None:
+    """Put `docinfo` under `metadata`, creating it in the `pdf-structure/v1` shape.
+
+    `title` is the page-1 front-matter slot. This rung parses no front matter,
+    so it is `None` here, and is never invented.
+    """
+    md = existing.setdefault("metadata", {})
+    md.setdefault("title", None)
+    md["docinfo"] = docinfo
+
+
+def docinfo_only(pdf: Path, entry: Path) -> int:
+    """Backfill `metadata.docinfo` into an EXISTING entry. Writes nothing else.
+
+    Refuses unless the entry's recorded `source.sha256` is this PDF's. A file
+    that merely shares a name is a different document, and its `/Title` would
+    become another entry's title.
+    """
+    manifest = entry / "structure.json"
+    if not manifest.exists():
+        print(f"FAIL  {entry}: no structure.json to backfill", file=sys.stderr)
+        return 1
+    raw = manifest.read_text(encoding="utf-8")
+    existing = json.loads(raw)
+    want = (existing.get("source") or {}).get("sha256")
+    got = hashlib.sha256(pdf.read_bytes()).hexdigest()
+    if want != got:
+        print(f"FAIL  {entry.name}: {pdf.name} sha256 {got[:12]} is not the recorded {str(want)[:12]}",
+              file=sys.stderr)
+        return 1
+    merge_docinfo(existing, pdf_docinfo(pdf))
+    # Keep the file's own escaping: one written with raw UTF-8 stays raw, so the
+    # diff is the metadata and nothing else.
+    keep_raw = any(ord(c) > 127 for c in raw)
+    manifest.write_text(json.dumps(existing, indent=2, ensure_ascii=not keep_raw) + "\n", encoding="utf-8")
+    print(f"ok  {entry.name:34s} docinfo /Title={existing['metadata']['docinfo'].get('Title')!r}")
+    return 0
+
+
 def page_texts(pdf: Path, from_ocr: bool, outroot: Path) -> tuple[list[str], str]:
     """Page text, and where it came from: `"embedded"` (the PDF's own text layer) or
     `"ocr"`, the vocabulary `pdf-structure.py` writes to `source.text_source`
@@ -171,9 +240,17 @@ def main() -> int:
     ap.add_argument("--label-starts-at", type=int, default=1, metavar="K",
                     help="PDF page where --first-page-label applies; earlier pages keep PDF numbering "
                          "(default 1). A JSTOR cover sheet is page 1, so the article's p. 177 is K=2.")
+    ap.add_argument("--docinfo-into", type=Path, default=None, metavar="ENTRY",
+                    help="backfill ONLY metadata.docinfo (the PDF Info dictionary) into the existing "
+                         "ENTRY/structure.json, after checking its recorded sha256 is this PDF's. "
+                         "Takes exactly one PDF; writes nothing else (issue #1794)")
     a = ap.parse_args()
     if not a.pdfs:
         ap.error("no PDFs given")
+    if a.docinfo_into is not None:
+        if len(a.pdfs) != 1:
+            ap.error("--docinfo-into takes exactly one PDF")
+        return docinfo_only(a.pdfs[0], a.docinfo_into)
 
     for pdf in a.pdfs:
         # THE DOC ID, which is not a section id, and the two differ in
@@ -262,6 +339,8 @@ def main() -> int:
         # `text_source` (`text-layer | ocr`) is removed, not kept beside it.
         existing["source"]["text_source"] = source
         existing.pop("text_source", None)
+        # The PDF's own Info dictionary, which this rung once dropped (#1794).
+        merge_docinfo(existing, pdf_docinfo(pdf))
         existing.update({
             "_schema": existing.get("_schema", "pdf-structure/v1"),
             "doc_id": doc_id,
@@ -295,6 +374,16 @@ def main() -> int:
                 "an inferred chapter was not."
             ),
         })
+        # The title (bean `w6fu`). This rung has no text walk, so the only raw
+        # title is the one the caller passed with --title, or none -- and with
+        # none the manifest falls back to the doc id, as it always did. The
+        # resolver replaces it only with a title another source CORROBORATES,
+        # marks it unverified otherwise, and never touches an editor's
+        # `title_correction`.
+        prior = existing.get("metadata") or {}
+        if a.title and "title_raw" not in prior:
+            prior = {**prior, "title": a.title}
+        existing["metadata"] = resolve_title(prior, evidence_from_pdf(str(pdf)), doc_id)
         manifest.write_text(json.dumps(existing, indent=2) + "\n", encoding="utf-8")
         print(f"ok  {doc_id:34s} {written:3d} pages  [{source}]")
     return 0
