@@ -415,6 +415,14 @@ const PROJECTION = join(SITE_ABS, "assets", "library", "index.json");
     });
     await page.goto("http://127.0.0.1:8080/cat-harness/library/who-iris/index.html");
     await page.waitForLoadState("networkidle");
+    // PARK THE POINTER OFF THE RAIL. The viewer rail expands to an OVERLAY
+    // 248-264 px wide on hover, by design. In CI the pointer starts over it,
+    // and Playwright hit-tests before it moves, so a control in the first
+    // 264 px reads as covered and the click retries until timeout. Since bean
+    // gnqa wrapped the pull-out under the slug (x = 74), this is that case.
+    // Reproduced locally by hovering (10, 300) first. A person reaching for
+    // the button has, by definition, moved off the rail.
+    await page.mouse.move(900, 600);
   };
 
   test("the generated page exists and carries the mount", () => {
@@ -493,6 +501,14 @@ test.describe("an asset's address is this page, anchored", () => {
     });
     await page.goto(`http://127.0.0.1:8080/cat-harness/library/who-iris/index.html${hash}`);
     await page.waitForLoadState("networkidle");
+    // PARK THE POINTER OFF THE RAIL. The viewer rail expands to an OVERLAY
+    // 248-264 px wide on hover, by design. In CI the pointer starts over it,
+    // and Playwright hit-tests before it moves, so a control in the first
+    // 264 px reads as covered and the click retries until timeout. Since bean
+    // gnqa wrapped the pull-out under the slug (x = 74), this is that case.
+    // Reproduced locally by hovering (10, 300) first. A person reaching for
+    // the button has, by definition, moved off the rail.
+    await page.mouse.move(900, 600);
   };
 
   test("a row's href is this page plus its own id", async ({ page }) => {
