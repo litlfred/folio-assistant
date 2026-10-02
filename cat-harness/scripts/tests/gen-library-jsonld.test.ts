@@ -280,7 +280,10 @@ describe("a whole library entry, through the real branch — bean `p67i`", () =>
     expect(manifest.contains).toEqual(["library/d/blocks/table-001"]);
     expect(manifest.meta.tabular_depth).toBe("table");
     expect(manifest.meta.tabular_record).toBe("folio-tabular-records/v1");
-    expect(manifest.title).toBe("d.csv");
+    // The record's `title` is its FILE name, which is never a title (#1794):
+    // with no catalogue record the slug stands, and says so.
+    expect(manifest.title).toBe("d");
+    expect(manifest.meta.title_source).toBe("slug");
     rmSync(dir, { recursive: true, force: true });
   });
 
@@ -349,6 +352,30 @@ describe("a whole library entry, through the real branch — bean `p67i`", () =>
     const manifest = JSON.parse(out.files.find((f) => f.path === "manifest.jsonld")!.content);
     expect(manifest.title).toBe("an-entry-id");
     rmSync(dir, { recursive: true, force: true });
+  });
+
+  test("a paged entry's title is its PDF /Title, never the page-1 parse (#1794)", () => {
+    const parsed = entry({
+      "structure.json": asPdfStructureFile({ doc_id: "d", sections: [], metadata: { title: "Abies", docinfo: {} } }),
+    });
+    const titled = entry({
+      "structure.json": asPdfStructureFile({
+        doc_id: "d",
+        sections: [],
+        metadata: { title: "JSON-LD 1.1 This version: Latest published version:", docinfo: { Title: "JSON-LD 1.1" } },
+      }),
+    });
+    const manifestOf = (dir: string) => {
+      const out = buildEntryNodes("d", dir);
+      if (out.state !== "built") throw new Error(out.state);
+      return JSON.parse(out.files.find((f) => f.path === "manifest.jsonld")!.content);
+    };
+    expect(manifestOf(parsed).title).toBe("d");
+    expect(manifestOf(parsed).meta.title_source).toBe("slug");
+    expect(manifestOf(titled).title).toBe("JSON-LD 1.1");
+    expect(manifestOf(titled).meta).toMatchObject({ title_source: "pdf-info", title_from: "structure.json metadata.docinfo.Title" });
+    rmSync(parsed, { recursive: true, force: true });
+    rmSync(titled, { recursive: true, force: true });
   });
 
   test("a paged entry still goes down the paged rung, untouched", () => {
