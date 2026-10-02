@@ -11018,6 +11018,118 @@
       "status": "candidate"
     },
     {
+      "id": "vocab-mapping-fhir.loss.path",
+      "prefLabel": "Loss.path",
+      "definition": "Where in the table, e.g. `group[0].element[2].target[1]`.",
+      "source": "cat-harness/schemas/vocab-mapping-fhir.ts#Loss.path",
+      "status": "candidate"
+    },
+    {
+      "id": "vocab-mapping.dependencyschema.attribute",
+      "prefLabel": "DependencySchema.attribute",
+      "definition": "R5 `attribute` (a code); R4 `property` (a URI).",
+      "source": "cat-harness/schemas/vocab-mapping.ts#DependencySchema.attribute",
+      "status": "candidate"
+    },
+    {
+      "id": "vocab-mapping.dependencyschema.display",
+      "prefLabel": "DependencySchema.display",
+      "definition": "R4 only.",
+      "source": "cat-harness/schemas/vocab-mapping.ts#DependencySchema.display",
+      "status": "candidate"
+    },
+    {
+      "id": "vocab-mapping.dependencyschema.system",
+      "prefLabel": "DependencySchema.system",
+      "definition": "R4 only.",
+      "source": "cat-harness/schemas/vocab-mapping.ts#DependencySchema.system",
+      "status": "candidate"
+    },
+    {
+      "id": "vocab-mapping.dependencyschema.valueset",
+      "prefLabel": "DependencySchema.valueSet",
+      "definition": "R5 only.",
+      "source": "cat-harness/schemas/vocab-mapping.ts#DependencySchema.valueSet",
+      "status": "candidate"
+    },
+    {
+      "id": "vocab-mapping.elementschema.code",
+      "prefLabel": "ElementSchema.code",
+      "definition": "The source term: a field of the source record, or a code in the source system.",
+      "source": "cat-harness/schemas/vocab-mapping.ts#ElementSchema.code",
+      "status": "candidate"
+    },
+    {
+      "id": "vocab-mapping.elementschema.nomap",
+      "prefLabel": "ElementSchema.noMap",
+      "definition": "Deliberately unmapped: an absence that is a statement, not a gap (R5 `noMap`).",
+      "source": "cat-harness/schemas/vocab-mapping.ts#ElementSchema.noMap",
+      "status": "candidate"
+    },
+    {
+      "id": "vocab-mapping.groupschema.source",
+      "prefLabel": "GroupSchema.source",
+      "definition": "The source vocabulary: an IRI, or a CURIE whose prefix is declared. Never carries `|version`.",
+      "source": "cat-harness/schemas/vocab-mapping.ts#GroupSchema.source",
+      "status": "candidate"
+    },
+    {
+      "id": "vocab-mapping.targetschema.authority",
+      "prefLabel": "TargetSchema.authority",
+      "definition": "`derived`: a rendering of another target's output, copied from it.",
+      "source": "cat-harness/schemas/vocab-mapping.ts#TargetSchema.authority",
+      "status": "candidate"
+    },
+    {
+      "id": "vocab-mapping.targetschema.code",
+      "prefLabel": "TargetSchema.code",
+      "definition": "The target term: a predicate's local name, or a code in the target system.",
+      "source": "cat-harness/schemas/vocab-mapping.ts#TargetSchema.code",
+      "status": "candidate"
+    },
+    {
+      "id": "vocab-mapping.targetschema.derivedfrom",
+      "prefLabel": "TargetSchema.derivedFrom",
+      "definition": "The `key` (or `code`) of the authoritative target a derived one copies.",
+      "source": "cat-harness/schemas/vocab-mapping.ts#TargetSchema.derivedFrom",
+      "status": "candidate"
+    },
+    {
+      "id": "vocab-mapping.targetschema.equivalence",
+      "prefLabel": "TargetSchema.equivalence",
+      "definition": "The R4 statement, verbatim, when the row came from an R4 map.",
+      "source": "cat-harness/schemas/vocab-mapping.ts#TargetSchema.equivalence",
+      "status": "candidate"
+    },
+    {
+      "id": "vocab-mapping.targetschema.key",
+      "prefLabel": "TargetSchema.key",
+      "definition": "The JSON term written, when it is not `code`.",
+      "source": "cat-harness/schemas/vocab-mapping.ts#TargetSchema.key",
+      "status": "candidate"
+    },
+    {
+      "id": "vocab-mapping.vocabmappingschema.id",
+      "prefLabel": "VocabMappingSchema.id",
+      "definition": "This table's id. A ConceptMap's own resource `id` is metadata, kept in `metadata.id`.",
+      "source": "cat-harness/schemas/vocab-mapping.ts#VocabMappingSchema.id",
+      "status": "candidate"
+    },
+    {
+      "id": "vocab-mapping.vocabmappingschema.metadata",
+      "prefLabel": "VocabMappingSchema.metadata",
+      "definition": "Every other ConceptMap field (contact, jurisdiction, meta, text, identifier, the resource id, …), verbatim.",
+      "source": "cat-harness/schemas/vocab-mapping.ts#VocabMappingSchema.metadata",
+      "status": "candidate"
+    },
+    {
+      "id": "vocab-mapping.vocabmappingschema.property",
+      "prefLabel": "VocabMappingSchema.property",
+      "definition": "R5 map-level `property` and `additionalAttribute` definitions, verbatim.",
+      "source": "cat-harness/schemas/vocab-mapping.ts#VocabMappingSchema.property",
+      "status": "candidate"
+    },
+    {
       "id": "vocabulary.termgloss.gloss",
       "prefLabel": "TermGloss.gloss",
       "definition": "One sentence. What the term IS, not why it was designed that way.",

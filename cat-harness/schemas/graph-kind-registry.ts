@@ -889,6 +889,23 @@ export const BASE_GRAPH_KINDS: Readonly<Record<string, GraphKindDef>> = {
       "Closed sets of codes — adjudication answers, the namespaces this project mints — one file " +
       "per list, every code carrying its definition and source, published as SKOS.",
   },
+  // Vocabulary mappings — one value carried into several target vocabularies,
+  // declared as data rather than as a line in a generator
+  // (schemas/vocab-mapping.ts). Bean `k74z`, owner 2026-10-02: option 1 of
+  // `docs/proposals/vocabulary-mappings-2026-10-02.md`. `content`, by the
+  // `code-list` argument: which predicate a field becomes, and which of two
+  // is authoritative, is a DECISION somebody makes. Generators read these
+  // through the `vocab-map` Tool; nothing writes them.
+  "vocab-mapping": {
+    renderable: false,
+    holds: "content",
+    // declared-path-literal: this table IS the declaration, as on `health`.
+    validator: "schemas/vocab-mapping.ts#VocabMappingSchema",
+    summary:
+      "Vocabulary mappings — which source field becomes which target predicate, with its stated " +
+      "relationship, one ConceptMap-shaped table per source and target; representable from and " +
+      "producible as a FHIR ConceptMap.",
+  },
   schemas: {
     // Grouped by concern from within (`schemas/schemas.json`), PR0c.
     declarationFile: "schemas.json",
