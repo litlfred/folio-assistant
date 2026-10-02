@@ -288,9 +288,17 @@ jobs:
             done
           fi
 
+      # The composition is `cat-harness/scripts/merge-main-comment.ts`, run
+      # from main's tool worktree like merge-base itself, so its branches are
+      # unit-tested. A CANCELLED job (a newer push to main superseded it) or a
+      # merge step with no exit status leaves the existing comment untouched
+      # — measured 2026-10-02 on #1777 (run 36986362911), where this step ran
+      # under always() with an empty STATUS and rewrote the comment to
+      # "**Error** (exit )" (issue #1854).
       - name: Comment once, edited in place
         if: always() && steps.merge.outcome != 'skipped'
         env:
+          JOB_STATUS: ${{ job.status }}
           STATUS: ${{ steps.merge.outputs.status }}
           MERGED: ${{ steps.merge.outputs.merged }}
           PUSHED: ${{ steps.push.outputs.sha != '' && 'success' || 'no' }}
@@ -299,43 +307,16 @@ jobs:
           SHA: ${{ steps.push.outputs.sha }}
         run: |
           set -euo pipefail
-          log="$RUNNER_TEMP/merge.log"
-          resolved=$(grep -E '^  ✓ .*  \[[a-z0-9-]+: ' "$log" | sed -E 's/.*\[([^:]+):.*/\1/' | sort | uniq -c | awk '{printf "- `%s`: %s\n", $2, $1}' || true)
-          refused=$(grep -E '^  ✗ .*  \[' "$log" | sed -E 's/^  ✗ /- /' || true)
-          unrepaired=$(grep -E 'STILL fails' "$log" | sed -E 's/^ *✗ /- /' || true)
-          if [ "$MERGED" = true ] && [ "$PUSHED" = success ]; then
-            head="**Merged \`main\` and pushed \`${SHA:0:9}\`.** Every conflict was resolved by a declared pattern and the gate set reproduced the result; CI now judges it."
-          elif [ "$MERGED" = true ] && [ "$BLOCKED" = workflows ]; then
-            head="**Merged and proved, but GitHub refused the push: the merge commit changes a workflow file**, and the workflow's token has no \`workflows\` permission, so no retry can succeed. Needs a person to push the merge (run the \`merge:main\` script locally). The fix is the owner's credentials design (#1829): a token with \`workflows\` scope."
-            gh label create needs-merge-human --color D93F0B --description "merge:main refused: an authored or undeclared conflict" --force >/dev/null
-            gh pr edit "$PR" --repo "$REPO" --add-label needs-merge-human >/dev/null
-          elif [ "$MERGED" = true ] && [ "$REJECTED" = true ]; then
-            head="**Merged and proved, but the push was rejected** — the branch moved during the run. Nothing was overwritten; the next push to \`main\` retries."
-          elif [ "$MERGED" = true ]; then
-            head="**Error** — merged and proved, but the push failed for a reason not recognised; see the run log. Nothing pushed."
-          elif [ "$STATUS" = 0 ]; then
-            head="**Already up to date with \`main\`.** Nothing to push."
-          elif [ -n "$refused" ]; then
-            head="**Refused — nothing pushed.** These conflicts are authored or named by no declared pattern, so they need a person. Adding a pattern is a deliberate change with its reason (skill \`merge-conflict-patterns\`), never a widened glob."
-            gh label create needs-merge-human --color D93F0B --description "merge:main refused: an authored or undeclared conflict" --force >/dev/null
-            gh pr edit "$PR" --repo "$REPO" --add-label needs-merge-human >/dev/null
-          elif [ -n "$unrepaired" ]; then
-            main_ci=$(gh api "repos/$REPO/commits/main/check-runs?per_page=100" --jq '[.check_runs[] | select(.conclusion == "failure") | .name] | join(", ")')
-            head="**Not proved — nothing pushed.** Every conflict matched a pattern, but regen could not reproduce these checks. If \`main\` is red on the same checks, it is main's red, not this PR's. Failing on main right now: ${main_ci:-none}."
-          else
-            head="**Error** (exit $STATUS) — merge-base failed for a reason that is neither a refusal nor an unrepaired check; see the run log. Nothing pushed, and this run is marked failed."
+          plan=$(bun run "$RUNNER_TEMP/tool/cat-harness/scripts/merge-main-comment.ts" --log "$RUNNER_TEMP/merge.log")
+          if [ "$(jq -r .action <<<"$plan")" = leave ]; then
+            echo "::notice::comment left untouched — $(jq -r .reason <<<"$plan")"
+            exit 0
           fi
-          body="$MARKER
-          $head
-          ${resolved:+
-          Resolved by pattern:
-          $resolved}${refused:+
-          Refused:
-          $refused}${unrepaired:+
-          Unrepaired:
-          $unrepaired}
-
-          [Run]($RUN_URL) · \`.github/workflows/merge-main.yml\` (bean \`d33q\`). Remove the \`merge-main\` label to stop."
+          body=$(jq -r .body <<<"$plan")
+          if [ "$(jq -r .labelNeedsHuman <<<"$plan")" = true ]; then
+            gh label create needs-merge-human --color D93F0B --description "merge:main refused: an authored or undeclared conflict" --force >/dev/null
+            gh pr edit "$PR" --repo "$REPO" --add-label needs-merge-human >/dev/null
+          fi
           existing=$(gh api "repos/$REPO/issues/$PR/comments?per_page=100" --paginate \
             --jq ".[] | select(.body | startswith(\"$MARKER\")) | .id" | head -n1)
           if [ -n "$existing" ]; then
