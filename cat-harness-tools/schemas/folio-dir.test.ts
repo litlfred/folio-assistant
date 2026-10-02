@@ -7,13 +7,13 @@
  *
  * @module schemas/folio-dir.test
  */
-import { folioDir } from "./cat-harness.js";
+import { folioDir } from "../../cat-harness/schemas/cat-harness.js";
 import { afterEach, describe, expect, test } from "bun:test";
 import { mkdtempSync, mkdirSync, rmSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { basename, join } from "node:path";
 
-import { writeDeclaration } from "../test/support/instance-fixture.js";
+import { writeDeclaration } from "../../cat-harness/test/support/instance-fixture.js";
 
 /**
  * Every root a test makes, removed after it. These sit directly in
@@ -106,7 +106,7 @@ describe("end to end — a consumer finds a folio that declares content/", () =>
     // `findPapers` is a real platform consumer, not a probe. With the folio
     // root hardcoded it looked in `folio/` and reported nothing, so a folio
     // keeping `content/` was invisible however correctly it declared itself.
-    const { findPapers } = await import("../content/pipeline/repo-root.js");
+    const { findPapers } = await import("../../cat-harness/content/pipeline/repo-root.js");
     const root = repo(declaring("content/"));
     mkdirSync(join(root, "content", "demo-paper"), { recursive: true });
     writeFileSync(
