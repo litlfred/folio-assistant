@@ -642,10 +642,18 @@ function indexPage(ix: FhirArtifactIndex): string {
     ``,
     `## Where this came from`,
     ``,
-    `No FHIR IG publishes an artefact-index document. What looks like one —`,
-    `\`ValueSets.schema.json\` at the published root — is a JSON *Schema* describing the shape of an`,
-    `enumeration response, carrying an \`example\` that happens to hold the list. So this index was`,
-    `**reconstructed**, and every part of it records which published file it came out of.`,
+    ...(fromBuild
+      ? [
+          `This index was **derived** from the IG Publisher's AST, the build's own record of every`,
+          `resource it produced, and each artefact records the AST file it came from. It was not read`,
+          `back from the published IG, so where the two disagree, the published IG is the authority.`,
+        ]
+      : [
+          `No FHIR IG publishes an artefact-index document. What looks like one —`,
+          `\`ValueSets.schema.json\` at the published root — is a JSON *Schema* describing the shape of an`,
+          `enumeration response, carrying an \`example\` that happens to hold the list. So this index was`,
+          `**reconstructed**, and every part of it records which published file it came out of.`,
+        ]),
     ``,
     `| | |`,
     `|---|---|`,
@@ -653,16 +661,26 @@ function indexPage(ix: FhirArtifactIndex): string {
     ``,
     `## ${SIDECAR_LABEL} surface`,
     ``,
-    `The IG publishes a ${SIDECAR_LABEL} for ${sc.schema} of its artefacts. The four sidecars are issued`,
-    `independently — every ValueSet gets all four, the logical models get two — which is why they`,
-    `are counted separately rather than as one "has ${SIDECAR_LABEL}" tally.`,
-    ``,
-    `<div class="st-grid">`,
-    stat(sc.schema, "JSON Schema"),
-    stat(sc.displays, "displays"),
-    stat(sc.openapi, "OpenAPI"),
-    stat(sc.jsonld, "JSON-LD"),
-    `</div>`,
+    // NOT DETERMINED is a third state, never a zero: an index that cannot see
+    // the sidecars (an AST-derived one, `sidecarApi: "unknown"`) must not print
+    // "0 of its artefacts", which reads as "the IG publishes none".
+    ...(ix.sidecarApi === "unknown"
+      ? [
+          `Not determined: this index cannot see whether the IG publishes a ${SIDECAR_LABEL}`,
+          `beside its artefacts${fromBuild ? " (the AST records the FHIR build only)" : ""}. Absent here does not mean absent.`,
+        ]
+      : [
+          `The IG publishes a ${SIDECAR_LABEL} for ${sc.schema} of its artefacts. The four sidecars are issued`,
+          `independently — every ValueSet gets all four, the logical models get two — which is why they`,
+          `are counted separately rather than as one "has ${SIDECAR_LABEL}" tally.`,
+          ``,
+          `<div class="st-grid">`,
+          stat(sc.schema, "JSON Schema"),
+          stat(sc.displays, "displays"),
+          stat(sc.openapi, "OpenAPI"),
+          stat(sc.jsonld, "JSON-LD"),
+          `</div>`,
+        ]),
     ``,
     `## Every artefact, by category`,
     ``,
@@ -846,9 +864,13 @@ function artifactPage(ix: FhirArtifactIndex, a: FhirArtifact): string {
       : [
           `## ${SIDECAR_LABEL}`,
           ``,
-          `No ${SIDECAR_LABEL} sidecar is published for this artefact. That is a fact about the IG,`,
-          `not a gap in this index — sidecars are published per artefact, and`,
-          `${ix.artifacts.filter((x) => x.sidecars).length} of ${ix.count} carry one.`,
+          ...(ix.sidecarApi === "unknown"
+            ? [`Not determined: this index cannot see whether a ${SIDECAR_LABEL} sidecar is published for this artefact.`]
+            : [
+                `No ${SIDECAR_LABEL} sidecar is published for this artefact. That is a fact about the IG,`,
+                `not a gap in this index — sidecars are published per artefact, and`,
+                `${ix.artifacts.filter((x) => x.sidecars).length} of ${ix.count} carry one.`,
+              ]),
           ``,
         ]),
   ].join("\n");

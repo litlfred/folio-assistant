@@ -126,6 +126,14 @@ export interface AstIndexOptions {
   publishedBase?: string;
   /** Path of the AST as recorded in `localPath`, relative to the IG root. Default `output-ast`. */
   astPath?: string;
+  /**
+   * The keys (`Type/id`) the PUBLISHED IG actually has. When given, an
+   * artefact outside it gets no `published` URL: the AST can hold artefacts
+   * newer than the last publish (smart-trust's Ireland participant,
+   * 2026-10-02), and a link composed for one of those resolves for nobody.
+   * Absent means not known, and every artefact is linked as before.
+   */
+  publishedKeys?: ReadonlySet<string>;
 }
 
 /** A cross-version extension URL: `http://hl7.org/fhir/<ver>/StructureDefinition/extension-<Type>.<field>`. */
@@ -194,7 +202,8 @@ export function astToArtifactIndex(ast: Ast, opts: AstIndexOptions): AstIndexRes
     }
     if (r.resourceType === "ImplementationGuide") ig = json;
     const category = publisherCategory(json);
-    const published = publishedFor(opts.publishedBase, r.resourceType, r.id, category !== undefined);
+    const isPublished = !opts.publishedKeys || opts.publishedKeys.has(`${r.resourceType}/${r.id}`);
+    const published = isPublished ? publishedFor(opts.publishedBase, r.resourceType, r.id, category !== undefined) : {};
     const localPath = `${astPath}/${r.file}`;
     const provenance = {
       ...(published.html ? { upstream: published.html.url } : {}),
@@ -375,7 +384,13 @@ if (import.meta.main) {
     process.exit(2);
   }
   const ast = readAst(resolve(astDir));
-  const { index, unreadable } = astToArtifactIndex(ast, { instanceId, publishedBase: arg("--published-base") });
+  const cmp = arg("--compare");
+  const pub = cmp ? FhirArtifactIndexSchema.parse(JSON.parse(readFileSync(resolve(cmp), "utf-8"))) : undefined;
+  const { index, unreadable } = astToArtifactIndex(ast, {
+    instanceId,
+    publishedBase: arg("--published-base"),
+    ...(pub ? { publishedKeys: new Set(pub.artifacts.map((a) => a.key)) } : {}),
+  });
   if (unreadable.length) {
     console.error(`! ${unreadable.length} manifest entr${unreadable.length === 1 ? "y has" : "ies have"} no readable resource file:`);
     for (const k of unreadable.slice(0, 10)) console.error(`    ${k}`);
@@ -386,9 +401,7 @@ if (import.meta.main) {
     writeFileSync(resolve(out), JSON.stringify(index, null, 2) + "\n");
     console.log(`wrote ${index.count} artefacts → ${out}`);
   }
-  const cmp = arg("--compare");
-  if (cmp) {
-    const pub = FhirArtifactIndexSchema.parse(JSON.parse(readFileSync(resolve(cmp), "utf-8")));
+  if (pub) {
     const c = compareIndexes(index, pub);
     console.log(`AST ${index.count} vs published ${pub.count}`);
     console.log(summarise(c));

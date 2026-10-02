@@ -101,6 +101,20 @@ describe("astToArtifactIndex", () => {
     expect(ig.category).toBeUndefined();
   });
 
+  test("an artefact the published IG does not have yet gets no published link", () => {
+    const { index: ix } = astToArtifactIndex(syntheticAst(), {
+      instanceId: "example",
+      publishedBase: "https://pub.example.org/ig",
+      publishedKeys: new Set(["CodeSystem/Colours"]),
+    });
+    expect(ix.artifacts.find((a) => a.key === "CodeSystem/Colours")!.published.html?.url).toBe(
+      "https://pub.example.org/ig/CodeSystem-Colours.html",
+    );
+    const ep = ix.artifacts.find((a) => a.key === "Endpoint/ep-1")!;
+    expect(ep.published).toEqual({});
+    expect(ep.materialization.provenance.upstream).toBeUndefined();
+  });
+
   test("no published base → no published representation claimed", () => {
     const { index: bare } = astToArtifactIndex(syntheticAst(), { instanceId: "example" });
     expect(bare.artifacts.every((a) => Object.keys(a.published).length === 0)).toBe(true);
