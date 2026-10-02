@@ -273,6 +273,13 @@ export type HarnessTile = {
   stats: HarnessStat[];
   visualisations: HarnessVisualisation[];
   /**
+   * Every graph this instance declares, each marked LOCAL or REMOTE — `603s`'s
+   * last open item: *"a tab for all materizled local subgraphs and declared
+   * remote graphs. opening up content should indicate if local or remote"*.
+   * See {@link subgraphsOf}.
+   */
+  subgraphs: HarnessSubgraph[];
+  /**
    * The instances this one sits on, as declared. `undefined` is UNDETERMINED
    * — nobody has said — and is a different answer from `[]`, which is an
    * instance asserting it sits on nothing.
@@ -281,6 +288,76 @@ export type HarnessTile = {
   /** Candidates with no published page, and any other honest gap. */
   findings: string[];
 };
+
+/**
+ * One graph an instance declares, and WHERE it is.
+ *
+ * `local` — its bytes are in this checkout, at `path` (repository-relative —
+ * the caller rebases the declaration's instance-relative path).
+ * `remote` — it is declared and lives elsewhere, at `url`: a `remoteGraphs`
+ * entry, or a `subscriptions` entry pinned at `ref`, whose `materialised`
+ * subgraphs have been copied in and are local copies of something remote.
+ *
+ * The distinction must SHOW (`603s`): *"a remote graph that renders
+ * identically to a local one is how somebody edits a copy that is not the
+ * source."*
+ */
+export type HarnessSubgraph =
+  | { readonly id: string; readonly kinds: readonly string[]; readonly where: "local"; readonly path: string }
+  | {
+      readonly id: string;
+      readonly kinds: readonly string[];
+      readonly where: "remote";
+      readonly url: string;
+      readonly via: "remote-graph" | "subscription";
+      /** A subscription's pinned commit, abbreviated for display. */
+      readonly ref?: string;
+      /** A subscription's subgraphs copied into this checkout. */
+      readonly materialised?: readonly string[];
+    };
+
+/**
+ * The graphs an instance declares, local first, then remote — `603s`.
+ *
+ * READ, never scanned: local rows are the declared directories (`dirs`, the
+ * same list the "declared directories" stat counts, so the two cannot
+ * disagree), remote rows are `remoteGraphs` and `subscriptions` as declared.
+ * Each list keeps its declared order within its half.
+ *
+ * Owner's ruling `owt6` (*"dividers, not a dashboard"*) is why this feeds the
+ * page a harness tab OPENS (`_includes/harness_details.html`) rather than the
+ * sidebar.
+ */
+export function subgraphsOf(
+  decl: Pick<CatHarnessDeclaration, "remoteGraphs" | "subscriptions">,
+  dirs: readonly { id: string; path: string; graphKinds?: readonly string[] }[],
+): HarnessSubgraph[] {
+  const local: HarnessSubgraph[] = dirs.map((d) => ({
+    id: d.id,
+    kinds: [...(d.graphKinds ?? [])],
+    where: "local" as const,
+    path: d.path,
+  }));
+  const remote: HarnessSubgraph[] = [
+    ...(decl.remoteGraphs ?? []).map((g) => ({
+      id: g.id,
+      kinds: [...g.graphKinds],
+      where: "remote" as const,
+      url: g.url,
+      via: "remote-graph" as const,
+    })),
+    ...(decl.subscriptions ?? []).map((sub) => ({
+      id: sub.id,
+      kinds: [] as string[],
+      where: "remote" as const,
+      url: `https://github.com/${sub.repository}/tree/${sub.ref}`,
+      via: "subscription" as const,
+      ref: sub.ref.slice(0, 7),
+      ...(sub.subgraphs?.length ? { materialised: [...sub.subgraphs] } : {}),
+    })),
+  ];
+  return [...local, ...remote];
+}
 
 /**
  * A declared icon's path, as the PUBLISHED site serves it.
@@ -1152,6 +1229,12 @@ function tileFor(
       { id: "views", label: "visualisations you can open", value: visualisations.filter((v) => v.path).length },
     ],
     visualisations,
+    // Paths REPOSITORY-relative: a declared `path` is the instance's own
+    // (`library/`), and a reader needs to know which `library/`.
+    subgraphs: subgraphsOf(
+      decl,
+      dirs.map((d) => ({ ...d, path: `${relative(repoRoot, join(instanceDir, d.path)).split("\\").join("/")}/` })),
+    ),
     findings,
   };
 }

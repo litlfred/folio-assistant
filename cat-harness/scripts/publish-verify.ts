@@ -52,6 +52,7 @@ import jsonld from "jsonld";
 import { CONTENT_CONTEXT_URL } from "../schemas/jsonld";
 import { readDeclaration } from "../schemas/cat-harness";
 import { OWN_NAMESPACE_VALUES } from "../schemas/namespaces";
+import { heldProvJsonldContext, PROV_JSONLD_CONTEXT_URL } from "../schemas/prov-jsonld.ts";
 import { duplicateIds } from "./check-duplicate-ids";
 
 export interface Finding {
@@ -153,6 +154,12 @@ export function localLoader(dir: string) {
   const base = CONTENT_CONTEXT_URL.slice(0, CONTENT_CONTEXT_URL.indexOf("/ns/content/"));
   return async (url: string) => {
     const p = url.startsWith(`${base}/`) ? join(dir, url.slice(base.length + 1)) : undefined;
+    // An EXTERNAL context we hold, pinned by sha256 (the `linked-data` voice,
+    // `ld-no-context-fetched-at-run-time`): served from the copy, refused on
+    // drift, never fetched. PROV-JSONLD's is the first (bean `9y9j`).
+    if (url === PROV_JSONLD_CONTEXT_URL) {
+      return { contextUrl: null, documentUrl: url, document: heldProvJsonldContext(resolve(import.meta.dir, "..", "..")) };
+    }
     const fallback = url === CONTENT_CONTEXT_URL ? resolve(import.meta.dir, "..", "ns", "content", "v1.jsonld") : undefined;
     const file = p && existsSync(p) ? p : fallback;
     if (!file) throw new Error(`refused to fetch ${url}: not in the tree being verified`);

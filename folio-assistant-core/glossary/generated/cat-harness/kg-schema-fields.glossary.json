@@ -35,6 +35,41 @@
       "status": "candidate"
     },
     {
+      "id": "artifact-store.artifactstoreschema.basis",
+      "prefLabel": "ArtifactStoreSchema.basis",
+      "definition": "Why this store, in one sentence — it is a choice, and a choice with no reason cannot be revisited.",
+      "source": "cat-harness/schemas/artifact-store.ts#ArtifactStoreSchema.basis",
+      "status": "candidate"
+    },
+    {
+      "id": "artifact-store.artifactstoreschema.cachettlseconds",
+      "prefLabel": "ArtifactStoreSchema.cacheTtlSeconds",
+      "definition": "What a CDN in front of this store will hold onto. Absent means unstated, never zero.",
+      "source": "cat-harness/schemas/artifact-store.ts#ArtifactStoreSchema.cacheTtlSeconds",
+      "status": "candidate"
+    },
+    {
+      "id": "artifact-store.artifactstoreschema.immutableurls",
+      "prefLabel": "ArtifactStoreSchema.immutableUrls",
+      "definition": "Whether the store's URLs are immutable once published. `true` means a re-publish MUST use a new path; `false` means readers may be served a cached old copy for up to `cacheTtlSeconds`.",
+      "source": "cat-harness/schemas/artifact-store.ts#ArtifactStoreSchema.immutableUrls",
+      "status": "candidate"
+    },
+    {
+      "id": "artifact-store.artifactstoreschema.maxartifactbytes",
+      "prefLabel": "ArtifactStoreSchema.maxArtifactBytes",
+      "definition": "Largest single artifact, where the host states one. Absent means unstated, never unlimited.",
+      "source": "cat-harness/schemas/artifact-store.ts#ArtifactStoreSchema.maxArtifactBytes",
+      "status": "candidate"
+    },
+    {
+      "id": "artifact-store.artifactstoreschema.publicbaseurl",
+      "prefLabel": "ArtifactStoreSchema.publicBaseUrl",
+      "definition": "The base the artifact will be READABLE at. Required, and it is the \"EXTREME care in URL handling\" clause in schema form: a published URL is a promise, and the address has to be decided before the upload rather than discovered from whatever the host returned.",
+      "source": "cat-harness/schemas/artifact-store.ts#ArtifactStoreSchema.publicBaseUrl",
+      "status": "candidate"
+    },
+    {
       "id": "assistant-package.aptdependency.package",
       "prefLabel": "AptDependency.package",
       "definition": "Debian package name (e.g., \"texlive-full\", \"ripgrep\").",
@@ -2324,6 +2359,13 @@
       "status": "candidate"
     },
     {
+      "id": "cat-harness.contentdirectory.heldentries",
+      "prefLabel": "ContentDirectory.heldEntries",
+      "definition": "Entry slugs of a `library` held back from the summary drain while the rest of it drains. See the schema field (bean `j7ql`).",
+      "source": "cat-harness/schemas/cat-harness.ts#ContentDirectory.heldEntries",
+      "status": "candidate"
+    },
+    {
       "id": "cat-harness.contentdirectory.readonly",
       "prefLabel": "ContentDirectory.readOnly",
       "definition": "This directory holds MATERIALIZED content: readable, and not editable here.",
@@ -2356,6 +2398,13 @@
       "prefLabel": "ContentDirectoryShape.composed",
       "definition": "This directory is AUTHORED FOR THE SITE'S PIPELINE, so compose it into the Jekyll source instead of mounting its built output.",
       "source": "cat-harness/schemas/cat-harness.ts#ContentDirectoryShape.composed",
+      "status": "candidate"
+    },
+    {
+      "id": "cat-harness.contentdirectoryshape.heldentries",
+      "prefLabel": "ContentDirectoryShape.heldEntries",
+      "definition": "Entry slugs (`<library>/<slug>/`) held back from the summary drain while the rest of this `library` drains — the per-entry form of `summaries: \"held\"`. It exists because a hold is the OWNER's decision about a set of documents, and a set can outlive the directory it was stated on: agent-skills' library was held on 2026-09-24 (bean `x80s`) and dissolved into cat-harness's on 2026-10-01 (bean `j7ql`), where the other entries drain. Folding the hold into the directory's would either drop it or extend it to documents the owner never held. Listed, never derived, so a move cannot release it silently.",
+      "source": "cat-harness/schemas/cat-harness.ts#ContentDirectoryShape.heldEntries",
       "status": "candidate"
     },
     {
@@ -5775,6 +5824,48 @@
       "status": "candidate"
     },
     {
+      "id": "id-lookup.identry.id",
+      "prefLabel": "IdEntry.id",
+      "definition": "`kind/local`, lower-case, as the catalogue names the node.",
+      "source": "cat-harness/schemas/id-lookup.ts#IdEntry.id",
+      "status": "candidate"
+    },
+    {
+      "id": "id-lookup.identry.url",
+      "prefLabel": "IdEntry.url",
+      "definition": "Where the node is held: the source's own page for it.",
+      "source": "cat-harness/schemas/id-lookup.ts#IdEntry.url",
+      "status": "candidate"
+    },
+    {
+      "id": "id-lookup.idlookupmanifestschema.selection",
+      "prefLabel": "IdLookupManifestSchema.selection",
+      "definition": "Which nodes, and from where. A count with no statement of what was counted cannot be checked.",
+      "source": "cat-harness/schemas/id-lookup.ts#IdLookupManifestSchema.selection",
+      "status": "candidate"
+    },
+    {
+      "id": "id-lookup.idlookupmanifestschema.source",
+      "prefLabel": "IdLookupManifestSchema.source",
+      "definition": "The corpus this indexes, by its instance name.",
+      "source": "cat-harness/schemas/id-lookup.ts#IdLookupManifestSchema.source",
+      "status": "candidate"
+    },
+    {
+      "id": "id-lookup.namespaceindexschema.shards",
+      "prefLabel": "NamespaceIndexSchema.shards",
+      "definition": "Every shard file in this namespace, relative to it. A prefix not listed has no entries, so no request is needed to say so.",
+      "source": "cat-harness/schemas/id-lookup.ts#NamespaceIndexSchema.shards",
+      "status": "candidate"
+    },
+    {
+      "id": "id-lookup.shardschema.entries",
+      "prefLabel": "ShardSchema.entries",
+      "definition": "`[id, title, url]`, sorted by id. Arrays rather than objects: the keys would be most of the bytes.",
+      "source": "cat-harness/schemas/id-lookup.ts#ShardSchema.entries",
+      "status": "candidate"
+    },
+    {
       "id": "instance-repositories.instancerepository.livesat",
       "prefLabel": "InstanceRepository.livesAt",
       "definition": "Where it sits today, when not at the root of `repository`.",
@@ -6752,6 +6843,20 @@
       "prefLabel": "precisionScalar.value",
       "definition": "Signed decimal: optional `-`, integer part, optional `.<frac>`, optional `[eE][+-]?<int>` exponent. Includes uppercase `E` and explicit positive sign on the exponent — both produced by various MPFR / mpmath formatting paths.",
       "source": "cat-harness/schemas/precision-scalar.ts#precisionScalar.value",
+      "status": "candidate"
+    },
+    {
+      "id": "prov-jsonld.owned.path",
+      "prefLabel": "Owned.path",
+      "definition": "Path inside the instance, without extension, `/`-separated.",
+      "source": "cat-harness/schemas/prov-jsonld.ts#Owned.path",
+      "status": "candidate"
+    },
+    {
+      "id": "prov-jsonld.owned.root",
+      "prefLabel": "Owned.root",
+      "definition": "Instance root, absolute.",
+      "source": "cat-harness/schemas/prov-jsonld.ts#Owned.root",
       "status": "candidate"
     },
     {
@@ -7907,6 +8012,55 @@
       "prefLabel": "SkillTopicsSchema.directories",
       "definition": "One node, two lists: the instance directories declared from within.",
       "source": "cat-harness/schemas/skill-topics.ts#SkillTopicsSchema.directories",
+      "status": "candidate"
+    },
+    {
+      "id": "source-descriptor.identifiersystemschema.authoritative",
+      "prefLabel": "IdentifierSystemSchema.authoritative",
+      "definition": "Whether this identifier is guaranteed by an authority outside the source. A Handle is; a DSpace UUID is the source's own; a local slug is neither. The distinction decides which identifier survives the source moving, and IRIS is the worked case — one of its two handles points at a regional instance that was merged away.",
+      "source": "cat-harness/schemas/source-descriptor.ts#IdentifierSystemSchema.authoritative",
+      "status": "candidate"
+    },
+    {
+      "id": "source-descriptor.sourcedescriptorschema.character",
+      "prefLabel": "SourceDescriptorSchema.character",
+      "definition": "The characterisation the \"ingest a new data source\" process produces. Required — these are what decide how the source may be REFERENCED, and a descriptor that has not said cannot answer that question.",
+      "source": "cat-harness/schemas/source-descriptor.ts#SourceDescriptorSchema.character",
+      "status": "candidate"
+    },
+    {
+      "id": "source-descriptor.sourcedescriptorschema.nodekind",
+      "prefLabel": "SourceDescriptorSchema.nodeKind",
+      "definition": "What one node IS in this corpus. Different per source, and never assumed.",
+      "source": "cat-harness/schemas/source-descriptor.ts#SourceDescriptorSchema.nodeKind",
+      "status": "candidate"
+    },
+    {
+      "id": "source-descriptor.sourcedescriptorschema.subsetbasis",
+      "prefLabel": "SourceDescriptorSchema.subsetBasis",
+      "definition": "Why `subsetIsSelfContained` has the value it has. Optional, because a self-contained source (IRIS: fetch an item and you have it) has little to say; the `false` case is the one that needs its reason recorded.",
+      "source": "cat-harness/schemas/source-descriptor.ts#SourceDescriptorSchema.subsetBasis",
+      "status": "candidate"
+    },
+    {
+      "id": "source-descriptor.sourcedescriptorschema.subsetisselfcontained",
+      "prefLabel": "SourceDescriptorSchema.subsetIsSelfContained",
+      "definition": "Whether a subset chosen by the strategies above stands on its own. `false` means every request must be closed over dependencies first.",
+      "source": "cat-harness/schemas/source-descriptor.ts#SourceDescriptorSchema.subsetIsSelfContained",
+      "status": "candidate"
+    },
+    {
+      "id": "source-descriptor.sourcedescriptorschema.system",
+      "prefLabel": "SourceDescriptorSchema.system",
+      "definition": "The software, where there is some — `DSpace 7`, `Lean 4 / Lake`. Descriptors for one system are often reusable.",
+      "source": "cat-harness/schemas/source-descriptor.ts#SourceDescriptorSchema.system",
+      "status": "candidate"
+    },
+    {
+      "id": "source-descriptor.sourcedescriptorschema.termsurl",
+      "prefLabel": "SourceDescriptorSchema.termsUrl",
+      "definition": "Whether the source states terms, and where. Feeds the `restrictions` and `copyright` gates; `unknown` stays unknown.",
+      "source": "cat-harness/schemas/source-descriptor.ts#SourceDescriptorSchema.termsUrl",
       "status": "candidate"
     },
     {
