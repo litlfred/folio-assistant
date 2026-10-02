@@ -201,9 +201,11 @@ export const GH_PAGES_GROUP = "gh-pages-push";
  *   form, used by `discoverability-docs`. `feature-staging`'s `stage` used it
  *   too until PR #552 (bean `bm6d`, 2026-09-20), when it moved to the loop
  *   form so the preview and its render-log entry could be ONE commit.
- * - **A shell loop around `git push`, with a rebase inside it** —
+ * - **A shell loop around `git push`, with a rebase or re-fetch inside it** —
  *   `feature-staging`'s `cleanup` does three attempts with
- *   `git pull --rebase` between them, and `stage` now does the same.
+ *   `git pull --rebase` between them; `stage` re-fetches `gh-pages` and
+ *   rebuilds its commit on every attempt instead (issue #1868: its commit
+ *   carries preview-cap removals, and a rebased removal is a stale one).
  *   Missing this shape is not hypothetical:
  *   the first version of this check flagged `cleanup` as unprotected while it
  *   was sitting next to a working retry loop, which is how a correct check
@@ -243,7 +245,8 @@ function ghPagesUngrouped(text: string, file: string): WorkflowFinding[] {
     if (/git push\b[^\n]*\bgh-pages\b/.test(l)) cur.pushes++;
     if (/continue-on-error:\s*true/.test(l)) cur.tolerant = true;
     if (/\b(for|until|while)\b[^\n]*\battempt\b/.test(l)) cur.loops = true;
-    if (/git\s+(pull\s+--rebase|rebase|fetch)\b/.test(l)) cur.rebases = true;
+    // `-C <dir>` allowed: `stage`'s loop re-reads with `git -C pages fetch`.
+    if (/git\s+(?:-C\s+\S+\s+)?(pull\s+--rebase|rebase|fetch)\b/.test(l)) cur.rebases = true;
   }
 
   return jobs

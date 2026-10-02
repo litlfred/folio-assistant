@@ -10,8 +10,8 @@
   },
   "families": {
     "coverage-measured": {
-      "summary": "Every declared kind with its four counts and its state. Not findings: the measurement itself, so the committed record answers \"what audits this kind\" without rerunning anything. The file COUNTS are printed rather than recorded — a census moves on any commit and a gate keyed on it is stale by default; `hasFiles` carries the only thing it decides. 51 of 51 declared kind(s), 209 gate(s), 73 criteria.",
-      "count": 51,
+      "summary": "Every declared kind with its four counts and its state. Not findings: the measurement itself, so the committed record answers \"what audits this kind\" without rerunning anything. The file COUNTS are printed rather than recorded — a census moves on any commit and a gate keyed on it is stale by default; `hasFiles` carries the only thing it decides. 50 of 50 declared kind(s), 209 gate(s), 73 criteria.",
+      "count": 50,
       "entries": [
         {
           "kind": "bean-defs",
@@ -487,7 +487,8 @@
             "bun run check:upload-names:check",
             "bun run check:uploads-retired",
             "bun run gen:jsonld:check",
-            "bun run lsi:skills:check"
+            "bun run lsi:skills:check",
+            "bun run smart-base:smart-kg-l1:check"
           ],
           "typed": true,
           "hasFiles": true
@@ -1009,20 +1010,6 @@
           "hasFiles": true
         },
         {
-          "kind": "vocab-mapping",
-          "state": "covered",
-          "directories": [
-            "cat-harness/vocab-mappings"
-          ],
-          "criteria": [],
-          "subjectKinds": [],
-          "gates": [
-            "bun run vocab-mappings:check"
-          ],
-          "typed": true,
-          "hasFiles": true
-        },
-        {
           "kind": "voice-vendors",
           "state": "no-directory",
           "directories": [],
@@ -1202,5 +1189,5 @@
       "entries": []
     }
   },
-  "total": 66
+  "total": 65
 }
