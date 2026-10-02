@@ -431,11 +431,13 @@
   the ORIGIN, so the beans tile pointed at `litlfred.github.io/beans/`. The
   owner found it by going looking for the board and landing there.
 
-  A meta of its own rather than reading `#fa-translation-index`, which already
-  carries a `baseurl`: that block is absent when `_data/translations.json` was
-  not built, and its reader returns `null` for it. Composing links out of an
-  optional block means the day it goes missing every tile silently points at
-  the origin again — which is this defect, with a second way to reach it.
+  A meta of its own rather than reading the site index, which also carries a
+  `baseurl`: that document reads as `null` when `_data/translations.json` was
+  not built, and since 2026-10-02 it is FETCHED, so it is also absent until a
+  request resolves and may never arrive. Composing links out of an optional
+  block means the day it goes missing every tile silently points at the origin
+  again — which is this defect, with a second way to reach it. Two reasons for
+  one answer now.
 -->
 <meta name="fa-baseurl" content="{{ site.baseurl }}">
 
