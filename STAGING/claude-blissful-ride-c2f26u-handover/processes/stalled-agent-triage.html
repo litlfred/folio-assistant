@@ -34,16 +34,16 @@
 
 
   <!-- Begin Jekyll SEO tag v2.8.0 -->
-<title>Copy out materialized content — to work on somebody else’s bytes | folio-assistant</title>
+<title>Stalled-agent triage: collect handovers, consolidate themes, recommend, re-route | folio-assistant</title>
 <meta name="generator" content="Jekyll v3.10.0" />
-<meta property="og:title" content="Copy out materialized content — to work on somebody else’s bytes" />
+<meta property="og:title" content="Stalled-agent triage: collect handovers, consolidate themes, recommend, re-route" />
 <meta property="og:locale" content="en_US" />
 <meta name="description" content="Content-agnostic agent skills framework — author scientific papers, WHO SMART Guidelines, and FHIR Implementation Guides with an LLM, an MCP server, and a typed content-object model." />
 <meta property="og:description" content="Content-agnostic agent skills framework — author scientific papers, WHO SMART Guidelines, and FHIR Implementation Guides with an LLM, an MCP server, and a typed content-object model." />
 <meta property="og:site_name" content="folio-assistant" />
 <meta property="og:type" content="website" />
 <meta name="twitter:card" content="summary" />
-<meta property="twitter:title" content="Copy out materialized content — to work on somebody else’s bytes" />
+<meta property="twitter:title" content="Stalled-agent triage: collect handovers, consolidate themes, recommend, re-route" />
 <!-- End Jekyll SEO tag -->
 
 
@@ -809,28 +809,22 @@ window.addEventListener('resize',measure);window.addEventListener('load',measure
         <main>
           
             <blockquote class="note">
-  <p>Generated from <code class="language-plaintext highlighter-rouge">cat-harness/processes/library/copy-out-materialized.bpmn</code> by <code class="language-plaintext highlighter-rouge">gen-processes-viz.ts</code> — do not edit here. <a href="index.html">All processes</a></p>
+  <p>Generated from <code class="language-plaintext highlighter-rouge">cat-harness/processes/sdlc/stalled-agent-triage.bpmn</code> by <code class="language-plaintext highlighter-rouge">gen-processes-viz.ts</code> — do not edit here. <a href="index.html">All processes</a></p>
 </blockquote>
-<h1 id="copy-out-materialized-content--to-work-on-somebody-elses-bytes">
+<h1 id="stalled-agent-triage-collect-handovers-consolidate-themes-recommend-re-route">
   
   
-    <a href="#copy-out-materialized-content--to-work-on-somebody-elses-bytes" class="anchor-heading" aria-labelledby="copy-out-materialized-content--to-work-on-somebody-elses-bytes"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Copy out materialized content — to work on somebody else’s bytes
+    <a href="#stalled-agent-triage-collect-handovers-consolidate-themes-recommend-re-route" class="anchor-heading" aria-labelledby="stalled-agent-triage-collect-handovers-consolidate-themes-recommend-re-route"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Stalled-agent triage: collect handovers, consolidate themes, recommend, re-route
   
   
 </h1>
     
 
-<p><code class="language-plaintext highlighter-rouge">Process_CopyOutMaterialized</code> · strict · 5 step(s)</p>
+<p><code class="language-plaintext highlighter-rouge">Process_StalledAgentTriage</code> · strict (defaulted) · 6 step(s)</p>
 
-<p>Materialized content is read-only. The owner, 2026-09-21: “if we have a materialized <stub>/<sub-graph>, the contents of it should be immutable ... you would need to copy/mateiralize it to your own folio/ in order to mess around with it." And 2026-09-22, choosing between advising and enforcing: enforce from the start.</sub-graph></stub></p>
+<p>When agents stall (context exhausted, container lost, session timed out) their work is spread over PRs, branches, beans and process runs. Collect each agent’s handover report, or reconstruct one, group the work into 2-4 themes, recommend how to pick each up, let the user decide, then record it and re-route open PRs through the merge steward. Owner, 2026-10-02: ‘an incoming stalled agent triage process which needs to look at stalled agents (named or over a given time window from active PRs, branches, discussions, beans etc), try to get as many handover reports as possible, if many then consolidate the various workstreams into 2-4 themes, give recommendation on how to pick up the work as part of current/new workplan; if open PRs etc, coordinate with relevant agents (e.g. the Merge Manager)’. Operating skills: stalled-agent-triage, handover-report.</p>
 
-<p>STRICT, and the reason is narrow. Only one step here is a gate, and it is Gateway_Frozen: whether the target is read-only at all. Everything after it is mechanical. What makes the process strict is that skipping it does not fail loudly — an edit in place succeeds, and is only caught later by check:materialized-fixity hashing bytes against the digest their record carries. A process whose omission looks exactly like compliance is the vlhk shape, and advisory would not hold it.</p>
-
-<p>The copy-out re-opens NONE of the five materialisation gates. Those were answered when this repository decided it may hold these bytes at all (materialize-remote.bpmn); copying something already held is not a second acquisition. What the copy does inherit is the restrictions and copyright verdicts — the copy is a new artefact in the copier’s folio, and publishing it is that folio’s decision.</p>
-
-<p>The three states, the five gates and the provenance pair are folio-assistant-core/schemas/materialization.ts. Nothing here restates them.</p>
-
-<p><img src="../assets/img/workflows/copy-out-materialized.svg" alt="BPMN diagram: Copy out materialized content — to work on somebody else's bytes" style="max-width:100%" /></p>
+<p><img src="../assets/img/workflows/stalled-agent-triage.svg" alt="BPMN diagram: Stalled-agent triage: collect handovers, consolidate themes, recommend, re-route" style="max-width:100%" /></p>
 <h2 id="how-it-connects">
   
   
@@ -844,7 +838,7 @@ window.addEventListener('resize',measure);window.addEventListener('load',measure
   <li><strong>Called by:</strong> no call activity names this process</li>
   <li><strong>Calls:</strong> none</li>
   <li><strong>Presented on:</strong> no docs page section shows this diagram</li>
-  <li><strong>Skill:</strong> <a href="../reference/skill-instructions/copy-out-materialized.html"><code class="language-plaintext highlighter-rouge">copy-out-materialized</code></a></li>
+  <li><strong>Skill:</strong> <a href="../reference/skill-instructions/stalled-agent-triage.html"><code class="language-plaintext highlighter-rouge">stalled-agent-triage</code></a></li>
 </ul>
 <h2 id="lanes--who-acts">
   
@@ -865,24 +859,19 @@ window.addEventListener('resize',measure);window.addEventListener('load',measure
   </thead>
   <tbody>
     <tr>
-      <td>Reader (any actor)</td>
+      <td>Triage agent</td>
+      <td><code class="language-plaintext highlighter-rouge">authoring-agent</code></td>
+      <td>Reads the footprint the stalled agents left, collects or reconstructs a handover report per agent, groups the work into 2-4 themes, and recommends. It never finishes, closes or deletes another agent’s work.</td>
+    </tr>
+    <tr>
+      <td>Merge steward</td>
+      <td><code class="language-plaintext highlighter-rouge">session-coordinator</code></td>
+      <td>Receives the open PRs that lost their driver: which are green and ready, which are mid-merge, which must be re-driven from their PR head.</td>
+    </tr>
+    <tr>
+      <td>User</td>
       <td><code class="language-plaintext highlighter-rouge">user</code></td>
-      <td>ANY reader, and that is a ruling rather than an oversight — the owner, 2026-09-22, chose it over restricting the copy-out to an editor. Refusing a copy would not protect the original, because the original is protected by being read-only; a permission here would only stop people working. So this lane has no entry condition, and the one decision in it is about the TARGET rather than about the actor.</td>
-    </tr>
-    <tr>
-      <td>Source graph — read-only</td>
-      <td><code class="language-plaintext highlighter-rouge">corpus</code></td>
-      <td>This lane holds exactly one task and it WRITES NOTHING, which is the point of drawing it at all. A lane that is only ever read from is the visible form of the rule: the arrow runs out of here and never back. Task_ReadSource is where the process would go wrong if anybody added a step, so its emptiness is load-bearing rather than incidental.</td>
-    </tr>
-    <tr>
-      <td>Copier’s own folio/</td>
-      <td><code class="language-plaintext highlighter-rouge">author</code></td>
-      <td>Where the copy lands, chosen by the owner 2026-09-22 over a scratch area. A scratch area lost because it makes the copy publishable by accident: a directory nobody declared is a directory nobody gates. The two writes here are ordered and both required — Task_Land puts the bytes somewhere, Task_RecordProvenance says what they are a copy OF, and a process that stopped after the first would produce a file indistinguishable from original work one rename later.</td>
-    </tr>
-    <tr>
-      <td>Verification</td>
-      <td><code class="language-plaintext highlighter-rouge">validation-pipeline</code></td>
-      <td>Asks the question the whole process exists to keep answerable: does the SOURCE still hash to its recorded digest? A copy-out that disturbed the original is not a copy-out, and this lane is the only thing that can tell the difference after the fact — the bytes look the same either way.</td>
+      <td>Decides one theme at a time: continue, fold into the plan, new epic, park, or scrap.</td>
     </tr>
   </tbody>
 </table></div>
@@ -895,7 +884,7 @@ window.addEventListener('resize',measure);window.addEventListener('load',measure
 </h2>
     
 
-<p>Every one of the 5 step(s) is documented.</p>
+<p><strong>1</strong> of 6 step(s) carry no documentation — <code class="language-plaintext highlighter-rouge">activity-documented</code> lists them.</p>
 
 <div class="table-wrapper"><table>
   <thead>
@@ -908,61 +897,40 @@ window.addEventListener('resize',measure);window.addEventListener('load',measure
   </thead>
   <tbody>
     <tr>
-      <td><strong>Edit it in place — it is your own content</strong><br /><code class="language-plaintext highlighter-rouge">Task_EditDirectly</code></td>
-      <td>Reader (any actor)</td>
-      <td><a href="../reference/skill-instructions/copy-out-materialized.html"><code class="language-plaintext highlighter-rouge">copy-out-materialized</code></a></td>
-      <td>The ordinary path, drawn so the process does not read as though every edit needs a copy. Content in a writable directory is authored content and is edited where it lives; the copy-out is for somebody else’s bytes, not for yours.</td>
+      <td><strong>Find the footprint</strong><br /><code class="language-plaintext highlighter-rouge">A_Footprint</code></td>
+      <td>Triage agent</td>
+      <td><a href="../reference/skill-instructions/stalled-agent-triage.html"><code class="language-plaintext highlighter-rouge">stalled-agent-triage</code></a></td>
+      <td>handover notes (beans/notes, title ‘handover:’), open PRs and branches by session or time window, in-progress beans, workflow instances, last PR and issue comments. REST, one batched pass.</td>
     </tr>
     <tr>
-      <td><strong>Read the original — and write nothing</strong><br /><code class="language-plaintext highlighter-rouge">Task_ReadSource</code></td>
-      <td>Source graph — read-only</td>
-      <td><a href="../reference/skill-instructions/copy-out-materialized.html"><code class="language-plaintext highlighter-rouge">copy-out-materialized</code></a></td>
-      <td>A read, and the only interaction this process has with the source. Its digest and <code class="language-plaintext highlighter-rouge">provenance</code> are carried forward: the digest so Task_VerifySourceUntouched has something to check against, and <code class="language-plaintext highlighter-rouge">provenance</code> so the copy can name what it came out of without re-deriving it.</td>
+      <td><strong>Collect or reconstruct a handover report per agent</strong><br /><code class="language-plaintext highlighter-rouge">A_Collect</code></td>
+      <td>Triage agent</td>
+      <td><a href="../reference/skill-instructions/handover-report.html"><code class="language-plaintext highlighter-rouge">handover-report</code></a></td>
+      <td>Use the agent’s own report and check it against live state; if none, ask the agent if it is still reachable, else reconstruct with the handover-report template and mark it reconstructed. Unpushed state is unknown, never empty.</td>
     </tr>
     <tr>
-      <td><strong>Land the bytes in the copier’s own folio/</strong><br /><code class="language-plaintext highlighter-rouge">Task_Land</code></td>
-      <td>Copier’s own folio/</td>
-      <td><a href="../reference/skill-instructions/copy-out-materialized.html"><code class="language-plaintext highlighter-rouge">copy-out-materialized</code></a></td>
-      <td>Into the copier’s own declared <code class="language-plaintext highlighter-rouge">folio/</code>, never a scratch area — a directory nobody declared is a directory nobody gates, and the copy would be publishable by accident. The copy is NOT read-only: it is the copier’s own content, makes no claim about anybody else’s bytes, and freezing it too would mean the next person needs a copy of the copy.</td>
+      <td><strong>Consolidate into 2-4 themes, with a recommendation each</strong><br /><code class="language-plaintext highlighter-rouge">A_Consolidate</code></td>
+      <td>Triage agent</td>
+      <td><a href="../reference/skill-instructions/stalled-agent-triage.html"><code class="language-plaintext highlighter-rouge">stalled-agent-triage</code></a></td>
+      <td>Group by what the work delivers, not by agent. Each theme gets its epic, members, dependencies, risk, and one of: continue, fold in, new epic, park, scrap (owner only).</td>
     </tr>
     <tr>
-      <td><strong>Record provenance.local — what this is a copy OF</strong><br /><code class="language-plaintext highlighter-rouge">Task_RecordProvenance</code></td>
-      <td>Copier’s own folio/</td>
-      <td><a href="../reference/skill-instructions/copy-out-materialized.html"><code class="language-plaintext highlighter-rouge">copy-out-materialized</code></a></td>
-      <td>The step that is easy to omit and impossible to reconstruct afterwards. <code class="language-plaintext highlighter-rouge">provenance</code> is a PAIR: <code class="language-plaintext highlighter-rouge">upstream</code> is the remote thing, <code class="language-plaintext highlighter-rouge">local</code> is the original in this repository. A copy-out writes <code class="language-plaintext highlighter-rouge">local</code>; it does not overwrite <code class="language-plaintext highlighter-rouge">upstream</code>, and it does not reuse <code class="language-plaintext highlighter-rouge">upstream</code> for a local value — that was one field until 2026-09-22, and by then 5 of the 9 who-iris item records were using it for a local one in violation of its own documentation. Without <code class="language-plaintext highlighter-rouge">local</code>, one rename later the copy is indistinguishable from original work and nothing downstream can repair it, because the information was never written down.</td>
+      <td><strong>Decide each theme</strong><br /><code class="language-plaintext highlighter-rouge">U_Decide</code></td>
+      <td>User</td>
+      <td>—</td>
+      <td>—</td>
     </tr>
     <tr>
-      <td><strong>Verify the ORIGINAL still hashes to its digest</strong><br /><code class="language-plaintext highlighter-rouge">Task_VerifySourceUntouched</code></td>
-      <td>Verification</td>
-      <td><a href="../reference/skill-instructions/copy-out-materialized.html"><code class="language-plaintext highlighter-rouge">copy-out-materialized</code></a></td>
-      <td><code class="language-plaintext highlighter-rouge">check:materialized-fixity</code>. Run against the SOURCE, not the copy — the copy is new content with no claim to verify, and the source is the thing a botched copy-out would have disturbed. A mismatch here means the copy-out was an edit in place wearing a copy’s clothes, and it is the only signal that tells the two apart.</td>
+      <td><strong>Record the triage and claim the picked-up work</strong><br /><code class="language-plaintext highlighter-rouge">A_Record</code></td>
+      <td>Triage agent</td>
+      <td><a href="../reference/skill-instructions/bean-coordination.html"><code class="language-plaintext highlighter-rouge">bean-coordination</code></a></td>
+      <td>A ‘triage: <date>' bean note on each theme's epic; new or re-parented beans; claims via beans:claim. Owning sessions still alive are notified before their branches are touched.</date></td>
     </tr>
-  </tbody>
-</table></div>
-<h2 id="decisions">
-  
-  
-    <a href="#decisions" class="anchor-heading" aria-labelledby="decisions"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Decisions
-  
-  
-</h2>
-    
-
-<p>Every one of the 1 decision(s) is documented.</p>
-
-<div class="table-wrapper"><table>
-  <thead>
     <tr>
-      <th>decision</th>
-      <th>what decides it</th>
-      <th>branches</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td><strong>Is the target materialized / read-only?</strong><br /><code class="language-plaintext highlighter-rouge">Gateway_Frozen</code></td>
-      <td>The one gate. <code class="language-plaintext highlighter-rouge">check:read-only-graphs</code> answers it from the directory’s declaration, and <code class="language-plaintext highlighter-rouge">readOnly</code> absent is NOT <code class="language-plaintext highlighter-rouge">false</code> — it is not declared, a third state. An undeclared directory holding materialized nodes is reported as a finding rather than waved through here, because “nobody answered” and “somebody said it is writable” must not share a branch.</td>
-      <td><strong>yes — read-only</strong> → Read the original — and write nothing<br /><strong>no, or not declared</strong> → Edit it in place — it is your own content</td>
+      <td><strong>Re-route open PRs that lost their driver</strong><br /><code class="language-plaintext highlighter-rouge">S_Reroute</code></td>
+      <td>Merge steward</td>
+      <td><a href="../reference/skill-instructions/coordinate.html"><code class="language-plaintext highlighter-rouge">coordinate</code></a></td>
+      <td>Green, up-to-date PRs join the queue; mid-merge branches are re-driven from the PR head, never guessed at; red PRs go back to the new driver.</td>
     </tr>
   </tbody>
 </table></div>
