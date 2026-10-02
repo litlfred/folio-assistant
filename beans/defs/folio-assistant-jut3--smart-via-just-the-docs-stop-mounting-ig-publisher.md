@@ -704,3 +704,12 @@ what the Publisher's does:
 They are the Publisher's element tables (Key / Differential / Snapshot)
 rendered from each StructureDefinition's snapshot, which is real rendering
 work rather than a sentence. That is the next slice.
+
+## Owner ruling 2026-10-02: the Publisher's QA output is left as is
+
+Owner, on converting `qa.xml` to JSON for a client-side QA page: *"fhir qa.xml? other things rely on it downstream... outside of this project. leave as is."*
+
+- **`qa.xml` is a FHIR Bundle of OperationOutcomes, and consumers outside this project read it.** It is not one of the per-artefact XML representations P2 refuses. The P2 record (`p2-refusals.qa-results.json`) does not list it and must not.
+- **The QA files are the Publisher's own, so this pipeline does not re-render, convert or drop them.** That covers `qa.html`, `qa.min.html`, `qa.xml`, `qa.json`, `qa.txt`, `qa.compare.txt`, `qa-tx`, `qa-txservers`, `qa-dep` and `qa-ipreview`. Where a Publisher run exists, they are published from its output byte for byte.
+- **Parity table:** the `qa*` pages move from "missing" to **passed through from the Publisher, by owner ruling**. They are not a render this pipeline owes.
+- **Still open:** `searchform` and `history` among the IG-level pages.
