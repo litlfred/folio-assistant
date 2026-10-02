@@ -1,10 +1,10 @@
 ---
 # folio-assistant-2h76
 title: 'STATE BRANCH P2: mechanism — storage keyedBy tip, branch-store splice-write, seed the orphan ''state'' branch, session-start mount at state/'
-status: todo
+status: in-progress
 type: task
 created_at: 2026-10-02T10:58:10Z
-updated_at: 2026-10-02T10:58:10Z
+updated_at: 2026-10-02T22:42:40Z
 parent: folio-assistant-fs43
 ---
 
