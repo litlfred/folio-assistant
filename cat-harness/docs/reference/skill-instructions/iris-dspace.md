@@ -253,5 +253,5 @@ had been allowed to believe the placeholder.
 
 Enumeration cost, subsetting and the characterisation that decides whether IRIS
 may be cited at all are in
-[`large-datasets/sources/who-iris.json`](https://github.com/litlfred/folio-assistant/blob/main/large-datasets/sources/who-iris.json).
+[`who-iris/sources/who-iris.json`](https://github.com/litlfred/folio-assistant/blob/main/who-iris/sources/who-iris.json).
 {% endraw %}
