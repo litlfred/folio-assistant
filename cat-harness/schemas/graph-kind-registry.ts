@@ -1571,6 +1571,11 @@ export const BASE_GRAPH_KINDS: Readonly<Record<string, GraphKindDef>> = {
       // the chrome from separate template repositories the IG merely depends
       // on. Three provenances, three documents (bean `ajx9`).
       "folio-ig-chrome/v1": { validator: "fhir-harness:schemas/ig-chrome.ts#IgChromeSchema" },
+      // The IG's GitHub RELEASES, as pointers to their binary assets — a
+      // fourth source (the GitHub API) and so a fourth document. Pointers,
+      // never bytes: previews carry no binaries, releases do (owner,
+      // 2026-10-02; bean `b8ip`).
+      "ig-releases/v1": { validator: "fhir-harness:schemas/ig-releases.ts#IgReleasesSchema" },
       "https://json-schema.org/draft/2020-12/schema": { external: "JSON Schema 2020-12" },
     },
     summary:
