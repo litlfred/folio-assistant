@@ -33,8 +33,19 @@ warn() { printf '  ! %s\n' "$*" >&2; }
 
 command -v git >/dev/null 2>&1 || die "git not found on PATH"
 
-REPO_ROOT=$(git rev-parse --show-toplevel 2>/dev/null) \
-  || die "not inside a git repository"
+# The harness this script ships in, found from the script itself — never
+# from the caller's directory. A caller may run it from folio-assistant, from
+# the IG checkout, or (after separation) from a repository that vendors it.
+HARNESS_ROOT=$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)
+IG_AST_TS="$HARNESS_ROOT/fhir-harness/scripts/ig-ast.ts"
+CALLER_ROOT=$(git rev-parse --show-toplevel 2>/dev/null || pwd)
+
+# Every git operation targets the IG's OWN repository. Before 2026-10-02 they
+# ran in the caller's directory, so `restore --ig-root X` started from
+# folio-assistant fetched folio-assistant's origin and reported the cache
+# "not found" while it sat on X's origin (bean wnhh).
+IGIT_ROOT=""
+igit() { git -C "$IGIT_ROOT" "$@"; }
 
 CMD="${1:-}"; shift || true
 IG_ROOT=""
@@ -69,7 +80,7 @@ resolve_ig_root() {
     fi
     d=$(dirname "$d")
   done
-  printf '%s\n' "$REPO_ROOT"
+  printf '%s\n' "$CALLER_ROOT"
 }
 
 resolve_package() {
@@ -85,7 +96,8 @@ resolve_package() {
 }
 
 cmd_list_names() {
-  git ls-remote --heads "$REMOTE" 'refs/heads/fhir-ast/*' | sed -n 's#^.*refs/heads/\(.*\)$#\1#p'
+  IGIT_ROOT=$(resolve_ig_root)
+  igit ls-remote --heads "$REMOTE" 'refs/heads/fhir-ast/*' | sed -n 's#^.*refs/heads/\(.*\)$#\1#p'
 }
 
 count_resources() {
@@ -116,8 +128,8 @@ cmd_status() {
   
   printf '\n  cache PRESENT — %s resources on disk.\n' "$n"
   
-  if ! bun run "$REPO_ROOT/fhir-harness/scripts/ig-ast.ts" validity "$out" --ig "$root" >/dev/null 2>&1; then
-    warn "AST is stale for current inputs. Run \`%s seed\` after rebuilding." "$PROG"
+  if ! bun run "$IG_AST_TS" validity "$out" --ig "$root" >/dev/null 2>&1; then
+    warn "AST is stale for current inputs. Run \`$PROG seed\` after rebuilding."
     return 3
   fi
   return 0
@@ -127,6 +139,7 @@ cmd_restore() {
   local root; root=$(resolve_ig_root)
   local pkg; pkg=$(resolve_package "$root") || die "could not resolve package id from $root/sushi-config.yaml"
   local br="${BRANCH:-fhir-ast/$pkg}"
+  IGIT_ROOT="$root"
   
   local out="$root/output-ast"
   if [ -d "$out" ] && [ "$(count_resources "$out")" -gt 0 ]; then
@@ -137,8 +150,8 @@ cmd_restore() {
   
   printf 'restoring %s -> %s\n' "$br" "$out"
   
-  git update-ref -d "$PRIVATE_REF" 2>/dev/null || true
-  if ! git fetch --depth=1 "$REMOTE" "+$br:$PRIVATE_REF" 2>/dev/null; then
+  igit update-ref -d "$PRIVATE_REF" 2>/dev/null || true
+  if ! igit fetch --depth=1 "$REMOTE" "+$br:$PRIVATE_REF" 2>/dev/null; then
     warn "cache branch '$br' not found on $REMOTE."
     info "A build is required. Afterwards run: $PROG seed"
     return 1
@@ -147,9 +160,9 @@ cmd_restore() {
   mkdir -p "$out"
   
   local tmp; tmp=$(mktemp -d) || die "mktemp failed"
-  trap "rm -rf '$tmp'; git update-ref -d '$PRIVATE_REF' 2>/dev/null || true" RETURN
+  trap "rm -rf '$tmp'; git -C '$root' update-ref -d '$PRIVATE_REF' 2>/dev/null || true" RETURN
   
-  git archive --format=tar "$PRIVATE_REF" | tar -xC "$tmp" 2>/dev/null || {
+  igit archive --format=tar "$PRIVATE_REF" | tar -xC "$tmp" 2>/dev/null || {
     warn "could not extract AST from '$br'."
     return 3
   }
@@ -159,6 +172,8 @@ cmd_restore() {
   for item in "$tmp"/*; do
     local base; base=$(basename "$item")
     [ "$base" = "txcache" ] && continue
+    # A lock file is the seed's own scratch, never AST content.
+    [ "$base" = "index.lock" ] && continue
     cp -R "$item" "$out/"
   done
   
@@ -196,10 +211,10 @@ parse_counts() {
 would_shrink() {
   local br="$1" cand_res="$2" cand_edges="$3"
   local ref="refs/ig-cache-prevcheck"
-  git update-ref -d "$ref" 2>/dev/null || true
-  timeout 60 git fetch --depth=1 --filter=blob:none -q "$REMOTE" "+$br:$ref" 2>/dev/null || return 1
-  local msg; msg=$(git log -1 --format=%s "$ref" 2>/dev/null)
-  git update-ref -d "$ref" 2>/dev/null || true
+  igit update-ref -d "$ref" 2>/dev/null || true
+  timeout 60 git -C "$IGIT_ROOT" fetch --depth=1 --filter=blob:none -q "$REMOTE" "+$br:$ref" 2>/dev/null || return 1
+  local msg; msg=$(igit log -1 --format=%s "$ref" 2>/dev/null)
+  igit update-ref -d "$ref" 2>/dev/null || true
   
   local prev; prev=$(parse_counts "$msg")
   [ -z "$prev" ] && return 1
@@ -214,11 +229,12 @@ cmd_seed() {
   local root; root=$(resolve_ig_root)
   local pkg; pkg=$(resolve_package "$root") || die "pass --package NAME"
   local br="${BRANCH:-fhir-ast/$pkg}"
+  IGIT_ROOT="$root"
   
   local out="$root/output-ast"
   
   info "Running AstExportCli..."
-  local export_dir="$REPO_ROOT/fhir-ig-publisher/ast-export"
+  local export_dir="$HARNESS_ROOT/fhir-ig-publisher/ast-export"
   [ ! -d "$export_dir" ] && export_dir="$PWD/fhir-ig-publisher/ast-export"
   if [ -d "$export_dir" ] && [ -f "$export_dir/target/classes/org/hl7/fhir/igtools/ast/AstExportCli.class" ]; then
     (cd "$export_dir" && java -cp "target/classes:$(cat cp.txt 2>/dev/null)" org.hl7.fhir.igtools.ast.AstExportCli -ig "$root" -ast-out "$out") || die "AstExportCli failed"
@@ -235,7 +251,7 @@ cmd_seed() {
   fi
   
   local pub_version="unknown"
-  local sha; sha=$(git rev-parse --short HEAD 2>/dev/null || echo "unknown")
+  local sha; sha=$(igit rev-parse --short HEAD 2>/dev/null || echo "unknown")
   
   if [ "$PUSH" -eq 1 ] && would_shrink "$br" "$n" "$edges"; then
     if [ "$FORCE" -eq 0 ]; then
@@ -250,6 +266,7 @@ cmd_seed() {
   trap "rm -rf '$tmp'" RETURN
   
   cp -R "$out/"* "$tmp/" 2>/dev/null || true
+  rm -f "$tmp/index.lock"
   # txcache goes alongside AST on the branch
   if [ -d "$root/input-cache/txcache" ]; then
     cp -R "$root/input-cache/txcache" "$tmp/"
@@ -257,15 +274,18 @@ cmd_seed() {
   
   if [ "$PUSH" -eq 1 ]; then
     info "committing to $br directly..."
-    export GIT_DIR="$REPO_ROOT/.git"
-    export GIT_INDEX_FILE="$tmp/index"
-    export GIT_WORK_TREE="$tmp"
-    git add .
-    local tree
-    tree=$(git write-tree) || die "git write-tree failed"
-    local commit
-    commit=$(git commit-tree "$tree" -m "$subj") || die "git commit-tree failed"
-    git push -f "$REMOTE" "$commit:refs/heads/$br" >/dev/null 2>&1 || die "push failed"
+    # The index lives OUTSIDE the tree being committed: inside it, `git add .`
+    # picked up its own `index.lock` (the 2026-10-02 smart-trust seed carries
+    # one). The env is scoped to these commands, never exported.
+    local gitdir; gitdir=$(igit rev-parse --absolute-git-dir) || die "IG root is not a git repository: $root"
+    local idx; idx=$(mktemp) && rm -f "$idx"
+    local tree commit
+    GIT_DIR="$gitdir" GIT_INDEX_FILE="$idx" GIT_WORK_TREE="$tmp" git add -A . \
+      || die "git add failed"
+    tree=$(GIT_DIR="$gitdir" GIT_INDEX_FILE="$idx" git write-tree) || die "git write-tree failed"
+    rm -f "$idx"
+    commit=$(GIT_DIR="$gitdir" git commit-tree "$tree" -m "$subj") || die "git commit-tree failed"
+    igit push -f "$REMOTE" "$commit:refs/heads/$br" >/dev/null 2>&1 || die "push failed"
     printf '\npushed %s (%s resources, %s edges)\n' "$br" "$n" "$edges"
   else
     printf '\nFiles written to %s\n' "$tmp"
@@ -284,7 +304,7 @@ cmd_verify() {
   if [ ! -d "$out" ]; then
     die "no output-ast found in $root"
   fi
-  bun run "$REPO_ROOT/fhir-harness/scripts/ig-ast.ts" validity "$out" --ig "$root"
+  bun run "$IG_AST_TS" validity "$out" --ig "$root"
 }
 
 cmd_doctor() {
