@@ -2,7 +2,7 @@
   "$schema": "folio-bean-index/v1",
   "tile": {
     "beans": {
-      "count": 645,
+      "count": 649,
       "unit": "beans"
     }
   },
@@ -186,7 +186,7 @@
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-10-02T14:10:55Z",
-      "updatedAt": "2026-10-02T14:10:55Z",
+      "updatedAt": "2026-10-02T18:25:19Z",
       "preview": "## This bean was filed on a false premise — corrected 2026-10-02\n\n**I filed it without reading `merge-main.yml` first.** That is the error worth\nrecording, because everything the first version \"discovered\" is written in that\nfile, measured on the same day, with its reason and its fix.\n\nThe step is **\"Have CI judge the merge commit\"**:\n\n> Every GATING workflow, so each judges the merge commit: a bo",
       "file": "beans/defs/folio-assistant-0qjq--merge-main-approval-stall-the-bots-push-creates-ac.md"
     },
@@ -2659,6 +2659,20 @@
       "file": "beans/defs/folio-assistant-9y9j--json-ld-voice-the-rules-every-emitted-json-ld-docu.md"
     },
     {
+      "id": "folio-assistant-9zok",
+      "title": "bun run gates can NEVER pass translation:catalogue:check — it scrapes a command whose $base is a shell variable defined on an earlier line of the workflow",
+      "status": "todo",
+      "type": "task",
+      "priority": "",
+      "parent": "folio-assistant-1xhc",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-10-02T18:56:04Z",
+      "updatedAt": "2026-10-02T18:56:04Z",
+      "preview": "## The defect\n\n`AGENTS.md` makes `bun run gates` the STRICT pre-push command, and its whole\nargument for existing is that `gates.ts` derives its list from\n`.github/workflows/code-quality-gates.yml` so it *\"cannot drift from what CI\nactually runs\"*. For one gate the derivation is lossy in a way that makes the\ngate unpassable locally, for everyone, always.\n\n`code-quality-gates.yml:1341-1348` is a mu",
+      "file": "beans/defs/folio-assistant-9zok--bun-run-gates-can-never-pass-translationcataloguec.md"
+    },
+    {
       "id": "folio-assistant-a0s3",
       "title": "B8 (#1168): string-to-reference sweep — typed refs on ~25 bare-string fields; delete SkillDefinition.roles and front-matter package:",
       "status": "completed",
@@ -3021,6 +3035,20 @@
       "updatedAt": "2026-09-30T20:09:40Z",
       "preview": "Owner 2026-09-30: IG pages use Liquid site.data.fhir.* (IG Publisher convention, e.g. {{site.data.fhir.ig.version}}). Those should be available in the just-the-docs pipeline, with fhir-harness RESPONSIBLE for declaring and populating the FHIR metadata Jekyll data.\n\n## Measured 2026-09-30 (issue #1564 analysis)\n- Nothing in folio-assistant resolves site.data.fhir.*: only the IG Publisher does. dak-",
       "file": "beans/defs/folio-assistant-bamf--fhir-harness-declares-and-populates-fhir-ig-jekyll.md"
+    },
+    {
+      "id": "folio-assistant-bbv3",
+      "title": "Page bytes: the fa-translation-index island is fetched once, not inlined 2356 times (22.34 MB); kg-render.js carries R4's two client-side obligations",
+      "status": "todo",
+      "type": "task",
+      "priority": "normal",
+      "parent": "folio-assistant-o3xy",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-10-02T17:50:36Z",
+      "updatedAt": "2026-10-02T17:50:51Z",
+      "preview": "## What and why\n\n`#fa-translation-index` was a `<script type=\"application/json\">` island in the `<head>`\nof every page. **Measured on a local build of this repo's docs site, 2026-10-02: 2356\npages carried it, 9482 B each, 22.34 MB in total, ONE distinct payload** (sha1 over the\npayloads). It is now published once at `assets/harness/site.json` and fetched.\n\n`folio-board-requirements.md` §R4 forbade",
+      "file": "beans/defs/folio-assistant-bbv3--page-bytes-the-fa-translation-index-island-is-fetc.md"
     },
     {
       "id": "folio-assistant-bbza",
@@ -3601,16 +3629,30 @@
     {
       "id": "folio-assistant-dlqu",
       "title": "SPEED-UP 4: CI sharding, BPMN render cache and shallow checkout",
-      "status": "todo",
+      "status": "in-progress",
       "type": "task",
       "priority": "",
       "parent": "folio-assistant-7x5n",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-10-01T17:42:24Z",
-      "updatedAt": "2026-10-01T17:42:24Z",
+      "updatedAt": "2026-10-02T22:08:54Z",
       "preview": "Owner approved 2026-10-01 late (~17:30, session_01ToWZR4RgTRCWeSsgxsSQfT) as speed-up 4 of 4 for the merge treadmill (S2 `0mf0`, epic `7x5n`). Siblings: input-hash skip, parallel checks, CI merge:main (`d33q` part B).\n\n## What\nThree CI changes to `.github/workflows/code-quality-gates.yml` (and the other gate workflows):\n1. **Sharding** — split the long `gates` job (and `bun test`) into parallel sh",
       "file": "beans/defs/folio-assistant-dlqu--speed-up-4-ci-sharding-bpmn-render-cache-and-shall.md"
+    },
+    {
+      "id": "folio-assistant-dm4j",
+      "title": "todos/index.html serves ZERO notes without JavaScript — the one page most about notes is the only one with no linear floor",
+      "status": "todo",
+      "type": "task",
+      "priority": "normal",
+      "parent": "folio-assistant-o3xy",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-10-02T17:41:46Z",
+      "updatedAt": "2026-10-02T18:08:07Z",
+      "preview": "Found while measuring the linear floor for `qj9a`, 2026-10-02, on\n`origin/gh-pages`. Parent topic: `qj9a`; the floor itself is bean `0jtj`.\n\n## The defect\n\n`todos/index.html` — the dedicated notes dashboard — carries **no\n`fa-todo-listing` section and zero `fa-todo-listing-item` elements** in its\nserved bytes. It is one of the eight generated JS shells in\n`cat-harness/test/first-paint-scheme.e2e.t",
+      "file": "beans/defs/folio-assistant-dm4j--todosindexhtml-serves-zero-notes-without-javascrip.md"
     },
     {
       "id": "folio-assistant-do70",
@@ -6285,12 +6327,12 @@
       "title": "STAGING SIZE: the measurement is right and the SEVERITY is an unverifiable claim — critical predicts a failed publish, and nothing in this repo can observe enforcement",
       "status": "in-progress",
       "type": "bug",
-      "priority": "",
+      "priority": "normal",
       "parent": "folio-assistant-1xhc",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-25T18:10:30Z",
-      "updatedAt": "2026-09-25T18:10:30Z",
+      "updatedAt": "2026-10-02T17:38:56Z",
       "preview": "`health` reports `staging-preview-size` as **critical** while every deploy keeps\nsucceeding. I went looking for a wrong number and did not find one: **the\nmeasurement is sound.** What is wrong is one level up, in what `critical` is\nasserting.\n\n## Measured first-hand, 2026-09-25\n\nDirectly off the publish ref — `git ls-tree -r -l origin/gh-pages`, not the\ncheck's own report:\n\n| | files | size |\n|---",
       "file": "beans/defs/folio-assistant-qj9a--staging-size-the-measurement-is-right-and-the-seve.md"
     },
@@ -8919,6 +8961,20 @@
       "updatedAt": "2026-09-29T23:29:01Z",
       "preview": "Tracks litlfred/folio-assistant#1492. Owner decisions (2026-09-29): the hybrid, no LeanArchitect; an elaborated formal-edge extractor; tools and skills in folio-assistant-sci, never in core (\"f-a-core has high level processes only, no tooling\").\n\n## Todo\n- [x] core: `elaborated` source label, `isElaborated`, and one `summarizeSources` rule shared by the reader (content-graph.ts) and the writer (le",
       "file": "beans/defs/folio-assistant-yxob--formal-edge-extractor-in-folio-assistant-sci-gener.md"
+    },
+    {
+      "id": "folio-assistant-z1x6",
+      "title": "PAGE WEIGHT: post-build HTML minification, and nav_exclude for the generated reference sections (#1885)",
+      "status": "in-progress",
+      "type": "task",
+      "priority": "normal",
+      "parent": "folio-assistant-o3xy",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-10-02T16:51:57Z",
+      "updatedAt": "2026-10-02T17:53:49Z",
+      "preview": "Owner-approved, 2026-10-02. Three changes were proposed; two are mine and one stands down.\n\n**Brief — what and why.** The published gh-pages tree holds 2481 MiB of HTML (measured below). About 9-10% of every page is HTML comments: maintainer prose in `head_custom.html` and generator banners, serialised into every one of 14,543 pages. A decision memo proposed hand-converting 30 comments in one incl",
+      "file": "beans/defs/folio-assistant-z1x6--page-weight-post-build-html-minification-and-nav-e.md"
     },
     {
       "id": "folio-assistant-z4mq",
