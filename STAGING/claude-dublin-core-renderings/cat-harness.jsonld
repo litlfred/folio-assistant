@@ -301,10 +301,10 @@
   ],
   "canonicalDocument": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld",
   "repository": "cat-harness",
-  "generatedAt": "2026-10-02T09:39:05.806Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/90d061fe4ea95e6b6c28fff33c4db384cfa65638",
-  "sourceCommitSha": "90d061fe4ea95e6b6c28fff33c4db384cfa65638",
-  "sourceCommitAt": "2026-10-02T09:32:51Z",
+  "generatedAt": "2026-10-02T11:19:20.932Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/47f2722792f2d5a8164d3299ec6e0dc34d497ea9",
+  "sourceCommitSha": "47f2722792f2d5a8164d3299ec6e0dc34d497ea9",
+  "sourceCommitAt": "2026-10-02T11:12:56Z",
   "sourceTreeDirty": true,
   "dependsOnUnavailable": "2 dependency edge(s), none expressible as a record — see gaps",
   "counts": {
@@ -318,7 +318,7 @@
     "Lane": 201,
     "ProcessNode": 940,
     "Tool": 112,
-    "Schema": 145,
+    "Schema": 146,
     "ExternalSchema": 19,
     "GraphKind": 25,
     "Role": 48,
@@ -2716,7 +2716,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-dublin-core-renderings/cat-harness.jsonld#package/sdlc-core"
       ],
       "instructionsPath": "skills/sdlc/sdlc-core/before-after-preview.md",
-      "instructionLines": 378,
+      "instructionLines": 387,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -2800,7 +2800,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-dublin-core-renderings/cat-harness.jsonld#package/sdlc-core"
       ],
       "instructionsPath": "skills/sdlc/sdlc-core/staging-review.md",
-      "instructionLines": 596,
+      "instructionLines": 614,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -40987,7 +40987,11 @@
           {
             "name": "url",
             "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-dublin-core-renderings/tool-types.schema.json#/$defs/Url",
-            "description": "The change proposal or comment created."
+            "description": "The change proposal or comment created.",
+            "render": {
+              "as": "url",
+              "reason": "a reader follows it to the proposal; the scheme is checked before it reaches an href"
+            }
           }
         ]
       },
@@ -41039,7 +41043,11 @@
           {
             "name": "url",
             "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-dublin-core-renderings/tool-types.schema.json#/$defs/Url",
-            "description": "Where the tree is served."
+            "description": "Where the tree is served.",
+            "render": {
+              "as": "url",
+              "reason": "a reader opens it; the scheme is checked before it reaches an href"
+            }
           }
         ]
       },
@@ -41097,7 +41105,11 @@
           {
             "name": "preview",
             "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-dublin-core-renderings/tool-types.schema.json#/$defs/Url",
-            "description": "Where the preview is served. A reviewer cannot assess a rendered artefact from a description of it, which is what this URL is for."
+            "description": "Where the preview is served. A reviewer cannot assess a rendered artefact from a description of it, which is what this URL is for.",
+            "render": {
+              "as": "url",
+              "reason": "a reviewer opens the preview; the scheme is checked before it reaches an href"
+            }
           }
         ]
       },
@@ -41146,7 +41158,11 @@
           {
             "name": "url",
             "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-dublin-core-renderings/tool-types.schema.json#/$defs/Url",
-            "description": "Where the tree is being served."
+            "description": "Where the tree is being served.",
+            "render": {
+              "as": "url",
+              "reason": "a reader opens it; the scheme is checked before it reaches an href"
+            }
           }
         ]
       },
@@ -42971,7 +42987,11 @@
           {
             "name": "report",
             "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-dublin-core-renderings/tool-types.schema.json#/$defs/Markdown",
-            "description": "One row per workflow. Five verdicts, not two: green, red, `running`, `superseded` (a red whose workflow file changed after the failing run, so the verdict is against code that no longer exists), and possibly-stale (a red that has not re-run in a week). Three exit codes carry them to a caller that reads no rows: 0 nothing is red, 1 something is, 2 COULD NOT LOOK — the API was unreachable, or `--out` could not be written. A caller must never read 2 as either verdict. `--markdown` and `--warn` always exit 0 by design, so a caller wanting the verdict uses neither."
+            "description": "One row per workflow. Five verdicts, not two: green, red, `running`, `superseded` (a red whose workflow file changed after the failing run, so the verdict is against code that no longer exists), and possibly-stale (a red that has not re-run in a week). Three exit codes carry them to a caller that reads no rows: 0 nothing is red, 1 something is, 2 COULD NOT LOOK — the API was unreachable, or `--out` could not be written. A caller must never read 2 as either verdict. `--markdown` and `--warn` always exit 0 by design, so a caller wanting the verdict uses neither.",
+            "render": {
+              "as": "markdown",
+              "reason": "a table a reader reads; rendered with raw HTML off"
+            }
           }
         ]
       },
@@ -43304,7 +43324,11 @@
           {
             "name": "entry",
             "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-dublin-core-renderings/tool-types.schema.json#/$defs/Markdown",
-            "description": "The entry as posted."
+            "description": "The entry as posted.",
+            "render": {
+              "as": "markdown",
+              "reason": "a log entry is prose with formatting; rendered with raw HTML off"
+            }
           }
         ]
       },
@@ -47095,6 +47119,15 @@
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/render-log"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-dublin-core-renderings/cat-harness.jsonld#schema/render-output",
+      "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#Schema",
+      "name": "render-output",
+      "title": "The ONE implementation of a Tool output's render hint — bean `q2wm`, R17.",
+      "module": "schemas/render-output.ts",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-dublin-core-renderings/cat-harness.jsonld#directory/schemas",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/render-output"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-dublin-core-renderings/cat-harness.jsonld#schema/render-targets",
       "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#Schema",
       "name": "render-targets",
@@ -49502,8 +49535,8 @@
   ],
   "staging": {
     "branch": "claude/dublin-core-renderings",
-    "sha": "43f8fe9036a427ace43689014634ccb3a71c290b",
+    "sha": "2a22cfe1c585e6558e707e7b27a8042ed79933db",
     "pr": "1841/merge",
-    "run": "36990416842"
+    "run": "36999782612"
   }
 }
