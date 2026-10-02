@@ -230,6 +230,7 @@
       "Process_Editing",
       "Process_Publication"
     ],
+    "Process_CopyOutMaterialized": [],
     "Process_CRDM_Close": [],
     "Process_CRDM_DataModel": [],
     "Process_CRDM_Deliver": [
@@ -298,6 +299,7 @@
     ],
     "Process_KgToPortal": [],
     "Process_L3Fhir": [],
+    "Process_MaterializeRemote": [],
     "Process_MergeBase": [],
     "Process_MethodologyFromSource": [
       "Process_Ingestion",
@@ -312,6 +314,9 @@
     "Process_PublishVerification": [],
     "Process_QaPublish": [],
     "Process_QaReportSigning": [],
+    "Process_RefreshMaterialized": [
+      "Process_Adjudication"
+    ],
     "Process_RelatedWork": [],
     "Process_RenderKgToCdn": [],
     "Process_RepoHealth": [],
@@ -325,8 +330,16 @@
       "Process_NarrativeCodeReview",
       "Process_NarrativeReview"
     ],
+    "Process_SampleImport": [
+      "Process_MaterializeRemote",
+      "Process_RefreshMaterialized"
+    ],
     "Process_SessionStateMachine": [],
     "Process_RenderLog": [],
+    "Process_SubscribeKg": [
+      "Process_MaterializeRemote",
+      "Process_RefreshMaterialized"
+    ],
     "Process_SwotAnalysis": [],
     "Process_TestPlanExecution": [
       "Process_QaReportSigning"
@@ -349,19 +362,6 @@
       "Process_OptionsAnalysis"
     ],
     "Process_DeepDocumentResearch": [],
-    "Process_CopyOutMaterialized": [],
-    "Process_MaterializeRemote": [],
-    "Process_RefreshMaterialized": [
-      "Process_Adjudication"
-    ],
-    "Process_SampleImport": [
-      "Process_MaterializeRemote",
-      "Process_RefreshMaterialized"
-    ],
-    "Process_SubscribeKg": [
-      "Process_MaterializeRemote",
-      "Process_RefreshMaterialized"
-    ],
     "Process_DIIG": [],
     "Process_L2Dak": []
   },
