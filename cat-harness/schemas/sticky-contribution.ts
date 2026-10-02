@@ -147,17 +147,27 @@ export function isExternalLink(link: StickyLink): boolean {
 /**
  * Where a contribution's body text comes from, when it is not written out.
  *
- * One member today, and an enum rather than a boolean so a second source can be
- * added without a second flag — `bodyFrom: "description"` reads better than
- * `useDescription: true` and leaves room for the next one to be named rather
- * than implied.
+ * An enum rather than a boolean so a source can be added without a second
+ * flag — `bodyFrom: "summary"` reads better than `useSummary: true`.
  *
- * **`description` is the DECLARING instance's description, not the root's.** That
- * is the whole point of a contribution: bootstrap's sticky carries bootstrap's
- * description, and cat-harness's carries cat-harness's. Reading the root's for
- * every layer would give a board of one sentence repeated.
+ * Both sources read the DECLARING instance, not the root's. That is the point
+ * of a contribution: bootstrap's sticky carries bootstrap's words, and
+ * cat-harness's carries cat-harness's. Reading the root's for every layer would
+ * give a board of one sentence repeated.
+ *
+ * - **`summary`** is the reader's text, the same text the landing page's
+ *   harness section shows: the declaration's `summary` (else its
+ *   `description`), then its `alsoWritten` spellings under "Also written".
+ *   See {@link readerText}. Use this one.
+ * - **`description`** is the declaration's `description` verbatim. A
+ *   description is written for an AUTHOR, so it can hold a naming rationale.
+ *   The owner's ruling on bean `ob3m` finding 3 (2026-10-01): a sticky shows
+ *   the same text as the landing page, never authoring notes. The member stays
+ *   because `bootstrap/bootstrap.json`, a pinned submodule, still declares it.
+ *   `landing:sticky:check` fails when it makes a card differ from the
+ *   reader's text, which happens as soon as that declaration gains a `summary`.
  */
-export const STICKY_BODY_SOURCES = ["description"] as const;
+export const STICKY_BODY_SOURCES = ["summary", "description"] as const;
 export type StickyBodySource = (typeof STICKY_BODY_SOURCES)[number];
 
 /**
@@ -444,6 +454,39 @@ export interface DeclaredContribution {
   declaredIn: string;
   /** The declaring instance's `description`, for `bodyFrom: "description"`. */
   description?: string;
+  /** The declaring instance's `summary`, for `bodyFrom: "summary"`. */
+  summary?: string;
+  /** The declaring instance's `alsoWritten`, for `bodyFrom: "summary"`. */
+  alsoWritten?: readonly string[];
+}
+
+/**
+ * The reader's text for a harness: the declaration's `summary` (else its
+ * `description`), then its other spellings under "Also written".
+ *
+ * **This is the landing page's rule, written once for the sticky board.** The
+ * landing's harness section (`docs/_includes/harness_details.html`) renders
+ * `t.summary | default: t.description` and then `Also written:` with each
+ * spelling in `<code>`. A sticky with `bodyFrom: "summary"` renders this, so
+ * the two surfaces read the same two declaration fields and agree. Before the
+ * owner's ruling on `ob3m` finding 3, a sticky read `description`, and the
+ * folio-assistant card showed why the instance was NAMED what it is.
+ *
+ * Returns `undefined` when neither field has words. The caller falls back to
+ * the instance's name.
+ */
+export function readerText(fields: {
+  summary?: string | undefined;
+  description?: string | undefined;
+  alsoWritten?: readonly string[] | undefined;
+}): string | undefined {
+  const has = (s: string | undefined): s is string => s !== undefined && s.trim().length > 0;
+  const line = has(fields.summary) ? fields.summary : has(fields.description) ? fields.description : undefined;
+  if (line === undefined) return undefined;
+  const also = (fields.alsoWritten ?? []).filter(has);
+  return also.length === 0
+    ? line
+    : `${line}\n\nAlso written: ${also.map((w) => `\`${w.trim()}\``).join(", ")}`;
 }
 
 /**

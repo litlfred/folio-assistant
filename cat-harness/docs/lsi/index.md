@@ -117,14 +117,14 @@ Each dimension is a **contrast** between two poles, shown by their highest-loadi
 
 | dim | σ | one pole | the other pole |
 |---|---|---|---|
-| 1 | 43.86 | instance, kind, harness, session, graph, directory, block, page | *(none)* |
-| 2 | 21.47 | watcher, slot, sibling, queue, backlog, prs, block, commits | harness, instance, declaration, directory, node, directories, graph, declares |
+| 1 | 43.87 | instance, kind, harness, session, graph, directory, block, page | *(none)* |
+| 2 | 21.48 | watcher, slot, sibling, queue, backlog, prs, block, commits | harness, instance, declaration, directory, node, directories, graph, declares |
 | 3 | 17.81 | session, beans, branch, goals, store, window, epic, push | slot, chapter, block, edges, formal, glossary, project, proof |
-| 4 | 16.45 | page, block, section, blocks, sections, chapter, manifest, text | ledger, sibling, subdirectory, items, sessions, queue, renderable, window |
-| 5 | 14.85 | locale, navbar, page, translated, translation, theme, staging, french | edges, forward, edge, logical, backward, cross-chapter, energy, ordering |
-| 6 | 14.77 | requirements, lane, role, actor, feature, phase, task, stakeholders | rung, queue, arm, slide, archive, zip, bytes, sniff |
+| 4 | 16.46 | page, block, section, text, blocks, sections, chapter, manifest | ledger, sibling, subdirectory, items, sessions, queue, renderable, relocation |
+| 5 | 14.86 | locale, navbar, page, translated, translation, theme, board, tile | edges, forward, edge, logical, backward, cross-chapter, energy, ordering |
+| 6 | 14.77 | requirements, lane, role, actor, feature, phase, task, stakeholders | rung, queue, arm, archive, slide, zip, sniff, bytes |
 | 7 | 14.40 | edges, forward, preview, backward, edge, cross-chapter, energy, logical | actor, lane, role, backlog, criterion, rung, login, roles |
-| 8 | 14.16 | locale, translation, translated, language, french, back-translation, glossary, term | tile, theme, avatar, card, board, stylesheet, sticky, crop |
+| 8 | 14.20 | tile, avatar, theme, card, board, sticky, crop, glass | translation, locale, language, translated, glossary, term, french, back-translation |
 
 **Findings** — 0 narrow dimension(s), 0 near-duplicate pair(s).
 
