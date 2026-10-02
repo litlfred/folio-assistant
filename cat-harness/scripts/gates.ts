@@ -495,6 +495,28 @@ export const STEP_EXEMPTIONS: StepExemption[] = [
     reason: "rewrites the built `_site` before a preview deploy; there is no `_site` in a checkout",
   },
   {
+    // Its last-in-the-pipeline sibling: drops the comments and the unrendered
+    // inter-tag whitespace from every emitted page. `ci-only` for the same
+    // reason — it takes `--site ./_site` — and for one more that is specific
+    // to it: the saving it reports is a fact about the BUILT tree, so a gate
+    // run in a checkout would have nothing to measure and would print 0.
+    //
+    // There IS a `--check` mode, and it is deliberately not gated: it reports
+    // what a build would save rather than passing or failing, so it is a
+    // measurement, not a verdict. The verdicts are elsewhere —
+    // `minify-site.test.ts` holds the equivalence rules (verbatim regions
+    // untouched, word boundaries kept, the three comment classes that stay)
+    // and idempotency, and `bun run preview:site` builds a tree to run it on.
+    match: "minify-site.ts",
+    kind: "ci-only",
+    reason:
+      "takes `--site ./_site`: it minifies the BUILT tree as the last pass before a publish, and " +
+      "there is no `_site` in a checkout. Its equivalence rules and its idempotency are covered " +
+      "by minify-site.test.ts in `bun test`, and its ORDERING — after every check and rewrite " +
+      "that reads the built HTML, two of which decide whether a marker is inside a COMMENT " +
+      "(bean `ur84`) — by check:invocation-parity requiring both workflows to run it",
+  },
+  {
     match: "set-html-lang.ts",
     kind: "ci-only",
     reason:
