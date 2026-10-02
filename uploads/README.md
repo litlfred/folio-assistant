@@ -29,6 +29,9 @@ It is a high-level process: 5 of its steps are **call activities**, each handing
 
 | file | what it is | used by |
 |---|---|---|
+| [`9789240093362-eng.pdf`](9789240093362-eng.pdf) | a file |  |
+| [`9789240101197-eng.pdf`](9789240101197-eng.pdf) | a file |  |
+| [`9789240116191-eng.pdf`](9789240116191-eng.pdf) | a file |  |
 | [`ChatGPT-Image-Sep-20-2026-03_33_23-PM.png`](ChatGPT-Image-Sep-20-2026-03_33_23-PM.png) | a file |  |
 | [`ChatGPT-Image-Sep-20-2026-03_33_28-PM.png`](ChatGPT-Image-Sep-20-2026-03_33_28-PM.png) | a file |  |
 | [`ChatGPT-Image-Sep-20-2026-03_35_27-PM.png`](ChatGPT-Image-Sep-20-2026-03_35_27-PM.png) | a file |  |
@@ -42,6 +45,7 @@ It is a high-level process: 5 of its steps are **call activities**, each handing
 | [`ChatGPT-Image-Sep-20-2026-11_58_08-AM.png`](ChatGPT-Image-Sep-20-2026-11_58_08-AM.png) | a file |  |
 | [`Home-_-folio-assistant.pdf`](Home-_-folio-assistant.pdf) | a file |  |
 | [`d1a26515-9bde-455d-84bc-2e5fc196b004.png`](d1a26515-9bde-455d-84bc-2e5fc196b004.png) | a file |  |
+| [`draft-for-public-comments_-reference-architecture-for-digital-public-infrastructure-for-health-guidance.pdf`](draft-for-public-comments_-reference-architecture-for-digital-public-infrastructure-for-health-guidance.pdf) | a file |  |
 | [`ihris_admin_handbook_sep_17_2010.pdf`](ihris_admin_handbook_sep_17_2010.pdf) | a file |  |
 | [`skills-in-openai-api-notebook/`](skills-in-openai-api-notebook/) | 2 files | |
 <!-- kg:subgraph:end -->
