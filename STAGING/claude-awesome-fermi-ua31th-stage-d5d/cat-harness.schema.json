@@ -534,6 +534,13 @@
                   "held"
                 ]
               },
+              "heldEntries": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "minLength": 1
+                }
+              },
               "visualisedAs": {
                 "type": "string",
                 "enum": [
@@ -1022,8 +1029,8 @@
   "$comment": "Instance graph: https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th-stage-d5d/cat-harness.jsonld",
   "staging": {
     "branch": "claude/awesome-fermi-ua31th-stage-d5d",
-    "sha": "1ff2bc95279eb7b29fb56dcdd0975957ed59b3ae",
+    "sha": "31b1890e833670af3da38294317add27099c7614",
     "pr": "1830/merge",
-    "run": "36980717432"
+    "run": "36987289968"
   }
 }
