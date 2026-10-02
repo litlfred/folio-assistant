@@ -3,9 +3,10 @@
 title: 'Content JSON-LD: stop relying on @base from the remote context (JSON-LD 1.1 §4.1.3)'
 status: todo
 type: task
+priority: normal
 parent: folio-assistant-scfh
 created_at: 2026-10-01T18:30:16Z
-updated_at: 2026-10-01T18:30:16Z
+updated_at: 2026-10-01T18:33:37Z
 ---
 
 ## Why
@@ -18,6 +19,10 @@ Voice rule `ld-no-base-in-a-remote-context` (folio-assistant-core/skills/voices/
 2. Put `@base` in each document's own (embedded) context, beside the remote URL.
 
 ## Done when
-- [ ] owner picks 1 or 2
+- [x] owner picks 1 or 2 (option 2, 2026-10-01)
 - [ ] emitter changed; a strict-1.1 expansion test (document loaded from a foreign URL) gives the same IRIs
 - [ ] regen fixed point; CI green
+
+
+## 2026-10-01 — owner ruled: option 2
+Put `@base` in each document's own (embedded) context beside the remote URL — the same shape schemas/prov-jsonld.ts already emits.

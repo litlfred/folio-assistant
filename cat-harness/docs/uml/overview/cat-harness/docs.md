@@ -237,6 +237,7 @@ classDiagram
       uploadInstance [1] string
       referencedBy [0..*] ReferencedBy[]
       withheld [0..1] string
+      withheldBy [0..1] object
       avatar [0..1] object
       summaries [0..1] object
     }

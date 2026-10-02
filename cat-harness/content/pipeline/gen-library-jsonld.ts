@@ -69,7 +69,7 @@
 
 import { existsSync, mkdirSync, readdirSync, readFileSync, rmSync, statSync, writeFileSync } from "fs";
 import { basename, dirname, join } from "path";
-import { CONTENT_CONTEXT_URL, typesForKind } from "../../schemas/jsonld";
+import { CONTENT_DOCUMENT_CONTEXT, typesForKind } from "../../schemas/jsonld";
 import { LABEL_PREFIXES } from "../../schemas/constraints";
 import { findContentRepoRoot } from "./repo-root";
 import type { DocumentImage, ImagesSidecar } from "../../schemas/document-image.ts";
@@ -384,7 +384,7 @@ export function buildDocumentNodes(
 
 /** Serialise, dropping undefined so output is byte-stable. */
 function node(doc: Record<string, unknown>): string {
-  const clean: Record<string, unknown> = { "@context": CONTENT_CONTEXT_URL };
+  const clean: Record<string, unknown> = { "@context": CONTENT_DOCUMENT_CONTEXT };
   for (const [k, v] of Object.entries(doc)) {
     if (v === undefined) continue;
     if (Array.isArray(v) && v.length === 0) continue;
@@ -599,7 +599,7 @@ export function buildEntryNodes(docId: string, dir: string): EntryOutcome {
     }>(join(dir, "referenced.json"));
     if (!record?.source?.sha256) return { state: "unreadable", rung };
     const manifest = {
-      "@context": CONTENT_CONTEXT_URL,
+      "@context": CONTENT_DOCUMENT_CONTEXT,
       "@id": docIri(docId, "manifest"),
       "@type": ["folio-assistant-core:SourceDocument"],
       title: record.identity?.title ?? docId,

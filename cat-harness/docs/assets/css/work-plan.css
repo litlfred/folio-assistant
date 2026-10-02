@@ -418,9 +418,14 @@ a.fa-workplan-bean-link { text-decoration: underline; text-underline-offset: 0.1
   background: var(--fa-wp-track, rgba(255,255,255,0.08));
   color: var(--fa-wp-ink);
 }
+/* The selected chip INVERTS: ink ground, surface lettering. It read
+   `var(--fa-wp-bg, #0d0d0d)`, a property nothing defines, so the fallback
+   painted near-black text on the near-black ink of the light scheme and the
+   active chip showed as a blank black pill. The surface token is defined in
+   both schemes, so the inversion now holds in each by construction. */
 .fa-workplan-type-btn.is-active {
   background: var(--fa-wp-ink);
-  color: var(--fa-wp-bg, #0d0d0d);
+  color: var(--fa-wp-surface);
   border-color: var(--fa-wp-ink);
   font-weight: 600;
 }
@@ -428,6 +433,15 @@ a.fa-workplan-bean-link { text-decoration: underline; text-underline-offset: 0.1
   outline: 2px solid var(--fa-wp-ink);
   outline-offset: 2px;
 }
+
+/* When this page was built, from which commit, and how far main has moved
+   since. Muted ink: it qualifies every number below rather than being one. */
+.fa-workplan-stamp {
+  font-size: 0.8rem;
+  color: var(--fa-wp-ink-2);
+  margin: 0 0 1rem;
+}
+.fa-workplan-stamp code { font-size: 0.95em; }
 
 .fa-workplan-empty,
 .fa-workplan-fallback {

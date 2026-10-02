@@ -6,7 +6,6 @@ renders:
   - bootstrap/processes
   - cat-harness/processes
   - folio-assistant-core/processes
-  - large-datasets/processes
   - smart-base/methodologies/processes
   - smart-base/processes
 rendered-by: processes-viewer
@@ -182,7 +181,7 @@ The reverse of `<bootstrap.processes:skill ref>`, which is the join nothing else
 | [`kg-separation`](../reference/skill-instructions/kg-separation.html) | [`kg-separation.bpmn`](kg-separation.html) |
 | [`kg-subscription`](../reference/skill-instructions/kg-subscription.html) | [`subscribe-kg.bpmn`](subscribe-kg.html) |
 | [`kg-to-portal`](../reference/skill-instructions/kg-to-portal.html) | [`kg-to-portal.bpmn`](kg-to-portal.html) |
-| [`l2-dak-authoring`](../reference/skill-instructions/l2-dak-authoring.html) | [`l2-dak-authoring.bpmn`](l2-dak-authoring.html) |
+| [`l2-dak-authoring`](../reference/skill-instructions/l2-dak-authoring.html) | [`l3-fhir-pipeline.bpmn`](l3-fhir-pipeline.html), [`l2-dak-authoring.bpmn`](l2-dak-authoring.html) |
 | [`l3-fhir-authoring`](../reference/skill-instructions/l3-fhir-authoring.html) | [`ig-incremental-build.bpmn`](ig-incremental-build.html), [`l3-fhir-pipeline.bpmn`](l3-fhir-pipeline.html) |
 | [`latex-authoring`](../reference/skill-instructions/latex-authoring.html) | [`authoring-a-paper.bpmn`](authoring-a-paper.html) |
 | [`lean-formalization`](../reference/skill-instructions/lean-formalization.html) | [`authoring-a-paper.bpmn`](authoring-a-paper.html) |

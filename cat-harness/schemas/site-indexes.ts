@@ -27,6 +27,7 @@ import { z } from "zod";
 
 import { SUMMARY_STATUSES } from "./block-summary.js";
 import { TileCountsSchema } from "./tile-count.js";
+import { WithheldEntrySchema } from "./withheld.js";
 import { BeanIdSchema } from "./tool-types.js";
 import { ModelIdSchema } from "../../bootstrap-tools/schemas/model-registry.ts";
 
@@ -225,6 +226,18 @@ export const LibraryIndexEntrySchema = z
       .optional(),
     /** Why the entry is withheld (bean `cw35`/`mkao`): no avatar, no verbatim excerpt. */
     withheld: z.string().min(1).optional(),
+    /**
+     * The structured half of `withheld` (issue #1794): which gates refused,
+     * and the catalogue record — copied from `folio-withheld/v1`, so the same
+     * shapes, never restated.
+     */
+    withheldBy: z
+      .object({
+        gates: WithheldEntrySchema.shape.gates,
+        record: WithheldEntrySchema.shape.record,
+      })
+      .strict()
+      .optional(),
     avatar: z.object({ href: z.string(), src: z.string(), source: z.enum(["cover", "figure"]) }).strict().optional(),
     summaries: z
       .object({

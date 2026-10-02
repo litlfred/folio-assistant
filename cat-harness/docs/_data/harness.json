@@ -279,7 +279,7 @@
       "href": "/cat-harness/schemas/cat-harness/",
       "hidden": false,
       "icon": "schemas",
-      "count": 206,
+      "count": 191,
       "unit": "modules"
     },
     {
@@ -367,7 +367,7 @@
       "href": "/cat-harness/uploads/cat-harness/",
       "hidden": false,
       "icon": "uploads",
-      "count": 19,
+      "count": 16,
       "unit": "waiting"
     }
   ],
@@ -380,7 +380,6 @@
       "summary": "This repository as a working instance: the platform and the folios it hosts.",
       "footer": false,
       "needs": [
-        "agent-skills",
         "bootstrap",
         "bootstrap-tools",
         "cat-harness",
@@ -388,12 +387,9 @@
         "fhir-harness",
         "folio-assistant-core",
         "folio-assistant-sci",
-        "large-datasets",
         "smart-base",
-        "smart-dak",
         "smart-ig",
         "smart-immunizations",
-        "smart-l1",
         "smart-trust",
         "who-iris",
         "who-style-guide"
@@ -639,17 +635,17 @@
         {
           "id": "directories",
           "label": "declared directories",
-          "value": 5
+          "value": 4
         },
         {
           "id": "kinds",
           "label": "declared graph kinds",
-          "value": 5
+          "value": 4
         },
         {
           "id": "views",
           "label": "visualisations you can open",
-          "value": 1
+          "value": 2
         }
       ],
       "visualisations": [
@@ -663,15 +659,11 @@
         },
         {
           "kind": "fhir-artifact-index",
-          "readOnly": true,
-          "note": "no viewer yet"
+          "path": "/smart-trust/",
+          "readOnly": true
         },
         {
           "kind": "qa",
-          "note": "no viewer yet"
-        },
-        {
-          "kind": "themes",
           "note": "no viewer yet"
         }
       ],
@@ -707,18 +699,10 @@
           ],
           "where": "local",
           "path": "smart-trust/test/results/"
-        },
-        {
-          "id": "smart-trust-themes",
-          "kinds": [
-            "themes"
-          ],
-          "where": "local",
-          "path": "smart-trust/themes/"
         }
       ],
       "findings": [
-        "smart-trust: declares 4 graph(s) with no published viewer — code, fhir-artifact-index, qa, themes. Declared and not rendered is a gap, not a dead link.",
+        "smart-trust: declares 2 graph(s) with no published viewer — code, qa. Declared and not rendered is a gap, not a dead link.",
         "smart-trust: 1 graph(s) hold materialized content and are READ-ONLY — fhir-artifact-index. Readable, not editable here: copy one out to your own folio/ to work on it. Separate from whether a viewer is published.",
         "smart-trust: no avatar declared for this instance — showing the generic mark."
       ],
@@ -746,28 +730,34 @@
       "reads": "a question mark — no avatar is declared for this kind",
       "genericAvatar": true,
       "instantiated": false,
+      "href": "/smart-immunizations/",
+      "hrefKind": "folio",
       "stats": [
         {
           "id": "directories",
           "label": "declared directories",
-          "value": 2
+          "value": 3
         },
         {
           "id": "kinds",
           "label": "declared graph kinds",
-          "value": 2
+          "value": 3
         },
         {
           "id": "views",
           "label": "visualisations you can open",
-          "value": 0
+          "value": 2
         }
       ],
       "visualisations": [
         {
+          "kind": "docs",
+          "path": "/cat-harness/docs-auto/index/docs/smart-immunizations-docs/"
+        },
+        {
           "kind": "fhir-artifact-index",
-          "readOnly": true,
-          "note": "no viewer yet"
+          "path": "/smart-immunizations/",
+          "readOnly": true
         },
         {
           "kind": "qa",
@@ -775,6 +765,14 @@
         }
       ],
       "subgraphs": [
+        {
+          "id": "smart-immunizations-docs",
+          "kinds": [
+            "docs"
+          ],
+          "where": "local",
+          "path": "smart-immunizations/docs/"
+        },
         {
           "id": "smart-immunizations-artifact-index",
           "kinds": [
@@ -793,70 +791,9 @@
         }
       ],
       "findings": [
-        "smart-immunizations: declares 2 graph(s) with no published viewer — fhir-artifact-index, qa. Declared and not rendered is a gap, not a dead link.",
+        "smart-immunizations: declares 1 graph(s) with no published viewer — qa. Declared and not rendered is a gap, not a dead link.",
         "smart-immunizations: 1 graph(s) hold materialized content and are READ-ONLY — fhir-artifact-index. Readable, not editable here: copy one out to your own folio/ to work on it. Separate from whether a viewer is published.",
         "smart-immunizations: no avatar declared for this instance — showing the generic mark."
-      ],
-      "navbarIcons": [
-        "close",
-        "todos",
-        "beans",
-        "processes",
-        "kg",
-        "launcher"
-      ]
-    },
-    {
-      "name": "smart-l1",
-      "title": "SMART L1",
-      "label": "SMART L1",
-      "description": "The narrative layer of WHO SMART Guidelines — the guideline text, recommendations and evidence a Digital Adaptation Kit is written from.",
-      "footer": false,
-      "needs": [
-        "smart-base"
-      ],
-      "icon": null,
-      "tone": 0,
-      "toneFrom": "avatar",
-      "reads": "a question mark — no avatar is declared for this kind",
-      "genericAvatar": true,
-      "instantiated": false,
-      "stats": [
-        {
-          "id": "directories",
-          "label": "declared directories",
-          "value": 1
-        },
-        {
-          "id": "kinds",
-          "label": "declared graph kinds",
-          "value": 1
-        },
-        {
-          "id": "views",
-          "label": "visualisations you can open",
-          "value": 0
-        }
-      ],
-      "visualisations": [
-        {
-          "kind": "qa",
-          "note": "no viewer yet"
-        }
-      ],
-      "subgraphs": [
-        {
-          "id": "qa",
-          "kinds": [
-            "qa"
-          ],
-          "where": "local",
-          "path": "smart-l1/test/results/"
-        }
-      ],
-      "findings": [
-        "smart-l1: declares 1 graph(s) with no published viewer — qa. Declared and not rendered is a gap, not a dead link.",
-        "smart-l1: no avatar declared for this instance — showing the generic mark."
       ],
       "navbarIcons": [
         "close",
@@ -918,67 +855,6 @@
       "findings": [
         "smart-ig: declares 1 graph(s) with no published viewer — qa. Declared and not rendered is a gap, not a dead link.",
         "smart-ig: no avatar declared for this instance — showing the generic mark."
-      ],
-      "navbarIcons": [
-        "close",
-        "todos",
-        "beans",
-        "processes",
-        "kg",
-        "launcher"
-      ]
-    },
-    {
-      "name": "smart-dak",
-      "title": "SMART DAK",
-      "label": "SMART DAK",
-      "description": "The L2 layer — Digital Adaptation Kit components and the authoring transforms over them. The harness every WHO SMART DAK instantiates.",
-      "footer": false,
-      "needs": [
-        "smart-base"
-      ],
-      "icon": null,
-      "tone": 0,
-      "toneFrom": "avatar",
-      "reads": "a question mark — no avatar is declared for this kind",
-      "genericAvatar": true,
-      "instantiated": false,
-      "stats": [
-        {
-          "id": "directories",
-          "label": "declared directories",
-          "value": 1
-        },
-        {
-          "id": "kinds",
-          "label": "declared graph kinds",
-          "value": 1
-        },
-        {
-          "id": "views",
-          "label": "visualisations you can open",
-          "value": 0
-        }
-      ],
-      "visualisations": [
-        {
-          "kind": "qa",
-          "note": "no viewer yet"
-        }
-      ],
-      "subgraphs": [
-        {
-          "id": "qa",
-          "kinds": [
-            "qa"
-          ],
-          "where": "local",
-          "path": "smart-dak/test/results/"
-        }
-      ],
-      "findings": [
-        "smart-dak: declares 1 graph(s) with no published viewer — qa. Declared and not rendered is a gap, not a dead link.",
-        "smart-dak: no avatar declared for this instance — showing the generic mark."
       ],
       "navbarIcons": [
         "close",
@@ -1098,17 +974,17 @@
         {
           "id": "directories",
           "label": "declared directories",
-          "value": 9
+          "value": 12
         },
         {
           "id": "kinds",
           "label": "declared graph kinds",
-          "value": 8
+          "value": 11
         },
         {
           "id": "views",
           "label": "visualisations you can open",
-          "value": 5
+          "value": 7
         }
       ],
       "visualisations": [
@@ -1117,9 +993,17 @@
           "path": "/cat-harness/docs-auto/index/docs/smart-base-docs/"
         },
         {
-          "kind": "fhir-artifact-index",
-          "readOnly": true,
+          "kind": "document-kinds",
+          "path": "/cat-harness/document-kinds/smart-base/"
+        },
+        {
+          "kind": "external-schema",
           "note": "no viewer yet"
+        },
+        {
+          "kind": "fhir-artifact-index",
+          "path": "/smart-base/",
+          "readOnly": true
         },
         {
           "kind": "library",
@@ -1135,6 +1019,10 @@
         },
         {
           "kind": "qa",
+          "note": "no viewer yet"
+        },
+        {
+          "kind": "themes",
           "note": "no viewer yet"
         },
         {
@@ -1212,6 +1100,30 @@
           "path": "smart-base/test/results/"
         },
         {
+          "id": "smart-base-themes",
+          "kinds": [
+            "themes"
+          ],
+          "where": "local",
+          "path": "smart-base/themes/"
+        },
+        {
+          "id": "smart-base-document-kinds",
+          "kinds": [
+            "document-kinds"
+          ],
+          "where": "local",
+          "path": "smart-base/document-kinds/"
+        },
+        {
+          "id": "smart-base-external-schemas",
+          "kinds": [
+            "external-schema"
+          ],
+          "where": "local",
+          "path": "smart-base/external-schemas/"
+        },
+        {
           "id": "voices",
           "kinds": [
             "voices"
@@ -1221,8 +1133,9 @@
         }
       ],
       "findings": [
-        "smart-base: declares 3 graph(s) with no published viewer — fhir-artifact-index, qa, tools. Declared and not rendered is a gap, not a dead link.",
-        "smart-base: 1 graph(s) hold materialized content and are READ-ONLY — fhir-artifact-index. Readable, not editable here: copy one out to your own folio/ to work on it. Separate from whether a viewer is published."
+        "smart-base: declares 4 graph(s) with no published viewer — external-schema, qa, themes, tools. Declared and not rendered is a gap, not a dead link.",
+        "smart-base: 1 graph(s) hold materialized content and are READ-ONLY — fhir-artifact-index. Readable, not editable here: copy one out to your own folio/ to work on it. Separate from whether a viewer is published.",
+        "smart-base: a viewer is published at /cat-harness/schemas/smart-base/ for a \"schemas\" graph this instance does not declare. Declare it and the tile links it."
       ],
       "navbarIcons": [
         "close",
@@ -1885,52 +1798,6 @@
       ]
     },
     {
-      "name": "large-datasets",
-      "title": "large-datasets",
-      "label": "large-datasets",
-      "description": "Taking a subset of a corpus you will never hold — and publishing artifacts too big for the site that describes them.",
-      "footer": false,
-      "needs": [
-        "cat-harness"
-      ],
-      "icon": null,
-      "tone": 0,
-      "toneFrom": "avatar",
-      "reads": "a question mark — no avatar is declared for this kind",
-      "genericAvatar": true,
-      "instantiated": false,
-      "stats": [
-        {
-          "id": "directories",
-          "label": "declared directories",
-          "value": 0
-        },
-        {
-          "id": "kinds",
-          "label": "declared graph kinds",
-          "value": 0
-        },
-        {
-          "id": "views",
-          "label": "visualisations you can open",
-          "value": 0
-        }
-      ],
-      "visualisations": [],
-      "subgraphs": [],
-      "findings": [
-        "large-datasets: no avatar declared for this instance — showing the generic mark."
-      ],
-      "navbarIcons": [
-        "close",
-        "todos",
-        "beans",
-        "processes",
-        "kg",
-        "launcher"
-      ]
-    },
-    {
       "name": "cat-harness-tools",
       "title": "C@T Harness Tools",
       "label": "C@T Harness Tools",
@@ -1950,7 +1817,7 @@
         {
           "id": "directories",
           "label": "declared directories",
-          "value": 4
+          "value": 5
         },
         {
           "id": "kinds",
@@ -1977,6 +1844,14 @@
           ],
           "where": "local",
           "path": "cat-harness-tools/adapters/"
+        },
+        {
+          "id": "cat-harness-tools-schemas",
+          "kinds": [
+            "code"
+          ],
+          "where": "local",
+          "path": "cat-harness-tools/schemas/"
         },
         {
           "id": "cat-harness-tools-scripts",
@@ -2006,67 +1881,6 @@
       "findings": [
         "cat-harness-tools: declares 1 graph(s) with no published viewer — code. Declared and not rendered is a gap, not a dead link.",
         "cat-harness-tools: no avatar declared for this instance — showing the generic mark."
-      ],
-      "navbarIcons": [
-        "close",
-        "todos",
-        "beans",
-        "processes",
-        "kg",
-        "launcher"
-      ]
-    },
-    {
-      "name": "agent-skills",
-      "title": "agent-skills",
-      "label": "agent-skills",
-      "description": "Published guidance on authoring and operating agent skills — vendor documentation and peer-reviewed evidence — and the voices derived from it.",
-      "footer": false,
-      "needs": [
-        "cat-harness"
-      ],
-      "icon": null,
-      "tone": 0,
-      "toneFrom": "avatar",
-      "reads": "a question mark — no avatar is declared for this kind",
-      "genericAvatar": true,
-      "instantiated": false,
-      "stats": [
-        {
-          "id": "directories",
-          "label": "declared directories",
-          "value": 1
-        },
-        {
-          "id": "kinds",
-          "label": "declared graph kinds",
-          "value": 1
-        },
-        {
-          "id": "views",
-          "label": "visualisations you can open",
-          "value": 0
-        }
-      ],
-      "visualisations": [
-        {
-          "kind": "voices",
-          "note": "no viewer yet"
-        }
-      ],
-      "subgraphs": [
-        {
-          "id": "voices",
-          "kinds": [
-            "voices"
-          ],
-          "where": "local",
-          "path": "agent-skills/skills/voices/"
-        }
-      ],
-      "findings": [
-        "agent-skills: declares 1 graph(s) with no published viewer — voices. Declared and not rendered is a gap, not a dead link.",
-        "agent-skills: no avatar declared for this instance — showing the generic mark."
       ],
       "navbarIcons": [
         "close",
@@ -2866,12 +2680,6 @@
     ]
   },
   "releases": {
-    "agent-skills": {
-      "version": "0.1.0",
-      "major": null,
-      "agent": "",
-      "human": ""
-    },
     "bootstrap": {
       "version": "0.1.0",
       "major": 0,
@@ -2920,19 +2728,7 @@
       "agent": "",
       "human": ""
     },
-    "large-datasets": {
-      "version": "0.1.0",
-      "major": null,
-      "agent": "",
-      "human": ""
-    },
     "smart-base": {
-      "version": "0.1.0",
-      "major": null,
-      "agent": "",
-      "human": ""
-    },
-    "smart-dak": {
       "version": "0.1.0",
       "major": null,
       "agent": "",
@@ -2945,12 +2741,6 @@
       "human": ""
     },
     "smart-immunizations": {
-      "version": "0.1.0",
-      "major": null,
-      "agent": "",
-      "human": ""
-    },
-    "smart-l1": {
       "version": "0.1.0",
       "major": null,
       "agent": "",
@@ -3343,7 +3133,7 @@
           },
           {
             "key": "needs",
-            "summary": "agent-skills, bootstrap, bootstrap-tools, cat-harness, cat-harness-tools, fhir-harness, f…"
+            "summary": "bootstrap, bootstrap-tools, cat-harness, cat-harness-tools, fhir-harness, folio-assistant…"
           },
           {
             "key": "version",
@@ -3381,7 +3171,7 @@
           },
           {
             "key": "directories",
-            "summary": "5: smart-trust-artifact-index, smart-trust-docs, smart-trust-scripts, qa, smart-trust-themes"
+            "summary": "4: smart-trust-artifact-index, smart-trust-docs, smart-trust-scripts, qa"
           },
           {
             "key": "stickies",
@@ -3427,57 +3217,11 @@
           },
           {
             "key": "directories",
-            "summary": "2: smart-immunizations-artifact-index, qa"
+            "summary": "3: smart-immunizations-docs, smart-immunizations-artifact-index, qa"
           },
           {
             "key": "needs",
             "summary": "smart-ig"
-          },
-          {
-            "key": "version",
-            "summary": "0.1.0"
-          }
-        ]
-      },
-      {
-        "name": "smart-l1",
-        "title": "SMART L1",
-        "group": "checkout",
-        "declaredIn": "smart-l1/smart-l1.json",
-        "viewHref": "https://github.com/litlfred/folio-assistant/blob/main/smart-l1/smart-l1.json",
-        "editHref": "https://github.com/litlfred/folio-assistant/edit/main/smart-l1/smart-l1.json",
-        "declared": [
-          {
-            "key": "name",
-            "summary": "smart-l1"
-          },
-          {
-            "key": "title",
-            "summary": "SMART L1"
-          },
-          {
-            "key": "description",
-            "summary": "The narrative layer of WHO SMART Guidelines — the guideline text, recommendations and evi…"
-          },
-          {
-            "key": "assets",
-            "summary": "2: agent-instructions, instance-readme"
-          },
-          {
-            "key": "repository",
-            "summary": "litlfred/smart-l1"
-          },
-          {
-            "key": "livesAt",
-            "summary": "{ repository, path }"
-          },
-          {
-            "key": "directories",
-            "summary": "1: qa"
-          },
-          {
-            "key": "needs",
-            "summary": "smart-base"
           },
           {
             "key": "version",
@@ -3512,52 +3256,6 @@
           {
             "key": "repository",
             "summary": "litlfred/smart-ig"
-          },
-          {
-            "key": "livesAt",
-            "summary": "{ repository, path }"
-          },
-          {
-            "key": "directories",
-            "summary": "1: qa"
-          },
-          {
-            "key": "needs",
-            "summary": "smart-base"
-          },
-          {
-            "key": "version",
-            "summary": "0.1.0"
-          }
-        ]
-      },
-      {
-        "name": "smart-dak",
-        "title": "SMART DAK",
-        "group": "checkout",
-        "declaredIn": "smart-dak/smart-dak.json",
-        "viewHref": "https://github.com/litlfred/folio-assistant/blob/main/smart-dak/smart-dak.json",
-        "editHref": "https://github.com/litlfred/folio-assistant/edit/main/smart-dak/smart-dak.json",
-        "declared": [
-          {
-            "key": "name",
-            "summary": "smart-dak"
-          },
-          {
-            "key": "title",
-            "summary": "SMART DAK"
-          },
-          {
-            "key": "description",
-            "summary": "The L2 layer — Digital Adaptation Kit components and the authoring transforms over them. …"
-          },
-          {
-            "key": "assets",
-            "summary": "2: agent-instructions, instance-readme"
-          },
-          {
-            "key": "repository",
-            "summary": "litlfred/smart-dak"
           },
           {
             "key": "livesAt",
@@ -3657,7 +3355,7 @@
           },
           {
             "key": "directories",
-            "summary": "8: smart-base-docs, library, methodologies, processes, smart-base-house-processes, smart-bas…"
+            "summary": "11: smart-base-docs, library, methodologies, processes, smart-base-house-processes, smart-bas…"
           },
           {
             "key": "needs",
@@ -3882,44 +3580,6 @@
         ]
       },
       {
-        "name": "large-datasets",
-        "title": "large-datasets",
-        "group": "checkout",
-        "declaredIn": "large-datasets/large-datasets.json",
-        "viewHref": "https://github.com/litlfred/folio-assistant/blob/main/large-datasets/large-datasets.json",
-        "editHref": "https://github.com/litlfred/folio-assistant/edit/main/large-datasets/large-datasets.json",
-        "declared": [
-          {
-            "key": "name",
-            "summary": "large-datasets"
-          },
-          {
-            "key": "description",
-            "summary": "Taking a subset of a corpus you will never hold — and publishing artifacts too big for th…"
-          },
-          {
-            "key": "assets",
-            "summary": "2: agent-instructions, readme"
-          },
-          {
-            "key": "repository",
-            "summary": "litlfred/large-datasets"
-          },
-          {
-            "key": "livesAt",
-            "summary": "{ repository, path }"
-          },
-          {
-            "key": "needs",
-            "summary": "cat-harness"
-          },
-          {
-            "key": "version",
-            "summary": "0.1.0"
-          }
-        ]
-      },
-      {
         "name": "cat-harness-tools",
         "title": "C@T Harness Tools",
         "group": "checkout",
@@ -3957,7 +3617,7 @@
           },
           {
             "key": "directories",
-            "summary": "4: cat-harness-tools-adapters, cat-harness-tools-scripts, cat-harness-tools-id-lookup, cat-h…"
+            "summary": "5: cat-harness-tools-adapters, cat-harness-tools-schemas, cat-harness-tools-scripts, cat-har…"
           },
           {
             "key": "needs",
@@ -3966,44 +3626,6 @@
           {
             "key": "liquid",
             "summary": "{ prefix, passThrough }"
-          },
-          {
-            "key": "version",
-            "summary": "0.1.0"
-          }
-        ]
-      },
-      {
-        "name": "agent-skills",
-        "title": "agent-skills",
-        "group": "checkout",
-        "declaredIn": "agent-skills/agent-skills.json",
-        "viewHref": "https://github.com/litlfred/folio-assistant/blob/main/agent-skills/agent-skills.json",
-        "editHref": "https://github.com/litlfred/folio-assistant/edit/main/agent-skills/agent-skills.json",
-        "declared": [
-          {
-            "key": "name",
-            "summary": "agent-skills"
-          },
-          {
-            "key": "description",
-            "summary": "Published guidance on authoring and operating agent skills — vendor documentation and pee…"
-          },
-          {
-            "key": "assets",
-            "summary": "2: agent-instructions, readme"
-          },
-          {
-            "key": "repository",
-            "summary": "litlfred/agent-skills"
-          },
-          {
-            "key": "livesAt",
-            "summary": "{ repository, path }"
-          },
-          {
-            "key": "needs",
-            "summary": "cat-harness"
           },
           {
             "key": "version",

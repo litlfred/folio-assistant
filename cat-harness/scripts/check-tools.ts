@@ -30,7 +30,7 @@
  * @covers tools, skills
  */
 import { existsSync, readFileSync } from "node:fs";
-import { dirname, join, resolve } from "node:path";
+import { dirname, join, relative, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 
 import { tools, toolsOf } from "../tools/discover.js";
@@ -40,6 +40,8 @@ import { toJsonSchema } from "../schemas/to-json-schema.js";
 import { contractFile, skillContracts } from "./skill-contracts.js";
 import { corpusScopeFor, knownSkills as knownSkillsIn, workflowFiles } from "./known-skills.js";
 import { instanceRootsIn, repoRootFor } from "../schemas/cat-harness.js";
+import { resolveImplementingPath } from "../schemas/harness-config.js";
+import type { ToolDefinition } from "../schemas/tool.js";
 
 /**
  * THIS INSTANCE'S OWN `schemas` directory, or the convention.
@@ -112,7 +114,15 @@ const REPO = join(ROOT, "..");
  * | field | resolved against | why |
  * |---|---|---|
  * | `invoke.shell` | the **repository** | it is a command a caller types, and `package.json` and `.github/` are at the repo root |
- * | `invoke.*.module` | the **instance** | it is loaded by this instance's own server, and matches `maintains.source` |
+ * | `invoke.*.module` | the **declaring instance**, then the one instance that **implements** it | it is loaded by the implementing instance's server, and matches `maintains.source` |
+ *
+ * "Implements" is owner ruling T1 (2026-10-01, bean `70lx`): the definitions
+ * stay in the harness and the code moves to the layer above, so a module path
+ * stays as written (`src/tools/x.ts`) and is found in the instance whose own
+ * `needs` names the declarer — `resolveImplementingPath` in
+ * `schemas/harness-config.ts`. Writing the implementer's name into the path
+ * instead would be the harness naming a layer above it. Two implementers
+ * holding the same path is reported, never resolved by order.
  *
  * Getting that backwards would have "fixed" twenty correct paths. The `module`
  * field's own docstring said *"Repo-relative"* while giving `src/tools/workflow.ts`
@@ -130,7 +140,15 @@ export function unresolvedPaths(
   // `REPO` stays the checkout either way: an `invoke` path is repo-relative
   // whichever instance declared the Tool, so narrowing the tool SET must not
   // narrow where its paths are resolved.
-  for (const t of toolsFor(instance)) {
+  //
+  // A `module`, by contrast, is resolved against the instance that DECLARED
+  // the Tool, and then against the instance that implements it — so the Tools
+  // are read per declaring instance rather than as one flat list.
+  const roots = instance === undefined ? instanceRootsIn(REPO) : [instance];
+  const declared: Array<{ declaringRoot: string; t: ToolDefinition }> = roots.flatMap((r) =>
+    toolsOf(r).map((t) => ({ declaringRoot: resolve(r), t })),
+  );
+  for (const { declaringRoot, t } of declared) {
     const inv = t.invoke as Record<string, unknown> | undefined;
     if (!inv) continue;
 
@@ -148,8 +166,22 @@ export function unresolvedPaths(
     for (const arm of ["inProcess", "container", "mcp"]) {
       const a = inv[arm] as { module?: unknown } | undefined;
       const mod = a && typeof a.module === "string" ? a.module : undefined;
-      if (mod !== undefined && !existsSync(join(ROOT, mod))) {
-        out.push({ field: `invoke.${arm}.module`, tool: t.id, value: mod, expected: `${mod} under the instance root` });
+      if (mod === undefined) continue;
+      const found = resolveImplementingPath(declaringRoot, mod);
+      if (found.state === "missing") {
+        out.push({
+          field: `invoke.${arm}.module`,
+          tool: t.id,
+          value: mod,
+          expected: `${mod} under the declaring instance or one instance that needs it (looked in ${found.looked.map((r) => relative(REPO, r) || ".").join(", ")})`,
+        });
+      } else if (found.state === "ambiguous") {
+        out.push({
+          field: `invoke.${arm}.module`,
+          tool: t.id,
+          value: mod,
+          expected: `exactly one implementing instance, but ${found.candidates.map((c) => c.name).join(" and ")} both hold ${mod}`,
+        });
       }
     }
   }
