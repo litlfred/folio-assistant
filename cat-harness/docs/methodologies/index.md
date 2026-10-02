@@ -36,8 +36,8 @@ the source that origin names is a separate question, and the one the third
 column answers.
 
 <div class="mv-grid">
-<div class="mv-stat"><b>24</b><span>adopted methodologies</span></div>
-<div class="mv-stat"><b>21</b><span>with the source held here</span></div>
+<div class="mv-stat"><b>25</b><span>adopted methodologies</span></div>
+<div class="mv-stat"><b>22</b><span>with the source held here</span></div>
 <div class="mv-stat"><b>3</b><span>cited, not ingested</span></div>
 <div class="mv-stat"><b>4</b><span>instance(s) declaring the graph</span></div>
 </div>
@@ -64,6 +64,7 @@ agent picks by resemblance, which is why the schema requires the field.
 | **[Latent Semantic Indexing — retrieve and relate by co-occurrence structure, not by shared words](#lsi)**<br>`lsi` | … | <span class="mv-tag mv-ingested">source held</span> | `cat-harness` |
 | **[MADR — Markdown Architectural Decision Records](#madr)**<br>`madr` | **Bean context** — the owner's binding, 2026-09-20. When a bean records a decision, this is the form. Not for the decision METHOD (see… | <span class="mv-tag mv-cited">cited, not ingested</span> | `cat-harness` |
 | **[Aggregation-type MCDM — an alternatives-criteria matrix collapsed to one score per alternative](#mcdm-aggregation)**<br>`mcdm-aggregation` | **A FIXED, FINITE set of alternatives is to be ranked against several explicit criteria, all known up front.** The input is an alternatives-criteria… | <span class="mv-tag mv-ingested">source held</span> | `cat-harness` |
+| **[Merge queue — land changes on a mainline that stays green, from three industrial studies](#merge-queue)**<br>`merge-queue` | **Deciding how changes that passed review are combined, tested and landed on a shared mainline**: how a batch (a "train") is composed, what happens w… | <span class="mv-tag mv-ingested">source held</span> | `cat-harness` |
 | **[ODRL 2.2 — what a party may do, as permission and prohibition rules over actions](#odrl-policies)**<br>`odrl-policies` | **What an actor may DO — may this party perform this action, here?** Use it when a grant or a refusal has to be written down so a machine can evaluat… | <span class="mv-tag mv-ingested">source held</span> | `cat-harness` |
 | **[Probabilistic decision-making algorithms — and what their regret bounds are claims ABOUT](#probabilistic-decision-analysis)**<br>`probabilistic-decision-analysis` | **The alternatives can be TRIED, repeatedly, and what you learn from one try changes what you should try next.** Bandits, Bayesian optimisation and t… | <span class="mv-tag mv-ingested">source held</span> | `cat-harness` |
 | **[Process-driven autoformalization — judge a formalised statement by compiling it WITH a proof, and read the first error as the step signal](#process-driven-autoformalization)**<br>`process-driven-autoformalization` | **A natural-language statement is being turned into a Lean statement and the question is how to test the candidate**, or… | <span class="mv-tag mv-ingested">source held</span> | `folio-assistant-sci` |
@@ -286,6 +287,22 @@ these.
 **Ingested sources:**
 
 - [`library/wang-rangaiah-2026-mcdm-aggregation`](../cat-harness/library/cat-harness/#cat-harness%2Fwang-rangaiah-2026-mcdm-aggregation) · [item page](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/library/wang-rangaiah-2026-mcdm-aggregation/README.md)
+
+### Merge queue — land changes on a mainline that stays green, from three industrial studies
+
+<a id="merge-queue"></a>
+
+`merge-queue` — declared by `cat-harness` — <span class="mv-tag mv-ingested">source held</span>
+
+**Applies when.** **Deciding how changes that passed review are combined, tested and landed on a shared mainline**: how a batch (a "train") is composed, what happens when it fails, and how a failing change is identified and returned. Not for whether a change is correct (that is review, and the gates of epic `nok9`), and not for how a conflict is resolved textually (that is the `merge-conflict-patterns` skill). Most of what the sources measure is at Uber or Google scale (hundreds of changes an hour, builds up to two hours). This repository merges about 40 PRs a day on a 6–8 minute CI, so each technique below carries a verdict for this scale and not only the paper's.
+
+**Origin.** Rendered from three ingested sources, all recorded rather than held (no licence printed on any of them permits a copy). Ananthanarayanan, Saeida Ardekani, Haenikel, Varadarajan, Soriano, Patel & Adl-Tabatabai (2019), "Keeping Master Green at Scale", EuroSys '19, ACM, doi:10.1145/3302424.3303970 — Uber's SubmitQueue, design and production evaluation. Juloori, Lin, Williams, Shin & Mahajan (2025), "CI at Scale: Lean, Green, and Fast", arXiv:2501.03440v2 — the follow-up to SubmitQueue at Uber. Memon, Gao, Nguyen, Dhanda, Nickell, Siemborski & Micco, "Taming Google-Scale Continuous Testing" — an empirical study of one month of Google TAP data. The PDF prints no venue or date; the 2019 paper cites it as ICSE-SEIP 2017, pp. 233–242.
+
+**Ingested sources:**
+
+- [`library/ananthanarayanan-2019-keeping-master-green`](../cat-harness/library/cat-harness/#cat-harness%2Fananthanarayanan-2019-keeping-master-green) · [item page](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/library/ananthanarayanan-2019-keeping-master-green/README.md)
+- [`library/arxiv-2501.03440v2`](../cat-harness/library/cat-harness/#cat-harness%2Farxiv-2501.03440v2) · [item page](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/library/arxiv-2501.03440v2/README.md)
+- [`library/memon-2017-taming-google-scale-testing`](../cat-harness/library/cat-harness/#cat-harness%2Fmemon-2017-taming-google-scale-testing) · [item page](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/library/memon-2017-taming-google-scale-testing/README.md)
 
 ### ODRL 2.2 — what a party may do, as permission and prohibition rules over actions
 
