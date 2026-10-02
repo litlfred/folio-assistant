@@ -14,6 +14,101 @@
       "dcterms:source": "Schema fields of fhir-harness"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/ns#glossary/kg-schema-fields/ig-ast.astmanifestschema.inputs",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "AstManifestSchema.inputs"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "What the AST is valid for, in `CompiledInputsSchema`'s shape."
+        }
+      ],
+      "dcterms:source": "fhir-harness/schemas/ig-ast.ts#AstManifestSchema.inputs",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/ns#glossary/kg-schema-fields/ig-ast.astmanifestschema.provisional",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "AstManifestSchema.provisional"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "What stays provisional until a full Publisher run."
+        }
+      ],
+      "dcterms:source": "fhir-harness/schemas/ig-ast.ts#AstManifestSchema.provisional",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/ns#glossary/kg-schema-fields/ig-ast.astresourceschema.builtat",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "AstResourceSchema.builtAt"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "On a merged (mixed-provenance) AST: the revision that built this resource."
+        }
+      ],
+      "dcterms:source": "fhir-harness/schemas/ig-ast.ts#AstResourceSchema.builtAt",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/ns#glossary/kg-schema-fields/ig-ast.astresourceschema.file",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "AstResourceSchema.file"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The resource's JSON file, relative to the AST directory."
+        }
+      ],
+      "dcterms:source": "fhir-harness/schemas/ig-ast.ts#AstResourceSchema.file",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/ns#glossary/kg-schema-fields/ig-ast.astresourceschema.source",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "AstResourceSchema.source"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The IG source file it was built from, where known."
+        }
+      ],
+      "dcterms:source": "fhir-harness/schemas/ig-ast.ts#AstResourceSchema.source",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/ns#glossary/kg-schema-fields/ig-chrome.igchromeconflictschema.kind",
       "@type": "skos:Concept",
       "skos:inScheme": {

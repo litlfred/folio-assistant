@@ -7,6 +7,41 @@
   "source": "Schema fields of fhir-harness",
   "terms": [
     {
+      "id": "ig-ast.astmanifestschema.inputs",
+      "prefLabel": "AstManifestSchema.inputs",
+      "definition": "What the AST is valid for, in `CompiledInputsSchema`'s shape.",
+      "source": "fhir-harness/schemas/ig-ast.ts#AstManifestSchema.inputs",
+      "status": "candidate"
+    },
+    {
+      "id": "ig-ast.astmanifestschema.provisional",
+      "prefLabel": "AstManifestSchema.provisional",
+      "definition": "What stays provisional until a full Publisher run.",
+      "source": "fhir-harness/schemas/ig-ast.ts#AstManifestSchema.provisional",
+      "status": "candidate"
+    },
+    {
+      "id": "ig-ast.astresourceschema.builtat",
+      "prefLabel": "AstResourceSchema.builtAt",
+      "definition": "On a merged (mixed-provenance) AST: the revision that built this resource.",
+      "source": "fhir-harness/schemas/ig-ast.ts#AstResourceSchema.builtAt",
+      "status": "candidate"
+    },
+    {
+      "id": "ig-ast.astresourceschema.file",
+      "prefLabel": "AstResourceSchema.file",
+      "definition": "The resource's JSON file, relative to the AST directory.",
+      "source": "fhir-harness/schemas/ig-ast.ts#AstResourceSchema.file",
+      "status": "candidate"
+    },
+    {
+      "id": "ig-ast.astresourceschema.source",
+      "prefLabel": "AstResourceSchema.source",
+      "definition": "The IG source file it was built from, where known.",
+      "source": "fhir-harness/schemas/ig-ast.ts#AstResourceSchema.source",
+      "status": "candidate"
+    },
+    {
       "id": "ig-chrome.igchromeconflictschema.kind",
       "prefLabel": "IgChromeConflictSchema.kind",
       "definition": "`shape` — the layers agree the token exists and disagree about what KIND of value it holds, so a consumer substituting one into the other's rule emits something invalid.",

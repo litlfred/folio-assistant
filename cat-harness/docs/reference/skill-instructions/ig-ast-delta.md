@@ -46,15 +46,33 @@ exists only in a log or a JSON field does not meet it.
 | `plan.json` (`ig-ast-plan/v1`) | `AstPlanCli` | what a delta of changed files means: rebuild, load from cache, remove, or a full build and why |
 | `delta.json` (`ig-ast-delta/v1`) | `ig-ast.ts diff` (here) | what changed between two ASTs |
 
+### The formats are declared once, and published as JSON Schema
+
+The three `ig-ast*` formats are declared in Zod in
+`fhir-harness/schemas/ig-ast.ts`, and `readAst` validates through it (bean
+`l0lq`). The JSON Schemas (draft-07) and a JSON-LD context are **generated**
+from that declaration and committed beside it:
+
+- `ig-ast.schema.json`
+- `ig-ast-dependencies.schema.json`
+- `ig-ast-plan.schema.json`
+- `ig-ast.context.jsonld`
+
+`bun run ig-ast:schema` regenerates them and `ig-ast:schema:check` is the CI
+gate. These are the files the Java writer, or any downstream consumer,
+validates against. Every object is open to fields the writer adds first;
+`authority` is the literal `"cache"`, and a manifest claiming anything else is
+refused.
+
 A resource's **key** is `canonical|version`, or `Type/id` when it has no
 canonical. Two ASTs are compared by key. **An incomplete AST is refused**: a
 missing `dependencies.json` or a missing or unparsable resource file stops
 the command, because an empty substitute would diff as "no change" (review on
 #1708).
 
-## Four commands
+## Commands
 
-All four live in `fhir-harness/scripts/ig-ast.ts`, and each is declared as a
+All of them live in `fhir-harness/scripts/ig-ast.ts`, and each is declared as a
 Tool:
 
 ```sh
@@ -62,6 +80,7 @@ bun run fhir-harness/scripts/ig-ast.ts list <ast>
 bun run fhir-harness/scripts/ig-ast.ts validity <ast> --ig <root> [--toolchain "<ig-publisher X / core Y>"]
 bun run fhir-harness/scripts/ig-ast.ts diff <base-ast> <head-ast> [--plan plan.json] [--json delta.json] [--site <dir>]
 bun run fhir-harness/scripts/ig-ast.ts render <delta.json> --site <dir>
+bun run fhir-harness/scripts/ig-ast.ts jsonld <ast> > ast.jsonld
 ```
 
 ### `validity`: is this AST still the IG I have?

@@ -55,6 +55,14 @@
       "status": "candidate"
     },
     {
+      "id": "ig-ast-jsonld",
+      "prefLabel": "Export an IG AST as JSON-LD",
+      "definition": "Write an AST as linked data against `fhir-harness/schemas/ig-ast.context.jsonld`: each resource a node identified by its canonical URL (`urn:fhir:<Type>/<id>` when it has none) and typed by its FHIR resource type, each dependency edge a link to its target, and the manifest's `authority: cache` and `provisional` list carried on the graph. The AST is validated against the Zod declaration the JSON Schemas are generated from before it is exported (bean `l0lq`).",
+      "notation": "ig-ast-jsonld",
+      "source": "fhir-harness/tools/index.ts#ig-ast-jsonld",
+      "status": "candidate"
+    },
+    {
       "id": "ig-ast-list",
       "prefLabel": "Summarise one IG AST",
       "definition": "Counts per resource type, edges in total and resolved inside the IG, edges by origin (upstream's DependencyAnalyser or ast-export's LogicEdges), whether the AST is mixed-provenance and how many resources each revision built, and what the manifest declares provisional.",

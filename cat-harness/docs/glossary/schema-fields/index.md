@@ -12,9 +12,9 @@ permalink: /glossary/schema-fields/
 
 Candidate terms extracted from every schema field with a doc comment: `<Declaration>.<field>` as the label, the comment's first paragraph as the definition. Each is the asset's own text, verbatim and not curated, and carries the badge "candidate, extracted". A person promotes one by authoring it. Authored terms, the counts and the sources are on the <a href="{{ '/glossary/' | relative_url }}">glossary index</a>.
 
-From: bootstrap-tools 28 (<a href="{{ '/assets/glossary/bootstrap-tools--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · cat-harness 1574 (<a href="{{ '/assets/glossary/cat-harness--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · fhir-harness 29 (<a href="{{ '/assets/glossary/fhir-harness--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · folio-assistant-core 158 (<a href="{{ '/assets/glossary/folio-assistant-core--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · large-datasets 18 (<a href="{{ '/assets/glossary/large-datasets--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>).
+From: bootstrap-tools 28 (<a href="{{ '/assets/glossary/bootstrap-tools--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · cat-harness 1574 (<a href="{{ '/assets/glossary/cat-harness--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · fhir-harness 34 (<a href="{{ '/assets/glossary/fhir-harness--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · folio-assistant-core 158 (<a href="{{ '/assets/glossary/folio-assistant-core--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · large-datasets 18 (<a href="{{ '/assets/glossary/large-datasets--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>).
 
-**Size:** this page holds 1807 terms and is 998 KB before compression, fetched in one request, within its budget of 1.0 MB. There is no search index: the filter below runs over this page, and the A–Z bar jumps within it.
+**Size:** this page holds 1812 terms and is 1001 KB before compression, fetched in one request, within its budget of 1.0 MB. There is no search index: the filter below runs over this page, and the A–Z bar jumps within it.
 
 <table class="fa-gloss-mapping">
 <caption>Already somebody else's concept? — <code>check:term-mapping</code>, bean <code>7wou</code></caption>
@@ -28,7 +28,7 @@ be a term this corpus is right to coin.</p>
 
 <label for="fa-gloss-q">Filter terms</label>
 <input id="fa-gloss-q" type="search" autocomplete="off" style="min-height:44px;width:100%;max-width:32rem">
-<p aria-live="polite"><span id="fa-gloss-n">1807</span> shown</p>
+<p aria-live="polite"><span id="fa-gloss-n">1812</span> shown</p>
 
 <nav aria-label="Letters"><a href="#letter-A">A</a> <a href="#letter-B">B</a> <a href="#letter-C">C</a> <a href="#letter-D">D</a> <a href="#letter-E">E</a> <a href="#letter-F">F</a> <a href="#letter-G">G</a> <a href="#letter-H">H</a> <a href="#letter-I">I</a> <a href="#letter-J">J</a> <a href="#letter-K">K</a> <a href="#letter-L">L</a> <a href="#letter-M">M</a> <a href="#letter-N">N</a> <a href="#letter-O">O</a> <a href="#letter-P">P</a> <a href="#letter-Q">Q</a> <a href="#letter-R">R</a> <a href="#letter-S">S</a> <a href="#letter-T">T</a> <a href="#letter-U">U</a> <a href="#letter-V">V</a> <a href="#letter-W">W</a></nav>
 
@@ -523,6 +523,41 @@ AssociatedHarness.url <span class="fa-gloss-status">candidate, extracted</span>
 <dd>
 <p>Where a reader goes: the harness's own published site.</p>
 <p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/cat-harness.ts"><code>cat-harness/schemas/cat-harness.ts#AssociatedHarness.url</code></a></p>
+</dd>
+<dt id="fhir-harness--kg-schema-fields--ig-ast.astmanifestschema.inputs" data-fa-state="extracted" data-fa-gloss="">
+AstManifestSchema.inputs <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>What the AST is valid for, in <code>CompiledInputsSchema</code>'s shape.</p>
+<p class="fa-gloss-meta">Schema fields of fhir-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/fhir-harness/schemas/ig-ast.ts"><code>fhir-harness/schemas/ig-ast.ts#AstManifestSchema.inputs</code></a></p>
+</dd>
+<dt id="fhir-harness--kg-schema-fields--ig-ast.astmanifestschema.provisional" data-fa-state="extracted" data-fa-gloss="">
+AstManifestSchema.provisional <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>What stays provisional until a full Publisher run.</p>
+<p class="fa-gloss-meta">Schema fields of fhir-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/fhir-harness/schemas/ig-ast.ts"><code>fhir-harness/schemas/ig-ast.ts#AstManifestSchema.provisional</code></a></p>
+</dd>
+<dt id="fhir-harness--kg-schema-fields--ig-ast.astresourceschema.builtat" data-fa-state="extracted" data-fa-gloss="">
+AstResourceSchema.builtAt <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>On a merged (mixed-provenance) AST: the revision that built this resource.</p>
+<p class="fa-gloss-meta">Schema fields of fhir-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/fhir-harness/schemas/ig-ast.ts"><code>fhir-harness/schemas/ig-ast.ts#AstResourceSchema.builtAt</code></a></p>
+</dd>
+<dt id="fhir-harness--kg-schema-fields--ig-ast.astresourceschema.file" data-fa-state="extracted" data-fa-gloss="">
+AstResourceSchema.file <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>The resource's JSON file, relative to the AST directory.</p>
+<p class="fa-gloss-meta">Schema fields of fhir-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/fhir-harness/schemas/ig-ast.ts"><code>fhir-harness/schemas/ig-ast.ts#AstResourceSchema.file</code></a></p>
+</dd>
+<dt id="fhir-harness--kg-schema-fields--ig-ast.astresourceschema.source" data-fa-state="extracted" data-fa-gloss="">
+AstResourceSchema.source <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>The IG source file it was built from, where known.</p>
+<p class="fa-gloss-meta">Schema fields of fhir-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/fhir-harness/schemas/ig-ast.ts"><code>fhir-harness/schemas/ig-ast.ts#AstResourceSchema.source</code></a></p>
 </dd>
 <dt id="cat-harness--kg-schema-fields--attribution.attribution.date" data-fa-state="extracted" data-fa-gloss="">
 Attribution.date <span class="fa-gloss-status">candidate, extracted</span>

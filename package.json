@@ -367,6 +367,8 @@
     "smart-trust:pages:check": "bun run fhir-harness/scripts/gen-ig-pages.ts --instance smart-trust --label \"WHO SMART Trust\" --chrome-owner smart-base --check",
     "smart-base:pages": "bun run fhir-harness/scripts/gen-ig-pages.ts --instance smart-base --label \"WHO SMART Base\" --chrome-owner smart-base --summary",
     "smart-base:pages:check": "bun run fhir-harness/scripts/gen-ig-pages.ts --instance smart-base --label \"WHO SMART Base\" --chrome-owner smart-base --summary --check",
+    "ig-ast:schema": "bun run fhir-harness/scripts/ig-ast.ts schema",
+    "ig-ast:schema:check": "bun run fhir-harness/scripts/ig-ast.ts schema --check",
     "p2:refusals": "bun run fhir-harness/scripts/p2-refusals.ts --instance smart-trust && bun run fhir-harness/scripts/p2-refusals.ts --instance smart-base",
     "p2:refusals:check": "bun run fhir-harness/scripts/p2-refusals.ts --instance smart-trust --check && bun run fhir-harness/scripts/p2-refusals.ts --instance smart-base --check",
     "stakeholder-map": "bun run cat-harness/scripts/stakeholder-map.ts",
