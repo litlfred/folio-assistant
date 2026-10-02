@@ -183,6 +183,10 @@ export const WRITER_OVERRIDES: Readonly<Record<string, string>> = {
   // Re-materialises a remote package's skills at its PINNED commit, so it is
   // deterministic and is exactly the repair for a stale copy.
   "check:remote-skills": "sync:remote-skills",
+  // Bean `v556`: the convention's `kg:export` writes the HOST's document and
+  // sidecar only, so a stale `kg-export.<stub>` sidecar would come back
+  // `unrepaired`. `--sidecars` rewrites exactly the set `--check` compares.
+  "kg:export:check": "kg:export:sidecars",
 };
 
 /**

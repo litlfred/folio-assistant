@@ -371,16 +371,89 @@ test.describe("kg viewer", () => {
 
   test("the interface is in English, because no catalogue is translated yet", async ({ page }) => {
     // The shipped state, asserted rather than assumed. Every
-    // translations/<locale>/kg-viewer.po carries all 38 msgids with an empty msgstr,
-    // so there is nothing to switch TO and no switcher is drawn: a control
-    // with one option is furniture.
+    // translations/<locale>/kg-viewer.po carries every msgid with an empty
+    // msgstr, so there is nothing to switch TO: English is the only choice.
     await page.goto(PAGE);
     await expect(page.locator("#facets-h")).toHaveText("Kind");
     await expect(page.locator("#list-h")).toHaveText("Nodes");
     await expect(page.locator("html")).toHaveAttribute("lang", "en");
-    await expect(page.locator("#langs")).toBeHidden();
+    await expect(page.locator('.lang:not(.planned)')).toHaveCount(1);
+    await expect(page.locator('.lang[lang="en"]')).toHaveAttribute("aria-pressed", "true");
     // No boundary note either: in English there is no boundary to draw.
     await expect(page.locator("#boundary")).toBeHidden();
+  });
+
+  /**
+   * Owner's ruling 2026-10-02 (issue #1838, bean w6fu): SHOW the switcher,
+   * disabled, so readers can see translations are planned.
+   *
+   * "Disabled" is asserted as an accessible state, not a colour: reachable by
+   * keyboard, announced as unavailable, with a reason a phone and a keyboard
+   * can both open. A greyed button with a hover tooltip would pass a
+   * screenshot and fail every one of those.
+   */
+  test("planned languages are shown disabled, with a reason you can open without a mouse", async ({ page }) => {
+    await page.goto(PAGE);
+    const planned = page.locator(".lang.planned");
+    await expect(planned).toHaveCount(5);
+    for (const loc of ["ar", "es", "fr", "ru", "zh"]) {
+      const b = page.locator(`.lang.planned[lang="${loc}"]`);
+      await expect(b).toHaveAttribute("aria-disabled", "true");
+      // aria-disabled rather than the disabled attribute: it stays in the tab order.
+      await expect(b).not.toHaveAttribute("disabled", /.*/);
+      await expect(b).toHaveAttribute("aria-describedby", "langs-why-s");
+    }
+    await expect(page.locator('.lang.planned[lang="ar"]')).toHaveAttribute("dir", "rtl");
+    await expect(page.locator('.lang.planned[lang="zh"]')).toHaveText("中文");
+
+    // The reason is VISIBLE, not hover-only, and is the description of every
+    // planned button.
+    const reason = page.locator("#langs-why-s");
+    await expect(reason).toBeVisible();
+    await expect(reason).toHaveText("Translations coming");
+    await expect(page.locator("#langs-why-t")).toBeHidden();
+
+    // Keyboard: focus a planned language and press it -- the explanation opens
+    // and focus lands on its toggle; nothing about the page's language changes.
+    await page.locator('.lang.planned[lang="fr"]').focus();
+    await page.keyboard.press("Enter");
+    await expect(page.locator("#langs-why-t")).toBeVisible();
+    await expect(page.locator("#langs-why-t")).toContainText("Français");
+    await expect(page.locator("#langs-why-t")).toContainText("shown in English");
+    await expect(reason).toBeFocused();
+    await expect(page.locator("html")).toHaveAttribute("lang", "en");
+    expect(new URL(page.url()).searchParams.get("lang")).toBeNull();
+
+    // ...and the toggle itself closes and reopens with the keyboard.
+    await page.keyboard.press("Enter");
+    await expect(page.locator("#langs-why-t")).toBeHidden();
+    await page.keyboard.press("Space");
+    await expect(page.locator("#langs-why-t")).toBeVisible();
+  });
+
+  test("the disabled switcher's targets clear 24px, and a tap opens the reason", async ({ page }) => {
+    // SC 2.5.8's floor is 24px; this instance's interaction profile is
+    // low-dexterity, so the switcher keeps the facets' 32px.
+    await page.setViewportSize({ width: 390, height: 844 });
+    await page.goto(PAGE);
+    await page.mouse.move(380, 830);
+    for (const t of await page.locator("#langs .lang, #langs-why-s").all()) {
+      const box = (await t.boundingBox())!;
+      expect(box.height).toBeGreaterThanOrEqual(24);
+      expect(box.width).toBeGreaterThanOrEqual(24);
+    }
+    // A tap on a planned language explains itself rather than doing nothing.
+    // `force`, because Playwright treats aria-disabled as "not enabled" and
+    // would wait forever -- which is exactly the state being tested. So the
+    // hit-test it would have done is done here: the button's centre is the
+    // button, not something drawn over it.
+    const es = page.locator('.lang.planned[lang="es"]');
+    const c = (await es.boundingBox())!;
+    expect(await page.evaluate(([x, y]) => document.elementFromPoint(x, y)?.getAttribute("lang"),
+      [c.x + c.width / 2, c.y + c.height / 2])).toBe("es");
+    await es.click({ force: true });
+    await expect(page.locator("#langs-why-t")).toBeVisible();
+    expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBeLessThanOrEqual(390);
   });
 
   test("asking for a language nobody has translated yet gets English, not a blank page", async ({ page }) => {
@@ -418,6 +491,10 @@ test.describe("kg viewer — with a catalogue", () => {
     await expect(page.locator(".lang").first()).toHaveText("English");
     await expect(page.locator('.lang[lang="qaa"]')).toHaveText("Qaa (fixture)");
     await expect(page.locator('.lang[lang="en"]')).toHaveAttribute("aria-pressed", "true");
+    // A catalogue WITH strings is a choice, never a planned language -- the
+    // enable-on-content path of bean w6fu, with no code change between them.
+    await expect(page.locator('.lang[lang="qaa"]')).not.toHaveAttribute("aria-disabled", /.*/);
+    await expect(page.locator('.lang.planned[lang="qaa"]')).toHaveCount(0);
   });
 
   test("choosing a language translates the chrome and turns the page", async ({ page }) => {

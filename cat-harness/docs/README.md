@@ -53,17 +53,17 @@ Part of [C@T Harness](../README.md) 0.1.0, declared as `docs`, holding `docs`.
 | [`external-schemas/`](external-schemas/) | 1 file | |
 | [`fr/`](fr/) | 14 files | |
 | [`fsh-guts/`](fsh-guts/) | 1 file | |
-| [`glossary/`](glossary/) | 6 files | |
+| [`glossary/`](glossary/) | 10 files | |
 | [`guides/`](guides/) | 14 files | |
 | [`health/`](health/) | 1 file | |
 | [`issue-marks/`](issue-marks/) | 1 file | |
 | [`lsi/`](lsi/) | 1 file | |
 | [`methodologies/`](methodologies/) | 1 file | |
 | [`processes/`](processes/) | 83 files | |
-| [`proposals/`](proposals/) | 29 files | |
+| [`proposals/`](proposals/) | 31 files | |
 | [`prov-qaqc/`](prov-qaqc/) | 1 file | |
 | [`qa/`](qa/) | 1 file | |
-| [`reference/`](reference/) | 324 files | |
+| [`reference/`](reference/) | 325 files | |
 | [`requirements/`](requirements/) | 1 file | |
 | [`research-and-analysis/`](research-and-analysis/) | 2 files | |
 | [`ru/`](ru/) | 14 files | |
@@ -75,6 +75,6 @@ Part of [C@T Harness](../README.md) 0.1.0, declared as `docs`, holding `docs`.
 | [`translation-status/`](translation-status/) | 1 file | |
 | [`uml/`](uml/) | 125 files | |
 | [`uploads/`](uploads/) | 1 file | |
-| [`wireframes/`](wireframes/) | 178 files | |
+| [`wireframes/`](wireframes/) | 192 files | |
 | [`zh/`](zh/) | 14 files | |
 <!-- kg:subgraph:end -->

@@ -1,5 +1,5 @@
 <!-- kg:subgraph:begin -->
-# JSON-LD 1.1 This version: Latest published version: Latest editor's draft: Test suite: Implementation report: Previous version: Previous Recommendation: Editors:
+# JSON-LD 1.1
 
 ingested source material — attributed to its document, not folio content
 
