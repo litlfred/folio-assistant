@@ -1,5 +1,10 @@
 {
-  "@context": "https://litlfred.github.io/folio-assistant/ns/content/v1.jsonld",
+  "@context": [
+    "https://litlfred.github.io/folio-assistant/ns/content/v1.jsonld",
+    {
+      "@base": "https://litlfred.github.io/folio/"
+    }
+  ],
   "@id": "site/guides/writing-a-document/nodes/what-a-document-folio-is",
   "@type": [
     "folio-assistant-core:Figure",
@@ -9,7 +14,7 @@
   "provenance": "authored",
   "title": "What a document folio is",
   "text": "what-a-document-folio-is.md",
-  "sourceDocument": "processes/authoring-a-document.bpmn",
+  "sourceDocument": "https://github.com/litlfred/folio-assistant/blob/main/folio-assistant-core/processes/content/authoring-a-document.bpmn",
   "meta": {
     "assetKind": "bpmn",
     "rendered": "../assets/img/workflows/authoring-a-document.svg",

@@ -28,10 +28,20 @@ describe("a skill names its own contracts (#1168, B3b)", () => {
     const missing: string[] = [];
     for (const c of skillContracts(INSTANCE).values()) {
       for (const ref of [c.input, c.output]) {
-        const f = ref === undefined ? undefined : contractFile(INSTANCE, ref);
+        const f = ref === undefined ? undefined : contractFile(c.instanceRoot, ref);
         if (f !== undefined && !existsSync(f)) missing.push(`${c.from}: ${ref}`);
       }
     }
     expect(missing).toEqual([]);
+  });
+
+  test("a local contract resolves against the instance HOLDING the skill (placement PR1)", () => {
+    // `latex-authoring` moved up to sci with its `schemas/skills/` contract.
+    // Resolved against the harness the ref names a file that is not there.
+    const c = skillContracts(INSTANCE).get("latex-authoring");
+    expect(c?.input).toBe("schemas/skills/latex-authoring/input.schema.json");
+    expect(c?.instanceRoot).toBe(resolve(INSTANCE, "..", "folio-assistant-sci"));
+    expect(existsSync(contractFile(c!.instanceRoot, c!.input!)!)).toBe(true);
+    expect(existsSync(contractFile(INSTANCE, c!.input!)!)).toBe(false);
   });
 });

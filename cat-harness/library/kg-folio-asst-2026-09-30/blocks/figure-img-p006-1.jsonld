@@ -1,0 +1,31 @@
+{
+  "@context": [
+    "https://litlfred.github.io/folio-assistant/ns/content/v1.jsonld",
+    {
+      "@base": "https://litlfred.github.io/folio/"
+    }
+  ],
+  "@id": "library/kg-folio-asst-2026-09-30/blocks/figure-img-p006-1",
+  "@type": [
+    "folio-assistant-core:Figure",
+    "doco:Figure"
+  ],
+  "kind": "figure",
+  "file": "../../../docs/assets/img/kg-deck/img-p006-1.webp",
+  "pageStart": 6,
+  "pageEnd": 6,
+  "narrative": {
+    "text": "BPMN diagram \"Folio lifecycle — one cycle, plan to retire\", in six horizontal lanes. Programme manager: Folio initiative (start), Plan scope, team, artifacts [content-plan]. Work plan — beans (shared by humans and agents): Seed the work plan [todo-manager]. Editors + authoring agents: Editing and HCI validation [content-author], a subprocess. Validation and QA (mechanical + agents): Integration test and QA sweep [content-test], a service task. Publication manager: Draft, review and publish [content-publish], a subprocess. Review team and SMEs: Triage published feedback [content-feedback]. Work plan again: File feedback as beans [todo-manager]. Programme manager: gateway \"More content?\" — yes loops back to editing; no leads to Retire or archive [content-retire] and the end event Folio retired. Each bracketed name is the skill the task runs.",
+    "state": "draft",
+    "drafted_by": {
+      "kind": "agent",
+      "id": "claude",
+      "model": "not-disclosed",
+      "session": "https://claude.ai/code/session_019rLS387FZZzjPJsNQhfALA"
+    },
+    "drafted_at": "2026-09-30"
+  },
+  "derivedFrom": "library/kg-folio-asst-2026-09-30/sections/slide-006",
+  "sourceDocument": "library/kg-folio-asst-2026-09-30/manifest",
+  "provenance": "ingested"
+}

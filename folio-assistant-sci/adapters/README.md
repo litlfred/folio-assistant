@@ -7,5 +7,5 @@ Part of [folio-assistant-sci](../README.md) 0.1.0, declared as `sci-adapters`, h
 
 | file | what it is | used by |
 |---|---|---|
-| [`paper/`](paper/) | 2 files | |
+| [`paper/`](paper/) | 3 files | |
 <!-- kg:subgraph:end -->

@@ -34,6 +34,41 @@
       "skos:note": "candidate"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/ns#glossary/kg-skills/fhir-validation",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/ns#glossary/kg-skills"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "fhir-validation"
+        }
+      ],
+      "skos:notation": "fhir-validation",
+      "dcterms:source": "fhir-harness/skills/content/fhir-ig-authoring/fhir-validation.md",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/ns#glossary/kg-skills/ig-ast-delta",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/ns#glossary/kg-skills"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "ig-ast-delta"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "List and view what changed between two IG ASTs, check whether an AST is still valid for the IG's current inputs, and render the delta as just-the-docs pages that carry the provisional mark. Read before trusting a cached AST, before reviewing an incremental IG build, and before rendering anything from a cache."
+        }
+      ],
+      "skos:notation": "ig-ast-delta",
+      "dcterms:source": "fhir-harness/skills/fhir-ig-base/ig-ast-delta.md",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/ns#glossary/kg-skills/ig-build-pipeline",
       "@type": "skos:Concept",
       "skos:inScheme": {
@@ -51,6 +86,21 @@
       ],
       "skos:notation": "ig-build-pipeline",
       "dcterms:source": "fhir-harness/skills/fhir-ig-base/ig-build-pipeline.md",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/ns#glossary/kg-skills/ig-publication",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/ns#glossary/kg-skills"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "ig-publication"
+        }
+      ],
+      "skos:notation": "ig-publication",
+      "dcterms:source": "fhir-harness/skills/content/fhir-ig-authoring/ig-publication.md",
       "skos:note": "candidate"
     },
     {
@@ -114,6 +164,21 @@
       "skos:note": "candidate"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/ns#glossary/kg-skills/l3-fhir-authoring",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/ns#glossary/kg-skills"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "l3-fhir-authoring"
+        }
+      ],
+      "skos:notation": "l3-fhir-authoring",
+      "dcterms:source": "fhir-harness/skills/content/fhir-ig-authoring/l3-fhir-authoring.md",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/ns#glossary/kg-skills/smart-launch",
       "@type": "skos:Concept",
       "skos:inScheme": {
@@ -131,6 +196,21 @@
       ],
       "skos:notation": "smart-launch",
       "dcterms:source": "fhir-harness/skills/fhir-client/smart-launch.md",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/ns#glossary/kg-skills/terminology-management",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/ns#glossary/kg-skills"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "terminology-management"
+        }
+      ],
+      "skos:notation": "terminology-management",
+      "dcterms:source": "fhir-harness/skills/content/fhir-ig-authoring/terminology-management.md",
       "skos:note": "candidate"
     }
   ]

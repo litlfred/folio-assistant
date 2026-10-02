@@ -6,9 +6,9 @@ parent: Skill instructions
 ---
 
 {: .note }
-> Generated from [`cat-harness/skills/folio-core/todo-manager.md`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/folio-core/todo-manager.md) — do not edit here.
+> Generated from [`cat-harness/skills/sdlc/sdlc-core/todo-manager.md`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/sdlc/sdlc-core/todo-manager.md) — do not edit here.
 >
-> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/cat-harness/skills/folio-core/todo-manager.md){: .fa-edit-source }
+> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/cat-harness/skills/sdlc/sdlc-core/todo-manager.md){: .fa-edit-source }
 
 {% raw %}
 > **This is the skill `skill_fetch` serves.** A stub of the same name
@@ -421,8 +421,8 @@ checkbox you silently worked around is one the next agent meets unchanged.
 Tick what is done and name who did it; withdraw a done-when you no longer
 believe, with reasons, rather than leaving it unmet. Where the bean and the
 code disagree, **the code is what is true and the bean is what is wrong** —
-the same rule [`AGENTS.md`'s banner](https://github.com/litlfred/folio-assistant/blob/main/AGENTS.md) states for a skill
-against that file.
+the same rule [`AGENTS.md`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/AGENTS.md) states for a skill against
+that file.
 
 This is the work-plan half. The cross-session half — why two sessions can file
 one defect four minutes apart — is
@@ -561,19 +561,20 @@ this skill by name never received them. Ported here as part of bean `tdmg`.
 
 | process | step(s) that name it |
 |---|---|
-| [Authoring a document](../../processes/authoring-a-document.html) | 2 · Seed the work plan |
-| [Authoring a paper](../../processes/authoring-a-paper.html) | 2 · Seed the work plan |
+| [Is the incremental IG AST what a full build would have produced?](../../processes/ig-ast-delta-review.html) | Note the missed coupling on the bean |
+| [Document ingestion — uploads/ to the L1 source knowledge graph](../../processes/document-ingestion.html) | Record the gap as a bean |
+| [CRDM Phase 5 — beans and sign-off](../../processes/crdm-signoff.html) | Phase 5: Create beans |
 | [Agent bean lifecycle](../../processes/bean-lifecycle.html) | Check before you create (exact-title search); Create the bean (agent CLI, not an engine op); Work, keeping the body current (this is 'edit'); Complete (no unchecked todos left); Scrap with reasons NEVER delete |
 | [Code change and review](../../processes/code-change-review.html) | Record what was done, and close |
+| [Incremental IG build](../../processes/ig-incremental-build.html) | Log the environment error on the bean; Log findings on the bean; File QC findings as beans |
+| [L3 FHIR IG pipeline](../../processes/l3-fhir-pipeline.html) | File QC findings as beans |
+| [Getting started](../../processes/getting-started.html) | Seed the work plan |
+| [Authoring a document](../../processes/authoring-a-document.html) | 2 · Seed the work plan |
 | [Content Change and Review](../../processes/content-change-review.html) | Open the branch-watch bean; Note the main-branch watch |
 | [Content lifecycle](../../processes/content-lifecycle.html) | Seed the work plan; File feedback as beans |
-| [CRDM Phase 5 — beans and sign-off](../../processes/crdm-signoff.html) | Phase 5: Create beans |
-| [Document ingestion — uploads/ to the L1 source knowledge graph](../../processes/document-ingestion.html) | Record the gap as a bean |
 | [Draft, review and publish](../../processes/draft-to-publication.html) | Open or claim the release bean; Open beans for the change requests; Close the release beans |
 | [Editing and HCI validation](../../processes/editing-hci-validation.html) | Claim or open the bean; Log findings on the bean; Resolve or re-open the bean |
 | [Evidence for a recommendation](../../processes/evidence-retrieval.html) | Open a bean for the unverified citation; Record the evidence gap |
-| [Getting started](../../processes/getting-started.html) | Seed the work plan |
-| [Incremental IG build](../../processes/ig-incremental-build.html) | Log the environment error on the bean; Log findings on the bean; File QC findings as beans |
+| [Authoring a paper](../../processes/authoring-a-paper.html) | 2 · Seed the work plan |
 | [L2 DAK authoring](../../processes/l2-dak-authoring.html) | Seed the work plan |
-| [L3 FHIR IG pipeline](../../processes/l3-fhir-pipeline.html) | File QC findings as beans |
 

@@ -522,10 +522,9 @@ export function coverage(repo: string): { rows: KindCoverage[]; gates: GateCover
   return { rows, gates, universe };
 }
 
-/** Everything about a result except when it was produced — the staleness key. */
+/** The staleness key: the whole result (it carries no timestamp since `y7b3`). */
 function comparable(r: QaResult): string {
-  const { updated_at: _when, ...rest } = r;
-  return JSON.stringify(rest);
+  return JSON.stringify(r);
 }
 
 /**

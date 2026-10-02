@@ -16,7 +16,7 @@
  */
 import { describe, expect, test } from "bun:test";
 import { existsSync } from "node:fs";
-import { resolve } from "node:path";
+import { join, resolve } from "node:path";
 
 import {
   isDerivedGraph,
@@ -26,6 +26,7 @@ import {
   subgraphTree,
 } from "../../schemas/cat-harness.ts";
 import { overDeepLinks, scanSubgraphs } from "../check-subgraphs.ts";
+import { checkoutDirectories } from "../../schemas/harness-config.ts";
 
 const ROOT = resolve(import.meta.dir, "../..");
 const dirs = resolveDirectories([{ name: "(local)", root: ROOT, own: true }]);
@@ -63,9 +64,14 @@ describe("subgraph containment is derived from declared paths", () => {
     // literal. Reading it as a child of `methodologies/` would be wrong on
     // the path AND on the intent. (The example was `smart-kg/methodologies/`
     // until it was removed, bean `wg7r`.)
-    const tree = subgraphTree(dirs);
-    for (const r of tree) expect(r.children).not.toContain("smart-base-methodologies");
-    expect(dirs.find((d) => d.id === "smart-base-methodologies"), "the scoped entry did not resolve — vacuous").toBeDefined();
+    // Since placement PR0 (bean `ejye`) smart-base declares it itself, and the
+    // platform reaches it through the CHECKOUT rather than a mirror: the tree
+    // over the corpus must still not read it as a child of the harness's own.
+    const corpus = checkoutDirectories(ROOT, { stackedOn: ROOT });
+    const scoped = corpus.find((d) => d.absPath === resolve(ROOT, "..", "smart-base", "methodologies"));
+    expect(scoped, "smart-base's methodologies did not resolve — vacuous").toBeDefined();
+    const own = dirs.find((d) => d.id === "methodologies")!;
+    expect(owningDirectory([own, scoped!], join(scoped!.absPath, "x.md"))?.absPath).toBe(scoped!.absPath);
   });
 
   // The real declaration no longer nests anything, so the two properties
@@ -144,9 +150,11 @@ describe("the entanglement report", () => {
     // Same call shape as `scanSubgraphs` itself — it takes an instance CHAIN,
     // not a path, and passing the root produced a `chain.find is not a
     // function` rather than a wrong answer.
-    const dirs = resolveDirectories([{ name: "(local)", root: ROOT, own: true }]);
+    // Over the CORPUS the sweep reads since placement PR0 (bean `ejye`), with
+    // a foreign directory labelled `<member>/<id>`, as the report labels it.
+    const dirs = checkoutDirectories(ROOT, { stackedOn: ROOT });
     const derivedIds = new Set(
-      dirs.filter((d) => d.graphKinds.some((g) => isDerivedGraph(g))).map((d) => d.id),
+      dirs.filter((d) => d.graphKinds.some((g) => isDerivedGraph(g))).flatMap((d) => [d.id, `${d.member}/${d.id}`]),
     );
     expect(derivedIds.size, "no derived directory is declared, so this proves nothing").toBeGreaterThan(0);
 
@@ -159,11 +167,11 @@ describe("the entanglement report", () => {
   test("CRDM's relocations left no broken links behind — both of them", () => {
     // 13 were left by `g43o` (into `methodologies/crdm/`) and repaired when
     // this check first surfaced them. CRDM moved AGAIN on 2026-09-22, into
-    // `skills/crdm/`, so this guard is re-keyed: `methodology-crdm` is no
+    // `skills/sdlc/crdm/`, so this guard is re-keyed: `methodology-crdm` is no
     // longer a declared id, and a filter on it would now match nothing and
     // pass for the wrong reason — a guard that cannot fail, which is worse
     // than one that is absent because it reads as coverage.
-    const crdm = report.dangling.filter((d) => d.from.includes("skills/crdm/"));
+    const crdm = report.dangling.filter((d) => d.from.includes("skills/sdlc/crdm/"));
     expect(crdm.map((d) => `${d.from} → ${d.target}`)).toEqual([]);
     const raci = report.dangling.filter((d) => d.from.includes("skills/process/raci/"));
     expect(raci.map((d) => `${d.from} → ${d.target}`)).toEqual([]);
@@ -209,7 +217,9 @@ describe("repository-scoped directories are attributed", () => {
   test("fsh-guts is exempt because it DECLARES an unpublished kind", () => {
     // It was already skipped before this bean — by accident, via the path
     // bug. Right answer, wrong reason, and therefore not one to rely on.
-    expect(report.exempt.some((d) => d.startsWith("fsh-guts"))).toBe(true);
+    // Declared by the checkout's ROOT instance since placement PR0, so it is
+    // labelled `folio-assistant/fsh-guts`.
+    expect(report.exempt.some((d) => /(^|\/)fsh-guts \(/.test(d))).toBe(true);
     // And the exemption is narrow: it must not swallow ordinary directories.
     expect(report.exempt.length).toBeLessThan(3);
   });
@@ -231,8 +241,11 @@ describe("repository-scoped directories are attributed", () => {
     // child" mean something. The tree is non-empty again since `main`
     // declared `test/` as a `code` graph, but this test does not depend on
     // that either way.
-    const scoped = dirs.find((d) => d.id === "smart-base-methodologies");
-    expect(scoped, "the repository-scoped entry did not resolve — the check above is vacuous").toBeDefined();
+    // smart-base's own entry, reached through the checkout since placement PR0.
+    const scoped = checkoutDirectories(ROOT, { stackedOn: ROOT }).find(
+      (d) => d.absPath === resolve(ROOT, "..", "smart-base", "methodologies"),
+    );
+    expect(scoped, "smart-base's methodologies did not resolve — the check above is vacuous").toBeDefined();
     expect(Array.isArray(report.tree), "containment was not computed at all").toBe(true);
   });
 });

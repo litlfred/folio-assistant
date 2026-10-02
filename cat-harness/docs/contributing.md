@@ -61,7 +61,7 @@ changing agent guidance.
 
 - **Skill instructions** (`docs/reference/skill-instructions/*.md`) are also
   generated — never hand-edit them. Edit the skill bodies under
-  `skills/content-lifecycle/*.md` or `src/skills/*.md` and regenerate:
+  `skills/authoring/content-lifecycle/*.md` or `src/skills/*.md` and regenerate:
 
   ```sh
   bun run scripts/gen-skill-docs.ts
@@ -83,6 +83,6 @@ bundle exec jekyll serve
 ## Shipping a change
 
 Verify → confirm mergeable → push → (only if asked) open a PR. See
-`skills/folio-core/prepare-merge.md`. Keep the **formalism of the framework
+`skills/sdlc/sdlc-core/prepare-merge.md`. Keep the **formalism of the framework
 separate from content** — content belongs in its own repository, and any content
 in these docs is illustrative only.

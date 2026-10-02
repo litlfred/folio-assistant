@@ -155,7 +155,7 @@ only provenance, `malformed` and `untagged`.
   It fetches the comments, ingests them idempotently over `--existing`,
   re-anchors against the head's blocks, and writes the file. It knows the
   blocks either from `--folio` (and writes `blocks.json`) or from `--blocks`.
-- **Skill** `review-comments` (`cat-harness/skills/folio-core/review-comments.md`):
+- **Skill** `review-comments` (`cat-harness/skills/authoring/authoring-core/review-comments.md`):
   the full write-up. It covers the rulings, the tag, the kind, the transition
   table, the Tool's steps, the two jobs and their trust boundary, the page,
   where each kind of change goes, and what is not decided.

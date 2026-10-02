@@ -251,6 +251,6 @@ the copy that drifted — it says so itself.
 - [`process-state`](../../process/workflow/process-state.md), [`bpmn-processes`](../../process/workflow/bpmn-processes.md) —
   the largest writer of a live-state graph: a workflow instance is a token's
   position in a diagram that lives in a content graph.
-- [`todo-manager`](../../folio-core/todo-manager.md), [`bean-coordination`](../../folio-core/bean-coordination.md)
+- [`todo-manager`](../../sdlc/sdlc-core/todo-manager.md), [`bean-coordination`](../../sdlc/sdlc-core/bean-coordination.md)
   — the work plan, and why a bean is never deleted. A state record that
   vanishes leaves a sibling unable to tell abandonment from accident.

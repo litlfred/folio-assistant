@@ -489,20 +489,10 @@ export interface GraphNodeDirectory extends KgNodeLabels {
  */
 export interface ContentDirectory extends GraphNodeDirectory {
   /**
-   * Whether a DEPENDENT instance materialises its own copy of this directory.
-   *
-   * Orthogonal to {@link GraphNodeDirectory.scope}, which says where a path
-   * RESOLVES. This says whether a folio depending on this instance gets one
-   * of its own. Required, because neither default is safe — see
-   * {@link DependentMaterialisationSchema} for the measurement.
-   */
-  dependents: DependentMaterialisation;
-
-  /**
    * What makes this subgraph reachable — a renderer, a documentation entry,
    * and a governing skill — or the reasons it does not need one.
    *
-   * OPTIONAL on purpose, unlike {@link dependents} above. An absent field is
+   * OPTIONAL on purpose. An absent field is
    * exactly the finding `check:subgraph-coverage` exists to raise, so making
    * it required would both destroy the measurement and bill every concurrent
    * branch for a field they had no reason to know about — which is what
@@ -524,6 +514,9 @@ export interface ContentDirectory extends GraphNodeDirectory {
 
   /** Whether the agent summary drain may offer a `library`'s blocks; absent means `drain`. See the schema field (bean `x80s`). */
   summaries?: "drain" | "held";
+
+  /** Entry slugs of a `library` held back from the summary drain while the rest of it drains. See the schema field (bean `j7ql`). */
+  heldEntries?: string[];
 
   /**
    * Which theme this subgraph renders on — one answer for every surface that
@@ -568,7 +561,50 @@ export const InstanceLocationSchema = z
   })
   .strict();
 
+/**
+ * One content adapter an instance ships, as its own declaration states it.
+ *
+ * `module` is relative to the DECLARING instance's root, and `className` is the
+ * export to construct. `extends` names the `contentType` this one specialises —
+ * `paper` extends `document` — and is what orders the fallback: a
+ * specialisation is a superset, so falling back TO it loses nothing, while
+ * falling back FROM it loses its tools. That order used to be the position of
+ * a row in a table in `src/builtin-adapters.ts`; it is a fact about the
+ * adapters, so it is declared beside them.
+ */
+export interface ContentAdapterDeclaration {
+  /** The `contentType` a folio's config names to get this adapter. */
+  contentType: string;
+  /** Instance-relative module path. */
+  module: string;
+  /** The exported class. */
+  className: string;
+  /** The `contentType` this adapter specialises, if any. */
+  extends?: string;
+}
+
+/**
+ * Zod form of {@link ContentAdapterDeclaration}. Exported on its own so the
+ * composition root can read this one field without parsing — and so without
+ * throwing on — every other field of every declaration in the checkout.
+ */
+export const ContentAdapterDeclarationSchema = z
+  .object({
+    contentType: z.string().min(1),
+    module: z
+      .string()
+      .min(1)
+      .refine((m) => !m.startsWith("/") && !m.split("/").includes(".."), "instance-relative, never absolute or escaping"),
+    className: z.string().min(1),
+    extends: z.string().min(1).optional(),
+  })
+  .strict();
+
 export interface CatHarnessDeclaration extends KgNodeLabels {
+  /** A reader's one line — see {@link CatHarnessDeclarationSchema}'s `summary` (`ob3m` 4/5). */
+  summary?: string;
+  /** Other spellings of the name, listed on the landing (`ob3m` 5). */
+  alsoWritten?: string[];
   /**
    * Images this instance names — its marks, in the graph rather than beside it.
    *
@@ -697,6 +733,10 @@ export interface CatHarnessDeclaration extends KgNodeLabels {
   remoteGraphs?: RemoteGraph[];
   /** Harnesses this one is associated with and does not hold — {@link AssociatedHarness}. Issue #1146. */
   associatedHarnesses?: AssociatedHarness[];
+  /** External Knowledge Graphs this one CONSUMES, and which of their parts it chose to hold — {@link Subscription}. Issue #1719. */
+  subscriptions?: Subscription[];
+  /** Substrates known to exist or planned that NO declaration here names — {@link KnownSubstrate}. Issue #1719. */
+  knownSubstrates?: KnownSubstrate[];
   /**
    * Sticky notes this layer contributes to the landing board.
    *
@@ -737,6 +777,11 @@ export interface CatHarnessDeclaration extends KgNodeLabels {
    * than computed, and why it is optional.
    */
   needs?: string[];
+  /**
+   * The content adapters this instance SHIPS, which the harness's composition
+   * root discovers rather than names. See {@link ContentAdapterDeclaration}.
+   */
+  contentAdapters?: ContentAdapterDeclaration[];
   /**
    * The Liquid prefix this instance's VALUES are addressed by in authored
    * text — `{{ <prefix>.<directory-id>.<entry>.<path> }}` — and whether the
@@ -822,47 +867,18 @@ export interface CatHarnessDeclaration extends KgNodeLabels {
 }
 
 /**
- * Whether a DEPENDENT instance materialises its own copy of this directory.
- *
- * ## The question this answers, and why `scope` cannot
- *
- * `scope` says WHERE a path resolves — against the instance or against the
- * repository. This asks something orthogonal: when another instance depends on
- * mine, **does it get one of its own?** The two are independent, and treating
- * them as one axis was measured and refused: moving one queue by giving
- * `uploads` `scope: "repository"` turned **6 tests red**, three of them the
- * guarantee a dependent inherits its own `uploads/` and `library/`.
- *
- * - **`reproduce`** — the directory is part of the SHAPE a folio has. A
- *   dependent gets its own, empty, with a keep marker. `uploads/` and
- *   `library/` are the worked examples: an ingestion queue with the
- *   dependency's files in it would be worse than useless.
- * - **`skip`** — the directory is merely WHERE THIS INSTANCE'S CONTENT LIVES.
- *   A dependent reads it through the overlay and materialises nothing.
- *   `schemas/`, `tools/` and `src/skills/` are the platform's own.
- *
- * ## It does not touch resolution, only materialisation
- *
- * A `skip` entry is still RESOLVED into a dependent's directory list, because
- * that is how the cross-instance overlay serves a dependency's skills —
- * `skill_list` and `skill_fetch` depend on it. What `skip` suppresses is
- * `mkdirSync`, nothing else. Conflating the two would break the overlay to fix
- * a directory-creation problem.
- *
- * ## Why REQUIRED, when nearly every other field here is optional
- *
- * Because neither default is safe, which is unusual and is the whole argument.
- * Defaulting to `reproduce` is today's behaviour and ships junk: simulated on a
- * fresh folio depending on this instance, **12 directories are inherited** and
- * four of them are the platform's own, each materialised empty with a committed
- * keep marker — the `dh4f` shape, shipped downstream to every folio.
- * Defaulting to `skip` silently stops a folio getting an ingestion queue, and
- * nothing would fail. A field whose wrong value is invisible either way is a
- * field that has to be written down, so this follows the `BLOCK_KINDS`
- * discipline: a directory added without a classification does not compile.
+ * RETIRED 2026-09-30 (option A). A per-entry `dependents: "reproduce" |
+ * "skip"` said whether an instance inheriting a directory got its own copy.
+ * The owner: "make dependents: reproduce automatic behaviour so [we] don't
+ * need it." Every declared subgraph is now inherited automatically — each
+ * instance in the chain whose same-named directory exists is a MEMBER of it
+ * ({@link ResolvedDirectory.member}) — and whether an inherited directory is
+ * CREATED is a fact about its graph kind, `GraphKindDef.perInstance`, stated
+ * once rather than per entry (the per-entry field disagreed with itself:
+ * `docs` was `reproduce` once and `skip` four times). A legacy `dependents`
+ * key still parses and is dropped, so a folio written before the change keeps
+ * loading.
  */
-export const DependentMaterialisationSchema = z.enum(["reproduce", "skip"]);
-export type DependentMaterialisation = z.infer<typeof DependentMaterialisationSchema>;
 
 /**
  * A place to look, with no statement about inheritance.
@@ -1347,7 +1363,6 @@ export const TileSchema = VisualisationSchema.omit({ ref: true });
 export type Tile = z.infer<typeof TileSchema>;
 
 const ContentDirectoryShape = GraphNodeDirectoryShape.extend({
-  dependents: DependentMaterialisationSchema,
   coverage: SubgraphCoverageSchema.optional(),
   /** How this directory's tile looks. See {@link TileSchema}. */
   tile: TileSchema.optional(),
@@ -1363,6 +1378,18 @@ const ContentDirectoryShape = GraphNodeDirectoryShape.extend({
    * bean, `summaries:next` handed its blocks out FIRST.
    */
   summaries: z.enum(["drain", "held"]).optional(),
+  /**
+   * Entry slugs (`<library>/<slug>/`) held back from the summary drain while
+   * the rest of this `library` drains — the per-entry form of
+   * `summaries: "held"`. It exists because a hold is the OWNER's decision
+   * about a set of documents, and a set can outlive the directory it was
+   * stated on: agent-skills' library was held on 2026-09-24 (bean `x80s`)
+   * and dissolved into cat-harness's on 2026-10-01 (bean `j7ql`), where the
+   * other entries drain. Folding the hold into the directory's would either
+   * drop it or extend it to documents the owner never held. Listed, never
+   * derived, so a move cannot release it silently.
+   */
+  heldEntries: z.array(z.string().min(1)).optional(),
   /**
    * HOW this graph is shown, and what can be done to it.
    *
@@ -1651,9 +1678,9 @@ export const DEFAULT_DIRECTORIES: readonly ContentDirectory[] = [
   // the rule "every entry carries one" free of an exception nobody would
   // remember — and if either ever loses that scope, the classification it
   // already has is the right one.
-  { id: "tools", path: "tools/", dependents: "skip", graphKinds: ["tools"] },
-  { id: "schemas", path: "schemas/", dependents: "skip", graphKinds: ["schemas", "cat-harness"] },
-  { id: "skills", path: "skills/", dependents: "skip", graphKinds: ["skills"] },
+  { id: "tools", path: "tools/", graphKinds: ["tools"] },
+  { id: "schemas", path: "schemas/", graphKinds: ["schemas", "cat-harness"] },
+  { id: "skills", path: "skills/", graphKinds: ["skills"] },
   // THE CONVENTION, as of 2026-09-21: an instance's Knowledge Graph is five sibling
   // directories rather than one with subdirectories. `scenarios/` and
   // `processes/` were `skills/roles/` and `skills/workflows/`, found by
@@ -1669,12 +1696,12 @@ export const DEFAULT_DIRECTORIES: readonly ContentDirectory[] = [
   //
   // Existence-filtered like every other entry, so an instance that has no
   // `processes/` is not claimed to have an empty one — the `dh4f` defect.
-  { id: "scenarios", path: "scenarios/", dependents: "skip", graphKinds: ["scenarios"] },
-  { id: "processes", path: "processes/", dependents: "skip", graphKinds: ["processes"] },
-  { id: "beans", path: "beans/", dependents: "reproduce", graphKinds: ["beans"] },
-  { id: "todos", path: "todos/", dependents: "reproduce", graphKinds: ["todos"] },
-  { id: "uploads", path: "uploads/", dependents: "reproduce", graphKinds: ["uploads"] },
-  { id: "library", path: "library/", dependents: "reproduce", graphKinds: ["library"] },
+  { id: "scenarios", path: "scenarios/", graphKinds: ["scenarios"] },
+  { id: "processes", path: "processes/", graphKinds: ["processes"] },
+  { id: "beans", path: "beans/", graphKinds: ["beans"] },
+  { id: "todos", path: "todos/", graphKinds: ["todos"] },
+  { id: "uploads", path: "uploads/", graphKinds: ["uploads"] },
+  { id: "library", path: "library/", graphKinds: ["library"] },
   // `skills/voices/`, not `voices/`, since 2026-09-21 — a voice IS a skill, and
   // the four this repository ships moved under `skills/` with the rest of the
   // `kg` graph (bean `btuv`). The convention stated here and the fallback
@@ -1690,7 +1717,7 @@ export const DEFAULT_DIRECTORIES: readonly ContentDirectory[] = [
   // The LEGACY path is not dropped: `loadVoices` probes `voices/` when the new
   // one is absent, for the same reason `voiceFilesIn` reads both file layouts
   // — a downstream folio must not be broken by an upgrade it did not ask for.
-  { id: "voices", path: "skills/voices/", dependents: "reproduce", graphKinds: ["voices"] },
+  { id: "voices", path: "skills/voices/", graphKinds: ["voices"] },
 ];
 
 /**
@@ -1982,7 +2009,7 @@ export class TopologyConflictError extends Error {
  *
  * ## It is `materialization` at the graph level
  *
- * `folio-assistant-core/schemas/materialization.ts` already names the states a
+ * `schemas/materialization-state.ts` already names the states a
  * body of content is in, and a declared graph is in the same ones: a
  * `ContentDirectory` is **materialized** (bytes here), a `RemoteGraph` is
  * **referenced** (we know it exists and where, we hold none of it).
@@ -2057,6 +2084,105 @@ export const AssociatedHarnessSchema = z
   // STRICT for the reason RemoteGraphSchema is: the declaration is parsed by a
   // plain z.object that drops unknown keys, and a misspelt `repo` would vanish
   // without a word and leave ✎ pointing nowhere.
+  .strict();
+
+/**
+ * A SUBSCRIPTION to an external Knowledge Graph — a **substrate**: a repository
+ * whose root declaration meets bootstrap's schema requirements and declares at
+ * least one harness. Issue #1719; the design is
+ * `docs/proposals/kg-subscriptions.md`.
+ *
+ * ## Between `associatedHarnesses` and `needs`, and it MOVES
+ *
+ * `needs` is fully loaded, with order, overlay and skill resolution.
+ * `associatedHarnesses` is never loaded. A subscription starts referenced and
+ * becomes materialised one part at a time, as the subscriber chooses. So this
+ * entry holds only the CHOICE and the PIN. Whether a chosen part is actually
+ * held is answered by that part's `MaterializationSchema` record, the one
+ * place that already answers "do we hold these bytes". Recording state here
+ * too would give two answers to that question.
+ *
+ * `ref` is a 40-character SHA and required, the rule `sync-remote-skills`
+ * already enforces. An unpinned subscription is how two subscribers see two
+ * graphs under one name. A subgraph not listed is REFERENCED, not absent.
+ */
+export interface Subscription {
+  /** Local name for the subscription; unique within this list. The substrate's own name, unless two pins of one substrate are ever needed. */
+  id: string;
+  /** Where the substrate lives, `owner/repo` (#1652). */
+  repository: RepoFullName;
+  /** The pinned commit, a full 40-character SHA. A tag replaces it once the substrate publishes releases. */
+  ref: string;
+  /** Subgraph ids (the substrate's `directories[].id`) CHOSEN for materialisation. Everything else stays referenced. */
+  subgraphs?: string[];
+  /** How referenced binary assets are materialised. Each copy still passes `Process_MaterializeRemote`'s gates. */
+  assets?: { policy: "none" | "on-demand" | "all" };
+  /** Harness names from the substrate CHOSEN for instantiation. Instantiating writes `<name>.config.json`, which is what puts it in the navbar. */
+  harnesses?: string[];
+  /** One sentence a reader of the visualizer sees. */
+  note?: string;
+}
+
+const uniqueStrings = (label: string) =>
+  z
+    .array(z.string().min(1))
+    .refine((xs) => new Set(xs).size === xs.length, { message: `${label}: a value appears twice` });
+
+export const SubscriptionSchema = z
+  .object({
+    id: z.string().regex(INSTANCE_NAME),
+    repository: RepoFullNameSchema,
+    // A full SHA, and only that. A branch name moves under the subscriber;
+    // an abbreviated SHA is ambiguous by definition.
+    ref: z.string().regex(/^[0-9a-f]{40}$/, "ref must be a full 40-character commit SHA — pin, never follow a branch"),
+    subgraphs: uniqueStrings("subgraphs").optional(),
+    assets: z.object({ policy: z.enum(["none", "on-demand", "all"]) }).strict().optional(),
+    harnesses: z.array(z.string().regex(INSTANCE_NAME)).refine((xs) => new Set(xs).size === xs.length, { message: "harnesses: a name appears twice" }).optional(),
+    note: z.string().min(1).optional(),
+  })
+  // STRICT for the reason AssociatedHarnessSchema is: a misspelt `subgraph`
+  // would be dropped without a word, and the subscriber would believe it had
+  // chosen something it had not.
+  .strict();
+
+/**
+ * A substrate this harness knows of that NO declaration in the checkout names.
+ * Issue #1719, owner: *"cat-harness should list known substrates now and as
+ * part of separation plans."*
+ *
+ * **Hand-entered only where no fact already exists.** Every staged instance
+ * already declares its planned `repository` (#1652), and every associated
+ * harness its `repository`, so the registry DERIVES those rows. Listing them
+ * again here would be a second copy of a fact, free to drift. This list is for
+ * the rest: a proposed substrate with no instance yet (the WHO World Health
+ * Data Hub), or a status only a person knows (a repository created today).
+ * `scripts/subscriptions-viz.ts` merges the two, and a hand row overrides a
+ * derived one by `name`.
+ */
+export interface KnownSubstrate {
+  /** The substrate's instance name, as its declaration gives it or will. */
+  name: string;
+  /** Human title. */
+  title?: string;
+  /** `owner/repo`, when one exists or is planned. */
+  repository?: RepoFullName;
+  /** Where it stands: proposed (an idea), planned (a staged instance), exists (a repository), published (a release). */
+  status: "proposed" | "planned" | "exists" | "published";
+  /** Its paired tools repository, when the `kg-separation` pattern gives it one. */
+  toolsRepository?: RepoFullName;
+  /** One sentence a reader of the visualizer sees. */
+  note?: string;
+}
+
+export const KnownSubstrateSchema = z
+  .object({
+    name: z.string().regex(INSTANCE_NAME),
+    title: z.string().min(1).optional(),
+    repository: RepoFullNameSchema.optional(),
+    status: z.enum(["proposed", "planned", "exists", "published"]),
+    toolsRepository: RepoFullNameSchema.optional(),
+    note: z.string().min(1).optional(),
+  })
   .strict();
 
 export const RemoteGraphSchema = z
@@ -2406,6 +2532,22 @@ export const ExactVersionSchema = z
 export const CatHarnessDeclarationSchema = z.object({
   name: z.string().min(1),
   ...kgNodeLabelShape,
+  /**
+   * One line for a READER, where `description` is written for an author.
+   *
+   * `ob3m` findings 4 and 5: the landing's harness sections printed the
+   * declaration's `description`, which here is authoring text — a naming
+   * rationale in one instance, a run of alternative spellings in another.
+   * The landing shows this instead when it is present, and the description
+   * when it is not, so an undeclared summary is today's behaviour.
+   */
+  summary: z.string().min(1).optional(),
+  /**
+   * Other ways the instance's name is written, shown on the landing as a small
+   * "also written" list rather than run into the description as one line.
+   * Owner's choice, 2026-10-01: keep the spellings visible, as a list.
+   */
+  alsoWritten: z.array(z.string().min(1)).nonempty().optional(),
   images: z.array(KgImageSchema).optional(),
   /**
    * Declared non-image artefacts — `AGENTS.md` first among them.
@@ -2495,6 +2637,20 @@ export const CatHarnessDeclarationSchema = z.object({
     .array(AssociatedHarnessSchema)
     .refine((xs) => new Set(xs.map((x) => x.name)).size === xs.length, { message: "associatedHarnesses: a name appears twice" })
     .optional(),
+  /**
+   * External Knowledge Graphs this one subscribes to — see {@link Subscription}.
+   * `.optional()` for the reason `associatedHarnesses` is. Ids are unique, and
+   * never also in `needs` or `associatedHarnesses` — refined below.
+   */
+  subscriptions: z
+    .array(SubscriptionSchema)
+    .refine((xs) => new Set(xs.map((x) => x.id)).size === xs.length, { message: "subscriptions: an id appears twice" })
+    .optional(),
+  /** See {@link KnownSubstrate}. Names are unique. */
+  knownSubstrates: z
+    .array(KnownSubstrateSchema)
+    .refine((xs) => new Set(xs.map((x) => x.name)).size === xs.length, { message: "knownSubstrates: a name appears twice" })
+    .optional(),
   stickies: z.array(StickyContributionSchema).optional(),
   renderExemption: RenderExemptionSchema.optional(),
   /**
@@ -2529,6 +2685,17 @@ export const CatHarnessDeclarationSchema = z.object({
    * in this schema, and a path would break the moment a directory moved.
    */
   needs: z.array(z.string().min(1)).optional(),
+  /**
+   * The content adapters this instance ships — see {@link ContentAdapterDeclaration}.
+   *
+   * Declared by the instance that OWNS the adapter, so the harness below it
+   * finds them by reading declarations instead of naming a directory above
+   * itself. `src/builtin-adapters.ts` held a `../<instance>/adapters/…` path
+   * for each until 2026-09-30 — a variable import no static gate could see,
+   * and the edge that kept this instance from lifting out on its own
+   * (`check:import-direction`, bean `p11x`).
+   */
+  contentAdapters: z.array(ContentAdapterDeclarationSchema).optional(),
   /** See {@link CatHarnessDeclaration.liquid}. */
   liquid: z
     .object({
@@ -2583,6 +2750,26 @@ export const CatHarnessDeclarationSchema = z.object({
           code: z.ZodIssueCode.custom,
           path: ["associatedHarnesses", i, "name"],
           message: `\`${a.name}\` is in \`needs\`: an associated harness is referenced, not loaded (issue #1146)`,
+        });
+      }
+    });
+    // Issue #1719: one relation per remote thing. A subscription that is also
+    // in `needs` would be both loaded and chosen part by part; one that is
+    // also an associated harness would be both referenced-only and consumed.
+    const associated = new Set((d.associatedHarnesses ?? []).map((a) => a.name));
+    (d.subscriptions ?? []).forEach((sub, i) => {
+      if (needs.has(sub.id)) {
+        ctx.addIssue({
+          code: z.ZodIssueCode.custom,
+          path: ["subscriptions", i, "id"],
+          message: `\`${sub.id}\` is in \`needs\`: a subscription is consumed part by part, not loaded whole (issue #1719)`,
+        });
+      }
+      if (associated.has(sub.id)) {
+        ctx.addIssue({
+          code: z.ZodIssueCode.custom,
+          path: ["subscriptions", i, "id"],
+          message: `\`${sub.id}\` is also in \`associatedHarnesses\`: subscribe to it OR associate it, not both (issue #1719)`,
         });
       }
     });
@@ -3525,9 +3712,37 @@ export function readDeclaration(
   const file = findDeclarationFile(instanceRoot);
   if (file === undefined) return undefined;
   const p = join(instanceRoot, file);
+  let text: string;
+  try {
+    text = readFileSync(p, "utf-8");
+  } catch (e) {
+    throw new Error(`${p} is not valid JSON: ${e instanceof Error ? e.message : String(e)}`);
+  }
+  // MEMOISED ON THE FILE'S TEXT, not its path or mtime: the checkout overlay
+  // (placement PR0) resolves every staged instance through its own chain and
+  // reads each declaration a dozen times per process, and the Zod parse is
+  // the cost (measured: a CLI run went from 0.2 s to 2 s). Keyed on the bytes,
+  // so a test that rewrites a fixture is re-parsed, and on the registry's
+  // size, since kinds are registered at runtime. A clone is returned, so a
+  // caller that mutates its copy cannot poison the next one.
+  const hit = declarationCache.get(p);
+  if (hit !== undefined && hit.text === text && hit.registry === registry && hit.kinds === registry.names().length) {
+    return structuredClone(hit.value);
+  }
+  const value = parseDeclarationText(p, text, registry);
+  declarationCache.set(p, { text, registry, kinds: registry.names().length, value });
+  return structuredClone(value);
+}
+
+const declarationCache = new Map<
+  string,
+  { text: string; registry: GraphKindRegistry; kinds: number; value: CatHarnessDeclaration }
+>();
+
+function parseDeclarationText(p: string, text: string, registry: GraphKindRegistry): CatHarnessDeclaration {
   let raw: unknown;
   try {
-    raw = JSON.parse(readFileSync(p, "utf-8"));
+    raw = JSON.parse(text);
   } catch (e) {
     throw new Error(`${p} is not valid JSON: ${e instanceof Error ? e.message : String(e)}`);
   }
@@ -3547,24 +3762,6 @@ export function readDeclaration(
     // Nothing was wrong with either side. The author of the other branch did
     // not know the field existed, and 166 red tests are a terrible way to find
     // out. So the missing-field case says which entries, and what to write.
-    const missing = parsed.error.issues
-      .filter((i) => i.path.length === 3 && i.path[0] === "directories" && i.path[2] === "dependents")
-      .map((i) => {
-        const dirs = (raw as { directories?: Array<{ id?: string }> })?.directories ?? [];
-        return dirs[i.path[1] as number]?.id ?? `#${String(i.path[1])}`;
-      });
-    if (missing.length > 0) {
-      throw new Error(
-        `${p}: ${missing.length} directory entr${missing.length === 1 ? "y is" : "ies are"} ` +
-          `missing the required \`dependents\` field: ${missing.join(", ")}.\n` +
-          `  Add \`"dependents": "reproduce"\` if an instance depending on this one should get its ` +
-          `OWN copy of the directory (\`uploads/\`, \`library/\`, \`folio/\`),\n` +
-          `  or \`"dependents": "skip"\` if it merely says where THIS instance's content lives ` +
-          `(\`schemas/\`, \`tools/\`, \`src/skills/\`).\n` +
-          `  It has no default on purpose: \`reproduce\` would ship empty directories into every ` +
-          `downstream folio, and \`skip\` would silently deny one its ingestion queue.`,
-      );
-    }
     throw new Error(`${p} is not a valid CatHarness declaration: ${parsed.error.message}`);
   }
   // Kind validation is here rather than in the Zod schema because the
@@ -3799,8 +3996,20 @@ export interface ResolvedDirectory extends ContentDirectory {
   declaredBy: string;
   /** Absolute path, resolved against the instance that declared it. */
   absPath: string;
-  /** True when the declaring instance is the root rather than a dependency. */
+  /**
+   * True when this entry is the ROOT instance's — its own declaration, or its
+   * own member of an inherited subgraph.
+   */
   own: boolean;
+  /**
+   * The instance whose directory this is. A declared subgraph is inherited as
+   * one MEMBER per instance in the chain whose same-named directory exists
+   * (owner, 2026-09-30, bean `3r47`/`xsqm` follow-up, option A: "if f-a-core
+   * … has a docs/ … and depends on cat-harness where docs/ is declared …
+   * the viewer should detect f-a-core/docs", "a named (sub-)subgraph of
+   * docs"). The declarer's own member comes first; `member` names each.
+   */
+  member?: string;
   /**
    * The id of the directory that declared this one FROM WITHIN (bean `cmsl`,
    * owner 2026-09-30): an entry of its kind's declaration file, e.g.
@@ -3918,7 +4127,92 @@ export function resolveDirectories(
   // inward without two answers existing at once.
   for (const d of [...byId.values()]) promoteFromWithin(d, byId, registry, new Set(), rootLink);
 
-  return [...byId.values()];
+  // MEMBERS (option A, owner 2026-09-30). A subgraph declared once is
+  // inherited by every instance in the chain: each whose `<root>/<path>`
+  // exists contributes its own member, a named sub-subgraph of the declared
+  // one — "if f-a-core … has a docs/ … and depends on cat-harness where docs/
+  // is declared …, the viewer should detect f-a-core/docs". The declarer's
+  // member comes first, so a consumer looking a subgraph up by id is handed
+  // the same directory as before. Existence-filtered (the `dh4f` rule); a
+  // repository-scoped entry has one location by definition; a path another
+  // entry already covers is not listed twice.
+  //
+  // NESTED MEMBERS (placement PR0c, bean `ejye`). The same rule one level
+  // down, for a sub-subgraph declared FROM WITHIN: the harness declares a
+  // group once (`skills/skills.json` naming `library/`), and each instance's
+  // same-named `skills/library/` is a member of it. And a MEMBER's own
+  // declaration file is read as well as the declarer's — before this, sci's
+  // `skills/skills.json` (naming `lean/`, `data/`, `voices/`) was read only
+  // when sci was resolved ALONE, because in sci's chain `skills` is
+  // cat-harness's entry and only cat-harness's `skills.json` was opened. A
+  // worklist, so a member's from-within entry gets members of its own.
+  const out: ResolvedDirectory[] = [...byId.values()].map((d) => ({ ...d, member: d.member ?? d.declaredBy }));
+  const seen = new Set(out.map((d) => d.absPath));
+  const nameOf = new Map(chain.map((l) => [l.root, readDeclaration(l.root, registry)?.name ?? l.name]));
+  const work = [...out];
+  while (work.length > 0) {
+    const d = work.shift()!;
+    if (d.scope === "repository") continue;
+    for (const link of chain) {
+      const abs = resolve(link.root, d.path);
+      if (seen.has(abs) || !existsSync(abs)) continue;
+      seen.add(abs);
+      const member = nameOf.get(link.root) ?? link.name;
+      const m = { ...d, absPath: abs, own: link.own === true, member };
+      out.push(m);
+      work.push(m);
+      for (const nd of declaredFromWithin(m.absPath, m.graphKinds, registry)) {
+        const nAbs = join(m.absPath, nd.sub);
+        if (seen.has(nAbs)) continue;
+        seen.add(nAbs);
+        const e = {
+          ...nd.entry,
+          path: `${d.path.replace(/\/+$/, "")}/${nd.sub}/`,
+          declaredBy: member,
+          absPath: nAbs,
+          own: m.own,
+          member,
+          within: d.id,
+        } as ResolvedDirectory;
+        out.push(e);
+        work.push(e);
+      }
+    }
+  }
+  return out;
+}
+
+/**
+ * The instance directories a directory's kind-declaration file names FROM
+ * WITHIN (`"subgraph": true` entries), unresolved: each with its single path
+ * segment `sub`. Unparseable or absent files yield nothing —
+ * `check:harness-dirs` owns that finding.
+ */
+function declaredFromWithin(
+  absPath: string,
+  graphKinds: readonly string[],
+  registry: GraphKindRegistry,
+): Array<{ sub: string; entry: ContentDirectory }> {
+  const files = graphKinds
+    .map((g) => registry.get(g)?.declarationFile)
+    .filter((f): f is string => typeof f === "string");
+  const out: Array<{ sub: string; entry: ContentDirectory }> = [];
+  for (const f of [...new Set(files)]) {
+    const p = join(absPath, f);
+    if (!existsSync(p)) continue;
+    let nested: { directories?: Array<Record<string, unknown>> };
+    try {
+      nested = JSON.parse(readFileSync(p, "utf-8"));
+    } catch {
+      continue;
+    }
+    for (const nd of nested.directories ?? []) {
+      if (typeof nd.id !== "string" || typeof nd.path !== "string" || nd.subgraph !== true) continue;
+      const sub = nd.path.replace(/^\.\//, "").replace(/\/+$/, "");
+      out.push({ sub, entry: nd as unknown as ContentDirectory });
+    }
+  }
+  return out;
 }
 
 /**
@@ -3980,7 +4274,12 @@ function promoteFromWithin(
       continue; // `check:harness-dirs` owns an unparseable declaration and says so
     }
     for (const nd of nested.directories ?? []) {
-      if (typeof nd.id !== "string" || typeof nd.path !== "string" || nd.dependents === undefined) continue;
+      // `"subgraph": true` marks an entry that is a subgraph of the INSTANCE
+      // (skills.json's `voices`), not a part of its parent's graph
+      // (beans.json's `defs`, docs.json's `proposals`). It answered the retired
+      // `dependents` question until 2026-09-30 (option A); the fact it carried
+      // here was never about dependents, so it is now stated as what it is.
+      if (typeof nd.id !== "string" || typeof nd.path !== "string" || nd.subgraph !== true) continue;
       // An instance-level DECLARATION with this id wins; a built-in DEFAULT
       // (`declaredBy: "(default)"`, e.g. `skills/voices`) is a convention, and
       // a from-within declaration is stronger than a convention.
@@ -4655,6 +4954,20 @@ export interface MaterialisedDirectory {
 }
 
 /**
+ * Does each instance have its own directory of every kind this one holds
+ * ({@link GraphKindDef.perInstance})? Such a directory is reproduced in each
+ * dependent by {@link materialiseDirectories}; an unregistered kind has said
+ * nothing, so it is not.
+ */
+export function isPerInstance(
+  dir: Pick<ContentDirectory, "graphKinds">,
+  registry: GraphKindRegistry = defaultGraphKinds,
+): boolean {
+  const kinds = dir.graphKinds ?? [];
+  return kinds.length > 0 && kinds.every((k) => registry.get(resolveGraphKind(k).kind)?.perInstance === true);
+}
+
+/**
  * Create every declared directory that does not exist yet, in the instance
  * being set up.
  *
@@ -4716,7 +5029,14 @@ export function materialiseDirectories(
     // the cross-instance overlay still serves the dependency's skills through
     // `skill_list` and `skill_fetch`. The only thing suppressed here is
     // `mkdirSync`.
-    if (dir.own !== true && dir.dependents === "skip") continue;
+    // Option A (owner 2026-09-30): "make dependents: reproduce automatic
+    // behaviour so [we] don't need it." Whether an inherited entry is created
+    // here is now read from its graph KIND ({@link GraphKindDef.perInstance}):
+    // a folio has its own `uploads/`, `library/`, `docs/`, work plan; it has
+    // no use for an empty `schemas/` or `tools/`. Anything else is a MEMBER of
+    // the inherited subgraph exactly where it already exists, never created
+    // empty (the `dh4f` rule); a repository-scoped entry has one location.
+    if (dir.own !== true && (dir.scope === "repository" || !isPerInstance(dir))) continue;
     const base = rootForScope(rootAbs, dir.scope);
     const abs = resolve(base, dir.path);
     const rel = relative(base, abs);
@@ -5451,7 +5771,6 @@ export function toJsonLd(
       path: termIri("path"),
       directories: termIri("scans"),
       scope: termIri("scope"),
-      dependents: termIri("dependents"),
       // What a directory holds, as the kinds' own individuals — the same
       // property kg-export writes (`dcterms:type`, via `propertyIri`).
       holdsGraph: { "@id": propertyIri("holdsGraph"), "@type": "@id" },
@@ -5485,10 +5804,6 @@ export function toJsonLd(
         // One stays a string, several become a list — JSON-LD permits both.
         holdsGraph: kinds.length === 1 ? kinds[0] : kinds,
         path: d.path,
-        // `dependents` is REQUIRED, so a projection that dropped it produced a
-        // document that no longer parses as a declaration — caught by the
-        // round-trip test rather than by review.
-        dependents: d.dependents,
         // ...and `scope` was ALREADY being dropped, silently, because it is
         // optional: a declaration round-tripped through JSON-LD came back
         // saying every path resolves against the instance. `beans/`, `todos/`

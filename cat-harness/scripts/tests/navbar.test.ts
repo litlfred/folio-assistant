@@ -246,20 +246,35 @@ describe("at rest it is a strip, and opens three ways", () => {
 
   it("opens on hover, on keyboard focus, and on the pinned checkbox", () => {
     expect(css).toContain(
-      `.fa-nav:hover,.fa-nav:focus-within,.fa-nav:has(.fa-nav-open:checked){width:${NAV_OPEN_PX}px}`,
+      `.fa-nav:hover,.fa-nav:has(:focus-visible),.fa-nav:has(.fa-nav-open:checked){width:${NAV_OPEN_PX}px}`,
     );
   });
 
-  it("shows the [x] only while pinned", () => {
-    expect(css).toContain(".fa-nav-close{display:none}");
-    expect(css).toContain(".fa-nav:has(.fa-nav-open:checked) .fa-nav-close");
+  it("renders no [x] and no ☰ — the header is the one control (#1757)", () => {
+    const html = navbarHtml(model);
+    expect(html).not.toContain("fa-nav-close");
+    expect(html).not.toContain("&#9776;");
+    expect(html).not.toContain("☰");
+    expect(css).not.toContain(".fa-nav-close");
   });
 
-  it("both controls drive ONE checkbox", () => {
+  it("ONE control drives the checkbox, and it is the header", () => {
     const html = navbarHtml(model);
     const id = /<input[^>]*class="fa-nav-open"[^>]*id="([^"]+)"/.exec(html)?.[1];
     expect(id).toBeDefined();
-    expect([...html.matchAll(new RegExp(`for="${id}"`, "g"))]).toHaveLength(2);
+    const labels = [...html.matchAll(new RegExp(`<label class="([^"]+)" for="${id}"`, "g"))];
+    expect(labels.map((m) => m[1])).toEqual(["fa-nav-head"]);
+  });
+
+  it("the header carries the instance's mark — its initial when no avatar is declared", () => {
+    const html = navbarHtml({ ...model, instance: "who-iris" });
+    expect(region(html, "fa-nav-top")).toMatch(/<span class="fa-nav-glyph[^"]*"[^>]*>W<\/span>/);
+  });
+
+  it("the header carries the declared avatar when there is one", () => {
+    const html = navbarHtml({ ...model, mark: { avatar: { src: "../a.svg" }, tone: 268 } });
+    expect(region(html, "fa-nav-top")).toContain('<img src="../a.svg" alt="">');
+    expect(region(html, "fa-nav-top")).toContain("hsl(268 45% 28%)");
   });
 
   it("escapes what it is given", () => {
@@ -400,10 +415,13 @@ describe("every declared graph reaches the navbar, linked or not", () => {
     // `bjzs`). The list grew because the instance did, exactly as it did for
     // `code`; pinning it at seven would make the assertion a statement about
     // 2026-09-26 rather than about the declaration.
-    // TEN since 2026-10-01: `glossary` and `voices` joined when the WHO style
-    // guide was folded into who-iris as a subgraph (bean `qsx4`) — the voices
-    // declared from within `skills/skills.json`, the glossary in who-iris.json.
-    expect(kinds()).toEqual(["catalogue", "code", "docs", "glossary", "library", "qa", "skills", "themes", "uploads", "voices"]);
+    // ELEVEN since 2026-10-01: `schemas` joined when who-iris took its own
+    // source descriptor (`sources/`) and generated lookup (`id-lookup/`, kind
+    // `code`) from large-datasets (bean `j7ql`); `glossary` and `voices` joined
+    // when the WHO style guide was folded into who-iris as a subgraph (bean
+    // `qsx4`) — the voices declared from within `skills/skills.json`, the
+    // glossary in who-iris.json. Same reason as both above.
+    expect(kinds()).toEqual(["catalogue", "code", "docs", "glossary", "library", "qa", "schemas", "skills", "themes", "uploads", "voices"]);
   });
 
   it("links exactly the kinds it was told are published", () => {
@@ -425,6 +443,8 @@ describe("every declared graph reaches the navbar, linked or not", () => {
       // per-instance graph page. Declared-and-unrendered is the state this
       // assertion keeps visible.
       "qa",
+      // `schemas` (who-iris/sources/, bean `j7ql`) publishes no page either.
+      "schemas",
       "skills",
       "themes",
       "uploads",
@@ -667,14 +687,42 @@ describe("the document index — `documentIndexOf`", () => {
     expect(html).toContain("fa-nav-graphs");
   });
 
-  it("sits in the FIXED top, with the instance", () => {
+  it("is the page's OWN section: first in the middle, the only group open (#1757)", () => {
     const html = injectRail(page(`<h2 id="a">A</h2><h2 id="b">B</h2>`), {
       instance: "who-iris",
       toRoot: "..",
       links: [],
     });
-    expect(region(html!, "fa-nav-top")).toContain('href="#a"');
-    expect(region(html!, "fa-nav-graphs")).not.toContain('href="#a"');
+    // It moved OUT of the fixed top: there it arrived folded while Graphs
+    // arrived open — the one section about this page was the one you had to open.
+    expect(region(html!, "fa-nav-top")).not.toContain('href="#a"');
+    const graphs = region(html!, "fa-nav-graphs");
+    expect(graphs).toContain('href="#a"');
+    const open = [...graphs.matchAll(/<details class="fa-nav-group"( open)?><summary>[\s\S]*?<span class="fa-nav-label">([^<]*)</g)];
+    expect(open.filter((m) => m[1]).map((m) => m[2])).toEqual(["Contents"]);
+  });
+
+  it("is named for the visualiser when the caller says which", () => {
+    const html = injectRail(page(`<h2 id="a">A</h2><h2 id="b">B</h2>`), {
+      instance: "cat-harness",
+      toRoot: "..",
+      links: [],
+      visualiserLabel: "todos",
+    });
+    expect(region(html!, "fa-nav-graphs")).toContain('<span class="fa-nav-label">todos</span>');
+  });
+
+  it("prefers a DECLARED visualiser nav over the headings", () => {
+    const decl = `<script type="application/json" data-fa-visualiser-nav>` +
+      `[{"label":"node-x","href":"#node-x","items":[{"label":"t1","href":"#todo-t1"}]}]</script>`;
+    const html = injectRail(page(`${decl}<h2 id="a">A</h2><h2 id="b">B</h2>`), {
+      instance: "cat-harness",
+      toRoot: "..",
+      links: [],
+    });
+    const graphs = region(html!, "fa-nav-graphs");
+    expect(graphs).toContain('href="#todo-t1"');
+    expect(graphs).not.toContain('href="#a"');
   });
 });
 
@@ -918,7 +966,6 @@ describe("the two surfaces differ by DECLARATION, not by branch", () => {
       // The labels still point at the input the FIRST copy rendered, which is
       // the whole mechanism: one control, operated from both copies.
       expect(html).toContain('for="fa-nav-open"');
-      expect(html).toContain("fa-nav-close");
       expect(html).toContain("fa-nav-head");
     });
 

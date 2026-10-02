@@ -17,7 +17,7 @@ archived: true
 Builder, Zod schema, label prefix, viewer registration, constraint rows, QA
 criteria. **There is no `recommendation` kind**: a normative statement is a
 labelled, titled `prose` block
-(`skills/folio-document-adapter/normative-statements.md`). Enumerate the cost
+(`folio-assistant-core/skills/content/folio-document-adapter/normative-statements.md`). Enumerate the cost
 before starting rather than half-doing it.
 
 Known-wrong and predating the document profile: `document-intake.md` maps

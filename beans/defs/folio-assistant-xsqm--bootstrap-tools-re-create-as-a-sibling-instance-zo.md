@@ -1,11 +1,11 @@
 ---
 # folio-assistant-xsqm
 title: 'BOOTSTRAP-TOOLS: re-create as a sibling instance; Zod, generators and checks move down; import cone to zod only'
-status: in-progress
+status: completed
 type: feature
 priority: high
 created_at: 2026-09-29T23:42:57Z
-updated_at: 2026-09-30T08:46:25Z
+updated_at: 2026-10-01T06:58:48Z
 parent: folio-assistant-vke6
 ---
 
@@ -58,7 +58,7 @@ Analysis: session scratchpad `separation-process-analysis.md` (94 beans, cone me
 - [x] check:version-bump reads plain `v<semver>` tags for a standalone repository
 - [x] docs: instance-publication release site per Q3; kg-export namespace table; hosted outputs in kg-audit (role-model) and translation skills; release/tag mechanics. OPEN: bootstrap-graph-publication/emission skills describe a harness artefact from inside bootstrap
 - [x] described (disabled) CI workflow + no npm publish (private) ; which lane runs each tool (bootstrap-tools/AGENTS.md), every command verified from the directory
-- [ ] migration-plan Phase II: left as a record (default B), pointer to kg-separation only
+- [x] ~~migration-plan Phase II: left as a record (default B), pointer to kg-separation only~~ — NOT done here (measured 2026-10-01: `cat-harness/docs/architecture/migration-plan.md` on origin/main names no `kg-separation`); carried forward unchanged to `folio-assistant-syzb` (cat-harness split stage 6), which adds the pointer for both splits
 
 ## Owner ruling, 2026-09-30 — seeding carries NO history
 
@@ -83,3 +83,14 @@ is how to reach it. Seeding still waits on the owner's go.
 - folio-assistant carries them as submodules at bootstrap/ and
   bootstrap-tools/ (owner: root paths, option B); the staged copies are
   packed in fsh-guts/retired/bootstrap-split.tar.gz with a manifest.
+
+
+## Summary of Changes (closed 2026-10-01, on evidence re-derived from the remote)
+
+The split this bean set out to make is done: bootstrap and bootstrap-tools are standalone repositories carried here as submodules.
+- `.gitmodules` on origin/main has two entries, `bootstrap` → https://github.com/litlfred/bootstrap and `bootstrap-tools` → https://github.com/litlfred/bootstrap-tools
+- the tree of origin/main (`b0ca040`) holds gitlinks `bootstrap` @ `f70a56c` and `bootstrap-tools` @ `920c772`
+- both remote repositories answer ls-remote (HEAD `ebfa406` / `03832a8`)
+- `fsh-guts/retired/bootstrap-split.md` + `bootstrap-split.tar.gz` present on origin/main
+
+Child `l9d5` closed the same day on its own re-measured gates. The one item not done — the migration-plan Phase II pointer — is carried to `syzb`. The cat-harness / cat-harness-tools separation (epic `iirv`) follows this bean's method stage for stage.

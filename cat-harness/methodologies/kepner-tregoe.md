@@ -36,7 +36,7 @@ analysis honest: most options die on a MUST, and an analysis that scores every
 option on every axis hides that.
 
 The adverse-consequence pass is the same act as
-[`opening-brief`](../skills/folio-core/opening-brief.md)'s *"what would falsify
+[`opening-brief`](../skills/sdlc/sdlc-core/opening-brief.md)'s *"what would falsify
 the approach"*, arrived at independently. Asking it of the **leader** specifically
 is KT's contribution: the option you are about to take is the one whose failure
 mode you have thought about least.
@@ -48,7 +48,7 @@ sums the products. **This platform does not.** The weights are invented, and the
 arithmetic converts a judgement into a number that reads as a measurement — a
 total of 7.4 against 6.9 looks like evidence and is not. That is the same failure
 as a count quoted from prose, which
-[`uses-editorial-review`](../skills/folio-core/uses-editorial-review.md) and the
+[`uses-editorial-review`](../skills/authoring/authoring-core/uses-editorial-review.md) and the
 `kg:audit` reading rules already refuse.
 
 So WANTs are **stated and compared in prose**, and the comparison says which way

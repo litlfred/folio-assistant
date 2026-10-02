@@ -71,7 +71,7 @@ Una habilidad se define a lo largo de varias capas — no en un único archivo. 
 |------|-----------|--------|
 | **Definición** (roles, capacidades requeridas, requisitos, patrones de enrutamiento, etapas del ciclo de vida, referencia de esquema) | `.claude/skills/local/<skill>.json` | ✅ las 22 habilidades de autoría — validadas en CI mediante `scripts/validate-skills.ts` |
 | **Contrato tipado** (JSON Schema de entrada/salida) | `schemas/skills/<skill>/` | ✅ las 22 — consulta la [referencia](../reference/skills/) |
-| **Cuerpo de instrucciones** (guía práctica en prosa que carga el LLM) — consúltalas en la referencia de [Instrucciones de habilidades](../reference/skill-instructions/) | `skills/content-lifecycle/*.md`, `skills/folio-*-adapter/*.md`, `src/skills/*.md` | ✅ habilidades de ciclo de vida, agente, paquete de plataforma y **folio-document-adapter**; ⏳ **los cuerpos de authoring-math / authoring-who-smart-guidelines están pendientes (TBD)** (esos paquetes incluyen el manifiesto y las definiciones JSON) |
+| **Cuerpo de instrucciones** (guía práctica en prosa que carga el LLM) — consúltalas en la referencia de [Instrucciones de habilidades](../reference/skill-instructions/) | `skills/authoring/content-lifecycle/*.md`, `skills/folio-*-adapter/*.md`, `src/skills/*.md` | ✅ habilidades de ciclo de vida, agente, paquete de plataforma y **folio-document-adapter**; ⏳ **los cuerpos de authoring-math / authoring-who-smart-guidelines están pendientes (TBD)** (esos paquetes incluyen el manifiesto y las definiciones JSON) |
 | **Paquete** (dependencias Docker/tiempo de ejecución) | `skills/<package>/package-manifest.json` | ✅ los cuatro paquetes |
 
 Así que *sí, las habilidades existen* — como definiciones estructuradas + esquemas tipados, con cuerpos
@@ -154,7 +154,7 @@ de contenido, no alternativas entre las que elegir.
 | `bean-coordination` | Disciplina de reclamación/coordinación multiagente |
 | `todo-manager` | Disciplina de beans como tareas pendientes (*beans-as-todos*) |
 
-### Paquetes de habilidades de plataforma (`skills/folio-core`, `skills/folio-document-adapter`, `skills/folio-paper-adapter`)
+### Paquetes de habilidades de plataforma (`skills/folio-core`, `folio-assistant-core/skills/content/folio-document-adapter`, `folio-assistant-sci/skills/content/folio-paper-adapter`)
 
 **Paquetes de plataforma** más amplios, dos de ellos migrados desde el repositorio de contenido qou (consulta el
 [registro de migración](migrations/2026-06-29-platform-skills-migration.html) y el

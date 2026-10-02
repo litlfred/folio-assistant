@@ -4,7 +4,7 @@ nav_exclude: true
 ---
 
 {: .note }
-> Generated from `cat-harness/processes/draft-to-publication.bpmn` by `gen-processes-viz.ts` — do not edit here. [All processes](index.html)
+> Generated from `folio-assistant-core/processes/content/draft-to-publication.bpmn` by `gen-processes-viz.ts` — do not edit here. [All processes](index.html)
 
 {% raw %}
 # Draft, review and publish
@@ -54,7 +54,7 @@ Every one of the 11 step(s) is documented.
 | **Clinical / scientific sign-off**<br>`Task_SmeSignoff` | Clinical / scientific SMEs | [`content-review`](../reference/skill-instructions/content-review.html) | Domain sign-off: clinical SMEs for a guideline, subject-matter reviewers for a paper. |
 | **Open beans for the change requests**<br>`Task_OpenChangeBeans` | Work plan — beans (shared by humans and agents) | [`todo-manager`](../reference/skill-instructions/todo-manager.html)<br>[`content-feedback`](../reference/skill-instructions/content-feedback.html) | Each requested change becomes a bean, so the editors and agents picking the work up next see exactly what review asked for and what is still open. |
 | **Authorise the release**<br>`Task_AuthorizeRelease` | Programme manager (release authority) | [`content-publish`](../reference/skill-instructions/content-publish.html) | Publication requires authorisation by the programme manager or designated authority. |
-| **Version, tag and publish**<br>`Task_PublishRelease` | Publication manager | [`content-publish`](../reference/skill-instructions/content-publish.html)<br>[`ig-publication`](../reference/skill-instructions/ig-publication.html) | Version bump, release notes, tag, build the final artifacts, deploy to the publication platform. |
+| **Version, tag and publish**<br>`Task_PublishRelease` | Publication manager | [`content-publish`](../reference/skill-instructions/content-publish.html)<br>[`ig-publication`](../reference/skill-instructions/ig-publication.html)<br>[`render-kg-to-cdn`](../reference/skill-instructions/render-kg-to-cdn.html) | Version bump, release notes, tag, build the final artifacts, deploy to the publication platform. The deploy is the general render-kg-to-cdn step with the RELEASE root as its publication root URL — the same step a staging preview takes with a root under it; the target (GitHub Pages, or a folio's own platform) is chosen by its Tool. |
 | **Close the release beans**<br>`Task_CloseReleaseBeans` | Work plan — beans (shared by humans and agents) | [`todo-manager`](../reference/skill-instructions/todo-manager.html) | What shipped is resolved; what slipped stays open and carries into the next cycle. |
 
 ## Decisions

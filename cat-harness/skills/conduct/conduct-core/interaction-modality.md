@@ -10,7 +10,7 @@ graph-kinds:
 
 # /interaction-modality — ask in a form the person can answer
 
-Process: [`processes/getting-started.bpmn`](../../../processes/getting-started.bpmn),
+Process: [`folio-assistant-core/processes/conduct/getting-started.bpmn`](../../../../folio-assistant-core/processes/conduct/getting-started.bpmn),
 `Task_DetectModality` and `Task_AskIntent`.
 Preferences: `interaction/interaction.json` (committed, read at session start).
 
@@ -126,7 +126,7 @@ about one page on it: *"next time give appropraite link
 …/STAGING/<branch>/who-iris/"*. Linking the root hands the reader a route the
 agent already knew, and hands it to somebody who types with difficulty. Full
 rule, with the failure it also hides:
-[`continual-progress`](../../folio-core/continual-progress.md) §"Link the PAGE, never the site
+[`continual-progress`](../../sdlc/sdlc-core/continual-progress.md) §"Link the PAGE, never the site
 root".
 
 Six parts, in order:
@@ -152,6 +152,8 @@ Six parts, in order:
 explicit question tool: the end-of-turn "next" line, a bean's `## Done when`, a
 PR body asking the author to choose, a comment on an issue. Those are where it
 is most often broken, because they feel like reporting rather than asking.
+A PR body as a whole, not only its question, is governed by
+[`pr-description`](../../sdlc/sdlc-core/pr-description.md).
 
 **Feature work breaks this more than content work, and for a specific reason:
 the agent has just finished an impact analysis, and the vocabulary it built

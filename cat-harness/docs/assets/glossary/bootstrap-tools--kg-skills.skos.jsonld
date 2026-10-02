@@ -32,6 +32,26 @@
       "skos:notation": "bootstrap-contract-semver",
       "dcterms:source": "bootstrap-tools/skills/bootstrap-contract-semver.md",
       "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/bootstrap-tools/ns#glossary/kg-skills/render-kg-to-github-pages",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/bootstrap-tools/ns#glossary/kg-skills"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "render-kg-to-github-pages"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Render a Knowledge Graph, or a list of its Subgraphs, to GitHub Pages at a publication root URL, and report the push: a status (pushed, not pushed, could not determine) and one message carrying the deployed commit and the QA result. The same steps for a staging preview and for a release; only the root URL differs."
+        }
+      ],
+      "skos:notation": "render-kg-to-github-pages",
+      "dcterms:source": "bootstrap-tools/skills/render-kg-to-github-pages.md",
+      "skos:note": "candidate"
     }
   ]
 }

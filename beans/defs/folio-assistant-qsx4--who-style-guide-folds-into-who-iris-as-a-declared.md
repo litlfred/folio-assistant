@@ -32,3 +32,7 @@ z7ev's cross-instance citation is no longer used by these voices: `sources[].ins
 
 ## NOT done — needs a person (deletion-requires-confirmation)
 Three GENERATED files of the retired instance are left at `who-style-guide/test/results/` (README.md subgraph readme, kg-qa.manifest.json byte-identical to who-iris's, kg-qa/scenarios/kg.kg-qa.json — an audit of an instance that no longer exists). Nothing regenerates or moves them, and removing them is a deletion, so they are left for the owner. Until then `check:undeclared-files:check` and the two "this repository, as it stands" tests are red over exactly these 7 KB.
+
+## Owner ruling 2026-10-01 late (recorded on `ga6u` in #1806; appended here as asked)
+
+The who-iris prose that still described the retired `dependents` field is **reworded in this PR's merge of main**, consistent with Q-B's Q1 (REWORD). Done in the 2026-10-02 merge: the themes entry's comment (key renamed `_inheritance_comment`), the docs entry's `_comment` and the `qa` description now describe the current mechanism — the graph kind's `perInstance` setting and nested subgraphs declared with `"subgraph": true`. The same wording in other declarations stays out of scope.

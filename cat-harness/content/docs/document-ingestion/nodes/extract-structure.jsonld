@@ -1,5 +1,10 @@
 {
-  "@context": "https://litlfred.github.io/folio-assistant/ns/content/v1.jsonld",
+  "@context": [
+    "https://litlfred.github.io/folio-assistant/ns/content/v1.jsonld",
+    {
+      "@base": "https://litlfred.github.io/folio/"
+    }
+  ],
   "@id": "site/document-ingestion/nodes/extract-structure",
   "@type": [
     "folio-assistant-core:Figure",
@@ -9,7 +14,7 @@
   "provenance": "authored",
   "title": "Extract structure",
   "text": "extract-structure.md",
-  "sourceDocument": "processes/ingest-extract-structure.bpmn",
+  "sourceDocument": "https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/library/ingest-extract-structure.bpmn",
   "meta": {
     "assetKind": "bpmn",
     "rendered": "assets/img/workflows/ingest-extract-structure.svg",

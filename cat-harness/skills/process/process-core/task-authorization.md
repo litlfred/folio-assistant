@@ -78,7 +78,7 @@ orchestrator) must say **how** it knows who the actor is. A `Principal` carries
 | value | meaning | today |
 |---|---|---|
 | `github` | GitHub authenticated the caller | a GitHub Actions run (`GITHUB_ACTOR`, set by the runner) |
-| `http-gateway` | the auth-gateway's OAuth session, as headers | the HTTP routes, once deployed ([`deployment-auth`](../../folio-core/deployment-auth.md)) |
+| `http-gateway` | the auth-gateway's OAuth session, as headers | the HTTP routes, once deployed ([`deployment-auth`](../../sdlc/sdlc-core/deployment-auth.md)) |
 | `asserted` | an actor id the caller typed | **every local agent session** |
 | `none` | nobody named | a step recorded with no `actor` |
 

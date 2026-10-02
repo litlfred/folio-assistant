@@ -42,6 +42,8 @@ const SCRIPT = join("cat-harness", "scripts", "check-navbar-consistency.ts");
 const CLIENT_INSTANCE = join(REPO, "cat-harness");
 const CLIENT = join(CLIENT_INSTANCE, siteDirFor(CLIENT_INSTANCE), "assets", "js", "docs-ui.js");
 const DECL = join(REPO, "cat-harness", "cat-harness.json");
+// The ROOT instance holds the `beans` tile since placement PR0 (bean `ejye`).
+const ROOT_DECL = join(REPO, "folio-assistant.json");
 
 /** Run the check, returning its exit status and combined output. */
 function run(...args: string[]): { status: number; out: string } {
@@ -113,7 +115,7 @@ describe("the two namespaces stay separate", () => {
   });
 
   test("an unregistered TILE icon fails (a name absent from the registry)", () => {
-    withEdit(DECL, (s) => s.replace('"icon": "beans"', '"icon": "no-such-glyph"'), () => {
+    withEdit(ROOT_DECL, (s) => s.replace('"icon": "beans"', '"icon": "no-such-glyph"'), () => {
       const { status, out } = run("--check");
       expect(out).toContain("unregistered-tile-icon");
       expect(status).toBe(1);
@@ -122,18 +124,29 @@ describe("the two namespaces stay separate", () => {
 });
 
 describe("the fallback is measured, not graded", () => {
+  // PLANTED, not read off the corpus: since `ob3m` finding 11 every declared
+  // tile names a glyph, so a test that waited for the real corpus to have a
+  // miss would pass by finding nothing to report.
+  const unnamed = (src: string): string => src.replace(/("title": "Tools"),\s*"icon": "tools"/, "$1");
+
   test("tiles naming no glyph are reported per instance, with a denominator", () => {
-    const { out, status } = run();
-    expect(out).toMatch(/tile-without-icon/);
-    expect(out).toMatch(/\d+ of \d+ declared tile\(s\) name no icon/);
-    // ADVISORY: `glyphFor`'s fallback is deliberate, so this must not fail the
-    // gate. What was missing was the COUNT — `ob3m` finding 11 had to be taken
-    // by hand off a render.
-    expect(status).toBe(0);
+    withEdit(DECL, unnamed, () => {
+      const { out, status } = run();
+      expect(out).toMatch(/tile-without-icon: cat-harness/);
+      expect(out).toMatch(/\d+ of \d+ declared tile\(s\) name no icon/);
+      // ADVISORY: `glyphFor`'s fallback is deliberate, so this must not fail
+      // the gate. What was missing was the COUNT — `ob3m` finding 11 had to be
+      // taken by hand off a render.
+      expect(status).toBe(0);
+    });
   });
 
   test("it fails under --strict, so the gate can opt in later", () => {
-    expect(run("--strict").status).toBe(1);
+    withEdit(DECL, unnamed, () => expect(run("--strict").status).toBe(1));
+  });
+
+  test("the real corpus has no declared tile on the fallback", () => {
+    expect(run().out).not.toContain("tile-without-icon");
   });
 
   test("the declared-tile denominator is NOT the rendered one", () => {
@@ -190,8 +203,12 @@ describe("the themes set is iterated, not hardcoded", () => {
     // The test was RIGHT to fail. Its name said "at a set size of 1", and the
     // premise expired; asserting a branch that no longer fires would have been
     // a test passing over a state the repository has left.
+    //
+    // `smart-base`, not `smart-trust`, since stage D of the smart-* separation
+    // (#1767): the WHO SMART theme is the template's, so it moved with the
+    // template to smart-base. The set is still 2.
     expect(out).toContain("who-iris");
-    expect(out).toContain("smart-trust");
+    expect(out).toContain("smart-base");
     expect(status).toBe(0);
   });
 

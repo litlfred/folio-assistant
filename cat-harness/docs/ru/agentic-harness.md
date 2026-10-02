@@ -63,13 +63,13 @@ _Эта страница сгенерирована из [`content/docs/agentic-
 
 | Рабочий процесс | Источник BPMN | Условие входа |
 |---|---|---|
-| **Создание контента (paper)** | [`authoring-a-paper.bpmn`](../../processes/authoring-a-paper.bpmn) | Пользователь запрашивает создание контента в фолио статьи (paper) |
-| **Создание контента (document)** | [`authoring-a-document.bpmn`](../../processes/authoring-a-document.bpmn) | Пользователь запрашивает создание контента в фолио документа (document) |
-| **Жизненный цикл контента** | [`content-lifecycle.bpmn`](../../processes/content-lifecycle.bpmn) | Контент проходит этапы validate → render → publish |
-| **Импорт документов** | [`document-ingestion.bpmn`](../../processes/document-ingestion.bpmn) | Пользователь помещает файл в `uploads/` |
-| **От черновика к публикации** | [`draft-to-publication.bpmn`](../../processes/draft-to-publication.bpmn) | Контент переходит из состояния черновика в опубликованное |
-| **Требования CRDM** | [`crdm-requirements.bpmn`](../../processes/crdm-requirements.bpmn) | Агент обнаруживает запрос новой функциональности (feature request) |
-| **Поиск свидетельств** | [`evidence-retrieval.bpmn`](../../processes/evidence-retrieval.bpmn) | Агент ищет свидетельства для подтверждения утверждения |
+| **Создание контента (paper)** | [`authoring-a-paper.bpmn`](../../../folio-assistant-sci/processes/content/authoring-a-paper.bpmn) | Пользователь запрашивает создание контента в фолио статьи (paper) |
+| **Создание контента (document)** | [`authoring-a-document.bpmn`](../../../folio-assistant-core/processes/content/authoring-a-document.bpmn) | Пользователь запрашивает создание контента в фолио документа (document) |
+| **Жизненный цикл контента** | [`content-lifecycle.bpmn`](../../../folio-assistant-core/processes/content/content-lifecycle.bpmn) | Контент проходит этапы validate → render → publish |
+| **Импорт документов** | [`document-ingestion.bpmn`](../../processes/library/document-ingestion.bpmn) | Пользователь помещает файл в `uploads/` |
+| **От черновика к публикации** | [`draft-to-publication.bpmn`](../../../folio-assistant-core/processes/content/draft-to-publication.bpmn) | Контент переходит из состояния черновика в опубликованное |
+| **Требования CRDM** | [`crdm-requirements.bpmn`](../../processes/process/crdm-requirements.bpmn) | Агент обнаруживает запрос новой функциональности (feature request) |
+| **Поиск свидетельств** | [`evidence-retrieval.bpmn`](../../../folio-assistant-core/processes/content/evidence-retrieval.bpmn) | Агент ищет свидетельства для подтверждения утверждения |
 
 **Переходы состояний:** рабочий процесс может быть **приостановлен**, когда пользователь просит
 переключить контекст. Агент фиксирует, где он находился (текущее действие BPMN), и
@@ -121,7 +121,7 @@ _Эта страница сгенерирована из [`content/docs/agentic-
 | **Создание контента** | Написание, редактирование, расширение контента фолио (главы, блоки, разделы) | Рабочий процесс создания (paper или document) |
 | **Рецензирование контента** | Проверка, валидация, обратная связь по существующему контенту | Жизненный цикл контента / рабочий процесс editing-HCI |
 | **Импорт контента** | Импорт исходного документа в фолио | Рабочий процесс импорта документов |
-| **Запрос функциональности** | Запрос новой возможности платформы (см. [crdm-detect](../../skills/crdm/crdm-detect.md)) | Рабочий процесс требований CRDM |
+| **Запрос функциональности** | Запрос новой возможности платформы (см. [crdm-detect](../../skills/sdlc/crdm/crdm-detect.md)) | Рабочий процесс требований CRDM |
 | **Информационный запрос** | Вопрос о платформе, контенте или процессе | Вне процессов — прямой ответ |
 | **Вызов инструмента** | Запуск конкретного инструмента (`content_validate`, `qa_sweep` и т. д.) | Вне процессов — выполнить и отчитаться |
 | **Управление планом работы** | Создание, обновление или запрос beans | Вне процессов — выполнить и отчитаться |
@@ -131,7 +131,7 @@ _Эта страница сгенерирована из [`content/docs/agentic-
 
 Критическая граница классификации пролегает между **созданием контента** и
 **запросом функциональности**. Навык `crdm-detect`
-([`skills/crdm/crdm-detect.md`](../../skills/crdm/crdm-detect.md))
+([`skills/sdlc/crdm/crdm-detect.md`](../../skills/sdlc/crdm/crdm-detect.md))
 предоставляет подробные критерии обнаружения. Краткое правило:
 
 > Если реализация запроса потребует изменений в **folio-assistant**
@@ -264,7 +264,7 @@ _Эта страница сгенерирована из [`content/docs/agentic-
 Когда запрос классифицируется как запрос новой функциональности, агент входит в
 **рабочий процесс требований CRDM**
 ([полная документация](https://litlfred.github.io/folio-assistant/crdm-methodology.html),
-[BPMN](../../processes/crdm-requirements.bpmn)).
+[BPMN](../../processes/process/crdm-requirements.bpmn)).
 
 Рабочий процесс запросов функциональности — это область, где данный документ об оснастке приносит больше всего
 пользы, поскольку он описывает поведение, которое ранее существовало лишь неявно. Процессы
@@ -273,7 +273,7 @@ _Эта страница сгенерирована из [`content/docs/agentic-
 
 ### Как агент входит в CRDM
 
-Логика обнаружения описана в [`skills/crdm/crdm-detect.md`](../../skills/crdm/crdm-detect.md).
+Логика обнаружения описана в [`skills/sdlc/crdm/crdm-detect.md`](../../skills/sdlc/crdm/crdm-detect.md).
 Три сценария:
 
 **Новая сессия, первый запрос — запрос новой функциональности:**
@@ -399,11 +399,11 @@ _Эта страница сгенерирована из [`content/docs/agentic-
 | Стартовый обзор сессии | `AGENTS.md § At session start` | [`AGENTS.md`](../../AGENTS.md) |
 | Протокол beans | `todo-manager.md`, `bean-coordination.md` | [`skills/folio-core/`](../../skills/folio-core/) |
 | Дисциплина коммитов и PR | `AGENTS.md § Commit early, commit often` | [`AGENTS.md`](../../AGENTS.md) |
-| Обнаружение запросов функциональности | `crdm-detect.md` | [`skills/crdm/crdm-detect.md`](../../skills/crdm/crdm-detect.md) |
-| Рабочий процесс требований CRDM | `crdm-requirements-workflow.md` | [`skills/crdm/crdm-requirements-workflow.md`](../../skills/crdm/crdm-requirements-workflow.md) |
-| Создание контента (paper) | навыки authoring-math | [`skills/authoring-math/`](../../skills/authoring-math/) |
-| Создание контента (document) | навыки folio-document-adapter | [`skills/folio-document-adapter/`](../../skills/folio-document-adapter/) |
-| Жизненный цикл контента | навыки content-lifecycle | [`skills/content-lifecycle/`](../../skills/content-lifecycle/) |
+| Обнаружение запросов функциональности | `crdm-detect.md` | [`skills/sdlc/crdm/crdm-detect.md`](../../skills/sdlc/crdm/crdm-detect.md) |
+| Рабочий процесс требований CRDM | `crdm-requirements-workflow.md` | [`skills/sdlc/crdm/crdm-requirements-workflow.md`](../../skills/sdlc/crdm/crdm-requirements-workflow.md) |
+| Создание контента (paper) | навыки authoring-math | `skill_list` → `authoring-math` |
+| Создание контента (document) | навыки folio-document-adapter | `skill_list` → `folio-document-adapter` |
+| Жизненный цикл контента | навыки content-lifecycle | [`skills/authoring/content-lifecycle/`](../../skills/authoring/content-lifecycle/) |
 | Импорт документов | `docs-generation.md` | [`skills/ui/ui-core/docs-generation.md`](../../skills/ui/ui-core/docs-generation.md) |
 | Диспетчеризация и координация | `dispatch-agent.md`, `coordinate.md` | [`skills/folio-core/`](../../skills/folio-core/) |
 | Типы контента и адаптеры | `AGENTS.md § Content types` | [`AGENTS.md`](../../AGENTS.md) |

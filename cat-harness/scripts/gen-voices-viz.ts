@@ -58,7 +58,7 @@ import {
   sourceLinks,
 } from "../schemas/cat-harness.ts";
 import { tileCounts } from "../schemas/tile-count.js";
-import { makeEmit, type ViewerNav } from "./viewer-page.ts";
+import { makeEmit, type ViewerNav, subjectSection } from "./viewer-page.ts";
 import { withRenders } from "./viewer-declarations.js";
 import { libraryResolver, type LibraryResolver } from "./lib/library-links.ts";
 import { SKILL_PAGES_DIR, skillPagesOf } from "./lib/skill-pages.ts";
@@ -491,21 +491,27 @@ if (import.meta.main) {
   // directories present — every one here, the subject's own on a subject page.
   const drawn = (subject?: string): string[] =>
     g.directories.filter((d) => d.present && (subject === undefined || d.instance === subject)).map((d) => d.dir);
-  emitPage(nav)(join(pageDir, "index.html"), withRenders(viewerHtml(dataHref), drawn(), VIEWER_TOOL));
+  // The rail section (#1757): the static regions the script draws into.
+  const regions = [
+    { label: "Summary", id: "badges" },
+    { label: "Directories", id: "dirs" },
+    { label: "Voices", id: "out" },
+  ];
+  const subjects = [...new Set(g.voices.map((v) => v.instance))].sort();
+  emitPage({ ...nav, section: subjectSection(subjects, undefined, regions) })(join(pageDir, "index.html"), withRenders(viewerHtml(dataHref), drawn(), VIEWER_TOOL));
 
   // One page per SUBJECT — the instances whose voices this handler renders.
   // Read from the VOICES rather than from the directory list, so the instance
   // that declares a voices directory and ships none gets no page claiming to
   // show it. It still gets a row in the directories table, which is the
   // honest place for "declared, not present".
-  const subjects = [...new Set(g.voices.map((v) => v.instance))].sort();
   for (const subject of subjects) {
     const sub = viewerPlacement(site, `${handler}/${seg}/${subject}`, seg);
     // The SUBJECT's graphs, not this handler's: the reader is looking at
     // who-iris's voices and the rail should offer who-iris's
     // library and docs. The generator holds the subject; nothing is parsed
     // back out of the path it just composed.
-    emitPage({ ...nav, instance: subject })(join(sub.pageDir, "index.html"), withRenders(viewerHtml(sub.dataHref, subject), drawn(subject), VIEWER_TOOL));
+    emitPage({ ...nav, instance: subject, section: subjectSection(subjects, subject, regions) })(join(sub.pageDir, "index.html"), withRenders(viewerHtml(sub.dataHref, subject), drawn(subject), VIEWER_TOOL));
   }
 
   // ── ORPHANS (bean `ankg`) ──────────────────────────────────────────────

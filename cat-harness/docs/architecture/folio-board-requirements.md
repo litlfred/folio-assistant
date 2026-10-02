@@ -428,7 +428,7 @@ in the corpus in three places, none of which had been read as answering it:
 | | |
 |---|---|
 | `folio-assistant-core/schemas/materialization.ts` | **three states** — `referenced` (we know where, we hold no bytes), `materialized` (the bytes are here), `unknown` (we have not established which) — with **no default**, plus five gates, and `localPath` present **iff** `materialized` |
-| `large-datasets/processes/materialize-remote.bpmn` | the act itself, as an executable **STRICT** process running five gates in a fixed order; `unknown` on any one keeps the node `referenced` |
+| `cat-harness/processes/library/materialize-remote.bpmn` | the act itself, as an executable **STRICT** process running five gates in a fixed order; `unknown` on any one keeps the node `referenced` |
 | `skills/kg/kg-core/directory-conventions.md` | the `catalogue` graph kind — *"a remote catalogue modelled BY REFERENCE … Distinct from `library`: that is content which IS here, this is the shape of a collection of which almost none is"* |
 
 **So: yes.** The knowledge graph is static and modelled by reference;
@@ -448,7 +448,7 @@ declared parts:
 { id: "library", path: "library/", dependents: "reproduce", graphKinds: ["library"] },
 ```
 
-`dependents: "reproduce"` is the schema saying **this is the reader's own
+`dependents: "reproduce"` (retired 2026-09-30; now the `perInstance` flag on the kind) was the schema saying **this is the reader's own
 copy** — the exact fact R27 reaches for, and it predates R27.
 
 **The literal reading would have broken a consumer, and that was found AFTER

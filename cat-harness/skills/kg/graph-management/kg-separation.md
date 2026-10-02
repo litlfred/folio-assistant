@@ -15,7 +15,7 @@ description: >-
 # Knowledge Graph separation — the method
 
 > Skill id: `kg-separation` · Package: `graph-management`
-> Process: [`kg-separation.bpmn`](../../../processes/kg-separation.bpmn)
+> Process: [`kg-separation.bpmn`](../../../processes/kg/kg-separation.bpmn)
 
 Owner, 2026-09-29: *"need replicable process for when KG gets too large to
 handle and skills"*, and on cat-harness: *"follow same methodology/house
@@ -97,11 +97,13 @@ An instance can be planned as a content repository before its `-tools` pair
 is authorised (who-iris, 2026-09-30). Declare it — `separation: "content"` in
 `<name>.json`; the content half of an existing pair is read from the tools
 instance's `supports` and needs nothing — and kg:audit's
-`content-instance-holds-code` fails, naming every code file still inside it.
-It is `major`, not `critical`: nothing is broken, and an owner may tolerate the
-code *for now* (*"iris specific tools for now ok in who-iris/ but make sure
-fails QA finding"*), so it must not fail `kg:audit --check`; but FR-7 has no
-legitimate exceptions, so it is not `minor` either. The remedy splits by what
+`content-instance-holds-code` records a finding naming every code file still
+inside it. It is a `minor` QA **warning**, not a failure, by owner ruling
+(2026-10-01: *"QA warning. not failure.. ok b/c small # tools"*): the owner
+tolerates the code *for now* (*"iris specific tools for now ok in who-iris/"*),
+and the warrant is that the tolerated set is small. It was `major` until then,
+on the argument that FR-7 has no legitimate exceptions. A warning still names
+each file, so the violation is never silent. The remedy splits by what
 the code is: **generic** code (it works for any instance of its kind — any
 DSpace catalogue, any PDF) moves into the platform and takes the instance root
 as an argument; **instance-specific** code waits for `<name>-tools`. Bean
@@ -125,9 +127,9 @@ the work looks finished.
 | 9 | **Authorise** — report what moves, sizes, what breaks, and wait | `administrator` | the owner's answer ([`deletion-requires-confirmation`](../../conduct/conduct-core/deletion-requires-confirmation.md)) |
 | 10 | **Seed**: the owner creates the repositories; seed `main`, then the content and tools as reviewed PRs, with history | `administrator`, then `authoring-agent` | the seeding PRs reviewed and green |
 | 11 | **Parent consumes, additively**: pin (a SHA while staging, a version once released), repoint imports, keep the parent's copy | `platform-authoring-agent` | the parent green with the dependency declared; `check:published-refs` |
-| 12 | **First release**: tag, publish `/<version>/` and `/v<major>/` | `publication-manager` | `check:version-bump`; every identifier dereferences ([`publish-verification`](../../folio-core/publish-verification.md)) |
+| 12 | **First release**: tag, publish `/<version>/` and `/v<major>/` | `publication-manager` | `check:version-bump`; every identifier dereferences ([`publish-verification`](../../sdlc/sdlc-core/publish-verification.md)) |
 | 13 | **Cutover**: the one commit deleting the parent's copy | `administrator` | only after 11 and 12 are green |
-| 14 | **Independent refinement**: each new release adopted by the parent as a reviewed step | `authoring-agent` | [`upstream-version-adoption`](../../folio-core/upstream-version-adoption.md) |
+| 14 | **Independent refinement**: each new release adopted by the parent as a reviewed step | `authoring-agent` | [`upstream-version-adoption`](../../sdlc/sdlc-core/upstream-version-adoption.md) |
 
 **Nothing is committed to the new repositories before stage 10**, and stage 10
 starts only when the owner says so. Until then the pair is staged as sibling

@@ -16,11 +16,11 @@
       "findings": []
     },
     "skill-in-role-or-process": {
-      "result": "unknown",
+      "result": "fail",
       "findings": [
         {
-          "where": "—",
-          "detail": "no role graph declared."
+          "where": "dublin-core-renderings",
+          "detail": "no role carries \"dublin-core-renderings\" and no activity names it — reached, if at all, by direct invocation. In this instance's graph only (read: `skills` at `skills/`, `scenarios` at `scenarios/`, `processes` at `processes/`, `core-skills` at `skills/`, `core-processes` at `processes/`) — a nested instance may name it, and this audit does not read one."
         }
       ]
     },
@@ -133,8 +133,8 @@
   },
   "totals": {
     "pass": 9,
-    "fail": 0,
+    "fail": 1,
     "n/a": 12,
-    "unknown": 1
+    "unknown": 0
   }
 }

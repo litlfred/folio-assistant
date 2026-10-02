@@ -18,6 +18,7 @@ package "folio-assistant-core/core-library" as pkg_folio_assistant_core_core_lib
   class "folio-image-verdicts/v1" as folio_assistant_core_core_library_folio_image_verdicts_v1 <<ts: VerdictFile>> #f4f4f1 {
     inspected_by [1] : unknown
     inspected_at [1] : string
+    attribution [0..1] : Record<string, { inspected_by: unknown; inspected_at: string }>
     verdicts [1] : Record<string, Record<string, Verdict>>
   }
 }

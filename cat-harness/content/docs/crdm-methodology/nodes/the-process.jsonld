@@ -1,5 +1,10 @@
 {
-  "@context": "https://litlfred.github.io/folio-assistant/ns/content/v1.jsonld",
+  "@context": [
+    "https://litlfred.github.io/folio-assistant/ns/content/v1.jsonld",
+    {
+      "@base": "https://litlfred.github.io/folio/"
+    }
+  ],
   "@id": "site/crdm-methodology/nodes/the-process",
   "@type": [
     "folio-assistant-core:Figure",
@@ -9,7 +14,7 @@
   "provenance": "authored",
   "title": "The process",
   "text": "the-process.md",
-  "sourceDocument": "processes/crdm-requirements.bpmn",
+  "sourceDocument": "https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/process/crdm-requirements.bpmn",
   "meta": {
     "assetKind": "bpmn",
     "rendered": "assets/img/workflows/crdm-requirements.svg",

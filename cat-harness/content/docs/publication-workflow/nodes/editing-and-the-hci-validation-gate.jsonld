@@ -1,5 +1,10 @@
 {
-  "@context": "https://litlfred.github.io/folio-assistant/ns/content/v1.jsonld",
+  "@context": [
+    "https://litlfred.github.io/folio-assistant/ns/content/v1.jsonld",
+    {
+      "@base": "https://litlfred.github.io/folio/"
+    }
+  ],
   "@id": "site/publication-workflow/nodes/editing-and-the-hci-validation-gate",
   "@type": [
     "folio-assistant-core:Figure",
@@ -9,7 +14,7 @@
   "provenance": "authored",
   "title": "Editing and the HCI validation gate",
   "text": "editing-and-the-hci-validation-gate-lead.md",
-  "sourceDocument": "processes/editing-hci-validation.bpmn",
+  "sourceDocument": "https://github.com/litlfred/folio-assistant/blob/main/folio-assistant-core/processes/content/editing-hci-validation.bpmn",
   "meta": {
     "assetKind": "bpmn",
     "rendered": "assets/img/workflows/editing-hci-validation.svg",

@@ -6,7 +6,7 @@ generated: cat-harness/scripts/gen-skill-commands.ts
 
 # /lean-cache-restore
 
-Run the `lean-cache-restore` skill. Read [`cat-harness/skills/folio-paper-adapter/lean-cache-restore.md`](../../cat-harness/skills/folio-paper-adapter/lean-cache-restore.md) and follow it.
+Run the `lean-cache-restore` skill. Read [`folio-assistant-sci/skills/content/folio-paper-adapter/lean-cache-restore.md`](../../folio-assistant-sci/skills/content/folio-paper-adapter/lean-cache-restore.md) and follow it.
 
 This command is a pointer, generated from that skill's `user_invocable: true`; the
 instructions live in the skill and nowhere else. The same skill is also served as the

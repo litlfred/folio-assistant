@@ -70,8 +70,8 @@ bun run src/index.ts --check-deps      # what this environment can do
 | Где | Что это дает |
 |---|---|
 | `skills/folio-core/` | не зависит от контента: координация, наблюдатели, QA, рендеринг, библиография |
-| `skills/folio-paper-adapter/` | статьи: Lean, LaTeX, доказательства, симуляторы |
-| `skills/authoring-who-smart-guidelines/` | WHO SMART DAK / IG |
+| `folio-assistant-sci/skills/content/folio-paper-adapter/` | статьи: Lean, LaTeX, доказательства, симуляторы |
+| `smart-base/skills/content/authoring-who-smart-guidelines/` | WHO SMART DAK / IG |
 | [Справочник по схемам навыков](../../reference/skills/) | сгенерированный контракт ввода/вывода для каждого навыка |
 | [Инструкции по навыкам](../../reference/skill-instructions/) | сгенерированные полные тексты инструкций |
 | [Навыки и роли](../../skills.html) | композиция навыков, ролей и возможностей |
@@ -135,8 +135,8 @@ beans update <id> --status in-progress    # CLAIM before you work
 параллельное хранилище задач. Не используйте `beans create` для массовых машинно-генерируемых
 очередей (`*.qa.json`, файлы свидетельств) — они остаются в виде массового JSON.
 
-Полные правила работы: `skills/folio-core/todo-manager.md`,
-`skills/folio-core/bean-coordination.md`.
+Полные правила работы: `skills/sdlc/sdlc-core/todo-manager.md`,
+`skills/sdlc/sdlc-core/bean-coordination.md`.
 
 ## 7. Файлы QA и оси
 

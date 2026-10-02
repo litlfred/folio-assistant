@@ -68,15 +68,47 @@
  */
 
 import { existsSync, mkdirSync, readdirSync, readFileSync, rmSync, statSync, writeFileSync } from "fs";
-import { join } from "path";
-import { CONTENT_CONTEXT_URL, typesForKind } from "../../schemas/jsonld";
+import { basename, dirname, join } from "path";
+import { CONTENT_DOCUMENT_CONTEXT, typesForKind } from "../../schemas/jsonld";
 import { LABEL_PREFIXES } from "../../schemas/constraints";
 import { findContentRepoRoot } from "./repo-root";
-import { directoriesForGraph } from "../../schemas/cat-harness.js";
 import type { DocumentImage, ImagesSidecar } from "../../schemas/document-image.ts";
 import { buildTabularNodes, tabularShapeOf } from "./tabular-nodes.ts";
 import { TABULAR_CSVW_FILENAME } from "../../schemas/tabular-csvw.ts";
 import { readStructure, STRUCTURE_FILENAME } from "../../schemas/document-structure.ts";
+import type { INGEST_RUNGS } from "../../schemas/site-indexes.ts";
+import { corpusDirectoriesForGraph } from "../../schemas/harness-config.js";
+import {
+  readTitleCandidates,
+  resolveLibraryTitle,
+  structureTitleCandidates,
+  type LibraryTitleSource,
+} from "./library-title.ts";
+
+/** A resolved manifest title and where it came from (issue #1794). */
+export interface ManifestTitle {
+  title: string;
+  source: LibraryTitleSource;
+  /** `<file> <field>` it was read from; absent for `slug`. */
+  from?: string;
+}
+
+/**
+ * The manifest fields that carry the title's provenance. `meta.title_source`
+ * is one of `LIBRARY_TITLE_SOURCES`, and `check:library-qa` judges against it.
+ */
+function titleMeta(t: ManifestTitle, md?: Structure["metadata"]): Record<string, unknown> {
+  return {
+    title_source: t.source,
+    title_from: t.from,
+    // Bean `w6fu`: an editor's title and a corroborated one are each a CHECKED
+    // title, and a corrected one keeps what extraction said beside it, so a
+    // correction never passes for an extraction.
+    title_verified: t.source === "editorial" || t.source === "corroborated" ? true : undefined,
+    title_correction:
+      t.source === "editorial" && md?.title_correction ? { ...md.title_correction, extracted: md.title ?? null } : undefined,
+  };
+}
 
 interface StructureSection {
   id: string;
@@ -93,7 +125,15 @@ interface Structure {
   _schema?: string;
   doc_id: string;
   source?: { file?: string; sha256?: string; pages?: number };
-  metadata?: { title?: string | null; authors_raw?: string | null; arxiv?: string | null; doi?: string | null };
+  metadata?: {
+    title?: string | null;
+    authors_raw?: string | null;
+    arxiv?: string | null;
+    doi?: string | null;
+    title_source?: string;
+    title_verified?: boolean;
+    title_correction?: { title: string; basis: string; corrected_on: string; bean?: string };
+  };
   sections?: StructureSection[];
 }
 
@@ -178,7 +218,18 @@ export function buildDocumentNodes(
   hasSectionMd: (sid: string) => boolean,
   images?: ImagesSidecar,
   licence?: unknown,
+  titled?: ManifestTitle,
 ): Array<{ path: string; content: string }> {
+  // Without a resolved title (a test, a caller with no disk), resolve from the
+  // structure alone: the Info dictionary or a text heading, never the page-1
+  // parse, then the slug. The walk passes one that has asked the catalogue.
+  const resolvedTitle: ManifestTitle =
+    titled ??
+    (() => {
+      const st = structureTitleCandidates(structure as unknown as Record<string, unknown>);
+      const r = resolveLibraryTitle({ slug: docId, ...st.candidates });
+      return { ...r, from: r.source === "slug" ? undefined : st.from[r.source] };
+    })();
   const out: Array<{ path: string; content: string }> = [];
   const sections = structure.sections ?? [];
 
@@ -340,11 +391,16 @@ export function buildDocumentNodes(
     content: node({
       "@id": docIri(docId, "manifest"),
       "@type": ["folio-assistant-core:SourceDocument"],
-      title: structure.metadata?.title ?? docId,
+      // NEVER the unverified `structure.metadata.title` — the page-1 parse
+      // (#1794, ruling of 2026-10-01). An editor's `title_correction` and a
+      // corroborated extraction (bean `w6fu`, ruling of 2026-10-02 on #1838)
+      // each have a slot. See `library-title.ts` for the order.
+      title: resolvedTitle.title,
       contains: sectionIris,
       provenance: "ingested",
       meta: {
         doc_id: docId,
+        ...titleMeta(resolvedTitle, structure.metadata),
         source_file: structure.source?.file,
         source_sha256: structure.source?.sha256,
         pages: structure.source?.pages,
@@ -366,7 +422,7 @@ export function buildDocumentNodes(
 
 /** Serialise, dropping undefined so output is byte-stable. */
 function node(doc: Record<string, unknown>): string {
-  const clean: Record<string, unknown> = { "@context": CONTENT_CONTEXT_URL };
+  const clean: Record<string, unknown> = { "@context": CONTENT_DOCUMENT_CONTEXT };
   for (const [k, v] of Object.entries(doc)) {
     if (v === undefined) continue;
     if (Array.isArray(v) && v.length === 0) continue;
@@ -385,7 +441,7 @@ function readJson<T>(path: string): T | undefined {
 }
 
 /** Which ingest rung an entry is on — bean `p67i`. */
-export type IngestRung = "paged" | "tabular" | "none";
+export type IngestRung = (typeof INGEST_RUNGS)[number];
 
 /**
  * The input file that puts an entry on each rung, in precedence order.
@@ -398,6 +454,9 @@ export type IngestRung = "paged" | "tabular" | "none";
 export const RUNG_INPUT: ReadonlyArray<readonly [IngestRung, readonly string[]]> = [
   ["paged", [STRUCTURE_FILENAME]],
   ["tabular", ["tabular.jsonld", TABULAR_CSVW_FILENAME]],
+  // A source RECORDED and not held (bean `scfh`): `referenced-source.py`
+  // writes the record, and this writes the manifest, as for every other rung.
+  ["referenced", ["referenced.json"]],
 ];
 
 /**
@@ -516,6 +575,18 @@ export type EntryOutcome =
   /** An input is there and did not parse. Undetermined, and it fails. */
   | { state: "unreadable"; rung: IngestRung };
 
+/** Resolve an entry's title by the authority order, or `undefined` if a record it names will not read. */
+function entryTitle(
+  dir: string,
+  docId: string,
+  pre: Parameters<typeof readTitleCandidates>[2],
+): ManifestTitle | undefined {
+  const read = readTitleCandidates(dir, docId, pre);
+  if (read.unreadable.length) return undefined;
+  const r = resolveLibraryTitle(read.candidates);
+  return { ...r, from: r.source === "slug" ? undefined : read.from[r.source] };
+}
+
 export function buildEntryNodes(docId: string, dir: string): EntryOutcome {
   // Two ingest rungs reach this walk, and a tabular entry has no Stage A
   // output at all — no `structure.json`, no `sections/*.md` — so it is not a
@@ -534,6 +605,10 @@ export function buildEntryNodes(docId: string, dir: string): EntryOutcome {
     const candidates = readJson<Candidates>(join(dir, "candidates.json"));
     const images = readJson<ImagesSidecar>(join(dir, "images.json"));
     const licence = readLicence(dir);
+    // A catalogue node names a record that will not read: the title cannot be
+    // determined, and the slug over a record that exists is the R8 defect.
+    const titled = entryTitle(dir, docId, { structure: read.raw as Record<string, unknown> });
+    if (!titled) return { state: "unreadable", rung };
     return {
       state: "built",
       rung,
@@ -544,6 +619,7 @@ export function buildEntryNodes(docId: string, dir: string): EntryOutcome {
         (sid) => existsSync(join(dir, "sections", `${sid}.md`)),
         images,
         licence,
+        titled,
       ),
     };
   }
@@ -557,17 +633,60 @@ export function buildEntryNodes(docId: string, dir: string): EntryOutcome {
     // document here would assert the dataset has no sheets, which is a claim
     // nobody made.
     if (!shape) return { state: "unreadable", rung };
+    // A tabular record's `title` is its source FILE name (`tabularShapeOf`),
+    // which is never a title. It goes in as a source file so nothing that
+    // merely repeats it can be taken for one.
+    const titled = entryTitle(dir, docId, { sourceFiles: shape.title ? [shape.title] : [] });
+    if (!titled) return { state: "unreadable", rung };
     return {
       state: "built",
       rung,
       files: buildTabularNodes(shape, {
-        title: shape.title ?? docId,
+        title: titled.title,
         iri: (rest) => docIri(docId, rest),
         // Where the headers and shape came from. The manifest points at
         // sheets and blocks; without this nothing in the graph says which
         // record produced them.
-        meta: { tabular_record: record?.$schema, licence: readLicence(dir) },
+        meta: { ...titleMeta(titled), tabular_record: record?.$schema, licence: readLicence(dir) },
       }),
+    };
+  }
+
+  if (rung === "referenced") {
+    const record = readJson<{
+      identity?: { title?: string };
+      source?: { file?: string; sha256?: string };
+    }>(join(dir, "referenced.json"));
+    if (!record?.source?.sha256) return { state: "unreadable", rung };
+    const titled = entryTitle(dir, docId, {
+      referenced: record as Record<string, unknown>,
+      sourceFiles: record.source.file ? [record.source.file] : [],
+    });
+    if (!titled) return { state: "unreadable", rung };
+    const manifest = {
+      "@context": CONTENT_DOCUMENT_CONTEXT,
+      "@id": docIri(docId, "manifest"),
+      "@type": ["folio-assistant-core:SourceDocument"],
+      title: titled.title,
+      // EMPTY on purpose: the entry holds no content nodes. The manifest says
+      // the source exists and that none of it is held here.
+      contains: [],
+      // The same value every manifest carries; `disposition` below says that
+      // none of the source's text is held.
+      provenance: "ingested",
+      meta: {
+        doc_id: docId,
+        ...titleMeta(titled),
+        source_file: record.source.file,
+        source_sha256: record.source.sha256,
+        disposition: "referenced source — recorded, text withheld by licence",
+        licence: readLicence(dir),
+      },
+    };
+    return {
+      state: "built",
+      rung,
+      files: [{ path: "manifest.jsonld", content: JSON.stringify(manifest, null, 2) + "\n" }],
     };
   }
 
@@ -578,6 +697,24 @@ export function buildEntryNodes(docId: string, dir: string): EntryOutcome {
 
 async function run(): Promise<number> {
   const argv = process.argv.slice(2);
+  // ONE entry directory, wherever it is — a STAGED entry, before promotion.
+  // `ingest-document.ts` runs this as the `referenced` rung's manifest arm
+  // (bean `scfh`), so the manifest has one writer whether the entry is staged
+  // or already in a library.
+  if (argv.includes("--entry")) {
+    const dir = argv[argv.indexOf("--entry") + 1]!;
+    const outcome = buildEntryNodes(basename(dir), dir);
+    if (outcome.state !== "built") {
+      console.error(`gen-library-jsonld: ${dir}: ${outcome.state}`);
+      return 1;
+    }
+    for (const f of outcome.files) {
+      mkdirSync(dirname(join(dir, f.path)), { recursive: true });
+      writeFileSync(join(dir, f.path), f.content);
+    }
+    console.log(`ok  ${basename(dir)}  ${outcome.files.length} file(s), rung ${outcome.rung}`);
+    return 0;
+  }
   const check = argv.includes("--check");
   const only = argv.includes("--doc") ? argv[argv.indexOf("--doc") + 1] : undefined;
 
@@ -592,7 +729,7 @@ async function run(): Promise<number> {
   // declared-path-literal: the convention fallback, at the call site so the
   // choice is visible. An absent directory is handled below as "nothing to
   // ingest", which is the determined-empty third state.
-  const declaredLibraries = directoriesForGraph(root, "library");
+  const declaredLibraries = corpusDirectoriesForGraph(root, "library");
   const libraryDirs = (declaredLibraries.length > 0 ? declaredLibraries : [join(root, "library")]).filter(
     (d) => existsSync(d),
   );

@@ -38,6 +38,11 @@
  * than no export: a consumer sees a well-formed graph and cannot tell it is
  * looking at part of one. Bean `dh4f` is the local precedent.
  *
+ * As the `kg:export:check` gate (bean `v556`) it judges the committed
+ * `kg-export*.qa-results.json` sidecars under the declared `test/results/`.
+ *
+ * @covers qa
+ *
  * @module scripts/kg-export
  *
  * @conformsTo dcmi-terms
@@ -47,15 +52,17 @@
  * @conformsTo w3c-rdfs
  * @conformsTo w3c-xsd11-datatypes
  */
-import { readFileSync, readdirSync, existsSync, writeFileSync, mkdirSync } from "node:fs";
+import { readFileSync, readdirSync, existsSync, writeFileSync, mkdirSync, mkdtempSync, rmSync } from "node:fs";
+import { tmpdir } from "node:os";
 import { basename, join, dirname, relative, resolve, sep } from "node:path";
 import { spawnSync } from "node:child_process";
 import { fileURLToPath } from "node:url";
 
 import { NS_PREFIXES, propertyIri, termIri } from "../schemas/namespaces.js";
-import { DCTERMS_NS } from "../schemas/jsonld.js";
+import { applyVocabMapping, contextBindings, vocabMapping, type VocabMapping } from "../schemas/vocab-mapping.js";
+import { STANDARD_PREFIXES } from "../schemas/vocab-mapping-fhir.js";
 import { readPolicyGrants } from "../schemas/odrl.js";
-import { KG_CONTENT_GRAPH_KINDS, declaredAssets, declaredGraphs, declaredKinds, directoriesForGraph, repoRootFor, resolveDirectories, declarationPathIn } from "../schemas/cat-harness.js";
+import { KG_CONTENT_GRAPH_KINDS, declaredAssets, declaredGraphs, declaredKinds, repoRootFor, resolveDirectories, declarationPathIn } from "../schemas/cat-harness.js";
 import { type DependsOnGap, type DependsOnRecord, dependsOnFor } from "../schemas/depends-on.js";
 import { type RoleDef, actorsDir, capabilitiesDir, readRoleGraph } from "../schemas/role-graph.js";
 import { REGISTRY_GROUPS } from "../schemas/kg-node.js";
@@ -82,6 +89,8 @@ import {
   skillMdDirs as knownSkillDirs,
   workflowDirs,
   unpublishedSkills,
+  corpusScopeFor,
+  roleGraphFor,
 } from "./known-skills.js";
 import { auditSchemaNodes } from "./schema-nodes.js";
 import { loadSpecs } from "./external-schemas.js";
@@ -89,9 +98,10 @@ import { declaredNamespaces } from "../schemas/external-schema.js";
 import { toolsOf } from "../tools/discover.js";
 import { skillIoIri } from "./harness-schema-export.js";
 import { stagingFields } from "./staging-stamp.js";
-import { buildQaResult, writeQaResult } from "./qa-results.js";
+import { QA_RESULTS_DIR, buildQaResult, qaResultPath, qaResultState, readQaResult, writeQaResult } from "./qa-results.js";
 import { loadProcessModel } from "../src/workflow/process-model.js";
 import { listDecisions } from "../src/workflow/decision-table.js";
+import { checkoutRootFor, corpusDirectoriesForGraph } from "../schemas/harness-config.js";
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), "..");
 
@@ -102,7 +112,7 @@ const ROOT = join(dirname(fileURLToPath(import.meta.url)), "..");
  * Three times now a hardcoded list has been the bug. First this module listed
  * six directories and missed `schemas/skills/`, reporting 11 BPMN refs as
  * dangling. Then, with that fixed, the same list still omitted
- * `skills/authoring-who-smart-guidelines/` and its siblings, so
+ * `smart-base/skills/content/authoring-who-smart-guidelines/` and its siblings, so
  * `smart-base-tools` — a file that plainly exists — came out as a dangling
  * `declaresSkill` link. `knownSkills()` in `scripts/check-workflow-refs.ts`
  * carries a fourth, differently-wrong copy of the same list.
@@ -128,7 +138,7 @@ const ROOT = join(dirname(fileURLToPath(import.meta.url)), "..");
  * `known-skills.ts` was extracted to prevent, restated one module along.
  */
 function skillMdDirs(root: string = ROOT): string[] {
-  return knownSkillDirs(root).map((p) => p.join("/"));
+  return knownSkillDirs(root, corpusScopeFor(root)).map((p) => p.join("/"));
 }
 
 /**
@@ -173,7 +183,7 @@ const SKILL_IO_DIR = "schemas/skills";
  * DECLARES, and a directory it does not declare is not its graph.
  */
 function findBpmnDirs(root: string = ROOT): string[] {
-  return workflowDirs(root).map((abs) => relative(root, abs));
+  return workflowDirs(root, corpusScopeFor(root)).map((abs) => relative(root, abs));
 }
 
 
@@ -195,6 +205,19 @@ const PROV = "http://www.w3.org/ns/prov#";
 const RDFS = "http://www.w3.org/2000/01/rdf-schema#";
 const SCHEMA = "https://schema.org/";
 const XSD = "http://www.w3.org/2001/XMLSchema#";
+
+/**
+ * A vocabulary-mapping table of THIS instance (the platform's), read once.
+ * Own rather than the exported instance's: a table belongs to the `vocab-map`
+ * Tool that applies it, which lives here, so `--instance ./bootstrap` names
+ * its roles with the same rows (`vocabMappingDirs`).
+ */
+const namingTables = new Map<string, VocabMapping>();
+function namingTable(id: string): VocabMapping {
+  let m = namingTables.get(id);
+  if (m === undefined) namingTables.set(id, (m = vocabMapping(ROOT, id)));
+  return m;
+}
 
 /**
  * The active context, following `WorldHealthOrganization/smart-base`'s
@@ -223,29 +246,32 @@ const XSD = "http://www.w3.org/2001/XMLSchema#";
  */
 export function buildContext(): Record<string, unknown> {
   const link = { "@type": "@id" } as const;
+  const prefixes = { ...NS_PREFIXES, prov: PROV, rdfs: RDFS, schema: SCHEMA, xsd: XSD };
   return {
     "@version": 1.1,
-    ...NS_PREFIXES,
-    prov: PROV,
-    rdfs: RDFS,
-    schema: SCHEMA,
-    xsd: XSD,
+    ...prefixes,
 
     id: "@id",
     type: "@type",
     graph: "@graph",
 
-    name: "rdfs:label",
-    // Dublin Core, not a second `rdfs:label`/`rdfs:comment` (owner,
-    // 2026-09-30, bean `xsqm`: "emphasize preexisting standards … now
-    // align"). The edges below that restate a standard — `partOf`,
-    // `holdsGraph`, `from`/`to`, `implementedBy`, … — resolve through
-    // `propertyIri`, which reads each retired term's `replacedBy` in the
-    // vocabulary; the JSON keys are unchanged, so a plain-JSON reader sees
-    // no difference and an RDF reader sees the standard property.
-    title: `${DCTERMS_NS}title`,
-    description: `${DCTERMS_NS}description`,
-    summary: "rdfs:comment",
+    // `name`, `title`, `description` and `summary`, then a role's
+    // `prefLabel` and `notation`: DERIVED from the vocabulary-mapping tables
+    // rather than restated here (bean `lodp`). `kg-node-naming` is the row
+    // fsh-guts reads too, so "exactly as the main export" is structural
+    // (finding D2); `role-naming` is the row glossary-export reads too, so
+    // one role node is not named two ways (D3). Dublin Core, not a second
+    // `rdfs:label`/`rdfs:comment` (owner, 2026-09-30, bean `xsqm`:
+    // "emphasize preexisting standards … now align"). The edges below that
+    // restate a standard — `partOf`, `holdsGraph`, `from`/`to`,
+    // `implementedBy`, … — resolve through `propertyIri`, which reads each
+    // retired term's `replacedBy` in the vocabulary; the JSON keys are
+    // unchanged, so a plain-JSON reader sees no difference and an RDF reader
+    // sees the standard property.
+    ...contextBindings([namingTable("kg-node-naming"), namingTable("role-naming")], {
+      inContext: prefixes,
+      prefixes: { ...STANDARD_PREFIXES, ...NS_PREFIXES },
+    }),
     generatedAt: { "@id": `${PROV}generatedAtTime`, "@type": `${XSD}dateTime` },
     // Provenance of the SOURCE, as against provenance of the run above.
     sourceCommit: { "@id": `${PROV}wasDerivedFrom`, "@type": "@id" },
@@ -970,15 +996,23 @@ function collectSkills(doc: string, base: string, problems: string[], root: stri
   // Minted by `skillIoIri`, the one function that owns a contract's IRI, so a
   // local contract outside `schemas/skills/<skill>/<io>.schema.json` has no
   // published address and is left unset rather than composed here.
-  const contractIri = (ref: string): string | undefined => {
+  //
+  // Only for a contract THIS instance holds. A skill held higher up names a
+  // contract under its own instance's `schemas/skills/` (placement PR1, bean
+  // `ybwt`), which this instance's schema export does not publish — so minting
+  // an IRI under this base would name a path nothing serves, the defect the
+  // published-paths test exists for. Left unset until that instance publishes.
+  const own = resolve(ROOT);
+  const contractIri = (instanceRoot: string, ref: string): string | undefined => {
     if (isExternalContract(ref)) return ref;
+    if (resolve(instanceRoot) !== own) return undefined;
     const m = new RegExp(`^${SKILL_IO_DIR}/([^/]+)/(input|output)\\.schema\\.json$`).exec(ref);
     return m ? skillIoIri(base, m[1]!, m[2]!) : undefined;
   };
   for (const c of skillContracts(root).values()) {
     const s = get(c.skill);
-    if (c.input !== undefined) s.inputSchema = contractIri(c.input);
-    if (c.output !== undefined) s.outputSchema = contractIri(c.output);
+    if (c.input !== undefined) s.inputSchema = contractIri(c.instanceRoot, c.input);
+    if (c.output !== undefined) s.outputSchema = contractIri(c.instanceRoot, c.output);
   }
 
   // The skill documenting an unpublished kind is itself unpublished — it
@@ -994,7 +1028,7 @@ function collectSkills(doc: string, base: string, problems: string[], root: stri
   // "did it SAY not to publish it"), and the blanket test asserts the
   // OUTCOME over the built document at any depth, so neither can quietly
   // stop working.
-  const declared = unpublishedSkills(ROOT);
+  const declared = unpublishedSkills(ROOT, corpusScopeFor(ROOT));
   const publishable = (name: string): boolean => isPublishedSkill(name) && !declared.has(name);
   return [...byName.entries()]
     .filter(([name]) => publishable(name))
@@ -1258,7 +1292,7 @@ function collectPackages(doc: string, problems: string[]): Node[] {
   // Hoisted: `unpublishedSkills` walks every declared skill directory, so
   // calling it inside the filter below would re-read the corpus once per
   // package entry.
-  const declaredUnpublished = unpublishedSkills(ROOT);
+  const declaredUnpublished = unpublishedSkills(ROOT, corpusScopeFor(ROOT));
   if (!existsSync(skillsRoot)) return nodes;
   for (const d of packageDirsIn(skillsRoot)) {
     const mf = join(d.dir, "package-manifest.json");
@@ -1501,7 +1535,7 @@ async function collectProcesses(
   // Reading the DECLARATION is the only way to compare what was claimed
   // against what is there, because the filtered view has already thrown the
   // discrepancy away.
-  if (dirs.length === 0 && kgDirectories(root).length > 0) {
+  if (dirs.length === 0 && kgDirectories(root, corpusScopeFor(root)).length > 0) {
     (notes ?? problems).push(
       `no directory containing .bpmn files was found under ${relative(ROOT, root) || "."}`,
     );
@@ -1599,9 +1633,10 @@ async function collectProcesses(
     continue;
   }
   await collectDecisions(dir);
-  for (const f of readdirSync(dir)) {
-    if (!f.endsWith(".bpmn")) continue;
-    const path = join(dir, f);
+  // At any depth: since placement PR3 (bean `63wl`) the diagrams sit in
+  // `processes/<group>/`, and a top-level read exported none of them.
+  for (const path of diagramFiles(dir)) {
+    if (!path.endsWith(".bpmn")) continue;
     try {
       const m = await loadProcessModel(path);
       nodes.push({
@@ -1683,7 +1718,7 @@ async function collectProcesses(
         });
       }
     } catch (e) {
-      problems.push(`unloadable process ${rel}/${f}: ${e instanceof Error ? e.message : String(e)}`);
+      problems.push(`unloadable process ${relative(root, path)}: ${e instanceof Error ? e.message : String(e)}`);
     }
   }
   }
@@ -1748,7 +1783,7 @@ function skillHome(base: string, ownDoc: string, skillId: string): string {
   // because those instances declare ids cat-harness also declares, and the
   // published-paths walk in `kg-export.test.ts` caught it as two documents
   // the deploy does not write.
-  if (knownSkills(ROOT).has(skillId)) return ownDoc;
+  if (knownSkills(ROOT, corpusScopeFor(ROOT)).has(skillId)) return ownDoc;
   for (const instance of instanceRootsIn(repoRootFor(ROOT))) {
     if (resolve(instance) === resolve(ROOT)) continue;
     if (!knownSkills(instance).has(skillId)) continue;
@@ -1851,7 +1886,11 @@ function collectSchemas(doc: string, base: string): Node[] {
     "@id": makeIri(doc, "schema", m.name),
     "@type": termIri("Schema"),
     name: m.name,
-    title: m.summary,
+    // Finding D5 (bean `lodp`), owner 2026-10-02: "Make it like the
+    // others". The docblock's first line is a `summary` (rdfs:comment) as on
+    // every other node type; the title is the module's stem.
+    title: m.name,
+    summary: m.summary,
     module: m.module,
     maintainedBy: keeper.get(m.module),
   }));
@@ -1954,7 +1993,7 @@ function linkSchemas(graph: Node[], root: string = ROOT): void {
       const named = def.schema && /^external-schemas\/([a-z0-9.-]+)\.json$/.exec(def.schema)?.[1];
       if (named && specIri.has(named)) links.add(specIri.get(named)!);
       let dirs: string[] = [];
-      try { dirs = directoriesForGraph(root, n.name); } catch { /* undeclared: nothing to scan */ }
+      try { dirs = corpusDirectoriesForGraph(root, n.name); } catch { /* undeclared: nothing to scan */ }
       for (const iri of specsIn(dirs.flatMap(diagramFiles))) links.add(iri);
       if (links.size > 0) n.conformsTo = [...links];
       if (def.validator) {
@@ -2007,18 +2046,27 @@ function collectDeclaredRoles(doc: string, root: string = ROOT): Node[] {
   // cannot silently redefine one.
   const roles: RoleDef[] = [];
   const seen = new Set<string>();
-  for (const kgRoot of kgRoots(root)) {
-    for (const r of readRoleGraph(kgRoot)?.roles ?? []) {
+  // The checkout's view on the platform's own run (placement PR0b): a
+  // dependent's extension adds skills to a role here, by id.
+  for (const kgRoot of corpusScopeFor(root) === "checkout" ? [root] : kgRoots(root)) {
+    const g = corpusScopeFor(root) === "checkout" ? roleGraphFor(root, "checkout") : readRoleGraph(kgRoot);
+    for (const r of g?.roles ?? []) {
       if (seen.has(r.id)) continue;
       seen.add(r.id);
       roles.push(r);
     }
   }
+  // NAMED by the table glossary-export applies to the same IRI (bean `lodp`,
+  // finding D3; owner default applied, option 1, 2026-10-02): the display
+  // name is `skos:prefLabel` and, derived from it, `dcterms:title`; the id is
+  // `skos:notation`. The id was written as `rdfs:label` until then, so a
+  // merged graph gave one role node `rdfs:label "reviewer"` beside
+  // `skos:prefLabel "Reviewer"`.
+  const naming = namingTable("role-naming");
   return roles.map((r) => ({
     "@id": makeIri(doc, "role", r.id),
     "@type": termIri("Role"),
-    name: r.id,
-    title: r.title,
+    ...applyVocabMapping(naming, { title: r.title, id: r.id }),
     description: r.description,
     sourceKind: "role-registry",
     actorKinds: r.actorKinds,
@@ -2781,6 +2829,112 @@ export async function buildExport(opts: ExportOptions = {}): Promise<Export> {
   };
 }
 
+
+// ── `--check` / `--sidecars`: the committed QA sidecars as a verify/write pair
+//    (bean `v556`) ──────────────────────────────────────────────────────────
+//
+// This script writes `qa-results/v1` sidecars under `test/results/`, and until
+// `v556` it had no `--check`. So it was in no verify/write pair, `regen`
+// ignored it, and `check:artefact-verification` — whose inventory is the
+// `--check` scripts in `package.json` — could not contain it. Measured on
+// `main` `f4de6c1e20`: two committed sidecars and the script carried THREE
+// different hashes; on `cf3e624` the host sidecar had caught up and
+// `kg-export.bootstrap.qa-results.json` was still stale (`47109f5daf3d`
+// against `e95fab417728`), with every gate green. Its only reader,
+// `check:published-instance-exports`, stopped exporting bootstrap through
+// this script when the deploy moved bootstrap to `export-graph.ts`, so nothing
+// read it at all.
+//
+// The subjects are DERIVED from what is committed, never listed: the host's
+// bare `kg-export` stem, plus every `kg-export.<stub>` sidecar, matched to the
+// instance whose declared stub it carries. A committed sidecar no instance
+// owns is reported as an ORPHAN — it can be neither checked nor regenerated,
+// and that is a finding, not a pass.
+//
+// Each subject is computed by spawning this script with `--qa-root` pointed at
+// a temp directory — the exact command a person runs, as
+// `check:published-instance-exports` does — so the comparison is against the
+// real producer and not against a second implementation of it.
+
+/** One committed (or expected) kg-export sidecar and the instance it is ABOUT. */
+export interface SidecarSubject {
+  stem: string;
+  /** `--instance` value, absolute; undefined for the host. */
+  instance?: string;
+}
+
+export function sidecarSubjects(
+  dir: string = join(ROOT, QA_RESULTS_DIR),
+  roots: string[] = instanceRootsIn(checkoutRootFor(ROOT)),
+): { subjects: SidecarSubject[]; orphans: string[] } {
+  const subjects: SidecarSubject[] = [{ stem: "kg-export" }];
+  const orphans: string[] = [];
+  const byStub = new Map<string, string>();
+  for (const r of roots) {
+    try {
+      const d = readDeclaration(r);
+      if (d) byStub.set(artefactStub(d), r);
+    } catch {
+      // an unreadable declaration names no stub
+    }
+  }
+  const files = existsSync(dir) ? readdirSync(dir).map(String).sort() : [];
+  for (const f of files) {
+    const m = /^kg-export\.(.+)\.qa-results\.json$/.exec(f);
+    if (!m) continue;
+    const inst = byStub.get(m[1]!);
+    if (inst === undefined || resolve(inst) === resolve(ROOT)) orphans.push(f);
+    else subjects.push({ stem: `kg-export.${m[1]}`, instance: inst });
+  }
+  return { subjects, orphans };
+}
+
+async function sidecarMode(mode: "check" | "write", baseUrl: string | undefined): Promise<number> {
+  const { subjects, orphans } = sidecarSubjects();
+  const tmp = mkdtempSync(join(tmpdir(), "kg-export-sidecars-"));
+  let bad = 0;
+  try {
+    for (const s of subjects) {
+      const out = join(tmp, s.stem);
+      const args = ["run", fileURLToPath(import.meta.url), "--out", join(out, "doc.jsonld"), "--qa-root", out];
+      if (s.instance) args.push("--instance", s.instance);
+      if (baseUrl) args.push("--base-url", baseUrl);
+      spawnSync("bun", args, { cwd: repoRootFor(ROOT), encoding: "utf-8" });
+      const fresh = readQaResult(qaResultPath(out, s.stem));
+      const label = `${s.stem}.qa-results.json`;
+      if (fresh === undefined) {
+        bad++;
+        console.log(`  ? ${label} — the export wrote no QA result, so currency could not be determined`);
+        continue;
+      }
+      if (mode === "write") {
+        writeQaResult(ROOT, s.stem, fresh);
+        console.log(`  ✓ ${label} written`);
+        continue;
+      }
+      const state = qaResultState(qaResultPath(ROOT, s.stem), fresh);
+      if (state === "current") {
+        console.log(`  ✓ ${label} current (${fresh.producer.script_hash})`);
+      } else {
+        bad++;
+        const committed = readQaResult(qaResultPath(ROOT, s.stem));
+        const was = committed ? ` — committed hash ${committed.producer.script_hash}, true ${fresh.producer.script_hash}` : "";
+        console.log(`  ✗ ${label} ${state.toUpperCase()}${was}`);
+      }
+    }
+  } finally {
+    rmSync(tmp, { recursive: true, force: true });
+  }
+  for (const o of orphans) {
+    bad++;
+    console.log(`  ✗ ${o} ORPHAN — no instance in this checkout declares that stub, so nothing can produce or check it`);
+  }
+  if (bad > 0 && mode === "check") {
+    console.log(`\n${bad} kg-export QA sidecar(s) not current. Run \`bun run kg:export:sidecars\` and commit.`);
+  }
+  return bad > 0 ? 1 : 0;
+}
+
 if (import.meta.main) {
   const arg = (flag: string): string | undefined => {
     const i = process.argv.indexOf(flag);
@@ -2823,6 +2977,10 @@ if (import.meta.main) {
   // the producer still writes the committed sidecar, and only a caller that
   // says otherwise gets a different destination.
   const qaRoot = arg("--qa-root") ?? ROOT;
+  // Bean `v556` — see `sidecarMode`. Neither writes the JSON-LD document.
+  if (process.argv.includes("--check") || process.argv.includes("--sidecars")) {
+    process.exit(await sidecarMode(process.argv.includes("--check") ? "check" : "write", baseUrl));
+  }
   const { stub, docPath } = exportIdentity({ baseUrl, instanceRoot });
   // Named after the repository, per the stub convention — `<stub>.jsonld`,
   // never a generic `kg.json`. `.jsonld` because it IS JSON-LD; the extension

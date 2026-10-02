@@ -1,9 +1,9 @@
 <!-- kg:subgraph:begin -->
-# folio-assist-core-schemas
+# core-schemas
 
 The schemas of the content layer's [Node Kinds](https://github.com/litlfred/bootstrap/blob/main/schemas/README.md#node-kind), kept as their own [Subgraph](https://github.com/litlfred/bootstrap/blob/main/schemas/README.md#subgraph) until this repository is split.
 
-Part of [C@T Harness](../../cat-harness/README.md) 0.1.0, declared as `folio-assist-core-schemas`, holding `schemas`, `cat-harness`.
+Part of [folio-assistant-core](../README.md) 0.1.0, declared as `core-schemas`, holding `schemas`, `cat-harness`.
 
 | file | what it is | used by |
 |---|---|---|
@@ -12,10 +12,10 @@ Part of [C@T Harness](../../cat-harness/README.md) 0.1.0, declared as `folio-ass
 | [`catalogue.ts`](catalogue.ts) | a file |  |
 | [`changeset.test.ts`](changeset.test.ts) | a file |  |
 | [`changeset.ts`](changeset.ts) | a file |  |
+| [`dublin-core-render.test.ts`](dublin-core-render.test.ts) | a file |  |
+| [`dublin-core-render.ts`](dublin-core-render.ts) | a file |  |
 | [`dublin-core.test.ts`](dublin-core.test.ts) | a file |  |
 | [`dublin-core.ts`](dublin-core.ts) | a file |  |
-| [`extraction.ts`](extraction.ts) | a file |  |
-| [`fhir-artifact-index.ts`](fhir-artifact-index.ts) | a file |  |
 | [`glossary.test.ts`](glossary.test.ts) | a file |  |
 | [`glossary.ts`](glossary.ts) | a file |  |
 | [`library-ref.test.ts`](library-ref.test.ts) | a file |  |
@@ -28,4 +28,5 @@ Part of [C@T Harness](../../cat-harness/README.md) 0.1.0, declared as `folio-ass
 | [`review-comment.ts`](review-comment.ts) | a file |  |
 | [`review-verdict.test.ts`](review-verdict.test.ts) | a file |  |
 | [`review-verdict.ts`](review-verdict.ts) | a file |  |
+| [`skills/`](skills/) | 10 files | |
 <!-- kg:subgraph:end -->

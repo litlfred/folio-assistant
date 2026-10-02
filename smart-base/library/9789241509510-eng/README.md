@@ -1,5 +1,5 @@
 <!-- kg:subgraph:begin -->
-# 9789241509510-eng
+# The MAPS Toolkit: mHealth Assessment and Planning for Scale
 
 ingested source material — attributed to its document, not folio content
 
@@ -14,6 +14,6 @@ Held in the library [`smart-base/library/`](../README.md) as `9789241509510-eng`
 | holds | count |
 |---|---|
 | [sections](sections/) | 212 |
-| [blocks](blocks/) | 267 |
+| [blocks](blocks/) | 208 |
 | images | 102 |
 <!-- kg:subgraph:end -->

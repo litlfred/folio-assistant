@@ -56,6 +56,7 @@ const QR = readFileSync(join(ROOT, SITE, "assets/js/vendor/qrcode.js"), "utf8");
  */
 const HARNESS_DATA = JSON.parse(readFileSync(join(ROOT, SITE, "_data/harness.json"), "utf8")) as {
   links: { id: string; path?: string; url?: string }[];
+  tiles?: { id: string; title: string; href?: string; icon?: string; hidden?: boolean }[];
 };
 const BASEURL = "/folio-assistant";
 const LINK_MAP: Record<string, string> = {};
@@ -104,8 +105,37 @@ const SEARCH_MARKUP =
  * and the file stops parsing. The note you are reading was in that comment
  * until it did exactly that.
  */
-function harness(links: string | null, search: string = SEARCH_MARKUP): string {
-  return `<!doctype html><html lang="en"><head><meta charset="utf-8"><style>
+/**
+ * The DECLARED tiles, as `head_custom.html` hands them to the client.
+ *
+ * `<meta name="fa-tiles" content="{{ site.data.harness.tiles | jsonify | escape }}">`
+ * at `_includes/head_custom.html:403` — so the fixture reads the same
+ * generated file the page does rather than restating a tile list here. A
+ * fixture that carries its own copy of the population under test cannot catch
+ * the population changing, which is the whole subject of the test below.
+ *
+ * DEFAULT OFF, and that is not tidiness. Supplying these adds thirty tiles to
+ * the panel, and the caption assertions elsewhere in this file name their
+ * tiles exactly (`["Search", "Page settings", "Language", "QR code"]`). A third
+ * parameter that defaults to `null` leaves every existing call byte-identical
+ * in behaviour; putting the meta into the shared HARNESS would have rewritten
+ * six unrelated tests to accommodate one new one.
+ */
+const DECLARED_TILES = JSON.stringify(HARNESS_DATA.tiles ?? []);
+
+/** Liquid's `escape` on the attribute value; `innerHTML` is never used on it. */
+function escapeAttr(s: string): string {
+  return s.replace(/&/g, "&amp;").replace(/"/g, "&quot;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+}
+
+function harness(
+  links: string | null,
+  search: string = SEARCH_MARKUP,
+  tilesMeta: string | null = null,
+): string {
+  return `<!doctype html><html lang="en"><head><meta charset="utf-8">${
+    tilesMeta === null ? "" : `<meta name="fa-tiles" content="${escapeAttr(tilesMeta)}">`
+  }<style>
   body { margin: 0; }
   .side-bar { position: fixed; top: 0; left: 0; width: 16.5rem; height: 100%;
               display: flex; flex-flow: column nowrap; align-items: flex-end;
@@ -165,7 +195,7 @@ test.describe("action tiles", () => {
     const captions = await page.locator(".fa-tiles-grid .fa-tile-caption").allTextContents();
     // Named, not counted. `toHaveLength(n)` breaks on the next tile and says
     // nothing about which one is missing.
-    for (const name of ["Search", "Settings", "Language", "QR code",
+    for (const name of ["Search", "Page settings", "Language", "QR code",
                         "Knowledge graph", "JSON-LD", "Source"]) {
       expect(captions).toContain(name);
     }
@@ -205,7 +235,7 @@ test.describe("action tiles", () => {
       await expect(page.locator(".fa-tile", { hasText: gone })).toHaveCount(0);
     }
     const captions = await page.locator(".fa-tiles-grid .fa-tile-caption").allTextContents();
-    expect(captions).toEqual(["Search", "Settings", "Language", "QR code"]);
+    expect(captions).toEqual(["Search", "Page settings", "Language", "QR code"]);
   });
 
   /* ── The search, back in the top display navbar ─────────────────────── */
@@ -220,10 +250,16 @@ test.describe("action tiles", () => {
     // The old test's own reasoning is why this checks load rather than first
     // open: if it only happened once the launcher was touched, every reader
     // who never opens it gets the other behaviour.
+    //
+    // 2026-09-30 (issue #1715): on load it is now the CLOSED magnifier at the
+    // top of the display panel, and the field opens full width from it. The
+    // invariant this test exists for is unchanged: search is in the panel on
+    // load, never behind the launcher.
     await page.setContent(HARNESS);
     await expect(page.locator(".main-header .fa-search-home .search")).toHaveCount(1);
     await expect(page.locator(".fa-tiles .search")).toHaveCount(0);
-    await expect(page.locator(".fa-search-home")).toHaveAttribute("data-place", "navbar");
+    await expect(page.locator(".fa-search-home")).toHaveAttribute("data-open", "false");
+    await expect(page.locator(".fa-search-home .fa-search-peek")).toBeVisible();
   });
 
   test("the search input is MOVED, not rebuilt — same node, theme handlers intact", async ({ page }) => {
@@ -249,20 +285,24 @@ test.describe("action tiles", () => {
     await expect(page.locator(".fa-search-home .search #search-results")).toHaveCount(1);
   });
 
-  test("in the navbar the field has size; slid to the corner it collapses behind its icon", async ({ page }) => {
+  test("closed, the field collapses behind its magnifier; opened, it has size", async ({ page }) => {
     // Geometry, not text. `textContent` is DOM order regardless of CSS
     // display, so a collapsed field still answers every text assertion — the
     // input is in the document the whole time BY DESIGN, because the theme
     // looks it up by id and getElementById does not find a detached node.
     //
-    // The COLLAPSE half of this test moved rather than disappearing. It used
-    // to describe the launcher ("collapsed until the tile is pressed"); it
-    // now describes the corner, which is where the owner put the collapsed
-    // state: *"option to slide out to the UR corner as an icon."*
+    // Was "in the navbar ... slid to the corner" until 2026-09-30, when the
+    // owner asked for one magnifier that opens full width (issue #1715).
     await page.setContent(HARNESS);
     const input = page.locator("#search-input");
 
-    // NAVBAR — visible, and big enough to hit.
+    // CLOSED — collapsed, but still in the document.
+    await expect(input).toBeHidden();
+    expect(await input.boundingBox()).toBeNull();
+    await expect(input).toHaveCount(1);
+
+    // OPEN — the magnifier is the way in, and back (`l4zi`).
+    await page.locator(".fa-search-peek").click();
     await expect(input).toBeVisible();
     const box = await input.boundingBox();
     expect(box).not.toBeNull();
@@ -270,20 +310,6 @@ test.describe("action tiles", () => {
     // legal minimum in case that comfort is ever spent.
     expect(box!.height).toBeGreaterThanOrEqual(24);
     expect(box!.width).toBeGreaterThan(80);
-
-    // CORNER — collapsed, but still in the document. Both halves matter: the
-    // first is the space the reader asked to reclaim, the second is the
-    // getElementById rule above.
-    await page.locator(".fa-search-slide").click();
-    await expect(page.locator(".fa-search-home")).toHaveAttribute("data-place", "corner");
-    await expect(input).toBeHidden();
-    expect(await input.boundingBox()).toBeNull();
-    await expect(input).toHaveCount(1);
-
-    // ...and the icon is the way back, which is `l4zi`: an action whose
-    // inverse is not reachable is not a toggle.
-    await page.locator(".fa-search-peek").click();
-    await expect(input).toBeVisible();
   });
 
   test("pressing Search puts the cursor in the field, from the keyboard alone", async ({ page }) => {
@@ -299,26 +325,26 @@ test.describe("action tiles", () => {
     await expect(page.locator("#search-input")).toHaveValue("bean");
   });
 
-  test("sliding to the corner and back keeps the SAME input, and what was typed in it", async ({ page }) => {
-    // The failure this guards is unchanged and is the reason the slide is a
-    // CLASS CHANGE rather than a move: a detached input is one
+  test("closing and reopening keeps the SAME input, and what was typed in it", async ({ page }) => {
+    // The failure this guards is unchanged and is the reason closing is a
+    // STATE CHANGE rather than a move: a detached input is one
     // getElementById away from a dead search. What the reader typed must
     // survive the round trip too — that is the cheap observable proof the
     // node is the same node rather than a convincing replacement.
     //
-    // The round trip used to be tile -> back -> tile. It is now navbar ->
-    // corner -> navbar, because that is the journey the field actually makes
-    // since 2026-09-21.
+    // The round trip was navbar -> corner -> navbar until 2026-09-30; it is
+    // open -> closed -> open on the one magnifier since (issue #1715).
     await page.setContent(HARNESS);
+    await page.locator(".fa-search-peek").click();
     await page.locator("#search-input").fill("workflow");
 
-    await page.locator(".fa-search-slide").click();
+    await page.locator(".fa-search-peek").click();
     // Collapsed, still IN the document — this is the load-bearing bit.
     await expect(page.locator("#search-input")).toHaveCount(1);
     await expect(page.locator("#search-input")).toBeHidden();
 
-    await page.locator(".fa-search-slide").click();
-    await expect(page.locator(".fa-search-home")).toHaveAttribute("data-place", "navbar");
+    await page.locator(".fa-search-peek").click();
+    await expect(page.locator(".fa-search-home")).toHaveAttribute("data-open", "true");
     await expect(page.locator("#search-input")).toBeVisible();
     await expect(page.locator("#search-input")).toHaveValue("workflow");
   });
@@ -388,7 +414,10 @@ test.describe("action tiles", () => {
     //
     // Looked in `.fa-tiles` until 2026-09-21; the field is in the navbar now,
     // and no tile press is needed to reach it.
+    // Opened first since 2026-09-30: search starts closed, and a closed
+    // field has no box to measure (issue #1715).
     await page.setContent(HARNESS);
+    await page.locator(".fa-search-peek").click();
     const label = page.locator(".fa-search-home .search-label");
     await expect(label).toHaveCount(1);
     const style = await label.evaluate((e) => getComputedStyle(e).display);
@@ -406,7 +435,7 @@ test.describe("action tiles", () => {
     await page.locator(".fa-tiles-toggle").click();
     await expect(page.locator(".fa-tile", { hasText: "Search" })).toHaveCount(0);
     const captions = await page.locator(".fa-tiles-grid .fa-tile-caption").allTextContents();
-    expect(captions[0]).toBe("Settings");
+    expect(captions[0]).toBe("Page settings");
     expect(captions).toContain("Knowledge graph");
   });
 
@@ -415,13 +444,13 @@ test.describe("action tiles", () => {
     // and never touches, so it does not earn a row of prime space.
     await openTiles(page);
     await expect(page.locator(".fa-tiles-grid .fa-theme-toggle")).toHaveCount(0);
-    await page.locator(".fa-tile", { hasText: "Settings" }).click();
+    await page.locator(".fa-tile", { hasText: "Page settings" }).click();
     await expect(page.locator(".fa-tiles-view .fa-theme-toggle")).toBeVisible();
   });
 
   test("the theme tile still switches the scheme, and says which it is in", async ({ page }) => {
     await openTiles(page);
-    await page.locator(".fa-tile", { hasText: "Settings" }).click();
+    await page.locator(".fa-tile", { hasText: "Page settings" }).click();
     const theme = page.locator(".fa-theme-toggle");
     const before = await theme.getAttribute("aria-pressed");
     await theme.click();
@@ -454,7 +483,7 @@ test.describe("action tiles", () => {
 
   test("Escape undoes one step, not three", async ({ page }) => {
     await openTiles(page);
-    await page.locator(".fa-tile", { hasText: "Settings" }).click();
+    await page.locator(".fa-tile", { hasText: "Page settings" }).click();
     await page.keyboard.press("Escape");
     // Back to the grid — the panel is still open.
     await expect(page.locator(".fa-tiles-grid")).toBeVisible();
@@ -514,8 +543,108 @@ test.describe("action tiles", () => {
     // Real <button>s and <a>s, so Tab reaches them and Enter acts, without the
     // page having to implement either. A <div> with an onclick would pass a
     // click test and fail this one.
-    await page.locator(".fa-tile", { hasText: "Settings" }).focus();
+    await page.locator(".fa-tile", { hasText: "Page settings" }).focus();
     await page.keyboard.press("Enter");
     await expect(page.locator(".fa-tiles-view .fa-theme-toggle")).toBeVisible();
   });
+
+  /* ── Finding 11's RENDERED half (bean `ob3m`) ────────────────────────── */
+
+  test("the declared tiles' glyphs: every tile draws one, and sameness only improves", async ({ page }) => {
+    /*
+     * Bean `ob3m` finding 11, the half `check:navbar-consistency` structurally
+     * cannot reach. That check reads DECLARATIONS; this reads the rendered
+     * panel, and the two answer different questions.
+     *
+     * THREE DENOMINATORS, and the bean is explicit that they must not be
+     * quoted as one. Its render said "18 of 20 draw the identical outline";
+     * its declaration half said "2 of 11 declared tiles name a glyph"; today
+     * `harness.json` carries THIRTY. So no number is hardcoded from the bean's
+     * prose below — every figure is computed from the fixture at run time, and
+     * the only literal is the ratchet.
+     *
+     * WHY A RATCHET RATHER THAN AN EQUALITY. `TILE_GLYPHS` holds two entries
+     * and `glyphFor` falls back to `NET_GLYPH` for every other name, so
+     * sameness is this panel's DEFAULT rather than an accident. Pinning the
+     * current figure as an equality would go red the first time somebody draws
+     * a new glyph — it would fail on the improvement it exists to encourage.
+     * Pinning it as a ceiling fails only when sameness gets WORSE, which is
+     * the regression, and quietly permits every step toward fixing it.
+     */
+    await page.setContent(harness(LINKS, SEARCH_MARKUP, DECLARED_TILES));
+    await page.locator(".fa-tiles-toggle").click();
+
+    const declared = (HARNESS_DATA.tiles ?? []).filter((x) => !x.hidden);
+    const named = declared.filter((x) => typeof x.icon === "string" && x.icon.length > 0);
+
+    // The fixture has to actually mount them, or everything after it is
+    // vacuous — a panel that rendered none of the declared tiles would pass
+    // every assertion below (`dh4f`). The first probe of this spec rendered
+    // SIX tiles and reported them all distinct, because it was measuring the
+    // built-in controls and not the declared tiles at all.
+    const grid = page.locator(".fa-tiles-grid .fa-tile");
+    expect(declared.length).toBeGreaterThan(10);
+    expect(await grid.count()).toBeGreaterThan(declared.length);
+
+    // Every tile draws SOMETHING. A tile with no glyph is a worse defect than
+    // a repeated one: the fallback is at least a mark you can aim at.
+    expect(await page.locator(".fa-tiles-grid .fa-tile:not(:has(svg))").count()).toBe(0);
+
+    const svgs = await page
+      .locator(".fa-tiles-grid .fa-tile svg")
+      .evaluateAll((ns) => ns.map((n) => (n as SVGElement).outerHTML));
+    const groups = new Map<string, number>();
+    for (const s of svgs) groups.set(s, (groups.get(s) ?? 0) + 1);
+    const largestIdenticalGroup = Math.max(...groups.values());
+
+    /*
+     * THE RATCHET. Measured 2026-09-30 on this fixture: of 30 declared tiles,
+     * 2 name a glyph (`beans`, `uploads` — exactly the two `TILE_GLYPHS` has),
+     * so 28 fall back to one drawing and that is the largest identical group.
+     * Lower this number when you draw a glyph; it must never be raised.
+     */
+    const FALLBACK_CEILING = 28;
+    expect(
+      largestIdenticalGroup,
+      `${largestIdenticalGroup} tiles draw the SAME glyph, out of ${svgs.length} rendered ` +
+        `(${named.length} of ${declared.length} declared tiles name one, and ` +
+        `${groups.size} distinct drawings appear). The ceiling is ${FALLBACK_CEILING}. ` +
+        "If you drew a new glyph, LOWER the ceiling to what you measured. If this rose " +
+        "without anyone drawing one, a glyph name stopped resolving — check TILE_GLYPHS " +
+        "against the `icon` values in docs/_data/harness.json.",
+    ).toBeLessThanOrEqual(FALLBACK_CEILING);
+
+    /*
+     * NAMING AN ICON HAS TO BUY SOMETHING — and the first version of this
+     * assertion could not tell whether it did. It read
+     * `expect(groups.size).toBeGreaterThan(1)`, over the WHOLE panel. The
+     * built-in controls (Settings, Language, QR code, Knowledge graph,
+     * JSON-LD, Source) each carry their own hardcoded drawing and never go
+     * through `glyphFor`, so nine distinct drawings appear no matter what the
+     * registry does: the assertion passed with every declared tile on the
+     * fallback, which is the state it was written to reject. Vacuous, in the
+     * `dh4f` sense, and caught by trying to falsify it rather than by reading
+     * it.
+     *
+     * What it checks now is the actual property: the tile of each tile that
+     * NAMES a glyph draws something other than the fallback. The fallback is
+     * identified as the dominant drawing rather than assumed to be
+     * `NET_GLYPH`, so this keeps working if the fallback is redrawn.
+     */
+    const dominant = [...groups.entries()].sort((a, b) => b[1] - a[1])[0][0];
+    for (const tile of named) {
+      const svg = await page
+        .locator(".fa-tiles-grid .fa-tile", { hasText: tile.title })
+        .first()
+        .locator("svg")
+        .evaluate((n) => (n as SVGElement).outerHTML);
+      expect(
+        svg,
+        `tile "${tile.title}" declares icon "${tile.icon}" but draws the FALLBACK. ` +
+          "Either the name is missing from TILE_GLYPHS in docs-ui.js, or it is " +
+          "registered to the fallback drawing — either way the declaration buys nothing.",
+      ).not.toBe(dominant);
+    }
+  });
+
 });

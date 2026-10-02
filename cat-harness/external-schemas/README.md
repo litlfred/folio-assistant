@@ -9,6 +9,7 @@ Part of [C@T Harness](../README.md) 0.1.0, declared as `external-schemas`, holdi
 |---|---|---|
 | [`dcmi-terms.json`](dcmi-terms.json) | DCMI Metadata Terms |  |
 | [`hl7-fhir.json`](hl7-fhir.json) | HL7 FHIR |  |
+| [`ietf-handle-system.json`](ietf-handle-system.json) | Handle System Overview (RFC 3650), with its namespace (RFC 3651) and protocol (RFC 3652) |  |
 | [`omg-bpmn-2.0.json`](omg-bpmn-2.0.json) | Business [Process](https://github.com/litlfred/bootstrap/blob/main/schemas/README.md#process) Model and Notation (BPMN) |  |
 | [`omg-dd-1.0.json`](omg-dd-1.0.json) | Diagram Definition (DD) |  |
 | [`omg-dmn-1.3.json`](omg-dmn-1.3.json) | Decision Model and Notation (DMN) |  |
@@ -17,11 +18,14 @@ Part of [C@T Harness](../README.md) 0.1.0, declared as `external-schemas`, holdi
 | [`w3c-csvw.json`](w3c-csvw.json) | Metadata Vocabulary for Tabular Data |  |
 | [`w3c-odrl.json`](w3c-odrl.json) | ODRL Information Model 2.2 |  |
 | [`w3c-owl2.json`](w3c-owl2.json) | OWL 2 Web Ontology Language Document Overview (Second Edition) |  |
+| [`w3c-prov-jsonld.json`](w3c-prov-jsonld.json) | The PROV-JSONLD Serialization: A JSON-LD Representation for the PROV Data Model |  |
 | [`w3c-prov-o.json`](w3c-prov-o.json) | PROV-O: The PROV Ontology |  |
 | [`w3c-rdf.json`](w3c-rdf.json) | RDF 1.1 Concepts and Abstract Syntax |  |
 | [`w3c-rdfs.json`](w3c-rdfs.json) | RDF Schema 1.1 |  |
 | [`w3c-skos.json`](w3c-skos.json) | SKOS Simple Knowledge Organization System [Reference](https://github.com/litlfred/bootstrap/blob/main/schemas/README.md#reference) |  |
 | [`w3c-web-annotation.json`](w3c-web-annotation.json) | Web Annotation Vocabulary |  |
 | [`w3c-xsd11-datatypes.json`](w3c-xsd11-datatypes.json) | XML Schema Definition Language (XSD) 1.1 Part 2: Datatypes |  |
+| [`w3c-xsd11-structures.json`](w3c-xsd11-structures.json) | W3C XML Schema Definition Language (XSD) 1.1 Part 1: Structures |  |
 | [`who-smart-base.json`](who-smart-base.json) | WHO SMART Guidelines base IG |  |
+| [`who-smart-base.terminology.json`](who-smart-base.terminology.json) | data |  |
 <!-- kg:subgraph:end -->

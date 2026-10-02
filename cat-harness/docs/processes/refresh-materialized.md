@@ -4,7 +4,7 @@ nav_exclude: true
 ---
 
 {: .note }
-> Generated from `large-datasets/processes/refresh-materialized.bpmn` by `gen-processes-viz.ts` — do not edit here. [All processes](index.html)
+> Generated from `cat-harness/processes/library/refresh-materialized.bpmn` by `gen-processes-viz.ts` — do not edit here. [All processes](index.html)
 
 {% raw %}
 # Refresh materialized remote content
@@ -21,7 +21,7 @@ An ARCHIVAL copy is not refreshed. Re-fetching it would defeat it: the copy exis
 
 ## How it connects
 
-- **Called by:** [Sample import into a structured data store](sample-import.html)
+- **Called by:** [Sample import into a structured data store](sample-import.html), [Subscribe to an external knowledge graph](subscribe-kg.html)
 - **Calls:** [Adjudication](adjudication.html)
 - **Presented on:** no docs page section shows this diagram
 

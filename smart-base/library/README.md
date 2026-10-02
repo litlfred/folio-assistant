@@ -1,17 +1,22 @@
 <!-- kg:subgraph:begin -->
-# smart-base-library
+# library
 
-The WHO digital-health corpus `smart-base` holds -- the publications the DIIG methodology and the WHO digital-health voices are derived FROM. Declared here, with `scope: repository` and an id distinct from the conventional `library`, for the same reason the three entries above are: this is a SIBLING instance's directory seen from the harness layer, and giving it the conventional id would override the harness's OWN library rather than joining it. `smart-base/smart-base.json` declares the same directory as plain `library` in its own namespace, which is the override that belongs there. Bean `ve07`; issue #877.
+L1 source content: one `<bib-slug>/` per ingested WHO publication, holding `sections/*.md` and `structure.json`. Every knowledge-graph reference to one of these sources resolves through here, never to a loose path or a bare URL — which is the whole reason the bytes could not stay in `uploads/`. The corpus-grep checklist searches `library/` ONLY, so a publication left in the incoming queue does not merely go unread: it makes a clean grep mean "nobody has done this" while the source sits right there. The id is `library`, the CONVENTIONAL one, so this entry OVERRIDES the default rather than joining it — overrides match on id and never on path, and a distinct id at the same path yields two entries for one directory that every fan-out consumer then scans twice.
 
-Part of [C@T Harness](../../cat-harness/README.md) 0.1.0, declared as `smart-base-library`, holding `library`.
+Part of [SMART Base](../README.md) 0.1.0, declared as `library`, holding `library`.
 
 | file | what it is | used by |
 |---|---|---|
-| [`9789240010567-eng/`](9789240010567-eng/README.md) | 579 files | |
-| [`9789240081949-eng/`](9789240081949-eng/README.md) | 218 files | |
-| [`9789240093362-eng/`](9789240093362-eng/README.md) | 167 files | |
+| [`image-verdicts.json`](image-verdicts.json) | data |  |
+| [`9789240010567-eng/`](9789240010567-eng/README.md) | 573 files | |
+| [`9789240081949-eng/`](9789240081949-eng/README.md) | 213 files | |
+| [`9789240093362-eng/`](9789240093362-eng/README.md) | 168 files | |
+| [`9789240101197-eng/`](9789240101197-eng/README.md) | 255 files | |
+| [`9789240116191-eng/`](9789240116191-eng/README.md) | 194 files | |
 | [`9789240120747-eng/`](9789240120747-eng/README.md) | 221 files | |
-| [`9789241509510-eng/`](9789241509510-eng/README.md) | 586 files | |
-| [`9789241511766-eng/`](9789241511766-eng/README.md) | 580 files | |
+| [`9789241509510-eng/`](9789241509510-eng/README.md) | 527 files | |
+| [`9789241511766-eng/`](9789241511766-eng/README.md) | 525 files | |
+| [`mehl-2021-who-smart-guidelines/`](mehl-2021-who-smart-guidelines/README.md) | 12 files | |
+| [`who-dpi-h-reference-architecture-draft-v1/`](who-dpi-h-reference-architecture-draft-v1/README.md) | 453 files | |
 | [`who-rhr-1806-eng/`](who-rhr-1806-eng/README.md) | 65 files | |
 <!-- kg:subgraph:end -->

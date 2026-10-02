@@ -78,6 +78,8 @@ import {
   resolveDirectories,
   subgraphTree,
 } from "../schemas/cat-harness.js";
+import { checkoutDirectories } from "../schemas/harness-config.js";
+import { corpusScopeFor } from "./known-skills.js";
 
 const ROOT = resolve(import.meta.dir, "..");
 
@@ -99,7 +101,7 @@ export interface SubgraphReport {
    * dangling link is `blv9`, not this"*. That was wrong, and it hid the
    * largest finding in the corpus: relocating CRDM into `methodologies/crdm/`
    * (bean `g43o`, hours earlier — CRDM has since moved again, to
-   * `skills/crdm/`, and this sentence is kept in the past tense on purpose:
+   * `skills/sdlc/crdm/`, and this sentence is kept in the past tense on purpose:
    * it records what the check caught, not where the files are today) broke
    * **13 sibling links** in
    * `crdm-requirements-workflow.md` — `interaction-modality.md`,
@@ -345,8 +347,20 @@ function markdownIn(abs: string): string[] {
 }
 
 export function scanSubgraphs(root: string = ROOT): SubgraphReport {
-  const dirs = resolveDirectories([{ name: "(local)", root, own: true }]);
-  const tree = subgraphTree(dirs);
+  // The CORPUS on the platform's own run (placement PR0, bean `ejye`): what
+  // the platform's `scope: "repository"` mirrors used to bring into this sweep
+  // is asked of the checkout now. Ids repeat across instances there (several
+  // `library`), so ownership is compared by ABSOLUTE PATH below and a foreign
+  // directory is labelled `<member>/<id>`; the containment TREE is still this
+  // instance's own declaration, the question it always answered.
+  const own = resolveDirectories([{ name: "(local)", root, own: true }]);
+  const dirs = corpusScopeFor(root) === "checkout" ? checkoutDirectories(root, { stackedOn: root }) : own;
+  const tree = subgraphTree(own);
+  // `own` on a checkout entry means "its own instance's", not this one's, so
+  // the test is membership of THIS instance's resolution.
+  const ownPaths = new Set(own.map((o) => o.absPath));
+  const label = (d: (typeof dirs)[number]): string =>
+    ownPaths.has(d.absPath) || d.member === undefined ? d.id : `${d.member}/${d.id}`;
   const edges: CrossEdge[] = [];
   const dangling: SubgraphReport["dangling"] = [];
   const derivedLinks: SubgraphReport["derivedLinks"] = [];
@@ -361,10 +375,11 @@ export function scanSubgraphs(root: string = ROOT): SubgraphReport {
     if (!existsSync(abs) || !statSync(abs).isDirectory()) continue;
     // Retired content is not held to link resolution — see `exempt`.
     if (dir.graphKinds.length > 0 && dir.graphKinds.every((g) => !isPublishedGraphKind(g))) {
-      exempt.push(`${dir.id} (${dir.path})`);
+      exempt.push(`${label(dir)} (${dir.path})`);
       continue;
     }
     let attributed = 0;
+    let unowned = 0;
     for (const rel of markdownIn(abs)) {
       const file = join(abs, rel);
       // ABSOLUTE, not instance-relative. A `scope: "repository"` directory
@@ -379,9 +394,10 @@ export function scanSubgraphs(root: string = ROOT): SubgraphReport {
       // in which instance-relative and repository-scoped entries are
       // commensurable at all.
       const owner = owningDirectory(dirs, file);
+      if (owner === undefined) unowned += 1;
       // Attribute the file to its DEEPEST owner, not to the directory whose
       // sweep happened to reach it — that attribution IS the `x4v4` defect.
-      if (owner === undefined || owner.id !== dir.id) continue;
+      if (owner === undefined || owner.absPath !== dir.absPath) continue;
       scanned += 1;
       attributed += 1;
       let text: string;
@@ -409,23 +425,28 @@ export function scanSubgraphs(root: string = ROOT): SubgraphReport {
           const bucket = renderable ? siteResolved : derived ? derivedLinks : dangling;
           bucket.push({
             from: relative(root, file),
-            fromDir: owner.id,
+            fromDir: label(owner),
             target,
           });
           continue;
         }
         const to = owningDirectory(dirs, resolved);
-        if (to === undefined || to.id === owner.id) continue;
+        if (to === undefined || to.absPath === owner.absPath) continue;
         edges.push({
           from: relative(root, file),
-          fromDir: owner.id,
+          fromDir: label(owner),
           to: relative(root, resolved),
-          toDir: to.id,
+          toDir: label(to),
         });
       }
     }
-    if (attributed === 0 && markdownIn(abs).length > 0) {
-      notExamined.push(`${dir.id} (${dir.path})`);
+    // NOT EXAMINED means a file this sweep could attribute to NOTHING — the
+    // `3ye4` path-space defect. A directory whose every file belongs to a
+    // DEEPER declared one (a member's `test/` holding only `test/results/`)
+    // was examined, under that deeper owner; over the checkout (placement
+    // PR0) that is the common case for an inherited member.
+    if (attributed === 0 && unowned > 0) {
+      notExamined.push(`${label(dir)} (${dir.path})`);
     }
   }
   return { tree, edges, dangling, derivedLinks, exempt, siteResolved, unreadable, notExamined, scanned };

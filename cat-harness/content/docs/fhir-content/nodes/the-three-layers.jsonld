@@ -1,5 +1,10 @@
 {
-  "@context": "https://litlfred.github.io/folio-assistant/ns/content/v1.jsonld",
+  "@context": [
+    "https://litlfred.github.io/folio-assistant/ns/content/v1.jsonld",
+    {
+      "@base": "https://litlfred.github.io/folio/"
+    }
+  ],
   "@id": "site/fhir-content/nodes/the-three-layers",
   "@type": [
     "folio-assistant-core:Prose",
@@ -7,7 +12,7 @@
   ],
   "label": "the-three-layers",
   "provenance": "authored",
-  "title": "L1, L2, L3 — three layers, not three stages",
+  "title": "L1–L5 — five layers, not five stages; FHIR content is the first three",
   "text": "the-three-layers.md",
   "meta": {
     "sourceDir": "content/docs/fhir-content"

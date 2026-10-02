@@ -116,7 +116,7 @@ fails in a way worth knowing:
 
 ### Where it goes
 
-`skills/folio-core/bean-coordination.md` §"A claim is branch-local" already says a
+`skills/sdlc/sdlc-core/bean-coordination.md` §"A claim is branch-local" already says a
 claim ANNOUNCES rather than reserves until your PR exists, and already names two
 checks to run first. This is a THIRD check at a LATER moment, so it belongs beside
 them rather than in a new section — and `AGENTS.md` is a pointer, not the home.
@@ -127,7 +127,7 @@ else.
 
 ## Implemented, 2026-09-26
 
-`skills/folio-core/bean-coordination.md` §"And ASK AGAIN before you open the PR —
+`skills/sdlc/sdlc-core/bean-coordination.md` §"And ASK AGAIN before you open the PR —
 looking once is not enough", placed inside §"A claim is branch-local" beside the
 two checks that section already names, and before `beans:claim`. It carries the
 rule, the one collision that settles why it is TIME rather than an edge (the

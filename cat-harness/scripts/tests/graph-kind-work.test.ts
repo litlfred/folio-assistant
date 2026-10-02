@@ -63,7 +63,7 @@ describe("recordsWork is narrower than holds: state", () => {
 describe("the verdict is asked of the REPOSITORY, not one instance", () => {
   it("a work-plan graph anywhere in the checkout makes it active", () => {
     const root = repoWith({
-      layer: { name: "layer", directories: [{ id: "b", path: "beans/", dependents: "skip", graphKinds: ["beans"] }] },
+      layer: { name: "layer", directories: [{ id: "b", path: "beans/", graphKinds: ["beans"] }] },
     });
     expect(isActiveKg(root)).toBe(true);
     expect(workPlanGraphsIn(root).plan).toEqual([{ instance: "layer", kinds: ["beans"] }]);
@@ -72,21 +72,22 @@ describe("the verdict is asked of the REPOSITORY, not one instance", () => {
 
   it("an instance with only non-work state is static", () => {
     const root = repoWith({
-      layer: { name: "layer", directories: [{ id: "u", path: "uploads/", dependents: "skip", graphKinds: ["uploads"] }] },
+      layer: { name: "layer", directories: [{ id: "u", path: "uploads/", graphKinds: ["uploads"] }] },
     });
     expect(isActiveKg(root)).toBe(false);
     rmSync(root, { recursive: true, force: true });
   });
 
-  it("this repository is ACTIVE, on cat-harness's beans and todos", () => {
+  it("this repository is ACTIVE, on the checkout's beans and todos", () => {
     const repo = resolve(import.meta.dir, "..", "..", "..");
     expect(isActiveKg(repo)).toBe(true);
     const { plan } = workPlanGraphsIn(repo);
-    expect(plan.map((p) => p.instance)).toContain("cat-harness");
-    // The ROOT instance declares no work-plan graph of its own — cat-harness
-    // declares beans at `scope: "repository"`. Asking per instance would call
-    // the one place a reader actually stands static.
-    expect(plan.map((p) => p.instance)).not.toContain("folio-assistant");
+    // The ROOT instance declares the work plan since placement PR0 (bean
+    // `ejye`): `beans/` and `todos/` sit at the checkout's root and belong to
+    // the checkout. Until then cat-harness declared them at
+    // `scope: "repository"`, and this asserted the opposite pair.
+    expect(plan.map((p) => p.instance)).toContain("folio-assistant");
+    expect(plan.map((p) => p.instance)).not.toContain("cat-harness");
   });
 });
 
@@ -123,7 +124,7 @@ describe("could not determine is a THIRD state, never STATIC", () => {
     const root = mkdtempSync(join(tmpdir(), "activekg-mix-"));
     writeDeclaration(root, JSON.stringify({ name: "root" }));
     mkdirSync(join(root, "ok"), { recursive: true });
-    writeDeclaration(join(root, "ok"), JSON.stringify({ name: "ok", directories: [{ id: "b", path: "beans/", dependents: "skip", graphKinds: ["beans"] }] }));
+    writeDeclaration(join(root, "ok"), JSON.stringify({ name: "ok", directories: [{ id: "b", path: "beans/", graphKinds: ["beans"] }] }));
     mkdirSync(join(root, "broken"), { recursive: true });
     writeDeclaration(join(root, "broken"), "{ not json", "broken");
     expect(isActiveKg(root)).toBe(true);

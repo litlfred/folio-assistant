@@ -131,24 +131,28 @@ describe.skipIf(!folio)(".mcp.json", () => {
 
 // ── Unified Docker image ───────────────────────────────────────
 
+// The MCP server and its Dockerfile moved to `cat-harness-tools` (bean `w2gr`,
+// step 3a); this reads the file there rather than importing anything from it.
+const MCP_DOCKERFILE = join(REPO_ROOT, "cat-harness-tools/adapters/mcp-server/Dockerfile");
+
 describe("Unified paper-assistant image", () => {
   test("Dockerfile exists", () => {
-    expect(existsSync(join(INSTANCE_ROOT, "adapters/mcp-server/Dockerfile"))).toBe(true);
+    expect(existsSync(MCP_DOCKERFILE)).toBe(true);
   });
 
   test("Dockerfile includes TeX Live", () => {
-    const df = readFileSync(join(INSTANCE_ROOT, "adapters/mcp-server/Dockerfile"), "utf-8");
+    const df = readFileSync(MCP_DOCKERFILE, "utf-8");
     expect(df).toContain("texlive-full");
   });
 
   test("Dockerfile includes gh CLI", () => {
-    const df = readFileSync(join(INSTANCE_ROOT, "adapters/mcp-server/Dockerfile"), "utf-8");
+    const df = readFileSync(MCP_DOCKERFILE, "utf-8");
     expect(df).toMatch(/apt-get\s+install\b[^\n]*\bgh\b/);
     expect(df).toMatch(/\bgh\s+--version\b/);
   });
 
   test("Dockerfile includes Python requests", () => {
-    const df = readFileSync(join(INSTANCE_ROOT, "adapters/mcp-server/Dockerfile"), "utf-8");
+    const df = readFileSync(MCP_DOCKERFILE, "utf-8");
     expect(df).toContain("requests");
   });
 

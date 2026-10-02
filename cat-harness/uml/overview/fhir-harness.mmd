@@ -1,5 +1,14 @@
 classDiagram
   direction LR
+  namespace fhir_harness__library {
+    class fhir_harness_library_folio_document_images_v1_folio_document_images_v1["folio-document-images/v1"] {
+      <<json: ImagesSidecarSchema>>
+      $schema [1] 'folio-document-images/v1'
+      doc_id [1] string
+      images [1] object[] | null
+      undetermined_reason [0..1] string
+    }
+  }
   namespace fhir_harness__fhir_ig_skills {
     class n_fhir_harness_fhir_ig_skills_skills["skills: no node schema"] {
       <<could not determine>>
@@ -26,6 +35,34 @@ classDiagram
       maintains [0..*] Maintain[]
       downstream [0..1] object
       renders [0..*] string[]
+      subprocesses [0..*] string[]
+    }
+  }
+  namespace fhir_harness__fhir_harness_processes {
+    class fhir_harness_fhir_harness_processes_omg_bpmn_2_0["Business Process Model and Notation (BPMN)"] {
+      <<ext: omg-bpmn-2.0>>
+      bpmn:callActivity [0..*] element
+      bpmn:collaboration [0..*] element
+      bpmn:definitions [0..*] element
+      bpmn:documentation [0..*] element
+      bpmn:endEvent [0..*] element
+      bpmn:exclusiveGateway [0..*] element
+      bpmn:extensionElements [0..*] element
+      bpmn:flowNodeRef [0..*] element
+      bpmn:import [0..*] element
+      bpmn:incoming [0..*] element
+      bpmn:lane [0..*] element
+      bpmn:laneSet [0..*] element
+      bpmn:outgoing [0..*] element
+      bpmn:parallelGateway [0..*] element
+      bpmn:participant [0..*] element
+      bpmn:process [0..*] element
+      bpmn:sequenceFlow [0..*] element
+      bpmn:serviceTask [0..*] element
+      bpmn:startEvent [0..*] element
+      bpmn:task [0..*] element
+      bpmn:timerEventDefinition [0..*] element
+      bpmn:userTask [0..*] element
     }
   }
   namespace fhir_harness__qa {
@@ -71,11 +108,13 @@ classDiagram
       auditor [1] object
     }
   }
+  cssClass "fhir_harness_library_folio_document_images_v1_folio_document_images_v1" fa_uml_kind_library
   cssClass "n_fhir_harness_fhir_ig_skills_skills" fa_uml_kind_skills
   cssClass "n_fhir_harness_fhir_ig_skills_skills" fa_uml_undetermined
   fhir_harness_fhir_ig_tools_ToolDefinition *-- "0..*" fhir_harness_fhir_ig_tools_Maintain : maintains
   cssClass "fhir_harness_fhir_ig_tools_Maintain" fa_uml_kind_tools
   cssClass "fhir_harness_fhir_ig_tools_ToolDefinition" fa_uml_kind_tools
+  cssClass "fhir_harness_fhir_harness_processes_omg_bpmn_2_0" fa_uml_kind_processes
   fhir_harness_qa_kg_qa_v1_kg_qa_v1 *-- "0..*" fhir_harness_qa_kg_qa_v1_Pair_attestation : pair_attestations
   fhir_harness_qa_kg_qa_v1_Voice_review *-- "0..*" fhir_harness_qa_kg_qa_v1_Verdict : verdicts
   fhir_harness_qa_kg_qa_v1_kg_qa_v1 *-- "0..*" fhir_harness_qa_kg_qa_v1_Voice_review : voice_reviews

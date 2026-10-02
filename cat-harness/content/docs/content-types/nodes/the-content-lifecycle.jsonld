@@ -1,5 +1,10 @@
 {
-  "@context": "https://litlfred.github.io/folio-assistant/ns/content/v1.jsonld",
+  "@context": [
+    "https://litlfred.github.io/folio-assistant/ns/content/v1.jsonld",
+    {
+      "@base": "https://litlfred.github.io/folio/"
+    }
+  ],
   "@id": "site/content-types/nodes/the-content-lifecycle",
   "@type": [
     "folio-assistant-core:Figure",
@@ -9,7 +14,7 @@
   "provenance": "authored",
   "title": "The content lifecycle",
   "text": "the-content-lifecycle.md",
-  "sourceDocument": "processes/content-lifecycle.bpmn",
+  "sourceDocument": "https://github.com/litlfred/folio-assistant/blob/main/folio-assistant-core/processes/content/content-lifecycle.bpmn",
   "meta": {
     "assetKind": "bpmn",
     "rendered": "assets/img/workflows/content-lifecycle.svg",

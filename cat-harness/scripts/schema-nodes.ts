@@ -41,7 +41,7 @@
  */
 import { existsSync, readFileSync, readdirSync } from "node:fs";
 import { basename, join, relative, sep } from "node:path";
-import { directoriesForGraph } from "../schemas/cat-harness.js";
+import { corpusDirectoriesForGraph } from "../schemas/harness-config.js";
 // The `folio` graph kind is registered by CORE. This module is a LIBRARY, so it
 // does NOT import that registration: a library's edge is inherited by every
 // module that imports it, and the harness may not depend on core. The
@@ -74,7 +74,7 @@ import { directoriesForGraph } from "../schemas/cat-harness.js";
  * `schemas` one by name rather than being handed a single-home guess.
  */
 function schemasRoots(root: string): string[] {
-  const declared = directoriesForGraph(root, "schemas");
+  const declared = corpusDirectoriesForGraph(root, "schemas");
   return declared.length > 0 ? declared : [join(root, "schemas")];
 }
 
@@ -89,7 +89,7 @@ export interface SchemaModule {
   kind: SchemaNodeKind;
   /** The reason given after `none —`, when one is. */
   reason?: string;
-  /** First prose line of the leading docblock, for the node's title. */
+  /** First prose line of the leading docblock, for the node's summary (D5). */
   summary?: string;
   /** True for `*.test.ts`: in the directory, not of the graph. */
   isTest: boolean;

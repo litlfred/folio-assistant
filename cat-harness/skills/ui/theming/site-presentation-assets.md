@@ -81,11 +81,13 @@ a failure.
 
 ## What this skill does not cover
 
-- **Prose voice and tone** — [`one-voice-style-guide`](../../folio-core/one-voice-style-guide.md).
+- **Prose voice and tone** — [`one-voice-style-guide`](../../authoring/authoring-core/one-voice-style-guide.md).
 - **Whether a rendered block LOOKS right** — that is a content question, and the
   rendering auditor's.
 - **How a link is spelled** —
-  [`link-style-raw-is-not-the-private-repo-answer`](../../../../memory/link-style-raw-is-not-the-private-repo-answer.md).
+  [`readme-sections`](../ui-core/readme-sections.md) §"On link style — `raw`
+  is not the private-repo answer" (summarised in the agent-memory entry
+  `link-style-raw-is-not-the-private-repo-answer`).
 
 This skill is only about the direction of authority: **the graph decides, the
 stylesheet reports.**

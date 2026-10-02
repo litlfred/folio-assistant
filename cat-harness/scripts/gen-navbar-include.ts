@@ -102,7 +102,7 @@ interface Visualisation {
   note?: string;
   stagingOnly?: true;
 }
-interface Harness {
+export interface Harness {
   name: string;
   title?: string;
   label?: string;
@@ -198,6 +198,8 @@ function model(harnesses: Harness[], title: string, staging: boolean, openContro
     instance: title,
     hrefs: "liquid",
     openControl,
+    // The theme's `.site-title` avatar IS the header here (#1757).
+    head: "none",
     ...(shown.length > 0 ? { harnesses: group } : {}),
     // Home is last in the fixed bottom, outside the disclosure, so folding the
     // harnesses away cannot take it with it — *"keep home at bottom for who
@@ -230,7 +232,7 @@ const BANNER =
  * that cannot say it is a preview is treated as canonical, which is the safe
  * direction and the one `isStagingPreview` already takes.
  */
-function render(harnesses: Harness[], title: string): string {
+export function render(harnesses: Harness[], title: string): string {
   const region = (staging: boolean): string =>
     navbarRegionsHtml(model(harnesses, title, staging, "labels"));
   return (
@@ -269,4 +271,5 @@ function main(): void {
   console.log(`wrote ${OUT}`);
 }
 
-main();
+// Guarded so a test can import `render` without rewriting the committed include.
+if (import.meta.main) main();

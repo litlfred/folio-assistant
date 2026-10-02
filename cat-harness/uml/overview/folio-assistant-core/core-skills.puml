@@ -46,7 +46,7 @@ package "folio-assistant-core/core-skills" as pkg_folio_assistant_core_core_skil
     sources [1..*] : Source[]
     rules [1..*] : Rule[]
     overlaySeverity [0..1] : critical | major | minor
-    appliesTo [0..*] : list<enum(16) | docs | skill | readme | specification>
+    appliesTo [0..*] : list<enum(16) | docs | skill | readme | specification | code>
     provenance [1] : assertion | evidence | house
     extends [0..1] : object
     activeIn [0..1] : object
@@ -61,7 +61,7 @@ package "folio-assistant-core/core-skills" as pkg_folio_assistant_core_core_skil
   class "Directory" as folio_assistant_core_core_skills_skill_topics_v1_Directory <<json: SkillTopicsSchema>> #e8f0ee {
     id [1] : string
     path [1] : string
-    dependents [1] : string
+    subgraph [1] : true
     graphKinds [1..*] : string[]
   }
   class "skill-topics/v1" as folio_assistant_core_core_skills_skill_topics_v1_skill_topics_v1 <<json: SkillTopicsSchema>> #e8f0ee {

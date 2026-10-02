@@ -39,6 +39,7 @@
  *   bun run ingest uploads/FILE.pdf
  *   bun run ingest uploads/FILE.pdf --dry-run
  *   bun run ingest uploads/FILE.pdf --refresh-meta   # technical facts only
+ *   bun run ingest uploads/FILE.pdf --refresh-title  # re-resolve the title (w6fu)
  *   bun run ingest uploads/FILE.pdf --library who-iris
  *
  * `--library` is required only when the repository declares more than one, and
@@ -57,11 +58,12 @@ import { fileURLToPath } from "node:url";
 import { ARCHIVE_MIMETYPES } from "../schemas/archive-contents.ts";
 import { checkEntry, type Requirement } from "./check-l1-complete.ts";
 import { TABULAR_MIMETYPES } from "../schemas/tabular-records.ts";
-import { directoriesForGraph } from "../schemas/cat-harness.ts";
+import { SLIDE_MIMETYPES } from "../schemas/pdf-structure.ts";
 import { refreshLibraryIndex } from "./lsi.ts";
 import { IntakeSchema } from "../schemas/intake.ts";
 import { LICENCE_FILENAME, readLicence } from "../content/pipeline/gen-library-jsonld.ts";
 import { STRUCTURE_FILENAME } from "../schemas/document-structure.ts";
+import { corpusDirectoriesForGraph } from "../schemas/harness-config.js";
 
 /**
  * This module's own instance root — where its `harness.json` is.
@@ -143,7 +145,7 @@ export function libraryRoot(root = INSTANCE_ROOT, choice?: string): string {
   //                     first: a WHO publication landing in the science
   //                     library reads as ingested and is in the wrong corpus,
   //                     and nothing downstream can tell.
-  const declared = directoriesForGraph(root, "library");
+  const declared = corpusDirectoriesForGraph(root, "library");
   if (declared.length === 0) {
     throw new Error(
       "this instance declares no `library` graph in its `<name>.json` — " +
@@ -203,7 +205,7 @@ export function libraryChoice(argv: string[]): string | undefined {
 
 /** Which rung a document needs, and the evidence that chose it. */
 export interface Plan {
-  rung: "archive" | "tabular" | "notebook" | "pdf-structure" | "pdf-pages" | "pdf-ocr+pdf-pages" | "undetermined";
+  rung: "archive" | "tabular" | "notebook" | "slides" | "referenced" | "pdf-structure" | "pdf-pages" | "pdf-ocr+pdf-pages" | "undetermined";
   why: string;
   /** Commands to run, in order, each as argv. */
   steps: string[][];
@@ -327,6 +329,29 @@ export function withDerivedArms(
     return { ...plan, steps: [...plan.steps, ["bun", "run", tsHelper("l1-blocks.ts"), "-o", staging]] };
   }
   const PDF_RUNGS = ["pdf-structure", "pdf-pages", "pdf-ocr+pdf-pages"];
+  // A deck writes the same `structure.json` + `sections/` a paged PDF does, and
+  // its own `images.json` (the images are package members, so there is no
+  // raster layer to recover and no vector labels to read). So it takes the two
+  // arms that read what the rung wrote, and not the two that read a PDF.
+  // Measured on the #1614 deck, not assumed: bean `scfh`.
+  // A RECORDED source holds no text, so there is nothing for the paged arms to
+  // read; its only derived artefact is the manifest (bean `scfh`).
+  if (plan.rung === "referenced") {
+    return {
+      ...plan,
+      steps: [...plan.steps, ["bun", "run", tsHelper("../content/pipeline/gen-library-jsonld.ts"), "--entry", staging]],
+    };
+  }
+  if (plan.rung === "slides") {
+    return {
+      ...plan,
+      steps: [
+        ...plan.steps,
+        ["bun", "run", tsHelper("l1-blocks.ts"), "-o", staging],
+        ["bun", "run", tsHelper("apply-image-verdicts.ts"), "--staging", staging, "--library", library],
+      ],
+    };
+  }
   if (!PDF_RUNGS.includes(plan.rung)) return plan;
   return {
     ...plan,
@@ -662,6 +687,17 @@ export function planFor(
     };
   }
 
+  // A deck before an archive, for the same reason a workbook is: a .pptx and
+  // an .odp are zips that DECLARE what they are, and listing one as a bag of
+  // XML parts would file the slides as data. Bean `scfh`, issue #1614.
+  if (mime !== null && (SLIDE_MIMETYPES as readonly string[]).includes(mime)) {
+    return {
+      rung: "slides",
+      why: `the package declares ${mime} — a slide deck, one section per slide, titles read from title placeholders only`,
+      steps: [["python3", pyHelper("slides-structure.py"), "-o", lib, pdf]],
+    };
+  }
+
   if (mime !== null && (ARCHIVE_MIMETYPES as readonly string[]).includes(mime)) {
     return {
       rung: "archive",
@@ -780,6 +816,34 @@ export function refreshMeta(pdf: string, libRoot = libraryRoot()): string {
 }
 
 /**
+ * `--refresh-title`: re-resolve an existing entry's title from its PDF (bean
+ * `w6fu`, owner's ruling 2026-10-02 on #1838).
+ *
+ * The title rule is `_pdf_title.py`'s, shared with both PDF rungs, so a
+ * refresh and a fresh ingest agree. It replaces the title only with one an
+ * independent source corroborates, records every candidate it saw, keeps the
+ * text walk's title as `title_raw` and never touches an editor's
+ * `title_correction`. Like {@link refreshMeta} it reads the file's indent off
+ * the file rather than choosing one.
+ */
+export function refreshTitle(pdf: string, libRoot = libraryRoot()): string {
+  const slug = bibSlug(pdf);
+  const structure = join(resolve(INSTANCE_ROOT, libRoot), slug, STRUCTURE_FILENAME);
+  if (!existsSync(structure)) throw new Error(`${structure}: no such entry to refresh`);
+  const r = Bun.spawnSync(["python3", pyHelper("_pdf_title.py"), "--refresh", structure, pdf]);
+  if (r.exitCode !== 0) {
+    throw new Error(`refreshing the title of ${slug}: ${new TextDecoder().decode(r.stderr).trim()}`);
+  }
+  const out = JSON.parse(new TextDecoder().decode(r.stdout)) as {
+    before: string | null;
+    after: string | null;
+    source: string;
+    verified: boolean;
+  };
+  return `${slug}: ${JSON.stringify(out.before)} -> ${JSON.stringify(out.after)} [${out.source}${out.verified ? "" : ", unverified"}]`;
+}
+
+/**
  * Which half of the pipeline is being asked for — bean `pn6j`.
  *
  * Exported for the same reason as {@link mayPromote}: the first version read
@@ -818,7 +882,7 @@ if (import.meta.main) {
   // was boolean; `--library who-iris` breaks it, because `who-iris` does not
   // start with `--` and would be ingested as a filename — producing "who-iris:
   // not there" while the real argument sat untouched two places along.
-  const takesValue = new Set(["--library"]);
+  const takesValue = new Set(["--library", "--reference"]);
   let pdf: string | undefined;
   for (let i = 0; i < argv.length; i++) {
     const a = argv[i]!;
@@ -839,6 +903,10 @@ if (import.meta.main) {
   }
   if (argv.includes("--refresh-meta")) {
     console.log(refreshMeta(pdf));
+    process.exit(0);
+  }
+  if (argv.includes("--refresh-title")) {
+    console.log(refreshTitle(pdf, libraryRoot(INSTANCE_ROOT, chosenLibrary)));
     process.exit(0);
   }
   const slug = bibSlug(pdf);
@@ -886,8 +954,18 @@ if (import.meta.main) {
   // (bean `8suc`). The refusal it may raise was already required to come
   // before the arms ran, so nothing about the ordering guarantee changes.
   const destination = libraryRoot(INSTANCE_ROOT, chosenLibrary);
+  // `--reference IDENTITY.json`: record the source and hold none of its text
+  // (bean `scfh`). Chosen by the caller, never inferred: whether a licence
+  // permits posting a copy is a reading of the licence, not of the bytes.
+  const reference = argv.includes("--reference") ? argv[argv.indexOf("--reference") + 1] : undefined;
   const plan = withDerivedArms(
-    planFor(pdf, undefined, stagingRoot),
+    reference
+      ? {
+          rung: "referenced",
+          why: "--reference given — recorded with its outline and sha256, text withheld",
+          steps: [["python3", pyHelper("referenced-source.py"), "-o", stagingRoot, pdf, "--identity", reference]],
+        }
+      : planFor(pdf, undefined, stagingRoot),
     pdf,
     stagingRoot,
     staging,

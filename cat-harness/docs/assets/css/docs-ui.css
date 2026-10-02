@@ -921,6 +921,42 @@
    * flex floor; collapsing either changes a layout this rule has no business
    * changing, and neither leaves a gap between marks.
    */
+  /* ▦ HARNESSES IS A MARK AT REST, like every other mark in the strip.
+   *
+   * Owner's ruling on bean `ob3m` finding 1, 2026-10-01, option 1 of 4:
+   * *"Make ▦ Harnesses visible on the landing page too."* Measured before it
+   * on #1762's head, 1280x800: the two lists above gave this summary
+   * `opacity: 0` AND `max-height: 0` at rest, so the strip showed six icons
+   * and no ▦ — reaching a harness took a hover to widen the strip and then a
+   * click. The viewer rail (`lib/navbar.ts`) never hid it, so the same control
+   * was one tap away on a generated page and two on this one.
+   *
+   * ONLY THE HARNESSES GROUP, by position: it is the one disclosure in the
+   * fixed bottom. Any other `.fa-nav-group` keeps the lists' rest state.
+   *
+   * WHAT STILL HIDES AT REST: the word (`.fa-nav-label`, in the lists above)
+   * and the `▸` disclosure caret, which in a 56px strip beside a glyph is a
+   * second mark that names nothing. Both come back from the same one flag, so
+   * the open summary is exactly what it was. The gutter is scaled the same
+   * way, so at rest the ▦ sits in the mark column — `--fa-nav-pad` from the
+   * edge, like ⌂ below it and every icon above — and open it sits where the
+   * caret needs it. ONE CLICK on it opens the group, and the click's focus
+   * holds the strip open (`:focus-within`), so the harness list is the
+   * first thing that click shows. */
+  .side-bar .fa-nav-bottom > .fa-nav-group > summary {
+    opacity: 1;
+    max-height: none;
+    min-height: var(--fa-nav-rest-min);
+    padding-left: calc(var(--fa-nav-pad) + var(--fa-nav-text, 1) * (0.5rem - var(--fa-nav-pad)));
+    gap: calc(var(--fa-nav-text, 1) * 0.375rem);
+  }
+  .side-bar .fa-nav-bottom > .fa-nav-group > summary::before {
+    display: inline-block;
+    overflow: hidden;
+    max-width: calc(var(--fa-nav-text, 1) * 2em);
+    opacity: var(--fa-nav-text, 1);
+  }
+
   /* A CLOSED DISCLOSURE MUST NOT YIELD, because it has nothing to give.
    *
    * Owner, 2026-09-23, with a screenshot: *"on this page is cut off"*. It was
@@ -1043,7 +1079,8 @@
   .side-bar > .fa-nav-icons {
     width: var(--fa-nav-collapsed);
     flex-wrap: wrap;
-    padding-top: var(--fa-nav-head-clear, 2rem);
+    /* No `☰` to clear any more (#1757): the avatar above is the control. */
+    padding-top: 0.25rem;
   }
   .side-bar:hover > .fa-nav-icons,
   .side-bar:focus-within > .fa-nav-icons,
@@ -3787,7 +3824,9 @@ a.fa-tile[data-fa-readonly]:focus-visible {
   box-shadow: inset 0 0 0 2px var(--fa-glass-accent);
 }
 .fa-glass-zoom-slider { width: 9rem; height: 2.75rem; accent-color: var(--fa-glass-accent); }
-.fa-glass-zoom-value { min-width: 3.2rem; text-align: right; font-weight: 700; font-variant-numeric: tabular-nums; }
+/* A FIXED width, not a minimum: the bar is right-aligned, so any change in the
+   readout's width ("100%" → "90%") would slide − and the slider sideways. */
+.fa-glass-zoom-value { flex: 0 0 auto; width: 3.6rem; white-space: nowrap; text-align: right; font-weight: 700; font-variant-numeric: tabular-nums; }
 .fa-glass-zoom button:focus-visible,
 .fa-glass-zoom input:focus-visible {
   outline: 3px solid var(--fa-glass-accent);
@@ -3863,6 +3902,38 @@ a.fa-tile[data-fa-readonly]:focus-visible {
    the picture loses nothing by the zoom. */
 .fa-glass-asset[data-fa-zoom="avatar"] .fa-glass-asset-name { display: none; }
 .fa-glass-asset[data-fa-zoom="avatar"] .fa-glass-asset-face { justify-content: center; }
+/* …EXCEPT A TEXT CARD, whose words are its face. Owner, 2026-10-01: *"if todo
+   is small zoomed, it shows no content at all. instead it should cleanup
+   whitespace and show condended first part of todo"*. A todo (and the
+   shelved-items note, which is drawn as one) shows its GIST in the avatar
+   state: whitespace collapsed and markdown dropped by `gistOf`, clamped here
+   to the whole lines that fit (the count is set by `zoomGlassCard`). Drawn
+   at a constant size on screen — the shelf's scale divided out — because
+   words zoomed to 25% with the card are present and unreadable. Hidden at
+   full size, where the title and the body already say it. */
+/* A LIBRARY card's gist is its title, the same way and for the same reason —
+   owner, 2026-10-01: *"where is title of thing from library?"*. Zoomed to its
+   cover, a book card had a picture and nothing saying which book; the caption
+   is clamped to two lines (`zoomGlassCard`) so the cover stays its face. */
+.fa-glass-asset-gist { display: none; }
+.fa-glass-asset[data-fa-zoom-kind="todo"][data-fa-zoom="avatar"] .fa-glass-asset-gist,
+.fa-glass-asset[data-fa-zoom-kind="library"][data-fa-zoom="avatar"] .fa-glass-asset-gist {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+  line-clamp: 3;
+  flex: 1 1 0;
+  min-height: 1.3em;
+  overflow: hidden;
+  margin: 0;
+  /* Above the theme's art and scrim, which sit at negative z in the card. */
+  position: relative;
+  z-index: 1;
+  font-size: calc(0.8rem / var(--fa-glass-scale, 1));
+  line-height: 1.3;
+  font-weight: 600;
+  overflow-wrap: anywhere;
+}
 .fa-glass-avatar {
   flex: 0 0 auto;
   width: 3.5rem;
@@ -4045,6 +4116,35 @@ a.fa-glass-asset-name { text-decoration: underline; text-underline-offset: 2px; 
   cursor: pointer;
 }
 
+/* ── Each settings panel names the other (bean `ob3m` finding 12) ─────────
+ * "Glass settings" and "Page settings" open with a link to each other. It is
+ * a button (it opens a panel, it does not navigate) DRESSED as a link, so it
+ * reads as a pointer elsewhere rather than as one of this panel's settings.
+ * `currentColor` and an underline, never colour alone (WCAG 1.4.1), so it is
+ * legible on the glass's themes and on the sidebar's light and dark schemes
+ * without a palette of its own. The 2.75rem target is the declared
+ * low-dexterity profile's, the same as every other control on the glass. */
+.fa-settings-crosslink {
+  display: block;
+  width: 100%;
+  min-height: 2.75rem;
+  margin: 0 0 0.75rem;
+  padding: 0.25rem 0;
+  border: 0;
+  border-bottom: 1px solid currentColor;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  font-size: 0.9rem;
+  font-weight: 600;
+  text-align: start;
+  text-decoration: underline;
+  text-underline-offset: 0.2em;
+  cursor: pointer;
+}
+.fa-settings-crosslink:hover { text-decoration-thickness: 2px; }
+.fa-settings-crosslink:focus-visible { outline: 3px solid currentColor; outline-offset: 2px; }
+
 /* ── The pull-out, first in its row ───────────────────────────────────── */
 .fa-pullout-slot { display: inline-flex; align-items: center; gap: 0.4rem; margin-left: 0.5rem; vertical-align: middle; }
 .fa-pullout {
@@ -4075,6 +4175,12 @@ a.fa-glass-asset-name { text-decoration: underline; text-underline-offset: 2px; 
   padding: 3rem 1rem 8.5rem;
   scroll-padding-bottom: 8.5rem;
   overflow: auto;
+  /* THE GUTTER IS RESERVED, so the zoom bar does not jump. Zooming in grows
+     the shelf until the glass overflows, a classic (non-overlay) scrollbar
+     appears, the content box narrows by its width, and the right-aligned zoom
+     bar slid 15px left under the pointer — measured 2026-10-01 at 1280×680,
+     on the click from 95% to 105%, and back again on Home. */
+  scrollbar-gutter: stable;
 }
 .fa-sticky-layer[data-fa-glass="closed"] .fa-glass-sheet { visibility: hidden; }
 
@@ -4094,6 +4200,30 @@ a.fa-glass-asset-name { text-decoration: underline; text-underline-offset: 2px; 
    glass is open — `l4zi`: an action whose inverse is not reachable is not a
    toggle, and a glass you can only leave by guessing at Escape is exactly
    that. */
+/* THE TITLE STOPS SHORT OF THE HANDLE on a narrow screen — `ob3m` finding 9.
+ * Below 50rem the theme's `.site-title` is a flex-grow link across the top
+ * bar, and the handle is fixed at its centre: at 390px the title's box ran
+ * 0–244px under a pill at 154–236px. "C@T Harness" happens to end before the
+ * pill; a longer instance name would not. So the title is held to the half of
+ * the bar left of the pill (half the viewport less half the pill and a gap)
+ * and ends in an ellipsis rather than running underneath it. */
+@media not all and (min-width: 50rem) {
+  .site-header .site-title {
+    max-width: calc(50vw - 3rem);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    /* The title's row-mates (`.fa-qr-host`'s icon buttons) follow it in the
+       flex row, so a shorter title slid them LEFT, under the handle. The auto
+       margin takes the space the title gave up and keeps them at the right. */
+    margin-right: auto;
+    /* The theme's 14px right padding is what pushed "C@T Harness" into the
+       ellipsis: the text ends at ~145px but the padded box needed ~159px.
+       Beside a fixed pill the padding buys nothing, so it goes here. */
+    padding-right: 0;
+  }
+}
+
 .fa-glass-handle {
   position: fixed;
   /* BELOW the staging banner, which is sticky at z-index 9999 and publishes
@@ -4223,6 +4353,41 @@ a.fa-glass-asset-name { text-decoration: underline; text-underline-offset: 2px; 
 html:has(style[data-folio-narrow-viewport]) body:has(> .fa-glass-handle),
 html:has(script[data-fa-folio-mount]) body:has(> .fa-glass-handle) {
   padding-top: 2.25rem;
+}
+
+/* ...AND KEEP IT RESERVED ONCE THE PAGE SCROLLS — issue #1693.
+ *
+ * The rule above, and the theme header's empty middle, clear the handle at
+ * the TOP of a page only. Scrolled, the handle sat over the middle of a body
+ * line (9 of 21 scroll positions on `platform.html` at 1280x900). While the
+ * page is scrolled `placeHandleBand` in `docs-ui.js` shows this strip behind
+ * the handle, across the content column, at the handle's own top and height
+ * and in the page's own background, so text scrolls under a bar rather than
+ * past a pill. Its geometry and colour are set there because both are read
+ * off the page: the handle's height differs by viewport, and a FIXED side bar
+ * must stay uncovered.
+ *
+ * Just under the glass layer (90), so an open glass is unchanged; and
+ * `scroll-padding-top` so an anchor jump or a focus scroll lands its target
+ * below the strip instead of under it. 2.25rem matches the band above. */
+.fa-glass-band {
+  position: fixed;
+  right: 0;
+  z-index: 89;
+  pointer-events: auto;
+  box-shadow: 0 1px 0 rgba(128, 128, 128, 0.3);
+  /* The page's own background: the band is body's child, and a themed page's
+     body paints the scheme's colour. NOT `Canvas`, which follows the OS
+     scheme rather than `data-fa-scheme` (see `.fa-sticky-floating`). */
+  background-color: inherit;
+}
+.fa-glass-band[hidden] { display: none; }
+/* A body that paints no background (the JS marks it): the scheme's page
+   colours, the same pair `head_custom.html` gives `html`. */
+.fa-glass-band[data-fa-band-fallback] { background-color: #ffffff; }
+:root[data-fa-scheme="dark"] .fa-glass-band[data-fa-band-fallback] { background-color: #27262b; }
+html:has(body > .fa-glass-handle) {
+  scroll-padding-top: calc(var(--fa-staging-offset, 0px) + 2.25rem);
 }
 
 /* A pinned sticky sits OVER page content, so it must be opaque — and which
@@ -5734,6 +5899,115 @@ button.fa-nav-icon {
   cursor: pointer;
 }
 
+/* ═══ THE NAME OF AN ICON, ON HOVER AND ON KEYBOARD FOCUS ═════════════════
+ *
+ * Owner's ruling on bean `ob3m` finding 1, 2026-10-01, option 1 of 4: *"show
+ * each icon's name as a tooltip on hover or keyboard focus."* Captions that
+ * are always visible were option 2 and were NOT chosen — the strip stays
+ * `--fa-nav-collapsed` wide.
+ *
+ * WHICH CONTROLS: those carrying `data-fa-tip`, which `docs-ui.js` writes on
+ * every control in the icon row with the same string as its `aria-label`.
+ * Those are the controls whose name is in `aria-label` and nowhere a sighted
+ * reader can see it, open or closed. A row with its own `.fa-nav-label` is
+ * named beside its mark once the strip opens, and hover and focus open it.
+ *
+ * WHERE: beyond the strip's right edge, level with the control. `fixed` with
+ * `top` left `auto` takes the STATIC position vertically, which is the
+ * control's own line, and `left` is the strip's current width plus a gap,
+ * from the same `--fa-nav-text` flag every other open rule reads. Fixed is
+ * also what stops `.side-bar`'s `overflow: hidden` clipping it: an overflow
+ * box clips a fixed descendant only when it is that descendant's containing
+ * block.
+ *
+ * ONE NAME FOR A SCREEN READER: `content: … / ""` gives the generated text an
+ * empty alternative, so the accessible name stays the `aria-label` and the
+ * tooltip is never read as a second one. The first `content` is the fallback
+ * for an engine that drops the alt syntax.
+ *
+ * INVERTED AGAINST THE SCHEME, so it reads as a tooltip over either page
+ * rather than as more sidebar. #1f2328 on white and white on #1f2328 are
+ * both 15.8:1.
+ *
+ * Inside `min-width: 50rem` only: below it the theme's own menu labels every
+ * row in words, and there is no strip to sit beside. */
+:root {
+  --fa-tip-bg: #1f2328;
+  --fa-tip-ink: #ffffff;
+}
+:root[data-fa-scheme="dark"] {
+  --fa-tip-bg: #ffffff;
+  --fa-tip-ink: #1f2328;
+}
+@media (min-width: 50rem) {
+  .side-bar [data-fa-tip]::after {
+    content: attr(data-fa-tip);
+    content: attr(data-fa-tip) / "";
+    position: fixed;
+    left: calc(var(--fa-nav-collapsed) + var(--fa-nav-text, 1) * (var(--fa-nav-open) - var(--fa-nav-collapsed)) + 0.5rem);
+    z-index: 2147483001;
+    padding: 0.25rem 0.5rem;
+    border-radius: 0.25rem;
+    background: var(--fa-tip-bg);
+    color: var(--fa-tip-ink);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+    font-size: 0.8125rem;
+    font-weight: 600;
+    line-height: 1.3;
+    letter-spacing: normal;
+    text-transform: none;
+    white-space: nowrap;
+    pointer-events: none;
+    opacity: 0;
+  }
+  .side-bar [data-fa-tip]:hover::after,
+  .side-bar [data-fa-tip]:focus-visible::after {
+    opacity: 1;
+  }
+
+  /* THE STRIP DOES NOT PEEK WHEN THE POINTER ARRIVES ON THE ICON COLUMN.
+   *
+   * Without this the tooltip above could never be seen for a pointer.
+   * Measured on #1762's head, 1280x800: the pointer on Beans at (20,105)
+   * widened the strip to 264px, which re-flows the column into a ROW, and the
+   * pointer was then over NOTHING — the icon it was naming had moved up and
+   * to the right. A name for something no longer under the pointer names
+   * nothing.
+   *
+   * `.fa-nav-tip-hold` is set by `docs-ui.js` (`mountNavIconRow`) when the
+   * pointer ENTERS the strip inside the column's at-rest box, and cleared the
+   * moment it leaves that box. So arriving on an icon keeps the strip a strip
+   * — the owner's ruling says it stays narrow — while arriving anywhere else
+   * still peeks, and a reader already peeking can still reach the row's
+   * icons and its [x]: holding on `.fa-nav-icons:hover` alone was tried
+   * first, and it collapsed the open bar under a pointer moving INTO the row
+   * (four `navbar-row.e2e.ts` cases caught it).
+   *
+   * Re-asserts the rest geometry the way the stay-closed rule above does, at
+   * a specificity that beats every open rule, rather than guarding each one.
+   * NOT for KEYBOARD focus and NOT while pinned: those are the reader's
+   * deliberate opening, and a keyboard reader must never tab through links
+   * they cannot see. `:focus-visible` rather than `:focus-within`, because a
+   * CLICK on a column icon focuses it too: with `:focus-within` the strip
+   * opened on mousedown, re-flowed the column, and the mouseup landed on
+   * another element — the click never arrived (`navbar-row.e2e.ts`'s
+   * launcher case caught it). */
+  .side-bar.fa-nav-tip-hold:hover:not(:has(:focus-visible)):not(:has(.fa-nav-open:checked)) {
+    width: var(--fa-nav-collapsed);
+    --fa-nav-text: 0;
+  }
+  .side-bar.fa-nav-tip-hold:hover:not(:has(:focus-visible)):not(:has(.fa-nav-open:checked)) > .fa-nav-icons {
+    width: var(--fa-nav-collapsed);
+    flex-wrap: wrap;
+  }
+  .side-bar.fa-nav-tip-hold:hover:not(:has(:focus-visible)):not(:has(.fa-nav-open:checked)) .fa-nav-close {
+    display: none;
+  }
+}
+@media (min-width: 50rem) and (prefers-reduced-motion: no-preference) {
+  .side-bar [data-fa-tip]::after { transition: opacity .12s ease; }
+}
+
 /* ═══ THE OPEN DOCUMENT'S INDEX ════════════════════════════════════════════
  *
  * Owner: *"when a document or other indexed object is opened, the document
@@ -6439,13 +6713,31 @@ a.fa-harness-tab__body:focus-visible {
 }
 
 .fa-harness-section__gap,
-.fa-harness-section__findings {
+.fa-harness-section__findings,
+.fa-harness-section__subgraphs {
   font-size: 0.8125rem;
   opacity: 0.85;
   margin: 0;
 }
 
-.fa-harness-section__findings summary {
+/* LOCAL / REMOTE as a word in a box (`603s`). No colour of its own — the word
+   is the signal, so it survives a missing stylesheet and reads the same to a
+   screen reader; the box only lines the tags up. A REMOTE tag is drawn with a
+   dashed border as a second, shape-based cue. */
+.fa-harness-section__subgraphs ul { margin: 0.25rem 0 0; padding-left: 1rem; }
+.fa-harness-section__where {
+  display: inline-block;
+  min-width: 3.75rem;
+  padding: 0 0.3rem;
+  border: 1px solid currentColor;
+  border-radius: 3px;
+  font-size: 0.75rem;
+  text-align: center;
+}
+.fa-harness-section__subgraphs [data-fa-where="remote"] .fa-harness-section__where { border-style: dashed; }
+
+.fa-harness-section__findings summary,
+.fa-harness-section__subgraphs summary {
   cursor: pointer;
   min-height: 2rem;
   display: flex;
@@ -6640,6 +6932,29 @@ a.fa-harness-tab__body:focus-visible {
   /* The avatar is the whole slot now, so centre it in the track it kept. */
   display: flex;
   justify-content: center;
+}
+
+/* THE AVATAR CARRIES THE NOTE'S FIRST WORDS — owner, 2026-10-01: *"if todo is
+ * small zoomed, it shows no content at all"*. A glyph alone could not tell one
+ * note from its neighbours. Shown only in the avatar state, under the glyph;
+ * at full size the card says it. Collapsed and de-marked by `gistOf`. */
+.fa-sticky-avatar-gist { display: none; }
+.fa-sticky-slot--avatar {
+  flex-direction: column;
+  align-items: center;
+}
+.fa-sticky-slot--avatar > .fa-sticky-avatar-gist {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+  line-clamp: 3;
+  overflow: hidden;
+  max-width: 100%;
+  margin: 0;
+  font-size: 0.8rem;
+  line-height: 1.3;
+  text-align: center;
+  overflow-wrap: anywhere;
 }
 
 /* THE WINDOW LAYER. Projected onto the board, so it is positioned against the
@@ -7227,239 +7542,200 @@ a.fa-harness-tab__body:focus-visible {
   background: rgba(128, 128, 128, 0.22);
 }
 
-/* ── Search: in the top display navbar, slidable to the corner ────────────
+/* ── Search: a magnifier at the top of the display window ─────────────────
  *
- * Owner, 2026-09-21: *"also i want the search restored back to the top
- * display navbar, with option to slide out to the UR corner as an icon."*
+ * Owner, 2026-09-30: *"search that should be a collsaible icon/avatar on top
+ * of display window... that when open is full span width of all avaioblae"*
+ * (issue #1715). Replaces the navbar/corner pair of 2026-09-21 (`rx6k`);
+ * `docs-ui.js` records what that design measured and why it went.
  *
- * TWO STATES ON ONE NODE, switched by `data-place`, because the field must
- * never leave the document — just-the-docs finds its input by id and
- * `getElementById` does not see a detached node. So "sliding out" is a class
- * change on the wrapper, never a move of the input. `docs-ui.js` carries the
- * long form of why.
+ * ONE NODE, TWO STATES, switched by `data-open`, because the field must never
+ * leave the document — just-the-docs finds its input by id and
+ * `getElementById` does not see a detached node. Closing is `display: none`
+ * on the holder, never a move of the input.
  *
- *   data-place="navbar"  in flow at the top of the main header (the default,
- *                        and where the theme itself renders search)
- *   data-place="corner"  fixed to the upper right, collapsed behind an icon
- *                        until `data-open="true"`
+ *   data-open="false"  the magnifier alone, FLOATED to the inline-end of the
+ *                      display panel's first line. Content flows beside it,
+ *                      so it costs no vertical space of its own. Floated to
+ *                      the logical end, so on an RTL page it sits top-left.
+ *   data-open="true"   the magnifier, then the field across the full width of
+ *                      the panel, and results the same full width beneath.
  *
- * The choice is remembered per reader in `localStorage`, so it is a setting
- * rather than a gesture repeated every page.
+ * STICKY, BELOW THE HANDLE'S ROW — issue #1732. The owner decided
+ * (2026-10-01) the magnifier must ALWAYS be on screen. #1720 had it in plain
+ * flow, so it scrolled away: measured on a local build it could be pressed at
+ * 1 of 14 sampled positions on a long page at 1280px and 2 of 25 at 390px.
+ *
+ * Sticky rather than fixed, because sticky keeps everything #1720 measured
+ * at rest — same place, same zero vertical cost, same full-width row — and
+ * only changes what happens once the page scrolls. It sticks at the staging
+ * banner's offset plus 2.5rem: the Folio handle and PR #1709's
+ * `.fa-glass-band` (z 89) are `position: fixed` at that offset and at most
+ * 2rem tall (28px at 1280, 25px at 390), so 2.5rem clears both with a gap.
+ * It is at the far inline end from the handle, which is centred, and z 88
+ * keeps it under the band and the glass layer (90) should either ever reach
+ * it. The phone header's menu button is in the side bar, which scrolls away
+ * on a phone, and sits ~300px above the panel at rest.
+ *
+ * Text scrolls UNDER it, so the magnifier and the open row paint the page's
+ * own background — per scheme, from tokens here, never from script
+ * (`inline-colour.test.ts`).
  */
-/* ## The navbar state INHERITS the page's ink; only the corner names its own
+/* ## The page's ink; only opaque surfaces name their own
  *
- * The first version of this block gave `.fa-search-home` a per-scheme
+ * The first version of the navbar search gave `.fa-search-home` a per-scheme
  * foreground the way `.fa-tiles` has one, and axe caught it immediately:
- * `#e6e9ee on #ffffff, 1.21:1`. The mistake is worth naming because it looks
- * like the FIX for `23bc` rather than a new instance of it.
- *
- * `.fa-tiles` paints its own opaque panel, so it knows what its text sits on
- * and must state a matching colour. The navbar search does NOT paint a
- * background — it sits in page content — so whatever colour it names is a
- * guess about a surface it does not own, and the guess is wrong in one
- * scheme by construction. Inheriting is not laziness here; it is the only
- * answer that cannot be wrong, because the page's own text colour is already
- * correct against the page's own background.
- *
- * The BORDER cannot inherit — it needs a value — so it takes one that clears
- * 3:1 on every background it can land on rather than one per scheme:
+ * `#e6e9ee on #ffffff, 1.21:1`. The search paints no background — it sits in
+ * page content — so any colour it named would be a guess about a surface it
+ * does not own. It inherits. The BORDER cannot inherit, so it takes one that
+ * clears 3:1 on every background it can land on:
  *
  *   #737d8c   on #ffffff 4.17:1   on #27262b 3.60:1   on #f5f6fa 3.86:1
  *
- * The corner card is the opposite case and keeps the per-scheme pair below:
- * it IS opaque, it does own its background, and it must.
- */
+ * The results list IS opaque (it drops over body text), so it keeps its own
+ * per-scheme pair below. */
 .fa-search-home {
   --fa-search-border: #737d8c;
+  /* The page's own background, for the two surfaces that now sit over text.
+     The same pair `head_custom.html` gives `html`. */
+  --fa-search-page-bg: #27262b;
 
-  display: flex;
-  align-items: center;
-  gap: 0.4rem;
-  color: inherit;
-}
-
-/* NAVBAR — the default. The field takes the width it is given and the slide
-   control sits after it, so the control does not move as the page resizes. */
-.fa-search-home[data-place="navbar"] {
-  width: 100%;
-  margin: 0 0 0.75rem;
-}
-
-.fa-search-home[data-place="navbar"] .fa-search-holder { flex: 1 1 auto; min-width: 0; }
-
-/* THE FIELD FILLS THE DISPLAY PANEL. Owner, 2026-09-23: *"it should start open
-   full top of display panel"*.
-
-   `width: 100%` on `.fa-search-home` was never the constraint. MEASURED at
-   1280px, walking the box chain up from the input: `.fa-search-home` 1224,
-   `.fa-search-holder` 1190, `.search` 1190 -- and then the theme's own
-   `.search-input-wrap` at **536px with `max-width: 536px`**, sized for the
-   header just-the-docs renders it in rather than for a panel this wide. So the
-   field was 44% of the space it was given, and every declaration above it was
-   already correct. */
-.fa-search-home[data-place="navbar"] .search-input-wrap {
-  max-width: none;
-  width: 100%;
-}
-
-/* THE GLYPH IS ALWAYS THERE. Owner, same message: *"maginfyingglass
-   avatar/braadning should be visibile always."*
-
-   It used to be `display: none` in this state, on the reasoning that the field
-   is present so the control that reveals it is redundant. That is true of it
-   AS A REVEAL and misses what the owner is asking for: a fixed mark that says
-   "search is here", in the same place in both states, so the eye has one
-   target rather than two.
-
-   It keeps a real job rather than becoming decoration -- clicking it focuses
-   the field. A visible glyph that did nothing would be `gjli`: an inert thing
-   that reads as a control. */
-.fa-search-home[data-place="navbar"] .fa-search-peek { display: inline-flex; }
-
-/* CORNER — fixed, upper right.
- *
- * `z-index: 95` puts it over page content and over the pinned-sticky layer
- * (`.fa-sticky-layer`, 90), which is deliberate: a reader who pressed the
- * search icon wants the field, not a note that happens to overlap it. It
- * stays BELOW anything modal, of which there is currently nothing. */
-.fa-search-home[data-place="corner"] {
-  position: fixed;
-  /* BELOW THE STAGING BANNER — owner, 2026-09-24: *"hiding search makes it go
-     away compleletey, cant restore."* On every preview the banner is
-     `position: sticky; top: 0; z-index: 9999`, about 36px tall, and at
-     `top: 0.75rem` this whole card -- the magnifier AND the dock-back control,
-     the only two ways back -- sat underneath it. Hit-tested on the real
-     preview off `gh-pages`, at 1280px and 390px: the point under each control
-     was the banner. The banner already publishes its measured height as
-     `--fa-staging-offset` (it moves the fixed sidebar down the same way), so
-     the corner reads that rather than guessing a number; 0 off a preview. */
-  top: calc(0.75rem + var(--fa-staging-offset, 0px));
-  right: 0.75rem;
-  z-index: 95;
-  gap: 0.25rem;
-  padding: 0.25rem;
-  border: 1px solid var(--fa-search-border);
-  border-radius: 6px;
-  /* Opaque: it sits over body text, so unlike the navbar state it DOES own
-     its background and therefore must name a foreground to match it. Dark by
-     default, re-measured light below — #e6e9ee on #27262b is 12.34:1 and
-     #1f2933 on #ffffff is 14.76:1. */
-  background: #27262b;
+  position: sticky;
+  top: calc(var(--fa-staging-offset, 0px) + 2.5rem);
+  z-index: 88;
+  /* NOW OPAQUE, SO IT NAMES ITS INK — the rule at the top of this block,
+     applied the other way round. Inheriting was right while the search
+     painted nothing; once it paints the scheme's background it must name the
+     scheme's foreground, or a page whose own text does not follow the scheme
+     gets #000 on #27262b (1.39:1, caught by `a11y.e2e.ts`).
+     #e6e9ee on #27262b 12.34:1; #1f2933 on #ffffff 14.76:1. */
   color: #e6e9ee;
 }
-
-:root[data-fa-scheme="light"] .fa-search-home[data-place="corner"] {
-  background: #ffffff;
+:root[data-fa-scheme="light"] .fa-search-home {
+  --fa-search-page-bg: #ffffff;
   color: #1f2933;
 }
 
-/* Collapsed is the corner's ARRIVAL state — sending search to the corner and
-   leaving the field open would not have freed the space that was the point. */
-.fa-search-home[data-place="corner"][data-open="false"] .fa-search-holder { display: none; }
-.fa-search-home[data-place="corner"][data-open="true"] .fa-search-holder { width: min(18rem, 60vw); }
+/* CLOSED — the magnifier, floated. The z-index above also keeps a heading's
+   own box, which runs under a float, from taking the click meant for it. */
+.fa-search-home[data-open="false"] {
+  float: inline-end;
+  margin-block: 0 0.25rem;
+  margin-inline: 0.75rem 0;
+}
+.fa-search-home[data-open="false"] .fa-search-holder { display: none; }
 
-/* The two controls. Sized like the header mini-icons (1.75rem) rather than
-   to the text, because this instance's interaction profile is low-dexterity
-   and both are targets a reader hits with a pointer. */
-.fa-search-peek,
-.fa-search-slide {
+/* OPEN — a full-width row: magnifier attached to the field, everything the
+   field's height, top-aligned so a preview's notice under the field grows the
+   row downwards and never pulls the magnifier off the field's line. */
+.fa-search-home[data-open="true"] {
+  display: flex;
+  align-items: flex-start;
+  width: 100%;
+  clear: both;
+  margin: 0 0 0.75rem;
+  /* Opaque: pinned mid-page, body text scrolls under the row, and the field
+     itself is transparent. */
+  background: var(--fa-search-page-bg);
+}
+
+/* KEEP THE PAGE WHERE IT IS WHILE SEARCHING. just-the-docs sets
+   `.search-active .main { position: fixed }` at 50rem and up, for the
+   full-screen overlay it draws search in. Search is not drawn there any more,
+   and pinned mid-page that rule dropped the reader at the top of the page the
+   moment they typed. `:has` scopes this to pages where docs-ui adopted the
+   search; a page without it keeps the theme's behaviour. */
+@media (min-width: 50rem) {
+  .search-active .main:has(.fa-search-home) {
+    position: relative;
+    left: auto;
+    right: auto;
+  }
+}
+.fa-search-home[data-open="true"] .fa-search-holder { flex: 1 1 auto; min-width: 0; }
+
+/* The magnifier. 2.25rem — the field's own height — rather than to the glyph,
+   because this instance's interaction profile is low-dexterity; the owner's
+   *"maginfyingglass avatar/braadning should be visibile always"* (2026-09-23)
+   holds, it is on screen in both states. */
+.fa-search-peek {
   flex: 0 0 auto;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 1.75rem;
-  height: 1.75rem;
+  width: 2.25rem;
+  height: 2.25rem;
   padding: 0;
   border: 1px solid var(--fa-search-border);
-  border-radius: 4px;
-  background: transparent;
+  border-radius: 50%;
+  /* Opaque, pinned over text (#1732). */
+  background: var(--fa-search-page-bg, transparent);
   color: inherit;
   cursor: pointer;
   line-height: 1;
-  font-size: 0.85rem;
 }
+.fa-search-peek svg { width: 1.1rem; height: 1.1rem; fill: currentColor; }
 
-.fa-search-peek svg { width: 1rem; height: 1rem; fill: currentColor; }
-
-/* The slide control carries WORDS now ("Hide search" / "Show search"), so it
-   sizes to them rather than to a 1.75rem square — and is a little taller,
-   because it is the way back and the declared profile is low-dexterity. */
-.fa-search-slide {
-  width: auto;
-  min-height: 1.75rem;
-  height: auto;
-  gap: 0.3rem;
-  padding: 0.15rem 0.5rem;
-  font-weight: 600;
-  white-space: nowrap;
+/* Open, it becomes the field's own leading edge: shared border, outer
+   corners rounded, inner ones square, so it reads as the field's icon. */
+.fa-search-home[data-open="true"] .fa-search-peek {
+  border-inline-end: 0;
+  border-radius: 4px;
+  border-start-end-radius: 0;
+  border-end-end-radius: 0;
 }
-.fa-search-slide-glyph { font-size: 0.9rem; }
+.fa-search-home[data-open="true"] .search-input {
+  border-start-start-radius: 0;
+  border-end-start-radius: 0;
+}
 
 .fa-search-peek:hover,
-.fa-search-peek:focus-visible,
-.fa-search-slide:hover,
-.fa-search-slide:focus-visible {
+.fa-search-peek:focus-visible {
   border-color: var(--link-color, #7253ed);
-  outline: none;
 }
-
-/* Never left to the user agent: the corner card's fill differs per scheme and
-   the default ring is invisible on one of them. */
-.fa-search-peek:focus-visible,
-.fa-search-slide:focus-visible {
+.fa-search-peek[aria-expanded="true"] {
+  background: rgba(128, 128, 128, 0.18);
+}
+/* Never left to the user agent: the default ring is invisible on one scheme. */
+.fa-search-peek:focus-visible {
   outline: 2px solid var(--link-color, #7253ed);
   outline-offset: 2px;
 }
 
-/* On a phone the corner card would cover most of the header, so the corner
-   state collapses to just its icon and the field opens full-width beneath.
-   The state is still honoured — it is not silently forced back to the navbar,
-   which would lose a choice the reader made on another device. */
-@media (max-width: 50rem) {
-  .fa-search-home[data-place="corner"][data-open="true"] {
-    left: 0.75rem;
-    right: 0.75rem;
-  }
-  .fa-search-home[data-place="corner"][data-open="true"] .fa-search-holder {
-    width: auto;
-    flex: 1 1 auto;
-    min-width: 0;
-  }
+/* THE FIELD'S OWN BOX, because the theme does not give it one — bean `tcq2`.
+ *
+ * The theme makes `.search-input-wrap` `position: absolute` at desktop inside
+ * a `.search` of height 0, so anything following the field was painted UNDER
+ * it (a hit test at the field's centre once returned the preview notice).
+ * Here the wrap is in flow, so `.search` has the field's height by itself.
+ *
+ * `.search` is `position: static` so the results list positions against
+ * `.fa-search-home` — the WHOLE row, magnifier included — which is what makes
+ * the results as wide as the panel rather than as wide as the field. Static,
+ * with this specificity, also beats the theme's below-50rem
+ * `.search-active .search { position: fixed }` full-screen takeover; the
+ * padding, heights and shadow of the theme's mobile box are undone here too.
+ *
+ * The theme also caps the wrap at `max-width: 33.5rem` (and `width: 33.5rem`
+ * while `.search-active`), sized for the header it renders search in. That
+ * cap was 44% of the panel at 1280px; it is lifted. */
+.fa-search-home .search {
+  position: static;
+  height: auto;
+  min-height: 2.25rem;
+  padding: 0;
 }
-
-/* The field's own size in the navbar.
- *
- * The theme's input is 21px tall unstyled, and the tiles panel used to give
- * it a height that the navbar does not. 21px is UNDER the 24px SC 2.5.8
- * target floor, and this instance's declared interaction profile is
- * low-dexterity, where "technically under the bar" is a reader who misses.
- * Caught by the e2e box assertion after the field moved — the check existed,
- * it was the styling that did not follow.
- *
- * 2.25rem (36px) rather than 24: that is what the panel already gave it, so
- * the field is not quietly smaller in its new home than in its old one. The
- * test holds the legal 24 so this comfort can be spent deliberately rather
- * than by accident. */
-/* THE FIELD'S OWN BOX, because the theme does not give it one — bean `tcq2`,
-   found by driving the REAL CI build rather than the local one.
-
-   `.search` is `position: relative` and its only child `.search-input-wrap` is
-   `position: absolute`, so `.search` computes to **height 0** while the input
-   inside it is 36px. Anything that follows the field in normal flow is
-   therefore painted UNDER it. Measured on the staging preview at 1280px:
-   `.search` h=0, `.fa-search-home` h=34 — the whole control's height was the
-   NOTICE, and a hit test at the field's centre returned `P.fa-search-notice`,
-   not the input. The field was not clickable where a reader would click it.
-
-   Reserving the field's own height puts the notice below it: `.search` h=36,
-   the control h=70, and the hit test reaches the input.
-
-   ONLY EVER VISIBLE ON A PREVIEW, since `.fa-search-notice` is rendered only
-   when the build stamped a non-canonical index — but a preview is what a
-   reviewer looks at, and a zero-height box around a 36px control is wrong
-   whether or not anything currently sits under it. 2.25rem is the field's own
-   height, one declaration below. */
-.fa-search-home .search { min-height: 2.25rem; }
+.fa-search-home .search-input-wrap {
+  position: relative;
+  width: 100%;
+  max-width: none;
+  height: 2.25rem;
+  box-shadow: none;
+  border-radius: 0;
+  /* `hidden` in the theme clipped the input's own focus ring. The theme's
+     magnifier label that the clip was for is already a 1px sr-only box. */
+  overflow: visible;
+}
 
 .fa-search-home .search-input {
   box-sizing: border-box;
@@ -7469,127 +7745,45 @@ a.fa-harness-tab__body:focus-visible {
   border: 1px solid var(--fa-search-border);
   border-radius: 4px;
   background: transparent;
-  /* Inherits — the page's in the navbar, the card's in the corner. One
-     declaration, correct in both, for the reason at the top of this block. */
+  /* Inherits the page's ink, for the reason at the top of this block. */
   color: inherit;
   font-size: 0.85rem;
 }
-
 .fa-search-home .search-input:focus-visible {
   outline: 2px solid var(--link-color, #7253ed);
   outline-offset: 1px;
 }
 
-/* Results drop below the field rather than floating, same rule the panel
-   already follows, and the corner card needs it more: fixed-positioned, it
-   would otherwise render its hits off the bottom of the viewport. */
+/* RESULTS: THE FULL WIDTH OF THE ROW, dropped below it.
+ *
+ * Opaque, because hits render over body text. `Canvas` was rejected for the
+ * reason the pinned-sticky rule records — a SYSTEM colour follows the OS
+ * scheme while the text follows the page's. Taller than the old 16rem: at
+ * full width each hit is two short lines rather than five narrow ones, and
+ * the list is what the reader came for. */
 .fa-search-home .search-results {
   position: absolute;
   top: 100%;
   left: 0;
   right: 0;
-  max-height: 16rem;
+  z-index: 3;
+  width: auto;
+  max-width: none;
+  max-height: min(70vh, 32rem);
   margin-top: 0.25rem;
   overflow-y: auto;
   border: 1px solid var(--fa-search-border);
   border-radius: 4px;
-  /* Opaque like the corner card, and for the same reason: hits render over
-     body text. `Canvas` was rejected here for the reason the pinned-sticky
-     rule records — it is a SYSTEM colour that follows the OS scheme while the
-     text follows the page's, so the two disagree the moment a reader sets the
-     page against their system. */
   background: #27262b;
   color: #e6e9ee;
 }
-
 :root[data-fa-scheme="light"] .fa-search-home .search-results {
   background: #ffffff;
   color: #1f2933;
 }
 
-.fa-search-home .search { position: relative; }
-
-/* ── ONE SEARCH ROW, not three controls ─────────────────────────────────
- *
- * Owner, 2026-09-27: *"search is wonky"* -- a small square magnifier on the
- * left, a full-width field, a "Hide search" button on the right, and on a
- * preview a note under them, all at DIFFERENT HEIGHTS, reading as three
- * unrelated controls.
- *
- * Measured on a local build before this block (getting-started.html):
- *
- *   1280px   magnifier 28px, field 36px, Hide search 28px -- three heights.
- *            On a preview `align-items: center` centred both buttons against
- *            the field PLUS the notice, so they dropped 21px below the field
- *            and sat level with the notice instead.
- *   390px    the theme's below-50rem rules were still live: `.search` is
- *            `height: 4rem; padding: 0.5rem` and `.search-input-wrap` is
- *            `height: 3rem` with a drop shadow, so the field floated 7px down
- *            inside a 56px box, shadowed, beside two 25px buttons.
- *
- * The fix is geometry, not new controls:
- *
- *   - Everything is 2.25rem tall -- the field's own height, already chosen
- *     above for the low-dexterity profile -- so no control is smaller than
- *     the field it sits beside.
- *   - Top-aligned, so a notice under the field grows the row DOWNWARDS and
- *     never pulls the buttons off the field's line.
- *   - The magnifier is ATTACHED to the field: no gap, shared edge, the outer
- *     corners rounded and the inner ones square, so it reads as the field's
- *     own icon. It keeps its job (focuses the field; in the corner, opens it)
- *     and its name, so nothing about keyboard access changes.
- *   - The theme's mobile box (padding, 4rem/3rem heights, shadow) is undone
- *     here, where search is ours. That the same `.search` rule used to go
- *     full-screen on focus below 50rem was ALREADY overridden by
- *     `position: relative` above; this only removes the leftovers.
- *
- * NAVBAR ONLY for the attached look. The corner card is its own bordered
- * box with the field collapsed behind the magnifier; fusing them there would
- * fuse the icon to nothing. */
-.fa-search-home .search {
-  height: auto;
-  padding: 0;
-}
-.fa-search-home .search-input-wrap {
-  height: 2.25rem;
-  box-shadow: none;
-  border-radius: 0;
-  /* `hidden` in the theme clipped the input's own focus ring. The theme's
-     magnifier label that the clip was for is already a 1px sr-only box. */
-  overflow: visible;
-}
-
-.fa-search-home[data-place="navbar"] {
-  align-items: flex-start;
-  gap: 0;
-}
-.fa-search-home[data-place="navbar"] .fa-search-peek {
-  width: 2.25rem;
-  height: 2.25rem;
-  border-right: 0;
-  border-radius: 4px 0 0 4px;
-}
-.fa-search-home[data-place="navbar"] .fa-search-peek svg { width: 1.1rem; height: 1.1rem; }
-.fa-search-home[data-place="navbar"] .search-input { border-radius: 0 4px 4px 0; }
-.fa-search-home[data-place="navbar"] .fa-search-slide {
-  height: 2.25rem;
-  margin-left: 0.4rem;
-}
-/* The notice belongs to the field, so it starts under the field's own left
-   edge, and a little closer: 0.4rem read as a gap between two things. */
-.fa-search-home[data-place="navbar"] .fa-search-notice { margin-top: 0.25rem; }
-
-/* THE PREVIEW NOTE UNDER THE WHOLE ROW on a phone, not under the field alone
- * (owner, 2026-09-27). It sits inside the field's holder, so at 390px it was
- * as narrow as the field and wrapped to five lines. `display: contents` lifts
- * the holder's children into the row, and the notice takes a line of its own
- * after the "Hide search" button. */
-@media not all and (min-width: 50rem) {
-  .fa-search-home[data-place="navbar"] { flex-wrap: wrap; }
-  .fa-search-home[data-place="navbar"] .fa-search-holder { display: contents; }
-  .fa-search-home[data-place="navbar"] .search { flex: 1 1 0; min-width: 0; }
-  .fa-search-home[data-place="navbar"] .fa-search-notice { order: 99; flex: 1 0 100%; }
-}
+/* The notice belongs to the field, so it starts under the field's own edge. */
+.fa-search-home .fa-search-notice { margin-top: 0.25rem; }
 
 /* ── A board nested in the sticky panel has no chrome of its own ──────────
  *
@@ -7885,6 +8079,36 @@ a.fa-harness-tab__body:focus-visible {
   border: 1px dashed var(--fa-glass-edge);
 }
 
+/* ── A CARD'S METADATA, on hover and on focus — owner, 2026-10-01 ─────────
+ *
+ * *"hovering should show metadata."* One popover for the glass, outside the
+ * scaled shelf, so it is drawn at reading size whatever the view's zoom; the
+ * card's `aria-describedby` carries the same facts for a screen reader. */
+.fa-glass-meta {
+  position: fixed;
+  z-index: 1000;
+  pointer-events: auto;
+  max-width: min(22rem, calc(100vw - 1rem));
+  box-sizing: border-box;
+  padding: 0.5rem 0.7rem;
+  background: var(--fa-glass-card);
+  color: var(--fa-glass-ink);
+  border: 1px solid var(--fa-glass-edge);
+  border-radius: 6px;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.25);
+  font-size: 0.85rem;
+  line-height: 1.35;
+}
+.fa-glass-meta[hidden] { display: none; }
+.fa-glass-meta-list {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 0.15rem 0.6rem;
+  margin: 0;
+}
+.fa-glass-meta-list dt { font-weight: 700; }
+.fa-glass-meta-list dd { margin: 0; overflow-wrap: anywhere; }
+
 /* ── The avatar COVERS the card — owner, 2026-09-23 ──────────────────────
  *
  * *"artefact avatar should cover sheet"*; offered three shapes, the owner
@@ -7935,6 +8159,19 @@ a.fa-harness-tab__body:focus-visible {
   padding: 0.35rem 0.5rem;
 }
 .fa-glass-asset:has(> .fa-glass-asset-face > .fa-glass-avatar) .fa-glass-asset-tools { margin: 0 -0.5rem -0.5rem; }
+/* The avatar-state gist rides the same strip, so a todo's words sit over its
+   plain note rather than through it. A themed sticky has no picture here —
+   its art is the backdrop, faded by the theme's scrim — and keeps its ink. */
+.fa-glass-asset:has(> .fa-glass-asset-face > .fa-glass-avatar) .fa-glass-asset-gist {
+  margin: 0 -0.5rem;
+  /* The strip's top and bottom are BORDERS, not padding: a clamped box clips
+     at its padding edge, so bottom padding showed the top of the line after
+     the ellipsis (measured on a two-line library caption). */
+  padding: 0 0.45em;
+  border-block: 0.2em solid var(--fa-glass-card);
+  background: var(--fa-glass-card);
+  color: var(--fa-glass-ink);
+}
 
 /* ── A popped-out STICKY: the themed sticky, square, its words on top ────
  *

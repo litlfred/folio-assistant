@@ -70,8 +70,8 @@ a mano, compruebe si ya existe uno.
 | Dónde | Qué le proporciona |
 |---|---|
 | `skills/folio-core/` | independiente del contenido: coordinación, observadores (watchers), QA, renderizado, bibliografía |
-| `skills/folio-paper-adapter/` | artículos: Lean, LaTeX, demostraciones, simuladores |
-| `skills/authoring-who-smart-guidelines/` | WHO SMART DAK / IG |
+| `folio-assistant-sci/skills/content/folio-paper-adapter/` | artículos: Lean, LaTeX, demostraciones, simuladores |
+| `smart-base/skills/content/authoring-who-smart-guidelines/` | WHO SMART DAK / IG |
 | [Referencia de esquemas de habilidades](../../reference/skills/) | contrato de entrada/salida generado por habilidad |
 | [Instrucciones de habilidades](../../reference/skill-instructions/) | cuerpos de instrucciones completos generados |
 | [Habilidades y roles](../../skills.html) | cómo se componen las habilidades, los roles y las capacidades |
@@ -135,8 +135,8 @@ resuelva ni elimine el bean de un homólogo. No cree un almacén de tareas
 paralelo. No ejecute `beans create` para colas masivas generadas por máquinas (`*.qa.json`,
 archivos de testigos) — esas permanecen como JSON masivo.
 
-Disciplina completa: `skills/folio-core/todo-manager.md`,
-`skills/folio-core/bean-coordination.md`.
+Disciplina completa: `skills/sdlc/sdlc-core/todo-manager.md`,
+`skills/sdlc/sdlc-core/bean-coordination.md`.
 
 ## 7. Sidecars y ejes de QA
 

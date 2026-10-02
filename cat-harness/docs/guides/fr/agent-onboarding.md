@@ -71,8 +71,8 @@ Les compétences sont l'unité de travail ici. Avant de créer une procédure
 | Où | Ce que ça vous donne |
 |---|---|
 | `skills/folio-core/` | indépendant du contenu : coordination, watchers, QA, rendu, bibliographie |
-| `skills/folio-paper-adapter/` | articles : Lean, LaTeX, preuves, simulateurs |
-| `skills/authoring-who-smart-guidelines/` | WHO SMART DAK / IG |
+| `folio-assistant-sci/skills/content/folio-paper-adapter/` | articles : Lean, LaTeX, preuves, simulateurs |
+| `smart-base/skills/content/authoring-who-smart-guidelines/` | WHO SMART DAK / IG |
 | [Référence du schéma de compétences](../../reference/skills/) | contrat d'entrée/sortie typé par compétence |
 | [Instructions de compétences](../../reference/skill-instructions/) | corps d'instructions complets générés |
 | [Compétences & rôles](../../skills.html) | comment les compétences, rôles et capacités se composent |

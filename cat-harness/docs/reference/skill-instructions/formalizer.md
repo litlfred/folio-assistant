@@ -6,9 +6,9 @@ parent: Skill instructions
 ---
 
 {: .note }
-> Generated from [`cat-harness/skills/folio-paper-adapter/formalizer.md`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/folio-paper-adapter/formalizer.md) — do not edit here.
+> Generated from [`folio-assistant-sci/skills/content/folio-paper-adapter/formalizer.md`](https://github.com/litlfred/folio-assistant/blob/main/folio-assistant-sci/skills/content/folio-paper-adapter/formalizer.md) — do not edit here.
 >
-> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/cat-harness/skills/folio-paper-adapter/formalizer.md){: .fa-edit-source }
+> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/folio-assistant-sci/skills/content/folio-paper-adapter/formalizer.md){: .fa-edit-source }
 
 {% raw %}
 # Lean 4 Formalizer (Narrative to Proof)
@@ -209,9 +209,9 @@ it*. Nothing was deleted.
 | what | where |
 |---|---|
 | heavy-proof discipline, overview, when to use, MCP tools, workflow, checklist | **here** — read first, every time |
-| base ring convention, imports, library synthesis | [`formalizer/conventions.md`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/folio-paper-adapter/formalizer/conventions.md) — before writing a declaration |
-| proven patterns, tactic ladder, authoring patterns, simplification pass | [`formalizer/patterns.md`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/folio-paper-adapter/formalizer/patterns.md) — while proving |
-| proof-state export, output structure, dependencies, blueprint, content objects | [`formalizer/integration.md`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/folio-paper-adapter/formalizer/integration.md) — when wiring a finished proof in |
+| base ring convention, imports, library synthesis | [`formalizer/conventions.md`](https://github.com/litlfred/folio-assistant/blob/main/folio-assistant-sci/skills/content/folio-paper-adapter/formalizer/conventions.md) — before writing a declaration |
+| proven patterns, tactic ladder, authoring patterns, simplification pass | [`formalizer/patterns.md`](https://github.com/litlfred/folio-assistant/blob/main/folio-assistant-sci/skills/content/folio-paper-adapter/formalizer/patterns.md) — while proving |
+| proof-state export, output structure, dependencies, blueprint, content objects | [`formalizer/integration.md`](https://github.com/litlfred/folio-assistant/blob/main/folio-assistant-sci/skills/content/folio-paper-adapter/formalizer/integration.md) — when wiring a finished proof in |
 
 The **heavy-proof discipline** below is MANDATORY and stays here deliberately:
 it governs whether you should be formalising at all, and moving it behind a

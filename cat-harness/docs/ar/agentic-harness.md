@@ -63,13 +63,13 @@ _تم توليد هذه الصفحة من [`content/docs/agentic-harness/`](http
 
 | سير العمل | مصدر BPMN | يُدخل إليه عندما |
 |---|---|---|
-| **التأليف (paper)** | [`authoring-a-paper.bpmn`](../../processes/authoring-a-paper.bpmn) | يطلب المستخدم تأليف محتوى في folio من نوع paper |
-| **التأليف (document)** | [`authoring-a-document.bpmn`](../../processes/authoring-a-document.bpmn) | يطلب المستخدم تأليف محتوى في folio من نوع document |
-| **دورة حياة المحتوى** | [`content-lifecycle.bpmn`](../../processes/content-lifecycle.bpmn) | ينتقل المحتوى عبر التحقق → التصيير → النشر |
-| **استيعاب المستندات** | [`document-ingestion.bpmn`](../../processes/document-ingestion.bpmn) | يُسقط المستخدم ملفًا في `uploads/` |
-| **من المسودة إلى النشر** | [`draft-to-publication.bpmn`](../../processes/draft-to-publication.bpmn) | ينتقل المحتوى من مسودة إلى منشور |
-| **متطلبات CRDM** | [`crdm-requirements.bpmn`](../../processes/crdm-requirements.bpmn) | يكتشف الوكيل طلب ميزة |
-| **استرجاع الأدلة** | [`evidence-retrieval.bpmn`](../../processes/evidence-retrieval.bpmn) | يبحث الوكيل عن أدلة لدعم ادعاء |
+| **التأليف (paper)** | [`authoring-a-paper.bpmn`](../../../folio-assistant-sci/processes/content/authoring-a-paper.bpmn) | يطلب المستخدم تأليف محتوى في folio من نوع paper |
+| **التأليف (document)** | [`authoring-a-document.bpmn`](../../../folio-assistant-core/processes/content/authoring-a-document.bpmn) | يطلب المستخدم تأليف محتوى في folio من نوع document |
+| **دورة حياة المحتوى** | [`content-lifecycle.bpmn`](../../../folio-assistant-core/processes/content/content-lifecycle.bpmn) | ينتقل المحتوى عبر التحقق → التصيير → النشر |
+| **استيعاب المستندات** | [`document-ingestion.bpmn`](../../processes/library/document-ingestion.bpmn) | يُسقط المستخدم ملفًا في `uploads/` |
+| **من المسودة إلى النشر** | [`draft-to-publication.bpmn`](../../../folio-assistant-core/processes/content/draft-to-publication.bpmn) | ينتقل المحتوى من مسودة إلى منشور |
+| **متطلبات CRDM** | [`crdm-requirements.bpmn`](../../processes/process/crdm-requirements.bpmn) | يكتشف الوكيل طلب ميزة |
+| **استرجاع الأدلة** | [`evidence-retrieval.bpmn`](../../../folio-assistant-core/processes/content/evidence-retrieval.bpmn) | يبحث الوكيل عن أدلة لدعم ادعاء |
 
 **انتقالات الحالة:** يمكن **تعليق (suspend)** سير العمل عندما يطلب المستخدم
 تبديل السياق. يسجل الوكيل أين كان (نشاط BPMN الحالي) ويمكنه
@@ -121,7 +121,7 @@ _تم توليد هذه الصفحة من [`content/docs/agentic-harness/`](http
 | **تأليف المحتوى** | كتابة محتوى folio أو تعديله أو توسيعه (فصول، كتل، أقسام) | سير عمل التأليف (paper أو document) |
 | **مراجعة المحتوى** | مراجعة المحتوى الحالي والتحقق منه وتقديم ملاحظات بشأنه | سير عمل دورة حياة المحتوى / تحرير تفاعل الإنسان والحاسوب (HCI) |
 | **استيعاب المحتوى** | استيعاب مستند مصدر في الـ folio | سير عمل استيعاب المستندات |
-| **طلب ميزة** | طلب قدرة جديدة للمنصة (انظر [crdm-detect](../../skills/crdm/crdm-detect.md)) | سير عمل متطلبات CRDM |
+| **طلب ميزة** | طلب قدرة جديدة للمنصة (انظر [crdm-detect](../../skills/sdlc/crdm/crdm-detect.md)) | سير عمل متطلبات CRDM |
 | **طلب معلومات** | الاستفسار عن المنصة أو المحتوى أو العملية | لا يوجد سير عمل — الإجابة مباشرة |
 | **استدعاء أداة** | تشغيل أداة محددة (`content_validate`، و`qa_sweep`، إلخ) | لا يوجد سير عمل — التنفيذ والإبلاغ |
 | **إدارة خطة العمل** | إنشاء الـ beans أو تحديثها أو الاستعلام عنها | لا يوجد سير عمل — التنفيذ والإبلاغ |
@@ -131,7 +131,7 @@ _تم توليد هذه الصفحة من [`content/docs/agentic-harness/`](http
 
 يقع الحد الفاصل الحرج للتصنيف بين **تأليف المحتوى** و**طلب ميزة**.
 وتوفر مهارة `crdm-detect`
-([`skills/crdm/crdm-detect.md`](../../skills/crdm/crdm-detect.md))
+([`skills/sdlc/crdm/crdm-detect.md`](../../skills/sdlc/crdm/crdm-detect.md))
 إشارات الاكتشاف التفصيلية. والقاعدة التلخيصية هي:
 
 > إذا كان تنفيذ الطلب يتطلب تغييرات في **folio-assistant**
@@ -263,7 +263,7 @@ _تم توليد هذه الصفحة من [`content/docs/agentic-harness/`](http
 عندما يُصنف طلب على أنه طلب ميزة، يدخل الوكيل في
 **سير عمل متطلبات CRDM**
 ([التوثيق الكامل](https://litlfred.github.io/folio-assistant/crdm-methodology.html)،
-و[BPMN](../../processes/crdm-requirements.bpmn)).
+و[BPMN](../../processes/process/crdm-requirements.bpmn)).
 
 يعد سير عمل طلبات الميزات هو الموضع الذي تقدم فيه وثيقة إطار العمل هذه أكبر
 فائدة، لأنها تصف سلوكًا كان ضمنيًا في السابق. فبينما وُثقت مسارات عمل
@@ -272,7 +272,7 @@ _تم توليد هذه الصفحة من [`content/docs/agentic-harness/`](http
 
 ### كيف يدخل الوكيل في CRDM
 
-يوجد منطق الاكتشاف في [`skills/crdm/crdm-detect.md`](../../skills/crdm/crdm-detect.md).
+يوجد منطق الاكتشاف في [`skills/sdlc/crdm/crdm-detect.md`](../../skills/sdlc/crdm/crdm-detect.md).
 ثلاثة سيناريوهات:
 
 **جلسة جديدة، والطلب الأول هو ميزة:**
@@ -398,11 +398,11 @@ _تم توليد هذه الصفحة من [`content/docs/agentic-harness/`](http
 | مسح بدء الجلسة | `AGENTS.md § At session start` | [`AGENTS.md`](../../AGENTS.md) |
 | بروتوكول Bean | `todo-manager.md`، و`bean-coordination.md` | [`skills/folio-core/`](../../skills/folio-core/) |
 | انضباط التثبيت وطلبات السحب | `AGENTS.md § Commit early, commit often` | [`AGENTS.md`](../../AGENTS.md) |
-| اكتشاف طلبات الميزات | `crdm-detect.md` | [`skills/crdm/crdm-detect.md`](../../skills/crdm/crdm-detect.md) |
-| سير عمل متطلبات CRDM | `crdm-requirements-workflow.md` | [`skills/crdm/crdm-requirements-workflow.md`](../../skills/crdm/crdm-requirements-workflow.md) |
-| تأليف المحتوى (paper) | مهارات authoring-math | [`skills/authoring-math/`](../../skills/authoring-math/) |
-| تأليف المحتوى (document) | مهارات folio-document-adapter | [`skills/folio-document-adapter/`](../../skills/folio-document-adapter/) |
-| دورة حياة المحتوى | مهارات content-lifecycle | [`skills/content-lifecycle/`](../../skills/content-lifecycle/) |
+| اكتشاف طلبات الميزات | `crdm-detect.md` | [`skills/sdlc/crdm/crdm-detect.md`](../../skills/sdlc/crdm/crdm-detect.md) |
+| سير عمل متطلبات CRDM | `crdm-requirements-workflow.md` | [`skills/sdlc/crdm/crdm-requirements-workflow.md`](../../skills/sdlc/crdm/crdm-requirements-workflow.md) |
+| تأليف المحتوى (paper) | مهارات authoring-math | `skill_list` → `authoring-math` |
+| تأليف المحتوى (document) | مهارات folio-document-adapter | `skill_list` → `folio-document-adapter` |
+| دورة حياة المحتوى | مهارات content-lifecycle | [`skills/authoring/content-lifecycle/`](../../skills/authoring/content-lifecycle/) |
 | استيعاب المستندات | `docs-generation.md` | [`skills/ui/ui-core/docs-generation.md`](../../skills/ui/ui-core/docs-generation.md) |
 | الإرسال والتنسيق | `dispatch-agent.md`، و`coordinate.md` | [`skills/folio-core/`](../../skills/folio-core/) |
 | أنواع المحتوى والمحولات | `AGENTS.md § Content types` | [`AGENTS.md`](../../AGENTS.md) |

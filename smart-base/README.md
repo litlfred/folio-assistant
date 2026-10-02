@@ -7,6 +7,17 @@ from it.
 Staged as a top-level directory ahead of becoming its own repository, the same
 path `who-iris`, `smart-trust` and `smart-immunizations` are on.
 
+**Contents**
+
+<!-- readme:toc:begin -->
+
+- [What this layer is for](#what-this-layer-is-for)
+- [What it is not](#what-it-is-not)
+- [Re-deriving an entry](#re-deriving-an-entry)
+- [Counts](#counts)
+
+<!-- readme:toc:end -->
+
 ## What this layer is for
 
 WHO digital health guidance is spread across many publications that do not

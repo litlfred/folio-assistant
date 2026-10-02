@@ -40,7 +40,7 @@ read an unparsed document as an empty one, which is the whole point.
 TWO BACKENDS, BOTH DELIBERATE.
 
   * **pdfplumber** (MIT) — the default.  Small, and it is already the tool
-    `skills/authoring-who-smart-guidelines/smart-base-tools.md` depends on, so
+    `smart-base/skills/content/authoring-who-smart-guidelines/smart-base-tools.md` depends on, so
     it is not a new dependency for this platform so much as a second use of an
     existing one.
   * **camelot-py** (MIT) — preferred when installed.  Camelot **2.0** dropped

@@ -6,9 +6,9 @@ parent: Skill instructions
 ---
 
 {: .note }
-> Generated from [`cat-harness/skills/folio-core/uses-editorial-review.md`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/folio-core/uses-editorial-review.md) — do not edit here.
+> Generated from [`cat-harness/skills/authoring/authoring-core/uses-editorial-review.md`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/authoring/authoring-core/uses-editorial-review.md) — do not edit here.
 >
-> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/cat-harness/skills/folio-core/uses-editorial-review.md){: .fa-edit-source }
+> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/cat-harness/skills/authoring/authoring-core/uses-editorial-review.md){: .fa-edit-source }
 
 {% raw %}
 # `uses[]` Editorial Review
@@ -320,5 +320,5 @@ read that other block first. Record the reasoning in the sidecar
 
 | process | step(s) that name it |
 |---|---|
-| [Narrative review](../../processes/review-narrative.html) | Review the editorial dependencies |
+| [Content Change and Review](../../processes/content-change-review.html) | Review the editorial dependencies |
 

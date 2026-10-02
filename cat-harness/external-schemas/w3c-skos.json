@@ -31,6 +31,10 @@
       "operative": "The other names one concept is drawn under. `build-pipeline` is labelled ten ways across the corpus; nine are altLabels, which is what makes \"Reviewer / SME\" findable as \"Reviewer\" rather than a rival entry."
     },
     {
+      "term": "skos:broadMatch",
+      "operative": "Declared as one of the four mapping predicates `vocabulary-authority` names, and NOT YET emitted by anything: `check:term-mapping` resolves label equality, which cannot establish that one concept is broader than another. Recorded as available rather than used, so a reader does not infer from its presence that a hierarchy has been computed."
+    },
+    {
       "term": "skos:broader",
       "operative": "A glossary term's `broader`: a local term id or an external IRI, emitted as a link (folio-glossary/v1)."
     },
@@ -39,8 +43,16 @@
       "operative": "Retirement. A term whose defining role is gone is deprecated and dated in the ledger, never deleted — a derived document has no memory, so the ledger is what makes \"reported and never deleted\" implementable."
     },
     {
+      "term": "skos:closeMatch",
+      "operative": "A candidate matched through a concept's `altLabel` rather than its `prefLabel` — the right idea under another name. It is the `concept`-but-not-`exact` case, and the asymmetry is the whole reason `check:term-mapping` records the two states as a pair rather than one boolean."
+    },
+    {
       "term": "skos:definition",
       "operative": "What the term MEANS, taken from the role's authored `description` — one author, one place to fix. Absent by design on a lane whose performer varies, which is honest rather than indistinguishable from a lane nobody bound."
+    },
+    {
+      "term": "skos:exactMatch",
+      "operative": "A candidate glossary term matched to a concept by its `prefLabel` — the `exact` half of `check:term-mapping`'s pair. Also what an authored term carries to an external vocabulary (`policy` to ODRL's), which is how a match against a local concept reports the external IRI behind it rather than only an in-repo id."
     },
     {
       "term": "skos:hiddenLabel",
@@ -59,6 +71,10 @@
       "operative": "derived from the corpus; what this repository does with it is not yet described"
     },
     {
+      "term": "skos:narrowMatch",
+      "operative": "The SKOS rendering of FHIR R5's `source-is-broader-than-target` in a vocabulary mapping table (`SKOS_MATCH_FOR`, schemas/vocab-mapping.ts, bean k74z): `A skos:narrowMatch B` says B is narrower."
+    },
+    {
       "term": "skos:notation",
       "operative": "The CODE. `TermGloss`'s prefixed name (`cat:FshGutsNode`) already WAS this, which is why the \"coded glossary\" requirement was satisfied by data that existed rather than by new authoring."
     },
@@ -73,6 +89,10 @@
     {
       "term": "skos:related",
       "operative": "A glossary term's `related`: a local term id or an external IRI."
+    },
+    {
+      "term": "skos:relatedMatch",
+      "operative": "The fourth mapping predicate, and like `broadMatch` not yet emitted. Relatedness is a judgement no label comparison can reach, so it waits for an adjudication step (bean `2i5f`) rather than being approximated."
     },
     {
       "term": "skos:scopeNote",

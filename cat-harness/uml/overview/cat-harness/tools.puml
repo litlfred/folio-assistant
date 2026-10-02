@@ -27,6 +27,7 @@ package "cat-harness/tools" as pkg_cat_harness_tools <<tools>> {
     maintains [0..*] : Maintain[]
     downstream [0..1] : object
     renders [0..*] : string[]
+    subprocesses [0..*] : string[]
   }
 }
 

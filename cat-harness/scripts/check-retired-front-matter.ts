@@ -38,8 +38,9 @@ import { resolve, relative, join } from "node:path";
 import { Glob } from "bun";
 
 import { parseFrontMatter } from "../schemas/front-matter.ts";
-import { repoRootFor, directoryForGraph, declarationPathIn } from "../schemas/cat-harness.ts";
+import { repoRootFor, declarationPathIn } from "../schemas/cat-harness.ts";
 import { kgRoots } from "./known-skills.ts";
+import { corpusDirectoryForGraph } from "../schemas/harness-config.js";
 
 const INSTANCE = resolve(import.meta.dir, "..");
 const REPO = repoRootFor(INSTANCE);
@@ -184,6 +185,15 @@ function sweepRoots(instance: string, repo: string): string[] {
     // consumer does.
     dirs.push(...kgRoots(instance));
   }
+  // The CHECKOUT's root instance too (placement PR0, bean `ejye`): `memory/`,
+  // `beans/` and `fsh-guts/` are declared there now that the platform no
+  // longer mirrors them with `scope: "repository"`, and a sweep of this
+  // instance alone would lose them — the exemption test is what notices.
+  const checkoutDecl = resolve(repo) === resolve(instance) ? undefined : declarationPathIn(repo);
+  if (checkoutDecl !== undefined && existsSync(checkoutDecl)) {
+    const decl = JSON.parse(readFileSync(checkoutDecl, "utf-8")) as { directories?: { path?: string }[] };
+    for (const d of decl.directories ?? []) if (typeof d.path === "string") dirs.push(resolve(repo, d.path));
+  }
   // `.claude/skills/` is a local convention rather than a declared graph,
   // and since #437 it sits beside the instance rather than inside it.
   // Checking one place would silently skip it.
@@ -201,7 +211,7 @@ export function scan(
   instance = INSTANCE,
   repo = repoRootFor(instance),
 ): { findings: Finding[]; scanned: number; missingRecords: Retired[]; roots: string[] } {
-  const guts = directoryForGraph(instance, "fsh-guts");
+  const guts = corpusDirectoryForGraph(instance, "fsh-guts");
   // No declared trashcan means the records are UNREACHABLE, not absent. Both
   // report here, because a rule whose reasons cannot be located is in the
   // same state either way from the reader's side.
@@ -257,7 +267,7 @@ function main(): void {
     console.error(`    ${f.entry.because}`);
     console.error(
       `    The full record, with every value it ever held: ` +
-        `${relative(REPO, join(directoryForGraph(INSTANCE, "fsh-guts") ?? "", f.entry.record))}`,
+        `${relative(REPO, join(corpusDirectoryForGraph(INSTANCE, "fsh-guts") ?? "", f.entry.record))}`,
     );
   }
 

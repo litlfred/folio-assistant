@@ -9,6 +9,18 @@ may import from the harness, and the harness may never import from it. That
 direction is checked — `bun run check:partition:edges` reports any edge running
 the wrong way.
 
+**Contents**
+
+<!-- readme:toc:begin -->
+
+- [Scope, stated so the boundary is checkable](#scope-stated-so-the-boundary-is-checkable)
+- [This instance is PRE-SPLIT](#this-instance-is-pre-split)
+- [What is here today](#what-is-here-today)
+- [Three states, and there is no default](#three-states-and-there-is-no-default)
+- [Why this is not in cat-harness/](#why-this-is-not-in-cat-harness)
+
+<!-- readme:toc:end -->
+
 ## Scope, stated so the boundary is checkable
 
 | in scope | out of scope |
@@ -65,6 +77,15 @@ Outside that chain, and answering a different question:
 A node that does not declare its state is **invalid**, not `unknown` — "the
 author did not say" and "the author said they could not tell" are different
 facts, and only the second is something somebody can act on.
+
+**The vocabulary itself lives one layer down**, in
+[`cat-harness/schemas/materialization-state.ts`](../cat-harness/schemas/materialization-state.ts),
+with `FixitySchema` beside it, and `schemas/materialization.ts` re-exports both.
+Owner ruling 2 of the placement proposal (2026-09-30, option A, bean `tlat`):
+only the states and fixity moved; the five gates, the purposes and the record
+stay here, because each gate is a decision about content. The same ruling adds
+that a remote-KG subscription is a materialization whose minimum is the chosen
+subgraphs' metadata under `library/<source>/` — recorded there as vocabulary.
 
 ## Why this is not in `cat-harness/`
 

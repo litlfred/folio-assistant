@@ -165,6 +165,37 @@ one title (`Handbook forGuideline Development 2nd edition` from joined title
 lines, `GRC Handbook - second edition` from PDF docinfo, and the real one), with
 no authority among them. That is what an IRIS record settles.
 
+**One did catalogue it as *Abies*, until 2026-10-01** (issue #1794). The
+JSON-LD generator wrote `structure.metadata.title ?? docId` into every
+manifest, so the page-1 parse became the title even though the catalogue node
+for `libraryId: who-pub-tps-931` pointed at a transcribed record whose
+`dc.title` is *WHO editorial style manual*. The owner then fixed the order a
+library title is taken in, for every instance and not only this one:
+
+1. **the catalogue record**: `dc.title` of the Dublin Core record that the
+   catalogue node naming the entry (`libraryId`) points at through `metadataRef`;
+2. **`referenced.json`** `identity.title`;
+3. **the PDF Info `/Title`** (`structure.json` `metadata.docinfo.Title`), only
+   when it is not junk such as `Microsoft Word - …`, a file name, `untitled`, or
+   an arXiv stamp;
+4. **the slug**, which `check:library-qa` then reports as `title-missing`.
+
+**The page-1 front-matter parse is never a title.** It may still feed search and
+the section files' `doc_title`, but nothing reads it as the entry's name. All
+three entries above now take their title from the record:
+
+| entry | was (page-1 parse) | now (`dc.title`) |
+|---|---|---|
+| `who-pub-tps-931` | Abies | WHO editorial style manual |
+| `9789241548960-eng` | Handbook forGuideline Development 2nd edition | WHO handbook for guideline development |
+| `wpr-rdo-2020-003-eng` | PUBLICATION AND INFORMATION | Publication and information products style guide |
+
+The manifest records which source won, as `meta.title_source`
+(`dc-record | referenced | pdf-info | text-heading | slug`) and `meta.title_from`,
+so R8 can be checked rather than trusted. The resolver is
+`cat-harness/content/pipeline/library-title.ts`, and the library-ingestion
+skill carries the full rule.
+
 ## Covers: an artefact we made, filed where IRIS files its own
 
 The replica's Recent Submissions strip shows a cover beside each item, because
@@ -222,4 +253,4 @@ had been allowed to believe the placeholder.
 
 Enumeration cost, subsetting and the characterisation that decides whether IRIS
 may be cited at all are in
-[`large-datasets/sources/who-iris.json`](../../large-datasets/sources/who-iris.json).
+[`who-iris/sources/who-iris.json`](../sources/who-iris.json).

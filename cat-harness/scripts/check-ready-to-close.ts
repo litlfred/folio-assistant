@@ -2,7 +2,7 @@
 /**
  * Beans a session judged finished but could not re-derive — the owner's batch.
  *
- * Bean `bbbl`. [`bean-coordination`](../skills/folio-core/bean-coordination.md)
+ * Bean `bbbl`. [`bean-coordination`](../skills/sdlc/sdlc-core/bean-coordination.md)
  * §"Closing a bean whose work has already landed" says a bean closes on
  * **evidence, not authorship**, and its first obligation is *re-derive, never
  * quote*. That obligation is the expensive one, and where it cannot be met the

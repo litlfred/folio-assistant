@@ -6,9 +6,9 @@ parent: Skill instructions
 ---
 
 {: .note }
-> Generated from [`cat-harness/skills/folio-paper-adapter/lean-proof-vacuity-audit.md`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/folio-paper-adapter/lean-proof-vacuity-audit.md) — do not edit here.
+> Generated from [`folio-assistant-sci/skills/content/folio-paper-adapter/lean-proof-vacuity-audit.md`](https://github.com/litlfred/folio-assistant/blob/main/folio-assistant-sci/skills/content/folio-paper-adapter/lean-proof-vacuity-audit.md) — do not edit here.
 >
-> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/cat-harness/skills/folio-paper-adapter/lean-proof-vacuity-audit.md){: .fa-edit-source }
+> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/folio-assistant-sci/skills/content/folio-paper-adapter/lean-proof-vacuity-audit.md){: .fa-edit-source }
 
 {% raw %}
 # lean-proof-vacuity-audit
@@ -218,7 +218,7 @@ silently, but it does not *say* what the hypothesis is worth.
 
 **Parameterise the class over the data, then state the residual vacuity as a
 proved pair.** Worked example in
-[`QOU/Archimedean/JetOrderIndependence.lean`](../../..) — read it before
+[`QOU/Archimedean/JetOrderIndependence.lean`](../../../..) — read it before
 inventing your own:
 
 ```lean

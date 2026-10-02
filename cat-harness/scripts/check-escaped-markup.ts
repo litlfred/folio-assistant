@@ -3,6 +3,9 @@
  * No page in the published tree carries a block-level HTML tag as escaped TEXT.
  *
  * @module scripts/check-escaped-markup
+ * @covers skills, docs — the SOURCE mode judges published markdown bodies in
+ *   those two declared graphs. The built-tree mode judges a rendered site,
+ *   which is not a declared graph and is covered by `docs-site.yml` instead.
  *
  * ## The failure this exists for, measured rather than imagined
  *
@@ -75,7 +78,7 @@
  *   bun run check:escaped-markup -- ./_site
  */
 import { existsSync, readdirSync, readFileSync, statSync } from "node:fs";
-import { join, relative, resolve } from "node:path";
+import { join, relative, resolve, sep } from "node:path";
 
 /**
  * Block-level tags whose appearance as escaped text is always a defect.
@@ -243,10 +246,250 @@ export function checkEscapedMarkup(siteDir: string): {
   return { pages: pages.length, found, leakedTables };
 }
 
+/* ────────────────────────────────────────────────────────────────────────────
+ * THE SOURCE SIDE — the CAUSE, where the built-tree scan above sees the EFFECT
+ * ──────────────────────────────────────────────────────────────────────────── */
+
+/**
+ * Markdown source lines that open a raw HTML block kramdown will never close.
+ *
+ * ## The mechanism, and why the built-tree scan cannot prevent it
+ *
+ * A markdown line whose FIRST character is `<` followed by a name makes
+ * kramdown open a raw HTML block. With no matching close tag the rest of the
+ * page stays raw, so every heading, list and table after it renders as literal
+ * text. The usual cause is an inline code span **wrapped across a line break**,
+ * leaving its continuation at column 0 — `page_start == page_end ==` then
+ * `<slide>\`` on the next line.
+ *
+ * The scan above catches this, but only on a BUILT tree, and the build runs in
+ * `docs-site.yml` AFTER merge. Measured on main 2026-10-01:
+ * `check:escaped-markup` occurs **once** in all of `.github/workflows/` and
+ * **zero** times in `code-quality-gates.yml`. So a pull request could not fail
+ * on it, and five of these shipped green and reddened `main`:
+ *
+ * | fixed in | the line that opened the block |
+ * |---|---|
+ * | `7w1a` (four at once) | `<agentId>`, `<branch>`, `<file.json>`, `<name>.config.json` |
+ * | #1726 / #1730 | `<slide>` — nine consecutive `Docs site` failures on `main` |
+ *
+ * Each was repaired by reflowing the one source that had it. Bean `7pp6`: a
+ * fix repeated five times is a missing gate, not five accidents.
+ *
+ * ## Both axes are narrowed, and the sweep is why
+ *
+ * A sweep of 2314 markdown files returned 6 column-0 matches. **Four were not
+ * this defect** — two autolinks `<https://…>`, one real `<caption>`, and the
+ * generated copy of the fifth. Designing from the one example would have
+ * produced a check that fires on valid markdown and on the
+ * `<details markdown="1">` that `7w1a` DELIBERATELY introduced. `BLOCK_TAGS`
+ * above states the stake: *a check that fires on documentation is a check that
+ * gets switched off.*
+ *
+ * - **SCOPE** — the caller names the directories, and generated reference trees
+ *   are excluded by {@link GENERATED_PREFIXES}: those must never be hand-edited,
+ *   so flagging one points at the wrong file. The SOURCE carries the defect.
+ * - **STATE** — column 0 only, outside fenced regions and front matter. A
+ *   `` `<slug>` `` mid-line is the normal, safe way to write a placeholder; the
+ *   defect is specifically a span wrapped so its continuation begins a line.
+ *
+ * **Deliberately not covered:** ingested `library/` content. One latent instance
+ * is there — Lean anonymous-constructor syntax `<kunnethMap_injective C D n,`
+ * in `folio-assistant-sci/library/arxiv-2602.16554v1/sections/sec-014-…md` —
+ * and `library/` publishes **0 of 1460** built pages, so covering it would fail
+ * a gate over a page nobody renders. Recorded on `7pp6` rather than swept in.
+ *
+ * **Why the directories are arguments rather than derived:** resolving them from
+ * the instance declarations was tried first. `resolveDirectories` over the local
+ * root alone returns 5 graph kinds, not the full declared set, and a sweep that
+ * under-matches reads as a clean corpus — so the scope is explicit and the
+ * zero-file guard in `main` is what stops a wrong path passing.
+ */
+
+/** Element names that are REAL html here, so a line may legitimately open with one. */
+export const MARKDOWN_HTML_NAMES: ReadonlySet<string> = new Set([
+  "a", "abbr", "article", "aside", "audio", "b", "blockquote", "br", "button",
+  "caption", "code", "col", "colgroup", "dd", "details", "div", "dl", "dt", "em",
+  "figcaption", "figure", "footer", "form", "h1", "h2", "h3", "h4", "h5", "h6",
+  "header", "hr", "i", "iframe", "img", "input", "kbd", "label", "li", "main",
+  "nav", "ol", "p", "picture", "pre", "s", "script", "section", "small", "source",
+  "span", "strong", "style", "sub", "summary", "sup", "svg", "table", "tbody",
+  "td", "tfoot", "th", "thead", "tr", "u", "ul", "video",
+]);
+
+/**
+ * Generated trees, excluded on purpose.
+ *
+ * `AGENTS.md`: *"Never hand-edit either generated dir."* A finding there names a
+ * file nobody may fix, while the source that produced it goes unreported — so
+ * the check would be both useless and actively misleading. The built-tree scan
+ * still covers whatever a generator emits that no source line explains.
+ *
+ * **A SEGMENT, not a prefix, and a test is why.** The first spelling was
+ * `docs/reference/skill-instructions/` matched against the path relative to the
+ * SCAN directory — so scanning `cat-harness/docs` produced
+ * `reference/skill-instructions/…`, the prefix never matched, and the generated
+ * tree was scanned after all. The exclusion silently did nothing; only an
+ * assertion over the real walk found it.
+ */
+export const GENERATED_SEGMENTS = [
+  "/reference/skill-instructions/",
+  "/reference/skills/",
+] as const;
+
+/** One markdown line that opens a raw HTML block. */
+export interface SourceLeak {
+  /** Path as given to the scanner. */
+  file: string;
+  /** 1-based line number. */
+  line: number;
+  /** The name kramdown will read as a tag. */
+  tag: string;
+  /** The line, trimmed for the report. */
+  excerpt: string;
+}
+
+/**
+ * Column-0 pseudo-tags in one markdown source.
+ *
+ * Front matter is skipped because a `---` delimited header is YAML, not
+ * markdown, and kramdown never sees it. Fenced regions are skipped because
+ * their whole point is that the converter does not read them — and an INDENTED
+ * code block cannot trip this check at all, since a line indented four spaces
+ * does not begin with `<`. That is the column-0 rule paying for itself.
+ */
+export function leakingLinesIn(file: string, text: string): SourceLeak[] {
+  const out: SourceLeak[] = [];
+  const lines = text.split("\n");
+  let fence: string | undefined;
+  let i = 0;
+
+  // YAML front matter: only when `---` is the very first line.
+  if (lines[0]?.trim() === "---") {
+    i = 1;
+    while (i < lines.length && lines[i]?.trim() !== "---") i += 1;
+    i += 1;
+  }
+
+  for (; i < lines.length; i += 1) {
+    const line = lines[i] ?? "";
+    const opener = /^\s*(```+|~~~+)/.exec(line);
+    if (opener !== undefined && opener !== null) {
+      const marker = opener[1]!.slice(0, 3);
+      if (fence === undefined) fence = marker;
+      else if (marker === fence) fence = undefined;
+      continue;
+    }
+    if (fence !== undefined) continue;
+
+    // Column 0 only. An html comment is not a tag, and `<` not followed by a
+    // letter cannot open one.
+    if (!line.startsWith("<") || line.startsWith("<!")) continue;
+    const m = /^<\/?([A-Za-z][A-Za-z0-9-]*)/.exec(line);
+    if (m === null) continue;
+
+    // An autolink — `<https://…>`, `<mailto:…>` — is valid markdown, and two of
+    // them are in this corpus. The scheme is what distinguishes it from a tag.
+    if (/^<\/?[A-Za-z][A-Za-z0-9+.-]*:/.test(line)) continue;
+
+    const tag = m[1]!;
+    // A dotted name is never an element: `<file.json>`, `<name>.config.json`.
+    if (MARKDOWN_HTML_NAMES.has(tag.toLowerCase()) && !tag.includes(".")) continue;
+    out.push({ file, line: i + 1, tag, excerpt: line.trim().slice(0, 90) });
+  }
+  return out;
+}
+
+/** Every `.md` beneath `dir`, depth-first, skipping the generated trees. */
+export function markdownSources(dir: string): string[] {
+  const out: string[] = [];
+  const walk = (d: string): void => {
+    for (const entry of readdirSync(d, { withFileTypes: true })) {
+      if (entry.name.startsWith(".") || entry.name === "node_modules") continue;
+      const p = join(d, entry.name);
+      if (entry.isDirectory()) walk(p);
+      else if (entry.name.endsWith(".md")) {
+        // Matched on the ABSOLUTE path: a prefix relative to the scan dir
+        // depends on where the caller started, which is how the first version
+        // of this exclusion came to do nothing at all.
+        const abs = `/${resolve(p).split(sep).join("/").replace(/^\/+/, "")}`;
+        if (GENERATED_SEGMENTS.some((g) => abs.includes(g))) continue;
+        out.push(p);
+      }
+    }
+  };
+  walk(dir);
+  return out;
+}
+
+/** Scan markdown sources under each directory. */
+export function checkSourceLeaks(dirs: readonly string[]): {
+  files: number;
+  found: SourceLeak[];
+} {
+  const found: SourceLeak[] = [];
+  let files = 0;
+  for (const dir of dirs) {
+    for (const p of markdownSources(dir)) {
+      files += 1;
+      found.push(...leakingLinesIn(relative(process.cwd(), p), readFileSync(p, "utf-8")));
+    }
+  }
+  return { files, found };
+}
+
+function sourceMain(args: readonly string[]): void {
+  if (args.length === 0) {
+    console.error("usage: check-escaped-markup --source <dir> [<dir>…]");
+    console.error("  Nothing was checked. That is `could not determine`, not a pass.");
+    process.exit(2);
+  }
+  const dirs: string[] = [];
+  for (const a of args) {
+    const d = resolve(a);
+    if (!existsSync(d) || !statSync(d).isDirectory()) {
+      console.error(`could not determine: ${a} is not a directory.`);
+      process.exit(2);
+    }
+    dirs.push(d);
+  }
+
+  const { files, found } = checkSourceLeaks(dirs);
+  if (files === 0) {
+    // The same vacuity guard the built-tree mode carries, for the same reason:
+    // a green run over zero files reads as coverage that is not there (`dh4f`).
+    console.error(`could not determine: no .md under ${args.join(", ")}.`);
+    console.error("  Either these are the wrong directories or the tree is empty.");
+    process.exit(2);
+  }
+
+  if (found.length > 0) {
+    console.error(`✗ ${found.length} line(s) open a raw HTML block, across ${files} markdown source(s):\n`);
+    for (const f of found) console.error(`    · ${f.file}:${f.line}  <${f.tag}>  ${f.excerpt}`);
+    console.error(
+      "\nA markdown line whose FIRST character is `<` makes kramdown open a raw HTML block,\n" +
+        "and with no closing tag the REST OF THE PAGE stays raw — headings, lists and tables\n" +
+        "after it render as literal text. The usual cause is an inline code span wrapped across\n" +
+        "a line break, leaving its continuation at column 0.\n\n" +
+        "Reflow the line so nothing begins with `<`, or wrap the placeholder in a code span and\n" +
+        "keep it on one line. This is bean `7pp6`; the same defect was repaired by hand five\n" +
+        "times before this check existed (`7w1a` four, #1730 one), each time only after it had\n" +
+        "already reddened `main`.",
+    );
+    process.exit(1);
+  }
+  console.log(`✓ no markdown source line opens a raw HTML block, across ${files} source(s)`);
+}
+
 function main(): void {
+  if (process.argv[2] === "--source") {
+    sourceMain(process.argv.slice(3));
+    return;
+  }
   const dir = process.argv[2];
   if (dir === undefined) {
     console.error("usage: check-escaped-markup <built-site-dir>");
+    console.error("         check-escaped-markup --source <dir> [<dir>…]");
     console.error("  Nothing was checked. That is `could not determine`, not a pass.");
     process.exit(2);
   }

@@ -38,7 +38,12 @@ export const SkillsDirectoryEntrySchema = z
   .object({
     id: z.string().min(1),
     path: z.string().min(1),
-    dependents: z.string().min(1),
+    /**
+     * Marks the entry as a subgraph of the INSTANCE rather than a part of the
+     * skills graph. Replaced `dependents` on 2026-09-30 (option A), when
+     * inheritance became automatic and the per-entry field was retired.
+     */
+    subgraph: z.literal(true),
     graphKinds: z.array(z.string().min(1)).min(1),
   })
   .passthrough();

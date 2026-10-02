@@ -39,11 +39,15 @@ describe("pdf-structure/v1", () => {
   });
 
   test("every committed PDF structure.json conforms", () => {
-    // Since bean rkqp a structure.json may be the NOTEBOOK variant; this
+    // Since bean rkqp a structure.json may be the NOTEBOOK variant, and since
+    // bean y4uj the TEXT variant; this
     // schema's promise is about the PDF ones, selected by their own tag.
     // document-structure.test.ts holds every file to SOME declared variant.
     const pdfs = COMMITTED.filter(
-      (rel) => (JSON.parse(readFileSync(resolve(REPO, rel), "utf-8")) as { _schema?: string })._schema !== "notebook-structure/v1",
+      (rel) =>
+        !["notebook-structure/v1", "text-structure/v1"].includes(
+          (JSON.parse(readFileSync(resolve(REPO, rel), "utf-8")) as { _schema?: string })._schema ?? "",
+        ),
     );
     expect(pdfs.length).toBeGreaterThan(10);
     const bad = pdfs.flatMap((rel) => {

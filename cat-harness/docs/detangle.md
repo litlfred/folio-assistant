@@ -119,13 +119,13 @@ Measured 2026-09-20, 443 nodes and 758 edges:
 | group | size | in | out | groups | dir | role |
 |---|---|---|---|---|---|---|
 | `skills/folio-core` | 108 | **254** | 10 | 3 | 0.92 | sink |
-| `skills/content-lifecycle` | 10 | 88 | 1 | 1 | 0.98 | sink |
-| `skills/authoring-who-smart-guidelines` | 11 | 60 | 0 | 0 | 1.00 | sink |
+| `skills/authoring/content-lifecycle` | 10 | 88 | 1 | 1 | 0.98 | sink |
+| `smart-base/skills/content/authoring-who-smart-guidelines` | 11 | 60 | 0 | 0 | 1.00 | sink |
 | `cat-harness/schemas` | 132 | 5 | 1 | 1 | 0.67 | sink |
 | `processes` | 41 | **0** | **334** | 6 | 1.00 | **source** |
 | `scenarios` | 1 | 0 | 122 | 6 | 1.00 | source |
 | `skills/memory` | 37 | 0 | 0 | 0 | 1.00 | isolated |
-| `skills/folio-paper-adapter` | 66 | 47 | 16 | 2 | **0.49** | **tangled** |
+| `folio-assistant-sci/skills/content/folio-paper-adapter` | 66 | 47 | 16 | 2 | **0.49** | **tangled** |
 
 **Two tangled groups out of twenty-two.** This is a well-layered graph, and the
 layering is the one the architecture describes: skill packages are leaves,

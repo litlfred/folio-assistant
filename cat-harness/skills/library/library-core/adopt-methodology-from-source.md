@@ -7,7 +7,7 @@ description: >
   render the method with its adopted and refused parts, place it by
   ownership, integrate it by calling existing processes, give every tool it
   uses a Tool node, and put it to the owner. Process:
-  processes/methodology-from-source.bpmn.
+  processes/library/methodology-from-source.bpmn.
 ---
 
 # Adopt a methodology from a source document
@@ -22,7 +22,7 @@ The adoption **rules** are [`methodology-adoption`](../../process/process-core/m
    - No stated licence means **reference only**: the library entry holds headings, page ranges and a summary in our own words.
    - A source with no origin is a house process. Write a skill instead of a methodology.
 2. **Ingest** (`Process_Ingestion`, [`library-ingestion`](library-ingestion.md)). Choose the rung mechanically. An inferred chapter tree is never accepted.
-3. **Related work** (`Process_RelatedWork`, [`related-work-coordination`](../../folio-core/related-work-coordination.md)). Search beans (`beans list --json`, `beans query`) and the repository's issues and open PRs for work the method touches.
+3. **Related work** (`Process_RelatedWork`, [`related-work-coordination`](../../sdlc/sdlc-core/related-work-coordination.md)). Search beans (`beans list --json`, `beans query`) and the repository's issues and open PRs for work the method touches.
    - Categorize each hit: *overlaps, coordinate*; *affected by*; *out of scope*; or *unrelated*. Give each a one-line summary.
    - Judgement decides the categories. Present them with context, options and a recommendation (`interaction-modality` §4.1), and **ask whether and how to coordinate**. Do not act before the answer.
    - This is the same step CRDM runs when a requirement starts or changes in chat.

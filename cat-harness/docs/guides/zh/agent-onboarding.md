@@ -59,8 +59,8 @@ bun run src/index.ts --check-deps      # what this environment can do
 | 位置 | 它为你提供的内容 |
 |---|---|
 | `skills/folio-core/` | 内容无关：协调、监视器（watchers）、QA、渲染、参考书目 |
-| `skills/folio-paper-adapter/` | 论文：Lean、LaTeX、证明、模拟器 |
-| `skills/authoring-who-smart-guidelines/` | WHO SMART DAK / IG |
+| `folio-assistant-sci/skills/content/folio-paper-adapter/` | 论文：Lean、LaTeX、证明、模拟器 |
+| `smart-base/skills/content/authoring-who-smart-guidelines/` | WHO SMART DAK / IG |
 | [技能模式参考](../../reference/skills/) | 每项技能生成的输入/输出契约 |
 | [技能指令](../../reference/skill-instructions/) | 生成的完整指令主体 |
 | [技能与角色](../../skills.html) | 技能、角色与能力如何组合 |
@@ -109,7 +109,7 @@ beans update <id> --status in-progress    # CLAIM before you work
 
 在开始工作前先进行申领，以免两个会话认领同一项任务；并且绝不要解决或删除同伴的 bean。不要建立平行的待办事项存储。不要用 `beans create` 来批量创建机器生成的队列（`*.qa.json`、证据文件等）— 这些应保留为批量 JSON。
 
-完整规范：`skills/folio-core/todo-manager.md`、`skills/folio-core/bean-coordination.md`。
+完整规范：`skills/sdlc/sdlc-core/todo-manager.md`、`skills/sdlc/sdlc-core/bean-coordination.md`。
 
 ## 7. QA 附属文件与维度轴
 

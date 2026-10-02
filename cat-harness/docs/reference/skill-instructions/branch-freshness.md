@@ -53,7 +53,7 @@ git log --oneline HEAD..origin/main
 - Schema changes (`schemas/*.ts`) → **types may be stale**
 - Pipeline changes (`content/pipeline/*.ts`) → **behaviour may differ**
 - Skill changes (`cat-harness/skills/**`) → **guidance may be out of date**
-- BPMN changes (`cat-harness/processes/*.bpmn`) → **diagrams may conflict**
+- BPMN changes (`cat-harness/processes/**/*.bpmn`) → **diagrams may conflict**
 - Bean changes (`.beans/`) → **beans may have been created/resolved by sibling**
 - `AGENTS.md` changes → **rules may have changed**
 - **Directory restructuring** → paths you're writing to may have moved
@@ -110,7 +110,7 @@ Or:
 
 ## Cross-references
 
-- [`../../skills/folio-core/coordinate.md`](coordinate.md) — multi-agent coordination
-- [`../../skills/folio-core/todo-manager.md`](todo-manager.md) — bean management
-- [`../../skills/folio-core/bean-coordination.md`](bean-coordination.md) — cross-session beans
+- [`../../skills/sdlc/sdlc-core/coordinate.md`](coordinate.md) — multi-agent coordination
+- [`../../skills/sdlc/sdlc-core/todo-manager.md`](todo-manager.md) — bean management
+- [`../../skills/sdlc/sdlc-core/bean-coordination.md`](bean-coordination.md) — cross-session beans
 {% endraw %}

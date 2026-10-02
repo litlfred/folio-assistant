@@ -6,9 +6,9 @@ parent: Skill instructions
 ---
 
 {: .note }
-> Generated from [`cat-harness/skills/folio-core/bean-coordination.md`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/folio-core/bean-coordination.md) — do not edit here.
+> Generated from [`cat-harness/skills/sdlc/sdlc-core/bean-coordination.md`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/sdlc/sdlc-core/bean-coordination.md) — do not edit here.
 >
-> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/cat-harness/skills/folio-core/bean-coordination.md){: .fa-edit-source }
+> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/cat-harness/skills/sdlc/sdlc-core/bean-coordination.md){: .fa-edit-source }
 
 {% raw %}
 > **This is the skill `skill_fetch` serves.** A stub of the same name
@@ -138,6 +138,55 @@ Neither check closes the window. Both are cheap, and the second catches the case
 that matters most in practice — a sibling minutes ahead of you who already has a
 PR up.
 
+### A DECISION bean you will not land soon — put the question where a person reads
+
+The section above is about work. A **decision** bean is different: it exists to
+get a ruling, and its whole value is that somebody with the authority to rule
+sees it. Branch-locality hurts it worse than it hurts a work item, because a
+work item merely gets duplicated while a decision sits unanswered and every
+branch downstream of it waits.
+
+**So if you open a decision bean on a branch you will not land soon, post the
+question where the owner already reads — the issue — and say ON THE BEAN where
+you posted it.** Both halves. The comment is what reaches a person; the line on
+the bean is what stops the next session re-asking, and tells them where the
+answer will appear.
+
+**This is written down because it WORKED.** Bean `r0tm` carried a
+recommendation and a safe default on a branch with no PR, which is exactly the
+shape that goes unseen. It was answered, and it was answered because the
+question had been posted to [issue #1558](https://github.com/litlfred/folio-assistant/issues/1558)
+and PR #1581 — not because anyone found the bean.
+
+**What the check reads, and what it must not — both measured over the whole store:**
+
+- **`status: draft` is the marker — claimed 2026-10-01, on the owner's ruling.**
+  It was already legal (`schemas/tool-types.ts` has
+  `.enum(["draft", "todo", "in-progress", "completed", "scrapped"])`, and
+  `beans create --status` offers it) and used by **0 of 542** beans. An enum
+  member nothing uses is free to adopt, so a decision bean awaiting a ruling is
+  `status: draft` and needs no new vocabulary.
+
+  **This reverses what this section said for one day**, and the reversal is
+  worth keeping. It read *"`status: draft` is not a signal"*, on a correct
+  measurement — zero use then, zero use now — and a wrong conclusion. Zero use
+  made `draft` **unclaimed**, not unsuitable; a measurement of the present
+  tense is not a measurement of what the convention should be.
+
+- **Prose is still not a signal.** Six recognisers over the open beans give
+  between **1 and 190** candidates depending which form you match
+  (`Recommendation` heading 1, `Options` heading 20, `safe default` 1,
+  `ruling` 63, `owner's call` 48, an unticked box 190) — bean `vq8g` as a
+  number rather than a worry. And the only unreachable bean either broad
+  recogniser found was one that *records* a ruling rather than asking for one.
+  So a check reads the STATUS and the two halves above, never the prose.
+
+So the convention is three things, and the third is new: **a comment where a
+person reads, a line on the bean saying where, and `status: draft` while the
+ruling is outstanding.** The first two are what reach a human; the third is what
+lets a check find the bean that never landed.
+
+
 ### The trigger is STARTING WORK, not claiming — and that distinction cost a merge
 
 **Measured 2026-09-26, bean `tuvg`.** These checks are written above as what you
@@ -171,6 +220,12 @@ would have.
 And a second-order caution, because it inverts who pays: a duplicate-detecting
 test punishes **whoever merges second**, not whoever duplicated. Merging first
 does not mean you were first.
+
+**A platform refactor needs more than this check.** Shared layout, generators,
+schemas and processes collide by file as well as by subject. They run the
+five-step collision review in [`coordinate`](coordinate.md) §"Before a
+platform refactor", and record it in the workplan bean before the first edit
+(owner, 2026-10-02, #1885).
 
 ### And ASK AGAIN before you open the PR — looking once is not enough
 
@@ -328,9 +383,11 @@ what makes them the shared substrate.
 2. **Declare intent + claim** — before starting, set the bean `in-progress` and
    add a short note naming your branch. Read §"A claim is branch-local" above
    first: the claim announces, it does not reserve.
-3. **Work** — keep the bean current; append status notes as you go. Do not fork
-   it into a parallel `todos/*.json` queue — link to any bulk queue from the
-   bean instead.
+3. **Work** — keep the bean current; append status notes as you go **to a bean
+   only your branch is changing**. When other open pull requests are adding
+   to the same bean, write a note instead — §"Adding to a bean — a note, not
+   an append" below. Do not fork it into a parallel `todos/*.json` queue —
+   link to any bulk queue from the bean instead.
 4. **Hand off or finish** — on landing, close the bean and update any cross-repo
    ownership note. **If you stop mid-flight, leave the bean `in-progress` with a
    note saying where you got to**, so the next session resumes instead of
@@ -372,6 +429,62 @@ Two things that follow:
 in a merged PR's title on `main`, those with every Done-when item ticked listed
 first. It reports and never closes; closing is still on evidence, per the next
 section.
+
+## Adding to a bean — a note, not an append
+
+**When more than one open pull request has something to add to the same bean,
+each writes a NOTE, never an append to the bean.**
+
+```bash
+bun run beans:note <bean-id> --title "Finding 3: ruling and after state" --body "…"
+git add beans/notes/      # the note AND the regenerated index
+```
+
+That writes `<bean-id>--<YYYY-MM-DD>--<branch>.md` in the declared `notes`
+directory of `beans/beans.json`, and rewrites the generated index beside it
+(`README.md`). The bean itself is not touched.
+
+**Why.** `ob3m` (the navbar findings) was appended to by one pull request per
+finding. Every merge put every other open pull request in conflict on that one
+file, and the merge-main bot refuses a bean conflict on purpose — two sessions
+editing one bean is a coordination question, not a regeneration. On 2026-10-02
+that cost hand-merges of #1798, #1805, #1807, #1808 and #1819 within a few
+hours (bean `m61r`, issue #1853). Teaching the bot to union that one bean was
+rejected: the refusal is right, the shared write was the defect.
+
+**The branch is the key, and that is the rule that must not drift.** Two open
+pull requests never share a branch, and the branch is known at the first
+commit, which a pull request number is not. A date-plus-finding name was
+refused: two sessions on the same finding on the same day pick the same slug.
+A second note from the same branch is a new `##` section in that branch's own
+file — found by its front matter, not by today's date — so only that branch
+ever writes it. Reasoning in full: `cat-harness/schemas/bean-note.ts`.
+
+**What still conflicts, and why that is acceptable.** The index is rewritten
+by every pull request that adds a note, so two of them conflict on it. It is a
+`README.md` whose rows all sit inside one `<!-- bean-notes:begin -->` region,
+so the declared `readme-generated-regions` pattern resolves it without a
+person and `regen` rewrites it from the merged notes. The notes themselves
+never conflict. `cat-harness/scripts/tests/bean-notes.test.ts` merges two real
+branches to show both halves, and fails when the branch is dropped from the
+name.
+
+**What `beans:notes:check` judges** (in CI): every file in the directory is a
+`folio-bean-note/v1` note naming a bean that exists, under exactly the name its
+own front matter derives — a hand-named note is the first step back to two
+pull requests writing one path — and the index is current.
+
+Three things that follow:
+
+- **The bean's own body stays the owner's.** Re-scoping it, ticking its
+  `## Done when`, or closing it are still edits to the bean, made by whoever
+  holds it, and they are rare enough not to collide.
+- **A note does not move the bean's `updated_at`.** Bumping it from every
+  pull request is exactly the one-line conflict this removes. A reader asking
+  "is anyone working on this?" reads the index's dates as well as the bean's.
+- **Sections appended before the convention stay where they are.** Moving them
+  would rewrite the region every still-open pull request is appending to,
+  which is one more round of the hand-merges this exists to stop.
 
 ## Closing a bean whose work has already landed (STRICT)
 
@@ -694,17 +807,17 @@ The two are not alternatives. (1) prevents the blindness; (2) catches the
 branches that were already open when (1) landed — including #477, whose 12
 beans are still branch-only today.
 
-## Which copy is canonical — `skills/folio-core/`
+## Which copy is canonical — `skills/sdlc/sdlc-core/`
 
 **This file.** A `.claude/skills/local/bean-coordination.md` existed until
 2026-09-19 and described *itself* as "the generic source of truth" from which
 downstream repos sync. That was measurably wrong: `LOCAL_PACKAGES` in
 `src/tools/skill-fetch.ts` is the table `skill_fetch` serves from, it holds
-`skills/folio-core` and no `.claude/skills/local` entry, and the local copy
+`skills/sdlc/sdlc-core` and no `.claude/skills/local` entry, and the local copy
 carried no front matter at all. An agent asking for this skill by name has
 always received *this* file. Bean `tdmg`.
 
-So when this skill or the installer changes, **`skills/folio-core/` is what a
+So when this skill or the installer changes, **`skills/sdlc/sdlc-core/` is what a
 downstream repo syncs from**, and the generated mirror under the docs site
 follows it automatically. On landing a coordination change that affects a
 downstream repo, update that repo's ownership note and close the tracking beans.

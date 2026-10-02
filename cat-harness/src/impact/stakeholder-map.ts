@@ -54,7 +54,7 @@
  * this exists so the BA is asked a sharper question than "who cares?".
  */
 import { existsSync, readdirSync } from "node:fs";
-import { isSkillMd, kgRoots, skillMdDirs, workflowFiles } from "../../scripts/known-skills.js";
+import { isSkillMd, kgRoots, skillMdDirs, workflowFiles, corpusScopeFor, roleGraphFor } from "../../scripts/known-skills.js";
 import { join, relative } from "node:path";
 import { loadProcessModel, isActivity } from "../workflow/process-model.js";
 import { readRoleGraph, roleForLane, type RoleGraph } from "../../schemas/role-graph.js";
@@ -100,7 +100,7 @@ export interface StakeholderMap {
  *
  * It was `name → path`, which was safe only while the list omitted
  * `.claude/skills/local/`. Reading the declaration admits it, and
- * `todo-manager.md` exists **three** times — `skills/folio-core/`,
+ * `todo-manager.md` exists **three** times — `skills/sdlc/sdlc-core/`,
  * `.claude/skills/local/` and the generated mirror, a divergence `AGENTS.md`
  * documents at length. Under `name → path` the last one scanned wins and a
  * change to either of the others reports NO impact: no roles, no lanes,
@@ -112,7 +112,7 @@ export interface StakeholderMap {
  */
 function skillIndex(root: string): Map<string, string> {
   const index = new Map<string, string>();
-  for (const parts of skillMdDirs(root)) {
+  for (const parts of skillMdDirs(root, corpusScopeFor(root))) {
     const dir = parts.join("/");
     const abs = join(root, dir);
     if (!existsSync(abs)) continue;
@@ -145,7 +145,7 @@ export async function stakeholderMap(root: string, changed: string[]): Promise<S
   // `processes/`. An impact report that misses a diagram reports NO
   // lane affected, which is indistinguishable from a change that affects
   // nobody — the one wrong answer this analysis must not give.
-  const diagrams = workflowFiles(root).filter((f) => f.endsWith(".bpmn"));
+  const diagrams = workflowFiles(root, corpusScopeFor(root)).filter((f) => f.endsWith(".bpmn"));
 
   if (diagrams.length > 0 && changedSkills.size > 0) {
     for (const file of diagrams) {
@@ -187,8 +187,11 @@ export async function stakeholderMap(root: string, changed: string[]): Promise<S
   // answer this analysis must not give.
   const graph: RoleGraph = { name: "stakeholder-map overlay", roles: [] };
   const seenRole = new Set<string>();
-  for (const kgRoot of kgRoots(root)) {
-    for (const r of readRoleGraph(kgRoot)?.roles ?? []) {
+  // The checkout's view on the platform's own run (placement PR0b).
+  const viaCheckout = corpusScopeFor(root) === "checkout";
+  for (const kgRoot of viaCheckout ? [root] : kgRoots(root)) {
+    const g = viaCheckout ? roleGraphFor(root, "checkout") : readRoleGraph(kgRoot);
+    for (const r of g?.roles ?? []) {
       if (seenRole.has(r.id)) continue;
       seenRole.add(r.id);
       graph.roles.push(r);

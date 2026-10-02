@@ -6,8 +6,8 @@ user_invocable: true
 
 # /getting-started — what did they actually ask for?
 
-Process: [`processes/getting-started.bpmn`](../../../processes/getting-started.bpmn).
-Decision table: [`decisions/folio-intent.dmn`](../../../processes/decisions/folio-intent.dmn).
+Process: [`folio-assistant-core/processes/conduct/getting-started.bpmn`](../../../../folio-assistant-core/processes/conduct/getting-started.bpmn).
+Decision table: [`decisions/folio-intent.dmn`](../../../../folio-assistant-core/processes/conduct/decisions/folio-intent.dmn).
 
 ## The landing page is the instance's own description
 
@@ -185,11 +185,16 @@ jumping straight to a branch.
 
 1. **Seed the work plan.** One bean per top-level thing the author named in
    step 3. Run the exact-title existence check in
-   [`todo-manager.md`](../../folio-core/todo-manager.md) §"Check before you create" first —
+   [`todo-manager.md`](../../sdlc/sdlc-core/todo-manager.md) §"Check before you create" first —
    `beans create` is not idempotent.
 2. **Start the Pages build and report the URL.** Run
    `bun run scripts/pages-bootstrap.ts --wait`. It derives the site address,
    says whether a publish workflow exists, and probes until the site answers.
+   **A `gh-pages` branch must exist before Pages can be switched on** to
+   serve from it (owner, 2026-10-01: *"need to create gh-pages branch before
+   can turn on"*). Provisioning it is the `gh-pages` Tool's subprocess's first
+   step ([`render-kg-to-cdn`](../../process/workflow/render-kg-to-cdn.md)),
+   not something to improvise here.
 3. **Say which of the three states you got**, and never blur them:
    - **live** — hand over the link, and say what is on it.
    - **not-yet** — a measured 404. Give the address, say the first build has

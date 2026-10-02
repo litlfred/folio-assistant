@@ -135,7 +135,7 @@ export const AVATARS: Readonly<Record<string, Avatar>> = {
   "smart-base": {
     // A broad base with three narrowing courses above it — the layer the rest
     // of the stack rests on. smart-base is exactly that: `fhir-harness` sits
-    // under it, and `smart-l1`, `smart-dak` and `smart-ig` are built on top,
+    // under it, and `smart-ig` (and the IGs that need it) is built on top,
     // so the glyph reads the instance's position rather than its subject.
     glyph: "M3 18h18M6 14h12M9 10h6M11 6h2",
     tone: 199,
@@ -243,6 +243,13 @@ export const AVATARS: Readonly<Record<string, Avatar>> = {
     tone: 188,
     reads: "two boxes and a flow between them, with a token part-way",
   },
+  // A NOTE pinned to a bean: the bean's outline with a slip beside it, because
+  // a note is an addendum to a bean and never a bean of its own (bean `m61r`).
+  "bean-notes": {
+    glyph: "M8 5c4 0 6 3 6 7s-2 7-6 7c2-3 2-4 2-7s0-4-2-7zM16 8h4v8h-4zM17 11h2M17 13h2",
+    tone: 40,
+    reads: "a bean with a slip of paper beside it — an addendum, not a second item",
+  },
   // A SURVEY of a commit window. Two endpoint marks with a span between them,
   // because the two edge commits ARE the artefact: a survey whose window
   // cannot be pinned tells a reader nothing about today (bean `6ptx`).
@@ -331,6 +338,17 @@ export const AVATARS: Readonly<Record<string, Avatar>> = {
     tone: 208,
     reads: "two bound volumes with the ties between them — somebody else's specification, pinned to an edition, beside what we do with it",
   },
+  // A SEALED ENVELOPE with a pin through its corner: somebody else's
+  // declaration, received and kept unopened at the commit it was pinned to.
+  // Not `external-schema`'s two volumes — that is a specification we read and
+  // apply; this is a snapshot we hold and never edit. `tone: 216` is unused and
+  // sits between `external-schema`'s 208 and `uml`'s 220, all three being
+  // about the shape of something defined elsewhere.
+  "substrate-snapshot": {
+    glyph: "M3 7h14v11H3zM3 7l7 6 7-6M17 4l4 4M19 6l-3 3",
+    tone: 216,
+    reads: "a sealed envelope, pinned — another Knowledge Graph's declaration, kept byte for byte at the commit it was subscribed at",
+  },
   // A LIST OF ENTRIES, each a short code tag beside a longer line: a code and
   // what it means, which is the whole of a code list. Deliberately not the
   // glossary's book — a book is looked up; a code list is CHOSEN from, closed,
@@ -340,6 +358,15 @@ export const AVATARS: Readonly<Record<string, Avatar>> = {
     glyph: "M4 6h3v2H4zM9 7h11M4 11h3v2H4zM9 12h11M4 16h3v2H4zM9 17h11",
     tone: 180,
     reads: "a closed list of codes, each beside its meaning — values chosen from, never free text",
+  },
+  // A CROSSWALK — a column of source rows, lines crossing to a column of
+  // target rows. Bean `k74z`: one value carried into several vocabularies.
+  // `tone: 120` was unused, and is far from `code-list`'s 180 so the two
+  // "tables of codes" kinds are not confused at a glance.
+  "vocab-mapping": {
+    glyph: "M3 6h4M3 12h4M3 18h4M8 6l8 6M8 12l8-6M8 18h8M17 6h4M17 12h4M17 18h4",
+    tone: 120,
+    reads: "a crosswalk — source rows on the left, lines crossing to target rows on the right — one value carried into another vocabulary",
   },
   // A CLASS BOX — a title compartment over an attribute compartment, with an
   // association line leaving it. The one glyph that says "a diagram of shapes"
@@ -446,6 +473,14 @@ export const AVATARS: Readonly<Record<string, Avatar>> = {
     glyph: "M10 4a3 3 0 013 3v4a3 3 0 01-6 0V7a3 3 0 013-3zM5 11a5 5 0 0010 0M10 16v4M16 6h5v5h-5zM18.5 8.5h.01",
     tone: 312,
     reads: "a microphone with a tag — an editorial voice specialised for one vendor",
+  },
+  "document-kinds": {
+    // A page outline with ruled sections: a document kind is a STRUCTURE to
+    // fill — the headings are fixed, the content is not. Distinct from
+    // `docs`, which is written pages; this is the shape a page must take.
+    glyph: "M6 3h9l3 3v15H6zM9 9h6M9 13h6M9 17h4",
+    tone: 268,
+    reads: "a page outline with its sections ruled in — a structure to fill, not a page written",
   },
   themes: {
     // A paint swatch with a corner turned: a theme is a palette APPLIED to a

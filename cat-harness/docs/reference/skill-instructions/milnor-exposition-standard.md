@@ -6,15 +6,15 @@ parent: Skill instructions
 ---
 
 {: .note }
-> Generated from [`cat-harness/skills/folio-core/milnor-exposition-standard.md`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/folio-core/milnor-exposition-standard.md) — do not edit here.
+> Generated from [`cat-harness/skills/authoring/authoring-core/milnor-exposition-standard.md`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/authoring/authoring-core/milnor-exposition-standard.md) — do not edit here.
 >
-> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/cat-harness/skills/folio-core/milnor-exposition-standard.md){: .fa-edit-source }
+> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/cat-harness/skills/authoring/authoring-core/milnor-exposition-standard.md){: .fa-edit-source }
 
 {% raw %}
 # The Milnor exposition standard
 
 **Three files sent readers here for this section and it did not exist.**
-`skills/folio-core/exposition-swarm-drain.md` cited "one-voice style guide →
+`skills/authoring/authoring-core/exposition-swarm-drain.md` cited "one-voice style guide →
 'The Milnor exposition standard'" three times, one of them naming a
 `.claude/skills/local/one-voice-style-guide.md` that is not on disk. The eight
 hallmarks lived only inside the `expo-milnor-clarity` criterion's description —
@@ -22,20 +22,22 @@ eight words, no rubric — while that criterion is a **strict gate passing only 
 a perfect 16/16**. Scoring against eight bare words is how eight reviewers
 produce eight different sixteens. Bean `bfmf`.
 
-**It is now derived from the paper, not from the name.** The source is
-[`folio-assistant-sci/library/milnorlink/`](https://github.com/litlfred/folio-assistant/tree/main/folio-assistant-sci/library/milnorlink)
-— John Milnor, *Link Groups*,
+**It is now derived from the paper, not from the name.** The source is the
+`milnorlink` library entry — John Milnor, *Link Groups*,
 Annals of Mathematics, Second Series, 59(2), March 1954, pp. 177–195
 ([JSTOR 1969685](http://www.jstor.org/stable/1969685)), ingested at journal-page
-granularity so a citation to "p. 179" resolves to
-`folio-assistant-sci/library/milnorlink/sections/page-179.md`.
+granularity so a citation to "p. 179" resolves to its
+`sections/page-179.md`. The entry is held by the science layer's `library`
+graph and reached through that declaration, never through a path written
+here: this layer sits below it and does not link up (bean `rfuq`). The science
+layer's `skills/voices/README.md` links down to this skill instead.
 
 The path moved with the corpus (bean `frs5`): the platform holds no content,
 so `milnorlink` went to the science instance. This link went on pointing at
 `cat-harness/library/` for a day and nothing reported it — `check:subgraphs`
 only began walking this directory once `main` added its zero-dangling
-assertion, which is what finally surfaced it. Every rule in
-[`milnor`'s voice skill](https://github.com/litlfred/folio-assistant/blob/main/folio-assistant-sci/skills/voices/milnor/voice.json) quotes a page. 8899 words, 496
+assertion, which is what finally surfaced it. Every rule in the `milnor`
+voice skill's `voice.json` (`skill_fetch milnor`) quotes a page. 8899 words, 496
 sentences; measured 2026-09-19.
 
 ### What the measurement found, including where WE are wrong

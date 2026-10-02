@@ -6,9 +6,9 @@ parent: Skill instructions
 ---
 
 {: .note }
-> Generated from [`cat-harness/skills/folio-core/coordinate.md`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/folio-core/coordinate.md) — do not edit here.
+> Generated from [`cat-harness/skills/sdlc/sdlc-core/coordinate.md`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/sdlc/sdlc-core/coordinate.md) — do not edit here.
 >
-> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/cat-harness/skills/folio-core/coordinate.md){: .fa-edit-source }
+> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/cat-harness/skills/sdlc/sdlc-core/coordinate.md){: .fa-edit-source }
 
 {% raw %}
 # /coordinate — multi-agent / multi-PR coordination
@@ -82,6 +82,10 @@ commit.
   store, and the boundary of that inference, is
   [`bean-coordination`](bean-coordination.md) §"Where a sibling
   session is visible from" — not restated here.
+- **Before a PLATFORM REFACTOR — always, before the first edit.** A
+  change to something many pages or PRs depend on runs the five-step
+  collision review in §"Before a platform refactor" below and records
+  it in the workplan bean. Owner, 2026-10-02 (#1885).
 
 ## Inputs
 
@@ -102,7 +106,7 @@ have to keep resolving.
 | section | where |
 |---|---|
 | workflow rule, when to invoke, inputs | **here** — read before you start |
-| **Protocol §1–§11** — the eleven coordination steps | [`coordinate/protocol.md`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/folio-core/coordinate/protocol.md) |
+| **Protocol §1–§11** — the eleven coordination steps | [`coordinate/protocol.md`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/sdlc/sdlc-core/coordinate/protocol.md) |
 | output, anti-patterns, §11 STATUS.md, §12 same-goal coordination, related skills | **here** |
 
 **Coordinating:** read this file for whether and when, then `protocol.md` for how.
@@ -336,6 +340,90 @@ and both were competent; the second was free to skip. Before re-deriving a
 measurement, check whether a sibling's **pushed commit** already carries it:
 an open PR's diff is a fact, and reading it costs one call against a session's
 worth of re-measurement.
+
+## Before a platform refactor — a collision review, recorded before the first edit (STRICT)
+
+Owner, 2026-10-02, on issue #1885, verbatim:
+
+> *"(in genreal update agent-agent coorindation/hadover skills - if you are
+> working on a refactor of the platform, review active agents/beans for impact
+> and coordiante)"*
+
+**This section is the rule's only home.** `bean-coordination`, `session-intent`
+and `continual-progress` point here. They do not restate it.
+
+### What counts as a platform refactor
+
+A platform refactor is a change to something that many pages, generators or
+open PRs depend on. Examples:
+
+- shared layout and includes: `_includes/`, `docs-ui.css`, `docs-ui.js`, the navbar;
+- a generator whose output is committed or published, such as `gen-ig-pages.ts`
+  or `gen-navbar-include.ts`;
+- a schema, a BPMN process, or a gate that other work is checked against.
+
+The test is the blast radius, not the size of the diff. A ten-line change to a
+shared include collides with every PR that regenerates it.
+
+The bean trigger above catches a sibling working on the same **subject**.
+§"The collision surface is FILES" catches two sessions editing the same
+**file** from different subjects. A refactor causes both kinds at once, which
+is why it gets a review of its own and does not rely on either trigger.
+
+### The five steps, in order, before any file is edited
+
+1. **List the open PRs and the files they change.** Use
+   `gh pr list --state open --json number,title,headRefName,files`, or
+   `pull_request_read` with the `get_files` method for each PR. Intersect the
+   result with the files the refactor will touch. A PR that changes only
+   **generated** files you will also regenerate is not a collision; say so
+   and move on.
+2. **Scan the `in-progress` beans for overlapping scope.** Use
+   `beans list --status in-progress --search <term>`, and search the subject
+   as well as the ids: the file names, the generator, the page type. A bean id finds nothing
+   when the overlapping work has no bean of its own; see
+   [`bean-coordination`](bean-coordination.md) §"The trigger is STARTING WORK".
+3. **Name the owning sessions.** Use `list_sessions`, the `Claude-Session:`
+   trailers on each PR's commits, and `bun run sessions --since <window>`.
+   [`bean-coordination`](bean-coordination.md) §"Where a sibling session is
+   visible from" says how far that inference goes.
+4. **Message each owner with your intent and your asks.** State what you will
+   change, phase by phase, and the files each phase touches. Then ask two
+   things: which order do we land in, and who owns each overlapping file.
+   Send it through a channel that actually reaches them; §"What actually
+   reaches a sibling" says which ones do. A PR comment also leaves a durable
+   copy.
+5. **Record the review in the workplan bean before editing.** Write down each
+   overlapping session, its PRs and beans, the files you share, and the phases
+   affected. A review that exists only in the chat is gone when the container
+   goes, and the next session has to run it again.
+
+**Phases that overlap a sibling wait.** They wait until the sibling has agreed
+an order, or until its overlapping PR has landed. Phases that touch none of the
+sibling's files can go ahead, and the review says which ones those are.
+
+### Worked example — #1885, bean `gp2f`
+
+The refactor moves the per-page nav, the harness bar, icons, scripts and the
+IG chrome CSS into shared cached assets. It touches the layout of every page
+on the site. Before any edit, the review found active sibling work on **every
+layout file the plan needed**:
+
+| sibling | its PRs | shared files | `gp2f` phases affected |
+|---|---|---|---|
+| navbar session (bean `ob3m`) | #1804, #1805, #1808, #1819 | `docs-ui.css`, `docs-ui.js`, `_includes/generated/navbar-footer.html`, `harness_details.html`, `head_custom.html`, `harness-tiles.md` | B, C, D, E |
+| fhir-ast session (bean `wnhh`) | #1816 | `fhir-harness/scripts/gen-ig-pages.ts` | A |
+| smart-trust IG session | #1766 | the `gen-ig-pages` area | A |
+
+If the review had been skipped, five PRs would have been rebased into a
+refactor of the files they were editing.
+
+What happened instead:
+
+- The review went into `gp2f` before any edit.
+- The three owning sessions were messaged with the plan and asked for an order.
+- The only work that started was work that touches none of their files: this
+  section, and a read-only baseline measurement of page sizes.
 
 ## Related skills
 

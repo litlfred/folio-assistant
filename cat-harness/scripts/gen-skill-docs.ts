@@ -5,7 +5,7 @@
  * index.
  *
  * Sources (the actual skill bodies — single source of truth):
- *   skills/content-lifecycle/*.md   → "Lifecycle skills"
+ *   skills/authoring/content-lifecycle/*.md   → "Lifecycle skills"
  *   src/skills/*.md                  → "Agent skills"
  *
  * Output (consumed by Jekyll → HTML on GitHub Pages):
@@ -26,7 +26,7 @@
 import { readdirSync, readFileSync, writeFileSync, mkdirSync, existsSync, statSync } from "fs";
 import { join, resolve, basename, relative, isAbsolute, sep } from "path";
 
-import { isSkillMd, kgDirectories } from "./known-skills.js";
+import { isSkillMd, kgDirectories, corpusScopeFor } from "./known-skills.js";
 import { packageDirsIn } from "./skill-topics.js";
 import { processRows, type ProcessRow } from "./gen-processes-viz.js";
 import { siteDirFor, repoRootFor } from "../schemas/cat-harness.ts";
@@ -296,7 +296,7 @@ interface Group {
    *
    * The output directory is flat, so two groups' identical basenames would have
    * one silently overwrite the other. `.claude/skills/local/todo-manager.md`
-   * and `skills/folio-core/todo-manager.md` collide that way.
+   * and `skills/sdlc/sdlc-core/todo-manager.md` collide that way.
    *
    * **The divergence that made this urgent is RESOLVED (bean `tdmg`,
    * 2026-09-19); the prefix is still required.** They were 369 and 396 lines
@@ -398,6 +398,8 @@ const SKILLS_CATEGORIES: Record<string, string> = {
   "ui-core": "Rendering, UI and publication surfaces (ui-core)",
   "conduct-core": "Agent conduct (conduct-core)",
   "process-core": "Process model — roles, authorization, methodology (process-core)",
+  "authoring-core": "Content authoring and editorial review (authoring-core)",
+  "sdlc-core": "Software delivery practice — work plan, review, merge, CI, coordination (sdlc-core)",
   theming: "Theming (theming)",
   // Keyed by basename: a package subdirectory of the declared `skills/`,
   // like `theming` above. Bean `6bhf`, owner 2026-09-25 — "bean as
@@ -409,6 +411,21 @@ const SKILLS_CATEGORIES: Record<string, string> = {
   "folio-paper-adapter": "Paper adapter (folio-paper-adapter)",
   "authoring-math": "Mathematical authoring (authoring-math)",
   "authoring-who-smart-guidelines": "WHO SMART Guidelines (authoring-who-smart-guidelines)",
+  // Placement PR1 (bean `ybwt`): packages split out of the harness's content
+  // packages when they moved up to their owning instance, by #1702's theme.
+  "fhir-ig-authoring": "FHIR IG authoring (fhir-ig-authoring)",
+  "content-lifecycle-ext": "Content lifecycle refinements (content-lifecycle-ext)",
+  ingestion: "Document ingestion methods (ingestion)",
+  // Bean `7eak`: rendering catalogue records as standard Dublin Core.
+  catalogue: "Catalogue records — Dublin Core renderings (catalogue)",
+  // Declared directories that hold their skills DIRECTLY, so they are keyed by
+  // the declaration's id, like `crdm` and `bootstrap` below. All three were
+  // declared in `cat-harness.json` with no label here, which made
+  // `skills:docs` — and through it `skill:register` — throw on main
+  // (found 2026-10-01 while working #1757).
+  "folio-assistant-core-skills": "Core layer — high-level processes (folio-assistant-core-skills)",
+  "folio-assistant-sci-lean-skills": "Science layer — Lean tooling (folio-assistant-sci-lean-skills)",
+  "folio-assistant-sci-data-skills": "Science layer — reference data (folio-assistant-sci-data-skills)",
   // Stubs for skills a remote package DECLARES and this instance does not
   // vendor. The heading says "not implemented" in the reader's own words,
   // because the published page is where somebody meets one of these first and
@@ -441,9 +458,9 @@ const SKILLS_CATEGORIES: Record<string, string> = {
   // instead. The old keys would not have failed loudly — they would simply
   // never match, and the generator throws naming the id it wanted, which is
   // how this was caught rather than shipped as two uncategorised packages.
-  crdm: "CRDM requirements methodology (skills/crdm)",
+  crdm: "CRDM requirements methodology (skills/sdlc/crdm)",
   raci: "RACI involvement model (skills/process/raci)",
-  "spec-kit": "Spec Kit spec-driven development (skills/spec-kit)",
+  "spec-kit": "Spec Kit spec-driven development (skills/sdlc/spec-kit)",
   // Synced from claude-scientific-skills at a pinned commit (issue #556):
   // somebody else's bytes, one package per skill so upstream's relative links
   // resolve. `remote-stubs` was retired when these arrived.
@@ -510,12 +527,20 @@ const SKILLS_CATEGORIES: Record<string, string> = {
   // the id does not. A LABEL is data, not a dependency — nothing here imports
   // core, so naming its package does not invert the layer order that
   // `folio-assistant-core.json`’s `needs: ["cat-harness"]` fixes.
-  "folio-assistant-core-skills": "Content layer (folio-assistant-core)",
+  //
+  // THE OWNER'S ids since placement PR0 (bean `ejye`): the platform's mirrors
+  // (`folio-assistant-core-skills`, `folio-assistant-sci-lean-skills`, …) are
+  // gone, and the corpus is read from each owner's own declaration — where
+  // cmsl measured five of the mirror ids had already drifted.
+  "core-skills": "Content layer (folio-assistant-core)",
   // The science layer's Lean tooling (folio-assistant#1492): tooling lives in
-  // folio-assistant-sci, never in core.
-  "folio-assistant-sci-lean-skills": "Science layer: Lean tooling (folio-assistant-sci)",
-  "folio-assistant-sci-data-skills": "Science layer: reference data (folio-assistant-sci)",
-  "large-datasets-skills": "Large data sets (subsetting, materializing, publishing)",
+  // folio-assistant-sci, never in core. Declared from within sci's `skills/`.
+  "lean-skills": "Science layer: Lean tooling (folio-assistant-sci)",
+  "data-skills": "Science layer: reference data (folio-assistant-sci)",
+  // `large-datasets` is a package of the harness's `library` group since bean
+  // `j7ql` (2026-10-01), keyed by basename like the packages above; it was
+  // the `large-datasets-skills` root of its own instance before.
+  "large-datasets": "Large data sets (subsetting, materializing, publishing)",
   "who-iris-skills": "WHO IRIS (catalogue instance)",
   // The `fhir-harness` instance's two packages, keyed by BASENAME because they
   // are package subdirectories of a declared root (`fhir-ig-skills`), not roots
@@ -582,7 +607,12 @@ function discoverGroups(): Group[] {
   // bootstrap's skills one level down and the generator demanded a heading for
   // a package called "skills"; #428 then keyed by repo-relative path, which
   // has the same shape of failure one move later.
-  for (const decl of kgDirectories(INSTANCE_ROOT)) {
+  const decls = kgDirectories(INSTANCE_ROOT, corpusScopeFor(INSTANCE_ROOT));
+  // A subdirectory DECLARED in its own right (sci's `skills/lean/`, declared
+  // from within `skills/skills.json`) is a root, keyed by its id — never also
+  // a package of its parent, or it would be published twice under two keys.
+  const declaredRoots = new Set(decls.map((d) => resolve(d.absPath)));
+  for (const decl of decls) {
     const skillsRoot = decl.absPath;
     if (holdsSkill(skillsRoot)) {
       const direct = SKILLS_CATEGORIES[decl.id];
@@ -591,6 +621,7 @@ function discoverGroups(): Group[] {
     }
     for (const d of packageDirsIn(skillsRoot)) {
       const dir = d.dir;
+      if (declaredRoots.has(resolve(dir))) continue;
       // No SKILL `.md` means it is not a skill package: `workflows/`,
       // `roles/`, `permissions/`, `requirements/`, `framework/`,
       // `remote-packages/` and `memory/` are other node kinds.

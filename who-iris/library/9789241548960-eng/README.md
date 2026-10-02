@@ -1,5 +1,5 @@
 <!-- kg:subgraph:begin -->
-# Handbook forGuideline Development 2nd edition
+# WHO handbook for guideline development
 
 ingested source material — attributed to its document, not folio content
 

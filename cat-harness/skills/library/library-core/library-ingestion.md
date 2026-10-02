@@ -56,8 +56,10 @@ further down dep tree)"*.
 - **`folio-assist-core` owns the remote half**, because `library/` is core's
   graph and so are `materialization.ts` and `library-ref.ts`. A harness that
   cannot hold content must not own the vocabulary for acquiring it.
-- **`large-datasets` owns the question before both**: how to enumerate a corpus
-  and ask it for a subset (`source-descriptor.ts`). Neither entry point can
+- **The `large-datasets` package owns the question before both**
+  ([`skills/library/large-datasets/`](../large-datasets/materialize-remote.md),
+  an instance of its own until bean `j7ql` dissolved it here): how to
+  enumerate a corpus and ask it for a subset (`source-descriptor.ts`). Neither entry point can
   start until something says what is out there.
 - **Further down the tree**, a dependency's declared `remoteGraphs` is what
   makes the second path reachable at all: an instance discovers assets through
@@ -73,6 +75,177 @@ bun run ingest uploads/FILE.pdf --dry-run # say which rung it would pick, and wh
 
 It picks the rung, runs it, and writes the manifest. Everything below is what it
 decides **on your behalf** — read it when the answer surprises you, not before.
+
+## What happens to the upload after it is ingested — it is RETIRED, not left and not deleted
+
+**Owner's ruling, 2026-09-29**, in two parts. First, answering *"why are
+ingested things still sitting in uploads and not moived to library of
+appropraite harness?"*:
+
+> **no, uploads is archival copy.**
+
+and then, refining where that archival copy belongs:
+
+> **archival (once ingested into KG and put into a proper `library/` under a
+> harness repo) then it should be moved to `fsh-guts`.**
+
+So the lifecycle has **three** places, not two, and `uploads/` is the only one
+that is temporary:
+
+| stage | where | what it holds |
+|---|---|---|
+| queued | `uploads/FILE.pdf` | the source, **not yet ingested** — this is what the queue viewer counts |
+| derived | `library/<slug>/` | `sections/`, `blocks/`, `images/`, `structure.json`, the manifest |
+| archived | `fsh-guts/uploads/FILE.pdf` + its sidecar | the **source bytes**, kept and addressable, off the rendered site |
+
+### Why the library cannot be the destination
+
+A library entry may not hold the bytes, and that is enforced rather than
+conventional. `ENTRY_DIRECTORIES` is `sections`, `blocks`, `images`, `ocr`;
+`ENTRY_SIDECARS` is `images.json`, `vector-labels.json`, `manifest.jsonld`,
+`summaries.json`, plus the one kind marker. Dropping the PDF into a promoted
+entry makes `check:l1-complete` report it — measured 2026-09-29:
+
+```
+✗ contents   1 unexpected child(ren): source.pdf
+```
+
+The entry records `source_sha256` and the technical metadata, which is what
+lets a re-derivation be checked against the original. It does not record the
+original. So "move it to the library" is not available, and the source needs
+somewhere else to live — which is what the second half of the ruling settles.
+
+### `fsh-guts/` is that somewhere, and it already has the contract
+
+[`fsh-guts`](../../kg/kg-core/fsh-guts.md) is *"the trashcan that is kept"*: addressable,
+exported, greppable, and deliberately absent from the canonical render.
+**Delete means relocate**, and this is that rule applied to a source whose
+derivation has landed.
+
+A PDF cannot carry front matter, and the directory already answers that —
+`extract-lean-blocks.py`, `split-docs-page.py`, `detangle-schema-viewer.html`
+each keep their bytes beside a same-basename `.md` sidecar that declares them.
+An archived upload follows the same convention:
+
+```yaml
+---
+$schema: folio-fsh-guts/v1
+title: "wang-rangaiah-2026-mcdm-aggregation.pdf"
+kind: source
+movedOn: 2026-09-29
+movedFrom: "uploads/wang-rangaiah-2026-mcdm-aggregation.pdf"
+summary: >-
+  Ingested to `cat-harness/library/wang-rangaiah-2026-mcdm-aggregation/`;
+  cited by `methodologies/mcdm-aggregation.md`. Archived here after promotion.
+---
+```
+
+`movedFrom` and `movedOn` are the load-bearing pair, for the reason `fsh-guts`
+gives: without them a node there is an orphan, and *"abandonment or accident"*
+becomes indistinguishable.
+
+**`fsh-guts/uploads/` is the sub-directory this proposes** — the existing two
+are `retired/` and `scripts/`, named for what the thing is, and an ingested
+source is neither. Not yet ruled on.
+
+### What this makes true, and what it costs
+
+`uploads/` becomes what its viewer already says it is. `gen-uploads-viz.ts`'s
+`itemState` returns `waiting` or `ingested`, and the headline is the
+UNINGESTED count because that is the one that means work is owed — under this
+rule `ingested` becomes a **transient** state rather than a resting place, and
+an upload sitting in it is a retirement nobody has done yet.
+
+**Never `rm`.** An ingested upload is not cleanup: deleting it removes the only
+copy of the source from the working tree, leaving git history, which is not the
+same thing — every derived artefact in `library/` becomes unreproducible from a
+checkout. `deletion-requires-confirmation` governs any exception, and an ingest
+step that removed its own input would be the `plj1` shape exactly.
+
+### Swept 2026-09-30 — and the sweep is now `check:uploads-retired`, not a habit
+
+`fsh-guts/uploads/` is the sub-directory. An ingested source's
+`*.pdf.extraction.json` companion moves with it, being a derived artefact of
+the same ingest rather than a queue item.
+
+**The hand sweep that first implemented this rule got four things wrong, in
+one commit, and each was invisible from its own output.** They are recorded
+here in full because they are one defect wearing four faces, and because the
+third and fourth were found only after the first two had been "corrected":
+
+| # | what it reported | what was true |
+|---|---|---|
+| 1 | **nine** sources to retire | **28**, across five harnesses — it had resolved `cat-harness/library/` alone, 14 of the corpus's entries |
+| 2 | **five sources RESTORED** from `4b10661cdde` after an earlier session deleted them | **none had been deleted.** All five were at `cat-harness/uploads/` continuously and are in that commit at that path. The sweep `git show`-ed a second copy of each into the archive |
+| 3 | 28 relocated | three of them were **copied, not moved** — the original stayed in `uploads/` |
+| 4 | who-iris among the five harnesses swept | **three ingested sources still in its queue** — that queue keeps a DIRECTORY per source, and the sweep listed only the top level |
+
+Eight files in two places, and a recovery claim with nothing recovered.
+
+**The common cause is one sentence: an answer computed over less than the
+corpus looks exactly like an answer over all of it.** (2) is the sharpest
+case — the five were *absent from `uploads/`* because they had been RENAMED
+into `cat-harness/uploads/`, and "absent from the one directory I looked in"
+was read as "deleted from the repository".
+
+**And correcting (1)'s number did not prevent (2), (3) or (4).** The count was
+re-derived across five libraries; the deleted-or-not determination, the
+move-or-copy, and the per-harness enumeration each kept the original method.
+That is the argument for the check rather than for a more careful sweep:
+
+```sh
+bun run check:uploads-retired
+```
+
+It matches on **sha256 against every declared library's recorded
+`source_sha256`**, never on filename — `2509.06388v1.pdf` is archived as
+`wang-rangaiah-2026-mcdm-aggregation.pdf`, and a name comparison would have
+called that unarchived and minted a ninth duplicate. Two families:
+
+- **blocking** — an already-ingested **bare drop** in a queue. The remedy is a
+  `git mv` plus a sidecar, or a `git rm` when identical bytes are already
+  archived. Those two are distinguished, because conflating them is exactly
+  how eight files ended up in two places.
+- **advisory** — an already-ingested file inside a **per-source intake
+  directory** (`who-iris/uploads/<slug>/` holds the PDF beside an
+  `intake.json` and an `iris-capture/`). Moving the PDF alone would leave that
+  record naming a file that is not there, so whether such a source retires as
+  a file or as a directory is a who-iris layout decision. Reported on every
+  run with its count; **not** exempted, because a family that goes quiet is a
+  family nobody revisits.
+
+It refuses rather than passing when no library records a `source_sha256` — the
+first version of it resolved libraries from the repository root, got **zero**,
+and printed a green line over 15 files. `dh4f`, inside the check written to
+stop `dh4f`. The repository root is not an instance that declares a library;
+`cat-harness` is, and the root declares the `uploads/` that `cat-harness` does
+not — so both roots are asked and neither alone is the corpus.
+
+It reports and never moves anything: `deletion-requires-confirmation`.
+
+**State after the correction, 2026-09-30:**
+
+| | |
+|---|---:|
+| sources archived in `fsh-guts/uploads/` | **41** |
+| duplicates removed from queues (identical bytes already archived) | 8 |
+| retired late, missed by the sweep | 1 (`milnorlink.pdf`, ingested to `folio-assistant-sci`) |
+| still queued, none of them ingested | 32 |
+| advisory, inside a who-iris intake directory | 3 |
+
+`milnorlink.pdf` is the cleanest statement of the whole class: it was ingested
+to `folio-assistant-sci/library/`, so a sweep matching against
+`cat-harness/library/` found no match and read it as still queued. Nobody was
+careless; the method could not see it.
+
+### Renaming an upload is done BEFORE the first ingest
+
+The slug is derived from the upload: `_pdf_doc_id.py` reads an arXiv id off
+page one's text layer and falls back to the basename slug. A source with no
+arXiv stamp is therefore named by hand first, to the author-year convention —
+`gurel-tat-2017-swot-analysis`, `wang-rangaiah-2026-mcdm-aggregation` — and the
+slug follows. Renaming afterwards means re-ingesting under the new name and
+removing the old entry, which is why it is worth getting right on the way in.
 
 ## Entry point two — an asset in a remote graph
 
@@ -99,6 +272,9 @@ of declaring one: navigable without being held.
 | `pdf-pages.py` | no outline | one section per **page** |
 | `pdf-ocr.py` | text extraction yields almost nothing | a text layer to then page-split |
 | `pdf-tables.py` | tables or figures matter | what `pdf-structure/v1`'s Section does not carry |
+| `slides-structure.py` | the package declares a **PPTX or ODP** deck | one section per **slide**, `images.json`, `accessibility.json` |
+| `referenced-source.py` | `--reference` given: the **licence forbids a copy** | `referenced.json` only — identity, sha256, outline; no text |
+| `text-structure.ts` | the source is **text files** — Markdown, MDX, XML — usually fetched from a repository at a commit | `text-structure/v1`: a Markdown file divided by its own ATX headings outside fenced code, any other file one verbatim section, located by **file and line range**; images recorded by digest, never sectioned |
 | `notebook-structure.ts` | the file is JSON with a numeric `nbformat` and a `cells` array — a **Jupyter notebook**, decided by content, never by the `.ipynb` name | `notebook-structure/v1`: one section per markdown heading, located by **cell** range; code kept as fenced code and never run; outputs not kept, and `structure_note` says so |
 
 **A notebook is a variant, not a PDF with odd pages** (bean `rkqp`, owner
@@ -117,6 +293,111 @@ index mistaken for a page number.
   `wpr-rdo-2020-003-eng`)
 - `toc_source: none`, `source.text_source: ocr` → `pdf-ocr` then `pdf-pages --from-ocr`
   (`who-pub-tps-931`)
+
+## Slide decks — PPTX and ODP (bean `scfh`, issue #1614)
+
+A deck is a zip that **declares** its type (`[Content_Types].xml`, or ODF's
+`mimetype` member), so it routes on the sniff, before the archive rung, exactly
+as a workbook does. `slides-structure.py` writes the same `pdf-structure/v1`
+shape a paged PDF gets — one section per slide,
+`page_start == page_end == <slide>`, `granularity: "slide"` — so
+`l1-blocks.ts`, the manifest and
+`check:l1-complete` read it unchanged. Two differences from the PDF rungs, both
+measured on the #1614 deck:
+
+- **A slide's title is its title placeholder, or it is `Slide N`.** Never the
+  largest text box: that is the inferred-TOC failure below in a new format. It is
+  also an accessibility finding, because a slide with no title placeholder cannot
+  be navigated to by name, so the two questions share one answer
+  (`title_source: placeholder | none` in each section's front matter).
+- **No image is a `page-scan`.** A full-bleed picture alone on a slide is the
+  slide's content, not a scan of text already extracted.
+
+`accessibility.json` reports, per check, what the package can answer — slide
+titles, alt text (with editor auto-captions such as *"Description automatically
+generated"* counted as **failing**, since nobody wrote them), decorative marks,
+language tags, document title, speaker notes — and says `undetermined` for the
+three it cannot: reading order, images of text, contrast. **It gives no overall
+score.** A single number would weigh a missing title against a missing alt text,
+and nothing supports that weighting.
+
+**Two copies of one deck? Compare before you choose which to ingest:**
+
+```sh
+python3 cat-harness/scripts/slides-structure.py --a11y-only DECK.pptx DECK.odp
+```
+
+On #1614 the two were Google Slides exports with identical image bytes. The PPTX
+kept per-run `lang` and the author's few alt texts; the ODP export dropped **all**
+alt text and kept the language only on the default style. Prefer the copy that
+wins the per-check comparison. An export can lose what the author wrote, and the
+format's reputation does not tell you which way this particular export went.
+
+Image descriptions go in the library's `image-verdicts.json` as for a PDF. Put
+the inspector in `attribution.<doc-id>` when they are not the file's
+`inspected_by`; without it the deck inherits the first inspector's name and
+date.
+
+## A source whose licence forbids a copy — record it, do not ingest it (bean `scfh`)
+
+Some sources may be read but not reposted. The OMG BPMN and DMN specifications
+permit use on condition that a copy "will not be copied or posted on any
+network computer or broadcast in any media". A normal ingest commits every
+section's text to a public repository, which breaks that condition. It does so
+silently, because nothing in the text layer says so.
+
+```sh
+bun run ingest FILE.pdf --reference IDENTITY.json --library <name>
+```
+
+`IDENTITY.json` holds the title, version, document number, date, publisher,
+URL and the licence clause, **read off the document**. A missing field is
+refused, never guessed. The entry holds `referenced.json` — the exact bytes'
+sha256, the embedded outline (clause titles and pages, so a citation can still
+name a clause), a `folio-materialization/v1` record in state `referenced`, and
+why the text is withheld — plus a manifest with an empty `contains`, and a
+`licence.json` quoting the clause.
+
+**The choice is the caller's, never inferred.** Whether a licence permits
+posting is a reading of the licence, not of the bytes. `check:l1-complete`
+knows the kind, and **refuses** a `referenced` entry that holds `sections/`,
+`blocks/` or `images/`. That would be the copy this kind exists not to make.
+
+## A source published as text in a repository — read it at a commit (bean `y4uj`)
+
+The Gherkin reference, the MCP specification, the `hmans/beans` README and
+FHIR R5's TestPlan resource (issue #1614 item 4) are published as Markdown or
+XML in git repositories. Printing one to PDF so a PDF rung can read it makes
+the recorded sha256 identify a rendering nobody published, so they take their
+own rung instead:
+
+```sh
+bun run cat-harness/scripts/text-structure.ts -o <library> --doc-id <slug> \
+  --base <checkout> --upstream upstream.json [--title T] [--image F]... FILE...
+```
+
+then `l1-blocks.ts -o <entry>` and `gen-library-jsonld.ts --entry <entry>`, as
+for a notebook. What it decides:
+
+- **Divided by the author's headings, or not at all.** A Markdown file splits
+  at its own ATX headings, outside fenced code. A `# comment` inside a
+  `gherkin` block is not a heading. Any other text, and anything that opens
+  with `<`, is one section, fenced verbatim. Nothing is rendered: shortcodes
+  and JSX stay as written, and `structure_note` says so.
+- **`upstream` records the exact revision**: repository, 40-hex commit, ref,
+  path, and in words whether that revision is the **published** text or a
+  working copy. A default branch is often neither, and a reader cannot tell
+  which from a URL. Keep the clone out of the repository tree. The bytes can
+  be fetched again from the commit, so none go to `uploads/` or `fsh-guts/`.
+- **Several files are one source** when the publisher ships them as one, as
+  with a specification version that is a directory of pages. Each file keeps
+  its own sha256. The source's sha256 is the sha256 of their `sha256sum`
+  listing, so `sha256sum -c` against a checkout verifies the entry without
+  this code.
+
+It is not wired into `bun run ingest`. That command reads a dropped file from
+`uploads/`, and text has no magic bytes to route on, so it would have to guess
+from the extension. Routing a dropped `.md` is a separate decision.
 
 ## An inferred chapter tree is refused, not guessed
 
@@ -157,6 +438,52 @@ library/<bib-slug>/
 requirement **met**, **unmet**, or **not yet derivable** — the last because the
 per-format arms (images, audio, tables, archives) are tracked separately and a
 check that cannot run must not read as a pass. Bean `pn6j`.
+
+## A manifest's title — the authority order, and never the page-1 parse
+
+The owner's ruling of 2026-10-01 (issue #1794, option 2 of 4). A library
+entry's `manifest.jsonld` `title` is the first of these the entry has:
+
+| rank | `meta.title_source` | read from |
+|---|---|---|
+| 1 | `dc-record` | `dc.title` of the Dublin Core record that the catalogue node naming this entry (`libraryId`) points at through `metadataRef` |
+| 2 | `referenced` | `referenced.json` `identity.title` |
+| 3 | `pdf-info` | `structure.json` `metadata.docinfo.Title`, the PDF Info `/Title`, when it is not junk |
+| 3 | `text-heading` | `structure.json` `metadata.title` of a **text or notebook** structure: front-matter `title:`, `--title`, or the level-1 heading |
+| 4 | `slug` | the entry id. Nothing better exists, and `check:library-qa` reports it as `title-missing` |
+
+**The page-1 front-matter parse is NEVER a title.** On a `pdf-structure/v1`,
+`metadata.title` is `parse_front_matter`'s guess at which lines of page 1 are
+the title. It guessed *Abies* for the WHO editorial style manual, *LeanArchitect
+LeanArchitect*, *Algorithmic Approaches to*, and the whole W3C status block for
+three specifications. A plausible wrong title passes every check that has no
+second source. A slug is honest about being a placeholder and gets flagged.
+The parse may still feed search and the section files' `doc_title`.
+
+`text-heading` shares rank 3 because it is the same kind of fact as `/Title`
+(the source naming itself, in its format's own metadata). The two are exclusive
+by variant, so no entry ever has both. A tabular record's `title` is its source
+file name, which is never a title.
+
+**Junk `/Title`** (`pdfInfoTitleJunk`): shorter than 3 characters or no letters;
+`untitled` and its kin; `Microsoft Word - …`; an arXiv stamp
+(`arXiv:0909.4061v2 [math.NA] …`); anything ending in a file extension; the
+source's file name or stem; the slug. A junk value falls through to the next
+source. It never becomes the title. Records (ranks 1–2) are taken as written,
+because a cataloguer's choice is not a program's default.
+
+**Record the Info dictionary at ingest.** `pdf-structure.py` writes
+`metadata.docinfo`. `pdf-pages.py` did not until #1794, which left 20
+page-granular entries with no `/Title` to read. Backfill an older entry with
+`python3 cat-harness/scripts/pdf-pages.py --docinfo-into <entry> <pdf>`. It
+refuses unless the PDF's sha256 is the one the entry recorded.
+
+One resolver, `cat-harness/content/pipeline/library-title.ts`
+(`resolveLibraryTitle`, `TITLE_AUTHORITY`), is used by both
+`gen-library-jsonld.ts` and `check-library-qa.ts`. The manifest records
+`meta.title_source` and `meta.title_from`, and the QA check re-derives the
+order from the entry's files. So a manifest that claims `pdf-info` while a
+catalogue record exists is reported as `title-implausible`, not believed.
 
 ## `source{}` — the technical facts, written by whichever rung ran
 
@@ -404,6 +731,42 @@ the library page. It is advisory, never a gate. What the gate does fail is a
 sidecar that does not parse, names another entry, or holds a record for a block
 or source that is not there.
 
+### A WITHHELD entry in the viewer — its summary, else the gate, never "no content" (issue #1794)
+
+An entry whose library root's `withheld.json` names it (bean `cw35`) is listed
+but publishes no verbatim text: `gen-library-viz` reads its blocks with
+`verbatim: false`. Until 2026-10-01 every such row then read **"(no content
+carried)"** — 121 of 121 rows of `who-pub-tps-931`, 250 of 250 of
+`9789241548960-eng` — which is what a page-scan with no text says, so "not ours
+to show" looked exactly like "nothing was extracted". The owner's ruling
+(option 1 of 4, *"Fix the viewer now"*) is the rule:
+
+1. **A row shows the section's summary when one exists**, labelled as a summary
+   and never as the source text. Summaries are our writing and stay published.
+2. **Otherwise, a withheld row says the gate**: *"Withheld — copyright not
+   granted"*, naming every gate that refused (*"copyright and restrictions not
+   granted"*), with a link to the catalogue record — its published page first,
+   its upstream URI second, no link rather than a guessed one.
+3. **Anything else with no content keeps the neutral "(no content carried)"**,
+   because for those it is true.
+4. **A banner tops a withheld entry**: why the text is not shown, which gate
+   refused, the record link, and how many sections have summaries (*"0 of 121
+   sections summarised"*). No banner on any other entry.
+
+**Withheld is READ, never inferred from emptiness.** The flag, the gates and the
+record come from `withheld.json` — `folio-withheld/v1` carries an optional
+structured `gates[]` and `record{id, page, uri}` beside the `reason` sentence,
+which the instance's generator writes from its own data (who-iris:
+`gen-iris-pages.ts`, from the catalogue's publication gates). A list that
+carries only the sentence still works: the row then says the sentence.
+
+The row and banner code is `scripts/lib/library-withheld-view.ts`, embedded in
+the page verbatim so `library-withheld-view.test.ts` runs the same text the
+browser does; `library-withheld-viewer.e2e.ts` opens the rendered page.
+Drafting the summaries is a separate backlog (bean `r96p`):
+`bun run summaries:next -- --entry <slug>` serves a withheld entry's text to the
+summariser like any other.
+
 ### Describing a document's images — and why it is an ARM, not a step you run
 
 `pdf-images.py` classifies by geometry, which answers exactly one question: is
@@ -550,4 +913,4 @@ only from a layer above it: a wrong-direction dependency, and after the split
 
 - [`directory-conventions`](../../kg/kg-core/directory-conventions.md) — the graph kinds and who declares them
 - [`bib-qa`](bib-qa.md) — auditing what is already in `library/`
-- `processes/document-ingestion.bpmn` — the process this sits inside
+- `processes/library/document-ingestion.bpmn` — the process this sits inside

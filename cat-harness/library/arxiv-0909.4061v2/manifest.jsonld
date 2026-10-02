@@ -1,10 +1,15 @@
 {
-  "@context": "https://litlfred.github.io/folio-assistant/ns/content/v1.jsonld",
+  "@context": [
+    "https://litlfred.github.io/folio-assistant/ns/content/v1.jsonld",
+    {
+      "@base": "https://litlfred.github.io/folio/"
+    }
+  ],
   "@id": "library/arxiv-0909.4061v2/manifest",
   "@type": [
     "folio-assistant-core:SourceDocument"
   ],
-  "title": "arxiv-0909.4061v2",
+  "title": "Finding Structure with Randomness: Probabilistic Algorithms for Constructing Approximate Matrix Decompositions",
   "contains": [
     "library/arxiv-0909.4061v2/sections/page-001",
     "library/arxiv-0909.4061v2/sections/page-002",
@@ -84,6 +89,16 @@
   "provenance": "ingested",
   "meta": {
     "doc_id": "arxiv-0909.4061v2",
+    "title_source": "editorial",
+    "title_from": "structure.json metadata.title_correction.title",
+    "title_verified": true,
+    "title_correction": {
+      "title": "Finding Structure with Randomness: Probabilistic Algorithms for Constructing Approximate Matrix Decompositions",
+      "basis": "Page 1 prints this title in capitals between the arXiv margin stamp and the authors (Halko, Martinsson, Tropp); the PDF Title metadata is only the arXiv stamp, and the heading reader ran the title on into the abstract. Capitalisation set by the editor.",
+      "corrected_on": "2026-10-02",
+      "bean": "folio-assistant-w6fu",
+      "extracted": null
+    },
     "source_file": "arxiv-0909.4061v2.pdf",
     "source_sha256": "d5d99d95b3d9657de6413f4c26d635238103ef9cf1a28ff1b7fde531cf11f6be",
     "arxiv": null,

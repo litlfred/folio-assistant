@@ -65,5 +65,5 @@ instance of it.*
 Rule: label **the action asked of the agent, not the subject matter**. #187 asks for a document (`isFeature: false`); #199 *is* the eleven requested platform changes (`isFeature: true`). The two describe the same content but differ on exactly what the label measures, so there is no contradiction left to resolve.
 
 - Corpus: both `why` lines now state the convention and cite this decision. **No label flipped.**
-- `bun run eval:crdm-detect` re-run: precision 86%, recall 100%, F1 93% over 27, unchanged. The committed test run was refreshed. Its DATA hash moved for the `why` text, and its PROCESS basis had been stale since the skill moved from `methodologies/crdm/` to `skills/crdm/`.
+- `bun run eval:crdm-detect` re-run: precision 86%, recall 100%, F1 93% over 27, unchanged. The committed test run was refreshed. Its DATA hash moved for the `why` text, and its PROCESS basis had been stale since the skill moved from `methodologies/crdm/` to `skills/sdlc/crdm/`.
 - `vjbl`: dated note added — #187 is no longer "turns on intent" or "contradicts #199"; the convention is named for a second annotator to accept or dispute.

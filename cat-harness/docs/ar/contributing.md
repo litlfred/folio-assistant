@@ -61,7 +61,7 @@ beans <id> --status in-progress   # احجزه قبل أن تبدأ العمل
 
 - **تعليمات المهارات** (`docs/reference/skill-instructions/*.md`) مُولَّدة
   آليًا أيضًا — إياك وتعديلها يدويًا. عدّل نصوص المهارات تحت
-  `skills/content-lifecycle/*.md` أو `src/skills/*.md` ثم أعد التوليد:
+  `skills/authoring/content-lifecycle/*.md` أو `src/skills/*.md` ثم أعد التوليد:
 
   ```sh
   bun run scripts/gen-skill-docs.ts
@@ -83,6 +83,6 @@ bundle exec jekyll serve
 ## شحن التغيير
 
 تحقق ← تأكد من قابلية الدمج ← ادفع (push) ← (فقط إذا طُلب منك) افتح طلب سحب (PR). راجع
-`skills/folio-core/prepare-merge.md`. حافظ على **فصل الصياغة الرسمية لإطار العمل
+`skills/sdlc/sdlc-core/prepare-merge.md`. حافظ على **فصل الصياغة الرسمية لإطار العمل
 عن المحتوى** — فالمحتوى ينتمي إلى مستودعه الخاص، وأي محتوى
 في هذه المستندات هو توضيحي فقط.

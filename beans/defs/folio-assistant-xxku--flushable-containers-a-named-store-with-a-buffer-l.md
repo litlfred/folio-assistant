@@ -225,7 +225,7 @@ treatment for the same kind of reason.
 
 **Not done here, and the reason is a rule rather than a budget.** It changes the
 docs build and the language switcher, and
-[`continual-progress`](../../cat-harness/skills/folio-core/continual-progress.md) is explicit
+[`continual-progress`](../../cat-harness/skills/sdlc/sdlc-core/continual-progress.md) is explicit
 that a rendered artefact cannot be assessed from a description of it — I cannot
 render this site from here, and ~20 branches are currently live in `docs/`. It
 wants its own bean, its own PR and a preview somebody looks at.

@@ -1,5 +1,10 @@
 {
-  "@context": "https://litlfred.github.io/folio-assistant/ns/content/v1.jsonld",
+  "@context": [
+    "https://litlfred.github.io/folio-assistant/ns/content/v1.jsonld",
+    {
+      "@base": "https://litlfred.github.io/folio/"
+    }
+  ],
   "@id": "library/arxiv-2504.19675v2/manifest",
   "@type": [
     "folio-assistant-core:SourceDocument"
@@ -36,6 +41,8 @@
   "provenance": "ingested",
   "meta": {
     "doc_id": "arxiv-2504.19675v2",
+    "title_source": "pdf-info",
+    "title_from": "structure.json metadata.docinfo.Title",
     "source_file": "2504.19675v2.pdf",
     "source_sha256": "5e8e75c26a95847b5f6915a1a4d526e9bc425769054e592d3ce4e42d88ee59f3",
     "pages": 8,

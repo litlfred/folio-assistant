@@ -6,9 +6,9 @@ parent: Skill instructions
 ---
 
 {: .note }
-> Generated from [`cat-harness/skills/folio-core/opening-brief.md`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/folio-core/opening-brief.md) — do not edit here.
+> Generated from [`cat-harness/skills/sdlc/sdlc-core/opening-brief.md`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/sdlc/sdlc-core/opening-brief.md) — do not edit here.
 >
-> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/cat-harness/skills/folio-core/opening-brief.md){: .fa-edit-source }
+> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/cat-harness/skills/sdlc/sdlc-core/opening-brief.md){: .fa-edit-source }
 
 {% raw %}
 # Opening brief — brief the topic before you touch anything
@@ -228,6 +228,10 @@ non-obvious, because it has just finished finding them out.
 **Cheapest correct move when you do not want to spend the words: do not start
 the topic.** A task you cannot brief is one you have not understood well enough
 to begin.
+
+The brief's durable form is the PR description. Once the work exists,
+[`pr-description`](pr-description.md) answers the same questions for a
+reader who arrives after it.
 {% endraw %}
 
 ## Processes that run this skill

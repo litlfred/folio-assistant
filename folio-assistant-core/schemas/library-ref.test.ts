@@ -11,7 +11,7 @@ import { mkdirSync, mkdtempSync, readFileSync, readdirSync, rmSync } from "fs";
 import { tmpdir } from "os";
 import { join, resolve } from "path";
 import { explainFailure, instanceRoots, libraryDirOf, resolveLibraryRef } from "./library-ref.js";
-import {  } from "../../cat-harness/schemas/cat-harness.js";
+import { declarationPathIn } from "../../cat-harness/schemas/cat-harness.js";
 import { writeDeclaration } from "../../cat-harness/test/support/instance-fixture.js";
 
 const REPO = resolve(import.meta.dir, "../..");
@@ -139,7 +139,21 @@ describe("library location is read from the declaration", () => {
       }
     }
 
-    const uncited = entries.filter((e) => !cited.has(e));
+    // THE AGENT-SKILL CORPUS, admitted by the owner's ruling of 2026-10-01
+    // (agent-skills dissolves into cat-harness; bean `j7ql`): literature
+    // ABOUT the harness's own subject, read into the voices in
+    // `skills/voices/`. Admitted by NAME, from the declaration's own
+    // `heldEntries` list on the library entry — the owner's hold on those
+    // documents — never by a pattern, so folio content arriving here still
+    // fails, by name, exactly as before.
+    const decl = JSON.parse(readFileSync(declarationPathIn(PLATFORM)!, "utf8")) as {
+      directories?: Array<{ graphKinds?: string[]; heldEntries?: string[] }>;
+    };
+    const admitted = new Set(
+      (decl.directories ?? []).filter((d) => d.graphKinds?.includes("library")).flatMap((d) => d.heldEntries ?? []),
+    );
+
+    const uncited = entries.filter((e) => !cited.has(e) && !admitted.has(e));
     expect(uncited).toEqual([]);
   });
 
@@ -276,8 +290,8 @@ describe("an instance's library is ITS OWN, not the first one declared", () => {
 
   it("ignores a repository-scoped entry even when it is declared FIRST", () => {
     const root = instance([
-      { id: "other", path: "elsewhere/library/", scope: "repository", dependents: "skip", graphKinds: ["library"] },
-      { id: "library", path: "library/", dependents: "reproduce", graphKinds: ["library"] },
+      { id: "other", path: "elsewhere/library/", scope: "repository", graphKinds: ["library"] },
+      { id: "library", path: "library/", graphKinds: ["library"] },
     ]);
     expect(libraryDirOf(root)).toBe(resolve(root, "library"));
     rmSync(root, { recursive: true, force: true });
@@ -286,8 +300,8 @@ describe("an instance's library is ITS OWN, not the first one declared", () => {
   it("and the answer does not change when the order does", () => {
     // The whole point: the same declaration, written the other way round.
     const root = instance([
-      { id: "library", path: "library/", dependents: "reproduce", graphKinds: ["library"] },
-      { id: "other", path: "elsewhere/library/", scope: "repository", dependents: "skip", graphKinds: ["library"] },
+      { id: "library", path: "library/", graphKinds: ["library"] },
+      { id: "other", path: "elsewhere/library/", scope: "repository", graphKinds: ["library"] },
     ]);
     expect(libraryDirOf(root)).toBe(resolve(root, "library"));
     rmSync(root, { recursive: true, force: true });
@@ -298,8 +312,8 @@ describe("an instance's library is ITS OWN, not the first one declared", () => {
     // different and wrong fact. Two libraries of one's own has no answer to
     // "where does this instance keep its corpus".
     const root = instance([
-      { id: "a", path: "library/", dependents: "reproduce", graphKinds: ["library"] },
-      { id: "b", path: "elsewhere/library/", dependents: "reproduce", graphKinds: ["library"] },
+      { id: "a", path: "library/", graphKinds: ["library"] },
+      { id: "b", path: "elsewhere/library/", graphKinds: ["library"] },
     ]);
     expect(() => libraryDirOf(root)).toThrow(/no single answer/);
     rmSync(root, { recursive: true, force: true });
@@ -307,7 +321,7 @@ describe("an instance's library is ITS OWN, not the first one declared", () => {
 
   it("every real instance here resolves its own library, or declares none", () => {
     // Over the real repository, so a future declaration that breaks it says so.
-    for (const inst of ["cat-harness", "who-iris", "folio-assistant-sci", "agent-skills"]) {
+    for (const inst of ["cat-harness", "who-iris", "folio-assistant-sci"]) {
       expect({ inst, dir: libraryDirOf(resolve(REPO, inst)) })
         .toEqual({ inst, dir: resolve(REPO, inst, "library") });
     }

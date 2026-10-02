@@ -66,8 +66,9 @@ import { LICENCE_FILENAME } from "../content/pipeline/gen-library-jsonld.ts";
 import { NARRATIVE_BEARING, narrativesIn } from "./narratives.ts";
 import { SUMMARIES_FILE } from "../schemas/block-summary.ts";
 import { entryDirs, entryItems, sidecarDefects, tally } from "./summaries.ts";
-import { directoriesForGraph } from "../schemas/cat-harness.ts";
 import { buildQaResult, writeQaResult } from "./qa-results.ts";
+import { REFERENCED_SOURCE_SCHEMA_ID, ReferencedSourceSchema } from "../schemas/referenced-source.ts";
+import { corpusDirectoriesForGraph } from "../schemas/harness-config.js";
 
 export type State = "met" | "unmet" | "not-derivable";
 
@@ -129,7 +130,7 @@ export interface EntryReport {
  * about the entry rather than a claim about the file, which is the same
  * argument `nso8` makes for sniffing over extensions, one level up.
  */
-export type EntryKind = "paged" | "tabular" | "archive" | "undetermined";
+export type EntryKind = "paged" | "tabular" | "archive" | "referenced" | "undetermined";
 
 /** Which sidecar identifies which shape. One place, so a fourth rung adds one line. */
 /**
@@ -188,12 +189,27 @@ export const ENTRY_SIDECARS: readonly string[] = [
   // A dataset's addressable values, written by an ingest tool beside its
   // tabular.jsonld (e.g. codata-ingest, bean uyp8; resolved by liquid-values).
   "values.json",
+  // A slide deck's accessibility report, written by `slides-structure.py`
+  // beside its structure.json (bean `scfh`, issue #1614).
+  "accessibility.json",
+  // A JSON-LD context the SOURCE ITSELF publishes among its files, held so a
+  // documentLoader can serve it offline instead of fetching it (bean `9y9j`,
+  // the linked-data voice's `ld-no-context-fetched-at-run-time`; first case:
+  // PROV-JSONLD's, pinned by sha256 in schemas/prov.ts).
+  "context.jsonld",
+  // A smart-kg L1 graph document (publication → section → recommendation)
+  // DERIVED from this entry by smart-base/scripts/extract-smart-kg-l1.ts and
+  // kept beside it, owner default (bean `8pzh`); its --check keeps it current.
+  // `.json`, not `.jsonld`: its @context is smart-kg's, not held here.
+  "smart-kg-l1.json",
 ];
 
 export const KIND_SIDECAR: ReadonlyArray<readonly [EntryKind, string]> = [
   ["paged", STRUCTURE_FILENAME],
   ["tabular", "tabular.jsonld"],
   ["archive", "contents.jsonld"],
+  // Recorded, text withheld by licence — `referenced-source.py`, bean `scfh`.
+  ["referenced", "referenced.json"],
 ];
 
 /**
@@ -745,6 +761,42 @@ function derivableRequirements(dir: string): Requirement[] {
     }
   }
 
+  // ── referenced-record — bean `scfh` ──────────────────────────────────────
+  //
+  // A source RECORDED and not held: its licence forbids posting copies, so the
+  // entry identifies the exact bytes and holds none of them. Two failures
+  // matter. A record that does not say it is `referenced` or does not say WHY
+  // is a claim with no basis. And an entry of this kind that carries
+  // `sections/` or `blocks/` is the copy this kind exists NOT to make, which is
+  // worse than no entry, so it is refused rather than tolerated.
+  if (has("referenced.json")) {
+    let r: unknown;
+    try {
+      r = JSON.parse(readFileSync(join(dir, "referenced.json"), "utf-8"));
+    } catch (e) {
+      out.push({ name: "referenced-record", state: "unmet", detail: `referenced.json unparseable: ${String(e)}` });
+    }
+    if (r !== undefined) {
+      const problems: string[] = [];
+      // The whole record, by the schema the writer is held to — not a list of
+      // spot checks here that could drift from it.
+      const parsed = ReferencedSourceSchema.safeParse(r);
+      if (!parsed.success) {
+        const i = parsed.error.issues[0];
+        problems.push(`not ${REFERENCED_SOURCE_SCHEMA_ID}: ${i?.path.join(".")} ${i?.message ?? "invalid"}`);
+      }
+      for (const d of ["sections", "blocks", "images"]) if (has(d)) problems.push(`holds ${d}/ — the text is meant to be withheld`);
+      out.push({
+        name: "referenced-record",
+        state: problems.length ? "unmet" : "met",
+        detail:
+          problems.length || !parsed.success
+            ? problems.join("; ")
+            : `${parsed.data.identity.title} — ${parsed.data.outline.length} outline entries, no text held`,
+      });
+    }
+  }
+
   // Narrative provenance (bean `iqim`).
   //
   // Every block declares how its text came to be: the literal `"ingested"` for
@@ -1116,9 +1168,9 @@ export function instanceRootFor(cwd: string): string | undefined {
   // declare a library at all — and asking it by indexing reads as though the
   // first one mattered. It never did here, and after bean `a02m` a root may
   // declare several.
-  if (directoriesForGraph(cwd, "library").length > 0) return cwd;
+  if (corpusDirectoriesForGraph(cwd, "library").length > 0) return cwd;
   const own = resolve(import.meta.dir, "..");
-  return directoriesForGraph(own, "library").length > 0 ? own : undefined;
+  return corpusDirectoriesForGraph(own, "library").length > 0 ? own : undefined;
 }
 
 /**
@@ -1138,7 +1190,7 @@ export function checkAll(root: string): EntryReport[] | undefined {
   // root and checked nothing (the comment on `instanceRootFor` above). Half
   // is the same bug as none, with better camouflage: none at least yields the
   // `undefined` third state. `directoriesForGraph(...)[0]` until bean `a02m`.
-  const libs = directoriesForGraph(root, "library");
+  const libs = corpusDirectoriesForGraph(root, "library");
   if (libs.length === 0) return undefined;
   const out: EntryReport[] = [];
   // A slug in two libraries is REFUSED, not merged. The committed sidecar is
@@ -1199,7 +1251,7 @@ export function checkAll(root: string): EntryReport[] | undefined {
  * `kg-qa` tree learned that the hard way, where four basenames already
  * collided across packages.
  */
-export function sidecarDocument(report: EntryReport, now?: Date) {
+export function sidecarDocument(report: EntryReport) {
   const unmet = report.requirements.filter((q) => q.state === "unmet");
   const nd = report.requirements.filter((q) => q.state === "not-derivable");
   const result = buildQaResult({
@@ -1222,14 +1274,13 @@ export function sidecarDocument(report: EntryReport, now?: Date) {
         entries: nd.map((q) => ({ requirement: q.name, detail: q.detail })),
       },
     },
-    now,
   });
   return result;
 }
 
 /** {@link sidecarDocument}, written under the declared `qa` tree. */
-export function sidecarFor(root: string, report: EntryReport, now?: Date): string {
-  return writeQaResult(root, join("library-qa", report.slug), sidecarDocument(report, now));
+export function sidecarFor(root: string, report: EntryReport): string {
+  return writeQaResult(root, join("library-qa", report.slug), sidecarDocument(report));
 }
 
 /**
@@ -1260,8 +1311,8 @@ export function staleSidecars(root: string, reports: EntryReport[]): string[] {
       out.push(`${r.slug}: sidecar will not parse`);
       continue;
     }
-    delete (fresh as Record<string, unknown>).updated_at;
-    delete committed.updated_at;
+    // Compared whole: the document carries no `updated_at` (`y7b3`), so an
+    // old sidecar that still has one reads stale and is regenerated away.
     if (JSON.stringify(fresh) !== JSON.stringify(committed)) out.push(`${r.slug}: stale`);
   }
   return out;
@@ -1330,7 +1381,7 @@ if (import.meta.main) {
     // Across EVERY declared library: an exception that has expired in the
     // second one is a gate lying about its coverage just as much as one that
     // expired in the first. Bean `a02m`.
-    const declaredLibs = libRoot ? splitDeclared(directoriesForGraph(libRoot, "library")) : { present: [], absent: [] };
+    const declaredLibs = libRoot ? splitDeclared(corpusDirectoriesForGraph(libRoot, "library")) : { present: [], absent: [] };
     noteAbsent(declaredLibs.absent, "a library");
     const libs = declaredLibs.present;
     if (libs.length > 0) {

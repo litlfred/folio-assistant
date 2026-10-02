@@ -16,6 +16,7 @@ Part of [C@T Harness](../../README.md) 0.1.0, declared as `qa`, holding `qa`.
 | [`kg-qa.manifest.json`](kg-qa.manifest.json) | data |  |
 | [`lane-documentation.qa-results.json`](lane-documentation.qa-results.json) | data |  |
 | [`layout-norms.qa-results.json`](layout-norms.qa-results.json) | data |  |
+| [`library-entry-qa.qa-results.json`](library-entry-qa.qa-results.json) | data |  |
 | [`lsi-need-an-index.qa-results.json`](lsi-need-an-index.qa-results.json) | data |  |
 | [`methodology-evidence.qa-results.json`](methodology-evidence.qa-results.json) | data |  |
 | [`reference-direction.qa-results.json`](reference-direction.qa-results.json) | data |  |
@@ -24,16 +25,20 @@ Part of [C@T Harness](../../README.md) 0.1.0, declared as `qa`, holding `qa`.
 | [`skill-register.qa-results.json`](skill-register.qa-results.json) | data |  |
 | [`source-licence.qa-results.json`](source-licence.qa-results.json) | data |  |
 | [`subgraph-readmes.qa-results.json`](subgraph-readmes.qa-results.json) | data |  |
+| [`term-mapping.qa-results.json`](term-mapping.qa-results.json) | data |  |
 | [`wireframes.qa-results.json`](wireframes.qa-results.json) | data |  |
+| [`agent-skills/`](agent-skills/) | 2 files | |
 | [`block-qa/`](block-qa/) | 122 files | |
-| [`bootstrap/`](bootstrap/) | 16 files | |
-| [`bootstrap-tools/`](bootstrap-tools/) | 3 files | |
-| [`detangle/`](detangle/) | 38 files | |
-| [`kg-export.@litlfred/`](kg-export.%40litlfred/) | 1 file | |
-| [`kg-qa/`](kg-qa/) | 564 files | |
-| [`library-qa/`](library-qa/) | 44 files | |
+| [`bootstrap/`](bootstrap/) | 22 files | |
+| [`bootstrap-tools/`](bootstrap-tools/) | 7 files | |
+| [`cat-harness-tools/`](cat-harness-tools/) | 2 files | |
+| [`detangle/`](detangle/) | 67 files | |
+| [`folio-assistant/`](folio-assistant/) | 2 files | |
+| [`kg-qa/`](kg-qa/) | 451 files | |
+| [`large-datasets/`](large-datasets/) | 2 files | |
+| [`library-qa/`](library-qa/) | 63 files | |
 | [`lsi/`](lsi/) | 4 files | |
-| [`tool-runs/`](tool-runs/) | 3 files | |
+| [`tool-runs/`](tool-runs/) | 4 files | |
 | [`translation-qa/`](translation-qa/) | 35 files | |
 | [`viewer-nav/`](viewer-nav/) | 1 file | |
 | [`witnesses/`](witnesses/) | 163 files | |

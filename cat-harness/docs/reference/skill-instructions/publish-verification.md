@@ -6,9 +6,9 @@ parent: Skill instructions
 ---
 
 {: .note }
-> Generated from [`cat-harness/skills/folio-core/publish-verification.md`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/folio-core/publish-verification.md) — do not edit here.
+> Generated from [`cat-harness/skills/sdlc/sdlc-core/publish-verification.md`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/sdlc/sdlc-core/publish-verification.md) — do not edit here.
 >
-> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/cat-harness/skills/folio-core/publish-verification.md){: .fa-edit-source }
+> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/cat-harness/skills/sdlc/sdlc-core/publish-verification.md){: .fa-edit-source }
 
 {% raw %}
 # Publish verification, and the one alert
@@ -76,8 +76,8 @@ This skill has its own process: **[Verify the export before it is deployed](../.
 
 | process | step(s) that name it |
 |---|---|
-| [Publishing the docs site, and keeping the previews alive](../../processes/docs-site-publish.html) | Verify the export (calls a sub-process); Alert the publication manager (calls a sub-process) |
 | [A knowledge graph leaves for its own repositories](../../processes/kg-separation.html) | Every identifier dereferences (calls a sub-process) |
+| [Publishing the docs site, and keeping the previews alive](../../processes/docs-site-publish.html) | Verify the export (calls a sub-process); Alert the publication manager (calls a sub-process) |
 | [Alert the publication manager](../../processes/publish-alert.html) | Triage the failure: hold or fix forward |
 | [Verify the export before it is deployed](../../processes/publish-verification.html) | Run every verifier over the export |
 

@@ -72,7 +72,8 @@ import { fileURLToPath } from "node:url";
 
 import { tools } from "../tools/discover.js";
 import { loadProcessModel } from "../src/workflow/process-model.js";
-import { isSkillMd, kgRoots } from "./known-skills.js";
+import { isSkillMd, kgRoots, corpusScopeFor } from "./known-skills.js";
+import { packageDirsIn } from "./skill-topics.js";
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), "..");
 
@@ -230,11 +231,15 @@ export interface SkillTriage {
  */
 function skillDirs(): string[] {
   const d: string[] = [];
-  for (const abs of kgRoots(ROOT)) {
+  for (const abs of kgRoots(ROOT, corpusScopeFor(ROOT))) {
     const rel = relative(ROOT, abs);
     if (holdsSkillMd(abs)) d.push(rel);
-    for (const e of readdirSync(abs, { withFileTypes: true })) {
-      if (e.isDirectory() && holdsSkillMd(join(abs, e.name))) d.push(`${rel}/${e.name}`);
+    // One level, or two inside a topic `skills.json` declares (bean `9umr`).
+    // This walk was one level only, so from #1618 on it silently lost every
+    // skill moved into a topic — found when three "uncovered by design"
+    // annotations read as stale after the authoring move.
+    for (const p of packageDirsIn(abs)) {
+      if (holdsSkillMd(p.dir)) d.push(`${rel}/${p.rel}`);
     }
   }
   // declared-path-literal: `.claude/skills/local/` is the agent harness's own

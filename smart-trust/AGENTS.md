@@ -74,7 +74,7 @@ itself, so a checker cannot disagree with the file it is checking.
 
 ## The discipline is in the skill, not here
 
-[`ig-artifact-ingestion`](../cat-harness/skills/authoring-who-smart-guidelines/ig-artifact-ingestion.md)
+[`ig-artifact-ingestion`](../smart-base/skills/content/authoring-who-smart-guidelines/ig-artifact-ingestion.md)
 carries which IGs qualify (the DAK API test, and why `unknown` is not a kind of
 `absent`), the four partial views and what each one misses, the two traps
 — `openapi/openapi.json` is the DDCC Gateway API, and `.index.json` is lossy —

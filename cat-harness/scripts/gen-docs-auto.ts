@@ -85,7 +85,7 @@ import { basename, dirname, join, relative } from "node:path";
 
 import { orphanSubjectPages, viewerPlacement } from "./gen-schema-viz.ts";
 import { classify } from "./check-docs-populated.ts";
-import { isSkillMd, kgRoots, skillMdDirs } from "./known-skills.ts";
+import { isSkillMd, kgRoots, skillMdDirs, corpusScopeFor } from "./known-skills.ts";
 import { readRoleGraph } from "../schemas/role-graph.ts";
 import {
   findDeclarationFile,
@@ -97,11 +97,13 @@ import {
   visualisationsOf,
   forgeLocation,
 } from "../schemas/cat-harness.ts";
+import { checkoutDirectories } from "../schemas/harness-config.ts";
 import { withViewerNav } from "./viewer-page.ts";
 import { withInlineCode } from "../schemas/inline-code.ts";
 import { skillPageHref, skillPagesOf } from "./lib/skill-pages.ts";
 import { ownElementPattern } from "../schemas/namespaces.js";
 import { renderedPath, withRenders } from "./viewer-declarations.js";
+import { visualiserNavDeclaration } from "./lib/navbar.ts";
 
 /** This generator's Tool node (`tools/viewers.ts`), named on every page it draws. */
 const VIEWER_TOOL = "docs-auto-viewer";
@@ -117,6 +119,14 @@ export interface AutoDocItem {
   path: string;
   /** What to call it in a listing. */
   name: string;
+  /**
+   * What to print under the name, when the full `path` would only repeat
+   * what the row already says. The link still goes to `path`. The glossary
+   * sets it: its path is `<ledger>#<notation>`, and the notation is already
+   * a fact on the row, so the full path made the term column a path column
+   * (bean `n5be`, finding 4).
+   */
+  pathLabel?: string;
   /** One line, EXTRACTED from the artefact. Absent means the artefact does not carry one. */
   summary?: string;
   /** Type-specific facts, rendered as a small table. */
@@ -304,11 +314,24 @@ function walk(dir: string, pred: (name: string) => boolean): string[] {
  * defect — a consumer scans nothing and reports a clean run over it.
  */
 export function declaredDirectories(graph: string): Array<{ id: string; absPath: string; path: string }> {
-  return resolveDirectories([{ name: "(local)", root: ROOT, own: true }])
-    .filter((d) => (d.graphKinds ?? []).includes(graph))
-    .map((d) => ({ id: d.id, absPath: d.absPath, path: relative(REPO, d.absPath).split("\\").join("/") }))
-    .filter((d) => existsSync(d.absPath))
-    .sort((a, b) => a.id.localeCompare(b.id, "en"));
+  // The CORPUS this handler documents (placement PR0, bean `ejye`): this
+  // instance plus everything stacked on it, which the platform's
+  // `scope: "repository"` mirrors used to supply under ids of their own. Each
+  // directory now keeps its OWNER's id; one that collides with an id already
+  // taken (smart-base's `processes`) is qualified by its instance, which is
+  // the mirror id it had (`smart-base-processes`).
+  const own = new Set(resolveDirectories([{ name: "(local)", root: ROOT, own: true }]).map((d) => d.absPath));
+  const all = checkoutDirectories(ROOT, { stackedOn: ROOT })
+    .filter((d) => (d.graphKinds ?? []).includes(graph as never) && existsSync(d.absPath))
+    .sort((a, b) => Number(!own.has(a.absPath)) - Number(!own.has(b.absPath)));
+  const taken = new Set<string>();
+  const out: Array<{ id: string; absPath: string; path: string }> = [];
+  for (const d of all) {
+    const id = taken.has(d.id) ? `${d.member ?? d.declaredBy}-${d.id}` : d.id;
+    taken.add(id);
+    out.push({ id, absPath: d.absPath, path: relative(REPO, d.absPath).split("\\").join("/") });
+  }
+  return out.sort((a, b) => a.id.localeCompare(b.id, "en"));
 }
 
 /**
@@ -346,7 +369,7 @@ export const TYPES: AutoDocType[] = [
       // whatever is under them, so this asks the same function rather than
       // re-deriving the rule and disagreeing by seven.
       const items: AutoDocItem[] = [];
-      for (const parts of skillMdDirs(ROOT)) {
+      for (const parts of skillMdDirs(ROOT, corpusScopeFor(ROOT))) {
         const dir = join(ROOT, ...parts);
         if (!existsSync(dir)) continue;
         for (const f of readdirSync(dir)) {
@@ -561,6 +584,10 @@ export const TYPES: AutoDocType[] = [
               // at the file and distinguishes itself by `name`. `dedupeByPath`
               // keys on path, so it is deliberately not applied here.
               path: `${relative(REPO, f).split("\\").join("/")}#${key}`,
+              // The ledger, relative to the sub-graph: more than one ledger
+              // lives under it (an instance's own, and bootstrap's), so which
+              // one is still worth a line — the `#key` is the notation fact.
+              pathLabel: relative(d.absPath, f).split("\\").join("/"),
               name: entry.prefLabel ?? key,
               summary: retired
                 ? `Retired ${entry.retiredOn} — kept, never deleted, so retirement and accident do not look alike.`
@@ -577,7 +604,16 @@ export const TYPES: AutoDocType[] = [
           }
         }
       }
-      return items;
+      // ALPHABETICAL BY THE NAME A READER SEES (bean `n5be`, finding 2).
+      // Rows used to follow ledger order and then the notation key, so
+      // "Activity log" (`role/log`) sat after "Librarian", and each ledger
+      // restarted the alphabet. A reader scanning a glossary scans by term.
+      // The notation breaks a tie, so the order stays deterministic.
+      return items.sort(
+        (a, b) =>
+          a.name.localeCompare(b.name, "en", { sensitivity: "base" }) ||
+          a.path.localeCompare(b.path, "en"),
+      );
     },
   },
 ];
@@ -658,7 +694,7 @@ const PAGE_CSS = `<style>
   table { width: 100%; border-collapse: collapse; font-size: .95rem; }
   th, td { text-align: left; padding: .6rem .6rem; border-bottom: 1px solid var(--edge); vertical-align: top; }
   th { background: color-mix(in srgb, var(--edge) 22%, transparent); }
-  td:first-child { width: 26rem; }
+  td:first-child { width: 20rem; }
   /* A repo-relative path is long and has no spaces, so it breaks mid-word
      unless the breakpoints are named. Slashes are where a reader expects it. */
   .p { color: var(--muted); font-size: .8rem; font-family: ui-monospace, monospace; word-break: normal; overflow-wrap: anywhere; line-break: anywhere; }
@@ -674,6 +710,20 @@ const PAGE_CSS = `<style>
   .fa-table-filter-count { font-size: .875em; opacity: .85; }
   table[data-fa-filtered] tr[hidden] { display: none !important; }
   .n { float: right; color: var(--muted); font-variant-numeric: tabular-nums; }
+  /* ON A PHONE THE TERM SITS ABOVE ITS DEFINITION (bean n5be, finding 4).
+     Two side-by-side columns at 390 px left the term 89 px and broke its path
+     over four lines, and narrow-viewport.css then made the table a sideways
+     scroll box. Each row becomes a block: the name, then the definition at
+     the full width of the screen. By id, so it outranks that file's
+     type selector; the header row is dropped because each cell is now
+     self-evidently what it is. */
+  @media (max-width: 799.98px) {
+    #da-index, #da-index tbody, #da-index tr, #da-index td { display: block; width: auto; }
+    #da-index { mask-image: none; animation: none; overflow: visible; }
+    #da-index thead { display: none; }
+    #da-index td { border-bottom: 0; padding: .25rem 0; overflow-wrap: anywhere; }
+    #da-index tr { border-bottom: 1px solid var(--edge); padding: .5rem 0; }
+  }
 </style>`;
 
 /**
@@ -690,6 +740,9 @@ const PAGE_CSS = `<style>
  * template literal.
  */
 const TABLE_FILTER_MIN = 25;
+
+/** The most entries a rail section lists before the table filter takes over (#1757). */
+const RAIL_ITEMS_MAX = 60;
 const TABLE_FILTER_BOX = `<div class="fa-table-filter">
 <label for="fa-table-filter-0">Filter this table</label>
 <input type="search" id="fa-table-filter-0" autocomplete="off" spellcheck="false" aria-describedby="fa-table-filter-0-count">
@@ -786,7 +839,7 @@ export function autoDocPage(
             .join("")
         : "";
       return `<tr${keyOf(i) ? ` id="${esc(rowId(i))}"` : ""}>
-  <td><a href="${esc(blobUrl(i.path))}"><code>${esc(i.name)}</code></a><br><span class="p">${esc(i.path)}</span></td>
+  <td><a href="${esc(blobUrl(i.path))}"><code>${esc(i.name)}</code></a><br><span class="p">${esc(i.pathLabel ?? i.path)}</span></td>
   <td>${i.summary ? linkCodes(i, withInlineCode(i.summary, esc)) : '<span class="none">no description in the artefact</span>'}${facts}</td>
 </tr>`;
     })
@@ -800,6 +853,24 @@ export function autoDocPage(
     )
     .join("\n");
 
+  // THE RAIL SECTION (#1757): the sibling sub-graphs, as the page's own list
+  // above already gives them, with THIS one's entries beneath it. Entries only
+  // up to a size a 248px column can hold; past it the table's filter is the
+  // way in, and a rail of 270 rows is the page again.
+  const railNav = visualiserNavDeclaration(
+    (siblings.length ? siblings : [{ id: scope || type.title, path: "", count: items.length }]).map((s) => {
+      const isHere = siblings.length === 0 || s.id === scope;
+      const kids = isHere && items.length <= RAIL_ITEMS_MAX
+        ? items.filter((i) => keyOf(i)).map((i) => ({ label: i.name, href: `#${rowId(i)}` }))
+        : [];
+      return {
+        label: s.id,
+        ...(isHere ? {} : { href: `../${s.id}/` }),
+        ...(kids.length ? { items: kids } : {}),
+      };
+    }),
+  );
+
   return `<!DOCTYPE html>
 <html lang="en">
 <head>
@@ -809,9 +880,10 @@ export function autoDocPage(
 ${PAGE_CSS}
 </head>
 <body>
+${railNav}
 <div class="wrap">
 <h1>${esc(type.title)}${scope ? ` <span class="p">${esc(scope)}</span>` : ""}</h1>
-<p class="lede">Derived: ${esc(type.extracts)}.${scopePath ? ` Sub-graph <code>${esc(scopePath)}</code>.` : ""}</p>
+<p class="lede">Derived: ${esc(type.extracts)}.${scopePath ? ` Sub-graph <code>${esc(scopePath)}</code>${siblings.length <= 1 ? `, ${items.length} ${items.length === 1 ? "entry" : "entries"}` : ""}.` : ""}</p>
 
 <div class="note">
   <strong>This is an index, not the documentation.</strong> It says what exists and what each
@@ -820,12 +892,15 @@ ${PAGE_CSS}
   see the <code>docs-auto</code> skill.
 </div>
 
-<ul class="subs">
-${nav}
-</ul>
-
+${
+  // A sibling list of ONE names this page a third time, after the heading
+  // and the lede (bean `n5be`, finding 5): it navigates nowhere. Shown only
+  // when there is somewhere else to go; the count it carried moves into the
+  // lede above.
+  siblings.length > 1 ? `<ul class="subs">\n${nav}\n</ul>\n` : ""
+}
 ${items.length > TABLE_FILTER_MIN ? TABLE_FILTER_BOX : ""}
-<table${items.length > TABLE_FILTER_MIN ? ' data-fa-filtered="true"' : ""}>
+<table id="da-index"${items.length > TABLE_FILTER_MIN ? ' data-fa-filtered="true"' : ""}>
 <thead><tr><th>Artefact</th><th>What it declares about itself</th></tr></thead>
 <tbody>
 ${rows || '<tr><td colspan="2" class="none">Nothing in scope.</td></tr>'}
@@ -894,6 +969,7 @@ export function levelPage(prefix: string, children: readonly LevelChild[]): stri
 ${PAGE_CSS}
 </head>
 <body>
+${visualiserNavDeclaration(children.map((c) => ({ label: c.title, href: `${c.seg}/` })))}
 <div class="wrap">
 <h1>docs-auto${prefix ? ` <span class="p">${esc(prefix)}</span>` : ""}</h1>
 <p class="lede">Derived documentation over a declared sub-graph. Each entry below is

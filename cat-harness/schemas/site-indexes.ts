@@ -27,6 +27,7 @@ import { z } from "zod";
 
 import { SUMMARY_STATUSES } from "./block-summary.js";
 import { TileCountsSchema } from "./tile-count.js";
+import { WithheldEntrySchema } from "./withheld.js";
 import { BeanIdSchema } from "./tool-types.js";
 import { ModelIdSchema } from "../../bootstrap-tools/schemas/model-registry.ts";
 
@@ -178,14 +179,24 @@ export const SchemaGraphIndexSchema = z
 
 const PageNumber = z.number().int().nullable();
 
+/**
+ * Which ingest rung a library entry sits on. The one list: `IngestRung` in
+ * `content/pipeline/gen-library-jsonld.ts` is derived from it, so a rung added
+ * there is a rung this index accepts. It was two lists until the `referenced`
+ * rung (bean `scfh`) met an index that knew only three.
+ */
+export const INGEST_RUNGS = ["paged", "tabular", "referenced", "none"] as const;
+
 export const LibraryIndexEntrySchema = z
   .object({
     id: z.string().min(1),
     instance: z.string(),
     dir: z.string(),
     title: z.string(),
+    /** The manifest's extracted title, only when a catalogue title replaced it (bean `gnqa`). */
+    extractedTitle: z.string().optional(),
     provenance: z.string(),
-    rung: z.enum(["paged", "tabular", "none"]),
+    rung: z.enum(INGEST_RUNGS),
     docId: z.string(),
     sourceFile: z.string(),
     sourceSha256: z.string(),
@@ -215,6 +226,18 @@ export const LibraryIndexEntrySchema = z
       .optional(),
     /** Why the entry is withheld (bean `cw35`/`mkao`): no avatar, no verbatim excerpt. */
     withheld: z.string().min(1).optional(),
+    /**
+     * The structured half of `withheld` (issue #1794): which gates refused,
+     * and the catalogue record — copied from `folio-withheld/v1`, so the same
+     * shapes, never restated.
+     */
+    withheldBy: z
+      .object({
+        gates: WithheldEntrySchema.shape.gates,
+        record: WithheldEntrySchema.shape.record,
+      })
+      .strict()
+      .optional(),
     avatar: z.object({ href: z.string(), src: z.string(), source: z.enum(["cover", "figure"]) }).strict().optional(),
     summaries: z
       .object({

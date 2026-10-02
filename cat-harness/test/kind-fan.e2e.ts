@@ -56,7 +56,7 @@ type Page = import("@playwright/test").Page;
 
 async function openSettings(page: Page): Promise<void> {
   await page.locator(".fa-tiles-toggle").click();
-  await page.locator('.fa-tiles-grid .fa-tile:has(.fa-tile-caption:text-is("Settings"))').click();
+  await page.locator('.fa-tiles-grid .fa-tile:has(.fa-tile-caption:text-is("Page settings"))').click();
 }
 
 test.describe("the fan is complete when it is still", () => {

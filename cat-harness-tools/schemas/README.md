@@ -1,0 +1,25 @@
+<!-- kg:subgraph:begin -->
+# cat-harness-tools-schemas
+
+Tests of cat-harness's schemas that exercise tools code: the sixteen `cat-harness/schemas/*.test.ts` files that imported `scripts/`, `src/`, `content/pipeline/` or `test/support/`, moved first (bean `70lx`, batch B0) so that no later batch of the code move leaves a harness file importing into this layer. The Zod sources they test stay in cat-harness and follow in stage 1b (bean `8lcl`). `code`, not `schemas`: nothing here is a schema definition.
+
+Part of [C@T Harness Tools](../README.md) 0.1.0, declared as `cat-harness-tools-schemas`, holding `code`.
+
+| file | what it is | used by |
+|---|---|---|
+| [`cat-harness.test.ts`](cat-harness.test.ts) | a file |  |
+| [`contributions.test.ts`](contributions.test.ts) | a file |  |
+| [`extension-namespace.test.ts`](extension-namespace.test.ts) | a file |  |
+| [`folio-dir.test.ts`](folio-dir.test.ts) | a file |  |
+| [`harness-config.test.ts`](harness-config.test.ts) | a file |  |
+| [`instance-versioning.test.ts`](instance-versioning.test.ts) | a file |  |
+| [`kg-qa.test.ts`](kg-qa.test.ts) | a file |  |
+| [`kind-validator.test.ts`](kind-validator.test.ts) | a file |  |
+| [`layer-direction.test.ts`](layer-direction.test.ts) | a file |  |
+| [`portable-path.test.ts`](portable-path.test.ts) | a file |  |
+| [`reference-direction-declaration.test.ts`](reference-direction-declaration.test.ts) | a file |  |
+| [`schema-graph.test.ts`](schema-graph.test.ts) | a file |  |
+| [`skill-overlay.test.ts`](skill-overlay.test.ts) | a file |  |
+| [`todo.test.ts`](todo.test.ts) | a file |  |
+| [`viz-generators.test.ts`](viz-generators.test.ts) | a file |  |
+<!-- kg:subgraph:end -->

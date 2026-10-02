@@ -120,6 +120,13 @@ export interface FshGraph {
   edgeKinds: Map<string, number>;
   fshFiles: number;
   cqlFiles: number;
+  /**
+   * Alias file → the files whose declarations USE one of its aliases by name.
+   * An alias is not a node, so it has no edges; but a changed alias URL changes
+   * every resource that writes it, including code uses (`$SCT#123`) that make
+   * no dependency edge at all. `fileUsers` folds this in (review on #1708).
+   */
+  aliasUsers: Map<string, Set<string>>;
 }
 
 function walkDir(dir: string, ext: string, out: string[] = []): string[] {
@@ -277,6 +284,7 @@ export function buildFshGraph(root: string): FshGraph {
   const nodes = new Map<string, FshNode>();
   const alias = new Map<string, string>();
   const fshAliases = new Map<string, string>();
+  const aliasFile = new Map<string, string>();
   const edgeKinds = new Map<string, number>();
 
   // Pass 1 — declarations and aliases.
@@ -291,6 +299,7 @@ export function buildFshGraph(root: string): FshGraph {
       const a = line.match(ALIAS_RE);
       if (a) {
         fshAliases.set(a[1], a[2]);
+        aliasFile.set(a[1], relative(root, file));
         continue;
       }
       const d = line.match(DECL_RE);
@@ -435,7 +444,22 @@ export function buildFshGraph(root: string): FshGraph {
       dependents.get(d)!.add(node.name);
     }
   }
-  return { root, canonical, nodes, dependents, edgeKinds, fshFiles: fshFiles.length, cqlFiles: cqlFiles.length };
+  // Alias use, by name, in any declaration's body. Matched as a whole token so
+  // `$SCT` does not match `$SCTX`; aliases need not start with `$`.
+  const aliasUsers = new Map<string, Set<string>>();
+  const escape = (x: string) => x.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+  const aliasRes = [...aliasFile.keys()].map((n) => [n, new RegExp(`(^|[^A-Za-z0-9_$-])${escape(n)}(?![A-Za-z0-9_-])`)] as const);
+  for (const b of blocks) {
+    for (const [name, re] of aliasRes) {
+      const declaredIn = aliasFile.get(name)!;
+      if (declaredIn === b.node.file) continue;
+      if (b.lines.some((l) => re.test(l))) {
+        if (!aliasUsers.has(declaredIn)) aliasUsers.set(declaredIn, new Set());
+        aliasUsers.get(declaredIn)!.add(b.node.file);
+      }
+    }
+  }
+  return { root, canonical, nodes, dependents, edgeKinds, fshFiles: fshFiles.length, cqlFiles: cqlFiles.length, aliasUsers };
 }
 
 function bump(m: Map<string, number>, k: string): void {
@@ -487,6 +511,35 @@ export function nodesInFiles(g: FshGraph, files: Iterable<string>): Set<string> 
   const out = new Set<string>();
   for (const node of g.nodes.values()) if (rel.has(node.file)) out.add(node.name);
   return out;
+}
+
+/**
+ * File-level users: for each source file, the OTHER files declaring a node
+ * that depends directly on a node the file declares, or that USES an alias the
+ * file declares (aliases are not nodes; see `FshGraph.aliasUsers`). Written as
+ * `fsh-file-users/v1` for the IG AST's incremental plan (`ast-export`'s
+ * `AstPlanCli -fsh-users`), which cannot otherwise tell what a changed
+ * RuleSet- or Alias-only file reaches: such a file declares no resource,
+ * so the AST holds nothing for it (bean `a9tx`).
+ *
+ * Direct users only. The plan follows users of users itself, and the AST's
+ * own dependency edges carry the cone from there.
+ */
+export function fileUsers(g: FshGraph): Record<string, string[]> {
+  const out = new Map<string, Set<string>>();
+  for (const node of g.nodes.values()) {
+    for (const d of g.dependents.get(node.name) ?? []) {
+      const user = g.nodes.get(d)?.file;
+      if (!user || user === node.file) continue;
+      if (!out.has(node.file)) out.set(node.file, new Set());
+      out.get(node.file)!.add(user);
+    }
+  }
+  for (const [file, users] of g.aliasUsers) {
+    if (!out.has(file)) out.set(file, new Set());
+    for (const u of users) out.get(file)!.add(u);
+  }
+  return Object.fromEntries([...out].sort(([a], [b]) => a.localeCompare(b)).map(([f, us]) => [f, [...us].sort()]));
 }
 
 export interface ConeSizes {
@@ -669,7 +722,7 @@ if (import.meta.main) {
   const args = process.argv.slice(2);
   const root = args.find((a) => !a.startsWith("--"));
   if (!root) {
-    console.error("usage: bun run cat-harness/content/pipeline/fsh-cone.ts <ig-root> [--top N] [--csv out.csv] [--changed f1,f2,…]");
+    console.error("usage: bun run cat-harness/content/pipeline/fsh-cone.ts <ig-root> [--top N] [--csv out.csv] [--changed f1,f2,…] [--file-users out.json]");
     process.exit(2);
   }
   const opt = (name: string): string | undefined => {
@@ -696,5 +749,10 @@ if (import.meta.main) {
   if (csv) {
     writeFileSync(csv, toCsv(g));
     console.log(`\nwrote ${csv}`);
+  }
+  const fu = opt("--file-users");
+  if (fu) {
+    writeFileSync(fu, JSON.stringify({ $schema: "fsh-file-users/v1", root: g.root, users: fileUsers(g) }, null, 2) + "\n");
+    console.log(`\nwrote ${fu}`);
   }
 }
