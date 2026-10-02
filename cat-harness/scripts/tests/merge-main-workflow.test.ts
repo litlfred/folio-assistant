@@ -112,3 +112,41 @@ describe("a rejected fast-forward is an expected race, not a red check", () => {
     }
   });
 });
+
+describe("a push refusal is read from stderr, not guessed", () => {
+  // Measured 2026-10-02 on #1790: GitHub refused because the merge commit
+  // changed a workflow file and GITHUB_TOKEN has no `workflows` permission —
+  // and the comment said "the branch moved", which was false.
+  const steps = doc.jobs.merge!.steps;
+  const push = steps.find((s) => (s as { id?: string }).id === "push")!;
+  const comment = steps.find((s) => s.name?.startsWith("Comment once"))!;
+
+  test("(a) stderr is captured and the workflows refusal is recognised before the branch-moved check", () => {
+    const run = push.run!;
+    expect(run).toContain('2> "$RUNNER_TEMP/push.err"');
+    const wf = run.indexOf("refusing to allow a GitHub App to create or update workflow");
+    const moved = run.indexOf('echo "rejected=true"');
+    expect(wf).toBeGreaterThan(0);
+    expect(moved).toBeGreaterThan(wf);
+    expect(run).toContain('echo "blocked=workflows"');
+  });
+
+  test("(b) the workflows refusal labels needs-merge-human and names the credentials design", () => {
+    const run = comment.run!;
+    const branch = run.slice(run.indexOf('[ "$BLOCKED" = workflows ]'), run.indexOf('[ "$REJECTED" = true ]'));
+    expect(branch).toContain("--add-label needs-merge-human");
+    expect(branch).toContain("#1829");
+    expect(branch).not.toContain("branch moved");
+  });
+
+  test("(c) 'the branch moved' is said only when the push step said so", () => {
+    const run = comment.run!;
+    const at = run.indexOf("the branch moved during the run");
+    expect(at).toBeGreaterThan(run.indexOf('[ "$REJECTED" = true ]'));
+  });
+
+  test("the dispatch fallback runs every gating workflow, JSON-LD drift included", () => {
+    const judge = steps.find((s) => s.name === "Have CI judge the merge commit")!;
+    expect(judge.run).toContain("code-quality-gates.yml jsonld-gen-check.yml");
+  });
+});

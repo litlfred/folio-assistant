@@ -241,8 +241,23 @@ jobs:
           # is reported (`rejected=true`, and in the comment) and the job stays
           # green; the next push to main retries. Any OTHER push failure — the
           # branch did not move, yet the push failed — is a real error.
-          if git push origin "HEAD:refs/heads/$REF"; then
+          #
+          # THE REASON IS READ FROM THE PUSH'S OWN STDERR, never inferred —
+          # measured 2026-10-02 on #1790: GitHub refused with "refusing to allow
+          # a GitHub App to create or update workflow … without `workflows`
+          # permission" and the comment said "the branch moved", which was
+          # false. A merge commit that changes a workflow file relative to the
+          # head can NEVER be pushed with GITHUB_TOKEN, so retrying is useless:
+          # it is a person's merge (needs-merge-human) until the owner's
+          # credentials design (#1829) supplies a token with `workflows` scope.
+          if git push origin "HEAD:refs/heads/$REF" 2> "$RUNNER_TEMP/push.err"; then
             echo "sha=$(git rev-parse HEAD)" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+          cat "$RUNNER_TEMP/push.err" >&2
+          if grep -qE 'without `?workflows`? permission|refusing to allow a GitHub App to create or update workflow' "$RUNNER_TEMP/push.err"; then
+            echo "::notice::the merge changes a workflow file; GITHUB_TOKEN cannot push it (needs a token with workflows scope, #1829)"
+            echo "blocked=workflows" >> "$GITHUB_OUTPUT"
             exit 0
           fi
           now=$(git ls-remote origin "refs/heads/$REF" | cut -f1)
@@ -263,7 +278,14 @@ jobs:
           if [ "$HAS_TOKEN" = true ]; then
             echo "pushed with MERGE_MAIN_TOKEN: the PR's own CI fires on the push"
           else
-            gh workflow run code-quality-gates.yml --repo "$REPO" --ref "$REF"
+            # Every GATING workflow, so each judges the merge commit: a bot-actor
+            # push leaves their `pull_request` runs at action_required (measured
+            # 2026-10-02), and only a dispatch actually runs. Feature Staging is
+            # preview-only and stays as it is. The real fix is a GitHub App token
+            # (#1829), whose pushes trigger the PR's own runs.
+            for wf in code-quality-gates.yml jsonld-gen-check.yml; do
+              gh workflow run "$wf" --repo "$REPO" --ref "$REF"
+            done
           fi
 
       - name: Comment once, edited in place
@@ -272,6 +294,8 @@ jobs:
           STATUS: ${{ steps.merge.outputs.status }}
           MERGED: ${{ steps.merge.outputs.merged }}
           PUSHED: ${{ steps.push.outputs.sha != '' && 'success' || 'no' }}
+          BLOCKED: ${{ steps.push.outputs.blocked }}
+          REJECTED: ${{ steps.push.outputs.rejected }}
           SHA: ${{ steps.push.outputs.sha }}
         run: |
           set -euo pipefail
@@ -281,8 +305,14 @@ jobs:
           unrepaired=$(grep -E 'STILL fails' "$log" | sed -E 's/^ *✗ /- /' || true)
           if [ "$MERGED" = true ] && [ "$PUSHED" = success ]; then
             head="**Merged \`main\` and pushed \`${SHA:0:9}\`.** Every conflict was resolved by a declared pattern and the gate set reproduced the result; CI now judges it."
-          elif [ "$MERGED" = true ]; then
+          elif [ "$MERGED" = true ] && [ "$BLOCKED" = workflows ]; then
+            head="**Merged and proved, but GitHub refused the push: the merge commit changes a workflow file**, and the workflow's token has no \`workflows\` permission, so no retry can succeed. Needs a person to push the merge (run the \`merge:main\` script locally). The fix is the owner's credentials design (#1829): a token with \`workflows\` scope."
+            gh label create needs-merge-human --color D93F0B --description "merge:main refused: an authored or undeclared conflict" --force >/dev/null
+            gh pr edit "$PR" --repo "$REPO" --add-label needs-merge-human >/dev/null
+          elif [ "$MERGED" = true ] && [ "$REJECTED" = true ]; then
             head="**Merged and proved, but the push was rejected** — the branch moved during the run. Nothing was overwritten; the next push to \`main\` retries."
+          elif [ "$MERGED" = true ]; then
+            head="**Error** — merged and proved, but the push failed for a reason not recognised; see the run log. Nothing pushed."
           elif [ "$STATUS" = 0 ]; then
             head="**Already up to date with \`main\`.** Nothing to push."
           elif [ -n "$refused" ]; then
