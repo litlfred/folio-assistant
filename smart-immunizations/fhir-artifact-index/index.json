@@ -1,5 +1,5 @@
 {
-  "$schema": "folio-fhir-artifact-index/v1",
+  "$schema": "folio-fhir-artifact-index/v2",
   "id": "smart-immunizations",
   "title": "smart.who.int.immunizations — artefact index",
   "packageId": "smart.who.int.immunizations",
@@ -19,12 +19,12 @@
     "canonicals": "canonicals.json",
     "packageIndex": "package.tgz!package/.index.json",
     "artifactsHtml": "artifacts.html",
-    "dakEnumerations": [
+    "sidecarEnumerations": [
       "LogicalModels.schema.json",
       "ValueSets.schema.json"
     ]
   },
-  "dakApi": "present",
+  "sidecarApi": "present",
   "count": 748,
   "artifacts": [
     {
@@ -16175,7 +16175,7 @@
       "category": "Structures: Logical Models",
       "title": "IMMZ.C4.Create client record",
       "description": "Data elements for the IMMZ.C4.Create client record Data Dictionary Activity. Identical to IMMZ.C5.3.Update client details.",
-      "dak": {
+      "sidecars": {
         "schema": {
           "url": "https://worldhealthorganization.github.io/smart-immunizations/schemas/StructureDefinition-IMMZ_C4_Create_client_record.schema.json",
           "localPath": "fhir-artifact-index/dak/StructureDefinition-IMMZ_C4_Create_client_record.schema.json",
@@ -16279,7 +16279,7 @@
       "category": "Structures: Logical Models",
       "title": "IMMZ.D1.Capture or update client history",
       "description": "Data elements for the IMMZ.D1.Capture or update client history Data Dictionary Activity.",
-      "dak": {
+      "sidecars": {
         "schema": {
           "url": "https://worldhealthorganization.github.io/smart-immunizations/schemas/StructureDefinition-IMMZ_D1_Capture_or_update_client_history.schema.json",
           "localPath": "fhir-artifact-index/dak/StructureDefinition-IMMZ_D1_Capture_or_update_client_history.schema.json",
@@ -16352,7 +16352,7 @@
       "category": "Structures: Logical Models",
       "title": "IMMZ.D13.Update client record",
       "description": "Data elements for the IMMZ.D13.Update client record Data Dictionary Activity.",
-      "dak": {
+      "sidecars": {
         "schema": {
           "url": "https://worldhealthorganization.github.io/smart-immunizations/schemas/StructureDefinition-IMMZ_D13_Update_client_record.schema.json",
           "localPath": "fhir-artifact-index/dak/StructureDefinition-IMMZ_D13_Update_client_record.schema.json",
@@ -16425,7 +16425,7 @@
       "category": "Structures: Logical Models",
       "title": "IMMZ.D17.Report AEFI",
       "description": "Data elements for the IMMZ.D17.Report AEFI Data Dictionary Activity.",
-      "dak": {
+      "sidecars": {
         "schema": {
           "url": "https://worldhealthorganization.github.io/smart-immunizations/schemas/StructureDefinition-IMMZ_D17_Report_AEFI.schema.json",
           "localPath": "fhir-artifact-index/dak/StructureDefinition-IMMZ_D17_Report_AEFI.schema.json",
@@ -16498,7 +16498,7 @@
       "category": "Structures: Logical Models",
       "title": "IMMZ.D18.Determine time for next visit",
       "description": "Data elements for the IMMZ.D18.Determine time for next visit Data Dictionary Activity.",
-      "dak": {
+      "sidecars": {
         "schema": {
           "url": "https://worldhealthorganization.github.io/smart-immunizations/schemas/StructureDefinition-IMMZ_D18_Determine_time_for_next_visit.schema.json",
           "localPath": "fhir-artifact-index/dak/StructureDefinition-IMMZ_D18_Determine_time_for_next_visit.schema.json",
@@ -16571,7 +16571,7 @@
       "category": "Structures: Logical Models",
       "title": "IMMZ.D2.Determine required vaccination(s)",
       "description": "Data elements for the IMMZ.D2.Determine required vaccination(s) Data Dictionary Activity.",
-      "dak": {
+      "sidecars": {
         "schema": {
           "url": "https://worldhealthorganization.github.io/smart-immunizations/schemas/StructureDefinition-IMMZ_D2_Determine_required_vaccination_s_.schema.json",
           "localPath": "fhir-artifact-index/dak/StructureDefinition-IMMZ_D2_Determine_required_vaccination_s_.schema.json",
@@ -16644,7 +16644,7 @@
       "category": "Structures: Logical Models",
       "title": "IMMZ.D20.Does client require a verifiable digital certificate",
       "description": "Data elements for the IMMZ.D20.Does client require a verifiable digital certificate Data Dictionary Activity.",
-      "dak": {
+      "sidecars": {
         "schema": {
           "url": "https://worldhealthorganization.github.io/smart-immunizations/schemas/StructureDefinition-IMMZ_D20_Does_client_require_a_verifiable_digital_certificate.schema.json",
           "localPath": "fhir-artifact-index/dak/StructureDefinition-IMMZ_D20_Does_client_require_a_verifiable_digital_certificate.schema.json",
@@ -16717,7 +16717,7 @@
       "category": "Structures: Logical Models",
       "title": "IMMZ.D21.Generate verifiable digital certificate",
       "description": "Data elements for the IMMZ.D21.Generate verifiable digital certificate Data Dictionary Activity.",
-      "dak": {
+      "sidecars": {
         "schema": {
           "url": "https://worldhealthorganization.github.io/smart-immunizations/schemas/StructureDefinition-IMMZ_D21_Generate_verifiable_digital_certificate.schema.json",
           "localPath": "fhir-artifact-index/dak/StructureDefinition-IMMZ_D21_Generate_verifiable_digital_certificate.schema.json",
@@ -16790,7 +16790,7 @@
       "category": "Structures: Logical Models",
       "title": "IMMZ.D5.Determine vaccine(s) to be administered based on contraindications",
       "description": "Data elements for the IMMZ.D5.Determine vaccine(s) to be administered based on contraindications Data Dictionary Activity.",
-      "dak": {
+      "sidecars": {
         "schema": {
           "url": "https://worldhealthorganization.github.io/smart-immunizations/schemas/StructureDefinition-IMMZ_D5_Determine_vaccine_s__to_be_administered_based_on_contraindications.schema.json",
           "localPath": "fhir-artifact-index/dak/StructureDefinition-IMMZ_D5_Determine_vaccine_s__to_be_administered_based_on_contraindications.schema.json",
@@ -16863,7 +16863,7 @@
       "category": "Structures: Logical Models",
       "title": "IMMZ.D7.Counsel client",
       "description": "Data elements for the IMMZ.D7.Counsel client Data Dictionary Activity.",
-      "dak": {
+      "sidecars": {
         "schema": {
           "url": "https://worldhealthorganization.github.io/smart-immunizations/schemas/StructureDefinition-IMMZ_D7_Counsel_client.schema.json",
           "localPath": "fhir-artifact-index/dak/StructureDefinition-IMMZ_D7_Counsel_client.schema.json",
@@ -17618,7 +17618,7 @@
       "category": "Terminology: Value Sets",
       "title": "IMMZ.C.DE5 ValueSet for Sex",
       "description": "ValueSet for Sex for IMMZ.C.DE5",
-      "dak": {
+      "sidecars": {
         "schema": {
           "url": "https://worldhealthorganization.github.io/smart-immunizations/schemas/ValueSet-IMMZ.C.DE5.schema.json",
           "localPath": "fhir-artifact-index/dak/ValueSet-IMMZ.C.DE5.schema.json",
@@ -17700,7 +17700,7 @@
       "category": "Terminology: Value Sets",
       "title": "IMMZ.D.DE1 ValueSet for Immunization event status",
       "description": "ValueSet for Immunization event status for IMMZ.D.DE1",
-      "dak": {
+      "sidecars": {
         "schema": {
           "url": "https://worldhealthorganization.github.io/smart-immunizations/schemas/ValueSet-IMMZ.D.DE1.schema.json",
           "localPath": "fhir-artifact-index/dak/ValueSet-IMMZ.D.DE1.schema.json",
@@ -17782,7 +17782,7 @@
       "category": "Terminology: Value Sets",
       "title": "IMMZ.D.DE107 ValueSet for Type of reaction",
       "description": "ValueSet for Type of reaction for IMMZ.D.DE107",
-      "dak": {
+      "sidecars": {
         "schema": {
           "url": "https://worldhealthorganization.github.io/smart-immunizations/schemas/ValueSet-IMMZ.D.DE107.schema.json",
           "localPath": "fhir-artifact-index/dak/ValueSet-IMMZ.D.DE107.schema.json",
@@ -17864,7 +17864,7 @@
       "category": "Terminology: Value Sets",
       "title": "IMMZ.D.DE115 ValueSet for Reaction outcome",
       "description": "ValueSet for Reaction outcome for IMMZ.D.DE115",
-      "dak": {
+      "sidecars": {
         "schema": {
           "url": "https://worldhealthorganization.github.io/smart-immunizations/schemas/ValueSet-IMMZ.D.DE115.schema.json",
           "localPath": "fhir-artifact-index/dak/ValueSet-IMMZ.D.DE115.schema.json",
@@ -17946,7 +17946,7 @@
       "category": "Terminology: Value Sets",
       "title": "IMMZ.D.DE126 ValueSet for Disease targeted",
       "description": "ValueSet for Disease targeted for IMMZ.D.DE126",
-      "dak": {
+      "sidecars": {
         "schema": {
           "url": "https://worldhealthorganization.github.io/smart-immunizations/schemas/ValueSet-IMMZ.D.DE126.schema.json",
           "localPath": "fhir-artifact-index/dak/ValueSet-IMMZ.D.DE126.schema.json",
@@ -18028,7 +18028,7 @@
       "category": "Terminology: Value Sets",
       "title": "IMMZ.D.DE156 ValueSet for Immunization recommendation status",
       "description": "ValueSet for Immunization recommendation status for IMMZ.D.DE156",
-      "dak": {
+      "sidecars": {
         "schema": {
           "url": "https://worldhealthorganization.github.io/smart-immunizations/schemas/ValueSet-IMMZ.D.DE156.schema.json",
           "localPath": "fhir-artifact-index/dak/ValueSet-IMMZ.D.DE156.schema.json",
@@ -18110,7 +18110,7 @@
       "category": "Terminology: Value Sets",
       "title": "IMMZ.D.DE161 ValueSet for Potential contraindications",
       "description": "ValueSet for Potential contraindications for IMMZ.D.DE161",
-      "dak": {
+      "sidecars": {
         "schema": {
           "url": "https://worldhealthorganization.github.io/smart-immunizations/schemas/ValueSet-IMMZ.D.DE161.schema.json",
           "localPath": "fhir-artifact-index/dak/ValueSet-IMMZ.D.DE161.schema.json",
@@ -18192,7 +18192,7 @@
       "category": "Terminology: Value Sets",
       "title": "IMMZ.D.DE18 ValueSet for Vaccine brand",
       "description": "ValueSet for Vaccine brand for IMMZ.D.DE18",
-      "dak": {
+      "sidecars": {
         "schema": {
           "url": "https://worldhealthorganization.github.io/smart-immunizations/schemas/ValueSet-IMMZ.D.DE18.schema.json",
           "localPath": "fhir-artifact-index/dak/ValueSet-IMMZ.D.DE18.schema.json",
@@ -18274,7 +18274,7 @@
       "category": "Terminology: Value Sets",
       "title": "IMMZ.D.DE19 ValueSet for Vaccine type",
       "description": "ValueSet for Vaccine type for IMMZ.D.DE19",
-      "dak": {
+      "sidecars": {
         "jsonld": {
           "url": "https://worldhealthorganization.github.io/smart-immunizations/ValueSet-IMMZ.D.DE19.jsonld",
           "localPath": "fhir-artifact-index/dak/ValueSet-IMMZ.D.DE19.jsonld",
@@ -18341,7 +18341,7 @@
       "category": "Terminology: Value Sets",
       "title": "IMMZ.D.DE204 ValueSet for HIV status",
       "description": "ValueSet for HIV status for IMMZ.D.DE204",
-      "dak": {
+      "sidecars": {
         "schema": {
           "url": "https://worldhealthorganization.github.io/smart-immunizations/schemas/ValueSet-IMMZ.D.DE204.schema.json",
           "localPath": "fhir-artifact-index/dak/ValueSet-IMMZ.D.DE204.schema.json",
@@ -18423,7 +18423,7 @@
       "category": "Terminology: Value Sets",
       "title": "IMMZ.D.DE212 ValueSet for Type of poliovirus dose",
       "description": "ValueSet for Type of poliovirus dose for IMMZ.D.DE212",
-      "dak": {
+      "sidecars": {
         "schema": {
           "url": "https://worldhealthorganization.github.io/smart-immunizations/schemas/ValueSet-IMMZ.D.DE212.schema.json",
           "localPath": "fhir-artifact-index/dak/ValueSet-IMMZ.D.DE212.schema.json",
@@ -18505,7 +18505,7 @@
       "category": "Terminology: Value Sets",
       "title": "IMMZ.D.DE216 ValueSet for Type of JE dose",
       "description": "ValueSet for Type of JE dose for IMMZ.D.DE216",
-      "dak": {
+      "sidecars": {
         "schema": {
           "url": "https://worldhealthorganization.github.io/smart-immunizations/schemas/ValueSet-IMMZ.D.DE216.schema.json",
           "localPath": "fhir-artifact-index/dak/ValueSet-IMMZ.D.DE216.schema.json",
@@ -18587,7 +18587,7 @@
       "category": "Terminology: Value Sets",
       "title": "IMMZ.D.DE220 ValueSet for Type of TBE dose",
       "description": "ValueSet for Type of TBE dose for IMMZ.D.DE220",
-      "dak": {
+      "sidecars": {
         "schema": {
           "url": "https://worldhealthorganization.github.io/smart-immunizations/schemas/ValueSet-IMMZ.D.DE220.schema.json",
           "localPath": "fhir-artifact-index/dak/ValueSet-IMMZ.D.DE220.schema.json",
@@ -18669,7 +18669,7 @@
       "category": "Terminology: Value Sets",
       "title": "IMMZ.D.DE225 ValueSet for Type of typhoid dose",
       "description": "ValueSet for Type of typhoid dose for IMMZ.D.DE225",
-      "dak": {
+      "sidecars": {
         "schema": {
           "url": "https://worldhealthorganization.github.io/smart-immunizations/schemas/ValueSet-IMMZ.D.DE225.schema.json",
           "localPath": "fhir-artifact-index/dak/ValueSet-IMMZ.D.DE225.schema.json",
@@ -18751,7 +18751,7 @@
       "category": "Terminology: Value Sets",
       "title": "IMMZ.D.DE229 ValueSet for Type of cholera dose",
       "description": "ValueSet for Type of cholera dose for IMMZ.D.DE229",
-      "dak": {
+      "sidecars": {
         "schema": {
           "url": "https://worldhealthorganization.github.io/smart-immunizations/schemas/ValueSet-IMMZ.D.DE229.schema.json",
           "localPath": "fhir-artifact-index/dak/ValueSet-IMMZ.D.DE229.schema.json",
@@ -18833,7 +18833,7 @@
       "category": "Terminology: Value Sets",
       "title": "IMMZ.D.DE23 ValueSet for Vaccine manufacturer",
       "description": "ValueSet for Vaccine manufacturer for IMMZ.D.DE23",
-      "dak": {
+      "sidecars": {
         "schema": {
           "url": "https://worldhealthorganization.github.io/smart-immunizations/schemas/ValueSet-IMMZ.D.DE23.schema.json",
           "localPath": "fhir-artifact-index/dak/ValueSet-IMMZ.D.DE23.schema.json",
@@ -18915,7 +18915,7 @@
       "category": "Terminology: Value Sets",
       "title": "IMMZ.D.DE232 ValueSet for Type of meningococcal dose",
       "description": "ValueSet for Type of meningococcal dose for IMMZ.D.DE232",
-      "dak": {
+      "sidecars": {
         "schema": {
           "url": "https://worldhealthorganization.github.io/smart-immunizations/schemas/ValueSet-IMMZ.D.DE232.schema.json",
           "localPath": "fhir-artifact-index/dak/ValueSet-IMMZ.D.DE232.schema.json",
@@ -18997,7 +18997,7 @@
       "category": "Terminology: Value Sets",
       "title": "IMMZ.D.DE237 ValueSet for Type of hepatitis A dose",
       "description": "ValueSet for Type of hepatitis A dose for IMMZ.D.DE237",
-      "dak": {
+      "sidecars": {
         "schema": {
           "url": "https://worldhealthorganization.github.io/smart-immunizations/schemas/ValueSet-IMMZ.D.DE237.schema.json",
           "localPath": "fhir-artifact-index/dak/ValueSet-IMMZ.D.DE237.schema.json",
@@ -19079,7 +19079,7 @@
       "category": "Terminology: Value Sets",
       "title": "IMMZ.D.DE241 ValueSet for Dengue serostatus",
       "description": "ValueSet for Dengue serostatus for IMMZ.D.DE241",
-      "dak": {
+      "sidecars": {
         "schema": {
           "url": "https://worldhealthorganization.github.io/smart-immunizations/schemas/ValueSet-IMMZ.D.DE241.schema.json",
           "localPath": "fhir-artifact-index/dak/ValueSet-IMMZ.D.DE241.schema.json",
@@ -19161,7 +19161,7 @@
       "category": "Terminology: Value Sets",
       "title": "IMMZ.D.DE243 ValueSet for Type of TB infection test performed",
       "description": "ValueSet for Type of TB infection test performed for IMMZ.D.DE243",
-      "dak": {
+      "sidecars": {
         "schema": {
           "url": "https://worldhealthorganization.github.io/smart-immunizations/schemas/ValueSet-IMMZ.D.DE243.schema.json",
           "localPath": "fhir-artifact-index/dak/ValueSet-IMMZ.D.DE243.schema.json",
@@ -19243,7 +19243,7 @@
       "category": "Terminology: Value Sets",
       "title": "IMMZ.D.DE246 ValueSet for TB infection test result",
       "description": "ValueSet for TB infection test result for IMMZ.D.DE246",
-      "dak": {
+      "sidecars": {
         "schema": {
           "url": "https://worldhealthorganization.github.io/smart-immunizations/schemas/ValueSet-IMMZ.D.DE246.schema.json",
           "localPath": "fhir-artifact-index/dak/ValueSet-IMMZ.D.DE246.schema.json",
@@ -19325,7 +19325,7 @@
       "category": "Terminology: Value Sets",
       "title": "IMMZ.D.DE25 ValueSet for Vaccine market authorization holder",
       "description": "ValueSet for Vaccine market authorization holder for IMMZ.D.DE25",
-      "dak": {
+      "sidecars": {
         "schema": {
           "url": "https://worldhealthorganization.github.io/smart-immunizations/schemas/ValueSet-IMMZ.D.DE25.schema.json",
           "localPath": "fhir-artifact-index/dak/ValueSet-IMMZ.D.DE25.schema.json",
@@ -19407,7 +19407,7 @@
       "category": "Terminology: Value Sets",
       "title": "IMMZ.D.DE254 ValueSet for Type of hepatitis B dose",
       "description": "ValueSet for Type of hepatitis B dose for IMMZ.D.DE254",
-      "dak": {
+      "sidecars": {
         "schema": {
           "url": "https://worldhealthorganization.github.io/smart-immunizations/schemas/ValueSet-IMMZ.D.DE254.schema.json",
           "localPath": "fhir-artifact-index/dak/ValueSet-IMMZ.D.DE254.schema.json",
@@ -19489,7 +19489,7 @@
       "category": "Terminology: Value Sets",
       "title": "IMMZ.D.DE258 ValueSet for Type of dose",
       "description": "ValueSet for Type of dose for IMMZ.D.DE258",
-      "dak": {
+      "sidecars": {
         "schema": {
           "url": "https://worldhealthorganization.github.io/smart-immunizations/schemas/ValueSet-IMMZ.D.DE258.schema.json",
           "localPath": "fhir-artifact-index/dak/ValueSet-IMMZ.D.DE258.schema.json",
@@ -19571,7 +19571,7 @@
       "category": "Terminology: Value Sets",
       "title": "IMMZ.D.DE5 ValueSet for Reason vaccine was not administered",
       "description": "ValueSet for Reason vaccine was not administered for IMMZ.D.DE5",
-      "dak": {
+      "sidecars": {
         "schema": {
           "url": "https://worldhealthorganization.github.io/smart-immunizations/schemas/ValueSet-IMMZ.D.DE5.schema.json",
           "localPath": "fhir-artifact-index/dak/ValueSet-IMMZ.D.DE5.schema.json",
@@ -19653,7 +19653,7 @@
       "category": "Terminology: Value Sets",
       "title": "IMMZ.D.DE86 ValueSet for Client education and counselling on immunization",
       "description": "ValueSet for Client education and counselling on immunization for IMMZ.D.DE86",
-      "dak": {
+      "sidecars": {
         "schema": {
           "url": "https://worldhealthorganization.github.io/smart-immunizations/schemas/ValueSet-IMMZ.D.DE86.schema.json",
           "localPath": "fhir-artifact-index/dak/ValueSet-IMMZ.D.DE86.schema.json",
@@ -19735,7 +19735,7 @@
       "category": "Terminology: Value Sets",
       "title": "IMMZ.D.DE95 ValueSet for Reaction manifestation",
       "description": "ValueSet for Reaction manifestation for IMMZ.D.DE95",
-      "dak": {
+      "sidecars": {
         "schema": {
           "url": "https://worldhealthorganization.github.io/smart-immunizations/schemas/ValueSet-IMMZ.D.DE95.schema.json",
           "localPath": "fhir-artifact-index/dak/ValueSet-IMMZ.D.DE95.schema.json",
@@ -19817,7 +19817,7 @@
       "category": "Terminology: Value Sets",
       "title": "IMMZ.D.Observation ValueSet for Sex",
       "description": "ValueSet for Observation codes for IMMZ.D",
-      "dak": {
+      "sidecars": {
         "schema": {
           "url": "https://worldhealthorganization.github.io/smart-immunizations/schemas/ValueSet-IMMZ.D.Observation.schema.json",
           "localPath": "fhir-artifact-index/dak/ValueSet-IMMZ.D.Observation.schema.json",
@@ -19899,7 +19899,7 @@
       "category": "Terminology: Value Sets",
       "title": "IMMZ.I.DE30 ValueSet for Disaggregation group",
       "description": "ValueSet for Disaggregation group for IMMZ.I.DE30",
-      "dak": {
+      "sidecars": {
         "schema": {
           "url": "https://worldhealthorganization.github.io/smart-immunizations/schemas/ValueSet-IMMZ.I.DE30.schema.json",
           "localPath": "fhir-artifact-index/dak/ValueSet-IMMZ.I.DE30.schema.json",
@@ -19981,7 +19981,7 @@
       "category": "Terminology: Value Sets",
       "title": "IMMZ.I.DE48 ValueSet for Closed stock discarded type",
       "description": "ValueSet for Closed stock discarded type for IMMZ.I.DE48",
-      "dak": {
+      "sidecars": {
         "schema": {
           "url": "https://worldhealthorganization.github.io/smart-immunizations/schemas/ValueSet-IMMZ.I.DE48.schema.json",
           "localPath": "fhir-artifact-index/dak/ValueSet-IMMZ.I.DE48.schema.json",
@@ -20063,7 +20063,7 @@
       "category": "Terminology: Value Sets",
       "title": "IMMZ.Z.DE1 ValueSet for BCG vaccines",
       "description": "ValueSet for BCG vaccines for IMMZ.Z.DE1",
-      "dak": {
+      "sidecars": {
         "schema": {
           "url": "https://worldhealthorganization.github.io/smart-immunizations/schemas/ValueSet-IMMZ.Z.DE1.schema.json",
           "localPath": "fhir-artifact-index/dak/ValueSet-IMMZ.Z.DE1.schema.json",
@@ -20145,7 +20145,7 @@
       "category": "Terminology: Value Sets",
       "title": "IMMZ.Z.DE10 ValueSet for Meningococcal vaccines",
       "description": "ValueSet for Meningococcal vaccines for IMMZ.Z.DE10",
-      "dak": {
+      "sidecars": {
         "schema": {
           "url": "https://worldhealthorganization.github.io/smart-immunizations/schemas/ValueSet-IMMZ.Z.DE10.schema.json",
           "localPath": "fhir-artifact-index/dak/ValueSet-IMMZ.Z.DE10.schema.json",
@@ -20227,7 +20227,7 @@
       "category": "Terminology: Value Sets",
       "title": "IMMZ.Z.DE11 ValueSet for Mumps-containing vaccines",
       "description": "ValueSet for Mumps-containing vaccines for IMMZ.Z.DE11",
-      "dak": {
+      "sidecars": {
         "schema": {
           "url": "https://worldhealthorganization.github.io/smart-immunizations/schemas/ValueSet-IMMZ.Z.DE11.schema.json",
           "localPath": "fhir-artifact-index/dak/ValueSet-IMMZ.Z.DE11.schema.json",
@@ -20309,7 +20309,7 @@
       "category": "Terminology: Value Sets",
       "title": "IMMZ.Z.DE12 ValueSet for Pertussis-containing vaccines",
       "description": "ValueSet for Pertussis-containing vaccines for IMMZ.Z.DE12",
-      "dak": {
+      "sidecars": {
         "schema": {
           "url": "https://worldhealthorganization.github.io/smart-immunizations/schemas/ValueSet-IMMZ.Z.DE12.schema.json",
           "localPath": "fhir-artifact-index/dak/ValueSet-IMMZ.Z.DE12.schema.json",
@@ -20391,7 +20391,7 @@
       "category": "Terminology: Value Sets",
       "title": "IMMZ.Z.DE13 ValueSet for Pneumococcal vaccines",
       "description": "ValueSet for Pneumococcal vaccines for IMMZ.Z.DE13",
-      "dak": {
+      "sidecars": {
         "schema": {
           "url": "https://worldhealthorganization.github.io/smart-immunizations/schemas/ValueSet-IMMZ.Z.DE13.schema.json",
           "localPath": "fhir-artifact-index/dak/ValueSet-IMMZ.Z.DE13.schema.json",
@@ -20473,7 +20473,7 @@
       "category": "Terminology: Value Sets",
       "title": "IMMZ.Z.DE14 ValueSet for Poliovirus-containing vaccines",
       "description": "ValueSet for Poliovirus-containing vaccines for IMMZ.Z.DE14",
-      "dak": {
+      "sidecars": {
         "schema": {
           "url": "https://worldhealthorganization.github.io/smart-immunizations/schemas/ValueSet-IMMZ.Z.DE14.schema.json",
           "localPath": "fhir-artifact-index/dak/ValueSet-IMMZ.Z.DE14.schema.json",
@@ -20555,7 +20555,7 @@
       "category": "Terminology: Value Sets",
       "title": "IMMZ.Z.DE15 ValueSet for Rabies vaccines",
       "description": "ValueSet for Rabies vaccines for IMMZ.Z.DE15",
-      "dak": {
+      "sidecars": {
         "schema": {
           "url": "https://worldhealthorganization.github.io/smart-immunizations/schemas/ValueSet-IMMZ.Z.DE15.schema.json",
           "localPath": "fhir-artifact-index/dak/ValueSet-IMMZ.Z.DE15.schema.json",
@@ -20637,7 +20637,7 @@
       "category": "Terminology: Value Sets",
       "title": "IMMZ.Z.DE16 ValueSet for Rotavirus vaccines",
       "description": "ValueSet for Rotavirus vaccines for IMMZ.Z.DE16",
-      "dak": {
+      "sidecars": {
         "schema": {
           "url": "https://worldhealthorganization.github.io/smart-immunizations/schemas/ValueSet-IMMZ.Z.DE16.schema.json",
           "localPath": "fhir-artifact-index/dak/ValueSet-IMMZ.Z.DE16.schema.json",
@@ -20719,7 +20719,7 @@
       "category": "Terminology: Value Sets",
       "title": "IMMZ.Z.DE17 ValueSet for Rubella-containing vaccines",
       "description": "ValueSet for Rubella-containing vaccines for IMMZ.Z.DE17",
-      "dak": {
+      "sidecars": {
         "schema": {
           "url": "https://worldhealthorganization.github.io/smart-immunizations/schemas/ValueSet-IMMZ.Z.DE17.schema.json",
           "localPath": "fhir-artifact-index/dak/ValueSet-IMMZ.Z.DE17.schema.json",
@@ -20801,7 +20801,7 @@
       "category": "Terminology: Value Sets",
       "title": "IMMZ.Z.DE18 ValueSet for Seasonal influenza vaccines",
       "description": "ValueSet for Seasonal influenza vaccines for IMMZ.Z.DE18",
-      "dak": {
+      "sidecars": {
         "schema": {
           "url": "https://worldhealthorganization.github.io/smart-immunizations/schemas/ValueSet-IMMZ.Z.DE18.schema.json",
           "localPath": "fhir-artifact-index/dak/ValueSet-IMMZ.Z.DE18.schema.json",
@@ -20883,7 +20883,7 @@
       "category": "Terminology: Value Sets",
       "title": "IMMZ.Z.DE19 ValueSet for Tetanus-containing vaccines",
       "description": "ValueSet for Tetanus-containing vaccines for IMMZ.Z.DE19",
-      "dak": {
+      "sidecars": {
         "schema": {
           "url": "https://worldhealthorganization.github.io/smart-immunizations/schemas/ValueSet-IMMZ.Z.DE19.schema.json",
           "localPath": "fhir-artifact-index/dak/ValueSet-IMMZ.Z.DE19.schema.json",
@@ -20965,7 +20965,7 @@
       "category": "Terminology: Value Sets",
       "title": "IMMZ.Z.DE2 ValueSet for Cholera vaccines",
       "description": "ValueSet for Cholera vaccines for IMMZ.Z.DE2",
-      "dak": {
+      "sidecars": {
         "schema": {
           "url": "https://worldhealthorganization.github.io/smart-immunizations/schemas/ValueSet-IMMZ.Z.DE2.schema.json",
           "localPath": "fhir-artifact-index/dak/ValueSet-IMMZ.Z.DE2.schema.json",
@@ -21047,7 +21047,7 @@
       "category": "Terminology: Value Sets",
       "title": "IMMZ.Z.DE20 ValueSet for TBE vaccines",
       "description": "ValueSet for TBE vaccines for IMMZ.Z.DE20",
-      "dak": {
+      "sidecars": {
         "schema": {
           "url": "https://worldhealthorganization.github.io/smart-immunizations/schemas/ValueSet-IMMZ.Z.DE20.schema.json",
           "localPath": "fhir-artifact-index/dak/ValueSet-IMMZ.Z.DE20.schema.json",
@@ -21129,7 +21129,7 @@
       "category": "Terminology: Value Sets",
       "title": "IMMZ.Z.DE21 ValueSet for Typhoid vaccines",
       "description": "ValueSet for Typhoid vaccines for IMMZ.Z.DE21",
-      "dak": {
+      "sidecars": {
         "schema": {
           "url": "https://worldhealthorganization.github.io/smart-immunizations/schemas/ValueSet-IMMZ.Z.DE21.schema.json",
           "localPath": "fhir-artifact-index/dak/ValueSet-IMMZ.Z.DE21.schema.json",
@@ -21211,7 +21211,7 @@
       "category": "Terminology: Value Sets",
       "title": "IMMZ.Z.DE22 ValueSet for Varicella-containing vaccines",
       "description": "ValueSet for Varicella-containing vaccines for IMMZ.Z.DE22",
-      "dak": {
+      "sidecars": {
         "schema": {
           "url": "https://worldhealthorganization.github.io/smart-immunizations/schemas/ValueSet-IMMZ.Z.DE22.schema.json",
           "localPath": "fhir-artifact-index/dak/ValueSet-IMMZ.Z.DE22.schema.json",
@@ -21293,7 +21293,7 @@
       "category": "Terminology: Value Sets",
       "title": "IMMZ.Z.DE23 ValueSet for Yellow fever vaccines",
       "description": "ValueSet for Yellow fever vaccines for IMMZ.Z.DE23",
-      "dak": {
+      "sidecars": {
         "schema": {
           "url": "https://worldhealthorganization.github.io/smart-immunizations/schemas/ValueSet-IMMZ.Z.DE23.schema.json",
           "localPath": "fhir-artifact-index/dak/ValueSet-IMMZ.Z.DE23.schema.json",
@@ -21375,7 +21375,7 @@
       "category": "Terminology: Value Sets",
       "title": "IMMZ.Z.DE24 ValueSet for DTP-containing vaccines",
       "description": "ValueSet for DTP-containing vaccines for IMMZ.Z.DE24",
-      "dak": {
+      "sidecars": {
         "schema": {
           "url": "https://worldhealthorganization.github.io/smart-immunizations/schemas/ValueSet-IMMZ.Z.DE24.schema.json",
           "localPath": "fhir-artifact-index/dak/ValueSet-IMMZ.Z.DE24.schema.json",
@@ -21457,7 +21457,7 @@
       "category": "Terminology: Value Sets",
       "title": "IMMZ.Z.DE25 ValueSet for Dengue vaccines",
       "description": "ValueSet for Dengue vaccines for IMMZ.Z.DE25",
-      "dak": {
+      "sidecars": {
         "schema": {
           "url": "https://worldhealthorganization.github.io/smart-immunizations/schemas/ValueSet-IMMZ.Z.DE25.schema.json",
           "localPath": "fhir-artifact-index/dak/ValueSet-IMMZ.Z.DE25.schema.json",
@@ -21539,7 +21539,7 @@
       "category": "Terminology: Value Sets",
       "title": "IMMZ.Z.DE26 ValueSet for COVID-19 vaccines",
       "description": "ValueSet for COVID-19 vaccines for IMMZ.Z.DE26",
-      "dak": {
+      "sidecars": {
         "schema": {
           "url": "https://worldhealthorganization.github.io/smart-immunizations/schemas/ValueSet-IMMZ.Z.DE26.schema.json",
           "localPath": "fhir-artifact-index/dak/ValueSet-IMMZ.Z.DE26.schema.json",
@@ -21621,7 +21621,7 @@
       "category": "Terminology: Value Sets",
       "title": "IMMZ.Z.DE27 ValueSet for Malaria vaccines",
       "description": "ValueSet for Malaria vaccines for IMMZ.Z.DE27",
-      "dak": {
+      "sidecars": {
         "schema": {
           "url": "https://worldhealthorganization.github.io/smart-immunizations/schemas/ValueSet-IMMZ.Z.DE27.schema.json",
           "localPath": "fhir-artifact-index/dak/ValueSet-IMMZ.Z.DE27.schema.json",
@@ -21703,7 +21703,7 @@
       "category": "Terminology: Value Sets",
       "title": "IMMZ.Z.DE28 ValueSet for Tetanus and diphtheria-containing vaccines",
       "description": "ValueSet for Tetanus and diphtheria-containing vaccines for IMMZ.Z.DE28",
-      "dak": {
+      "sidecars": {
         "schema": {
           "url": "https://worldhealthorganization.github.io/smart-immunizations/schemas/ValueSet-IMMZ.Z.DE28.schema.json",
           "localPath": "fhir-artifact-index/dak/ValueSet-IMMZ.Z.DE28.schema.json",
@@ -21785,7 +21785,7 @@
       "category": "Terminology: Value Sets",
       "title": "IMMZ.Z.DE29 ValueSet for Pentavalent vaccines",
       "description": "ValueSet for Pentavalent vaccines for IMMZ.Z.DE29",
-      "dak": {
+      "sidecars": {
         "schema": {
           "url": "https://worldhealthorganization.github.io/smart-immunizations/schemas/ValueSet-IMMZ.Z.DE29.schema.json",
           "localPath": "fhir-artifact-index/dak/ValueSet-IMMZ.Z.DE29.schema.json",
@@ -21867,7 +21867,7 @@
       "category": "Terminology: Value Sets",
       "title": "IMMZ.Z.DE3 ValueSet for Diphtheria-containing vaccines",
       "description": "ValueSet for Diphtheria-containing vaccines for IMMZ.Z.DE3",
-      "dak": {
+      "sidecars": {
         "schema": {
           "url": "https://worldhealthorganization.github.io/smart-immunizations/schemas/ValueSet-IMMZ.Z.DE3.schema.json",
           "localPath": "fhir-artifact-index/dak/ValueSet-IMMZ.Z.DE3.schema.json",
@@ -21949,7 +21949,7 @@
       "category": "Terminology: Value Sets",
       "title": "IMMZ.Z.DE30 ValueSet for Oral polio vaccines",
       "description": "ValueSet for Oral polio vaccines for IMMZ.Z.DE30",
-      "dak": {
+      "sidecars": {
         "schema": {
           "url": "https://worldhealthorganization.github.io/smart-immunizations/schemas/ValueSet-IMMZ.Z.DE30.schema.json",
           "localPath": "fhir-artifact-index/dak/ValueSet-IMMZ.Z.DE30.schema.json",
@@ -22031,7 +22031,7 @@
       "category": "Terminology: Value Sets",
       "title": "IMMZ.Z.DE31 ValueSet for Inactivated polio vaccines",
       "description": "ValueSet for Inactivated polio vaccines for IMMZ.Z.DE31",
-      "dak": {
+      "sidecars": {
         "schema": {
           "url": "https://worldhealthorganization.github.io/smart-immunizations/schemas/ValueSet-IMMZ.Z.DE31.schema.json",
           "localPath": "fhir-artifact-index/dak/ValueSet-IMMZ.Z.DE31.schema.json",
@@ -22113,7 +22113,7 @@
       "category": "Terminology: Value Sets",
       "title": "IMMZ.Z.DE32 ValueSet for Measles and rubella-containing vaccines",
       "description": "ValueSet for Measles and rubella-containing vaccines for IMMZ.Z.DE32",
-      "dak": {
+      "sidecars": {
         "schema": {
           "url": "https://worldhealthorganization.github.io/smart-immunizations/schemas/ValueSet-IMMZ.Z.DE32.schema.json",
           "localPath": "fhir-artifact-index/dak/ValueSet-IMMZ.Z.DE32.schema.json",
@@ -22195,7 +22195,7 @@
       "category": "Terminology: Value Sets",
       "title": "IMMZ.Z.DE33 ValueSet for Tetanus and diphtheria-containing vaccines (DT)",
       "description": "ValueSet for Tetanus and diphtheria-containing vaccines (DT) for IMMZ.Z.DE33",
-      "dak": {
+      "sidecars": {
         "schema": {
           "url": "https://worldhealthorganization.github.io/smart-immunizations/schemas/ValueSet-IMMZ.Z.DE33.schema.json",
           "localPath": "fhir-artifact-index/dak/ValueSet-IMMZ.Z.DE33.schema.json",
@@ -22277,7 +22277,7 @@
       "category": "Terminology: Value Sets",
       "title": "IMMZ.Z.DE34 ValueSet for Tetanus and diphtheria-containing vaccines (Td)",
       "description": "ValueSet for Tetanus and diphtheria-containing vaccines (Td) for IMMZ.Z.DE34",
-      "dak": {
+      "sidecars": {
         "schema": {
           "url": "https://worldhealthorganization.github.io/smart-immunizations/schemas/ValueSet-IMMZ.Z.DE34.schema.json",
           "localPath": "fhir-artifact-index/dak/ValueSet-IMMZ.Z.DE34.schema.json",
@@ -22359,7 +22359,7 @@
       "category": "Terminology: Value Sets",
       "title": "IMMZ.Z.DE4 ValueSet for Hib-containing vaccines",
       "description": "ValueSet for Hib-containing vaccines for IMMZ.Z.DE4",
-      "dak": {
+      "sidecars": {
         "schema": {
           "url": "https://worldhealthorganization.github.io/smart-immunizations/schemas/ValueSet-IMMZ.Z.DE4.schema.json",
           "localPath": "fhir-artifact-index/dak/ValueSet-IMMZ.Z.DE4.schema.json",
@@ -22441,7 +22441,7 @@
       "category": "Terminology: Value Sets",
       "title": "IMMZ.Z.DE5 ValueSet for Hepatitis A-containing vaccines",
       "description": "ValueSet for Hepatitis A-containing vaccines for IMMZ.Z.DE5",
-      "dak": {
+      "sidecars": {
         "schema": {
           "url": "https://worldhealthorganization.github.io/smart-immunizations/schemas/ValueSet-IMMZ.Z.DE5.schema.json",
           "localPath": "fhir-artifact-index/dak/ValueSet-IMMZ.Z.DE5.schema.json",
@@ -22523,7 +22523,7 @@
       "category": "Terminology: Value Sets",
       "title": "IMMZ.Z.DE6 ValueSet for Hepatitis B-containing vaccines",
       "description": "ValueSet for Hepatitis B-containing vaccines for IMMZ.Z.DE6",
-      "dak": {
+      "sidecars": {
         "schema": {
           "url": "https://worldhealthorganization.github.io/smart-immunizations/schemas/ValueSet-IMMZ.Z.DE6.schema.json",
           "localPath": "fhir-artifact-index/dak/ValueSet-IMMZ.Z.DE6.schema.json",
@@ -22605,7 +22605,7 @@
       "category": "Terminology: Value Sets",
       "title": "IMMZ.Z.DE7 ValueSet for HPV vaccines",
       "description": "ValueSet for HPV vaccines for IMMZ.Z.DE7",
-      "dak": {
+      "sidecars": {
         "schema": {
           "url": "https://worldhealthorganization.github.io/smart-immunizations/schemas/ValueSet-IMMZ.Z.DE7.schema.json",
           "localPath": "fhir-artifact-index/dak/ValueSet-IMMZ.Z.DE7.schema.json",
@@ -22687,7 +22687,7 @@
       "category": "Terminology: Value Sets",
       "title": "IMMZ.Z.DE8 ValueSet for JE vaccines",
       "description": "ValueSet for JE vaccines for IMMZ.Z.DE8",
-      "dak": {
+      "sidecars": {
         "schema": {
           "url": "https://worldhealthorganization.github.io/smart-immunizations/schemas/ValueSet-IMMZ.Z.DE8.schema.json",
           "localPath": "fhir-artifact-index/dak/ValueSet-IMMZ.Z.DE8.schema.json",
@@ -22769,7 +22769,7 @@
       "category": "Terminology: Value Sets",
       "title": "IMMZ.Z.DE9 ValueSet for Measles-containing vaccines",
       "description": "ValueSet for Measles-containing vaccines for IMMZ.Z.DE9",
-      "dak": {
+      "sidecars": {
         "schema": {
           "url": "https://worldhealthorganization.github.io/smart-immunizations/schemas/ValueSet-IMMZ.Z.DE9.schema.json",
           "localPath": "fhir-artifact-index/dak/ValueSet-IMMZ.Z.DE9.schema.json",
@@ -22851,7 +22851,7 @@
       "category": "Terminology: Value Sets",
       "title": "IMMZ.Z.LiveAttenuated ValueSet for live attenuated vaccines",
       "description": "ValueSet for live attenuated vaccine types for IMMZ.Z.LiveAttenuated",
-      "dak": {
+      "sidecars": {
         "schema": {
           "url": "https://worldhealthorganization.github.io/smart-immunizations/schemas/ValueSet-IMMZ.Z.LiveAttenuated.schema.json",
           "localPath": "fhir-artifact-index/dak/ValueSet-IMMZ.Z.LiveAttenuated.schema.json",
@@ -22933,7 +22933,7 @@
       "category": "Terminology: Value Sets",
       "title": "IMMZ.Z.VS ValueSet for vaccine types",
       "description": "ValueSet for vaccine types for IMMZ.Z",
-      "dak": {
+      "sidecars": {
         "jsonld": {
           "url": "https://worldhealthorganization.github.io/smart-immunizations/ValueSet-IMMZ.Z.VS.jsonld",
           "localPath": "fhir-artifact-index/dak/ValueSet-IMMZ.Z.VS.jsonld",
@@ -23000,7 +23000,7 @@
       "category": "Terminology: Value Sets",
       "title": "IMMZD18SBCG ValueSet for Decision Table",
       "description": "ValueSet IMMZD18SBCG for IMMZ.D18.S.BCG schedule. Business rule: Determine if the client is due for a bacille Calmette–Guérin (BCG) vaccination according to the national immunization schedule Trigger: IMMZ.D2 Determine required vaccination(s) if any Table: IMMZ.D18.S.BCG schedule",
-      "dak": {
+      "sidecars": {
         "schema": {
           "url": "https://worldhealthorganization.github.io/smart-immunizations/schemas/ValueSet-IMMZD18SBCGVS.schema.json",
           "localPath": "fhir-artifact-index/dak/ValueSet-IMMZD18SBCGVS.schema.json",
@@ -23082,7 +23082,7 @@
       "category": "Terminology: Value Sets",
       "title": "IMMZD18SCholeraWCRBSVaccine2Doses ValueSet for Decision Table",
       "description": "ValueSet IMMZD18SCholeraWCRBSVaccine2Doses for IMMZ.D18.S.Cholera.WC-rBS vaccine 2-dose schedule. Business rule: Determine if the client is due for a cholera vaccination according to the national immunization schedule Trigger: IMMZ.D2 Determine required vaccination(s) if any Table: Whole cell-recombinant B subunit (WC-rBS) vaccine (Dukoral), 2-dose schedule for clients aged ≥ 6 years",
-      "dak": {
+      "sidecars": {
         "schema": {
           "url": "https://worldhealthorganization.github.io/smart-immunizations/schemas/ValueSet-IMMZD18SCholeraWCRBSVaccine2DosesVS.schema.json",
           "localPath": "fhir-artifact-index/dak/ValueSet-IMMZD18SCholeraWCRBSVaccine2DosesVS.schema.json",
@@ -23164,7 +23164,7 @@
       "category": "Terminology: Value Sets",
       "title": "IMMZD18SCholeraWCRBSVaccine3Doses ValueSet for Decision Table",
       "description": "ValueSet IMMZD18SCholeraWCRBSVaccine3Doses for IMMZ.D18.S.Cholera.WC-rBS vaccine 3-dose schedule. Business rule: Determine if the client is due for a cholera vaccination according to the national immunization schedule Trigger: IMMZ.D2 Determine required vaccination(s) if any Table: Whole cell-recombinant B subunit (WC-rBS) vaccine (Dukoral), 3-dose schedule for clients aged 2–5 years",
-      "dak": {
+      "sidecars": {
         "schema": {
           "url": "https://worldhealthorganization.github.io/smart-immunizations/schemas/ValueSet-IMMZD18SCholeraWCRBSVaccine3DosesVS.schema.json",
           "localPath": "fhir-artifact-index/dak/ValueSet-IMMZD18SCholeraWCRBSVaccine3DosesVS.schema.json",
@@ -23246,7 +23246,7 @@
       "category": "Terminology: Value Sets",
       "title": "IMMZD18SCholeraWCVaccines ValueSet for Decision Table",
       "description": "ValueSet IMMZD18SCholeraWCVaccines for IMMZ.D18.S.Cholera.WC vaccines schedule. Business rule: Determine if the client is due for a cholera vaccination according to the national immunization schedule Trigger: IMMZ.D2 Determine required vaccination(s) if any Table: Whole-cell (WC) vaccines (Shanchol, Euvchol and mORCVAX), 2-dose schedule",
-      "dak": {
+      "sidecars": {
         "schema": {
           "url": "https://worldhealthorganization.github.io/smart-immunizations/schemas/ValueSet-IMMZD18SCholeraWCVaccinesVS.schema.json",
           "localPath": "fhir-artifact-index/dak/ValueSet-IMMZD18SCholeraWCVaccinesVS.schema.json",
@@ -23328,7 +23328,7 @@
       "category": "Terminology: Value Sets",
       "title": "IMMZD18SDengue3DosesWithPreVaccinationScreening ValueSet for Decision Table",
       "description": "ValueSet IMMZD18SDengue3DosesWithPreVaccinationScreening for IMMZ.D18.S.Dengue schedule. Business rule: Determine if the client is due for a dengue vaccination according to the national immunization schedule Trigger: IMMZ.D2 Determine required vaccination(s) if any Table: CYD-TDV (Dengvaxia), 3-dose schedule",
-      "dak": {
+      "sidecars": {
         "schema": {
           "url": "https://worldhealthorganization.github.io/smart-immunizations/schemas/ValueSet-IMMZD18SDengue3DosesWithPreVaccinationScreeningVS.schema.json",
           "localPath": "fhir-artifact-index/dak/ValueSet-IMMZD18SDengue3DosesWithPreVaccinationScreeningVS.schema.json",
@@ -23410,7 +23410,7 @@
       "category": "Terminology: Value Sets",
       "title": "IMMZD18SDTPDelayedOrInterruptedSeries ValueSet for Decision Table",
       "description": "ValueSet IMMZD18SDTPDelayedOrInterruptedSeries for IMMZ.D18.S.DTP.Delayed or interrupted schedule. Business rule: Determine if the client is due for a diphtheria–tetanus–pertussis (DTP) vaccination according to the national immunization schedule Trigger: IMMZ.D2 Determine required vaccination(s) if any Table: Diphtheria–tetanus–pertussis (DTP) vaccination schedule for the following groups: children ≥ 1 year of age with no previous immunization, adolescents and adults with no previous immunization (including pregnant women) and supplementary immunization activities in high-risk areas, for women of reproductive age",
-      "dak": {
+      "sidecars": {
         "schema": {
           "url": "https://worldhealthorganization.github.io/smart-immunizations/schemas/ValueSet-IMMZD18SDTPDelayedOrInterruptedSeriesVS.schema.json",
           "localPath": "fhir-artifact-index/dak/ValueSet-IMMZD18SDTPDelayedOrInterruptedSeriesVS.schema.json",
@@ -23492,7 +23492,7 @@
       "category": "Terminology: Value Sets",
       "title": "IMMZD18SDTPOnTimeStart ValueSet for Decision Table",
       "description": "ValueSet IMMZD18SDTPOnTimeStart for IMMZ.D18.S.DTP.On-time start schedule. Business rule: Determine if the client is due for a diphtheria–tetanus–pertussis (DTP) vaccination according to the national immunization schedule Trigger: IMMZ.D2 Determine required vaccination(s) if any Table: Diphtheria–tetanus–pertussis (DTP) vaccination schedule, on-time start (at ≤ 12 months of age)",
-      "dak": {
+      "sidecars": {
         "schema": {
           "url": "https://worldhealthorganization.github.io/smart-immunizations/schemas/ValueSet-IMMZD18SDTPOnTimeStartVS.schema.json",
           "localPath": "fhir-artifact-index/dak/ValueSet-IMMZD18SDTPOnTimeStartVS.schema.json",
@@ -23574,7 +23574,7 @@
       "category": "Terminology: Value Sets",
       "title": "IMMZD18SDTPPregnancyStartingWith3Doses ValueSet for Decision Table",
       "description": "ValueSet IMMZD18SDTPPregnancyStartingWith3Doses for IMMZ.D18.S.DTP.Pregnancy starting with 3 doses schedule. Business rule: Determine if the client is due for a diphtheria–tetanus–pertussis (DTP) vaccination according to the national immunization schedule Trigger: IMMZ.D2 Determine required vaccination(s) if any Table: Diphtheria and tetanus vaccination schedule in pregnant women who received 3 childhood diphtheria–tetanus–pertussis (DTP) doses",
-      "dak": {
+      "sidecars": {
         "schema": {
           "url": "https://worldhealthorganization.github.io/smart-immunizations/schemas/ValueSet-IMMZD18SDTPPregnancyStartingWith3DosesVS.schema.json",
           "localPath": "fhir-artifact-index/dak/ValueSet-IMMZD18SDTPPregnancyStartingWith3DosesVS.schema.json",
@@ -23656,7 +23656,7 @@
       "category": "Terminology: Value Sets",
       "title": "IMMZD18SDTPPregnancyStartingWith4Doses ValueSet for Decision Table",
       "description": "ValueSet IMMZD18SDTPPregnancyStartingWith4Doses for IMMZ.D18.S.DTP.Pregnancy starting with 4 doses schedule. Business rule: Determine if the client is due for a diphtheria–tetanus–pertussis (DTP) vaccination according to the national immunization schedule Trigger: IMMZ.D2 Determine required vaccination(s) if any Table: Diphtheria and tetanus vaccination schedule in pregnant women who received 4 childhood diphtheria–tetanus–pertussis (DTP) doses",
-      "dak": {
+      "sidecars": {
         "schema": {
           "url": "https://worldhealthorganization.github.io/smart-immunizations/schemas/ValueSet-IMMZD18SDTPPregnancyStartingWith4DosesVS.schema.json",
           "localPath": "fhir-artifact-index/dak/ValueSet-IMMZD18SDTPPregnancyStartingWith4DosesVS.schema.json",
@@ -23738,7 +23738,7 @@
       "category": "Terminology: Value Sets",
       "title": "IMMZD18SHepatitisAInactivatedHAV1Dose ValueSet for Decision Table",
       "description": "ValueSet IMMZD18SHepatitisAInactivatedHAV1Dose for IMMZ.D18.S.Hepatitis A.Inactivated HAV 1-dose schedule. Business rule: Determine if the client is due for a hepatitis A vaccination according to the national immunization schedule Trigger: IMMZ.D2 Determine required vaccination(s) if any Table: Inactivated hepatitis A virus (HAV), 1-dose schedule",
-      "dak": {
+      "sidecars": {
         "schema": {
           "url": "https://worldhealthorganization.github.io/smart-immunizations/schemas/ValueSet-IMMZD18SHepatitisAInactivatedHAV1DoseVS.schema.json",
           "localPath": "fhir-artifact-index/dak/ValueSet-IMMZD18SHepatitisAInactivatedHAV1DoseVS.schema.json",
@@ -23820,7 +23820,7 @@
       "category": "Terminology: Value Sets",
       "title": "IMMZD18SHepatitisAInactivatedHAV2Doses ValueSet for Decision Table",
       "description": "ValueSet IMMZD18SHepatitisAInactivatedHAV2Doses for IMMZ.D18.S.Hepatitis A.Inactivated HAV 2-dose schedule. Business rule: Determine if the client is due for a hepatitis A vaccination according to the national immunization schedule Trigger: IMMZ.D2 Determine required vaccination(s) if any Table: Inactivated hepatitis A virus (HAV), 2-dose schedule",
-      "dak": {
+      "sidecars": {
         "schema": {
           "url": "https://worldhealthorganization.github.io/smart-immunizations/schemas/ValueSet-IMMZD18SHepatitisAInactivatedHAV2DosesVS.schema.json",
           "localPath": "fhir-artifact-index/dak/ValueSet-IMMZD18SHepatitisAInactivatedHAV2DosesVS.schema.json",
@@ -23902,7 +23902,7 @@
       "category": "Terminology: Value Sets",
       "title": "IMMZD18SHepatitisALiveAttenuatedHAV1Dose ValueSet for Decision Table",
       "description": "ValueSet IMMZD18SHepatitisALiveAttenuatedHAV1Dose for IMMZ.D18.S.Hepatitis A.Live attenuated HAV 1-dose schedule. Business rule: Determine if the client is due for a hepatitis A vaccination according to the national immunization schedule Trigger: IMMZ.D2 Determine required vaccination(s) if any Table: Live attenuated hepatitis A virus (HAV), 1 dose schedule",
-      "dak": {
+      "sidecars": {
         "schema": {
           "url": "https://worldhealthorganization.github.io/smart-immunizations/schemas/ValueSet-IMMZD18SHepatitisALiveAttenuatedHAV1DoseVS.schema.json",
           "localPath": "fhir-artifact-index/dak/ValueSet-IMMZD18SHepatitisALiveAttenuatedHAV1DoseVS.schema.json",
@@ -23984,7 +23984,7 @@
       "category": "Terminology: Value Sets",
       "title": "IMMZD18SHib2DosesWithBoosterDose ValueSet for Decision Table",
       "description": "ValueSet IMMZD18SHib2DosesWithBoosterDose for IMMZ.D18.S.Hib.2 doses with booster dose schedule. Business rule: Determine if the client is due for a Haemophilus influenzae type b (Hib) vaccination according to the national immunization schedule Trigger: IMMZ.D2 Determine required vaccination(s) if any Table: 2 primary doses with a booster dose (2p+1) schedule",
-      "dak": {
+      "sidecars": {
         "schema": {
           "url": "https://worldhealthorganization.github.io/smart-immunizations/schemas/ValueSet-IMMZD18SHib2DosesWithBoosterDoseVS.schema.json",
           "localPath": "fhir-artifact-index/dak/ValueSet-IMMZD18SHib2DosesWithBoosterDoseVS.schema.json",
@@ -24066,7 +24066,7 @@
       "category": "Terminology: Value Sets",
       "title": "IMMZD18SHib3Doses ValueSet for Decision Table",
       "description": "ValueSet IMMZD18SHib3Doses for IMMZ.D18.S.Hib.3 doses schedule. Business rule: Determine if the client is due for a Haemophilus influenzae type b (Hib) vaccination according to the national immunization schedule Trigger: IMMZ.D2 Determine required vaccination(s) if any Table: 3 primary doses without a booster dose (3p) schedule",
-      "dak": {
+      "sidecars": {
         "schema": {
           "url": "https://worldhealthorganization.github.io/smart-immunizations/schemas/ValueSet-IMMZD18SHib3DosesVS.schema.json",
           "localPath": "fhir-artifact-index/dak/ValueSet-IMMZD18SHib3DosesVS.schema.json",
@@ -24148,7 +24148,7 @@
       "category": "Terminology: Value Sets",
       "title": "IMMZD18SHib3DosesWithBoosterDose ValueSet for Decision Table",
       "description": "ValueSet IMMZD18SHib3DosesWithBoosterDose for IMMZ.D18.S.Hib.3 doses with booster dose schedule. Business rule: Determine if the client is due for a Haemophilus influenzae type b (Hib) vaccination according to the national immunization schedule Trigger: IMMZ.D2 Determine required vaccination(s) if any Table: 3 primary doses with a booster dose (3p+1) schedule",
-      "dak": {
+      "sidecars": {
         "schema": {
           "url": "https://worldhealthorganization.github.io/smart-immunizations/schemas/ValueSet-IMMZD18SHib3DosesWithBoosterDoseVS.schema.json",
           "localPath": "fhir-artifact-index/dak/ValueSet-IMMZD18SHib3DosesWithBoosterDoseVS.schema.json",
@@ -24230,7 +24230,7 @@
       "category": "Terminology: Value Sets",
       "title": "IMMZD18SHPV2Doses ValueSet for Decision Table",
       "description": "ValueSet IMMZD18SHPV2Doses for IMMZ.D18.S.HPV.2-dose schedule. Business rule: Determine if the client is due for a human papillomavirus (HPV) vaccination according to the national immunization schedule Trigger: IMMZ.D2 Determine required vaccination(s) if any Table: 2-dose schedule",
-      "dak": {
+      "sidecars": {
         "schema": {
           "url": "https://worldhealthorganization.github.io/smart-immunizations/schemas/ValueSet-IMMZD18SHPV2DosesVS.schema.json",
           "localPath": "fhir-artifact-index/dak/ValueSet-IMMZD18SHPV2DosesVS.schema.json",
@@ -24312,7 +24312,7 @@
       "category": "Terminology: Value Sets",
       "title": "IMMZD18SHPVSingleDose ValueSet for Decision Table",
       "description": "ValueSet IMMZD18SHPVSingleDose for IMMZ.D18.S.Single-dose schedule. Business rule: Determine if the client is due for a human papillomavirus (HPV) vaccination according to the national immunization schedule Trigger: IMMZ.D2 Determine required vaccination(s) if any Table: Alternative single-dose schedule",
-      "dak": {
+      "sidecars": {
         "schema": {
           "url": "https://worldhealthorganization.github.io/smart-immunizations/schemas/ValueSet-IMMZD18SHPVSingleDoseVS.schema.json",
           "localPath": "fhir-artifact-index/dak/ValueSet-IMMZD18SHPVSingleDoseVS.schema.json",
@@ -24394,7 +24394,7 @@
       "category": "Terminology: Value Sets",
       "title": "IMMZD18SJEInactivatedVeroCellDerivedVaccine ValueSet for Decision Table",
       "description": "ValueSet IMMZD18SJEInactivatedVeroCellDerivedVaccine for IMMZ.D18.S.JE.Inactivated Vero cell-derived vaccination schedule. Business rule: Determine if the client is due for a Japanese encephalitis (JE) vaccination according to the national immunization schedule Trigger: IMMZ.D2 Determine required vaccination(s) if any Table: Inactivated Vero cell-derived vaccination schedule (2-dose scheme)",
-      "dak": {
+      "sidecars": {
         "schema": {
           "url": "https://worldhealthorganization.github.io/smart-immunizations/schemas/ValueSet-IMMZD18SJEInactivatedVeroCellDerivedVaccineVS.schema.json",
           "localPath": "fhir-artifact-index/dak/ValueSet-IMMZD18SJEInactivatedVeroCellDerivedVaccineVS.schema.json",
@@ -24476,7 +24476,7 @@
       "category": "Terminology: Value Sets",
       "title": "IMMZD18SJELiveAttenuatedVaccine ValueSet for Decision Table",
       "description": "ValueSet IMMZD18SJELiveAttenuatedVaccine for IMMZ.D18.S.JE.Live attenuated vaccination schedule. Business rule: Determine if the client is due for a Japanese encephalitis (JE) vaccination according to the national immunization schedule Trigger: IMMZ.D2 Determine required vaccination(s) if any Table: Live attenuated vaccination schedule (1-dose scheme)",
-      "dak": {
+      "sidecars": {
         "schema": {
           "url": "https://worldhealthorganization.github.io/smart-immunizations/schemas/ValueSet-IMMZD18SJELiveAttenuatedVaccineVS.schema.json",
           "localPath": "fhir-artifact-index/dak/ValueSet-IMMZD18SJELiveAttenuatedVaccineVS.schema.json",
@@ -24558,7 +24558,7 @@
       "category": "Terminology: Value Sets",
       "title": "IMMZD18SJELiveRecombinantVaccine ValueSet for Decision Table",
       "description": "ValueSet IMMZD18SJELiveRecombinantVaccine for IMMZ.D18.S.JE.Live recombinant vaccination schedule. Business rule: Determine if the client is due for a Japanese encephalitis (JE) vaccination according to the national immunization schedule Trigger: IMMZ.D2 Determine required vaccination(s) if any Table: Live recombinant vaccination schedule (1-dose scheme)",
-      "dak": {
+      "sidecars": {
         "schema": {
           "url": "https://worldhealthorganization.github.io/smart-immunizations/schemas/ValueSet-IMMZD18SJELiveRecombinantVaccineVS.schema.json",
           "localPath": "fhir-artifact-index/dak/ValueSet-IMMZD18SJELiveRecombinantVaccineVS.schema.json",
@@ -24640,7 +24640,7 @@
       "category": "Terminology: Value Sets",
       "title": "IMMZD18SMalaria ValueSet for Decision Table",
       "description": "ValueSet IMMZD18SMalaria for IMMZ.D18.S.Malaria schedule. Business rule: Determine if the client is due for a malaria vaccination according to the national immunization schedule Trigger: IMMZ.D2 Determine required vaccination(s) if any Table: 4-dose schedule",
-      "dak": {
+      "sidecars": {
         "schema": {
           "url": "https://worldhealthorganization.github.io/smart-immunizations/schemas/ValueSet-IMMZD18SMalariaVS.schema.json",
           "localPath": "fhir-artifact-index/dak/ValueSet-IMMZD18SMalariaVS.schema.json",
@@ -24722,7 +24722,7 @@
       "category": "Terminology: Value Sets",
       "title": "IMMZD18SMeaslesLowTransmission ValueSet for Decision Table",
       "description": "ValueSet IMMZD18SMeaslesLowTransmission for IMMZ.D18.S.Measles.Low transmission schedule. Business rule: Determine if the client is due for a measles vaccination according to the national immunization schedule Trigger: IMMZ.D2 Determine required vaccination(s) if any Table: Schedule for countries with low levels of measles transmission (countries that provide first dose of measles-containing vaccine (MCV) at 12 months and second dose of MCV at 15 months)",
-      "dak": {
+      "sidecars": {
         "schema": {
           "url": "https://worldhealthorganization.github.io/smart-immunizations/schemas/ValueSet-IMMZD18SMeaslesLowTransmissionVS.schema.json",
           "localPath": "fhir-artifact-index/dak/ValueSet-IMMZD18SMeaslesLowTransmissionVS.schema.json",
@@ -24804,7 +24804,7 @@
       "category": "Terminology: Value Sets",
       "title": "IMMZD18SMeaslesMCVDose0 ValueSet for Decision Table",
       "description": "ValueSet IMMZD18SMeaslesMCVDose0 for IMMZ.D18.S.Measles.MCV dose 0 schedule. Business rule: Determine if the client is due for a measles vaccination according to the national immunization schedule Trigger: IMMZ.D2 Determine required vaccination(s) if any Table: Measles-containing vaccine dose 0 (MCV0) schedule",
-      "dak": {
+      "sidecars": {
         "schema": {
           "url": "https://worldhealthorganization.github.io/smart-immunizations/schemas/ValueSet-IMMZD18SMeaslesMCVDose0VS.schema.json",
           "localPath": "fhir-artifact-index/dak/ValueSet-IMMZD18SMeaslesMCVDose0VS.schema.json",
@@ -24886,7 +24886,7 @@
       "category": "Terminology: Value Sets",
       "title": "IMMZD18SMeaslesOngoingTransmission ValueSet for Decision Table",
       "description": "ValueSet IMMZD18SMeaslesOngoingTransmission for IMMZ.D18.S.Measles.Ongoing transmission schedule. Business rule: Determine if the client is due for a measles vaccination according to the national immunization schedule Trigger: IMMZ.D2 Determine required vaccination(s) if any Table: Countries with ongoing transmission in which the risk of measles mortality remains high (countries that provide first dose of measles-containing vaccine (MCV) at 9 months and second dose of MCV at 15 months)",
-      "dak": {
+      "sidecars": {
         "schema": {
           "url": "https://worldhealthorganization.github.io/smart-immunizations/schemas/ValueSet-IMMZD18SMeaslesOngoingTransmissionVS.schema.json",
           "localPath": "fhir-artifact-index/dak/ValueSet-IMMZD18SMeaslesOngoingTransmissionVS.schema.json",
@@ -24968,7 +24968,7 @@
       "category": "Terminology: Value Sets",
       "title": "IMMZD18SMeaslesSupplementaryDose ValueSet for Decision Table",
       "description": "ValueSet IMMZD18SMeaslesSupplementaryDose for IMMZ.D18.S.Measles.Supplementary dose schedule. Business rule: Check for contraindications before administering the vaccine(s) due Trigger: IMMZ.D5 Determine vaccine(s) to be administered based on contraindications Table: Measles supplementary dose schedule",
-      "dak": {
+      "sidecars": {
         "schema": {
           "url": "https://worldhealthorganization.github.io/smart-immunizations/schemas/ValueSet-IMMZD18SMeaslesSupplementaryDoseVS.schema.json",
           "localPath": "fhir-artifact-index/dak/ValueSet-IMMZD18SMeaslesSupplementaryDoseVS.schema.json",
@@ -25050,7 +25050,7 @@
       "category": "Terminology: Value Sets",
       "title": "IMMZD18SMeningococcalMenAConjugateVaccine1Dose ValueSet for Decision Table",
       "description": "ValueSet IMMZD18SMeningococcalMenAConjugateVaccine1Dose for IMMZ.D18.S.Meningococcal.MenA conjugate vaccine 1-dose schedule. Business rule: Determine if the client is due for a meningococcal vaccination according to the national immunization schedule Trigger: IMMZ.D2 Determine required vaccination(s) if any Table: MenA conjugate vaccine, 1-dose schedule",
-      "dak": {
+      "sidecars": {
         "schema": {
           "url": "https://worldhealthorganization.github.io/smart-immunizations/schemas/ValueSet-IMMZD18SMeningococcalMenAConjugateVaccine1DoseVS.schema.json",
           "localPath": "fhir-artifact-index/dak/ValueSet-IMMZD18SMeningococcalMenAConjugateVaccine1DoseVS.schema.json",
@@ -25132,7 +25132,7 @@
       "category": "Terminology: Value Sets",
       "title": "IMMZD18SMeningococcalMenAConjugateVaccine2Doses ValueSet for Decision Table",
       "description": "ValueSet IMMZD18SMeningococcalMenAConjugateVaccine2Doses for IMMZ.D18.S.Meningococcal.MenA conjugate vaccine 2-dose schedule. Business rule: Determine if the client is due for a meningococcal vaccination according to the national immunization schedule Trigger: IMMZ.D2 Determine required vaccination(s) if any Table: MenA conjugate vaccine, 2-dose schedule (specific context where there is a compelling reason to vaccinate infants aged under 9 months)",
-      "dak": {
+      "sidecars": {
         "schema": {
           "url": "https://worldhealthorganization.github.io/smart-immunizations/schemas/ValueSet-IMMZD18SMeningococcalMenAConjugateVaccine2DosesVS.schema.json",
           "localPath": "fhir-artifact-index/dak/ValueSet-IMMZD18SMeningococcalMenAConjugateVaccine2DosesVS.schema.json",
@@ -25214,7 +25214,7 @@
       "category": "Terminology: Value Sets",
       "title": "IMMZD18SMeningococcalMonovalentMenCConjugateVaccine ValueSet for Decision Table",
       "description": "ValueSet IMMZD18SMeningococcalMonovalentMenCConjugateVaccine for IMMZ.D18.S.Meningococcal.Monovalent MenC conjugate vaccine schedule. Business rule: Determine if the client is due for a meningococcal vaccination according to the national immunization schedule Trigger: IMMZ.D2 Determine required vaccination(s) if any Table: Monovalent MenC conjugate schedule",
-      "dak": {
+      "sidecars": {
         "schema": {
           "url": "https://worldhealthorganization.github.io/smart-immunizations/schemas/ValueSet-IMMZD18SMeningococcalMonovalentMenCConjugateVaccineVS.schema.json",
           "localPath": "fhir-artifact-index/dak/ValueSet-IMMZD18SMeningococcalMonovalentMenCConjugateVaccineVS.schema.json",
@@ -25296,7 +25296,7 @@
       "category": "Terminology: Value Sets",
       "title": "IMMZD18SMeningococcalPolysaccharideVaccines ValueSet for Decision Table",
       "description": "ValueSet IMMZD18SMeningococcalPolysaccharideVaccines for IMMZ.D18.S.Meningococcal.Polysaccharide vaccines schedule. Business rule: Determine if the client is due for a meningococcal vaccination according to the national immunization schedule Trigger: IMMZ.D2 Determine required vaccination(s) if any Table: Polysaccharide vaccines, 1-dose and booster dose schedule",
-      "dak": {
+      "sidecars": {
         "schema": {
           "url": "https://worldhealthorganization.github.io/smart-immunizations/schemas/ValueSet-IMMZD18SMeningococcalPolysaccharideVaccinesVS.schema.json",
           "localPath": "fhir-artifact-index/dak/ValueSet-IMMZD18SMeningococcalPolysaccharideVaccinesVS.schema.json",
@@ -25378,7 +25378,7 @@
       "category": "Terminology: Value Sets",
       "title": "IMMZD18SMeningococcalQuadrivalentConjugateVaccines1Dose ValueSet for Decision Table",
       "description": "ValueSet IMMZD18SMeningococcalQuadrivalentConjugateVaccines1Dose for IMMZ.D18.S.Meningococcal.Quadrivalent conjugate vaccines 1-dose schedule. Business rule: Determine if the client is due for a meningococcal vaccination according to the national immunization schedule Trigger: IMMZ.D2 Determine required vaccination(s) if any Table: Quadrivalent conjugate vaccines (A,C,W135,Y-D and A,C,W135,Y-CRM), 1-dose schedule",
-      "dak": {
+      "sidecars": {
         "schema": {
           "url": "https://worldhealthorganization.github.io/smart-immunizations/schemas/ValueSet-IMMZD18SMeningococcalQuadrivalentConjugateVaccines1DoseVS.schema.json",
           "localPath": "fhir-artifact-index/dak/ValueSet-IMMZD18SMeningococcalQuadrivalentConjugateVaccines1DoseVS.schema.json",
@@ -25460,7 +25460,7 @@
       "category": "Terminology: Value Sets",
       "title": "IMMZD18SMeningococcalQuadrivalentConjugateVaccines2Doses ValueSet for Decision Table",
       "description": "ValueSet IMMZD18SMeningococcalQuadrivalentConjugateVaccines2Doses for IMMZ.D18.S.Meningococcal.Quadrivalent conjugate vaccines 2-dose schedule. Business rule: Determine if the client is due for a meningococcal vaccination according to the national immunization schedule Trigger: IMMZ.D2 Determine required vaccination(s) if any Table: Quadrivalent conjugate vaccine (A,C,W135,Y-D), 2-dose schedule",
-      "dak": {
+      "sidecars": {
         "schema": {
           "url": "https://worldhealthorganization.github.io/smart-immunizations/schemas/ValueSet-IMMZD18SMeningococcalQuadrivalentConjugateVaccines2DosesVS.schema.json",
           "localPath": "fhir-artifact-index/dak/ValueSet-IMMZD18SMeningococcalQuadrivalentConjugateVaccines2DosesVS.schema.json",
@@ -25542,7 +25542,7 @@
       "category": "Terminology: Value Sets",
       "title": "IMMZD18SMumps ValueSet for Decision Table",
       "description": "ValueSet IMMZD18SMumps for IMMZ.D18.S.Mumps schedule. Business rule: Determine if the client is due for a mumps vaccination according to the national immunization schedule Trigger: IMMZ.D2 Determine required vaccination(s) if any Table: 2-dose schedule",
-      "dak": {
+      "sidecars": {
         "schema": {
           "url": "https://worldhealthorganization.github.io/smart-immunizations/schemas/ValueSet-IMMZD18SMumpsVS.schema.json",
           "localPath": "fhir-artifact-index/dak/ValueSet-IMMZD18SMumpsVS.schema.json",
@@ -25624,7 +25624,7 @@
       "category": "Terminology: Value Sets",
       "title": "IMMZD18SPneumococcal2DosesWithBoosterDose ValueSet for Decision Table",
       "description": "ValueSet IMMZD18SPneumococcal2DosesWithBoosterDose for IMMZ.D18.S.Pneumococcal.2 doses with booster dose schedule. Business rule: Determine if the client is due for a pneumococcal vaccination according to the national immunization schedule Trigger: IMMZ.D2 Determine required vaccination(s) if any Table: 2 primary doses with a booster dose (2p+1) schedule",
-      "dak": {
+      "sidecars": {
         "schema": {
           "url": "https://worldhealthorganization.github.io/smart-immunizations/schemas/ValueSet-IMMZD18SPneumococcal2DosesWithBoosterDoseVS.schema.json",
           "localPath": "fhir-artifact-index/dak/ValueSet-IMMZD18SPneumococcal2DosesWithBoosterDoseVS.schema.json",
@@ -25706,7 +25706,7 @@
       "category": "Terminology: Value Sets",
       "title": "IMMZD18SPneumococcal3Doses ValueSet for Decision Table",
       "description": "ValueSet IMMZD18SPneumococcal3Doses for IMMZ.D18.S.Pneumococcal.3 doses schedule. Business rule: Determine if the client is due for a pneumococcal vaccination according to the national immunization schedule Trigger: IMMZ.D2 Determine required vaccination(s) if any Table: 3 primary doses (3p+0) schedule",
-      "dak": {
+      "sidecars": {
         "schema": {
           "url": "https://worldhealthorganization.github.io/smart-immunizations/schemas/ValueSet-IMMZD18SPneumococcal3DosesVS.schema.json",
           "localPath": "fhir-artifact-index/dak/ValueSet-IMMZD18SPneumococcal3DosesVS.schema.json",
@@ -25788,7 +25788,7 @@
       "category": "Terminology: Value Sets",
       "title": "IMMZD18SPolioBirthDose ValueSet for Decision Table",
       "description": "ValueSet IMMZD18SPolioBirthDose for IMMZ.D18.S.Polio.Birth dose schedule. Business rule: Determine if the client is due for a poliovirus vaccination according to the national immunization schedule Trigger: IMMZ.D2 Determine required vaccination(s) if any Table: Birth dose schedule (in countries that are poliomyelitis (polio)-endemic countries or countries at high risk for importation and subsequent spread of polio that follow the combined bivalent oral polio vaccine [bOPV]–inactivated polio vaccine [IPV] schedule)",
-      "dak": {
+      "sidecars": {
         "schema": {
           "url": "https://worldhealthorganization.github.io/smart-immunizations/schemas/ValueSet-IMMZD18SPolioBirthDoseVS.schema.json",
           "localPath": "fhir-artifact-index/dak/ValueSet-IMMZD18SPolioBirthDoseVS.schema.json",
@@ -25870,7 +25870,7 @@
       "category": "Terminology: Value Sets",
       "title": "IMMZD18SPolioBOPVPlusIPV ValueSet for Decision Table",
       "description": "ValueSet IMMZD18SPolioBOPVPlusIPV for IMMZ.D18.S.Polio.bOPV plus IPV schedule. Business rule: Determine if the client is due for a poliovirus vaccination according to the national immunization schedule Trigger: IMMZ.D2 Determine required vaccination(s) if any Table: Bivalent oral polio vaccine (bOPV) plus inactivated polio vaccine (IPV) schedule",
-      "dak": {
+      "sidecars": {
         "schema": {
           "url": "https://worldhealthorganization.github.io/smart-immunizations/schemas/ValueSet-IMMZD18SPolioBOPVPlusIPVVS.schema.json",
           "localPath": "fhir-artifact-index/dak/ValueSet-IMMZD18SPolioBOPVPlusIPVVS.schema.json",
@@ -25952,7 +25952,7 @@
       "category": "Terminology: Value Sets",
       "title": "IMMZD18SPolioIPVOnly ValueSet for Decision Table",
       "description": "ValueSet IMMZD18SPolioIPVOnly for IMMZ.D18.S.Polio.IPV-only schedule. Business rule: Determine if the client is due for a poliovirus vaccination according to the national immunization schedule Trigger: IMMZ.D2 Determine required vaccination(s) if any Table: Inactivated polio vaccine (IPV)-only schedule",
-      "dak": {
+      "sidecars": {
         "schema": {
           "url": "https://worldhealthorganization.github.io/smart-immunizations/schemas/ValueSet-IMMZD18SPolioIPVOnlyVS.schema.json",
           "localPath": "fhir-artifact-index/dak/ValueSet-IMMZD18SPolioIPVOnlyVS.schema.json",
@@ -26034,7 +26034,7 @@
       "category": "Terminology: Value Sets",
       "title": "IMMZD18SPolioSequentialIPVbOPV ValueSet for Decision Table",
       "description": "ValueSet IMMZD18SPolioSequentialIPVbOPV for IMMZ.D18.S.Polio.Sequential IPV–bOPV schedule. Business rule: Determine if the client is due for a poliovirus vaccination according to the national immunization schedule Trigger: IMMZ.D2 Determine required vaccination(s) if any Table: Sequential bivalent oral polio vaccine (bOPV)–inactivated polio vaccine (IPV) schedule",
-      "dak": {
+      "sidecars": {
         "schema": {
           "url": "https://worldhealthorganization.github.io/smart-immunizations/schemas/ValueSet-IMMZD18SPolioSequentialIPVbOPVVS.schema.json",
           "localPath": "fhir-artifact-index/dak/ValueSet-IMMZD18SPolioSequentialIPVbOPVVS.schema.json",
@@ -26116,7 +26116,7 @@
       "category": "Terminology: Value Sets",
       "title": "IMMZD18SRabies ValueSet for Decision Table",
       "description": "ValueSet IMMZD18SRabies for IMMZ.D18.S.Rabies schedule. Business rule: Determine if the client is due for a rabies vaccination according to the national immunization schedule Trigger: IMMZ.D2 Determine required vaccination(s) if any Table: Rabies schedule (2-dose scheme)",
-      "dak": {
+      "sidecars": {
         "schema": {
           "url": "https://worldhealthorganization.github.io/smart-immunizations/schemas/ValueSet-IMMZD18SRabiesVS.schema.json",
           "localPath": "fhir-artifact-index/dak/ValueSet-IMMZD18SRabiesVS.schema.json",
@@ -26198,7 +26198,7 @@
       "category": "Terminology: Value Sets",
       "title": "IMMZD18SRotavirus ValueSet for Decision Table",
       "description": "ValueSet IMMZD18SRotavirus for IMMZ.D18.S.Rotavirus schedule. Business rule: Determine if the client is due for a rotavirus vaccination according to the national immunization schedule Trigger: IMMZ.D2 Determine required vaccination(s) if any Table: IMMZ.D18.S.Rotavirus schedule",
-      "dak": {
+      "sidecars": {
         "schema": {
           "url": "https://worldhealthorganization.github.io/smart-immunizations/schemas/ValueSet-IMMZD18SRotavirusVS.schema.json",
           "localPath": "fhir-artifact-index/dak/ValueSet-IMMZD18SRotavirusVS.schema.json",
@@ -26280,7 +26280,7 @@
       "category": "Terminology: Value Sets",
       "title": "IMMZD18SRubellaHighIncidence ValueSet for Decision Table",
       "description": "ValueSet IMMZD18SRubellaHighIncidence for IMMZ.D18.S.Rubella.High incidence schedule. Business rule: Determine if the client is due for a rubella vaccination according to the national immunization schedule Trigger: IMMZ.D2 Determine required vaccination(s) if any Table: Schedule for countries with high incidence and mortality from rubella",
-      "dak": {
+      "sidecars": {
         "schema": {
           "url": "https://worldhealthorganization.github.io/smart-immunizations/schemas/ValueSet-IMMZD18SRubellaHighIncidenceVS.schema.json",
           "localPath": "fhir-artifact-index/dak/ValueSet-IMMZD18SRubellaHighIncidenceVS.schema.json",
@@ -26362,7 +26362,7 @@
       "category": "Terminology: Value Sets",
       "title": "IMMZD18SRubellaLowIncidence ValueSet for Decision Table",
       "description": "ValueSet IMMZD18SRubellaLowIncidence for IMMZ.D18.S.Rubella.Low incidence schedule. Business rule: Determine if the client is due for a rubella vaccination according to the national immunization schedule Trigger: IMMZ.D2 Determine required vaccination(s) if any Table: Schedule for countries with low incidence of rubella",
-      "dak": {
+      "sidecars": {
         "schema": {
           "url": "https://worldhealthorganization.github.io/smart-immunizations/schemas/ValueSet-IMMZD18SRubellaLowIncidenceVS.schema.json",
           "localPath": "fhir-artifact-index/dak/ValueSet-IMMZD18SRubellaLowIncidenceVS.schema.json",
@@ -26444,7 +26444,7 @@
       "category": "Terminology: Value Sets",
       "title": "IMMZD18STBEEncepur ValueSet for Decision Table",
       "description": "ValueSet IMMZD18STBEEncepur for IMMZ.D18.S.TBE.Encepur schedule. Business rule: Determine if the client is due for a tick-borne encephalitis (TBE) vaccination according to the national immunization schedule Trigger: IMMZ.D2 Determine required vaccination(s) if any Table: Encepur, 3-dose schedule",
-      "dak": {
+      "sidecars": {
         "schema": {
           "url": "https://worldhealthorganization.github.io/smart-immunizations/schemas/ValueSet-IMMZD18STBEEncepurVS.schema.json",
           "localPath": "fhir-artifact-index/dak/ValueSet-IMMZD18STBEEncepurVS.schema.json",
@@ -26526,7 +26526,7 @@
       "category": "Terminology: Value Sets",
       "title": "IMMZD18STBEEnceVir ValueSet for Decision Table",
       "description": "ValueSet IMMZD18STBEEnceVir for IMMZ.D18.S.TBE.EnceVir schedule. Business rule: Determine if the client is due for a tick-borne encephalitis (TBE) vaccination according to the national immunization schedule Trigger: IMMZ.D2 Determine required vaccination(s) if any Table: EnceVir, 3-dose schedule",
-      "dak": {
+      "sidecars": {
         "schema": {
           "url": "https://worldhealthorganization.github.io/smart-immunizations/schemas/ValueSet-IMMZD18STBEEnceVirVS.schema.json",
           "localPath": "fhir-artifact-index/dak/ValueSet-IMMZD18STBEEnceVirVS.schema.json",
@@ -26608,7 +26608,7 @@
       "category": "Terminology: Value Sets",
       "title": "IMMZD18STBEFSMEImmun ValueSet for Decision Table",
       "description": "ValueSet IMMZD18STBEFSMEImmun for IMMZ.D18.S.TBE.FSME-Immun schedule. Business rule: Determine if the client is due for a tick-borne encephalitis (TBE) vaccination according to the national immunization schedule Trigger: IMMZ.D2 Determine required vaccination(s) if any Table: FSME-Immun, 3-dose schedule",
-      "dak": {
+      "sidecars": {
         "schema": {
           "url": "https://worldhealthorganization.github.io/smart-immunizations/schemas/ValueSet-IMMZD18STBEFSMEImmunVS.schema.json",
           "localPath": "fhir-artifact-index/dak/ValueSet-IMMZD18STBEFSMEImmunVS.schema.json",
@@ -26690,7 +26690,7 @@
       "category": "Terminology: Value Sets",
       "title": "IMMZD18STBETBEMoscow ValueSet for Decision Table",
       "description": "ValueSet IMMZD18STBETBEMoscow for IMMZ.D18.S.TBE.TBE-Moscow schedule. Business rule: Determine if the client is due for a tick-borne encephalitis (TBE) vaccination according to the national immunization schedule Trigger: IMMZ.D2 Determine required vaccination(s) if any Table: TBE-Moscow, 3-dose schedule",
-      "dak": {
+      "sidecars": {
         "schema": {
           "url": "https://worldhealthorganization.github.io/smart-immunizations/schemas/ValueSet-IMMZD18STBETBEMoscowVS.schema.json",
           "localPath": "fhir-artifact-index/dak/ValueSet-IMMZD18STBETBEMoscowVS.schema.json",
@@ -26772,7 +26772,7 @@
       "category": "Terminology: Value Sets",
       "title": "IMMZD18STyphoidTCV ValueSet for Decision Table",
       "description": "ValueSet IMMZD18STyphoidTCV for IMMZ.D18.S.Typhoid.TCV schedule. Business rule: Determine if the client is due for a typhoid vaccination according to the national immunization schedule Trigger: IMMZ.D2 Determine required vaccination(s) if any Table: Typhoid conjugate vaccine (TCV), 1 dose schedule",
-      "dak": {
+      "sidecars": {
         "schema": {
           "url": "https://worldhealthorganization.github.io/smart-immunizations/schemas/ValueSet-IMMZD18STyphoidTCVVS.schema.json",
           "localPath": "fhir-artifact-index/dak/ValueSet-IMMZD18STyphoidTCVVS.schema.json",
@@ -26854,7 +26854,7 @@
       "category": "Terminology: Value Sets",
       "title": "IMMZD18STyphoidTy21a ValueSet for Decision Table",
       "description": "ValueSet IMMZD18STyphoidTy21a for IMMZ.D18.S.Typhoid.Ty21a schedule. Business rule: Determine if the client is due for a typhoid vaccination according to the national immunization schedule Trigger: IMMZ.D2 Determine required vaccination(s) if any Table: Live attenuated Ty21a vaccine, 3-dose schedule",
-      "dak": {
+      "sidecars": {
         "schema": {
           "url": "https://worldhealthorganization.github.io/smart-immunizations/schemas/ValueSet-IMMZD18STyphoidTy21aVS.schema.json",
           "localPath": "fhir-artifact-index/dak/ValueSet-IMMZD18STyphoidTy21aVS.schema.json",
@@ -26936,7 +26936,7 @@
       "category": "Terminology: Value Sets",
       "title": "IMMZD18STyphoidViPS ValueSet for Decision Table",
       "description": "ValueSet IMMZD18STyphoidViPS for IMMZ.D18.S.Typhoid.ViPS schedule. Business rule: Determine if the client is due for a typhoid vaccination according to the national immunization schedule Trigger: IMMZ.D2 Determine required vaccination(s) if any Table: Unconjugated Vi polysaccharide (ViPS), 1 dose schedule",
-      "dak": {
+      "sidecars": {
         "schema": {
           "url": "https://worldhealthorganization.github.io/smart-immunizations/schemas/ValueSet-IMMZD18STyphoidViPSVS.schema.json",
           "localPath": "fhir-artifact-index/dak/ValueSet-IMMZD18STyphoidViPSVS.schema.json",
@@ -27018,7 +27018,7 @@
       "category": "Terminology: Value Sets",
       "title": "IMMZD18SVaricella1Dose ValueSet for Decision Table",
       "description": "ValueSet IMMZD18SVaricella1Dose for IMMZ.D18.S.Varicella.1-dose schedule. Business rule: Determine if the client is due for a varicella vaccination according to the national immunization schedule Trigger: IMMZ.D2 Determine required vaccination(s) if any Table: 1-dose schedule",
-      "dak": {
+      "sidecars": {
         "schema": {
           "url": "https://worldhealthorganization.github.io/smart-immunizations/schemas/ValueSet-IMMZD18SVaricella1DoseVS.schema.json",
           "localPath": "fhir-artifact-index/dak/ValueSet-IMMZD18SVaricella1DoseVS.schema.json",
@@ -27100,7 +27100,7 @@
       "category": "Terminology: Value Sets",
       "title": "IMMZD18SVaricella2Doses ValueSet for Decision Table",
       "description": "ValueSet IMMZD18SVaricella2Doses for IMMZ.D18.S.Varicella.2-dose schedule. Business rule: Determine if the client is due for a varicella vaccination according to the national immunization schedule Trigger: IMMZ.D2 Determine required vaccination(s) if any Table: 2-dose schedule",
-      "dak": {
+      "sidecars": {
         "schema": {
           "url": "https://worldhealthorganization.github.io/smart-immunizations/schemas/ValueSet-IMMZD18SVaricella2DosesVS.schema.json",
           "localPath": "fhir-artifact-index/dak/ValueSet-IMMZD18SVaricella2DosesVS.schema.json",
@@ -27182,7 +27182,7 @@
       "category": "Terminology: Value Sets",
       "title": "IMMZD18SYellowfeverYellowFever ValueSet for Decision Table",
       "description": "ValueSet IMMZD18SYellowfeverYellowFever for IMMZ.D18.S.Yellow fever schedule. Business rule: Determine if the client is due for a yellow fever vaccination according to the national immunization schedule Trigger: IMMZ.D2 Determine required vaccination(s) in any Table: IMMZ.D18.S.Yellow fever schedule",
-      "dak": {
+      "sidecars": {
         "schema": {
           "url": "https://worldhealthorganization.github.io/smart-immunizations/schemas/ValueSet-IMMZD18SYellowfeverYellowFeverVS.schema.json",
           "localPath": "fhir-artifact-index/dak/ValueSet-IMMZD18SYellowfeverYellowFeverVS.schema.json",
@@ -27264,7 +27264,7 @@
       "category": "Terminology: Value Sets",
       "title": "IMMZD2DTBCG ValueSet for Decision Table",
       "description": "ValueSet IMMZD2DTBCG for IMMZ.D2.DT.BCG. Business rule: Determine if the client is due for a bacille Calmette–Guérin (BCG) vaccination according to the national immunization schedule Trigger: IMMZ.D2 Determine required vaccination(s) if any Table: IMMZ.D2.DT.BCG",
-      "dak": {
+      "sidecars": {
         "schema": {
           "url": "https://worldhealthorganization.github.io/smart-immunizations/schemas/ValueSet-IMMZD2DTBCGVS.schema.json",
           "localPath": "fhir-artifact-index/dak/ValueSet-IMMZD2DTBCGVS.schema.json",
@@ -27346,7 +27346,7 @@
       "category": "Terminology: Value Sets",
       "title": "IMMZD2DTCholeraWCRBSVaccine2Doses ValueSet for Decision Table",
       "description": "ValueSet IMMZD2DTCholeraWCRBSVaccine2Doses for IMMZ.D2.DT.Cholera.WC-rBS vaccine 2 doses. Business rule: Determine if the client is due for a cholera vaccination according to the national immunization schedule Trigger: IMMZ.D2 Determine required vaccination(s) if any Table: Whole cell-recombinant B subunit (WC-rBS) vaccine, 2-dose schedule for clients aged over 5 years",
-      "dak": {
+      "sidecars": {
         "schema": {
           "url": "https://worldhealthorganization.github.io/smart-immunizations/schemas/ValueSet-IMMZD2DTCholeraWCRBSVaccine2DosesVS.schema.json",
           "localPath": "fhir-artifact-index/dak/ValueSet-IMMZD2DTCholeraWCRBSVaccine2DosesVS.schema.json",
@@ -27428,7 +27428,7 @@
       "category": "Terminology: Value Sets",
       "title": "IMMZD2DTCholeraWCRBSVaccine3Doses ValueSet for Decision Table",
       "description": "ValueSet IMMZD2DTCholeraWCRBSVaccine3Doses for IMMZ.D2.DT.Cholera.WC-rBS vaccine 3 doses. Business rule: Determine if the client is due for a cholera vaccination according to the national immunization schedule Trigger: IMMZ.D2 Determine required vaccination(s) if any Table: Whole cell-recombinant B subunit (WC-rBS) vaccine, 3-dose schedule for clients aged 2–5 years",
-      "dak": {
+      "sidecars": {
         "schema": {
           "url": "https://worldhealthorganization.github.io/smart-immunizations/schemas/ValueSet-IMMZD2DTCholeraWCRBSVaccine3DosesVS.schema.json",
           "localPath": "fhir-artifact-index/dak/ValueSet-IMMZD2DTCholeraWCRBSVaccine3DosesVS.schema.json",
@@ -27510,7 +27510,7 @@
       "category": "Terminology: Value Sets",
       "title": "IMMZD2DTCholeraWCVaccines ValueSet for Decision Table",
       "description": "ValueSet IMMZD2DTCholeraWCVaccines for IMMZ.D2.DT.Cholera.WC vaccines. Business rule: Determine if the client is due for a cholera vaccination according to the national immunization schedule Trigger: IMMZ.D2 Determine required vaccination(s) if any Table: Whole-cell (WC) vaccines schedule",
-      "dak": {
+      "sidecars": {
         "schema": {
           "url": "https://worldhealthorganization.github.io/smart-immunizations/schemas/ValueSet-IMMZD2DTCholeraWCVaccinesVS.schema.json",
           "localPath": "fhir-artifact-index/dak/ValueSet-IMMZD2DTCholeraWCVaccinesVS.schema.json",
@@ -27592,7 +27592,7 @@
       "category": "Terminology: Value Sets",
       "title": "IMMZD2DTDengue3DosesWithoutPreVaccinationScreening ValueSet for Decision Table",
       "description": "ValueSet IMMZD2DTDengue3DosesWithoutPreVaccinationScreening for IMMZ.D2.DT.Dengue.3 doses without pre-vaccination screening. Business rule: Determine if the client is due for a dengue vaccination according to the national immunization schedule Trigger: IMMZ.D2 Determine required vaccination(s) if any Table: CYD-TDV (Dengvaxia), 3-dose schedule without pre-vaccination screening [when pre-vaccination screening is not feasible and in areas with recent documentation of seroprevalence rates of at least 80% by age 9 years]",
-      "dak": {
+      "sidecars": {
         "schema": {
           "url": "https://worldhealthorganization.github.io/smart-immunizations/schemas/ValueSet-IMMZD2DTDengue3DosesWithoutPreVaccinationScreeningVS.schema.json",
           "localPath": "fhir-artifact-index/dak/ValueSet-IMMZD2DTDengue3DosesWithoutPreVaccinationScreeningVS.schema.json",
@@ -27674,7 +27674,7 @@
       "category": "Terminology: Value Sets",
       "title": "IMMZD2DTDengue3DosesWithPreVaccinationScreening ValueSet for Decision Table",
       "description": "ValueSet IMMZD2DTDengue3DosesWithPreVaccinationScreening for IMMZ.D2.DT.Dengue.3 doses with pre-vaccination screening. Business rule: Determine if the client is due for a dengue vaccination according to the national immunization schedule Trigger: IMMZ.D2 Determine required vaccination(s) if any Table: CYD-TDV (Dengvaxia), 3-dose schedule with pre-vaccination screening, the recommended strategy where feasible (pre-vaccination screening whereby only those tested seropositive would be vaccinated)",
-      "dak": {
+      "sidecars": {
         "schema": {
           "url": "https://worldhealthorganization.github.io/smart-immunizations/schemas/ValueSet-IMMZD2DTDengue3DosesWithPreVaccinationScreeningVS.schema.json",
           "localPath": "fhir-artifact-index/dak/ValueSet-IMMZD2DTDengue3DosesWithPreVaccinationScreeningVS.schema.json",
@@ -27756,7 +27756,7 @@
       "category": "Terminology: Value Sets",
       "title": "IMMZD2DTDTPDelayedOrInterruptedSeries ValueSet for Decision Table",
       "description": "ValueSet IMMZD2DTDTPDelayedOrInterruptedSeries for IMMZ.D2.DT.DTP.Delayed or interrupted series. Business rule: Determine if the client is due for a diphtheria–tetanus–pertussis (DTP) vaccination according to the national immunization schedule Trigger: IMMZ.D2 Determine required vaccination(s) if any Table: DTP vaccination schedule for the following groups: children ≥ 1 year of age with no previous immunization, adolescents and adults with no previous immunization (including pregnant women) and supplementary immunization activities in high-risk areas, for women of reproductive age",
-      "dak": {
+      "sidecars": {
         "schema": {
           "url": "https://worldhealthorganization.github.io/smart-immunizations/schemas/ValueSet-IMMZD2DTDTPDelayedOrInterruptedSeriesVS.schema.json",
           "localPath": "fhir-artifact-index/dak/ValueSet-IMMZD2DTDTPDelayedOrInterruptedSeriesVS.schema.json",
@@ -27838,7 +27838,7 @@
       "category": "Terminology: Value Sets",
       "title": "IMMZD2DTDTPOnTimeStart ValueSet for Decision Table",
       "description": "ValueSet IMMZD2DTDTPOnTimeStart for IMMZ.D2.DT.DTP.On-time start. Business rule: Determine if the client is due for a diphtheria–tetanus–pertussis (DTP) vaccination according to the national immunization schedule Trigger: IMMZ.D2 Determine required vaccination(s) if any Table: DTP vaccination schedule, on-time start (at ≤ 12 months of age)",
-      "dak": {
+      "sidecars": {
         "schema": {
           "url": "https://worldhealthorganization.github.io/smart-immunizations/schemas/ValueSet-IMMZD2DTDTPOnTimeStartVS.schema.json",
           "localPath": "fhir-artifact-index/dak/ValueSet-IMMZD2DTDTPOnTimeStartVS.schema.json",
@@ -27920,7 +27920,7 @@
       "category": "Terminology: Value Sets",
       "title": "IMMZD2DTDTPPregnancyStartingWith3Doses ValueSet for Decision Table",
       "description": "ValueSet IMMZD2DTDTPPregnancyStartingWith3Doses for IMMZ.D2.DT.DTP.Pregnancy starting with 3 doses. Business rule: Determine if the client is due for a diphtheria–tetanus–pertussis (DTP) vaccination according to the national immunization schedule Trigger: IMMZ.D2 Determine required vaccination(s) if any Table: Diphtheria and tetanus vaccination schedule in pregnant women who received 3 childhood DTP doses",
-      "dak": {
+      "sidecars": {
         "schema": {
           "url": "https://worldhealthorganization.github.io/smart-immunizations/schemas/ValueSet-IMMZD2DTDTPPregnancyStartingWith3DosesVS.schema.json",
           "localPath": "fhir-artifact-index/dak/ValueSet-IMMZD2DTDTPPregnancyStartingWith3DosesVS.schema.json",
@@ -28002,7 +28002,7 @@
       "category": "Terminology: Value Sets",
       "title": "IMMZD2DTDTPPregnancyStartingWith4Doses ValueSet for Decision Table",
       "description": "ValueSet IMMZD2DTDTPPregnancyStartingWith4Doses for IMMZ.D2.DT.DTP.Pregnancy starting with 4 doses. Business rule: Determine if the client is due for a diphtheria–tetanus–pertussis (DTP) vaccination according to the national immunization schedule Trigger: IMMZ.D2 Determine required vaccination(s) if any Table: Diphtheria and tetanus vaccination schedule in pregnant women who received 4 childhood DTP doses",
-      "dak": {
+      "sidecars": {
         "schema": {
           "url": "https://worldhealthorganization.github.io/smart-immunizations/schemas/ValueSet-IMMZD2DTDTPPregnancyStartingWith4DosesVS.schema.json",
           "localPath": "fhir-artifact-index/dak/ValueSet-IMMZD2DTDTPPregnancyStartingWith4DosesVS.schema.json",
@@ -28084,7 +28084,7 @@
       "category": "Terminology: Value Sets",
       "title": "IMMZD2DTDTPPregnancy ValueSet for Decision Table",
       "description": "ValueSet IMMZD2DTDTPPregnancy for IMMZ.D2.DT.DTP.Pregnancy. Business rule: Determine if the client is due for a diphtheria–tetanus–pertussis (DTP) vaccination according to the national immunization schedule Trigger: IMMZ.D2 Determine required vaccination(s) if any Table: Determine whether DTP-containing vaccines are needed for pregnant women",
-      "dak": {
+      "sidecars": {
         "schema": {
           "url": "https://worldhealthorganization.github.io/smart-immunizations/schemas/ValueSet-IMMZD2DTDTPPregnancyVS.schema.json",
           "localPath": "fhir-artifact-index/dak/ValueSet-IMMZD2DTDTPPregnancyVS.schema.json",
@@ -28166,7 +28166,7 @@
       "category": "Terminology: Value Sets",
       "title": "IMMZD2DTHepatitisAInactivatedHAV1Dose ValueSet for Decision Table",
       "description": "ValueSet IMMZD2DTHepatitisAInactivatedHAV1Dose for IMMZ.D2.DT.Hepatitis A.Inactivated HAV 1 dose. Business rule: Determine if the client is due for a hepatitis A vaccination according to the national immunization schedule Trigger: IMMZ.D2 Determine required vaccination(s) if any Table: Inactivated hepatitis A virus (HAV), 1-dose schedule",
-      "dak": {
+      "sidecars": {
         "schema": {
           "url": "https://worldhealthorganization.github.io/smart-immunizations/schemas/ValueSet-IMMZD2DTHepatitisAInactivatedHAV1DoseVS.schema.json",
           "localPath": "fhir-artifact-index/dak/ValueSet-IMMZD2DTHepatitisAInactivatedHAV1DoseVS.schema.json",
@@ -28248,7 +28248,7 @@
       "category": "Terminology: Value Sets",
       "title": "IMMZD2DTHepatitisAInactivatedHAV2Doses ValueSet for Decision Table",
       "description": "ValueSet IMMZD2DTHepatitisAInactivatedHAV2Doses for IMMZ.D2.DT.Hepatitis A.Inactivated HAV 2 doses. Business rule: Determine if the client is due for a hepatitis A vaccination according to the national immunization schedule Trigger: IMMZ.D2 Determine required vaccination(s) if any Table: Inactivated hepatitis A virus (HAV), 2-dose schedule",
-      "dak": {
+      "sidecars": {
         "schema": {
           "url": "https://worldhealthorganization.github.io/smart-immunizations/schemas/ValueSet-IMMZD2DTHepatitisAInactivatedHAV2DosesVS.schema.json",
           "localPath": "fhir-artifact-index/dak/ValueSet-IMMZD2DTHepatitisAInactivatedHAV2DosesVS.schema.json",
@@ -28330,7 +28330,7 @@
       "category": "Terminology: Value Sets",
       "title": "IMMZD2DTHepatitisALiveAttenuatedHAV1Dose ValueSet for Decision Table",
       "description": "ValueSet IMMZD2DTHepatitisALiveAttenuatedHAV1Dose for IMMZ.D2.DT.Hepatitis A.Live attenuated HAV 1 dose. Business rule: Determine if the client is due for a hepatitis A vaccination according to the national immunization schedule Trigger: IMMZ.D2 Determine required vaccination(s) if any Table: Live attenuated hepatitis A virus (HAV), 1 dose schedule",
-      "dak": {
+      "sidecars": {
         "schema": {
           "url": "https://worldhealthorganization.github.io/smart-immunizations/schemas/ValueSet-IMMZD2DTHepatitisALiveAttenuatedHAV1DoseVS.schema.json",
           "localPath": "fhir-artifact-index/dak/ValueSet-IMMZD2DTHepatitisALiveAttenuatedHAV1DoseVS.schema.json",
@@ -28412,7 +28412,7 @@
       "category": "Terminology: Value Sets",
       "title": "IMMZD2DTHib2DosesWithBoosterDose ValueSet for Decision Table",
       "description": "ValueSet IMMZD2DTHib2DosesWithBoosterDose for IMMZ.D2.DT.Hib.2 doses with booster dose. Business rule: Determine if the client is due for a Haemophilus influenzae type b (Hib) vaccination according to the national immunization schedule Trigger: IMMZ.D2 Determine required vaccination(s) if any Table: 2 primary doses with a booster dose (2p+1)",
-      "dak": {
+      "sidecars": {
         "schema": {
           "url": "https://worldhealthorganization.github.io/smart-immunizations/schemas/ValueSet-IMMZD2DTHib2DosesWithBoosterDoseVS.schema.json",
           "localPath": "fhir-artifact-index/dak/ValueSet-IMMZD2DTHib2DosesWithBoosterDoseVS.schema.json",
@@ -28494,7 +28494,7 @@
       "category": "Terminology: Value Sets",
       "title": "IMMZD2DTHib3Doses ValueSet for Decision Table",
       "description": "ValueSet IMMZD2DTHib3Doses for IMMZ.D2.DT.Hib.3 doses. Business rule: Determine if the client is due for a Haemophilus influenzae type b (Hib) vaccination according to the national immunization schedule Trigger: IMMZ.D2 Determine required vaccination(s) if any Table: 3 primary doses without a booster dose (3p)",
-      "dak": {
+      "sidecars": {
         "schema": {
           "url": "https://worldhealthorganization.github.io/smart-immunizations/schemas/ValueSet-IMMZD2DTHib3DosesVS.schema.json",
           "localPath": "fhir-artifact-index/dak/ValueSet-IMMZD2DTHib3DosesVS.schema.json",
@@ -28576,7 +28576,7 @@
       "category": "Terminology: Value Sets",
       "title": "IMMZD2DTHib3DosesWithBoosterDose ValueSet for Decision Table",
       "description": "ValueSet IMMZD2DTHib3DosesWithBoosterDose for IMMZ.D2.DT.Hib.3 doses with booster dose. Business rule: Determine if the client is due for a Haemophilus influenzae type b (Hib) vaccination according to the national immunization schedule Trigger: IMMZ.D2 Determine required vaccination(s) if any Table: 3 primary doses with a booster dose (3p+1)",
-      "dak": {
+      "sidecars": {
         "schema": {
           "url": "https://worldhealthorganization.github.io/smart-immunizations/schemas/ValueSet-IMMZD2DTHib3DosesWithBoosterDoseVS.schema.json",
           "localPath": "fhir-artifact-index/dak/ValueSet-IMMZD2DTHib3DosesWithBoosterDoseVS.schema.json",
@@ -28658,7 +28658,7 @@
       "category": "Terminology: Value Sets",
       "title": "IMMZD2DTHPV2Doses ValueSet for Decision Table",
       "description": "ValueSet IMMZD2DTHPV2Doses for IMMZ.D2.DT.HPV.2 doses. Business rule: Determine if the client is due for a human papillomavirus (HPV) vaccination according to the national immunization schedule Trigger: IMMZ.D2 Determine required vaccination(s) if any Table: 2-dose schedule",
-      "dak": {
+      "sidecars": {
         "schema": {
           "url": "https://worldhealthorganization.github.io/smart-immunizations/schemas/ValueSet-IMMZD2DTHPV2DosesVS.schema.json",
           "localPath": "fhir-artifact-index/dak/ValueSet-IMMZD2DTHPV2DosesVS.schema.json",
@@ -28740,7 +28740,7 @@
       "category": "Terminology: Value Sets",
       "title": "IMMZD2DTHPVSingleDose ValueSet for Decision Table",
       "description": "ValueSet IMMZD2DTHPVSingleDose for IMMZ.D2.DT.HPV.Single dose. Business rule: Determine if the client is due for a human papillomavirus (HPV) vaccination according to the national immunization schedule Trigger: IMMZ.D2 Determine required vaccination(s) if any Table: Alternative single-dose schedule",
-      "dak": {
+      "sidecars": {
         "schema": {
           "url": "https://worldhealthorganization.github.io/smart-immunizations/schemas/ValueSet-IMMZD2DTHPVSingleDoseVS.schema.json",
           "localPath": "fhir-artifact-index/dak/ValueSet-IMMZD2DTHPVSingleDoseVS.schema.json",
@@ -28822,7 +28822,7 @@
       "category": "Terminology: Value Sets",
       "title": "IMMZD2DTJEInactivatedVeroCellDerivedVaccine ValueSet for Decision Table",
       "description": "ValueSet IMMZD2DTJEInactivatedVeroCellDerivedVaccine for IMMZ.D2.DT.JE.Inactivated Vero cell-derived vaccine. Business rule: Determine if the client is due for a Japanese encephalitis (JE) vaccination according to the national immunization schedule Trigger: IMMZ.D2 Determine required vaccination(s) if any Table: Inactivated Vero cell-derived vaccination schedule (2-dose scheme) JE vaccination should be integrated into national immunization schedules in all areas where JE is recognized as a public health priority",
-      "dak": {
+      "sidecars": {
         "schema": {
           "url": "https://worldhealthorganization.github.io/smart-immunizations/schemas/ValueSet-IMMZD2DTJEInactivatedVeroCellDerivedVaccineVS.schema.json",
           "localPath": "fhir-artifact-index/dak/ValueSet-IMMZD2DTJEInactivatedVeroCellDerivedVaccineVS.schema.json",
@@ -28904,7 +28904,7 @@
       "category": "Terminology: Value Sets",
       "title": "IMMZD2DTJELiveAttenuatedVaccine ValueSet for Decision Table",
       "description": "ValueSet IMMZD2DTJELiveAttenuatedVaccine for IMMZ.D2.DT.JE.Live attenuated vaccine. Business rule: Determine if the client is due for a Japanese encephalitis (JE) vaccination according to the national immunization schedule Trigger: IMMZ.D2 Determine required vaccination(s) if any Table: Live attenuated vaccination schedule (1-dose scheme) JE vaccination should be integrated into national immunization schedules in all areas where JE is recognized as a public health priority",
-      "dak": {
+      "sidecars": {
         "schema": {
           "url": "https://worldhealthorganization.github.io/smart-immunizations/schemas/ValueSet-IMMZD2DTJELiveAttenuatedVaccineVS.schema.json",
           "localPath": "fhir-artifact-index/dak/ValueSet-IMMZD2DTJELiveAttenuatedVaccineVS.schema.json",
@@ -28986,7 +28986,7 @@
       "category": "Terminology: Value Sets",
       "title": "IMMZD2DTJELiveRecombinantVaccine ValueSet for Decision Table",
       "description": "ValueSet IMMZD2DTJELiveRecombinantVaccine for IMMZ.D2.DT.JE.Live recombinant vaccine. Business rule: Determine if the client is due for a Japanese encephalitis (JE) vaccination according to the national immunization schedule Trigger: IMMZ.D2 Determine required vaccination(s) if any Table: Live recombinant vaccination schedule (1-dose scheme) JE vaccination should be integrated into national immunization schedules in all areas where JE is recognized as a public health priority",
-      "dak": {
+      "sidecars": {
         "schema": {
           "url": "https://worldhealthorganization.github.io/smart-immunizations/schemas/ValueSet-IMMZD2DTJELiveRecombinantVaccineVS.schema.json",
           "localPath": "fhir-artifact-index/dak/ValueSet-IMMZD2DTJELiveRecombinantVaccineVS.schema.json",
@@ -29068,7 +29068,7 @@
       "category": "Terminology: Value Sets",
       "title": "IMMZD2DTMalaria ValueSet for Decision Table",
       "description": "ValueSet IMMZD2DTMalaria for IMMZ.D2.DT.Malaria. Business rule: Determine if the client is due for a malaria vaccination according to the national immunization schedule Trigger: IMMZ.D2 Determine required vaccination(s) if any Table: 4-dose schedule (The RTS,S/AS01 malaria vaccine should be used for the prevention of Plasmodium falciparum malaria in children living in regions with moderate to high malaria transmission, as defined by WHO)",
-      "dak": {
+      "sidecars": {
         "schema": {
           "url": "https://worldhealthorganization.github.io/smart-immunizations/schemas/ValueSet-IMMZD2DTMalariaVS.schema.json",
           "localPath": "fhir-artifact-index/dak/ValueSet-IMMZD2DTMalariaVS.schema.json",
@@ -29150,7 +29150,7 @@
       "category": "Terminology: Value Sets",
       "title": "IMMZD2DTMeaslesLowTransmission ValueSet for Decision Table",
       "description": "ValueSet IMMZD2DTMeaslesLowTransmission for IMMZ.D2.DT.Measles.Low transmission. Business rule: Determine if the client is due for a measles vaccination according to the national immunization schedule Trigger: IMMZ.D2 Determine required vaccination(s) if any Table: Countries with low levels of measles transmission (countries that provide first dose of measles-containing vaccine (MCV) at 12 months and second dose of MCV at 15 months)",
-      "dak": {
+      "sidecars": {
         "schema": {
           "url": "https://worldhealthorganization.github.io/smart-immunizations/schemas/ValueSet-IMMZD2DTMeaslesLowTransmissionVS.schema.json",
           "localPath": "fhir-artifact-index/dak/ValueSet-IMMZD2DTMeaslesLowTransmissionVS.schema.json",
@@ -29232,7 +29232,7 @@
       "category": "Terminology: Value Sets",
       "title": "IMMZD2DTMeaslesMCVDose0 ValueSet for Decision Table",
       "description": "ValueSet IMMZD2DTMeaslesMCVDose0 for IMMZ.D2.DT.Measles.MCV dose 0. Business rule: Determine if the client is due for a measles vaccination according to the national immunization schedule Trigger: IMMZ.D2 Determine required vaccination(s) if any Table: Measles-containing vaccine dose 0 (MCV0) administration",
-      "dak": {
+      "sidecars": {
         "schema": {
           "url": "https://worldhealthorganization.github.io/smart-immunizations/schemas/ValueSet-IMMZD2DTMeaslesMCVDose0VS.schema.json",
           "localPath": "fhir-artifact-index/dak/ValueSet-IMMZD2DTMeaslesMCVDose0VS.schema.json",
@@ -29314,7 +29314,7 @@
       "category": "Terminology: Value Sets",
       "title": "IMMZD2DTMeaslesOngoingTransmission ValueSet for Decision Table",
       "description": "ValueSet IMMZD2DTMeaslesOngoingTransmission for IMMZ.D2.DT.Measles.Ongoing transmission. Business rule: Determine if the client is due for a measles vaccination according to the national immunization schedule Trigger: IMMZ.D2 Determine required vaccination(s) if any Table: Countries with ongoing transmission in which the risk of measles mortality remains high (countries that provide first dose of measles-containing vaccine (MCV) at 9 months and second dose of MCV at 15 months)",
-      "dak": {
+      "sidecars": {
         "schema": {
           "url": "https://worldhealthorganization.github.io/smart-immunizations/schemas/ValueSet-IMMZD2DTMeaslesOngoingTransmissionVS.schema.json",
           "localPath": "fhir-artifact-index/dak/ValueSet-IMMZD2DTMeaslesOngoingTransmissionVS.schema.json",
@@ -29396,7 +29396,7 @@
       "category": "Terminology: Value Sets",
       "title": "IMMZD2DTMeaslesSupplementaryDose ValueSet for Decision Table",
       "description": "ValueSet IMMZD2DTMeaslesSupplementaryDose for IMMZ.D2.DT.Measles.Supplementary dose. Business rule: Check for contraindications before administering the vaccine(s) due Trigger: IMMZ.D5 Determine vaccine(s) to be administered based on contraindications Table: IMMZ.D2.DT.Measles.Supplementary dose",
-      "dak": {
+      "sidecars": {
         "schema": {
           "url": "https://worldhealthorganization.github.io/smart-immunizations/schemas/ValueSet-IMMZD2DTMeaslesSupplementaryDoseVS.schema.json",
           "localPath": "fhir-artifact-index/dak/ValueSet-IMMZD2DTMeaslesSupplementaryDoseVS.schema.json",
@@ -29478,7 +29478,7 @@
       "category": "Terminology: Value Sets",
       "title": "IMMZD2DTMeningococcalMenAConjugateVaccine1Dose ValueSet for Decision Table",
       "description": "ValueSet IMMZD2DTMeningococcalMenAConjugateVaccine1Dose for IMMZ.D2.DT.Meningococcal.MenA conjugate vaccine 1 dose. Business rule: Determine if the client is due for a meningococcal vaccination according to the national immunization schedule Trigger: IMMZ.D2 Determine required vaccination(s) if any Table: MenA conjugate vaccine, 1-dose schedule",
-      "dak": {
+      "sidecars": {
         "schema": {
           "url": "https://worldhealthorganization.github.io/smart-immunizations/schemas/ValueSet-IMMZD2DTMeningococcalMenAConjugateVaccine1DoseVS.schema.json",
           "localPath": "fhir-artifact-index/dak/ValueSet-IMMZD2DTMeningococcalMenAConjugateVaccine1DoseVS.schema.json",
@@ -29560,7 +29560,7 @@
       "category": "Terminology: Value Sets",
       "title": "IMMZD2DTMeningococcalMenAConjugateVaccine2Doses ValueSet for Decision Table",
       "description": "ValueSet IMMZD2DTMeningococcalMenAConjugateVaccine2Doses for IMMZ.D2.DT.Meningococcal.MenA conjugate vaccine 2 doses. Business rule: Determine if the client is due for a meningococcal vaccination according to the national immunization schedule Trigger: IMMZ.D2 Determine required vaccination(s) if any Table: MenA conjugate vaccine, 2-dose schedule (specific context where there is a compelling reason to vaccinate infants aged under 9 months)",
-      "dak": {
+      "sidecars": {
         "schema": {
           "url": "https://worldhealthorganization.github.io/smart-immunizations/schemas/ValueSet-IMMZD2DTMeningococcalMenAConjugateVaccine2DosesVS.schema.json",
           "localPath": "fhir-artifact-index/dak/ValueSet-IMMZD2DTMeningococcalMenAConjugateVaccine2DosesVS.schema.json",
@@ -29642,7 +29642,7 @@
       "category": "Terminology: Value Sets",
       "title": "IMMZD2DTMeningococcalMonovalentMenCConjugateVaccine ValueSet for Decision Table",
       "description": "ValueSet IMMZD2DTMeningococcalMonovalentMenCConjugateVaccine for IMMZ.D2.DT.Meningococcal.Monovalent MenC conjugate vaccine. Business rule: Determine if the client is due for a meningococcal vaccination according to the national immunization schedule Trigger: IMMZ.D2 Determine required vaccination(s) if any Table: Monovalent MenC conjugate vaccine schedule",
-      "dak": {
+      "sidecars": {
         "schema": {
           "url": "https://worldhealthorganization.github.io/smart-immunizations/schemas/ValueSet-IMMZD2DTMeningococcalMonovalentMenCConjugateVaccineVS.schema.json",
           "localPath": "fhir-artifact-index/dak/ValueSet-IMMZD2DTMeningococcalMonovalentMenCConjugateVaccineVS.schema.json",
@@ -29724,7 +29724,7 @@
       "category": "Terminology: Value Sets",
       "title": "IMMZD2DTMeningococcalPolysaccharideVaccines ValueSet for Decision Table",
       "description": "ValueSet IMMZD2DTMeningococcalPolysaccharideVaccines for IMMZ.D2.DT.Meningococcal.Polysaccharide vaccines. Business rule: Determine if the client is due for a meningococcal vaccination according to the national immunization schedule Trigger: IMMZ.D2 Determine required vaccination(s) if any Table: Polysaccharide vaccines schedule (Polysaccharide vaccines can be used to control outbreaks in countries where limited economic resources or insufficient supply restrict the use of meningococcal conjugate vaccines)",
-      "dak": {
+      "sidecars": {
         "schema": {
           "url": "https://worldhealthorganization.github.io/smart-immunizations/schemas/ValueSet-IMMZD2DTMeningococcalPolysaccharideVaccinesVS.schema.json",
           "localPath": "fhir-artifact-index/dak/ValueSet-IMMZD2DTMeningococcalPolysaccharideVaccinesVS.schema.json",
@@ -29806,7 +29806,7 @@
       "category": "Terminology: Value Sets",
       "title": "IMMZD2DTMeningococcalQuadrivalentConjugateVaccines1Dose ValueSet for Decision Table",
       "description": "ValueSet IMMZD2DTMeningococcalQuadrivalentConjugateVaccines1Dose for IMMZ.D2.DT.Meningococcal.Quadrivalent conjugate vaccines 1 dose. Business rule: Determine if the client is due for a meningococcal vaccination according to the national immunization schedule Trigger: IMMZ.D2 Determine required vaccination(s) if any Table: Quadrivalent conjugate vaccines (A,C,W135,Y-CRM), 1-dose schedule",
-      "dak": {
+      "sidecars": {
         "schema": {
           "url": "https://worldhealthorganization.github.io/smart-immunizations/schemas/ValueSet-IMMZD2DTMeningococcalQuadrivalentConjugateVaccines1DoseVS.schema.json",
           "localPath": "fhir-artifact-index/dak/ValueSet-IMMZD2DTMeningococcalQuadrivalentConjugateVaccines1DoseVS.schema.json",
@@ -29888,7 +29888,7 @@
       "category": "Terminology: Value Sets",
       "title": "IMMZD2DTMeningococcalQuadrivalentConjugateVaccines2Doses ValueSet for Decision Table",
       "description": "ValueSet IMMZD2DTMeningococcalQuadrivalentConjugateVaccines2Doses for IMMZ.D2.DT.Meningococcal.Quadrivalent conjugate vaccines 2 doses. Business rule: Determine if the client is due for a meningococcal vaccination according to the national immunization schedule Trigger: IMMZ.D2 Determine required vaccination(s) if any Table: Quadrivalent conjugate vaccines (A,C,W135,Y-D), 2-dose schedule",
-      "dak": {
+      "sidecars": {
         "schema": {
           "url": "https://worldhealthorganization.github.io/smart-immunizations/schemas/ValueSet-IMMZD2DTMeningococcalQuadrivalentConjugateVaccines2DosesVS.schema.json",
           "localPath": "fhir-artifact-index/dak/ValueSet-IMMZD2DTMeningococcalQuadrivalentConjugateVaccines2DosesVS.schema.json",
@@ -29970,7 +29970,7 @@
       "category": "Terminology: Value Sets",
       "title": "IMMZD2DTMumps ValueSet for Decision Table",
       "description": "ValueSet IMMZD2DTMumps for IMMZ.D2.DT.Mumps. Business rule: Determine if the client is due for a mumps vaccination according to the national immunization schedule Trigger: IMMZ.D2 Determine required vaccination(s) if any Table: 2-dose schedule (countries with mumps in schedule and low transmission of measles)",
-      "dak": {
+      "sidecars": {
         "schema": {
           "url": "https://worldhealthorganization.github.io/smart-immunizations/schemas/ValueSet-IMMZD2DTMumpsVS.schema.json",
           "localPath": "fhir-artifact-index/dak/ValueSet-IMMZD2DTMumpsVS.schema.json",
@@ -30052,7 +30052,7 @@
       "category": "Terminology: Value Sets",
       "title": "IMMZD2DTPneumococcal2DosesWithBoosterDose ValueSet for Decision Table",
       "description": "ValueSet IMMZD2DTPneumococcal2DosesWithBoosterDose for IMMZ.D2.DT.Pneumococcal.2 doses with booster dose. Business rule: Determine if the client is due for a pneumococcal vaccination according to the national immunization schedule Trigger: IMMZ.D2 Determine required vaccination(s) if any Table: 2 primary doses with a booster dose (2p+1)",
-      "dak": {
+      "sidecars": {
         "schema": {
           "url": "https://worldhealthorganization.github.io/smart-immunizations/schemas/ValueSet-IMMZD2DTPneumococcal2DosesWithBoosterDoseVS.schema.json",
           "localPath": "fhir-artifact-index/dak/ValueSet-IMMZD2DTPneumococcal2DosesWithBoosterDoseVS.schema.json",
@@ -30134,7 +30134,7 @@
       "category": "Terminology: Value Sets",
       "title": "IMMZD2DTPneumococcal3Doses ValueSet for Decision Table",
       "description": "ValueSet IMMZD2DTPneumococcal3Doses for IMMZ.D2.DT.Pneumococcal.3 doses. Business rule: Determine if the client is due for a pneumococcal vaccination according to the national immunization schedule Trigger: IMMZ.D2 Determine required vaccination(s) if any Table: 3 primary doses (3p+0)",
-      "dak": {
+      "sidecars": {
         "schema": {
           "url": "https://worldhealthorganization.github.io/smart-immunizations/schemas/ValueSet-IMMZD2DTPneumococcal3DosesVS.schema.json",
           "localPath": "fhir-artifact-index/dak/ValueSet-IMMZD2DTPneumococcal3DosesVS.schema.json",
@@ -30216,7 +30216,7 @@
       "category": "Terminology: Value Sets",
       "title": "IMMZD2DTPolioBirthDose ValueSet for Decision Table",
       "description": "ValueSet IMMZD2DTPolioBirthDose for IMMZ.D2.DT.Polio.Birth dose. Business rule: Determine if the client is due for a poliovirus vaccination according to the national immunization schedule Trigger: IMMZ.D2 Determine required vaccination(s) if any Table: Birth dose administration as part of \"bivalent oral polio vaccine (bOPV) plus inactivated polio vaccine (IPV)\" schedule (in countries that are poliomyelitis (polio)-endemic countries or at high risk of importation and subsequent spread of polio that follow the combined bOPV–IPV schedule)",
-      "dak": {
+      "sidecars": {
         "schema": {
           "url": "https://worldhealthorganization.github.io/smart-immunizations/schemas/ValueSet-IMMZD2DTPolioBirthDoseVS.schema.json",
           "localPath": "fhir-artifact-index/dak/ValueSet-IMMZD2DTPolioBirthDoseVS.schema.json",
@@ -30298,7 +30298,7 @@
       "category": "Terminology: Value Sets",
       "title": "IMMZD2DTPolioBOPVPlusIPV ValueSet for Decision Table",
       "description": "ValueSet IMMZD2DTPolioBOPVPlusIPV for IMMZ.D2.DT.Polio.bOPV plus IPV. Business rule: Determine if the client is due for a poliovirus vaccination according to the national immunization schedule Trigger: IMMZ.D2 Determine required vaccination(s) if any Table: \"Bivalent oral polio vaccine (bOPV) plus inactivated polio vaccine (IPV)\" schedule (applicable for all countries)",
-      "dak": {
+      "sidecars": {
         "schema": {
           "url": "https://worldhealthorganization.github.io/smart-immunizations/schemas/ValueSet-IMMZD2DTPolioBOPVPlusIPVVS.schema.json",
           "localPath": "fhir-artifact-index/dak/ValueSet-IMMZD2DTPolioBOPVPlusIPVVS.schema.json",
@@ -30380,7 +30380,7 @@
       "category": "Terminology: Value Sets",
       "title": "IMMZD2DTPolioIPVOnly ValueSet for Decision Table",
       "description": "ValueSet IMMZD2DTPolioIPVOnly for IMMZ.D2.DT.Polio.IPV-only. Business rule: Determine if the client is due for a poliovirus vaccination according to the national immunization schedule Trigger: IMMZ.D2 Determine required vaccination(s) if any Table: Inactivated polio vaccine (IPV)-only (in countries, in polio-free regions, with a very low risk of importation and sustained high routine immunization coverage (third dose of the diphtheria–tetanus–pertussis vaccine [DTP3] > 90%)",
-      "dak": {
+      "sidecars": {
         "schema": {
           "url": "https://worldhealthorganization.github.io/smart-immunizations/schemas/ValueSet-IMMZD2DTPolioIPVOnlyVS.schema.json",
           "localPath": "fhir-artifact-index/dak/ValueSet-IMMZD2DTPolioIPVOnlyVS.schema.json",
@@ -30462,7 +30462,7 @@
       "category": "Terminology: Value Sets",
       "title": "IMMZD2DTPolioSequentialIPVbOPV ValueSet for Decision Table",
       "description": "ValueSet IMMZD2DTPolioSequentialIPVbOPV for IMMZ.D2.DT.Polio.Sequential IPV–bOPV. Business rule: Determine if the client is due for a poliovirus vaccination according to the national immunization schedule Trigger: IMMZ.D2 Determine required vaccination(s) if any Table: Sequential \"Bivalent oral polio vaccine (bOPV)–inactivated polio vaccine (IPV)\" schedule (in countries with high vaccination coverage [e.g. 90–95%] and low importation risk [where neighbouring countries and/or countries that share substantial population movement have a similarly high coverage])",
-      "dak": {
+      "sidecars": {
         "schema": {
           "url": "https://worldhealthorganization.github.io/smart-immunizations/schemas/ValueSet-IMMZD2DTPolioSequentialIPVbOPVVS.schema.json",
           "localPath": "fhir-artifact-index/dak/ValueSet-IMMZD2DTPolioSequentialIPVbOPVVS.schema.json",
@@ -30544,7 +30544,7 @@
       "category": "Terminology: Value Sets",
       "title": "IMMZD2DTRabies ValueSet for Decision Table",
       "description": "ValueSet IMMZD2DTRabies for IMMZ.D2.DT.Rabies. Business rule: Determine if the client is due for a rabies vaccination according to the national immunization schedule Trigger: IMMZ.D2 Determine required vaccination(s) if any Table: Pre-exposure prophylaxis (PrEP), 2-dose scheme; high risk of rabies virus exposure",
-      "dak": {
+      "sidecars": {
         "schema": {
           "url": "https://worldhealthorganization.github.io/smart-immunizations/schemas/ValueSet-IMMZD2DTRabiesVS.schema.json",
           "localPath": "fhir-artifact-index/dak/ValueSet-IMMZD2DTRabiesVS.schema.json",
@@ -30626,7 +30626,7 @@
       "category": "Terminology: Value Sets",
       "title": "IMMZD2DTRotavirus ValueSet for Decision Table",
       "description": "ValueSet IMMZD2DTRotavirus for IMMZ.D2.DT.Rotavirus. Business rule: Determine if the client is due for a rotavirus vaccination according to the national immunization schedule Trigger: IMMZ.D2 Determine required vaccination(s) if any Table: IMMZ.D2.DT.Rotavirus",
-      "dak": {
+      "sidecars": {
         "schema": {
           "url": "https://worldhealthorganization.github.io/smart-immunizations/schemas/ValueSet-IMMZD2DTRotavirusVS.schema.json",
           "localPath": "fhir-artifact-index/dak/ValueSet-IMMZD2DTRotavirusVS.schema.json",
@@ -30708,7 +30708,7 @@
       "category": "Terminology: Value Sets",
       "title": "IMMZD2DTRubellaHighIncidence ValueSet for Decision Table",
       "description": "ValueSet IMMZD2DTRubellaHighIncidence for IMMZ.D2.DT.Rubella.High incidence. Business rule: Determine if the client is due for a rubella vaccination according to the national immunization schedule Trigger: IMMZ.D2 Determine required vaccination(s) if any Table: Countries with high incidence and mortality from rubella",
-      "dak": {
+      "sidecars": {
         "schema": {
           "url": "https://worldhealthorganization.github.io/smart-immunizations/schemas/ValueSet-IMMZD2DTRubellaHighIncidenceVS.schema.json",
           "localPath": "fhir-artifact-index/dak/ValueSet-IMMZD2DTRubellaHighIncidenceVS.schema.json",
@@ -30790,7 +30790,7 @@
       "category": "Terminology: Value Sets",
       "title": "IMMZD2DTRubellaLowIncidence ValueSet for Decision Table",
       "description": "ValueSet IMMZD2DTRubellaLowIncidence for IMMZ.D2.DT.Rubella.Low incidence. Business rule: Determine if the client is due for a rubella vaccination according to the national immunization schedule Trigger: IMMZ.D2 Determine required vaccination(s) if any Table: Countries with low incidence of rubella",
-      "dak": {
+      "sidecars": {
         "schema": {
           "url": "https://worldhealthorganization.github.io/smart-immunizations/schemas/ValueSet-IMMZD2DTRubellaLowIncidenceVS.schema.json",
           "localPath": "fhir-artifact-index/dak/ValueSet-IMMZD2DTRubellaLowIncidenceVS.schema.json",
@@ -30872,7 +30872,7 @@
       "category": "Terminology: Value Sets",
       "title": "IMMZD2DTTBEEncepur ValueSet for Decision Table",
       "description": "ValueSet IMMZD2DTTBEEncepur for IMMZ.D2.DT.TBE.Encepur. Business rule: Determine if the client is due for a tick-borne encephalitis (TBE) vaccination according to the national immunization schedule Trigger: IMMZ.D2 Determine required vaccination(s) if any Table: Encepur schedule (In areas where the disease is highly endemic, implying that there is a high individual risk of infection, WHO recommends that vaccination be offered to all age groups, including children )",
-      "dak": {
+      "sidecars": {
         "schema": {
           "url": "https://worldhealthorganization.github.io/smart-immunizations/schemas/ValueSet-IMMZD2DTTBEEncepurVS.schema.json",
           "localPath": "fhir-artifact-index/dak/ValueSet-IMMZD2DTTBEEncepurVS.schema.json",
@@ -30954,7 +30954,7 @@
       "category": "Terminology: Value Sets",
       "title": "IMMZD2DTTBEEnceVir ValueSet for Decision Table",
       "description": "ValueSet IMMZD2DTTBEEnceVir for IMMZ.D2.DT.TBE.EnceVir. Business rule: Determine if the client is due for a tick-borne encephalitis (TBE) vaccination according to the national immunization schedule Trigger: IMMZ.D2 Determine required vaccination(s) if any Table: EnceVir schedule (In areas where the disease is highly endemic, implying that there is a high individual risk of infection, WHO recommends that vaccination be offered to all age groups, including children )",
-      "dak": {
+      "sidecars": {
         "schema": {
           "url": "https://worldhealthorganization.github.io/smart-immunizations/schemas/ValueSet-IMMZD2DTTBEEnceVirVS.schema.json",
           "localPath": "fhir-artifact-index/dak/ValueSet-IMMZD2DTTBEEnceVirVS.schema.json",
@@ -31036,7 +31036,7 @@
       "category": "Terminology: Value Sets",
       "title": "IMMZD2DTTBEFSMEImmun ValueSet for Decision Table",
       "description": "ValueSet IMMZD2DTTBEFSMEImmun for IMMZ.D2.DT.TBE.FSME-Immun. Business rule: Determine if the client is due for a tick-borne encephalitis (TBE) vaccination according to the national immunization schedule Trigger: IMMZ.D2 Determine required vaccination(s) if any Table: FSME-Immun schedule (In areas where the disease is highly endemic, implying that there is a high individual risk of infection, WHO recommends that vaccination be offered to all age groups, including children)",
-      "dak": {
+      "sidecars": {
         "schema": {
           "url": "https://worldhealthorganization.github.io/smart-immunizations/schemas/ValueSet-IMMZD2DTTBEFSMEImmunVS.schema.json",
           "localPath": "fhir-artifact-index/dak/ValueSet-IMMZD2DTTBEFSMEImmunVS.schema.json",
@@ -31118,7 +31118,7 @@
       "category": "Terminology: Value Sets",
       "title": "IMMZD2DTTBETBEMoscow ValueSet for Decision Table",
       "description": "ValueSet IMMZD2DTTBETBEMoscow for IMMZ.D2.DT.TBE.TBE-Moscow. Business rule: Determine if the client is due for a tick-borne encephalitis (TBE) vaccination according to the national immunization schedule Trigger: IMMZ.D2 Determine required vaccination(s) if any Table: TBE-Moscow schedule (In areas where the disease is highly endemic, implying that there is a high individual risk of infection, WHO recommends that vaccination be offered to all age groups, including children )",
-      "dak": {
+      "sidecars": {
         "schema": {
           "url": "https://worldhealthorganization.github.io/smart-immunizations/schemas/ValueSet-IMMZD2DTTBETBEMoscowVS.schema.json",
           "localPath": "fhir-artifact-index/dak/ValueSet-IMMZD2DTTBETBEMoscowVS.schema.json",
@@ -31200,7 +31200,7 @@
       "category": "Terminology: Value Sets",
       "title": "IMMZD2DTTyphoidTCV ValueSet for Decision Table",
       "description": "ValueSet IMMZD2DTTyphoidTCV for IMMZ.D2.DT.Typhoid.TCV. Business rule: Determine if the client is due for a typhoid vaccination according to the national immunization schedule Trigger: IMMZ.D2 Determine required vaccination(s) if any Table: Typhoid conjugate vaccine (TCV) schedule",
-      "dak": {
+      "sidecars": {
         "schema": {
           "url": "https://worldhealthorganization.github.io/smart-immunizations/schemas/ValueSet-IMMZD2DTTyphoidTCVVS.schema.json",
           "localPath": "fhir-artifact-index/dak/ValueSet-IMMZD2DTTyphoidTCVVS.schema.json",
@@ -31282,7 +31282,7 @@
       "category": "Terminology: Value Sets",
       "title": "IMMZD2DTTyphoidTy21a ValueSet for Decision Table",
       "description": "ValueSet IMMZD2DTTyphoidTy21a for IMMZ.D2.DT.Typhoid.Ty21a. Business rule: Determine if the client is due for a typhoid vaccination according to the national immunization schedule Trigger: IMMZ.D2 Determine required vaccination(s) if any Table: Live attenuated Ty21a vaccine schedule",
-      "dak": {
+      "sidecars": {
         "schema": {
           "url": "https://worldhealthorganization.github.io/smart-immunizations/schemas/ValueSet-IMMZD2DTTyphoidTy21aVS.schema.json",
           "localPath": "fhir-artifact-index/dak/ValueSet-IMMZD2DTTyphoidTy21aVS.schema.json",
@@ -31364,7 +31364,7 @@
       "category": "Terminology: Value Sets",
       "title": "IMMZD2DTTyphoidViPS ValueSet for Decision Table",
       "description": "ValueSet IMMZD2DTTyphoidViPS for IMMZ.D2.DT.Typhoid.ViPS. Business rule: Determine if the client is due for a typhoid vaccination according to the national immunization schedule Trigger: IMMZ.D2 Determine required vaccination(s) if any Table: Unconjugated Vi polysaccharide (ViPS) schedule",
-      "dak": {
+      "sidecars": {
         "schema": {
           "url": "https://worldhealthorganization.github.io/smart-immunizations/schemas/ValueSet-IMMZD2DTTyphoidViPSVS.schema.json",
           "localPath": "fhir-artifact-index/dak/ValueSet-IMMZD2DTTyphoidViPSVS.schema.json",
@@ -31508,7 +31508,7 @@
       "category": "Terminology: Value Sets",
       "title": "IMMZD2DTYellowfeverYellowFever ValueSet for Decision Table",
       "description": "ValueSet IMMZD2DTYellowfeverYellowFever for IMMZ.D2.DT.Yellow fever. Business rule: Determine if the client is due for a yellow fever vaccination according to the national immunization schedule Trigger: IMMZ.D2 Determine required vaccination(s) in any Table: IMMZ.D2.DT.Yellow fever",
-      "dak": {
+      "sidecars": {
         "schema": {
           "url": "https://worldhealthorganization.github.io/smart-immunizations/schemas/ValueSet-IMMZD2DTYellowfeverYellowFeverVS.schema.json",
           "localPath": "fhir-artifact-index/dak/ValueSet-IMMZD2DTYellowfeverYellowFeverVS.schema.json",
@@ -31590,7 +31590,7 @@
       "category": "Terminology: Value Sets",
       "title": "IMMZD5DTBCGContraindications ValueSet for Decision Table",
       "description": "ValueSet IMMZD5DTBCGContraindications for IMMZ.D5.DT.BCG contraindications. Business rule: Check for contraindications before administering the vaccine(s) due Trigger: IMMZ.D5 Determine vaccine(s) to be administered based on contraindications Table: IMMZ.D5.DT.BCG contraindications",
-      "dak": {
+      "sidecars": {
         "schema": {
           "url": "https://worldhealthorganization.github.io/smart-immunizations/schemas/ValueSet-IMMZD5DTBCGContraindicationsVS.schema.json",
           "localPath": "fhir-artifact-index/dak/ValueSet-IMMZD5DTBCGContraindicationsVS.schema.json",
@@ -31672,7 +31672,7 @@
       "category": "Terminology: Value Sets",
       "title": "IMMZD5DTDengueContraindications ValueSet for Decision Table",
       "description": "ValueSet IMMZD5DTDengueContraindications for IMMZ.D5.DT.Dengue contraindications. Business rule: Check for contraindications before administering the vaccine(s) due Trigger: IMMZ.D5 Determine vaccine(s) to be administered based on contraindications Table: IMMZ.D5.DT.Dengue contraindications",
-      "dak": {
+      "sidecars": {
         "schema": {
           "url": "https://worldhealthorganization.github.io/smart-immunizations/schemas/ValueSet-IMMZD5DTDengueContraindicationsVS.schema.json",
           "localPath": "fhir-artifact-index/dak/ValueSet-IMMZD5DTDengueContraindicationsVS.schema.json",
@@ -31754,7 +31754,7 @@
       "category": "Terminology: Value Sets",
       "title": "IMMZD5DTDTPContraindications ValueSet for Decision Table",
       "description": "ValueSet IMMZD5DTDTPContraindications for IMMZ.D5.DT.DTP contraindications. Business rule: Check for contraindications before administering the vaccine(s) due Trigger: IMMZ.D5 Determine vaccine(s) to be administered based on contraindications Table: IMMZ.D5.DT.DTP contraindications",
-      "dak": {
+      "sidecars": {
         "schema": {
           "url": "https://worldhealthorganization.github.io/smart-immunizations/schemas/ValueSet-IMMZD5DTDTPContraindicationsVS.schema.json",
           "localPath": "fhir-artifact-index/dak/ValueSet-IMMZD5DTDTPContraindicationsVS.schema.json",
@@ -31836,7 +31836,7 @@
       "category": "Terminology: Value Sets",
       "title": "IMMZD5DTHepatitisAContraindications ValueSet for Decision Table",
       "description": "ValueSet IMMZD5DTHepatitisAContraindications for IMMZ.D5.DT.Hepatitis A contraindications. Business rule: Check for contraindications before administering the vaccine(s) due Trigger: IMMZ.D5 Determine vaccine(s) to be administered based on contraindications Table: IMMZ.D5.DT.Hepatitis A contraindications",
-      "dak": {
+      "sidecars": {
         "schema": {
           "url": "https://worldhealthorganization.github.io/smart-immunizations/schemas/ValueSet-IMMZD5DTHepatitisAContraindicationsVS.schema.json",
           "localPath": "fhir-artifact-index/dak/ValueSet-IMMZD5DTHepatitisAContraindicationsVS.schema.json",
@@ -31918,7 +31918,7 @@
       "category": "Terminology: Value Sets",
       "title": "IMMZD5DTHibContraindications ValueSet for Decision Table",
       "description": "ValueSet IMMZD5DTHibContraindications for IMMZ.D5.DT.Hib contraindications. Business rule: Check for contraindications before administering the vaccine(s) due Trigger: IMMZ.D5 Determine vaccine(s) to be administered based on contraindications (9) Table: IMMZ.D5.DT.Hib contraindications",
-      "dak": {
+      "sidecars": {
         "schema": {
           "url": "https://worldhealthorganization.github.io/smart-immunizations/schemas/ValueSet-IMMZD5DTHibContraindicationsVS.schema.json",
           "localPath": "fhir-artifact-index/dak/ValueSet-IMMZD5DTHibContraindicationsVS.schema.json",
@@ -32000,7 +32000,7 @@
       "category": "Terminology: Value Sets",
       "title": "IMMZD5DTHPVContraindications ValueSet for Decision Table",
       "description": "ValueSet IMMZD5DTHPVContraindications for IMMZ.D5.DT.HPV contraindications. Business rule: Check for contraindications before administering the vaccine(s) due Trigger: IMMZ.D5 Determine vaccine(s) to be administered based on contraindications Table: IMMZ.D5.DT.HPV contraindications",
-      "dak": {
+      "sidecars": {
         "schema": {
           "url": "https://worldhealthorganization.github.io/smart-immunizations/schemas/ValueSet-IMMZD5DTHPVContraindicationsVS.schema.json",
           "localPath": "fhir-artifact-index/dak/ValueSet-IMMZD5DTHPVContraindicationsVS.schema.json",
@@ -32082,7 +32082,7 @@
       "category": "Terminology: Value Sets",
       "title": "IMMZD5DTJEContraindications ValueSet for Decision Table",
       "description": "ValueSet IMMZD5DTJEContraindications for IMMZ.D5.DT.JE contraindications. Business rule: Check for contraindications before administering the vaccine(s) due Trigger: IMMZ.D5 Determine vaccine(s) to be administered based on contraindications Table: IMMZ.D5.DT.JE contraindications",
-      "dak": {
+      "sidecars": {
         "schema": {
           "url": "https://worldhealthorganization.github.io/smart-immunizations/schemas/ValueSet-IMMZD5DTJEContraindicationsVS.schema.json",
           "localPath": "fhir-artifact-index/dak/ValueSet-IMMZD5DTJEContraindicationsVS.schema.json",
@@ -32164,7 +32164,7 @@
       "category": "Terminology: Value Sets",
       "title": "IMMZD5DTMalariaContraindications ValueSet for Decision Table",
       "description": "ValueSet IMMZD5DTMalariaContraindications for IMMZ.D5.DT.Malaria contraindications. Business rule: Check for contraindications before administering the vaccine(s) due Trigger: IMMZ.D5 Determine vaccine(s) to be administered based on contraindications Table: IMMZ.D5.DT.Malaria contraindications",
-      "dak": {
+      "sidecars": {
         "schema": {
           "url": "https://worldhealthorganization.github.io/smart-immunizations/schemas/ValueSet-IMMZD5DTMalariaContraindicationsVS.schema.json",
           "localPath": "fhir-artifact-index/dak/ValueSet-IMMZD5DTMalariaContraindicationsVS.schema.json",
@@ -32246,7 +32246,7 @@
       "category": "Terminology: Value Sets",
       "title": "IMMZD5DTMeaslesContraindications ValueSet for Decision Table",
       "description": "ValueSet IMMZD5DTMeaslesContraindications for IMMZ.D5.DT.Measles contraindications. Business rule: Check for contraindications before administering the vaccine(s) due Trigger: IMMZ.D5 Determine vaccine(s) to be administered based on contraindications Table: IMMZ.D5.DT.Measles contraindications",
-      "dak": {
+      "sidecars": {
         "schema": {
           "url": "https://worldhealthorganization.github.io/smart-immunizations/schemas/ValueSet-IMMZD5DTMeaslesContraindicationsVS.schema.json",
           "localPath": "fhir-artifact-index/dak/ValueSet-IMMZD5DTMeaslesContraindicationsVS.schema.json",
@@ -32328,7 +32328,7 @@
       "category": "Terminology: Value Sets",
       "title": "IMMZD5DTMeningococcalContraindications ValueSet for Decision Table",
       "description": "ValueSet IMMZD5DTMeningococcalContraindications for IMMZ.D5.DT.Meningococcal contraindications. Business rule: Check for contraindications before administering the vaccine(s) due Trigger: IMMZ.D5 Determine vaccine(s) to be administered based on contraindications Table: IMMZ.D5.DT.Meningococcal contraindications",
-      "dak": {
+      "sidecars": {
         "schema": {
           "url": "https://worldhealthorganization.github.io/smart-immunizations/schemas/ValueSet-IMMZD5DTMeningococcalContraindicationsVS.schema.json",
           "localPath": "fhir-artifact-index/dak/ValueSet-IMMZD5DTMeningococcalContraindicationsVS.schema.json",
@@ -32410,7 +32410,7 @@
       "category": "Terminology: Value Sets",
       "title": "IMMZD5DTMumpsContraindications ValueSet for Decision Table",
       "description": "ValueSet IMMZD5DTMumpsContraindications for IMMZ.D5.DT.Mumps contraindications. Business rule: Check for contraindications before administering the vaccine(s) due Trigger: IMMZ.D5 Determine vaccine(s) to be administered based on contraindications Table: IMMZ.D5.DT.Mumps contraindications",
-      "dak": {
+      "sidecars": {
         "schema": {
           "url": "https://worldhealthorganization.github.io/smart-immunizations/schemas/ValueSet-IMMZD5DTMumpsContraindicationsVS.schema.json",
           "localPath": "fhir-artifact-index/dak/ValueSet-IMMZD5DTMumpsContraindicationsVS.schema.json",
@@ -32492,7 +32492,7 @@
       "category": "Terminology: Value Sets",
       "title": "IMMZD5DTPneumococcalContraindications ValueSet for Decision Table",
       "description": "ValueSet IMMZD5DTPneumococcalContraindications for IMMZ.D5.DT.Pneumococcal contraindications. Business rule: Check for contraindications before administering the vaccine(s) due Trigger: IMMZ.D5 Determine vaccine(s) to be administered based on contraindications Table: IMMZ.D5.DT.Pneumococcal contraindications",
-      "dak": {
+      "sidecars": {
         "schema": {
           "url": "https://worldhealthorganization.github.io/smart-immunizations/schemas/ValueSet-IMMZD5DTPneumococcalContraindicationsVS.schema.json",
           "localPath": "fhir-artifact-index/dak/ValueSet-IMMZD5DTPneumococcalContraindicationsVS.schema.json",
@@ -32574,7 +32574,7 @@
       "category": "Terminology: Value Sets",
       "title": "IMMZD5DTPolioContraindications ValueSet for Decision Table",
       "description": "ValueSet IMMZD5DTPolioContraindications for IMMZ.D5.DT.Polio contraindications. Business rule: Check for contraindications before administering the vaccine(s) due Trigger: IMMZ.D5 Determine vaccine(s) to be administered based on contraindications Table: IMMZ.D5.DT.Polio contraindications",
-      "dak": {
+      "sidecars": {
         "schema": {
           "url": "https://worldhealthorganization.github.io/smart-immunizations/schemas/ValueSet-IMMZD5DTPolioContraindicationsVS.schema.json",
           "localPath": "fhir-artifact-index/dak/ValueSet-IMMZD5DTPolioContraindicationsVS.schema.json",
@@ -32656,7 +32656,7 @@
       "category": "Terminology: Value Sets",
       "title": "IMMZD5DTRabiesContraindications ValueSet for Decision Table",
       "description": "ValueSet IMMZD5DTRabiesContraindications for IMMZ.D5.DT.Rabies contraindications. Business rule: Check for contraindications before administering the vaccine(s) due Trigger: IMMZ.D5 Determine vaccine(s) to be administered based on contraindications Table: IMMZ.D5.DT.Rabies contraindications",
-      "dak": {
+      "sidecars": {
         "schema": {
           "url": "https://worldhealthorganization.github.io/smart-immunizations/schemas/ValueSet-IMMZD5DTRabiesContraindicationsVS.schema.json",
           "localPath": "fhir-artifact-index/dak/ValueSet-IMMZD5DTRabiesContraindicationsVS.schema.json",
@@ -32738,7 +32738,7 @@
       "category": "Terminology: Value Sets",
       "title": "IMMZD5DTRotavirusContraindications ValueSet for Decision Table",
       "description": "ValueSet IMMZD5DTRotavirusContraindications for IMMZ.D5.DT.Rotavirus contraindications. Business rule: Check for contraindications before administering the vaccine(s) due Trigger: IMMZ.D5 Determine vaccine(s) to be administered based on contraindications Table: IMMZ.D5.DT.Rotavirus contraindications",
-      "dak": {
+      "sidecars": {
         "schema": {
           "url": "https://worldhealthorganization.github.io/smart-immunizations/schemas/ValueSet-IMMZD5DTRotavirusContraindicationsVS.schema.json",
           "localPath": "fhir-artifact-index/dak/ValueSet-IMMZD5DTRotavirusContraindicationsVS.schema.json",
@@ -32820,7 +32820,7 @@
       "category": "Terminology: Value Sets",
       "title": "IMMZD5DTRubellaContraindications ValueSet for Decision Table",
       "description": "ValueSet IMMZD5DTRubellaContraindications for IMMZ.D5.DT.Rubella contraindications. Business rule: Check for contraindications before administering the vaccine(s) due Trigger: IMMZ.D5 Determine vaccine(s) to be administered based on contraindications Table: IMMZ.D5.DT.Rubella contraindications",
-      "dak": {
+      "sidecars": {
         "schema": {
           "url": "https://worldhealthorganization.github.io/smart-immunizations/schemas/ValueSet-IMMZD5DTRubellaContraindicationsVS.schema.json",
           "localPath": "fhir-artifact-index/dak/ValueSet-IMMZD5DTRubellaContraindicationsVS.schema.json",
@@ -32902,7 +32902,7 @@
       "category": "Terminology: Value Sets",
       "title": "IMMZD5DTTBEContraindications ValueSet for Decision Table",
       "description": "ValueSet IMMZD5DTTBEContraindications for IMMZ.D5.DT.TBE contraindications. Business rule: Check for contraindications before administering the vaccine(s) due Trigger: IMMZ.D5 Determine vaccine(s) to be administered based on contraindications Table: IMMZ.D5.DT.TBE contraindications",
-      "dak": {
+      "sidecars": {
         "schema": {
           "url": "https://worldhealthorganization.github.io/smart-immunizations/schemas/ValueSet-IMMZD5DTTBEContraindicationsVS.schema.json",
           "localPath": "fhir-artifact-index/dak/ValueSet-IMMZD5DTTBEContraindicationsVS.schema.json",
@@ -32984,7 +32984,7 @@
       "category": "Terminology: Value Sets",
       "title": "IMMZD5DTTyphoidContraindications ValueSet for Decision Table",
       "description": "ValueSet IMMZD5DTTyphoidContraindications for IMMZ.D5.DT.Typhoid contraindications. Business rule: Check for contraindications before administering the vaccine(s) due Trigger: IMMZ.D5 Determine vaccine(s) to be administered based on contraindications Table: IMMZ.D5.DT.Typhoid contraindications",
-      "dak": {
+      "sidecars": {
         "schema": {
           "url": "https://worldhealthorganization.github.io/smart-immunizations/schemas/ValueSet-IMMZD5DTTyphoidContraindicationsVS.schema.json",
           "localPath": "fhir-artifact-index/dak/ValueSet-IMMZD5DTTyphoidContraindicationsVS.schema.json",
@@ -33066,7 +33066,7 @@
       "category": "Terminology: Value Sets",
       "title": "IMMZD5DTVaricellaContraindications ValueSet for Decision Table",
       "description": "ValueSet IMMZD5DTVaricellaContraindications for IMMZ.D5.DT.Varicella contraindications. Business rule: Check for contraindications before administering the vaccine(s) due Trigger: IMMZ.D5 Determine vaccine(s) to be administered based on contraindications Table: IMMZ.D5.DT.Varicella contraindications",
-      "dak": {
+      "sidecars": {
         "schema": {
           "url": "https://worldhealthorganization.github.io/smart-immunizations/schemas/ValueSet-IMMZD5DTVaricellaContraindicationsVS.schema.json",
           "localPath": "fhir-artifact-index/dak/ValueSet-IMMZD5DTVaricellaContraindicationsVS.schema.json",
@@ -33148,7 +33148,7 @@
       "category": "Terminology: Value Sets",
       "title": "IMMZD5DTYellowFeverContraindications ValueSet for Decision Table",
       "description": "ValueSet IMMZD5DTYellowFeverContraindications for IMMZ.D5.DT.Yellow fever contraindications. Business rule: Check for contraindications before administering the vaccine(s) due Trigger: IMMZ.D5 Determine vaccine(s) to be administered based on contraindications Table: IMMZ.D5.DT.Yellow fever contraindications",
-      "dak": {
+      "sidecars": {
         "schema": {
           "url": "https://worldhealthorganization.github.io/smart-immunizations/schemas/ValueSet-IMMZD5DTYellowFeverContraindicationsVS.schema.json",
           "localPath": "fhir-artifact-index/dak/ValueSet-IMMZD5DTYellowFeverContraindicationsVS.schema.json",
