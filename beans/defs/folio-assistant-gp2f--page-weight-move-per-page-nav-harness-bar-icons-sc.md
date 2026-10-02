@@ -43,13 +43,13 @@ There are about 4,700 HTML pages, and each preview is a full copy of the site (#
 ## Workplan
 Each phase is its own PR, with a before/after size table and a Chromium check at 1280 px and 390 px.
 
-- [ ] **0. Coordinate.** Post intent and asks to the three sessions above and agree the order.
+- [x] **0. Coordinate.** Post intent and asks to the three sessions above and agree the order.
 - [ ] **A. IG chrome CSS.** `gen-ig-pages` emits one shared `ig-chrome.css` per chrome and references it, instead of inlining about 6.6 KB per IG page. Lands after #1816 and #1766, or is rebased onto them.
 - [ ] **B. Icons.** One shared SVG sprite, referenced via `<use href>`. Saves about 30 KB per page.
 - [ ] **C. Harness bar and footer.** Emitted once and made responsive with CSS. Saves about 25 KB per page. Inside the navbar session's area, so this phase is offered to that session or lands after its series.
 - [ ] **D. Site navigation.** One shared, cached nav JSON rendered client-side. Every link is a real page, with a noscript fallback. Saves about 70 KB per page. Last, because it overlaps most with ob3m and p5wm.
 - [ ] **E. Inline scripts.** Moved into shared, cached JS. Saves about 15 KB per page.
-- [ ] **F. Skills.**
+- [x] **F. Skills** (the coordination rule; done in 2814ee1). The site-page skill text lands with phases B–E.
   - The site-page skills say shared assets are never inlined per page.
   - The coordinate, bean-coordination and handover skills gain the owner's rule: a platform refactor first reviews active agents, PRs and beans for impact, and coordinates.
 
@@ -57,3 +57,17 @@ Each phase is its own PR, with a before/after size table and a Chromium check at
 - [ ] A sampled IG page is at most 20 KB, and the whole-site total is reported before and after.
 - [ ] a11y (axe) and e2e pass, and the Chromium checks pass at both widths.
 - [ ] The sibling sessions have acknowledged the order, or their overlapping PRs have landed before each overlapping phase.
+
+## Coordination outcome, 2026-10-02
+- **A:** #1766 already writes `assets/ig-chrome.css` and `assets/ig-pages.css` once per instance and links them (52 % less page CSS). Not rebuilt here. After #1766 merges, only the sharing across instances is added, reading the chrome through `chromeFileFor`. #1816 does not conflict, but use a distinct filename in `assets/` and relative links.
+- **C:** owned here, at the navbar session's request. It waits for #1804, #1805, #1808 and #1819, and must respect `mountSidebarRail`, the avatar-only toggle, the strip hidden on first open, the e2e specs and `check:nav-names`. The theme emits `nav_footer_custom` in both `components/sidebar.html` and `components/footer.html`, so the fix is to override those two includes.
+- **D:** keep a no-JS fallback. `mountSidebarRail` and the theme's DOMContentLoaded current-page highlight must run after the JSON nav is in the DOM, or the nav data loads synchronously. `check:nav-names` and `check:viewer-nav` read the nav JSON.
+
+## Baseline (local `preview:site` of main `22ac68dc`; #1886 comment)
+- 220.7 KB per IG page.
+- Nav: 67.4 KB.
+- Harness bar: 38.5 KB, emitted twice.
+- Inline svg: about 31 KB.
+- Inline script: about 14.5 KB.
+- Whole site: 595 MiB, 89 % of it HTML.
+
