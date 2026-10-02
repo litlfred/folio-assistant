@@ -11870,6 +11870,253 @@
       "skos:note": "candidate"
     },
     {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/extraction.extractedassetschema.bytes",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "ExtractedAssetSchema.bytes"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Uncompressed size in bytes, from the container's index."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/extraction.ts#ExtractedAssetSchema.bytes",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/extraction.extractedassetschema.extractedbecause",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "ExtractedAssetSchema.extractedBecause"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Why this one entry was extracted, when one was."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/extraction.ts#ExtractedAssetSchema.extractedBecause",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/extraction.extractedassetschema.localpath",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "ExtractedAssetSchema.localPath"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Where the entry was written, IF it was written."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/extraction.ts#ExtractedAssetSchema.localPath",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/extraction.extractedassetschema.mediatype",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "ExtractedAssetSchema.mediaType"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Media type."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/extraction.ts#ExtractedAssetSchema.mediaType",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/extraction.extractedassetschema.modifiedat",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "ExtractedAssetSchema.modifiedAt"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The entry's own timestamp, as the container records it."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/extraction.ts#ExtractedAssetSchema.modifiedAt",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/extraction.extractedassetschema.path",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "ExtractedAssetSchema.path"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Path INSIDE the container, exactly as the container spells it."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/extraction.ts#ExtractedAssetSchema.path",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/extraction.extractedassetschema.sha256",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "ExtractedAssetSchema.sha256"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "sha256 of the entry's bytes, when it was read rather than indexed."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/extraction.ts#ExtractedAssetSchema.sha256",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/extraction.extractionschema.assets",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "ExtractionSchema.assets"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Every entry the container indexes."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/extraction.ts#ExtractionSchema.assets",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/extraction.extractionschema.capturedat",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "ExtractionSchema.capturedAt"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "When the CONTAINER'S CONTENTS were produced — the capture moment."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/extraction.ts#ExtractionSchema.capturedAt",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/extraction.extractionschema.container",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "ExtractionSchema.container"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The container this describes, repo-relative."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/extraction.ts#ExtractionSchema.container",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/extraction.extractionschema.omitted",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "ExtractionSchema.omitted"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Entries deliberately not listed, and why."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/extraction.ts#ExtractionSchema.omitted",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/extraction.extractionschema.producer",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "ExtractionSchema.producer"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The tool that produced the container, verbatim."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/extraction.ts#ExtractionSchema.producer",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/extraction.extractionschema.readat",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "ExtractionSchema.readAt"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "When THIS record was written — a fact about the reading, not the file."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/extraction.ts#ExtractionSchema.readAt",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/figure-description.figuredescriptionschema.described_by",
       "@type": "skos:Concept",
       "skos:inScheme": {
@@ -17852,6 +18099,25 @@
         }
       ],
       "dcterms:source": "cat-harness/schemas/log-entry.ts#LogReferenceSchema.title",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/materialization-state.fixityschema.verifiedat",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "FixitySchema.verifiedAt"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "When the digest was last RE-COMPUTED against the bytes, not when it was recorded. An unverified digest ages."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/materialization-state.ts#FixitySchema.verifiedAt",
       "skos:note": "candidate"
     },
     {

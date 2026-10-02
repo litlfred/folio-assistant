@@ -1941,10 +1941,16 @@ export const RULES: Rule[] = [
       "scripts/notebook-structure.ts",      // the notebook rung: a folio's `.ipynb` → `notebook-structure/v1` (bean rkqp)
       "scripts/text-structure.ts",          // the text rung: Markdown/XML at a commit → `text-structure/v1` (bean y4uj)
       // `scripts/extract-assets.ts` STOOD HERE and is GONE as of bean `yj6r`,
-      // 2026-09-30, for the reason the materialisation trio above gives: it now
-      // lives in `folio-assistant-core/scripts/` beside the
-      // `schemas/extraction.ts` it reads, so the classification is carried by
-      // location. Its reasoning is kept rather than deleted with the entry,
+      // 2026-09-30, for the reason the materialisation trio above gives: it
+      // moved to `folio-assistant-core/scripts/` beside the
+      // `schemas/extraction.ts` it reads, so the classification was carried by
+      // location. SUPERSEDED 2026-10-02 by owner ruling 2 of the placement
+      // proposal (bean `tlat`, PR5): the pair is the tool behind the harness's
+      // own `asset-extraction` skill, so the schema moved DOWN to
+      // `cat-harness/schemas/extraction.ts` and the script to
+      // `cat-harness-tools/scripts/extract-assets.ts`. Neither is in this
+      // core list again; the reasoning below is kept as the record of why it
+      // was ever classified core. Its reasoning is kept rather than deleted with the entry,
       // because the next reader will ask why a container-extraction tool is not
       // adjudicated and "it is, by where it sits" is the answer: same test as
       // the three above — it reads a CONTAINER a folio was given (a zip, a PDF,
