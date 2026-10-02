@@ -168,6 +168,16 @@ if (import.meta.main) {
   // `translate-bpmn:bootstrap:check` came back "unrepaired" — a defect in the
   // tool's view, not in the merge.
   syncSubmodules(root);
+  // Likewise the dependencies: when the base changed `bun.lock`, regen must
+  // run against the merged lockfile, not the branch's — otherwise a writer
+  // that needs a dependency the base added reads as "unrepaired". Measured as
+  // a risk when this command started running on old branches in CI
+  // (`merge-main.yml`, 2026-10-02). `node_modules/` is ignored, so the tree
+  // stays clean for the final `add -A`.
+  if (spawnSync("git", ["-C", root, "diff", "--cached", "--quiet", "HEAD", "--", "bun.lock", "package.json"]).status !== 0) {
+    const inst = spawnSync("bun", ["install", "--frozen-lockfile"], { cwd: root, stdio: "inherit" });
+    if (inst.status !== 0) abort("bun install against the merged lockfile failed");
+  }
   console.log("\nmerge-base: regenerating, and asking every gate the CI workflow runs …");
   const regen = spawnSync("bun", ["run", "regen"], { cwd: root, stdio: "inherit" });
   if (regen.status !== 0) abort("the gate set could not reproduce the resolution (regen reported unrepaired checks)");
