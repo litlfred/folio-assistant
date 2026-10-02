@@ -5,7 +5,7 @@ status: todo
 type: epic
 priority: normal
 created_at: 2026-10-02T16:29:09Z
-updated_at: 2026-10-02T16:29:09Z
+updated_at: 2026-10-02T16:41:15Z
 ---
 
 Owner, 2026-10-02 (bean for later): update the Merge Manager skills, process and tools so that a merge is GATED on:
@@ -52,3 +52,6 @@ These are all **ad hoc and session-scoped**. None blocks a merge, and none write
 - [ ] the merge process (`code-change-review.bpmn` → `merge-base.bpmn`, plus the `prepare-merge` skill and command) names the new gates, and how they compose with merge trains is documented
 - [ ] the owner has answered the open questions in the proposal (§9)
 - [ ] the reading list's items are uploaded to the library, or the ones not uploaded are recorded with the reason
+
+## Filed 2026-10-02
+Design PR (draft, not merged): https://github.com/litlfred/folio-assistant/pull/1887. Reading list: 30 items, 29 search-confirmed, 1 unverified; direct fetch was egress-blocked. Open question Q1 (where the review runs) has default B: the steward runs it and CI checks the verdict.
