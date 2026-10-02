@@ -366,6 +366,7 @@
     "skills:docs:check": "bun run cat-harness/scripts/gen-skill-docs.ts --check",
     "smart-trust:pages": "bun run fhir-harness/scripts/gen-ig-pages.ts --instance smart-trust --label \"WHO SMART Trust\" --chrome-owner smart-base",
     "smart-trust:pages:check": "bun run fhir-harness/scripts/gen-ig-pages.ts --instance smart-trust --label \"WHO SMART Trust\" --chrome-owner smart-base --check",
+    "smart-trust:ast-site": "bash fhir-harness/scripts/ig-ast-site.sh --instance smart-trust --label \"WHO SMART Trust\" --chrome-owner smart-base",
     "smart-base:pages": "bun run fhir-harness/scripts/gen-ig-pages.ts --instance smart-base --label \"WHO SMART Base\" --chrome-owner smart-base --summary",
     "smart-base:pages:check": "bun run fhir-harness/scripts/gen-ig-pages.ts --instance smart-base --label \"WHO SMART Base\" --chrome-owner smart-base --summary --check",
     "stakeholder-map": "bun run cat-harness/scripts/stakeholder-map.ts",

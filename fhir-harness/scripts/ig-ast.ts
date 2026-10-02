@@ -223,7 +223,7 @@ function walk(dir: string, out: string[]): void {
  * A compiled copy can never discharge `sourceLoss`: it is derived, not the
  * source.
  */
-const AST_GATES = {
+export const AST_GATES = {
   size: { verdict: "unknown", basis: "ig-ast validity does not measure the AST's size" },
   restrictions: { verdict: "unknown", basis: "derived from the IG's own source; inherits its terms, not assessed here" },
   copyright: { verdict: "unknown", basis: "derived from the IG's own source; inherits its terms, not assessed here" },
