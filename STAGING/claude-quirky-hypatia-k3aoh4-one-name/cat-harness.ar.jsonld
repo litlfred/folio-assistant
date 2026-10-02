@@ -301,14 +301,14 @@
   ],
   "canonicalDocument": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld",
   "repository": "cat-harness",
-  "generatedAt": "2026-10-02T15:38:05.235Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/44750fb693d2b660a1f4058d0ceeedb404e34688",
-  "sourceCommitSha": "44750fb693d2b660a1f4058d0ceeedb404e34688",
-  "sourceCommitAt": "2026-10-02T15:33:28Z",
+  "generatedAt": "2026-10-02T17:14:28.035Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/9dd401927ca96861e06def90a14fcc71d04ac122",
+  "sourceCommitSha": "9dd401927ca96861e06def90a14fcc71d04ac122",
+  "sourceCommitAt": "2026-10-02T17:10:42Z",
   "sourceTreeDirty": true,
   "dependsOnUnavailable": "2 dependency edge(s), none expressible as a record — see gaps",
   "counts": {
-    "Skill": 294,
+    "Skill": 295,
     "Actor": 36,
     "Capability": 28,
     "SkillPackage": 35,
@@ -318,7 +318,7 @@
     "Lane": 201,
     "ProcessNode": 940,
     "Tool": 113,
-    "Schema": 150,
+    "Schema": 152,
     "ExternalSchema": 20,
     "GraphKind": 25,
     "Role": 48,
@@ -1152,7 +1152,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-hypatia-k3aoh4-one-name/cat-harness.jsonld#package/conduct-core"
       ],
       "instructionsPath": "skills/conduct/conduct-core/deletion-requires-confirmation.md",
-      "instructionLines": 288,
+      "instructionLines": 302,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -2110,6 +2110,23 @@
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/uploads-watch"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-hypatia-k3aoh4-one-name/cat-harness.jsonld#skill/term-disagreement",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Skill",
+      "name": "term-disagreement",
+      "title": "Term disagreement — the extractor and the terminology disagree",
+      "description": "When a glossary term the extractor minted and an authorised terminology disagree — the corpus spells a concept differently from the authority, or uses a word the authority does not carry — decide among three outcomes: change the prose, author a local term with its reason, or record that the vocabulary is wrong for this domain. Says which disagreements need a decision at all, how to choose, what each outcome writes and where, and what is NOT this skill (two judges disagreeing about a mapping).",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-hypatia-k3aoh4-one-name/cat-harness.jsonld#package/library-core"
+      ],
+      "instructionsPath": "skills/library/library-core/term-disagreement.md",
+      "instructionLines": 151,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-hypatia-k3aoh4-one-name/cat-harness.jsonld#directory/skills",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/term-disagreement"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-hypatia-k3aoh4-one-name/cat-harness.jsonld#skill/archiving-arxiv",
       "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Skill",
       "name": "archiving-arxiv",
@@ -2170,7 +2187,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-hypatia-k3aoh4-one-name/cat-harness.jsonld#package/library-core"
       ],
       "instructionsPath": "skills/library/library-core/asset-extraction.md",
-      "instructionLines": 181,
+      "instructionLines": 184,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -2716,7 +2733,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-hypatia-k3aoh4-one-name/cat-harness.jsonld#package/sdlc-core"
       ],
       "instructionsPath": "skills/sdlc/sdlc-core/before-after-preview.md",
-      "instructionLines": 387,
+      "instructionLines": 394,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -2800,7 +2817,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-hypatia-k3aoh4-one-name/cat-harness.jsonld#package/sdlc-core"
       ],
       "instructionsPath": "skills/sdlc/sdlc-core/staging-review.md",
-      "instructionLines": 614,
+      "instructionLines": 652,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -3138,7 +3155,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-hypatia-k3aoh4-one-name/cat-harness.jsonld#package/sdlc-core"
       ],
       "instructionsPath": "skills/sdlc/sdlc-core/feature-staging.md",
-      "instructionLines": 219,
+      "instructionLines": 247,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -3864,7 +3881,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-hypatia-k3aoh4-one-name/cat-harness.jsonld#package/ui-core"
       ],
       "instructionsPath": "skills/ui/ui-core/render-logging.md",
-      "instructionLines": 219,
+      "instructionLines": 220,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -6724,6 +6741,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-hypatia-k3aoh4-one-name/cat-harness.jsonld#skill/literature-search",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-hypatia-k3aoh4-one-name/cat-harness.jsonld#skill/ontologist",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-hypatia-k3aoh4-one-name/cat-harness.jsonld#skill/tabular-metadata",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-hypatia-k3aoh4-one-name/cat-harness.jsonld#skill/term-disagreement",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-hypatia-k3aoh4-one-name/cat-harness.jsonld#skill/translation-manager",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-hypatia-k3aoh4-one-name/cat-harness.jsonld#skill/upload-naming",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-hypatia-k3aoh4-one-name/cat-harness.jsonld#skill/upload-routes",
@@ -47175,6 +47193,15 @@
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/external-schema"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-hypatia-k3aoh4-one-name/cat-harness.jsonld#schema/extraction",
+      "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#Schema",
+      "name": "extraction",
+      "title": "What an EXTRACTION produced, and when — provenance for assets pulled out of",
+      "module": "schemas/extraction.ts",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-hypatia-k3aoh4-one-name/cat-harness.jsonld#directory/schemas",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/extraction"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-hypatia-k3aoh4-one-name/cat-harness.jsonld#schema/figure-description",
       "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#Schema",
       "name": "figure-description",
@@ -47374,6 +47401,15 @@
       "module": "schemas/log-entry.ts",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-hypatia-k3aoh4-one-name/cat-harness.jsonld#directory/schemas",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/log-entry"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-hypatia-k3aoh4-one-name/cat-harness.jsonld#schema/materialization-state",
+      "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#Schema",
+      "name": "materialization-state",
+      "title": "The materialization STATE vocabulary — whether the bytes are here, and how",
+      "module": "schemas/materialization-state.ts",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-hypatia-k3aoh4-one-name/cat-harness.jsonld#directory/schemas",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/materialization-state"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-hypatia-k3aoh4-one-name/cat-harness.jsonld#schema/memory",
@@ -47781,6 +47817,15 @@
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/tabular-records"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-hypatia-k3aoh4-one-name/cat-harness.jsonld#schema/term-adjudication",
+      "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#Schema",
+      "name": "term-adjudication",
+      "title": "What was decided when a minted glossary term and an authorised terminology",
+      "module": "schemas/term-adjudication.ts",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-hypatia-k3aoh4-one-name/cat-harness.jsonld#directory/schemas",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/term-adjudication"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-hypatia-k3aoh4-one-name/cat-harness.jsonld#schema/term-mapping",
       "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#Schema",
       "name": "term-mapping",
@@ -48084,14 +48129,6 @@
       "title": "Qualified Dublin Core, as a graph node.",
       "module": "../folio-assistant-core/schemas/dublin-core.ts",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/dublin-core"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-hypatia-k3aoh4-one-name/cat-harness.jsonld#schema/extraction",
-      "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#Schema",
-      "name": "extraction",
-      "title": "What an EXTRACTION produced, and when — provenance for assets pulled out of",
-      "module": "../folio-assistant-core/schemas/extraction.ts",
-      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/extraction"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-hypatia-k3aoh4-one-name/cat-harness.jsonld#schema/glossary",
