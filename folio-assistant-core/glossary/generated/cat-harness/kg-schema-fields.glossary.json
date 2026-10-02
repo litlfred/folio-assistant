@@ -6755,6 +6755,20 @@
       "status": "candidate"
     },
     {
+      "id": "prov-jsonld.owned.path",
+      "prefLabel": "Owned.path",
+      "definition": "Path inside the instance, without extension, `/`-separated.",
+      "source": "cat-harness/schemas/prov-jsonld.ts#Owned.path",
+      "status": "candidate"
+    },
+    {
+      "id": "prov-jsonld.owned.root",
+      "prefLabel": "Owned.root",
+      "definition": "Instance root, absolute.",
+      "source": "cat-harness/schemas/prov-jsonld.ts#Owned.root",
+      "status": "candidate"
+    },
+    {
       "id": "prov.provactivityschema.cat-harness-underpolicy",
       "prefLabel": "ProvActivitySchema.cat-harness:underPolicy",
       "definition": "The ODRL policy uid(s) the run was under. Required: a run under no policy cannot be checked. An array when several policies were in force, which is how JSON-LD writes several values of one property: `decide` evaluates every policy an instance holds, so naming only one would misstate what the verdict was computed against.",
