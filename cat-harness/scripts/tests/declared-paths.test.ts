@@ -31,6 +31,20 @@ import { absentResultDirs, isTestFile, scanDeclaredPaths, underAbsentResults, wi
 const root = resolve(import.meta.dir, "../..");
 const scan = scanDeclaredPaths(root);
 
+/**
+ * A recorded witness whose literal points into a declared `qa`/`health`
+ * directory that is ABSENT from this checkout cannot be verified here — the
+ * gate's own rule (`isUnverifiable` in `check-declared-paths.ts`), applied
+ * the same way so the test does not assert on the committed QA corpus being
+ * present (bean `cxcn`, reader audit F7). Unverifiable, never "resolves".
+ */
+const absentResults = absentResultDirs(root);
+const recordedWitnesses = new Set(
+  (JSON.parse(readFileSync(join(root, "scripts", "declared-path-baseline.json"), "utf-8")) as { resolves?: string[] }).resolves ?? [],
+);
+const unverifiable = (file: string, literal: string): boolean =>
+  recordedWitnesses.has(`${file}::${literal}`) && underAbsentResults(root, literal, absentResults);
+
 describe("declared-path literals", () => {
   test("the scan saw something — otherwise nothing below proves anything", () => {
     expect(scan.prefixes.length).toBeGreaterThan(5);
@@ -46,7 +60,7 @@ describe("declared-path literals", () => {
     // `witnessesOf`, and the guard below that pins it.
     const current: Record<string, number> = {};
     for (const r of scan.refused) {
-      if (isTestFile(r.file)) continue;
+      if (isTestFile(r.file) || unverifiable(r.file, r.literal)) continue;
       current[r.file] = (current[r.file] ?? 0) + 1;
     }
 
@@ -86,7 +100,11 @@ describe("declared-path literals", () => {
     expect(recorded.length, "no witnesses recorded — the relocation guard is vacuous").toBeGreaterThan(50);
 
     const held = new Set(witnessesOf(scan));
-    const lost = recorded.filter((w) => !held.has(w));
+    const lost = recorded.filter((w) => {
+      if (held.has(w)) return false;
+      const at = w.indexOf("::");
+      return !unverifiable(w.slice(0, at), w.slice(at + 2));
+    });
     expect(lost, "an artefact moved and the code naming it was not updated").toEqual([]);
   });
 

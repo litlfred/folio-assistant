@@ -130,11 +130,18 @@ export function checkQaDirs(dirs: readonly string[]): QaIntegrityReport {
  * it holds the judgements C1's conflict markers would have destroyed, and its
  * readers now refuse a corrupt file rather than reading it as empty — this is
  * where such a file is reported before a reader meets it.
+ *
+ * `kinds` narrows it: a test sweeps only `attestations`, the half that stays
+ * on `main`; the derived `qa` half is judged by `check:qa-corpus` over the
+ * fetched tree (bean `cxcn`).
  */
-export function declaredQaDirs(repoRoot: string): string[] {
+export function declaredQaDirs(
+  repoRoot: string,
+  kinds: readonly ("qa" | "attestations")[] = ["qa", "attestations"],
+): string[] {
   const dirs = new Set<string>();
   for (const inst of instanceRootsIn(repoRoot)) {
-    for (const kind of ["qa", "attestations"]) {
+    for (const kind of kinds) {
       for (const d of directoriesForGraph(inst, kind)) dirs.add(resolve(d));
     }
   }

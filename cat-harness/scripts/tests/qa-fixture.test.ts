@@ -165,20 +165,10 @@ describe("marking a witness stale — by id, never by index", () => {
   });
 });
 
-describe("the real corpus still holds the subject the e2e spec keys to", () => {
-  test("`voice-status-leak` is present, whatever its verdict", () => {
-    // If this fails, the e2e fixture's throw is about to fire — and this says
-    // so in `bun test`, which runs everywhere, rather than in the browser job.
-    // The witnesses moved to `test/results/witnesses/` on 2026-09-19 (bean
-    // `2634`): placement follows provenance, and a witness is a QA process's
-    // output rather than an authored page. They are still PUBLISHED at
-    // `/assets/qa/`, which is a different question and unchanged.
-    const p = join(
-      import.meta.dir,
-      "../../test/results/witnesses/crdm-methodology/what-is-not-built-yet.block.json",
-    );
-    expect(() =>
-      sidecarWithVerdicts(p, [{ id: "voice-status-leak", result: "fail" }]),
-    ).not.toThrow();
-  });
-});
+// "the real corpus still holds the subject the e2e spec keys to" read a
+// committed witness (`witnesses/crdm-methodology/what-is-not-built-yet`) to
+// warn early that `qa-panel.e2e.ts` would throw. A test asserting on the
+// committed corpus, so it went with bean `cxcn` (reader audit F7). The e2e
+// specs that still read corpus witnesses at load (R72 `qa-badge.e2e.ts`, R73
+// `qa-panel.e2e.ts`) are recorded on that bean as left to do; their fix is a
+// fixture, after which this early warning has nothing to warn about.

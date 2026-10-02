@@ -33,6 +33,8 @@ import { tmpdir } from "node:os";
 import { join, resolve } from "node:path";
 
 import { auditInstance, resolveDeclaredPath } from "../check-declared-dirs.ts";
+import { mayLeaveMain } from "../qa-results.ts";
+import { readDeclaration } from "../../schemas/cat-harness.ts";
 
 const REPO = resolve(import.meta.dir, "../../..");
 const made: string[] = [];
@@ -145,6 +147,17 @@ describe("the real corpus", () => {
     // over nothing, which is the shape this whole check exists to catch.
     expect(roots.length).toBeGreaterThan(1);
     const all = roots.flatMap((r) => auditInstance(r, REPO, roots));
-    expect(all).toEqual([]);
+    // Whether the derived QA corpus is in this checkout is not this test's
+    // question (bean `cxcn`, reader audit F7): it is leaving `main`. The GATE
+    // still reports an absent off-main directory that declares no `storage`
+    // — bean `16ei` kept that deliberately, and `5hox` adds the declaration —
+    // so only that one finding is set aside here, and only for those kinds.
+    const offMain = (f: (typeof all)[number]): boolean => {
+      if (f.kind !== "absent") return false;
+      const decl = readDeclaration(f.instance) as { directories?: Array<{ id: string; graphKinds?: string[] }> } | undefined;
+      const entry = decl?.directories?.find((d) => d.id === f.id);
+      return entry !== undefined && mayLeaveMain(entry);
+    };
+    expect(all.filter((f) => !offMain(f))).toEqual([]);
   });
 });

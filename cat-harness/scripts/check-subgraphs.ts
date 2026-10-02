@@ -80,6 +80,7 @@ import {
 } from "../schemas/cat-harness.js";
 import { checkoutDirectories } from "../schemas/harness-config.js";
 import { corpusScopeFor } from "./known-skills.js";
+import { mayLeaveMain } from "./qa-results.js";
 
 const ROOT = resolve(import.meta.dir, "..");
 
@@ -115,6 +116,15 @@ export interface SubgraphReport {
    * prevent.
    */
   dangling: Array<{ from: string; fromDir: string; target: string }>;
+  /**
+   * Links into a declared directory that is ABSENT from this checkout and may
+   * be (`mayLeaveMain`: every kind it holds is one the qa-reports arc moves
+   * off `main`). Whether such a link resolves cannot be determined here, so it
+   * is neither dangling nor resolved — the third state, reported by count.
+   * Bean `cxcn`: with the derived corpus absent, `test/README.md`'s generated
+   * link to `results/README.md` read as a broken link.
+   */
+  unverifiable: Array<{ from: string; fromDir: string; target: string }>;
   /**
    * Directories skipped BY DECLARATION — they hold only unpublished graph
    * kinds, so their links are not held to resolution.
@@ -363,6 +373,13 @@ export function scanSubgraphs(root: string = ROOT): SubgraphReport {
     ownPaths.has(d.absPath) || d.member === undefined ? d.id : `${d.member}/${d.id}`;
   const edges: CrossEdge[] = [];
   const dangling: SubgraphReport["dangling"] = [];
+  const unverifiable: SubgraphReport["unverifiable"] = [];
+  // Declared directories that are absent and allowed to be: a link into one
+  // cannot be judged from this checkout.
+  const absentOffMain = dirs
+    .filter((d) => mayLeaveMain(d as { graphKinds?: string[]; storage?: unknown }))
+    .map((d) => resolve(d.absPath ?? join(root, d.path)))
+    .filter((a) => !existsSync(a));
   const derivedLinks: SubgraphReport["derivedLinks"] = [];
   const unreadable: string[] = [];
   const notExamined: string[] = [];
@@ -412,7 +429,12 @@ export function scanSubgraphs(root: string = ROOT): SubgraphReport {
         // A link destination is a URL: `%20`, `%28`, `%40` name the file's own
         // characters (`linkTarget` in subgraph-readmes writes them), so decode
         // before asking the filesystem. Malformed escapes stay as written.
-        const resolved = resolveInTree(resolve(dirname(file), decodeLinkTarget(target)));
+        const wanted = resolve(dirname(file), decodeLinkTarget(target));
+        const resolved = resolveInTree(wanted);
+        if (resolved === undefined && absentOffMain.some((a) => wanted === a || wanted.startsWith(a + "/"))) {
+          unverifiable.push({ from: relative(root, file), fromDir: label(owner), target });
+          continue;
+        }
         if (resolved === undefined) {
           // A renderable graph addresses the PUBLISHED tree, not this one.
           const renderable = owner.graphKinds.some((g) => isRenderable(g));
@@ -449,12 +471,12 @@ export function scanSubgraphs(root: string = ROOT): SubgraphReport {
       notExamined.push(`${label(dir)} (${dir.path})`);
     }
   }
-  return { tree, edges, dangling, derivedLinks, exempt, siteResolved, unreadable, notExamined, scanned };
+  return { tree, edges, dangling, unverifiable, derivedLinks, exempt, siteResolved, unreadable, notExamined, scanned };
 }
 
 if (import.meta.main) {
   const check = process.argv.includes("--check");
-  const { tree, edges, dangling, derivedLinks, exempt, siteResolved, unreadable, notExamined, scanned } =
+  const { tree, edges, dangling, unverifiable, derivedLinks, exempt, siteResolved, unreadable, notExamined, scanned } =
     scanSubgraphs(ROOT);
 
   console.log(`Subgraphs  (${scanned} markdown node(s) attributed to a declared directory)\n`);
@@ -495,6 +517,13 @@ if (import.meta.main) {
       for (const e of list.slice(0, 4)) console.log(`         ${e.from}  →  ${e.to}`);
       if (list.length > 4) console.log(`         … and ${list.length - 4} more`);
     }
+  }
+
+  if (unverifiable.length > 0) {
+    console.log(
+      `\n? ${unverifiable.length} link(s) point into a declared directory absent from this checkout ` +
+        `(derived QA, kept off main): COULD NOT DETERMINE whether they resolve — not counted as broken, not as clean.`,
+    );
   }
 
   if (dangling.length > 0) {

@@ -27,9 +27,9 @@ So each record answers three questions — **which edition**, **what here
 depends on it**, and **which of its terms this repository branches on**.
 
 <div class="xs-grid">
-<div class="xs-stat"><b>17</b><span>specifications</span></div>
+<div class="xs-stat"><b>18</b><span>specifications</span></div>
 <div class="xs-stat"><b>105</b><span>operative terms in the graph</span></div>
-<div class="xs-stat"><b>200</b><span>declared uses</span></div>
+<div class="xs-stat"><b>201</b><span>declared uses</span></div>
 <div class="xs-stat"><b>0</b><span>declarations naming no record</span></div>
 </div>
 
@@ -47,6 +47,7 @@ depends on it**, and **which of its terms this repository branches on**.
 | **[Metadata Vocabulary for Tabular Data](#w3c-csvw)**<br>`w3c-csvw` | W3C | [2015-12-17](https://www.w3.org/TR/tabular-metadata/) | `conforms` — this repository's artefacts are valid against it |
 | **[ODRL Information Model 2.2](#w3c-odrl)**<br>`w3c-odrl` | W3C | [2018-02-15](https://www.w3.org/TR/odrl-model/) | `conforms` — this repository's artefacts are valid against it |
 | **[OWL 2 Web Ontology Language Document Overview (Second Edition)](#w3c-owl2)**<br>`w3c-owl2` | W3C | [2012-12-11](https://www.w3.org/TR/owl2-overview/) | `conforms` — this repository's artefacts are valid against it |
+| **[The PROV-JSONLD Serialization: A JSON-LD Representation for the PROV Data Model](#w3c-prov-jsonld)**<br>`w3c-prov-jsonld` | W3C | [2024-08-25](https://www.w3.org/submissions/2024/SUBM-prov-jsonld-20240825/) | `conforms` — this repository's artefacts are valid against it |
 | **[PROV-O: The PROV Ontology](#w3c-prov-o)**<br>`w3c-prov-o` | W3C | [2013-04-30](https://www.w3.org/TR/prov-o/) | `conforms` — this repository's artefacts are valid against it |
 | **[RDF 1.1 Concepts and Abstract Syntax](#w3c-rdf)**<br>`w3c-rdf` | W3C | [2014-02-25](https://www.w3.org/TR/rdf11-concepts/) | `conforms` — this repository's artefacts are valid against it |
 | **[RDF Schema 1.1](#w3c-rdfs)**<br>`w3c-rdfs` | W3C | [2014-02-25](https://www.w3.org/TR/rdf-schema/) | `conforms` — this repository's artefacts are valid against it |
@@ -74,7 +75,7 @@ vocabulary shows up here instead of going unnoticed.
 
 Every namespace the corpus declares is covered by a record above.
 
-**18 declared and not in use.** Not a defect on its own: a
+**19 declared and not in use.** Not a defect on its own: a
 record may cover a namespace only some artefacts carry. It is here because
 a registry nobody prunes is one that stops describing the repository.
 
@@ -95,6 +96,7 @@ a registry nobody prunes is one that stops describing the repository.
 - `http://www.w3.org/ns/oa#`
 - `http://www.w3.org/ns/odrl/2/`
 - `http://www.w3.org/ns/prov#`
+- `https://openprovenance.org/ns/provext#`
 - `https://schema.org/`
 
 ## Each specification
@@ -419,6 +421,26 @@ a subset of the edition rather than a transcription of it.
 | `owl:Ontology` | derived from the corpus; what this repository does with it is not yet described |
 | `owl:deprecated` | derived from the corpus; what this repository does with it is not yet described |
 | `owl:sameAs` | derived from the corpus; what this repository does with it is not yet described |
+
+### The PROV-JSONLD Serialization: A JSON-LD Representation for the PROV Data Model {#w3c-prov-jsonld}
+
+`w3c-prov-jsonld` — W3C, edition [2024-08-25](https://www.w3.org/submissions/2024/SUBM-prov-jsonld-20240825/) — `conforms`, meaning this repository's artefacts are valid against it.
+
+**Namespaces.**
+
+- `https://openprovenance.org/ns/provext#`
+
+**Note.** A W3C Member Submission (King's College London; editors Luc Moreau, Dong Huynh) — acknowledged by W3C, NOT endorsed. Adopted by owner decision 2026-10-01 (beans jcet, 9y9j) because W3C publishes no JSON-LD context for PROV-O; PROV itself stays pinned by w3c-prov-o. The text is held at library/w3c-2024-prov-jsonld and its context.jsonld beside it, pinned by sha256 in schemas/prov-jsonld.ts and served offline; provext# is the Submission's own extension namespace, which that context binds.
+
+**What depends on it.**
+
+| user | declared by |
+|---|---|
+| [`cat-harness/schemas/prov-jsonld.ts`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/prov-jsonld.ts) | `@conformsTo` tag |
+
+**No operative terms.** This repository conforms to the specification
+without branching on any of its terms, so none is materialised into the
+graph. That is a determined zero, not an unfilled field.
 
 ### PROV-O: The PROV Ontology {#w3c-prov-o}
 

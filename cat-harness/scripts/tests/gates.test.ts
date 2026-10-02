@@ -236,8 +236,14 @@ describe("a strict reader and a loose one agree", () => {
     // The publish itself, and the step that PRODUCES what it publishes — bean
     // `0utt`: the bootstrap kg-export sidecar is regenerated in that job, and
     // `check:published-instance-exports` (a gate) already runs the same export.
+    // And the step that READS BACK what was published (bean `cxcn`):
+    // `check:qa-corpus --github` judges the stored entry, which exists only
+    // after the publish, so it cannot run in `bun run gates`; locally the same
+    // check is `check:qa-corpus --dir <tree>` over a `qa:fetch`.
     const named = (c: string) =>
-      c.includes("qa:publish") || /kg-export\.ts --instance \.\/bootstrap\b/.test(c);
+      c.includes("qa:publish") ||
+      /kg-export\.ts --instance \.\/bootstrap\b/.test(c) ||
+      c === "bun run check:qa-corpus --github";
     expect([...published].filter((c) => !named(c))).toEqual([]);
     expect(loose.filter((c) => !found.has(c) && !published.has(c))).toEqual([]);
     // And the guard is not vacuous — a loose scan that matched nothing would

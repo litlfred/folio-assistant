@@ -220,29 +220,36 @@ describe("per-family node schemas (bean rdkm)", () => {
   });
 
   test("kg-validate routes a qa node by its $schema tag", async () => {
+    // Over FIXTURES planted in the declared `qa` directory, never over the
+    // committed corpus (bean `cxcn`, reader audit F7 R67): the routing is a
+    // fact about the declaration and the node's tag, and the corpus is leaving
+    // `main`. The directory may be absent (it is a `qa` kind, which may leave
+    // `main`), so it is created for the fixture and removed after if so.
     const { validatePath } = await import("../scripts/kg-validate");
-    const dir = join(HARNESS, "test", "results");
-    const { readdirSync, readFileSync, statSync } = await import("node:fs");
-    const find = (d: string, tag: string): string | undefined => {
-      for (const e of readdirSync(d)) {
-        const p = join(d, e);
-        if (statSync(p).isDirectory()) { const hit = find(p, tag); if (hit) return hit; continue; }
-        if (!p.endsWith(".json")) continue;
-        try {
-          if (JSON.parse(readFileSync(p, "utf8"))?.$schema === tag) return p;
-        } catch {
-          // not a node
-        }
-      }
-      return undefined;
-    };
-    const kg = find(dir, "kg-qa/v1");
-    expect(kg).toBeDefined();
-    expect((await validatePath(kg!, HARNESS)).state).toBe("valid");
-    const witness = find(dir, "qa-witness/v1");
-    expect(witness).toBeDefined();
-    const v = await validatePath(witness!, HARNESS);
-    expect(v.state).toBe("undetermined");
+    const { existsSync } = await import("node:fs");
+    const { KG_QA_SCHEMA, tally } = await import("./kg-qa");
+    const results = join(HARNESS, "test", "results");
+    const hadResults = existsSync(results);
+    const dir = join(results, `.kind-validator-fixture-${process.pid}`);
+    mkdirSync(dir, { recursive: true });
+    try {
+      const criteria = { "skill-ref-resolves": { result: "pass" as const, findings: [] } };
+      const kg = join(dir, "p.kg-qa.json");
+      writeFileSync(kg, JSON.stringify({
+        $schema: KG_QA_SCHEMA,
+        subject: { kind: "process", id: "P", path: "p.bpmn" },
+        source_hash: "sha256:x",
+        criteria,
+        totals: tally(criteria),
+      }));
+      expect((await validatePath(kg, HARNESS)).state).toBe("valid");
+      const witness = join(dir, "p.block.json");
+      writeFileSync(witness, JSON.stringify({ $schema: "qa-witness/v1" }));
+      // `qa-witness/v1` is a TypeScript shape, so it is UNDETERMINED — not valid.
+      expect((await validatePath(witness, HARNESS)).state).toBe("undetermined");
+    } finally {
+      rmSync(hadResults ? dir : results, { recursive: true, force: true });
+    }
   });
 });
 

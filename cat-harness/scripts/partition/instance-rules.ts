@@ -407,6 +407,7 @@ export const RULES: Rule[] = [
       // and no folio's subject matter could make it answer differently.
       "scripts/qa-store.ts",                 // the qa-reports branch: readQa / publishQa / pruneQa
       "scripts/qa-site-assets.ts",           // a site build's QA evidence: fetch from qa-reports, verify the copy (tfqf)
+      "scripts/check-qa-corpus.ts",          // the fetched qa tree validates, hosted homes included (cxcn)
       // Its clean-merge counterpart, and harness-level for the same reason: it
       // loads the GATE SET from the workflow and re-runs whichever writers
       // their checks report stale. It knows nothing about any folio's subject

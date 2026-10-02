@@ -23,8 +23,8 @@
  */
 import { describe, expect, test } from "bun:test";
 import { spawnSync } from "node:child_process";
-import { existsSync, readFileSync, readdirSync, writeFileSync } from "node:fs";
-import { join } from "node:path";
+import { existsSync, readFileSync, readdirSync, rmSync, writeFileSync } from "node:fs";
+import { dirname, join } from "node:path";
 
 import { regenPass, writerFor, type Runner } from "../regen-after-merge.ts";
 import { chromiumExecutable } from "../bpmn-render.ts";
@@ -42,6 +42,13 @@ function firstIn(dir: string, suffix: string): string {
   const f = readdirSync(join(REPO, dir)).filter((n) => n.endsWith(suffix)).sort()[0];
   if (f === undefined) throw new Error(`no *${suffix} under ${dir} — the fixture this case stales is gone`);
   return join(dir, f);
+}
+
+/** The outermost ancestor of `abs` that does not exist yet (it may be `abs` itself). */
+function firstMissingAncestor(abs: string): string {
+  let p = abs;
+  while (!existsSync(dirname(p))) p = dirname(p);
+  return p;
 }
 
 function hasBrowser(): boolean {
@@ -103,6 +110,13 @@ describe("every writer regen pairs for these gates turns a STALED artefact's che
         expect(writer, `${c.check} has no writer regen can run`).toBeDefined();
         const rel = c.artefact();
         const abs = join(REPO, rel);
+        // A derived QA artefact may be absent — the committed corpus is
+        // leaving `main` (bean `cxcn`, reader audit F7). Then the WRITER
+        // produces it fresh first, and the directory it had to create is
+        // removed afterwards, so the test asserts on a fresh run rather than
+        // on the committed copy, and leaves the checkout as it found it.
+        const createdDir = existsSync(abs) ? undefined : firstMissingAncestor(abs);
+        if (createdDir !== undefined) expect(runner(writer!), `${writer} could not produce ${rel}`).toBe(true);
         const original = readFileSync(abs, "utf-8");
         const staled = c.stale(original);
         expect(staled, `the fixture did not change ${rel}`).not.toBe(original);
@@ -114,7 +128,8 @@ describe("every writer regen pairs for these gates turns a STALED artefact's che
           expect(results[0]).toEqual({ check: c.check, writer, outcome: "regenerated" });
           expect(readFileSync(abs, "utf-8"), `${writer} left ${rel} staled`).not.toBe(staled);
         } finally {
-          writeFileSync(abs, original);
+          if (createdDir !== undefined) rmSync(createdDir, { recursive: true, force: true });
+          else writeFileSync(abs, original);
         }
       },
       120_000,
