@@ -7,5 +7,9 @@ Part of [folio-assistant-core](../README.md) 0.1.0, declared as `core-processes`
 
 | file | what it is | used by |
 |---|---|---|
-| [`deep-document-research.bpmn`](deep-document-research.bpmn) | a [Process](https://github.com/litlfred/bootstrap/blob/main/schemas/README.md#process): Deep document research |  |
+| [`processes.json`](processes.json) | data |  |
+| [`conduct/`](conduct/) | 3 files | |
+| [`content/`](content/) | 8 files | |
+| [`library/`](library/) | 1 file | |
+| [`ui/`](ui/) | 3 files | |
 <!-- kg:subgraph:end -->
