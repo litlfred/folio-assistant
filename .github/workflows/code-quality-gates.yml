@@ -853,7 +853,11 @@ jobs:
       # step is what stops a new gate arriving undeclared and quietly turning
       # them back into an upper bound.
       - name: audit coverage is measured, current, and every gate has declared
-        run: bun run audit:coverage:require-all
+        # `--against main` (bean `5hox`): every `qa` directory declares `storage`, so
+        # the working copy is not a baseline any more. New-vs-inherited is judged
+        # against the newest `qa-reports:main/<sha>`; a missing entry is UNKNOWN,
+        # printed and not gated (`judgeQaResult` in `qa-results.ts`).
+        run: bun run audit:coverage:require-all --against main
 
       # ADVISORY ON THE FINDINGS, HARD ON THE STALENESS, and the split is the
       # whole point of this step existing at all. `xd1g` Done-when 3 wanted a
@@ -869,7 +873,7 @@ jobs:
       # fail is `1xhc`; this arrangement is what gives it something real to
       # fail on.
       - name: the root-scan census is current
-        run: bun run root-scan-census:check
+        run: bun run root-scan-census:check --against main
 
       # The four graphs `audit:coverage` reported as `typed-only` — a schema
       # parses their nodes and nothing had an opinion about what they SAY.
@@ -904,7 +908,7 @@ jobs:
       # `--require-all` that every gate has declared, `--strict` that every kind
       # with files is JUDGED and not merely typed.
       - name: every kind with files is judged, not merely typed
-        run: bun run audit:coverage:strict
+        run: bun run audit:coverage:strict --against main
 
       # The detangle measurements are PINNED, not graded. This fails on a STALE
       # sidecar or an orphaned one — never on a number being "wrong", because
@@ -1122,7 +1126,7 @@ jobs:
       # `subgraph-readmes` (owner, 2026-09-29). The pre-commit hook runs the
       # same check; this is the gate a commit that skipped the hook still meets.
       - name: Every declared directory's README is current
-        run: bun run readme:subgraphs:check
+        run: bun run readme:subgraphs:check --against main
 
       # An instance's IRIs are `<iriBase><version>/…` for programs and
       # `<iriBase>v<major>/…` for people (owner, 2026-09-29). The copies that
@@ -2034,7 +2038,7 @@ jobs:
       # `bun run viewer:nav:strict`, which the author of a new generator runs.
       # Bean `edx7`.
       - name: viewer pages keep the navbar they had
-        run: bun run check:viewer-nav
+        run: bun run check:viewer-nav --against main
 
       # The handler namespace's own index. Gated on the same ground as the
       # voices projection: it derives from the DECLARATIONS (which kinds each

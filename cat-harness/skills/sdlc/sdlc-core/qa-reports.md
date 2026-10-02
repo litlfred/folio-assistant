@@ -34,7 +34,12 @@ two on that line, by the owner's rulings of 2026-10-01:
 them once every reader is migrated and the branch holds a hash-verified copy
 (ruling D4, "right away"). Until then they are a copy on its way out, not the
 record. Do not regenerate one in order to commit it, and do not hand-resolve
-one.
+one. Every `qa` directory already declares `storage` and is ignored by version
+control, so a new file there is not committed. Before the removal is pushed,
+`bun run qa:verify-moved --key main/<head>` must answer IDENTICAL. It compares
+every moved path's blob id with the entry, and an entry it cannot read is
+UNKNOWN (exit 2), never a pass. The inventory is
+`docs/proposals/5hox-removal-inventory.md`.
 
 ## The branch
 
@@ -120,8 +125,9 @@ so read that rather than this list.
 ## Related
 
 - [`directory-conventions`](../../kg/kg-core/directory-conventions.md)
-  §"`storage`" covers the declaration field that will mark a directory as
-  stored. No real declaration sets it yet.
+  §"`storage`" covers the declaration field that marks a directory as
+  stored. Every `qa` directory sets it since bean `5hox`, and each working
+  copy is ignored by version control.
 - [`content-context-and-state-graphs`](../../kg/kg-core/content-context-and-state-graphs.md)
   explains why both halves are `state`, and why only one of them can be
   rebuilt.

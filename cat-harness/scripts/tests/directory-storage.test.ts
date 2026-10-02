@@ -11,11 +11,15 @@
  * | `harness:dirs` | absent → created | absent → NOT created (an empty working copy reads as clean) |
  * | `audit:coverage` | censused | skipped, and the kind reads `stored` |
  *
- * No real declaration sets the field yet; flipping one is a later bean.
+ * Every real `qa` directory declares it since bean `5hox`, and the last
+ * describe block pins the one consequence a fixture cannot: each stored
+ * directory's working copy is ignored by version control, so a writer's output
+ * is never committed by accident and the removal stays removed.
  *
  * @module scripts/tests/directory-storage
  */
 import { afterAll, describe, expect, test } from "bun:test";
+import { spawnSync } from "node:child_process";
 import { existsSync, mkdirSync, mkdtempSync, rmSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
@@ -129,5 +133,25 @@ describe("resolveQaLocation", () => {
       { id: "qa2", path: "more/results/", graphKinds: ["qa"], storage: { branch: "two", keyedBy: "commit" } },
     ]);
     expect(() => resolveQaLocation(root)).toThrow(QaUsageError);
+  });
+});
+
+describe("the real declarations (bean 5hox)", () => {
+  const repoRoot = join(import.meta.dir, "..", "..", "..");
+
+  test("every declared qa directory is stored, and every stored working copy is ignored", () => {
+    const loc = resolveQaLocation(repoRoot);
+    expect(loc.directories.length).toBeGreaterThan(0);
+    expect(loc.declared).toBe(true);
+    expect(loc.directories.filter((d) => !d.storage).map((d) => d.path)).toEqual([]);
+    const probes = loc.directories.map((d) => `${d.path}/probe.json`);
+    const r = spawnSync("git", ["check-ignore", "--no-index", "--stdin"], { cwd: repoRoot, input: probes.join("\n") + "\n", encoding: "utf-8" });
+    const ignored = new Set(r.stdout.split("\n").filter(Boolean));
+    expect(probes.filter((p) => !ignored.has(p))).toEqual([]);
+  });
+
+  test("attestations are never ignored: they stay on main (ruling D2 (a))", () => {
+    const r = spawnSync("git", ["check-ignore", "--no-index", "-q", "cat-harness/test/attestations/kg-qa/probe.attestations.json"], { cwd: repoRoot });
+    expect(r.status).toBe(1);
   });
 });
