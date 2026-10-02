@@ -1,3 +1,12 @@
+---
+# note on folio-assistant-qj9a from claude/wizardly-galileo-feyypz
+$schema: folio-bean-note/v1
+bean: folio-assistant-qj9a
+branch: "claude/wizardly-galileo-feyypz"
+created: "2026-10-02"
+---
+## handover: preview size / page weight 2026-10-02
+
 ## Handover report: preview size / page weight (session `01WmQ8e6wkd4dbzbe1En9znA`)
 
 - **Session:** https://claude.ai/code/session_01WmQ8e6wkd4dbzbe1En9znA
