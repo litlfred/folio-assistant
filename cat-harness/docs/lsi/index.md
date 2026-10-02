@@ -24,8 +24,8 @@ The method is [Latent Semantic Indexing](../methodologies/) (node `lsi`), with
 how to build, query and audit an index is the skill `lsi-indexing`.
 
 <div class="lv-grid">
-<div class="lv-stat"><b>5</b><span>committed indexes</span></div>
-<div class="lv-stat"><b>2140</b><span>units indexed</span></div>
+<div class="lv-stat"><b>4</b><span>committed indexes</span></div>
+<div class="lv-stat"><b>1966</b><span>units indexed</span></div>
 <div class="lv-stat"><b>5</b><span>graphs that need an index and lack a fresh one</span></div>
 </div>
 
@@ -66,27 +66,6 @@ the same as fine. The same verdict is `kg:audit`'s `tool-downstream-fresh` for t
 | `who-iris/who-iris-site` | <span class="lv-na">n/a</span> | below the need-an-index threshold — not judged |
 | `who-iris/who-iris-skills` | <span class="lv-na">n/a</span> | below the need-an-index threshold — not judged |
 | `who-style-guide/glossary` | <span class="lv-na">n/a</span> | below the need-an-index threshold — not judged |
-
-## agent-skills / library
-
-**174** units · **2605** terms · k = **100** · retains **88.5 %** of the weighted matrix · weighting `log-entropy` · sidecar `cat-harness/test/results/lsi/agent-skills/library.lsi.json`
-
-> Dimension 1 has **no negative pole**: it most likely measures unit length and term frequency (a margin), not a theme. Read the themes from dimension 2 on.
-
-Each dimension is a **contrast** between two poles, shown by their highest-loading terms. It is not named here: naming it is a reader's act.
-
-| dim | σ | one pole | the other pole |
-|---|---|---|---|
-| 1 | 18.54 | gemini, task, office, science, model, industrial, agent, openhands | *(none)* |
-| 2 | 15.41 | office, industrial, science, finance, media, gpt, opus, deepseek | defects, defect, safety, routing, body, detected, checks, description |
-| 3 | 13.21 | arxiv, wang, zhou, language, yang, yao, jiang, liu | defects, defect, routing, office, industrial, safety, detected, body |
-| 4 | 12.16 | openhands, gemini, gpt, configurations, opus, flash, condition, pro | defects, defect, arxiv, safety, liu, routing, coding, zhang |
-| 5 | 11.34 | openhands, defects, gemini, gpt, flash, pro, opus, defect | reasoning, tool, reference, docs, cookie, file, multimodal, coding |
-| 6 | 10.31 | oracle, human, fraction, verifier, augmentation, pytest, passed, submissions | claude, openhands, opus, gpt, flash, pro, deepseek, gemini |
-| 7 | 9.45 | behaviour, hook, mechanisms, interface, call, external, advisory, ordinary | cookie, claude, services, docs, platform, analyze, usage, policy |
-| 8 | 8.90 | wang, xiangyi, tier, university, spec, retrieved, well, checks | reasoning, yao, generated, spec-aware, providing, framework, chat, hook |
-
-**Findings** — 0 narrow dimension(s), 0 near-duplicate pair(s).
 
 ## cat-harness / library
 
@@ -138,14 +117,14 @@ Each dimension is a **contrast** between two poles, shown by their highest-loadi
 
 | dim | σ | one pole | the other pole |
 |---|---|---|---|
-| 1 | 43.93 | instance, kind, harness, session, graph, directory, block, page | *(none)* |
+| 1 | 43.95 | instance, kind, harness, session, graph, directory, block, page | *(none)* |
 | 2 | 21.48 | watcher, slot, sibling, queue, backlog, prs, block, commits | harness, instance, declaration, directory, node, directories, graph, declares |
 | 3 | 17.81 | session, beans, branch, goals, store, window, epic, push | slot, chapter, block, edges, formal, glossary, project, narrative |
-| 4 | 16.48 | page, block, section, manifest, sections, text, blocks, chapter | ledger, sibling, subdirectory, items, sessions, renderable, relocation, window |
-| 5 | 14.98 | rung, archive, queue, arm, sniff, zip, archived, slide | feature, requirements, role, phase, folio, lane, feedback, sign-off |
-| 6 | 14.84 | locale, page, navbar, translated, sha, translation, board, theme | edge, edges, forward, lane, actor, role, analysis, logical |
+| 4 | 16.49 | page, block, section, text, manifest, sections, blocks, chapter | ledger, sibling, subdirectory, items, sessions, renderable, relocation, window |
+| 5 | 14.98 | rung, archive, queue, arm, sniff, archived, zip, ingest | feature, requirements, role, folio, phase, feedback, preview, navbar |
+| 6 | 14.85 | page, locale, navbar, sha, translated, board, translation, theme | edge, forward, edges, lane, actor, role, analysis, logical |
 | 7 | 14.41 | edges, forward, edge, backward, preview, cross-chapter, energy, logical | actor, lane, role, requirement, login, criterion, roles, task |
-| 8 | 14.18 | tile, avatar, theme, card, board, sticky, crop, art | translation, locale, language, glossary, translated, term, french, badge |
+| 8 | 14.23 | tile, avatar, card, theme, board, sticky, crop, art | translation, language, locale, glossary, translated, term, french, badge |
 
 **Findings** — 0 narrow dimension(s), 0 near-duplicate pair(s).
 
