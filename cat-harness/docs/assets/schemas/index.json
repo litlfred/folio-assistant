@@ -2,7 +2,7 @@
   "$schema": "folio-schema-graph/v1",
   "tile": {
     "schemas": {
-      "count": 191,
+      "count": 193,
       "unit": "modules"
     }
   },
@@ -1229,6 +1229,23 @@
       "name": "tabular-records",
       "graphNode": "schema",
       "summary": "What makes a dataset findable — bean `p67i`.",
+      "isTest": false
+    },
+    {
+      "module": "cat-harness/schemas/term-adjudication.test.ts",
+      "instance": "cat-harness",
+      "name": "term-adjudication.test",
+      "graphNode": "none",
+      "reason": "a test",
+      "summary": "The outcome set for leg 1 of bean `2i5f`: what is refused, and why.",
+      "isTest": true
+    },
+    {
+      "module": "cat-harness/schemas/term-adjudication.ts",
+      "instance": "cat-harness",
+      "name": "term-adjudication",
+      "graphNode": "schema",
+      "summary": "What was decided when a minted glossary term and an authorised terminology",
       "isTest": false
     },
     {
@@ -31084,6 +31101,380 @@
       "exported": true
     },
     {
+      "id": "cat-harness/schemas/term-adjudication.ts#AdjudicationStatus",
+      "name": "AdjudicationStatus",
+      "module": "cat-harness/schemas/term-adjudication.ts",
+      "kind": "type-alias",
+      "doc": "Each record set against what the check reports NOW, by outcome:",
+      "fields": [],
+      "extendsNames": [],
+      "values": [
+        "applied",
+        "pending",
+        "holds",
+        "stale"
+      ],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/term-adjudication.ts#ChangeProseSchema",
+      "name": "ChangeProseSchema",
+      "module": "cat-harness/schemas/term-adjudication.ts",
+      "kind": "zod-object",
+      "fields": [
+        {
+          "name": "outcome",
+          "type": "z.literal(\"change-prose\")",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "concept",
+          "type": "Iri",
+          "optional": false,
+          "array": false,
+          "doc": "The authorised concept the corpus now uses."
+        },
+        {
+          "name": "authorisedLabel",
+          "type": "z.string().trim().min(1)",
+          "optional": false,
+          "array": false,
+          "doc": "Its authorised label, which the corpus now carries."
+        },
+        {
+          "name": "changed",
+          "type": "z.array(z.string().min(1)).min(1, \"say which source assets were changed, or nothing can be checked\")",
+          "optional": false,
+          "array": true,
+          "doc": "The source assets that were edited, by repository path."
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [
+        "cat-harness/schemas/term-adjudication.ts#Iri"
+      ],
+      "unresolved": [],
+      "external": [
+        "z"
+      ],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/term-adjudication.ts#Common",
+      "name": "Common",
+      "module": "cat-harness/schemas/term-adjudication.ts",
+      "kind": "undetermined",
+      "note": "{ subject: Subject, /** The actor who decided: an id under `scenarios/actors/`. A content decision is a person's. */ decidedBy: z.string().min(1), decidedAt: z…",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": false
+    },
+    {
+      "id": "cat-harness/schemas/term-adjudication.ts#Iri",
+      "name": "Iri",
+      "module": "cat-harness/schemas/term-adjudication.ts",
+      "kind": "zod-scalar",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": false
+    },
+    {
+      "id": "cat-harness/schemas/term-adjudication.ts#LocalTermSchema",
+      "name": "LocalTermSchema",
+      "module": "cat-harness/schemas/term-adjudication.ts",
+      "kind": "zod-object",
+      "fields": [
+        {
+          "name": "outcome",
+          "type": "z.literal(\"local-term\")",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "localTerm",
+          "type": "z .object({ /** The authored glossary file, by repository path. */ glossary: z.string().min(1), id: z.string().regex(LO…",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "reason",
+          "type": "Reason",
+          "optional": false,
+          "array": false,
+          "doc": "Why the authority's concept does not serve, so the next reader need not re-derive it."
+        },
+        {
+          "name": "relation",
+          "type": "z.enum(LOCAL_TERM_RELATIONS)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "concept",
+          "type": "Iri.optional()",
+          "optional": true,
+          "array": false,
+          "doc": "The authority's concept, required unless `relation` is `none`."
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [
+        "cat-harness/schemas/term-adjudication.ts#Iri",
+        "cat-harness/schemas/term-adjudication.ts#Reason"
+      ],
+      "unresolved": [],
+      "external": [
+        "LOCAL_ID",
+        "LOCAL_TERM_RELATIONS",
+        "z"
+      ],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/term-adjudication.ts#Observed",
+      "name": "Observed",
+      "module": "cat-harness/schemas/term-adjudication.ts",
+      "kind": "zod-object",
+      "doc": "The two disagreements, as `check:term-mapping` reported them.",
+      "fields": [
+        {
+          "name": "exact",
+          "type": "z.literal(\"unmapped\")",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "concept",
+          "type": "z.enum([\"mapped\", \"unmapped\"])",
+          "optional": false,
+          "array": false
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [
+        "z"
+      ],
+      "exported": false
+    },
+    {
+      "id": "cat-harness/schemas/term-adjudication.ts#Outcome",
+      "name": "Outcome",
+      "module": "cat-harness/schemas/term-adjudication.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/term-adjudication.ts#Reason",
+      "name": "Reason",
+      "module": "cat-harness/schemas/term-adjudication.ts",
+      "kind": "zod-scalar",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": false
+    },
+    {
+      "id": "cat-harness/schemas/term-adjudication.ts#Subject",
+      "name": "Subject",
+      "module": "cat-harness/schemas/term-adjudication.ts",
+      "kind": "zod-object",
+      "fields": [
+        {
+          "name": "scheme",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false,
+          "doc": "The candidate's scheme id, as the mapping record keys it (`kg-tools`, …)."
+        },
+        {
+          "name": "term",
+          "type": "z.string().regex(LOCAL_ID)",
+          "optional": false,
+          "array": false,
+          "doc": "The candidate's term id within that scheme."
+        },
+        {
+          "name": "target",
+          "type": "z.enum(MAPPING_TARGETS)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "observed",
+          "type": "Observed",
+          "optional": false,
+          "array": false
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [
+        "cat-harness/schemas/term-adjudication.ts#Observed"
+      ],
+      "unresolved": [
+        "MAPPING_TARGETS"
+      ],
+      "external": [
+        "LOCAL_ID",
+        "z"
+      ],
+      "exported": false
+    },
+    {
+      "id": "cat-harness/schemas/term-adjudication.ts#TermAdjudication",
+      "name": "TermAdjudication",
+      "module": "cat-harness/schemas/term-adjudication.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/term-adjudication.ts#TermAdjudicationSchema",
+      "name": "TermAdjudicationSchema",
+      "module": "cat-harness/schemas/term-adjudication.ts",
+      "kind": "zod-union",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/term-adjudication.ts#TermAdjudicationsFile",
+      "name": "TermAdjudicationsFile",
+      "module": "cat-harness/schemas/term-adjudication.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/term-adjudication.ts#TermAdjudicationsFileSchema",
+      "name": "TermAdjudicationsFileSchema",
+      "module": "cat-harness/schemas/term-adjudication.ts",
+      "kind": "zod-object",
+      "fields": [
+        {
+          "name": "$schema",
+          "type": "z.literal(TERM_ADJUDICATIONS_SCHEMA_ID)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "_comment",
+          "type": "z.string().optional()",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "adjudications",
+          "type": "z.array(TermAdjudicationSchema)",
+          "optional": false,
+          "array": true
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [
+        "cat-harness/schemas/term-adjudication.ts#TermAdjudicationSchema"
+      ],
+      "unresolved": [],
+      "external": [
+        "TERM_ADJUDICATIONS_SCHEMA_ID",
+        "z"
+      ],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/term-adjudication.ts#VocabularyWrongSchema",
+      "name": "VocabularyWrongSchema",
+      "module": "cat-harness/schemas/term-adjudication.ts",
+      "kind": "zod-object",
+      "fields": [
+        {
+          "name": "outcome",
+          "type": "z.literal(\"vocabulary-wrong\")",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "vocabulary",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false,
+          "doc": "The vocabulary consulted, as the check's scope names it (`platform`, `who-smart-base@v1.0.0`, …)."
+        },
+        {
+          "name": "domain",
+          "type": "z.string().trim().min(1)",
+          "optional": false,
+          "array": false,
+          "doc": "The domain it does not serve."
+        },
+        {
+          "name": "reason",
+          "type": "Reason",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "concept",
+          "type": "Iri.optional()",
+          "optional": true,
+          "array": false,
+          "doc": "The concept the label reached, where it reached one."
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [
+        "cat-harness/schemas/term-adjudication.ts#Iri",
+        "cat-harness/schemas/term-adjudication.ts#Reason"
+      ],
+      "unresolved": [],
+      "external": [
+        "z"
+      ],
+      "exported": true
+    },
+    {
       "id": "cat-harness/schemas/term-mapping.ts#ConceptMatch",
       "name": "ConceptMatch",
       "module": "cat-harness/schemas/term-mapping.ts",
@@ -43150,6 +43541,39 @@
       "exported": true
     },
     {
+      "id": "folio-assistant-core/schemas/glossary.ts#AutomatedMatch",
+      "name": "AutomatedMatch",
+      "module": "folio-assistant-core/schemas/glossary.ts",
+      "kind": "interface",
+      "doc": "One candidate's AUTOMATED matches, as `check:term-mapping` found them:",
+      "fields": [
+        {
+          "name": "term",
+          "type": "string",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "exactMatch",
+          "type": "string[]",
+          "optional": false,
+          "array": true
+        },
+        {
+          "name": "closeMatch",
+          "type": "string[]",
+          "optional": false,
+          "array": true
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
       "id": "folio-assistant-core/schemas/glossary.ts#Glossary",
       "name": "Glossary",
       "module": "folio-assistant-core/schemas/glossary.ts",
@@ -49529,6 +49953,62 @@
       "kind": "field",
       "optional": false,
       "array": true
+    },
+    {
+      "from": "cat-harness/schemas/term-adjudication.ts#ChangeProseSchema",
+      "to": "cat-harness/schemas/term-adjudication.ts#Iri",
+      "via": "concept",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "cat-harness/schemas/term-adjudication.ts#LocalTermSchema",
+      "to": "cat-harness/schemas/term-adjudication.ts#Iri",
+      "via": "concept",
+      "kind": "field",
+      "optional": true,
+      "array": false
+    },
+    {
+      "from": "cat-harness/schemas/term-adjudication.ts#LocalTermSchema",
+      "to": "cat-harness/schemas/term-adjudication.ts#Reason",
+      "via": "reason",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "cat-harness/schemas/term-adjudication.ts#Subject",
+      "to": "cat-harness/schemas/term-adjudication.ts#Observed",
+      "via": "observed",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "cat-harness/schemas/term-adjudication.ts#TermAdjudicationsFileSchema",
+      "to": "cat-harness/schemas/term-adjudication.ts#TermAdjudicationSchema",
+      "via": "adjudications",
+      "kind": "field",
+      "optional": false,
+      "array": true
+    },
+    {
+      "from": "cat-harness/schemas/term-adjudication.ts#VocabularyWrongSchema",
+      "to": "cat-harness/schemas/term-adjudication.ts#Iri",
+      "via": "concept",
+      "kind": "field",
+      "optional": true,
+      "array": false
+    },
+    {
+      "from": "cat-harness/schemas/term-adjudication.ts#VocabularyWrongSchema",
+      "to": "cat-harness/schemas/term-adjudication.ts#Reason",
+      "via": "reason",
+      "kind": "field",
+      "optional": false,
+      "array": false
     },
     {
       "from": "cat-harness/schemas/term-mapping.ts#TermMappingSchema",
