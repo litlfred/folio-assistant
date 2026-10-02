@@ -20,6 +20,28 @@
       ]
     },
     {
+      "id": "cat-harness-tools-scripts",
+      "path": "scripts/",
+      "description": "Scripts this layer runs. Today the identifier lookup's pair, moved here from large-datasets when it dissolved into cat-harness (bean `j7ql`, 2026-10-01; D1: code goes to cat-harness-tools): `gen-id-lookup.ts` builds the prefix-sharded lookup over a catalogue's REFERENCED nodes for every instance that declares an `id-lookup` directory, and writes it THERE (`bun run id-lookup`, gated by `id-lookup:check`); `bench-id-lookup.ts` measures it at full catalogue scale on a seeded synthetic corpus (bean `4pm8`). Neither names a corpus: both read the checkout's declarations.",
+      "graphKinds": [
+        "code"
+      ],
+      "coverage": {
+        "skill": "where-does-this-go"
+      }
+    },
+    {
+      "id": "cat-harness-tools-id-lookup",
+      "path": "id-lookup/",
+      "description": "The identifier-lookup CLIENT a reader's browser runs: `lookup.js` (plain ES module, no dependencies) with its hand-written `lookup.d.ts`, and a one-form `index.html` told which index to open by `?index=<directory>`. The indexes themselves are generated output hosted by the instance each is about (`who-iris/id-lookup/`), never here. JavaScript, so it never sits under the plain docs pipeline. Moved from large-datasets (bean `j7ql`).",
+      "graphKinds": [
+        "code"
+      ],
+      "coverage": {
+        "skill": "where-does-this-go"
+      }
+    },
+    {
       "id": "cat-harness-tools-tests",
       "path": "test/",
       "description": "Tests of the code this layer holds, moved with their subjects so the harness keeps no test importing upward into this layer: `composition-roots` (the declared tool groups and route mounting) and `mcp-graph-tools`.",
