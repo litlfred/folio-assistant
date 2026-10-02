@@ -854,7 +854,25 @@ export function loadUnresolved(root: string, opts: { all?: boolean } = {}): Gate
   return unresolvedGatesFrom(readFileSync(join(root, GATES_WORKFLOW), "utf-8"), opts);
 }
 
-/** Read and parse, refusing an empty result. */
+/**
+ * Every gate CI RUNS — the runnable set plus the ones only this tool cannot run.
+ *
+ * The third consumer of this list, and the second time the layering caught me
+ * out. `audit:coverage` asks "how many gates declare a kind", which is a
+ * question about CI: a gate CI runs and that declares `@covers` still covers
+ * its kind, whether or not a local runner can execute it. Pointing it at
+ * {@link loadGates} silently shrank its census from 210 to 209 and turned
+ * *"all 210 gates have declared, so this is a verdict rather than an upper
+ * bound"* into a verdict over a smaller set than reality.
+ *
+ * So the two questions get two functions with their names on them:
+ * `loadGates` for **what can I run**, this for **what does CI run**.
+ */
+export function loadGatesCiRuns(root: string, opts: { all?: boolean } = {}): Gate[] {
+  return [...loadGates(root, opts), ...loadUnresolved(root, opts)];
+}
+
+/** Read and parse, refusing an empty result. The RUNNER's list — see {@link loadGatesCiRuns}. */
 export function loadGates(root: string, opts: { all?: boolean } = {}): Gate[] {
   const path = join(root, GATES_WORKFLOW);
   // The RUNNER's list, so the filter belongs here rather than in `gatesFrom`:
