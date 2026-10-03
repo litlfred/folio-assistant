@@ -105,7 +105,7 @@ describe("the extractor assigns no role — the schema refuses one", () => {
 });
 
 describe("a role arrives by inspection, through apply-image-verdicts", () => {
-  const verdict = { role: "figure", saw: "an architecture diagram", draft: "Three layers…", shows: ["3"] };
+  const verdict = { role: "figure" as const, saw: "an architecture diagram", draft: "Three layers…", shows: ["3"] };
 
   test("the verdict becomes an inspection basis naming who looked, with a draft", () => {
     const { text, result } = applyToVector(
