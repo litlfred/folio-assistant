@@ -60,6 +60,7 @@ the same as fine. The same verdict is `kg:audit`'s `tool-downstream-fresh` for t
 | `smart-base/library` | <span class="lv-pass">pass</span> | fresh |
 | `smart-base/methodologies` | <span class="lv-na">n/a</span> | below the need-an-index threshold — not judged |
 | `smart-base/smart-base-docs` | <span class="lv-fail">fail</span> | needs an LSI index and has none — run `bun run lsi index --instance smart-base --graph smart-base-docs` |
+| `smart-base/smart-base-findings` | <span class="lv-na">n/a</span> | below the need-an-index threshold — not judged |
 | `smart-immunizations/smart-immunizations-docs` | <span class="lv-fail">fail</span> | needs an LSI index and has none — run `bun run lsi index --instance smart-immunizations --graph smart-immunizations-docs` |
 | `smart-trust/smart-trust-docs` | <span class="lv-fail">fail</span> | needs an LSI index and has none — run `bun run lsi index --instance smart-trust --graph smart-trust-docs` |
 | `who-iris/library` | <span class="lv-pass">pass</span> | fresh |
@@ -118,14 +119,14 @@ Each dimension is a **contrast** between two poles, shown by their highest-loadi
 
 | dim | σ | one pole | the other pole |
 |---|---|---|---|
-| 1 | 45.42 | instance, harness, graph, kind, directory, page, session, block | *(none)* |
+| 1 | 45.44 | instance, harness, graph, kind, directory, page, session, block | *(none)* |
 | 2 | 21.77 | watcher, sibling, queue, prs, commits, backlog, slot, block | harness, instance, declaration, node, iri, directories, directory, subgraph |
 | 3 | 18.08 | slot, chapter, block, edges, formal, project, proof, watcher | session, push, window, beans, branch, minutes, epic, goals |
 | 4 | 16.90 | page, tile, text, block, blocks, avatar, manifest, chapter | sibling, subdirectory, ledger, plan, sessions, session, actor, relocation |
-| 5 | 15.51 | tile, glass, board, avatar, card, theme, sticky, tiles | rung, archive, pdf, sniff, archived, ingest, zip, arxiv |
-| 6 | 15.03 | queue, withheld, rung, backlog, tile, glass, arm, avatar | preview, feature, lane, requirements, github, analysis, edge, impact |
-| 7 | 14.96 | preview, staging, url, sha, pages, deploy, previews, main | actor, role, lane, task, process, judgement, answer, lanes |
-| 8 | 14.50 | edges, forward, edge, backward, cross-chapter, logical, energy, storytelling | actor, lane, role, requirements, feedback, sign-off, requirement, task |
+| 5 | 15.50 | tile, glass, board, avatar, card, theme, sticky, tiles | rung, archive, pdf, sniff, archived, ingest, zip, arxiv |
+| 6 | 15.04 | queue, withheld, backlog, rung, arm, tile, slide, library | lane, role, actor, requirements, feature, analysis, edge, impact |
+| 7 | 14.98 | preview, staging, url, pages, deploy, sha, previews, fetch | actor, role, lane, glass, tile, judgement, task, avatar |
+| 8 | 14.51 | edges, forward, edge, backward, logical, cross-chapter, energy, storytelling | actor, lane, role, requirements, feedback, sign-off, requirement, task |
 
 **Findings** — 0 narrow dimension(s), 0 near-duplicate pair(s).
 
