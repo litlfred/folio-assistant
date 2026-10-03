@@ -2,6 +2,8 @@ import { test, expect } from "@playwright/test";
 import { readFileSync } from "node:fs";
 import { join } from "node:path";
 
+import { siteDirFor } from "../schemas/cat-harness.ts";
+
 /**
  * Every todo has its own page, and the page renders it from its JSON-LD —
  * issue #1908.
@@ -21,8 +23,9 @@ const SITE = process.env.FA_SITE_URL ?? "http://127.0.0.1:8080";
 const DOCS = "/cat-harness/docs";
 const SITE_BASE = "https://litlfred.github.io/folio-assistant/";
 
+const ROOT = join(import.meta.dirname, "..");
 const index = JSON.parse(
-  readFileSync(join(import.meta.dirname, "..", "docs", "assets", "todos", "index.json"), "utf8"),
+  readFileSync(join(ROOT, siteDirFor(ROOT), "assets", "todos", "index.json"), "utf8"),
 ) as { items: Array<{ id: string; summary: string; target?: { page: string; node: string } }> };
 
 function listen(page: import("@playwright/test").Page): string[] {
