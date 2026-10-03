@@ -97,8 +97,9 @@ function disableHeadStyleSheets() {
 // 2tfy (#1972 step A): load the page's SCOPE of the index, not the whole site.
 // `search-split.ts` writes `assets/js/search/manifest.json` and one index per
 // scope after the build; this reads it, picks the scope the page lives in by
-// the same rule (instance, `<kind>/<instance>`, target locale, else
-// platform), and loads only that. No manifest, or one that cannot be read:
+// the same rule (instance, `<kind>/<instance>`, target locale, a platform
+// section over the split's budget — bean `mm2n` — else platform), and loads
+// only that. No manifest, or one that cannot be read:
 // the whole index, exactly as the theme always did.
 function searchUrl(path) {
   return '/folio-assistant/'.replace(/\/?$/, '/') + String(path).replace(/^\//, '');
@@ -115,6 +116,11 @@ function scopeForPage(manifest) {
   if (seg[0] && isInstance(seg[0])) return byId[seg[0]];
   if (seg[0] && byId['locale-' + seg[0]]) return byId['locale-' + seg[0]];
   if (seg[1] && isInstance(seg[1])) return byId[seg[1]];
+  // mm2n: a platform section over the split's budget has a scope of its own.
+  // Same rule as `sectionOfPath` in search-split.ts: below the section, or its
+  // index (a path ending in `/`).
+  var section = seg[0] && (seg.length > 1 || /\/$/.test(path)) ? byId['section-' + seg[0]] : null;
+  if (section && section.kind === 'section') return section;
   return platform;
 }
 
