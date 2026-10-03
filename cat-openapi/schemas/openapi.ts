@@ -101,7 +101,6 @@ export const OpenApiProvenanceSchema = z
     /** The document file beside this one. */
     file: z.string().regex(/^[A-Za-z0-9._-]+\.openapi\.json$/),
     source: OpenApiSourceSchema.extend({ commit: z.string().regex(/^[0-9a-f]{40}$/) }).strict(),
-    sha256: z.string().regex(/^[0-9a-f]{64}$/),
     bytes: z.number().int().positive(),
     /** The document's `openapi` version, and its `info.title` / `info.version`, as published. */
     openapi: z.string().min(1),
@@ -109,6 +108,24 @@ export const OpenApiProvenanceSchema = z
     version: z.string().min(1),
     /** How many operations it holds — every one of which gets a page. */
     operations: z.number().int().nonnegative(),
+    /**
+     * The document IS a held copy of upstream bytes, so it says so in the
+     * shared `folio-materialization/v1` shape (`folio-assistant-core`'s
+     * `MaterializationSchema`): where from, where it landed, why it was
+     * taken, its fixity and the five gates. Checked here only as far as this
+     * harness relies on it — the state, the path and the digest; the full
+     * record is that schema's to judge, and `check:read-only-graphs` reads
+     * `state` to agree with the directory's `readOnly`.
+     */
+    materialization: z
+      .object({
+        $schema: z.literal("folio-materialization/v1"),
+        state: z.literal("materialized"),
+        localPath: z.string().min(1),
+        purpose: z.literal("working"),
+        fixity: z.object({ algorithm: z.literal("sha256"), digest: z.string().regex(/^[0-9a-f]{64}$/) }).strict(),
+      })
+      .passthrough(),
   })
   .strict();
 export type OpenApiProvenance = z.infer<typeof OpenApiProvenanceSchema>;

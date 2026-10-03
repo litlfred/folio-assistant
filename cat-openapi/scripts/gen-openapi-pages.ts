@@ -10,15 +10,26 @@
  * Usage:
  *   bun run cat-openapi/scripts/gen-openapi-pages.ts --instance smart-trust [--check]
  *
- * ## What is written, under the instance's composed docs
+ * ## What is written, INSIDE the instance's `openapi` graph
  *
- * | path | what |
+ * | path (under the graph's directory) | what |
  * |---|---|
- * | `api/<doc>.jsonld`, `.json` | the document as a node: its operations, each by IRI |
- * | `api/<doc>/<op>.jsonld`, `.json` | one operation — its `@id` IS this address |
- * | `api/<doc>/` | the document's RENDERING: a thin page listing the operations |
- * | `api/<doc>/<op>/` | the operation's RENDERING: a thin page, drawn Swagger-style |
+ * | `<doc>.openapi.json`, `<doc>.source.json` | the document and its provenance — the INGEST's, never written here |
+ * | `<doc>.jsonld`, `.json` | the document as a node: its operations, each by IRI |
+ * | `<doc>/<op>.jsonld`, `.json` | one operation — its `@id` IS this address |
+ * | `<doc>/` | the document's RENDERING: a thin page listing the operations |
+ * | `<doc>/<op>/` | the operation's RENDERING: a thin page, drawn Swagger-style |
  * | `assets/openapi.js`, `assets/openapi.css` | the one shared loader and its style |
+ *
+ * **In the graph, not in `docs/`.** Owner: *"kind is an OpenAPI node"* — an
+ * operation is a node OF the openapi graph, so its IRI sits under that
+ * graph's path (`<base>/<instance>/openapi/<doc>/<op>.jsonld`). It also keeps
+ * this generator out of a directory another one owns: `gen-ig-pages.ts`
+ * treats every file under an IG instance's `docs/` as its own output and
+ * reports anything else there as an orphan — measured on the first version of
+ * this harness, which wrote `docs/api/` and had the two generators deleting
+ * each other's files. The graph is `served`, so its bytes publish verbatim at
+ * `/<instance>/<path>`: a thin page is complete HTML and needs no Jekyll.
  *
  * `.json` beside `.jsonld` because GitHub Pages serves no correct
  * Content-Type for `.jsonld` (the `todo-graph` precedent). No `.schema.json`:
@@ -28,17 +39,15 @@
  * ## Nothing of the API is copied into a page
  *
  * `visualizer-loading`: a page holds identity, layout and a pointer. An
- * operation page's config names the served document (relative to the page,
- * so a staging preview works), the method and the path — and the loader
- * fetches the document and draws the parameters, request body, responses and
- * schemas from it. The JSON-LD nodes carry identity only: id, method, path,
- * summary. The document stays the one answer to what the API does.
+ * operation page's config names the document (relative to the page, so a
+ * staging preview works), the method and the path — and the loader fetches
+ * the document and draws the parameters, request body, responses and schemas
+ * from it. The JSON-LD nodes carry identity only: id, method, path, summary.
  *
  * ## A directory that is not served gets no page
  *
  * `visualizer-loading` §"Where the data is served from": a generator whose
- * data is not served writes no page that would fetch it, and says why. So the
- * run refuses, naming the directory, unless it is declared `served: true`.
+ * data is not served writes no page that would fetch it, and says why.
  *
  * ## Vocabularies — borrowed, not minted
  *
@@ -53,12 +62,10 @@ import { dirname, join, posix, relative, resolve } from "node:path";
 import { DOCS_SITE_BASE } from "../../cat-harness/schemas/jsonld.ts";
 import { escHtml, thinPageConfigOf, thinPageHtml } from "../../cat-harness/scripts/thin-page.ts";
 import { OpenApiDocumentSchema, OpenApiProvenanceSchema, operationsOf, type OpenApiOperation } from "../schemas/openapi.ts";
-import { openapiDir, readConfig } from "./ingest-openapi.ts";
+import { localDirOf, openapiDir, readConfig } from "./ingest-openapi.ts";
 
 /** The config-block id every page written here carries — how a run recognises its own output. */
 export const PAGE_CONFIG_ID = "openapi-page";
-/** Where the pages and nodes go, under the instance's composed docs. */
-export const API_DIR = "api";
 const LOADER = "assets/openapi.js";
 const STYLE = "assets/openapi.css";
 const TEMPLATES = join(import.meta.dir, "templates");
@@ -92,8 +99,8 @@ export function pagesFor(instanceRoot: string): Written[] {
         "no page is written (visualizer-loading §\"Where the data is served from\")",
     );
   }
-  // The served document's path under /<instance>/, e.g. `openapi/gateway.openapi.json`.
-  const servedPath = (file: string) => posix.join(relative(instanceRoot, dir).split("\\").join("/"), file);
+  // The graph's path under /<instance>/ — `openapi` — which every IRI here extends.
+  const graphPath = localDirOf(instanceRoot, dir).replace(/\/$/, "");
   const out: Written[] = [];
   const json = (path: string, node: object) => {
     const text = `${JSON.stringify(node, null, 2)}\n`;
@@ -105,9 +112,9 @@ export function pagesFor(instanceRoot: string): Written[] {
     const doc = OpenApiDocumentSchema.parse(JSON.parse(readFileSync(join(dir, prov.file), "utf8")));
     const ops = operationsOf(doc);
     const title = d.title ?? doc.info.title;
-    const docSite = `${API_DIR}/${d.id}`;
-    const docIri = iri(instance, `${docSite}.jsonld`);
-    const opIri = (o: OpenApiOperation) => iri(instance, `${docSite}/${o.id}.jsonld`);
+    const docSite = d.id;
+    const docIri = iri(instance, `${graphPath}/${docSite}.jsonld`);
+    const opIri = (o: OpenApiOperation) => iri(instance, `${graphPath}/${docSite}/${o.id}.jsonld`);
     const opSummary = (o: OpenApiOperation) => ({
       "@id": opIri(o),
       "@type": "hydra:Operation",
@@ -127,20 +134,20 @@ export function pagesFor(instanceRoot: string): Written[] {
       ...(d.description ? { "schema:description": d.description } : {}),
       "dcterms:conformsTo": `https://spec.openapis.org/oas/v${doc.openapi}`,
       "dcterms:source": `https://github.com/${prov.source.repository}/blob/${prov.source.commit}/${prov.source.path}`,
-      "schema:contentUrl": iri(instance, servedPath(prov.file)),
+      "schema:contentUrl": iri(instance, `${graphPath}/${prov.file}`),
       "hydra:supportedOperation": ops.map(opSummary),
     });
 
-    // The document's page, one level below `api/`: reaches the served file at ../../<served>.
+    // The document's page, one level into the graph: the document is at ../<file>.
     out.push({
       path: `${docSite}/index.html`,
       content: thinPageHtml({
         title: `${title} ${doc.info.version}`,
         jsonld: `../${d.id}.jsonld`,
-        script: `../../${LOADER}`,
-        stylesheet: `../../${STYLE}`,
+        script: `../${LOADER}`,
+        stylesheet: `../${STYLE}`,
         configId: PAGE_CONFIG_ID,
-        config: { kind: "document", node: `../${d.id}.jsonld`, openapi: `../../${servedPath(prov.file)}` },
+        config: { kind: "document", node: `../${d.id}.jsonld`, openapi: `../${prov.file}` },
         body: `<main class="oa"><h1>${escHtml(title)}</h1><div class="oa-body" aria-live="polite"><p>Loading the API…</p></div></main>`,
         noscriptLead: `The ${escHtml(title)} API page`,
       }),
@@ -161,10 +168,10 @@ export function pagesFor(instanceRoot: string): Written[] {
         content: thinPageHtml({
           title: `${heading} — ${title}`,
           jsonld: `../${o.id}.jsonld`,
-          script: `../../../${LOADER}`,
-          stylesheet: `../../../${STYLE}`,
+          script: `../../${LOADER}`,
+          stylesheet: `../../${STYLE}`,
           configId: PAGE_CONFIG_ID,
-          config: { kind: "operation", node: `../${o.id}.jsonld`, openapi: `../../../${servedPath(prov.file)}`, method: o.method, path: o.path },
+          config: { kind: "operation", node: `../${o.id}.jsonld`, openapi: `../../${prov.file}`, method: o.method, path: o.path },
           // Identity only — what a link preview, search and a no-JS reader need.
           body:
             `<main class="oa"><p class="oa-up"><a href="../">← ${escHtml(title)}</a></p>` +
@@ -183,29 +190,34 @@ export function pagesFor(instanceRoot: string): Written[] {
   return out;
 }
 
-/** The instance's composed docs directory — `docs/` today, read from its declaration. */
-export function docsDir(instanceRoot: string): string {
-  const instance = posix.basename(resolve(instanceRoot));
-  const decl = JSON.parse(readFileSync(join(instanceRoot, `${instance}.json`), "utf8")) as {
-    directories: Array<{ path: string; instanceRoot?: boolean }>;
-  };
-  const docs = decl.directories.find((d) => d.instanceRoot);
-  if (!docs) throw new Error(`${instance}: no directory is the instance's composed docs root (\`instanceRoot: true\`)`);
-  return join(instanceRoot, docs.path);
-}
-
-/** Files under `api/` this generator wrote earlier and no longer would — found by what they declare. */
+/**
+ * Files in the graph this generator wrote earlier and no longer would — found
+ * by what they are, never by where they sit: a thin page declaring
+ * {@link PAGE_CONFIG_ID}, a node file (`.jsonld`, or `.json` that is neither a
+ * document nor its provenance), or the loader. The ingest's own files and the
+ * directory's README are never candidates.
+ */
 function orphans(root: string, wanted: Set<string>): string[] {
-  const apiRoot = join(root, API_DIR);
   const out: string[] = [];
+  const ingested = /\.(openapi|source)\.json$/;
   const walk = (d: string) => {
     for (const e of existsSync(d) ? readdirSync(d, { withFileTypes: true }) : []) {
       const p = join(d, e.name);
-      if (e.isDirectory()) walk(p);
-      else if (!wanted.has(p) && (/\.(jsonld|json)$/.test(e.name) || (e.name === "index.html" && thinPageConfigOf(readFileSync(p, "utf8"), PAGE_CONFIG_ID)))) out.push(p);
+      if (e.isDirectory()) {
+        walk(p);
+        continue;
+      }
+      if (wanted.has(p) || ingested.test(e.name) || e.name === "README.md") continue;
+      const ours =
+        e.name.endsWith(".jsonld") ||
+        e.name.endsWith(".json") ||
+        p === join(root, LOADER) ||
+        p === join(root, STYLE) ||
+        (e.name === "index.html" && thinPageConfigOf(readFileSync(p, "utf8"), PAGE_CONFIG_ID) !== undefined);
+      if (ours) out.push(p);
     }
   };
-  walk(apiRoot);
+  walk(root);
   return out;
 }
 
@@ -218,12 +230,12 @@ if (import.meta.main) {
   }
   const check = process.argv.includes("--check");
   const root = resolve(instance);
-  const docs = docsDir(root);
+  const graph = openapiDir(root, readConfig(root));
   const files = pagesFor(root);
-  const wanted = new Set(files.map((f) => join(docs, f.path)));
+  const wanted = new Set(files.map((f) => join(graph, f.path)));
   let stale = 0;
   for (const f of files) {
-    const p = join(docs, f.path);
+    const p = join(graph, f.path);
     const current = existsSync(p) ? readFileSync(p, "utf8") : undefined;
     if (current === f.content) continue;
     if (check) {
@@ -234,7 +246,7 @@ if (import.meta.main) {
       writeFileSync(p, f.content);
     }
   }
-  for (const p of orphans(docs, wanted)) {
+  for (const p of orphans(graph, wanted)) {
     if (check) {
       console.error(`✗ ${p} is an orphan — no operation publishes it`);
       stale++;
@@ -244,6 +256,6 @@ if (import.meta.main) {
     console.error(`${stale} file(s) out of date — run without --check`);
     process.exit(1);
   }
-  const ops = files.filter((f) => /\/index\.html$/.test(f.path)).length;
-  console.log(`${check ? "✓ current" : "wrote"}: ${instance} — ${ops} page(s) under ${relative(process.cwd(), join(docs, API_DIR))}/`);
+  const pages = files.filter((f) => f.path.endsWith("/index.html")).length;
+  console.log(`${check ? "✓ current" : "wrote"}: ${instance} — ${pages} page(s) in ${relative(process.cwd(), graph)}/`);
 }

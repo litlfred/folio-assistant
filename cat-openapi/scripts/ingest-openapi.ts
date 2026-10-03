@@ -28,7 +28,7 @@
 import { createHash } from "node:crypto";
 import { execFileSync } from "node:child_process";
 import { existsSync, mkdirSync, readFileSync, readdirSync, writeFileSync } from "node:fs";
-import { basename, join, resolve } from "node:path";
+import { basename, join, posix, relative, resolve } from "node:path";
 import {
   OPENAPI_SOURCE_SCHEMA_TAG,
   OpenApiConfigSchema,
@@ -66,20 +66,49 @@ export function openapiDir(instanceRoot: string, config: OpenApiConfig): string 
 
 const sha256 = (b: Buffer): string => createHash("sha256").update(b).digest("hex");
 
-/** The provenance a document's bytes yield. `source.commit` is the caller's. */
-export function provenanceFor(id: string, bytes: Buffer, source: OpenApiProvenance["source"]): OpenApiProvenance {
+/** The openapi directory, instance-relative and in POSIX form — what a materialization's `localPath` is relative to. */
+export const localDirOf = (instanceRoot: string, dir: string): string => relative(instanceRoot, dir).split("\\").join("/");
+
+/**
+ * The provenance a document's bytes yield. `source.commit` is the caller's;
+ * `localDir` is the openapi directory, instance-relative (`openapi/`).
+ *
+ * The materialization gates are stated, never defaulted to `permitted`: a
+ * `working` copy may not claim `sourceLoss` permitted (the schema refuses
+ * it), and nobody has read the API's licence, so `copyright` is `unknown`
+ * with that said — the same answers the IG ingest gives its sidecars.
+ */
+export function provenanceFor(id: string, bytes: Buffer, source: OpenApiProvenance["source"], localDir: string): OpenApiProvenance {
   const doc = OpenApiDocumentSchema.parse(JSON.parse(bytes.toString("utf8")));
+  const file = `${id}.openapi.json`;
+  const upstream = `https://github.com/${source.repository}/blob/${source.commit}/${source.path}`;
   return OpenApiProvenanceSchema.parse({
     $schema: OPENAPI_SOURCE_SCHEMA_TAG,
     id,
-    file: `${id}.openapi.json`,
+    file,
     source,
-    sha256: sha256(bytes),
     bytes: bytes.length,
     openapi: doc.openapi,
     title: doc.info.title,
     version: doc.info.version,
     operations: operationsOf(doc).length,
+    materialization: {
+      $schema: "folio-materialization/v1",
+      state: "materialized",
+      provenance: { upstream },
+      localPath: posix.join(localDir, file),
+      bytes: bytes.length,
+      purpose: "working",
+      fixity: { algorithm: "sha256", digest: sha256(bytes) },
+      upstreamVersion: source.commit,
+      gates: {
+        size: { verdict: "permitted", basis: `One OpenAPI document of ${bytes.length.toLocaleString("en")} bytes.` },
+        restrictions: { verdict: "permitted", basis: `Read from the public repository ${source.repository}; no access control on the source.` },
+        retention: { verdict: "permitted", basis: "Working copy, regenerable by re-running the ingest against the recorded commit." },
+        sourceLoss: { verdict: "unknown", basis: "Not established. The source is a git commit, which persists while the repository does; nobody has stated how long that is." },
+        copyright: { verdict: "unknown", basis: "Not established. The API description's licence has not been read for this ingest." },
+      },
+    },
   });
 }
 
@@ -104,7 +133,7 @@ export function checkCommitted(instanceRoot: string): string[] {
     }
     let actual: OpenApiProvenance;
     try {
-      actual = provenanceFor(d.id, readFileSync(file), recorded.data.source);
+      actual = provenanceFor(d.id, readFileSync(file), recorded.data.source, localDirOf(instanceRoot, dir));
     } catch (e) {
       problems.push(`${file}: ${(e as Error).message}`);
       continue;
@@ -151,7 +180,7 @@ if (import.meta.main) {
   for (const d of config.documents) {
     if (only && d.id !== only) continue;
     const bytes = readFileSync(join(source, d.source.path));
-    const prov = provenanceFor(d.id, bytes, { ...d.source, commit });
+    const prov = provenanceFor(d.id, bytes, { ...d.source, commit }, localDirOf(root, dir));
     writeFileSync(join(dir, prov.file), bytes);
     writeFileSync(join(dir, `${d.id}.source.json`), `${JSON.stringify(prov, null, 2)}\n`);
     console.log(`${d.id}: ${prov.title} ${prov.version} — ${prov.operations} operations, ${prov.bytes} bytes from ${d.source.repository}@${commit.slice(0, 7)}`);

@@ -23,12 +23,12 @@
     {
       "id": "smart-trust-openapi",
       "path": "openapi/",
-      "description": "The OpenAPI documents this instance holds, ingested by the cat-openapi harness from the sources `cat-openapi.config.json` names (bean `s4ta`). Today one: the trust network gateway's API, which the IG's published `openapi/` carries as a vendored Swagger UI and which `ingest-ig-artifacts.ts` deliberately does not treat as the IG's own API. Each document is held VERBATIM beside a `<id>.source.json` recording the repository, path and commit it was read from; every operation in it gets a page and an IRI, generated into `docs/api/` by `cat-openapi/scripts/gen-openapi-pages.ts`, whose loader fetches the document from here — hence `served`.",
+      "description": "The OpenAPI documents this instance holds, ingested by the cat-openapi harness from the sources `cat-openapi.config.json` names (bean `s4ta`). Today one: the trust network gateway's API, which the IG's published `openapi/` carries as a vendored Swagger UI and which `ingest-ig-artifacts.ts` deliberately does not treat as the IG's own API. Each document is held VERBATIM beside a `<id>.source.json` recording the repository, path and commit it was read from; every operation in it is a node of this graph, with a page and an IRI here (`gateway/<operationId>/`, `gateway/<operationId>.jsonld`), written by `cat-openapi/scripts/gen-openapi-pages.ts`; the pages fetch the document beside them, and are complete HTML, so `served` publishes all of it verbatim.",
       "graphKinds": [
         "openapi"
       ],
       "readOnly": true,
-      "readOnlyBasis": "Copies of an upstream API description, rewritten by `ingest-openapi.ts`; a hand edit would silently change what this repository claims the API's authors published. `ingest-openapi.ts --check` is what catches one.",
+      "readOnlyBasis": "Copies of an upstream API description (each a materialized node, `<id>.source.json`) and pages generated from it; `ingest-openapi.ts` and `gen-openapi-pages.ts` rewrite them, a person does not. A hand edit would silently change what this repository claims the API's authors published — the two scripts' `--check` is what catches one.",
       "served": true
     },
     {

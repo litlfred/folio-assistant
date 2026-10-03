@@ -22,14 +22,19 @@ operation says is a fix upstream, then a re-ingest.
 
 Then `ingest-openapi.ts --instance <dir> --source <checkout>` brings the bytes
 in, and `gen-openapi-pages.ts --instance <dir>` writes the pages and JSON-LD
-under the instance's `docs/api/`. Both take `--check`.
+into the same graph. Both take `--check`.
 
-## Where the pages and IRIs land
+## Where the pages and IRIs land — inside the `openapi` graph
 
-| what | path under the instance's docs | |
+| what | path under the graph's directory | |
 |---|---|---|
-| the document | `api/<doc>.jsonld`, `.json`, page `api/<doc>/` | lists every operation |
-| an operation | `api/<doc>/<operation>.jsonld`, `.json`, page `api/<doc>/<operation>/` | its `@id` is that `.jsonld` address |
+| the document | `<doc>.openapi.json` + `<doc>.source.json` (the ingest's), node `<doc>.jsonld`, page `<doc>/` | lists every operation |
+| an operation | `<doc>/<operation>.jsonld`, `.json`, page `<doc>/<operation>/` | its `@id` is that `.jsonld` address |
+
+In the graph and not in `docs/`: an operation is a node OF the openapi graph,
+and an IG instance's `docs/` belongs to `gen-ig-pages.ts`, which reports
+anything else there as an orphan. The graph is `served`, so it publishes
+verbatim at `/<instance>/<path>/` — a thin page needs no Jekyll.
 
 `<operation>` is the document's `operationId`, or `<method>-<path>` when it
 gives none (`operationsOf`). Two operations that would share an id are refused,

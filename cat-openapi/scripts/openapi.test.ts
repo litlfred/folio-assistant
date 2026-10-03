@@ -68,22 +68,22 @@ describe("pages", () => {
   const pages = files.filter((f) => f.path.endsWith("/index.html"));
 
   it("one page per operation, plus the document's", () => {
-    const ops = JSON.parse(files.find((f) => f.path === "api/gateway.jsonld")!.content)["hydra:supportedOperation"];
+    const ops = JSON.parse(files.find((f) => f.path === "gateway.jsonld")!.content)["hydra:supportedOperation"];
     expect(ops.length).toBe(22);
     expect(pages.length).toBe(ops.length + 1);
   });
 
   it("every operation's @id is the address of its own JSON-LD", () => {
-    for (const f of files.filter((x) => /^api\/gateway\/[^/]+\.jsonld$/.test(x.path))) {
-      expect(JSON.parse(f.content)["@id"]).toBe(`https://litlfred.github.io/folio-assistant/smart-trust/${f.path}`);
+    for (const f of files.filter((x) => /^gateway\/[^/]+\.jsonld$/.test(x.path))) {
+      expect(JSON.parse(f.content)["@id"]).toBe(`https://litlfred.github.io/folio-assistant/smart-trust/openapi/${f.path}`);
     }
   });
 
-  it("a page copies nothing of the API: its config names the served document relative to itself", () => {
+  it("a page copies nothing of the API: its config names the document relative to itself", () => {
     for (const p of pages) {
       const cfg = thinPageConfigOf(p.content, PAGE_CONFIG_ID)!;
       const depth = p.path.split("/").length - 1;
-      expect(cfg.openapi).toBe(`${"../".repeat(depth)}openapi/gateway.openapi.json`);
+      expect(cfg.openapi).toBe(`${"../".repeat(depth)}gateway.openapi.json`);
       expect(p.content).not.toContain("Base64 encoded CMS");
     }
   });
