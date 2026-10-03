@@ -298,6 +298,10 @@
     "kg:export:check": "bun run cat-harness/scripts/kg-export.ts --check",
     "subgraph:jsonld": "bun run cat-harness/scripts/gen-subgraph-jsonld.ts",
     "subgraph:jsonld:check": "bun run cat-harness/scripts/gen-subgraph-jsonld.ts --check",
+    "slice:sqlite": "bun run cat-harness/scripts/gen-slice-sqlite.ts",
+    "slice:sqlite:check": "bun run cat-harness/scripts/gen-slice-sqlite.ts --check",
+    "slice:sqlite:vendor": "bun run cat-harness/scripts/vendor-sqlite-wasm.ts",
+    "slice:sqlite:vendor:check": "bun run cat-harness/scripts/vendor-sqlite-wasm.ts --check",
     "kg:export:sidecars": "bun run cat-harness/scripts/kg-export.ts --sidecars",
     "kg:export:judge": "bun run cat-harness/scripts/kg-export.ts --judge",
     "kg:instantiate": "bun run cat-harness/scripts/kg-instantiate.ts",
@@ -498,6 +502,7 @@
   "devDependencies": {
     "@axe-core/playwright": "^4.13.0",
     "@playwright/test": "1.63.0",
+    "@sqlite.org/sqlite-wasm": "3.53.4-build2",
     "@types/jsonld": "^1.5.15",
     "bpmn-js": "^18.25.1",
     "bun-types": "latest",

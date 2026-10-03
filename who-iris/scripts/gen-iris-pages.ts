@@ -2266,6 +2266,32 @@ for the drawing above:</p>
   health certificates, and nothing there covers arbitrary files.</p>
 </div>
 
+<h2>Searching it on the client: one SQLite file per slice</h2>
+
+<p>A corpus the size of IRIS can only be searched on the client if the client
+never downloads the whole graph. The platform&rsquo;s answer is
+<strong>late materialization</strong>. CI flattens one named slice of the graph
+into a relational schema and publishes it as <code>&lt;slice&gt;.sqlite3</code>,
+with B-tree indexes and a contentless FTS5 index. The browser downloads that one
+file, checks its sha256 against a small manifest, stores it in the Origin Private
+File System, and opens it with the official SQLite WASM build. Nothing is parsed.
+Heavy content (a PDF, a page of sections) stays out of the file: a row holds
+only the <code>/payload/sha256/&lt;hex&gt;</code> pointer, and the payload is
+fetched when the reader opens the result.</p>
+
+<div class="caveat">
+  <p><strong>Built for the platform&rsquo;s own work plan first, not for this
+  catalogue.</strong> The pilot is the beans slice (bean <code>q8ar</code>). It
+  holds 717 rows in a 2.8&nbsp;MB file, which opened in about 200&nbsp;ms from a
+  plain static host and in about 90&nbsp;ms from OPFS on a reload.</p>
+  <p>The contract is in the <code>kg-export</code> skill under &ldquo;Per-slice
+  SQLite&rdquo;. It is general: <em>any</em> named subgraph can be a slice,
+  which is how a who-iris slice per community or collection would work. It
+  works the same behind a CDN. The client keys its copy by the sha256 the
+  manifest names, so only the small manifest needs a short TTL. No who-iris
+  slice is built yet.</p>
+</div>
+
 <h2>What is deliberately not decided</h2>
 
 <div class="caveat">
