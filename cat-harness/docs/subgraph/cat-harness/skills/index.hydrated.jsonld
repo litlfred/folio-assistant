@@ -2591,6 +2591,7 @@
               "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/process-core",
               "@type": "cat-harness:SkillPackage",
               "declaresSkill": [
+                "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/compiled-artefact-cache",
                 "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/decision-methodology-selector",
                 "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/methodology-adoption",
                 "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/role-model",
@@ -2604,6 +2605,25 @@
               "name": "process-core",
               "path": "skills/process/process-core",
               "version": "0.1.0"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/compiled-artefact-cache",
+              "@type": "bootstrap:Skill",
+              "ambiguous": false,
+              "description": "The general pattern for caching expensive compiled artefacts (Lean .oleans, FHIR ASTs) across builds. Defines branch-based storage, validity checking, exit code protocol, safety guards, and the restore→build→contribute loop.",
+              "hasIOContract": false,
+              "hasInstructions": true,
+              "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/process-core",
+              "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills",
+              "instructionLines": 111,
+              "instructionsPath": "skills/process/process-core/compiled-artefact-cache.md",
+              "name": "compiled-artefact-cache",
+              "payload": {
+                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/fa5c390589744fa0747835025ebb9f72db92881ca04401d87c8da251e783e67d",
+                "bytes": 6251,
+                "sha256": "fa5c390589744fa0747835025ebb9f72db92881ca04401d87c8da251e783e67d"
+              },
+              "title": "Compiled Artefact Cache"
             },
             {
               "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/decision-methodology-selector",

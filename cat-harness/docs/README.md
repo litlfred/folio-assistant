@@ -65,7 +65,7 @@ Part of [C@T Harness](../README.md) 0.1.0, declared as `docs`, holding `docs`.
 | [`issue-marks/`](issue-marks/) | 1 file | |
 | [`lsi/`](lsi/) | 1 file | |
 | [`methodologies/`](methodologies/) | 1 file | |
-| [`payload/`](payload/) | 612 files | |
+| [`payload/`](payload/) | 614 files | |
 | [`processes/`](processes/) | 88 files | |
 | [`proposals/`](proposals/) | Proposals for this harness's own features — initial analysis, MVP, options — argued, and updated in place, before and while they are built. | |
 | [`prov-qaqc/`](prov-qaqc/) | 1 file | |

@@ -176,6 +176,8 @@ export const STEP_EXEMPTIONS: StepExemption[] = [
     reason:
       "a BUILD step, not a check: it lists the IGs whose repositories carry an AST cache by asking " +
       "each repository over the network; best effort (continue-on-error), its output only feeds the preview",
+  },
+  {
     // Bean `q8ar`. The deploy-time BUILD of each SQLite slice (beans, todos,
     // library, kg; one line per slice) and its payloads, written straight into
     // `./_site`. None is committed, because their sources move on most merges.
