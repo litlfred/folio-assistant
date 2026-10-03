@@ -12,12 +12,14 @@ parent: folio-assistant-fs43
 Serial, one agent. Reuses the 3fva spike 3ds9 write path (hash-object, mktree, commit-tree, push; never -f).
 
 ## Done when
-- [ ] schema field with keyedBy: tip
-- [ ] branch-store.ts with retry over a moved tip
+- [x] schema field with keyedBy: tip
+- [x] branch-store.ts with retry over a moved tip
 - [x] state branch seeded with a hash-verified manifest (2026-10-02, see below)
+- [x] session-start hook mounts state/ and fails LOUDLY when it cannot
+- [x] bun run state:push
+- [x] measured: two sessions editing the SAME bean concurrently — no lost edit
 - [x] generic `branch-store mount --id <dir-id> [--into]` (replaces the single `state/` mount, owner ruling 2026-10-03): refuses loudly on corrupt or unknown, a miss is never an empty mount; wiring it into the session-start hook is left to each directory's cutover
 - [x] generic `branch-store push --id <dir-id>` (replaces `state:push`): splices the mount's edits with `expect` from the mounted tip, so a concurrent edit to the same file is a `conflict`
-- [ ] measured: two sessions editing the SAME bean concurrently — no lost edit
 
 Proposal: cat-harness/docs/proposals/state-branch-2026-10-02.md
 
@@ -53,6 +55,38 @@ git hash-object -w manifest.json README.md; git update-index --add --cacheinfo �
 git write-tree; git commit-tree <tree>                        # no parent
 git push origin <commit>:refs/heads/state                     # create; never -f
 ```
+
+## Mechanism complete 2026-10-03 — `claude/fs43-p2-state-store`, session `01EKB1gh`
+
+Every line above is built and tested. **Nothing is live**: no declaration sets
+`storage`, so `main` remains authoritative and the cutover is Phase 3 (`9ofm`).
+
+| part | where |
+|---|---|
+| 1. extract the generic store | `TreeStore` in `branch-store.ts`; `qa-store`'s `Store` extends it |
+| 2. `keyedBy: commit \| tip` | #1937 |
+| 3. `state-store.ts` | declared tip-keyed directory, addressed by id |
+| 4. session-start mount | `state-mount.ts`, wired into `session-start-coord-sweep.sh` |
+| `state:push` | `state-push.ts` — splice, never a worktree push |
+
+**Part 1 was left open by #1937 on purpose** — *"whether it adopts this one is
+3fva's call"* — and the answer was yes. Measured before extracting: `must`
+identical, `mktree`/`setPath` identical but for a `private`, and only
+`fetchTip` genuinely different (candidate branch names, a superset). Net −77
+lines across the two files, `qa-store`'s constructor signature unchanged, its
+tests untouched.
+
+**The "no lost edit" measurement, twice.** `state-store`'s `update()`
+re-reads and re-applies on conflict, so two sessions appending to one bean both
+land (asserted on the final blob). And `state-push` turns a dirty mount into a
+SPLICE: a sibling's write to another file survives a push that never saw it —
+a `git push` from the worktree would have reverted it — while a same-file
+sibling is a `conflict` with the tip unmoved and the edit still on disk.
+
+**Two things deliberately not done.** No declaration was flipped to
+`keyedBy: "tip"`, and `.beans.yml` still points at `beans/defs` on `main`.
+Doing either now would redirect every session's work-plan before the seed is
+re-verified, which is `9ofm`'s job.
 
 
 ## Owner ruling 2026-10-03: ONE generic mount/push pair (asked by the 9c7h fsh-guts move, relayed by session 01CbYZTA; owner answered "1")
