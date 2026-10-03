@@ -597,6 +597,21 @@
       "layer": "harness"
     },
     {
+      "@id": "cat-harness:graphKind/merge-queue",
+      "@type": [
+        "bootstrap:GraphKind",
+        "skos:Concept"
+      ],
+      "label": "merge-queue",
+      "comment": "A merge steward's DECISIONS about an open pull request — priority, rank or override with its reason, a hold with its expiry, the train it joined, an ejection with its evidence. Never a fact GitHub owns: CI, mergeability, labels and the head SHA are read live and refused by name here.",
+      "prefLabel": "merge-queue",
+      "definition": "A merge steward's DECISIONS about an open pull request — priority, rank or override with its reason, a hold with its expiry, the train it joined, an ejection with its evidence. Never a fact GitHub owns: CI, mergeability, labels and the head SHA are read live and refused by name here.",
+      "notation": "cat-harness:graphKind/merge-queue",
+      "inScheme": "https://litlfred.github.io/cat-harness/0.1.0/ns",
+      "isDefinedBy": "https://litlfred.github.io/cat-harness/0.1.0/ns",
+      "layer": "harness"
+    },
+    {
       "@id": "cat-harness:graphKind/methodology",
       "@type": [
         "bootstrap:GraphKind",
