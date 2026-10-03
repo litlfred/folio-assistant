@@ -3153,7 +3153,13 @@ export function repoRootFor(instanceRoot: string): string {
 export function checkoutRootFor(instanceRoot: string): string {
   const abs = resolve(instanceRoot);
   if (isForeignCheckout(abs)) return abs;
-  const up = repoRootFor(abs);
+  // A git-less tree whose root AGGREGATES other instances (`init-folio` before
+  // `git init`, a cross-instance fixture) is its own checkout too — the
+  // container rule {@link siblingScopeFor} states, and the whole of what
+  // `harness-config`'s `checkoutRootFor` was before this (it now delegates
+  // here, so there is one answer rather than two that disagree on a leaf).
+  const up = siblingScopeFor(abs);
+  if (up === abs) return abs;
   if (existsSync(join(abs, ".git")) && !existsSync(join(up, ".git"))) {
     throw new Error(
       `cannot determine the checkout of ${abs}: it is a declared submodule of ${up}, ` +
