@@ -45,7 +45,8 @@
  * ## Enforcement is a RATCHET, not a gate on the whole corpus
  *
  * Four instances nest `skills/voices` inside `skills/` today — `agent-skills`,
- * `folio-assistant-core`, `folio-assistant-sci` and `who-style-guide`. (Three,
+ * `folio-assistant-core`, `folio-assistant-sci` and `who-iris` (which took
+ * them over from `who-style-guide`, bean `qsx4`). (Three,
  * said this line when it was written from a hand audit; the check found the
  * fourth. The baseline is the list, not this sentence.) Failing on those
  * would make this the "check that cries wolf is a check somebody switches off"

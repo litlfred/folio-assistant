@@ -1442,7 +1442,7 @@ function stampSubgraph(graph: Node[], doc: string, instanceRoot: string = ROOT):
     // `..` is KEPT, and dropping it is what made this facet useless.
     //
     // Every repository-scoped entry — `who-iris/`, `folio-assistant-core/`,
-    // `bootstrap/`, `detangle/`, `large-datasets/`, `who-style-guide/` —
+    // `bootstrap/`, `detangle/`, `large-datasets/` —
     // resolves to `../<instance>/…` relative to this instance, so
     // `!startsWith("..")` excluded the entire set the facet exists to offer.
     //

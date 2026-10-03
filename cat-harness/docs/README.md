@@ -50,7 +50,7 @@ Part of [C@T Harness](../README.md) 0.1.0, declared as `docs`, holding `docs`.
 | [`_includes/`](_includes/) | 9 files | |
 | [`ar/`](ar/) | 14 files | |
 | [`architecture/`](architecture/) | 8 files | |
-| [`assets/`](assets/) | 643 files | |
+| [`assets/`](assets/) | 639 files | |
 | [`attestations/`](attestations/) | 1 file | |
 | [`beans/`](beans/) | 2 files | |
 | [`bootstrap/`](bootstrap/) | 1 file | |
@@ -76,14 +76,14 @@ Part of [C@T Harness](../README.md) 0.1.0, declared as `docs`, holding `docs`.
 | [`ru/`](ru/) | 14 files | |
 | [`site/`](site/) | 183 files | |
 | [`slices/`](slices/) | 1 file | |
-| [`subgraph/`](subgraph/) | 328 files | |
+| [`subgraph/`](subgraph/) | 325 files | |
 | [`subscriptions/`](subscriptions/) | 1 file | |
 | [`swimlane-glossary/`](swimlane-glossary/) | 1 file | |
 | [`themes/`](themes/) | 1 file | |
 | [`todos/`](todos/) | 10 files | |
 | [`tools/`](tools/) | 1 file | |
 | [`translation-status/`](translation-status/) | 1 file | |
-| [`uml/`](uml/) | 134 files | |
+| [`uml/`](uml/) | 132 files | |
 | [`uploads/`](uploads/) | 1 file | |
 | [`wireframes/`](wireframes/) | 192 files | |
 | [`zh/`](zh/) | 14 files | |
