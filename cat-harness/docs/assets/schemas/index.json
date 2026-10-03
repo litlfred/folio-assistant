@@ -6536,6 +6536,13 @@
           "doc": "Which icons this instance's navbar row shows — see `NavbarIconsSchema`."
         },
         {
+          "name": "glassStrip",
+          "type": "GlassStripPin[]",
+          "optional": true,
+          "array": true,
+          "doc": "Which tiles the glass's bottom strip pins, in order — see `GlassStripSchema`. Absent inherits."
+        },
+        {
           "name": "name",
           "type": "string",
           "optional": false,
@@ -6690,6 +6697,7 @@
         "cat-harness/schemas/cat-harness.ts#AssociatedHarness",
         "cat-harness/schemas/cat-harness.ts#ContentAdapterDeclaration",
         "cat-harness/schemas/cat-harness.ts#ContentDirectory",
+        "cat-harness/schemas/cat-harness.ts#GlassStripPin",
         "cat-harness/schemas/cat-harness.ts#InstanceLocation",
         "cat-harness/schemas/cat-harness.ts#KnownSubstrate",
         "cat-harness/schemas/cat-harness.ts#LiquidPrefix",
@@ -6760,6 +6768,13 @@
           "optional": true,
           "array": false,
           "doc": "Which icons this instance's navbar row shows."
+        },
+        {
+          "name": "glassStrip",
+          "type": "GlassStripSchema.optional()",
+          "optional": true,
+          "array": false,
+          "doc": "Which tiles the glass's bottom strip pins, in order — see"
         },
         {
           "name": "repository",
@@ -6913,6 +6928,7 @@
         "cat-harness/schemas/cat-harness.ts#ContentAdapterDeclarationSchema",
         "cat-harness/schemas/cat-harness.ts#ContentDirectorySchema",
         "cat-harness/schemas/cat-harness.ts#ExactVersionSchema",
+        "cat-harness/schemas/cat-harness.ts#GlassStripSchema",
         "cat-harness/schemas/cat-harness.ts#InstanceLocationSchema",
         "cat-harness/schemas/cat-harness.ts#KnownSubstrateSchema",
         "cat-harness/schemas/cat-harness.ts#NavbarIconsSchema",
@@ -7325,6 +7341,58 @@
       "name": "Forge",
       "module": "cat-harness/schemas/cat-harness.ts",
       "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/cat-harness.ts#GlassChrome",
+      "name": "GlassChrome",
+      "module": "cat-harness/schemas/cat-harness.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/cat-harness.ts#GlassStripPin",
+      "name": "GlassStripPin",
+      "module": "cat-harness/schemas/cat-harness.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/cat-harness.ts#GlassStripPinSchema",
+      "name": "GlassStripPinSchema",
+      "module": "cat-harness/schemas/cat-harness.ts",
+      "kind": "zod-union",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/cat-harness.ts#GlassStripSchema",
+      "name": "GlassStripSchema",
+      "module": "cat-harness/schemas/cat-harness.ts",
+      "kind": "zod-array",
       "fields": [],
       "extendsNames": [],
       "values": [],
@@ -25022,7 +25090,7 @@
         },
         {
           "name": "properties",
-          "type": "Readonly<Record<string, string>>",
+          "type": "Readonly<Record<string, string | readonly string[]>>",
           "optional": true,
           "array": false,
           "doc": "The node's own properties, e.g. `{ status: \"open\", priority: \"high\" }`."
@@ -49442,6 +49510,14 @@
     },
     {
       "from": "cat-harness/schemas/cat-harness.ts#CatHarnessDeclaration",
+      "to": "cat-harness/schemas/cat-harness.ts#GlassStripPin",
+      "via": "glassStrip",
+      "kind": "field",
+      "optional": true,
+      "array": true
+    },
+    {
+      "from": "cat-harness/schemas/cat-harness.ts#CatHarnessDeclaration",
       "to": "cat-harness/schemas/cat-harness.ts#InstanceLocation",
       "via": "livesAt",
       "kind": "field",
@@ -49580,6 +49656,14 @@
       "from": "cat-harness/schemas/cat-harness.ts#CatHarnessDeclarationSchema",
       "to": "cat-harness/schemas/cat-harness.ts#ExactVersionSchema",
       "via": "version",
+      "kind": "field",
+      "optional": true,
+      "array": false
+    },
+    {
+      "from": "cat-harness/schemas/cat-harness.ts#CatHarnessDeclarationSchema",
+      "to": "cat-harness/schemas/cat-harness.ts#GlassStripSchema",
+      "via": "glassStrip",
       "kind": "field",
       "optional": true,
       "array": false
