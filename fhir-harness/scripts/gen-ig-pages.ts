@@ -75,6 +75,8 @@
  */
 import { existsSync, mkdirSync, readFileSync, readdirSync, rmSync, writeFileSync } from "node:fs";
 import { basename, join, resolve } from "node:path";
+import { IG_API_HUB_SCRIPT, IG_API_HUB_TEMPLATE, IG_API_VIEW_SCRIPT, igApiHubData, igApiHubFragment, igApiServed, igApiViewData, igApiViews } from "./ig-api-views.ts";
+import { JSON_VIEW_SCRIPT, VIEW_PAGE, examplesPage, hasJsonView, historyPage, jsonViewData, mappingsPage, mdText, packageEntries, profileJsonViewData, resourceFacts, resourceTabs, testingPage, type TabPageData } from "./resource-views.ts";
 import { isDirectoryReadme } from "../../cat-harness/schemas/kg-node.js";
 
 import { IgMenuSchema, type IgMenu, type IgMenuGroup, menuHref, menuItemCount } from "../schemas/ig-menu.js";
@@ -91,6 +93,7 @@ import {
   declarationPathIn,
   directoriesForGraph,
   instanceRootsIn,
+  readDeclaration,
   repoRootFor,
 } from "../../cat-harness/schemas/cat-harness.js";
 
@@ -116,7 +119,17 @@ if (!INSTANCE_ARG) {
   process.exit(2);
 }
 const INSTANCE = resolve(process.cwd(), INSTANCE_ARG);
-const INSTANCE_NAME = basename(INSTANCE);
+/**
+ * The instance's IDENTITY: the `name` its declaration gives, and only
+ * without one the directory's name. The two differ in a separated IG
+ * repository, where every IG keeps its data under `smart-base/` (owner,
+ * 2026-10-02, choosing the plan's layout) but must still publish under its
+ * own name. Keyed on the directory, every such IG would publish under
+ * `/smart-base/` and collide once one site subscribes to several (bean
+ * `rbz3`, measured on the litlfred/smart-trust rehearsal: 2,153 pages
+ * changed by the rename alone).
+ */
+const INSTANCE_NAME = readDeclaration(INSTANCE)?.name ?? basename(INSTANCE);
 /**
  * `--index` renders from an index OTHER than the instance's committed one,
  * e.g. one derived from a restored IG Publisher AST by
@@ -151,6 +164,27 @@ const AST_LOADER = join(import.meta.dir, "templates", "ig-pages", "ast-resource.
 /** `--out` writes the pages somewhere other than the instance's committed `docs/`. */
 const OUT_ARG = arg("--out");
 const OUT = OUT_ARG ? resolve(process.cwd(), OUT_ARG) : join(INSTANCE, "docs");
+/** The pages' shared stylesheets, under the docs root (one copy each, linked from every page). */
+const PAGES_CSS = "assets/ig-pages.css";
+const CHROME_CSS = "assets/ig-chrome.css";
+const igApiServable = () => igApiServed(INSTANCE);
+
+/** The IG API view pages' Liquid template (`liquid-templates`: a file of this directory, beside its writer). */
+const IG_API_VIEW_TEMPLATE = join(import.meta.dir, "templates", "ig-pages", "ig-api-view.liquid");
+/** Their one shared loader, copied to `docs/assets/` (bean `680p`, `visualizer-loading`). */
+const IG_API_VIEW_LOADER = join(import.meta.dir, "templates", "ig-pages", "ig-api-view.js");
+/** The IG API hub page's template and loader — the Publisher's hub page, replicated. */
+const IG_API_HUB_LOADER = join(import.meta.dir, "templates", "ig-pages", "ig-api-hub.js");
+/** The JSON view pages' template and loader — the Publisher's `<Name>.json.html`. */
+const JSON_VIEW_TEMPLATE = join(import.meta.dir, "templates", "ig-pages", "json-view.liquid");
+const JSON_VIEW_LOADER = join(import.meta.dir, "templates", "ig-pages", "resource-json.js");
+/** The text-only tab pages' template — history, testing, a logical model's examples. */
+const TAB_PAGE_TEMPLATE = join(import.meta.dir, "templates", "ig-pages", "tab-page.liquid");
+const MAPPINGS_TEMPLATE = join(import.meta.dir, "templates", "ig-pages", "mappings.liquid");
+/** An artefact page's IG API section: its template and the loader that builds it from the OpenAPI sidecar. */
+const IG_API_OPENAPI_BODY = readFileSync(join(import.meta.dir, "templates", "ig-pages", "ig-api-openapi.liquid"), "utf8");
+const IG_API_OPENAPI_LOADER = join(import.meta.dir, "templates", "ig-pages", "ig-api-openapi.js");
+const IG_API_OPENAPI_SCRIPT = "assets/ig-api-openapi.js";
 
 /**
  * The instance that OWNS the template chrome, or none.
@@ -196,7 +230,13 @@ const publishNoteFor = (ix: FhirArtifactIndex): string =>
  * OpenAPI, JSON-LD). Some publishers brand them; this layer does not, so the
  * label is the caller's and the default is plain.
  */
-const SIDECAR_LABEL = arg("--sidecar-label") ?? "API sidecars";
+const SIDECAR_LABEL = arg("--sidecar-label") ?? "IG API";
+/**
+ * The hub page's name on this site: the Publisher's own, read from the URL the
+ * hub was ingested from (`dak-api` for WHO's DAK overlay), so the replica
+ * keeps the published name without this layer writing any IG's name down.
+ */
+const hubPage = (ix: FhirArtifactIndex): string => basename(new URL(ix.igApiHub!.url).pathname).replace(/\.html$/, "");
 
 /** The declaration's `name`, or `undefined` when a directory is not an instance. */
 function declaredName(root: string): string | undefined {
@@ -345,6 +385,15 @@ function pageName(a: FhirArtifact): string {
 }
 
 /**
+ * What the uncategorised bucket is called — on its section, its Contents row
+ * and, if it ever outgrows the index, its page. Never "Other": the IG HAS a
+ * literal "Other" category (`byCategory`), and a coined second one put two
+ * sections named "Other" on smart-trust's index, the second holding the IG's
+ * own ImplementationGuide resource.
+ */
+const UNCATEGORISED = "Uncategorised";
+
+/**
  * A category's own page name, sanitised the same way an artefact's is.
  *
  * Categories are free text out of the IG (`Requirements: Formal Requirements`,
@@ -353,7 +402,37 @@ function pageName(a: FhirArtifact): string {
  * one, because two sanitisers are two answers to "what is a safe name".
  */
 function categoryName(label: string | undefined): string {
-  return (label ?? "Other").replace(/[^A-Za-z0-9._-]/g, "_");
+  return (label ?? UNCATEGORISED).replace(/[^A-Za-z0-9._-]/g, "_");
+}
+
+/**
+ * The index's in-page anchor for a category, which the Contents box links to.
+ *
+ * The uncategorised bucket gets its own id rather than `Other`'s: the IG HAS a
+ * literal "Other" category (see `byCategory`), and two sections answering to
+ * one fragment would send the Contents link to whichever came first.
+ */
+function categoryAnchor(label: string | undefined): string {
+  return label === undefined ? "cat--uncategorised" : `cat-${categoryName(label)}`;
+}
+
+/**
+ * The "Contents" box the Publisher puts at the top of `artifacts.html` (#1901):
+ * one row per category, in the same order as the sections below it, each
+ * linking to its section. A category listed off the index links to the
+ * section too, whose summary names the count and points on to its own page —
+ * one target per row, so the box and the sections cannot disagree.
+ */
+function contentsBox(ordered: [string | undefined, FhirArtifact[]][]): string {
+  return [
+    `<nav class="ig-toc" aria-label="Contents" markdown="1">`,
+    ``,
+    `**Contents**`,
+    ``,
+    ...ordered.map(([label, list]) => `- [${mdText(label ?? UNCATEGORISED)}](#${categoryAnchor(label)}) — ${list.length}`),
+    ``,
+    `</nav>`,
+  ].join("\n");
 }
 
 /**
@@ -372,8 +451,8 @@ function categoryName(label: string | undefined): string {
  *
  * What makes linking out lossless HERE, checked rather than assumed: every one
  * of smart-trust's 604 `Other` artefacts is an Endpoint or an Organization and
- * NONE carries a DAK overlay, so none would have had an artefact page to link
- * to. The summary reports the DAK count it actually finds, so a future
+ * NONE carries an IG API sidecar, so none would have had an artefact page to link
+ * to. The summary reports the sidecar count it actually finds, so a future
  * category that does carry sidecars says so instead of hiding them.
  */
 const INLINE_LIMIT = 100;
@@ -407,7 +486,13 @@ const CSS = `
 .st-stat{flex:1 1 8rem;border:1px solid rgba(128,128,128,.35);border-radius:6px;padding:.5rem .7rem}
 .st-stat b{display:block;font-size:1.25rem;line-height:1.2}
 .st-stat span{font-size:.75rem;opacity:.75}
+.ig-toc{border:2px solid var(--toc-box-border,rgba(128,128,128,.35));background:var(--toc-box-bg-color,transparent);padding:.5rem 1rem;margin:1rem 0;display:inline-block}
+.ig-toc ul{margin:.25rem 0 0}
 `;
+// `.ig-toc` reads the mirrored chrome's `--toc-box-*` tokens, the Publisher's
+// own Contents-box colours, and WHO's `2px solid` reading of the border token
+// (see `ig-chrome.ts` on its shape conflict). Without an ingested chrome the
+// fallbacks give a neutral box, never a hand-typed palette.
 
 /**
  * A page for the JUST-THE-DOCS pipeline: front matter, then the body.
@@ -513,26 +598,33 @@ function shell(
   body: string,
   nav: NavRole = { kind: "index" },
   chrome: ChromeChoice = "fixture",
+  data: Record<string, unknown> = {},
 ): string {
   const fm = [
     "---",
     `title: ${yamlScalar(title)}`,
     `description: ${yamlScalar(description)}`,
     ...navFrontMatter(nav),
+    // Page variables for a Liquid template, as JSON flow mappings — YAML is a
+    // superset of JSON, so one line per key needs no YAML emitter.
+    ...Object.entries(data).map(([k, v]) => `${k}: ${JSON.stringify(v)}`),
     "---",
     "",
   ].join("\n");
-  // The remaining styling rides inside the page rather than in a `<head>` this
-  // file no longer owns. It is now the handful of rules just-the-docs has no
-  // opinion about; everything the theme already provides was removed rather
-  // than overridden.
+  // The remaining styling — the handful of rules just-the-docs has no opinion
+  // about, and the mirrored chrome — is LINKED, from one stylesheet each
+  // under the instance's `assets/` (bean `680p`). It was inlined into every
+  // page: 3.1 KB x 2,153 pages = 6.7 MB of smart-trust's 12.2 MB of generated
+  // pages (measured 2026-10-01), the same bytes 2,153 times. `relative_url`
+  // keeps the link right under any baseurl, staging previews included.
   // The chrome is mirrored only when it was actually ingested. Absent, the
   // page renders as an ordinary folio page: a mirror nobody could build is
   // reported by the build, never faked with a hand-typed palette.
   const wearsChrome = chrome === "fixture" && CHROME !== undefined;
-  const style = wearsChrome ? `${CSS}\n${chromeStyles(CHROME!)}` : CSS;
+  const link = (file: string) => `<link rel="stylesheet" href="{{ '/${INSTANCE_NAME}/${file}' | relative_url }}">`;
+  const links = `${link(PAGES_CSS)}${wearsChrome ? `\n${link(CHROME_CSS)}` : ""}`;
   const banner = wearsChrome ? `${igBanner(IX)}\n\n` : "";
-  return `${fm}<style>${style}</style>\n\n${banner}${body.trim()}\n`;
+  return `${fm}${links}\n\n${banner}${body.trim()}\n`;
 }
 
 /**
@@ -563,18 +655,17 @@ function repLinks(a: FhirArtifact): string {
 function indexPage(ix: FhirArtifactIndex): string {
   const census = materializationCensus(ix.artifacts);
   const sc = sidecarCensus(ix.artifacts);
-  const cats = byCategory(ix.artifacts);
-  // Deterministic: named categories by name, the uncategorised bucket last.
-  const ordered = [...cats.entries()].sort(([a], [b]) =>
-    a === undefined ? 1 : b === undefined ? -1 : a.localeCompare(b),
-  );
+  // The Publisher's order, as `byCategory` returns it — the same traversal the
+  // sidebar's category pages are numbered by, so the two cannot disagree.
+  const ordered = [...byCategory(ix.artifacts).entries()];
 
   const stat = (v: string | number, label: string) =>
     `<div class="st-stat"><b>${esc(String(v))}</b><span>${label}</span></div>`;
 
   const sections = ordered
     .map(([label, list]) => {
-      const name = label ?? "Other";
+      const name = label ?? UNCATEGORISED;
+      const id = ` id="${categoryAnchor(label)}"`;
       if (list.length > INLINE_LIMIT) {
         // Too many to inline; say so and say where they are, rather than
         // rendering a table nobody can read or silently dropping them.
@@ -589,7 +680,7 @@ function indexPage(ix: FhirArtifactIndex): string {
         // came to 524KB with one category 90% of it — so the list moves to a
         // page of its own rather than inline.
         return [
-          `<details markdown="1">`,
+          `<details markdown="1"${id}>`,
           `<summary><strong>${esc(name)}</strong> — ${list.length}</summary>`,
           ``,
           `${list.length} artefacts — too many to list here without the index becoming`,
@@ -603,7 +694,7 @@ function indexPage(ix: FhirArtifactIndex): string {
       // whole artefact table shipped as raw text on the live index — found by
       // `check:escaped-markup`'s leaked-table scan (bean `7w1a`, 2026-09-24).
       return [
-        `<details markdown="1">`,
+        `<details markdown="1"${id}>`,
         `<summary><strong>${esc(name)}</strong> — ${list.length}</summary>`,
         ``,
         ...artifactTable(list, "."),
@@ -639,7 +730,7 @@ function indexPage(ix: FhirArtifactIndex): string {
     : [
         `The artefact index of the ${LABEL} Implementation Guide, rebuilt from what the IG`,
         `publishes. Most of it is catalogued **by reference**: the index records where each artefact`,
-        `lives and holds none of its bytes. A ${stateTag({ materialization: { state: "referenced" } } as FhirArtifact)} row`,
+        `lives and holds none of its bytes. An artefact page marked ${stateTag({ materialization: { state: "referenced" } } as FhirArtifact)}`,
         `is not a broken one — it means upstream, not here.`,
       ];
   const body = [
@@ -683,7 +774,7 @@ function indexPage(ix: FhirArtifactIndex): string {
           `beside its artefacts${fromBuild ? " (the AST records the FHIR build only)" : ""}. Absent here does not mean absent.`,
         ]
       : [
-          `The IG publishes a ${SIDECAR_LABEL} for ${sc.schema} of its artefacts. The four sidecars are issued`,
+          `The IG publishes its ${SIDECAR_LABEL} for ${sc.schema} of its artefacts. The four sidecars are issued`,
           `independently — every ValueSet gets all four, the logical models get two — which is why they`,
           `are counted separately rather than as one "has ${SIDECAR_LABEL}" tally.`,
           ``,
@@ -695,10 +786,15 @@ function indexPage(ix: FhirArtifactIndex): string {
           `</div>`,
         ]),
     ``,
+    // Linked only when the hub page is written — the same two conditions.
+    ...(ix.igApiHub?.localPath && igApiServable().ok ? [`The IG's own [${SIDECAR_LABEL} hub](${hubPage(ix)}.html) lists them as the Publisher's \`${hubPage(ix)}.html\` does.`, ``] : []),
     `## Every artefact, by category`,
     ``,
-    `Grouped as the IG's own \`artifacts.html\` groups them. An artefact with a ${SIDECAR_LABEL} sidecar links`,
-    `through to its own page; the rest link out to the published representations.`,
+    `Grouped and ordered as the IG's own \`artifacts.html\` groups them, with each artefact's name and`,
+    `description. Its canonical URL, published representations and whether it is held here are on`,
+    `its own page.`,
+    ``,
+    contentsBox(ordered),
     ``,
     sections,
     ``,
@@ -746,14 +842,21 @@ function indexPage(ix: FhirArtifactIndex): string {
  * reads the href out of the page and resolves it back to a file.
  */
 function artifactTable(list: FhirArtifact[], base: string): string[] {
+  // The Publisher's two columns (#1901): the name, linked to the artefact's
+  // page, and its description. The technical columns this table carried —
+  // canonical URL, published representations, materialization — are on that
+  // page already, so dropping them here loses nothing; the key stays under the
+  // name because two artefacts can share a title and the key is what tells them apart.
   return [
-    `| Artefact | Canonical URL | Published as | Bytes |`,
-    `|---|---|---|---|`,
+    `| Artefact | Description |`,
+    `|---|---|`,
     ...list.map((a) => {
       const nm = a.title ?? a.name ?? a.id;
       const linked = `[${mdCell(nm)}](${base}/artifact/${pageName(a)}.html)`;
-      const canonical = a.canonical ? `\`${mdCell(a.canonical)}\`` : "*no canonical URL*";
-      return `| ${linked}<br>\`${mdCell(a.key)}\` | ${canonical} | ${mdCell(repLinks(a))} | ${stateTag(a)} |`;
+      // `mdText`, not `mdCell`: a FHIR description is markdown, and a stray
+      // `*` or `<` in one would otherwise restyle or swallow the row.
+      const desc = a.description ? mdText(a.description).replace(/\r?\n+/g, " ") : "";
+      return `| ${linked}<br>\`${mdCell(a.key)}\` | ${desc} |`;
     }),
   ];
 }
@@ -773,7 +876,7 @@ function artifactTable(list: FhirArtifact[], base: string): string[] {
  * cannot disagree about which category comes first.
  */
 function categoryPage(ix: FhirArtifactIndex, label: string | undefined, list: FhirArtifact[], order: number): string {
-  const name = label ?? "Other";
+  const name = label ?? UNCATEGORISED;
   const body = [
     `[← all ${ix.count} artefacts](../)`,
     ``,
@@ -788,7 +891,7 @@ function categoryPage(ix: FhirArtifactIndex, label: string | undefined, list: Fh
 
   return shell(
     `${name} — ${LABEL}`,
-    `The ${list.length} ${LABEL} artefacts in the ${name} category, with canonical URLs and published representations.`,
+    `The ${list.length} ${LABEL} artefacts in the ${name} category, with their descriptions.`,
     body,
     { kind: "section", order },
   );
@@ -837,12 +940,23 @@ function compiledResourceSection(a: FhirArtifact): string[] {
 
 function artifactPage(ix: FhirArtifactIndex, a: FhirArtifact): string {
   const name = a.title ?? a.name ?? a.id;
+  // THE IG API SECTION — what the IG's post-processing appends to a
+  // ValueSet's Publisher page ("API Information", "Endpoints"), built in the
+  // browser from the OpenAPI sidecar in the served graph (bean `680p`). Only
+  // for a ValueSet: the generator skips logical models, so the Publisher's
+  // StructureDefinition pages carry none, and a section here would be a
+  // difference from the standard render rather than a match.
+  const openapi =
+    a.resourceType === "ValueSet" && a.sidecars?.openapi?.localPath && igApiServable().ok
+      ? { src: `../${a.sidecars.openapi.localPath}`, script: `../${IG_API_OPENAPI_SCRIPT}` }
+      : undefined;
 
-  const dakRows = (["schema", "displays", "openapi", "jsonld"] as const).map((k) => {
+  const apiRows = (["schema", "displays", "openapi", "jsonld"] as const).map((k) => {
     const r = a.sidecars?.[k];
     const label = { schema: "JSON Schema", displays: "Displays", openapi: "OpenAPI", jsonld: "JSON-LD" }[k];
     if (!r) return `| ${label} | *not published for this artefact* | |`;
-    const held = r.localPath ? `\`${mdCell(r.localPath)}\`` : "*by reference*";
+    const view = (k === "schema" || k === "jsonld") && r.localPath ? ` · [view](${mdCell(r.localPath.split("/").pop()!)}.html)` : "";
+    const held = r.localPath ? `\`${mdCell(r.localPath)}\`${view}` : "*by reference*";
     return `| ${label} | <${mdCell(r.url)}> | ${held} |`;
   });
 
@@ -902,7 +1016,7 @@ function artifactPage(ix: FhirArtifactIndex, a: FhirArtifact): string {
           ``,
           `| Sidecar | Published at | Held locally |`,
           `|---|---|---|`,
-          ...dakRows,
+          ...apiRows,
           ``,
         ]
       : [
@@ -922,8 +1036,10 @@ function artifactPage(ix: FhirArtifactIndex, a: FhirArtifact): string {
   return shell(
     `${name} — ${LABEL} artefact`,
     `${a.key} in the ${LABEL} IG, with its canonical URL, published representations and ${SIDECAR_LABEL} sidecars.`,
-    body,
+    openapi ? `${body}\n\n${IG_API_OPENAPI_BODY}` : body,
     { kind: "leaf" },
+    "fixture",
+    openapi ? { ig_api_openapi: openapi } : {},
   );
 }
 
@@ -1003,6 +1119,8 @@ const pages = new Map<string, string>();
 // Jekyll to copy the file verbatim, which is the behaviour this change exists
 // to stop.
 pages.set("index.md", indexPage(ix));
+pages.set(PAGES_CSS, `${CSS.trim()}\n`);
+if (CHROME !== undefined) pages.set(CHROME_CSS, `${chromeStyles(CHROME).trim()}\n`);
 
 // THE VIEWER DECLARATION (#1767, stage C3). The index page says which
 // directory it renders and which Tool drew it, so `harness-tiles` finds this
@@ -1033,6 +1151,143 @@ if ([...pages.values()].some((p) => p.includes("data-ast-src="))) {
     join("assets", "ast-pages.json"),
     `${JSON.stringify(ix.artifacts.map((a) => `${pageName(a)}.html`).sort())}\n`,
   );
+}
+
+// THE IG API VIEW PAGES — the Publisher's `<Name>.schema.json.html` and
+// `<Name>.jsonld.html` (bean `jut3`'s parity table: 33 on smart-trust). Each is
+// the raw file, published beside its page so Raw and Download resolve where
+// the Publisher's do, plus a page that is the Liquid template over data
+// `ig-api-views.ts` computed. The file's text is fetched in the browser by one
+// shared loader, never copied into the page (bean `680p`). An IG with no IG API
+// overlay writes none of these.
+//
+// The pages FETCH from the served artefact-index graph (owner, 2026-10-01:
+// publish the graph directory rather than copy its files beside the pages).
+// That needs two declarations, and without either the pages would link data
+// that is not on the site — so they are not written, and the run says why.
+const igApiViewTemplate = readFileSync(IG_API_VIEW_TEMPLATE, "utf8");
+const igApiServing = igApiServable();
+let igApiViewCount = 0;
+if (igApiServing.ok === false && ix.artifacts.some((a) => igApiViews(a).length > 0)) {
+  console.log(`  IG API view pages NOT written: ${igApiServing.why}`);
+}
+for (const a of igApiServing.ok ? ix.artifacts : []) {
+  for (const v of igApiViews(a)) {
+    const data = igApiViewData(a, v, "../", Boolean(ix.package?.localPath));
+    igApiViewCount += 1;
+    pages.set(
+      join("artifact", `${v.file}.md`),
+      shell(
+        `${data.artifact.title} — ${v.label}`,
+        `The ${v.label} sidecar of ${a.key}, from the IG's ${SIDECAR_LABEL}.`,
+        igApiViewTemplate,
+        { kind: "leaf" },
+        "fixture",
+        { ig_api: data },
+      ),
+    );
+  }
+}
+if (igApiViewCount > 0) pages.set(IG_API_VIEW_SCRIPT, readFileSync(IG_API_VIEW_LOADER, "utf8"));
+
+// THE JSON VIEW PAGES — the Publisher's `<Name>.json.html` (672 on
+// smart-trust). Each reads its resource out of the IG's package.tgz, held in
+// the served graph, in the browser; no resource is copied (bean `680p`).
+// Without a held package, or a served graph, none is written and the run says so.
+let jsonViewCount = 0;
+if (ix.artifacts.some(hasJsonView)) {
+  if (!ix.package?.localPath) console.log("  JSON view pages NOT written: the index holds no package (re-ingest with --materialize-package)");
+  else if (!igApiServing.ok) console.log(`  JSON view pages NOT written: ${igApiServing.why}`);
+  else {
+    const template = readFileSync(JSON_VIEW_TEMPLATE, "utf8");
+    for (const a of ix.artifacts.filter(hasJsonView)) {
+      const extra = igApiViews(a).map((v) => ({ label: v.label, href: `${v.file}.html`, active: false }));
+      const data = jsonViewData(a, ix.package.localPath, extra);
+      pages.set(
+        join("artifact", `${pageName(a)}.json.md`),
+        shell(`${a.title ?? a.name ?? a.id} — JSON`, `The JSON representation of ${a.key}.`, template, { kind: "leaf" }, "fixture", { json_view: data }),
+      );
+      jsonViewCount += 1;
+    }
+    pages.set(JSON_VIEW_SCRIPT, readFileSync(JSON_VIEW_LOADER, "utf8"));
+  }
+}
+
+// THE TAB PAGES — `.change.history` (672 on smart-trust), `-testing` (69) and a
+// logical model's `.profile.history`, `.profile.json` and `-examples` — from
+// the resource itself, read out of the same held package at generation time.
+// Each states only what the Publisher's states; a page whose Publisher form
+// would list data this build cannot (tests, examples) is not written.
+const tabCounts = { history: 0, testing: 0, profileHistory: 0, profileJson: 0, examples: 0, mappings: 0 };
+if (ix.package?.localPath && igApiServing.ok) {
+  const entries = packageEntries(join(INSTANCE, ix.package.localPath));
+  const resources = [...entries.values()].map((b) => JSON.parse(b.toString("utf8")) as Record<string, unknown>);
+  const hasTests = resources.some((r) => r.resourceType === "TestPlan" || r.resourceType === "TestScript");
+  const claimed = new Set(resources.flatMap((r) => ((r.meta as { profile?: string[] } | undefined)?.profile ?? [])));
+  const tabTemplate = readFileSync(TAB_PAGE_TEMPLATE, "utf8");
+  const mappingsTemplate = readFileSync(MAPPINGS_TEMPLATE, "utf8");
+  const igStructures = new Set(resources.filter((r) => r.resourceType === "StructureDefinition" && typeof r.url === "string").map((r) => r.url as string));
+  const jsonTemplate = readFileSync(JSON_VIEW_TEMPLATE, "utf8");
+  const tabPage = (file: string, title: string, p: TabPageData | undefined, count: keyof typeof tabCounts) => {
+    if (!p) return;
+    const data = { ...p, heading: mdText(p.heading), status: p.status, sections: p.sections.map((x) => ({ ...x, text: mdText(x.text) })) };
+    pages.set(join("artifact", file), shell(title, `${p.heading}.`, tabTemplate, { kind: "leaf" }, "fixture", { tab_page: data }));
+    tabCounts[count] += 1;
+  };
+  for (const a of ix.artifacts) {
+    const raw = entries.get(`package/${a.resourceType}-${a.id}.json`);
+    if (!raw) continue;
+    const f = resourceFacts(JSON.parse(raw.toString("utf8")));
+    const stem = pageName(a);
+    const igApiTabs = igApiViews(a).map((v) => ({ label: v.label, href: `${v.file}.html`, active: false }));
+    const name = a.title ?? a.name ?? a.id;
+    if (a.resourceType === "StructureDefinition") {
+      const tabs = resourceTabs(a, igApiTabs, true);
+      // The definitions page is the Publisher's (it needs hl7.fhir.r5.core's
+      // base-type text, which this build cannot hold — bean wnhh), so each
+      // mapping row links an element's definition THERE.
+      const defsAt = `${a.published?.json?.url.replace(/[^/]*$/, "") ?? ""}${stem}-definitions.html#`;
+      const m = mappingsPage(JSON.parse(raw.toString("utf8")), f, resourceTabs(a, igApiTabs, true, "Mappings"), igStructures, (p) => `${defsAt}${p}`);
+      if (m) {
+        const esc = (t: { rows: Array<{ label: string; value: string }> }) => ({ ...t, rows: t.rows.map((r) => ({ ...r, label: mdText(r.label), value: mdText(r.value) })) });
+        const data = { ...m, heading: mdText(m.heading), intro: mdText(m.intro), inIg: m.inIg.map(esc), toOther: m.toOther.map(esc), other: m.other.map(esc) };
+        pages.set(join("artifact", `${stem}-mappings.md`), shell(`${name} — mappings`, `${m.heading}.`, mappingsTemplate, { kind: "leaf" }, "fixture", { mappings: data }));
+        tabCounts.mappings += 1;
+      }
+      tabPage(`${stem}.profile.history.md`, `${name} — change history`, historyPage(a, f, tabs), "profileHistory");
+      tabPage(`${stem}-examples.md`, `${name} — examples`, examplesPage(f, tabs, f.url !== undefined && claimed.has(f.url)), "examples");
+      const pj = profileJsonViewData(a, f, ix.package.localPath, resourceTabs(a, igApiTabs, true, "JSON"));
+      if (pj) {
+        pages.set(join("artifact", `${stem}.profile.json.md`), shell(`${name} — JSON profile`, `The JSON representation of ${a.key}.`, jsonTemplate, { kind: "leaf" }, "fixture", { json_view: { ...pj, heading: mdText(pj.heading), intro: pj.intro && mdText(pj.intro) } }));
+        tabCounts.profileJson += 1;
+      }
+    } else if (hasJsonView(a)) {
+      tabPage(`${stem}.change.history.md`, `${name} — change history`, historyPage(a, f, resourceTabs(a, igApiTabs, true)), "history");
+    }
+    tabPage(`${stem}-testing.md`, `${name} — testing`, testingPage(f, resourceTabs(a, igApiTabs, true), hasTests), "testing");
+  }
+}
+if ([...pages.values()].some((p) => p.includes("data-ig-api-openapi-src"))) pages.set(IG_API_OPENAPI_SCRIPT, readFileSync(IG_API_OPENAPI_LOADER, "utf8"));
+
+// THE IG API HUB — the Publisher's hub page, as its own page under the same
+// name (owner, 2026-10-01: "replicate dak-api.html seperately"). The hub fragment is held
+// in the served graph and fetched; what is computed here is where each of its
+// links should go on THIS site, because the Publisher's relative links assume
+// its flat layout.
+if (ix.igApiHub?.localPath && igApiServing.ok) {
+  const hub = igApiHubData(ix, igApiHubFragment(INSTANCE, ix.igApiHub.localPath), "");
+  pages.set(
+    `${hubPage(ix)}.md`,
+    shell(
+      `${SIDECAR_LABEL} Documentation Hub`,
+      `The ${LABEL} IG's ${SIDECAR_LABEL} hub: its logical models, ValueSet schemas, JSON-LD vocabularies and enumeration endpoints.`,
+      readFileSync(IG_API_HUB_TEMPLATE, "utf8"),
+      { kind: "leaf" },
+      "fixture",
+      { hub },
+    ),
+  );
+  pages.set(IG_API_HUB_SCRIPT, readFileSync(IG_API_HUB_LOADER, "utf8"));
 }
 
 // A page for each category too large to inline, so "too many to list here"
@@ -1117,9 +1372,14 @@ if (CHECK) {
   // right while the index was the only non-artefact page and quietly became
   // wrong the moment a category page joined it — it reported 675 artefact
   // pages over a corpus of 674.
-  const artefactPages = [...pages.keys()].filter((k) => k.startsWith("artifact/")).length;
+  // One per ARTEFACT: the IG API view pages and their raw files share the
+  // directory and are counted on their own line.
+  const artefactPages = [...pages.keys()].filter((k) => k.startsWith("artifact/") && k.endsWith(".md") && !VIEW_PAGE.test(k)).length;
   const categoryPages = [...pages.keys()].filter((k) => k.startsWith("category/")).length;
   console.log(`  ${artefactPages} artefact page(s) — one per artefact; ${sc.schema} carry a ${SIDECAR_LABEL} schema`);
+  console.log(`  ${igApiViewCount} IG API view page(s) — one per held JSON Schema or JSON-LD sidecar, file fetched client-side`);
+  console.log(`  ${jsonViewCount} JSON view page(s) — resource read client-side from the held package.tgz`);
+  console.log(`  tab pages: ${tabCounts.history} change history, ${tabCounts.testing} testing, ${tabCounts.profileHistory} profile history, ${tabCounts.profileJson} profile JSON, ${tabCounts.examples} examples, ${tabCounts.mappings} mappings`);
   console.log(`  ${categoryPages} category page(s) — categories over ${INLINE_LIMIT}, listed off the index`);
   // THE MENU IS REPORTED EITHER WAY. An unreported page is a page nothing
   // checks, and an absent menu reported as silence is indistinguishable from

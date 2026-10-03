@@ -1,0 +1,16 @@
+{%- comment -%}
+The IG's Artifacts Summary page, the Publisher's `artifacts.html` rendered by Jekyll from `site.data.fhir`.
+Reads `site.data.fhir.artifacts_listed` (how many artefacts the page lists),
+`site.data.fhir.artifact_categories[]` (`name`, `keys`, in the Publisher's order)
+and, per key, `site.data.fhir.artifacts[key]` (`text.label`, `url.page`, `reference`).
+Every value, the count and the label escaping included, is computed by
+`artifactVariables` in `build-ig-site.ts`; this file only arranges them.
+{%- endcomment -%}
+# Artifacts Summary
+
+This IG has {{ site.data.fhir.artifacts_listed }} artefact(s).
+{% for cat in site.data.fhir.artifact_categories %}
+## {{ cat.name }}
+
+{% for k in cat.keys %}{% assign a = site.data.fhir.artifacts[k] %}- [{{ a.text.label }}]({{ a.url.page }}) — `{{ a.reference }}`
+{% endfor %}{% endfor %}

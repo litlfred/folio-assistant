@@ -85,7 +85,7 @@ describe("gen-ig-pages defaults: this layer names no publisher (fhir-harness/AGE
       const index = readFileSync(join(dir, "docs", "index.md"), "utf8");
       // The banner is drawn (a chrome is given), so the publish note is really on the page.
       expect(index).toContain('<p id="publish-box">This page mirrors a published FHIR Implementation Guide.')
-      expect(index).toContain("## API sidecars surface");
+      expect(index).toContain("## IG API surface");
       expect(index).not.toContain("WHO Implementation Guide");
       expect(index).not.toMatch(/^## DAK/m);
     } finally {
@@ -128,7 +128,8 @@ describe("gen-ig-pages --compiled-data: an AST-built artefact page loads its res
       // `artifact/Name.html` → docs root `../` → the data beside the docs.
       expect(md).toContain('data-ast-src="../../ast-data/resources/ActorDefinition/Holder--7ae5e8a1.json"');
       expect(md).toContain('data-ast-pages="../assets/ast-pages.json"');
-      expect(md).toContain('data-ast-published="https://worldhealthorganization.github.io/smart-trust/"');
+      // The base the index says the IG publishes from (the owner's fork since #1766).
+      expect(md).toContain('data-ast-published="https://litlfred.github.io/smart-trust/"');
       expect(md).toContain('<p class="ast-state">');
       expect(md).toMatch(/<noscript>.*href="\.\.\/\.\.\/ast-data\/resources\/ActorDefinition\/Holder--7ae5e8a1\.json"/);
       expect(md).toContain('<script src="../assets/ast-resource.js" defer></script>');
