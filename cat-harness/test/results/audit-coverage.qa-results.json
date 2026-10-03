@@ -10,8 +10,8 @@
   },
   "families": {
     "coverage-measured": {
-      "summary": "Every declared kind with its four counts and its state. Not findings: the measurement itself, so the committed record answers \"what audits this kind\" without rerunning anything. The file COUNTS are printed rather than recorded — a census moves on any commit and a gate keyed on it is stale by default; `hasFiles` carries the only thing it decides. 55 of 55 declared kind(s), 216 gate(s), 73 criteria.",
-      "count": 55,
+      "summary": "Every declared kind with its four counts and its state. Not findings: the measurement itself, so the committed record answers \"what audits this kind\" without rerunning anything. The file COUNTS are printed rather than recorded — a census moves on any commit and a gate keyed on it is stale by default; `hasFiles` carries the only thing it decides. 56 of 56 declared kind(s), 216 gate(s), 73 criteria.",
+      "count": 56,
       "entries": [
         {
           "kind": "attestations",
@@ -339,6 +339,18 @@
           ],
           "typed": true,
           "hasFiles": true
+        },
+        {
+          "kind": "docs-auto",
+          "state": "no-directory",
+          "directories": [],
+          "criteria": [],
+          "subjectKinds": [],
+          "gates": [
+            "bun run docs:auto:check"
+          ],
+          "typed": false,
+          "hasFiles": false
         },
         {
           "kind": "document-kinds",
@@ -1159,7 +1171,7 @@
     },
     "kinds-no-directory": {
       "summary": "No instance declares a directory of this kind — a nested kind reached through its parent (`bean-defs` inside `beans/`), or one this repository does not have. Recorded so it cannot be read as a coverage gap, and so a kind that LOSES its directory shows up.",
-      "count": 18,
+      "count": 19,
       "entries": [
         {
           "kind": "bean-defs",
@@ -1200,6 +1212,13 @@
           "criteria": 0,
           "gates": [
             "bun run boards:default:check"
+          ]
+        },
+        {
+          "kind": "docs-auto",
+          "criteria": 0,
+          "gates": [
+            "bun run docs:auto:check"
           ]
         },
         {
@@ -1286,5 +1305,5 @@
       "entries": []
     }
   },
-  "total": 73
+  "total": 75
 }
