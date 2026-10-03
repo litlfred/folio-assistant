@@ -258,10 +258,23 @@ meantime — they were not in its mental list, so they were in no list at all.
 
 The sweep is cheap and mechanical: for every open non-draft PR, read
 `base.ref`, run `git merge-tree --write-tree origin/main <head>` for the rc,
-and read the check runs on that exact head. Three columns, one pass. Anything
-with `base == main`, `rc == 0`, no failures and nothing pending is mergeable,
-and a steward that cannot say why it is not merging such a PR is holding it by
-accident.
+and read the check runs on that exact head. Three columns, one pass. A PR with `base == main` and
+`rc == 0` is a *candidate*; whether it is mergeable is still the OWED question
+above, not a count of failures.
+
+**`no failures and nothing pending` is NOT green, and this rule got that wrong
+on its first use.** The sweep that followed it marked #1953 mergeable on
+`ok=1 bad=0 wait=0` — one completed check, the `.jsonld siblings` one, against
+the 23 that a full suite produces here. Nothing had failed and nothing was
+pending because **almost nothing had been asked**. That is bean `1xhc` inside
+the sweep itself: a gate that did not fire is indistinguishable from one that
+passed, and a tally of failures cannot tell them apart.
+
+So the third column is the owed SET, never a count: compare the check-run
+*names* on that head against the set owed for its event, and treat a missing
+name exactly as a red one. A steward that cannot say why it is not merging a PR
+which is green **on the owed set** is holding it by accident; one that merges on
+`bad=0 wait=0` alone is merging unverified.
 
 ## Read `base.ref` BEFORE anything else: a stacked PR is not a main-queue member
 
