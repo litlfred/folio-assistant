@@ -215,7 +215,7 @@ export interface QaDirectory {
   path: string;
   absPath: string;
   present: boolean;
-  storage?: { branch: string; keyedBy: "commit" };
+  storage?: import("../schemas/cat-harness.js").DirectoryStorage;
 }
 
 export interface QaLocation {
