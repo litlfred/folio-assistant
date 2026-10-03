@@ -86,6 +86,7 @@ import {
   KG_QA_SCHEMA,
   KG_QA_DIRNAME,
   kgQaSidecarPath,
+  partitionBySubjectOwner,
   sweepOrphans,
   type OrphanSidecar,
   KG_QA_MANIFEST_SCHEMA,
@@ -129,7 +130,7 @@ import {
   remotePackageSkills,
 } from "./known-skills.js";
 import { LOCAL_PACKAGES } from "./skill-packages.js";
-import { repoRootFor, DECLARATION_SUFFIX, ownDirectoryById, instanceDirectoriesForGraph, readDeclaration, kgQaHomeFor} from "../schemas/cat-harness.js";
+import { repoRootFor, DECLARATION_SUFFIX, ownDirectoryById, instanceDirectoriesForGraph, instanceRootsIn, readDeclaration, kgQaHomeFor} from "../schemas/cat-harness.js";
 import { toolDownstreamEntry, undeclaredDownstream } from "./downstream-runs.ts";
 import { VERIFIERS } from "./publish-verify.ts";
 import { checkoutRootFor, orderedDependencies } from "../schemas/harness-config.js";
@@ -1329,8 +1330,15 @@ function auditTools(instance?: string): KgQaReport[] {
   const alternatives = deriveAlternatives(instance === undefined ? tools() : toolsOf(instance));
   const unreadable = new Set(check.unreadableContracts);
 
+  // SUBJECTS are this instance's own Tools, on every run. The CHECKS above
+  // still read the whole checkout on the default run, because a Tool here may
+  // name one there — resolution widens, coverage does not (`satisfiableSkills`
+  // in `check-tools.ts`, ruling `pve3`). Until 2026-10-01 the default run
+  // iterated `tools()`, so it wrote 29 sidecars about Tools that fhir-harness
+  // (19), folio-assistant-core (4) and smart-base (6) declare and audit
+  // themselves — a second copy of each verdict, free to drift (Q-A PR 4).
   const out: KgQaReport[] = [];
-  for (const t of instance === undefined ? tools() : toolsOf(instance)) {
+  for (const t of toolsOf(instance ?? root)) {
     const f = (rows: { detail: string }[] | undefined): KgFinding[] =>
       (rows ?? []).map((r) => ({ where: t.id, detail: r.detail }));
 
@@ -2428,9 +2436,11 @@ const skills = knownSkills(root, corpusScopeFor(root));
  * correct.
  *
  * The auditor's own run already knew: `test/results/kg-qa/_external/smart-base/`
- * records `skill-ref-resolves` **pass (0)** for that same diagram, because from
+ * recorded `skill-ref-resolves` **pass (0)** for that same diagram, because from
  * here the skill is local. So the two runs disagreed about one file, and the
- * instance-scoped one was wrong.
+ * instance-scoped one was wrong. (That `_external/` copy was itself the
+ * defect's enabler — two verdicts about one subject — and was deleted with the
+ * other seven on 2026-10-01, Q-A PR 4; the owner's run now holds the only one.)
  *
  * ## This is the FIFTH cross-instance defect, and the only DOWNWARD one
  *
@@ -2651,6 +2661,33 @@ reports.push(...auditRequirements(requirements, actors, satisfiers));
 reports.push(...auditSkills());
 reports.push(auditGraph(graph, processes, actors, skills, stories, danglingSatisfies(requirements, satisfiers)));
 reports.push(...auditTools(INSTANCE_RUN ? root : undefined));
+
+/**
+ * Drop every subject ANOTHER instance owns — it audits that subject itself.
+ *
+ * The default run walks the CHECKOUT (`corpusScopeFor`), so it loads
+ * smart-base's, large-datasets' and folio-assistant-core's diagrams beside its
+ * own. Loading them is right: a call activity here may name one, and the
+ * graph-level criteria need the whole corpus. Writing a VERDICT about them is
+ * not — each owner's `kg:audit:all` run already writes one under its own
+ * `test/results/kg-qa/`, and until 2026-10-01 this run wrote a second under
+ * `_external/`. Eight duplicates, deleted with the owner's confirmation
+ * (Q-A PR 4, epic `7x5n`); `kgQaSidecarPath` now refuses the path, so this
+ * filter is what keeps the run from throwing rather than a courtesy.
+ *
+ * A subject outside this instance that NO checkout instance owns is refused
+ * loudly: dropping it would be a clean run over nothing (`dh4f`), and giving
+ * it a path is what `_external/` was.
+ */
+const ownership = partitionBySubjectOwner(reports, root, instanceRootsIn(checkoutRootFor(root)));
+if (ownership.unowned.length > 0) {
+  console.error(`${ownership.unowned.length} subject(s) lie outside ${root} and no instance in the checkout owns them:`);
+  for (const r of ownership.unowned) console.error(`  · ${r.subject.kind}:${r.subject.id}  ${r.subject.path}`);
+  console.error("This is NOT a pass. Nothing was written; declare the owning instance, or stop discovering the subject.");
+  process.exit(2);
+}
+reports.splice(0, reports.length, ...ownership.kept);
+const ownerAudited = ownership.skipped.length;
 
 // Write or compare.
 //
@@ -2967,6 +3004,11 @@ if (asJson) {
 
   console.log(`Knowledge-graph audit  (${reports.length} subjects, ${skills.size} skills, ${graph?.roles.length ?? 0} roles)\n`);
   console.log(`  pass ${counts.pass}   fail ${counts.fail}   n/a ${counts["n/a"]}   unknown ${counts.unknown}\n`);
+  // Said, not silent: a subject left to its owner is still a subject this run
+  // saw, and a reader comparing counts across runs needs the difference named.
+  if (ownerAudited > 0) {
+    console.log(`  ${ownerAudited} subject(s) another instance owns were left to that instance's own audit.\n`);
+  }
   // The scope line, printed only when it has something to say. A run at the
   // auditor's own root suppresses nothing, so a `0 suppressed` line there would
   // be noise; an instance run states the number and where to read the argument,

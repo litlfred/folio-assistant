@@ -28,8 +28,8 @@ depends on it**, and **which of its terms this repository branches on**.
 
 <div class="xs-grid">
 <div class="xs-stat"><b>20</b><span>specifications</span></div>
-<div class="xs-stat"><b>105</b><span>operative terms in the graph</span></div>
-<div class="xs-stat"><b>200</b><span>declared uses</span></div>
+<div class="xs-stat"><b>106</b><span>operative terms in the graph</span></div>
+<div class="xs-stat"><b>210</b><span>declared uses</span></div>
 <div class="xs-stat"><b>0</b><span>declarations naming no record</span></div>
 </div>
 
@@ -175,6 +175,9 @@ a subset of the edition rather than a transcription of it.
 | user | declared by |
 |---|---|
 | [`cat-harness/schemas/jsonld.ts`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/jsonld.ts) | `@conformsTo` tag |
+| [`cat-harness/schemas/vocab-mapping-fhir.ts`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/vocab-mapping-fhir.ts) | `@conformsTo` tag |
+| [`cat-harness/schemas/vocab-mapping.ts`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/vocab-mapping.ts) | `@conformsTo` tag |
+| `vocab-mapping graph` | through the module that types it ([`cat-harness/schemas/vocab-mapping.ts`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/vocab-mapping.ts)) |
 
 **Operative terms (1).** The terms this repository acts on —
 derived by the tooling from the corpus, never hand-listed, and deliberately
@@ -224,7 +227,7 @@ graph. That is a determined zero, not an unfilled field.
 | `cat-harness/processes/kg/*.bpmn (4)` | `xmlns` binding |
 | `cat-harness/processes/library/*.bpmn (14)` | `xmlns` binding |
 | `cat-harness/processes/process/*.bpmn (12)` | `xmlns` binding |
-| `cat-harness/processes/sdlc/*.bpmn (21)` | `xmlns` binding |
+| `cat-harness/processes/sdlc/*.bpmn (23)` | `xmlns` binding |
 | `cat-harness/processes/ui/*.bpmn (4)` | `xmlns` binding |
 | [`cat-harness/scripts/kg-export.ts`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/scripts/kg-export.ts) | `@conformsTo` tag |
 | [`cat-harness/scripts/render-bpmn.ts`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/scripts/render-bpmn.ts) | `@conformsTo` tag |
@@ -286,7 +289,7 @@ a subset of the edition rather than a transcription of it.
 | `cat-harness/processes/kg/*.bpmn (4)` | `xmlns` binding |
 | `cat-harness/processes/library/*.bpmn (14)` | `xmlns` binding |
 | `cat-harness/processes/process/*.bpmn (12)` | `xmlns` binding |
-| `cat-harness/processes/sdlc/*.bpmn (21)` | `xmlns` binding |
+| `cat-harness/processes/sdlc/*.bpmn (23)` | `xmlns` binding |
 | `cat-harness/processes/ui/*.bpmn (4)` | `xmlns` binding |
 | [`cat-harness/scripts/render-bpmn.ts`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/scripts/render-bpmn.ts) | `@conformsTo` tag |
 | `fhir-harness/processes/content/*.bpmn (2)` | `xmlns` binding |
@@ -318,7 +321,7 @@ graph. That is a determined zero, not an unfilled field.
 | user | declared by |
 |---|---|
 | `cat-harness/processes/kg/decisions/*.dmn (3)` | `xmlns` binding |
-| `cat-harness/processes/sdlc/decisions/*.dmn (1)` | `xmlns` binding |
+| `cat-harness/processes/sdlc/decisions/*.dmn (2)` | `xmlns` binding |
 | `folio-assistant-core/processes/conduct/decisions/*.dmn (2)` | `xmlns` binding |
 | `folio-assistant-core/processes/content/decisions/*.dmn (2)` | `xmlns` binding |
 | `folio-assistant-sci/processes/content/decisions/*.dmn (1)` | `xmlns` binding |
@@ -583,11 +586,13 @@ a subset of the edition rather than a transcription of it.
 | user | declared by |
 |---|---|
 | [`cat-harness/schemas/jsonld.ts`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/jsonld.ts) | `@conformsTo` tag |
+| [`cat-harness/schemas/vocab-mapping.ts`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/vocab-mapping.ts) | `@conformsTo` tag |
 | [`cat-harness/schemas/vocabulary.ts`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/vocabulary.ts) | `@conformsTo` tag |
 | [`cat-harness/scripts/glossary-export.ts`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/scripts/glossary-export.ts) | `@conformsTo` tag |
 | [`cat-harness/scripts/ns-export.ts`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/scripts/ns-export.ts) | `@conformsTo` tag |
+| `vocab-mapping graph` | through the module that types it ([`cat-harness/schemas/vocab-mapping.ts`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/vocab-mapping.ts)) |
 
-**Operative terms (21).** The terms this repository acts on —
+**Operative terms (22).** The terms this repository acts on —
 derived by the tooling from the corpus, never hand-listed, and deliberately
 a subset of the edition rather than a transcription of it.
 
@@ -608,6 +613,7 @@ a subset of the edition rather than a transcription of it.
 | `skos:inScheme` | Binds a concept to its instance's glossary document. Each concept's `inScheme` names that document's own published URL, so a preview that publishes the graph without the glossary serves a 404ing scheme IRI — which `check:invocation-parity` refuses. |
 | `skos:member` | The external concept IRIs of a glossary's `members` Collection. |
 | `skos:memberList` | derived from the corpus; what this repository does with it is not yet described |
+| `skos:narrowMatch` | The SKOS rendering of FHIR R5's `source-is-broader-than-target` in a vocabulary mapping table (`SKOS_MATCH_FOR`, schemas/vocab-mapping.ts, bean k74z): `A skos:narrowMatch B` says B is narrower. |
 | `skos:notation` | The CODE. `TermGloss`'s prefixed name (`cat:FshGutsNode`) already WAS this, which is why the "coded glossary" requirement was satisfied by data that existed rather than by new authoring. |
 | `skos:note` | The status of a glossary term that is not `authored` (`candidate`, or `could-not-extract` with its reason), so a SKOS-only reader can tell it is not a curated definition (bean `lqo9`). |
 | `skos:prefLabel` | The one name a concept is published under. AUTHORITATIVE for a concept's name — where a node is both a resource and a concept, `dcterms:title` is the derived copy and this is the source. |

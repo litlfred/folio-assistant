@@ -34,6 +34,8 @@ Part of [folio-assistant-core](../README.md) 0.1.0, declared as `core-scripts`, 
 | [`glossary-pot.test.ts`](glossary-pot.test.ts) | a file |  |
 | [`glossary-pot.ts`](glossary-pot.ts) | a file |  |
 | [`glossary-skos-automated.test.ts`](glossary-skos-automated.test.ts) | a file |  |
+| [`kg-materialize.test.ts`](kg-materialize.test.ts) | a file |  |
+| [`kg-materialize.ts`](kg-materialize.ts) | a file |  |
 | [`local-path.test.ts`](local-path.test.ts) | a file |  |
 | [`materialized-fixity.test.ts`](materialized-fixity.test.ts) | a file |  |
 | [`review-comment-move.test.ts`](review-comment-move.test.ts) | a file |  |

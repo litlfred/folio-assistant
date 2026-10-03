@@ -3,8 +3,9 @@
 title: 'STAGING SIZE: the measurement is right and the SEVERITY is an unverifiable claim — critical predicts a failed publish, and nothing in this repo can observe enforcement'
 status: in-progress
 type: bug
+priority: normal
 created_at: 2026-09-25T18:10:30Z
-updated_at: 2026-09-25T18:10:30Z
+updated_at: 2026-10-02T17:38:56Z
 parent: folio-assistant-1xhc
 ---
 
@@ -197,3 +198,199 @@ warn about: the registry summary still advertised *"owner's 100 MB warning"* aft
 the raise to 500 MB, and the check's own summary still claimed the previews had
 *"grown past what a GitHub Pages site can carry"* — a publish claim, in the check
 that just had one taken away.
+
+
+## R4's scope — settled 2026-10-02, and it was my own commit that needed correcting
+
+The question (raised by the nav-options agent against commit `2eb113ea280`):
+does R4's linear floor govern the **docs nav** or only the **board**? Only the
+board — and the nav was never under it, so relaxing R4 was not merely
+mis-scoped, it was **unnecessary** for the nav work.
+
+Evidence, all checkable:
+
+- `cat-harness/docs/architecture/folio-board-requirements.md` §"What this is,
+  and what it is not" states on the owner's own ruling that the file is
+  "history, not instruction", and that the rules an agent follows live in the
+  `cat-harness` skills. R4 governs nothing *directly*, board or docs.
+- R4's normative sentence names its subject: "**The board** SHALL always be
+  collapsible…".
+- The skill that DOES bind the docs site is `ui-accessibility` — it says so:
+  "it binds every surface this project produces: the knowledge-graph viewer,
+  **the docs site**, the action-icon tiles, anything future". Its standard is
+  WCAG 2.2 A/AA + keyboard + 24 px targets + computed contrast + visible focus
+  + announced change. **No no-JavaScript clause**, and WCAG imposes none.
+- The docs navbar **already requires JavaScript**: `mountNavIconRow`,
+  `mountDocumentIndex`, `mountInstanceGraphs` build three of its regions in the
+  DOM at load (shipped #959; `cat-harness/test/navbar-row.e2e.ts` opens "The
+  three JS-mounted navbar regions"). No gate objects.
+
+So a client-side docs nav is permitted by the rules as written **today**,
+independently of the relaxation. That unblocks the nav-duplication options.
+
+**Exactly two `javaScriptEnabled: false` contexts exist in this repository**,
+measured today, and neither is the nav:
+
+| gate | what it requires | what it does not reach |
+|---|---|---|
+| `cat-harness/test/linear-floor.e2e.ts:117` | the **todo listing** (`#fa-todo-listing`) is in the served bytes, in document order, with count = own cardinality | anything else on the page |
+| `cat-harness/test/first-paint-scheme.e2e.ts:247` | eight generated dashboards **first-paint dark from CSS alone** in a light-preferring browser | the page's content — it is a colour assertion |
+
+**The relaxation's real target is therefore the todo listing**, which is
+`gen-docs-pages.ts`'s 19.5 MB floor and R4's actual subject. Converting it to a
+fetch is now *permitted*; it is not thereby *decided*. The test header records
+what the static floor cost to build (bean `0jtj`: with JS off, a reader
+previously got "no note, no count, no hint that notes exist"), so those five
+tests must not be deleted to go green. Both running agents have been told.
+
+**Second defect in the same commit, independent of scope.** It added two NEW
+`SHALL` obligations — print/PDF waits for load and render; a failed load says
+so — to a document that disclaims being instruction. Nothing enforced them and
+nothing looking for the rule would have found them: the AGENTS.md banner's
+failure mode, one directory over. Re-homed to `ui-accessibility` §"A rendering
+built client-side owes two things the static one gave for free", with the
+`console.warn` trap stated and the reason a PDF is the strictest case.
+
+Fixed in `166507acd1b`.
+
+
+## Collision review — run LATE, 2026-10-02, and two phases stood down
+
+**I broke the rule I am now following.** PR #1886 landed
+`coordinate` §"Before a platform refactor" (STRICT) earlier today — owner,
+verbatim: *"if you are working on a refactor of the platform, review active
+agents/beans for impact and coordiante"* — and I dispatched two agents at
+shared includes, committed generators and workflow YAML **without** it. By
+that section's own definition (blast radius, not diff size) this was a
+platform refactor. Recorded here because the section says a review living only
+in chat is gone when the container goes.
+
+### What was already claimed
+
+| sibling | its PRs / beans | shared files | effect on this work |
+|---|---|---|---|
+| page-weight session (bean `gp2f`, issue #1885) | **#1886**, `ready-to-merge` | the whole per-page chrome plan, phases A–E | **owns** the harness bar (C) and the shared nav (D) |
+| navbar session (bean `ob3m`) | #1804, #1805, #1808, #1819 — all `ready-to-merge` | `docs-ui.css`, `docs-ui.js`, `_includes/generated/navbar-footer.html`, `harness_details.html`, `head_custom.html` | gates the KG islands work; `check:nav-names` gates `nav_exclude` |
+| — | #1875, #1801 | `.github/workflows/docs-site.yml` | gates where the minifier step wires in |
+
+`gp2f` records phase C as "owned here, at the navbar session's request",
+waiting on those four PRs. So the harness-bar work was claimed with agreement
+before I started.
+
+### Stood down, measurements offered rather than discarded
+
+- **Harness bar duplication (~60.6 MiB)** — is `gp2f` phase C. Dropped.
+  `gp2f` has the better mechanism: `nav_footer_custom` is emitted in both
+  `components/sidebar.html` and `components/footer.html`, so the fix is to
+  override those two includes.
+- **`nav_exclude` the generated sections (~94.3 MiB)** — a *different*
+  mechanism against phase D's bytes, and complementary: 94.3 MiB off the nav
+  before it is published once beats publishing the large one once. Dropped as
+  a workstream, offered to `gp2f` as an input. Collides with #1804.
+
+### Kept, because it collides with nothing
+
+**Post-build HTML minification.** Operates on the built `_site`, touches no
+include, generator or source page, composes with all five `gp2f` phases.
+Measured on three sampled pages of `origin/gh-pages` preview
+`STAGING/agy-wnhh-sushi-publisher-local`: comments −10.0%; plus inter-tag
+whitespace collapse −10.7% stored (~45 MB of 418 MB HTML); **gzipped transfer
+−25.4%**. The "no Jekyll plugin under `actions/jekyll-build-pages@v1`"
+objection is true of plugins and irrelevant to the route: the workflows
+already post-process the tree (`strip-preview-seo.ts --site ./_site`,
+`feature-staging.yml:712`).
+
+### A measurement to correct, since it is cited elsewhere
+
+My first chrome/content split (56.6% / 43.4%) was **wrong by ~7×**. It summed
+nav + svg + script + style and called the remainder content; the remainder is
+`<head>`, `<footer>` and wrappers, all chrome. Measuring `<main>` directly:
+content is **5.9%** (24.7 MB of 417.5 MB), independently 2.7–2.8% on three
+pages. A subtraction-based baseline makes #1885's 10–15 KB/page target look
+already met.
+
+### Defect reported on #1886 (non-blocking)
+
+`coordinate.kg-qa.json` regresses in that diff: `skill-not-a-document`
+pass → fail (481 lines, p90 391), `totals.fail` 2 → 3. `kg:audit:check` fails
+only on `critical`, so it stays green; `kg:audit:strict` adds `major`, and the
+PR carries `ready-to-merge`.
+
+
+## The linear floor, measured on `origin/gh-pages` 2026-10-02 — and a 5x error corrected
+
+**The 19.5 MB figure in circulation for `fa-todo-listing` is wrong by about 5x.**
+It was relayed from an agent report and I repeated it without deriving it.
+Measured directly:
+
+- the listing section is **12,876 bytes, byte-identical** on every page that
+  carries it — six pages sampled across `reference/`, `smart-trust/` and the
+  root all gave the same number, because it is a GLOBAL listing, not
+  page-specific;
+- it renders **3 notes**, so ~4.3 KB per note;
+- it is injected by `cat-harness/docs/_includes/footer_custom.html:40`, so
+  every Jekyll page gets it.
+
+| tree | HTML pages | carrying it | bytes |
+|---|---|---|---|
+| main site, non-`api/` | 2,505 | ~2,405 (24 of 25 sampled) | **31.0 MB** |
+| main site, `api/` (TypeDoc) | 2,206 | **0** | — |
+| `STAGING/` previews | 11,096 | ~51 % by carry-rate | ~73 MB (estimated by rate, NOT counted) |
+| | | | **~104 MB** |
+
+The STAGING row is an estimate from the carry-rate, not a count. Stated as
+such because the main-site row IS counted and the two must not be read as
+equally firm.
+
+### The `api/` absence is the rule working, not a hole
+
+`footer_custom.html` justifies per-page inclusion thus: *"the board is
+launched from every page, so a floor that exists on some of them is not a
+floor."* 2,206 pages lack the listing, which looks like a contradiction. It is
+not: `api/` pages load **no `docs-ui.js`**, so no board can launch there and no
+floor is owed. Checked, not assumed.
+
+### Where the rule does rest on a conflation
+
+**The board IS JavaScript**, so a reader with JS off never gets a board to
+collapse. Two readers are being served by one artefact:
+
+- **JS-on** — `docs-ui.js` collapses the listing into a disclosure. The
+  content could be FETCHED; relaxed R4 permits exactly that.
+- **JS-off** — no board, ever. For them this is not "the board's fallback on
+  this page", it is a global notes index duplicated ~2,405 times. What bean
+  `0jtj` actually complained of is *"no note, no count, no hint that notes
+  exist"* — a count, a hint and a path satisfy it.
+
+### A live defect found while measuring
+
+**`todos/index.html` serves ZERO items and carries no listing section at
+all.** It is one of the eight JS shells in `first-paint-scheme.e2e.ts`. So
+today a no-JS reader gets the full listing on `accessibility.html` and
+**nothing on the notes page** — the one page most about notes is the only one
+with no floor. That is `0jtj`'s defect, still live, at the destination.
+
+### The option this implies, which is better than convert-or-keep
+
+A footer **stub** (~300 B/page: `Open notes (3)`, linking to `todos/`), the
+full static listing moved INTO `todos/index.html` where it is missing, and the
+board fetching bodies. Recovers ~97 % of the ~104 MB, and leaves the no-JS
+reader better off than today: count and path on every page, plus a served
+listing at the destination that does not currently exist.
+
+Two costs, both real:
+
+1. `footer_custom.html` is `nav_footer_custom` — **#1886 phase C territory**,
+   so this needs that session's agreement.
+2. **The stub's count must not be `data-fa-todo-count` on a
+   `fa-todo-listing` section.** `linear-floor.e2e.ts` test 5 asserts that
+   attribute equals the panel's own cardinality; a stub carrying `3` with zero
+   items is precisely the number-somebody-maintains that R6 designed out. It
+   is a link label, not a panel count.
+
+Test disposition: three of the five move to `todos/` (bodies, document order,
+attachment/status), one stays (board-did-not-run), one splits. **None is
+deleted, and the floor gets stronger** — one authoritative served listing
+instead of 2,405 copies and an empty destination.
+
+Put to the owner as a decision; not acted on.

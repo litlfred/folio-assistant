@@ -5,8 +5,8 @@ status: in-progress
 type: feature
 priority: normal
 created_at: 2026-10-01T06:57:14Z
-updated_at: 2026-10-01T17:42:08Z
-parent: folio-assistant-1xhc
+updated_at: 2026-10-03T00:34:24Z
+parent: folio-assistant-hfag
 ---
 
 Issue #1707 (bean y7b3 measured it). Owner 2026-10-01: '1 + new skills/tools for each common churn/conflict pattern' and 'put in merge process bpmn'. Settles 520m's open question (may a resolver cover every generated artefact?) as: yes, one declared pattern at a time.
@@ -94,3 +94,36 @@ a bot commit on somebody's in-flight branch is a coordination event.
 ## 2026-10-01 late — part B approved
 
 Owner approved CI merge:main (this bean's part B) as speed-up 3 of 4 for the merge treadmill (session_01ToWZR4RgTRCWeSsgxsSQfT). Siblings created alongside it under `0mf0`: input-hash skip, parallel checks, CI sharding + BPMN cache + shallow checkout.
+
+Re-parented 2026-10-02 from `1xhc` to the merge-pipeline epic `hfag` on the owner's ruling (the merge pipeline is its own epic, blocking `7x5n`).
+
+## Field case for the qa-sidecar pattern (measured 2026-10-03)
+
+A HAND resolution deleted a generated QA sidecar that BOTH sides had, and the
+breakage surfaced as a hard-gate red with an unrelated-looking name.
+
+PR #1819 head `c975c7da7b9` ("Merge remote-tracking branch origin/main into
+claude/quirky-hypatia-k3aoh4-strip-pinned", 2026-10-03T00:03:36Z):
+
+- parent1 `bdc09cbec75` (branch side) HAS `cat-harness/test/results/viewer-nav/viewer-nav.qa.json`
+- parent2 `5187a4df361` (main side)   HAS the same path
+- merge result `c975c7da7b9`          does NOT (`git ls-tree` empty)
+
+Consequence: `bun run check:viewer-nav` exits 1 with
+`viewer-nav.qa.json is missing - run bun run viewer:nav:audit`, failing the
+hard job "Repository gates (hard)" / step "viewer pages keep the navbar they
+had" (run 37080417880). The same run reports `0 railed page(s) fail a layout
+flag` - so the gate name reads like a navbar regression while the actual cause
+is a dropped sidecar. #1808 and #1804 both still carry main blob
+`32529aedc17` at that path, so #1819 is the only one affected.
+
+Two things this is evidence for:
+
+1. `merge:main` would have classified the path under the declared `qa-sidecar`
+   strategy rather than dropping it; a delete-on-conflict is not a strategy the
+   registry can express, which is the point.
+2. "Resolve only the generated conflicts" is not self-evidently safe advice when
+   carried out by hand - deleting a generated file IS a resolution of its
+   conflict, and it passes a reviewer skim because the path looks like noise.
+   Worth a line in the merge-conflict-patterns skill: a generated path is
+   REGENERATED or taken, never removed.

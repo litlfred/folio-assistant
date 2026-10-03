@@ -152,7 +152,7 @@ import {
 } from "../schemas/cat-harness.js";
 import { KG_CRITERIA, KG_SUBJECT_GRAPH_KINDS, type KgSubjectKind } from "../schemas/kg-qa.js";
 import { gitFiles } from "../schemas/git-corpus.ts";
-import { loadGates } from "./gates.js";
+import { loadGatesCiRuns } from "./gates.js";
 import { QA_RESULTS_DIR, buildQaResult, writeQaResult, type QaResult } from "./qa-results.js";
 
 /** The INSTANCE root — this file lives at `<instance>/scripts/`. */
@@ -424,7 +424,13 @@ export function gateCoverage(root: string, repo: string): GateCoverage[] {
   // `--all`: the browser jobs gate the corpus too, and a coverage report that
   // silently dropped them would under-count for a reason invisible in its own
   // output.
-  const gates = loadGates(repo, { all: true });
+  // What CI RUNS, not what the local runner can execute. `loadGates` omits a
+  // command whose shell variable the extraction discarded (bean `9zok`); CI
+  // runs that command correctly, and a gate that declares `@covers` covers its
+  // kind regardless of this tool's ability to invoke it. Using the runner's
+  // list here made the census 209 and the "all N have declared" verdict narrower
+  // than reality.
+  const gates = loadGatesCiRuns(repo, { all: true });
   const out: GateCoverage[] = [];
   const byCommand = new Map<string, GateCoverage>();
   for (const g of gates) {

@@ -2,7 +2,7 @@
   "$schema": "qa-results/v1",
   "producer": {
     "script": "scripts/subgraph-readmes.ts",
-    "script_hash": "8ef39e10c6c3"
+    "script_hash": "70ec174e4c49"
   },
   "subject": {
     "kind": "graph",
@@ -80,8 +80,18 @@
         },
         {
           "instance": "cat-harness",
+          "directory": "subscriptions",
+          "path": "cat-harness/subscriptions"
+        },
+        {
+          "instance": "cat-harness",
           "directory": "code-lists",
           "path": "cat-harness/code-lists"
+        },
+        {
+          "instance": "cat-harness",
+          "directory": "vocab-mappings",
+          "path": "cat-harness/vocab-mappings"
         },
         {
           "instance": "cat-harness",
@@ -117,11 +127,6 @@
           "instance": "cat-harness",
           "directory": "qa",
           "path": "cat-harness/test/results"
-        },
-        {
-          "instance": "cat-harness",
-          "directory": "attestations",
-          "path": "cat-harness/test/attestations"
         },
         {
           "instance": "cat-harness",
@@ -277,11 +282,6 @@
           "instance": "folio-assistant-sci",
           "directory": "qa",
           "path": "folio-assistant-sci/test/results"
-        },
-        {
-          "instance": "folio-assistant-sci",
-          "directory": "attestations",
-          "path": "folio-assistant-sci/test/attestations"
         },
         {
           "instance": "folio-assistant-sci",
@@ -458,7 +458,7 @@
     },
     "no-title": {
       "summary": "Declared directories with no `title`: their README heading falls back to the id.",
-      "count": 106,
+      "count": 105,
       "entries": [
         {
           "instance": "folio-assistant",
@@ -547,6 +547,11 @@
         },
         {
           "instance": "cat-harness",
+          "directory": "vocab-mappings",
+          "path": "cat-harness/vocab-mappings"
+        },
+        {
+          "instance": "cat-harness",
           "directory": "schemas",
           "path": "cat-harness/schemas"
         },
@@ -584,11 +589,6 @@
           "instance": "cat-harness",
           "directory": "qa",
           "path": "cat-harness/test/results"
-        },
-        {
-          "instance": "cat-harness",
-          "directory": "attestations",
-          "path": "cat-harness/test/attestations"
         },
         {
           "instance": "cat-harness",
@@ -802,11 +802,6 @@
         },
         {
           "instance": "folio-assistant-sci",
-          "directory": "attestations",
-          "path": "folio-assistant-sci/test/attestations"
-        },
-        {
-          "instance": "folio-assistant-sci",
           "directory": "voices",
           "path": "folio-assistant-sci/skills/voices"
         },
@@ -1014,5 +1009,5 @@
       "entries": []
     }
   },
-  "total": 194
+  "total": 193
 }
