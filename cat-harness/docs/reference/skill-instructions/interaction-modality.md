@@ -581,5 +581,6 @@ reader's font choice silently reconfiguring how an agent talks to the author.
 | process | step(s) that name it |
 |---|---|
 | [Session state machine](../../processes/session-state-machine.html) | Ask who is acting |
+| [A merge train](../../processes/merge-train.html) | Release the merge to main; Place it by hand, with a reason |
 | [Getting started](../../processes/getting-started.html) | Detect the interaction modality; Choose from the offered options |
 
