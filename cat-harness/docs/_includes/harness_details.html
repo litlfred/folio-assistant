@@ -74,7 +74,10 @@
       {%- endfor -%}
     </dl>
     {%- endif -%}
-    {%- assign open = t.visualisations | where_exp: "v", "v.path" -%}
+    {%- comment -%} ONE NAME PER DESTINATION (bean `ob3m` finding 6): a kind
+    whose page is another kind's row carries `sameAs` and is listed once,
+    under the label `harness-tiles.ts` gave it. {%- endcomment -%}
+    {%- assign open = t.visualisations | where_exp: "v", "v.path" | where_exp: "v", "v.sameAs == nil" -%}
     {%- comment -%}
       The viewers, which are NOT the same thing as the tab's target and the
       split is the owner's: `/who-iris/` is who-iris presenting itself,
@@ -112,7 +115,7 @@
         <a href="{{ v.path | relative_url }}"
            {%- if v.readOnly == true %} data-fa-readonly
            title="materialized content: readable, not editable here"{% endif -%}
-        >{{ v.kind }}</a>
+        >{{ v.label | default: v.kind }}</a>
         {%- if v.readOnly == true -%}
         <span class="fa-readonly-note">read-only</span>
         {%- endif -%}

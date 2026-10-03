@@ -87,6 +87,12 @@ export interface RailOptions {
    * `/todos/`. Absent on a mounted document, whose section is its "Contents".
    */
   visualiserLabel?: string;
+  /**
+   * What the home row is called — the site's title from `harness.json`, the
+   * same words the Jekyll sidebar's home row shows (bean `ob3m` finding 6).
+   * Absent falls back to `folio-assistant`.
+   */
+  homeLabel?: string;
 }
 
 /**
@@ -118,7 +124,7 @@ export function railModel(o: RailOptions): NavbarModel & { graphs: NavGroup } {
     // whenever a visualiser section is present.
     graphs: { label: "Graphs", icon: "\u25A4", items: o.links, collapsible: true, open: true },
     ...(harnesses ? { harnesses } : {}),
-    home: { href: `${o.toRoot}/`, label: "folio-assistant", icon: "\u2302" },
+    home: { href: `${o.toRoot}/`, label: o.homeLabel ?? "folio-assistant", icon: "\u2302" },
   };
 }
 

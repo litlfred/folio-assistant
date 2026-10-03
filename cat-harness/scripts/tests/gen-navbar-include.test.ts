@@ -189,3 +189,28 @@ describe("one navbar section per instantiated harness (bean `nvbr`)", () => {
     expect(out).not.toContain(">Harnesses<");
   });
 });
+
+describe("a graph row says the destination's ONE name (bean `ob3m` finding 6)", () => {
+  const harness: Harness = {
+    name: "cat-harness",
+    title: "C@T Harness",
+    label: "C@T Harness",
+    href: "/#harness-cat-harness",
+    instantiated: true,
+    visualisations: [
+      { kind: "cat-harness", label: "Schemas", sameAs: "schemas", path: "/s/" },
+      { kind: "methodology", label: "Methodologies", path: "/methodologies/" },
+      { kind: "schemas", label: "Schemas", path: "/s/" },
+    ],
+  };
+  const out = variants(render([harness], "T")).canonical;
+
+  test("the row prints the data's label, not the kind word", () => {
+    expect(out).toContain('<span class="fa-nav-label">Methodologies');
+    expect(out).not.toContain('<span class="fa-nav-label">methodology');
+  });
+
+  test("a kind whose page is another kind's row is listed once", () => {
+    expect(out.match(/<span class="fa-nav-label">Schemas/g)?.length).toBe(1);
+  });
+});

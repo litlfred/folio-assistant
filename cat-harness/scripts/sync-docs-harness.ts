@@ -42,6 +42,7 @@ import { harnessTiles, instanceDirs } from "./harness-tiles.js";
 import { harnessPanel, skillPageIn } from "./harness-panel.js";
 import { siteLinks } from "./site-links.js";
 import { siteDirectories, withViewers } from "./viewer-declarations.js";
+import { harnessTitle } from "./lib/nav-label.js";
 
 
 const ROOT = resolve(import.meta.dir, "..");
@@ -288,7 +289,7 @@ function navbarRow(
   harnesses: readonly {
     name: string;
     navbarIcons?: string[];
-    visualisations?: { kind: string; within?: string; path?: string | null; note?: string; stagingOnly?: true }[];
+    visualisations?: { kind: string; label?: string; sameAs?: string; within?: string; path?: string | null; note?: string; stagingOnly?: true }[];
   }[],
   self: string | undefined,
   siteLinkList: readonly { id: string; path?: string; url?: string }[],
@@ -298,7 +299,7 @@ function navbarRow(
   hrefs: Record<string, string>;
   /** WHY an icon has no href, keyed by icon id — see the `notes` note below. */
   notes: Record<string, string>;
-  folders: { kind: string; within?: string; path?: string; note?: string; stagingOnly?: true }[];
+  folders: { kind: string; label?: string; within?: string; path?: string; note?: string; stagingOnly?: true }[];
 } | null {
   const mine = harnesses.find((h) => h.name === self);
   // UNDETERMINED -> `null`, never `{icons: []}`. "Nobody decided" and "show
@@ -384,11 +385,15 @@ function navbarRow(
   // only the page knows which deploy it is on.
   // `within` RIDES ALONG TOO (issue #1164): a sub-graph is drawn inside its
   // parent's row, folded, by every client — one answer to where it sits.
-  const folders = (mine.visualisations ?? []).map((v) => {
+  // `label` RIDES ALONG as `harness-tiles.ts` set it (bean `ob3m` finding 6):
+  // FOLDERS printed the bare kind word, and the glass named the same page
+  // otherwise. The client renders this and composes nothing.
+  const folders = (mine.visualisations ?? []).filter((v) => v.sameAs === undefined).map((v) => {
     const within = v.within ? { within: v.within } : {};
+    const label = v.label ? { label: v.label } : {};
     return v.path
-      ? { kind: v.kind, ...within, path: v.path, ...(v.stagingOnly ? { stagingOnly: true as const } : {}) }
-      : { kind: v.kind, ...within, ...(v.note ? { note: v.note } : {}) };
+      ? { kind: v.kind, ...label, ...within, path: v.path, ...(v.stagingOnly ? { stagingOnly: true as const } : {}) }
+      : { kind: v.kind, ...label, ...within, ...(v.note ? { note: v.note } : {}) };
   });
   return { icons: [...mine.navbarIcons], hrefs, notes, folders };
 }
@@ -445,8 +450,20 @@ const payload = {
    * second list. One array for BOTH surfaces — Q11: a tile is declared once
    * and says where it shows, never two registries free to disagree about what
    * a tile is. The navbar and the board filter this by `surfaces`. */
+  // THE QUALIFIER is the declaring harness's title (bean `ob3m` finding 6):
+  // a `repository`-scoped entry is the checkout root's, every other one this
+  // instance's own. Two "Docs" tiles are then "Docs · C@T Harness" and
+  // "Docs · Folio Assistant", one base name each.
   tiles: withTileCounts(
-    graphTiles(withViewers(siteDirectories(decl?.directories ?? [], ROOT, REPO_ROOT), ROOT), relative(REPO_ROOT, join(ROOT, siteDirFor(ROOT)))),
+    graphTiles(
+      withViewers(siteDirectories(decl?.directories ?? [], ROOT, REPO_ROOT), ROOT),
+      relative(REPO_ROOT, join(ROOT, siteDirFor(ROOT))),
+      (d) => {
+        const owner = d.scope === "repository" ? readDeclaration(REPO_ROOT) : decl;
+        return owner ? harnessTitle(owner) : undefined;
+      },
+      allHarnesses.map((h) => h.name),
+    ),
     scanTileCounts(join(ROOT, siteDirFor(ROOT), "assets")),
   ),
   harnesses: allHarnesses,

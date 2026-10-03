@@ -69,6 +69,7 @@ import { dirname, join } from "node:path";
 
 import { siteDirFor } from "../schemas/cat-harness.js";
 import { graphKindRowDecor } from "./lib/graph-kind-nav.js";
+import { kindTitle } from "./lib/nav-label.js";
 import {
   navbarOpenInputHtml,
   navbarRegionsHtml,
@@ -98,6 +99,8 @@ const OUT = join(SITE, "_includes", "generated", "navbar-footer.html");
  */
 interface Visualisation {
   kind: string;
+  label?: string;
+  sameAs?: string;
   path?: string | null;
   note?: string;
   stagingOnly?: true;
@@ -127,7 +130,11 @@ export interface Harness {
  * `harness-tiles.ts` has already worded the reason; this picks none of them.
  */
 function graphRows(h: Harness, staging: boolean): NavItem[] {
-  return (h.visualisations ?? []).map((v) => {
+  // ONE NAME PER DESTINATION (bean `ob3m` finding 6): the row says the label
+  // `harness-tiles.ts` gave it, never the bare kind word, and a kind whose page
+  // is another kind's row (`sameAs`) is not listed a second time.
+  return (h.visualisations ?? []).filter((v) => v.sameAs === undefined).map((v) => {
+    const label = v.label ?? kindTitle(v.kind);
     const withheld = v.stagingOnly === true && !staging;
     // The same distinct glyph and full accessible name the rail gives a kind
     // row (bean `yag0`) — one answer, from `lib/graph-kind-nav.ts`.
@@ -135,9 +142,9 @@ function graphRows(h: Harness, staging: boolean): NavItem[] {
     // on its own neutral chip in the page's ink, and a dark tone behind a
     // dark-ink glyph would lose contrast. The shape and the words carry it.
     const { tone: _tone, ...decor } = graphKindRowDecor(v.kind, h.label ?? h.title ?? h.name);
-    if (v.path && !withheld) return { href: v.path, label: v.kind, ...decor };
+    if (v.path && !withheld) return { href: v.path, label, ...decor };
     const note = withheld ? "staging only" : v.note;
-    return { label: v.kind, ...decor, ...(note ? { note } : {}) };
+    return { label, ...decor, ...(note ? { note } : {}) };
   });
 }
 
