@@ -129,6 +129,13 @@ scripts/state-visualizer.ts". **`docs/uploads/index.html` is the viewer OF
 `**/uploads/**` caught it, and #1764 refused on it. First match wins, so the
 viewer entries sit above the refusal.
 
+And `docs/fsh-guts/index.md`, written whole by `fsh-guts:viz`
+(`gen-fsh-guts-viz.ts`, checked by `fsh-guts:viz:check`) from everything under
+`fsh-guts/`. Any PR that archives an upload rewrites it, so two such PRs always
+collide; #1766 refused on it alone on 2026-10-03. Only that one page is
+declared: the archive it renders (`fsh-guts/**`) is kept content and stays
+refused.
+
 ### `viewer-namespace` — take the base, regenerate
 
 `docs/cat-harness/{catalogue,folio,library,schemas,uploads,voices}/**`: the

@@ -11,11 +11,11 @@
       "description": "Resource type identifier for CWT logical model"
     },
     "header": {
-      "$ref": "http://smart.who.int/base/StructureDefinition-COSEHeader.schema.json",
+      "$ref": "StructureDefinition-COSEHeader.schema.json",
       "description": "Header"
     },
     "payload": {
-      "$ref": "http://smart.who.int/base/StructureDefinition-CWTPayload.schema.json",
+      "$ref": "StructureDefinition-CWTPayload.schema.json",
       "description": "Payload"
     },
     "signature": {
@@ -29,6 +29,23 @@
     "payload",
     "signature"
   ],
-  "resourceDefinition": "http://smart.who.int/trust/StructureDefinition/CWT",
-  "fhir:parent": "http://hl7.org/fhir/StructureDefinition/Base"
+  "allOf": [
+    {
+      "$ref": "./StructureDefinition-FHIRSchemaBase.schema.json"
+    },
+    {
+      "type": "object",
+      "properties": {
+        "resourceDefinition": {
+          "type": "string",
+          "format": "uri",
+          "const": "http://smart.who.int/trust/StructureDefinition/CWT"
+        },
+        "fhir:parent": {
+          "type": "string",
+          "const": "http://hl7.org/fhir/StructureDefinition/Base"
+        }
+      }
+    }
+  ]
 }

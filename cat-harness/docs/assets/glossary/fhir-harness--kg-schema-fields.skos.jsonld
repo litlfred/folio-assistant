@@ -71,6 +71,44 @@
       "skos:note": "candidate"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/ns#glossary/kg-schema-fields/fhir-artifact-index.fhirartifactindexschema.igapihub",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "FhirArtifactIndexSchema.igApiHub"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The IG API hub: the region of the IG's hub page between the two markers its post-processing writes after the Publisher has run (for WHO's DAK overlay, `dak-api.html` between `DAK_API_HUB_START` and `DAK_API_HUB_END`, written by smart-base's `generate_dak_api_hub.py`). `url` is the page it was read from; `localPath` is the fragment, held so a page can fetch it (bean `680p`) rather than retype its prose — as a JSON node (`{ from, between, html }`), because an `.html` fragment published in the served graph would be a page with no <body>. Absent means the IG publishes no hub, or it was not materialised."
+        }
+      ],
+      "dcterms:source": "fhir-harness/schemas/fhir-artifact-index.ts#FhirArtifactIndexSchema.igApiHub",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/ns#glossary/kg-schema-fields/fhir-artifact-index.fhirartifactindexschema.package",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "FhirArtifactIndexSchema.package"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The IG's own `package.tgz` — every resource's JSON in one file, as the Publisher packaged it. Held (`--materialize-package`) so a page can fetch the one archive and read a resource out of it in the browser, rather than this graph copying hundreds of resource files (bean `680p`, `visualizer-loading`). Absent means not held."
+        }
+      ],
+      "dcterms:source": "fhir-harness/schemas/fhir-artifact-index.ts#FhirArtifactIndexSchema.package",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/ns#glossary/kg-schema-fields/fhir-artifact-index.fhirartifactindexschema.packageid",
       "@type": "skos:Concept",
       "skos:inScheme": {
@@ -163,6 +201,25 @@
         }
       ],
       "dcterms:source": "fhir-harness/schemas/fhir-artifact-index.ts#FhirArtifactSchema.key",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/ns#glossary/kg-schema-fields/fhir-artifact-index.fhirartifactschema.listedat",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "FhirArtifactSchema.listedAt"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Position on the Publisher's `artifacts.html`, 0-based, first appearance. The category's order and the artefact's order within it are both read off this — a renderer that must match the Publisher's page (owner, 2026-10-01: every phase renders equivalent to the standard IG render) has no other source for either. Absent exactly when `category` is."
+        }
+      ],
+      "dcterms:source": "fhir-harness/schemas/fhir-artifact-index.ts#FhirArtifactSchema.listedAt",
       "skos:note": "candidate"
     },
     {
@@ -543,6 +600,101 @@
         }
       ],
       "dcterms:source": "fhir-harness/schemas/fhir-artifact-index.ts#UnboundSidecarSchema.title",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/ns#glossary/kg-schema-fields/ig-ast.astmanifestschema.inputs",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "AstManifestSchema.inputs"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "What the AST is valid for, in `CompiledInputsSchema`'s shape."
+        }
+      ],
+      "dcterms:source": "fhir-harness/schemas/ig-ast.ts#AstManifestSchema.inputs",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/ns#glossary/kg-schema-fields/ig-ast.astmanifestschema.provisional",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "AstManifestSchema.provisional"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "What stays provisional until a full Publisher run."
+        }
+      ],
+      "dcterms:source": "fhir-harness/schemas/ig-ast.ts#AstManifestSchema.provisional",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/ns#glossary/kg-schema-fields/ig-ast.astresourceschema.builtat",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "AstResourceSchema.builtAt"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "On a merged (mixed-provenance) AST: the revision that built this resource."
+        }
+      ],
+      "dcterms:source": "fhir-harness/schemas/ig-ast.ts#AstResourceSchema.builtAt",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/ns#glossary/kg-schema-fields/ig-ast.astresourceschema.file",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "AstResourceSchema.file"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The resource's JSON file, relative to the AST directory."
+        }
+      ],
+      "dcterms:source": "fhir-harness/schemas/ig-ast.ts#AstResourceSchema.file",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/ns#glossary/kg-schema-fields/ig-ast.astresourceschema.source",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "AstResourceSchema.source"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The IG source file it was built from, where known."
+        }
+      ],
+      "dcterms:source": "fhir-harness/schemas/ig-ast.ts#AstResourceSchema.source",
       "skos:note": "candidate"
     },
     {
@@ -1151,6 +1303,139 @@
         }
       ],
       "dcterms:source": "fhir-harness/schemas/ig-metadata-index.ts#IgMetadataSourceSchema.runUrl",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/ns#glossary/kg-schema-fields/ig-releases.igreleaseschema.commitish",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "IgReleaseSchema.commitish"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The commit the tag points at, where GitHub reports it."
+        }
+      ],
+      "dcterms:source": "fhir-harness/schemas/ig-releases.ts#IgReleaseSchema.commitish",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/ns#glossary/kg-schema-fields/ig-releases.igreleaseschema.url",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "IgReleaseSchema.url"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The release's page on GitHub."
+        }
+      ],
+      "dcterms:source": "fhir-harness/schemas/ig-releases.ts#IgReleaseSchema.url",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/ns#glossary/kg-schema-fields/ig-releases.igreleasesschema.readat",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "IgReleasesSchema.readAt"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "When they were read (UTC date). A release made later is not here until the next read."
+        }
+      ],
+      "dcterms:source": "fhir-harness/schemas/ig-releases.ts#IgReleasesSchema.readAt",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/ns#glossary/kg-schema-fields/ig-releases.igreleasesschema.releases",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "IgReleasesSchema.releases"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Newest first, as GitHub lists them. Drafts are never recorded: they are not published."
+        }
+      ],
+      "dcterms:source": "fhir-harness/schemas/ig-releases.ts#IgReleasesSchema.releases",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/ns#glossary/kg-schema-fields/ig-releases.igreleasesschema.repository",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "IgReleasesSchema.repository"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "`owner/repo` the releases were read from."
+        }
+      ],
+      "dcterms:source": "fhir-harness/schemas/ig-releases.ts#IgReleasesSchema.repository",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/ns#glossary/kg-schema-fields/ig-releases.releaseassetschema.digest",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "ReleaseAssetSchema.digest"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "`sha256:<hex>` as GitHub reports it; absent on assets uploaded before GitHub computed digests."
+        }
+      ],
+      "dcterms:source": "fhir-harness/schemas/ig-releases.ts#ReleaseAssetSchema.digest",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/ns#glossary/kg-schema-fields/ig-releases.releaseassetschema.url",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "ReleaseAssetSchema.url"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Where to fetch the bytes: GitHub's `browser_download_url`."
+        }
+      ],
+      "dcterms:source": "fhir-harness/schemas/ig-releases.ts#ReleaseAssetSchema.url",
       "skos:note": "candidate"
     }
   ]
