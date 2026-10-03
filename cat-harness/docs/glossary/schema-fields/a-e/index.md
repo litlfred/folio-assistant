@@ -2290,7 +2290,7 @@ ContentDirectory.readOnlyBasis <span class="fa-gloss-status">candidate, extracte
 ContentDirectory.storage <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
-<p>This directory's contents are STORED on a branch, keyed by commit, and the checkout holds at most a working copy. See &#123;@link DirectoryStorageSchema}.</p>
+<p>This directory's contents are STORED on a branch, keyed by commit or tip, and the checkout holds at most a working copy. See &#123;@link DirectoryStorageSchema}.</p>
 <p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/cat-harness.ts"><code>cat-harness/schemas/cat-harness.ts#ContentDirectory.storage</code></a></p>
 </dd>
 <dt id="cat-harness--kg-schema-fields--cat-harness.contentdirectory.summaries" data-fa-state="extracted" data-fa-gloss="">
@@ -3407,7 +3407,7 @@ DirectoryStorageSchema.branch <span class="fa-gloss-status">candidate, extracted
 DirectoryStorageSchema.keyedBy <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
-<p>How entries are keyed on the branch. Only <code>commit</code> exists.</p>
+<p>How entries are keyed on the branch: one entry per <code>commit</code>, or one live copy at the <code>tip</code>.</p>
 <p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/cat-harness.ts"><code>cat-harness/schemas/cat-harness.ts#DirectoryStorageSchema.keyedBy</code></a></p>
 </dd>
 <dt id="cat-harness--kg-schema-fields--document-image.documentimageschema.basis" data-fa-state="extracted" data-fa-gloss="">

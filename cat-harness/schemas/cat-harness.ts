@@ -529,7 +529,7 @@ export interface ContentDirectory extends GraphNodeDirectory {
   theme?: ThemeRef;
 
   /**
-   * This directory's contents are STORED on a branch, keyed by commit, and the
+   * This directory's contents are STORED on a branch, keyed by commit or tip, and the
    * checkout holds at most a working copy. See {@link DirectoryStorageSchema}.
    */
   storage?: DirectoryStorage;
@@ -1375,7 +1375,8 @@ export const TileSchema = VisualisationSchema.omit({ ref: true });
 export type Tile = z.infer<typeof TileSchema>;
 
 /**
- * A directory whose contents live on a BRANCH, one tree per commit, with the
+ * A directory whose contents live on a BRANCH — one tree per commit, or one
+ * live copy at the tip — with the
  * checkout holding at most a working copy.
  *
  * Bean `16ei`, arc `3fva`, proposal
@@ -1397,11 +1398,21 @@ export type Tile = z.infer<typeof TileSchema>;
  *   and `audit:coverage` reports the kind as `stored` rather than counting a
  *   working copy whose size depends on whether somebody ran `qa:fetch`.
  *
- * ## `keyedBy` has one value, on purpose
+ * ## `keyedBy` — two keyings, and a third is a schema change
  *
- * `commit` is the only keying the branch layout implements. The field exists
- * so that a second keying is a schema change somebody has to make, rather
- * than a reinterpretation of an unkeyed declaration.
+ * - `commit` — one entry per commit (`main/<sha>/`, `pr/<n>/<sha>/`), read
+ *   against a baseline. The QA branch (`scripts/qa-store.ts`).
+ * - `tip` — ONE live copy: the branch tip IS the current state, with paths
+ *   mirroring the checkout and a root `manifest.json` (`state-manifest/v1`).
+ *   Beans and todos, each on its own named-subgraph branch
+ *   (`cat/cat-harness/beans`, `cat/cat-harness/todos`; owner ruling
+ *   2026-10-02). Read and written through `scripts/branch-store.ts`, whose
+ *   writes splice onto the tip and never force-push.
+ *
+ * The field is an enum, not a string, so a third keying is a schema change
+ * somebody has to make rather than a reinterpretation of an existing value.
+ * Not every named subgraph gets a branch — semi-static KG content (skills,
+ * schemas, processes) stays on `main` (owner, 2026-10-02).
  *
  * ## Not yet set on any declaration
  *
@@ -1419,8 +1430,8 @@ export const DirectoryStorageSchema = z
         (b) => !b.includes("..") && !b.includes("//") && !b.endsWith("/") && !b.endsWith(".lock") && !b.startsWith("/"),
         "not a valid branch name",
       ),
-    /** How entries are keyed on the branch. Only `commit` exists. */
-    keyedBy: z.literal("commit"),
+    /** How entries are keyed on the branch: one entry per `commit`, or one live copy at the `tip`. */
+    keyedBy: z.enum(["commit", "tip"]),
   })
   .strict();
 export type DirectoryStorage = z.infer<typeof DirectoryStorageSchema>;
@@ -1694,7 +1705,17 @@ const ContentDirectoryShape = GraphNodeDirectoryShape.extend({
 });
 
 /** As {@link GraphNodeDirectorySchema}, for an instance's own directories. */
-export const ContentDirectorySchema = z.preprocess(acceptLegacyGraphsKey, ContentDirectoryShape);
+export const ContentDirectorySchema = z.preprocess(
+  acceptLegacyGraphsKey,
+  // A `qa` directory is commit-keyed by construction: its readers compare one
+  // commit's verdicts against a baseline, and `qa-store.ts` implements only
+  // that layout. A tip-keyed `qa` store would be read as if it were keyed by
+  // commit, so it is refused here rather than at its first read (bean `2h76`).
+  ContentDirectoryShape.refine(
+    (d) => !(d.storage?.keyedBy === "tip" && (d.graphKinds as readonly string[] | undefined)?.includes("qa")),
+    { message: 'a `qa` directory is keyed by commit; `keyedBy: "tip"` is for one-live-copy state (beans, todos)', path: ["storage", "keyedBy"] },
+  ),
+);
 
 // THERE IS NO `locale` FIELD HERE, and that is a decision rather than an
 // omission. A first draft of PR #351 added one, required on a
@@ -2502,19 +2523,23 @@ export function renderExemptionProblems(
  * from a dead link: a slot that renders nothing reads as a navbar that lost
  * something.
  *
- * ## SIX, and the cap is the owner's
+ * ## SEVEN, and the cap is the owner's
+ *
+ * It was six until 2026-10-02, when the owner added fsh-guts to the row
+ * rather than in place of anything: *"i wanted fsh guts icon here with the
+ * others"* (#1925). The cap moved with the ruling; it is still a cap.
  *
  * Refused rather than truncated. Truncating drops whichever the instance
  * listed last, silently, and an instance that declared seven has made a
  * decision the navbar would then be overruling without saying so.
  */
-export const NAVBAR_ICONS = ["close", "todos", "beans", "processes", "kg", "launcher"] as const;
+export const NAVBAR_ICONS = ["close", "todos", "beans", "processes", "kg", "fsh-guts", "launcher"] as const;
 
 export type NavbarIcon = (typeof NAVBAR_ICONS)[number];
 
 export const NavbarIconsSchema = z
   .array(z.enum(NAVBAR_ICONS))
-  .max(6, { message: "the navbar icon row holds at most 6 — the owner's cap" })
+  .max(7, { message: "the navbar icon row holds at most 7 — the owner's cap" })
   .refine((xs) => new Set(xs).size === xs.length, {
     message: "an icon listed twice is two slots doing one job",
   });
