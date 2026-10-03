@@ -122,6 +122,13 @@ What is the user asking for? <span class="fa-gloss-status">candidate, extracted<
 <p><em>The asset carries no description.</em></p>
 <p class="fa-gloss-meta">DMN decisions of folio-assistant-core · source <a href="https://github.com/litlfred/folio-assistant/blob/main/folio-assistant-core/processes/conduct/decisions/folio-intent.dmn"><code>folio-assistant-core/processes/conduct/decisions/folio-intent.dmn#Decision_FolioIntent</code></a></p>
 </dd>
+<dt id="cat-harness--kg-dmn-decisions--decision_mergepriority" data-fa-state="extracted" data-fa-gloss="">
+Where does this PR go? <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p><em>The asset carries no description.</em></p>
+<p class="fa-gloss-meta">DMN decisions of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/sdlc/decisions/merge-priority.dmn"><code>cat-harness/processes/sdlc/decisions/merge-priority.dmn#Decision_MergePriority</code></a></p>
+</dd>
 <dt id="cat-harness--kg-dmn-decisions--decision_signingroute" data-fa-state="extracted" data-fa-gloss="">
 Which signing route? <span class="fa-gloss-status">candidate, extracted</span>
 </dt>

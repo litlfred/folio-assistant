@@ -417,6 +417,7 @@ export const RULES: Rule[] = [
       "scripts/merge-base.ts",               // merge the base in, resolve only declared patterns, prove
       "scripts/merge-conflict-patterns.ts",  // the declared patterns that merge reads
       "scripts/merge-main-comment.ts",       // the merge-main bot's PR comment, composed and tested (#1854)
+      "scripts/merge-queue.ts",              // the merge train's order: live facts in, merge-priority.dmn's placement out (bean hfag)
       "scripts/sync-docs-harness.ts",        // the declaration's title/mark → the docs data file
       // Its tile half, and harness-level for the same reason: it reads every
       // INSTANCE's declaration and the published viewer tree, and asks which
@@ -1099,6 +1100,17 @@ export const RULES: Rule[] = [
       // exactly that reason. A folio has no bean store of its own to roll
       // over, so swapping the content could not make it answer differently.
       "scripts/bean-rollover.ts",
+      // `mvp-status` is the same test again, and the clearest case of it: it
+      // asks how far THIS repository is from its own separation point, and
+      // every gate it reports is a fact about this repository — whether the
+      // beans that define the plan are on its `main`, how many of its open
+      // PRs still carry an authored conflict, whether any of them still
+      // touches `cat-harness-tools`. A folio has no separation point and no
+      // `cat-harness-tools`, so swapping the content could not make it
+      // answer differently. It composes the four above rather than
+      // re-measuring, which is why it belongs with them and not beside the
+      // generic reporters.
+      "scripts/mvp-status.ts",
       // Their two shared modules, classified with them rather than beside
       // the generic path helpers: `merge-pipeline-paths` reads path classes
       // out of this repository's `PATTERNS` declaration, and
