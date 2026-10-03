@@ -2,7 +2,7 @@
   "$schema": "folio-bean-index/v1",
   "tile": {
     "beans": {
-      "count": 678,
+      "count": 680,
       "unit": "beans"
     }
   },
@@ -1327,6 +1327,20 @@
       "file": "beans/defs/folio-assistant-4l5q--b7b-1168-a-skill-declares-the-directories-it-gover.md"
     },
     {
+      "id": "folio-assistant-4pla",
+      "title": "JSON-LD VOICE, MECHANICAL HALF: publish:verify checks object properties are links and no document leans on a remote @base",
+      "status": "completed",
+      "type": "task",
+      "priority": "normal",
+      "parent": "folio-assistant-whlc",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-10-03T07:23:50Z",
+      "updatedAt": "2026-10-03T07:24:00Z",
+      "preview": "The linked-data voice (bean 9y9j) holds 7 rules, all judgementOnly: a reviewer applies them, nothing checks the emitted documents. Two are decidable by a JSON-LD processor over the emitted files and belong in publish:verify's verifier set, which already runs on the built site before deploy (docs-site.yml) and on every PR's staging build (feature-staging.yml).\n\nMeasured 2026-10-03 over the 7,059 co",
+      "file": "beans/defs/folio-assistant-4pla--json-ld-voice-mechanical-half-publishverify-checks.md"
+    },
+    {
       "id": "folio-assistant-4pm8",
       "title": "PAGEFIND: evaluate as the search engine for the large-datasets subgraph",
       "status": "completed",
@@ -1807,12 +1821,12 @@
       "title": "RENDER STAGE 3: the dynamic-state export has a position but no filename — the owner left it open on purpose",
       "status": "todo",
       "type": "task",
-      "priority": "",
+      "priority": "normal",
       "parent": "folio-assistant-yj32",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-20T19:59:52Z",
-      "updatedAt": "2026-09-20T19:59:52Z",
+      "updatedAt": "2026-10-03T07:43:33Z",
       "preview": "Owner, 2026-09-20, settling where the README render sits in the pipeline:\n\n> dynamic content then hets get json/jsonld export avaiable under\n> cat-harness/state.jsonld or so (whatever matches the dyanmic state\n> vsualizesrs)\n\n**\"or so (whatever matches …)\" is an explicit uncertainty, and it was not\nclosed by guessing.** `scripts/render-pipeline.ts` declares the step\n(`kg-dynamic`), fixes its POSIT",
       "file": "beans/defs/folio-assistant-6h47--render-stage-3-the-dynamic-state-export-has-a-posi.md"
     },
@@ -5283,6 +5297,20 @@
       "updatedAt": "2026-09-30T16:12:46Z",
       "preview": "Findings from the as-is wireframe `cat-harness/docs/wireframes/docs-index/` (intent.md, as-is.html, checks/), observed at 1280×800 and 390×844. Verbatim from its `## Findings`; a finding tagged → is also covered by that cross-cutting bug.\n\n1. **Most rows say nothing.** 187 of 217 rows read *no description in the artefact*, so the table is mostly a list of paths.\n2. **Non-pages are indexed as \"auth",
       "file": "beans/defs/folio-assistant-krmw--docs-index-visualiser-6-wireframe-findings.md"
+    },
+    {
+      "id": "folio-assistant-ksg3",
+      "title": "SPEED-UP: translation-block-qa --check spends 98% re-resolving the instance graph per (block, locale)",
+      "status": "completed",
+      "type": "task",
+      "priority": "",
+      "parent": "folio-assistant-hfag",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-10-03T07:52:01Z",
+      "updatedAt": "2026-10-03T07:52:01Z",
+      "preview": "Follow-up to `dlqu` (SPEED-UP 4), found while measuring its shard balancing.\n\nMeasured 2026-10-03: `translation-block-qa.ts --check` is 67 s of the 168 s\n`gates that were registered and never run` step in CI (run 37090513935, job\n111109661496) — the critical path of Code-quality gates once `dlqu`'s sharding\nlands (bun test shard 2/4 is 150–194 s; that step's job 163–175 s). Balancing\nthe test shar",
+      "file": "beans/defs/folio-assistant-ksg3--speed-up-translation-block-qa-check-spends-98-re-r.md"
     },
     {
       "id": "folio-assistant-ktt2",
