@@ -9,7 +9,7 @@ import { describe, expect, it } from "bun:test";
 import { resolve } from "node:path";
 
 import { BASELINE } from "./fhir-harness-exclusions.baseline.ts";
-import { MOVED_DOWN, codeOf, dakStepNames, judge, rules, scan } from "./check-fhir-harness-exclusions.ts";
+import { MOVED_DOWN, codeOf, dakStepNames, judge, pathHits, rules, scan } from "./check-fhir-harness-exclusions.ts";
 
 const root = resolve(import.meta.dir, "..", "..");
 const rs = rules(root);
@@ -36,9 +36,22 @@ describe("a mention is not a dependency", () => {
 });
 
 describe("planted dependencies are graded", () => {
-  it("a template literal naming a DAK API sidecar — the string survives comment stripping", () => {
-    expect(codeOf("const p = `schemas/${s}.displays.json`; // smart.who.int")).toContain(".displays.json");
-    expect(one("fhir-harness/s.ts", "const p = `schemas/${s}.displays.json`;").graded[0]!.rule).toBe("dak-api");
+  it("a template literal survives comment stripping, so a DAK label inside a string is graded", () => {
+    expect(codeOf("const p = `${s} DAK API`; // smart.who.int")).toContain("DAK API");
+    expect(one("fhir-harness/s.ts", "const label = `${s} DAK API`;").graded[0]!.rule).toBe("dak-naming");
+  });
+  it("the IG API sidecars themselves are the generic FHIR IG API, NOT a hit (owner, 2026-10-03)", () => {
+    const src = "const files = [`schemas/${s}.schema.json`, `schemas/${s}.displays.json`, `schemas/${s}.openapi.json`];";
+    expect(one("fhir-harness/s.ts", src).graded).toEqual([]);
+  });
+  it("DAK names are hits: dak-api.html, dakViews, dak-views", () => {
+    for (const src of ['const hub = "dak-api.html";', "export function dakViews() {}", 'import "./dak-views.ts";']) {
+      expect(one("fhir-harness/s.ts", src).graded.some((h) => h.rule === "dak-naming")).toBe(true);
+    }
+  });
+  it("a file whose NAME carries a DAK name is a hit, whatever it contains", () => {
+    expect(pathHits(["fhir-harness/scripts/templates/ig-pages/dak-api.liquid", "fhir-harness/scripts/dak-views.ts"])).toHaveLength(2);
+    expect(pathHits(["fhir-harness/scripts/ig-api-views.ts", "fhir-harness/scripts/gen-ig-pages.ts"])).toEqual([]);
   });
   it("reading dak.config.json", () => {
     expect(one("fhir-harness/s.ts", 'readFileSync("dak.config.json")').graded[0]!.rule).toBe("dak-config");

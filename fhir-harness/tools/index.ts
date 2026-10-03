@@ -25,7 +25,7 @@
  *
  * ## What is NOT here, and must not drift in
  *
- * Nothing that knows about `dak.config.json`, the DAK API surface, or any
+ * Nothing that knows about `dak.config.json`, a DAK name or label, or any
  * `smart.who.int` canonical. `ig-build-pipeline` carries the full refusal
  * list. A WHO reference added here fails no gate; it just quietly makes the
  * layer unusable for the non-WHO IG it exists for.

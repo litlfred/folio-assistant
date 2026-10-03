@@ -36,7 +36,7 @@ export const BASELINE: readonly BaselineEntry[] = [
   },
   {
     "file": "fhir-harness/schemas/ig-menu.test.ts",
-    "rule": "dak-api",
+    "rule": "dak-naming",
     "count": 2,
     "reason": "Test fixture uses a WHO IG as sample data; swap for a non-WHO IG without weakening the assertion. Includes a 'DAK API' menu entry.",
     "bean": "folio-assistant-veiu"
@@ -60,13 +60,6 @@ export const BASELINE: readonly BaselineEntry[] = [
     "rule": "who-canonical",
     "count": 2,
     "reason": "Test fixture uses a WHO IG as sample data; swap for a non-WHO IG without weakening the assertion.",
-    "bean": "folio-assistant-veiu"
-  },
-  {
-    "file": "fhir-harness/scripts/ingest-ig-artifacts.ts",
-    "rule": "dak-api",
-    "count": 2,
-    "reason": "Reads the per-artefact .displays.json / .openapi.json DAK API sidecars. The arm belongs in smart-base as an overlay; keep a neutral extension point here (r939 is the stage-B move).",
     "bean": "folio-assistant-veiu"
   },
   {

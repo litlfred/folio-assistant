@@ -107,16 +107,21 @@ export function dakStepNames(root: string): string[] {
 
 const esc = (s: string) => s.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
 
+/** DAK labels and names: `dak-api(.html)`, "DAK API", `dak-views`/`dakViews`, "DAK view(s)". */
+export const DAK_NAMING = /\bdak-api(?:\.html)?\b|\bDAK[ -]API\b|\bdak[-_]?views?\b|\bdakViews?\b|\bDAK views?\b/g;
+
 export function rules(root: string): Rule[] {
   return [
     { id: "dak-config", refuses: "dak.config.json / dak.json", pattern: /\bdak(?:\.config)?\.json\b/gi },
     { id: "who-canonical", refuses: "smart.who.int canonicals", pattern: /\bsmart\.who\.int\b/gi },
     {
-      id: "dak-api",
-      refuses: "the DAK API surface",
-      // Not a bare `.schema.json`: JSON Schema is not WHO's, and the IG AST
-      // schemas in this very layer are spelled that way.
-      pattern: /\.displays\.json\b|\.openapi\.json\b|\bdak-api(?:\.html)?\b|\bDAK API\b/g,
+      id: "dak-naming",
+      refuses: "DAK labels and names (the IG API itself is the generic FHIR IG API)",
+      // Owner, 2026-10-03: the per-artefact `.schema.json` / `.displays.json` /
+      // `.openapi.json` sidecars and their hub "should be FHIR-IG-API, no DAK
+      // label/names". So the API SURFACE belongs here; only its DAK naming does
+      // not. A file NAME counts too — see {@link pathHits}.
+      pattern: DAK_NAMING,
     },
     { id: "dak-step", refuses: "the DAK pre/post-processing steps", pattern: new RegExp(dakStepNames(root).map(esc).join("|"), "g") },
     { id: "who-package", refuses: "the authoring-who-smart-guidelines package", pattern: /\bauthoring-who-smart-guidelines\b/g },
@@ -223,6 +228,17 @@ export function scan(files: readonly { path: string; text: string }[], rs: reado
   return { graded, mentions };
 }
 
+/**
+ * A tracked file whose PATH carries a DAK name is one `dak-naming` hit: the
+ * owner's ruling is "no DAK label/names", and `templates/ig-pages/dak-api.liquid`
+ * is a name whatever its contents say.
+ */
+export function pathHits(paths: readonly string[]): Hit[] {
+  return paths
+    .filter((p) => p.split("/").some((seg) => /^dak[-_.]|[-_]dak[-_.]|^dak$/i.test(seg)))
+    .map((file) => ({ file: `${file}#path`, rule: "dak-naming", count: 1 }));
+}
+
 export interface Verdict {
   regressions: (Hit & { allowed: number })[];
   stale: (BaselineEntry & { now: number })[];
@@ -261,7 +277,9 @@ if (import.meta.main) {
   const root = resolve(import.meta.dir, "..", "..");
   const rs = rules(root);
   const files = trackedFiles(root).map((path) => ({ path, text: readFileSync(join(root, path), "utf-8") }));
-  const { graded, mentions } = scan(files, rs);
+  const text = scan(files, rs);
+  const graded = [...text.graded, ...pathHits(files.map((f) => f.path))];
+  const mentions = text.mentions;
   const { regressions, stale } = judge(graded, BASELINE);
 
   console.log(`fhir-harness exclusions — ${files.length} files, ${rs.length} rules`);

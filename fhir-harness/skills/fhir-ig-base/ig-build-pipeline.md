@@ -82,8 +82,12 @@ must contain no reference to:
 - `dak.config.json` (`dak.json` as upstream still spells it), the DAK logical
   model, or any DAK component
 - `smart.who.int` canonicals, or any WHO publisher metadata
-- the DAK API surface — `.schema.json`, `.displays.json`, `.openapi.json`, the
-  `dak-api.html` hub
+- DAK **naming** of the IG API: the "DAK API" label, `dak-api.html`,
+  `dak-views`, and any file named for the DAK. The API surface itself — a
+  `.schema.json`, `.displays.json` and `.openapi.json` per artefact, and a
+  hub page listing them — is the generic **FHIR IG API** and belongs here.
+  Owner, 2026-10-03: *"should be FHIR-IG-API, no DAK label/names"*. The WHO
+  layer supplies its own label (`--sidecar-label "DAK API"`).
 - the DAK pre- and post-processing steps, in either direction
 - anything in the `authoring-who-smart-guidelines` package
 
@@ -130,8 +134,9 @@ from ValueSet expansions). The ruling: *"it is only transforming existing
 (meta)data, not adding any new constraints or profiles (e.g. like smart
 guidelines does). It is generic."* That is the test for this layer. A step
 that reshapes what the Publisher already emitted belongs here. A step that adds
-a constraint, a profile or a WHO surface (the `dak-api.html` hub and its
-`.openapi.json` / `.displays.json` sidecars) stays in the overlay. The Tools are
+a constraint, a profile or a WHO-specific name stays in the overlay. The
+per-artefact API sidecars and their hub are not WHO-specific: they are the
+FHIR IG API above, and only their DAK label stays in the overlay. The Tools are
 declared in `fhir-harness/tools/`.
 
 ## Upgrading to the overlay

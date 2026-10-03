@@ -7,7 +7,7 @@ guide.
 ## The one rule
 
 **Nothing here may know about WHO.** Not `dak.config.json`, not the DAK logical
-model, not `smart.who.int` canonicals, not the DAK API surface, not the
+model, not `smart.who.int` canonicals, no DAK name or label (the per-artefact IG API sidecars are the generic FHIR IG API and DO belong here, owner 2026-10-03), not the
 pre/post-processing steps, and nothing from the
 `authoring-who-smart-guidelines` package.
 
