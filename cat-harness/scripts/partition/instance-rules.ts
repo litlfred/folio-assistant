@@ -1102,6 +1102,17 @@ export const RULES: Rule[] = [
       // exactly that reason. A folio has no bean store of its own to roll
       // over, so swapping the content could not make it answer differently.
       "scripts/bean-rollover.ts",
+      // `mvp-status` is the same test again, and the clearest case of it: it
+      // asks how far THIS repository is from its own separation point, and
+      // every gate it reports is a fact about this repository — whether the
+      // beans that define the plan are on its `main`, how many of its open
+      // PRs still carry an authored conflict, whether any of them still
+      // touches `cat-harness-tools`. A folio has no separation point and no
+      // `cat-harness-tools`, so swapping the content could not make it
+      // answer differently. It composes the four above rather than
+      // re-measuring, which is why it belongs with them and not beside the
+      // generic reporters.
+      "scripts/mvp-status.ts",
       // Their two shared modules, classified with them rather than beside
       // the generic path helpers: `merge-pipeline-paths` reads path classes
       // out of this repository's `PATTERNS` declaration, and
