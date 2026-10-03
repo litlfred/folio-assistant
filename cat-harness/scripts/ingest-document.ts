@@ -377,6 +377,13 @@ export function withDerivedArms(
       // write different files — but it sits beside `pdf-images.py` because
       // the two answer the same question about the same page.
       ["python3", pyHelper("pdf-vector-labels.py"), "-o", stagingRoot, pdf],
+      // The step ABOVE the labels — bean `ay3x`, owner ruling 2026-10-03:
+      // group the page's drawings, relate the labels to them, and render the
+      // region so somebody can look. It assigns no role; a verdict does. Like
+      // `pdf-images.py` it opens its sidecar with `"w"`, so it must run BEFORE
+      // `apply-image-verdicts.ts`, which lays the committed `vfig-` judgements
+      // back over it — the same ordering reason given for the fourth arm below.
+      ["python3", pyHelper("pdf-vector-figures.py"), "-o", stagingRoot, pdf],
       // `l1-blocks.ts` reads what the rung already wrote, so it takes the
       // ENTRY directory and no source at all. See the table above.
       ["bun", "run", tsHelper("l1-blocks.ts"), "-o", staging],

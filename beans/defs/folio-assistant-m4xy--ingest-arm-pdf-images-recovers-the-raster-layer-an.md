@@ -57,7 +57,7 @@ Five regression tests in `ingest-and-l1.test.ts`, including the one asserting th
 ## Done when
 - [x] the pattern is checked across all seven entries rather than four
 - [x] `image-descriptions` either covers vector figures or SAYS it does not, rather than passing silently
-- [ ] the owner has said whether a vector-figure arm is wanted
+- [x] the owner has said whether a vector-figure arm is wanted — **yes**, 2026-10-03 (below)
 - [ ] the role threshold is decided on a stated basis rather than on this corpus
 
 ## MEASURED 2026-09-24 — this bean's own premise for the caption option is FALSE
@@ -153,10 +153,23 @@ already exists: `apply-image-verdicts`, an `inspection` basis naming who looked.
 - [x] the caption-as-handle option is tested rather than assumed — it fails
 - [x] the arm's real cost is measured — no OCR, no VLM, assembly only
 - [x] the role threshold has evidence — and it argues against a number
-- [ ] the owner rules on whether to build the assembly step
+- [x] the owner rules on whether to build the assembly step — **yes**, 2026-10-03 (below)
 
 
 
 ## Claim released 2026-09-29
 
 Released `in-progress` → `todo` on the owner's instruction (review session https://claude.ai/code/session_014Qj8wncQhqV52QGN1yZDnj). No git change to this bean since before 2026-09-26, no holder recorded, and no open branch touches it; the sessions that held theme D (content folios, SMART/FHIR stack, ingest) work stopped on the 2026-09-25 weekly usage limit. Nothing in the body was changed: re-claim with `bun run beans:claim <id>`.
+
+## Owner ruling 2026-10-03 — build the arm
+
+Asked whether to build the vector-figure assembly step, the owner chose, verbatim:
+
+> **"Yes, build it."**
+
+Relayed into session https://claude.ai/code/session_012vJhm2nLrDMYghqFftZCQZ, which
+builds it under bean `ay3x`. **The role threshold is NOT ruled on and is not
+decided by this**: per the 2026-09-24 measurement above, no number is
+proposed, and the arm carries role calls through `apply-image-verdicts`'
+inspection basis instead. The remaining open item below stays open.
+
