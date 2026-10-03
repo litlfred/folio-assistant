@@ -92,6 +92,22 @@ this layer; this layer may not reference the WHO package. A violation fails
 nothing on its own — the build stays green and the layer simply stops being
 usable for a non-WHO IG, which is the failure this list exists to make visible.
 
+**It is a gate now: `bun run check:fhir-harness-exclusions`** (bean `wm63`).
+The checker lives in the layer that owns the excluded names, not here, because
+a copy of this list inside `fhir-harness` would be its own first violation. A
+mention is not a dependency. Comments, markdown, and JSON `_comment` or
+`description` values are counted and never graded. Code (string literals
+included), other JSON values, and BPMN outside `<documentation>` are graded.
+The DAK step names are read from the WHO layer's own pre/post-processing
+tables, so this list does not restate them.
+
+It is a **ratchet**. The layer was not clean on 2026-10-03, so its hits are
+in a committed baseline, each with a reason. A new hit fails, and so does a
+cleared one the baseline still allows, until `--shrink` lowers it. Never
+widen the baseline to admit a hit: move the WHO-specific part up, or have the
+WHO layer pass it in as a parameter (the IG page generator's `--sidecar-label`
+is that shape already).
+
 ## Two steps that came DOWN from the WHO build
 
 `strip_library_binaries.py` and `strip_library_content.py` strip base64 payloads
