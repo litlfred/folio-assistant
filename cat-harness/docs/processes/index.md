@@ -86,7 +86,7 @@ Each page shows the diagram, what it is for, who acts in it, every step with the
 | [Agent bean lifecycle](bean-lifecycle.html) | 8 | — |
 | [Is CI actually working on the default branch?](ci-health-watch.html) | 4 | — |
 | [Code change and review](code-change-review.html) | 11 | — |
-| [The gates a change must pass before it can merge](code-quality-gates.html) | 10 | — |
+| [The gates a change must pass before it can merge](code-quality-gates.html) | 7 | — |
 | [Criterion adjudication](criterion-adjudication.html) | 4 | — |
 | [Publishing the docs site, and keeping the previews alive](docs-site-publish.html) | 8 | — |
 | [Staging a feature branch preview, and taking it down](feature-staging.html) | 12 | — |

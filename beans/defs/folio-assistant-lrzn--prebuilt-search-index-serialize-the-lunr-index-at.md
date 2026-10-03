@@ -1,11 +1,11 @@
 ---
 # folio-assistant-lrzn
 title: 'PREBUILT SEARCH INDEX: serialize the lunr index at build time for scopes over a token budget (#1972)'
-status: in-progress
+status: completed
 type: task
 priority: normal
 created_at: 2026-10-03T15:42:45Z
-updated_at: 2026-10-03T15:57:22Z
+updated_at: 2026-10-03T16:55:01Z
 parent: folio-assistant-whlc
 ---
 
@@ -51,3 +51,6 @@ browser build at the measured rate — five scopes cross it.
 | section-glossary | 478 / 655 | 145 / 390 | 0.65 MB |
 
 The split itself goes from ~2 s to ~7 s in CI (deterministic: `--check` current on a second run). Mutation-checked: 5 server mutants (boost, budget comparison, whitelist, token fields, separator) and 3 client mutants (load path, fallback, separator on load) each fail a test.
+
+## Closed 2026-10-03 — landed
+Merged to main as litlfred/folio-assistant#2018 (head 692c306, every CI job green on it, mergeable by merge-tree). All done-when items met: search-split writes <scope>.idx.json for the five scopes over 128 Ki tokens; the client loads them with lunr.Index.load and falls back to building; search-scopes verifies each covers exactly its scope; unit, verifier and e2e tests mutation-checked (8 mutants killed); measured in Chromium (table above).

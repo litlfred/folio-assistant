@@ -327,14 +327,6 @@
       "status": "candidate"
     },
     {
-      "id": "process_codequalitygates.task_advisories",
-      "prefLabel": "Dependency advisories (WARN-ONLY)",
-      "definition": "Asks the one question the lockfile cannot: is anything in the resolved tree KNOWN-VULNERABLE? Warn-only by the owner's ruling on bean `j41m` — a hard gate here would hand a transitive advisory nobody can patch the power to red every PR, and the suppression that follows is what rots. `.github/dependabot.yml` is the other half of that ruling and is NOT drawn here: it is not a job in this workflow, it runs on Dependabot's schedule.",
-      "notation": "Task_Advisories",
-      "source": "cat-harness/processes/sdlc/code-quality-gates.bpmn#Task_Advisories",
-      "status": "candidate"
-    },
-    {
       "id": "process_codequalitygates.task_e2e",
       "prefLabel": "End-to-end + accessibility (HARD)",
       "definition": "Install Chromium, check the rendered BPMN SVGs are current, then run the Playwright suite, which includes the accessibility checks. Hard: a failure blocks the PR. SHARDED since bean `dlqu` (drawn as one task, deliberately: a multi-instance marker would add a BPMN term to every instance's UML overview, about 75 generated files, for a picture this sentence already gives): the suite runs as three `e2e-shard` jobs (`E2E_SHARD=i/3`, one Playwright worker per core in each), and the `e2e` job that carries this check's name completes the task only when every instance succeeded — a shard that failed, was cancelled or never ran is a red check, never a skipped one. Measured before the split: `playwright test` alone was 4m33s of a 5m16s job, the workflow's slowest once `bun test` ran in parallel. The BPMN-render and `.bat`-wrapper checks run in shard 1 only, so they are asked once.",
@@ -343,19 +335,11 @@
       "status": "candidate"
     },
     {
-      "id": "process_codequalitygates.task_lean",
-      "prefLabel": "Lean: no bare `import Mathlib` (HARD)",
-      "definition": "Fail on any bare `import Mathlib` in content/**/*.lean — targeted imports only. In this platform repo there is no content/, so the job prints SKIP and states that nothing was scanned rather than passing silently.",
-      "notation": "Task_Lean",
-      "source": "cat-harness/processes/sdlc/code-quality-gates.bpmn#Task_Lean",
-      "status": "candidate"
-    },
-    {
-      "id": "process_codequalitygates.task_python",
-      "prefLabel": "Python: unused and wildcard imports (HARD)",
-      "definition": "ruff F401 (unused) and F403 (wildcard) imports over the Python trees that exist, then the Python tests. A tree that is absent is dropped rather than passed to ruff, and an empty set says SKIP — a missing path must not be swallowed as a pass.",
-      "notation": "Task_Python",
-      "source": "cat-harness/processes/sdlc/code-quality-gates.bpmn#Task_Python",
+      "id": "process_codequalitygates.task_hygiene",
+      "prefLabel": "Import hygiene (HARD) and advisories (WARN-ONLY)",
+      "definition": "FOUR QUESTIONS, ONE RUNNER — bean `7fu5`. They were four jobs (`lean-bare-import`, `python-imports`, `rust-wildcard`, `dependency-advisories`), each about a second of work behind a ~13 s checkout and a runner request; measured on `main` run 37133247484 (2026-10-03), the run took 21.7 min while its longest job executed for 174 s, the rest waiting for runners. Now they are steps of the `hygiene` job, and every step after the first gate runs `if: !cancelled()`, so a red one masks none of the others — the `om30` rule kept inside one job rather than by splitting it. (1) Lean, HARD: fail on any bare `import Mathlib` in content/**/*.lean; in this platform repo there is no content/, so the step prints SKIP and states that nothing was scanned. (2) Python, HARD: ruff F401 (unused) and F403 (wildcard) over the Python trees that exist, then the Python tests; an absent tree is dropped rather than passed to ruff, and an empty set says SKIP. (3) Dependency advisories, WARN-ONLY by the owner's ruling on bean `j41m`: is anything in the resolved tree KNOWN-VULNERABLE? The script exits 0 in every state and keeps them apart in its output; `.github/dependabot.yml` is the other half of that ruling and is not drawn here. (4) Rust wildcard imports, WARN-ONLY: report non-test `use …::*;` in tools/**/*.rs; `continue-on-error`, and therefore the job's LAST step, where it masks nothing.",
+      "notation": "Task_Hygiene",
+      "source": "cat-harness/processes/sdlc/code-quality-gates.bpmn#Task_Hygiene",
       "status": "candidate"
     },
     {
@@ -372,14 +356,6 @@
       "definition": "The 43 repository-gate steps — workflow refs, lane and process documentation, kg:audit:check, detangle, skills, published packages — 150 `bun run` invocations in all. A SEPARATE job from Task_TypeScript since bean `om30`: they were one job in which `bun test` came second of 47 steps, and because Actions stops a job at its first failing step and no step was continue-on-error, a deliberate test failure on `main` meant none of these ran. A gate never asked and a gate that passed are indistinguishable from outside, which is `xom7` at the step rather than the workflow. No sequence dependency on Task_TypeScript is drawn because there is none: a red test must not stop these being asked. `bun run gates` derives its list from BOTH jobs, so the local set still cannot drift from CI's.",
       "notation": "Task_RepositoryGates",
       "source": "cat-harness/processes/sdlc/code-quality-gates.bpmn#Task_RepositoryGates",
-      "status": "candidate"
-    },
-    {
-      "id": "process_codequalitygates.task_rust",
-      "prefLabel": "Rust wildcard imports (WARN-ONLY)",
-      "definition": "Report non-test `use …::*;` in tools/**/*.rs, excluding `use super::*;`. continue-on-error: it reports and never blocks, which is why it is labelled WARN-ONLY rather than drawn like the hard jobs.",
-      "notation": "Task_Rust",
-      "source": "cat-harness/processes/sdlc/code-quality-gates.bpmn#Task_Rust",
       "status": "candidate"
     },
     {
