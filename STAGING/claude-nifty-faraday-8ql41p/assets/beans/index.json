@@ -2,7 +2,7 @@
   "$schema": "folio-bean-index/v1",
   "tile": {
     "beans": {
-      "count": 679,
+      "count": 683,
       "unit": "beans"
     }
   },
@@ -1327,6 +1327,20 @@
       "file": "beans/defs/folio-assistant-4l5q--b7b-1168-a-skill-declares-the-directories-it-gover.md"
     },
     {
+      "id": "folio-assistant-4pla",
+      "title": "JSON-LD VOICE, MECHANICAL HALF: publish:verify checks object properties are links and no document leans on a remote @base",
+      "status": "completed",
+      "type": "task",
+      "priority": "normal",
+      "parent": "folio-assistant-whlc",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-10-03T07:23:50Z",
+      "updatedAt": "2026-10-03T07:24:00Z",
+      "preview": "The linked-data voice (bean 9y9j) holds 7 rules, all judgementOnly: a reviewer applies them, nothing checks the emitted documents. Two are decidable by a JSON-LD processor over the emitted files and belong in publish:verify's verifier set, which already runs on the built site before deploy (docs-site.yml) and on every PR's staging build (feature-staging.yml).\n\nMeasured 2026-10-03 over the 7,059 co",
+      "file": "beans/defs/folio-assistant-4pla--json-ld-voice-mechanical-half-publishverify-checks.md"
+    },
+    {
       "id": "folio-assistant-4pm8",
       "title": "PAGEFIND: evaluate as the search engine for the large-datasets subgraph",
       "status": "completed",
@@ -1807,12 +1821,12 @@
       "title": "RENDER STAGE 3: the dynamic-state export has a position but no filename — the owner left it open on purpose",
       "status": "todo",
       "type": "task",
-      "priority": "",
+      "priority": "normal",
       "parent": "folio-assistant-yj32",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-20T19:59:52Z",
-      "updatedAt": "2026-09-20T19:59:52Z",
+      "updatedAt": "2026-10-03T07:43:33Z",
       "preview": "Owner, 2026-09-20, settling where the README render sits in the pipeline:\n\n> dynamic content then hets get json/jsonld export avaiable under\n> cat-harness/state.jsonld or so (whatever matches the dyanmic state\n> vsualizesrs)\n\n**\"or so (whatever matches …)\" is an explicit uncertainty, and it was not\nclosed by guessing.** `scripts/render-pipeline.ts` declares the step\n(`kg-dynamic`), fixes its POSIT",
       "file": "beans/defs/folio-assistant-6h47--render-stage-3-the-dynamic-state-export-has-a-posi.md"
     },
@@ -2367,6 +2381,20 @@
       "file": "beans/defs/folio-assistant-89wq--four-qa-checkers-are-unconditional-na-stubs-8949-s.md"
     },
     {
+      "id": "folio-assistant-8c6v",
+      "title": "MERGE PATTERNS GAP: the 17 generated docs/*.md pages have no declared merge-conflict pattern, so merge:main refuses them although their own front matter says do-not-hand-edit",
+      "status": "todo",
+      "type": "bug",
+      "priority": "normal",
+      "parent": "folio-assistant-d33q",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-10-03T08:55:15Z",
+      "updatedAt": "2026-10-03T08:55:42Z",
+      "preview": "Found 2026-10-03 while measuring PR #1888's merge with `main` for session\n`folio-assistant-a8`: of its 55 conflicts, 53 classified to a declared pattern\nand **2 refused**, and both were the same page in its two forms —\n`cat-harness/content/docs/publication-workflow/every-workflow-in-the-repo.md`\n(authored source) and `cat-harness/docs/publication-workflow.md` (its generated\nmirror). The mirror's o",
+      "file": "beans/defs/folio-assistant-8c6v--merge-patterns-gap-the-17-generated-docsmd-pages-h.md"
+    },
+    {
       "id": "folio-assistant-8ez4",
       "title": "STATE BRANCH P0: agree ONE storage field and ONE branch-store library with arc 3fva before either lands",
       "status": "in-progress",
@@ -2637,12 +2665,12 @@
       "title": "lake-cache family to cat/folio-assistant-sci/lake-cache/ (declaration, 8 mirrors, folio-repo renames)",
       "status": "todo",
       "type": "task",
-      "priority": "",
+      "priority": "normal",
       "parent": "folio-assistant-fs43",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-10-03T00:51:43Z",
-      "updatedAt": "2026-10-03T00:51:43Z",
+      "updatedAt": "2026-10-03T07:55:15Z",
       "preview": "The last special branch still declared under the interim `cat-<name>` scheme. Owner, 2026-10-02: special branches are `cat/<harness>/<name>`; and (confirmed 2026-10-02, Parcel B brief) folio-assistant-sci is the lake-cache harness. So the family becomes `cat/folio-assistant-sci/lake-cache/<pkg>-<slug>`.\n\nSplit out of 9c7h on 2026-10-03 because it touches 8 CI and script files that run INSIDE folio",
       "file": "beans/defs/folio-assistant-9io2--lake-cache-family-to-catfolio-assistant-scilake-ca.md"
     },
@@ -4259,6 +4287,20 @@
       "file": "beans/defs/folio-assistant-fjwi--where-can-the-registration-chain-check-go-in-ci-ev.md"
     },
     {
+      "id": "folio-assistant-fmdl",
+      "title": "SPEED-UP: resolution-across-needs.test.ts spawns each kg-audit twice, serially — 92 s of the slowest shard",
+      "status": "completed",
+      "type": "task",
+      "priority": "",
+      "parent": "folio-assistant-hfag",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-10-03T08:20:52Z",
+      "updatedAt": "2026-10-03T08:20:52Z",
+      "preview": "Follow-up to `ksg3` (and `dlqu`): after both, the longest job in Code-quality\ngates is `TypeScript — bun test, shard 2/4` at 223 s (shard 3/4: 68 s), measured\non #1950's run at `12ae9dc75`.\n\n92 s of that shard is ONE file, `cat-harness/scripts/tests/resolution-across-needs.test.ts`\n(per-file times from the shard's log). A shard moves whole files, so no\nrebalancing can shorten it — the file itself ",
+      "file": "beans/defs/folio-assistant-fmdl--speed-up-resolution-across-needstestts-spawns-each.md"
+    },
+    {
       "id": "folio-assistant-fnqn",
       "title": "INGEST: WPRO style guide specimen pages (Lorem ipsum, font, table and graph samples) read as prose",
       "status": "completed",
@@ -4555,15 +4597,15 @@
     {
       "id": "folio-assistant-gzkt",
       "title": "VOCAB DRIFT D4: library licence is an opaque @json literal, glossary licence is dcterms:license — one mapping row for both",
-      "status": "in-progress",
+      "status": "completed",
       "type": "task",
       "priority": "normal",
       "parent": "folio-assistant-zzmr",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-10-03T08:07:15Z",
-      "updatedAt": "2026-10-03T08:11:59Z",
-      "preview": "Issue #1910 D4. Owner ruling 2026-10-03 (this session, selected option 'Yes, move it'): a library item's licence moves out of the opaque `@json` meta into `dcterms:license`, driven by the same vocab-mappings row the glossary uses. Unblocked: #1899 merged 2026-10-02T23:35Z.\n\n## Done when\n- [ ] a library item's JSON-LD carries dcterms:license (IRI or literal as the glossary does), read from the voca",
+      "updatedAt": "2026-10-03T09:01:01Z",
+      "preview": "Issue #1910 D4. Owner ruling 2026-10-03 (this session, selected option 'Yes, move it'): a library item's licence moves out of the opaque `@json` meta into `dcterms:license`, driven by the same vocab-mappings row the glossary uses. Unblocked: #1899 merged 2026-10-02T23:35Z.\n\n## Done when\n- [x] a library item's JSON-LD carries dcterms:license (IRI or literal as the glossary does), read from the voca",
       "file": "beans/defs/folio-assistant-gzkt--vocab-drift-d4-library-licence-is-an-opaque-json-l.md"
     },
     {
@@ -5297,6 +5339,20 @@
       "updatedAt": "2026-09-30T16:12:46Z",
       "preview": "Findings from the as-is wireframe `cat-harness/docs/wireframes/docs-index/` (intent.md, as-is.html, checks/), observed at 1280×800 and 390×844. Verbatim from its `## Findings`; a finding tagged → is also covered by that cross-cutting bug.\n\n1. **Most rows say nothing.** 187 of 217 rows read *no description in the artefact*, so the table is mostly a list of paths.\n2. **Non-pages are indexed as \"auth",
       "file": "beans/defs/folio-assistant-krmw--docs-index-visualiser-6-wireframe-findings.md"
+    },
+    {
+      "id": "folio-assistant-ksg3",
+      "title": "SPEED-UP: translation-block-qa --check spends 98% re-resolving the instance graph per (block, locale)",
+      "status": "completed",
+      "type": "task",
+      "priority": "",
+      "parent": "folio-assistant-hfag",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-10-03T07:52:01Z",
+      "updatedAt": "2026-10-03T07:52:01Z",
+      "preview": "Follow-up to `dlqu` (SPEED-UP 4), found while measuring its shard balancing.\n\nMeasured 2026-10-03: `translation-block-qa.ts --check` is 67 s of the 168 s\n`gates that were registered and never run` step in CI (run 37090513935, job\n111109661496) — the critical path of Code-quality gates once `dlqu`'s sharding\nlands (bun test shard 2/4 is 150–194 s; that step's job 163–175 s). Balancing\nthe test shar",
+      "file": "beans/defs/folio-assistant-ksg3--speed-up-translation-block-qa-check-spends-98-re-r.md"
     },
     {
       "id": "folio-assistant-ktt2",
@@ -6054,7 +6110,7 @@
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-23T10:36:15Z",
-      "updatedAt": "2026-10-01T18:14:39Z",
+      "updatedAt": "2026-10-01T18:26:59Z",
       "preview": "Findings from the as-is wireframe `cat-harness/docs/wireframes/navbar/` (intent.md, as-is.html, checks/), observed at 1280×800 and 390×844. Verbatim from its `## Findings`; a finding tagged → is also covered by that cross-cutting bug.\n\n1. **At rest the strip is marks with no labels.** Changed by #1022: the four divider initials are gone, so the harnesses are **not reachable from the strip at all**",
       "file": "beans/defs/folio-assistant-ob3m--navbar-visualiser-12-wireframe-findings.md"
     },
@@ -8577,14 +8633,14 @@
     {
       "id": "folio-assistant-wm63",
       "title": "FHIR-HARNESS: the bare FHIR IG pipeline as its own harness layer, between core and smart-base",
-      "status": "todo",
+      "status": "in-progress",
       "type": "feature",
       "priority": "high",
       "parent": "folio-assistant-uhkv",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-22T19:07:23Z",
-      "updatedAt": "2026-09-29T20:03:10Z",
+      "updatedAt": "2026-10-03T08:47:15Z",
       "preview": "`fhir-harness` — the layer bean `nsbb` called \"the bare FHIR IG pipeline\", now\nnamed by the owner's stack ruling of 2026-09-22.\n\n## What it is\n\nSUSHI → IG Publisher → Jekyll → a pages branch. **No pre-processing and no\npost-processing.** This is how SMART Guidelines were built before the DAK\nphases were added, so it is a shape that demonstrably worked rather than one\nbeing invented.\n\n## The defini",
       "file": "beans/defs/folio-assistant-wm63--fhir-harness-the-bare-fhir-ig-pipeline-as-its-own.md"
     },
