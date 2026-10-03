@@ -14,6 +14,8 @@ import {
   LIBRARY_SLICE,
   SLICES,
   TODOS_SLICE,
+  TODO_INDEX,
+  LIBRARY_DIR,
   beanEdges,
   beansData,
   buildSlice,
@@ -193,7 +195,7 @@ describe("gen-slice-sqlite — the slice table", () => {
 
 const INSTANCE = join(import.meta.dir, "../..");
 const REPO = repoRootFor(INSTANCE);
-const realTodoIndex = JSON.parse(readFileSync(join(INSTANCE, "docs/assets/todos/index.json"), "utf-8"));
+const realTodoIndex = JSON.parse(readFileSync(join(INSTANCE, TODO_INDEX), "utf-8"));
 
 describe("gen-slice-sqlite — todos", () => {
   const item = realTodoIndex.items[0];
@@ -246,7 +248,7 @@ describe("gen-slice-sqlite — todos", () => {
 
 // ── Slice: library ─────────────────────────────────────────────────────────
 
-const realLibraryIndex = JSON.parse(readFileSync(join(INSTANCE, "docs/assets/library/index.json"), "utf-8"));
+const realLibraryIndex = JSON.parse(readFileSync(join(INSTANCE, LIBRARY_DIR, "index.json"), "utf-8"));
 
 describe("gen-slice-sqlite — library", () => {
   const e0 = realLibraryIndex.entries[0];

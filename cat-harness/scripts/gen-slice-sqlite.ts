@@ -903,7 +903,7 @@ export const KG_SLICE: SliceDef = {
     const data = await buildExport({ instanceRoot: INSTANCE_ROOT });
     const baseUrl = canonicalBase();
     // The SAME plan `gen-subgraph-jsonld` writes the committed payloads from.
-    const plan = planPayloads(data["@graph"] as KgNode[], { root: INSTANCE_ROOT, baseUrl });
+    const plan = planPayloads(data["@graph"] as Parameters<typeof planPayloads>[0], { root: INSTANCE_ROOT, baseUrl });
     return kgData(data as unknown as { "@id": string; "@context": unknown; "@graph": unknown[] }, plan);
   },
 };
