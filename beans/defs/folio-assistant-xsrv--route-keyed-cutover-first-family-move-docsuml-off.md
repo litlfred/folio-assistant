@@ -148,3 +148,54 @@ source graph it indexes.
 cannot be derived from `TYPES`, the manifest needs hand-authored content and the
 one-source claim fails — at which point the right shape is `TYPES` reading the
 manifest rather than the reverse.
+
+## The eventual scope is ALREADY ENUMERATED — `merge-conflict-patterns.ts` (2026-10-03)
+
+The §"eventual set is wider" note above lists six writers I happened to hit on
+#1996. That was the wrong source: `scripts/merge-conflict-patterns.ts` is a
+**maintained catalogue of 24 patterns**, each a family whose merge conflicts
+somebody has already declared mechanically resolvable — and `merge-main.yml`'s
+own header says the resolution is *"mechanical BY DECLARATION"*, so the patterns
+ARE that declaration. Observed live on #1935 the same day: one bot push resolved
+`docs-auto` ×1, `readme-generated-regions` ×1 and `site-data` ×3.
+
+**And the catalogue carries its own discriminator.** `strategy` separates exactly
+what `route` separates:
+
+| `strategy` | n | what it means | keying |
+|---|---|---|---|
+| `take-base` | **20** | the newer generation is right; nothing to settle | **`route`** |
+| `refuse` | **2** | a person must settle it — `beans`, `uploads` | `tip`, or stays on `main` |
+| `qa-sidecar` | 1 | `kg-qa-sidecar`, merged by its own rule | `commit` (arc `3fva`) |
+| `generated-regions` | 1 | `readme-generated-regions` — generated regions inside AUTHORED prose | **neither, and see below** |
+
+That is not a coincidence. `take-base` and `route` are the same assertion made in
+two places: *the content is a pure function of its source, so the newer one wins.*
+`refuse` and `tip` are the other same assertion: *somebody decided this, so a
+collision is theirs to settle.* The catalogue reached it from merge behaviour and
+this arc reached it from storage; they agree, which is the strongest evidence
+either is right.
+
+### What this changes for this bean
+
+- **The family list is not mine to invent.** `docs/uml/` stays first (one
+  generator, one gate, bisectable), and the eventual set is the `take-base`
+  twenty — read from that file, not restated here, because a list in a bean is a
+  second answer that drifts.
+- **`beans` and `uploads` are explicitly OUT**, with reasons already written:
+  bean defs are *"authored work-plan state, so it is resolved by a person"*;
+  uploads are *"provenance-bearing input, never regenerated"*.
+- **`readme-generated-regions` is the genuinely hard one**, and the catalogue
+  says why better than my earlier note did: *"their generated regions carry file
+  counts and listings that every concurrent addition changes; the prose around
+  them is authored, so only a hunk INSIDE a region resolves."* A file that is
+  authored and derived at different offsets cannot be keyed as a whole by either
+  mechanism. Still a person's ruling; now with the precise reason.
+
+### A measurement this suggests, not yet taken
+
+If route-keying removes the `take-base` twenty from `main`, those twenty patterns
+have nothing left to resolve. **Whether the patterns should then be retired is
+NOT this bean's call** — they would become harmless no-ops rather than wrong, and
+a pattern that fires on nothing is the `xom7` shape this arc keeps meeting. Worth
+asking the owner at cutover rather than deciding here.
