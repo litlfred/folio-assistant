@@ -409,6 +409,8 @@
     "start": "bun run cat-harness/src/index.ts",
     "start:http": "bun run cat-harness/src/index.ts --http",
     "start:stdio": "bun run cat-harness/src/index.ts --stdio",
+    "state:push": "bun run cat-harness/scripts/state-push.ts",
+    "state:mount": "bun run cat-harness/scripts/state-mount.ts",
     "state:visualizer": "bun run cat-harness/scripts/state-visualizer.ts",
     "survey:owed": "bun run cat-harness/scripts/survey.ts",
     "survey:publish": "bun run cat-harness/scripts/survey.ts --publish",
@@ -502,6 +504,7 @@
     "eslint": "^10.8.0",
     "fast-xml-parser": "^5.10.1",
     "jsonld": "8",
+    "lunr": "2.3.9",
     "typescript-eslint": "^8.66.0",
     "yaml": "^2.9.1"
   },

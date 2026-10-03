@@ -79,6 +79,7 @@ import { instanceRootsIn, resolveDirectories } from "../schemas/cat-harness.js";
 import "../schemas/folio-graph-kind.js";
 import { waitFor } from "../src/core/retry.js";
 import { PUSH_BASE_MS, PUSH_CAP_MS } from "./backoff-sleep.js";
+import { TreeStore } from "./branch-store.js";
 
 // ── Constants ────────────────────────────────────────────────────────────
 
@@ -215,7 +216,7 @@ export interface QaDirectory {
   path: string;
   absPath: string;
   present: boolean;
-  storage?: { branch: string; keyedBy: "commit" };
+  storage?: import("../schemas/cat-harness.js").DirectoryStorage;
 }
 
 export interface QaLocation {
@@ -262,12 +263,9 @@ export function resolveQaLocation(repoRoot: string = gitTopLevel()): QaLocation 
 }
 
 // ── Git plumbing ─────────────────────────────────────────────────────────
-
-interface GitResult {
-  status: number;
-  stdout: Buffer;
-  stderr: string;
-}
+//
+// The plumbing itself is `branch-store.ts`'s `TreeStore` (bean `2h76`); what
+// is left here is only what locates the checkout it runs in.
 
 function gitTopLevel(cwd = process.cwd()): string {
   const r = spawnSync("git", ["rev-parse", "--show-toplevel"], { cwd, encoding: "utf-8" });
@@ -281,221 +279,30 @@ function gitTopLevel(cwd = process.cwd()): string {
  * Built once per (storeDir, remote, branch) and reused for the process, so a
  * reader asking for 487 files fetches the tip once and the blobs once.
  */
-class Store {
-  readonly env: NodeJS.ProcessEnv;
-  readonly log: (line: string) => void;
-  private seq = 0;
-
+/**
+ * The commit-keyed store: {@link TreeStore}'s plumbing, nothing added.
+ *
+ * Bean `2h76` part 1. This class was 200 lines of git plumbing that
+ * `branch-store.ts` had a second copy of — `mktree` and `setPath` were
+ * byte-identical but for a `private`, `must` identical outright. The copy that
+ * survives is {@link TreeStore}, and the three axes the two actually differed
+ * on are its constructor arguments. The signature here is UNCHANGED, so every
+ * caller and `qa-store.test.ts` are untouched.
+ *
+ * `fetchTip` now also reports WHICH branch answered, because a tip-keyed
+ * caller migrating between names needs that. A commit-keyed caller has one
+ * candidate and can ignore it.
+ */
+class Store extends TreeStore {
   constructor(
-    readonly dir: string,
-    readonly remote: string,
-    readonly branch: string,
+    dir: string,
+    remote: string,
+    branch: string,
     authEnv: Record<string, string>,
     log?: (line: string) => void,
   ) {
-    this.log = log ?? ((l) => console.error(l));
-    this.env = {
-      ...process.env,
-      ...authEnv,
-      GIT_TERMINAL_PROMPT: "0",
-      GIT_AUTHOR_NAME: QA_BOT.name,
-      GIT_AUTHOR_EMAIL: QA_BOT.email,
-      GIT_COMMITTER_NAME: QA_BOT.name,
-      GIT_COMMITTER_EMAIL: QA_BOT.email,
-    };
-    delete this.env.GIT_DIR;
-    delete this.env.GIT_WORK_TREE;
-    delete this.env.GIT_INDEX_FILE;
-    if (!existsSync(join(dir, "HEAD"))) {
-      mkdirSync(dir, { recursive: true });
-      this.must(["init", "-q", "--bare"]);
-    }
-    const cur = this.git(["config", "--get", "remote.origin.url"]);
-    if (cur.status !== 0) this.must(["remote", "add", "origin", remote]);
-    else if (cur.stdout.toString().trim() !== remote) this.must(["remote", "set-url", "origin", remote]);
+    super(dir, remote, [branch], authEnv, { identity: QA_BOT, refNamespace: "qa-store", log });
   }
-
-  git(args: string[], opts: GitOpts = {}): GitResult {
-    const r = spawnSync("git", [`--git-dir=${this.dir}`, ...args], {
-      cwd: opts.cwd,
-      env: { ...this.env, ...opts.env },
-      input: opts.input,
-      maxBuffer: 1 << 30,
-    });
-    return {
-      status: r.status ?? (r.error ? 128 : 0),
-      stdout: (r.stdout as Buffer | null) ?? Buffer.alloc(0),
-      stderr: (r.stderr as Buffer | null)?.toString() ?? String(r.error ?? ""),
-    };
-  }
-
-  must(args: string[], opts: GitOpts = {}): string {
-    const r = this.git(args, opts);
-    if (r.status !== 0) throw new Error(`git ${args.join(" ")} → ${r.status}: ${r.stderr.trim()}`);
-    return r.stdout.toString();
-  }
-
-  /** A ref name unique to this process and call, so concurrent readers never contend for one lock. */
-  privateRef(kind: string): string {
-    return `refs/qa-store/${kind}/${process.pid}-${++this.seq}`;
-  }
-
-  /**
-   * The branch tip, trees only. `absent` is a DETERMINED absence (ls-remote
-   * answered, and answered nothing); a failed ls-remote is `unknown`.
-   */
-  fetchTip(): { state: "ok"; tip: string } | { state: "absent" } | { state: "unknown"; reason: string } {
-    const ls = this.git(["ls-remote", "--heads", "origin", `refs/heads/${this.branch}`]);
-    if (ls.status !== 0) return { state: "unknown", reason: `ls-remote failed: ${ls.stderr.trim()}` };
-    if (ls.stdout.toString().trim() === "") return { state: "absent" };
-    const ref = this.privateRef("tip");
-    const f = this.git(["fetch", "-q", "--no-tags", "--depth=1", "--filter=blob:none", "origin", `+refs/heads/${this.branch}:${ref}`]);
-    if (f.status !== 0) return { state: "unknown", reason: `fetch of ${this.branch} failed: ${f.stderr.trim()}` };
-    const tip = this.must(["rev-parse", ref]).trim();
-    this.git(["update-ref", "-d", ref]);
-    return { state: "ok", tip };
-  }
-
-  /** `ls-tree -z` of one tree, parsed. */
-  lsTree(tree: string): TreeEntry[] {
-    const out = this.must(["ls-tree", "-z", tree]);
-    return out
-      .split("\0")
-      .filter(Boolean)
-      .map((l) => {
-        const tab = l.indexOf("\t");
-        const [mode, type, sha] = l.slice(0, tab).split(" ");
-        return { mode: mode!, type: type!, sha: sha!, name: l.slice(tab + 1) };
-      });
-  }
-
-  /** The object at `path` (slash-separated) under `tree`, or undefined. */
-  lookup(tree: string, path: string): TreeEntry | undefined {
-    let cur: TreeEntry | undefined = { mode: "040000", type: "tree", sha: tree, name: "" };
-    for (const seg of path.split("/").filter(Boolean)) {
-      if (cur.type !== "tree") return undefined;
-      cur = this.lsTree(cur.sha).find((e) => e.name === seg);
-      if (!cur) return undefined;
-    }
-    return cur;
-  }
-
-  mktree(entries: TreeEntry[]): string {
-    const input = entries.map((e) => `${e.mode} ${e.type} ${e.sha}\t${e.name}\0`).join("");
-    return this.must(["mktree", "-z", "--missing"], { input }).trim();
-  }
-
-  /**
-   * `tree` with `path` set to `entry`, or removed when `entry` is undefined.
-   * A directory emptied by a removal is removed too: git has no empty tree
-   * entry, and writing one would be a determined-empty that means nothing.
-   * Returns undefined when the whole tree became empty.
-   */
-  setPath(tree: string | undefined, path: string[], entry: TreeEntry | undefined): string | undefined {
-    const [head, ...rest] = path;
-    const entries = tree ? this.lsTree(tree) : [];
-    const others = entries.filter((e) => e.name !== head);
-    let replacement: TreeEntry | undefined;
-    if (rest.length === 0) {
-      replacement = entry ? { ...entry, name: head! } : undefined;
-    } else {
-      const child = entries.find((e) => e.name === head && e.type === "tree");
-      const sub = this.setPath(child?.sha, rest, entry);
-      replacement = sub ? { mode: "040000", type: "tree", sha: sub, name: head! } : undefined;
-    }
-    const next = replacement ? [...others, replacement] : others;
-    return next.length ? this.mktree(next) : undefined;
-  }
-
-  /** Blobs reachable from `tree` that are not in the store yet — without fetching them lazily. */
-  missingObjects(tree: string): string[] {
-    const r = this.git(["rev-list", "--objects", "--missing=print", "--no-object-names", tree]);
-    if (r.status !== 0) throw new Error(`rev-list over ${tree} failed: ${r.stderr.trim()}`);
-    return r.stdout
-      .toString()
-      .split("\n")
-      .filter((l) => l.startsWith("?"))
-      .map((l) => l.slice(1));
-  }
-
-  /**
-   * Make every blob under `tree` local, in ONE round trip (spike finding 1).
-   * Falls back to an unfiltered depth-1 fetch of the branch when the server
-   * refuses a want by object id. Returns how many are still missing.
-   */
-  hydrate(tree: string): number {
-    let missing = this.missingObjects(tree);
-    if (missing.length === 0) return 0;
-    const batch = this.git(
-      ["-c", "fetch.negotiationAlgorithm=noop", "fetch", "-q", "--stdin", "--no-tags", "--no-write-fetch-head", "--filter=blob:none", "origin"],
-      { input: missing.join("\n") + "\n" },
-    );
-    missing = this.missingObjects(tree);
-    if (missing.length && batch.status !== 0) {
-      const ref = this.privateRef("full");
-      this.git(["fetch", "-q", "--no-tags", "--depth=1", "origin", `+refs/heads/${this.branch}:${ref}`]);
-      this.git(["update-ref", "-d", ref]);
-      missing = this.missingObjects(tree);
-    }
-    return missing.length;
-  }
-
-  /**
-   * Make `shas` (blobs somewhere under `tree`) local, in one round trip, without
-   * hydrating the rest of `tree`. Presence is asked of `rev-list --missing=print`
-   * because every presence probe git 2.43 offers fetches lazily, one object at a time.
-   */
-  ensureBlobs(tree: string, shas: string[]): boolean {
-    const want = new Set(shas);
-    const missing = this.missingObjects(tree).filter((s) => want.has(s));
-    if (missing.length === 0) return true;
-    this.git(
-      ["-c", "fetch.negotiationAlgorithm=noop", "fetch", "-q", "--stdin", "--no-tags", "--no-write-fetch-head", "--filter=blob:none", "origin"],
-      { input: missing.join("\n") + "\n" },
-    );
-    return !this.missingObjects(tree).some((s) => want.has(s));
-  }
-
-  /** Contents of many blobs in one `cat-file --batch` process. */
-  catBlobs(shas: string[]): Map<string, Buffer> {
-    const out = new Map<string, Buffer>();
-    if (shas.length === 0) return out;
-    const r = this.git(["cat-file", "--batch"], { input: shas.join("\n") + "\n", env: { GIT_NO_LAZY_FETCH: "1" } });
-    if (r.status !== 0) throw new Error(`cat-file --batch failed: ${r.stderr.trim()}`);
-    const buf = r.stdout;
-    let i = 0;
-    for (const sha of shas) {
-      const nl = buf.indexOf(10, i);
-      const header = buf.subarray(i, nl).toString();
-      const parts = header.split(" ");
-      if (parts[1] === "missing") throw new Error(`blob ${sha} is missing from the store`);
-      const size = Number(parts[2]);
-      out.set(sha, buf.subarray(nl + 1, nl + 1 + size));
-      i = nl + 1 + size + 1;
-    }
-    return out;
-  }
-
-  blobText(sha: string): string {
-    return this.catBlobs([sha]).get(sha)!.toString("utf-8");
-  }
-
-  hashBlob(content: string): string {
-    return this.must(["hash-object", "-w", "--stdin"], { input: content }).trim();
-  }
-}
-
-interface GitOpts {
-  input?: string | Buffer;
-  env?: Record<string, string>;
-  cwd?: string;
-}
-
-interface TreeEntry {
-  mode: string;
-  type: string;
-  sha: string;
-  name: string;
 }
 
 /** The checkout's own `http.*.extraheader` lines, carried in env (never argv). */
