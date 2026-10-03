@@ -11,16 +11,16 @@ Part of [SMART Base](../README.md) 0.1.0, declared as `library`, holding `librar
 | file | what it is | used by |
 |---|---|---|
 | [`image-verdicts.json`](image-verdicts.json) | data |  |
-| [`9789240010567-eng/`](9789240010567-eng/README.md) | 573 files | |
-| [`9789240081949-eng/`](9789240081949-eng/README.md) | 213 files | |
-| [`9789240093362-eng/`](9789240093362-eng/README.md) | 168 files | |
-| [`9789240101197-eng/`](9789240101197-eng/README.md) | 255 files | |
-| [`9789240116191-eng/`](9789240116191-eng/README.md) | 194 files | |
-| [`9789240120747-eng/`](9789240120747-eng/README.md) | 221 files | |
-| [`9789241509510-eng/`](9789241509510-eng/README.md) | 527 files | |
-| [`9789241511766-eng/`](9789241511766-eng/README.md) | 525 files | |
+| [`9789240010567-eng/`](9789240010567-eng/README.md) | 617 files | |
+| [`9789240081949-eng/`](9789240081949-eng/README.md) | 215 files | |
+| [`9789240093362-eng/`](9789240093362-eng/README.md) | 184 files | |
+| [`9789240101197-eng/`](9789240101197-eng/README.md) | 278 files | |
+| [`9789240116191-eng/`](9789240116191-eng/README.md) | 210 files | |
+| [`9789240120747-eng/`](9789240120747-eng/README.md) | 228 files | |
+| [`9789241509510-eng/`](9789241509510-eng/README.md) | 531 files | |
+| [`9789241511766-eng/`](9789241511766-eng/README.md) | 548 files | |
 | [`mehl-2021-who-smart-guidelines/`](mehl-2021-who-smart-guidelines/README.md) | 12 files | |
 | [`smart-trust/`](smart-trust/README.md) | 4 files | |
 | [`who-dpi-h-reference-architecture-draft-v1/`](who-dpi-h-reference-architecture-draft-v1/README.md) | 453 files | |
-| [`who-rhr-1806-eng/`](who-rhr-1806-eng/README.md) | 65 files | |
+| [`who-rhr-1806-eng/`](who-rhr-1806-eng/README.md) | 66 files | |
 <!-- kg:subgraph:end -->

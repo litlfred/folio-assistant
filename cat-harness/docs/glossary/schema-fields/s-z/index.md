@@ -13,16 +13,16 @@ permalink: /glossary/schema-fields/s-z/
 
 Candidate terms extracted from every schema field with a doc comment: `<Declaration>.<field>` as the label, the comment's first paragraph as the definition. Each is the asset's own text, verbatim and not curated, and carries the badge "candidate, extracted". A person promotes one by authoring it. Authored terms, the counts and the sources are on the <a href="{{ '/glossary/' | relative_url }}">glossary index</a>.
 
-From: bootstrap-tools 28 (<a href="{{ '/assets/glossary/bootstrap-tools--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · cat-harness 1741 (<a href="{{ '/assets/glossary/cat-harness--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · cat-openapi 13 (<a href="{{ '/assets/glossary/cat-openapi--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · fhir-harness 75 (<a href="{{ '/assets/glossary/fhir-harness--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · folio-assistant-core 127 (<a href="{{ '/assets/glossary/folio-assistant-core--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · smart-base 9 (<a href="{{ '/assets/glossary/smart-base--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>).
+From: bootstrap-tools 28 (<a href="{{ '/assets/glossary/bootstrap-tools--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · cat-harness 1750 (<a href="{{ '/assets/glossary/cat-harness--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · cat-openapi 13 (<a href="{{ '/assets/glossary/cat-openapi--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · fhir-harness 75 (<a href="{{ '/assets/glossary/fhir-harness--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · folio-assistant-core 127 (<a href="{{ '/assets/glossary/folio-assistant-core--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · smart-base 9 (<a href="{{ '/assets/glossary/smart-base--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>).
 
 One of 4 pages of this type, split by the first letter of the label: <a href="{{ '/glossary/schema-fields/' | relative_url }}">all parts</a>.
 
-**Size:** this page holds 562 terms and is 311 KB before compression, fetched in one request, within its budget of 1.0 MB. There is no search index: the filter below runs over this page, and the A–Z bar jumps within it.
+**Size:** this page holds 578 terms and is 320 KB before compression, fetched in one request, within its budget of 1.0 MB. There is no search index: the filter below runs over this page, and the A–Z bar jumps within it.
 
 <table class="fa-gloss-mapping">
 <caption>Already somebody else's concept? — <code>check:term-mapping</code>, bean <code>7wou</code></caption>
 <thead><tr><th>target</th><th>mapped</th><th>unmapped</th><th>undetermined</th><th>why undetermined</th></tr></thead>
-<tbody><tr><td><code>fhir</code></td><td>0</td><td>1993</td><td>0</td><td>—</td></tr><tr><td><code>skos</code></td><td>0</td><td>1993</td><td>0</td><td>—</td></tr></tbody>
+<tbody><tr><td><code>fhir</code></td><td>0</td><td>2002</td><td>0</td><td>—</td></tr><tr><td><code>skos</code></td><td>0</td><td>2002</td><td>0</td><td>—</td></tr></tbody>
 </table>
 <p class="fa-gloss-mapping-note"><strong>Undetermined is never “no match”.</strong> 
 A vocabulary that could not be reached has said nothing, and the column above keeps that 
@@ -32,7 +32,7 @@ be a term this corpus is right to coin.</p>
 
 <label for="fa-gloss-q">Filter terms</label>
 <input id="fa-gloss-q" type="search" autocomplete="off" style="min-height:44px;width:100%;max-width:32rem">
-<p aria-live="polite"><span id="fa-gloss-n">562</span> shown</p>
+<p aria-live="polite"><span id="fa-gloss-n">578</span> shown</p>
 
 <nav aria-label="Letters"><a href="#letter-S">S</a> <a href="#letter-T">T</a> <a href="#letter-U">U</a> <a href="#letter-V">V</a> <a href="#letter-W">W</a></nav>
 
@@ -2191,6 +2191,27 @@ ThemeSchema.palette <span class="fa-gloss-status">candidate, extracted</span>
 <p>Shared across every kind, deliberately.</p>
 <p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/theme.ts"><code>cat-harness/schemas/theme.ts#ThemeSchema.palette</code></a></p>
 </dd>
+<dt id="cat-harness--kg-schema-fields--document-image.thresholdbasisschema.coverage" data-fa-state="extracted" data-fa-gloss="">
+ThresholdBasisSchema.coverage <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>Placed area over page area — the number compared against <code>value</code>.</p>
+<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/document-image.ts"><code>cat-harness/schemas/document-image.ts#ThresholdBasisSchema.coverage</code></a></p>
+</dd>
+<dt id="cat-harness--kg-schema-fields--document-image.thresholdbasisschema.suppliedby" data-fa-state="extracted" data-fa-gloss="">
+ThresholdBasisSchema.suppliedBy <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>Always the caller. Recorded so the provenance is read, not inferred.</p>
+<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/document-image.ts"><code>cat-harness/schemas/document-image.ts#ThresholdBasisSchema.suppliedBy</code></a></p>
+</dd>
+<dt id="cat-harness--kg-schema-fields--document-image.thresholdbasisschema.value" data-fa-state="extracted" data-fa-gloss="">
+ThresholdBasisSchema.value <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>The cutoff, exactly as supplied. Images below it were filed <code>furniture</code>.</p>
+<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/document-image.ts"><code>cat-harness/schemas/document-image.ts#ThresholdBasisSchema.value</code></a></p>
+</dd>
 <dt id="cat-harness--kg-schema-fields--tile-count.tilecount.count" data-fa-state="extracted" data-fa-gloss="">
 TileCount.count <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
@@ -3053,6 +3074,55 @@ ValidatorRef.module <span class="fa-gloss-status">candidate, extracted</span>
 <p>Module path, relative to &#123;@link ValidatorRef.instance}'s root, or to the resolving one.</p>
 <p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/kind-validator.ts"><code>cat-harness/schemas/kind-validator.ts#ValidatorRef.module</code></a></p>
 </dd>
+<dt id="cat-harness--kg-schema-fields--vector-figure.vectorassemblyschema.background" data-fa-state="extracted" data-fa-gloss="">
+VectorAssemblySchema.background <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>Of those, page-sized backgrounds that joined no component.</p>
+<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/vector-figure.ts"><code>cat-harness/schemas/vector-figure.ts#VectorAssemblySchema.background</code></a></p>
+</dd>
+<dt id="cat-harness--kg-schema-fields--vector-figure.vectorassemblyschema.between" data-fa-state="extracted" data-fa-gloss="">
+VectorAssemblySchema.between <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>Lines inside the region but in no component — the white space <code>a8wy</code> found real labels in.</p>
+<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/vector-figure.ts"><code>cat-harness/schemas/vector-figure.ts#VectorAssemblySchema.between</code></a></p>
+</dd>
+<dt id="cat-harness--kg-schema-fields--vector-figure.vectorassemblyschema.drawings" data-fa-state="extracted" data-fa-gloss="">
+VectorAssemblySchema.drawings <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>Drawing operations on the page. Reported, never graded.</p>
+<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/vector-figure.ts"><code>cat-harness/schemas/vector-figure.ts#VectorAssemblySchema.drawings</code></a></p>
+</dd>
+<dt id="cat-harness--kg-schema-fields--vector-figure.vectorassemblyschema.outside" data-fa-state="extracted" data-fa-gloss="">
+VectorAssemblySchema.outside <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>Lines outside the rendered region: furniture, and sometimes figure titles. The crop's stated limit.</p>
+<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/vector-figure.ts"><code>cat-harness/schemas/vector-figure.ts#VectorAssemblySchema.outside</code></a></p>
+</dd>
+<dt id="cat-harness--kg-schema-fields--vector-figure.vectorassemblyschema.unlabelledclosedshapes" data-fa-state="extracted" data-fa-gloss="">
+VectorAssemblySchema.unlabelledClosedShapes <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>Closed shapes holding no label — arrowheads, bullets, swatches. Counted, not listed.</p>
+<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/vector-figure.ts"><code>cat-harness/schemas/vector-figure.ts#VectorAssemblySchema.unlabelledClosedShapes</code></a></p>
+</dd>
+<dt id="cat-harness--kg-schema-fields--vector-figure.vectorboxschema.parent" data-fa-state="extracted" data-fa-gloss="">
+VectorBoxSchema.parent <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>The smallest other labelled box containing this one, or null.</p>
+<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/vector-figure.ts"><code>cat-harness/schemas/vector-figure.ts#VectorBoxSchema.parent</code></a></p>
+</dd>
+<dt id="cat-harness--kg-schema-fields--vector-figure.vectorconnectorschema.from" data-fa-state="extracted" data-fa-gloss="">
+VectorConnectorSchema.from <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>Box the stroke starts in, or null when it lands in none.</p>
+<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/vector-figure.ts"><code>cat-harness/schemas/vector-figure.ts#VectorConnectorSchema.from</code></a></p>
+</dd>
 <dt id="cat-harness--kg-schema-fields--vector-labels.vectorfigurepageschema.captioncandidates" data-fa-state="extracted" data-fa-gloss="">
 VectorFigurePageSchema.captionCandidates <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
@@ -3087,6 +3157,48 @@ VectorFigurePageSchema.rotation <span class="fa-gloss-status">candidate, extract
 <dd>
 <p>The page's rotation in degrees, as the PDF declares it.</p>
 <p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/vector-labels.ts"><code>cat-harness/schemas/vector-labels.ts#VectorFigurePageSchema.rotation</code></a></p>
+</dd>
+<dt id="cat-harness--kg-schema-fields--vector-figure.vectorfigureschema.captionlabels" data-fa-state="extracted" data-fa-gloss="">
+VectorFigureSchema.captionLabels <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>Figure numbers from the page's caption candidates — candidates, not claims.</p>
+<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/vector-figure.ts"><code>cat-harness/schemas/vector-figure.ts#VectorFigureSchema.captionLabels</code></a></p>
+</dd>
+<dt id="cat-harness--kg-schema-fields--vector-figure.vectorfigureschema.file" data-fa-state="extracted" data-fa-gloss="">
+VectorFigureSchema.file <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>The render, relative to the entry; null when nothing was rendered, with the reason.</p>
+<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/vector-figure.ts"><code>cat-harness/schemas/vector-figure.ts#VectorFigureSchema.file</code></a></p>
+</dd>
+<dt id="cat-harness--kg-schema-fields--vector-figure.vectorfigureschema.id" data-fa-state="extracted" data-fa-gloss="">
+VectorFigureSchema.id <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p><code>vfig-p034</code> — one per qualifying page; a verdict keys on it.</p>
+<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/vector-figure.ts"><code>cat-harness/schemas/vector-figure.ts#VectorFigureSchema.id</code></a></p>
+</dd>
+<dt id="cat-harness--kg-schema-fields--vector-figure.vectorfigureschema.region" data-fa-state="extracted" data-fa-gloss="">
+VectorFigureSchema.region <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>The rendered rectangle, visible frame.</p>
+<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/vector-figure.ts"><code>cat-harness/schemas/vector-figure.ts#VectorFigureSchema.region</code></a></p>
+</dd>
+<dt id="cat-harness--kg-schema-fields--vector-figure.vectorfigureschema.shows" data-fa-state="extracted" data-fa-gloss="">
+VectorFigureSchema.shows <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>Which declared figures the render shows. Inspection only — see the module docblock.</p>
+<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/vector-figure.ts"><code>cat-harness/schemas/vector-figure.ts#VectorFigureSchema.shows</code></a></p>
+</dd>
+<dt id="cat-harness--kg-schema-fields--vector-figure.vectorfiguressidecarschema.figures" data-fa-state="extracted" data-fa-gloss="">
+VectorFiguresSidecarSchema.figures <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p><code>null</code> is could-not-determine, never &quot;draws no figures&quot; — the <code>dh4f</code> rule.</p>
+<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/vector-figure.ts"><code>cat-harness/schemas/vector-figure.ts#VectorFiguresSidecarSchema.figures</code></a></p>
 </dd>
 <dt id="cat-harness--kg-schema-fields--vector-labels.vectorlabelschema.bbox" data-fa-state="extracted" data-fa-gloss="">
 VectorLabelSchema.bbox <span class="fa-gloss-status">candidate, extracted</span>
