@@ -147,6 +147,25 @@
       "skos:note": "candidate"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-openapi/ns#glossary/kg-schema-fields/openapi.openapiprovenanceschema.materialization",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-openapi/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "OpenApiProvenanceSchema.materialization"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The document IS a held copy of upstream bytes, so it says so in the shared `folio-materialization/v1` shape (`folio-assistant-core`'s `MaterializationSchema`): where from, where it landed, why it was taken, its fixity and the five gates. Checked here only as far as this harness relies on it — the state, the path and the digest; the full record is that schema's to judge, and `check:read-only-graphs` reads `state` to agree with the directory's `readOnly`."
+        }
+      ],
+      "dcterms:source": "cat-openapi/schemas/openapi.ts#OpenApiProvenanceSchema.materialization",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/cat-openapi/ns#glossary/kg-schema-fields/openapi.openapiprovenanceschema.openapi",
       "@type": "skos:Concept",
       "skos:inScheme": {

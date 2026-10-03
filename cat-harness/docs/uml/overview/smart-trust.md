@@ -345,12 +345,12 @@ classDiagram
       id [1] string
       file [1] string
       source [1] object
-      sha256 [1] string
       bytes [1] integer
       openapi [1] string
       title [1] string
       version [1] string
       operations [1] integer
+      materialization [1] object
     }
   }
   namespace smart_trust__smart_trust_docs {

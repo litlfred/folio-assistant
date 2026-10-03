@@ -49,12 +49,12 @@ classDiagram
       id [1] string
       file [1] string
       source [1] object
-      sha256 [1] string
       bytes [1] integer
       openapi [1] string
       title [1] string
       version [1] string
       operations [1] integer
+      materialization [1] object
     }
   }
   cssClass "smart_trust_smart_trust_openapi_folio_openapi_source_v1_folio_openapi_source_v1" fa_uml_kind_openapi

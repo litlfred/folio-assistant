@@ -1623,7 +1623,7 @@
       "module": "cat-openapi/schemas/openapi.ts",
       "instance": "cat-openapi",
       "name": "openapi",
-      "graphNode": "undeclared",
+      "graphNode": "schema",
       "summary": "The OpenAPI harness's shapes: what an instance declares, what an ingest",
       "isTest": false
     },
@@ -41836,12 +41836,6 @@
           "array": false
         },
         {
-          "name": "sha256",
-          "type": "z.string().regex(/^[0-9a-f]{64}$/)",
-          "optional": false,
-          "array": false
-        },
-        {
           "name": "bytes",
           "type": "z.number().int().positive()",
           "optional": false,
@@ -41872,6 +41866,13 @@
           "optional": false,
           "array": false,
           "doc": "How many operations it holds — every one of which gets a page."
+        },
+        {
+          "name": "materialization",
+          "type": "z .object({ $schema: z.literal(\"folio-materialization/v1\"), state: z.literal(\"materialized\"), localPath: z.string().min…",
+          "optional": false,
+          "array": false,
+          "doc": "The document IS a held copy of upstream bytes, so it says so in the"
         }
       ],
       "extendsNames": [],
