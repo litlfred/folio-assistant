@@ -72,14 +72,16 @@
  *   bun run cat-harness/scripts/branch-store.ts read --branch B <path>
  *   bun run cat-harness/scripts/branch-store.ts ls   --branch B [<dir>]
  *   bun run cat-harness/scripts/branch-store.ts where --id <directory-id>
+ *   bun run cat-harness/scripts/branch-store.ts mount --id <directory-id> [--into <path>]
+ *   bun run cat-harness/scripts/branch-store.ts push  --id <directory-id> [--message <m>]
  *
  * @module scripts/branch-store
  * @covers beans
  * @covers todos
  */
 import { spawnSync } from "node:child_process";
-import { existsSync } from "node:fs";
-import { join, relative, resolve } from "node:path";
+import { chmodSync, existsSync, mkdirSync, readdirSync, readFileSync, rmSync, statSync, writeFileSync } from "node:fs";
+import { dirname, join, relative, resolve, sep } from "node:path";
 
 import { instanceRootsIn, resolveDirectories } from "../schemas/cat-harness.js";
 // `readDeclaration` throws on the `folio` kind unless core has registered it —
@@ -113,6 +115,7 @@ export type FileRead = (Hit & { path: string; blob: string; text: string }) | No
 export type JsonRead<T = unknown> = (Hit & { path: string; blob: string; value: T }) | NotHit;
 export type DirRead = (Hit & { path: string; entries: Array<{ name: string; type: "blob" | "tree"; sha: string }> }) | NotHit;
 export type TreeRead = (Hit & { prefix: string; files: Map<string, string> }) | NotHit;
+export type TreeEntriesRead = (Hit & { prefix: string; files: Map<string, { blob: string; mode: string; bytes: Buffer }> }) | NotHit;
 
 /**
  * One change to splice onto the tip. `content: null` removes the path.
@@ -121,8 +124,11 @@ export type TreeRead = (Hit & { prefix: string; files: Map<string, string> }) | 
  */
 export interface Change {
   path: string;
-  content: string | null;
+  /** Text or BYTES: a tip store may hold binary files (fsh-guts keeps archived PDFs). */
+  content: string | Buffer | null;
   expect?: string | null;
+  /** `100755` keeps an executable executable; default `100644`. */
+  mode?: "100644" | "100755";
 }
 
 export type WriteState = "pushed" | "unchanged" | "conflict" | "absent" | "failed";
@@ -516,25 +522,42 @@ export class BranchStore {
     return { state: "hit", branch: v.branch, tip: v.tip, path: segs.join("/"), entries };
   }
 
-  /** Every file under `prefix` at the tip, fetched in one batch. Paths are branch-relative. */
+  /** Every file under `prefix` at the tip, fetched in one batch. Paths are branch-relative. Text only; see {@link readTreeEntries} for bytes. */
   readTree(prefix: string): TreeRead {
+    const r = this.readTreeEntries(prefix);
+    if (r.state !== "hit") return r;
+    const files = new Map([...r.files].map(([p, f]) => [p, f.bytes.toString("utf-8")]));
+    return { state: "hit", branch: r.branch, tip: r.tip, prefix: r.prefix, files };
+  }
+
+  /**
+   * Every file under `prefix` at the tip as BYTES, with its blob id and mode.
+   * What a mount needs: a binary file must arrive unchanged, and its blob id
+   * is the `expect` a later push compares against.
+   */
+  readTreeEntries(prefix: string): TreeEntriesRead {
     const segs = segments(prefix);
     const v = this.verifiedTip();
     if (v.state !== "hit") return v;
     const e = segs.length ? this.lookup(v.tree, segs) : { mode: "040000", type: "tree", sha: v.tree, name: "" };
     if (!e) return { state: "miss", reason: `${prefix} is not on ${v.branch} at ${v.tip.slice(0, 12)}` };
     if (e.type !== "tree") return { state: "corrupt", reason: `${prefix} on ${v.branch} is a ${e.type}, not a directory` };
-    const blobs = new Map<string, string>();
+    const blobs = new Map<string, { sha: string; mode: string }>();
     for (const l of this.must(["ls-tree", "-r", "-z", e.sha]).split("\0").filter(Boolean)) {
       const tab = l.indexOf("\t");
-      const [, type, sha] = l.slice(0, tab).split(" ");
-      if (type === "blob") blobs.set([...segs, l.slice(tab + 1)].join("/"), sha!);
+      const [mode, type, sha] = l.slice(0, tab).split(" ");
+      if (type === "blob") blobs.set([...segs, l.slice(tab + 1)].join("/"), { sha: sha!, mode: mode! });
     }
-    const shas = [...new Set(blobs.values())];
+    const shas = [...new Set([...blobs.values()].map((b) => b.sha))];
     if (!this.ensureBlobs(e.sha, shas)) return { state: "unknown", reason: `some blobs under ${prefix} could not be fetched` };
     const bytes = this.catBlobs(shas);
-    const files = new Map([...blobs].map(([p, s]) => [p, bytes.get(s)!.toString("utf-8")]));
+    const files = new Map([...blobs].map(([p, b]) => [p, { blob: b.sha, mode: b.mode, bytes: bytes.get(b.sha)! }]));
     return { state: "hit", branch: v.branch, tip: v.tip, prefix: segs.join("/"), files };
+  }
+
+  /** The blob id `bytes` would have, without writing it. */
+  hashOf(bytes: Buffer): string {
+    return this.must(["hash-object", "--stdin"], { input: bytes }).trim();
   }
 
   // ── Writing ────────────────────────────────────────────────────────────
@@ -581,7 +604,7 @@ export class BranchStore {
           const actual = cur ? cur.sha : null;
           if (c.expect !== undefined && c.expect !== actual) conflicts.push({ path: c.segs.join("/"), expected: c.expect, actual });
           const blob = blobs[i];
-          tree = this.setPath(tree, c.segs, blob ? { mode: "100644", type: "blob", sha: blob, name: "" } : undefined) ?? this.mktree([]);
+          tree = this.setPath(tree, c.segs, blob ? { mode: c.mode ?? "100644", type: "blob", sha: blob, name: "" } : undefined) ?? this.mktree([]);
         });
         if (conflicts.length) {
           return { state: "conflict", reason: `${conflicts.length} path(s) changed on ${v.branch} since they were read`, branch: v.branch, attempts: attempt, conflicts };
@@ -610,10 +633,206 @@ export class BranchStore {
   }
 }
 
+// ── Mounts: one live copy at a local path, and the push back ─────────────
+//
+// Owner ruling 2026-10-03 (bean 2h76, relayed for 9c7h): ONE generic pair,
+// keyed by directory id, for beans, todos and fsh-guts alike. A mount puts the
+// tip's files where readers look, so a reader that walks a directory keeps
+// working unchanged; a push splices the local edits back with `expect` taken
+// from the mounted tip, so a sibling's edit to the same file is a `conflict`
+// and never an overwrite. This replaces 2h76's single `state/` mount.
+//
+// The marker lives in the GIT directory, not the mount: a reader that walks
+// the mount (gen-fsh-guts-viz walks every file) must not find it.
+
+export const MOUNT_MARKER_SCHEMA = "branch-mount/v1";
+
+export interface MountMarker {
+  $schema: typeof MOUNT_MARKER_SCHEMA;
+  id: string;
+  branch: string;
+  /** The directory's path on the branch (= its declared, repository-relative path). */
+  path: string;
+  /** The absolute local mount. */
+  into: string;
+  /** The tip the files were read at. */
+  tip: string;
+  /** Mount-relative path → the blob id and mode it had at `tip`. */
+  files: Record<string, { blob: string; mode: string }>;
+}
+
+export interface MountOptions {
+  /** The checkout root. Default: `git rev-parse --show-toplevel`. */
+  repoRoot?: string;
+  /** Where to mount. Default: the declared path, so readers find it where the directory used to be. */
+  into?: string;
+  /** Passed to {@link BranchStore.open}. */
+  store?: BranchStoreOptions;
+}
+
+export type MountResult =
+  | { state: "mounted"; into: string; tip: string; branch: string; files: number }
+  | { state: "refused"; reason: string }
+  | NotHit;
+
+export type PushResult = WriteResult | { state: "refused"; reason: string };
+
+function gitCommonDir(repoRoot: string): string {
+  const c = spawnSync("git", ["rev-parse", "--path-format=absolute", "--git-common-dir"], { cwd: repoRoot, encoding: "utf-8" });
+  if (c.status !== 0) throw new BranchStoreUsageError(`cannot find the git directory of ${repoRoot}`);
+  return c.stdout.trim();
+}
+
+/** Where `id`'s mount marker lives: `<git-common-dir>/branch-mounts/<id>.json`. */
+export function markerPath(repoRoot: string, id: string): string {
+  if (!/^[A-Za-z0-9._-]+$/.test(id)) throw new BranchStoreUsageError(`not a directory id: ${id}`);
+  return join(gitCommonDir(repoRoot), "branch-mounts", `${id}.json`);
+}
+
+export function readMarker(repoRoot: string, id: string): MountMarker | undefined {
+  const p = markerPath(repoRoot, id);
+  if (!existsSync(p)) return undefined;
+  const m = JSON.parse(readFileSync(p, "utf-8")) as MountMarker;
+  if (m.$schema !== MOUNT_MARKER_SCHEMA) throw new BranchStoreUsageError(`${p} is not a ${MOUNT_MARKER_SCHEMA} marker`);
+  return m;
+}
+
+function writeMarker(repoRoot: string, m: MountMarker): void {
+  const p = markerPath(repoRoot, m.id);
+  mkdirSync(dirname(p), { recursive: true });
+  writeFileSync(p, JSON.stringify(m, null, 2) + "\n");
+}
+
+/** Every file under `dir`, mount-relative with `/` separators. Symlinks are not followed. */
+function walkFiles(dir: string, base = dir, out: string[] = []): string[] {
+  if (!existsSync(dir)) return out;
+  for (const name of readdirSync(dir)) {
+    const abs = join(dir, name);
+    const st = statSync(abs);
+    if (st.isDirectory()) walkFiles(abs, base, out);
+    else if (st.isFile()) out.push(relative(base, abs).split(sep).join("/"));
+  }
+  return out.sort();
+}
+
+/** The local edits since the mount: what a push would send. */
+function localChanges(store: BranchStore, m: MountMarker, repoRoot: string): Change[] {
+  const local = new Set(walkFiles(m.into));
+  const changes: Change[] = [];
+  const fresh = [...local].filter((r) => !m.files[r]);
+  const ignored = ignoredByCheckout(repoRoot, m.into, fresh);
+  for (const rel of local) {
+    if (!m.files[rel] && ignored.has(rel)) continue;
+    const abs = join(m.into, rel);
+    const bytes = readFileSync(abs);
+    const prev = m.files[rel];
+    const exec = (statSync(abs).mode & 0o111) !== 0;
+    const mode = exec ? "100755" : "100644";
+    if (prev && prev.blob === store.hashOf(bytes) && prev.mode === mode) continue;
+    changes.push({ path: `${m.path}/${rel}`, content: bytes, expect: prev ? prev.blob : null, mode });
+  }
+  for (const [rel, prev] of Object.entries(m.files)) {
+    if (!local.has(rel)) changes.push({ path: `${m.path}/${rel}`, content: null, expect: prev.blob });
+  }
+  return changes;
+}
+
+/**
+ * Mount-relative paths among `rels` that the CHECKOUT ignores by a rule
+ * other than one ignoring the mount root itself. A mount honours the
+ * checkout's ignore rules for its contents (fsh-guts/logs/ is local scratch
+ * and must never be pushed), while the rule that hides the whole mount from
+ * `main` after the cutover does not make every file in it unpushable.
+ */
+function ignoredByCheckout(repoRoot: string, into: string, rels: string[]): Set<string> {
+  const out = new Set<string>();
+  const root = relative(repoRoot, into).split(sep).join("/");
+  if (!rels.length || root.startsWith("..")) return out;
+  const input = rels.map((r) => `${root}/${r}`).join("\n") + "\n";
+  const r = spawnSync("git", ["check-ignore", "-v", "--no-index", "--stdin"], { cwd: repoRoot, input, encoding: "utf-8" });
+  for (const line of (r.stdout ?? "").split("\n").filter(Boolean)) {
+    const tab = line.indexOf("\t");
+    const pattern = line.slice(0, tab).split(":").slice(2).join(":").replace(/^\/+|\/+$/g, "");
+    const path = line.slice(tab + 1);
+    if (pattern === root || pattern === `${root}/*` || pattern === `${root}/**`) continue;
+    out.add(path.slice(root.length + 1));
+  }
+  return out;
+}
+
+/**
+ * Put the tip's copy of `loc` at a local path. Refuses rather than clobbers:
+ * a directory `main` still tracks (the cutover has not happened), a non-empty
+ * directory that is not a mount, and a mount with unpushed edits. A miss is
+ * reported as a miss, never as an empty mount.
+ */
+export function mountTip(loc: TipLocation, opts: MountOptions = {}): MountResult {
+  const repoRoot = opts.repoRoot ?? gitTopLevel();
+  const into = resolve(repoRoot, opts.into ?? loc.path);
+  const relInto = relative(repoRoot, into);
+  if (!relInto.startsWith("..")) {
+    const tracked = spawnSync("git", ["ls-files", "--", relInto || "."], { cwd: repoRoot, encoding: "utf-8" });
+    if (tracked.status === 0 && tracked.stdout.trim()) {
+      return { state: "refused", reason: `${relInto} is still tracked on this checkout's branch, so ${loc.id} has not been cut over to ${loc.branch}; mount it elsewhere with --into` };
+    }
+  }
+  const store = BranchStore.open(loc.branch, { repoRoot, ...opts.store });
+  const prior = readMarker(repoRoot, loc.id);
+  if (prior) {
+    const pending = localChanges(store, prior, repoRoot);
+    if (pending.length) return { state: "refused", reason: `${prior.into} has ${pending.length} unpushed change(s); push or discard them before re-mounting` };
+  } else if (existsSync(into) && walkFiles(into).length) {
+    return { state: "refused", reason: `${into} holds files and is not a mount of ${loc.id}` };
+  }
+  const r = store.readTreeEntries(loc.path);
+  if (r.state !== "hit") return r;
+  if (prior) for (const rel of Object.keys(prior.files)) rmSync(join(prior.into, rel), { force: true });
+  const files: MountMarker["files"] = {};
+  for (const [p, f] of r.files) {
+    const rel = p.slice(loc.path.length + 1);
+    const abs = join(into, rel);
+    mkdirSync(dirname(abs), { recursive: true });
+    writeFileSync(abs, f.bytes);
+    chmodSync(abs, f.mode === "100755" ? 0o755 : 0o644);
+    files[rel] = { blob: f.blob, mode: f.mode };
+  }
+  writeMarker(repoRoot, { $schema: MOUNT_MARKER_SCHEMA, id: loc.id, branch: r.branch, path: loc.path, into, tip: r.tip, files });
+  return { state: "mounted", into, tip: r.tip, branch: r.branch, files: r.files.size };
+}
+
+/**
+ * Splice the mount's local edits onto the tip. Every change carries `expect`
+ * from the mounted tip, so an edit a sibling made to the same file since is a
+ * `conflict` and nothing is pushed. On `pushed`, the marker moves to the new
+ * tip, so the next push compares against what landed.
+ */
+export function pushMount(id: string, message: string, opts: MountOptions = {}): PushResult {
+  const repoRoot = opts.repoRoot ?? gitTopLevel();
+  const m = readMarker(repoRoot, id);
+  if (!m) return { state: "refused", reason: `${id} is not mounted in ${repoRoot}` };
+  const store = BranchStore.open(m.branch, { repoRoot, ...opts.store });
+  const changes = localChanges(store, m, repoRoot);
+  if (!changes.length) return { state: "unchanged", reason: `no local edits under ${m.into}`, branch: m.branch, attempts: 0 };
+  const w = store.write(changes, message);
+  if (w.state === "pushed" && w.commit) {
+    for (const c of changes) {
+      const rel = c.path.slice(m.path.length + 1);
+      if (c.content === null) delete m.files[rel];
+      else m.files[rel] = { blob: store.hashOf(Buffer.from(c.content)), mode: c.mode ?? "100644" };
+    }
+    writeMarker(repoRoot, { ...m, tip: w.commit });
+  }
+  return w;
+}
+
 // ── CLI ──────────────────────────────────────────────────────────────────
 
 /** hit 0, miss 1, usage 2, corrupt 3, unknown 4 — qa-store's and lake-cache's numbers. */
 export const EXIT = { hit: 0, miss: 1, usage: 2, corrupt: 3, unknown: 4 } as const;
+/** `mount`: the read codes above, plus `refused` (it would clobber, or the directory is not cut over). */
+export const MOUNT_EXIT = { refused: 5 } as const;
+/** `push`: success is 0 either way; `conflict` and `refused` never read as success. */
+export const PUSH_EXIT = { pushed: 0, unchanged: 0, absent: 1, conflict: 5, refused: 5, failed: 6 } as const;
 
 export function main(argv: string[]): number {
   const [cmd, ...rest] = argv;
@@ -631,6 +850,27 @@ export function main(argv: string[]): number {
       console.log(JSON.stringify(resolveTipLocation(id), null, 2));
       return 0;
     }
+    if (cmd === "mount") {
+      const id = named.get("id");
+      if (!id) throw new BranchStoreUsageError("mount needs --id <directory-id>");
+      const r = mountTip(resolveTipLocation(id), { into: named.get("into") });
+      if (r.state === "mounted") {
+        console.log(`branch-store: mounted ${id} (${r.files} file(s)) from ${r.branch}@${r.tip.slice(0, 12)} at ${r.into}`);
+        return 0;
+      }
+      console.error(`branch-store: mount ${id}: ${r.state}: ${r.reason}`);
+      return r.state === "refused" ? MOUNT_EXIT.refused : EXIT[r.state];
+    }
+    if (cmd === "push") {
+      const id = named.get("id");
+      if (!id) throw new BranchStoreUsageError("push needs --id <directory-id>");
+      const r = pushMount(id, named.get("message") ?? `${id}: push the local mount`);
+      const line = `branch-store: push ${id}: ${r.state}: ${r.reason}`;
+      if (r.state === "pushed" || r.state === "unchanged") console.log(line);
+      else console.error(line);
+      if ("conflicts" in r && r.conflicts) for (const c of r.conflicts) console.error(`  ${c.path}: mounted ${c.expected ?? "(absent)"}, tip ${c.actual ?? "(absent)"}`);
+      return PUSH_EXIT[r.state];
+    }
     const branch = named.get("branch");
     if (!branch) throw new BranchStoreUsageError(`${cmd ?? "(none)"} needs --branch B`);
     const store = BranchStore.open(branch.split(","));
@@ -646,7 +886,7 @@ export function main(argv: string[]): number {
       else console.error(`branch-store: ${r.state}: ${r.reason}`);
       return EXIT[r.state];
     }
-    throw new BranchStoreUsageError(`unknown command ${cmd ?? "(none)"}; expected read | ls | where`);
+    throw new BranchStoreUsageError(`unknown command ${cmd ?? "(none)"}; expected read | ls | where | mount | push`);
   } catch (e) {
     if (e instanceof BranchStoreUsageError) {
       console.error(`branch-store: ${e.message}`);
