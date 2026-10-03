@@ -137,7 +137,8 @@ function main(): void {
   const materializePackage = process.argv.includes("--materialize-package");
   const USAGE =
     "usage: ingest-ig-artifacts.ts --source <dir> --out <dir> [--id <id>] " +
-    "[--base <url>] [--kind gh-pages|output] [--materialize-sidecars] [--check]";
+    "[--base <url>] [--kind gh-pages|output] [--materialize-sidecars] [--sidecar-dir <dir>] " +
+    "[--api-hub-page <file>] [--api-hub-markers <START>,<END>] [--api-placeholder <NAME>] [--check]";
 
   // A MISINVOCATION AND "NOTHING HERE TO CHECK" ARE DIFFERENT, and printing one
   // usage string for both is why `ingest:ig:check` read as a broken script for
@@ -232,7 +233,7 @@ function main(): void {
   const htmlPosition = new Map<string, number>();
   htmlEntries.forEach((e, i) => { if (!htmlPosition.has(e.key)) htmlPosition.set(e.key, i); });
 
-  // ── DAK API detection ─────────────────────────────────────────────────
+  // ── IG API detection ──────────────────────────────────────────────────
   // Keyed off the ENUMERATION SCHEMAS at the published root. Never off the
   // presence of `openapi/`, which in smart-trust holds the DDCC Gateway API —
   // a domain API that merely lives there.
@@ -277,7 +278,7 @@ function main(): void {
   }
 
   /**
-   * The five materialisation gates for a DAK sidecar.
+   * The five materialisation gates for an IG API sidecar.
    *
    * `size.basis` is MEASURED from this IG's own surface at ingest time. It was
    * a hardcoded sentence quoting smart-trust's 332K/71 files and 7.1M corpus,
@@ -285,21 +286,21 @@ function main(): void {
    * basis that is wrong for its subject is worse than none, because it reads
    * as though somebody checked.
    */
-  const dakGates = (): NonNullable<FhirArtifact["materialization"]["gates"]> => ({
+  const apiGates = (): NonNullable<FhirArtifact["materialization"]["gates"]> => ({
     size: {
       verdict: "permitted",
       basis:
-        `The DAK surface materialised here is ${dakBytes().toLocaleString()} bytes across ` +
-        `${dakFiles} file(s), measured from ${base} at ingest. The full resource corpus is left by reference.`,
+        `The IG API surface materialised here is ${apiBytes().toLocaleString()} bytes across ` +
+        `${apiFiles} file(s), measured from ${base} at ingest. The full resource corpus is left by reference.`,
     },
     restrictions: { verdict: "permitted", basis: "Published openly on the IG's public Pages site; no access control on the source." },
     retention: { verdict: "permitted", basis: "Working copy, regenerable by re-running this ingest against the same source revision." },
     sourceLoss: { verdict: "unknown", basis: "Not established. The IG is actively published; no statement has been made about how long a given version's Pages build remains reachable." },
-    copyright: { verdict: "unknown", basis: "Not established. WHO SMART Guideline IG content carries WHO's own licensing, which has not been read for this ingest." },
+    copyright: { verdict: "unknown", basis: "Not established. The IG's content licensing has not been read for this ingest." },
   });
-  let dakFiles = 0;
-  let dakByteTotal = 0;
-  const dakBytes = (): number => dakByteTotal;
+  let apiFiles = 0;
+  let apiByteTotal = 0;
+  const apiBytes = (): number => apiByteTotal;
 
   // ── DAK overlay ───────────────────────────────────────────────────────
   //
@@ -396,13 +397,13 @@ function main(): void {
         // SOURCE, and this is what maps a recorded `localPath` back to it.
         materializedFrom.set(basename(file), file);
       }
-      dakFiles += 1;
-      dakByteTotal += r.bytes ?? statSync(join(source, file)).size;
+      apiFiles += 1;
+      apiByteTotal += r.bytes ?? statSync(join(source, file)).size;
       any = true;
     }
     if (any && counts?.codeCount !== undefined) a.sidecars = { ...a.sidecars, codeCount: counts.codeCount };
     if (any && counts?.propertyCount !== undefined) a.sidecars = { ...a.sidecars, propertyCount: counts.propertyCount };
-    // Gates are assigned AFTER every sidecar has landed, not here: `dakGates`
+    // Gates are assigned AFTER every sidecar has landed, not here: `apiGates`
     // reads running totals, so building them mid-loop gave each artefact a
     // different "measured" surface — 14 files on the first, hundreds on the
     // last. A basis that varies per row is not a measurement.
@@ -448,7 +449,7 @@ function main(): void {
       attach(a, `${a.resourceType}-${a.id}`);
     }
     // One measurement, taken once, applied to every materialised node.
-    const gates = dakGates();
+    const gates = apiGates();
     // Keys only: the stem used to compose `localPath` and no longer does —
     // the path is read from the sidecar that actually attached.
     for (const key of materializedStems.keys()) {
@@ -515,15 +516,25 @@ function main(): void {
     }
   }
 
-  // ── The DAK API hub, a fragment of `dak-api.html` ──────────────────────
+  // ── The IG API hub, a fragment of the IG's hub page ───────────────────
   // The hub is generated AFTER the Publisher, into a page whose source holds
   // only a placeholder, so the published page is the one place it exists.
   // Held verbatim between its own markers: a page fetches it (bean `680p`)
-  // instead of retyping prose that smart-base's generator owns.
-  const HUB_START = "<!-- DAK_API_HUB_START -->";
-  const HUB_END = "<!-- DAK_API_HUB_END -->";
-  let hub: { fragment: string; rep: Representation } | undefined;
-  const hubPage = join(source, "dak-api.html");
+  // instead of retyping prose that the IG's own post-processing owns.
+  //
+  // The page's name, its two markers and the source placeholder are the
+  // post-processor's, never this layer's (bean `d313`): flags with generic
+  // defaults, and an IG that publishes a hub under other names (WHO's DAK
+  // overlay: `dak-api.html`, `DAK_API_HUB_START/END`, `DAK_API_CONTENT`)
+  // passes its own.
+  const [HUB_START, HUB_END] = (arg("api-hub-markers") ?? "IG_API_HUB_START,IG_API_HUB_END").split(",").map((m) => `<!-- ${m.trim()} -->`);
+  const hubFile = arg("api-hub-page") ?? "ig-api.html";
+  const hubPlaceholder = arg("api-placeholder") ?? "IG_API_CONTENT";
+  // Named after the hub page, so WHO's stays `dak-api-hub.json` and a generic
+  // IG's is `ig-api-hub.json`, with no name of either written here.
+  const hubDataFile = `${hubFile.replace(/\.html$/, "")}-hub.json`;
+  let hub: { fragment: string; rep: Representation & { placeholder: string } } | undefined;
+  const hubPage = join(source, hubFile);
   if (materializeSidecars && sidecarApi === "present" && existsSync(hubPage)) {
     const html = readFileSync(hubPage, "utf8");
     const a = html.indexOf(HUB_START);
@@ -533,14 +544,14 @@ function main(): void {
       // file: published in the served graph, an `.html` fragment is a page
       // with no <body>, which the staging banner refuses (and rightly: it is
       // not a page). Measured on PR #1766's staging job, 2026-10-01.
-      const url = `${base.replace(/\/$/, "")}/dak-api.html`;
+      const url = `${base.replace(/\/$/, "")}/${hubFile}`;
       const fragment = `${JSON.stringify({ from: url, between: [HUB_START, HUB_END], html: html.slice(a, b + HUB_END.length) }, null, 2)}\n`;
       hub = {
         fragment,
-        rep: { url, localPath: join("fhir-artifact-index", sidecarDir, "dak-api-hub.json"), bytes: Buffer.byteLength(fragment) },
+        rep: { url, localPath: join("fhir-artifact-index", sidecarDir, hubDataFile), bytes: Buffer.byteLength(fragment), placeholder: `<!-- ${hubPlaceholder} -->` },
       };
     } else {
-      console.log("  dak-api.html carries no DAK_API_HUB_START/END pair — no hub held");
+      console.log(`  ${hubFile} carries no ${HUB_START} … ${HUB_END} pair — no hub held`);
     }
   }
 
@@ -566,7 +577,7 @@ function main(): void {
     provenance,
     sidecarApi,
     ...(contexts.length ? { contexts } : {}),
-    ...(hub ? { dakApiHub: hub.rep } : {}),
+    ...(hub ? { igApiHub: hub.rep } : {}),
     ...(materializePackage ? (() => {
       const r = rep(source, base, "package.tgz", join("fhir-artifact-index", "package.tgz"));
       return r ? { package: r } : {};
@@ -602,7 +613,7 @@ function main(): void {
     mkdirSync(join(sidecarsDir, "contexts"), { recursive: true });
     for (const [from, to] of materialized) copyFileSync(join(source, from), join(sidecarsDir, to));
   }
-  if (hub) writeFileSync(join(graphDir, sidecarDir, "dak-api-hub.json"), hub.fragment);
+  if (hub) writeFileSync(join(graphDir, sidecarDir, hubDataFile), hub.fragment);
   if (materializePackage && existsSync(join(source, "package.tgz"))) copyFileSync(join(source, "package.tgz"), join(graphDir, "package.tgz"));
 
   const census = materializationCensus(artifacts);
@@ -617,7 +628,7 @@ function main(): void {
     if (divergentSidecars.length > 5) console.log(`    …and ${divergentSidecars.length - 5} more`);
   }
   console.log(`  contexts: ${contexts.length}`);
-  if (hub) console.log(`  DAK API hub: ${hub.rep.bytes} bytes from dak-api.html`);
+  if (hub) console.log(`  IG API hub: ${hub.rep.bytes} bytes from ${hubFile}`);
   if (unbound.length) {
     console.log(`  UNBOUND sidecars: ${unbound.length} — listed by an enumeration, matched to no artefact:`);
     for (const u of unbound.slice(0, 5)) console.log(`    ${u.filename}${u.title ? ` (${u.title})` : ""}`);

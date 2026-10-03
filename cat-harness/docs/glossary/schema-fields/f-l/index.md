@@ -66,19 +66,19 @@ FhirArtifactIndexSchema.canonicalBase <span class="fa-gloss-status">candidate, e
 <p>The canonical base every artefact's canonical URL extends, e.g. <code>http://smart.who.int/trust</code>.</p>
 <p class="fa-gloss-meta">Schema fields of fhir-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/fhir-harness/schemas/fhir-artifact-index.ts"><code>fhir-harness/schemas/fhir-artifact-index.ts#FhirArtifactIndexSchema.canonicalBase</code></a></p>
 </dd>
-<dt id="fhir-harness--kg-schema-fields--fhir-artifact-index.fhirartifactindexschema.dakapihub" data-fa-state="extracted" data-fa-gloss="">
-FhirArtifactIndexSchema.dakApiHub <span class="fa-gloss-status">candidate, extracted</span>
-</dt>
-<dd>
-<p>The DAK API hub: the region of the IG's <code>dak-api.html</code> between its <code>DAK_API_HUB_START</code> and <code>DAK_API_HUB_END</code> markers, which smart-base's <code>generate_dak_api_hub.py</code> writes after the Publisher has run. <code>url</code> is the page it was read from; <code>localPath</code> is the fragment, held so a page can fetch it (bean <code>680p</code>) rather than retype its prose — as a JSON node (<code>&#123; from, between, html }</code>), because an <code>.html</code> fragment published in the served graph would be a page with no &lt;body&gt;. Absent means the IG publishes no hub, or it was not materialised.</p>
-<p class="fa-gloss-meta">Schema fields of fhir-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/fhir-harness/schemas/fhir-artifact-index.ts"><code>fhir-harness/schemas/fhir-artifact-index.ts#FhirArtifactIndexSchema.dakApiHub</code></a></p>
-</dd>
 <dt id="fhir-harness--kg-schema-fields--fhir-artifact-index.fhirartifactindexschema.id" data-fa-state="extracted" data-fa-gloss="">
 FhirArtifactIndexSchema.id <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
 <p>Instance id — the directory this index lives in, e.g. <code>smart-trust</code>.</p>
 <p class="fa-gloss-meta">Schema fields of fhir-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/fhir-harness/schemas/fhir-artifact-index.ts"><code>fhir-harness/schemas/fhir-artifact-index.ts#FhirArtifactIndexSchema.id</code></a></p>
+</dd>
+<dt id="fhir-harness--kg-schema-fields--fhir-artifact-index.fhirartifactindexschema.igapihub" data-fa-state="extracted" data-fa-gloss="">
+FhirArtifactIndexSchema.igApiHub <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>The IG API hub: the region of the IG's hub page between the two markers its post-processing writes after the Publisher has run (for WHO's DAK overlay, <code>dak-api.html</code> between <code>DAK_API_HUB_START</code> and <code>DAK_API_HUB_END</code>, written by smart-base's <code>generate_dak_api_hub.py</code>). <code>url</code> is the page it was read from; <code>localPath</code> is the fragment, held so a page can fetch it (bean <code>680p</code>) rather than retype its prose — as a JSON node (<code>&#123; from, between, html }</code>), because an <code>.html</code> fragment published in the served graph would be a page with no &lt;body&gt;. Absent means the IG publishes no hub, or it was not materialised.</p>
+<p class="fa-gloss-meta">Schema fields of fhir-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/fhir-harness/schemas/fhir-artifact-index.ts"><code>fhir-harness/schemas/fhir-artifact-index.ts#FhirArtifactIndexSchema.igApiHub</code></a></p>
 </dd>
 <dt id="fhir-harness--kg-schema-fields--fhir-artifact-index.fhirartifactindexschema.package" data-fa-state="extracted" data-fa-gloss="">
 FhirArtifactIndexSchema.package <span class="fa-gloss-status">candidate, extracted</span>

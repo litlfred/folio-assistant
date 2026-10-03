@@ -29,7 +29,7 @@ implementation guide instantiates.
 | in | out |
 |---|---|
 | SUSHI, the IG Publisher, Jekyll assembly, publication | `dak.config.json` and the DAK logical model |
-| rendering IG content through just-the-docs | the DAK API surface — `.schema.json`, `.displays.json`, `.openapi.json`, `dak-api.html` |
+| rendering IG content through just-the-docs, including the IG API sidecars an IG publishes (`ig-api-views.ts`, bean `d313`) | the DAK API's names and production — the "DAK API" label, `dak-api.html` and its markers, the post-processing that writes the sidecars |
 | stripping oversized `Library` payloads | any `smart.who.int` canonical or WHO publisher metadata |
 | the artefact-index reconstruction | the DAK pre- and post-processing phases |
 

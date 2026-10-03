@@ -1,4 +1,4 @@
-// The DAK view pages' one script, published once at `assets/dak-view.js` and
+// The IG API view pages' one script, published once at `assets/ig-api-view.js` and
 // loaded by every `<Name>.schema.json.html` / `<Name>.jsonld.html` (bean `680p`:
 // the page carries layout, the content is fetched from the graph).
 //
@@ -15,9 +15,9 @@
       if (--this.pending === 0) document.documentElement.setAttribute("data-kg-loaded", "");
     },
   });
-document.querySelectorAll("code[data-dak-src]").forEach(function (el) {
+document.querySelectorAll("code[data-ig-api-src]").forEach(function (el) {
   kg.pending++;
-  fetch(el.getAttribute("data-dak-src"))
+  fetch(el.getAttribute("data-ig-api-src"))
     .then(function (r) {
       if (!r.ok) throw new Error(r.status + " " + r.statusText);
       return r.json();
@@ -26,7 +26,7 @@ document.querySelectorAll("code[data-dak-src]").forEach(function (el) {
       el.textContent = JSON.stringify(d, null, 2);
     })
     .catch(function (e) {
-      el.textContent = "Could not load " + el.getAttribute("data-dak-src") + ": " + e.message;
+      el.textContent = "Could not load " + el.getAttribute("data-ig-api-src") + ": " + e.message;
     })
     .finally(function () {
       kg.done();

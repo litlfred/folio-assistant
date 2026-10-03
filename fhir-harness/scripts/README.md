@@ -13,10 +13,10 @@ Part of [FHIR IG Harness](../README.md) 0.1.0, declared as `fhir-ig-scripts`, ho
 | [`build-ig-site.test.ts`](build-ig-site.test.ts) | a file |  |
 | [`build-ig-site.ts`](build-ig-site.ts) | a file |  |
 | [`check-artifact-index.ts`](check-artifact-index.ts) | a file |  |
-| [`dak-views.test.ts`](dak-views.test.ts) | a file |  |
-| [`dak-views.ts`](dak-views.ts) | a file |  |
 | [`gen-ig-pages.test.ts`](gen-ig-pages.test.ts) | a file |  |
 | [`gen-ig-pages.ts`](gen-ig-pages.ts) | a file |  |
+| [`ig-api-views.test.ts`](ig-api-views.test.ts) | a file |  |
+| [`ig-api-views.ts`](ig-api-views.ts) | a file |  |
 | [`ig-ast.test.ts`](ig-ast.test.ts) | a file |  |
 | [`ig-ast.ts`](ig-ast.ts) | a file |  |
 | [`ig-binary-audit.test.ts`](ig-binary-audit.test.ts) | a file |  |
