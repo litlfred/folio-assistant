@@ -247,6 +247,17 @@ export interface NavbarModel {
    */
   documentIndex?: NavGroup;
   /**
+   * fsh-guts, the trashcan that is kept, as a control in the FIXED top — issue
+   * #1925, owner 2026-10-02: *"(also add fsh-guts icon to LHS top navbar)"*.
+   *
+   * It is where a sticky sent to fsh-guts is restored from, which is why it is
+   * on every page rather than inside a settings panel. Rendered `hidden`:
+   * the list, the count and the restore are all script (`docs-ui.js`
+   * `mountFshGutsNav`), so with no script it is absent rather than a button
+   * that does nothing. Absent from the model, nothing is rendered at all.
+   */
+  fshGuts?: { label: string };
+  /**
    * The KG's own graphs — the scrollable middle, as ONE collapsible group.
    *
    * Owner, 2026-09-21: *"librarues should be in hambuger menu so can collase
@@ -677,6 +688,29 @@ export function navbarOpenInputHtml(): string {
  * image is already silent — and the label's name is the instance, so a
  * screen reader hears "cat-harness" and the `title` says what a click does.
  */
+/** The dead fish (`7vhe`), the same drawing `docs-ui.js` uses for fsh-guts. */
+const FISH_SVG =
+  '<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">' +
+  '<path d="M2 12c3-4 7-6 11-6s7 2 9 6c-2 4-5 6-9 6s-8-2-11-6z" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/>' +
+  '<path d="M22 12l-3-3v6z" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/>' +
+  '<path d="M7.2 10.2l2 2m0-2l-2 2" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>';
+
+/**
+ * The fsh-guts control. Its count starts `pending` and is written by the
+ * client, which knows the four states (`absent`, `zero`, `some`, `error`); a
+ * number baked here would be the build's, not this reader's.
+ */
+export function fshGutsHtml(f: { label: string }): string {
+  return (
+    `<button type="button" class="fa-nav-fsh-guts" data-fa-fsh-guts-open hidden ` +
+    `aria-label="${esc(f.label)}" data-fa-tip="${esc(f.label)}">` +
+    `<span class="fa-nav-glyph" aria-hidden="true">${FISH_SVG}</span>` +
+    `<span class="fa-nav-label">fsh-guts</span>` +
+    `<span class="fa-nav-count" data-fa-count-state="pending" aria-hidden="true">\u2026</span>` +
+    `</button>`
+  );
+}
+
 export function headHtml(m: NavbarModel, c: Ctx = { liquid: false }): string {
   const item: NavItem = { label: m.instance, ...(m.mark ?? {}) };
   return (
@@ -708,6 +742,7 @@ export function navbarRegionsHtml(m: NavbarModel): string {
     (m.head === "none" ? "" : headHtml(m, c)) +
     (m.root ? itemHtml(m.root, c) : "") +
     (m.documentIndex ? groupHtml(m.documentIndex, c) : "") +
+    (m.fshGuts ? fshGutsHtml(m.fshGuts) : "") +
     `</div>` +
     (m.graphs || m.visualiser
       ? `<div class="fa-nav-graphs">` +
