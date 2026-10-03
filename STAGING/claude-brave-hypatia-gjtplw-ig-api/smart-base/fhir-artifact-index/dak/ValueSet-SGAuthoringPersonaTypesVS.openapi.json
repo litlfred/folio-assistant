@@ -1,0 +1,56 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "SMART Guidelines Authoring Persona Types ValueSet Schema API",
+    "description": "JSON Schema for SMART Guidelines Authoring Persona Types ValueSet ValueSet codes. Generated from FHIR expansions using IRI format.",
+    "version": "1.0.0"
+  },
+  "paths": {
+    "/ValueSet-SGAuthoringPersonaTypesVS.schema.json": {
+      "get": {
+        "summary": "JSON Schema definition for the enumeration ValueSet-SGAuthoringPersonaTypesVS",
+        "description": "This endpoint serves the JSON Schema definition for the enumeration ValueSet-SGAuthoringPersonaTypesVS.",
+        "responses": {
+          "200": {
+            "description": "The JSON Schema for ValueSet-SGAuthoringPersonaTypesVS",
+            "content": {
+              "application/schema+json": {
+                "schema": {
+                  "$ref": "./ValueSet-SGAuthoringPersonaTypesVS.schema.json"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "ValueSet-SGAuthoringPersonaTypesVS": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "$id": "http://smart.who.int/base/ValueSet-SGAuthoringPersonaTypesVS.schema.json",
+        "title": "SMART Guidelines Authoring Persona Types ValueSet Schema",
+        "description": "JSON Schema for SMART Guidelines Authoring Persona Types ValueSet ValueSet codes. Generated from FHIR expansions using IRI format.",
+        "type": "string",
+        "enum": [
+          "http://smart.who.int/base/CodeSystem/SGAuthoringPersonaTypes#programme-manager",
+          "http://smart.who.int/base/CodeSystem/SGAuthoringPersonaTypes#technical-officer",
+          "http://smart.who.int/base/CodeSystem/SGAuthoringPersonaTypes#clinical-sme",
+          "http://smart.who.int/base/CodeSystem/SGAuthoringPersonaTypes#business-analyst",
+          "http://smart.who.int/base/CodeSystem/SGAuthoringPersonaTypes#fhir-modeller",
+          "http://smart.who.int/base/CodeSystem/SGAuthoringPersonaTypes#terminologist",
+          "http://smart.who.int/base/CodeSystem/SGAuthoringPersonaTypes#qc-reviewer",
+          "http://smart.who.int/base/CodeSystem/SGAuthoringPersonaTypes#publication-manager",
+          "http://smart.who.int/base/CodeSystem/SGAuthoringPersonaTypes#content-reviewer",
+          "http://smart.who.int/base/CodeSystem/SGAuthoringPersonaTypes#translator"
+        ],
+        "narrative": "This schema validates IRI-formatted codes for the SMART Guidelines Authoring Persona Types ValueSet ValueSet. Each enum value includes the system URI in the format {systemuri}#{code} to match JSON-LD enumeration IRIs. Display values are available at http://smart.who.int/base/ValueSet-SGAuthoringPersonaTypesVS.displays.json. For a complete listing of all ValueSets, see artifacts.html#terminology-value-sets.",
+        "fhir:displays": "http://smart.who.int/base/ValueSet-SGAuthoringPersonaTypesVS.displays.json",
+        "fhir:valueSet": "http://smart.who.int/base/ValueSet/SGAuthoringPersonaTypesVS",
+        "fhir:version": "0.3.0",
+        "fhir:expansionTimestamp": "2026-08-26T08:29:22.803550"
+      }
+    }
+  }
+}
