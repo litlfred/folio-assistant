@@ -39,7 +39,21 @@ that a route has one writer, and a family with two would be the premise failing
 - [ ] the 126 files are removed from `main` only on the owner's explicit go (`deletion-requires-confirmation`)
 - [ ] measured AFTER: a merge of a branch that regenerates these pages against a `main` that also did produces 0 conflicts, where today it produces one per changed page
 
-## Blocked on
+## Blocked on — LIFTED 2026-10-03, #1996 merged (`abe8d8253b`)
+
+The condition this block named has been met, and the handoff below said exactly
+what to do when it was: unblock and start at the first Done-when, which is the
+`docs-auto` DECLARATION rather than the branch. Verified on `main`:
+`cat-harness.ts:1461` reads `keyedBy: z.enum(["commit", "tip", "route"])`.
+
+**One Done-when is NOT startable by an agent and that is deliberate** — *"the
+126 files are removed from `main` only on the owner's explicit go"*. That is
+`deletion-requires-confirmation`, and it means this bean can be carried as far
+as declare-seed-and-read-from-the-branch while `main` keeps its copy, with the
+removal a separate act the owner performs or authorises. A cutover that deletes
+on its own initiative is the `plj1` shape.
+
+The original block, kept for the record:
 
 - **waits on:** `1j3q` / PR #1996 merging — the `keyedBy: "route"` enum value
   and `branch-store.ts`'s route write path. Nothing here is startable before
