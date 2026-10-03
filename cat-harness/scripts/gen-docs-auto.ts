@@ -98,6 +98,7 @@ import {
   forgeLocation,
 } from "../schemas/cat-harness.ts";
 import { checkoutDirectories } from "../schemas/harness-config.ts";
+import { gitFiles } from "../schemas/git-corpus.ts";
 import { withViewerNav } from "./viewer-page.ts";
 import { withInlineCode } from "../schemas/inline-code.ts";
 import { skillPageHref, skillPagesOf } from "./lib/skill-pages.ts";
@@ -353,14 +354,29 @@ export function declaredDirectories(graph: string): Array<{ id: string; absPath:
  */
 /**
  * Every file under a graph's declared directories that `keep` admits, as
- * `AutoDocItem`s.
+ * `AutoDocItem`s — read from the GIT CORPUS, not from the disk.
  *
  * Factored out because the four types added 2026-10-03 (`index/schemas`,
  * `index/tools`, `uml`, `lsi`) differ only in their extension filter and their
- * summary source, and writing the walk four times is how four copies drift
- * into four answers to "what counts as an artefact of this graph".
+ * summary source, and writing the walk four times is how four copies drift into
+ * four answers to "what counts as an artefact of this graph".
  *
- * It walks RECURSIVELY, which `index/skills` deliberately does not — and the
+ * **It uses `gitFiles` because the first draft used `readdirSync`, and that was
+ * a measured defect rather than a style point.** The disk walk admitted
+ * `cat-harness/schemas/block-qa-schema/dist/index.d.ts` — a gitignored build
+ * output present in a working container and absent from a fresh checkout — so
+ * `index/schemas` emitted **155** rows here and **154** in CI, `docs:auto`
+ * wrote a different page in each, and `Skill-registration chain, unmasked
+ * (hard)` went red on a tree that was green locally. `skill-register.ts`'s own
+ * closing note names this exact trap — *"if it is red in CI but green here: ask
+ * git what the corpus is, not the disk"* — citing a gitignored `node_modules/`
+ * that inflated `cat-harness/schemas` from 227 nodes to 1441. An index of a
+ * graph is an index of what the repository HOLDS, and git is what says so.
+ *
+ * `gitFiles` falls back to a walk where git cannot answer, skipping only `.git`
+ * and `node_modules`, so the two paths admit the same set wherever git works.
+ *
+ * It descends RECURSIVELY, which `index/skills` deliberately does not — and the
  * difference is not an oversight. A skill's directory holds supporting pages
  * that are not skills, so that type asks `skillMdDirs()` instead. These four
  * have no such sub-artefact: a `.puml` under `uml/overview/<instance>/` is a
@@ -372,22 +388,20 @@ function filesOfGraph(
   summarise?: (abs: string) => string | undefined,
 ): AutoDocItem[] {
   const items: AutoDocItem[] = [];
-  const walk = (dir: string): void => {
-    if (!existsSync(dir)) return;
-    for (const e of readdirSync(dir, { withFileTypes: true })) {
-      if (e.name.startsWith(".") || e.name === "node_modules") continue;
-      const abs = join(dir, e.name);
-      if (e.isDirectory()) walk(abs);
-      else if (keep(e.name)) {
-        items.push({
-          path: relative(REPO, abs).split("\\").join("/"),
-          name: basename(e.name).replace(/\.(ts|json|puml)$/, ""),
-          summary: summarise?.(abs),
-        });
-      }
+  for (const d of declaredDirectories(graph)) {
+    if (!existsSync(d.absPath)) continue;
+    const { files } = gitFiles(
+      d.absPath,
+      (rel) => !rel.split("/").some((s) => s.startsWith(".")) && keep(basename(rel)),
+    );
+    for (const abs of files) {
+      items.push({
+        path: relative(REPO, abs).split("\\").join("/"),
+        name: basename(abs).replace(/\.(ts|json|puml)$/, ""),
+        summary: summarise?.(abs),
+      });
     }
-  };
-  for (const d of declaredDirectories(graph)) walk(d.absPath);
+  }
   return dedupeByPath(items);
 }
 
