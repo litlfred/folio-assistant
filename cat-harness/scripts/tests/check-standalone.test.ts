@@ -72,6 +72,23 @@ describe("the falsifiers, through the real probe", () => {
     }
   }, 60_000);
 
+  test("a run that executes nothing is never measured, whatever BUN_OPTIONS says", () => {
+    // CI's shards set BUN_OPTIONS=--shard=N/4; inherited, the probe ran a
+    // quarter of the layer and a one-test layer ran nothing (#1977).
+    const root = scratchRepo({
+      "layer/a.test.ts": 'import { test } from "bun:test";\ntest("a", () => {});\n',
+    });
+    const before = process.env.BUN_OPTIONS;
+    process.env.BUN_OPTIONS = "--shard=2/4";
+    try {
+      expect(probeStandalone(root, "layer", DECLS, OPTS)).toMatchObject({ state: "measured", count: 0 });
+    } finally {
+      if (before === undefined) delete process.env.BUN_OPTIONS;
+      else process.env.BUN_OPTIONS = before;
+      rmSync(root, { recursive: true, force: true });
+    }
+  }, 60_000);
+
   test("a planted read of an undeclared sibling is red", () => {
     const root = scratchRepo({
       "folio-assistant-core/x": "only the monorepo has this\n",

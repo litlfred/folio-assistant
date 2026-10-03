@@ -814,6 +814,10 @@ export function probeStandalone(
     // run). The rehearsal's output is parsed, not shown, so it runs plain.
     const env = { ...process.env };
     for (const k of ["GITHUB_ACTIONS", "CI", "TEAMCITY_VERSION", "BUILDKITE"]) delete env[k];
+    // BUN_OPTIONS is prepended to EVERY bun invocation, and CI's test shards set
+    // `--shard=N/4` there: inherited, it made this rehearsal run a quarter of the
+    // layer, and #1977's one-test falsifier ran nothing at all (CI, 2026-10-03).
+    delete env.BUN_OPTIONS;
     const report = join(ws, ".standalone-junit.xml");
     const run = spawnSync("bun", ["test", "--reporter=junit", `--reporter-outfile=${report}`], {
       cwd,
@@ -825,6 +829,9 @@ export function probeStandalone(
     if (run.error) return { state: "error", note: `bun test could not run: ${message(run.error)}` };
     const parsed = parseBunTest(`${run.stdout}\n${run.stderr}`);
     if (!parsed) return { state: "error", note: `bun test exited ${run.status} with no summary to read` };
+    // A run that executed nothing is not a run with nothing failing.
+    const passed = Number(/^\s*(\d+)\s+pass\b/m.exec(`${run.stdout}\n${run.stderr}`)?.[1] ?? 0);
+    if (passed + parsed.failed === 0) return { state: "error", note: "bun test ran no tests, so nothing was measured" };
     const names = existsSync(report) ? parseJunitFailures(readFileSync(report, "utf-8")) : undefined;
     if (!names) return { state: "error", note: `bun test wrote no readable JUnit report at ${report}` };
     return {
