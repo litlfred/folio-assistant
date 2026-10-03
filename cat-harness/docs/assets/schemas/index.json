@@ -2,13 +2,12 @@
   "$schema": "folio-schema-graph/v1",
   "tile": {
     "schemas": {
-      "count": 207,
+      "count": 209,
       "unit": "modules"
     }
   },
   "roots": [
     "cat-harness/schemas",
-    "cat-openapi/schemas",
     "fhir-harness/schemas",
     "folio-assistant-core/schemas",
     "folio-assistant-sci/schemas",
@@ -1274,6 +1273,22 @@
       "isTest": false
     },
     {
+      "module": "cat-harness/schemas/subgraph-source.test.ts",
+      "instance": "cat-harness",
+      "name": "subgraph-source.test",
+      "graphNode": "undeclared",
+      "summary": "A declared subgraph's content source — one union, one resolver (bean `l4ay`).",
+      "isTest": true
+    },
+    {
+      "module": "cat-harness/schemas/subgraph-source.ts",
+      "instance": "cat-harness",
+      "name": "subgraph-source",
+      "graphNode": "schema",
+      "summary": "WHERE A DECLARED SUBGRAPH GETS ITS CONTENT — one concept, several kinds.",
+      "isTest": false
+    },
+    {
       "module": "cat-harness/schemas/substrate-snapshot.ts",
       "instance": "cat-harness",
       "name": "substrate-snapshot",
@@ -1684,27 +1699,11 @@
       "isTest": false
     },
     {
-      "module": "cat-openapi/schemas/openapi.ts",
-      "instance": "cat-openapi",
-      "name": "openapi",
-      "graphNode": "schema",
-      "summary": "The OpenAPI harness's shapes: what an instance declares, what an ingest",
-      "isTest": false
-    },
-    {
       "module": "fhir-harness/schemas/fhir-artifact-index.ts",
       "instance": "fhir-harness",
       "name": "fhir-artifact-index",
       "graphNode": "schema",
       "summary": "The artefact index of a published FHIR Implementation Guide.",
-      "isTest": false
-    },
-    {
-      "module": "fhir-harness/schemas/ig-ast.ts",
-      "instance": "fhir-harness",
-      "name": "ig-ast",
-      "graphNode": "schema",
-      "summary": "ig-ast.ts — the IG AST's file formats, declared once (bean `l0lq`).",
       "isTest": false
     },
     {
@@ -1768,21 +1767,6 @@
       "name": "ig-metadata-index",
       "graphNode": "schema",
       "summary": "IG metadata indexes — the Publisher's own metadata exports, given somewhere",
-      "isTest": false
-    },
-    {
-      "module": "fhir-harness/schemas/ig-releases.test.ts",
-      "instance": "fhir-harness",
-      "name": "ig-releases.test",
-      "graphNode": "undeclared",
-      "isTest": true
-    },
-    {
-      "module": "fhir-harness/schemas/ig-releases.ts",
-      "instance": "fhir-harness",
-      "name": "ig-releases",
-      "graphNode": "schema",
-      "summary": "ig-releases.ts — an IG's GitHub releases, recorded as POINTERS to their",
       "isTest": false
     },
     {
@@ -7130,6 +7114,13 @@
           "doc": "Which theme this subgraph renders on — one answer for every surface that"
         },
         {
+          "name": "source",
+          "type": "SubgraphSource",
+          "optional": true,
+          "array": false,
+          "doc": "Where this subgraph gets its content. Absent is `{ kind: \"directory\" }`."
+        },
+        {
           "name": "storage",
           "type": "DirectoryStorage",
           "optional": true,
@@ -7145,6 +7136,7 @@
         "cat-harness/schemas/cat-harness.ts#DirectoryStorage",
         "cat-harness/schemas/cat-harness.ts#GraphNodeDirectory",
         "cat-harness/schemas/cat-harness.ts#SubgraphCoverage",
+        "cat-harness/schemas/subgraph-source.ts#SubgraphSource",
         "cat-harness/schemas/theme.ts#ThemeRef"
       ],
       "unresolved": [],
@@ -7249,18 +7241,18 @@
           "doc": "This directory is AUTHORED FOR THE SITE'S PIPELINE, so compose it into the"
         },
         {
-          "name": "served",
-          "type": "z.boolean().optional()",
-          "optional": true,
-          "array": false,
-          "doc": "This directory's BYTES are published verbatim, at `/<instance>/<path>`, for"
-        },
-        {
           "name": "theme",
           "type": "ThemeRefSchema.optional()",
           "optional": true,
           "array": false,
           "doc": "Which theme this subgraph renders on."
+        },
+        {
+          "name": "source",
+          "type": "SubgraphSourceSchema.optional()",
+          "optional": true,
+          "array": false,
+          "doc": "Where this subgraph gets its CONTENT — the checkout's own directory (the"
         }
       ],
       "extendsNames": [
@@ -7272,6 +7264,7 @@
         "cat-harness/schemas/cat-harness.ts#GraphNodeDirectoryShape",
         "cat-harness/schemas/cat-harness.ts#SubgraphCoverageSchema",
         "cat-harness/schemas/cat-harness.ts#TileSchema",
+        "cat-harness/schemas/subgraph-source.ts#SubgraphSourceSchema",
         "cat-harness/schemas/theme.ts#ThemeRefSchema"
       ],
       "unresolved": [],
@@ -17439,6 +17432,63 @@
       "exported": true
     },
     {
+      "id": "cat-harness/schemas/harness-config.ts#DeclaredSubgraph",
+      "name": "DeclaredSubgraph",
+      "module": "cat-harness/schemas/harness-config.ts",
+      "kind": "interface",
+      "doc": "A declared subgraph: who declares it, its entry, and where its content comes from.",
+      "fields": [
+        {
+          "name": "id",
+          "type": "string",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "instanceRoot",
+          "type": "string",
+          "optional": false,
+          "array": false,
+          "doc": "The root of the instance whose OWN declaration carries the entry."
+        },
+        {
+          "name": "instanceName",
+          "type": "string",
+          "optional": false,
+          "array": false,
+          "doc": "That instance's declared `name`."
+        },
+        {
+          "name": "repository",
+          "type": "string",
+          "optional": true,
+          "array": false,
+          "doc": "The instance's declared `repository` (`owner/repo`), when it has one."
+        },
+        {
+          "name": "entry",
+          "type": "ResolvedDirectory",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "source",
+          "type": "ResolvedSubgraphSource",
+          "optional": false,
+          "array": false
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [
+        "cat-harness/schemas/cat-harness.ts#ResolvedDirectory",
+        "cat-harness/schemas/subgraph-source.ts#ResolvedSubgraphSource"
+      ],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
       "id": "cat-harness/schemas/harness-config.ts#FolioAssistantDependency",
       "name": "FolioAssistantDependency",
       "module": "cat-harness/schemas/harness-config.ts",
@@ -17627,13 +17677,21 @@
           "optional": true,
           "array": false,
           "doc": "Cross-folio dependencies."
+        },
+        {
+          "name": "subgraphSources",
+          "type": "SubgraphSourceOverrides",
+          "optional": true,
+          "array": false,
+          "doc": "Where a declared subgraph's content comes from in THIS instantiation, by directory id. See {@link HarnessConfigSchema}."
         }
       ],
       "extendsNames": [],
       "values": [],
       "refs": [
         "cat-harness/schemas/harness-config.ts#HarnessConfigDependencies",
-        "cat-harness/schemas/harness-config.ts#TranslationConfig"
+        "cat-harness/schemas/harness-config.ts#TranslationConfig",
+        "cat-harness/schemas/subgraph-source.ts#SubgraphSourceOverrides"
       ],
       "unresolved": [],
       "external": [],
@@ -17741,6 +17799,13 @@
           "type": "HarnessConfigDependenciesSchema.optional()",
           "optional": true,
           "array": false
+        },
+        {
+          "name": "subgraphSources",
+          "type": "SubgraphSourceOverridesSchema.optional()",
+          "optional": true,
+          "array": false,
+          "doc": "Per-instantiation override of where a declared subgraph gets its content,"
         }
       ],
       "extendsNames": [],
@@ -17748,7 +17813,8 @@
       "refs": [
         "cat-harness/schemas/harness-config.ts#HarnessConfigDependenciesSchema",
         "cat-harness/schemas/harness-config.ts#HarnessDirsSchema",
-        "cat-harness/schemas/harness-config.ts#TranslationConfigSchema"
+        "cat-harness/schemas/harness-config.ts#TranslationConfigSchema",
+        "cat-harness/schemas/subgraph-source.ts#SubgraphSourceOverridesSchema"
       ],
       "unresolved": [],
       "external": [
@@ -31529,6 +31595,329 @@
       "exported": true
     },
     {
+      "id": "cat-harness/schemas/subgraph-source.ts#BranchNameSchema",
+      "name": "BranchNameSchema",
+      "module": "cat-harness/schemas/subgraph-source.ts",
+      "kind": "zod-scalar",
+      "doc": "A plain branch name: no `refs/`, no `..`, no leading `-` — the rule `DirectoryStorageSchema` (#1764) uses.",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/subgraph-source.ts#BranchSourceSchema",
+      "name": "BranchSourceSchema",
+      "module": "cat-harness/schemas/subgraph-source.ts",
+      "kind": "zod-object",
+      "doc": "The content is a declared repository branch; the entry's `path` is where a mount of it lands.",
+      "fields": [
+        {
+          "name": "kind",
+          "type": "z.literal(\"branch\")",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "branch",
+          "type": "BranchNameSchema",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "keyedBy",
+          "type": "KeyedBySchema",
+          "optional": false,
+          "array": false
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [
+        "cat-harness/schemas/subgraph-source.ts#BranchNameSchema",
+        "cat-harness/schemas/subgraph-source.ts#KeyedBySchema"
+      ],
+      "unresolved": [],
+      "external": [
+        "z"
+      ],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/subgraph-source.ts#DirectorySourceSchema",
+      "name": "DirectorySourceSchema",
+      "module": "cat-harness/schemas/subgraph-source.ts",
+      "kind": "zod-object",
+      "doc": "The content is the checkout's own directory at the entry's `path`.",
+      "fields": [
+        {
+          "name": "kind",
+          "type": "z.literal(\"directory\")",
+          "optional": false,
+          "array": false
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [
+        "z"
+      ],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/subgraph-source.ts#KeyedBy",
+      "name": "KeyedBy",
+      "module": "cat-harness/schemas/subgraph-source.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/subgraph-source.ts#KeyedBySchema",
+      "name": "KeyedBySchema",
+      "module": "cat-harness/schemas/subgraph-source.ts",
+      "kind": "zod-enum",
+      "doc": "How entries are keyed on a branch: one per `commit`, or one live copy at the `tip`.",
+      "fields": [],
+      "extendsNames": [],
+      "values": [
+        "commit",
+        "tip"
+      ],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/subgraph-source.ts#LegacyStorageSchema",
+      "name": "LegacyStorageSchema",
+      "module": "cat-harness/schemas/subgraph-source.ts",
+      "kind": "zod-object",
+      "doc": "The #1764 shape, read only to map it.",
+      "fields": [
+        {
+          "name": "branch",
+          "type": "BranchNameSchema",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "keyedBy",
+          "type": "KeyedBySchema",
+          "optional": false,
+          "array": false
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [
+        "cat-harness/schemas/subgraph-source.ts#BranchNameSchema",
+        "cat-harness/schemas/subgraph-source.ts#KeyedBySchema"
+      ],
+      "unresolved": [],
+      "external": [],
+      "exported": false
+    },
+    {
+      "id": "cat-harness/schemas/subgraph-source.ts#ResolvedSubgraphSource",
+      "name": "ResolvedSubgraphSource",
+      "module": "cat-harness/schemas/subgraph-source.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/subgraph-source.ts#SourceDeclaredIn",
+      "name": "SourceDeclaredIn",
+      "module": "cat-harness/schemas/subgraph-source.ts",
+      "kind": "type-alias",
+      "doc": "Which layer the answer came from — reported, so an override is never silent.",
+      "fields": [],
+      "extendsNames": [],
+      "values": [
+        "default",
+        "declaration",
+        "storage",
+        "config"
+      ],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/subgraph-source.ts#SourcedEntry",
+      "name": "SourcedEntry",
+      "module": "cat-harness/schemas/subgraph-source.ts",
+      "kind": "interface",
+      "doc": "The fields of a directory entry the resolver reads.",
+      "fields": [
+        {
+          "name": "id",
+          "type": "string",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "path",
+          "type": "string",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "graphKinds",
+          "type": "readonly string[]",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "source",
+          "type": "SubgraphSource",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "storage",
+          "type": "unknown",
+          "optional": true,
+          "array": false,
+          "doc": "#1764's field, if a declaration carries it. Read only to map it."
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [
+        "cat-harness/schemas/subgraph-source.ts#SubgraphSource"
+      ],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/subgraph-source.ts#SpecialBranchRow",
+      "name": "SpecialBranchRow",
+      "module": "cat-harness/schemas/subgraph-source.ts",
+      "kind": "interface",
+      "doc": "A row of `special-branches.json`, as far as a source needs it.",
+      "fields": [
+        {
+          "name": "id",
+          "type": "string",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "shape",
+          "type": "\"branch\" | \"family\"",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "name",
+          "type": "string",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "legacy",
+          "type": "string[]",
+          "optional": false,
+          "array": true
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/subgraph-source.ts#SubgraphSource",
+      "name": "SubgraphSource",
+      "module": "cat-harness/schemas/subgraph-source.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/subgraph-source.ts#SubgraphSourceKind",
+      "name": "SubgraphSourceKind",
+      "module": "cat-harness/schemas/subgraph-source.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/subgraph-source.ts#SubgraphSourceOverrides",
+      "name": "SubgraphSourceOverrides",
+      "module": "cat-harness/schemas/subgraph-source.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/subgraph-source.ts#SubgraphSourceOverridesSchema",
+      "name": "SubgraphSourceOverridesSchema",
+      "module": "cat-harness/schemas/subgraph-source.ts",
+      "kind": "zod-record",
+      "doc": "The config half: `<instance>.config.json` → `subgraphSources`, keyed by directory id.",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/subgraph-source.ts#SubgraphSourceSchema",
+      "name": "SubgraphSourceSchema",
+      "module": "cat-harness/schemas/subgraph-source.ts",
+      "kind": "zod-union",
+      "doc": "A declared subgraph's content source. A discriminated union, so a new kind",
+      "fields": [],
+      "extendsNames": [],
+      "values": [
+        "kind"
+      ],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
       "id": "cat-harness/schemas/substrate-snapshot.ts#SubstrateSnapshot",
       "name": "SubstrateSnapshot",
       "module": "cat-harness/schemas/substrate-snapshot.ts",
@@ -43152,411 +43541,6 @@
       "exported": true
     },
     {
-      "id": "cat-openapi/schemas/openapi.ts#OpenApiConfig",
-      "name": "OpenApiConfig",
-      "module": "cat-openapi/schemas/openapi.ts",
-      "kind": "type-alias",
-      "fields": [],
-      "extendsNames": [],
-      "values": [],
-      "refs": [],
-      "unresolved": [],
-      "external": [],
-      "exported": true
-    },
-    {
-      "id": "cat-openapi/schemas/openapi.ts#OpenApiConfigDocumentSchema",
-      "name": "OpenApiConfigDocumentSchema",
-      "module": "cat-openapi/schemas/openapi.ts",
-      "kind": "zod-object",
-      "fields": [
-        {
-          "name": "id",
-          "type": "z.string().regex(SEGMENT)",
-          "optional": false,
-          "array": false,
-          "doc": "The document's id: its file stem, its page directory and its IRI segment."
-        },
-        {
-          "name": "title",
-          "type": "z.string().min(1).optional()",
-          "optional": true,
-          "array": false,
-          "doc": "What a reader calls it. Absent, the document's own `info.title` is used."
-        },
-        {
-          "name": "description",
-          "type": "z.string().min(1).optional()",
-          "optional": true,
-          "array": false,
-          "doc": "One sentence on what this API is and why this instance holds it."
-        },
-        {
-          "name": "source",
-          "type": "OpenApiSourceSchema",
-          "optional": false,
-          "array": false
-        }
-      ],
-      "extendsNames": [],
-      "values": [],
-      "refs": [
-        "cat-openapi/schemas/openapi.ts#OpenApiSourceSchema"
-      ],
-      "unresolved": [],
-      "external": [
-        "SEGMENT",
-        "z"
-      ],
-      "exported": true
-    },
-    {
-      "id": "cat-openapi/schemas/openapi.ts#OpenApiConfigSchema",
-      "name": "OpenApiConfigSchema",
-      "module": "cat-openapi/schemas/openapi.ts",
-      "kind": "zod-object",
-      "fields": [
-        {
-          "name": "$schema",
-          "type": "z.literal(OPENAPI_CONFIG_SCHEMA_TAG)",
-          "optional": false,
-          "array": false
-        },
-        {
-          "name": "directory",
-          "type": "z.string().min(1)",
-          "optional": false,
-          "array": false,
-          "doc": "The `<instance>.json` directory id of graph kind `openapi` the documents are ingested into."
-        },
-        {
-          "name": "documents",
-          "type": "z.array(OpenApiConfigDocumentSchema).min(1)",
-          "optional": false,
-          "array": true
-        }
-      ],
-      "extendsNames": [],
-      "values": [],
-      "refs": [
-        "cat-openapi/schemas/openapi.ts#OpenApiConfigDocumentSchema"
-      ],
-      "unresolved": [],
-      "external": [
-        "OPENAPI_CONFIG_SCHEMA_TAG",
-        "z"
-      ],
-      "exported": true
-    },
-    {
-      "id": "cat-openapi/schemas/openapi.ts#OpenApiDocument",
-      "name": "OpenApiDocument",
-      "module": "cat-openapi/schemas/openapi.ts",
-      "kind": "type-alias",
-      "fields": [],
-      "extendsNames": [],
-      "values": [],
-      "refs": [],
-      "unresolved": [],
-      "external": [],
-      "exported": true
-    },
-    {
-      "id": "cat-openapi/schemas/openapi.ts#OpenApiDocumentSchema",
-      "name": "OpenApiDocumentSchema",
-      "module": "cat-openapi/schemas/openapi.ts",
-      "kind": "zod-object",
-      "doc": "An OpenAPI 3 document, checked only as far as this harness reads it.",
-      "fields": [
-        {
-          "name": "openapi",
-          "type": "z.string().regex(/^3\\.\\d+\\.\\d+$/, \"an OpenAPI 3.x document\")",
-          "optional": false,
-          "array": false
-        },
-        {
-          "name": "info",
-          "type": "z.object({ title: z.string().min(1), version: z.string().min(1), description: z.string().optional() }).passthrough()",
-          "optional": false,
-          "array": false
-        },
-        {
-          "name": "paths",
-          "type": "z.record(z.string(), z.record(z.string(), z.unknown()))",
-          "optional": false,
-          "array": false
-        }
-      ],
-      "extendsNames": [],
-      "values": [],
-      "refs": [],
-      "unresolved": [],
-      "external": [
-        "z"
-      ],
-      "exported": true
-    },
-    {
-      "id": "cat-openapi/schemas/openapi.ts#OpenApiMethod",
-      "name": "OpenApiMethod",
-      "module": "cat-openapi/schemas/openapi.ts",
-      "kind": "type-alias",
-      "fields": [],
-      "extendsNames": [],
-      "values": [],
-      "refs": [],
-      "unresolved": [],
-      "external": [],
-      "exported": true
-    },
-    {
-      "id": "cat-openapi/schemas/openapi.ts#OpenApiOperation",
-      "name": "OpenApiOperation",
-      "module": "cat-openapi/schemas/openapi.ts",
-      "kind": "interface",
-      "doc": "One operation, as a node: what its page and its JSON-LD are built from.",
-      "fields": [
-        {
-          "name": "id",
-          "type": "string",
-          "optional": false,
-          "array": false,
-          "doc": "The node id: `operationId`, or `<method>-<path>` made filename-safe."
-        },
-        {
-          "name": "declaredId",
-          "type": "boolean",
-          "optional": false,
-          "array": false,
-          "doc": "Whether {@link id} is the document's own `operationId`."
-        },
-        {
-          "name": "method",
-          "type": "OpenApiMethod",
-          "optional": false,
-          "array": false
-        },
-        {
-          "name": "path",
-          "type": "string",
-          "optional": false,
-          "array": false
-        },
-        {
-          "name": "summary",
-          "type": "string",
-          "optional": true,
-          "array": false
-        },
-        {
-          "name": "description",
-          "type": "string",
-          "optional": true,
-          "array": false
-        },
-        {
-          "name": "tags",
-          "type": "string[]",
-          "optional": false,
-          "array": true
-        },
-        {
-          "name": "deprecated",
-          "type": "boolean",
-          "optional": false,
-          "array": false
-        }
-      ],
-      "extendsNames": [],
-      "values": [],
-      "refs": [
-        "cat-openapi/schemas/openapi.ts#OpenApiMethod"
-      ],
-      "unresolved": [],
-      "external": [],
-      "exported": true
-    },
-    {
-      "id": "cat-openapi/schemas/openapi.ts#OpenApiProvenance",
-      "name": "OpenApiProvenance",
-      "module": "cat-openapi/schemas/openapi.ts",
-      "kind": "type-alias",
-      "fields": [],
-      "extendsNames": [],
-      "values": [],
-      "refs": [],
-      "unresolved": [],
-      "external": [],
-      "exported": true
-    },
-    {
-      "id": "cat-openapi/schemas/openapi.ts#OpenApiProvenanceSchema",
-      "name": "OpenApiProvenanceSchema",
-      "module": "cat-openapi/schemas/openapi.ts",
-      "kind": "zod-object",
-      "fields": [
-        {
-          "name": "$schema",
-          "type": "z.literal(OPENAPI_SOURCE_SCHEMA_TAG)",
-          "optional": false,
-          "array": false
-        },
-        {
-          "name": "id",
-          "type": "z.string().regex(SEGMENT)",
-          "optional": false,
-          "array": false
-        },
-        {
-          "name": "file",
-          "type": "z.string().regex(/^[A-Za-z0-9._-]+\\.openapi\\.json$/)",
-          "optional": false,
-          "array": false,
-          "doc": "The document file beside this one."
-        },
-        {
-          "name": "source",
-          "type": "OpenApiSourceSchema.extend({ commit: z.string().regex(/^[0-9a-f]{40}$/) }).strict()",
-          "optional": false,
-          "array": false
-        },
-        {
-          "name": "bytes",
-          "type": "z.number().int().positive()",
-          "optional": false,
-          "array": false
-        },
-        {
-          "name": "openapi",
-          "type": "z.string().min(1)",
-          "optional": false,
-          "array": false,
-          "doc": "The document's `openapi` version, and its `info.title` / `info.version`, as published."
-        },
-        {
-          "name": "title",
-          "type": "z.string().min(1)",
-          "optional": false,
-          "array": false
-        },
-        {
-          "name": "version",
-          "type": "z.string().min(1)",
-          "optional": false,
-          "array": false
-        },
-        {
-          "name": "operations",
-          "type": "z.number().int().nonnegative()",
-          "optional": false,
-          "array": false,
-          "doc": "How many operations it holds — every one of which gets a page."
-        },
-        {
-          "name": "materialization",
-          "type": "z .object({ $schema: z.literal(\"folio-materialization/v1\"), state: z.literal(\"materialized\"), localPath: z.string().min…",
-          "optional": false,
-          "array": false,
-          "doc": "The document IS a held copy of upstream bytes, so it says so in the"
-        }
-      ],
-      "extendsNames": [],
-      "values": [],
-      "refs": [
-        "cat-openapi/schemas/openapi.ts#OpenApiSourceSchema"
-      ],
-      "unresolved": [],
-      "external": [
-        "OPENAPI_SOURCE_SCHEMA_TAG",
-        "SEGMENT",
-        "z"
-      ],
-      "exported": true
-    },
-    {
-      "id": "cat-openapi/schemas/openapi.ts#OpenApiSourceSchema",
-      "name": "OpenApiSourceSchema",
-      "module": "cat-openapi/schemas/openapi.ts",
-      "kind": "zod-object",
-      "fields": [
-        {
-          "name": "repository",
-          "type": "z.string().regex(/^[\\w.-]+\\/[\\w.-]+$/)",
-          "optional": false,
-          "array": false,
-          "doc": "`owner/repo` on GitHub."
-        },
-        {
-          "name": "path",
-          "type": "z.string().min(1)",
-          "optional": false,
-          "array": false,
-          "doc": "Path of the document inside that repository."
-        },
-        {
-          "name": "ref",
-          "type": "z.string().min(1).default(\"main\")",
-          "optional": true,
-          "array": false,
-          "doc": "Branch, tag or commit to read it from. The ingest records the commit it resolved to."
-        }
-      ],
-      "extendsNames": [],
-      "values": [],
-      "refs": [],
-      "unresolved": [],
-      "external": [
-        "z"
-      ],
-      "exported": true
-    },
-    {
-      "id": "cat-openapi/schemas/openapi.ts#OperationSchema",
-      "name": "OperationSchema",
-      "module": "cat-openapi/schemas/openapi.ts",
-      "kind": "zod-object",
-      "fields": [
-        {
-          "name": "operationId",
-          "type": "z.string().min(1).optional()",
-          "optional": true,
-          "array": false
-        },
-        {
-          "name": "summary",
-          "type": "z.string().optional()",
-          "optional": true,
-          "array": false
-        },
-        {
-          "name": "description",
-          "type": "z.string().optional()",
-          "optional": true,
-          "array": false
-        },
-        {
-          "name": "tags",
-          "type": "z.array(z.string()).optional()",
-          "optional": true,
-          "array": true
-        },
-        {
-          "name": "deprecated",
-          "type": "z.boolean().optional()",
-          "optional": true,
-          "array": false
-        }
-      ],
-      "extendsNames": [],
-      "values": [],
-      "refs": [],
-      "unresolved": [],
-      "external": [
-        "z"
-      ],
-      "exported": false
-    },
-    {
       "id": "fhir-harness/schemas/fhir-artifact-index.ts#FhirArtifact",
       "name": "FhirArtifact",
       "module": "fhir-harness/schemas/fhir-artifact-index.ts",
@@ -43665,20 +43649,6 @@
           "array": true
         },
         {
-          "name": "igApiHub",
-          "type": "RepresentationSchema.extend({ placeholder: z.string().min(1).optional() }).optional()",
-          "optional": true,
-          "array": false,
-          "doc": "The IG API hub: the region of the IG's hub page between the two markers"
-        },
-        {
-          "name": "package",
-          "type": "RepresentationSchema.optional()",
-          "optional": true,
-          "array": false,
-          "doc": "The IG's own `package.tgz` — every resource's JSON in one file, as the"
-        },
-        {
           "name": "sidecarsUnbound",
           "type": "z.array(UnboundSidecarSchema).optional()",
           "optional": true,
@@ -43705,7 +43675,6 @@
         "fhir-harness/schemas/fhir-artifact-index.ts#IgSourceSchema",
         "fhir-harness/schemas/fhir-artifact-index.ts#IndexProvenanceSchema",
         "fhir-harness/schemas/fhir-artifact-index.ts#JsonLdContextSchema",
-        "fhir-harness/schemas/fhir-artifact-index.ts#RepresentationSchema",
         "fhir-harness/schemas/fhir-artifact-index.ts#UnboundSidecarSchema"
       ],
       "unresolved": [],
@@ -43785,13 +43754,6 @@
           "optional": true,
           "array": false,
           "doc": "Editorial grouping from `artifacts.html`. Absent means the IG published no artefact page."
-        },
-        {
-          "name": "listedAt",
-          "type": "z.number().int().nonnegative().optional()",
-          "optional": true,
-          "array": false,
-          "doc": "Position on the Publisher's `artifacts.html`, 0-based, first appearance."
         },
         {
           "name": "published",
@@ -44249,359 +44211,6 @@
           "optional": false,
           "array": false,
           "doc": "Why no artefact matched: the strategies tried, in order."
-        }
-      ],
-      "extendsNames": [],
-      "values": [],
-      "refs": [],
-      "unresolved": [],
-      "external": [
-        "z"
-      ],
-      "exported": true
-    },
-    {
-      "id": "fhir-harness/schemas/ig-ast.ts#AstDependenciesSchema",
-      "name": "AstDependenciesSchema",
-      "module": "fhir-harness/schemas/ig-ast.ts",
-      "kind": "zod-object",
-      "doc": "`dependencies.json`.",
-      "fields": [
-        {
-          "name": "$schema",
-          "type": "z.literal(IG_AST_DEPENDENCIES_TAG)",
-          "optional": false,
-          "array": false
-        },
-        {
-          "name": "dependencies",
-          "type": "z.array(AstEdgeSchema)",
-          "optional": false,
-          "array": true
-        }
-      ],
-      "extendsNames": [],
-      "values": [],
-      "refs": [
-        "fhir-harness/schemas/ig-ast.ts#AstEdgeSchema"
-      ],
-      "unresolved": [],
-      "external": [
-        "IG_AST_DEPENDENCIES_TAG",
-        "z"
-      ],
-      "exported": true
-    },
-    {
-      "id": "fhir-harness/schemas/ig-ast.ts#AstEdge",
-      "name": "AstEdge",
-      "module": "fhir-harness/schemas/ig-ast.ts",
-      "kind": "type-alias",
-      "fields": [],
-      "extendsNames": [],
-      "values": [],
-      "refs": [],
-      "unresolved": [],
-      "external": [],
-      "exported": true
-    },
-    {
-      "id": "fhir-harness/schemas/ig-ast.ts#AstEdgeSchema",
-      "name": "AstEdgeSchema",
-      "module": "fhir-harness/schemas/ig-ast.ts",
-      "kind": "zod-object",
-      "doc": "One dependency edge. `resolved` is the key of the target in this IG, or `null` when it is elsewhere.",
-      "fields": [
-        {
-          "name": "source",
-          "type": "z.string().min(1)",
-          "optional": false,
-          "array": false
-        },
-        {
-          "name": "kind",
-          "type": "z.string().min(1)",
-          "optional": false,
-          "array": false
-        },
-        {
-          "name": "target",
-          "type": "z.string().min(1)",
-          "optional": false,
-          "array": false
-        },
-        {
-          "name": "targetVersion",
-          "type": "z.string().nullable()",
-          "optional": false,
-          "array": false
-        },
-        {
-          "name": "resolved",
-          "type": "z.string().nullable()",
-          "optional": false,
-          "array": false
-        },
-        {
-          "name": "path",
-          "type": "z.string().nullish()",
-          "optional": true,
-          "array": false
-        },
-        {
-          "name": "origin",
-          "type": "z.string().min(1)",
-          "optional": false,
-          "array": false
-        }
-      ],
-      "extendsNames": [],
-      "values": [],
-      "refs": [],
-      "unresolved": [],
-      "external": [
-        "z"
-      ],
-      "exported": true
-    },
-    {
-      "id": "fhir-harness/schemas/ig-ast.ts#AstManifest",
-      "name": "AstManifest",
-      "module": "fhir-harness/schemas/ig-ast.ts",
-      "kind": "type-alias",
-      "fields": [],
-      "extendsNames": [],
-      "values": [],
-      "refs": [],
-      "unresolved": [],
-      "external": [],
-      "exported": true
-    },
-    {
-      "id": "fhir-harness/schemas/ig-ast.ts#AstManifestSchema",
-      "name": "AstManifestSchema",
-      "module": "fhir-harness/schemas/ig-ast.ts",
-      "kind": "zod-object",
-      "doc": "`manifest.json`.",
-      "fields": [
-        {
-          "name": "$schema",
-          "type": "z.literal(IG_AST_TAG)",
-          "optional": false,
-          "array": false
-        },
-        {
-          "name": "authority",
-          "type": "z.literal(\"cache\")",
-          "optional": false,
-          "array": false
-        },
-        {
-          "name": "provisional",
-          "type": "z.array(z.string())",
-          "optional": false,
-          "array": true,
-          "doc": "What stays provisional until a full Publisher run."
-        },
-        {
-          "name": "provisionalUntil",
-          "type": "z.string().optional()",
-          "optional": true,
-          "array": false
-        },
-        {
-          "name": "mixed",
-          "type": "z.boolean().optional()",
-          "optional": true,
-          "array": false
-        },
-        {
-          "name": "incremental",
-          "type": "z .object({ base: z.string(), head: z.string(), rebuilt: z.number(), kept: z.number(), removed: z.number() }) .passthro…",
-          "optional": true,
-          "array": false
-        },
-        {
-          "name": "generatedAt",
-          "type": "z.string().optional()",
-          "optional": true,
-          "array": false
-        },
-        {
-          "name": "toolchain",
-          "type": "z.record(z.string(), z.string().nullable()).optional()",
-          "optional": true,
-          "array": false
-        },
-        {
-          "name": "inputs",
-          "type": "z.object({ toolchain: z.string(), sourceRevision: z.string().optional(), inputDigest: z.string().optional() }).passthro…",
-          "optional": true,
-          "array": false,
-          "doc": "What the AST is valid for, in `CompiledInputsSchema`'s shape."
-        },
-        {
-          "name": "inputsUnknown",
-          "type": "z.record(z.string(), z.string()).optional()",
-          "optional": true,
-          "array": false
-        },
-        {
-          "name": "resources",
-          "type": "z.array(AstResourceSchema)",
-          "optional": false,
-          "array": true
-        }
-      ],
-      "extendsNames": [],
-      "values": [],
-      "refs": [
-        "fhir-harness/schemas/ig-ast.ts#AstResourceSchema"
-      ],
-      "unresolved": [],
-      "external": [
-        "IG_AST_TAG",
-        "z"
-      ],
-      "exported": true
-    },
-    {
-      "id": "fhir-harness/schemas/ig-ast.ts#AstPlan",
-      "name": "AstPlan",
-      "module": "fhir-harness/schemas/ig-ast.ts",
-      "kind": "type-alias",
-      "fields": [],
-      "extendsNames": [],
-      "values": [],
-      "refs": [],
-      "unresolved": [],
-      "external": [],
-      "exported": true
-    },
-    {
-      "id": "fhir-harness/schemas/ig-ast.ts#AstPlanSchema",
-      "name": "AstPlanSchema",
-      "module": "fhir-harness/schemas/ig-ast.ts",
-      "kind": "zod-object",
-      "doc": "`plan.json`: what a set of changed files means — rebuild, keep, remove, or a full build and why.",
-      "fields": [
-        {
-          "name": "$schema",
-          "type": "z.literal(IG_AST_PLAN_TAG).optional()",
-          "optional": true,
-          "array": false
-        },
-        {
-          "name": "decision",
-          "type": "z.string().min(1)",
-          "optional": false,
-          "array": false
-        },
-        {
-          "name": "coneFraction",
-          "type": "z.number().optional()",
-          "optional": true,
-          "array": false
-        },
-        {
-          "name": "rebuild",
-          "type": "z.array(z.unknown()).optional()",
-          "optional": true,
-          "array": true
-        },
-        {
-          "name": "fullBuildBecause",
-          "type": "z.array(z.string()).optional()",
-          "optional": true,
-          "array": true
-        }
-      ],
-      "extendsNames": [],
-      "values": [],
-      "refs": [],
-      "unresolved": [],
-      "external": [
-        "IG_AST_PLAN_TAG",
-        "z"
-      ],
-      "exported": true
-    },
-    {
-      "id": "fhir-harness/schemas/ig-ast.ts#AstResource",
-      "name": "AstResource",
-      "module": "fhir-harness/schemas/ig-ast.ts",
-      "kind": "type-alias",
-      "fields": [],
-      "extendsNames": [],
-      "values": [],
-      "refs": [],
-      "unresolved": [],
-      "external": [],
-      "exported": true
-    },
-    {
-      "id": "fhir-harness/schemas/ig-ast.ts#AstResourceSchema",
-      "name": "AstResourceSchema",
-      "module": "fhir-harness/schemas/ig-ast.ts",
-      "kind": "zod-object",
-      "doc": "One resource the AST holds. `key` is `canonical|version`, or `Type/id` when there is no canonical.",
-      "fields": [
-        {
-          "name": "key",
-          "type": "z.string().min(1)",
-          "optional": false,
-          "array": false
-        },
-        {
-          "name": "canonical",
-          "type": "z.string().nullable()",
-          "optional": false,
-          "array": false
-        },
-        {
-          "name": "version",
-          "type": "z.string().nullable()",
-          "optional": false,
-          "array": false
-        },
-        {
-          "name": "resourceType",
-          "type": "z.string().min(1)",
-          "optional": false,
-          "array": false
-        },
-        {
-          "name": "id",
-          "type": "z.string().min(1)",
-          "optional": false,
-          "array": false
-        },
-        {
-          "name": "name",
-          "type": "z.string().nullish()",
-          "optional": true,
-          "array": false
-        },
-        {
-          "name": "file",
-          "type": "z.string().min(1)",
-          "optional": false,
-          "array": false,
-          "doc": "The resource's JSON file, relative to the AST directory."
-        },
-        {
-          "name": "source",
-          "type": "z.string().nullable()",
-          "optional": false,
-          "array": false,
-          "doc": "The IG source file it was built from, where known."
-        },
-        {
-          "name": "builtAt",
-          "type": "z.string().optional()",
-          "optional": true,
-          "array": false,
-          "doc": "On a merged (mixed-provenance) AST: the revision that built this resource."
         }
       ],
       "extendsNames": [],
@@ -45658,264 +45267,6 @@
           "type": "z.array(z.string().min(1))",
           "optional": false,
           "array": true
-        }
-      ],
-      "extendsNames": [],
-      "values": [],
-      "refs": [],
-      "unresolved": [],
-      "external": [
-        "z"
-      ],
-      "exported": true
-    },
-    {
-      "id": "fhir-harness/schemas/ig-releases.ts#GitHubRelease",
-      "name": "GitHubRelease",
-      "module": "fhir-harness/schemas/ig-releases.ts",
-      "kind": "interface",
-      "doc": "The fields of a GitHub REST `release` object this module reads.",
-      "fields": [
-        {
-          "name": "tag_name",
-          "type": "string",
-          "optional": false,
-          "array": false
-        },
-        {
-          "name": "name",
-          "type": "string | null",
-          "optional": true,
-          "array": false
-        },
-        {
-          "name": "html_url",
-          "type": "string",
-          "optional": false,
-          "array": false
-        },
-        {
-          "name": "published_at",
-          "type": "string | null",
-          "optional": false,
-          "array": false
-        },
-        {
-          "name": "prerelease",
-          "type": "boolean",
-          "optional": false,
-          "array": false
-        },
-        {
-          "name": "draft",
-          "type": "boolean",
-          "optional": false,
-          "array": false
-        },
-        {
-          "name": "target_commitish",
-          "type": "string",
-          "optional": true,
-          "array": false
-        },
-        {
-          "name": "assets",
-          "type": "Array<{ name: string; browser_download_url: string; size: number; digest?: string | null; content_type?: string }>",
-          "optional": false,
-          "array": false
-        }
-      ],
-      "extendsNames": [],
-      "values": [],
-      "refs": [],
-      "unresolved": [],
-      "external": [],
-      "exported": true
-    },
-    {
-      "id": "fhir-harness/schemas/ig-releases.ts#IgRelease",
-      "name": "IgRelease",
-      "module": "fhir-harness/schemas/ig-releases.ts",
-      "kind": "type-alias",
-      "fields": [],
-      "extendsNames": [],
-      "values": [],
-      "refs": [],
-      "unresolved": [],
-      "external": [],
-      "exported": true
-    },
-    {
-      "id": "fhir-harness/schemas/ig-releases.ts#IgReleases",
-      "name": "IgReleases",
-      "module": "fhir-harness/schemas/ig-releases.ts",
-      "kind": "type-alias",
-      "fields": [],
-      "extendsNames": [],
-      "values": [],
-      "refs": [],
-      "unresolved": [],
-      "external": [],
-      "exported": true
-    },
-    {
-      "id": "fhir-harness/schemas/ig-releases.ts#IgReleaseSchema",
-      "name": "IgReleaseSchema",
-      "module": "fhir-harness/schemas/ig-releases.ts",
-      "kind": "zod-object",
-      "fields": [
-        {
-          "name": "tag",
-          "type": "z.string().min(1)",
-          "optional": false,
-          "array": false
-        },
-        {
-          "name": "name",
-          "type": "z.string().optional()",
-          "optional": true,
-          "array": false
-        },
-        {
-          "name": "url",
-          "type": "z.string().url()",
-          "optional": false,
-          "array": false,
-          "doc": "The release's page on GitHub."
-        },
-        {
-          "name": "publishedAt",
-          "type": "z.string().min(1)",
-          "optional": false,
-          "array": false
-        },
-        {
-          "name": "prerelease",
-          "type": "z.boolean()",
-          "optional": false,
-          "array": false
-        },
-        {
-          "name": "commitish",
-          "type": "z.string().optional()",
-          "optional": true,
-          "array": false,
-          "doc": "The commit the tag points at, where GitHub reports it."
-        },
-        {
-          "name": "assets",
-          "type": "z.array(ReleaseAssetSchema)",
-          "optional": false,
-          "array": true
-        }
-      ],
-      "extendsNames": [],
-      "values": [],
-      "refs": [
-        "fhir-harness/schemas/ig-releases.ts#ReleaseAssetSchema"
-      ],
-      "unresolved": [],
-      "external": [
-        "z"
-      ],
-      "exported": true
-    },
-    {
-      "id": "fhir-harness/schemas/ig-releases.ts#IgReleasesSchema",
-      "name": "IgReleasesSchema",
-      "module": "fhir-harness/schemas/ig-releases.ts",
-      "kind": "zod-object",
-      "fields": [
-        {
-          "name": "$schema",
-          "type": "z.literal(IG_RELEASES_TAG)",
-          "optional": false,
-          "array": false
-        },
-        {
-          "name": "repository",
-          "type": "z.string().regex(/^[^/\\s]+\\/[^/\\s]+$/)",
-          "optional": false,
-          "array": false,
-          "doc": "`owner/repo` the releases were read from."
-        },
-        {
-          "name": "readAt",
-          "type": "z.string().regex(/^\\d{4}-\\d{2}-\\d{2}$/)",
-          "optional": false,
-          "array": false,
-          "doc": "When they were read (UTC date). A release made later is not here until the next read."
-        },
-        {
-          "name": "releases",
-          "type": "z.array(IgReleaseSchema)",
-          "optional": false,
-          "array": true,
-          "doc": "Newest first, as GitHub lists them. Drafts are never recorded: they are not published."
-        }
-      ],
-      "extendsNames": [],
-      "values": [],
-      "refs": [
-        "fhir-harness/schemas/ig-releases.ts#IgReleaseSchema"
-      ],
-      "unresolved": [],
-      "external": [
-        "IG_RELEASES_TAG",
-        "z"
-      ],
-      "exported": true
-    },
-    {
-      "id": "fhir-harness/schemas/ig-releases.ts#ReleaseAsset",
-      "name": "ReleaseAsset",
-      "module": "fhir-harness/schemas/ig-releases.ts",
-      "kind": "type-alias",
-      "fields": [],
-      "extendsNames": [],
-      "values": [],
-      "refs": [],
-      "unresolved": [],
-      "external": [],
-      "exported": true
-    },
-    {
-      "id": "fhir-harness/schemas/ig-releases.ts#ReleaseAssetSchema",
-      "name": "ReleaseAssetSchema",
-      "module": "fhir-harness/schemas/ig-releases.ts",
-      "kind": "zod-object",
-      "fields": [
-        {
-          "name": "name",
-          "type": "z.string().min(1)",
-          "optional": false,
-          "array": false
-        },
-        {
-          "name": "url",
-          "type": "z.string().url()",
-          "optional": false,
-          "array": false,
-          "doc": "Where to fetch the bytes: GitHub's `browser_download_url`."
-        },
-        {
-          "name": "bytes",
-          "type": "z.number().int().nonnegative()",
-          "optional": false,
-          "array": false
-        },
-        {
-          "name": "digest",
-          "type": "z.string().regex(/^sha256:[0-9a-f]{64}$/).optional()",
-          "optional": true,
-          "array": false,
-          "doc": "`sha256:<hex>` as GitHub reports it; absent on assets uploaded before GitHub computed digests."
-        },
-        {
-          "name": "contentType",
-          "type": "z.string().min(1).optional()",
-          "optional": true,
-          "array": false
         }
       ],
       "extendsNames": [],
@@ -50958,6 +50309,14 @@
     },
     {
       "from": "cat-harness/schemas/cat-harness.ts#ContentDirectory",
+      "to": "cat-harness/schemas/subgraph-source.ts#SubgraphSource",
+      "via": "source",
+      "kind": "field",
+      "optional": true,
+      "array": false
+    },
+    {
+      "from": "cat-harness/schemas/cat-harness.ts#ContentDirectory",
       "to": "cat-harness/schemas/theme.ts#ThemeRef",
       "via": "theme",
       "kind": "field",
@@ -50992,6 +50351,14 @@
       "from": "cat-harness/schemas/cat-harness.ts#ContentDirectoryShape",
       "to": "cat-harness/schemas/cat-harness.ts#TileSchema",
       "via": "tile",
+      "kind": "field",
+      "optional": true,
+      "array": false
+    },
+    {
+      "from": "cat-harness/schemas/cat-harness.ts#ContentDirectoryShape",
+      "to": "cat-harness/schemas/subgraph-source.ts#SubgraphSourceSchema",
+      "via": "source",
       "kind": "field",
       "optional": true,
       "array": false
@@ -52501,6 +51868,22 @@
       "array": true
     },
     {
+      "from": "cat-harness/schemas/harness-config.ts#DeclaredSubgraph",
+      "to": "cat-harness/schemas/cat-harness.ts#ResolvedDirectory",
+      "via": "entry",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "cat-harness/schemas/harness-config.ts#DeclaredSubgraph",
+      "to": "cat-harness/schemas/subgraph-source.ts#ResolvedSubgraphSource",
+      "via": "source",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
       "from": "cat-harness/schemas/harness-config.ts#FolioAssistantDependencySchema",
       "to": "cat-harness/schemas/cat-harness.ts#ExactVersionSchema",
       "via": "version",
@@ -52520,6 +51903,14 @@
       "from": "cat-harness/schemas/harness-config.ts#HarnessConfig",
       "to": "cat-harness/schemas/harness-config.ts#TranslationConfig",
       "via": "translation",
+      "kind": "field",
+      "optional": true,
+      "array": false
+    },
+    {
+      "from": "cat-harness/schemas/harness-config.ts#HarnessConfig",
+      "to": "cat-harness/schemas/subgraph-source.ts#SubgraphSourceOverrides",
+      "via": "subgraphSources",
       "kind": "field",
       "optional": true,
       "array": false
@@ -52560,6 +51951,14 @@
       "from": "cat-harness/schemas/harness-config.ts#HarnessConfigSchema",
       "to": "cat-harness/schemas/harness-config.ts#TranslationConfigSchema",
       "via": "translation",
+      "kind": "field",
+      "optional": true,
+      "array": false
+    },
+    {
+      "from": "cat-harness/schemas/harness-config.ts#HarnessConfigSchema",
+      "to": "cat-harness/schemas/subgraph-source.ts#SubgraphSourceOverridesSchema",
+      "via": "subgraphSources",
       "kind": "field",
       "optional": true,
       "array": false
@@ -54629,6 +54028,46 @@
       "array": false
     },
     {
+      "from": "cat-harness/schemas/subgraph-source.ts#BranchSourceSchema",
+      "to": "cat-harness/schemas/subgraph-source.ts#BranchNameSchema",
+      "via": "branch",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "cat-harness/schemas/subgraph-source.ts#BranchSourceSchema",
+      "to": "cat-harness/schemas/subgraph-source.ts#KeyedBySchema",
+      "via": "keyedBy",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "cat-harness/schemas/subgraph-source.ts#LegacyStorageSchema",
+      "to": "cat-harness/schemas/subgraph-source.ts#BranchNameSchema",
+      "via": "branch",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "cat-harness/schemas/subgraph-source.ts#LegacyStorageSchema",
+      "to": "cat-harness/schemas/subgraph-source.ts#KeyedBySchema",
+      "via": "keyedBy",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "cat-harness/schemas/subgraph-source.ts#SourcedEntry",
+      "to": "cat-harness/schemas/subgraph-source.ts#SubgraphSource",
+      "via": "source",
+      "kind": "field",
+      "optional": true,
+      "array": false
+    },
+    {
       "from": "cat-harness/schemas/substrate-snapshot.ts#SubstrateSnapshotSchema",
       "to": "cat-harness/schemas/repo-full-name.ts#RepoFullNameSchema",
       "via": "repository",
@@ -56437,38 +55876,6 @@
       "array": true
     },
     {
-      "from": "cat-openapi/schemas/openapi.ts#OpenApiConfigDocumentSchema",
-      "to": "cat-openapi/schemas/openapi.ts#OpenApiSourceSchema",
-      "via": "source",
-      "kind": "field",
-      "optional": false,
-      "array": false
-    },
-    {
-      "from": "cat-openapi/schemas/openapi.ts#OpenApiConfigSchema",
-      "to": "cat-openapi/schemas/openapi.ts#OpenApiConfigDocumentSchema",
-      "via": "documents",
-      "kind": "field",
-      "optional": false,
-      "array": true
-    },
-    {
-      "from": "cat-openapi/schemas/openapi.ts#OpenApiOperation",
-      "to": "cat-openapi/schemas/openapi.ts#OpenApiMethod",
-      "via": "method",
-      "kind": "field",
-      "optional": false,
-      "array": false
-    },
-    {
-      "from": "cat-openapi/schemas/openapi.ts#OpenApiProvenanceSchema",
-      "to": "cat-openapi/schemas/openapi.ts#OpenApiSourceSchema",
-      "via": "source",
-      "kind": "field",
-      "optional": false,
-      "array": false
-    },
-    {
       "from": "fhir-harness/schemas/fhir-artifact-index.ts#FhirArtifactIndexSchema",
       "to": "fhir-harness/schemas/fhir-artifact-index.ts#FhirArtifactSchema",
       "via": "artifacts",
@@ -56499,22 +55906,6 @@
       "kind": "field",
       "optional": true,
       "array": true
-    },
-    {
-      "from": "fhir-harness/schemas/fhir-artifact-index.ts#FhirArtifactIndexSchema",
-      "to": "fhir-harness/schemas/fhir-artifact-index.ts#RepresentationSchema",
-      "via": "igApiHub",
-      "kind": "field",
-      "optional": true,
-      "array": false
-    },
-    {
-      "from": "fhir-harness/schemas/fhir-artifact-index.ts#FhirArtifactIndexSchema",
-      "to": "fhir-harness/schemas/fhir-artifact-index.ts#RepresentationSchema",
-      "via": "package",
-      "kind": "field",
-      "optional": true,
-      "array": false
     },
     {
       "from": "fhir-harness/schemas/fhir-artifact-index.ts#FhirArtifactIndexSchema",
@@ -56611,22 +56002,6 @@
       "kind": "field",
       "optional": true,
       "array": false
-    },
-    {
-      "from": "fhir-harness/schemas/ig-ast.ts#AstDependenciesSchema",
-      "to": "fhir-harness/schemas/ig-ast.ts#AstEdgeSchema",
-      "via": "dependencies",
-      "kind": "field",
-      "optional": false,
-      "array": true
-    },
-    {
-      "from": "fhir-harness/schemas/ig-ast.ts#AstManifestSchema",
-      "to": "fhir-harness/schemas/ig-ast.ts#AstResourceSchema",
-      "via": "resources",
-      "kind": "field",
-      "optional": false,
-      "array": true
     },
     {
       "from": "fhir-harness/schemas/ig-chrome.ts#IgChromeSchema",
@@ -56768,22 +56143,6 @@
       "from": "fhir-harness/schemas/ig-metadata-index.ts#IgMetadataIndexSchema",
       "to": "fhir-harness/schemas/ig-metadata-index.ts#IgValueSetRefSchema",
       "via": "valueSetRefs",
-      "kind": "field",
-      "optional": false,
-      "array": true
-    },
-    {
-      "from": "fhir-harness/schemas/ig-releases.ts#IgReleaseSchema",
-      "to": "fhir-harness/schemas/ig-releases.ts#ReleaseAssetSchema",
-      "via": "assets",
-      "kind": "field",
-      "optional": false,
-      "array": true
-    },
-    {
-      "from": "fhir-harness/schemas/ig-releases.ts#IgReleasesSchema",
-      "to": "fhir-harness/schemas/ig-releases.ts#IgReleaseSchema",
-      "via": "releases",
       "kind": "field",
       "optional": false,
       "array": true
