@@ -230,7 +230,7 @@ graph. That is a determined zero, not an unfilled field.
 | `cat-harness/processes/kg/*.bpmn (4)` | `xmlns` binding |
 | `cat-harness/processes/library/*.bpmn (14)` | `xmlns` binding |
 | `cat-harness/processes/process/*.bpmn (12)` | `xmlns` binding |
-| `cat-harness/processes/sdlc/*.bpmn (22)` | `xmlns` binding |
+| `cat-harness/processes/sdlc/*.bpmn (23)` | `xmlns` binding |
 | `cat-harness/processes/ui/*.bpmn (4)` | `xmlns` binding |
 | [`cat-harness/scripts/kg-export.ts`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/scripts/kg-export.ts) | `@conformsTo` tag |
 | [`cat-harness/scripts/render-bpmn.ts`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/scripts/render-bpmn.ts) | `@conformsTo` tag |
@@ -292,7 +292,7 @@ a subset of the edition rather than a transcription of it.
 | `cat-harness/processes/kg/*.bpmn (4)` | `xmlns` binding |
 | `cat-harness/processes/library/*.bpmn (14)` | `xmlns` binding |
 | `cat-harness/processes/process/*.bpmn (12)` | `xmlns` binding |
-| `cat-harness/processes/sdlc/*.bpmn (22)` | `xmlns` binding |
+| `cat-harness/processes/sdlc/*.bpmn (23)` | `xmlns` binding |
 | `cat-harness/processes/ui/*.bpmn (4)` | `xmlns` binding |
 | [`cat-harness/scripts/render-bpmn.ts`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/scripts/render-bpmn.ts) | `@conformsTo` tag |
 | `fhir-harness/processes/content/*.bpmn (2)` | `xmlns` binding |
@@ -324,7 +324,7 @@ graph. That is a determined zero, not an unfilled field.
 | user | declared by |
 |---|---|
 | `cat-harness/processes/kg/decisions/*.dmn (3)` | `xmlns` binding |
-| `cat-harness/processes/sdlc/decisions/*.dmn (1)` | `xmlns` binding |
+| `cat-harness/processes/sdlc/decisions/*.dmn (2)` | `xmlns` binding |
 | `folio-assistant-core/processes/conduct/decisions/*.dmn (2)` | `xmlns` binding |
 | `folio-assistant-core/processes/content/decisions/*.dmn (2)` | `xmlns` binding |
 | `folio-assistant-sci/processes/content/decisions/*.dmn (1)` | `xmlns` binding |

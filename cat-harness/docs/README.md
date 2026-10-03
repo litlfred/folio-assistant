@@ -43,14 +43,14 @@ Part of [C@T Harness](../README.md) 0.1.0, declared as `docs`, holding `docs`.
 | [`todos.jsonld`](todos.jsonld) | data |  |
 | [`tool-graph.md`](tool-graph.md) | "What a Tool is, how it differs from a skill, and how the two are joined without being conflated." |  |
 | [`translation-support.md`](translation-support.md) | Translation support |  |
-| [`_data/`](_data/) | 6 files | |
+| [`_data/`](_data/) | 8 files | |
 | [`_includes/`](_includes/) | 9 files | |
 | [`ar/`](ar/) | 14 files | |
 | [`architecture/`](architecture/) | 8 files | |
-| [`assets/`](assets/) | 608 files | |
+| [`assets/`](assets/) | 613 files | |
 | [`beans/`](beans/) | 1 file | |
 | [`bootstrap/`](bootstrap/) | 1 file | |
-| [`cat-harness/`](cat-harness/) | 120 files | |
+| [`cat-harness/`](cat-harness/) | 122 files | |
 | [`es/`](es/) | 14 files | |
 | [`external-schemas/`](external-schemas/) | 1 file | |
 | [`fr/`](fr/) | 14 files | |
@@ -61,11 +61,11 @@ Part of [C@T Harness](../README.md) 0.1.0, declared as `docs`, holding `docs`.
 | [`issue-marks/`](issue-marks/) | 1 file | |
 | [`lsi/`](lsi/) | 1 file | |
 | [`methodologies/`](methodologies/) | 1 file | |
-| [`processes/`](processes/) | 84 files | |
+| [`processes/`](processes/) | 85 files | |
 | [`proposals/`](proposals/) | 34 files | |
 | [`prov-qaqc/`](prov-qaqc/) | 1 file | |
-| [`qa/`](qa/) | 1 file | |
-| [`reference/`](reference/) | 329 files | |
+| [`qa/`](qa/) | 3 files | |
+| [`reference/`](reference/) | 330 files | |
 | [`requirements/`](requirements/) | 1 file | |
 | [`research-and-analysis/`](research-and-analysis/) | 2 files | |
 | [`ru/`](ru/) | 14 files | |
