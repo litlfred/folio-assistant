@@ -19,7 +19,19 @@
  */
 import { describe, expect, test } from "bun:test";
 
-import { deriveFacts, isSharedDeclaration, type FactContext, type LivePr } from "../merge-queue.js";
+import { readFileSync } from "node:fs";
+
+import {
+  deriveFacts,
+  isSharedDeclaration,
+  loadPriorityTable,
+  placeAll,
+  readinessOf,
+  PRIORITY_DMN,
+  type FactContext,
+  type LivePr,
+} from "../merge-queue.js";
+import { PRIORITY_CLASSES } from "../../schemas/merge-queue.js";
 
 /** A PR with just enough shape to derive facts from. */
 const pr = (n: number, files: string[]): LivePr => ({
@@ -29,6 +41,8 @@ const pr = (n: number, files: string[]): LivePr => ({
   deletions: 0,
   beans: [],
   labels: [],
+  draft: false,
+  baseRef: "main",
 });
 
 const ctx: FactContext = { parentOf: () => undefined, refused: new Set() };
@@ -109,5 +123,65 @@ describe("deriveFacts — overlapKind", () => {
       const authoredish = f.overlapKind === "authored" || f.overlapKind === "shared-declaration";
       expect(f.conflictRisk === "high").toBe(authoredish);
     }
+  });
+});
+
+/**
+ * Bean `uoob` — the table, evaluated. Until 2026-10-03 nothing here ran
+ * `placeAll` at all, and it threw on every PR that reached
+ * `Rule_HeadNotGreen`: the rule was written `not("green")`, which
+ * `decision-table.ts` does not implement, and returned `ci-not-green`, which
+ * `PriorityClassSchema` does not contain. These tests are what would have
+ * caught it.
+ */
+describe("merge-priority.dmn — readiness and CI, evaluated", () => {
+  const SESSION = "session_01Own";
+  const HEAD = "e75895610c4aaaaaaaaaaaaaaaaaaaaaaaaaaaaa";
+  /** A PR that is finished in every respect, so one field at a time can be broken. */
+  const done = (over: Partial<LivePr> = {}): LivePr => ({
+    ...pr(1, ["cat-harness/skills/sdlc/sdlc-core/x.md"]),
+    ownCi: "green",
+    headShaMatchesCi: true,
+    readySha: HEAD.slice(0, 11),
+    readyBy: SESSION,
+    headSha: HEAD,
+    session: SESSION,
+    ...over,
+  });
+  const place = async (p: LivePr) => placeAll(await loadPriorityTable(), deriveFacts([p], ctx))[0]!;
+
+  test("a finished PR is admitted", async () => {
+    expect(readinessOf(done())).toBe("ready");
+    expect((await place(done())).route).toBe("admit");
+  });
+
+  const cases: [string, Partial<LivePr>, ReturnType<typeof readinessOf>][] = [
+    ["a draft", { draft: true }, "draft"],
+    ["#1937: based on #1764's head", { baseRef: "claude/quirky-davinci-ixuymr" }, "not-main"],
+    ["#1960 / #1957: no ready marker", { readySha: undefined, readyBy: undefined }, "no-marker"],
+    ["#1937: an unsigned marker", { readyBy: undefined }, "foreign-marker"],
+    ["a marker signed by another session", { readyBy: "session_01Steward" }, "foreign-marker"],
+    ["#1937: the head moved past the marker", { headSha: "ee4151d2ccc37a45ee58731ea7711bec0df0a4db" }, "stale-marker"],
+  ];
+  for (const [what, over, readiness] of cases) {
+    test(`${what} is \`${readiness}\` and handed back by Rule_NotReady`, async () => {
+      expect(readinessOf(done(over))).toBe(readiness);
+      const p = await place(done(over));
+      expect([p.route, p.class, p.rule]).toEqual(["hand back", "hand-back", "Rule_NotReady"]);
+    });
+  }
+
+  for (const ci of ["red", "missing-required", "none", "unknown"] as const) {
+    test(`ownCi \`${ci}\` is handed back by Rule_HeadNotGreen, without throwing`, async () => {
+      const p = await place(done({ ownCi: ci }));
+      expect([p.route, p.class, p.rule]).toEqual(["hand back", "hand-back", "Rule_HeadNotGreen"]);
+    });
+  }
+
+  test("every class the table can return is in PRIORITY_CLASSES", () => {
+    const xml = readFileSync(PRIORITY_DMN, "utf8");
+    const classes = [...xml.matchAll(/<outputEntry id="OE_[A-Za-z0-9]+_2"><text>"([^"]+)"<\/text>/g)].map((m) => m[1]!);
+    expect(classes.length).toBeGreaterThan(10);
+    for (const c of classes) expect(PRIORITY_CLASSES as readonly string[]).toContain(c);
   });
 });

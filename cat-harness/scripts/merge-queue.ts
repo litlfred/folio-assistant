@@ -40,6 +40,7 @@ import {
   PriorityClassSchema,
   type MemberFacts,
   type PriorityClass,
+  type Readiness,
 } from "../schemas/merge-queue.ts";
 
 /** The table, beside the diagram whose gateway reads it. */
@@ -118,6 +119,35 @@ export interface LivePr {
   ownCi?: "green" | "red" | "missing-required" | "none" | "unknown";
   /** Did CI run on the head that would be merged (T2). */
   headShaMatchesCi?: boolean;
+  /** Still a draft. Bean `uoob`. */
+  draft: boolean;
+  /** The base branch's name. Anything but `main` is `not-main` (#1937). */
+  baseRef: string;
+  /**
+   * The sha named by the latest `ready: <sha>` comment, as written (it may be
+   * abbreviated). Absent when there is none (#1960, #1957).
+   */
+  readySha?: string;
+  /** The session that SIGNED that comment (its footer's session link). Absent when unsigned (#1937). */
+  readyBy?: string;
+  /** The head sha. With it, a marker the head has moved past is `stale-marker`. */
+  headSha?: string;
+  /** The PR's own session, from its body. With it, a marker signed by another session is `foreign-marker`. */
+  session?: string;
+}
+
+/**
+ * {@link MemberFacts}`.readiness` from the live PR — the cheap half of
+ * `merge:guard`'s checks 1-3, for placement. The guard asks the full
+ * question at the moment of merging; see the schema for where they differ.
+ */
+export function readinessOf(p: LivePr): Readiness {
+  if (p.draft) return "draft";
+  if (p.baseRef !== "main") return "not-main";
+  if (!p.readySha) return "no-marker";
+  if (!p.readyBy || (p.session !== undefined && p.readyBy !== p.session)) return "foreign-marker";
+  if (p.headSha !== undefined && !p.headSha.toLowerCase().startsWith(p.readySha.toLowerCase())) return "stale-marker";
+  return "ready";
 }
 
 export interface FactContext {
@@ -205,6 +235,7 @@ export function deriveFacts(prs: readonly LivePr[], ctx: FactContext): MemberFac
       refused: ctx.refused.has(p.pr),
       ownCi: p.ownCi ?? "none",
       headShaMatchesCi: p.headShaMatchesCi ?? false,
+      readiness: readinessOf(p),
     };
     return MemberFactsSchema.parse(facts);
   });
