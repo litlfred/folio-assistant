@@ -5,7 +5,7 @@
     "id": "Process_HumanAgentDiscussion",
     "path": "processes/human-agent-discussion.bpmn"
   },
-  "source_hash": "sha256:816af581744acc437efa5285a9bf0a19ebd0282efd9bbd064e3a18e8d8b1514f",
+  "source_hash": "sha256:9d3aea40452a725884ecb9e19609be388cc1835b14467f8dc7c470122adbf259",
   "criteria": {
     "raci-role-resolves": {
       "result": "n/a",
@@ -34,6 +34,22 @@
     "activity-skill-has-tool": {
       "result": "fail",
       "findings": [
+        {
+          "where": "A_DetermineContext",
+          "detail": "names skill \"human-agent-discussion\", which no Tool declares `satisfies` for — the step's mechanism is still prose."
+        },
+        {
+          "where": "A_DetermineRoles",
+          "detail": "names skill \"human-agent-discussion\", which no Tool declares `satisfies` for — the step's mechanism is still prose."
+        },
+        {
+          "where": "A_DetermineProcess",
+          "detail": "names skill \"human-agent-discussion\", which no Tool declares `satisfies` for — the step's mechanism is still prose."
+        },
+        {
+          "where": "A_AskUndeterminedFirst",
+          "detail": "names skill \"human-agent-discussion\", which no Tool declares `satisfies` for — the step's mechanism is still prose."
+        },
         {
           "where": "A_GiveContext",
           "detail": "names skill \"human-agent-discussion\", which no Tool declares `satisfies` for — the step's mechanism is still prose."
@@ -117,13 +133,8 @@
       "findings": []
     },
     "gateway-documented": {
-      "result": "fail",
-      "findings": [
-        {
-          "where": "GW_DefaultAllowed",
-          "detail": "\"Did the caller allow a default?\" carries no <bpmn:documentation>, so its page shows the question and not what answers it — who decides, from what evidence, and what each branch commits the process to."
-        }
-      ]
+      "result": "pass",
+      "findings": []
     },
     "gateway-branches-named": {
       "result": "pass",
@@ -147,8 +158,8 @@
     }
   },
   "totals": {
-    "pass": 15,
-    "fail": 2,
+    "pass": 16,
+    "fail": 1,
     "n/a": 8,
     "unknown": 0
   }

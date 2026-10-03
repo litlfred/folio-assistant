@@ -244,14 +244,24 @@ describe("a strict reader and a loose one agree", () => {
     // deliberately omits commands carrying a shell variable this reader
     // discarded (bean `9zok`); those are REPORTED instead, so the property
     // this test guards is that every loose-scanned line lands in one of the
-    // two — never in neither. Comparing against `loadGates` alone would have
-    // made a deliberate, printed omission look identical to the silent drop
-    // this test exists to catch, which is the distinction it is for.
+    // stated buckets — never in none. Comparing against `loadGates` alone would
+    // have made a deliberate, printed omission look identical to the silent
+    // drop this test exists to catch, which is the distinction it is for.
     const found = new Set([
       ...loadGates(ROOT, { all: true }).map((g) => g.command),
       ...loadUnresolved(ROOT, { all: true }).map((g) => g.command),
     ]);
-    expect(loose.filter((c) => !found.has(c))).toEqual([]);
+    // A PUBLISHER job's lines are dropped on purpose, by `publishes` (bean
+    // `16ei`): a job holding `contents: write` is not a gate, and `bun run
+    // gates` must never push. They are named here, so the drop is a stated
+    // one rather than the silent kind this test exists to catch.
+    const published = new Set(
+      gatesFrom(readFileSync(join(ROOT, GATES_WORKFLOW), "utf-8"), { all: true })
+        .filter((g) => !found.has(g.command))
+        .map((g) => g.command),
+    );
+    expect([...published].every((c) => c.includes("qa:publish"))).toBe(true);
+    expect(loose.filter((c) => !found.has(c) && !published.has(c))).toEqual([]);
     // And the guard is not vacuous — a loose scan that matched nothing would
     // pass the filter above while proving nothing at all.
     expect(loose.length).toBeGreaterThan(30);
@@ -465,7 +475,10 @@ jobs:
     // command this tool silently will not run, and that should be a decision
     // rather than a discovery.
     const real = readFileSync(resolve(import.meta.dir, "../../..", GATES_WORKFLOW), "utf-8");
-    const skipped = unresolvedGatesFrom(real, { all: true });
+    // Publishers excluded, as `loadUnresolved` excludes them: the
+    // `qa-publish` job's `$GATES_RESULT` line is not a gate at all (bean
+    // `16ei`), so it is neither run nor counted as unrunnable here.
+    const skipped = unresolvedGatesFrom(real, { all: true, skipPublishers: true });
     expect(skipped).toHaveLength(1);
     expect(skipped[0]?.command).toContain("translation:catalogue:check");
   });

@@ -73,6 +73,7 @@
     }
   },
   "declaredKinds": [
+    "attestations",
     "beans",
     "cat-harness",
     "code",
@@ -280,7 +281,7 @@
       "href": "/cat-harness/schemas/cat-harness/",
       "hidden": false,
       "icon": "schemas",
-      "count": 199,
+      "count": 205,
       "unit": "modules"
     },
     {
@@ -1352,12 +1353,12 @@
         {
           "id": "directories",
           "label": "declared directories",
-          "value": 9
+          "value": 10
         },
         {
           "id": "kinds",
           "label": "declared graph kinds",
-          "value": 8
+          "value": 9
         },
         {
           "id": "views",
@@ -1366,6 +1367,10 @@
         }
       ],
       "visualisations": [
+        {
+          "kind": "attestations",
+          "note": "no viewer yet"
+        },
         {
           "kind": "code",
           "note": "no viewer yet"
@@ -1449,6 +1454,14 @@
           "path": "folio-assistant-sci/test/results/"
         },
         {
+          "id": "attestations",
+          "kinds": [
+            "attestations"
+          ],
+          "where": "local",
+          "path": "folio-assistant-sci/test/attestations/"
+        },
+        {
           "id": "voices",
           "kinds": [
             "voices"
@@ -1474,7 +1487,7 @@
         }
       ],
       "findings": [
-        "folio-assistant-sci: declares 3 graph(s) with no published viewer — code, qa, skills. Declared and not rendered is a gap, not a dead link.",
+        "folio-assistant-sci: declares 4 graph(s) with no published viewer — attestations, code, qa, skills. Declared and not rendered is a gap, not a dead link.",
         "folio-assistant-sci: no avatar declared for this instance — showing the generic mark.",
         "folio-assistant-sci: has no docs/ of its own, so the tile opens a kind handler's viewer (/cat-harness/library/folio-assistant-sci/) rather than the instance's own themed root."
       ],
@@ -1991,20 +2004,24 @@
         {
           "id": "directories",
           "label": "declared directories",
-          "value": 29
+          "value": 30
         },
         {
           "id": "kinds",
           "label": "declared graph kinds",
-          "value": 25
+          "value": 26
         },
         {
           "id": "views",
           "label": "visualisations you can open",
-          "value": 18
+          "value": 19
         }
       ],
       "visualisations": [
+        {
+          "kind": "attestations",
+          "path": "/attestations/"
+        },
         {
           "kind": "cat-harness",
           "path": "/cat-harness/schemas/cat-harness/"
@@ -2214,6 +2231,14 @@
           ],
           "where": "local",
           "path": "cat-harness/test/results/"
+        },
+        {
+          "id": "attestations",
+          "kinds": [
+            "attestations"
+          ],
+          "where": "local",
+          "path": "cat-harness/test/attestations/"
         },
         {
           "id": "health",
@@ -2632,6 +2657,10 @@
     },
     "notes": {},
     "folders": [
+      {
+        "kind": "attestations",
+        "path": "/attestations/"
+      },
       {
         "kind": "cat-harness",
         "path": "/cat-harness/schemas/cat-harness/"
@@ -3512,7 +3541,7 @@
           },
           {
             "key": "directories",
-            "summary": "6: library, sci-methodologies, sci-adapters, sci-sources, sci-processes, qa"
+            "summary": "7: library, sci-methodologies, sci-adapters, sci-sources, sci-processes, qa, attestations"
           },
           {
             "key": "needs",
@@ -3760,7 +3789,7 @@
           },
           {
             "key": "directories",
-            "summary": "26: tools, external-schemas, subscriptions, code-lists, vocab-mappings, schemas, uml, skills,…"
+            "summary": "27: tools, external-schemas, subscriptions, code-lists, vocab-mappings, schemas, uml, skills,…"
           },
           {
             "key": "associatedHarnesses",
