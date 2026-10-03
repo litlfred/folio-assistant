@@ -509,6 +509,30 @@ if command -v bun >/dev/null 2>&1 && [ -f "$REPO_ROOT/scripts/state-mount.ts" ];
   fi
 fi
 
+# ── 3.6 The seeds' freshness ────────────────────────────────────────────────
+# Bean `9ofm`, row C. Owner, 2026-10-03: wire it here rather than into CI.
+#
+# Reading the branch is the whole job, so this needs the network — which is
+# why it is HERE and not a gate: `check:declared-dirs` and `audit:coverage`
+# are offline by construction, and a gate that can go red because a fetch
+# failed teaches people to re-run gates until they pass. This sweep already
+# does network work and already tolerates-and-reports.
+#
+# `--brief` prints the finding and nothing else, and nothing at all when every
+# seed is current. The full report lists every differing path, and the
+# superseded `cat/cat-harness/state` alone carried 159 of them — in a sweep
+# whose whole job is to be read, that would bury the rest of it.
+#
+# Unlike 3.5 this is NOT a reason to disbelieve the work-plan above: `main` is
+# still the store, so a stale seed breaks nothing today. It breaks the
+# cutover. The printed block says so, so a reader does not over-read it.
+if command -v bun >/dev/null 2>&1 && [ -f "$REPO_ROOT/scripts/state-drift.ts" ]; then
+  drift_out="$(cd "$CHECKOUT_ROOT" && bun run "$REPO_ROOT/scripts/state-drift.ts" --brief 2>&1)" || true
+  if [ -n "$drift_out" ]; then
+    printf '%s\n\n' "$drift_out"
+  fi
+fi
+
 # ── 4. Recommended action (generic) ─────────────────────────────────────────
 cat <<'EOF'
 **Recommended action:**

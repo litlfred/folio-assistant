@@ -291,6 +291,12 @@ export function checkBeanRestatesSkill(root: string): RestatesSkillReport {
     // vacuity guard exists for.
     throw new Error(`the bean graph declares ${store.dir} and it is not there`);
   }
+  if (store.state === "unreachable") {
+    // Same reason one state over (bean `9ofm` row D): a store this checkout
+    // could not reach is not an empty corpus, and the vacuity guard below
+    // would read it as one. Different remedy, so a different message.
+    throw new Error(`the bean store could not be reached: ${store.reason}`);
+  }
   const open: BeanFile[] = store.beans.filter((b) => !b.archived && OPEN_STATUSES.has(b.status));
   const findings: Restatement[] = [];
   for (const b of open) {

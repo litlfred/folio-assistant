@@ -64,6 +64,9 @@ import {
   nodeOfKind,
   parseBeanGraph,
 } from "../schemas/bean-graph.ts";
+// Bean `9ofm` row D. No cycle: `graph-read` reads the declaration, git and the
+// mount marker, and knows nothing about beans.
+import { graphReadPath } from "./graph-read.ts";
 
 export const ROOT = resolve(import.meta.dir, "..");
 
@@ -166,9 +169,22 @@ function sequence(fm: string, key: string): string[] {
  * Returns `null` when the graph declares no `bean-defs` node. An instance with
  * no declaration at all falls back to the schema's own default, which is what
  * an unmigrated folio has: absent is "no store", not "wrong".
+ *
+ * **THROWS** when the graph is kept on a branch this checkout cannot reach
+ * (bean `9ofm` row D). `null` already means "no store" to every one of the ten
+ * call sites, so returning it for "could not read the store" would make each
+ * of them report a clean run over nothing — `dh4f`, ten times, on the first
+ * session after a cutover where the mount did not happen. A crash carrying the
+ * remedy beats that. It cannot fire before the cutover: while `main` still
+ * tracks the files, the graph resolves to the checkout.
+ *
+ * A caller that must not throw asks {@link resolveBeanDefs} and reads
+ * `unreachable` itself — `readBeanStore` is the one that does.
  */
 export function beanDefsDir(root: string): string | null {
-  return resolveBeanDefs(root).dir;
+  const r = resolveBeanDefs(root);
+  if (r.unreachable) throw new Error(`cannot resolve the bean store: ${r.unreachable}`);
+  return r.dir;
 }
 
 /** Where the store is, and WHO SAID SO. */
@@ -180,6 +196,16 @@ export interface BeanDefsResolution {
    * {@link DEFAULT_BEAN_GRAPH} because no graph file is present.
    */
   declared: boolean;
+  /**
+   * Why the graph could not be reached, when it is kept on a branch and this
+   * checkout has no mount of it. Bean `9ofm` row D.
+   *
+   * `dir` is `null` here, and that `null` means something a caller must NOT
+   * read as "no store": it is the THIRD state bean `t6s7` opened this type up
+   * for, one further out. `declared` stays `true`, because the declaration is
+   * correct — it is the checkout that is missing the content.
+   */
+  unreachable?: string;
 }
 
 /**
@@ -196,7 +222,38 @@ export interface BeanDefsResolution {
  * keeps its signature and delegates, so the other four readers are untouched.
  */
 export function resolveBeanDefs(root: string): BeanDefsResolution {
-  const graphRoot = join(root, DEFAULT_BEAN_GRAPH_ROOT);
+  // WHERE THE GRAPH IS, then where `defs` is within it (bean `9ofm` row D).
+  // Resolved HERE rather than in each reader, so every consumer of
+  // `beanDefsDir`, `readBeans` and `readBeanStore` relocates at once when the
+  // graph moves to its branch — and so there is one implementation of the
+  // question rather than one per funnel.
+  const where = graphReadPath("beans", root);
+  if (where.state === "refused") {
+    // Not a path that merely happens not to exist: that reads as "no store"
+    // one level up, which is the whole defect.
+    return { dir: null, declared: true, unreachable: where.reason };
+  }
+  // `undeclared` keeps the convention: an unmigrated folio with no `beans`
+  // entry at all has no store, which is fine rather than wrong.
+  const graphRoot = where.state === "ok" ? where.at : join(root, DEFAULT_BEAN_GRAPH_ROOT);
+  return resolveBeanDefsAt(graphRoot);
+}
+
+/**
+ * {@link resolveBeanDefs}, parameterised on WHERE THE GRAPH IS.
+ *
+ * Bean `9ofm` row D. `beans/beans.json` declares `defs` relative to its own
+ * directory, so the nested declaration keeps answering "where is `defs` within
+ * the graph" unchanged — what moves is the graph. Once `beans` is cut over to
+ * its branch the graph root is a mount, which `graphReadPath` resolves and
+ * this takes as given.
+ *
+ * Two questions, deliberately not merged into one resolver: the mount is keyed
+ * on the `beans` entry in `folio-assistant.json`, and `beans/` is not an
+ * instance root, so `beans/beans.json`'s nodes are invisible to it. A single
+ * resolver would have to know both and would be wrong about one.
+ */
+export function resolveBeanDefsAt(graphRoot: string): BeanDefsResolution {
   const file = join(graphRoot, BEAN_GRAPH_FILE);
   const declared = existsSync(file);
   const graph = declared
