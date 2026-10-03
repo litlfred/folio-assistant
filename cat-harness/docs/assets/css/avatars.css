@@ -136,6 +136,13 @@
   mask-image: var(--fa-avatar-glyph);
 }
 
+.fa-avatar[data-fa-kind="merge-queue"] {
+  /* three queued items converging into one line — a queue feeding a train */
+  --fa-avatar-glyph: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M5 7h5M5 12h5M5 17h5M10 7q4 0 4 5M10 17q4 0 4-5M10 12h9' fill='none' stroke='black' stroke-width='1.7' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+  -webkit-mask-image: var(--fa-avatar-glyph);
+  mask-image: var(--fa-avatar-glyph);
+}
+
 .fa-avatar[data-fa-kind="bean-notes"] {
   /* a bean with a slip of paper beside it — an addendum, not a second item */
   --fa-avatar-glyph: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M8 5c4 0 6 3 6 7s-2 7-6 7c2-3 2-4 2-7s0-4-2-7zM16 8h4v8h-4zM17 11h2M17 13h2' fill='none' stroke='black' stroke-width='1.7' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
@@ -488,6 +495,7 @@
   .fa-avatar[data-fa-kind="beans"] { background-color: hsl(28 46% 34%); }
   .fa-avatar[data-fa-kind="bean-defs"] { background-color: hsl(28 46% 34%); }
   .fa-avatar[data-fa-kind="workflow-state"] { background-color: hsl(188 46% 34%); }
+  .fa-avatar[data-fa-kind="merge-queue"] { background-color: hsl(205 46% 34%); }
   .fa-avatar[data-fa-kind="bean-notes"] { background-color: hsl(40 46% 34%); }
   .fa-avatar[data-fa-kind="session-survey"] { background-color: hsl(168 46% 34%); }
   .fa-avatar[data-fa-kind="boards"] { background-color: hsl(205 46% 34%); }
@@ -554,6 +562,7 @@
     .fa-avatar[data-fa-kind="beans"] { background-color: hsl(28 46% 34%); }
     .fa-avatar[data-fa-kind="bean-defs"] { background-color: hsl(28 46% 34%); }
     .fa-avatar[data-fa-kind="workflow-state"] { background-color: hsl(188 46% 34%); }
+    .fa-avatar[data-fa-kind="merge-queue"] { background-color: hsl(205 46% 34%); }
     .fa-avatar[data-fa-kind="bean-notes"] { background-color: hsl(40 46% 34%); }
     .fa-avatar[data-fa-kind="session-survey"] { background-color: hsl(168 46% 34%); }
     .fa-avatar[data-fa-kind="boards"] { background-color: hsl(205 46% 34%); }
@@ -621,6 +630,7 @@
   .fa-avatar[data-fa-kind="beans"] { background-color: hsl(28 42% 72%); }
   .fa-avatar[data-fa-kind="bean-defs"] { background-color: hsl(28 42% 72%); }
   .fa-avatar[data-fa-kind="workflow-state"] { background-color: hsl(188 42% 72%); }
+  .fa-avatar[data-fa-kind="merge-queue"] { background-color: hsl(205 42% 72%); }
   .fa-avatar[data-fa-kind="bean-notes"] { background-color: hsl(40 42% 72%); }
   .fa-avatar[data-fa-kind="session-survey"] { background-color: hsl(168 42% 72%); }
   .fa-avatar[data-fa-kind="boards"] { background-color: hsl(205 42% 72%); }
@@ -687,6 +697,7 @@
     .fa-avatar[data-fa-kind="beans"] { background-color: hsl(28 42% 72%); }
     .fa-avatar[data-fa-kind="bean-defs"] { background-color: hsl(28 42% 72%); }
     .fa-avatar[data-fa-kind="workflow-state"] { background-color: hsl(188 42% 72%); }
+    .fa-avatar[data-fa-kind="merge-queue"] { background-color: hsl(205 42% 72%); }
     .fa-avatar[data-fa-kind="bean-notes"] { background-color: hsl(40 42% 72%); }
     .fa-avatar[data-fa-kind="session-survey"] { background-color: hsl(168 42% 72%); }
     .fa-avatar[data-fa-kind="boards"] { background-color: hsl(205 42% 72%); }
@@ -756,6 +767,7 @@
   .fa-avatar[data-fa-kind="beans"][data-fa-trash="true"] { background-color: hsl(28 16% 52%); }
   .fa-avatar[data-fa-kind="bean-defs"][data-fa-trash="true"] { background-color: hsl(28 16% 52%); }
   .fa-avatar[data-fa-kind="workflow-state"][data-fa-trash="true"] { background-color: hsl(188 16% 52%); }
+  .fa-avatar[data-fa-kind="merge-queue"][data-fa-trash="true"] { background-color: hsl(205 16% 52%); }
   .fa-avatar[data-fa-kind="bean-notes"][data-fa-trash="true"] { background-color: hsl(40 16% 52%); }
   .fa-avatar[data-fa-kind="session-survey"][data-fa-trash="true"] { background-color: hsl(168 16% 52%); }
   .fa-avatar[data-fa-kind="boards"][data-fa-trash="true"] { background-color: hsl(205 16% 52%); }
@@ -821,6 +833,7 @@
     .fa-avatar[data-fa-kind="beans"][data-fa-trash="true"] { background-color: hsl(28 16% 52%); }
     .fa-avatar[data-fa-kind="bean-defs"][data-fa-trash="true"] { background-color: hsl(28 16% 52%); }
     .fa-avatar[data-fa-kind="workflow-state"][data-fa-trash="true"] { background-color: hsl(188 16% 52%); }
+    .fa-avatar[data-fa-kind="merge-queue"][data-fa-trash="true"] { background-color: hsl(205 16% 52%); }
     .fa-avatar[data-fa-kind="bean-notes"][data-fa-trash="true"] { background-color: hsl(40 16% 52%); }
     .fa-avatar[data-fa-kind="session-survey"][data-fa-trash="true"] { background-color: hsl(168 16% 52%); }
     .fa-avatar[data-fa-kind="boards"][data-fa-trash="true"] { background-color: hsl(205 16% 52%); }
@@ -886,6 +899,7 @@
   .fa-avatar[data-fa-kind="beans"][data-fa-trash="true"] { background-color: hsl(28 14% 56%); }
   .fa-avatar[data-fa-kind="bean-defs"][data-fa-trash="true"] { background-color: hsl(28 14% 56%); }
   .fa-avatar[data-fa-kind="workflow-state"][data-fa-trash="true"] { background-color: hsl(188 14% 56%); }
+  .fa-avatar[data-fa-kind="merge-queue"][data-fa-trash="true"] { background-color: hsl(205 14% 56%); }
   .fa-avatar[data-fa-kind="bean-notes"][data-fa-trash="true"] { background-color: hsl(40 14% 56%); }
   .fa-avatar[data-fa-kind="session-survey"][data-fa-trash="true"] { background-color: hsl(168 14% 56%); }
   .fa-avatar[data-fa-kind="boards"][data-fa-trash="true"] { background-color: hsl(205 14% 56%); }
@@ -951,6 +965,7 @@
     .fa-avatar[data-fa-kind="beans"][data-fa-trash="true"] { background-color: hsl(28 14% 56%); }
     .fa-avatar[data-fa-kind="bean-defs"][data-fa-trash="true"] { background-color: hsl(28 14% 56%); }
     .fa-avatar[data-fa-kind="workflow-state"][data-fa-trash="true"] { background-color: hsl(188 14% 56%); }
+    .fa-avatar[data-fa-kind="merge-queue"][data-fa-trash="true"] { background-color: hsl(205 14% 56%); }
     .fa-avatar[data-fa-kind="bean-notes"][data-fa-trash="true"] { background-color: hsl(40 14% 56%); }
     .fa-avatar[data-fa-kind="session-survey"][data-fa-trash="true"] { background-color: hsl(168 14% 56%); }
     .fa-avatar[data-fa-kind="boards"][data-fa-trash="true"] { background-color: hsl(205 14% 56%); }
