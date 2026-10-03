@@ -11395,6 +11395,63 @@
       "skos:note": "candidate"
     },
     {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/document-image.thresholdbasisschema.coverage",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "ThresholdBasisSchema.coverage"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Placed area over page area — the number compared against `value`."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/document-image.ts#ThresholdBasisSchema.coverage",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/document-image.thresholdbasisschema.suppliedby",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "ThresholdBasisSchema.suppliedBy"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Always the caller. Recorded so the provenance is read, not inferred."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/document-image.ts#ThresholdBasisSchema.suppliedBy",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/document-image.thresholdbasisschema.value",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "ThresholdBasisSchema.value"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The cutoff, exactly as supplied. Images below it were filed `furniture`."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/document-image.ts#ThresholdBasisSchema.value",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/document-kind.documentkindcoverageschema.from",
       "@type": "skos:Concept",
       "skos:inScheme": {
@@ -31000,6 +31057,272 @@
         }
       ],
       "dcterms:source": "cat-harness/schemas/user-story.ts#UserStorySchema.want",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/vector-figure.assemblybasisschema.by",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "AssemblyBasisSchema.by"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The script, as a `script` attribution — what looked."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/vector-figure.ts#AssemblyBasisSchema.by",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/vector-figure.vectorassemblyschema.background",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "VectorAssemblySchema.background"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Of those, page-sized backgrounds that joined no component."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/vector-figure.ts#VectorAssemblySchema.background",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/vector-figure.vectorassemblyschema.between",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "VectorAssemblySchema.between"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Lines inside the region but in no component — the white space `a8wy` found real labels in."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/vector-figure.ts#VectorAssemblySchema.between",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/vector-figure.vectorassemblyschema.drawings",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "VectorAssemblySchema.drawings"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Drawing operations on the page. Reported, never graded."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/vector-figure.ts#VectorAssemblySchema.drawings",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/vector-figure.vectorassemblyschema.outside",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "VectorAssemblySchema.outside"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Lines outside the rendered region: furniture, and sometimes figure titles. The crop's stated limit."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/vector-figure.ts#VectorAssemblySchema.outside",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/vector-figure.vectorassemblyschema.unlabelledclosedshapes",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "VectorAssemblySchema.unlabelledClosedShapes"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Closed shapes holding no label — arrowheads, bullets, swatches. Counted, not listed."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/vector-figure.ts#VectorAssemblySchema.unlabelledClosedShapes",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/vector-figure.vectorboxschema.parent",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "VectorBoxSchema.parent"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The smallest other labelled box containing this one, or null."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/vector-figure.ts#VectorBoxSchema.parent",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/vector-figure.vectorconnectorschema.from",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "VectorConnectorSchema.from"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Box the stroke starts in, or null when it lands in none."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/vector-figure.ts#VectorConnectorSchema.from",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/vector-figure.vectorfigureschema.captionlabels",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "VectorFigureSchema.captionLabels"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Figure numbers from the page's caption candidates — candidates, not claims."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/vector-figure.ts#VectorFigureSchema.captionLabels",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/vector-figure.vectorfigureschema.file",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "VectorFigureSchema.file"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The render, relative to the entry; null when nothing was rendered, with the reason."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/vector-figure.ts#VectorFigureSchema.file",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/vector-figure.vectorfigureschema.id",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "VectorFigureSchema.id"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "`vfig-p034` — one per qualifying page; a verdict keys on it."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/vector-figure.ts#VectorFigureSchema.id",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/vector-figure.vectorfigureschema.region",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "VectorFigureSchema.region"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The rendered rectangle, visible frame."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/vector-figure.ts#VectorFigureSchema.region",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/vector-figure.vectorfigureschema.shows",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "VectorFigureSchema.shows"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Which declared figures the render shows. Inspection only — see the module docblock."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/vector-figure.ts#VectorFigureSchema.shows",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/vector-figure.vectorfiguressidecarschema.figures",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "VectorFiguresSidecarSchema.figures"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "`null` is could-not-determine, never \"draws no figures\" — the `dh4f` rule."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/vector-figure.ts#VectorFiguresSidecarSchema.figures",
       "skos:note": "candidate"
     },
     {

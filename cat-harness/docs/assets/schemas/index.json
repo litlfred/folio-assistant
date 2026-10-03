@@ -2,7 +2,7 @@
   "$schema": "folio-schema-graph/v1",
   "tile": {
     "schemas": {
-      "count": 211,
+      "count": 210,
       "unit": "modules"
     }
   },
@@ -570,14 +570,6 @@
       "graphNode": "schema",
       "summary": "The `owner/repo ↔ instance` map — DERIVED, never kept by hand (bean `6rmv`).",
       "isTest": false
-    },
-    {
-      "module": "cat-harness/schemas/instance-roots-worktrees.test.ts",
-      "instance": "cat-harness",
-      "name": "instance-roots-worktrees.test",
-      "graphNode": "undeclared",
-      "summary": "Instance discovery with git worktrees present (bean `g43f`).",
-      "isTest": true
     },
     {
       "module": "cat-harness/schemas/intake.ts",
@@ -1282,14 +1274,6 @@
       "isTest": false
     },
     {
-      "module": "cat-harness/schemas/subgraph-manifest.ts",
-      "instance": "cat-harness",
-      "name": "subgraph-manifest",
-      "graphNode": "schema",
-      "summary": "The two files a NAMED SUBGRAPH publishes — `index.jsonld` (referenced) and",
-      "isTest": false
-    },
-    {
       "module": "cat-harness/schemas/subgraph-source.test.ts",
       "instance": "cat-harness",
       "name": "subgraph-source.test",
@@ -1601,6 +1585,14 @@
       "name": "user-story",
       "graphNode": "schema",
       "summary": "User stories — what a reader acting in a role is trying to do.",
+      "isTest": false
+    },
+    {
+      "module": "cat-harness/schemas/vector-figure.ts",
+      "instance": "cat-harness",
+      "name": "vector-figure",
+      "graphNode": "schema",
+      "summary": "A DRAWN figure, assembled and rendered — bean `ay3x`, under `m4xy`. The step",
       "isTest": false
     },
     {
@@ -7607,7 +7599,7 @@
       "external": [
         "z"
       ],
-      "exported": true
+      "exported": false
     },
     {
       "id": "cat-harness/schemas/cat-harness.ts#InstanceLocation",
@@ -13220,6 +13212,75 @@
           "optional": true,
           "array": false,
           "doc": "What this copy serves HERE — never what the image is, which is the"
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [
+        "z"
+      ],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/document-image.ts#ThresholdBasis",
+      "name": "ThresholdBasis",
+      "module": "cat-harness/schemas/document-image.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/document-image.ts#ThresholdBasisSchema",
+      "name": "ThresholdBasisSchema",
+      "module": "cat-harness/schemas/document-image.ts",
+      "kind": "zod-object",
+      "doc": "A role decided by a coverage CUTOFF THE CALLER SUPPLIED — bean `ay3x`.",
+      "fields": [
+        {
+          "name": "method",
+          "type": "z.literal(\"threshold\")",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "value",
+          "type": "z.number().positive()",
+          "optional": false,
+          "array": false,
+          "doc": "The cutoff, exactly as supplied. Images below it were filed `furniture`."
+        },
+        {
+          "name": "suppliedBy",
+          "type": "z.literal(\"caller\")",
+          "optional": false,
+          "array": false,
+          "doc": "Always the caller. Recorded so the provenance is read, not inferred."
+        },
+        {
+          "name": "coverage",
+          "type": "z.number().min(0)",
+          "optional": false,
+          "array": false,
+          "doc": "Placed area over page area — the number compared against `value`."
+        },
+        {
+          "name": "imagesOnPage",
+          "type": "z.number().int().min(1)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "page",
+          "type": "z.number().int().min(1)",
+          "optional": false,
+          "array": false
         }
       ],
       "extendsNames": [],
@@ -27860,13 +27921,6 @@
           "array": true
         },
         {
-          "name": "edges",
-          "type": "z.array( z .object({ blocker: BeanIdSchema, blocked: BeanIdSchema, declaredOn: z.array(z.enum([\"blocked_by\", \"blocking\"…",
-          "optional": false,
-          "array": true,
-          "doc": "The block graph as ONE edge set, `blocker → blocked`, over both"
-        },
-        {
           "name": "findings",
           "type": "z.array( z .object({ kind: z.enum([\"blocked-without-expiry\", \"blocker-closed\", \"blocking-unknown\"]), bean: BeanIdSchema…",
           "optional": false,
@@ -31650,458 +31704,6 @@
       "extendsNames": [],
       "values": [],
       "refs": [],
-      "unresolved": [],
-      "external": [
-        "z"
-      ],
-      "exported": true
-    },
-    {
-      "id": "cat-harness/schemas/subgraph-manifest.ts#ContextUrl",
-      "name": "ContextUrl",
-      "module": "cat-harness/schemas/subgraph-manifest.ts",
-      "kind": "zod-scalar",
-      "doc": "The `@context` is a URL, never an inline object.",
-      "fields": [],
-      "extendsNames": [],
-      "values": [],
-      "refs": [],
-      "unresolved": [],
-      "external": [],
-      "exported": false
-    },
-    {
-      "id": "cat-harness/schemas/subgraph-manifest.ts#PayloadIriSchema",
-      "name": "PayloadIriSchema",
-      "module": "cat-harness/schemas/subgraph-manifest.ts",
-      "kind": "zod-scalar",
-      "doc": "`<BASE_URL>/payload/sha256/<hex>` — no extension, ever.",
-      "fields": [],
-      "extendsNames": [],
-      "values": [],
-      "refs": [],
-      "unresolved": [],
-      "external": [],
-      "exported": true
-    },
-    {
-      "id": "cat-harness/schemas/subgraph-manifest.ts#PayloadLink",
-      "name": "PayloadLink",
-      "module": "cat-harness/schemas/subgraph-manifest.ts",
-      "kind": "type-alias",
-      "fields": [],
-      "extendsNames": [],
-      "values": [],
-      "refs": [],
-      "unresolved": [],
-      "external": [],
-      "exported": true
-    },
-    {
-      "id": "cat-harness/schemas/subgraph-manifest.ts#PayloadLinkSchema",
-      "name": "PayloadLinkSchema",
-      "module": "cat-harness/schemas/subgraph-manifest.ts",
-      "kind": "zod-object",
-      "doc": "The `payload` link a node carries in BOTH subgraph files: the payload's IRI,",
-      "fields": [
-        {
-          "name": "@id",
-          "type": "PayloadIriSchema",
-          "optional": false,
-          "array": false
-        },
-        {
-          "name": "sha256",
-          "type": "Sha256HexSchema",
-          "optional": false,
-          "array": false
-        },
-        {
-          "name": "bytes",
-          "type": "z.number().int().nonnegative()",
-          "optional": false,
-          "array": false
-        }
-      ],
-      "extendsNames": [],
-      "values": [],
-      "refs": [
-        "cat-harness/schemas/subgraph-manifest.ts#PayloadIriSchema",
-        "cat-harness/schemas/subgraph-manifest.ts#Sha256HexSchema"
-      ],
-      "unresolved": [],
-      "external": [
-        "z"
-      ],
-      "exported": true
-    },
-    {
-      "id": "cat-harness/schemas/subgraph-manifest.ts#PayloadSidecar",
-      "name": "PayloadSidecar",
-      "module": "cat-harness/schemas/subgraph-manifest.ts",
-      "kind": "type-alias",
-      "fields": [],
-      "extendsNames": [],
-      "values": [],
-      "refs": [],
-      "unresolved": [],
-      "external": [],
-      "exported": true
-    },
-    {
-      "id": "cat-harness/schemas/subgraph-manifest.ts#PayloadSidecarSchema",
-      "name": "PayloadSidecarSchema",
-      "module": "cat-harness/schemas/subgraph-manifest.ts",
-      "kind": "zod-object",
-      "doc": "`<hex>.json`, beside `<hex>`: the one home of the media type.",
-      "fields": [
-        {
-          "name": "$schema",
-          "type": "z.literal(PAYLOAD_SIDECAR_SCHEMA)",
-          "optional": false,
-          "array": false
-        },
-        {
-          "name": "sha256",
-          "type": "Sha256HexSchema",
-          "optional": false,
-          "array": false
-        },
-        {
-          "name": "bytes",
-          "type": "z.number().int().nonnegative()",
-          "optional": false,
-          "array": false
-        },
-        {
-          "name": "mediaType",
-          "type": "z.string().regex(/^[a-z]+\\/[a-z0-9.+-]+(?:; ?[a-z]+=[A-Za-z0-9-]+)?$/, \"an RFC 6838 media type\")",
-          "optional": false,
-          "array": false
-        }
-      ],
-      "extendsNames": [],
-      "values": [],
-      "refs": [
-        "cat-harness/schemas/subgraph-manifest.ts#Sha256HexSchema"
-      ],
-      "unresolved": [],
-      "external": [
-        "PAYLOAD_SIDECAR_SCHEMA",
-        "z"
-      ],
-      "exported": true
-    },
-    {
-      "id": "cat-harness/schemas/subgraph-manifest.ts#Sha256HexSchema",
-      "name": "Sha256HexSchema",
-      "module": "cat-harness/schemas/subgraph-manifest.ts",
-      "kind": "zod-scalar",
-      "doc": "Lower-case hex SHA-256 — the whole of a payload's name.",
-      "fields": [],
-      "extendsNames": [],
-      "values": [],
-      "refs": [],
-      "unresolved": [],
-      "external": [],
-      "exported": true
-    },
-    {
-      "id": "cat-harness/schemas/subgraph-manifest.ts#SubgraphHydrated",
-      "name": "SubgraphHydrated",
-      "module": "cat-harness/schemas/subgraph-manifest.ts",
-      "kind": "type-alias",
-      "fields": [],
-      "extendsNames": [],
-      "values": [],
-      "refs": [],
-      "unresolved": [],
-      "external": [],
-      "exported": true
-    },
-    {
-      "id": "cat-harness/schemas/subgraph-manifest.ts#SubgraphHydratedNode",
-      "name": "SubgraphHydratedNode",
-      "module": "cat-harness/schemas/subgraph-manifest.ts",
-      "kind": "type-alias",
-      "fields": [],
-      "extendsNames": [],
-      "values": [],
-      "refs": [],
-      "unresolved": [],
-      "external": [],
-      "exported": true
-    },
-    {
-      "id": "cat-harness/schemas/subgraph-manifest.ts#SubgraphHydratedNodeSchema",
-      "name": "SubgraphHydratedNodeSchema",
-      "module": "cat-harness/schemas/subgraph-manifest.ts",
-      "kind": "zod-scalar",
-      "fields": [],
-      "extendsNames": [],
-      "values": [],
-      "refs": [],
-      "unresolved": [],
-      "external": [],
-      "exported": true
-    },
-    {
-      "id": "cat-harness/schemas/subgraph-manifest.ts#SubgraphHydratedSchema",
-      "name": "SubgraphHydratedSchema",
-      "module": "cat-harness/schemas/subgraph-manifest.ts",
-      "kind": "zod-object",
-      "doc": "`index.hydrated.jsonld`.",
-      "fields": [
-        {
-          "name": "@context",
-          "type": "ContextUrl",
-          "optional": false,
-          "array": false
-        },
-        {
-          "name": "hasMember",
-          "type": "z.array(SubgraphMemberSchema).optional()",
-          "optional": true,
-          "array": true
-        },
-        {
-          "name": "hasSubgraph",
-          "type": "z.array(SubgraphHydratedNodeSchema).optional()",
-          "optional": true,
-          "array": true
-        }
-      ],
-      "extendsNames": [
-        "SubgraphNodeBase"
-      ],
-      "values": [],
-      "refs": [
-        "cat-harness/schemas/subgraph-manifest.ts#ContextUrl",
-        "cat-harness/schemas/subgraph-manifest.ts#SubgraphHydratedNodeSchema",
-        "cat-harness/schemas/subgraph-manifest.ts#SubgraphMemberSchema",
-        "cat-harness/schemas/subgraph-manifest.ts#SubgraphNodeBase"
-      ],
-      "unresolved": [],
-      "external": [
-        "z"
-      ],
-      "exported": true
-    },
-    {
-      "id": "cat-harness/schemas/subgraph-manifest.ts#SubgraphIndex",
-      "name": "SubgraphIndex",
-      "module": "cat-harness/schemas/subgraph-manifest.ts",
-      "kind": "type-alias",
-      "fields": [],
-      "extendsNames": [],
-      "values": [],
-      "refs": [],
-      "unresolved": [],
-      "external": [],
-      "exported": true
-    },
-    {
-      "id": "cat-harness/schemas/subgraph-manifest.ts#SubgraphIndexNodeSchema",
-      "name": "SubgraphIndexNodeSchema",
-      "module": "cat-harness/schemas/subgraph-manifest.ts",
-      "kind": "zod-object",
-      "fields": [
-        {
-          "name": "hasMember",
-          "type": "z.array(SubgraphPointerSchema).optional()",
-          "optional": true,
-          "array": true
-        },
-        {
-          "name": "hasSubgraph",
-          "type": "z.array(SubgraphIriSchema).optional()",
-          "optional": true,
-          "array": true
-        }
-      ],
-      "extendsNames": [
-        "SubgraphNodeBase"
-      ],
-      "values": [],
-      "refs": [
-        "cat-harness/schemas/subgraph-manifest.ts#SubgraphIriSchema",
-        "cat-harness/schemas/subgraph-manifest.ts#SubgraphNodeBase",
-        "cat-harness/schemas/subgraph-manifest.ts#SubgraphPointerSchema"
-      ],
-      "unresolved": [],
-      "external": [
-        "z"
-      ],
-      "exported": true
-    },
-    {
-      "id": "cat-harness/schemas/subgraph-manifest.ts#SubgraphIndexSchema",
-      "name": "SubgraphIndexSchema",
-      "module": "cat-harness/schemas/subgraph-manifest.ts",
-      "kind": "zod-object",
-      "doc": "`index.jsonld`.",
-      "fields": [
-        {
-          "name": "@context",
-          "type": "ContextUrl",
-          "optional": false,
-          "array": false
-        }
-      ],
-      "extendsNames": [
-        "SubgraphIndexNodeSchema"
-      ],
-      "values": [],
-      "refs": [
-        "cat-harness/schemas/subgraph-manifest.ts#ContextUrl",
-        "cat-harness/schemas/subgraph-manifest.ts#SubgraphIndexNodeSchema"
-      ],
-      "unresolved": [],
-      "external": [],
-      "exported": true
-    },
-    {
-      "id": "cat-harness/schemas/subgraph-manifest.ts#SubgraphIriSchema",
-      "name": "SubgraphIriSchema",
-      "module": "cat-harness/schemas/subgraph-manifest.ts",
-      "kind": "zod-scalar",
-      "doc": "A subgraph IRI: `<BASE_URL>/subgraph/<HARNESS>/<PATH>/` — always a directory.",
-      "fields": [],
-      "extendsNames": [],
-      "values": [],
-      "refs": [],
-      "unresolved": [],
-      "external": [],
-      "exported": true
-    },
-    {
-      "id": "cat-harness/schemas/subgraph-manifest.ts#SubgraphMemberSchema",
-      "name": "SubgraphMemberSchema",
-      "module": "cat-harness/schemas/subgraph-manifest.ts",
-      "kind": "zod-object",
-      "doc": "A member as the HYDRATED file carries it: the whole KG node, open-ended — its payload a link, never the body.",
-      "fields": [
-        {
-          "name": "@id",
-          "type": "z.string().url()",
-          "optional": false,
-          "array": false
-        },
-        {
-          "name": "@type",
-          "type": "z.string().min(1)",
-          "optional": false,
-          "array": false
-        },
-        {
-          "name": "payload",
-          "type": "PayloadLinkSchema.optional()",
-          "optional": true,
-          "array": false
-        }
-      ],
-      "extendsNames": [],
-      "values": [],
-      "refs": [
-        "cat-harness/schemas/subgraph-manifest.ts#PayloadLinkSchema"
-      ],
-      "unresolved": [],
-      "external": [
-        "z"
-      ],
-      "exported": true
-    },
-    {
-      "id": "cat-harness/schemas/subgraph-manifest.ts#SubgraphNodeBase",
-      "name": "SubgraphNodeBase",
-      "module": "cat-harness/schemas/subgraph-manifest.ts",
-      "kind": "zod-object",
-      "doc": "The shared base: the declared-directory shape, picked, plus the JSON-LD identity.",
-      "fields": [
-        {
-          "name": "@id",
-          "type": "SubgraphIriSchema",
-          "optional": false,
-          "array": false
-        },
-        {
-          "name": "@type",
-          "type": "z.string().min(1)",
-          "optional": false,
-          "array": false
-        },
-        {
-          "name": "name",
-          "type": "z.string().min(1)",
-          "optional": false,
-          "array": false,
-          "doc": "The subgraph's label: the harness name at the root, the instance-relative path below it."
-        },
-        {
-          "name": "holdsGraph",
-          "type": "z.array(z.string().min(1)).optional()",
-          "optional": true,
-          "array": true,
-          "doc": "Links to the GraphKind nodes this subgraph holds."
-        }
-      ],
-      "extendsNames": [
-        "GraphNodeDirectoryShape"
-      ],
-      "values": [],
-      "refs": [
-        "cat-harness/schemas/cat-harness.ts#GraphNodeDirectoryShape",
-        "cat-harness/schemas/subgraph-manifest.ts#SubgraphIriSchema"
-      ],
-      "unresolved": [],
-      "external": [
-        "z"
-      ],
-      "exported": false
-    },
-    {
-      "id": "cat-harness/schemas/subgraph-manifest.ts#SubgraphPointerSchema",
-      "name": "SubgraphPointerSchema",
-      "module": "cat-harness/schemas/subgraph-manifest.ts",
-      "kind": "zod-object",
-      "doc": "A member as the INDEX carries it: enough to find it, label it, type it, and reach its payload.",
-      "fields": [
-        {
-          "name": "@id",
-          "type": "z.string().url()",
-          "optional": false,
-          "array": false
-        },
-        {
-          "name": "@type",
-          "type": "z.string().min(1)",
-          "optional": false,
-          "array": false
-        },
-        {
-          "name": "name",
-          "type": "z.string().optional()",
-          "optional": true,
-          "array": false
-        },
-        {
-          "name": "title",
-          "type": "z.string().optional()",
-          "optional": true,
-          "array": false
-        },
-        {
-          "name": "payload",
-          "type": "PayloadLinkSchema.optional()",
-          "optional": true,
-          "array": false
-        }
-      ],
-      "extendsNames": [],
-      "values": [],
-      "refs": [
-        "cat-harness/schemas/subgraph-manifest.ts#PayloadLinkSchema"
-      ],
       "unresolved": [],
       "external": [
         "z"
@@ -41256,6 +40858,382 @@
       "exported": true
     },
     {
+      "id": "cat-harness/schemas/vector-figure.ts#AssemblyBasisSchema",
+      "name": "AssemblyBasisSchema",
+      "module": "cat-harness/schemas/vector-figure.ts",
+      "kind": "zod-object",
+      "doc": "What the extractor did. Names itself; asserts no role.",
+      "fields": [
+        {
+          "name": "method",
+          "type": "z.literal(\"assembly\")",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "by",
+          "type": "AttributionSchema",
+          "optional": false,
+          "array": false,
+          "doc": "The script, as a `script` attribution — what looked."
+        },
+        {
+          "name": "page",
+          "type": "z.number().int().positive()",
+          "optional": false,
+          "array": false
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [
+        "cat-harness/schemas/attribution.ts#AttributionSchema"
+      ],
+      "unresolved": [],
+      "external": [
+        "z"
+      ],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/vector-figure.ts#VectorAssemblySchema",
+      "name": "VectorAssemblySchema",
+      "module": "cat-harness/schemas/vector-figure.ts",
+      "kind": "zod-object",
+      "fields": [
+        {
+          "name": "drawings",
+          "type": "z.number().int().nonnegative()",
+          "optional": false,
+          "array": false,
+          "doc": "Drawing operations on the page. Reported, never graded."
+        },
+        {
+          "name": "background",
+          "type": "z.number().int().nonnegative()",
+          "optional": false,
+          "array": false,
+          "doc": "Of those, page-sized backgrounds that joined no component."
+        },
+        {
+          "name": "groups",
+          "type": "z.array( z .object({ bbox: BBoxSchema, drawings: z.number().int().positive(), /** Touches the page boundary — chapter t…",
+          "optional": false,
+          "array": true
+        },
+        {
+          "name": "boxes",
+          "type": "z.array(VectorBoxSchema)",
+          "optional": false,
+          "array": true
+        },
+        {
+          "name": "unlabelledClosedShapes",
+          "type": "z.number().int().nonnegative()",
+          "optional": false,
+          "array": false,
+          "doc": "Closed shapes holding no label — arrowheads, bullets, swatches. Counted, not listed."
+        },
+        {
+          "name": "connectors",
+          "type": "z.array(VectorConnectorSchema)",
+          "optional": false,
+          "array": true
+        },
+        {
+          "name": "between",
+          "type": "z.array(z.string().min(1))",
+          "optional": false,
+          "array": true,
+          "doc": "Lines inside the region but in no component — the white space `a8wy` found real labels in."
+        },
+        {
+          "name": "outside",
+          "type": "z.number().int().nonnegative()",
+          "optional": false,
+          "array": false,
+          "doc": "Lines outside the rendered region: furniture, and sometimes figure titles. The crop's stated limit."
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [
+        "cat-harness/schemas/vector-figure.ts#VectorBoxSchema",
+        "cat-harness/schemas/vector-figure.ts#VectorConnectorSchema",
+        "cat-harness/schemas/vector-labels.ts#BBoxSchema"
+      ],
+      "unresolved": [],
+      "external": [
+        "z"
+      ],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/vector-figure.ts#VectorBoxSchema",
+      "name": "VectorBoxSchema",
+      "module": "cat-harness/schemas/vector-figure.ts",
+      "kind": "zod-object",
+      "fields": [
+        {
+          "name": "id",
+          "type": "z.string().regex(/^b\\d+$/)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "bbox",
+          "type": "BBoxSchema",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "parent",
+          "type": "z.string().regex(/^b\\d+$/).nullable()",
+          "optional": false,
+          "array": false,
+          "doc": "The smallest other labelled box containing this one, or null."
+        },
+        {
+          "name": "labels",
+          "type": "z.array(z.string().min(1)).min(1)",
+          "optional": false,
+          "array": true
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [
+        "cat-harness/schemas/vector-labels.ts#BBoxSchema"
+      ],
+      "unresolved": [],
+      "external": [
+        "z"
+      ],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/vector-figure.ts#VectorConnectorSchema",
+      "name": "VectorConnectorSchema",
+      "module": "cat-harness/schemas/vector-figure.ts",
+      "kind": "zod-object",
+      "fields": [
+        {
+          "name": "from",
+          "type": "z.string().regex(/^b\\d+$/).nullable()",
+          "optional": false,
+          "array": false,
+          "doc": "Box the stroke starts in, or null when it lands in none."
+        },
+        {
+          "name": "to",
+          "type": "z.string().regex(/^b\\d+$/).nullable()",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "bbox",
+          "type": "BBoxSchema",
+          "optional": false,
+          "array": false
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [
+        "cat-harness/schemas/vector-labels.ts#BBoxSchema"
+      ],
+      "unresolved": [],
+      "external": [
+        "z"
+      ],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/vector-figure.ts#VectorFigure",
+      "name": "VectorFigure",
+      "module": "cat-harness/schemas/vector-figure.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/vector-figure.ts#VectorFigureBasisSchema",
+      "name": "VectorFigureBasisSchema",
+      "module": "cat-harness/schemas/vector-figure.ts",
+      "kind": "zod-union",
+      "fields": [],
+      "extendsNames": [],
+      "values": [
+        "method"
+      ],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/vector-figure.ts#VectorFigureSchema",
+      "name": "VectorFigureSchema",
+      "module": "cat-harness/schemas/vector-figure.ts",
+      "kind": "zod-object",
+      "fields": [
+        {
+          "name": "id",
+          "type": "z.string().regex(/^vfig-p\\d{3,}$/)",
+          "optional": false,
+          "array": false,
+          "doc": "`vfig-p034` — one per qualifying page; a verdict keys on it."
+        },
+        {
+          "name": "file",
+          "type": "z.string().min(1).nullable()",
+          "optional": false,
+          "array": false,
+          "doc": "The render, relative to the entry; null when nothing was rendered, with the reason."
+        },
+        {
+          "name": "unrendered_reason",
+          "type": "z.string().min(1).optional()",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "role",
+          "type": "z.enum(IMAGE_ROLES)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "basis",
+          "type": "VectorFigureBasisSchema",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "page",
+          "type": "z.number().int().positive()",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "rotation",
+          "type": "z.number().int()",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "captionLabels",
+          "type": "z.array(z.string().min(1))",
+          "optional": false,
+          "array": true,
+          "doc": "Figure numbers from the page's caption candidates — candidates, not claims."
+        },
+        {
+          "name": "region",
+          "type": "BBoxSchema.nullable()",
+          "optional": false,
+          "array": false,
+          "doc": "The rendered rectangle, visible frame."
+        },
+        {
+          "name": "assembly",
+          "type": "VectorAssemblySchema",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "shows",
+          "type": "z.array(z.string().min(1)).min(1).optional()",
+          "optional": true,
+          "array": true,
+          "doc": "Which declared figures the render shows. Inspection only — see the module docblock."
+        },
+        {
+          "name": "narrative",
+          "type": "NarrativeSchema.optional()",
+          "optional": true,
+          "array": false
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [
+        "cat-harness/schemas/narrative.ts#NarrativeSchema",
+        "cat-harness/schemas/vector-figure.ts#VectorAssemblySchema",
+        "cat-harness/schemas/vector-figure.ts#VectorFigureBasisSchema",
+        "cat-harness/schemas/vector-labels.ts#BBoxSchema"
+      ],
+      "unresolved": [
+        "IMAGE_ROLES"
+      ],
+      "external": [
+        "z"
+      ],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/vector-figure.ts#VectorFiguresSidecar",
+      "name": "VectorFiguresSidecar",
+      "module": "cat-harness/schemas/vector-figure.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/vector-figure.ts#VectorFiguresSidecarSchema",
+      "name": "VectorFiguresSidecarSchema",
+      "module": "cat-harness/schemas/vector-figure.ts",
+      "kind": "zod-object",
+      "fields": [
+        {
+          "name": "$schema",
+          "type": "z.literal(VECTOR_FIGURES_SCHEMA_ID)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "doc_id",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "figures",
+          "type": "z.array(VectorFigureSchema).nullable()",
+          "optional": false,
+          "array": true,
+          "doc": "`null` is could-not-determine, never \"draws no figures\" — the `dh4f` rule."
+        },
+        {
+          "name": "undetermined_reason",
+          "type": "z.string().min(1).optional()",
+          "optional": true,
+          "array": false
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [
+        "cat-harness/schemas/vector-figure.ts#VectorFigureSchema"
+      ],
+      "unresolved": [],
+      "external": [
+        "VECTOR_FIGURES_SCHEMA_ID",
+        "z"
+      ],
+      "exported": true
+    },
+    {
       "id": "cat-harness/schemas/vector-labels.ts#BBoxSchema",
       "name": "BBoxSchema",
       "module": "cat-harness/schemas/vector-labels.ts",
@@ -48714,114 +48692,6 @@
       "exported": true
     },
     {
-      "id": "folio-assistant-core/schemas/kg-materialization.ts#KgNodesRecord",
-      "name": "KgNodesRecord",
-      "module": "folio-assistant-core/schemas/kg-materialization.ts",
-      "kind": "type-alias",
-      "fields": [],
-      "extendsNames": [],
-      "values": [],
-      "refs": [],
-      "unresolved": [],
-      "external": [],
-      "exported": true
-    },
-    {
-      "id": "folio-assistant-core/schemas/kg-materialization.ts#KgNodesRecordSchema",
-      "name": "KgNodesRecordSchema",
-      "module": "folio-assistant-core/schemas/kg-materialization.ts",
-      "kind": "zod-object",
-      "doc": "The record of ONE subgraph fetched in METADATA mode — `kg:materialize",
-      "fields": [
-        {
-          "name": "$schema",
-          "type": "z.literal(KG_NODES_RECORD_SCHEMA)",
-          "optional": false,
-          "array": false
-        },
-        {
-          "name": "subscription",
-          "type": "z.string().min(1)",
-          "optional": false,
-          "array": false
-        },
-        {
-          "name": "repository",
-          "type": "RepoFullNameSchema",
-          "optional": false,
-          "array": false
-        },
-        {
-          "name": "ref",
-          "type": "z.string().regex(/^[0-9a-f]{40}$/)",
-          "optional": false,
-          "array": false,
-          "doc": "The pin the file was fetched at — the subscription's `ref` when it was written."
-        },
-        {
-          "name": "subgraph",
-          "type": "z .object({ /** Instance-relative, as the substrate's own subgraph tree names it: `skills/sdlc`. */ path: RelPathSchema…",
-          "optional": false,
-          "array": false
-        },
-        {
-          "name": "state",
-          "type": "z.enum([\"materialized\", \"referenced\"])",
-          "optional": false,
-          "array": false,
-          "doc": "`materialized`: the file is here; `referenced`: the size cap stopped it, and `size` says so."
-        },
-        {
-          "name": "size",
-          "type": "GateSchema",
-          "optional": false,
-          "array": false,
-          "doc": "The one gate that applies: MEASURED bytes against `maxBytes`."
-        },
-        {
-          "name": "file",
-          "type": "z .object({ name: z.literal(SUBGRAPH_HYDRATED_FILE), /** Where upstream publishes it, at the pin. */ upstream: z.string…",
-          "optional": true,
-          "array": false
-        },
-        {
-          "name": "members",
-          "type": "z.number().int().nonnegative().optional()",
-          "optional": true,
-          "array": false,
-          "doc": "Nodes in the subgraph's transitive membership, and subgraphs under it, as counted from the file."
-        },
-        {
-          "name": "subgraphs",
-          "type": "z.number().int().nonnegative().optional()",
-          "optional": true,
-          "array": false
-        },
-        {
-          "name": "note",
-          "type": "z.string().min(1).optional()",
-          "optional": true,
-          "array": false
-        }
-      ],
-      "extendsNames": [],
-      "values": [],
-      "refs": [
-        "folio-assistant-core/schemas/kg-materialization.ts#RelPathSchema",
-        "folio-assistant-core/schemas/materialization.ts#GateSchema"
-      ],
-      "unresolved": [
-        "FixitySchema"
-      ],
-      "external": [
-        "KG_NODES_RECORD_SCHEMA",
-        "RepoFullNameSchema",
-        "SUBGRAPH_HYDRATED_FILE",
-        "z"
-      ],
-      "exported": true
-    },
-    {
       "id": "folio-assistant-core/schemas/kg-materialization.ts#KgPartRecord",
       "name": "KgPartRecord",
       "module": "folio-assistant-core/schemas/kg-materialization.ts",
@@ -55034,14 +54904,6 @@
     {
       "from": "cat-harness/schemas/site-indexes.ts#BeanIndexSchema",
       "to": "cat-harness/schemas/tool-types.ts#BeanIdSchema",
-      "via": "edges",
-      "kind": "field",
-      "optional": false,
-      "array": true
-    },
-    {
-      "from": "cat-harness/schemas/site-indexes.ts#BeanIndexSchema",
-      "to": "cat-harness/schemas/tool-types.ts#BeanIdSchema",
       "via": "findings",
       "kind": "field",
       "optional": false,
@@ -55691,134 +55553,6 @@
       "from": "cat-harness/schemas/sticky-contribution.ts#StickyTextSchema",
       "to": "cat-harness/schemas/sticky-contribution.ts#TextBoxSchema",
       "via": "box",
-      "kind": "field",
-      "optional": true,
-      "array": false
-    },
-    {
-      "from": "cat-harness/schemas/subgraph-manifest.ts#PayloadLinkSchema",
-      "to": "cat-harness/schemas/subgraph-manifest.ts#PayloadIriSchema",
-      "via": "@id",
-      "kind": "field",
-      "optional": false,
-      "array": false
-    },
-    {
-      "from": "cat-harness/schemas/subgraph-manifest.ts#PayloadLinkSchema",
-      "to": "cat-harness/schemas/subgraph-manifest.ts#Sha256HexSchema",
-      "via": "sha256",
-      "kind": "field",
-      "optional": false,
-      "array": false
-    },
-    {
-      "from": "cat-harness/schemas/subgraph-manifest.ts#PayloadSidecarSchema",
-      "to": "cat-harness/schemas/subgraph-manifest.ts#Sha256HexSchema",
-      "via": "sha256",
-      "kind": "field",
-      "optional": false,
-      "array": false
-    },
-    {
-      "from": "cat-harness/schemas/subgraph-manifest.ts#SubgraphHydratedSchema",
-      "to": "cat-harness/schemas/subgraph-manifest.ts#ContextUrl",
-      "via": "@context",
-      "kind": "field",
-      "optional": false,
-      "array": false
-    },
-    {
-      "from": "cat-harness/schemas/subgraph-manifest.ts#SubgraphHydratedSchema",
-      "to": "cat-harness/schemas/subgraph-manifest.ts#SubgraphHydratedNodeSchema",
-      "via": "hasSubgraph",
-      "kind": "field",
-      "optional": true,
-      "array": true
-    },
-    {
-      "from": "cat-harness/schemas/subgraph-manifest.ts#SubgraphHydratedSchema",
-      "to": "cat-harness/schemas/subgraph-manifest.ts#SubgraphMemberSchema",
-      "via": "hasMember",
-      "kind": "field",
-      "optional": true,
-      "array": true
-    },
-    {
-      "from": "cat-harness/schemas/subgraph-manifest.ts#SubgraphHydratedSchema",
-      "to": "cat-harness/schemas/subgraph-manifest.ts#SubgraphNodeBase",
-      "via": "",
-      "kind": "extends",
-      "optional": false,
-      "array": false
-    },
-    {
-      "from": "cat-harness/schemas/subgraph-manifest.ts#SubgraphIndexNodeSchema",
-      "to": "cat-harness/schemas/subgraph-manifest.ts#SubgraphIriSchema",
-      "via": "hasSubgraph",
-      "kind": "field",
-      "optional": true,
-      "array": true
-    },
-    {
-      "from": "cat-harness/schemas/subgraph-manifest.ts#SubgraphIndexNodeSchema",
-      "to": "cat-harness/schemas/subgraph-manifest.ts#SubgraphNodeBase",
-      "via": "",
-      "kind": "extends",
-      "optional": false,
-      "array": false
-    },
-    {
-      "from": "cat-harness/schemas/subgraph-manifest.ts#SubgraphIndexNodeSchema",
-      "to": "cat-harness/schemas/subgraph-manifest.ts#SubgraphPointerSchema",
-      "via": "hasMember",
-      "kind": "field",
-      "optional": true,
-      "array": true
-    },
-    {
-      "from": "cat-harness/schemas/subgraph-manifest.ts#SubgraphIndexSchema",
-      "to": "cat-harness/schemas/subgraph-manifest.ts#ContextUrl",
-      "via": "@context",
-      "kind": "field",
-      "optional": false,
-      "array": false
-    },
-    {
-      "from": "cat-harness/schemas/subgraph-manifest.ts#SubgraphIndexSchema",
-      "to": "cat-harness/schemas/subgraph-manifest.ts#SubgraphIndexNodeSchema",
-      "via": "",
-      "kind": "extends",
-      "optional": false,
-      "array": false
-    },
-    {
-      "from": "cat-harness/schemas/subgraph-manifest.ts#SubgraphMemberSchema",
-      "to": "cat-harness/schemas/subgraph-manifest.ts#PayloadLinkSchema",
-      "via": "payload",
-      "kind": "field",
-      "optional": true,
-      "array": false
-    },
-    {
-      "from": "cat-harness/schemas/subgraph-manifest.ts#SubgraphNodeBase",
-      "to": "cat-harness/schemas/cat-harness.ts#GraphNodeDirectoryShape",
-      "via": "",
-      "kind": "extends",
-      "optional": false,
-      "array": false
-    },
-    {
-      "from": "cat-harness/schemas/subgraph-manifest.ts#SubgraphNodeBase",
-      "to": "cat-harness/schemas/subgraph-manifest.ts#SubgraphIriSchema",
-      "via": "@id",
-      "kind": "field",
-      "optional": false,
-      "array": false
-    },
-    {
-      "from": "cat-harness/schemas/subgraph-manifest.ts#SubgraphPointerSchema",
-      "to": "cat-harness/schemas/subgraph-manifest.ts#PayloadLinkSchema",
-      "via": "payload",
       "kind": "field",
       "optional": true,
       "array": false
@@ -57160,6 +56894,94 @@
       "array": false
     },
     {
+      "from": "cat-harness/schemas/vector-figure.ts#AssemblyBasisSchema",
+      "to": "cat-harness/schemas/attribution.ts#AttributionSchema",
+      "via": "by",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "cat-harness/schemas/vector-figure.ts#VectorAssemblySchema",
+      "to": "cat-harness/schemas/vector-figure.ts#VectorBoxSchema",
+      "via": "boxes",
+      "kind": "field",
+      "optional": false,
+      "array": true
+    },
+    {
+      "from": "cat-harness/schemas/vector-figure.ts#VectorAssemblySchema",
+      "to": "cat-harness/schemas/vector-figure.ts#VectorConnectorSchema",
+      "via": "connectors",
+      "kind": "field",
+      "optional": false,
+      "array": true
+    },
+    {
+      "from": "cat-harness/schemas/vector-figure.ts#VectorAssemblySchema",
+      "to": "cat-harness/schemas/vector-labels.ts#BBoxSchema",
+      "via": "groups",
+      "kind": "field",
+      "optional": false,
+      "array": true
+    },
+    {
+      "from": "cat-harness/schemas/vector-figure.ts#VectorBoxSchema",
+      "to": "cat-harness/schemas/vector-labels.ts#BBoxSchema",
+      "via": "bbox",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "cat-harness/schemas/vector-figure.ts#VectorConnectorSchema",
+      "to": "cat-harness/schemas/vector-labels.ts#BBoxSchema",
+      "via": "bbox",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "cat-harness/schemas/vector-figure.ts#VectorFigureSchema",
+      "to": "cat-harness/schemas/narrative.ts#NarrativeSchema",
+      "via": "narrative",
+      "kind": "field",
+      "optional": true,
+      "array": false
+    },
+    {
+      "from": "cat-harness/schemas/vector-figure.ts#VectorFigureSchema",
+      "to": "cat-harness/schemas/vector-figure.ts#VectorAssemblySchema",
+      "via": "assembly",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "cat-harness/schemas/vector-figure.ts#VectorFigureSchema",
+      "to": "cat-harness/schemas/vector-figure.ts#VectorFigureBasisSchema",
+      "via": "basis",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "cat-harness/schemas/vector-figure.ts#VectorFigureSchema",
+      "to": "cat-harness/schemas/vector-labels.ts#BBoxSchema",
+      "via": "region",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "cat-harness/schemas/vector-figure.ts#VectorFiguresSidecarSchema",
+      "to": "cat-harness/schemas/vector-figure.ts#VectorFigureSchema",
+      "via": "figures",
+      "kind": "field",
+      "optional": false,
+      "array": true
+    },
+    {
       "from": "cat-harness/schemas/vector-labels.ts#VectorFigurePageSchema",
       "to": "cat-harness/schemas/vector-labels.ts#VectorLabelSchema",
       "via": "labels",
@@ -58267,22 +58089,6 @@
       "from": "folio-assistant-core/schemas/kg-materialization.ts#KgMaterializationRecordSchema",
       "to": "folio-assistant-core/schemas/materialization.ts#MaterializationSchema",
       "via": "materialization",
-      "kind": "field",
-      "optional": false,
-      "array": false
-    },
-    {
-      "from": "folio-assistant-core/schemas/kg-materialization.ts#KgNodesRecordSchema",
-      "to": "folio-assistant-core/schemas/kg-materialization.ts#RelPathSchema",
-      "via": "subgraph",
-      "kind": "field",
-      "optional": false,
-      "array": false
-    },
-    {
-      "from": "folio-assistant-core/schemas/kg-materialization.ts#KgNodesRecordSchema",
-      "to": "folio-assistant-core/schemas/materialization.ts#GateSchema",
-      "via": "size",
       "kind": "field",
       "optional": false,
       "array": false

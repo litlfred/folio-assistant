@@ -13,7 +13,7 @@ permalink: /glossary/schema-fields/a-e/
 
 Candidate terms extracted from every schema field with a doc comment: `<Declaration>.<field>` as the label, the comment's first paragraph as the definition. Each is the asset's own text, verbatim and not curated, and carries the badge "candidate, extracted". A person promotes one by authoring it. Authored terms, the counts and the sources are on the <a href="{{ '/glossary/' | relative_url }}">glossary index</a>.
 
-From: bootstrap-tools 28 (<a href="{{ '/assets/glossary/bootstrap-tools--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · cat-harness 1736 (<a href="{{ '/assets/glossary/cat-harness--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · cat-openapi 13 (<a href="{{ '/assets/glossary/cat-openapi--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · fhir-harness 75 (<a href="{{ '/assets/glossary/fhir-harness--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · folio-assistant-core 131 (<a href="{{ '/assets/glossary/folio-assistant-core--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · smart-base 9 (<a href="{{ '/assets/glossary/smart-base--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>).
+From: bootstrap-tools 28 (<a href="{{ '/assets/glossary/bootstrap-tools--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · cat-harness 1750 (<a href="{{ '/assets/glossary/cat-harness--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · cat-openapi 13 (<a href="{{ '/assets/glossary/cat-openapi--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · fhir-harness 75 (<a href="{{ '/assets/glossary/fhir-harness--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · folio-assistant-core 127 (<a href="{{ '/assets/glossary/folio-assistant-core--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · smart-base 9 (<a href="{{ '/assets/glossary/smart-base--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>).
 
 One of 4 pages of this type, split by the first letter of the label: <a href="{{ '/glossary/schema-fields/' | relative_url }}">all parts</a>.
 
@@ -22,7 +22,7 @@ One of 4 pages of this type, split by the first letter of the label: <a href="{{
 <table class="fa-gloss-mapping">
 <caption>Already somebody else's concept? — <code>check:term-mapping</code>, bean <code>7wou</code></caption>
 <thead><tr><th>target</th><th>mapped</th><th>unmapped</th><th>undetermined</th><th>why undetermined</th></tr></thead>
-<tbody><tr><td><code>fhir</code></td><td>0</td><td>1992</td><td>0</td><td>—</td></tr><tr><td><code>skos</code></td><td>0</td><td>1992</td><td>0</td><td>—</td></tr></tbody>
+<tbody><tr><td><code>fhir</code></td><td>0</td><td>2002</td><td>0</td><td>—</td></tr><tr><td><code>skos</code></td><td>0</td><td>2002</td><td>0</td><td>—</td></tr></tbody>
 </table>
 <p class="fa-gloss-mapping-note"><strong>Undetermined is never “no match”.</strong> 
 A vocabulary that could not be reached has said nothing, and the column above keeps that 
@@ -444,6 +444,13 @@ ArtifactStoreSchema.publicBaseUrl <span class="fa-gloss-status">candidate, extra
 <p>The base the artifact will be READABLE at. Required, and it is the &quot;EXTREME care in URL handling&quot; clause in schema form: a published URL is a promise, and the address has to be decided before the upload rather than discovered from whatever the host returned.</p>
 <p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/artifact-store.ts"><code>cat-harness/schemas/artifact-store.ts#ArtifactStoreSchema.publicBaseUrl</code></a></p>
 </dd>
+<dt id="cat-harness--kg-schema-fields--vector-figure.assemblybasisschema.by" data-fa-state="extracted" data-fa-gloss="">
+AssemblyBasisSchema.by <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>The script, as a <code>script</code> attribution — what looked.</p>
+<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/vector-figure.ts"><code>cat-harness/schemas/vector-figure.ts#AssemblyBasisSchema.by</code></a></p>
+</dd>
 <dt id="cat-harness--kg-schema-fields--cat-harness.assetroledef.delivery" data-fa-state="extracted" data-fa-gloss="">
 AssetRoleDef.delivery <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
@@ -734,13 +741,6 @@ BeanIndexItemSchema.preview <span class="fa-gloss-status">candidate, extracted</
 <dd>
 <p>The body, trimmed to its first 400 characters.</p>
 <p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/site-indexes.ts"><code>cat-harness/schemas/site-indexes.ts#BeanIndexItemSchema.preview</code></a></p>
-</dd>
-<dt id="cat-harness--kg-schema-fields--site-indexes.beanindexschema.edges" data-fa-state="extracted" data-fa-gloss="">
-BeanIndexSchema.edges <span class="fa-gloss-status">candidate, extracted</span>
-</dt>
-<dd>
-<p>The block graph as ONE edge set, <code>blocker → blocked</code>, over both front-matter declarations (<code>blocking:</code> on the blocker, <code>blocked_by:</code> on the blocked), deduplicated — <code>blockEdges</code> in <code>scripts/beans.ts</code>, bean <code>vhqq</code>. An end may name no bean in <code>items</code>: that edge is kept here and reported as a <code>blocking-unknown</code> finding, never dropped.</p>
-<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/site-indexes.ts"><code>cat-harness/schemas/site-indexes.ts#BeanIndexSchema.edges</code></a></p>
 </dd>
 <dt id="cat-harness--kg-schema-fields--bean-note.beannotefrontmatterschema.bean" data-fa-state="extracted" data-fa-gloss="">
 BeanNoteFrontMatterSchema.bean <span class="fa-gloss-status">candidate, extracted</span>
