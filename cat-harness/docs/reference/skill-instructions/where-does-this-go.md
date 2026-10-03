@@ -42,7 +42,7 @@ surface on which the nine rules appear together.
 Bean `f258`, and that bean is its own example: choosing where to file IT took
 a judgement call between a PROCESS epic, QA, and the knowledge graph.
 
-## The nine questions
+## The ten questions
 
 Read down the middle column until one matches what you are actually deciding.
 If two match, you have two decisions, not one — take them in the order below,
@@ -60,14 +60,22 @@ placement.
 | 7 | Is this an adapter, a profile, or a visualiser? | [`content-profiles`](content-profiles.md), and [issue #764](https://github.com/litlfred/folio-assistant/issues/764) for the axis still open |
 | 8 | Does this belong in `AGENTS.md` or in a skill? | [`AGENTS.md`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/AGENTS.md) §"What is specific to THIS layer" — **always the skill** |
 | 9 | Is this a skill, or an agent's memory? | [`agent-memory`](agent-memory.md) |
+| 10 | Am I adding a new INSTANCE (a harness) or a new graph KIND — and what does it owe, and how does it relate to the instances it sits beside? | [`instance-kinds`](instance-kinds.md) first (most new things are not a new kind; the `cat-` / `folio-assistant-` / `who-` prefixes), then [`harness-requirements`](harness-requirements.md) (the five obligations, and a node's `.json` / `.jsonld` / `.schema.json` IRIs), [`associate-harness`](associate-harness.md) (`needs` vs `associatedHarnesses`) and [`instance-publication`](instance-publication.md) (ids and release IRIs) |
 
-**Nine, and the count is here on purpose** where the repository's own rule is
+**Ten, and the count is here on purpose** where the repository's own rule is
 usually *never quote a count from prose*. The difference is what the number
 is FOR: a count of findings is a measurement that ages, while this one is a
 claim about the table directly beneath it, falsifiable by looking down. When
-a tenth rule is added and this still says nine, the table is one line away
+an eleventh rule is added and this still says ten, the table is one line away
 from proving it wrong — which is the opposite of a stale measurement nobody
 can check.
+
+**Row 10 was added 2026-10-03** (bean `s4ta`), after an agent designing a new
+harness asked the owner four questions — the node's kind, its per-node IRI,
+which file an instance declares it in, how one instance depends on another —
+that `instance-kinds`, `harness-requirements` and `associate-harness` already
+answered. The owner: *"these questions should have already been clear in a
+harness design document/skill or so."* They were; nothing routed to them.
 
 ## Two rows that are easy to confuse, and the discriminator for each
 

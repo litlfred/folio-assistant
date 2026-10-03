@@ -1868,6 +1868,11 @@ jobs:
           # generator (fhir-harness/scripts/gen-ig-pages.ts, #1767).
           bun run smart-base:pages:check
           bun run smart-immunizations:pages:check
+          # The OpenAPI harness (cat-openapi, bean s4ta): every document an
+          # instance's cat-openapi.config.json names is held verbatim and matches
+          # its provenance, and its per-operation pages and IRIs are current.
+          bun run smart-trust:openapi:check
+          bun run smart-trust:openapi:pages:check
           # smart-base's DAK document kind, generated from DAK_COMPONENTS
           # (stage D5, #1767): stale the moment a component is added.
           bun run smart-base:document-kinds:check
