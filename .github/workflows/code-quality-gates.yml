@@ -97,6 +97,20 @@ jobs:
     # bpmn-node: Task_Lean
     name: Lean bare-import gate (hard)
     runs-on: ubuntu-latest
+    # EVERY `run:` step in this job goes through `gate-shell.sh`, which on a
+    # non-zero exit appends the step and the tail of its output to
+    # $GITHUB_STEP_SUMMARY — and so to the check run's `output.summary`, an
+    # API field readable WITHOUT the Actions log host (bean `yqc4`; measured
+    # Forbidden from a cloud container on 2026-10-03).
+    #
+    # The template's `{0}` is the generated step script. The wrapper runs it
+    # under `bash -e` — GitHub's own default — and NOT `-o pipefail`, which
+    # would redden steps that pass today. The two rollup jobs (`typescript`,
+    # `e2e`) are deliberately NOT here: they never check out, so this path
+    # does not exist for them, and they write their own summary inline.
+    defaults:
+      run:
+        shell: cat-harness/scripts/gate-shell.sh {0}
     steps:
       - uses: actions/checkout@v7
         with:
@@ -157,6 +171,20 @@ jobs:
     # bpmn-node: Task_Python
     name: Python unused/wildcard imports (hard)
     runs-on: ubuntu-latest
+    # EVERY `run:` step in this job goes through `gate-shell.sh`, which on a
+    # non-zero exit appends the step and the tail of its output to
+    # $GITHUB_STEP_SUMMARY — and so to the check run's `output.summary`, an
+    # API field readable WITHOUT the Actions log host (bean `yqc4`; measured
+    # Forbidden from a cloud container on 2026-10-03).
+    #
+    # The template's `{0}` is the generated step script. The wrapper runs it
+    # under `bash -e` — GitHub's own default — and NOT `-o pipefail`, which
+    # would redden steps that pass today. The two rollup jobs (`typescript`,
+    # `e2e`) are deliberately NOT here: they never check out, so this path
+    # does not exist for them, and they write their own summary inline.
+    defaults:
+      run:
+        shell: cat-harness/scripts/gate-shell.sh {0}
     steps:
       - uses: actions/checkout@v7
         with:
@@ -262,6 +290,20 @@ jobs:
     # masked lint and typecheck (bean `om30`). In separate jobs nothing can mask
     # anything, so the rule is no longer something an author has to remember.
     runs-on: ubuntu-latest
+    # EVERY `run:` step in this job goes through `gate-shell.sh`, which on a
+    # non-zero exit appends the step and the tail of its output to
+    # $GITHUB_STEP_SUMMARY — and so to the check run's `output.summary`, an
+    # API field readable WITHOUT the Actions log host (bean `yqc4`; measured
+    # Forbidden from a cloud container on 2026-10-03).
+    #
+    # The template's `{0}` is the generated step script. The wrapper runs it
+    # under `bash -e` — GitHub's own default — and NOT `-o pipefail`, which
+    # would redden steps that pass today. The two rollup jobs (`typescript`,
+    # `e2e`) are deliberately NOT here: they never check out, so this path
+    # does not exist for them, and they write their own summary inline.
+    defaults:
+      run:
+        shell: cat-harness/scripts/gate-shell.sh {0}
     steps:
       - uses: actions/checkout@v7
         with:
@@ -321,6 +363,20 @@ jobs:
     # a shard measured 2m07s-2m21s; 20 is ~9x that, so a red here is a hang, never a slow day.
     timeout-minutes: 20
     runs-on: ubuntu-latest
+    # EVERY `run:` step in this job goes through `gate-shell.sh`, which on a
+    # non-zero exit appends the step and the tail of its output to
+    # $GITHUB_STEP_SUMMARY — and so to the check run's `output.summary`, an
+    # API field readable WITHOUT the Actions log host (bean `yqc4`; measured
+    # Forbidden from a cloud container on 2026-10-03).
+    #
+    # The template's `{0}` is the generated step script. The wrapper runs it
+    # under `bash -e` — GitHub's own default — and NOT `-o pipefail`, which
+    # would redden steps that pass today. The two rollup jobs (`typescript`,
+    # `e2e`) are deliberately NOT here: they never check out, so this path
+    # does not exist for them, and they write their own summary inline.
+    defaults:
+      run:
+        shell: cat-harness/scripts/gate-shell.sh {0}
     steps:
       - uses: actions/checkout@v7
         with:
@@ -365,9 +421,28 @@ jobs:
         env:
           STATIC: ${{ needs.typescript-static.result }}
           TESTS: ${{ needs.typescript-test.result }}
+        # No `gate-shell.sh` here: this job never checks out, so the wrapper
+        # does not exist for it. It needs none — the diagnosis is already in
+        # the two env vars, so it writes its own summary and the whole of
+        # WHICH part failed reaches `output.summary` (bean `yqc4`).
         run: |
           echo "lint+types: $STATIC   tests: $TESTS"
-          test "$STATIC" = "success" && test "$TESTS" = "success"
+          if [ "$STATIC" != "success" ] || [ "$TESTS" != "success" ]; then
+            {
+              echo "### ✗ TypeScript — tests, lint, types"
+              echo
+              echo "| part | result |"
+              echo "| --- | --- |"
+              echo "| lint and types | \`$STATIC\` |"
+              echo "| test shards | \`$TESTS\` |"
+              echo
+              echo "This job runs nothing itself — it is red because a part above is."
+              echo "\`cancelled\` or \`skipped\` is NOT a pass: a skipped required check"
+              echo "reads as neither red nor green, which is the vacuous pass bean"
+              echo "\`0qjq\` measured. Open the named job for its own summary."
+            } >> "$GITHUB_STEP_SUMMARY"
+            exit 1
+          fi
 
   gates:
     # bpmn-node: Task_RepositoryGates
@@ -403,6 +478,20 @@ jobs:
     # `typescript` is the three checks its name promises; everything else is a
     # repository gate and belongs in this job.
     runs-on: ubuntu-latest
+    # EVERY `run:` step in this job goes through `gate-shell.sh`, which on a
+    # non-zero exit appends the step and the tail of its output to
+    # $GITHUB_STEP_SUMMARY — and so to the check run's `output.summary`, an
+    # API field readable WITHOUT the Actions log host (bean `yqc4`; measured
+    # Forbidden from a cloud container on 2026-10-03).
+    #
+    # The template's `{0}` is the generated step script. The wrapper runs it
+    # under `bash -e` — GitHub's own default — and NOT `-o pipefail`, which
+    # would redden steps that pass today. The two rollup jobs (`typescript`,
+    # `e2e`) are deliberately NOT here: they never check out, so this path
+    # does not exist for them, and they write their own summary inline.
+    defaults:
+      run:
+        shell: cat-harness/scripts/gate-shell.sh {0}
     steps:
       - uses: actions/checkout@v7
         with:
@@ -1560,6 +1649,20 @@ jobs:
     # the reason `gates` gives about `typescript` — independent questions,
     # asked independently, so one red cannot stop the other being asked.
     runs-on: ubuntu-latest
+    # EVERY `run:` step in this job goes through `gate-shell.sh`, which on a
+    # non-zero exit appends the step and the tail of its output to
+    # $GITHUB_STEP_SUMMARY — and so to the check run's `output.summary`, an
+    # API field readable WITHOUT the Actions log host (bean `yqc4`; measured
+    # Forbidden from a cloud container on 2026-10-03).
+    #
+    # The template's `{0}` is the generated step script. The wrapper runs it
+    # under `bash -e` — GitHub's own default — and NOT `-o pipefail`, which
+    # would redden steps that pass today. The two rollup jobs (`typescript`,
+    # `e2e`) are deliberately NOT here: they never check out, so this path
+    # does not exist for them, and they write their own summary inline.
+    defaults:
+      run:
+        shell: cat-harness/scripts/gate-shell.sh {0}
     steps:
       - uses: actions/checkout@v7
         with:
@@ -2329,6 +2432,20 @@ jobs:
       fail-fast: false
       matrix:
         shard: [1, 2, 3]
+    # EVERY `run:` step in this job goes through `gate-shell.sh`, which on a
+    # non-zero exit appends the step and the tail of its output to
+    # $GITHUB_STEP_SUMMARY — and so to the check run's `output.summary`, an
+    # API field readable WITHOUT the Actions log host (bean `yqc4`; measured
+    # Forbidden from a cloud container on 2026-10-03).
+    #
+    # The template's `{0}` is the generated step script. The wrapper runs it
+    # under `bash -e` — GitHub's own default — and NOT `-o pipefail`, which
+    # would redden steps that pass today. The two rollup jobs (`typescript`,
+    # `e2e`) are deliberately NOT here: they never check out, so this path
+    # does not exist for them, and they write their own summary inline.
+    defaults:
+      run:
+        shell: cat-harness/scripts/gate-shell.sh {0}
     steps:
       - uses: actions/checkout@v7
         with:
@@ -2388,14 +2505,46 @@ jobs:
       - name: every shard succeeded
         env:
           SHARDS: ${{ needs.e2e-shard.result }}
+        # No `gate-shell.sh` here either, and for the same reason: this job
+        # never checks out. See the `typescript` rollup above (bean `yqc4`).
         run: |
           echo "e2e shards: $SHARDS"
-          test "$SHARDS" = "success"
+          if [ "$SHARDS" != "success" ]; then
+            {
+              echo "### ✗ End-to-end + accessibility"
+              echo
+              echo "Shard result: \`$SHARDS\`"
+              echo
+              echo "This job runs nothing itself — it completes the multi-instance"
+              echo "task and is green only when EVERY shard succeeded, so open the"
+              echo "red shard for its own summary and its Playwright report artifact."
+              echo
+              echo "Worth checking first: shard 1/3 alone runs \`render:bpmn:check\`"
+              echo "BEFORE playwright, so a stale BPMN SVG kills it in ~37 s having"
+              echo "run no test, while a passing shard takes ~2 min. \`bun run regen\`"
+              echo "reports that check as OUTSIDE its coverage on every run."
+            } >> "$GITHUB_STEP_SUMMARY"
+            exit 1
+          fi
 
   rust-wildcard:
     # bpmn-node: Task_Rust
     name: Rust wildcard imports (warn-only)
     runs-on: ubuntu-latest
+    # EVERY `run:` step in this job goes through `gate-shell.sh`, which on a
+    # non-zero exit appends the step and the tail of its output to
+    # $GITHUB_STEP_SUMMARY — and so to the check run's `output.summary`, an
+    # API field readable WITHOUT the Actions log host (bean `yqc4`; measured
+    # Forbidden from a cloud container on 2026-10-03).
+    #
+    # The template's `{0}` is the generated step script. The wrapper runs it
+    # under `bash -e` — GitHub's own default — and NOT `-o pipefail`, which
+    # would redden steps that pass today. The two rollup jobs (`typescript`,
+    # `e2e`) are deliberately NOT here: they never check out, so this path
+    # does not exist for them, and they write their own summary inline.
+    defaults:
+      run:
+        shell: cat-harness/scripts/gate-shell.sh {0}
     steps:
       - uses: actions/checkout@v7
         with:
@@ -2435,6 +2584,20 @@ jobs:
     # bpmn-node: Task_Advisories
     name: Dependency advisories (warn-only)
     runs-on: ubuntu-latest
+    # EVERY `run:` step in this job goes through `gate-shell.sh`, which on a
+    # non-zero exit appends the step and the tail of its output to
+    # $GITHUB_STEP_SUMMARY — and so to the check run's `output.summary`, an
+    # API field readable WITHOUT the Actions log host (bean `yqc4`; measured
+    # Forbidden from a cloud container on 2026-10-03).
+    #
+    # The template's `{0}` is the generated step script. The wrapper runs it
+    # under `bash -e` — GitHub's own default — and NOT `-o pipefail`, which
+    # would redden steps that pass today. The two rollup jobs (`typescript`,
+    # `e2e`) are deliberately NOT here: they never check out, so this path
+    # does not exist for them, and they write their own summary inline.
+    defaults:
+      run:
+        shell: cat-harness/scripts/gate-shell.sh {0}
     steps:
       - uses: actions/checkout@v7
         with:
@@ -2469,6 +2632,20 @@ jobs:
     # bpmn-node: Task_SkillChain
     name: Skill-registration chain, unmasked (hard)
     runs-on: ubuntu-latest
+    # EVERY `run:` step in this job goes through `gate-shell.sh`, which on a
+    # non-zero exit appends the step and the tail of its output to
+    # $GITHUB_STEP_SUMMARY — and so to the check run's `output.summary`, an
+    # API field readable WITHOUT the Actions log host (bean `yqc4`; measured
+    # Forbidden from a cloud container on 2026-10-03).
+    #
+    # The template's `{0}` is the generated step script. The wrapper runs it
+    # under `bash -e` — GitHub's own default — and NOT `-o pipefail`, which
+    # would redden steps that pass today. The two rollup jobs (`typescript`,
+    # `e2e`) are deliberately NOT here: they never check out, so this path
+    # does not exist for them, and they write their own summary inline.
+    defaults:
+      run:
+        shell: cat-harness/scripts/gate-shell.sh {0}
     steps:
       - uses: actions/checkout@v7
         with:
@@ -2541,6 +2718,20 @@ jobs:
     concurrency:
       group: qa-publish-${{ github.event.pull_request.number || github.sha }}
       cancel-in-progress: false
+    # EVERY `run:` step in this job goes through `gate-shell.sh`, which on a
+    # non-zero exit appends the step and the tail of its output to
+    # $GITHUB_STEP_SUMMARY — and so to the check run's `output.summary`, an
+    # API field readable WITHOUT the Actions log host (bean `yqc4`; measured
+    # Forbidden from a cloud container on 2026-10-03).
+    #
+    # The template's `{0}` is the generated step script. The wrapper runs it
+    # under `bash -e` — GitHub's own default — and NOT `-o pipefail`, which
+    # would redden steps that pass today. The two rollup jobs (`typescript`,
+    # `e2e`) are deliberately NOT here: they never check out, so this path
+    # does not exist for them, and they write their own summary inline.
+    defaults:
+      run:
+        shell: cat-harness/scripts/gate-shell.sh {0}
     steps:
       - uses: actions/checkout@v7
         with:
