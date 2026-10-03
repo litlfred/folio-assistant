@@ -5,7 +5,7 @@ status: todo
 type: task
 priority: normal
 created_at: 2026-09-20T20:54:07Z
-updated_at: 2026-10-03T09:39:07Z
+updated_at: 2026-10-03T09:51:16Z
 parent: folio-assistant-0lmb
 ---
 
@@ -566,3 +566,85 @@ not the globs. Worth recording because the first reading looked like
 - [ ] `toc` stays OUT (this bean is the only record of that withdrawal)
 - [ ] the authoring-rule half is a SKILL, untouched by the move
 - [ ] `who-iris/docs` is the named first exercise, end to end
+
+
+## CORRECTION, 2026-10-03 — two claims in the plan above are wrong
+
+Both were found by reading `scripts/gen-docs-auto.ts`'s module docblock, which
+I should have read before writing the plan rather than after. It records
+decisions already taken on this bean.
+
+### 1. `docs-auto` is deliberately NOT a graph kind — and the plan was about to register one
+
+The docblock, §"Why this is a NEW generator rather than a kind of an existing
+one":
+
+> A note on `06e3` guessed the opposite — that docs-auto would be a `kind`
+> handled by `state-visualizer.ts` … Reading the three existing generators says
+> no, and the reason is structural rather than a matter of taste: **every one of
+> them is one-axis.** … docs-auto is **two-axis** — an auto-doc TYPE crossed
+> with a SUB-GRAPH — and there is nowhere in a one-axis generator to put the
+> second axis without it becoming this file anyway.
+
+So "a `docs-auto` graph kind with `holds: derived` and a `docs-auto.json`
+from-within node" is **the thing a note on this bean already guessed and the
+implementer rejected with reasons**. I had got as far as reading the
+`graph-kind-registry` entry for `docs` and the §"Adding a kind" procedure
+before finding it.
+
+### 2. "Rooted three levels too deep … a promotion, not a redesign" is WRONG
+
+`docs/cat-harness/docs-auto/` is not misplacement. `viewerPlacement(site,
+dirPath, kind)` builds `pageDir = join(site, ...dirPath.split("/"))`, and
+`dirPath` is documented as *"the handled directory's repo-relative path, e.g.
+`cat-harness/schemas`"*. The `cat-harness` segment is therefore the **handler**,
+and the whole route is the owner's `<base>/<handler>/<kind>/<subject>` rule,
+shared with `gen-schema-viz` and `gen-library-viz`. The docblock says so:
+*"No new URL rule, no fourth pruner."*
+
+**Promoting it to the instance root would break the owner's URL rule**, not
+tidy it.
+
+### 3. The sub-graph segment is a declared `id`, ONE segment — which invalidates part of the mapping table
+
+Also settled already, and by the owner:
+
+> The owner wrote `<path>`. This publishes under the declared entry's **id**
+> instead — put to them as an open question on #607 with both costs stated, and
+> **ruled for the `id` on 2026-09-21** … It stays one segment. A path has
+> slashes, so page directories would nest — and `orphanSubjectPages` scans one
+> level, which is what makes pruning's ownership test exact.
+
+So rows in the mapping table above that put a slash or a non-id in the subject
+segment are not reachable: `glossary/<ledger>`, `index/schemas/<schema>`,
+`glossary/<ledger>/<lang>`, `uml/<instance>`. The subject must be a **declared
+directory id** — `skills`, `schemas`, `processes`, `swimlane-glossary` — and
+one segment only.
+
+## What the owner's ruling today therefore means
+
+Not *"move `docs-auto` up and relocate directories beneath it"*. Rather:
+
+**`docs-auto` is already in the right place, with the right two-axis keying and
+the owner's URL rule. The other derived families become new `<auto-doc-type>`s
+handled by this generator** — `uml`, `lsi`, `index/schemas`, `index/tools` — with
+their subject segment taken from the declaration's `id`.
+
+That is a change to one two-axis generator and a set of declared types, not a
+bulk `git mv` of 687 files. It is also much closer to what this bean asked for
+in the first place: *"one handler, parameterised twice"*.
+
+**The `docs/` half of the owner's ruling still stands and is unaffected**: the
+17 `gen-docs-pages.ts` pages are assembled authored prose and stay, and that
+remains the discriminator — is the SOURCE a graph, or prose a person wrote?
+
+## Still true from the plan above
+
+- the seam slice is done and landed (`baseDocsDir`, six copies deleted, proven
+  no-op: all six generator `:check`s pass with zero generated files changed)
+- the 913-page verdict snapshot, and that the 216 `authored take-base` are a
+  detector artefact rather than a data-loss defect
+- `assets/` is a Jekyll URL namespace; `assets/library/` is URL-frozen by
+  13,214 absolute citations across 6,861 files
+- `toc` stays out; the authoring rule is a skill; `who-iris/docs` is the first
+  exercise
