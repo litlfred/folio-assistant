@@ -41,6 +41,7 @@ Branch name updated 2026-10-02 per the owner's naming ruling, `cat/<harness>/<na
 
 Related: `32f6` (cat- prefix; PR #1913), `rva2` (one storage field per special branch), `wggr` (non-instance stores), `oi3h` (fsh-guts visualiser).
 
+_2026-10-03T00:50:36Z_ — Claimed by claude/lucid-shannon-o8zop1-fsh-guts — pushed to main so sibling sessions see it before this branch has a PR (bean 35nj).
 
 ## 2026-10-03: step 1, and why it was larger than one row (session https://claude.ai/code/session_01SmeBn6QZsDFaNQ4GtuC2sd)
 
