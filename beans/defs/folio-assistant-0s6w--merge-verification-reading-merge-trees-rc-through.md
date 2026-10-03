@@ -1,0 +1,67 @@
+---
+# folio-assistant-0s6w
+title: 'MERGE VERIFICATION: reading merge-tree''s rc through a command substitution reports the WRONG exit status, and it reads as clean'
+status: todo
+type: bug
+created_at: 2026-10-03T02:07:04Z
+updated_at: 2026-10-03T02:07:04Z
+parent: folio-assistant-hfag
+---
+
+A merge steward verifies mergeability with `git merge-tree --write-tree` and reads the exit
+code: **rc=0 clean, rc=1 CONFLICT, rc>=2 an ERROR that is not clean**. On 2026-10-03 that
+read was wrong for a whole session, in one specific shell form, and it reported **clean**.
+
+## The defect
+
+```sh
+git merge-tree --write-tree origin/main "$sha" >/dev/null 2>&1
+echo "merge-tree rc=$?"                                                   # CORRECT
+echo "merge-tree vs main($(git rev-parse --short origin/main)) rc=$?"     # WRONG — always 0
+```
+
+Bash expands the whole word before running `echo`. The command substitution
+`$(git rev-parse …)` **runs a command**, and that resets `$?`. So the second form reports
+`git rev-parse`'s exit status — which is 0 whenever the ref exists — and never
+`merge-tree`'s.
+
+The failure is silent and confident. It does not print a warning or an empty value; it
+prints `rc=0`, which is the exact string a steward is looking for.
+
+## Measured consequence
+
+PR #1939 was declared clean on that form and the merge was then **refused by GitHub with
+HTTP 405, "Pull Request has merge conflicts."** Re-measuring with the correct form against
+the same base gave **rc=1 with three conflicts** — `beans/README.md`,
+`cat-harness/docs/_data/harness.json`, `cat-harness/docs/assets/library/index.json`.
+
+**No bad merge resulted, and the reason matters: GitHub's merge API is an independent
+gate.** It refuses a conflicted merge whatever the client believes. So the only thing
+standing between a mis-read `rc` and a wrong merge was the forge, not the steward's own
+check. The same session used the correct form on #1894, #1942 and #1944, and the broken
+form on #1946 and #1939; #1946 merged, so it was genuinely clean — confirmed by the forge
+accepting it, not by the check.
+
+## Why this is worth a bean rather than a habit
+
+It is the `1xhc` shape applied to a steward's instrument rather than to a gate: **a check
+that cannot answer emitted a plausible answer.** Every other instance recorded in this
+corpus emits nothing and is read as clean; this one emits `rc=0` and is read as clean. That
+is strictly worse, because there is no silence to notice.
+
+It also generalises past `merge-tree`. Any `rc=$?` preceded in the same word by a command
+substitution has the bug — a timing `$(date)`, a sha `$(git rev-parse …)`, a count
+`$(wc -l < f)`. That is a common shape in a status line.
+
+## Done when
+- [ ] the shell rule is written where a steward reads it before verifying a merge — `$?`
+      must be captured into a variable on the line AFTER the command, before any other
+      command runs, including one inside a substitution
+- [ ] the merge-pipeline scripts are checked for the same shape (`merge-train.ts`,
+      `merge-overlap.ts`, `merge-leftover.ts`, `bean-rollover.ts`, `mvp-status.ts` read
+      `rc` from `spawnSync` rather than a shell, so they are likely clean — VERIFY rather
+      than assume)
+- [ ] a NEGATIVE control recorded: a known-conflicted pair whose rc must read 1, so a
+      future change to the reporting cannot silently reintroduce a constant 0
+- [ ] stated plainly that GitHub's 405 is a backstop and not a substitute: a steward who
+      relies on it learns of a conflict only at merge time, after announcing the PR clean
