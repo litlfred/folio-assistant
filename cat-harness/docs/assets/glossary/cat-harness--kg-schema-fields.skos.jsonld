@@ -19584,6 +19584,25 @@
       "skos:note": "candidate"
     },
     {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/pinned-terminology.pinnedconceptschema.deprecated",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "PinnedConceptSchema.deprecated"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The edition itself marks the code deprecated: still valid to read, not to write anew. Absent means the edition says nothing, not \"current\". First user: the SPDX License List (`isDeprecatedLicenseId`), bean `sd5v`."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/pinned-terminology.ts#PinnedConceptSchema.deprecated",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/pinned-terminology.pinnedconceptschema.display",
       "@type": "skos:Concept",
       "skos:inScheme": {
@@ -23324,6 +23343,44 @@
         }
       ],
       "dcterms:source": "cat-harness/schemas/source-provenance.ts#SourceProvenanceSchema.upstream",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/spdx-license-expression.expressioncheck.deprecated",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "ExpressionCheck.deprecated"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Listed ids the edition marks deprecated, canonical spelling."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/spdx-license-expression.ts#ExpressionCheck.deprecated",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/spdx-license-expression.expressioncheck.recased",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "ExpressionCheck.recased"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Ids written in a case other than the list's, as `[written, canonical]`. Valid; reported."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/spdx-license-expression.ts#ExpressionCheck.recased",
       "skos:note": "candidate"
     },
     {
