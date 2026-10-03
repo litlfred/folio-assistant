@@ -72,6 +72,7 @@ export function webpagePalette(repoRoot: string, instance: string): { palette?: 
  */
 export function artifactsFor(root: string): StageOptions["artifacts"] {
   const index = join(root, "fhir-artifact-index", "index.json");
+  // declared-path-literal: the staged IG instance's own docs/artifact/ under `root`, not folio-assistant's docs/
   if (!existsSync(index) || !existsSync(join(root, "docs", "artifact"))) return undefined;
   const ix = JSON.parse(readFileSync(index, "utf-8")) as { artifacts: IndexedArtifact[] };
   return { list: ix.artifacts, pagesHref: "../artifact/" };

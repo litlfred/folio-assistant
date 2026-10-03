@@ -914,26 +914,6 @@
       "skos:note": "candidate"
     },
     {
-      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-bpmn-activities/process_codequalitygates.task_advisories",
-      "@type": "skos:Concept",
-      "skos:inScheme": {
-        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-bpmn-activities"
-      },
-      "skos:prefLabel": [
-        {
-          "@value": "Dependency advisories (WARN-ONLY)"
-        }
-      ],
-      "skos:definition": [
-        {
-          "@value": "Asks the one question the lockfile cannot: is anything in the resolved tree KNOWN-VULNERABLE? Warn-only by the owner's ruling on bean `j41m` — a hard gate here would hand a transitive advisory nobody can patch the power to red every PR, and the suppression that follows is what rots. `.github/dependabot.yml` is the other half of that ruling and is NOT drawn here: it is not a job in this workflow, it runs on Dependabot's schedule."
-        }
-      ],
-      "skos:notation": "Task_Advisories",
-      "dcterms:source": "cat-harness/processes/sdlc/code-quality-gates.bpmn#Task_Advisories",
-      "skos:note": "candidate"
-    },
-    {
       "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-bpmn-activities/process_codequalitygates.task_e2e",
       "@type": "skos:Concept",
       "skos:inScheme": {
@@ -954,43 +934,23 @@
       "skos:note": "candidate"
     },
     {
-      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-bpmn-activities/process_codequalitygates.task_lean",
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-bpmn-activities/process_codequalitygates.task_hygiene",
       "@type": "skos:Concept",
       "skos:inScheme": {
         "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-bpmn-activities"
       },
       "skos:prefLabel": [
         {
-          "@value": "Lean: no bare `import Mathlib` (HARD)"
+          "@value": "Import hygiene (HARD) and advisories (WARN-ONLY)"
         }
       ],
       "skos:definition": [
         {
-          "@value": "Fail on any bare `import Mathlib` in content/**/*.lean — targeted imports only. In this platform repo there is no content/, so the job prints SKIP and states that nothing was scanned rather than passing silently."
+          "@value": "FOUR QUESTIONS, ONE RUNNER — bean `7fu5`. They were four jobs (`lean-bare-import`, `python-imports`, `rust-wildcard`, `dependency-advisories`), each about a second of work behind a ~13 s checkout and a runner request; measured on `main` run 37133247484 (2026-10-03), the run took 21.7 min while its longest job executed for 174 s, the rest waiting for runners. Now they are steps of the `hygiene` job, and every step after the first gate runs `if: !cancelled()`, so a red one masks none of the others — the `om30` rule kept inside one job rather than by splitting it. (1) Lean, HARD: fail on any bare `import Mathlib` in content/**/*.lean; in this platform repo there is no content/, so the step prints SKIP and states that nothing was scanned. (2) Python, HARD: ruff F401 (unused) and F403 (wildcard) over the Python trees that exist, then the Python tests; an absent tree is dropped rather than passed to ruff, and an empty set says SKIP. (3) Dependency advisories, WARN-ONLY by the owner's ruling on bean `j41m`: is anything in the resolved tree KNOWN-VULNERABLE? The script exits 0 in every state and keeps them apart in its output; `.github/dependabot.yml` is the other half of that ruling and is not drawn here. (4) Rust wildcard imports, WARN-ONLY: report non-test `use …::*;` in tools/**/*.rs; `continue-on-error`, and therefore the job's LAST step, where it masks nothing."
         }
       ],
-      "skos:notation": "Task_Lean",
-      "dcterms:source": "cat-harness/processes/sdlc/code-quality-gates.bpmn#Task_Lean",
-      "skos:note": "candidate"
-    },
-    {
-      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-bpmn-activities/process_codequalitygates.task_python",
-      "@type": "skos:Concept",
-      "skos:inScheme": {
-        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-bpmn-activities"
-      },
-      "skos:prefLabel": [
-        {
-          "@value": "Python: unused and wildcard imports (HARD)"
-        }
-      ],
-      "skos:definition": [
-        {
-          "@value": "ruff F401 (unused) and F403 (wildcard) imports over the Python trees that exist, then the Python tests. A tree that is absent is dropped rather than passed to ruff, and an empty set says SKIP — a missing path must not be swallowed as a pass."
-        }
-      ],
-      "skos:notation": "Task_Python",
-      "dcterms:source": "cat-harness/processes/sdlc/code-quality-gates.bpmn#Task_Python",
+      "skos:notation": "Task_Hygiene",
+      "dcterms:source": "cat-harness/processes/sdlc/code-quality-gates.bpmn#Task_Hygiene",
       "skos:note": "candidate"
     },
     {
@@ -1031,26 +991,6 @@
       ],
       "skos:notation": "Task_RepositoryGates",
       "dcterms:source": "cat-harness/processes/sdlc/code-quality-gates.bpmn#Task_RepositoryGates",
-      "skos:note": "candidate"
-    },
-    {
-      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-bpmn-activities/process_codequalitygates.task_rust",
-      "@type": "skos:Concept",
-      "skos:inScheme": {
-        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-bpmn-activities"
-      },
-      "skos:prefLabel": [
-        {
-          "@value": "Rust wildcard imports (WARN-ONLY)"
-        }
-      ],
-      "skos:definition": [
-        {
-          "@value": "Report non-test `use …::*;` in tools/**/*.rs, excluding `use super::*;`. continue-on-error: it reports and never blocks, which is why it is labelled WARN-ONLY rather than drawn like the hard jobs."
-        }
-      ],
-      "skos:notation": "Task_Rust",
-      "dcterms:source": "cat-harness/processes/sdlc/code-quality-gates.bpmn#Task_Rust",
       "skos:note": "candidate"
     },
     {
