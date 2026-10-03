@@ -12,7 +12,7 @@ import { chmodSync, mkdirSync, mkdtempSync, writeFileSync, rmSync } from "node:f
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 
-import { assess, looksGenerated, proseWords } from "../check-docs-populated.ts";
+import { assess, assessSubject, looksGenerated, proseWords, subjectsOf } from "../check-docs-populated.ts";
 
 // The planted directory is called `pages`, NOT `docs`, and that is the point
 // twice over. `site-dir-single-answer` refuses a hardcoded site root in any
@@ -142,5 +142,228 @@ describe("assess", () => {
     writeFileSync(join(repo, "h", "pages", ".cache", "index.md"), `---\ntitle: X\n---\n\n${LONG}`);
     expect(assess(repo, "h", ["h/pages"]).verdict).toBe("thin");
     rmSync(repo, { recursive: true });
+  });
+});
+
+// ── SUBJECT: §4(b)'s other half (bean akjg) ───────────────────────────────
+//
+// The falsifier here is not "a short page". It is **a long page about the
+// wrong thing**: the real corpus passed `smart-trust` on `docs/category/
+// Other.md` at 14158 words, so a check with teeth about length alone is green
+// on a page whose own title says it is the leftovers.
+//
+// Three cracks are pinned, each one measured on the real corpus while this was
+// built, and each one would re-open silently if its test were deleted.
+
+describe("subject — the processes/roles/tasks half", () => {
+  const SUBJECTS = {
+    processes: ["Adjudication", "Content lifecycle"],
+    roles: ["Author", "Reviewer"],
+    tasks: ["L1 completeness gate", "Adjudication"],
+    unreadable: [],
+  };
+
+  test("a page naming a declared process, role and task is populated", () => {
+    const text = "The Adjudication process runs when an Author submits. Its L1 completeness gate refuses an incomplete block.";
+    const v = assessSubject(SUBJECTS, [{ path: "docs/index.md", text }]);
+    expect(v.verdict).toBe("populated");
+    expect(v.found).toMatchObject({ process: "Adjudication", role: "Author", task: "L1 completeness gate" });
+  });
+
+  // Crack 1. `Adjudication` is BOTH a process name and a task name here, which
+  // is true of the real corpus. A page saying it once must not score two
+  // dimensions off one token.
+  test("one string that is both a process and a task scores ONE, not two", () => {
+    const v = assessSubject(SUBJECTS, [{ path: "docs/p.md", text: "Adjudication is how we decide." }]);
+    expect(v.verdict).toBe("thin");
+    // Both dimensions matched the SAME string, which is why they count once.
+    // `found` reports each dimension's match so a reader can see the collision;
+    // the detail counts distinct names, and says ONE.
+    expect(v.found.process).toBe("Adjudication");
+    expect(v.found.task).toBe("Adjudication");
+    expect(v.detail).toMatch(/names 1 of the three as distinct names/);
+  });
+
+  test("a process and a role but no distinct task is thin, and the detail says how close", () => {
+    const v = assessSubject(SUBJECTS, [{ path: "docs/p.md", text: "Adjudication, run by an Author." }]);
+    expect(v.verdict).toBe("thin");
+    // TWO distinct names, not three — and not the "a process and a role and a
+    // task" the first draft printed by counting a task that was the same
+    // string as the process.
+    expect(v.detail).toMatch(/names 2 of the three as distinct names/);
+    expect(v.detail).not.toMatch(/a task/);
+  });
+
+  // Crack 2. A harness that declares none of the three cannot be judged on
+  // whether its pages mention them. Four of six real harnesses are in exactly
+  // this position, so this is the common case and not an edge one.
+  test("declaring none of the three is UNKNOWN, never a pass", () => {
+    const v = assessSubject({ processes: [], roles: [], tasks: [], unreadable: [] }, [{ path: "docs/i.md", text: "words ".repeat(400) }]);
+    expect(v.verdict).toBe("unknown");
+    expect(v.declared).toEqual({ processes: 0, roles: 0, tasks: 0 });
+  });
+
+  test("declaring processes and tasks but no roles is still UNKNOWN, and names which half is missing", () => {
+    const v = assessSubject({ processes: ["Adjudication"], roles: [], tasks: ["L1 completeness gate"], unreadable: [] }, []);
+    expect(v.verdict).toBe("unknown");
+    expect(v.detail).toMatch(/no roles/);
+  });
+
+  // Crack 3. A name shorter than four characters matches inside ordinary
+  // prose. A role id like `BA` would make every page a pass.
+  test("a name under four characters is dropped rather than matched", () => {
+    const v = assessSubject({ processes: ["BA"], roles: ["QA"], tasks: ["Do"], unreadable: [] }, [
+      { path: "docs/i.md", text: "This page is about baking and quality, and we do things." },
+    ]);
+    expect(v.verdict).toBe("unknown");
+  });
+
+  /**
+   * A whole instance on disk: a declaration naming a `pages` docs directory, a
+   * `flows` processes directory with one BPMN, and a `lanes` scenarios
+   * directory with one role graph.
+   *
+   * Planted rather than stubbed because `subjectsOf` reads the DECLARATION, and
+   * a stub would be testing my mock of the declaration reader rather than the
+   * rule that the subject half resolves from what the harness declares.
+   */
+  function plantInstance(dir: string): void {
+    mkdirSync(join(dir, "pages"), { recursive: true });
+    mkdirSync(join(dir, "flows"), { recursive: true });
+    mkdirSync(join(dir, "lanes"), { recursive: true });
+    writeFileSync(
+      join(dir, "t.json"),
+      JSON.stringify({
+        name: "t",
+        repository: "o/t",
+        version: "0.1.0",
+        directories: [
+          { id: "pages", path: "pages/", graphKinds: ["docs"] },
+          { id: "flows", path: "flows/", graphKinds: ["processes"] },
+          { id: "lanes", path: "lanes/", graphKinds: ["scenarios"] },
+        ],
+      }),
+    );
+    writeFileSync(
+      join(dir, "flows", "p.bpmn"),
+      `<?xml version="1.0"?><definitions><process id="P" name="Adjudication">` +
+        `<userTask id="T1" name="L1 completeness gate" /></process></definitions>`,
+    );
+    writeFileSync(
+      join(dir, "lanes", "roles.json"),
+      JSON.stringify({ name: "t", roles: [{ id: "author", title: "Author", description: "d", actorKinds: ["agent"] }] }),
+    );
+  }
+
+  test("subjects are resolved from the DECLARATION — processes, roles and tasks, each from its own graph kind", () => {
+    const dir = mkdtempSync(join(tmpdir(), "subject-decl-"));
+    try {
+      plantInstance(dir);
+      const s = subjectsOf(dir);
+      expect(s.processes).toContain("Adjudication");
+      expect(s.tasks).toContain("L1 completeness gate");
+      // Both the id and the title, because a lane binds the id and a reader
+      // writes the title.
+      expect(s.roles).toContain("Author");
+      expect(s.roles).toContain("author");
+    } finally {
+      rmSync(dir, { recursive: true, force: true });
+    }
+  });
+
+  // THE ONE-PAGE RULE, pinned end to end through `assess` with a real
+  // declaration. Without it the length half passes on the long page and the
+  // subject half on the short one, and the harness clears a bar that no single
+  // page of its own meets — both columns green, no such page.
+  test("a LONG page about nothing plus a SHORT page naming all three is NOT a subject pass", () => {
+    const dir = mkdtempSync(join(tmpdir(), "subject-onepage-"));
+    try {
+      plantInstance(dir);
+      writeFileSync(join(dir, "pages", "long.md"), `# Other\n\n${"filler words here ".repeat(200)}\n`);
+      writeFileSync(join(dir, "pages", "short.md"), "# S\n\nAdjudication, Author, L1 completeness gate.\n");
+      const r = assess(dir, "t", ["pages"], dir);
+      expect(r.verdict).toBe("populated"); // long.md clears the prose bar
+      expect(r.subject.verdict).toBe("thin"); // ...and short.md was not eligible
+      expect(r.subject.declared).toEqual({ processes: 1, roles: 2, tasks: 1 });
+
+      // The control: make the page that names all three long enough, and it
+      // passes — so the `thin` above is the eligibility rule, not a resolver
+      // that found nothing.
+      writeFileSync(
+        join(dir, "pages", "short.md"),
+        `# Landing\n\nAdjudication is run by an Author, whose L1 completeness gate refuses an incomplete block. ${"more prose here ".repeat(80)}\n`,
+      );
+      const r2 = assess(dir, "t", ["pages"], dir);
+      expect(r2.subject.verdict).toBe("populated");
+      expect(r2.subject.page).toBe("pages/short.md");
+    } finally {
+      rmSync(dir, { recursive: true, force: true });
+    }
+  });
+
+  // "Declares no roles" and "its role graph does not parse" are different
+  // facts. Both end in `unknown` — never a pass — but the REASON must not lie:
+  // a detail saying "declares no roles" about a file that declares plenty and
+  // is broken sends the next reader to write roles that already exist.
+  test("a role graph that does not parse is UNREADABLE, not absent, and the detail says so", () => {
+    const dir = mkdtempSync(join(tmpdir(), "subject-broken-"));
+    try {
+      plantInstance(dir);
+      // Valid JSON, invalid role graph: `actorKinds` is required, so this is
+      // the realistic breakage rather than a syntax error.
+      writeFileSync(join(dir, "lanes", "roles.json"), JSON.stringify({ name: "t", roles: [{ id: "a", title: "Author" }] }));
+      const s2 = subjectsOf(dir);
+      expect(s2.roles).toEqual([]);
+      expect(s2.unreadable.length).toBe(1);
+      expect(s2.unreadable[0]).toMatch(/roles\.json/);
+
+      writeFileSync(join(dir, "pages", "p.md"), `# P\n\n${"words here ".repeat(200)}\n`);
+      const r = assess(dir, "t", ["pages"], dir);
+      expect(r.subject.verdict).toBe("unknown");
+      expect(r.subject.detail).toMatch(/could not read/);
+      expect(r.subject.detail).not.toMatch(/declares no/);
+    } finally {
+      rmSync(dir, { recursive: true, force: true });
+    }
+  });
+
+  // Crack 4, and the subtlest: the two halves must be satisfied by ONE page.
+  // `assess` only hands the subject pass the pages that already clear the
+  // prose bar, so a long page about the wrong thing plus a short page about
+  // the right thing is NOT a pass.
+  test("a short page naming all three is not eligible — one page must satisfy both halves", () => {
+    const dir = mkdtempSync(join(tmpdir(), "subject-"));
+    try {
+      mkdirSync(join(dir, "pages"), { recursive: true });
+      // Long, and about nothing in particular.
+      writeFileSync(join(dir, "pages", "long.md"), `# Other\n\n${"filler words here ".repeat(200)}\n`);
+      // Names all three, but far too short to be the documentation.
+      writeFileSync(join(dir, "pages", "short.md"), "# S\n\nAdjudication, Author, L1 completeness gate.\n");
+      const r = assess(dir, "t", ["pages"]);
+      expect(r.verdict).toBe("populated"); // the length half passes on long.md
+      // ...and with no declaration planted, the subject half cannot be judged
+      // at all, which is the honest answer rather than a pass off short.md.
+      expect(r.subject.verdict).toBe("unknown");
+      // The eligibility rule itself, asked directly: short.md is excluded.
+      const eligibleOnly = assessSubject(SUBJECTS, [
+        { path: "pages/long.md", text: `# Other\n\n${"filler words here ".repeat(200)}\n` },
+      ]);
+      expect(eligibleOnly.verdict).toBe("thin");
+    } finally {
+      rmSync(dir, { recursive: true, force: true });
+    }
+  });
+
+  // Ranking: not the alphabetically first page. The real corpus passed on
+  // `docs/ar/architecture.md` — an Arabic translation — purely because `ar/`
+  // sorts before `architecture/`.
+  test("among pages that qualify, the one with the most prose is named", () => {
+    const both = "Adjudication, Author, L1 completeness gate. ";
+    const v = assessSubject(SUBJECTS, [
+      { path: "docs/ar/short.md", text: both },
+      { path: "docs/real.md", text: both + "words ".repeat(300) },
+    ]);
+    expect(v.verdict).toBe("populated");
+    expect(v.page).toBe("docs/real.md");
   });
 });
