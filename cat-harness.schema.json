@@ -217,6 +217,43 @@
             ]
           }
         },
+        "glassStrip": {
+          "type": "array",
+          "items": {
+            "anyOf": [
+              {
+                "type": "object",
+                "properties": {
+                  "chrome": {
+                    "type": "string",
+                    "enum": [
+                      "todos",
+                      "filter",
+                      "settings"
+                    ]
+                  }
+                },
+                "required": [
+                  "chrome"
+                ],
+                "additionalProperties": false
+              },
+              {
+                "type": "object",
+                "properties": {
+                  "kind": {
+                    "type": "string",
+                    "minLength": 1
+                  }
+                },
+                "required": [
+                  "kind"
+                ],
+                "additionalProperties": false
+              }
+            ]
+          }
+        },
         "repository": {
           "type": "string",
           "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]*\\/[A-Za-z0-9][A-Za-z0-9._-]*$",
@@ -1052,8 +1089,8 @@
   "$comment": "Instance graph: https://litlfred.github.io/folio-assistant/cat-harness.jsonld",
   "staging": {
     "branch": "main",
-    "sha": "26441a1da336570b44dc497fa68e63fe3e65b043",
+    "sha": "7cbf47fe262e4f276773ac28e166679f16b95185",
     "pr": "main",
-    "run": "37120472398"
+    "run": "37127698293"
   }
 }
