@@ -139,6 +139,23 @@
     "issDateTime",
     "nextUpdate"
   ],
-  "resourceDefinition": "http://smart.who.int/trust/StructureDefinition/SchemeInformation",
-  "fhir:parent": "http://hl7.org/fhir/StructureDefinition/Base"
+  "allOf": [
+    {
+      "$ref": "./StructureDefinition-FHIRSchemaBase.schema.json"
+    },
+    {
+      "type": "object",
+      "properties": {
+        "resourceDefinition": {
+          "type": "string",
+          "format": "uri",
+          "const": "http://smart.who.int/trust/StructureDefinition/SchemeInformation"
+        },
+        "fhir:parent": {
+          "type": "string",
+          "const": "http://hl7.org/fhir/StructureDefinition/Base"
+        }
+      }
+    }
+  ]
 }

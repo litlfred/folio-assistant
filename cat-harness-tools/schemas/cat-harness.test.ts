@@ -1032,6 +1032,9 @@ describe("instanceRootsIn — discovered, never listed", () => {
       // option-A ruling. It sorts after `cat-harness` ("cat-harness" <
       // "cat-harness-tools").
       "cat-harness-tools",
+      // Added 2026-10-03 with bean `s4ta`: the OpenAPI harness, a sibling
+      // instance like cat-harness-tools ("cat-harness-tools" < "cat-openapi").
+      "cat-openapi",
       // Alphabetical, and the ORDER moved with the rename: `folio-assist-sci`
       // sorted BEFORE `folio-assistant-core` ("assist-" < "assista"), and
       // `folio-assistant-sci` sorts after it. The list is the assertion, so

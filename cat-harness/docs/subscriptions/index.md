@@ -18,6 +18,7 @@ Derived from the declarations wherever a fact exists: a staged instance's planne
 |---|---|---|---|---|---|
 | **cat-harness** `cat-harness` | [`litlfred/cat-harness`](https://github.com/litlfred/cat-harness) | 🧱 planned | — | staged instance | — |
 | **cat-harness-tools** `cat-harness-tools` | [`litlfred/cat-harness-tools`](https://github.com/litlfred/cat-harness-tools) | 🧱 planned | — | staged instance | — |
+| **cat-openapi** `cat-openapi` | [`litlfred/cat-openapi`](https://github.com/litlfred/cat-openapi) | 🧱 planned | — | staged instance | — |
 | **fhir-harness** `fhir-harness` | [`litlfred/fhir-harness`](https://github.com/litlfred/fhir-harness) | 🧱 planned | — | staged instance | — |
 | **folio-assistant-core** `folio-assistant-core` | [`litlfred/folio-assistant-core`](https://github.com/litlfred/folio-assistant-core) | 🧱 planned | — | staged instance | — |
 | **folio-assistant-sci** `folio-assistant-sci` | [`litlfred/folio-assistant-sci`](https://github.com/litlfred/folio-assistant-sci) | 🧱 planned | — | staged instance | — |
