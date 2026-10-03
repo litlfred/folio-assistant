@@ -303,10 +303,10 @@
   ],
   "canonicalDocument": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld",
   "repository": "cat-harness",
-  "generatedAt": "2026-10-03T10:02:16.754Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/1609391010cdc27761e274162397fb083d5e5992",
-  "sourceCommitSha": "1609391010cdc27761e274162397fb083d5e5992",
-  "sourceCommitAt": "2026-10-03T09:58:59Z",
+  "generatedAt": "2026-10-03T11:15:06.407Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/a1dd12f510bf5fa71d08f974ca718318210b3dab",
+  "sourceCommitSha": "a1dd12f510bf5fa71d08f974ca718318210b3dab",
+  "sourceCommitAt": "2026-10-03T11:09:04Z",
   "sourceTreeDirty": true,
   "dependsOnUnavailable": "2 dependency edge(s), none expressible as a record — see gaps",
   "counts": {
@@ -319,7 +319,7 @@
     "SequenceFlow": 1040,
     "Lane": 208,
     "ProcessNode": 980,
-    "Tool": 117,
+    "Tool": 118,
     "Schema": 160,
     "ExternalSchema": 21,
     "GraphKind": 27,
@@ -1443,7 +1443,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-gifted-fermi-t8k217/cat-harness.jsonld#package/kg-core"
       ],
       "instructionsPath": "skills/kg/kg-core/content-context-and-state-graphs.md",
-      "instructionLines": 257,
+      "instructionLines": 293,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -2444,7 +2444,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-gifted-fermi-t8k217/cat-harness.jsonld#package/workflow"
       ],
       "instructionsPath": "skills/process/workflow/bpmn-processes.md",
-      "instructionLines": 255,
+      "instructionLines": 282,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -2718,7 +2718,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-gifted-fermi-t8k217/cat-harness.jsonld#package/sdlc-core"
       ],
       "instructionsPath": "skills/sdlc/sdlc-core/merge-queue.md",
-      "instructionLines": 192,
+      "instructionLines": 225,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -3867,7 +3867,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-gifted-fermi-t8k217/cat-harness.jsonld#package/ui-core"
       ],
       "instructionsPath": "skills/ui/ui-core/board-windows.md",
-      "instructionLines": 269,
+      "instructionLines": 335,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -3985,7 +3985,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-gifted-fermi-t8k217/cat-harness.jsonld#package/ui-core"
       ],
       "instructionsPath": "skills/ui/ui-core/harness-tiles.md",
-      "instructionLines": 439,
+      "instructionLines": 448,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -44805,6 +44805,46 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-gifted-fermi-t8k217/cat-harness.jsonld#skill/docs-generation"
       ],
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#tool/site-search-index"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-gifted-fermi-t8k217/cat-harness.jsonld#tool/site-search-scopes",
+      "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#Tool",
+      "name": "site-search-scopes",
+      "title": "Site search scopes",
+      "description": "The site search index cut into one index per scope — each declared instance, each target locale, and the platform — plus `assets/js/search/manifest.json` naming them, so a reader's search loads its own scope rather than the whole site (issue #1972, bean `m7mn`). Run on the assembled site after the index is written or borrowed.",
+      "install": {
+        "none": true
+      },
+      "invoke": {
+        "shell": "bun run cat-harness/scripts/search-split.ts --dir _site"
+      },
+      "io": {
+        "inputs": [
+          {
+            "name": "index",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-gifted-fermi-t8k217/tool-types.schema.json#/$defs/RepoPath",
+            "description": "`_site/assets/js/search-data.json`, as the theme wrote it or as staging borrowed it.",
+            "required": true
+          }
+        ],
+        "outputs": [
+          {
+            "name": "scopes",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-gifted-fermi-t8k217/tool-types.schema.json#/$defs/RepoPath",
+            "description": "`_site/assets/js/search/` — `manifest.json` and one `<scope>.json` per scope."
+          }
+        ]
+      },
+      "requirements": {
+        "runtime": [
+          "bun"
+        ],
+        "network": false
+      },
+      "satisfies": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-gifted-fermi-t8k217/cat-harness.jsonld#skill/docs-generation"
+      ],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#tool/site-search-scopes"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-gifted-fermi-t8k217/cat-harness.jsonld#tool/log-message",

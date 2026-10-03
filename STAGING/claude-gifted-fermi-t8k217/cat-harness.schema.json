@@ -202,7 +202,7 @@
           "minLength": 1
         },
         "navbarIcons": {
-          "maxItems": 6,
+          "maxItems": 7,
           "type": "array",
           "items": {
             "type": "string",
@@ -212,6 +212,7 @@
               "beans",
               "processes",
               "kg",
+              "fsh-guts",
               "launcher"
             ]
           }
@@ -569,7 +570,10 @@
                   },
                   "keyedBy": {
                     "type": "string",
-                    "const": "commit"
+                    "enum": [
+                      "commit",
+                      "tip"
+                    ]
                   }
                 },
                 "required": [
@@ -1048,8 +1052,8 @@
   "$comment": "Instance graph: https://litlfred.github.io/folio-assistant/STAGING/claude-gifted-fermi-t8k217/cat-harness.jsonld",
   "staging": {
     "branch": "claude/gifted-fermi-t8k217",
-    "sha": "08a846a59eac606292d4f9438615d3ead71e205c",
+    "sha": "025a3498f370023ffc5c3a4d465910b1981f26d9",
     "pr": "1968/merge",
-    "run": "37114864021"
+    "run": "37118741106"
   }
 }
