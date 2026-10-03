@@ -30,6 +30,8 @@ Part of [C@T Harness](../README.md) 0.1.0, declared as `cat-harness-tests`, hold
 | [`glass-placement.e2e.ts`](glass-placement.e2e.ts) | a file |  |
 | [`glass-pop-outs.e2e.ts`](glass-pop-outs.e2e.ts) | a file |  |
 | [`glass-scroll.e2e.ts`](glass-scroll.e2e.ts) | a file |  |
+| [`glass-strip-default-hidden.e2e.ts`](glass-strip-default-hidden.e2e.ts) | a file |  |
+| [`glass-strip-fit.e2e.ts`](glass-strip-fit.e2e.ts) | a file |  |
 | [`glass-tiles.e2e.ts`](glass-tiles.e2e.ts) | a file |  |
 | [`glass-zoom-steady.e2e.ts`](glass-zoom-steady.e2e.ts) | a file |  |
 | [`glass.e2e.ts`](glass.e2e.ts) | a file |  |
