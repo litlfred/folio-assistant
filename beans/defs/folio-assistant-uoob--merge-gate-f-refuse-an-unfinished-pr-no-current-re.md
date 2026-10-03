@@ -1,10 +1,10 @@
 ---
 # folio-assistant-uoob
 title: 'MERGE GATE (f): refuse an unfinished PR — no current ready marker, or a base branch whose PR already merged'
-status: todo
+status: in-progress
 type: bug
 created_at: 2026-10-03T13:53:29Z
-updated_at: 2026-10-03T13:53:29Z
+updated_at: 2026-10-03T14:17:55Z
 parent: folio-assistant-nok9
 ---
 
@@ -22,3 +22,5 @@ Owner ruling 2026-10-03: BOTH guards (option 1 of 4, asked by the Parcel B sessi
 - [ ] the merge pipeline (merge train / Merge Manager tooling, see `blgm`) applies both guards before merging, with a refusal that names which guard and the sha it expected
 - [ ] tested on the three real shapes: no ready marker (#1957), head moved past the marker (#1960), base = a merged PR's head (#1937)
 - [ ] the merge-pipeline skill states both rules
+
+_2026-10-03T14:17:55Z_ — Claimed by claude/merge-guard — pushed to main so sibling sessions see it before this branch has a PR (bean 35nj).
