@@ -98,6 +98,7 @@ import {
   forgeLocation,
 } from "../schemas/cat-harness.ts";
 import { checkoutDirectories } from "../schemas/harness-config.ts";
+import { gitFiles } from "../schemas/git-corpus.ts";
 import { withViewerNav } from "./viewer-page.ts";
 import { withInlineCode } from "../schemas/inline-code.ts";
 import { skillPageHref, skillPagesOf } from "./lib/skill-pages.ts";
@@ -351,6 +352,73 @@ export function declaredDirectories(graph: string): Array<{ id: string; absPath:
  * `index/tasks`, `index/roles`. Absent rather than stubbed: a type that emits
  * an empty page is indistinguishable from one whose sub-graphs are empty.
  */
+/**
+ * Every file under a graph's declared directories that `keep` admits, as
+ * `AutoDocItem`s — read from the GIT CORPUS, not from the disk.
+ *
+ * Factored out because the four types added 2026-10-03 (`index/schemas`,
+ * `index/tools`, `uml`, `lsi`) differ only in their extension filter and their
+ * summary source, and writing the walk four times is how four copies drift into
+ * four answers to "what counts as an artefact of this graph".
+ *
+ * **It uses `gitFiles` because the first draft used `readdirSync`, and that was
+ * a measured defect rather than a style point.** The disk walk admitted
+ * `cat-harness/schemas/block-qa-schema/dist/index.d.ts` — a gitignored build
+ * output present in a working container and absent from a fresh checkout — so
+ * `index/schemas` emitted **155** rows here and **154** in CI, `docs:auto`
+ * wrote a different page in each, and `Skill-registration chain, unmasked
+ * (hard)` went red on a tree that was green locally. `skill-register.ts`'s own
+ * closing note names this exact trap — *"if it is red in CI but green here: ask
+ * git what the corpus is, not the disk"* — citing a gitignored `node_modules/`
+ * that inflated `cat-harness/schemas` from 227 nodes to 1441. An index of a
+ * graph is an index of what the repository HOLDS, and git is what says so.
+ *
+ * `gitFiles` falls back to a walk where git cannot answer, skipping only `.git`
+ * and `node_modules`, so the two paths admit the same set wherever git works.
+ *
+ * It descends RECURSIVELY, which `index/skills` deliberately does not — and the
+ * difference is not an oversight. A skill's directory holds supporting pages
+ * that are not skills, so that type asks `skillMdDirs()` instead. These four
+ * have no such sub-artefact: a `.puml` under `uml/overview/<instance>/` is a
+ * model, and an `.lsi.json` at any depth is an index.
+ */
+function filesOfGraph(
+  graph: string,
+  keep: (file: string) => boolean,
+  summarise?: (abs: string) => string | undefined,
+): AutoDocItem[] {
+  const items: AutoDocItem[] = [];
+  for (const d of declaredDirectories(graph)) {
+    if (!existsSync(d.absPath)) continue;
+    const { files } = gitFiles(
+      d.absPath,
+      (rel) => !rel.split("/").some((s) => s.startsWith(".")) && keep(basename(rel)),
+    );
+    for (const abs of files) {
+      items.push({
+        path: relative(REPO, abs).split("\\").join("/"),
+        name: basename(abs).replace(/\.(ts|json|puml)$/, ""),
+        summary: summarise?.(abs),
+      });
+    }
+  }
+  return dedupeByPath(items);
+}
+
+/** The first sentence of a leading `/** … *\/` module docblock, if there is one. */
+function docblockSummary(abs: string): string | undefined {
+  const text = readFileSync(abs, "utf-8").slice(0, 4000);
+  const m = /\/\*\*([\s\S]*?)\*\//.exec(text);
+  if (!m) return undefined;
+  const body = m[1]!
+    .split("\n")
+    .map((l) => l.replace(/^\s*\*ic?\s?/, "").replace(/^\s*\*\s?/, "").trim())
+    .filter((l) => l !== "" && !l.startsWith("@"))
+    .join(" ")
+    .trim();
+  return body === "" ? undefined : firstSentence(body);
+}
+
 export const TYPES: AutoDocType[] = [
   {
     id: "index/skills",
@@ -387,6 +455,60 @@ export const TYPES: AutoDocType[] = [
         }
       }
       return dedupeByPath(items);
+    },
+  },
+  {
+    id: "index/schemas",
+    title: "Schemas",
+    graph: "schemas",
+    extracts: "every schema module a declared `schemas` directory holds, with the first sentence of its module docblock",
+    collect(): AutoDocItem[] {
+      return filesOfGraph("schemas", (f) => f.endsWith(".ts") && !f.endsWith(".test.ts"), docblockSummary);
+    },
+  },
+  {
+    id: "index/tools",
+    title: "Tools",
+    graph: "tools",
+    // `.ts`, not `.json`. A Tool definition here is a TypeScript module
+    // (`mcp.ts`, `viewers.ts`, `vocab-map.ts`), and the first draft of this
+    // type filtered for `.json` on the strength of `AGENTS.md` calling them
+    // "Tool definitions, themselves KG nodes". It emitted **0 items across 0
+    // sub-graphs** and reported `✓` — which is the vacuous pass this corpus
+    // keeps paying for: a type that finds nothing is indistinguishable from a
+    // graph that holds nothing. Measured against the directory, not recalled.
+    extracts: "every Tool module a declared `tools` directory holds, with the first sentence of its module docblock",
+    collect(): AutoDocItem[] {
+      return filesOfGraph("tools", (f) => f.endsWith(".ts") && !f.endsWith(".test.ts"), docblockSummary);
+    },
+  },
+  {
+    id: "uml",
+    title: "UML",
+    graph: "uml",
+    // `.puml` only, though each model is emitted as BOTH `.puml` and `.mmd`.
+    // Listing both would double every row for one model in two notations —
+    // the `index/skills` defect (a RENDERING is not the artefact) in a second
+    // form. The `.mmd` sibling is reachable from the rendered page, which
+    // links both sources.
+    extracts: "every UML model a declared `uml` directory holds, one row per model rather than per notation",
+    collect(): AutoDocItem[] {
+      return filesOfGraph("uml", (f) => f.endsWith(".puml"));
+    },
+  },
+  {
+    id: "lsi",
+    title: "LSI",
+    // `qa`, NOT the graph each index is ABOUT, and the distinction is the one
+    // `AutoDocType.graph` is documented for: this names where the artefacts
+    // LIVE. An `.lsi.json` is a QA result computed over some other graph, so
+    // its declared home is `test/results/` and its subject segment is that
+    // directory's id. Naming the indexed graph here would make the type walk
+    // `skills/` and find no `.lsi.json` at all.
+    graph: "qa",
+    extracts: "every LSI index a declared `qa` directory holds, named for the instance and graph it was computed over",
+    collect(): AutoDocItem[] {
+      return filesOfGraph("qa", (f) => f.endsWith(".lsi.json"));
     },
   },
   {
