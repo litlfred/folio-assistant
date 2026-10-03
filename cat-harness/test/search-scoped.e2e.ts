@@ -53,13 +53,15 @@ const SEARCH =
 const entry = (title: string, content: string, relUrl: string) => ({ doc: title, title, content, url: `/folio-assistant${relUrl}`, relUrl });
 const PLATFORM = { 0: entry("Gates", "Every gate CI runs.", "/gates/") };
 const TRUST = { 1: entry("Trust lists", "Trust lists of the network.", "/smart-trust/lists.html") };
-const WHOLE = { ...PLATFORM, ...TRUST };
+const REFERENCE = { 2: entry("Schema reference", "Every schema field.", "/reference/schemas.html") };
+const WHOLE = { ...PLATFORM, ...TRUST, ...REFERENCE };
 const MANIFEST = {
   $schema: "folio-search-manifest/v1",
-  source: { path: "assets/js/search-data.json", sha256: "x", entries: 2, bytes: 13_700_000 },
+  source: { path: "assets/js/search-data.json", sha256: "x", entries: 3, bytes: 13_700_000 },
   scopes: [
     { id: "_platform", kind: "platform", path: "assets/js/search/_platform.json", entries: 1, bytes: 1 },
     { id: "smart-trust", kind: "instance", path: "assets/js/search/smart-trust.json", entries: 1, bytes: 1 },
+    { id: "section-reference", kind: "section", path: "assets/js/search/section-reference.json", entries: 1, bytes: 1 },
   ],
 };
 
@@ -82,6 +84,7 @@ async function load(page: Page, path: string, withManifest = true): Promise<Load
     "/assets/js/search-data.json": WHOLE,
     "/assets/js/search/_platform.json": PLATFORM,
     "/assets/js/search/smart-trust.json": TRUST,
+    "/assets/js/search/section-reference.json": REFERENCE,
   };
   if (withManifest) serve["/assets/js/search/manifest.json"] = MANIFEST;
   await page.route("http://replica.test/**", (route) => {
@@ -149,3 +152,16 @@ test("a page outside every instance and locale searches the platform scope", asy
   expect(fetched("/assets/js/search/smart-trust.json")).toBe(0);
   expect(fetched("/assets/js/search-data.json")).toBe(0);
 });
+
+// Bean `mm2n`: a platform section over the split's budget has a scope of its
+// own, and both a page below it and its index page load it.
+for (const path of ["/reference/schemas.html", "/reference/"]) {
+  test(`a page in a platform section with its own scope (${path}) loads that section`, async ({ page }) => {
+    const { fetched } = await load(page, path);
+    await search(page, "schema");
+    await expect(results(page)).not.toHaveCount(0);
+    expect(fetched("/assets/js/search/section-reference.json")).toBe(1);
+    expect(fetched("/assets/js/search/_platform.json")).toBe(0);
+    expect(fetched("/assets/js/search-data.json")).toBe(0);
+  });
+}
