@@ -1,11 +1,11 @@
 ---
 # folio-assistant-8c6v
 title: 'MERGE PATTERNS GAP: the 17 generated docs/*.md pages have no declared merge-conflict pattern, so merge:main refuses them although their own front matter says do-not-hand-edit'
-status: in-progress
+status: completed
 type: bug
 priority: normal
 created_at: 2026-10-03T08:55:15Z
-updated_at: 2026-10-03T11:18:48Z
+updated_at: 2026-10-03T11:20:40Z
 parent: folio-assistant-d33q
 ---
 
@@ -117,3 +117,8 @@ Measured on the merged tree: under `origin/main`'s 23 patterns all 17 refuse; un
 Gates: 215 of 216 passed; the one failure is `bun test` whose 15 failures are ALL 5000ms timeouts (15 timeouts / 15 failures, zero assertion failures), and all four files involved pass in isolation. `merge-base.test.ts` 28/28. `skill:register:check` exit 0 on its own (bean `ymsu`).
 
 NOT closed: CI has produced zero runs because `main` moved four times during the session and the head keeps re-conflicting on the same three generated LSI artefacts (all `take-base`-covered). Handed to the Merge Manager; #1966 supersedes this entry if it lands.
+
+
+_2026-10-03_ — **All four `## Done when` items satisfied.** PR #1971 merged to main by litlfred at 11:14:38Z, merge commit `76cdd687a20`, with the `merge-main` label applied by the Merge Manager (not by this session). `origin/main` now carries 24 PATTERNS entries including `docs-pages`, and all 17 pages classify to it under the BASE's own patterns.
+
+Item 4 verified rather than assumed: `bun run merge:overlap` re-run after the merge lists **none** of the 17 generated pages as an authored path, while the authored source `content/docs/publication-workflow/every-workflow-in-the-repo.md` still appears 16 times — which is correct and deliberate, since that half genuinely needs a person.
