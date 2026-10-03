@@ -1,11 +1,11 @@
 ---
 # folio-assistant-cpmo
 title: 'SMART-BASE CROSSWALKS: the v1 to v2 ConceptMaps exist, are draft, and one is incomplete'
-status: todo
+status: in-progress
 type: task
 priority: normal
 created_at: 2026-09-22T09:06:44Z
-updated_at: 2026-09-22T11:55:46Z
+updated_at: 2026-10-03T14:13:37Z
 parent: folio-assistant-2yyh
 ---
 
@@ -50,3 +50,5 @@ So a v1 code does not yet resolve to v2 mechanically from inside this repository
 `CDHIv1toCDHIv2.fsh` stops mid-group-4 and never emits the unmatched rows for the v2-only codes its own description promises. That is a finding about someone else's repository. Reporting it upstream is a decision, not a task.
 
 The nine categories of health system challenge remain in the publication (`library/9789240081949-eng/sections/page-010.md`) and **not** in smart-base, where the only resource titled for them wraps the 25-code A–Y system-categories ValueSet. Worth a note to whoever owns the FSH.
+
+_2026-10-03T14:13:37Z_ — Claimed by claude/fgkb-cpmo-qou-uploads — pushed to main so sibling sessions see it before this branch has a PR (bean 35nj).
