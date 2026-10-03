@@ -26,6 +26,8 @@ Caution: `cat-harness/docs/assets/**/*.json` is already `site-data`; `.skos.json
 - [x] merge-base.test.ts classifies each, with an authored neighbour refused
 - [x] merge:overlap re-run shows them as generated
 
+_2026-10-03T00:27:48Z_ — Claimed by claude/merge-patterns-8rff — pushed to main so sibling sessions see it before this branch has a PR (bean 35nj).
+
 ## Summary of Changes — 2026-10-03
 
 Option (a) as the coordinator chose: three `take-base` entries in
