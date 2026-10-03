@@ -70,7 +70,7 @@ Part of [C@T Harness](../README.md) 0.1.0, declared as `cat-harness-tests`, hold
 | [`test_pypdf_compat.py`](test_pypdf_compat.py) | a file |  |
 | [`todos-page-board.e2e.ts`](todos-page-board.e2e.ts) | a file |  |
 | [`translation-badges.e2e.ts`](translation-badges.e2e.ts) | a file |  |
-| [`attestations/`](attestations/README.md) | 30 files | |
+| [`attestations/`](attestations/README.md) | 20 files | |
 | [`health/`](health/) | 8 files | |
 | [`results/`](results/README.md) | 977 files | |
 | [`support/`](support/) | 3 files | |
