@@ -667,6 +667,133 @@ there is the whole change to make a field heavy.
 - The schema is `PayloadLinkSchema` and `PayloadSidecarSchema` in
   `schemas/subgraph-manifest.ts`.
 
+## Per-slice SQLite — a named subgraph as one file a browser mounts
+
+**Contract (bean `q8ar`; owner ruling 2026-10-03: the official SQLite WASM
+build with an OPFS VFS, pilot slice `beans`).** A large graph needs search on
+the client, and a static host cannot run a query. So CI flattens one slice into
+a relational schema and publishes it as `<slice>.sqlite3`, and the browser
+opens that file as it is. There is nothing to parse, because SQLite reads its
+B-tree pages on demand. This is the **skeleton** of `f233` in a second
+encoding. It never replaces the JSON-LD files above; it sits beside them for
+the consumer that has to search.
+
+### What a slice file holds
+
+- **One table per node type, one row per node.** Columns are the fields a
+  search filters or sorts on. Each has a B-tree index where a query needs one.
+  A JSON-valued field stays a JSON column and is read through JSON1
+  (`json_each`), rather than becoming another stored table.
+- **One edge table per relation**, with a `declared_on` column saying which
+  side declared each edge. The two directions are **views** over that one
+  table, never two stored tables, because two tables for one relation are two
+  answers that can disagree.
+- **An FTS5 index over the searchable text.** It is CONTENTLESS
+  (`content=''`), so it indexes text without storing it. It keeps **full
+  detail**, because positions are what make a phrase query work. Both the
+  official WASM build and `bun:sqlite` compile with `ENABLE_FTS5` (measured
+  2026-10-03: 3.53.4 and 3.53.0).
+- **No heavy content.** A row carries `payload_sha256`, a pointer to the
+  payload at `<BASE_URL>/payload/sha256/<hex>` (§"Payloads"). The client fetches
+  the payload when a result is opened. Measured on beans, the same 717 rows
+  take 7.85 MB with the bodies stored and 2.82 MB without them; the bodies were
+  4.58 MB of the larger file.
+- **A `meta` table and `PRAGMA user_version`** carry the schema version. No
+  timestamp and no commit go in the file.
+
+### The manifest beside it
+
+`<slice>.sqlite3.json`, `$schema: folio-slice-sqlite/v1`, carries:
+
+- `sha256` and `bytes` of the file;
+- `contentDigest`, a sha256 over the canonical row dump;
+- the row count of each table;
+- `schemaVersion`, `sqliteVersion` and `pageSize`;
+- `payloadPath`;
+- any `duplicateIds` the source holds.
+
+There are two digests because there are two questions. `sha256` asks whether
+these are the bytes that were promised; it is what the client verifies a
+download against and keys its cache by. `contentDigest` asks whether this is
+the same data, and it stays equal across a SQLite upgrade that changes the
+file's bytes. The header records the writing library's version at offset 96.
+
+### Deterministic, proved
+
+Rows go in sorted by key, the page size is fixed, and the published file is
+`VACUUM INTO` a fresh path, so no free page or insertion history leaks in. The
+gate builds twice and requires one sha256. Measured on beans: two separate
+processes gave one sha256 on 2026-10-03, and the gate re-proves it on every run.
+
+### Built at deploy, not committed — when the source moves every session
+
+A slice of a corpus that every session writes, which `beans/` is, is **not
+committed**. A committed binary would be stale against every merge ref, so a
+content gate would be red on every open PR. It would also grow the clone on
+every edit. This is the same reasoning that checks `assets/beans/index.json`
+only for existence. The deploy builds the slice from the tree it publishes,
+straight into `_site/assets/slices/`, and writes the slice's payloads into
+`_site/payload/sha256/`.
+
+Those payloads never go into the committed `docs/payload/`. Its orphan audit
+admits KG nodes only, and beans are not KG nodes (§"Adding a node type").
+
+The gate (`bun run slice:sqlite:check`) therefore checks four things:
+
+- the builder runs;
+- two builds give one sha256;
+- the row digest read back **from the file** equals the one computed
+  independently from the source, so a dropped or truncated row fails;
+- an FTS5 phrase query finds a known node, and the payloads pass
+  `auditPayloadTree`.
+
+A slice of a corpus that does not move every session may be committed and
+gated on its content like any other generated file.
+
+### The client — download, OPFS, mount, with a fallback
+
+`docs/assets/js/slice-sqlite.js` gives `openSlice(manifestUrl)` →
+`{ mode, info, query(sql, params) }`:
+
+1. Fetch the manifest with `no-store`.
+2. Look in OPFS for `/<slice>-<sha256>.sqlite3`. A hit opens with **no
+   download**. A new build has a new name, which is the whole invalidation
+   story.
+3. On a miss, download the file as an ArrayBuffer. **Refuse** it if its sha256
+   is not the manifest's. Import it into the pool and unlink older builds of
+   that slice.
+4. Open it.
+
+**The VFS is `opfs-sahpool`, in a Worker** (`slice-sqlite-worker.js`), not the
+`opfs` VFS. That one needs SharedArrayBuffer, which needs COOP/COEP headers,
+and GitHub Pages cannot send them. When there is no Worker or no OPFS, the
+verified bytes are opened **in memory** with `sqlite3_deserialize`. That is no
+parse either, but nothing is persisted. The mode actually used is reported,
+never assumed.
+
+The WASM build is **vendored** from the pinned `@sqlite.org/sqlite-wasm`
+devDependency, at 1.51 MB (`bun run slice:sqlite:vendor`, gated by
+`:vendor:check`). The reason: jsDelivr is unreachable from some builders, and
+a reader's search should depend on no host but the site's own.
+
+Measured in Chromium against a plain static server with no COOP/COEP:
+
+- first open, including the 2.82 MB download and verification: about 200 ms
+  on loopback;
+- reopen from OPFS: about 90 ms, with no download.
+
+### Adding a slice
+
+- Write the slice's DDL and rows in `scripts/gen-slice-sqlite.ts`; beans is the
+  worked example.
+- Choose its heavy fields by the table in §"What is heavy". A heavy field is a
+  `payload_sha256` column, never a stored column.
+- Decide **committed or built at deploy** by the question above: does every
+  session write the source?
+- Give the slice its own manifest, gate and test. A slice whose rows do not
+  match its source must fail. It must never pass as whole (§"A partial graph
+  must never pass for a whole one").
+
 ## Adding a node type
 
 1. **Decide it is in this graph.** The `kg` graph holds skills, processes,

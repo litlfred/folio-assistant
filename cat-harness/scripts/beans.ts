@@ -106,6 +106,17 @@ export interface BeanNode {
   updatedAt: string;
   /** The prose below the front matter. Where a block's expiry is written. */
   body: string;
+  /**
+   * Bean ids this bean is blocked BY, as its own front matter declares them
+   * (`blocked_by:`, which `beans update --blocked-by` writes). Optional so a
+   * hand-built fixture need not carry it. Not folded into {@link blockedBy},
+   * which inverts `blocking:` only: measured 2026-10-03, 60 beans declare
+   * `blocked_by:` and 7 declare `blocking:`, so a consumer wanting every edge
+   * takes the union itself (the beans SQLite slice does, bean `q8ar`).
+   */
+  declaredBlockedBy?: string[];
+  /** Front-matter `tags:`, or `[]`. Optional for the same reason. */
+  tags?: string[];
 }
 
 /**
@@ -307,6 +318,8 @@ function beansIn(dir: string, root: string): BeanNode[] {
       createdAt: field(fm, "created_at"),
       updatedAt: field(fm, "updated_at"),
       body: m[2]!,
+      declaredBlockedBy: sequence(fm, "blocked_by"),
+      tags: sequence(fm, "tags"),
     });
   }
   return out.sort((a, b) => a.id.localeCompare(b.id));

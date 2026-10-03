@@ -980,6 +980,13 @@ jobs:
           # (excluded in _config.yml): a rendered body would not hash to its name.
           mkdir -p "./_site/payload"
           cp -R ./cat-harness/docs/payload/. "./_site/payload/"
+          # The beans SQLite slice (bean `q8ar`), built from the tree being
+          # deployed rather than committed, because every session writes
+          # `beans/`. Its bean bodies are content-addressed payloads in the
+          # same `payload/sha256/` namespace. They are added here and never to
+          # the committed `docs/payload/`, whose orphan audit admits KG nodes
+          # only.
+          bun run cat-harness/scripts/gen-slice-sqlite.ts --out ./_site/assets/slices --payload-out ./_site/payload/sha256
           # No all-layers union here any more (owner, 2026-09-30: "Retire it"):
           # each term is defined by its layer's own document, below, and the
           # Glossary publishes SKOS for every scheme. bootstrap's document is

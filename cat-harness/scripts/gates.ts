@@ -168,6 +168,18 @@ export interface StepExemption {
 
 export const STEP_EXEMPTIONS: StepExemption[] = [
   {
+    // Bean `q8ar`. The deploy-time BUILD of the beans SQLite slice and its
+    // bean-body payloads, written straight into `./_site`. It is not
+    // committed, because every session writes `beans/`. The fast set runs its
+    // verdict as `slice:sqlite:check` (determinism, the row digest against the
+    // store, FTS5, the payload audit), so this line only writes.
+    match: "gen-slice-sqlite.ts --out ./_site",
+    kind: "covered-by",
+    reason:
+      "a DEPLOY build into ./_site, which only the deploy and staging jobs produce; its verdict is " +
+      "`slice:sqlite:check` in the fast set, and gen-slice-sqlite.test.ts plus slice-sqlite.e2e.ts pin it",
+  },
+  {
     // Bean `bamf`: each IG's own just-the-docs site, staged from the source
     // repository its menu.json records. A BUILD step: it clones and copies,
     // and has no verdict a contributor could run without the network and a
