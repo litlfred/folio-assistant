@@ -344,6 +344,22 @@
   or in JavaScript.
 -->
 <script type="application/json" id="fa-navbar-row">{{ site.data.harness.navbar | jsonify }}</script>
+{%- comment -%}
+  THE INSTANCE THIS PAGE IS INSIDE, for the rail's PAGES and FOLDERS (#1902).
+  `railScopes` is sorted longest href first by `sync-docs-harness.ts`, so the
+  first prefix of `page.url` that matches is the innermost instance. `page.url`
+  carries no baseurl, so a staging prefix cannot make it miss. Nothing is
+  emitted on a page inside no instance: the rail then lists the whole site.
+{%- endcomment -%}
+{%- assign _fa_scope = nil -%}
+{%- for _s in site.data.harness.railScopes -%}
+{%- assign _n = _s.href | size -%}
+{%- assign _pre = page.url | slice: 0, _n -%}
+{%- if _pre == _s.href -%}{%- assign _fa_scope = _s -%}{%- break -%}{%- endif -%}
+{%- endfor -%}
+{%- if _fa_scope %}
+<script type="application/json" id="fa-rail-scope">{{ _fa_scope | jsonify }}</script>
+{%- endif %}
 
 <!-- NOT MOVED, deliberately. Measured, with the reason and the condition for
      moving it, in assets/harness/site.json's front matter. -->
