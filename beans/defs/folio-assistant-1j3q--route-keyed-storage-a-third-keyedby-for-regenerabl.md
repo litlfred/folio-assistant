@@ -1,11 +1,11 @@
 ---
 # folio-assistant-1j3q
 title: 'ROUTE-KEYED STORAGE: a third `keyedBy` for regenerable rendered pages — one entry per route, replaced by its one writer, never spliced with `expect`'
-status: in-progress
+status: completed
 type: feature
 priority: normal
 created_at: 2026-10-03T13:20:54Z
-updated_at: 2026-10-03T13:21:20Z
+updated_at: 2026-10-03T15:15:19Z
 parent: folio-assistant-fs43
 ---
 
@@ -97,3 +97,34 @@ field; and `keyedBy` INSIDE the manifest is already the discriminator, which is
 this repository's "the file declares what it is" rule. A second `$schema` for an
 identical format would be two names free to drift. The name is historical, and
 this paragraph is the record rather than a silent reuse.
+
+## Closed 2026-10-03 — landed in PR #1996, merge commit `abe8d8253b`
+
+Closed on **evidence, not authorship**. Verified on `main` rather than taken
+from the merge notification:
+
+- both commits are ancestors of `main`: `dbc226942c` (the mechanism) and
+  `a258eddbf3` (the merge that carried it forward);
+- `cat-harness.ts:1461` on `main` reads `keyedBy: z.enum(["commit", "tip", "route"])`;
+- `branch-store.ts` on `main` carries 16 references to `route`;
+- all five Done-when boxes above are ticked on `main`'s copy of this file.
+
+**Nothing is live, exactly as the fourth box says.** No declaration sets
+`storage`, so `main` remains authoritative for every directory. `xsrv` is the
+cutover and its block lifts with this merge.
+
+### What it cost to build, recorded because the number is the argument
+
+While this PR waited for review it was blocked **three separate times** by
+generated content on `main`, never once by a disagreement about code:
+
+| | artefacts | resolution |
+|---|---|---|
+| 1 | `docs-auto/index/index.html`, conflicting as a **binary** file | `bun run docs:auto` |
+| 2 | `docs/README.md`, a file-COUNT row (twice) | `bun run readme:subgraphs` |
+| 3 | `docs/README.md`, `docs/lsi/index.md`, `skills.lsi.json`, `skills.tool-run.json` | `lsi:skills`, `lsi:viz`, `readme:subgraphs` |
+
+Six writers, four generators, one afternoon — and **not one was a decision
+anybody needed to make**. Every resolution was "take `main`'s side, re-run the
+owning generator, verify with its `:check`". That is the case for this keying,
+made by the repository rather than by argument.
