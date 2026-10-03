@@ -9,7 +9,7 @@ tags:
     - ui
     - cross-cutting
 created_at: 2026-09-23T10:36:13Z
-updated_at: 2026-09-24T06:04:56Z
+updated_at: 2026-10-01T18:13:39Z
 parent: folio-assistant-4ccr
 ---
 
@@ -70,3 +70,8 @@ a defect in this change, so it is `xwrt`.
 Also carried: `prov:qaqc` regenerated. It was stale on `main` itself (checked on
 a clean worktree of `origin/main`), and CI would otherwise be red here for it.
 
+
+
+## 2026-10-01 — the glass strip (ob3m finding 10), re-opened by the owner's ruling
+
+The glass bottom strip no longer scrolls sideways at any width. It shows the declared pins that fit, then a "+N more" tile that counts everything else exactly. Measured on a local build: 1280×800 shows 6 pins plus "+12 more" (scrollWidth 1280 = clientWidth 1280), and 390×844 shows 4 pins plus "+14 more" (390 = 390). Branch `claude/quirky-hypatia-k3aoh4-strip-pinned`, stacked on #1762. Test: `cat-harness/test/glass-strip-fit.e2e.ts`.
