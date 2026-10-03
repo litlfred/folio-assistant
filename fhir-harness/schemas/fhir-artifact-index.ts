@@ -328,16 +328,24 @@ export const FhirArtifactIndexSchema = z
     sidecarApi: z.enum(SIDECAR_API_STATES),
     contexts: z.array(JsonLdContextSchema).optional(),
     /**
-     * The DAK API hub: the region of the IG's `dak-api.html` between its
-     * `DAK_API_HUB_START` and `DAK_API_HUB_END` markers, which smart-base's
-     * `generate_dak_api_hub.py` writes after the Publisher has run. `url` is the
-     * page it was read from; `localPath` is the fragment, held so a page can
-     * fetch it (bean `680p`) rather than retype its prose — as a JSON node
-     * (`{ from, between, html }`), because an `.html` fragment published in
-     * the served graph would be a page with no <body>. Absent means the IG
-     * publishes no hub, or it was not materialised.
+     * The IG API hub: the region of the IG's hub page between the two markers
+     * its post-processing writes after the Publisher has run (for WHO's DAK
+     * overlay, `dak-api.html` between `DAK_API_HUB_START` and
+     * `DAK_API_HUB_END`, written by smart-base's `generate_dak_api_hub.py`).
+     * `url` is the page it was read from; `localPath` is the fragment, held so
+     * a page can fetch it (bean `680p`) rather than retype its prose — as a
+     * JSON node (`{ from, between, html }`), because an `.html` fragment
+     * published in the served graph would be a page with no <body>. Absent
+     * means the IG publishes no hub, or it was not materialised.
+     *
+     * `placeholder` is the comment the hub page's SOURCE holds where the
+     * post-processing writes the hub, so an IG site rendered from that source
+     * knows where to put it back. Recorded per IG at ingest because the
+     * layer that stages every IG's site at once has no other per-IG place to
+     * read it from, and names no post-processor's marker itself (bean `d313`;
+     * this field was `dakApiHub` until then).
      */
-    dakApiHub: RepresentationSchema.optional(),
+    igApiHub: RepresentationSchema.extend({ placeholder: z.string().min(1).optional() }).optional(),
     /**
      * The IG's own `package.tgz` — every resource's JSON in one file, as the
      * Publisher packaged it. Held (`--materialize-package`) so a page can

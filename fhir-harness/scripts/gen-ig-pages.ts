@@ -75,7 +75,7 @@
  */
 import { existsSync, mkdirSync, readFileSync, readdirSync, rmSync, writeFileSync } from "node:fs";
 import { basename, join, resolve } from "node:path";
-import { DAK_HUB_SCRIPT, DAK_HUB_TEMPLATE, DAK_VIEW_SCRIPT, dakHubData, dakHubFragment, dakServed, dakViewData, dakViews } from "./dak-views.ts";
+import { IG_API_HUB_SCRIPT, IG_API_HUB_TEMPLATE, IG_API_VIEW_SCRIPT, igApiHubData, igApiHubFragment, igApiServed, igApiViewData, igApiViews } from "./ig-api-views.ts";
 import { JSON_VIEW_SCRIPT, VIEW_PAGE, examplesPage, hasJsonView, historyPage, jsonViewData, mappingsPage, mdText, packageEntries, profileJsonViewData, resourceFacts, resourceTabs, testingPage, type TabPageData } from "./resource-views.ts";
 import { isDirectoryReadme } from "../../cat-harness/schemas/kg-node.js";
 
@@ -145,24 +145,24 @@ const OUT = join(INSTANCE, "docs");
 /** The pages' shared stylesheets, under the docs root (one copy each, linked from every page). */
 const PAGES_CSS = "assets/ig-pages.css";
 const CHROME_CSS = "assets/ig-chrome.css";
-const dakViewServing = () => dakServed(INSTANCE);
+const igApiServable = () => igApiServed(INSTANCE);
 
-/** The DAK view pages' Liquid template (`liquid-templates`: a file of this directory, beside its writer). */
-const DAK_VIEW_TEMPLATE = join(import.meta.dir, "templates", "ig-pages", "dak-view.liquid");
+/** The IG API view pages' Liquid template (`liquid-templates`: a file of this directory, beside its writer). */
+const IG_API_VIEW_TEMPLATE = join(import.meta.dir, "templates", "ig-pages", "ig-api-view.liquid");
 /** Their one shared loader, copied to `docs/assets/` (bean `680p`, `visualizer-loading`). */
-const DAK_VIEW_LOADER = join(import.meta.dir, "templates", "ig-pages", "dak-view.js");
-/** The DAK API hub page's template and loader — the Publisher's `dak-api.html`, replicated. */
-const DAK_HUB_LOADER = join(import.meta.dir, "templates", "ig-pages", "dak-hub.js");
+const IG_API_VIEW_LOADER = join(import.meta.dir, "templates", "ig-pages", "ig-api-view.js");
+/** The IG API hub page's template and loader — the Publisher's hub page, replicated. */
+const IG_API_HUB_LOADER = join(import.meta.dir, "templates", "ig-pages", "ig-api-hub.js");
 /** The JSON view pages' template and loader — the Publisher's `<Name>.json.html`. */
 const JSON_VIEW_TEMPLATE = join(import.meta.dir, "templates", "ig-pages", "json-view.liquid");
 const JSON_VIEW_LOADER = join(import.meta.dir, "templates", "ig-pages", "resource-json.js");
 /** The text-only tab pages' template — history, testing, a logical model's examples. */
 const TAB_PAGE_TEMPLATE = join(import.meta.dir, "templates", "ig-pages", "tab-page.liquid");
 const MAPPINGS_TEMPLATE = join(import.meta.dir, "templates", "ig-pages", "mappings.liquid");
-/** An artefact page's DAK API section: its template and the loader that builds it from the OpenAPI sidecar. */
-const DAK_OPENAPI_BODY = readFileSync(join(import.meta.dir, "templates", "ig-pages", "dak-openapi.liquid"), "utf8");
-const DAK_OPENAPI_LOADER = join(import.meta.dir, "templates", "ig-pages", "dak-openapi.js");
-const DAK_OPENAPI_SCRIPT = "assets/dak-openapi.js";
+/** An artefact page's IG API section: its template and the loader that builds it from the OpenAPI sidecar. */
+const IG_API_OPENAPI_BODY = readFileSync(join(import.meta.dir, "templates", "ig-pages", "ig-api-openapi.liquid"), "utf8");
+const IG_API_OPENAPI_LOADER = join(import.meta.dir, "templates", "ig-pages", "ig-api-openapi.js");
+const IG_API_OPENAPI_SCRIPT = "assets/ig-api-openapi.js";
 
 /**
  * The instance that OWNS the template chrome, or none.
@@ -198,7 +198,13 @@ const PUBLISH_NOTE = arg("--publish-note") ?? "This page mirrors a published FHI
  * OpenAPI, JSON-LD). Some publishers brand them; this layer does not, so the
  * label is the caller's and the default is plain.
  */
-const SIDECAR_LABEL = arg("--sidecar-label") ?? "API sidecars";
+const SIDECAR_LABEL = arg("--sidecar-label") ?? "IG API";
+/**
+ * The hub page's name on this site: the Publisher's own, read from the URL the
+ * hub was ingested from (`dak-api` for WHO's DAK overlay), so the replica
+ * keeps the published name without this layer writing any IG's name down.
+ */
+const hubPage = (ix: FhirArtifactIndex): string => basename(new URL(ix.igApiHub!.url).pathname).replace(/\.html$/, "");
 
 /** The declaration's `name`, or `undefined` when a directory is not an instance. */
 function declaredName(root: string): string | undefined {
@@ -413,8 +419,8 @@ function contentsBox(ordered: [string | undefined, FhirArtifact[]][]): string {
  *
  * What makes linking out lossless HERE, checked rather than assumed: every one
  * of smart-trust's 604 `Other` artefacts is an Endpoint or an Organization and
- * NONE carries a DAK overlay, so none would have had an artefact page to link
- * to. The summary reports the DAK count it actually finds, so a future
+ * NONE carries an IG API sidecar, so none would have had an artefact page to link
+ * to. The summary reports the sidecar count it actually finds, so a future
  * category that does carry sidecars says so instead of hiding them.
  */
 const INLINE_LIMIT = 100;
@@ -701,7 +707,7 @@ function indexPage(ix: FhirArtifactIndex): string {
     ``,
     `## ${SIDECAR_LABEL} surface`,
     ``,
-    `The IG publishes a ${SIDECAR_LABEL} for ${sc.schema} of its artefacts. The four sidecars are issued`,
+    `The IG publishes its ${SIDECAR_LABEL} for ${sc.schema} of its artefacts. The four sidecars are issued`,
     `independently — every ValueSet gets all four, the logical models get two — which is why they`,
     `are counted separately rather than as one "has ${SIDECAR_LABEL}" tally.`,
     ``,
@@ -713,7 +719,7 @@ function indexPage(ix: FhirArtifactIndex): string {
     `</div>`,
     ``,
     // Linked only when the hub page is written — the same two conditions.
-    ...(ix.dakApiHub?.localPath && dakViewServing().ok ? [`The IG's own [DAK API hub](dak-api.html) lists them as the Publisher's \`dak-api.html\` does.`, ``] : []),
+    ...(ix.igApiHub?.localPath && igApiServable().ok ? [`The IG's own [${SIDECAR_LABEL} hub](${hubPage(ix)}.html) lists them as the Publisher's \`${hubPage(ix)}.html\` does.`, ``] : []),
     `## Every artefact, by category`,
     ``,
     `Grouped and ordered as the IG's own \`artifacts.html\` groups them, with each artefact's name and`,
@@ -836,18 +842,18 @@ function stateTag(a: FhirArtifact): string {
 
 function artifactPage(ix: FhirArtifactIndex, a: FhirArtifact): string {
   const name = a.title ?? a.name ?? a.id;
-  // THE DAK API SECTION — what smart-base's post-processing appends to a
+  // THE IG API SECTION — what the IG's post-processing appends to a
   // ValueSet's Publisher page ("API Information", "Endpoints"), built in the
   // browser from the OpenAPI sidecar in the served graph (bean `680p`). Only
   // for a ValueSet: the generator skips logical models, so the Publisher's
   // StructureDefinition pages carry none, and a section here would be a
   // difference from the standard render rather than a match.
   const openapi =
-    a.resourceType === "ValueSet" && a.sidecars?.openapi?.localPath && dakViewServing().ok
-      ? { src: `../${a.sidecars.openapi.localPath}`, script: `../${DAK_OPENAPI_SCRIPT}` }
+    a.resourceType === "ValueSet" && a.sidecars?.openapi?.localPath && igApiServable().ok
+      ? { src: `../${a.sidecars.openapi.localPath}`, script: `../${IG_API_OPENAPI_SCRIPT}` }
       : undefined;
 
-  const dakRows = (["schema", "displays", "openapi", "jsonld"] as const).map((k) => {
+  const apiRows = (["schema", "displays", "openapi", "jsonld"] as const).map((k) => {
     const r = a.sidecars?.[k];
     const label = { schema: "JSON Schema", displays: "Displays", openapi: "OpenAPI", jsonld: "JSON-LD" }[k];
     if (!r) return `| ${label} | *not published for this artefact* | |`;
@@ -906,7 +912,7 @@ function artifactPage(ix: FhirArtifactIndex, a: FhirArtifact): string {
           ``,
           `| Sidecar | Published at | Held locally |`,
           `|---|---|---|`,
-          ...dakRows,
+          ...apiRows,
           ``,
         ]
       : [
@@ -922,10 +928,10 @@ function artifactPage(ix: FhirArtifactIndex, a: FhirArtifact): string {
   return shell(
     `${name} — ${LABEL} artefact`,
     `${a.key} in the ${LABEL} IG, with its canonical URL, published representations and ${SIDECAR_LABEL} sidecars.`,
-    openapi ? `${body}\n\n${DAK_OPENAPI_BODY}` : body,
+    openapi ? `${body}\n\n${IG_API_OPENAPI_BODY}` : body,
     { kind: "leaf" },
     "fixture",
-    openapi ? { dak_openapi: openapi } : {},
+    openapi ? { ig_api_openapi: openapi } : {},
   );
 }
 
@@ -1030,42 +1036,42 @@ for (const a of ix.artifacts) {
   pages.set(join("artifact", `${pageName(a)}.md`), artifactPage(ix, a));
 }
 
-// THE DAK VIEW PAGES — the Publisher's `<Name>.schema.json.html` and
+// THE IG API VIEW PAGES — the Publisher's `<Name>.schema.json.html` and
 // `<Name>.jsonld.html` (bean `jut3`'s parity table: 33 on smart-trust). Each is
 // the raw file, published beside its page so Raw and Download resolve where
 // the Publisher's do, plus a page that is the Liquid template over data
-// `dak-views.ts` computed. The file's text is fetched in the browser by one
-// shared loader, never copied into the page (bean `680p`). An IG with no DAK
+// `ig-api-views.ts` computed. The file's text is fetched in the browser by one
+// shared loader, never copied into the page (bean `680p`). An IG with no IG API
 // overlay writes none of these.
 //
 // The pages FETCH from the served artefact-index graph (owner, 2026-10-01:
 // publish the graph directory rather than copy its files beside the pages).
 // That needs two declarations, and without either the pages would link data
 // that is not on the site — so they are not written, and the run says why.
-const dakTemplate = readFileSync(DAK_VIEW_TEMPLATE, "utf8");
-const dakServing = dakViewServing();
-let dakViewCount = 0;
-if (dakServing.ok === false && ix.artifacts.some((a) => dakViews(a).length > 0)) {
-  console.log(`  DAK view pages NOT written: ${dakServing.why}`);
+const igApiViewTemplate = readFileSync(IG_API_VIEW_TEMPLATE, "utf8");
+const igApiServing = igApiServable();
+let igApiViewCount = 0;
+if (igApiServing.ok === false && ix.artifacts.some((a) => igApiViews(a).length > 0)) {
+  console.log(`  IG API view pages NOT written: ${igApiServing.why}`);
 }
-for (const a of dakServing.ok ? ix.artifacts : []) {
-  for (const v of dakViews(a)) {
-    const data = dakViewData(a, v, "../", Boolean(ix.package?.localPath));
-    dakViewCount += 1;
+for (const a of igApiServing.ok ? ix.artifacts : []) {
+  for (const v of igApiViews(a)) {
+    const data = igApiViewData(a, v, "../", Boolean(ix.package?.localPath));
+    igApiViewCount += 1;
     pages.set(
       join("artifact", `${v.file}.md`),
       shell(
         `${data.artifact.title} — ${v.label}`,
-        `The ${v.label} sidecar of ${a.key}, from the IG's DAK API.`,
-        dakTemplate,
+        `The ${v.label} sidecar of ${a.key}, from the IG's ${SIDECAR_LABEL}.`,
+        igApiViewTemplate,
         { kind: "leaf" },
         "fixture",
-        { dak: data },
+        { ig_api: data },
       ),
     );
   }
 }
-if (dakViewCount > 0) pages.set(DAK_VIEW_SCRIPT, readFileSync(DAK_VIEW_LOADER, "utf8"));
+if (igApiViewCount > 0) pages.set(IG_API_VIEW_SCRIPT, readFileSync(IG_API_VIEW_LOADER, "utf8"));
 
 // THE JSON VIEW PAGES — the Publisher's `<Name>.json.html` (672 on
 // smart-trust). Each reads its resource out of the IG's package.tgz, held in
@@ -1074,11 +1080,11 @@ if (dakViewCount > 0) pages.set(DAK_VIEW_SCRIPT, readFileSync(DAK_VIEW_LOADER, "
 let jsonViewCount = 0;
 if (ix.artifacts.some(hasJsonView)) {
   if (!ix.package?.localPath) console.log("  JSON view pages NOT written: the index holds no package (re-ingest with --materialize-package)");
-  else if (!dakServing.ok) console.log(`  JSON view pages NOT written: ${dakServing.why}`);
+  else if (!igApiServing.ok) console.log(`  JSON view pages NOT written: ${igApiServing.why}`);
   else {
     const template = readFileSync(JSON_VIEW_TEMPLATE, "utf8");
     for (const a of ix.artifacts.filter(hasJsonView)) {
-      const extra = dakViews(a).map((v) => ({ label: v.label, href: `${v.file}.html`, active: false }));
+      const extra = igApiViews(a).map((v) => ({ label: v.label, href: `${v.file}.html`, active: false }));
       const data = jsonViewData(a, ix.package.localPath, extra);
       pages.set(
         join("artifact", `${pageName(a)}.json.md`),
@@ -1096,7 +1102,7 @@ if (ix.artifacts.some(hasJsonView)) {
 // Each states only what the Publisher's states; a page whose Publisher form
 // would list data this build cannot (tests, examples) is not written.
 const tabCounts = { history: 0, testing: 0, profileHistory: 0, profileJson: 0, examples: 0, mappings: 0 };
-if (ix.package?.localPath && dakServing.ok) {
+if (ix.package?.localPath && igApiServing.ok) {
   const entries = packageEntries(join(INSTANCE, ix.package.localPath));
   const resources = [...entries.values()].map((b) => JSON.parse(b.toString("utf8")) as Record<string, unknown>);
   const hasTests = resources.some((r) => r.resourceType === "TestPlan" || r.resourceType === "TestScript");
@@ -1116,15 +1122,15 @@ if (ix.package?.localPath && dakServing.ok) {
     if (!raw) continue;
     const f = resourceFacts(JSON.parse(raw.toString("utf8")));
     const stem = pageName(a);
-    const dakTabs = dakViews(a).map((v) => ({ label: v.label, href: `${v.file}.html`, active: false }));
+    const igApiTabs = igApiViews(a).map((v) => ({ label: v.label, href: `${v.file}.html`, active: false }));
     const name = a.title ?? a.name ?? a.id;
     if (a.resourceType === "StructureDefinition") {
-      const tabs = resourceTabs(a, dakTabs, true);
+      const tabs = resourceTabs(a, igApiTabs, true);
       // The definitions page is the Publisher's (it needs hl7.fhir.r5.core's
       // base-type text, which this build cannot hold — bean wnhh), so each
       // mapping row links an element's definition THERE.
       const defsAt = `${a.published?.json?.url.replace(/[^/]*$/, "") ?? ""}${stem}-definitions.html#`;
-      const m = mappingsPage(JSON.parse(raw.toString("utf8")), f, resourceTabs(a, dakTabs, true, "Mappings"), igStructures, (p) => `${defsAt}${p}`);
+      const m = mappingsPage(JSON.parse(raw.toString("utf8")), f, resourceTabs(a, igApiTabs, true, "Mappings"), igStructures, (p) => `${defsAt}${p}`);
       if (m) {
         const esc = (t: { rows: Array<{ label: string; value: string }> }) => ({ ...t, rows: t.rows.map((r) => ({ ...r, label: mdText(r.label), value: mdText(r.value) })) });
         const data = { ...m, heading: mdText(m.heading), intro: mdText(m.intro), inIg: m.inIg.map(esc), toOther: m.toOther.map(esc), other: m.other.map(esc) };
@@ -1133,38 +1139,38 @@ if (ix.package?.localPath && dakServing.ok) {
       }
       tabPage(`${stem}.profile.history.md`, `${name} — change history`, historyPage(a, f, tabs), "profileHistory");
       tabPage(`${stem}-examples.md`, `${name} — examples`, examplesPage(f, tabs, f.url !== undefined && claimed.has(f.url)), "examples");
-      const pj = profileJsonViewData(a, f, ix.package.localPath, resourceTabs(a, dakTabs, true, "JSON"));
+      const pj = profileJsonViewData(a, f, ix.package.localPath, resourceTabs(a, igApiTabs, true, "JSON"));
       if (pj) {
         pages.set(join("artifact", `${stem}.profile.json.md`), shell(`${name} — JSON profile`, `The JSON representation of ${a.key}.`, jsonTemplate, { kind: "leaf" }, "fixture", { json_view: { ...pj, heading: mdText(pj.heading), intro: pj.intro && mdText(pj.intro) } }));
         tabCounts.profileJson += 1;
       }
     } else if (hasJsonView(a)) {
-      tabPage(`${stem}.change.history.md`, `${name} — change history`, historyPage(a, f, resourceTabs(a, dakTabs, true)), "history");
+      tabPage(`${stem}.change.history.md`, `${name} — change history`, historyPage(a, f, resourceTabs(a, igApiTabs, true)), "history");
     }
-    tabPage(`${stem}-testing.md`, `${name} — testing`, testingPage(f, resourceTabs(a, dakTabs, true), hasTests), "testing");
+    tabPage(`${stem}-testing.md`, `${name} — testing`, testingPage(f, resourceTabs(a, igApiTabs, true), hasTests), "testing");
   }
 }
-if ([...pages.values()].some((p) => p.includes("data-dak-openapi-src"))) pages.set(DAK_OPENAPI_SCRIPT, readFileSync(DAK_OPENAPI_LOADER, "utf8"));
+if ([...pages.values()].some((p) => p.includes("data-ig-api-openapi-src"))) pages.set(IG_API_OPENAPI_SCRIPT, readFileSync(IG_API_OPENAPI_LOADER, "utf8"));
 
-// THE DAK API HUB — the Publisher's `dak-api.html`, as its own page (owner,
-// 2026-10-01: "replicate dak-api.html seperately"). The hub fragment is held
+// THE IG API HUB — the Publisher's hub page, as its own page under the same
+// name (owner, 2026-10-01: "replicate dak-api.html seperately"). The hub fragment is held
 // in the served graph and fetched; what is computed here is where each of its
 // links should go on THIS site, because the Publisher's relative links assume
 // its flat layout.
-if (ix.dakApiHub?.localPath && dakServing.ok) {
-  const hub = dakHubData(ix, dakHubFragment(INSTANCE, ix.dakApiHub.localPath), "");
+if (ix.igApiHub?.localPath && igApiServing.ok) {
+  const hub = igApiHubData(ix, igApiHubFragment(INSTANCE, ix.igApiHub.localPath), "");
   pages.set(
-    "dak-api.md",
+    `${hubPage(ix)}.md`,
     shell(
-      "DAK API Documentation Hub",
-      `The ${LABEL} IG's DAK API hub: its logical models, ValueSet schemas, JSON-LD vocabularies and enumeration endpoints.`,
-      readFileSync(DAK_HUB_TEMPLATE, "utf8"),
+      `${SIDECAR_LABEL} Documentation Hub`,
+      `The ${LABEL} IG's ${SIDECAR_LABEL} hub: its logical models, ValueSet schemas, JSON-LD vocabularies and enumeration endpoints.`,
+      readFileSync(IG_API_HUB_TEMPLATE, "utf8"),
       { kind: "leaf" },
       "fixture",
       { hub },
     ),
   );
-  pages.set(DAK_HUB_SCRIPT, readFileSync(DAK_HUB_LOADER, "utf8"));
+  pages.set(IG_API_HUB_SCRIPT, readFileSync(IG_API_HUB_LOADER, "utf8"));
 }
 
 // A page for each category too large to inline, so "too many to list here"
@@ -1249,12 +1255,12 @@ if (CHECK) {
   // right while the index was the only non-artefact page and quietly became
   // wrong the moment a category page joined it — it reported 675 artefact
   // pages over a corpus of 674.
-  // One per ARTEFACT: the DAK view pages and their raw files share the
+  // One per ARTEFACT: the IG API view pages and their raw files share the
   // directory and are counted on their own line.
   const artefactPages = [...pages.keys()].filter((k) => k.startsWith("artifact/") && k.endsWith(".md") && !VIEW_PAGE.test(k)).length;
   const categoryPages = [...pages.keys()].filter((k) => k.startsWith("category/")).length;
   console.log(`  ${artefactPages} artefact page(s) — one per artefact; ${sc.schema} carry a ${SIDECAR_LABEL} schema`);
-  console.log(`  ${dakViewCount} DAK view page(s) — one per held JSON Schema or JSON-LD sidecar, file fetched client-side`);
+  console.log(`  ${igApiViewCount} IG API view page(s) — one per held JSON Schema or JSON-LD sidecar, file fetched client-side`);
   console.log(`  ${jsonViewCount} JSON view page(s) — resource read client-side from the held package.tgz`);
   console.log(`  tab pages: ${tabCounts.history} change history, ${tabCounts.testing} testing, ${tabCounts.profileHistory} profile history, ${tabCounts.profileJson} profile JSON, ${tabCounts.examples} examples, ${tabCounts.mappings} mappings`);
   console.log(`  ${categoryPages} category page(s) — categories over ${INLINE_LIMIT}, listed off the index`);

@@ -2,7 +2,7 @@
 title: "WHO GDHCN Trust Domains - DEV — JSON-LD"
 description: "The JSON-LD sidecar of ValueSet/Domains-DEV, from the IG's DAK API."
 nav_exclude: true
-dak: {"label":"JSON-LD","file":"ValueSet-Domains-DEV.jsonld","src":"../fhir-artifact-index/dak/ValueSet-Domains-DEV.jsonld","artifact":{"title":"WHO GDHCN Trust Domains - DEV","page":"ValueSet-Domains-DEV.html"},"tabs":[{"label":"Narrative Content","href":"ValueSet-Domains-DEV.html","active":false},{"label":"XML","href":"https://litlfred.github.io/smart-trust/ValueSet-Domains-DEV.xml","active":false},{"label":"JSON","href":"ValueSet-Domains-DEV.json.html","active":false},{"label":"TTL","href":"https://litlfred.github.io/smart-trust/ValueSet-Domains-DEV.ttl","active":false},{"label":"JSON Schema","href":"ValueSet-Domains-DEV.schema.json.html","active":false},{"label":"JSON-LD","href":"ValueSet-Domains-DEV.jsonld.html","active":true}],"script":"../assets/dak-view.js"}
+ig_api: {"label":"JSON-LD","file":"ValueSet-Domains-DEV.jsonld","src":"../fhir-artifact-index/dak/ValueSet-Domains-DEV.jsonld","artifact":{"title":"WHO GDHCN Trust Domains - DEV","page":"ValueSet-Domains-DEV.html"},"tabs":[{"label":"Narrative Content","href":"ValueSet-Domains-DEV.html","active":false},{"label":"XML","href":"https://litlfred.github.io/smart-trust/ValueSet-Domains-DEV.xml","active":false},{"label":"JSON","href":"ValueSet-Domains-DEV.json.html","active":false},{"label":"TTL","href":"https://litlfred.github.io/smart-trust/ValueSet-Domains-DEV.ttl","active":false},{"label":"JSON Schema","href":"ValueSet-Domains-DEV.schema.json.html","active":false},{"label":"JSON-LD","href":"ValueSet-Domains-DEV.jsonld.html","active":true}],"script":"../assets/ig-api-view.js"}
 ---
 <link rel="stylesheet" href="{{ '/smart-trust/assets/ig-pages.css' | relative_url }}">
 <link rel="stylesheet" href="{{ '/smart-trust/assets/ig-chrome.css' | relative_url }}">
@@ -16,21 +16,21 @@ dak: {"label":"JSON-LD","file":"ValueSet-Domains-DEV.jsonld","src":"../fhir-arti
 </div>
 
 {%- comment -%}
-A DAK sidecar's view page, the Publisher's `<Name>.schema.json.html` or `<Name>.jsonld.html`, rendered by Jekyll.
-Reads `page.dak`, every field written by `gen-smart-trust-pages.ts`:
+An IG API sidecar's view page, the Publisher's `<Name>.schema.json.html` or `<Name>.jsonld.html`, rendered by Jekyll.
+Reads `page.ig_api`, every field written by `gen-ig-pages.ts`:
 `label` (JSON Schema | JSON-LD), `file` (the file's name), `src` (where it is served, in the artefact-index graph),
 `artifact.title` and `artifact.page`, `tabs[]` (`label`, `href`, `active`) in the Publisher's order,
-and `script` (the shared loader's path). The file's text is NOT in the page: `dak-view.js` fetches
+and `script` (the shared loader's path). The file's text is NOT in the page: `ig-api-view.js` fetches
 it in the browser, as the Publisher's page does (bean `680p`). This file only arranges.
 {%- endcomment -%}
-[← {{ page.dak.artifact.title }}]({{ page.dak.artifact.page }})
+[← {{ page.ig_api.artifact.title }}]({{ page.ig_api.artifact.page }})
 
-{% for t in page.dak.tabs %}{% if t.active %}**{{ t.label }}**{% else %}[{{ t.label }}]({{ t.href }}){% endif %}{% unless forloop.last %} · {% endunless %}{% endfor %}
+{% for t in page.ig_api.tabs %}{% if t.active %}**{{ t.label }}**{% else %}[{{ t.label }}]({{ t.href }}){% endif %}{% unless forloop.last %} · {% endunless %}{% endfor %}
 
-## {{ page.dak.label }}
+## {{ page.ig_api.label }}
 
-[Raw {{ page.dak.label }}]({{ page.dak.src }}) · [Download]({{ page.dak.src }}){: download="{{ page.dak.file }}"}
+[Raw {{ page.ig_api.label }}]({{ page.ig_api.src }}) · [Download]({{ page.ig_api.src }}){: download="{{ page.ig_api.file }}"}
 
-<pre><code class="language-json" data-dak-src="{{ page.dak.src }}">Loading…</code></pre>
-<noscript><p>This view needs JavaScript; the <a href="{{ page.dak.src }}">raw file</a> does not.</p></noscript>
-<script src="{{ page.dak.script }}" defer></script>
+<pre><code class="language-json" data-ig-api-src="{{ page.ig_api.src }}">Loading…</code></pre>
+<noscript><p>This view needs JavaScript; the <a href="{{ page.ig_api.src }}">raw file</a> does not.</p></noscript>
+<script src="{{ page.ig_api.script }}" defer></script>

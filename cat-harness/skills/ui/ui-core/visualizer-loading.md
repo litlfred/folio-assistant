@@ -80,8 +80,8 @@ not served writes no page that would fetch it, and says why.
   the same bytes work in production and in a staging preview ([`kg-viewer`](kg-viewer.md)
   §"The page is generated, not committed").
 - **One shared loader per visualizer kind**, published once and referenced by
-  every page, never inlined in each page. The DAK view pages share
-  `assets/dak-view.js` (source: `fhir-harness/scripts/templates/ig-pages/`).
+  every page, never inlined in each page. The IG API view pages share
+  `assets/ig-api-view.js` (source: `fhir-harness/scripts/templates/ig-pages/`).
 - **No dependencies:** no CDN or framework. Same reason as `kg-viewer`: the
   data is this repository's, and a third party in its trust boundary is at
   odds with that.

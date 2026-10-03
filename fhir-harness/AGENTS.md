@@ -7,9 +7,12 @@ guide.
 ## The one rule
 
 **Nothing here may know about WHO.** Not `dak.config.json`, not the DAK logical
-model, not `smart.who.int` canonicals, not the DAK API surface, not the
-pre/post-processing steps, and nothing from the
-`authoring-who-smart-guidelines` package.
+model, not `smart.who.int` canonicals, not the DAK API's names or the
+post-processing that produces it, not the pre/post-processing steps, and
+nothing from the `authoring-who-smart-guidelines` package. **Rendering** the
+sidecars an IG publishes is generic and is here, as the IG API
+(`ig-api-views.ts`; owner, 2026-10-03, bean `d313`); a WHO instance passes the
+"DAK API" names in as configuration.
 
 The import direction is the enforceable half: the WHO package may reference
 this layer, this layer may not reference it. A violation **fails nothing** —

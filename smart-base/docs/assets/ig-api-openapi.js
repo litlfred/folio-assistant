@@ -1,15 +1,15 @@
-// The artefact page's DAK API section — "API Information" and "Endpoints" —
+// The artefact page's IG API section — "API Information" and "Endpoints" —
 // rendered in the browser from the artefact's OpenAPI sidecar in the served
 // graph (bean `680p`, `visualizer-loading`). Published once at
-// `assets/dak-openapi.js`.
+// `assets/ig-api-openapi.js`.
 //
-// It builds what smart-base's `generate_dak_api_hub.py`
+// It builds what the IG's post-processing (WHO's: smart-base's `generate_dak_api_hub.py`)
 // (`_generate_html_content`) injects into the Publisher's page after the
 // build: the same elements, classes, text and style, and the same fallbacks
 // ("API", "No description available", "Unknown", "No summary"). Text is set
 // with textContent, never as markup.
 (function () {
-  var host = document.querySelector("[data-dak-openapi-src]");
+  var host = document.querySelector("[data-ig-api-openapi-src]");
   if (!host) return;
   // PRINT AND PDF: the page prints what has loaded. Each loader counts itself
   // in and out, and the last one to finish marks <html data-kg-loaded> — the
@@ -28,20 +28,20 @@
     return e;
   }
   var STYLE =
-    "\n/* DAK API documentation styling that integrates with IG theme */\n.dak-api-content {\n  margin: 1rem 0;\n}\n\n" +
+    "\n/* IG API documentation styling that integrates with IG theme */\n.ig-api-content {\n  margin: 1rem 0;\n}\n\n" +
     ".api-info .card, .endpoint-card {\n  background-color: #f8f9fa;\n  border: 1px solid #dee2e6;\n  border-radius: 0.375rem;\n  padding: 1rem;\n  margin: 1rem 0;\n}\n\n" +
     ".endpoint-card h3 {\n  color: #00477d;\n  margin-top: 0;\n}\n\n" +
     ".badge-get { background-color: #28a745; }\n.badge-post { background-color: #007bff; }\n" +
     ".badge-put { background-color: #ffc107; color: #212529; }\n.badge-delete { background-color: #dc3545; }\n" +
     ".badge-patch { background-color: #6f42c1; }\n";
-  fetch(host.getAttribute("data-dak-openapi-src"))
+  fetch(host.getAttribute("data-ig-api-openapi-src"))
     .then(function (r) {
       if (!r.ok) throw new Error(r.status + " " + r.statusText);
       return r.json();
     })
     .then(function (spec) {
       var info = spec.info || {};
-      var content = el("div", { class: "dak-api-content" }, [
+      var content = el("div", { class: "ig-api-content" }, [
         el("div", { class: "api-info" }, [
           el("h2", {}, ["API Information"]),
           el("div", { class: "card" }, [
@@ -77,7 +77,7 @@
       );
     })
     .catch(function (e) {
-      host.textContent = "Could not load " + host.getAttribute("data-dak-openapi-src") + ": " + e.message;
+      host.textContent = "Could not load " + host.getAttribute("data-ig-api-openapi-src") + ": " + e.message;
     })
     .finally(function () {
       kg.done();

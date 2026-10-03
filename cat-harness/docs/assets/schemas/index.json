@@ -41666,11 +41666,11 @@
           "array": true
         },
         {
-          "name": "dakApiHub",
-          "type": "RepresentationSchema.optional()",
+          "name": "igApiHub",
+          "type": "RepresentationSchema.extend({ placeholder: z.string().min(1).optional() }).optional()",
           "optional": true,
           "array": false,
-          "doc": "The DAK API hub: the region of the IG's `dak-api.html` between its"
+          "doc": "The IG API hub: the region of the IG's hub page between the two markers"
         },
         {
           "name": "package",
@@ -54224,7 +54224,7 @@
     {
       "from": "fhir-harness/schemas/fhir-artifact-index.ts#FhirArtifactIndexSchema",
       "to": "fhir-harness/schemas/fhir-artifact-index.ts#RepresentationSchema",
-      "via": "dakApiHub",
+      "via": "igApiHub",
       "kind": "field",
       "optional": true,
       "array": false
