@@ -356,7 +356,7 @@ role
 <dd>
 <p>The swimlane: a persona an actor takes on because of the lane it is acting in, carrying the skills that lane's activities need.</p>
 <p class="fa-gloss-meta">Folio Assistant platform terms (cat-harness) · <code>https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/platform/role</code> · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/process/process-core/role-model.md"><code>cat-harness/skills/process/process-core/role-model.md</code></a></p>
-<ul class="fa-gloss-matches"><li>closeMatch: <a href="http://www.w3.org/ns/prov#Role">www.w3.org/ns/prov#Role</a></li></ul>
+<ul class="fa-gloss-matches"><li>closeMatch: <a href="http://www.w3.org/ns/prov#Role">www.w3.org/ns/prov#Role</a></li><li>closeMatch: <a href="https://litlfred.github.io/folio/library/who-dpi-h-reference-architecture-draft-v1/sections/sec-048">litlfred.github.io/folio/library/who-dpi-h-reference-architecture-draft-v1/sections/sec-048</a></li><li>closeMatch: <a href="http://smart.who.int/base/StructureDefinition/GenericPersona">smart.who.int/base/StructureDefinition/GenericPersona</a></li></ul>
 </dd>
 </dl>
 

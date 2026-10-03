@@ -28,6 +28,13 @@ Four objects, each with a home:
 | **Requirement** | a conformance obligation, **pointed at** by what discharges it: a skill or capability names the statement in `satisfies: req:<id>#<key>`. The requirement points at `actors` (who is bound) and `derivedFrom` (the broader requirement it specialises). | `skills/requirements/*.json` |
 | **Permission** | what an actor is **allowed to do**. Cross-cuts roles. A W3C ODRL 2.2 rule, scoped by Process, Task or Role when it needs to be (issue #1180). | actions: `skills/permissions/permissions.json`; who holds them: `policies/*.jsonld` |
 
+**WHO's "actor" is this model's Role.** An actor in the WHO DPI-H Reference
+Architecture's conformance model (§3.7.2, an abstract information-processing
+role) and a DAK generic persona each map to a folio-assistant **Role**, never
+to an Actor. The RA's system *realising* an actor maps to a mechanical Actor
+taking on that role. Owner, 2026-10-03 (#1984); the comparison is on
+`smart-base/findings/dth-terms.md`.
+
 Schema: [`schemas/role-graph.ts`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/role-graph.ts). Audit:
 [`scripts/kg-audit.ts`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/scripts/kg-audit.ts), sidecar schema
 [`schemas/kg-qa.ts`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/kg-qa.ts).
