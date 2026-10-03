@@ -35,7 +35,21 @@ last published one), `4pm8` (Pagefind, large-datasets only; the docs pipeline
 is "no extensions, no fancy, no js (if possible)").
 
 ## Done when
-- [ ] PR 1: the index is fetched and built on first focus of the search box, never on load; a reader who focused or typed before it was ready gets results without re-typing — e2e test
-- [ ] PR 1 measured on the built site: script/heap on load with the change
-- [ ] PR 2: the index shrunk — as step A of issue #1972 (one index per harness and per locale, behind a manifest), which shrinks what any one page loads (a smart-trust page: 1.5 MB, not 13.7 MB) and replaces a separate `search_exclude` pass
+- [x] PR 1 (#1975, merged): the index is fetched and built on first focus of the search box, never on load; a reader who focused or typed before it was ready gets results without re-typing — `search-lazy.e2e.ts`, mutation-checked
+- [x] PR 1 measured on the built site: on load 4,796 → 41 ms script, 314 → 2 MB heap, no index fetched
+- [x] PR 2: the index shrunk — as step A of issue #1972 (one index per harness and per locale, behind a manifest), which shrinks what any one page loads (a smart-trust page: 1.5 MB, not 13.7 MB) and replaces a separate `search_exclude` pass — the split is #1981 (bean `m7mn`), the client that loads one scope with a "Search everywhere" widening is this bean's third PR
 - [ ] green on CI, PRs ready
+
+## Measured: first search, scoped vs whole (2026-10-03)
+
+Local `preview:site` build, split by `search-split.ts`, headless Chromium,
+median of 3, opening search and typing "trust":
+
+| page | index loaded | first search | script | heap |
+|---|---|---|---|---|
+| `/smart-trust/` scoped | manifest + `smart-trust.json` | 0.64 s | 504 ms | 48 MB |
+| `/smart-trust/` whole (no manifest) | `search-data.json` | 5.16 s | 4,898 ms | 319 MB |
+| `/` scoped | manifest + `_platform.json` | 3.65 s | 3,450 ms | 194 MB |
+
+The platform scope (7.7 MB) is now the largest single cost — #1972's open
+question about giving `/reference/` its own scope.
