@@ -560,6 +560,24 @@
               "kindRouteRedirect": {
                 "type": "boolean"
               },
+              "storage": {
+                "type": "object",
+                "properties": {
+                  "branch": {
+                    "type": "string",
+                    "pattern": "^(?!-)(?!refs\\/)[A-Za-z0-9._/-]+$"
+                  },
+                  "keyedBy": {
+                    "type": "string",
+                    "const": "commit"
+                  }
+                },
+                "required": [
+                  "branch",
+                  "keyedBy"
+                ],
+                "additionalProperties": false
+              },
               "composed": {
                 "type": "boolean"
               },
@@ -1030,8 +1048,8 @@
   "$comment": "Instance graph: https://litlfred.github.io/folio-assistant/STAGING/claude-auto-doc-rendered-graphs/cat-harness.jsonld",
   "staging": {
     "branch": "claude/auto-doc-rendered-graphs",
-    "sha": "7b20502ce50c60ec0170ccc3f3881b5622bec4ae",
+    "sha": "83b899186c7eb5056e7c5f13aad7f5b99a49ca4f",
     "pr": "1966/merge",
-    "run": "37112251811"
+    "run": "37113294212"
   }
 }
