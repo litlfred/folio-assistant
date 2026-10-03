@@ -118,14 +118,14 @@ Each dimension is a **contrast** between two poles, shown by their highest-loadi
 
 | dim | σ | one pole | the other pole |
 |---|---|---|---|
-| 1 | 44.70 | instance, harness, kind, directory, page, graph, session, block | *(none)* |
-| 2 | 21.65 | watcher, sibling, slot, queue, prs, backlog, commits, coordination | harness, instance, declaration, node, directory, directories, graph, iri |
-| 3 | 18.01 | slot, chapter, block, edges, formal, project, proof, glossary | session, beans, branch, epic, goals, store, window, sessions |
-| 4 | 16.72 | page, text, pdf, block, manifest, blocks, slide, images | sibling, ledger, subdirectory, sessions, items, renderable, relocation, coordination |
-| 5 | 15.21 | rung, archive, queue, withheld, arm, sniff, archived, zip | preview, feature, staging, build, requirements, phase, folio, role |
-| 6 | 14.93 | lane, actor, edge, role, edges, process, forward, graph | sha, locale, page, staging, translated, url, preview, pages |
-| 7 | 14.52 | edges, forward, edge, backward, cross-chapter, energy, preview, logical | actor, lane, role, task, criterion, login, backlog, requirement |
-| 8 | 14.25 | phase, feature, feedback, impact, preview, stakeholders, post, pdf | claim, avatar, locale, translated, tile, slot, adjudicator, translation |
+| 1 | 44.62 | instance, kind, harness, session, page, directory, graph, block | *(none)* |
+| 2 | 21.60 | watcher, sibling, slot, queue, prs, backlog, commits, coordination | harness, instance, declaration, node, directory, directories, graph, asset |
+| 3 | 18.00 | slot, chapter, block, edges, formal, project, proof, glossary | session, beans, branch, epic, goals, store, window, sessions |
+| 4 | 16.73 | page, pdf, text, block, manifest, blocks, slide, images | sibling, ledger, subdirectory, sessions, items, renderable, relocation, coordination |
+| 5 | 15.23 | rung, queue, archive, withheld, arm, sniff, archived, zip | preview, feature, staging, build, requirements, role, phase, folio |
+| 6 | 14.93 | lane, actor, role, edge, edges, process, forward, task | sha, page, locale, staging, translated, preview, pages, url |
+| 7 | 14.52 | edges, forward, edge, backward, cross-chapter, energy, logical, preview | actor, lane, role, task, backlog, requirement, criterion, login |
+| 8 | 14.25 | phase, feature, feedback, impact, preview, stakeholders, analysis, post | claim, avatar, tile, slot, locale, adjudicator, translated, art |
 
 **Findings** — 0 narrow dimension(s), 0 near-duplicate pair(s).
 
