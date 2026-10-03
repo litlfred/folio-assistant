@@ -29,6 +29,7 @@ import {
   SELF_WORKFLOW_FILE,
   type CheckId,
   type GuardOptions,
+  type GuardRun,
   type GuardSnapshot,
 } from "../merge-guard.js";
 import type { TriggerScan } from "../../src/core/workflow-events.js";
@@ -228,15 +229,19 @@ describe("check 5 — the head's own pull_request CI", () => {
   test("the guard's own run is never evidence, either way", () => {
     const s = real(1957);
     if (s.runs.state !== "has-run") throw new Error("fixture");
-    s.runs.runs.push({ id: 99_999_999_999, name: "Merge guard", event: "pull_request", status: "completed", conclusion: "failure", html_url: "" });
+    const own: GuardRun = { id: 99_999_999_999, name: "Merge guard", event: "pull_request", status: "completed", conclusion: "failure", html_url: "" };
+    s.runs.runs.push(own);
     expect(status(s, "ci").status).toBe("pass");
   });
 
   test("a later success supersedes an earlier failure of the same workflow", () => {
     const s = real(1937);
     if (s.runs.state !== "has-run") throw new Error("fixture");
-    for (const r of [...s.runs.runs]) {
-      if (r.event === "pull_request") s.runs.runs.push({ ...r, id: (r as { id: number }).id + 1_000_000, conclusion: "success" });
+    for (const r of [...(s.runs.runs as GuardRun[])]) {
+      if (r.event === "pull_request") {
+        const rerun: GuardRun = { ...r, id: (r.id ?? 0) + 1_000_000, conclusion: "success" };
+        s.runs.runs.push(rerun);
+      }
     }
     expect(status(s, "ci").status).toBe("pass");
   });
