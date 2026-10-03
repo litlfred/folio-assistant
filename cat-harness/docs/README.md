@@ -50,7 +50,7 @@ Part of [C@T Harness](../README.md) 0.1.0, declared as `docs`, holding `docs`.
 | [`_includes/`](_includes/) | 9 files | |
 | [`ar/`](ar/) | 14 files | |
 | [`architecture/`](architecture/) | 8 files | |
-| [`assets/`](assets/) | 631 files | |
+| [`assets/`](assets/) | 632 files | |
 | [`attestations/`](attestations/) | 1 file | |
 | [`beans/`](beans/) | 1 file | |
 | [`bootstrap/`](bootstrap/) | 1 file | |
@@ -65,7 +65,7 @@ Part of [C@T Harness](../README.md) 0.1.0, declared as `docs`, holding `docs`.
 | [`issue-marks/`](issue-marks/) | 1 file | |
 | [`lsi/`](lsi/) | 1 file | |
 | [`methodologies/`](methodologies/) | 1 file | |
-| [`processes/`](processes/) | 86 files | |
+| [`processes/`](processes/) | 87 files | |
 | [`proposals/`](proposals/) | Proposals for this harness's own features — initial analysis, MVP, options — argued, and updated in place, before and while they are built. | |
 | [`prov-qaqc/`](prov-qaqc/) | 1 file | |
 | [`qa/`](qa/) | 1 file | |
