@@ -785,12 +785,12 @@
       "title": "STATE BRANCH P2: mechanism — storage keyedBy tip, branch-store splice-write, seed the orphan 'state' branch, session-start mount at state/",
       "status": "in-progress",
       "type": "task",
-      "priority": "",
+      "priority": "normal",
       "parent": "folio-assistant-fs43",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-10-02T10:58:10Z",
-      "updatedAt": "2026-10-02T22:42:40Z",
+      "updatedAt": "2026-10-03T08:11:12Z",
       "preview": "Serial, one agent. Reuses the 3fva spike 3ds9 write path (hash-object, mktree, commit-tree, push; never -f).\n\n## Done when\n- [x] schema field with keyedBy: tip\n- [x] branch-store.ts with retry over a moved tip\n- [x] state branch seeded with a hash-verified manifest (2026-10-02, see below)\n- [x] session-start hook mounts state/ and fails LOUDLY when it cannot\n- [x] bun run state:push\n- [x] measured",
       "file": "beans/defs/folio-assistant-2h76--state-branch-p2-mechanism-storage-keyedby-tip-bran.md"
     },
@@ -2796,7 +2796,7 @@
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-10-02T21:20:17Z",
-      "updatedAt": "2026-10-03T01:06:35Z",
+      "updatedAt": "2026-10-03T08:34:43Z",
       "preview": "Owner, 2026-10-02, verbatim: \"bean: as pre-requistie as part of separation, fsh-guts content gets its own named branch, cat/cat-harness/fsh-guts and the contents of fsh-guts/ dir goes there. will need to update the tools associated to this, like with other special named branches.\"\n\nBranch name updated 2026-10-02 per the owner's naming ruling, `cat/<harness>/<name>` (note on `fs43`). The owner aske",
       "file": "beans/defs/folio-assistant-9c7h--move-fsh-guts-to-its-own-special-branch-cat-fsh-gu.md"
     },
