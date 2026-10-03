@@ -3861,7 +3861,7 @@
     var url = src && src.getAttribute("content");
     if (!url) return done(null);
     var base;
-    try { base = new URL(url, document.baseURI); } catch (e) { return done(null); }
+    try { base = new URL(url, document.baseURI); } catch (_e) { return done(null); }
     fetch(base.href)
       .then(function (r) {
         if (!r.ok) throw new Error("HTTP " + r.status);
@@ -8382,7 +8382,7 @@
       slot.appendChild(stickyActions({
         title: todo.summary,
         // Its own page, `todos/<id>/`, from the graph (`fetchTodoGraph`).
-        page: todo.pageHref && { href: todo.pageHref, title: "Open this todo's page",
+        page: todo.pageHref && { href: safeHref(todo.pageHref), title: "Open this todo's page",
                                  label: "Open the page for " + todo.summary },
         view: todo.viewHref && { href: safeHref(todo.viewHref), title: "View this todo's source on GitHub",
                                  label: "View the source of " + todo.summary },
