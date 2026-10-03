@@ -99,7 +99,9 @@ the owner's to make, not a code change.
 - [ ] the CLI exits non-zero on a blocked required run
 - [ ] the advice for `blocked` names the bot-actor cause and does NOT recommend
       a hand dispatch
-- [ ] `check:prs-have-runs` stops calling an all-blocked head `has-run`
+- [x] `check:prs-have-runs` stops calling an all-blocked head `has-run` —
+      but see the CORRECTION below: that is NOT the #1819 shape, and this
+      box as originally written overclaimed
 - [ ] tests over every new branch
 
 ## A fifth state, NAMED but deliberately NOT built
@@ -139,3 +141,52 @@ evidence and left for the owner to scope.
 It is bean `1xhc`'s shape one level above a single gate, and the reason it
 belongs on this bean rather than a new one is that both are the same sentence:
 **a gate that did not judge you is indistinguishable from one that passed.**
+
+## CORRECTION — the sweep half does NOT catch #1819 or #1808
+
+Measured 2026-10-03 by running the thing rather than reasoning about it:
+`bun run check:prs-have-runs --min-age-minutes 0`
+
+```
+  ✓ #1819  has-run   Glass strip: pinned tiles first, "+N more", hidden until
+  ✓ #1808  has-run   Theme sidebar takes the viewer rail's layout: one scroll
+```
+
+**Still `has-run`, after the fix.** The `## Done when` box above claimed
+*"`check:prs-have-runs` stops calling an all-blocked head `has-run`"* and the
+first draft of PR #1942 said the sweep *"marked both heads ✓ has-run"* as though
+this change addressed it. It does not, and the claim was wrong.
+
+**Why.** `anyExecuted` asks whether ANY run at the head executed, and these
+heads carry `workflow_dispatch` runs that **did** execute. So they are not
+all-blocked. The `blocked` state fires only when *every* run at the head failed
+to execute, which is a narrower shape than the one this bean was filed about.
+
+**What the change is actually worth**, stated without inflation: it closes the
+all-blocked case, and it stops the sweep's `clean` verdict being vacuously
+satisfied by run objects that never ran. That is real and tested. It is not the
+#1819 shape.
+
+**Why it was not then extended to the owed event.** That question —
+*did a run of the event the PR OWES execute* — is `coverageFor`'s, and
+`coverageFor` already answers it correctly (the event match predates this bean,
+from `9x9r`). `check:head-has-run` and `ci:watch` compose it and both now
+report these two heads as findings, verified: exit **1**, `! Code-quality gates
+required — DID NOT EXECUTE`. Teaching the broad sweep to answer the same
+question a second way, in an unattended CI job, is the *"two answers to one
+question are free to disagree"* failure that
+[`github-state-inspection`](../../cat-harness/skills/sdlc/sdlc-core/github-state-inspection.md)
+§"A clean check set and a COMPLETE check set are different questions" names
+explicitly — *"Do not build a second reconciliation"*. The sweep's own docblock
+scopes it to *"no CI run of any kind"*, and that scope is deliberate: it is a
+cheap pass over every open PR, where the per-head tool does the reconciliation.
+
+**So the honest split**, and the thing a reader of this bean needs:
+
+| question | instrument | #1819 verdict |
+|---|---|---|
+| is there any CI on this head? | `check:prs-have-runs` | ✓ yes (a dispatch ran) — and that is TRUE |
+| did the gates the PR owes execute? | `check:head-has-run`, `ci:watch` | ✗ **no** — exit 1 |
+
+Reading the first as the second is the whole of bean `1xhc`. The sweep is not
+the instrument for a merge decision, and nothing here makes it one.
