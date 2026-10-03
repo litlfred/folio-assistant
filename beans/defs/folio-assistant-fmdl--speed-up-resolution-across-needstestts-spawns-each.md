@@ -1,7 +1,7 @@
 ---
 # folio-assistant-fmdl
 title: 'SPEED-UP: resolution-across-needs.test.ts spawns each kg-audit twice, serially — 92 s of the slowest shard'
-status: in-progress
+status: completed
 type: task
 created_at: 2026-10-03T08:20:52Z
 updated_at: 2026-10-03T08:20:52Z
@@ -23,5 +23,26 @@ the 14 instances is 54 s locally (`./cat-harness` alone 16 s); the file took
 
 ## Done when
 - [x] each audit runs once (memoised by argument list) and they run side by side under a one-per-core limit — 123 s → 35 s locally, same 9 tests, same 23 expect() calls
-- [ ] measured in CI
-- [ ] green on CI, PR ready
+- [x] measured in CI (#1961 head `15b2d23ee` vs #1950's `12ae9dc75`): bun test shard 2/4 223 s → 135 s; Repository gates 181 s → 145 s, of which `kg:audit:all:check` 39 s → 21 s and `skill:register:check` 29 s → 19 s
+- [x] green on CI, PR ready — 22 check runs on `15b2d23ee`, 20 success + 2 intended skips
+
+## Also in this bean's PR
+
+The same shape in two Repository-gates steps: `kg-audit-all.ts --check` now
+runs its 14 instance audits side by side (writing runs stay serial — nothing
+has established one instance's run never reads another's sidecar), and
+`skill-register.ts` starts its nine read-only verify steps at once, printing
+verdicts in `STEPS` order.
+
+## Summary of Changes
+
+Independent processes that ran one after another now run side by side under a
+one-per-core limit, in three places; every output is unchanged (same tests and
+expect() counts, byte-identical audit summary, verdicts in the same order).
+
+## What is on the critical path now
+
+After `ksg3`, `fmdl` and `dlqu`, the longest Code-quality jobs are Repository
+gates (~145 s), "registered, never run elsewhere" (~94 s with `ksg3`) and the
+bun test shards (71–135 s). They are within ~1.6× of one another, so a further
+gain needs several of them shortened together — no single lever is left.
