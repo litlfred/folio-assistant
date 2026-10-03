@@ -12,15 +12,17 @@ parent: folio-assistant-fs43
 Owner rulings 2026-10-03 (verbatim): "todos = subgraph node + todo content nodes" -> option 1, "and make pattern for declared repo branches (and declared dir subgraphs)". Later the same day: "It's the same pattern. One of them is mounting the directory while one of them is mounting a branch. Another mount type could come in the future. A sub graph declares where it's getting its content.. It could also be a graph database in the future. That same information can be overwritten by the harness instance config. Update skills process processes and tools".
 
 ## Todo
-- [x] SubgraphSource discriminated union on ContentDirectory (directory | branch), mapping from #1764/#1937 storage
-- [x] instance-config override by directory id; one resolver (`declaredSubgraph` → `resolveSubgraphSource`)
-- [x] Subgraph JSON-LD node carries resolved source (`contentSource`)
-- [x] generic subgraphContainer/memberOf helper; todos.jsonld container = declared todos Subgraph, todos gain inSubgraph (dcterms:isPartOf)
-- [x] gate: publisher of a declared subgraph without Subgraph node / members without isPartOf fails (subgraph-node.test.ts, subgraph-source.test.ts)
-- [x] skills (directory-conventions, content-context-and-state-graphs), process (kg/mount-subgraph.bpmn), tool (subgraph-resolve) updated
+#1960 merged early (2026-10-03 10:45) carrying only this bean; the code lands through the follow-on PR from `claude/subgraph-node-pattern`. Code boxes stay open until that PR merges.
+
+- [ ] SubgraphSource discriminated union on ContentDirectory (directory | branch), mapping from #1764/#1937 storage
+- [ ] instance-config override by directory id; one resolver (`declaredSubgraph` → `resolveSubgraphSource`)
+- [ ] Subgraph JSON-LD node carries resolved source (`contentSource`)
+- [ ] generic subgraphContainer/memberOf helper; todos.jsonld container = declared todos Subgraph, todos gain inSubgraph (dcterms:isPartOf)
+- [ ] gate: publisher of a declared subgraph without Subgraph node / members without isPartOf fails (subgraph-node.test.ts, subgraph-source.test.ts)
+- [ ] skills (directory-conventions, content-context-and-state-graphs), process (kg/mount-subgraph.bpmn), tool (subgraph-resolve) updated
 - [x] audit other generators minting their own collection node; one follow-up bean (r5wu)
 - [x] interface comment on #1957; reader check on #1953
-- [ ] CI green on #1960
+- [ ] follow-on PR merged with CI green
 
 ## Done when
 PR merged-ready with CI green and the checklist above ticked.
