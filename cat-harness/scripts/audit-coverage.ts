@@ -142,12 +142,13 @@ import { existsSync, readFileSync } from "node:fs";
 import { join, relative, resolve } from "node:path";
 
 import {
+  type ResolvedDirectory,
   declaredKinds,
   defaultGraphKinds,
-  directoriesForGraph,
   instanceRootsIn,
   readDeclaration,
   repoRootFor,
+  resolveDirectories,
 } from "../schemas/cat-harness.js";
 import { KG_CRITERIA, KG_SUBJECT_GRAPH_KINDS, type KgSubjectKind } from "../schemas/kg-qa.js";
 import { gitFiles } from "../schemas/git-corpus.ts";
@@ -184,7 +185,16 @@ export type KindState =
    */
   | "typed-only"
   /** Files, and nothing reaching them at all — not even a validator. */
-  | "unaudited";
+  | "unaudited"
+  /**
+   * Every directory of this kind declares `storage` (bean `16ei`): its files
+   * live on a branch, keyed by commit, and the checkout holds at most a
+   * working copy. NOT a census of zero — the checkout is not where they are,
+   * and counting a working copy would make the row depend on whether somebody
+   * ran `qa:fetch`. Proposal §2.4: `audit:coverage` "stops expecting the files
+   * in the checkout". Not a finding, and not covered either.
+   */
+  | "stored";
 
 export interface KindCoverage {
   kind: string;
@@ -310,6 +320,34 @@ export function census(dir: string, skip: ReadonlySet<string> = new Set([SELF_SI
     else if (countable(base)) files++;
   }
   return { files, sidecars, readable: true };
+}
+
+/**
+ * {@link census} over several directories, skipping the STORED ones.
+ *
+ * A directory declaring `storage.branch` (bean `16ei`) keeps its files on that
+ * branch; what sits at its path in the checkout is a working copy whose size
+ * depends on whether `qa:fetch` ran. Counting it would make this report a
+ * measurement of the contributor's last command. `stored` says how many were
+ * skipped, so a caller can tell "all stored" from "all empty".
+ */
+export function censusDirectories(
+  dirs: ReadonlyArray<{ absPath: string; storage?: { branch: string } }>,
+  skip?: ReadonlySet<string>,
+): { files: number; sidecars: number; stored: number } {
+  let files = 0;
+  let sidecars = 0;
+  let stored = 0;
+  for (const d of dirs) {
+    if (d.storage?.branch) {
+      stored++;
+      continue;
+    }
+    const c = census(d.absPath, skip);
+    files += c.files;
+    sidecars += c.sidecars;
+  }
+  return { files, sidecars, stored };
 }
 
 /**
@@ -489,15 +527,16 @@ export function coverage(repo: string): { rows: KindCoverage[]; gates: GateCover
   const instances = instanceRootsIn(repo);
   const rows: KindCoverage[] = [];
   for (const kind of kinds) {
-    const dirs = new Set<string>();
-    for (const inst of instances) for (const d of directoriesForGraph(inst, kind)) dirs.add(d);
-    let files = 0;
-    let sidecars = 0;
-    for (const d of dirs) {
-      const c = census(d);
-      files += c.files;
-      sidecars += c.sidecars;
+    // `directoriesForGraph`, kept whole rather than reduced to paths, so the
+    // census can see which directories are STORED (`storage`, bean `16ei`).
+    const resolved = new Map<string, Pick<ResolvedDirectory, "absPath" | "storage">>();
+    for (const inst of instances) {
+      for (const d of resolveDirectories([{ name: "(local)", root: inst, own: true }])) {
+        if (d.graphKinds.includes(kind as never) && !resolved.has(d.absPath)) resolved.set(d.absPath, d);
+      }
     }
+    const dirs = new Set(resolved.keys());
+    const { files, sidecars, stored } = censusDirectories([...resolved.values()]);
     const crit = criteriaByGraph.get(kind);
     const gs = gatesByKind.get(kind) ?? [];
     const def = defaultGraphKinds.get(kind);
@@ -506,7 +545,9 @@ export function coverage(repo: string): { rows: KindCoverage[]; gates: GateCover
     const state: KindState =
       dirs.size === 0
         ? "no-directory"
-        : files === 0
+        : stored === dirs.size
+          ? "stored"
+          : files === 0
           ? "empty"
           : judged
             ? "covered"
