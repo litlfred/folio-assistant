@@ -428,6 +428,18 @@ function main(): void {
     );
     process.exit(2);
   }
+  // THREE absences now, three exits. `unreachable` (bean `9ofm` row D) would
+  // otherwise fall into the `beans === null` branch below and print "no store
+  // in this repository", exit 0 — the `t6s7` defect restored by the cutover,
+  // and with a message that sends the reader to look for a store that is
+  // exactly where its declaration says.
+  if (report.storeState === "unreachable") {
+    console.error(
+      "::error::check-bean-front-matter: the bean store is kept on its branch and is not mounted here, " +
+        "so nothing scanned it and nothing here was checked. Run `bun run state:mount`. NOT a pass",
+    );
+    process.exit(2);
+  }
   if (report.beans === null) {
     console.log("Bean front matter — no store in this repository, nothing to check");
     process.exit(0);

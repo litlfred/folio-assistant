@@ -1941,6 +1941,84 @@
       "status": "candidate"
     },
     {
+      "id": "process_mergerefusal.task_agentfix",
+      "prefLabel": "Merge main in, regenerate, fix mechanical gates",
+      "definition": "Merge commits only; never a force-push.",
+      "notation": "Task_AgentFix",
+      "source": "cat-harness/processes/sdlc/merge-refusal.bpmn#Task_AgentFix",
+      "status": "candidate"
+    },
+    {
+      "id": "process_mergerefusal.task_askowner",
+      "prefLabel": "Ask the owner on the PR, both sides quoted",
+      "notation": "Task_AskOwner",
+      "source": "cat-harness/processes/sdlc/merge-refusal.bpmn#Task_AskOwner",
+      "status": "candidate"
+    },
+    {
+      "id": "process_mergerefusal.task_close",
+      "prefLabel": "Close the bean, merge commit as evidence",
+      "notation": "Task_Close",
+      "source": "cat-harness/processes/sdlc/merge-refusal.bpmn#Task_Close",
+      "status": "candidate"
+    },
+    {
+      "id": "process_mergerefusal.task_comment",
+      "prefLabel": "Comment on the PR once, linking the bean",
+      "definition": "One comment per refused PR, edited in place on every later event.",
+      "notation": "Task_Comment",
+      "source": "cat-harness/processes/sdlc/merge-refusal.bpmn#Task_Comment",
+      "status": "candidate"
+    },
+    {
+      "id": "process_mergerefusal.task_dispatch",
+      "prefLabel": "Dispatch one agent, recorded on the bean",
+      "definition": "Before the agent starts: the date, why the fail condition fired, the agent's id, its budget. Never while the first writer may still be live. Two failed attempts with the same cause go to the owner instead.",
+      "notation": "Task_Dispatch",
+      "source": "cat-harness/processes/sdlc/merge-refusal.bpmn#Task_Dispatch",
+      "status": "candidate"
+    },
+    {
+      "id": "process_mergerefusal.task_fix",
+      "prefLabel": "Fix the PR, report on the PR",
+      "definition": "Claims the refusal bean, brings main in with `merge:main`, settles what it refused, pushes. Completed with the outcome `fail condition` by the steward when the condition fires first.",
+      "notation": "Task_Fix",
+      "source": "cat-harness/processes/sdlc/merge-refusal.bpmn#Task_Fix",
+      "status": "candidate"
+    },
+    {
+      "id": "process_mergerefusal.task_handback",
+      "prefLabel": "Hand back, with a fail condition",
+      "definition": "The `agent-handoff` format (#1884): Roles, Report to (the PR), Done when, Fails if. The fail condition: no `started` line within 4 h, no push within 24 h, the session gone, or `blocked` on something it cannot settle. One line to the session; the instructions are in the bean.",
+      "notation": "Task_HandBack",
+      "source": "cat-harness/processes/sdlc/merge-refusal.bpmn#Task_HandBack",
+      "status": "candidate"
+    },
+    {
+      "id": "process_mergerefusal.task_record",
+      "prefLabel": "Record the refusal on the bean",
+      "definition": "The PR, the head sha the train used, the train and its other members, each refused path or failing gate and why. A repeat refusal goes under `## Attempts` with `--body-append`.",
+      "notation": "Task_Record",
+      "source": "cat-harness/processes/sdlc/merge-refusal.bpmn#Task_Record",
+      "status": "candidate"
+    },
+    {
+      "id": "process_mergerefusal.task_retrain",
+      "prefLabel": "Re-enter a train on the new head",
+      "definition": "The next train is the verifier: the executor's own log is evidence, not the close.",
+      "notation": "Task_Retrain",
+      "source": "cat-harness/processes/sdlc/merge-refusal.bpmn#Task_Retrain",
+      "status": "candidate"
+    },
+    {
+      "id": "process_mergerefusal.task_scrap",
+      "prefLabel": "Scrap the bean, with the reason",
+      "definition": "The agent's own `beans update --status scrapped`; never deleted.",
+      "notation": "Task_Scrap",
+      "source": "cat-harness/processes/sdlc/merge-refusal.bpmn#Task_Scrap",
+      "status": "candidate"
+    },
+    {
       "id": "process_mergetrain.call_checkspresent",
       "prefLabel": "Find members with no CI on their head [pr-checks-present]",
       "definition": "GitHub runs no `pull_request` CI while a PR conflicts, so a member can arrive with nothing on its head (bean `u7be` item 3). That member is T2's first suspect if the train goes red.",

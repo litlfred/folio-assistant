@@ -432,6 +432,21 @@ export const RULES: Rule[] = [
       // through the library rather than a push from the worktree, which is the
       // lost update. Harness-level for the same reason as its neighbours.
       "scripts/state-push.ts",                // the mount's edits, spliced onto the tip
+      // The seeds' own freshness check (bean `9ofm`): it reads each special
+      // branch's `manifest.json`, resolves the ref that manifest names, and
+      // compares the two TREES. Harness-level for the same reason as its
+      // neighbours, and one more: the branches it reads are declared in
+      // `scripts/special-branches.json`, which is the harness's table — a
+      // folio's subject matter cannot add a row to it or change what a tree
+      // comparison concludes.
+      "scripts/state-drift.ts",               // a seeded state branch still matches the ref it was seeded from
+      // What every reader of a moved graph needs, written once (bean `9ofm`
+      // row D): given a declared directory id, which directory to actually
+      // read — the checkout, the mount, or a refusal. Harness-level for the
+      // same reason as its neighbours: it reads the declaration, git and the
+      // mount marker, and no folio's subject matter could make it resolve
+      // differently — only give it more directories to resolve.
+      "scripts/graph-read.ts",                // where to read a declared graph from: the checkout, or its mount
       // Its clean-merge counterpart, and harness-level for the same reason: it
       // loads the GATE SET from the workflow and re-runs whichever writers
       // their checks report stale. It knows nothing about any folio's subject
