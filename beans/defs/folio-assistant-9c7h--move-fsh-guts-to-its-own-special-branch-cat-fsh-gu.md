@@ -5,7 +5,7 @@ status: in-progress
 type: task
 priority: normal
 created_at: 2026-10-02T21:20:17Z
-updated_at: 2026-10-03T01:03:55Z
+updated_at: 2026-10-03T01:06:35Z
 parent: folio-assistant-7x5n
 ---
 
@@ -33,7 +33,7 @@ Branch name updated 2026-10-02 per the owner's naming ruling, `cat/<harness>/<na
 
 ## Done when
 - [x] `fsh-guts` declared in `special-branches.json`, with the test green (2026-10-03, branch claude/lucid-shannon-o8zop1-fsh-guts)
-- [ ] `cat/cat-harness/fsh-guts` exists with the contents of `fsh-guts/` (owner confirmed the push)
+- [x] `cat/cat-harness/fsh-guts` exists with the contents of `fsh-guts/` (owner confirmed the push 2026-10-03; seeded 9c8828be, verified cold)
 - [ ] every tool listed above reads and writes through the declaration; `bun run gates` green
 - [ ] relocation ("delete means relocate") writes to the branch, and an end-to-end test proves it
 - [ ] `fsh-guts/` removed from `main` after the owner confirms
@@ -72,3 +72,13 @@ _2026-10-03T00:50:36Z_ — Claimed by claude/lucid-shannon-o8zop1-fsh-guts — p
 | MENTION, fixture tests, e2e ids | 59 | no change (`wireframes/fsh-guts` in derive-po and pot-extract is a DIFFERENT directory) |
 
 **Design default, stated so it can be overruled:** `fsh-guts/logs/` is git-ignored local scratch, never committed, so it does NOT move to the branch. `logDirs` keeps resolving a local working-tree directory. Only committed content (retired/, samples/, scripts/, uploads/) moves.
+
+
+## Step 2 done 2026-10-03: branch seeded (owner: "1", that is, create it now)
+
+- `cat/cat-harness/fsh-guts` = **9c8828be799b**, an orphan commit by folio-state-bot, seeded from main@53ba9f5547a7.
+- The layout is the same as `cat/cat-harness/beans`: root `manifest.json` (`state-manifest/v1`, `status: seed`, `authoritative: false`, `keyedBy: tip`, source SHA, tree id and file count), `README.md`, and `fsh-guts/**` mirroring the checkout.
+- **Verified twice:** the branch's `fsh-guts` tree id equals main's (929703e0c852, 140 files), first locally before the push, then again from a cold `git init` reader (`fetch --depth=1 --filter=blob:none`, 0.84 s).
+- Pushed without `-f`; the branch did not exist beforehand.
+- **History:** not rewritten onto the branch. The clone was shallow, and the sibling beans and todos branches are orphan seeds too. The history stays on main, reachable from `source.sha`.
+- **main is still the store.** Until the cutover, a write to main's fsh-guts/ makes the branch stale, so re-seed or splice at cutover, as the beans branch will.
