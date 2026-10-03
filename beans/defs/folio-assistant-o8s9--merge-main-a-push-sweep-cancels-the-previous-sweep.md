@@ -93,21 +93,3 @@ GitHub holds at most one pending run per group.
 Raising `MERGE_MAIN_TOKEN`, the `needs-merge-human` label having no remover
 (no `remove-label` step exists anywhere in the workflow), and the 44 % `docs/`
 share of conflicts (bean `34cm`). Each is its own bean.
-
-## Owner ruling, 2026-10-03
-
-Asked how to drain the queue given that each merge discards a sweep, the owner
-chose **"Fix the mechanism first"** over merging on sight, freezing one sweep
-window, or going to the root with the `auto-docs` branch (#1966):
-
-> Hold merges until o8s9 (concurrency) and 8c6v (17 docs patterns) land, then
-> drain. Both are dispatched and small. Costs ~30-45 min of throughput now;
-> after it, my merges stop killing sweeps and ~53-of-55 conflicts auto-resolve.
-
-So the Merge Manager merges **nothing** to `main` until this bean's fix and
-bean `8c6v`'s pattern declaration are both in. The last merge before the hold
-was #1764, leaving `main` at `1aaa669f998`.
-
-This makes the bean's third Done-when clause binding rather than advisory: the
-steward's cadence is an input to the bot's throughput, and the owner has now
-ruled on the order in which the two are fixed.
