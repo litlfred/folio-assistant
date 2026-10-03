@@ -72,14 +72,16 @@ import {
 export interface StateChange {
   /** Directory-relative, e.g. `defs/folio-assistant-2h76--….md`. */
   path: string;
-  /** New content, or `null` to remove. */
-  content: string | null;
+  /** New content as text or BYTES, or `null` to remove. See {@link Change.content}. */
+  content: string | Buffer | null;
   /**
    * The blob id this author read (a {@link FileRead}'s `blob`), or `null` for
    * "must not exist". Omitted means "do not check" — a last-writer-wins write,
    * which is correct only for content nobody else edits.
    */
   expect?: string | null;
+  /** Tree mode; see {@link Change.mode}. Default `100644`. */
+  mode?: "100644" | "100755" | "120000";
 }
 
 export interface UpdateOptions {
@@ -158,6 +160,7 @@ export class StateStore {
       path: this.branchPath(c.path),
       content: c.content,
       ...("expect" in c ? { expect: c.expect } : {}),
+      ...(c.mode ? { mode: c.mode } : {}),
     }));
     return this.store.write(mapped, message);
   }

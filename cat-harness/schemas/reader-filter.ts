@@ -60,8 +60,16 @@ export const NO_READER_FILTER: ReaderFilter = {};
 /** What a reader's filter matches on — a board node plus its own properties. */
 export interface FilterableNode {
   kind?: string;
-  /** The node's own properties, e.g. `{ status: "open", priority: "high" }`. */
-  properties?: Readonly<Record<string, string>>;
+  /**
+   * The node's own properties, e.g. `{ status: "open", priority: "high" }`.
+   *
+   * A property may be MULTI-VALUED — a todo has every assignee and every bean
+   * its graph gives it (`todos.jsonld`, `schema:agent` / `dcterms:isPartOf`).
+   * Such a node matches when ANY of its values is selected, and contributes
+   * every value to `propertyValues`. An empty list is a node that cannot
+   * answer, which is the same as an absent property.
+   */
+  properties?: Readonly<Record<string, string | readonly string[]>>;
 }
 
 /**
@@ -85,6 +93,13 @@ export function readerFilterProblem(filter: ReaderFilter): string | undefined {
   return undefined;
 }
 
+/** A node's values for one property, single- or multi-valued, as a list. */
+function haveOf(node: FilterableNode, name: string): readonly string[] {
+  const have = node.properties?.[name];
+  if (have === undefined) return [];
+  return typeof have === "string" ? [have] : have;
+}
+
 /**
  * Does this node survive the reader's filter?
  *
@@ -97,8 +112,7 @@ export function readerShows(filter: ReaderFilter, node: FilterableNode): boolean
     if (node.kind === undefined || !filter.kinds.includes(node.kind)) return false;
   }
   for (const [name, values] of Object.entries(filter.properties ?? {})) {
-    const have = node.properties?.[name];
-    if (have === undefined || !values.includes(have)) return false;
+    if (!haveOf(node, name).some((v) => values.includes(v))) return false;
   }
   return true;
 }
@@ -116,8 +130,7 @@ export function propertyValues(
 ): string[] {
   const seen = new Set<string>();
   for (const n of nodes) {
-    const v = n.properties?.[name];
-    if (v !== undefined) seen.add(v);
+    for (const v of haveOf(n, name)) seen.add(v);
   }
   return [...seen].sort((a, b) => a.localeCompare(b, "en"));
 }
