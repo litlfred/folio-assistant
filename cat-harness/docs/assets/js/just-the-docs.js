@@ -6,7 +6,8 @@ layout: null
 // changes, both bean `2tfy`: the search index is built on the reader's first
 // focus of the search box instead of on every page load; and it is the index
 // of the page's own SCOPE (issue #1972 — `search-split.ts`'s manifest), with a
-// "Search everywhere" button that widens to the whole site.
+// "Search everywhere" button that widens to the whole site, and a link to
+// each identifier lookup the manifest names (bean `1br0`).
 //
 // Why. Measured 2026-10-03 on a local build in headless Chromium: the theme
 // fetched `search-data.json` (12,040 entries, 13.7 MB raw, 2.8 MB gzip) and
@@ -17,7 +18,7 @@ layout: null
 //
 // Keeping it in step. `remote_theme` in `_config.yml` pins v0.12.0; when that
 // pin moves, re-copy the new version's file and re-apply every hunk marked
-// `2tfy` — `initSearch` and the helpers above it, the setter at the top of
+// `2tfy`, `mm2n` or `1br0` — `initSearch` and the helpers above it, the setter at the top of
 // `searchLoaded`, and the focus trigger in `jtd.onReady`. Everything else must
 // stay byte-identical to the gem.
 (function (jtd, undefined) {
@@ -114,8 +115,9 @@ function disableHeadStyleSheets() {
 // 2tfy (#1972 step A): load the page's SCOPE of the index, not the whole site.
 // `search-split.ts` writes `assets/js/search/manifest.json` and one index per
 // scope after the build; this reads it, picks the scope the page lives in by
-// the same rule (instance, `<kind>/<instance>`, target locale, else
-// platform), and loads only that. No manifest, or one that cannot be read:
+// the same rule (instance, `<kind>/<instance>`, target locale, a platform
+// section over the split's budget — bean `mm2n` — else platform), and loads
+// only that. No manifest, or one that cannot be read:
 // the whole index, exactly as the theme always did.
 function searchUrl(path) {
   return '{{ "/" | relative_url }}'.replace(/\/?$/, '/') + String(path).replace(/^\//, '');
@@ -132,6 +134,11 @@ function scopeForPage(manifest) {
   if (seg[0] && isInstance(seg[0])) return byId[seg[0]];
   if (seg[0] && byId['locale-' + seg[0]]) return byId['locale-' + seg[0]];
   if (seg[1] && isInstance(seg[1])) return byId[seg[1]];
+  // mm2n: a platform section over the split's budget has a scope of its own.
+  // Same rule as `sectionOfPath` in search-split.ts: below the section, or its
+  // index (a path ending in `/`).
+  var section = seg[0] && (seg.length > 1 || /\/$/.test(path)) ? byId['section-' + seg[0]] : null;
+  if (section && section.kind === 'section') return section;
   return platform;
 }
 
@@ -214,6 +221,33 @@ function offerEverywhere(manifest, scope) {
   results.parentNode.insertBefore(button, results.nextSibling);
 }
 
+// 1br0 (#1972 step 3): an identifier lookup is a page of its own, never
+// loaded here (the owner's ruling on bean `4pm8`). Each one the manifest
+// names gets one link under the results, carrying the reader's query so the
+// lookup opens with it already run.
+function offerRemote(manifest) {
+  var results = document.getElementById('search-results');
+  var input = document.getElementById('search-input');
+  if (!results || !input || !manifest.remote || !manifest.remote.length) return;
+  var box = document.createElement('div');
+  box.className = 'search-remote';
+  var links = manifest.remote.map(function(r){
+    var a = document.createElement('a');
+    a.className = 'search-remote-link';
+    a.textContent = 'Look up an identifier in ' + r.id + ' (' + r.entries + ' referenced entries) →';
+    a.setAttribute('data-base', searchUrl(r.href));
+    box.appendChild(a);
+    return a;
+  });
+  var refresh = function(){
+    var q = input.value.trim();
+    links.forEach(function(a){ a.href = a.getAttribute('data-base') + (q ? '&q=' + encodeURIComponent(q) : ''); });
+  };
+  input.addEventListener('input', refresh);
+  refresh();
+  results.parentNode.appendChild(box);
+}
+
 function initSearch() {
   getJson(searchUrl('assets/js/search/manifest.json'), function(manifest){
     var scope = manifest ? scopeForPage(manifest) : null;
@@ -223,6 +257,7 @@ function initSearch() {
       searchLoaded(buildSearchIndex(docs), docs);
       replaySearch();
       if (scope && scope.entries < manifest.source.entries) offerEverywhere(manifest, scope);
+      if (manifest) offerRemote(manifest);
     });
   });
 }

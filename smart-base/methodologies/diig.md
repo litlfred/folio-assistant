@@ -136,6 +136,16 @@ This is the same rule as never quoting a count from prose as though it were
 evidence, and DIIG itself is not harmed by it: the Guide's own text asks the
 three questions, and the table is how it suggests tallying them.
 
+**The summed score is on record as an alternative, not erased.** The DTH for
+health supply chain architecture repeats the tally in its Annex 3
+(`9789240101197-eng`, `sections/page-068.md`: *"Adding the scores yields the
+prioritized ranking."*). The owner ruled on 2026-10-03 (#1984) that where
+sources disagree, each version is kept as an alternative. So DIIG Table 3.3.1
+and SC Annex 3 are recorded beside this refusal on
+[`smart-base/findings/dth-terms.md`](../findings/dth-terms.md). The refusal
+still governs what an agent applying this method does. The page records that
+the sources do otherwise.
+
 **Never let a rejected option go unrecorded.** DIIG Chapter 4 selects
 interventions against prioritized challenges. The interventions considered and
 not chosen are part of the output, with why — the same argument `scrapped` wins

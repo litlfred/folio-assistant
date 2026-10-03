@@ -37,11 +37,11 @@ Part of [C@T Harness](../../README.md) 0.1.0, declared as `qa`, holding `qa`.
 | [`cat-harness-tools/`](cat-harness-tools/) | 2 files | |
 | [`detangle/`](detangle/) | 67 files | |
 | [`folio-assistant/`](folio-assistant/) | 2 files | |
-| [`kg-qa/`](kg-qa/) | 460 files | |
+| [`kg-qa/`](kg-qa/) | 461 files | |
 | [`large-datasets/`](large-datasets/) | 2 files | |
-| [`library-qa/`](library-qa/) | 64 files | |
+| [`library-qa/`](library-qa/) | 66 files | |
 | [`lsi/`](lsi/) | 4 files | |
-| [`screenshots/`](screenshots/) | 16 files | |
+| [`screenshots/`](screenshots/) | 20 files | |
 | [`tool-runs/`](tool-runs/) | 4 files | |
 | [`translation-qa/`](translation-qa/) | 35 files | |
 | [`viewer-nav/`](viewer-nav/) | 1 file | |
