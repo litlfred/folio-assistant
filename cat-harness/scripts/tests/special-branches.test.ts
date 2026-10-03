@@ -1,5 +1,5 @@
 import { describe, expect, test } from "bun:test";
-import { existsSync, readdirSync, readFileSync } from "fs";
+import { existsSync, readFileSync } from "fs";
 import { resolve } from "path";
 
 /**
@@ -21,8 +21,6 @@ interface SpecialBranch {
   holds: string;
   writers: string[];
   repos: string;
-  /** The `cat/<harness>/<name>` target of a rename still to come, and the bean that owns it. */
-  pendingRename?: string;
 }
 interface Declaration {
   branches: SpecialBranch[];
@@ -59,20 +57,21 @@ describe("special-branches — the declaration", () => {
   const HARNESS = /^cat\/([^/]+)\/[^/]/;
   const declaredHarness = (h: string) => existsSync(resolve(REPO, h, `${h}.json`));
 
-  test("every other special branch is cat/<declared harness>/<name>, or names the bean that renames it", () => {
+  // Bean folio-assistant-9io2 moved the last interim `cat-<name>` row
+  // (lake-cache) onto this scheme, so there is no deferred-rename escape
+  // hatch any more: every row's `name` IS its `cat/<harness>/<name>`.
+  test("every other special branch is cat/<declared harness>/<name>", () => {
     for (const b of DECL.branches.filter((x) => x.id !== "gh-pages")) {
-      const target = b.pendingRename ? b.pendingRename.split(" ")[0] : b.name;
-      const m = HARNESS.exec(target);
-      expect(m, `${b.id}: ${target}`).not.toBeNull();
+      const m = HARNESS.exec(b.name);
+      expect(m, `${b.id}: ${b.name}`).not.toBeNull();
       expect(declaredHarness(m![1]), `${b.id}: harness '${m![1]}' has no ${m![1]}/${m![1]}.json`).toBe(true);
-      if (b.pendingRename) {
-        const bean = /folio-assistant-[0-9a-z]{4}/.exec(b.pendingRename)?.[0];
-        expect(bean, `${b.id}: pendingRename names no bean`).toBeDefined();
-        const defs = resolve(REPO, "beans", "defs");
-        const files = readdirSync(defs).filter((f) => f.startsWith(`${bean}--`));
-        expect(files.length, `${b.id}: bean ${bean} is not in beans/defs`).toBe(1);
-      }
+      expect(Object.keys(b), `${b.id}: a pending rename is done by renaming, not by annotating`).not.toContain("pendingRename");
     }
+  });
+
+  test("lake-cache is the folio-assistant-sci harness's family, with both earlier names as legacy, newest first", () => {
+    expect(byId("lake-cache").name).toBe("cat/folio-assistant-sci/lake-cache/");
+    expect(byId("lake-cache").legacy).toEqual(["cat-lake-cache/", "lake-cache/"]);
   });
 
   test("a family's names end in '/', a single branch's never do", () => {
@@ -94,7 +93,7 @@ describe("special-branches — the declaration", () => {
 describe("special-branches — resolution (new name first, then legacy)", () => {
   test("neither exists: the new name", () => {
     expect(resolveBranch("qa-reports", new Set())).toBe("cat/cat-harness/qa-reports");
-    expect(resolveBranch("lake-cache", new Set(), "qou-v4-24-0")).toBe("cat-lake-cache/qou-v4-24-0");
+    expect(resolveBranch("lake-cache", new Set(), "qou-v4-24-0")).toBe("cat/folio-assistant-sci/lake-cache/qou-v4-24-0");
   });
 
   test("only the legacy name exists: the legacy name, for writers too", () => {
@@ -105,10 +104,21 @@ describe("special-branches — resolution (new name first, then legacy)", () => 
   test("only the interim cat-<name> exists: that one, ahead of the older legacy name", () => {
     expect(resolveBranch("qa-reports", new Set(["cat-qa-reports"]))).toBe("cat-qa-reports");
     expect(resolveBranch("state", new Set(["state", "cat-state"]))).toBe("cat-state");
+    // `lake-cache/` is a substring of `cat-lake-cache/`: whole names, in order.
+    expect(resolveBranch("lake-cache", new Set(["lake-cache/qou-v4-24-0", "cat-lake-cache/qou-v4-24-0"]), "qou-v4-24-0")).toBe(
+      "cat-lake-cache/qou-v4-24-0",
+    );
   });
 
   test("the new name exists: the new name, whatever else does", () => {
     expect(resolveBranch("state", new Set(["state", "cat-state", "cat/cat-harness/state"]))).toBe("cat/cat-harness/state");
+    expect(
+      resolveBranch(
+        "lake-cache",
+        new Set(["lake-cache/qou-v4-24-0", "cat-lake-cache/qou-v4-24-0", "cat/folio-assistant-sci/lake-cache/qou-v4-24-0"]),
+        "qou-v4-24-0",
+      ),
+    ).toBe("cat/folio-assistant-sci/lake-cache/qou-v4-24-0");
     expect(resolveBranch("fhir-ast", new Set(["cat/fhir-harness/fhir-ast/smart.who.int.trust"]), "smart.who.int.trust")).toBe(
       "cat/fhir-harness/fhir-ast/smart.who.int.trust",
     );
@@ -126,20 +136,26 @@ describe("special-branches — every copy agrees with the declaration", () => {
       const b = byId(m.id);
       const text = readFileSync(resolve(REPO, m.file), "utf-8");
       const bare = (n: string) => n.replace(/\/$/, "");
-      expect(text).toContain(bare(b.name));
-      // A legacy name can be a substring of the new one (`lake-cache` is
-      // inside `cat-lake-cache`), so `toContain` alone would pass a file that
-      // never reads the legacy name. Strip every new-name occurrence first.
-      const withoutNew = text.split(bare(b.name)).join("");
-      for (const l of b.legacy) expect(withoutNew).toContain(bare(l));
+      // A name can be a substring of another (`lake-cache` is inside both
+      // `cat-lake-cache` and `cat/folio-assistant-sci/lake-cache`, and inside
+      // `lake-cache.sh`), so `toContain` alone would pass a file that never
+      // reads the name. Each name must occur as a whole TOKEN: not preceded
+      // by a word character, `-` or `/`, and not followed by one or by `.`.
+      const esc = (n: string) => n.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+      for (const n of [b.name, ...b.legacy]) {
+        expect(new RegExp(`(?<![\\w/-])${esc(bare(n))}(?![\\w.-])`).test(text), `${m.file}: ${bare(n)}`).toBe(true);
+      }
     });
   }
 
   test("lake-cache.sh declares the prefixes by name, where the top of the file says", () => {
     const b = byId("lake-cache");
     const text = readFileSync(resolve(REPO, "cat-harness/scripts/lake-cache.sh"), "utf-8");
-    expect(text).toContain(`CACHE_PREFIX="${b.name.replace(/\/$/, "")}"`);
-    for (const l of b.legacy) expect(text).toContain(`LEGACY_CACHE_PREFIX="${l.replace(/\/$/, "")}"`);
+    const bare = (n: string) => n.replace(/\/$/, "");
+    expect(text).toContain(`CACHE_PREFIX="${bare(b.name)}"`);
+    // One space-separated list, in the declared (newest-first) order, so
+    // the resolution order is the declaration's and not the script's.
+    expect(text).toContain(`LEGACY_CACHE_PREFIXES="${b.legacy.map(bare).join(" ")}"`);
   });
 
   test("every file that resolves a lake-cache branch is listed as a mirror", () => {

@@ -10603,26 +10603,6 @@
     scheme.addEventListener("click", toggleScheme);
     host.appendChild(scheme);
 
-    /* THE [x] IN THE ROW, as its last item — owner, 2026-09-27: *"make close
-     * navigation in line with the rest of icons"*. It was PAINTED over the
-     * row's end from `.site-footer` (absolute, with its own box), and never
-     * quite sat on the row's line. It is a `<label for="fa-nav-open">`, and a
-     * label drives its checkbox from anywhere, so moving it keeps the no-script
-     * behaviour; it is moved only when `mountNavPreference` has run (the
-     * `.fa-nav-js` mark), because that handler is what makes the hover-case
-     * click mean "close" rather than "pin". Without script it stays where the
-     * stylesheet already places it. */
-    var closeCtl = bar.querySelector(".fa-nav-close");
-    if (closeCtl && bar.classList.contains("fa-nav-js")) {
-      closeCtl.classList.add("fa-nav-icon", "fa-nav-close--in-row");
-      // Its name is in a visually hidden span, so to the eye it is a bare
-      // glyph like the rest of the row and gets the same tooltip. Read off
-      // that span rather than restated, so the two cannot disagree.
-      var closeName = (closeCtl.textContent || "").replace(/\s+/g, " ").replace(/^[\s×x]+/, "").trim();
-      if (closeName) closeCtl.setAttribute("data-fa-tip", closeName);
-      host.appendChild(closeCtl);
-    }
-
     // AFTER the header: line 1 is the avatar and the name, line 2 is this.
     var header = bar.querySelector(".site-header");
     if (header && header.nextSibling) bar.insertBefore(host, header.nextSibling);
@@ -10642,7 +10622,7 @@
    * only true AT REST — once the strip peeks it is a row somewhere else — so
    * "is the pointer on the column" has to be asked of where the column WAS.
    * `.fa-nav-icons:hover` alone held the strip shut under a pointer moving
-   * into the open row and made the row's icons and its [x] unreachable.
+   * into the open row and made the row's icons unreachable.
    *
    * Set on ENTERING the bar only, so a reader already peeking keeps the open
    * bar; cleared the moment the pointer leaves the box, so moving down the
@@ -10897,6 +10877,114 @@
     nav.parentNode.insertBefore(btn, nav);
   }
 
+  /* ── THE RAIL'S LAYOUT, ON A THEME PAGE ──────────────────────────────────
+   *
+   * Owner ruling on bean ob3m finding 7, 2026-10-01, option 1 of 4: *"Use the
+   * viewer-rail layout on Jekyll pages."* The generated viewer rail
+   * (`lib/navbar.ts`, #1762) has ONE scroller holding the page's own section
+   * first and a folded "Graphs" group after it. This sidebar had three
+   * regions that each capped and scrolled on their own, and the measurement
+   * that settled it was taken on the built landing page at 1280x800 with
+   * every group unfolded: the middle at its 128px floor, 0 of the 430 page
+   * links visible because FOLDERS (789px) sat above them, the harness group
+   * scrolling inside the footer, and `.side-bar` clipping 2108px of content
+   * into 800. Two nested scrollers and a column that hid what it could not fit.
+   *
+   * So, inside the one middle region and in this order:
+   *
+   *   1. "On this page" -- first, as the ruling says, and still folded on
+   *      arrival (*"any indices/toc should be closed"*, 2026-09-23).
+   *   2. The page list -- the only group open on arrival, so it gets the
+   *      height. The rail's `single-open` rule, applied to this surface.
+   *   3. "Graphs" -- FOLDERS, in a disclosure that starts folded and keeps
+   *      FOLDERS' own fold inside it.
+   *   4. "▦ Harnesses" -- the harness group, moved out of the footer, folded,
+   *      LAST and BESIDE Graphs rather than inside it. That is where the
+   *      viewer rail keeps it too (`navbarHtml`: graphs in the middle,
+   *      harnesses below them), and it is what keeps the owner's ruling on
+   *      finding 1 (#1805): *"Make ▦ Harnesses visible on the landing page
+   *      too"* -- ▦ is a mark in the 56px strip at rest and ONE click shows
+   *      the harnesses. Folded inside Graphs it would be invisible at rest and
+   *      two clicks away, which is the state that ruling removed. Both folded
+   *      headings are pinned to the scroller's bottom edge, ▦ lowest, so the
+   *      one-scroller property of this ruling is unchanged.
+   *
+   * MOVED, never re-rendered: the folder rows and the harness rows are the
+   * nodes the generators already wrote, so their labels, notes and tooltips
+   * are exactly what those generators say. This changes WHERE, not WHAT --
+   * which is why the harness rows' `data-fa-tip` (#1805) still names their ⚙
+   * after the move: `.side-bar [data-fa-tip]::after` is `position: fixed`, so
+   * the scroller's `overflow` does not clip it.
+   *
+   * The footer keeps home, which is the one destination `navbar.ts` pins below
+   * everything (*"keep home at bottom"*). Only the sidebar's own footer is
+   * touched: just-the-docs renders the same include a second time for the
+   * phone layout, outside `.side-bar`, and that copy is not this region.
+   */
+  function mountSidebarRail() {
+    var bar = document.querySelector(".side-bar");
+    var nav = bar && bar.querySelector(".site-nav");
+    if (!bar || !nav) return;
+    if (bar.querySelector(".fa-nav-graphs-group, .fa-nav-harness-group")) return;
+
+    // THE ONE SCROLLER. `mountInstanceGraphs` builds it when the folder row
+    // could be read; when it could not, the nav still needs a region to share
+    // with the page index, or the index keeps a scroll box of its own.
+    var middle = bar.querySelector(":scope > .fa-nav-middle");
+    if (!middle) {
+      middle = el("div", { class: "fa-nav-middle" });
+      var first = bar.querySelector(":scope > .fa-nav-pages") || nav;
+      if (first.parentNode !== bar) return;
+      bar.insertBefore(middle, first);
+      if (first !== nav) middle.appendChild(first);
+      middle.appendChild(nav);
+    }
+
+    var index = bar.querySelector(".fa-doc-index");
+    if (index) middle.insertBefore(index, middle.firstChild);
+
+    var folders = middle.querySelector(":scope > .fa-nav-folders");
+    var foot = bar.querySelector(":scope > .site-footer .fa-nav-bottom");
+    var harnesses = foot && foot.querySelector(":scope > details.fa-nav-group");
+    if (!folders && !harnesses) return;
+
+    // OPENED FROM THE BOTTOM EDGE, a heading is pinned there while folded
+    // (docs-ui.css), so what it reveals lands below the fold. Bring the group
+    // to the top of the one scroller so opening it visibly does something.
+    function toTopOnOpen(d) {
+      d.addEventListener("toggle", function () {
+        if (!d.open) return;
+        var by = d.getBoundingClientRect().top - middle.getBoundingClientRect().top;
+        if (by > 0) middle.scrollTop += by;
+      });
+    }
+
+    if (folders) {
+      var group = el("details", { class: "fa-nav-graphs-group" });
+      group.appendChild(el("summary", { class: "fa-nav-graphs-group__heading" }, "Graphs"));
+      group.appendChild(folders);
+      middle.appendChild(group);
+      toTopOnOpen(group);
+    }
+
+    if (harnesses) {
+      harnesses.classList.add("fa-nav-harness-group");
+      middle.appendChild(harnesses);
+      toTopOnOpen(harnesses);
+      // THE FOLDED GRAPHS HEADING SITS ON TOP OF ▦, not under it: both are
+      // pinned to the bottom edge, so Graphs is offset by ▦'s height. That
+      // height changes between the strip and the open bar, so it is measured
+      // rather than restated (`--fa-nav-harness-rest`, read by docs-ui.css).
+      // The FOLDED box is what sits under Graphs, so it is read only while
+      // folded; the stylesheet stops reading it once ▦ is opened.
+      var setRest = function () {
+        if (!harnesses.open) middle.style.setProperty("--fa-nav-harness-rest", harnesses.offsetHeight + "px");
+      };
+      setRest();
+      if (typeof ResizeObserver === "function") new ResizeObserver(setRest).observe(harnesses);
+    }
+  }
+
   /* ── STAY CLOSED, REMEMBERED ─────────────────────────────────────────────
    *
    * Owner, 2026-09-23: *"need mechansim for closing harness navabar (e.g. w/
@@ -10962,33 +11050,10 @@
     applyNavPref(readNavPref());
 
     var box = document.getElementById("fa-nav-open");
-    var close = document.querySelector(".fa-nav-close");
-    // `.fa-nav-head` is the SAME control as `lib/navbar.ts` renders it (`sjic`).
-    // Only the old Liquid markup said `.fa-nav-toggle`, so on the live footer
-    // this handler never attached and a stay-closed bar could not be lifted by
-    // the ☰ (found 2026-09-27).
-    var open = document.querySelector(".fa-nav-toggle, .side-bar .fa-nav-head");
-
-    if (close) {
-      close.addEventListener("click", function (e) {
-        // Pinned: let the label do its own work — that is the no-script path
-        // and it is already correct. Not pinned: the label would CHECK the box
-        // and pin the bar open, so the default is refused.
-        if (box && !box.checked) e.preventDefault();
-        writeNavPref("closed");
-        applyNavPref("closed");
-      });
-    }
-
-    if (open) {
-      // `☰` is how the preference is LIFTED. A control whose inverse is not
-      // reachable is not a toggle (`l4zi`), and without this the bar could be
-      // closed and never peek again.
-      open.addEventListener("click", function () {
-        writeNavPref(null);
-        applyNavPref(null);
-      });
-    }
+    // NO ☰ AND NO [x] (#1757 on the rail, ob3m finding 8 here). The avatar
+    // below is the one control: it pins the bar open, lifting stay-closed, and
+    // closes it, setting stay-closed -- so the preference keeps both of its
+    // directions (`l4zi`) with one control instead of three.
 
     /* THE AVATAR OPENS AND CLOSES THE BAR — owner, 2026-09-27: *"navbar
      * starts hidden, click avatar opens for a split second then returns to
@@ -11138,6 +11203,9 @@
     mountInstanceGraphs();
     // AFTER the wrapper exists, so the heading lands beside the nav inside it.
     mountNavPagesHeading();
+    // LAST of the sidebar mounts: it MOVES the index, the folders and the
+    // harness group into the one middle, so all three must already exist.
+    mountSidebarRail();
     // AFTER THE SITE INDEX, which is fetched rather than inlined since
     // 2026-10-02 — see the site-index block at the top of this file. It is the
     // ONE deferred call in this sequence: `mountNavLocale` sets attributes on

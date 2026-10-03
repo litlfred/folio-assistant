@@ -25,9 +25,10 @@
 #   scripts/lake-cache.sh doctor   [--lake-root DIR]
 #   scripts/lake-cache.sh resolve-branch --key <pkg>-<slug>
 #
-# Cache branches are `cat-lake-cache/<pkg>-<slug>`; the legacy
-# `lake-cache/<pkg>-<slug>` is still read AND written where it is the one
-# that exists, until the remotes are renamed (bean folio-assistant-32f6).
+# Cache branches are `cat/folio-assistant-sci/lake-cache/<pkg>-<slug>`;
+# the legacy `cat-lake-cache/<pkg>-<slug>` and `lake-cache/<pkg>-<slug>`
+# are still read AND written where one of them is what exists, until the
+# remotes are renamed (beans folio-assistant-32f6, folio-assistant-9io2).
 #
 # The package and branch are derived automatically from
 # `.github/lake-packages.json` + `lean-toolchain`; pass them only to
@@ -68,13 +69,17 @@ PRIVATE_REF="refs/lake-cache-restore"
 # copied here because a folio may restore a cache with no `bun` on the
 # path. tests/special-branches.test.ts fails if the copy disagrees.
 #
-# The family is moving from `lake-cache/` to `cat-lake-cache/` (bean
+# The family is `cat/folio-assistant-sci/lake-cache/` (owner, 2026-10-02:
+# special branches are `cat/<harness>/<name>`; bean folio-assistant-9io2).
+# It was `lake-cache/`, then the interim `cat-lake-cache/` (bean
 # folio-assistant-32f6). Until every remote is renamed, a branch is
-# resolved new-name-first, then the legacy name — for WRITES as well as
-# reads, so nothing creates a `cat-` branch beside a legacy one and blocks
-# the rename. LEGACY_CACHE_PREFIX goes when bean folio-assistant-oycs says.
-CACHE_PREFIX="cat-lake-cache"
-LEGACY_CACHE_PREFIX="lake-cache"
+# resolved new-name-first, then each legacy name in order, newest first —
+# for WRITES as well as reads, so nothing creates a new-name branch beside
+# a legacy one and blocks the rename. LEGACY_CACHE_PREFIXES is a
+# space-separated list (no prefix contains a space) and empties when bean
+# folio-assistant-oycs says.
+CACHE_PREFIX="cat/folio-assistant-sci/lake-cache"
+LEGACY_CACHE_PREFIXES="cat-lake-cache lake-cache"
 
 die()  { printf '%s: %s\n' "$PROG" "$*" >&2; exit 2; }
 info() { printf '  %s\n' "$*"; }
@@ -214,10 +219,14 @@ PY
   # Without this exclusion a single-package repo has two exact matches and
   # inference declines for no good reason.
   local slug; slug=$(toolchain_slug "$root") || return 1
-  local cands
+  # Every prefix is matched ANCHORED at `^`, so `lake-cache/` cannot match
+  # inside `cat-lake-cache/…` or `cat/folio-assistant-sci/lake-cache/…`.
+  local cands p sed_args=()
+  for p in "$CACHE_PREFIX" $LEGACY_CACHE_PREFIXES; do
+    sed_args+=(-e "s#^${p}/\(.*\)-${slug}\$#\1#p")
+  done
   cands=$(cmd_list_names \
-    | sed -n -e "s#^${CACHE_PREFIX}/\(.*\)-${slug}\$#\1#p" \
-             -e "s#^${LEGACY_CACHE_PREFIX}/\(.*\)-${slug}\$#\1#p" \
+    | sed -n "${sed_args[@]}" \
     | sort -u | grep -vx 'toolchain')
   [ "$(printf '%s\n' "$cands" | grep -c .)" -eq 1 ] && printf '%s\n' "$cands"
 }
@@ -981,26 +990,28 @@ _LIST_DONE=0
 cmd_list_names() {
   if [ "$_LIST_DONE" -eq 0 ]; then
     _LIST_DONE=1
-    _LIST_CACHE=$(timeout 30 git ls-remote --heads origin \
-        "refs/heads/${CACHE_PREFIX}/*" "refs/heads/${LEGACY_CACHE_PREFIX}/*" 2>/dev/null \
+    local p pats=()
+    for p in "$CACHE_PREFIX" $LEGACY_CACHE_PREFIXES; do pats+=("refs/heads/${p}/*"); done
+    _LIST_CACHE=$(timeout 30 git ls-remote --heads origin "${pats[@]}" 2>/dev/null \
       | sed 's#.*refs/heads/##' | sort)
   fi
   printf '%s\n' "$_LIST_CACHE"
 }
 
 # cache_branch KEY -> the branch for `<pkg>-<slug>` (or `toolchain-<slug>`):
-# the `cat-` name if it exists on origin, else the legacy name if THAT
-# exists, else the `cat-` name. Readers and writers both use it — see the
-# family-names note at the top of this file.
+# the new name if it exists on origin, else the first legacy name that
+# exists (newest first), else the new name. Readers and writers both use
+# it — see the family-names note at the top of this file. `grep -x` is a
+# whole-line match, so a legacy name never matches inside a newer one.
 cache_branch() {
-  local key="$1" names; names=$(cmd_list_names)
-  if printf '%s\n' "$names" | grep -qxF "$CACHE_PREFIX/$key"; then
-    printf '%s/%s\n' "$CACHE_PREFIX" "$key"
-  elif [ -n "$LEGACY_CACHE_PREFIX" ] && printf '%s\n' "$names" | grep -qxF "$LEGACY_CACHE_PREFIX/$key"; then
-    printf '%s/%s\n' "$LEGACY_CACHE_PREFIX" "$key"
-  else
-    printf '%s/%s\n' "$CACHE_PREFIX" "$key"
-  fi
+  local key="$1" names p; names=$(cmd_list_names)
+  for p in "$CACHE_PREFIX" $LEGACY_CACHE_PREFIXES; do
+    if printf '%s\n' "$names" | grep -qxF "$p/$key"; then
+      printf '%s/%s\n' "$p" "$key"
+      return
+    fi
+  done
+  printf '%s/%s\n' "$CACHE_PREFIX" "$key"
 }
 
 # `resolve-branch --key <pkg>-<slug>`: print cache_branch, so the restore

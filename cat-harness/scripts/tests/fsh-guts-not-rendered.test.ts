@@ -17,11 +17,12 @@
  */
 import { describe, expect, test } from "bun:test";
 import { existsSync, readFileSync, readdirSync } from "node:fs";
-import { join, resolve } from "node:path";
+import { join, relative, resolve } from "node:path";
 
 import { siteDirFor, repoRootFor } from "../../schemas/cat-harness.ts";
 import { isWithheld, withheldFromCanonical } from "../compose-docs.ts";
 import { pageRelPath } from "../gen-fsh-guts-viz.ts";
+import { fshGutsDirectory } from "../../schemas/fsh-guts.ts";
 import { isDirectoryReadme } from "../../schemas/kg-node.ts";
 
 const ROOT = resolve(import.meta.dir, "../..");
@@ -30,7 +31,10 @@ const ROOT = resolve(import.meta.dir, "../..");
 // is what the first assertion below says in words and what `join(REPO_ROOT, GUTS)`
 // stopped meaning at the move (bean `wggr`).
 const REPO_ROOT = repoRootFor(ROOT);
-const GUTS = "fsh-guts";
+/** The declared trashcan, resolved rather than spelled (bean 9c7h), so this follows it to its branch. */
+const GUTS_DIR = fshGutsDirectory(REPO_ROOT);
+/** Its path relative to the repository root: what a Jekyll source or the built site would contain. */
+const GUTS = relative(REPO_ROOT, GUTS_DIR);
 
 /** Every `source:` a publish workflow hands to the Jekyll build. */
 function jekyllSourceRoots(): { file: string; source: string }[] {
@@ -67,16 +71,17 @@ function fshGutsNodes(repoRoot: string): string[] {
       else if (e.name.endsWith(".md") && !isDirectoryReadme(abs)) out.push(abs);
     }
   };
-  walk(join(repoRoot, GUTS));
+  walk(fshGutsDirectory(repoRoot));
   return out;
 }
 
 describe("fsh-guts stays out of the render pipeline", () => {
-  test("the directory exists at the repository root", () => {
+  test("the declared trashcan exists", () => {
     // If this fails the rest is vacuous — a test suite that passes because
     // its subject is missing is the shape of `pzdv` (two hard gates passing
     // over an empty corpus).
-    expect(existsSync(join(REPO_ROOT, GUTS))).toBe(true);
+    expect(existsSync(GUTS_DIR)).toBe(true);
+    expect(GUTS).toBe("fsh-guts");
   });
 
   test("at least one workflow declares a Jekyll source, so the check has teeth", () => {
