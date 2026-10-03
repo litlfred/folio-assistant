@@ -1,11 +1,11 @@
 ---
 # folio-assistant-dlqu
 title: 'SPEED-UP 4: CI sharding, BPMN render cache and shallow checkout'
-status: in-progress
+status: completed
 type: task
 priority: normal
 created_at: 2026-10-01T17:42:24Z
-updated_at: 2026-10-02T22:08:56Z
+updated_at: 2026-10-03T02:35:39Z
 parent: folio-assistant-hfag
 ---
 
@@ -24,10 +24,10 @@ A shard that silently runs nothing is green. So: the aggregate must check that e
 Another agent is editing `code-quality-gates.yml` for this; other PRs keep their workflow edits to single added steps so merges stay trivial.
 
 ## Done when
-- [x] parallelism: `bun test --parallel` in-job; e2e as 3 shards + an aggregate that is red unless every shard succeeded; unrun-gates step in its own job
+- [x] parallelism: `bun test` as four SEQUENTIAL shards (Bun `--parallel` hung — measured); e2e as 3 shards; each behind an aggregate that keeps the check name and is red unless every part succeeded; unrun-gates step in its own job
 - [x] ~~BPMN render cache keyed on inputs~~ — measured, not worth building (see Re-scoped)
 - [x] ~~per-job fetch-depth~~ — already depth 1 everywhere in this workflow (see Re-scoped)
-- [ ] measured: CI wall-clock before/after over ≥3 runs
+- [x] measured: CI wall-clock before/after over ≥3 runs — 8m18s–8m36s → 3m25s–3m49s (see "After")
 
 Re-parented 2026-10-02 from `7x5n` to the merge-pipeline epic `hfag` on the owner's ruling; `hfag` blocks `7x5n`, so the arc still waits on this.
 
@@ -151,3 +151,45 @@ cannot recur either. Expected per shard ≈ 7.6 min / 4 ≈ 2 min plus imbalance
 The Bun hang itself remains open (trigger set includes
 `uses-hygiene-remedy.test.ts`; worth reporting upstream with the nine-file
 reproduction).
+
+## After — three green runs of the final shape on `ed8eae27b` (2026-10-03)
+
+| run | event | wall-clock (created → done) | bun-test shards |
+|---|---|---|---|
+| 37088984861 | pull_request | 3m48s (first job start → last end) | 1m33s / 3m40s / 1m07s / 2m20s |
+| 37089387632 | workflow_dispatch | 3m49s | — |
+| 37089853408 | workflow_dispatch | 3m25s | — |
+
+**Before: 8m18s–8m36s (three `main` runs). After: 3m25s–3m49s — about 57 % less
+wall-clock.** No hang in any of them (four sequential shards, no `--parallel`).
+Final shape: `typescript-static` + four sequential `typescript-test` shards +
+`typescript` aggregate; `gates` and `gates-unrun` side by side; three e2e
+shards (one Playwright worker per core) + `e2e` aggregate; every aggregate
+carries the old check name and is red unless all its parts succeeded.
+
+Next lever, NOT done here: bun's `--shard` splits by file COUNT, so shard 2/4
+(3m40s) is the critical path while 3/4 takes 1m07s; a duration-balanced split
+would bring the workflow to ~3 min.
+
+## Summary of Changes
+
+PR litlfred/folio-assistant#1930. `Code-quality gates` wall-clock 8m18s–8m36s
+→ 3m25s–3m49s over three runs each.
+
+- **Workflow** (`code-quality-gates.yml`): `typescript` split into
+  `typescript-static` (lint, tsc) + four sequential `bun test` shards
+  (`BUN_OPTIONS=--shard=i/4`, so `gatesFrom` still runs the whole suite
+  locally) + an aggregate keeping the cited check name; `e2e` split into three
+  Playwright shards (`E2E_SHARD`, `workers: '100%'` on CI) + aggregate; the
+  1m46s–2m28s "registered and never run" step moved to its own `gates-unrun`
+  job; 20-minute caps on shard jobs.
+- **Tests made parallel-safe** (they wrote into the checkout): navbar-consistency
+  plants in a symlinked copy; repo-files probes in a throwaway git repo; four
+  in-tree `__test_*__` scratch dirs → `tmpdir()`; e2e `_kg/` generation moved to
+  a Playwright `globalSetup`; gates.test and workflow-yaml.test read the job
+  graph rather than one job.
+- **Measured and NOT built:** BPMN render cache (2–4 s, off the critical path);
+  shallow checkout (already depth 1).
+- **Found and recorded:** Bun 1.3.14 `--parallel` worker hang (open, with a
+  nine-file reproduction); `--parallel` + `--reporter=junit` hang; the 5-test
+  count gap explained (`lean-projects` registry leak).
