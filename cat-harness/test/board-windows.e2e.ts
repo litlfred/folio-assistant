@@ -15,11 +15,14 @@
  * than hoped away: every rule the unit test pins has a case here against the
  * real file, so a drift fails one of the two.
  *
- * ## The trap this file is built to avoid
+ * ## The board no longer zooms — #1925
  *
- * The bean's own words: *"zoom falsified in BOTH directions — a test that only
- * checks the shrunk case passes for a board that is always avatars."* So every
- * zoom assertion has a partner on the other side of the threshold.
+ * Owner, 2026-10-02: *"upper smaller same size closed looks niceer"*. Every
+ * board slot is its closed tile at every width, so semantic zoom is the
+ * GLASS's now (`glass-zoom-steady.e2e.ts`). The bean's trap — *"zoom falsified
+ * in BOTH directions"* — is kept the other way round: the tile is checked on
+ * both sides of the declared threshold, so a board that quietly started
+ * zooming again fails here.
  */
 import { test, expect } from "@playwright/test";
 import { readFileSync } from "node:fs";
@@ -60,9 +63,8 @@ function page(withZoom: boolean, widthPx: number): string {
 <meta name="fa-todo-src" content="/assets/todos/index.json">
 ${withZoom ? '<meta name="fa-zoom-src" content="/assets/semantic-zoom.json">' : ""}
 <style>${CSS}
-/* The grid's track width is what the threshold is measured against, so the
-   test sets it explicitly rather than inferring it from the viewport. */
-.fa-sticky-grid { display: grid; grid-template-columns: ${widthPx}px; }
+/* The board's width, on both sides of the declared threshold. The grid's own
+   tracks are the stylesheet's: every slot is one fixed-size tile. */
 .fa-sticky-board { width: ${widthPx + 40}px; }
 </style></head><body>
 <div class="main-content-wrap"><div class="main-content" id="main-content">
@@ -111,49 +113,62 @@ test.describe("every card starts as its avatar", () => {
     await expect(p.locator(".fa-board-window")).toHaveCount(0);
   });
 
-  test("a kind with no avatar rule still gets a mark — GENERIC, never blank", async ({ page: p }) => {
-    // `avatars.css` keys the glyph off `data-fa-kind` and emits a generic
-    // question mark last, so an unknown kind is marked rather than empty.
+  test("every avatar is the one sticky tile, named by its own words — never blank", async ({ page: p }) => {
+    // #1925: one component for every sticky. The tile says its kind and
+    // carries the card's own title, so no avatar is an empty square.
     await routes(true, 600)(p);
     await p.goto(URL_BOARD);
     await boot(p);
     const kinds = await p
       .locator(".fa-sticky-avatar")
-      .evaluateAll((els) => els.map((e) => (e as HTMLElement).dataset.faKind));
+      .evaluateAll((els) => els.map((e) => (e as HTMLElement).dataset.faStickyKind));
     expect(new Set(kinds)).toEqual(new Set(["todo"]));
+    await expect(p.locator(".fa-sticky-avatar").first().locator(".fa-sticky-tile-title")).toHaveText("Card alpha");
     const box = await p.locator(".fa-sticky-avatar").first().boundingBox();
     expect(box?.width ?? 0).toBeGreaterThan(0);
     expect(box?.height ?? 0).toBeGreaterThan(0);
   });
 });
 
-test.describe("semantic zoom, falsified in BOTH directions", () => {
-  test("above the declared threshold the cards keep their words", async ({ page: p }) => {
+test.describe("no semantic zoom on the board — checked on BOTH sides of the threshold", () => {
+  /** Each slot's tile size, and whether any slot carries a zoom state. */
+  async function tiles(p: import("@playwright/test").Page) {
+    return p.locator(".fa-sticky-slot").evaluateAll((els) => els.map((e) => {
+      const t = e.querySelector(".fa-sticky-tile")!.getBoundingClientRect();
+      return { w: Math.round(t.width), h: Math.round(t.height), zoom: e.getAttribute("data-fa-avatar") };
+    }));
+  }
+
+  test("above the declared threshold every slot is its closed tile", async ({ page: p }) => {
     await routes(true, 400)(p);
     await p.goto(URL_BOARD);
     await boot(p);
-    await expect(p.locator('.fa-sticky-slot[data-fa-avatar="true"]')).toHaveCount(0);
-    await expect(p.locator(".fa-sticky-slot .fa-sticky").first()).toBeVisible();
+    const t = await tiles(p);
+    expect(t.length).toBe(3);
+    for (const x of t) expect(x.zoom).toBeNull();
+    await expect(p.locator(".fa-sticky-slot > .fa-sticky").first()).toBeHidden();
   });
 
-  test("below it they become their avatars", async ({ page: p }) => {
-    // 320 is the `todo` override, not the folio's 200 — so this also proves
-    // the override is the number in force.
+  test("below it, the same tiles at the same size — nothing flips", async ({ page: p }) => {
+    // 320 is the `todo` override: below it a zooming board would have flipped.
+    await routes(true, 400)(p);
+    await p.goto(URL_BOARD);
+    await boot(p);
+    const wide = await tiles(p);
     await routes(true, 240)(p);
     await p.goto(URL_BOARD);
     await boot(p);
-    await expect(p.locator('.fa-sticky-slot[data-fa-avatar="true"]')).toHaveCount(3);
-    await expect(p.locator(".fa-sticky-slot .fa-sticky").first()).toBeHidden();
+    const narrow = await tiles(p);
+    expect(narrow).toEqual(wide);
+    await expect(p.locator(".fa-sticky-slot > .fa-sticky-tile").first()).toBeVisible();
   });
 
-  test("with NO declaration every card keeps its words — the threshold is never invented", async ({ page: p }) => {
-    // R2: the threshold is declared data. A board that guessed one would put
-    // the literal one layer further from where anybody looks for it, so the
-    // absent case is words-everywhere rather than avatars-everywhere.
+  test("with NO declaration the board is the same tiles — the threshold is never invented", async ({ page: p }) => {
     await routes(false, 100)(p);
     await p.goto(URL_BOARD);
     await boot(p);
     await expect(p.locator('.fa-sticky-slot[data-fa-avatar="true"]')).toHaveCount(0);
+    await expect(p.locator(".fa-sticky-slot > .fa-sticky-tile")).toHaveCount(3);
   });
 });
 
@@ -201,24 +216,19 @@ test.describe("opening projects a window", () => {
   });
 });
 
-test.describe("an open window survives a zoom-out past the threshold", () => {
-  test("the card becomes its avatar and the window stays", async ({ page: p }) => {
-    // THE central claim of the skill, and the one a flag joining the two
-    // mechanisms would have broken. Checked in both directions: the slot must
-    // actually flip, or this passes for a board where nothing ever changes.
+test.describe("an open window survives anything the grid does", () => {
+  test("the grid reflows and the window stays", async ({ page: p }) => {
+    // The window is a separate layer, not the card grown large — so a
+    // reflow of the grid under it changes nothing about it.
     await routes(true, 600)(p);
     await p.goto(URL_BOARD);
     await boot(p);
     await p.locator(".fa-sticky-avatar").first().click();
     await expect(p.locator(".fa-board-window")).toHaveCount(1);
-    await expect(p.locator('.fa-sticky-slot[data-fa-avatar="true"]')).toHaveCount(0);
-
     await p.evaluate(() => {
-      const grid = document.querySelector(".fa-sticky-grid") as HTMLElement;
-      grid.style.gridTemplateColumns = "180px";
+      const board = document.querySelector(".fa-sticky-board") as HTMLElement;
+      board.style.width = "180px";
     });
-
-    await expect(p.locator('.fa-sticky-slot[data-fa-avatar="true"]')).toHaveCount(3);
     await expect(p.locator(".fa-board-window")).toHaveCount(1);
     await expect(p.locator(".fa-board-window")).toBeVisible();
   });

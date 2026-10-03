@@ -133,6 +133,20 @@ posting is a reading of the licence, not of the bytes. `check:l1-complete`
 knows the kind, and **refuses** a `referenced` entry that holds `sections/`,
 `blocks/` or `images/`. That would be the copy this kind exists not to make.
 
+**A publication, not a file — an external reference (owner, 2026-10-02).** A
+FHIR implementation guide is a website and a package, not one PDF, so there are
+no bytes to hash. Its `referenced.json` takes the `published` variant of
+`source` (`schemas/referenced-source.ts`): `kind: "published"`, `url`,
+`canonical`, `package_id`, `version`, and `read_from` / `read_at` naming the
+local record the identity was read off — no `sha256`, rather than a made-up
+one. `links` names where a reader goes instead (the publisher's page, and a
+`site_path` on this site such as the instance's artefact index), and the
+library viewer shows them on the entry's row. Write it by hand — there is no
+file to run `referenced-source.py` on — then `gen-library-jsonld.ts --entry`
+for the manifest. The licence follows the usual rule: `stated` only with a
+basis, else `unknown` with where you looked. First case:
+`smart-base/library/smart-trust/`, the WHO SMART Trust IG.
+
 ## A source published as text in a repository — read it at a commit (bean `y4uj`)
 
 The Gherkin reference, the MCP specification, the `hmans/beans` README and

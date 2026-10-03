@@ -639,6 +639,14 @@
       "status": "candidate"
     },
     {
+      "id": "handover-report",
+      "prefLabel": "handover-report",
+      "definition": "Write a handover report: a templated snapshot of an agent's current state, committed as a bean note, so that a session or subagent that stalls, runs out of context, or loses its container can be picked up by another agent without re-deriving anything. Use it when you are told a stall is likely, at the end of every long arc, before a risky or long-running step, and whenever a steward asks for one. Its reader is `stalled-agent-triage`.",
+      "notation": "handover-report",
+      "source": "cat-harness/skills/sdlc/sdlc-core/handover-report.md",
+      "status": "candidate"
+    },
+    {
       "id": "harness-requirements",
       "prefLabel": "harness-requirements",
       "definition": "What an instance OWES for every directory it declares — a visualiser, a documentation entry, a governing skill, json/jsonld/schema.json serialisations at the directory's URL and at every node beneath it, and a starting README of its own. Read before declaring a directory, before adding a graph kind, and when reading `check:subgraph-coverage`. Carries which obligations are ranked as unmet promises rather than unanswered questions, why the discriminator is \"is this the static knowledge graph\", and which single obligation a harness may never waive.",
@@ -900,6 +908,14 @@
       "status": "candidate"
     },
     {
+      "id": "merge-queue",
+      "prefLabel": "merge-queue",
+      "definition": "Order the ready PRs and land them as a train: read each PR's live facts, let the reprioritisation table place it, merge the members together, run the gate set on the combination, and on red attribute and eject the culprit rather than reject the train. Use for \"merge the ready PRs\", \"what lands next\", \"run a merge train\", \"why was my PR ejected\", \"move this PR up\", and when tuning the train's order or size.",
+      "notation": "merge-queue",
+      "source": "cat-harness/skills/sdlc/sdlc-core/merge-queue.md",
+      "status": "candidate"
+    },
+    {
       "id": "methodology-adoption",
       "prefLabel": "methodology-adoption",
       "definition": "How a named external methodology enters the knowledge graph, and how an agent picks which one applies. Read before following a judgement method, before adopting a new one, and before writing a house method instead of adopting one.",
@@ -1008,6 +1024,14 @@
       "definition": "Write or update a pull request's description so that someone who has never seen the work can follow it: the problem, why it matters, how it was approached, what constrained it, the solution, how to use it, and what is not done. Read before opening a PR, before rewriting its body, and whenever the PR's scope changes.",
       "notation": "pr-description",
       "source": "cat-harness/skills/sdlc/sdlc-core/pr-description.md",
+      "status": "candidate"
+    },
+    {
+      "id": "prepare-for-handover",
+      "prefLabel": "prepare-for-handover",
+      "definition": "Prepare for a handover: commit and push everything you hold, then write a handover report that cites the commits. Use it when told a stall, timeout or container loss is coming (\"you may stall in N minutes\"), before a long or risky step, or whenever a steward or the owner says \"prepare for handover\". It is the producing half; `handover-report` is the format and `stalled-agent-triage` is the reader.",
+      "notation": "prepare-for-handover",
+      "source": "cat-harness/skills/sdlc/sdlc-core/prepare-for-handover.md",
       "status": "candidate"
     },
     {
@@ -1302,6 +1326,14 @@
       "status": "candidate"
     },
     {
+      "id": "stalled-agent-triage",
+      "prefLabel": "stalled-agent-triage",
+      "definition": "Triage incoming work from stalled agents. Given named agents or sessions, or a time window, find what they left (handover reports, open PRs, branches, beans, issue and PR discussions, workflow instances), collect as many handover reports as exist, reconstruct the rest, consolidate the workstreams into 2–4 themes, recommend how to fold them into the current or a new work plan, and coordinate open PRs with their owners (the merge steward above all). Use when a session or a swarm has stalled, timed out or lost its container, or when the owner says \"pick up what X was doing\".",
+      "notation": "stalled-agent-triage",
+      "source": "cat-harness/skills/sdlc/sdlc-core/stalled-agent-triage.md",
+      "status": "candidate"
+    },
+    {
       "id": "surprise-to-corpus",
       "prefLabel": "surprise-to-corpus",
       "definition": "What was unexpected in that task, and does it belong in the corpus? Logical surprise is the detectable kind, recurrence is the filter that stops this generating noise every turn, and the agent PROMPTS — it never writes corpus guidance unasked.",
@@ -1462,7 +1494,7 @@
     {
       "id": "ui-accessibility",
       "prefLabel": "ui-accessibility",
-      "definition": "Every user interface this project produces must be operable by keyboard, legible at measured contrast, and comfortable to hit. How to build to that, how to check it, and why an automated pass is not the standard.",
+      "definition": "Every user interface this project produces must be operable by keyboard, legible at measured contrast, and comfortable to hit. How to build to that, how to check it, why an automated pass is not the standard, and what a rendering built client-side owes a reader — there is no no-JavaScript floor here, and the two gates that look like one are narrower than their names.",
       "notation": "ui-accessibility",
       "source": "cat-harness/skills/ui/ui-core/ui-accessibility.md",
       "status": "candidate"

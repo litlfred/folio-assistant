@@ -87,6 +87,54 @@ function translationDir(folioRoot: string, config?: HarnessConfig | null): strin
   return declared ?? join(folioRoot, "translations");
 }
 
+// ── Folio context ───────────────────────────────────────────────
+
+/**
+ * The half of PO resolution that depends on the FOLIO only, never on the block.
+ *
+ * Steps 1–3 compose paths under the folio's own translation directory and
+ * step 4 walks its ordered dependencies — and both of those are a function of
+ * `folioRoot` alone. Resolving them per call made a sweep pay for the instance
+ * graph once per (block, locale): measured 2026-10-03, 86 s of the 93 s
+ * `translation-block-qa --check` was `orderedDependencies` and 12 s more was
+ * `directoryForGraph`, re-reading every declaration for every pair (bean `ksg3`).
+ *
+ * A caller resolving many blocks builds this ONCE and passes it in. It is a
+ * value, not a module-level cache, on purpose: tests build fixture folios and
+ * edit them between calls, and a cache keyed on the path would answer for the
+ * folio as it was.
+ */
+export interface PoResolveContext {
+  /** The folio's own translation directory (see `translationDir`). */
+  translationDir: string;
+  /** Each dependency that provides translations, deepest first, with its directory. */
+  dependencies: { name: string; translationDir: string }[];
+}
+
+/** Build the folio-level context `resolvePoSources` needs. */
+export function poResolveContext(folioRoot: string): PoResolveContext {
+  const dependencies: PoResolveContext["dependencies"] = [];
+  // Dependency walk — deepest first, each dependency once (bean a1lq).
+  // Uses the canonical resolution from schemas/harness-config.ts.
+  for (const resolved of orderedDependencies(folioRoot)) {
+    // Skip deps that don't provide translations
+    if (
+      resolved.dependency.provides &&
+      !resolved.dependency.provides.includes("translations")
+    ) {
+      continue;
+    }
+    dependencies.push({
+      name: resolved.dependency.name,
+      translationDir: translationDir(resolved.rootPath, resolved.config),
+    });
+  }
+  return {
+    translationDir: translationDir(folioRoot, readHarnessConfig(folioRoot)),
+    dependencies,
+  };
+}
+
 // ── Resolution ──────────────────────────────────────────────────
 
 /**
@@ -98,7 +146,11 @@ function translationDir(folioRoot: string, config?: HarnessConfig | null): strin
  *
  * @returns Array of resolved PO sources (may be empty if none found).
  */
-export function resolvePoSources(options: PoResolveOptions): ResolvedPoSource[] {
+export function resolvePoSources(
+  options: PoResolveOptions,
+  /** The folio-level half, built once by a caller resolving many blocks. */
+  context?: PoResolveContext,
+): ResolvedPoSource[] {
   const { folioRoot, locale, blockStem, chapterSlug, poSources } = options;
 
   // ── Explicit poSources (no fallback) ──
@@ -114,9 +166,8 @@ export function resolvePoSources(options: PoResolveOptions): ResolvedPoSource[] 
 
   // ── Fallback chain ──
   const results: ResolvedPoSource[] = [];
-  const config = readHarnessConfig(folioRoot);
-  const transDir = translationDir(folioRoot, config);
-  const localeDir = join(transDir, locale);
+  const ctx = context ?? poResolveContext(folioRoot);
+  const localeDir = join(ctx.translationDir, locale);
 
   // Step 1: Block-level
   const blockPo = join(localeDir, `${blockStem}.po`);
@@ -138,21 +189,9 @@ export function resolvePoSources(options: PoResolveOptions): ResolvedPoSource[] 
     results.push({ path: globalPo, resolution: "folio" });
   }
 
-  // Step 4: Dependency walk — deepest first, each dependency once (bean a1lq).
-  // Uses the canonical resolution from schemas/harness-config.ts.
-  const flatDeps = orderedDependencies(folioRoot);
-  for (const resolved of flatDeps) {
-    // Skip deps that don't provide translations
-    if (
-      resolved.dependency.provides &&
-      !resolved.dependency.provides.includes("translations")
-    ) {
-      continue;
-    }
-
-    const depConfig = resolved.config;
-    const depTransDir = translationDir(resolved.rootPath, depConfig);
-    const depLocaleDir = join(depTransDir, locale);
+  // Step 4: Dependency walk — the order `poResolveContext` fixed.
+  for (const dep of ctx.dependencies) {
+    const depLocaleDir = join(dep.translationDir, locale);
 
     // Look for block-level match in the dependency
     const depBlockPo = join(depLocaleDir, `${blockStem}.po`);
@@ -160,7 +199,7 @@ export function resolvePoSources(options: PoResolveOptions): ResolvedPoSource[] 
       results.push({
         path: depBlockPo,
         resolution: "dependency",
-        dependencyName: resolved.dependency.name,
+        dependencyName: dep.name,
       });
     }
 
@@ -170,7 +209,7 @@ export function resolvePoSources(options: PoResolveOptions): ResolvedPoSource[] 
       results.push({
         path: depGlobalPo,
         resolution: "dependency",
-        dependencyName: resolved.dependency.name,
+        dependencyName: dep.name,
       });
     }
   }

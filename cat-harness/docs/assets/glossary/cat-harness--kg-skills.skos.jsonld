@@ -1554,6 +1554,26 @@
       "skos:note": "candidate"
     },
     {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-skills/handover-report",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-skills"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "handover-report"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Write a handover report: a templated snapshot of an agent's current state, committed as a bean note, so that a session or subagent that stalls, runs out of context, or loses its container can be picked up by another agent without re-deriving anything. Use it when you are told a stall is likely, at the end of every long arc, before a risky or long-running step, and whenever a steward asks for one. Its reader is `stalled-agent-triage`."
+        }
+      ],
+      "skos:notation": "handover-report",
+      "dcterms:source": "cat-harness/skills/sdlc/sdlc-core/handover-report.md",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-skills/harness-requirements",
       "@type": "skos:Concept",
       "skos:inScheme": {
@@ -2199,6 +2219,26 @@
       "skos:note": "candidate"
     },
     {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-skills/merge-queue",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-skills"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "merge-queue"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Order the ready PRs and land them as a train: read each PR's live facts, let the reprioritisation table place it, merge the members together, run the gate set on the combination, and on red attribute and eject the culprit rather than reject the train. Use for \"merge the ready PRs\", \"what lands next\", \"run a merge train\", \"why was my PR ejected\", \"move this PR up\", and when tuning the train's order or size."
+        }
+      ],
+      "skos:notation": "merge-queue",
+      "dcterms:source": "cat-harness/skills/sdlc/sdlc-core/merge-queue.md",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-skills/methodology-adoption",
       "@type": "skos:Concept",
       "skos:inScheme": {
@@ -2471,6 +2511,26 @@
       ],
       "skos:notation": "pr-description",
       "dcterms:source": "cat-harness/skills/sdlc/sdlc-core/pr-description.md",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-skills/prepare-for-handover",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-skills"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "prepare-for-handover"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Prepare for a handover: commit and push everything you hold, then write a handover report that cites the commits. Use it when told a stall, timeout or container loss is coming (\"you may stall in N minutes\"), before a long or risky step, or whenever a steward or the owner says \"prepare for handover\". It is the producing half; `handover-report` is the format and `stalled-agent-triage` is the reader."
+        }
+      ],
+      "skos:notation": "prepare-for-handover",
+      "dcterms:source": "cat-harness/skills/sdlc/sdlc-core/prepare-for-handover.md",
       "skos:note": "candidate"
     },
     {
@@ -3189,6 +3249,26 @@
       "skos:note": "candidate"
     },
     {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-skills/stalled-agent-triage",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-skills"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "stalled-agent-triage"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Triage incoming work from stalled agents. Given named agents or sessions, or a time window, find what they left (handover reports, open PRs, branches, beans, issue and PR discussions, workflow instances), collect as many handover reports as exist, reconstruct the rest, consolidate the workstreams into 2–4 themes, recommend how to fold them into the current or a new work plan, and coordinate open PRs with their owners (the merge steward above all). Use when a session or a swarm has stalled, timed out or lost its container, or when the owner says \"pick up what X was doing\"."
+        }
+      ],
+      "skos:notation": "stalled-agent-triage",
+      "dcterms:source": "cat-harness/skills/sdlc/sdlc-core/stalled-agent-triage.md",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-skills/surprise-to-corpus",
       "@type": "skos:Concept",
       "skos:inScheme": {
@@ -3591,7 +3671,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "Every user interface this project produces must be operable by keyboard, legible at measured contrast, and comfortable to hit. How to build to that, how to check it, and why an automated pass is not the standard."
+          "@value": "Every user interface this project produces must be operable by keyboard, legible at measured contrast, and comfortable to hit. How to build to that, how to check it, why an automated pass is not the standard, and what a rendering built client-side owes a reader — there is no no-JavaScript floor here, and the two gates that look like one are narrower than their names."
         }
       ],
       "skos:notation": "ui-accessibility",

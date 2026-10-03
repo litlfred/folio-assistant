@@ -40,6 +40,7 @@ import {
   readBlockManifest,
   resolveCanonicalLean,
 } from "../content/pipeline/qa-utils";
+import { blockQaPath, existingBlockQaPath, findContentRepoRoot } from "../content/pipeline/qa-paths";
 import type {
   BlockQaReport,
   QaCriterionEntry,
@@ -160,7 +161,19 @@ if (!leanPath) {
   );
   leanPath = resolveCanonicalLean(refMatch?.[1], REPO_ROOT);
 }
-const qaPath = `${base}.qa.json`;
+// Read where the readers look; write where they look FIRST (bean r7v6, R50).
+//
+// This used to read and write `${base}.qa.json` beside the block, the legacy
+// path. Every reader goes through `existingBlockQaPath`, which prefers the
+// results tree, so once a block had a results-tree verdict an agent verdict
+// written here was shadowed and never read. Now it is load-then-write, the
+// same as `qa-agent-entry.ts` and `qa-sweep.ts`: the read falls back to the
+// legacy sibling, so an unmigrated block keeps its history, and the write
+// never does. The anchor is the block's own content repo, found the way
+// qa-sweep finds it, so the recorded path does not depend on the cwd.
+const contentRepoRoot = findContentRepoRoot(resolve(base), REPO_ROOT);
+const qaReadPath = existingBlockQaPath(contentRepoRoot, resolve(base));
+const qaPath = blockQaPath(contentRepoRoot, resolve(base));
 
 const paths = { ts: tsPath, md: mdPath, lean: leanPath };
 const currentHashes = hashBlockFiles(paths);
@@ -178,7 +191,7 @@ const relPaths = {
   lean: leanPath ? relative(REPO_ROOT, leanPath) : undefined,
 };
 
-let report: BlockQaReport | undefined = loadQaReport(qaPath);
+let report: BlockQaReport | undefined = qaReadPath === undefined ? undefined : loadQaReport(qaReadPath);
 if (!report) {
   report = {
     $schema: "block-qa/v1",

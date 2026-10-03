@@ -24,6 +24,7 @@ import { mkdtempSync, mkdirSync, readdirSync, readFileSync, writeFileSync } from
 import { tmpdir } from "node:os";
 import { join, resolve } from "node:path";
 
+import { isSubjectShell } from "../gen-library-viz.ts";
 import { orphanSubjectPages, viewerHtml } from "../gen-schema-viz.ts";
 import { readDeclaration, siteDirFor } from "../../schemas/cat-harness.ts";
 
@@ -126,7 +127,10 @@ describe("the committed tree carries no orphan", () => {
       expect(subs.length).toBeGreaterThan(0);
       for (const s of subs) {
         const html = readFileSync(join(dir, s, "index.html"), "utf-8");
-        expect(html).toContain(`var SCOPE = "${s}";`);
+        // A library page is a thin shell (#1881) whose identity is its config
+        // block; a schema page still names itself in a SCOPE line.
+        if (kind === "library") expect(isSubjectShell(html, s)).toBe(true);
+        else expect(html).toContain(`var SCOPE = "${s}";`);
       }
     });
   }

@@ -846,7 +846,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "Install Chromium, check the rendered BPMN SVGs are current, then run the Playwright suite, which includes the accessibility checks. Hard: a failure blocks the PR."
+          "@value": "Install Chromium, check the rendered BPMN SVGs are current, then run the Playwright suite, which includes the accessibility checks. Hard: a failure blocks the PR. SHARDED since bean `dlqu` (drawn as one task, deliberately: a multi-instance marker would add a BPMN term to every instance's UML overview, about 75 generated files, for a picture this sentence already gives): the suite runs as three `e2e-shard` jobs (`E2E_SHARD=i/3`, one Playwright worker per core in each), and the `e2e` job that carries this check's name completes the task only when every instance succeeded — a shard that failed, was cancelled or never ran is a red check, never a skipped one. Measured before the split: `playwright test` alone was 4m33s of a 5m16s job, the workflow's slowest once `bun test` ran in parallel. The BPMN-render and `.bat`-wrapper checks run in shard 1 only, so they are asked once."
         }
       ],
       "skos:notation": "Task_E2E",
@@ -891,6 +891,26 @@
       ],
       "skos:notation": "Task_Python",
       "dcterms:source": "cat-harness/processes/sdlc/code-quality-gates.bpmn#Task_Python",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-bpmn-activities/process_codequalitygates.task_qapublish",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Publish QA results to qa-reports (NOT A GATE)"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Bean `16ei`, arc `3fva`. After Task_RepositoryGates, WHATEVER it concluded (`needs: gates` with `always()`), `qa:publish --github` writes this run's `test/results` trees to the orphan `qa-reports` branch: `main/<sha>/` on a push to main, `pr/<n>/<head-sha>/` on a same-repository PR (owner rulings D1, D3). A fork PR's token is read-only, so it is skipped with a `::notice` naming why. It does NOT reach GW_Join: a red publish is its own red and never decides mergeability, and the hard gates never wait on it. The only job here holding `contents: write`, which is also how `bun run gates` knows not to run it locally."
+        }
+      ],
+      "skos:notation": "Task_QaPublish",
+      "dcterms:source": "cat-harness/processes/sdlc/code-quality-gates.bpmn#Task_QaPublish",
       "skos:note": "candidate"
     },
     {
@@ -966,11 +986,31 @@
       ],
       "skos:definition": [
         {
-          "@value": "Three checks and nothing else: `bun run lint`, `tsc --noEmit`, then `bun test`. The repository gates it used to carry are Task_RepositoryGates now (bean `om30`). Order inside the job is load-bearing rather than stylistic: Actions stops a job at its first failing step, so `bun test` — red on `main` by the owner's decision — runs LAST, with nothing behind it to mask. While it ran first, lint and typecheck did not execute on `main` at all."
+          "@value": "Three checks: `bun run lint`, `tsc --noEmit` and `bun test`. The repository gates it used to carry are Task_RepositoryGates now (bean `om30`). Since bean `dlqu` it is three jobs: `typescript-static` (lint, then typecheck), `typescript-test` (`bun test` as four SEQUENTIAL shards on separate machines — Bun's in-process `--parallel` worker pool hung at both 4 and 2 workers, measured — the shard passed in `BUN_OPTIONS` so the command stays the one `bun run gates` runs locally) and `typescript`, which carries the check name and is green only when the other two succeeded. The step-order rule the single job needed — `bun test` LAST, because Actions stops at the first failing step and a red-by-decision test would otherwise mask lint and typecheck — no longer has anything to order: separate jobs cannot mask each other. Measured on three `main` runs before the change: `bun test` alone was 7m30s-7m45s of an 8m14s-8m33s job."
         }
       ],
       "skos:notation": "Task_TypeScript",
       "dcterms:source": "cat-harness/processes/sdlc/code-quality-gates.bpmn#Task_TypeScript",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-bpmn-activities/process_codequalitygates.task_unrungates",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Registered gates that never run (HARD)"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "`check:gates-registered`, split out of Task_RepositoryGates by bean `dlqu`: one step of that job measured 1m46s-2m28s across four runs, the longest step in it by a factor of four, and a sequential job is as slow as the sum of its steps. In its own job it runs beside the rest rather than after them. It still asks the same question — is every gate a script registers actually run somewhere — and is still hard."
+        }
+      ],
+      "skos:notation": "Task_UnrunGates",
+      "dcterms:source": "cat-harness/processes/sdlc/code-quality-gates.bpmn#Task_UnrunGates",
       "skos:note": "candidate"
     },
     {
@@ -2066,7 +2106,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "On CREATING the feature branch, comment on the issue: the branch name, the process and phase, and the beans claimed. Visibility is the whole point — without it a sibling session or a human cannot tell that work has begun, only that it has finished. Deliberately on this edge and not inside Phase 6. The three loops back into A_Implement (increment rejected, MVP not ready, feedback translated) re-enter implementation on the SAME branch, and re-announcing on each would be noise. Announce once, when the branch is created."
+          "@value": "On CREATING the feature branch, comment on the issue: the branch name, the process and phase, and the beans claimed. Visibility is the whole point — without it a sibling session or a human cannot tell that work has begun, only that it has finished. Deliberately on this edge and not inside Phase 6. The three loops back into A_Implement (increment rejected, MVP not ready, feedback translated) re-enter implementation on the SAME branch, and re-announcing on each would be noise. Announce once, when the branch is created. Before announcing, run the collision review that starts any new unit of work (coordinate, \"Starting new work\"): open PRs and in-progress beans checked against the branch's files and subject, scaled to the blast radius, and the result recorded in the bean before the first edit."
         }
       ],
       "skos:notation": "A_AnnounceBranch",
@@ -4284,6 +4324,326 @@
       "skos:note": "candidate"
     },
     {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-bpmn-activities/process_mergetrain.call_checkspresent",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Find members with no CI on their head [pr-checks-present]"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "GitHub runs no `pull_request` CI while a PR conflicts, so a member can arrive with nothing on its head (bean `u7be` item 3). That member is T2's first suspect if the train goes red."
+        }
+      ],
+      "skos:notation": "Call_ChecksPresent",
+      "dcterms:source": "cat-harness/processes/sdlc/merge-train.bpmn#Call_ChecksPresent",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-bpmn-activities/process_mergetrain.call_ejecthandback",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Hand the culprit back [merge-refusal]"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The same hand-back as a refused placement (#1888), carrying the ejection's evidence (R4). Then the train re-runs without it."
+        }
+      ],
+      "skos:notation": "Call_EjectHandBack",
+      "dcterms:source": "cat-harness/processes/sdlc/merge-train.bpmn#Call_EjectHandBack",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-bpmn-activities/process_mergetrain.call_gates",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Run the gate set on the train [code-quality-gates]"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Every gate CI runs, on the combination (R2): a member that passes alone can still break `main` with another. The merge-gate epic (`nok9`, #1887) adds its gates here when they land."
+        }
+      ],
+      "skos:notation": "Call_Gates",
+      "dcterms:source": "cat-harness/processes/sdlc/merge-train.bpmn#Call_Gates",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-bpmn-activities/process_mergetrain.call_handback",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Hand it back [merge-refusal]"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "`merge-refusal.bpmn` (PR #1888, bean `zacz`): a bean under the right epic, a hand-back to the owning session with a fail condition (agent-handoff, #1884), or a dispatch when nobody owns it. R4: the PR returns with its reason."
+        }
+      ],
+      "skos:notation": "Call_HandBack",
+      "dcterms:source": "cat-harness/processes/sdlc/merge-train.bpmn#Call_HandBack",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-bpmn-activities/process_mergetrain.call_mergemembers",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Merge each member onto the base [merge-base]"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "`merge-base.bpmn` once per member, in order, `--no-regen`; then ONE `bun run regen` over the result. Tool: `merge:train`. Always onto the current base, never a cached one (R5)."
+        }
+      ],
+      "skos:notation": "Call_MergeMembers",
+      "dcterms:source": "cat-harness/processes/sdlc/merge-train.bpmn#Call_MergeMembers",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-bpmn-activities/process_mergetrain.task_admit",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Admit it to the train, record the train id"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Writes the queue entry's `trainId` and `placement` (rule, class, rank) with who decided and when. A decision, so it is stored; the facts it was decided on are not. PRECONDITION, CHECKED RATHER THAN ASSUMED: the worktree carries no untracked, non-ignored file before the member is merged and the tree regenerated. `git status --porcelain` must be empty. The reason is specific: generated directory READMEs carry a per-subdirectory file count, and the writer counts the files GIT WOULD COMMIT -- `git ls-files --cached --others --exclude-standard` (bootstrap-tools/scripts/git-files.ts:23). `--exclude-standard` already keeps IGNORED junk out, which is the `__pycache__` case that drove that line, but `--others` still counts an untracked file nobody has ignored. So a transient written by an earlier train step moves a committed count, `readme:subgraphs:check` goes red, and the red belongs to nobody. Train 6 hit this. The count is volatile for a second reason the precondition cannot fix: two members each adding a file write different integers to one line. Measured in bean `y7b3` -- 76 of 300 replayed merges conflicted on `beans/README.md`, every one on the `| defs/ | N files |` line -- and the exposure is wider than that bean states: 54 generated READMEs across 14 instances carry 207 such rows (measured 2026-10-02). `merge:main` already resolves them (`readme-generated-regions`), so the cost falls on merges made by plain git. The chosen fix is bean `ba9e`: take the integer off `main` into the KG's `_data` layer, which classifies `take-base` and is therefore auto-resolved, leaving the README with a marker that is invariant until the directory crosses LIST_LIMIT. Not done here -- it spans the pinned `bootstrap-tools` submodule."
+        }
+      ],
+      "skos:notation": "Task_Admit",
+      "dcterms:source": "cat-harness/processes/sdlc/merge-train.bpmn#Task_Admit",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-bpmn-activities/process_mergetrain.task_attribute",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Attribute the failure: each member's own CI first"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "T2 (SQ19 §2.1 pp. 2-3). A member whose own PR CI is red, or never ran on its head, is the prime suspect, and the evidence is already on GitHub. Only when every member is green alone is the failure a real conflict between them."
+        }
+      ],
+      "skos:notation": "Task_Attribute",
+      "dcterms:source": "cat-harness/processes/sdlc/merge-train.bpmn#Task_Attribute",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-bpmn-activities/process_mergetrain.task_bisect",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Bisect the train"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Halve the members and re-run the gates on each half until the conflicting one is found: two or three CI runs for three to six members. Only reached when the cheap evidence is silent."
+        }
+      ],
+      "skos:notation": "Task_Bisect",
+      "dcterms:source": "cat-harness/processes/sdlc/merge-train.bpmn#Task_Bisect",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-bpmn-activities/process_mergetrain.task_eject",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Eject the culprit, record why"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "T1 (R3; SQ19 §2.2 p. 3): the culprit leaves, the rest re-run. Writes `ejection` on its queue entry (train id, reason, evidence URL, when) and a dated evidence snapshot on this instance. The train is never rejected whole for one member."
+        }
+      ],
+      "skos:notation": "Task_Eject",
+      "dcterms:source": "cat-harness/processes/sdlc/merge-train.bpmn#Task_Eject",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-bpmn-activities/process_mergetrain.task_land",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Land the train at the tested SHA"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "R1: what lands is exactly what CI tested. If `main` moved after the train's CI started, re-run rather than land (open question for the owner in the requirements note §6). Clears each member's `trainId`; its preview is then taken down by `feature-staging.bpmn`."
+        }
+      ],
+      "skos:notation": "Task_Land",
+      "dcterms:source": "cat-harness/processes/sdlc/merge-train.bpmn#Task_Land",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-bpmn-activities/process_mergetrain.task_override",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Place it by hand, with a reason"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Recorded as a queue entry whose placement is `override` with a position and a reason; the schema refuses one without a reason. It enters the next placement as the table's `ownerOverride` input."
+        }
+      ],
+      "skos:notation": "Task_Override",
+      "dcterms:source": "cat-harness/processes/sdlc/merge-train.bpmn#Task_Override",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-bpmn-activities/process_mergetrain.task_readlive",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Read each queued PR's live facts"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "From GitHub and the checkout, now: authored paths, shared declarations, size, conflict risk and overlap KIND against the other queued PRs (T3), own CI and whether it ran on the head (T2). Tools: `merge:overlap` for the overlap facts, `check:head-has-run` for `ownCi`. Nothing read here is written to a queue entry; it is the input to the placement table. `ownCi` IS NOT A VERDICT READ. Never ask whether anything is red: ask which workflow runs are OWED for the head's event and whether each one is present and successful. The two readings come apart, measured 2026-10-02 on #1889's head 7ab6119405 -- 9 runs present, all 9 gating job NAMES matching, 3 of them in_progress with a null conclusion, and 3 check SUITES completed as `action_required` having executed nothing. A filter for conclusion = failure finds zero, and counting the runs does not catch it either. `check:head-has-run` is the only thing here that asks the owed question (bean `3pqn`), and the five states it distinguishes are the five values of `ownCi`. `Rule_HeadNotGreen` in merge-priority.dmn then hands back anything but `green`, so this is a gate the engine applies rather than advice a steward remembers. Overlap kind matters as much as overlap: `merge:overlap` over all 36 open PRs on 2026-10-02 (459 pairs) found #1907 x #1909 NOT independent on `package.json` alone, with zero authored content shared. `generated-only` needs a regeneration and `shared-declaration` needs ordering; only `authored` needs a train."
+        }
+      ],
+      "skos:notation": "Task_ReadLive",
+      "dcterms:source": "cat-harness/processes/sdlc/merge-train.bpmn#Task_ReadLive",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-bpmn-activities/process_mergetrain.task_release",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Release the merge to main"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Explicit confirmation before merging to `main`, or a standing ruling the steward quotes verbatim with its date (2026-10-01: \"you may merge green PRs\")."
+        }
+      ],
+      "skos:notation": "Task_Release",
+      "dcterms:source": "cat-harness/processes/sdlc/merge-train.bpmn#Task_Release",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-bpmn-activities/process_mergetrain.task_retryflaky",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Retry a declared-flaky gate once"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "T7, narrow (R11; TAP17 Table II p. 5): only gates on a declared flaky list (browser e2e), once, both outcomes recorded. A deterministic gate is never retried: that would spend a CI cycle to learn nothing."
+        }
+      ],
+      "skos:notation": "Task_RetryFlaky",
+      "dcterms:source": "cat-harness/processes/sdlc/merge-train.bpmn#Task_RetryFlaky",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-bpmn-activities/process_mergetrain.task_siblingfix",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Fix the PR, then re-signal ready"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "On the sibling's own branch: merge main in, fix, push, and re-mark ready (`ready: <head sha>`). It re-enters the queue as a new placement; the ejection stays on its entry until a later train lands it."
+        }
+      ],
+      "skos:notation": "Task_SiblingFix",
+      "dcterms:source": "cat-harness/processes/sdlc/merge-train.bpmn#Task_SiblingFix",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-bpmn-activities/process_mergetrain.task_takenext",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Take the next PR in queue order"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Owner overrides at their positions first, then by the table's rank, then by PR number, oldest first (`scripts/merge-queue.ts` `orderQueue`)."
+        }
+      ],
+      "skos:notation": "Task_TakeNext",
+      "dcterms:source": "cat-harness/processes/sdlc/merge-train.bpmn#Task_TakeNext",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-bpmn-activities/process_methodologyfromsource.a_integrate",
       "@type": "skos:Concept",
       "skos:inScheme": {
@@ -5951,6 +6311,121 @@
       ],
       "skos:notation": "A_UpdateSession",
       "dcterms:source": "cat-harness/processes/process/session-state-machine.bpmn#A_UpdateSession",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-bpmn-activities/process_stalledagenttriage.a_collect",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Collect or reconstruct a handover report per agent"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Use the agent's own report and check it against live state; if none, ask the agent if it is still reachable, else reconstruct with the handover-report template and mark it reconstructed. Unpushed state is unknown, never empty."
+        }
+      ],
+      "skos:notation": "A_Collect",
+      "dcterms:source": "cat-harness/processes/sdlc/stalled-agent-triage.bpmn#A_Collect",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-bpmn-activities/process_stalledagenttriage.a_consolidate",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Consolidate into 2-4 themes, with a recommendation each"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Group by what the work delivers, not by agent. Each theme gets its epic, members, dependencies, risk, and one of: continue, fold in, new epic, park, scrap (owner only)."
+        }
+      ],
+      "skos:notation": "A_Consolidate",
+      "dcterms:source": "cat-harness/processes/sdlc/stalled-agent-triage.bpmn#A_Consolidate",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-bpmn-activities/process_stalledagenttriage.a_footprint",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Find the footprint"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "handover notes (beans/notes, title 'handover:'), open PRs and branches by session or time window, in-progress beans, workflow instances, last PR and issue comments. REST, one batched pass."
+        }
+      ],
+      "skos:notation": "A_Footprint",
+      "dcterms:source": "cat-harness/processes/sdlc/stalled-agent-triage.bpmn#A_Footprint",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-bpmn-activities/process_stalledagenttriage.a_record",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Record the triage and claim the picked-up work"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "A 'triage: <date>' bean note on each theme's epic; new or re-parented beans; claims via beans:claim. Owning sessions still alive are notified before their branches are touched."
+        }
+      ],
+      "skos:notation": "A_Record",
+      "dcterms:source": "cat-harness/processes/sdlc/stalled-agent-triage.bpmn#A_Record",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-bpmn-activities/process_stalledagenttriage.s_reroute",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Re-route open PRs that lost their driver"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Green, up-to-date PRs join the queue; mid-merge branches are re-driven from the PR head, never guessed at; red PRs go back to the new driver."
+        }
+      ],
+      "skos:notation": "S_Reroute",
+      "dcterms:source": "cat-harness/processes/sdlc/stalled-agent-triage.bpmn#S_Reroute",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-bpmn-activities/process_stalledagenttriage.u_decide",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Decide each theme"
+        }
+      ],
+      "skos:notation": "U_Decide",
+      "dcterms:source": "cat-harness/processes/sdlc/stalled-agent-triage.bpmn#U_Decide",
       "skos:note": "candidate"
     },
     {

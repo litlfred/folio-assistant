@@ -100,6 +100,10 @@ are both shorter than the ambiguity is expensive.
 
 ## A tile opens the INSTANCE, not a kind handler's view of it
 
+(A viewer page is a RENDERING with its own IRI, separate from the asset it
+shows; how the two IRIs relate is in `kg-viewer` §"The asset and its rendering
+are two resources with two IRIs".)
+
 `scripts/mount-instance-docs.ts` carries the owner's own rule for the two
 routes:
 
@@ -303,11 +307,20 @@ the list lives: *"should be in each harness config which are shown (so some
 could show none, but make this default in cat-harness that is inherited)."*
 
 `navbarIcons` on the instance declaration. A **closed** set — `close`,
-`todos`, `beans`, `processes`, `kg`, `launcher` — because a free string lets an
-instance name an icon nothing draws, and the failure is a silent gap in a row
-capped at six. Six is the cap and it is **refused, never truncated**: an
-instance that declared seven has made a decision, and silently dropping its
-last entry overrules that decision without saying so.
+`todos`, `beans`, `processes`, `kg`, `fsh-guts`, `launcher` — because a free
+string lets an instance name an icon nothing draws, and the failure is a silent
+gap in a row capped at seven. Seven is the cap and it is **refused, never
+truncated**: an instance that declared eight has made a decision, and silently
+dropping its last entry overrules that decision without saying so.
+
+The cap was six until 2026-10-02, when the owner put the fsh-guts trashcan in
+the row *"with the others"* (#1925) rather than in place of one. `fsh-guts` is
+a control, like `launcher`: a button that opens the discarded-items list and
+carries its live count, not a link. It is also the **way back** the discard
+confirmation names — *"make sure confirmed by user"* (owner, 2026-10-02) — so
+that dialog says "the fish in the icon row" only when this icon is on the page,
+and points at Page settings otherwise. The confirmation itself is
+`board-windows` §"Send to fsh-guts asks first".
 
 **The three states are the part to get right, and two of them look the same:**
 
@@ -372,35 +385,30 @@ fall back to the mark.
 
 ## Where a tile lives, and what it must not eat
 
-Tiles render in the navbar **and** on the board: one declaration, per-surface
+Tiles render in the navbar **and** on the glass: one declaration, per-surface
 visibility, never two registries free to disagree about what a tile is.
 
-**On the board they are a strip along the TOP, and it starts OPEN.** Both
-halves are rules rather than defaults to tune:
+**The sticky board carries NO tiles.** Owner, 2026-10-02 (issue #1905, bean
+`t6ht`): *"stickies panel shouldnt have all those icons"*. That reverses the
+2026-09-21 ruling (bean `v0jv`) which put a "Visualisations" strip of square
+tiles along the top of every sticky board — on every board, not only the
+landing one, because the ruling names the panel rather than a page.
 
-- **The top, not the bottom, and not in flow.** In flow the strip lands below
-  the cards, and on a board of full-bleed art it reads as absent — which is the
-  failure this placement exists to fix, not a cosmetic one.
-- **Open, because closed reads as absent too.** Tiles a reader must open before
-  they can see what a folio offers have the same effect as tiles that are not
-  there. Sliding the strip up is the reader's act; it is never the starting
-  position.
-- **`sticky`, never `fixed`.** The strip belongs to the FOLIO: it travels with
-  the board and goes when the board goes. A viewport-fixed bar is chrome for
-  the *page*, a different object, and would follow a reader onto content with
-  no tiles at all.
-- **Chrome along the board, not a panel within it.** It carries no card, no
-  content and no second surface. An open window passes **over** it, because
-  chrome frames content and never the reverse.
-- **An empty strip does not render.** A row that opens on nothing is `pb04`'s
-  failure — an affordance that promises and delivers nothing.
-
-**A board tile is SQUARE, and it is the launcher's tile.** Same template, same
-declaration; what differs is the surface's geometry. Square is a measured
-property rather than a declared one — assert the box, not the stylesheet.
-`aspect-ratio` gives a height only while the content fits inside it, and a flex
-line's default `align-items: stretch` un-squares every tile on a row the moment
-one caption wraps. Both failures are invisible in a screenshot.
+- **Removing a surface loses nothing only if the others still carry it.**
+  Check that before removing one: every tile this repository declares names
+  `navbar` and `glass` as well, so each stays reachable. A tile that named
+  ONLY the removed surface would vanish silently — report it, do not
+  re-route it to another surface on the author's behalf.
+- **`board` stays a legal value in `TILE_SURFACES`, and nothing mounts it.**
+  Retiring the value would turn every existing declaration that names it
+  invalid on the commit that removed it — the cost the "every field but `ref`
+  is optional" rule in `schemas/cat-harness.ts` exists to avoid. A
+  declaration saying `["board"]` alone is valid and renders no tile; the
+  graph-tiles e2e asserts both halves.
+- **A ruling that reverses an earlier one is cited where the old one was.**
+  The comments that quoted `v0jv` now quote the 2026-10-02 words, so a reader
+  meeting the code sees the current reason and the one it replaced, not a
+  stale rationale for code that is gone.
 
 They are **collapsible**, with the count on the summary so a collapsed list
 still says how much is behind it. That is not polish — a fixed-height sidebar

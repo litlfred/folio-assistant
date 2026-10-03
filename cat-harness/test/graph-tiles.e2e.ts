@@ -1,6 +1,6 @@
 /**
- * Every declared visualisation gets a tile, on two surfaces, and each opens
- * the EXISTING visualisation.
+ * Every declared visualisation gets a tile, and each opens the EXISTING
+ * visualisation.
  *
  * Bean `folio-assistant-zsah`, R12 + R16 of issue #602. Owner, 2026-09-20:
  *
@@ -18,12 +18,14 @@
  * answer from the same declaration. A tile that composed its own path could
  * reach a different page, and this is what would catch it.
  *
- * ## And the two lists that must stay one
+ * ## The sticky board carries none
  *
- * Q11: a tile is declared once and says where it shows. So the navbar and the
- * board are asserted to carry the SAME tile — same id, same title, same href —
- * rather than each being checked against the fixture separately, which is what
- * two registries would also pass.
+ * Q11: a tile is declared once and says where it shows. The board was a
+ * second surface for the same declaration until the owner ruled, 2026-10-02
+ * (issue #1905, bean `t6ht`): *"stickies panel shouldnt have all those
+ * icons"*. The `board` surface value is still legal — so a declaration naming
+ * it stays valid — but nothing mounts it, and that is asserted below rather
+ * than left to the absence of code.
  */
 import { test, expect } from "@playwright/test";
 import { readFileSync } from "node:fs";
@@ -57,10 +59,15 @@ const DIRS: TiledDirectory[] = [
         // An icon the client's registry has not got: the fallback case, which
         // is a folio declaring against a newer platform than the one rendering.
         { ref: "cat-harness/docs/library/shelf.html", title: "Shelf", icon: "no-such-glyph" },
+        // BOARD-ONLY: a surface no longer rendered (#1905). Still a valid
+        // declaration; it must yield no tile anywhere on this page.
         { ref: "cat-harness/docs/library/map.html", title: "Map", surfaces: ["board"] },
       ],
     },
   },
+  // NO icon, on the navbar: the generic glyph a fallback must equal. It was
+  // `library/2` on the board until that surface stopped rendering.
+  { id: "plain", coverage: { visualiser: [{ ref: "cat-harness/docs/p.html", surfaces: ["navbar"] }] } },
   // An INHERITED property of every object literal. A registry read as
   // `TILE_GLYPHS[name]` would return `Object`'s constructor here and hand a
   // function to `innerHTML`; this pins the `hasOwnProperty` guard.
@@ -157,9 +164,10 @@ test.beforeEach(async ({ page }) => {
   });
 });
 
-/** Every graph tile on a surface: id, visible text, and href. */
+/** Every graph tile on a surface (or on ANY surface, with `"*"`): id, visible text, and href. */
 async function tilesOnPage(page: import("@playwright/test").Page, surface: string) {
-  return page.locator(`[data-fa-tile][data-fa-surface="${surface}"]`).evaluateAll((els) =>
+  const sel = surface === "*" ? "[data-fa-tile]" : `[data-fa-tile][data-fa-surface="${surface}"]`;
+  return page.locator(sel).evaluateAll((els) =>
     els.map((e) => ({
       id: (e as HTMLElement).dataset.faTile,
       title: e.querySelector(".fa-tile-caption")?.textContent,
@@ -190,9 +198,10 @@ test.describe("a tile per declared visualisation, derived and not listed", () =>
     await page.goto(URL_PAGE);
     await ready(page);
     const ids = (await tilesOnPage(page, "navbar")).map((t) => t.id).sort();
-    // `library/2` says board only; `starts-hidden` starts out of frame;
-    // `undeclared` declares nothing; `elsewhere` has no published href.
-    expect(ids).toEqual(["beans", "library/1", "navbar-only"]);
+    // `library/2` says board only, which nothing renders (#1905);
+    // `starts-hidden` starts out of frame; `undeclared` declares nothing;
+    // `elsewhere` has no published href.
+    expect(ids).toEqual(["beans", "library/1", "navbar-only", "plain"]);
   });
 
   test("a directory that declares NOTHING gets no tile", async ({ page }) => {
@@ -200,7 +209,7 @@ test.describe("a tile per declared visualisation, derived and not listed", () =>
     // would make the audit that reports the gap look wrong.
     await page.goto(URL_PAGE);
     await ready(page);
-    const all = [...(await tilesOnPage(page, "navbar")), ...(await tilesOnPage(page, "board"))];
+    const all = await tilesOnPage(page, "*");
     expect(all.map((t) => t.id)).not.toContain("undeclared");
   });
 
@@ -209,7 +218,7 @@ test.describe("a tile per declared visualisation, derived and not listed", () =>
     // serve it, and a link that 404s reads as a broken site.
     await page.goto(URL_PAGE);
     await ready(page);
-    const all = [...(await tilesOnPage(page, "navbar")), ...(await tilesOnPage(page, "board"))];
+    const all = await tilesOnPage(page, "*");
     expect(all.map((t) => t.id)).not.toContain("elsewhere");
   });
 });
@@ -281,33 +290,52 @@ test.describe("each tile opens the EXISTING visualisation — asserted by reuse"
   });
 });
 
-test.describe("ONE declaration, two surfaces", () => {
-  test("a tile on both carries the same id, title and href on each", async ({ page }) => {
-    // Q11, asserted as an equality rather than by checking each surface
-    // against the fixture — which two registries would also pass.
+/* ── No tiles on the sticky board — owner, 2026-10-02, issue #1905 ─────
+ *
+ * *"stickies panel shouldnt have all those icons."* That reverses the
+ * 2026-09-21 ruling (bean `v0jv`: *"lets have the square tiles lined up on
+ * the top of the folio-sicky-board-landingpanel…"*) which these specs used to
+ * hold in place: a "Visualisations" strip along the top of every sticky
+ * board, open, sticky, square. Those specs are gone with the strip; what
+ * replaces them is the inverse, plus the half that keeps the removal honest —
+ * the tiles are still reachable from the navbar.
+ */
+test.describe("the sticky board carries no tiles", () => {
+  test("no strip and no tile inside the board, while the navbar still has them", async ({ page }) => {
     await page.goto(URL_PAGE);
     await ready(page);
-    const nav = await tilesOnPage(page, "navbar");
-    const board = await tilesOnPage(page, "board");
-    const onBoth = nav.filter((n) => board.some((b) => b.id === n.id));
-    expect(onBoth.length).toBeGreaterThan(0);
-    for (const n of onBoth) {
-      expect(board.find((b) => b.id === n.id)).toEqual(n);
-    }
+    const board = page.locator(".fa-sticky-board").first();
+    await expect(board).toHaveCount(1);
+    // The board is really there — its grid and filter row survive — so an
+    // empty answer below is about the strip, not about a missing board.
+    await expect(board.locator(".fa-sticky-grid")).toHaveCount(1);
+    await expect(board.locator(".fa-board-filter")).toHaveCount(1);
+    await expect(board.locator(".fa-board-strip")).toHaveCount(0);
+    await expect(board.locator("[data-fa-tile]")).toHaveCount(0);
+    await expect(page.locator(".fa-board-strip, .fa-board-tiles")).toHaveCount(0);
+    expect((await tilesOnPage(page, "navbar")).length).toBeGreaterThan(0);
   });
 
-  test("a board-only declaration appears there and NOT in the navbar", async ({ page }) => {
+  test("nothing renders the `board` surface anywhere on the page", async ({ page }) => {
     await page.goto(URL_PAGE);
     await ready(page);
-    expect((await tilesOnPage(page, "board")).map((t) => t.id)).toContain("library/2");
-    expect((await tilesOnPage(page, "navbar")).map((t) => t.id)).not.toContain("library/2");
+    expect(await tilesOnPage(page, "board")).toEqual([]);
   });
 
-  test("a navbar-only declaration appears there and NOT on the board", async ({ page }) => {
+  test("a board-only declaration stays valid but yields no tile at all", async ({ page }) => {
+    // `library/2` declares `surfaces: ["board"]`. The value is still in
+    // `TILE_SURFACES`, so the declaration parses; it simply has nowhere to
+    // render. The navbar must not pick it up as a fallback either.
+    await page.goto(URL_PAGE);
+    await ready(page);
+    expect(TILES.map((t) => t.id)).toContain("library/2");
+    expect((await tilesOnPage(page, "*")).map((t) => t.id)).not.toContain("library/2");
+  });
+
+  test("a navbar-only declaration appears in the navbar", async ({ page }) => {
     await page.goto(URL_PAGE);
     await ready(page);
     expect((await tilesOnPage(page, "navbar")).map((t) => t.id)).toContain("navbar-only");
-    expect((await tilesOnPage(page, "board")).map((t) => t.id)).not.toContain("navbar-only");
   });
 });
 
@@ -315,7 +343,7 @@ test.describe("declared visibility, and the reader's override commits nothing", 
   test("a tile declared hidden starts out of frame", async ({ page }) => {
     await page.goto(URL_PAGE);
     await ready(page);
-    const all = [...(await tilesOnPage(page, "navbar")), ...(await tilesOnPage(page, "board"))];
+    const all = await tilesOnPage(page, "*");
     expect(all.map((t) => t.id)).not.toContain("starts-hidden");
   });
 
@@ -332,16 +360,15 @@ test.describe("declared visibility, and the reader's override commits nothing", 
 });
 
 test.describe("the tile template is `1le7`'s, not a second one", () => {
-  test("a graph tile IS a `.fa-tile`, on both surfaces", async ({ page }) => {
+  test("a graph tile IS a `.fa-tile`, on every surface rendered", async ({ page }) => {
     // Asserted structurally rather than by looking: two templates would be two
     // tiles that look alike until one of them is changed.
     await page.goto(URL_PAGE);
     await ready(page);
-    for (const surface of ["navbar", "board"]) {
-      const n = await page.locator(`.fa-tile[data-fa-surface="${surface}"]`).count();
-      const all = await page.locator(`[data-fa-tile][data-fa-surface="${surface}"]`).count();
-      expect(n, `${surface} tiles use the shared template`).toBe(all);
-    }
+    const n = await page.locator(".fa-tile[data-fa-tile]").count();
+    const all = await page.locator("[data-fa-tile]").count();
+    expect(all).toBeGreaterThan(0);
+    expect(n, "every graph tile uses the shared template").toBe(all);
   });
 
   test("every tile has an accessible name saying what it opens", async ({ page }) => {
@@ -352,146 +379,6 @@ test.describe("the tile template is `1le7`'s, not a second one", () => {
       .evaluateAll((els) => els.map((e) => e.getAttribute("aria-label")));
     expect(labels.length).toBeGreaterThan(0);
     for (const l of labels) expect(l).toContain("the declared visualisation of");
-  });
-});
-
-/* ── `v0jv`, corrected by #796 — the tile strip along the folio's top ──
- *
- * `v0jv` opened on placement: *"folios have tiles do not go to the window.
- * they are stacked around (bottom?) of folio, slid away."* The parenthesis
- * was the owner's own uncertainty, and 2026-09-21 settled it the other way:
- * *"lets have the square tiles lined up on the top of the
- * folio-sicky-board-landingpanel whole slides up if user doesnt want."*
- *
- * TWO THINGS CHANGED AND BOTH ARE ASSERTED BELOW — the edge (top, not
- * bottom) and the DEFAULT STATE (open, not closed). The second is the one
- * that would ship silently: tiles a reader must open before they can see
- * what a folio offers read as absent, which is the complaint that opened
- * `v0jv` about the in-flow row in the first place. Sliding the strip up is
- * the reader's act; it is not the starting position.
- *
- * `.fa-board-tiles` was a `flex-wrap` row appended after the sticky grid, IN
- * FLOW — so on the landing board it landed below every full-bleed card. Only
- * the PLACEMENT was ever wrong: `harness-tiles` already fixes the
- * declaration side (*"declared once, per-surface visibility, never two
- * registries"*), and the first spec below is what keeps this change honest
- * about that.
- */
-test.describe("the folio's tile strip", () => {
-  test("the strip holds the BOARD surface's tiles — still one registry", async ({ page }) => {
-    // THE ONE THAT MATTERS. A placement change must not become a registry
-    // change, and that failure ships by looking fine. Every board-surface
-    // tile must be inside the strip, and the strip must hold nothing else.
-    await page.goto(URL_PAGE);
-    await ready(page);
-    const inStrip = await page
-      .locator(".fa-board-tiles [data-fa-tile]")
-      .evaluateAll((els) => els.map((e) => (e as HTMLElement).dataset.faTile).sort());
-    const onBoard = (await tilesOnPage(page, "board")).map((t) => t.id).sort();
-    expect(onBoard.length).toBeGreaterThan(0);
-    expect(inStrip).toEqual(onBoard);
-  });
-
-  test("it is the BOARD's edge, not the viewport's", async ({ page }) => {
-    // `sticky`, never `fixed`. The strip belongs to the FOLIO: it travels
-    // with the board and goes when the board goes. A viewport-fixed bar is
-    // chrome for the page — a different object — and would follow a reader
-    // onto content that has no tiles at all.
-    await page.goto(URL_PAGE);
-    await ready(page);
-    const pos = await page
-      .locator(".fa-board-strip")
-      .evaluate((el) => getComputedStyle(el).position);
-    expect(pos).toBe("sticky");
-  });
-
-  test("it is the TOP edge, and it precedes every card", async ({ page }) => {
-    // Two facts, because either alone passes while the strip is in the wrong
-    // place: `top: 0` on an element appended last still sticks to the top of
-    // whatever is left below it, and DOM order alone says nothing about which
-    // edge it clings to. Both, or the strip is only incidentally at the top.
-    //
-    // NOT "the board's first child", which is the assertion this nearly was
-    // and which would have been wrong: the board's head (its title) and its
-    // filter row precede the strip, and they should. *"On the top"* means
-    // above the CARDS — the tiles announce what the folio offers before a
-    // reader meets its contents. Putting them above the board's own title
-    // would answer "what can I open" before "what is this".
-    await page.goto(URL_PAGE);
-    await ready(page);
-    const strip = page.locator(".fa-board-strip").first();
-    await expect(strip).toHaveCSS("top", "0px");
-    const grid = page.locator(".fa-sticky-grid").first();
-    const before = await strip.evaluate(
-      (el, sel) => {
-        const g = el.parentElement?.querySelector(sel as string);
-        // `DOCUMENT_POSITION_FOLLOWING` — the grid comes after the strip.
-        return !!g && (el.compareDocumentPosition(g) & Node.DOCUMENT_POSITION_FOLLOWING) !== 0;
-      },
-      ".fa-sticky-grid",
-    );
-    expect(before).toBe(true);
-    const stripBox = await strip.boundingBox();
-    const gridBox = await grid.boundingBox();
-    expect(stripBox!.y).toBeLessThan(gridBox!.y);
-  });
-
-  test("it starts OPEN — a reader never has to ask what a folio offers", async ({ page }) => {
-    // The correction to `v0jv`, asserted rather than left to the markup.
-    // Closed-by-default is what made the old in-flow row read as absent, and
-    // it is the state a refactor would silently restore.
-    await page.goto(URL_PAGE);
-    await ready(page);
-    await expect(page.locator(".fa-board-strip").first()).toHaveAttribute("open", "");
-  });
-
-  test("it opens and closes from the keyboard alone", async ({ page }) => {
-    // No `page.mouse` below. The declared interaction profile is
-    // low-dexterity, and a slide-away whose only way in is a pointer excludes
-    // the person who asked for it. `l4zi`: the inverse must be reachable too,
-    // which is why this closes and then reopens rather than stopping at the
-    // first transition.
-    await page.goto(URL_PAGE);
-    await ready(page);
-    const strip = page.locator(".fa-board-strip").first();
-    const summary = strip.locator("summary");
-    await expect(summary).toHaveAttribute("aria-label", /Visualisations/);
-
-    await summary.press("Enter");
-    await expect(strip).not.toHaveAttribute("open", "");
-    await summary.press("Enter");
-    await expect(strip).toHaveAttribute("open", "");
-  });
-
-  test("the tiles are SQUARE", async ({ page }) => {
-    // *"i meant to use same SQUARE TILES taht are in the expanding menu of
-    // LHS navbar."* The template was already shared with the launcher; what
-    // was not square was the tile itself, a flex item of flexible width in a
-    // wrap row. Measured from the box, not from the declaration, because
-    // `aspect-ratio` loses to a `min-height` that outgrows it — which is the
-    // bug this would have shipped.
-    await page.goto(URL_PAGE);
-    await ready(page);
-    const tile = page.locator(".fa-board-tiles .fa-tile").first();
-    const box = await tile.boundingBox();
-    expect(box).not.toBeNull();
-    expect(Math.abs(box!.width - box!.height)).toBeLessThanOrEqual(1);
-  });
-
-  test("an open window passes OVER the strip — chrome is not content", async ({ page }) => {
-    // The bean states it outright: "the tiles must NOT be projected onto the
-    // glass — they are folio chrome, where a window is content." So the float
-    // layer stacks above the strip, and this holds that line.
-    await page.goto(URL_PAGE);
-    await ready(page);
-    const stripZ = await page
-      .locator(".fa-board-strip")
-      .first()
-      .evaluate((el) => Number(getComputedStyle(el).zIndex));
-    const layerZ = await page
-      .locator(".fa-sticky-layer")
-      .evaluate((el) => Number(getComputedStyle(el).zIndex));
-    expect(layerZ).toBeGreaterThan(stripZ);
   });
 });
 
@@ -509,15 +396,14 @@ test.describe("the glyph a tile wears is DECLARED, by name", () => {
   });
 
   test("an unknown icon name falls back to the glyph every tile had before", async ({ page }) => {
-    // `library/1` declares `no-such-glyph`; `library/2` declares nothing. The
+    // `library/1` declares `no-such-glyph`; `plain` declares nothing. The
     // two must be identical, which is what "falls back" has to mean — a folio
     // naming a glyph its platform has not got still gets a working tile.
     await page.goto(URL_PAGE);
     await ready(page);
     const nav = Object.fromEntries((await tilesOnPage(page, "navbar")).map((t) => [t.id, t.glyph]));
-    const board = Object.fromEntries((await tilesOnPage(page, "board")).map((t) => [t.id, t.glyph]));
     expect(nav["library/1"]).toBeTruthy();
-    expect(nav["library/1"]).toBe(board["library/2"]);
+    expect(nav["library/1"]).toBe(nav["plain"]);
   });
 
   test("an INHERITED property name is not a glyph", async ({ page }) => {
@@ -531,19 +417,6 @@ test.describe("the glyph a tile wears is DECLARED, by name", () => {
     expect(nav["navbar-only"]).toBe(nav["library/1"]);
     const html = await page.locator('[data-fa-tile="navbar-only"]').innerHTML();
     expect(html).not.toContain("function");
-  });
-
-  test("a tile's glyph is the same on both surfaces", async ({ page }) => {
-    // One declaration, two surfaces — the same rule Q11 states for visibility.
-    await page.goto(URL_PAGE);
-    await ready(page);
-    const nav = await tilesOnPage(page, "navbar");
-    const board = await tilesOnPage(page, "board");
-    const onBoth = nav.filter((n) => board.some((b) => b.id === n.id));
-    expect(onBoth.length).toBeGreaterThan(0);
-    for (const n of onBoth) {
-      expect(board.find((b) => b.id === n.id)!.glyph).toBe(n.glyph);
-    }
   });
 });
 
@@ -625,8 +498,8 @@ test.describe("a staging-only tile appears only on a preview", () => {
     // Conflating them would let "show hidden" produce a link to a 404.
     await page.goto(URL_PAGE);
     await ready(page);
-    const board = (await tilesOnPage(page, "board")).map((t) => t.id);
-    expect(board).not.toContain("staging-only");
+    const all = (await tilesOnPage(page, "*")).map((t) => t.id);
+    expect(all).not.toContain("staging-only");
   });
 });
 

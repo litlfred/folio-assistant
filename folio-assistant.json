@@ -69,6 +69,10 @@
     {
       "id": "todos",
       "path": "todos/",
+      "coverage": {
+        "serialisations": "cat-harness/docs/todos.jsonld"
+      },
+      "_coverage_comment": "Issue #1908: the todo graph is published as ONE JSON-LD graph at <base>/todos.jsonld (+ .json), and every todo at <base>/todos/<id>.jsonld (+ .json), whose @id is that address, with a page at <base>/todos/<id>/. All written by gen-docs-pages.ts from the same items as assets/todos/index.json; scripts/todo-graph.ts is the builder.",
       "description": "A PERSON's outstanding items — the human half of memory, as against `beans/`, which is the agent's workflow management. Not a second work plan: the two sit in different quadrants of one 2x2 (memory vs workflow management, human vs agent), and human workflow management is EMPTY, deliberately. `todos/todos.json` declares its nodes — `items` (raised about anything) and `feedback` (raised against a specific block, carrying the submitter's identity) — the same shape as `beans/beans.json`. REPOSITORY-scoped: it sits at the top of the checkout, not inside this instance, and it is deliberately never overlaid by a dependency.",
       "graphKinds": [
         "todos"

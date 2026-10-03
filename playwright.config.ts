@@ -12,6 +12,24 @@ if (chromium.kind === 'fallback' || chromium.kind === 'unknown') {
   console.warn(`[playwright] chromium: ${chromium.kind} — ${chromium.note}`);
 }
 
+/**
+ * `i/N` → Playwright's shard, or `null` for the whole suite.
+ *
+ * A malformed value THROWS. Read as "no shard" it would run the whole suite
+ * in every shard job — slower but green — and read as shard 1 it would drop
+ * the rest. Neither is visible from a green check, so neither is allowed.
+ */
+function parseShard(raw: string | undefined): { current: number; total: number } | null {
+  if (raw === undefined || raw === '') return null;
+  const m = /^(\d+)\/(\d+)$/.exec(raw);
+  const current = m ? Number(m[1]) : NaN;
+  const total = m ? Number(m[2]) : NaN;
+  if (!(current >= 1 && total >= 1 && current <= total)) {
+    throw new Error(`E2E_SHARD must be i/N with 1 <= i <= N, got ${JSON.stringify(raw)}`);
+  }
+  return { current, total };
+}
+
 export default defineConfig({
   // `./test`, not `./tests`. This repository had both until 2026-09-19 (bean
   // `auap`): `test/` because a declaration in `harness.json` pointed at
@@ -34,7 +52,22 @@ export default defineConfig({
   fullyParallel: true,
   forbidOnly: !!process.env.CI,
   retries: 0,
-  workers: 1,
+  // Bean `dlqu`: one worker per core on CI. `workers: 1` held the e2e job at
+  // 4m33s of playwright alone, the workflow's slowest job once `bun test` ran
+  // in parallel. Locally it stays at one, which is what it was.
+  //
+  // Safe because what the specs generate under `_kg/` is now generated ONCE,
+  // before any worker starts — see `globalSetup` below. Before that, two specs
+  // ran a generator at module load, which with N workers is N concurrent
+  // writers to the files the other workers are serving.
+  workers: process.env.CI ? '100%' : 1,
+  // `E2E_SHARD=i/N` splits the suite across CI jobs. An ENVIRONMENT variable
+  // rather than `--shard=${{ matrix.* }}` on the command line, for the reason
+  // `bun test --parallel` gives in the workflow: `gatesFrom` runs a `bun` line
+  // with no shell, so an interpolation there reaches the local gate run as
+  // literal text (the bean `9zok` shape). Unset means the whole suite.
+  shard: parseShard(process.env.E2E_SHARD),
+  globalSetup: './cat-harness/test/e2e-global-setup.ts',
   reporter: 'list',
   use: {
     baseURL: 'http://127.0.0.1:8080',

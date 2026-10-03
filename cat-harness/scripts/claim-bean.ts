@@ -63,12 +63,58 @@
  * @module scripts/claim-bean
  */
 import { spawnSync } from "node:child_process";
-import { mkdtempSync, rmSync } from "node:fs";
+import { mkdtempSync, readFileSync, rmSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { dirname, join, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 
 import { findBean, noteBean, updateBean } from "./beans-fallback.js";
+
+/** The claim line `noteBean` just appended, exactly as it was written. */
+const CLAIM_NOTE = /^_\d{4}-\d{2}-\d{2}T[\d:]+Z_ — Claimed by \S+ —.*$/m;
+
+/**
+ * Copy the claim note from what was PUSHED onto the local branch, byte for byte.
+ *
+ * Bean `24fa`. The status is already mirrored below, and for a bare claim that
+ * is enough: `status` changes identically on both sides so git merges it, and
+ * `updated_at` and the note are one-sided. **The conflict appears once the
+ * branch edits the bean too**, which is the normal path — claim it, work it,
+ * complete it. Then both sides have appended to the end of the same body and
+ * both have bumped the same front-matter fields.
+ *
+ * Mirroring the note fixes the BODY half: with main's line already present, the
+ * branch's later `## Summary of Changes` lands *after* it rather than racing
+ * it. Measured by hand on #1943 — carrying this one line across took the
+ * conflict from two hunks to one.
+ *
+ * **It must be byte-identical, which is why this copies rather than re-notes.**
+ * `noteBean` stamps `nowStamp()`, so calling it again here would write a
+ * different second and git would see two different additions — the opposite of
+ * the intent.
+ *
+ * What this deliberately does NOT fix: `status` and `updated_at` once the
+ * branch changes them (`in-progress` on the default branch against
+ * `completed` on the branch). Both sides then differ from a merge base that
+ * predates the claim, so it is a real divergence and it SHOULD be resolved by
+ * a person — keep the completing branch's value, keep the note. Only moving
+ * the merge base (merging the default branch in after claiming) removes it,
+ * and that is the session's decision rather than this tool's.
+ *
+ * Not committed, for the reason the status mirror gives: a tool that commits to
+ * your branch behind your back is worse than the problem.
+ */
+export function mirrorClaimNote(repo: string, work: string, id: string): "mirrored" | "already-there" | "no-note" {
+  const from = findBean(work, id);
+  const onto = findBean(repo, id);
+  if (!from || !onto) return "no-note";
+  const note = CLAIM_NOTE.exec(readFileSync(from.path, "utf-8"))?.[0];
+  if (note === undefined) return "no-note";
+  const local = readFileSync(onto.path, "utf-8");
+  if (local.includes(note)) return "already-there";
+  writeFileSync(onto.path, `${local.replace(/\s*$/, "")}\n\n${note}\n`, "utf-8");
+  return "mirrored";
+}
 
 /**
  * Where the platform's own code lives — NOT where the beans are.
@@ -322,6 +368,9 @@ export function claimOnDefaultBranch(id: string, branch: string, opts: { repo?: 
         // problem.
         try {
           updateBean(repo, id, { status: "in-progress" });
+          // Bean `24fa`: the note as well as the status, copied from what was
+          // pushed so the two are byte-identical. See `mirrorClaimNote`.
+          mirrorClaimNote(repo, work, id);
         } catch {
           // The push already succeeded, which is the durable half. A local
           // write failing is worth reporting, not worth undoing a landed claim.

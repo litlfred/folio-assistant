@@ -3,7 +3,7 @@
  */
 import { describe, it, expect, beforeAll, afterAll } from "bun:test";
 import { HARNESS_ROOT } from "../scripts/lib/roots.ts";
-import { mkdirSync, mkdtempSync, writeFileSync, rmSync, readFileSync } from "node:fs";
+import { mkdirSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 import {
@@ -19,7 +19,10 @@ import {
 } from "../../cat-harness/schemas/harness-config";
 import { instanceConfigPathIn, writeInstanceConfig } from "../../cat-harness/test/support/instance-fixture.js";
 
-const TMP = join(import.meta.dir, "__test_folio_config__");
+// Under the system temp directory, not beside this file (bean `dlqu`): an
+// in-tree scratch directory is visible to every test that enumerates the
+// checkout, and under `bun test --parallel` those run at the same time.
+const TMP = mkdtempSync(join(tmpdir(), "test_folio_config-"));
 
 beforeAll(() => {
   mkdirSync(TMP, { recursive: true });

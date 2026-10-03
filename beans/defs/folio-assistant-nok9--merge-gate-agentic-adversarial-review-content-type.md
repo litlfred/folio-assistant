@@ -5,7 +5,7 @@ status: todo
 type: epic
 priority: normal
 created_at: 2026-10-02T16:29:09Z
-updated_at: 2026-10-02T16:41:15Z
+updated_at: 2026-10-02T22:27:34Z
 ---
 
 Owner, 2026-10-02 (bean for later): update the Merge Manager skills, process and tools so that a merge is GATED on:
@@ -55,3 +55,28 @@ These are all **ad hoc and session-scoped**. None blocks a merge, and none write
 
 ## Filed 2026-10-02
 Design PR (draft, not merged): https://github.com/litlfred/folio-assistant/pull/1887. Reading list: 30 items, 29 search-confirmed, 1 unverified; direct fetch was egress-blocked. Open question Q1 (where the review runs) has default B: the steward runs it and CI checks the verdict.
+
+
+## 2026-10-02 — split in two, per the owner: gates here, backfill on `9v5a`
+
+Owner, asked by the Merge Manager: *"Split into TWO epics: gates, and QA backfill"*.
+
+**This epic is now the GATE half only.** Children A (`w8jq`), B (`xqdi`),
+C (`abmq`) and E (`u7be`) stay. Child D (`lvlv`) — per-content-block adversarial QA
+over the existing corpus — is **re-parented to `9v5a`**, together with the research
+arm of the text above (best practice, methodology, open-access literature).
+
+The cut is by cadence, not by subject. A gate blocks a merge, runs on a diff, and is
+judged per PR. The backfill sweeps a corpus nobody is waiting on and finishes at an
+agreed coverage level. In one epic neither could be claimed without the other, so the
+sweep would have held up the gates that every merge waits on.
+
+**A correction, and it is the Merge Manager's own.** The question put to the owner
+described this epic as one undecomposed bean holding "~6 gate clauses plus a research
+arm" — read off the body, without checking for children. It was already decomposed
+into A–E. The owner's ruling survives that error unchanged, because the existing
+children map onto the two halves cleanly and D was the only one on the backfill side;
+but the work was a re-parent rather than a decomposition, which is smaller than the
+question implied. Recorded because a wrong premise that produced a right answer is
+still a wrong premise, and the next reader should not infer that the decomposition
+happened today.

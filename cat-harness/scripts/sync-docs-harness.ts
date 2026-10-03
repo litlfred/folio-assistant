@@ -351,10 +351,10 @@ function navbarRow(
     if (at) hrefs[icon] = at;
     else {
       const why = icon === "kg" ? undefined : noteByKind.get(icon);
-      // `close` and `launcher` drive controls on the page and are MEANT to have
+      // `close`, `launcher` and `fsh-guts` drive controls on the page and are MEANT to have
       // no href, so they owe no explanation. An entry for them would make the
       // client render "no viewer yet" on a working button.
-      if (why && icon !== "close" && icon !== "launcher") notes[icon] = why;
+      if (why && icon !== "close" && icon !== "launcher" && icon !== "fsh-guts") notes[icon] = why;
     }
   }
   // THIS INSTANCE'S OWN CONTROLLED FOLDERS — owner: *"next on navbar then is

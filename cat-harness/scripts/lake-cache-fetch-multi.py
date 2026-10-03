@@ -8,7 +8,8 @@ lake-cache/qou-<toolchain> format).
 
 For each git-installed package in `lake-manifest.json`:
 
-  1. Shallow-fetch its orphan branch `lake-cache/<pkg>-<toolchain>`
+  1. Shallow-fetch its orphan branch `cat/folio-assistant-sci/lake-cache/<pkg>-<toolchain>`
+     (legacy `cat-lake-cache/…`, then `lake-cache/…`, until renamed)
      (or `<branch-suffix>` variant when --branch-suffix is given)
   2. git archive extract the .lake/ subtree into a staging dir
   3. Run the regen recipe from `cache-index.json`:
@@ -162,15 +163,26 @@ def regen_from_index(staging_lake: Path, index_path: Path) -> int:
     return n
 
 
+# Family prefixes, declared in cat-harness/scripts/special-branches.json (id
+# `lake-cache`) and checked against this copy by
+# tests/special-branches.test.ts. New name first, then each legacy one,
+# newest first, until bean folio-assistant-oycs removes the fallback. A
+# candidate is always a WHOLE branch name (prefix + key), so `lake-cache/`
+# never matches inside `cat-lake-cache/` or `cat/folio-assistant-sci/lake-cache/`.
+CACHE_PREFIXES = ("cat/folio-assistant-sci/lake-cache/", "cat-lake-cache/", "lake-cache/")
+
+
 def restore_one(pkg: dict, slug: str, suffix: str, force: bool) -> dict:
     name = pkg["name"]
-    branch = f"lake-cache/{name}-{slug}{('-' + suffix) if suffix else ''}"
+    key = f"{name}-{slug}{('-' + suffix) if suffix else ''}"
+    candidates = [p + key for p in CACHE_PREFIXES]
 
     if not force and package_is_warm(name):
         return {"name": name, "status": "warm-already"}
 
-    if not fetch_orphan(branch):
-        return {"name": name, "branch": branch, "status": "branch-missing"}
+    branch = next((b for b in candidates if fetch_orphan(b)), None)
+    if branch is None:
+        return {"name": name, "branch": " | ".join(candidates), "status": "branch-missing"}
 
     with tempfile.TemporaryDirectory(prefix=f"lcfm-{name}-") as staging:
         staging_p = Path(staging)
@@ -212,7 +224,7 @@ def main() -> int:
                                      formatter_class=argparse.RawDescriptionHelpFormatter)
     parser.add_argument("--packages", help="comma-separated list (default: all in manifest)")
     parser.add_argument("--branch-suffix", default="",
-                        help="suffix on lake-cache/<pkg>-<tc>-<suffix> branches")
+                        help="suffix on cat/folio-assistant-sci/lake-cache/<pkg>-<tc>-<suffix> branches")
     parser.add_argument("--force", action="store_true",
                         help="re-extract even if package is already warm")
     args = parser.parse_args()

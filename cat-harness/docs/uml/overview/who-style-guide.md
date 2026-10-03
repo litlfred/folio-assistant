@@ -52,32 +52,6 @@ classDiagram
     }
   }
   namespace who_style_guide__qa {
-    class who_style_guide_qa_kg_qa_v1_Pair_attestation["Pair_attestation"] {
-      <<json: KgQaReportSchema>>
-      kind [1] implements | co-located
-      prose [1] string
-      code [1] string
-      prose_hash [1] string
-      code_hash [1] string
-      by [1] baseline | agent | human
-      reason [0..1] string
-    }
-    class who_style_guide_qa_kg_qa_v1_Verdict["Verdict"] {
-      <<json: KgQaReportSchema>>
-      rule [1] string
-      result [1] pass | fail | n/a
-      note [0..1] string
-    }
-    class who_style_guide_qa_kg_qa_v1_Voice_review["Voice_review"] {
-      <<json: KgQaReportSchema>>
-      voice [1] string
-      instance [1] string
-      skill_hash [1] string
-      voice_hash [1] string
-      by [1] agent | human
-      at [1] string
-      verdicts [0..*] Verdict[]
-    }
     class who_style_guide_qa_kg_qa_v1_kg_qa_v1["kg-qa/v1"] {
       <<json: KgQaReportSchema>>
       $schema [1] 'kg-qa/v1'
@@ -85,8 +59,8 @@ classDiagram
       source_hash [1] string | null
       criteria [1] map~object~
       totals [1] map~number~
-      pair_attestations [0..*] Pair_attestation[]
-      voice_reviews [0..*] Voice_review[]
+      pair_attestations [0..1] any
+      voice_reviews [0..1] any
     }
     class who_style_guide_qa_kg_qa_manifest_v1_kg_qa_manifest_v1["kg-qa-manifest/v1"] {
       <<json: KgQaManifestSchema>>
@@ -146,12 +120,6 @@ classDiagram
   }
   cssClass "n_who_style_guide_glossary_glossary" fa_uml_kind_glossary
   cssClass "n_who_style_guide_glossary_glossary" fa_uml_undetermined
-  who_style_guide_qa_kg_qa_v1_kg_qa_v1 *-- "0..*" who_style_guide_qa_kg_qa_v1_Pair_attestation : pair_attestations
-  who_style_guide_qa_kg_qa_v1_Voice_review *-- "0..*" who_style_guide_qa_kg_qa_v1_Verdict : verdicts
-  who_style_guide_qa_kg_qa_v1_kg_qa_v1 *-- "0..*" who_style_guide_qa_kg_qa_v1_Voice_review : voice_reviews
-  cssClass "who_style_guide_qa_kg_qa_v1_Pair_attestation" fa_uml_kind_qa
-  cssClass "who_style_guide_qa_kg_qa_v1_Verdict" fa_uml_kind_qa
-  cssClass "who_style_guide_qa_kg_qa_v1_Voice_review" fa_uml_kind_qa
   cssClass "who_style_guide_qa_kg_qa_v1_kg_qa_v1" fa_uml_kind_qa
   cssClass "who_style_guide_qa_kg_qa_manifest_v1_kg_qa_manifest_v1" fa_uml_kind_qa
   who_style_guide_voices_VoiceProfile *-- "1..*" who_style_guide_voices_Source : sources

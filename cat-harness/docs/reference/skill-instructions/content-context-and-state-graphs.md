@@ -130,6 +130,42 @@ verdict.
 `isStateGraph` is usually being asked in service of, and naming it means a
 fourth layer is one edit rather than a search.
 
+## Where a state graph is STORED — `storage.keyedBy`
+
+The layer says who may write a graph. The directory's `storage` field says
+where the graph lives when that is not `main`. The two are independent, but
+only process-written graphs are candidates for `storage`:
+
+| `keyedBy` | what the branch holds | for | API |
+|---|---|---|---|
+| `commit` | one entry per commit (`main/<sha>/`, `pr/<n>/<sha>/`) | `qa` — derived verdicts read against a baseline | `scripts/qa-store.ts` |
+| `tip` | ONE live copy; the tip IS the current state | beans, todos — `state` with one truth at a time | `scripts/branch-store.ts` |
+
+Three rules (bean `2h76`, owner rulings 2026-10-02):
+
+- **One ref per state subgraph.** Beans are on `cat/cat-harness/beans` and
+  todos on `cat/cat-harness/todos`, not on one shared `state` branch. The owner:
+  *"go with cat/cat-harness/todos and cat/cat-harness/beans as their own named
+  sub-graph branches"*.
+- **Not every named subgraph gets a branch.** The owner: *"(not all named
+  subgraphs get own branch, especially not semi-static KG content)"*. Skills,
+  schemas, processes, roles and the declarations themselves are `content` or
+  `context`. They change by PR and stay on `main`.
+- **A `qa` directory is commit-keyed.** The schema refuses `keyedBy: "tip"` on
+  one, because a tip-keyed QA store would be read as if it were keyed by commit.
+
+A tip-keyed read is **hit / miss / corrupt / unknown**, and a branch without a
+`state-manifest/v1` root manifest is `corrupt`, not a hit. A write is spliced
+onto the tip and pushed **without `-f`**, retrying when the tip moves. To edit
+a file somebody else may be editing, pass the blob you read as `expect`. A tip
+that disagrees then answers `conflict` and pushes nothing, so the edit is not
+silently lost.
+
+**Until a declaration sets `storage`, `main` is authoritative.** A directory
+with no `storage` field lives in the checkout, whatever branches exist. The
+seeded `cat/cat-harness/beans` and `cat/cat-harness/todos` say
+`authoritative: false` in their manifests until the steward-run flip on #1850.
+
 ## Adding a kind
 
 Answer the question and write the answer in `holds`, with the reason beside it

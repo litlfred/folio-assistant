@@ -637,6 +637,14 @@ jobs:
       - name: Check the navbar tiles resolve against the built site
         run: bun run cat-harness/scripts/site-links.ts --root ./cat-harness --site ./_site
 
+      # One search index per scope — each instance, each target locale, the
+      # platform — cut from the index Jekyll just wrote, plus the manifest a
+      # page reads to load only its own (issue #1972, bean `m7mn`). Before the
+      # verify step, whose `search-scopes` verifier checks the split matches
+      # THIS index and partitions it exactly.
+      - name: Split the search index per scope
+        run: bun run cat-harness/scripts/search-split.ts --dir ./_site
+
       # VERIFY BEFORE DEPLOYING, AND BLOCK — bean `vigi`, owner 2026-09-23:
       # "a set of post processing tools for verification that a failure
       # triggers an alert to the publisher manager ... before deployment".
@@ -647,6 +655,32 @@ jobs:
       - name: Verify the export before deploying
         id: verify
         run: bun run cat-harness/scripts/publish-verify.ts --dir ./_site --report "$RUNNER_TEMP/publish-verify.md"
+
+      # MINIFY LAST, and it is a POST-BUILD PASS rather than a Jekyll plugin
+      # on purpose. CI builds with `actions/jekyll-build-pages@v1` -- the
+      # `github-pages` gem set and its plugin allow-list -- so
+      # `jekyll-minifier` would mean a plain `bundle exec jekyll build`, which
+      # also un-pins the `remote_theme` that `_config.yml` lines 10-45 argue
+      # must only move through `upstream-version-adoption`. Nothing has to
+      # move: this job already post-processes the emitted tree
+      # (`set-html-lang`, `rail-standalone-pages`), so one more pass over
+      # `_site` couples to no gem, no theme file and no config.
+      #
+      # It runs AFTER every check and rewrite above, and the ordering is the
+      # correctness argument rather than tidiness: `check:escaped-markup`,
+      # `check:maintained-artefacts`, `site-links` and `publish-verify` all
+      # read this HTML, and `staging-banner`/`folio-mount` decide whether a
+      # marker is live by asking whether it sits inside a COMMENT (bean
+      # `ur84`). Minifying before any of them would silently change what they
+      # judge. Measured on the published main site: 9.4% of its 614 MiB of
+      # HTML is comments, 10.3% once the unrendered inter-tag whitespace goes,
+      # and ~22% of gzipped transfer.
+      #
+      # Mirrored in `feature-staging.yml`, which `check:invocation-parity`
+      # requires -- a preview must carry the deploy's passes or it is not a
+      # preview of what ships.
+      - name: Minify the built pages
+        run: bun run cat-harness/scripts/minify-site.ts --site ./_site
 
       - name: Disable Jekyll on the published branch
         run: touch ./_site/.nojekyll

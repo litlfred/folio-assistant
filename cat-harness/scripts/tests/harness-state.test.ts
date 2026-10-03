@@ -8,7 +8,13 @@
  */
 import { describe, expect, test } from "bun:test";
 
-import { healthProducerCurrent, issueMarkEdits, interactionProfilesRead, todoProcessRefs } from "../check-harness-state.js";
+import {
+  healthProducerCurrent,
+  issueMarkEdits,
+  interactionProfilesRead,
+  todoProcessRefs,
+  writesSidecar,
+} from "../check-harness-state.js";
 import { checkerHash } from "../../test/health/run.js";
 
 const FAMILIES = [healthProducerCurrent, todoProcessRefs, issueMarkEdits, interactionProfilesRead];
@@ -84,5 +90,18 @@ describe("nodesOf dedupes — two instance roots can name one directory", () => 
     const f = todoProcessRefs();
     expect(f.examined).toBeLessThan(6);
     expect(f.examined).toBeGreaterThan(0);
+  });
+});
+
+describe("the gate form writes nothing (bean r7v6)", () => {
+  // Measured 2026-10-01: `check:harness-state:check` over an absent results
+  // tree recreated `harness-state.qa-results.json`. The judge writes nothing;
+  // only the producer form does. Pinned both ways, as bo44 pins
+  // `skill-register`'s `writesReport`.
+  test("--check writes no sidecar", () => {
+    expect(writesSidecar(["bun", "check-harness-state.ts", "--check"])).toBe(false);
+  });
+  test("the producer form still writes it", () => {
+    expect(writesSidecar(["bun", "check-harness-state.ts"])).toBe(true);
   });
 });

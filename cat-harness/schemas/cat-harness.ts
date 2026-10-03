@@ -527,6 +527,12 @@ export interface ContentDirectory extends GraphNodeDirectory {
    * `analyst`.
    */
   theme?: ThemeRef;
+
+  /**
+   * This directory's contents are STORED on a branch, keyed by commit or tip, and the
+   * checkout holds at most a working copy. See {@link DirectoryStorageSchema}.
+   */
+  storage?: DirectoryStorage;
 }
 
 /** An instance's root declaration. */
@@ -1031,7 +1037,7 @@ export const GraphNodeDirectorySchema = z.preprocess(acceptLegacyGraphsKey, Grap
  *
  * A visualisation that states only where it is rendered is **complete rather
  * than invalid** — the same rule `semantic-zoom.ts` encodes and for the same
- * reason. `title` falls back to the directory's id, `surfaces` to both, `theme`
+ * reason. `title` falls back to the directory's id, `surfaces` to every surface, `theme`
  * to the directory's, `hidden` to false. Requiring any of them would make every
  * existing declaration in this repository invalid on the commit that added the
  * field, which is the cost `dependents` already charged once.
@@ -1045,6 +1051,12 @@ export const GraphNodeDirectorySchema = z.preprocess(acceptLegacyGraphsKey, Grap
  * glass"*, and it is a SURFACE on the one declaration rather than a second
  * list of glass tiles — `harness-tiles`: one declaration, per-surface
  * visibility, never two registries.
+ *
+ * `board` is still a legal value and NOTHING RENDERS IT. Owner, 2026-10-02
+ * (issue #1905, bean `t6ht`): *"stickies panel shouldnt have all those
+ * icons"* — the sticky board's tile strip is gone. The value stays so no
+ * existing declaration naming it turns invalid; a declaration whose only
+ * surface is `board` parses and yields no tile.
  */
 export const TILE_SURFACES = ["navbar", "board", "glass"] as const;
 export type TileSurface = (typeof TILE_SURFACES)[number];
@@ -1362,6 +1374,68 @@ export type VisualiserKind = (typeof VISUALISER_KINDS)[number];
 export const TileSchema = VisualisationSchema.omit({ ref: true });
 export type Tile = z.infer<typeof TileSchema>;
 
+/**
+ * A directory whose contents live on a BRANCH — one tree per commit, or one
+ * live copy at the tip — with the
+ * checkout holding at most a working copy.
+ *
+ * Bean `16ei`, arc `3fva`, proposal
+ * `docs/proposals/qa-reports-branch-and-test-process-2026-10-01.md` §2.4. The
+ * owner, 2026-10-01: *"do not pollute main with the QA subgraph; publish it on
+ * a dedicated branch, as caching is"* — ruling D1 (a), an orphan `qa-reports`
+ * branch keyed `main/<sha>/` and `pr/<n>/<head-sha>/`.
+ *
+ * ## What it changes, and for whom
+ *
+ * - **Writers** still write the declared path. It is the working copy, and
+ *   `qa:publish` (`scripts/qa-store.ts`) carries it to the branch.
+ * - **Readers** go through `qa-store`'s `readQa` / `readQaTree`, which answer
+ *   hit / miss / corrupt / unknown — never "the directory is empty, so clean".
+ * - **Presence checks** stop expecting the files in the checkout:
+ *   `check:declared-dirs` and `harness:dirs --check` do not report the
+ *   directory missing, `harness:dirs` does not create it empty (an empty
+ *   working copy is the `dh4f` shape, a scan of nothing reading as clean),
+ *   and `audit:coverage` reports the kind as `stored` rather than counting a
+ *   working copy whose size depends on whether somebody ran `qa:fetch`.
+ *
+ * ## `keyedBy` — two keyings, and a third is a schema change
+ *
+ * - `commit` — one entry per commit (`main/<sha>/`, `pr/<n>/<sha>/`), read
+ *   against a baseline. The QA branch (`scripts/qa-store.ts`).
+ * - `tip` — ONE live copy: the branch tip IS the current state, with paths
+ *   mirroring the checkout and a root `manifest.json` (`state-manifest/v1`).
+ *   Beans and todos, each on its own named-subgraph branch
+ *   (`cat/cat-harness/beans`, `cat/cat-harness/todos`; owner ruling
+ *   2026-10-02). Read and written through `scripts/branch-store.ts`, whose
+ *   writes splice onto the tip and never force-push.
+ *
+ * The field is an enum, not a string, so a third keying is a schema change
+ * somebody has to make rather than a reinterpretation of an existing value.
+ * Not every named subgraph gets a branch — semi-static KG content (skills,
+ * schemas, processes) stays on `main` (owner, 2026-10-02).
+ *
+ * ## Not yet set on any declaration
+ *
+ * Flipping a real `qa` directory to `storage` is a later bean, after every
+ * reader has migrated (proposal §4 Phase 3). Setting it earlier would tell the
+ * presence checks to stop looking while the readers still read the checkout.
+ */
+export const DirectoryStorageSchema = z
+  .object({
+    /** The branch, e.g. `qa-reports`. A plain branch name: no `refs/`, no `..`, no leading `-`. */
+    branch: z
+      .string()
+      .regex(/^(?!-)(?!refs\/)[A-Za-z0-9._/-]+$/, "a plain branch name, e.g. qa-reports")
+      .refine(
+        (b) => !b.includes("..") && !b.includes("//") && !b.endsWith("/") && !b.endsWith(".lock") && !b.startsWith("/"),
+        "not a valid branch name",
+      ),
+    /** How entries are keyed on the branch: one entry per `commit`, or one live copy at the `tip`. */
+    keyedBy: z.enum(["commit", "tip"]),
+  })
+  .strict();
+export type DirectoryStorage = z.infer<typeof DirectoryStorageSchema>;
+
 const ContentDirectoryShape = GraphNodeDirectoryShape.extend({
   coverage: SubgraphCoverageSchema.optional(),
   /** How this directory's tile looks. See {@link TileSchema}. */
@@ -1528,6 +1602,11 @@ const ContentDirectoryShape = GraphNodeDirectoryShape.extend({
    */
   kindRouteRedirect: z.boolean().optional(),
   /**
+   * Where this directory's contents are KEPT, when that is not the checkout.
+   * See {@link DirectoryStorageSchema} — bean `16ei`, arc `3fva`.
+   */
+  storage: DirectoryStorageSchema.optional(),
+  /**
    * This directory is AUTHORED FOR THE SITE'S PIPELINE, so compose it into the
    * Jekyll source instead of mounting its built output.
    *
@@ -1603,7 +1682,17 @@ const ContentDirectoryShape = GraphNodeDirectoryShape.extend({
 });
 
 /** As {@link GraphNodeDirectorySchema}, for an instance's own directories. */
-export const ContentDirectorySchema = z.preprocess(acceptLegacyGraphsKey, ContentDirectoryShape);
+export const ContentDirectorySchema = z.preprocess(
+  acceptLegacyGraphsKey,
+  // A `qa` directory is commit-keyed by construction: its readers compare one
+  // commit's verdicts against a baseline, and `qa-store.ts` implements only
+  // that layout. A tip-keyed `qa` store would be read as if it were keyed by
+  // commit, so it is refused here rather than at its first read (bean `2h76`).
+  ContentDirectoryShape.refine(
+    (d) => !(d.storage?.keyedBy === "tip" && (d.graphKinds as readonly string[] | undefined)?.includes("qa")),
+    { message: 'a `qa` directory is keyed by commit; `keyedBy: "tip"` is for one-live-copy state (beans, todos)', path: ["storage", "keyedBy"] },
+  ),
+);
 
 // THERE IS NO `locale` FIELD HERE, and that is a decision rather than an
 // omission. A first draft of PR #351 added one, required on a
@@ -2411,19 +2500,23 @@ export function renderExemptionProblems(
  * from a dead link: a slot that renders nothing reads as a navbar that lost
  * something.
  *
- * ## SIX, and the cap is the owner's
+ * ## SEVEN, and the cap is the owner's
+ *
+ * It was six until 2026-10-02, when the owner added fsh-guts to the row
+ * rather than in place of anything: *"i wanted fsh guts icon here with the
+ * others"* (#1925). The cap moved with the ruling; it is still a cap.
  *
  * Refused rather than truncated. Truncating drops whichever the instance
  * listed last, silently, and an instance that declared seven has made a
  * decision the navbar would then be overruling without saying so.
  */
-export const NAVBAR_ICONS = ["close", "todos", "beans", "processes", "kg", "launcher"] as const;
+export const NAVBAR_ICONS = ["close", "todos", "beans", "processes", "kg", "fsh-guts", "launcher"] as const;
 
 export type NavbarIcon = (typeof NAVBAR_ICONS)[number];
 
 export const NavbarIconsSchema = z
   .array(z.enum(NAVBAR_ICONS))
-  .max(6, { message: "the navbar icon row holds at most 6 — the owner's cap" })
+  .max(7, { message: "the navbar icon row holds at most 7 — the owner's cap" })
   .refine((xs) => new Set(xs).size === xs.length, {
     message: "an icon listed twice is two slots doing one job",
   });
@@ -5037,6 +5130,12 @@ export function materialiseDirectories(
     // the inherited subgraph exactly where it already exists, never created
     // empty (the `dh4f` rule); a repository-scoped entry has one location.
     if (dir.own !== true && (dir.scope === "repository" || !isPerInstance(dir))) continue;
+    // A STORED directory (`storage`, bean `16ei`) lives on its branch; the
+    // checkout holds at most a working copy that `qa:fetch` or a writer makes.
+    // Creating it empty here would manufacture the `dh4f` shape — a reader
+    // scanning an empty directory and reporting a clean run — and its absence
+    // is not "missing", so `--check` does not list it either.
+    if (dir.storage?.branch) continue;
     const base = rootForScope(rootAbs, dir.scope);
     const abs = resolve(base, dir.path);
     const rel = relative(base, abs);

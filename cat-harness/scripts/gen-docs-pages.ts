@@ -32,7 +32,7 @@
  * @covers docs
  */
 
-import { readFileSync, writeFileSync, existsSync, readdirSync, mkdirSync, unlinkSync } from "node:fs";
+import { readFileSync, writeFileSync, existsSync, readdirSync, mkdirSync, rmSync, unlinkSync } from "node:fs";
 import { workflowFiles, corpusScopeFor } from "./known-skills.js";
 import { join, dirname, relative, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
@@ -55,7 +55,10 @@ import {
   type QaFamily,
   type QaWitnessDoc,
 } from "../content/pipeline/qa-witness.ts";
-import { readTodoFiles, todoDefaultTheme } from "./todos.js";
+import { todoDefaultTheme } from "./todos.js";
+import { publishedTodoFiles } from "./todo-source.js";
+import { TODO_GRAPH_SITE_PATH, serialiseJsonld, todoDocument, todoGraphDocument, todoPageSitePath, todoSitePath } from "./todo-graph.ts";
+import { isTodoPage, todoPageHtml } from "./todo-page.ts";
 import { beanDefsDir, beanFindings, blockedBy, readBeans } from "./beans.js";
 import { detectRepoUrl } from "../src/core/git-refs.js";
 import { resolveThemeBackdrop } from "../schemas/theme.js";
@@ -1178,7 +1181,7 @@ function processHierarchy(): Record<string, string[]> {
     return target === undefined ? {} : { target };
   };
   const fallbackTheme = todoDefaultTheme();
-  const items = readTodoFiles().map(({ todo, path }) => ({
+  const items = publishedTodoFiles().map(({ todo, path }) => ({
     id: todo.id,
     summary: todo.summary,
     comment: todo.comment,
@@ -1344,9 +1347,72 @@ function processHierarchy(): Record<string, string[]> {
         // the second character of the Liquid tag — valid Liquid, broken HTML,
         // and it renders as a link to the empty string.
         pageHref: (page, node) => `{{ '/${page}.html' | relative_url }}#${node}`,
+        // Each todo's own page (#1908) — a directory, so the href ends in `/`.
+        todoPageHref: (id) => `{{ '/${todoPageSitePath(id)}' | relative_url }}`,
       }),
     "data",
   );
+
+  // THE GRAPH AND A PAGE PER TODO — issue #1908. From the SAME `items`, so the
+  // JSON index the board reads, the no-JS floor and the JSON-LD cannot
+  // disagree about what a todo says or what it is attached to.
+  //
+  //   todos.jsonld (+ .json)        the whole graph, one named graph
+  //   todos/<id>.jsonld (+ .json)   one todo, at the address its @id names
+  //   todos/<id>/index.html         its RENDERING — a thin page, not the asset
+  {
+    const graph = serialiseJsonld(todoGraphDocument(items));
+    for (const ext of [".jsonld", ".json"]) {
+      emit(join(OUT_DIR, TODO_GRAPH_SITE_PATH.replace(/\.jsonld$/, ext)), graph, "data");
+    }
+    const wanted = new Set<string>();
+    for (const item of items) {
+      const doc = serialiseJsonld(todoDocument(item));
+      const asset = join(OUT_DIR, todoSitePath(item.id));
+      if (!check) mkdirSync(dirname(asset), { recursive: true });
+      for (const ext of [".jsonld", ".json"]) {
+        const p = asset.replace(/\.jsonld$/, ext);
+        wanted.add(p);
+        emit(p, doc, "data");
+      }
+      const pageDir = join(OUT_DIR, todoPageSitePath(item.id));
+      if (!check) mkdirSync(pageDir, { recursive: true });
+      const page = join(pageDir, "index.html");
+      wanted.add(page);
+      emit(
+        page,
+        todoPageHtml(item, {
+          // The block's RENDERING, from the todo page two levels down. A fact
+          // about renderings, so it lives on the page and never on the todo.
+          ...(item.target ? { targetHref: `../../${item.target.page}.html#${item.target.node}` } : {}),
+        }),
+        "data",
+      );
+    }
+    // A todo that is gone takes its files with it. Only OUR output is touched:
+    // a `.jsonld`/`.json` beside the pages, or a directory whose `index.html`
+    // declares itself a todo page. `todos/index.html` (the board page,
+    // `state-visualizer.ts`) is neither and is never considered.
+    const todoDir = join(OUT_DIR, "todos");
+    for (const e of existsSync(todoDir) ? readdirSync(todoDir, { withFileTypes: true }) : []) {
+      const p = join(todoDir, e.name);
+      const ours = e.isDirectory()
+        ? existsSync(join(p, "index.html")) && isTodoPage(readFileSync(join(p, "index.html"), "utf-8"))
+        : /\.(jsonld|json)$/.test(e.name);
+      const target = e.isDirectory() ? join(p, "index.html") : p;
+      if (!ours || wanted.has(target)) continue;
+      if (check) {
+        console.error(`  ✗ ${target} is an orphan — no todo publishes it`);
+        stale++;
+      } else {
+        rmSync(e.isDirectory() ? p : target, { recursive: true });
+        console.log(`  - removed orphaned ${target}`);
+      }
+    }
+    console.log(
+      `  ${check ? "·" : "✓"} todos.jsonld + ${items.length} todo(s) as JSON-LD, each with a page at todos/<id>/`,
+    );
+  }
 
   // THE THRESHOLDS, when this folio has declared any. `readSemanticZoom`
   // returns `undefined` for a folio that has not, and that absence is carried

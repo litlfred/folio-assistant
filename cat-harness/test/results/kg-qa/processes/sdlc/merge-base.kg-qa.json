@@ -32,21 +32,8 @@
       "findings": []
     },
     "activity-skill-has-tool": {
-      "result": "fail",
-      "findings": [
-        {
-          "where": "Task_Classify",
-          "detail": "names skill \"merge-conflict-patterns\", which no Tool declares `satisfies` for — the step's mechanism is still prose."
-        },
-        {
-          "where": "Task_Resolve",
-          "detail": "names skill \"merge-conflict-patterns\", which no Tool declares `satisfies` for — the step's mechanism is still prose."
-        },
-        {
-          "where": "Task_Abort",
-          "detail": "names skill \"merge-conflict-patterns\", which no Tool declares `satisfies` for — the step's mechanism is still prose."
-        }
-      ]
+      "result": "pass",
+      "findings": []
     },
     "decision-ref-resolves": {
       "result": "n/a",
@@ -72,20 +59,12 @@
       "result": "fail",
       "findings": [
         {
-          "where": "Task_Merge",
-          "detail": "needs skill \"prepare-merge\", but its lane's role \"build-pipeline\" does not carry it."
-        },
-        {
           "where": "Task_Classify",
           "detail": "needs skill \"merge-conflict-patterns\", but its lane's role \"build-pipeline\" does not carry it."
         },
         {
           "where": "Task_Resolve",
           "detail": "needs skill \"merge-conflict-patterns\", but its lane's role \"build-pipeline\" does not carry it."
-        },
-        {
-          "where": "Task_Regen",
-          "detail": "needs skill \"prepare-merge\", but its lane's role \"build-pipeline\" does not carry it."
         },
         {
           "where": "Task_Commit",
@@ -147,13 +126,8 @@
       "findings": []
     },
     "prose-reviewed-since-code-changed": {
-      "result": "fail",
-      "findings": [
-        {
-          "where": ".github/workflows/merge-main.yml",
-          "detail": ".github/workflows/merge-main.yml changed since cat-harness/processes/sdlc/merge-base.bpmn was last seen, and the prose did not. Re-read it; if it still holds, run pairs:attest with a reason."
-        }
-      ]
+      "result": "pass",
+      "findings": []
     },
     "prose-claims-resolve": {
       "result": "pass",
@@ -161,19 +135,9 @@
     }
   },
   "totals": {
-    "pass": 13,
-    "fail": 4,
+    "pass": 15,
+    "fail": 2,
     "n/a": 8,
     "unknown": 0
-  },
-  "pair_attestations": [
-    {
-      "kind": "implements",
-      "prose": "cat-harness/processes/sdlc/merge-base.bpmn",
-      "code": ".github/workflows/merge-main.yml",
-      "prose_hash": "6315b7a2a250",
-      "code_hash": "946efc61097e",
-      "by": "baseline"
-    }
-  ]
+  }
 }

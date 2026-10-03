@@ -9,7 +9,7 @@ tags:
     - ui
     - visualiser-navbar
 created_at: 2026-09-23T10:36:15Z
-updated_at: 2026-10-01T18:14:39Z
+updated_at: 2026-10-01T18:26:59Z
 parent: folio-assistant-4ccr
 ---
 
@@ -367,3 +367,41 @@ The PR #1762 sections on this bean (2, 4, 5, 8, 9 and 11 fixed) live on that bra
 | 7 | **STILL-PRESENT on theme pages; CHANGED on the viewer rail** | Landing at 1280, sidebar open (264 px), all 4 groups unfolded: **531 links** in `.side-bar` (524 on 2026-09-30). `.fa-nav-middle` is at its **128 px floor** (`min-height: 128px`) with scrollHeight **3682**, or 17634 with every theme subtree forced open. `nav.site-nav` is 2852 px tall with 430 links, and **0 of them are visible** in the middle region without scrolling, because `FOLDERS` (789 px) sits above it in the same region. `.side-bar` also scrolls (2108 / 800), so there are two nested scroll regions. The theme page list is still the squeezed region. **Viewer rail:** 28 links (schemas/) and 27 (todos/), with one scroller, `.fa-nav-graphs` (418 of 1872 px at 1280, 462 of 1872 at 390), and no theme page list. |
 
 Session: https://claude.ai/code/session_01Cw8JgZEDT5VqQ5ergjdMjB
+
+## RULED 2026-10-01: findings 7 and 8, the theme sidebar takes the viewer rail's layout (PR #1808, stacked on #1762)
+
+**Finding 7.** The owner chose option 1 of 4: *"Use the viewer-rail layout on Jekyll pages."* `mountSidebarRail` (docs-ui.js) now moves three things into the one `.fa-nav-middle` scroller, in this order:
+
+1. "On this page", folded.
+2. The page list, the only group open on arrival.
+3. A new **Graphs** disclosure, folded, holding FOLDERS and the harness group moved out of the footer. Each keeps its own fold.
+
+Home stays pinned in the footer. The folded Graphs heading is sticky to the scroller's bottom edge, so it is always one row away.
+
+**Finding 8.** The owner chose option 1 of 4: remove the sidebar's own ☰/×, as #1762 did on the rail. #1762 had already dropped the markup from the generated include (0 in the built page before this change). This change removes the rules and handlers that were left behind:
+- every `.fa-nav-toggle`, `.fa-nav-close` and `.fa-nav-head` rule in docs-ui.css;
+- the `[x]` row move and the ☰/× handlers in docs-ui.js.
+
+The avatar is the one control. It opens and closes the bar, and it sets and lifts stay-closed, by pointer and by keyboard (Enter).
+
+**Measured on local builds** with `preview-site.sh`, served at `/folio-assistant/`, using Playwright with hit-tested visibility. Base is 644d04b9959; after is this branch.
+
+| landing, 1280×800, sidebar pinned open | before | after |
+|---|---|---|
+| scroll regions on arrival | 1 (`fa-nav-middle` 549/2936) | 1 (`fa-nav-middle` 627/2977) |
+| scroll regions, every group open | **2** (`fa-nav-middle` 128/3682, `details.fa-nav-group` 328/1716) | **1** (`fa-nav-middle` 627/6747) |
+| `.side-bar` clipping, every group open | **800/2108** | none |
+| page links visible on arrival | 14 | 15 |
+| page links visible, every group open, scrolled to top | **0** (on the guide 4 of 3228 px) | 0 on the landing (19 open index rows fill the first screen), 6 on the guide. Nothing is clipped, and one scroll reaches the list. |
+| Graphs/FOLDERS on arrival | FOLDERS folded, above the page list | Graphs folded, heading in view at the scroller's bottom |
+| ☰ / × controls, 1280 and 390 | 0 / 0 (markup gone in #1762, CSS left) | 0 / 0, and no rule names them |
+
+At 390×844 there is no fixed scroller, so the phone menu is unchanged in kind. The order is now On this page, Pages, Graphs, and Graphs sits at the end of the menu (it is not sticky on a phone).
+
+**Check:** `cat-harness/test/sidebar-rail.e2e.ts` uses the real generated footer include. It fails on:
+- more than one scroll region, or any clipping inside the sidebar or its regions;
+- Graphs open on arrival, or FOLDERS/harnesses outside it;
+- zero visible page links;
+- a ☰/× by class or by glyph at 1280 or 390.
+
+**Falsified:** 4 of the 5 finding-7 tests fail on 644d04b9959's CSS/JS. The finding-8 tests fail when a ☰ label is injected into the include. `sidebar-strip.test.ts` fails on 644d04b9959's CSS.

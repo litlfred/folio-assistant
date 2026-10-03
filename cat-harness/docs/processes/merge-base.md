@@ -21,7 +21,7 @@ ALL OR NOTHING: every conflicted path is classified before any is touched, and o
 
 ## How it connects
 
-- **Called by:** [Code change and review](code-change-review.html)
+- **Called by:** [Code change and review](code-change-review.html), [A merge train](merge-train.html)
 - **Calls:** none
 - **Presented on:** no docs page section shows this diagram
 

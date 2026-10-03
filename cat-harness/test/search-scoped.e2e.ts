@@ -1,0 +1,151 @@
+import { test, expect, type Page } from "@playwright/test";
+import { readFileSync } from "node:fs";
+import { dirname, join } from "node:path";
+import { fileURLToPath } from "node:url";
+import { createRequire } from "node:module";
+import { Liquid } from "liquidjs";
+
+import { siteDirFor } from "../schemas/cat-harness.ts";
+
+/**
+ * A PAGE SEARCHES ITS OWN SCOPE, AND CAN ALWAYS WIDEN TO THE WHOLE SITE —
+ * bean `2tfy`, issue #1972 step A.
+ *
+ * `search-split.ts` cuts the site index into one index per scope and writes a
+ * manifest naming them. The site's copy of the theme script reads that
+ * manifest on first focus of the search box and loads only the scope the page
+ * lives in — a smart-trust page 1.5 MB of a 13.7 MB index — and puts a
+ * "Search everywhere" button under the results so that nothing findable
+ * before the split becomes unfindable after it.
+ *
+ * Pinned here, on the real override rendered through Liquid and the real
+ * `docs-ui.js`, with search opened through the launcher's own control (see
+ * `search-lazy.e2e.ts` for why it must be the control):
+ *
+ *   - an instance page fetches the manifest and ITS scope, never the whole;
+ *   - its results come from that scope only;
+ *   - "Search everywhere" fetches the whole index once and re-runs the query;
+ *   - with no manifest the page falls back to the whole index, as before;
+ *   - a page outside every instance and locale gets the platform scope.
+ */
+
+const ROOT = join(dirname(fileURLToPath(import.meta.url)), "..");
+const SITE = siteDirFor(ROOT);
+const CSS = readFileSync(join(ROOT, SITE, "assets/css/docs-ui.css"), "utf8");
+const UI = readFileSync(join(ROOT, SITE, "assets/js/docs-ui.js"), "utf8");
+const LUNR = readFileSync(createRequire(import.meta.url).resolve("lunr/lunr.min.js"), "utf8");
+
+async function renderedJtd(): Promise<string> {
+  const src = readFileSync(join(ROOT, SITE, "assets/js/just-the-docs.js"), "utf8").replace(/^---[\s\S]*?---\n/, "");
+  const liquid = new Liquid({ dynamicPartials: false, templates: { "lunr/custom-index.js": "", "js/custom.js": "" } });
+  liquid.registerFilter("relative_url", (p: string) => `/folio-assistant/${String(p).replace(/^\//, "")}`);
+  // As Jekyll renders the theme's default; see search-lazy.e2e.ts.
+  const site = { search_enabled: true, search: { tokenizer_separator: String.raw`/[\s\-/]+/` }, baseurl: "/folio-assistant" };
+  return liquid.parseAndRender(src, { site });
+}
+
+const SEARCH =
+  '<div class="search" role="search"><div class="search-input-wrap">' +
+  '<input type="text" id="search-input" class="search-input" autocomplete="off">' +
+  '<label for="search-input" class="search-label"><span class="sr-only">Search folio-assistant</span></label>' +
+  '</div><div id="search-results" class="search-results"></div></div>';
+
+const entry = (title: string, content: string, relUrl: string) => ({ doc: title, title, content, url: `/folio-assistant${relUrl}`, relUrl });
+const PLATFORM = { 0: entry("Gates", "Every gate CI runs.", "/gates/") };
+const TRUST = { 1: entry("Trust lists", "Trust lists of the network.", "/smart-trust/lists.html") };
+const WHOLE = { ...PLATFORM, ...TRUST };
+const MANIFEST = {
+  $schema: "folio-search-manifest/v1",
+  source: { path: "assets/js/search-data.json", sha256: "x", entries: 2, bytes: 13_700_000 },
+  scopes: [
+    { id: "_platform", kind: "platform", path: "assets/js/search/_platform.json", entries: 1, bytes: 1 },
+    { id: "smart-trust", kind: "instance", path: "assets/js/search/smart-trust.json", entries: 1, bytes: 1 },
+  ],
+};
+
+interface Load { fetched: (suffix: string) => number }
+
+async function load(page: Page, path: string, withManifest = true): Promise<Load> {
+  const JTD = await renderedJtd();
+  const PAGE = `<!doctype html><html lang="en"><head><meta charset="utf-8"><title>p</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="/folio-assistant/assets/css/just-the-docs-default.css">
+<style>body { margin: 0; } ${CSS}</style>
+<script>${LUNR}<\/script><script>${JTD}<\/script></head><body>
+<div class="side-bar"><div class="site-header"><a class="site-title">folio-assistant</a>
+<button id="menu-button" class="site-button btn-reset" aria-label="Menu"></button></div><nav class="site-nav" id="site-nav"></nav></div>
+<div class="main"><div class="main-header" id="main-header">${SEARCH}</div><div class="main-content-wrap">
+<div class="main-content"><h1>Page</h1><p>Text.</p></div></div></div>
+<script>${UI}<\/script></body></html>`;
+  const counts = new Map<string, number>();
+  const serve: Record<string, unknown> = {
+    "/assets/js/search-data.json": WHOLE,
+    "/assets/js/search/_platform.json": PLATFORM,
+    "/assets/js/search/smart-trust.json": TRUST,
+  };
+  if (withManifest) serve["/assets/js/search/manifest.json"] = MANIFEST;
+  await page.route("http://replica.test/**", (route) => {
+    const p = new URL(route.request().url()).pathname;
+    if (p === `/folio-assistant${path}`) return route.fulfill({ contentType: "text/html", body: PAGE });
+    for (const [suffix, body] of Object.entries(serve)) {
+      if (p === `/folio-assistant${suffix}`) {
+        counts.set(suffix, (counts.get(suffix) ?? 0) + 1);
+        return route.fulfill({ contentType: "application/json", body: JSON.stringify(body) });
+      }
+    }
+    return route.fulfill({ status: 404, body: "not found" });
+  });
+  const errors: string[] = [];
+  page.on("pageerror", (e) => errors.push(e.message));
+  await page.goto(`http://replica.test/folio-assistant${path}`);
+  await page.waitForSelector(".fa-search-peek");
+  expect(errors, "page errors while loading the replica").toEqual([]);
+  return { fetched: (suffix) => counts.get(suffix) ?? 0 };
+}
+
+const results = (page: Page) => page.locator("#search-results .search-result");
+
+async function search(page: Page, q: string) {
+  await page.click(".fa-search-peek");
+  await page.fill("#search-input", "");
+  await page.keyboard.type(q);
+}
+
+test("an instance page searches its own scope, never the whole index", async ({ page }) => {
+  const { fetched } = await load(page, "/smart-trust/page.html");
+  await search(page, "trust");
+  await expect(results(page)).not.toHaveCount(0);
+  expect(fetched("/assets/js/search/manifest.json")).toBe(1);
+  expect(fetched("/assets/js/search/smart-trust.json")).toBe(1);
+  expect(fetched("/assets/js/search-data.json")).toBe(0);
+  expect(fetched("/assets/js/search/_platform.json")).toBe(0);
+});
+
+test("'Search everywhere' loads the whole index once and finds what the scope could not", async ({ page }) => {
+  const { fetched } = await load(page, "/smart-trust/page.html");
+  await search(page, "gate");
+  const everywhere = page.locator(".search-everywhere");
+  await expect(everywhere).toHaveCount(1);
+  await expect(results(page)).toHaveCount(0); // a platform page's term is not in smart-trust's scope
+  await everywhere.click();
+  await expect(results(page)).not.toHaveCount(0);
+  expect(fetched("/assets/js/search-data.json")).toBe(1);
+  await expect(everywhere).toHaveCount(0); // widened once; the button has done its job
+});
+
+test("with no manifest the page falls back to the whole index, as the theme always did", async ({ page }) => {
+  const { fetched } = await load(page, "/smart-trust/page.html", false);
+  await search(page, "gate");
+  await expect(results(page)).not.toHaveCount(0);
+  expect(fetched("/assets/js/search-data.json")).toBe(1);
+  await expect(page.locator(".search-everywhere")).toHaveCount(0);
+});
+
+test("a page outside every instance and locale searches the platform scope", async ({ page }) => {
+  const { fetched } = await load(page, "/guides/page.html");
+  await search(page, "gate");
+  await expect(results(page)).not.toHaveCount(0);
+  expect(fetched("/assets/js/search/_platform.json")).toBe(1);
+  expect(fetched("/assets/js/search/smart-trust.json")).toBe(0);
+  expect(fetched("/assets/js/search-data.json")).toBe(0);
+});

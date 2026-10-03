@@ -1,0 +1,19 @@
+{
+  "$schema": "qa-attestations/v1",
+  "family": "kg-qa",
+  "subject": {
+    "kind": "skill",
+    "id": "formalizer",
+    "path": "skills/content/folio-paper-adapter/formalizer.md"
+  },
+  "pair_attestations": [
+    {
+      "kind": "co-located",
+      "prose": "folio-assistant-sci/skills/content/folio-paper-adapter/formalizer.md",
+      "code": "folio-assistant-sci/skills/content/folio-paper-adapter/formalizer.ts",
+      "prose_hash": "45db8336b895",
+      "code_hash": "41c3ea30ebb5",
+      "by": "baseline"
+    }
+  ]
+}

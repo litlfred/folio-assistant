@@ -7,7 +7,8 @@
  * checkbox per item; what a thing IS kept apart from where it CAME FROM.
  *
  * The glass holds all three kinds here: two books from two libraries, a
- * pinned landing sticky, and a todo pulled out of the Todos panel.
+ * pinned landing sticky — a folio asset like the rest since #1925 — and a
+ * todo pulled out of the Todos panel.
  */
 import { test, expect, type Page } from "@playwright/test";
 import { readFileSync } from "node:fs";
@@ -51,7 +52,7 @@ test.beforeEach(async ({ page }) => {
   // Fill the glass: two books, one sticky, one todo.
   await page.locator('[data-fa-library-item="who-iris/handbook"] .fa-pullout').click();
   await page.locator('[data-fa-library-item="smart-base/guide"] .fa-pullout').click();
-  await page.locator('[data-fa-home-slot="alpha"] .fa-home-pin').click();
+  await page.locator('[data-fa-home-slot="alpha"] .fa-sticky-act-pin').click();
   await page.click(".fa-glass-handle");
   await page.click('[data-fa-glass-chrome="glass-todos"]');
   await page.locator('[data-fa-library-item="todo/t-one"] .fa-pullout').click();
@@ -60,9 +61,9 @@ test.beforeEach(async ({ page }) => {
 
 const visible = (page: Page) =>
   page.evaluate(() => Array.from(document.querySelectorAll(
-    ".fa-sticky-layer .fa-glass-asset, .fa-sticky-layer .fa-sticky-floating",
+    ".fa-sticky-layer .fa-glass-asset",
   )).filter((n) => getComputedStyle(n).display !== "none").map((n) =>
-    n.getAttribute("data-fa-asset") || n.getAttribute("data-fa-pin")).sort());
+    n.getAttribute("data-fa-asset")).sort());
 
 test("with no filter, all four are on the glass", async ({ page }) => {
   expect(await visible(page)).toEqual(["landing/alpha", "smart-base/guide", "todo/t-one", "who-iris/handbook"]);

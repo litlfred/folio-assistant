@@ -1484,6 +1484,83 @@ export function tools(baseUrl?: string): ToolDefinition[] {
       },
     }),
 
+    // ── The merge steward's three commands — bean `blgm` ──────────────────
+    //
+    // Owner-approved 2026-10-02, replacing the steward's scratch scripts. Each
+    // satisfies `merge-conflict-patterns` because each reads its declaration
+    // (what is generated) and none adds a second one. The merge-queue skill
+    // being written on the merge-pipeline epic is the one they serve; when it
+    // lands, it joins `satisfies`.
+    defineTool({
+      id: "merge-train",
+      title: "Merge train",
+      description:
+        "Build a train branch from a base SHA: merge each member (a PR number or branch) with `merge-base.ts --no-regen`, refusing — never hand-resolving — a member whose conflicts no declared pattern covers; then one `bun run regen`, `check:l1-complete --write`, `extract-smart-kg-l1.ts --entry` for each stale entry, and `kg:audit:all:check`; then merge `origin/main`, taking main's side of generated conflicts and regenerating once more. Emits a `merge-train-report/v1` JSON report. Never pushes, opens or merges a PR.",
+      install: { none: true },
+      invoke: { shell: "bun run merge:train" },
+      io: {
+        inputs: [
+          { name: "base", schema: t("CommitSha"), required: true, arg: { flag: "--base" }, description: "The commit the train branch starts from." },
+          { name: "branch", schema: t("Branch"), required: false, arg: { flag: "--branch" }, description: "The train branch to create; default `merge-train/<base>-<time>`." },
+          { name: "dry-run", schema: t("Flag"), required: false, arg: { flag: "--dry-run" }, description: "Simulate with `git merge-tree`: classify each member's conflicts against the simulated train and change nothing." },
+          { name: "no-main", schema: t("Flag"), required: false, arg: { flag: "--no-main" }, description: "Skip merging `origin/main` into the train." },
+          { name: "members", schema: t("Branch"), required: true, repeated: true, arg: { positional: 0 }, description: "PR numbers or branches, in train order. On the command line a PR may be pinned to the head CI saw as `N:<sha>`." },
+        ],
+        outputs: [{ name: "report", schema: t("Text"), description: "`merge-train-report/v1` on stdout: members merged, refused with reasons and conflicted paths, the checks run, main's merge, and the head. Exit 0 built, 1 needs a person, 2 could not start." }],
+      },
+      satisfies: ["merge-conflict-patterns", "prepare-merge"],
+      requires: { runtime: ["bun"], network: true },
+      selection: {
+        when: "The steward has chosen a batch of green, mutually independent PRs (see merge-overlap) and wants one branch that carries them all, regenerated once.",
+        limits: "Each member's merge commit is not proved on its own; the train is proved at its end by one regen. A refused member is left out and reported — handing it back to its owner is the steward's step. It does not push: CI on the train runs only after the steward pushes it.",
+        cost: "One `merge-base.ts` per member (seconds each), then one regen (5-13 min measured 2026-10-02) and the three checks; a second regen if main had generated conflicts.",
+      },
+    }),
+    defineTool({
+      id: "merge-overlap",
+      title: "Merge overlap (conflict prediction)",
+      description:
+        "For the open PRs (via `gh`, or a list of branches), report which pairs would conflict: pairwise overlap on AUTHORED paths, with generated paths excluded using the merge-conflict-patterns declaration; which PRs touch a shared declaration (an instance's `<instance>.json`, `roles.json`, `package.json`, `bun.lock`, schemas, BPMN/DMN); and which touch `cat-harness/` or `cat-harness-tools/`. A PR that could not be measured makes no pair independent. JSON (`merge-overlap/v1`), the conflict-prediction input for composing trains.",
+      install: { none: true },
+      invoke: { shell: "bun run merge:overlap" },
+      io: {
+        inputs: [
+          { name: "base", schema: t("Branch"), required: false, arg: { flag: "--base" }, description: "The base each PR is diffed against from its fork point; default `origin/main`." },
+          { name: "branches", schema: t("Branch"), required: false, repeated: true, arg: { positional: 0 }, description: "Branches to compare instead of the open PRs; with none, the open PRs come from `gh`." },
+        ],
+        outputs: [{ name: "report", schema: t("Text"), description: "`merge-overlap/v1` on stdout: per member `authored_paths`, `region_paths`, `touches_shared`, the two harness flags; every pair that is not independent, with why." }],
+      },
+      satisfies: ["merge-conflict-patterns", "coordinate"],
+      requires: { runtime: ["bun"], network: true },
+      selection: {
+        when: "Before composing a merge train, and whenever deciding which PRs can land together or must be ordered.",
+        limits: "Paths, not semantics (requirements T3): two PRs that change different files can still interact, which the shared-declaration list only partly covers. A README counts as authored when its prose changed, as a region when only generated regions did.",
+        cost: "One REST listing (`gh api …/pulls`; not `gh pr list`, which is GraphQL) and one `git fetch` of every open head, then a `git diff --name-only` per PR. No working tree is touched.",
+      },
+    }),
+    defineTool({
+      id: "merge-leftover",
+      title: "Merge leftover (has a PR's intent landed?)",
+      description:
+        "After a train merged, compare a PR's head with the base path by path and say whether what it still changes is ONLY generated files, generated README regions, or changes the base already carries (its patch applies in reverse to the base): `landed`, `not-landed` with the authored paths still different, or `could-not-determine`, which is never shown as clean. Only reports; closing the PR stays a steward action.",
+      install: { none: true },
+      invoke: { shell: "bun run merge:leftover" },
+      io: {
+        inputs: [
+          { name: "member", schema: t("Branch"), required: true, arg: { positional: 0 }, description: "The PR number or branch. On the command line a PR may be pinned as `N:<sha>`." },
+          { name: "base", schema: t("Branch"), required: false, arg: { flag: "--base" }, description: "The base the train landed on; default `origin/main`." },
+        ],
+        outputs: [{ name: "report", schema: t("Text"), description: "`merge-leftover/v1` on stdout. Exit 0 landed, 1 not-landed, 2 could not determine." }],
+      },
+      satisfies: ["merge-conflict-patterns"],
+      requires: { runtime: ["bun"], network: true },
+      selection: {
+        when: "After a train lands, for each member PR still open, before the steward decides whether to close it.",
+        limits: "An authored path whose lines the base rewrote after the train reads `not-landed`: the reverse patch no longer applies, and only a person can say whether the rewrite kept the intent.",
+        cost: "One fetch, then one `git diff` and one `git apply --check` per authored path, in a throwaway index. No working tree is touched.",
+      },
+    }),
+
     // ── The narrative review queue — what is waiting on a PERSON ──────────
     //
     // Bean `7ajt`, and the node almost did not get written. I had it filed as a
@@ -1877,6 +1954,31 @@ export function tools(baseUrl?: string): ToolDefinition[] {
         inputs: ["the pages of the Jekyll site build (`cat-harness/docs/`)"],
         judgedAt: "published",
         verifier: "search-index",
+      },
+    }),
+
+    defineTool({
+      id: "site-search-scopes",
+      title: "Site search scopes",
+      description:
+        "The site search index cut into one index per scope — each declared instance, each target locale, and the platform — plus `assets/js/search/manifest.json` naming them, so a reader's search loads its own scope rather than the whole site (issue #1972, bean `m7mn`). Run on the assembled site after the index is written or borrowed.",
+      install: { none: true },
+      invoke: { shell: "bun run cat-harness/scripts/search-split.ts --dir _site" },
+      io: {
+        inputs: [
+          { name: "index", schema: t("RepoPath"), required: true, description: "`_site/assets/js/search-data.json`, as the theme wrote it or as staging borrowed it." },
+        ],
+        outputs: [
+          { name: "scopes", schema: t("RepoPath"), description: "`_site/assets/js/search/` — `manifest.json` and one `<scope>.json` per scope." },
+        ],
+      },
+      satisfies: ["docs-generation"],
+      requires: { runtime: ["bun"], network: false },
+      downstream: {
+        output: "assets/js/search/manifest.json",
+        inputs: ["the site search index (`assets/js/search-data.json`)", "the declared instances and target locales"],
+        judgedAt: "published",
+        verifier: "search-scopes",
       },
     }),
 

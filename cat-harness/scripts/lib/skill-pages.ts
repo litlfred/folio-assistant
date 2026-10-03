@@ -12,21 +12,16 @@
  */
 import { existsSync, readdirSync } from "node:fs";
 import { basename, join, posix } from "node:path";
-import { docsLayers } from "../compose-docs.js";
+import { baseDocsDir } from "../compose-docs.js";
 
 /** Where the instruction pages sit, relative to the base docs layer. */
 export const SKILL_PAGES_DIR = "reference/skill-instructions";
 
 /** The base docs layer, the same answer `compose-docs.ts` uses. */
-function baseDocs(repo: string): string {
-  const base = docsLayers(repo).layers.find((l) => !l.repositoryScoped);
-  if (base === undefined) throw new Error("no instance-scoped docs layer is declared");
-  return base.dir;
-}
 
 /** The skills with a generated instruction page. */
 export function skillPagesOf(repo: string): ReadonlySet<string> {
-  const dir = join(baseDocs(repo), SKILL_PAGES_DIR);
+  const dir = join(baseDocsDir(repo), SKILL_PAGES_DIR);
   return new Set(existsSync(dir) ? readdirSync(dir).filter((f) => f.endsWith(".md")).map((f) => basename(f, ".md")) : []);
 }
 

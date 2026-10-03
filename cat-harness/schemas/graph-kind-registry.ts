@@ -1055,6 +1055,38 @@ export const BASE_GRAPH_KINDS: Readonly<Record<string, GraphKindDef>> = {
     // is what proves the path still resolves.
     validator: "schemas/health-report.ts#HealthReportSchema",
   },
+  // QA ATTESTATIONS — the judgement half of a QA verdict (bean `2gst`, arc
+  // `3fva`). Split out of the `qa` kind by owner ruling D2 (a), 2026-10-01:
+  // derived script verdicts move to the `qa-reports` branch, and every
+  // non-script verdict stays on main. A `kg-qa/v1` sidecar used to carry its
+  // `pair_attestations` and `voice_reviews` beside script verdicts, so moving
+  // the file would have taken the judgements with it — and every reader read
+  // an absent sidecar as "never attested" and re-baselined (defect C4 of the
+  // reader audit). A SEPARATE kind, not a `nodeSchemas` row under `qa`,
+  // because the two answer different questions about deletion: a `qa` file can
+  // be regenerated from the tree, an attestation cannot.
+  //
+  // `state` by the one question, the same answer `review-verdicts` gives: a
+  // running audit WRITES it (a first-sight baseline, an attestation that moves
+  // with the prose), and detached from the subject it judges it asserts
+  // nothing. `recordsWork: false` — a judgement is finished, not in flight.
+  //
+  // ONE layout for every family, so bean `8wj1` (block-qa, translation-qa)
+  // adds rows to `ATTESTATION_FAMILIES` rather than a second store:
+  // `<attestations dir>/<family>/<mirrored subject path>.attestations.json`.
+  attestations: {
+    renderable: false,
+    holds: "state",
+    recordsWork: false,
+    summary:
+      "QA attestations — the judgements a QA family carries across runs (pair attestations, voice " +
+      "reviews, agent and human verdicts), one `qa-attestations/v1` file per subject, mirroring the " +
+      "derived family's tree. Kept on main where deleting derived results cannot reach them; each " +
+      "entry pins the hash it attested, so a stale one is detectable.",
+    schema: "schemas/qa-attestations.ts",
+    // declared-path-literal: this table IS the declaration, as on `health`.
+    validator: "schemas/qa-attestations.ts#QaAttestationsSchema",
+  },
   // Source code. Registered 2026-09-22 (bean `ylj7`) after a measurement the
   // owner asked for: of roughly 1,216 `.ts` files in this repository, about
   // 180 sat inside a DECLARED directory. Roughly 85% of the code was in no
@@ -1153,6 +1185,81 @@ export const BASE_GRAPH_KINDS: Readonly<Record<string, GraphKindDef>> = {
     schema: "schemas/qa-report.ts",
     // declared-path-literal: this table IS the declaration, as for `health`.
     validator: "schemas/qa-report.ts#QaReportSchema",
+  },
+  // Test plans -- what a SYSTEM UNDER TEST must do, case by case, and the DMN
+  // rule that decides whether it did. Strawperson, bean `ygzh` (arc `3fva`,
+  // proposal §3.2), shaped after the held FHIR R5 TestPlan source.
+  //
+  // `content` by the one question: a running process READS a plan and never
+  // writes it -- the tester resolves it, the certifier applies its
+  // `exitCriteria` -- and somebody authors it with an intention. It also
+  // passes both supporting questions: detached from every run it still says
+  // what is required, and you would re-author it rather than regenerate it.
+  // NOT `context`, the near miss: `context` is a record ABOUT content, read
+  // at session start; a plan is the subject matter of a certification, as a
+  // skill is of an agent's work. That is also why the run points at the plan
+  // and never the reverse -- a plan listing its runs would be rewritten by
+  // every execution, which is content turned into state.
+  //
+  // NOT renderable: `renderable` asks whether the graph is wired to the SITE
+  // BUILD, and nothing in the docs build reads a plan. Saying `true` would
+  // promise a page per plan that no generator makes.
+  //
+  // Declared, no directory: nothing authors a plan yet. Plan #1 is
+  // `crdm-detect` (§3.3), and no fixture was manufactured to make a count
+  // non-zero -- the row `qa-report` and `binary-release` also carry.
+  "test-plan": {
+    renderable: false,
+    holds: "content",
+    summary:
+      "Test plans -- one `test-plan/v1` document per plan, in the FHIR R5 TestPlan shape: the " +
+      "system-under-test kind and version range, the `req:` requirements it is evidence for, " +
+      "test cases whose assertions are criterion ids, fixed (reviewed) or generated " +
+      "(template + params + seed) test data, and the certification rule as a DMN reference.",
+    schema: "schemas/test-plan.ts",
+    // declared-path-literal: this table IS the declaration, as for `health`.
+    validator: "schemas/test-plan.ts#TestPlanSchema",
+  },
+  // Test reports -- the verdicts ONE run of ONE plan reached against ONE
+  // system under test, with a per-plan rollup. Strawperson, bean `ygzh`.
+  //
+  // `state` by the one question: the tester's run WRITES it, and it fails the
+  // stand-alone test the way `qa` and `qa-report` do -- detached from the plan
+  // and the system it judges, a list of case ids marked `pass` asserts
+  // nothing. NOT `derived`: re-running a plan against a system produces a NEW
+  // report under a new run id rather than the same one again, which is the
+  // line `qa-report` and `binary-release` already draw.
+  //
+  // A separate kind from `qa-report`, and the difference is the subject: that
+  // records what a TOOL said about its own run; this records what a TESTER
+  // found about SOMEBODY ELSE -- the system under test, which the schema
+  // forbids from writing its own verdict. Folding them would hand a certifier
+  // a script's self-report as if it were a test result.
+  //
+  // `recordsWork: false` -- live state, but nothing anybody is partway
+  // through. A running report is a run in flight, not a work item, and
+  // `testReportVerdict` reports it as `unknown` rather than as clean.
+  //
+  // NOT renderable, for the reason `health` and `qa-report` give: the site
+  // build does not read it. The owner's `py74` ruling -- separate family
+  // panels, never one total -- governs any dashboard later built over it,
+  // and the schema already refuses a total.
+  //
+  // Declared, no directory: proposal §3.2 writes these to the `qa-reports`
+  // branch under `tests/<plan-id>/<sut>/<run-id>/`, which does not exist yet
+  // (beans `ygzh` and the branch work in arc `3fva`).
+  "test-report": {
+    renderable: false,
+    holds: "state",
+    recordsWork: false,
+    summary:
+      "Test reports -- one `test-report/v1` document per run of a plan against a system under " +
+      "test: per-case verdicts in the block-qa entry shape, a rollup for that ONE plan that may " +
+      "not disagree with its cases, and never a total across plans. `running` is never a pass, " +
+      "and the system under test never writes its own verdict. Generated by the run.",
+    schema: "schemas/test-report.ts",
+    // declared-path-literal: this table IS the declaration, as for `health`.
+    validator: "schemas/test-report.ts#TestReportSchema",
   },
   // ONE kind for the whole work plan, not one per store. It replaced `workplan`
   // + `process-state` in #266; the rationale is in this map's doc comment above,
@@ -2132,10 +2239,19 @@ export const BASE_GRAPH_KINDS: Readonly<Record<string, GraphKindDef>> = {
     // subscription, which this tree deliberately does not carry. Every node is
     // tagged `folio-substrate-snapshot/v1` regardless, so moving to
     // `nodeSchemas` then is a one-line change.
+    //
+    // A SECOND family now lives here too, and the validator does not cover it:
+    // the `folio-kg-materialization/v1` part records `kg:materialize` writes
+    // (slices 5-6). Their schema embeds core's `MaterializationSchema`, so it
+    // is core's (`folio-assistant-core/schemas/kg-materialization.ts`) and
+    // this registry cannot name it without pointing up the arrow. They are
+    // JUDGED by `kg:materialize:check` instead; `kg:validate` on one reports
+    // it against the snapshot schema, which is a known gap, not a verdict.
     validator: "schemas/substrate-snapshot.ts#SubstrateSnapshotSchema",
     summary:
       "The root declaration of each Knowledge Graph this instance subscribes to, cached byte for byte at " +
-      "the pinned commit with its fixity, and what the substrate judgement found in it.",
+      "the pinned commit with its fixity, and what the substrate judgement found in it; and each chosen " +
+      "subgraph or asset materialised from it, with its fixity, provenance and gate answers.",
   },
   "translation-sources": {
     perInstance: true,

@@ -5,7 +5,7 @@
     "id": "session-coordinator",
     "path": "scenarios/roles.json"
   },
-  "source_hash": "sha256:f116120a848f90df8f13456dfe379d84bff79721a145b81bd0453c936f5ca08f",
+  "source_hash": "sha256:25f476f2061a06b45094df43c014d8889e9f396004b3a2768211275a2003dd7a",
   "criteria": {
     "role-skills-resolve": {
       "result": "pass",
@@ -16,13 +16,8 @@
       "findings": []
     },
     "role-binds-a-lane": {
-      "result": "fail",
-      "findings": [
-        {
-          "where": "session-coordinator",
-          "detail": "role \"session-coordinator\" is bound by no lane's <bootstrap.processes:role ref> in any diagram — nothing can enter it. Either a lane lost its ref, or the role is dead."
-        }
-      ]
+      "result": "pass",
+      "findings": []
     },
     "role-has-persona": {
       "result": "pass",
@@ -42,8 +37,8 @@
     }
   },
   "totals": {
-    "pass": 6,
-    "fail": 1,
+    "pass": 7,
+    "fail": 0,
     "n/a": 0,
     "unknown": 0
   }

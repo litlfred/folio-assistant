@@ -11,9 +11,11 @@
  * The test of whether a file belongs there is **not** "is it generated" — it is
  * **"does its producer carry anything forward from the existing file"**.
  *
- * `kg-audit` reads its own sidecars back (`readAttestations(sidecarPath(r))`), so
- * a `kg-qa` sidecar holds adjudications an earlier run or a person recorded.
- * `-merge` on one would discard an attestation with nothing said. 840 generated
+ * `kg-audit` reads its prior judgements back (`readAttestations`), so the
+ * file holding them carries adjudications an earlier run or a person recorded.
+ * `-merge` on one would discard an attestation with nothing said. Since bean
+ * `2gst` that file is the attestation store (`test/attestations/kg-qa/`), not
+ * the `kg-qa` sidecar — and BOTH stay textually mergeable here. 840 generated
  * files live under `test/results/`, which makes a glob there the obvious and
  * wrong widening — and the reason this test exists rather than a comment.
  */
@@ -60,6 +62,8 @@ describe("a sidecar whose producer reads it back is NOT marked", () => {
     for (const p of [
       "cat-harness/test/results/kg-qa/processes/adjudication.kg-qa.json",
       "cat-harness/test/results/kg-qa/skills/kg/kg-core/audit-coverage.kg-qa.json",
+      // The judgement half itself (bean `2gst`) — the file that must never be `-merge`.
+      "cat-harness/test/attestations/kg-qa/processes/ci-health-watch.attestations.json",
     ]) {
       expect(mergeAttr(p), `${p} is marked -merge, which would discard an attestation`).not.toBe("unset");
     }

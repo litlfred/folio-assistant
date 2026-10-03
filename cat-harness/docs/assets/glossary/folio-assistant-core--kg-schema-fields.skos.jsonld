@@ -1306,6 +1306,196 @@
       "skos:note": "candidate"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant-core/0.1.0/ns#glossary/kg-schema-fields/kg-materialization.kgdecisionsschema.decidedby",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant-core/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "KgDecisionsSchema.decidedBy"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Who decided, applied to every gate that does not name its own `decidedBy`."
+        }
+      ],
+      "dcterms:source": "folio-assistant-core/schemas/kg-materialization.ts#KgDecisionsSchema.decidedBy",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant-core/0.1.0/ns#glossary/kg-schema-fields/kg-materialization.kgdecisionsschema.expiresat",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant-core/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "KgDecisionsSchema.expiresAt"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "When the copy expires; recorded as `expiresAt`."
+        }
+      ],
+      "dcterms:source": "folio-assistant-core/schemas/kg-materialization.ts#KgDecisionsSchema.expiresAt",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant-core/0.1.0/ns#glossary/kg-schema-fields/kg-materialization.kgdecisionsschema.maxbytes",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant-core/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "KgDecisionsSchema.maxBytes"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The size budget, in bytes. Absent: {@link DEFAULT_MAX_BYTES}."
+        }
+      ],
+      "dcterms:source": "folio-assistant-core/schemas/kg-materialization.ts#KgDecisionsSchema.maxBytes",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant-core/0.1.0/ns#glossary/kg-schema-fields/kg-materialization.kgfilerecordschema.name",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant-core/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "KgFileRecordSchema.name"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Path relative to the part's `tree/` (or the licence's own name)."
+        }
+      ],
+      "dcterms:source": "folio-assistant-core/schemas/kg-materialization.ts#KgFileRecordSchema.name",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant-core/0.1.0/ns#glossary/kg-schema-fields/kg-materialization.kgmaterializationrecordschema.files",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant-core/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "KgMaterializationRecordSchema.files"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "A held SUBGRAPH: one record per file under `tree/`."
+        }
+      ],
+      "dcterms:source": "folio-assistant-core/schemas/kg-materialization.ts#KgMaterializationRecordSchema.files",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant-core/0.1.0/ns#glossary/kg-schema-fields/kg-materialization.kgmaterializationrecordschema.licence",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant-core/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "KgMaterializationRecordSchema.licence"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The upstream licence, copied beside the tree so its notice travels with the copy."
+        }
+      ],
+      "dcterms:source": "folio-assistant-core/schemas/kg-materialization.ts#KgMaterializationRecordSchema.licence",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant-core/0.1.0/ns#glossary/kg-schema-fields/kg-materialization.kgmaterializationrecordschema.ref",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant-core/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "KgMaterializationRecordSchema.ref"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The pin the part was asked at — the subscription's `ref` when it was written."
+        }
+      ],
+      "dcterms:source": "folio-assistant-core/schemas/kg-materialization.ts#KgMaterializationRecordSchema.ref",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant-core/0.1.0/ns#glossary/kg-schema-fields/kg-materialization.kgmaterializationrecordschema.refusal",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant-core/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "KgMaterializationRecordSchema.refusal"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Present iff the part stayed referenced."
+        }
+      ],
+      "dcterms:source": "folio-assistant-core/schemas/kg-materialization.ts#KgMaterializationRecordSchema.refusal",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant-core/0.1.0/ns#glossary/kg-schema-fields/kg-materialization.kgmaterializationrecordschema.subscription",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant-core/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "KgMaterializationRecordSchema.subscription"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The `subscriptions[].id` this part belongs to."
+        }
+      ],
+      "dcterms:source": "folio-assistant-core/schemas/kg-materialization.ts#KgMaterializationRecordSchema.subscription",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant-core/0.1.0/ns#glossary/kg-schema-fields/kg-materialization.kgrefusalschema.purposemissing",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant-core/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "KgRefusalSchema.purposeMissing"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "A purpose is asked FIRST; a part with none cannot have its gates judged."
+        }
+      ],
+      "dcterms:source": "folio-assistant-core/schemas/kg-materialization.ts#KgRefusalSchema.purposeMissing",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant-core/0.1.0/ns#glossary/kg-schema-fields/library-ref.libraryref.instance",
       "@type": "skos:Concept",
       "skos:inScheme": {

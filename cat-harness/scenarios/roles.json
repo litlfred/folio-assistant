@@ -358,6 +358,7 @@
         "content-graph",
         "content-plan",
         "continual-progress",
+        "coordinate",
         "crdm-detect",
         "crdm-requirements-workflow",
         "decision-audit",
@@ -472,6 +473,20 @@
       "persona": "Another agent or human on the same store, with different context and its own claims. Present precisely to mark what is NOT yours to close."
     },
     {
+      "id": "merge-steward",
+      "title": "Merge steward",
+      "description": "Composes a merge train from the queue, attributes and ejects on red, and lands at the tested SHA. Decides nothing the reprioritisation table or the owner has not: placement is computed by merge-priority.dmn, and landing waits for the owner's release. Records decisions on queue entries, never GitHub's facts.",
+      "actorKinds": [
+        "agent"
+      ],
+      "skills": [
+        "merge-queue",
+        "merge-conflict-patterns",
+        "prepare-merge"
+      ],
+      "persona": "Patient and literal. Would rather eject one PR with evidence than hold a whole train, and would rather re-run than land a SHA CI did not test."
+    },
+    {
       "id": "build-pipeline",
       "title": "Build pipeline",
       "description": "Validates, renders and publishes, and watches whether that actually worked. A system lane: it runs a fixed program and exercises no judgement, so anything needing a decision belongs in a different lane. It carries `todo-manager` for the two CI-watcher dispatch points in `content-change-review`, which `claim` and `note` a bean and never `resolve` one -- claim is idempotent and note appends, both fixed programs, while deciding that a publish SUCCEEDED is the judgement this lane must not make (bean xom7: docs-site.yml failed 30 times while reporting its own exit code).",
@@ -490,7 +505,10 @@
         "watch",
         "kg-separation",
         "render-kg-to-cdn",
-        "ig-ast-delta"
+        "ig-ast-delta",
+        "ci-health",
+        "platform-gates",
+        "prepare-merge"
       ]
     },
     {

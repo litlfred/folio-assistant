@@ -212,11 +212,10 @@ And a second-order caution, because it inverts who pays: a duplicate-detecting
 test punishes **whoever merges second**, not whoever duplicated. Merging first
 does not mean you were first.
 
-**A platform refactor needs more than this check.** Shared layout, generators,
-schemas and processes collide by file as well as by subject. They run the
-five-step collision review in [`coordinate`](coordinate.md) §"Before a
-platform refactor", and record it in the workplan bean before the first edit
-(owner, 2026-10-02, #1885).
+**Starting any new unit of work runs the collision review in
+[`coordinate`](coordinate.md) §"Starting new work"**, scaled to its blast
+radius and recorded in the workplan bean before the first edit (owner,
+2026-10-02, #1885).
 
 ### And ASK AGAIN before you open the PR — looking once is not enough
 

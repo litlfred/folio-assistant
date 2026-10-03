@@ -2,7 +2,7 @@
   "$schema": "folio-schema-graph/v1",
   "tile": {
     "schemas": {
-      "count": 197,
+      "count": 205,
       "unit": "modules"
     }
   },
@@ -676,6 +676,15 @@
       "isTest": false
     },
     {
+      "module": "cat-harness/schemas/library-iri.ts",
+      "instance": "cat-harness",
+      "name": "library-iri",
+      "graphNode": "none",
+      "reason": "a mint rule, not a schema",
+      "summary": "A library entry's ONE IRI — the address of its published JSON-LD.",
+      "isTest": false
+    },
+    {
       "module": "cat-harness/schemas/log-entry.ts",
       "instance": "cat-harness",
       "name": "log-entry",
@@ -705,6 +714,14 @@
       "name": "memory",
       "graphNode": "schema",
       "summary": "An agent's memory — what it carries into the next task, as a graph node.",
+      "isTest": false
+    },
+    {
+      "module": "cat-harness/schemas/merge-queue.ts",
+      "instance": "cat-harness",
+      "name": "merge-queue",
+      "graphNode": "schema",
+      "summary": "The MERGE QUEUE — what the merge steward DECIDED about each open pull",
       "isTest": false
     },
     {
@@ -908,6 +925,22 @@
       "name": "python-deps",
       "graphNode": "schema",
       "summary": "The Python packages this repository's scripts need — declared once.",
+      "isTest": false
+    },
+    {
+      "module": "cat-harness/schemas/qa-attestations.test.ts",
+      "instance": "cat-harness",
+      "name": "qa-attestations.test",
+      "graphNode": "undeclared",
+      "summary": "The attestation store — bean `2gst`. The schema holds only judgements, the",
+      "isTest": true
+    },
+    {
+      "module": "cat-harness/schemas/qa-attestations.ts",
+      "instance": "cat-harness",
+      "name": "qa-attestations",
+      "graphNode": "schema",
+      "summary": "QA ATTESTATIONS — the judgement half of a QA verdict, kept on `main` where a",
       "isTest": false
     },
     {
@@ -1273,11 +1306,43 @@
       "isTest": false
     },
     {
+      "module": "cat-harness/schemas/test-plan.test.ts",
+      "instance": "cat-harness",
+      "name": "test-plan.test",
+      "graphNode": "undeclared",
+      "summary": "`test-plan/v1` — the strawperson plan schema (bean `ygzh`).",
+      "isTest": true
+    },
+    {
+      "module": "cat-harness/schemas/test-plan.ts",
+      "instance": "cat-harness",
+      "name": "test-plan",
+      "graphNode": "schema",
+      "summary": "A TEST PLAN — what a system under test must do, case by case, and the rule",
+      "isTest": false
+    },
+    {
       "module": "cat-harness/schemas/test-preload.ts",
       "instance": "cat-harness",
       "name": "test-preload",
       "graphNode": "schema",
       "summary": "Register core's graph kinds before any test reads a declaration.",
+      "isTest": false
+    },
+    {
+      "module": "cat-harness/schemas/test-report.test.ts",
+      "instance": "cat-harness",
+      "name": "test-report.test",
+      "graphNode": "undeclared",
+      "summary": "`test-report/v1` — per-case verdicts, a per-plan rollup, never a total",
+      "isTest": true
+    },
+    {
+      "module": "cat-harness/schemas/test-report.ts",
+      "instance": "cat-harness",
+      "name": "test-report",
+      "graphNode": "schema",
+      "summary": "A TEST REPORT — the verdicts one run of one plan reached against one system",
       "isTest": false
     },
     {
@@ -1759,6 +1824,14 @@
       "name": "glossary",
       "graphNode": "schema",
       "summary": "`folio-glossary/v1`: a glossary as W3C SKOS. Core's `glossary` graph kind",
+      "isTest": false
+    },
+    {
+      "module": "folio-assistant-core/schemas/kg-materialization.ts",
+      "instance": "folio-assistant-core",
+      "name": "kg-materialization",
+      "graphNode": "schema",
+      "summary": "The record of ONE materialised part of a subscribed Knowledge Graph — a",
       "isTest": false
     },
     {
@@ -6991,6 +7064,13 @@
           "optional": true,
           "array": false,
           "doc": "Which theme this subgraph renders on — one answer for every surface that"
+        },
+        {
+          "name": "storage",
+          "type": "DirectoryStorage",
+          "optional": true,
+          "array": false,
+          "doc": "This directory's contents are STORED on a branch, keyed by commit or tip, and the"
         }
       ],
       "extendsNames": [
@@ -6998,6 +7078,7 @@
       ],
       "values": [],
       "refs": [
+        "cat-harness/schemas/cat-harness.ts#DirectoryStorage",
         "cat-harness/schemas/cat-harness.ts#GraphNodeDirectory",
         "cat-harness/schemas/cat-harness.ts#SubgraphCoverage",
         "cat-harness/schemas/theme.ts#ThemeRef"
@@ -7011,7 +7092,7 @@
       "name": "ContentDirectorySchema",
       "module": "cat-harness/schemas/cat-harness.ts",
       "kind": "undetermined",
-      "note": "z.preprocess(acceptLegacyGraphsKey, ContentDirectoryShape)",
+      "note": "z.preprocess( acceptLegacyGraphsKey, // A `qa` directory is commit-keyed by construction: its readers compare one // commit's verdicts against a baseline, and …",
       "doc": "As {@link GraphNodeDirectorySchema}, for an instance's own directories.",
       "fields": [],
       "extendsNames": [],
@@ -7090,6 +7171,13 @@
           "doc": "`/<kind>/<instance>/` for this directory is a ONE-FILE REDIRECT to the"
         },
         {
+          "name": "storage",
+          "type": "DirectoryStorageSchema.optional()",
+          "optional": true,
+          "array": false,
+          "doc": "Where this directory's contents are KEPT, when that is not the checkout."
+        },
+        {
           "name": "composed",
           "type": "z.boolean().optional()",
           "optional": true,
@@ -7109,6 +7197,7 @@
       ],
       "values": [],
       "refs": [
+        "cat-harness/schemas/cat-harness.ts#DirectoryStorageSchema",
         "cat-harness/schemas/cat-harness.ts#GraphNodeDirectoryShape",
         "cat-harness/schemas/cat-harness.ts#SubgraphCoverageSchema",
         "cat-harness/schemas/cat-harness.ts#TileSchema",
@@ -7171,6 +7260,50 @@
       ],
       "unresolved": [],
       "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/cat-harness.ts#DirectoryStorage",
+      "name": "DirectoryStorage",
+      "module": "cat-harness/schemas/cat-harness.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/cat-harness.ts#DirectoryStorageSchema",
+      "name": "DirectoryStorageSchema",
+      "module": "cat-harness/schemas/cat-harness.ts",
+      "kind": "zod-object",
+      "doc": "A directory whose contents live on a BRANCH — one tree per commit, or one",
+      "fields": [
+        {
+          "name": "branch",
+          "type": "z .string() .regex(/^(?!-)(?!refs\\/)[A-Za-z0-9._/-]+$/, \"a plain branch name, e.g. qa-reports\") .refine( (b) => !b.incl…",
+          "optional": false,
+          "array": false,
+          "doc": "The branch, e.g. `qa-reports`. A plain branch name: no `refs/`, no `..`, no leading `-`."
+        },
+        {
+          "name": "keyedBy",
+          "type": "z.enum([\"commit\", \"tip\"])",
+          "optional": false,
+          "array": false,
+          "doc": "How entries are keyed on the branch: one entry per `commit`, or one live copy at the `tip`."
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [
+        "z"
+      ],
       "exported": true
     },
     {
@@ -19431,63 +19564,6 @@
       "exported": true
     },
     {
-      "id": "cat-harness/schemas/kg-qa.ts#KgPairAttestation",
-      "name": "KgPairAttestation",
-      "module": "cat-harness/schemas/kg-qa.ts",
-      "kind": "interface",
-      "doc": "One declared pair's accepted state. Paths are repo-relative.",
-      "fields": [
-        {
-          "name": "kind",
-          "type": "\"implements\" | \"co-located\"",
-          "optional": false,
-          "array": false
-        },
-        {
-          "name": "prose",
-          "type": "string",
-          "optional": false,
-          "array": false
-        },
-        {
-          "name": "code",
-          "type": "string",
-          "optional": false,
-          "array": false
-        },
-        {
-          "name": "prose_hash",
-          "type": "string",
-          "optional": false,
-          "array": false
-        },
-        {
-          "name": "code_hash",
-          "type": "string",
-          "optional": false,
-          "array": false
-        },
-        {
-          "name": "by",
-          "type": "\"baseline\" | \"agent\" | \"human\"",
-          "optional": false,
-          "array": false
-        },
-        {
-          "name": "reason",
-          "type": "string",
-          "optional": true,
-          "array": false
-        }
-      ],
-      "extendsNames": [],
-      "values": [],
-      "refs": [],
-      "unresolved": [],
-      "external": [],
-      "exported": true
-    },
-    {
       "id": "cat-harness/schemas/kg-qa.ts#KgQaManifest",
       "name": "KgQaManifest",
       "module": "cat-harness/schemas/kg-qa.ts",
@@ -19584,30 +19660,14 @@
           "type": "Record<KgResult, number>",
           "optional": false,
           "array": false
-        },
-        {
-          "name": "pair_attestations",
-          "type": "KgPairAttestation[]",
-          "optional": true,
-          "array": true,
-          "doc": "Declared prose ↔ code pairs and the state each was last accepted in —"
-        },
-        {
-          "name": "voice_reviews",
-          "type": "KgVoiceReview[]",
-          "optional": true,
-          "array": true,
-          "doc": "An agent's or a person's rule-by-rule review of a skill against a voice"
         }
       ],
       "extendsNames": [],
       "values": [],
       "refs": [
         "cat-harness/schemas/kg-qa.ts#KgCriterionEntry",
-        "cat-harness/schemas/kg-qa.ts#KgPairAttestation",
         "cat-harness/schemas/kg-qa.ts#KgResult",
-        "cat-harness/schemas/kg-qa.ts#KgSubject",
-        "cat-harness/schemas/kg-qa.ts#KgVoiceReview"
+        "cat-harness/schemas/kg-qa.ts#KgSubject"
       ],
       "unresolved": [],
       "external": [
@@ -19653,15 +19713,15 @@
         },
         {
           "name": "pair_attestations",
-          "type": "z .array( z.object({ kind: z.enum([\"implements\", \"co-located\"]), prose: z.string().min(1), code: z.string().min(1), pro…",
+          "type": "z.never({ error: \"pair_attestations belong in the attestation store (schemas/qa-attestations.ts), not a kg-qa sidecar\" …",
           "optional": true,
-          "array": true
+          "array": false
         },
         {
           "name": "voice_reviews",
-          "type": "z .array( z.object({ voice: z.string().min(1), instance: z.string().min(1), skill_hash: z.string().min(1), voice_hash: …",
+          "type": "z.never({ error: \"voice_reviews belong in the attestation store (schemas/qa-attestations.ts), not a kg-qa sidecar\" }).o…",
           "optional": true,
-          "array": true
+          "array": false
         }
       ],
       "extendsNames": [],
@@ -19747,63 +19807,6 @@
       "module": "cat-harness/schemas/kg-qa.ts",
       "kind": "type-alias",
       "fields": [],
-      "extendsNames": [],
-      "values": [],
-      "refs": [],
-      "unresolved": [],
-      "external": [],
-      "exported": true
-    },
-    {
-      "id": "cat-harness/schemas/kg-qa.ts#KgVoiceReview",
-      "name": "KgVoiceReview",
-      "module": "cat-harness/schemas/kg-qa.ts",
-      "kind": "interface",
-      "doc": "One review of a skill against one voice. Hashes pin what was reviewed.",
-      "fields": [
-        {
-          "name": "voice",
-          "type": "string",
-          "optional": false,
-          "array": false
-        },
-        {
-          "name": "instance",
-          "type": "string",
-          "optional": false,
-          "array": false
-        },
-        {
-          "name": "skill_hash",
-          "type": "string",
-          "optional": false,
-          "array": false
-        },
-        {
-          "name": "voice_hash",
-          "type": "string",
-          "optional": false,
-          "array": false
-        },
-        {
-          "name": "by",
-          "type": "\"agent\" | \"human\"",
-          "optional": false,
-          "array": false
-        },
-        {
-          "name": "at",
-          "type": "string",
-          "optional": false,
-          "array": false
-        },
-        {
-          "name": "verdicts",
-          "type": "Array<{ rule: string; result: \"pass\" | \"fail\" | \"n/a\"; note?: string }>",
-          "optional": false,
-          "array": false
-        }
-      ],
       "extendsNames": [],
       "values": [],
       "refs": [],
@@ -20771,6 +20774,535 @@
       "unresolved": [],
       "external": [
         "MEMORY_LABELS",
+        "z"
+      ],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/merge-queue.ts#BeanIdSchema",
+      "name": "BeanIdSchema",
+      "module": "cat-harness/schemas/merge-queue.ts",
+      "kind": "zod-scalar",
+      "doc": "A bean id as the store writes it, e.g. `folio-assistant-hfag`.",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/merge-queue.ts#Ejection",
+      "name": "Ejection",
+      "module": "cat-harness/schemas/merge-queue.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/merge-queue.ts#EjectionSchema",
+      "name": "EjectionSchema",
+      "module": "cat-harness/schemas/merge-queue.ts",
+      "kind": "zod-object",
+      "doc": "The PR was taken out of a train (T1; R3, R4 — see the module docblock).",
+      "fields": [
+        {
+          "name": "trainId",
+          "type": "NonBlank",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "reason",
+          "type": "NonBlank",
+          "optional": false,
+          "array": false,
+          "doc": "What the steward concluded, e.g. \"own CI red on `docs:harness:check`\"."
+        },
+        {
+          "name": "evidenceUrl",
+          "type": "z.url()",
+          "optional": false,
+          "array": false,
+          "doc": "The run, comment or log that shows it."
+        },
+        {
+          "name": "at",
+          "type": "Instant",
+          "optional": false,
+          "array": false
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [
+        "cat-harness/schemas/merge-queue.ts#Instant",
+        "cat-harness/schemas/merge-queue.ts#NonBlank"
+      ],
+      "unresolved": [],
+      "external": [
+        "z"
+      ],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/merge-queue.ts#EntryObjectSchema",
+      "name": "EntryObjectSchema",
+      "module": "cat-harness/schemas/merge-queue.ts",
+      "kind": "zod-object",
+      "fields": [
+        {
+          "name": "$schema",
+          "type": "z.literal(MERGE_QUEUE_ENTRY_TAG)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "repository",
+          "type": "z.string().regex(/^[\\w.-]+\\/[\\w.-]+$/, \"`owner/name`\")",
+          "optional": false,
+          "array": false,
+          "doc": "`owner/name` — a PR number means nothing without its repository."
+        },
+        {
+          "name": "pr",
+          "type": "z.number().int().positive()",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "placement",
+          "type": "PlacementSchema",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "reason",
+          "type": "NonBlank",
+          "optional": false,
+          "array": false,
+          "doc": "Why this placement, in a sentence. For `computed`, the rule's description will do."
+        },
+        {
+          "name": "decidedBy",
+          "type": "NonBlank",
+          "optional": false,
+          "array": false,
+          "doc": "Who decided — a session URL, `owner`, or an actor id."
+        },
+        {
+          "name": "decidedAt",
+          "type": "Instant",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "hold",
+          "type": "HoldSchema.optional()",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "trainId",
+          "type": "NonBlank.optional()",
+          "optional": true,
+          "array": false,
+          "doc": "Assigned once the PR is taken into a train; the train-run instance's id."
+        },
+        {
+          "name": "ejection",
+          "type": "EjectionSchema.optional()",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "beans",
+          "type": "z.array(BeanIdSchema).default([])",
+          "optional": true,
+          "array": true,
+          "doc": "Beans and epics this PR serves. Epics are beans, so one list."
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [
+        "cat-harness/schemas/merge-queue.ts#BeanIdSchema",
+        "cat-harness/schemas/merge-queue.ts#EjectionSchema",
+        "cat-harness/schemas/merge-queue.ts#HoldSchema",
+        "cat-harness/schemas/merge-queue.ts#Instant",
+        "cat-harness/schemas/merge-queue.ts#NonBlank",
+        "cat-harness/schemas/merge-queue.ts#PlacementSchema"
+      ],
+      "unresolved": [],
+      "external": [
+        "MERGE_QUEUE_ENTRY_TAG",
+        "z"
+      ],
+      "exported": false
+    },
+    {
+      "id": "cat-harness/schemas/merge-queue.ts#Hold",
+      "name": "Hold",
+      "module": "cat-harness/schemas/merge-queue.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/merge-queue.ts#HoldSchema",
+      "name": "HoldSchema",
+      "module": "cat-harness/schemas/merge-queue.ts",
+      "kind": "zod-object",
+      "doc": "A hold — the entry stays in the queue but is not taken into a train.",
+      "fields": [
+        {
+          "name": "waitsOn",
+          "type": "NonBlank",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "since",
+          "type": "Instant",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "expires",
+          "type": "Instant",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "handoff",
+          "type": "NonBlank",
+          "optional": false,
+          "array": false
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [
+        "cat-harness/schemas/merge-queue.ts#Instant",
+        "cat-harness/schemas/merge-queue.ts#NonBlank"
+      ],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/merge-queue.ts#Instant",
+      "name": "Instant",
+      "module": "cat-harness/schemas/merge-queue.ts",
+      "kind": "undetermined",
+      "note": "z.iso.datetime({ offset: true })",
+      "doc": "An ISO-8601 timestamp with a zone, as everywhere else in the work plan.",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": false
+    },
+    {
+      "id": "cat-harness/schemas/merge-queue.ts#MemberFacts",
+      "name": "MemberFacts",
+      "module": "cat-harness/schemas/merge-queue.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/merge-queue.ts#MemberFactsSchema",
+      "name": "MemberFactsSchema",
+      "module": "cat-harness/schemas/merge-queue.ts",
+      "kind": "zod-object",
+      "doc": "The live facts about one PR that the reprioritisation table reads.",
+      "fields": [
+        {
+          "name": "pr",
+          "type": "z.number().int().positive()",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "authoredPaths",
+          "type": "z.array(z.string())",
+          "optional": false,
+          "array": true,
+          "doc": "Changed paths a declared merge pattern would REFUSE — the authored ones (T3, R7)."
+        },
+        {
+          "name": "touchesShared",
+          "type": "z.boolean()",
+          "optional": false,
+          "array": false,
+          "doc": "Touches a shared declaration: a schema, generator, `<instance>.json`, BPMN or DMN (T3, R6)."
+        },
+        {
+          "name": "touchesHarness",
+          "type": "z.boolean()",
+          "optional": false,
+          "array": false,
+          "doc": "An authored path under `cat-harness/` or `cat-harness-tools/`. The raw"
+        },
+        {
+          "name": "seedsStaging",
+          "type": "z.boolean()",
+          "optional": false,
+          "array": false,
+          "doc": "Input (a): `touchesHarness` AND a linked bean descends from the"
+        },
+        {
+          "name": "unblocks",
+          "type": "z.number().int().nonnegative()",
+          "optional": false,
+          "array": false,
+          "doc": "Open PRs or beans this unblocks, or tangle edges it removes — input (b)."
+        },
+        {
+          "name": "mvp",
+          "type": "z.boolean()",
+          "optional": false,
+          "array": false,
+          "doc": "Tagged MVP / feature-priority, by epic or label — input (c)."
+        },
+        {
+          "name": "sizeBand",
+          "type": "z.enum([\"small\", \"large\"])",
+          "optional": false,
+          "array": false,
+          "doc": "Changed files plus changed lines, banded — input (d)."
+        },
+        {
+          "name": "conflictRisk",
+          "type": "z.enum([\"low\", \"high\"])",
+          "optional": false,
+          "array": false,
+          "doc": "Shares an AUTHORED path with another live queued PR — input (d), T3."
+        },
+        {
+          "name": "overlapKind",
+          "type": "z.enum([\"none\", \"generated-only\", \"shared-declaration\", \"authored\"])",
+          "optional": false,
+          "array": false,
+          "doc": "WHICH KIND of collision this PR has with the rest of the live queue."
+        },
+        {
+          "name": "refused",
+          "type": "z.boolean()",
+          "optional": false,
+          "array": false,
+          "doc": "A declared merge pattern refuses a conflicted path, or GitHub reports it dirty."
+        },
+        {
+          "name": "ownCi",
+          "type": "z.enum([\"green\", \"red\", \"missing-required\", \"none\", \"unknown\"])",
+          "optional": false,
+          "array": false,
+          "doc": "The PR's own CI on its head: T2's first evidence."
+        },
+        {
+          "name": "headShaMatchesCi",
+          "type": "z.boolean()",
+          "optional": false,
+          "array": false,
+          "doc": "Did CI run on the head that would be merged (T2; bean `u7be` item 3)."
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [
+        "z"
+      ],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/merge-queue.ts#MergeQueueEntry",
+      "name": "MergeQueueEntry",
+      "module": "cat-harness/schemas/merge-queue.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/merge-queue.ts#MergeQueueEntrySchema",
+      "name": "MergeQueueEntrySchema",
+      "module": "cat-harness/schemas/merge-queue.ts",
+      "kind": "zod-object",
+      "doc": "One queue entry, one file: `<merge-queue>/<owner>--<repo>--<pr>.json`.",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/merge-queue.ts#NonBlank",
+      "name": "NonBlank",
+      "module": "cat-harness/schemas/merge-queue.ts",
+      "kind": "zod-scalar",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": false
+    },
+    {
+      "id": "cat-harness/schemas/merge-queue.ts#Placement",
+      "name": "Placement",
+      "module": "cat-harness/schemas/merge-queue.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/merge-queue.ts#PlacementSchema",
+      "name": "PlacementSchema",
+      "module": "cat-harness/schemas/merge-queue.ts",
+      "kind": "zod-union",
+      "doc": "Where the PR sits, and on whose authority.",
+      "fields": [],
+      "extendsNames": [],
+      "values": [
+        "kind",
+        "computed",
+        "override"
+      ],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/merge-queue.ts#PriorityClass",
+      "name": "PriorityClass",
+      "module": "cat-harness/schemas/merge-queue.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/merge-queue.ts#PriorityClassSchema",
+      "name": "PriorityClassSchema",
+      "module": "cat-harness/schemas/merge-queue.ts",
+      "kind": "zod-enum",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/merge-queue.ts#TrainMemberEvidence",
+      "name": "TrainMemberEvidence",
+      "module": "cat-harness/schemas/merge-queue.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/merge-queue.ts#TrainMemberEvidenceSchema",
+      "name": "TrainMemberEvidenceSchema",
+      "module": "cat-harness/schemas/merge-queue.ts",
+      "kind": "zod-object",
+      "doc": "A DATED snapshot of the facts the steward acted on, for one member of a",
+      "fields": [
+        {
+          "name": "pr",
+          "type": "z.number().int().positive()",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "headSha",
+          "type": "z.string().regex(/^[0-9a-f]{40}$/, \"a full 40-character object name\")",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "ownCi",
+          "type": "z.enum([\"green\", \"red\", \"none\"])",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "headShaMatchesCi",
+          "type": "z.boolean()",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "observedAt",
+          "type": "Instant",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "outcome",
+          "type": "z.enum([\"merged\", \"ejected\", \"handed-back\", \"held\"])",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "evidenceUrl",
+          "type": "z.url().optional()",
+          "optional": true,
+          "array": false
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [
+        "cat-harness/schemas/merge-queue.ts#Instant"
+      ],
+      "unresolved": [],
+      "external": [
         "z"
       ],
       "exported": true
@@ -22744,6 +23276,377 @@
       "exported": true
     },
     {
+      "id": "cat-harness/schemas/qa-attestations.ts#AttestationFamily",
+      "name": "AttestationFamily",
+      "module": "cat-harness/schemas/qa-attestations.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/qa-attestations.ts#AttestationRead",
+      "name": "AttestationRead",
+      "module": "cat-harness/schemas/qa-attestations.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/qa-attestations.ts#AttestationSubjectSchema",
+      "name": "AttestationSubjectSchema",
+      "module": "cat-harness/schemas/qa-attestations.ts",
+      "kind": "zod-object",
+      "doc": "The subject, exactly as the derived report beside it names it.",
+      "fields": [
+        {
+          "name": "kind",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "id",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "path",
+          "type": "z.string().nullable()",
+          "optional": false,
+          "array": false
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [
+        "z"
+      ],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/qa-attestations.ts#KgAttestations",
+      "name": "KgAttestations",
+      "module": "cat-harness/schemas/qa-attestations.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/qa-attestations.ts#KgAttestationsSchema",
+      "name": "KgAttestationsSchema",
+      "module": "cat-harness/schemas/qa-attestations.ts",
+      "kind": "zod-object",
+      "doc": "The `kg-qa` family: pair attestations and voice reviews.",
+      "fields": [
+        {
+          "name": "family",
+          "type": "z.literal(\"kg-qa\")",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "pair_attestations",
+          "type": "z.array(PairAttestationSchema).optional()",
+          "optional": true,
+          "array": true
+        },
+        {
+          "name": "voice_reviews",
+          "type": "z.array(VoiceReviewSchema).optional()",
+          "optional": true,
+          "array": true
+        }
+      ],
+      "extendsNames": [
+        "QaAttestationsBaseSchema"
+      ],
+      "values": [],
+      "refs": [
+        "cat-harness/schemas/qa-attestations.ts#PairAttestationSchema",
+        "cat-harness/schemas/qa-attestations.ts#QaAttestationsBaseSchema",
+        "cat-harness/schemas/qa-attestations.ts#VoiceReviewSchema"
+      ],
+      "unresolved": [],
+      "external": [
+        "z"
+      ],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/qa-attestations.ts#KgAttestationTree",
+      "name": "KgAttestationTree",
+      "module": "cat-harness/schemas/qa-attestations.ts",
+      "kind": "interface",
+      "doc": "One instance's `kg-qa/` derived tree and the attestation home it maps onto.",
+      "fields": [
+        {
+          "name": "instance",
+          "type": "string",
+          "optional": false,
+          "array": false,
+          "doc": "Repo-relative instance root, `.` for the checkout root."
+        },
+        {
+          "name": "kgTree",
+          "type": "string",
+          "optional": false,
+          "array": false,
+          "doc": "Absolute `<qa home>/kg-qa`."
+        },
+        {
+          "name": "attHome",
+          "type": "string",
+          "optional": false,
+          "array": false,
+          "doc": "Absolute attestations home (the `<family>` directory goes under it)."
+        },
+        {
+          "name": "storeRoot",
+          "type": "string",
+          "optional": false,
+          "array": false,
+          "doc": "The declared directory whose absence is \"store absent\" — see `attestationsHomeFor`."
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/qa-attestations.ts#PairAttestationEntry",
+      "name": "PairAttestationEntry",
+      "module": "cat-harness/schemas/qa-attestations.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/qa-attestations.ts#PairAttestationSchema",
+      "name": "PairAttestationSchema",
+      "module": "cat-harness/schemas/qa-attestations.ts",
+      "kind": "zod-object",
+      "doc": "One declared prose ↔ code pair's accepted state. Paths are repo-relative.",
+      "fields": [
+        {
+          "name": "kind",
+          "type": "z.enum([\"implements\", \"co-located\"])",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "prose",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "code",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "prose_hash",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "code_hash",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "by",
+          "type": "z.enum([\"baseline\", \"agent\", \"human\"])",
+          "optional": false,
+          "array": false,
+          "doc": "`baseline` counts as a judgement (owner, 2026-10-01): it records the state the drift is measured from."
+        },
+        {
+          "name": "reason",
+          "type": "z.string().min(1).optional()",
+          "optional": true,
+          "array": false
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [
+        "z"
+      ],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/qa-attestations.ts#QaAttestations",
+      "name": "QaAttestations",
+      "module": "cat-harness/schemas/qa-attestations.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/qa-attestations.ts#QaAttestationsBaseSchema",
+      "name": "QaAttestationsBaseSchema",
+      "module": "cat-harness/schemas/qa-attestations.ts",
+      "kind": "zod-object",
+      "doc": "The envelope every family shares. A family's own arrays are added by `.extend`.",
+      "fields": [
+        {
+          "name": "$schema",
+          "type": "z.literal(QA_ATTESTATIONS_SCHEMA)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "family",
+          "type": "z.enum(ATTESTATION_FAMILIES)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "subject",
+          "type": "AttestationSubjectSchema",
+          "optional": false,
+          "array": false
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [
+        "cat-harness/schemas/qa-attestations.ts#AttestationSubjectSchema"
+      ],
+      "unresolved": [],
+      "external": [
+        "ATTESTATION_FAMILIES",
+        "QA_ATTESTATIONS_SCHEMA",
+        "z"
+      ],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/qa-attestations.ts#QaAttestationsSchema",
+      "name": "QaAttestationsSchema",
+      "module": "cat-harness/schemas/qa-attestations.ts",
+      "kind": "zod-union",
+      "doc": "Every `qa-attestations/v1` file. A union on `family` so `kg_validate` and",
+      "fields": [],
+      "extendsNames": [],
+      "values": [
+        "family"
+      ],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/qa-attestations.ts#VoiceReviewEntry",
+      "name": "VoiceReviewEntry",
+      "module": "cat-harness/schemas/qa-attestations.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/qa-attestations.ts#VoiceReviewSchema",
+      "name": "VoiceReviewSchema",
+      "module": "cat-harness/schemas/qa-attestations.ts",
+      "kind": "zod-object",
+      "doc": "One review of a skill against one voice. Hashes pin what was reviewed.",
+      "fields": [
+        {
+          "name": "voice",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "instance",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "skill_hash",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "voice_hash",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "by",
+          "type": "z.enum([\"agent\", \"human\"])",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "at",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "verdicts",
+          "type": "z.array( z.object({ rule: z.string().min(1), result: z.enum([\"pass\", \"fail\", \"n/a\"]), note: z.string().min(1).optional(…",
+          "optional": false,
+          "array": true
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [
+        "z"
+      ],
+      "exported": true
+    },
+    {
       "id": "cat-harness/schemas/qa-report.ts#DetailsShape",
       "name": "DetailsShape",
       "module": "cat-harness/schemas/qa-report.ts",
@@ -24493,6 +25396,147 @@
       "exported": true
     },
     {
+      "id": "cat-harness/schemas/referenced-source.ts#FileSourceSchema",
+      "name": "FileSourceSchema",
+      "module": "cat-harness/schemas/referenced-source.ts",
+      "kind": "zod-object",
+      "doc": "A source that IS one file — the OMG specifications. `_tech_meta`'s block,",
+      "fields": [
+        {
+          "name": "file",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "sha256",
+          "type": "z.string().regex(/^[0-9a-f]{64}$/)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "bytes",
+          "type": "z.number().int().min(0)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "mtime",
+          "type": "z.string().nullable()",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "mimetype_sniffed",
+          "type": "z.string().nullable()",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "mimetype_source",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [
+        "z"
+      ],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/referenced-source.ts#PublishedSourceSchema",
+      "name": "PublishedSourceSchema",
+      "module": "cat-harness/schemas/referenced-source.ts",
+      "kind": "zod-object",
+      "doc": "A source that is a PUBLICATION rather than a file — a FHIR implementation",
+      "fields": [
+        {
+          "name": "kind",
+          "type": "z.literal(\"published\")",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "url",
+          "type": "z.string().url()",
+          "optional": false,
+          "array": false,
+          "doc": "Where a reader goes to read it — the publisher's own address."
+        },
+        {
+          "name": "canonical",
+          "type": "z.string().url()",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "package_id",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "version",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "read_from",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false,
+          "doc": "The repo-relative file the identity above was read from."
+        },
+        {
+          "name": "read_at",
+          "type": "z.string().regex(/^\\d{4}-\\d{2}-\\d{2}$/)",
+          "optional": false,
+          "array": false
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [
+        "z"
+      ],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/referenced-source.ts#ReferencedLink",
+      "name": "ReferencedLink",
+      "module": "cat-harness/schemas/referenced-source.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/referenced-source.ts#ReferencedLinkSchema",
+      "name": "ReferencedLinkSchema",
+      "module": "cat-harness/schemas/referenced-source.ts",
+      "kind": "zod-union",
+      "doc": "Where else a reader can go for this source — the publisher's page, or a",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
       "id": "cat-harness/schemas/referenced-source.ts#ReferencedSource",
       "name": "ReferencedSource",
       "module": "cat-harness/schemas/referenced-source.ts",
@@ -24525,7 +25569,7 @@
         },
         {
           "name": "source",
-          "type": "z .object({ file: z.string().min(1), sha256: z.string().regex(/^[0-9a-f]{64}$/), bytes: z.number().int().min(0), mtime:…",
+          "type": "z.union([FileSourceSchema, PublishedSourceSchema])",
           "optional": false,
           "array": false
         },
@@ -24552,11 +25596,21 @@
           "type": "z.object({ what: z.string().min(1), why: z.string().min(1) }).strict()",
           "optional": false,
           "array": false
+        },
+        {
+          "name": "links",
+          "type": "z.array(ReferencedLinkSchema).optional()",
+          "optional": true,
+          "array": true
         }
       ],
       "extendsNames": [],
       "values": [],
-      "refs": [],
+      "refs": [
+        "cat-harness/schemas/referenced-source.ts#FileSourceSchema",
+        "cat-harness/schemas/referenced-source.ts#PublishedSourceSchema",
+        "cat-harness/schemas/referenced-source.ts#ReferencedLinkSchema"
+      ],
       "unresolved": [],
       "external": [
         "REFERENCED_SOURCE_SCHEMA_ID",
@@ -26869,6 +27923,20 @@
           "type": "z.string().url().optional()",
           "optional": true,
           "array": false
+        },
+        {
+          "name": "links",
+          "type": "z .array( z .object({ label: z.string().min(1), href: z.union([z.string().url(), z.string().regex(/^\\/[a-z0-9][a-z0-9._…",
+          "optional": true,
+          "array": true,
+          "doc": "Where else to go for a `referenced` entry — an absolute URL, or a"
+        },
+        {
+          "name": "view",
+          "type": "z.string().regex(/^\\/[a-z0-9][a-z0-9._/-]*\\/$/).optional()",
+          "optional": true,
+          "array": false,
+          "doc": "The page that RENDERS this entry, site-root path with a leading `/` and"
         },
         {
           "name": "pageStart",
@@ -31480,6 +32548,972 @@
       "exported": true
     },
     {
+      "id": "cat-harness/schemas/test-plan.ts#DmnRefSchema",
+      "name": "DmnRefSchema",
+      "module": "cat-harness/schemas/test-plan.ts",
+      "kind": "zod-scalar",
+      "doc": "`path/to/file.dmn#Decision_Id` — the spelling every BPMN gateway here uses.",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/test-plan.ts#FixedTestDataSchema",
+      "name": "FixedTestDataSchema",
+      "module": "cat-harness/schemas/test-plan.ts",
+      "kind": "zod-object",
+      "doc": "A FIXED data set: committed, reviewed, cited. Evidence only once reviewed —",
+      "fields": [
+        {
+          "name": "kind",
+          "type": "z.literal(\"fixed\")",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "path",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false,
+          "doc": "Repo-relative path to the committed set."
+        },
+        {
+          "name": "review",
+          "type": "z .strictObject({ reviewer: z.strictObject({ kind: z.enum(ATTRIBUTION_KINDS), id: z.string().min(1) }), /** ISO-8601 UT…",
+          "optional": true,
+          "array": false
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [
+        "ATTRIBUTION_KINDS"
+      ],
+      "external": [
+        "z"
+      ],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/test-plan.ts#GeneratedTestDataSchema",
+      "name": "GeneratedTestDataSchema",
+      "module": "cat-harness/schemas/test-plan.ts",
+      "kind": "zod-object",
+      "doc": "A GENERATED data set: a recipe, never its output. No `path` field exists to",
+      "fields": [
+        {
+          "name": "kind",
+          "type": "z.literal(\"generated\")",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "template",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false,
+          "doc": "Repo-relative path to the template (a FHIR template, a Synthea module, …)."
+        },
+        {
+          "name": "params",
+          "type": "z.record(z.string(), z.unknown())",
+          "optional": false,
+          "array": false,
+          "doc": "The generator's parameters. Hashed with the template into the run's data basis."
+        },
+        {
+          "name": "seed",
+          "type": "z.union([z.number().int().nonnegative(), z.string().min(1)])",
+          "optional": false,
+          "array": false,
+          "doc": "Required: without a fixed seed, regenerating does not give the bytes that were hashed (`zz0a`)."
+        },
+        {
+          "name": "generator",
+          "type": "z.string().min(1).optional()",
+          "optional": true,
+          "array": false,
+          "doc": "The generator, when it is not implied by the template — `synthea`, `fsh`. FHIR `testData.type`."
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [
+        "z"
+      ],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/test-plan.ts#SutKind",
+      "name": "SutKind",
+      "module": "cat-harness/schemas/test-plan.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/test-plan.ts#SutKindSchema",
+      "name": "SutKindSchema",
+      "module": "cat-harness/schemas/test-plan.ts",
+      "kind": "zod-enum",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/test-plan.ts#TestAssertion",
+      "name": "TestAssertion",
+      "module": "cat-harness/schemas/test-plan.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/test-plan.ts#TestAssertionSchema",
+      "name": "TestAssertionSchema",
+      "module": "cat-harness/schemas/test-plan.ts",
+      "kind": "zod-object",
+      "doc": "One assertion. Its `id` IS a criterion id — the QA and test vocabularies",
+      "fields": [
+        {
+          "name": "id",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "type",
+          "type": "z.enum([\"required\", \"informative\"])",
+          "optional": false,
+          "array": false,
+          "doc": "FHIR `TestPlan.testCase.assertion.type`: does a failure fail the case?"
+        },
+        {
+          "name": "expectation",
+          "type": "z.string().min(1).optional()",
+          "optional": true,
+          "array": false,
+          "doc": "What is expected, for a reader who has only the plan."
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [
+        "z"
+      ],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/test-plan.ts#TestCaseIdSchema",
+      "name": "TestCaseIdSchema",
+      "module": "cat-harness/schemas/test-plan.ts",
+      "kind": "zod-scalar",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/test-plan.ts#TestDataRef",
+      "name": "TestDataRef",
+      "module": "cat-harness/schemas/test-plan.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/test-plan.ts#TestDataRefSchema",
+      "name": "TestDataRefSchema",
+      "module": "cat-harness/schemas/test-plan.ts",
+      "kind": "zod-union",
+      "fields": [],
+      "extendsNames": [],
+      "values": [
+        "kind"
+      ],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/test-plan.ts#TestPlan",
+      "name": "TestPlan",
+      "module": "cat-harness/schemas/test-plan.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/test-plan.ts#TestPlanCase",
+      "name": "TestPlanCase",
+      "module": "cat-harness/schemas/test-plan.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/test-plan.ts#TestPlanCaseSchema",
+      "name": "TestPlanCaseSchema",
+      "module": "cat-harness/schemas/test-plan.ts",
+      "kind": "zod-object",
+      "fields": [
+        {
+          "name": "id",
+          "type": "TestCaseIdSchema",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "description",
+          "type": "z.string().min(1).optional()",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "assertions",
+          "type": "z.array(TestAssertionSchema).min(1)",
+          "optional": false,
+          "array": true,
+          "doc": "A case with no assertion asserts nothing, and would pass vacuously."
+        },
+        {
+          "name": "testData",
+          "type": "z.array(TestDataRefSchema).default([])",
+          "optional": true,
+          "array": true,
+          "doc": "May be empty: a case can test behaviour on no input. Absent and empty are the same here."
+        },
+        {
+          "name": "feature",
+          "type": "z .string() .regex(/\\.feature$/, \"a Gherkin link names a `.feature` file\") .optional()",
+          "optional": true,
+          "array": false,
+          "doc": "Optional Gherkin `.feature` file the case is written in."
+        },
+        {
+          "name": "dependsOn",
+          "type": "z.array(TestCaseIdSchema).optional()",
+          "optional": true,
+          "array": true,
+          "doc": "Sibling cases that must run first. FHIR `testCase.dependency`, resolved."
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [
+        "cat-harness/schemas/test-plan.ts#TestAssertionSchema",
+        "cat-harness/schemas/test-plan.ts#TestCaseIdSchema",
+        "cat-harness/schemas/test-plan.ts#TestDataRefSchema"
+      ],
+      "unresolved": [],
+      "external": [
+        "z"
+      ],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/test-plan.ts#TestPlanDependencySchema",
+      "name": "TestPlanDependencySchema",
+      "module": "cat-harness/schemas/test-plan.ts",
+      "kind": "zod-object",
+      "doc": "FHIR `TestPlan.dependency`: a precondition, and optionally a plan that must pass first.",
+      "fields": [
+        {
+          "name": "description",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "predecessor",
+          "type": "TestPlanIdSchema.optional()",
+          "optional": true,
+          "array": false
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [
+        "cat-harness/schemas/test-plan.ts#TestPlanIdSchema"
+      ],
+      "unresolved": [],
+      "external": [
+        "z"
+      ],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/test-plan.ts#TestPlanExitCriteriaSchema",
+      "name": "TestPlanExitCriteriaSchema",
+      "module": "cat-harness/schemas/test-plan.ts",
+      "kind": "zod-object",
+      "fields": [
+        {
+          "name": "decision",
+          "type": "DmnRefSchema",
+          "optional": false,
+          "array": false,
+          "doc": "The certification rule, executable."
+        },
+        {
+          "name": "description",
+          "type": "z.string().min(1).optional()",
+          "optional": true,
+          "array": false,
+          "doc": "A reader's summary of it. Never the rule itself — the DMN is."
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [
+        "cat-harness/schemas/test-plan.ts#DmnRefSchema"
+      ],
+      "unresolved": [],
+      "external": [
+        "z"
+      ],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/test-plan.ts#TestPlanIdSchema",
+      "name": "TestPlanIdSchema",
+      "module": "cat-harness/schemas/test-plan.ts",
+      "kind": "zod-scalar",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/test-plan.ts#TestPlanSchema",
+      "name": "TestPlanSchema",
+      "module": "cat-harness/schemas/test-plan.ts",
+      "kind": "zod-object",
+      "fields": [
+        {
+          "name": "$schema",
+          "type": "z.literal(TEST_PLAN_SCHEMA_ID)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "id",
+          "type": "TestPlanIdSchema",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "title",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "status",
+          "type": "TestPlanStatusSchema",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "version",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false,
+          "doc": "The PLAN's version — a run records which one it executed."
+        },
+        {
+          "name": "description",
+          "type": "z.string().min(1).optional()",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "scope",
+          "type": "TestPlanScopeSchema",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "requirements",
+          "type": "z.array(RequirementRefSchema).min(1)",
+          "optional": false,
+          "array": true,
+          "doc": "What the plan is evidence FOR. At least one: a plan tied to no requirement certifies nothing."
+        },
+        {
+          "name": "testCases",
+          "type": "z.array(TestPlanCaseSchema).min(1)",
+          "optional": false,
+          "array": true
+        },
+        {
+          "name": "dependencies",
+          "type": "z.array(TestPlanDependencySchema).default([])",
+          "optional": true,
+          "array": true
+        },
+        {
+          "name": "exitCriteria",
+          "type": "TestPlanExitCriteriaSchema",
+          "optional": false,
+          "array": false
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [
+        "cat-harness/schemas/test-plan.ts#TestPlanCaseSchema",
+        "cat-harness/schemas/test-plan.ts#TestPlanDependencySchema",
+        "cat-harness/schemas/test-plan.ts#TestPlanExitCriteriaSchema",
+        "cat-harness/schemas/test-plan.ts#TestPlanIdSchema",
+        "cat-harness/schemas/test-plan.ts#TestPlanScopeSchema",
+        "cat-harness/schemas/test-plan.ts#TestPlanStatusSchema"
+      ],
+      "unresolved": [],
+      "external": [
+        "RequirementRefSchema",
+        "TEST_PLAN_SCHEMA_ID",
+        "z"
+      ],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/test-plan.ts#TestPlanScope",
+      "name": "TestPlanScope",
+      "module": "cat-harness/schemas/test-plan.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/test-plan.ts#TestPlanScopeSchema",
+      "name": "TestPlanScopeSchema",
+      "module": "cat-harness/schemas/test-plan.ts",
+      "kind": "zod-object",
+      "doc": "What the plan is FOR — a kind of system, and the versions it applies to.",
+      "fields": [
+        {
+          "name": "kind",
+          "type": "SutKindSchema",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "target",
+          "type": "z.string().min(1).optional()",
+          "optional": true,
+          "array": false,
+          "doc": "The specific system, when the plan is for one: a skill name, a tool name,"
+        },
+        {
+          "name": "versionRange",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false,
+          "doc": "The versions the plan applies to, as a semver range (`>=1.2 <2`, `*`)."
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [
+        "cat-harness/schemas/test-plan.ts#SutKindSchema"
+      ],
+      "unresolved": [],
+      "external": [
+        "z"
+      ],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/test-plan.ts#TestPlanStatusSchema",
+      "name": "TestPlanStatusSchema",
+      "module": "cat-harness/schemas/test-plan.ts",
+      "kind": "zod-enum",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/test-report.ts#PlanMismatch",
+      "name": "PlanMismatch",
+      "module": "cat-harness/schemas/test-report.ts",
+      "kind": "interface",
+      "doc": "A disagreement between a report and the plan it claims to have executed.",
+      "fields": [
+        {
+          "name": "kind",
+          "type": "\"plan-id\" | \"plan-version\" | \"unknown-case\" | \"unexecuted-case\"",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "message",
+          "type": "string",
+          "optional": false,
+          "array": false
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/test-report.ts#TestCaseResult",
+      "name": "TestCaseResult",
+      "module": "cat-harness/schemas/test-report.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/test-report.ts#TestCaseVerdict",
+      "name": "TestCaseVerdict",
+      "module": "cat-harness/schemas/test-report.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/test-report.ts#TestCaseVerdictSchema",
+      "name": "TestCaseVerdictSchema",
+      "module": "cat-harness/schemas/test-report.ts",
+      "kind": "zod-object",
+      "fields": [
+        {
+          "name": "result",
+          "type": "z.enum(TEST_CASE_RESULTS)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "reviewer",
+          "type": "TestReviewerSchema",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "reviewed_at",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false,
+          "doc": "ISO-8601 UTC."
+        },
+        {
+          "name": "assertions",
+          "type": "z.record(z.string().min(1), z.enum([\"pass\", \"fail\", \"warn\", \"n/a\"])).optional()",
+          "optional": true,
+          "array": false,
+          "doc": "Per-assertion results, keyed by the assertion's criterion id."
+        },
+        {
+          "name": "evidence",
+          "type": "z.union([z.string(), z.array(z.object({ line: z.number().optional(), text: z.string().optional() }))]).optional()",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "reason",
+          "type": "z.string().min(1).optional()",
+          "optional": true,
+          "array": false,
+          "doc": "Why the case was skipped. Required when `result` is `skipped`."
+        },
+        {
+          "name": "notes",
+          "type": "z.string().optional()",
+          "optional": true,
+          "array": false
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [
+        "cat-harness/schemas/test-report.ts#TestReviewerSchema"
+      ],
+      "unresolved": [],
+      "external": [
+        "TEST_CASE_RESULTS",
+        "z"
+      ],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/test-report.ts#TestReport",
+      "name": "TestReport",
+      "module": "cat-harness/schemas/test-report.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/test-report.ts#TestReportPanel",
+      "name": "TestReportPanel",
+      "module": "cat-harness/schemas/test-report.ts",
+      "kind": "interface",
+      "doc": "One panel: one report's rollup, in its plan's own terms.",
+      "fields": [
+        {
+          "name": "sut",
+          "type": "TestReport[\"sut\"]",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "run",
+          "type": "TestReport[\"run\"]",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "planVersion",
+          "type": "string",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "rollup",
+          "type": "TestReportRollup",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "verdict",
+          "type": "\"ok\" | \"finding\" | \"unknown\"",
+          "optional": false,
+          "array": false
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [
+        "cat-harness/schemas/test-report.ts#TestReport",
+        "cat-harness/schemas/test-report.ts#TestReportRollup"
+      ],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/test-report.ts#TestReportRollup",
+      "name": "TestReportRollup",
+      "module": "cat-harness/schemas/test-report.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/test-report.ts#TestReportRollupSchema",
+      "name": "TestReportRollupSchema",
+      "module": "cat-harness/schemas/test-report.ts",
+      "kind": "zod-object",
+      "doc": "Counts of CURRENT verdicts, one bucket per result. Strict: no `total` key.",
+      "fields": [
+        {
+          "name": "pass",
+          "type": "z.number().int().nonnegative()",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "fail",
+          "type": "z.number().int().nonnegative()",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "warn",
+          "type": "z.number().int().nonnegative()",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "n/a",
+          "type": "z.number().int().nonnegative()",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "skipped",
+          "type": "z.number().int().nonnegative()",
+          "optional": false,
+          "array": false
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [
+        "z"
+      ],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/test-report.ts#TestReportRunRefSchema",
+      "name": "TestReportRunRefSchema",
+      "module": "cat-harness/schemas/test-report.ts",
+      "kind": "zod-object",
+      "doc": "The run the verdicts came from, with the two hashes that make it repeatable (`zz0a`).",
+      "fields": [
+        {
+          "name": "id",
+          "type": "z.string().regex(/^[A-Za-z0-9][A-Za-z0-9._-]*$/, \"a run id is path-safe\")",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "data",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "process",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [
+        "z"
+      ],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/test-report.ts#TestReportSchema",
+      "name": "TestReportSchema",
+      "module": "cat-harness/schemas/test-report.ts",
+      "kind": "zod-object",
+      "fields": [
+        {
+          "name": "$schema",
+          "type": "z.literal(TEST_REPORT_SCHEMA_ID)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "plan",
+          "type": "TestPlanRefSchema",
+          "optional": false,
+          "array": false,
+          "doc": "ONE plan. There is no field for a second — see the module note."
+        },
+        {
+          "name": "sut",
+          "type": "SutRefSchema",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "run",
+          "type": "TestReportRunRefSchema",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "status",
+          "type": "TestReportStatusSchema",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "started_at",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "completed_at",
+          "type": "z.string().min(1).optional()",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "cases",
+          "type": "z.record(z.string().min(1), z.array(TestCaseVerdictSchema).min(1))",
+          "optional": false,
+          "array": false,
+          "doc": "Case id → reviewer entries, oldest first. The last is current."
+        },
+        {
+          "name": "rollup",
+          "type": "TestReportRollupSchema",
+          "optional": false,
+          "array": false
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [
+        "cat-harness/schemas/test-report.ts#TestCaseVerdictSchema",
+        "cat-harness/schemas/test-report.ts#TestReportRollupSchema",
+        "cat-harness/schemas/test-report.ts#TestReportRunRefSchema",
+        "cat-harness/schemas/test-report.ts#TestReportStatusSchema",
+        "cat-harness/schemas/test-run.ts#SutRefSchema",
+        "cat-harness/schemas/test-run.ts#TestPlanRefSchema"
+      ],
+      "unresolved": [],
+      "external": [
+        "TEST_REPORT_SCHEMA_ID",
+        "z"
+      ],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/test-report.ts#TestReportStatus",
+      "name": "TestReportStatus",
+      "module": "cat-harness/schemas/test-report.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/test-report.ts#TestReportStatusSchema",
+      "name": "TestReportStatusSchema",
+      "module": "cat-harness/schemas/test-report.ts",
+      "kind": "zod-enum",
+      "fields": [],
+      "extendsNames": [],
+      "values": [
+        "running"
+      ],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/test-report.ts#TestReviewerSchema",
+      "name": "TestReviewerSchema",
+      "module": "cat-harness/schemas/test-report.ts",
+      "kind": "zod-object",
+      "doc": "Who reached a verdict — block-qa's `QaReviewer`, the identity half.",
+      "fields": [
+        {
+          "name": "kind",
+          "type": "z.enum(ATTRIBUTION_KINDS)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "id",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false,
+          "doc": "What ran: a script path, an agent name, a GitHub login."
+        },
+        {
+          "name": "version",
+          "type": "z.string().optional()",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "actor",
+          "type": "z.string().min(1).optional()",
+          "optional": true,
+          "array": false,
+          "doc": "On whose authority — an id under `scenarios/actors/`. Absent is unresolved, not permitted."
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [
+        "ATTRIBUTION_KINDS"
+      ],
+      "external": [
+        "z"
+      ],
+      "exported": true
+    },
+    {
       "id": "cat-harness/schemas/test-run.ts#HashBasis",
       "name": "HashBasis",
       "module": "cat-harness/schemas/test-run.ts",
@@ -31558,6 +33592,57 @@
       "exported": true
     },
     {
+      "id": "cat-harness/schemas/test-run.ts#SutRef",
+      "name": "SutRef",
+      "module": "cat-harness/schemas/test-run.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/test-run.ts#SutRefSchema",
+      "name": "SutRefSchema",
+      "module": "cat-harness/schemas/test-run.ts",
+      "kind": "zod-object",
+      "doc": "The SYSTEM UNDER TEST — who was tested, at what version, with what reach.",
+      "fields": [
+        {
+          "name": "actor",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "version",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "reach",
+          "type": "z.enum([...NETWORK_REACHES, REACH_UNKNOWN])",
+          "optional": false,
+          "array": false
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [
+        "NETWORK_REACHES",
+        "REACH_UNKNOWN"
+      ],
+      "external": [
+        "z"
+      ],
+      "exported": true
+    },
+    {
       "id": "cat-harness/schemas/test-run.ts#TestCase",
       "name": "TestCase",
       "module": "cat-harness/schemas/test-run.ts",
@@ -31588,6 +33673,50 @@
           "type": "z.unknown()",
           "optional": false,
           "array": false
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [
+        "z"
+      ],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/test-run.ts#TestPlanRef",
+      "name": "TestPlanRef",
+      "module": "cat-harness/schemas/test-run.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/test-run.ts#TestPlanRefSchema",
+      "name": "TestPlanRefSchema",
+      "module": "cat-harness/schemas/test-run.ts",
+      "kind": "zod-object",
+      "doc": "WHICH PLAN a run executed, and which version of it (bean `ygzh`).",
+      "fields": [
+        {
+          "name": "id",
+          "type": "z.string().regex(/^[a-z0-9][a-z0-9-]*$/, \"a test-plan id is a lowercase slug\")",
+          "optional": false,
+          "array": false,
+          "doc": "The plan's `id` (`test-plan/v1`)."
+        },
+        {
+          "name": "version",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false,
+          "doc": "The plan's `version` at execution time."
         }
       ],
       "extendsNames": [],
@@ -31679,13 +33808,29 @@
           "optional": false,
           "array": false,
           "doc": "ISO-8601 UTC. Deliberately NOT part of either hash: when a run happened"
+        },
+        {
+          "name": "plan",
+          "type": "TestPlanRefSchema.optional()",
+          "optional": true,
+          "array": false,
+          "doc": "The plan this run executed (bean `ygzh`). Optional: a run recorded before"
+        },
+        {
+          "name": "sut",
+          "type": "SutRefSchema.optional()",
+          "optional": true,
+          "array": false,
+          "doc": "The system under test (bean `ygzh`). Required whenever `plan` is set."
         }
       ],
       "extendsNames": [],
       "values": [],
       "refs": [
         "cat-harness/schemas/test-run.ts#HashBasisSchema",
+        "cat-harness/schemas/test-run.ts#SutRefSchema",
         "cat-harness/schemas/test-run.ts#TestCaseSchema",
+        "cat-harness/schemas/test-run.ts#TestPlanRefSchema",
         "cat-harness/schemas/tool-types.ts#SkillNameSchema"
       ],
       "unresolved": [],
@@ -44226,6 +46371,299 @@
       "exported": true
     },
     {
+      "id": "folio-assistant-core/schemas/kg-materialization.ts#KgDecisions",
+      "name": "KgDecisions",
+      "module": "folio-assistant-core/schemas/kg-materialization.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "folio-assistant-core/schemas/kg-materialization.ts#KgDecisionsSchema",
+      "name": "KgDecisionsSchema",
+      "module": "folio-assistant-core/schemas/kg-materialization.ts",
+      "kind": "zod-object",
+      "doc": "What the SUBSCRIBER decides before anything is copied — the lane",
+      "fields": [
+        {
+          "name": "purpose",
+          "type": "z.enum([\"working\", \"archival\", \"both\"]).optional()",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "maxBytes",
+          "type": "z.number().int().positive().optional()",
+          "optional": true,
+          "array": false,
+          "doc": "The size budget, in bytes. Absent: {@link DEFAULT_MAX_BYTES}."
+        },
+        {
+          "name": "expiresAt",
+          "type": "z.string().min(1).optional()",
+          "optional": true,
+          "array": false,
+          "doc": "When the copy expires; recorded as `expiresAt`."
+        },
+        {
+          "name": "gates",
+          "type": "z .object({ restrictions: GatesSchema.shape.restrictions.optional(), retention: GatesSchema.shape.retention.optional(),…",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "decidedBy",
+          "type": "z.string().min(1).optional()",
+          "optional": true,
+          "array": false,
+          "doc": "Who decided, applied to every gate that does not name its own `decidedBy`."
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [
+        "folio-assistant-core/schemas/materialization.ts#GatesSchema"
+      ],
+      "unresolved": [],
+      "external": [
+        "z"
+      ],
+      "exported": true
+    },
+    {
+      "id": "folio-assistant-core/schemas/kg-materialization.ts#KgFileRecordSchema",
+      "name": "KgFileRecordSchema",
+      "module": "folio-assistant-core/schemas/kg-materialization.ts",
+      "kind": "zod-object",
+      "doc": "One held file: the shape `check:materialized-fixity` walks.",
+      "fields": [
+        {
+          "name": "id",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "name",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false,
+          "doc": "Path relative to the part's `tree/` (or the licence's own name)."
+        },
+        {
+          "name": "materialization",
+          "type": "MaterializationSchema",
+          "optional": false,
+          "array": false
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [
+        "folio-assistant-core/schemas/materialization.ts#MaterializationSchema"
+      ],
+      "unresolved": [],
+      "external": [
+        "z"
+      ],
+      "exported": true
+    },
+    {
+      "id": "folio-assistant-core/schemas/kg-materialization.ts#KgMaterializationRecord",
+      "name": "KgMaterializationRecord",
+      "module": "folio-assistant-core/schemas/kg-materialization.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "folio-assistant-core/schemas/kg-materialization.ts#KgMaterializationRecordSchema",
+      "name": "KgMaterializationRecordSchema",
+      "module": "folio-assistant-core/schemas/kg-materialization.ts",
+      "kind": "zod-object",
+      "fields": [
+        {
+          "name": "$schema",
+          "type": "z.literal(KG_PART_RECORD_SCHEMA)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "subscription",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false,
+          "doc": "The `subscriptions[].id` this part belongs to."
+        },
+        {
+          "name": "repository",
+          "type": "RepoFullNameSchema",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "ref",
+          "type": "z.string().regex(/^[0-9a-f]{40}$/)",
+          "optional": false,
+          "array": false,
+          "doc": "The pin the part was asked at — the subscription's `ref` when it was written."
+        },
+        {
+          "name": "part",
+          "type": "KgPartSchema",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "materialization",
+          "type": "MaterializationSchema",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "files",
+          "type": "z.array(KgFileRecordSchema).optional()",
+          "optional": true,
+          "array": true,
+          "doc": "A held SUBGRAPH: one record per file under `tree/`."
+        },
+        {
+          "name": "licence",
+          "type": "KgFileRecordSchema.optional()",
+          "optional": true,
+          "array": false,
+          "doc": "The upstream licence, copied beside the tree so its notice travels with the copy."
+        },
+        {
+          "name": "refusal",
+          "type": "KgRefusalSchema.optional()",
+          "optional": true,
+          "array": false,
+          "doc": "Present iff the part stayed referenced."
+        },
+        {
+          "name": "note",
+          "type": "z.string().min(1).optional()",
+          "optional": true,
+          "array": false
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [
+        "folio-assistant-core/schemas/kg-materialization.ts#KgFileRecordSchema",
+        "folio-assistant-core/schemas/kg-materialization.ts#KgPartSchema",
+        "folio-assistant-core/schemas/kg-materialization.ts#KgRefusalSchema",
+        "folio-assistant-core/schemas/materialization.ts#MaterializationSchema"
+      ],
+      "unresolved": [],
+      "external": [
+        "KG_PART_RECORD_SCHEMA",
+        "RepoFullNameSchema",
+        "z"
+      ],
+      "exported": true
+    },
+    {
+      "id": "folio-assistant-core/schemas/kg-materialization.ts#KgPartRecord",
+      "name": "KgPartRecord",
+      "module": "folio-assistant-core/schemas/kg-materialization.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "folio-assistant-core/schemas/kg-materialization.ts#KgPartSchema",
+      "name": "KgPartSchema",
+      "module": "folio-assistant-core/schemas/kg-materialization.ts",
+      "kind": "zod-union",
+      "doc": "Which part of the substrate this is. A subgraph is named by the substrate's own `directories[].id`.",
+      "fields": [],
+      "extendsNames": [],
+      "values": [
+        "kind",
+        "subgraph",
+        "asset"
+      ],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "folio-assistant-core/schemas/kg-materialization.ts#KgRefusalSchema",
+      "name": "KgRefusalSchema",
+      "module": "folio-assistant-core/schemas/kg-materialization.ts",
+      "kind": "zod-object",
+      "doc": "Why a chosen part stayed referenced: every gate's answer, and which of them stopped it.",
+      "fields": [
+        {
+          "name": "gates",
+          "type": "GatesSchema",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "refused",
+          "type": "z.array(z.enum(GATE_NAMES))",
+          "optional": false,
+          "array": true
+        },
+        {
+          "name": "unanswered",
+          "type": "z.array(z.enum(GATE_NAMES))",
+          "optional": false,
+          "array": true
+        },
+        {
+          "name": "purposeMissing",
+          "type": "z.boolean().optional()",
+          "optional": true,
+          "array": false,
+          "doc": "A purpose is asked FIRST; a part with none cannot have its gates judged."
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [
+        "folio-assistant-core/schemas/materialization.ts#GatesSchema"
+      ],
+      "unresolved": [],
+      "external": [
+        "GATE_NAMES",
+        "z"
+      ],
+      "exported": true
+    },
+    {
+      "id": "folio-assistant-core/schemas/kg-materialization.ts#RelPathSchema",
+      "name": "RelPathSchema",
+      "module": "folio-assistant-core/schemas/kg-materialization.ts",
+      "kind": "zod-scalar",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": false
+    },
+    {
       "id": "folio-assistant-core/schemas/library-ref.ts#LibraryRef",
       "name": "LibraryRef",
       "module": "folio-assistant-core/schemas/library-ref.ts",
@@ -47244,6 +49682,14 @@
     },
     {
       "from": "cat-harness/schemas/cat-harness.ts#ContentDirectory",
+      "to": "cat-harness/schemas/cat-harness.ts#DirectoryStorage",
+      "via": "storage",
+      "kind": "field",
+      "optional": true,
+      "array": false
+    },
+    {
+      "from": "cat-harness/schemas/cat-harness.ts#ContentDirectory",
       "to": "cat-harness/schemas/cat-harness.ts#GraphNodeDirectory",
       "via": "",
       "kind": "extends",
@@ -47262,6 +49708,14 @@
       "from": "cat-harness/schemas/cat-harness.ts#ContentDirectory",
       "to": "cat-harness/schemas/theme.ts#ThemeRef",
       "via": "theme",
+      "kind": "field",
+      "optional": true,
+      "array": false
+    },
+    {
+      "from": "cat-harness/schemas/cat-harness.ts#ContentDirectoryShape",
+      "to": "cat-harness/schemas/cat-harness.ts#DirectoryStorageSchema",
+      "via": "storage",
       "kind": "field",
       "optional": true,
       "array": false
@@ -49172,14 +51626,6 @@
     },
     {
       "from": "cat-harness/schemas/kg-qa.ts#KgQaReport",
-      "to": "cat-harness/schemas/kg-qa.ts#KgPairAttestation",
-      "via": "pair_attestations",
-      "kind": "field",
-      "optional": true,
-      "array": true
-    },
-    {
-      "from": "cat-harness/schemas/kg-qa.ts#KgQaReport",
       "to": "cat-harness/schemas/kg-qa.ts#KgResult",
       "via": "totals",
       "kind": "field",
@@ -49193,14 +51639,6 @@
       "kind": "field",
       "optional": false,
       "array": false
-    },
-    {
-      "from": "cat-harness/schemas/kg-qa.ts#KgQaReport",
-      "to": "cat-harness/schemas/kg-qa.ts#KgVoiceReview",
-      "via": "voice_reviews",
-      "kind": "field",
-      "optional": true,
-      "array": true
     },
     {
       "from": "cat-harness/schemas/kg-qa.ts#KgQaReportSchema",
@@ -49328,6 +51766,134 @@
       "via": "measured",
       "kind": "field",
       "optional": true,
+      "array": false
+    },
+    {
+      "from": "cat-harness/schemas/merge-queue.ts#EjectionSchema",
+      "to": "cat-harness/schemas/merge-queue.ts#Instant",
+      "via": "at",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "cat-harness/schemas/merge-queue.ts#EjectionSchema",
+      "to": "cat-harness/schemas/merge-queue.ts#NonBlank",
+      "via": "reason",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "cat-harness/schemas/merge-queue.ts#EjectionSchema",
+      "to": "cat-harness/schemas/merge-queue.ts#NonBlank",
+      "via": "trainId",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "cat-harness/schemas/merge-queue.ts#EntryObjectSchema",
+      "to": "cat-harness/schemas/merge-queue.ts#BeanIdSchema",
+      "via": "beans",
+      "kind": "field",
+      "optional": true,
+      "array": true
+    },
+    {
+      "from": "cat-harness/schemas/merge-queue.ts#EntryObjectSchema",
+      "to": "cat-harness/schemas/merge-queue.ts#EjectionSchema",
+      "via": "ejection",
+      "kind": "field",
+      "optional": true,
+      "array": false
+    },
+    {
+      "from": "cat-harness/schemas/merge-queue.ts#EntryObjectSchema",
+      "to": "cat-harness/schemas/merge-queue.ts#HoldSchema",
+      "via": "hold",
+      "kind": "field",
+      "optional": true,
+      "array": false
+    },
+    {
+      "from": "cat-harness/schemas/merge-queue.ts#EntryObjectSchema",
+      "to": "cat-harness/schemas/merge-queue.ts#Instant",
+      "via": "decidedAt",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "cat-harness/schemas/merge-queue.ts#EntryObjectSchema",
+      "to": "cat-harness/schemas/merge-queue.ts#NonBlank",
+      "via": "decidedBy",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "cat-harness/schemas/merge-queue.ts#EntryObjectSchema",
+      "to": "cat-harness/schemas/merge-queue.ts#NonBlank",
+      "via": "reason",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "cat-harness/schemas/merge-queue.ts#EntryObjectSchema",
+      "to": "cat-harness/schemas/merge-queue.ts#NonBlank",
+      "via": "trainId",
+      "kind": "field",
+      "optional": true,
+      "array": false
+    },
+    {
+      "from": "cat-harness/schemas/merge-queue.ts#EntryObjectSchema",
+      "to": "cat-harness/schemas/merge-queue.ts#PlacementSchema",
+      "via": "placement",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "cat-harness/schemas/merge-queue.ts#HoldSchema",
+      "to": "cat-harness/schemas/merge-queue.ts#Instant",
+      "via": "expires",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "cat-harness/schemas/merge-queue.ts#HoldSchema",
+      "to": "cat-harness/schemas/merge-queue.ts#Instant",
+      "via": "since",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "cat-harness/schemas/merge-queue.ts#HoldSchema",
+      "to": "cat-harness/schemas/merge-queue.ts#NonBlank",
+      "via": "handoff",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "cat-harness/schemas/merge-queue.ts#HoldSchema",
+      "to": "cat-harness/schemas/merge-queue.ts#NonBlank",
+      "via": "waitsOn",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "cat-harness/schemas/merge-queue.ts#TrainMemberEvidenceSchema",
+      "to": "cat-harness/schemas/merge-queue.ts#Instant",
+      "via": "observedAt",
+      "kind": "field",
+      "optional": false,
       "array": false
     },
     {
@@ -49486,6 +52052,38 @@
       "from": "cat-harness/schemas/prov.ts#ProvActivitySchema",
       "to": "cat-harness/schemas/prov.ts#ProvAssociationSchema",
       "via": "prov:qualifiedAssociation",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "cat-harness/schemas/qa-attestations.ts#KgAttestationsSchema",
+      "to": "cat-harness/schemas/qa-attestations.ts#PairAttestationSchema",
+      "via": "pair_attestations",
+      "kind": "field",
+      "optional": true,
+      "array": true
+    },
+    {
+      "from": "cat-harness/schemas/qa-attestations.ts#KgAttestationsSchema",
+      "to": "cat-harness/schemas/qa-attestations.ts#QaAttestationsBaseSchema",
+      "via": "",
+      "kind": "extends",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "cat-harness/schemas/qa-attestations.ts#KgAttestationsSchema",
+      "to": "cat-harness/schemas/qa-attestations.ts#VoiceReviewSchema",
+      "via": "voice_reviews",
+      "kind": "field",
+      "optional": true,
+      "array": true
+    },
+    {
+      "from": "cat-harness/schemas/qa-attestations.ts#QaAttestationsBaseSchema",
+      "to": "cat-harness/schemas/qa-attestations.ts#AttestationSubjectSchema",
+      "via": "subject",
       "kind": "field",
       "optional": false,
       "array": false
@@ -49800,6 +52398,30 @@
       "via": "strategies",
       "kind": "field",
       "optional": false,
+      "array": true
+    },
+    {
+      "from": "cat-harness/schemas/referenced-source.ts#ReferencedSourceSchema",
+      "to": "cat-harness/schemas/referenced-source.ts#FileSourceSchema",
+      "via": "source",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "cat-harness/schemas/referenced-source.ts#ReferencedSourceSchema",
+      "to": "cat-harness/schemas/referenced-source.ts#PublishedSourceSchema",
+      "via": "source",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "cat-harness/schemas/referenced-source.ts#ReferencedSourceSchema",
+      "to": "cat-harness/schemas/referenced-source.ts#ReferencedLinkSchema",
+      "via": "links",
+      "kind": "field",
+      "optional": true,
       "array": true
     },
     {
@@ -50907,6 +53529,190 @@
       "array": true
     },
     {
+      "from": "cat-harness/schemas/test-plan.ts#TestPlanCaseSchema",
+      "to": "cat-harness/schemas/test-plan.ts#TestAssertionSchema",
+      "via": "assertions",
+      "kind": "field",
+      "optional": false,
+      "array": true
+    },
+    {
+      "from": "cat-harness/schemas/test-plan.ts#TestPlanCaseSchema",
+      "to": "cat-harness/schemas/test-plan.ts#TestCaseIdSchema",
+      "via": "dependsOn",
+      "kind": "field",
+      "optional": true,
+      "array": true
+    },
+    {
+      "from": "cat-harness/schemas/test-plan.ts#TestPlanCaseSchema",
+      "to": "cat-harness/schemas/test-plan.ts#TestCaseIdSchema",
+      "via": "id",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "cat-harness/schemas/test-plan.ts#TestPlanCaseSchema",
+      "to": "cat-harness/schemas/test-plan.ts#TestDataRefSchema",
+      "via": "testData",
+      "kind": "field",
+      "optional": true,
+      "array": true
+    },
+    {
+      "from": "cat-harness/schemas/test-plan.ts#TestPlanDependencySchema",
+      "to": "cat-harness/schemas/test-plan.ts#TestPlanIdSchema",
+      "via": "predecessor",
+      "kind": "field",
+      "optional": true,
+      "array": false
+    },
+    {
+      "from": "cat-harness/schemas/test-plan.ts#TestPlanExitCriteriaSchema",
+      "to": "cat-harness/schemas/test-plan.ts#DmnRefSchema",
+      "via": "decision",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "cat-harness/schemas/test-plan.ts#TestPlanSchema",
+      "to": "cat-harness/schemas/test-plan.ts#TestPlanCaseSchema",
+      "via": "testCases",
+      "kind": "field",
+      "optional": false,
+      "array": true
+    },
+    {
+      "from": "cat-harness/schemas/test-plan.ts#TestPlanSchema",
+      "to": "cat-harness/schemas/test-plan.ts#TestPlanDependencySchema",
+      "via": "dependencies",
+      "kind": "field",
+      "optional": true,
+      "array": true
+    },
+    {
+      "from": "cat-harness/schemas/test-plan.ts#TestPlanSchema",
+      "to": "cat-harness/schemas/test-plan.ts#TestPlanExitCriteriaSchema",
+      "via": "exitCriteria",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "cat-harness/schemas/test-plan.ts#TestPlanSchema",
+      "to": "cat-harness/schemas/test-plan.ts#TestPlanIdSchema",
+      "via": "id",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "cat-harness/schemas/test-plan.ts#TestPlanSchema",
+      "to": "cat-harness/schemas/test-plan.ts#TestPlanScopeSchema",
+      "via": "scope",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "cat-harness/schemas/test-plan.ts#TestPlanSchema",
+      "to": "cat-harness/schemas/test-plan.ts#TestPlanStatusSchema",
+      "via": "status",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "cat-harness/schemas/test-plan.ts#TestPlanScopeSchema",
+      "to": "cat-harness/schemas/test-plan.ts#SutKindSchema",
+      "via": "kind",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "cat-harness/schemas/test-report.ts#TestCaseVerdictSchema",
+      "to": "cat-harness/schemas/test-report.ts#TestReviewerSchema",
+      "via": "reviewer",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "cat-harness/schemas/test-report.ts#TestReportPanel",
+      "to": "cat-harness/schemas/test-report.ts#TestReport",
+      "via": "run",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "cat-harness/schemas/test-report.ts#TestReportPanel",
+      "to": "cat-harness/schemas/test-report.ts#TestReport",
+      "via": "sut",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "cat-harness/schemas/test-report.ts#TestReportPanel",
+      "to": "cat-harness/schemas/test-report.ts#TestReportRollup",
+      "via": "rollup",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "cat-harness/schemas/test-report.ts#TestReportSchema",
+      "to": "cat-harness/schemas/test-report.ts#TestCaseVerdictSchema",
+      "via": "cases",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "cat-harness/schemas/test-report.ts#TestReportSchema",
+      "to": "cat-harness/schemas/test-report.ts#TestReportRollupSchema",
+      "via": "rollup",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "cat-harness/schemas/test-report.ts#TestReportSchema",
+      "to": "cat-harness/schemas/test-report.ts#TestReportRunRefSchema",
+      "via": "run",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "cat-harness/schemas/test-report.ts#TestReportSchema",
+      "to": "cat-harness/schemas/test-report.ts#TestReportStatusSchema",
+      "via": "status",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "cat-harness/schemas/test-report.ts#TestReportSchema",
+      "to": "cat-harness/schemas/test-run.ts#SutRefSchema",
+      "via": "sut",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "cat-harness/schemas/test-report.ts#TestReportSchema",
+      "to": "cat-harness/schemas/test-run.ts#TestPlanRefSchema",
+      "via": "plan",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
       "from": "cat-harness/schemas/test-run.ts#TestRunSchema",
       "to": "cat-harness/schemas/skill-package.ts#SkillDefinitionSchema",
       "via": "skill",
@@ -50932,11 +53738,27 @@
     },
     {
       "from": "cat-harness/schemas/test-run.ts#TestRunSchema",
+      "to": "cat-harness/schemas/test-run.ts#SutRefSchema",
+      "via": "sut",
+      "kind": "field",
+      "optional": true,
+      "array": false
+    },
+    {
+      "from": "cat-harness/schemas/test-run.ts#TestRunSchema",
       "to": "cat-harness/schemas/test-run.ts#TestCaseSchema",
       "via": "cases",
       "kind": "field",
       "optional": true,
       "array": true
+    },
+    {
+      "from": "cat-harness/schemas/test-run.ts#TestRunSchema",
+      "to": "cat-harness/schemas/test-run.ts#TestPlanRefSchema",
+      "via": "plan",
+      "kind": "field",
+      "optional": true,
+      "array": false
     },
     {
       "from": "cat-harness/schemas/test-run.ts#TestRunSchema",
@@ -52822,6 +55644,70 @@
       "from": "folio-assistant-core/schemas/glossary.ts#TermSchema",
       "to": "folio-assistant-core/schemas/glossary.ts#LangTextSchema",
       "via": "prefLabel",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "folio-assistant-core/schemas/kg-materialization.ts#KgDecisionsSchema",
+      "to": "folio-assistant-core/schemas/materialization.ts#GatesSchema",
+      "via": "gates",
+      "kind": "field",
+      "optional": true,
+      "array": false
+    },
+    {
+      "from": "folio-assistant-core/schemas/kg-materialization.ts#KgFileRecordSchema",
+      "to": "folio-assistant-core/schemas/materialization.ts#MaterializationSchema",
+      "via": "materialization",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "folio-assistant-core/schemas/kg-materialization.ts#KgMaterializationRecordSchema",
+      "to": "folio-assistant-core/schemas/kg-materialization.ts#KgFileRecordSchema",
+      "via": "files",
+      "kind": "field",
+      "optional": true,
+      "array": true
+    },
+    {
+      "from": "folio-assistant-core/schemas/kg-materialization.ts#KgMaterializationRecordSchema",
+      "to": "folio-assistant-core/schemas/kg-materialization.ts#KgFileRecordSchema",
+      "via": "licence",
+      "kind": "field",
+      "optional": true,
+      "array": false
+    },
+    {
+      "from": "folio-assistant-core/schemas/kg-materialization.ts#KgMaterializationRecordSchema",
+      "to": "folio-assistant-core/schemas/kg-materialization.ts#KgPartSchema",
+      "via": "part",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "folio-assistant-core/schemas/kg-materialization.ts#KgMaterializationRecordSchema",
+      "to": "folio-assistant-core/schemas/kg-materialization.ts#KgRefusalSchema",
+      "via": "refusal",
+      "kind": "field",
+      "optional": true,
+      "array": false
+    },
+    {
+      "from": "folio-assistant-core/schemas/kg-materialization.ts#KgMaterializationRecordSchema",
+      "to": "folio-assistant-core/schemas/materialization.ts#MaterializationSchema",
+      "via": "materialization",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "folio-assistant-core/schemas/kg-materialization.ts#KgRefusalSchema",
+      "to": "folio-assistant-core/schemas/materialization.ts#GatesSchema",
+      "via": "gates",
       "kind": "field",
       "optional": false,
       "array": false

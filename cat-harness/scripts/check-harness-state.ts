@@ -40,7 +40,10 @@
  * `generalise-the-fix`: a sweep that cannot tell an empty walk from a clean one
  * is not a check.
  *
- * Exit codes: 0 clean · 1 a finding (under `--check`) · 2 a graph could not be read.
+ * Exit codes: 0 clean · 1 a finding (under `--check`) · 2 a graph could not be read,
+ * or (under `--check`) an unknown flag. `--check` is the JUDGE form (bean
+ * `bo44`): it computes, judges and writes nothing; the bare form writes the
+ * sidecar and exits 0 on findings.
  */
 import { readFileSync, readdirSync, statSync } from "node:fs";
 import { join, relative, resolve } from "node:path";
@@ -48,7 +51,16 @@ import { join, relative, resolve } from "node:path";
 import { directoriesForGraph, instanceRootsIn, repoRootFor } from "../schemas/cat-harness.js";
 // The producer's OWN hash, not a re-derivation. See `healthProducerCurrent`.
 import { checkerHash } from "../test/health/run.js";
-import { buildQaResult, writeQaResult } from "./qa-results.js";
+import {
+  buildQaResult,
+  concludeJudgement,
+  judgementOf,
+  judgeUsage,
+  judging,
+  writeQaResult,
+  type Judgement,
+  type QaResult,
+} from "./qa-results.js";
 import { isDirectoryReadme } from "../schemas/kg-node.ts";
 
 const ROOT = resolve(import.meta.dir, "..");
@@ -400,8 +412,55 @@ export function interactionProfilesRead(): Family {
   return f;
 }
 
+/**
+ * Does this run write the committed QA sidecar?
+ *
+ * Never under `--check` (bean `r7v6`, the write-in-check half of reader-audit
+ * rows R11/R21). The gate form CI runs judges and writes nothing. Measured
+ * 2026-10-01, a `--check` run over an absent results tree RECREATED
+ * `harness-state.qa-results.json`. A gate that writes the record it reports
+ * into is the `ymsu` gate-tree-mutation defect. This mirrors `writesReport` in
+ * `skill-register.ts` (bean `bo44`), so the two gates answer it the same way.
+ */
+export function writesSidecar(argv: readonly string[]): boolean {
+  return !argv.includes("--check");
+}
+
+/** The sidecar document. Pure, so the judge and the writer render ONE computation. */
+export function harnessStateDocument(families: readonly Family[]): QaResult {
+  return buildQaResult({
+    script: relative(REPO, join(ROOT, "scripts", "check-harness-state.ts")),
+    scriptAbsPath: join(ROOT, "scripts", "check-harness-state.ts"),
+    subject: { kind: "harness-state", id: "health+todos+interaction+issue-marks" },
+    families: Object.fromEntries(
+      families.map((f) => [
+        f.id,
+        {
+          summary: f.unreadable ? `${f.summary} COULD NOT DETERMINE: ${f.unreadable}` : `${f.summary} Examined ${f.examined}.`,
+          entries: f.findings,
+        },
+      ]),
+    ),
+  });
+}
+
+/**
+ * Bean `bo44`'s four states. Any family that could not be read is `unknown`
+ * and outranks a finding; under the gate form any finding fails.
+ */
+export function judgeHarnessState(families: readonly Family[]): Judgement {
+  return judgementOf({
+    failing: families.reduce((a, f) => a + f.findings.length, 0),
+    undetermined: families.some((f) => f.unreadable),
+  });
+}
+
 function main(): number {
-  const check = process.argv.includes("--check");
+  const check = judging();
+  if (check) {
+    const usage = judgeUsage("check:harness-state", process.argv.slice(2), []);
+    if (usage !== undefined) return usage;
+  }
   const families = [healthProducerCurrent(), todoProcessRefs(), issueMarkEdits(), interactionProfilesRead()];
 
   const unreadable = families.filter((f) => f.unreadable);
@@ -422,24 +481,21 @@ function main(): number {
     for (const x of f.findings) console.log(`      · ${x.where} — ${x.detail}`);
   }
 
-  writeQaResult(
-    ROOT,
-    "harness-state",
-    buildQaResult({
-      script: relative(REPO, join(ROOT, "scripts", "check-harness-state.ts")),
-      scriptAbsPath: join(ROOT, "scripts", "check-harness-state.ts"),
-      subject: { kind: "harness-state", id: "health+todos+interaction+issue-marks" },
-      families: Object.fromEntries(
-        families.map((f) => [
-          f.id,
-          {
-            summary: f.unreadable ? `${f.summary} COULD NOT DETERMINE: ${f.unreadable}` : `${f.summary} Examined ${f.examined}.`,
-            entries: f.findings,
-          },
-        ]),
-      ),
-    }),
-  );
+  // The gate form (`--check`, wired in CI) judges and writes NOTHING — bean
+  // `bo44`. Measured 2026-10-01 with every committed `qa-results/v1` sidecar
+  // hand-staled: `check:harness-state:check` rewrote
+  // `test/results/harness-state.qa-results.json`, so the gate was a writer of
+  // the record it reports into. The bare form is the author's command.
+  const doc = harnessStateDocument(families);
+  if (!check) writeQaResult(ROOT, "harness-state", doc);
+  else {
+    return concludeJudgement({
+      gate: "check:harness-state",
+      judgement: judgeHarnessState(families),
+      detail: `${total} finding(s), ${unreadable.length} famil(ies) could not be determined`,
+      committed: { root: ROOT, stem: "harness-state", fresh: doc, writer: "check:harness-state" },
+    });
+  }
 
   if (unreadable.length > 0) {
     // Could-not-determine outranks a finding: a sweep blind on one family has

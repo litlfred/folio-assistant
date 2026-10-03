@@ -205,13 +205,18 @@ test.describe("the zoom controls stay where the pointer is", () => {
   });
 });
 
-/* ── The same defect on the BOARD: an avatar slot was a bare glyph ─────── */
-test.describe("a board todo zoomed to its avatar shows its first words too", () => {
+/* ── The same defect on the BOARD: an avatar slot was a bare glyph ───────
+ *
+ * Since #1925 the board does not zoom at all: every slot is its closed tile,
+ * and the tile carries the card's condensed words at every width (owner,
+ * 2026-10-02: "upper smaller same size closed looks niceer"). So the defect
+ * this half guarded — a closed sticky that was a bare glyph — is asserted on
+ * BOTH sides of the declared threshold, against the tile. */
+test.describe("a board todo's closed tile shows its first words, at every width", () => {
   const board = (widthPx: number) => `<!doctype html><html lang="en"><head><meta charset="utf-8">
 <meta name="fa-todo-src" content="/assets/todos/index.json">
 <meta name="fa-zoom-src" content="/assets/semantic-zoom.json">
 <style>${CSS}
-.fa-sticky-grid { display: grid; grid-template-columns: ${widthPx}px; }
 .fa-sticky-board { width: ${widthPx + 40}px; }
 </style></head><body>
 <div class="main-content-wrap"><div class="main-content" id="main-content">
@@ -241,18 +246,15 @@ test.describe("a board todo zoomed to its avatar shows its first words too", () 
     await page.waitForFunction(() => Boolean((window as never as { __faTodoBoard?: unknown }).__faTodoBoard));
   };
 
-  test("below the threshold: the gist is seen, collapsed, beside the avatar", async ({ page }) => {
-    await serveBoard(page, 240);
-    const slot = page.locator('.fa-sticky-slot[data-fa-avatar="true"]');
-    await expect(slot).toHaveCount(1);
-    const gist = slot.locator(".fa-sticky-avatar-gist");
-    await expect(gist).toBeVisible();
-    expect(await gist.textContent()).toBe("Card alpha summary — Body of alpha.");
-  });
-
-  test("above it: no second copy of the words exists at all", async ({ page }) => {
-    await serveBoard(page, 400);
-    await expect(page.locator('.fa-sticky-slot[data-fa-avatar="true"]')).toHaveCount(0);
-    await expect(page.locator(".fa-sticky-avatar-gist")).toHaveCount(0);
-  });
+  for (const width of [240, 400]) {
+    test(`at ${width}px: the tile is the card's condensed words, and nothing zooms`, async ({ page }) => {
+      await serveBoard(page, width);
+      const tile = page.locator('.fa-sticky-slot[data-fa-home-slot="alpha"] .fa-sticky-tile');
+      await expect(tile).toBeVisible();
+      // One line from prose that was never one line — never a bare glyph.
+      await expect(tile.locator(".fa-sticky-tile-title")).toHaveText("Card alpha summary");
+      await expect(page.locator('.fa-sticky-slot[data-fa-avatar="true"]')).toHaveCount(0);
+      await expect(page.locator(".fa-sticky-avatar-gist")).toHaveCount(0);
+    });
+  }
 });

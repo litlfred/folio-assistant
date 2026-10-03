@@ -600,6 +600,13 @@ jobs:
             echo "search-data.json: EMPTY — the page's banner says search is unavailable on this preview"
           fi
 
+      # Split the index THIS preview serves — the published one, or `{}` —
+      # never one built here: a preview's scopes must be cut from the same
+      # index its pages search, or `search-scopes` reports the split stale
+      # (issue #1972, bean `m7mn`).
+      - name: Split the served search index per scope
+        run: bun run cat-harness/scripts/search-split.ts --dir ./_site
+
       # Mount every OTHER instance's rendered content under the built site.
       #
       # Jekyll above builds ONE directory — `cat-harness/docs` — so an instance
@@ -1126,6 +1133,27 @@ jobs:
       # published site's and only presence and parsing are asked (bean fq5u).
       - name: Verify the export before deploying the preview
         run: bun run cat-harness/scripts/publish-verify.ts --dir ./_site --search-index borrowed
+
+      # MINIFY LAST — the deploy's pass, mirrored here because
+      # `check:invocation-parity` requires it and because a preview whose
+      # bytes differ from the release's is not a preview of it. The reasoning
+      # (why a post-build pass and not a Jekyll plugin, and why this ordering
+      # is the correctness argument) is written out in `docs-site.yml` beside
+      # the same step and not repeated here.
+      #
+      # It matters more on a preview than on the deploy: every preview is a
+      # FULL copy of the site, so this is ~42 MiB off each one (measured on
+      # the published `STAGING/agy-wnhh-sushi-publisher-local`: 417.5 MiB of
+      # HTML, 10.0% of it comments and unrendered whitespace).
+      #
+      # The pass is asserted IDEMPOTENT (`minify-site.test.ts`) rather than
+      # merely expected to be, and the reason is this branch's publish model:
+      # `publish-gh-pages.sh` carries every other preview forward untouched,
+      # and a pass that drifted on re-entry would make each re-run rewrite
+      # bytes nothing asked it to — turning a one-directory preview update
+      # into a whole-tree diff.
+      - name: Minify the built pages
+        run: bun run cat-harness/scripts/minify-site.ts --site ./_site
 
       - name: Disable Jekyll on published branch
         run: touch ./_site/.nojekyll

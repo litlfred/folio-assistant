@@ -489,6 +489,26 @@ from the listing.
 SESSIONS
 echo
 
+# ── 3.5 The state-branch mount ──────────────────────────────────────────────
+# Bean `2h76` part 4. Printed BEFORE the recommended action because it changes
+# whether the work-plan above can be believed.
+#
+# The proposal names the failure this guards: if the fetch fails silently and
+# `beans list` comes back empty, the agent reads "no work" — an unreachable
+# work-plan and an empty one are indistinguishable from here, and the agent
+# acts on the first reading. So the mount prints its own finding, loudly, and
+# `state-mount.ts` also exits non-zero so a wrapper cannot swallow it.
+#
+# No declaration is tip-keyed yet, so today this says "not enabled" and costs
+# one process. Guarded on `bun` because this sweep is CLI-independent by
+# design and must still work where only git is present.
+if command -v bun >/dev/null 2>&1 && [ -f "$REPO_ROOT/scripts/state-mount.ts" ]; then
+  mount_out="$(cd "$CHECKOUT_ROOT" && bun run "$REPO_ROOT/scripts/state-mount.ts" 2>&1)" || true
+  if [ -n "$mount_out" ]; then
+    printf '%s\n\n' "$mount_out"
+  fi
+fi
+
 # ── 4. Recommended action (generic) ─────────────────────────────────────────
 cat <<'EOF'
 **Recommended action:**

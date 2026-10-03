@@ -229,37 +229,14 @@ package "folio-assistant-core/core-processes" as pkg_folio_assistant_core_core_p
   }
 }
 package "folio-assistant-core/qa" as pkg_folio_assistant_core_qa <<qa>> {
-  class "Pair_attestation" as folio_assistant_core_qa_kg_qa_v1_Pair_attestation <<json: KgQaReportSchema>> #f4e6e6 {
-    kind [1] : implements | co-located
-    prose [1] : string
-    code [1] : string
-    prose_hash [1] : string
-    code_hash [1] : string
-    by [1] : baseline | agent | human
-    reason [0..1] : string
-  }
-  class "Verdict" as folio_assistant_core_qa_kg_qa_v1_Verdict <<json: KgQaReportSchema>> #f4e6e6 {
-    rule [1] : string
-    result [1] : pass | fail | n/a
-    note [0..1] : string
-  }
-  class "Voice_review" as folio_assistant_core_qa_kg_qa_v1_Voice_review <<json: KgQaReportSchema>> #f4e6e6 {
-    voice [1] : string
-    instance [1] : string
-    skill_hash [1] : string
-    voice_hash [1] : string
-    by [1] : agent | human
-    at [1] : string
-    verdicts [0..*] : Verdict[]
-  }
   class "kg-qa/v1" as folio_assistant_core_qa_kg_qa_v1_kg_qa_v1 <<json: KgQaReportSchema>> #f4e6e6 {
     $schema [1] : 'kg-qa/v1'
     subject [1] : object
     source_hash [1] : string | null
     criteria [1] : map<object>
     totals [1] : map<number>
-    pair_attestations [0..*] : Pair_attestation[]
-    voice_reviews [0..*] : Voice_review[]
+    pair_attestations [0..1] : any
+    voice_reviews [0..1] : any
   }
   class "kg-qa-manifest/v1" as folio_assistant_core_qa_kg_qa_manifest_v1_kg_qa_manifest_v1 <<json: KgQaManifestSchema>> #f4e6e6 {
     $schema [1] : 'kg-qa-manifest/v1'
@@ -321,9 +298,6 @@ folio_assistant_core_core_skills_folio_voice_v1_Rule *-- "0..*" folio_assistant_
 folio_assistant_core_core_skills_folio_voice_v1_folio_voice_v1 *-- "1..*" folio_assistant_core_core_skills_folio_voice_v1_Rule : rules
 folio_assistant_core_core_skills_skill_topics_v1_skill_topics_v1 *-- "0..*" folio_assistant_core_core_skills_skill_topics_v1_Topic : topics
 folio_assistant_core_core_skills_skill_topics_v1_skill_topics_v1 *-- "0..*" folio_assistant_core_core_skills_skill_topics_v1_Directory : directories
-folio_assistant_core_qa_kg_qa_v1_kg_qa_v1 *-- "0..*" folio_assistant_core_qa_kg_qa_v1_Pair_attestation : pair_attestations
-folio_assistant_core_qa_kg_qa_v1_Voice_review *-- "0..*" folio_assistant_core_qa_kg_qa_v1_Verdict : verdicts
-folio_assistant_core_qa_kg_qa_v1_kg_qa_v1 *-- "0..*" folio_assistant_core_qa_kg_qa_v1_Voice_review : voice_reviews
 folio_assistant_core_voices_VoiceProfile *-- "1..*" folio_assistant_core_voices_Source : sources
 folio_assistant_core_voices_Rule *-- "0..*" folio_assistant_core_voices_Pattern : patterns
 folio_assistant_core_voices_Rule *-- "0..*" folio_assistant_core_voices_Terminology : terminology

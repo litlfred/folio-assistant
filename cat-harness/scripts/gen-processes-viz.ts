@@ -73,7 +73,7 @@ import { existsSync, mkdirSync, readFileSync, readdirSync, writeFileSync } from 
 import { basename, dirname, join, relative, resolve } from "node:path";
 
 import { declarationPathIn } from "../schemas/cat-harness.js";
-import { docsLayers } from "./compose-docs.js";
+import { baseDocsDir } from "./compose-docs.js";
 import { skillPagesOf } from "./lib/skill-pages.ts";
 import { workflowFiles, kgRoots } from "./known-skills.js";
 import { loadProcessModel, isActivity, isDecision, branchesOf } from "../src/workflow/process-model.js";
@@ -95,11 +95,6 @@ const VIEWER_TOOL = "processes-viewer";
 const REPO = resolve(import.meta.dir, "..", "..");
 const KIND = "processes";
 
-function baseDocs(repo: string): string {
-  const base = docsLayers(repo).layers.find((l) => !l.repositoryScoped);
-  if (base === undefined) throw new Error("no instance-scoped docs layer is declared");
-  return base.dir;
-}
 
 /** One diagram, as the index sees it. */
 export interface ProcessRow {
@@ -304,7 +299,7 @@ export async function processRows(repo = REPO): Promise<ProcessRow[]> {
     // A report that claims a gap which is not there teaches its reader to
     // discount it, and this repository has paid for that once already
     // (`viewer-undiscovered.test.ts`, the same week).
-    const svgRel = join(baseDocs(repo), "assets/img/workflows", `${basename(abs, ".bpmn")}.svg`);
+    const svgRel = join(baseDocsDir(repo), "assets/img/workflows", `${basename(abs, ".bpmn")}.svg`);
     const svg = existsSync(svgRel) ? relative(repo, svgRel) : undefined;
     // The DECLARATION, asked of the file: is there an enforcement VALUE? A
     // presence check, not a second reading of what the policy means — and a
@@ -845,7 +840,7 @@ if (import.meta.main) {
     console.error("no visualiser declared for the `processes` graph — nothing to write");
     process.exit(1);
   }
-  const out = join(baseDocs(REPO), rel);
+  const out = join(baseDocsDir(REPO), rel);
   const rows = await processRows();
   // VACUITY GUARD. A sweep that found nothing reports a clean corpus, which is
   // the `dh4f` shape this page's own Findings section exists to raise — and the

@@ -98,6 +98,7 @@ import {
   forgeLocation,
 } from "../schemas/cat-harness.ts";
 import { checkoutDirectories } from "../schemas/harness-config.ts";
+import { gitFiles } from "../schemas/git-corpus.ts";
 import { withViewerNav } from "./viewer-page.ts";
 import { withInlineCode } from "../schemas/inline-code.ts";
 import { skillPageHref, skillPagesOf } from "./lib/skill-pages.ts";
@@ -351,6 +352,105 @@ export function declaredDirectories(graph: string): Array<{ id: string; absPath:
  * `index/tasks`, `index/roles`. Absent rather than stubbed: a type that emits
  * an empty page is indistinguishable from one whose sub-graphs are empty.
  */
+/**
+ * Every file under a graph's declared directories that `keep` admits, as
+ * `AutoDocItem`s — read from the GIT CORPUS, not from the disk.
+ *
+ * Factored out because the four types added 2026-10-03 (`index/schemas`,
+ * `index/tools`, `uml`, `lsi`) differ only in their extension filter and their
+ * summary source, and writing the walk four times is how four copies drift into
+ * four answers to "what counts as an artefact of this graph".
+ *
+ * **It uses `gitFiles` because the first draft used `readdirSync`, and that was
+ * a measured defect rather than a style point.** The disk walk admitted
+ * `cat-harness/schemas/block-qa-schema/dist/index.d.ts` — a gitignored build
+ * output present in a working container and absent from a fresh checkout — so
+ * `index/schemas` emitted **155** rows here and **154** in CI, `docs:auto`
+ * wrote a different page in each, and `Skill-registration chain, unmasked
+ * (hard)` went red on a tree that was green locally. `skill-register.ts`'s own
+ * closing note names this exact trap — *"if it is red in CI but green here: ask
+ * git what the corpus is, not the disk"* — citing a gitignored `node_modules/`
+ * that inflated `cat-harness/schemas` from 227 nodes to 1441. An index of a
+ * graph is an index of what the repository HOLDS, and git is what says so.
+ *
+ * `gitFiles` falls back to a walk where git cannot answer, skipping only `.git`
+ * and `node_modules`, so the two paths admit the same set wherever git works.
+ *
+ * It descends RECURSIVELY, which `index/skills` deliberately does not — and the
+ * difference is not an oversight. A skill's directory holds supporting pages
+ * that are not skills, so that type asks `skillMdDirs()` instead. These four
+ * have no such sub-artefact: a `.puml` under `uml/overview/<instance>/` is a
+ * model, and an `.lsi.json` at any depth is an index.
+ */
+function filesOfGraph(
+  graph: string,
+  keep: (file: string) => boolean,
+  summarise?: (abs: string) => string | undefined,
+): AutoDocItem[] {
+  const items: AutoDocItem[] = [];
+  for (const d of declaredDirectories(graph)) {
+    if (!existsSync(d.absPath)) continue;
+    const { files } = gitFiles(
+      d.absPath,
+      (rel) => !rel.split("/").some((s) => s.startsWith(".")) && keep(basename(rel)),
+    );
+    for (const abs of files) {
+      items.push({
+        path: relative(REPO, abs).split("\\").join("/"),
+        name: basename(abs).replace(/\.(ts|json|puml)$/, ""),
+        summary: summarise?.(abs),
+      });
+    }
+  }
+  return dedupeByPath(items);
+}
+
+/** The first sentence of a leading `/** … *\/` module docblock, if there is one. */
+function docblockSummary(abs: string): string | undefined {
+  const text = readFileSync(abs, "utf-8").slice(0, 4000);
+  const m = /\/\*\*([\s\S]*?)\*\//.exec(text);
+  if (!m) return undefined;
+  const body = m[1]!
+    .split("\n")
+    .map((l) => l.replace(/^\s*\*ic?\s?/, "").replace(/^\s*\*\s?/, "").trim())
+    .filter((l) => l !== "" && !l.startsWith("@"))
+    .join(" ")
+    .trim();
+  return body === "" ? undefined : firstSentence(body);
+}
+
+/**
+ * Every `.bpmn` in a declared `processes` graph, as `[repo-relative path, xml]`.
+ *
+ * Shared by `index/tasks` and `index/dmn`'s sibling so neither re-implements
+ * the walk, and read through `gitFiles` for the reason `filesOfGraph` records:
+ * a disk walk admits whatever the last build left behind.
+ */
+function processSources(ext = ".bpmn"): Array<[string, string]> {
+  const out: Array<[string, string]> = [];
+  const seen = new Set<string>();
+  for (const d of declaredDirectories("processes")) {
+    if (!existsSync(d.absPath) || seen.has(d.absPath)) continue;
+    seen.add(d.absPath);
+    const { files } = gitFiles(d.absPath, (rel) => !rel.split("/").some((s) => s.startsWith(".")) && rel.endsWith(ext));
+    for (const abs of files) out.push([relative(REPO, abs).split("\\").join("/"), readFileSync(abs, "utf-8")]);
+  }
+  return out;
+}
+
+/** One row per file of `ext`, named by `nameRe`'s first group, else the filename. */
+function bpmnishFiles(ext: string, nameRe: RegExp): AutoDocItem[] {
+  const items: AutoDocItem[] = [];
+  for (const [rel, xml] of processSources(ext)) {
+    items.push({
+      path: rel,
+      name: nameRe.exec(xml)?.[1]?.trim() || basename(rel, ext),
+      summary: /<(?:dmn:|bpmn:)?description[^>]*>([^<]+)</.exec(xml)?.[1]?.trim(),
+    });
+  }
+  return dedupeByPath(items);
+}
+
 export const TYPES: AutoDocType[] = [
   {
     id: "index/skills",
@@ -384,6 +484,132 @@ export const TYPES: AutoDocType[] = [
             name: basename(f, ".md"),
             summary: desc ? firstSentence(desc) : undefined,
           });
+        }
+      }
+      return dedupeByPath(items);
+    },
+  },
+  {
+    id: "index/schemas",
+    title: "Schemas",
+    graph: "schemas",
+    extracts: "every schema module a declared `schemas` directory holds, with the first sentence of its module docblock",
+    collect(): AutoDocItem[] {
+      return filesOfGraph("schemas", (f) => f.endsWith(".ts") && !f.endsWith(".test.ts"), docblockSummary);
+    },
+  },
+  {
+    id: "index/tools",
+    title: "Tools",
+    graph: "tools",
+    // `.ts`, not `.json`. A Tool definition here is a TypeScript module
+    // (`mcp.ts`, `viewers.ts`, `vocab-map.ts`), and the first draft of this
+    // type filtered for `.json` on the strength of `AGENTS.md` calling them
+    // "Tool definitions, themselves KG nodes". It emitted **0 items across 0
+    // sub-graphs** and reported `✓` — which is the vacuous pass this corpus
+    // keeps paying for: a type that finds nothing is indistinguishable from a
+    // graph that holds nothing. Measured against the directory, not recalled.
+    extracts: "every Tool module a declared `tools` directory holds, with the first sentence of its module docblock",
+    collect(): AutoDocItem[] {
+      return filesOfGraph("tools", (f) => f.endsWith(".ts") && !f.endsWith(".test.ts"), docblockSummary);
+    },
+  },
+  {
+    id: "uml",
+    title: "UML",
+    graph: "uml",
+    // `.puml` only, though each model is emitted as BOTH `.puml` and `.mmd`.
+    // Listing both would double every row for one model in two notations —
+    // the `index/skills` defect (a RENDERING is not the artefact) in a second
+    // form. The `.mmd` sibling is reachable from the rendered page, which
+    // links both sources.
+    extracts: "every UML model a declared `uml` directory holds, one row per model rather than per notation",
+    collect(): AutoDocItem[] {
+      return filesOfGraph("uml", (f) => f.endsWith(".puml"));
+    },
+  },
+  {
+    id: "lsi",
+    title: "LSI",
+    // `qa`, NOT the graph each index is ABOUT, and the distinction is the one
+    // `AutoDocType.graph` is documented for: this names where the artefacts
+    // LIVE. An `.lsi.json` is a QA result computed over some other graph, so
+    // its declared home is `test/results/` and its subject segment is that
+    // directory's id. Naming the indexed graph here would make the type walk
+    // `skills/` and find no `.lsi.json` at all.
+    graph: "qa",
+    extracts: "every LSI index a declared `qa` directory holds, named for the instance and graph it was computed over",
+    collect(): AutoDocItem[] {
+      return filesOfGraph("qa", (f) => f.endsWith(".lsi.json"));
+    },
+  },
+  {
+    id: "index/roles",
+    title: "Roles",
+    // `scenarios`, because that is where `roles.json` is declared. A role is
+    // not a file of its own, so this type reads the role GRAPH rather than
+    // walking for an extension — `readRoleGraph` is the same reader the
+    // `glossary` type already uses, asked once instead of re-derived.
+    graph: "scenarios",
+    extracts: "every role a declared `scenarios` graph defines, with the description it declares",
+    collect(): AutoDocItem[] {
+      const items: AutoDocItem[] = [];
+      for (const d of declaredDirectories("scenarios")) {
+        // `d.absPath`, NOT its parent. `readRoleGraph`'s own docblock says so:
+        // *"callers that hand this function every declared graph root pass the
+        // scenarios directory ITSELF"* — the role graph became a declared
+        // directory on 2026-09-21 rather than a subdirectory of one. The first
+        // draft passed `dirname()` and this type emitted **0 items across 0
+        // sub-graphs** while printing `✓`, which is the same vacuous pass
+        // `index/tools` shipped with an hour earlier.
+        for (const r of readRoleGraph(d.absPath)?.roles ?? []) {
+          items.push({
+            path: `${relative(REPO, d.absPath).split("\\").join("/")}/roles.json#${r.id}`,
+            name: r.title ?? r.id,
+            summary: r.description ? firstSentence(r.description) : undefined,
+          });
+        }
+      }
+      return dedupeByPath(items);
+    },
+  },
+  {
+    id: "index/dmn",
+    title: "Decisions",
+    graph: "processes",
+    extracts: "every DMN decision table a declared `processes` graph holds, with the decision's own name",
+    collect(): AutoDocItem[] {
+      return bpmnishFiles(".dmn", /<(?:dmn:)?decision[^>]*\sname="([^"]*)"/);
+    },
+  },
+  {
+    id: "index/tasks",
+    title: "Tasks",
+    graph: "processes",
+    // Activities ACROSS processes, which is a different granularity from
+    // `index/processes` — that type answers "what processes are there", this
+    // one "what work do they contain". Listing a process here as well would
+    // be the double-count `AutoDocType.graph` exists to prevent.
+    extracts: "every named activity in a declared `processes` graph — task, user, service, manual, script and call activities",
+    collect(): AutoDocItem[] {
+      const items: AutoDocItem[] = [];
+      for (const [rel, xml] of processSources()) {
+        // `(?:bpmn:)?` on the element, for the reason `index/processes`
+        // records: the prefix is a DOCUMENT's choice, and
+        // `translation-workflow.bpmn` declares BPMN as the default namespace
+        // and writes its activities unprefixed. A prefixed-only regex reads
+        // that file as having no work in it at all.
+        const re =
+          /<(?:bpmn:)?(task|userTask|serviceTask|manualTask|scriptTask|callActivity)\b[^>]*\sname="([^"]*)"[^>]*>/g;
+        for (const m of xml.matchAll(re)) {
+          const kind = m[1]!;
+          const label = m[2]!.replace(/\s+/g, " ").trim();
+          // An UNNAMED activity is skipped rather than listed under its id: a
+          // row whose name is `Activity_1x2y3z` tells a reader nothing and
+          // makes the index look populated. Absent is the honest state, and
+          // `check-lane-documentation` is what reports the omission.
+          if (label === "") continue;
+          items.push({ path: `${rel}#${label}`, name: label, summary: `${kind} in ${basename(rel, ".bpmn")}` });
         }
       }
       return dedupeByPath(items);
@@ -1075,6 +1301,60 @@ if (import.meta.main) {
       );
     }
 
+    // ── A TYPE THAT FINDS NOTHING WHERE ITS GRAPH HOLDS FILES IS A DEFECT ──
+    //
+    // Bean `06e3`: *"a stale or moved source makes the derivation FAIL, never
+    // render empty."* This is that guard, and it is not speculative — it was
+    // written after shipping the failure TWICE in one session, 2026-10-03:
+    //
+    //   - `index/tools` filtered `.json` on the strength of `AGENTS.md`
+    //     calling them "Tool definitions"; `tools/` holds `.ts`. It emitted
+    //     **0 items across 0 sub-graphs and printed `✓`**.
+    //   - `index/roles` passed `dirname()` where `readRoleGraph` wants the
+    //     scenarios directory itself. Same symptom, same `✓`.
+    //
+    // Both were caught by a human reading the count, which is exactly the
+    // check a gate is supposed to make unnecessary.
+    //
+    // The DISCRIMINATION is `dh4f`'s, and getting it right is the whole
+    // difference between a guard and a nuisance:
+    //
+    //   - no declared directory for the graph  → nothing to index. Silent.
+    //     A fresh folio declaring no `processes/` must not fail `index/dmn`.
+    //   - declared directories, all EMPTY      → nothing to index. Silent.
+    //     "the directory is not there" and "the directory is empty" are
+    //     different facts, and neither is a defect.
+    //   - declared directories WITH FILES, and the type collects nothing
+    //     → the reader is wrong, or its source moved. **Refuse.**
+    //
+    // So this cannot fire on an instance that simply does not have the
+    // material; it fires when the material is there and the type cannot see
+    // it. `check` mode counts it as stale rather than throwing, so one run
+    // reports every type rather than dying on the first.
+    if (items.length === 0 && dirs.length > 0) {
+      const holdsFiles = dirs.some(
+        (d) => existsSync(d.absPath) && gitFiles(d.absPath, () => true).files.length > 0,
+      );
+      if (holdsFiles) {
+        const where = dirs.map((d) => d.id).join(", ");
+        console.error(
+          `  ✗ ${type.id}: collected NOTHING, but its \`${type.graph}\` directories hold files (${where}) — ` +
+            `a moved source or a wrong filter, not an empty graph`,
+        );
+        stale++;
+        continue;
+      }
+    }
+
+    // The guard above runs BEFORE the orphan prune on purpose. With the
+    // order reversed — as the first draft had it — a wrong filter made the
+    // prune DELETE every sub-graph page first and the guard then reported a
+    // defect against a tree it had already emptied. Measured: reintroducing
+    // the `index/tools` `.json` bug pruned four pages before complaining.
+    // `deletion-requires-confirmation` is the rule that forbids it — an agent
+    // does not remove a durable artefact on its own initiative, least of all
+    // because its own reader is broken.
+
     // Orphans — bean `ankg`'s helper, unchanged. A sub-graph that stops
     // contributing items keeps its page otherwise, indexing a set that no
     // longer exists.
@@ -1092,6 +1372,7 @@ if (import.meta.main) {
       rmSync(dir, { recursive: true });
       console.log(`  ✗ pruned ${dir}`);
     }
+
 
     built.set(type.id, items.length);
     if (!check) {

@@ -50,10 +50,9 @@ while you work.
    update the checklist (invariant 3) for routine progress; comment only
    for genuine coordination (overlap, a blocker, a handoff-relevant
    finding). Defer to [`/coordinate`](coordinate.md) for the full
-   cross-PR triage protocol. A **platform refactor** (shared layout,
-   generators, schemas, processes) posts its intent only after the
-   collision review in `coordinate` §"Before a platform refactor" has
-   been run and recorded in the workplan bean.
+   cross-PR triage protocol. New work posts its intent only after the
+   collision review in `coordinate` §"Starting new work" has been run
+   and recorded in the workplan bean.
 
 ## The fifth invariant, and the one agents get wrong
 
