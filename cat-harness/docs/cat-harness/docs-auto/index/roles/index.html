@@ -186,6 +186,10 @@
   <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/scenarios/roles.json#business-analyst"><code>Business analyst</code></a><br><span class="p">cat-harness/scenarios/roles.json#business-analyst</span></td>
   <td>Turns a stated need into a modelled requirement.</td>
 </tr>
+<tr id="a-cat-harness-scenarios-roles-json-certifier">
+  <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/scenarios/roles.json#certifier"><code>Certifier</code></a><br><span class="p">cat-harness/scenarios/roles.json#certifier</span></td>
+  <td>Takes the certification decision on ONE test report: applies the DMN the plan's <code>exitCriteria</code> names (computed from facts, never asserted) and records the decision as a judgement under the declared <code>attestations</code> graph,…</td>
+</tr>
 <tr id="a-cat-harness-scenarios-roles-json-clinical-sme">
   <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/scenarios/roles.json#clinical-sme"><code>Clinical / scientific SME</code></a><br><span class="p">cat-harness/scenarios/roles.json#clinical-sme</span></td>
   <td>Reviewer whose judgement is about the subject matter rather than the artefact.</td>
@@ -326,6 +330,14 @@
   <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/scenarios/roles.json#terminologist"><code>Terminologist</code></a><br><span class="p">cat-harness/scenarios/roles.json#terminologist</span></td>
   <td>Owns coded concepts and value sets — the vocabulary a DAK is expressed in.</td>
 </tr>
+<tr id="a-cat-harness-scenarios-roles-json-test-requester">
+  <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/scenarios/roles.json#test-requester"><code>Test requester</code></a><br><span class="p">cat-harness/scenarios/roles.json#test-requester</span></td>
+  <td>Asks for a system under test to be certified against a named <code>test-plan/v1</code> (plan id and version).</td>
+</tr>
+<tr id="a-cat-harness-scenarios-roles-json-tester">
+  <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/scenarios/roles.json#tester"><code>Tester</code></a><br><span class="p">cat-harness/scenarios/roles.json#tester</span></td>
+  <td>Runs a <code>test-plan/v1</code> against a system under test: resolves the plan, binds its test data (fixed and reviewed, or generated from template + params + seed, per <code>vm6m</code>), executes every case or skips it with a reason, and…</td>
+</tr>
 <tr id="a-cat-harness-scenarios-roles-json-translation-adjudicator">
   <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/scenarios/roles.json#translation-adjudicator"><code>Translation adjudicator</code></a><br><span class="p">cat-harness/scenarios/roles.json#translation-adjudicator</span></td>
   <td>Adjudicator who settles a disagreement between machine and human translation.</td>
@@ -337,6 +349,10 @@
 <tr id="a-cat-harness-scenarios-roles-json-translator">
   <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/scenarios/roles.json#translator"><code>Human translator</code></a><br><span class="p">cat-harness/scenarios/roles.json#translator</span></td>
   <td>Produces the target-language text.</td>
+</tr>
+<tr id="a-cat-harness-scenarios-roles-json-untainted-checker">
+  <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/scenarios/roles.json#untainted-checker"><code>Untainted checker</code></a><br><span class="p">cat-harness/scenarios/roles.json#untainted-checker</span></td>
+  <td>Re-executes a SAMPLE of a plan's cases from the plan and the data alone — never the tester's verdicts — and reports whether it agrees.</td>
 </tr>
 <tr id="a-cat-harness-scenarios-roles-json-user">
   <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/scenarios/roles.json#user"><code>User</code></a><br><span class="p">cat-harness/scenarios/roles.json#user</span></td>
