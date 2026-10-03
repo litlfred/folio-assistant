@@ -238,6 +238,24 @@ export const PATTERNS: readonly ConflictPattern[] = [
     why: "bean definitions (44). Authored work-plan state, so it is resolved by a person. It may be TWO sessions editing one bean, which is a coordination question — or ONE session whose claim went to the default branch while its completion stayed on the branch, which is `beans:claim`'s normal path and needs no coordination at all (bean `24fa`). Check which before looking for a sibling. Either way, do not union the front matter: a duplicated updated_at is check-bean-front-matter's recorded defect.",
   },
   {
+    id: "artefact-verification",
+    globs: ["**/scripts/artefact-verification.json"],
+    strategy: "refuse",
+    why:
+      "the per-check consumer-verification declaration. It READS like a generated sidecar — under `scripts/`, " +
+      "a `.json`, its key set DERIVED from `package.json` — and it is the only path that refused on two open " +
+      "PRs at once (#1958, #1955, swept 2026-10-03), so it is the one a sweep is most likely to glob by " +
+      "mistake. Two facts rule that out. `task-io.ts` classifies `check:artefact-verification` as `READ_ONLY`: " +
+      "NO script writes this file, so there is no writer for `regen` to run and `take-base` would be a silent " +
+      "discard rather than a resolution. And its own `_comment` requires every `none` entry to carry a REASON " +
+      "in prose and says the file may only SHRINK — so a branch that adds a gated check adds an authored " +
+      "sentence, which is exactly what taking base would drop. A conflict here is a genuine editorial merge " +
+      "(both reasons are wanted; which survives is a judgement), and human merge is the cost of the file's " +
+      "shape, not a hole in this catalogue. Bean `mjl3`, which also records the falsifier: if a `--write` is " +
+      "ever added that composes the derived keys and carries existing reasons forward, this becomes " +
+      "`take-base` and the pattern changes with it.",
+  },
+  {
     id: "uploads",
     // declared-path-literal: a GLOB matched against conflicted paths, not a
     // directory read; it refuses any uploads/ wherever an instance declares one.
