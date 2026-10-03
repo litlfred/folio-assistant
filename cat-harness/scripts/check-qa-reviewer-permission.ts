@@ -45,6 +45,25 @@
  * "unavailable"`, per `isCouldNotDispatch`), never by reviewer name, so the
  * exemption cannot be claimed by asserting it.
  *
+ * ## An absent corpus is "could not determine", never a stale baseline
+ *
+ * Bean `c8uq` (reader audit row R28). With `test/results/` moved aside this
+ * gate used to exit 1 only through its stale-baseline rule, printing *"stale
+ * baseline entry, remove it"* five times — and an agent obeying that empties
+ * the baseline, after which the next run passes over **0 entries**. The
+ * derived corpus now lives on the `qa-reports` branch, so an unfetched
+ * checkout is the normal case, not an accident.
+ *
+ * So the gate reports its POPULATION. It reads two places — the derived
+ * results tree and the declared `attestations` tree (`test/attestations/`,
+ * where agent and human judgements stay on `main`, bean `2gst`) — and:
+ *
+ * - a `forbidden` entry still fails (exit 1): that is determined wherever it
+ *   was found;
+ * - an ABSENT results tree is exit 2, *could not determine*, and the baseline
+ *   is NOT judged — no entry is called stale over a corpus nobody looked at;
+ * - zero verdict-bearing entries examined is exit 2 through `vacuityRefusal`.
+ *
  * @module scripts/check-qa-reviewer-permission
  * @covers policies, scenarios
  */
@@ -56,6 +75,8 @@ import { join, relative } from "node:path";
 import type { QaCriterionEntry, QaReviewer } from "../schemas/block-qa.ts";
 import { isCheckerWitness, isCouldNotDispatch } from "../content/pipeline/untainted-verification.ts";
 import { actorsDir } from "../schemas/role-graph.ts";
+import { directoryForGraph } from "../schemas/cat-harness.ts";
+import { vacuityRefusal, type Source } from "./vacuity-refusal.ts";
 
 const ROOT = join(import.meta.dir, "..", "..");
 const ACTOR_DIR = actorsDir(ROOT) ?? (() => { throw new Error("the platform declares no `scenarios` graph, so the actor registry (bean rqao) has no home to read"); })();
@@ -63,6 +84,14 @@ const ACTOR_DIR = actorsDir(ROOT) ?? (() => { throw new Error("the platform decl
 // (issue #1180), beside the actor registry this gate already reads by path.
 const POLICY_DIR = join(ROOT, "cat-harness", "policies");
 const RESULTS = join(ROOT, "cat-harness", "test", "results");
+/**
+ * The judgement half (bean `2gst`), read from the DECLARATION. Agent and human
+ * entries are what this gate exists to judge, and they stay on `main` when the
+ * derived results leave it — so this is the half that is never "not fetched".
+ */
+function attestationsDir(): string | undefined {
+  return directoryForGraph(join(ROOT, "cat-harness"), "attestations");
+}
 const BASELINE = join(import.meta.dir, "qa-reviewer-permission-baseline.json");
 const PERMISSION = "qa-reporting";
 
@@ -130,7 +159,20 @@ function walkJson(dir: string, out: string[] = []): string[] {
 
 /** Scan every QA sidecar and classify each verdict-bearing entry. */
 export function scan(resultsDir: string = RESULTS, actors = readActors()): Finding[] {
+  return scanCounted(resultsDir, actors).findings;
+}
+
+/**
+ * {@link scan}, plus the population: how many verdict-bearing entries were
+ * EXAMINED (permitted ones included), and whether the directory was there.
+ * Zero examined must not read as "no defect" (bean `c8uq`).
+ */
+export function scanCounted(
+  resultsDir: string,
+  actors = readActors(),
+): { findings: Finding[]; examined: number; present: boolean } {
   const findings: Finding[] = [];
+  let examined = 0;
   for (const file of walkJson(resultsDir)) {
     let doc: unknown;
     try {
@@ -160,6 +202,7 @@ export function scan(resultsDir: string = RESULTS, actors = readActors()): Findi
         // criterion does not apply here" is precisely the claim that produces
         // a false pass when it is wrong. Exempting it would blind the gate to
         // the `dh4f` shape this whole epic is about.
+        examined++;
         if (isCouldNotDispatch(entry) || isCheckerWitness(entry)) continue;
         const outcome = reviewerOutcome(entry.reviewer, actors);
         if (outcome === "permitted") continue;
@@ -173,7 +216,7 @@ export function scan(resultsDir: string = RESULTS, actors = readActors()): Findi
       }
     }
   }
-  return findings;
+  return { findings, examined, present: existsSync(resultsDir) };
 }
 
 /** The backlog key: a reviewer id, not a file — the corpus has thousands of files and nine ids. */
@@ -203,10 +246,33 @@ export function report(findings: Finding[], known: Set<string>) {
 if (import.meta.main) {
   const write = process.argv.includes("--write-baseline");
   const actors = readActors();
-  const findings = scan(RESULTS, actors);
+  const ATTESTATIONS = attestationsDir();
+  const derived = scanCounted(RESULTS, actors);
+  const judged = ATTESTATIONS
+    ? scanCounted(ATTESTATIONS, actors)
+    : { findings: [] as Finding[], examined: 0, present: false };
+  const findings = [...derived.findings, ...judged.findings];
   const base = readBaseline();
+  const looked: Source[] = [
+    { label: "derived results", dir: RESULTS, present: derived.present, found: derived.examined },
+    {
+      label: "attestations",
+      dir: ATTESTATIONS ?? "(no `attestations` directory declared)",
+      present: judged.present,
+      found: judged.examined,
+    },
+  ];
 
   if (write) {
+    // Writing a baseline from a corpus that is not here would record "nothing
+    // unresolved" — the vacuous pass, made permanent.
+    if (!derived.present) {
+      console.error(
+        `  ✗ refusing --write-baseline: ${relative(ROOT, RESULTS)} is absent, so the baseline would be written ` +
+          `over a corpus nobody looked at. Run \`bun run qa:fetch --ref main\` first.`,
+      );
+      process.exit(2);
+    }
     const keys = [...new Set(findings.filter((f) => f.outcome !== "forbidden").map(baselineKey))].sort();
     writeFileSync(
       BASELINE,
@@ -228,11 +294,16 @@ if (import.meta.main) {
     process.exit(0);
   }
 
-  const { forbidden, unresolved, novel, stale } = report(findings, new Set(base.known));
+  const { forbidden, unresolved, novel, stale: staleIfJudged } = report(findings, new Set(base.known));
+  // The baseline describes the DERIVED corpus. With that corpus absent every
+  // entry would read stale, and "remove it" is the instruction that turns the
+  // next run into a pass over nothing. So it is not judged at all.
+  const stale = derived.present ? staleIfJudged : [];
   const total = findings.length;
   console.log(
     `QA reviewer permission (${actors.size} declared actor(s), ` +
-      `${[...actors.values()].filter((p) => p.has(PERMISSION)).length} holding \`${PERMISSION}\`)`,
+      `${[...actors.values()].filter((p) => p.has(PERMISSION)).length} holding \`${PERMISSION}\`; ` +
+      `${derived.examined} derived + ${judged.examined} attested entr(y/ies) examined)`,
   );
 
   let bad = false;
@@ -252,14 +323,37 @@ if (import.meta.main) {
     bad = true;
   }
 
-  if (!bad) {
+  // A determined defect outranks an unknown: a `forbidden` entry found in the
+  // attestations is a failure whether or not the derived half was fetched.
+  if (bad) {
     console.log(
-      `  ✓ no NEW defect — 0 forbidden; ${unresolved.length} entr(y/ies) across ` +
-        `${new Set(unresolved.map((f) => f.reviewer)).size} reviewer id(s) still name no actor (baselined)`,
+      `  · ${total} entr(y/ies) not yet permitted; a "could not dispatch" record is exempt by design`,
     );
+    process.exit(1);
   }
+
+  const refusal = vacuityRefusal({ script: "check:qa-reviewer-permission", covers: "policies, scenarios" }, looked);
+  if (!derived.present || refusal) {
+    console.log(
+      refusal ??
+        `  ? could not determine — ${relative(ROOT, RESULTS)} is ABSENT from this checkout, so ` +
+          `${base.known.length} baselined reviewer id(s) were not evaluated and NONE of them is stale.\n` +
+          `    ${judged.examined} attested entr(y/ies) were examined and none is forbidden; that is not a ` +
+          `verdict on the derived corpus.`,
+    );
+    console.log(
+      `\n  The derived QA corpus lives on the \`qa-reports\` branch. Materialise it with\n` +
+        `  \`bun run qa:fetch --ref main\` (or \`--ref pr/<n>\`) and re-run. Do NOT edit the baseline.`,
+    );
+    process.exit(2);
+  }
+
+  console.log(
+    `  ✓ no NEW defect — 0 forbidden; ${unresolved.length} entr(y/ies) across ` +
+      `${new Set(unresolved.map((f) => f.reviewer)).size} reviewer id(s) still name no actor (baselined)`,
+  );
   console.log(
     `  · ${total} entr(y/ies) not yet permitted; a "could not dispatch" record is exempt by design`,
   );
-  process.exit(bad ? 1 : 0);
+  process.exit(0);
 }

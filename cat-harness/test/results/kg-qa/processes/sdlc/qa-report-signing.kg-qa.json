@@ -5,7 +5,7 @@
     "id": "Process_QaReportSigning",
     "path": "processes/sdlc/qa-report-signing.bpmn"
   },
-  "source_hash": "sha256:b45e4450c97ea1d4e016b3e6ec4d60088cae24a3e283378fb6e848193cb9223c",
+  "source_hash": "sha256:6f8477e9fd80df1c387f10ba28bfbe68a3a441e392f57f48f8a6118386095ffc",
   "criteria": {
     "raci-role-resolves": {
       "result": "n/a",
@@ -53,6 +53,10 @@
         {
           "where": "Task_RecordAttestation",
           "detail": "names skill \"qa-report-signing\", which no Tool declares `satisfies` for — the step's mechanism is still prose."
+        },
+        {
+          "where": "Task_StoreSigned",
+          "detail": "names skill \"qa-reports\", which no Tool declares `satisfies` for — the step's mechanism is still prose."
         }
       ]
     },

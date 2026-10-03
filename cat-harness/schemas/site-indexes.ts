@@ -450,7 +450,41 @@ export const QaIndexSchema = z
     $schema: z.literal("folio-qa-index/v1"),
     /** The page's slug. */
     page: z.string().min(1),
+    /**
+     * Whether the build that wrote this had the derived QA corpus (bean
+     * `4l4d`). `absent`: every badge on the page reads "not available in this
+     * build", and `badges` and `unswept` are empty because nothing was known.
+     * Optional only for an index written before that bean, which the painter
+     * reads as `present` with no `unswept` list — what it then meant.
+     */
+    corpus: z.enum(["present", "absent"]).optional(),
     /** Keyed `<nodeId>.<family>` or `page.<family>`; may be empty. */
     badges: z.record(z.string().min(1), QaIndexBadgeSchema),
+    /**
+     * Keys whose subject has NO sidecar — "not swept", painted inert. Decided
+     * here rather than in the committed page since bean `4l4d`.
+     */
+    unswept: z.array(z.string().min(1)).optional(),
+  })
+  .strict()
+  .superRefine((doc, ctx) => {
+    const unswept = doc.unswept ?? [];
+    if (doc.corpus === "absent" && (Object.keys(doc.badges).length > 0 || unswept.length > 0)) {
+      ctx.addIssue({ code: "custom", message: "corpus absent: an index that knew nothing carries no rows" });
+    }
+    for (const k of unswept) {
+      if (k in doc.badges) ctx.addIssue({ code: "custom", message: `${k} is both a row and unswept` });
+    }
+  });
+
+// ── folio-qa-translation-pages/v1 — scripts/gen-docs-pages.ts → test/results/witnesses/translation-qa-pages.json ──
+
+/** Which HAND-AUTHORED pages have a translation projection; fetched by `docs-ui.js` (bean `4l4d`). */
+export const QaTranslationPagesSchema = z
+  .object({
+    $schema: z.literal("folio-qa-translation-pages/v1"),
+    corpus: z.enum(["present", "absent"]),
+    /** Page slugs (path, `/` → `-`). Empty with `corpus: "absent"`. */
+    pages: z.array(z.string().min(1)),
   })
   .strict();

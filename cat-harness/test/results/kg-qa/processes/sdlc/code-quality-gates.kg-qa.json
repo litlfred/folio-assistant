@@ -5,7 +5,7 @@
     "id": "Process_CodeQualityGates",
     "path": "processes/sdlc/code-quality-gates.bpmn"
   },
-  "source_hash": "sha256:4a4af087cadc3ed35fbfe905ff49f1730c456e0fc2e2ecc70328a5a5bfec551d",
+  "source_hash": "sha256:0584220085ef5c060da23a2cfea78a183b587a5c77cd908ea2b4a17a235a6822",
   "criteria": {
     "raci-role-resolves": {
       "result": "n/a",
@@ -32,8 +32,13 @@
       "findings": []
     },
     "activity-skill-has-tool": {
-      "result": "pass",
-      "findings": []
+      "result": "fail",
+      "findings": [
+        {
+          "where": "Task_QaPublish",
+          "detail": "names skill \"qa-reports\", which no Tool declares `satisfies` for — the step's mechanism is still prose."
+        }
+      ]
     },
     "decision-ref-resolves": {
       "result": "n/a",
@@ -68,7 +73,7 @@
       "findings": []
     },
     "call-activity-resolves": {
-      "result": "n/a",
+      "result": "pass",
       "findings": []
     },
     "process-diagram-published": {
@@ -100,13 +105,8 @@
       "findings": []
     },
     "prose-reviewed-since-code-changed": {
-      "result": "fail",
-      "findings": [
-        {
-          "where": ".github/workflows/code-quality-gates.yml",
-          "detail": ".github/workflows/code-quality-gates.yml changed since cat-harness/processes/sdlc/code-quality-gates.bpmn was last seen, and the prose did not. Re-read it; if it still holds, run pairs:attest with a reason."
-        }
-      ]
+      "result": "pass",
+      "findings": []
     },
     "prose-claims-resolve": {
       "result": "pass",
@@ -114,9 +114,9 @@
     }
   },
   "totals": {
-    "pass": 16,
+    "pass": 17,
     "fail": 1,
-    "n/a": 8,
+    "n/a": 7,
     "unknown": 0
   }
 }

@@ -87,6 +87,32 @@ passed.
 - Coverage metrics
 - Regression comparison
 - Issue list (if failures)
+
+## Where the results go — not into a commit
+
+A test run's results are **derived**: re-running the plan over the same tree
+and data reproduces them. So they are kept where every derived QA result is
+kept since arc `3fva` — the orphan **`qa-reports`** branch, keyed by the
+commit they were computed on (`main/<sha>/`, `pr/<n>/<sha>/`), written by
+`bun run qa:publish` (the CI job `qa-publish`) and read back with `bun run
+qa:fetch`. **Do not regenerate a results file in order to commit it**; the
+checkout's `test/results/` is a working copy, still on `main` only until bean
+`5hox` removes it.
+
+Two things a test run produces are not derived, and they stay on `main`:
+
+- **A reviewer's judgement** of a case — an SME or QC reviewer's verdict, an
+  agent's adjudication — goes to `test/attestations/` (`qa-attestations/v1`),
+  because no re-run can reproduce it.
+- **A certification** — an accountable decision taken on a plan's rollup —
+  also stays on `main`, beside the attestations (owner decision D5, default
+  (a)), and is then signed through
+  [`qa-report-signing`](qa-report-signing.md).
+
+"Regression comparison" against a previous version is a comparison against
+its **stored** results: `--against <ref>` on a gate, or `qa:fetch --ref` for a
+report. A previous version with no stored entry is UNKNOWN — say so; never
+read it as "no regressions".
 {% endraw %}
 
 ## Processes that run this skill

@@ -10010,10 +10010,16 @@
       warning.appendChild(warnBody);
 
       if (meta.translationQa && meta.translationQa.src) {
+        // Hidden until a badge with a projection behind it exists: since bean
+        // `4l4d` the page always carries the PATHS, and only the published
+        // list (`translationQa.list`) says whether there is a report to open.
+        // An older page without `list` keeps the old meaning — paths were
+        // emitted only where a projection existed — and shows it at once.
         var openReport = el("button", {
           type: "button",
           class: "fa-translation-warning__report",
         }, "Open the translation QA report");
+        if (meta.translationQa.list) openReport.hidden = true;
         openReport.addEventListener("click", function () {
           var badge = document.querySelector('.fa-qa-badge[data-qa-family="translation"]');
           // Absent is a real state and is REPORTED, not swallowed: a button
@@ -10035,18 +10041,25 @@
 
     // A HAND-AUTHORED page has no generator to write its badge into the
     // markup, so it is built here from the paths `head_custom.html` published.
-    // Those paths are STRUCTURE — `_data/translation-qa-pages.json` says a
-    // projection exists, never what it found — so this badge is emitted only
-    // where there is something to open, and `paintQaBadges` (which runs right
-    // after `mountTranslationBadges`) fetches its state from the same
-    // `qa-index.json` every other badge uses.
+    // Those paths are STRUCTURE. Whether a projection exists is the fetched
+    // `translation-qa-pages.json` list's answer (bean `4l4d`; it was a Jekyll
+    // `_data` file baked into every page), never what the projection found —
+    // so this badge is emitted only where there is something to open, and is
+    // painted from the same `qa-index.json` every other badge uses.
     //
     // Deliberately identical markup to the generated one, down to the
     // `fa-qa-pending` class and the `…` glyph: one badge, one painter, one
     // panel. A second shape here would be a second set of states to keep in
     // step with the first.
     var tq = meta.translationQa;
-    if (tq && tq.src && tq.index && !document.querySelector(".fa-page-qa-badges")) {
+    var showReport = function () {
+      var r = document.querySelector(".fa-translation-warning__report");
+      if (r) r.hidden = false;
+    };
+    if (tq && document.querySelector(".fa-page-qa-badges")) {
+      // A generated page (or a translation of one) carries its own badge.
+      showReport();
+    } else if (tq && tq.src && tq.index) {
       var tqBadge = el("button", {
         type: "button",
         class: "fa-qa-badge fa-qa-pending fa-qa-fam-translation",
@@ -10063,7 +10076,40 @@
       });
       tqBadge.appendChild(el("span", { class: "fa-qa-tag" }, "TR"));
       tqBadge.appendChild(el("span", { class: "fa-qa-glyph", "aria-hidden": "true" }, "…"));
-      container.appendChild(tqBadge);
+      if (!tq.list) {
+        // An older `head_custom.html` emitted the paths only where a
+        // projection existed; that page needs no list to ask.
+        container.appendChild(tqBadge);
+      } else {
+        // WHICH authored pages have a projection is a published asset, fetched
+        // here, never baked into the page (bean `4l4d`). Three answers:
+        //   - the list names this page: build the badge and paint it from the
+        //     page's `qa-index.json`, as every other badge is painted;
+        //   - the list loaded, has the corpus, and does not name it: no
+        //     projection, so no badge — the determined answer it always was;
+        //   - the list says `corpus: "absent"`, or will not load: whether this
+        //     page was swept is unknown, said as "not available in this build".
+        fetch(tq.list, { credentials: "same-origin" })
+          .then(function (r) {
+            if (!r.ok) throw new Error("HTTP " + r.status);
+            return r.json();
+          })
+          .then(function (doc) {
+            if (doc && doc.corpus !== "absent" && Array.isArray(doc.pages)) {
+              if (doc.pages.indexOf(tq.slug) === -1) return;
+              container.appendChild(tqBadge);
+              showReport();
+              paintQaBadges(container);
+              return;
+            }
+            container.appendChild(tqBadge);
+            qaPaintInert(tqBadge, "unavailable");
+          })
+          .catch(function () {
+            container.appendChild(tqBadge);
+            qaPaintInert(tqBadge, "unavailable");
+          });
+      }
     }
 
     // The page-level QA badges the generator emitted under the h1 join this
@@ -10489,10 +10535,13 @@
    *
    * **Two states carry no mark at all, and they are not the same state.**
    * `empty` is a subject that WAS swept and whose every criterion came back
-   * `n/a`; a subject nobody has swept never reaches this map, because the
-   * generator renders it server-side as a dulled `<span>` — there is nothing
-   * to fetch and nothing to open. Any glyph on either would be a claim about a
-   * check that returned no verdict.
+   * `n/a`; a subject nobody has swept never reaches this map: its key is in
+   * the index's `unswept` list and `qaPaintInert` turns it into a dulled
+   * `<span>` — there is nothing to fetch and nothing to open. (That was
+   * server-rendered until bean `4l4d`; it moved to the index because whether a
+   * sidecar exists is a fact about the fetched QA corpus, not the checkout.)
+   * Any glyph on either would be a claim about a check that returned no
+   * verdict.
    *
    * **`unknown` is the third state and it is NOT a quiet pass.** `?` is loud
    * on purpose: a badge that could not read its verdict must not look like one
@@ -10519,9 +10568,11 @@
    * facts, and both are the reader's business. Lifted from the generator with
    * its wording intact, so the badge reads as it always did.
    */
-  function qaBadgeTitle(label, noun, state, counts) {
+  function qaBadgeTitle(label, noun, state, counts, reason) {
     if (state === "unknown") {
-      return label + ": could not determine — this page's verdict index could not be read";
+      return label + ": could not determine — " + (reason === "no-row"
+        ? "this page's verdict index has no row for this " + noun
+        : "this page's verdict index is not available in this build");
     }
     if (state === "empty") {
       return label + ": swept, and no criterion applied to this " + noun +
@@ -10544,7 +10595,7 @@
    * projector uses one word for "nothing ruled on this" whatever the reason,
    * and by the time a row EXISTS the subject has demonstrably been swept.
    */
-  function qaPaintBadge(badge, entry) {
+  function qaPaintBadge(badge, entry, reason) {
     var label = badge.getAttribute("data-qa-label") || "QA";
     var noun = badge.getAttribute("data-qa-noun") || "subject";
     var state = entry ? (entry.state === "unswept" ? "empty" : entry.state) : "unknown";
@@ -10553,7 +10604,7 @@
     QA_STATE_CLASSES.forEach(function (c) { badge.classList.remove(c); });
     badge.classList.add("fa-qa-" + state);
 
-    var title = qaBadgeTitle(label, noun, state, entry && entry.counts);
+    var title = qaBadgeTitle(label, noun, state, entry && entry.counts, reason);
     badge.setAttribute("title", title);
     badge.setAttribute("aria-label", title);
     badge.removeAttribute("aria-busy");
@@ -10572,6 +10623,47 @@
       badge.appendChild(glyph);
     }
     glyph.textContent = mark;
+  }
+
+  /**
+   * Replace a placeholder with an inert mark: there is nothing to open.
+   *
+   * `unswept` — the index lists the key: no sidecar, nobody has ruled.
+   * `unavailable` — the index says `corpus: "absent"`: this build was made
+   * without the QA results, so whether anything was swept is UNKNOWN. Neither
+   * is a verdict and neither carries a glyph; the class and the accessible
+   * name say which absence it is.
+   *
+   * A `<span>` rather than a disabled `<button>`: a control that does nothing
+   * when pressed is worse than a plain mark. The span drops `data-qa-src` and
+   * `data-qa-index`, so neither the click delegate nor a repaint touches it.
+   * Bean `4l4d` — this was server-rendered until the committed pages had to
+   * stop depending on the QA corpus.
+   */
+  function qaPaintInert(badge, kind) {
+    var label = badge.getAttribute("data-qa-label") || "QA";
+    var noun = badge.getAttribute("data-qa-noun") || "subject";
+    var family = badge.getAttribute("data-qa-family") || "";
+    var title = kind === "unavailable"
+      ? label + ": not available in this build — the QA results were not fetched, " +
+        "so whether this was swept is unknown"
+      : label + ": not swept — " + (noun === "page"
+        ? "no block on this page carries a translation verdict"
+        : "no sidecar for this " + noun);
+    var span = document.createElement("span");
+    span.className = "fa-qa-badge fa-qa-unswept" +
+      (kind === "unavailable" ? " fa-qa-unavailable" : "") +
+      (family ? " fa-qa-fam-" + family : "");
+    ["data-qa-family", "data-qa-key", "data-qa-label", "data-qa-noun"].forEach(function (a) {
+      var v = badge.getAttribute(a);
+      if (v !== null) span.setAttribute(a, v);
+    });
+    span.setAttribute("title", title);
+    span.setAttribute("aria-label", title);
+    var tag = badge.querySelector(".fa-qa-tag");
+    if (tag) span.appendChild(tag);
+    if (badge.parentNode) badge.parentNode.replaceChild(span, badge);
+    return span;
   }
 
   /**
@@ -10613,8 +10705,14 @@
       function paintAll(doc) {
         group.forEach(function (b) {
           var key = b.getAttribute("data-qa-key");
+          // The build had no QA corpus: whether this was swept is unknown.
+          if (doc && doc.corpus === "absent") { qaPaintInert(b, "unavailable"); return; }
+          if (doc && key && Array.isArray(doc.unswept) && doc.unswept.indexOf(key) !== -1) {
+            qaPaintInert(b, "unswept");
+            return;
+          }
           var row = doc && doc.badges && key ? doc.badges[key] : null;
-          qaPaintBadge(b, row || null);
+          qaPaintBadge(b, row || null, doc ? "no-row" : "no-index");
         });
       }
       if (QA_INDEX_CACHE[src]) { paintAll(QA_INDEX_CACHE[src]); return; }

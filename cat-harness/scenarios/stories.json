@@ -115,6 +115,20 @@
       "want": "Get stakeholder sign-off on scope before build"
     },
     {
+      "id": "certifier-1",
+      "role": {
+        "role": "certifier"
+      },
+      "want": "Decide on one report by the plan's exit-criteria table, and record the decision as my judgement"
+    },
+    {
+      "id": "certifier-2",
+      "role": {
+        "role": "certifier"
+      },
+      "want": "See an undetermined result as different from both a pass and a refusal"
+    },
+    {
       "id": "clinical-sme-1",
       "role": {
         "role": "clinical-sme"
@@ -704,6 +718,27 @@
       "want": "Find where a concept is used before changing it"
     },
     {
+      "id": "test-requester-1",
+      "role": {
+        "role": "test-requester"
+      },
+      "want": "Ask for my system to be certified against a named plan and version, and know nothing after the request is mine to do"
+    },
+    {
+      "id": "tester-1",
+      "role": {
+        "role": "tester"
+      },
+      "want": "Run every case of a plan against a system, or skip it with a reason, and record both hashes"
+    },
+    {
+      "id": "tester-2",
+      "role": {
+        "role": "tester"
+      },
+      "want": "Bind fixed or generated test data so a re-run hashes to the same input"
+    },
+    {
       "id": "translation-adjudicator-1",
       "role": {
         "role": "translation-adjudicator"
@@ -765,6 +800,13 @@
         "role": "translator"
       },
       "want": "See what changed in a source string since last translated"
+    },
+    {
+      "id": "untainted-checker-1",
+      "role": {
+        "role": "untainted-checker"
+      },
+      "want": "Re-execute a sample of cases without seeing the tester's verdicts, and say plainly when I could not"
     },
     {
       "id": "user-1",
