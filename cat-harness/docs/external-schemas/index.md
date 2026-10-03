@@ -29,7 +29,7 @@ depends on it**, and **which of its terms this repository branches on**.
 <div class="xs-grid">
 <div class="xs-stat"><b>22</b><span>specifications</span></div>
 <div class="xs-stat"><b>106</b><span>operative terms in the graph</span></div>
-<div class="xs-stat"><b>213</b><span>declared uses</span></div>
+<div class="xs-stat"><b>214</b><span>declared uses</span></div>
 <div class="xs-stat"><b>0</b><span>declarations naming no record</span></div>
 </div>
 
@@ -70,10 +70,6 @@ front-matter list, an `xmlns` binding, and a graph kind whose typing module
 declares the spec (bean `u63y`).
 
 Every declaration names a record on this page.
-
-**1 record(s) nothing declares.** A version bump would move nothing that says so:
-
-- [`spdx-license-list`](#spdx-license-list)
 
 ## Namespaces the corpus uses against the ones it declares
 
@@ -409,7 +405,11 @@ a subset of the edition rather than a transcription of it.
 
 **Note.** The identifiers a `licence.json` `id` (and an `intake.json` licence) may use, as an SPDX licence expression: a listed licence or exception id, or a `LicenseRef-`. Adopted for VALIDATION ONLY on the owner's ruling 2026-10-03 (bean sd5v): 'go ahead with licence-id validation, that's it for now' — no SPDX documents are produced. The ids are snapshotted beside this record in spdx-license-list.terminology.json; move this pin, fetch github.com/spdx/license-list-data at tag v<version>, and re-run scripts/pin-spdx-license-list.ts to update both together. Authority is `other` because the list is published by the SPDX Legal Team of The Linux Foundation, not by a standards body this registry names.
 
-**What depends on it.** Nothing here declares it.
+**What depends on it.**
+
+| user | declared by |
+|---|---|
+| [`cat-harness/schemas/spdx-license-expression.ts`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/spdx-license-expression.ts) | `@conformsTo` tag |
 
 **No operative terms.** This repository conforms to the specification
 without branching on any of its terms, so none is materialised into the

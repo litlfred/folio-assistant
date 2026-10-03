@@ -42,6 +42,8 @@
  * licence; the list only asks that it not be used in NEW records. So a record
  * carrying one is valid, and the id comes back in `deprecated` for the check
  * to report as its own family rather than fold into `malformed`.
+ *
+ * @conformsTo spdx-license-list
  */
 import { readFileSync } from "node:fs";
 import { join } from "node:path";
