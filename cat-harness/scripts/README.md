@@ -8,7 +8,7 @@ The platform's executable surface -- generators, checkers and the gate runner. T
 
 Part of [C@T Harness](../README.md) 0.1.0, declared as `cat-harness-scripts`, holding `code`.
 
-_465 files directly here, too many to list: 337 .ts, 45 .sh, 34 .bat, 31 .py, 15 .json, 1 .txt, 1 .ps1, 1 .mjs._
+_466 files directly here, too many to list: 338 .ts, 45 .sh, 34 .bat, 31 .py, 15 .json, 1 .txt, 1 .ps1, 1 .mjs._
 
 | file | what it is | used by |
 |---|---|---|
