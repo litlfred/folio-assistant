@@ -736,6 +736,14 @@
       "@type": "bootstrap:SequenceFlow"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CodeQualityGates/flow/Flow_22",
+      "@type": "bootstrap:SequenceFlow"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CodeQualityGates/flow/Flow_23",
+      "@type": "bootstrap:SequenceFlow"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CodeQualityGates/flow/Flow_3",
       "@type": "bootstrap:SequenceFlow"
     },
@@ -779,6 +787,11 @@
       "name": "Mergeable"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CodeQualityGates/node/End_Published",
+      "@type": "bootstrap:ProcessNode",
+      "name": "QA results published (or skipped, with a reason)"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CodeQualityGates/node/GW_Fork",
       "@type": "bootstrap:ProcessNode",
       "name": "Every job, in parallel"
@@ -817,6 +830,11 @@
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CodeQualityGates/node/Task_Python",
       "@type": "bootstrap:ProcessNode",
       "name": "Python: unused and wildcard imports (HARD)"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CodeQualityGates/node/Task_QaPublish",
+      "@type": "bootstrap:ProcessNode",
+      "name": "Publish QA results to qa-reports (NOT A GATE)"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CodeQualityGates/node/Task_RepositoryGates",

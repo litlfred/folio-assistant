@@ -1981,9 +1981,9 @@
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#externalSchema/omg-dd-1.0"
       ],
       "enforcement": "strict",
-      "flowCount": 22,
+      "flowCount": 24,
       "name": "The gates a change must pass before it can merge",
-      "nodeCount": 15,
+      "nodeCount": 17,
       "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes",
       "sourcePath": "processes/sdlc/code-quality-gates.bpmn",
       "startNode": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CodeQualityGates/node/Start_Change"
@@ -2141,6 +2141,26 @@
       "to": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CodeQualityGates/node/GW_Join"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CodeQualityGates/flow/Flow_22",
+      "@type": "bootstrap:SequenceFlow",
+      "from": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CodeQualityGates/node/Task_RepositoryGates",
+      "partOf": [
+        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes",
+        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CodeQualityGates"
+      ],
+      "to": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CodeQualityGates/node/Task_QaPublish"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CodeQualityGates/flow/Flow_23",
+      "@type": "bootstrap:SequenceFlow",
+      "from": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CodeQualityGates/node/Task_QaPublish",
+      "partOf": [
+        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes",
+        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CodeQualityGates"
+      ],
+      "to": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CodeQualityGates/node/End_Published"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CodeQualityGates/flow/Flow_3",
       "@type": "bootstrap:SequenceFlow",
       "from": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CodeQualityGates/node/GW_Fork",
@@ -2243,6 +2263,22 @@
       "inLane": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CodeQualityGates/lane/Lane_Ci",
       "incoming": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CodeQualityGates/flow/Flow_12",
       "name": "Mergeable",
+      "nodeKind": "end",
+      "partOf": [
+        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes",
+        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CodeQualityGates"
+      ],
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/build-pipeline",
+      "relaxable": true,
+      "touchesWorkPlan": false
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CodeQualityGates/node/End_Published",
+      "@type": "bootstrap:ProcessNode",
+      "bpmnType": "bpmn:EndEvent",
+      "inLane": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CodeQualityGates/lane/Lane_Ci",
+      "incoming": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CodeQualityGates/flow/Flow_23",
+      "name": "QA results published (or skipped, with a reason)",
       "nodeKind": "end",
       "partOf": [
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes",
@@ -2415,6 +2451,24 @@
       "touchesWorkPlan": false
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CodeQualityGates/node/Task_QaPublish",
+      "@type": "bootstrap:ProcessNode",
+      "bpmnType": "bpmn:Task",
+      "implementedBy": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/platform-gates",
+      "inLane": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CodeQualityGates/lane/Lane_Ci",
+      "incoming": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CodeQualityGates/flow/Flow_22",
+      "name": "Publish QA results to qa-reports (NOT A GATE)",
+      "nodeKind": "activity",
+      "outgoing": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CodeQualityGates/flow/Flow_23",
+      "partOf": [
+        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes",
+        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CodeQualityGates"
+      ],
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/build-pipeline",
+      "relaxable": true,
+      "touchesWorkPlan": false
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CodeQualityGates/node/Task_RepositoryGates",
       "@type": "bootstrap:ProcessNode",
       "bpmnType": "bpmn:Task",
@@ -2423,7 +2477,10 @@
       "incoming": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CodeQualityGates/flow/Flow_16",
       "name": "Repository gates (HARD)",
       "nodeKind": "activity",
-      "outgoing": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CodeQualityGates/flow/Flow_17",
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CodeQualityGates/flow/Flow_17",
+        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CodeQualityGates/flow/Flow_22"
+      ],
       "partOf": [
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes",
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CodeQualityGates"

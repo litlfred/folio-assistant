@@ -531,6 +531,12 @@ Rules for the pair:
 - **`@context` is never inlined.** Every file declares the one shared, cached
   context URL, the way content documents already use
   `ns/content/v1.jsonld`.
+- **Where it is built.** `bun run subgraph:jsonld`
+  (`scripts/gen-subgraph-jsonld.ts`) frames kg-export's in-memory graph and
+  writes `docs/subgraph/<HARNESS>/<PATH>/index[.hydrated].jsonld`, which Pages
+  serves at the subgraph IRI, plus the context at `ns/subgraph/v1.jsonld`.
+  `subgraph:jsonld:check` is the gate. The file shape is
+  `schemas/subgraph-manifest.ts`.
 
 ### Membership is declared, not inferred
 

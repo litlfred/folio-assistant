@@ -24,6 +24,11 @@
       "name": "skills"
     },
     {
+      "@id": "cat-harness:graphKind/attestations",
+      "@type": "bootstrap:GraphKind",
+      "name": "attestations"
+    },
+    {
       "@id": "cat-harness:graphKind/cat-harness",
       "@type": "bootstrap:GraphKind",
       "name": "cat-harness"
@@ -497,6 +502,11 @@
       "name": "Every changed block reviewed?"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/attestations",
+      "@type": "bootstrap:Subgraph",
+      "name": "attestations"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/cat-harness-adapters",
       "@type": "bootstrap:Subgraph",
       "name": "cat-harness-adapters"
@@ -695,6 +705,12 @@
       "@type": "cat-harness:ExternalSchema",
       "name": "w3c-rdf",
       "title": "RDF 1.1 Concepts and Abstract Syntax"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#externalSchema/w3c-rdf-calendar",
+      "@type": "cat-harness:ExternalSchema",
+      "name": "w3c-rdf-calendar",
+      "title": "RDF Calendar — an application of the Resource Description Framework to iCalendar Data"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#externalSchema/w3c-rdfs",
@@ -4666,6 +4682,12 @@
       "title": "python-deps"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/qa-attestations",
+      "@type": "cat-harness:Schema",
+      "name": "qa-attestations",
+      "title": "qa-attestations"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/qa-report",
       "@type": "cat-harness:Schema",
       "name": "qa-report",
@@ -4882,10 +4904,22 @@
       "title": "term-mapping"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/test-plan",
+      "@type": "cat-harness:Schema",
+      "name": "test-plan",
+      "title": "test-plan"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/test-preload",
       "@type": "cat-harness:Schema",
       "name": "test-preload",
       "title": "test-preload"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/test-report",
+      "@type": "cat-harness:Schema",
+      "name": "test-report",
+      "title": "test-report"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/test-run",
