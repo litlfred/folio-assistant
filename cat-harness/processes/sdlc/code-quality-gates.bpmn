@@ -13,11 +13,11 @@
   <bpmn:process id="Process_CodeQualityGates" name="The gates a change must pass before it can merge" isExecutable="false">
     <bpmn:documentation>The gates a change must pass before it can merge: the jobs of the code-quality workflow, each marked hard, warn-only or not a gate, joined by one question — did every hard one pass. EVERY JOB IS INDEPENDENT, AND NOTHING IN THE YAML SAYS SO IN ONE PLACE. Bean `7yvd`. The file reads as a long sequence; it is not one. NO job declares `needs:`, so they all start together and the wall-clock cost of the whole workflow is the SLOWEST job, not the sum. That is the single most useful thing to know before adding a gate, and it is recoverable today only by checking for `needs:` keys that are not there. COUNT THE `# bpmn-node:` DECLARATIONS rather than trusting a number here: this paragraph said SIX until 2026-09-26, by which point there were eight — `typescript` had been split into `typescript` + `gates` and `skill-registration-chain` added — and the count was wrong in the one place a reader checks the shape.
 
-THE ASYMMETRY IS THE OTHER HALF, AND IT IS THE PART THAT DOES NOT GO STALE. Exactly TWO jobs report without blocking — `rust-wildcard` and `dependency-advisories` — and every other job is HARD. Stated that way round on purpose: the warn-only set is named and closed, so it stays true as jobs are added, whereas "four are hard" needed editing the moment a ninth gate existed. Drawing them as equal boxes would be a lie a reader would act on, so both warn-only jobs are labelled as such and the gateway after the join asks specifically about the HARD ones.
+THE ASYMMETRY IS THE OTHER HALF, AND IT IS THE PART THAT DOES NOT GO STALE. Exactly TWO gates report without blocking — the Rust wildcard report and the dependency advisories, both STEPS of the `hygiene` job since bean `7fu5` — and every other gate is HARD. Stated that way round on purpose: the warn-only set is named and closed, so it stays true as jobs are added, whereas "four are hard" needed editing the moment a ninth gate existed. Drawing them as equal boxes would be a lie a reader would act on, so the warn-only gates are labelled as such and the gateway after the join asks specifically about the HARD ones.
 
-THE TWO WARN-ONLY JOBS ARE WARN-ONLY BY DIFFERENT MECHANISMS, AND THE DIFFERENCE IS THE POINT. `rust-wildcard` carries `continue-on-error: true` — the RUNNER discards its result. `dependency-advisories` carries no such flag: its script exits 0 in every state and keeps the three states apart in its OUTPUT instead. That is deliberate, because a warn-only step whose exit code says nothing has only its output left to distinguish `found nothing` from `could not find out`, and `continue-on-error` would have thrown away the one signal that still worked.
+THE TWO WARN-ONLY GATES ARE WARN-ONLY BY DIFFERENT MECHANISMS, AND THE DIFFERENCE IS THE POINT. The Rust step carries `continue-on-error: true` — the RUNNER discards its result. The advisories step carries no such flag: its script exits 0 in every state and keeps the three states apart in its OUTPUT instead. That is deliberate, because a warn-only step whose exit code says nothing has only its output left to distinguish `found nothing` from `could not find out`, and `continue-on-error` would have thrown away the one signal that still worked.
 
-`continue-on-error` IS NOT A DEFAULT HERE, it is a decision that has been REVERSED once already: `python-imports` carried it, and the flag swallowed a failure on a missing path, so the job reported success over a check that never ran. It was removed and a new unused import now fails. The flag STILL survives on exactly one job — adding a second warn-only job did not add a second `continue-on-error`, which is the history being honoured rather than an oversight. Anyone reaching for the flag should read that paragraph first.
+`continue-on-error` IS NOT A DEFAULT HERE, it is a decision that has been REVERSED once already: the Python import check carried it, and the flag swallowed a failure on a missing path, so the job reported success over a check that never ran. It was removed and a new unused import now fails. The flag STILL survives on exactly one step — adding a second warn-only gate did not add a second `continue-on-error`, which is the history being honoured rather than an oversight. Anyone reaching for the flag should read that paragraph first.
 
 `TypeScript` IS ONE BOX STANDING FOR ROUGHLY THIRTY REPOSITORY GATES — workflow policy, AGENTS.md cross-references and claims, declared assets, workflow skill refs and BPMN coverage, the knowledge-graph audit, generated-docs currency, agent memory, and the ratchet that fails a check script no workflow runs. They are sequential only because one job runs them; each is independent, and `bun run gates` is the local runner derived from this job so a contributor can run the same set before pushing.
 
@@ -25,26 +25,23 @@ Mechanical throughout. Nothing here waits on a person, which is what makes `buil
     <bpmn:extensionElements>
       <!-- STRICT, and declared (bean `30hn`) — and here the attribute is close
            to a tautology, which is why it is worth writing down rather than
-           leaving to the default. The process IS the gate: four hard jobs
+           leaving to the default. The process IS the gate: hard jobs
            whose failure blocks a merge. A diagram of the gate that was
            advisory about its own steps would be self-contradicting. -->
       <cat-harness.processes:policy enforcement="strict"/>
     </bpmn:extensionElements>
     <bpmn:laneSet id="LaneSet_Process_CodeQualityGates">
       <bpmn:lane id="Lane_Ci" name="CI/CD Pipeline">
-        <bpmn:documentation>Joins all seven jobs before asking anything, then GW_Hard asks specifically about the five HARD ones — both warn-only results reach the same join but never the gate, so this lane's merge/block call is deliberately blind to a red job it also ran, which is where the seven-are-not-five asymmetry actually bites. These counts read six-and-four with the asymmetry called five-are-not-four, which was already inconsistent before `om30` split the gates job out; both are corrected here rather than incremented.</bpmn:documentation>
+        <bpmn:documentation>Joins every job before asking anything, then GW_Hard asks specifically about the HARD gates — the two warn-only results reach the same join but never the gate, so this lane's merge/block call is deliberately blind to a red warn-only step it also ran. No count is given here on purpose: this paragraph carried "seven jobs, five hard" and then "six-and-four", and each was wrong the next time a job was split or folded (beans `om30`, `7fu5`). Count the `# bpmn-node:` lines in the workflow instead.</bpmn:documentation>
         <bpmn:extensionElements><bootstrap.processes:role ref="build-pipeline"/></bpmn:extensionElements>
         <bpmn:flowNodeRef>Start_Change</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>GW_Fork</bpmn:flowNodeRef>
-        <bpmn:flowNodeRef>Task_Lean</bpmn:flowNodeRef>
-        <bpmn:flowNodeRef>Task_Python</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Task_Hygiene</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Task_TypeScript</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Task_RepositoryGates</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Task_UnrunGates</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Task_SkillChain</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Task_E2E</bpmn:flowNodeRef>
-        <bpmn:flowNodeRef>Task_Rust</bpmn:flowNodeRef>
-        <bpmn:flowNodeRef>Task_Advisories</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>GW_Join</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>GW_Hard</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>End_Pass</bpmn:flowNodeRef>
@@ -59,29 +56,19 @@ Mechanical throughout. Nothing here waits on a person, which is what makes `buil
     <bpmn:parallelGateway id="GW_Fork" name="Every job,&#10;in parallel">
       <bpmn:incoming>Flow_0</bpmn:incoming>
       <bpmn:outgoing>Flow_1</bpmn:outgoing>
-      <bpmn:outgoing>Flow_2</bpmn:outgoing>
       <bpmn:outgoing>Flow_3</bpmn:outgoing>
       <bpmn:outgoing>Flow_4</bpmn:outgoing>
-      <bpmn:outgoing>Flow_5</bpmn:outgoing>
-      <bpmn:outgoing>Flow_14</bpmn:outgoing>
       <bpmn:outgoing>Flow_16</bpmn:outgoing>
+      <bpmn:outgoing>Flow_18</bpmn:outgoing>
       <bpmn:outgoing>Flow_20</bpmn:outgoing>
     </bpmn:parallelGateway>
-    <bpmn:task id="Task_Lean" name="Lean: no bare&#10;`import Mathlib` (HARD)">
-      <bpmn:documentation>Fail on any bare `import Mathlib` in content/**/*.lean — targeted imports only. In this platform repo there is no content/, so the job prints SKIP and states that nothing was scanned rather than passing silently.</bpmn:documentation>
+    <bpmn:task id="Task_Hygiene" name="Import hygiene (HARD) and&#10;advisories (WARN-ONLY)">
+      <bpmn:documentation>FOUR QUESTIONS, ONE RUNNER — bean `7fu5`. They were four jobs (`lean-bare-import`, `python-imports`, `rust-wildcard`, `dependency-advisories`), each about a second of work behind a ~13 s checkout and a runner request; measured on `main` run 37133247484 (2026-10-03), the run took 21.7 min while its longest job executed for 174 s, the rest waiting for runners. Now they are steps of the `hygiene` job, and every step after the first gate runs `if: !cancelled()`, so a red one masks none of the others — the `om30` rule kept inside one job rather than by splitting it. (1) Lean, HARD: fail on any bare `import Mathlib` in content/**/*.lean; in this platform repo there is no content/, so the step prints SKIP and states that nothing was scanned. (2) Python, HARD: ruff F401 (unused) and F403 (wildcard) over the Python trees that exist, then the Python tests; an absent tree is dropped rather than passed to ruff, and an empty set says SKIP. (3) Dependency advisories, WARN-ONLY by the owner's ruling on bean `j41m`: is anything in the resolved tree KNOWN-VULNERABLE? The script exits 0 in every state and keeps them apart in its output; `.github/dependabot.yml` is the other half of that ruling and is not drawn here. (4) Rust wildcard imports, WARN-ONLY: report non-test `use …::*;` in tools/**/*.rs; `continue-on-error`, and therefore the job's LAST step, where it masks nothing.</bpmn:documentation>
       <bpmn:extensionElements>
         <bootstrap.processes:skill ref="platform-gates"/>
       </bpmn:extensionElements>
       <bpmn:incoming>Flow_1</bpmn:incoming>
       <bpmn:outgoing>Flow_6</bpmn:outgoing>
-    </bpmn:task>
-    <bpmn:task id="Task_Python" name="Python: unused and&#10;wildcard imports (HARD)">
-      <bpmn:documentation>ruff F401 (unused) and F403 (wildcard) imports over the Python trees that exist, then the Python tests. A tree that is absent is dropped rather than passed to ruff, and an empty set says SKIP — a missing path must not be swallowed as a pass.</bpmn:documentation>
-      <bpmn:extensionElements>
-        <bootstrap.processes:skill ref="platform-gates"/>
-      </bpmn:extensionElements>
-      <bpmn:incoming>Flow_2</bpmn:incoming>
-      <bpmn:outgoing>Flow_7</bpmn:outgoing>
     </bpmn:task>
     <bpmn:task id="Task_TypeScript" name="TypeScript: lint, types&#10;and tests (HARD)">
       <bpmn:documentation>Three checks: `bun run lint`, `tsc --noEmit` and `bun test`. The repository gates it used to carry are Task_RepositoryGates now (bean `om30`). Since bean `dlqu` it is three jobs: `typescript-static` (lint, then typecheck), `typescript-test` (`bun test` as four SEQUENTIAL shards on separate machines — Bun's in-process `--parallel` worker pool hung at both 4 and 2 workers, measured — the shard passed in `BUN_OPTIONS` so the command stays the one `bun run gates` runs locally) and `typescript`, which carries the check name and is green only when the other two succeeded. The step-order rule the single job needed — `bun test` LAST, because Actions stops at the first failing step and a red-by-decision test would otherwise mask lint and typecheck — no longer has anything to order: separate jobs cannot mask each other. Measured on three `main` runs before the change: `bun test` alone was 7m30s-7m45s of an 8m14s-8m33s job.</bpmn:documentation>
@@ -98,22 +85,6 @@ Mechanical throughout. Nothing here waits on a person, which is what makes `buil
       </bpmn:extensionElements>
       <bpmn:incoming>Flow_4</bpmn:incoming>
       <bpmn:outgoing>Flow_9</bpmn:outgoing>
-    </bpmn:task>
-    <bpmn:task id="Task_Rust" name="Rust wildcard imports&#10;(WARN-ONLY)">
-      <bpmn:documentation>Report non-test `use …::*;` in tools/**/*.rs, excluding `use super::*;`. continue-on-error: it reports and never blocks, which is why it is labelled WARN-ONLY rather than drawn like the hard jobs.</bpmn:documentation>
-      <bpmn:extensionElements>
-        <bootstrap.processes:skill ref="platform-gates"/>
-      </bpmn:extensionElements>
-      <bpmn:incoming>Flow_5</bpmn:incoming>
-      <bpmn:outgoing>Flow_10</bpmn:outgoing>
-    </bpmn:task>
-    <bpmn:task id="Task_Advisories" name="Dependency advisories&#10;(WARN-ONLY)">
-      <bpmn:documentation>Asks the one question the lockfile cannot: is anything in the resolved tree KNOWN-VULNERABLE? Warn-only by the owner's ruling on bean `j41m` — a hard gate here would hand a transitive advisory nobody can patch the power to red every PR, and the suppression that follows is what rots. `.github/dependabot.yml` is the other half of that ruling and is NOT drawn here: it is not a job in this workflow, it runs on Dependabot's schedule.</bpmn:documentation>
-      <bpmn:extensionElements>
-        <bootstrap.processes:skill ref="platform-gates"/>
-      </bpmn:extensionElements>
-      <bpmn:incoming>Flow_14</bpmn:incoming>
-      <bpmn:outgoing>Flow_15</bpmn:outgoing>
     </bpmn:task>
     <bpmn:task id="Task_RepositoryGates" name="Repository gates&#10;(HARD)">
       <bpmn:documentation>The 43 repository-gate steps — workflow refs, lane and process documentation, kg:audit:check, detangle, skills, published packages — 150 `bun run` invocations in all. A SEPARATE job from Task_TypeScript since bean `om30`: they were one job in which `bun test` came second of 47 steps, and because Actions stops a job at its first failing step and no step was continue-on-error, a deliberate test failure on `main` meant none of these ran. A gate never asked and a gate that passed are indistinguishable from outside, which is `xom7` at the step rather than the workflow. No sequence dependency on Task_TypeScript is drawn because there is none: a red test must not stop these being asked. `bun run gates` derives its list from BOTH jobs, so the local set still cannot drift from CI's.</bpmn:documentation>
@@ -142,12 +113,10 @@ Mechanical throughout. Nothing here waits on a person, which is what makes `buil
     </bpmn:task>
     <bpmn:parallelGateway id="GW_Join" name="">
       <bpmn:incoming>Flow_6</bpmn:incoming>
-      <bpmn:incoming>Flow_7</bpmn:incoming>
       <bpmn:incoming>Flow_8</bpmn:incoming>
       <bpmn:incoming>Flow_9</bpmn:incoming>
-      <bpmn:incoming>Flow_10</bpmn:incoming>
-      <bpmn:incoming>Flow_15</bpmn:incoming>
       <bpmn:incoming>Flow_17</bpmn:incoming>
+      <bpmn:incoming>Flow_19</bpmn:incoming>
       <bpmn:incoming>Flow_21</bpmn:incoming>
       <bpmn:outgoing>Flow_11</bpmn:outgoing>
     </bpmn:parallelGateway>
@@ -175,21 +144,15 @@ Mechanical throughout. Nothing here waits on a person, which is what makes `buil
       <bpmn:incoming>Flow_23</bpmn:incoming>
     </bpmn:endEvent>
     <bpmn:sequenceFlow id="Flow_0" sourceRef="Start_Change" targetRef="GW_Fork"/>
-    <bpmn:sequenceFlow id="Flow_1" sourceRef="GW_Fork" targetRef="Task_Lean"/>
-    <bpmn:sequenceFlow id="Flow_2" sourceRef="GW_Fork" targetRef="Task_Python"/>
+    <bpmn:sequenceFlow id="Flow_1" sourceRef="GW_Fork" targetRef="Task_Hygiene"/>
     <bpmn:sequenceFlow id="Flow_3" sourceRef="GW_Fork" targetRef="Task_TypeScript"/>
     <bpmn:sequenceFlow id="Flow_4" sourceRef="GW_Fork" targetRef="Task_E2E"/>
-    <bpmn:sequenceFlow id="Flow_5" sourceRef="GW_Fork" targetRef="Task_Rust"/>
-    <bpmn:sequenceFlow id="Flow_6" sourceRef="Task_Lean" targetRef="GW_Join"/>
-    <bpmn:sequenceFlow id="Flow_7" sourceRef="Task_Python" targetRef="GW_Join"/>
+    <bpmn:sequenceFlow id="Flow_6" sourceRef="Task_Hygiene" targetRef="GW_Join"/>
     <bpmn:sequenceFlow id="Flow_8" sourceRef="Task_TypeScript" targetRef="GW_Join"/>
     <bpmn:sequenceFlow id="Flow_9" sourceRef="Task_E2E" targetRef="GW_Join"/>
-    <bpmn:sequenceFlow id="Flow_10" sourceRef="Task_Rust" targetRef="GW_Join"/>
     <bpmn:sequenceFlow id="Flow_11" sourceRef="GW_Join" targetRef="GW_Hard"/>
     <bpmn:sequenceFlow id="Flow_12" sourceRef="GW_Hard" targetRef="End_Pass" name="no"/>
     <bpmn:sequenceFlow id="Flow_13" sourceRef="GW_Hard" targetRef="End_Fail" name="yes"/>
-    <bpmn:sequenceFlow id="Flow_14" sourceRef="GW_Fork" targetRef="Task_Advisories"/>
-    <bpmn:sequenceFlow id="Flow_15" sourceRef="Task_Advisories" targetRef="GW_Join"/>
     <bpmn:sequenceFlow id="Flow_16" sourceRef="GW_Fork" targetRef="Task_RepositoryGates"/>
     <bpmn:sequenceFlow id="Flow_17" sourceRef="Task_RepositoryGates" targetRef="GW_Join"/>
     <bpmn:sequenceFlow id="Flow_18" sourceRef="GW_Fork" targetRef="Task_SkillChain"/>
@@ -202,10 +165,10 @@ Mechanical throughout. Nothing here waits on a person, which is what makes `buil
   <bpmndi:BPMNDiagram id="Diagram_Process_CodeQualityGates">
     <bpmndi:BPMNPlane id="Plane_Process_CodeQualityGates" bpmnElement="Collaboration_Process_CodeQualityGates">
       <bpmndi:BPMNShape id="Shape_Participant_Process_CodeQualityGates" bpmnElement="Participant_Process_CodeQualityGates" isHorizontal="true">
-        <dc:Bounds x="60" y="60" width="1640" height="1190"/>
+        <dc:Bounds x="60" y="60" width="1640" height="950"/>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Shape_Lane_Ci" bpmnElement="Lane_Ci" isHorizontal="true">
-        <dc:Bounds x="90" y="60" width="1610" height="1080"/>
+        <dc:Bounds x="90" y="60" width="1610" height="840"/>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Shape_Start_Change" bpmnElement="Start_Change">
         <dc:Bounds x="122" y="332" width="36" height="36"/>
@@ -213,10 +176,7 @@ Mechanical throughout. Nothing here waits on a person, which is what makes `buil
       <bpmndi:BPMNShape id="Shape_GW_Fork" bpmnElement="GW_Fork">
         <dc:Bounds x="365" y="325" width="50" height="50"/>
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Shape_Task_Lean" bpmnElement="Task_Lean">
-        <dc:Bounds x="550" y="70" width="180" height="80"/>
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Shape_Task_Python" bpmnElement="Task_Python">
+      <bpmndi:BPMNShape id="Shape_Task_Hygiene" bpmnElement="Task_Hygiene">
         <dc:Bounds x="550" y="190" width="180" height="80"/>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Shape_Task_TypeScript" bpmnElement="Task_TypeScript">
@@ -225,20 +185,14 @@ Mechanical throughout. Nothing here waits on a person, which is what makes `buil
       <bpmndi:BPMNShape id="Shape_Task_E2E" bpmnElement="Task_E2E">
         <dc:Bounds x="550" y="430" width="180" height="80"/>
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Shape_Task_Rust" bpmnElement="Task_Rust">
+      <bpmndi:BPMNShape id="Shape_Task_RepositoryGates" bpmnElement="Task_RepositoryGates">
         <dc:Bounds x="550" y="550" width="180" height="80"/>
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Shape_Task_Advisories" bpmnElement="Task_Advisories">
+      <bpmndi:BPMNShape id="Shape_Task_SkillChain" bpmnElement="Task_SkillChain">
         <dc:Bounds x="550" y="670" width="180" height="80"/>
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Shape_Task_RepositoryGates" bpmnElement="Task_RepositoryGates">
-        <dc:Bounds x="550" y="790" width="180" height="80"/>
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Shape_Task_SkillChain" bpmnElement="Task_SkillChain">
-        <dc:Bounds x="550" y="910" width="180" height="80"/>
-      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Shape_Task_UnrunGates" bpmnElement="Task_UnrunGates">
-        <dc:Bounds x="550" y="1030" width="180" height="80"/>
+        <dc:Bounds x="550" y="790" width="180" height="80"/>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Shape_GW_Join" bpmnElement="GW_Join">
         <dc:Bounds x="865" y="325" width="50" height="50"/>
@@ -253,10 +207,10 @@ Mechanical throughout. Nothing here waits on a person, which is what makes `buil
         <dc:Bounds x="1372" y="452" width="36" height="36"/>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Shape_Task_QaPublish" bpmnElement="Task_QaPublish">
-        <dc:Bounds x="1100" y="790" width="180" height="80"/>
+        <dc:Bounds x="1100" y="550" width="180" height="80"/>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Shape_End_Published" bpmnElement="End_Published">
-        <dc:Bounds x="1372" y="812" width="36" height="36"/>
+        <dc:Bounds x="1372" y="572" width="36" height="36"/>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="Edge_Flow_0" bpmnElement="Flow_0">
         <di:waypoint x="158" y="350"/>
@@ -264,13 +218,9 @@ Mechanical throughout. Nothing here waits on a person, which is what makes `buil
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Edge_Flow_1" bpmnElement="Flow_1">
         <di:waypoint x="415" y="350"/>
-        <di:waypoint x="640" y="350"/>
-        <di:waypoint x="640" y="150"/>
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Edge_Flow_2" bpmnElement="Flow_2">
-        <di:waypoint x="415" y="350"/>
-        <di:waypoint x="640" y="350"/>
-        <di:waypoint x="640" y="270"/>
+        <di:waypoint x="480" y="350"/>
+        <di:waypoint x="480" y="230"/>
+        <di:waypoint x="550" y="230"/>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Edge_Flow_3" bpmnElement="Flow_3">
         <di:waypoint x="415" y="350"/>
@@ -278,20 +228,11 @@ Mechanical throughout. Nothing here waits on a person, which is what makes `buil
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Edge_Flow_4" bpmnElement="Flow_4">
         <di:waypoint x="415" y="350"/>
-        <di:waypoint x="640" y="350"/>
-        <di:waypoint x="640" y="430"/>
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Edge_Flow_5" bpmnElement="Flow_5">
-        <di:waypoint x="415" y="350"/>
-        <di:waypoint x="640" y="350"/>
-        <di:waypoint x="640" y="550"/>
+        <di:waypoint x="480" y="350"/>
+        <di:waypoint x="480" y="470"/>
+        <di:waypoint x="550" y="470"/>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Edge_Flow_6" bpmnElement="Flow_6">
-        <di:waypoint x="730" y="110"/>
-        <di:waypoint x="890" y="110"/>
-        <di:waypoint x="890" y="325"/>
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Edge_Flow_7" bpmnElement="Flow_7">
         <di:waypoint x="730" y="230"/>
         <di:waypoint x="890" y="230"/>
         <di:waypoint x="890" y="325"/>
@@ -305,11 +246,6 @@ Mechanical throughout. Nothing here waits on a person, which is what makes `buil
         <di:waypoint x="890" y="470"/>
         <di:waypoint x="890" y="375"/>
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Edge_Flow_10" bpmnElement="Flow_10">
-        <di:waypoint x="730" y="590"/>
-        <di:waypoint x="890" y="590"/>
-        <di:waypoint x="890" y="375"/>
-      </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Edge_Flow_11" bpmnElement="Flow_11">
         <di:waypoint x="915" y="350"/>
         <di:waypoint x="1115" y="350"/>
@@ -319,48 +255,50 @@ Mechanical throughout. Nothing here waits on a person, which is what makes `buil
         <di:waypoint x="1372" y="350"/>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Edge_Flow_13" bpmnElement="Flow_13">
-        <di:waypoint x="1165" y="350"/>
-        <di:waypoint x="1390" y="350"/>
-        <di:waypoint x="1390" y="452"/>
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Edge_Flow_14" bpmnElement="Flow_14">
-        <di:waypoint x="415" y="350"/>
-        <di:waypoint x="640" y="350"/>
-        <di:waypoint x="640" y="670"/>
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Edge_Flow_15" bpmnElement="Flow_15">
-        <di:waypoint x="730" y="710"/>
-        <di:waypoint x="890" y="710"/>
-        <di:waypoint x="890" y="375"/>
+        <di:waypoint x="1140" y="375"/>
+        <di:waypoint x="1140" y="470"/>
+        <di:waypoint x="1372" y="470"/>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Edge_Flow_16" bpmnElement="Flow_16">
         <di:waypoint x="415" y="350"/>
-        <di:waypoint x="640" y="350"/>
-        <di:waypoint x="640" y="790"/>
+        <di:waypoint x="480" y="350"/>
+        <di:waypoint x="480" y="590"/>
+        <di:waypoint x="550" y="590"/>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Edge_Flow_17" bpmnElement="Flow_17">
-        <di:waypoint x="730" y="830"/>
-        <di:waypoint x="890" y="830"/>
+        <di:waypoint x="730" y="590"/>
+        <di:waypoint x="890" y="590"/>
+        <di:waypoint x="890" y="375"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_Flow_18" bpmnElement="Flow_18">
+        <di:waypoint x="415" y="350"/>
+        <di:waypoint x="480" y="350"/>
+        <di:waypoint x="480" y="710"/>
+        <di:waypoint x="550" y="710"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_Flow_19" bpmnElement="Flow_19">
+        <di:waypoint x="730" y="710"/>
+        <di:waypoint x="890" y="710"/>
         <di:waypoint x="890" y="375"/>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Edge_Flow_20" bpmnElement="Flow_20">
         <di:waypoint x="415" y="350"/>
         <di:waypoint x="480" y="350"/>
-        <di:waypoint x="480" y="1070"/>
-        <di:waypoint x="550" y="1070"/>
+        <di:waypoint x="480" y="830"/>
+        <di:waypoint x="550" y="830"/>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Edge_Flow_21" bpmnElement="Flow_21">
-        <di:waypoint x="730" y="1070"/>
-        <di:waypoint x="890" y="1070"/>
+        <di:waypoint x="730" y="830"/>
+        <di:waypoint x="890" y="830"/>
         <di:waypoint x="890" y="375"/>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Edge_Flow_22" bpmnElement="Flow_22">
-        <di:waypoint x="730" y="850"/>
-        <di:waypoint x="1100" y="850"/>
+        <di:waypoint x="730" y="610"/>
+        <di:waypoint x="1100" y="610"/>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Edge_Flow_23" bpmnElement="Flow_23">
-        <di:waypoint x="1280" y="830"/>
-        <di:waypoint x="1372" y="830"/>
+        <di:waypoint x="1280" y="590"/>
+        <di:waypoint x="1372" y="590"/>
       </bpmndi:BPMNEdge>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>
