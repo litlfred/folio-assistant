@@ -3,8 +3,9 @@
 title: 'NAMED SUBGRAPH CONTRACT: one JSON-LD pair per subgraph (index = pointers, hydrated = inline), directory IRIs, build-time framing, central @context; harness as a subgraph'
 status: in-progress
 type: feature
+priority: normal
 created_at: 2026-10-02T20:42:54Z
-updated_at: 2026-10-03T08:07:54Z
+updated_at: 2026-10-03T08:10:40Z
 parent: folio-assistant-whlc
 ---
 
@@ -29,3 +30,8 @@ Assessment of the pasted design note (owner asked "does the discussion apply"): 
 - [ ] remote materialization consumes the same files
 
 _2026-10-03T08:07:54Z_ — Claimed by claude/nifty-faraday-8ql41p — pushed to main so sibling sessions see it before this branch has a PR (bean 35nj).
+
+
+
+## Owner ruling 2026-10-03 — subgraph IRI namespace
+Selected: `<BASE_URL>/subgraph/<HARNESS>/<NAME>/` — one IRI names the subgraph; `index.jsonld` (referenced) and `hydrated.jsonld` (dereferenced) are two files under it. `/hydrated-graph/` rejected because the pointer-only index would live under a 'hydrated' path.
