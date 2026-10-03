@@ -1,0 +1,31 @@
+{
+  "@context": [
+    "https://litlfred.github.io/folio-assistant/ns/content/v1.jsonld",
+    {
+      "@base": "https://litlfred.github.io/folio/"
+    }
+  ],
+  "@id": "library/strauch-carbno-2025-spdx-3-1-supply-chain/blocks/figure-img-p037-3",
+  "@type": [
+    "folio-assistant-core:Figure",
+    "doco:Figure"
+  ],
+  "kind": "figure",
+  "file": "../images/img-p037-3.png",
+  "pageStart": 37,
+  "pageEnd": 37,
+  "narrative": {
+    "text": "An object diagram of an example regulation. The central Regulation box lists: spdxId: ExampleID1234567890; description: an Example for a export Regulation; creationInfo: CreationInfo[1]; externalRef: ExternalRef[0..*]; comment: xsd:string[0..1]; summary: 2025 export Regulation for \"XYZ\"; name: DIN 123456789. An arrow runs from Regulation to CreationInfo (specVersion: 3.1; created: 2025 08 31; createdBy:; createdUsing: Tool[0..*]; comment: xsd:string[0..1]), and from CreationInfo to Organization (description: Government Organization; name: Gov Org; spdxId: Org1abcd). Another arrow runs to ExternalRef (externalRefType: documentation; locator: .gov/Regulaion-123; comment: An Passed Regulation). Three arrows labelled 'Contens' run from Regulation to Requirement (requirementText: Must provide a country of origin), Requirement (requirementText: Must provide a product name) and a stacked-document shape labelled 'Addition Requirements'. The spellings 'Contens', 'Regulaion' and 'Addition' are as drawn.",
+    "state": "draft",
+    "drafted_by": {
+      "kind": "agent",
+      "id": "claude",
+      "model": "not-disclosed",
+      "session": "https://claude.ai/code/session_01VfkKocGaQW7Msro2t5S66U"
+    },
+    "drafted_at": "2026-10-03"
+  },
+  "derivedFrom": "library/strauch-carbno-2025-spdx-3-1-supply-chain/sections/sec-000",
+  "sourceDocument": "https://litlfred.github.io/folio-assistant/assets/library/jsonld/cat-harness/strauch-carbno-2025-spdx-3-1-supply-chain/manifest.jsonld",
+  "provenance": "ingested"
+}

@@ -13,5 +13,5 @@ Part of [Folio Assistant](../README.md) 0.1.0, declared as `fsh-guts`, holding `
 | [`retired/`](retired/) | 22 files | |
 | [`samples/`](samples/) | 1 file | |
 | [`scripts/`](scripts/) | 16 files | |
-| [`uploads/`](uploads/) | 102 files | |
+| [`uploads/`](uploads/) | 106 files | |
 <!-- kg:subgraph:end -->
