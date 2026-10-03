@@ -258,3 +258,137 @@ export function qaResultState(committedPath: string, fresh: QaResult): QaResultS
   if (committed === undefined) return "unreadable";
   return key(committed) === key(fresh) ? "current" : "stale";
 }
+
+// ─────────────────────────────────────────────────────────────────────────────
+// JUDGE MODE — compute and judge, write nothing (bean `bo44`)
+// ─────────────────────────────────────────────────────────────────────────────
+
+/**
+ * The four states a JUDGE run can end in.
+ *
+ * ## Why judge, and not compare
+ *
+ * Bean `bo44` (arc `3fva`, proposal `qa-reports-branch-and-test-process`
+ * §2.3). A producer that writes its own sidecar on every run turns its gate
+ * into a writer: CI runs it, it rewrites `test/results/<stem>.qa-results.json`,
+ * and nothing anywhere asks whether what it wrote is what is committed. The
+ * obvious remedy — compare with the committed file, {@link qaResultState} —
+ * stops working the day QA files leave `main`, because there is nothing
+ * committed left to compare against.
+ *
+ * So the gate form of every such producer COMPUTES its findings fresh and
+ * JUDGES them, and writes nothing. That survives the move unchanged. Whether
+ * the committed copy is current is still REPORTED, as an advisory line through
+ * {@link concludeJudgement} — so this is not the weakening `qaResultState`'s
+ * docblock warns about (staleness ceasing to be noticed) — but it never decides
+ * the exit, because after the move "stale" is no longer a state.
+ *
+ * | state     | exit | means |
+ * |-----------|------|-------|
+ * | `ok`      | 0    | computed, and nothing at or above the gate's severity |
+ * | `finding` | 1    | computed, and at least one finding the gate fails on |
+ * | `unknown` | 2    | the question could not be ASKED — nothing to scan, a source that would not read. Never 0. |
+ * | `error`   | 2    | the run itself is wrong — an unknown flag, or the producer threw |
+ *
+ * `unknown` outranks `finding`: a sweep blind on one part has not cleared the
+ * others, and a finding beside a blind spot must not read as "the only
+ * problem is this one" (the rule `test/health` keeps for the same reason).
+ */
+export type Judgement = "ok" | "finding" | "unknown" | "error";
+
+/** The exit code each {@link Judgement} ends in. One table, every judge. */
+export const JUDGEMENT_EXIT: Readonly<Record<Judgement, 0 | 1 | 2>> = {
+  ok: 0,
+  finding: 1,
+  unknown: 2,
+  error: 2,
+};
+
+/**
+ * The flag that selects judge mode. `--check`, the convention every other
+ * generated artefact here already uses for "verify without writing", so the
+ * gate form of a producer is spelled `<script>:check` in `package.json` and
+ * `regen-after-merge` pairs it with its writer by name.
+ */
+export const JUDGE_FLAG = "--check";
+
+/** Is this run a judge run? */
+export function judging(argv: readonly string[] = process.argv): boolean {
+  return argv.includes(JUDGE_FLAG);
+}
+
+/**
+ * Decide the judgement from what the producer computed.
+ *
+ * `failing` counts only the findings at or above the gate's severity — the
+ * producer decides which families those are, where it decides, and passes the
+ * count. `undetermined` is the could-not-ask state and outranks a finding.
+ */
+export function judgementOf(args: { failing: number; undetermined?: boolean }): Judgement {
+  if (args.undetermined) return "unknown";
+  return args.failing > 0 ? "finding" : "ok";
+}
+
+/**
+ * Flags this run was given that the producer does not know.
+ *
+ * A misspelled `--chek` would otherwise run the WRITER — the exact thing judge
+ * mode exists not to do — so in judge mode an unknown flag is a usage error
+ * (`error`, exit 2), never silently ignored. Positional arguments are not
+ * flags and are left to the caller.
+ */
+export function unknownFlags(argv: readonly string[], allowed: readonly string[]): string[] {
+  const known = new Set([JUDGE_FLAG, ...allowed]);
+  return argv.filter((a) => a.startsWith("--") && !known.has(a));
+}
+
+/**
+ * Print a judge run's verdict and return its exit code. Writes nothing.
+ *
+ * `committed`, when given, adds ONE advisory line when the committed sidecar is
+ * not what this run computed ({@link qaResultState}). Advisory because the arc
+ * moves those files off `main`: an absent committed copy is the expected state
+ * then, and the staleness of a file that will not exist cannot be what fails a
+ * gate. It is printed so that until then a stale copy is still SEEN rather than
+ * silently left behind.
+ */
+export function concludeJudgement(args: {
+  gate: string;
+  judgement: Judgement;
+  detail?: string;
+  committed?: { root: string; stem: string; fresh: QaResult; writer: string };
+}): number {
+  const exit = JUDGEMENT_EXIT[args.judgement];
+  const label = {
+    ok: "OK — no finding the gate fails on",
+    finding: "FINDING — the gate fails on what it found",
+    unknown: "UNKNOWN — could not determine; this is NOT a pass",
+    error: "ERROR — the run itself is wrong; nothing was judged",
+  }[args.judgement];
+  const line = `${args.gate} (judge mode, wrote nothing): ${label}${args.detail ? ` — ${args.detail}` : ""}`;
+  if (exit === 0) console.log(line);
+  else console.error(line);
+  if (args.committed) {
+    const { root, stem, fresh, writer } = args.committed;
+    const state = qaResultState(qaResultPath(root, stem), fresh);
+    if (state !== "current") {
+      console.log(
+        `  advisory: the committed ${stem}.qa-results.json is ${state.toUpperCase()} against this run. ` +
+          `Not gated (bean bo44: judge, never compare). \`bun run ${writer}\` rewrites it.`,
+      );
+    }
+  }
+  return exit;
+}
+
+/**
+ * The judge-mode prelude every producer shares: refuse an unknown flag.
+ *
+ * Returns an exit code to stop with, or `undefined` to carry on. Called only
+ * when {@link judging} — the writer forms keep their historical tolerance.
+ */
+export function judgeUsage(gate: string, argv: readonly string[], allowed: readonly string[]): number | undefined {
+  const bad = unknownFlags(argv, allowed);
+  if (bad.length === 0) return undefined;
+  return concludeJudgement({ gate, judgement: "error", detail: `unknown flag(s): ${bad.join(" ")}` });
+}

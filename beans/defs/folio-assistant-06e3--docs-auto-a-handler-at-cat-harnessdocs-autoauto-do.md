@@ -5,7 +5,7 @@ status: todo
 type: task
 priority: normal
 created_at: 2026-09-20T20:54:07Z
-updated_at: 2026-09-29T20:03:12Z
+updated_at: 2026-10-03T10:59:40Z
 parent: folio-assistant-0lmb
 ---
 
@@ -59,14 +59,14 @@ it, and refuses rather than rendering an empty table when the source moves.
 
 ## Done when
 
-- [ ] the handler exists and is declared, with the `auto-doc-type` set above and
+- [x] the handler exists and is declared, with the `auto-doc-type` set above and
       **no** `toc`
 - [ ] **`who-iris/docs` is the first real exercise, end to end** — owner,
       2026-09-20: *"try it out fully w/ who-iris docs, auto-docs."* Not a
       fixture and not a smoke test: the instance that already has a hand-built
       `docs/` is the one that will show whether a derived index and an authored
       summary can sit in the same directory without fighting.
-- [ ] the authoring rule lives in a skill with the reuse-not-restate clause
+- [x] the authoring rule lives in a skill with the reuse-not-restate clause
 - [ ] `<harness>/docs` carries a per-process summary that references the derived
       index rather than duplicating it
 - [ ] a stale or moved source makes the derivation FAIL, never render empty
@@ -459,3 +459,244 @@ neither the check nor anything else could have known.
 ## Claim released 2026-09-29
 
 Released `in-progress` → `todo` on the owner's instruction (review session https://claude.ai/code/session_014Qj8wncQhqV52QGN1yZDnj). No git change to this bean since before 2026-09-26, no holder recorded, and no open branch touches it; the sessions that held theme D (content folios, SMART/FHIR stack, ingest) work stopped on the 2026-09-25 weekly usage limit. Nothing in the body was changed: re-claim with `bun run beans:claim <id>`.
+
+
+## Migration plan, 2026-10-03 — the owner re-ruled and chose THIS bean's layout
+
+Owner today: *"reserve `docs/` for user generated content, auto-docs/ for
+glossary and such"*, *"one declared subgraph, with declared sub-sub-graphs per
+writer"*, *"`derived-content` graph kind"*, *"go ahead w/ move … clean break"* —
+then, shown that this bean already specified a different keying, **ruled for
+this bean**: key by `<auto-doc-type>/<sub-graph>`, not per writer.
+
+### The name collision dissolves — no new name is needed
+
+`docs-auto` looked overloaded, because `cat-harness/docs/cat-harness/docs-auto/`
+already exists. Measured: its 28 files are already emitted as
+
+```
+glossary/index.html            glossary/swimlane-glossary/index.html
+index/docs/<sub-graph>/         index/processes/<sub-graph>/
+index/skills/<sub-graph>/
+```
+
+**That IS this bean's `<auto-doc-type>/<sub-graph>` keying.** `gen-docs-auto.ts`
+already implements the handler; it is merely rooted three levels too deep. So
+the first slice is a promotion, not a redesign, and `docs-auto` stays the name.
+
+### Proposed mapping (913 rendered pages; ~704 generated)
+
+| current | files | → `docs-auto/<type>/<sub-graph>` |
+|---|---|---|
+| `docs/cat-harness/docs-auto/**` | 28 | **as-is, promoted to the instance root** |
+| `docs/reference/skill-instructions/**` | 305 | `index/skills/<package>` |
+| `docs/reference/skills/**` | 24 | `index/schemas/<schema>` |
+| `docs/reference/upload-step/` | 1 | `index/tools/upload-step` |
+| `docs/uml/**` | 126 | `uml/<instance>` |
+| `docs/glossary/**` | 10 | `glossary/<ledger>` |
+| `docs/{ar,es,fr,ru,zh}/glossary/` | 5 | `glossary/<ledger>/<lang>` |
+| `docs/lsi/` | 1 | `lsi/<graph>` |
+| `docs/processes/**` | 85 | `index/processes/<package>` |
+| viewer pages (`docs/{qa,beans,todos,health,…}/index.html`) | ~127 | `index/<graph>` |
+
+### The 17 `gen-docs-pages.ts` pages STAY in `docs/` — and this is the one place the owner's rule misfires
+
+They carry `generated: scripts/gen-docs-pages.ts`, so "what is not user content
+goes to auto-docs" would move them. **Measured: they are assembled AUTHORED
+prose.** `content/docs/knowledge-graph/` holds 444 lines of hand-written `.md`
+blocks; `docs/knowledge-graph.md` is the 507-line assembled page. The marker
+means *built by a template*, not *derived from a graph*.
+
+And §2 of this bean already says where they belong: *"when authoring
+`<harness>/docs` the author should make use of auto-doc references and provide a
+summary / overview"*. **These 17 are exactly those authored summary pages.**
+So: `docs/` keeps them, and the `generated:` marker is not the discriminator —
+**is the SOURCE a graph, or prose a person wrote?** is.
+
+### The seam — why this is not a path rewrite across 16 scripts
+
+Paths here are **composed from declarations**, not written as literals
+(`check:declared-paths` refuses literals), which is why grepping for
+`docs/processes` finds no writer.
+
+- `docsLayers()` — `cat-harness/scripts/compose-docs.ts:147` — is the single
+  resolver. **17 modules call it.**
+- `baseDocs(repo)`, the five-line helper that picks the instance-scoped docs
+  layer, is **copy-pasted identically into 6 files**:
+  `gen-external-schemas-viz.ts`, `gen-fsh-guts-viz.ts`, `gen-processes-viz.ts`,
+  `gen-tools-viz.ts`, `gen-methodologies-viz.ts`, `lib/skill-pages.ts`.
+
+So "fix all producers/consumers/references" is: declare the layer, export **one**
+`baseDocs`/`autoDocsDir`, delete the 6 copies, and have each writer ask for the
+layer it owns.
+
+### The guard, captured BEFORE anything moves
+
+A verdict snapshot of all 913 rendered pages under `docs/`
+(`generated|authored` × merge strategy × pattern id), taken at `c4036a79af`:
+
+| | pages |
+|---|---|
+| generated + `take-base` | 448 |
+| authored + `take-base` | 216 |
+| authored + `refuse` | 206 |
+| generated + `refuse` | 42 |
+| authored + `generated-regions` | 1 |
+
+**The 216 are not an authored-data-loss defect** — checked rather than reported:
+127 are `.html` viewer pages and 85 are `docs/processes/*.md`, all generated
+without a Jekyll `generated:` line, so the front-matter detector missed them,
+not the globs. Worth recording because the first reading looked like
+`take-base` silently discarding authors' edits, and it is not.
+
+### Costs already measured
+
+- `assets/` is a **Jekyll URL namespace**, 27 hardcoded refs in
+  `_includes`/`_config.yml`. It splits: 6 authored css/js stay with `docs/`.
+- **`assets/library/` is URL-frozen**: 13,214 absolute
+  `https://litlfred.github.io/…/assets/library/…` citations across 6,861 files.
+  Clean break accepted by the owner today, so these are rewritten rather than
+  redirected — but the number is the number.
+- ~184 authored in-repo references to the moving paths, concentrated in
+  `docs/reference/` (92), all gate-resolved by `readme:audit`,
+  `check:anchor-names`, `check-workflow-refs`, `check:reference-direction`.
+
+### Still open
+
+- [ ] `toc` stays OUT (this bean is the only record of that withdrawal)
+- [ ] the authoring-rule half is a SKILL, untouched by the move
+- [ ] `who-iris/docs` is the named first exercise, end to end
+
+
+## CORRECTION, 2026-10-03 — two claims in the plan above are wrong
+
+Both were found by reading `scripts/gen-docs-auto.ts`'s module docblock, which
+I should have read before writing the plan rather than after. It records
+decisions already taken on this bean.
+
+### 1. `docs-auto` is deliberately NOT a graph kind — and the plan was about to register one
+
+The docblock, §"Why this is a NEW generator rather than a kind of an existing
+one":
+
+> A note on `06e3` guessed the opposite — that docs-auto would be a `kind`
+> handled by `state-visualizer.ts` … Reading the three existing generators says
+> no, and the reason is structural rather than a matter of taste: **every one of
+> them is one-axis.** … docs-auto is **two-axis** — an auto-doc TYPE crossed
+> with a SUB-GRAPH — and there is nowhere in a one-axis generator to put the
+> second axis without it becoming this file anyway.
+
+So "a `docs-auto` graph kind with `holds: derived` and a `docs-auto.json`
+from-within node" is **the thing a note on this bean already guessed and the
+implementer rejected with reasons**. I had got as far as reading the
+`graph-kind-registry` entry for `docs` and the §"Adding a kind" procedure
+before finding it.
+
+### 2. "Rooted three levels too deep … a promotion, not a redesign" is WRONG
+
+`docs/cat-harness/docs-auto/` is not misplacement. `viewerPlacement(site,
+dirPath, kind)` builds `pageDir = join(site, ...dirPath.split("/"))`, and
+`dirPath` is documented as *"the handled directory's repo-relative path, e.g.
+`cat-harness/schemas`"*. The `cat-harness` segment is therefore the **handler**,
+and the whole route is the owner's `<base>/<handler>/<kind>/<subject>` rule,
+shared with `gen-schema-viz` and `gen-library-viz`. The docblock says so:
+*"No new URL rule, no fourth pruner."*
+
+**Promoting it to the instance root would break the owner's URL rule**, not
+tidy it.
+
+### 3. The sub-graph segment is a declared `id`, ONE segment — which invalidates part of the mapping table
+
+Also settled already, and by the owner:
+
+> The owner wrote `<path>`. This publishes under the declared entry's **id**
+> instead — put to them as an open question on #607 with both costs stated, and
+> **ruled for the `id` on 2026-09-21** … It stays one segment. A path has
+> slashes, so page directories would nest — and `orphanSubjectPages` scans one
+> level, which is what makes pruning's ownership test exact.
+
+So rows in the mapping table above that put a slash or a non-id in the subject
+segment are not reachable: `glossary/<ledger>`, `index/schemas/<schema>`,
+`glossary/<ledger>/<lang>`, `uml/<instance>`. The subject must be a **declared
+directory id** — `skills`, `schemas`, `processes`, `swimlane-glossary` — and
+one segment only.
+
+## What the owner's ruling today therefore means
+
+Not *"move `docs-auto` up and relocate directories beneath it"*. Rather:
+
+**`docs-auto` is already in the right place, with the right two-axis keying and
+the owner's URL rule. The other derived families become new `<auto-doc-type>`s
+handled by this generator** — `uml`, `lsi`, `index/schemas`, `index/tools` — with
+their subject segment taken from the declaration's `id`.
+
+That is a change to one two-axis generator and a set of declared types, not a
+bulk `git mv` of 687 files. It is also much closer to what this bean asked for
+in the first place: *"one handler, parameterised twice"*.
+
+**The `docs/` half of the owner's ruling still stands and is unaffected**: the
+17 `gen-docs-pages.ts` pages are assembled authored prose and stay, and that
+remains the discriminator — is the SOURCE a graph, or prose a person wrote?
+
+## Still true from the plan above
+
+- the seam slice is done and landed (`baseDocsDir`, six copies deleted, proven
+  no-op: all six generator `:check`s pass with zero generated files changed)
+- the 913-page verdict snapshot, and that the 216 `authored take-base` are a
+  detector artefact rather than a data-loss defect
+- `assets/` is a Jekyll URL namespace; `assets/library/` is URL-frozen by
+  13,214 absolute citations across 6,861 files
+- `toc` stays out; the authoring rule is a skill; `who-iris/docs` is the first
+  exercise
+
+
+## `index/bpmn` — RULED satisfied, 2026-10-03
+
+Owner, asked with the measurement in front of them and both alternatives
+costed: **`index/processes` IS `index/bpmn` under a different name.** The item
+is closed, not dropped.
+
+What was measured before asking:
+
+| | |
+|---|---|
+| git-tracked `.bpmn` files | **78** |
+| `index/processes` items | **78** — *"every BPMN process, with its own documentation, its lanes, and the skills its activities name"* |
+| `index/tasks` items (added same day) | **584** named activities inside those files |
+
+So both granularities a reader could want — the process, and the work inside it
+— were already covered before a type called `index/bpmn` existed. A third index
+over the same 78 files is the defect `AutoDocType.graph` exists to prevent, and
+`gen-docs-auto.ts`'s own docblock records its cost: walking every declared
+directory reported **1,522** skills where `knownSkills()` finds ~136, *"because
+a RENDERING of an artefact is not the artefact"*.
+
+**The alternative was offered and declined**, so it does not need rediscovering:
+a type over BPMN *elements* beyond activities — gateways, events, lanes,
+sequence flows — is genuinely uncovered, but it is ~2,000+ rows of which most
+carry no `name`, and it would need the same unnamed-element rule `index/tasks`
+uses (skip rather than list under an id, because a row reading
+`Gateway_0a1b2c` makes an index look populated while telling a reader nothing).
+
+**Status, against the canonical `## Done when` above — which is now ticked
+there rather than restated here.** `check:bean-bodies` rejected the first
+version of this paragraph for exactly that: it carried a second, ticked copy of
+two items while the canonical list still showed them open, and the gate's words
+are the reason — *"the section a reader and every tool consult says this is not
+done"*. One fact, one place.
+
+Ticked above today: **the handler and its type set** (with `toc` verified
+ABSENT, not merely unmentioned), and **the authoring rule in a skill** — which
+needed no work, because `skills/ui/ui-core/docs-auto.md` already carried the
+obligation, the owner's *"reuse assets in explain"* quote, the `id`-not-path
+rule and empty-gets-no-page. I nearly wrote a second one.
+
+Still open above, and the only substantive item left: **`who-iris/docs` as the
+first real exercise, end to end.** That directory holds **1** markdown file, so
+it is untouched rather than partly done. The per-process summary item is its
+authored half.
+
+The type set as it now stands: `glossary`, `index`, `index/docs`,
+`index/skills`, `index/processes`, `index/schemas`, `index/tools`,
+`index/roles`, `index/dmn`, `index/tasks`, `uml`, `lsi`. Count it from `TYPES`
+rather than from this list.
