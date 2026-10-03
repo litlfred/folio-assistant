@@ -299,10 +299,10 @@
   "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld",
   "@type": "http://www.w3.org/ns/prov#Entity",
   "repository": "cat-harness",
-  "generatedAt": "2026-10-03T08:07:47.526Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/6e04abaa6ebd1e7748afc3d14bcedc814eb8f256",
-  "sourceCommitSha": "6e04abaa6ebd1e7748afc3d14bcedc814eb8f256",
-  "sourceCommitAt": "2026-10-03T10:03:05+02:00",
+  "generatedAt": "2026-10-03T08:19:53.847Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/5dcee5b0baf9ad111da1ba49c5e1279e63b32b26",
+  "sourceCommitSha": "5dcee5b0baf9ad111da1ba49c5e1279e63b32b26",
+  "sourceCommitAt": "2026-10-03T10:15:44+02:00",
   "sourceTreeDirty": true,
   "dependsOnUnavailable": "2 dependency edge(s), none expressible as a record — see gaps",
   "counts": {
@@ -317,7 +317,7 @@
     "ProcessNode": 978,
     "Tool": 117,
     "Schema": 157,
-    "ExternalSchema": 20,
+    "ExternalSchema": 21,
     "GraphKind": 26,
     "Role": 49,
     "Subgraph": 26,
@@ -46357,6 +46357,19 @@
       ]
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#externalSchema/w3c-rdf-calendar",
+      "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#ExternalSchema",
+      "name": "w3c-rdf-calendar",
+      "title": "RDF Calendar — an application of the Resource Description Framework to iCalendar Data",
+      "authority": "W3C",
+      "specVersion": "2005-09-29",
+      "specUse": "conforms",
+      "specUrl": "https://www.w3.org/TR/rdfcal/",
+      "namespace": [
+        "http://www.w3.org/2002/12/cal/ical#"
+      ]
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#externalSchema/w3c-rdf",
       "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#ExternalSchema",
       "name": "w3c-rdf",
@@ -47993,8 +48006,8 @@
   ],
   "staging": {
     "branch": "main",
-    "sha": "6e04abaa6ebd1e7748afc3d14bcedc814eb8f256",
+    "sha": "5dcee5b0baf9ad111da1ba49c5e1279e63b32b26",
     "pr": "main",
-    "run": "37108393932"
+    "run": "37109110981"
   }
 }
