@@ -2,20 +2,34 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "http://smart.who.int/trust/ValueSet-WHORegionalOffices.schema.json",
   "title": "WHO Regional Offices Schema",
-  "description": "JSON Schema for WHO Regional Offices ValueSet codes. Generated from FHIR expansions using IRI format.",
-  "type": "string",
-  "enum": [
-    "http://smart.who.int/trust/CodeSystem/WHORegionalOffices#AFRO",
-    "http://smart.who.int/trust/CodeSystem/WHORegionalOffices#AMRO",
-    "http://smart.who.int/trust/CodeSystem/WHORegionalOffices#EMRO",
-    "http://smart.who.int/trust/CodeSystem/WHORegionalOffices#EURO",
-    "http://smart.who.int/trust/CodeSystem/WHORegionalOffices#SEARO",
-    "http://smart.who.int/trust/CodeSystem/WHORegionalOffices#WPRO",
-    "http://smart.who.int/trust/CodeSystem/WHORegionalOffices#OTHER"
+  "description": "JSON Schema for WHO Regional Offices ValueSet codes. Values are represented as Coding objects with 'system' and 'code' properties.",
+  "type": "object",
+  "required": [
+    "system",
+    "code"
   ],
-  "narrative": "This schema validates IRI-formatted codes for the WHO Regional Offices ValueSet. Each enum value includes the system URI in the format {systemuri}#{code} to match JSON-LD enumeration IRIs. Display values are available at http://smart.who.int/trust/ValueSet-WHORegionalOffices.displays.json. For a complete listing of all ValueSets, see artifacts.html#terminology-value-sets.",
+  "additionalProperties": false,
+  "properties": {
+    "system": {
+      "type": "string",
+      "const": "http://smart.who.int/trust/CodeSystem/WHORegionalOffices"
+    },
+    "code": {
+      "type": "string",
+      "enum": [
+        "AFRO",
+        "AMRO",
+        "EMRO",
+        "EURO",
+        "SEARO",
+        "WPRO",
+        "OTHER"
+      ]
+    }
+  },
+  "narrative": "This schema validates Coding-shaped objects for the WHO Regional Offices ValueSet. Each value must be an object with 'system' (CodeSystem URI) and 'code' (fragment after '#') properties. Display values are available at http://smart.who.int/trust/ValueSet-WHORegionalOffices.displays.json. The canonical IRI for a code can be reconstructed as system + '#' + code. For a complete listing of all ValueSets, see artifacts.html#terminology-value-sets.",
   "fhir:displays": "http://smart.who.int/trust/ValueSet-WHORegionalOffices.displays.json",
   "fhir:valueSet": "http://smart.who.int/trust/ValueSet/WHORegionalOffices",
   "fhir:version": "1.8.0",
-  "fhir:expansionTimestamp": "2026-09-07T14:05:57.487394"
+  "fhir:expansionTimestamp": "2026-10-01T11:51:29+00:00"
 }

@@ -2,16 +2,16 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "http://smart.who.int/trust/ValueSet-Participants-UAT.displays.json",
   "title": "WHO GDHCN Trust Network Participant - UAT Display Values",
-  "description": "Display values for WHO GDHCN Trust Network Participant - UAT ValueSet codes. Generated from FHIR expansions.",
+  "description": "Display values for WHO GDHCN Trust Network Participant - UAT ValueSet codes. Generated from FHIR expansions. Keys are code fragments (the part after '#' in the canonical IRI). The full IRI can be reconstructed as system + '#' + code.",
   "type": "object",
   "properties": {
     "fhir:displays": {
       "type": "object",
-      "description": "Multilingual display values for ValueSet codes using IRI format to match JSON schema enum values",
+      "description": "Multilingual display values for ValueSet codes keyed by code fragment",
       "patternProperties": {
-        "^https?://.*": {
+        "^.+$": {
           "type": "object",
-          "description": "Display values for a specific IRI-formatted code by language",
+          "description": "Display values for a specific code fragment by language",
           "properties": {
             "en": {
               "type": "string",
@@ -35,179 +35,179 @@
   ],
   "additionalProperties": true,
   "fhir:displays": {
-    "http://smart.who.int/refmart/CodeSystems/REF_COUNTRY#ALB": {
-      "en": "ALB"
-    },
-    "http://smart.who.int/refmart/CodeSystems/REF_COUNTRY#AND": {
-      "en": "AND"
-    },
-    "http://smart.who.int/refmart/CodeSystems/REF_COUNTRY#ARM": {
-      "en": "ARM"
-    },
-    "http://smart.who.int/refmart/CodeSystems/REF_COUNTRY#BEL": {
-      "en": "BEL"
-    },
-    "http://smart.who.int/refmart/CodeSystems/REF_COUNTRY#BEN": {
-      "en": "BEN"
-    },
-    "http://smart.who.int/refmart/CodeSystems/REF_COUNTRY#BRA": {
-      "en": "BRA"
-    },
-    "http://smart.who.int/refmart/CodeSystems/REF_COUNTRY#CAN": {
-      "en": "CAN"
-    },
-    "http://smart.who.int/refmart/CodeSystems/REF_COUNTRY#CHL": {
-      "en": "CHL"
-    },
-    "http://smart.who.int/refmart/CodeSystems/REF_COUNTRY#CYP": {
-      "en": "CYP"
-    },
-    "http://smart.who.int/refmart/CodeSystems/REF_COUNTRY#CZE": {
-      "en": "CZE"
-    },
-    "http://smart.who.int/refmart/CodeSystems/REF_COUNTRY#ECU": {
-      "en": "ECU"
-    },
-    "http://smart.who.int/refmart/CodeSystems/REF_COUNTRY#ESP": {
-      "en": "ESP"
-    },
-    "http://smart.who.int/refmart/CodeSystems/REF_COUNTRY#EST": {
-      "en": "EST"
-    },
-    "http://smart.who.int/refmart/CodeSystems/REF_COUNTRY#FIN": {
-      "en": "FIN"
-    },
-    "http://smart.who.int/refmart/CodeSystems/REF_COUNTRY#FRA": {
-      "en": "FRA"
-    },
-    "http://smart.who.int/refmart/CodeSystems/REF_COUNTRY#FRO": {
-      "en": "FRO"
-    },
-    "http://smart.who.int/refmart/CodeSystems/REF_COUNTRY#GTM": {
-      "en": "GTM"
-    },
-    "http://smart.who.int/refmart/CodeSystems/REF_COUNTRY#HRV": {
-      "en": "HRV"
-    },
-    "http://smart.who.int/refmart/CodeSystems/REF_COUNTRY#IDN": {
-      "en": "IDN"
-    },
-    "http://smart.who.int/refmart/CodeSystems/REF_COUNTRY#IRL": {
-      "en": "IRL"
-    },
-    "http://smart.who.int/refmart/CodeSystems/REF_COUNTRY#LTU": {
-      "en": "LTU"
-    },
-    "http://smart.who.int/refmart/CodeSystems/REF_COUNTRY#LVA": {
-      "en": "LVA"
-    },
-    "http://smart.who.int/refmart/CodeSystems/REF_COUNTRY#MCO": {
-      "en": "MCO"
-    },
-    "http://smart.who.int/refmart/CodeSystems/REF_COUNTRY#MLT": {
-      "en": "MLT"
-    },
-    "http://smart.who.int/refmart/CodeSystems/REF_COUNTRY#MYS": {
-      "en": "MYS"
-    },
-    "http://smart.who.int/refmart/CodeSystems/REF_COUNTRY#NLD": {
-      "en": "NLD"
-    },
-    "http://smart.who.int/refmart/CodeSystems/REF_COUNTRY#NZL": {
-      "en": "NZL"
-    },
-    "http://smart.who.int/refmart/CodeSystems/REF_COUNTRY#OMN": {
-      "en": "OMN"
-    },
-    "http://smart.who.int/refmart/CodeSystems/REF_COUNTRY#PAN": {
-      "en": "PAN"
-    },
-    "http://smart.who.int/refmart/CodeSystems/REF_COUNTRY#POL": {
-      "en": "POL"
-    },
-    "http://smart.who.int/refmart/CodeSystems/REF_COUNTRY#PRT": {
-      "en": "PRT"
-    },
-    "http://smart.who.int/refmart/CodeSystems/REF_COUNTRY#PRY": {
-      "en": "PRY"
-    },
-    "http://smart.who.int/refmart/CodeSystems/REF_COUNTRY#SAU": {
-      "en": "SAU"
-    },
-    "http://smart.who.int/refmart/CodeSystems/REF_COUNTRY#SGP": {
-      "en": "SGP"
-    },
-    "http://smart.who.int/refmart/CodeSystems/REF_COUNTRY#SLV": {
-      "en": "SLV"
-    },
-    "http://smart.who.int/refmart/CodeSystems/REF_COUNTRY#SMR": {
-      "en": "SMR"
-    },
-    "http://smart.who.int/refmart/CodeSystems/REF_COUNTRY#SVK": {
-      "en": "SVK"
-    },
-    "http://smart.who.int/refmart/CodeSystems/REF_COUNTRY#SVN": {
-      "en": "SVN"
-    },
-    "http://smart.who.int/refmart/CodeSystems/REF_COUNTRY#SWE": {
-      "en": "SWE"
-    },
-    "http://smart.who.int/refmart/CodeSystems/REF_COUNTRY#TGO": {
-      "en": "TGO"
-    },
-    "http://smart.who.int/refmart/CodeSystems/REF_COUNTRY#THA": {
-      "en": "THA"
-    },
-    "http://smart.who.int/refmart/CodeSystems/REF_COUNTRY#TUR": {
-      "en": "TUR"
-    },
-    "http://smart.who.int/refmart/CodeSystems/REF_COUNTRY#URY": {
-      "en": "URY"
-    },
-    "http://smart.who.int/trust/CodeSystems/Participants-UAT#IOM": {
+    "IOM": {
       "en": "IOM"
     },
-    "http://smart.who.int/trust/CodeSystems/Participants-UAT#WHO": {
-      "en": "WHO"
+    "WHO": {
+      "en": "UAT Participant WHO"
     },
-    "http://smart.who.int/trust/CodeSystems/Participants-UAT#XXA": {
-      "en": "XXA"
+    "XXA": {
+      "en": "Geneva"
     },
-    "http://smart.who.int/trust/CodeSystems/Participants-UAT#XXB": {
-      "en": "XXB"
+    "XXB": {
+      "en": "UAT Participant XXB"
     },
-    "http://smart.who.int/trust/CodeSystems/Participants-UAT#XXC": {
-      "en": "XXC"
+    "XXC": {
+      "en": "UAT Participant XXC"
     },
-    "http://smart.who.int/trust/CodeSystems/Participants-UAT#XXD": {
-      "en": "XXD"
+    "XXD": {
+      "en": "UAT Participant XXD"
     },
-    "http://smart.who.int/trust/CodeSystems/Participants-UAT#XXO": {
-      "en": "XXO"
+    "XXO": {
+      "en": "UAT Participant XXO"
     },
-    "http://smart.who.int/trust/CodeSystems/Participants-UAT#XXQ": {
-      "en": "XXQ"
+    "XXQ": {
+      "en": "Test Locality"
     },
-    "http://smart.who.int/trust/CodeSystems/Participants-UAT#XXS": {
-      "en": "XXS"
+    "XXS": {
+      "en": "Test Locality"
     },
-    "http://smart.who.int/trust/CodeSystems/Participants-UAT#XXT": {
-      "en": "XXT"
+    "XXT": {
+      "en": "Geneva"
     },
-    "http://smart.who.int/trust/CodeSystems/Participants-UAT#XXU": {
-      "en": "XXU"
+    "XXU": {
+      "en": "Geneva"
     },
-    "http://smart.who.int/trust/CodeSystems/Participants-UAT#XXV": {
-      "en": "XXV"
+    "XXV": {
+      "en": "test city"
     },
-    "http://smart.who.int/trust/CodeSystems/Participants-UAT#XXX": {
-      "en": "XXX"
+    "XXX": {
+      "en": "UAT Participant XXX"
     },
-    "http://smart.who.int/trust/CodeSystems/Participants-UAT#XYK": {
-      "en": "XYK"
+    "XYK": {
+      "en": "India"
+    },
+    "ALB": {
+      "en": "Albania"
+    },
+    "AND": {
+      "en": "Andorra"
+    },
+    "ARM": {
+      "en": "Armenia"
+    },
+    "BEL": {
+      "en": "Belgium"
+    },
+    "BEN": {
+      "en": "Benin"
+    },
+    "BRA": {
+      "en": "Brazil"
+    },
+    "CAN": {
+      "en": "Canada"
+    },
+    "CHL": {
+      "en": "Chile"
+    },
+    "CYP": {
+      "en": "Cyprus"
+    },
+    "CZE": {
+      "en": "Czechia"
+    },
+    "ECU": {
+      "en": "Ecuador"
+    },
+    "ESP": {
+      "en": "Spain"
+    },
+    "EST": {
+      "en": "Estonia"
+    },
+    "FIN": {
+      "en": "Finland"
+    },
+    "FRA": {
+      "en": "France"
+    },
+    "FRO": {
+      "en": "Faroe Islands"
+    },
+    "GTM": {
+      "en": "Guatemala"
+    },
+    "HRV": {
+      "en": "Croatia"
+    },
+    "IDN": {
+      "en": "Indonesia"
+    },
+    "IRL": {
+      "en": "Ireland"
+    },
+    "LTU": {
+      "en": "Lithuania"
+    },
+    "LVA": {
+      "en": "Latvia"
+    },
+    "MCO": {
+      "en": "Monaco"
+    },
+    "MLT": {
+      "en": "Malta"
+    },
+    "MYS": {
+      "en": "Malaysia"
+    },
+    "NLD": {
+      "en": "Netherlands (Kingdom of the)"
+    },
+    "NZL": {
+      "en": "New Zealand"
+    },
+    "OMN": {
+      "en": "Oman"
+    },
+    "PAN": {
+      "en": "Panama"
+    },
+    "POL": {
+      "en": "Poland"
+    },
+    "PRT": {
+      "en": "Portugal"
+    },
+    "PRY": {
+      "en": "Paraguay"
+    },
+    "SAU": {
+      "en": "Saudi Arabia"
+    },
+    "SGP": {
+      "en": "Singapore"
+    },
+    "SLV": {
+      "en": "El Salvador"
+    },
+    "SMR": {
+      "en": "San Marino"
+    },
+    "SVK": {
+      "en": "Slovakia"
+    },
+    "SVN": {
+      "en": "Slovenia"
+    },
+    "SWE": {
+      "en": "Sweden"
+    },
+    "TGO": {
+      "en": "Togo"
+    },
+    "THA": {
+      "en": "Thailand"
+    },
+    "TUR": {
+      "en": "Türkiye"
+    },
+    "URY": {
+      "en": "Uruguay"
     }
   },
   "fhir:valueSet": "http://smart.who.int/trust/ValueSet/Participants-UAT",
   "fhir:version": "1.8.0",
-  "fhir:expansionTimestamp": "2026-09-07T14:05:57.487541"
+  "fhir:expansionTimestamp": "2026-10-01T11:51:29+00:00"
 }
