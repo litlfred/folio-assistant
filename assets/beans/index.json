@@ -2,7 +2,7 @@
   "$schema": "folio-bean-index/v1",
   "tile": {
     "beans": {
-      "count": 761,
+      "count": 762,
       "unit": "beans"
     }
   },
@@ -10561,6 +10561,20 @@
       "updatedAt": "2026-09-30T19:49:54Z",
       "preview": "Found 2026-09-30 during a goal review, and confirmed independently before\nbeing written down.\n\n`bun run audit:coverage` reports the `themes` graph kind as:\n\n```json\n{\"kind\": \"themes\", \"state\": \"covered\", \"directories\": [\"who-iris/themes\"],\n \"criteria\": [], \"gates\": [\"bun run check:theme-art:check\",\n \"bun run theme:page:check\", \"bun run themes:css:check\"],\n \"typed\": true, \"hasFiles\": true}\n```\n\n**N",
       "file": "beans/defs/folio-assistant-z6xd--false-coverage-three-gates-declare-covers-themes-a.md"
+    },
+    {
+      "id": "folio-assistant-zacz",
+      "title": "Merge train: a refused member gets a bean, a hand-back with a fail condition, or a dispatch",
+      "status": "in-progress",
+      "type": "task",
+      "priority": "",
+      "parent": "folio-assistant-nok9",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-10-02T16:59:06Z",
+      "updatedAt": "2026-10-02T16:59:06Z",
+      "preview": "Owner, 2026-10-02: \"update skills: if a merge in queue cannot be merged for some reason, create a new bean (under appropriate epic/story…), hand it back to the sibling (use the agent-to-agent handoff process with a fail condition) for resolution, or dispatch an agent as appropriate.\"\n\nUntil now a merge steward handled a refused train member ad hoc, with a PR comment or a message to the owning sess",
+      "file": "beans/defs/folio-assistant-zacz--merge-train-a-refused-member-gets-a-bean-a-hand-ba.md"
     },
     {
       "id": "folio-assistant-zdfa",

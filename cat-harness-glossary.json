@@ -914,6 +914,7 @@
         "Agent (this session)",
         "Agent / platform (automated)",
         "Designer",
+        "Dispatched agent",
         "Triage agent"
       ],
       "inScheme": "https://litlfred.github.io/folio-assistant/cat-harness-glossary.jsonld",
@@ -935,6 +936,7 @@
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#glossary-usage/Process_BeanLifecycle/Lane_Agent",
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#glossary-usage/Process_CodeChangeReview/Lane_Agent",
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#glossary-usage/Process_MergeBase/Lane_Agent",
+        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#glossary-usage/Process_MergeRefusal/Lane_Dispatched",
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#glossary-usage/Process_RelatedWork/Lane_Agent",
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#glossary-usage/Process_StalledAgentTriage/Lane_Triage",
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#glossary-usage/Process_UpstreamPinWatch/Lane_Agent",
@@ -1094,6 +1096,15 @@
       "label": "Authoring agent",
       "scopeNote": "Reached only when the command refused: an authored conflict, an undeclared path, or a resolution the gates could not reproduce. The refused paths are listed for it; what to do with an authored conflict is judgement.",
       "source": "cat-harness/processes/sdlc/merge-base.bpmn"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#glossary-usage/Process_MergeRefusal/Lane_Dispatched",
+      "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#LaneUsage",
+      "ofConcept": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/authoring-agent",
+      "inProcess": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_MergeRefusal",
+      "label": "Dispatched agent",
+      "scopeNote": "ONE agent with a modest budget, reached only when no live owner can be. May do what a declared pattern would have done; may NOT decide an authored conflict, which goes to the owner as a question.",
+      "source": "cat-harness/processes/sdlc/merge-refusal.bpmn"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#glossary-usage/Process_RelatedWork/Lane_Agent",
@@ -1319,11 +1330,13 @@
       "notation": "sibling-session",
       "definition": "Another agent or human working the same store. Present in bean-lifecycle precisely to mark what is NOT yours to close.",
       "altLabel": [
+        "Owning session",
         "Sibling session or human (not yours to close)"
       ],
       "inScheme": "https://litlfred.github.io/folio-assistant/cat-harness-glossary.jsonld",
       "usage": [
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#glossary-usage/Process_BeanLifecycle/Lane_Sibling",
+        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#glossary-usage/Process_MergeRefusal/Lane_Owner",
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#glossary-usage/Process_MergeTrain/Lane_Sibling"
       ]
     },
@@ -1335,6 +1348,15 @@
       "label": "Sibling session or human (not yours to close)",
       "scopeNote": "The only task in this diagram with no `cat-harness.processes:bean` op at all — every other terminal action here writes something, and this one's entire job is to write nothing to a bean it does not own, ending the lifecycle at End_NotYours rather than at the completion Lane_Agent reaches for its own beans.",
       "source": "cat-harness/processes/sdlc/bean-lifecycle.bpmn"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#glossary-usage/Process_MergeRefusal/Lane_Owner",
+      "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#LaneUsage",
+      "ofConcept": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/sibling-session",
+      "inProcess": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_MergeRefusal",
+      "label": "Owning session",
+      "scopeNote": "The session named in the PR's `Claude-Session:` trailer. The executor of the hand-back: claims the refusal bean, fixes the PR, reports on the PR in the bean's one-line formats.",
+      "source": "cat-harness/processes/sdlc/merge-refusal.bpmn"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#glossary-usage/Process_MergeTrain/Lane_Sibling",
@@ -1943,8 +1965,18 @@
       ],
       "inScheme": "https://litlfred.github.io/folio-assistant/cat-harness-glossary.jsonld",
       "usage": [
+        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#glossary-usage/Process_MergeRefusal/Lane_Steward",
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#glossary-usage/Process_StalledAgentTriage/Lane_Steward"
       ]
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#glossary-usage/Process_MergeRefusal/Lane_Steward",
+      "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#LaneUsage",
+      "ofConcept": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/session-coordinator",
+      "inProcess": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_MergeRefusal",
+      "label": "Merge steward",
+      "scopeNote": "Coordinator and verifier of the hand-back: records, hands back, takes back when the fail condition fires, and closes. Never edits the bean's instructions after the executor claims it; later facts go to the PR.",
+      "source": "cat-harness/processes/sdlc/merge-refusal.bpmn"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#glossary-usage/Process_StalledAgentTriage/Lane_Steward",
