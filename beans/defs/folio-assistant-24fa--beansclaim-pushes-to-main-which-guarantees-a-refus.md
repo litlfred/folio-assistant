@@ -3,8 +3,9 @@
 title: beans:claim pushes to main, which GUARANTEES a refuse-class conflict on the claiming branch's own completion
 status: todo
 type: bug
+priority: normal
 created_at: 2026-10-03T00:43:10Z
-updated_at: 2026-10-03T00:43:10Z
+updated_at: 2026-10-03T09:24:35Z
 parent: folio-assistant-d33q
 ---
 
@@ -72,3 +73,42 @@ because this is a design question, not a defect with one fix.
 - [ ] `35nj` annotated with the cost its remedy creates, since it is the bean
       a reader lands on
 
+
+## Measured, 2026-10-03 — how much of main's movement this is
+
+Of the last **60 tip-moves** on `main` (`git log origin/main --first-parent`):
+
+| what moved the tip | count |
+|---|---|
+| PR merges | 48 |
+| **`beans:claim` pushing straight to `main`** | **10** |
+| other direct pushes | 2 |
+
+So roughly **one main-move in six is a claim**, not a merge. Measured with
+`--first-parent`: a plain `git log` walks the merged branches' own commits and
+gives a badly misleading split (it reported 27 merges against 165 "other"),
+which is worth recording because the wrong number makes claims look negligible.
+
+### Why this now costs more than it looks
+
+Each tip-move re-conflicts every open PR and, until bean `o8s9` lands, cancels
+the in-flight per-PR jobs of the `merge-main` sweep. A claim therefore pays the
+full price of a merge while landing no reviewed change.
+
+It also defeats a merge freeze. The owner froze merges to `main` on
+2026-10-03 (recorded on `o8s9`) so the queue could be drained after the
+mechanism was fixed. `main` moved anyway, during the freeze, from
+`1aaa669f998` to `c4036a79af0` — and that commit is
+`beans(folio-assistant-8c6v): claim in-progress from
+claude/docs-pages-merge-pattern-declare-8c6v`, a claim pushed by an agent this
+session had dispatched. **A freeze on merges is not a freeze on `main` while
+claims bypass the PR path.**
+
+PR #1947 (merged) made a claim mirror its note to the branch, which is the
+same problem seen from the other side.
+
+This is evidence for the ruling this bean is already waiting on, not a new
+question, and not an argument for any particular answer: a claim that
+announces on `main` is exactly what makes it visible to a sibling session, which
+is the thing `bean-coordination` wants. The cost is now measured, so the
+trade-off can be decided rather than estimated.
