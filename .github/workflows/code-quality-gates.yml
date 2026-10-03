@@ -6,7 +6,11 @@
 #
 # TWO of the four jobs gate THIS repo; two scan trees only a folio has. Which
 # is which is stated in each job, and a job with nothing to scan says so
-# rather than printing OK — see the note on `lean-bare-import`.
+# rather than printing OK — see the Lean step of the `hygiene` job.
+#
+# Since bean `7fu5`, 1, 2 and 4 below — and the dependency advisories — are
+# STEPS of one job, `hygiene`, rather than jobs of their own: each was a second
+# of work behind a runner request. The numbered list is what they ask.
 #
 #   1. Lean bare-import gate — HARD FAIL on `import Mathlib` (the whole
 #      library). A bare `import Mathlib` pulls the entire Mathlib build cone
@@ -93,14 +97,45 @@ permissions:
   contents: read
 
 jobs:
-  lean-bare-import:
-    # bpmn-node: Task_Lean
-    name: Lean bare-import gate (hard)
+  hygiene:
+    # bpmn-node: Task_Hygiene
+    name: Import hygiene (hard) and dependency advisories (warn-only)
+    #
+    # ## Four questions, one runner — bean `7fu5`
+    #
+    # These were four jobs: `lean-bare-import`, `python-imports`,
+    # `rust-wildcard` and `dependency-advisories`. Each did about a second of
+    # work after a ~13 s checkout, and each was a runner request. Measured on
+    # `main` run 37133247484 (2026-10-03): the run took 21.7 min while its
+    # longest job executed for 174 s — the rest was WAITING for runners, with
+    # 18 requested per run. Folding them makes it 15.
+    #
+    # Not folded into `gates`, for the reason that job exists (bean `om30`): a
+    # job stops at its first failing step, so a red step masks every one after
+    # it. Here the same rule is kept INSIDE the job instead: every step after
+    # the first gate runs `if: !cancelled()`, so a red Lean scan does not stop
+    # ruff, the Python tests or the advisories being asked — each still fails
+    # the job, and each still shows as its own red step. The Rust report is
+    # `continue-on-error`, so it goes last, where it can mask nothing.
+    #
+    # The Lean and Rust steps scan folio trees this repository does not have,
+    # and say so (SKIP — … Nothing scanned); they are here for folios that
+    # vendor this workflow.
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v7
         with:
           submodules: true
+
+      - uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: 1.3.14
+
+
+      - uses: actions/setup-python@v7
+        with:
+          python-version: "3.12"
+
 
       # HARD GATE: a bare `import Mathlib` (optionally trailing whitespace)
       # at the start of a line is forbidden in content Lean files. Use
@@ -153,21 +188,11 @@ jobs:
           fi
           echo "OK — no bare 'import Mathlib' in $count Lean file(s)"
 
-  python-imports:
-    # bpmn-node: Task_Python
-    name: Python unused/wildcard imports (hard)
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v7
-        with:
-          submodules: true
-
-      - uses: actions/setup-python@v7
-        with:
-          python-version: "3.12"
 
       - name: Install ruff
+        if: ${{ !cancelled() }}
         run: pip install "ruff>=0.5"
+
 
       # The Python backends the scripts actually import, from the file
       # `schemas/python-deps.ts` generates. Bean `68dt`: nothing declared them
@@ -181,13 +206,16 @@ jobs:
       # lean set — for one script. That is a cost statement, not a
       # deprecation; `pdf-tables.py` is live and its tests run outside CI.
       - name: Install Python dependencies
+        if: ${{ !cancelled() }}
         run: pip install -r requirements.txt
+
 
       # HARD GATE, promoted from warn-only. Same rule as eslint: a check is an
       # error only once its count is zero, and this repo's count is zero — the
       # 24 live F401s were drained in the same commit that repointed the scan.
       # `continue-on-error` is gone with it; a new unused import fails here.
       - name: ruff F401,F403
+        if: ${{ !cancelled() }}
         #
         # Was pointed at `folio-assistant/computations tools`. Neither exists
         # here: `tools/` is a folio tree, and `folio-assistant/computations` is
@@ -214,6 +242,7 @@ jobs:
             --exclude '**/_deprecated/**' \
             $targets
 
+
       # THIS STEP IS FOR THIS REPOSITORY'S OWN SCRIPTS, NOT FOR PACKAGES IT
       # PUBLISHES. A publishable package's Python tests run in the `typescript`
       # job, under `bun run check:published-packages`, which discovers them
@@ -236,6 +265,7 @@ jobs:
       # Discovered rather than listed, so a new one is picked up by
       # existing; a listed set is a set that goes stale.
       - name: Python tests (cat-harness/scripts/tests/*.test.py)
+        if: ${{ !cancelled() }}
         run: |
           set -uo pipefail
           shopt -s nullglob
@@ -250,6 +280,62 @@ jobs:
             python3 "$t" || rc=1
           done
           exit $rc
+
+
+      # WARN-ONLY by the owner's decision on bean `j41m`, and the reason is
+      # worth keeping next to the step: a HARD gate on advisories hands a
+      # transitive advisory nobody can patch the power to red every PR until
+      # somebody adds a suppression — and the suppression is what rots.
+      # `.github/dependabot.yml` is the other half: it turns the same
+      # advisories into reviewable PRs rather than into a gate.
+      #
+      # `bun audit` needs the registry, not the modules, so there is no
+      # install step. Adding one would make a dependency resolve a
+      # precondition of asking whether dependencies are safe.
+      #
+      # NO `continue-on-error` and NO `|| true`. The script exits 0 in every
+      # state on purpose, and keeps the three states apart in its OUTPUT
+      # instead — which is the only place they can be kept apart once the exit
+      # code carries no information. `|| true` is exactly how "could not
+      # determine" becomes "fine", and this workflow has paid for that once
+      # already: see the ruff note at the top of this file, where a step
+      # "warned about the missing paths and exited 0, so it reported a clean
+      # baseline it had never computed."
+      - name: Known advisories against the resolved tree
+        if: ${{ !cancelled() }}
+        run: bun run check:dependency-advisories
+
+
+      # WARN-ONLY ratchet: count non-test `use ...::*;` wildcard imports in
+      # tools/. Test modules (`#[cfg(test)]` / `use super::*;`) are the bulk
+      # of the legitimate baseline, so they're reported but not failed.
+      - name: Wildcard `use ...::*;` report
+        if: ${{ !cancelled() }}
+        continue-on-error: true
+        run: |
+          set -uo pipefail
+          # Same distinction as the Lean gate: there are ZERO .rs files in this
+          # repo, so "OK — no non-test wildcard imports" was reporting a clean
+          # result for a scan of nothing. `tools/` is a folio tree; this job is
+          # here for folios that vendor this workflow.
+          count=$(find tools -name '*.rs' 2>/dev/null | wc -l)
+          if [ "$count" -eq 0 ]; then
+            echo "SKIP — no tools/**/*.rs in this repo (the Rust tree lives in the folio). Nothing scanned."
+            exit 0
+          fi
+          # Char class covers digits too (e.g. base64::prelude::*, sha2::*) and
+          # underscores (wasm_bindgen::prelude::*, extendr_api::prelude::*).
+          matches=$(grep -rnE '^[[:space:]]*use [A-Za-z0-9_:]+::\*;' \
+            tools --include='*.rs' 2>/dev/null | grep -vE 'use super::\*;' || true)
+          if [ -n "$matches" ]; then
+            echo "::warning::Non-test wildcard imports in tools/ (ratchet — narrow when touched):"
+            echo "$matches" | while IFS= read -r line; do
+              echo "::warning::$line"
+              echo "  $line"
+            done
+          else
+            echo "OK — no non-test wildcard imports in $count Rust file(s)"
+          fi
 
   typescript-static:
     # bpmn-node: Task_TypeScript
@@ -1845,6 +1931,12 @@ jobs:
           # reason the check exists rather than a file-exists test.
           bun run check:docs-populated
           bun run check:declared-paths
+          # Its cross-instance half (bean `gz47`): no instance's source spells a
+          # path into a directory ANOTHER instance declares (the root's beans/,
+          # todos/, fsh-guts/, uploads/ — the ones moving to branches). A one-way
+          # ratchet over scripts/foreign-path-baseline.json: a rise is red, a
+          # fall is reported and never red.
+          bun run check:foreign-paths
           bun run check:fallback-roles
           # `--require-all` as of bean `rj0n`. The flag existed "for the day the gap
           # is meant to be closed" and could NEVER have passed: all seven kinds it
@@ -2438,79 +2530,6 @@ jobs:
         run: |
           echo "e2e shards: $SHARDS"
           test "$SHARDS" = "success"
-
-  rust-wildcard:
-    # bpmn-node: Task_Rust
-    name: Rust wildcard imports (warn-only)
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v7
-        with:
-          submodules: true
-
-      # WARN-ONLY ratchet: count non-test `use ...::*;` wildcard imports in
-      # tools/. Test modules (`#[cfg(test)]` / `use super::*;`) are the bulk
-      # of the legitimate baseline, so they're reported but not failed.
-      - name: Wildcard `use ...::*;` report
-        continue-on-error: true
-        run: |
-          set -uo pipefail
-          # Same distinction as the Lean gate: there are ZERO .rs files in this
-          # repo, so "OK — no non-test wildcard imports" was reporting a clean
-          # result for a scan of nothing. `tools/` is a folio tree; this job is
-          # here for folios that vendor this workflow.
-          count=$(find tools -name '*.rs' 2>/dev/null | wc -l)
-          if [ "$count" -eq 0 ]; then
-            echo "SKIP — no tools/**/*.rs in this repo (the Rust tree lives in the folio). Nothing scanned."
-            exit 0
-          fi
-          # Char class covers digits too (e.g. base64::prelude::*, sha2::*) and
-          # underscores (wasm_bindgen::prelude::*, extendr_api::prelude::*).
-          matches=$(grep -rnE '^[[:space:]]*use [A-Za-z0-9_:]+::\*;' \
-            tools --include='*.rs' 2>/dev/null | grep -vE 'use super::\*;' || true)
-          if [ -n "$matches" ]; then
-            echo "::warning::Non-test wildcard imports in tools/ (ratchet — narrow when touched):"
-            echo "$matches" | while IFS= read -r line; do
-              echo "::warning::$line"
-              echo "  $line"
-            done
-          else
-            echo "OK — no non-test wildcard imports in $count Rust file(s)"
-          fi
-
-  dependency-advisories:
-    # bpmn-node: Task_Advisories
-    name: Dependency advisories (warn-only)
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v7
-        with:
-          submodules: true
-      - uses: oven-sh/setup-bun@v2
-        with:
-          bun-version: 1.3.14
-
-      # WARN-ONLY by the owner's decision on bean `j41m`, and the reason is
-      # worth keeping next to the step: a HARD gate on advisories hands a
-      # transitive advisory nobody can patch the power to red every PR until
-      # somebody adds a suppression — and the suppression is what rots.
-      # `.github/dependabot.yml` is the other half: it turns the same
-      # advisories into reviewable PRs rather than into a gate.
-      #
-      # `bun audit` needs the registry, not the modules, so there is no
-      # install step. Adding one would make a dependency resolve a
-      # precondition of asking whether dependencies are safe.
-      #
-      # NO `continue-on-error` and NO `|| true`. The script exits 0 in every
-      # state on purpose, and keeps the three states apart in its OUTPUT
-      # instead — which is the only place they can be kept apart once the exit
-      # code carries no information. `|| true` is exactly how "could not
-      # determine" becomes "fine", and this workflow has paid for that once
-      # already: see the ruff note at the top of this file, where a step
-      # "warned about the missing paths and exited 0, so it reported a clean
-      # baseline it had never computed."
-      - name: Known advisories against the resolved tree
-        run: bun run check:dependency-advisories
 
   skill-registration-chain:
     # bpmn-node: Task_SkillChain

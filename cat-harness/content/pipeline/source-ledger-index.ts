@@ -40,7 +40,7 @@
  */
 
 import { existsSync, readFileSync, readdirSync, writeFileSync } from "node:fs";
-import { basename, join } from "node:path";
+import { basename, join, relative } from "node:path";
 import type { LedgerEntry, SourceLedger, SourceRef } from "../../schemas/bib-verification";
 import { directoryForGraph, folioDir, deferResolution} from "../../schemas/cat-harness.js";
 
@@ -231,7 +231,8 @@ function main(): void {
       }
 
       entries.push({
-        source: { kind: "upload", file: `uploads/${f}` },
+        // Where the file really is, repo-relative, not the root queue's spelling (bean `gz47`).
+        source: { kind: "upload", file: relative(REPO_ROOT, join(UPLOADS_DIR(), f)) },
         id,
         status: "unreviewed",
       });

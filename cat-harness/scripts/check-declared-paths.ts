@@ -209,7 +209,7 @@ function declaredPrefixes(root: string): string[] {
  * discoverable half is the access pattern that needs guarding, and a directory
  * is a place to look that may hold more than one part of a graph.
  */
-function isAddressedByPath(d: { graphKinds?: readonly string[] }): boolean {
+export function isAddressedByPath(d: { graphKinds?: readonly string[] }): boolean {
   const kinds = d.graphKinds ?? [];
   return kinds.length > 0 && kinds.every((k) => k === "code");
 }
@@ -268,7 +268,7 @@ const MARKER = /declared-path-literal:\s*\S/;
  * than its author meant; the marked literals are PRINTED with their reason on
  * every run, so an over-broad marker is visible rather than silent.
  */
-function markerCoverage(rawLines: string[]): Map<number, string> {
+export function markerCoverage(rawLines: string[]): Map<number, string> {
   const cover = new Map<number, string>();
   for (let n = 0; n < rawLines.length; n++) {
     if (!MARKER.test(rawLines[n]!)) continue;
@@ -316,7 +316,7 @@ function markerCoverage(rawLines: string[]): Map<number, string> {
  * case was BOTH extra findings and hidden ones, and the hidden half is what
  * made the state worth giving up.
  */
-function stripComments(text: string): string {
+export function stripComments(text: string): string {
   let out = "";
   let i = 0;
   let mode: "code" | "line" | "block" | "s" | "d" | "t" = "code";
@@ -367,7 +367,7 @@ function stripComments(text: string): string {
  * path with it. Nesting is tracked, so `join(a, join(b, "skills"))` is caught
  * at the inner call.
  */
-function pathContextRanges(code: string): Array<[number, number]> {
+export function pathContextRanges(code: string): Array<[number, number]> {
   const out: Array<[number, number]> = [];
   const call = /\b(?:join|joinPath|resolve|relative)\s*\(/g;
   let m: RegExpExecArray | null;
@@ -386,13 +386,13 @@ function pathContextRanges(code: string): Array<[number, number]> {
   return out;
 }
 
-export /**
+/**
  * Offset of the first string literal inside a path-building call, or -1.
  *
  * "First" is what makes a bare segment a DECLARED directory rather than a
  * word: only the segment directly under the root can be one.
  */
-function firstLiteralIn(code: string, [a, b]: [number, number]): number {
+export function firstLiteralIn(code: string, [a, b]: [number, number]): number {
   const re = /(["'`])(?:[^\\\n]|\\.)*?\1/g;
   re.lastIndex = a;
   const m = re.exec(code);
@@ -410,7 +410,7 @@ export interface Scan {
   refused: Array<Site & { why: string }>;
 }
 
-const LITERAL = /(["'`])((?:[^\\\n]|\\.)*?)\1/g;
+export const LITERAL = /(["'`])((?:[^\\\n]|\\.)*?)\1/g;
 
 /**
  * Every declared-path literal in the instance's own source, classified.

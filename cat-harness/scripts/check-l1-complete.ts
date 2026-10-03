@@ -62,6 +62,11 @@ import {
 } from "../schemas/tabular-records.ts";
 import { DESCRIBABLE_ROLES, ImagesSidecarSchema } from "../schemas/document-image.ts";
 import { VECTOR_LABELS_FILE, VectorLabelsSidecarSchema } from "../schemas/vector-labels.ts";
+import {
+  VECTOR_FIGURES_DIR,
+  VECTOR_FIGURES_FILE,
+  VectorFiguresSidecarSchema,
+} from "../schemas/vector-figure.ts";
 import { LICENCE_FILENAME } from "../content/pipeline/gen-library-jsonld.ts";
 import { NARRATIVE_BEARING, narrativesIn } from "./narratives.ts";
 import { SUMMARIES_FILE } from "../schemas/block-summary.ts";
@@ -175,12 +180,14 @@ export type EntryKind = "paged" | "tabular" | "archive" | "referenced" | "undete
  * `blocks` and `images.json` on all 21, `images/` on 13, `ocr/` on 2, and
  * **nothing else anywhere**.
  */
-export const ENTRY_DIRECTORIES: readonly string[] = ["sections", "blocks", "images", "ocr"];
+// `figures/` is the vector arm's renders — `pdf-vector-figures.py`, bean `ay3x`.
+export const ENTRY_DIRECTORIES: readonly string[] = ["sections", "blocks", "images", "ocr", VECTOR_FIGURES_DIR];
 
 /** Sidecars an entry may carry beyond {@link KIND_SIDECAR}'s kind markers. */
 export const ENTRY_SIDECARS: readonly string[] = [
   "images.json",
   VECTOR_LABELS_FILE,
+  VECTOR_FIGURES_FILE,
   "manifest.jsonld",
   SUMMARIES_FILE,
   // Authored, not produced by an arm: the licence record gen-library-jsonld
@@ -342,6 +349,67 @@ export function vectorLabelNote(dir: string): string {
     ` The vector arm recovered ${labels} positioned label(s) across ${pages.length} page(s) ` +
     `that declare a figure — see ${VECTOR_LABELS_FILE}; which labels belong to which figure ` +
     `is NOT established (bean a8wy).`
+  );
+}
+
+/**
+ * How far the vector FIGURE arm reaches into the BARE figures — bean `ay3x`.
+ *
+ * Measured against the bare set and nothing wider, on purpose: a figure with
+ * caption text is already covered by the owner's 2026-09-23 caption ruling,
+ * so counting it here would credit the arm with work the caption did. The
+ * bare figures are the only ones neither a raster image nor a caption reaches.
+ *
+ * Three disjoint answers per bare label, and only the first is coverage:
+ *
+ * - `shown` — an INSPECTED render says it shows this figure (`shows`), and
+ *   carries a narrative. Somebody looked; the figure has a description.
+ * - `candidate` — a render exists on a page whose caption candidates name the
+ *   label, and nobody has looked. NOT coverage: a candidate may be a
+ *   cross-reference, so the page may not show the figure at all.
+ * - `neither` — no render names it. The arm did not reach it.
+ *
+ * `undefined` when there is no vector sidecar, or it is undetermined — the
+ * third state, carried rather than flattened to "reached nothing".
+ */
+export function vectorFigureReach(
+  dir: string,
+  bare: readonly string[],
+): { shown: string[]; candidate: string[]; neither: string[]; renders: number; inspected: number } | undefined {
+  const f = join(dir, VECTOR_FIGURES_FILE);
+  if (!existsSync(f)) return undefined;
+  let figures;
+  try {
+    ({ figures } = VectorFiguresSidecarSchema.parse(JSON.parse(readFileSync(f, "utf-8"))));
+  } catch {
+    // A malformed sidecar is `entry-contents`' to report, not this line's.
+    return undefined;
+  }
+  if (figures === null) return undefined;
+  const rendered = figures.filter((x) => x.file !== null);
+  const inspected = rendered.filter((x) => x.basis.method === "inspection");
+  const shownSet = new Set(
+    inspected.filter((x) => x.narrative?.text).flatMap((x) => x.shows ?? []),
+  );
+  const candidateSet = new Set(
+    rendered.filter((x) => x.basis.method === "assembly").flatMap((x) => x.captionLabels),
+  );
+  const shown = bare.filter((l) => shownSet.has(l));
+  const candidate = bare.filter((l) => !shownSet.has(l) && candidateSet.has(l));
+  const neither = bare.filter((l) => !shownSet.has(l) && !candidateSet.has(l));
+  return { shown, candidate, neither, renders: rendered.length, inspected: inspected.length };
+}
+
+/** {@link vectorFigureReach} as a sentence for a gate's detail, or `""`. */
+export function vectorFigureNote(dir: string, bare: readonly string[]): string {
+  const r = vectorFigureReach(dir, bare);
+  if (!r || r.renders === 0) return "";
+  const list = (xs: string[]) => (xs.length ? ` (Fig. ${xs.join(", ")})` : "");
+  return (
+    ` The vector figure arm rendered ${r.renders} caption page(s), ${r.inspected} inspected; of the ` +
+    `${bare.length} bare figure(s), ${r.shown.length} shown by an inspected render${list(r.shown)}, ` +
+    `${r.candidate.length} named on a render nobody has inspected${list(r.candidate)}, ` +
+    `${r.neither.length} on no render${list(r.neither)} — see ${VECTOR_FIGURES_FILE} (bean ay3x).`
   );
 }
 
@@ -982,7 +1050,9 @@ function derivableRequirements(dir: string): Requirement[] {
           const unjudged = parsed.images.filter((i) => i.role === "undetermined");
           // What the TEXT declares, against what the raster arm placed — bean
           // `m4xy`. Never compared as a ratio; see `declaredFigureLabels`.
-          const declared = declaredFigureLabels(join(dir, "sections"));
+          const declaredCaptions = declaredFigureCaptions(join(dir, "sections"));
+          const declared = new Set(declaredCaptions.keys());
+          const bareLabels = [...declaredCaptions].filter(([, c]) => c === null).map(([l]) => l);
           const declaredNote =
             (declared.size > 0
               ? ` The text declares at least ${declared.size} captioned figure(s); ` +
@@ -993,7 +1063,11 @@ function derivableRequirements(dir: string): Requirement[] {
             // `9789240010567-eng` page 92 is the case: the raster arm extracted
             // five component logos and Fig. 5.6.2, the diagram they sit inside,
             // is drawn.
-            vectorLabelNote(dir);
+            vectorLabelNote(dir) +
+            // Reported, never a state change here: which bare figures the
+            // placed raster images already are is NOT established, so the
+            // arm's reach is information beside a `met`, not a verdict on it.
+            vectorFigureNote(dir, bareLabels);
           if (undescribed.length || unjudged.length) {
             out.push({
               name: "image-descriptions",
@@ -1027,9 +1101,27 @@ function derivableRequirements(dir: string): Requirement[] {
             // the other fifteen are cross-references the lower bound counted.
             // A blanket `met` there would pass over fifteen figures nothing
             // describes.
-            const figures = declaredFigureCaptions(join(dir, "sections"));
-            const bare = [...figures].filter(([, c]) => c === null).map(([l]) => l);
-            if (bare.length === 0) {
+            const figures = declaredCaptions;
+            // A bare figure an INSPECTED render shows is covered — bean
+            // `ay3x`. Only `shown` counts: a render nobody looked at is a
+            // candidate, and crediting it would be the pass-on-a-count this
+            // branch exists against. What is left is the "neither the caption
+            // nor the arm reaches" set, and it stays `not-derivable`.
+            const reach = vectorFigureReach(dir, bareLabels);
+            const shown = new Set(reach?.shown ?? []);
+            const bare = bareLabels.filter((l) => !shown.has(l));
+            if (bare.length === 0 && shown.size > 0) {
+              out.push({
+                name: "image-descriptions",
+                state: "met",
+                detail:
+                  `no raster image was placed — the figures are drawn in vector. ` +
+                  `${figures.size - shown.size} declared figure(s) carry caption text and ` +
+                  `${shown.size} more (Fig. ${[...shown].join(", ")}) are shown by a vector render ` +
+                  `somebody inspected and described — see ${VECTOR_FIGURES_FILE} (bean ay3x).` +
+                  vectorLabelNote(dir),
+              });
+            } else if (bare.length === 0) {
               out.push({
                 name: "image-descriptions",
                 state: "met",
@@ -1053,8 +1145,10 @@ function derivableRequirements(dir: string): Requirement[] {
                 detail:
                   `no raster image was placed, and ${bare.length} of ${figures.size} ` +
                   `declared figure(s) carry no caption text either — Fig. ` +
-                  `${bare.join(", ")}. They are drawn in vector and the caption handle does ` +
-                  `not reach them (bean m4xy).` + vectorLabelNote(dir),
+                  `${bare.join(", ")}. They are drawn in vector and neither the caption handle ` +
+                  `nor an inspected vector render reaches them (beans m4xy, ay3x).` +
+                  vectorLabelNote(dir) +
+                  vectorFigureNote(dir, bareLabels),
               });
             }
           } else {

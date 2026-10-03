@@ -1,11 +1,11 @@
 ---
 # folio-assistant-d313
 title: 'IG API: rename the DAK API surface in fhir-harness to a generic IG API'
-status: in-progress
+status: completed
 type: task
 priority: high
 created_at: 2026-10-03T09:23:38Z
-updated_at: 2026-10-03T09:23:49Z
+updated_at: 2026-10-03T17:36:11Z
 parent: folio-assistant-uhkv
 ---
 
@@ -29,3 +29,7 @@ fhir-harness's one rule is that it knows nothing of WHO, yet `dak-views.ts`, the
 
 ## Done when
 No dak/DAK identifier or file name remains in fhir-harness/ outside configuration supplied by smart-base, the WHO sites render the same apart from renamed asset paths, and gates are green.
+
+## Summary of Changes
+
+Landed on main 2026-10-03 in #1766 (merge `f3b6168`), which carried #1970, #1973 and #1976. Follow-up regen of the four drifted generated files in the PR that closes this bean.
