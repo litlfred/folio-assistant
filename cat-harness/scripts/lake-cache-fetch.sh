@@ -2,8 +2,9 @@
 # scripts/lake-cache-fetch.sh — agent-side Tier-2 cache fetch
 #
 # Fetches the pre-built `.lake/` artifacts from the populated orphan
-# branch `cat-lake-cache/qou-v<toolchain-slug>` (or, until the remotes are
-# renamed, the legacy `lake-cache/qou-v<toolchain-slug>`) and extracts them into the
+# branch `cat/folio-assistant-sci/lake-cache/qou-v<toolchain-slug>` (or,
+# until the remotes are renamed, the legacy `cat-lake-cache/qou-…` or
+# `lake-cache/qou-…`, in that order) and extracts them into the
 # repo root. The CI-side equivalent lives at
 # `.github/actions/lake-cache-restore/action.yml` (Tier 2 step); this
 # script is the local-agent equivalent for sessions in ephemeral
@@ -64,9 +65,9 @@ if [ -z "$BRANCH" ]; then
   slug=$(echo "$toolchain" | tr '.' '-')
   # Family names are declared in cat-harness/scripts/special-branches.json
   # (id `lake-cache`) and checked against this copy by
-  # tests/special-branches.test.ts. New name first, then the legacy one,
-  # until bean folio-assistant-oycs removes the fallback.
-  CANDIDATES="cat-lake-cache/qou-${slug} lake-cache/qou-${slug}"
+  # tests/special-branches.test.ts. New name first, then each legacy one,
+  # newest first, until bean folio-assistant-oycs removes the fallback.
+  CANDIDATES="cat/folio-assistant-sci/lake-cache/qou-${slug} cat-lake-cache/qou-${slug} lake-cache/qou-${slug}"
 else
   CANDIDATES="$BRANCH"
 fi
