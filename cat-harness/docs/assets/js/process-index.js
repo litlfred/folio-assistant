@@ -87,12 +87,6 @@
   }
   var el = FA.el;
 
-  function cell(tag, child) {
-    var c = el(tag);
-    if (child) c.appendChild(child);
-    return c;
-  }
-
   function renderTable(group, key, siteRoot) {
     var other = key === "instance" ? "Concern group" : "Instance";
     var table = el("table", { class: "fa-process-index-table" });
