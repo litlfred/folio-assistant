@@ -122,6 +122,8 @@
     "check:test-budgets": "bun run cat-harness/scripts/check-test-budgets.ts",
     "check:environment": "bun run cat-harness/scripts/check-environment.ts",
     "check:declared-paths": "bun run cat-harness/scripts/check-declared-paths.ts",
+    "check:foreign-paths": "bun run cat-harness/scripts/check-foreign-paths.ts",
+    "foreign-paths:baseline": "bun run cat-harness/scripts/check-foreign-paths.ts --update",
     "check:dependency-advisories": "bun run cat-harness/scripts/check-dependency-advisories.ts",
     "check:docs-populated": "bun run cat-harness/scripts/check-docs-populated.ts",
     "check:docs-templates": "bun run cat-harness/scripts/check-docs-templates.ts",

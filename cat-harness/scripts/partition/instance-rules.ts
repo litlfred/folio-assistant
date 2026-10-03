@@ -191,6 +191,10 @@ export const RULES: Rule[] = [
       // forge's open PRs and this checkout's instance declarations, judged by
       // a `kg-separation` decision table. It reads no folio material.
       "scripts/seed-ready.ts",
+      // HARNESS: the cross-instance half of check:declared-paths (bean `gz47`).
+      // Its subject is every instance's declarations and source, read; it
+      // reads no folio material.
+      "scripts/check-foreign-paths.ts",
       // HARNESS, by the same test as `check-ci-health.ts` above: its subject is
       // this checkout's own ENVIRONMENT — whether a nested `node_modules` or a
       // symlinked root makes a tool answer a question about the repository from
