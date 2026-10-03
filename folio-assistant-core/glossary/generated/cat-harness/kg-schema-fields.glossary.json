@@ -2485,6 +2485,13 @@
       "status": "candidate"
     },
     {
+      "id": "cat-harness.contentdirectoryshape.served",
+      "prefLabel": "ContentDirectoryShape.served",
+      "definition": "This directory's BYTES are published verbatim, at `/<instance>/<path>`, for the site's own pages to fetch.",
+      "source": "cat-harness/schemas/cat-harness.ts#ContentDirectoryShape.served",
+      "status": "candidate"
+    },
+    {
       "id": "cat-harness.contentdirectoryshape.source",
       "prefLabel": "ContentDirectoryShape.source",
       "definition": "Where this subgraph gets its CONTENT — the checkout's own directory (the default, so absent means `{ kind: \"directory\" }`) or a declared repository branch, with room for a later kind. The instance config may override it by id. Resolve it with `resolveSubgraphSource`, never by reading this field: the override and #1764's `storage` are folded in there, once. See `schemas/subgraph-source.ts` — bean `l4ay`, owner 2026-10-03.",
