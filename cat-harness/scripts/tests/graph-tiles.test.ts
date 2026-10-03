@@ -9,6 +9,7 @@ import {
   graphTiles,
   kindTileIcon,
   publishedHref,
+  resolveGlassStrip,
   tileFindings,
   tilesOn,
   undeclaredProjections,
@@ -17,7 +18,7 @@ import {
   type GraphTile,
   type TiledDirectory,
 } from "../graph-tiles.js";
-import { SubgraphCoverageSchema, visualisationsOf } from "../../schemas/cat-harness.js";
+import { GlassStripSchema, SubgraphCoverageSchema, visualisationsOf } from "../../schemas/cat-harness.js";
 
 const dir = (id: string, coverage?: unknown, theme?: string): TiledDirectory => ({
   id,
@@ -436,5 +437,56 @@ describe("a tile with no icon of its own takes its graph KIND's (ob3m finding 11
   test("a kind with no icon leaves the tile without one, rather than guessing", () => {
     expect(graphTiles([kinded("glossary", ["swimlane-glossary"])])[0]).not.toHaveProperty("icon");
     expect(kindTileIcon(undefined)).toBeUndefined();
+  });
+});
+
+
+// ── The glass strip's pins — owner, 2026-10-01, bean `ob3m` finding 10 ─────
+describe("resolveGlassStrip — pinned tiles first, plus '+N more'", () => {
+  const tile = (id: string, directory: string, extra: Partial<GraphTile> = {}): GraphTile => ({
+    id, directory, title: id, ref: "x", href: `/${id}/`, surfaces: ["navbar", "board", "glass"], hidden: false, ...extra,
+  });
+  const kinds = new Map<string, string[]>([
+    ["library", ["library"]],
+    ["library-who-iris", ["library"]],
+    ["processes", ["processes"]],
+    ["tools", ["tools"]],
+    ["skills", ["skills"]],
+    ["skills-other", ["skills"]],
+    ["staged", ["fsh-guts"]],
+  ]);
+
+  test("chrome pins become glass-<id>, kinds become ONE tile each, in declared order", () => {
+    const tiles = [tile("library-who-iris", "library-who-iris"), tile("library", "library"),
+      tile("skills-other", "skills-other"), tile("processes", "processes"), tile("tools", "tools")];
+    const r = resolveGlassStrip(
+      [{ chrome: "todos" }, { chrome: "settings" }, { kind: "library" }, { kind: "processes" }, { kind: "tools" }, { kind: "skills" }],
+      tiles, kinds);
+    // The directory named for the kind wins over an earlier tile of the same kind.
+    expect(r.pinned).toEqual(["glass-todos", "glass-settings", "library", "processes", "tools", "skills-other"]);
+    expect(r.unmatched).toEqual([]);
+  });
+
+  test("a kind no usable tile holds is a finding, never a silent skip", () => {
+    const r = resolveGlassStrip(
+      [{ kind: "fsh-guts" }, { kind: "processes" }],
+      [tile("staged", "staged", { publish: "staging-only" }), tile("processes", "processes", { surfaces: ["navbar"] })],
+      kinds);
+    expect(r.pinned).toEqual([]);
+    expect(r.unmatched).toEqual(["fsh-guts", "processes"]);
+  });
+
+  test("a hidden tile or one with no page is never pinned", () => {
+    const r = resolveGlassStrip(
+      [{ kind: "library" }],
+      [tile("library", "library", { hidden: true }), { ...tile("library-who-iris", "library-who-iris"), href: undefined }],
+      kinds);
+    expect(r.unmatched).toEqual(["library"]);
+  });
+
+  test("the schema refuses a pin listed twice and a chrome id nothing draws", () => {
+    expect(GlassStripSchema.safeParse([{ kind: "tools" }, { kind: "tools" }]).success).toBe(false);
+    expect(GlassStripSchema.safeParse([{ chrome: "more" }]).success).toBe(false);
+    expect(GlassStripSchema.safeParse([{ chrome: "todos" }, { kind: "tools" }]).success).toBe(true);
   });
 });
