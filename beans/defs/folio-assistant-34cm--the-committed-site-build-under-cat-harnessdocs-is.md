@@ -117,3 +117,77 @@ collision in the store — 14 PRs each on three files, 42 instances, 6 % of
 everything — and two of the three are under `test/results/` while one is under
 `docs/`, so it straddles the two arcs. It may deserve its own answer before
 either arc lands.
+
+## Owner ruling, 2026-10-03: a special branch `cat/cat-harness/auto-docs`
+
+Owner, on being shown the distribution: *"i think we need a special branch
+cat/cat-harness/auto-docs"*. That is the remedy `.gitattributes` names — the
+files off `main` altogether — applied to the 44 % share.
+
+The name fits the declared convention `cat/<harness>/<subgraph>` and the
+harness owns the branch, so by `rva2` the declaration goes in **cat-harness's
+own** declaration, not a central table. By `esz4` the branch owes a README
+stating what it is, how and when it was generated — and this one is a better
+fit for that than any existing special branch, because its contents are a pure
+rendering with a single writer.
+
+### What the owner's question "is it mostly timestamp & things?" actually measured
+
+**No — and that matters for the design.** Between `main` and #1888's head, 491
+files under `docs/` differ over 34,253 changed lines, of which only **912
+(2.7 %)** carry a timestamp. The rest is substance: inlined JS and CSS, JSON-LD
+payloads (`skos:definition`, `@value`), prose, table rows. The largest are
+`docs/todos/index.html` (+1589) and seven `library/*/index.html` at ~+710 each.
+
+Two honest caveats on that number:
+
+- It is `main` vs a PR head, so it measures **divergence** — both sides
+  regenerated — not one PR's own churn. Divergence is the right measure for
+  *conflicts*, but it is not "what this PR changed".
+- The seven near-identical library diffs suggest a shared template with
+  per-instance substitution; their added-line hashes are NOT identical, so a
+  single duplicated inlined blob was checked and **ruled out**. The
+  amplification mechanism is unconfirmed and should not be asserted.
+
+The consequence for the branch: because the churn is real content rather than a
+stamp, **stripping volatile fields would not have fixed this** (the `y7b3`
+remedy), and neither would `-merge`. Only moving the files helps.
+
+### Scope: 1862 tracked files under `cat-harness/docs/`, and not all of them move
+
+Candidates for the branch — pure renderings with a single writer:
+
+| subtree | files | writer |
+|---|---|---|
+| `docs/reference/**` | 330 | `gen-schema-docs`, `gen-skill-docs` — AGENTS.md: never hand-edit |
+| `docs/uml/**` | 126 | `uml:overview` |
+| `docs/cat-harness/**` | 120 | `gen-docs-auto`, `library:viz` |
+| `docs/{ar,es,fr,ru,zh}/**` | 70 | the per-locale glossary |
+| `docs/glossary/**`, `docs/todos/**` | 20 | `glossary:page`, `gen-docs-pages` |
+
+Must STAY on `main` — authored: `docs/guides/**` (14), `docs/proposals/**` (34),
+`docs/wireframes/**` intent (192 mixed), `docs/_includes/**` (9), and the
+authored halves of `docs/assets/**` (609 mixed — `work-plan.js` and
+`work-plan.css` are authored, `assets/beans/index.json` is generated).
+
+`docs/assets/**` and `docs/site/**` (183) are the two that need per-path
+judgement rather than a glob — the same trap `.gitattributes` names.
+
+### What the branch does NOT solve on its own
+
+The `:check` gates read the committed copies to detect drift. Moving the files
+means each one must either read the branch, or be retired with its reason
+stated. That is the real work of this bean, and it is why the 44 % has survived
+this long: the files are cheap to move and the gates are not.
+
+## Done when — revised on the ruling
+
+- [ ] `cat/cat-harness/auto-docs` exists, declared by cat-harness itself (`rva2`),
+      with a README (`esz4`)
+- [ ] The per-subtree split above is decided path by path, with
+      `docs/assets/**` and `docs/site/**` judged individually, not globbed
+- [ ] Every `:check` that read a moved file either reads the branch or is
+      retired with its reason recorded
+- [ ] `docs-site.yml` still publishes a complete site (it already regenerates
+      all of this, so this should be a no-op — verify rather than assume)
+- [ ] The conflict distribution is re-measured; the 44 % should drop toward 0
