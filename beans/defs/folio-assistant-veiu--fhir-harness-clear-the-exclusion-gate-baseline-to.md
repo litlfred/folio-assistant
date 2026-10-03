@@ -15,6 +15,11 @@ The gate `check:fhir-harness-exclusions` (smart-base/scripts/) was turned on 202
 
 - [ ] the WHO test fixtures (4 test files) use a non-WHO IG
 - [ ] ingest-ig-artifacts.ts no longer names the DAK API sidecars — the arm is an overlay smart-base plugs in
-- [ ] tools/index.ts: owner rules on the three DAK post-processing Tools (generate_logical_model_schemas, generate_valueset_schemas, generate_jsonld_vocabularies) — move them up to smart-base, OR record them as having come DOWN like the Library strippers (then MOVED_DOWN in the gate and ig-build-pipeline both say so)
+- [x] tools/index.ts: owner rules on the three DAK post-processing Tools (generate_logical_model_schemas, generate_valueset_schemas, generate_jsonld_vocabularies) — move them up to smart-base, OR record them as having come DOWN like the Library strippers (then MOVED_DOWN in the gate and ig-build-pipeline both say so)
 - [ ] l3-fhir-pipeline.bpmn's import of smart-base's l2-dak-authoring.bpmn resolved, with the owner's OK
 - [ ] BASELINE is [] and the gate passes
+
+
+## Owner ruling 2026-10-03: the three transforms stay in fhir-harness
+
+*"keep logical-model schemas, ValueSet schemas, JSON-LD vocabularies in fhir-harness. it is only transforming existing (meta)data, not adding any new constraints or profiles (e.g. like smart guidelines does). it is generic."* Recorded in the gate's MOVED_DOWN, in ig-build-pipeline §"Five steps that came DOWN" and in dak-postprocessing. The `tools/index.ts` dak-step baseline entry is dropped (#1968).

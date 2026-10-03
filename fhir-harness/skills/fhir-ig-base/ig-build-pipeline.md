@@ -108,7 +108,7 @@ widen the baseline to admit a hit: move the WHO-specific part up, or have the
 WHO layer pass it in as a parameter (the IG page generator's `--sidecar-label`
 is that shape already).
 
-## Two steps that came DOWN from the WHO build
+## Five steps that came DOWN from the WHO build
 
 `strip_library_binaries.py` and `strip_library_content.py` strip base64 payloads
 and inline CQL/ELM out of `Library` resources. They arrived labelled *"DAK
@@ -121,6 +121,18 @@ They belong here. Recorded because this is the layering rule
 ([`smart-stack-layering`](../../../smart-base/skills/content/authoring-who-smart-guidelines/smart-stack-layering.md))
 producing a result its own step names contradicted — which is the only kind of
 evidence that a split is doing work.
+
+**Three more followed, on the owner's ruling of 2026-10-03:**
+`generate_logical_model_schemas.py` (a JSON Schema per logical model),
+`generate_valueset_schemas.py` (a JSON Schema per ValueSet, plus the
+enumeration-response schemas) and `generate_jsonld_vocabularies.py` (JSON-LD
+from ValueSet expansions). The ruling: *"it is only transforming existing
+(meta)data, not adding any new constraints or profiles (e.g. like smart
+guidelines does). It is generic."* That is the test for this layer. A step
+that reshapes what the Publisher already emitted belongs here. A step that adds
+a constraint, a profile or a WHO surface (the `dak-api.html` hub and its
+`.openapi.json` / `.displays.json` sidecars) stays in the overlay. The Tools are
+declared in `fhir-harness/tools/`.
 
 ## Upgrading to the overlay
 

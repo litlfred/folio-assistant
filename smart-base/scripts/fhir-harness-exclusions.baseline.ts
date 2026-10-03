@@ -24,7 +24,7 @@ export const BASELINE: readonly BaselineEntry[] = [
     "file": "fhir-harness/processes/content/l3-fhir-pipeline.bpmn",
     "rule": "who-layer-path",
     "count": 1,
-    "reason": "Documentary bpmn:import of smart-base's l2-dak-authoring.bpmn \u2014 the upward residual fhir-harness.json already records (proposal \u00a75). Changing it needs the owner's OK.",
+    "reason": "Documentary bpmn:import of smart-base's l2-dak-authoring.bpmn — the upward residual fhir-harness.json already records (proposal §5). Changing it needs the owner's OK.",
     "bean": "folio-assistant-veiu"
   },
   {
@@ -67,13 +67,6 @@ export const BASELINE: readonly BaselineEntry[] = [
     "rule": "dak-api",
     "count": 2,
     "reason": "Reads the per-artefact .displays.json / .openapi.json DAK API sidecars. The arm belongs in smart-base as an overlay; keep a neutral extension point here (r939 is the stage-B move).",
-    "bean": "folio-assistant-veiu"
-  },
-  {
-    "file": "fhir-harness/tools/index.ts",
-    "rule": "dak-step",
-    "count": 3,
-    "reason": "Declares Tools invoking DAK post-processing steps 3-5 (generate_logical_model_schemas, generate_valueset_schemas, generate_jsonld_vocabularies). Owner to rule: move them up to smart-base, or record them as having come DOWN like the Library strippers.",
     "bean": "folio-assistant-veiu"
   },
   {

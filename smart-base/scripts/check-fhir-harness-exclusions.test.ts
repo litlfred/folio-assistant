@@ -60,7 +60,7 @@ describe("planted dependencies are graded", () => {
 });
 
 describe("the DAK step names come from smart-base's own tables", () => {
-  it("reads both tables and leaves out the two strippers that came down", () => {
+  it("reads both tables and leaves out the five steps that came down", () => {
     const names = dakStepNames(root);
     expect(names).toContain("generate_dak_from_sushi.py");
     expect(names).toContain("generate_dak_api_hub.py");

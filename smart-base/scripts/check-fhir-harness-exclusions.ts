@@ -65,11 +65,20 @@ import { BASELINE, type BaselineEntry } from "./fhir-harness-exclusions.baseline
 export const LAYER = "fhir-harness";
 
 /**
- * The two Library strippers sit in smart-base's post-processing table but came
- * DOWN into fhir-harness (`ig-build-pipeline` §"Two steps that came DOWN"), so
- * they are the one part of that table the layer may name.
+ * Post-processing steps 1–5 sit in smart-base's table but came DOWN into
+ * fhir-harness (`ig-build-pipeline` §"Five steps that came DOWN"), so they are
+ * the part of that table the layer may name. The two Library strippers came
+ * down first. The three schema/vocabulary transforms followed on the owner's
+ * ruling of 2026-10-03: *"it is only transforming existing (meta)data, not
+ * adding any new constraints or profiles … it is generic."*
  */
-export const MOVED_DOWN = new Set(["strip_library_binaries.py", "strip_library_content.py"]);
+export const MOVED_DOWN = new Set([
+  "strip_library_binaries.py",
+  "strip_library_content.py",
+  "generate_logical_model_schemas.py",
+  "generate_valueset_schemas.py",
+  "generate_jsonld_vocabularies.py",
+]);
 
 export interface Rule {
   id: string;
