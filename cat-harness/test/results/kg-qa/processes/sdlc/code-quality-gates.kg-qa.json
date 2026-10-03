@@ -56,45 +56,8 @@
       "findings": []
     },
     "role-carries-activity-skill": {
-      "result": "fail",
-      "findings": [
-        {
-          "where": "Task_Lean",
-          "detail": "needs skill \"platform-gates\", but its lane's role \"build-pipeline\" does not carry it."
-        },
-        {
-          "where": "Task_Python",
-          "detail": "needs skill \"platform-gates\", but its lane's role \"build-pipeline\" does not carry it."
-        },
-        {
-          "where": "Task_TypeScript",
-          "detail": "needs skill \"platform-gates\", but its lane's role \"build-pipeline\" does not carry it."
-        },
-        {
-          "where": "Task_E2E",
-          "detail": "needs skill \"platform-gates\", but its lane's role \"build-pipeline\" does not carry it."
-        },
-        {
-          "where": "Task_Rust",
-          "detail": "needs skill \"platform-gates\", but its lane's role \"build-pipeline\" does not carry it."
-        },
-        {
-          "where": "Task_Advisories",
-          "detail": "needs skill \"platform-gates\", but its lane's role \"build-pipeline\" does not carry it."
-        },
-        {
-          "where": "Task_RepositoryGates",
-          "detail": "needs skill \"platform-gates\", but its lane's role \"build-pipeline\" does not carry it."
-        },
-        {
-          "where": "Task_UnrunGates",
-          "detail": "needs skill \"platform-gates\", but its lane's role \"build-pipeline\" does not carry it."
-        },
-        {
-          "where": "Task_SkillChain",
-          "detail": "needs skill \"platform-gates\", but its lane's role \"build-pipeline\" does not carry it."
-        }
-      ]
+      "result": "pass",
+      "findings": []
     },
     "activity-names-skill": {
       "result": "pass",
@@ -146,8 +109,8 @@
     }
   },
   "totals": {
-    "pass": 16,
-    "fail": 1,
+    "pass": 17,
+    "fail": 0,
     "n/a": 8,
     "unknown": 0
   },

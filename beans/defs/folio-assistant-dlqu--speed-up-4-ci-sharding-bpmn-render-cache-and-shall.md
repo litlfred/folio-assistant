@@ -3,9 +3,10 @@
 title: 'SPEED-UP 4: CI sharding, BPMN render cache and shallow checkout'
 status: in-progress
 type: task
+priority: normal
 created_at: 2026-10-01T17:42:24Z
 updated_at: 2026-10-02T22:08:56Z
-parent: folio-assistant-7x5n
+parent: folio-assistant-hfag
 ---
 
 Owner approved 2026-10-01 late (~17:30, session_01ToWZR4RgTRCWeSsgxsSQfT) as speed-up 4 of 4 for the merge treadmill (S2 `0mf0`, epic `7x5n`). Siblings: input-hash skip, parallel checks, CI merge:main (`d33q` part B).
@@ -27,6 +28,8 @@ Another agent is editing `code-quality-gates.yml` for this; other PRs keep their
 - [x] ~~BPMN render cache keyed on inputs~~ — measured, not worth building (see Re-scoped)
 - [x] ~~per-job fetch-depth~~ — already depth 1 everywhere in this workflow (see Re-scoped)
 - [ ] measured: CI wall-clock before/after over ≥3 runs
+
+Re-parented 2026-10-02 from `7x5n` to the merge-pipeline epic `hfag` on the owner's ruling; `hfag` blocks `7x5n`, so the arc still waits on this.
 
 _2026-10-02T22:08:54Z_ — Claimed by claude/zealous-thompson-y8dcf1 — pushed to main so sibling sessions see it before this branch has a PR (bean 35nj).
 
