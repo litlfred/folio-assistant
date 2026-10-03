@@ -67,6 +67,12 @@ export interface TodoListingOptions {
    * than no link — so the listing then names the page and node as text.
    */
   pageHref?: (page: string, node: string) => string | undefined;
+  /**
+   * The link to a todo's OWN page (`<site>/todos/<id>/`, issue #1908), or
+   * `undefined` for none. Same rule as {@link pageHref}: the caller composes
+   * it because Jekyll owns `baseurl`, and an absent href renders no link.
+   */
+  todoPageHref?: (id: string) => string | undefined;
 }
 
 /**
@@ -157,6 +163,13 @@ function renderItem(item: TodoIndexItem, opts: TodoListingOptions): string {
   // wrong tool that looks like the right one. A refused URL renders as text
   // rather than as a link to nowhere (`pb04`).
   const links: string[] = [];
+  // The todo's own page first: it is this site's rendering of the todo, where
+  // the source links below leave the site.
+  const own = safeHref(opts.todoPageHref?.(item.id));
+  // Not re-escaped, like `pageHref` above: the site passes a Liquid call whose
+  // single quotes must survive to Jekyll. `safeHref` has already refused a
+  // scheme, and a todo id is a slug (`TodoNodeSchema`).
+  if (own !== undefined) links.push(`<a href="${own}">Open this todo</a>`);
   const view = safeHref(item.viewHref);
   if (view !== undefined) links.push(`<a href="${escapeHtml(view)}">View source</a>`);
   const edit = safeHref(item.editHref);
