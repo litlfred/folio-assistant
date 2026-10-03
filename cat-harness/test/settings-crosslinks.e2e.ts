@@ -66,9 +66,23 @@ async function load(page: Page, html = WITH_SIDEBAR): Promise<void> {
   await page.waitForSelector(".fa-glass-handle", { state: "attached" });
 }
 
+/**
+ * The strip starts HIDDEN on a first open (owner, 2026-10-01, bean `ob3m`
+ * finding 10), and `setContent` pages have no storage to remember a choice in,
+ * so a spec that clicks a strip tile shows the strip first — through the tab,
+ * as a reader would. `glass-strip-default-hidden.e2e.ts` holds the default.
+ */
+async function showStrip(page: Page): Promise<void> {
+  if ((await page.locator(".fa-glass-dock").getAttribute("data-fa-strip")) === "hidden") {
+    await page.click(".fa-glass-strip-toggle");
+  }
+  await expect(page.locator(".fa-glass-dock")).toHaveAttribute("data-fa-strip", "shown");
+}
+
 async function openGlassSettings(page: Page): Promise<void> {
   await page.click(".fa-glass-handle");
   await expect(page.locator(layer)).toHaveAttribute("data-fa-glass", "open");
+  await showStrip(page);
   await page.click('[data-fa-glass-chrome="glass-settings"]');
   await expect(page.locator(glassPanel)).toHaveAttribute("data-fa-panel", "glass-settings");
   await expect(page.locator(glassPanel)).toBeVisible();
@@ -108,6 +122,7 @@ test.describe("ob3m 12 — the two settings panels do not share a name", () => {
   test("tile captions, accessible names and panel headings all differ", async ({ page }) => {
     await load(page);
     await page.click(".fa-glass-handle");
+    await showStrip(page);
     const glassTile = page.locator('[data-fa-glass-chrome="glass-settings"]').first();
     await expect(glassTile.locator(".fa-tile-caption")).toHaveText("Glass settings");
     // Label in name (WCAG 2.5.3): the accessible name STARTS with the caption.

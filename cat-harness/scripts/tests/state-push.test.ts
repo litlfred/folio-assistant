@@ -7,7 +7,7 @@
  */
 import { afterEach, describe, expect, test } from "bun:test";
 import { spawnSync } from "node:child_process";
-import { existsSync, mkdirSync, mkdtempSync, readFileSync, rmSync, unlinkSync, writeFileSync } from "node:fs";
+import { chmodSync, existsSync, mkdirSync, mkdtempSync, readFileSync, rmSync, symlinkSync, unlinkSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { dirname, join } from "node:path";
 
@@ -162,5 +162,46 @@ describe("refusals", () => {
     const r = pushState({ repoRoot: f.work }); // no --branch, and nothing is declared tip-keyed
     expect(r.state).toBe("failed");
     if (r.state === "failed") expect(r.reason).toContain("pass --branch");
+  });
+});
+
+describe("non-text state survives the round trip", () => {
+  // A `utf-8` read corrupted all three of these until 2026-10-03. Bean `9c7h`
+  // moves `fsh-guts` — archived PDFs — onto a tip branch, so this is the live case.
+  test("a binary file arrives byte-identical", () => {
+    const f = fixture();
+    // Bytes that are not valid UTF-8: a lone 0x80 continuation, a NUL, and 0xFF.
+    const bytes = Buffer.from([0x89, 0x50, 0x4e, 0x47, 0x00, 0x80, 0xff, 0xfe, 0x0d, 0x0a, 0x1a]);
+    writeFileSync(join(f.mount, "beans/defs/blob.bin"), bytes);
+    const r = f.push();
+    expect(r.state).toBe("pushed");
+    const out = spawnSync("git", [...NOGPG, "show", `refs/heads/${BRANCH}:beans/defs/blob.bin`], { cwd: f.bare, maxBuffer: 1 << 20 });
+    expect(Buffer.compare(out.stdout, bytes)).toBe(0);
+  });
+
+  test("an executable keeps its bit — mode 100755 on the branch", () => {
+    const f = fixture();
+    const p = join(f.mount, "beans/defs/run.sh");
+    writeFileSync(p, "#!/bin/sh\necho hi\n");
+    chmodSync(p, 0o755);
+    expect(f.push().state).toBe("pushed");
+    const entry = git(f.bare, "ls-tree", `refs/heads/${BRANCH}`, "beans/defs/run.sh");
+    expect(entry.split(" ")[0]).toBe("100755");
+  });
+
+  test("a symlink stays a symlink — mode 120000, content is its target", () => {
+    const f = fixture();
+    symlinkSync("a.md", join(f.mount, "beans/defs/link.md"));
+    expect(f.push().state).toBe("pushed");
+    const entry = git(f.bare, "ls-tree", `refs/heads/${BRANCH}`, "beans/defs/link.md");
+    expect(entry.split(" ")[0]).toBe("120000");
+    expect(git(f.bare, "show", `refs/heads/${BRANCH}:beans/defs/link.md`)).toBe("a.md");
+  });
+
+  test("a plain file is still 100644", () => {
+    const f = fixture();
+    writeFileSync(join(f.mount, "beans/defs/plain.md"), "plain\n");
+    expect(f.push().state).toBe("pushed");
+    expect(git(f.bare, "ls-tree", `refs/heads/${BRANCH}`, "beans/defs/plain.md").split(" ")[0]).toBe("100644");
   });
 });

@@ -42,7 +42,7 @@
  */
 
 import { spawnSync } from "node:child_process";
-import { existsSync, readFileSync } from "node:fs";
+import { existsSync, lstatSync, readFileSync, readlinkSync } from "node:fs";
 import { join } from "node:path";
 
 import { BranchStore, tipLocations, type Change, type WriteResult } from "./branch-store.js";
@@ -76,6 +76,27 @@ function repoRootOf(cwd = process.cwd()): string {
   return r.stdout.trim();
 }
 
+/**
+ * One file's content and tree mode, as git would record them.
+ *
+ * Read as BYTES, never as `utf-8`: a tip-keyed directory may hold binary files
+ * (bean `9c7h` moves `fsh-guts`, archived PDFs, onto such a branch) and a text
+ * round trip corrupts those silently — the push would succeed and the file
+ * would be wrong, which is the worst shape a data bug comes in.
+ *
+ * The mode is taken from `lstat`, not assumed: an executable that came back
+ * `100644` would lose its bit, and a symlink read through its target would be
+ * committed as a regular file holding that path as text. A symlink's content
+ * IS its target, which is what git stores for mode `120000`.
+ */
+function read(abs: string): { content: string | Buffer; mode: "100644" | "100755" | "120000" } {
+  const st = lstatSync(abs);
+  if (st.isSymbolicLink()) return { content: readlinkSync(abs), mode: "120000" };
+  // Any execute bit, matching git's own rule rather than only the owner's.
+  const mode = (st.mode & 0o111) !== 0 ? "100755" : "100644";
+  return { content: readFileSync(abs), mode };
+}
+
 /** The mount's changed paths, as `Change`s carrying the blob the editor read. */
 export function pendingChanges(mount: string): Change[] {
   // -z and --no-renames: a rename read as one entry would lose the delete.
@@ -90,7 +111,7 @@ export function pendingChanges(mount: string): Change[] {
     const gone = code.includes("D");
     const base = git(mount, ["rev-parse", `HEAD:${path}`]);
     const expect = base.status === 0 ? base.stdout.trim() : null;
-    out.push({ path, content: gone ? null : readFileSync(join(mount, path), "utf-8"), expect });
+    out.push(gone ? { path, content: null, expect } : { path, ...read(join(mount, path)), expect });
   }
   return out.sort((a, b) => a.path.localeCompare(b.path));
 }

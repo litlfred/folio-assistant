@@ -30,6 +30,8 @@ Part of [C@T Harness](../README.md) 0.1.0, declared as `cat-harness-tests`, hold
 | [`glass-placement.e2e.ts`](glass-placement.e2e.ts) | a file |  |
 | [`glass-pop-outs.e2e.ts`](glass-pop-outs.e2e.ts) | a file |  |
 | [`glass-scroll.e2e.ts`](glass-scroll.e2e.ts) | a file |  |
+| [`glass-strip-default-hidden.e2e.ts`](glass-strip-default-hidden.e2e.ts) | a file |  |
+| [`glass-strip-fit.e2e.ts`](glass-strip-fit.e2e.ts) | a file |  |
 | [`glass-tiles.e2e.ts`](glass-tiles.e2e.ts) | a file |  |
 | [`glass-zoom-steady.e2e.ts`](glass-zoom-steady.e2e.ts) | a file |  |
 | [`glass.e2e.ts`](glass.e2e.ts) | a file |  |
@@ -68,6 +70,7 @@ Part of [C@T Harness](../README.md) 0.1.0, declared as `cat-harness-tests`, hold
 | [`sticky-home.e2e.ts`](sticky-home.e2e.ts) | a file |  |
 | [`sticky-one-component.e2e.ts`](sticky-one-component.e2e.ts) | a file |  |
 | [`sticky-shape.e2e.ts`](sticky-shape.e2e.ts) | a file |  |
+| [`sticky-todo-graph.e2e.ts`](sticky-todo-graph.e2e.ts) | a file |  |
 | [`sticky-todos.e2e.ts`](sticky-todos.e2e.ts) | a file |  |
 | [`subprocess-links.e2e.ts`](subprocess-links.e2e.ts) | a file |  |
 | [`table-filter.e2e.ts`](table-filter.e2e.ts) | a file |  |
@@ -78,6 +81,6 @@ Part of [C@T Harness](../README.md) 0.1.0, declared as `cat-harness-tests`, hold
 | [`translation-badges.e2e.ts`](translation-badges.e2e.ts) | a file |  |
 | [`attestations/`](attestations/README.md) | 19 files | |
 | [`health/`](health/) | 8 files | |
-| [`results/`](results/README.md) | 994 files | |
+| [`results/`](results/README.md) | 1004 files | |
 | [`support/`](support/) | 3 files | |
 <!-- kg:subgraph:end -->
