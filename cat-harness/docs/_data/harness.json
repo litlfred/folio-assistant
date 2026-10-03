@@ -72,12 +72,8 @@
       "description": "A grumpy cat in a sage hoodie stands in the rain under a thought-cloud carrying the c@t mark; the instance's description is drawn inside the cloud. Square crop for a card or sticker. The cloud is pushed right by the cat at the lower left, so the region starts further in than either other variant — the clearest case for why each layout carries its own. The text region was found by rendering candidate boxes over the image and looking at them — the first attempt spilled past the cloud edge, which no amount of arithmetic on the aspect ratio would have caught."
     }
   },
-  "landingInstance": {
-    "kind": "instance",
-    "name": "cat-harness",
-    "by": "flag"
-  },
   "declaredKinds": [
+    "attestations",
     "beans",
     "cat-harness",
     "code",
@@ -138,7 +134,7 @@
       "href": "/beans/",
       "hidden": false,
       "icon": "beans",
-      "count": 636,
+      "count": 672,
       "unit": "beans"
     },
     {
@@ -256,7 +252,7 @@
       "href": "/lsi/",
       "hidden": false,
       "icon": "index",
-      "count": 1018,
+      "count": 976,
       "unit": "documents"
     },
     {
@@ -285,7 +281,7 @@
       "href": "/cat-harness/schemas/cat-harness/",
       "hidden": false,
       "icon": "schemas",
-      "count": 200,
+      "count": 205,
       "unit": "modules"
     },
     {
@@ -373,10 +369,21 @@
       "href": "/cat-harness/uploads/cat-harness/",
       "hidden": false,
       "icon": "uploads",
-      "count": 24,
+      "count": 25,
       "unit": "waiting"
     }
   ],
+  "glassStrip": {
+    "pinned": [
+      "glass-todos",
+      "glass-settings",
+      "library",
+      "processes",
+      "tools",
+      "skills"
+    ],
+    "unmatched": []
+  },
   "harnesses": [
     {
       "name": "folio-assistant",
@@ -585,6 +592,7 @@
         "beans",
         "processes",
         "kg",
+        "fsh-guts",
         "launcher"
       ]
     },
@@ -718,6 +726,7 @@
         "beans",
         "processes",
         "kg",
+        "fsh-guts",
         "launcher"
       ]
     },
@@ -807,6 +816,7 @@
         "beans",
         "processes",
         "kg",
+        "fsh-guts",
         "launcher"
       ]
     },
@@ -868,6 +878,7 @@
         "beans",
         "processes",
         "kg",
+        "fsh-guts",
         "launcher"
       ]
     },
@@ -956,6 +967,7 @@
         "beans",
         "processes",
         "kg",
+        "fsh-guts",
         "launcher"
       ]
     },
@@ -1149,6 +1161,7 @@
         "beans",
         "processes",
         "kg",
+        "fsh-guts",
         "launcher"
       ]
     },
@@ -1326,6 +1339,7 @@
         "beans",
         "processes",
         "kg",
+        "fsh-guts",
         "launcher"
       ]
     },
@@ -1350,12 +1364,12 @@
         {
           "id": "directories",
           "label": "declared directories",
-          "value": 9
+          "value": 10
         },
         {
           "id": "kinds",
           "label": "declared graph kinds",
-          "value": 8
+          "value": 9
         },
         {
           "id": "views",
@@ -1364,6 +1378,10 @@
         }
       ],
       "visualisations": [
+        {
+          "kind": "attestations",
+          "note": "no viewer yet"
+        },
         {
           "kind": "code",
           "note": "no viewer yet"
@@ -1447,6 +1465,14 @@
           "path": "folio-assistant-sci/test/results/"
         },
         {
+          "id": "attestations",
+          "kinds": [
+            "attestations"
+          ],
+          "where": "local",
+          "path": "folio-assistant-sci/test/attestations/"
+        },
+        {
           "id": "voices",
           "kinds": [
             "voices"
@@ -1472,7 +1498,7 @@
         }
       ],
       "findings": [
-        "folio-assistant-sci: declares 3 graph(s) with no published viewer — code, qa, skills. Declared and not rendered is a gap, not a dead link.",
+        "folio-assistant-sci: declares 4 graph(s) with no published viewer — attestations, code, qa, skills. Declared and not rendered is a gap, not a dead link.",
         "folio-assistant-sci: no avatar declared for this instance — showing the generic mark.",
         "folio-assistant-sci: has no docs/ of its own, so the tile opens a kind handler's viewer (/cat-harness/library/folio-assistant-sci/) rather than the instance's own themed root."
       ],
@@ -1482,6 +1508,7 @@
         "beans",
         "processes",
         "kg",
+        "fsh-guts",
         "launcher"
       ]
     },
@@ -1595,6 +1622,7 @@
         "beans",
         "processes",
         "kg",
+        "fsh-guts",
         "launcher"
       ]
     },
@@ -1824,6 +1852,7 @@
         "beans",
         "processes",
         "kg",
+        "fsh-guts",
         "launcher"
       ]
     },
@@ -1918,6 +1947,7 @@
         "beans",
         "processes",
         "kg",
+        "fsh-guts",
         "launcher"
       ]
     },
@@ -1985,20 +2015,24 @@
         {
           "id": "directories",
           "label": "declared directories",
-          "value": 29
+          "value": 30
         },
         {
           "id": "kinds",
           "label": "declared graph kinds",
-          "value": 25
+          "value": 26
         },
         {
           "id": "views",
           "label": "visualisations you can open",
-          "value": 18
+          "value": 19
         }
       ],
       "visualisations": [
+        {
+          "kind": "attestations",
+          "path": "/attestations/"
+        },
         {
           "kind": "cat-harness",
           "path": "/cat-harness/schemas/cat-harness/"
@@ -2210,6 +2244,14 @@
           "path": "cat-harness/test/results/"
         },
         {
+          "id": "attestations",
+          "kinds": [
+            "attestations"
+          ],
+          "where": "local",
+          "path": "cat-harness/test/attestations/"
+        },
+        {
           "id": "health",
           "kinds": [
             "health"
@@ -2347,6 +2389,7 @@
         "beans",
         "processes",
         "kg",
+        "fsh-guts",
         "launcher"
       ]
     },
@@ -2459,6 +2502,7 @@
         "beans",
         "processes",
         "kg",
+        "fsh-guts",
         "launcher"
       ]
     },
@@ -2600,6 +2644,7 @@
         "beans",
         "processes",
         "kg",
+        "fsh-guts",
         "launcher"
       ]
     }
@@ -2611,16 +2656,22 @@
       "beans",
       "processes",
       "kg",
+      "fsh-guts",
       "launcher"
     ],
     "hrefs": {
       "todos": "/todos/",
       "beans": "/beans/",
       "processes": "/processes/",
-      "kg": "/cat-harness/"
+      "kg": "/cat-harness/",
+      "fsh-guts": "/fsh-guts/"
     },
     "notes": {},
     "folders": [
+      {
+        "kind": "attestations",
+        "path": "/attestations/"
+      },
       {
         "kind": "cat-harness",
         "path": "/cat-harness/schemas/cat-harness/"
@@ -2899,6 +2950,15 @@
       },
       {
         "key": "navbarIcons",
+        "skills": [
+          {
+            "name": "harness-tiles",
+            "path": "/reference/skill-instructions/harness-tiles.html"
+          }
+        ]
+      },
+      {
+        "key": "glassStrip",
         "skills": [
           {
             "name": "harness-tiles",
@@ -3501,7 +3561,7 @@
           },
           {
             "key": "directories",
-            "summary": "6: library, sci-methodologies, sci-adapters, sci-sources, sci-processes, qa"
+            "summary": "7: library, sci-methodologies, sci-adapters, sci-sources, sci-processes, qa, attestations"
           },
           {
             "key": "needs",
@@ -3721,7 +3781,11 @@
           },
           {
             "key": "navbarIcons",
-            "summary": "close, todos, beans, processes, kg, launcher"
+            "summary": "close, todos, beans, processes, kg, fsh-guts, launcher"
+          },
+          {
+            "key": "glassStrip",
+            "summary": "6 entries"
           },
           {
             "key": "repository",
@@ -3749,7 +3813,7 @@
           },
           {
             "key": "directories",
-            "summary": "26: tools, external-schemas, subscriptions, code-lists, vocab-mappings, schemas, uml, skills,…"
+            "summary": "27: tools, external-schemas, subscriptions, code-lists, vocab-mappings, schemas, uml, skills,…"
           },
           {
             "key": "associatedHarnesses",

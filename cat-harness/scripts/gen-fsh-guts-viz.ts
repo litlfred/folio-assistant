@@ -54,7 +54,8 @@ import { existsSync, mkdirSync, readFileSync, readdirSync, writeFileSync } from 
 import { join, relative, resolve } from "node:path";
 
 import { declarationPathIn } from "../schemas/cat-harness.js";
-import { docsLayers } from "./compose-docs.js";
+import { fshGutsDirectory } from "../schemas/fsh-guts.js";
+import { baseDocsDir } from "./compose-docs.js";
 
 const REPO = resolve(import.meta.dir, "..", "..");
 const TAG = "folio-fsh-guts/v1";
@@ -82,21 +83,15 @@ export interface GutsFile {
  * generator that keeps working after the directory moves, over nothing.
  */
 export function gutsDir(repo = REPO): string | undefined {
-  // The CHECKOUT's root instance declares it since placement PR0a (bean
-  // `ejye`); cat-harness's own declaration is still read after it, so a
-  // checkout that has not moved the entry keeps resolving.
-  for (const root of declarers(repo)) {
-    const declPath = declarationPathIn(root);
-    if (!declPath || !existsSync(declPath)) continue;
-    const d = JSON.parse(readFileSync(declPath, "utf-8")) as {
-      directories?: { id?: string; path?: string; scope?: string; graphKinds?: string[] }[];
-    };
-    for (const e of d.directories ?? []) {
-      if (!e.path || !(e.graphKinds ?? []).includes(KIND)) continue;
-      return join(e.scope === "repository" ? repo : root, e.path);
-    }
+  // The shared resolution (bean 9c7h): the checkout's root instance declares
+  // it since placement PR0a, and `fshGutsDirectories` reads cat-harness's own
+  // declaration after it, as this function did. More than one declared
+  // trashcan is no single answer, so it is `undefined`, never "the first".
+  try {
+    return fshGutsDirectory(repo);
+  } catch {
+    return undefined;
   }
-  return undefined;
 }
 
 /** The declarations that may hold the trashcan: the checkout's root instance, then the platform. */
@@ -132,7 +127,7 @@ export function pageRelPath(repo = REPO): string | undefined {
     for (const one of Array.isArray(v) ? v : [v]) {
       const ref = typeof one === "string" ? one : (one as { ref?: string } | undefined)?.ref;
       if (!ref) continue;
-      const rel = relative(baseDocs(repo), resolve(repo, ref));
+      const rel = relative(baseDocsDir(repo), resolve(repo, ref));
       // Outside the base docs layer is not a page this generator may write.
       if (rel.startsWith("..") || rel === "") return undefined;
       return rel;
@@ -316,11 +311,6 @@ export function page(files: GutsFile[], blobBase: string): string {
  * declaration and marks which is which, so asking it is the one answer —
  * and it is the same one the composer withholds against.
  */
-function baseDocs(repo: string): string {
-  const base = docsLayers(repo).layers.find((l) => !l.repositoryScoped);
-  if (base === undefined) throw new Error("no instance-scoped docs layer is declared");
-  return base.dir;
-}
 
 if (import.meta.main) {
   const check = process.argv.includes("--check");
@@ -345,7 +335,7 @@ if (import.meta.main) {
     console.error(`::error::gen-fsh-guts-viz: no visualiser declared for graph kind '${KIND}'`);
     process.exit(1);
   }
-  const out = join(baseDocs(REPO), PAGE);
+  const out = join(baseDocsDir(REPO), PAGE);
 
   if (check) {
     const current = existsSync(out) ? readFileSync(out, "utf-8") : "";

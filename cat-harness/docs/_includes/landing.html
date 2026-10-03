@@ -187,6 +187,7 @@
   <div class="fa-sticky-cell" data-fa-home-slot="{{ st.id }}">
   <article class="fa-sticky fa-landing-sticky{% if has_art %} fa-sticky--backdrop fa-landing-sticky--fixed{% endif %}"
            data-fa-sticky-theme="{{ st.theme }}"
+           {% if st.art.card %}data-fa-art-card="{{ st.art.card.src | relative_url }}"{% endif %}
            {%- if has_art %} data-fa-shape="{{ st.shape }}" style="
              {%- comment -%}
                RAW PER-LAYOUT VALUES ONLY. Which layout's aspect and cloud are

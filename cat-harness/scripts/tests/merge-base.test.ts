@@ -8,13 +8,66 @@
 import { describe, expect, test } from "bun:test";
 
 import { execFileSync } from "node:child_process";
-import { existsSync, mkdirSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from "node:fs";
+import { existsSync, mkdirSync, mkdtempSync, readdirSync, readFileSync, rmSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
-import { join } from "node:path";
+import { join, relative, resolve } from "node:path";
 
 import { plan, takeBase, takeBaseAction, unmergedStages } from "../merge-base.js";
 import { plan as qaPlan } from "../qa-resolve-conflicts.ts";
 import { classify, PATTERNS, resolveGeneratedRegions } from "../merge-conflict-patterns.js";
+import { repoRootFor, siteDirFor } from "../../schemas/cat-harness.js";
+
+/** This instance and the repository it sits in, for the filesystem-driven sweeps. */
+const INSTANCE = resolve(import.meta.dir, "..", "..");
+const REPO = repoRootFor(INSTANCE);
+
+/**
+ * The leading `---`-delimited front matter of a markdown file, or `""` when it
+ * has none.
+ *
+ * **Front matter ONLY, and that is not fussiness.** The first cut of
+ * `generatedDocsPages` tested the WHOLE file for `generated:
+ * scripts/gen-docs-pages.ts`, and the very first merge after it was written
+ * found an 18th subject: `docs/reference/skill-instructions/
+ * merge-conflict-patterns.md`, the generated body of the skill that DOCUMENTS
+ * this pattern, which quotes that front-matter line in a fenced code block. A
+ * detector that reads a quotation as a declaration finds its own
+ * documentation — *"a docblock that documents a tag necessarily contains the
+ * tag"* (`audit-coverage`). That page's own front matter names
+ * `gen-skill-docs.ts` and the `skill-instructions` pattern already owns it.
+ */
+function frontMatter(text: string): string {
+  if (!text.startsWith("---\n")) return "";
+  const end = text.indexOf("\n---", 3);
+  return end === -1 ? "" : text.slice(4, end + 1);
+}
+
+/**
+ * Every `.md` under this instance's site directory whose own front matter names
+ * `gen-docs-pages.ts` as its writer, repo-relative. Read from the TREE rather
+ * than listed, so a page added to `content/docs/` makes the `docs-pages` test
+ * fail until its slug is declared — the enumeration cannot go quietly stale.
+ */
+function generatedDocsPages(): string[] {
+  const out: string[] = [];
+  const walk = (abs: string): void => {
+    for (const e of readdirSync(abs, { withFileTypes: true })) {
+      if (e.name.startsWith(".") || e.name.startsWith("_")) continue;
+      const p = join(abs, e.name);
+      if (e.isDirectory()) {
+        if (e.name === "assets" || e.name === "vendor") continue;
+        walk(p);
+        continue;
+      }
+      if (!e.isFile() || !e.name.endsWith(".md")) continue;
+      if (/^generated:\s*scripts\/gen-docs-pages\.ts/m.test(frontMatter(readFileSync(p, "utf8")))) {
+        out.push(relative(REPO, p));
+      }
+    }
+  };
+  walk(join(INSTANCE, siteDirFor(INSTANCE)));
+  return out.sort();
+}
 
 describe("classify", () => {
   test("measured generated families resolve by their declared strategy", () => {
@@ -23,6 +76,99 @@ describe("classify", () => {
     expect(classify("cat-harness/docs/cat-harness/docs-auto/index/index.html").pattern?.id).toBe("docs-auto");
     expect(classify("cat-harness/docs/glossary/index.md").pattern?.id).toBe("glossary");
     expect(classify("beans/README.md").strategy).toBe("generated-regions");
+  });
+
+  test("the three generated glossary/skill families classify, and their carry-forward neighbours do not", () => {
+    // Bean `8rff`: each was named by no pattern, so `merge:main` refused it
+    // and `merge:overlap` counted it as authored — 54 + 50 + 30 pair-path hits
+    // across 32 open PRs.
+    expect(classify("cat-harness/docs/assets/glossary/bootstrap--kg-skills.skos.jsonld").pattern?.id).toBe(
+      "skos-glossary-export",
+    );
+    expect(classify("folio-assistant-core/glossary/generated/cat-harness/kg-skills.glossary.json").pattern?.id).toBe(
+      "glossary-generated",
+    );
+    expect(classify("cat-harness/docs/reference/skill-instructions/bean-coordination.md").pattern?.id).toBe(
+      "skill-instructions",
+    );
+  });
+
+  test("the glossary LEDGER is refused: it is the one artefact that carries forward", () => {
+    // glossary-export.ts reads the prior ledger and preserves a concept's
+    // earlier names as skos:hiddenLabel (#1168 B10b). Taking one side would
+    // drop a term's history, so `glossary-generated`'s glob must stop at
+    // `generated/` and leave the sibling alone. This is the unsafe neighbour
+    // the skill's §"Adding a pattern" step 3 asks for.
+    expect(classify("cat-harness/glossary/glossary-ledger.json").strategy).toBe("refuse");
+    expect(classify("cat-harness/glossary/bootstrap/glossary-ledger.json").strategy).toBe("refuse");
+  });
+
+  test("a skill SOURCE is refused while its generated instruction page is taken", () => {
+    // The pair that makes `skill-instructions` safe: resolve the generated
+    // copy, never the authored skill it is generated from.
+    expect(classify("cat-harness/docs/reference/skill-instructions/merge-conflict-patterns.md").strategy).toBe(
+      "take-base",
+    );
+    expect(classify("cat-harness/skills/sdlc/sdlc-core/merge-conflict-patterns.md").strategy).toBe("refuse");
+  });
+
+  test("every generated docs page classifies to `docs-pages` — read from the tree, not listed", () => {
+    // Bean `8c6v`: 17 pages under `cat-harness/docs/` carry
+    // `generated: scripts/gen-docs-pages.ts — do not hand-edit` in their own
+    // front matter, and NONE was named by a pattern, so `merge:main` returned
+    // `refuse / — none —` and handed back for hand-editing the files that
+    // forbid it. `docs/publication-workflow.md` was one of the 2 refusals that
+    // blocked #1888 after 53 of its 55 conflicts had resolved.
+    const pages = generatedDocsPages();
+    expect(pages.length).toBeGreaterThanOrEqual(17);
+    // Deriving the subjects from the tree is the point: a page added to
+    // `content/docs/` lands here and fails until the glob names its slug.
+    const unmatched = pages.filter((p) => classify(p).pattern?.id !== "docs-pages");
+    expect(unmatched).toEqual([]);
+    expect(classify("cat-harness/docs/publication-workflow.md").pattern?.id).toBe("docs-pages");
+    expect(classify("cat-harness/docs/guides/writing-a-paper.md").pattern?.id).toBe("docs-pages");
+  });
+
+  test("the AUTHORED source a docs page is generated from is refused, and so are its authored siblings", () => {
+    // The pair that makes `docs-pages` safe, and step 3 of §"Adding a pattern":
+    // `gen-docs-pages.ts` READS the blocks under `content/docs/<slug>/`, which
+    // are hand-written and genuinely need a person. The glob must not reach
+    // them, nor the authored `docs/*.md` pages sitting beside the generated
+    // ones in the SAME directory — `cat-harness/docs/*.md` is a mix, which is
+    // why the 17 slugs are enumerated instead of globbed.
+    expect(
+      classify("cat-harness/content/docs/publication-workflow/every-workflow-in-the-repo.md").strategy,
+    ).toBe("refuse");
+    for (const authored of [
+      "cat-harness/docs/architecture.md",
+      "cat-harness/docs/getting-started.md",
+      "cat-harness/docs/index.md",
+      "cat-harness/docs/guides/agent-onboarding.md",
+      "cat-harness/docs/guides/voices.md",
+    ]) {
+      expect(classify(authored).strategy).toBe("refuse");
+    }
+    // Nothing under `content/` may be claimed by it, at any depth.
+    const claimed = generatedDocsPages().filter((p) => p.includes("/content/"));
+    expect(claimed).toEqual([]);
+  });
+
+  test("a page that QUOTES the generated marker is not a subject of it", () => {
+    // Found on this branch's first merge of `main`: the generated body of the
+    // skill documenting `docs-pages` quotes `generated: scripts/gen-docs-pages.ts`
+    // in a code fence, so a whole-file detector counted an 18th page. Its OWN
+    // front matter names gen-skill-docs.ts, and `skill-instructions` — declared
+    // BEFORE `docs-pages`, so it wins the first match — already owns it.
+    const quoting = "cat-harness/docs/reference/skill-instructions/merge-conflict-patterns.md";
+    expect(readFileSync(join(REPO, quoting), "utf8")).toContain("generated: scripts/gen-docs-pages.ts");
+    expect(generatedDocsPages()).not.toContain(quoting);
+    expect(classify(quoting).pattern?.id).toBe("skill-instructions");
+  });
+
+  test("site-data still owns docs/assets JSON: the new SKOS entry did not widen it", () => {
+    // `.skos.jsonld` is not `*.json`, so the two cannot overlap — pinned
+    // because `8rff` flagged exactly this as the thing to confirm.
+    expect(classify("cat-harness/docs/assets/library/index.json").pattern?.id).toBe("site-data");
   });
 
   test("a kg-qa sidecar is delegated, not taken: it may carry an attestation", () => {

@@ -135,10 +135,25 @@ describe("GitHub Actions workflows", () => {
   test("the TypeScript gate runs all three checks", () => {
     // Each is a separate ratchet; a gate that runs two of the three reads as
     // full coverage in the Actions UI.
+    //
+    // Since bean `dlqu` the gate is a JOB GRAPH, not one job: `typescript`
+    // carries the check name and runs nothing itself, and its `needs` run the
+    // three checks (lint and types in one job, `bun test` sharded in another).
+    // So coverage is read over the aggregate and everything it needs — and the
+    // aggregate must run `if: always()`, or a failed part SKIPS the named check
+    // instead of reddening it, which reads as neither red nor green (`0qjq`).
+    type Job = { steps?: Array<{ run?: string }>; needs?: string | string[]; if?: string };
     const doc = Bun.YAML.parse(
       readFileSync(join(WORKFLOW_DIR, "code-quality-gates.yml"), "utf-8"),
-    ) as { jobs: Record<string, { steps: Array<{ run?: string }> }> };
-    const runs = (doc.jobs.typescript?.steps ?? []).map((s) => s.run ?? "").join("\n");
+    ) as { jobs: Record<string, Job> };
+    const gate = doc.jobs.typescript;
+    expect(gate).toBeDefined();
+    const needs = gate?.needs === undefined ? [] : [gate.needs].flat();
+    if (needs.length > 0) expect(gate?.if).toBe("always()");
+    const runs = ["typescript", ...needs]
+      .flatMap((j) => doc.jobs[j]?.steps ?? [])
+      .map((s) => s.run ?? "")
+      .join("\n");
     expect(runs).toContain("bun test");
     expect(runs).toContain("bun run lint");
     expect(runs).toContain("tsc --noEmit");
