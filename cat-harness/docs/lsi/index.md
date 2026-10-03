@@ -123,14 +123,14 @@ Each dimension is a **contrast** between two poles, shown by their highest-loadi
 
 | dim | σ | one pole | the other pole |
 |---|---|---|---|
-| 1 | 45.49 | kind, instance, harness, page, directory, session, graph, branch | *(none)* |
+| 1 | 45.53 | instance, kind, harness, page, directory, session, graph, branch | *(none)* |
 | 2 | 21.74 | watcher, sibling, queue, prs, slot, backlog, commits, block | harness, instance, declaration, node, directories, directory, iri, subgraph |
-| 3 | 18.07 | slot, chapter, block, edges, formal, project, proof, watcher | session, beans, epic, branch, conflict, page, goals, window |
-| 4 | 17.12 | page, block, tile, text, avatar, chapter, blocks, manifest | sibling, ledger, subgraph, subdirectory, session, sessions, plan, coordination |
-| 5 | 15.51 | tile, glass, avatar, card, board, theme, sticky, tiles | rung, archive, sniff, ingest, zip, archived, pdf, arxiv |
-| 6 | 15.13 | lane, actor, role, requirements, task, analysis, process, impact | queue, sha, backlog, bytes, withheld, slide, tile, library |
-| 7 | 14.75 | preview, staging, translation, locale, url, pages, translated, language | tile, glass, avatar, card, slot, sticky, fit, settings |
-| 8 | 14.52 | edges, forward, edge, backward, cross-chapter, logical, energy, storytelling | actor, lane, role, requirement, user, requirements, task, pdf |
+| 3 | 18.08 | slot, chapter, block, edges, formal, project, proof, watcher | session, beans, epic, page, conflict, branch, goals, window |
+| 4 | 17.14 | page, tile, block, text, avatar, chapter, blocks, glass | sibling, ledger, session, sessions, subdirectory, subgraph, plan, coordination |
+| 5 | 15.58 | tile, glass, avatar, board, card, sticky, tiles, theme | rung, archive, pdf, sniff, ingest, zip, archived, arxiv |
+| 6 | 15.15 | lane, actor, role, requirements, task, analysis, feature, impact | queue, sha, withheld, backlog, rung, bytes, slide, arm |
+| 7 | 14.79 | preview, staging, translation, locale, url, pages, translated, page | tile, glass, avatar, card, fit, slot, sticky, role |
+| 8 | 14.52 | edges, forward, edge, backward, cross-chapter, logical, energy, storytelling | actor, lane, role, requirement, user, requirements, task, backlog |
 
 **Findings** — 0 narrow dimension(s), 0 near-duplicate pair(s).
 
