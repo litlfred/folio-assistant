@@ -7339,10 +7339,10 @@
         },
         {
           "name": "keyedBy",
-          "type": "z.enum([\"commit\", \"tip\"])",
+          "type": "z.enum([\"commit\", \"tip\", \"route\"])",
           "optional": false,
           "array": false,
-          "doc": "How entries are keyed on the branch: one entry per `commit`, or one live copy at the `tip`."
+          "doc": "How entries are keyed on the branch: one entry per `commit`, one live"
         }
       ],
       "extendsNames": [],
