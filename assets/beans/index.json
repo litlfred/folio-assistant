@@ -2,7 +2,7 @@
   "$schema": "folio-bean-index/v1",
   "tile": {
     "beans": {
-      "count": 746,
+      "count": 747,
       "unit": "beans"
     }
   },
@@ -2337,6 +2337,20 @@
       "file": "beans/defs/folio-assistant-7eak--dublin-core-renderings-dc-xml-json-ld-per-record-a.md"
     },
     {
+      "id": "folio-assistant-7fu5",
+      "title": "CI: fold the four one-second jobs into one — fewer runner requests per run",
+      "status": "in-progress",
+      "type": "task",
+      "priority": "normal",
+      "parent": "folio-assistant-hfag",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-10-03T16:14:26Z",
+      "updatedAt": "2026-10-03T16:34:12Z",
+      "preview": "Measured on main run 37133247484 (2026-10-03, #2010 merge): 21.7 min wall for a run whose longest job executes 174 s. Runner WAIT dominates: first job queued 4.5 min; the two 1-s aggregator jobs waited 9.6 and 3.8 min. Each run asks for 18 runners. Four jobs do ~1 s of work after a ~13 s checkout: lean-bare-import, python-imports, rust-wildcard, dependency-advisories.\n\nOwner chose option 1 (2026-1",
+      "file": "beans/defs/folio-assistant-7fu5--ci-fold-the-four-one-second-jobs-into-one-fewer-ru.md"
+    },
+    {
       "id": "folio-assistant-7h1c",
       "title": "publish-verify scope misses our own SKOS code-lists document",
       "status": "completed",
@@ -4105,14 +4119,14 @@
     {
       "id": "folio-assistant-d313",
       "title": "IG API: rename the DAK API surface in fhir-harness to a generic IG API",
-      "status": "in-progress",
+      "status": "completed",
       "type": "task",
       "priority": "high",
       "parent": "folio-assistant-uhkv",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-10-03T09:23:38Z",
-      "updatedAt": "2026-10-03T09:23:49Z",
+      "updatedAt": "2026-10-03T17:36:11Z",
       "preview": "Part of the layering in `nsbb` (bare FHIR IG pipeline is the base; DAK is an overlay).\n\nOwner, 2026-10-03: \"can we rename dakapi hub to someting more ig generic. split up/generifize code. relabel?\" — and chose the name \"IG API\".\n\n## What\nfhir-harness's one rule is that it knows nothing of WHO, yet `dak-views.ts`, the `dak-*.liquid`/`.js` templates, the `dakApiHub` index field and ~30 sites in `gen",
       "file": "beans/defs/folio-assistant-d313--ig-api-rename-the-dak-api-surface-in-fhir-harness.md"
     },
@@ -6113,14 +6127,14 @@
     {
       "id": "folio-assistant-lrzn",
       "title": "PREBUILT SEARCH INDEX: serialize the lunr index at build time for scopes over a token budget (#1972)",
-      "status": "in-progress",
+      "status": "completed",
       "type": "task",
       "priority": "normal",
       "parent": "folio-assistant-whlc",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-10-03T15:42:45Z",
-      "updatedAt": "2026-10-03T15:57:22Z",
+      "updatedAt": "2026-10-03T16:55:01Z",
       "preview": "Issue #1972, the owner's \"1 2\" of 2026-10-03: (1) a prebuilt search index.\nAsked with the measured trade-off, the owner chose **big scopes only**.\n\n## Measured (Node / V8, scopes from a local build)\n\nBuilding a scope's lunr index costs ~3–5 µs per token, consistently:\n`section-reference` 550k tokens / 2,489 ms, `smart-immunizations` 163k /\n809 ms, `_platform` 138k / 476 ms, `smart-trust` 137k / 40",
       "file": "beans/defs/folio-assistant-lrzn--prebuilt-search-index-serialize-the-lunr-index-at.md"
     },
@@ -7969,14 +7983,14 @@
     {
       "id": "folio-assistant-s4ta",
       "title": "OpenAPI harness: a subgraph for OpenAPI documentation sources with its own rendering sub-pipeline; smart-trust depends on smart-base + openapi",
-      "status": "in-progress",
+      "status": "completed",
       "type": "feature",
       "priority": "normal",
       "parent": "folio-assistant-uhkv",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-10-03T09:29:09Z",
-      "updatedAt": "2026-10-03T09:44:08Z",
+      "updatedAt": "2026-10-03T17:36:11Z",
       "preview": "Owner, 2026-10-03, verbatim:\n\n> there is one thing wonky in openapi handing (in smart-trust there is an import openapi of the trust netework gateway. really there should be a KG harness specfiic to openapi docuemnataiton sources with its own rendering sub-pipeline. and then the smart-trust repo has a smart-base harness and a openapi harness. openapi ahrness could be in cat-harness repo for now as ",
       "file": "beans/defs/folio-assistant-s4ta--openapi-harness-a-subgraph-for-openapi-documentati.md"
     },
