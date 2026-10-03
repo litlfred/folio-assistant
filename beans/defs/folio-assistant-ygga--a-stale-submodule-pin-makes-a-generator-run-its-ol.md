@@ -5,7 +5,8 @@ status: todo
 type: bug
 priority: normal
 created_at: 2026-10-03T09:28:22Z
-updated_at: 2026-10-03T09:28:42Z
+updated_at: 2026-10-03T09:54:52Z
+parent: folio-assistant-1xhc
 ---
 
 ## Measured 2026-10-03 on PR #1959, with a 101-file blast radius

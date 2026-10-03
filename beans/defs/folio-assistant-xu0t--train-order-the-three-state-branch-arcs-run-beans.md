@@ -5,7 +5,8 @@ status: todo
 type: task
 priority: normal
 created_at: 2026-10-03T09:39:07Z
-updated_at: 2026-10-03T09:39:39Z
+updated_at: 2026-10-03T09:54:52Z
+parent: folio-assistant-fs43
 ---
 
 ## The owner's ruling, 2026-10-03
