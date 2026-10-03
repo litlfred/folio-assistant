@@ -2,6 +2,7 @@
 # folio-assistant-1qrr
 title: 'FEATURE-STAGING: the workflow definition comes from the BASE but the checkout is the PR HEAD, so a newly-added step fails every branch that predates it'
 status: todo
+parent: folio-assistant-1xhc
 type: bug
 created_at: 2026-10-03T15:33:32Z
 updated_at: 2026-10-03T15:33:32Z

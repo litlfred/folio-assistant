@@ -968,6 +968,15 @@ jobs:
           # cannot disagree about which build they came from.
           cp "./_site/${STUB}.jsonld" "./_site/${STUB}.json"
 
+          # The CHECKOUT ROOT instance's graph, as the deploy publishes it (bean
+          # `l4ay`): it declares `todos`, and `todos.jsonld`'s container IS its
+          # declared Subgraph node, so a preview without it names a node the
+          # preview does not serve.
+          ROOT_STUB=$(bun run cat-harness/scripts/print-stub.ts .)
+          mkdir -p "./_site/${ROOT_STUB}"
+          bun run cat-harness/scripts/kg-export.ts --instance . --base-url "$BASE" --out "./_site/${ROOT_STUB}/${ROOT_STUB}.jsonld"
+          cp "./_site/${ROOT_STUB}/${ROOT_STUB}.jsonld" "./_site/${ROOT_STUB}/${ROOT_STUB}.json"
+
           # THE NAMESPACE DOCUMENTS AND THE BOOTSTRAP GRAPH — bean `35kc`.
           #
           # Staging published NONE of these while the live site published all

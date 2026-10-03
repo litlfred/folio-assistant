@@ -1,10 +1,10 @@
 ---
 # folio-assistant-9ofm
 title: 'STATE BRANCH P3: migrate every reader and writer of beans/, todos/, issue-marks/, health results to the branch'
-status: todo
+status: in-progress
 type: task
 created_at: 2026-10-02T10:58:10Z
-updated_at: 2026-10-02T10:58:10Z
+updated_at: 2026-10-03T15:38:10Z
 parent: folio-assistant-fs43
 ---
 
@@ -14,3 +14,5 @@ Proposal section 4 table, one row per change: .beans.yml, workflow/store.ts WORK
 - [ ] every row green against the branch
 
 Proposal: cat-harness/docs/proposals/state-branch-2026-10-02.md
+
+_2026-10-03T15:38:10Z_ — Claimed by work-1764 — pushed to main so sibling sessions see it before this branch has a PR (bean 35nj).

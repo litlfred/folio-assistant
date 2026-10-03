@@ -434,6 +434,17 @@ jobs:
           #
           # `.json` alias for the same reason as every document above: Pages
           # serves `.jsonld` as octet-stream. The `.jsonld` stays canonical.
+          # The CHECKOUT ROOT instance's own graph (bean `l4ay`). It declares
+          # the checkout-level subgraphs — `todos`, `beans`, `fsh-guts`, … —
+          # and `todos.jsonld` is published AS its declared `todos` Subgraph
+          # node (`<base>/folio-assistant/folio-assistant.jsonld#directory/todos`,
+          # `subgraph-node.ts`). Publishing the document is what makes that
+          # `@id` dereference rather than name a node nothing serves.
+          ROOT_STUB=$(bun run cat-harness/scripts/print-stub.ts .)
+          mkdir -p "./_site/${ROOT_STUB}"
+          bun run cat-harness/scripts/kg-export.ts --instance . --out "./_site/${ROOT_STUB}/${ROOT_STUB}.jsonld"
+          cp "./_site/${ROOT_STUB}/${ROOT_STUB}.jsonld" "./_site/${ROOT_STUB}/${ROOT_STUB}.json"
+
           bun run cat-harness/scripts/glossary-export.ts --out "./_site/${STUB}-glossary.jsonld"
           cp "./_site/${STUB}-glossary.jsonld" "./_site/${STUB}-glossary.json"
           bun run cat-harness/scripts/glossary-export.ts --instance ./bootstrap --out "./_site/${BOOT_STUB}/${BOOT_STUB}-glossary.jsonld"

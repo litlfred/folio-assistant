@@ -13,13 +13,13 @@ permalink: /glossary/schema-fields/
 
 Candidate terms extracted from every schema field with a doc comment: `<Declaration>.<field>` as the label, the comment's first paragraph as the definition. Each is the asset's own text, verbatim and not curated, and carries the badge "candidate, extracted". A person promotes one by authoring it. Authored terms, the counts and the sources are on the <a href="{{ '/glossary/' | relative_url }}">glossary index</a>.
 
-From: bootstrap-tools 28 (<a href="{{ '/assets/glossary/bootstrap-tools--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · cat-harness 1734 (<a href="{{ '/assets/glossary/cat-harness--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · fhir-harness 60 (<a href="{{ '/assets/glossary/fhir-harness--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · folio-assistant-core 127 (<a href="{{ '/assets/glossary/folio-assistant-core--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · smart-base 9 (<a href="{{ '/assets/glossary/smart-base--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>).
+From: bootstrap-tools 28 (<a href="{{ '/assets/glossary/bootstrap-tools--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · cat-harness 1742 (<a href="{{ '/assets/glossary/cat-harness--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · fhir-harness 60 (<a href="{{ '/assets/glossary/fhir-harness--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · folio-assistant-core 127 (<a href="{{ '/assets/glossary/folio-assistant-core--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · smart-base 9 (<a href="{{ '/assets/glossary/smart-base--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>).
 
-**Split by first letter.** 1958 terms are too many for one page within its budget of 1.0 MB, so they are on 4 pages by the first letter of the label. The ranges are fixed, so a term's address does not move as terms are added. A label that does not start with a letter is on the first page.
+**Split by first letter.** 1966 terms are too many for one page within its budget of 1.0 MB, so they are on 4 pages by the first letter of the label. The ranges are fixed, so a term's address does not move as terms are added. A label that does not start with a letter is on the first page.
 
 <ul>
-<li><a href="{{ '/glossary/schema-fields/a-e/' | relative_url }}">A–E</a>: 539 terms</li>
-<li><a href="{{ '/glossary/schema-fields/f-l/' | relative_url }}">F–L</a>: 373 terms</li>
+<li><a href="{{ '/glossary/schema-fields/a-e/' | relative_url }}">A–E</a>: 544 terms</li>
+<li><a href="{{ '/glossary/schema-fields/f-l/' | relative_url }}">F–L</a>: 375 terms</li>
 <li><a href="{{ '/glossary/schema-fields/m-r/' | relative_url }}">M–R</a>: 485 terms</li>
-<li><a href="{{ '/glossary/schema-fields/s-z/' | relative_url }}">S–Z</a>: 561 terms</li>
+<li><a href="{{ '/glossary/schema-fields/s-z/' | relative_url }}">S–Z</a>: 562 terms</li>
 </ul>

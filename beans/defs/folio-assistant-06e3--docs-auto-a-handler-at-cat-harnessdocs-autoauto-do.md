@@ -564,9 +564,25 @@ not the globs. Worth recording because the first reading looked like
 
 ### Still open
 
-- [ ] `toc` stays OUT (this bean is the only record of that withdrawal)
-- [ ] the authoring-rule half is a SKILL, untouched by the move
-- [ ] `who-iris/docs` is the named first exercise, end to end
+**Withdrawn 2026-10-03 — this was a SHADOW CHECKLIST and two of its three items
+were false.** It restated the canonical `## Done when` in a planning section, and
+once the canonical items were ticked it went on claiming work was outstanding:
+
+| it said | the canonical list says |
+|---|---|
+| `[ ] toc stays OUT` | `[x] the handler exists and is declared … and **no** toc` |
+| `[ ] the authoring-rule half is a SKILL` | `[x] the authoring rule lives in a skill with the reuse-not-restate clause` |
+| `[ ] who-iris/docs is the named first exercise` | `[ ]` — the one genuinely open item, and already there |
+
+So: **see `## Done when` above.** Nothing is tracked here.
+
+`check:bean-bodies` rejects a *ticked* restatement beside an open canonical item,
+for the stated reason that *"the section a reader and every tool consult says this
+is not done"*. This was the INVERSE — an *unticked* restatement beside a ticked
+canonical item — and the gate is green across it, measured on `main` 2026-10-03.
+That direction is worse, not better: a stale "still open" sends the next agent to
+redo finished work, where a stale "done" at least leaves them reading the real
+list. Reported rather than fixed in the gate, which is its own change.
 
 
 ## CORRECTION, 2026-10-03 — two claims in the plan above are wrong
