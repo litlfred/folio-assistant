@@ -1,13 +1,23 @@
 {
   "$schema": "state-manifest/v1",
-  "status": "seed",
+  "status": "retired",
   "authoritative": false,
+  "retiredReason": "SUPERSEDED, not stale. The owner reversed D4 on 2026-10-03 (bean `laqs`): \"Keep per-graph branches\" and \"i dont think we need a speciifc 'state' branch or mount, several potnential subgraphs can be a part of state\". So each named subgraph gets its own `cat/<harness>/<name>` branch and this shared branch has no job. Retired rather than deleted (owner, 2026-10-03, on PR #2014): nothing is removed and the branch stays readable, but `status: \"retired\"` tells `bun run state:drift` to NAME it and not compare it. That matters because a superseded seed is more dangerous than a stale one: it still carried a valid `state-manifest/v1` over six real graphs, so a cutover tool that found it would have used it — and its `beans/defs` was measured 159 files behind main on 2026-10-03. Bean `9ofm`.",
+  "supersededBy": {
+    "beans/defs": "cat/cat-harness/beans",
+    "beans/workflows": "cat/cat-harness/beans",
+    "beans/surveys": "cat/cat-harness/beans",
+    "todos": "cat/cat-harness/todos"
+  },
+  "_not_superseded_comment": "`issue-marks` and `cat-harness/test/health/results` have NO per-graph branch yet. They are listed in `graphs` below and are absent from `supersededBy` on purpose: naming a branch that does not exist would be worse than saying nothing. They stay on `main`, which is where every reader of them still looks. Moving them is a later bean.",
   "note": "Seeded from main for arc fs43 (issue #1850). main remains the source of truth until Phase 3 migrates every reader and writer; until then this branch is a verified copy, not the store. Re-seeded at cutover.",
   "source": {
     "ref": "main",
     "sha": "85b9578b630e46d1b82eae3877d915cf05c4591d"
   },
+  "retiredAt": "2026-10-03",
   "keyedBy": "tip",
+  "_graphs_comment": "Kept verbatim as the RECORD of what this branch held when it was retired. These trees are no longer compared against main.",
   "graphs": [
     {
       "path": "beans/defs",
