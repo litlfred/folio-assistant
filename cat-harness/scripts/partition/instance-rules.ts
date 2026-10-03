@@ -405,6 +405,11 @@ export const RULES: Rule[] = [
       // same reason as its two neighbours — it reads the declaration and git,
       // and no folio's subject matter could make it answer differently.
       "scripts/qa-store.ts",                 // the qa-reports branch: readQa / publishQa / pruneQa
+      // Its generalisation (bean `2h76`): the same branch-kept store for ANY
+      // directory declaring `storage.keyedBy: "tip"`. Harness-level for the
+      // same reason as `qa-store` — it reads the declaration and git, and no
+      // folio's subject matter could make it answer differently.
+      "scripts/branch-store.ts",             // a `keyedBy: "tip"` directory's own branch: one live copy
       // Its clean-merge counterpart, and harness-level for the same reason: it
       // loads the GATE SET from the workflow and re-runs whichever writers
       // their checks report stale. It knows nothing about any folio's subject
@@ -816,7 +821,8 @@ export const RULES: Rule[] = [
       "scripts/library-graph.ts",            // library/ + uploads/ → the L1 corpus
       "scripts/gen-library-viz.ts",          // that corpus → projection + viewer
       "scripts/lib/library-withheld-view.ts", // that viewer's withheld rows + banner (#1794), embedded verbatim
-      "scripts/gen-uploads-viz.ts",          // the QUEUE half → a viewer only; the dataset stays library's (bean `flh4`)
+      "scripts/lib/library-address.ts",    // that viewer's entry-IRI path parser (#1881), embedded verbatim
+      "scripts/gen-uploads-viz.ts",         // the QUEUE half → a viewer only; the dataset stays library's (bean `flh4`)
       "scripts/voices-graph.ts",             // declared voices/ → voices + their citations
       "scripts/gen-voices-viz.ts",           // those voices → projection + viewer
       "scripts/gen-document-kinds-viz.ts",   // every harness's document kinds → a viewer (stage D5, #1767)
@@ -854,7 +860,7 @@ export const RULES: Rule[] = [
       "scripts/sync-remote-skills.ts",       // a remote package's declared skills, materialized at its pinned commit (issue #556)
       "scripts/kg-subscribe.ts",             // subscribe to an external Knowledge Graph at a pin: judge its root declaration, record the subscription (issue #1719)
       "scripts/kg-instantiate.ts",           // instantiate a harness a subscription chose: its config at the root and its state directories (issue #1719)
-      "scripts/subscriptions-viz.ts",        // the KG subscriptions page: known substrates, and what each instance subscribed to and chose (issue #1719)
+      "scripts/subscriptions-viz.ts",        // the KG subscriptions page: known substrates, what each instance subscribed to and chose, and each chosen part drawn from its materialisation record (issue #1719)
       "scripts/check-read-only-graphs.ts", // a directory's `readOnly` declaration vs what its nodes say — the DECLARATION half of the same rule
       "scripts/gen-fsh-guts-viz.ts",         // the fsh-guts graph → projection + viewer; staging-only, so the page is withheld from the canonical deploy
       "scripts/gen-handler-index.ts",        // the handler namespace's own index, over the tiles model
@@ -1080,6 +1086,32 @@ export const RULES: Rule[] = [
       // job that runs the harness's own scripts checked out the harness's own
       // submodules. A folio could not make it answer differently.
       "scripts/check-workflow-submodules.ts",
+      // The five merge-pipeline modules (bean `blgm`, PR #1895). Harness by
+      // their subject, and not marginally: what they read is THIS
+      // repository's open pull requests, its `merge-conflict-patterns`
+      // declaration and its own branches. `merge-train` builds a train of
+      // this repo's PRs; `merge-overlap` predicts conflicts between them;
+      // `merge-leftover` asks whether a PR's intent reached this repo's
+      // main. A folio has no queue for them to operate on, so none of the
+      // five could be made to answer differently by swapping the content.
+      "scripts/merge-train.ts",
+      "scripts/merge-overlap.ts",
+      "scripts/merge-leftover.ts",
+      // `bean-rollover` joins them, and by the same test rather than by
+      // adjacency: what it reads is THIS repository's open pull requests and
+      // its `beans/` store, to answer a question only this repository has —
+      // which bean edits must land before `beans/` can leave `main` (issue
+      // #1850 step 2). It reuses `merge-pipeline-paths`'s classifiers for
+      // exactly that reason. A folio has no bean store of its own to roll
+      // over, so swapping the content could not make it answer differently.
+      "scripts/bean-rollover.ts",
+      // Their two shared modules, classified with them rather than beside
+      // the generic path helpers: `merge-pipeline-paths` reads path classes
+      // out of this repository's `PATTERNS` declaration, and
+      // `merge-pipeline-git` resolves member specs against this repository's
+      // refs. Both are about this queue, not about paths or git in general.
+      "scripts/merge-pipeline-paths.ts",
+      "scripts/merge-pipeline-git.ts",
       // Builds every package this REPOSITORY publishes to npm (bean `rsi6`).
       // Harness by its subject: the thing it builds is this repository's own
       // shipped artefact, and a folio publishes prose and proofs rather than
@@ -1339,6 +1371,10 @@ export const RULES: Rule[] = [
       // tooling below; a core placement made `process-model.ts` import down.
       "schemas/code-list.ts",
       "scripts/code-lists.ts",
+      // Vocabulary mapping tables' gate (bean `k74z`), beside the code-list
+      // gate for the same reason: glossary-export, which the publish process
+      // runs, applies the tables, so judging them is harness work.
+      "scripts/vocab-mappings.ts",
       // The pre-deploy verifier set (bean `vigi`): needed to RUN the publish
       // process, so harness, beside the gates it sits among.
       "scripts/publish-verify.ts",
@@ -1519,6 +1555,7 @@ export const RULES: Rule[] = [
       "scripts/repo-files.ts",              // enumerates files the way a GATE needs
       "scripts/strip-preview-seo.ts",       // the preview site build
       "scripts/set-html-lang.ts",           // ...and the served language on its `<html>` (bean `zru7`). Beside the SEO strip for the same reason: a pass over the EMITTED tree, coupling to no content type and to no theme file
+      "scripts/minify-site.ts",             // ...and the last pass over it: the comments and unrendered whitespace drop out of every emitted page. Harness for the same reason as the two above — it reads the TREE, knows no content type, and could not: it decides by HTML's own rendering rules which bytes a reader can see
       "scripts/staging-banner.ts",          // ...and its banner (bean `g196`)
       "scripts/html-comments.ts",           // the one "is this inside a comment" scan the banner's body-finder and the folio mount's marker check share (bean `ur84`)
       "scripts/folio-mount.ts",             // the fragment that carries the reader's folio onto a library page — machinery, not a content model (bean `jpjt`)
