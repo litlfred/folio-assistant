@@ -55,3 +55,51 @@ These are all **ad hoc and session-scoped**. None blocks a merge, and none write
 
 ## Filed 2026-10-02
 Design PR (draft, not merged): https://github.com/litlfred/folio-assistant/pull/1887. Reading list: 30 items, 29 search-confirmed, 1 unverified; direct fetch was egress-blocked. Open question Q1 (where the review runs) has default B: the steward runs it and CI checks the verdict.
+
+## Superseded 2026-10-03 — the agentic review WARNS, it does not block
+
+The ask recorded above is kept verbatim as what was asked. The owner ruled
+differently later on 2026-10-02:
+
+> dont want hard gate (at least not for now, lots of backlog on content nodes)
+> but do want warn.
+
+and confirmed on 2026-10-03, with both dates put to them: *"warn only.
+proposal predates ruling, update it."* So this is a stale record corrected,
+not two live positions.
+
+**The reason is specific.** A hard gate over a backlog of unreviewed content
+nodes fires on the corpus's existing state rather than on what a PR changed,
+so the first PR after it landed would inherit every unresolved finding in the
+paths it touches. The per-block backfill (`lvlv`) has to come first; a
+blocking gate inverts that order.
+
+**Scope of the ruling, read narrowly and flagged as an interpretation.** It
+covers child (a) `w8jq` (the review as a required check) and the gate
+behaviour of (c) `abmq` (RED FLAGs). It does NOT change child (b) `xqdi` — the
+content-type compile gates — because those are deterministic, the ask named
+them separately from the review, and "backlog on content nodes" is not an
+argument about whether Lean compiles. **If the owner meant compile gates too,
+this is the line to correct.**
+
+**A warn is not a weaker block — it is the only instrument that can produce
+the number a later promotion needs.** No paper in the 2026-10-02 reading sweep
+reports a false-positive rate for any LLM judge (checked across arXiv
+2402.02172v5, 2404.04834v4, 2507.23348v1, 2601.04544v1, 2607.00053v1), and
+CodeAgent's own annotation leaves 49% of GPT-4's flags unconfirmed. So a
+`blocking`-weight finding is posted as **"would have blocked"** rather than
+discarded: that record is what a warn-to-block decision reads. The test set
+should be this repository's own recorded defects (`plj1`, `dh4f`, `w4tq`,
+`7u3g`), which cannot have leaked into a model's training data.
+
+**The pattern to copy is `dependency-advisories` in
+`.github/workflows/code-quality-gates.yml`**: exit 0 in every state, with
+*found-nothing*, *found-something* and *could-not-determine* kept distinct in
+the output. **Not `continue-on-error`** — that file records it as already
+reversed once. A warn-only gate that collapses could-not-determine into
+found-nothing is the defect this repo keeps paying for (beans `0qjq`, `zjm1`,
+`gtx4`, all measured 2026-10-02).
+
+Design amended to match: `cat-harness/docs/proposals/merge-gate-2026-10-02.md`
+§1.1, §4.2, §5.1. Tracking bean: `5ge1`.
+

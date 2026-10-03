@@ -1,10 +1,11 @@
 ---
 # folio-assistant-5ge1
 title: 'MERGE GATE IS SPECIFIED AS BLOCKING, OWNER RULED WARN-ONLY: reconcile merge-gate-2026-10-02.md and nok9 with the 2026-10-02 ruling'
-status: todo
+status: completed
 type: bug
+priority: normal
 created_at: 2026-10-02T23:32:19Z
-updated_at: 2026-10-02T23:32:19Z
+updated_at: 2026-10-03T00:02:20Z
 parent: folio-assistant-0ipy
 ---
 
@@ -29,11 +30,11 @@ a content backlog blocks work that was already queued.
 Epic `nok9` ("MERGE GATE: agentic adversarial review") and bean `w8jq` carry
 the same blocking G3/G4 shape.
 
-**Which came first is not established.** Both are dated 2026-10-02. The
-proposal is research-and-design by its own header, so it may predate the
-ruling by hours. Do not assume the ruling supersedes it without checking —
-ask the owner, because a proposal written after a ruling is a disagreement and
-one written before it is just stale.
+**SETTLED by the owner, 2026-10-03.** The question was put with both dates and
+the answer was: *"warn only. proposal predates ruling, update it."* So the
+proposal is a **stale document**, not a disagreement — the ask came first, the
+ruling supersedes it, and the fix is to correct the document rather than to
+reopen the decision.
 
 ## What a warn-only form looks like, from the evidence
 
@@ -68,10 +69,82 @@ finding must carry evidence: under the paper's own annotation, **49% of
 GPT-4's flags went unconfirmed**.
 
 ## Done when
-- [ ] owner says whether the proposal post-dates the ruling (a disagreement)
-      or pre-dates it (stale)
-- [ ] `merge-gate-2026-10-02.md` §5.1 and the ready-to-merge definition carry
-      the warn-only form, or record the owner's reversal with its date
-- [ ] `nok9` and `w8jq` reconciled with whichever stands
-- [ ] the warn form names `dependency-advisories` as its pattern and states
-      the three distinct output states
+- [x] owner says whether the proposal post-dates the ruling or pre-dates it —
+      **2026-10-03: pre-dates. Stale, so update it.**
+- [x] `merge-gate-2026-10-02.md` carries the warn-only form: new **§1.1**
+      ("Superseded, same day"), the frontmatter summary, the status block with
+      a pointer to §1.1, principle **§4.2** (was "`unknown` blocks"), and
+      **§5.1** rows G3/G4 (were `yes`)
+- [x] `nok9`, `w8jq` and `abmq` reconciled — `abmq` as well, since it defined a
+      RED FLAG as a finding that "blocks the merge"
+- [x] the warn form names `dependency-advisories` as its pattern and the three
+      distinct output states
+- [x] `xqdi` (compile gates) deliberately NOT changed, with the interpretation
+      flagged in `nok9` for the owner to correct in one line if it is wrong
+- [x] the promotion criterion is split out rather than left hanging here — it
+      is its own bean under `nok9`, because it needs a warn-only phase to run
+      first and so cannot be done by this reconciliation
+
+## What the amendment says, in one line each
+
+- **The review warns; the deterministic gates do not change.** G3/G4 → warn.
+  G1 (CI green per job), G2 (the head HAS a run), G8 (`regen` on the train
+  result) and H (the owner's "merge it") stay blocking, because the ruling was
+  about agentic review and not about whether CI ran.
+- **Scope read narrowly and flagged.** G5–G7 (Lean builds, SUSHI compiles,
+  JSON-LD renders) are unchanged: deterministic, named separately in the
+  original ask, and "backlog on content nodes" is not an argument about
+  whether Lean compiles. Named in `nok9` as an interpretation to correct, not
+  as an instruction.
+- **`unknown` survives the ruling untouched.** A warn-only gate that collapses
+  *could-not-determine* into *found-nothing* is this repository's recurring
+  defect — three instances measured on 2026-10-02 alone (`0qjq` vacuous CI
+  pass, `zjm1` vacuous `clean`, `gtx4` defaulted provenance). Exit 0 with
+  `unknown` on the record; never exit 0 with silence.
+- **The vocabulary did not have to change.** `weight: blocking` keeps its
+  meaning in `schemas/qa-review.ts` — what the reviewer asks of the gate —
+  and only the gate's response changed. A taxonomy needing a rewrite because
+  enforcement changed would have been the wrong taxonomy.
+
+## Summary of Changes
+
+Owner settled it 2026-10-03: the proposal **pre-dates** the ruling, so it was
+stale rather than in disagreement, and the fix was to correct the document.
+
+**`cat-harness/docs/proposals/merge-gate-2026-10-02.md`** — five edits:
+
+1. new **§1.1 "Superseded, same day"**, carrying the ruling verbatim with both
+   dates, the backlog reason, and a table of what changed against what did not;
+2. **frontmatter `summary`** — dropped "blocks until resolved or overridden";
+3. **status block** — amended, with a pointer telling a reader to take §1.1
+   before §4 or §5;
+4. **§4 principle 2** — was "**`unknown` blocks**", now "`unknown` is never
+   green, and under warn-only never a pass either", keeping the third state;
+5. **§5.1** — rows **G3** and **G4** moved from `**yes**` to `**no — warn**`,
+   plus a note on why a warn still fails loudly on `unknown` and on what the
+   promotion criterion must be.
+
+**The owner's own ask in §1 was left verbatim.** It is the record of what was
+asked; the ruling supersedes it rather than rewriting history.
+
+**Beans reconciled:** `nok9` (epic — plus the scope interpretation, flagged for
+correction), `w8jq` (the "required check" is now a reporter: still required to
+exist and SHA-bound, no longer holding the merge), and `abmq` — which needed it
+too, since it defined a RED FLAG as a finding that *"blocks the merge"*.
+
+**Deliberately not changed:** `xqdi`, the content-type compile gates. G5–G7 are
+deterministic, the original ask named them separately from the review, and
+"backlog on content nodes" is not an argument about whether Lean compiles. That
+reading is flagged in `nok9` as an interpretation the owner can correct in one
+line.
+
+**Split out:** `h1uq` — warn → block needs a measured false-positive rate, no
+paper reports one for any LLM judge, and only a warn-only phase can produce
+it.
+
+**One process slip, recorded because the rule is explicit.** This bean was
+marked `completed` while it still carried an unchecked Done-when item. The
+beans guide permits completion only with none left. Corrected by moving that
+item into `h1uq`, which is where it belonged anyway — it cannot be done by this
+reconciliation.
+
