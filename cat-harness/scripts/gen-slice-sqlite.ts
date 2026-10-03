@@ -141,7 +141,7 @@ import { readDeclaration, repoRootFor, siteDirFor } from "../schemas/cat-harness
 import { LibraryEntrySchema, LibraryIndexSchema } from "../schemas/site-indexes.ts";
 import { PAYLOAD_MEDIA_TYPES, PAYLOAD_PATH, type PayloadLink } from "../schemas/subgraph-manifest.ts";
 import { TodoIndexSchema } from "../schemas/todo-index.ts";
-import { declaredBlockEdges, readBeans, type BeanNode } from "./beans.ts";
+import { beanDefsDir, declaredBlockEdges, readBeans, type BeanNode } from "./beans.ts";
 import { auditPayloadTree, payloadOutDir, planPayloads, renderPayloadFiles, type PayloadEntry, type PayloadPlan } from "./gen-subgraph-jsonld.ts";
 
 const INSTANCE_ROOT = resolve(import.meta.dir, "..");
@@ -570,9 +570,12 @@ export function beansData(beans: BeanNode[], root: string = REPO_ROOT, baseUrl =
   };
 }
 
+/** The bean store, read from its declaration (`beans/beans.json`), never spelled. */
+const BEAN_DEFS = beanDefsDir(REPO_ROOT);
+
 export const BEANS_SLICE: SliceDef = {
   slice: "beans",
-  source: { graph: "bean-defs", path: "beans/defs/" },
+  source: { graph: "bean-defs", path: BEAN_DEFS ? `${posix(relative(REPO_ROOT, BEAN_DEFS))}/` : "(no bean-defs declared)" },
   ddl: [
     // A rowid table, because FTS5 addresses rows by rowid; rows go in (id, file) order.
     `CREATE TABLE beans (
