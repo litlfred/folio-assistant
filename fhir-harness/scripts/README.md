@@ -10,6 +10,8 @@ Part of [FHIR IG Harness](../README.md) 0.1.0, declared as `fhir-ig-scripts`, ho
 
 | file | what it is | used by |
 |---|---|---|
+| [`ast-to-artifact-index.test.ts`](ast-to-artifact-index.test.ts) | a file |  |
+| [`ast-to-artifact-index.ts`](ast-to-artifact-index.ts) | a file |  |
 | [`build-ig-site.test.ts`](build-ig-site.test.ts) | a file |  |
 | [`build-ig-site.ts`](build-ig-site.ts) | a file |  |
 | [`check-artifact-index.ts`](check-artifact-index.ts) | a file |  |
@@ -17,10 +19,12 @@ Part of [FHIR IG Harness](../README.md) 0.1.0, declared as `fhir-ig-scripts`, ho
 | [`gen-ig-pages.ts`](gen-ig-pages.ts) | a file |  |
 | [`ig-api-views.test.ts`](ig-api-views.test.ts) | a file |  |
 | [`ig-api-views.ts`](ig-api-views.ts) | a file |  |
+| [`ig-ast-site.sh`](ig-ast-site.sh) | a file |  |
 | [`ig-ast.test.ts`](ig-ast.test.ts) | a file |  |
 | [`ig-ast.ts`](ig-ast.ts) | a file |  |
 | [`ig-binary-audit.test.ts`](ig-binary-audit.test.ts) | a file |  |
 | [`ig-binary-audit.ts`](ig-binary-audit.ts) | a file |  |
+| [`ig-cache.sh`](ig-cache.sh) | a file |  |
 | [`ig-site-data.test.ts`](ig-site-data.test.ts) | a file |  |
 | [`ig-site-data.ts`](ig-site-data.ts) | a file |  |
 | [`ingest-ig-artifacts.ts`](ingest-ig-artifacts.ts) | a file |  |
@@ -34,8 +38,9 @@ Part of [FHIR IG Harness](../README.md) 0.1.0, declared as `fhir-ig-scripts`, ho
 | [`resource-tabs.test.ts`](resource-tabs.test.ts) | a file |  |
 | [`resource-views.test.ts`](resource-views.test.ts) | a file |  |
 | [`resource-views.ts`](resource-views.ts) | a file |  |
+| [`stage-ast-sites.ts`](stage-ast-sites.ts) | a file |  |
 | [`stage-ig-sites.test.ts`](stage-ig-sites.test.ts) | a file |  |
 | [`stage-ig-sites.ts`](stage-ig-sites.ts) | a file |  |
-| [`templates/`](templates/) | 12 files | |
+| [`templates/`](templates/) | 13 files | |
 | [`tests/`](tests/) | 1 file | |
 <!-- kg:subgraph:end -->
