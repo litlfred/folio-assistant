@@ -5,7 +5,7 @@ status: in-progress
 type: task
 priority: normal
 created_at: 2026-10-02T21:20:17Z
-updated_at: 2026-10-03T00:53:08Z
+updated_at: 2026-10-03T01:03:55Z
 parent: folio-assistant-7x5n
 ---
 
@@ -57,3 +57,17 @@ Related: `32f6` (cat- prefix; PR #1913), `rva2` (one storage field per special b
 - special-branches.test.ts now requires `cat/<declared harness>/`, and a pending rename must name a bean that exists. Both were mutation-checked.
 
 **Survey re-run 2026-10-03:** 101 files mention fsh-guts, against about 30 listed above. Classification (writer, reader, excluder, declaration, test) to follow.
+
+
+## Step 3 inventory, classified 2026-10-03 (101 files that mention fsh-guts)
+
+| category | n | after the move |
+|---|---|---|
+| WRITER | 7 | `folio-assistant-core/scripts/sample-import-run.ts` `runSampleImport` (a HARD-CODED `join(root, 'fsh-guts', 'samples')`, so it must go through the declaration and then splice-write); `processes/library/sample-import.bpmn`, `processes/sdlc/activity-log.bpmn`, `folio-assistant-core/processes/ui/board-relocate.bpmn` (its relocate handler is not found by name; it probably resolves through the graph kind, so trace it); logs: `schemas/log-entry.ts` `logDirs`, `src/logging/log-writer.ts`, `log-sweep.ts` |
+| READER | 6 | `scripts/fsh-guts-export.ts` (`fshGutsDirs`, `walk`, `buildFshGutsExport`; docs-site.yml:503), `scripts/gen-fsh-guts-viz.ts` (`gutsDir`, `gutsFiles`; CI `fsh-guts:viz:check`), `check-uploads-retired.ts` (`ARCHIVE`, `archivedSources`), `check-retired-front-matter.ts` (`scan`, record existence) |
+| DECLARATION | 15 | `folio-assistant.json`'s `fsh-guts` directory entry is what every resolver-based reader and writer keys on, so it changes FIRST (it gains `storage`) |
+| EXCLUDER | 3 | `.gitignore`, `bunfig.toml`, qa-utils comments: dead after the move, and harmless |
+| TEST reading the real dir | 11 | fsh-guts-bean-refs, -not-rendered, -viz, -export (part), staging-only-publish, publish-verify, vocab-mapping-apply, check-retired-front-matter, retired-skill-fields, remote-packages-honest-docs, activity-log: each needs a fixture or a branch read, or it goes vacuous |
+| MENTION, fixture tests, e2e ids | 59 | no change (`wireframes/fsh-guts` in derive-po and pot-extract is a DIFFERENT directory) |
+
+**Design default, stated so it can be overruled:** `fsh-guts/logs/` is git-ignored local scratch, never committed, so it does NOT move to the branch. `logDirs` keeps resolving a local working-tree directory. Only committed content (retired/, samples/, scripts/, uploads/) moves.
