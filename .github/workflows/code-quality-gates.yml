@@ -103,6 +103,19 @@ jobs:
     # API field readable WITHOUT the Actions log host (bean `yqc4`; measured
     # Forbidden from a cloud container on 2026-10-03).
     #
+    # `bash <absolute path>` rather than the path alone, which removes BOTH
+    # ways this can fail on a runner: `bash` is certainly on PATH, the script
+    # is named unambiguously, and the executable bit stops mattering. The
+    # wrapper uses `PIPESTATUS`, which is bash-only, so naming bash is honest
+    # as well as safer.
+    #
+    # ABSOLUTE via `github.workspace`, because a custom `shell:` command is
+    # resolved through PATH, NOT against the workspace. Measured on #2016:
+    # `shell: cat-harness/scripts/gate-shell.sh {0}` made EVERY job fail with
+    # `Could not find a part of the path '/opt/pipx_bin/cat-harness/scripts'`
+    # -- the runner's first PATH entry with the relative path appended. An
+    # absolute path also survives a step that sets its own working-directory.
+    #
     # The template's `{0}` is the generated step script. The wrapper runs it
     # under `bash -e` — GitHub's own default — and NOT `-o pipefail`, which
     # would redden steps that pass today. The two rollup jobs (`typescript`,
@@ -110,7 +123,7 @@ jobs:
     # does not exist for them, and they write their own summary inline.
     defaults:
       run:
-        shell: cat-harness/scripts/gate-shell.sh {0}
+        shell: bash ${{ github.workspace }}/cat-harness/scripts/gate-shell.sh {0}
     steps:
       - uses: actions/checkout@v7
         with:
@@ -177,6 +190,19 @@ jobs:
     # API field readable WITHOUT the Actions log host (bean `yqc4`; measured
     # Forbidden from a cloud container on 2026-10-03).
     #
+    # `bash <absolute path>` rather than the path alone, which removes BOTH
+    # ways this can fail on a runner: `bash` is certainly on PATH, the script
+    # is named unambiguously, and the executable bit stops mattering. The
+    # wrapper uses `PIPESTATUS`, which is bash-only, so naming bash is honest
+    # as well as safer.
+    #
+    # ABSOLUTE via `github.workspace`, because a custom `shell:` command is
+    # resolved through PATH, NOT against the workspace. Measured on #2016:
+    # `shell: cat-harness/scripts/gate-shell.sh {0}` made EVERY job fail with
+    # `Could not find a part of the path '/opt/pipx_bin/cat-harness/scripts'`
+    # -- the runner's first PATH entry with the relative path appended. An
+    # absolute path also survives a step that sets its own working-directory.
+    #
     # The template's `{0}` is the generated step script. The wrapper runs it
     # under `bash -e` — GitHub's own default — and NOT `-o pipefail`, which
     # would redden steps that pass today. The two rollup jobs (`typescript`,
@@ -184,7 +210,7 @@ jobs:
     # does not exist for them, and they write their own summary inline.
     defaults:
       run:
-        shell: cat-harness/scripts/gate-shell.sh {0}
+        shell: bash ${{ github.workspace }}/cat-harness/scripts/gate-shell.sh {0}
     steps:
       - uses: actions/checkout@v7
         with:
@@ -296,6 +322,19 @@ jobs:
     # API field readable WITHOUT the Actions log host (bean `yqc4`; measured
     # Forbidden from a cloud container on 2026-10-03).
     #
+    # `bash <absolute path>` rather than the path alone, which removes BOTH
+    # ways this can fail on a runner: `bash` is certainly on PATH, the script
+    # is named unambiguously, and the executable bit stops mattering. The
+    # wrapper uses `PIPESTATUS`, which is bash-only, so naming bash is honest
+    # as well as safer.
+    #
+    # ABSOLUTE via `github.workspace`, because a custom `shell:` command is
+    # resolved through PATH, NOT against the workspace. Measured on #2016:
+    # `shell: cat-harness/scripts/gate-shell.sh {0}` made EVERY job fail with
+    # `Could not find a part of the path '/opt/pipx_bin/cat-harness/scripts'`
+    # -- the runner's first PATH entry with the relative path appended. An
+    # absolute path also survives a step that sets its own working-directory.
+    #
     # The template's `{0}` is the generated step script. The wrapper runs it
     # under `bash -e` — GitHub's own default — and NOT `-o pipefail`, which
     # would redden steps that pass today. The two rollup jobs (`typescript`,
@@ -303,7 +342,7 @@ jobs:
     # does not exist for them, and they write their own summary inline.
     defaults:
       run:
-        shell: cat-harness/scripts/gate-shell.sh {0}
+        shell: bash ${{ github.workspace }}/cat-harness/scripts/gate-shell.sh {0}
     steps:
       - uses: actions/checkout@v7
         with:
@@ -369,6 +408,19 @@ jobs:
     # API field readable WITHOUT the Actions log host (bean `yqc4`; measured
     # Forbidden from a cloud container on 2026-10-03).
     #
+    # `bash <absolute path>` rather than the path alone, which removes BOTH
+    # ways this can fail on a runner: `bash` is certainly on PATH, the script
+    # is named unambiguously, and the executable bit stops mattering. The
+    # wrapper uses `PIPESTATUS`, which is bash-only, so naming bash is honest
+    # as well as safer.
+    #
+    # ABSOLUTE via `github.workspace`, because a custom `shell:` command is
+    # resolved through PATH, NOT against the workspace. Measured on #2016:
+    # `shell: cat-harness/scripts/gate-shell.sh {0}` made EVERY job fail with
+    # `Could not find a part of the path '/opt/pipx_bin/cat-harness/scripts'`
+    # -- the runner's first PATH entry with the relative path appended. An
+    # absolute path also survives a step that sets its own working-directory.
+    #
     # The template's `{0}` is the generated step script. The wrapper runs it
     # under `bash -e` — GitHub's own default — and NOT `-o pipefail`, which
     # would redden steps that pass today. The two rollup jobs (`typescript`,
@@ -376,7 +428,7 @@ jobs:
     # does not exist for them, and they write their own summary inline.
     defaults:
       run:
-        shell: cat-harness/scripts/gate-shell.sh {0}
+        shell: bash ${{ github.workspace }}/cat-harness/scripts/gate-shell.sh {0}
     steps:
       - uses: actions/checkout@v7
         with:
@@ -484,6 +536,19 @@ jobs:
     # API field readable WITHOUT the Actions log host (bean `yqc4`; measured
     # Forbidden from a cloud container on 2026-10-03).
     #
+    # `bash <absolute path>` rather than the path alone, which removes BOTH
+    # ways this can fail on a runner: `bash` is certainly on PATH, the script
+    # is named unambiguously, and the executable bit stops mattering. The
+    # wrapper uses `PIPESTATUS`, which is bash-only, so naming bash is honest
+    # as well as safer.
+    #
+    # ABSOLUTE via `github.workspace`, because a custom `shell:` command is
+    # resolved through PATH, NOT against the workspace. Measured on #2016:
+    # `shell: cat-harness/scripts/gate-shell.sh {0}` made EVERY job fail with
+    # `Could not find a part of the path '/opt/pipx_bin/cat-harness/scripts'`
+    # -- the runner's first PATH entry with the relative path appended. An
+    # absolute path also survives a step that sets its own working-directory.
+    #
     # The template's `{0}` is the generated step script. The wrapper runs it
     # under `bash -e` — GitHub's own default — and NOT `-o pipefail`, which
     # would redden steps that pass today. The two rollup jobs (`typescript`,
@@ -491,7 +556,7 @@ jobs:
     # does not exist for them, and they write their own summary inline.
     defaults:
       run:
-        shell: cat-harness/scripts/gate-shell.sh {0}
+        shell: bash ${{ github.workspace }}/cat-harness/scripts/gate-shell.sh {0}
     steps:
       - uses: actions/checkout@v7
         with:
@@ -1655,6 +1720,19 @@ jobs:
     # API field readable WITHOUT the Actions log host (bean `yqc4`; measured
     # Forbidden from a cloud container on 2026-10-03).
     #
+    # `bash <absolute path>` rather than the path alone, which removes BOTH
+    # ways this can fail on a runner: `bash` is certainly on PATH, the script
+    # is named unambiguously, and the executable bit stops mattering. The
+    # wrapper uses `PIPESTATUS`, which is bash-only, so naming bash is honest
+    # as well as safer.
+    #
+    # ABSOLUTE via `github.workspace`, because a custom `shell:` command is
+    # resolved through PATH, NOT against the workspace. Measured on #2016:
+    # `shell: cat-harness/scripts/gate-shell.sh {0}` made EVERY job fail with
+    # `Could not find a part of the path '/opt/pipx_bin/cat-harness/scripts'`
+    # -- the runner's first PATH entry with the relative path appended. An
+    # absolute path also survives a step that sets its own working-directory.
+    #
     # The template's `{0}` is the generated step script. The wrapper runs it
     # under `bash -e` — GitHub's own default — and NOT `-o pipefail`, which
     # would redden steps that pass today. The two rollup jobs (`typescript`,
@@ -1662,7 +1740,7 @@ jobs:
     # does not exist for them, and they write their own summary inline.
     defaults:
       run:
-        shell: cat-harness/scripts/gate-shell.sh {0}
+        shell: bash ${{ github.workspace }}/cat-harness/scripts/gate-shell.sh {0}
     steps:
       - uses: actions/checkout@v7
         with:
@@ -2438,6 +2516,19 @@ jobs:
     # API field readable WITHOUT the Actions log host (bean `yqc4`; measured
     # Forbidden from a cloud container on 2026-10-03).
     #
+    # `bash <absolute path>` rather than the path alone, which removes BOTH
+    # ways this can fail on a runner: `bash` is certainly on PATH, the script
+    # is named unambiguously, and the executable bit stops mattering. The
+    # wrapper uses `PIPESTATUS`, which is bash-only, so naming bash is honest
+    # as well as safer.
+    #
+    # ABSOLUTE via `github.workspace`, because a custom `shell:` command is
+    # resolved through PATH, NOT against the workspace. Measured on #2016:
+    # `shell: cat-harness/scripts/gate-shell.sh {0}` made EVERY job fail with
+    # `Could not find a part of the path '/opt/pipx_bin/cat-harness/scripts'`
+    # -- the runner's first PATH entry with the relative path appended. An
+    # absolute path also survives a step that sets its own working-directory.
+    #
     # The template's `{0}` is the generated step script. The wrapper runs it
     # under `bash -e` — GitHub's own default — and NOT `-o pipefail`, which
     # would redden steps that pass today. The two rollup jobs (`typescript`,
@@ -2445,7 +2536,7 @@ jobs:
     # does not exist for them, and they write their own summary inline.
     defaults:
       run:
-        shell: cat-harness/scripts/gate-shell.sh {0}
+        shell: bash ${{ github.workspace }}/cat-harness/scripts/gate-shell.sh {0}
     steps:
       - uses: actions/checkout@v7
         with:
@@ -2537,6 +2628,19 @@ jobs:
     # API field readable WITHOUT the Actions log host (bean `yqc4`; measured
     # Forbidden from a cloud container on 2026-10-03).
     #
+    # `bash <absolute path>` rather than the path alone, which removes BOTH
+    # ways this can fail on a runner: `bash` is certainly on PATH, the script
+    # is named unambiguously, and the executable bit stops mattering. The
+    # wrapper uses `PIPESTATUS`, which is bash-only, so naming bash is honest
+    # as well as safer.
+    #
+    # ABSOLUTE via `github.workspace`, because a custom `shell:` command is
+    # resolved through PATH, NOT against the workspace. Measured on #2016:
+    # `shell: cat-harness/scripts/gate-shell.sh {0}` made EVERY job fail with
+    # `Could not find a part of the path '/opt/pipx_bin/cat-harness/scripts'`
+    # -- the runner's first PATH entry with the relative path appended. An
+    # absolute path also survives a step that sets its own working-directory.
+    #
     # The template's `{0}` is the generated step script. The wrapper runs it
     # under `bash -e` — GitHub's own default — and NOT `-o pipefail`, which
     # would redden steps that pass today. The two rollup jobs (`typescript`,
@@ -2544,7 +2648,7 @@ jobs:
     # does not exist for them, and they write their own summary inline.
     defaults:
       run:
-        shell: cat-harness/scripts/gate-shell.sh {0}
+        shell: bash ${{ github.workspace }}/cat-harness/scripts/gate-shell.sh {0}
     steps:
       - uses: actions/checkout@v7
         with:
@@ -2590,6 +2694,19 @@ jobs:
     # API field readable WITHOUT the Actions log host (bean `yqc4`; measured
     # Forbidden from a cloud container on 2026-10-03).
     #
+    # `bash <absolute path>` rather than the path alone, which removes BOTH
+    # ways this can fail on a runner: `bash` is certainly on PATH, the script
+    # is named unambiguously, and the executable bit stops mattering. The
+    # wrapper uses `PIPESTATUS`, which is bash-only, so naming bash is honest
+    # as well as safer.
+    #
+    # ABSOLUTE via `github.workspace`, because a custom `shell:` command is
+    # resolved through PATH, NOT against the workspace. Measured on #2016:
+    # `shell: cat-harness/scripts/gate-shell.sh {0}` made EVERY job fail with
+    # `Could not find a part of the path '/opt/pipx_bin/cat-harness/scripts'`
+    # -- the runner's first PATH entry with the relative path appended. An
+    # absolute path also survives a step that sets its own working-directory.
+    #
     # The template's `{0}` is the generated step script. The wrapper runs it
     # under `bash -e` — GitHub's own default — and NOT `-o pipefail`, which
     # would redden steps that pass today. The two rollup jobs (`typescript`,
@@ -2597,7 +2714,7 @@ jobs:
     # does not exist for them, and they write their own summary inline.
     defaults:
       run:
-        shell: cat-harness/scripts/gate-shell.sh {0}
+        shell: bash ${{ github.workspace }}/cat-harness/scripts/gate-shell.sh {0}
     steps:
       - uses: actions/checkout@v7
         with:
@@ -2638,6 +2755,19 @@ jobs:
     # API field readable WITHOUT the Actions log host (bean `yqc4`; measured
     # Forbidden from a cloud container on 2026-10-03).
     #
+    # `bash <absolute path>` rather than the path alone, which removes BOTH
+    # ways this can fail on a runner: `bash` is certainly on PATH, the script
+    # is named unambiguously, and the executable bit stops mattering. The
+    # wrapper uses `PIPESTATUS`, which is bash-only, so naming bash is honest
+    # as well as safer.
+    #
+    # ABSOLUTE via `github.workspace`, because a custom `shell:` command is
+    # resolved through PATH, NOT against the workspace. Measured on #2016:
+    # `shell: cat-harness/scripts/gate-shell.sh {0}` made EVERY job fail with
+    # `Could not find a part of the path '/opt/pipx_bin/cat-harness/scripts'`
+    # -- the runner's first PATH entry with the relative path appended. An
+    # absolute path also survives a step that sets its own working-directory.
+    #
     # The template's `{0}` is the generated step script. The wrapper runs it
     # under `bash -e` — GitHub's own default — and NOT `-o pipefail`, which
     # would redden steps that pass today. The two rollup jobs (`typescript`,
@@ -2645,7 +2775,7 @@ jobs:
     # does not exist for them, and they write their own summary inline.
     defaults:
       run:
-        shell: cat-harness/scripts/gate-shell.sh {0}
+        shell: bash ${{ github.workspace }}/cat-harness/scripts/gate-shell.sh {0}
     steps:
       - uses: actions/checkout@v7
         with:
@@ -2724,6 +2854,19 @@ jobs:
     # API field readable WITHOUT the Actions log host (bean `yqc4`; measured
     # Forbidden from a cloud container on 2026-10-03).
     #
+    # `bash <absolute path>` rather than the path alone, which removes BOTH
+    # ways this can fail on a runner: `bash` is certainly on PATH, the script
+    # is named unambiguously, and the executable bit stops mattering. The
+    # wrapper uses `PIPESTATUS`, which is bash-only, so naming bash is honest
+    # as well as safer.
+    #
+    # ABSOLUTE via `github.workspace`, because a custom `shell:` command is
+    # resolved through PATH, NOT against the workspace. Measured on #2016:
+    # `shell: cat-harness/scripts/gate-shell.sh {0}` made EVERY job fail with
+    # `Could not find a part of the path '/opt/pipx_bin/cat-harness/scripts'`
+    # -- the runner's first PATH entry with the relative path appended. An
+    # absolute path also survives a step that sets its own working-directory.
+    #
     # The template's `{0}` is the generated step script. The wrapper runs it
     # under `bash -e` — GitHub's own default — and NOT `-o pipefail`, which
     # would redden steps that pass today. The two rollup jobs (`typescript`,
@@ -2731,7 +2874,7 @@ jobs:
     # does not exist for them, and they write their own summary inline.
     defaults:
       run:
-        shell: cat-harness/scripts/gate-shell.sh {0}
+        shell: bash ${{ github.workspace }}/cat-harness/scripts/gate-shell.sh {0}
     steps:
       - uses: actions/checkout@v7
         with:
