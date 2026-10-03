@@ -802,6 +802,14 @@
       },
       "want": "Subscribe a folio that is not WHO-facing to ihris and instantiate the ihris harness, without materialising any of its subgraphs",
       "soThat": "ihris appears in the folio's navbar as an instantiated harness, pinned to one commit, once its needs are known to be held"
+    },
+    {
+      "id": "merge-steward-1",
+      "role": {
+        "role": "merge-steward"
+      },
+      "want": "Land the PRs that are ready as one train, in the order the reprioritisation table computes, ejecting only the member that turned it red",
+      "soThat": "main stays green while a red train costs one PR a hand-back rather than every PR in it a new round"
     }
   ]
 }
