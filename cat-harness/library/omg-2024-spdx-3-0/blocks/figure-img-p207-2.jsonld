@@ -1,0 +1,31 @@
+{
+  "@context": [
+    "https://litlfred.github.io/folio-assistant/ns/content/v1.jsonld",
+    {
+      "@base": "https://litlfred.github.io/folio/"
+    }
+  ],
+  "@id": "library/omg-2024-spdx-3-0/blocks/figure-img-p207-2",
+  "@type": [
+    "folio-assistant-core:Figure",
+    "doco:Figure"
+  ],
+  "kind": "figure",
+  "file": "../images/img-p207-2.png",
+  "pageStart": 207,
+  "pageEnd": 207,
+  "narrative": {
+    "text": "Two UML diagrams joined by a large double-headed arrow. Left: the SPDX 2.3 model, centred on SpdxDocument, SpdxElement and SpdxItem, with Package, File, Snippet, Annotation, Relationship (a long RelationshipType enumeration from contains to hasPrerequisite), Checksum, ExternalRef, the licensing classes (AnyLicenseInfo, SimpleLicensingInfo, License, LicenseException, Conjunctive/DisjunctiveLicenseSet, OrLaterOperator, WithExceptionOperator) and pink notes marking what was 'Added in 2.2'. Right: the SPDX 3.0 Core, Software and Security profiles as in Figures A.1–A.3, with Element as the root rather than SpdxDocument. At this resolution the small print of both diagrams is barely legible; the arrow, not the detail, is the figure's claim.",
+    "state": "draft",
+    "drafted_by": {
+      "kind": "agent",
+      "id": "claude",
+      "model": "not-disclosed",
+      "session": "https://claude.ai/code/session_01VfkKocGaQW7Msro2t5S66U"
+    },
+    "drafted_at": "2026-10-03"
+  },
+  "derivedFrom": "library/omg-2024-spdx-3-0/sections/sec-397",
+  "sourceDocument": "https://litlfred.github.io/folio-assistant/assets/library/jsonld/cat-harness/omg-2024-spdx-3-0/manifest.jsonld",
+  "provenance": "ingested"
+}

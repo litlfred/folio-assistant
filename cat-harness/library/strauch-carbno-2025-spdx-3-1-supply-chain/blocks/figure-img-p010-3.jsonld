@@ -1,0 +1,31 @@
+{
+  "@context": [
+    "https://litlfred.github.io/folio-assistant/ns/content/v1.jsonld",
+    {
+      "@base": "https://litlfred.github.io/folio/"
+    }
+  ],
+  "@id": "library/strauch-carbno-2025-spdx-3-1-supply-chain/blocks/figure-img-p010-3",
+  "@type": [
+    "folio-assistant-core:Figure",
+    "doco:Figure"
+  ],
+  "kind": "figure",
+  "file": "../images/img-p010-3.png",
+  "pageStart": 10,
+  "pageEnd": 10,
+  "narrative": {
+    "text": "UML class diagram in a frame tabbed 'Core profile', reproduced small: most attribute text is not legible at the extracted resolution, so only the larger class names are transcribed here, as drawn. Upper half: PhysicalLocation (attributes including country, countryCode, city, postalCode, postOfficeBoxNumber, provinceStateCode, streetAddress, geographicPointLocation), Location (locationTime), Requirement, Person, Organization (headquartersLocation : Location), SoftwareAgent and Agent; Element at the centre, with Annotation, Relationship, ElementCollection, SpdxDocument, Bundle, Bom, IndividualElement and LifecycleScopedRelationship around it; Tool and Artifact; DefinedProcess (processVersion, processRationale, processReadiness : ProcessReadinessType); Regulation pointing to Specification; and Action (actionStartTime, actionEndTime, actionLocation : Location, additionalInformation). Specification and Action each carry one attribute row shaded red. A 'Non-Element Classes' frame holds CreationInfo, ExternalIdentifier, ExternalMap, DictionaryEntry, ExternalRef, PositiveIntegerRange, NamespaceMap, IntegrityMethod with Hash and PackageVerificationCode, UnitOfMeasure (quantity, unitQUDT) with MeasureOfMass and MeasureOfLength, DefinedType and RequirementContext. A 'Simple Data Types' frame lists DateTime, MediaType, SemVer and one further type, and an 'Enumerations' frame lists about twelve enumeration names that are not reliably legible at this size.",
+    "state": "draft",
+    "drafted_by": {
+      "kind": "agent",
+      "id": "claude",
+      "model": "not-disclosed",
+      "session": "https://claude.ai/code/session_01VfkKocGaQW7Msro2t5S66U"
+    },
+    "drafted_at": "2026-10-03"
+  },
+  "derivedFrom": "library/strauch-carbno-2025-spdx-3-1-supply-chain/sections/sec-000",
+  "sourceDocument": "https://litlfred.github.io/folio-assistant/assets/library/jsonld/cat-harness/strauch-carbno-2025-spdx-3-1-supply-chain/manifest.jsonld",
+  "provenance": "ingested"
+}

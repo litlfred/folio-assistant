@@ -29,6 +29,9 @@ package "folio-assistant/uploads" as pkg_folio_assistant_uploads <<uploads>> {
     files [0..*] : File[]
     licence [0..1] : object
   }
+  class "spdx-3-1-rc1-machine-readable/schema.json" as folio_assistant_uploads_spdx_3_1_rc1_machine_readable_schema_json_spdx_3_1_rc1_machine_readable_schema_json <<schema: spdx-3-1-rc1-machine-readable/schema.json>> #f4f4f1 {
+    @context [1] : 'https://spdx.github.io/spdx-spec/v3.1-RC1/rdf/spdx-context.jsonld'
+  }
 }
 
 folio_assistant_uploads_folio_intake_v1_folio_intake_v1 *-- "0..*" folio_assistant_uploads_folio_intake_v1_File : files

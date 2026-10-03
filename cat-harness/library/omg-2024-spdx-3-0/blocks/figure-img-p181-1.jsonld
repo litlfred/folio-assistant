@@ -1,0 +1,31 @@
+{
+  "@context": [
+    "https://litlfred.github.io/folio-assistant/ns/content/v1.jsonld",
+    {
+      "@base": "https://litlfred.github.io/folio/"
+    }
+  ],
+  "@id": "library/omg-2024-spdx-3-0/blocks/figure-img-p181-1",
+  "@type": [
+    "folio-assistant-core:Figure",
+    "doco:Figure"
+  ],
+  "kind": "figure",
+  "file": "../images/img-p181-1.png",
+  "pageStart": 181,
+  "pageEnd": 181,
+  "narrative": {
+    "text": "UML class diagram of the two licensing profiles. Simple Licensing: the abstract AnyLicenseInfo specialises Core/Element; LicenseExpression (customIdToUri, licenseExpression string[1], licenseListVersion SemVer) specialises it, and SimpleLicensingText (licenseText[1]) specialises Element directly. Expanded Licensing: ConjunctiveLicenseSet and DisjunctiveLicenseSet (each with members), IndividualLicensingInfo, WithAdditionOperator (subjectExtendableLicense, subjectAddition) and the abstract ExtendableLicense all specialise AnyLicenseInfo. ExtendableLicense is specialised by the abstract License (licenseText, isDeprecatedLicenseId, isFsfLibre, isOsiApproved, licenseXml, obsoletedBy, seeAlso, standardLicenseHeader, standardLicenseTemplate), with subclasses ListedLicense (deprecatedVersion, listVersionAdded) and CustomLicense, and by OrLaterOperator (subjectLicense). LicenseAddition (additionText[1], …) specialises Element, with subclasses ListedLicenseException and CustomLicenseAddition.",
+    "state": "draft",
+    "drafted_by": {
+      "kind": "agent",
+      "id": "claude",
+      "model": "not-disclosed",
+      "session": "https://claude.ai/code/session_01VfkKocGaQW7Msro2t5S66U"
+    },
+    "drafted_at": "2026-10-03"
+  },
+  "derivedFrom": "library/omg-2024-spdx-3-0/sections/sec-325",
+  "sourceDocument": "https://litlfred.github.io/folio-assistant/assets/library/jsonld/cat-harness/omg-2024-spdx-3-0/manifest.jsonld",
+  "provenance": "ingested"
+}

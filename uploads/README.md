@@ -58,6 +58,7 @@ It is a high-level process: 5 of its steps are **call activities**, each handing
 | [`arxiv-licence-assumed-1991-2003/`](arxiv-licence-assumed-1991-2003/) | 2 files | |
 | [`arxiv-license-information/`](arxiv-license-information/) | 2 files | |
 | [`skills-in-openai-api-notebook/`](skills-in-openai-api-notebook/) | 2 files | |
+| [`spdx-3-1-rc1-machine-readable/`](spdx-3-1-rc1-machine-readable/) | 3 files | |
 | [`who-dpi-h-reference-architecture-draft-v1/`](who-dpi-h-reference-architecture-draft-v1/) | 2 files | |
 <!-- kg:subgraph:end -->
 

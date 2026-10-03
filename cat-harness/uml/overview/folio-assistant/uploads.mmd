@@ -23,7 +23,12 @@ classDiagram
       files [0..*] File[]
       licence [0..1] object
     }
+    class folio_assistant_uploads_spdx_3_1_rc1_machine_readable_schema_json_spdx_3_1_rc1_machine_readable_schema_json["spdx-3-1-rc1-machine-readable/schema.json"] {
+      <<schema: spdx-3-1-rc1-machine-readable/schema.json>>
+      @context [1] 'https://spdx.github.io/spdx-spec/v3.1-RC1/rdf/spdx-context.jsonld'
+    }
   }
   folio_assistant_uploads_folio_intake_v1_folio_intake_v1 *-- "0..*" folio_assistant_uploads_folio_intake_v1_File : files
   cssClass "folio_assistant_uploads_folio_intake_v1_File" fa_uml_kind_uploads
   cssClass "folio_assistant_uploads_folio_intake_v1_folio_intake_v1" fa_uml_kind_uploads
+  cssClass "folio_assistant_uploads_spdx_3_1_rc1_machine_readable_schema_json_spdx_3_1_rc1_machine_readable_schema_json" fa_uml_kind_uploads

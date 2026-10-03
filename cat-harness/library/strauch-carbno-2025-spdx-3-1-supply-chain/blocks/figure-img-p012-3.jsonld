@@ -1,0 +1,31 @@
+{
+  "@context": [
+    "https://litlfred.github.io/folio-assistant/ns/content/v1.jsonld",
+    {
+      "@base": "https://litlfred.github.io/folio/"
+    }
+  ],
+  "@id": "library/strauch-carbno-2025-spdx-3-1-supply-chain/blocks/figure-img-p012-3",
+  "@type": [
+    "folio-assistant-core:Figure",
+    "doco:Figure"
+  ],
+  "kind": "figure",
+  "file": "../images/img-p012-3.png",
+  "pageStart": 12,
+  "pageEnd": 12,
+  "narrative": {
+    "text": "UML class diagram of the Supply Chain profile, reproduced small: class names are mostly legible but most attribute text is not, so names are given as drawn and approximately. Three parents sit above the frame: Core/ Action, Core/ Artifact and Core/ DefinedProcess. The left column hangs action classes from Core/Action: CreateAction with HarvestingAction (or similar), AssemblyAction, ManufactureAction and ReproduceAction beneath it; UseAction with BoundaryCrossingAction, InspectionAction, OutOfSpecAction, PlanAction, ResolutionAction, a state-related action and TestAction; ModifyAction with ChangeAction, StorageAction and TransportAction; then BoundaryDefinitionAction, DestroyAction and ResponsibilityChangeAction. The right column mirrors it with process classes from Core/DefinedProcess: CreateProcess with InstantiateVirtualHardwareProcess, HarvestProcess, AssemblyProcess, ManufactureProcess and ReproduceProcess; UseProcess with InspectionProcess, PlanProcess, DefinedStateProcess and TestProcess among others; ModifyProcess with ChangeProcess, StorageProcess and TransportProcess; then BoundaryDefinitionProcess, DestroyProcess and ResponsibilityChangeProcess. A single class near the top centre hangs from Core/Artifact. Many classes carry one or more attribute rows shaded red, and a small 'Enumerations' frame at the lower right holds one enumeration.",
+    "state": "draft",
+    "drafted_by": {
+      "kind": "agent",
+      "id": "claude",
+      "model": "not-disclosed",
+      "session": "https://claude.ai/code/session_01VfkKocGaQW7Msro2t5S66U"
+    },
+    "drafted_at": "2026-10-03"
+  },
+  "derivedFrom": "library/strauch-carbno-2025-spdx-3-1-supply-chain/sections/sec-000",
+  "sourceDocument": "https://litlfred.github.io/folio-assistant/assets/library/jsonld/cat-harness/strauch-carbno-2025-spdx-3-1-supply-chain/manifest.jsonld",
+  "provenance": "ingested"
+}

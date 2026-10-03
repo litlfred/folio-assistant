@@ -1,0 +1,31 @@
+{
+  "@context": [
+    "https://litlfred.github.io/folio-assistant/ns/content/v1.jsonld",
+    {
+      "@base": "https://litlfred.github.io/folio/"
+    }
+  ],
+  "@id": "library/omg-2024-spdx-3-0/blocks/figure-img-p179-1",
+  "@type": [
+    "folio-assistant-core:Figure",
+    "doco:Figure"
+  ],
+  "kind": "figure",
+  "file": "../images/img-p179-1.png",
+  "pageStart": 179,
+  "pageEnd": 179,
+  "narrative": {
+    "text": "UML class diagram of the Software profile. The abstract SoftwareArtifact (contentIdentifier, primaryPurpose, additionalPurpose, copyrightText, attributionText) specialises Core/Artifact; Package (packageVersion, downloadLocation, packageUrl, homePage, sourceInfo), File (contentType, name[1], fileKind) and Snippet (byteRange, lineRange, snippetFromFile File[1]) specialise SoftwareArtifact. Sbom (sbomType SbomType[0..*]) specialises Core/Bom, and ContentIdentifier (contentIdentifierType[1], contentIdentifierValue anyURI[1]) specialises Core/IntegrityMethod. Enumerations: ContentIdentifierType, FileKindType, SbomType, SoftwarePurpose.",
+    "state": "draft",
+    "drafted_by": {
+      "kind": "agent",
+      "id": "claude",
+      "model": "not-disclosed",
+      "session": "https://claude.ai/code/session_01VfkKocGaQW7Msro2t5S66U"
+    },
+    "drafted_at": "2026-10-03"
+  },
+  "derivedFrom": "library/omg-2024-spdx-3-0/sections/sec-325",
+  "sourceDocument": "https://litlfred.github.io/folio-assistant/assets/library/jsonld/cat-harness/omg-2024-spdx-3-0/manifest.jsonld",
+  "provenance": "ingested"
+}

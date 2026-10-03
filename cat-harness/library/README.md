@@ -40,6 +40,7 @@ Part of [C@T Harness](../README.md) 0.1.0, declared as `library`, holding `libra
 | [`mcp-2026-specification-2026-07-28/`](mcp-2026-specification-2026-07-28/README.md) | 1631 files | |
 | [`omg-2013-bpmn-2-0-2/`](omg-2013-bpmn-2-0-2/README.md) | 4 files | |
 | [`omg-2024-dmn-1-5/`](omg-2024-dmn-1-5/README.md) | 4 files | |
+| [`omg-2024-spdx-3-0/`](omg-2024-spdx-3-0/README.md) | 1234 files | |
 | [`qi-hessen-vanderheijden-2023-ca-vs-lsa/`](qi-hessen-vanderheijden-2023-ca-vs-lsa/README.md) | 78 files | |
 | [`rfc2119-key-words-requirement-levels/`](rfc2119-key-words-requirement-levels/README.md) | 22 files | |
 | [`rfc8174-uppercase-vs-lowercase-2119-key-words/`](rfc8174-uppercase-vs-lowercase-2119-key-words/README.md) | 28 files | |
@@ -47,6 +48,7 @@ Part of [C@T Harness](../README.md) 0.1.0, declared as `library`, holding `libra
 | [`skill-authoring-best-practices---claude-platform-docs/`](skill-authoring-best-practices---claude-platform-docs/README.md) | 106 files | |
 | [`skills-in-openai-api/`](skills-in-openai-api/README.md) | 7 files | |
 | [`skills-in-openai-api-notebook/`](skills-in-openai-api-notebook/README.md) | 41 files | |
+| [`strauch-carbno-2025-spdx-3-1-supply-chain/`](strauch-carbno-2025-spdx-3-1-supply-chain/README.md) | 70 files | |
 | [`w3c-2013-prov-o/`](w3c-2013-prov-o/README.md) | 105 files | |
 | [`w3c-2018-odrl-model-2-2/`](w3c-2018-odrl-model-2-2/README.md) | 206 files | |
 | [`w3c-2020-json-ld-1-1/`](w3c-2020-json-ld-1-1/README.md) | 501 files | |

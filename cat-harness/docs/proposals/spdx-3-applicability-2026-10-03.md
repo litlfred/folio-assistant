@@ -301,6 +301,23 @@ touchpoints: `check:context-emission` and `check:node-iris` (G10), and
 
 ## 9. Decisions for the owner
 
+**What the owner decided, 2026-10-03.** Asked *"why would we need spdx at
+all? just export? what consumes?"*: nothing does today, which left the
+build items (rows 1–2, 6, M2, M3, M7) justified by no reader. Then:
+
+- **D1: waiting on a consumer.** *"Ask a consumer first"*. The question is
+  drafted and tracked as bean `ffv7`. No SPDX document is built until a
+  downstream party answers.
+- **D4: validation only, done.** *"go ahead with licence-id validation,
+  that's it for now"*. `check:source-licence` now refuses a `stated` id that
+  is not a valid SPDX expression over License List 3.29.0, pinned in
+  `external-schemas/spdx-license-list.json` with its id snapshot beside it
+  (`pin-spdx-license-list`). Deprecated and miscased ids are reported, not
+  refused. Notices generation and `REUSE.toml` were **not** taken up.
+- **D2, D3, D5:** not taken up. They matter only if D1 comes back "yes".
+
+The table below is the analysis as it stood before those answers.
+
 | | decision | options | recommended | if unanswered |
 |---|---|---|---|---|
 | **D1** | Scope | (a) **boundaries only: rows 1–6, generated** · (b) broadly, including QA and tools · (c) not at all | **(a)** | nothing is built; this stays a proposal |

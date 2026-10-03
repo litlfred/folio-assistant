@@ -37,6 +37,8 @@ function report(over: Partial<LicenceReport> = {}): LicenceReport {
     unknown: [],
     notRecorded: [{ entry: "library/b" }],
     malformed: [],
+    deprecatedIds: [],
+    recased: [],
     ...over,
   };
 }

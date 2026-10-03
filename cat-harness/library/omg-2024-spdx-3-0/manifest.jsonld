@@ -1,10 +1,15 @@
 {
-  "@context": "https://litlfred.github.io/folio-assistant/ns/content/v1.jsonld",
+  "@context": [
+    "https://litlfred.github.io/folio-assistant/ns/content/v1.jsonld",
+    {
+      "@base": "https://litlfred.github.io/folio/"
+    }
+  ],
   "@id": "https://litlfred.github.io/folio-assistant/assets/library/jsonld/cat-harness/omg-2024-spdx-3-0/manifest.jsonld",
   "@type": [
     "folio-assistant-core:SourceDocument"
   ],
-  "title": "omg-2024-spdx-3-0",
+  "title": "System Package Data Exchange (SPDX)",
   "contains": [
     "library/omg-2024-spdx-3-0/sections/sec-front-matter",
     "library/omg-2024-spdx-3-0/sections/sec-000",
@@ -411,9 +416,22 @@
   "provenance": "ingested",
   "meta": {
     "doc_id": "omg-2024-spdx-3-0",
+    "title_source": "corroborated",
+    "title_from": "structure.json metadata.title",
+    "title_verified": true,
     "source_file": "omg-2024-spdx-3-0.pdf",
     "source_sha256": "3041bc8676650ef6d0dd3d896d6bcf5f9757f9d04ce680ce5ea22a54e08cc67a",
-    "granularity": null,
-    "disposition": "ingested source material — attributed to its document, not folio content"
+    "pages": 215,
+    "arxiv": null,
+    "doi": null,
+    "document_class": null,
+    "extractor_validated": null,
+    "disposition": "ingested source material — attributed to its document, not folio content",
+    "licence": {
+      "status": "stated",
+      "id": "Community-Spec-1.0 AND CC-BY-3.0",
+      "basis": "PDF page ii, 'Use of Specification - Terms, Conditions & Notices': 'This work is licensed under the Community Specification License 1.0 (Community-Spec-1.0). Pre-existing portions of this work from copyright holders who have not subsequently contributed under the Community-Spec-1.0 are provided under Creative Commons Attribution License 3.0 Unported (CC-BY-3.0). Copies of these licenses are reproduced in their entirety herein.' Community-Spec-1.0 §1.1 grants a licence 'to reproduce, prepare derivative works of, publicly display, publicly perform, and distribute'; §1.2 requires attribution including 'the material's name, version number, and source from where the materials were retrieved'. Both licences permit holding the text, so the entry holds it (unlike omg-2024-dmn-1-5, whose OMG notice forbids network posting).",
+      "note": "ATTRIBUTION (Community-Spec-1.0 §1.2): System Package Data Exchange (SPDX) Specification, Version 3.0, OMG formal/24-11-01 (March 2025), retrieved from https://www.omg.org/spec/SPDX. Copyright © 2010-2024, The Linux Foundation and its Contributors, including SPDX Model contributions from OMG and its Contributors. SPDX® is a registered trademark of The Linux Foundation. This is the OMG formal publication of SPDX 3.0, not the Linux Foundation's 3.0.1 web edition; differences between the two were not compared."
+    }
   }
 }

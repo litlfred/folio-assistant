@@ -1,0 +1,31 @@
+{
+  "@context": [
+    "https://litlfred.github.io/folio-assistant/ns/content/v1.jsonld",
+    {
+      "@base": "https://litlfred.github.io/folio/"
+    }
+  ],
+  "@id": "library/omg-2024-spdx-3-0/blocks/figure-img-p180-1",
+  "@type": [
+    "folio-assistant-core:Figure",
+    "doco:Figure"
+  ],
+  "kind": "figure",
+  "file": "../images/img-p180-1.png",
+  "pageStart": 180,
+  "pageEnd": 180,
+  "narrative": {
+    "text": "UML class diagram of the Security profile. Vulnerability (publishedTime, modifiedTime, withdrawnTime) specialises Core/Artifact. The abstract VulnAssessmentRelationship specialises Core/Relationship, constrains 'to' to exactly one Element, and adds assessedElement, suppliedBy and the three times; it is specialised by CvssV2/V3/V4VulnAssessmentRelationship (score, severity, vectorString), EpssVulnAssessmentRelationship (probability, percentile), ExploitCatalogVulnAssessmentRelationship (catalogType, exploited, locator), SsvcVulnAssessmentRelationship (decisionType) and the abstract VexVulnAssessmentRelationship (vexVersion, statusNotes). The VEX class has four subclasses: VexAffected (actionStatement[1], actionStatementTime), VexFixed, VexNotAffected (justificationType, impactStatement, impactStatementTime) and VexUnderInvestigation. Enumerations: CvssSeverityType, ExploitCatalogType, SsvcDecisionType, VexJustificationType.",
+    "state": "draft",
+    "drafted_by": {
+      "kind": "agent",
+      "id": "claude",
+      "model": "not-disclosed",
+      "session": "https://claude.ai/code/session_01VfkKocGaQW7Msro2t5S66U"
+    },
+    "drafted_at": "2026-10-03"
+  },
+  "derivedFrom": "library/omg-2024-spdx-3-0/sections/sec-325",
+  "sourceDocument": "https://litlfred.github.io/folio-assistant/assets/library/jsonld/cat-harness/omg-2024-spdx-3-0/manifest.jsonld",
+  "provenance": "ingested"
+}

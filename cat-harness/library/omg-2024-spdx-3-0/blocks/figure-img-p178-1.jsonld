@@ -1,0 +1,31 @@
+{
+  "@context": [
+    "https://litlfred.github.io/folio-assistant/ns/content/v1.jsonld",
+    {
+      "@base": "https://litlfred.github.io/folio/"
+    }
+  ],
+  "@id": "library/omg-2024-spdx-3-0/blocks/figure-img-p178-1",
+  "@type": [
+    "folio-assistant-core:Figure",
+    "doco:Figure"
+  ],
+  "kind": "figure",
+  "file": "../images/img-p178-1.png",
+  "pageStart": 178,
+  "pageEnd": 178,
+  "narrative": {
+    "text": "UML class diagram of the SPDX 3.0 Core profile. The abstract Element (spdxId anyURI[1], name, summary, description, comment, creationInfo CreationInfo[1], verifiedUsing IntegrityMethod[0..*], externalRef, externalIdentifier, extension) is the root. Agent (with subclasses Person, Organization, SoftwareAgent), Tool, Artifact (originatedBy, suppliedBy, builtTime, releaseTime, validUntilTime, standardName, supportLevel), IndividualElement, Annotation (annotationType[1], statement, contentType; subject 1 Element), Relationship (relationshipType[1], completeness, startTime, endTime; from 1 Element, to 1..* Elements) and the abstract ElementCollection (profileConformance; element and rootElement) all specialise Element. SpdxDocument (import ExternalMap, dataLicense, namespaceMap) and Bundle (context) specialise ElementCollection, Bom specialises Bundle, and LifecycleScopedRelationship (scope) specialises Relationship. A 'Non-Element Classes' box holds CreationInfo (specVersion SemVer[1], created DateTime[1], createdBy Agent[1..*], createdUsing Tool[0..*], comment), ExternalIdentifier, ExternalMap, ExternalRef, DictionaryEntry, NamespaceMap, PositiveIntegerRange and IntegrityMethod with its subclasses Hash (algorithm, hashValue) and PackageVerificationCode. Two further boxes list the simple data types (DateTime, MediaType, SemVer) and the enumerations (AnnotationType, ExternalIdentifierType, ExternalRefType, HashAlgorithm, LifecycleScopeType, PresenceType, ProfileIdentifierType, RelationshipCompleteness, RelationshipType, SupportType).",
+    "state": "draft",
+    "drafted_by": {
+      "kind": "agent",
+      "id": "claude",
+      "model": "not-disclosed",
+      "session": "https://claude.ai/code/session_01VfkKocGaQW7Msro2t5S66U"
+    },
+    "drafted_at": "2026-10-03"
+  },
+  "derivedFrom": "library/omg-2024-spdx-3-0/sections/sec-324",
+  "sourceDocument": "https://litlfred.github.io/folio-assistant/assets/library/jsonld/cat-harness/omg-2024-spdx-3-0/manifest.jsonld",
+  "provenance": "ingested"
+}
