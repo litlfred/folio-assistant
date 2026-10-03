@@ -148,7 +148,7 @@
 <ul class="subs">
 <li><a href="../core-processes/">core-processes</a> <span class="p">folio-assistant-core/processes</span> <span class="n">11</span></li>
 <li><a href="../fhir-harness-processes/">fhir-harness-processes</a> <span class="p">fhir-harness/processes</span> <span class="n">2</span></li>
-<li><strong>processes</strong> <span class="p">cat-harness/processes</span> <span class="n">61</span></li>
+<li><strong>processes</strong> <span class="p">cat-harness/processes</span> <span class="n">62</span></li>
 <li><a href="../sci-processes/">sci-processes</a> <span class="p">folio-assistant-sci/processes</span> <span class="n">2</span></li>
 <li><a href="../smart-base-house-processes/">smart-base-house-processes</a> <span class="p">smart-base/processes</span> <span class="n">1</span></li>
 <li><a href="../smart-base-processes/">smart-base-processes</a> <span class="p">smart-base/methodologies/processes</span> <span class="n">1</span></li>
@@ -193,6 +193,10 @@
 <tr>
   <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/kg/review-code.bpmn"><code>Code node review</code></a><br><span class="p">cat-harness/processes/kg/review-code.bpmn</span></td>
   <td>Judging changed CODE NODES — Tool definitions and schema definition nodes — on whether they are correct NODES, not merely correct code.<div class="f"><span class="k">activities</span> 4</div><div class="f"><span class="k">lanes</span> Code reviewer</div><div class="f"><span class="k">skills</span> code-node-review, covered-is-not-reachable, site-presentation-assets, skills-and-tools</div></td>
+</tr>
+<tr>
+  <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/kg/slice-sqlite-publish.bpmn"><code>Build and publish a per-slice SQLite file</code></a><br><span class="p">cat-harness/processes/kg/slice-sqlite-publish.bpmn</span></td>
+  <td>Build one named slice of a knowledge graph as a SQLite file a browser mounts without parsing, and publish it beside its manifest and its payloads.<div class="f"><span class="k">activities</span> 7</div><div class="f"><span class="k">lanes</span> Platform authoring agent · CI/CD Pipeline</div><div class="f"><span class="k">skills</span> kg-export, rendered-verification</div></td>
 </tr>
 <tr>
   <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/library/content-acquisition.bpmn"><code>Content acquisition</code></a><br><span class="p">cat-harness/processes/library/content-acquisition.bpmn</span></td>

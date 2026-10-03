@@ -683,6 +683,13 @@ PDF page raster <span class="fa-gloss-status">candidate, extracted</span>
 <p>Render one page of a PDF to a PNG — the thumbnail a repository listing shows — and print the provenance a catalogue needs to record it as DERIVED: source, digest, page, geometry, renderer.</p>
 <p class="fa-gloss-meta">Tools of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/tools/index.ts"><code>cat-harness/tools/index.ts#pdf-cover</code></a></p>
 </dd>
+<dt id="cat-harness--kg-tools--slice-sqlite" data-fa-state="extracted" data-fa-gloss="">
+Per-slice SQLite builder <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>Build a named slice of a graph (beans, todos, library, or the whole-repo kg) as one SQLite file a browser mounts without parsing it, beside a manifest carrying its sha256, a row-content digest, its row counts and the search block the one search page reads. Heavy text is indexed by a contentless FTS5 and not stored; each row points at a content-addressed payload. <code>--check</code> builds every slice twice, requires one sha256, and requires the row digest read back from the file to equal the one computed from the source.</p>
+<p class="fa-gloss-meta">Tools of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/tools/index.ts"><code>cat-harness/tools/index.ts#slice-sqlite</code></a></p>
+</dd>
 <dt id="fhir-harness--kg-tools--ig-ast-plan" data-fa-state="extracted" data-fa-gloss="">
 Plan an incremental IG build from a delta of changed files <span class="fa-gloss-status">candidate, extracted</span>
 </dt>

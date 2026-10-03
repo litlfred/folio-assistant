@@ -1,171 +1,19 @@
 <!doctype html>
 <html lang="en">
 <head>
-<script data-folio-saved-scheme>try{var s=localStorage.getItem("fa-color-scheme");if(s==="light"||s==="dark")document.documentElement.setAttribute("data-fa-scheme",s)}catch(e){}</script>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Bean search</title>
 <!--
-  Full-text search over the work plan, from the per-slice SQLite file
-  (bean `q8ar`; contract in skills/kg/kg-core/kg-export.md §"Per-slice
-  SQLite"). Hand-written, unlike `index.html` beside it, which
-  scripts/state-visualizer.ts owns.
-
-  A page of its own rather than a panel on the dashboard, for two reasons.
-  The dashboard is `work-plan.js` in the Jekyll layout, and is loaded on every
-  page that includes `head_custom.html`; this one downloads a multi-MB
-  database, and must never do that on a page that did not ask for it. And
-  plain HTML with no Liquid serves identically from Jekyll's output and from
-  `cat-harness/docs/` as it is, which is what lets a browser test run against
-  the checkout itself.
+  Bean search moved to the ONE slice search page, which takes the slice as a
+  parameter (bean `q8ar`). This address is kept so a link to it still lands;
+  GitHub Pages cannot send a redirect, so the page sends the browser on.
 -->
-<meta name="fa-slice-manifest" content="../assets/slices/beans.sqlite3.json">
-<meta name="fa-payload-base" content="../payload/sha256/">
-<style>
-:root { --sv-bg: #0d0d0d; --sv-ink: #ffffff; --sv-ink-2: #c3c2b7; --sv-line: rgba(255,255,255,0.12); }
-:root[data-fa-scheme="light"] { --sv-bg: #f9f9f7; --sv-ink: #0b0b0b; --sv-ink-2: #52514e; --sv-line: rgba(11,11,11,0.12); }
-body {
-  margin: 0; padding: 1.5rem clamp(1rem, 4vw, 3rem) 4rem;
-  background: var(--sv-bg); color: var(--sv-ink);
-  font: 16px/1.55 system-ui, -apple-system, "Segoe UI", sans-serif;
-}
-main { max-width: 68rem; margin: 0 auto; }
-h1 { font-size: 1.5rem; margin: 0 0 0.25rem; }
-a { color: inherit; text-decoration: underline; text-underline-offset: 0.15em; }
-.sub, .state { color: var(--sv-ink-2); font-size: 0.9rem; margin: 0 0 1rem; }
-label { display: block; font-weight: 600; margin-bottom: 0.3rem; }
-input[type=search] {
-  width: 100%; box-sizing: border-box; font: inherit; padding: 0.55rem 0.75rem;
-  border: 1px solid var(--sv-line); border-radius: 6px; background: transparent; color: inherit;
-}
-ol { list-style: none; padding: 0; margin: 1rem 0 0; display: grid; gap: 0.5rem; }
-li { border: 1px solid var(--sv-line); border-radius: 8px; padding: 0.6rem 0.9rem; }
-li button {
-  all: unset; cursor: pointer; font-weight: 600; text-decoration: underline;
-  text-underline-offset: 0.15em;
-}
-li button:focus-visible { outline: 2px solid currentColor; outline-offset: 2px; }
-.meta { color: var(--sv-ink-2); font-size: 0.8rem; }
-pre { white-space: pre-wrap; font-size: 0.85rem; margin: 0.6rem 0 0; color: var(--sv-ink-2); }
-.err { color: #e66767; }
-</style>
+<meta http-equiv="refresh" content="0; url=../slices/search.html?slice=beans">
+<link rel="canonical" href="../slices/search.html?slice=beans">
+<style>body{font:16px/1.55 system-ui,sans-serif;margin:2rem;background:#0d0d0d;color:#fff}a{color:inherit}</style>
 </head>
 <body>
-<main>
-<h1>Bean search</h1>
-<p class="sub">Full-text search over every bean, run in your browser against a SQLite file
-(<a href="./">the work-plan state</a>). Titles and bodies are indexed; a body is fetched only
-when you open a result. Use quotes for a phrase.</p>
-<p class="state" id="state" role="status" aria-live="polite">Opening the beans slice…</p>
-<label for="q">Search beans</label>
-<input type="search" id="q" autocomplete="off" disabled placeholder='e.g. "named subgraph" or opfs'>
-<ol id="out" aria-label="Matching beans"></ol>
-</main>
-<script type="module">
-import { openSlice } from "../assets/js/slice-sqlite.js";
-
-const meta = (n) => document.querySelector(`meta[name="${n}"]`).content;
-const state = document.getElementById("state");
-const q = document.getElementById("q");
-const out = document.getElementById("out");
-const PAYLOAD = new URL(meta("fa-payload-base"), location.href);
-
-/** User text → an FTS5 query: a quoted phrase is kept, every other word is quoted and the last one is a prefix. */
-function ftsQuery(text) {
-  const parts = [];
-  const re = /"([^"]+)"|(\S+)/g;
-  let m;
-  while ((m = re.exec(text))) {
-    if (m[1]) parts.push(`"${m[1].replace(/"/g, "")}"`);
-    else parts.push(`"${m[2].replace(/"/g, "")}"`);
-  }
-  if (parts.length && !/"\s*$/.test(text)) parts[parts.length - 1] += "*";
-  return parts.join(" ");
-}
-
-const SELECT = "SELECT b.id, b.title, b.status, b.type, b.file, b.payload_sha256 FROM beans b";
-let slice = null;
-
-async function search(text) {
-  const t = text.trim();
-  if (!t) return { how: "none", rows: [] };
-  try {
-    const rows = await slice.query(
-      `${SELECT} JOIN beans_fts f ON f.rowid = b.rowid WHERE beans_fts MATCH ? ORDER BY bm25(beans_fts) LIMIT 50`,
-      [ftsQuery(t)],
-    );
-    return { how: "fts5", rows };
-  } catch (e) {
-    // FTS5 syntax a reader typed by accident: degrade to a title match rather than fail.
-    const rows = await slice.query(`${SELECT} WHERE b.title LIKE ? ORDER BY b.id LIMIT 50`, [`%${t}%`]);
-    return { how: "like", rows, why: String(e.message || e) };
-  }
-}
-
-function el(tag, props = {}, ...kids) {
-  const n = document.createElement(tag);
-  Object.assign(n, props);
-  for (const k of kids) n.append(k);
-  return n;
-}
-
-async function openBody(li, row) {
-  if (li.querySelector("pre")) return;
-  const pre = el("pre", { textContent: "Fetching…" });
-  li.append(pre);
-  try {
-    const r = await fetch(new URL(row.payload_sha256, PAYLOAD));
-    if (!r.ok) throw new Error(`payload answered ${r.status}`);
-    // The payload is the bean FILE verbatim; the row already shows its front matter.
-    pre.textContent = (await r.text()).replace(/^---\n[\s\S]*?\n---\n?/, "").trim();
-  } catch (e) {
-    pre.textContent = `Could not fetch this body (${e.message}).`;
-    pre.className = "err";
-  }
-}
-
-function render(result) {
-  out.replaceChildren(
-    ...result.rows.map((row) => {
-      const li = el("li");
-      const btn = el("button", { type: "button", textContent: row.title });
-      btn.addEventListener("click", () => openBody(li, row));
-      li.append(btn, el("div", { className: "meta", textContent: `${row.id} · ${row.status} · ${row.type}` }));
-      return li;
-    }),
-  );
-}
-
-let timer = 0;
-q.addEventListener("input", () => {
-  clearTimeout(timer);
-  timer = setTimeout(async () => {
-    const r = await search(q.value);
-    render(r);
-    state.textContent = q.value.trim()
-      ? `${r.rows.length} match${r.rows.length === 1 ? "" : "es"} (${r.how === "fts5" ? "full-text" : "title match — " + r.why}).`
-      : baseline;
-  }, 150);
-});
-
-let baseline = "";
-try {
-  slice = await openSlice(meta("fa-slice-manifest"));
-  const i = slice.info;
-  baseline = `${i.manifest.rows.beans} beans · ${(i.manifest.bytes / 1e6).toFixed(2)} MB · ` +
-    `${i.mode === "opfs-sahpool" ? "stored in this browser (OPFS)" : "in memory — not stored" + (i.opfsError ? ` (${i.opfsError})` : "")}` +
-    ` · ${i.downloaded ? "downloaded" : "no download"} · ready in ${i.ms} ms`;
-  state.textContent = baseline;
-  q.disabled = false;
-  q.focus();
-  window.__beanSearch = async (text) => { const r = await search(text); render(r); return { mode: slice.mode, info: i, ...r }; };
-  document.documentElement.dataset.sliceReady = slice.mode;
-} catch (e) {
-  // A load that FAILS says so, rather than showing an empty result list.
-  state.textContent = `The beans slice could not be opened: ${e.message}`;
-  state.className = "state err";
-  document.documentElement.dataset.sliceReady = "failed";
-}
-</script>
+<p>Bean search is now <a href="../slices/search.html?slice=beans">the slice search page, on the beans slice</a>.</p>
 </body>
 </html>

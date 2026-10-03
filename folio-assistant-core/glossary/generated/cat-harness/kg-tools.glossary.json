@@ -663,6 +663,14 @@
       "status": "candidate"
     },
     {
+      "id": "slice-sqlite",
+      "prefLabel": "Per-slice SQLite builder",
+      "definition": "Build a named slice of a graph (beans, todos, library, or the whole-repo kg) as one SQLite file a browser mounts without parsing it, beside a manifest carrying its sha256, a row-content digest, its row counts and the search block the one search page reads. Heavy text is indexed by a contentless FTS5 and not stored; each row points at a content-addressed payload. `--check` builds every slice twice, requires one sha256, and requires the row digest read back from the file to equal the one computed from the source.",
+      "notation": "slice-sqlite",
+      "source": "cat-harness/tools/index.ts#slice-sqlite",
+      "status": "candidate"
+    },
+    {
       "id": "stakeholder-map",
       "prefLabel": "Stakeholder map",
       "definition": "Given the paths a proposed change touches, report which skills change, which roles declare them, and who therefore has a stake in the review.",
