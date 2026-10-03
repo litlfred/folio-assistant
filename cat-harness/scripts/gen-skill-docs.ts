@@ -31,6 +31,7 @@ import { packageDirsIn } from "./skill-topics.js";
 import { processRows, type ProcessRow } from "./gen-processes-viz.js";
 import { siteDirFor, repoRootFor } from "../schemas/cat-harness.ts";
 import { stripInlineCode } from "../schemas/inline-code.ts";
+import { wrapRaw } from "./lib/liquid-raw.ts";
 
 const INSTANCE_ROOT = resolve(import.meta.dir, "..");
 const REPO_ROOT = repoRootFor(INSTANCE_ROOT);
@@ -1117,10 +1118,9 @@ async function main(): Promise<void> {
       }
       page.push("");
       // Wrap the body in a Liquid raw block so prose containing `{{ }}` / `{% %}`
-      // (math, code, templates) is emitted verbatim, not parsed by Jekyll.
-      page.push("{% raw %}");
-      page.push(body.trimEnd());
-      page.push("{% endraw %}");
+      // (math, code, templates) is emitted verbatim, not parsed by Jekyll —
+      // including a skill that writes the closing raw tag itself (bean kjbb).
+      page.push(...wrapRaw(body.trimEnd()));
       page.push(...processesSection(name, procRows));
       page.push("");
       emit(join(OUT_DIR, `${published}.md`), page.join("\n"));

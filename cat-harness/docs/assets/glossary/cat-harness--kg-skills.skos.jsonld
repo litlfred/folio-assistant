@@ -3879,6 +3879,26 @@
       "skos:note": "candidate"
     },
     {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-skills/visualizer-loading",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-skills"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "visualizer-loading"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The general strategy for a complex visualizer: the generated page carries identity, layout and a pointer, and its bulky or repeated content is fetched from the Knowledge Graph in the browser rather than baked into every page. What must stay server-side, how to fetch, how to stay equivalent to the render being replaced, and how to verify a page whose content is not in its HTML. Read before generating any page that shows a KG node's data at length: an IG artefact view, a graph viewer, a schema or sidecar view."
+        }
+      ],
+      "skos:notation": "visualizer-loading",
+      "dcterms:source": "cat-harness/skills/ui/ui-core/visualizer-loading.md",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-skills/vocabulary-authority",
       "@type": "skos:Concept",
       "skos:inScheme": {

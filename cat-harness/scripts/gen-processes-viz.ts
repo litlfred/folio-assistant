@@ -75,6 +75,7 @@ import { basename, dirname, join, relative, resolve } from "node:path";
 import { declarationPathIn } from "../schemas/cat-harness.js";
 import { baseDocsDir } from "./compose-docs.js";
 import { skillPagesOf } from "./lib/skill-pages.ts";
+import { wrapRaw } from "./lib/liquid-raw.ts";
 import { workflowFiles, kgRoots } from "./known-skills.js";
 import { loadProcessModel, isActivity, isDecision, branchesOf } from "../src/workflow/process-model.js";
 import {
@@ -715,7 +716,10 @@ export function processPage(
   L.push("{: .note }");
   L.push(`> Generated from \`${row.file}\` by \`gen-processes-viz.ts\` — do not edit here. [All processes](index.html)`);
   L.push("");
-  L.push("{% raw %}");
+  // Everything from here to the end is authored BPMN text; `wrapRaw` below
+  // escapes it so a closing raw tag inside a documentation string cannot end
+  // the block early (bean kjbb).
+  const rawFrom = L.length;
   L.push(`# ${row.name}`);
   L.push("");
   L.push(`\`${row.id}\` · ${row.enforcement}${row.enforcementDeclared ? "" : " (defaulted)"} · ${row.activities} step(s)`);
@@ -804,7 +808,7 @@ export function processPage(
     }
     L.push("");
   }
-  L.push("{% endraw %}");
+  L.push(...wrapRaw(L.splice(rawFrom).join("\n")));
   return `${L.join("\n")}\n`;
 }
 

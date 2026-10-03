@@ -41,6 +41,9 @@ package "fhir-harness/fhir-ig-tools" as pkg_fhir_harness_fhir_ig_tools <<tools>>
     subprocesses [0..*] : string[]
   }
 }
+package "fhir-harness/fhir-ig-scripts" as pkg_fhir_harness_fhir_ig_scripts <<code>> {
+  note "code: no node schema declared\n(no validator registered: could not determine)" as n_fhir_harness_fhir_ig_scripts_code
+}
 package "fhir-harness/fhir-harness-processes" as pkg_fhir_harness_fhir_harness_processes <<processes>> {
   class "Business Process Model and Notation (BPMN)" as fhir_harness_fhir_harness_processes_omg_bpmn_2_0 <<ext: omg-bpmn-2.0>> #eee9f5 {
     bpmn:callActivity [0..*] : element
@@ -83,8 +86,9 @@ package "fhir-harness/qa" as pkg_fhir_harness_qa <<qa>> {
 }
 
 fhir_harness_fhir_ig_tools_ToolDefinition *-- "0..*" fhir_harness_fhir_ig_tools_Maintain : maintains
-' grid: portrait, 2 column(s) — pkg_fhir_harness_library pkg_fhir_harness_fhir_ig_skills pkg_fhir_harness_fhir_ig_tools pkg_fhir_harness_fhir_harness_processes pkg_fhir_harness_qa
+' grid: portrait, 2 column(s) — pkg_fhir_harness_library pkg_fhir_harness_fhir_ig_skills pkg_fhir_harness_fhir_ig_tools pkg_fhir_harness_fhir_ig_scripts pkg_fhir_harness_fhir_harness_processes pkg_fhir_harness_qa
 pkg_fhir_harness_library -[hidden]down- pkg_fhir_harness_fhir_ig_tools
-pkg_fhir_harness_fhir_ig_skills -[hidden]down- pkg_fhir_harness_fhir_harness_processes
-pkg_fhir_harness_fhir_ig_tools -[hidden]down- pkg_fhir_harness_qa
+pkg_fhir_harness_fhir_ig_skills -[hidden]down- pkg_fhir_harness_fhir_ig_scripts
+pkg_fhir_harness_fhir_ig_tools -[hidden]down- pkg_fhir_harness_fhir_harness_processes
+pkg_fhir_harness_fhir_ig_scripts -[hidden]down- pkg_fhir_harness_qa
 @enduml
