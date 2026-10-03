@@ -133,6 +133,17 @@ jobs:
       # at the start of a line is forbidden in content Lean files. Use
       # targeted imports (run `#min_imports` after a clean build to find
       # them).
+      # TEMPORARY PROBE — bean `yqc4`. Proves that an `::error::` emitted from
+      # inside `gate-shell.sh` reaches the check run's annotations endpoint,
+      # which is the claim this PR now rests on and the only one that cannot
+      # be tested from a checkout. REVERTED in the next commit, exactly as the
+      # Playwright artifact was proved on #1949.
+      - name: PROBE - delete me
+        run: |
+          echo "PROBE-MARKER-ALPHA this line must reach the annotations API"
+          echo "PROBE-MARKER-BETA on stderr" >&2
+          exit 3
+
       - name: No bare `import Mathlib`
         run: |
           set -euo pipefail
