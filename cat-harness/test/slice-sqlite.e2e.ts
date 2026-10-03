@@ -1,6 +1,6 @@
 import { test, expect, type Page } from "@playwright/test";
 import { execFileSync, spawn, type ChildProcess } from "node:child_process";
-import { existsSync, mkdirSync, mkdtempSync, readFileSync, readdirSync, rmSync, symlinkSync } from "node:fs";
+import { existsSync, mkdirSync, mkdtempSync, readFileSync, readdirSync, rmSync, symlinkSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 
@@ -211,6 +211,63 @@ test("kg: the whole-repo slice finds a skill node, and its instruction body is t
   console.log(`[q8ar] kg first open: ${r.info.ms} ms; "todo manager" → ${r.rows.length} row(s)`);
   const body = await page.evaluate(async (hex) => (await fetch(`../payload/sha256/${hex}`)).text(), hit!.payload!);
   expect(body).toContain("beans");
+});
+
+// ── content addressing (bean `wixl`) ─────────────────────────────────────
+
+type Manifest = { slice: string; file: string; sha256: string } & Record<string, unknown>;
+const manifestOf = (slice: string) =>
+  JSON.parse(readFileSync(join(site, "assets", "slices", `${slice}.sqlite3.json`), "utf-8")) as Manifest;
+
+test("wixl: the manifest names a content-addressed database, and that named file is what the page downloads", async ({ page }) => {
+  const m = manifestOf("beans");
+  expect(m.file).toBe(`beans.${m.sha256}.sqlite3`);
+  const files = readdirSync(join(site, "assets", "slices"));
+  // Only the current build is published: no fixed-path database beside it.
+  expect(files).not.toContain("beans.sqlite3");
+  expect(files.filter((f) => f.startsWith("beans.") && f.endsWith(".sqlite3"))).toEqual([m.file]);
+  const fetched: string[] = [];
+  page.on("request", (r) => { if (r.url().includes("/assets/slices/")) fetched.push(new URL(r.url()).pathname); });
+  expect(await open(page, "beans")).toBe("opfs-sahpool");
+  expect(fetched).toContain(`/assets/slices/${m.file}`);
+  const r = await search(page, `"${beanPhrase}"`);
+  expect(r.info.downloaded).toBe(true);
+  expect((r.info as unknown as { contentAddressed: boolean }).contentAddressed).toBe(true);
+});
+
+/** A manifest that names a REAL file whose sha256 is not the one it promises. */
+function writeMismatch(slice: string) {
+  const beansM = manifestOf("beans");
+  const todosM = manifestOf("todos");
+  expect(todosM.sha256).not.toBe(beansM.sha256);
+  writeFileSync(
+    join(site, "assets", "slices", `${slice}.sqlite3.json`),
+    JSON.stringify({ ...beansM, slice, file: todosM.file }),
+  );
+  return todosM.file;
+}
+
+test("wixl: a manifest whose named file has a different sha256 is refused with a visible message (Worker + OPFS)", async ({ page }) => {
+  const file = writeMismatch("mismatch");
+  await page.goto(`${BASE}/slices/search.html?slice=mismatch`);
+  await expect(page.locator("html")).toHaveAttribute("data-slice-ready", "failed", { timeout: 60_000 });
+  await expect(page.locator("html")).toHaveAttribute("data-slice-error", "integrity");
+  const state = page.locator("#state");
+  await expect(state).toBeVisible();
+  await expect(state).toContainText("could not be opened");
+  await expect(state).toContainText("the manifest and the database disagree");
+  await expect(state).toContainText(file);
+  await expect(state).toContainText("Refused");
+  await expect(page.locator("#q")).toBeDisabled();
+});
+
+test("wixl: the same mismatch is refused in memory too, with no Worker to fall back from", async ({ page }) => {
+  writeMismatch("mismatch-mem");
+  await page.addInitScript(() => { delete (window as unknown as { Worker?: unknown }).Worker; });
+  await page.goto(`${BASE}/slices/search.html?slice=mismatch-mem`);
+  await expect(page.locator("html")).toHaveAttribute("data-slice-ready", "failed", { timeout: 60_000 });
+  await expect(page.locator("html")).toHaveAttribute("data-slice-error", "integrity");
+  await expect(page.locator("#state")).toContainText("the manifest and the database disagree");
 });
 
 test("with no slice named, the page lists every built slice and opens none", async ({ page }) => {

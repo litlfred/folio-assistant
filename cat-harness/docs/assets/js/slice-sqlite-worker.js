@@ -22,6 +22,7 @@ self.onmessage = async (ev) => {
       throw new Error(`unknown op ${op}`);
     }
   } catch (e) {
-    self.postMessage({ id, ok: false, error: String(e && e.message ? e.message : e) });
+    // `integrity` survives the structured clone where an Error subclass would not.
+    self.postMessage({ id, ok: false, error: String(e && e.message ? e.message : e), integrity: !!e && e.name === "SliceIntegrityError" });
   }
 };

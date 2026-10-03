@@ -576,6 +576,15 @@ jobs:
           # committed KG payloads copied just above. Each run also rewrites
           # `assets/slices/index.json`, which lists every slice built so far.
           # Searched at `slices/search.html?slice=<name>`.
+          # The database is CONTENT-ADDRESSED, `<slice>.<sha256>.sqlite3`, and
+          # the fixed `<slice>.sqlite3.json` manifest names it (bean `wixl`), so
+          # a CDN cannot pair a fresh manifest with stale bytes. Old builds do
+          # not pile up: each run writes only the current file, this deploy is a FULL REPLACE of
+          # `gh-pages` (`publish-gh-pages.sh`, `rm -r '*'` over the branch), and
+          # the STAGING/ previews it carries forward are restored as they were.
+          # A CDN may still hold, for one TTL (Pages: max-age=600), a stale
+          # manifest and the older file it names -- a self-consistent pair --
+          # or a stale manifest whose file is gone, which the page reports.
           bun run cat-harness/scripts/gen-slice-sqlite.ts --out ./_site/assets/slices --payload-out ./_site/payload/sha256 --slice beans
           bun run cat-harness/scripts/gen-slice-sqlite.ts --out ./_site/assets/slices --payload-out ./_site/payload/sha256 --slice todos
           bun run cat-harness/scripts/gen-slice-sqlite.ts --out ./_site/assets/slices --payload-out ./_site/payload/sha256 --slice library

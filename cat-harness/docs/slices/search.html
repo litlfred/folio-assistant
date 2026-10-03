@@ -195,7 +195,8 @@ if (!name) {
     const n = i.manifest.rows[i.manifest.fts5.rowsOf];
     baseline = `${n} ${search.noun}s · ${(i.manifest.bytes / 1e6).toFixed(2)} MB · ` +
       `${i.mode === "opfs-sahpool" ? "stored in this browser (OPFS)" : "in memory — not stored" + (i.opfsError ? ` (${i.opfsError})` : "")}` +
-      ` · ${i.downloaded ? "downloaded" : "no download"} · ready in ${i.ms} ms`;
+      ` · ${i.downloaded ? "downloaded" : "no download"} · ready in ${i.ms} ms` +
+      (i.contentAddressed ? "" : " · an older fixed-path build, still verified by sha256");
     state.textContent = baseline;
     q.disabled = false;
     q.focus();
@@ -205,6 +206,9 @@ if (!name) {
     // A load that FAILS says so, rather than showing an empty result list.
     state.textContent = `The ${name} slice could not be opened: ${e.message}`;
     state.className = "state err";
+    // Which failure, for a test or a reader's devtools: a manifest/database
+    // mismatch (bean `wixl`) is not the same fault as a network or WASM one.
+    document.documentElement.dataset.sliceError = e.name === "SliceIntegrityError" ? "integrity" : "other";
     document.documentElement.dataset.sliceReady = "failed";
   }
 }

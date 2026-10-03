@@ -29,16 +29,66 @@
  *
  * ## What it writes
  *
- * - `<out>/<slice>.sqlite3`: the skeleton — rows, edges, a contentless FTS5.
- * - `<out>/<slice>.sqlite3.json`: the manifest (`folio-slice-sqlite/v1`). It
- *   carries the file's `sha256` and `bytes`, which the client verifies the
- *   download against and keys its OPFS copy by; per-table row counts; the
- *   schema and SQLite versions; a `contentDigest` over the ROWS; and the
- *   `search` block the generic page reads.
+ * - `<out>/<slice>.<sha256>.sqlite3`: the skeleton — rows, edges, a
+ *   contentless FTS5 — at a CONTENT-ADDRESSED name (bean `wixl`, below).
+ * - `<out>/<slice>.sqlite3.json`: the manifest (`folio-slice-sqlite/v1`), at a
+ *   FIXED name. Its `file` names the database; it carries the file's `sha256`
+ *   and `bytes`, which the client verifies the download against and keys its
+ *   OPFS copy by; per-table row counts; the schema and SQLite versions; a
+ *   `contentDigest` over the ROWS; and the `search` block the generic page
+ *   reads.
  * - `<out>/index.json`: the list of slices in `<out>`, for the search page.
  * - With `--payload-out <dir>`: every deploy-written payload of the slices
  *   built, at `<dir>/<hex>` plus its `<hex>.json` sidecar, written by
  *   `gen-subgraph-jsonld`'s own `renderPayloadFiles` — not a second writer.
+ *
+ * ## The database is content-addressed; the manifest is not (bean `wixl`)
+ *
+ * Until 2026-10-03 the database sat at `<slice>.sqlite3`, one path across
+ * builds. Behind a CDN with any TTL a client could get a FRESH manifest and a
+ * STALE database, fail the sha256 check, and fall back: correct, but a search
+ * that does not open. Naming the file by its sha256 removes the pair that can
+ * disagree. A fresh manifest names a file no cache has seen; a stale manifest
+ * names an older file whose bytes still hash to what that manifest promises.
+ * Either way the client gets a self-consistent pair, or a 404 it reports.
+ *
+ * **The scheme is `assets/slices/<slice>.<full sha256 hex>.sqlite3`, not
+ * `payload/sha256/<hex>`.** Weighed against `kg-export` §"Payloads":
+ *
+ * - A payload is the MUSCLE: a node's heavy body, "the source file verbatim",
+ *   linked from a node's `payload` and admitted by an orphan audit only while
+ *   something links to it. A slice database is the SKELETON in a second
+ *   encoding — derived, SQLite-version dependent, and linked from no node. In
+ *   `payload/sha256/` it would be an orphan by that contract's own rule (the
+ *   deploy audit, `auditPayloadTree`, admits referenced payloads only), and it
+ *   would need a `<hex>.json` sidecar to carry a media type its extension
+ *   already says.
+ * - Beside its manifest, `file` stays a SIBLING name the client resolves
+ *   against the manifest's URL, so the client's resolution did not change and
+ *   the directory still says which slice a file is.
+ * - The FULL hex, not a prefix, for the payload contract's own reason: the
+ *   name's hash segment IS `sha256` by construction, so a reader (and the
+ *   client) can check one against the other. A prefix would be a weaker claim
+ *   to save ~50 bytes.
+ *
+ * What the scheme borrows from the payload contract is the property that
+ * matters: **immutable, not kept forever.** The bytes at a name never change;
+ * a name stops resolving once a build no longer writes it.
+ *
+ * **The manifest stays at the fixed `<slice>.sqlite3.json`**, because it is the
+ * one file that says which build is current, and the page has to find it by
+ * slice name. It must be served with a SHORT TTL. The client fetches it with
+ * `no-store`, which bypasses the BROWSER cache only; a CDN in front of the
+ * site keeps it for the host's TTL (GitHub Pages sends `max-age=600`, and a
+ * repository cannot change it). That is now an availability bound, not a
+ * correctness one: a manifest up to one TTL old names a file that is either
+ * still cached beside it, or gone and reported as a 404.
+ *
+ * **Rotation.** A build writes ONLY the current file, and removes any other
+ * `<slice>.<hex>.sqlite3` (and the legacy `<slice>.sqlite3`) of the SAME slice
+ * from `--out` — {@link rotateSliceFiles}. `--out` is a build directory this
+ * tool owns (`_site/assets/slices/` at deploy; a gitignored one locally), so
+ * this is a build output replacing itself, not a durable artefact removed.
  *
  * ## Bodies are payloads, not columns
  *
@@ -85,7 +135,7 @@ import { Database } from "bun:sqlite";
 import { createHash } from "node:crypto";
 import { existsSync, mkdirSync, mkdtempSync, readFileSync, readdirSync, renameSync, rmSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
-import { dirname, join, relative, resolve } from "node:path";
+import { join, relative, resolve } from "node:path";
 
 import { readDeclaration, repoRootFor, siteDirFor } from "../schemas/cat-harness.ts";
 import { LibraryEntrySchema, LibraryIndexSchema } from "../schemas/site-indexes.ts";
@@ -295,7 +345,7 @@ export function databaseContentDigest(db: Database, def: SliceDef): string {
  * written to a scratch file first and then `VACUUM INTO` the destination, so
  * the published bytes carry no build history.
  */
-export function buildSlice(def: SliceDef, data: SliceData, outFile: string): SliceManifest {
+export function buildSlice(def: SliceDef, data: SliceData, outDir: string): SliceManifest {
   const scratchDir = mkdtempSync(join(tmpdir(), "slice-sqlite-"));
   const scratch = join(scratchDir, "build.sqlite3");
   try {
@@ -336,27 +386,31 @@ export function buildSlice(def: SliceDef, data: SliceData, outFile: string): Sli
       : [];
     const sqliteVersion = (db.query(`SELECT sqlite_version() AS v`).get() as { v: string }).v;
 
-    mkdirSync(dirname(outFile), { recursive: true });
-    const tmpOut = `${outFile}.tmp-${process.pid}`;
+    mkdirSync(outDir, { recursive: true });
+    // `.tmp-` never matches SLICE_FILE, so an interrupted build is not a slice.
+    const tmpOut = join(outDir, `${def.slice}.tmp-${process.pid}.sqlite3`);
     rmSync(tmpOut, { force: true });
     db.exec(`VACUUM INTO '${tmpOut.replace(/'/g, "''")}'`);
     db.close();
-    renameSync(tmpOut, outFile);
 
-    // The digest is read back from the PUBLISHED file, so it describes what shipped.
-    const shipped = new Database(outFile, { readonly: true });
+    // The digest is read back from the PUBLISHED bytes, so it describes what shipped.
+    const shipped = new Database(tmpOut, { readonly: true });
     const contentDigest = databaseContentDigest(shipped, def);
     shipped.close();
 
-    const bytes = readFileSync(outFile);
+    const bytes = readFileSync(tmpOut);
+    const hex = sha256(bytes);
+    // The name is the hash, so it is fixed only once the bytes are.
+    const file = sliceFileName(def.slice, hex);
+    renameSync(tmpOut, join(outDir, file));
     let payloadBytes = 0;
     for (const e of data.payloads.payloads.values()) payloadBytes += e.bytes.length;
     return {
       $schema: MANIFEST_SCHEMA,
       slice: def.slice,
-      file: `${def.slice}.sqlite3`,
+      file,
       schemaVersion: SCHEMA_VERSION,
-      sha256: sha256(bytes),
+      sha256: hex,
       bytes: bytes.length,
       contentDigest,
       sqliteVersion,
@@ -376,6 +430,38 @@ export function buildSlice(def: SliceDef, data: SliceData, outFile: string): Sli
   }
 }
 
+/** The content-addressed name a slice's database is published under: `<slice>.<sha256 hex>.sqlite3`. */
+export function sliceFileName(slice: string, hex: string): string {
+  if (!/^[0-9a-f]{64}$/.test(hex)) throw new Error(`slice ${slice}: ${hex} is not a sha256 hex digest`);
+  return `${slice}.${hex}.sqlite3`;
+}
+
+/** Matches a published slice database name, capturing the slice and its hex. */
+export const SLICE_FILE = /^([a-z][a-z0-9-]*)\.([0-9a-f]{64})\.sqlite3$/;
+
+/** The manifest's FIXED name — the one file that says which build is current. */
+export const manifestFileName = (slice: string): string => `${slice}.sqlite3.json`;
+
+/**
+ * Remove every database of `slice` in `outDir` other than `keep`: earlier
+ * content-addressed builds, and the pre-`wixl` fixed `<slice>.sqlite3`.
+ * Other slices' files, the manifests and anything unrecognised are not
+ * touched. Returns the names removed, so the build can say what went.
+ */
+export function rotateSliceFiles(outDir: string, slice: string, keep: string): string[] {
+  if (!existsSync(outDir)) return [];
+  const removed: string[] = [];
+  for (const f of readdirSync(outDir).sort()) {
+    if (f === keep) continue;
+    const m = SLICE_FILE.exec(f);
+    if ((m && m[1] === slice) || f === `${slice}.sqlite3`) {
+      rmSync(join(outDir, f), { force: true });
+      removed.push(f);
+    }
+  }
+  return removed;
+}
+
 export function manifestText(m: SliceManifest): string {
   return JSON.stringify(m, null, 2) + "\n";
 }
@@ -385,9 +471,12 @@ export function checkSlice(def: SliceDef, data: SliceData, opts: { publishedPayl
   const problems: string[] = [];
   const dir = mkdtempSync(join(tmpdir(), "slice-check-"));
   try {
-    const a = buildSlice(def, data, join(dir, "a.sqlite3"));
-    const b = buildSlice(def, data, join(dir, "b.sqlite3"));
+    const a = buildSlice(def, data, join(dir, "a"));
+    const b = buildSlice(def, data, join(dir, "b"));
     if (a.sha256 !== b.sha256) problems.push(`not deterministic: two builds gave ${a.sha256} and ${b.sha256}`);
+    if (a.file !== sliceFileName(def.slice, a.sha256) || !existsSync(join(dir, "a", a.file))) {
+      problems.push(`the manifest names ${a.file}, which is not the content-addressed file the build wrote`);
+    }
     const expected = expectedContentDigest(def, data);
     if (a.contentDigest !== expected) {
       problems.push(`the database's row digest ${a.contentDigest} ≠ the source's ${expected} — the slice is not the source`);
@@ -399,7 +488,7 @@ export function checkSlice(def: SliceDef, data: SliceData, opts: { publishedPayl
     if (!data.probe) problems.push(`no known row to probe FTS5 with — an empty source is not a green slice`);
     else {
       // A PHRASE query, which only full-detail FTS5 can answer.
-      const db = new Database(join(dir, "a.sqlite3"), { readonly: true });
+      const db = new Database(join(dir, "a", a.file), { readonly: true });
       const { phrase, column, value } = data.probe;
       const hit = db
         .query(`SELECT 1 FROM ${def.fts.table} f JOIN ${def.fts.rowsOf} t ON t.rowid = f.rowid WHERE ${def.fts.table} MATCH ? AND t.${column} = ?`)
@@ -910,7 +999,7 @@ export const SLICES: readonly SliceDef[] = [BEANS_SLICE, TODOS_SLICE, LIBRARY_SL
 
 export function sliceIndexText(manifests: SliceManifest[]): string {
   const slices = manifests
-    .map((m) => ({ slice: m.slice, manifest: `${m.slice}.sqlite3.json`, title: m.search.title, bytes: m.bytes, rows: m.rows }))
+    .map((m) => ({ slice: m.slice, manifest: manifestFileName(m.slice), title: m.search.title, bytes: m.bytes, rows: m.rows }))
     .sort((a, b) => cmp(a.slice, b.slice));
   return JSON.stringify({ $schema: SLICE_INDEX_SCHEMA, slices }, null, 2) + "\n";
 }
@@ -954,12 +1043,15 @@ if (import.meta.main) {
       }
       continue;
     }
-    const m = buildSlice(def, data, join(outDir, `${def.slice}.sqlite3`));
-    writeFileSync(join(outDir, `${def.slice}.sqlite3.json`), manifestText(m));
+    const m = buildSlice(def, data, outDir);
+    // Database first, manifest second: a manifest must never name a file not yet written.
+    writeFileSync(join(outDir, manifestFileName(def.slice)), manifestText(m));
+    const rotated = rotateSliceFiles(outDir, def.slice, m.file);
     manifests.push(m);
     const ms = Math.round(performance.now() - t0);
     const counts = Object.entries(m.rows).map(([k, v]) => `${v} ${k}`).join(", ");
     console.log(`  · ${join(outDir, m.file)} — ${m.bytes} bytes (${counts}), ${m.payloads.count} payload(s) ${m.payloads.mode}, ${ms} ms`);
+    if (rotated.length) console.log(`  · ${def.slice}: rotated off ${rotated.length} earlier build(s): ${rotated.join(", ")}`);
     if (m.overBudget) console.warn(`  ! ${def.slice}: ${m.bytes} bytes is over the ${SIZE_BUDGET_BYTES}-byte budget — a decision, not a default`);
     if (m.duplicateIds.length) console.warn(`  ! ${def.slice}: keys declared by more than one source row: ${m.duplicateIds.join(", ")}`);
     for (const f of m.findings) console.warn(`  ! ${def.slice}: ${f}`);
