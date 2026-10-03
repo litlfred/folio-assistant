@@ -1,11 +1,11 @@
 ---
 # folio-assistant-s4ta
 title: 'OpenAPI harness: a subgraph for OpenAPI documentation sources with its own rendering sub-pipeline; smart-trust depends on smart-base + openapi'
-status: in-progress
+status: completed
 type: feature
 priority: normal
 created_at: 2026-10-03T09:29:09Z
-updated_at: 2026-10-03T09:44:08Z
+updated_at: 2026-10-03T17:36:11Z
 parent: folio-assistant-uhkv
 ---
 
@@ -36,3 +36,7 @@ d313 renames the per-artefact OpenAPI *sidecars* an IG's post-processing publish
 
 ## Done when
 smart-trust's gateway OpenAPI is declared as a node of an openapi subgraph in cat-harness, rendered by that subgraph's own pipeline, and smart-trust's declaration names both dependencies.
+
+## Summary of Changes
+
+Landed on main 2026-10-03 in #1766 (merge `f3b6168`), which carried #1970, #1973 and #1976. Follow-up regen of the four drifted generated files in the PR that closes this bean.
