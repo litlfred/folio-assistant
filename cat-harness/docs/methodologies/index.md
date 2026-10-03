@@ -401,8 +401,8 @@ these.
 
 **Ingested sources:**
 
-- `library/omg-2024-spdx-3-0`
-- `library/strauch-carbno-2025-spdx-3-1-supply-chain`
+- [`library/omg-2024-spdx-3-0`](../cat-harness/library/cat-harness/#cat-harness%2Fomg-2024-spdx-3-0) · [item page](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/library/omg-2024-spdx-3-0/README.md)
+- [`library/strauch-carbno-2025-spdx-3-1-supply-chain`](../cat-harness/library/cat-harness/#cat-harness%2Fstrauch-carbno-2025-spdx-3-1-supply-chain) · [item page](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/library/strauch-carbno-2025-spdx-3-1-supply-chain/README.md)
 
 ### Specification-compiled agents — the control flow comes from the diagram, not from the model's plan
 
