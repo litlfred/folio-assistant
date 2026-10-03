@@ -77,7 +77,9 @@ describe("mounting", () => {
     expect(readFileSync(join(path, "beans/defs/a.md"), "utf-8")).toBe("A\n");
     // Detached: no symbolic HEAD.
     expect(spawnSync("git", ["symbolic-ref", "-q", "HEAD"], { cwd: path }).status).not.toBe(0);
-    if (r.state === "mounted") expect(git(path, "rev-parse", "HEAD").trim()).toBe(r.tip);
+    // `tip` is optional on `mounted` since the fan-out reports it per graph
+    // instead, so the single-mount tip is the RECEIVED side here.
+    if (r.state === "mounted") expect(r.tip).toBe(git(path, "rev-parse", "HEAD").trim());
   });
 
   test("a second mount at the same tip is a no-op", () => {

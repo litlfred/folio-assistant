@@ -28,11 +28,12 @@
  */
 import { afterEach, describe, expect, test } from "bun:test";
 import { spawnSync } from "node:child_process";
-import { existsSync, mkdirSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from "node:fs";
+import { existsSync, mkdirSync, mkdtempSync, readFileSync, rmSync, symlinkSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { dirname, join } from "node:path";
 
 import { mountState, report } from "../state-mount.js";
+import { pushState, report as pushReport } from "../state-push.js";
 
 const NOGPG = ["-c", "commit.gpgsign=false", "-c", "user.name=t", "-c", "user.email=t@t"];
 const MANIFEST = JSON.stringify({ $schema: "state-manifest/v1", status: "seed", authoritative: false, keyedBy: "tip" });
@@ -220,6 +221,135 @@ describe("one graph failing never lets the others read clean (bean 1xhc)", () =>
     expect(r.state).toBe("failed");
     expect(r.graphs.every((g) => g.state !== "mounted")).toBe(true);
     expect(report(r)).toContain("🛑");
+  });
+});
+
+describe("state:push splices back PER BRANCH, not to one", () => {
+  /** What `branch` holds at `path`, read straight off the bare remote. */
+  function onBranch(bare: string, branch: string, path: string): string {
+    return git(bare, "show", `${branch}:${path}`);
+  }
+
+  test("each graph's edit lands on its OWN branch, and neither reverts the other", () => {
+    const f = fixture(TWO);
+    expect(mountState({ repoRoot: f.work }).state).toBe("mounted");
+
+    writeFileSync(join(f.work, "beans/defs/a.md"), "A edited\n");
+    writeFileSync(join(f.work, "todos/t1.md"), "T edited\n");
+
+    const r = pushState({ repoRoot: f.work, message: "per-branch splice" });
+    expect(r.state).toBe("pushed");
+    expect(r.graphs?.map((g) => g.id).sort()).toEqual(["beans-defs", "todos"]);
+    expect(r.graphs?.every((g) => g.state === "pushed")).toBe(true);
+    // Each graph went to the branch ITS OWN declaration names.
+    expect(r.graphs?.find((g) => g.id === "beans-defs")?.branch).toBe(BEANS_BRANCH);
+    expect(r.graphs?.find((g) => g.id === "todos")?.branch).toBe(TODOS_BRANCH);
+
+    expect(onBranch(f.bare, BEANS_BRANCH, "beans/defs/a.md")).toBe("A edited\n");
+    expect(onBranch(f.bare, TODOS_BRANCH, "todos/t1.md")).toBe("T edited\n");
+    // The todos edit did NOT go to the beans branch, and vice versa.
+    expect(() => onBranch(f.bare, BEANS_BRANCH, "todos/t1.md")).toThrow();
+    expect(() => onBranch(f.bare, TODOS_BRANCH, "beans/defs/a.md")).toThrow();
+  });
+
+  test("a new file is created on its own graph's branch", () => {
+    const f = fixture(TWO);
+    expect(mountState({ repoRoot: f.work }).state).toBe("mounted");
+    writeFileSync(join(f.work, "todos/t2.md"), "T2\n");
+
+    expect(pushState({ repoRoot: f.work }).state).toBe("pushed");
+    expect(onBranch(f.bare, TODOS_BRANCH, "todos/t2.md")).toBe("T2\n");
+  });
+
+  test("--dry-run previews every graph and sends nothing", () => {
+    const f = fixture(TWO);
+    expect(mountState({ repoRoot: f.work }).state).toBe("mounted");
+    writeFileSync(join(f.work, "beans/defs/a.md"), "A edited\n");
+
+    const r = pushState({ repoRoot: f.work, dryRun: true });
+    expect(r.state).toBe("would-push");
+    expect(r.graphs?.length).toBe(2);
+    // Nothing moved on the remote.
+    expect(onBranch(f.bare, BEANS_BRANCH, "beans/defs/a.md")).toBe("A\n");
+  });
+
+  test("no graph with changes is `nothing`, not a failure", () => {
+    const f = fixture(TWO);
+    expect(mountState({ repoRoot: f.work }).state).toBe("mounted");
+    expect(pushState({ repoRoot: f.work }).state).toBe("nothing");
+  });
+
+  test("nothing mounted is `no-mount`, the same answer the single mount gives", () => {
+    const f = fixture(TWO);
+    expect(pushState({ repoRoot: f.work }).state).toBe("no-mount");
+  });
+
+  test("one graph failing to push leaves the other's push standing (bean 1xhc)", () => {
+    const f = fixture(TWO);
+    expect(mountState({ repoRoot: f.work }).state).toBe("mounted");
+    writeFileSync(join(f.work, "beans/defs/a.md"), "A edited\n");
+    writeFileSync(join(f.work, "todos/t1.md"), "T edited\n");
+
+    // A sibling edits the SAME todos file on its branch: that graph conflicts.
+    const seed2 = join(f.base, "sibling");
+    mkdirSync(seed2);
+    git(seed2, "clone", "-q", f.url, "--branch", TODOS_BRANCH, seed2);
+    writeFileSync(join(seed2, "todos/t1.md"), "T from a sibling\n");
+    git(seed2, "add", "-A");
+    git(seed2, "commit", "-q", "-m", "sibling");
+    git(seed2, "push", "-q", "origin", `HEAD:refs/heads/${TODOS_BRANCH}`);
+
+    const r = pushState({ repoRoot: f.work });
+    expect(r.state).toBe("partial");
+    expect(r.graphs?.find((g) => g.id === "beans-defs")?.state).toBe("pushed");
+    expect(r.graphs?.find((g) => g.id === "todos")?.state).toBe("conflict");
+
+    // beans landed; todos did NOT, and the sibling's edit was not overwritten.
+    expect(onBranch(f.bare, BEANS_BRANCH, "beans/defs/a.md")).toBe("A edited\n");
+    expect(onBranch(f.bare, TODOS_BRANCH, "todos/t1.md")).toBe("T from a sibling\n");
+    // The unsettled edit is still on disk — nothing was discarded.
+    expect(readFileSync(join(f.work, "todos/t1.md"), "utf-8")).toBe("T edited\n");
+
+    const text = pushReport(r);
+    expect(text).toContain("🛑");
+    expect(text).toContain("todos");
+    expect(text).toContain("Nothing was discarded");
+    expect(text).toContain("beans-defs");
+  });
+
+  test("a partial push exits non-zero through the CLI", () => {
+    const f = fixture(TWO);
+    expect(mountState({ repoRoot: f.work }).state).toBe("mounted");
+    writeFileSync(join(f.work, "beans/defs/a.md"), "A edited\n");
+    writeFileSync(join(f.work, "todos/t1.md"), "T edited\n");
+    const seed2 = join(f.base, "sibling2");
+    mkdirSync(seed2);
+    git(seed2, "clone", "-q", f.url, "--branch", TODOS_BRANCH, seed2);
+    writeFileSync(join(seed2, "todos/t1.md"), "T from a sibling\n");
+    git(seed2, "add", "-A");
+    git(seed2, "commit", "-q", "-m", "sibling");
+    git(seed2, "push", "-q", "origin", `HEAD:refs/heads/${TODOS_BRANCH}`);
+
+    const r = spawnSync("bun", ["run", join(import.meta.dir, "..", "state-push.ts")], { cwd: f.work, encoding: "utf-8" });
+    expect(r.status).not.toBe(0);
+    expect((r.stdout ?? "") + (r.stderr ?? "")).toContain("🛑");
+  });
+
+  test("binary, executable and symlink survive the per-branch round trip", () => {
+    const f = fixture(TWO);
+    expect(mountState({ repoRoot: f.work }).state).toBe("mounted");
+    const bytes = Buffer.from([0x00, 0x01, 0xff, 0xfe, 0x00, 0x7f]);
+    writeFileSync(join(f.work, "todos/blob.bin"), bytes);
+    writeFileSync(join(f.work, "todos/run.sh"), "#!/bin/sh\necho hi\n", { mode: 0o755 });
+    symlinkSync("t1.md", join(f.work, "todos/link.md"));
+
+    expect(pushState({ repoRoot: f.work }).state).toBe("pushed");
+    // Bytes, not text: a utf-8 round trip would corrupt these silently.
+    const got = spawnSync("git", ["show", `${TODOS_BRANCH}:todos/blob.bin`], { cwd: f.bare, maxBuffer: 1 << 20 });
+    expect(Buffer.compare(got.stdout, bytes)).toBe(0);
+    expect(git(f.bare, "ls-tree", TODOS_BRANCH, "todos/run.sh")).toContain("100755");
+    expect(git(f.bare, "ls-tree", TODOS_BRANCH, "todos/link.md")).toContain("120000");
+    expect(onBranch(f.bare, TODOS_BRANCH, "todos/link.md")).toBe("t1.md");
   });
 });
 
