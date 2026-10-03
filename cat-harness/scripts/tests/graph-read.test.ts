@@ -15,6 +15,8 @@ import { join } from "node:path";
 
 import { MOUNT_MARKER_SCHEMA, markerPath } from "../branch-store.ts";
 import { readBeanFiles, readBeanStore } from "../bean-store-read.ts";
+import { fallbackStoreDir, listBeans, readStoreConfig } from "../beans-fallback.ts";
+import { beanDefsDir, readBeans, resolveBeanDefs } from "../beans.ts";
 import { graphReadPath, mustReadGraph } from "../graph-read.ts";
 
 const made: string[] = [];
@@ -51,7 +53,7 @@ describe("a directory that never moved", () => {
   test("reads from the checkout, and says so", () => {
     const root = repo([{ id: "beans", path: "beans/", graphKinds: ["beans"] }]);
     mkdirSync(join(root, "beans"));
-    expect(graphReadPath("beans", root)).toEqual({ state: "ok", at: join(root, "beans"), from: "checkout", id: "beans" });
+    expect(graphReadPath("beans", root)).toEqual({ state: "ok", at: join(root, "beans"), from: "checkout", id: "beans", path: "beans" });
   });
 
   test("a COMMIT-keyed branch directory still reads from the checkout: only a tip mount relocates a read", () => {
@@ -72,6 +74,7 @@ describe("a tip-keyed directory, through the cutover", () => {
       at: join(root, "beans"),
       from: "checkout",
       id: "beans",
+      path: "beans",
       notCutOver: true,
     });
   });
@@ -80,7 +83,7 @@ describe("a tip-keyed directory, through the cutover", () => {
     const root = repo([{ id: "beans", path: "beans/", graphKinds: ["beans"], storage: TIP }]);
     const into = join(root, "elsewhere");
     mount(root, "beans", into);
-    expect(graphReadPath("beans", root)).toEqual({ state: "ok", at: into, from: "mount", id: "beans" });
+    expect(graphReadPath("beans", root)).toEqual({ state: "ok", at: into, from: "mount", id: "beans", path: "beans" });
   });
 
   test("BETWEEN: cut over and NOT mounted — refused, never a plausible empty directory", () => {
@@ -137,7 +140,7 @@ describe("what it refuses to guess", () => {
     const root = repo([{ id: "beans", path: "beans/", graphKinds: ["beans"], source: { kind: "branch", branch: TIP.branch, keyedBy: "tip" } }]);
     const into = join(root, "beans");
     mount(root, "beans", into);
-    expect(graphReadPath("beans", root)).toEqual({ state: "ok", at: into, from: "mount", id: "beans" });
+    expect(graphReadPath("beans", root)).toEqual({ state: "ok", at: into, from: "mount", id: "beans", path: "beans" });
   });
 });
 
@@ -221,5 +224,112 @@ describe("readBeanStore relocates, and refuses", () => {
     expect(() => readBeanFiles(root)).toThrow(/cannot read the bean store.*state:mount/s);
     // ...while a repository that genuinely has no store still gets `null`.
     expect(readBeanFiles(repo([]))).toBeNull();
+  });
+});
+
+// ── The readers that funnel through `resolveBeanDefs` (bean `9ofm` row D) ───
+describe("resolveBeanDefs carries the third state, so ten call sites inherit it", () => {
+  function beansRepo(storage?: Record<string, unknown>): string {
+    const root = repo([{ id: "beans", path: "beans/", graphKinds: ["beans"], ...(storage ? { storage } : {}) }]);
+    mkdirSync(join(root, "beans", "defs"), { recursive: true });
+    writeFileSync(
+      join(root, "beans", "beans.json"),
+      JSON.stringify({ name: "fixture", directories: [{ id: "defs", path: "defs", graphKinds: ["bean-defs"] }] }),
+    );
+    writeFileSync(join(root, "beans", "defs", "x.md"), "---\n# fx-1\ntitle: one\nstatus: todo\ntype: task\n---\nbody\n");
+    return root;
+  }
+
+  test("not moved: `dir` resolves in the checkout and `unreachable` is unset", () => {
+    const root = beansRepo();
+    expect(resolveBeanDefs(root)).toEqual({ dir: join(root, "beans", "defs"), declared: true });
+    expect(beanDefsDir(root)).toBe(join(root, "beans", "defs"));
+  });
+
+  test("mounted: `dir` resolves INSIDE the mount, so `defs` follows the graph", () => {
+    const root = repo([{ id: "beans", path: "beans/", graphKinds: ["beans"], storage: TIP }]);
+    const into = join(root, "mounted");
+    mkdirSync(join(into, "defs"), { recursive: true });
+    writeFileSync(join(into, "beans.json"), JSON.stringify({ name: "f", directories: [{ id: "defs", path: "defs", graphKinds: ["bean-defs"] }] }));
+    mount(root, "beans", into);
+    expect(resolveBeanDefs(root).dir).toBe(join(into, "defs"));
+  });
+
+  test("unreachable: `dir` is null but `declared` stays true — the declaration is CORRECT", () => {
+    const root = repo([{ id: "beans", path: "beans/", graphKinds: ["beans"], storage: TIP }]);
+    const r = resolveBeanDefs(root);
+    expect(r.dir).toBeNull();
+    expect(r.declared).toBe(true);
+    expect(r.unreachable).toContain("state:mount");
+  });
+
+  test("beanDefsDir THROWS on unreachable: its `null` already means 'no store' to ten callers", () => {
+    const root = repo([{ id: "beans", path: "beans/", graphKinds: ["beans"], storage: TIP }]);
+    expect(() => beanDefsDir(root)).toThrow(/cannot resolve the bean store.*state:mount/s);
+
+    // ...while a repository with NO declaration at all still gets the
+    // schema's default path, which is the documented behaviour: an unmigrated
+    // folio has no `beans` entry, and that is fine rather than wrong.
+    const bare = repo([]);
+    expect(beanDefsDir(bare)).toBe(join(bare, "beans", "defs"));
+
+    // `null` is for a bean graph that declares no `bean-defs` NODE — a
+    // different question from either of the two above.
+    const noNode = repo([{ id: "beans", path: "beans/", graphKinds: ["beans"] }]);
+    mkdirSync(join(noNode, "beans"), { recursive: true });
+    // At least one directory (the schema requires it), of a kind that is NOT
+    // `bean-defs` — that is what "declares no bean-defs node" means.
+    writeFileSync(
+      join(noNode, "beans", "beans.json"),
+      JSON.stringify({ name: "f", directories: [{ id: "notes", path: "notes", graphKinds: ["bean-notes"] }] }),
+    );
+    expect(beanDefsDir(noNode)).toBeNull();
+  });
+
+  test("readBeans inherits it rather than reporting an empty roadmap", () => {
+    const root = beansRepo();
+    expect(readBeans(root)?.map((b) => b.id)).toEqual(["fx-1"]);
+    const cut = repo([{ id: "beans", path: "beans/", graphKinds: ["beans"], storage: TIP }]);
+    expect(() => readBeans(cut)).toThrow(/cannot resolve the bean store/);
+  });
+});
+
+describe("beans-fallback: the CLI-absent reader relocates, and refuses", () => {
+  /** A repo declaring `beans`, with `.beans.yml` pointing at `beans/defs`. */
+  function fallbackRepo(storage?: Record<string, unknown>): string {
+    const root = repo([{ id: "beans", path: "beans/", graphKinds: ["beans"], ...(storage ? { storage } : {}) }]);
+    writeFileSync(join(root, ".beans.yml"), "path: beans/defs\nprefix: fx-\nid_length: 4\n");
+    return root;
+  }
+
+  test("not moved: the `.beans.yml` path, unchanged", () => {
+    const root = fallbackRepo();
+    const cfg = readStoreConfig(root);
+    expect(cfg.dir).toBe("beans/defs");
+    expect(fallbackStoreDir(root, cfg)).toEqual({ at: join(root, "beans", "defs") });
+  });
+
+  test("mounted: the part inside the graph is REBASED onto the mount, the rest kept", () => {
+    const root = fallbackRepo(TIP);
+    const into = join(root, "elsewhere");
+    mount(root, "beans", into);
+    // `beans/defs` under a graph declared at `beans` -> `<mount>/defs`.
+    expect(fallbackStoreDir(root, readStoreConfig(root))).toEqual({ at: join(into, "defs") });
+  });
+
+  test("unreachable: refused, and `listBeans` THROWS rather than returning []", () => {
+    const root = fallbackRepo(TIP);
+    const cfg = readStoreConfig(root);
+    const w = fallbackStoreDir(root, cfg);
+    expect("refused" in w).toBe(true);
+    // `[]` here reads as "there is no work" — bean `35nj`'s measured cost.
+    expect(() => listBeans(root, cfg)).toThrow(/cannot read the bean store/);
+  });
+
+  test("a `.beans.yml` path OUTSIDE the declared graph is left alone, not invented onto it", () => {
+    const root = repo([{ id: "beans", path: "beans/", graphKinds: ["beans"], storage: TIP }]);
+    writeFileSync(join(root, ".beans.yml"), "path: somewhere/else\n");
+    const cfg = readStoreConfig(root);
+    expect(fallbackStoreDir(root, cfg)).toEqual({ at: join(root, "somewhere", "else") });
   });
 });
