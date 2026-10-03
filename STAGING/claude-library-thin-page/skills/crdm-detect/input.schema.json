@@ -1,0 +1,24 @@
+{
+  "$id": "https://litlfred.github.io/folio-assistant/STAGING/claude-library-thin-page/skills/crdm-detect/input.schema.json",
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "CRDM Detect Input",
+  "description": "One user request to classify: is it a feature request (a platform capability change, which enters the CRDM requirements workflow) or a content request?",
+  "type": "object",
+  "required": [
+    "text"
+  ],
+  "properties": {
+    "text": {
+      "type": "string",
+      "minLength": 1,
+      "description": "The request as the user wrote it — an issue title and body, or a chat turn."
+    }
+  },
+  "additionalProperties": false,
+  "staging": {
+    "branch": "claude/library-thin-page",
+    "sha": "68e426d0aaa827b337c2a681233a07ef271a13db",
+    "pr": "1958/merge",
+    "run": "37131487395"
+  }
+}

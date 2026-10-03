@@ -1,0 +1,43 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://litlfred.github.io/folio-assistant/STAGING/claude-library-thin-page/skills/content-author/output.schema.json",
+  "title": "Content Author Output",
+  "description": "Output schema for general content authoring.",
+  "type": "object",
+  "required": [
+    "artifacts"
+  ],
+  "properties": {
+    "artifacts": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "path",
+          "type"
+        ],
+        "properties": {
+          "path": {
+            "type": "string"
+          },
+          "type": {
+            "type": "string"
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "draft",
+              "ready-for-validation"
+            ]
+          }
+        }
+      }
+    }
+  },
+  "staging": {
+    "branch": "claude/library-thin-page",
+    "sha": "68e426d0aaa827b337c2a681233a07ef271a13db",
+    "pr": "1958/merge",
+    "run": "37131487395"
+  }
+}
