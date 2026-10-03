@@ -160,7 +160,10 @@ import {
 } from "../schemas/cat-harness.js";
 import { KG_CRITERIA, KG_SUBJECT_GRAPH_KINDS, type KgSubjectKind } from "../schemas/kg-qa.js";
 import { gitFiles } from "../schemas/git-corpus.ts";
-import { contentIsOffCheckout, type SubgraphSource } from "../schemas/subgraph-source.ts";
+import { contentIsOffCheckout, resolveSubgraphSource, type SubgraphSource } from "../schemas/subgraph-source.ts";
+// The same single reader `check:declared-dirs` uses, so the two gates cannot
+// disagree about whether a tip-keyed graph is readable here (bean `9ofm`).
+import { tipPresence } from "./check-declared-dirs.ts";
 import { loadGatesCiRuns } from "./gates.js";
 import {
   againstOrUsage,
@@ -226,7 +229,23 @@ export type KindState =
    * gated: proposal §2.3, a record that is not here is `unknown`, not a pass
    * and not this change's defect.
    */
-  | "unknown";
+  | "unknown"
+  /**
+   * A directory of this kind is kept at a branch TIP that this checkout
+   * cannot read — not cut over, or cut over and not mounted.
+   *
+   * Bean `9ofm`. A tip mount is DETERMINISTIC, so unlike `stored` there is a
+   * right answer here and this run does not have it. Every other count for
+   * the kind is therefore a LOWER BOUND, which is why this state is decided
+   * before `empty`, `covered` and `unaudited`: reporting `empty` for a
+   * directory nothing read is `dh4f` — a clean run over nothing — and
+   * reporting `covered` would certify a gate against files it never saw.
+   *
+   * It is a finding, and `--strict` fails on it. `check:declared-dirs` says
+   * which of the two cases it is and how to fix it; this report's job is only
+   * to refuse to put a number on what it could not read.
+   */
+  | "undetermined";
 
 export interface KindCoverage {
   kind: string;
@@ -355,32 +374,71 @@ export function census(dir: string, skip: ReadonlySet<string> = new Set([SELF_SI
 }
 
 /**
- * {@link census} over several directories, skipping the STORED ones.
+ * {@link census} over several directories, and the two reasons one is not
+ * censused where it was declared.
  *
  * A directory declaring `storage.branch` (bean `16ei`) keeps its files on that
- * branch; what sits at its path in the checkout is a working copy whose size
- * depends on whether `qa:fetch` ran. Counting it would make this report a
- * measurement of the contributor's last command. `stored` says how many were
- * skipped, so a caller can tell "all stored" from "all empty".
+ * branch. What that means for the census depends on the **keying**, and bean
+ * `9ofm` measured the cost of treating the two alike:
+ *
+ * - **`commit`**-keyed (qa-store's layout) — what sits at the path in the
+ *   checkout is a working copy whose size depends on whether `qa:fetch` ran.
+ *   Counting it would make this report a measurement of the contributor's last
+ *   command, so it is skipped and counted in `stored`.
+ * - a branch **TIP** — the mount is deterministic, so there IS a right answer.
+ *   Mounted, it is censused at the marker's `into` like any other directory:
+ *   these are real files, and 1,389 beans dropping out of the census the day a
+ *   declaration flipped would be a silent loss of the whole work plan from
+ *   this report. Not mounted, it is `undetermined` — never folded into
+ *   `stored`, because `stored` means "not where the files are, by design" and
+ *   this means "could not read the files", and a caller that cannot tell those
+ *   apart will read a lower bound as a measurement.
  *
  * `uncounted` is the third answer (bean `0dav`, C8): a directory that is NOT
- * stored and is not in the checkout either. Its zero is not a measurement, so
- * it is counted apart and a caller can tell "examined, empty" from "not here".
+ * stored, not tip-keyed, and not in the checkout either. Its zero is not a
+ * measurement, so it is counted apart and a caller can tell "examined, empty"
+ * from "not here".
+ *
+ * So `stored` tells "all stored" from "all empty", and `undetermined` tells
+ * both from "could not say".
+ *
+ * @param repoRoot the checkout a tip mount is resolved against. Only read for
+ *   tip-keyed directories, so a caller with none needs no git repository.
  */
 export function censusDirectories(
-  dirs: ReadonlyArray<{ absPath: string; storage?: { branch: string }; source?: SubgraphSource }>,
+  dirs: ReadonlyArray<{ id?: string; absPath: string; storage?: { branch: string; keyedBy?: string }; source?: SubgraphSource }>,
   skip?: ReadonlySet<string>,
-): { files: number; sidecars: number; stored: number; uncounted: number } {
+  repoRoot: string = process.cwd(),
+): { files: number; sidecars: number; stored: number; undetermined: number; uncounted: number } {
   let files = 0;
   let sidecars = 0;
   let stored = 0;
+  let undetermined = 0;
   let uncounted = 0;
   for (const d of dirs) {
+    let at = d.absPath;
     if (contentIsOffCheckout(d)) {
-      stored++;
-      continue;
+      let src;
+      try {
+        src = resolveSubgraphSource({ id: d.id ?? "", path: d.absPath, source: d.source, storage: d.storage });
+      } catch {
+        // The resolver's contradictions are `check:declared-dirs`'s finding to
+        // report, with the remedy. Here the only honest number is "none".
+        undetermined++;
+        continue;
+      }
+      if (src.kind !== "branch" || src.keyedBy !== "tip") {
+        stored++;
+        continue;
+      }
+      const t = tipPresence(src, d.absPath, repoRoot);
+      if (t.state !== "mounted") {
+        undetermined++;
+        continue;
+      }
+      at = t.into;
     }
-    const c = census(d.absPath, skip);
+    const c = census(at, skip);
     if (!c.readable) {
       uncounted++;
       continue;
@@ -388,7 +446,7 @@ export function censusDirectories(
     files += c.files;
     sidecars += c.sidecars;
   }
-  return { files, sidecars, stored, uncounted };
+  return { files, sidecars, stored, undetermined, uncounted };
 }
 
 /**
@@ -570,14 +628,14 @@ export function coverage(repo: string): { rows: KindCoverage[]; gates: GateCover
   for (const kind of kinds) {
     // `directoriesForGraph`, kept whole rather than reduced to paths, so the
     // census can see which directories are STORED (`storage`, bean `16ei`).
-    const resolved = new Map<string, Pick<ResolvedDirectory, "absPath" | "storage">>();
+    const resolved = new Map<string, Pick<ResolvedDirectory, "id" | "absPath" | "storage">>();
     for (const inst of instances) {
       for (const d of resolveDirectories([{ name: "(local)", root: inst, own: true }])) {
         if (d.graphKinds.includes(kind as never) && !resolved.has(d.absPath)) resolved.set(d.absPath, d);
       }
     }
     const dirs = new Set(resolved.keys());
-    const { files, sidecars, stored, uncounted } = censusDirectories([...resolved.values()]);
+    const { files, sidecars, stored, undetermined, uncounted } = censusDirectories([...resolved.values()], undefined, repo);
     const crit = criteriaByGraph.get(kind);
     const gs = gatesByKind.get(kind) ?? [];
     const def = defaultGraphKinds.get(kind);
@@ -586,17 +644,23 @@ export function coverage(repo: string): { rows: KindCoverage[]; gates: GateCover
     const state: KindState =
       dirs.size === 0
         ? "no-directory"
-        : stored === dirs.size
-          ? "stored"
-          : files === 0 && uncounted > 0
-          ? "unknown"
-          : files === 0
-          ? "empty"
-          : judged
-            ? "covered"
-            : typed
-              ? "typed-only"
-              : "unaudited";
+        // Decided BEFORE `empty`, `covered` and `unaudited`, because a
+        // directory this run could not read makes every count below a lower
+        // bound (bean `9ofm`). `stored` keeps its precedence over the counts
+        // for the same reason it always had it.
+        : undetermined > 0
+          ? "undetermined"
+          : stored === dirs.size
+            ? "stored"
+            : files === 0 && uncounted > 0
+            ? "unknown"
+            : files === 0
+            ? "empty"
+            : judged
+              ? "covered"
+              : typed
+                ? "typed-only"
+                : "unaudited";
     rows.push({
       kind,
       state,
@@ -658,11 +722,15 @@ function main(): number {
         ? "✗"
         : r.state === "typed-only"
           ? "~"
-          : r.state === "covered"
-            ? "✓"
-            : r.state === "unknown"
-              ? "?"
-              : "·";
+          // `?`, not `✗`: this is not a coverage gap, it is this run declining
+          // to put a number on a directory it could not read (bean `9ofm`).
+          : r.state === "undetermined"
+            ? "?"
+            : r.state === "covered"
+              ? "✓"
+              : r.state === "unknown"
+                ? "?"
+                : "·";
     console.log(
       `  ${mark} ${pad(r.kind, 20)} ${num(r.files, 6)} ${num(r.criteria.length, 5)} ${num(r.gates.length, 6)} ${num(r.sidecars, 9)}  ${r.state}`,
     );
@@ -692,6 +760,18 @@ function main(): number {
   if (typedOnly.length > 0) {
     console.log(`~ ${typedOnly.length} kind(s) are TYPED and judged by nothing — a schema parses their nodes, no criterion reads them:`);
     for (const r of typedOnly) console.log(`    · ${r.kind}: ${r.files} file(s) under ${r.directories.join(", ")}`);
+  }
+  const undet = byState("undetermined");
+  if (undet.length > 0) {
+    console.log(
+      `? ${undet.length} kind(s) are kept at a branch TIP this checkout cannot read, so their rows above ` +
+        `are LOWER BOUNDS and not measurements:`,
+    );
+    for (const r of undet) console.log(`    · ${r.kind}: ${r.directories.join(", ")}`);
+    console.log(
+      `    Run \`bun run check:declared-dirs\` — it says, per directory, whether the declaration is ` +
+        `flipped ahead of the cutover or the mount is simply missing.`,
+    );
   }
 
   const undeclared = gates.filter((g) => g.state === "undeclared");
@@ -800,11 +880,15 @@ function main(): number {
   if (!check) {
     const out = writeQaResult(ROOT, "audit-coverage", result);
     console.log(`\n· ${relative(REPO, out)} — written.`);
-    if (strict && (unaudited.length > 0 || typedOnly.length > 0)) return 1;
+    if (strict && (unaudited.length > 0 || typedOnly.length > 0 || undet.length > 0)) return 1;
     if (requireAll && undeclared.length > 0) return 1;
     return 0;
   }
   console.log("");
+  // `undetermined` fails `--strict` for a stronger reason than either: it is
+  // not a known gap but an UNKNOWN, and a strict run that passed over it would
+  // certify coverage of files it never read (bean `9ofm`).
+  if (strict && undet.length > 0) return 1;
   return judgeQaResult({
     gate: `${GATE}${strict ? ":strict" : requireAll ? ":require-all" : ":check"}`,
     fresh: result,

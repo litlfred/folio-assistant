@@ -11,11 +11,26 @@
  * | `harness:dirs` | absent → created | absent → NOT created (an empty working copy reads as clean) |
  * | `audit:coverage` | censused | skipped, and the kind reads `stored` |
  *
- * `keyedBy` is `commit` or `tip` (bean `2h76`); `tip` is refused on a `qa`
+ * `keyedBy` is `commit`, `tip` or `route` (beans `2h76`, `9ofm`); `tip` is refused on a `qa`
  * directory. Every real `qa` directory declares it since bean `5hox`, and the
  * last describe block pins the one consequence a fixture cannot: each stored
  * directory's working copy is ignored by version control, so a writer's output
  * is never committed by accident and the removal stays removed.
+ *
+ * ## The two keyings are NOT the same question (bean `9ofm`)
+ *
+ * The table above is the **commit**-keyed behaviour, and it stays. For a
+ * branch TIP the mount is deterministic, so "not in the checkout" has a right
+ * answer and skipping the directory would report a clean run over nothing:
+ *
+ * | consumer | commit-keyed | tip-keyed |
+ * |---|---|---|
+ * | `check:declared-dirs` | absent → nothing | `not-cut-over` / `unmounted` / mounted → nothing |
+ * | `audit:coverage` | skipped, kind reads `stored` | censused at the mount, or kind reads `undetermined` |
+ *
+ * These cases need a REAL git repository, because the answer is read from
+ * `git ls-files` and the mount marker — never from the branch, so the gates
+ * stay offline.
  *
  * @module scripts/tests/directory-storage
  */
@@ -24,6 +39,8 @@ import { spawnSync } from "node:child_process";
 import { existsSync, mkdirSync, mkdtempSync, rmSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
+
+import { MOUNT_MARKER_SCHEMA, markerPath } from "../branch-store.ts";
 
 import { ContentDirectorySchema, DirectoryStorageSchema, materialiseDirectories, resolveDirectories } from "../../schemas/cat-harness.js";
 import { censusDirectories } from "../audit-coverage.js";
@@ -36,6 +53,33 @@ afterAll(() => {
 });
 
 const STORED = { branch: "qa-reports", keyedBy: "commit" } as const;
+const TIP = { branch: "cat/cat-harness/beans", keyedBy: "tip" } as const;
+
+/** `instance()`, in a real (empty) git repository — what the tip cases need. */
+function gitInstance(dirs: Array<Record<string, unknown>>): string {
+  const root = instance(dirs);
+  for (const args of [["init", "-q", "-b", "main"], ["config", "user.email", "t@t"], ["config", "user.name", "t"]]) {
+    const r = spawnSync("git", args, { cwd: root, encoding: "utf-8" });
+    expect(r.status).toBe(0);
+  }
+  return root;
+}
+
+function git(root: string, ...args: string[]): void {
+  const r = spawnSync("git", args, { cwd: root, encoding: "utf-8" });
+  expect(r.stderr + String(r.status)).toBe("0");
+}
+
+/** A mount of `id` at `into`, as `mountTip` would leave it. */
+function marker(root: string, id: string, into: string): void {
+  mkdirSync(into, { recursive: true });
+  const p = markerPath(root, id);
+  mkdirSync(join(p, ".."), { recursive: true });
+  writeFileSync(
+    p,
+    JSON.stringify({ $schema: MOUNT_MARKER_SCHEMA, id, branch: TIP.branch, path: "beans", into, tip: "0".repeat(40), files: {} }),
+  );
+}
 
 /** An instance (at a fresh repository root) declaring exactly `dirs`. */
 function instance(dirs: Array<Record<string, unknown>>): string {
@@ -121,7 +165,7 @@ describe("presence checks honour it", () => {
       { absPath: a, storage: STORED },
       { absPath: b, storage: STORED },
     ]);
-    expect(r).toEqual({ files: 0, sidecars: 0, stored: 2, uncounted: 0 });
+    expect(r).toEqual({ files: 0, sidecars: 0, stored: 2, undetermined: 0, uncounted: 0 });
   });
 
   test("a directory neither stored nor present is UNCOUNTED, never a census of zero (bean 0dav, C8)", () => {
@@ -130,7 +174,123 @@ describe("presence checks honour it", () => {
     mkdirSync(here);
     writeFileSync(join(here, "x.json"), "{}");
     const r = censusDirectories([{ absPath: here }, { absPath: join(root, "gone") }]);
-    expect(r).toEqual({ files: 1, sidecars: 0, stored: 0, uncounted: 1 });
+    expect(r).toEqual({ files: 1, sidecars: 0, stored: 0, undetermined: 0, uncounted: 1 });
+  });
+});
+
+// Bean `9ofm`. Each case is the state the machinery can actually be left in,
+// asserted through the gate rather than through a hand-built object, because
+// the question "what does this checkout know" is answered by git and the
+// marker and a stub of either would assert nothing.
+describe("a tip-keyed directory is three-valued, and only one value is a pass", () => {
+  test("not-cut-over: the declaration names the branch and the checkout still tracks the files", () => {
+    const root = gitInstance([{ id: "beans", path: "beans/", graphKinds: ["beans"], storage: TIP }]);
+    mkdirSync(join(root, "beans"));
+    writeFileSync(join(root, "beans", "a.md"), "x\n");
+    git(root, "add", "beans/a.md");
+
+    const f = auditInstance(root, root);
+    expect(f.map((x) => x.kind)).toEqual(["not-cut-over"]);
+    // The remedy is the part a reader acts on: the two halves are ONE change.
+    expect(f[0]!.detail).toContain("ONE change");
+    expect(f[0]!.detail).toContain("still tracks 1 file(s)");
+  });
+
+  test("unmounted: cut over, nothing mounted — an EMPTY graph, not an unreachable one", () => {
+    const root = gitInstance([{ id: "beans", path: "beans/", graphKinds: ["beans"], storage: TIP }]);
+    const f = auditInstance(root, root);
+    expect(f.map((x) => x.kind)).toEqual(["unmounted"]);
+    expect(f[0]!.detail).toContain("nothing is mounted here");
+  });
+
+  test("mounted is the pass, and a marker whose mount is GONE is not", () => {
+    const root = gitInstance([{ id: "beans", path: "beans/", graphKinds: ["beans"], storage: TIP }]);
+    const into = join(root, "beans");
+    marker(root, "beans", into);
+    expect(auditInstance(root, root)).toEqual([]);
+
+    rmSync(into, { recursive: true, force: true });
+    expect(auditInstance(root, root).map((x) => x.kind)).toEqual(["unmounted"]);
+  });
+
+  test("a COMMIT-keyed directory in the same repository is still skipped — the distinction is the keying", () => {
+    const root = gitInstance([
+      { id: "qa", path: "test/results/", graphKinds: ["qa"], storage: STORED },
+      { id: "beans", path: "beans/", graphKinds: ["beans"], storage: TIP },
+    ]);
+    // Only the tip-keyed one is answered; `qa` contributes no finding either way.
+    expect(auditInstance(root, root).map((x) => x.id)).toEqual(["beans"]);
+  });
+
+  test("audit:coverage counts a mount's real files, and will not fold `undetermined` into `stored`", () => {
+    const root = gitInstance([]);
+    const into = join(root, "mounted");
+    marker(root, "beans", into);
+    writeFileSync(join(into, "a.md"), "x\n");
+    writeFileSync(join(into, "b.md"), "y\n");
+
+    // Mounted: censused AT THE MARKER's `into`, which is not the declared path.
+    expect(censusDirectories([{ id: "beans", absPath: join(root, "beans"), storage: TIP }], undefined, root)).toEqual({
+      files: 2,
+      sidecars: 0,
+      stored: 0,
+      undetermined: 0,
+      uncounted: 0,
+    });
+
+    // Unmounted: `undetermined`, and NOT `stored` — "could not read the files"
+    // and "not where the files are, by design" are different answers.
+    expect(censusDirectories([{ id: "todos", absPath: join(root, "todos"), storage: TIP }], undefined, root)).toEqual({
+      files: 0,
+      sidecars: 0,
+      stored: 0,
+      undetermined: 1,
+      uncounted: 0,
+    });
+  });
+
+  // The MODERN spelling (#1987, bean `l4ay`). `storage` is its legacy form and
+  // the resolver maps one onto the other, so both must reach the same verdict
+  // — otherwise the answer depends on which field a declaration happened to
+  // use, which is the defect `subgraph-source` exists to remove.
+  test("`source: { kind: branch, keyedBy: tip }` reaches the same verdict as the legacy `storage`", () => {
+    const src = { kind: "branch", branch: TIP.branch, keyedBy: "tip" } as const;
+    const root = gitInstance([{ id: "beans", path: "beans/", graphKinds: ["beans"], source: src }]);
+    expect(auditInstance(root, root).map((x) => x.kind)).toEqual(["unmounted"]);
+
+    marker(root, "beans", join(root, "beans"));
+    expect(auditInstance(root, root)).toEqual([]);
+    expect(censusDirectories([{ id: "beans", absPath: join(root, "beans"), source: src }], undefined, root).undetermined).toBe(0);
+  });
+
+  test("`source: { kind: branch, keyedBy: commit }` is skipped, like the legacy commit-keyed form", () => {
+    const src = { kind: "branch", branch: "cat/cat-harness/qa-reports", keyedBy: "commit" } as const;
+    const root = gitInstance([{ id: "qa", path: "test/results/", graphKinds: ["qa"], source: src }]);
+    expect(auditInstance(root, root)).toEqual([]);
+    expect(censusDirectories([{ id: "qa", absPath: join(root, "test", "results"), source: src }], undefined, root)).toEqual({
+      files: 0,
+      sidecars: 0,
+      stored: 1,
+      undetermined: 0,
+      uncounted: 0,
+    });
+  });
+
+  test("an entry declaring BOTH is a finding carrying the resolver's message, not a crash", () => {
+    const root = gitInstance([
+      { id: "beans", path: "beans/", graphKinds: ["beans"], storage: TIP, source: { kind: "branch", branch: TIP.branch, keyedBy: "tip" } },
+    ]);
+    const f = auditInstance(root, root);
+    expect(f.map((x) => x.kind)).toEqual(["unmounted"]);
+    expect(f[0]!.detail).toContain("two answers to where its content comes from");
+  });
+
+  test("no git repository is `undetermined`, never a pass: a gate that could not ask has not asked", () => {
+    const root = instance([{ id: "beans", path: "beans/", graphKinds: ["beans"], storage: TIP }]);
+    const f = auditInstance(root, root);
+    expect(f.map((x) => x.kind)).toEqual(["unmounted"]);
+    expect(f[0]!.detail).toContain("Not a pass");
+    expect(censusDirectories([{ id: "beans", absPath: join(root, "beans"), storage: TIP }], undefined, root).undetermined).toBe(1);
   });
 });
 
