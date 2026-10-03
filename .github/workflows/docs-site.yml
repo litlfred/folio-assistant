@@ -544,6 +544,11 @@ jobs:
           # `docs/subgraph/**/index*.jsonld` names it by URL rather than inlining it.
           mkdir -p "./_site/ns/subgraph"
           cp ./cat-harness/ns/subgraph/v1.jsonld "./_site/ns/subgraph/v1.jsonld"
+          # Content-addressed payloads (bean `f233`): `<BASE_URL>/payload/sha256/<hex>`
+          # plus each `<hex>.json` sidecar. Copied VERBATIM, never through Jekyll
+          # (excluded in _config.yml): a rendered body would not hash to its name.
+          mkdir -p "./_site/payload"
+          cp -R ./cat-harness/docs/payload/. "./_site/payload/"
           # No all-layers union here any more (owner, 2026-09-30: "Retire it"):
           # each term is defined by its layer's own document, below, and the
           # Glossary publishes SKOS for every scheme. bootstrap's document is

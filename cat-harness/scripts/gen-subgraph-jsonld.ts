@@ -48,12 +48,21 @@
  * writes — kg-export's context without its keyword aliases (so the files say
  * `@id`, not `id`) plus the two subgraph terms. It is never inlined.
  *
- * ## Heavy bodies stay pointers
+ * ## Heavy bodies stay pointers — and the pointer now resolves (bean `f233`)
  *
  * The KG already carries a skill's body as `instructionsPath`, a diagram as
  * `sourcePath`, a schema as `module` — never the text. This script refuses a
  * literal over {@link HEAVY_LITERAL_BYTES} rather than trimming it, because a
  * body that has crept into the graph is a kg-export defect to fix there.
+ *
+ * For the fields `HEAVY_POINTERS` names (`schemas/subgraph-manifest.ts`), the
+ * TARGET is published as a PAYLOAD: one immutable file per distinct body at
+ * `docs/payload/sha256/<hex>`, served at `<BASE_URL>/payload/sha256/<hex>`,
+ * with its media type in `<hex>.json` beside it. The node carries a `payload`
+ * link — `@id`, `sha256`, `bytes` — in both its index pointer and its hydrated
+ * form. Identical bodies are one file. {@link auditPayloadTree} fails a payload
+ * no node references, a node whose payload is missing, and bytes that do not
+ * hash to their name; it runs on every write and under `--check`.
  *
  * Output is deterministic — no timestamps, no commit, keys and members
  * sorted — so `--check` can compare bytes.
@@ -71,8 +80,9 @@
  * @covers computed — the subgraphs are every directory under `kgDirectories(instance)`
  */
 
+import { createHash } from "node:crypto";
 import { existsSync, mkdirSync, readFileSync, readdirSync, rmSync, statSync, writeFileSync } from "node:fs";
-import { dirname, join, relative, resolve, sep } from "node:path";
+import { dirname, extname, join, relative, resolve, sep } from "node:path";
 import jsonld from "jsonld";
 import { buildContext, buildExport, graphKindId } from "./kg-export.js";
 import { kgDirectories } from "./known-skills.js";
@@ -80,6 +90,14 @@ import { readDeclaration } from "../schemas/cat-harness.js";
 import { gitCorpus } from "../schemas/git-corpus.js";
 import { propertyIri, termIri } from "../schemas/namespaces.js";
 import {
+  HEAVY_POINTERS,
+  PAYLOAD_MEDIA_TYPES,
+  PAYLOAD_PATH,
+  PAYLOAD_SIDECAR_SCHEMA,
+  PAYLOAD_SIDECAR_SUFFIX,
+  PayloadLinkSchema,
+  PayloadSidecarSchema,
+  type PayloadLink,
   SUBGRAPH_CONTEXT_PATH,
   SUBGRAPH_HYDRATED_FILE,
   SUBGRAPH_INDEX_FILE,
@@ -100,6 +118,134 @@ export function subgraphOutDir(root: string = ROOT): string {
   const docs = readDeclaration(root)?.directories.find((d) => d.id === "docs");
   if (!docs) throw new Error(`gen-subgraph-jsonld: ${root} declares no \`docs\` directory to serve subgraphs from`);
   return join(docs.path, "subgraph");
+}
+
+/** Where payloads are written, relative to the instance root: `<docs>/payload/sha256`. */
+export function payloadOutDir(root: string = ROOT): string {
+  return join(dirname(subgraphOutDir(root)), PAYLOAD_PATH);
+}
+
+/** One distinct payload: its bytes, its declared type, and every node linking to it. */
+export interface PayloadEntry {
+  sha256: string;
+  bytes: Buffer;
+  mediaType: string;
+  referencedBy: string[];
+}
+
+export interface PayloadPlan {
+  /** By hex digest — so identical bodies are ONE entry. */
+  payloads: Map<string, PayloadEntry>;
+  /** By node `@id`. */
+  links: Map<string, PayloadLink>;
+  problems: string[];
+}
+
+const sha256Hex = (b: Buffer | string): string => createHash("sha256").update(b).digest("hex");
+
+/**
+ * Decide every node's payload: for each node of a class `HEAVY_POINTERS`
+ * names, read the file its pointer field names, hash it, and link it. Pure
+ * over `graph` and the files under `root`; deterministic, since a name is a
+ * digest and every list is sorted.
+ */
+export function planPayloads(graph: Node[], opts: { root: string; baseUrl: string }): PayloadPlan {
+  const base = opts.baseUrl.replace(/\/+$/, "");
+  const payloads = new Map<string, PayloadEntry>();
+  const links = new Map<string, PayloadLink>();
+  const problems: string[] = [];
+  const heavy = HEAVY_POINTERS.map((h) => ({ type: termIri(h.type), field: h.field }));
+  for (const n of graph) {
+    const types = ([] as unknown[]).concat(n["@type"]).map(String);
+    const h = heavy.find((x) => types.includes(x.type));
+    if (!h) continue;
+    const id = String(n["@id"]);
+    const p = n[h.field];
+    if (typeof p !== "string" || p.length === 0) continue;
+    const abs = join(opts.root, p);
+    if (!existsSync(abs) || !statSync(abs).isFile()) { problems.push(`${id}: ${h.field} ${p} is not a file — no payload`); continue; }
+    const ext = extname(p).slice(1).toLowerCase();
+    const mediaType = PAYLOAD_MEDIA_TYPES[ext];
+    if (mediaType === undefined) { problems.push(`${id}: ${p} has no declared payload media type for .${ext}`); continue; }
+    const bytes = readFileSync(abs);
+    const hex = sha256Hex(bytes);
+    const prior = payloads.get(hex);
+    if (prior && prior.mediaType !== mediaType) {
+      problems.push(`${id}: payload ${hex} is ${prior.mediaType} for ${prior.referencedBy[0]} but ${mediaType} here`);
+      continue;
+    }
+    const e = prior ?? { sha256: hex, bytes, mediaType, referencedBy: [] };
+    e.referencedBy.push(id);
+    payloads.set(hex, e);
+    links.set(id, { "@id": `${base}/${PAYLOAD_PATH}/${hex}`, sha256: hex, bytes: bytes.length });
+  }
+  for (const e of payloads.values()) e.referencedBy.sort();
+  return { payloads, links, problems };
+}
+
+/** A sidecar's bytes — canonical, so a re-run writes the same file. */
+export function payloadSidecar(e: PayloadEntry): string {
+  return `${JSON.stringify({ $schema: PAYLOAD_SIDECAR_SCHEMA, bytes: e.bytes.length, mediaType: e.mediaType, sha256: e.sha256 }, null, 2)}\n`;
+}
+
+/** Render every payload file: instance-relative path → bytes (the body, then its sidecar). */
+export function renderPayloadFiles(pp: PayloadPlan, outDir: string): Map<string, Buffer | string> {
+  const out = new Map<string, Buffer | string>();
+  for (const hex of [...pp.payloads.keys()].sort()) {
+    const e = pp.payloads.get(hex)!;
+    out.set(join(outDir, hex), e.bytes);
+    out.set(join(outDir, `${hex}${PAYLOAD_SIDECAR_SUFFIX}`), payloadSidecar(e));
+  }
+  return out;
+}
+
+/**
+ * The orphan check, BOTH ways, over a payload directory as it is on disk:
+ *
+ * - a node whose link names a payload that is not there, or whose `bytes`
+ *   disagree with the file;
+ * - a payload file no node links to — an orphan;
+ * - a payload whose bytes do not hash to its name — it is not what it says;
+ * - a payload without its sidecar, a sidecar without its payload, a sidecar
+ *   that disagrees with it, and any file that is neither.
+ *
+ * Returns problems; an empty list is a clean tree. `links` is every node's
+ * link (node `@id` → link).
+ */
+export function auditPayloadTree(dirAbs: string, links: ReadonlyMap<string, PayloadLink>): string[] {
+  const problems: string[] = [];
+  const names = existsSync(dirAbs) ? readdirSync(dirAbs).sort() : [];
+  const present = new Set(names);
+  const referenced = new Map<string, string[]>();
+  for (const [id, link] of [...links].sort(([a], [b]) => a.localeCompare(b))) {
+    const parsed = PayloadLinkSchema.safeParse(link);
+    if (!parsed.success) { problems.push(`${id}: malformed payload link — ${parsed.error.message}`); continue; }
+    (referenced.get(link.sha256) ?? referenced.set(link.sha256, []).get(link.sha256)!).push(id);
+    if (!present.has(link.sha256)) { problems.push(`${id}: references payload ${link.sha256}, which is missing`); continue; }
+    const size = statSync(join(dirAbs, link.sha256)).size;
+    if (size !== link.bytes) problems.push(`${id}: payload ${link.sha256} is ${size} bytes, the link says ${link.bytes}`);
+  }
+  for (const name of names) {
+    const abs = join(dirAbs, name);
+    if (/^[0-9a-f]{64}$/.test(name)) {
+      if (!referenced.has(name)) problems.push(`orphan payload ${name}: no node references it`);
+      const bytes = readFileSync(abs);
+      if (sha256Hex(bytes) !== name) problems.push(`payload ${name}: its bytes hash to ${sha256Hex(bytes)}, not to its name`);
+      if (!present.has(`${name}${PAYLOAD_SIDECAR_SUFFIX}`)) { problems.push(`payload ${name}: no ${PAYLOAD_SIDECAR_SUFFIX} sidecar`); continue; }
+      let sidecar: unknown;
+      try { sidecar = JSON.parse(readFileSync(`${abs}${PAYLOAD_SIDECAR_SUFFIX}`, "utf-8")); } catch (e) {
+        problems.push(`payload ${name}: sidecar is not JSON — ${(e as Error).message}`); continue;
+      }
+      const s = PayloadSidecarSchema.safeParse(sidecar);
+      if (!s.success) problems.push(`payload ${name}: sidecar fails ${PAYLOAD_SIDECAR_SCHEMA} — ${s.error.message}`);
+      else if (s.data.sha256 !== name || s.data.bytes !== bytes.length) problems.push(`payload ${name}: sidecar disagrees with the bytes`);
+    } else if (name.endsWith(PAYLOAD_SIDECAR_SUFFIX) && /^[0-9a-f]{64}$/.test(name.slice(0, -PAYLOAD_SIDECAR_SUFFIX.length))) {
+      if (!present.has(name.slice(0, -PAYLOAD_SIDECAR_SUFFIX.length))) problems.push(`orphan sidecar ${name}: its payload is missing`);
+    } else {
+      problems.push(`${name}: not a payload or a payload sidecar`);
+    }
+  }
+  return problems;
 }
 
 /** A literal larger than this is a body, not KG metadata. */
@@ -124,6 +270,11 @@ export function subgraphContext(): Record<string, unknown> {
   }
   ctx.hasMember = { "@id": propertyIri("hasMember"), "@type": "@id", "@container": "@set" };
   ctx.hasSubgraph = { "@id": propertyIri("hasSubgraph"), "@type": "@id", "@container": "@set" };
+  // Not `@type: @id`: the value is a node object — the payload's IRI plus its
+  // digest and size — so a consumer can verify a fetch without a second one.
+  ctx.payload = { "@id": propertyIri("payload") };
+  ctx.sha256 = { "@id": propertyIri("sha256") };
+  ctx.bytes = { "@id": propertyIri("bytes") };
   return ctx;
 }
 
@@ -352,8 +503,13 @@ export async function renderSubgraphFiles(
   const ctx = subgraphContext();
   const links = linkTerms(ctx);
   const never = Object.fromEntries(links.map((t) => [t, { "@embed": "@never", "@omitDefault": true }]));
-  const memberWhole = { "@type": {}, "@embed": "@always", "@omitDefault": true, ...never };
-  const pointer = { "@type": {}, "@embed": "@always", "@explicit": true, "@omitDefault": true, name: {}, title: {} };
+  // A payload link is embedded whole wherever its node appears — `@id`,
+  // `sha256`, `bytes` — and never more: the body is behind the IRI.
+  const payloadLink = { "@embed": "@always", "@omitDefault": true };
+  const memberWhole = { "@type": {}, "@embed": "@always", "@omitDefault": true, ...never, payload: payloadLink };
+  const pointer = {
+    "@type": {}, "@embed": "@always", "@explicit": true, "@omitDefault": true, name: {}, title: {}, payload: payloadLink,
+  };
   const subgraphFrame = (d: number): Record<string, unknown> => ({
     "@type": {},
     "@embed": "@always",
@@ -427,23 +583,40 @@ export async function renderSubgraphFiles(
 /** Build the plan and the files for an instance from kg-export's in-memory graph. */
 export async function generateSubgraphs(
   opts: { root?: string; baseUrl?: string } = {},
-): Promise<{ plan: SubgraphPlan; files: Map<string, string>; harness: string; outDir: string }> {
+): Promise<{
+  plan: SubgraphPlan;
+  files: Map<string, string>;
+  harness: string;
+  outDir: string;
+  payloadPlan: PayloadPlan;
+  payloadFiles: Map<string, Buffer | string>;
+  payloadDir: string;
+}> {
   const root = opts.root ?? ROOT;
   const decl = readDeclaration(root);
   if (!decl) throw new Error(`gen-subgraph-jsonld: no declaration under ${root}`);
   const baseUrl = opts.baseUrl ?? decl.canonicalUrl;
   if (!baseUrl) throw new Error(`gen-subgraph-jsonld: ${decl.name} declares no canonicalUrl and no --base-url was given`);
   const data = await buildExport({ instanceRoot: root });
-  const plan = planSubgraphs(data["@graph"] as Node[], {
+  // Payloads first, so every node carries its link into both frames.
+  const payloadPlan = planPayloads(data["@graph"] as Node[], { root, baseUrl });
+  const graph = (data["@graph"] as Node[]).map((n) => {
+    const link = payloadPlan.links.get(String(n["@id"]));
+    return link ? { ...n, payload: link } : n;
+  });
+  const plan = planSubgraphs(graph, {
     root,
     harness: decl.name,
     baseUrl,
     title: decl.title,
   });
   for (const p of data.problems) plan.problems.push(`kg-export: ${p}`);
+  for (const p of payloadPlan.problems) plan.problems.push(`payload: ${p}`);
   const outDir = subgraphOutDir(root);
   const files = await renderSubgraphFiles(plan, decl.name, outDir);
-  return { plan, files, harness: decl.name, outDir };
+  const payloadDir = payloadOutDir(root);
+  const payloadFiles = renderPayloadFiles(payloadPlan, payloadDir);
+  return { plan, files, harness: decl.name, outDir, payloadPlan, payloadFiles, payloadDir };
 }
 
 function listFiles(abs: string): string[] {
@@ -459,7 +632,7 @@ function listFiles(abs: string): string[] {
 
 async function main(): Promise<number> {
   const check = process.argv.includes("--check");
-  const { plan, files, harness, outDir } = await generateSubgraphs();
+  const { plan, files, harness, outDir, payloadPlan, payloadFiles, payloadDir } = await generateSubgraphs();
 
   if (plan.problems.length > 0) {
     console.error(`gen-subgraph-jsonld: ${plan.problems.length} problem(s) — nothing written:`);
@@ -467,35 +640,45 @@ async function main(): Promise<number> {
     return 1;
   }
 
+  const all = new Map<string, Buffer | string>([...files, ...payloadFiles]);
   const treeAbs = join(ROOT, outDir, harness);
-  const expected = new Set([...files.keys()].map((p) => join(ROOT, p)));
-  const strays = listFiles(treeAbs).filter((p) => !expected.has(p)).sort();
-  let bytes = 0;
-  for (const t of files.values()) bytes += Buffer.byteLength(t, "utf8");
+  const payloadAbs = join(ROOT, payloadDir);
+  const expected = new Set([...all.keys()].map((p) => join(ROOT, p)));
+  const strays = [...listFiles(treeAbs), ...listFiles(payloadAbs)].filter((p) => !expected.has(p)).sort();
+  const size = (files_: Map<string, Buffer | string>): number =>
+    [...files_.values()].reduce((s, t) => s + (typeof t === "string" ? Buffer.byteLength(t, "utf8") : t.length), 0);
+  const same = (abs: string, t: Buffer | string): boolean =>
+    existsSync(abs) && readFileSync(abs).equals(typeof t === "string" ? Buffer.from(t, "utf8") : t);
+  const summary =
+    `${files.size} subgraph file(s), ${size(files)} bytes, ${plan.subgraphs.size} subgraph(s); ` +
+    `${payloadPlan.payloads.size} payload(s) for ${payloadPlan.links.size} node(s), ${payloadFiles.size} file(s), ${size(payloadFiles)} bytes`;
 
   if (check) {
-    const stale = [...files].filter(([p, t]) => {
-      const abs = join(ROOT, p);
-      return !existsSync(abs) || readFileSync(abs, "utf-8") !== t;
-    }).map(([p]) => p).sort();
-    if (stale.length === 0 && strays.length === 0) {
-      console.log(`gen-subgraph-jsonld --check: ${files.size} file(s), ${bytes} bytes, ${plan.subgraphs.size} subgraph(s) — up to date.`);
+    const stale = [...all].filter(([p, t]) => !same(join(ROOT, p), t)).map(([p]) => p).sort();
+    const audit = auditPayloadTree(payloadAbs, payloadPlan.links);
+    if (stale.length === 0 && strays.length === 0 && audit.length === 0) {
+      console.log(`gen-subgraph-jsonld --check: ${summary} — up to date.`);
       return 0;
     }
     for (const p of stale) console.error(`  stale or missing: ${p}`);
     for (const p of strays) console.error(`  not generated:    ${relative(ROOT, p)}`);
+    for (const p of audit) console.error(`  payload:          ${p}`);
     console.error("Run: bun run subgraph:jsonld");
     return 1;
   }
 
   for (const p of strays) rmSync(p);
-  for (const [p, t] of files) {
+  for (const [p, t] of all) {
     const abs = join(ROOT, p);
     mkdirSync(dirname(abs), { recursive: true });
-    if (!existsSync(abs) || readFileSync(abs, "utf-8") !== t) writeFileSync(abs, t);
+    if (!same(abs, t)) writeFileSync(abs, t);
   }
-  console.log(`gen-subgraph-jsonld: ${files.size} file(s), ${bytes} bytes, ${plan.subgraphs.size} subgraph(s)` +
-    (strays.length > 0 ? `, ${strays.length} stale file(s) removed` : ""));
+  const audit = auditPayloadTree(payloadAbs, payloadPlan.links);
+  if (audit.length > 0) {
+    for (const p of audit) console.error(`  ✗ payload: ${p}`);
+    return 1;
+  }
+  console.log(`gen-subgraph-jsonld: ${summary}` + (strays.length > 0 ? `, ${strays.length} stale file(s) removed` : ""));
   return 0;
 }
 

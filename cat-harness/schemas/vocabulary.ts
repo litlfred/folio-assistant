@@ -317,6 +317,14 @@ export const PROPERTY_GLOSSES: Readonly<Record<string, TermGloss>> = {
       "A child named subgraph: a directory directly inside this one. The index names it by " +
       "IRI; the hydrated file nests it, members and all.",
   },
+  payload: {
+    gloss:
+      "Where a node's heavy content is published: an immutable, content-addressed file at " +
+      "`<BASE_URL>/payload/sha256/<hex>`, the hex being the SHA-256 of its bytes. A subgraph file " +
+      "carries this link in place of the body (bean `f233`).",
+  },
+  sha256: { gloss: "The lower-case hex SHA-256 digest of a payload's bytes — also its IRI's last segment." },
+  bytes: { gloss: "The size of a payload, in bytes." },
   localId: { gloss: "The node's own identifier within its file, before any IRI is minted." },
   module: { gloss: "The source module a node was projected from." },
   path: { gloss: "A declared directory's path, relative to the instance root." },

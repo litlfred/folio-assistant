@@ -509,7 +509,8 @@ Both files have root `@id` = the directory IRI.
 Rules for the pair:
 
 - **The hydrated file carries KG metadata, never heavy content.** Markdown
-  bodies, images and binaries stay as asset pointers (`f233`'s payloads).
+  bodies, images and binaries are payloads, reached by a `payload` link
+  (§"Payloads — heavy content by content address", below).
 - **The root has `index.jsonld` only.** A harness instance is itself a named
   subgraph of the repo KG, and the repo KG is the level above it. A *deep*
   hydrated file at the root would be the whole graph in one document, which is
@@ -557,6 +558,93 @@ Rules for the pair:
   sparse checkout of the directory.
 - A subgraph manifest that lists a child IRI but whose child file is missing is
   a dangling link. It is reported, never skipped.
+
+## Payloads — heavy content by content address
+
+**Contract (bean `f233`; owner ruling 2026-10-03).** The subgraph files are the
+**skeleton**: topology and the metadata a search needs. Heavy content is the
+**muscle**, and it lives outside the graph, one file per distinct body. No
+generator emits a monolithic graph file that inlines bodies.
+
+### Addressing
+
+- **A payload's IRI is `<BASE_URL>/payload/sha256/<hex>`**, where `<hex>` is the
+  lower-case hex SHA-256 of its bytes. Nothing else names it: no extension, no
+  source path, no node id.
+- **It is immutable.** The bytes at an IRI never change, because a change to
+  the bytes is a change to the name. A consumer may cache a payload forever.
+- Immutable is not "kept forever". A payload no node links to is an **orphan**:
+  the gate fails on it and the generator removes it on write. An old IRI may
+  therefore stop resolving once nothing references it; while it resolves, it
+  resolves to the same bytes.
+- **Identical bodies are one file**, linked from every node that has them.
+- **The bytes are the source file verbatim.** A Markdown body keeps its front
+  matter, and its relative links resolve against the node's own source path
+  (`instructionsPath`), not against the payload IRI.
+
+### The link
+
+Every node with a payload carries one `payload` link, in **both** subgraph
+files. In the index it sits on the pointer; in the hydrated file it sits on the
+whole node, in place of the body:
+
+```json
+"payload": { "@id": "<BASE_URL>/payload/sha256/<hex>", "sha256": "<hex>", "bytes": 12653 }
+```
+
+`sha256` and `bytes` let a consumer verify a fetch, and decide whether to make
+it, without a second request. `sha256` is the IRI's last segment by
+construction, and the schema checks it.
+
+### The media type is in a sidecar
+
+`<hex>.json` beside `<hex>` carries `$schema: cat-harness-payload/v1`,
+`sha256`, `bytes` and `mediaType`. It is a sidecar rather than an extension for
+two reasons:
+
+- the ruled IRI has no extension, and `<hex>.md` would be a second address for
+  one payload;
+- GitHub Pages types a file by its extension, so an extensionless payload is
+  served as `application/octet-stream` whatever it holds.
+
+A consumer holding only the IRI appends `.json`. The media type is not also on
+the link, because one fact gets one place. It comes from the source file's
+extension through a declared table; an undeclared extension is a problem, never
+a guess.
+
+### What is heavy
+
+Decided from measurement on 2026-10-03, over kg-export's graph for this
+instance. The graph held 3,120 nodes and 2.5 MB of metadata, and no literal
+field was over 4.6 KB. The graph therefore inlined no body already, so "heavy"
+means what its pointers name:
+
+| node | field | files | bytes | heavy? |
+|---|---|---|---|---|
+| Skill | `instructionsPath` (.md) | 300 | 3.0 MB | **yes** — the instruction body |
+| Asset | `path` (.md; an image would be too) | 3 | 12 KB | **yes** |
+| Process / Decision | `sourcePath` (.bpmn / .dmn) | 78 / 10 | 1.5 MB / 58 KB | not yet — the topology is already graph nodes, and the XML is its own graph's source |
+| Schema | `module` (.ts) | 161 | 2.5 MB | no — code, not content |
+
+No deep provenance is in the graph today, so none moves. The table that decides
+this is `HEAVY_POINTERS` in `schemas/subgraph-manifest.ts`, and adding a row
+there is the whole change to make a field heavy.
+
+### Building and checking
+
+- `bun run subgraph:jsonld` writes the payloads to `docs/payload/sha256/` in
+  the same run as the subgraph files, from the same graph.
+- The docs workflows copy that directory into the site **verbatim**. It is
+  excluded from Jekyll, which would render a body's front matter and Liquid,
+  and then the served bytes would not hash to their name.
+- `subgraph:jsonld:check` is the gate. It fails on any of these:
+  - a stale or stray file;
+  - a payload no node references;
+  - a node whose payload is missing;
+  - bytes that do not hash to their name;
+  - a payload without its sidecar, or a sidecar without its payload.
+- The schema is `PayloadLinkSchema` and `PayloadSidecarSchema` in
+  `schemas/subgraph-manifest.ts`.
 
 ## Adding a node type
 

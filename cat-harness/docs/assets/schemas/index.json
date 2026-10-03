@@ -31461,6 +31461,142 @@
       "exported": false
     },
     {
+      "id": "cat-harness/schemas/subgraph-manifest.ts#PayloadIriSchema",
+      "name": "PayloadIriSchema",
+      "module": "cat-harness/schemas/subgraph-manifest.ts",
+      "kind": "zod-scalar",
+      "doc": "`<BASE_URL>/payload/sha256/<hex>` — no extension, ever.",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/subgraph-manifest.ts#PayloadLink",
+      "name": "PayloadLink",
+      "module": "cat-harness/schemas/subgraph-manifest.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/subgraph-manifest.ts#PayloadLinkSchema",
+      "name": "PayloadLinkSchema",
+      "module": "cat-harness/schemas/subgraph-manifest.ts",
+      "kind": "zod-object",
+      "doc": "The `payload` link a node carries in BOTH subgraph files: the payload's IRI,",
+      "fields": [
+        {
+          "name": "@id",
+          "type": "PayloadIriSchema",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "sha256",
+          "type": "Sha256HexSchema",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "bytes",
+          "type": "z.number().int().nonnegative()",
+          "optional": false,
+          "array": false
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [
+        "cat-harness/schemas/subgraph-manifest.ts#PayloadIriSchema",
+        "cat-harness/schemas/subgraph-manifest.ts#Sha256HexSchema"
+      ],
+      "unresolved": [],
+      "external": [
+        "z"
+      ],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/subgraph-manifest.ts#PayloadSidecar",
+      "name": "PayloadSidecar",
+      "module": "cat-harness/schemas/subgraph-manifest.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/subgraph-manifest.ts#PayloadSidecarSchema",
+      "name": "PayloadSidecarSchema",
+      "module": "cat-harness/schemas/subgraph-manifest.ts",
+      "kind": "zod-object",
+      "doc": "`<hex>.json`, beside `<hex>`: the one home of the media type.",
+      "fields": [
+        {
+          "name": "$schema",
+          "type": "z.literal(PAYLOAD_SIDECAR_SCHEMA)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "sha256",
+          "type": "Sha256HexSchema",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "bytes",
+          "type": "z.number().int().nonnegative()",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "mediaType",
+          "type": "z.string().regex(/^[a-z]+\\/[a-z0-9.+-]+(?:; ?[a-z]+=[A-Za-z0-9-]+)?$/, \"an RFC 6838 media type\")",
+          "optional": false,
+          "array": false
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [
+        "cat-harness/schemas/subgraph-manifest.ts#Sha256HexSchema"
+      ],
+      "unresolved": [],
+      "external": [
+        "PAYLOAD_SIDECAR_SCHEMA",
+        "z"
+      ],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/subgraph-manifest.ts#Sha256HexSchema",
+      "name": "Sha256HexSchema",
+      "module": "cat-harness/schemas/subgraph-manifest.ts",
+      "kind": "zod-scalar",
+      "doc": "Lower-case hex SHA-256 — the whole of a payload's name.",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
       "id": "cat-harness/schemas/subgraph-manifest.ts#SubgraphHydrated",
       "name": "SubgraphHydrated",
       "module": "cat-harness/schemas/subgraph-manifest.ts",
@@ -31633,7 +31769,7 @@
       "name": "SubgraphMemberSchema",
       "module": "cat-harness/schemas/subgraph-manifest.ts",
       "kind": "zod-object",
-      "doc": "A member as the HYDRATED file carries it: the whole KG node, open-ended.",
+      "doc": "A member as the HYDRATED file carries it: the whole KG node, open-ended — its payload a link, never the body.",
       "fields": [
         {
           "name": "@id",
@@ -31646,11 +31782,19 @@
           "type": "z.string().min(1)",
           "optional": false,
           "array": false
+        },
+        {
+          "name": "payload",
+          "type": "PayloadLinkSchema.optional()",
+          "optional": true,
+          "array": false
         }
       ],
       "extendsNames": [],
       "values": [],
-      "refs": [],
+      "refs": [
+        "cat-harness/schemas/subgraph-manifest.ts#PayloadLinkSchema"
+      ],
       "unresolved": [],
       "external": [
         "z"
@@ -31710,7 +31854,7 @@
       "name": "SubgraphPointerSchema",
       "module": "cat-harness/schemas/subgraph-manifest.ts",
       "kind": "zod-object",
-      "doc": "A member as the INDEX carries it: enough to find it, label it and type it.",
+      "doc": "A member as the INDEX carries it: enough to find it, label it, type it, and reach its payload.",
       "fields": [
         {
           "name": "@id",
@@ -31735,11 +31879,19 @@
           "type": "z.string().optional()",
           "optional": true,
           "array": false
+        },
+        {
+          "name": "payload",
+          "type": "PayloadLinkSchema.optional()",
+          "optional": true,
+          "array": false
         }
       ],
       "extendsNames": [],
       "values": [],
-      "refs": [],
+      "refs": [
+        "cat-harness/schemas/subgraph-manifest.ts#PayloadLinkSchema"
+      ],
       "unresolved": [],
       "external": [
         "z"
@@ -53817,6 +53969,30 @@
       "array": false
     },
     {
+      "from": "cat-harness/schemas/subgraph-manifest.ts#PayloadLinkSchema",
+      "to": "cat-harness/schemas/subgraph-manifest.ts#PayloadIriSchema",
+      "via": "@id",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "cat-harness/schemas/subgraph-manifest.ts#PayloadLinkSchema",
+      "to": "cat-harness/schemas/subgraph-manifest.ts#Sha256HexSchema",
+      "via": "sha256",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "cat-harness/schemas/subgraph-manifest.ts#PayloadSidecarSchema",
+      "to": "cat-harness/schemas/subgraph-manifest.ts#Sha256HexSchema",
+      "via": "sha256",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
       "from": "cat-harness/schemas/subgraph-manifest.ts#SubgraphHydratedSchema",
       "to": "cat-harness/schemas/subgraph-manifest.ts#ContextUrl",
       "via": "@context",
@@ -53889,6 +54065,14 @@
       "array": false
     },
     {
+      "from": "cat-harness/schemas/subgraph-manifest.ts#SubgraphMemberSchema",
+      "to": "cat-harness/schemas/subgraph-manifest.ts#PayloadLinkSchema",
+      "via": "payload",
+      "kind": "field",
+      "optional": true,
+      "array": false
+    },
+    {
       "from": "cat-harness/schemas/subgraph-manifest.ts#SubgraphNodeBase",
       "to": "cat-harness/schemas/cat-harness.ts#GraphNodeDirectoryShape",
       "via": "",
@@ -53902,6 +54086,14 @@
       "via": "@id",
       "kind": "field",
       "optional": false,
+      "array": false
+    },
+    {
+      "from": "cat-harness/schemas/subgraph-manifest.ts#SubgraphPointerSchema",
+      "to": "cat-harness/schemas/subgraph-manifest.ts#PayloadLinkSchema",
+      "via": "payload",
+      "kind": "field",
+      "optional": true,
       "array": false
     },
     {
