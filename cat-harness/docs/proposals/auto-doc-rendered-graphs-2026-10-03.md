@@ -1,0 +1,294 @@
+---
+title: "Auto-docs as rendered sub-graphs"
+kind: proposal
+summary: >-
+  Proposed 2026-10-03: 488 of the 908 pages under cat-harness/docs/ declare
+  their generator in their own front matter, yet eleven merge-conflict patterns
+  rediscover that fact by hand-maintained glob, 42 files are covered by none of
+  them, one pattern id covers two generators, and the `docs` declaration itself
+  admits the mixture without recording it. The arrow already exists in prose —
+  `uml`'s declaration says "the rendered pages are docs/uml/overview/". The
+  proposal is to declare that arrow structurally, so the merge pattern, the
+  audit coverage and the gating decision all derive from one fact instead of
+  eleven globs. Measurement and options; nothing is built, and the two
+  questions that are the owner's are named rather than answered. Includes the
+  consolidation the same declaration would allow — 16 writers into docs/, 31
+  hand-written --check branches, 11 merge globs and 13 skill sections — with
+  what must NOT consolidate (the per-writer carry-forward judgement, and the
+  gated/ungated split, which turns on input set rather than generated-ness)
+  and a three-step sequencing whose middle step is provably a no-op.
+---
+
+# Auto-docs as rendered sub-graphs
+
+## The one-sentence version
+
+**A generated page already says which generator wrote it, in its own front
+matter — and every consumer that needs to know re-derives it by glob instead.**
+
+## What was measured
+
+`cat-harness/docs/`, 2026-10-03, against `main` `f239953db6`. Counted by
+reading each file's first six lines for a `generated:` key, not by pattern.
+
+| | files |
+|---|---|
+| all files under `cat-harness/docs/` | 1050 |
+| `.md` + `.html` (the rendered surface) | 908 |
+| **declaring a generator in front matter** | **488** |
+| authored | 420 |
+
+Six generators write those 488:
+
+| generator | files | merge pattern that catches them |
+|---|---|---|
+| `scripts/gen-skill-docs.ts` | 305 | `skill-instructions` |
+| `scripts/gen-uml-overview.ts` | 126 | `uml` |
+| `scripts/gen-schema-docs.ts` | 24 | **— none — → `refuse`** |
+| `scripts/gen-docs-pages.ts` | 17 | **— none — → `refuse`** |
+| `folio-assistant-core/scripts/glossary-page.ts` | 15 | `glossary` ×10, `translated-glossary` ×5 |
+| `cat-harness/scripts/gen-upload-step-docs.ts` | 1 | **— none — → `refuse`** |
+
+**42 of 488 generated pages classify `refuse`**, which means `merge:main` hands
+them back for hand-editing — the one thing each of their own front matters
+forbids (`generated: … — do not hand-edit`). Found the hard way: of PR #1888's
+55 conflicts, 53 resolved by pattern and the 2 that refused were
+`docs/publication-workflow.md` and its authored source.
+
+Where the 42 are: `docs/reference/skills/` (24), `docs/` top level (13),
+`docs/guides/` (4), `docs/reference/upload-step/index.md` (1).
+
+## The shape of the problem is not "a missing pattern"
+
+Filing the 17 as a gap (bean `8c6v`, PR #1965) is correct and small. But the
+same measurement shows three further facts that a fourth pattern does not
+touch.
+
+**1. Eleven patterns hand-maintain globs over one directory.** In `PATTERNS`
+order: `docs-auto`, `glossary`, `translated-glossary`, `viewer-pages`,
+`viewer-namespace`, `navbar-include`, `handler-index`, `skos-glossary-export`,
+`skill-instructions`, `site-data`, plus `uml`. Two of them enumerate directory
+names *literally* —
+
+```
+cat-harness/docs/{beans,todos,health,issue-marks,swimlane-glossary,uploads}/index.html
+cat-harness/docs/cat-harness/{catalogue,folio,library,schemas,uploads,voices}/**
+```
+
+— so adding a graph with a viewer means remembering to extend a brace list in
+a merge script. Nothing fails if you forget; the page just starts refusing.
+
+**2. One pattern id covers two generators, and is named for one of them.**
+`glossary`'s globs are `cat-harness/docs/glossary/**` **and**
+`cat-harness/docs/lsi/**`. The LSI pages are not the glossary and are written
+by a different generator. A reader of the pattern list cannot see that, and a
+reader looking for "what covers the LSI pages" finds nothing under that name.
+
+**3. `docs/` is declared as a single graph whose own description admits the
+mixture.** From `cat-harness/cat-harness.json`:
+
+> "Documentation about the Knowledge Graph itself: the pages of the published
+> site, **some written by people and some generated from the graph**."
+
+The declaration states the mixture and records nothing that distinguishes the
+two halves. So `audit:coverage` cannot tell a never-audited authored page from
+a generated projection that is audited at its source, and every other
+declaration-driven consumer scans `docs/` as one undifferentiated thing.
+
+## The arrow already exists — in prose, in one declaration
+
+`uml` is declared as its own graph, `uml/`, and its description says:
+
+> "nothing here is authored. **The rendered pages are `docs/uml/overview/`**"
+
+`swimlane-glossary` is the same shape: the graph is `glossary/` (the retirement
+ledger) and its rendered pages are `docs/glossary/`.
+
+So the relation *source graph → rendered pages* is a fact the corpus already
+knows. It is written once, in English, in one entry's `description`, where no
+consumer can read it. Everything in this proposal is making that one arrow
+structural.
+
+It is the same arrow the board skills already draw for a different pair —
+`folio → board → position → note`, *"the folio carries what is true, the layout
+layer carries where it was drawn … and never back."* A rendered page is where a
+graph was drawn.
+
+## Options
+
+Costs first, because one of these is reader-facing and the others are not.
+
+### A. `rendersTo` on the source graph (recommended)
+
+The source graph's entry names where its pages land:
+
+```jsonc
+{ "id": "uml", "path": "uml/", "graphKinds": ["uml"],
+  "rendersTo": [{ "path": "docs/uml/overview/", "writer": "scripts/gen-uml-overview.ts" }] }
+```
+
+- **Nothing moves.** No URL changes, no `permalink` churn, no redirects.
+- One declared fact replaces eleven globs: the merge pattern, the audit's
+  per-kind coverage and the gate decision all read it.
+- It puts the fact next to the thing that owns it — the generator's graph —
+  which is where `uml` already put it in prose.
+- A generator with no source graph of its own (`gen-docs-pages.ts` renders
+  `content/docs/`) needs that directory declared, which it is not today. **That
+  is this option's real work**, and it is the honest one to surface: the arrow
+  can only be declared from a node that exists.
+
+### B. Sub-entries under `docs/`
+
+Split the one `docs` entry into `docs-authored` and one entry per generated
+tree.
+
+- Also no file movement, and it makes the split visible in the place a reader
+  of `docs/` looks first.
+- But it puts the fact on the *destination*, so each entry has to name its
+  writer anyway, and a generated page outside a clean tree — the **13 loose
+  `*.md` at `docs/` top level and 4 of 10 in `docs/guides/`** — has no
+  directory to be an entry for. Those are the files that make a
+  destination-keyed scheme need a per-file list.
+
+### C. Relocate generated pages under one prefix
+
+Move the loose ones into `docs/generated/` so the split is a path.
+
+- Cleanest to read; and the only option that **breaks URLs**. The 17
+  `gen-docs-pages.ts` pages carry `permalink` and `nav_order`, and
+  `docs/publication-workflow.md` is linked from `AGENTS.md` and from the
+  published site. Not worth it on this evidence.
+
+### D. Derive it from the front matter at runtime
+
+No declaration: have the merge resolver and the audit read each file's
+`generated:` key.
+
+- Zero maintenance and no drift — the fact is already in the file.
+- But it reads the working tree to decide a *merge* strategy, and during a
+  conflict the file on disk is the conflicted file. It also cannot answer
+  "which pages does graph X render?" without scanning all 908. Useful as a
+  **check** that A's declarations stay complete, not as the mechanism.
+
+**Recommendation: A, with D as its gate** — declare the arrow on the source
+graph, and add a check that every file carrying a `generated:` key is covered
+by some declared `rendersTo`. That check is what makes the declaration binding,
+exactly as `skill:register:check` does for a skill's derived artefacts.
+
+## Consolidating the tooling and the skills
+
+Asked for alongside the layout, 2026-10-03, and it is the same fact seen from
+the other end: **eleven globs, sixteen writers and thirteen skill sections all
+encode "this page is generated", and none of them is the declaration.**
+
+Measured on `f239953db6`:
+
+| surface | count | what it repeats |
+|---|---|---|
+| `cat-harness/scripts/gen-*.ts` | 32 | — |
+| …of those, writing into `cat-harness/docs/` | **16** | each decides its own output path |
+| …of those, the `gen-*-viz.ts` viewer-page family | **12** | one page per declared graph, same shape each time |
+| scripts carrying a `--check` / `CHECK_ONLY` branch | **31** | compare-or-write, hand-written 31 times |
+| `package.json` docs script pairs (`X` + `X:check`) | **13** | `docs:auto`, `docs:pages`, `uml:overview`, `glossary:page`, `lsi:viz`, `readme:subgraphs`, … |
+| merge patterns whose globs name `docs/` | **11** | the same "generated, take base" judgement |
+| skill files documenting these generators | **13** | across 7 packages (`ui`, `kg/kg-core`, `kg/graph-management`, `kg/kg-navigation`, `process`, `library`, `sdlc`, `folio-core`) |
+
+### What consolidates, and what must not
+
+**The `--check` branch should be one function, not 31.** Every one of them is
+the same three states — absent, differing, identical — and
+`gen-docs-pages.ts`'s is the only one that distinguishes a fourth
+(`verdict`: existence gated, contents reported). That fourth state is the
+interesting one and it is invisible in the other 30, which means they cannot
+express "this moved for a legitimate reason" and so either gate a live
+measurement or gate nothing. A shared `emit(path, content, kind)` makes the
+distinction available everywhere instead of once.
+
+**The 12 `gen-*-viz.ts` are one generator over a declaration, not 12
+generators.** Each renders one page for one declared graph. If `rendersTo`
+exists, the viewer page is a function of the declaration, and the 12 become one
+writer plus 12 rows — which is also what removes the two hand-maintained brace
+lists in `viewer-pages` and `viewer-namespace`.
+
+**Thirteen skill sections consolidate to one plus pointers.** They currently
+restate "generated, do not hand-edit, run X" in seven packages. `AGENTS.md`'s
+own banner says what that costs: *"a rule stated in two places is a rule free to
+drift, and the copy a reader finds first is the one with no test."* The home is
+`kg/kg-core/` beside `directory-conventions.md`, because the subject is the
+declaration; the others keep a pointer, as `where-does-this-go` does for the
+nine placement questions.
+
+**What must NOT consolidate** — and this is the part a tidy-up gets wrong:
+
+- **The per-writer carry-forward judgement.** `glossary-export.ts` carries a
+  term's earlier names forward into `skos:hiddenLabel`, so its **ledger** is
+  refused while its generated tree is `take-base`. One shared pattern that
+  assumed "generated ⇒ take-base" would drop a term's history silently. The
+  carry-forward test stays per writer; only its *recording* consolidates.
+- **The gated/not-gated split.** `library:viz:check` and `schema:viz:check` are
+  deliberately ungated (owner, 2026-09-20) because they derive from the whole
+  repository, so a red means somebody else merged. The voices projection *is*
+  gated because it derives from declared directories, so its red is always the
+  author's. **Input set, not generated-ness** — that is the test, and it is a
+  property of each writer, not of the family.
+
+### The sequencing that makes this safe
+
+1. Declare `rendersTo` (option A) and add the front-matter completeness check
+   (option D as a gate). Nothing moves; nothing is deleted.
+2. Derive the merge patterns from the declaration, keeping each writer's
+   existing strategy verbatim — so step 2 is provably a no-op, testable by
+   classifying all 908 pages before and after and diffing the verdicts.
+3. Only then consolidate writers and skills, with the 42 currently-uncovered
+   files picked up as part of step 2 rather than as a fourth hand-written
+   pattern.
+
+Step 2's before/after diff is the whole safety argument: a consolidation that
+cannot be shown to change no verdict is a rewrite.
+
+## What this does not claim
+
+- **Not a graph-kind ruling.** Whether a rendered page tree is `content`
+  (a process produces it), `context` (read, never written) or `state` is the
+  question `content-context-and-state-graphs.md` says one question settles, and
+  it is the owner's. A projection whose source of truth is another graph may not
+  fit the three cleanly, and that is worth saying before a kind is picked.
+- **Not a claim that `take-base` is safe for all 42.** `8rff`'s discipline is
+  *read the writer first*: `glossary-export.ts` looked whole-file-written and in
+  fact carries a term's earlier names forward into `skos:hiddenLabel`, which is
+  why the glossary **ledger** stays refused while the generated tree is
+  `take-base`. `gen-docs-pages.ts` has been read and passes (its `emit()` is
+  compare-or-write, and its only read of prior output is inside the `--check`
+  branch). **`gen-schema-docs.ts` and `gen-upload-step-docs.ts` have not been
+  read**, so their 25 files are not cleared here.
+- **Not a count to quote.** Every number above is a measurement on
+  `f239953db6` and moves with the corpus. The commands are in the next section
+  so the next reader re-measures rather than cites this page.
+
+## How to re-measure
+
+```sh
+# generated vs authored across the rendered surface
+for f in $(find cat-harness/docs -type f \( -name '*.md' -o -name '*.html' \)); do
+  head -6 "$f" | grep -q '^generated:' && echo GEN || echo AUTH
+done | sort | uniq -c
+
+# which generator, and how many pages each writes
+grep -rh '^generated:' cat-harness/docs/ | sort | uniq -c | sort -rn
+
+# which of them no merge pattern covers
+#   (classify() from cat-harness/scripts/merge-conflict-patterns.ts)
+```
+
+## Related
+
+- bean `8c6v`, PR #1965 — the 17 `gen-docs-pages.ts` pages as a pattern gap.
+  This proposal is why a fourth pattern is a patch rather than the fix.
+- bean `8rff`, merged in #1943 — the three families before these, and the
+  carry-forward discipline every row above is held to.
+- bean `ba9e` — generated README counts, the other chronically-conflicting
+  generated family.
+- `skills/kg/kg-core/audit-coverage.md` — the per-kind coverage this would let
+  distinguish generated projections from authored pages.
+- `skills/kg/kg-core/content-context-and-state-graphs.md` — where the graph-kind
+  question above is settled.
