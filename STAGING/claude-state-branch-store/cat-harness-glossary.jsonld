@@ -51,6 +51,8 @@
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-state-branch-store/cat-harness.jsonld#role/user",
       "@type": "skos:Concept",
       "prefLabel": "User",
+      "title": "User",
+      "notation": "user",
       "definition": "The person the assistant is working for. States intent, answers the questions the agent cannot decide from the filesystem, and confirms anything irreversible.",
       "altLabel": [
         "Contributor",
@@ -61,7 +63,6 @@
         "Reader (any actor)",
         "Subscriber (the folio's owner)"
       ],
-      "notation": "user",
       "inScheme": "https://litlfred.github.io/folio-assistant/STAGING/claude-state-branch-store/cat-harness-glossary.jsonld",
       "usage": [
         "https://litlfred.github.io/folio-assistant/STAGING/claude-state-branch-store/cat-harness.jsonld#glossary-usage/Process_ContentAcquisition/Lane_Person",
@@ -75,7 +76,8 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-state-branch-store/cat-harness.jsonld#glossary-usage/Process_SessionStateMachine/Lane_Human",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-state-branch-store/cat-harness.jsonld#glossary-usage/Process_ActivityLog/Lane_Operator",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-state-branch-store/cat-harness.jsonld#glossary-usage/Process_FeatureStaging/Lane_Human",
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-state-branch-store/cat-harness.jsonld#glossary-usage/Process_RelatedWork/Lane_User"
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-state-branch-store/cat-harness.jsonld#glossary-usage/Process_RelatedWork/Lane_User",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-state-branch-store/cat-harness.jsonld#glossary-usage/Process_StalledAgentTriage/Lane_User"
       ]
     },
     {
@@ -187,14 +189,24 @@
       "source": "cat-harness/processes/sdlc/related-work.bpmn"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-state-branch-store/cat-harness.jsonld#glossary-usage/Process_StalledAgentTriage/Lane_User",
+      "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#LaneUsage",
+      "ofConcept": "https://litlfred.github.io/folio-assistant/STAGING/claude-state-branch-store/cat-harness.jsonld#role/user",
+      "inProcess": "https://litlfred.github.io/folio-assistant/STAGING/claude-state-branch-store/cat-harness.jsonld#process/Process_StalledAgentTriage",
+      "label": "User",
+      "scopeNote": "Decides one theme at a time: continue, fold into the plan, new epic, park, or scrap.",
+      "source": "cat-harness/processes/sdlc/stalled-agent-triage.bpmn"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-state-branch-store/cat-harness.jsonld#role/author",
       "@type": "skos:Concept",
       "prefLabel": "Author",
+      "title": "Author",
+      "notation": "author",
       "definition": "Writes and revises folio content. The position, not the person: an editor and a guideline developer both act as author when they are changing a block.",
       "altLabel": [
         "Copier's own folio/"
       ],
-      "notation": "author",
       "inScheme": "https://litlfred.github.io/folio-assistant/STAGING/claude-state-branch-store/cat-harness-glossary.jsonld",
       "usage": [
         "https://litlfred.github.io/folio-assistant/STAGING/claude-state-branch-store/cat-harness.jsonld#glossary-usage/Process_CopyOutMaterialized/Lane_Folio"
@@ -213,12 +225,13 @@
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-state-branch-store/cat-harness.jsonld#role/editor",
       "@type": "skos:Concept",
       "prefLabel": "Editor",
+      "title": "Editor",
+      "notation": "editor",
       "definition": "Author plus the authority to accept a change into the corpus. The lane that sees QA findings and decides.",
       "altLabel": [
         "Editorial",
         "Editors + authoring agents"
       ],
-      "notation": "editor",
       "inScheme": "https://litlfred.github.io/folio-assistant/STAGING/claude-state-branch-store/cat-harness-glossary.jsonld",
       "usage": [
         "https://litlfred.github.io/folio-assistant/STAGING/claude-state-branch-store/cat-harness.jsonld#glossary-usage/Process_Review/Lane_EditorDecides",
@@ -247,13 +260,14 @@
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-state-branch-store/cat-harness.jsonld#role/reviewer",
       "@type": "skos:Concept",
       "prefLabel": "Reviewer / SME",
+      "title": "Reviewer / SME",
+      "notation": "reviewer",
       "definition": "Reads a change and judges it. Cannot accept it — that is the editor's lane — and the separation is why review findings are advice rather than commits. The GENERIC review position: what kind of thing changed decides which subprocess it descends into (review-task.bpmn), and the actor takes on that inner lane's role for the call path only.",
       "altLabel": [
         "Reviewer",
         "Reviewer (SME or editor)",
         "Subject-Matter Expert / Reviewer"
       ],
-      "notation": "reviewer",
       "inScheme": "https://litlfred.github.io/folio-assistant/STAGING/claude-state-branch-store/cat-harness-glossary.jsonld",
       "usage": [
         "https://litlfred.github.io/folio-assistant/STAGING/claude-state-branch-store/cat-harness.jsonld#glossary-usage/Process_Review/Lane_Reviewer",
@@ -322,16 +336,18 @@
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-state-branch-store/cat-harness.jsonld#role/review-coordinator",
       "@type": "skos:Concept",
       "prefLabel": "Review coordinator",
-      "definition": "Organises a review without deciding it. Pulls tagged review comments in, splits a large change into slices by section, assigns each slice to a reviewer of the right role, and watches coverage until every changed block has a verdict or a reasoned waiver. Cannot accept or reject: that is the editor's lane, and the separation is the owner's ruling (2026-09-23, bean en2d). Not a reviewer: it does not inherit one, because assigning a slice is not reading it.",
+      "title": "Review coordinator",
       "notation": "review-coordinator",
+      "definition": "Organises a review without deciding it. Pulls tagged review comments in, splits a large change into slices by section, assigns each slice to a reviewer of the right role, and watches coverage until every changed block has a verdict or a reasoned waiver. Cannot accept or reject: that is the editor's lane, and the separation is the owner's ruling (2026-09-23, bean en2d). Not a reviewer: it does not inherit one, because assigning a slice is not reading it.",
       "inScheme": "https://litlfred.github.io/folio-assistant/STAGING/claude-state-branch-store/cat-harness-glossary.jsonld"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-state-branch-store/cat-harness.jsonld#role/narrative-reviewer",
       "@type": "skos:Concept",
       "prefLabel": "Narrative reviewer",
-      "definition": "Judges PROSE — register and voice, the editorial dependencies a reader needs, and translation. Entered by DESCENDING into Process_NarrativeReview: the actor keeps its outer review role and adds these skills along that call path, rather than every reviewer carrying them everywhere.",
+      "title": "Narrative reviewer",
       "notation": "narrative-reviewer",
+      "definition": "Judges PROSE — register and voice, the editorial dependencies a reader needs, and translation. Entered by DESCENDING into Process_NarrativeReview: the actor keeps its outer review role and adds these skills along that call path, rather than every reviewer carrying them everywhere.",
       "inScheme": "https://litlfred.github.io/folio-assistant/STAGING/claude-state-branch-store/cat-harness-glossary.jsonld",
       "usage": [
         "https://litlfred.github.io/folio-assistant/STAGING/claude-state-branch-store/cat-harness.jsonld#glossary-usage/Process_NarrativeReview/Lane_NarrativeReviewer",
@@ -360,8 +376,9 @@
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-state-branch-store/cat-harness.jsonld#role/code-reviewer",
       "@type": "skos:Concept",
       "prefLabel": "Code reviewer",
-      "definition": "Judges the knowledge graph's CODE nodes — Tool definitions in the `tools` graph and schema definition nodes under `schemas/`. Not ordinary code review: the question is whether the NODE is sound — does it declare what it is, do its references resolve, is the mechanism it advertises the one that runs — which a passing test suite does not answer. Entered by DESCENDING into Process_CodeReview.",
+      "title": "Code reviewer",
       "notation": "code-reviewer",
+      "definition": "Judges the knowledge graph's CODE nodes — Tool definitions in the `tools` graph and schema definition nodes under `schemas/`. Not ordinary code review: the question is whether the NODE is sound — does it declare what it is, do its references resolve, is the mechanism it advertises the one that runs — which a passing test suite does not answer. Entered by DESCENDING into Process_CodeReview.",
       "inScheme": "https://litlfred.github.io/folio-assistant/STAGING/claude-state-branch-store/cat-harness-glossary.jsonld",
       "usage": [
         "https://litlfred.github.io/folio-assistant/STAGING/claude-state-branch-store/cat-harness.jsonld#glossary-usage/Process_CodeReview/Lane_CodeReviewer",
@@ -390,8 +407,9 @@
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-state-branch-store/cat-harness.jsonld#role/qc-reviewer",
       "@type": "skos:Concept",
       "prefLabel": "QC reviewer",
-      "definition": "Reviewer with the publication quality gate. Checks the built artefact, not only the source.",
+      "title": "QC reviewer",
       "notation": "qc-reviewer",
+      "definition": "Reviewer with the publication quality gate. Checks the built artefact, not only the source.",
       "inScheme": "https://litlfred.github.io/folio-assistant/STAGING/claude-state-branch-store/cat-harness-glossary.jsonld",
       "usage": [
         "https://litlfred.github.io/folio-assistant/STAGING/claude-state-branch-store/cat-harness.jsonld#glossary-usage/Process_IgAstDeltaReview/Lane_Review"
@@ -410,16 +428,18 @@
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-state-branch-store/cat-harness.jsonld#role/clinical-sme",
       "@type": "skos:Concept",
       "prefLabel": "Clinical / scientific SME",
-      "definition": "Reviewer whose judgement is about the subject matter rather than the artefact.",
+      "title": "Clinical / scientific SME",
       "notation": "clinical-sme",
+      "definition": "Reviewer whose judgement is about the subject matter rather than the artefact.",
       "inScheme": "https://litlfred.github.io/folio-assistant/STAGING/claude-state-branch-store/cat-harness-glossary.jsonld"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-state-branch-store/cat-harness.jsonld#role/administrator",
       "@type": "skos:Concept",
       "prefLabel": "Administrator",
-      "definition": "Administers the role graph itself: who exists, what they may act as, and what they may do. The ONE lane whose activities change the substrate every other diagram's lanes bind to — which is why it is drawn rather than left as a filesystem edit. Declared 2026-09-20 on the owner's answer that administration is a swimlane; `role-model.md`'s rule is that a role is never invented to make a diagram drawable, so it waited for that.",
+      "title": "Administrator",
       "notation": "administrator",
+      "definition": "Administers the role graph itself: who exists, what they may act as, and what they may do. The ONE lane whose activities change the substrate every other diagram's lanes bind to — which is why it is drawn rather than left as a filesystem edit. Declared 2026-09-20 on the owner's answer that administration is a swimlane; `role-model.md`'s rule is that a role is never invented to make a diagram drawable, so it waited for that.",
       "inScheme": "https://litlfred.github.io/folio-assistant/STAGING/claude-state-branch-store/cat-harness-glossary.jsonld",
       "usage": [
         "https://litlfred.github.io/folio-assistant/STAGING/claude-state-branch-store/cat-harness.jsonld#glossary-usage/Process_GraphDetanglement/Lane_Admin",
@@ -458,20 +478,22 @@
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-state-branch-store/cat-harness.jsonld#role/programme-manager",
       "@type": "skos:Concept",
       "prefLabel": "Programme manager",
-      "definition": "Owns what gets worked on and holds release authority. The lane that authorises, and the one step no policy may relax.",
+      "title": "Programme manager",
       "notation": "programme-manager",
+      "definition": "Owns what gets worked on and holds release authority. The lane that authorises, and the one step no policy may relax.",
       "inScheme": "https://litlfred.github.io/folio-assistant/STAGING/claude-state-branch-store/cat-harness-glossary.jsonld"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-state-branch-store/cat-harness.jsonld#role/publication-manager",
       "@type": "skos:Concept",
       "prefLabel": "Publication manager",
+      "title": "Publication manager",
+      "notation": "publication-manager",
       "definition": "Takes an authorised release to its published form and is accountable for what is live.",
       "altLabel": [
         "Deployment owner",
         "Human signer"
       ],
-      "notation": "publication-manager",
       "inScheme": "https://litlfred.github.io/folio-assistant/STAGING/claude-state-branch-store/cat-harness-glossary.jsonld",
       "usage": [
         "https://litlfred.github.io/folio-assistant/STAGING/claude-state-branch-store/cat-harness.jsonld#glossary-usage/Process_KgSeparation/Lane_Publication",
@@ -530,11 +552,12 @@
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-state-branch-store/cat-harness.jsonld#role/business-analyst",
       "@type": "skos:Concept",
       "prefLabel": "Business analyst",
+      "title": "Business analyst",
+      "notation": "business-analyst",
       "definition": "Turns a stated need into a modelled requirement. Owns the CRDM lane and the BPMN/DMN that come out of it.",
       "altLabel": [
         "BA / Feature Requestor"
       ],
-      "notation": "business-analyst",
       "inScheme": "https://litlfred.github.io/folio-assistant/STAGING/claude-state-branch-store/cat-harness-glossary.jsonld",
       "usage": [
         "https://litlfred.github.io/folio-assistant/STAGING/claude-state-branch-store/cat-harness.jsonld#glossary-usage/Process_CRDM_Close/Lane_BA",
@@ -633,27 +656,30 @@
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-state-branch-store/cat-harness.jsonld#role/terminologist",
       "@type": "skos:Concept",
       "prefLabel": "Terminologist",
-      "definition": "Owns coded concepts and value sets — the vocabulary a DAK is expressed in.",
+      "title": "Terminologist",
       "notation": "terminologist",
+      "definition": "Owns coded concepts and value sets — the vocabulary a DAK is expressed in.",
       "inScheme": "https://litlfred.github.io/folio-assistant/STAGING/claude-state-branch-store/cat-harness-glossary.jsonld"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-state-branch-store/cat-harness.jsonld#role/fhir-modeller",
       "@type": "skos:Concept",
       "prefLabel": "FHIR modeller",
-      "definition": "Authors the L3 profiles, extensions and examples an IG is built from.",
+      "title": "FHIR modeller",
       "notation": "fhir-modeller",
+      "definition": "Authors the L3 profiles, extensions and examples an IG is built from.",
       "inScheme": "https://litlfred.github.io/folio-assistant/STAGING/claude-state-branch-store/cat-harness-glossary.jsonld"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-state-branch-store/cat-harness.jsonld#role/translation-coordinator",
       "@type": "skos:Concept",
       "prefLabel": "Translation coordinator",
+      "title": "Translation coordinator",
+      "notation": "translation-coordinator",
       "definition": "Decides what is translated, into which languages, and when a translation is accepted.",
       "altLabel": [
         "Translation Coordinator"
       ],
-      "notation": "translation-coordinator",
       "inScheme": "https://litlfred.github.io/folio-assistant/STAGING/claude-state-branch-store/cat-harness-glossary.jsonld",
       "usage": [
         "https://litlfred.github.io/folio-assistant/STAGING/claude-state-branch-store/cat-harness.jsonld#glossary-usage/Process_HumanTranslation/Lane_Coordinator"
@@ -672,11 +698,12 @@
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-state-branch-store/cat-harness.jsonld#role/translator",
       "@type": "skos:Concept",
       "prefLabel": "Human translator",
+      "title": "Human translator",
+      "notation": "translator",
       "definition": "Produces the target-language text. Distinct from the coordinator because accepting one's own translation is the gate this separation removes.",
       "altLabel": [
         "Human Translator"
       ],
-      "notation": "translator",
       "inScheme": "https://litlfred.github.io/folio-assistant/STAGING/claude-state-branch-store/cat-harness-glossary.jsonld",
       "usage": [
         "https://litlfred.github.io/folio-assistant/STAGING/claude-state-branch-store/cat-harness.jsonld#glossary-usage/Process_HumanTranslation/Lane_Translator"
@@ -695,11 +722,12 @@
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-state-branch-store/cat-harness.jsonld#role/translation-adjudicator",
       "@type": "skos:Concept",
       "prefLabel": "Translation adjudicator",
+      "title": "Translation adjudicator",
+      "notation": "translation-adjudicator",
       "definition": "Adjudicator who settles a disagreement between machine and human translation. The first specialisation of `adjudicator`, and the only one that existed before the role did — its lane documentation in translation-workflow.bpmn is where \"a reviewer reports, an adjudicator settles\" was written down.",
       "altLabel": [
         "Human reviewer / adjudicator"
       ],
-      "notation": "translation-adjudicator",
       "inScheme": "https://litlfred.github.io/folio-assistant/STAGING/claude-state-branch-store/cat-harness-glossary.jsonld",
       "usage": [
         "https://litlfred.github.io/folio-assistant/STAGING/claude-state-branch-store/cat-harness.jsonld#glossary-usage/Process_Translation/Lane_Reviewer"
@@ -718,8 +746,9 @@
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-state-branch-store/cat-harness.jsonld#role/adjudicator",
       "@type": "skos:Concept",
       "prefLabel": "Adjudicator",
-      "definition": "Settles a criterion whose reviewer entries disagree, and records WHY. Inherits `reviewer` because an adjudicator is a reviewer with one added entitlement — the `adjudication` permission — and the separation is the point: a reviewer reports, an adjudicator settles, and a process where every reviewer could settle has no way to say who decided. The KNOWLEDGE spreads (several roles carry the `adjudication` skill, because each has to tell an adjudicable disagreement from a complaint); the ENTITLEMENT does not, and lives on the actor as a permission.",
+      "title": "Adjudicator",
       "notation": "adjudicator",
+      "definition": "Settles a criterion whose reviewer entries disagree, and records WHY. Inherits `reviewer` because an adjudicator is a reviewer with one added entitlement — the `adjudication` permission — and the separation is the point: a reviewer reports, an adjudicator settles, and a process where every reviewer could settle has no way to say who decided. The KNOWLEDGE spreads (several roles carry the `adjudication` skill, because each has to tell an adjudicable disagreement from a complaint); the ENTITLEMENT does not, and lives on the actor as a permission.",
       "inScheme": "https://litlfred.github.io/folio-assistant/STAGING/claude-state-branch-store/cat-harness-glossary.jsonld",
       "usage": [
         "https://litlfred.github.io/folio-assistant/STAGING/claude-state-branch-store/cat-harness.jsonld#glossary-usage/Process_Adjudication/Lane_Adjudicator",
@@ -758,11 +787,12 @@
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-state-branch-store/cat-harness.jsonld#role/feedback-provider",
       "@type": "skos:Concept",
       "prefLabel": "Feedback provider",
+      "title": "Feedback provider",
+      "notation": "feedback-provider",
       "definition": "Offers a finding on content or code — a script checker, a review agent, a reader, an SME. PLURAL by design: an adjudication is the judgement of one or more feedback providers' feedback, and the process draws the lane once for any number of them. Not an adjudicator: this role states what it found and on what evidence, and has no entitlement to settle the disagreement its finding creates.",
       "altLabel": [
         "Feedback providers"
       ],
-      "notation": "feedback-provider",
       "inScheme": "https://litlfred.github.io/folio-assistant/STAGING/claude-state-branch-store/cat-harness-glossary.jsonld",
       "usage": [
         "https://litlfred.github.io/folio-assistant/STAGING/claude-state-branch-store/cat-harness.jsonld#glossary-usage/Process_Adjudication/Lane_FeedbackProvider",
@@ -791,11 +821,12 @@
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-state-branch-store/cat-harness.jsonld#role/stakeholder",
       "@type": "skos:Concept",
       "prefLabel": "Stakeholder",
+      "title": "Stakeholder",
+      "notation": "stakeholder",
       "definition": "Signs off that a requirement is met. Carries no skills deliberately: sign-off is a judgement, not a procedure, and a skill here would suggest an agent could supply it.",
       "altLabel": [
         "Stakeholders"
       ],
-      "notation": "stakeholder",
       "inScheme": "https://litlfred.github.io/folio-assistant/STAGING/claude-state-branch-store/cat-harness-glossary.jsonld",
       "usage": [
         "https://litlfred.github.io/folio-assistant/STAGING/claude-state-branch-store/cat-harness.jsonld#glossary-usage/Process_CRDM_Close/Lane_Stakeholders",
@@ -864,15 +895,17 @@
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-state-branch-store/cat-harness.jsonld#role/authoring-agent",
       "@type": "skos:Concept",
       "prefLabel": "Authoring agent",
+      "title": "Authoring agent",
+      "notation": "authoring-agent",
       "definition": "The session agent doing the work. The broadest skill set here, and the one whose membership most needs auditing.",
       "altLabel": [
         "Agent",
         "Agent (playing the machine)",
         "Agent (this session)",
         "Agent / platform (automated)",
-        "Designer"
+        "Designer",
+        "Triage agent"
       ],
-      "notation": "authoring-agent",
       "inScheme": "https://litlfred.github.io/folio-assistant/STAGING/claude-state-branch-store/cat-harness-glossary.jsonld",
       "usage": [
         "https://litlfred.github.io/folio-assistant/STAGING/claude-state-branch-store/cat-harness.jsonld#glossary-usage/Process_GraphDetanglement/Lane_Agent",
@@ -893,6 +926,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-state-branch-store/cat-harness.jsonld#glossary-usage/Process_CodeChangeReview/Lane_Agent",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-state-branch-store/cat-harness.jsonld#glossary-usage/Process_MergeBase/Lane_Agent",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-state-branch-store/cat-harness.jsonld#glossary-usage/Process_RelatedWork/Lane_Agent",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-state-branch-store/cat-harness.jsonld#glossary-usage/Process_StalledAgentTriage/Lane_Triage",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-state-branch-store/cat-harness.jsonld#glossary-usage/Process_UpstreamPinWatch/Lane_Agent",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-state-branch-store/cat-harness.jsonld#glossary-usage/Process_UpstreamAdoption/Lane_Agent",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-state-branch-store/cat-harness.jsonld#glossary-usage/Process_WireframeDesignReview/Lane_Designer"
@@ -1061,6 +1095,15 @@
       "source": "cat-harness/processes/sdlc/related-work.bpmn"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-state-branch-store/cat-harness.jsonld#glossary-usage/Process_StalledAgentTriage/Lane_Triage",
+      "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#LaneUsage",
+      "ofConcept": "https://litlfred.github.io/folio-assistant/STAGING/claude-state-branch-store/cat-harness.jsonld#role/authoring-agent",
+      "inProcess": "https://litlfred.github.io/folio-assistant/STAGING/claude-state-branch-store/cat-harness.jsonld#process/Process_StalledAgentTriage",
+      "label": "Triage agent",
+      "scopeNote": "Reads the footprint the stalled agents left, collects or reconstructs a handover report per agent, groups the work into 2-4 themes, and recommends. It never finishes, closes or deletes another agent's work.",
+      "source": "cat-harness/processes/sdlc/stalled-agent-triage.bpmn"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-state-branch-store/cat-harness.jsonld#glossary-usage/Process_UpstreamPinWatch/Lane_Agent",
       "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#LaneUsage",
       "ofConcept": "https://litlfred.github.io/folio-assistant/STAGING/claude-state-branch-store/cat-harness.jsonld#role/authoring-agent",
@@ -1091,20 +1134,22 @@
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-state-branch-store/cat-harness.jsonld#role/onboarding-agent",
       "@type": "skos:Concept",
       "prefLabel": "Onboarding agent",
-      "definition": "The authoring agent acting before there is a folio: clarifying what the user means by \"create a folio\", scanning an existing repo, and scaffolding.",
+      "title": "Onboarding agent",
       "notation": "onboarding-agent",
+      "definition": "The authoring agent acting before there is a folio: clarifying what the user means by \"create a folio\", scanning an existing repo, and scaffolding.",
       "inScheme": "https://litlfred.github.io/folio-assistant/STAGING/claude-state-branch-store/cat-harness-glossary.jsonld"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-state-branch-store/cat-harness.jsonld#role/ingestion-agent",
       "@type": "skos:Concept",
       "prefLabel": "Ingestion engine",
+      "title": "Ingestion engine",
+      "notation": "ingestion-agent",
       "definition": "Runs unattended over a source corpus. No user is in the room, so every gate it reaches must be decidable from the material.",
       "altLabel": [
         "Agent",
         "Ingestion Engine (agent, runs unattended)"
       ],
-      "notation": "ingestion-agent",
       "inScheme": "https://litlfred.github.io/folio-assistant/STAGING/claude-state-branch-store/cat-harness-glossary.jsonld",
       "usage": [
         "https://litlfred.github.io/folio-assistant/STAGING/claude-state-branch-store/cat-harness.jsonld#glossary-usage/Process_ContentAcquisition/Lane_Agent",
@@ -1233,35 +1278,39 @@
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-state-branch-store/cat-harness.jsonld#role/librarian",
       "@type": "skos:Concept",
       "prefLabel": "Librarian",
-      "definition": "Acquires a source and files it. Distinct from `ingestion-agent`, which DERIVES structure from a source already in hand: this role decides what to capture, how faithfully, and what must be recorded at the moment of capture because nobody can reconstruct it later.",
+      "title": "Librarian",
       "notation": "librarian",
+      "definition": "Acquires a source and files it. Distinct from `ingestion-agent`, which DERIVES structure from a source already in hand: this role decides what to capture, how faithfully, and what must be recorded at the moment of capture because nobody can reconstruct it later.",
       "inScheme": "https://litlfred.github.io/folio-assistant/STAGING/claude-state-branch-store/cat-harness-glossary.jsonld"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-state-branch-store/cat-harness.jsonld#role/deep-researcher",
       "@type": "skos:Concept",
       "prefLabel": "Deep researcher",
-      "definition": "Answers a question FROM a corpus already held, and is answerable for the answer. Distinct from `librarian`, which decides what to capture, and from `ingestion-agent`, which derives structure from what was captured: both produce the corpus, and this role consumes it. Added 2026-09-23 with the `doc-researcher` methodology, because the accountability it names — somebody who must stand behind a synthesis and its citations — belonged to no declared role. THE LANE IT BINDS IS DRAWN IN ANOTHER INSTANCE — the `Deep researcher` lane of `folio-assistant-core/processes/library/deep-document-research.bpmn`, which names this role with `<folio:role ref>`. It carried a `lanes[]` here for about an hour on 2026-09-23 before #1168 landed and inverted the relation: a lane names its role, and a role does not list its lanes, because a general node never names its users. The binding is therefore stated once, on the lane, and this role says nothing about where it is drawn.",
+      "title": "Deep researcher",
       "notation": "deep-researcher",
+      "definition": "Answers a question FROM a corpus already held, and is answerable for the answer. Distinct from `librarian`, which decides what to capture, and from `ingestion-agent`, which derives structure from what was captured: both produce the corpus, and this role consumes it. Added 2026-09-23 with the `doc-researcher` methodology, because the accountability it names — somebody who must stand behind a synthesis and its citations — belonged to no declared role. THE LANE IT BINDS IS DRAWN IN ANOTHER INSTANCE — the `Deep researcher` lane of `folio-assistant-core/processes/library/deep-document-research.bpmn`, which names this role with `<folio:role ref>`. It carried a `lanes[]` here for about an hour on 2026-09-23 before #1168 landed and inverted the relation: a lane names its role, and a role does not list its lanes, because a general node never names its users. The binding is therefore stated once, on the lane, and this role says nothing about where it is drawn.",
       "inScheme": "https://litlfred.github.io/folio-assistant/STAGING/claude-state-branch-store/cat-harness-glossary.jsonld"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-state-branch-store/cat-harness.jsonld#role/evidence-agent",
       "@type": "skos:Concept",
       "prefLabel": "Evidence agent",
-      "definition": "Retrieves and appraises external evidence for a guideline claim.",
+      "title": "Evidence agent",
       "notation": "evidence-agent",
+      "definition": "Retrieves and appraises external evidence for a guideline claim.",
       "inScheme": "https://litlfred.github.io/folio-assistant/STAGING/claude-state-branch-store/cat-harness-glossary.jsonld"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-state-branch-store/cat-harness.jsonld#role/sibling-session",
       "@type": "skos:Concept",
       "prefLabel": "Sibling session",
+      "title": "Sibling session",
+      "notation": "sibling-session",
       "definition": "Another agent or human working the same store. Present in bean-lifecycle precisely to mark what is NOT yours to close.",
       "altLabel": [
         "Sibling session or human (not yours to close)"
       ],
-      "notation": "sibling-session",
       "inScheme": "https://litlfred.github.io/folio-assistant/STAGING/claude-state-branch-store/cat-harness-glossary.jsonld",
       "usage": [
         "https://litlfred.github.io/folio-assistant/STAGING/claude-state-branch-store/cat-harness.jsonld#glossary-usage/Process_BeanLifecycle/Lane_Sibling"
@@ -1280,6 +1329,8 @@
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-state-branch-store/cat-harness.jsonld#role/build-pipeline",
       "@type": "skos:Concept",
       "prefLabel": "Build pipeline",
+      "title": "Build pipeline",
+      "notation": "build-pipeline",
       "definition": "Validates, renders and publishes, and watches whether that actually worked. A system lane: it runs a fixed program and exercises no judgement, so anything needing a decision belongs in a different lane. It carries `todo-manager` for the two CI-watcher dispatch points in `content-change-review`, which `claim` and `note` a bean and never `resolve` one -- claim is idempotent and note appends, both fixed programs, while deciding that a publish SUCCEEDED is the judgement this lane must not make (bean xom7: docs-site.yml failed 30 times while reporting its own exit code).",
       "altLabel": [
         "Automated Pipeline",
@@ -1290,7 +1341,6 @@
         "Scheduled log sweep",
         "merge:main command"
       ],
-      "notation": "build-pipeline",
       "inScheme": "https://litlfred.github.io/folio-assistant/STAGING/claude-state-branch-store/cat-harness-glossary.jsonld",
       "usage": [
         "https://litlfred.github.io/folio-assistant/STAGING/claude-state-branch-store/cat-harness.jsonld#glossary-usage/Process_IgAstDeltaReview/Lane_Build",
@@ -1499,20 +1549,22 @@
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-state-branch-store/cat-harness.jsonld#role/board-renderer",
       "@type": "skos:Concept",
       "prefLabel": "Board renderer",
-      "definition": "Draws a board and performs what the reader has already decided: reads each kind's declared zoom threshold and the layout layer, swaps a card for its avatar, projects an open window onto the canvas, and carries out a confirmed relocation. A system lane — it runs a fixed program and exercises no judgement, which is exactly why every decision in board-open-close.bpmn and board-relocate.bpmn sits in the reader's lane instead. It is NOT the build pipeline: it runs where the reader is, once per request, and publishes nothing.",
+      "title": "Board renderer",
       "notation": "board-renderer",
+      "definition": "Draws a board and performs what the reader has already decided: reads each kind's declared zoom threshold and the layout layer, swaps a card for its avatar, projects an open window onto the canvas, and carries out a confirmed relocation. A system lane — it runs a fixed program and exercises no judgement, which is exactly why every decision in board-open-close.bpmn and board-relocate.bpmn sits in the reader's lane instead. It is NOT the build pipeline: it runs where the reader is, once per request, and publishes nothing.",
       "inScheme": "https://litlfred.github.io/folio-assistant/STAGING/claude-state-branch-store/cat-harness-glossary.jsonld"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-state-branch-store/cat-harness.jsonld#role/validation-pipeline",
       "@type": "skos:Concept",
       "prefLabel": "Validation pipeline",
+      "title": "Validation pipeline",
+      "notation": "validation-pipeline",
       "definition": "The mechanical half of the HCI validation gate. Its findings are inputs to the editor's decision, never the decision.",
       "altLabel": [
         "Validation and QA (mechanical + agents)",
         "Verification"
       ],
-      "notation": "validation-pipeline",
       "inScheme": "https://litlfred.github.io/folio-assistant/STAGING/claude-state-branch-store/cat-harness-glossary.jsonld",
       "usage": [
         "https://litlfred.github.io/folio-assistant/STAGING/claude-state-branch-store/cat-harness.jsonld#glossary-usage/Process_CopyOutMaterialized/Lane_Verify",
@@ -1541,8 +1593,9 @@
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-state-branch-store/cat-harness.jsonld#role/publish-target",
       "@type": "skos:Concept",
       "prefLabel": "Publish target",
-      "definition": "GitHub Pages, or wherever the folio is served from. Reached, probed and reported on — never assumed live.",
+      "title": "Publish target",
       "notation": "publish-target",
+      "definition": "GitHub Pages, or wherever the folio is served from. Reached, probed and reported on — never assumed live.",
       "inScheme": "https://litlfred.github.io/folio-assistant/STAGING/claude-state-branch-store/cat-harness-glossary.jsonld",
       "actedUpon": true,
       "usage": [
@@ -1562,28 +1615,31 @@
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-state-branch-store/cat-harness.jsonld#role/lean-toolchain",
       "@type": "skos:Concept",
       "prefLabel": "Lean toolchain",
-      "definition": "Elaborates and checks the formal half of a paper folio. Answers only what Lean can answer.",
+      "title": "Lean toolchain",
       "notation": "lean-toolchain",
+      "definition": "Elaborates and checks the formal half of a paper folio. Answers only what Lean can answer.",
       "inScheme": "https://litlfred.github.io/folio-assistant/STAGING/claude-state-branch-store/cat-harness-glossary.jsonld"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-state-branch-store/cat-harness.jsonld#role/ig-publisher-service",
       "@type": "skos:Concept",
       "prefLabel": "IG publisher + validator",
-      "definition": "The JVM services an IG build shells out to. External in behaviour, internal in configuration.",
+      "title": "IG publisher + validator",
       "notation": "ig-publisher-service",
+      "definition": "The JVM services an IG build shells out to. External in behaviour, internal in configuration.",
       "inScheme": "https://litlfred.github.io/folio-assistant/STAGING/claude-state-branch-store/cat-harness-glossary.jsonld"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-state-branch-store/cat-harness.jsonld#role/attestation-service",
       "@type": "skos:Concept",
       "prefLabel": "Attestation service",
+      "title": "Attestation service",
+      "notation": "attestation-service",
       "definition": "Signs a QA report's run hashes over an API. A MECHANICAL role, and the one that DISAPPEARS when the actor performing it cannot reach out — which is why the signing process carries a second, human lane rather than a retry.",
       "altLabel": [
         "Attestation (GDHCN / WHO SMART Trust)",
         "Attestation service (API)"
       ],
-      "notation": "attestation-service",
       "inScheme": "https://litlfred.github.io/folio-assistant/STAGING/claude-state-branch-store/cat-harness-glossary.jsonld",
       "usage": [
         "https://litlfred.github.io/folio-assistant/STAGING/claude-state-branch-store/cat-harness.jsonld#glossary-usage/Process_KgToPortal/Lane_Attestation",
@@ -1612,11 +1668,12 @@
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-state-branch-store/cat-harness.jsonld#role/work-plan",
       "@type": "skos:Concept",
       "prefLabel": "Work plan (beans)",
+      "title": "Work plan (beans)",
+      "notation": "work-plan",
       "definition": "The shared store, modelled as a lane because tasks act ON it and a reader needs to see where the plan is touched. No actor takes this role on; it is acted upon.",
       "altLabel": [
         "Work plan — beans (shared by humans and agents)"
       ],
-      "notation": "work-plan",
       "inScheme": "https://litlfred.github.io/folio-assistant/STAGING/claude-state-branch-store/cat-harness-glossary.jsonld",
       "actedUpon": true,
       "usage": [
@@ -1646,13 +1703,14 @@
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-state-branch-store/cat-harness.jsonld#role/corpus",
       "@type": "skos:Concept",
       "prefLabel": "Corpus",
+      "title": "Corpus",
+      "notation": "corpus",
       "definition": "The versioned content store and the L1 source knowledge graph. Like the work plan, a lane that is written to rather than a participant that acts.",
       "altLabel": [
         "Corpus — L1 source knowledge graph",
         "Corpus — the subscriber's declaration",
         "Source graph — read-only"
       ],
-      "notation": "corpus",
       "inScheme": "https://litlfred.github.io/folio-assistant/STAGING/claude-state-branch-store/cat-harness-glossary.jsonld",
       "actedUpon": true,
       "usage": [
@@ -1732,11 +1790,12 @@
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-state-branch-store/cat-harness.jsonld#role/external-registry",
       "@type": "skos:Concept",
       "prefLabel": "External registry",
+      "title": "External registry",
+      "notation": "external-registry",
       "definition": "Trusted registries and observatories outside this instance's control. Carries no skills because nothing here instructs it.",
       "altLabel": [
         "Portal (external consumer)"
       ],
-      "notation": "external-registry",
       "inScheme": "https://litlfred.github.io/folio-assistant/STAGING/claude-state-branch-store/cat-harness-glossary.jsonld",
       "actedUpon": true,
       "usage": [
@@ -1756,8 +1815,9 @@
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-state-branch-store/cat-harness.jsonld#role/log",
       "@type": "skos:Concept",
       "prefLabel": "Activity log",
-      "definition": "The agent activity log. A MECHANICAL role and an `actedUpon` one: it is written to at task start and task end, and emptied by an actor — one entry, all of them, or on a periodic sweep — and it decides nothing. Modelled on `work-plan` and `corpus`, the two existing stores that are acted upon rather than acting. Its entries are held in the instance's unpublished store and never reach a published graph; the `activity-log` skill names the location, which is deliberately not repeated here because a role description IS published.",
+      "title": "Activity log",
       "notation": "log",
+      "definition": "The agent activity log. A MECHANICAL role and an `actedUpon` one: it is written to at task start and task end, and emptied by an actor — one entry, all of them, or on a periodic sweep — and it decides nothing. Modelled on `work-plan` and `corpus`, the two existing stores that are acted upon rather than acting. Its entries are held in the instance's unpublished store and never reach a published graph; the `activity-log` skill names the location, which is deliberately not repeated here because a role description IS published.",
       "inScheme": "https://litlfred.github.io/folio-assistant/STAGING/claude-state-branch-store/cat-harness-glossary.jsonld",
       "actedUpon": true
     },
@@ -1765,8 +1825,9 @@
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-state-branch-store/cat-harness.jsonld#role/session-record",
       "@type": "skos:Concept",
       "prefLabel": "Session record",
-      "definition": "A session's context — who is acting, which instances are open, what it waits on. A MECHANICAL role and an `actedUpon` one: written to as the session moves and read by a sibling deciding whether a claim is live, and it decides nothing. Modelled on `work-plan`, `corpus` and `log`, the stores that are acted upon rather than acting. It carries `session-context` because the shape of what is written IS the discipline here — unlike `work-plan`, whose store has a CLI, this one is written by a machine that may be an LLM playing the part, so the schema is the contract.",
+      "title": "Session record",
       "notation": "session-record",
+      "definition": "A session's context — who is acting, which instances are open, what it waits on. A MECHANICAL role and an `actedUpon` one: written to as the session moves and read by a sibling deciding whether a claim is live, and it decides nothing. Modelled on `work-plan`, `corpus` and `log`, the stores that are acted upon rather than acting. It carries `session-context` because the shape of what is written IS the discipline here — unlike `work-plan`, whose store has a CLI, this one is written by a machine that may be an LLM playing the part, so the schema is the contract.",
       "inScheme": "https://litlfred.github.io/folio-assistant/STAGING/claude-state-branch-store/cat-harness-glossary.jsonld",
       "actedUpon": true
     },
@@ -1774,24 +1835,27 @@
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-state-branch-store/cat-harness.jsonld#role/editorial-authoring-agent",
       "@type": "skos:Concept",
       "prefLabel": "Editorial authoring agent",
-      "definition": "The authoring agent in the editorial lane: auditing a block's prose, structure and sourcing rather than writing new subject matter.",
+      "title": "Editorial authoring agent",
       "notation": "editorial-authoring-agent",
+      "definition": "The authoring agent in the editorial lane: auditing a block's prose, structure and sourcing rather than writing new subject matter.",
       "inScheme": "https://litlfred.github.io/folio-assistant/STAGING/claude-state-branch-store/cat-harness-glossary.jsonld"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-state-branch-store/cat-harness.jsonld#role/docs-authoring-agent",
       "@type": "skos:Concept",
       "prefLabel": "Docs authoring agent",
-      "definition": "The authoring agent producing what a person reads ABOUT the instance — generated references, the glossary, sticky notes, theme art and deployment documentation.",
+      "title": "Docs authoring agent",
       "notation": "docs-authoring-agent",
+      "definition": "The authoring agent producing what a person reads ABOUT the instance — generated references, the glossary, sticky notes, theme art and deployment documentation.",
       "inScheme": "https://litlfred.github.io/folio-assistant/STAGING/claude-state-branch-store/cat-harness-glossary.jsonld"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-state-branch-store/cat-harness.jsonld#role/platform-authoring-agent",
       "@type": "skos:Concept",
       "prefLabel": "Platform authoring agent",
-      "definition": "The authoring agent working on how this instance PUBLISHES itself — the MCP projection, its contract, and the rendering endpoints.",
+      "title": "Platform authoring agent",
       "notation": "platform-authoring-agent",
+      "definition": "The authoring agent working on how this instance PUBLISHES itself — the MCP projection, its contract, and the rendering endpoints.",
       "inScheme": "https://litlfred.github.io/folio-assistant/STAGING/claude-state-branch-store/cat-harness-glossary.jsonld",
       "usage": [
         "https://litlfred.github.io/folio-assistant/STAGING/claude-state-branch-store/cat-harness.jsonld#glossary-usage/Process_KgSeparation/Lane_Platform"
@@ -1810,40 +1874,60 @@
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-state-branch-store/cat-harness.jsonld#role/session-coordinator",
       "@type": "skos:Concept",
       "prefLabel": "Session coordinator",
-      "definition": "The authoring agent managing the SESSION rather than the content: what this session intends, what is already in flight elsewhere, and what to pick up next.",
+      "title": "Session coordinator",
       "notation": "session-coordinator",
-      "inScheme": "https://litlfred.github.io/folio-assistant/STAGING/claude-state-branch-store/cat-harness-glossary.jsonld"
+      "definition": "The authoring agent managing the SESSION rather than the content: what this session intends, what is already in flight elsewhere, and what to pick up next.",
+      "altLabel": [
+        "Merge steward"
+      ],
+      "inScheme": "https://litlfred.github.io/folio-assistant/STAGING/claude-state-branch-store/cat-harness-glossary.jsonld",
+      "usage": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-state-branch-store/cat-harness.jsonld#glossary-usage/Process_StalledAgentTriage/Lane_Steward"
+      ]
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-state-branch-store/cat-harness.jsonld#glossary-usage/Process_StalledAgentTriage/Lane_Steward",
+      "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#LaneUsage",
+      "ofConcept": "https://litlfred.github.io/folio-assistant/STAGING/claude-state-branch-store/cat-harness.jsonld#role/session-coordinator",
+      "inProcess": "https://litlfred.github.io/folio-assistant/STAGING/claude-state-branch-store/cat-harness.jsonld#process/Process_StalledAgentTriage",
+      "label": "Merge steward",
+      "scopeNote": "Receives the open PRs that lost their driver: which are green and ready, which are mid-merge, which must be re-driven from their PR head.",
+      "source": "cat-harness/processes/sdlc/stalled-agent-triage.bpmn"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-state-branch-store/cat-harness.jsonld#role/integration-watcher",
       "@type": "skos:Concept",
       "prefLabel": "Integration watcher",
-      "definition": "Watches the default branch and open branches for newly-landed work that an existing audit axis should be re-run over. Reports findings; does not author the fix.",
+      "title": "Integration watcher",
       "notation": "integration-watcher",
+      "definition": "Watches the default branch and open branches for newly-landed work that an existing audit axis should be re-run over. Reports findings; does not author the fix.",
       "inScheme": "https://litlfred.github.io/folio-assistant/STAGING/claude-state-branch-store/cat-harness-glossary.jsonld"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-state-branch-store/cat-harness.jsonld#role/lean-authoring-agent",
       "@type": "skos:Concept",
       "prefLabel": "Lean authoring agent",
-      "definition": "Writes and repairs the Lean 4 formalization — translating narrative mathematics into declarations, keeping the build green, and curating what is staged for upstream.",
+      "title": "Lean authoring agent",
       "notation": "lean-authoring-agent",
+      "definition": "Writes and repairs the Lean 4 formalization — translating narrative mathematics into declarations, keeping the build green, and curating what is staged for upstream.",
       "inScheme": "https://litlfred.github.io/folio-assistant/STAGING/claude-state-branch-store/cat-harness-glossary.jsonld"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-state-branch-store/cat-harness.jsonld#role/proof-review-agent",
       "@type": "skos:Concept",
       "prefLabel": "Proof review agent",
-      "definition": "Reviews proofs — narrative and formal — for gaps, vacuity, redundancy and divergence between the two renderings of the same claim.",
+      "title": "Proof review agent",
       "notation": "proof-review-agent",
+      "definition": "Reviews proofs — narrative and formal — for gaps, vacuity, redundancy and divergence between the two renderings of the same claim.",
       "inScheme": "https://litlfred.github.io/folio-assistant/STAGING/claude-state-branch-store/cat-harness-glossary.jsonld"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-state-branch-store/cat-harness.jsonld#role/compute-authoring-agent",
       "@type": "skos:Concept",
       "prefLabel": "Compute authoring agent",
-      "definition": "Writes and audits the computation scripts and simulators that produce witnessed values, and keeps the paper's numbers and its computations from drifting apart.",
+      "title": "Compute authoring agent",
       "notation": "compute-authoring-agent",
+      "definition": "Writes and audits the computation scripts and simulators that produce witnessed values, and keeps the paper's numbers and its computations from drifting apart.",
       "inScheme": "https://litlfred.github.io/folio-assistant/STAGING/claude-state-branch-store/cat-harness-glossary.jsonld"
     }
   ]

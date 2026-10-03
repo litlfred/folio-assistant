@@ -723,9 +723,9 @@
         "skos:Concept"
       ],
       "label": "substrate-snapshot",
-      "comment": "The root declaration of each Knowledge Graph this instance subscribes to, cached byte for byte at the pinned commit with its fixity, and what the substrate judgement found in it.",
+      "comment": "The root declaration of each Knowledge Graph this instance subscribes to, cached byte for byte at the pinned commit with its fixity, and what the substrate judgement found in it; and each chosen subgraph or asset materialised from it, with its fixity, provenance and gate answers.",
       "prefLabel": "substrate-snapshot",
-      "definition": "The root declaration of each Knowledge Graph this instance subscribes to, cached byte for byte at the pinned commit with its fixity, and what the substrate judgement found in it.",
+      "definition": "The root declaration of each Knowledge Graph this instance subscribes to, cached byte for byte at the pinned commit with its fixity, and what the substrate judgement found in it; and each chosen subgraph or asset materialised from it, with its fixity, provenance and gate answers.",
       "notation": "cat-harness:graphKind/substrate-snapshot",
       "inScheme": "https://litlfred.github.io/cat-harness/0.1.0/ns",
       "isDefinedBy": "https://litlfred.github.io/cat-harness/0.1.0/ns",
@@ -832,6 +832,21 @@
       "prefLabel": "uml",
       "definition": "UML class diagrams of each named sub-graph a harness declares, derived from the node schemas its graph kinds register — PlantUML and Mermaid from one model.",
       "notation": "cat-harness:graphKind/uml",
+      "inScheme": "https://litlfred.github.io/cat-harness/0.1.0/ns",
+      "isDefinedBy": "https://litlfred.github.io/cat-harness/0.1.0/ns",
+      "layer": "harness"
+    },
+    {
+      "@id": "cat-harness:graphKind/vocab-mapping",
+      "@type": [
+        "bootstrap:GraphKind",
+        "skos:Concept"
+      ],
+      "label": "vocab-mapping",
+      "comment": "Vocabulary mappings — which source field becomes which target predicate, with its stated relationship, one ConceptMap-shaped table per source and target; representable from and producible as a FHIR ConceptMap.",
+      "prefLabel": "vocab-mapping",
+      "definition": "Vocabulary mappings — which source field becomes which target predicate, with its stated relationship, one ConceptMap-shaped table per source and target; representable from and producible as a FHIR ConceptMap.",
+      "notation": "cat-harness:graphKind/vocab-mapping",
       "inScheme": "https://litlfred.github.io/cat-harness/0.1.0/ns",
       "isDefinedBy": "https://litlfred.github.io/cat-harness/0.1.0/ns",
       "layer": "harness"
