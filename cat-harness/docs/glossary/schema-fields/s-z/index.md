@@ -13,11 +13,11 @@ permalink: /glossary/schema-fields/s-z/
 
 Candidate terms extracted from every schema field with a doc comment: `<Declaration>.<field>` as the label, the comment's first paragraph as the definition. Each is the asset's own text, verbatim and not curated, and carries the badge "candidate, extracted". A person promotes one by authoring it. Authored terms, the counts and the sources are on the <a href="{{ '/glossary/' | relative_url }}">glossary index</a>.
 
-From: bootstrap-tools 28 (<a href="{{ '/assets/glossary/bootstrap-tools--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · cat-harness 1733 (<a href="{{ '/assets/glossary/cat-harness--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · fhir-harness 60 (<a href="{{ '/assets/glossary/fhir-harness--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · folio-assistant-core 127 (<a href="{{ '/assets/glossary/folio-assistant-core--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · smart-base 9 (<a href="{{ '/assets/glossary/smart-base--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>).
+From: bootstrap-tools 28 (<a href="{{ '/assets/glossary/bootstrap-tools--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · cat-harness 1736 (<a href="{{ '/assets/glossary/cat-harness--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · fhir-harness 60 (<a href="{{ '/assets/glossary/fhir-harness--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · folio-assistant-core 127 (<a href="{{ '/assets/glossary/folio-assistant-core--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · smart-base 9 (<a href="{{ '/assets/glossary/smart-base--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>).
 
 One of 4 pages of this type, split by the first letter of the label: <a href="{{ '/glossary/schema-fields/' | relative_url }}">all parts</a>.
 
-**Size:** this page holds 574 terms and is 317 KB before compression, fetched in one request, within its budget of 1.0 MB. There is no search index: the filter below runs over this page, and the A–Z bar jumps within it.
+**Size:** this page holds 577 terms and is 319 KB before compression, fetched in one request, within its budget of 1.0 MB. There is no search index: the filter below runs over this page, and the A–Z bar jumps within it.
 
 <table class="fa-gloss-mapping">
 <caption>Already somebody else's concept? — <code>check:term-mapping</code>, bean <code>7wou</code></caption>
@@ -32,7 +32,7 @@ be a term this corpus is right to coin.</p>
 
 <label for="fa-gloss-q">Filter terms</label>
 <input id="fa-gloss-q" type="search" autocomplete="off" style="min-height:44px;width:100%;max-width:32rem">
-<p aria-live="polite"><span id="fa-gloss-n">574</span> shown</p>
+<p aria-live="polite"><span id="fa-gloss-n">577</span> shown</p>
 
 <nav aria-label="Letters"><a href="#letter-S">S</a> <a href="#letter-T">T</a> <a href="#letter-U">U</a> <a href="#letter-V">V</a> <a href="#letter-W">W</a></nav>
 
@@ -2183,6 +2183,27 @@ ThemeSchema.palette <span class="fa-gloss-status">candidate, extracted</span>
 <dd>
 <p>Shared across every kind, deliberately.</p>
 <p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/theme.ts"><code>cat-harness/schemas/theme.ts#ThemeSchema.palette</code></a></p>
+</dd>
+<dt id="cat-harness--kg-schema-fields--document-image.thresholdbasisschema.coverage" data-fa-state="extracted" data-fa-gloss="">
+ThresholdBasisSchema.coverage <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>Placed area over page area — the number compared against <code>value</code>.</p>
+<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/document-image.ts"><code>cat-harness/schemas/document-image.ts#ThresholdBasisSchema.coverage</code></a></p>
+</dd>
+<dt id="cat-harness--kg-schema-fields--document-image.thresholdbasisschema.suppliedby" data-fa-state="extracted" data-fa-gloss="">
+ThresholdBasisSchema.suppliedBy <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>Always the caller. Recorded so the provenance is read, not inferred.</p>
+<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/document-image.ts"><code>cat-harness/schemas/document-image.ts#ThresholdBasisSchema.suppliedBy</code></a></p>
+</dd>
+<dt id="cat-harness--kg-schema-fields--document-image.thresholdbasisschema.value" data-fa-state="extracted" data-fa-gloss="">
+ThresholdBasisSchema.value <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>The cutoff, exactly as supplied. Images below it were filed <code>furniture</code>.</p>
+<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/document-image.ts"><code>cat-harness/schemas/document-image.ts#ThresholdBasisSchema.value</code></a></p>
 </dd>
 <dt id="cat-harness--kg-schema-fields--tile-count.tilecount.count" data-fa-state="extracted" data-fa-gloss="">
 TileCount.count <span class="fa-gloss-status">candidate, extracted</span>

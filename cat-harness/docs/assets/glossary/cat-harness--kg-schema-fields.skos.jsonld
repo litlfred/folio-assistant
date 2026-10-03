@@ -11300,6 +11300,63 @@
       "skos:note": "candidate"
     },
     {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/document-image.thresholdbasisschema.coverage",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "ThresholdBasisSchema.coverage"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Placed area over page area — the number compared against `value`."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/document-image.ts#ThresholdBasisSchema.coverage",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/document-image.thresholdbasisschema.suppliedby",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "ThresholdBasisSchema.suppliedBy"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Always the caller. Recorded so the provenance is read, not inferred."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/document-image.ts#ThresholdBasisSchema.suppliedBy",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/document-image.thresholdbasisschema.value",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "ThresholdBasisSchema.value"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The cutoff, exactly as supplied. Images below it were filed `furniture`."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/document-image.ts#ThresholdBasisSchema.value",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/document-kind.documentkindcoverageschema.from",
       "@type": "skos:Concept",
       "skos:inScheme": {
