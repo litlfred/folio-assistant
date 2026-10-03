@@ -351,6 +351,60 @@ export function declaredDirectories(graph: string): Array<{ id: string; absPath:
  * `index/tasks`, `index/roles`. Absent rather than stubbed: a type that emits
  * an empty page is indistinguishable from one whose sub-graphs are empty.
  */
+/**
+ * Every file under a graph's declared directories that `keep` admits, as
+ * `AutoDocItem`s.
+ *
+ * Factored out because the four types added 2026-10-03 (`index/schemas`,
+ * `index/tools`, `uml`, `lsi`) differ only in their extension filter and their
+ * summary source, and writing the walk four times is how four copies drift
+ * into four answers to "what counts as an artefact of this graph".
+ *
+ * It walks RECURSIVELY, which `index/skills` deliberately does not — and the
+ * difference is not an oversight. A skill's directory holds supporting pages
+ * that are not skills, so that type asks `skillMdDirs()` instead. These four
+ * have no such sub-artefact: a `.puml` under `uml/overview/<instance>/` is a
+ * model, and an `.lsi.json` at any depth is an index.
+ */
+function filesOfGraph(
+  graph: string,
+  keep: (file: string) => boolean,
+  summarise?: (abs: string) => string | undefined,
+): AutoDocItem[] {
+  const items: AutoDocItem[] = [];
+  const walk = (dir: string): void => {
+    if (!existsSync(dir)) return;
+    for (const e of readdirSync(dir, { withFileTypes: true })) {
+      if (e.name.startsWith(".") || e.name === "node_modules") continue;
+      const abs = join(dir, e.name);
+      if (e.isDirectory()) walk(abs);
+      else if (keep(e.name)) {
+        items.push({
+          path: relative(REPO, abs).split("\\").join("/"),
+          name: basename(e.name).replace(/\.(ts|json|puml)$/, ""),
+          summary: summarise?.(abs),
+        });
+      }
+    }
+  };
+  for (const d of declaredDirectories(graph)) walk(d.absPath);
+  return dedupeByPath(items);
+}
+
+/** The first sentence of a leading `/** … *\/` module docblock, if there is one. */
+function docblockSummary(abs: string): string | undefined {
+  const text = readFileSync(abs, "utf-8").slice(0, 4000);
+  const m = /\/\*\*([\s\S]*?)\*\//.exec(text);
+  if (!m) return undefined;
+  const body = m[1]!
+    .split("\n")
+    .map((l) => l.replace(/^\s*\*ic?\s?/, "").replace(/^\s*\*\s?/, "").trim())
+    .filter((l) => l !== "" && !l.startsWith("@"))
+    .join(" ")
+    .trim();
+  return body === "" ? undefined : firstSentence(body);
+}
+
 export const TYPES: AutoDocType[] = [
   {
     id: "index/skills",
@@ -387,6 +441,60 @@ export const TYPES: AutoDocType[] = [
         }
       }
       return dedupeByPath(items);
+    },
+  },
+  {
+    id: "index/schemas",
+    title: "Schemas",
+    graph: "schemas",
+    extracts: "every schema module a declared `schemas` directory holds, with the first sentence of its module docblock",
+    collect(): AutoDocItem[] {
+      return filesOfGraph("schemas", (f) => f.endsWith(".ts") && !f.endsWith(".test.ts"), docblockSummary);
+    },
+  },
+  {
+    id: "index/tools",
+    title: "Tools",
+    graph: "tools",
+    // `.ts`, not `.json`. A Tool definition here is a TypeScript module
+    // (`mcp.ts`, `viewers.ts`, `vocab-map.ts`), and the first draft of this
+    // type filtered for `.json` on the strength of `AGENTS.md` calling them
+    // "Tool definitions, themselves KG nodes". It emitted **0 items across 0
+    // sub-graphs** and reported `✓` — which is the vacuous pass this corpus
+    // keeps paying for: a type that finds nothing is indistinguishable from a
+    // graph that holds nothing. Measured against the directory, not recalled.
+    extracts: "every Tool module a declared `tools` directory holds, with the first sentence of its module docblock",
+    collect(): AutoDocItem[] {
+      return filesOfGraph("tools", (f) => f.endsWith(".ts") && !f.endsWith(".test.ts"), docblockSummary);
+    },
+  },
+  {
+    id: "uml",
+    title: "UML",
+    graph: "uml",
+    // `.puml` only, though each model is emitted as BOTH `.puml` and `.mmd`.
+    // Listing both would double every row for one model in two notations —
+    // the `index/skills` defect (a RENDERING is not the artefact) in a second
+    // form. The `.mmd` sibling is reachable from the rendered page, which
+    // links both sources.
+    extracts: "every UML model a declared `uml` directory holds, one row per model rather than per notation",
+    collect(): AutoDocItem[] {
+      return filesOfGraph("uml", (f) => f.endsWith(".puml"));
+    },
+  },
+  {
+    id: "lsi",
+    title: "LSI",
+    // `qa`, NOT the graph each index is ABOUT, and the distinction is the one
+    // `AutoDocType.graph` is documented for: this names where the artefacts
+    // LIVE. An `.lsi.json` is a QA result computed over some other graph, so
+    // its declared home is `test/results/` and its subject segment is that
+    // directory's id. Naming the indexed graph here would make the type walk
+    // `skills/` and find no `.lsi.json` at all.
+    graph: "qa",
+    extracts: "every LSI index a declared `qa` directory holds, named for the instance and graph it was computed over",
+    collect(): AutoDocItem[] {
+      return filesOfGraph("qa", (f) => f.endsWith(".lsi.json"));
     },
   },
   {
