@@ -13,6 +13,8 @@ parent: Skill instructions
 {% raw %}
 # Lean cache: the authoring loop
 
+> This is an instantiation of the general compiled-artefact-cache pattern. See `cat-harness/skills/process/process-core/compiled-artefact-cache.md` for the shared contract.
+
 ## The loop
 
 The cache is not a maintenance chore. It is the **output of every

@@ -68,6 +68,24 @@ describe("inputDigest — the same algorithm as the Java InputDigest", () => {
     put(ig, "output/x.html", "noise");
     expect(inputDigest(ig)).toBe("58871352384745e1d7fd68f7ea918b0e2febbd86cf36a9cb5f0c7ce9d13a82f1");
   });
+
+  test("in a git work tree, an ignored file is not an input but an untracked one is", () => {
+    const ig = tmp("gitdigest-");
+    put(ig, "sushi-config.yaml", "id: x\n");
+    put(ig, "input/fsh/a.fsh", "Profile: A\n");
+    put(ig, ".gitignore", ".DS_Store\n");
+    const git = (...a: string[]) => spawnSync("git", a, { cwd: ig, encoding: "utf-8" });
+    git("init", "-q");
+    git("-c", "user.email=t@t", "-c", "user.name=t", "add", ".");
+    git("-c", "user.email=t@t", "-c", "user.name=t", "commit", "-qm", "base");
+    const clean = inputDigest(ig);
+
+    put(ig, "input/.DS_Store", "finder noise");
+    expect(inputDigest(ig)).toBe(clean);
+
+    put(ig, "input/fsh/b.fsh", "Profile: B\n");
+    expect(inputDigest(ig)).not.toBe(clean);
+  });
 });
 
 describe("validity — compiledValidity on the manifest's inputs", () => {
