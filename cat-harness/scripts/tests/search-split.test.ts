@@ -18,8 +18,10 @@ import {
   SCOPES_DIR,
   SOURCE_PATH,
   declaredInstanceNames,
+  SECTION_BUDGET_BYTES,
   render,
   scopeOf,
+  sectionOfPath,
   split,
   type SearchManifest,
 } from "../search-split.ts";
@@ -128,4 +130,51 @@ describe("the CLI", () => {
 test("this checkout's declared instances include the ones the site mounts", () => {
   const names = declaredInstanceNames(resolve(import.meta.dir, "..", "..", ".."));
   for (const n of ["smart-trust", "smart-base", "bootstrap"]) expect(names.has(n)).toBe(true);
+});
+
+describe("platform sections over the budget — bean mm2n", () => {
+  test("sectionOfPath: below a section, or its index; never a page at the root", () => {
+    expect(sectionOfPath("/reference/skills.html")).toBe("reference");
+    expect(sectionOfPath("/reference/")).toBe("reference");
+    expect(sectionOfPath("/reference/a/b.html")).toBe("reference");
+    expect(sectionOfPath("/getting-started.html")).toBeUndefined();
+    expect(sectionOfPath("/")).toBeUndefined();
+  });
+
+  const big = "x".repeat(400);
+  const idx = {
+    0: { relUrl: "/", content: "home" },
+    1: { relUrl: "/reference/", content: big },
+    2: { relUrl: "/reference/a.html", content: big },
+    3: { relUrl: "/guides/g.html", content: "small" },
+    4: { relUrl: "/smart-trust/t.html", content: big },
+    5: { relUrl: "/getting-started.html", content: big },
+  };
+  // A budget the reference section (two ~430-byte entries) crosses and the
+  // others do not — the real 512 KiB is tested by what it is, not by size.
+  const parts = split(idx, INSTANCES, LOCALES, 600);
+
+  test("a section over the budget becomes its own scope, index page included", () => {
+    expect(parts.get("section-reference")?.scope).toEqual({ id: "section-reference", kind: "section" });
+    expect(Object.keys(parts.get("section-reference")!.entries)).toEqual(["1", "2"]);
+  });
+
+  test("a section under it, and pages at the root, stay in the platform", () => {
+    expect(Object.keys(parts.get(PLATFORM)!.entries)).toEqual(["0", "3", "5"]);
+    expect(parts.has("section-guides")).toBe(false);
+  });
+
+  test("instances are never cut into sections, and the partition stays exact", () => {
+    expect(Object.keys(parts.get("smart-trust")!.entries)).toEqual(["4"]);
+    const all = [...parts.values()].flatMap((p) => Object.keys(p.entries)).sort();
+    expect(all).toEqual(Object.keys(idx).sort());
+  });
+
+  test("the default budget is 512 KiB, and render threads a given one through to the manifest", () => {
+    expect(SECTION_BUDGET_BYTES).toBe(512 * 1024);
+    const m = JSON.parse(render(JSON.stringify(idx), INSTANCES, LOCALES, 600).get(`${SCOPES_DIR}/manifest.json`)!) as SearchManifest;
+    expect(m.scopes.filter((s) => s.kind === "section").map((s) => s.id)).toEqual(["section-reference"]);
+    const none = JSON.parse(render(JSON.stringify(idx), INSTANCES, LOCALES).get(`${SCOPES_DIR}/manifest.json`)!) as SearchManifest;
+    expect(none.scopes.some((s) => s.kind === "section")).toBe(false);
+  });
 });
