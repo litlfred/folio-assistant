@@ -63,6 +63,7 @@ const MANIFEST = {
     { id: "smart-trust", kind: "instance", path: "assets/js/search/smart-trust.json", entries: 1, bytes: 1 },
     { id: "section-reference", kind: "section", path: "assets/js/search/section-reference.json", entries: 1, bytes: 1 },
   ],
+  remote: [{ id: "who-iris", kind: "id-lookup", href: "id-lookup/?index=who-iris/", entries: 10 }],
 };
 
 interface Load { fetched: (suffix: string) => number }
@@ -165,3 +166,23 @@ for (const path of ["/reference/schemas.html", "/reference/"]) {
     expect(fetched("/assets/js/search-data.json")).toBe(0);
   });
 }
+
+// Bean `1br0`: each identifier lookup the manifest names is one link under the
+// results — a page of its own, never loaded here — and it carries the query.
+test("the search box links to each identifier lookup, carrying the reader's query", async ({ page }) => {
+  const { fetched } = await load(page, "/smart-trust/page.html");
+  await search(page, "10665/123");
+  const link = page.locator(".search-remote-link");
+  await expect(link).toHaveCount(1);
+  await expect(link).toContainText("who-iris");
+  expect(await link.getAttribute("href")).toBe("/folio-assistant/id-lookup/?index=who-iris/&q=10665%2F123");
+  // A link, not a load: nothing under id-lookup/ is fetched by the search box.
+  expect(fetched("/id-lookup/who-iris/manifest.json")).toBe(0);
+});
+
+test("no remote in the manifest, no link", async ({ page }) => {
+  await load(page, "/smart-trust/page.html", false);
+  await search(page, "gate");
+  await expect(results(page)).not.toHaveCount(0); // the search has run, so the box is built
+  await expect(page.locator(".search-remote-link")).toHaveCount(0);
+});

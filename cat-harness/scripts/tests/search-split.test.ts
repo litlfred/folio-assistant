@@ -18,7 +18,9 @@ import {
   SCOPES_DIR,
   SOURCE_PATH,
   declaredInstanceNames,
+  ID_LOOKUP_DIR,
   SECTION_BUDGET_BYTES,
+  publishedLookups,
   render,
   scopeOf,
   sectionOfPath,
@@ -176,5 +178,50 @@ describe("platform sections over the budget — bean mm2n", () => {
     expect(m.scopes.filter((s) => s.kind === "section").map((s) => s.id)).toEqual(["section-reference"]);
     const none = JSON.parse(render(JSON.stringify(idx), INSTANCES, LOCALES).get(`${SCOPES_DIR}/manifest.json`)!) as SearchManifest;
     expect(none.scopes.some((s) => s.kind === "section")).toBe(false);
+  });
+});
+
+describe("remote identifier lookups — bean 1br0", () => {
+  const tree = (pageToo: boolean, indexes: Record<string, unknown>) => {
+    const site = mkdtempSync(join(tmpdir(), "search-split-remote-"));
+    mkdirSync(join(site, ID_LOOKUP_DIR), { recursive: true });
+    if (pageToo) writeFileSync(join(site, ID_LOOKUP_DIR, "index.html"), "<p>lookup</p>");
+    for (const [name, manifest] of Object.entries(indexes)) {
+      mkdirSync(join(site, ID_LOOKUP_DIR, name), { recursive: true });
+      writeFileSync(join(site, ID_LOOKUP_DIR, name, "manifest.json"), typeof manifest === "string" ? manifest : JSON.stringify(manifest));
+    }
+    return site;
+  };
+
+  test("every published index is named, with its entry count and a link that opens it", () => {
+    const site = tree(true, { "who-iris": { entryCount: 10 }, "b-other": { entryCount: 3 } });
+    try {
+      expect(publishedLookups(site)).toEqual([
+        { id: "b-other", kind: "id-lookup", href: "id-lookup/?index=b-other/", entries: 3 },
+        { id: "who-iris", kind: "id-lookup", href: "id-lookup/?index=who-iris/", entries: 10 },
+      ]);
+    } finally {
+      rmSync(site, { recursive: true, force: true });
+    }
+  });
+
+  test("no lookup page, or an unreadable index, is nothing to link to", () => {
+    const noPage = tree(false, { "who-iris": { entryCount: 10 } });
+    const bad = tree(true, { "who-iris": "not json" });
+    try {
+      expect(publishedLookups(noPage)).toEqual([]);
+      expect(publishedLookups(bad)).toEqual([]);
+    } finally {
+      rmSync(noPage, { recursive: true, force: true });
+      rmSync(bad, { recursive: true, force: true });
+    }
+  });
+
+  test("render puts them in the manifest, and leaves the key out when there are none", () => {
+    const r = [{ id: "who-iris", kind: "id-lookup" as const, href: "id-lookup/?index=who-iris/", entries: 10 }];
+    const withRemote = JSON.parse(render(JSON.stringify(INDEX), INSTANCES, LOCALES, SECTION_BUDGET_BYTES, r).get(`${SCOPES_DIR}/manifest.json`)!) as SearchManifest;
+    expect(withRemote.remote).toEqual(r);
+    const without = JSON.parse(render(JSON.stringify(INDEX), INSTANCES, LOCALES).get(`${SCOPES_DIR}/manifest.json`)!) as SearchManifest;
+    expect("remote" in without).toBe(false);
   });
 });

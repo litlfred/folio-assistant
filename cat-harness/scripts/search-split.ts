@@ -49,7 +49,7 @@
  * @module scripts/search-split
  */
 import { createHash } from "node:crypto";
-import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
+import { existsSync, mkdirSync, readdirSync, readFileSync, writeFileSync } from "node:fs";
 import { basename, join, resolve } from "node:path";
 
 import { instanceRootsIn, readDeclaration } from "../schemas/cat-harness.js";
@@ -81,11 +81,56 @@ export interface ManifestScope extends Scope {
   bytes: number;
 }
 
+/**
+ * A searchable thing that is NOT a lunr scope: the identifier lookup an
+ * instance publishes under `<site>/id-lookup/<id>/` (bean `1br0`, issue
+ * #1972 step 3). The search box links to it rather than loading it — the
+ * owner's ruling on `4pm8` keeps it a page of its own.
+ */
+export interface RemoteScope {
+  id: string;
+  kind: "id-lookup";
+  /** Site-relative URL of the lookup page, opened on this index. */
+  href: string;
+  /** The index's own `entryCount`. */
+  entries: number;
+}
+
 export interface SearchManifest {
   $schema: typeof MANIFEST_SCHEMA;
   /** The whole index the scopes were cut from — what "search everywhere" loads. */
   source: { path: string; sha256: string; entries: number; bytes: number };
   scopes: ManifestScope[];
+  /** Absent when the tree publishes no identifier lookup. */
+  remote?: RemoteScope[];
+}
+
+/** Where `publish-id-lookup.ts` puts the lookup client and its indexes, under the site root. */
+export const ID_LOOKUP_DIR = "id-lookup";
+
+/**
+ * Every identifier-lookup index PUBLISHED in a built site: a directory under
+ * `id-lookup/` holding a `manifest.json`, beside the client page. Read from
+ * the tree rather than from the declarations, so the manifest names exactly
+ * what a reader can open — a declared index the build did not publish would
+ * be a link to "could not be read".
+ */
+export function publishedLookups(site: string): RemoteScope[] {
+  const root = join(site, ID_LOOKUP_DIR);
+  if (!existsSync(join(root, "index.html"))) return [];
+  const out: RemoteScope[] = [];
+  for (const name of readdirSync(root).sort()) {
+    const m = join(root, name, "manifest.json");
+    if (!existsSync(m)) continue;
+    let entries = 0;
+    try {
+      entries = Number((JSON.parse(readFileSync(m, "utf-8")) as { entryCount?: unknown }).entryCount) || 0;
+    } catch {
+      continue; // unreadable: not something to link a reader to
+    }
+    out.push({ id: name, kind: "id-lookup", href: `${ID_LOOKUP_DIR}/?index=${encodeURIComponent(name)}/`, entries });
+  }
+  return out;
 }
 
 /** The id the platform scope uses. Not a possible instance or locale name, so it cannot collide. */
@@ -190,6 +235,7 @@ export function render(
   instances: ReadonlySet<string>,
   locales: ReadonlySet<string>,
   sectionBudget: number = SECTION_BUDGET_BYTES,
+  remote: readonly RemoteScope[] = [],
 ): Map<string, string> {
   const index = JSON.parse(sourceText) as Record<string, SearchEntry>;
   const files = new Map<string, string>();
@@ -210,6 +256,7 @@ export function render(
       bytes: Buffer.byteLength(sourceText),
     },
     scopes,
+    ...(remote.length > 0 ? { remote: [...remote] } : {}),
   };
   files.set(`${SCOPES_DIR}/manifest.json`, JSON.stringify(manifest, null, 2) + "\n");
   return files;
@@ -248,7 +295,13 @@ if (import.meta.main) {
   }
   const instanceRoot = resolve(import.meta.dir, "..");
   const repo = resolve(instanceRoot, "..");
-  const files = render(readFileSync(source, "utf-8"), declaredInstanceNames(repo), new Set(targetLocales(instanceRoot)));
+  const files = render(
+    readFileSync(source, "utf-8"),
+    declaredInstanceNames(repo),
+    new Set(targetLocales(instanceRoot)),
+    SECTION_BUDGET_BYTES,
+    publishedLookups(dir),
+  );
   let stale = 0;
   for (const [rel, body] of files) {
     const p = join(dir, rel);
@@ -265,6 +318,9 @@ if (import.meta.main) {
   const manifest = JSON.parse(files.get(`${SCOPES_DIR}/manifest.json`)!) as SearchManifest;
   for (const s of manifest.scopes) {
     console.log(`  ${s.kind.padEnd(8)} ${s.id.padEnd(24)} ${String(s.entries).padStart(6)} entries  ${(s.bytes / 1e6).toFixed(2)} MB`);
+  }
+  for (const r of manifest.remote ?? []) {
+    console.log(`  remote   ${r.id.padEnd(24)} ${String(r.entries).padStart(6)} entries  → ${r.href}`);
   }
   console.log(
     `${manifest.scopes.length} scope(s) from ${manifest.source.entries} entries (${(manifest.source.bytes / 1e6).toFixed(2)} MB)` +

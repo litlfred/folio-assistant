@@ -336,6 +336,22 @@ describe("the search-scopes verifier — bean m7mn", () => {
     expect(short).toContain("do not partition it");
   });
 
+  test("a remote lookup the tree does not hold is a finding — bean 1br0", async () => {
+    const remote = [{ id: "who-iris", kind: "id-lookup" as const, href: "id-lookup/?index=who-iris/", entries: 10 }];
+    const withRemote = (edit: (f: Record<string, unknown>) => void) => {
+      const files: Record<string, unknown> = { [SEARCH_INDEX_PATH]: text };
+      for (const [p, body] of render(text, new Set(["smart-trust"]), new Set(["fr"]), undefined, remote)) files[p] = body;
+      edit(files);
+      return verify(site(files), [SEARCH_SCOPES], { bases: [] });
+    };
+    const ok = await withRemote((f) => { f["id-lookup/index.html"] = "<p/>"; f["id-lookup/who-iris/manifest.json"] = { entryCount: 10 }; });
+    expect(ok.exit).toBe(0);
+    const noIndex = await withRemote((f) => { f["id-lookup/index.html"] = "<p/>"; });
+    expect(noIndex.results[0]!.findings.map((x) => x.detail).join("\n")).toContain("names an index that is not in the tree");
+    const noPage = await withRemote((f) => { f["id-lookup/who-iris/manifest.json"] = { entryCount: 10 }; });
+    expect(noPage.results[0]!.findings.map((x) => x.detail).join("\n")).toContain("holds no lookup page");
+  });
+
   test("a tree with no site index is out of scope — search-index reports that", async () => {
     const { exit, results } = await verify(site({ "a.html": "<p/>" }), [SEARCH_SCOPES], { bases: [] });
     expect(results[0]!.findings).toEqual([]);
