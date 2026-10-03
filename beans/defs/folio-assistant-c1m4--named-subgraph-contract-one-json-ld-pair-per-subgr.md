@@ -4,7 +4,7 @@ title: 'NAMED SUBGRAPH CONTRACT: one JSON-LD pair per subgraph (index = pointers
 status: in-progress
 type: feature
 created_at: 2026-10-02T20:42:54Z
-updated_at: 2026-10-03T08:07:57Z
+updated_at: 2026-10-03T08:07:54Z
 parent: folio-assistant-whlc
 ---
 
@@ -27,3 +27,5 @@ Assessment of the pasted design note (owner asked "does the discussion apply"): 
 - [ ] contract written into the KG data-modelling skill and `schemas/` (subgraph manifest type; Harness/Subgraph common base decided)
 - [ ] generator emits `index.jsonld` + `hydrated.jsonld` per declared subgraph via framing, with a check gate
 - [ ] remote materialization consumes the same files
+
+_2026-10-03T08:07:54Z_ — Claimed by claude/nifty-faraday-8ql41p — pushed to main so sibling sessions see it before this branch has a PR (bean 35nj).

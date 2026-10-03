@@ -4,7 +4,7 @@ title: 'KG PUBLICATION: named subgraphs (referenced + hydrated), skeleton/payloa
 status: in-progress
 type: epic
 created_at: 2026-10-02T20:42:54Z
-updated_at: 2026-10-03T08:07:48Z
+updated_at: 2026-10-03T08:07:45Z
 ---
 
 Owner, 2026-10-02 (lead session, verbatim excerpts):
@@ -19,3 +19,5 @@ Related (read before starting): 9umr (concern subgraphs), 54rk (caching + on-dem
 
 ## Done when
 - [ ] every child below is completed or scrapped with reasons
+
+_2026-10-03T08:07:45Z_ — Claimed by claude/nifty-faraday-8ql41p — pushed to main so sibling sessions see it before this branch has a PR (bean 35nj).
