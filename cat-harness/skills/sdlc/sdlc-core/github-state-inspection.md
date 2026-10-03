@@ -182,13 +182,62 @@ reconciles the runs against the workflows the tree itself declares, and
 composes both since #1664. **Do not build a second reconciliation**; two
 answers to one question are free to disagree.
 
-Three causes of an absent run, which must not collapse into one silence:
+Four causes of an absent-or-inert run, which must not collapse into one
+silence. The fourth is not an ABSENCE at all, which is why it hid: the run
+exists, it completed, and it executed nothing.
 
 | cause | how it reads | what to do |
 |---|---|---|
 | **a conflicted head** | no `pull_request` run is published AT ALL — the forge mints no `refs/pull/N/merge`, and a `pull_request` run checks that ref out (bean `52cz`) | merge the base in. The checks are not slow; they are never coming |
 | **a filtered trigger that owed no run** | genuinely nothing was due | stay silent — `g62s` measured that loosening this produces false fires |
 | **a run never created, unexplained** | a workflow the tree declares `on: pull_request` has no run and the head is mergeable | a **finding** (bean `3pqn`), not a wait |
+| **a bot-actor push** | the runs EXIST and are `completed`, with `conclusion: action_required` — approval was owed and never given, so no job ran (bean `0qjq`) | read the dispatched run instead; see below |
+
+A `draft` PR is a fifth reading of the same silence: `Code-quality gates` does
+not fire from `pull_request` while a PR is a draft, so a draft head owes those
+runs no more than a filtered trigger does. Mark it ready, do not dispatch.
+
+#### `conclusion: action_required` is not a failure, and not a pass
+
+Counting conclusions makes this invisible. `action_required` is a terminal
+conclusion that is neither `success` nor `failure`, so a predicate written as
+`conclusion != "failure"` reads it as fine and one written as
+`conclusion == "success"` reads the head as merely incomplete. Neither says
+what is true: **the workflow was reached, approval was owed, and no job body
+executed.**
+
+Established by intervention rather than inference, on #1939, 2026-10-03 — four
+consecutive commits alternating strictly with the pushing actor:
+
+| head | pushed by | `pull_request` runs |
+|---|---|---|
+| `915370757a0` | bot | all three `action_required` |
+| `4c188f31368` | a session | executed |
+| `dea5195eece` | bot | all three `action_required` |
+| `96926836d53` | a session | executed |
+
+**And the compensation is real, which corrects the obvious conclusion.** It is
+tempting to say the merge-forward bot voids the gates it helps. It does not:
+with no `MERGE_MAIN_TOKEN` set, `merge-main.yml` **dispatches** both gating
+workflows — `code-quality-gates.yml` and `jsonld-gen-check.yml` — so the merge
+commit is proved by CI rather than trusted, and Feature Staging is left alone
+because it is preview-only. Measured on #1947, #1888, #1892, #1808 and #1804:
+every one shows the same pair, `pull_request: action_required` beside
+`workflow_dispatch: success`, on the identical head sha.
+
+So the rule for reading a head is **by workflow and sha, never by event**: a
+`workflow_dispatch` run of an owed workflow on the exact head is proof, and
+after a merge-forward it is arguably better proof, because the branch tip
+already contains the base and the dispatch tests the merged content rather
+than a synthesised merge ref. `check:head-has-run` already reads it this way —
+its own header records crediting `Code-quality gates` via `workflow_dispatch`
+alone on #1222 — so do not add an event filter to it.
+
+The consequence worth carrying: `MERGE_MAIN_TOKEN` (#1829 D1) is a
+**convenience**, not a correctness fix. It makes the PR's own runs fire on the
+bot's push instead of needing a dispatch. Saying the bot leaves its merges
+unproved is wrong, and a steward who believes it will hand-push commits to
+"restore" gates that already ran.
 
 **Ask whether the BASE moved before calling any verdict non-deterministic.** A
 `pull_request` run tests the head merged with `main` as it was at push time, so
