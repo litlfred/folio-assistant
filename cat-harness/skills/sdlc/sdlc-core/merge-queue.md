@@ -17,6 +17,62 @@ user_invocable: false
 by `scripts/merge-queue.ts`; what the steward decided is recorded against
 `schemas/merge-queue.ts`. This page says what each piece is FOR. Bean `hfag`.
 
+## The steward's own attention is FOREGROUND; everything else is dispatched
+
+Owner's ruling, 2026-10-03: *"Merge Manager role is ALWAYS foreground. intake
+and dispatch to your agents for other stuff."*
+
+The role is a **scheduler of its own attention**, and the scheduling is not
+symmetric. Merging is foreground: the queue only moves when somebody holding
+this role looks at a head, verifies it and merges it. Everything else that
+arrives — a feature, a bean, an analysis, a corpus edit — is **intaken and
+dispatched**, not worked here.
+
+### Why the rule needs stating, measured on the session that earned it
+
+The steward in that session merged seven PRs — and between them built a
+reporting tool, wrote three skill sections, authored four beans and ran a
+conflict-distribution study, all in the foreground. Each was asked for and each
+was worth doing. The cost is still visible in the record: the queue was swept
+roughly once an hour rather than once a merge, and two sibling sessions sat
+blocked on a de-confliction answer that took ninety seconds to give once
+somebody looked.
+
+**The failure is not idleness, it is the opposite** — a steward with plenty to
+show for the hour, whose queue moved less than it could have. That is why it
+cannot be left to judgement in the moment: every individual task looked more
+urgent than another queue sweep, and the aggregate was wrong.
+
+### What foreground means, concretely
+
+| arrives | steward does |
+|---|---|
+| a PR goes green | **verify and merge, now** |
+| a PR goes red or conflicted | classify it (`merge-conflict-patterns` rule 3) and route it |
+| a sibling asks who owns what | answer it — it unblocks another session |
+| a feature, an epic, a refactor | **intake**: bean it, then dispatch |
+| an analysis or a corpus edit | intake, then dispatch, unless it is about the queue itself |
+
+The exception that is not an exception: work **about the merge pipeline** —
+a pattern declaration, a conflict measurement, a queue tool — is the steward's
+subject and may be foreground. Everything else is somebody else's subject that
+happens to have arrived here.
+
+**Dispatch is its own skill, not restated here** — `dispatch-agent` carries the
+live progress contract and the heartbeat, and `swarm-management` carries the
+rule that a swarm is asked for every time, with agent count, model level and
+rough cost. A steward who dispatches without those is handing out work it
+cannot then account for.
+
+### Blocking on a long-running command is a dispatch failure
+
+The same session lost long stretches to a 20-minute regeneration in the
+foreground while the queue waited. A command that takes minutes is the clearest
+possible dispatch candidate: background it, and sweep the queue while it runs.
+If the only thing a steward can truthfully report at the end of a stretch is
+"a generator is still running", that stretch was not scheduled — it was
+surrendered.
+
 ## The rule everything else follows from
 
 **The queue stores decisions, never GitHub's facts.** CI status, mergeability,
