@@ -121,8 +121,24 @@ export type TreeRead = (Hit & { prefix: string; files: Map<string, string> }) | 
  */
 export interface Change {
   path: string;
-  content: string | null;
+  /**
+   * Text, or BYTES. A tip-keyed directory may hold binary files — bean `9c7h`
+   * moves `fsh-guts`, a kept trashcan of archived PDFs, onto such a branch —
+   * and a `utf-8` round trip corrupts those silently. `hash-object` is fed
+   * this verbatim through {@link GitOpts.input}, so a Buffer hashes its bytes.
+   */
+  content: string | Buffer | null;
   expect?: string | null;
+  /**
+   * The tree entry mode. `100755` keeps an executable executable and `120000`
+   * a symlink (whose `content` is its target path); the default `100644` is a
+   * plain file.
+   *
+   * This existed as a hardcoded `"100644"` in {@link BranchStore.write} until
+   * 2026-10-03, so a push through the mount silently dropped an executable
+   * bit and turned a symlink into a regular file holding its target as text.
+   */
+  mode?: "100644" | "100755" | "120000";
 }
 
 export type WriteState = "pushed" | "unchanged" | "conflict" | "absent" | "failed";
@@ -719,7 +735,7 @@ export class BranchStore extends TreeStore {
           const actual = cur ? cur.sha : null;
           if (c.expect !== undefined && c.expect !== actual) conflicts.push({ path: c.segs.join("/"), expected: c.expect, actual });
           const blob = blobs[i];
-          tree = this.setPath(tree, c.segs, blob ? { mode: "100644", type: "blob", sha: blob, name: "" } : undefined) ?? this.mktree([]);
+          tree = this.setPath(tree, c.segs, blob ? { mode: c.mode ?? "100644", type: "blob", sha: blob, name: "" } : undefined) ?? this.mktree([]);
         });
         if (conflicts.length) {
           return { state: "conflict", reason: `${conflicts.length} path(s) changed on ${v.branch} since they were read`, branch: v.branch, attempts: attempt, conflicts };
