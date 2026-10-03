@@ -2,7 +2,7 @@
   "$schema": "folio-bean-index/v1",
   "tile": {
     "beans": {
-      "count": 746,
+      "count": 747,
       "unit": "beans"
     }
   },
@@ -6393,6 +6393,20 @@
       "updatedAt": "2026-09-26T17:58:04Z",
       "preview": "Surfaced 2026-09-20 by declaring `docs/` as a graph directory — 241 markdown\nfiles that were, until then, invisible to every declaration-driven consumer.\n`check:subgraphs` walked them for the first time and found 171 links that do\nnot resolve in the source tree.\n\nThey are NOT one problem. Measured, by trying each repair against disk:\n\n| shape | count | example |\n|---|---|---|\n| one `../` too many ",
       "file": "beans/defs/folio-assistant-mi97--audit-the-171-unresolved-links-in-docs-23-carry-on.md"
+    },
+    {
+      "id": "folio-assistant-mjl3",
+      "title": "artefact-verification.json merges are CORRECTLY refused and must stay refused: it reads like a generated sidecar, has no writer, and carries authored reasons",
+      "status": "todo",
+      "type": "task",
+      "priority": "normal",
+      "parent": "folio-assistant-d33q",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-10-03T17:41:35Z",
+      "updatedAt": "2026-10-03T17:41:53Z",
+      "preview": "A **preventive** record, not a defect: this bean exists so the next agent that\nmeets this refusal twice does not \"fix\" it by widening a glob — which is the\nmistake `merge-conflict-patterns` names in its own opening and which I came within\none step of making.\n\n## Where it came from\n\nSwept the merge-main bot's refusals across all 13 open `merge-main` PRs on\n2026-10-03, while #2029 added the one real",
+      "file": "beans/defs/folio-assistant-mjl3--artefact-verificationjson-merges-are-correctly-ref.md"
     },
     {
       "id": "folio-assistant-mkao",
