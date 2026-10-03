@@ -145,16 +145,6 @@ describe("at rest it is a strip, not an absence", () => {
     }
   });
 
-  it("the [x] anchors to the bar, not to a scroll that no longer exists", () => {
-    // `sticky; top: 0` lifted it to the top of `.side-bar`'s scroll, which
-    // worked only while `.side-bar` WAS the scroll container. It is painted
-    // from `.site-footer`, the last child, so a sticky one now sits at the
-    // BOTTOM of the navbar.
-    const close = ruleWith("width: 1.75rem");
-    expect(close).toContain("position: absolute");
-    expect(close).not.toContain("position: sticky");
-  });
-
   it("is scoped above the theme's breakpoint, never applied to the phone", () => {
     // Below 50rem the theme is not `fixed` and has its own hamburger. Bound to
     // the RULE, not to the presence of the string: a later
@@ -186,21 +176,15 @@ describe("three ways in, one way back", () => {
     expect(opener).toMatch(/z-index:\s*\d+/);
   });
 
-  it("shows the [x] only while pinned — never alone in the strip", () => {
-    // An `[x]` as the only thing in a 3.5rem strip reads as a close button for
-    // the page.
-    expect(block).toContain(".fa-nav-close { display: none; }");
-    expect(block).toContain(".side-bar:has(.fa-nav-open:checked) .fa-nav-close");
-  });
-
-  it("hides the ☰ once pinned — two controls for one state is one too many", () => {
-    // BOTH vocabularies. `sjic` moved the sidebar's markup to `lib/navbar.ts`,
-    // which calls this control `.fa-nav-head`; the hand-written Liquid called
-    // it `.fa-nav-toggle`. One rule, two selectors — asserting only the old
-    // name would have passed while the renderer's control stayed visible.
-    expect(block).toContain(".side-bar:has(.fa-nav-open:checked) .fa-nav-toggle");
-    expect(block).toContain(".side-bar:has(.fa-nav-open:checked) .fa-nav-head");
-    expect(block).toContain("display: none;");
+  it("draws no ☰ and no [x] — the avatar is the one control (ob3m finding 8)", () => {
+    // Owner, 2026-10-01, option 1 of 4: remove them on theme pages as #1762
+    // did on the rail. Every rule that styled them sat inside the 50rem
+    // block, so below 800px a copy rendered unstyled. No rule may name them,
+    // in the block or anywhere else in the file.
+    const bare = read("cat-harness/docs/assets/css/docs-ui.css").replace(/\/\*[\s\S]*?\*\//g, "");
+    expect(bare).not.toContain(".fa-nav-close");
+    expect(bare).not.toContain(".fa-nav-toggle");
+    expect(bare).not.toContain(".fa-nav-head");
   });
 });
 
