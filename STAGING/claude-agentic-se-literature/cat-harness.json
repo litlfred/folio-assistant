@@ -303,10 +303,10 @@
   ],
   "canonicalDocument": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld",
   "repository": "cat-harness",
-  "generatedAt": "2026-10-03T08:18:22.527Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/49c3e98415ca074826adf8e2db369b5987c92beb",
-  "sourceCommitSha": "49c3e98415ca074826adf8e2db369b5987c92beb",
-  "sourceCommitAt": "2026-10-03T08:15:47Z",
+  "generatedAt": "2026-10-03T08:27:29.645Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/c818da26367b0979a3965967e395b29cfb2587b0",
+  "sourceCommitSha": "c818da26367b0979a3965967e395b29cfb2587b0",
+  "sourceCommitAt": "2026-10-03T08:23:15Z",
   "sourceTreeDirty": true,
   "dependsOnUnavailable": "2 dependency edge(s), none expressible as a record — see gaps",
   "counts": {
@@ -321,7 +321,7 @@
     "ProcessNode": 978,
     "Tool": 117,
     "Schema": 157,
-    "ExternalSchema": 20,
+    "ExternalSchema": 21,
     "GraphKind": 26,
     "Role": 49,
     "Subgraph": 26,
@@ -49359,6 +49359,20 @@
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#externalSchema/w3c-prov-o"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-agentic-se-literature/cat-harness.jsonld#externalSchema/w3c-rdf-calendar",
+      "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#ExternalSchema",
+      "name": "w3c-rdf-calendar",
+      "title": "RDF Calendar — an application of the Resource Description Framework to iCalendar Data",
+      "authority": "W3C",
+      "specVersion": "2005-09-29",
+      "specUse": "conforms",
+      "specUrl": "https://www.w3.org/TR/rdfcal/",
+      "namespace": [
+        "http://www.w3.org/2002/12/cal/ical#"
+      ],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#externalSchema/w3c-rdf-calendar"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-agentic-se-literature/cat-harness.jsonld#externalSchema/w3c-rdf",
       "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#ExternalSchema",
       "name": "w3c-rdf",
@@ -51080,8 +51094,8 @@
   ],
   "staging": {
     "branch": "claude/agentic-se-literature",
-    "sha": "eda2da4a5656bb5e416c18c777bec929dd704448",
+    "sha": "18e11e633318358bc1e666f5d16847568d6568cc",
     "pr": "1935/merge",
-    "run": "37109117528"
+    "run": "37109532020"
   }
 }
