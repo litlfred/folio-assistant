@@ -97,7 +97,7 @@ share of conflicts (bean `34cm`). Each is its own bean.
 ## Owner ruling, 2026-10-03
 
 Asked how to drain the queue given that each merge discards a sweep, the owner
-chose **\"Fix the mechanism first\"** over merging on sight, freezing one sweep
+chose **"Fix the mechanism first"** over merging on sight, freezing one sweep
 window, or going to the root with the `auto-docs` branch (#1966):
 
 > Hold merges until o8s9 (concurrency) and 8c6v (17 docs patterns) land, then
