@@ -22,7 +22,17 @@ import { chmodSync, mkdirSync, mkdtempSync, readFileSync, writeFileSync } from "
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 
-import { absoluteRemote, claimOnDefaultBranch, describe as describeOutcome, exitCodeFor, wrongCheckout } from "../claim-bean.js";
+const BEAN_FM = `---
+# folio-assistant-zz11
+title: 'a bean to claim'
+status: todo
+type: task
+created_at: 2026-10-03T00:00:00Z
+updated_at: 2026-10-03T00:00:00Z
+---
+`;
+
+import { absoluteRemote, claimOnDefaultBranch, describe as describeOutcome, exitCodeFor, mirrorClaimNote, wrongCheckout } from "../claim-bean.js";
 
 const ID = ["-c", "user.name=t", "-c", "user.email=t@t"];
 
@@ -338,5 +348,61 @@ describe("a claim from the wrong checkout is refused, not misattributed (ssfp)",
     expect(readFileSync(join(wt, "beans", "defs", "folio-assistant-bbbb--b.md"), "utf8")).toContain("status: in-progress");
     // The main checkout is untouched — no stray claim left as dirt.
     expect(readFileSync(join(work, "beans", "defs", "folio-assistant-bbbb--b.md"), "utf8")).toContain("status: todo");
+  });
+});
+
+describe("mirrorClaimNote — bean `24fa`", () => {
+  /** A minimal two-store fixture: what was pushed, and the local branch. */
+  const fixture = (localBody: string, pushedNote: string) => {
+    const root = mkdtempSync(join(tmpdir(), "mirror-note-"));
+    const work = join(root, "work");
+    const repo = join(root, "repo");
+    const name = "folio-assistant-zz11--a-bean-to-claim.md";
+    for (const d of [work, repo]) {
+      mkdirSync(join(d, "beans", "defs"), { recursive: true });
+      // `findBean` resolves the store from `.beans.yml`; without it the fixture
+      // has no store and every lookup is a miss.
+      writeFileSync(
+        join(d, ".beans.yml"),
+        "beans:\n    path: beans/defs\n    prefix: folio-assistant-\n    id_length: 4\n    default_status: todo\n    default_type: task\n",
+      );
+    }
+    writeFileSync(join(work, "beans", "defs", name), `${BEAN_FM}\nBody.\n${pushedNote === "" ? "" : `\n${pushedNote}\n`}`, "utf-8");
+    writeFileSync(join(repo, "beans", "defs", name), `${BEAN_FM}\n${localBody}`, "utf-8");
+    return { repo, work, file: join(repo, "beans", "defs", name) };
+  };
+
+  const NOTE = "_2026-10-03T00:27:48Z_ — Claimed by claude/x — pushed to main so sibling sessions see it before this branch has a PR (bean 35nj).";
+
+  test("copies the pushed note onto the local branch byte for byte", () => {
+    const { repo, work, file } = fixture("Body.\n", NOTE);
+    expect(mirrorClaimNote(repo, work, "zz11")).toBe("mirrored");
+    // Byte-identical is the whole point: re-running `noteBean` here would
+    // stamp a different second and git would see two different additions.
+    expect(readFileSync(file, "utf-8")).toContain(NOTE);
+  });
+
+  test("is idempotent — a second claim does not append the note twice", () => {
+    const { repo, work, file } = fixture(`Body.\n\n${NOTE}\n`, NOTE);
+    expect(mirrorClaimNote(repo, work, "zz11")).toBe("already-there");
+    const body = readFileSync(file, "utf-8");
+    expect(body.split(NOTE).length - 1).toBe(1);
+  });
+
+  test("the branch's own later edits stay AFTER the note, which is what fixes the body conflict", () => {
+    const { repo, work, file } = fixture("Body.\n", NOTE);
+    expect(mirrorClaimNote(repo, work, "zz11")).toBe("mirrored");
+    writeFileSync(file, `${readFileSync(file, "utf-8")}\n## Summary of Changes\n\nDone.\n`, "utf-8");
+    const body = readFileSync(file, "utf-8");
+    // Guard the guard: without this the assertion below passes on indexOf === -1,
+    // which is the note being ABSENT — the opposite of what it claims to show.
+    expect(body).toContain(NOTE);
+    expect(body.indexOf(NOTE)).toBeLessThan(body.indexOf("## Summary of Changes"));
+  });
+
+  test("reports `no-note` rather than guessing when nothing was pushed", () => {
+    // Could-not-determine is never rendered as done — the file's own rule.
+    const { repo, work } = fixture("Body.\n", "");
+    expect(mirrorClaimNote(repo, work, "zz11")).toBe("no-note");
   });
 });

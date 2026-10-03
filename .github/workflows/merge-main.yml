@@ -129,11 +129,28 @@ jobs:
       fail-fast: false
       matrix:
         pr: ${{ fromJSON(needs.select.outputs.prs) }}
-    # A burst of pushes to main yields ONE live run per PR: a newer run
-    # supersedes an older one, whose merge would be stale before it landed.
+    # Coalesce on the PR's own pushes; QUEUE on pushes to main. The group is
+    # per-PR, and GitHub holds at most one pending run per group, so queue
+    # depth is bounded at one either way — the only question is which of the
+    # two runs survives.
+    #
+    # Under `pull_request_target` the hazard is real and cancelling is right: a
+    # new commit on the PR means the in-flight job is merging main into a head
+    # that no longer exists, so its result would be stale before it landed.
+    #
+    # Under `push` to main there is no such hazard, and cancelling is pure
+    # loss. A job that lands `main@T1` into the PR is not worthless once main
+    # has moved to `T2`: the next sweep then has only `T1 -> T2` to carry, a
+    # strictly smaller step. Kill it and the PR is still at `main@T0`, so the
+    # next sweep must carry `T0 -> T2` — and under a steady merge cadence that
+    # one is cancelled too, so the PR never advances at all. That is bean
+    # `mc8h`'s treadmill, produced by the mechanism meant to avoid it. Measured
+    # (bean `o8s9`, 2026-10-03): of the last 100 runs, `push`-triggered gave 20
+    # success to 21 cancelled, against 14 to 2 for `pull_request_target`. The
+    # queued job re-reads main when it starts, so nothing stale lands.
     concurrency:
       group: merge-main-${{ matrix.pr }}
-      cancel-in-progress: true
+      cancel-in-progress: ${{ github.event_name != 'push' }}
     permissions:
       contents: write
       pull-requests: write

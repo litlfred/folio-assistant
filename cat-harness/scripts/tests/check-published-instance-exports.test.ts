@@ -12,10 +12,16 @@
  * (bean `jijc`). They stay literal.
  */
 import { describe, expect, test } from "bun:test";
-import { readFileSync } from "node:fs";
+import { mkdtempSync, readFileSync, rmSync, writeFileSync } from "node:fs";
+import { tmpdir } from "node:os";
 import { join, resolve } from "node:path";
 
-import { formatReport, publishedInstances } from "../check-published-instance-exports.js";
+import {
+  COMMITTED_SIDECAR,
+  committedSidecarSubjects,
+  formatReport,
+  publishedInstances,
+} from "../check-published-instance-exports.js";
 
 const REPO_ROOT = resolve(import.meta.dir, "..", "..", "..");
 const wf = (n: string) => join(REPO_ROOT, ".github", "workflows", n);
@@ -164,5 +170,62 @@ describe("formatReport", () => {
       workflowsRead: 39,
     });
     expect(out).toContain("no diagnosis");
+  });
+});
+
+describe("committedSidecarSubjects — the comparison has a subject (bean r7v6, C2)", () => {
+  // Before r7v6, both deploy invocations were `export-graph.ts`, which writes
+  // no sidecar, so the committed `kg-export.bootstrap.qa-results.json` was
+  // never compared: identical output with it present and absent.
+  function qaDir(names: string[]): { dir: string; cleanup: () => void } {
+    const dir = mkdtempSync(join(tmpdir(), "pie-qa-"));
+    for (const n of names) writeFileSync(join(dir, n), "{}");
+    return { dir, cleanup: () => rmSync(dir, { recursive: true, force: true }) };
+  }
+  const graphInv = { workflow: "docs-site.yml", instance: "./bootstrap", standInBase: true, tool: "export-graph" as const };
+
+  test("a committed foreign sidecar that only export-graph invocations cover becomes a subject", () => {
+    const q = qaDir(["kg-export.bootstrap.qa-results.json", "kg-export.qa-results.json", "other.qa-results.json"]);
+    try {
+      const subs = committedSidecarSubjects([graphInv], q.dir);
+      // The host's own bare-stem sidecar is not a foreign export.
+      expect(subs.map((s) => s.instance)).toEqual(["./bootstrap"]);
+      expect(subs[0]!.workflow).toBe(COMMITTED_SIDECAR);
+      expect(subs[0]!.tool).toBe("kg-export");
+    } finally {
+      q.cleanup();
+    }
+  });
+
+  test("a sidecar a workflow's kg-export invocation already covers is not compared twice", () => {
+    const q = qaDir(["kg-export.bootstrap.qa-results.json"]);
+    try {
+      const kgInv = { workflow: "w.yml", instance: "./bootstrap", standInBase: false, tool: "kg-export" as const };
+      expect(committedSidecarSubjects([kgInv], q.dir)).toEqual([]);
+    } finally {
+      q.cleanup();
+    }
+  });
+
+  test("the real checkout's committed bootstrap sidecar is a subject", () => {
+    const found = publishedInstances(readFileSync(wf("docs-site.yml"), "utf-8"), "docs-site.yml");
+    expect(committedSidecarSubjects(found).map((s) => s.instance)).toContain("./bootstrap");
+  });
+
+  test("the report says a compared sidecar has no workflow producer, and shows each row's sidecar state", () => {
+    const sub = { workflow: COMMITTED_SIDECAR, instance: "./bootstrap", standInBase: false, tool: "kg-export" as const };
+    const out = formatReport({
+      invocations: [graphInv],
+      sidecarSubjects: [sub],
+      results: [
+        { ...graphInv, ok: true, nodes: 82 },
+        { ...sub, ok: false, nodes: 94, qaSidecar: "stale", detail: "STALE" },
+      ],
+      workflowsRead: 33,
+    });
+    expect(out).toContain("1 committed sidecar(s) compared");
+    expect(out).toContain("writes no QA sidecar");
+    expect(out).toContain("QA sidecar stale");
+    expect(out).toContain("no workflow runs `kg-export.ts --instance` for ./bootstrap");
   });
 });
