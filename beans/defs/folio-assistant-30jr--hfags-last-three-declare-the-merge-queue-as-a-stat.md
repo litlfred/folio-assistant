@@ -122,3 +122,45 @@ what makes it a real finding rather than one gate's opinion.
 Not fixed here. Giving `merge-queue` criteria and a declaring gate is new work with
 its own decisions, and the box stays open and honest per the owner's 2026-10-03
 ruling.
+
+## Correction, 2026-10-03: `no-directory` is NOT a gap, and I said twice that it was
+
+Earlier the same day I wrote — in a commit on this PR and in the section above —
+that audit-coverage reporting `merge-queue` as
+
+    {"kind": "merge-queue", "state": "no-directory", "criteria": [], "gates": [],
+     "typed": true, "hasFiles": false}
+
+was "a real gap", and that `no-directory` is "a weaker state than `typed-only`".
+**Both claims are wrong**, and the skill that owns the report says so explicitly:
+
+> | `no-directory` | no instance declares one of this kind | `bean-defs`, declared
+> inside `beans/beans.json`, reached through its parent — and carrying 8 gates |
+>
+> `bean-defs` is why the first state is not a gap: it has coverage and no
+> instance-declared directory.
+
+`bean-defs` is the SAME SHAPE as `merge-queue` — declared inside `beans/beans.json`,
+reached through its parent. The state says WHERE a kind is declared, not whether
+anything judges it. I inferred severity from a state name instead of reading the
+table that defines it.
+
+What is true is the part that sat next to the error: `bean-defs` carries **8
+gates**, `merge-queue` carries **0 criteria and 0 gates**. The emptiness of the
+coverage is the finding. The state name never was.
+
+## And that gap cannot honestly be closed yet
+
+Giving `merge-queue` criteria now would mean a validator over zero nodes, which the
+same skill forbids by name:
+
+> **A validator over the nodes nobody produces is not coverage.**
+
+`check-harness-state.ts` is where such a family would go — it declares
+`@covers health, todos, interaction, issue-marks` and carries one family per kind —
+and adding a fifth over an empty kind reproduces the `check:kind-validators`
+refusal that already blocks the tile: *"EXAMINED NOTHING"*.
+
+So this is not deferred for effort. **The precondition is the same first real queue
+entry the tile waits on**, and until a steward records one there is nothing for a
+criterion to have an opinion about. Both boxes unblock together, from one event.
