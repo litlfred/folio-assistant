@@ -36,6 +36,12 @@ on:
       # this the pages are committed, gated, and never redeployed.
       - 'who-iris/docs/**'
       - 'who-iris/catalogue/**'
+      # The identifier lookup this workflow publishes (bean `1br0`): the
+      # script, its client, and each instance's generated index — a changed
+      # index must redeploy, or the search box links to a stale one.
+      - 'cat-harness-tools/scripts/**'
+      - 'cat-harness-tools/id-lookup/**'
+      - '*/id-lookup/**'
       # EVERY script, for the reason bean `tyyc` measured on `docs-site.yml`:
       # a named list of generators drifts, and the drift is invisible because
       # a preview that was never built looks exactly like one nobody opened.
@@ -600,6 +606,11 @@ jobs:
             echo "search-data.json: EMPTY — the page's banner says search is unavailable on this preview"
           fi
 
+      # The identifier lookup, as on deploy (bean `1br0`): before the split,
+      # which links the search box to it.
+      - name: Publish the identifier lookup
+        run: bun run cat-harness-tools/scripts/publish-id-lookup.ts --site ./_site
+
       # Split the index THIS preview serves — the published one, or `{}` —
       # never one built here: a preview's scopes must be cut from the same
       # index its pages search, or `search-scopes` reports the split stale
@@ -956,6 +967,15 @@ jobs:
           # The `.json` alias is copied AFTER the export, so the two documents
           # cannot disagree about which build they came from.
           cp "./_site/${STUB}.jsonld" "./_site/${STUB}.json"
+
+          # The CHECKOUT ROOT instance's graph, as the deploy publishes it (bean
+          # `l4ay`): it declares `todos`, and `todos.jsonld`'s container IS its
+          # declared Subgraph node, so a preview without it names a node the
+          # preview does not serve.
+          ROOT_STUB=$(bun run cat-harness/scripts/print-stub.ts .)
+          mkdir -p "./_site/${ROOT_STUB}"
+          bun run cat-harness/scripts/kg-export.ts --instance . --base-url "$BASE" --out "./_site/${ROOT_STUB}/${ROOT_STUB}.jsonld"
+          cp "./_site/${ROOT_STUB}/${ROOT_STUB}.jsonld" "./_site/${ROOT_STUB}/${ROOT_STUB}.json"
 
           # THE NAMESPACE DOCUMENTS AND THE BOOTSTRAP GRAPH — bean `35kc`.
           #

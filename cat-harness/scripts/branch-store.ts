@@ -1,9 +1,26 @@
 #!/usr/bin/env bun
 /**
- * branch-store — a generic store for a directory whose `storage.keyedBy` is
- * `"tip"`: ONE live copy, kept on its own branch, whose tip IS the current
- * state. Bean `2h76`, arc `fs43` (issue #1850), proposal
- * `docs/proposals/state-branch-2026-10-02.md` §3.2 / §3.4.
+ * branch-store — a generic store for a directory whose contents live at a
+ * BRANCH TIP rather than on `main`. Two keyings reach it, and they differ in
+ * exactly one thing, the write:
+ *
+ * - `storage.keyedBy: "tip"` — ONE live copy whose tip IS the current state.
+ *   Beans, todos, fsh-guts. A write carries `expect`, so two sessions editing
+ *   one file is a `conflict` the caller settles. Bean `2h76`, arc `fs43`
+ *   (issue #1850), proposal `docs/proposals/state-branch-2026-10-02.md`
+ *   §3.2 / §3.4.
+ * - `storage.keyedBy: "route"` — one entry per published SITE ROUTE, each
+ *   replaced wholesale by the single generator that owns it. Regenerable
+ *   rendered pages. A write may NOT carry `expect` and is refused if it does:
+ *   nobody authored either side, so the newer generation wins and a
+ *   `conflict` would block a push over content no one disagrees about. Bean
+ *   `1j3q`, owner 2026-10-03.
+ *
+ * The keying is PASSED to {@link BranchStore.open}, not read off the branch,
+ * and a manifest that disagrees is `corrupt`. A store that adopted whatever
+ * keying the branch claimed would read a route-keyed branch as state the
+ * moment somebody pushed the wrong manifest — the caller states what it came
+ * for.
  *
  * The owner, 2026-10-02: *"go with cat/cat-harness/todos and
  * cat/cat-harness/beans as their own named sub-graph branches"* — and *"(not
@@ -64,9 +81,11 @@
  * ## Not wired to anything yet
  *
  * No reader or writer of `beans/` or `todos/` uses this module, and no
- * declaration sets `keyedBy: "tip"`: `main` stays authoritative until the
- * steward-run flip on #1850. {@link resolveTipLocation} is what the flip will
- * read.
+ * declaration sets `keyedBy: "tip"` or `"route"`: `main` stays authoritative
+ * until the steward-run flip on #1850. {@link resolveTipLocation} is what the
+ * flip will read. No generator writes a route-keyed branch either — the first
+ * family (`docs/uml/`) is a follow-on bean to `1j3q`, deliberately separate so
+ * the mechanism lands before 49 gated checks move.
  *
  * Usage:
  *   bun run cat-harness/scripts/branch-store.ts read --branch B <path>
@@ -143,6 +162,14 @@ export interface WriteResult {
   conflicts?: Array<{ path: string; expected: string | null; actual: string | null }>;
 }
 
+/**
+ * The keyings {@link BranchStore} implements — the subset of
+ * `DirectoryStorage.keyedBy` that lives on a branch tip rather than under a
+ * per-commit prefix. `commit` is `qa-store.ts`'s and is deliberately absent.
+ */
+export const BRANCH_KEYINGS = ["tip", "route"] as const;
+export type BranchKeying = (typeof BRANCH_KEYINGS)[number];
+
 export interface BranchStoreOptions {
   /** The checkout root. Default: `git rev-parse --show-toplevel` from cwd. */
   repoRoot?: string;
@@ -156,6 +183,17 @@ export interface BranchStoreOptions {
   beforePush?: (attempt: number) => void;
   /** Progress lines; default stderr. */
   log?: (line: string) => void;
+  /**
+   * Which keying this store is opened for — the value the branch's root
+   * manifest must agree with, and what decides whether a write may carry
+   * `expect`. Default `"tip"`, the only keying before bean `1j3q`.
+   *
+   * It is passed rather than sniffed from the manifest on purpose: a reader
+   * that adopted whatever keying the branch claimed would read a route-keyed
+   * branch as state the moment somebody pushed the wrong manifest. The caller
+   * states what it came for and a disagreement is `corrupt`.
+   */
+  keyedBy?: BranchKeying;
 }
 
 /** A malformed question — never folded into miss. */
@@ -173,6 +211,8 @@ export interface TipLocation {
   /** Repository-relative, no trailing slash — the path on the branch too. */
   path: string;
   branch: string;
+  /** The declared keying this location was resolved for. */
+  keyedBy: BranchKeying;
 }
 
 /**
@@ -194,26 +234,39 @@ export interface TipLocation {
  *
  * Returns them sorted by id so a caller's output is stable.
  */
-export function tipLocations(repoRoot: string = gitTopLevel()): TipLocation[] {
+export function tipLocations(repoRoot: string = gitTopLevel(), keyedBy: BranchKeying | "any" = "tip"): TipLocation[] {
   const out: TipLocation[] = [];
   for (const inst of instanceRootsIn(repoRoot)) {
     for (const d of resolveDirectories([{ name: "(local)", root: inst, own: true }])) {
-      if (d.storage?.keyedBy !== "tip") continue;
+      const k = d.storage?.keyedBy;
+      if (k !== "tip" && k !== "route") continue;
+      if (keyedBy !== "any" && k !== keyedBy) continue;
       const path = relative(repoRoot, d.absPath).split("\\").join("/").replace(/\/+$/, "");
-      if (!out.some((o) => o.id === d.id)) out.push({ id: d.id, path, branch: d.storage.branch });
+      if (!out.some((o) => o.id === d.id)) out.push({ id: d.id, path, branch: d.storage!.branch, keyedBy: k });
     }
   }
   return out.sort((a, b) => a.id.localeCompare(b.id));
 }
 
-export function resolveTipLocation(id: string, repoRoot: string = gitTopLevel()): TipLocation {
+export function resolveTipLocation(
+  id: string,
+  repoRoot: string = gitTopLevel(),
+  keyedBy: BranchKeying | "any" = "any",
+): TipLocation {
   for (const inst of instanceRootsIn(repoRoot)) {
     for (const d of resolveDirectories([{ name: "(local)", root: inst, own: true }])) {
       if (d.id !== id) continue;
       if (!d.storage) throw new BranchStoreUsageError(`directory ${id} declares no storage; it lives on main`);
-      if (d.storage.keyedBy !== "tip") throw new BranchStoreUsageError(`directory ${id} is keyed by ${d.storage.keyedBy}, not tip`);
+      const k = d.storage.keyedBy;
+      // `commit` is qa-store's layout, not a branch tip at all; `route` and
+      // `tip` are both tips but differ in how a write settles, so a caller
+      // that came for one is refused the other rather than served it.
+      if (k !== "tip" && k !== "route") {
+        throw new BranchStoreUsageError(`directory ${id} is keyed by ${k}, which this store does not implement`);
+      }
+      if (keyedBy !== "any" && k !== keyedBy) throw new BranchStoreUsageError(`directory ${id} is keyed by ${k}, not ${keyedBy}`);
       const path = relative(repoRoot, d.absPath).split("\\").join("/").replace(/\/+$/, "");
-      return { id, path, branch: d.storage.branch };
+      return { id, path, branch: d.storage.branch, keyedBy: k };
     }
   }
   throw new BranchStoreUsageError(`no declared directory has id ${id}`);
@@ -537,6 +590,8 @@ export class TreeStore {
 export class BranchStore extends TreeStore {
   private readonly sleep: (ms: number) => void;
   private readonly beforePush?: (attempt: number) => void;
+  /** The keying this store was opened for; the manifest must agree. */
+  readonly keyedBy: BranchKeying;
 
   private constructor(
     dir: string,
@@ -549,6 +604,7 @@ export class BranchStore extends TreeStore {
     super(dir, remote, branches, authEnv, { identity: STATE_BOT, refNamespace: "branch-store", log: opts.log });
     this.sleep = opts.sleep ?? ((ms) => Bun.sleepSync(ms));
     this.beforePush = opts.beforePush;
+    this.keyedBy = opts.keyedBy ?? "tip";
   }
 
   /**
@@ -593,7 +649,19 @@ export class BranchStore extends TreeStore {
 
   // ── Reading ────────────────────────────────────────────────────────────
 
-  /** The tip, verified as a state branch: a root manifest, `state-manifest/v1`, `keyedBy: "tip"`. */
+  /**
+   * The tip, verified as a branch store: a root manifest, `state-manifest/v1`,
+   * whose `keyedBy` is the one this store was OPENED for.
+   *
+   * The `$schema` string stays `state-manifest/v1` for a route-keyed branch
+   * too, and that is a choice rather than an oversight. The two seeded
+   * branches (`cat/cat-harness/beans`, `cat/cat-harness/todos`) already carry
+   * it, so a second value would turn them `corrupt`; the format is identical
+   * in every field; and `keyedBy` INSIDE the manifest is already the
+   * discriminator, which is this repository's own rule that the file declares
+   * what it is. The name is historical and the bean (`1j3q`) records it as
+   * such.
+   */
   private verifiedTip(): (Hit & { tree: string }) | NotHit {
     let t: Tip;
     try {
@@ -615,7 +683,9 @@ export class BranchStore extends TreeStore {
         return { state: "corrupt", reason: `${t.branch}:${MANIFEST_FILE} does not parse: ${(e as Error).message}` };
       }
       if (manifest?.$schema !== MANIFEST_SCHEMA) return { state: "corrupt", reason: `${t.branch}:${MANIFEST_FILE} is ${String(manifest?.$schema)}, not ${MANIFEST_SCHEMA}` };
-      if (manifest.keyedBy !== "tip") return { state: "corrupt", reason: `${t.branch} is keyed by ${String(manifest.keyedBy)}, not tip` };
+      if (manifest.keyedBy !== this.keyedBy) {
+        return { state: "corrupt", reason: `${t.branch} is keyed by ${String(manifest.keyedBy)}, not ${this.keyedBy}` };
+      }
       return { state: "hit", branch: t.branch, tip: t.tip, tree };
     } catch (e) {
       return { state: "unknown", reason: String(e) };
@@ -703,11 +773,35 @@ export class BranchStore extends TreeStore {
    * - `absent` — the branch does not exist. Seeding one is a steward act
    *   (it carries the manifest), so this store never creates it.
    * - `unchanged` — the tip already holds exactly this content; nothing pushed.
-   * - `conflict` — an `expect` disagreed with the tip; nothing pushed.
+   * - `conflict` — an `expect` disagreed with the tip; nothing pushed. A
+   *   route-keyed store never returns this, because it refuses `expect`.
    * - `failed` — gave up after {@link WRITE_ATTEMPTS}, or the tip is not a state branch.
+   *
+   * ## A route-keyed write may not carry `expect` (bean `1j3q`)
+   *
+   * `expect` exists so that two authors editing one file is a `conflict` the
+   * caller settles. A route-keyed entry has no author: it is a rendering of
+   * the source tree, its one declared generator replaces it wholesale, and the
+   * newer generation is simply right. Honouring an `expect` here would turn a
+   * stale read into a blocked push over content nobody disagrees about.
+   *
+   * So it is REFUSED rather than ignored. Ignoring it would let a caller
+   * believe it had the tip-keyed guarantee while getting last-write-wins,
+   * which is the vacuous-pass shape — and an `expect` arriving here means the
+   * caller thinks the page has two writers, i.e. the premise of route-keying
+   * failing, which is worth a loud stop rather than a silent one.
    */
   write(changes: Change[], message: string): WriteResult {
     if (changes.length === 0) throw new BranchStoreUsageError("no changes to write");
+    if (this.keyedBy === "route") {
+      const withExpect = changes.filter((c) => c.expect !== undefined).map((c) => c.path);
+      if (withExpect.length > 0) {
+        throw new BranchStoreUsageError(
+          `a route-keyed write may not carry \`expect\` (${withExpect.join(", ")}): a rendered page has one writer and the newer generation wins. ` +
+            `An \`expect\` here means the page has two writers — fix that rather than resolving a conflict.`,
+        );
+      }
+    }
     const parsed = changes.map((c) => {
       const segs = segments(c.path);
       if (segs.length === 0) throw new BranchStoreUsageError("cannot write the branch root");
@@ -969,6 +1063,21 @@ export function mountTip(loc: TipLocation, opts: MountOptions = {}): MountResult
   }
   writeMarker(repoRoot, { $schema: MOUNT_MARKER_SCHEMA, id: loc.id, branch: r.branch, path: loc.path, into, tip: r.tip, files });
   return { state: "mounted", into, tip: r.tip, branch: r.branch, files: r.files.size };
+}
+
+/**
+ * What a push of `id` would send, without sending it — {@link localChanges}
+ * for a mounted directory, or `undefined` when `id` is not mounted here.
+ *
+ * Exported for the `--dry-run` of a caller that fans out over several
+ * mounts (`state-push.ts`): the alternative is each such caller re-deriving
+ * the diff from the marker, and a second implementation of "what changed"
+ * is how a dry run comes to disagree with the push it is previewing.
+ */
+export function pendingMountChanges(id: string, opts: MountOptions = {}): Change[] | undefined {
+  const repoRoot = opts.repoRoot ?? gitTopLevel();
+  const m = readMarker(repoRoot, id);
+  return m ? localChanges(m, repoRoot) : undefined;
 }
 
 /**
