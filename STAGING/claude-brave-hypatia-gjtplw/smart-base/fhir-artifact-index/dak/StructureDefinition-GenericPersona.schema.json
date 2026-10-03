@@ -1,0 +1,141 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "http://smart.who.int/base/StructureDefinition-GenericPersona.schema.json",
+  "title": "Generic Persona (DAK)",
+  "description": "Logical Model for representing Generic Personas from a DAK. Depiction of the human and system actors. Human actors are end users, supervisors and related stakeholders who would be interacting with the digital system or involved in the clinical care, public health or health system pathway.",
+  "type": "object",
+  "properties": {
+    "resourceType": {
+      "type": "string",
+      "const": "GenericPersona",
+      "description": "Resource type identifier for GenericPersona logical model"
+    },
+    "@context": {
+      "description": "JSON-LD context for this logical model with ValueSet vocabularies",
+      "anyOf": [
+        {
+          "type": "string",
+          "format": "uri",
+          "description": "URI reference to external JSON-LD context"
+        },
+        {
+          "type": "object",
+          "description": "Inline JSON-LD context",
+          "properties": {
+            "@version": {
+              "type": "number",
+              "const": 1.1
+            },
+            "fhir": {
+              "type": "string",
+              "const": "http://hl7.org/fhir/"
+            }
+          },
+          "additionalProperties": {
+            "type": "string",
+            "format": "uri"
+          }
+        },
+        {
+          "type": "array",
+          "description": "Array of JSON-LD context objects/URIs",
+          "items": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "uri"
+              },
+              {
+                "type": "object"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "@type": {
+      "type": "string",
+      "description": "JSON-LD type identifier for GenericPersona logical model",
+      "examples": [
+        "LogicalModel-GenericPersona"
+      ]
+    },
+    "title": {
+      "type": "string",
+      "description": "Title of the persona"
+    },
+    "id": {
+      "type": "string",
+      "description": "Identifier for the persona"
+    },
+    "description[x]": {
+      "oneOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "string",
+          "format": "uri"
+        }
+      ],
+      "description": "Description of the persona - either Markdown content or a URI to a Markdown file (absolute or relative to repository root)"
+    },
+    "otherNames": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Other names or examples for the persona"
+    },
+    "iscoCode": {
+      "type": "array",
+      "items": {
+        "oneOf": [
+          {
+            "type": "string",
+            "description": "Code from ValueSet ISCO08ValueSet (plain string)"
+          },
+          {
+            "type": "object",
+            "description": "Code from ValueSet ISCO08ValueSet (JSON-LD structure)",
+            "properties": {
+              "@type": {
+                "type": "string",
+                "const": "http://smart.who.int/base/ValueSet-ISCO08ValueSet.jsonld",
+                "description": "JSON-LD type reference to ValueSet ISCO08ValueSet"
+              },
+              "@id": {
+                "type": "string",
+                "format": "uri",
+                "description": "Full IRI of the code from ValueSet ISCO08ValueSet"
+              }
+            },
+            "required": [
+              "@type",
+              "@id"
+            ],
+            "additionalProperties": false
+          }
+        ],
+        "description": "Code from ValueSet ISCO08ValueSet. Can be a plain string or JSON-LD structure with @type and @id."
+      },
+      "description": "ISCO-08 codes for occupation classification"
+    }
+  },
+  "required": [
+    "resourceType",
+    "title",
+    "id",
+    "description[x]"
+  ],
+  "resourceDefinition": "http://smart.who.int/base/StructureDefinition/GenericPersona",
+  "fhir:parent": "http://hl7.org/fhir/StructureDefinition/Base",
+  "jsonld:valuesets": [
+    "ISCO08ValueSet"
+  ],
+  "jsonld:contextTemplate": {
+    "@version": 1.1,
+    "fhir": "http://hl7.org/fhir/",
+    "ISCO08ValueSet": "http://smart.who.int/base/ValueSet-ISCO08ValueSet.jsonld"
+  }
+}
