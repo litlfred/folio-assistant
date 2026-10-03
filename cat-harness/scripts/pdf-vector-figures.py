@@ -176,7 +176,6 @@ def assemble(page) -> dict | None:
         return None
 
     # The page rectangle in the UNROTATED frame the drawings are reported in.
-    import pymupdf
     pr = tuple((page.rect * page.derotation_matrix).normalize())
     page_area = area(pr)
     lines = []
