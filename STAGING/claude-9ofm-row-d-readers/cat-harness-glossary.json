@@ -1495,7 +1495,7 @@
       "ofConcept": "https://litlfred.github.io/folio-assistant/STAGING/claude-9ofm-row-d-readers/cat-harness.jsonld#role/build-pipeline",
       "inProcess": "https://litlfred.github.io/folio-assistant/STAGING/claude-9ofm-row-d-readers/cat-harness.jsonld#process/Process_CodeQualityGates",
       "label": "CI/CD Pipeline",
-      "scopeNote": "Joins all seven jobs before asking anything, then GW_Hard asks specifically about the five HARD ones — both warn-only results reach the same join but never the gate, so this lane's merge/block call is deliberately blind to a red job it also ran, which is where the seven-are-not-five asymmetry actually bites. These counts read six-and-four with the asymmetry called five-are-not-four, which was already inconsistent before `om30` split the gates job out; both are corrected here rather than incremented.",
+      "scopeNote": "Joins every job before asking anything, then GW_Hard asks specifically about the HARD gates — the two warn-only results reach the same join but never the gate, so this lane's merge/block call is deliberately blind to a red warn-only step it also ran. No count is given here on purpose: this paragraph carried \"seven jobs, five hard\" and then \"six-and-four\", and each was wrong the next time a job was split or folded (beans `om30`, `7fu5`). Count the `# bpmn-node:` lines in the workflow instead.",
       "source": "cat-harness/processes/sdlc/code-quality-gates.bpmn"
     },
     {

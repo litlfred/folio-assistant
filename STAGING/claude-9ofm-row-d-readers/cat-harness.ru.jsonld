@@ -312,26 +312,26 @@
   ],
   "canonicalDocument": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld",
   "repository": "cat-harness",
-  "generatedAt": "2026-10-03T17:21:29.147Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/711e8f986a02af86185e79950a0a2350c92dbf1e",
-  "sourceCommitSha": "711e8f986a02af86185e79950a0a2350c92dbf1e",
-  "sourceCommitAt": "2026-10-03T17:07:41Z",
+  "generatedAt": "2026-10-03T18:42:40.353Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/33ba142a36594de7a17b3c3a4da9c4d200859e1f",
+  "sourceCommitSha": "33ba142a36594de7a17b3c3a4da9c4d200859e1f",
+  "sourceCommitAt": "2026-10-03T18:36:49Z",
   "sourceTreeDirty": true,
   "dependsOnUnavailable": "2 dependency edge(s), none expressible as a record — see gaps",
   "counts": {
-    "Skill": 300,
+    "Skill": 303,
     "Actor": 36,
     "Capability": 28,
     "SkillPackage": 35,
     "Decision": 10,
     "Process": 79,
-    "SequenceFlow": 1049,
+    "SequenceFlow": 1043,
     "Lane": 209,
-    "ProcessNode": 989,
+    "ProcessNode": 986,
     "Tool": 120,
-    "Schema": 162,
+    "Schema": 166,
     "ExternalSchema": 22,
-    "GraphKind": 27,
+    "GraphKind": 28,
     "Role": 49,
     "Subgraph": 27,
     "Asset": 3
@@ -1061,7 +1061,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-9ofm-row-d-readers/cat-harness.jsonld#package/conduct-core"
       ],
       "instructionsPath": "skills/conduct/conduct-core/where-does-this-go.md",
-      "instructionLines": 106,
+      "instructionLines": 114,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -1740,7 +1740,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-9ofm-row-d-readers/cat-harness.jsonld#package/kg-core"
       ],
       "instructionsPath": "skills/kg/kg-core/directory-conventions.md",
-      "instructionLines": 1399,
+      "instructionLines": 1401,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -3183,7 +3183,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-9ofm-row-d-readers/cat-harness.jsonld#package/sdlc-core"
       ],
       "instructionsPath": "skills/sdlc/sdlc-core/merge-conflict-patterns.md",
-      "instructionLines": 374,
+      "instructionLines": 381,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -3766,6 +3766,23 @@
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/render-order"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-9ofm-row-d-readers/cat-harness.jsonld#skill/visualizer-loading",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Skill",
+      "name": "visualizer-loading",
+      "title": "Visualizer loading — the page is layout, the graph is fetched",
+      "description": "The general strategy for a complex visualizer: the generated page carries identity, layout and a pointer, and its bulky or repeated content is fetched from the Knowledge Graph in the browser rather than baked into every page. What must stay server-side, how to fetch, how to stay equivalent to the render being replaced, and how to verify a page whose content is not in its HTML. Read before generating any page that shows a KG node's data at length: an IG artefact view, a graph viewer, a schema or sidecar view.",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-9ofm-row-d-readers/cat-harness.jsonld#package/ui-core"
+      ],
+      "instructionsPath": "skills/ui/ui-core/visualizer-loading.md",
+      "instructionLines": 155,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-9ofm-row-d-readers/cat-harness.jsonld#directory/skills",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/visualizer-loading"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-9ofm-row-d-readers/cat-harness.jsonld#skill/docs-generation",
       "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Skill",
       "name": "docs-generation",
@@ -4259,7 +4276,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-9ofm-row-d-readers/cat-harness.jsonld#package/fhir-ig-base"
       ],
       "instructionsPath": "../fhir-harness/skills/fhir-ig-base/ig-publisher-reduction.md",
-      "instructionLines": 271,
+      "instructionLines": 277,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -4298,6 +4315,22 @@
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/ig-publisher-fork"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-9ofm-row-d-readers/cat-harness.jsonld#skill/ig-binary-artefacts",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Skill",
+      "name": "ig-binary-artefacts",
+      "title": "ig-binary-artefacts",
+      "description": "Where the IG Publisher's binary outputs go — full-ig.zip, package.tgz and its R4/R4B variants, package.db, validator packs, and the definitions, examples and expansions zips — and why a pages branch is the wrong place for them. Measure a branch with ig-binary-audit before deciding anything. Read before configuring an IG's deploy or release step, before linking a download from a page, and before a pages branch grows past its size limit.",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-9ofm-row-d-readers/cat-harness.jsonld#package/fhir-ig-base"
+      ],
+      "instructionsPath": "../fhir-harness/skills/fhir-ig-base/ig-binary-artefacts.md",
+      "instructionLines": 104,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/ig-binary-artefacts"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-9ofm-row-d-readers/cat-harness.jsonld#skill/ig-build-pipeline",
       "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Skill",
       "name": "ig-build-pipeline",
@@ -4307,11 +4340,27 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-9ofm-row-d-readers/cat-harness.jsonld#package/fhir-ig-base"
       ],
       "instructionsPath": "../fhir-harness/skills/fhir-ig-base/ig-build-pipeline.md",
-      "instructionLines": 127,
+      "instructionLines": 133,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/ig-build-pipeline"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-9ofm-row-d-readers/cat-harness.jsonld#skill/ig-site-theme",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Skill",
+      "name": "ig-site-theme",
+      "title": "ig-site-theme",
+      "description": "How an IG rendered through just-the-docs wears the theme its instance ALREADY declares: the one `webpage` theme becomes the IG site's colour scheme. Says which of the three theme paths applies to which surface, what is refused, and how to verify on the built CSS rather than on a log line. Read before theming an IG site, adding a theme to an IG instance, or concluding that a staged IG is unthemed.",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-9ofm-row-d-readers/cat-harness.jsonld#package/fhir-ig-base"
+      ],
+      "instructionsPath": "../fhir-harness/skills/fhir-ig-base/ig-site-theme.md",
+      "instructionLines": 88,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/ig-site-theme"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-9ofm-row-d-readers/cat-harness.jsonld#skill/ig-ast-delta",
@@ -4323,7 +4372,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-9ofm-row-d-readers/cat-harness.jsonld#package/fhir-ig-base"
       ],
       "instructionsPath": "../fhir-harness/skills/fhir-ig-base/ig-ast-delta.md",
-      "instructionLines": 160,
+      "instructionLines": 179,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -5212,7 +5261,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-9ofm-row-d-readers/cat-harness.jsonld#package/authoring-who-smart-guidelines"
       ],
       "instructionsPath": "../smart-base/skills/content/authoring-who-smart-guidelines/dak-postprocessing.md",
-      "instructionLines": 157,
+      "instructionLines": 202,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -7068,6 +7117,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-9ofm-row-d-readers/cat-harness.jsonld#skill/serving-renderings",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-9ofm-row-d-readers/cat-harness.jsonld#skill/theme-ui-review",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-9ofm-row-d-readers/cat-harness.jsonld#skill/ui-accessibility",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-9ofm-row-d-readers/cat-harness.jsonld#skill/visualizer-loading",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-9ofm-row-d-readers/cat-harness.jsonld#skill/wireframe-design-review"
       ],
       "providesCapability": [],
@@ -28700,8 +28750,8 @@
       "startNode": [
         "https://litlfred.github.io/folio-assistant/STAGING/claude-9ofm-row-d-readers/cat-harness.jsonld#process/Process_CodeQualityGates/node/Start_Change"
       ],
-      "nodeCount": 17,
-      "flowCount": 24,
+      "nodeCount": 14,
+      "flowCount": 18,
       "conformsTo": [
         "https://litlfred.github.io/folio-assistant/STAGING/claude-9ofm-row-d-readers/cat-harness.jsonld#externalSchema/omg-bpmn-2.0",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-9ofm-row-d-readers/cat-harness.jsonld#externalSchema/omg-dd-1.0"
@@ -28723,18 +28773,9 @@
       "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#SequenceFlow",
       "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-9ofm-row-d-readers/cat-harness.jsonld#process/Process_CodeQualityGates",
       "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-9ofm-row-d-readers/cat-harness.jsonld#process/Process_CodeQualityGates/node/GW_Fork",
-      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-9ofm-row-d-readers/cat-harness.jsonld#process/Process_CodeQualityGates/node/Task_Lean",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-9ofm-row-d-readers/cat-harness.jsonld#process/Process_CodeQualityGates/node/Task_Hygiene",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-9ofm-row-d-readers/cat-harness.jsonld#directory/processes",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CodeQualityGates/flow/Flow_1"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-9ofm-row-d-readers/cat-harness.jsonld#process/Process_CodeQualityGates/flow/Flow_2",
-      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#SequenceFlow",
-      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-9ofm-row-d-readers/cat-harness.jsonld#process/Process_CodeQualityGates",
-      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-9ofm-row-d-readers/cat-harness.jsonld#process/Process_CodeQualityGates/node/GW_Fork",
-      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-9ofm-row-d-readers/cat-harness.jsonld#process/Process_CodeQualityGates/node/Task_Python",
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-9ofm-row-d-readers/cat-harness.jsonld#directory/processes",
-      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CodeQualityGates/flow/Flow_2"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-9ofm-row-d-readers/cat-harness.jsonld#process/Process_CodeQualityGates/flow/Flow_3",
@@ -28755,31 +28796,13 @@
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CodeQualityGates/flow/Flow_4"
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-9ofm-row-d-readers/cat-harness.jsonld#process/Process_CodeQualityGates/flow/Flow_5",
-      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#SequenceFlow",
-      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-9ofm-row-d-readers/cat-harness.jsonld#process/Process_CodeQualityGates",
-      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-9ofm-row-d-readers/cat-harness.jsonld#process/Process_CodeQualityGates/node/GW_Fork",
-      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-9ofm-row-d-readers/cat-harness.jsonld#process/Process_CodeQualityGates/node/Task_Rust",
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-9ofm-row-d-readers/cat-harness.jsonld#directory/processes",
-      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CodeQualityGates/flow/Flow_5"
-    },
-    {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-9ofm-row-d-readers/cat-harness.jsonld#process/Process_CodeQualityGates/flow/Flow_6",
       "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#SequenceFlow",
       "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-9ofm-row-d-readers/cat-harness.jsonld#process/Process_CodeQualityGates",
-      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-9ofm-row-d-readers/cat-harness.jsonld#process/Process_CodeQualityGates/node/Task_Lean",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-9ofm-row-d-readers/cat-harness.jsonld#process/Process_CodeQualityGates/node/Task_Hygiene",
       "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-9ofm-row-d-readers/cat-harness.jsonld#process/Process_CodeQualityGates/node/GW_Join",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-9ofm-row-d-readers/cat-harness.jsonld#directory/processes",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CodeQualityGates/flow/Flow_6"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-9ofm-row-d-readers/cat-harness.jsonld#process/Process_CodeQualityGates/flow/Flow_7",
-      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#SequenceFlow",
-      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-9ofm-row-d-readers/cat-harness.jsonld#process/Process_CodeQualityGates",
-      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-9ofm-row-d-readers/cat-harness.jsonld#process/Process_CodeQualityGates/node/Task_Python",
-      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-9ofm-row-d-readers/cat-harness.jsonld#process/Process_CodeQualityGates/node/GW_Join",
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-9ofm-row-d-readers/cat-harness.jsonld#directory/processes",
-      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CodeQualityGates/flow/Flow_7"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-9ofm-row-d-readers/cat-harness.jsonld#process/Process_CodeQualityGates/flow/Flow_8",
@@ -28798,15 +28821,6 @@
       "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-9ofm-row-d-readers/cat-harness.jsonld#process/Process_CodeQualityGates/node/GW_Join",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-9ofm-row-d-readers/cat-harness.jsonld#directory/processes",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CodeQualityGates/flow/Flow_9"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-9ofm-row-d-readers/cat-harness.jsonld#process/Process_CodeQualityGates/flow/Flow_10",
-      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#SequenceFlow",
-      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-9ofm-row-d-readers/cat-harness.jsonld#process/Process_CodeQualityGates",
-      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-9ofm-row-d-readers/cat-harness.jsonld#process/Process_CodeQualityGates/node/Task_Rust",
-      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-9ofm-row-d-readers/cat-harness.jsonld#process/Process_CodeQualityGates/node/GW_Join",
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-9ofm-row-d-readers/cat-harness.jsonld#directory/processes",
-      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CodeQualityGates/flow/Flow_10"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-9ofm-row-d-readers/cat-harness.jsonld#process/Process_CodeQualityGates/flow/Flow_11",
@@ -28842,24 +28856,6 @@
       "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-9ofm-row-d-readers/cat-harness.jsonld#process/Process_CodeQualityGates/node/End_Fail",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-9ofm-row-d-readers/cat-harness.jsonld#directory/processes",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CodeQualityGates/flow/Flow_13"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-9ofm-row-d-readers/cat-harness.jsonld#process/Process_CodeQualityGates/flow/Flow_14",
-      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#SequenceFlow",
-      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-9ofm-row-d-readers/cat-harness.jsonld#process/Process_CodeQualityGates",
-      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-9ofm-row-d-readers/cat-harness.jsonld#process/Process_CodeQualityGates/node/GW_Fork",
-      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-9ofm-row-d-readers/cat-harness.jsonld#process/Process_CodeQualityGates/node/Task_Advisories",
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-9ofm-row-d-readers/cat-harness.jsonld#directory/processes",
-      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CodeQualityGates/flow/Flow_14"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-9ofm-row-d-readers/cat-harness.jsonld#process/Process_CodeQualityGates/flow/Flow_15",
-      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#SequenceFlow",
-      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-9ofm-row-d-readers/cat-harness.jsonld#process/Process_CodeQualityGates",
-      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-9ofm-row-d-readers/cat-harness.jsonld#process/Process_CodeQualityGates/node/Task_Advisories",
-      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-9ofm-row-d-readers/cat-harness.jsonld#process/Process_CodeQualityGates/node/GW_Join",
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-9ofm-row-d-readers/cat-harness.jsonld#directory/processes",
-      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CodeQualityGates/flow/Flow_15"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-9ofm-row-d-readers/cat-harness.jsonld#process/Process_CodeQualityGates/flow/Flow_16",
@@ -28978,11 +28974,8 @@
       ],
       "outgoing": [
         "https://litlfred.github.io/folio-assistant/STAGING/claude-9ofm-row-d-readers/cat-harness.jsonld#process/Process_CodeQualityGates/flow/Flow_1",
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-9ofm-row-d-readers/cat-harness.jsonld#process/Process_CodeQualityGates/flow/Flow_2",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-9ofm-row-d-readers/cat-harness.jsonld#process/Process_CodeQualityGates/flow/Flow_3",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-9ofm-row-d-readers/cat-harness.jsonld#process/Process_CodeQualityGates/flow/Flow_4",
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-9ofm-row-d-readers/cat-harness.jsonld#process/Process_CodeQualityGates/flow/Flow_5",
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-9ofm-row-d-readers/cat-harness.jsonld#process/Process_CodeQualityGates/flow/Flow_14",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-9ofm-row-d-readers/cat-harness.jsonld#process/Process_CodeQualityGates/flow/Flow_16",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-9ofm-row-d-readers/cat-harness.jsonld#process/Process_CodeQualityGates/flow/Flow_18",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-9ofm-row-d-readers/cat-harness.jsonld#process/Process_CodeQualityGates/flow/Flow_20"
@@ -28991,9 +28984,9 @@
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CodeQualityGates/node/GW_Fork"
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-9ofm-row-d-readers/cat-harness.jsonld#process/Process_CodeQualityGates/node/Task_Lean",
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-9ofm-row-d-readers/cat-harness.jsonld#process/Process_CodeQualityGates/node/Task_Hygiene",
       "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#ProcessNode",
-      "name": "Lean: no bare `import Mathlib` (HARD)",
+      "name": "Import hygiene (HARD) and advisories (WARN-ONLY)",
       "nodeKind": "activity",
       "bpmnType": "bpmn:Task",
       "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-9ofm-row-d-readers/cat-harness.jsonld#process/Process_CodeQualityGates",
@@ -29011,30 +29004,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-9ofm-row-d-readers/cat-harness.jsonld#process/Process_CodeQualityGates/flow/Flow_6"
       ],
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-9ofm-row-d-readers/cat-harness.jsonld#directory/processes",
-      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CodeQualityGates/node/Task_Lean"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-9ofm-row-d-readers/cat-harness.jsonld#process/Process_CodeQualityGates/node/Task_Python",
-      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#ProcessNode",
-      "name": "Python: unused and wildcard imports (HARD)",
-      "nodeKind": "activity",
-      "bpmnType": "bpmn:Task",
-      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-9ofm-row-d-readers/cat-harness.jsonld#process/Process_CodeQualityGates",
-      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-9ofm-row-d-readers/cat-harness.jsonld#role/build-pipeline",
-      "inLane": "https://litlfred.github.io/folio-assistant/STAGING/claude-9ofm-row-d-readers/cat-harness.jsonld#process/Process_CodeQualityGates/lane/Lane_Ci",
-      "implementedBy": [
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-9ofm-row-d-readers/cat-harness.jsonld#skill/platform-gates"
-      ],
-      "touchesWorkPlan": false,
-      "relaxable": true,
-      "incoming": [
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-9ofm-row-d-readers/cat-harness.jsonld#process/Process_CodeQualityGates/flow/Flow_2"
-      ],
-      "outgoing": [
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-9ofm-row-d-readers/cat-harness.jsonld#process/Process_CodeQualityGates/flow/Flow_7"
-      ],
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-9ofm-row-d-readers/cat-harness.jsonld#directory/processes",
-      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CodeQualityGates/node/Task_Python"
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CodeQualityGates/node/Task_Hygiene"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-9ofm-row-d-readers/cat-harness.jsonld#process/Process_CodeQualityGates/node/Task_TypeScript",
@@ -29081,52 +29051,6 @@
       ],
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-9ofm-row-d-readers/cat-harness.jsonld#directory/processes",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CodeQualityGates/node/Task_E2E"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-9ofm-row-d-readers/cat-harness.jsonld#process/Process_CodeQualityGates/node/Task_Rust",
-      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#ProcessNode",
-      "name": "Rust wildcard imports (WARN-ONLY)",
-      "nodeKind": "activity",
-      "bpmnType": "bpmn:Task",
-      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-9ofm-row-d-readers/cat-harness.jsonld#process/Process_CodeQualityGates",
-      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-9ofm-row-d-readers/cat-harness.jsonld#role/build-pipeline",
-      "inLane": "https://litlfred.github.io/folio-assistant/STAGING/claude-9ofm-row-d-readers/cat-harness.jsonld#process/Process_CodeQualityGates/lane/Lane_Ci",
-      "implementedBy": [
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-9ofm-row-d-readers/cat-harness.jsonld#skill/platform-gates"
-      ],
-      "touchesWorkPlan": false,
-      "relaxable": true,
-      "incoming": [
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-9ofm-row-d-readers/cat-harness.jsonld#process/Process_CodeQualityGates/flow/Flow_5"
-      ],
-      "outgoing": [
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-9ofm-row-d-readers/cat-harness.jsonld#process/Process_CodeQualityGates/flow/Flow_10"
-      ],
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-9ofm-row-d-readers/cat-harness.jsonld#directory/processes",
-      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CodeQualityGates/node/Task_Rust"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-9ofm-row-d-readers/cat-harness.jsonld#process/Process_CodeQualityGates/node/Task_Advisories",
-      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#ProcessNode",
-      "name": "Dependency advisories (WARN-ONLY)",
-      "nodeKind": "activity",
-      "bpmnType": "bpmn:Task",
-      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-9ofm-row-d-readers/cat-harness.jsonld#process/Process_CodeQualityGates",
-      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-9ofm-row-d-readers/cat-harness.jsonld#role/build-pipeline",
-      "inLane": "https://litlfred.github.io/folio-assistant/STAGING/claude-9ofm-row-d-readers/cat-harness.jsonld#process/Process_CodeQualityGates/lane/Lane_Ci",
-      "implementedBy": [
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-9ofm-row-d-readers/cat-harness.jsonld#skill/platform-gates"
-      ],
-      "touchesWorkPlan": false,
-      "relaxable": true,
-      "incoming": [
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-9ofm-row-d-readers/cat-harness.jsonld#process/Process_CodeQualityGates/flow/Flow_14"
-      ],
-      "outgoing": [
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-9ofm-row-d-readers/cat-harness.jsonld#process/Process_CodeQualityGates/flow/Flow_15"
-      ],
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-9ofm-row-d-readers/cat-harness.jsonld#directory/processes",
-      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CodeQualityGates/node/Task_Advisories"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-9ofm-row-d-readers/cat-harness.jsonld#process/Process_CodeQualityGates/node/Task_RepositoryGates",
@@ -29212,11 +29136,8 @@
       "relaxable": true,
       "incoming": [
         "https://litlfred.github.io/folio-assistant/STAGING/claude-9ofm-row-d-readers/cat-harness.jsonld#process/Process_CodeQualityGates/flow/Flow_6",
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-9ofm-row-d-readers/cat-harness.jsonld#process/Process_CodeQualityGates/flow/Flow_7",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-9ofm-row-d-readers/cat-harness.jsonld#process/Process_CodeQualityGates/flow/Flow_8",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-9ofm-row-d-readers/cat-harness.jsonld#process/Process_CodeQualityGates/flow/Flow_9",
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-9ofm-row-d-readers/cat-harness.jsonld#process/Process_CodeQualityGates/flow/Flow_10",
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-9ofm-row-d-readers/cat-harness.jsonld#process/Process_CodeQualityGates/flow/Flow_15",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-9ofm-row-d-readers/cat-harness.jsonld#process/Process_CodeQualityGates/flow/Flow_17",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-9ofm-row-d-readers/cat-harness.jsonld#process/Process_CodeQualityGates/flow/Flow_19",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-9ofm-row-d-readers/cat-harness.jsonld#process/Process_CodeQualityGates/flow/Flow_21"
@@ -49795,6 +49716,16 @@
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/user-story"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-9ofm-row-d-readers/cat-harness.jsonld#schema/vector-figure",
+      "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#Schema",
+      "name": "vector-figure",
+      "title": "vector-figure",
+      "summary": "A DRAWN figure, assembled and rendered — bean `ay3x`, under `m4xy`. The step",
+      "module": "schemas/vector-figure.ts",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-9ofm-row-d-readers/cat-harness.jsonld#directory/schemas",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/vector-figure"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-9ofm-row-d-readers/cat-harness.jsonld#schema/vector-labels",
       "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#Schema",
       "name": "vector-labels",
@@ -49919,6 +49850,15 @@
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/withheld"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-9ofm-row-d-readers/cat-harness.jsonld#schema/openapi",
+      "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#Schema",
+      "name": "openapi",
+      "title": "openapi",
+      "summary": "The OpenAPI harness's shapes: what an instance declares, what an ingest",
+      "module": "../cat-openapi/schemas/openapi.ts",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/openapi"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-9ofm-row-d-readers/cat-harness.jsonld#schema/adjudication",
       "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#Schema",
       "name": "adjudication",
@@ -50027,6 +49967,15 @@
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/fhir-artifact-index"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-9ofm-row-d-readers/cat-harness.jsonld#schema/ig-ast",
+      "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#Schema",
+      "name": "ig-ast",
+      "title": "ig-ast",
+      "summary": "ig-ast.ts — the IG AST's file formats, declared once (bean `l0lq`).",
+      "module": "../fhir-harness/schemas/ig-ast.ts",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/ig-ast"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-9ofm-row-d-readers/cat-harness.jsonld#schema/ig-chrome",
       "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#Schema",
       "name": "ig-chrome",
@@ -50061,6 +50010,15 @@
       "summary": "IG metadata indexes — the Publisher's own metadata exports, given somewhere",
       "module": "../fhir-harness/schemas/ig-metadata-index.ts",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/ig-metadata-index"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-9ofm-row-d-readers/cat-harness.jsonld#schema/ig-releases",
+      "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#Schema",
+      "name": "ig-releases",
+      "title": "ig-releases",
+      "summary": "ig-releases.ts — an IG's GitHub releases, recorded as POINTERS to their",
+      "module": "../fhir-harness/schemas/ig-releases.ts",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/ig-releases"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-9ofm-row-d-readers/cat-harness.jsonld#schema/dak-blocks",
@@ -50509,6 +50467,14 @@
       "renderable": false,
       "summary": "What the harness promises, one document per shipped feature, each carrying a `Requirement` in its front matter. A sub-graph of `docs`. Test runs point at these statements by `req:<slug>#<key>`.",
       "validatorNotApplicable": "its nodes are markdown pages whose FRONT MATTER is a `Requirement`. A registry validator parses a JSON node, so one here would be a category error. `check:requirements` extracts the front matter and parses it against the Requirement schema instead, and requires the id to match the file name."
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#graphKind/docs-auto",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#GraphKind",
+      "name": "docs-auto",
+      "renderable": false,
+      "summary": "Derived indexes over the other graphs — one page per auto-doc TYPE crossed with each SUB-GRAPH that type reaches. A sub-graph of `docs`, written by `scripts/gen-docs-auto.ts` and never by hand. Distinct from `docs` itself by the one question that settles the layer: a docs page is re-authored, an index is regenerated.",
+      "validatorNotApplicable": "its nodes are generated index PAGES — HTML and markdown with no fixed JSON shape — so a registry validator would be a category error, as on `proposals`. What is checked mechanically is the derivation instead: `docs:auto:check` fails on a stale page, and refuses outright when a type collects nothing while its graph's directories hold files, which is a moved source rather than an empty graph (bean `06e3`)."
     },
     {
       "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#graphKind/external-schema",

@@ -477,6 +477,21 @@
       "layer": "harness"
     },
     {
+      "@id": "cat-harness:graphKind/docs-auto",
+      "@type": [
+        "bootstrap:GraphKind",
+        "skos:Concept"
+      ],
+      "label": "docs-auto",
+      "comment": "Derived indexes over the other graphs — one page per auto-doc TYPE crossed with each SUB-GRAPH that type reaches. A sub-graph of `docs`, written by `scripts/gen-docs-auto.ts` and never by hand. Distinct from `docs` itself by the one question that settles the layer: a docs page is re-authored, an index is regenerated.",
+      "prefLabel": "docs-auto",
+      "definition": "Derived indexes over the other graphs — one page per auto-doc TYPE crossed with each SUB-GRAPH that type reaches. A sub-graph of `docs`, written by `scripts/gen-docs-auto.ts` and never by hand. Distinct from `docs` itself by the one question that settles the layer: a docs page is re-authored, an index is regenerated.",
+      "notation": "cat-harness:graphKind/docs-auto",
+      "inScheme": "https://litlfred.github.io/cat-harness/0.1.0/ns",
+      "isDefinedBy": "https://litlfred.github.io/cat-harness/0.1.0/ns",
+      "layer": "harness"
+    },
+    {
       "@id": "cat-harness:graphKind/document-kinds",
       "@type": [
         "bootstrap:GraphKind",
@@ -622,6 +637,21 @@
       "prefLabel": "methodology",
       "definition": "Judgement methodologies, adopted whole and kept independent — parallel ways to reach a decision, selected by context.",
       "notation": "cat-harness:graphKind/methodology",
+      "inScheme": "https://litlfred.github.io/cat-harness/0.1.0/ns",
+      "isDefinedBy": "https://litlfred.github.io/cat-harness/0.1.0/ns",
+      "layer": "harness"
+    },
+    {
+      "@id": "cat-harness:graphKind/openapi",
+      "@type": [
+        "bootstrap:GraphKind",
+        "skos:Concept"
+      ],
+      "label": "openapi",
+      "comment": "OpenAPI 3 documents an instance holds, each verbatim beside a provenance node naming the repository, path and commit it was ingested from (the cat-openapi harness). Every operation in a document is a node of its own: a page and an IRI under the instance's docs.",
+      "prefLabel": "openapi",
+      "definition": "OpenAPI 3 documents an instance holds, each verbatim beside a provenance node naming the repository, path and commit it was ingested from (the cat-openapi harness). Every operation in a document is a node of its own: a page and an IRI under the instance's docs.",
+      "notation": "cat-harness:graphKind/openapi",
       "inScheme": "https://litlfred.github.io/cat-harness/0.1.0/ns",
       "isDefinedBy": "https://litlfred.github.io/cat-harness/0.1.0/ns",
       "layer": "harness"
