@@ -1647,6 +1647,10 @@ export const BASE_GRAPH_KINDS: Readonly<Record<string, GraphKindDef>> = {
       // measure coverage on, no `xref` to dedupe by and no pixel to inspect,
       // so `role` and `basis` would each mean two things.
       "folio-vector-labels/v1": { validator: "schemas/vector-labels.ts#VectorLabelsSidecarSchema" },
+      // The vector figures ASSEMBLED and RENDERED — bean `ay3x`. Every entry
+      // carries a basis naming who or what looked; the extractor's assigns no
+      // role, and the role arrives by inspection through `image-verdicts.json`.
+      "folio-vector-figures/v1": { validator: "schemas/vector-figure.ts#VectorFiguresSidecarSchema" },
       // The JUDGEMENT half of the vector arm — bean `a8wy`. Stands to
       // `folio-vector-labels` as `folio-image-verdicts` stands to
       // `folio-document-images`: the measurement says where every text line
