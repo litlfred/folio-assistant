@@ -2,7 +2,7 @@
   "$schema": "folio-bean-index/v1",
   "tile": {
     "beans": {
-      "count": 754,
+      "count": 768,
       "unit": "beans"
     }
   },
@@ -133,6 +133,20 @@
       "updatedAt": "2026-09-29T18:14:47Z",
       "preview": "From [#363](https://github.com/litlfred/folio-assistant/issues/363): \"no github,\nlocal git only. tools (several options) to run lightweight server locally for\nskill of hosting content (using mime time data whch github tool cant)\" and\n\"github on private repo so gh-pages not avaialbe. use local server skill.\"\n\n## This hole is already documented, deliberately\n\n`skills/ui/ui-core/serving-renderings.md",
       "file": "beans/defs/folio-assistant-0hi8--deploy-a-local-http-server-that-serves-a-rendering.md"
+    },
+    {
+      "id": "folio-assistant-0ipy",
+      "title": "AGENTIC SE LITERATURE: five papers on agentic code review, adversarial debate and agent routing — ingest, analyse within and across, and attack folio-assistant with them",
+      "status": "in-progress",
+      "type": "epic",
+      "priority": "",
+      "parent": "",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-10-02T23:15:14Z",
+      "updatedAt": "2026-10-02T23:15:14Z",
+      "preview": "placeholder",
+      "file": "beans/defs/folio-assistant-0ipy--agentic-se-literature-five-papers-on-agentic-code.md"
     },
     {
       "id": "folio-assistant-0js9",
@@ -1751,6 +1765,20 @@
       "file": "beans/defs/folio-assistant-5blc--digital-transformation-handbook-dth-a-voice-an-l1.md"
     },
     {
+      "id": "folio-assistant-5ge1",
+      "title": "MERGE GATE IS SPECIFIED AS BLOCKING, OWNER RULED WARN-ONLY: reconcile merge-gate-2026-10-02.md and nok9 with the 2026-10-02 ruling",
+      "status": "completed",
+      "type": "bug",
+      "priority": "normal",
+      "parent": "folio-assistant-0ipy",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-10-02T23:32:19Z",
+      "updatedAt": "2026-10-03T00:02:20Z",
+      "preview": "## The conflict, both sides measured 2026-10-02\n\n**The owner ruled WARN:** asked how to handle agentic code review before merge,\nthe owner answered — *\"do ingesion and analsysi. then propose. dont want hard\ngate (at least not for now, lots of backlog on content nodes) but do want\nwarn.\"* Two reasons given, and the second is the binding one: a hard gate over\na content backlog blocks work that was a",
+      "file": "beans/defs/folio-assistant-5ge1--merge-gate-is-specified-as-blocking-owner-ruled-wa.md"
+    },
+    {
       "id": "folio-assistant-5gqn",
       "title": "MERGE FRICTION: beans index.json should join oxka -merge set; harness.json must NOT",
       "status": "todo",
@@ -1795,6 +1823,20 @@
       "updatedAt": "2026-10-01T12:50:27Z",
       "preview": "Found 2026-09-30 on PR #1633, by CI rather than by `regen`.\n\n`End-to-end + accessibility (hard)` failed on `render:bpmn:check` with three\nstale drawings — `bootstrap/processes/{discussion,initialize-harness,log-message}.svg`\n— on a tree where `bun run regen` had just reported a fixed point.\n\n## This is NOT the same defect as `check:X` (the prefix-convention false clean)\n\nWorth separating, because ",
       "file": "beans/defs/folio-assistant-5qq3--regen-scope-the-browser-jobs-artefacts-are-outside.md"
+    },
+    {
+      "id": "folio-assistant-5ulq",
+      "title": "STRICT IN NAME ONLY: 9 workflow instances against 755 merges, and no gate reads beans/workflows at all",
+      "status": "todo",
+      "type": "bug",
+      "priority": "",
+      "parent": "folio-assistant-0ipy",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-10-02T23:49:21Z",
+      "updatedAt": "2026-10-02T23:49:21Z",
+      "preview": "## Measured 2026-10-02 at `871b1da1c`\n\n| | |\n|---|---|\n| instance files in `beans/workflows/` | **9** |\n| first-parent merge commits on `origin/main` since 2026-09-20T18:00Z | **755** |\n| gates or workflows referencing `beans/workflows` | **0** (grep over `.github/workflows/` and `cat-harness/scripts/check-*.ts`) |\n| bean `vlhk`, which made the rule mandatory | `status: completed`, archived |\n\n`AG",
+      "file": "beans/defs/folio-assistant-5ulq--strict-in-name-only-9-workflow-instances-against-7.md"
     },
     {
       "id": "folio-assistant-5uuf",
@@ -2613,6 +2655,20 @@
       "file": "beans/defs/folio-assistant-7x8o--translations-9-published-pages-carry-less-than-the.md"
     },
     {
+      "id": "folio-assistant-8107",
+      "title": "LMA systems for SE (2404.04834v4): the SDLC landscape review — which stages folio-assistant covers and which it does not",
+      "status": "todo",
+      "type": "task",
+      "priority": "",
+      "parent": "folio-assistant-0ipy",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-10-02T23:15:27Z",
+      "updatedAt": "2026-10-02T23:15:27Z",
+      "preview": "Ingest + critical analysis. 30pp systematic review, He/Treude/Lo. The cross-cutting frame: use its SDLC stage map as the gap checklist against this repo's processes/.",
+      "file": "beans/defs/folio-assistant-8107--lma-systems-for-se-240404834v4-the-sdlc-landscape.md"
+    },
+    {
       "id": "folio-assistant-81t5",
       "title": "TOOL 8/13: ingest-extract-structure — document ingestion (15 files, 7 entry points)",
       "status": "completed",
@@ -3033,6 +3089,20 @@
       "file": "beans/defs/folio-assistant-9io2--lake-cache-family-to-catfolio-assistant-scilake-ca.md"
     },
     {
+      "id": "folio-assistant-9k2i",
+      "title": "CROSS-PAPER synthesis + adversarial pass ON folio-assistant: what transfers, what is refuted, what gap remains",
+      "status": "todo",
+      "type": "task",
+      "priority": "",
+      "parent": "folio-assistant-0ipy",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-10-02T23:15:27Z",
+      "updatedAt": "2026-10-02T23:15:27Z",
+      "preview": "Depends on the five per-paper beans. Must keep measured / recommended / claimed apart, as methodologies/merge-queue.md does. Adversarial in both directions: attack the papers' claims, and attack this repo's processes with them.",
+      "file": "beans/defs/folio-assistant-9k2i--cross-paper-synthesis-adversarial-pass-on-folio-as.md"
+    },
+    {
       "id": "folio-assistant-9ofm",
       "title": "STATE BRANCH P3: migrate every reader and writer of beans/, todos/, issue-marks/, health results to the branch",
       "status": "in-progress",
@@ -3351,7 +3421,7 @@
       "blockedBy": [],
       "createdAt": "2026-10-02T16:29:16Z",
       "updatedAt": "2026-10-02T16:29:16Z",
-      "preview": "Child (c) of the merge-gate epic. Design: `cat-harness/docs/proposals/merge-gate-2026-10-02.md` §6.\n\nA RED FLAG is a finding the reviewer asserts **blocks the merge**. It reuses the two existing axes in `schemas/qa-review.ts`: `FindingSeverity` (critical | major | minor: what kind of breakage) and `FindingWeight` (blocking | suggestion | praise: what the reviewer asks of the gate). A RED FLAG is `",
+      "preview": "Child (c) of the merge-gate epic. Design: `cat-harness/docs/proposals/merge-gate-2026-10-02.md` §6.\n\nA RED FLAG is a finding the reviewer asserts **would block the merge** (amended 2026-10-03; it asserted \"blocks the merge\" until the warn-only ruling below). It reuses the two existing axes in `schemas/qa-review.ts`: `FindingSeverity` (critical | major | minor: what kind of breakage) and `FindingWe",
       "file": "beans/defs/folio-assistant-abmq--merge-gate-c-red-flag-taxonomy-verdict-sidecar-sha.md"
     },
     {
@@ -5109,6 +5179,34 @@
       "file": "beans/defs/folio-assistant-gr0r--a-link-into-the-bean-store-breaks-when-the-bean-is.md"
     },
     {
+      "id": "folio-assistant-gs0u",
+      "title": "CodeAgent (2402.02172v5): agentic code review as a PRE-MERGE gate — extract, attack, and test against nok9",
+      "status": "todo",
+      "type": "task",
+      "priority": "",
+      "parent": "folio-assistant-0ipy",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-10-02T23:15:27Z",
+      "updatedAt": "2026-10-02T23:15:27Z",
+      "preview": "Ingest + critical analysis. 35pp. Bears on bean nok9 (MERGE GATE: agentic adversarial review) and the owner's 2026-10-02 ask: full code agentic review before merge to main.",
+      "file": "beans/defs/folio-assistant-gs0u--codeagent-240202172v5-agentic-code-review-as-a-pre.md"
+    },
+    {
+      "id": "folio-assistant-gtx4",
+      "title": "FALSE PROVENANCE: qa-agent-write defaults agent_model to a stale literal, writing a model that did not do the work into committed sidecars",
+      "status": "todo",
+      "type": "bug",
+      "priority": "",
+      "parent": "folio-assistant-0ipy",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-10-02T23:52:42Z",
+      "updatedAt": "2026-10-02T23:52:42Z",
+      "preview": "## The defect, verified first-hand 2026-10-02\n\n`cat-harness/src/qa-agent-write.ts:142-143`:\n\n```ts\nconst model = arg(\"model\") ?? \"claude-opus-4-8\";\nconst skill = arg(\"skill\") ?? \"local/qa-agent-drain\";\n```\n\n`:204-210` writes them straight into the committed sidecar:\n\n```ts\n  reviewer: {\n    kind: \"agent\",\n    id: skill,\n    agent_model: model,\n    agent_date: today,\n    agent_skill: skill,\n  },\n``",
+      "file": "beans/defs/folio-assistant-gtx4--false-provenance-qa-agent-write-defaults-agent-mod.md"
+    },
+    {
       "id": "folio-assistant-gurh",
       "title": "MAIN RED 2026-10-01: Code-quality gates 12 consecutive failures since #1725, Docs site red — watchdog issue #1755",
       "status": "todo",
@@ -5177,6 +5275,20 @@
       "updatedAt": "2026-10-03T08:51:59Z",
       "preview": "Owner, 2026-10-03: \"audit other declared sub-graphs. may have same issue with tests or other consumers\". The trigger was fsh-guts (9c7h): five tests and one writer named `fsh-guts/` by path, and #1945 and #1948 moved them onto the declaration (`fshGutsDirectory`). The owner's 2026-10-03 content-source ruling makes the class general: ANY declared subgraph's source may move (directory → branch → gra",
       "file": "beans/defs/folio-assistant-gz47--audit-every-declared-subgraph-for-literal-paths-in.md"
+    },
+    {
+      "id": "folio-assistant-h1uq",
+      "title": "WARN -> BLOCK NEEDS A NUMBER: no false-positive rate exists for any agentic reviewer, and only a warn-only phase can produce one",
+      "status": "todo",
+      "type": "task",
+      "priority": "",
+      "parent": "folio-assistant-nok9",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-10-03T00:02:50Z",
+      "updatedAt": "2026-10-03T00:02:50Z",
+      "preview": "Split out of `5ge1` (the warn-only reconciliation), which is otherwise done.\nThe owner ruled the agentic merge review **warn-only** on 2026-10-02 and\nconfirmed it 2026-10-03: *\"warn only. proposal predates ruling, update it.\"*\nPromotion to a hard gate is explicitly left open (\"at least not for now\"), and\nthis bean is what that decision would have to read.\n\n## The gap, measured\n\n**No paper reports ",
+      "file": "beans/defs/folio-assistant-h1uq--warn-block-needs-a-number-no-false-positive-rate-e.md"
     },
     {
       "id": "folio-assistant-h1wq",
@@ -6149,6 +6261,20 @@
       "file": "beans/defs/folio-assistant-li5y--bpmn-labels-are-double-escaped-126-amp10-across-8.md"
     },
     {
+      "id": "folio-assistant-lk2a",
+      "title": "check:workflow-refs sends the reader to bean bvuk, which is COMPLETED and archived — the finding is live, the attribution is stale",
+      "status": "todo",
+      "type": "bug",
+      "priority": "",
+      "parent": "folio-assistant-0ipy",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-10-02T23:32:19Z",
+      "updatedAt": "2026-10-02T23:32:19Z",
+      "preview": "## Measured 2026-10-02, on a checkout of `main`\n\n`check:workflow-refs` reports two callers that run an adjudication without\nnaming the answers it may give, and sends the reader to bean `bvuk`:\n\n```\n? processes/library/sample-import.bpmn  · Call_Refresh → Process_RefreshMaterialized: does not say\n? processes/library/subscribe-kg.bpmn   · Call_Refresh → Process_RefreshMaterialized: does not say\n2 ca",
+      "file": "beans/defs/folio-assistant-lk2a--checkworkflow-refs-sends-the-reader-to-bean-bvuk-w.md"
+    },
+    {
       "id": "folio-assistant-lodp",
       "title": "Vocabulary drift D1–D3: role naming, fsh-guts description, sl9u condition onto mapping tables",
       "status": "completed",
@@ -6489,6 +6615,20 @@
       "file": "beans/defs/folio-assistant-mi97--audit-the-171-unresolved-links-in-docs-23-carry-on.md"
     },
     {
+      "id": "folio-assistant-mjl3",
+      "title": "artefact-verification.json merges are CORRECTLY refused and must stay refused: it reads like a generated sidecar, has no writer, and carries authored reasons",
+      "status": "todo",
+      "type": "task",
+      "priority": "normal",
+      "parent": "folio-assistant-d33q",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-10-03T17:41:35Z",
+      "updatedAt": "2026-10-03T17:41:53Z",
+      "preview": "A **preventive** record, not a defect: this bean exists so the next agent that\nmeets this refusal twice does not \"fix\" it by widening a glob — which is the\nmistake `merge-conflict-patterns` names in its own opening and which I came within\none step of making.\n\n## Where it came from\n\nSwept the merge-main bot's refusals across all 13 open `merge-main` PRs on\n2026-10-03, while #2029 added the one real",
+      "file": "beans/defs/folio-assistant-mjl3--artefact-verificationjson-merges-are-correctly-ref.md"
+    },
+    {
       "id": "folio-assistant-mkao",
       "title": "LIBRARY VIEWER LEAK: withheld who-iris entries still published verbatim text and covers via /assets/library/",
       "status": "completed",
@@ -6825,6 +6965,20 @@
       "file": "beans/defs/folio-assistant-o3xy--ui-accessibility-the-rendered-site-is-the-artefact.md"
     },
     {
+      "id": "folio-assistant-o57z",
+      "title": "SWE-Debate (2507.23348v1): competitive multi-agent debate — refine devils-advocate-watcher and the adjudication codes",
+      "status": "todo",
+      "type": "task",
+      "priority": "",
+      "parent": "folio-assistant-0ipy",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-10-02T23:15:27Z",
+      "updatedAt": "2026-10-02T23:15:27Z",
+      "preview": "Ingest + critical analysis. 19pp. Bears on devils-advocate-watcher, the accepts/adjudication codes (bean bvuk), and whether debate beats a single adversarial pass.",
+      "file": "beans/defs/folio-assistant-o57z--swe-debate-250723348v1-competitive-multi-agent-deb.md"
+    },
+    {
       "id": "folio-assistant-o7eq",
       "title": "URL SPACE: rendered assets mirror the instantiation structure — <baseurl>/ for the root, <baseurl>/<instance>/<path> for every enabled harness",
       "status": "todo",
@@ -7105,6 +7259,20 @@
       "file": "beans/defs/folio-assistant-p11x--checkpartition-cannot-see-cross-instance-edges-its.md"
     },
     {
+      "id": "folio-assistant-p1sk",
+      "title": "SWE-Router (2607.00053v1): routing in multi-turn agentic SE — cost-aware model choice per task",
+      "status": "todo",
+      "type": "task",
+      "priority": "",
+      "parent": "folio-assistant-0ipy",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-10-02T23:15:27Z",
+      "updatedAt": "2026-10-02T23:15:27Z",
+      "preview": "Ingest + critical analysis. 10pp. Pairs with TCAndon-Router; bears on when a swarm needs a frontier model at all.",
+      "file": "beans/defs/folio-assistant-p1sk--swe-router-260700053v1-routing-in-multi-turn-agent.md"
+    },
+    {
       "id": "folio-assistant-p3ny",
       "title": "STATE BRANCH P6: remove the moved state files from main — ONLY on the owner's explicit go",
       "status": "todo",
@@ -7259,6 +7427,20 @@
       "updatedAt": "2026-09-30T17:11:41Z",
       "preview": "Found 2026-09-30 by the wireframe QA re-run on main 3779d5d27: the schemas page's field notes show backticks as literal characters instead of inline code. No existing finding tracks it; xb4p #5 covers a different page (24 literal backticks down to 1 there).\n\n## Done when\n- [ ] The field notes render inline code through withInlineCode (schemas/inline-code.ts), and a built page shows 0 literal backt",
       "file": "beans/defs/folio-assistant-pqdv--schema-field-notes-render-literal-backticks.md"
+    },
+    {
+      "id": "folio-assistant-ptdp",
+      "title": "TCAndon-Router (2601.04544v1): adaptive reasoning router — does it refine swarm-management's model-level choice?",
+      "status": "todo",
+      "type": "task",
+      "priority": "",
+      "parent": "folio-assistant-0ipy",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-10-02T23:15:27Z",
+      "updatedAt": "2026-10-02T23:15:27Z",
+      "preview": "Ingest + critical analysis. 16pp, Tencent. Bears on swarm-management (agent count, model level, cost) and dispatch-agent.",
+      "file": "beans/defs/folio-assistant-ptdp--tcandon-router-260104544v1-adaptive-reasoning-rout.md"
     },
     {
       "id": "folio-assistant-pv51",
@@ -9952,7 +10134,7 @@
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-10-03T13:28:54Z",
-      "updatedAt": "2026-10-03T13:29:11Z",
+      "updatedAt": "2026-10-03T17:52:50Z",
       "preview": "The follow-on to `1j3q` (PR #1996), which built `storage.keyedBy: \"route\"` and\ndeliberately flipped nothing. This is the first family that uses it.\n\n## Why `docs/uml/` and not the other 48\n\n**A-narrow, chosen over A-full.** Measured on #1966: **49 of 94** gated checks\nwrite page files. Flipping them together cannot be bisected — a red tells you\n\"some page moved wrong\" and nothing more. `docs/uml/`",
       "file": "beans/defs/folio-assistant-xsrv--route-keyed-cutover-first-family-move-docsuml-off.md"
     },
@@ -10501,6 +10683,20 @@
       "updatedAt": "2026-10-01T17:41:32Z",
       "preview": "## State — delivered, advisory, green. Not merged.\n\nIssue #1219, PR #1222, `bun run gates` 139/139, 34 tests in 194ms on synthetic trees.\n\n## The rule\n\nOwner, 2026-09-23: *\"if sub1 depends (directly or through chain) stub0, no references/context etc points stub0 → sub1.\"* `bootstrap-tools/schemas/graph.test.ts` enforces it for ONE instance (`iwtn`); this generalises it to all 17.\n\n## Absorbing `ch",
       "file": "beans/defs/folio-assistant-zhg2--reference-direction-generalise-bootstraps-no-upwar.md"
+    },
+    {
+      "id": "folio-assistant-zjm1",
+      "title": "VACUOUS CLEAN: devils-advocate 'clean (all rebutted)' is satisfied by ZERO objections, and the sidecar skip then makes it sticky",
+      "status": "todo",
+      "type": "bug",
+      "priority": "",
+      "parent": "folio-assistant-0ipy",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-10-02T23:49:21Z",
+      "updatedAt": "2026-10-02T23:49:21Z",
+      "preview": "## The defect, quoted\n\n`cat-harness/skills/authoring/authoring-core/devils-advocate-watcher.md:186`:\n\n> Then assign the block a `da-referee-verdict`: `clean` (**all rebutted**),\n> `survivable-objection` (≥1 partial, none surviving), or `open-objection`\n> (≥1 surviving).\n\n**\"All rebutted\" is vacuously true over an empty set.** A block where every\nlens returned no objection at all earns the SAME ver",
+      "file": "beans/defs/folio-assistant-zjm1--vacuous-clean-devils-advocate-clean-all-rebutted-i.md"
     },
     {
       "id": "folio-assistant-zldg",
