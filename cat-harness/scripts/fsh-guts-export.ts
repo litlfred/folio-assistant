@@ -43,10 +43,9 @@ import { dirname, join, relative, resolve } from "node:path";
 import {
   artefactStub,
   readDeclaration,
-  resolveDirectories, repoRootFor } from "../schemas/cat-harness.js";
+  repoRootFor } from "../schemas/cat-harness.js";
 import { NS_PREFIXES, termIri } from "../schemas/namespaces.js";
-import { readFshGutsNode } from "../schemas/fsh-guts.js";
-import { checkoutDirectories } from "../schemas/harness-config.js";
+import { fshGutsDirectories, readFshGutsNode } from "../schemas/fsh-guts.js";
 import { contextBindings, vocabMapping } from "../schemas/vocab-mapping.js";
 import { STANDARD_PREFIXES } from "../schemas/vocab-mapping-fhir.js";
 
@@ -127,16 +126,11 @@ export interface FshGutsDir {
 
 /** Every declared `fsh-guts` directory — not the literal path. */
 export function fshGutsDirs(root: string): FshGutsDir[] {
-  try {
-    // Own declaration first; then the checkout's (placement PR0a: the
-    // repository's `fsh-guts/` is declared by the ROOT instance).
-    const own = resolveDirectories([{ name: "(local)", root, own: true }]).filter((d) => d.graphKinds.includes("fsh-guts"));
-    return (own.length > 0 ? own : checkoutDirectories(root, { stackedOn: root }).filter((d) => d.graphKinds.includes("fsh-guts")))
-      .map((d) => ({ absPath: d.absPath, path: d.path.replace(/\/+$/, "") }))
-      .filter((d) => existsSync(d.absPath));
-  } catch {
-    return [];
-  }
+  // One resolution for every reader and writer (bean 9c7h): the seam the
+  // move to `cat/cat-harness/fsh-guts` changes.
+  return fshGutsDirectories(root)
+    .map((d) => ({ absPath: d.absPath, path: d.path.replace(/\/+$/, "") }))
+    .filter((d) => existsSync(d.absPath));
 }
 
 function walk(dir: string, out: string[] = []): string[] {
