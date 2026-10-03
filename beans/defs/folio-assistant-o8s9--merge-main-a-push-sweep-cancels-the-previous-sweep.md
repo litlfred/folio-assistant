@@ -1,11 +1,11 @@
 ---
 # folio-assistant-o8s9
 title: 'merge-main: a push sweep CANCELS the previous sweep''s in-flight merges, so a fast merge cadence starves the bot'
-status: todo
+status: in-progress
 type: bug
 priority: normal
 created_at: 2026-10-03T09:11:12Z
-updated_at: 2026-10-03T09:54:52Z
+updated_at: 2026-10-03T10:21:55Z
 parent: folio-assistant-hfag
 ---
 
