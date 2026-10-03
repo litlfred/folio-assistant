@@ -23,6 +23,7 @@ Part of [C@T Harness](../README.md) 0.1.0, declared as `external-schemas`, holdi
 | [`w3c-owl2.json`](w3c-owl2.json) | OWL 2 Web Ontology Language Document Overview (Second Edition) |  |
 | [`w3c-prov-jsonld.json`](w3c-prov-jsonld.json) | The PROV-JSONLD Serialization: A JSON-LD Representation for the PROV Data Model |  |
 | [`w3c-prov-o.json`](w3c-prov-o.json) | PROV-O: The PROV Ontology |  |
+| [`w3c-rdf-calendar.json`](w3c-rdf-calendar.json) | RDF Calendar — an application of the Resource Description Framework to iCalendar Data |  |
 | [`w3c-rdf.json`](w3c-rdf.json) | RDF 1.1 Concepts and Abstract Syntax |  |
 | [`w3c-rdfs.json`](w3c-rdfs.json) | RDF Schema 1.1 |  |
 | [`w3c-skos.json`](w3c-skos.json) | SKOS Simple Knowledge Organization System [Reference](https://litlfred.github.io/bootstrap/schemas/#reference) |  |
