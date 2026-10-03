@@ -2060,12 +2060,12 @@
         {
           "id": "directories",
           "label": "declared directories",
-          "value": 30
+          "value": 31
         },
         {
           "id": "kinds",
           "label": "declared graph kinds",
-          "value": 26
+          "value": 27
         },
         {
           "id": "views",
@@ -2093,6 +2093,11 @@
         {
           "kind": "docs",
           "path": "/cat-harness/docs-auto/index/docs/docs/"
+        },
+        {
+          "kind": "docs-auto",
+          "within": "docs",
+          "note": "no viewer yet"
         },
         {
           "kind": "external-schema",
@@ -2417,6 +2422,14 @@
           "path": "cat-harness/docs/requirements/"
         },
         {
+          "id": "docs/docs-auto",
+          "kinds": [
+            "docs-auto"
+          ],
+          "where": "local",
+          "path": "cat-harness/docs/cat-harness/docs-auto/"
+        },
+        {
           "id": "voices",
           "kinds": [
             "voices"
@@ -2426,7 +2439,7 @@
         }
       ],
       "findings": [
-        "cat-harness: declares 7 graph(s) with no published viewer — code, code-list, policies, scenarios, substrate-snapshot, uml, vocab-mapping. Declared and not rendered is a gap, not a dead link."
+        "cat-harness: declares 8 graph(s) with no published viewer — code, code-list, docs-auto, policies, scenarios, substrate-snapshot, uml, vocab-mapping. Declared and not rendered is a gap, not a dead link."
       ],
       "navbarIcons": [
         "close",
@@ -2732,6 +2745,11 @@
       {
         "kind": "docs",
         "path": "/cat-harness/docs-auto/index/docs/docs/"
+      },
+      {
+        "kind": "docs-auto",
+        "within": "docs",
+        "note": "no viewer yet"
       },
       {
         "kind": "external-schema",
