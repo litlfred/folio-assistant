@@ -14,11 +14,11 @@
  */
 import { afterEach, describe, expect, test } from "bun:test";
 import { spawnSync } from "node:child_process";
-import { existsSync, mkdirSync, mkdtempSync, readFileSync, rmSync, statSync, unlinkSync, writeFileSync } from "node:fs";
+import { existsSync, lstatSync, mkdirSync, mkdtempSync, readFileSync, readlinkSync, rmSync, statSync, symlinkSync, unlinkSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { dirname, join } from "node:path";
 
-import { MANIFEST_SCHEMA, markerPath, mountTip, pushMount, readMarker, type TipLocation } from "../branch-store.js";
+import { gitBlobId, MANIFEST_SCHEMA, markerPath, mountTip, pushMount, readMarker, type TipLocation } from "../branch-store.js";
 
 const NOGPG = ["-c", "commit.gpgsign=false", "-c", "user.name=t", "-c", "user.email=t@t"];
 const BRANCH = "cat/cat-harness/fsh-guts";
@@ -72,6 +72,7 @@ function fixture(): Fixture {
     writeFileSync(join(seed, p), t);
   }
   spawnSync("chmod", ["755", join(seed, "fsh-guts/scripts/run.sh")]);
+  symlinkSync("../retired/a.md", join(seed, "fsh-guts/scripts/a-link.md"));
   git(seed, "add", "-A");
   git(seed, "commit", "-q", "-m", "seed");
   git(seed, "push", "-q", url, `HEAD:refs/heads/${BRANCH}`);
@@ -170,7 +171,8 @@ describe("push", () => {
     // Untouched paths are carried across: the binary and the branch's own manifest.
     expect(f.remoteFile("fsh-guts/uploads/doc.pdf")!.equals(PDF)).toBe(true);
     expect(f.remoteFile("manifest.json")).toBeDefined();
-    expect(readMarker(root, "fsh-guts")!.tip).toBe(f.tip());
+    expect(readMarker(root, "fsh-guts")!.lastPush).toBe(f.tip());
+    expect(readMarker(root, "fsh-guts")!.tip).toBe(before);
     expect(pushMount("fsh-guts", "again", opts).state).toBe("unchanged");
   });
 
@@ -228,5 +230,73 @@ describe("push", () => {
     const f = fixture();
     const { opts } = f.checkout("a");
     expect(pushMount("fsh-guts", "x", opts).state).toBe("refused");
+  });
+});
+
+describe("review on #1957", () => {
+  test("two worktrees of one checkout mounting the same id keep separate markers, and neither pushes the other's edits", () => {
+    const f = fixture();
+    const { root, opts } = f.checkout("a");
+    writeFileSync(join(root, "seed.txt"), "x\n");
+    git(root, "add", "-A");
+    git(root, "commit", "-q", "-m", "base");
+    const wt = join(dirname(root), "co-a-wt");
+    git(root, "worktree", "add", "-q", wt);
+    const wtOpts = { ...opts, repoRoot: wt };
+    expect(mountTip(LOC, opts).state).toBe("mounted");
+    expect(mountTip(LOC, wtOpts).state).toBe("mounted");
+    expect(markerPath(root, "fsh-guts")).not.toBe(markerPath(wt, "fsh-guts"));
+    writeFileSync(join(wt, "fsh-guts/retired/b.md"), "only the worktree's edit\n");
+    expect(pushMount("fsh-guts", "main checkout", opts).state).toBe("unchanged");
+    expect(f.remoteFile("fsh-guts/retired/b.md")!.toString()).toBe("---\ntitle: B\n---\n");
+    expect(pushMount("fsh-guts", "worktree", wtOpts).state).toBe("pushed");
+    expect(f.remoteFile("fsh-guts/retired/b.md")!.toString()).toBe("only the worktree's edit\n");
+  });
+
+  test("a symlink is mounted as a symlink and pushed back as one, never as a regular file", () => {
+    const f = fixture();
+    const { root, opts } = f.checkout("a");
+    mountTip(LOC, opts);
+    const link = join(root, "fsh-guts/scripts/a-link.md");
+    expect(lstatSync(link).isSymbolicLink()).toBe(true);
+    expect(readlinkSync(link)).toBe("../retired/a.md");
+    // An edit elsewhere must not turn the link into a file on the way back.
+    writeFileSync(join(root, "fsh-guts/retired/b.md"), "edit\n");
+    expect(pushMount("fsh-guts", "edit", opts).state).toBe("pushed");
+    const mode = spawnSync("git", ["--git-dir", f.bare, "ls-tree", `refs/heads/${BRANCH}`, "fsh-guts/scripts/a-link.md"], { encoding: "utf-8" }).stdout;
+    expect(mode.startsWith("120000")).toBe(true);
+    // Re-pointing the link is an edit like any other.
+    unlinkSync(link);
+    symlinkSync("../retired/b.md", link);
+    expect(pushMount("fsh-guts", "relink", opts).state).toBe("pushed");
+    expect(f.remoteFile("fsh-guts/scripts/a-link.md")!.toString()).toBe("../retired/b.md");
+  });
+
+  test("gitBlobId is git's own blob id, computed without spawning git", () => {
+    for (const bytes of [Buffer.from(""), Buffer.from("hello\n"), PDF]) {
+      const r = spawnSync("git", ["hash-object", "--stdin"], { input: bytes, encoding: "utf-8" });
+      expect(gitBlobId(bytes)).toBe(r.stdout.trim());
+    }
+  });
+
+  test("after a push over a moved tip, `tip` is still the MOUNTED tip and `lastPush` records the push", () => {
+    const f = fixture();
+    const a = f.checkout("a");
+    const b = f.checkout("b");
+    mountTip(LOC, a.opts);
+    const mounted = readMarker(a.root, "fsh-guts")!.tip;
+    mountTip(LOC, b.opts);
+    writeFileSync(join(b.root, "fsh-guts/retired/b.md"), "b moved the tip\n");
+    expect(pushMount("fsh-guts", "b", b.opts).state).toBe("pushed");
+    writeFileSync(join(a.root, "fsh-guts/retired/a.md"), "a lands on top\n");
+    expect(pushMount("fsh-guts", "a", a.opts).state).toBe("pushed");
+    const m = readMarker(a.root, "fsh-guts")!;
+    expect(m.tip).toBe(mounted);
+    expect(m.lastPush).toBe(f.tip());
+    // a's disk still has the OLD b.md: the marker does not pretend otherwise,
+    // and an edit to it now is a conflict, never an overwrite of b's change.
+    writeFileSync(join(a.root, "fsh-guts/retired/b.md"), "a, unaware\n");
+    expect(pushMount("fsh-guts", "a2", a.opts).state).toBe("conflict");
+    expect(f.remoteFile("fsh-guts/retired/b.md")!.toString()).toBe("b moved the tip\n");
   });
 });

@@ -80,7 +80,8 @@
  * @covers todos
  */
 import { spawnSync } from "node:child_process";
-import { chmodSync, existsSync, mkdirSync, readdirSync, readFileSync, rmSync, statSync, writeFileSync } from "node:fs";
+import { createHash } from "node:crypto";
+import { chmodSync, existsSync, lstatSync, mkdirSync, readdirSync, readFileSync, readlinkSync, rmSync, symlinkSync, writeFileSync } from "node:fs";
 import { dirname, join, relative, resolve, sep } from "node:path";
 
 import { instanceRootsIn, resolveDirectories } from "../schemas/cat-harness.js";
@@ -127,8 +128,8 @@ export interface Change {
   /** Text or BYTES: a tip store may hold binary files (fsh-guts keeps archived PDFs). */
   content: string | Buffer | null;
   expect?: string | null;
-  /** `100755` keeps an executable executable; default `100644`. */
-  mode?: "100644" | "100755";
+  /** `100755` keeps an executable executable, `120000` a symlink (content = its target); default `100644`. */
+  mode?: "100644" | "100755" | "120000";
 }
 
 export type WriteState = "pushed" | "unchanged" | "conflict" | "absent" | "failed";
@@ -555,11 +556,6 @@ export class BranchStore {
     return { state: "hit", branch: v.branch, tip: v.tip, prefix: segs.join("/"), files };
   }
 
-  /** The blob id `bytes` would have, without writing it. */
-  hashOf(bytes: Buffer): string {
-    return this.must(["hash-object", "--stdin"], { input: bytes }).trim();
-  }
-
   // ── Writing ────────────────────────────────────────────────────────────
 
   /**
@@ -647,6 +643,17 @@ export class BranchStore {
 
 export const MOUNT_MARKER_SCHEMA = "branch-mount/v1";
 
+/**
+ * The blob id git gives `bytes`: SHA-1 of `"blob <len>\0" + bytes`. Computed
+ * in-process, because a beans mount is ~1,240 files and one `git hash-object`
+ * per file is that many process spawns per push (review on #1957). A
+ * SHA-256 object-format repository is not supported here, which is also true
+ * of every other tool in this harness.
+ */
+export function gitBlobId(bytes: Buffer): string {
+  return createHash("sha1").update(`blob ${bytes.length}\0`).update(bytes).digest("hex");
+}
+
 export interface MountMarker {
   $schema: typeof MOUNT_MARKER_SCHEMA;
   id: string;
@@ -655,8 +662,14 @@ export interface MountMarker {
   path: string;
   /** The absolute local mount. */
   into: string;
-  /** The tip the files were read at. */
+  /**
+   * The tip the files on disk were read at. A push does NOT move it: a push
+   * that retried over a moved tip lands on top of siblings' changes to other
+   * files, which this mount has not read. A re-mount is how to catch up.
+   */
   tip: string;
+  /** The commit the last successful push created, for the record. */
+  lastPush?: string;
   /** Mount-relative path → the blob id and mode it had at `tip`. */
   files: Record<string, { blob: string; mode: string }>;
 }
@@ -677,16 +690,22 @@ export type MountResult =
 
 export type PushResult = WriteResult | { state: "refused"; reason: string };
 
-function gitCommonDir(repoRoot: string): string {
-  const c = spawnSync("git", ["rev-parse", "--path-format=absolute", "--git-common-dir"], { cwd: repoRoot, encoding: "utf-8" });
+/**
+ * The PER-WORKTREE git directory. Not `--git-common-dir`: that one is shared
+ * by every linked worktree of a checkout, so two worktrees mounting the same
+ * id would overwrite each other's marker, and one could push the other's
+ * edits (review on #1957). Agents here work in worktrees all the time.
+ */
+function worktreeGitDir(repoRoot: string): string {
+  const c = spawnSync("git", ["rev-parse", "--path-format=absolute", "--git-dir"], { cwd: repoRoot, encoding: "utf-8" });
   if (c.status !== 0) throw new BranchStoreUsageError(`cannot find the git directory of ${repoRoot}`);
   return c.stdout.trim();
 }
 
-/** Where `id`'s mount marker lives: `<git-common-dir>/branch-mounts/<id>.json`. */
+/** Where `id`'s mount marker lives: `<this worktree's git-dir>/branch-mounts/<id>.json`. */
 export function markerPath(repoRoot: string, id: string): string {
   if (!/^[A-Za-z0-9._-]+$/.test(id)) throw new BranchStoreUsageError(`not a directory id: ${id}`);
-  return join(gitCommonDir(repoRoot), "branch-mounts", `${id}.json`);
+  return join(worktreeGitDir(repoRoot), "branch-mounts", `${id}.json`);
 }
 
 export function readMarker(repoRoot: string, id: string): MountMarker | undefined {
@@ -703,32 +722,40 @@ function writeMarker(repoRoot: string, m: MountMarker): void {
   writeFileSync(p, JSON.stringify(m, null, 2) + "\n");
 }
 
-/** Every file under `dir`, mount-relative with `/` separators. Symlinks are not followed. */
+/**
+ * Every file AND symlink under `dir`, mount-relative with `/` separators.
+ * Symlinks are leaves, never followed (`lstat`): a link to a directory is
+ * not walked twice or outside the mount, and it round-trips as a link.
+ */
 function walkFiles(dir: string, base = dir, out: string[] = []): string[] {
   if (!existsSync(dir)) return out;
   for (const name of readdirSync(dir)) {
     const abs = join(dir, name);
-    const st = statSync(abs);
-    if (st.isDirectory()) walkFiles(abs, base, out);
-    else if (st.isFile()) out.push(relative(base, abs).split(sep).join("/"));
+    const st = lstatSync(abs);
+    if (st.isSymbolicLink() || st.isFile()) out.push(relative(base, abs).split(sep).join("/"));
+    else if (st.isDirectory()) walkFiles(abs, base, out);
   }
   return out.sort();
 }
 
+/** A local file's git content and mode: a symlink is its target, mode 120000. */
+function localEntry(abs: string): { bytes: Buffer; mode: "100644" | "100755" | "120000" } {
+  const st = lstatSync(abs);
+  if (st.isSymbolicLink()) return { bytes: Buffer.from(readlinkSync(abs)), mode: "120000" };
+  return { bytes: readFileSync(abs), mode: (st.mode & 0o111) !== 0 ? "100755" : "100644" };
+}
+
 /** The local edits since the mount: what a push would send. */
-function localChanges(store: BranchStore, m: MountMarker, repoRoot: string): Change[] {
+function localChanges(m: MountMarker, repoRoot: string): Change[] {
   const local = new Set(walkFiles(m.into));
   const changes: Change[] = [];
   const fresh = [...local].filter((r) => !m.files[r]);
   const ignored = ignoredByCheckout(repoRoot, m.into, fresh);
   for (const rel of local) {
     if (!m.files[rel] && ignored.has(rel)) continue;
-    const abs = join(m.into, rel);
-    const bytes = readFileSync(abs);
+    const { bytes, mode } = localEntry(join(m.into, rel));
     const prev = m.files[rel];
-    const exec = (statSync(abs).mode & 0o111) !== 0;
-    const mode = exec ? "100755" : "100644";
-    if (prev && prev.blob === store.hashOf(bytes) && prev.mode === mode) continue;
+    if (prev && prev.blob === gitBlobId(bytes) && prev.mode === mode) continue;
     changes.push({ path: `${m.path}/${rel}`, content: bytes, expect: prev ? prev.blob : null, mode });
   }
   for (const [rel, prev] of Object.entries(m.files)) {
@@ -779,7 +806,7 @@ export function mountTip(loc: TipLocation, opts: MountOptions = {}): MountResult
   const store = BranchStore.open(loc.branch, { repoRoot, ...opts.store });
   const prior = readMarker(repoRoot, loc.id);
   if (prior) {
-    const pending = localChanges(store, prior, repoRoot);
+    const pending = localChanges(prior, repoRoot);
     if (pending.length) return { state: "refused", reason: `${prior.into} has ${pending.length} unpushed change(s); push or discard them before re-mounting` };
   } else if (existsSync(into) && walkFiles(into).length) {
     return { state: "refused", reason: `${into} holds files and is not a mount of ${loc.id}` };
@@ -787,13 +814,19 @@ export function mountTip(loc: TipLocation, opts: MountOptions = {}): MountResult
   const r = store.readTreeEntries(loc.path);
   if (r.state !== "hit") return r;
   if (prior) for (const rel of Object.keys(prior.files)) rmSync(join(prior.into, rel), { force: true });
+  const unsupported = [...r.files].filter(([, f]) => !["100644", "100755", "120000"].includes(f.mode));
+  if (unsupported.length) return { state: "corrupt", reason: `${unsupported[0]![0]} has mode ${unsupported[0]![1].mode}, which a mount cannot hold` };
   const files: MountMarker["files"] = {};
   for (const [p, f] of r.files) {
     const rel = p.slice(loc.path.length + 1);
     const abs = join(into, rel);
     mkdirSync(dirname(abs), { recursive: true });
-    writeFileSync(abs, f.bytes);
-    chmodSync(abs, f.mode === "100755" ? 0o755 : 0o644);
+    if (f.mode === "120000") {
+      symlinkSync(f.bytes.toString("utf-8"), abs);
+    } else {
+      writeFileSync(abs, f.bytes);
+      chmodSync(abs, f.mode === "100755" ? 0o755 : 0o644);
+    }
     files[rel] = { blob: f.blob, mode: f.mode };
   }
   writeMarker(repoRoot, { $schema: MOUNT_MARKER_SCHEMA, id: loc.id, branch: r.branch, path: loc.path, into, tip: r.tip, files });
@@ -811,16 +844,17 @@ export function pushMount(id: string, message: string, opts: MountOptions = {}):
   const m = readMarker(repoRoot, id);
   if (!m) return { state: "refused", reason: `${id} is not mounted in ${repoRoot}` };
   const store = BranchStore.open(m.branch, { repoRoot, ...opts.store });
-  const changes = localChanges(store, m, repoRoot);
+  const changes = localChanges(m, repoRoot);
   if (!changes.length) return { state: "unchanged", reason: `no local edits under ${m.into}`, branch: m.branch, attempts: 0 };
   const w = store.write(changes, message);
   if (w.state === "pushed" && w.commit) {
     for (const c of changes) {
       const rel = c.path.slice(m.path.length + 1);
       if (c.content === null) delete m.files[rel];
-      else m.files[rel] = { blob: store.hashOf(Buffer.from(c.content)), mode: c.mode ?? "100644" };
+      else m.files[rel] = { blob: gitBlobId(Buffer.from(c.content)), mode: c.mode ?? "100644" };
     }
-    writeMarker(repoRoot, { ...m, tip: w.commit });
+    // `tip` stays the MOUNTED tip: see MountMarker.tip.
+    writeMarker(repoRoot, { ...m, lastPush: w.commit });
   }
   return w;
 }
