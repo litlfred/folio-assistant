@@ -35,6 +35,9 @@ export const PROPERTY_SKILLS = {
   assets: { skills: ["directory-conventions"] },
   icon: { skills: ["theme-declaration", "harness-tiles"] },
   navbarIcons: { skills: ["harness-tiles"] },
+  // Which tiles the glass's bottom strip pins, in order; the rest are
+  // counted on its "+N more" tile (owner's ruling, bean `ob3m` finding 10).
+  glassStrip: { skills: ["harness-tiles"] },
   // The planned owner/repo and, pre-split, the host + directory it sits in
   // today (bean 6rmv); `instance-repositories.ts` derives the map from both.
   repository: { skills: ["instance-kinds", "directory-conventions"] },
