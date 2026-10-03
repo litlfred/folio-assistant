@@ -502,6 +502,15 @@ export const STEP_EXEMPTIONS: StepExemption[] = [
       "logic is covered in a checkout by publish-verify.test.ts, which builds the documents in memory",
   },
   {
+    match: "search-split.ts",
+    kind: "ci-only",
+    reason:
+      "takes `--dir ./_site`: it cuts the BUILT (or, on a preview, borrowed) search index into per-scope " +
+      "indices (bean `m7mn`); there is no `_site` in a checkout. Its scope rule, partition and determinism " +
+      "are covered by search-split.test.ts, and its output on every deployed tree by publish-verify's " +
+      "`search-scopes` verifier",
+  },
+  {
     match: "strip-preview-seo.ts",
     kind: "ci-only",
     reason: "rewrites the built `_site` before a preview deploy; there is no `_site` in a checkout",
