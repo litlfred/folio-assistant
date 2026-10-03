@@ -1158,6 +1158,87 @@
       "layer": "harness"
     },
     {
+      "@id": "cat-harness:contentSource",
+      "@type": [
+        "rdf:Property",
+        "skos:Concept"
+      ],
+      "label": "contentSource",
+      "comment": "Where a declared subgraph gets its content — the checkout's own directory, a declared repository branch, or a later kind — as resolved after the instance config's override.",
+      "prefLabel": "contentSource",
+      "definition": "Where a declared subgraph gets its content — the checkout's own directory, a declared repository branch, or a later kind — as resolved after the instance config's override.",
+      "notation": "cat-harness:contentSource",
+      "inScheme": "https://litlfred.github.io/cat-harness/0.1.0/ns",
+      "isDefinedBy": "https://litlfred.github.io/cat-harness/0.1.0/ns",
+      "layer": "harness",
+      "deprecated": true,
+      "isReplacedBy": "http://purl.org/dc/terms/source"
+    },
+    {
+      "@id": "cat-harness:contentSourceKind",
+      "@type": [
+        "rdf:Property",
+        "skos:Concept"
+      ],
+      "label": "contentSourceKind",
+      "comment": "Which kind of content source: `directory` or `branch`.",
+      "prefLabel": "contentSourceKind",
+      "definition": "Which kind of content source: `directory` or `branch`.",
+      "notation": "cat-harness:contentSourceKind",
+      "inScheme": "https://litlfred.github.io/cat-harness/0.1.0/ns",
+      "isDefinedBy": "https://litlfred.github.io/cat-harness/0.1.0/ns",
+      "layer": "harness",
+      "deprecated": true,
+      "isReplacedBy": "http://purl.org/dc/terms/type"
+    },
+    {
+      "@id": "cat-harness:contentSourceBranch",
+      "@type": [
+        "rdf:Property",
+        "skos:Concept"
+      ],
+      "label": "contentSourceBranch",
+      "comment": "The repository branch a subgraph's content is read from.",
+      "prefLabel": "contentSourceBranch",
+      "definition": "The repository branch a subgraph's content is read from.",
+      "notation": "cat-harness:contentSourceBranch",
+      "inScheme": "https://litlfred.github.io/cat-harness/0.1.0/ns",
+      "isDefinedBy": "https://litlfred.github.io/cat-harness/0.1.0/ns",
+      "layer": "harness",
+      "deprecated": true,
+      "isReplacedBy": "http://purl.org/dc/terms/identifier"
+    },
+    {
+      "@id": "cat-harness:keyedBy",
+      "@type": [
+        "rdf:Property",
+        "skos:Concept"
+      ],
+      "label": "keyedBy",
+      "comment": "How entries are keyed on a content branch: one entry per `commit`, or one live copy at the `tip`.",
+      "prefLabel": "keyedBy",
+      "definition": "How entries are keyed on a content branch: one entry per `commit`, or one live copy at the `tip`.",
+      "notation": "cat-harness:keyedBy",
+      "inScheme": "https://litlfred.github.io/cat-harness/0.1.0/ns",
+      "isDefinedBy": "https://litlfred.github.io/cat-harness/0.1.0/ns",
+      "layer": "harness"
+    },
+    {
+      "@id": "cat-harness:sourceDeclaredIn",
+      "@type": [
+        "rdf:Property",
+        "skos:Concept"
+      ],
+      "label": "sourceDeclaredIn",
+      "comment": "Which layer said where a subgraph's content comes from — the declaration, a legacy `storage` field, the instance config's override, or the `directory` default — so an override is never silent.",
+      "prefLabel": "sourceDeclaredIn",
+      "definition": "Which layer said where a subgraph's content comes from — the declaration, a legacy `storage` field, the instance config's override, or the `directory` default — so an override is never silent.",
+      "notation": "cat-harness:sourceDeclaredIn",
+      "inScheme": "https://litlfred.github.io/cat-harness/0.1.0/ns",
+      "isDefinedBy": "https://litlfred.github.io/cat-harness/0.1.0/ns",
+      "layer": "harness"
+    },
+    {
       "@id": "cat-harness:dependents",
       "@type": [
         "rdf:Property",

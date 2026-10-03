@@ -205,6 +205,15 @@
     "sourceKind": "https://litlfred.github.io/cat-harness/0.1.0/ns#sourceKind",
     "instructionsPath": "https://litlfred.github.io/cat-harness/0.1.0/ns#instructionsPath",
     "readmePath": "https://litlfred.github.io/cat-harness/0.1.0/ns#readmePath",
+    "contentSource": {
+      "@id": "http://purl.org/dc/terms/source",
+      "@context": {
+        "kind": "http://purl.org/dc/terms/type",
+        "branch": "http://purl.org/dc/terms/identifier",
+        "keyedBy": "https://litlfred.github.io/cat-harness/0.1.0/ns#keyedBy",
+        "declaredIn": "https://litlfred.github.io/cat-harness/0.1.0/ns#sourceDeclaredIn"
+      }
+    },
     "instructionLines": {
       "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#instructionLines",
       "@type": "http://www.w3.org/2001/XMLSchema#integer"
@@ -303,10 +312,10 @@
   ],
   "canonicalDocument": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld",
   "repository": "cat-harness",
-  "generatedAt": "2026-10-03T15:36:53.680Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/0ef99431d7abf385f83665fd1dc8d732a33bcd2f",
-  "sourceCommitSha": "0ef99431d7abf385f83665fd1dc8d732a33bcd2f",
-  "sourceCommitAt": "2026-10-03T15:22:33Z",
+  "generatedAt": "2026-10-03T16:07:44.094Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/e1659ff78d7d6003d5f54d6170cc82b7a1300bb0",
+  "sourceCommitSha": "e1659ff78d7d6003d5f54d6170cc82b7a1300bb0",
+  "sourceCommitAt": "2026-10-03T15:55:08Z",
   "sourceTreeDirty": true,
   "dependsOnUnavailable": "2 dependency edge(s), none expressible as a record — see gaps",
   "counts": {
@@ -315,12 +324,12 @@
     "Capability": 28,
     "SkillPackage": 35,
     "Decision": 10,
-    "Process": 78,
-    "SequenceFlow": 1040,
-    "Lane": 208,
-    "ProcessNode": 980,
-    "Tool": 119,
-    "Schema": 164,
+    "Process": 79,
+    "SequenceFlow": 1049,
+    "Lane": 209,
+    "ProcessNode": 989,
+    "Tool": 120,
+    "Schema": 165,
     "ExternalSchema": 22,
     "GraphKind": 27,
     "Role": 49,
@@ -1443,7 +1452,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-curie-gbfeuy/cat-harness.jsonld#package/kg-core"
       ],
       "instructionsPath": "skills/kg/kg-core/content-context-and-state-graphs.md",
-      "instructionLines": 333,
+      "instructionLines": 354,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -1731,7 +1740,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-curie-gbfeuy/cat-harness.jsonld#package/kg-core"
       ],
       "instructionsPath": "skills/kg/kg-core/directory-conventions.md",
-      "instructionLines": 1312,
+      "instructionLines": 1399,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -13248,6 +13257,312 @@
       "outgoing": [],
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-curie-gbfeuy/cat-harness.jsonld#directory/processes",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_GraphDetanglement/node/End_Unknown"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-curie-gbfeuy/cat-harness.jsonld#process/Process_MountSubgraph",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Process",
+      "name": "Mount a declared subgraph",
+      "enforcement": "strict",
+      "sourcePath": "processes/kg/mount-subgraph.bpmn",
+      "startNode": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-curie-gbfeuy/cat-harness.jsonld#process/Process_MountSubgraph/node/Start_SubgraphWanted"
+      ],
+      "nodeCount": 9,
+      "flowCount": 9,
+      "conformsTo": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-curie-gbfeuy/cat-harness.jsonld#externalSchema/omg-bpmn-2.0",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-curie-gbfeuy/cat-harness.jsonld#externalSchema/omg-dd-1.0"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-curie-gbfeuy/cat-harness.jsonld#directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_MountSubgraph"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-curie-gbfeuy/cat-harness.jsonld#process/Process_MountSubgraph/flow/F_M1",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-curie-gbfeuy/cat-harness.jsonld#process/Process_MountSubgraph",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-curie-gbfeuy/cat-harness.jsonld#process/Process_MountSubgraph/node/Start_SubgraphWanted",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-curie-gbfeuy/cat-harness.jsonld#process/Process_MountSubgraph/node/Task_ResolveSource",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-curie-gbfeuy/cat-harness.jsonld#directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_MountSubgraph/flow/F_M1"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-curie-gbfeuy/cat-harness.jsonld#process/Process_MountSubgraph/flow/F_M2",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-curie-gbfeuy/cat-harness.jsonld#process/Process_MountSubgraph",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-curie-gbfeuy/cat-harness.jsonld#process/Process_MountSubgraph/node/Task_ResolveSource",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-curie-gbfeuy/cat-harness.jsonld#process/Process_MountSubgraph/node/GW_SourceKind",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-curie-gbfeuy/cat-harness.jsonld#directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_MountSubgraph/flow/F_M2"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-curie-gbfeuy/cat-harness.jsonld#process/Process_MountSubgraph/flow/F_M3",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#SequenceFlow",
+      "name": "directory",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-curie-gbfeuy/cat-harness.jsonld#process/Process_MountSubgraph",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-curie-gbfeuy/cat-harness.jsonld#process/Process_MountSubgraph/node/GW_SourceKind",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-curie-gbfeuy/cat-harness.jsonld#process/Process_MountSubgraph/node/Task_UseCheckoutPath",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-curie-gbfeuy/cat-harness.jsonld#directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_MountSubgraph/flow/F_M3"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-curie-gbfeuy/cat-harness.jsonld#process/Process_MountSubgraph/flow/F_M4",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#SequenceFlow",
+      "name": "branch",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-curie-gbfeuy/cat-harness.jsonld#process/Process_MountSubgraph",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-curie-gbfeuy/cat-harness.jsonld#process/Process_MountSubgraph/node/GW_SourceKind",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-curie-gbfeuy/cat-harness.jsonld#process/Process_MountSubgraph/node/Task_MountBranchTip",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-curie-gbfeuy/cat-harness.jsonld#directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_MountSubgraph/flow/F_M4"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-curie-gbfeuy/cat-harness.jsonld#process/Process_MountSubgraph/flow/F_M5",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#SequenceFlow",
+      "name": "any other kind",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-curie-gbfeuy/cat-harness.jsonld#process/Process_MountSubgraph",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-curie-gbfeuy/cat-harness.jsonld#process/Process_MountSubgraph/node/GW_SourceKind",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-curie-gbfeuy/cat-harness.jsonld#process/Process_MountSubgraph/node/Task_RefuseUnknownKind",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-curie-gbfeuy/cat-harness.jsonld#directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_MountSubgraph/flow/F_M5"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-curie-gbfeuy/cat-harness.jsonld#process/Process_MountSubgraph/flow/F_M6",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-curie-gbfeuy/cat-harness.jsonld#process/Process_MountSubgraph",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-curie-gbfeuy/cat-harness.jsonld#process/Process_MountSubgraph/node/Task_UseCheckoutPath",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-curie-gbfeuy/cat-harness.jsonld#process/Process_MountSubgraph/node/GW_Join",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-curie-gbfeuy/cat-harness.jsonld#directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_MountSubgraph/flow/F_M6"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-curie-gbfeuy/cat-harness.jsonld#process/Process_MountSubgraph/flow/F_M7",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-curie-gbfeuy/cat-harness.jsonld#process/Process_MountSubgraph",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-curie-gbfeuy/cat-harness.jsonld#process/Process_MountSubgraph/node/Task_MountBranchTip",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-curie-gbfeuy/cat-harness.jsonld#process/Process_MountSubgraph/node/GW_Join",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-curie-gbfeuy/cat-harness.jsonld#directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_MountSubgraph/flow/F_M7"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-curie-gbfeuy/cat-harness.jsonld#process/Process_MountSubgraph/flow/F_M8",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-curie-gbfeuy/cat-harness.jsonld#process/Process_MountSubgraph",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-curie-gbfeuy/cat-harness.jsonld#process/Process_MountSubgraph/node/GW_Join",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-curie-gbfeuy/cat-harness.jsonld#process/Process_MountSubgraph/node/End_Mounted",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-curie-gbfeuy/cat-harness.jsonld#directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_MountSubgraph/flow/F_M8"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-curie-gbfeuy/cat-harness.jsonld#process/Process_MountSubgraph/flow/F_M9",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-curie-gbfeuy/cat-harness.jsonld#process/Process_MountSubgraph",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-curie-gbfeuy/cat-harness.jsonld#process/Process_MountSubgraph/node/Task_RefuseUnknownKind",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-curie-gbfeuy/cat-harness.jsonld#process/Process_MountSubgraph/node/End_Refused",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-curie-gbfeuy/cat-harness.jsonld#directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_MountSubgraph/flow/F_M9"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-curie-gbfeuy/cat-harness.jsonld#process/Process_MountSubgraph/lane/Lane_MountPipeline",
+      "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#Lane",
+      "name": "Build pipeline",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-curie-gbfeuy/cat-harness.jsonld#process/Process_MountSubgraph",
+      "bindsRole": "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-curie-gbfeuy/cat-harness.jsonld#role/build-pipeline",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-curie-gbfeuy/cat-harness.jsonld#directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_MountSubgraph/lane/Lane_MountPipeline"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-curie-gbfeuy/cat-harness.jsonld#process/Process_MountSubgraph/node/Start_SubgraphWanted",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#ProcessNode",
+      "name": "A step needs a declared subgraph",
+      "nodeKind": "start",
+      "bpmnType": "bpmn:StartEvent",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-curie-gbfeuy/cat-harness.jsonld#process/Process_MountSubgraph",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-curie-gbfeuy/cat-harness.jsonld#role/build-pipeline",
+      "inLane": "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-curie-gbfeuy/cat-harness.jsonld#process/Process_MountSubgraph/lane/Lane_MountPipeline",
+      "implementedBy": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-curie-gbfeuy/cat-harness.jsonld#process/Process_MountSubgraph/flow/F_M1"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-curie-gbfeuy/cat-harness.jsonld#directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_MountSubgraph/node/Start_SubgraphWanted"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-curie-gbfeuy/cat-harness.jsonld#process/Process_MountSubgraph/node/Task_ResolveSource",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#ProcessNode",
+      "name": "Resolve the subgraph's content source",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:Task",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-curie-gbfeuy/cat-harness.jsonld#process/Process_MountSubgraph",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-curie-gbfeuy/cat-harness.jsonld#role/build-pipeline",
+      "inLane": "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-curie-gbfeuy/cat-harness.jsonld#process/Process_MountSubgraph/lane/Lane_MountPipeline",
+      "implementedBy": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-curie-gbfeuy/cat-harness.jsonld#skill/directory-conventions"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-curie-gbfeuy/cat-harness.jsonld#process/Process_MountSubgraph/flow/F_M1"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-curie-gbfeuy/cat-harness.jsonld#process/Process_MountSubgraph/flow/F_M2"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-curie-gbfeuy/cat-harness.jsonld#directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_MountSubgraph/node/Task_ResolveSource"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-curie-gbfeuy/cat-harness.jsonld#process/Process_MountSubgraph/node/GW_SourceKind",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#ProcessNode",
+      "name": "Which source kind?",
+      "nodeKind": "exclusive",
+      "bpmnType": "bpmn:ExclusiveGateway",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-curie-gbfeuy/cat-harness.jsonld#process/Process_MountSubgraph",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-curie-gbfeuy/cat-harness.jsonld#role/build-pipeline",
+      "inLane": "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-curie-gbfeuy/cat-harness.jsonld#process/Process_MountSubgraph/lane/Lane_MountPipeline",
+      "implementedBy": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-curie-gbfeuy/cat-harness.jsonld#process/Process_MountSubgraph/flow/F_M2"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-curie-gbfeuy/cat-harness.jsonld#process/Process_MountSubgraph/flow/F_M3",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-curie-gbfeuy/cat-harness.jsonld#process/Process_MountSubgraph/flow/F_M4",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-curie-gbfeuy/cat-harness.jsonld#process/Process_MountSubgraph/flow/F_M5"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-curie-gbfeuy/cat-harness.jsonld#directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_MountSubgraph/node/GW_SourceKind"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-curie-gbfeuy/cat-harness.jsonld#process/Process_MountSubgraph/node/Task_UseCheckoutPath",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#ProcessNode",
+      "name": "Use the checkout path in place",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:Task",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-curie-gbfeuy/cat-harness.jsonld#process/Process_MountSubgraph",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-curie-gbfeuy/cat-harness.jsonld#role/build-pipeline",
+      "inLane": "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-curie-gbfeuy/cat-harness.jsonld#process/Process_MountSubgraph/lane/Lane_MountPipeline",
+      "implementedBy": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-curie-gbfeuy/cat-harness.jsonld#skill/directory-conventions"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-curie-gbfeuy/cat-harness.jsonld#process/Process_MountSubgraph/flow/F_M3"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-curie-gbfeuy/cat-harness.jsonld#process/Process_MountSubgraph/flow/F_M6"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-curie-gbfeuy/cat-harness.jsonld#directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_MountSubgraph/node/Task_UseCheckoutPath"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-curie-gbfeuy/cat-harness.jsonld#process/Process_MountSubgraph/node/Task_MountBranchTip",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#ProcessNode",
+      "name": "Mount the branch tip at the declared path",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:Task",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-curie-gbfeuy/cat-harness.jsonld#process/Process_MountSubgraph",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-curie-gbfeuy/cat-harness.jsonld#role/build-pipeline",
+      "inLane": "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-curie-gbfeuy/cat-harness.jsonld#process/Process_MountSubgraph/lane/Lane_MountPipeline",
+      "implementedBy": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-curie-gbfeuy/cat-harness.jsonld#skill/directory-conventions",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-curie-gbfeuy/cat-harness.jsonld#skill/content-context-and-state-graphs"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-curie-gbfeuy/cat-harness.jsonld#process/Process_MountSubgraph/flow/F_M4"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-curie-gbfeuy/cat-harness.jsonld#process/Process_MountSubgraph/flow/F_M7"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-curie-gbfeuy/cat-harness.jsonld#directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_MountSubgraph/node/Task_MountBranchTip"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-curie-gbfeuy/cat-harness.jsonld#process/Process_MountSubgraph/node/Task_RefuseUnknownKind",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#ProcessNode",
+      "name": "Refuse: no flow for this source kind",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:Task",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-curie-gbfeuy/cat-harness.jsonld#process/Process_MountSubgraph",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-curie-gbfeuy/cat-harness.jsonld#role/build-pipeline",
+      "inLane": "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-curie-gbfeuy/cat-harness.jsonld#process/Process_MountSubgraph/lane/Lane_MountPipeline",
+      "implementedBy": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-curie-gbfeuy/cat-harness.jsonld#skill/directory-conventions"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-curie-gbfeuy/cat-harness.jsonld#process/Process_MountSubgraph/flow/F_M5"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-curie-gbfeuy/cat-harness.jsonld#process/Process_MountSubgraph/flow/F_M9"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-curie-gbfeuy/cat-harness.jsonld#directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_MountSubgraph/node/Task_RefuseUnknownKind"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-curie-gbfeuy/cat-harness.jsonld#process/Process_MountSubgraph/node/GW_Join",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#ProcessNode",
+      "name": "GW_Join",
+      "nodeKind": "exclusive",
+      "bpmnType": "bpmn:ExclusiveGateway",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-curie-gbfeuy/cat-harness.jsonld#process/Process_MountSubgraph",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-curie-gbfeuy/cat-harness.jsonld#role/build-pipeline",
+      "inLane": "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-curie-gbfeuy/cat-harness.jsonld#process/Process_MountSubgraph/lane/Lane_MountPipeline",
+      "implementedBy": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-curie-gbfeuy/cat-harness.jsonld#process/Process_MountSubgraph/flow/F_M6",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-curie-gbfeuy/cat-harness.jsonld#process/Process_MountSubgraph/flow/F_M7"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-curie-gbfeuy/cat-harness.jsonld#process/Process_MountSubgraph/flow/F_M8"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-curie-gbfeuy/cat-harness.jsonld#directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_MountSubgraph/node/GW_Join"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-curie-gbfeuy/cat-harness.jsonld#process/Process_MountSubgraph/node/End_Mounted",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#ProcessNode",
+      "name": "Subgraph content at its declared path",
+      "nodeKind": "end",
+      "bpmnType": "bpmn:EndEvent",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-curie-gbfeuy/cat-harness.jsonld#process/Process_MountSubgraph",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-curie-gbfeuy/cat-harness.jsonld#role/build-pipeline",
+      "inLane": "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-curie-gbfeuy/cat-harness.jsonld#process/Process_MountSubgraph/lane/Lane_MountPipeline",
+      "implementedBy": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-curie-gbfeuy/cat-harness.jsonld#process/Process_MountSubgraph/flow/F_M8"
+      ],
+      "outgoing": [],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-curie-gbfeuy/cat-harness.jsonld#directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_MountSubgraph/node/End_Mounted"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-curie-gbfeuy/cat-harness.jsonld#process/Process_MountSubgraph/node/End_Refused",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#ProcessNode",
+      "name": "Refused, with the reason",
+      "nodeKind": "end",
+      "bpmnType": "bpmn:EndEvent",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-curie-gbfeuy/cat-harness.jsonld#process/Process_MountSubgraph",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-curie-gbfeuy/cat-harness.jsonld#role/build-pipeline",
+      "inLane": "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-curie-gbfeuy/cat-harness.jsonld#process/Process_MountSubgraph/lane/Lane_MountPipeline",
+      "implementedBy": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-curie-gbfeuy/cat-harness.jsonld#process/Process_MountSubgraph/flow/F_M9"
+      ],
+      "outgoing": [],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-curie-gbfeuy/cat-harness.jsonld#directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_MountSubgraph/node/End_Refused"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-curie-gbfeuy/cat-harness.jsonld#process/Process_CodeReview",
@@ -41450,6 +41765,64 @@
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#tool/gh-pages"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-curie-gbfeuy/cat-harness.jsonld#tool/subgraph-resolve",
+      "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#Tool",
+      "name": "subgraph-resolve",
+      "title": "Resolve a declared subgraph's content source",
+      "description": "Say where a declared subgraph gets its content — the checkout's own directory, or a declared repository branch (with its keying and its `special-branches.json` row) — after the instance config's `subgraphSources` override by id, and which layer answered. The same `declaredSubgraph` resolver the KG export, the publishers and the mount tool use, so a shell sees the answer they act on.",
+      "install": {
+        "none": true
+      },
+      "invoke": {
+        "shell": "bun run subgraph:resolve"
+      },
+      "io": {
+        "inputs": [
+          {
+            "name": "id",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-curie-gbfeuy/tool-types.schema.json#/$defs/Slug",
+            "description": "A declared directory id. Repeatable; absent with `--all`.",
+            "required": false
+          },
+          {
+            "name": "all",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-curie-gbfeuy/tool-types.schema.json#/$defs/Flag",
+            "description": "Every subgraph the checkout declares.",
+            "required": false,
+            "arg": {
+              "flag": "--all"
+            }
+          },
+          {
+            "name": "json",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-curie-gbfeuy/tool-types.schema.json#/$defs/Flag",
+            "description": "Machine-readable output.",
+            "required": false,
+            "arg": {
+              "flag": "--json"
+            }
+          }
+        ],
+        "outputs": [
+          {
+            "name": "source",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-curie-gbfeuy/tool-types.schema.json#/$defs/Text",
+            "description": "One line per subgraph: its source kind and location, its declarer, and `declaredIn`. Exit 1 when no instance declares the id, 2 when the declaration contradicts itself or names an undeclared branch."
+          }
+        ]
+      },
+      "requirements": {
+        "runtime": [
+          "bun"
+        ],
+        "network": false
+      },
+      "satisfies": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-curie-gbfeuy/cat-harness.jsonld#skill/directory-conventions"
+      ],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#tool/subgraph-resolve"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-curie-gbfeuy/cat-harness.jsonld#tool/subgraph-readmes",
       "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#Tool",
       "name": "subgraph-readmes",
@@ -48856,6 +49229,16 @@
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/sticky-contribution"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-curie-gbfeuy/cat-harness.jsonld#schema/subgraph-source",
+      "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#Schema",
+      "name": "subgraph-source",
+      "title": "subgraph-source",
+      "summary": "WHERE A DECLARED SUBGRAPH GETS ITS CONTENT — one concept, several kinds.",
+      "module": "schemas/subgraph-source.ts",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-curie-gbfeuy/cat-harness.jsonld#directory/schemas",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/subgraph-source"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-curie-gbfeuy/cat-harness.jsonld#schema/substrate-snapshot",
       "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#Schema",
       "name": "substrate-snapshot",
@@ -51023,6 +51406,10 @@
       "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Subgraph",
       "name": "tools",
       "path": "tools/",
+      "contentSource": {
+        "kind": "directory",
+        "declaredIn": "default"
+      },
       "holdsGraph": [
         "https://litlfred.github.io/cat-harness/0.1.0/ns#graphKind/tools"
       ],
@@ -51036,6 +51423,10 @@
       "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Subgraph",
       "name": "external-schemas",
       "path": "external-schemas/",
+      "contentSource": {
+        "kind": "directory",
+        "declaredIn": "default"
+      },
       "holdsGraph": [
         "https://litlfred.github.io/cat-harness/0.1.0/ns#graphKind/external-schema"
       ],
@@ -51049,6 +51440,10 @@
       "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Subgraph",
       "name": "subscriptions",
       "path": "subscriptions/",
+      "contentSource": {
+        "kind": "directory",
+        "declaredIn": "default"
+      },
       "holdsGraph": [
         "https://litlfred.github.io/cat-harness/0.1.0/ns#graphKind/substrate-snapshot"
       ],
@@ -51063,6 +51458,10 @@
       "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Subgraph",
       "name": "code-lists",
       "path": "code-lists/",
+      "contentSource": {
+        "kind": "directory",
+        "declaredIn": "default"
+      },
       "holdsGraph": [
         "https://litlfred.github.io/cat-harness/0.1.0/ns#graphKind/code-list"
       ],
@@ -51076,6 +51475,10 @@
       "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Subgraph",
       "name": "vocab-mappings",
       "path": "vocab-mappings/",
+      "contentSource": {
+        "kind": "directory",
+        "declaredIn": "default"
+      },
       "holdsGraph": [
         "https://litlfred.github.io/cat-harness/0.1.0/ns#graphKind/vocab-mapping"
       ],
@@ -51089,6 +51492,10 @@
       "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Subgraph",
       "name": "schemas",
       "path": "schemas/",
+      "contentSource": {
+        "kind": "directory",
+        "declaredIn": "default"
+      },
       "holdsGraph": [
         "https://litlfred.github.io/bootstrap/0.1.0/ns#graphKind/schemas",
         "https://litlfred.github.io/cat-harness/0.1.0/ns#graphKind/cat-harness"
@@ -51103,6 +51510,10 @@
       "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Subgraph",
       "name": "uml",
       "path": "uml/",
+      "contentSource": {
+        "kind": "directory",
+        "declaredIn": "default"
+      },
       "holdsGraph": [
         "https://litlfred.github.io/cat-harness/0.1.0/ns#graphKind/uml"
       ],
@@ -51116,6 +51527,10 @@
       "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Subgraph",
       "name": "skills",
       "path": "skills/",
+      "contentSource": {
+        "kind": "directory",
+        "declaredIn": "default"
+      },
       "holdsGraph": [
         "https://litlfred.github.io/bootstrap/0.1.0/ns#graphKind/skills"
       ],
@@ -51129,6 +51544,10 @@
       "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Subgraph",
       "name": "scenarios",
       "path": "scenarios/",
+      "contentSource": {
+        "kind": "directory",
+        "declaredIn": "default"
+      },
       "holdsGraph": [
         "https://litlfred.github.io/bootstrap/0.1.0/ns#graphKind/scenarios"
       ],
@@ -51142,6 +51561,10 @@
       "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Subgraph",
       "name": "policies",
       "path": "policies/",
+      "contentSource": {
+        "kind": "directory",
+        "declaredIn": "default"
+      },
       "holdsGraph": [
         "https://litlfred.github.io/cat-harness/0.1.0/ns#graphKind/policies"
       ],
@@ -51155,6 +51578,10 @@
       "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Subgraph",
       "name": "processes",
       "path": "processes/",
+      "contentSource": {
+        "kind": "directory",
+        "declaredIn": "default"
+      },
       "holdsGraph": [
         "https://litlfred.github.io/bootstrap/0.1.0/ns#graphKind/processes"
       ],
@@ -51168,6 +51595,10 @@
       "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Subgraph",
       "name": "methodologies",
       "path": "methodologies/",
+      "contentSource": {
+        "kind": "directory",
+        "declaredIn": "default"
+      },
       "holdsGraph": [
         "https://litlfred.github.io/cat-harness/0.1.0/ns#graphKind/methodology"
       ],
@@ -51181,6 +51612,10 @@
       "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Subgraph",
       "name": "qa",
       "path": "test/results/",
+      "contentSource": {
+        "kind": "directory",
+        "declaredIn": "default"
+      },
       "holdsGraph": [
         "https://litlfred.github.io/cat-harness/0.1.0/ns#graphKind/qa"
       ],
@@ -51194,6 +51629,10 @@
       "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Subgraph",
       "name": "attestations",
       "path": "test/attestations/",
+      "contentSource": {
+        "kind": "directory",
+        "declaredIn": "default"
+      },
       "holdsGraph": [
         "https://litlfred.github.io/cat-harness/0.1.0/ns#graphKind/attestations"
       ],
@@ -51207,6 +51646,10 @@
       "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Subgraph",
       "name": "health",
       "path": "test/health/results/",
+      "contentSource": {
+        "kind": "directory",
+        "declaredIn": "default"
+      },
       "holdsGraph": [
         "https://litlfred.github.io/cat-harness/0.1.0/ns#graphKind/health"
       ],
@@ -51220,6 +51663,10 @@
       "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Subgraph",
       "name": "uploads",
       "path": "uploads/",
+      "contentSource": {
+        "kind": "directory",
+        "declaredIn": "default"
+      },
       "holdsGraph": [
         "https://litlfred.github.io/folio-assistant-core/0.1.0/ns#graphKind/uploads"
       ],
@@ -51233,6 +51680,10 @@
       "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Subgraph",
       "name": "library",
       "path": "library/",
+      "contentSource": {
+        "kind": "directory",
+        "declaredIn": "default"
+      },
       "holdsGraph": [
         "https://litlfred.github.io/folio-assistant-core/0.1.0/ns#graphKind/library"
       ],
@@ -51246,6 +51697,10 @@
       "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Subgraph",
       "name": "translation-sources",
       "path": "translations/",
+      "contentSource": {
+        "kind": "directory",
+        "declaredIn": "default"
+      },
       "holdsGraph": [
         "https://litlfred.github.io/cat-harness/0.1.0/ns#graphKind/translation-sources"
       ],
@@ -51259,6 +51714,10 @@
       "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Subgraph",
       "name": "folio",
       "path": "folio/",
+      "contentSource": {
+        "kind": "directory",
+        "declaredIn": "default"
+      },
       "holdsGraph": [
         "https://litlfred.github.io/folio-assistant-core/0.1.0/ns#graphKind/folio"
       ],
@@ -51272,6 +51731,10 @@
       "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Subgraph",
       "name": "docs",
       "path": "docs/",
+      "contentSource": {
+        "kind": "directory",
+        "declaredIn": "default"
+      },
       "holdsGraph": [
         "https://litlfred.github.io/cat-harness/0.1.0/ns#graphKind/docs"
       ],
@@ -51285,6 +51748,10 @@
       "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Subgraph",
       "name": "swimlane-glossary",
       "path": "glossary/",
+      "contentSource": {
+        "kind": "directory",
+        "declaredIn": "default"
+      },
       "holdsGraph": [
         "https://litlfred.github.io/cat-harness/0.1.0/ns#graphKind/swimlane-glossary"
       ],
@@ -51298,6 +51765,10 @@
       "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Subgraph",
       "name": "cat-harness-scripts",
       "path": "scripts/",
+      "contentSource": {
+        "kind": "directory",
+        "declaredIn": "default"
+      },
       "holdsGraph": [
         "https://litlfred.github.io/cat-harness/0.1.0/ns#graphKind/code"
       ],
@@ -51311,6 +51782,10 @@
       "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Subgraph",
       "name": "cat-harness-src",
       "path": "src/",
+      "contentSource": {
+        "kind": "directory",
+        "declaredIn": "default"
+      },
       "holdsGraph": [
         "https://litlfred.github.io/cat-harness/0.1.0/ns#graphKind/code"
       ],
@@ -51324,6 +51799,10 @@
       "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Subgraph",
       "name": "cat-harness-adapters",
       "path": "adapters/",
+      "contentSource": {
+        "kind": "directory",
+        "declaredIn": "default"
+      },
       "holdsGraph": [
         "https://litlfred.github.io/cat-harness/0.1.0/ns#graphKind/code"
       ],
@@ -51337,6 +51816,10 @@
       "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Subgraph",
       "name": "cat-harness-tests",
       "path": "test/",
+      "contentSource": {
+        "kind": "directory",
+        "declaredIn": "default"
+      },
       "holdsGraph": [
         "https://litlfred.github.io/cat-harness/0.1.0/ns#graphKind/code"
       ],
@@ -51350,6 +51833,10 @@
       "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Subgraph",
       "name": "folio-templates",
       "path": "templates/",
+      "contentSource": {
+        "kind": "directory",
+        "declaredIn": "default"
+      },
       "holdsGraph": [
         "https://litlfred.github.io/cat-harness/0.1.0/ns#graphKind/code"
       ],
@@ -51363,6 +51850,10 @@
       "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Subgraph",
       "name": "cat-harness-deploy",
       "path": "deploy/",
+      "contentSource": {
+        "kind": "directory",
+        "declaredIn": "default"
+      },
       "holdsGraph": [
         "https://litlfred.github.io/cat-harness/0.1.0/ns#graphKind/code"
       ],

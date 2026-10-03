@@ -643,6 +643,49 @@
                   "themeId"
                 ],
                 "additionalProperties": false
+              },
+              "source": {
+                "oneOf": [
+                  {
+                    "type": "object",
+                    "properties": {
+                      "kind": {
+                        "type": "string",
+                        "const": "directory"
+                      }
+                    },
+                    "required": [
+                      "kind"
+                    ],
+                    "additionalProperties": false
+                  },
+                  {
+                    "type": "object",
+                    "properties": {
+                      "kind": {
+                        "type": "string",
+                        "const": "branch"
+                      },
+                      "branch": {
+                        "type": "string",
+                        "pattern": "^(?!-)(?!refs\\/)[A-Za-z0-9._/-]+$"
+                      },
+                      "keyedBy": {
+                        "type": "string",
+                        "enum": [
+                          "commit",
+                          "tip"
+                        ]
+                      }
+                    },
+                    "required": [
+                      "kind",
+                      "branch",
+                      "keyedBy"
+                    ],
+                    "additionalProperties": false
+                  }
+                ]
               }
             },
             "required": [
@@ -1093,8 +1136,8 @@
   "$comment": "Instance graph: https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-curie-gbfeuy/cat-harness.jsonld",
   "staging": {
     "branch": "claude/wonderful-curie-gbfeuy",
-    "sha": "c3be2f05336761c6582ab5ed41336786738a633a",
+    "sha": "2f13a014a74d80648496ebbadf5b1f90dd5109d5",
     "pr": "1766/merge",
-    "run": "37133150165"
+    "run": "37134969349"
   }
 }
