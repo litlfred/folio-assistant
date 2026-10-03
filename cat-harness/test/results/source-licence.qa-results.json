@@ -2,7 +2,7 @@
   "$schema": "qa-results/v1",
   "producer": {
     "script": "cat-harness/scripts/check-source-licence.ts",
-    "script_hash": "ed652ce543cd"
+    "script_hash": "9d75fdfb57b4"
   },
   "subject": {
     "kind": "corpus",
@@ -16,7 +16,7 @@
     },
     "not-recorded": {
       "summary": "No licence recorded at all: nobody has looked yet. Reported, not gated; the field is new.",
-      "count": 43,
+      "count": 44,
       "entries": [
         {
           "entry": "cat-harness/library/agent-skill-best-practices---gemini-cli"
@@ -89,6 +89,9 @@
         },
         {
           "entry": "cat-harness/library/landauer-foltz-laham-1998-intro-lsa"
+        },
+        {
+          "entry": "cat-harness/library/omg-2024-spdx-3-0"
         },
         {
           "entry": "cat-harness/library/qi-hessen-vanderheijden-2023-ca-vs-lsa"
@@ -267,5 +270,5 @@
       ]
     }
   },
-  "total": 64
+  "total": 65
 }

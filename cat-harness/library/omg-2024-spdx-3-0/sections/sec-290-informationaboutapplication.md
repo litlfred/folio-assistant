@@ -1,0 +1,36 @@
+---
+doc_id: omg-2024-spdx-3-0
+doc_title: "System Package Data Exchange (SPDX)"
+section_id: sec-290-informationaboutapplication
+section_title: "informationAboutApplication"
+section_number: null
+pages: 159-160
+source_pdf: omg-2024-spdx-3-0.pdf
+source_sha256: 3041bc8676650ef6
+toc_source: outline
+---
+Summary
+Provides relevant information about the AI software, not including the model description.
+System Package Data Exchange (SPDX©) v3.0
+147
+Description
+A free-form text description of how the AI model is used within the software.
+It should include any relevant information, such as pre-processing steps, third-party APIs, and other pertinent details.
+It can also include:
+• Functionality provided by the AI model within the software application, including: any specific tasks or decisions it is
+designed to perform; any pre-processing steps that are applied to the input data before it is fed into the AI model for inference,
+such as data cleaning, normalization, or feature extraction; and any third-party APIs or services that are used in conjunction
+with the AI model, such as data sources, cloud services, or other AI models.
+• Description of any dependencies or requirements needed to run the AI model within the software application, including:
+specific hardware, software libraries, and operating systems.
+Metadata
+https://spdx.org/rdf/3.0.1/terms/AI/informationAboutApplication
+Name:
+informationAboutApplication
+Nature:
+DataProperty
+Range:
+xsd:string
+Referenced
+• /AI/AIPackage
+15.2.10

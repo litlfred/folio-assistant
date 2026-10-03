@@ -1,0 +1,42 @@
+---
+doc_id: omg-2024-spdx-3-0
+doc_title: "System Package Data Exchange (SPDX)"
+section_id: sec-208-ssvcdecisiontype
+section_title: "SsvcDecisionType"
+section_number: null
+pages: 115-116
+source_pdf: omg-2024-spdx-3-0.pdf
+source_sha256: 3041bc8676650ef6
+toc_source: outline
+---
+Summary
+Specifies the SSVC decision type.
+Description
+SsvcDecisionType specifies the type of decision that’s been made according to the Stakeholder-Specific Vulnerability Categoriza-
+tion (SSVC)86.
+81https://www.first.org/cvss/v3.0/specification-document#Qualitative-Severity-Rating-Scale
+82https://www.first.org/cvss/v4.0/specification-document#Qualitative-Severity-Rating-Scale
+83https://www.first.org/cvss/cvss-v3.0.json
+84https://www.first.org/cvss/cvss-v3.1.json
+85https://www.first.org/cvss/cvss-v4.0.json
+86https://www.cisa.gov/stakeholder-specific-vulnerability-categorization-ssvc
+System Package Data Exchange (SPDX©) v3.0
+103
+Metadata
+https://spdx.org/rdf/3.0.1/terms/Security/SsvcDecisionType
+Name:
+SsvcDecisionType
+Entries
+act The vulnerability requires attention from the organization’s internal, supervisory-level and leadership-level individuals. Nec-
+essary actions include requesting assistance or information about the vulnerability, as well as publishing a notification either
+internally and/or externally. Typically, internal groups would meet to determine the overall response and then execute agreed
+upon actions. CISA recommends remediating Act vulnerabilities as soon as possible.
+attend The vulnerability requires attention from the organization’s internal, supervisory-level individuals. Necessary actions in-
+clude requesting assistance or information about the vulnerability, and may involve publishing a notification either internally
+and/or externally. CISA recommends remediating Attend vulnerabilities sooner than standard update timelines.
+track The vulnerability does not require action at this time. The organization would continue to track the vulnerability and
+reassess it if new information becomes available. CISA recommends remediating Track vulnerabilities within standard
+update timelines.
+trackStar (“Track*” in the SSVC spec) The vulnerability contains specific characteristics that may require closer monitoring for
+changes. CISA recommends remediating Track* vulnerabilities within standard update timelines.
+10.3.4

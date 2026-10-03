@@ -3,13 +3,19 @@ title: "SPDX 3: where it should, could and should not be used"
 kind: proposal
 bean: folio-assistant-sd5v
 summary: >-
-  SPDX 3 belongs at trust boundaries, as a GENERATED export: the release SBOM, the kg-to-portal package manifest, licence ids and the notices built from them, and a published instance's dependencies. It does not belong in QA verdicts, health reports or BPMN task logs. SPDX has no verdict class, it requires a timestamp the QA records deliberately omit, and PROV-O already answers "what happened". Includes the impact on 9 existing processes, 7 missing processes or tasks, 10 prerequisite gaps found along the way, and five owner decisions.
+  SPDX 3 belongs at trust boundaries, as a GENERATED export: the release SBOM, the kg-to-portal package manifest, licence ids and the notices built from them, and a published instance's dependencies. It is not the store for QA verdicts, health reports or BPMN task logs. A release instead POINTS at its QA report (3.0's qualityAssessmentReport), and a certification report may be EXPORTED through 3.1's EvaluationResult once 3.1 is final. Checked against the SPDX 3.0 specification, now ingested with a methodology node. Covers the impact on existing processes, the missing processes and tasks, the prerequisite gaps, and five owner decisions.
 ---
 
 # SPDX 3: where it should, could and should not be used
 {: .no_toc }
 
-**Status:** analysis for review. Bean `sd5v`. **Nothing is built.**
+**Status:** analysis for review. Bean `sd5v`. **Nothing is built.** The
+specification is now held: the owner uploaded SPDX 3.0 (OMG formal/24-11-01)
+mid-analysis, and it is ingested as
+[`library/omg-2024-spdx-3-0`](../../library/omg-2024-spdx-3-0/), with the
+methodology node [`spdx-3`](../../methodologies/spdx-3.md). §2 and §4.1 were
+**corrected against it**. Three claims made from memory did not survive, and
+§2.1 says which.
 
 The owner asked, on 2026-10-03:
 
@@ -42,13 +48,19 @@ repository already holds**, never a second place to author them.
 contradicts the owner's starting guess, so the reasons are in §4 in full. In
 short:
 
-- SPDX 3 has no verdict or test-result class.
-- It requires a creation timestamp that the QA records omit on purpose
-  (bean `y7b3`).
+- SPDX 3.0 has no verdict class. 3.1-RC1 adds one, but in a
+  functional-safety profile, and 3.1 is not final.
+- An SPDX store would be committed derived state with a date on every
+  element: the churn class beans `mcdj`, `oq57` and `3ozg` record.
 - Its elements are immutable, while a QA sidecar holds many reviewers' verdicts
   over time.
 - "What ran and who answered for it" already has an owner-chosen standard:
   **PROV-O** (issue #1180).
+
+What SPDX *should* do for QA is narrower. A release package points at its QA
+report through 3.0's `qualityAssessmentReport` external reference. Once 3.1
+is final, a certification report may be **exported** as
+`Requirement` → `RequirementVerification` → `EvaluationResult` (§4.1).
 
 **Tool definitions are a "could", not a "should".** A Tool has no version, no
 content hash and no licence today. Exporting it would publish a package that
@@ -56,24 +68,41 @@ SPDX cannot identify, so that gap comes first (§6, G4).
 
 ## 2. What SPDX 3 is, and what it is not
 
-Only the properties that decide placement are listed here.
+Only the properties that decide placement are listed here. Section references
+(`sec-NNN`) are files under `library/omg-2024-spdx-3-0/sections/`.
 
 | property | consequence here |
 |---|---|
-| **Model.** Element-based: everything has an absolute-IRI `spdxId` and a `CreationInfo` (`specVersion`, `created`, `createdBy`, `createdUsing`). | Every element needs an **absolute IRI** and a **timestamp**. |
+| **Model.** Element-based: everything has an absolute-IRI `spdxId` and a `CreationInfo` (`specVersion`, `created`, `createdBy` required; `createdUsing` optional). | Every element needs an **absolute IRI** and a **date**. The date may be the source commit's: *"often the date of last change (e.g., a git commit date) … as doing so supports reproducible builds"* (`sec-044`). |
 | **Serialisation.** JSON-LD native, with a published remote `@context`. | It aligns with [`json-ld-serialisation`](../methodologies/json-ld-serialisation.md). The context must be **vendored**, since that methodology forbids network context fetches (`localLoader`). |
 | **Profiles in 3.0.1.** Core, Software, Security, SimpleLicensing, ExpandedLicensing, Dataset, AI, Build, Lite. | §3 maps them. |
 | **Relationships.** A closed vocabulary: `dependsOn`, `generates`, `hasInput`, `hasOutput`, `hasEvidence`, `hasTest`, `testedOn`, `trainedOn`, `usesTool`, `hasDeclaredLicense`, `hasConcludedLicense`, and others. | Edges such as skill `satisfies` have no SPDX term and stay KG edges. |
-| **No verdict class.** A test result can only be an `Annotation` (free text) or a `hasEvidence` / `hasTest` edge pointing at an artefact. | §4.1. |
-| **Licences.** `NOASSERTION` / `NONE` and `LicenseRef-` ids. | This repo's third licence state, `unknown` **with `searched[]`** (`check:source-licence`), has no SPDX equivalent. `NOASSERTION` would discard the search log. |
-| **Versions.** 3.0.1 is stable. 3.1 had its first release candidate on 2026-01-26, adding profiles (Hardware, Safety, Operations, Supply Chain and others). A final 3.1 could not be confirmed on 2026-10-03. | Target 3.0.1 and watch 3.1 through `upstream-pins` (D2). |
+| **No verdict class in 3.0; one in 3.1-RC1.** In 3.0 a result is an `Annotation` (*"An assertion made in relation to one or more elements"*, `sec-039`) or a `hasEvidence` / `hasTest` edge. 3.1-RC1 adds `functionalsafety_EvaluationResult` (pass / fail / inconclusive) over a `RequirementVerification`. 3.0 also has `externalRefType: qualityAssessmentReport`, *"A reference to a quality assessment for a package"* (`sec-123`). | §4.1. |
+| **Licences.** `NoAssertionLicense` / `NoneLicense` and `LicenseRef-` ids. *"A missing hasDeclaredLicense is not the same as a relationship to NoAssertionLicense since the latter is a 'known unknown'"*, and an explanation *"MAY be provided in the comment field for the relationship"* (`sec-210`). | **All three house states map.** Absent is no relationship. `unknown` + `searched[]` is `NoAssertionLicense` with the search log in `comment`. `stated` is a `LicenseExpression`. |
+| **Versions.** The held OMG edition is "3.0", with the 3.0.1 model (Annex A cites `spdx.org/rdf/3.0.1/spdx-model.ttl`). 3.1-RC1 (2026-01-26) adds, per its schema, `functionalsafety_*`, `hardware_*`, `operations_*`, `service_*`, `supplychain_*` classes and Core `Requirement`, `Specification`, `DefinedProcess`, `Action`, `Regulation`. A final 3.1 could not be confirmed on 2026-10-03. | Target 3.0.1 and watch 3.1 through `upstream-pins` (D2). |
+| **Canonical form.** *"a single, consistent, normalized, deterministic, and reproducible form"* (`sec-029`). | The form to hash and sign. Generation is reproducible per commit. |
 
-**Not held.** No SPDX specification is in `cat-harness/library/`. This
-platform adopts a standard **from a held source** (precedent: beans `f1qz` and
-`6306` ingested ODRL, PROV-O and JSON-LD before their methodology nodes). So
-the first task is to ingest the spec (§7, M1). Everything in this table was
-read from memory and the SPDX site, **not from a held copy**, and is
-provisional until M1.
+### 2.1 What the held text corrected
+
+This section was first drafted from memory, then checked against the
+ingested source. Three claims did not survive, and they are recorded here
+rather than silently fixed:
+
+1. *"`NOASSERTION` would discard the search log."* **Wrong.** It is
+   carried in the relationship `comment` (`sec-210`), so licences need no
+   house extension.
+2. *"A required timestamp the QA records omit on purpose."* **Half
+   wrong.** It is required, but it may be the commit date, which makes a
+   generated document reproducible. The objection survives only against
+   *committing* derived SPDX, which D3 already refuses.
+3. *"SPDX has no verdict class."* **True for 3.0, false for 3.1-RC1**
+   (§4.1).
+
+Held sources: `library/omg-2024-spdx-3-0` (3.0, normative).
+`library/strauch-carbno-2025-spdx-3-1-supply-chain` (NIST deck on 3.1, not
+normative, CC-BY-SA-3.0). The 3.1-RC1 JSON
+Schema and context are queued at `uploads/spdx-3-1-rc1-machine-readable/`
+with an intake record.
 
 ## 3. Surface by surface
 
@@ -86,7 +115,7 @@ Rating key:
 |---|---|---|---|---|---|
 | 1 | **Platform release** (`release-folio-assistant.yml`: tgz, GitHub Release, GitHub Packages) | No SBOM. The release is dispatch-only and **unmodelled in BPMN**. | `software_Sbom` (`sbomType: build`) with one `software_Package` per entry in `bun.lock` and `python-deps.ts`, purls `pkg:npm` / `pkg:pypi`, `dependsOn` edges | **S** | This is the use SPDX exists for, and downstream regulation increasingly asks for it. All the inputs exist. **Blocker:** `requirements*.txt` are unpinned, so Python versions are not exact (G5). |
 | 2 | **`kg-to-portal` package** ("files plus a manifest of digests", then sign, then verify) | A house digest manifest | `SpdxDocument` → `software_Package` → `software_File` with `verifiedUsing: Hash(sha256)`; the signature stays separate | **S** | The strongest structural fit in the repo. The manifest of digests **is** an SBOM of files, and the GDHCN / WHO SMART Trust side gains a format it can read without knowing ours. |
-| 3 | **Licence ids** (`library/*/licence.json`, `schemas/source-licence.ts`) | `id` is a free string ("SPDX where one exists"). Values include `W3C-20150513` and the `LicenseRef-W3C-Document-License` / `LicenseRef-OMG-Specification` refs. | `simplelicensing_LicenseExpression`, validated against a **pinned** SPDX License List | **S** | Cheap, and it makes an existing claim checkable. Keep `unknown` + `searched[]` as the house field it is, and emit `NOASSERTION` **only in exports**. |
+| 3 | **Licence ids** (`library/*/licence.json`, `schemas/source-licence.ts`) | `id` is a free string ("SPDX where one exists"). Values include `W3C-20150513` and the `LicenseRef-W3C-Document-License` / `LicenseRef-OMG-Specification` refs; this analysis added the expressions `Community-Spec-1.0 AND CC-BY-3.0` and `CC-BY-SA-3.0`, which nothing validated. | `simplelicensing_LicenseExpression`, validated against a **pinned** SPDX License List | **S** | Cheap, and it makes an existing claim checkable. All three house states map without loss (§2): `unknown` + `searched[]` becomes `NoAssertionLicense` with the log in `comment`, **in exports only**. |
 | 4 | **NOTICE / THIRD-PARTY-NOTICES.md** | Hand-written; THIRD-PARTY-NOTICES has licence texts pasted in | **Generated** from item 3, plus the release SBOM's concluded licences | **S** | Today the same fact is written in two places with nothing tying them. That is exactly what `generalise-the-fix` names a class defect. |
 | 5 | **Path-scoped dual licence** (`LICENSE` Apache-2.0 for code, `LICENSE-CONTENT.md` CC-BY-3.0 for prose, by path) | Prose rule only. One file in the tree has an `SPDX-License-Identifier` header (`grep -rl SPDX-License-Identifier --include=*.ts .`). | **`REUSE.toml`** (path globs to SPDX expression), **not** per-file headers | **S** (with REUSE) | One declaration, no corpus sweep, and machine-readable. Per-file headers across thousands of files would be churn with no single source. |
 | 6 | **Published instance dependencies** (`<instance>.json` `needs[]`, `dependencies.folioAssistant`, `schemas/depends-on.ts` FHIR `{packageId, version, uri}`) | Three spellings of one graph | SPDX `dependsOn` **generated** from whichever one #592 makes authoritative | **S**, after #592 | Without #592 settled this becomes a **fourth** authored copy. The order matters more than the format. |
@@ -95,7 +124,9 @@ Rating key:
 | 9 | **Library sources and reference datasets** (`manifest.jsonld` `meta.source_sha256`; materialisation `fixity`; CODATA; who-iris catalogue; `fhir-artifact-index`) | Three sha256 vocabularies (G2). Origin URL and retrieval date are often prose in `licence.json` `note`. | `dataset_DatasetPackage` (reference datasets) or `software_File` + `Hash` (documents) | **C** | Useful **when a dataset is republished** (e.g. a folio ships a CODATA-derived table). Internally, PROV `wasDerivedFrom` plus Dublin Core already covers it. |
 | 10 | **`folio-tool-run/v1`, `folio-test-run/v1`, `attribution.ts`** (`toolchain`, `sourceRevision`, `inputDigest`) | House run records with full 64-hex fingerprints | `build_Build` **inside a release SBOM only** | **C** | The mapping is close, but it competes with PROV `Activity` (row 13). Use it only where a release consumer wants "how was this built" in SPDX terms. |
 | 11 | **Dependency advisories** (`check:dependency-advisories`: `bun audit`, warn-only; Dependabot) | Advisory output, not recorded | `security_Vulnerability` + VEX (`VexAffected` / `VexNotAffected`…) linked to row 1's packages | **C**, after row 1 | VEX lets a person record "not affected, because…" as data. That is a **decision**, and it needs a lane (M6). |
-| 12 | **QA verdicts**: `qa-results/v1`, `block-qa/v1` (`*.qa.json`), `kg-qa/v1`, `qa-attestations/v1`, script sidecars `qa-script/v1` | House schemas, 12-hex hashes, no timestamps by design, four-state freshness | — | **N** | §4.1. |
+| 12 | **QA verdicts as the store**: `qa-results/v1`, `block-qa/v1` (`*.qa.json`), `kg-qa/v1`, `qa-attestations/v1`, script sidecars `qa-script/v1` | House schemas, 12-hex hashes, no timestamps by design, four-state freshness | — | **N** | §4.1. |
+| 12a | **A QA/test report about a RELEASED package, pointed at** | none | `ExternalRef` `qualityAssessmentReport` on the release `software_Package` (3.0) | **S**, with row 1 | One URL, no mapping: the report stays house-shaped (`sec-123`). |
+| 12b | **A certification report exported** (#1763 `test-report/v1` + certification Decision) | proposed, not built | 3.1: `Requirement` ← `RequirementVerification` (method `test` / `review` / `inspection` / `analysis` / `audit`) ← `functionalsafety_EvaluationResult` (pass / fail / inconclusive + rationale) | **C**, gated on 3.1 final | §4.1. A third shape beside FHIR TestReport, so only when a consumer asks. |
 | 13 | **BPMN task runs** (`schemas/prov.ts`, `src/workflow/prov-record.ts`, `docs/assets/prov/*.prov.jsonld`) | PROV-O / PROV-JSONLD, owner-chosen | — | **N** | §4.2. |
 | 14 | **Health report** (`health-report/v1`) | Judges the repository itself | — | **N** | Its subject is not an artefact. SPDX has nothing to describe. |
 | 15 | **QA witnesses** (`qa-witness/v1`, published at `/assets/qa/`) | A derived projection of sidecars | — | **N** | A derived view of a derived view. If anything, it is an **output** listed in a release SBOM, never evidence. |
@@ -106,41 +137,77 @@ Rating key:
 
 ### 4.1 Test results and QA reports
 
-The owner suggested starting here, so the reasons are given in full. Each one
-is independent of the others.
+The owner suggested starting here, so the reasons are given in full. The
+answer **splits three ways**, and it changed while this was being written:
 
-1. **No class to hold a verdict.** In SPDX 3 a result can be an
-   `Annotation` (`annotationType: review`, with free-text `statement`) or a
-   `hasEvidence` / `hasTest` edge from the artefact to a file. Neither holds
-   `{criterion, result, reviewer, field_hash}`. We would serialise our schema
-   into a string inside theirs, and lose validation on both sides.
-2. **A required timestamp we refuse on purpose.** `CreationInfo.created` is
-   mandatory. `qa-results/v1` has *"No `updated_at`, on purpose (bean
-   `y7b3`)"*, and `kg-qa` sidecars record no time either, because a time makes
-   every re-run a diff. The class of defect is recorded four times already:
-   `mcdj` (one auditor edit rewrote 21 files), `oq57` (`engine_version` made
-   gates unpassable), `3ozg` (`bun test` rewrote 72 sidecars) and `cflw`.
-   SPDX would reintroduce it by specification.
+| | answer |
+|---|---|
+| QA verdicts as the **store** (row 12) | **N**, for the five reasons below |
+| a report about a released package, **pointed at** (row 12a) | **S**, through 3.0's `qualityAssessmentReport` external reference |
+| a certification report **exported** (row 12b) | **C**, once 3.1 is final |
+
+**What changed.** The 3.1-RC1 schema the owner supplied has a verdict class:
+`functionalsafety_EvaluationResult`, with `evaluation` ∈ {`pass`, `fail`,
+`inconclusive`}, a required `evaluationBasedOn` → `RequirementVerification`
+(`verificationMethod` ∈ {analysis, assessment, audit, demonstration,
+inspection, review, test, other}, pre/postconditions, rationale), and a
+required `evaluationRationale`. A Core `Requirement` (`requirementStatement`
+required) sits above it, and the relationship types gain `verifiedBy`,
+`validatedOn`, `evaluatedOn`, `conformsTo` and `tracedToDetail`. The #1763
+test process maps onto that almost one for one:
+
+| #1763 strawperson | 3.1-RC1 |
+|---|---|
+| `requirements[]` (`req:` refs) | `Requirement` |
+| `testCases[]`, assertions = criterion ids | `RequirementVerification` (`verificationMethod: test`; `review` for an agent or human reviewer) |
+| per-case verdict | `functionalsafety_EvaluationResult` |
+| *could not determine* | `inconclusive` |
+| the run's record | `functionalsafety_EvidenceRelationship` (`evidenceCategory: report` / `log`) |
+
+**Why that still does not make SPDX the store:**
+
+1. **It is a release candidate, and the class is in a functional-safety
+   profile.** Using `functionalsafety_EvaluationResult` for a prose-QA
+   criterion borrows the semantics of a safety case (IEC 61508 / ISO 26262
+   territory, per the profile's name). Whether 3.1 final keeps the class there,
+   or moves it to Core as it did `Requirement`, decides whether a non-safety
+   export may use it. Do not build before that.
+2. **A date per element, which is fine for an export and wrong for the
+   store.** `created` may be the commit date (`sec-044`), so a *generated*
+   SPDX document is reproducible. But `qa-results/v1` has *"No `updated_at`,
+   on purpose (bean `y7b3`)"* because committed derived state churns. That is
+   recorded four times already: `mcdj` (one auditor edit rewrote 21 files),
+   `oq57` (`engine_version` made gates unpassable), `3ozg` (`bun test`
+   rewrote 72 sidecars) and `cflw`. An SPDX store would be committed derived
+   state with a date on every element.
 3. **Immutable elements versus a living record.** A `block-qa` sidecar keeps
    many reviewers' verdicts per criterion, and staleness is computed by
    matching `field_hash` against the present source. An SPDX element is
    immutable and carries one `CreationInfo`. Mapping one onto the other means
    either one document per verdict (a file explosion, on the graph #1763
    measured as the churn hot spot) or mutating "immutable" elements.
-4. **Four-state freshness has no home.** `current | stale | absent |
-   unreadable`, and the rule that *could-not-determine is never rendered as
-   clean*, cannot be expressed in SPDX.
+4. **Four-state freshness has only one SPDX term.** `inconclusive`
+   matches *could not determine*. `stale` (a verdict over a source that has
+   since changed) and `absent` (never judged) have none. Absent can be
+   *expressed* by omission, but SPDX itself warns that omission licenses no
+   assumption.
 5. **The test process in #1763 already has a downstream target.**
    [QA and test evidence off `main`](qa-reports-branch-and-test-process-2026-10-01.html)
    §3.2 makes `test-plan/v1` and `test-report/v1` house models, with **FHIR
    TestPlan / TestReport** as the export in the FHIR context. Adding SPDX gives
    a third shape for one report.
 
-**What to do instead**, if an external consumer ever needs test evidence about
-a *release*: an **in-toto attestation** (test-result predicate) whose subject
-is the release SBOM's package digest. That is the supply-chain standard for
-"this artefact passed these tests", and it points **at** SPDX rather than
-living inside it. Nobody needs this today, so it is listed and not proposed.
+**What to do instead, in order:**
+
+1. **Now, with the release SBOM:** a `qualityAssessmentReport` external
+   reference from the release package to its QA rollup or test report, which
+   stays house-shaped. That is SPDX 3.0's own provision for exactly this.
+2. **When 3.1 is final and a consumer asks:** export `test-report/v1` as
+   `Requirement` / `RequirementVerification` / `EvaluationResult`. It sits
+   beside the FHIR TestReport export as a parallel downstream target, never
+   as the model.
+3. **If a consumer wants a signed claim** that an artefact passed: an in-toto
+   attestation whose subject is the SBOM package digest. Listed, not proposed.
 
 ### 4.2 BPMN task runs and the execution log
 
@@ -187,14 +254,16 @@ otherwise surface as a malformed SPDX document.
 | G6 | **Reviewer actors do not resolve**: 0 of 5,896 `block-qa` reviewer entries name a declared actor (recount: the actor-resolution report in `qa-readers-audit`) | `schemas/block-qa.ts` `QaReviewer.actor` | Any export naming who judged anything, in SPDX or PROV |
 | G7 | **No QA artefact links to PROV.** `grep -l 'prov' cat-harness/scripts/qa-*.ts cat-harness/schemas/*qa*.ts` finds none. No Activity `generated` a sidecar. | QA writers | §4.2: the PROV record is what a release SBOM would point at for "how" |
 | G8 | **Bean `mcdj` is marked done, but regressed.** It says *"no kg witness carries `scriptHash` at all now"*. `content/pipeline/qa-witness.ts:597` still writes `scriptHash: auditor?.script_hash`, and 21 `*.kg.json` witnesses carry it (`grep -l '"scriptHash"' cat-harness/test/results/witnesses/**/*.kg.json`). | | Not SPDX. Found in passing, and reported because a completed bean is now false. |
-| G9 | **The SPDX spec is not held** | `cat-harness/library/` | M1, and every claim in §2 |
+| G9 | ~~**The SPDX spec is not held**~~ **Closed 2026-10-03**: 3.0 ingested. 3.1 is held only as a deck and a queued RC schema. | `library/omg-2024-spdx-3-0` | §2 |
+| G11 | **Licence ids written during this analysis are unvalidated**: `Community-Spec-1.0 AND CC-BY-3.0`, `CC-BY-SA-3.0`. The first is an *expression*, which `source-licence.ts` neither parses nor rejects. | the two new `licence.json` files | M4 must accept expressions, not only ids |
+| G12 | **Share-alike enters the corpus.** The NIST deck is CC-BY-SA-3.0, so its library entry is an adaptation under CC-BY-SA-3.0, not under `LICENSE-CONTENT.md`'s CC-BY-3.0. Nothing generates THIRD-PARTY-NOTICES to say so. | `library/strauch-carbno-2025-spdx-3-1-supply-chain` | M5 |
 | G10 | **JSON-LD friction.** (a) SPDX's remote `@context` must be vendored into `localLoader`. (b) A `spdx` prefix fails `check:context-emission` unless emitted or `FORWARD_DECLARED`. (c) `spdxId` must be an absolute IRI, while house `@id` is the file path (`check:node-iris`). | `scripts/publish-verify.ts`, `schemas/jsonld.ts` | Any SPDX output. (c) is settled by minting `spdxId`s under the **release URL**, not the repo path. SPDX documents are not KG nodes. |
 
 ## 7. Missing processes and tasks
 
 | | missing | shape | modelled on |
 |---|---|---|---|
-| M1 | **Ingest SPDX 3.0.1** into `library/`, then write a `spdx-3` methodology node with `applies-when` and what it refuses | `library/methodology-from-source.bpmn`, as-is | beans `f1qz` → `6306` (ODRL, PROV-O, JSON-LD) |
+| M1 | ~~Ingest SPDX 3.0.1 and write a `spdx-3` methodology node~~ **Done in this change** (3.0, OMG edition). Remaining: ingest 3.1 final when published, compare the OMG edition with the LF 3.0.1 web edition, and pin the context file beside the entry, as `w3c-2024-prov-jsonld` pins PROV's | `library/methodology-from-source.bpmn` | beans `f1qz` → `6306` |
 | M2 | **A release process.** `release-folio-assistant.yml` runs today with **no BPMN**. Tasks: resolve the version (`check:version-bump`), build, **generate the SBOM**, **validate it**, attach both, record digests, sign (optional, D3) | new `sdlc/release.bpmn`, lanes CI/CD, Publication manager | `docs-site-publish.bpmn` and `qa-report-signing.bpmn` (as a call activity) |
 | M3 | **An `sbom_export` Tool plus a `sbom-generation` skill.** One generator serves rows 1, 2 and 6. Validation uses the SPDX JSON-LD shape with the vendored context (G10). | `defineTool()` in `cat-harness/tools/`. The skill registers through `skill:register`. | `kg-export` (already emits `prov:wasDerivedFrom` and `dependsOn`) |
 | M4 | **Licence-id validation.** Pin the SPDX License List (`upstream-pins.json` entry: repo `spdx/license-list-data`, `pinnedIn` a vendored JSON), and make `check:source-licence` refuse an id that is neither on the list nor `LicenseRef-`. | a task inside the existing ingest processes, plus a pin watched by `upstream-pin-watch.bpmn` | `check:source-licence` three-state discipline |
@@ -238,12 +307,11 @@ touchpoints: `check:context-emission` and `check:node-iris` (G10), and
 | **D2** | Version | (a) **3.0.1 now, watch 3.1 via `upstream-pins`** · (b) wait for 3.1 final | **(a)** | (a) |
 | **D3** | Where an SBOM lives | (a) **a release asset, plus its digest in a `binary-release`-style record; not committed** · (b) committed on `main` (needs M7) · (c) on the `qa-reports` branch (#1763) | **(a)** | (a) |
 | **D4** | Licences | (a) **validate ids + generate notices + `REUSE.toml`** · (b) validate only · (c) per-file headers | **(a)** | (b), the smallest safe step |
-| **D5** | Test evidence | (a) **house schemas + PROV now; in-toto attestation over the SBOM only when a consumer asks** · (b) SPDX Annotations | **(a)** | (a) |
+| **D5** | Test evidence | (a) **house schemas + PROV are the store; `qualityAssessmentReport` pointer now; 3.1 `EvaluationResult` export once final** · (b) SPDX as the store | **(a)** | (a) |
 
 ## 10. Order of work, if D1 = (a)
 
-1. **M1:** ingest SPDX 3.0.1 and write the methodology node. This retires the
-   provisional status of §2.
+1. ~~**M1:** ingest the spec and write the methodology node.~~ Done.
 2. **M4 + G3:** validate licence ids against the pinned list. This is cheap,
    and it is useful even if everything else stops here.
 3. **M5:** generate NOTICE and THIRD-PARTY-NOTICES, and add `REUSE.toml`.
@@ -257,9 +325,9 @@ touchpoints: `check:context-emission` and `check:node-iris` (G10), and
 
 - **A consumer asking for SPDX-shaped test evidence** would reopen §4.1, and
   even then the answer is more likely in-toto than SPDX.
-- **SPDX 3.1 adding a first-class test or verification-result class** would
-  reopen §4.1 on its merits. The 3.1 RC's new profiles (Safety, Operations)
-  should be read for this once ingested.
+- **SPDX 3.1 final moving `EvaluationResult` out of the functional-safety
+  profile** (as `Requirement` already sits in Core) would promote row 12b
+  from C to S. It would not change row 12.
 - **A folio packaging a model** would reopen §4.3.
 - **The owner choosing to commit derived artefacts on `main` after all** (D3
   b) brings in M7 and the churn classes in §4.1 point 2.
