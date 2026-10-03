@@ -5,7 +5,7 @@ status: in-progress
 type: bug
 priority: normal
 created_at: 2026-10-03T09:11:12Z
-updated_at: 2026-10-03T10:21:55Z
+updated_at: 2026-10-03T09:13:40Z
 parent: folio-assistant-hfag
 ---
 
@@ -93,7 +93,6 @@ GitHub holds at most one pending run per group.
 Raising `MERGE_MAIN_TOKEN`, the `needs-merge-human` label having no remover
 (no `remove-label` step exists anywhere in the workflow), and the 44 % `docs/`
 share of conflicts (bean `34cm`). Each is its own bean.
-
 
 ## Owner ruling, 2026-10-03
 
