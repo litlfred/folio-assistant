@@ -1,0 +1,51 @@
+{
+  "$schema": "folio-slice-sqlite/v1",
+  "slice": "library",
+  "file": "library.sqlite3",
+  "schemaVersion": 2,
+  "sha256": "158bf8c22d4a6e8cda52f5035b8f441db165479d17a4b480cd8cadb24336afe4",
+  "bytes": 2756608,
+  "contentDigest": "ff48d15b9d97b47cbc007cefd9cfb2e66cac5ada07943d2e4e59bf8e4d54fd99",
+  "sqliteVersion": "3.53.0",
+  "pageSize": 4096,
+  "fts5": {
+    "table": "library_fts",
+    "rowsOf": "blocks",
+    "columns": [
+      "title",
+      "text",
+      "entry_title"
+    ],
+    "contentless": true,
+    "detail": "full"
+  },
+  "payloadPath": "payload/sha256/",
+  "payloads": {
+    "mode": "deploy",
+    "count": 66,
+    "bytes": 3848964
+  },
+  "rows": {
+    "entries": 66,
+    "blocks": 3995,
+    "entry_ref": 18
+  },
+  "duplicateIds": [],
+  "findings": [
+    "entries/250906388v1.json is not in the library index — not sliced"
+  ],
+  "overBudget": false,
+  "search": {
+    "noun": "block",
+    "title": "Library — every ingested source, block by block",
+    "placeholder": "e.g. \"guideline development\" or GRADE",
+    "select": "SELECT b.id AS key, CASE WHEN b.title = '' THEN '(' || b.kind || ')' ELSE b.title END AS title, e.title || ' · ' || b.kind || coalesce(' · p. ' || b.page_start, '') AS meta, b.payload_sha256 AS payload, b.id AS part FROM blocks b JOIN entries e ON e.id = b.entry",
+    "alias": "b",
+    "like": "b.title",
+    "body": "library-entry"
+  },
+  "source": {
+    "graph": "library",
+    "path": "cat-harness/docs/assets/library/index.json"
+  }
+}
