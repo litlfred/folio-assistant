@@ -8,7 +8,8 @@ lake-cache/qou-<toolchain> format).
 
 For each git-installed package in `lake-manifest.json`:
 
-  1. Shallow-fetch its orphan branch `cat-lake-cache/<pkg>-<toolchain>` (legacy `lake-cache/…` until renamed)
+  1. Shallow-fetch its orphan branch `cat/folio-assistant-sci/lake-cache/<pkg>-<toolchain>`
+     (legacy `cat-lake-cache/…`, then `lake-cache/…`, until renamed)
      (or `<branch-suffix>` variant when --branch-suffix is given)
   2. git archive extract the .lake/ subtree into a staging dir
   3. Run the regen recipe from `cache-index.json`:
@@ -164,9 +165,11 @@ def regen_from_index(staging_lake: Path, index_path: Path) -> int:
 
 # Family prefixes, declared in cat-harness/scripts/special-branches.json (id
 # `lake-cache`) and checked against this copy by
-# tests/special-branches.test.ts. New name first, then the legacy one, until
-# bean folio-assistant-oycs removes the fallback.
-CACHE_PREFIXES = ("cat-lake-cache/", "lake-cache/")
+# tests/special-branches.test.ts. New name first, then each legacy one,
+# newest first, until bean folio-assistant-oycs removes the fallback. A
+# candidate is always a WHOLE branch name (prefix + key), so `lake-cache/`
+# never matches inside `cat-lake-cache/` or `cat/folio-assistant-sci/lake-cache/`.
+CACHE_PREFIXES = ("cat/folio-assistant-sci/lake-cache/", "cat-lake-cache/", "lake-cache/")
 
 
 def restore_one(pkg: dict, slug: str, suffix: str, force: bool) -> dict:
@@ -221,7 +224,7 @@ def main() -> int:
                                      formatter_class=argparse.RawDescriptionHelpFormatter)
     parser.add_argument("--packages", help="comma-separated list (default: all in manifest)")
     parser.add_argument("--branch-suffix", default="",
-                        help="suffix on cat-lake-cache/<pkg>-<tc>-<suffix> branches")
+                        help="suffix on cat/folio-assistant-sci/lake-cache/<pkg>-<tc>-<suffix> branches")
     parser.add_argument("--force", action="store_true",
                         help="re-extract even if package is already warm")
     args = parser.parse_args()

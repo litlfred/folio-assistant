@@ -104,7 +104,11 @@ const STRIP = { landing: ".side-bar", viewer: ".fa-nav" } as const;
 async function harnessesAtRest(p: Page, which: "landing" | "viewer") {
   return p.evaluate((sel) => {
     const strip = document.querySelector(sel)!.getBoundingClientRect();
-    const sum = [...document.querySelectorAll(sel + " .fa-nav-bottom > .fa-nav-group > summary")].find(
+    // In the footer, or -- on a theme page, once `mountSidebarRail` (ob3m
+    // finding 7) has moved it -- beside Graphs in the one scroller.
+    const sum = [...document.querySelectorAll(
+      sel + " .fa-nav-bottom > .fa-nav-group > summary, " + sel + " .fa-nav-middle > .fa-nav-harness-group > summary",
+    )].find(
       (s) => s.querySelector(".fa-nav-label")?.textContent === "Harnesses",
     ) as HTMLElement | undefined;
     if (!sum) return null;
@@ -125,7 +129,9 @@ async function harnessesAtRest(p: Page, which: "landing" | "viewer") {
 async function visibleHarnessLinks(p: Page, which: "landing" | "viewer"): Promise<number> {
   return p.evaluate((sel) => {
     const strip = document.querySelector(sel)!.getBoundingClientRect();
-    return [...document.querySelectorAll(sel + " .fa-nav-bottom > .fa-nav-group .fa-nav-sub a")].filter((a) => {
+    return [...document.querySelectorAll(
+      sel + " .fa-nav-bottom > .fa-nav-group .fa-nav-sub a, " + sel + " .fa-nav-middle > .fa-nav-harness-group .fa-nav-sub a",
+    )].filter((a) => {
       const r = a.getBoundingClientRect();
       let op = 1;
       for (let n: Element | null = a; n; n = n.parentElement) op *= +getComputedStyle(n).opacity;
