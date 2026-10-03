@@ -148,8 +148,28 @@ jobs:
     # (bean `o8s9`, 2026-10-03): of the last 100 runs, `push`-triggered gave 20
     # success to 21 cancelled, against 14 to 2 for `pull_request_target`. The
     # queued job re-reads main when it starts, so nothing stale lands.
+    # MEASURED INSUFFICIENT, 2026-10-03 (bean `o8s9`). The reasoning above is
+    # right and the implementation was on the wrong side of the relation:
+    # `cancel-in-progress` is read from the INCOMING run's config, not from
+    # the config of the run being cancelled. One group shared by both events
+    # therefore lets a `pull_request_target` run — which correctly evaluates
+    # the expression to `true` — cancel an in-flight `push` run, which the
+    # expression was written to protect. Re-measured after the first fix: 57 %
+    # of `push` runs still cancelled (16 of 28 concluded), against 68 % before
+    # it, and all 31 cancelled runs in the sample were MID-FLIGHT when killed
+    # (median 336 s of work, max 1178 s) rather than queued runs displaced by
+    # a newer one, which would have been harmless.
+    #
+    # So the group is now per EVENT as well as per PR. `pull_request_target`
+    # runs still cancel each other, which is the hazard the comment above
+    # describes; `push` runs still queue among themselves; neither reaches
+    # across. The residual cost is that a push sweep and a PR-target sweep for
+    # one PR may now run at once and both try to push the branch — one loses
+    # with "the branch moved during the run", which the bot already reports
+    # and retries without overwriting anything. A retried push is cheaper than
+    # a discarded resolution, which is what stalls the queue.
     concurrency:
-      group: merge-main-${{ matrix.pr }}
+      group: merge-main-${{ matrix.pr }}-${{ github.event_name }}
       cancel-in-progress: ${{ github.event_name != 'push' }}
     permissions:
       contents: write
