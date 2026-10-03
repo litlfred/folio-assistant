@@ -10,8 +10,8 @@
   },
   "families": {
     "coverage-measured": {
-      "summary": "Every declared kind with its four counts and its state. Not findings: the measurement itself, so the committed record answers \"what audits this kind\" without rerunning anything. The file COUNTS are printed rather than recorded — a census moves on any commit and a gate keyed on it is stale by default; `hasFiles` carries the only thing it decides. 56 of 56 declared kind(s), 219 gate(s), 73 criteria.",
-      "count": 56,
+      "summary": "Every declared kind with its four counts and its state. Not findings: the measurement itself, so the committed record answers \"what audits this kind\" without rerunning anything. The file COUNTS are printed rather than recorded — a census moves on any commit and a gate keyed on it is stale by default; `hasFiles` carries the only thing it decides. 55 of 55 declared kind(s), 216 gate(s), 73 criteria.",
+      "count": 55,
       "entries": [
         {
           "kind": "attestations",
@@ -126,7 +126,6 @@
             "bootstrap-tools/schemas",
             "cat-harness-tools/schemas",
             "cat-harness/schemas",
-            "cat-openapi/schemas",
             "fhir-harness/schemas",
             "folio-assistant-core/schemas",
             "folio-assistant-sci/schemas",
@@ -244,8 +243,6 @@
             "cat-harness/src",
             "cat-harness/templates",
             "cat-harness/test",
-            "cat-openapi/scripts",
-            "fhir-harness/scripts",
             "folio-assistant-core/adapters",
             "folio-assistant-core/scripts",
             "folio-assistant-sci/adapters",
@@ -296,6 +293,7 @@
             "cat-harness/docs",
             "docs",
             "smart-base/docs",
+            "smart-base/findings",
             "smart-immunizations/docs",
             "smart-trust/docs",
             "who-iris/docs",
@@ -335,6 +333,7 @@
             "bun run readme:sync:check",
             "bun run readme:sync:root:check",
             "bun run skills:docs:check",
+            "bun run smart-base:dth-terms:check",
             "bun run subscriptions:viz:check",
             "bun run translated-links:check"
           ],
@@ -384,7 +383,6 @@
           "subjectKinds": [],
           "gates": [
             "bun run check:artifact-index",
-            "bun run p2:refusals:check",
             "bun run smart-base:pages:check",
             "bun run smart-immunizations:pages:check",
             "bun run smart-trust:pages:check"
@@ -578,21 +576,6 @@
           "hasFiles": true
         },
         {
-          "kind": "openapi",
-          "state": "covered",
-          "directories": [
-            "smart-trust/openapi"
-          ],
-          "criteria": [],
-          "subjectKinds": [],
-          "gates": [
-            "bun run smart-trust:openapi:check",
-            "bun run smart-trust:openapi:pages:check"
-          ],
-          "typed": true,
-          "hasFiles": true
-        },
-        {
           "kind": "policies",
           "state": "covered",
           "directories": [
@@ -711,7 +694,6 @@
             "bun run kg:export:check",
             "bun run kg:export:judge",
             "bun run lsi:viz:check",
-            "bun run p2:refusals:check",
             "bun run translation:block-qa:check"
           ],
           "typed": true,
@@ -796,7 +778,6 @@
             "bootstrap/schemas",
             "cat-harness-tools/schemas",
             "cat-harness/schemas",
-            "cat-openapi/schemas",
             "fhir-harness/schemas",
             "folio-assistant-core/schemas",
             "folio-assistant-sci/schemas",
@@ -815,7 +796,6 @@
             "bun run check:node-iris",
             "bun run check:schema-nodes",
             "bun run gen:jsonld:check",
-            "bun run ig-ast:schema:check",
             "bun run kg:export:check",
             "bun run kg:export:judge",
             "bun run kg:schema:check"
@@ -1301,10 +1281,10 @@
       "entries": []
     },
     "kinds-unaudited": {
-      "summary": "A declared kind whose directories hold files that NOTHING reaches — no kg-audit criterion, no gate declaring @covers, and no declared validator. All 219 gate(s) have declared, so this is a verdict rather than an upper bound (bean `3srh`).",
+      "summary": "A declared kind whose directories hold files that NOTHING reaches — no kg-audit criterion, no gate declaring @covers, and no declared validator. All 216 gate(s) have declared, so this is a verdict rather than an upper bound (bean `3srh`).",
       "count": 0,
       "entries": []
     }
   },
-  "total": 74
+  "total": 73
 }

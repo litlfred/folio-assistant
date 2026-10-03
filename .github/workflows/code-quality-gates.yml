@@ -1879,6 +1879,10 @@ jobs:
           # smart-kg L1 documents kept beside library entries (bean 8pzh):
           # stale the moment a section text or structure.json they read changes.
           bun run smart-base:smart-kg-l1:check
+          # The DTH terminology findings page (#1984): stale the moment the
+          # candidate list or the authored alternatives change, and red when a
+          # quote no longer matches the section it cites.
+          bun run smart-base:dth-terms:check
           bun run document-kinds:viz:check
           # P2's refusal record (bean ntyj): every published XML/Turtle
           # representation this pipeline does not render, per IG, generated
