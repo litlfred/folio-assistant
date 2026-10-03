@@ -948,6 +948,19 @@ export function readMarker(repoRoot: string, id: string): MountMarker | undefine
   return m;
 }
 
+/** The ids mounted in THIS worktree, one marker each — what `state:push` sends, declared or not. */
+export function mountedIds(repoRoot: string = gitTopLevel()): string[] {
+  const dir = dirname(markerPath(repoRoot, "x"));
+  if (!existsSync(dir)) return [];
+  return readdirSync(dir).filter((n) => n.endsWith(".json")).map((n) => n.slice(0, -".json".length)).sort();
+}
+
+/** What a push of `id` would send now; `undefined` when `id` is not mounted here. */
+export function mountChanges(id: string, repoRoot: string = gitTopLevel()): Change[] | undefined {
+  const m = readMarker(repoRoot, id);
+  return m ? localChanges(m, repoRoot) : undefined;
+}
+
 function writeMarker(repoRoot: string, m: MountMarker): void {
   const p = markerPath(repoRoot, m.id);
   mkdirSync(dirname(p), { recursive: true });
