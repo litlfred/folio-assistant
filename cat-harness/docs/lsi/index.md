@@ -123,11 +123,11 @@ Each dimension is a **contrast** between two poles, shown by their highest-loadi
 
 | dim | σ | one pole | the other pole |
 |---|---|---|---|
-| 1 | 45.28 | kind, instance, harness, directory, page, graph, session, branch | *(none)* |
+| 1 | 45.29 | kind, instance, harness, directory, page, graph, session, branch | *(none)* |
 | 2 | 21.73 | watcher, sibling, queue, prs, slot, backlog, commits, block | harness, instance, declaration, node, directory, directories, subgraph, asset |
 | 3 | 18.05 | slot, chapter, block, edges, formal, project, proof, watcher | session, beans, page, epic, goals, branch, window, store |
 | 4 | 17.12 | page, block, text, tile, chapter, blocks, manifest, avatar | sibling, ledger, session, sessions, subdirectory, subgraph, plan, coordination |
-| 5 | 15.52 | tile, glass, avatar, card, board, theme, sticky, tiles | rung, archive, sniff, archived, ingest, zip, pdf, arxiv |
+| 5 | 15.51 | tile, glass, avatar, card, board, theme, sticky, tiles | rung, archive, sniff, archived, ingest, zip, pdf, arxiv |
 | 6 | 15.13 | lane, actor, role, requirements, task, analysis, process, edge | queue, sha, backlog, bytes, withheld, slide, library, rung |
 | 7 | 14.72 | preview, staging, translation, url, locale, pages, translated, language | tile, glass, avatar, card, slot, sticky, fit, referee |
 | 8 | 14.53 | edges, forward, edge, backward, cross-chapter, logical, energy, storytelling | actor, lane, role, task, requirement, user, login, backlog |
