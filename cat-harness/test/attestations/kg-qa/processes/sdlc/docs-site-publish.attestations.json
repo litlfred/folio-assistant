@@ -1,0 +1,19 @@
+{
+  "$schema": "qa-attestations/v1",
+  "family": "kg-qa",
+  "subject": {
+    "kind": "process",
+    "id": "Process_DocsSite",
+    "path": "processes/sdlc/docs-site-publish.bpmn"
+  },
+  "pair_attestations": [
+    {
+      "kind": "implements",
+      "prose": "cat-harness/processes/sdlc/docs-site-publish.bpmn",
+      "code": ".github/workflows/docs-site.yml",
+      "prose_hash": "38e301e4c11e",
+      "code_hash": "aaca0b948ae6",
+      "by": "baseline"
+    }
+  ]
+}

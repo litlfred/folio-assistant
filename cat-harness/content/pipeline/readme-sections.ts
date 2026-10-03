@@ -73,6 +73,7 @@ import {
   readDeclaration,
   workPlanGraphsIn,
 } from "../../schemas/cat-harness";
+import { generatedBanner } from "../../../bootstrap-tools/scripts/generated-by.ts";
 import { filesSection, processesSection, rolesSection } from "../../../bootstrap-tools/scripts/readme-graph-sections.ts";
 
 // ── Section contract ────────────────────────────────────────────────────────
@@ -933,7 +934,16 @@ export function syncSections(
       skipped.push(section.marker);
       continue;
     }
-    const injected = injectSection(content, out.markdown, section.marker);
+    // A section bootstrap-tools owns (`kg:processes`, `kg:files`, `kg:roles`)
+    // says what generated it, exactly as bootstrap-tools' own writer does —
+    // two writers of one region that disagree on its first line make each
+    // other's `--check` red. Its `from` is what marks it as the tools'.
+    const from = (section as { from?: unknown }).from;
+    const markdown =
+      typeof from === "string"
+        ? `${generatedBanner("scripts/readme-sections.ts", `${from} (section \`${section.marker}\`)`, "edit outside the markers, or change what it is generated from", "section")}\n\n${out.markdown}`
+        : out.markdown;
+    const injected = injectSection(content, markdown, section.marker);
     content = injected.content;
     changed = changed || injected.changed;
     written.push(section.marker);

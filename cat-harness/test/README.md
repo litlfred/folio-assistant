@@ -73,6 +73,7 @@ Part of [C@T Harness](../README.md) 0.1.0, declared as `cat-harness-tests`, hold
 | [`todo-page.e2e.ts`](todo-page.e2e.ts) | a file |  |
 | [`todos-page-board.e2e.ts`](todos-page-board.e2e.ts) | a file |  |
 | [`translation-badges.e2e.ts`](translation-badges.e2e.ts) | a file |  |
+| [`attestations/`](attestations/README.md) | 19 files | |
 | [`health/`](health/) | 8 files | |
 | [`results/`](results/README.md) | 978 files | |
 | [`support/`](support/) | 3 files | |

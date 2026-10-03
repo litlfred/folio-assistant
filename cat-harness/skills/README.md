@@ -11,18 +11,18 @@ Part of [C@T Harness](../README.md) 0.1.0, declared as `skills`, holding `skills
 | file | what it is | used by |
 |---|---|---|
 | [`skills.json`](skills.json) | data |  |
-| [`authoring/`](authoring/) | 42 files | |
-| [`conduct/`](conduct/) | 18 files | |
+| [`authoring/`](authoring/) | How content is written, reviewed and validated: the content-type adapters, the content lifecycle, editorial and voice review, and domain authoring (math, WHO SMART guidelines). | |
+| [`conduct/`](conduct/) | How an agent behaves in the harness: interaction, confirmation, memory, security, and what it may and may not do on its own. | |
 | [`conventions/`](conventions/) | 2 files | |
 | [`folio-core/`](folio-core/) | 6 files | |
 | [`framework/`](framework/) | 1 file | |
-| [`kg/`](kg/) | 35 files | |
-| [`library/`](library/) | 30 files | |
+| [`kg/`](kg/) | How the graph is declared, placed, read, restructured, exported and audited. | |
+| [`library/`](library/) | How sources are acquired, ingested, archived, catalogued and described. | |
 | [`permissions/`](permissions/) | 1 file | |
-| [`process/`](process/) | 24 files | |
+| [`process/`](process/) | How work is modelled and run: BPMN and DMN, roles and authorization, RACI, methodologies, and the workflow engine's state. | |
 | [`requirements/`](requirements/) | 7 files | |
-| [`sdlc/`](sdlc/) | 69 files | |
+| [`sdlc/`](sdlc/) | How work is planned, claimed, reviewed, merged, released and coordinated: the work plan, issues and PRs, CI and gates, requirements (CRDM, spec-kit), and multi-session coordination. | |
 | [`skill-definitions/`](skill-definitions/) | 2 files | |
-| [`ui/`](ui/) | 28 files | |
+| [`ui/`](ui/) | How the corpus is rendered, published and presented: the docs site, viewers, boards, themes, and their QC. | |
 | [`voices/`](voices/README.md) | 7 files | |
 <!-- kg:subgraph:end -->
