@@ -291,7 +291,7 @@ function navbarRow(
     title?: string;
     navbarIcons?: string[];
     href?: string;
-    hrefKind?: "folio" | "viewer" | "handled";
+    hrefKind?: "folio" | "section" | "viewer" | "handled";
     visualisations?: { kind: string; label?: string; sameAs?: string; within?: string; path?: string | null; note?: string; stagingOnly?: true }[];
   }[],
   self: string | undefined,
@@ -421,6 +421,7 @@ function foldersOf(
  * (`hrefKind: "folio"`) at a path of its own. Two kinds of href are not a
  * scope and are left out, each for a reason a reader could check:
  *
+ * - `section` — an anchor on the landing page (bean `ob3m` 6), not a root.
  * - `viewer` / `handled` — the href is a page some OTHER thing publishes
  *   (`/processes/` is bootstrap's tile and the whole site's process viewer),
  *   so "every page under it belongs to this instance" would be false.
@@ -444,7 +445,7 @@ function railScopes(
     name: string;
     title?: string;
     href?: string;
-    hrefKind?: "folio" | "viewer" | "handled";
+    hrefKind?: "folio" | "section" | "viewer" | "handled";
     visualisations?: { kind: string; label?: string; sameAs?: string; within?: string; path?: string | null; note?: string; stagingOnly?: true }[];
   }[],
 ): RailScope[] {
