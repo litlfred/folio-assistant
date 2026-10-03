@@ -6874,6 +6874,146 @@
       "skos:note": "candidate"
     },
     {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-bpmn-activities/process_slicesqlitepublish.a_check",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Gate every slice: slice:sqlite:check"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "For every slice: build twice and require one sha256; read the row digest back from the file and require it to equal the digest computed from the source without SQLite; run an FTS5 phrase query for a known row; and audit the payloads with `auditPayloadTree` (deploy payloads as written, the kg slice's pointers against the committed payload tree). A slice whose rows do not match its source fails; it never passes as whole."
+        }
+      ],
+      "skos:notation": "A_Check",
+      "dcterms:source": "cat-harness/processes/kg/slice-sqlite-publish.bpmn#A_Check",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-bpmn-activities/process_slicesqlitepublish.a_define",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Write the slice definition"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Add one `SliceDef` to the builder's slice table: the DDL (one table per node type, edge tables, one CONTENTLESS full-detail FTS5), the order each table's rows go in, the `load` that turns the source into rows, where the payloads live (written at deploy, or already published), and the `search` block the generic page reads. Choose the heavy fields by `kg-export` §\"What is heavy\": a heavy field is a `payload_sha256` pointer, never a stored column. Never copy the builder."
+        }
+      ],
+      "skos:notation": "A_Define",
+      "dcterms:source": "cat-harness/processes/kg/slice-sqlite-publish.bpmn#A_Define",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-bpmn-activities/process_slicesqlitepublish.a_deploy",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Build each slice into _site at deploy"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "`gen-slice-sqlite.ts --out ./_site/assets/slices --payload-out ./_site/payload/sha256 --slice <name>`, once per slice, from the tree being published: the file, its manifest, the slice index, and the deploy payloads beside the committed KG payloads. Never into the committed `docs/payload/`, whose orphan audit admits KG nodes only."
+        }
+      ],
+      "skos:notation": "A_Deploy",
+      "dcterms:source": "cat-harness/processes/kg/slice-sqlite-publish.bpmn#A_Deploy",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-bpmn-activities/process_slicesqlitepublish.a_measure",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Build it locally and measure the file"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Run `bun run slice:sqlite -- --slice <name> --out <scratch>` and read the manifest: `bytes`, the row counts, the payload count and bytes, `overBudget`, `duplicateIds` and `findings`. Record the measurement on the bean with its provenance (the command and the date), beside the size of the source it replaces."
+        }
+      ],
+      "skos:notation": "A_Measure",
+      "dcterms:source": "cat-harness/processes/kg/slice-sqlite-publish.bpmn#A_Measure",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-bpmn-activities/process_slicesqlitepublish.a_report",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Report the measurement; ship nothing"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Write the measurement and what was tried onto the bean, and ask the owner whether the slice should ship at that size, be cut further, or not exist. Nothing is wired: no manifest is published, no gate added, no deploy line written."
+        }
+      ],
+      "skos:notation": "A_Report",
+      "dcterms:source": "cat-harness/processes/kg/slice-sqlite-publish.bpmn#A_Report",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-bpmn-activities/process_slicesqlitepublish.a_verify",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Search the published slice in a browser"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Open `slices/search.html?slice=<name>` on the deployed site, run a phrase search for a known row, open it so its payload is fetched, and look at the result; send the screenshot rather than a description of it. Report the mode the page says it used (OPFS or in memory), never an assumed one."
+        }
+      ],
+      "skos:notation": "A_Verify",
+      "dcterms:source": "cat-harness/processes/kg/slice-sqlite-publish.bpmn#A_Verify",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-bpmn-activities/process_slicesqlitepublish.a_wire",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Wire it: gate, deploy line, search, tests"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Give the slice everything a slice owes: its manifest (written by the builder from the definition), its `--check` (covered by `slice:sqlite:check`), one deploy line in `docs-site.yml` and in `feature-staging.yml`, its search (the generic page needs no code, only the definition's `search` block), a unit test over a fixture and over the real source, and a search in `slice-sqlite.e2e.ts`."
+        }
+      ],
+      "skos:notation": "A_Wire",
+      "dcterms:source": "cat-harness/processes/kg/slice-sqlite-publish.bpmn#A_Wire",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-bpmn-activities/process_stalledagenttriage.a_collect",
       "@type": "skos:Concept",
       "skos:inScheme": {

@@ -118,14 +118,14 @@ Each dimension is a **contrast** between two poles, shown by their highest-loadi
 
 | dim | σ | one pole | the other pole |
 |---|---|---|---|
-| 1 | 45.42 | instance, harness, graph, kind, directory, page, session, block | *(none)* |
-| 2 | 21.77 | watcher, sibling, queue, prs, commits, backlog, slot, block | harness, instance, declaration, node, iri, directories, directory, subgraph |
-| 3 | 18.08 | slot, chapter, block, edges, formal, project, proof, watcher | session, push, window, beans, branch, minutes, epic, goals |
-| 4 | 16.90 | page, tile, text, block, blocks, avatar, manifest, chapter | sibling, subdirectory, ledger, plan, sessions, session, actor, relocation |
-| 5 | 15.51 | tile, glass, board, avatar, card, theme, sticky, tiles | rung, archive, pdf, sniff, archived, ingest, zip, arxiv |
-| 6 | 15.03 | queue, withheld, rung, backlog, tile, glass, arm, avatar | preview, feature, lane, requirements, github, analysis, edge, impact |
-| 7 | 14.96 | preview, staging, url, sha, pages, deploy, previews, main | actor, role, lane, task, process, judgement, answer, lanes |
-| 8 | 14.50 | edges, forward, edge, backward, cross-chapter, logical, energy, storytelling | actor, lane, role, requirements, feedback, sign-off, requirement, task |
+| 1 | 45.61 | instance, harness, graph, kind, directory, page, session, block | *(none)* |
+| 2 | 21.82 | watcher, sibling, queue, prs, commits, backlog, slot, coordination | harness, instance, declaration, iri, node, subgraph, directories, directory |
+| 3 | 18.10 | chapter, slot, block, edges, formal, project, proof, watcher | session, window, push, beans, branch, minutes, epic, goals |
+| 4 | 16.94 | page, tile, text, block, manifest, blocks, pdf, avatar | sibling, subdirectory, ledger, plan, actor, sessions, session, relocation |
+| 5 | 15.61 | tile, glass, avatar, board, card, sticky, theme, tiles | slice, export, rung, payloads, archive, heavy, processor, payload |
+| 6 | 15.18 | preview, deploy, payload, slice, iri, staging, payloads, build | rung, licence, archive, archived, judgement, ingest, zip, sniff |
+| 7 | 14.99 | lane, actor, role, requirements, task, analysis, process, edge | sha, queue, backlog, bytes, slide, arm, rung, idle |
+| 8 | 14.57 | locale, translation, language, translated, french, staging, badge, translations | slice, tile, glass, heavy, payloads, iri, subgraph, avatar |
 
 **Findings** — 0 narrow dimension(s), 0 near-duplicate pair(s).
 

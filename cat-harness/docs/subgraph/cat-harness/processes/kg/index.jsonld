@@ -731,6 +731,138 @@
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_KgToPortal/node/Start_Graph",
       "@type": "bootstrap:ProcessNode",
       "name": "A graph exists, and a portal needs it"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_SliceSqlitePublish",
+      "@type": "bootstrap:Process",
+      "name": "Build and publish a per-slice SQLite file"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_SliceSqlitePublish/flow/Flow_0",
+      "@type": "bootstrap:SequenceFlow"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_SliceSqlitePublish/flow/Flow_1",
+      "@type": "bootstrap:SequenceFlow"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_SliceSqlitePublish/flow/Flow_10",
+      "@type": "bootstrap:SequenceFlow"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_SliceSqlitePublish/flow/Flow_11",
+      "@type": "bootstrap:SequenceFlow"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_SliceSqlitePublish/flow/Flow_2",
+      "@type": "bootstrap:SequenceFlow"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_SliceSqlitePublish/flow/Flow_3",
+      "@type": "bootstrap:SequenceFlow",
+      "name": "yes — under"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_SliceSqlitePublish/flow/Flow_4",
+      "@type": "bootstrap:SequenceFlow",
+      "name": "no — over"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_SliceSqlitePublish/flow/Flow_5",
+      "@type": "bootstrap:SequenceFlow"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_SliceSqlitePublish/flow/Flow_6",
+      "@type": "bootstrap:SequenceFlow"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_SliceSqlitePublish/flow/Flow_7",
+      "@type": "bootstrap:SequenceFlow"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_SliceSqlitePublish/flow/Flow_8",
+      "@type": "bootstrap:SequenceFlow",
+      "name": "yes — green"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_SliceSqlitePublish/flow/Flow_9",
+      "@type": "bootstrap:SequenceFlow",
+      "name": "no — red"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_SliceSqlitePublish/lane/Lane_Author",
+      "@type": "cat-harness:Lane",
+      "name": "Platform authoring agent"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_SliceSqlitePublish/lane/Lane_Ci",
+      "@type": "cat-harness:Lane",
+      "name": "CI/CD Pipeline"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_SliceSqlitePublish/node/A_Check",
+      "@type": "bootstrap:ProcessNode",
+      "name": "Gate every slice: slice:sqlite:check"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_SliceSqlitePublish/node/A_Define",
+      "@type": "bootstrap:ProcessNode",
+      "name": "Write the slice definition"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_SliceSqlitePublish/node/A_Deploy",
+      "@type": "bootstrap:ProcessNode",
+      "name": "Build each slice into _site at deploy"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_SliceSqlitePublish/node/A_Measure",
+      "@type": "bootstrap:ProcessNode",
+      "name": "Build it locally and measure the file"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_SliceSqlitePublish/node/A_Report",
+      "@type": "bootstrap:ProcessNode",
+      "name": "Report the measurement; ship nothing"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_SliceSqlitePublish/node/A_Verify",
+      "@type": "bootstrap:ProcessNode",
+      "name": "Search the published slice in a browser"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_SliceSqlitePublish/node/A_Wire",
+      "@type": "bootstrap:ProcessNode",
+      "name": "Wire it: gate, deploy line, search, tests"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_SliceSqlitePublish/node/End_Red",
+      "@type": "bootstrap:ProcessNode",
+      "name": "Job RED"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_SliceSqlitePublish/node/End_Shipped",
+      "@type": "bootstrap:ProcessNode",
+      "name": "Slice searchable on the site"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_SliceSqlitePublish/node/End_Stopped",
+      "@type": "bootstrap:ProcessNode",
+      "name": "Stopped, with its measurement"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_SliceSqlitePublish/node/GW_Budget",
+      "@type": "bootstrap:ProcessNode",
+      "name": "Under the ~5 MB budget?"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_SliceSqlitePublish/node/GW_Green",
+      "@type": "bootstrap:ProcessNode",
+      "name": "Every slice green?"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_SliceSqlitePublish/node/Start_Need",
+      "@type": "bootstrap:ProcessNode",
+      "name": "A corpus needs client-side search"
     }
   ],
   "hasSubgraph": [

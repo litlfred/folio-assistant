@@ -678,16 +678,55 @@ B-tree pages on demand. This is the **skeleton** of `f233` in a second
 encoding. It never replaces the JSON-LD files above; it sits beside them for
 the consumer that has to search.
 
+**One builder, one definition per slice.** `scripts/gen-slice-sqlite.ts` is the
+`slice-sqlite` Tool; its procedure is the `slice-sqlite-publish` process. Each
+slice is one `SliceDef` in its `SLICES` table: the DDL, each stored table's
+columns and row order, the one FTS5 index and the rows it covers, where the
+payloads live, the `search` block the page reads, and a `load` that turns the
+source into rows. The engine (build, `VACUUM INTO`, digest, manifest,
+`--check`) names no slice. Adding a slice is adding a definition, **never a
+copy of the builder**.
+
+### The four pilots, measured
+
+Measured 2026-10-03 in this checkout (`bun run slice:sqlite -- --out <scratch>`;
+browser figures from `slice-sqlite.e2e.ts` in Chromium on loopback, first open
+including download and sha256 verification):
+
+| slice | source | file | source as published | rows | payloads | build | first open |
+|---|---|---|---|---|---|---|---|
+| `beans` | `beans/defs/` | 2.83 MB | 4.82 MB of bean files | 723 beans, 84 edges | 723 bean files, at deploy | 0.26 s | ~190 ms |
+| `todos` | `assets/todos/index.json` | 0.07 MB | 18 KB of JSON | 3 todos, 12 relations | 3 todo files, at deploy | 0.22 s | ~110 ms |
+| `library` | `assets/library/index.json` + `entries/<id>.json` | 2.48 MB | 3.59 MB of JSON | 64 entries, 3,557 blocks | 64 entry files, at deploy | 0.23 s | ~165 ms |
+| `kg` | the whole-repo KG export | 3.40 MB | 3.03 MB of JSON-LD | 3,121 nodes, 12,835 edges | 303, already committed | 4.8 s | ~180 ms |
+
+**All four are under the ~5 MB budget**, so all four shipped. The whole-repo
+slice is the **no-body variant**: nodes, edges, and an FTS5 over names,
+titles, summaries and descriptions, with bodies as payload pointers. It is the
+one slice larger than its JSON source, because it adds a full-text index the
+JSON does not have; it stays under budget because it stores IRIs as fragments
+of the document (`skill/todo-manager`, with `<doc>#` in `meta.base`). The
+budget is `SIZE_BUDGET_BYTES`, **reported** in the manifest as `overBudget` and
+not gated: the beans slice grows every session, and a gate would turn every
+open PR red on the day it crossed the line, for a change nobody made. Over
+budget means stop and report (the process's budget gateway), not ship.
+
 ### What a slice file holds
 
 - **One table per node type, one row per node.** Columns are the fields a
   search filters or sorts on. Each has a B-tree index where a query needs one.
   A JSON-valued field stays a JSON column and is read through JSON1
   (`json_each`), rather than becoming another stored table.
-- **One edge table per relation**, with a `declared_on` column saying which
-  side declared each edge. The two directions are **views** over that one
-  table, never two stored tables, because two tables for one relation are two
-  answers that can disagree.
+- **One stored table per relation, never two.** When a relation can be
+  declared from either side, as a bean's `blocking:` and `blocked_by:` can, the
+  table has a `declared_on` column saying which side declared each edge, and
+  the two directions are **views** over it. Two tables for one relation are two
+  answers that can disagree. When a relation is declared on one side only, a
+  `declared_on` column could hold one value, so it is left out (`todos`,
+  `library`). When the relations are many and share one shape, they share ONE
+  table keyed by `rel`: the `kg` slice's 36 `@id`-typed terms are rows of
+  `edges (src, rel, dst)`, with `incoming` and `dangling` as views, because 36
+  tables of one shape would be 36 places to change it.
 - **An FTS5 index over the searchable text.** It is CONTENTLESS
   (`content=''`), so it indexes text without storing it. It keeps **full
   detail**, because positions are what make a phrase query work. Both the
@@ -697,7 +736,14 @@ the consumer that has to search.
   payload at `<BASE_URL>/payload/sha256/<hex>` (§"Payloads"). The client fetches
   the payload when a result is opened. Measured on beans, the same 717 rows
   take 7.85 MB with the bodies stored and 2.82 MB without them; the bodies were
-  4.58 MB of the larger file.
+  4.58 MB of the larger file. **What the payload is, is a per-slice decision**:
+  a bean's or a todo's source file verbatim; for the library, the PUBLISHED
+  `entries/<id>.json`, one payload per entry that every one of its blocks
+  points at, never the section files under `library/`, because a withheld
+  entry (bean `cw35`) publishes no verbatim text and the published entry is
+  what already applied that rule; for `kg`, the KG's own committed payloads,
+  from the same `planPayloads` call the subgraph files use. A row with nothing
+  heavy has a `NULL` pointer, never an invented one.
 - **A `meta` table and `PRAGMA user_version`** carry the schema version. No
   timestamp and no commit go in the file.
 
@@ -709,8 +755,18 @@ the consumer that has to search.
 - `contentDigest`, a sha256 over the canonical row dump;
 - the row count of each table;
 - `schemaVersion`, `sqliteVersion` and `pageSize`;
-- `payloadPath`;
-- any `duplicateIds` the source holds.
+- `fts5`: the index's table, the table whose rows it covers, and its columns;
+- `payloadPath`, and `payloads`: whether they are written at deploy or
+  already published, how many, how many bytes;
+- any `duplicateIds` the source holds, and any other source `findings` in
+  words (a todo with no source file, an entry file the index does not list),
+  so a gap is reported rather than silently dropped;
+- `overBudget`;
+- `search`: the query, the alias, the column a typed query degrades to, and
+  what a payload is, which the one search page reads (§"The search page").
+
+`assets/slices/index.json` (`folio-slice-index/v1`) lists every slice built
+into a directory.
 
 There are two digests because there are two questions. `sha256` asks whether
 these are the bytes that were promised; it is what the client verifies a
@@ -722,33 +778,45 @@ file's bytes. The header records the writing library's version at offset 96.
 
 Rows go in sorted by key, the page size is fixed, and the published file is
 `VACUUM INTO` a fresh path, so no free page or insertion history leaks in. The
-gate builds twice and requires one sha256. Measured on beans: two separate
-processes gave one sha256 on 2026-10-03, and the gate re-proves it on every run.
+gate builds twice and requires one sha256. Measured 2026-10-03: two separate
+processes gave one sha256 for each of the four slices, and the gate re-proves
+it on every run.
 
-### Built at deploy, not committed — when the source moves every session
+### Built at deploy, not committed — when the source moves on most merges
 
 A slice of a corpus that every session writes, which `beans/` is, is **not
 committed**. A committed binary would be stale against every merge ref, so a
 content gate would be red on every open PR. It would also grow the clone on
 every edit. This is the same reasoning that checks `assets/beans/index.json`
-only for existence. The deploy builds the slice from the tree it publishes,
-straight into `_site/assets/slices/`, and writes the slice's payloads into
+only for existence. The deploy builds each slice from the tree it publishes,
+one line per slice in `docs-site.yml` and `feature-staging.yml`, straight into
+`_site/assets/slices/`, and writes the deploy payloads into
 `_site/payload/sha256/`.
 
-Those payloads never go into the committed `docs/payload/`. Its orphan audit
-admits KG nodes only, and beans are not KG nodes (§"Adding a node type").
+**The other three are built at deploy too**, although their sources are
+committed generated files that a session does not write by hand. The todo
+index, the library index and entries, and the KG export are regenerated on
+most merges, so the same staleness applies one step removed. And a committed
+binary's sha256 is stable for one SQLite version only, so a content gate over
+it would go red on a Bun upgrade that changed no data. A slice whose source
+truly does not move may still be committed and gated like any generated file;
+none of the four pilots is that slice.
 
-The gate (`bun run slice:sqlite:check`) therefore checks four things:
+Deploy payloads never go into the committed `docs/payload/`. Its orphan audit
+admits KG nodes only, and beans, todos and library entries are not KG nodes
+(§"Adding a node type").
 
-- the builder runs;
+The gate (`bun run slice:sqlite:check`, or `--check --slice <name>` for one)
+therefore checks, for every slice:
+
+- the builder runs, and a source it cannot read is could-not-determine, red;
 - two builds give one sha256;
 - the row digest read back **from the file** equals the one computed
   independently from the source, so a dropped or truncated row fails;
-- an FTS5 phrase query finds a known node, and the payloads pass
-  `auditPayloadTree`.
-
-A slice of a corpus that does not move every session may be committed and
-gated on its content like any other generated file.
+- an FTS5 phrase query finds a known row, and a slice with no row to probe is
+  red rather than an empty green;
+- the payloads pass `auditPayloadTree`; for `kg`, every pointer names a
+  payload the committed tree holds.
 
 ### The client — download, OPFS, mount, with a fallback
 
@@ -776,23 +844,45 @@ devDependency, at 1.51 MB (`bun run slice:sqlite:vendor`, gated by
 `:vendor:check`). The reason: jsDelivr is unreachable from some builders, and
 a reader's search should depend on no host but the site's own.
 
-Measured in Chromium against a plain static server with no COOP/COEP:
+Measured in Chromium against a plain static server with no COOP/COEP: first
+open, including download and verification, 110 to 190 ms per slice on
+loopback (table above); reopen from OPFS about 85 ms, with no download.
 
-- first open, including the 2.82 MB download and verification: about 200 ms
-  on loopback;
-- reopen from OPFS: about 90 ms, with no download.
+### The search page — one page, the slice is a parameter
+
+`docs/slices/search.html?slice=<name>`; with no `slice`, it lists what
+`assets/slices/index.json` says was built. **One page rather than one per
+slice**, because every per-slice fact the page needs is already in the
+manifest's `search` block, which the builder writes from the same definition
+that built the tables. A page per slice would be a second copy of those facts
+for each slice, free to drift from the schema it queries; this page has no
+slice-specific code that could. A payload is shown by what the manifest says
+it is: `markdown` (front matter stripped), or `library-entry` (the block of
+the published entry whose id the row names). The parameter is checked against
+a name pattern before it becomes part of a path.
+
+`beans/search.html`, the pilot's own page, is now a forwarding page to
+`?slice=beans`, so a link to it still lands.
 
 ### Adding a slice
 
-- Write the slice's DDL and rows in `scripts/gen-slice-sqlite.ts`; beans is the
-  worked example.
+Follow the `slice-sqlite-publish` process. In short:
+
+- Add one `SliceDef` to `SLICES` in `scripts/gen-slice-sqlite.ts`. Never copy
+  the builder.
 - Choose its heavy fields by the table in §"What is heavy". A heavy field is a
-  `payload_sha256` column, never a stored column.
-- Decide **committed or built at deploy** by the question above: does every
-  session write the source?
-- Give the slice its own manifest, gate and test. A slice whose rows do not
-  match its source must fail. It must never pass as whole (§"A partial graph
-  must never pass for a whole one").
+  `payload_sha256` column, never a stored column. Choose what the payload IS by
+  what the site already publishes, and never publish through a payload what a
+  withheld or private source keeps back.
+- **Measure before wiring.** Build it to a scratch directory and read `bytes`.
+  Over the ~5 MB budget, try the no-body variant first, then stop and report the
+  measurement rather than ship it.
+- Decide **committed or built at deploy** by the question above.
+- Wire it: one deploy line per workflow, a unit test over a fixture and over
+  the real source, and a search in `slice-sqlite.e2e.ts`. The manifest, the
+  gate and the page come from the definition. A slice whose rows do not match
+  its source must fail. It must never pass as whole (§"A partial graph must
+  never pass for a whole one").
 
 ## Adding a node type
 
