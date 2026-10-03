@@ -5,7 +5,7 @@
     "id": "Process_CodeQualityGates",
     "path": "processes/sdlc/code-quality-gates.bpmn"
   },
-  "source_hash": "sha256:ca85218fed8edaef21e3732a772d3ed3d56b755b5b9509205cc32fe601d470e4",
+  "source_hash": "sha256:92a57b48dec86fb04baa0b2f7f1c8574b25d441bda132a07c3b9acc4ea8f90e5",
   "criteria": {
     "raci-role-resolves": {
       "result": "n/a",
@@ -32,8 +32,13 @@
       "findings": []
     },
     "activity-skill-has-tool": {
-      "result": "pass",
-      "findings": []
+      "result": "fail",
+      "findings": [
+        {
+          "where": "Task_QaPublish",
+          "detail": "names skill \"qa-reports\", which no Tool declares `satisfies` for — the step's mechanism is still prose."
+        }
+      ]
     },
     "decision-ref-resolves": {
       "result": "n/a",
@@ -68,7 +73,7 @@
       "findings": []
     },
     "call-activity-resolves": {
-      "result": "n/a",
+      "result": "pass",
       "findings": []
     },
     "process-diagram-published": {
@@ -110,8 +115,8 @@
   },
   "totals": {
     "pass": 17,
-    "fail": 0,
-    "n/a": 8,
+    "fail": 1,
+    "n/a": 7,
     "unknown": 0
   }
 }

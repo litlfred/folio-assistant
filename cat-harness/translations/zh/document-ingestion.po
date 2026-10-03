@@ -29,10 +29,6 @@ msgstr ""
 msgid "Document ingestion"
 msgstr "文档摄取"
 
-#: docs/document-ingestion.md:17
-msgid "TR"
-msgstr "TR"
-
 #: docs/document-ingestion.md:19
 msgid "On this page"
 msgstr "本页目录"
@@ -41,10 +37,6 @@ msgstr "本页目录"
 msgid "This page is generated from  — each section below links to its own source."
 msgstr "本页面生成自  — 下方每个小节都链接至其自身的源文件。"
 
-#: docs/document-ingestion.md:28
-msgid "✎ Edit{: .fa-node-edit title=\"Edit content/docs/document-ingestion/overview.md\" } QA… TR"
-msgstr "✎ Edit{: .fa-node-edit title=\"Edit content/docs/document-ingestion/overview.md\" } QA… TR"
-
 #: docs/document-ingestion.md:30
 msgid "How a dropped file becomes an L1 source the corpus can cite — expressed as BPMN 2.0 swimlane diagrams, with the Ingestion Engine as a named actor and every not-yet-built step linked to the bean that tracks it."
 msgstr "放入的文件如何变成语料库可以引用的 L1 来源 —— 以 BPMN 2.0 泳道图表示，将摄取引擎作为具名参与者，并将每个尚未构建的步骤链接至跟踪它的 bean。"
@@ -52,10 +44,6 @@ msgstr "放入的文件如何变成语料库可以引用的 L1 来源 —— 以
 #: docs/document-ingestion.md:36
 msgid "and  are two stages of one pipeline"
 msgstr "与  是同一流水线的两个阶段"
-
-#: docs/document-ingestion.md:39
-msgid "✎ Edit{: .fa-node-edit title=\"Edit content/docs/document-ingestion/uploads-and-library-are-two-stages-of-one-pipeline.md\" } QA… TR"
-msgstr "✎ Edit{: .fa-node-edit title=\"Edit content/docs/document-ingestion/uploads-and-library-are-two-stages-of-one-pipeline.md\" } QA… TR"
 
 #: docs/document-ingestion.md:41
 msgid "They are not the same directory under two names, and the distinction is load-bearing:"
@@ -106,10 +94,6 @@ msgstr "最后一行正是消耗会话成本的地方。语料库 grep 检查清
 #: docs/document-ingestion.md:56
 msgid "is L1"
 msgstr "即 L1"
-
-#: docs/document-ingestion.md:59
-msgid "✎ Edit{: .fa-node-edit title=\"Edit content/docs/document-ingestion/library-is-l1.md\" } QA… TR"
-msgstr "✎ Edit{: .fa-node-edit title=\"Edit content/docs/document-ingestion/library-is-l1.md\" } QA… TR"
 
 #: docs/document-ingestion.md:61
 msgid "Anything under  is L1 source content. Any knowledge-graph reference to a source — from a paper, an L2 DAK, an L3 IG, or any other artefact — resolves to it through , never to a loose path or a bare URL."
@@ -235,10 +219,6 @@ msgstr "往返检查是翻译检查设计成此种形态的原因。仅向前检
 msgid "What is not built yet"
 msgstr "尚未构建的内容"
 
-#: docs/document-ingestion.md:236
-msgid "✎ Edit{: .fa-node-edit title=\"Edit content/docs/document-ingestion/what-is-not-built-yet.md\" } QA… TR"
-msgstr "✎ Edit{: .fa-node-edit title=\"Edit content/docs/document-ingestion/what-is-not-built-yet.md\" } QA… TR"
-
 #: docs/document-ingestion.md:238
 msgid "Every one of these is drawn in the diagrams above and tracked as a bean. None is implemented."
 msgstr "上述图表中所绘制的每一项均作为 bean 进行了跟踪。目前均未实现。"
@@ -327,10 +307,6 @@ msgstr "检测漂移；由人工进行判定"
 msgid "How much of this does Dublin Core carry?"
 msgstr "Dublin Core 涵盖了其中的多少？"
 
-#: docs/document-ingestion.md:256
-msgid "✎ Edit{: .fa-node-edit title=\"Edit content/docs/document-ingestion/how-much-of-this-does-dublin-core-carry.md\" } QA… TR"
-msgstr "✎ Edit{: .fa-node-edit title=\"Edit content/docs/document-ingestion/how-much-of-this-does-dublin-core-carry.md\" } QA… TR"
-
 #: docs/document-ingestion.md:258
 msgid "Some of it, and it is worth being exact about which, because the answer decides whether a field is a  term or something this project invents."
 msgstr "涵盖了其中一部分，而明确具体涵盖了哪些很有价值，因为答案决定了一个字段究竟是  术语还是本项目自创的内容。"
@@ -350,10 +326,6 @@ msgstr "中既有的内部规则决定了其形态：合理泛化是明智的，
 #: docs/document-ingestion.md:278
 msgid "Editing an ingested source"
 msgstr "编辑已摄取的来源"
-
-#: docs/document-ingestion.md:281
-msgid "✎ Edit{: .fa-node-edit title=\"Edit content/docs/document-ingestion/editing-an-ingested-source.md\" } QA… TR"
-msgstr "✎ Edit{: .fa-node-edit title=\"Edit content/docs/document-ingestion/editing-an-ingested-source.md\" } QA… TR"
 
 #: docs/document-ingestion.md:283
 msgid "Ingestion never edits corpus content. It produces L1 records; authoring and review consume them through the ordinary flow in the publication workflow, where a change to a content block goes through validation, findings, and an editor's decision."
@@ -380,3 +352,24 @@ msgstr "值得说明的一项耦合是：在编辑会话期间向  放入文件�
 
 #~ msgid "✎ Edit{: .fa-node-edit title=\"Edit processes/ingest-l1-completeness-gate.bpmn\" } QA… TR KG…"
 #~ msgstr "✎ Edit{: .fa-node-edit title=\"Edit processes/ingest-l1-completeness-gate.bpmn\" } QA… TR KG…"
+
+#~ msgid "TR"
+#~ msgstr "TR"
+
+#~ msgid "✎ Edit{: .fa-node-edit title=\"Edit content/docs/document-ingestion/overview.md\" } QA… TR"
+#~ msgstr "✎ Edit{: .fa-node-edit title=\"Edit content/docs/document-ingestion/overview.md\" } QA… TR"
+
+#~ msgid "✎ Edit{: .fa-node-edit title=\"Edit content/docs/document-ingestion/uploads-and-library-are-two-stages-of-one-pipeline.md\" } QA… TR"
+#~ msgstr "✎ Edit{: .fa-node-edit title=\"Edit content/docs/document-ingestion/uploads-and-library-are-two-stages-of-one-pipeline.md\" } QA… TR"
+
+#~ msgid "✎ Edit{: .fa-node-edit title=\"Edit content/docs/document-ingestion/library-is-l1.md\" } QA… TR"
+#~ msgstr "✎ Edit{: .fa-node-edit title=\"Edit content/docs/document-ingestion/library-is-l1.md\" } QA… TR"
+
+#~ msgid "✎ Edit{: .fa-node-edit title=\"Edit content/docs/document-ingestion/what-is-not-built-yet.md\" } QA… TR"
+#~ msgstr "✎ Edit{: .fa-node-edit title=\"Edit content/docs/document-ingestion/what-is-not-built-yet.md\" } QA… TR"
+
+#~ msgid "✎ Edit{: .fa-node-edit title=\"Edit content/docs/document-ingestion/how-much-of-this-does-dublin-core-carry.md\" } QA… TR"
+#~ msgstr "✎ Edit{: .fa-node-edit title=\"Edit content/docs/document-ingestion/how-much-of-this-does-dublin-core-carry.md\" } QA… TR"
+
+#~ msgid "✎ Edit{: .fa-node-edit title=\"Edit content/docs/document-ingestion/editing-an-ingested-source.md\" } QA… TR"
+#~ msgstr "✎ Edit{: .fa-node-edit title=\"Edit content/docs/document-ingestion/editing-an-ingested-source.md\" } QA… TR"

@@ -15,7 +15,7 @@ parent: Skill instructions
 
 > Skill id: `test-plan-execution` · Package: `sdlc-core` · Process:
 > [`test-plan-execution.bpmn`](../../processes/test-plan-execution.html) ·
-> Decision: [`test-certification.dmn`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/decisions/test-certification.dmn)
+> Decision: [`test-certification.dmn`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/sdlc/decisions/test-certification.dmn)
 
 **A system is tested against a plan, by somebody who is not the system, and
 certified by somebody who did not run the test.** Everything below is that

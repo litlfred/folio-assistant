@@ -25,10 +25,6 @@ msgstr ""
 msgid "Document ingestion"
 msgstr "Загрузка документов"
 
-#: docs/document-ingestion.md:17
-msgid "TR"
-msgstr "TR"
-
 #: docs/document-ingestion.md:19
 msgid "On this page"
 msgstr "На этой странице"
@@ -37,10 +33,6 @@ msgstr "На этой странице"
 msgid "This page is generated from  — each section below links to its own source."
 msgstr "Эта страница сгенерирована из  — каждый раздел ниже ссылается на собственный исходный файл."
 
-#: docs/document-ingestion.md:28
-msgid "✎ Edit{: .fa-node-edit title=\"Edit content/docs/document-ingestion/overview.md\" } QA… TR"
-msgstr "✎ Edit{: .fa-node-edit title=\"Edit content/docs/document-ingestion/overview.md\" } QA… TR"
-
 #: docs/document-ingestion.md:30
 msgid "How a dropped file becomes an L1 source the corpus can cite — expressed as BPMN 2.0 swimlane diagrams, with the Ingestion Engine as a named actor and every not-yet-built step linked to the bean that tracks it."
 msgstr "Как добавленный файл становится источником L1, на который корпус может ссылаться — представлено в виде BPMN 2.0 диаграмм с дорожками (swimlane diagrams), где движок загрузки (Ingestion Engine) выступает как именованный участник, а каждый еще не реализованный шаг связан с отслеживающим его bean."
@@ -48,10 +40,6 @@ msgstr "Как добавленный файл становится источн
 #: docs/document-ingestion.md:36
 msgid "and  are two stages of one pipeline"
 msgstr "и  — два этапа единого конвейера"
-
-#: docs/document-ingestion.md:39
-msgid "✎ Edit{: .fa-node-edit title=\"Edit content/docs/document-ingestion/uploads-and-library-are-two-stages-of-one-pipeline.md\" } QA… TR"
-msgstr "✎ Edit{: .fa-node-edit title=\"Edit content/docs/document-ingestion/uploads-and-library-are-two-stages-of-one-pipeline.md\" } QA… TR"
 
 #: docs/document-ingestion.md:41
 msgid "They are not the same directory under two names, and the distinction is load-bearing:"
@@ -100,10 +88,6 @@ msgstr "Именно последняя строка приводит к пот�
 #: docs/document-ingestion.md:56
 msgid "is L1"
 msgstr "Каталог  — это L1"
-
-#: docs/document-ingestion.md:59
-msgid "✎ Edit{: .fa-node-edit title=\"Edit content/docs/document-ingestion/library-is-l1.md\" } QA… TR"
-msgstr "✎ Edit{: .fa-node-edit title=\"Edit content/docs/document-ingestion/library-is-l1.md\" } QA… TR"
 
 #: docs/document-ingestion.md:61
 msgid "Anything under  is L1 source content. Any knowledge-graph reference to a source — from a paper, an L2 DAK, an L3 IG, or any other artefact — resolves to it through , never to a loose path or a bare URL."
@@ -229,10 +213,6 @@ msgstr "Именно двусторонний перевод (round trip) опр
 msgid "What is not built yet"
 msgstr "Что еще не реализовано"
 
-#: docs/document-ingestion.md:236
-msgid "✎ Edit{: .fa-node-edit title=\"Edit content/docs/document-ingestion/what-is-not-built-yet.md\" } QA… TR"
-msgstr "✎ Edit{: .fa-node-edit title=\"Edit content/docs/document-ingestion/what-is-not-built-yet.md\" } QA… TR"
-
 #: docs/document-ingestion.md:238
 msgid "Every one of these is drawn in the diagrams above and tracked as a bean. None is implemented."
 msgstr "Каждый из этих пунктов отображен на диаграммах выше и отслеживается в виде bean. Ни один из них еще не реализован."
@@ -321,10 +301,6 @@ msgstr "Обнаруживает смысловые искажения; окон
 msgid "How much of this does Dublin Core carry?"
 msgstr "Что из этого покрывает Dublin Core?"
 
-#: docs/document-ingestion.md:256
-msgid "✎ Edit{: .fa-node-edit title=\"Edit content/docs/document-ingestion/how-much-of-this-does-dublin-core-carry.md\" } QA… TR"
-msgstr "✎ Edit{: .fa-node-edit title=\"Edit content/docs/document-ingestion/how-much-of-this-does-dublin-core-carry.md\" } QA… TR"
-
 #: docs/document-ingestion.md:258
 msgid "Some of it, and it is worth being exact about which, because the answer decides whether a field is a  term or something this project invents."
 msgstr "Лишь часть, и здесь важно точно понимать, какую именно, поскольку ответ определяет, является ли поле термином  или чем-то, изобретенным данным проектом."
@@ -344,10 +320,6 @@ msgstr "Внутреннее правило проекта, уже зафикс�
 #: docs/document-ingestion.md:278
 msgid "Editing an ingested source"
 msgstr "Редактирование загруженного источника"
-
-#: docs/document-ingestion.md:281
-msgid "✎ Edit{: .fa-node-edit title=\"Edit content/docs/document-ingestion/editing-an-ingested-source.md\" } QA… TR"
-msgstr "✎ Edit{: .fa-node-edit title=\"Edit content/docs/document-ingestion/editing-an-ingested-source.md\" } QA… TR"
 
 #: docs/document-ingestion.md:283
 msgid "Ingestion never edits corpus content. It produces L1 records; authoring and review consume them through the ordinary flow in the publication workflow, where a change to a content block goes through validation, findings, and an editor's decision."
@@ -374,3 +346,24 @@ msgstr "Единственная взаимосвязь, которую стои
 
 #~ msgid "✎ Edit{: .fa-node-edit title=\"Edit processes/ingest-l1-completeness-gate.bpmn\" } QA… TR KG…"
 #~ msgstr "✎ Edit{: .fa-node-edit title=\"Edit processes/ingest-l1-completeness-gate.bpmn\" } QA… TR KG…"
+
+#~ msgid "TR"
+#~ msgstr "TR"
+
+#~ msgid "✎ Edit{: .fa-node-edit title=\"Edit content/docs/document-ingestion/overview.md\" } QA… TR"
+#~ msgstr "✎ Edit{: .fa-node-edit title=\"Edit content/docs/document-ingestion/overview.md\" } QA… TR"
+
+#~ msgid "✎ Edit{: .fa-node-edit title=\"Edit content/docs/document-ingestion/uploads-and-library-are-two-stages-of-one-pipeline.md\" } QA… TR"
+#~ msgstr "✎ Edit{: .fa-node-edit title=\"Edit content/docs/document-ingestion/uploads-and-library-are-two-stages-of-one-pipeline.md\" } QA… TR"
+
+#~ msgid "✎ Edit{: .fa-node-edit title=\"Edit content/docs/document-ingestion/library-is-l1.md\" } QA… TR"
+#~ msgstr "✎ Edit{: .fa-node-edit title=\"Edit content/docs/document-ingestion/library-is-l1.md\" } QA… TR"
+
+#~ msgid "✎ Edit{: .fa-node-edit title=\"Edit content/docs/document-ingestion/what-is-not-built-yet.md\" } QA… TR"
+#~ msgstr "✎ Edit{: .fa-node-edit title=\"Edit content/docs/document-ingestion/what-is-not-built-yet.md\" } QA… TR"
+
+#~ msgid "✎ Edit{: .fa-node-edit title=\"Edit content/docs/document-ingestion/how-much-of-this-does-dublin-core-carry.md\" } QA… TR"
+#~ msgstr "✎ Edit{: .fa-node-edit title=\"Edit content/docs/document-ingestion/how-much-of-this-does-dublin-core-carry.md\" } QA… TR"
+
+#~ msgid "✎ Edit{: .fa-node-edit title=\"Edit content/docs/document-ingestion/editing-an-ingested-source.md\" } QA… TR"
+#~ msgstr "✎ Edit{: .fa-node-edit title=\"Edit content/docs/document-ingestion/editing-an-ingested-source.md\" } QA… TR"
