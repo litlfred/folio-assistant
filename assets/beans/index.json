@@ -2,7 +2,7 @@
   "$schema": "folio-bean-index/v1",
   "tile": {
     "beans": {
-      "count": 667,
+      "count": 668,
       "unit": "beans"
     }
   },
@@ -371,6 +371,20 @@
       "updatedAt": "2026-10-02T20:46:38Z",
       "preview": "Owner, 2026-10-02 (on litlfred/fhir-ig-publisher#8): *\"PR should be readable for human for first time. what probelm trying to address, why, how approached, constratins, soltion... ...usage\"* and *\"make that a general skill when writing/updating PRs. see existing skills/processes\"*. Issue #1879.\n\n## Done when\n- [ ] cat-harness/skills/sdlc/sdlc-core/pr-description.md written and registered (skill:re",
       "file": "beans/defs/folio-assistant-19wc--skill-pr-description-a-pr-body-a-first-time-reader.md"
+    },
+    {
+      "id": "folio-assistant-1acg",
+      "title": "check:head-has-run counts an action_required run as RAN — a run that never executed satisfies 'the gates fired'",
+      "status": "completed",
+      "type": "bug",
+      "priority": "high",
+      "parent": "folio-assistant-1xhc",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-10-03T00:15:20Z",
+      "updatedAt": "2026-10-03T01:21:22Z",
+      "preview": "## The defect, in one line\n\n`ranAs` matches a run on **name and event** and never reads its `conclusion`:\n\n```ts\nfunction ranAs(runs: RunRow[], t: WorkflowTrigger, event: string): boolean {\n  return runs.some((r) => r.name === t.name && r.event === event);\n}\n```\n\n`RunRow` already carries `conclusion`. The data was in hand and not consulted.\n\nA `pull_request` run that completes **`action_required`*",
+      "file": "beans/defs/folio-assistant-1acg--checkhead-has-run-counts-an-action-required-run-as.md"
     },
     {
       "id": "folio-assistant-1bvx",
