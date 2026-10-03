@@ -2,7 +2,7 @@
   "$schema": "folio-bean-index/v1",
   "tile": {
     "beans": {
-      "count": 717,
+      "count": 719,
       "unit": "beans"
     }
   },
@@ -46,7 +46,7 @@
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-20T20:54:07Z",
-      "updatedAt": "2026-10-03T10:59:40Z",
+      "updatedAt": "2026-10-03T11:41:35Z",
       "preview": "Owner, 2026-09-20 (session_014HGPQoUnzXGqSspA8x6YyD), in three messages.\n\n## 1. The handler\n\n> in cat-harness needs to be harness/handler at `cat-harness/docs-auto/<auto-doc-type>/<path>`\n> defined. which will auto-generate extracatable documentation at `<path>` sub-graph.\n> extracablle = bpmn, tasks, glossary, etc. ther is a glosarry bean... this could\n> clarify it lives at `cat-harness/docs-auto",
       "file": "beans/defs/folio-assistant-06e3--docs-auto-a-handler-at-cat-harnessdocs-autoauto-do.md"
     },
@@ -888,14 +888,14 @@
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-23T10:36:13Z",
-      "updatedAt": "2026-09-24T06:04:56Z",
+      "updatedAt": "2026-10-01T18:13:39Z",
       "preview": "A page wider than a 390 px viewport makes the reader pan sideways to reach columns or actions. Fix in the shared table/grid CSS: wrap, stack or collapse columns at narrow widths, and let only a table's own container scroll, with a visible cue.\n\nObserved on: `catalogue`, `folio`, `fsh-guts`, `kg-viewer`, `library`, `navbar`, `processes`, `skills-index`, `tools`, `translation-status`, `uploads` (see",
       "file": "beans/defs/folio-assistant-2r2n--mobile-pages-scroll-sideways-at-phone-width.md"
     },
     {
       "id": "folio-assistant-2tfy",
       "title": "SEARCH COST: the lunr index is built on every page view — ~4.7 s CPU, ~315 MB heap before anyone searches",
-      "status": "in-progress",
+      "status": "completed",
       "type": "task",
       "priority": "",
       "parent": "folio-assistant-whlc",
@@ -3233,6 +3233,20 @@
       "updatedAt": "2026-09-26T03:54:14Z",
       "preview": "Owner, 2026-09-23, chose \"All three, fetch HL7's base template\" and \"smart-base, inherited\".\n\nFinishes what 0818 left open: the WHO visual styling, a different question from the menu it shipped.\n\n## The template chain is three layers, and the three items do not come from one of them\n\n    smart-trust local-template  ->  who.template.root 0.5.0  ->  fhir.base.template 1.0.0\n\n- BLUE BAR is WHO's: --n",
       "file": "beans/defs/folio-assistant-ajx9--who-ig-chrome-the-blue-bar-draft-watermark-and-pub.md"
+    },
+    {
+      "id": "folio-assistant-akjg",
+      "title": "DOCS-POPULATED HAS NO SUBJECT TEST: the gate passes smart-trust on docs/category/Other.md — length and authorship have teeth, 06e3 §4(b) processes/roles/tasks half was never built",
+      "status": "in-progress",
+      "type": "bug",
+      "priority": "normal",
+      "parent": "folio-assistant-0lmb",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-10-03T13:50:38Z",
+      "updatedAt": "2026-10-03T13:50:59Z",
+      "preview": "`check:docs-populated` (`scripts/check-docs-populated.ts`, 2026-10-02, gated at\n`code-quality-gates.yml:1846`) implements half of `06e3` §4(b) and reports the\nother half as if it were not asked.\n\nOwner, `06e3` §4(b), both halves in one sentence:\n\n> does the page reference the harness's **processes, roles and tasks**, and does\n> it say something about them that the index does not?\n\nBuilt: **length*",
+      "file": "beans/defs/folio-assistant-akjg--docs-populated-has-no-subject-test-the-gate-passes.md"
     },
     {
       "id": "folio-assistant-amom",
@@ -6031,7 +6045,7 @@
     {
       "id": "folio-assistant-m7mn",
       "title": "SEARCH SCOPES: split the site index per harness and per locale, with a manifest (#1972 A1)",
-      "status": "in-progress",
+      "status": "completed",
       "type": "task",
       "priority": "",
       "parent": "folio-assistant-whlc",
@@ -6474,7 +6488,7 @@
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-23T10:36:15Z",
-      "updatedAt": "2026-10-01T18:26:59Z",
+      "updatedAt": "2026-10-01T18:55:06Z",
       "preview": "Findings from the as-is wireframe `cat-harness/docs/wireframes/navbar/` (intent.md, as-is.html, checks/), observed at 1280×800 and 390×844. Verbatim from its `## Findings`; a finding tagged → is also covered by that cross-cutting bug.\n\n1. **At rest the strip is marks with no labels.** Changed by #1022: the four divider initials are gone, so the harnesses are **not reachable from the strip at all**",
       "file": "beans/defs/folio-assistant-ob3m--navbar-visualiser-12-wireframe-findings.md"
     },
@@ -8417,6 +8431,20 @@
       "updatedAt": "2026-09-23T21:59:49Z",
       "preview": "## What\n\nEvery generated docs page carries **two elements with `id=\"fa-nav-open\"`**. A\nduplicate `id` is invalid HTML, and `document.getElementById` plus every\n`<label for=…>` resolve to the **first** one only.\n\n## How it was found\n\nMeasured 2026-09-22 on the **rendered** page, not on the source — the staging\npreview for PR #957, read out of the `gh-pages` publish ref rather than over\nHTTP (the ag",
       "file": "beans/defs/folio-assistant-uknu--duplicate-id-on-every-docs-page-just-the-docs-rend.md"
+    },
+    {
+      "id": "folio-assistant-uoob",
+      "title": "MERGE GATE (f): refuse an unfinished PR — no current ready marker, or a base branch whose PR already merged",
+      "status": "todo",
+      "type": "bug",
+      "priority": "",
+      "parent": "folio-assistant-nok9",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-10-03T13:53:29Z",
+      "updatedAt": "2026-10-03T13:53:29Z",
+      "preview": "Owner ruling 2026-10-03: BOTH guards (option 1 of 4, asked by the Parcel B session; proposed by session 01CbYZTA). Three merges on 2026-10-03 landed work in a state its author had not finished, and nothing in the pipeline asked:\n\n- **#1937** merged into its stale base `claude/quirky-davinci-ixuymr` after #1764 had already landed, so the branch-store never reached main (re-opened as #1978).\n- **#19",
+      "file": "beans/defs/folio-assistant-uoob--merge-gate-f-refuse-an-unfinished-pr-no-current-re.md"
     },
     {
       "id": "folio-assistant-upgd",

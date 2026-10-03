@@ -217,6 +217,43 @@
             ]
           }
         },
+        "glassStrip": {
+          "type": "array",
+          "items": {
+            "anyOf": [
+              {
+                "type": "object",
+                "properties": {
+                  "chrome": {
+                    "type": "string",
+                    "enum": [
+                      "todos",
+                      "filter",
+                      "settings"
+                    ]
+                  }
+                },
+                "required": [
+                  "chrome"
+                ],
+                "additionalProperties": false
+              },
+              {
+                "type": "object",
+                "properties": {
+                  "kind": {
+                    "type": "string",
+                    "minLength": 1
+                  }
+                },
+                "required": [
+                  "kind"
+                ],
+                "additionalProperties": false
+              }
+            ]
+          }
+        },
         "repository": {
           "type": "string",
           "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]*\\/[A-Za-z0-9][A-Za-z0-9._-]*$",
@@ -1052,8 +1089,8 @@
   "$comment": "Instance graph: https://litlfred.github.io/folio-assistant/STAGING/claude-zealous-gates-3o9ma2/cat-harness.jsonld",
   "staging": {
     "branch": "claude/zealous-gates-3o9ma2",
-    "sha": "fe3babab3c5cb6edd19a013cfeb38ba6447fbb0f",
+    "sha": "163850f1a355087e538251e962263a35c05ad2c3",
     "pr": "1993/merge",
-    "run": "37123554938"
+    "run": "37128483928"
   }
 }
