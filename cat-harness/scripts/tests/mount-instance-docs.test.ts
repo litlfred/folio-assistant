@@ -346,8 +346,10 @@ describe("a served directory's bytes publish at /<instance>/<path> — bean 680p
     ]);
   });
 
-  it("the real declarations serve smart-trust's and smart-base's artefact indexes, and nothing else", () => {
+  it("the real declarations serve smart-trust's and smart-base's artefact indexes and smart-trust's OpenAPI graph, and nothing else", () => {
     const routes = servedDirectories().map((s) => s.route).sort();
-    expect(routes).toEqual(["smart-base/fhir-artifact-index", "smart-trust/fhir-artifact-index"]);
+    // `smart-trust/openapi` added 2026-10-03 (bean `s4ta`): the cat-openapi
+    // harness's graph, whose thin pages fetch the document beside them.
+    expect(routes).toEqual(["smart-base/fhir-artifact-index", "smart-trust/fhir-artifact-index", "smart-trust/openapi"]);
   });
 });
