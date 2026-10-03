@@ -18,21 +18,21 @@ The after-check for the agentic engine (issue #1180, step 5). The deterministic 
 
 ## Totals
 
-10 instance(s), 105 step(s) checked, 105 `prov:Activity` emitted, 93 finding(s). Policies evaluated: `https://litlfred.github.io/folio-assistant/policies/folio-defaults`, `https://litlfred.github.io/folio-assistant/policies/http-gateway`.
+11 instance(s), 117 step(s) checked, 117 `prov:Activity` emitted, 119 finding(s). Policies evaluated: `https://litlfred.github.io/folio-assistant/policies/folio-defaults`, `https://litlfred.github.io/folio-assistant/policies/http-gateway`.
 
 | finding | count | means |
 |---|---|---|
 | `no-actor` | 0 | the entry names nobody; no activity is emitted, because `prov:agent` is required and would have to be invented |
 | `no-role` | 0 | the node's lane binds no role; no activity is emitted, because `ProvActivitySchema` requires `prov:hadRole` (PROV-O itself does not) |
-| `undeclared-actor` | 1 | the actor is not declared in `cat-harness/scenarios/actors/` |
-| `not-eligible` | 2 | the actor's `roles` do not include the role the lane binds |
-| `unknown` | 67 | no ODRL policy grants `perform-task` here; `unknown` is never permit |
+| `undeclared-actor` | 3 | the actor is not declared in `cat-harness/scenarios/actors/` |
+| `not-eligible` | 12 | the actor's `roles` do not include the role the lane binds |
+| `unknown` | 79 | no ODRL policy grants `perform-task` here; `unknown` is never permit |
 | `deny` | 0 | an ODRL policy prohibits `perform-task` here |
 | `authz-disagrees` | 0 | the verdict recorded in the entry's `authz` differs from the one recomputed now |
 | `node-not-in-model` | 4 | the entry names a node its process model does not have |
 | `source-moved` | 18 | the `.bpmn` the instance recorded is gone; the diagram was found by file name, as `workflow_start` resolves one, and its process id matches the instance's |
 | `source-missing` | 0 | the `.bpmn` the instance recorded is gone and no diagram with that name and process id exists; nothing in it can be checked |
-| `unaddressed` | 1 | the agent, role or plan has no release address — its owning instance declares no `iriBase`, or no instance declares it — so the PROV-JSONLD record carries it as a literal, not a link (`linked-data` voice, `ld-link-is-the-node-release-address`) |
+| `unaddressed` | 3 | the agent, role or plan has no release address — its owning instance declares no `iriBase`, or no instance declares it — so the PROV-JSONLD record carries it as a literal, not a link (`linked-data` voice, `ld-link-is-the-node-release-address`) |
 
 ## By instance
 
@@ -176,6 +176,39 @@ The after-check for the agentic engine (issue #1180, step 5). The deterministic 
 | `crdm--issue-607-kg-to-cdn-portal/Call_Needs` | (instance) | `Process_CRDM_Needs` | `source-moved` | cat-harness/methodologies/crdm/processes/crdm-needs.bpmn does not exist; read cat-harness/processes/process/crdm-needs.bpmn, which defines Process_CRDM_Needs |
 | `crdm--issue-607-kg-to-cdn-portal/Call_Needs` | 1 | `A_Stakeholders` | `unknown` | no policy grants perform-task for Process_CRDM_Needs/A_Stakeholders as authoring-agent |
 | `crdm--issue-607-kg-to-cdn-portal/Call_Needs` | 2 | `A_Synthesise` | `unknown` | no policy grants perform-task for Process_CRDM_Needs/A_Synthesise as authoring-agent |
+
+### merge-train--train-6
+
+12 step(s) checked, 12 `prov:Activity` emitted, 26 finding(s). Source: `cat-harness/processes/sdlc/merge-train.bpmn`. [PROV JSON-LD]({{ '/assets/prov/merge-train--train-6.prov.jsonld' | relative_url }})
+
+| instance | entry | node | finding | detail |
+|---|---|---|---|---|
+| `merge-train--train-6` | 1 | `Task_ReadLive` | `not-eligible` | claude may act as authoring-agent, business-analyst, code-reviewer, not as merge-steward |
+| `merge-train--train-6` | 1 | `Task_ReadLive` | `unknown` | no policy grants perform-task for Process_MergeTrain/Task_ReadLive as merge-steward |
+| `merge-train--train-6` | 2 | `Task_TakeNext` | `not-eligible` | claude may act as authoring-agent, business-analyst, code-reviewer, not as merge-steward |
+| `merge-train--train-6` | 2 | `Task_TakeNext` | `unknown` | no policy grants perform-task for Process_MergeTrain/Task_TakeNext as merge-steward |
+| `merge-train--train-6` | 3 | `GW_Placement` | `not-eligible` | claude may act as authoring-agent, business-analyst, code-reviewer, not as merge-steward |
+| `merge-train--train-6` | 3 | `GW_Placement` | `unknown` | no policy grants perform-task for Process_MergeTrain/GW_Placement as merge-steward |
+| `merge-train--train-6` | 4 | `Task_Admit` | `not-eligible` | claude may act as authoring-agent, business-analyst, code-reviewer, not as merge-steward |
+| `merge-train--train-6` | 4 | `Task_Admit` | `unknown` | no policy grants perform-task for Process_MergeTrain/Task_Admit as merge-steward |
+| `merge-train--train-6` | 5 | `Call_MergeMembers` | `not-eligible` | claude may act as authoring-agent, business-analyst, code-reviewer, not as build-pipeline |
+| `merge-train--train-6` | 5 | `Call_MergeMembers` | `unknown` | no policy grants perform-task for Process_MergeTrain/Call_MergeMembers as build-pipeline |
+| `merge-train--train-6` | 6 | `GW_AllMerged` | `not-eligible` | claude may act as authoring-agent, business-analyst, code-reviewer, not as build-pipeline |
+| `merge-train--train-6` | 6 | `GW_AllMerged` | `unknown` | no policy grants perform-task for Process_MergeTrain/GW_AllMerged as build-pipeline |
+| `merge-train--train-6` | 7 | `Call_Gates` | `not-eligible` | claude may act as authoring-agent, business-analyst, code-reviewer, not as build-pipeline |
+| `merge-train--train-6` | 7 | `Call_Gates` | `unknown` | no policy grants perform-task for Process_MergeTrain/Call_Gates as build-pipeline |
+| `merge-train--train-6` | 8 | `Task_Attribute` | `not-eligible` | claude may act as authoring-agent, business-analyst, code-reviewer, not as merge-steward |
+| `merge-train--train-6` | 8 | `Task_Attribute` | `unknown` | no policy grants perform-task for Process_MergeTrain/Task_Attribute as merge-steward |
+| `merge-train--train-6` | 9 | `Call_ChecksPresent` | `not-eligible` | claude may act as authoring-agent, business-analyst, code-reviewer, not as build-pipeline |
+| `merge-train--train-6` | 9 | `Call_ChecksPresent` | `unknown` | no policy grants perform-task for Process_MergeTrain/Call_ChecksPresent as build-pipeline |
+| `merge-train--train-6` | 10 | `GW_Green` | `not-eligible` | claude may act as authoring-agent, business-analyst, code-reviewer, not as build-pipeline |
+| `merge-train--train-6` | 10 | `GW_Green` | `unknown` | no policy grants perform-task for Process_MergeTrain/GW_Green as build-pipeline |
+| `merge-train--train-6` | 11 | `Task_Release` | `undeclared-actor` | "merge-manager (session 01SjvqTkDQsqa6SLLFjBwoD3)" is not a declared actor |
+| `merge-train--train-6` | 11 | `Task_Release` | `unknown` | no policy grants perform-task for Process_MergeTrain/Task_Release as user |
+| `merge-train--train-6` | 12 | `Task_Land` | `undeclared-actor` | "merge-manager (session 01SjvqTkDQsqa6SLLFjBwoD3)" is not a declared actor |
+| `merge-train--train-6` | 12 | `Task_Land` | `unknown` | no policy grants perform-task for Process_MergeTrain/Task_Land as merge-steward |
+| `merge-train--train-6` | 11 | `merge-manager (session 01SjvqTkDQsqa6SLLFjBwoD3)` | `unaddressed` | agent: no instance in this checkout declares actor "merge-manager (session 01SjvqTkDQsqa6SLLFjBwoD3)" |
+| `merge-train--train-6` | 12 | `merge-manager (session 01SjvqTkDQsqa6SLLFjBwoD3)` | `unaddressed` | agent: no instance in this checkout declares actor "merge-manager (session 01SjvqTkDQsqa6SLLFjBwoD3)" |
 
 ### sampleimport--xlg2-wpro-trial
 
