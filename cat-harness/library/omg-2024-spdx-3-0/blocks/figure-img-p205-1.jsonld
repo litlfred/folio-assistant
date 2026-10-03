@@ -1,0 +1,31 @@
+{
+  "@context": [
+    "https://litlfred.github.io/folio-assistant/ns/content/v1.jsonld",
+    {
+      "@base": "https://litlfred.github.io/folio/"
+    }
+  ],
+  "@id": "library/omg-2024-spdx-3-0/blocks/figure-img-p205-1",
+  "@type": [
+    "folio-assistant-core:Figure",
+    "doco:Figure"
+  ],
+  "kind": "figure",
+  "file": "../images/img-p205-1.png",
+  "pageStart": 205,
+  "pageEnd": 205,
+  "narrative": {
+    "text": "Historical UML class diagram of the 3T-SBOM group's draft core model (circa September 2020). Identity (Id, name, aliases, comment), specialised by Tool (user-agent), Organization and Person (a Person may belong to 0..1 Organization), is linked to Artifact (Id, artifact-url, name, comment) as supplier and as originator (each 0..1); a callout reads 'Need to capture contacts on supplier and originator links'. Artifact has Hashes (algorithm, value), ExternalReferences (type, locator, comment) and takes part in Relationship (type, completeness, comment) as from and to. DocumentMetadata has creators (1..* Identity); a Tool links to 0..1 ExternalDocumentReference (namespace, document-url, comment) by 'bill-of-materials', and that reference carries Hashes.",
+    "state": "draft",
+    "drafted_by": {
+      "kind": "agent",
+      "id": "claude",
+      "model": "not-disclosed",
+      "session": "https://claude.ai/code/session_01VfkKocGaQW7Msro2t5S66U"
+    },
+    "drafted_at": "2026-10-03"
+  },
+  "derivedFrom": "library/omg-2024-spdx-3-0/sections/sec-397",
+  "sourceDocument": "https://litlfred.github.io/folio-assistant/assets/library/jsonld/cat-harness/omg-2024-spdx-3-0/manifest.jsonld",
+  "provenance": "ingested"
+}

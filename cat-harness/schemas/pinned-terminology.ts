@@ -52,6 +52,12 @@ export const PinnedConceptSchema = z
      * never `exactMatch`.
      */
     display: z.string().min(1),
+    /**
+     * The edition itself marks the code deprecated: still valid to read, not
+     * to write anew. Absent means the edition says nothing, not "current".
+     * First user: the SPDX License List (`isDeprecatedLicenseId`), bean `sd5v`.
+     */
+    deprecated: z.boolean().optional(),
   })
   .strict();
 
