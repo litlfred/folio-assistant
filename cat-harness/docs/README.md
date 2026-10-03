@@ -50,9 +50,9 @@ Part of [C@T Harness](../README.md) 0.1.0, declared as `docs`, holding `docs`.
 | [`_includes/`](_includes/) | 9 files | |
 | [`ar/`](ar/) | 14 files | |
 | [`architecture/`](architecture/) | 8 files | |
-| [`assets/`](assets/) | 615 files | |
+| [`assets/`](assets/) | 621 files | |
 | [`attestations/`](attestations/) | 1 file | |
-| [`beans/`](beans/) | 1 file | |
+| [`beans/`](beans/) | 2 files | |
 | [`bootstrap/`](bootstrap/) | 1 file | |
 | [`cat-harness/`](cat-harness/) | 147 files | |
 | [`es/`](es/) | 14 files | |
@@ -65,6 +65,7 @@ Part of [C@T Harness](../README.md) 0.1.0, declared as `docs`, holding `docs`.
 | [`issue-marks/`](issue-marks/) | 1 file | |
 | [`lsi/`](lsi/) | 1 file | |
 | [`methodologies/`](methodologies/) | 1 file | |
+| [`payload/`](payload/) | 606 files | |
 | [`processes/`](processes/) | 85 files | |
 | [`proposals/`](proposals/) | Proposals for this harness's own features — initial analysis, MVP, options — argued, and updated in place, before and while they are built. | |
 | [`prov-qaqc/`](prov-qaqc/) | 1 file | |
@@ -74,6 +75,7 @@ Part of [C@T Harness](../README.md) 0.1.0, declared as `docs`, holding `docs`.
 | [`research-and-analysis/`](research-and-analysis/) | 2 files | |
 | [`ru/`](ru/) | 14 files | |
 | [`site/`](site/) | 183 files | |
+| [`subgraph/`](subgraph/) | 328 files | |
 | [`subscriptions/`](subscriptions/) | 1 file | |
 | [`swimlane-glossary/`](swimlane-glossary/) | 1 file | |
 | [`themes/`](themes/) | 1 file | |
