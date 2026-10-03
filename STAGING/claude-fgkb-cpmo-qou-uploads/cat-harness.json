@@ -303,10 +303,10 @@
   ],
   "canonicalDocument": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld",
   "repository": "cat-harness",
-  "generatedAt": "2026-10-03T14:56:28.645Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/9cbc8fa1380cc34489c58cec620226dc030bd913",
-  "sourceCommitSha": "9cbc8fa1380cc34489c58cec620226dc030bd913",
-  "sourceCommitAt": "2026-10-03T14:46:09Z",
+  "generatedAt": "2026-10-03T15:44:27.675Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/68e18e060957cdfba5442f8690fedae23166fd66",
+  "sourceCommitSha": "68e18e060957cdfba5442f8690fedae23166fd66",
+  "sourceCommitAt": "2026-10-03T15:39:15Z",
   "sourceTreeDirty": true,
   "dependsOnUnavailable": "2 dependency edge(s), none expressible as a record — see gaps",
   "counts": {
@@ -319,9 +319,9 @@
     "SequenceFlow": 1040,
     "Lane": 208,
     "ProcessNode": 980,
-    "Tool": 118,
-    "Schema": 160,
-    "ExternalSchema": 21,
+    "Tool": 119,
+    "Schema": 161,
+    "ExternalSchema": 22,
     "GraphKind": 27,
     "Role": 49,
     "Subgraph": 27,
@@ -1443,7 +1443,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-fgkb-cpmo-qou-uploads/cat-harness.jsonld#package/kg-core"
       ],
       "instructionsPath": "skills/kg/kg-core/content-context-and-state-graphs.md",
-      "instructionLines": 293,
+      "instructionLines": 333,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -45276,6 +45276,46 @@
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#tool/l1-complete-check"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-fgkb-cpmo-qou-uploads/cat-harness.jsonld#tool/pin-spdx-license-list",
+      "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#Tool",
+      "name": "pin-spdx-license-list",
+      "title": "Snapshot the SPDX License List at its pinned version",
+      "description": "Read `json/licenses.json` and `json/exceptions.json` from a copy of github.com/spdx/license-list-data at the pinned tag and write `cat-harness/external-schemas/spdx-license-list.terminology.json` (`folio-pinned-terminology/v1`): every licence and exception id with its name and deprecated flag — the offline, version-fixed list `check:source-licence` validates a `licence.json` id against.",
+      "install": {
+        "none": true
+      },
+      "invoke": {
+        "shell": "bun run cat-harness/scripts/pin-spdx-license-list.ts --from <license-list-data checkout>"
+      },
+      "io": {
+        "inputs": [
+          {
+            "name": "licenseListCheckout",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-fgkb-cpmo-qou-uploads/tool-types.schema.json#/$defs/FilesystemPath",
+            "description": "A copy of github.com/spdx/license-list-data at tag `v<version>`, passed as `--from`. Named for what it is rather than `from`: with the same name it would share `pin-ig-terminology`'s signature and be DERIVED as its substitute, which it is not — an IG clone and a licence list are different inputs (`deriveAlternatives`). Refused unless both files declare the pin's `licenseListVersion`.",
+            "required": true
+          }
+        ],
+        "outputs": [
+          {
+            "name": "snapshot",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-fgkb-cpmo-qou-uploads/tool-types.schema.json#/$defs/RepoPath",
+            "description": "`folio-pinned-terminology/v1`: the version, the source, and every `spdx-license#<id>` / `spdx-exception#<id>` with its name, sorted; `deprecated: true` where the List marks it."
+          }
+        ]
+      },
+      "requirements": {
+        "runtime": [
+          "bun"
+        ],
+        "network": false
+      },
+      "satisfies": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-fgkb-cpmo-qou-uploads/cat-harness.jsonld#skill/vocabulary-authority"
+      ],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#tool/pin-spdx-license-list"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-fgkb-cpmo-qou-uploads/cat-harness.jsonld#tool/tabular-csv",
       "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#Tool",
       "name": "tabular-csv",
@@ -48708,6 +48748,16 @@
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/source-provenance"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-fgkb-cpmo-qou-uploads/cat-harness.jsonld#schema/spdx-license-expression",
+      "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#Schema",
+      "name": "spdx-license-expression",
+      "title": "spdx-license-expression",
+      "summary": "An SPDX licence expression, checked against the pinned SPDX License List.",
+      "module": "schemas/spdx-license-expression.ts",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-fgkb-cpmo-qou-uploads/cat-harness.jsonld#directory/schemas",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/spdx-license-expression"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-fgkb-cpmo-qou-uploads/cat-harness.jsonld#schema/staging-preview",
       "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#Schema",
       "name": "staging-preview",
@@ -49418,6 +49468,20 @@
         "http://purl.org/spar/cito/"
       ],
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#externalSchema/spar-doco-deo-cito"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-fgkb-cpmo-qou-uploads/cat-harness.jsonld#externalSchema/spdx-license-list",
+      "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#ExternalSchema",
+      "name": "spdx-license-list",
+      "title": "SPDX License List",
+      "authority": "other",
+      "specVersion": "3.29.0",
+      "specUse": "reads",
+      "specUrl": "https://spdx.org/licenses/",
+      "namespace": [
+        "https://spdx.org/licenses/"
+      ],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#externalSchema/spdx-license-list"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-fgkb-cpmo-qou-uploads/cat-harness.jsonld#externalSchema/w3c-csvw",
@@ -51246,8 +51310,8 @@
   ],
   "staging": {
     "branch": "claude/fgkb-cpmo-qou-uploads",
-    "sha": "e16bc9582d4597fc2a249ea0265d2382c1b03544",
+    "sha": "d3c91384d7662728db82c2bd02e0ec6b897c8553",
     "pr": "2005/merge",
-    "run": "37130839596"
+    "run": "37134006392"
   }
 }

@@ -2,7 +2,7 @@
   "$schema": "folio-bean-index/v1",
   "tile": {
     "beans": {
-      "count": 720,
+      "count": 726,
       "unit": "beans"
     }
   },
@@ -457,6 +457,20 @@
       "file": "beans/defs/folio-assistant-1acg--checkhead-has-run-counts-an-action-required-run-as.md"
     },
     {
+      "id": "folio-assistant-1br0",
+      "title": "SEARCH REMOTE: publish the identifier lookup as its own page and link it from the search box (#1972 step 3)",
+      "status": "in-progress",
+      "type": "task",
+      "priority": "",
+      "parent": "folio-assistant-whlc",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-10-03T14:17:59Z",
+      "updatedAt": "2026-10-03T14:17:59Z",
+      "preview": "Issue #1972 step 3 (remote/large graphs). The owner's choice of 2026-10-03,\nfrom four options: **a separate page and a link** — publish the identifier\nlookup as its own page OUTSIDE the docs pipeline, name it in the search\nmanifest as a `remote` scope, and have the search box show one link to it.\n\nIt keeps both standing decisions: bean `4pm8`'s ruling (title search over\nreferenced nodes is an acce",
+      "file": "beans/defs/folio-assistant-1br0--search-remote-publish-the-identifier-lookup-as-its.md"
+    },
+    {
       "id": "folio-assistant-1bvx",
       "title": "check:reference-direction fails on main and is in NO workflow — nothing catches it",
       "status": "in-progress",
@@ -539,6 +553,20 @@
       "updatedAt": "2026-09-30T22:47:27Z",
       "preview": "Measured 2026-09-30, after the owner asked for the merge queue to be turned on.\n\n## What was found\n\nThe repository's **New branch ruleset** form offers thirteen rules. **`Require\nmerge queue` is not one of them**:\n\n```\nRestrict creations · Restrict updates · Restrict deletions\nRequire linear history · Require deployments to succeed · Require signed commits\nRequire a pull request before merging · R",
       "file": "beans/defs/folio-assistant-1hjm--merge-queue-is-unavailable-on-this-repo-three-work.md"
+    },
+    {
+      "id": "folio-assistant-1j3q",
+      "title": "ROUTE-KEYED STORAGE: a third `keyedBy` for regenerable rendered pages — one entry per route, replaced by its one writer, never spliced with `expect`",
+      "status": "in-progress",
+      "type": "feature",
+      "priority": "normal",
+      "parent": "folio-assistant-fs43",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-10-03T13:20:54Z",
+      "updatedAt": "2026-10-03T13:21:20Z",
+      "preview": "Owner, 2026-10-03, decision 3 of the auto-doc rendered-graphs Q&A (#1966):\n**\"Add route-keyed storage, then move it off main\"** — asked about the cost of\nleaving generated pages committed on `main`.\n\nThe schema's own docblock (`cat-harness.ts`, §\"`keyedBy` — two keyings, and a\nthird is a schema change\") says what this bean is: *\"The field is an enum, not\na string, so a third keying is a schema cha",
+      "file": "beans/defs/folio-assistant-1j3q--route-keyed-storage-a-third-keyedby-for-regenerabl.md"
     },
     {
       "id": "folio-assistant-1l13",
@@ -3251,14 +3279,14 @@
     {
       "id": "folio-assistant-akjg",
       "title": "DOCS-POPULATED HAS NO SUBJECT TEST: the gate passes smart-trust on docs/category/Other.md — length and authorship have teeth, 06e3 §4(b) processes/roles/tasks half was never built",
-      "status": "in-progress",
+      "status": "completed",
       "type": "bug",
       "priority": "normal",
       "parent": "folio-assistant-0lmb",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-10-03T13:50:38Z",
-      "updatedAt": "2026-10-03T13:50:59Z",
+      "updatedAt": "2026-10-03T14:22:22Z",
       "preview": "`check:docs-populated` (`scripts/check-docs-populated.ts`, 2026-10-02, gated at\n`code-quality-gates.yml:1846`) implements half of `06e3` §4(b) and reports the\nother half as if it were not asked.\n\nOwner, `06e3` §4(b), both halves in one sentence:\n\n> does the page reference the harness's **processes, roles and tasks**, and does\n> it say something about them that the index does not?\n\nBuilt: **length*",
       "file": "beans/defs/folio-assistant-akjg--docs-populated-has-no-subject-test-the-gate-passes.md"
     },
@@ -4551,6 +4579,20 @@
       "updatedAt": "2026-10-01T09:12:25Z",
       "preview": "Arc `3fva`, proposal §3.3 and §4 item 5.6. Blocked on the TEST PROCESS bean.\n\n`test/results/crdm-detect-eval.test-run.json` already holds 27 cases with precision and recall, plus a second-annotator corpus in `scripts/eval/`. Turn it into `test-plan/v1`, execute it through `test-plan-execution.bpmn`, and take a certification decision. The second plan is an MCP tool (`workflow_complete` refuses a st",
       "file": "beans/defs/folio-assistant-ff09--dogfood-test-plan-1-certify-the-crdm-detect-skill.md"
+    },
+    {
+      "id": "folio-assistant-ffv7",
+      "title": "ASK DOWNSTREAM: would a kg-to-portal consumer read SPDX (SBOM or licence ids)? D1 of the SPDX proposal waits on it",
+      "status": "todo",
+      "type": "task",
+      "priority": "",
+      "parent": "folio-assistant-zzmr",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-10-03T10:44:28Z",
+      "updatedAt": "2026-10-03T10:44:28Z",
+      "preview": "Owner, 2026-10-03, after the SPDX 3 analysis (bean `sd5v`) found that **nothing\nconsumes an SPDX document** today: *\"Ask a consumer first\"*, then *\"leave a bean\nto ask downstream user feedback\"*.\n\n## Why this exists\n\nThe applicability proposal\n(`cat-harness/docs/proposals/spdx-3-applicability-2026-10-03.md`) rated a\nrelease SBOM and an SPDX `kg-to-portal` manifest as worth building **if** a\nconsum",
+      "file": "beans/defs/folio-assistant-ffv7--ask-downstream-would-a-kg-to-portal-consumer-read.md"
     },
     {
       "id": "folio-assistant-fgkb",
@@ -6199,6 +6241,20 @@
       "file": "beans/defs/folio-assistant-mkqf--queued-stream-c-what-the-reader-receives-deploymen.md"
     },
     {
+      "id": "folio-assistant-mlux",
+      "title": "PROCESS BINDINGS: clear the 33 wrong-direction skill bindings check:process-bindings baselined",
+      "status": "in-progress",
+      "type": "task",
+      "priority": "normal",
+      "parent": "folio-assistant-vke6",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-10-03T10:38:18Z",
+      "updatedAt": "2026-10-03T15:01:36Z",
+      "preview": "Owner, 2026-10-03: a process may bind only skills (and through them Tools) from its own instance or one it needs — \"general rule, not just fhir-harness\". `check:process-bindings` (cat-harness/scripts/, PR #1968) found 33 unique wrong-direction bindings (35 refs) in 9 diagrams on 2026-10-03, all baselined in cat-harness/scripts/process-bindings.baseline.ts. Each fix is EITHER move the process up to",
+      "file": "beans/defs/folio-assistant-mlux--process-bindings-clear-the-34-wrong-direction-skil.md"
+    },
+    {
       "id": "folio-assistant-mm2n",
       "title": "SEARCH SECTIONS: split the 7.7 MB platform scope by section over a declared budget (#1972)",
       "status": "in-progress",
@@ -7727,6 +7783,20 @@
       "updatedAt": "2026-09-30T15:01:31Z",
       "preview": "Issue #1614. Owner supplied KG__folio-asst as .pptx and .odp. Add a slides rung to bun run ingest handling both, report accessibility, ingest the preferred (pptx) into library, list missing methodology sources, improve docs across layers.\n\n## Done when\n- [ ] slides-structure.py rung + ingest-document.ts routing + tests\n- [ ] library-ingestion skill updated\n- [ ] deck ingested to a library with a11",
       "file": "beans/defs/folio-assistant-scfh--ingest-slides-pptxodp-rung-a11y-probe-kgfolio-asst.md"
+    },
+    {
+      "id": "folio-assistant-sd5v",
+      "title": "SPDX 3 applicability: where it should, could and should not be used — impact on processes, tasks and gates",
+      "status": "in-progress",
+      "type": "task",
+      "priority": "normal",
+      "parent": "folio-assistant-zzmr",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-10-03T10:14:26Z",
+      "updatedAt": "2026-10-03T10:44:49Z",
+      "preview": "Owner, 2026-10-03: deep analysis of where SPDX v3 could/should/should not be used (test results, QA reports, tool definitions...), impact analysis on missing processes/tasks and on existing ones. Deliverable: cat-harness/docs/proposals/spdx-3-applicability-2026-10-03.md. Not building anything: owner decisions first.\n\n## Done when\n- [x] proposal written and linked from proposals index\n- [ ] owner h",
+      "file": "beans/defs/folio-assistant-sd5v--spdx-3-applicability-where-it-should-could-and-sho.md"
     },
     {
       "id": "folio-assistant-sff8",
@@ -9511,6 +9581,20 @@
       "updatedAt": "2026-10-01T06:58:48Z",
       "preview": "Owner rulings, 2026-09-29 (answers to the separation analysis, Q7/Q1/Q10/Q5):\n\n- **Zod moves DOWN into bootstrap-tools** — reverses `319n`'s placement. Across repos, Zod in cat-harness makes a bootstrap release depend on cat-harness, which depends on bootstrap. bootstrap still knows no zod (`etg1`).\n- **bootstrap-tools owns content checks AND the README/SVG writers** (options 1+2), not a whole har",
       "file": "beans/defs/folio-assistant-xsqm--bootstrap-tools-re-create-as-a-sibling-instance-zo.md"
+    },
+    {
+      "id": "folio-assistant-xsrv",
+      "title": "ROUTE-KEYED CUTOVER, FIRST FAMILY: move docs/uml/ off main onto a route-keyed branch — one generator, one gate, bisectable",
+      "status": "todo",
+      "type": "task",
+      "priority": "normal",
+      "parent": "folio-assistant-fs43",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-10-03T13:28:54Z",
+      "updatedAt": "2026-10-03T13:29:11Z",
+      "preview": "The follow-on to `1j3q` (PR #1996), which built `storage.keyedBy: \"route\"` and\ndeliberately flipped nothing. This is the first family that uses it.\n\n## Why `docs/uml/` and not the other 48\n\n**A-narrow, chosen over A-full.** Measured on #1966: **49 of 94** gated checks\nwrite page files. Flipping them together cannot be bisected — a red tells you\n\"some page moved wrong\" and nothing more. `docs/uml/`",
+      "file": "beans/defs/folio-assistant-xsrv--route-keyed-cutover-first-family-move-docsuml-off.md"
     },
     {
       "id": "folio-assistant-xtpc",
