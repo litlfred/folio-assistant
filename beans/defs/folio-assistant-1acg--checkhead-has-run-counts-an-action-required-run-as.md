@@ -5,7 +5,7 @@ status: in-progress
 type: bug
 priority: high
 created_at: 2026-10-03T00:15:20Z
-updated_at: 2026-10-03T00:15:28Z
+updated_at: 2026-10-03T01:07:00Z
 parent: folio-assistant-1xhc
 ---
 
@@ -190,3 +190,5 @@ cheap pass over every open PR, where the per-head tool does the reconciliation.
 
 Reading the first as the second is the whole of bean `1xhc`. The sweep is not
 the instrument for a merge decision, and nothing here makes it one.
+
+PR #1942 opened and pushed (4 commits). Blocked on #1946 for a base-side step-65 red that is not this diff. Not merging; the Merge Manager merges.
