@@ -60,6 +60,7 @@ the same as fine. The same verdict is `kg:audit`'s `tool-downstream-fresh` for t
 | `smart-base/library` | <span class="lv-pass">pass</span> | fresh |
 | `smart-base/methodologies` | <span class="lv-na">n/a</span> | below the need-an-index threshold — not judged |
 | `smart-base/smart-base-docs` | <span class="lv-fail">fail</span> | needs an LSI index and has none — run `bun run lsi index --instance smart-base --graph smart-base-docs` |
+| `smart-base/smart-base-findings` | <span class="lv-na">n/a</span> | below the need-an-index threshold — not judged |
 | `smart-immunizations/smart-immunizations-docs` | <span class="lv-fail">fail</span> | needs an LSI index and has none — run `bun run lsi index --instance smart-immunizations --graph smart-immunizations-docs` |
 | `smart-trust/smart-trust-docs` | <span class="lv-fail">fail</span> | needs an LSI index and has none — run `bun run lsi index --instance smart-trust --graph smart-trust-docs` |
 | `who-iris/library` | <span class="lv-pass">pass</span> | fresh |
@@ -118,14 +119,14 @@ Each dimension is a **contrast** between two poles, shown by their highest-loadi
 
 | dim | σ | one pole | the other pole |
 |---|---|---|---|
-| 1 | 45.18 | kind, instance, harness, directory, page, graph, session, branch | *(none)* |
-| 2 | 21.72 | watcher, sibling, queue, prs, slot, backlog, commits, block | harness, instance, declaration, node, directory, directories, subgraph, graph |
+| 1 | 45.19 | kind, instance, harness, directory, page, graph, session, branch | *(none)* |
+| 2 | 21.73 | watcher, sibling, queue, prs, slot, backlog, commits, block | harness, instance, declaration, node, directory, directories, subgraph, graph |
 | 3 | 18.07 | slot, chapter, block, edges, formal, project, proof, watcher | session, beans, epic, page, goals, branch, window, push |
 | 4 | 17.07 | page, block, text, tile, blocks, chapter, manifest, avatar | sibling, ledger, session, sessions, subgraph, subdirectory, plan, coordination |
 | 5 | 15.51 | tile, glass, avatar, card, board, theme, sticky, tiles | rung, archive, sniff, archived, ingest, pdf, zip, arxiv |
-| 6 | 15.09 | lane, actor, role, requirements, task, analysis, edge, impact | queue, sha, backlog, withheld, bytes, slide, rung, arm |
-| 7 | 14.72 | preview, staging, translation, locale, url, translated, pages, language | tile, glass, avatar, card, slot, sticky, fit, settings |
-| 8 | 14.52 | edges, forward, edge, backward, cross-chapter, logical, energy, storytelling | actor, lane, role, requirement, task, user, requirements, login |
+| 6 | 15.11 | lane, actor, role, requirements, task, analysis, process, impact | queue, sha, backlog, withheld, bytes, slide, rung, library |
+| 7 | 14.72 | preview, staging, translation, url, locale, pages, translated, language | tile, glass, avatar, card, slot, sticky, fit, referee |
+| 8 | 14.53 | edges, forward, edge, backward, cross-chapter, logical, energy, storytelling | actor, lane, role, requirement, task, user, login, backlog |
 
 **Findings** — 0 narrow dimension(s), 0 near-duplicate pair(s).
 
