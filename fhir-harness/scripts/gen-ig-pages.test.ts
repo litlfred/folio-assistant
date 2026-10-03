@@ -85,7 +85,7 @@ describe("gen-ig-pages defaults: this layer names no publisher (fhir-harness/AGE
       const index = readFileSync(join(dir, "docs", "index.md"), "utf8");
       // The banner is drawn (a chrome is given), so the publish note is really on the page.
       expect(index).toContain('<p id="publish-box">This page mirrors a published FHIR Implementation Guide.')
-      expect(index).toContain("## API sidecars surface");
+      expect(index).toContain("## IG API surface");
       expect(index).not.toContain("WHO Implementation Guide");
       expect(index).not.toMatch(/^## DAK/m);
     } finally {

@@ -2,7 +2,7 @@
 title: "Services and Application Types: Health System/Provider Administration — WHO SMART Base artefact"
 description: "ValueSet/CDSCv2.B in the WHO SMART Base IG, with its canonical URL, published representations and DAK API sidecars."
 nav_exclude: true
-dak_openapi: {"src":"../fhir-artifact-index/dak/ValueSet-CDSCv2.B.openapi.json","script":"../assets/dak-openapi.js"}
+ig_api_openapi: {"src":"../fhir-artifact-index/dak/ValueSet-CDSCv2.B.openapi.json","script":"../assets/ig-api-openapi.js"}
 ---
 <link rel="stylesheet" href="{{ '/smart-base/assets/ig-pages.css' | relative_url }}">
 <link rel="stylesheet" href="{{ '/smart-base/assets/ig-chrome.css' | relative_url }}">
@@ -47,14 +47,14 @@ IG rather than a gap in this index.
 
 
 {% comment %}
-An artefact page's DAK API section ("API Information", "Endpoints"), appended to the page by `gen-ig-pages.ts`.
-Reads `page.dak_openapi`: `src` (the artefact's OpenAPI sidecar in the served artefact-index graph) and
-`script` (the loader). The section is built in the browser by `dak-openapi.js` from that file, as
+An artefact page's IG API section ("API Information", "Endpoints"), appended to the page by `gen-ig-pages.ts`.
+Reads `page.ig_api_openapi`: `src` (the artefact's OpenAPI sidecar in the served artefact-index graph) and
+`script` (the loader). The section is built in the browser by `ig-api-openapi.js` from that file, as
 smart-base's post-processing builds it into the Publisher's page; nothing of it is baked in here.
 No whitespace control on these tags, unlike a template that IS a page: this one is APPENDED to an
 artefact page, and a whitespace-stripping opening tag ate the blank line after that page's last table row, so the
 <div> became part of the row and kramdown printed it as text (`liquid-templates` §"Whitespace").
 {% endcomment %}
-<div class="dak-openapi-host" data-dak-openapi-src="{{ page.dak_openapi.src }}"><p>Loading the API information…</p></div>
-<noscript><p>The API information needs JavaScript; the <a href="{{ page.dak_openapi.src }}">OpenAPI file</a> does not.</p></noscript>
-<script src="{{ page.dak_openapi.script }}" defer></script>
+<div class="ig-api-openapi-host" data-ig-api-openapi-src="{{ page.ig_api_openapi.src }}"><p>Loading the API information…</p></div>
+<noscript><p>The API information needs JavaScript; the <a href="{{ page.ig_api_openapi.src }}">OpenAPI file</a> does not.</p></noscript>
+<script src="{{ page.ig_api_openapi.script }}" defer></script>

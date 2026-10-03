@@ -444,7 +444,7 @@ describe("the DAK API section is on exactly the pages the Publisher puts it on",
     .filter((a) => a.resourceType === "ValueSet" && a.sidecars?.openapi?.localPath)
     .map((a) => `${a.resourceType}-${a.id}.md`)
     .sort();
-  const carrying = artifactFiles.filter((f) => readFileSync(join(ARTIFACTS, f), "utf-8").includes("data-dak-openapi-src")).sort();
+  const carrying = artifactFiles.filter((f) => readFileSync(join(ARTIFACTS, f), "utf-8").includes("data-ig-api-openapi-src")).sort();
 
   it("the set matches, and is not empty", () => {
     expect(carrying).toEqual(expected);
