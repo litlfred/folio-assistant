@@ -55,8 +55,10 @@ Part of [C@T Harness](../README.md) 0.1.0, declared as `cat-harness-tests`, hold
 | [`review-nav.e2e.ts`](review-nav.e2e.ts) | a file |  |
 | [`review-visual.e2e.ts`](review-visual.e2e.ts) | a file |  |
 | [`schema-overview-filter.e2e.ts`](schema-overview-filter.e2e.ts) | a file |  |
+| [`search-lazy.e2e.ts`](search-lazy.e2e.ts) | a file |  |
 | [`search-pinned.e2e.ts`](search-pinned.e2e.ts) | a file |  |
 | [`search-restore.e2e.ts`](search-restore.e2e.ts) | a file |  |
+| [`search-scoped.e2e.ts`](search-scoped.e2e.ts) | a file |  |
 | [`settings-crosslinks.e2e.ts`](settings-crosslinks.e2e.ts) | a file |  |
 | [`sidebar-panels.e2e.ts`](sidebar-panels.e2e.ts) | a file |  |
 | [`sidebar-rail.e2e.ts`](sidebar-rail.e2e.ts) | a file |  |
@@ -64,6 +66,7 @@ Part of [C@T Harness](../README.md) 0.1.0, declared as `cat-harness-tests`, hold
 | [`staging-banner.e2e.ts`](staging-banner.e2e.ts) | a file |  |
 | [`state-dashboards.e2e.ts`](state-dashboards.e2e.ts) | a file |  |
 | [`sticky-home.e2e.ts`](sticky-home.e2e.ts) | a file |  |
+| [`sticky-one-component.e2e.ts`](sticky-one-component.e2e.ts) | a file |  |
 | [`sticky-shape.e2e.ts`](sticky-shape.e2e.ts) | a file |  |
 | [`sticky-todos.e2e.ts`](sticky-todos.e2e.ts) | a file |  |
 | [`subprocess-links.e2e.ts`](subprocess-links.e2e.ts) | a file |  |
@@ -75,6 +78,6 @@ Part of [C@T Harness](../README.md) 0.1.0, declared as `cat-harness-tests`, hold
 | [`translation-badges.e2e.ts`](translation-badges.e2e.ts) | a file |  |
 | [`attestations/`](attestations/README.md) | 32 files | |
 | [`health/`](health/) | 8 files | |
-| [`results/`](results/README.md) | 990 files | |
-| [`support/`](support/) | 6 files | |
+| [`results/`](results/README.md) | 994 files | |
+| [`support/`](support/) | 3 files | |
 <!-- kg:subgraph:end -->

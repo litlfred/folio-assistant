@@ -11,8 +11,9 @@
  * | `harness:dirs` | absent → created | absent → NOT created (an empty working copy reads as clean) |
  * | `audit:coverage` | censused | skipped, and the kind reads `stored` |
  *
- * Every real `qa` directory declares it since bean `5hox`, and the last
- * describe block pins the one consequence a fixture cannot: each stored
+ * `keyedBy` is `commit` or `tip` (bean `2h76`); `tip` is refused on a `qa`
+ * directory. Every real `qa` directory declares it since bean `5hox`, and the
+ * last describe block pins the one consequence a fixture cannot: each stored
  * directory's working copy is ignored by version control, so a writer's output
  * is never committed by accident and the removal stays removed.
  *
@@ -48,6 +49,20 @@ describe("the schema", () => {
   test("accepts { branch, keyedBy: commit } and leaves it optional", () => {
     expect(ContentDirectorySchema.safeParse({ id: "qa", path: "test/results/", graphKinds: ["qa"], storage: STORED }).success).toBe(true);
     expect(ContentDirectorySchema.safeParse({ id: "qa", path: "test/results/", graphKinds: ["qa"] }).success).toBe(true);
+  });
+
+  test.each([
+    ["commit", { id: "qa", path: "test/results/", graphKinds: ["qa"] }],
+    ["tip", { id: "beans-defs", path: "beans/defs/", graphKinds: ["bean-defs"] }],
+  ])("accepts keyedBy %s (bean 2h76)", (keyedBy, dir) => {
+    const storage = { branch: "cat/cat-harness/beans", keyedBy };
+    expect(DirectoryStorageSchema.safeParse(storage).success).toBe(true);
+    expect(ContentDirectorySchema.safeParse({ ...dir, storage }).success).toBe(true);
+  });
+
+  test("refuses keyedBy tip on a qa directory: qa is commit-keyed by construction", () => {
+    const r = ContentDirectorySchema.safeParse({ id: "qa", path: "test/results/", graphKinds: ["qa"], storage: { branch: "x", keyedBy: "tip" } });
+    expect(r.success).toBe(false);
   });
 
   test.each([

@@ -6543,7 +6543,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "This directory's contents are STORED on a branch, keyed by commit, and the checkout holds at most a working copy. See {@link DirectoryStorageSchema}."
+          "@value": "This directory's contents are STORED on a branch, keyed by commit or tip, and the checkout holds at most a working copy. See {@link DirectoryStorageSchema}."
         }
       ],
       "dcterms:source": "cat-harness/schemas/cat-harness.ts#ContentDirectory.storage",
@@ -6866,7 +6866,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "How entries are keyed on the branch. Only `commit` exists."
+          "@value": "How entries are keyed on the branch: one entry per `commit`, or one live copy at the `tip`."
         }
       ],
       "dcterms:source": "cat-harness/schemas/cat-harness.ts#DirectoryStorageSchema.keyedBy",
