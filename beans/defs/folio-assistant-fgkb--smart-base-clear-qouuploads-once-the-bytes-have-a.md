@@ -5,7 +5,7 @@ status: in-progress
 type: task
 priority: normal
 created_at: 2026-09-22T08:35:28Z
-updated_at: 2026-10-02T12:43:16Z
+updated_at: 2026-10-03T14:16:53Z
 parent: folio-assistant-2yyh
 ---
 
@@ -44,7 +44,7 @@ A "go" on the session's work is not consent for this. It is the one step in the 
 
 ## Done when
 - [x] the remaining two sha256 comparisons are made
-- [ ] the owner has said whether to remove the seven, and separately what to do with `Home _ folio-assistant.pdf`
+- [x] the owner has said whether to remove the seven, and separately what to do with `Home _ folio-assistant.pdf`
 - [ ] if yes: a commit in `litlfred/qou`, not here
 
 ## The verification is complete, 2026-09-22 — and all SEVEN were re-run, not two
@@ -100,3 +100,19 @@ rather than as free text.
 ## Owner ruling 2026-10-02: "Put in fsh-guts"
 
 Applied to all eight, the home-page print included: relocation is reversible, which is why fsh-guts exists. litlfred/qou#7494 (draft) moves them from uploads/ to fsh-guts/uploads/, each with a folio-fsh-guts/v1 .md sidecar (kind: source, movedFrom, movedOn, bean). sha256 re-run before the move: all seven WHO PDFs equal the source.sha256 recorded by their smart-base/library entries. Merging in qou needs /prepare-merge and the author's 'merge it'. Close this bean when #7494 merges.
+
+## Owner rulings 2026-10-03 (supersede the 2026-10-02 "Put in fsh-guts" plan for qou#7494)
+
+Dispatched from https://claude.ai/code/session_015Q15h1fg2Hh9MJXfAqr4h7. Held by https://claude.ai/code/session_013Pdniq3SSCRvxhsN4E5aFi (branch `claude/fgkb-cpmo-qou-uploads`).
+
+1. Remove the seven verified WHO PDFs from qou/uploads — selected option, verbatim: **"Yes, via a qou PR"**.
+2. `Home _ folio-assistant.pdf` — selected option, verbatim: **"Move it to fsh-guts"**. Keep a copy in folio-assistant's fsh-guts, then remove it from qou.
+
+Order, because the qou step cannot be undone: (a) the home PDF lands in `fsh-guts/uploads/` on folio-assistant **main**; (b) only then all seven sha256 are re-verified against `smart-base/library/*/structure.json`, and the home PDF against its fsh-guts copy on main; (c) ONE qou PR removes the eight files. The owner merges it personally. Any mismatch means nothing is removed.
+
+### Step (a), 2026-10-03
+`fsh-guts/uploads/Home-_-folio-assistant.pdf` + sidecar. Copied byte-identical from this repo's `uploads/Home-_-folio-assistant.pdf`: 7,341,534 bytes, sha256 `783058fd36feb3cb2618b43fc236b37d3f10a096d5af1edb354970084deffa54`. The 2026-09-22 pass recorded only the PREFIX `783058fd…` for qou's copy, so the full digest is still owed against qou in step (b).
+
+The seven WHO PDFs already have archived copies at `fsh-guts/uploads/` here (the 2026-09-30 `q7ey` retirement), so step (a) added none of them.
+
+**Blocked on access:** this session's request to attach `litlfred/qou` was refused by the permission classifier, so steps (b) and (c) need the owner to allow `add_repo` for qou, or another session to do them.
