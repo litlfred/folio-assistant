@@ -46,3 +46,6 @@ Selected: `<BASE_URL>/subgraph/<HARNESS>/<NAME>/` — one IRI names the subgraph
 
 ## Owner ruling 2026-10-03 — hydration depth
 Selected "Deep, but not at root": `hydrated.jsonld` inlines EVERY node in the subgraph's transitive membership (so all of `skills/sdlc` is one fetch); the ROOT subgraph (a harness instance, and the repo KG above it) publishes `index.jsonld` only — no root `hydrated.jsonld`, so no monolith. Every level, root included, has `index.jsonld`, which lists direct members as pointers and child subgraphs by IRI.
+
+## Owner ruling 2026-10-03 — file name
+The dereferenced file is `index.hydrated.jsonld` (was `hydrated.jsonld`): the pair is `index.jsonld` + `index.hydrated.jsonld`, sorting together, both under the subgraph's directory IRI.
