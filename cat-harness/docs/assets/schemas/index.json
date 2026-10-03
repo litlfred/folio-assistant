@@ -2,7 +2,7 @@
   "$schema": "folio-schema-graph/v1",
   "tile": {
     "schemas": {
-      "count": 206,
+      "count": 207,
       "unit": "modules"
     }
   },
@@ -569,6 +569,14 @@
       "graphNode": "schema",
       "summary": "The `owner/repo ↔ instance` map — DERIVED, never kept by hand (bean `6rmv`).",
       "isTest": false
+    },
+    {
+      "module": "cat-harness/schemas/instance-roots-worktrees.test.ts",
+      "instance": "cat-harness",
+      "name": "instance-roots-worktrees.test",
+      "graphNode": "undeclared",
+      "summary": "Instance discovery with git worktrees present (bean `g43f`).",
+      "isTest": true
     },
     {
       "module": "cat-harness/schemas/intake.ts",

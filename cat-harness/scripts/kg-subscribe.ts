@@ -105,6 +105,7 @@ import {
   findDeclarationFile,
   instanceRootsIn,
   repoRootFor,
+  siblingScopeFor,
   rootForScope,
 } from "../schemas/cat-harness.js";
 import { RepoFullNameSchema } from "../schemas/repo-full-name.js";
@@ -744,7 +745,7 @@ function flag(argv: string[], name: string): string | undefined {
 if (import.meta.main) {
   const argv = process.argv.slice(2);
   if (argv.includes("--check")) {
-    const roots = [...new Set([resolve(INSTANCE), ...instanceRootsIn(repoRootFor(INSTANCE)).map((r) => resolve(r))])];
+    const roots = [...new Set([resolve(INSTANCE), ...instanceRootsIn(siblingScopeFor(INSTANCE)).map((r) => resolve(r))])];
     let subs = 0;
     const problems: string[] = [];
     for (const r of roots) {

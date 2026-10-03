@@ -5,7 +5,7 @@ status: todo
 type: bug
 priority: high
 created_at: 2026-09-30T14:13:37Z
-updated_at: 2026-10-03T13:53:19Z
+updated_at: 2026-10-03T15:30:00Z
 parent: folio-assistant-1xhc
 ---
 
@@ -220,3 +220,76 @@ That residue is why the box below stays open rather than being ticked.
 
 ## Seen again 2026-10-03 (session_01AxhsSvodhTgaioG1nUBWkh)
 A `bun run gates` run in worktree `agent-a4f48d5f4b9b6cf79` failed 5 of 220: part of the run picked up the SIBLING worktree `.claude/worktrees/agent-a632837f47a89d903` as an instance, and the failing tests and flagged files (`gen-slice-sqlite.ts`, `vendor-sqlite-wasm.ts`) existed only there. Re-run alone, `check:declared-paths`, `check:artefact-verification`, `check:partition` and the three test files all passed. So at least one of those sweeps (or the instance discovery behind them) still descends into `.claude/worktrees/`.
+
+## 2026-10-03 follow-up — the instance-discovery escape (session_01AxhsSvodhTgaioG1nUBWkh)
+
+### What the reproduction showed, and did not
+
+Probe: `git worktree add .claude/worktrees/g43f-probe HEAD`, seeded with
+`agent-a632837f47a89d903`'s `gen-slice-sqlite.ts`, `vendor-sqlite-wasm.ts`, its
+`package.json`, and a failing `*.test.ts`. With that probe nested AND ten live
+sibling worktrees beside this one, **before any fix**:
+
+```
+check:declared-paths, check:artefact-verification, check:partition   exit 0, 0 mentions of the probe
+bun test                                                            14726 pass, 0 fail (724 files); probe test not collected
+bun run gates                                                       220 of 220 pass
+```
+
+So the 5-of-220 failure of 2026-10-03 is **NOT reproduced** by a nested worktree,
+nor by siblings. Each of the three checks roots its scan at its own
+`import.meta.dir`, so flagging `gen-slice-sqlite.ts` means the process READ
+`agent-a632…`'s tree as its own. That points to the run's working directory
+(the main checkout, or `agent-a632…` itself) rather than to a sweep descending.
+**Not determined**, and not to be read as "no sweep descends".
+
+### The escape that IS real — found while looking
+
+`repoRootFor` is `dirname`. For the ROOT instance of a worktree that is
+`.claude/worktrees/`, and `instanceRootsIn` there returned **every sibling
+worktree** (measured: 10) as an instance. Three call sites composed exactly
+that: `content-holds-code.ts` (reached by `kg-audit` for the root instance),
+`check-tools.ts` (`declaredProcessIds`, `satisfiableSkills`) and
+`kg-subscribe.ts --check`.
+
+Fixed at two layers:
+
+- **Shared:** `instanceRootsIn` drops a child that holds its own `.git` (a
+  worktree's is a FILE) unless the scanned root's `.gitmodules` names it, via
+  the new exported `isForeignCheckout`. `bootstrap/`, `bootstrap-tools/` keep
+  their place; a fixture with no `.git` is unchanged. This reaches every
+  `instanceRootsIn` caller (~40), whatever scope it arrives with.
+- **Call sites:** the three above use `siblingScopeFor`, which keeps the root
+  instance inside its own checkout.
+
+Regression test: `cat-harness/schemas/instance-roots-worktrees.test.ts` builds a
+real `git worktree add` fixture and asserts neither the nested nor the escaped
+scan sees a sibling.
+
+### Class audit — recorded, not fixed
+
+`repoRootFor(x)` with an `x` that can be the root instance still escapes the
+checkout for **file reads**, though no longer for instance discovery:
+`known-skills.ts:462,766` (`join(repoRootFor(root), ".claude", "skills")` — a
+missing dir read as empty, the `dh4f` shape), `kg-export.ts:1519`,
+`schema-graph.ts:773`, `gen-subgraph-jsonld.ts:540`,
+`check-subgraph-coverage.ts:440` default, `voice-criteria.ts:75`,
+`liquid-values.ts:124` and `cat-harness.ts` `rootForScope`/6065 (a
+`scope: "repository"` entry on the root declaration), `core/access.ts:83`,
+`pages-bootstrap.ts:152`, `check-agents-xref.ts:266`, `validate-skills.ts:78,85`,
+`ensure-landing-sticky.ts:386`, `declared-dirs.ts:45`,
+`check-retired-front-matter.ts:46,212`, `library-graph.ts:748`,
+`voices-graph.ts:269`. Each is safe today only because its caller passes a
+NESTED instance. The fix is `repoRootFor` answering "the checkout" for the root
+instance, which changes ~60 callers and is its own bean.
+
+Static sweep of non-git enumerators seeded at a root-ish variable with no
+dot guard: 32 candidates; those inspected (`check-secret-leaks`,
+`check-self-discharging-instances`, `process-model`, `lean-coverage`,
+`summaries`, `beans-prime`, `check-declared-paths`) walk a named subdirectory.
+
+- [x] Reproduce with a nested probe worktree — done; not reproduced (above).
+- [x] Instance discovery cannot list a sibling or nested worktree — `isForeignCheckout`, with a regression test.
+- [x] The three call sites that composed the escape use `siblingScopeFor`.
+- [ ] `repoRootFor` escapes the checkout for the root instance — the list above.
+- [ ] What actually produced the 2026-10-03 5-of-220 — not determined.
