@@ -68,7 +68,18 @@ export default defineConfig({
   // literal text (the bean `9zok` shape). Unset means the whole suite.
   shard: parseShard(process.env.E2E_SHARD),
   globalSetup: './cat-harness/test/e2e-global-setup.ts',
-  reporter: 'list',
+  // `list` prints to the job log; on CI an HTML report is written BESIDE it so
+  // the workflow can keep it as an artifact.
+  //
+  // Bean `yqc4`. A red e2e job here was opaque to anyone who could not reach
+  // GitHub's log host: the check run's annotations say only `Process completed
+  // with exit code 1`, the run uploaded nothing, and `list` writes to the log
+  // and nowhere else. So the one record of WHICH test failed lived in the one
+  // place a reader might not be able to open.
+  //
+  // `open: 'never'` because CI has no browser to open it in, and the step that
+  // follows uploads the folder rather than serving it.
+  reporter: process.env.CI ? [['list'], ['html', { open: 'never' }]] : 'list',
   use: {
     baseURL: 'http://127.0.0.1:8080',
     headless: true,
