@@ -274,6 +274,26 @@
       "skos:note": "candidate"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/ns#glossary/kg-tools/ig-cache",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/ns#glossary/kg-tools"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "FHIR AST cache"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Restore, verify, seed and diagnose the prebuilt AST artefacts for an IG. Always try `restore` first: a full AST build via AstExportCli is expensive, a restore is fast."
+        }
+      ],
+      "skos:notation": "ig-cache",
+      "dcterms:source": "fhir-harness/tools/index.ts#ig-cache",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/ns#glossary/kg-tools/ig-pages",
       "@type": "skos:Concept",
       "skos:inScheme": {

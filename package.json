@@ -402,6 +402,7 @@
     "smart-trust:openapi:pages": "bun run cat-openapi/scripts/gen-openapi-pages.ts --instance smart-trust",
     "smart-trust:openapi:pages:check": "bun run cat-openapi/scripts/gen-openapi-pages.ts --instance smart-trust --check",
     "smart-trust:pages:check": "bun run fhir-harness/scripts/gen-ig-pages.ts --instance smart-trust --publish-note \"This page mirrors a published WHO Implementation Guide.\" --sidecar-label \"DAK API\" --label \"WHO SMART Trust\" --chrome-owner smart-base --check",
+    "smart-trust:ast-site": "bash fhir-harness/scripts/ig-ast-site.sh --instance smart-trust --label \"WHO SMART Trust (AST build)\" --chrome-owner smart-base --publish-note \"This page is built from the WHO SMART Trust IG Publisher AST cache, provisional until a full Publisher run.\" --sidecar-label \"DAK API\"",
     "smart-base:pages": "bun run fhir-harness/scripts/gen-ig-pages.ts --instance smart-base --publish-note \"This page mirrors a published WHO Implementation Guide.\" --sidecar-label \"DAK API\" --label \"WHO SMART Base\" --chrome-owner smart-base --summary",
     "smart-base:document-kinds": "bun run smart-base/scripts/gen-document-kinds.ts",
     "smart-base:document-kinds:check": "bun run smart-base/scripts/gen-document-kinds.ts --check",
