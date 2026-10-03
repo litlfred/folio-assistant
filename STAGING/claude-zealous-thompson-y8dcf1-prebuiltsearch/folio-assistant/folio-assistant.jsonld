@@ -205,6 +205,15 @@
     "sourceKind": "https://litlfred.github.io/cat-harness/0.1.0/ns#sourceKind",
     "instructionsPath": "https://litlfred.github.io/cat-harness/0.1.0/ns#instructionsPath",
     "readmePath": "https://litlfred.github.io/cat-harness/0.1.0/ns#readmePath",
+    "contentSource": {
+      "@id": "http://purl.org/dc/terms/source",
+      "@context": {
+        "kind": "http://purl.org/dc/terms/type",
+        "branch": "http://purl.org/dc/terms/identifier",
+        "keyedBy": "https://litlfred.github.io/cat-harness/0.1.0/ns#keyedBy",
+        "declaredIn": "https://litlfred.github.io/cat-harness/0.1.0/ns#sourceDeclaredIn"
+      }
+    },
     "instructionLines": {
       "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#instructionLines",
       "@type": "http://www.w3.org/2001/XMLSchema#integer"
@@ -309,10 +318,10 @@
     "schemas",
     "tools"
   ],
-  "generatedAt": "2026-10-03T16:06:49.075Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/80812a65c572dc3d9d25f261b96ea896b2810464",
-  "sourceCommitSha": "80812a65c572dc3d9d25f261b96ea896b2810464",
-  "sourceCommitAt": "2026-10-03T15:57:36Z",
+  "generatedAt": "2026-10-03T16:22:21.394Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/692c306abf5d95dd1b7d74ba9b3eaefe787d86d6",
+  "sourceCommitSha": "692c306abf5d95dd1b7d74ba9b3eaefe787d86d6",
+  "sourceCommitAt": "2026-10-03T16:11:37Z",
   "sourceTreeDirty": true,
   "dependsOnUnavailable": "this instance declares no `canonicalUrl`, and §3.4's record is `{packageId, version, uri}` — `canonicalUrl` is what plays `uri`, so the record cannot be expressed rather than being withheld on purpose",
   "counts": {
@@ -445,6 +454,10 @@
       "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Subgraph",
       "name": "uploads",
       "path": "uploads/",
+      "contentSource": {
+        "kind": "directory",
+        "declaredIn": "default"
+      },
       "holdsGraph": [
         "https://litlfred.github.io/folio-assistant-core/0.1.0/ns#graphKind/uploads"
       ],
@@ -458,6 +471,10 @@
       "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Subgraph",
       "name": "root-tools",
       "path": "tools/",
+      "contentSource": {
+        "kind": "directory",
+        "declaredIn": "default"
+      },
       "holdsGraph": [
         "https://litlfred.github.io/cat-harness/0.1.0/ns#graphKind/code"
       ],
@@ -471,6 +488,10 @@
       "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Subgraph",
       "name": "beans",
       "path": "beans/",
+      "contentSource": {
+        "kind": "directory",
+        "declaredIn": "default"
+      },
       "holdsGraph": [
         "https://litlfred.github.io/cat-harness/0.1.0/ns#graphKind/beans"
       ],
@@ -484,6 +505,10 @@
       "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Subgraph",
       "name": "todos",
       "path": "todos/",
+      "contentSource": {
+        "kind": "directory",
+        "declaredIn": "default"
+      },
       "holdsGraph": [
         "https://litlfred.github.io/folio-assistant-core/0.1.0/ns#graphKind/todos"
       ],
@@ -497,6 +522,10 @@
       "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Subgraph",
       "name": "memory",
       "path": "memory/",
+      "contentSource": {
+        "kind": "directory",
+        "declaredIn": "default"
+      },
       "holdsGraph": [
         "https://litlfred.github.io/cat-harness/0.1.0/ns#graphKind/memory",
         "https://litlfred.github.io/cat-harness/0.1.0/ns#graphKind/waiver"
@@ -511,6 +540,10 @@
       "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Subgraph",
       "name": "interaction",
       "path": "interaction/",
+      "contentSource": {
+        "kind": "directory",
+        "declaredIn": "default"
+      },
       "holdsGraph": [
         "https://litlfred.github.io/cat-harness/0.1.0/ns#graphKind/interaction"
       ],
@@ -524,6 +557,10 @@
       "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Subgraph",
       "name": "issue-marks",
       "path": "issue-marks/",
+      "contentSource": {
+        "kind": "directory",
+        "declaredIn": "default"
+      },
       "holdsGraph": [
         "https://litlfred.github.io/cat-harness/0.1.0/ns#graphKind/issue-marks"
       ],
@@ -537,6 +574,10 @@
       "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Subgraph",
       "name": "root-docs",
       "path": "docs/",
+      "contentSource": {
+        "kind": "directory",
+        "declaredIn": "default"
+      },
       "holdsGraph": [
         "https://litlfred.github.io/cat-harness/0.1.0/ns#graphKind/docs"
       ],
@@ -568,8 +609,8 @@
   ],
   "staging": {
     "branch": "claude/zealous-thompson-y8dcf1-prebuiltsearch",
-    "sha": "ab768941b628f2faf1726b29797b1ab767283a7d",
+    "sha": "db63fad3aecd83ae4fd1331cc2d87317cff7ebbc",
     "pr": "2018/merge",
-    "run": "37135104994"
+    "run": "37135952570"
   }
 }
