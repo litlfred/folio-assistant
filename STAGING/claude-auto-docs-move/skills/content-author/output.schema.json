@@ -1,0 +1,43 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://litlfred.github.io/folio-assistant/STAGING/claude-auto-docs-move/skills/content-author/output.schema.json",
+  "title": "Content Author Output",
+  "description": "Output schema for general content authoring.",
+  "type": "object",
+  "required": [
+    "artifacts"
+  ],
+  "properties": {
+    "artifacts": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "path",
+          "type"
+        ],
+        "properties": {
+          "path": {
+            "type": "string"
+          },
+          "type": {
+            "type": "string"
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "draft",
+              "ready-for-validation"
+            ]
+          }
+        }
+      }
+    }
+  },
+  "staging": {
+    "branch": "claude/auto-docs-move",
+    "sha": "99054fa5565b68f08551624ba0c1efb234800469",
+    "pr": "1974/merge",
+    "run": "37114469901"
+  }
+}

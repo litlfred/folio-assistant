@@ -1,0 +1,35 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://litlfred.github.io/folio-assistant/STAGING/claude-auto-docs-move/skills/content-publish/output.schema.json",
+  "title": "Content Publish Output",
+  "description": "Output schema for content publication.",
+  "type": "object",
+  "required": [
+    "version",
+    "status"
+  ],
+  "properties": {
+    "version": {
+      "type": "string"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "published",
+        "failed"
+      ]
+    },
+    "publishedUrl": {
+      "type": "string"
+    },
+    "releaseTag": {
+      "type": "string"
+    }
+  },
+  "staging": {
+    "branch": "claude/auto-docs-move",
+    "sha": "99054fa5565b68f08551624ba0c1efb234800469",
+    "pr": "1974/merge",
+    "run": "37114469901"
+  }
+}
