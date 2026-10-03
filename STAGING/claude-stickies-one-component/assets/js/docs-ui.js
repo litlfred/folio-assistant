@@ -8223,7 +8223,7 @@
       pinStickyToGlass(stickyFolioKey("todos", todo.id), {
         title: todo.summary || todo.id,
         kind: "todos",
-        href: withBase("/todos/") + "#" + encodeURIComponent(todo.id),
+        href: safeHref(withBase("/todos/") + "#" + encodeURIComponent(todo.id)),
       });
     }
 
