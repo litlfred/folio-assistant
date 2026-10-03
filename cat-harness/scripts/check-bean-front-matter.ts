@@ -131,14 +131,13 @@ const DUPLICATE_KEY_BASELINE = new Set(["folio-assistant-1hvo"]);
  * Ids already declared by more than one file when the `duplicate-id` check
  * landed (bean `4vg7`, 2026-10-03), other than the one that bean repaired.
  *
- * `yt7j` is a DIFFERENT shape from `t3n8`: not two beans that drew the same
- * id, but one bean in two divergent files — `defs/` holds it `todo` with its
- * title, `archive/` holds it `completed` with `title: ""` and a RULED body.
- * Repairing it means choosing which file is the bean, which is its owner's
- * call, so it is listed rather than demanded. Remove the id when it is
- * repaired; a baseline entry that matches nothing is reported as stale.
+ * Empty since 2026-10-03: the one entry, `yt7j` (one bean in two divergent
+ * files), was repaired by the owner's ruling "keep archive, drop stale" — the
+ * completed archive copy keeps the bean, the stale `defs/` copy was removed.
+ * A new entry needs the same: a reason, and an owner to choose which file is
+ * the bean.
  */
-const DUPLICATE_ID_BASELINE = new Set(["folio-assistant-yt7j"]);
+const DUPLICATE_ID_BASELINE = new Set<string>([]);
 
 /** What a loader objected to, and how much it costs. */
 export type DefectKind =

@@ -167,12 +167,10 @@ describe("check-bean-front-matter", () => {
       // mirrors `DUPLICATE_KEY_BASELINE`, so shrinking that set is meant to
       // fail here — and did, in the same change.
       //
-      // `yt7j` joined 2026-10-03 from `DUPLICATE_ID_BASELINE` (bean `4vg7`):
-      // one bean in two divergent files, defs/ and archive/, the owner's to settle.
-      expect(checkBeanFrontMatter(root).staleBaseline).toEqual([
-        "folio-assistant-1hvo",
-        "folio-assistant-yt7j",
-      ]);
+      // `yt7j` joined 2026-10-03 from `DUPLICATE_ID_BASELINE` (bean `4vg7`) and
+      // left the same day: the owner kept the archive copy and the stale defs/
+      // copy was removed, so that set is empty again.
+      expect(checkBeanFrontMatter(root).staleBaseline).toEqual(["folio-assistant-1hvo"]);
     } finally {
       rmSync(root, { recursive: true, force: true });
     }
