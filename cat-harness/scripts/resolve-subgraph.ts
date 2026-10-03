@@ -19,7 +19,8 @@
  *
  * @module scripts/resolve-subgraph
  */
-import { resolve } from "node:path";
+import { dirname, resolve } from "node:path";
+import { fileURLToPath } from "node:url";
 
 import { checkoutDirectories, declaredSubgraph, type DeclaredSubgraph } from "../schemas/harness-config.ts";
 
@@ -38,7 +39,7 @@ function line(d: DeclaredSubgraph): string {
 }
 
 if (import.meta.main) {
-  const from = resolve(arg("--from") ?? resolve(import.meta.dir, ".."));
+  const from = resolve(arg("--from") ?? resolve(dirname(fileURLToPath(import.meta.url)), ".."));
   const json = process.argv.includes("--json");
   const ids = process.argv.includes("--all")
     ? [...new Set(checkoutDirectories(from).filter((d) => d.own && d.within === undefined).map((d) => d.id))]

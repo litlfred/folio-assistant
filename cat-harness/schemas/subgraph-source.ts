@@ -57,7 +57,8 @@
  * `directory` default) is stated once.
  */
 import { readFileSync } from "node:fs";
-import { resolve } from "node:path";
+import { dirname, resolve } from "node:path";
+import { fileURLToPath } from "node:url";
 import { z } from "zod";
 
 import { propertyIri, termIri } from "./namespaces";
@@ -142,16 +143,24 @@ export type ResolvedSubgraphSource =
       declaredIn: SourceDeclaredIn;
     };
 
-const SPECIAL_BRANCHES_PATH = resolve(import.meta.dir, "..", "scripts", "special-branches.json");
+/**
+ * Where `special-branches.json` is — resolved LAZILY, from `import.meta.url`.
+ * `import.meta.dir` is Bun's alone: Playwright loads this module under Node,
+ * where a top-level `resolve(import.meta.dir, …)` threw before any test ran.
+ * Lazy as well, so importing the declaration schema touches no filesystem.
+ */
+function specialBranchesPath(): string {
+  return resolve(dirname(fileURLToPath(import.meta.url)), "..", "scripts", "special-branches.json");
+}
 
 let specialRows: SpecialBranchRow[] | undefined;
 
 /** `special-branches.json`'s rows — the one declaration of branch names. */
-export function specialBranches(path: string = SPECIAL_BRANCHES_PATH): SpecialBranchRow[] {
-  if (path === SPECIAL_BRANCHES_PATH && specialRows !== undefined) return specialRows;
-  const raw = JSON.parse(readFileSync(path, "utf-8")) as { branches?: SpecialBranchRow[] };
+export function specialBranches(path?: string): SpecialBranchRow[] {
+  if (path === undefined && specialRows !== undefined) return specialRows;
+  const raw = JSON.parse(readFileSync(path ?? specialBranchesPath(), "utf-8")) as { branches?: SpecialBranchRow[] };
   const rows = (raw.branches ?? []).map((b) => ({ id: b.id, shape: b.shape, name: b.name, legacy: [...(b.legacy ?? [])] }));
-  if (path === SPECIAL_BRANCHES_PATH) specialRows = rows;
+  if (path === undefined) specialRows = rows;
   return rows;
 }
 
