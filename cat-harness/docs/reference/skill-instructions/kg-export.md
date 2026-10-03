@@ -477,6 +477,81 @@ Three consequences, all of which the implementation carries:
    checked only against the exporter's own collection would have passed the
    original bug.
 
+## Named subgraphs — one IRI, two files, framed from one graph
+
+**Contract (bean `c1m4`; owner rulings 2026-10-03).** A *named subgraph* is a
+directory of a declared graph, read as a set of KG nodes: `skills/` is one, and
+so is `skills/sdlc/`. Asking for "every node of `cat-harness/skills/sdlc`" must
+take one fetch. Before this contract it could not be done in one step. Today's
+export is one document per instance, and `skills/sdlc` is not a subgraph
+anywhere (measured 2026-10-03; the evidence is on bean `c1m4`).
+
+### Identity
+
+- **The subgraph IRI is a directory IRI in its own namespace:**
+  `<BASE_URL>/subgraph/<HARNESS>/<PATH>/`, for example
+  `…/subgraph/cat-harness/skills/sdlc/`.
+- It is kept apart from content-node IRIs on purpose. A subgraph is a *view* of
+  nodes, not one of them, so renaming a file never renames the subgraph, and
+  re-homing a node never re-mints the subgraph.
+- `/hydrated-graph/` was rejected. The pointer-only file would then live under
+  a path that says "hydrated".
+
+### Two files under the IRI
+
+Both files have root `@id` = the directory IRI.
+
+| file | what is in it | who it is for |
+|---|---|---|
+| `index.jsonld` | **referenced**: each direct member as a pointer (`@id`, `@type`, label), and each child subgraph by its IRI | search, navigation, skeleton loading (`f233`) |
+| `index.hydrated.jsonld` | **dereferenced**: every node in the subgraph's *transitive* membership, inline and fully hydrated | "give me all of `skills/sdlc`" in one fetch |
+
+Rules for the pair:
+
+- **The hydrated file carries KG metadata, never heavy content.** Markdown
+  bodies, images and binaries stay as asset pointers (`f233`'s payloads).
+- **The root has `index.jsonld` only.** A harness instance is itself a named
+  subgraph of the repo KG, and the repo KG is the level above it. A *deep*
+  hydrated file at the root would be the whole graph in one document, which is
+  the monolith `f233` forbids. The owner ruled "deep, but not at root"; the
+  rejected options were shallow everywhere, deep everywhere, and size-capped.
+- **The GitHub Pages caveat.** Pages does no content negotiation, so the
+  directory IRI is documented as resolving to `index.jsonld` by explicit path.
+  A consumer that dereferences the bare IRI gets whatever Pages serves for the
+  directory; `index.jsonld` and `index.hydrated.jsonld` are always addressable
+  by name.
+
+### Building the files
+
+- **One source, two frames.** Both files come out of one build step, from the
+  same in-memory graph, by JSON-LD **framing**: a pointer frame
+  (`@embed: @never`) and an embed frame (`@embed: @always`).
+- **Never two hand-synced properties.** No `authorUri` beside `author`. Two
+  properties carrying one fact is the drift `data-modelling` §3 exists to stop.
+- **`@context` is never inlined.** Every file declares the one shared, cached
+  context URL, the way content documents already use
+  `ns/content/v1.jsonld`.
+
+### Membership is declared, not inferred
+
+- A subgraph's members are what its **declared membership rule** selects.
+- For a directory of a declared graph, the rule is *containment*: a node is in
+  the deepest subgraph directory that contains its source path, and in every
+  ancestor of that one, transitively.
+- A harness's own rule, saying which directories are its graph, is its
+  `<instance>.json` declaration. `Harness` and `Subgraph` therefore share
+  one base, `GraphNodeDirectoryShape`. They do not get two parallel
+  "directory with members" types.
+- A node whose subgraph cannot be determined goes in `problems[]`. It is never
+  silently left out (§"A partial graph must never pass for a whole one").
+
+### Consumers
+
+- **Remote materialization reads these same files.** It does not do a second
+  sparse checkout of the directory.
+- A subgraph manifest that lists a child IRI but whose child file is missing is
+  a dangling link. It is reported, never skipped.
+
 ## Adding a node type
 
 1. **Decide it is in this graph.** The `kg` graph holds skills, processes,
