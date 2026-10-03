@@ -2,7 +2,7 @@
   "$schema": "folio-bean-index/v1",
   "tile": {
     "beans": {
-      "count": 677,
+      "count": 678,
       "unit": "beans"
     }
   },
@@ -4257,6 +4257,20 @@
       "updatedAt": "2026-09-26T11:23:18Z",
       "preview": "Split out of `v625` rather than blocking it: the command itself, its flags and\nits QA sidecar all landed, so the parent has work that can proceed. What cannot\nproceed without a decision is **whether the chain gets a CI gate, and where** —\nbecause every placement available today is either masked or red on arrival.\n\n## Why the obvious placement does not work\n\n`skill:register:check` runs the five `--",
       "file": "beans/defs/folio-assistant-fjwi--where-can-the-registration-chain-check-go-in-ci-ev.md"
+    },
+    {
+      "id": "folio-assistant-fmdl",
+      "title": "SPEED-UP: resolution-across-needs.test.ts spawns each kg-audit twice, serially — 92 s of the slowest shard",
+      "status": "completed",
+      "type": "task",
+      "priority": "",
+      "parent": "folio-assistant-hfag",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-10-03T08:20:52Z",
+      "updatedAt": "2026-10-03T08:20:52Z",
+      "preview": "Follow-up to `ksg3` (and `dlqu`): after both, the longest job in Code-quality\ngates is `TypeScript — bun test, shard 2/4` at 223 s (shard 3/4: 68 s), measured\non #1950's run at `12ae9dc75`.\n\n92 s of that shard is ONE file, `cat-harness/scripts/tests/resolution-across-needs.test.ts`\n(per-file times from the shard's log). A shard moves whole files, so no\nrebalancing can shorten it — the file itself ",
+      "file": "beans/defs/folio-assistant-fmdl--speed-up-resolution-across-needstestts-spawns-each.md"
     },
     {
       "id": "folio-assistant-fnqn",
@@ -8549,14 +8563,14 @@
     {
       "id": "folio-assistant-wm63",
       "title": "FHIR-HARNESS: the bare FHIR IG pipeline as its own harness layer, between core and smart-base",
-      "status": "todo",
+      "status": "in-progress",
       "type": "feature",
       "priority": "high",
       "parent": "folio-assistant-uhkv",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-22T19:07:23Z",
-      "updatedAt": "2026-09-29T20:03:10Z",
+      "updatedAt": "2026-10-03T08:47:15Z",
       "preview": "`fhir-harness` — the layer bean `nsbb` called \"the bare FHIR IG pipeline\", now\nnamed by the owner's stack ruling of 2026-09-22.\n\n## What it is\n\nSUSHI → IG Publisher → Jekyll → a pages branch. **No pre-processing and no\npost-processing.** This is how SMART Guidelines were built before the DAK\nphases were added, so it is a shape that demonstrably worked rather than one\nbeing invented.\n\n## The defini",
       "file": "beans/defs/folio-assistant-wm63--fhir-harness-the-bare-fhir-ig-pipeline-as-its-own.md"
     },
