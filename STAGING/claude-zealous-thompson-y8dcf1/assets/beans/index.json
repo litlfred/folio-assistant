@@ -2,7 +2,7 @@
   "$schema": "folio-bean-index/v1",
   "tile": {
     "beans": {
-      "count": 667,
+      "count": 672,
       "unit": "beans"
     }
   },
@@ -371,6 +371,20 @@
       "updatedAt": "2026-10-02T20:46:38Z",
       "preview": "Owner, 2026-10-02 (on litlfred/fhir-ig-publisher#8): *\"PR should be readable for human for first time. what probelm trying to address, why, how approached, constratins, soltion... ...usage\"* and *\"make that a general skill when writing/updating PRs. see existing skills/processes\"*. Issue #1879.\n\n## Done when\n- [ ] cat-harness/skills/sdlc/sdlc-core/pr-description.md written and registered (skill:re",
       "file": "beans/defs/folio-assistant-19wc--skill-pr-description-a-pr-body-a-first-time-reader.md"
+    },
+    {
+      "id": "folio-assistant-1acg",
+      "title": "check:head-has-run counts an action_required run as RAN — a run that never executed satisfies 'the gates fired'",
+      "status": "completed",
+      "type": "bug",
+      "priority": "high",
+      "parent": "folio-assistant-1xhc",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-10-03T00:15:20Z",
+      "updatedAt": "2026-10-03T01:21:22Z",
+      "preview": "## The defect, in one line\n\n`ranAs` matches a run on **name and event** and never reads its `conclusion`:\n\n```ts\nfunction ranAs(runs: RunRow[], t: WorkflowTrigger, event: string): boolean {\n  return runs.some((r) => r.name === t.name && r.event === event);\n}\n```\n\n`RunRow` already carries `conclusion`. The data was in hand and not consulted.\n\nA `pull_request` run that completes **`action_required`*",
+      "file": "beans/defs/folio-assistant-1acg--checkhead-has-run-counts-an-action-required-run-as.md"
     },
     {
       "id": "folio-assistant-1bvx",
@@ -1677,6 +1691,20 @@
       "file": "beans/defs/folio-assistant-68k7--resolvedirectories-climbs-the-checkouts-parent-is.md"
     },
     {
+      "id": "folio-assistant-68op",
+      "title": "GATE NAME DESCRIBES ONE OF TWO FAILURE MODES: 'viewer pages keep the navbar they had' goes red when the sidecar is ABSENT, and the same run says 0 pages regressed",
+      "status": "todo",
+      "type": "bug",
+      "priority": "",
+      "parent": "folio-assistant-p5wm",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-10-03T01:08:12Z",
+      "updatedAt": "2026-10-03T01:08:12Z",
+      "preview": "The step name in `code-quality-gates.yml` names the REGRESSION branch of\n`check:viewer-nav`. The check has two failure modes, and the other one -\nthe sidecar is absent, so the audit cannot see its subject - fails under\nthe same name. A reader then goes looking for a page that lost its rail,\nand the same run tells them none did.\n\n## Measured 2026-10-03 (on PR #1819, heads c975c7da7b9 and 28746eb6a8",
+      "file": "beans/defs/folio-assistant-68op--gate-name-describes-one-of-two-failure-modes-viewe.md"
+    },
+    {
       "id": "folio-assistant-6b8u",
       "title": "EXTRACTION: MD_MIN_TEXT_LEN is a threshold in CHARACTERS, so the same table cell is translatable in Arabic and not in English",
       "status": "completed",
@@ -2176,7 +2204,9 @@
       "priority": "high",
       "parent": "folio-assistant-vuip",
       "blocking": [],
-      "blockedBy": [],
+      "blockedBy": [
+        "folio-assistant-hfag"
+      ],
       "createdAt": "2026-10-01T08:14:10Z",
       "updatedAt": "2026-10-01T08:31:09Z",
       "preview": "Consolidates the handovers of five stalled sessions (iirv, w2gr/9umr, cjvs/vke6, fnx4/eayu, d33q) into one arc. Plan, status bars, gap analysis (G1–G14), migration checklist and delegation rules: cat-harness/docs/proposals/separation-arc-2026-10-01.md. Stories S0–S8 are children; each story points at the existing beans it absorbs and owns no new code of its own.\n\nStrategy adopted from sibling bean",
@@ -2521,14 +2551,14 @@
     {
       "id": "folio-assistant-9c7h",
       "title": "Move fsh-guts/ to its own special branch cat/cat-harness/fsh-guts (separation prerequisite); retarget its tools",
-      "status": "todo",
+      "status": "in-progress",
       "type": "task",
       "priority": "",
       "parent": "folio-assistant-7x5n",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-10-02T21:20:17Z",
-      "updatedAt": "2026-10-02T21:20:17Z",
+      "updatedAt": "2026-10-03T00:50:36Z",
       "preview": "Owner, 2026-10-02, verbatim: \"bean: as pre-requistie as part of separation, fsh-guts content gets its own named branch, cat/cat-harness/fsh-guts and the contents of fsh-guts/ dir goes there. will need to update the tools associated to this, like with other special named branches.\"\n\nBranch name updated 2026-10-02 per the owner's naming ruling, `cat/<harness>/<name>` (note on `fs43`). The owner aske",
       "file": "beans/defs/folio-assistant-9c7h--move-fsh-guts-to-its-own-special-branch-cat-fsh-gu.md"
     },
@@ -3121,6 +3151,20 @@
       "file": "beans/defs/folio-assistant-b963--cold-start-the-entry-documents-named-scripts-for-t.md"
     },
     {
+      "id": "folio-assistant-ba9e",
+      "title": "Generated README subdirectory counts: 207 volatile integers across 54 READMEs — move them to the _data layer",
+      "status": "todo",
+      "type": "task",
+      "priority": "normal",
+      "parent": "folio-assistant-hfag",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-10-02T22:34:28Z",
+      "updatedAt": "2026-10-02T23:05:21Z",
+      "preview": "Child of `y7b3` part 2, which the owner left as \"decide later\" on 2026-09-30\nwith three options on the table (band the count, drop it, keep it exact).\n**Owner chose a fourth on 2026-10-02: pull the count dynamically from the KG\nJSON-LD rather than freeze it into committed markdown.**\n\n## Why that is the right answer and the other three are not\n\nThe repository had already reached this conclusion fr",
+      "file": "beans/defs/folio-assistant-ba9e--generated-readme-subdirectory-counts-207-volatile.md"
+    },
+    {
       "id": "folio-assistant-bamf",
       "title": "fhir-harness declares and populates FHIR IG Jekyll data (site.data.fhir.*) for the just-the-docs pipeline",
       "status": "completed",
@@ -3644,11 +3688,11 @@
       "status": "in-progress",
       "type": "feature",
       "priority": "normal",
-      "parent": "folio-assistant-1xhc",
+      "parent": "folio-assistant-hfag",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-10-01T06:57:14Z",
-      "updatedAt": "2026-10-01T17:42:08Z",
+      "updatedAt": "2026-10-03T00:34:24Z",
       "preview": "Issue #1707 (bean y7b3 measured it). Owner 2026-10-01: '1 + new skills/tools for each common churn/conflict pattern' and 'put in merge process bpmn'. Settles 520m's open question (may a resolver cover every generated artefact?) as: yes, one declared pattern at a time.\n\n## Measured (y7b3)\n300 main-into-branch merges: 235 conflicted, 147 (63%) only on generated files.\n\n## Built\n- cat-harness/scripts",
       "file": "beans/defs/folio-assistant-d33q--merge-auto-resolve-mergemain-resolves-only-declare.md"
     },
@@ -3743,8 +3787,8 @@
       "title": "SPEED-UP 4: CI sharding, BPMN render cache and shallow checkout",
       "status": "in-progress",
       "type": "task",
-      "priority": "",
-      "parent": "folio-assistant-7x5n",
+      "priority": "normal",
+      "parent": "folio-assistant-hfag",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-10-01T17:42:24Z",
@@ -4521,6 +4565,22 @@
       "updatedAt": "2026-09-26T03:57:20Z",
       "preview": "The owner, 2026-09-20, after four questions that broke the rule:\n\n> *\"ask specific questiosn w/ context/ recommendations/pros/cons (see skills,\n> why not invoked?)\"*\n>\n> *\"fix skills so interaction modality would be triggered\"*\n>\n> *\"can we struture schema better to help enforce?\"*\n\n## The measurement\n\n`interaction-modality` §4.1 was STRICT and complete, and was broken the same day\nby the agent im",
       "file": "beans/defs/folio-assistant-hajp--interaction-the-asking-rule-is-enforced-by-three-l.md"
+    },
+    {
+      "id": "folio-assistant-hfag",
+      "title": "Merge pipeline: train process, queue state, reprioritisation, gates",
+      "status": "in-progress",
+      "type": "epic",
+      "priority": "high",
+      "parent": "",
+      "blocking": [
+        "folio-assistant-7x5n"
+      ],
+      "blockedBy": [],
+      "createdAt": "2026-10-02T17:17:27Z",
+      "updatedAt": "2026-10-02T18:52:43Z",
+      "preview": "Owner, 2026-10-02: the merge pipeline gets its own top-level epic, marked as blocking the separation epic `7x5n`. Running the queue is NOT part of this epic; this epic is the finite build list below.\n\nUntil now the steward's ordering lived in prose (#1802's merge-manager SOP step 2, \"oldest first, unless the owner names an order\"), so nothing recorded WHY one PR jumped ahead of another, and a seco",
+      "file": "beans/defs/folio-assistant-hfag--merge-pipeline-train-process-queue-state-repriorit.md"
     },
     {
       "id": "folio-assistant-hh7g",
@@ -8291,6 +8351,20 @@
       "file": "beans/defs/folio-assistant-w91p--b7a-1168-the-10-gen-viz-scripts-become-tools-rende.md"
     },
     {
+      "id": "folio-assistant-wczm",
+      "title": "Regenerate gaps: no writer for check:l1-complete or smart-kg-l1 --entry; merge-base takes main's side on a fast-forwardable gitlink; merge-main bot doesn't clear needs-merge-human",
+      "status": "todo",
+      "type": "bug",
+      "priority": "",
+      "parent": "folio-assistant-hfag",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-10-02T17:19:31Z",
+      "updatedAt": "2026-10-02T17:19:31Z",
+      "preview": "Owner, 2026-10-02, via the merge-pipeline coordinator: one bean under the merge-pipeline epic `hfag` for these regenerate and merge-bot gaps.\n\n## Overlap with `u7be` (read this first)\n\n`u7be` (\"MERGE GATE (e): four merge-steward gaps\"), filed on PR #1887's branch and NOT on `main` when this bean was created, lists items (1), (2) and (4) below as its own (1), (2) and (4). Checked with `beans list` ",
+      "file": "beans/defs/folio-assistant-wczm--regenerate-gaps-no-writer-for-checkl1-complete-or.md"
+    },
+    {
       "id": "folio-assistant-wekz",
       "title": "ARCHIVE: moving a bean one level deeper breaks its relative links, and the CLI reports a path it did not write to",
       "status": "completed",
@@ -9372,6 +9446,12 @@
     }
   ],
   "findings": [
+    {
+      "kind": "blocked-without-expiry",
+      "bean": "folio-assistant-hfag",
+      "blocks": "folio-assistant-7x5n",
+      "detail": "blocks `folio-assistant-7x5n` and states no expiry, so the block cannot be told from abandoned work"
+    },
     {
       "kind": "blocked-without-expiry",
       "bean": "folio-assistant-jg8s",
