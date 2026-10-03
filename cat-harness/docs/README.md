@@ -48,18 +48,18 @@ Part of [C@T Harness](../README.md) 0.1.0, declared as `docs`, holding `docs`.
 | [`translation-support.md`](translation-support.md) | Translation support |  |
 | [`_data/`](_data/) | 6 files | |
 | [`_includes/`](_includes/) | 9 files | |
-| [`ar/`](ar/) | 14 files | |
+| [`ar/`](ar/) | 16 files | |
 | [`architecture/`](architecture/) | 8 files | |
-| [`assets/`](assets/) | 613 files | |
+| [`assets/`](assets/) | 614 files | |
 | [`attestations/`](attestations/) | 1 file | |
 | [`beans/`](beans/) | 1 file | |
 | [`bootstrap/`](bootstrap/) | 1 file | |
-| [`cat-harness/`](cat-harness/) | 120 files | |
-| [`es/`](es/) | 14 files | |
+| [`cat-harness/`](cat-harness/) | 149 files | |
+| [`es/`](es/) | 16 files | |
 | [`external-schemas/`](external-schemas/) | 1 file | |
-| [`fr/`](fr/) | 14 files | |
+| [`fr/`](fr/) | 16 files | |
 | [`fsh-guts/`](fsh-guts/) | 1 file | |
-| [`glossary/`](glossary/) | 10 files | |
+| [`glossary/`](glossary/) | 12 files | |
 | [`guides/`](guides/) | 14 files | |
 | [`health/`](health/) | 1 file | |
 | [`issue-marks/`](issue-marks/) | 1 file | |
@@ -72,7 +72,7 @@ Part of [C@T Harness](../README.md) 0.1.0, declared as `docs`, holding `docs`.
 | [`reference/`](reference/) | 330 files | |
 | [`requirements/`](requirements/) | What this harness promises, one page per shipped feature: a proposal MOVED here when its feature ships, its front matter a `Requirement` (`bootstrap/schemas/requirement.schema.json`), checked by `check:requirements`. | |
 | [`research-and-analysis/`](research-and-analysis/) | 2 files | |
-| [`ru/`](ru/) | 14 files | |
+| [`ru/`](ru/) | 16 files | |
 | [`site/`](site/) | 183 files | |
 | [`subscriptions/`](subscriptions/) | 1 file | |
 | [`swimlane-glossary/`](swimlane-glossary/) | 1 file | |
@@ -83,5 +83,5 @@ Part of [C@T Harness](../README.md) 0.1.0, declared as `docs`, holding `docs`.
 | [`uml/`](uml/) | 128 files | |
 | [`uploads/`](uploads/) | 1 file | |
 | [`wireframes/`](wireframes/) | 192 files | |
-| [`zh/`](zh/) | 14 files | |
+| [`zh/`](zh/) | 16 files | |
 <!-- kg:subgraph:end -->

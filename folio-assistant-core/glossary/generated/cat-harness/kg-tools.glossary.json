@@ -631,6 +631,14 @@
       "status": "candidate"
     },
     {
+      "id": "site-search-scopes",
+      "prefLabel": "Site search scopes",
+      "definition": "The site search index cut into one index per scope — each declared instance, each target locale, and the platform — plus `assets/js/search/manifest.json` naming them, so a reader's search loads its own scope rather than the whole site (issue #1972, bean `m7mn`). Run on the assembled site after the index is written or borrowed.",
+      "notation": "site-search-scopes",
+      "source": "cat-harness/tools/index.ts#site-search-scopes",
+      "status": "candidate"
+    },
+    {
       "id": "skill-docs",
       "prefLabel": "Skill instruction reference",
       "definition": "Render the skill instruction bodies — the prose an agent actually loads — as browsable pages with an index, so a reader can see what an agent is told without cloning the repository.",

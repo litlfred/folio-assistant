@@ -17,18 +17,10 @@ From: bootstrap-tools 28 (<a href="{{ '/assets/glossary/bootstrap-tools--kg-sche
 
 One of 4 pages of this type, split by the first letter of the label: <a href="{{ '/glossary/schema-fields/' | relative_url }}">all parts</a>.
 
-**Size:** this page holds 536 terms and is 302 KB before compression, fetched in one request, within its budget of 1.0 MB. There is no search index: the filter below runs over this page, and the A–Z bar jumps within it.
+**Size:** this page holds 536 terms and is 301 KB before compression, fetched in one request, within its budget of 1.0 MB. There is no search index: the filter below runs over this page, and the A–Z bar jumps within it.
 
-<table class="fa-gloss-mapping">
-<caption>Already somebody else's concept? — <code>check:term-mapping</code>, bean <code>7wou</code></caption>
-<thead><tr><th>target</th><th>mapped</th><th>unmapped</th><th>undetermined</th><th>why undetermined</th></tr></thead>
-<tbody><tr><td><code>fhir</code></td><td>0</td><td>1946</td><td>0</td><td>—</td></tr><tr><td><code>skos</code></td><td>0</td><td>1946</td><td>0</td><td>—</td></tr></tbody>
-</table>
-<p class="fa-gloss-mapping-note"><strong>Undetermined is never “no match”.</strong> 
-A vocabulary that could not be reached has said nothing, and the column above keeps that 
-apart from a checked miss. The counts are reported and not graded: an unmapped candidate may 
-be a term this corpus is right to coin.</p>
-<p class="fa-gloss-mapping-perterm"><strong>Per term.</strong> Every term on this page is <strong>unmapped</strong> on <code>fhir</code>, and <strong>unmapped</strong> on <code>skos</code>, unless its entry says otherwise. No entry says otherwise.</p>
+<p class="fa-gloss-mapping fa-gloss-mapping--unrun"><strong>Not checked.</strong> No <code>term-mapping</code> result is committed, so whether these terms already exist in an authoritative vocabulary is <em>unknown</em> — which is not the same as “none do”. Run <code>bun run term:mapping</code>.</p>
+
 
 <label for="fa-gloss-q">Filter terms</label>
 <input id="fa-gloss-q" type="search" autocomplete="off" style="min-height:44px;width:100%;max-width:32rem">
@@ -2255,7 +2247,7 @@ ContentDirectory.readOnlyBasis <span class="fa-gloss-status">candidate, extracte
 ContentDirectory.storage <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
-<p>This directory's contents are STORED on a branch, keyed by commit, and the checkout holds at most a working copy. See &#123;@link DirectoryStorageSchema}.</p>
+<p>This directory's contents are STORED on a branch, keyed by commit or tip, and the checkout holds at most a working copy. See &#123;@link DirectoryStorageSchema}.</p>
 <p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/cat-harness.ts"><code>cat-harness/schemas/cat-harness.ts#ContentDirectory.storage</code></a></p>
 </dd>
 <dt id="cat-harness--kg-schema-fields--cat-harness.contentdirectory.summaries" data-fa-state="extracted" data-fa-gloss="">
@@ -3365,7 +3357,7 @@ DirectoryStorageSchema.branch <span class="fa-gloss-status">candidate, extracted
 DirectoryStorageSchema.keyedBy <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
-<p>How entries are keyed on the branch. Only <code>commit</code> exists.</p>
+<p>How entries are keyed on the branch: one entry per <code>commit</code>, or one live copy at the <code>tip</code>.</p>
 <p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/cat-harness.ts"><code>cat-harness/schemas/cat-harness.ts#DirectoryStorageSchema.keyedBy</code></a></p>
 </dd>
 <dt id="cat-harness--kg-schema-fields--document-image.documentimageschema.basis" data-fa-state="extracted" data-fa-gloss="">

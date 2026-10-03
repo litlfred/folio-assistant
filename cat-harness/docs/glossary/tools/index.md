@@ -12,24 +12,16 @@ permalink: /glossary/tools/
 
 Candidate terms extracted from every Tool node: `title` as the label, `description` as the definition, the Tool id as the code. Each is the asset's own text, verbatim and not curated, and carries the badge "candidate, extracted". A person promotes one by authoring it. Authored terms, the counts and the sources are on the <a href="{{ '/glossary/' | relative_url }}">glossary index</a>.
 
-From: cat-harness 118 (<a href="{{ '/assets/glossary/cat-harness--kg-tools.skos.jsonld' | relative_url }}">SKOS</a>) · fhir-harness 19 (<a href="{{ '/assets/glossary/fhir-harness--kg-tools.skos.jsonld' | relative_url }}">SKOS</a>) · folio-assistant-core 5 (<a href="{{ '/assets/glossary/folio-assistant-core--kg-tools.skos.jsonld' | relative_url }}">SKOS</a>) · smart-base 6 (<a href="{{ '/assets/glossary/smart-base--kg-tools.skos.jsonld' | relative_url }}">SKOS</a>).
+From: cat-harness 119 (<a href="{{ '/assets/glossary/cat-harness--kg-tools.skos.jsonld' | relative_url }}">SKOS</a>) · fhir-harness 19 (<a href="{{ '/assets/glossary/fhir-harness--kg-tools.skos.jsonld' | relative_url }}">SKOS</a>) · folio-assistant-core 5 (<a href="{{ '/assets/glossary/folio-assistant-core--kg-tools.skos.jsonld' | relative_url }}">SKOS</a>) · smart-base 6 (<a href="{{ '/assets/glossary/smart-base--kg-tools.skos.jsonld' | relative_url }}">SKOS</a>).
 
-**Size:** this page holds 148 terms and is 103 KB before compression, fetched in one request, within its budget of 1.0 MB. There is no search index: the filter below runs over this page, and the A–Z bar jumps within it.
+**Size:** this page holds 149 terms and is 103 KB before compression, fetched in one request, within its budget of 1.0 MB. There is no search index: the filter below runs over this page, and the A–Z bar jumps within it.
 
-<table class="fa-gloss-mapping">
-<caption>Already somebody else's concept? — <code>check:term-mapping</code>, bean <code>7wou</code></caption>
-<thead><tr><th>target</th><th>mapped</th><th>unmapped</th><th>undetermined</th><th>why undetermined</th></tr></thead>
-<tbody><tr><td><code>fhir</code></td><td>0</td><td>148</td><td>0</td><td>—</td></tr><tr><td><code>skos</code></td><td>0</td><td>148</td><td>0</td><td>—</td></tr></tbody>
-</table>
-<p class="fa-gloss-mapping-note"><strong>Undetermined is never “no match”.</strong> 
-A vocabulary that could not be reached has said nothing, and the column above keeps that 
-apart from a checked miss. The counts are reported and not graded: an unmapped candidate may 
-be a term this corpus is right to coin.</p>
-<p class="fa-gloss-mapping-perterm"><strong>Per term.</strong> Every term on this page is <strong>unmapped</strong> on <code>fhir</code>, and <strong>unmapped</strong> on <code>skos</code>, unless its entry says otherwise. No entry says otherwise.</p>
+<p class="fa-gloss-mapping fa-gloss-mapping--unrun"><strong>Not checked.</strong> No <code>term-mapping</code> result is committed, so whether these terms already exist in an authoritative vocabulary is <em>unknown</em> — which is not the same as “none do”. Run <code>bun run term:mapping</code>.</p>
+
 
 <label for="fa-gloss-q">Filter terms</label>
 <input id="fa-gloss-q" type="search" autocomplete="off" style="min-height:44px;width:100%;max-width:32rem">
-<p aria-live="polite"><span id="fa-gloss-n">148</span> shown</p>
+<p aria-live="polite"><span id="fa-gloss-n">149</span> shown</p>
 
 <nav aria-label="Letters"><a href="#letter-A">A</a> <a href="#letter-B">B</a> <a href="#letter-C">C</a> <a href="#letter-D">D</a> <a href="#letter-E">E</a> <a href="#letter-F">F</a> <a href="#letter-G">G</a> <a href="#letter-H">H</a> <a href="#letter-I">I</a> <a href="#letter-J">J</a> <a href="#letter-K">K</a> <a href="#letter-L">L</a> <a href="#letter-M">M</a> <a href="#letter-N">N</a> <a href="#letter-O">O</a> <a href="#letter-P">P</a> <a href="#letter-Q">Q</a> <a href="#letter-R">R</a> <a href="#letter-S">S</a> <a href="#letter-T">T</a> <a href="#letter-U">U</a> <a href="#letter-V">V</a> <a href="#letter-W">W</a></nav>
 
@@ -848,6 +840,13 @@ Site search index <span class="fa-gloss-status">candidate, extracted</span>
 <dd>
 <p>The just-the-docs search index, <code>assets/js/search-data.json</code>, which the theme writes as part of the Jekyll site build: one entry per page section, searched by every page's search box. Built implicitly by the build rather than by a command of its own.</p>
 <p class="fa-gloss-meta">Tools of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/tools/index.ts"><code>cat-harness/tools/index.ts#site-search-index</code></a></p>
+</dd>
+<dt id="cat-harness--kg-tools--site-search-scopes" data-fa-state="extracted" data-fa-gloss="">
+Site search scopes <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>The site search index cut into one index per scope — each declared instance, each target locale, and the platform — plus <code>assets/js/search/manifest.json</code> naming them, so a reader's search loads its own scope rather than the whole site (issue #1972, bean <code>m7mn</code>). Run on the assembled site after the index is written or borrowed.</p>
+<p class="fa-gloss-meta">Tools of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/tools/index.ts"><code>cat-harness/tools/index.ts#site-search-scopes</code></a></p>
 </dd>
 <dt id="cat-harness--kg-tools--schema-docs" data-fa-state="extracted" data-fa-gloss="">
 Skill contract reference <span class="fa-gloss-status">candidate, extracted</span>

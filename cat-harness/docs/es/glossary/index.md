@@ -22,15 +22,7 @@ Extracted candidates are minted from this repository's own assets and are not, b
 
 The table's labels are in the source language: it reports counts per scheme, computed by the gate rather than authored here. _(sin traducir)_
 
-<table class="fa-gloss-mapping">
-<caption>Already somebody else's concept? — <code>check:term-mapping</code>, bean <code>7wou</code></caption>
-<thead><tr><th>target</th><th>mapped</th><th>unmapped</th><th>undetermined</th><th>why undetermined</th></tr></thead>
-<tbody><tr><td><code>fhir</code></td><td>0</td><td>3046</td><td>0</td><td>—</td></tr><tr><td><code>skos</code></td><td>0</td><td>3046</td><td>0</td><td>—</td></tr></tbody>
-</table>
-<p class="fa-gloss-mapping-note"><strong>Undetermined is never “no match”.</strong> 
-A vocabulary that could not be reached has said nothing, and the column above keeps that 
-apart from a checked miss. The counts are reported and not graded: an unmapped candidate may 
-be a term this corpus is right to coin.</p>
+<p class="fa-gloss-mapping fa-gloss-mapping--unrun"><strong>Not checked.</strong> No <code>term-mapping</code> result is committed, so whether these terms already exist in an authoritative vocabulary is <em>unknown</em> — which is not the same as “none do”. Run <code>bun run term:mapping</code>.</p>
 
 ## Páginas
 
