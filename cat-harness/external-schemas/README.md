@@ -18,6 +18,8 @@ Part of [C@T Harness](../README.md) 0.1.0, declared as `external-schemas`, holdi
 | [`omg-dmn-1.3.json`](omg-dmn-1.3.json) | Decision Model and Notation (DMN) |  |
 | [`schema-org.json`](schema-org.json) | Schema.org |  |
 | [`spar-doco-deo-cito.json`](spar-doco-deo-cito.json) | SPAR Ontologies: DoCO, DEO and CiTO |  |
+| [`spdx-license-list.json`](spdx-license-list.json) | SPDX License List |  |
+| [`spdx-license-list.terminology.json`](spdx-license-list.terminology.json) | data |  |
 | [`w3c-csvw.json`](w3c-csvw.json) | Metadata Vocabulary for Tabular Data |  |
 | [`w3c-odrl.json`](w3c-odrl.json) | ODRL Information Model 2.2 |  |
 | [`w3c-owl2.json`](w3c-owl2.json) | OWL 2 Web Ontology Language Document Overview (Second Edition) |  |
