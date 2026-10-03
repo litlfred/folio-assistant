@@ -25161,6 +25161,85 @@
       "exported": true
     },
     {
+      "id": "cat-harness/schemas/referenced-source.ts#ReferencedIdentitySchema",
+      "name": "ReferencedIdentitySchema",
+      "module": "cat-harness/schemas/referenced-source.ts",
+      "kind": "zod-object",
+      "fields": [
+        {
+          "name": "title",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "version",
+          "type": "z.string().min(1).nullable()",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "document_number",
+          "type": "z.string().min(1).nullable()",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "date",
+          "type": "z.string().min(1).nullable()",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "publisher",
+          "type": "z.string().min(1).nullable()",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "authors",
+          "type": "z.array(z.string().min(1)).min(1).optional()",
+          "optional": true,
+          "array": true,
+          "doc": "Bibliographic fields a paper carries and a specification usually does"
+        },
+        {
+          "name": "venue",
+          "type": "z.string().min(1).optional()",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "doi",
+          "type": "z.string().regex(/^10\\.\\d{4,9}\\/\\S+$/).optional()",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "arxiv",
+          "type": "z.string().regex(/^\\d{4}\\.\\d{4,5}v\\d+$/, \"a VERSIONED arXiv id (archiving-arxiv)\").optional()",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "not_stated",
+          "type": "z.array(z.enum(NULLABLE_IDENTITY_FIELDS)).optional()",
+          "optional": true,
+          "array": true,
+          "doc": "Each nullable field the document does not state, and only those."
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [
+        "NULLABLE_IDENTITY_FIELDS",
+        "z"
+      ],
+      "exported": true
+    },
+    {
       "id": "cat-harness/schemas/referenced-source.ts#ReferencedLink",
       "name": "ReferencedLink",
       "module": "cat-harness/schemas/referenced-source.ts",
@@ -25214,7 +25293,7 @@
         },
         {
           "name": "identity",
-          "type": "z .object({ title: z.string().min(1), version: z.string().min(1), document_number: z.string().min(1), date: z.string().…",
+          "type": "ReferencedIdentitySchema",
           "optional": false,
           "array": false
         },
@@ -25260,6 +25339,7 @@
       "refs": [
         "cat-harness/schemas/referenced-source.ts#FileSourceSchema",
         "cat-harness/schemas/referenced-source.ts#PublishedSourceSchema",
+        "cat-harness/schemas/referenced-source.ts#ReferencedIdentitySchema",
         "cat-harness/schemas/referenced-source.ts#ReferencedLinkSchema"
       ],
       "unresolved": [],
@@ -50954,6 +51034,14 @@
       "from": "cat-harness/schemas/referenced-source.ts#ReferencedSourceSchema",
       "to": "cat-harness/schemas/referenced-source.ts#PublishedSourceSchema",
       "via": "source",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "cat-harness/schemas/referenced-source.ts#ReferencedSourceSchema",
+      "to": "cat-harness/schemas/referenced-source.ts#ReferencedIdentitySchema",
+      "via": "identity",
       "kind": "field",
       "optional": false,
       "array": false

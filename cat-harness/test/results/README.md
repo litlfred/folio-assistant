@@ -36,7 +36,7 @@ Part of [C@T Harness](../../README.md) 0.1.0, declared as `qa`, holding `qa`.
 | [`folio-assistant/`](folio-assistant/) | 2 files | |
 | [`kg-qa/`](kg-qa/) | 459 files | |
 | [`large-datasets/`](large-datasets/) | 2 files | |
-| [`library-qa/`](library-qa/) | 64 files | |
+| [`library-qa/`](library-qa/) | 67 files | |
 | [`lsi/`](lsi/) | 4 files | |
 | [`tool-runs/`](tool-runs/) | 4 files | |
 | [`translation-qa/`](translation-qa/) | 35 files | |

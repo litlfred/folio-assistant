@@ -17,7 +17,7 @@ Part of [C@T Harness](../README.md) 0.1.0, declared as `methodologies`, holding 
 | [`lsi.md`](lsi.md) | Latent Semantic Indexing: the vocabulary problem, answered with a truncated SVD |  |
 | [`madr.md`](madr.md) | MADR — the record, not the method |  |
 | [`mcdm-aggregation.md`](mcdm-aggregation.md) | Aggregation-type MCDM |  |
-| [`merge-queue.md`](merge-queue.md) | Merge queue — what three industrial studies measured, what they recommend, and what transfers |  |
+| [`merge-queue.md`](merge-queue.md) | Merge queue — what three industrial studies measured, what they recommend, and what transfers | "A merge train" |
 | [`odrl-policies.md`](odrl-policies.md) | ODRL 2.2: permissions as rules over a declared action graph |  |
 | [`probabilistic-decision-analysis.md`](probabilistic-decision-analysis.md) | Probabilistic decision-making algorithms |  |
 | [`prov-o-provenance.md`](prov-o-provenance.md) | PROV-O: provenance as a shared record, not a house log format |  |
