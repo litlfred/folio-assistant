@@ -1,11 +1,11 @@
 ---
 # folio-assistant-dqir
 title: 'MERGE GUARD: merge:guard is the single way a steward lands a PR; a required merge-guard status backs it'
-status: in-progress
+status: scrapped
 type: feature
 priority: normal
 created_at: 2026-10-03T13:53:48Z
-updated_at: 2026-10-03T13:53:58Z
+updated_at: 2026-10-03T14:17:51Z
 ---
 
 Owner ruling 2026-10-03 (option 1): build an enforced merge guard, as a DRAFT PR for the owner to review.
@@ -29,3 +29,8 @@ The owner has reviewed the draft PR and decided whether to merge it and add the 
 
 
 Held by session https://claude.ai/code/session_01CbYZTAubUAZhitov4NiPR9 on branch claude/merge-guard (claimed 2026-10-03).
+
+
+
+## Reasons for Scrapping
+Duplicate of `folio-assistant-uoob` (MERGE GATE (f), child of `nok9`), which Parcel B filed at 13:53:29Z, 19 s before this one, and merged to main in #1999 while this session was working. The coordinator directed the work onto uoob. Nothing is lost: the work continues under uoob on the same branch and PR (#2000). Scrapped, not deleted, because PR #2000's first commit references this id.

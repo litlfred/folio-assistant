@@ -5,7 +5,7 @@
  * @module cat-harness/scripts/merge-guard
  * @covers none — a merge precondition over GitHub's live facts about one PR; it judges no declared graph
  *
- * Bean `dqir`. Owner ruling 2026-10-03, option 1: build an ENFORCED merge
+ * Bean `uoob` (merge gate (f), epic `nok9`). Owner ruling 2026-10-03, option 1: build an ENFORCED merge
  * guard. Until this existed, the Merge Manager steward landed PRs with
  *
  * ```
@@ -295,7 +295,20 @@ export function untickedItems(body: string | null | undefined): string[] {
  */
 export function addresseeRe(ownerLogin: string | undefined): RegExp {
   const login = ownerLogin ? `|@${ownerLogin.replace(/[^A-Za-z0-9-]/g, "")}\\b` : "";
-  return new RegExp(`\\b(owner|merge[- ]manager|merge[- ]steward|steward)\\b${login}`, "i");
+  // A request for a decision is addressed to whoever decides, which on a PR
+  // is the owner — measured on #1937, whose open question ("Should I delete
+  // the `_external` copy?") named nobody but said "I need a decision".
+  return new RegExp(
+    `\\b(owner|merge[- ]manager|merge[- ]steward|steward|decision|your call|please confirm|approve)\\b${login}`,
+    "i",
+  );
+}
+
+/** Sentences ending in `?`, in one line. A `?` inside a URL is followed by text, so it does not end one. */
+export function questionsIn(line: string): string[] {
+  return [...line.matchAll(/([^.!?\n]*\?)(?=[\s*_`)]|$)/g)]
+    .map((m) => m[1]!.replace(/^[\s*_`>#-]+/, "").trim())
+    .filter((q) => q.length > 1);
 }
 
 export interface OpenQuestion {
@@ -306,14 +319,13 @@ export interface OpenQuestion {
 
 /**
  * Check 7's heuristic: comments newer than `since`, not written by the bot,
- * that contain a line ending in `?` AND mention the owner or the Merge
- * Manager somewhere in the same comment.
+ * that contain a sentence ending in `?` AND, somewhere in the same comment,
+ * name the owner or the Merge Manager or ask for a decision ({@link addresseeRe}).
  *
  * **Its limits, stated so nobody reads a pass as "nothing is open":**
  *
- * - It misses a question that does not end its line with `?` ("tell me
- *   whether…"), and one addressed only implicitly ("should I delete it?" in a
- *   comment that names nobody).
+ * - It misses a question with no `?` ("tell me whether…"), and one in a
+ *   comment that neither names an addressee nor asks for a decision.
  * - It flags a rhetorical question, and a question already answered in a later
  *   comment: it cannot read an answer. The remedy is the owning session's: a
  *   fresh `ready: <sha>` comment after the question is settled moves the
@@ -336,8 +348,7 @@ export function openQuestions(
     if (!addressee.test(text)) continue;
     for (const raw of text.split("\n")) {
       if (/^\s*>/.test(raw)) continue;
-      const line = raw.replace(/[\s*_`]+$/g, "").trim();
-      if (line.endsWith("?")) out.push({ line, url: c.html_url, at: c.created_at });
+      for (const line of questionsIn(raw)) out.push({ line, url: c.html_url, at: c.created_at });
     }
   }
   return out;
