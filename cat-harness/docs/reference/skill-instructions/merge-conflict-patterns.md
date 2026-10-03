@@ -13,7 +13,7 @@ parent: Skill instructions
 {% raw %}
 # Merge-conflict patterns — what a merge may resolve on its own
 
-`bun run merge:main` is the command; `processes/merge-base.bpmn` is the
+`bun run merge:main` is the command; `processes/sdlc/merge-base.bpmn` is the
 process it executes, called from `Task_PrepareMerge` in
 `code-change-review.bpmn`. The patterns themselves are data in
 `cat-harness/scripts/merge-conflict-patterns.ts`. This page says what each one
@@ -156,6 +156,48 @@ graph and declared viewer, written whole by `gen-handler-index.ts`
 (`handler:index:check`). Any new graph or viewer rewrites it. Found on #1754's
 third merge, 2026-10-01.
 
+### `skos-glossary-export` — take the base, regenerate (54)
+
+`**/docs/assets/glossary/*.skos.jsonld`: the published SKOS export, written
+whole by `glossary:export` (`glossary-export.ts`, gated by `glossary:check`).
+Bean `8rff` measured **54** pair-path hits across 32 open PRs — every
+instance's export restamps whenever any declared role, skill or term moves, so
+two PRs that touch unrelated skills still collide here.
+
+**It is not the ledger, and that distinction is the whole safety argument.**
+`glossary-ledger.json` carries forward: `glossary-export.ts` reads the prior
+ledger and preserves a concept's earlier names as `skos:hiddenLabel` (#1168
+B10b), so taking one side would drop a term's history. The ledger sits one
+level up from `generated/` and matches no glob here — verified, and pinned by
+a test. This is `.gitattributes`'s rule applied to a resolver: the test is not
+*is it generated* but **does its producer carry anything forward**.
+
+`.skos.jsonld` does not match `site-data`'s `cat-harness/docs/assets/**/*.json`
+— `.jsonld` is not `.json` — which is why it needed its own entry rather than
+falling through.
+
+### `glossary-generated` — take the base, regenerate (50)
+
+`**/glossary/generated/**`: the per-instance generated glossary JSON, same
+writer and same check as `skos-glossary-export`. **50** pair-path hits
+(`8rff`). The glob stops at `generated/`, so the sibling ledger is untouched.
+
+### `skill-instructions` — take the base, regenerate (30)
+
+`**/docs/reference/skill-instructions/**`: skill instruction bodies, written
+whole by `skills:docs` (`gen-skill-docs.ts`'s `OUT_DIR`, gated by
+`skills:docs:check`). **30** pair-path hits (`8rff`), and `AGENTS.md` says of
+this directory: *"Never hand-edit either generated dir."*
+
+Safe because `emit()` is compare-or-write with no merge — under `--check` it
+compares and records drift, otherwise it writes the content whole — so nothing
+is carried forward from the file on disk.
+
+**The authored neighbour is the skill itself.** `skills/**/*.md` is the SOURCE
+these pages are generated from and stays `refuse`; a test pins that pair,
+because resolving the generated copy while taking a side on the source is the
+mistake this entry would otherwise invite.
+
 ### `health-report` — take the base's measurement
 
 `test/health/results/*.health-report.json`. Not a derivation of the tree but a
@@ -250,4 +292,5 @@ review rather than on its author; leave it off a branch somebody is pushing to.
 | process | step(s) that name it |
 |---|---|
 | [Merge the base branch in](../../processes/merge-base.html) | Classify every conflicted path against the declared patterns; Resolve each by its declared strategy; Abort, restore the tree, list what was refused |
+| [A merge train](../../processes/merge-train.html) | Hand it back (calls a sub-process); Hand the culprit back (calls a sub-process) |
 

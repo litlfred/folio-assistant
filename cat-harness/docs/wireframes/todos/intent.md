@@ -25,3 +25,15 @@ The dashed box (web) and the note (mobile) in `as-is.html` are **annotations**, 
 3. **Most of the first screen is the list of other graphs.** At 1280×800 the counts panel takes about 115 px, and the rest of the viewport is the 7 state-graph cards. At 390 px it is the same pattern.
 4. **The heading order skips a level, and the tags run into the names.** These are shared with `beans/`: the panel title is an `h3` directly under the `h1`, and the card headings' text reads "beanslive", "todoslive" and so on, because the tag span has no separator.
 5. **No way back to the site.** There is no `nav` or `header` and no link home. The page is dark by default, with no scheme control.
+
+## Update, 2026-10-02: the page is the landing sticky panel (bean `72gk`, issue #1906)
+
+Owner, 2026-10-02: *"https://litlfred.github.io/folio-assistant/todos/ should also have the same stickies panel. not sure why all the graphs are listed on the todos page. cluttery"*. Then, of the by-node list (#1757): *"are not functional for more info or anything"*.
+
+`state-visualizer.ts` now writes `/todos/` as a themed Jekyll page (`layout: default`) that includes `_includes/landing.html` with `open=true`. `docs-ui.js` mounts the todo board into that panel's `.fa-landing-board`, the same way it does on `/`. The as-is drawing above is NOT re-drawn; it records the page as it was. These verdicts are read from the generated page and from `cat-harness/test/todos-page-board.e2e.ts`. That test renders the page and the real includes through `liquidjs`. There was no Jekyll build.
+
+1. **Fixed.** Every item is a sticky on the board, with one home slot per item in the projection. The no-JS floor from the layout's footer lists every item with its body, View source, Edit and a link to its node.
+2. **No longer applies to this page.** The counts panel that used the different meaning of "open" is gone.
+3. **Fixed.** "State graphs this harness declares" is gone from this page, and so is the plain-text by-node list. The other six state pages still carry the registry. Whether they should keep it is open for the owner.
+4. **No longer applies to this page.** The `h3` panel title and the run-together card tags were both part of the shell that was removed. They still apply to `beans/`.
+5. **Fixed.** The page has the site's layout, so it has the navbar, the way home and the site's colour scheme.

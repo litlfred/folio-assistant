@@ -1,0 +1,39 @@
+{
+  "$schema": "folio-intake/v1",
+  "doc_id": "arxiv-licence-assumed-1991-2003",
+  "title": "arXiv.org — Assumed non-exclusive license to distribute (the 1991–2003 submissions)",
+  "_comment": "Uploaded by the owner 2026-10-02 (bean yc74), beside `arxiv-license-information`. Its own directory because an intake record — and the licence it states — covers one file. This is the licence that applies to every arXiv submission before January 2004, where the submission process captured no explicit licence at all; it is the case where a blank licence field is a determined fact rather than a gap.",
+  "source": {
+    "upstream": "https://arxiv.org/licenses/assumed-1991-2003/license.html",
+    "local": "uploads/arxiv-licence-assumed-1991-2003/arxiv-licence-assumed-1991-2003.pdf",
+    "capturedAt": "2026-10-03T01:31:00",
+    "capturedBy": "owner (litlfred), browser print-to-PDF"
+  },
+  "files": [
+    {
+      "path": "arxiv-licence-assumed-1991-2003.pdf",
+      "bytes": 74384,
+      "sha256": "7a922432b1331c9d98c0c46def1bfaeacbe944386449e518efcb0db8f36d9993",
+      "mimetype_sniffed": "application/pdf",
+      "type": "publication",
+      "role": "original-bitstream",
+      "note": "1 printed page. Names its own URI (http://arxiv.org/licenses/assumed-1991-2003/), the four terms arXiv operates on for pre-2004 submissions, and a revision history back to hep-th/9108001 (1991-08-14)."
+    }
+  ],
+  "licence": {
+    "status": "unknown",
+    "searched": [
+      {
+        "where": "the captured page itself (https://arxiv.org/licenses/assumed-1991-2003/license.html)",
+        "result": "states the licence arXiv assumes for pre-2004 SUBMISSIONS; says nothing about the licence of this licence-statement page",
+        "on": "2026-10-03"
+      },
+      {
+        "where": "the page's own 'Contact' link, its only navigation",
+        "result": "a contact route, not a licence statement",
+        "on": "2026-10-03"
+      }
+    ],
+    "note": "The document STATES a licence — but that licence is the one arXiv assumes for other people's pre-2004 submissions, not the licence of this page. Recording the former as this capture's `licence` would be a category error, and it is the specific error this note exists to block."
+  }
+}

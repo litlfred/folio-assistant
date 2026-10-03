@@ -513,31 +513,83 @@ export function noRunAdvice(merge: MergeState): string {
  * could not have caught.
  */
 export interface WorkflowCoverage {
-  /** Owed unconditionally. A `false` here is the finding. */
-  required: { name: string; file: string; ran: boolean }[];
+  /**
+   * Owed unconditionally. A `false` `ran` here is the finding — and `state`
+   * says WHICH finding, because `blocked` and `absent` need opposite advice.
+   */
+  required: { name: string; file: string; ran: boolean; state: RunState }[];
   /**
    * Declared behind `paths`/`types`/`branches`. **Not judged** — whether a run
    * was owed depends on the diff or the ref, and a sha carries neither. Printed
    * rather than dropped, because a silent omission reads as a pass.
    */
-  conditional: { name: string; file: string; ran: boolean; filters: string[] }[];
+  conditional: { name: string; file: string; ran: boolean; state: RunState; filters: string[] }[];
   /** Workflow files that could not be read; while any exist, `required` is incomplete. */
   unreadable: TriggerScan["unreadable"];
 }
 
+/**
+ * Conclusions that mean the run was CREATED and never EXECUTED.
+ *
+ * Bean `1acg`. `action_required` is GitHub\'s "this run needs approval before it
+ * may start". The run object exists, carries the right name and the right
+ * event, and reports `status: "completed"` — and not one job of it ran, so not
+ * one gate was evaluated. Measured 2026-10-03 on #1819 and #1808: three
+ * `pull_request` runs each, all `action_required`, zero jobs between them.
+ *
+ * `startup_failure` is the same class and is here for the same reason: the run
+ * failed before any job started, so it is evidence about the workflow file
+ * rather than about the tree. It is NOT a measured case here — it is included
+ * because the alternative is to count it as a gate that fired, which is the
+ * defect this set exists to stop.
+ *
+ * **Not the same question as {@link ../src/workflow/check-verdict}\'s `FAILED`.**
+ * That module asks *what is the verdict on this tree*, and puts
+ * `action_required` with the failures because it is not a pass. This asks the
+ * prior question — *did the gate run at all* — and the answer is no. A module
+ * that conflated the two would report a blocked run as a red tree, sending the
+ * next reader to hunt for a defect in code that was never compiled.
+ */
+export const NOT_EXECUTED = new Set(["action_required", "startup_failure"]);
+
+/** Did this run actually execute? A `null` conclusion is still in flight, which is not a no. */
+export function executed(r: RunRow): boolean {
+  return r.conclusion === null || !NOT_EXECUTED.has(r.conclusion);
+}
+
+/**
+ * Three states for one workflow, and the middle one is bean `1acg`.
+ *
+ * `absent` and `blocked` are both "no gate was evaluated", and folding them
+ * together would be the `9x9r` mistake in reverse: they call for OPPOSITE
+ * actions. An absent run may be a dropped event worth dispatching; a blocked
+ * one is explained, and dispatching it is what masked this for 28 pull
+ * requests.
+ */
+export type RunState = "ran" | "blocked" | "absent";
+
 /** Match on BOTH name and event: a `push` run of a workflow is not its `pull_request` run. */
-function ranAs(runs: RunRow[], t: WorkflowTrigger, event: string): boolean {
-  return runs.some((r) => r.name === t.name && r.event === event);
+function stateOf(runs: RunRow[], t: WorkflowTrigger, event: string): RunState {
+  const mine = runs.filter((r) => r.name === t.name && r.event === event);
+  if (mine.length === 0) return "absent";
+  // ANY executed run settles it: a re-run that escaped the approval gate is a
+  // gate that fired, and the blocked sibling it superseded says nothing further.
+  return mine.some(executed) ? "ran" : "blocked";
 }
 
 export function coverageFor(runs: RunRow[], scan: TriggerScan, event: string): WorkflowCoverage {
+  const row = (t: WorkflowTrigger) => {
+    const state = stateOf(runs, t, event);
+    // `ran` stays a boolean and stays TRUE only for "executed", so every
+    // existing consumer that filters on `!ran` keeps a blocked run in its
+    // missing set rather than silently passing it.
+    return { name: t.name, file: t.file, state, ran: state === "ran" };
+  };
   return {
-    required: scan.triggers
-      .filter((t) => t.requirement === "required")
-      .map((t) => ({ name: t.name, file: t.file, ran: ranAs(runs, t, event) })),
+    required: scan.triggers.filter((t) => t.requirement === "required").map(row),
     conditional: scan.triggers
       .filter((t) => t.requirement === "conditional")
-      .map((t) => ({ name: t.name, file: t.file, ran: ranAs(runs, t, event), filters: t.filters })),
+      .map((t) => ({ ...row(t), filters: t.filters })),
     unreadable: scan.unreadable,
   };
 }
@@ -584,6 +636,49 @@ export function missingRequiredAdvice(missing: string[], merge: MergeState): str
     "      gh pr view N --json merged          # merged? then nothing is owed\n" +
     "      git ls-remote origin refs/pull/N/merge   # the probe above, retried\n" +
     "  On a conflicted PR a dispatch tests a tree that will never exist."
+  );
+}
+
+/**
+ * What to tell somebody whose required run EXISTS and never executed.
+ *
+ * Bean `1acg`, and a separate message from {@link missingRequiredAdvice} for
+ * the reason that one is separate from {@link noRunAdvice}: this operator is in
+ * a third position, and the advice the other two give is actively WRONG here.
+ *
+ * `missingRequiredAdvice`'s `mergeable` branch says the absence *"is
+ * unexplained (bean `3pqn`)"* and that *"Dispatching against this ref is safe
+ * HERE"*. For a blocked run the first is false — the cause is known and written
+ * in `merge-main.yml` — and the second is the trap: a dispatch produces a green
+ * that reads like the PR's own gates and is not. That is how #1819 and #1808
+ * came to carry a `ready:` attestation over a tree whose gates had not judged
+ * it, and on #1819 the dispatch it points at had actually FAILED.
+ *
+ * So this says what the state is and names the ONE change that fixes the class,
+ * rather than offering a per-head workaround.
+ */
+export function blockedRequiredAdvice(blocked: string[]): string {
+  return (
+    `\n  Its head HAS a \`pull_request\` run of ${blocked.length} workflow(s) owed —\n` +
+    `  ${blocked.join(", ")} — and NONE of them executed.\n` +
+    "\n  They completed `action_required`: created, never started, no job run, no\n" +
+    "  gate evaluated. `status: completed` on such a run is what makes this read\n" +
+    "  as a finished check set, and the Actions API reports a conclusion for a\n" +
+    "  run whose jobs never existed.\n" +
+    "\n  THIS IS NOT A DROPPED EVENT. Waiting will not help and a re-push by the\n" +
+    "  same actor reproduces it. Measured 2026-10-03 on #1819 and #1808: every\n" +
+    "  such run's `actor` and `triggering_actor` is `github-actions[bot]`, and\n" +
+    "  the head repo is NOT a fork — so it is the bot-actor gate that\n" +
+    "  `merge-main.yml` documents at its `Have CI judge the merge commit` step,\n" +
+    "  not an outside-contributor approval.\n" +
+    "\n  Do NOT read a `workflow_dispatch` green on this head as the answer. It is\n" +
+    "  a different run of a different ref resolution, and on #1819 the dispatched\n" +
+    "  `Code-quality gates` FAILED while this script still printed a checkmark.\n" +
+    "\n  The fix is a push credential whose pushes trigger the PR's own runs —\n" +
+    "  issue #1829 D1, bean `0qjq`. `merge-main.yml` already branches on\n" +
+    "  `secrets.MERGE_MAIN_TOKEN`, so SETTING THE SECRET is the whole change, and\n" +
+    "  it is the repository owner's to make. Until then this head cannot be\n" +
+    "  judged by its own gates, and that is a report, not something to work around."
   );
 }
 
@@ -677,12 +772,19 @@ if (import.meta.main) {
     process.exit(2);
   }
 
+  // A blocked run gets its OWN mark and its own word. Printing `✗ required`
+  // over it would say "no run", which is the half-truth that made this
+  // invisible: there IS a run, and that is exactly why it looked fine.
+  const mark = (st: RunState) => (st === "ran" ? "✓" : st === "blocked" ? "!" : "✗");
+  const word = (st: RunState) => (st === "blocked" ? "required — DID NOT EXECUTE" : "required");
   console.log(`\n  owed for \`${event}\`, read from .github/workflows/:`);
-  for (const w of cov.required) console.log(`    ${w.ran ? "✓" : "✗"} ${w.name.padEnd(36)} required`);
+  for (const w of cov.required) console.log(`    ${mark(w.state)} ${w.name.padEnd(36)} ${word(w.state)}`);
   for (const w of cov.conditional) {
-    console.log(
-      `    ${w.ran ? "✓" : "?"} ${w.name.padEnd(36)} conditional (${w.filters.join(", ")}) — not judged`,
-    );
+    const tail =
+      w.state === "blocked"
+        ? `conditional (${w.filters.join(", ")}) — a run exists and DID NOT EXECUTE`
+        : `conditional (${w.filters.join(", ")}) — not judged`;
+    console.log(`    ${w.state === "ran" ? "✓" : w.state === "blocked" ? "!" : "?"} ${w.name.padEnd(36)} ${tail}`);
   }
   if (cov.conditional.length > 0) {
     console.log(
@@ -692,12 +794,20 @@ if (import.meta.main) {
     );
   }
 
-  const missing = cov.required.filter((w) => !w.ran).map((w) => w.name);
-  if (missing.length > 0) {
-    console.error(`\n✗ ${sha.slice(0, 10)} is MISSING a required workflow run.`);
-    console.error(missingRequiredAdvice(missing, merge));
-    process.exit(1);
+  // Bean `1acg`. Reported FIRST and separately: a blocked run and an absent one
+  // are both "no gate fired", and the advice for each contradicts the other, so
+  // a head with one of each must hear both rather than whichever won a filter.
+  const blocked = cov.required.filter((w) => w.state === "blocked").map((w) => w.name);
+  const absent = cov.required.filter((w) => w.state === "absent").map((w) => w.name);
+  if (blocked.length > 0) {
+    console.error(`\n✗ ${sha.slice(0, 10)} — a required workflow run EXISTS but DID NOT EXECUTE.`);
+    console.error(blockedRequiredAdvice(blocked));
   }
+  if (absent.length > 0) {
+    console.error(`\n✗ ${sha.slice(0, 10)} is MISSING a required workflow run.`);
+    console.error(missingRequiredAdvice(absent, merge));
+  }
+  if (blocked.length > 0 || absent.length > 0) process.exit(1);
 
   console.log(`\n✓ ${sha.slice(0, 10)} — all ${cov.required.length} workflow(s) owed for \`${event}\` ran.`);
   process.exit(0);

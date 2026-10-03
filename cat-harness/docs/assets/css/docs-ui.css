@@ -921,6 +921,42 @@
    * flex floor; collapsing either changes a layout this rule has no business
    * changing, and neither leaves a gap between marks.
    */
+  /* ▦ HARNESSES IS A MARK AT REST, like every other mark in the strip.
+   *
+   * Owner's ruling on bean `ob3m` finding 1, 2026-10-01, option 1 of 4:
+   * *"Make ▦ Harnesses visible on the landing page too."* Measured before it
+   * on #1762's head, 1280x800: the two lists above gave this summary
+   * `opacity: 0` AND `max-height: 0` at rest, so the strip showed six icons
+   * and no ▦ — reaching a harness took a hover to widen the strip and then a
+   * click. The viewer rail (`lib/navbar.ts`) never hid it, so the same control
+   * was one tap away on a generated page and two on this one.
+   *
+   * ONLY THE HARNESSES GROUP, by position: it is the one disclosure in the
+   * fixed bottom. Any other `.fa-nav-group` keeps the lists' rest state.
+   *
+   * WHAT STILL HIDES AT REST: the word (`.fa-nav-label`, in the lists above)
+   * and the `▸` disclosure caret, which in a 56px strip beside a glyph is a
+   * second mark that names nothing. Both come back from the same one flag, so
+   * the open summary is exactly what it was. The gutter is scaled the same
+   * way, so at rest the ▦ sits in the mark column — `--fa-nav-pad` from the
+   * edge, like ⌂ below it and every icon above — and open it sits where the
+   * caret needs it. ONE CLICK on it opens the group, and the click's focus
+   * holds the strip open (`:focus-within`), so the harness list is the
+   * first thing that click shows. */
+  .side-bar .fa-nav-bottom > .fa-nav-group > summary {
+    opacity: 1;
+    max-height: none;
+    min-height: var(--fa-nav-rest-min);
+    padding-left: calc(var(--fa-nav-pad) + var(--fa-nav-text, 1) * (0.5rem - var(--fa-nav-pad)));
+    gap: calc(var(--fa-nav-text, 1) * 0.375rem);
+  }
+  .side-bar .fa-nav-bottom > .fa-nav-group > summary::before {
+    display: inline-block;
+    overflow: hidden;
+    max-width: calc(var(--fa-nav-text, 1) * 2em);
+    opacity: var(--fa-nav-text, 1);
+  }
+
   /* A CLOSED DISCLOSURE MUST NOT YIELD, because it has nothing to give.
    *
    * Owner, 2026-09-23, with a screenshot: *"on this page is cut off"*. It was
@@ -5863,6 +5899,115 @@ button.fa-nav-icon {
   cursor: pointer;
 }
 
+/* ═══ THE NAME OF AN ICON, ON HOVER AND ON KEYBOARD FOCUS ═════════════════
+ *
+ * Owner's ruling on bean `ob3m` finding 1, 2026-10-01, option 1 of 4: *"show
+ * each icon's name as a tooltip on hover or keyboard focus."* Captions that
+ * are always visible were option 2 and were NOT chosen — the strip stays
+ * `--fa-nav-collapsed` wide.
+ *
+ * WHICH CONTROLS: those carrying `data-fa-tip`, which `docs-ui.js` writes on
+ * every control in the icon row with the same string as its `aria-label`.
+ * Those are the controls whose name is in `aria-label` and nowhere a sighted
+ * reader can see it, open or closed. A row with its own `.fa-nav-label` is
+ * named beside its mark once the strip opens, and hover and focus open it.
+ *
+ * WHERE: beyond the strip's right edge, level with the control. `fixed` with
+ * `top` left `auto` takes the STATIC position vertically, which is the
+ * control's own line, and `left` is the strip's current width plus a gap,
+ * from the same `--fa-nav-text` flag every other open rule reads. Fixed is
+ * also what stops `.side-bar`'s `overflow: hidden` clipping it: an overflow
+ * box clips a fixed descendant only when it is that descendant's containing
+ * block.
+ *
+ * ONE NAME FOR A SCREEN READER: `content: … / ""` gives the generated text an
+ * empty alternative, so the accessible name stays the `aria-label` and the
+ * tooltip is never read as a second one. The first `content` is the fallback
+ * for an engine that drops the alt syntax.
+ *
+ * INVERTED AGAINST THE SCHEME, so it reads as a tooltip over either page
+ * rather than as more sidebar. #1f2328 on white and white on #1f2328 are
+ * both 15.8:1.
+ *
+ * Inside `min-width: 50rem` only: below it the theme's own menu labels every
+ * row in words, and there is no strip to sit beside. */
+:root {
+  --fa-tip-bg: #1f2328;
+  --fa-tip-ink: #ffffff;
+}
+:root[data-fa-scheme="dark"] {
+  --fa-tip-bg: #ffffff;
+  --fa-tip-ink: #1f2328;
+}
+@media (min-width: 50rem) {
+  .side-bar [data-fa-tip]::after {
+    content: attr(data-fa-tip);
+    content: attr(data-fa-tip) / "";
+    position: fixed;
+    left: calc(var(--fa-nav-collapsed) + var(--fa-nav-text, 1) * (var(--fa-nav-open) - var(--fa-nav-collapsed)) + 0.5rem);
+    z-index: 2147483001;
+    padding: 0.25rem 0.5rem;
+    border-radius: 0.25rem;
+    background: var(--fa-tip-bg);
+    color: var(--fa-tip-ink);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+    font-size: 0.8125rem;
+    font-weight: 600;
+    line-height: 1.3;
+    letter-spacing: normal;
+    text-transform: none;
+    white-space: nowrap;
+    pointer-events: none;
+    opacity: 0;
+  }
+  .side-bar [data-fa-tip]:hover::after,
+  .side-bar [data-fa-tip]:focus-visible::after {
+    opacity: 1;
+  }
+
+  /* THE STRIP DOES NOT PEEK WHEN THE POINTER ARRIVES ON THE ICON COLUMN.
+   *
+   * Without this the tooltip above could never be seen for a pointer.
+   * Measured on #1762's head, 1280x800: the pointer on Beans at (20,105)
+   * widened the strip to 264px, which re-flows the column into a ROW, and the
+   * pointer was then over NOTHING — the icon it was naming had moved up and
+   * to the right. A name for something no longer under the pointer names
+   * nothing.
+   *
+   * `.fa-nav-tip-hold` is set by `docs-ui.js` (`mountNavIconRow`) when the
+   * pointer ENTERS the strip inside the column's at-rest box, and cleared the
+   * moment it leaves that box. So arriving on an icon keeps the strip a strip
+   * — the owner's ruling says it stays narrow — while arriving anywhere else
+   * still peeks, and a reader already peeking can still reach the row's
+   * icons and its [x]: holding on `.fa-nav-icons:hover` alone was tried
+   * first, and it collapsed the open bar under a pointer moving INTO the row
+   * (four `navbar-row.e2e.ts` cases caught it).
+   *
+   * Re-asserts the rest geometry the way the stay-closed rule above does, at
+   * a specificity that beats every open rule, rather than guarding each one.
+   * NOT for KEYBOARD focus and NOT while pinned: those are the reader's
+   * deliberate opening, and a keyboard reader must never tab through links
+   * they cannot see. `:focus-visible` rather than `:focus-within`, because a
+   * CLICK on a column icon focuses it too: with `:focus-within` the strip
+   * opened on mousedown, re-flowed the column, and the mouseup landed on
+   * another element — the click never arrived (`navbar-row.e2e.ts`'s
+   * launcher case caught it). */
+  .side-bar.fa-nav-tip-hold:hover:not(:has(:focus-visible)):not(:has(.fa-nav-open:checked)) {
+    width: var(--fa-nav-collapsed);
+    --fa-nav-text: 0;
+  }
+  .side-bar.fa-nav-tip-hold:hover:not(:has(:focus-visible)):not(:has(.fa-nav-open:checked)) > .fa-nav-icons {
+    width: var(--fa-nav-collapsed);
+    flex-wrap: wrap;
+  }
+  .side-bar.fa-nav-tip-hold:hover:not(:has(:focus-visible)):not(:has(.fa-nav-open:checked)) .fa-nav-close {
+    display: none;
+  }
+}
+@media (min-width: 50rem) and (prefers-reduced-motion: no-preference) {
+  .side-bar [data-fa-tip]::after { transition: opacity .12s ease; }
+}
+
 /* ═══ THE OPEN DOCUMENT'S INDEX ════════════════════════════════════════════
  *
  * Owner: *"when a document or other indexed object is opened, the document
@@ -7052,110 +7197,12 @@ a.fa-harness-tab__body:focus-visible {
   opacity: 0.8;
 }
 
-/* ── The folio's tile strip (beans `v0jv`, refined by #796) ────────────
+/* ── No tile strip on the sticky board (issue #1905, bean `t6ht`) ─────────
  *
- * Owner, 2026-09-21: *"lets have the square tiles lined up on the top of the
- * folio-sicky-board-landingpanel whole slides up if user doesnt want"*, and
- * in the same breath *"i dont want sub-panels of the folio, just one open
- * (miro-like) board … drop all the rounded corners… too much dead space."*
- *
- * TWO CORRECTIONS TO WHAT THIS WAS, both before it shipped. `v0jv` put the
- * tiles in a `<details>` at the BOTTOM, CLOSED. Wrong edge, and wrong
- * default: tiles a reader must open before they can see what a folio offers
- * read as absent, which is the very complaint that opened `v0jv` about the
- * in-flow row. Open is the initial state; sliding it up is the reader's act.
- *
- * CHROME ALONG THE BOARD, NOT A PANEL WITHIN IT. It carries no card, no
- * content and no second surface — that is what *"no sub-panels"* means, and
- * it is why this is a strip rather than a dock.
- *
- * SQUARE, and the same `.fa-tile` the launcher uses: *"i meant to use same
- * SQUARE TILES taht are in the expanding menu of LHS navbar."* The template
- * was already shared; what was not square was the tile itself, a flex item of
- * flexible width in a wrap row. `aspect-ratio` makes it square without
- * hardcoding a size, so it still tracks the theme's own steps.
- *
- * NO ROUNDED CORNERS on this surface. Stated as a rule here rather than swept
- * across all 57 `border-radius` declarations in this file: the folio
- * visualisation is the surface the owner is specifying, and a blanket sweep
- * would change the QA panel, the translation badges and the search field —
- * none of which was asked for and each of which is somebody else's bean. */
-.fa-board-strip {
-  position: sticky;
-  top: 0;
-  z-index: 4;
-  border-bottom: 1px solid var(--border-color, rgba(128, 128, 128, 0.45));
-  /* Opaque: board content scrolls UNDER it. */
-  background: var(--sidebar-color, #27262b);
-}
-:root[data-fa-scheme="light"] .fa-board-strip {
-  background: #e8eaed;
-  border-bottom-color: #767d88;        /* 3.44:1 as a boundary, SC 1.4.11 */
-  color: #1f2933;                      /* 12.24:1 */
-}
-
-.fa-board-strip-summary {
-  display: flex;
-  align-items: center;
-  gap: 0.4em;
-  /* SC 2.5.8's 24px floor. This instance's declared interaction profile is
-     low-dexterity, so the floor is the point rather than a minimum to argue
-     down from. */
-  min-height: 24px;
-  padding: 0.2rem 0.5rem;
-  cursor: pointer;
-  font-size: 0.75rem;
-  list-style: none;
-}
-.fa-board-strip-summary::-webkit-details-marker { display: none; }
-.fa-board-strip-summary::marker { content: ""; }
-.fa-board-strip-summary:hover { background: rgba(128, 128, 128, 0.16); }
-
-/* The declared visualisations, lined up along the top. The navbar's copies
- * live in the launcher's own grid and take its rules; this is the second
- * surface of the same declaration, so it reuses `.fa-tile` rather than
- * styling a new thing — the template is `1le7`'s and is not duplicated. */
-.fa-board-tiles {
-  display: flex;
-  flex-wrap: wrap;
-  /* CONDENSED — *"to much padding between panels, condense"*. Was 0.5rem on
-     both; the gap carries the separation and the padding was dead space. */
-  gap: 0.25rem;
-  padding: 0.25rem;
-  /* NOT the default `stretch`. A flex line stretches its items to the tallest
-     one, which silently un-squares every tile on the row the moment one
-     caption wraps — measured at 64 x 68.8px, and invisible in a screenshot. */
-  align-items: flex-start;
-}
-
-/* SQUARE, and cornerless, on this surface only.
- *
- * AN EXPLICIT HEIGHT rather than `aspect-ratio: 1 / 1`, and the difference is
- * that one of them is a promise and the other is a constraint. `aspect-ratio`
- * supplies a height only while the content fits inside it; a two-line caption
- * grows the box past the ratio and the tile is quietly oblong again. The
- * padding drops with it so the caption has the room not to wrap in the first
- * place — that is the actual fix, and the clip below is only the backstop for
- * a caption longer than any declared today. */
-.fa-board-tiles .fa-tile {
-  flex: 0 0 auto;
-  width: 4rem;
-  height: 4rem;
-  min-height: 0;
-  padding: 0.25rem;
-  overflow: hidden;
-  border-radius: 0;
-}
-
-/* An EMPTY strip is no strip. A row that opens on nothing is the `pb04`
-   failure again — an affordance that promises and delivers nothing — and
-   `:has()` lets the container answer for its contents rather than the mount
-   having to tell it. */
-.fa-board-strip:not(:has(.fa-tile)) { display: none; }
-
-.fa-board-tiles:empty {
-  display: none;
-}
+ * Owner, 2026-10-02: *"stickies panel shouldnt have all those icons"* —
+ * reversing the 2026-09-21 ruling (`v0jv`) that put a `.fa-board-strip` of
+ * square tiles along the top of every sticky board. Its rules went with it;
+ * the tiles stay on the navbar and the glass strip. */
 
 /* ── The sticky panel, slid away ──────────────────────────────────────────
  *
@@ -8361,3 +8408,87 @@ a.fa-harness-tab__body:focus-visible {
 /* A filtered-out row must stay out even where a table lays its rows out
  * itself (`.fa-hc-table tr { display: grid }` would otherwise beat `hidden`). */
 table[data-fa-filtered] tr[hidden] { display: none !important; }
+
+/* ── The render state: a client-built region, and what print does about it ──
+ *
+ * AT THE END OF THIS FILE DELIBERATELY, and the reason is coordination rather
+ * than cascade. These rules belong beside the `@media print` block ~1340 lines
+ * up; PR #1808 rewrites lines 1060-1340 of this file and was `ready-to-merge`
+ * on 2026-10-02, and a sibling's in-flight work wins. Nothing here competes
+ * with a selector above it, so the position costs nothing. Move it up when
+ * that lands.
+ *
+ * ## What the two obligations are, and which half is enforceable
+ *
+ * `skills/ui/ui-core/ui-accessibility.md` §"A rendering built client-side owes
+ * two things the static one gave for free", owner 2026-10-02: print and PDF
+ * SHALL wait for load and render, and a load that FAILS SHALL say so.
+ *
+ * For a HEADLESS run the wait is enforceable, and `scripts/dak-pdf.ts`
+ * enforces it: it waits on `data-fa-render` and REFUSES to emit over a page
+ * that is `pending` or `failed`, because a PDF is not re-checkable after the
+ * fact the way a web page is.
+ *
+ * For an INTERACTIVE print it is not, and saying so plainly is better than
+ * implying a mechanism exists. `beforeprint` is synchronous, a `fetch` cannot
+ * be awaited inside it, and no browser lets a script hold the print dialogue
+ * open. `kg-render.js` starts its requests at script evaluation — `defer`red,
+ * so before `DOMContentLoaded` — which makes the common case ready long before
+ * anybody reaches the print command. The rules below cover the uncommon one:
+ * they do not make print wait, they make a premature print SELF-IDENTIFY on
+ * the paper instead of leaving a silent gap.
+ *
+ * A `::before` on the region rather than `display: none` on it, for the same
+ * reason `collapseFloor` opens its `<details>` from script rather than from a
+ * stylesheet: hiding the region would print a page that looks complete and is
+ * not, which is the exact failure this exists to prevent.
+ *
+ * TWO SELECTORS because there are two kinds of client-built region in the tree
+ * today — `[data-fa-workplan]`, which `work-plan.js` fills on the
+ * `beans-and-todos` pages, and `[data-fa-region]`, the generic container.
+ * Both, rather than one and a promise: a print rule that matched nothing would
+ * look like it worked, which is the `gjli` lesson from this repository's own
+ * heading-anchor defect.
+ *
+ * Keyed on the attribute `head_custom.html` writes at first paint, so the rule
+ * holds for a print fired before any script ran. A page that declares no
+ * dynamic region carries no attribute and matches neither selector — the third
+ * state, which must not render as either of the other two. */
+@media print {
+  html[data-fa-render="pending"] [data-fa-region]::before,
+  html[data-fa-render="pending"] [data-fa-workplan]::before {
+    content: "This section had not finished loading when this page was printed. "
+             "The published data file named beside it is the complete record.";
+    display: block;
+    font-style: italic;
+  }
+  html[data-fa-render="failed"] [data-fa-region]::before,
+  html[data-fa-render="failed"] [data-fa-workplan]::before {
+    content: "This section could not be loaded when this page was printed. "
+             "That is not an empty section \2014 see the linked data file.";
+    display: block;
+    font-style: italic;
+  }
+}
+
+/* A client-built region that could not be loaded, and one that is genuinely
+ * empty. `kg-render.js`'s `failureNote` and `emptyNote`.
+ *
+ * TWO CLASSES rather than one, because they are opposite facts — "could not be
+ * read" against "there is nothing here" — and a reader who cannot tell them
+ * apart has been handed the third-state failure this repository guards
+ * everywhere else.
+ *
+ * The failure is NOT painted as an error: no red, no icon. It is a sentence
+ * about what the reader is looking at, and the data file in it is a working
+ * link. An alarming box would be louder than the fact and would not help
+ * anybody read the artefact. */
+.fa-render-failed,
+.fa-render-empty,
+.fa-workplan-failed {
+  font-size: 0.9rem;
+  line-height: 1.5;
+  margin: 0.75rem 0 0;
+}
+.fa-render-failed code,
+.fa-workplan-failed code { word-break: break-all; }

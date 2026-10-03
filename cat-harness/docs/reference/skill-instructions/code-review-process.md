@@ -46,7 +46,7 @@ the arbiter. If ambiguous, ask the BA.
 | Schema (`schemas/*.ts`) | Code review | BA (type ↔ requirement) |
 | Pipeline (`content/pipeline/*.ts`) | Code review + tests | BA (output correctness) |
 | Skills (`cat-harness/skills/**`) | BA (guidance sense) | Code review (cross-refs) |
-| BPMN (`cat-harness/processes/*.bpmn`) | BA (process ↔ reality) | Code review (compliance) |
+| BPMN (`cat-harness/processes/**/*.bpmn`) | BA (process ↔ reality) | Code review (compliance) |
 | Docs (`cat-harness/docs/**`) | BA (content accuracy) | Visual (staging preview) |
 | Tests | Code review | — |
 | CI/workflows | Code review | CI health check |

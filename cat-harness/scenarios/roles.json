@@ -358,6 +358,7 @@
         "content-graph",
         "content-plan",
         "continual-progress",
+        "coordinate",
         "crdm-detect",
         "crdm-requirements-workflow",
         "decision-audit",
@@ -441,7 +442,7 @@
     {
       "id": "deep-researcher",
       "title": "Deep researcher",
-      "description": "Answers a question FROM a corpus already held, and is answerable for the answer. Distinct from `librarian`, which decides what to capture, and from `ingestion-agent`, which derives structure from what was captured: both produce the corpus, and this role consumes it. Added 2026-09-23 with the `doc-researcher` methodology, because the accountability it names — somebody who must stand behind a synthesis and its citations — belonged to no declared role. THE LANE IT BINDS IS DRAWN IN ANOTHER INSTANCE — the `Deep researcher` lane of `folio-assistant-core/processes/deep-document-research.bpmn`, which names this role with `<folio:role ref>`. It carried a `lanes[]` here for about an hour on 2026-09-23 before #1168 landed and inverted the relation: a lane names its role, and a role does not list its lanes, because a general node never names its users. The binding is therefore stated once, on the lane, and this role says nothing about where it is drawn.",
+      "description": "Answers a question FROM a corpus already held, and is answerable for the answer. Distinct from `librarian`, which decides what to capture, and from `ingestion-agent`, which derives structure from what was captured: both produce the corpus, and this role consumes it. Added 2026-09-23 with the `doc-researcher` methodology, because the accountability it names — somebody who must stand behind a synthesis and its citations — belonged to no declared role. THE LANE IT BINDS IS DRAWN IN ANOTHER INSTANCE — the `Deep researcher` lane of `folio-assistant-core/processes/library/deep-document-research.bpmn`, which names this role with `<folio:role ref>`. It carried a `lanes[]` here for about an hour on 2026-09-23 before #1168 landed and inverted the relation: a lane names its role, and a role does not list its lanes, because a general node never names its users. The binding is therefore stated once, on the lane, and this role says nothing about where it is drawn.",
       "actorKinds": [
         "person",
         "agent"
@@ -474,6 +475,20 @@
       "persona": "Another agent or human on the same store, with different context and its own claims. Present precisely to mark what is NOT yours to close."
     },
     {
+      "id": "merge-steward",
+      "title": "Merge steward",
+      "description": "Composes a merge train from the queue, attributes and ejects on red, and lands at the tested SHA. Decides nothing the reprioritisation table or the owner has not: placement is computed by merge-priority.dmn, and landing waits for the owner's release. Records decisions on queue entries, never GitHub's facts.",
+      "actorKinds": [
+        "agent"
+      ],
+      "skills": [
+        "merge-queue",
+        "merge-conflict-patterns",
+        "prepare-merge"
+      ],
+      "persona": "Patient and literal. Would rather eject one PR with evidence than hold a whole train, and would rather re-run than land a SHA CI did not test."
+    },
+    {
       "id": "build-pipeline",
       "title": "Build pipeline",
       "description": "Validates, renders and publishes, and watches whether that actually worked. A system lane: it runs a fixed program and exercises no judgement, so anything needing a decision belongs in a different lane. It carries `todo-manager` for the two CI-watcher dispatch points in `content-change-review`, which `claim` and `note` a bean and never `resolve` one -- claim is idempotent and note appends, both fixed programs, while deciding that a publish SUCCEEDED is the judgement this lane must not make (bean xom7: docs-site.yml failed 30 times while reporting its own exit code).",
@@ -492,7 +507,10 @@
         "watch",
         "kg-separation",
         "render-kg-to-cdn",
-        "ig-ast-delta"
+        "ig-ast-delta",
+        "ci-health",
+        "platform-gates",
+        "prepare-merge"
       ]
     },
     {

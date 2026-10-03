@@ -150,7 +150,7 @@ as a separate site loses the navigation a reviewer came in with.
 
 ## Where this sits in a process
 
-In `cat-harness/processes/ig-incremental-build.bpmn` the delta belongs
+In `fhir-harness/processes/content/ig-incremental-build.bpmn` the delta belongs
 between **Task_Merge** (restored and rebuilt records merged) and
 **Task_Qa** (QC gates on the aggregate): it is what the QC reviewer reads to
 decide whether the incremental result is what a full build would have

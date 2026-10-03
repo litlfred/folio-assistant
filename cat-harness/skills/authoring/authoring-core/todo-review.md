@@ -32,7 +32,7 @@ gives a reader nothing to annotate.
 The missing first step is
 [`copy-out-materialized`](../../library/large-datasets/copy-out-materialized.md)
 (diagram:
-`cat-harness/processes/copy-out-materialized.bpmn`).
+`cat-harness/processes/library/copy-out-materialized.bpmn`).
 The owner's framing, 2026-09-21:
 
 > *"this is first/early step of review process, checking out local copy to edit,

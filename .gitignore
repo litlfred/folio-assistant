@@ -98,6 +98,13 @@ content/schema/
 # simply never have deployed.
 !cat-harness/docs/_includes/*.js
 
+# The library viewer's SHARED script (#1881). Every library page — each
+# instance's and each entry's own IRI — is a thin shell that loads this one
+# file, so it is published output that `library:viz` writes and
+# `library:viz:check` compares; ignored, the committed shells would load a
+# script that is not there.
+!cat-harness/docs/assets/library/viewer.js
+
 # Build stamp written by .github/workflows/docs-site.yml at deploy time.
 # Never committed: a sha in the repo names the commit BEFORE the deploy.
 cat-harness/docs/_data/build.yml
