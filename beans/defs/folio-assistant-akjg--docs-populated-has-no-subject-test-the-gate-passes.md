@@ -1,11 +1,11 @@
 ---
 # folio-assistant-akjg
 title: 'DOCS-POPULATED HAS NO SUBJECT TEST: the gate passes smart-trust on docs/category/Other.md — length and authorship have teeth, 06e3 §4(b) processes/roles/tasks half was never built'
-status: in-progress
+status: completed
 type: bug
 priority: normal
 created_at: 2026-10-03T13:50:38Z
-updated_at: 2026-10-03T13:50:59Z
+updated_at: 2026-10-03T14:22:22Z
 parent: folio-assistant-0lmb
 ---
 
@@ -114,3 +114,24 @@ four-character guard, the eligibility filter, the ranking tiebreak, the
 unreadable/absent split, or the `scenarios` resolution each turns a NAMED test
 red. 23 pass, including a planted instance (declaration + BPMN + role graph) so
 the resolver is tested against a real `readDeclaration` rather than a mock of it.
+
+## Closed 2026-10-03 — landed in PR #2002, merge commit `27e2a46350`
+
+Closed on **evidence, not authorship** (`bean-coordination` §"Closing a bean
+whose work has already landed"). What was verified on `main` rather than assumed
+from the merge notification:
+
+- both commits are ancestors of `main`: `1ddfca1988` (the implementation) and
+  `d08d038a5f` (the correction);
+- the code is really there — `subjectsOf` at `check-docs-populated.ts:214`, the
+  §SUBJECT docblock at `:62`, `assessSubject` referenced three times;
+- every Done-when box above is ticked on `main`'s copy of this file.
+
+The check-before-closing mattered: **#1998 merged at its FIRST commit** (the bean
+alone) while three more were already pushed to its branch, which is the whole
+reason #2002 existed. A merge notification says a PR merged; it does not say
+which sha it took. The `ready:` marker on #2002 named that risk in advance, and
+the verification above is what closes it.
+
+Final measurement on `main`: **1 populated, 5 unknown, 0 thin.** `--strict` is
+what `06e3` §4(a) turns on when the landing pages exist.
