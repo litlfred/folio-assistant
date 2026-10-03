@@ -60,6 +60,7 @@ Part of [C@T Harness](../README.md) 0.1.0, declared as `cat-harness-tests`, hold
 | [`search-lazy.e2e.ts`](search-lazy.e2e.ts) | a file |  |
 | [`search-pinned.e2e.ts`](search-pinned.e2e.ts) | a file |  |
 | [`search-restore.e2e.ts`](search-restore.e2e.ts) | a file |  |
+| [`search-scoped.e2e.ts`](search-scoped.e2e.ts) | a file |  |
 | [`settings-crosslinks.e2e.ts`](settings-crosslinks.e2e.ts) | a file |  |
 | [`sidebar-panels.e2e.ts`](sidebar-panels.e2e.ts) | a file |  |
 | [`sidebar-rail.e2e.ts`](sidebar-rail.e2e.ts) | a file |  |
