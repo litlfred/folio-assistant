@@ -193,6 +193,10 @@ describe("classify", () => {
     expect(classify("cat-harness/docs/processes/merge-base.md").pattern?.id).toBe("viewer-pages");
     expect(classify("cat-harness/docs/translation-status/index.html").pattern?.id).toBe("viewer-pages");
     expect(classify("cat-harness/docs/methodologies/index.md").pattern?.id).toBe("viewer-pages");
+    expect(classify("cat-harness/docs/fsh-guts/index.md").pattern?.id).toBe("viewer-pages");
+    // ...but not the archive it renders: fsh-guts/ holds authored, kept content.
+    expect(classify("fsh-guts/uploads/Home-_-folio-assistant.md").strategy).toBe("refuse");
+    expect(classify("cat-harness/docs/fsh-guts/other.md").strategy).toBe("refuse");
     expect(classify("cat-harness/docs/cat-harness/published-graphs.md").pattern?.id).toBe("handler-index");
     expect(classify("cat-harness/test/health/results/repository.health-report.json").pattern?.id).toBe("health-report");
     // Authored neighbours: a methodology page itself, and the health producer.

@@ -50,11 +50,11 @@ Part of [C@T Harness](../README.md) 0.1.0, declared as `docs`, holding `docs`.
 | [`_includes/`](_includes/) | 9 files | |
 | [`ar/`](ar/) | 14 files | |
 | [`architecture/`](architecture/) | 8 files | |
-| [`assets/`](assets/) | 624 files | |
+| [`assets/`](assets/) | 635 files | |
 | [`attestations/`](attestations/) | 1 file | |
 | [`beans/`](beans/) | 1 file | |
 | [`bootstrap/`](bootstrap/) | 1 file | |
-| [`cat-harness/`](cat-harness/) | 151 files | |
+| [`cat-harness/`](cat-harness/) | 153 files | |
 | [`es/`](es/) | 14 files | |
 | [`external-schemas/`](external-schemas/) | 1 file | |
 | [`fr/`](fr/) | 14 files | |
@@ -69,7 +69,7 @@ Part of [C@T Harness](../README.md) 0.1.0, declared as `docs`, holding `docs`.
 | [`proposals/`](proposals/) | Proposals for this harness's own features — initial analysis, MVP, options — argued, and updated in place, before and while they are built. | |
 | [`prov-qaqc/`](prov-qaqc/) | 1 file | |
 | [`qa/`](qa/) | 1 file | |
-| [`reference/`](reference/) | 330 files | |
+| [`reference/`](reference/) | 333 files | |
 | [`requirements/`](requirements/) | What this harness promises, one page per shipped feature: a proposal MOVED here when its feature ships, its front matter a `Requirement` (`bootstrap/schemas/requirement.schema.json`), checked by `check:requirements`. | |
 | [`research-and-analysis/`](research-and-analysis/) | 2 files | |
 | [`ru/`](ru/) | 14 files | |
@@ -80,7 +80,7 @@ Part of [C@T Harness](../README.md) 0.1.0, declared as `docs`, holding `docs`.
 | [`todos/`](todos/) | 10 files | |
 | [`tools/`](tools/) | 1 file | |
 | [`translation-status/`](translation-status/) | 1 file | |
-| [`uml/`](uml/) | 129 files | |
+| [`uml/`](uml/) | 134 files | |
 | [`uploads/`](uploads/) | 1 file | |
 | [`wireframes/`](wireframes/) | 192 files | |
 | [`zh/`](zh/) | 14 files | |
