@@ -60,13 +60,35 @@
  *   refuses one it does not reach). A mirror is refused so the twenty cannot
  *   quietly come back one at a time.
  *
+ * ## Two more, for a directory kept at a branch TIP
+ *
+ * - **not-cut-over** — it declares the branch and the checkout still tracks
+ *   files at the path. Two copies, and nothing says which is authoritative.
+ * - **unmounted** — cut over, and nothing mounted here, so every reader of
+ *   the path sees an EMPTY graph rather than an unreachable one.
+ *
+ * A **commit**-keyed directory is still skipped, because for that keying the
+ * checkout copy really is an artefact of whether `qa:fetch` ran. The
+ * distinction, and the measurements behind it, are in {@link tipPresence}.
+ *
  * Exit codes: 0 clean · 1 any finding.
  */
+import { spawnSync } from "node:child_process";
 import { existsSync, statSync } from "node:fs";
-import { basename, join, resolve, sep } from "node:path";
+import { basename, join, relative, resolve, sep } from "node:path";
 
 import { instanceRootsIn, readDeclaration } from "../schemas/cat-harness.js";
-import { contentIsOffCheckout, type SubgraphSource } from "../schemas/subgraph-source.js";
+import {
+  contentIsOffCheckout,
+  resolveSubgraphSource,
+  type ResolvedSubgraphSource,
+  type SubgraphSource,
+} from "../schemas/subgraph-source.js";
+// The marker format has ONE reader, in `branch-store.ts`. This gate asking
+// `existsSync` on a path it spelled itself would be a second, and the two
+// would drift the first time the marker moved — which it already did once,
+// from `--git-common-dir` to the per-worktree git dir (review on #1957).
+import { readMarker } from "./branch-store.ts";
 // The `folio` graph kind is registered by CORE as a load-time side effect, so
 // the harness alone does not know it exists and `readDeclaration` throws on a
 // perfectly valid declaration that uses it. Same import, same reason, as
@@ -77,7 +99,7 @@ export interface DirFinding {
   instance: string;
   id: string;
   path: string;
-  kind: "absent" | "stale-exemption" | "mirror";
+  kind: "absent" | "stale-exemption" | "mirror" | "not-cut-over" | "unmounted";
   detail: string;
 }
 
@@ -93,6 +115,74 @@ export function resolveDeclaredPath(
   repoRoot: string,
 ): string {
   return join(entry.scope === "repository" ? repoRoot : instanceRoot, entry.path);
+}
+
+/**
+ * What this checkout can say about a directory kept at a branch TIP.
+ *
+ * Three answers, and **only one of them is a pass**:
+ *
+ * - **`not-cut-over`** — the declaration names the branch and the checkout
+ *   still tracks files at the path, so the graph has two copies and nothing
+ *   says which is authoritative. `mountTip` refuses precisely this state
+ *   (*"is still tracked on this checkout's branch"*), so a declaration
+ *   flipped ahead of the `git rm` leaves the mount permanently refusing while
+ *   every reader goes on reading `main`. Bean `9ofm` measured both halves on
+ *   `main@4622dc2a`: `branch-store.ts mount --id beans` refused with exit 5,
+ *   and `state-mount.ts` — what the session-start hook calls — printed
+ *   "Mounted" and exited **0** for the same declaration. This finding is the
+ *   guard that makes the flip and the `git rm` one step rather than a state
+ *   somebody can leave the repository in.
+ * - **`unmounted`** — cut over, and nothing mounted here, so every reader of
+ *   this path sees an empty graph. For the work plan that is an empty
+ *   `beans list`, which is not evidence that there is no work.
+ * - **`mounted`** — a marker for this id, and its mount on disk. It carries
+ *   `into`, because the mount is wherever the marker says and not necessarily
+ *   the declared path (`mountTip --into`), and a census that assumed the
+ *   declared path would count zero files for a mount that is really there.
+ *
+ * Read from the mount MARKER and `git ls-files`, never from the branch: this
+ * gate stays local and offline, so it cannot go red for a network reason and
+ * cannot be made green by a fetch. "Could not ask" — no git directory, or a
+ * marker that will not parse — is reported as `unmounted` with the reason,
+ * because a gate that cannot determine presence has not determined presence.
+ */
+export function tipPresence(
+  loc: { id: string; branch: string; keyedBy: string },
+  abs: string,
+  repoRoot: string,
+): { state: "mounted"; into: string } | { state: "not-cut-over" | "unmounted"; detail: string } {
+  const rel = relative(repoRoot, abs).split(sep).join("/") || ".";
+  const tracked = spawnSync("git", ["ls-files", "--", rel], { cwd: repoRoot, encoding: "utf-8" });
+  if (tracked.status === 0 && tracked.stdout.trim()) {
+    const n = tracked.stdout.trim().split("\n").length;
+    return {
+      state: "not-cut-over",
+      detail:
+        `declares \`storage.branch: "${loc.branch}"\` (keyed by ${loc.keyedBy}) and the checkout ` +
+        `still tracks ${n} file(s) here, so the graph has two copies and nothing says which is ` +
+        `authoritative. \`mountTip\` refuses this state, so the mount stays refused while every ` +
+        `reader goes on reading this branch. Flipping the declaration and removing the files are ` +
+        `ONE change (bean \`9ofm\`): land both, or neither.`,
+    };
+  }
+  let marker;
+  try {
+    marker = readMarker(repoRoot, loc.id);
+  } catch (err) {
+    return {
+      state: "unmounted",
+      detail: `could not determine whether ${loc.branch} is mounted here: ${(err as Error).message}. Not a pass — nothing read this path.`,
+    };
+  }
+  if (marker && existsSync(marker.into)) return { state: "mounted", into: marker.into };
+  return {
+    state: "unmounted",
+    detail:
+      `is cut over to \`${loc.branch}\` and ${marker ? `its marker points at ${marker.into}, which is gone` : "nothing is mounted here"}, ` +
+      `so every reader of this path sees an EMPTY graph rather than an unreachable one. ` +
+      `Mount it (\`bun run state:mount\`); "no content" and "could not reach the content" are different answers.`,
+  };
 }
 
 /**
@@ -114,7 +204,7 @@ export function auditInstance(
           path: string;
           scope?: string;
           absent?: { reason: string };
-          storage?: { branch: string };
+          storage?: { branch: string; keyedBy?: string };
           source?: SubgraphSource;
         }>;
       }
@@ -129,13 +219,40 @@ export function auditInstance(
     // `readdirSync` on it throws rather than reporting an empty graph.
     const present = existsSync(abs) && statSync(abs).isDirectory();
 
-    // A STORED directory (`storage.branch`, bean `16ei`) is kept on its
-    // branch, so its absence from the checkout is the declared state, not a
-    // missing directory — and its presence (a fetched working copy) is not a
-    // stale exemption either. Neither direction applies.
-    // Any source off the checkout — `source: { kind: "branch" }` or the
-    // legacy `storage` (bean `l4ay`).
-    if (contentIsOffCheckout(e)) continue;
+    // Content off the checkout — `source: { kind: "branch" }` or the legacy
+    // `storage` (beans `16ei`, `l4ay`). `contentIsOffCheckout` is the cheap,
+    // throw-free question: is this entry's content elsewhere at all. It is
+    // asked FIRST so the common case costs nothing.
+    if (contentIsOffCheckout(e)) {
+      // ...and then WHICH elsewhere, because the keyings are not the same
+      // question and treating them alike is what bean `9ofm` measured going
+      // wrong.
+      //
+      // `commit`-keyed is qa-store's layout: the checkout holds at most a
+      // working copy whose size depends on whether `qa:fetch` ran, so its
+      // absence IS the declared state and its presence is not a stale
+      // exemption either. Neither direction applies — skipped, as before.
+      //
+      // A branch TIP is deterministic, so skipping it would be `1xhc`: a
+      // reader of this path sees nothing, and "no content" and "could not
+      // reach the content" would be indistinguishable from here. See
+      // {@link tipPresence}.
+      let src: ResolvedSubgraphSource;
+      try {
+        src = resolveSubgraphSource(e);
+      } catch (err) {
+        // The resolver throws on a contradiction a reader must not paper over
+        // (both fields, or a tip-keyed `qa`). It is a finding here rather than
+        // a crash, so one bad entry does not take the whole sweep with it —
+        // and `unmounted` is the honest state: nothing read this path.
+        findings.push({ instance: instanceRoot, id: e.id, path: e.path, kind: "unmounted", detail: (err as Error).message });
+        continue;
+      }
+      if (src.kind !== "branch" || src.keyedBy !== "tip") continue;
+      const t = tipPresence(src, abs, repoRoot);
+      if (t.state !== "mounted") findings.push({ instance: instanceRoot, id: e.id, path: e.path, kind: t.state, detail: t.detail });
+      continue;
+    }
     if (!present && !e.absent) {
       findings.push({
         instance: instanceRoot,
