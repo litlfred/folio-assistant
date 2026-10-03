@@ -102,5 +102,48 @@ if [ "$status" -ne 0 ] && [ -n "${GITHUB_STEP_SUMMARY:-}" ]; then
   } >> "$GITHUB_STEP_SUMMARY"
 fi
 
+# AND AN ANNOTATION, which is the part a reader outside the log host can
+# actually fetch.
+#
+# This is here because the step summary ALONE does not do the job this script
+# exists for. Measured on #2016, on a real red `Repository gates (hard)`:
+#
+#     output.title    null
+#     output.summary  null
+#     annotations     [failure] "Process completed with exit code 1."
+#
+# `$GITHUB_STEP_SUMMARY` renders on the run page and does NOT populate the
+# check run's `output.summary`. The premise this script was first written on
+# was simply false. Annotations ARE served -- by
+# `GET /repos/{owner}/{repo}/check-runs/{id}/annotations` -- and that is how
+# the previous failure on this branch was diagnosed from a container that
+# cannot reach the log host at all.
+#
+# So the summary stays for a person reading the run page, and the annotation
+# carries the same verdict to everyone else.
+if [ "$status" -ne 0 ]; then
+  # `::error::` takes ONE line. A literal newline would end the command and
+  # spill the rest into the log as plain text, so newlines travel as `%0A` --
+  # and `%` must be escaped FIRST or it would eat the escapes that follow.
+  #
+  # Bounded hard at 24 lines / 3500 characters. GitHub truncates a long
+  # annotation silently and shows at most 10 error annotations per step, so a
+  # generous limit loses the verdict rather than preserving it. The TAIL again:
+  # a gate prints its ✗ last.
+  detail=$(tail -n 24 "$log" | tail -c 3500 \
+    | sed -e 's/%/%25/g' -e 's/\r/%0D/g' \
+    | awk '{ printf "%s%%0A", $0 }')
+  # The command needs the SAME escaping as the detail: a gate whose name or
+  # output contains a `%` would otherwise corrupt the annotation. Found by
+  # testing a step that prints `50%`.
+  cmd=$(grep -vE '^\s*(#|$)' "$script" | head -3 | tr '\n' ' ' | cut -c1-200 \
+    | sed -e 's/%/%25/g')
+  if [ -n "$detail" ]; then
+    echo "::error title=${GITHUB_JOB:-gate} failed (exit ${status})::${cmd}%0A%0A${detail}"
+  else
+    echo "::error title=${GITHUB_JOB:-gate} failed (exit ${status})::${cmd}%0A%0A(the step printed nothing before failing)"
+  fi
+fi
+
 rm -f "$log"
 exit "$status"

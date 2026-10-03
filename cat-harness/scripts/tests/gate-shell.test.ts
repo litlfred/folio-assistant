@@ -62,7 +62,13 @@ describe("gate-shell.sh", () => {
   test("keeps -e: a failing command aborts the rest of the step", () => {
     const r = runStep("false\necho NOT-REACHED\n");
     expect(r.status).toBe(1);
-    expect(r.stdout).not.toContain("NOT-REACHED");
+    // The STEP's own output, not the whole of stdout: the `::error::`
+    // annotation quotes the command, so it legitimately contains the text of
+    // a line that never ran. Asserting over all of stdout made this test fail
+    // when the annotation was added — the test was too broad, not the code
+    // wrong.
+    const stepOutput = r.stdout.split("\n").filter((l) => !l.startsWith("::")).join("\n");
+    expect(stepOutput).not.toContain("NOT-REACHED");
   });
 
   test("writes nothing to the summary when the step passes", () => {
@@ -107,6 +113,48 @@ describe("gate-shell.sh", () => {
     const r = runStep("echo local\nexit 4\n", { summary: false });
     expect(r.status).toBe(4);
     expect(r.stdout).toContain("local");
+  });
+
+  // ANNOTATIONS, which is the channel that actually reaches a reader outside
+  // the log host. `$GITHUB_STEP_SUMMARY` does NOT populate a check run's
+  // `output.summary` — measured on #2016 against a real red `Repository gates`:
+  // title null, summary null, annotations only "Process completed with exit
+  // code 1". The premise this script was first written on was false, so these
+  // tests cover the mechanism that replaced it.
+  test("emits exactly ONE ::error:: line, since the command takes a single line", () => {
+    const lines = runStep("echo a\necho b\nexit 1\n").stdout.split("\n").filter((l) => l.startsWith("::error"));
+    expect(lines.length).toBe(1);
+  });
+
+  test("escapes newlines as %0A — a literal one would end the command early", () => {
+    const line = runStep("echo first\necho second\nexit 1\n").stdout.split("\n").find((l) => l.startsWith("::error"))!;
+    expect(line).toContain("%0A");
+    expect(line).toContain("first");
+    expect(line).toContain("second");
+  });
+
+  test("escapes a literal % as %25, in the OUTPUT and in the command", () => {
+    // Found by test rather than by reading: the command half was unescaped at
+    // first, so a gate printing `50%` corrupted its own annotation.
+    const line = runStep('echo "stale: 50% of files"\nexit 1\n').stdout.split("\n").find((l) => l.startsWith("::error"))!;
+    expect(line).toContain("50%25 of files");
+    expect(line).not.toMatch(/50% of/);
+  });
+
+  test("bounds the annotation — GitHub truncates a long one silently", () => {
+    const line = runStep("for i in $(seq 1 4000); do echo \"line $i padding\"; done\nexit 1\n")
+      .stdout.split("\n").find((l) => l.startsWith("::error"))!;
+    expect(line.length).toBeLessThan(6000);
+    expect(line).toContain("line 4000");   // the tail is what survives
+  });
+
+  test("a passing step emits no annotation at all", () => {
+    expect(runStep("echo fine\n").stdout).not.toContain("::error");
+  });
+
+  test("says so in the annotation when the step printed nothing", () => {
+    const line = runStep("false\n").stdout.split("\n").find((l) => l.startsWith("::error"))!;
+    expect(line).toContain("printed nothing");
   });
 
   test("refuses a missing step script rather than passing vacuously", () => {
