@@ -1,10 +1,11 @@
 ---
 # folio-assistant-q8ar
 title: 'LATE MATERIALIZATION: per-slice SQLite/DuckDB WASM via OPFS on gh-pages; pilots beans, todos, library, whole repo; who-iris CDN'
-status: todo
+status: in-progress
 type: feature
+priority: normal
 created_at: 2026-10-02T20:42:54Z
-updated_at: 2026-10-02T20:42:54Z
+updated_at: 2026-10-03T11:17:43Z
 parent: folio-assistant-whlc
 ---
 
@@ -16,3 +17,10 @@ Owner, 2026-10-02 ("bean up #2"): a client (browser running Oxigraph or SQLite v
 - [ ] client loader: download → OPFS → mount, with a fallback when OPFS is unavailable
 - [ ] who-iris CDN proposal updated with this design, generalized to any slice (coordinate with l9v6 / xies / 7dek)
 - [ ] heavy payloads stay lazy: the SQLite slice holds the skeleton and pointers, payloads fetched on demand
+
+
+
+## Owner ruling 2026-10-03 — engine and pilot slice
+Selected SQLite (official SQLite WASM build, OPFS VFS), pilot slice = beans. Rejected: SQLite/library, DuckDB-Wasm/beans, defer.
+
+_2026-10-03T11:17:41Z_ — Claimed by claude/nifty-faraday-8ql41p — pushed to main so sibling sessions see it before this branch has a PR (bean 35nj).

@@ -1,10 +1,11 @@
 ---
 # folio-assistant-f233
 title: 'KG DATA MODELLING: skeleton (topology index) vs content-addressed payloads; no monolithic JSON-LD'
-status: todo
+status: in-progress
 type: feature
+priority: normal
 created_at: 2026-10-02T20:42:54Z
-updated_at: 2026-10-02T20:42:54Z
+updated_at: 2026-10-03T11:17:35Z
 parent: folio-assistant-whlc
 ---
 
@@ -15,3 +16,10 @@ Owner, 2026-10-02 ("bean up #1: add to data modeling/schema design for the KG sk
 - [ ] the directory layout and IRI scheme for payloads are specified (content-addressed paths; how a skeleton pointer resolves to a payload)
 - [ ] existing monolithic emitters are inventoried, each with a follow-up bean or a reason it stays
 - [ ] consistent with the named-subgraph contract (sibling bean)
+
+
+
+## Owner ruling 2026-10-03 — payload address scheme
+Selected `<BASE_URL>/payload/sha256/<hex>`: content-addressed, immutable, cacheable forever; an index or hydrated node points to its payload by that IRI. Rejected: beside-each-node paths, defer.
+
+_2026-10-03T11:17:21Z_ — Claimed by claude/nifty-faraday-8ql41p — pushed to main so sibling sessions see it before this branch has a PR (bean 35nj).

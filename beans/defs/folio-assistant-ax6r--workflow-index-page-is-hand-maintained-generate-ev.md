@@ -3,8 +3,9 @@
 title: 'Workflow index page is hand-maintained: generate every-workflow-in-the-repo from the process KG, strip drift; aggregate across KGs'
 status: in-progress
 type: feature
+priority: normal
 created_at: 2026-10-02T20:42:54Z
-updated_at: 2026-10-03T09:38:44Z
+updated_at: 2026-10-03T11:17:12Z
 parent: folio-assistant-whlc
 ---
 
@@ -46,3 +47,8 @@ Today the page is a hand-written table: every new BPMN needs a manual row (#1894
 15. "`check:workflow-refs` fails when a `.bpmn` under `processes/` is absent from this page" — it never covered bootstrap's or bootstrap-tools' diagrams, which is how items 1–3 survived.
 
 _2026-10-03T09:38:41Z_ — Claimed by claude/nifty-faraday-8ql41p — pushed to main so sibling sessions see it before this branch has a PR (bean 35nj).
+
+
+
+## Owner ruling 2026-10-03 — format
+Selected 'Move to JSON-LD': the KG export carries each process's `bpmn:documentation` (first sentence and full), and the workflow-index page reads the published JSON-LD rather than the plain-JSON `folio-process-index/v1`. The plain JSON goes once the page reads JSON-LD (no second store).

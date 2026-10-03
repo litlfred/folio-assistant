@@ -5,7 +5,7 @@ status: in-progress
 type: feature
 priority: normal
 created_at: 2026-10-02T20:42:54Z
-updated_at: 2026-10-03T08:10:40Z
+updated_at: 2026-10-03T11:17:11Z
 parent: folio-assistant-whlc
 ---
 
@@ -55,3 +55,8 @@ The dereferenced file is `index.hydrated.jsonld` (was `hydrated.jsonld`): the pa
 - `cat-harness/scripts/gen-subgraph-jsonld.ts` (`bun run subgraph:jsonld`, gate `subgraph:jsonld:check`): reuses `buildExport()`'s in-memory graph; every directory under `kgDirectories(instance)` (skills/, scenarios/, processes/, nested) is a subgraph; direct membership by deepest containing directory, `partOf` inheritance for pathless nodes, the rest at the root. `jsonld.frame` with `@embed @never` (index; direct members as `@explicit` pointer projections) and `@always` (hydrated; members whole, children nested, every KG edge left as an IRI). Root gets `index.jsonld` only.
 - Output: `cat-harness/docs/subgraph/cat-harness/**` (served at `<BASE_URL>/subgraph/cat-harness/…`), 53 subgraphs, 105 files + context `cat-harness/ns/subgraph/v1.jsonld`, 4,462,188 bytes total. `skills/sdlc` hydrated = all 63 sdlc nodes in one fetch.
 - Still open: remote materialization does not yet read these files.
+
+
+
+## Owner ruling 2026-10-03 — remote materialization
+Selected 'Add metadata mode': `kg:materialize --nodes <subgraph>` fetches the subgraph's `index.hydrated.jsonld` only (graph metadata, no bytes); the byte copy and its five gates are unchanged. Rejected: index-driven file selection, both, leave as is.
