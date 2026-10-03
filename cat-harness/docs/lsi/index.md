@@ -123,14 +123,14 @@ Each dimension is a **contrast** between two poles, shown by their highest-loadi
 
 | dim | σ | one pole | the other pole |
 |---|---|---|---|
-| 1 | 45.38 | kind, instance, harness, directory, page, session, graph, branch | *(none)* |
-| 2 | 21.73 | watcher, sibling, queue, prs, slot, backlog, commits, block | harness, instance, declaration, node, directories, directory, iri, subgraph |
-| 3 | 18.06 | slot, chapter, block, edges, formal, project, proof, watcher | session, beans, epic, branch, page, conflict, goals, window |
-| 4 | 17.12 | page, tile, block, text, avatar, chapter, blocks, manifest | sibling, ledger, subgraph, subdirectory, session, sessions, plan, coordination |
+| 1 | 45.41 | kind, instance, harness, page, directory, session, graph, branch | *(none)* |
+| 2 | 21.74 | watcher, sibling, queue, prs, slot, backlog, commits, block | harness, instance, declaration, node, directories, directory, iri, subgraph |
+| 3 | 18.07 | slot, chapter, block, edges, formal, project, proof, watcher | session, beans, epic, branch, page, conflict, goals, window |
+| 4 | 17.12 | page, block, tile, text, avatar, chapter, blocks, manifest | sibling, ledger, session, subdirectory, subgraph, sessions, plan, coordination |
 | 5 | 15.51 | tile, glass, avatar, card, board, theme, sticky, tiles | rung, archive, sniff, ingest, zip, archived, pdf, arxiv |
-| 6 | 15.12 | lane, actor, role, requirements, task, analysis, process, edge | queue, sha, backlog, bytes, withheld, slide, library, rung |
-| 7 | 14.73 | preview, translation, staging, locale, url, translated, pages, language | tile, glass, avatar, card, slot, sticky, fit, settings |
-| 8 | 14.52 | edges, forward, edge, backward, cross-chapter, logical, energy, storytelling | actor, lane, role, requirement, user, task, requirements, backlog |
+| 6 | 15.13 | lane, actor, role, requirements, task, analysis, process, edge | queue, sha, backlog, bytes, withheld, slide, library, rung |
+| 7 | 14.74 | preview, staging, translation, locale, url, pages, translated, language | tile, glass, avatar, card, slot, sticky, fit, settings |
+| 8 | 14.53 | edges, forward, edge, backward, cross-chapter, logical, energy, storytelling | actor, lane, role, requirement, user, task, requirements, backlog |
 
 **Findings** — 0 narrow dimension(s), 0 near-duplicate pair(s).
 
