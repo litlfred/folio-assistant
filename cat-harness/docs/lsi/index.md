@@ -115,7 +115,7 @@ Each dimension is a **contrast** between two poles, shown by their highest-loadi
 
 ## cat-harness / skills
 
-**225** units · **6000** terms · k = **100** · retains **78.5 %** of the weighted matrix · weighting `log-entropy` · sidecar `cat-harness/test/results/lsi/cat-harness/skills.lsi.json`
+**225** units · **6002** terms · k = **100** · retains **78.5 %** of the weighted matrix · weighting `log-entropy` · sidecar `cat-harness/test/results/lsi/cat-harness/skills.lsi.json`
 
 > Dimension 1 has **no negative pole**: it most likely measures unit length and term frequency (a margin), not a theme. Read the themes from dimension 2 on.
 
@@ -123,14 +123,14 @@ Each dimension is a **contrast** between two poles, shown by their highest-loadi
 
 | dim | σ | one pole | the other pole |
 |---|---|---|---|
-| 1 | 45.08 | kind, instance, harness, directory, page, session, graph, block | *(none)* |
+| 1 | 45.10 | kind, instance, harness, directory, page, session, graph, branch | *(none)* |
 | 2 | 21.59 | watcher, sibling, queue, prs, commits, backlog, slot, block | harness, instance, declaration, node, directory, directories, graph, asset |
-| 3 | 18.09 | chapter, block, slot, edges, formal, project, glossary, proof | session, beans, branch, push, epic, goals, window, green |
+| 3 | 18.09 | chapter, block, slot, edges, formal, project, glossary, proof | session, beans, branch, push, epic, goals, window, conflict |
 | 4 | 16.91 | page, tile, text, block, avatar, card, glass, blocks | sibling, subdirectory, ledger, plan, sessions, session, actor, relocation |
-| 5 | 15.50 | tile, glass, avatar, card, board, theme, sticky, tiles | rung, archive, sniff, zip, archived, ingest, pdf, arxiv |
-| 6 | 15.07 | lane, actor, role, requirements, task, analysis, impact, process | queue, sha, backlog, tile, bytes, board, withheld, library |
+| 5 | 15.51 | tile, glass, avatar, card, board, theme, sticky, tiles | rung, archive, sniff, zip, archived, ingest, pdf, arxiv |
+| 6 | 15.07 | lane, actor, role, requirements, analysis, task, impact, process | queue, sha, backlog, tile, board, bytes, withheld, glass |
 | 7 | 14.72 | preview, staging, translation, url, locale, pages, translated, deploy | tile, glass, avatar, card, sticky, slot, fit, settings |
-| 8 | 14.55 | edges, forward, edge, backward, cross-chapter, logical, energy, storytelling | actor, lane, role, requirement, user, requirements, pdf, feedback |
+| 8 | 14.55 | edges, forward, edge, backward, logical, cross-chapter, energy, storytelling | actor, lane, role, requirement, user, requirements, pdf, feedback |
 
 **Findings** — 0 narrow dimension(s), 0 near-duplicate pair(s).
 

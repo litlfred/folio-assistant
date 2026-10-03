@@ -2599,7 +2599,7 @@
     {
       "id": "cat-harness.directorystorageschema.keyedby",
       "prefLabel": "DirectoryStorageSchema.keyedBy",
-      "definition": "How entries are keyed on the branch: one entry per `commit`, or one live copy at the `tip`.",
+      "definition": "How entries are keyed on the branch: one entry per `commit`, one live copy at the `tip`, or one entry per published `route`. See {@link DirectoryStorageSchema}'s docblock for why `route` is not a synonym for `tip`.",
       "source": "cat-harness/schemas/cat-harness.ts#DirectoryStorageSchema.keyedBy",
       "status": "candidate"
     },
