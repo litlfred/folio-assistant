@@ -23,7 +23,7 @@ import { readFileSync } from "node:fs";
 import { basename, join } from "node:path";
 
 import { viewerHtml as schemaViewer, viewerPlacement } from "../../cat-harness/scripts/gen-schema-viz.ts";
-import { viewerHtml as libraryViewer } from "../../cat-harness/scripts/gen-library-viz.ts";
+import { viewerHtml as libraryShell, VIEWER_CSS, VIEWER_JS } from "../../cat-harness/scripts/gen-library-viz.ts";
 import { readSchemaGraph } from "../../cat-harness/scripts/schema-graph.ts";
 import { readLibraryGraph } from "../../cat-harness/scripts/library-graph.ts";
 import { directoriesForGraph, repoRootFor, siteDirFor } from "../../cat-harness/schemas/cat-harness.ts";
@@ -57,7 +57,16 @@ const DATA = "../../assets/schemas/index.json";
 
 describe.each([
   ["schema", (h: string) => schemaViewer(h)],
-  ["library", (h: string) => libraryViewer(h)],
+  // What a browser assembles: the library page is a thin shell (#1881) that
+  // loads its shared stylesheet and script, so the questions below are asked
+  // of the shell WITH what it references, inlined where it references them.
+  [
+    "library",
+    (h: string) =>
+      libraryShell(h)
+        .replace("</head>", `<style>${VIEWER_CSS}</style>\n</head>`)
+        .replace("</body>", `<script>${VIEWER_JS}</script>\n</body>`),
+  ],
 ])("the %s viewer", (_name, viewer) => {
   const html = (): string => viewer(DATA);
   const dataPath = DATA;

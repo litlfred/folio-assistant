@@ -4,9 +4,9 @@ title: 'MERGE-MAIN APPROVAL STALL — CORRECTED: already handled by design; the 
 status: todo
 type: bug
 priority: low
-parent: folio-assistant-d33q
 created_at: 2026-10-02T14:10:55Z
-updated_at: 2026-10-02T14:10:55Z
+updated_at: 2026-10-02T18:25:19Z
+parent: folio-assistant-d33q
 ---
 
 ## This bean was filed on a false premise — corrected 2026-10-02
@@ -105,3 +105,46 @@ run on a bot push should read `merge-main.yml`'s own comment first.
 
 Related: `d33q` (the bot), #1829 (credentials design, D1), `mc8h` (the
 merge-forward ruling this label exists to make cheap).
+
+
+## Measured 2026-10-02: the NOTIFICATION channel reports clean while 11 of 12 jobs never ran
+
+A new wrinkle on this bean's subject, and the reason it is worse than a stalled
+merge: **the event an agent is woken by can say "no failures" when nothing
+ran.**
+
+On PR #1889, head `cd643aa0b6d`, a `check_suite.completed` event arrived whose
+own guidance reads *"No third-party check suite on the PR's head_sha is still
+running or failed. If you were waiting on CI, continue with the next step."*
+Checking the PR directly at that head:
+
+| | |
+|---|---|
+| check runs present | **1** — `.jsonld siblings in sync with .ts manifests`, success |
+| check runs expected | **12** (the set that ran on `b51b16ad6b5`) |
+| missing | `Repository gates (hard)`, `TypeScript — tests, lint, types (hard)`, `Skill-registration chain, unmasked (hard)`, `End-to-end + accessibility (hard)`, the Python/Rust/Lean gates, Feature Staging |
+
+So "continue with the next step" was advice to proceed on a tree that **had
+not been gated**. The event is not wrong by its own terms — it covers
+third-party suites that ran, and its small print says *"suites with no runs …
+are not covered; verify the PR's overall state before acting"* — but the
+default reading is the dangerous one, and an agent that trusts the wake is
+exactly the `1xhc` failure: a gate that does not fire is indistinguishable
+from one that passed.
+
+**Corroborates the sibling agent's independent finding**, which this session
+first doubted and then retracted: `pull_request` runs on this branch complete
+with conclusion `action_required` and never execute, so its gate runs happened
+only because it dispatched them. Recorded here because this session's doubt
+was itself the error — the measurement above is what settled it.
+
+**The workaround that works**, and it needs no permissions beyond what an
+agent already has: `code-quality-gates.yml` carries `workflow_dispatch`
+(line 90), so the gates can be dispatched on the branch to turn an absence
+into a signal. Done on this head.
+
+**What this means for any agent reading PR events here:** the count of check
+runs on a head is the measurement, not the presence of a passing suite event.
+One job green out of twelve is `could not determine`, never `green` —
+`could-not-determine-is-a-third-state-everywhere` applied to the wake channel
+itself.

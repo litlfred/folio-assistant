@@ -32,21 +32,8 @@
       "findings": []
     },
     "activity-skill-has-tool": {
-      "result": "fail",
-      "findings": [
-        {
-          "where": "Task_Classify",
-          "detail": "names skill \"merge-conflict-patterns\", which no Tool declares `satisfies` for — the step's mechanism is still prose."
-        },
-        {
-          "where": "Task_Resolve",
-          "detail": "names skill \"merge-conflict-patterns\", which no Tool declares `satisfies` for — the step's mechanism is still prose."
-        },
-        {
-          "where": "Task_Abort",
-          "detail": "names skill \"merge-conflict-patterns\", which no Tool declares `satisfies` for — the step's mechanism is still prose."
-        }
-      ]
+      "result": "pass",
+      "findings": []
     },
     "decision-ref-resolves": {
       "result": "n/a",
@@ -156,8 +143,8 @@
     }
   },
   "totals": {
-    "pass": 14,
-    "fail": 3,
+    "pass": 15,
+    "fail": 2,
     "n/a": 8,
     "unknown": 0
   }

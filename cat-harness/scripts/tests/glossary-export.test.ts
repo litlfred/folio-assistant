@@ -378,3 +378,34 @@ describe("ledger keys and renames", () => {
     expect(dangling).toEqual([]);
   });
 });
+
+// Bean `k74z`: the predicates are declared in `vocab-mappings/` tables. A table
+// row and the document's `@context` must agree, or the JSON key would be
+// written as one predicate and read as another (the drift D2 found between
+// kg-export and fsh-guts-export).
+describe("the vocabulary-mapping tables agree with the document's @context", () => {
+  test("every key a table writes expands, in the context, to the table's target + code", async () => {
+    const { vocabMapping } = await import("../../schemas/vocab-mapping.ts");
+    const { expandCurie, STANDARD_PREFIXES } = await import("../../schemas/vocab-mapping-fhir.ts");
+    const { NS_PREFIXES } = await import("../../schemas/namespaces.js");
+    const prefixes = { ...STANDARD_PREFIXES, ...NS_PREFIXES };
+    const ctx = buildGlossary({ today: () => "2026-09-21" }).doc["@context"] as Record<string, unknown>;
+    const ctxPrefixes = Object.fromEntries(Object.entries(ctx).filter(([, v]) => typeof v === "string" && /[#/]$/.test(v as string))) as Record<string, string>;
+    const ids = ["role-naming", "glossary-role-concept", "glossary-lane-usage", "glossary-variable-lane-concept", "glossary-retired-concept", "concept-scheme-naming", "glossary-concept-scheme"];
+    let checked = 0;
+    for (const id of ids) {
+      for (const g of vocabMapping(HARNESS, id).group) {
+        for (const e of g.element) {
+          for (const t of e.target ?? []) {
+            const key = t.key ?? t.code!;
+            const bound = ctx[key];
+            const iri = typeof bound === "string" ? bound : (bound as { "@id": string } | undefined)?.["@id"];
+            expect([id, key, iri === undefined ? undefined : expandCurie(iri, ctxPrefixes)]).toEqual([id, key, expandCurie(`${g.target}${t.code}`, prefixes)]);
+            checked += 1;
+          }
+        }
+      }
+    }
+    expect(checked).toBe(28);
+  });
+});

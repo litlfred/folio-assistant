@@ -889,6 +889,23 @@ export const BASE_GRAPH_KINDS: Readonly<Record<string, GraphKindDef>> = {
       "Closed sets of codes — adjudication answers, the namespaces this project mints — one file " +
       "per list, every code carrying its definition and source, published as SKOS.",
   },
+  // Vocabulary mappings — one value carried into several target vocabularies,
+  // declared as data rather than as a line in a generator
+  // (schemas/vocab-mapping.ts). Bean `k74z`, owner 2026-10-02: option 1 of
+  // `docs/proposals/vocabulary-mappings-2026-10-02.md`. `content`, by the
+  // `code-list` argument: which predicate a field becomes, and which of two
+  // is authoritative, is a DECISION somebody makes. Generators read these
+  // through the `vocab-map` Tool; nothing writes them.
+  "vocab-mapping": {
+    renderable: false,
+    holds: "content",
+    // declared-path-literal: this table IS the declaration, as on `health`.
+    validator: "schemas/vocab-mapping.ts#VocabMappingSchema",
+    summary:
+      "Vocabulary mappings — which source field becomes which target predicate, with its stated " +
+      "relationship, one ConceptMap-shaped table per source and target; representable from and " +
+      "producible as a FHIR ConceptMap.",
+  },
   schemas: {
     // Grouped by concern from within (`schemas/schemas.json`), PR0c.
     declarationFile: "schemas.json",
@@ -2222,10 +2239,19 @@ export const BASE_GRAPH_KINDS: Readonly<Record<string, GraphKindDef>> = {
     // subscription, which this tree deliberately does not carry. Every node is
     // tagged `folio-substrate-snapshot/v1` regardless, so moving to
     // `nodeSchemas` then is a one-line change.
+    //
+    // A SECOND family now lives here too, and the validator does not cover it:
+    // the `folio-kg-materialization/v1` part records `kg:materialize` writes
+    // (slices 5-6). Their schema embeds core's `MaterializationSchema`, so it
+    // is core's (`folio-assistant-core/schemas/kg-materialization.ts`) and
+    // this registry cannot name it without pointing up the arrow. They are
+    // JUDGED by `kg:materialize:check` instead; `kg:validate` on one reports
+    // it against the snapshot schema, which is a known gap, not a verdict.
     validator: "schemas/substrate-snapshot.ts#SubstrateSnapshotSchema",
     summary:
       "The root declaration of each Knowledge Graph this instance subscribes to, cached byte for byte at " +
-      "the pinned commit with its fixity, and what the substrate judgement found in it.",
+      "the pinned commit with its fixity, and what the substrate judgement found in it; and each chosen " +
+      "subgraph or asset materialised from it, with its fixity, provenance and gate answers.",
   },
   "translation-sources": {
     perInstance: true,
