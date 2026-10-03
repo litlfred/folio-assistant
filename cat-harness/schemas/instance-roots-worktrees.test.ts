@@ -155,10 +155,19 @@ describe("checkoutRootFor — repository-level reads stay inside the checkout (g
     expect(findPublishWorkflows(wtA)).toEqual(["pages.yml"]);
   });
 
-  test("known-skills reads the worktree's own `.claude/skills`, not `.claude/worktrees/.claude/skills`", () => {
-    const dirs = skillMdDirs(wtA).map((p) => join(wtA, ...p));
-    expect(dirs).toContain(join(wtA, ".claude", "skills", "local"));
-    for (const d of dirs) expect(inside(d, wtA)).toBe(true);
+  test("known-skills never reads `.claude/skills` from outside the checkout", () => {
+    // The ROOT instance's scope is deliberately unchanged — reading the
+    // checkout's `.claude/skills` into it is a scope decision (see the
+    // comment at the read). A sibling's `.claude/skills` must never appear.
+    const seed = join(checkout, ".claude", "worktrees", ".claude", "skills", "leak");
+    mkdirSync(seed, { recursive: true });
+    writeFileSync(join(seed, "leak.md"), "---\nname: leak\n---\n");
+    try {
+      expect(skillMdDirs(wtA).some((p) => p.includes("leak"))).toBe(false);
+      for (const p of skillMdDirs(join(wtA, "core"))) expect(inside(join(wtA, "core", ...p), wtA)).toBe(true);
+    } finally {
+      rmSync(join(checkout, ".claude", "worktrees", ".claude"), { recursive: true, force: true });
+    }
   });
 
   test("check-retired-front-matter sweeps only inside the worktree", () => {
