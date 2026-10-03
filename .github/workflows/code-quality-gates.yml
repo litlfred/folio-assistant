@@ -2449,6 +2449,34 @@ jobs:
           E2E_SHARD: ${{ matrix.shard }}/3
         run: bunx playwright test
 
+      # KEEP THE REPORT WHEN THE JOB GOES RED — bean `yqc4`.
+      #
+      # A red e2e job here was unreadable to anyone who could not reach
+      # GitHub's log host: the check run's annotations carry only `Process
+      # completed with exit code 1`, and the `list` reporter writes to the log
+      # and nowhere else. An artifact is fetchable from the REST API, so the
+      # failing test, its error and its stack survive where a reader can get
+      # at them.
+      #
+      # `if: failure()` rather than `always()`: a green run's report is noise.
+      #
+      # `if-no-files-found: ignore` is deliberate and was paid for. Shard 1
+      # runs `render:bpmn:check` BEFORE this step, so when THAT fails the job
+      # is red with no report ever written — and that is exactly how the
+      # 2026-10-03 incident presented: shard 1 dying in 37 s while shards 2
+      # and 3 took ~2 min and passed. `error` here would add a second, louder
+      # failure on top of the real one and point at the wrong step.
+      - name: Keep the Playwright report
+        if: failure()
+        uses: actions/upload-artifact@v7
+        with:
+          name: playwright-report-shard-${{ matrix.shard }}
+          path: |
+            playwright-report/
+            test-results/
+          if-no-files-found: ignore
+          retention-days: 14
+
       # Every .sh a user runs by hand or wires into a config has a .bat beside
       # it, generated from one template by scripts/gen-bat-wrappers.sh. A
       # script added to WRAPPED without a regenerate, or a wrapper edited by
