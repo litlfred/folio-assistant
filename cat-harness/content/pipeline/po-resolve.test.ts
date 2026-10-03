@@ -2,13 +2,17 @@
  * Tests for content/pipeline/po-resolve.ts — PO source resolution.
  */
 import { describe, it, expect, beforeAll, afterAll } from "bun:test";
-import { mkdirSync, writeFileSync, rmSync } from "node:fs";
+import { mkdirSync, mkdtempSync, rmSync, writeFileSync } from "node:fs";
+import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { resolvePoSources, mergePoSources, availableLocales } from "./po-resolve";
 import { parsePo } from "./po-inject";
 import { writeInstanceConfig } from "../../test/support/instance-fixture.js";
 
-const TMP = join(import.meta.dir, "__test_po_resolve__");
+// Under the system temp directory, not beside this file (bean `dlqu`): an
+// in-tree scratch directory is visible to every test that enumerates the
+// checkout, and under `bun test --parallel` those run at the same time.
+const TMP = mkdtempSync(join(tmpdir(), "test_po_resolve-"));
 
 function mkpo(dir: string, name: string, content: string) {
   mkdirSync(dir, { recursive: true });

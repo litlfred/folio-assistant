@@ -13,6 +13,7 @@ Part of [C@T Harness](../README.md) 0.1.0, declared as `cat-harness-tests`, hold
 | [`board-move-filter.e2e.ts`](board-move-filter.e2e.ts) | a file |  |
 | [`board-windows.e2e.ts`](board-windows.e2e.ts) | a file |  |
 | [`discarded-items.e2e.ts`](discarded-items.e2e.ts) | a file |  |
+| [`e2e-global-setup.ts`](e2e-global-setup.ts) | a file |  |
 | [`figure-export.e2e.ts`](figure-export.e2e.ts) | a file |  |
 | [`first-paint-scheme.e2e.ts`](first-paint-scheme.e2e.ts) | a file |  |
 | [`fishbone-relocate.e2e.ts`](fishbone-relocate.e2e.ts) | a file |  |
@@ -55,6 +56,7 @@ Part of [C@T Harness](../README.md) 0.1.0, declared as `cat-harness-tests`, hold
 | [`search-restore.e2e.ts`](search-restore.e2e.ts) | a file |  |
 | [`settings-crosslinks.e2e.ts`](settings-crosslinks.e2e.ts) | a file |  |
 | [`sidebar-panels.e2e.ts`](sidebar-panels.e2e.ts) | a file |  |
+| [`sidebar-rail.e2e.ts`](sidebar-rail.e2e.ts) | a file |  |
 | [`site-index.e2e.ts`](site-index.e2e.ts) | a file |  |
 | [`staging-banner.e2e.ts`](staging-banner.e2e.ts) | a file |  |
 | [`state-dashboards.e2e.ts`](state-dashboards.e2e.ts) | a file |  |
@@ -65,6 +67,7 @@ Part of [C@T Harness](../README.md) 0.1.0, declared as `cat-harness-tests`, hold
 | [`table-filter.e2e.ts`](table-filter.e2e.ts) | a file |  |
 | [`test-server.e2e.ts`](test-server.e2e.ts) | a file |  |
 | [`test_pypdf_compat.py`](test_pypdf_compat.py) | a file |  |
+| [`todo-page.e2e.ts`](todo-page.e2e.ts) | a file |  |
 | [`todos-page-board.e2e.ts`](todos-page-board.e2e.ts) | a file |  |
 | [`translation-badges.e2e.ts`](translation-badges.e2e.ts) | a file |  |
 | [`health/`](health/) | 8 files | |
