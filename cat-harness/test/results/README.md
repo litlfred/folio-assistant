@@ -23,6 +23,7 @@ Part of [C@T Harness](../../README.md) 0.1.0, declared as `qa`, holding `qa`.
 | [`library-entry-qa.qa-results.json`](library-entry-qa.qa-results.json) | data |  |
 | [`lsi-need-an-index.qa-results.json`](lsi-need-an-index.qa-results.json) | data |  |
 | [`methodology-evidence.qa-results.json`](methodology-evidence.qa-results.json) | data |  |
+| [`nav-names.qa-results.json`](nav-names.qa-results.json) | data |  |
 | [`reference-direction.qa-results.json`](reference-direction.qa-results.json) | data |  |
 | [`rendered-labels.qa-results.json`](rendered-labels.qa-results.json) | data |  |
 | [`root-scan-census.qa-results.json`](root-scan-census.qa-results.json) | data |  |

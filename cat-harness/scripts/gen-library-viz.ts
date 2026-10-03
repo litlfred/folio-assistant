@@ -65,7 +65,8 @@ import { instanceRootsIn, repoRootFor, siteDirFor } from "../schemas/cat-harness
 import { directoryByVisualisationRef } from "./graph-tiles.ts";
 import { tileCounts } from "../schemas/tile-count.js";
 import { itemState } from "./gen-uploads-viz.ts";
-import { makeEmit, type ViewerNav, subjectSection } from "./viewer-page.ts";
+import { makeEmit, type ViewerNav, subjectNames, subjectSection } from "./viewer-page.ts";
+import { escHtml, thinPageConfigOf, thinPageHtml } from "./thin-page.ts";
 import { renderedPath, withRenders, withViewers } from "./viewer-declarations.js";
 import { corpusDirectoriesForGraph } from "../schemas/harness-config.js";
 
@@ -133,10 +134,6 @@ function projection(
  * Empty by default, so a caller that publishes no folio surface emits no
  * mount and nothing changes for it. Absent is a real state.
  */
-/** HTML-escape for the generator's own server-side markup (the viewer's script has its own `esc`). */
-const escHtml = (s: string): string =>
-  s.replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[c]!);
-
 /**
  * The viewer's stylesheet — published ONCE at `assets/library/viewer.css` and
  * referenced by every library page, so a page is a shell rather than a copy
@@ -855,44 +852,19 @@ export interface ShellEntry {
   jsonld?: string;
 }
 
+/** The config block's id — how a library page names itself, and how this generator recognises its own output. */
+export const LIBRARY_CONFIG_ID = "fa-library-config";
+
+/** The library's tab icon: book spines on the green tile. */
+const LIBRARY_ICON =
+  "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Crect width='16' height='16' rx='3' fill='%23276749'/%3E%3Crect x='3.5' y='3' width='3' height='10' fill='white'/%3E%3Crect x='7.5' y='3' width='2' height='10' fill='white'/%3E%3Crect x='10.5' y='4' width='2' height='9' fill='white'/%3E%3C/svg%3E";
+
 /**
- * One library page: a THIN SHELL — owner, 2026-10-02, #1881: *"each link/page
- * needs to be materialized on the CDN (gh-pagees), just load the content from
- * the KG json(ld) assets already published"*.
- *
- * The same template serves the handler's whole view, an instance's library and
- * every entry: what differs is the identity in the config block — the
- * projection's href, the scope, the library root — and, for an entry, the
- * `alternate` link to its JSON-LD. Styles and script are the shared assets
- * {@link VIEWER_CSS} and {@link VIEWER_JS}, found beside the projection.
- * Nothing about any entry's content is written here; the script loads it.
- *
- * `mount` is the folio mount fragment, passed IN rather than composed here —
- * a fact about where the CALLER publishes. Empty by default.
- *
- * @param libRoot  the library root relative to this page: `./`, `../`, `../../`
+ * The skeleton {@link VIEWER_JS} fills — the same on the handler's page, an
+ * instance's page and every entry page, since the script decides from the
+ * config and the page's own path what to draw into it.
  */
-export function viewerHtml(dataHref: string, scope = "", mount = "", libRoot?: string, entry?: ShellEntry): string {
-  const assets = dataHref.slice(0, dataHref.lastIndexOf("/") + 1);
-  const config = JSON.stringify({
-    data: dataHref,
-    scope,
-    libRoot: libRoot ?? (scope ? "../" : "./"),
-    ...(entry ? { entry: entry.id } : {}),
-  }).replace(/</g, "\\u003c");
-  const title = entry ? `${escHtml(entry.id)} — ${escHtml(scope)} library` : "Library — the L1 corpus";
-  return `<!doctype html>
-<html lang="en">
-<head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>${title}</title>
-<link rel="canonical" href="./">
-${entry ? `<meta name="folio-navbar" content="none">\n` : ""}${entry?.jsonld ? `<link rel="alternate" type="application/ld+json" href="${escHtml(entry.jsonld)}">\n` : ""}<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Crect width='16' height='16' rx='3' fill='%23276749'/%3E%3Crect x='3.5' y='3' width='3' height='10' fill='white'/%3E%3Crect x='7.5' y='3' width='2' height='10' fill='white'/%3E%3Crect x='10.5' y='4' width='2' height='9' fill='white'/%3E%3C/svg%3E">
-<link rel="stylesheet" href="${escHtml(assets)}viewer.css">
-</head>
-<body>
-<header>
+const VIEWER_BODY = `<header>
   <h1>Library — the L1 corpus</h1>
   <p class="empty" id="status" style="padding:0">loading…</p>
   <div class="badges" id="badges"></div>
@@ -912,11 +884,50 @@ ${entry ? `<meta name="folio-navbar" content="none">\n` : ""}${entry?.jsonld ? `
   <p class="note">A source sitting here reads as <strong>absent</strong> to every consumer while the file is on disk.
     Queues are counted per declaring instance and never merged.</p>
   <section id="queue" class="wrap"></section>
-</main>
-<noscript><p class="note">This page loads its entries from <a href="${escHtml(dataHref)}">the library projection</a>${
-    entry?.jsonld ? ` and this entry from <a href="${escHtml(entry.jsonld)}">its JSON-LD</a>` : ""
-  }; it needs JavaScript to draw them.</p></noscript>
-<script type="application/json" id="fa-library-config">${config}</script>
+</main>`;
+
+/** The shared stylesheet and script sit beside the projection. */
+const assetsOf = (dataHref: string): string => dataHref.slice(0, dataHref.lastIndexOf("/") + 1);
+
+/**
+ * A library page that is NOT about one entry — the handler's whole view or an
+ * instance's library: a THIN SHELL — owner, 2026-10-02, #1881: *"each
+ * link/page needs to be materialized on the CDN (gh-pagees), just load the
+ * content from the KG json(ld) assets already published"*.
+ *
+ * What differs between these pages is the identity in the config block — the
+ * projection's href, the scope, the library root. Styles and script are the
+ * shared assets {@link VIEWER_CSS} and {@link VIEWER_JS}, found beside the
+ * projection. Nothing about any entry's content is written here; the script
+ * loads it. These pages carry the viewer rail, so they are not thin pages in
+ * the `thin-page.ts` sense; an ENTRY's page is — {@link entryPageHtml}.
+ *
+ * `mount` is the folio mount fragment, passed IN rather than composed here —
+ * a fact about where the CALLER publishes. Empty by default.
+ *
+ * @param libRoot  the library root relative to this page: `./` or `../`
+ */
+export function viewerHtml(dataHref: string, scope = "", mount = "", libRoot?: string): string {
+  const assets = assetsOf(dataHref);
+  const config = JSON.stringify({
+    data: dataHref,
+    scope,
+    libRoot: libRoot ?? (scope ? "../" : "./"),
+  }).replace(/</g, "\\u003c");
+  return `<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Library — the L1 corpus</title>
+<link rel="canonical" href="./">
+<link rel="icon" href="${LIBRARY_ICON}">
+<link rel="stylesheet" href="${escHtml(assets)}viewer.css">
+</head>
+<body>
+${VIEWER_BODY}
+<noscript><p class="note">This page loads its entries from <a href="${escHtml(dataHref)}">the library projection</a>; it needs JavaScript to draw them.</p></noscript>
+<script type="application/json" id="${LIBRARY_CONFIG_ID}">${config}</script>
 <script src="${escHtml(assets)}viewer.js"></script>
 ${mount}
 </body>
@@ -925,18 +936,43 @@ ${mount}
 }
 
 /**
+ * One ENTRY's page, at `<library>/<instance>/<id>/` (#1881, #1899) — a thin
+ * page ({@link thinPageHtml}, #1941), the same shell the todo pages use.
+ *
+ * What is library-specific is the skeleton ({@link VIEWER_BODY}, the one the
+ * instance page draws into), the config, the `<noscript>` — this page loads
+ * the library projection as well as the entry's JSON-LD, and says both — and
+ * the mount fragment after the script. The rail is declined (the thin-page
+ * default): it is ~14 KB of inlined markup, which would make every entry's
+ * shell as heavy as the page it stands for.
+ *
+ * @param libRoot  the library root relative to this page: `../../`
+ */
+export function entryPageHtml(dataHref: string, scope: string, mount: string, libRoot: string, entry: ShellEntry): string {
+  const assets = assetsOf(dataHref);
+  return thinPageHtml({
+    title: `${entry.id} — ${scope} library`,
+    ...(entry.jsonld ? { jsonld: entry.jsonld } : {}),
+    script: `${assets}viewer.js`,
+    stylesheet: `${assets}viewer.css`,
+    icon: LIBRARY_ICON,
+    configId: LIBRARY_CONFIG_ID,
+    config: { data: dataHref, scope, libRoot, entry: entry.id },
+    body: VIEWER_BODY,
+    noscript: `<p class="note">This page loads its entries from <a href="${escHtml(dataHref)}">the library projection</a>${
+      entry.jsonld ? ` and this entry from <a href="${escHtml(entry.jsonld)}">its JSON-LD</a>` : ""
+    }; it needs JavaScript to draw them.</p>`,
+    tail: mount,
+  });
+}
+
+/**
  * A library page's identity, read from its config block — or `undefined` when
  * it carries none. The page names itself there (#1881), which is what lets a
  * later run prune its own stale output and nothing else.
  */
 export function libraryConfigOf(content: string): { data?: unknown; scope?: unknown; libRoot?: unknown; entry?: unknown } | undefined {
-  const m = /<script type="application\/json" id="fa-library-config">([^<]*)<\/script>/.exec(content);
-  if (!m) return undefined;
-  try {
-    return JSON.parse(m[1]!) as { data?: unknown; scope?: unknown; libRoot?: unknown; entry?: unknown };
-  } catch {
-    return undefined;
-  }
+  return thinPageConfigOf(content, LIBRARY_CONFIG_ID);
 }
 
 /**
@@ -1330,11 +1366,11 @@ if (import.meta.main) {
   emit(join(dataDir, "viewer.css"), VIEWER_CSS);
   emit(join(dataDir, "viewer.js"), VIEWER_JS);
 
-  emitPage({ ...nav, section: subjectSection(subjects, undefined, regions) })(join(pageDir, "index.html"), withRenders(viewerHtml(dataHref, "", folioMount, "./"), drawn(), VIEWER_TOOL));
+  emitPage({ ...nav, section: subjectSection(subjects, undefined, regions, subjectNames(nav.built, "library")) })(join(pageDir, "index.html"), withRenders(viewerHtml(dataHref, "", folioMount, "./"), drawn(), VIEWER_TOOL));
   const wantedJsonld = new Set<string>();
   for (const subject of subjects) {
     const sub = viewerPlacement(site, `${handler}/${seg}/${subject}`, seg);
-    emitPage({ ...nav, instance: subject, section: subjectSection(subjects, subject, regions) })(
+    emitPage({ ...nav, instance: subject, section: subjectSection(subjects, subject, regions, subjectNames(nav.built, "library")) })(
       join(sub.pageDir, "index.html"),
       withRenders(viewerHtml(sub.dataHref, subject, folioMount, "../"), drawn(subject), VIEWER_TOOL),
     );
@@ -1376,7 +1412,7 @@ if (import.meta.main) {
       // until the rail is itself a shared asset.
       emit(
         join(shellDir, "index.html"),
-        viewerHtml(`../${sub.dataHref}`, subject, folioMount, "../../", { id: e.id, ...(jsonld ? { jsonld } : {}) }),
+        entryPageHtml(`../${sub.dataHref}`, subject, folioMount, "../../", { id: e.id, ...(jsonld ? { jsonld } : {}) }),
       );
     }
 
