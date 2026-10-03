@@ -117,7 +117,8 @@ Two environment facts that each cost a round:
    `playwright install` is not available. Launch with
    `executablePath: "/opt/pw-browsers/chromium"`.
 
-**Drive the control a reader would drive.** `page.click(".fa-nav-toggle")`,
+**Drive the control a reader would drive.** `page.click(".side-bar .site-title")`
+(the avatar, which opens and closes the sidebar from 50rem up),
 not `element.classList.add(…)`. A state you set by hand is a state you have
 not tested the way in to.
 

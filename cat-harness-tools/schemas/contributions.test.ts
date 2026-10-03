@@ -7,7 +7,8 @@
  * collision is REFUSED rather than silently overlaid.
  */
 import { describe, it, expect, beforeAll, afterAll } from "bun:test";
-import { mkdirSync, writeFileSync, rmSync } from "node:fs";
+import { mkdirSync, mkdtempSync, rmSync, writeFileSync } from "node:fs";
+import { tmpdir } from "node:os";
 import { join } from "node:path";
 import {
   ContributionRegistry,
@@ -19,7 +20,10 @@ import { loadContributions } from "../../cat-harness/schemas/harness-config";
 import { adapterForKind } from "../../cat-harness/schemas/block-kinds";
 import { writeInstanceConfig } from "../../cat-harness/test/support/instance-fixture.js";
 
-const TMP = join(import.meta.dir, "__test_contributions__");
+// Under the system temp directory, not beside this file (bean `dlqu`): an
+// in-tree scratch directory is visible to every test that enumerates the
+// checkout, and under `bun test --parallel` those run at the same time.
+const TMP = mkdtempSync(join(tmpdir(), "test_contributions-"));
 
 beforeAll(() => {
   // ── The gate fixture: a root folio with one dependency that contributes
