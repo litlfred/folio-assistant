@@ -19,8 +19,9 @@ import { buildVocabulary } from "../ns-export";
 import { codeListDirs, loadCodeLists } from "../../schemas/code-list";
 import { buildCodeListsDoc } from "../code-lists";
 import { PROV_JSONLD_CONTEXT_URL } from "../../schemas/prov-jsonld.ts";
+import { SCOPES_DIR, render } from "../search-split.ts";
 import { siteDirFor } from "../../schemas/cat-harness.ts";
-import { HTML_UNIQUE_IDS, JSONLD_EXPAND, JSONLD_OBJECT_LINKS, JSONLD_OWN_BASE, SEARCH_INDEX, SEARCH_INDEX_PATH, VERIFIERS, declaredBase, expandFindings, isOurs, localLoader, verify } from "../publish-verify";
+import { HTML_UNIQUE_IDS, JSONLD_EXPAND, JSONLD_OBJECT_LINKS, JSONLD_OWN_BASE, SEARCH_INDEX, SEARCH_INDEX_PATH, SEARCH_SCOPES, VERIFIERS, declaredBase, expandFindings, isOurs, localLoader, verify } from "../publish-verify";
 
 const site = (files: Record<string, unknown>): string => {
   const dir = mkdtempSync(join(tmpdir(), "publish-verify-"));
@@ -299,4 +300,55 @@ test("both voice verifiers are in the deploy set", () => {
   const ids = VERIFIERS.map((v) => v.id);
   expect(ids).toContain("jsonld-object-links");
   expect(ids).toContain("jsonld-own-base");
+});
+
+describe("the search-scopes verifier — bean m7mn", () => {
+  const INDEX = { 0: { relUrl: "/" }, 1: { relUrl: "/smart-trust/a.html" }, 2: { relUrl: "/fr/b.html" } };
+  const text = JSON.stringify(INDEX);
+  /** A tree holding the index and its fresh split, with optional edits on top. */
+  const tree = (edit: (files: Record<string, unknown>) => void = () => {}) => {
+    const files: Record<string, unknown> = { [SEARCH_INDEX_PATH]: text };
+    for (const [p, body] of render(text, new Set(["smart-trust"]), new Set(["fr"]))) files[p] = body;
+    edit(files);
+    return verify(site(files), [SEARCH_SCOPES], { bases: [] });
+  };
+  const manifestAt = `${SCOPES_DIR}/manifest.json`;
+  const details = async (edit: (files: Record<string, unknown>) => void) =>
+    (await tree(edit)).results[0]!.findings.map((f) => f.detail).join("\n");
+
+  test("a fresh split of the tree's own index passes", async () => {
+    expect((await tree()).exit).toBe(0);
+  });
+
+  test("an unsplit index is a finding — scoped search would load nothing", async () => {
+    expect(await details((f) => { for (const k of Object.keys(f)) if (k.startsWith(`${SCOPES_DIR}/`)) delete f[k]; })).toContain("missing");
+  });
+
+  test("a split of a DIFFERENT index is stale — what a staging tree that split before borrowing would ship", async () => {
+    expect(await details((f) => { f[SEARCH_INDEX_PATH] = JSON.stringify({ ...INDEX, 3: { relUrl: "/x" } }); })).toContain("split from a different index");
+  });
+
+  test("an entry in two scopes, or one missing from all, does not partition", async () => {
+    const scopeFile = (_f: Record<string, unknown>, id: string) => `${SCOPES_DIR}/${id}.json`;
+    expect(await details((f) => { f[scopeFile(f, "smart-trust")] = JSON.stringify({ 0: { relUrl: "/" }, 1: { relUrl: "/smart-trust/a.html" } }); })).toContain("entry 0 is in both");
+    const short = await details((f) => { f[scopeFile(f, "locale-fr")] = "{}"; });
+    expect(short).toContain("the manifest says 1");
+    expect(short).toContain("do not partition it");
+  });
+
+  test("a tree with no site index is out of scope — search-index reports that", async () => {
+    const { exit, results } = await verify(site({ "a.html": "<p/>" }), [SEARCH_SCOPES], { bases: [] });
+    expect(results[0]!.findings).toEqual([]);
+    expect(results[0]!.outOfScope).toBe(1);
+    expect(exit).not.toBe(1);
+  });
+
+  test("it is in the deploy set and names the downstream Tool it judges", () => {
+    expect(VERIFIERS).toContain(SEARCH_SCOPES);
+    expect(SEARCH_SCOPES.tool).toBe("site-search-scopes");
+  });
+
+  test("manifest path is where the split writes it", () => {
+    expect(manifestAt).toBe("assets/js/search/manifest.json");
+  });
 });
