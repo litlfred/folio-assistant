@@ -67,6 +67,7 @@ Part of [C@T Harness](../README.md) 0.1.0, declared as `docs`, holding `docs`.
 | [`requirements/`](requirements/) | 1 file | |
 | [`research-and-analysis/`](research-and-analysis/) | 2 files | |
 | [`ru/`](ru/) | 14 files | |
+| [`subgraph/`](subgraph/) | 105 files | |
 | [`subscriptions/`](subscriptions/) | 1 file | |
 | [`swimlane-glossary/`](swimlane-glossary/) | 1 file | |
 | [`themes/`](themes/) | 1 file | |

@@ -9,7 +9,6 @@ import { describe, test, expect, beforeAll } from "bun:test";
 import { join, resolve } from "node:path";
 import {
   SUBGRAPH_CONTEXT_PATH,
-  SUBGRAPH_OUT_DIR,
   generateSubgraphs,
   planSubgraphs,
   type SubgraphPlan,
@@ -26,12 +25,13 @@ const ROOT = resolve(import.meta.dir, "..", "..");
 let plan: SubgraphPlan;
 let files: Map<string, string>;
 let harness: string;
+let outDir: string;
 
 beforeAll(async () => {
-  ({ plan, files, harness } = await generateSubgraphs());
+  ({ plan, files, harness, outDir } = await generateSubgraphs());
 }, 120_000);
 
-const fileFor = (rel: string, name: string): string => join(SUBGRAPH_OUT_DIR, harness, rel, name);
+const fileFor = (rel: string, name: string): string => join(outDir, harness, rel, name);
 const read = (rel: string, name: string): Record<string, unknown> => {
   const t = files.get(fileFor(rel, name));
   if (t === undefined) throw new Error(`not generated: ${fileFor(rel, name)}`);

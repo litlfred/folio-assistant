@@ -72,13 +72,15 @@
  */
 
 import { existsSync, mkdirSync, readFileSync, readdirSync, rmSync, statSync, writeFileSync } from "node:fs";
-import { dirname, join, relative, resolve } from "node:path";
+import { dirname, join, relative, resolve, sep } from "node:path";
 import jsonld from "jsonld";
 import { buildContext, buildExport, graphKindId } from "./kg-export.js";
 import { kgDirectories } from "./known-skills.js";
 import { readDeclaration } from "../schemas/cat-harness.js";
+import { gitCorpus } from "../schemas/git-corpus.js";
 import { propertyIri, termIri } from "../schemas/namespaces.js";
 import {
+  SUBGRAPH_CONTEXT_PATH,
   SUBGRAPH_HYDRATED_FILE,
   SUBGRAPH_INDEX_FILE,
   SubgraphHydratedSchema,
@@ -87,10 +89,18 @@ import {
 
 const ROOT = resolve(import.meta.dir, "..");
 
-/** Where the context is written, relative to the instance root. */
-export const SUBGRAPH_CONTEXT_PATH = "ns/subgraph/v1.jsonld";
-/** Where the subgraph tree is written, relative to the instance root — the docs site root. */
-export const SUBGRAPH_OUT_DIR = "docs/subgraph";
+export { SUBGRAPH_CONTEXT_PATH };
+/**
+ * Where the subgraph tree is written, relative to the instance root: the
+ * `subgraph/` directory of the declared `docs` graph, which is the docs site
+ * root — so a file there is served at `<BASE_URL>/subgraph/…`. Read from the
+ * declaration by id rather than spelled, because the path is the unstable half.
+ */
+export function subgraphOutDir(root: string = ROOT): string {
+  const docs = readDeclaration(root)?.directories.find((d) => d.id === "docs");
+  if (!docs) throw new Error(`gen-subgraph-jsonld: ${root} declares no \`docs\` directory to serve subgraphs from`);
+  return join(docs.path, "subgraph");
+}
 
 /** A literal larger than this is a body, not KG metadata. */
 export const HEAVY_LITERAL_BYTES = 16 * 1024;
@@ -171,12 +181,25 @@ function pathOf(n: Node): string | undefined {
   return undefined;
 }
 
-function walkDirs(abs: string, rel: string, out: string[]): void {
-  out.push(rel);
-  for (const e of readdirSync(abs, { withFileTypes: true }).sort((a, b) => a.name.localeCompare(b.name))) {
-    if (!e.isDirectory() || e.name.startsWith(".") || e.name === "node_modules") continue;
-    walkDirs(join(abs, e.name), `${rel}${e.name}/`, out);
+/**
+ * The directories under `abs` that git accounts for — every directory holding
+ * a tracked or unignored file, and each of its ancestors — as `rel`-prefixed,
+ * `/`-terminated paths in sorted order (parents before children).
+ *
+ * Asked of git, never of the disk (`schemas/git-corpus.ts`): a walk would mint
+ * a subgraph for one machine's ignored residue, and the committed output would
+ * then differ by checkout. `undefined` when git cannot answer.
+ */
+function gitDirs(abs: string, rel: string): string[] | undefined {
+  const files = gitCorpus(abs);
+  if (files === undefined) return undefined;
+  const out = new Set<string>([rel]);
+  for (const f of files) {
+    const parts = relative(abs, f).split(sep).slice(0, -1);
+    if (parts.some((x) => x.startsWith(".") || x === "node_modules")) continue;
+    for (let i = 1; i <= parts.length; i++) out.add(`${rel}${parts.slice(0, i).join("/")}/`);
   }
+  return [...out].sort();
 }
 
 /** Decide every subgraph and every node's place in one of them. Pure over `graph`. */
@@ -193,21 +216,28 @@ export function planSubgraphs(
   subgraphs.set(rootIri, root);
   byRel.set("", root);
 
-  const kgDirs = kgDirectories(opts.root, "instance");
+  // `kgDirectories` answers WHERE; the declaration answers what kind and what
+  // title, looked up by the entry's id — ids are stable, paths are not.
+  const declared = new Map((readDeclaration(opts.root)?.directories ?? []).map((d) => [d.id, d]));
+  const kgDirs = kgDirectories(opts.root, "instance").map((d) => ({
+    ...d,
+    graphKinds: declared.get(d.id)?.graphKinds ?? [],
+    title: declared.get(d.id)?.title,
+  }));
   const kgRels: string[] = [];
   for (const d of kgDirs) {
     const top = relative(opts.root, d.absPath).replace(/\\/g, "/").replace(/\/?$/, "/");
     if (top.startsWith("../")) continue; // another instance's directory — not this harness's subgraph
     kgRels.push(top);
-    const rels: string[] = [];
-    walkDirs(d.absPath, top, rels);
+    const rels = gitDirs(d.absPath, top);
+    if (rels === undefined) { problems.push(`${top}: git could not list its files — subgraphs not determined`); continue; }
     for (const rel of rels) {
       const parentRel = rel === top ? "" : rel.replace(/[^/]+\/$/, "");
       const e: SubgraphEntry = {
         iri: `${rootIri}${rel}`,
         rel,
         kinds: [...d.graphKinds].sort(),
-        title: rel === top ? (d as { title?: string }).title : undefined,
+        title: rel === top ? d.title : undefined,
         members: [],
         children: [],
       };
@@ -317,6 +347,7 @@ const NULL_LOADER = async (url: string): Promise<never> => {
 export async function renderSubgraphFiles(
   plan: SubgraphPlan,
   harness: string,
+  outDir: string,
 ): Promise<Map<string, string>> {
   const ctx = subgraphContext();
   const links = linkTerms(ctx);
@@ -339,7 +370,7 @@ export async function renderSubgraphFiles(
   };
 
   for (const e of [...plan.subgraphs.values()].sort((a, b) => a.iri.localeCompare(b.iri))) {
-    const dir = join(SUBGRAPH_OUT_DIR, harness, e.rel);
+    const dir = join(outDir, harness, e.rel);
     const subtree = descendants(plan, e);
     const input = {
       "@context": ctx,
@@ -383,7 +414,7 @@ export async function renderSubgraphFiles(
   for (const e of plan.subgraphs.values()) {
     for (const c of e.children) {
       const child = plan.subgraphs.get(c);
-      if (!child || !out.has(join(SUBGRAPH_OUT_DIR, harness, child.rel, SUBGRAPH_INDEX_FILE))) {
+      if (!child || !out.has(join(outDir, harness, child.rel, SUBGRAPH_INDEX_FILE))) {
         plan.problems.push(`${e.iri}: child ${c} has no ${SUBGRAPH_INDEX_FILE}`);
       }
     }
@@ -396,7 +427,7 @@ export async function renderSubgraphFiles(
 /** Build the plan and the files for an instance from kg-export's in-memory graph. */
 export async function generateSubgraphs(
   opts: { root?: string; baseUrl?: string } = {},
-): Promise<{ plan: SubgraphPlan; files: Map<string, string>; harness: string }> {
+): Promise<{ plan: SubgraphPlan; files: Map<string, string>; harness: string; outDir: string }> {
   const root = opts.root ?? ROOT;
   const decl = readDeclaration(root);
   if (!decl) throw new Error(`gen-subgraph-jsonld: no declaration under ${root}`);
@@ -410,8 +441,9 @@ export async function generateSubgraphs(
     title: decl.title,
   });
   for (const p of data.problems) plan.problems.push(`kg-export: ${p}`);
-  const files = await renderSubgraphFiles(plan, decl.name);
-  return { plan, files, harness: decl.name };
+  const outDir = subgraphOutDir(root);
+  const files = await renderSubgraphFiles(plan, decl.name, outDir);
+  return { plan, files, harness: decl.name, outDir };
 }
 
 function listFiles(abs: string): string[] {
@@ -427,7 +459,7 @@ function listFiles(abs: string): string[] {
 
 async function main(): Promise<number> {
   const check = process.argv.includes("--check");
-  const { plan, files, harness } = await generateSubgraphs();
+  const { plan, files, harness, outDir } = await generateSubgraphs();
 
   if (plan.problems.length > 0) {
     console.error(`gen-subgraph-jsonld: ${plan.problems.length} problem(s) — nothing written:`);
@@ -435,7 +467,7 @@ async function main(): Promise<number> {
     return 1;
   }
 
-  const treeAbs = join(ROOT, SUBGRAPH_OUT_DIR, harness);
+  const treeAbs = join(ROOT, outDir, harness);
   const expected = new Set([...files.keys()].map((p) => join(ROOT, p)));
   const strays = listFiles(treeAbs).filter((p) => !expected.has(p)).sort();
   let bytes = 0;

@@ -105,6 +105,13 @@ export const SubgraphHydratedSchema = SubgraphNodeBase.extend({
 }).strict();
 export type SubgraphHydrated = z.infer<typeof SubgraphHydratedSchema>;
 
+/**
+ * Where the shared subgraph `@context` is written, relative to the instance
+ * root, and published, relative to the base URL — the same path for both,
+ * beside `ns/content/v1.jsonld`.
+ */
+export const SUBGRAPH_CONTEXT_PATH = "ns/subgraph/v1.jsonld";
+
 /** The two file names under every subgraph IRI. The root has the first only. */
 export const SUBGRAPH_INDEX_FILE = "index.jsonld";
 export const SUBGRAPH_HYDRATED_FILE = "index.hydrated.jsonld";
