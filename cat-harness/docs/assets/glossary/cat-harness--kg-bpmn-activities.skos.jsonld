@@ -994,6 +994,26 @@
       "skos:note": "candidate"
     },
     {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-bpmn-activities/process_codequalitygates.task_qapublish",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Publish QA results to qa-reports (NOT A GATE)"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Bean `16ei`, arc `3fva`. After Task_RepositoryGates, WHATEVER it concluded (`needs: gates` with `always()`), `qa:publish --github` writes this run's `test/results` trees to the orphan `qa-reports` branch: `main/<sha>/` on a push to main, `pr/<n>/<head-sha>/` on a same-repository PR (owner rulings D1, D3). A fork PR's token is read-only, so it is skipped with a `::notice` naming why. It does NOT reach GW_Join: a red publish is its own red and never decides mergeability, and the hard gates never wait on it. The only job here holding `contents: write`, which is also how `bun run gates` knows not to run it locally."
+        }
+      ],
+      "skos:notation": "Task_QaPublish",
+      "dcterms:source": "cat-harness/processes/sdlc/code-quality-gates.bpmn#Task_QaPublish",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-bpmn-activities/process_codequalitygates.task_repositorygates",
       "@type": "skos:Concept",
       "skos:inScheme": {

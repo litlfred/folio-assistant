@@ -2,7 +2,7 @@
   "$schema": "qa-results/v1",
   "producer": {
     "script": "scripts/kg-export.ts",
-    "script_hash": "24c04eb42fea"
+    "script_hash": "2f61c540c2f5"
   },
   "subject": {
     "kind": "graph",
@@ -21,7 +21,7 @@
     },
     "undeclaredSchemaModules": {
       "summary": "Modules in the declared schemas/ directory that do not say what they are, so they are absent from the graph.",
-      "count": 4,
+      "count": 3,
       "entries": [
         {
           "module": "../bootstrap-tools/schemas/declaration.ts",
@@ -34,10 +34,6 @@
         {
           "module": "../bootstrap-tools/schemas/graph-export.ts",
           "why": "no-tag"
-        },
-        {
-          "module": "../cat-harness/schemas/subgraph-source.ts",
-          "why": "no-tag"
         }
       ]
     },
@@ -47,5 +43,5 @@
       "entries": []
     }
   },
-  "total": 4
+  "total": 3
 }
