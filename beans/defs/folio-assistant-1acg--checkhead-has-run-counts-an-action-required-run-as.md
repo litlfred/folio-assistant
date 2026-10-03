@@ -1,11 +1,11 @@
 ---
 # folio-assistant-1acg
 title: check:head-has-run counts an action_required run as RAN — a run that never executed satisfies 'the gates fired'
-status: in-progress
+status: completed
 type: bug
 priority: high
 created_at: 2026-10-03T00:15:20Z
-updated_at: 2026-10-03T01:07:00Z
+updated_at: 2026-10-03T01:21:22Z
 parent: folio-assistant-1xhc
 ---
 
@@ -192,3 +192,5 @@ Reading the first as the second is the whole of bean `1xhc`. The sweep is not
 the instrument for a merge decision, and nothing here makes it one.
 
 PR #1942 opened and pushed (4 commits). Blocked on #1946 for a base-side step-65 red that is not this diff. Not merging; the Merge Manager merges.
+
+DONE 2026-10-03. PR #1942 green on ffa5b2e66e5 (12 checks, 0 red), labelled ready-to-merge, not merged by this session. Root cause confirmed as measurement (bot actor, non-fork); one config change (#1829 D1) un-blocks 2 of 33 PRs, NOT the 15 conflicted ones -- there is no single fix, stated plainly.
