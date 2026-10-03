@@ -174,6 +174,31 @@ export interface TipLocation {
  * commit-keyed, rather than guessing a branch: the default for "no
  * declaration" is `main`, which is not this store.
  */
+/**
+ * Every declared directory that is kept at a branch tip, across the instances
+ * in this checkout.
+ *
+ * The companion to {@link resolveTipLocation}: that answers "which branch for
+ * THIS id", this answers "is anything kept on a branch at all". The
+ * session-start mount needs the second question, because the honest answer
+ * today is "nothing is" — no declaration sets `storage` yet — and a mount that
+ * treated that as a failure would fail every session over a branch that
+ * nothing reads.
+ *
+ * Returns them sorted by id so a caller's output is stable.
+ */
+export function tipLocations(repoRoot: string = gitTopLevel()): TipLocation[] {
+  const out: TipLocation[] = [];
+  for (const inst of instanceRootsIn(repoRoot)) {
+    for (const d of resolveDirectories([{ name: "(local)", root: inst, own: true }])) {
+      if (d.storage?.keyedBy !== "tip") continue;
+      const path = relative(repoRoot, d.absPath).split("\\").join("/").replace(/\/+$/, "");
+      if (!out.some((o) => o.id === d.id)) out.push({ id: d.id, path, branch: d.storage.branch });
+    }
+  }
+  return out.sort((a, b) => a.id.localeCompare(b.id));
+}
+
 export function resolveTipLocation(id: string, repoRoot: string = gitTopLevel()): TipLocation {
   for (const inst of instanceRootsIn(repoRoot)) {
     for (const d of resolveDirectories([{ name: "(local)", root: inst, own: true }])) {

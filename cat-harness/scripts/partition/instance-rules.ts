@@ -416,6 +416,10 @@ export const RULES: Rule[] = [
       // reason again: it reads the declaration and git, and no folio subject
       // matter could make it resolve differently.
       "scripts/state-store.ts",              // a declared tip-keyed directory, by id: read and splice-write
+      // Its session-start step (bean `2h76` part 4): fetches the declared state
+      // branch and checks it out as a read surface. Harness-level for the same
+      // reason as the three above.
+      "scripts/state-mount.ts",               // the state branch on disk, or a loud finding saying it is not
       // Its clean-merge counterpart, and harness-level for the same reason: it
       // loads the GATE SET from the workflow and re-runs whichever writers
       // their checks report stale. It knows nothing about any folio's subject
