@@ -70,13 +70,17 @@ rows marked *(no fit)* below and §"The residual" after the table.
 session, in this bean's commit or anywhere else. The proposal **is** the
 deliverable.
 
+An epic's placement is a claim about which goal pays for it, and a milestone is
+a statement of what its owner believes that goal needs next.
 [`role-model.md`](../../cat-harness/skills/process/process-core/role-model.md)
-is why: a milestone is a statement of what its owner believes a goal needs
-next, and an epic's placement is a claim about which goal pays for it. Acting
-as *analyst* in this lane lets this session **measure and propose**; it does not
-make it the owner of 17 other agents' epics. `k59d` already settled the same
-question one level down and declined to edit `p5wm` and `yg29` for the identical
-reason — *"rewriting somebody else's belief is not a checker's to do."*
+§`judgementOnly` is the rule: the `stakeholder` role *"carries no skills
+deliberately: sign-off is a judgement, not a procedure, and a skill here would
+suggest an agent could supply it."* **Approving 17 re-parents is exactly that
+sign-off.** This session acted in the measuring lane — it can derive the table
+and argue each row, and that is what a skill can supply; it cannot supply the
+approval. `k59d` already settled the same question one level down and declined
+to edit `p5wm` and `yg29` for the matching reason — *"rewriting somebody else's
+belief is not a checker's to do."*
 
 Column 3 is one of **PLATFORM** (this bean), `vuip` (GOAL 1 — separation and
 instantiation), `p5wm` (GOAL 2 — navbar, folios, stickies), `yg29` (GOAL 3 —
