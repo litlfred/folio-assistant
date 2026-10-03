@@ -1553,6 +1553,11 @@ export const BASE_GRAPH_KINDS: Readonly<Record<string, GraphKindDef>> = {
       // The document adapter writes an upload's description beside its intake
       // (bean `d4lb`), in the same family the IRIS catalogue records use.
       "folio-dublin-core/v1": { validator: "folio-assistant-core:schemas/dublin-core.ts#DublinCoreRecordSchema" },
+      // A queued source may itself BE a JSON Schema: the SPDX 3.1-RC1 schema
+      // held in uploads/spdx-3-1-rc1-machine-readable/ (bean `sd5v`) declares
+      // the meta-schema as its `$schema`. It conforms to a specification
+      // nobody here types, so it is `external`, as on `schemas` and `docs`.
+      "https://json-schema.org/draft/2020-12/schema": { external: "JSON Schema 2020-12" },
     },
     recordsWork: false, // live state, but nothing anybody is partway through
     summary:
