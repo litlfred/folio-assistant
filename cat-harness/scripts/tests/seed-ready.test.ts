@@ -186,6 +186,9 @@ describe("the probes", () => {
     expect(parseBunTest(out)).toEqual({ failed: 1, names: ["b > c"] });
     const two = "x/a.test.ts:\n(fail) d > e [3.00ms]\n\ny/b.test.ts:\n(fail) d > e [10.1ms]\n 2 fail\n";
     expect(parseBunTest(two)).toEqual({ failed: 2, names: ["x/a.test.ts > d > e", "y/b.test.ts > d > e"] });
+    // bun's GitHub Actions spelling of the same output keys the same (#1977).
+    const ci = "::group::x/a.test.ts:\n(fail) d > e [3.00ms]\n\n::endgroup::\n 1 fail\n";
+    expect(parseBunTest(ci)).toEqual({ failed: 1, names: ["x/a.test.ts > d > e"] });
     expect(parseBunTest("Killed")).toBeUndefined();
   });
 

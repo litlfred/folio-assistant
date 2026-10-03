@@ -1,8 +1,8 @@
 {
-  "_comment": "Tests that fail when a layer runs alone beside its declared closure (bean `ho66`), keyed `<test file> > <test>`, with `bun test`'s own fail count, which also counts errors between tests. A RATCHET: a failure not listed here is red, and a listed one that now passes is red until it is removed. WRITTEN by `bun run standalone:baseline`; a longer list is a diff somebody reviews. See the module header of scripts/check-standalone.ts.",
+  "_comment": "Tests that fail when a layer runs alone beside its declared closure (bean `ho66`), keyed `<test file> > <test>`, with `bun test`'s own fail count, which also counts errors between tests. A RATCHET: a failure not listed here is red, and a listed one that now passes is red until it is removed. WRITTEN by `bun run standalone:baseline`; a longer list is a diff somebody reviews. See the module header of cat-harness/scripts/check-standalone.ts.",
   "layers": {
     "cat-harness": {
-      "failed": 459,
+      "failed": 460,
       "failing": [
         "content/pipeline/contributions-root.test.ts > contributionsRoot > loading from contributionsRoot() registers both contributed cost checkers",
         "content/pipeline/pipeline-plugins.test.ts > this repository > folio-assistant-sci fills every slot, loaded lazily from the running folio",
@@ -62,6 +62,7 @@
         "scripts/tests/check-invocation-parity.test.ts > invocations > the real deploy workflow's set includes the foreign-instance export",
         "scripts/tests/check-invocation-parity.test.ts > invocations > the real deploy's built-site checks are obligations the real preview meets",
         "scripts/tests/check-invocation-parity.test.ts > isDeploy > the real pair classifies without either being named in the check",
+        "scripts/tests/check-published-instance-exports.test.ts > committedSidecarSubjects — the comparison has a subject (bean r7v6, C2) > the real checkout's committed bootstrap sidecar is a subject",
         "scripts/tests/check-published-instance-exports.test.ts > publishedInstances > finds it in the STAGING workflow too — the file `3jhq` showed was missed",
         "scripts/tests/check-published-instance-exports.test.ts > publishedInstances > finds the invocation in the real deploy workflow",
         "scripts/tests/check-published-refs.test.ts > carrier 2 — asset sources > this repository's own unpinned source is found",
@@ -125,11 +126,6 @@
         "scripts/tests/fsh-guts-export.test.ts > the folded block scalar the corpus actually uses > every real node's summary survived the parse",
         "scripts/tests/fsh-guts-export.test.ts > the real corpus > every committed node is in the document",
         "scripts/tests/fsh-guts-export.test.ts > the real corpus > the directory is resolved from the declaration, not spelled",
-        "scripts/tests/fsh-guts-not-rendered.test.ts > fsh-guts stays out of the render pipeline > and the index that IS there is withheld from the canonical deploy",
-        "scripts/tests/fsh-guts-not-rendered.test.ts > fsh-guts stays out of the render pipeline > at least one workflow declares a Jekyll source, so the check has teeth",
-        "scripts/tests/fsh-guts-not-rendered.test.ts > fsh-guts stays out of the render pipeline > its nodes declare themselves",
-        "scripts/tests/fsh-guts-not-rendered.test.ts > fsh-guts stays out of the render pipeline > no Jekyll source root contains it",
-        "scripts/tests/fsh-guts-not-rendered.test.ts > fsh-guts stays out of the render pipeline > the directory exists at the repository root",
         "scripts/tests/fsh-guts-viz.test.ts > corpus — the real directory, so a regression cannot pass on fixtures > no archived source reads as undeclared, and no title is binary",
         "scripts/tests/gates-third-state.test.ts > loadGates refuses rather than returning an empty set > returns a NON-EMPTY set for this repository, so the tests above are not vacuous",
         "scripts/tests/gates.test.ts > a command whose shell variable this reader discarded is NOT a gate > the real workflow carries exactly one, and it is that one",
@@ -212,6 +208,8 @@
         "scripts/tests/instance-render.test.ts > this repository's own instances > every instance is found — otherwise everything below is vacuous",
         "scripts/tests/instance-themes.test.ts > kinds are reported, never graded > the kinds line is printed, so the gap is visible without being fatal",
         "scripts/tests/jsonld-label-resolution.test.ts > contributed label prefixes > the real registry supplies them",
+        "scripts/tests/judge-mode.test.ts > check:rendered-labels > CLI on this checkout: exit 0 and no tracked-file change",
+        "scripts/tests/judge-mode.test.ts > check:wireframes > CORRUPTED: a wireframe with no intent and a ref nothing declares → exit 1",
         "scripts/tests/kg-audit-root-instance.test.ts > kg:audit over the instance declared at the repository root (bean `pgzn`) > `--instance .` emits a report rather than throwing",
         "scripts/tests/kg-audit-root-instance.test.ts > kg:audit over the instance declared at the repository root (bean `pgzn`) > the repository root IS a declared instance, so the case is not vacuous",
         "scripts/tests/kg-export.test.ts > a package's id is declared, not derived from its path > `corpus-grep` is NOT among them — the contamination the merge caused",
@@ -302,6 +300,7 @@
         "scripts/tests/qa-criterion-source-file.test.ts > getCriterionSourceFile — declared source must host the checker > an automated criterion with NO checker anywhere is a defect, not a pass",
         "scripts/tests/qa-criterion-source-file.test.ts > getCriterionSourceFile — declared source must host the checker > every locatable automated criterion is hashed against its own file",
         "scripts/tests/qa-criterion-source-file.test.ts > getCriterionSourceFile — declared source must host the checker > the glob finds the checker files",
+        "scripts/tests/qa-reports-ci.test.ts > qa-reports-unretried > the repository's own workflows carry none",
         "scripts/tests/qa-results.test.ts > the result and the document are two renderings of ONE computation > every family in the committed result matches the export's own field",
         "scripts/tests/qa-results.test.ts > the witnesses are committed in one place and published in another > BOTH publishing workflows copy them into the site",
         "scripts/tests/readme-sections.test.ts > cat-harness:instances — both entries, per instance (issue #592) > a declared `scope: \"repository\"` directory is linked at the REPOSITORY root",

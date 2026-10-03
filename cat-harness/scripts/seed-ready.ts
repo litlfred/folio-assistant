@@ -667,7 +667,10 @@ export function parseBunTest(output: string): { failed: number; names: string[] 
   const names: string[] = [];
   let file: string | undefined;
   for (const raw of output.split("\n")) {
-    const header = /^(\S.*\.test\.[cm]?[jt]sx?):$/.exec(raw);
+    // `::group::` is bun's GitHub Actions spelling of a file header; it is
+    // stripped as well as avoided (see probeStandalone), so a log captured in CI
+    // parses the same as one captured locally.
+    const header = /^(?:::group::|##\[group\])?(\S.*\.test\.[cm]?[jt]sx?):$/.exec(raw);
     if (header) {
       file = header[1];
       continue;
@@ -699,12 +702,12 @@ export function probeStandalone(
   repoRoot: string,
   layerName: string,
   decls: LayerDecl[],
-  opts: { timeoutMs?: number } = {},
+  opts: { timeoutMs?: number; minFreeBytes?: number } = {},
 ): Probe {
   try {
     const st = statfsSync(tmpdir());
     const free = Number(st.bavail) * Number(st.bsize);
-    if (free < REHEARSAL_MIN_FREE_BYTES) {
+    if (free < (opts.minFreeBytes ?? REHEARSAL_MIN_FREE_BYTES)) {
       return { state: "error", note: `only ${(free / 1024 ** 3).toFixed(1)} GB free under ${tmpdir()}; the rehearsal needs 3` };
     }
   } catch (e) {
@@ -755,8 +758,15 @@ export function probeStandalone(
     if (existsSync(join(repoRoot, "node_modules"))) symlinkSync(join(repoRoot, "node_modules"), join(ws, "node_modules"));
 
     const cwd = join(ws, relative(repoRoot, rootOf(repoRoot, layer)));
+    // bun prints its file headers as `::group::<file>:` when it sees GitHub
+    // Actions, so the same failure keyed differently in CI than locally and
+    // `check:standalone` read every baseline entry as fixed (#1977's first CI
+    // run). The rehearsal's output is parsed, not shown, so it runs plain.
+    const env = { ...process.env };
+    for (const k of ["GITHUB_ACTIONS", "CI", "TEAMCITY_VERSION", "BUILDKITE"]) delete env[k];
     const run = spawnSync("bun", ["test"], {
       cwd,
+      env,
       encoding: "utf-8",
       maxBuffer: 512 * 1024 * 1024,
       timeout: opts.timeoutMs ?? 60 * 60 * 1000,

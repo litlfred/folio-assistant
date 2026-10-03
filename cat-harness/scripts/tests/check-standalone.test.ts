@@ -57,12 +57,16 @@ describe("the falsifiers, through the real probe", () => {
     return root;
   }
   const DECLS: LayerDecl[] = [{ name: "layer", dir: "layer", needs: [] }];
+  // A one-file fixture needs no 3 GB; the floor is for the real corpus.
+  const OPTS = { minFreeBytes: 0 };
 
   test("an empty layer exits non-zero", () => {
     const root = scratchRepo({ "layer/README.md": "nothing to test\n" });
     try {
-      const j = judge(probeStandalone(root, "layer", DECLS), { failing: [], failed: 0 });
-      expect(j.exit).not.toBe(STANDALONE_EXIT.held);
+      const probe = probeStandalone(root, "layer", DECLS, OPTS);
+      // bun finds no test and prints no summary: an error, never a measured 0.
+      expect(probe.state).toBe("error");
+      expect(judge(probe, { failing: [], failed: 0 }).exit).toBe(STANDALONE_EXIT.undetermined);
     } finally {
       rmSync(root, { recursive: true, force: true });
     }
@@ -80,11 +84,11 @@ describe("the falsifiers, through the real probe", () => {
       ].join("\n"),
     });
     try {
-      const probe = probeStandalone(root, "layer", DECLS);
-      expect(probe.state).toBe("measured");
+      const probe = probeStandalone(root, "layer", DECLS, OPTS);
+      expect(probe).toMatchObject({ state: "measured", count: 1 }); // a mismatch prints the probe's note
       const j = judge(probe, { failing: [], failed: 0 });
       expect(j.exit).toBe(STANDALONE_EXIT.moved);
-      expect(j.lines.join("\n")).toContain("reads.test.ts > reads core");
+      expect(j.measured?.failing).toEqual(["reads.test.ts > reads core"]);
     } finally {
       rmSync(root, { recursive: true, force: true });
     }

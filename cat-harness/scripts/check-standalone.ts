@@ -104,7 +104,7 @@ export function judge(probe: Probe, baseline: Baseline | undefined): Judgement {
 }
 
 const BASELINE_COMMENT =
-  "Tests that fail when a layer runs alone beside its declared closure (bean `ho66`), keyed `<test file> > <test>`, with `bun test`'s own fail count, which also counts errors between tests. A RATCHET: a failure not listed here is red, and a listed one that now passes is red until it is removed. WRITTEN by `bun run standalone:baseline`; a longer list is a diff somebody reviews. See the module header of scripts/check-standalone.ts.";
+  "Tests that fail when a layer runs alone beside its declared closure (bean `ho66`), keyed `<test file> > <test>`, with `bun test`'s own fail count, which also counts errors between tests. A RATCHET: a failure not listed here is red, and a listed one that now passes is red until it is removed. WRITTEN by `bun run standalone:baseline`; a longer list is a diff somebody reviews. See the module header of cat-harness/scripts/check-standalone.ts.";
 
 interface BaselineFile {
   _comment: string;
